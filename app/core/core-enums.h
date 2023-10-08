@@ -544,6 +544,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE,   /*< desc="Merge paths"                    >*/
   GIMP_UNDO_GROUP_IMAGE_QUICK_MASK,      /*< desc="Quick Mask"                     >*/
   GIMP_UNDO_GROUP_IMAGE_GRID,            /*< desc="Grid"                           >*/
+  GIMP_UNDO_GROUP_IMAGE_COLORMAP_REMAP,  /*< desc="Colormap remapping"             >*/
   GIMP_UNDO_GROUP_GUIDE,                 /*< desc="Guide"                          >*/
   GIMP_UNDO_GROUP_SAMPLE_POINT,          /*< desc="Sample Point"                   >*/
   GIMP_UNDO_GROUP_DRAWABLE,              /*< desc="Layer/Channel"                  >*/

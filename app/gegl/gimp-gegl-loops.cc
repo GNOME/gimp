@@ -914,6 +914,120 @@ gimp_gegl_index_to_mask (GeglBuffer          *indexed_buffer,
     });
 }
 
+gboolean
+gimp_gegl_is_index_used (GeglBuffer          *indexed_buffer,
+                         const GeglRectangle *indexed_rect,
+                         const Babl          *indexed_format,
+                         gint                 index)
+{
+  GRWLock  lock;
+  gboolean found = FALSE;
+
+  g_rw_lock_init (&lock);
+
+  if (! indexed_rect)
+    indexed_rect = gegl_buffer_get_extent (indexed_buffer);
+
+  gegl_parallel_distribute_area (
+    indexed_rect, PIXELS_PER_THREAD,
+    [&] (const GeglRectangle *indexed_area)
+    {
+      GeglBufferIterator *iter;
+
+      iter = gegl_buffer_iterator_new (indexed_buffer, indexed_area, 0,
+                                       indexed_format,
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          const guchar *indexed = (const guchar *) iter->items[0].data;
+          gint          count   = iter->length;
+
+          while (count--)
+            {
+              if (*indexed == index)
+                {
+                  /*
+                   * Position of one item using this color index:
+                  gint x = iter->items[0].roi.x + (iter->length - count - 1) % iter->items[0].roi.width;
+                  gint y = iter->items[0].roi.y + (gint) ((iter->length - count - 1) / iter->items[0].roi.width);
+                  */
+                  g_rw_lock_writer_lock (&lock);
+                  found = TRUE;
+                  g_rw_lock_writer_unlock (&lock);
+                  break;
+                }
+              else
+                {
+                  g_rw_lock_reader_lock (&lock);
+                  if (found)
+                    {
+                      g_rw_lock_reader_unlock (&lock);
+                      break;
+                    }
+                  g_rw_lock_reader_unlock (&lock);
+                }
+
+              indexed++;
+            }
+
+          if (count > 0)
+            {
+              gegl_buffer_iterator_stop (iter);
+              break;
+            }
+
+          g_rw_lock_reader_lock (&lock);
+          if (found)
+            {
+              g_rw_lock_reader_unlock (&lock);
+              gegl_buffer_iterator_stop (iter);
+              break;
+            }
+          g_rw_lock_reader_unlock (&lock);
+        }
+    });
+  g_rw_lock_clear (&lock);
+
+  return found;
+}
+
+void
+gimp_gegl_shift_index (GeglBuffer          *indexed_buffer,
+                       const GeglRectangle *indexed_rect,
+                       const Babl          *indexed_format,
+                       gint                 from_index,
+                       gint                 shift)
+{
+  if (! indexed_rect)
+    indexed_rect = gegl_buffer_get_extent (indexed_buffer);
+
+  gegl_parallel_distribute_area (
+    indexed_rect, PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *indexed_area)
+    {
+      GeglBufferIterator *iter;
+
+      iter = gegl_buffer_iterator_new (indexed_buffer, indexed_area, 0,
+                                       indexed_format,
+                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          guchar *indexed = (guchar *) iter->items[0].data;
+          gint    count   = iter->length;
+
+          while (count--)
+            {
+              if (*indexed >= from_index)
+                *indexed += shift;
+
+              indexed++;
+            }
+        }
+    });
+}
+
 static void
 gimp_gegl_convert_color_profile_progress (GimpProgress *progress,
                                           gdouble       value)

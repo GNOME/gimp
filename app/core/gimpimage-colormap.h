@@ -45,6 +45,9 @@ void           gimp_image_set_colormap             (GimpImage     *image,
 void           gimp_image_unset_colormap           (GimpImage     *image,
                                                     gboolean       push_undo);
 
+gboolean       gimp_image_colormap_is_index_used   (GimpImage     *image,
+                                                    gint           color_index);
+
 void           gimp_image_get_colormap_entry       (GimpImage     *image,
                                                     gint           color_index,
                                                     GimpRGB       *color);
@@ -55,6 +58,9 @@ void           gimp_image_set_colormap_entry       (GimpImage     *image,
 
 void           gimp_image_add_colormap_entry       (GimpImage     *image,
                                                     const GimpRGB *color);
+gboolean       gimp_image_delete_colormap_entry    (GimpImage     *image,
+                                                    gint           color_index,
+                                                    gboolean       push_undo);
 
 
 #endif /* __GIMP_IMAGE_COLORMAP_H__ */

@@ -28,13 +28,16 @@
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-loops.h"
 
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpdatafactory.h"
+#include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-private.h"
+#include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimppalette.h"
 
@@ -342,6 +345,30 @@ gimp_image_unset_colormap (GimpImage *image,
   gimp_image_colormap_changed (image, -1);
 }
 
+gboolean
+gimp_image_colormap_is_index_used (GimpImage *image,
+                                   gint       color_index)
+{
+  GList    *layers;
+  GList    *iter;
+  gboolean  found;
+
+  layers = gimp_image_get_layer_list (image);
+
+  for (iter = layers; iter; iter = g_list_next (iter))
+    {
+      found = gimp_gegl_is_index_used (gimp_drawable_get_buffer (iter->data), NULL,
+                                       gimp_drawable_get_format_without_alpha (iter->data),
+                                       color_index);
+      if (found)
+        break;
+    }
+
+  g_list_free (layers);
+
+  return found;
+}
+
 void
 gimp_image_get_colormap_entry (GimpImage *image,
                                gint       color_index,
@@ -413,6 +440,57 @@ gimp_image_add_colormap_entry (GimpImage     *image,
                                          gimp_palette_get_n_colors (private->palette));
 
   gimp_image_colormap_changed (image, -1);
+}
+
+gboolean
+gimp_image_delete_colormap_entry (GimpImage *image,
+                                  gint       color_index,
+                                  gboolean   push_undo)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  if (! gimp_image_colormap_is_index_used (image, color_index))
+    {
+      GimpImagePrivate *private;
+      GimpPaletteEntry *entry;
+      GList            *layers;
+      GList            *iter;
+
+      if (push_undo)
+        {
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_COLORMAP_REMAP,
+                                       C_("undo-type", "Delete Colormap entry"));
+
+          gimp_image_undo_push_image_colormap (image, NULL);
+        }
+
+      private = GIMP_IMAGE_GET_PRIVATE (image);
+      layers  = gimp_image_get_layer_list (image);
+
+      for (iter = layers; iter; iter = g_list_next (iter))
+        {
+          if (push_undo)
+            gimp_image_undo_push_drawable_mod (image, NULL, iter->data, TRUE);
+
+          gimp_gegl_shift_index (gimp_drawable_get_buffer (iter->data), NULL,
+                                 gimp_drawable_get_format_without_alpha (iter->data),
+                                 color_index, -1);
+        }
+
+      entry = gimp_palette_get_entry (private->palette, color_index);
+      gimp_palette_delete_entry (private->palette, entry);
+
+      g_list_free (layers);
+
+      if (push_undo)
+        gimp_image_undo_group_end (image);
+
+      gimp_image_colormap_changed (image, -1);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 

@@ -37,6 +37,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimpimage-colormap.h"
 #include "core/gimppalette.h"
 #include "core/gimpparamspecs.h"
 
@@ -304,9 +305,18 @@ palette_delete_entry_invoker (GimpProcedure         *procedure,
           GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
 
           if (entry)
-            gimp_palette_delete_entry (palette, entry);
+            {
+              GimpImage *image = gimp_data_get_image (GIMP_DATA (palette));
+
+              if (image != NULL)
+                success = gimp_image_delete_colormap_entry (image, entry_num, TRUE);
+              else
+                gimp_palette_delete_entry (palette, entry);
+            }
           else
-            success = FALSE;
+            {
+              success = FALSE;
+            }
         }
       else
         success = FALSE;
@@ -683,7 +693,8 @@ register_palette_procs (GimpPDB *pdb)
                                "gimp-palette-delete-entry");
   gimp_procedure_set_static_help (procedure,
                                   "Deletes an entry from the palette.",
-                                  "Deletes an entry from the palette. Returns an error if the index is out or range. Returns an error if the palette is not editable.",
+                                  "This function will fail and return %FALSE if the index is out or range or if the palette is not editable.\n"
+                                  "Additionally if the palette belongs to an indexed image, it will only be possible to delete palette colors not in use in the image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",

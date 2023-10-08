@@ -326,8 +326,10 @@ gimp_palette_add_entry (GimpPalette   *palette,
  *
  * Deletes an entry from the palette.
  *
- * Deletes an entry from the palette. Returns an error if the index is
- * out or range. Returns an error if the palette is not editable.
+ * This function will fail and return %FALSE if the index is out or
+ * range or if the palette is not editable.
+ * Additionally if the palette belongs to an indexed image, it will
+ * only be possible to delete palette colors not in use in the image.
  *
  * Returns: TRUE on success.
  *

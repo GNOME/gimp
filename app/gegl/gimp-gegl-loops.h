@@ -87,6 +87,15 @@ void   gimp_gegl_index_to_mask         (GeglBuffer               *indexed_buffer
                                         GeglBuffer               *mask_buffer,
                                         const GeglRectangle      *mask_rect,
                                         gint                      index);
+gboolean gimp_gegl_is_index_used       (GeglBuffer               *indexed_buffer,
+                                        const GeglRectangle      *indexed_rect,
+                                        const Babl               *indexed_format,
+                                        gint                      index);
+void     gimp_gegl_shift_index         (GeglBuffer               *indexed_buffer,
+                                        const GeglRectangle      *indexed_rect,
+                                        const Babl               *indexed_format,
+                                        gint                      from_index,
+                                        gint                      shift);
 
 void   gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
                                         const GeglRectangle      *src_rect,
