@@ -785,6 +785,8 @@ gimp_colormap_selection_set_palette (GimpColormapSelection *selection)
     {
       if (selection->active_palette)
         {
+          gimp_colormap_selection_set_index (selection, 0, NULL);
+
           g_signal_handlers_disconnect_by_func (selection->active_palette,
                                                 G_CALLBACK (gtk_widget_queue_draw),
                                                 selection);
