@@ -459,6 +459,7 @@ gimp_data_factory_real_data_duplicate (GimpDataFactory *factory,
       gint         copy_len;
       gint         number;
       gchar       *new_name;
+      GError      *error = NULL;
 
       ext      = strrchr (name, '#');
       copy_len = strlen (_("copy"));
@@ -478,8 +479,12 @@ gimp_data_factory_real_data_duplicate (GimpDataFactory *factory,
 
       gimp_object_take_name (GIMP_OBJECT (new_data), new_name);
 
+      if (! gimp_data_factory_data_save_single (factory, new_data, &error))
+        g_critical ("%s: data saving failed: %s", G_STRFUNC, error->message);
+
       gimp_container_add (priv->container, GIMP_OBJECT (new_data));
       g_object_unref (new_data);
+      g_clear_error (&error);
     }
 
   return new_data;
