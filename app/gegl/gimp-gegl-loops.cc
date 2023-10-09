@@ -920,74 +920,48 @@ gimp_gegl_is_index_used (GeglBuffer          *indexed_buffer,
                          const Babl          *indexed_format,
                          gint                 index)
 {
-  GRWLock  lock;
-  gboolean found = FALSE;
-
-  g_rw_lock_init (&lock);
+  GeglBufferIterator *iter;
+  gboolean            found = FALSE;
 
   if (! indexed_rect)
     indexed_rect = gegl_buffer_get_extent (indexed_buffer);
 
-  gegl_parallel_distribute_area (
-    indexed_rect, PIXELS_PER_THREAD,
-    [&] (const GeglRectangle *indexed_area)
+  iter = gegl_buffer_iterator_new (indexed_buffer, indexed_rect, 0,
+                                   indexed_format,
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
+
+  /* I initially had an implementation using gegl_parallel_distribute_area()
+   * which turned out to be much slower than the simpler iteration on the whole
+   * buffer at once. I think the cost of threading and using GRWLock is just far
+   * too high for such very basic value check.
+   * See gegl_parallel_distribute_area() implementation in commit dbaa8b6a1c.
+   */
+  while (gegl_buffer_iterator_next (iter))
     {
-      GeglBufferIterator *iter;
+      const guchar *indexed = (const guchar *) iter->items[0].data;
+      gint          count   = iter->length;
 
-      iter = gegl_buffer_iterator_new (indexed_buffer, indexed_area, 0,
-                                       indexed_format,
-                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
-
-      while (gegl_buffer_iterator_next (iter))
+      while (count--)
         {
-          const guchar *indexed = (const guchar *) iter->items[0].data;
-          gint          count   = iter->length;
-
-          while (count--)
+          if (*indexed == index)
             {
-              if (*indexed == index)
-                {
-                  /*
-                   * Position of one item using this color index:
-                  gint x = iter->items[0].roi.x + (iter->length - count - 1) % iter->items[0].roi.width;
-                  gint y = iter->items[0].roi.y + (gint) ((iter->length - count - 1) / iter->items[0].roi.width);
-                  */
-                  g_rw_lock_writer_lock (&lock);
-                  found = TRUE;
-                  g_rw_lock_writer_unlock (&lock);
-                  break;
-                }
-              else
-                {
-                  g_rw_lock_reader_lock (&lock);
-                  if (found)
-                    {
-                      g_rw_lock_reader_unlock (&lock);
-                      break;
-                    }
-                  g_rw_lock_reader_unlock (&lock);
-                }
-
-              indexed++;
-            }
-
-          if (count > 0)
-            {
-              gegl_buffer_iterator_stop (iter);
+              /*
+               * Position of one item using this color index:
+               gint x = iter->items[0].roi.x + (iter->length - count - 1) % iter->items[0].roi.width;
+               gint y = iter->items[0].roi.y + (gint) ((iter->length - count - 1) / iter->items[0].roi.width);
+               */
+              found = TRUE;
               break;
             }
-
-          g_rw_lock_reader_lock (&lock);
-          if (found)
-            {
-              g_rw_lock_reader_unlock (&lock);
-              gegl_buffer_iterator_stop (iter);
-              break;
-            }
-          g_rw_lock_reader_unlock (&lock);
+          indexed++;
         }
-    });
-  g_rw_lock_clear (&lock);
+
+      if (found)
+        {
+          gegl_buffer_iterator_stop (iter);
+          break;
+        }
+    }
 
   return found;
 }
@@ -999,8 +973,12 @@ gimp_gegl_shift_index (GeglBuffer          *indexed_buffer,
                        gint                 from_index,
                        gint                 shift)
 {
+  gboolean indexed_format_has_alpha;
+
   if (! indexed_rect)
     indexed_rect = gegl_buffer_get_extent (indexed_buffer);
+
+  indexed_format_has_alpha = babl_format_has_alpha (indexed_format);
 
   gegl_parallel_distribute_area (
     indexed_rect, PIXELS_PER_THREAD,
@@ -1022,7 +1000,7 @@ gimp_gegl_shift_index (GeglBuffer          *indexed_buffer,
               if (*indexed >= from_index)
                 *indexed += shift;
 
-              indexed++;
+              indexed += (indexed_format_has_alpha ? 2 : 1);
             }
         }
     });

@@ -27,6 +27,8 @@
 
 #include "core-types.h"
 
+#include "config/gimpgeglconfig.h"
+
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-loops.h"
 
@@ -44,11 +46,24 @@
 #include "gimp-intl.h"
 
 
+typedef struct
+{
+  GeglBuffer *buffer;
+  const Babl *format;
+
+  /* Shared by jobs. */
+  gboolean   *found;
+  GRWLock    *lock;
+} IndexUsedJobData;
+
+
 /*  local function prototype  */
 
-static void   gimp_image_colormap_set_palette_entry (GimpImage     *image,
-                                                     const GimpRGB *color,
-                                                     gint           index);
+static void   gimp_image_colormap_set_palette_entry    (GimpImage        *image,
+                                                        const GimpRGB    *color,
+                                                        gint              index);
+static void   gimp_image_colormap_thread_is_index_used (IndexUsedJobData *data,
+                                                        gint              index);
 
 
 /*  public functions  */
@@ -349,21 +364,36 @@ gboolean
 gimp_image_colormap_is_index_used (GimpImage *image,
                                    gint       color_index)
 {
-  GList    *layers;
-  GList    *iter;
-  gboolean  found;
+  GList       *layers;
+  GList       *iter;
+  GThreadPool *pool;
+  GRWLock      lock;
+  gboolean     found = FALSE;
+  gint         num_processors;
 
-  layers = gimp_image_get_layer_list (image);
+  g_rw_lock_init (&lock);
+  num_processors = GIMP_GEGL_CONFIG (image->gimp->config)->num_processors;
+  layers         = gimp_image_get_layer_list (image);
 
+  pool = g_thread_pool_new_full ((GFunc) gimp_image_colormap_thread_is_index_used,
+                                 GINT_TO_POINTER (color_index),
+                                 (GDestroyNotify) g_free,
+                                 num_processors, TRUE, NULL);
   for (iter = layers; iter; iter = g_list_next (iter))
     {
-      found = gimp_gegl_is_index_used (gimp_drawable_get_buffer (iter->data), NULL,
-                                       gimp_drawable_get_format_without_alpha (iter->data),
-                                       color_index);
-      if (found)
-        break;
+      IndexUsedJobData *job_data;
+
+      job_data = g_malloc (sizeof (IndexUsedJobData ));
+      job_data->buffer = gimp_drawable_get_buffer (iter->data);
+      job_data->format = gimp_drawable_get_format_without_alpha (iter->data);
+      job_data->found  = &found;
+      job_data->lock   = &lock;
+
+      g_thread_pool_push (pool, job_data, NULL);
     }
 
+  g_thread_pool_free (pool, FALSE, TRUE);
+  g_rw_lock_clear (&lock);
   g_list_free (layers);
 
   return found;
@@ -473,7 +503,7 @@ gimp_image_delete_colormap_entry (GimpImage *image,
             gimp_image_undo_push_drawable_mod (image, NULL, iter->data, TRUE);
 
           gimp_gegl_shift_index (gimp_drawable_get_buffer (iter->data), NULL,
-                                 gimp_drawable_get_format_without_alpha (iter->data),
+                                 gimp_drawable_get_format (iter->data),
                                  color_index, -1);
         }
 
@@ -514,4 +544,23 @@ gimp_image_colormap_set_palette_entry (GimpImage     *image,
   g_snprintf (name, sizeof (name), "#%d", index);
 
   gimp_palette_set_entry (private->palette, index, name, color);
+}
+
+static void
+gimp_image_colormap_thread_is_index_used (IndexUsedJobData *data,
+                                          gint              index)
+{
+  g_rw_lock_reader_lock (data->lock);
+  if (*data->found)
+    {
+      g_rw_lock_reader_unlock (data->lock);
+      return;
+    }
+  g_rw_lock_reader_unlock (data->lock);
+  if (gimp_gegl_is_index_used (data->buffer, NULL, data->format, index))
+    {
+      g_rw_lock_writer_lock (data->lock);
+      *data->found = TRUE;
+      g_rw_lock_writer_unlock (data->lock);
+    }
 }
