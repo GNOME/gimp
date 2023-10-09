@@ -934,7 +934,8 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
 
       /* Add to the selection. */
       gtk_tree_selection_select_path (tree_view->priv->selection, path->data);
-      gtk_tree_view_set_cursor (tree_view->view, path->data, NULL, FALSE);
+      if (path == paths)
+        gtk_tree_view_set_cursor (tree_view->view, path->data, NULL, FALSE);
     }
   g_signal_handlers_unblock_by_func (tree_view->priv->selection,
                                      gimp_container_tree_view_selection_changed,
