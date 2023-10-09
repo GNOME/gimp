@@ -277,7 +277,7 @@ map_create_procedure (GimpPlugIn  *plug_in,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "diffuse-intensity",
-                            _("_D_iffuse"),
+                            _("D_iffuse"),
                             _("Material diffuse intensity"),
                             0, 1, 1.0,
                             G_PARAM_READWRITE);

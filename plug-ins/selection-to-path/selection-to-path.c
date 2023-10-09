@@ -291,7 +291,7 @@ sel2path_create_procedure (GimpPlugIn  *plug_in,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "subdivide-threshold",
-                            _("Subdivide_ Threshold"),
+                            _("Subdivide Th_reshold"),
                             _("How many pixels a point can diverge from a straight "
                               "line and still be considered a better place to "
                               "subdivide."),

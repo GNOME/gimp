@@ -415,23 +415,23 @@ bender_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation
         (procedure,
          _("Bend the image using two control curves"),
-         _("This plug-in does bend the active layer "
+         _("This plug-in bends the active layer. "
            "If there is a current selection it is copied to "
            "floating selection and the curve_bend distortion "
            "is done on the floating selection. If "
            "work_on_copy parameter is TRUE, the curve_bend "
            "distortion is done on a copy of the active layer "
            "(or floating selection). The upper and lower edges "
-           "are bent in shape of 2 spline curves. both (upper "
-           "and lower) curves are determined by upto 17 points "
+           "are bent in shape of 2 spline curves. Both (upper "
+           "and lower) curves are determined by up to 17 points "
            "or by 256 Y-Values if curve_type == 1 (freehand "
-           "mode) If rotation is not 0, the layer is rotated "
+           "mode). If rotation is not 0, the layer is rotated "
            "before and rotated back after the bend operation. "
            "This enables bending in other directions than "
-           "vertical. bending usually changes the size of "
-           "the handled layer. this plug-in sets the offsets "
+           "vertical. Bending usually changes the size of "
+           "the handled layer. This plug-in sets the offsets "
            "of the handled layer to keep its center at the "
-           "same position"),
+           "same position."),
          name);
       gimp_procedure_set_attribution (procedure,
                                       PLUG_IN_AUTHOR,
@@ -1206,7 +1206,7 @@ bender_new_dialog (GimpProcedure       *procedure,
                     G_CALLBACK (bender_type_callback), cd);
 
   store = gimp_int_store_new (_("Upper"), OUTLINE_UPPER,
-                              _("Lower"), OUTLINE_LOWER,
+                              C_("adjective", "Lower"), OUTLINE_LOWER,
                               NULL);
   gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (cd->shell),
                                        "curve-border", GIMP_INT_STORE (store));

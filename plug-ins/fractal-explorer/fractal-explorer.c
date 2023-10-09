@@ -283,13 +283,13 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_DOUBLE (procedure, "ymin",
                             _("To_p"),
-                            _("y min fractal image delimiter"),
+                            _("Y min fractal image delimiter"),
                             -3.000, 3.000, -1.500,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "ymax",
                             _("_Bottom"),
-                            _("ymax fractal image delimiter"),
+                            _("Y max fractal image delimiter"),
                             -3.000, 3.000, 1.500,
                             G_PARAM_READWRITE);
 

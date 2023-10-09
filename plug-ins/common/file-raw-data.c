@@ -398,7 +398,7 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                          G_PARAM_READWRITE);
       GIMP_PROC_ARG_INT (procedure, "palette-type",
                          _("Palette's la_yout"),
-                         _("The layout for the palette's color channels"
+                         _("The layout for the palette's color channels "
                            "{ RAW_PALETTE_RGB (0), RAW_PALETTE_BGR (1) }"),
                          RAW_PALETTE_RGB, RAW_PALETTE_BGR, RAW_PALETTE_RGB,
                          G_PARAM_READWRITE);
@@ -474,7 +474,7 @@ raw_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_INT (procedure, "palette-type",
                          _("Palette's layout"),
-                         _("The layout for the palette's color channels"
+                         _("The layout for the palette's color channels "
                            "{ RAW_PALETTE_RGB (0), RAW_PALETTE_BGR (1) }"),
                          RAW_PALETTE_RGB, RAW_PALETTE_BGR, RAW_PALETTE_RGB,
                          G_PARAM_READWRITE);
