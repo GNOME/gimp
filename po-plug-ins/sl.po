@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-10-07 14:49+0000\n"
-"PO-Revision-Date: 2023-10-08 17:43+0200\n"
+"PO-Revision-Date: 2023-10-10 09:10+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -966,22 +966,30 @@ msgid "Create abstract Coupled-Map Lattice patterns"
 msgstr "Ustvari abstraktne vzorce mreže združenih poslikav"
 
 #: plug-ins/common/cml-explorer.c:515
+#, fuzzy
 msgid ""
 "Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellular "
 "Automata on continuous (value) domain. In GIMP_RUN_NONINTERACTIVE, the name "
 "of a parameter file is passed as the 4th arg. You can control CML_explorer "
 "via parameter file."
 msgstr ""
+"Ustvarite sliko mreže Coupled-Map Lattice (CML). CML je vrsta celičnega "
+"avtomata na zveznem (vrednostnem) področju. V GIMP_RUN_NONINTERACTIVE se ime "
+"datoteke s parametri posreduje kot 4. argument. Preko datoteke parametrov "
+"lahko upravljate raziskovalca CML_explorer."
 
 #: plug-ins/common/cml-explorer.c:534
 msgid "Parameter URI"
 msgstr "Parameter URI"
 
 #: plug-ins/common/cml-explorer.c:535
+#, fuzzy
 msgid ""
 "The local file:// URI of parameter file. CML_explorer makes an image with "
 "its settings."
 msgstr ""
+"Lokalni datotečni:// URI datoteke parametra. CML_explorer ustvari sliko s "
+"svojimi nastavitvami."
 
 #: plug-ins/common/cml-explorer.c:884
 msgid "CML Explorer: evoluting"
@@ -1296,10 +1304,13 @@ msgid "Rearrange the colormap"
 msgstr "Prerazporedi barve"
 
 #: plug-ins/common/colormap-remap.c:193
+#, fuzzy
 msgid ""
 "This procedure takes an indexed image and lets you alter the positions of "
 "colors in the colormap without visually changing the image."
 msgstr ""
+"Ta postopek vzame indeksirano sliko in omogoča spreminjanje položajev barv v "
+"barvni karti, ne da bi sliko vizualno spremenili."
 
 #: plug-ins/common/colormap-remap.c:204
 msgid "Map"
@@ -1320,10 +1331,13 @@ msgid "Swap two colors in the colormap"
 msgstr "Zamenja dve barvi v katalogu barv"
 
 #: plug-ins/common/colormap-remap.c:225
+#, fuzzy
 msgid ""
 "This procedure takes an indexed image and lets you swap the positions of two "
 "colors in the colormap without visually changing the image."
 msgstr ""
+"Ta postopek vzame indeksirano sliko in omogoča zamenjavo položajev dveh barv "
+"v barvni karti, ne da bi sliko vizualno spremenili."
 
 #: plug-ins/common/colormap-remap.c:237
 #, fuzzy
@@ -1625,13 +1639,15 @@ msgid "Output image"
 msgstr "Izhodna slka"
 
 #: plug-ins/common/compose.c:470
+#, fuzzy
 msgid "Compose an image from multiple drawables of gray images"
-msgstr ""
+msgstr "Sestavite sliko iz več risljivih sivih slik"
 
 #: plug-ins/common/compose.c:472
+#, fuzzy
 msgid ""
 "This function creates a new image from multiple drawables of gray images"
-msgstr ""
+msgstr "Ta funkcija ustvari novo sliko iz več risalnikov sivih slik"
 
 #: plug-ins/common/compose.c:481
 msgid "Drawable 2"
@@ -1666,11 +1682,15 @@ msgid "Recompose an image that was previously decomposed"
 msgstr "Ponovno sestavi sliko, ki je bila prej razstavljena"
 
 #: plug-ins/common/compose.c:540
+#, fuzzy
 msgid ""
 "This function recombines the grayscale layers produced by Decompose into a "
 "single RGB or RGBA layer, and replaces the originally decomposed layer with "
 "the result."
 msgstr ""
+"Ta funkcija ponovno združi sloje sivine, ki jih ustvari funkcija Decompose, "
+"v en sam sloj RGB ali RGBA in z rezultatom nadomesti prvotno razčlenjeni "
+"sloj."
 
 #: plug-ins/common/compose.c:604
 msgid ""
@@ -1842,6 +1862,7 @@ msgid "Bend the image using two control curves"
 msgstr "Ukrivi sliko z dvema nadzornima krivuljama"
 
 #: plug-ins/common/curve-bend.c:418
+#, fuzzy
 msgid ""
 "This plug-in does bend the active layer If there is a current selection it "
 "is copied to floating selection and the curve_bend distortion is done on the "
@@ -1855,14 +1876,26 @@ msgid ""
 "handled layer. this plug-in sets the offsets of the handled layer to keep "
 "its center at the same position"
 msgstr ""
+"Ta vtičnik upogne aktivno plast Če obstaja trenutna izbira, se kopira v "
+"plavajočo izbiro in izkrivljanje krivulje_bend se izvede na plavajoči "
+"izbiri. Če je parameter work_on_copy enak TRUE, se popačenje curve_bend "
+"izvede na kopiji aktivnega sloja (ali plavajočega izbora). Zgornji in "
+"spodnji rob se upogneta v obliki dveh krivulj spline. obe (zgornja in "
+"spodnja) krivulji sta določeni z do 17 točkami ali z 256 vrednostmi Y, če "
+"curve_type == 1 (prostoročni način) Če vrtenje ni enako 0, se plast pred "
+"operacijo upogibanja zavrti in po njej zavrti nazaj. To omogoča upogibanje v "
+"drugih smereh, ne le v navpični. upogibanje običajno spremeni velikost "
+"obdelane plasti. ta vtičnik nastavi odmike obdelane plasti, da njeno "
+"središče ostane na istem položaju"
 
 #: plug-ins/common/curve-bend.c:442
 msgid "Rotat_e"
 msgstr "Zasu_kaj"
 
 #: plug-ins/common/curve-bend.c:443
+#, fuzzy
 msgid "Direction {angle 0 to 360 degree } of the bend effect"
-msgstr ""
+msgstr "Smer {kot 0 do 360 stopinj } učinka upogibanja"
 
 #: plug-ins/common/curve-bend.c:449
 msgid "Smoo_thing"
@@ -1886,28 +1919,33 @@ msgid "Work on cop_y"
 msgstr "Obdeluj _kopijo"
 
 #: plug-ins/common/curve-bend.c:462
+#, fuzzy
 msgid "Copy the drawable and bend the copy"
-msgstr ""
+msgstr "Kopirajte risalo in upognite kopijo"
 
 #: plug-ins/common/curve-bend.c:467
 msgid "Curve Type"
 msgstr "Vrsta krivulje"
 
 #: plug-ins/common/curve-bend.c:468
+#, fuzzy
 msgid "{ 0 == smooth (use 17 points), 1 == freehand (use 256 val_y) }"
 msgstr ""
+"{ 0 == gladko (uporabite 17 točk), 1 == prostoročno (uporabite 256 val_y) }"
 
 #: plug-ins/common/curve-bend.c:474
 msgid "Curve for Border"
 msgstr "Krivulja roba"
 
 #: plug-ins/common/curve-bend.c:475
+#, fuzzy
 msgid "Choose the active border line to edit"
-msgstr ""
+msgstr "Izberite aktivno mejno črto za urejanje"
 
 #: plug-ins/common/curve-bend.c:480 plug-ins/common/curve-bend.c:481
+#, fuzzy
 msgid "Argc upper point X"
-msgstr ""
+msgstr "Argc zgornja točka X"
 
 #: plug-ins/common/curve-bend.c:486
 #, fuzzy
@@ -1916,12 +1954,15 @@ msgid "Upper point X"
 msgstr "desno zgoraj"
 
 #: plug-ins/common/curve-bend.c:487 plug-ins/common/curve-bend.c:511
+#, fuzzy
 msgid "Array of 17 x point coords { 0.0 <= x <= 1.0 or -1 for unused point }"
 msgstr ""
+"Polje 17 x koordinat točk { 0,0 <= x <= 1,0 ali -1 za neuporabljeno točko }"
 
 #: plug-ins/common/curve-bend.c:492 plug-ins/common/curve-bend.c:493
+#, fuzzy
 msgid "Argc upper point Y"
-msgstr ""
+msgstr "Argc zgornja točka Y"
 
 #: plug-ins/common/curve-bend.c:498
 #, fuzzy
@@ -1930,12 +1971,15 @@ msgid "Upper point Y"
 msgstr "desno zgoraj"
 
 #: plug-ins/common/curve-bend.c:499 plug-ins/common/curve-bend.c:523
+#, fuzzy
 msgid "Array of 17 y point coords { 0.0 <= y <= 1.0 or -1 for unused point }"
 msgstr ""
+"Polje 17 koordinat točk y { 0,0 <= y <= 1,0 ali -1 za neuporabljeno točko }"
 
 #: plug-ins/common/curve-bend.c:504 plug-ins/common/curve-bend.c:505
+#, fuzzy
 msgid "Argc lower point X"
-msgstr ""
+msgstr "Argc spodnja točka X"
 
 #: plug-ins/common/curve-bend.c:510
 #, fuzzy
@@ -1944,8 +1988,9 @@ msgid "Lower point X"
 msgstr "desno spodaj"
 
 #: plug-ins/common/curve-bend.c:516 plug-ins/common/curve-bend.c:517
+#, fuzzy
 msgid "Argc lower point Y"
-msgstr ""
+msgstr "Argc spodnja točka Y"
 
 #: plug-ins/common/curve-bend.c:522
 #, fuzzy
@@ -1960,8 +2005,9 @@ msgid "Upper val Y"
 msgstr "levo zgoraj"
 
 #: plug-ins/common/curve-bend.c:529 plug-ins/common/curve-bend.c:535
+#, fuzzy
 msgid "Array of 256 y freehand coords { 0 <= y <= 255 }"
-msgstr ""
+msgstr "Polje 256 y prostoročnih koordinat { 0 <= y <= 255 }"
 
 #: plug-ins/common/curve-bend.c:534
 #, fuzzy
@@ -1975,7 +2021,7 @@ msgstr "Ukrivljena plast"
 
 #: plug-ins/common/curve-bend.c:541
 msgid "The transformed layer"
-msgstr ""
+msgstr "Preoblikovana plast"
 
 #: plug-ins/common/curve-bend.c:672
 msgid "Can operate on layers only (but was called on channel or mask)."
@@ -2328,8 +2374,9 @@ msgid "Scal_e 2"
 msgstr "M_erilo"
 
 #: plug-ins/common/depth-merge.c:313
+#, fuzzy
 msgid "The selection does not intersect with the input drawable."
-msgstr ""
+msgstr "Izbor se ne križa z vhodnim risalnim elementom."
 
 #: plug-ins/common/depth-merge.c:366
 msgid "Depth-merging"
@@ -2499,8 +2546,9 @@ msgid "Load KISS Palette"
 msgstr "Naloži paleto KISS"
 
 #: plug-ins/common/file-cel.c:253
+#, fuzzy
 msgid "This KISS CEL image requires a palette file."
-msgstr ""
+msgstr "Za to sliko KISS CEL je potrebna datoteka s paleto."
 
 #: plug-ins/common/file-cel.c:317
 msgid "CEL format does not support multiple layers."
@@ -3233,7 +3281,7 @@ msgstr "Širina _celice"
 
 #: plug-ins/common/file-gih.c:200
 msgid "Width of the brush cells in pixels"
-msgstr ""
+msgstr "Širina celic čopiča v slik. točkah"
 
 #: plug-ins/common/file-gih.c:205
 msgid "Cell _height"
@@ -3241,7 +3289,7 @@ msgstr "_Višina celice"
 
 #: plug-ins/common/file-gih.c:206
 msgid "Height of the brush cells in pixels"
-msgstr ""
+msgstr "Višina celic čopiča v slik. točkah"
 
 #: plug-ins/common/file-gih.c:211
 msgid "_Number of cells"
@@ -3271,7 +3319,7 @@ msgstr "Pokaži kot"
 
 #: plug-ins/common/file-gih.c:230
 msgid "Describe how the layers will be split"
-msgstr ""
+msgstr "Opišite, kako bodo plasti razdeljene"
 
 #: plug-ins/common/file-gih.c:234
 #, fuzzy
@@ -3280,8 +3328,9 @@ msgid "D_imension"
 msgstr "Mere"
 
 #: plug-ins/common/file-gih.c:235
+#, fuzzy
 msgid "How many dimensions the animated brush has"
-msgstr ""
+msgstr "Koliko dimenzij ima animirani čopič"
 
 #: plug-ins/common/file-gih.c:477
 msgid "Width Mismatch!"
@@ -3292,9 +3341,9 @@ msgid "Height Mismatch!"
 msgstr "Neujemanje po višini!"
 
 #: plug-ins/common/file-gih.c:525
-#, c-format
+#, fuzzy, c-format
 msgid "Displays as a %d × %d grid on each layer"
-msgstr ""
+msgstr "Prikaže se kot mreža %d × %d na vsaki plasti"
 
 #: plug-ins/common/file-gih.c:711
 msgid "Ranks:"
@@ -6506,8 +6555,9 @@ msgid "Composing images"
 msgstr "Sestavljanje slik ..."
 
 #: plug-ins/common/film.c:700
+#, fuzzy
 msgid "\"Filmstrip\" cannot be run without any input images"
-msgstr ""
+msgstr "\"Filmskega traku\" ni mogoče zagnati brez vhodnih slik"
 
 #: plug-ins/common/film.c:970
 msgid "Available images:"
@@ -7003,9 +7053,9 @@ msgid "Procedure Browser"
 msgstr "Brskalnik procedur"
 
 #: plug-ins/common/procedure-browser.c:184
-#, c-format
+#, fuzzy, c-format
 msgid "Procedure %s allows only interactive invocation."
-msgstr ""
+msgstr "Postopek %s omogoča samo interaktivni klic."
 
 #: plug-ins/common/qbist.c:185
 msgid "_Qbist..."
@@ -7053,46 +7103,57 @@ msgid "Sample drawable"
 msgstr "Vzorči risani predmet"
 
 #: plug-ins/common/sample-colorize.c:341
+#, fuzzy
 msgid "Sample drawable (should be of Type RGB or RGBA)"
-msgstr ""
+msgstr "Vzorec drawable (mora biti tipa RGB ali RGBA)"
 
 #: plug-ins/common/sample-colorize.c:346
 msgid "Hold _intensity"
 msgstr "Obdrži _intenziteto"
 
 #: plug-ins/common/sample-colorize.c:347
+#, fuzzy
 msgid "Hold brightness intensity levels"
-msgstr ""
+msgstr "Držite ravni intenzivnosti svetlosti"
 
 #: plug-ins/common/sample-colorize.c:352
 msgid "Original i_ntensity"
 msgstr "Izvorna i_ntenziteta"
 
 #: plug-ins/common/sample-colorize.c:353
+#, fuzzy
 msgid ""
 "TRUE: hold brightness of original intensity levels, FALSE: Hold Intensity of "
 "input levels"
 msgstr ""
+"TRUE: zadrži svetlost izvirnih ravni intenzivnosti, FALSE: zadrži "
+"intenzivnost vhodnih ravni"
 
 #: plug-ins/common/sample-colorize.c:360
 msgid "Us_e subcolors"
 msgstr "Uporab_i podbarve"
 
 #: plug-ins/common/sample-colorize.c:361
+#, fuzzy
 msgid ""
 "TRUE: Use all subcolors of same intensity, FALSE: Use only one color per "
 "intensity"
 msgstr ""
+"TRUE: Uporabite vse podbarve enake intenzivnosti, FALSE: Uporabite samo eno "
+"barvo na intenzivnost"
 
 #: plug-ins/common/sample-colorize.c:367
 msgid "Smooth sam_ples"
 msgstr "Z_gladi vzorce"
 
 #: plug-ins/common/sample-colorize.c:368
+#, fuzzy
 msgid ""
 "TRUE: guess samplecolors for the missing intensity values, FALSE: use only "
 "colors found in the sample"
 msgstr ""
+"TRUE: uganite vzorčne barve za manjkajoče vrednosti intenzivnosti, FALSE: "
+"uporabite samo barve, najdene v vzorcu"
 
 #: plug-ins/common/sample-colorize.c:375
 #, fuzzy
@@ -7102,8 +7163,9 @@ msgid "_Low"
 msgstr "_spodnja"
 
 #: plug-ins/common/sample-colorize.c:376
+#, fuzzy
 msgid "Intensity of lowest input"
-msgstr ""
+msgstr "Intenzivnost najnižjega vnosa"
 
 #: plug-ins/common/sample-colorize.c:381
 #, fuzzy
@@ -7112,8 +7174,9 @@ msgid "_High"
 msgstr "visoko"
 
 #: plug-ins/common/sample-colorize.c:382
+#, fuzzy
 msgid "Intensity of highest input"
-msgstr ""
+msgstr "Jakost najvišjega vnosa"
 
 #: plug-ins/common/sample-colorize.c:387
 msgid "Ga_mma"
@@ -7121,7 +7184,7 @@ msgstr "Ga_ma"
 
 #: plug-ins/common/sample-colorize.c:388
 msgid "Gamma adjustment factor, 1.0 is linear"
-msgstr ""
+msgstr "Faktor prilagoditve gama, 1,0 je linearen"
 
 #: plug-ins/common/sample-colorize.c:393
 msgid "Lo_w"
@@ -8147,8 +8210,9 @@ msgid "Enter location (_URI)"
 msgstr "Vnesite mesto (_URI)"
 
 #: plug-ins/common/web-page.c:140
+#, fuzzy
 msgid "URL of the webpage to screenshot"
-msgstr ""
+msgstr "URL spletne strani za posnetek zaslona"
 
 #: plug-ins/common/web-page.c:145
 msgid "_Width (pixels)"
@@ -10764,10 +10828,13 @@ msgid "Color mode"
 msgstr "Barvni način"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:316
+#, fuzzy
 msgid ""
 "0: Apply colormap as specified by the parameters below; 1: Apply active "
 "gradient to final image"
 msgstr ""
+"0: uporabi barvno karto, kot je določeno s spodnjimi parametri; 1: uporabi "
+"aktivni gradient za končno sliko"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:322
 #, fuzzy
@@ -13365,16 +13432,18 @@ msgid "B_ump map image"
 msgstr "Slika _odtisa za poslikavo"
 
 #: plug-ins/lighting/lighting-main.c:137
+#, fuzzy
 msgid "Bumpmap drawable (set to NULL if disabled)"
-msgstr ""
+msgstr "Bumpmap drawable (nastavi se na NULL, če je onemogočen)"
 
 #: plug-ins/lighting/lighting-main.c:142
 msgid "Enviro_nment map image"
 msgstr "Slika odtisa _okolja"
 
 #: plug-ins/lighting/lighting-main.c:143
+#, fuzzy
 msgid "Environmentmap drawable (set to NULL if disabled)"
-msgstr ""
+msgstr "Risalnik zemljevida okolja (nastavi na NULL, če je onemogočen)"
 
 #: plug-ins/lighting/lighting-main.c:149
 msgid "Enable bump mappi_ng"
@@ -13450,8 +13519,9 @@ msgid "Isolate"
 msgstr "Izoliraj"
 
 #: plug-ins/lighting/lighting-main.c:192
+#, fuzzy
 msgid "Only show the active lighting in the preview"
-msgstr ""
+msgstr "V predogledu prikažite samo aktivno osvetlitev"
 
 #: plug-ins/lighting/lighting-main.c:199 plug-ins/lighting/lighting-main.c:322
 #: plug-ins/lighting/lighting-main.c:381 plug-ins/lighting/lighting-main.c:440
@@ -13575,8 +13645,9 @@ msgid "Ambient intensity"
 msgstr "Jakost svetlobe"
 
 #: plug-ins/lighting/lighting-main.c:258
+#, fuzzy
 msgid "Material ambient intensity (Glowing)"
-msgstr ""
+msgstr "Intenzivnost okolice materiala (Žareče)"
 
 #: plug-ins/lighting/lighting-main.c:264
 #, fuzzy
@@ -13585,8 +13656,9 @@ msgid "Diffuse intensity"
 msgstr "Jakost svetlobe"
 
 #: plug-ins/lighting/lighting-main.c:265
+#, fuzzy
 msgid "Material diffuse intensity (Bright)"
-msgstr ""
+msgstr "Razpršena intenzivnost materiala (Svetlo)"
 
 #: plug-ins/lighting/lighting-main.c:290
 msgid "Metallic"
@@ -13620,8 +13692,9 @@ msgid "_Distance"
 msgstr "Raz_dalja"
 
 #: plug-ins/lighting/lighting-main.c:315
+#, fuzzy
 msgid "Distance of observer from surface"
-msgstr ""
+msgstr "Oddaljenost opazovalca od površine"
 
 #: plug-ins/lighting/lighting-ui.c:247 plug-ins/map-object/map-object-ui.c:394
 msgid "Recompute preview image"
@@ -13915,8 +13988,9 @@ msgid "Highligh_t"
 msgstr "Svetla področja:"
 
 #: plug-ins/map-object/map-object-main.c:300
+#, fuzzy
 msgid "Material highlight (note, it's exponential)"
-msgstr ""
+msgstr "Poudarjanje materiala (upoštevajte, da je eksponentno)"
 
 #: plug-ins/map-object/map-object-main.c:306
 msgid "Antialia_sing"
