@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-07 14:49+0000\n"
-"PO-Revision-Date: 2023-10-09 21:27+0300\n"
+"POT-Creation-Date: 2023-10-09 21:43+0000\n"
+"PO-Revision-Date: 2023-10-10 22:34+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -972,13 +972,12 @@ msgid ""
 "of a parameter file is passed as the 4th arg. You can control CML_explorer "
 "via parameter file."
 msgstr ""
-"Перетворює зображення на ґратку пов'язаних відображень (CML). CML є типом"
-" коміркового автомата над неперервною областю значень. У"
-" GIMP_RUN_NONINTERACTIVE назву файла параметрів передають як четвертий"
-" аргумент. Ви можете керувати CML_explorer за допомогою файла параметрів."
+"Перетворює зображення на ґратку пов'язаних відображень (CML). CML є типом "
+"коміркового автомата над неперервною областю значень. У "
+"GIMP_RUN_NONINTERACTIVE назву файла параметрів передають як четвертий "
+"аргумент. Ви можете керувати CML_explorer за допомогою файла параметрів."
 
 #: plug-ins/common/cml-explorer.c:534
-#| msgid "Parameter k:"
 msgid "Parameter URI"
 msgstr "Адреса параметрів"
 
@@ -987,8 +986,8 @@ msgid ""
 "The local file:// URI of parameter file. CML_explorer makes an image with "
 "its settings."
 msgstr ""
-"Локальна адреса file:// файла параметрів. CML_explorer створює зображення на"
-" основі цих параметрів."
+"Локальна адреса file:// файла параметрів. CML_explorer створює зображення на "
+"основі цих параметрів."
 
 #: plug-ins/common/cml-explorer.c:884
 msgid "CML Explorer: evoluting"
@@ -1308,16 +1307,14 @@ msgid ""
 "This procedure takes an indexed image and lets you alter the positions of "
 "colors in the colormap without visually changing the image."
 msgstr ""
-"Ці процедура обробляє індексоване зображення і надає вам змогу змінити"
-" позиції кольорів на мапі кольорів без візуальної зміни зображення."
+"Ці процедура обробляє індексоване зображення і надає вам змогу змінити "
+"позиції кольорів на мапі кольорів без візуальної зміни зображення."
 
 #: plug-ins/common/colormap-remap.c:204
-#| msgid "Map to:"
 msgid "Map"
 msgstr "Мапа"
 
 #: plug-ins/common/colormap-remap.c:205
-#| msgid "Rearrange the colormap"
 msgid "Remap array for the colormap"
 msgstr "Перебудувати масив для мапи кольорів"
 
@@ -1334,27 +1331,23 @@ msgid ""
 "This procedure takes an indexed image and lets you swap the positions of two "
 "colors in the colormap without visually changing the image."
 msgstr ""
-"Ці процедура обробляє індексоване зображення і надає вам змогу поміняти"
-" місцями позиції двох кольорів на мапі кольорів без візуальної зміни"
-" зображення."
+"Ці процедура обробляє індексоване зображення і надає вам змогу поміняти "
+"місцями позиції двох кольорів на мапі кольорів без візуальної зміни "
+"зображення."
 
 #: plug-ins/common/colormap-remap.c:237
-#| msgid "Indexed"
 msgid "Index 1"
 msgstr "Індекс 1"
 
 #: plug-ins/common/colormap-remap.c:238
-#| msgid "Rearranging the colormap"
 msgid "First index in the colormap"
 msgstr "Перший індекс на мапі кольорів"
 
 #: plug-ins/common/colormap-remap.c:243
-#| msgid "Indexed"
 msgid "Index 2"
 msgstr "Індекс 2"
 
 #: plug-ins/common/colormap-remap.c:244
-#| msgid "Swap two colors in the colormap"
 msgid "Second (other) index in the colormap"
 msgstr "Другий (інший) індекс на мапі кольорів"
 
@@ -1574,74 +1567,60 @@ msgstr ""
 "сірого» у якості каналів"
 
 #: plug-ins/common/compose.c:409
-#| msgid "Create an image using multiple gray images as color channels"
 msgid "This function creates a new image from multiple gray images"
 msgstr "Ця функція створює зображення з декількох сірих зображень"
 
 #: plug-ins/common/compose.c:418
-#| msgid "Image"
 msgid "Image 2"
 msgstr "Зображення 2"
 
 #: plug-ins/common/compose.c:419
-#| msgid "Reload the image"
 msgid "Second input image"
 msgstr "Друге вхідне зображення"
 
 #: plug-ins/common/compose.c:424
-#| msgid "Image"
 msgid "Image 3"
 msgstr "Зображення 3"
 
 #: plug-ins/common/compose.c:425
-#| msgid "Print the image"
 msgid "Third input image"
 msgstr "Третє вхідне зображення"
 
 #: plug-ins/common/compose.c:430
-#| msgid "Image"
 msgid "Image 4"
 msgstr "Зображення 4"
 
 #: plug-ins/common/compose.c:431
-#| msgid "Photoshop image"
 msgid "Fourth input image"
 msgstr "Четверте вхідне зображення"
 
 #: plug-ins/common/compose.c:436 plug-ins/common/compose.c:499
-#| msgid "Color _model:"
 msgid "Color _model"
 msgstr "Кольорова _модель"
 
 #: plug-ins/common/compose.c:445 plug-ins/common/compose.c:508
-#| msgid "YCbCr_ITU_R470"
 msgid "YCbCr ITU R470"
 msgstr "YCbCr ITU R470"
 
 #: plug-ins/common/compose.c:446 plug-ins/common/compose.c:509
-#| msgid "YCbCr_ITU_R709"
 msgid "YCbCr ITU R709"
 msgstr "YCbCr ITU R709"
 
 #: plug-ins/common/compose.c:447 plug-ins/common/compose.c:510
-#| msgid "YCbCr_ITU_R470_256"
 msgid "YCbCr ITU R470 256"
 msgstr "YCbCr ITU R470 256"
 
 #: plug-ins/common/compose.c:448 plug-ins/common/compose.c:511
-#| msgid "YCbCr_ITU_R709_256"
 msgid "YCbCr ITU R709 256"
 msgstr "YCbCr ITU R709 256"
 
 #: plug-ins/common/compose.c:454 plug-ins/common/compose.c:517
 #: plug-ins/common/smooth-palette.c:159
-#| msgid "PNG image"
 msgid "New image"
 msgstr "Нове зображення"
 
 #: plug-ins/common/compose.c:455 plug-ins/common/compose.c:518
 #: plug-ins/common/smooth-palette.c:160
-#| msgid "Output"
 msgid "Output image"
 msgstr "Зображення-результат"
 
@@ -1692,9 +1671,9 @@ msgid ""
 "single RGB or RGBA layer, and replaces the originally decomposed layer with "
 "the result."
 msgstr ""
-"Ця функція повторно збирає шари сірого кольору, які створено функцією"
-" «Розібрати на шари» RGB або RGBA, і замінює початковий розібраний шар на"
-" результат."
+"Ця функція повторно збирає шари сірого кольору, які створено функцією "
+"«Розібрати на шари» RGB або RGBA, і замінює початковий розібраний шар на "
+"результат."
 
 #: plug-ins/common/compose.c:604
 msgid ""
@@ -1866,34 +1845,45 @@ msgid "Bend the image using two control curves"
 msgstr "Вигнути зображення, використовуючи дві напрямні криві"
 
 #: plug-ins/common/curve-bend.c:418
+#| msgid ""
+#| "This plug-in does bend the active layer If there is a current selection "
+#| "it is copied to floating selection and the curve_bend distortion is done "
+#| "on the floating selection. If work_on_copy parameter is TRUE, the "
+#| "curve_bend distortion is done on a copy of the active layer (or floating "
+#| "selection). The upper and lower edges are bent in shape of 2 spline "
+#| "curves. both (upper and lower) curves are determined by upto 17 points or "
+#| "by 256 Y-Values if curve_type == 1 (freehand mode) If rotation is not 0, "
+#| "the layer is rotated before and rotated back after the bend operation. "
+#| "This enables bending in other directions than vertical. bending usually "
+#| "changes the size of the handled layer. this plug-in sets the offsets of "
+#| "the handled layer to keep its center at the same position"
 msgid ""
-"This plug-in does bend the active layer If there is a current selection it "
-"is copied to floating selection and the curve_bend distortion is done on the "
+"This plug-in bends the active layer. If there is a current selection it is "
+"copied to floating selection and the curve_bend distortion is done on the "
 "floating selection. If work_on_copy parameter is TRUE, the curve_bend "
 "distortion is done on a copy of the active layer (or floating selection). "
-"The upper and lower edges are bent in shape of 2 spline curves. both (upper "
-"and lower) curves are determined by upto 17 points or by 256 Y-Values if "
-"curve_type == 1 (freehand mode) If rotation is not 0, the layer is rotated "
+"The upper and lower edges are bent in shape of 2 spline curves. Both (upper "
+"and lower) curves are determined by up to 17 points or by 256 Y-Values if "
+"curve_type == 1 (freehand mode). If rotation is not 0, the layer is rotated "
 "before and rotated back after the bend operation. This enables bending in "
-"other directions than vertical. bending usually changes the size of the "
-"handled layer. this plug-in sets the offsets of the handled layer to keep "
-"its center at the same position"
+"other directions than vertical. Bending usually changes the size of the "
+"handled layer. This plug-in sets the offsets of the handled layer to keep "
+"its center at the same position."
 msgstr ""
-"Цей додаток вигинає активний шар. Якщо щось позначено, його буде скопійовано"
-" до рухомого позначення і виконано викривлення curve_bend для рухомої"
-" позначеної ділянки. Якщо параметр work_on_copy має значення TRUE,"
-" викривлення curve_bend буде виконано над копією активного шару (або рухомої"
-" позначеної ділянки). Верхній і нижній краї буде вигнуло у формі двох"
-" кривих-сплайнів. Обидві криві (верхня і нижня) визначаються набором до 17"
-" точок або 256 значеннями за Y, якщо curve_type == 1 (режим довільної"
-" кривої). Якщо ненульове значення обертання, шар буде обернуто до дії з"
-" вигинання і обернуто назад після неї. Це уможливлює вигинання у напрямках,"
-" відмінних від вертикального. Вигинання, зазвичай, змінює розмір обробленого"
-" шару. Цей додаток встановлює відступи обробленого шару для збереження"
-" позиції його центру."
+"Цей додаток вигинає активний шар. Якщо щось позначено, його буде скопійовано "
+"до рухомого позначення і виконано викривлення curve_bend для рухомої "
+"позначеної ділянки. Якщо параметр work_on_copy має значення TRUE, "
+"викривлення curve_bend буде виконано над копією активного шару (або рухомої "
+"позначеної ділянки). Верхній і нижній краї буде вигнуло у формі двох кривих-"
+"сплайнів. Обидві криві (верхня і нижня) визначаються набором до 17 точок або "
+"256 значеннями за Y, якщо curve_type == 1 (режим довільної кривої). Якщо "
+"ненульове значення обертання, шар буде обернуто до дії з вигинання і "
+"обернуто назад після неї. Це уможливлює вигинання у напрямках, відмінних від "
+"вертикального. Вигинання, зазвичай, змінює розмір обробленого шару. Цей "
+"додаток встановлює відступи обробленого шару для збереження позиції його "
+"центру."
 
 #: plug-ins/common/curve-bend.c:442
-#| msgid "Rotat_e:"
 msgid "Rotat_e"
 msgstr "_Обертання"
 
@@ -1906,7 +1896,6 @@ msgid "Smoo_thing"
 msgstr "_Згладжувати зображення"
 
 #: plug-ins/common/curve-bend.c:450
-#| msgid "S_moothing"
 msgid "Smoothing"
 msgstr "Згладжування зображення"
 
@@ -1916,7 +1905,6 @@ msgid "_Antialiasing"
 msgstr "Згладжувати _межі"
 
 #: plug-ins/common/curve-bend.c:456
-#| msgid "Antialiasing"
 msgid "Antialias"
 msgstr "Згладжування меж"
 
@@ -1950,37 +1938,34 @@ msgid "Argc upper point X"
 msgstr "X верхньої точки Argc"
 
 #: plug-ins/common/curve-bend.c:486
-#| msgid "Upper right"
 msgid "Upper point X"
 msgstr "X верхньої точки"
 
 #: plug-ins/common/curve-bend.c:487 plug-ins/common/curve-bend.c:511
 msgid "Array of 17 x point coords { 0.0 <= x <= 1.0 or -1 for unused point }"
 msgstr ""
-"Масив з координат x 17 точок { 0.0 <= x <= 1.0 або -1 для невикористаної"
-" точки }"
+"Масив з координат x 17 точок { 0.0 <= x <= 1.0 або -1 для невикористаної "
+"точки }"
 
 #: plug-ins/common/curve-bend.c:492 plug-ins/common/curve-bend.c:493
 msgid "Argc upper point Y"
 msgstr "Y верхньої точки Argc"
 
 #: plug-ins/common/curve-bend.c:498
-#| msgid "Upper right"
 msgid "Upper point Y"
 msgstr "Y верхньої точки"
 
 #: plug-ins/common/curve-bend.c:499 plug-ins/common/curve-bend.c:523
 msgid "Array of 17 y point coords { 0.0 <= y <= 1.0 or -1 for unused point }"
 msgstr ""
-"Масив з координат y 17 точок { 0.0 <= y <= 1.0 або -1 для невикористаної"
-" точки }"
+"Масив з координат y 17 точок { 0.0 <= y <= 1.0 або -1 для невикористаної "
+"точки }"
 
 #: plug-ins/common/curve-bend.c:504 plug-ins/common/curve-bend.c:505
 msgid "Argc lower point X"
 msgstr "X нижньої точки Argc"
 
 #: plug-ins/common/curve-bend.c:510
-#| msgid "Lower right"
 msgid "Lower point X"
 msgstr "X нижньої точки"
 
@@ -1989,12 +1974,10 @@ msgid "Argc lower point Y"
 msgstr "Y нижньої точки Argc"
 
 #: plug-ins/common/curve-bend.c:522
-#| msgid "Lower right"
 msgid "Lower point Y"
 msgstr "Y нижньої точки"
 
 #: plug-ins/common/curve-bend.c:528
-#| msgid "Upper left"
 msgid "Upper val Y"
 msgstr "Верхнє значення Y"
 
@@ -2003,12 +1986,10 @@ msgid "Array of 256 y freehand coords { 0 <= y <= 255 }"
 msgstr "Масив 256 довільних координат y { 0 <= y <= 255 }"
 
 #: plug-ins/common/curve-bend.c:534
-#| msgid "Lower left"
 msgid "Lower val Y"
 msgstr "Нижнє значення Y"
 
 #: plug-ins/common/curve-bend.c:540
-#| msgid "Selected layer"
 msgid "Bent layer"
 msgstr "Нахилити шар"
 
@@ -2063,25 +2044,22 @@ msgstr "_Автоматичний перегляд"
 #. The curves graph
 #. Config-connected widgets first
 #: plug-ins/common/curve-bend.c:1200
-#| msgid "Smoot_h"
 msgid "Smooth"
 msgstr "Згладжена"
 
 #: plug-ins/common/curve-bend.c:1201
-#| msgid "_Free"
 msgid "Free"
 msgstr "Довільна"
 
 #: plug-ins/common/curve-bend.c:1208
-#| msgctxt "curve-border"
-#| msgid "_Upper"
 msgid "Upper"
 msgstr "Верхня"
 
-#: plug-ins/common/curve-bend.c:1209 plug-ins/gfig/gfig-dialog.c:417
-#: plug-ins/gfig/gfig-menu.ui:120
+#: plug-ins/common/curve-bend.c:1209
+#| msgid "Lower"
+msgctxt "adjective"
 msgid "Lower"
-msgstr "Нижче"
+msgstr "Нижня"
 
 #: plug-ins/common/curve-bend.c:1227
 msgid "Modify Curves"
@@ -2330,27 +2308,22 @@ msgid "Combine two images using depth maps (z-buffers)"
 msgstr "Об'єднати два зображення, використовуючи карту глибин (z-buffers)"
 
 #: plug-ins/common/depth-merge.c:223
-#| msgid "Source 1:"
 msgid "Source _1"
 msgstr "Джерело _1"
 
 #: plug-ins/common/depth-merge.c:229
-#| msgid "Depth map:"
 msgid "_Depth map 1"
 msgstr "Мапа _глибин 1"
 
 #: plug-ins/common/depth-merge.c:235
-#| msgid "Source 2:"
 msgid "Source _2"
 msgstr "Джерело _2"
 
 #: plug-ins/common/depth-merge.c:241
-#| msgid "Depth map:"
 msgid "Depth _map 2"
 msgstr "_Мапа глибин 2"
 
 #: plug-ins/common/depth-merge.c:247
-#| msgid "O_verlap:"
 msgid "O_verlap"
 msgstr "_Перекриття"
 
@@ -2359,17 +2332,14 @@ msgid "O_ffset"
 msgstr "_Зсув"
 
 #: plug-ins/common/depth-merge.c:254
-#| msgid "Save layer o_ffset"
 msgid "Depth relative offset"
 msgstr "Відносний зсув глибин"
 
 #: plug-ins/common/depth-merge.c:259
-#| msgid "Sc_ale 1:"
 msgid "Sc_ale 1"
 msgstr "_Масштаб 1"
 
 #: plug-ins/common/depth-merge.c:265
-#| msgid "Scal_e"
 msgid "Scal_e 2"
 msgstr "М_асштаб 2"
 
@@ -2531,12 +2501,10 @@ msgid "KISS CEL"
 msgstr "KISS CEL"
 
 #: plug-ins/common/file-cel.c:159
-#| msgid "_Palette File"
 msgid "_Palette file"
 msgstr "Файл _палітри"
 
 #: plug-ins/common/file-cel.c:160
-#| msgid "Error: failed to load parameters"
 msgid "KCF file to load palette from"
 msgstr "Файл KCF, з якого слід завантажити палітру"
 
@@ -2958,12 +2926,11 @@ msgid "local colormap"
 msgstr "локальна мапа кольорів"
 
 #: plug-ins/common/file-gif-load.c:569
-#| msgid "Non-square pixels.  Image might look squashed."
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr ""
-"Неквадратні точки. Зображення, ймовірно, пошкоджене, якщо увімкнено режим"
-" «крапка до крапки»."
+"Неквадратні точки. Зображення, ймовірно, пошкоджене, якщо увімкнено режим "
+"«крапка до крапки»."
 
 #: plug-ins/common/file-gif-load.c:606 plug-ins/common/file-gif-load.c:611
 #, c-format
@@ -3270,17 +3237,14 @@ msgid "Brush Pipe"
 msgstr "Анімаційний пензель"
 
 #: plug-ins/common/file-gih.c:187
-#| msgid "_Spacing (percent):"
 msgid "Spacing (_percent)"
 msgstr "_Інтервал (відсотки)"
 
 #: plug-ins/common/file-gih.c:194
-#| msgid "Short description of the brush"
 msgid "Short description of the GIH brush pipe"
 msgstr "Короткий опис анімаційного пензля GIH"
 
 #: plug-ins/common/file-gih.c:199
-#| msgid "_Bevel width:"
 msgid "Cell _width"
 msgstr "_Ширина комірки"
 
@@ -3289,7 +3253,6 @@ msgid "Width of the brush cells in pixels"
 msgstr "Ширина комірок пензлів у пікселях"
 
 #: plug-ins/common/file-gih.c:205
-#| msgid "Image _height:"
 msgid "Cell _height"
 msgstr "_Висота комірки"
 
@@ -3298,27 +3261,22 @@ msgid "Height of the brush cells in pixels"
 msgstr "Висота комірок пензлів у пікселях"
 
 #: plug-ins/common/file-gih.c:211
-#| msgid "_Number of cells:"
 msgid "_Number of cells"
 msgstr "_Кількість комірок"
 
 #: plug-ins/common/file-gih.c:212
-#| msgid "_Number of cells:"
 msgid "Number of cells to cut up"
 msgstr "Кількість комірок для вирізання"
 
 #: plug-ins/common/file-gih.c:217
-#| msgid "Ranks:"
 msgid "_Rank"
 msgstr "_Ранг"
 
 #: plug-ins/common/file-gih.c:218
-#| msgid "bad image dimensions"
 msgid "Ranks of the dimensions"
 msgstr "Ранги розмірностей"
 
 #: plug-ins/common/file-gih.c:229
-#| msgid "Display as:"
 msgid "Display as"
 msgstr "Відобразити як"
 
@@ -3327,7 +3285,6 @@ msgid "Describe how the layers will be split"
 msgstr "Опис того, як буде поділено шари"
 
 #: plug-ins/common/file-gih.c:234
-#| msgid "Dimensions"
 msgid "D_imension"
 msgstr "Розмір_ність"
 
@@ -3336,12 +3293,10 @@ msgid "How many dimensions the animated brush has"
 msgstr "Кількість розмірностей анімаційного пензля"
 
 #: plug-ins/common/file-gih.c:477
-#| msgid " (Width Mismatch!) "
 msgid "Width Mismatch!"
 msgstr "Невідповідність ширини!"
 
 #: plug-ins/common/file-gih.c:478
-#| msgid " (Height Mismatch!) "
 msgid "Height Mismatch!"
 msgstr "Невідповідність висоти!"
 
@@ -5443,8 +5398,11 @@ msgid "Palette's la_yout"
 msgstr "_Компонування палітри"
 
 #: plug-ins/common/file-raw-data.c:401 plug-ins/common/file-raw-data.c:477
+#| msgid ""
+#| "The layout for the palette's color channels{ RAW_PALETTE_RGB (0), "
+#| "RAW_PALETTE_BGR (1) }"
 msgid ""
-"The layout for the palette's color channels{ RAW_PALETTE_RGB (0), "
+"The layout for the palette's color channels { RAW_PALETTE_RGB (0), "
 "RAW_PALETTE_BGR (1) }"
 msgstr ""
 "Компонування для каланів кольорів палітри{ RAW_PALETTE_RGB (0), "
@@ -5816,22 +5774,17 @@ msgid "_Paths"
 msgstr "К_онтури"
 
 #: plug-ins/common/file-svg.c:206
-#| msgid ""
-#| "Import path elements of the SVG so they can be used with the GIMP path "
-#| "tool"
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr ""
-"Чи слід імпортувати контури так, щоб ними можна було скористатися у"
-" інструменті контурів, і як це робити"
+"Чи слід імпортувати контури так, щоб ними можна було скористатися у "
+"інструменті контурів, і як це робити"
 
 #: plug-ins/common/file-svg.c:207
-#| msgid "Import _paths"
 msgid "Don't import paths"
 msgstr "Не імпортувати контури"
 
 #: plug-ins/common/file-svg.c:208
-#| msgid "Import _paths"
 msgid "Import paths individually"
 msgstr "Імпортувати контури окремо"
 
@@ -6536,79 +6489,62 @@ msgid "Combine several images on a film strip"
 msgstr "Об'єднати декілька зображень у одне на зразок фотоплівки"
 
 #: plug-ins/common/film.c:245
-#| msgid "Image _height:"
 msgid "Image _height"
 msgstr "_Висота зображення"
 
 #: plug-ins/common/film.c:246
-#| msgid "All Values are Fractions of the Strip Height"
 msgid "As fraction of the strip height"
 msgstr "Як частка висоти плівки"
 
 #: plug-ins/common/film.c:251
-#| msgid "Image spac_ing:"
 msgid "Image s_pacing"
 msgstr "_Інтервал між зображеннями"
 
 #: plug-ins/common/film.c:252
-#| msgid "All Values are Fractions of the Strip Height"
 msgid "The spacing between 2 images, as fraction of the strip height"
 msgstr "Інтервал між 2 зображенням як частка висоти плівки"
 
 #: plug-ins/common/film.c:257
-#| msgid "_Hole offset:"
 msgid "Hole offse_t"
 msgstr "_Зсув отворів"
 
 #: plug-ins/common/film.c:258
-#| msgid ""
-#| "The distance from the center of the image determines the direction of the "
-#| "stroke"
 msgid "The offset from the edge of film, as fraction of the strip height"
 msgstr "Зсув від краю плівки, як частка висоти плівки"
 
 #: plug-ins/common/film.c:263
-#| msgid "Ho_le width:"
 msgid "Hole _width"
 msgstr "_Ширина отворів"
 
 #: plug-ins/common/film.c:264
-#| msgid "All Values are Fractions of the Strip Height"
 msgid "The width of the holes, as fraction of the strip height"
 msgstr "Ширина отворів, як частка висоти плівки"
 
 #: plug-ins/common/film.c:269
-#| msgid "Hol_e height:"
 msgid "Hole hei_ght"
 msgstr "Висота _отворів"
 
 #: plug-ins/common/film.c:270
-#| msgid "All Values are Fractions of the Strip Height"
 msgid "The height of the holes, as fraction of the strip height"
 msgstr "Висота отворів, як частка висоти плівки"
 
 #: plug-ins/common/film.c:275
-#| msgid "Distance:"
 msgid "Hole _distance"
 msgstr "Відст_ань між отворами"
 
 #: plug-ins/common/film.c:276
-#| msgid "All Values are Fractions of the Strip Height"
 msgid "The distance between holes, as fraction of the strip height"
 msgstr "Відстань між отворами, як частка висоти плівки"
 
 #: plug-ins/common/film.c:281
-#| msgid "_Number height:"
 msgid "_Number height"
 msgstr "Висота _чисел"
 
 #: plug-ins/common/film.c:282
-#| msgid "All Values are Fractions of the Strip Height"
 msgid "The height of drawn numbers, as fraction of the strip height"
 msgstr "Висота намальованих чисел, як частка висоти плівки"
 
 #: plug-ins/common/film.c:289
-#| msgid "_Fit height to images"
 msgid "F_it height to images"
 msgstr "_Розтягувати до висоти зображень"
 
@@ -6659,7 +6595,6 @@ msgid "Ad_vanced"
 msgstr "Д_одатково"
 
 #: plug-ins/common/film.c:1143
-#| msgid "Selection"
 msgid "_Selection"
 msgstr "Поз_начене"
 
@@ -7162,7 +7097,6 @@ msgid "Colorize image using a sample image as a guide"
 msgstr "Фарбувати одне зображення за зразком іншого"
 
 #: plug-ins/common/sample-colorize.c:340
-#| msgid "Sample analyze"
 msgid "Sample drawable"
 msgstr "Зразок малюнка"
 
@@ -7187,8 +7121,8 @@ msgid ""
 "TRUE: hold brightness of original intensity levels, FALSE: Hold Intensity of "
 "input levels"
 msgstr ""
-"TRUE: зберігати яскравість початкових рівнів інтенсивності, FALSE: зберігати"
-" інтенсивність вхідних рівнів"
+"TRUE: зберігати яскравість початкових рівнів інтенсивності, FALSE: зберігати "
+"інтенсивність вхідних рівнів"
 
 #: plug-ins/common/sample-colorize.c:360
 msgid "Us_e subcolors"
@@ -7199,11 +7133,10 @@ msgid ""
 "TRUE: Use all subcolors of same intensity, FALSE: Use only one color per "
 "intensity"
 msgstr ""
-"TRUE: використовувати усі підкольори однакової інтенсивності, FALSE:"
-" використовувати лише один колір на інтенсивність"
+"TRUE: використовувати усі підкольори однакової інтенсивності, FALSE: "
+"використовувати лише один колір на інтенсивність"
 
 #: plug-ins/common/sample-colorize.c:367
-#| msgid "S_mooth samples"
 msgid "Smooth sam_ples"
 msgstr "З_гладжувати зразки"
 
@@ -7212,12 +7145,10 @@ msgid ""
 "TRUE: guess samplecolors for the missing intensity values, FALSE: use only "
 "colors found in the sample"
 msgstr ""
-"TRUE: визначати зразки кольорів для пропущених значень інтенсивності, FALSE:"
-" використовувати лише кольори, які знайдено у зразку"
+"TRUE: визначати зразки кольорів для пропущених значень інтенсивності, FALSE: "
+"використовувати лише кольори, які знайдено у зразку"
 
 #: plug-ins/common/sample-colorize.c:375
-#| msgctxt "curve-border"
-#| msgid "_Lower"
 msgid "_Low"
 msgstr "_Низ"
 
@@ -7226,7 +7157,6 @@ msgid "Intensity of lowest input"
 msgstr "Інтенсивність найнижчого вхідного"
 
 #: plug-ins/common/sample-colorize.c:381
-#| msgid "High"
 msgid "_High"
 msgstr "_Верх"
 
@@ -7247,17 +7177,14 @@ msgid "Lo_w"
 msgstr "Ни_жній"
 
 #: plug-ins/common/sample-colorize.c:394
-#| msgid "Adjust the flare intensity"
 msgid "Lowest sample color intensity"
 msgstr "Найнижча інтенсивність кольорів зразка"
 
 #: plug-ins/common/sample-colorize.c:399
-#| msgid "Hi_ghlight"
 msgid "Hi_gh"
 msgstr "Ви_щий"
 
 #: plug-ins/common/sample-colorize.c:400
-#| msgid "Light intensity"
 msgid "Highest sample color intensity"
 msgstr "Найвища інтенсивність кольорів зразка"
 
@@ -7332,22 +7259,18 @@ msgid "Derive a smooth color palette from the image"
 msgstr "Створити гладку палітру з кольорів зображення"
 
 #: plug-ins/common/smooth-palette.c:136
-#| msgid "_Width"
 msgid "Width"
 msgstr "Ширина"
 
 #: plug-ins/common/smooth-palette.c:142
-#| msgid "_Height"
 msgid "Height"
 msgstr "Висота"
 
 #: plug-ins/common/smooth-palette.c:147
-#| msgid "_Search depth:"
 msgid "Search _depth"
 msgstr "_Глибина пошуку"
 
 #: plug-ins/common/smooth-palette.c:148
-#| msgid "_Search depth:"
 msgid "Search depth"
 msgstr "Глибина пошуку"
 
@@ -7358,12 +7281,10 @@ msgid "Show image"
 msgstr "Показати зображення"
 
 #: plug-ins/common/smooth-palette.c:165
-#| msgid "Create new layer"
 msgid "New layer"
 msgstr "Створити шар"
 
 #: plug-ins/common/smooth-palette.c:166
-#| msgid "Output levels:"
 msgid "Output layer"
 msgstr "Шар на виході"
 
@@ -7758,7 +7679,6 @@ msgid "_n²"
 msgstr "_n²"
 
 #: plug-ins/common/tile-small.c:286
-#| msgid "Number of Tiles"
 msgid "Number of tiles to make"
 msgstr "Кількість створених плиток"
 
@@ -8265,7 +8185,6 @@ msgid "Create an image of a webpage"
 msgstr "Створити зображення веб-сторінки"
 
 #: plug-ins/common/web-page.c:139
-#| msgid "Enter location (URI):"
 msgid "Enter location (_URI)"
 msgstr "Введення адреси (_URI)"
 
@@ -8274,22 +8193,18 @@ msgid "URL of the webpage to screenshot"
 msgstr "Адреса вебсторінки знімка"
 
 #: plug-ins/common/web-page.c:145
-#| msgid "_Width (pixels):"
 msgid "_Width (pixels)"
 msgstr "_Ширина (у точках)"
 
 #: plug-ins/common/web-page.c:146
-#| msgid "Adjust the spike length (in pixels)"
 msgid "The width of the screenshot (in pixels)"
 msgstr "Ширина знімка вікна (у точках)"
 
 #: plug-ins/common/web-page.c:151
-#| msgid "Font size:"
 msgid "_Font size"
 msgstr "_Розмір шрифту"
 
 #: plug-ins/common/web-page.c:152
-#| msgid "The name of the file to save the image in"
 msgid "The font size to use in the page (in pt)"
 msgstr "Розмір шрифту на сторінці (у пунктах)"
 
@@ -9839,7 +9754,6 @@ msgid "Co_mpression"
 msgstr "С_тиснення"
 
 #: plug-ins/file-tiff/file-tiff.c:222
-#| msgid "Compression _type"
 msgid "Compression type"
 msgstr "Тип стиснення"
 
@@ -10728,7 +10642,6 @@ msgid "_Parameters"
 msgstr "П_араметри"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:760
-#| msgid "Colors"
 msgid "_Colors"
 msgstr "_Кольори"
 
@@ -10773,7 +10686,6 @@ msgid "FractalExplorer Gradient"
 msgstr "Градієнт дослідника фракталів"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1036
-#| msgid "_Presets"
 msgid "Presets"
 msgstr "Шаблони"
 
@@ -10809,12 +10721,10 @@ msgid "Render fractal art"
 msgstr "Намалювати фрактал"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:257
-#| msgid "Fractal Type"
 msgid "Fr_actal Type"
 msgstr "Тип _фрактала"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:258
-#| msgid "Load Fractal Parameters"
 msgid "Type of Fractal Pattern"
 msgstr "Тип взірця фрактала"
 
@@ -10860,7 +10770,6 @@ msgstr "Мінімальний обмежувач за X фрактальног�
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:279
 #: plug-ins/map-object/map-object-main.c:382
-#| msgid "Hi_ghlight"
 msgid "Ri_ght"
 msgstr "_Праворуч"
 
@@ -10874,51 +10783,45 @@ msgid "To_p"
 msgstr "В_горі"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:286
-msgid "y min fractal image delimiter"
+#| msgid "X min fractal image delimiter"
+msgid "Y min fractal image delimiter"
 msgstr "Мінімальний обмежувач за Y фрактального зображення"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:291
 #: plug-ins/map-object/map-object-main.c:411
-#| msgid "_Bottom:"
 msgid "_Bottom"
 msgstr "В_низу"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:292
-msgid "ymax fractal image delimiter"
+#| msgid "X max fractal image delimiter"
+msgid "Y max fractal image delimiter"
 msgstr "Максимальний обмежувач за Y фрактального зображення"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:297
-#| msgid "Iterations:"
 msgid "Iteratio_ns"
 msgstr "Кількість пов_торів"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:298
-#| msgid "Iterations:"
 msgid "Iteration value"
 msgstr "Значення кількості ітерацій"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:303
-#| msgid "_X:"
 msgid "C_X"
 msgstr "C_X"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:304
-#| msgid "value"
 msgid "cx value"
 msgstr "Значення cx"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:309
-#| msgid "_Y:"
 msgid "C_Y"
 msgstr "C_Y"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:310
-#| msgid "value"
 msgid "cy value"
 msgstr "Значення cy"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:315
-#| msgid "Color Mode"
 msgid "Color mode"
 msgstr "Режим кольорів"
 
@@ -10927,41 +10830,34 @@ msgid ""
 "0: Apply colormap as specified by the parameters below; 1: Apply active "
 "gradient to final image"
 msgstr ""
-"0: застосувати мапу кольорів, як вказано параметрами нижче; 1: застосувати"
-" активний градієнт до остаточного зображення"
+"0: застосувати мапу кольорів, як вказано параметрами нижче; 1: застосувати "
+"активний градієнт до остаточного зображення"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:322
-#| msgid "Stretch"
 msgid "Red stretch"
 msgstr "Розтяг червоного"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:323
-#| msgid "JPEG smoothing factor"
 msgid "Red stretching factor"
 msgstr "Коефіцієнт розтягу червоного"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:328
-#| msgid "Stretch"
 msgid "Green stretch"
 msgstr "Розтяг зеленого"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:329
-#| msgid "JPEG smoothing factor"
 msgid "Green stretching factor"
 msgstr "Коефіцієнт розтягу зеленого"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:334
-#| msgid "Stretch"
 msgid "Blue stretch"
 msgstr "Розтяг синього"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:335
-#| msgid "JPEG smoothing factor"
 msgid "Blue stretching factor"
 msgstr "Коефіцієнт розтягу синього"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:340
-#| msgid "_Red:"
 msgid "_Red"
 msgstr "_Червоний"
 
@@ -10976,17 +10872,14 @@ msgid "Sine"
 msgstr "Синус"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:350
-#| msgid "_Green:"
 msgid "_Green"
 msgstr "_Зелений"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:351
-#| msgid "Gradient map selection menu"
 msgid "Green application mode"
 msgstr "Режим накладання зеленого"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:360
-#| msgid "_Blue:"
 msgid "_Blue"
 msgstr "С_иній"
 
@@ -10995,17 +10888,14 @@ msgid "Blue application mode"
 msgstr "Режим накладання синього"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:370
-#| msgid "Inversion"
 msgid "In_version"
 msgstr "І_нверсія"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:388
-#| msgid "Number of colors:"
 msgid "_Number of colors"
 msgstr "_Кількість кольорів"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:389
-#| msgid "Number of Colors"
 msgid "Number of Colors for mapping"
 msgstr "Кількість кольорів відображення"
 
@@ -11212,6 +11102,10 @@ msgstr "Підняти"
 #: plug-ins/gfig/gfig-dialog.c:415
 msgid "Raise selected object"
 msgstr "Підняти вибрані об'єкти"
+
+#: plug-ins/gfig/gfig-dialog.c:417 plug-ins/gfig/gfig-menu.ui:120
+msgid "Lower"
+msgstr "Нижче"
 
 #: plug-ins/gfig/gfig-dialog.c:417
 msgid "Lower selected object"
@@ -11706,17 +11600,14 @@ msgid "Performs various artistic operations"
 msgstr "Множина способів прикрасити зображення"
 
 #: plug-ins/gimpressionist/gimp.c:127
-#| msgid "Performs various artistic operations"
 msgid "Performs various artistic operations on an image"
 msgstr "Виконує різноманітні художні перетворення зображення"
 
 #: plug-ins/gimpressionist/gimp.c:136
-#| msgid "_Presets"
 msgid "Preset"
 msgstr "Шаблон"
 
 #: plug-ins/gimpressionist/gimp.c:137
-#| msgid "_Presets"
 msgid "Preset Name"
 msgstr "Назва налаштувань"
 
@@ -12195,42 +12086,34 @@ msgstr "Додати до зображення відблиск, викорис�
 #: plug-ins/gradient-flare/gradient-flare.c:853
 #: plug-ins/map-object/map-object-main.c:349
 #: plug-ins/map-object/map-object-main.c:417
-#| msgid "Radius"
 msgid "Radi_us"
 msgstr "Раді_ус"
 
 #: plug-ins/gradient-flare/gradient-flare.c:859
-#| msgid "Ro_tation:"
 msgid "Ro_tation"
 msgstr "_Обертання"
 
 #: plug-ins/gradient-flare/gradient-flare.c:865
-#| msgid "_Hue rotation:"
 msgid "_Hue rotation"
 msgstr "Обертання _відтінку"
 
 #: plug-ins/gradient-flare/gradient-flare.c:871
-#| msgid "Vector _angle:"
 msgid "Vector _angle"
 msgstr "_Кут вектора"
 
 #: plug-ins/gradient-flare/gradient-flare.c:877
-#| msgid "Vector _length:"
 msgid "Vector len_gth"
 msgstr "Дов_жина вектора"
 
 #: plug-ins/gradient-flare/gradient-flare.c:884
-#| msgid "A_daptive supersampling"
 msgid "Ada_ptive supersampling"
 msgstr "Адап_тивна наддискретизація"
 
 #: plug-ins/gradient-flare/gradient-flare.c:890
-#| msgid "_Max depth:"
 msgid "_Max depth"
 msgstr "Максимальна г_либина"
 
 #: plug-ins/gradient-flare/gradient-flare.c:896
-#| msgid "_Threshold"
 msgid "Threshol_d"
 msgstr "П_оріг"
 
@@ -13526,7 +13409,6 @@ msgid "Apply various lighting effects to an image"
 msgstr "Застосувати до зображення різні ефекти освітлення"
 
 #: plug-ins/lighting/lighting-main.c:136
-#| msgid "Bumpm_ap image:"
 msgid "B_ump map image"
 msgstr "_Зображення рельєфу"
 
@@ -13535,7 +13417,6 @@ msgid "Bumpmap drawable (set to NULL if disabled)"
 msgstr "Рельєфна мапа малюнка (встановіть NULL, якщо вимкнено)"
 
 #: plug-ins/lighting/lighting-main.c:142
-#| msgid "En_vironment image:"
 msgid "Enviro_nment map image"
 msgstr "_Зображення середовища"
 
@@ -13544,22 +13425,18 @@ msgid "Environmentmap drawable (set to NULL if disabled)"
 msgstr "Мапа середовища малюнка (встановіть NULL, якщо вимкнено)"
 
 #: plug-ins/lighting/lighting-main.c:149
-#| msgid "E_nable bump mapping"
 msgid "Enable bump mappi_ng"
 msgstr "_Увімкнути рельєфне відбиття"
 
 #: plug-ins/lighting/lighting-main.c:150
-#| msgid "E_nable bump mapping"
 msgid "Enable bumpmapping"
 msgstr "Увімкнути мапу рельєфу"
 
 #: plug-ins/lighting/lighting-main.c:155
-#| msgid "E_nable environment mapping"
 msgid "Enable en_vironment mapping"
 msgstr "Увімкнути картографування с_ередовища"
 
 #: plug-ins/lighting/lighting-main.c:156 plug-ins/lighting/lighting-main.c:291
-#| msgid "E_nable environment mapping"
 msgid "Enable envmapping"
 msgstr "Увімкнути мапу середовища"
 
@@ -13577,17 +13454,14 @@ msgid "Logarithmic"
 msgstr "Логарифмічний"
 
 #: plug-ins/lighting/lighting-main.c:172
-#| msgid "Ma_ximum height:"
 msgid "Ma_ximum height"
 msgstr "М_аксимальна висота"
 
 #: plug-ins/lighting/lighting-main.c:173
-#| msgid "Maximum height for bumps"
 msgid "The maximum height of the bumpmap"
 msgstr "Максимальна висота рельєфу"
 
 #: plug-ins/lighting/lighting-main.c:178
-#| msgid "Adaptive"
 msgid "Active"
 msgstr "Активне"
 
@@ -13620,7 +13494,6 @@ msgid "Light 6"
 msgstr "Світло 6"
 
 #: plug-ins/lighting/lighting-main.c:191
-#| msgid "I_solate"
 msgid "Isolate"
 msgstr "Ізолювати"
 
@@ -13631,7 +13504,6 @@ msgstr "Показувати лише активне освітлення у п�
 #: plug-ins/lighting/lighting-main.c:199 plug-ins/lighting/lighting-main.c:322
 #: plug-ins/lighting/lighting-main.c:381 plug-ins/lighting/lighting-main.c:440
 #: plug-ins/lighting/lighting-main.c:499 plug-ins/lighting/lighting-main.c:558
-#| msgid "Type of light source to apply"
 msgid "Type of light source"
 msgstr "Тип джерела світла"
 
@@ -13650,7 +13522,6 @@ msgstr "Точкове"
 #: plug-ins/lighting/lighting-main.c:203 plug-ins/lighting/lighting-main.c:326
 #: plug-ins/lighting/lighting-main.c:385 plug-ins/lighting/lighting-main.c:444
 #: plug-ins/lighting/lighting-main.c:503 plug-ins/lighting/lighting-main.c:562
-#| msgid "Spots"
 msgid "Spot"
 msgstr "Пляма"
 
@@ -13658,21 +13529,18 @@ msgstr "Пляма"
 #: plug-ins/lighting/lighting-main.c:392 plug-ins/lighting/lighting-main.c:451
 #: plug-ins/lighting/lighting-main.c:510 plug-ins/lighting/lighting-main.c:569
 #: plug-ins/map-object/map-object-main.c:237
-#| msgid "Lightsource color:"
 msgid "Light source color"
 msgstr "Колір джерела світла"
 
 #: plug-ins/lighting/lighting-main.c:215 plug-ins/lighting/lighting-main.c:338
 #: plug-ins/lighting/lighting-main.c:397 plug-ins/lighting/lighting-main.c:456
 #: plug-ins/lighting/lighting-main.c:515 plug-ins/lighting/lighting-main.c:574
-#| msgid "_Intensity:"
 msgid "Intensity"
 msgstr "Інтенсивність"
 
 #: plug-ins/lighting/lighting-main.c:216 plug-ins/lighting/lighting-main.c:339
 #: plug-ins/lighting/lighting-main.c:398 plug-ins/lighting/lighting-main.c:457
 #: plug-ins/lighting/lighting-main.c:516 plug-ins/lighting/lighting-main.c:575
-#| msgid "Light intensity"
 msgid "Light source intensity"
 msgstr "Інтенсивність джерела світла"
 
@@ -13680,7 +13548,6 @@ msgstr "Інтенсивність джерела світла"
 #: plug-ins/lighting/lighting-main.c:403 plug-ins/lighting/lighting-main.c:462
 #: plug-ins/lighting/lighting-main.c:521 plug-ins/lighting/lighting-main.c:580
 #: plug-ins/map-object/map-object-main.c:242
-#| msgid "Show position"
 msgid "Light position X"
 msgstr "Позиція освітлення за X"
 
@@ -13696,7 +13563,6 @@ msgstr "Позиція освітлення за X"
 #: plug-ins/map-object/map-object-main.c:243
 #: plug-ins/map-object/map-object-main.c:248
 #: plug-ins/map-object/map-object-main.c:253
-#| msgid "Light source X position in XYZ space"
 msgid "Light source position (x,y,z)"
 msgstr "Позиція джерела світла (x,y,z)"
 
@@ -13704,7 +13570,6 @@ msgstr "Позиція джерела світла (x,y,z)"
 #: plug-ins/lighting/lighting-main.c:409 plug-ins/lighting/lighting-main.c:468
 #: plug-ins/lighting/lighting-main.c:527 plug-ins/lighting/lighting-main.c:586
 #: plug-ins/map-object/map-object-main.c:247
-#| msgid "Show position"
 msgid "Light position Y"
 msgstr "Позиція освітлення Y"
 
@@ -13712,7 +13577,6 @@ msgstr "Позиція освітлення Y"
 #: plug-ins/lighting/lighting-main.c:415 plug-ins/lighting/lighting-main.c:474
 #: plug-ins/lighting/lighting-main.c:533 plug-ins/lighting/lighting-main.c:592
 #: plug-ins/map-object/map-object-main.c:252
-#| msgid "Show position"
 msgid "Light position Z"
 msgstr "Позиція освітлення за Z"
 
@@ -13720,7 +13584,6 @@ msgstr "Позиція освітлення за Z"
 #: plug-ins/lighting/lighting-main.c:421 plug-ins/lighting/lighting-main.c:480
 #: plug-ins/lighting/lighting-main.c:539 plug-ins/lighting/lighting-main.c:598
 #: plug-ins/map-object/map-object-main.c:258
-#| msgid "Light Settings"
 msgid "Light direction X"
 msgstr "Напрямок освітлення за X"
 
@@ -13736,7 +13599,6 @@ msgstr "Напрямок освітлення за X"
 #: plug-ins/map-object/map-object-main.c:259
 #: plug-ins/map-object/map-object-main.c:264
 #: plug-ins/map-object/map-object-main.c:269
-#| msgid "Light source X direction in XYZ space"
 msgid "Light source direction (x,y,z)"
 msgstr "Напрямок на джерело світла (x,y,z)"
 
@@ -13744,7 +13606,6 @@ msgstr "Напрямок на джерело світла (x,y,z)"
 #: plug-ins/lighting/lighting-main.c:427 plug-ins/lighting/lighting-main.c:486
 #: plug-ins/lighting/lighting-main.c:545 plug-ins/lighting/lighting-main.c:604
 #: plug-ins/map-object/map-object-main.c:263
-#| msgid "Light Settings"
 msgid "Light direction Y"
 msgstr "Напрямок освітлення за Y"
 
@@ -13752,12 +13613,10 @@ msgstr "Напрямок освітлення за Y"
 #: plug-ins/lighting/lighting-main.c:433 plug-ins/lighting/lighting-main.c:492
 #: plug-ins/lighting/lighting-main.c:551 plug-ins/lighting/lighting-main.c:610
 #: plug-ins/map-object/map-object-main.c:268
-#| msgid "Light Settings"
 msgid "Light direction Z"
 msgstr "Напрямок освітлення за Z"
 
 #: plug-ins/lighting/lighting-main.c:257
-#| msgid "Light intensity"
 msgid "Ambient intensity"
 msgstr "Інтенсивність, яку розсіяно матеріалом"
 
@@ -13766,7 +13625,6 @@ msgid "Material ambient intensity (Glowing)"
 msgstr "Інтенсивність, яку розсіяно матеріалом (сяйво)"
 
 #: plug-ins/lighting/lighting-main.c:264
-#| msgid "Light intensity"
 msgid "Diffuse intensity"
 msgstr "Інтенсивність розсіювання"
 
@@ -13775,40 +13633,33 @@ msgid "Material diffuse intensity (Bright)"
 msgstr "Інтенсивність розсіювання матеріалом (яскраве)"
 
 #: plug-ins/lighting/lighting-main.c:290
-#| msgid "_Metallic"
 msgid "Metallic"
 msgstr "Метал"
 
 #: plug-ins/lighting/lighting-main.c:297
 #: plug-ins/map-object/map-object-main.c:307
-#| msgid "Antialiasing"
 msgid "Apply antialiasing"
 msgstr "Застосувати з_гладжування"
 
 #: plug-ins/lighting/lighting-main.c:302
-#| msgid "Create new image"
 msgid "Create new ima_ge"
 msgstr "Створити нове зоб_раження"
 
 #: plug-ins/lighting/lighting-main.c:303
 #: plug-ins/map-object/map-object-main.c:331
-#| msgid "Create new image"
 msgid "Create a new image"
 msgstr "Створення нового зображення"
 
 #: plug-ins/lighting/lighting-main.c:308
-#| msgid "Transparent background"
 msgid "Trans_parent background"
 msgstr "П_розоре тло"
 
 #: plug-ins/lighting/lighting-main.c:309
 #: plug-ins/map-object/map-object-main.c:343
-#| msgid "Background transparent"
 msgid "Make background transparent"
 msgstr "Створити прозоре тло"
 
 #: plug-ins/lighting/lighting-main.c:314
-#| msgid "Distance:"
 msgid "_Distance"
 msgstr "_Відстань"
 
@@ -13896,7 +13747,6 @@ msgid "light-position-vbox-%d"
 msgstr "позиційна-рамка-освітлення-%d"
 
 #: plug-ins/lighting/lighting-ui.c:478
-#| msgid "Lighting preset:"
 msgid "Lighting presets: "
 msgstr "Передвстановлення світла: "
 
@@ -13947,7 +13797,6 @@ msgstr ""
 "Спроектувати зображення на об'єкт (площина, сферу, паралелепіпед або циліндр)"
 
 #: plug-ins/map-object/map-object-main.c:135
-#| msgid "Map to:"
 msgid "Map _to"
 msgstr "Проекція _на"
 
@@ -13966,7 +13815,6 @@ msgstr "Паралелепіпед"
 #: plug-ins/map-object/map-object-main.c:146
 #: plug-ins/map-object/map-object-main.c:178
 #: plug-ins/map-object/map-object-main.c:194
-#| msgid "X:"
 msgid "X"
 msgstr "X"
 
@@ -13978,36 +13826,30 @@ msgstr "Позиція точки перегляду (x,y,z)"
 
 #: plug-ins/map-object/map-object-main.c:151
 #: plug-ins/map-object/map-object-main.c:199
-#| msgid "Y:"
 msgid "Y"
 msgstr "Y"
 
 #: plug-ins/map-object/map-object-main.c:156
 #: plug-ins/map-object/map-object-main.c:188
 #: plug-ins/map-object/map-object-main.c:204
-#| msgid "Z:"
 msgid "Z"
 msgstr "Z"
 
 #: plug-ins/map-object/map-object-main.c:162
-#| msgid "Position X:"
 msgid "Position X"
 msgstr "Позиція за X"
 
 #: plug-ins/map-object/map-object-main.c:163
 #: plug-ins/map-object/map-object-main.c:168
 #: plug-ins/map-object/map-object-main.c:173
-#| msgid "Object X position in XYZ space"
 msgid "Object position (x,y,z)"
 msgstr "Позиція об'єкта (x,y,z)"
 
 #: plug-ins/map-object/map-object-main.c:167
-#| msgid "Position Y:"
 msgid "Position Y"
 msgstr "Позиція за Y"
 
 #: plug-ins/map-object/map-object-main.c:172
-#| msgid "Position Z:"
 msgid "Position Z"
 msgstr "Позиція за Z"
 
@@ -14028,87 +13870,71 @@ msgid "Second axis of object (x,y,z)"
 msgstr "Друга вісь об'єкта (x,y,z)"
 
 #: plug-ins/map-object/map-object-main.c:210
-#| msgid "Angle:"
 msgid "Angle X"
 msgstr "Кут X"
 
 #: plug-ins/map-object/map-object-main.c:211
-#| msgid "Rotation angle about X axis"
 msgid "Rotation about X axis in degrees"
 msgstr "Кут обертання навколо вісі X у градусах"
 
 #: plug-ins/map-object/map-object-main.c:215
-#| msgid "Angle:"
 msgid "Angle Y"
 msgstr "Кут Y"
 
 #: plug-ins/map-object/map-object-main.c:216
-#| msgid "Rotation angle about Y axis"
 msgid "Rotation about Y axis in degrees"
 msgstr "Кут обертання навколо вісі Y у градусах"
 
 #: plug-ins/map-object/map-object-main.c:220
-#| msgid "Angle:"
 msgid "Angle Z"
 msgstr "Кут Z"
 
 #: plug-ins/map-object/map-object-main.c:221
-#| msgid "Rotation angle about Z axis"
 msgid "Rotation about Z axis in degrees"
 msgstr "Кут обертання навколо вісі Z у градусах"
 
 #: plug-ins/map-object/map-object-main.c:226
-#| msgid "Lightsource type:"
 msgid "Light source type"
 msgstr "Тип джерела світла"
 
 #: plug-ins/map-object/map-object-main.c:227
-#| msgid "Type of light source to apply"
 msgid "Type of lightsource"
 msgstr "Тип джерела світла"
 
 #: plug-ins/map-object/map-object-main.c:228
-#| msgid "Point light"
 msgid "Point Light"
 msgstr "Точкове джерело"
 
 #: plug-ins/map-object/map-object-main.c:229
-#| msgid "Directional light"
 msgid "Directional Light"
 msgstr "Спрямоване світло"
 
 #: plug-ins/map-object/map-object-main.c:230
-#| msgid "No light"
 msgid "No Light"
 msgstr "Немає освітлення"
 
 #: plug-ins/map-object/map-object-main.c:236
-#| msgid "Lightsource color:"
 msgid "Light source _color"
 msgstr "_Колір джерела світла"
 
 #: plug-ins/map-object/map-object-main.c:274
-#| msgid "Ambient:"
 msgid "Ambie_nt"
 msgstr "Розсі_яне"
 
 #: plug-ins/map-object/map-object-main.c:275
-#| msgid "Material Properties"
 msgid "Material ambient intensity"
 msgstr "Інтенсивність, яку розсіяно матеріалом"
 
 #: plug-ins/map-object/map-object-main.c:280
-#| msgid "Diffuse:"
-msgid "_D_iffuse"
+#| msgid "_D_iffuse"
+msgid "D_iffuse"
 msgstr "_Розсіювання"
 
 #: plug-ins/map-object/map-object-main.c:281
-#| msgid "Original i_ntensity"
 msgid "Material diffuse intensity"
 msgstr "Інтенсивність розсіювання матеріалом"
 
 #: plug-ins/map-object/map-object-main.c:287
-#| msgid "Diffuse:"
 msgid "Di_ffuse"
 msgstr "Р_озсіювання"
 
@@ -14117,7 +13943,6 @@ msgid "Material diffuse reflectivity"
 msgstr "Розсіювальна дзеркальність матеріалу"
 
 #: plug-ins/map-object/map-object-main.c:293
-#| msgid "Specular:"
 msgid "Spec_ular"
 msgstr "Від_биття"
 
@@ -14126,7 +13951,6 @@ msgid "Material specular reflectivity"
 msgstr "Відбивна дзеркальність матеріалу"
 
 #: plug-ins/map-object/map-object-main.c:299
-#| msgid "Highlight:"
 msgid "Highligh_t"
 msgstr "Відб_лиски"
 
@@ -14135,12 +13959,10 @@ msgid "Material highlight (note, it's exponential)"
 msgstr "Підсвічування матеріалу (зауважте, вона є експоненційною)"
 
 #: plug-ins/map-object/map-object-main.c:306
-#| msgid "Antialiasing"
 msgid "Antialia_sing"
 msgstr "Зглад_жування"
 
 #: plug-ins/map-object/map-object-main.c:311
-#| msgid "_Depth:"
 msgid "_Depth"
 msgstr "Г_либина"
 
@@ -14149,7 +13971,6 @@ msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Якість згладжування. Вища - краща, але повільніше виконується"
 
 #: plug-ins/map-object/map-object-main.c:317
-#| msgid "_Threshold"
 msgid "Thr_eshold"
 msgstr "П_оріг"
 
@@ -14158,7 +13979,6 @@ msgid "Stop when pixel differences are smaller than this value"
 msgstr "Зупинятись коли різниця між точками менша, ніж це значення"
 
 #: plug-ins/map-object/map-object-main.c:324
-#| msgid "Tile source image"
 msgid "_Tile source image"
 msgstr "_Розрізати початкове зображення"
 
@@ -14167,12 +13987,10 @@ msgid "Tile source image"
 msgstr "Розрізати початкове зображення"
 
 #: plug-ins/map-object/map-object-main.c:330
-#| msgid "Create new image"
 msgid "Create _new image"
 msgstr "С_творити нове зображення"
 
 #: plug-ins/map-object/map-object-main.c:336
-#| msgid "Create new layer"
 msgid "Create ne_w layer"
 msgstr "Створити _новий шар"
 
@@ -14181,12 +13999,10 @@ msgid "Create a new layer when applying filter"
 msgstr "Створювати нове зображення протягом застосування фільтра"
 
 #: plug-ins/map-object/map-object-main.c:342
-#| msgid "Transparent background"
 msgid "Transparent bac_kground"
 msgstr "Прозоре т_ло"
 
 #: plug-ins/map-object/map-object-main.c:350
-#| msgid "Spot radius:"
 msgid "Sphere radius"
 msgstr "Радіус сфери"
 
@@ -14203,7 +14019,6 @@ msgid "B_ack"
 msgstr "З_ад"
 
 #: plug-ins/map-object/map-object-main.c:363
-#| msgid "Go back one page"
 msgid "Box back face"
 msgstr "Задня грань паралелепіпеда"
 
@@ -14212,12 +14027,10 @@ msgid "Box top face"
 msgstr "Верхня грань паралелепіпеда"
 
 #: plug-ins/map-object/map-object-main.c:372
-#| msgid "Bottom"
 msgid "Bo_ttom"
 msgstr "_Низ"
 
 #: plug-ins/map-object/map-object-main.c:373
-#| msgid "Bottom edge"
 msgid "Box bottom face"
 msgstr "Нижня грань паралелепіпеда"
 
@@ -14230,42 +14043,34 @@ msgid "Box left face"
 msgstr "Ліва грань паралелепіпеда"
 
 #: plug-ins/map-object/map-object-main.c:383
-#| msgid "Copyright Notice"
 msgid "Box right face"
 msgstr "Права грань паралелепіпеда"
 
 #: plug-ins/map-object/map-object-main.c:388
-#| msgid "Scale X:"
 msgid "Scale X"
 msgstr "Масштаб за X"
 
 #: plug-ins/map-object/map-object-main.c:389
-#| msgid "Font size:"
 msgid "Box X size"
 msgstr "Розмір паралелепіпеда за X"
 
 #: plug-ins/map-object/map-object-main.c:393
-#| msgid "Scale Y:"
 msgid "Scale Y"
 msgstr "Масштаб за Y"
 
 #: plug-ins/map-object/map-object-main.c:394
-#| msgid "Font size:"
 msgid "Box Y size"
 msgstr "Розмір паралелепіпеда за Y"
 
 #: plug-ins/map-object/map-object-main.c:398
-#| msgid "Scale Z:"
 msgid "Scale Z"
 msgstr "Масштаб за Z"
 
 #: plug-ins/map-object/map-object-main.c:399
-#| msgid "Font size:"
 msgid "Box Z size"
 msgstr "Розмір паралелепіпеда за Z"
 
 #: plug-ins/map-object/map-object-main.c:405
-#| msgid "_Top:"
 msgid "_Top"
 msgstr "Вер_х"
 
@@ -14282,7 +14087,6 @@ msgid "Cylinder radius"
 msgstr "Радіус циліндра"
 
 #: plug-ins/map-object/map-object-main.c:422
-#| msgid "Cylinder length"
 msgid "Cylin_der length"
 msgstr "Дов_жина циліндра"
 
@@ -14311,22 +14115,18 @@ msgid "O_ptions"
 msgstr "_Параметри"
 
 #: plug-ins/map-object/map-object-ui.c:433
-#| msgid "Hi_ghlight"
 msgid "Li_ght"
 msgstr "Св_ітло"
 
 #: plug-ins/map-object/map-object-ui.c:435
-#| msgid "Spike _points"
 msgid "_Viewpoint"
 msgstr "_Точка перегляду"
 
 #: plug-ins/map-object/map-object-ui.c:439
-#| msgid "Orientation"
 msgid "Orient_ation"
 msgstr "_Орієнтація"
 
 #: plug-ins/map-object/map-object-ui.c:442
-#| msgid "Sphere"
 msgid "Sp_here"
 msgstr "С_фера"
 
@@ -14343,17 +14143,14 @@ msgid "Direction Vector"
 msgstr "Вектор напрямку"
 
 #: plug-ins/map-object/map-object-ui.c:563
-#| msgid "Position"
 msgid "Viewpoint Position"
 msgstr "Позиція точки перегляду"
 
 #: plug-ins/map-object/map-object-ui.c:585
-#| msgid "First Gfig"
 msgid "First Axis"
 msgstr "Перша вісь"
 
 #: plug-ins/map-object/map-object-ui.c:605
-#| msgid "seconds"
 msgid "Second Axis"
 msgstr "Друга вісь"
 
@@ -15176,7 +14973,6 @@ msgid "Current gradient (reversed)"
 msgstr "Обраний градієнт (реверсивний)"
 
 #: plug-ins/pagecurl/pagecurl.c:238
-#| msgid "Curl Location"
 msgid "Locatio_n"
 msgstr "_Розташування"
 
@@ -15205,7 +15001,6 @@ msgid "Sh_ade"
 msgstr "_Тінь"
 
 #: plug-ins/pagecurl/pagecurl.c:258
-#| msgid "_Shade under curl"
 msgid "Shade the region under the curl"
 msgstr "Тінь від ділянки під загином"
 
@@ -15321,12 +15116,10 @@ msgid "Shoot _area"
 msgstr "_Область знімка"
 
 #: plug-ins/screenshot/screenshot.c:224
-#| msgid "Color Profile"
 msgid "Color _Profile"
 msgstr "Колірний про_філь"
 
 #: plug-ins/screenshot/screenshot.c:264
-#| msgid "The DDE transaction failed."
 msgid "GDK initialization failed."
 msgstr "Не вдалося ініціалізувати GDK."
 
@@ -15344,17 +15137,14 @@ msgid "S_nap"
 msgstr "За_хопити"
 
 #: plug-ins/screenshot/screenshot.c:507
-#| msgid "Take a screenshot of a single _window"
 msgid "Take a screenshot of a single window"
 msgstr "Створити знімок одного вікна"
 
 #: plug-ins/screenshot/screenshot.c:508
-#| msgid "Take a screenshot of the entire _screen"
 msgid "Take a screenshot of the entire screen"
 msgstr "Створити знімок усього екрана"
 
 #: plug-ins/screenshot/screenshot.c:509
-#| msgid "Select a _region to grab"
 msgid "Select a region to grab"
 msgstr "Виберіть ділянку для захоплення"
 
@@ -15363,12 +15153,10 @@ msgid "Delay"
 msgstr "Затримка"
 
 #: plug-ins/screenshot/screenshot.c:603
-#| msgid "Tag image with _monitor profile"
 msgid "Tag image with monitor profile"
 msgstr "Позначити зображення міткою профілю монітора"
 
 #: plug-ins/screenshot/screenshot.c:604
-#| msgid "Convert image to sR_GB"
 msgid "Convert image with sRGB"
 msgstr "Перетворити зображення до sRGB"
 
@@ -15399,12 +15187,10 @@ msgstr "Вибране у контур"
 
 #: plug-ins/selection-to-path/selection-to-path.c:143
 #: plug-ins/selection-to-path/selection-to-path.c:144
-#| msgid "Selection to Path"
 msgid "Converts a selection to a path"
 msgstr "Перетворює позначений фрагмент на контур"
 
 #: plug-ins/selection-to-path/selection-to-path.c:152
-#| msgid "Align Threshold:"
 msgid "_Align Threshold"
 msgstr "Поріг ви_рівнювання"
 
@@ -15414,7 +15200,6 @@ msgstr ""
 "Якщо два кінцеві точки є ближчими, ніж це значення, вони стають однаковими."
 
 #: plug-ins/selection-to-path/selection-to-path.c:159
-#| msgid "Corner Always Threshold:"
 msgid "Corner Al_ways Threshold"
 msgstr "Без_умовний поріг кутка"
 
@@ -15429,7 +15214,6 @@ msgstr ""
 "«corner_surround» пікселів від точки із меншим кутом."
 
 #: plug-ins/selection-to-path/selection-to-path.c:168
-#| msgid "Corner Surround:"
 msgid "Corner _Surround"
 msgstr "_Оточення кутка"
 
@@ -15441,7 +15225,6 @@ msgstr ""
 "ні."
 
 #: plug-ins/selection-to-path/selection-to-path.c:175
-#| msgid "Corner Threshold:"
 msgid "Cor_ner Threshold"
 msgstr "Поріг _кутка"
 
@@ -15454,7 +15237,6 @@ msgstr ""
 "значення, то це куток."
 
 #: plug-ins/selection-to-path/selection-to-path.c:182
-#| msgid "Error Threshold:"
 msgid "Error Thres_hold"
 msgstr "П_орогова похибка"
 
@@ -15467,7 +15249,6 @@ msgstr ""
 "віддалений від кривої більше, ніж на це значення, то спробувати знову."
 
 #: plug-ins/selection-to-path/selection-to-path.c:190
-#| msgid "Filter Alternative Surround:"
 msgid "_Filter Alternative Surround"
 msgstr "Альтернативне ото_чення фільтра"
 
@@ -15477,7 +15258,6 @@ msgstr ""
 "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path.c:197
-#| msgid "Filter Epsilon:"
 msgid "Filter E_psilon"
 msgstr "Доп_уск фільтра"
 
@@ -15492,7 +15272,6 @@ msgstr ""
 "використати з filter_alternative_surround."
 
 #: plug-ins/selection-to-path/selection-to-path.c:206
-#| msgid "Filter Iteration Count:"
 msgid "Filter Iteration Co_unt"
 msgstr "Кі_лькість ітерацій фільтра"
 
@@ -15509,7 +15288,6 @@ msgstr ""
 "знайдено, крива пройде дуже далеко від точки."
 
 #: plug-ins/selection-to-path/selection-to-path.c:216
-#| msgid "Filter Percent:"
 msgid "Filt_er Percent"
 msgstr "_Частка фільтра"
 
@@ -15521,7 +15299,6 @@ msgstr ""
 "сусідніх."
 
 #: plug-ins/selection-to-path/selection-to-path.c:223
-#| msgid "Filter Secondary Surround:"
 msgid "Filter Secondar_y Surround"
 msgstr "В_торинне оточення фільтра"
 
@@ -15534,7 +15311,6 @@ msgstr ""
 "пряму лінію."
 
 #: plug-ins/selection-to-path/selection-to-path.c:230
-#| msgid "Filter Surround:"
 msgid "Filter Surroun_d"
 msgstr "Оточ_ення фільтра"
 
@@ -15543,7 +15319,6 @@ msgid "Number of adjacent points to consider when filtering."
 msgstr "Кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path.c:236
-#| msgid "Keep Knees"
 msgid "_Keep Knees"
 msgstr "Зали_шити заломи"
 
@@ -15552,7 +15327,6 @@ msgid "Says whether or not to remove 'knee' points after finding the outline."
 msgstr "Визначає, залишати чи ні точки \"заломів\" після виявлення контуру."
 
 #: plug-ins/selection-to-path/selection-to-path.c:243
-#| msgid "Line Reversion Threshold:"
 msgid "_Line Reversion Threshold"
 msgstr "Поріг розверт_ання лінії"
 
@@ -15568,7 +15342,6 @@ msgstr ""
 "квадратом довжини кривої, щоб короткі криві були, швидше за все, розвернуті."
 
 #: plug-ins/selection-to-path/selection-to-path.c:253
-#| msgid "Line Threshold:"
 msgid "L_ine Threshold"
 msgstr "Поріг пр_ямої"
 
@@ -15581,7 +15354,6 @@ msgstr ""
 "визначається його кінцевими точками, щоб він був замінений прямою."
 
 #: plug-ins/selection-to-path/selection-to-path.c:261
-#| msgid "Reparametrize Improvement:"
 msgid "Reparametri_ze Improvement"
 msgstr "Покращення реп_араметризації"
 
@@ -15594,7 +15366,6 @@ msgstr ""
 "припинити її. Похибка, за якої неможливо репараметризувати."
 
 #: plug-ins/selection-to-path/selection-to-path.c:269
-#| msgid "Reparametrize Threshold:"
 msgid "Repara_metrize Threshold"
 msgstr "Поріг репара_метризації"
 
@@ -15612,7 +15383,6 @@ msgstr ""
 "Можливо, краще було б виявити випадки, коли ми не знайшли жодних кутів."
 
 #: plug-ins/selection-to-path/selection-to-path.c:280
-#| msgid "Subdivide Search:"
 msgid "Subdi_vide Search"
 msgstr "По_шук поділів"
 
@@ -15623,7 +15393,6 @@ msgid ""
 msgstr "Відсоток кривої від найгіршої точки для пошуку кращого місця поділу"
 
 #: plug-ins/selection-to-path/selection-to-path.c:287
-#| msgid "Subdivide Surround:"
 msgid "Su_bdivide Surround"
 msgstr "Оточення под_ілу"
 
@@ -15636,8 +15405,8 @@ msgstr ""
 "кращою для поділу."
 
 #: plug-ins/selection-to-path/selection-to-path.c:294
-#| msgid "Subdivide Threshold:"
-msgid "Subdivide_ Threshold"
+#| msgid "Subdivide_ Threshold"
+msgid "Subdivide Th_reshold"
 msgstr "По_ріг поділу"
 
 #: plug-ins/selection-to-path/selection-to-path.c:295
@@ -15649,7 +15418,6 @@ msgstr ""
 "кращим місцем для поділу."
 
 #: plug-ins/selection-to-path/selection-to-path.c:302
-#| msgid "Tangent Surround:"
 msgid "_Tangent Surround"
 msgstr "Оточення дотичн_ої"
 
@@ -15687,6 +15455,12 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "y min fractal image delimiter"
+#~ msgstr "Мінімальний обмежувач за Y фрактального зображення"
+
+#~ msgid "ymax fractal image delimiter"
+#~ msgstr "Максимальний обмежувач за Y фрактального зображення"
 
 #~ msgid "O_ffset:"
 #~ msgstr "_Зсув:"
