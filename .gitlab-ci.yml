@@ -593,6 +593,8 @@ gimp-win-aarch64-native:
   tags:
     - windows-aarch64
   script:
+    # Temporary patch until we use the latest LLVM.
+    - git apply ./build/windows/patches/0004-clang-windres.patch
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/build-gimp-msys2.sh"
   artifacts:

@@ -1,0 +1,600 @@
+diff -bur gimp-2.99.12-c/app/meson.build gimp-2.99.12/app/meson.build
+--- gimp-2.99.12-c/app/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/app/meson.build	2022-08-26 11:05:18.272156800 -0600
+@@ -151,9 +151,9 @@
+   console_rc_file = windows.compile_resources(
+     gimp_app_console_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(console_rc_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(console_rc_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(console_rc_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(console_rc_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+@@ -169,9 +169,9 @@
+   gui_rc_file = windows.compile_resources(
+     gimp_app_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(gui_rc_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(gui_rc_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(gui_rc_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(gui_rc_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/extensions/goat-exercises/meson.build gimp-2.99.12/extensions/goat-exercises/meson.build
+--- gimp-2.99.12-c/extensions/goat-exercises/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/extensions/goat-exercises/meson.build	2022-08-26 11:05:21.367326100 -0600
+@@ -11,9 +11,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plug_in_name + '-c.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plug_in_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plug_in_name + '-c.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plug_in_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/common/meson.build gimp-2.99.12/plug-ins/common/meson.build
+--- gimp-2.99.12-c/plug-ins/common/meson.build	2022-08-26 10:58:35.055807300 -0600
++++ gimp-2.99.12/plug-ins/common/meson.build	2022-08-26 11:05:18.323293100 -0600
+@@ -178,9 +178,9 @@
+     plugin_sources += windows.compile_resources(
+       plugin_rc,
+       args: [
+-        '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-        '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-        '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++        '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++        '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++        '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+       ],
+       include_directories: [
+         rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/file-bmp/meson.build gimp-2.99.12/plug-ins/file-bmp/meson.build
+--- gimp-2.99.12-c/plug-ins/file-bmp/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/file-bmp/meson.build	2022-08-26 11:05:18.326295200 -0600
+@@ -10,9 +10,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/file-dds/meson.build gimp-2.99.12/plug-ins/file-dds/meson.build
+--- gimp-2.99.12-c/plug-ins/file-dds/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/file-dds/meson.build	2022-08-26 11:05:18.328294700 -0600
+@@ -14,9 +14,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/file-exr/meson.build gimp-2.99.12/plug-ins/file-exr/meson.build
+--- gimp-2.99.12-c/plug-ins/file-exr/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/file-exr/meson.build	2022-08-26 11:05:18.330294400 -0600
+@@ -11,9 +11,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/file-faxg3/meson.build gimp-2.99.12/plug-ins/file-faxg3/meson.build
+--- gimp-2.99.12-c/plug-ins/file-faxg3/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/file-faxg3/meson.build	2022-08-26 11:05:18.332294000 -0600
+@@ -9,9 +9,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+--- gimp-2.99.16/plug-ins/file-fits/meson.build.orig	2023-07-06 07:48:46.078752900 +0200
++++ gimp-2.99.16/plug-ins/file-fits/meson.build	2023-07-06 07:49:41.120861200 +0200
+@@ -9,9 +9,9 @@
+     plugin_sources += windows.compile_resources(
+       gimp_plugins_rc,
+       args: [
+-        '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-        '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-        '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++        '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++        '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++        '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+       ],
+       include_directories: [
+         rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/file-fli/meson.build gimp-2.99.12/plug-ins/file-fli/meson.build
+--- gimp-2.99.12-c/plug-ins/file-fli/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/file-fli/meson.build	2022-08-26 11:05:18.336295400 -0600
+@@ -9,9 +9,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/file-ico/meson.build gimp-2.99.12/plug-ins/file-ico/meson.build
+--- gimp-2.99.12-c/plug-ins/file-ico/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/file-ico/meson.build	2022-08-26 11:05:18.338293600 -0600
+@@ -11,9 +11,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/file-jpeg/meson.build gimp-2.99.12/plug-ins/file-jpeg/meson.build
+--- gimp-2.99.12-c/plug-ins/file-jpeg/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/file-jpeg/meson.build	2022-08-26 11:05:18.340292800 -0600
+@@ -13,9 +13,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/file-psd/meson.build gimp-2.99.12/plug-ins/file-psd/meson.build
+--- gimp-2.99.12-c/plug-ins/file-psd/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/file-psd/meson.build	2022-08-26 11:05:18.342293000 -0600
+@@ -14,9 +14,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/file-raw/meson.build gimp-2.99.12/plug-ins/file-raw/meson.build
+--- gimp-2.99.12-c/plug-ins/file-raw/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/file-raw/meson.build	2022-08-26 11:05:18.344293200 -0600
+@@ -21,9 +21,9 @@
+     plugin_sources += windows.compile_resources(
+       plugin_rc,
+       args: [
+-        '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-        '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-        '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++        '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++        '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++        '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+       ],
+       include_directories: [
+         rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/file-sgi/meson.build gimp-2.99.12/plug-ins/file-sgi/meson.build
+--- gimp-2.99.12-c/plug-ins/file-sgi/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/file-sgi/meson.build	2022-08-26 11:05:18.346292800 -0600
+@@ -9,9 +9,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/file-tiff/meson.build gimp-2.99.12/plug-ins/file-tiff/meson.build
+--- gimp-2.99.12-c/plug-ins/file-tiff/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/file-tiff/meson.build	2022-08-26 11:05:18.348293500 -0600
+@@ -11,9 +11,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/file-webp/meson.build gimp-2.99.12/plug-ins/file-webp/meson.build
+--- gimp-2.99.12-c/plug-ins/file-webp/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/file-webp/meson.build	2022-08-26 11:05:18.350294300 -0600
+@@ -13,9 +13,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/flame/meson.build gimp-2.99.12/plug-ins/flame/meson.build
+--- gimp-2.99.12-c/plug-ins/flame/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/flame/meson.build	2022-08-26 11:05:18.353294700 -0600
+@@ -11,9 +11,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/fractal-explorer/meson.build gimp-2.99.12/plug-ins/fractal-explorer/meson.build
+--- gimp-2.99.12-c/plug-ins/fractal-explorer/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/fractal-explorer/meson.build	2022-08-26 11:05:18.355294200 -0600
+@@ -11,9 +11,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/gfig/meson.build gimp-2.99.12/plug-ins/gfig/meson.build
+--- gimp-2.99.12-c/plug-ins/gfig/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/gfig/meson.build	2022-08-26 11:05:18.358466600 -0600
+@@ -27,9 +27,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/gimpressionist/meson.build gimp-2.99.12/plug-ins/gimpressionist/meson.build
+--- gimp-2.99.12-c/plug-ins/gimpressionist/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/gimpressionist/meson.build	2022-08-26 11:05:18.361592500 -0600
+@@ -29,9 +29,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/gradient-flare/meson.build gimp-2.99.12/plug-ins/gradient-flare/meson.build
+--- gimp-2.99.12-c/plug-ins/gradient-flare/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/gradient-flare/meson.build	2022-08-26 11:05:18.365447800 -0600
+@@ -10,9 +10,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/help/meson.build gimp-2.99.12/plug-ins/help/meson.build
+--- gimp-2.99.12-c/plug-ins/help/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/help/meson.build	2022-08-26 11:05:18.367447200 -0600
+@@ -13,9 +13,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/help-browser/meson.build gimp-2.99.12/plug-ins/help-browser/meson.build
+--- gimp-2.99.12-c/plug-ins/help-browser/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/help-browser/meson.build	2022-08-26 11:05:18.369447300 -0600
+@@ -12,9 +12,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/ifs-compose/meson.build gimp-2.99.12/plug-ins/ifs-compose/meson.build
+--- gimp-2.99.12-c/plug-ins/ifs-compose/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/ifs-compose/meson.build	2022-08-26 11:05:18.371447900 -0600
+@@ -10,9 +10,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/imagemap/meson.build gimp-2.99.12/plug-ins/imagemap/meson.build
+--- gimp-2.99.12-c/plug-ins/imagemap/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/imagemap/meson.build	2022-08-26 11:05:18.373620200 -0600
+@@ -73,9 +73,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/lighting/meson.build gimp-2.99.12/plug-ins/lighting/meson.build
+--- gimp-2.99.12-c/plug-ins/lighting/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/lighting/meson.build	2022-08-26 11:05:18.376619900 -0600
+@@ -17,9 +17,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/map-object/meson.build gimp-2.99.12/plug-ins/map-object/meson.build
+--- gimp-2.99.12-c/plug-ins/map-object/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/map-object/meson.build	2022-08-26 11:05:18.378618900 -0600
+@@ -16,9 +16,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/metadata/meson.build gimp-2.99.12/plug-ins/metadata/meson.build
+--- gimp-2.99.12-c/plug-ins/metadata/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/metadata/meson.build	2022-08-26 11:05:18.381620300 -0600
+@@ -17,9 +17,9 @@
+   plugin_sources += windows.compile_resources(
+     plugin_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+@@ -55,9 +55,9 @@
+   plugin_sources += windows.compile_resources(
+     plugin_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/pagecurl/meson.build gimp-2.99.12/plug-ins/pagecurl/meson.build
+--- gimp-2.99.12-c/plug-ins/pagecurl/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/pagecurl/meson.build	2022-08-26 11:05:18.383620200 -0600
+@@ -41,9 +41,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/print/meson.build gimp-2.99.12/plug-ins/print/meson.build
+--- gimp-2.99.12-c/plug-ins/print/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/print/meson.build	2022-08-26 11:05:18.385620400 -0600
+@@ -17,9 +17,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/script-fu/interpreter/meson.build gimp-2.99.12/plug-ins/script-fu/interpreter/meson.build
+--- gimp-2.99.12-c/plug-ins/script-fu/interpreter/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/script-fu/interpreter/meson.build	2022-08-26 11:05:18.388620100 -0600
+@@ -12,9 +12,9 @@
+   plugin_sources += windows.compile_resources(
+     plugin_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(executable_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(executable_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(executable_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(executable_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/script-fu/meson.build gimp-2.99.12/plug-ins/script-fu/meson.build
+--- gimp-2.99.12-c/plug-ins/script-fu/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/script-fu/meson.build	2022-08-26 11:05:18.392620300 -0600
+@@ -31,9 +31,9 @@
+   plugin_sources += windows.compile_resources(
+     plugin_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(executable_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(executable_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(executable_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(executable_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/script-fu/server/meson.build gimp-2.99.12/plug-ins/script-fu/server/meson.build
+--- gimp-2.99.12-c/plug-ins/script-fu/server/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/script-fu/server/meson.build	2022-08-26 11:05:18.394619900 -0600
+@@ -12,9 +12,9 @@
+   plugin_sources += windows.compile_resources(
+     plugin_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(executable_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(executable_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(executable_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(executable_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/selection-to-path/meson.build gimp-2.99.12/plug-ins/selection-to-path/meson.build
+--- gimp-2.99.12-c/plug-ins/selection-to-path/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/selection-to-path/meson.build	2022-08-26 11:05:18.396618000 -0600
+@@ -16,9 +16,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
+diff -bur gimp-2.99.12-c/plug-ins/twain/meson.build gimp-2.99.12/plug-ins/twain/meson.build
+--- gimp-2.99.12-c/plug-ins/twain/meson.build	2022-08-21 13:21:38.000000000 -0600
++++ gimp-2.99.12/plug-ins/twain/meson.build	2022-08-26 11:05:18.398619200 -0600
+@@ -14,9 +14,9 @@
+ plugin_sources += windows.compile_resources(
+   gimp_plugins_rc,
+   args: [
+-    '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-    '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-    '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++    '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++    '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++    '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+   ],
+   include_directories: [
+     rootInclude, appInclude,
+--- gimp-2.99.14/plug-ins/file-icns/meson.build.orig	2022-11-14 00:04:38.000000000 +0100
++++ gimp-2.99.14/plug-ins/file-icns/meson.build	2022-11-19 21:03:14.665912600 +0100
+@@ -11,9 +11,9 @@
+   plugin_sources += windows.compile_resources(
+     gimp_plugins_rc,
+     args: [
+-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
++      '--define', 'ORIGINALFILENAME_STR=@0@'.format(plugin_name+'.exe'),
++      '--define', 'INTERNALNAME_STR=@0@'    .format(plugin_name),
++      '--define', 'TOP_SRCDIR=@0@'          .format(meson.project_source_root()),
+     ],
+     include_directories: [
+       rootInclude, appInclude,
