@@ -1037,6 +1037,7 @@ static GList *
 gimp_image_window_get_aux_info (GimpSessionManaged *session_managed)
 {
   GList                  *aux_info = NULL;
+  GimpSessionInfoAux     *aux;
   GimpImageWindowPrivate *private;
   GimpGuiConfig          *config;
 
@@ -1047,9 +1048,8 @@ gimp_image_window_get_aux_info (GimpSessionManaged *session_managed)
 
   if (config->single_window_mode)
     {
-      GimpSessionInfoAux *aux;
-      GtkAllocation       allocation;
-      gchar               widthbuf[128];
+      GtkAllocation allocation;
+      gchar         widthbuf[128];
 
       g_snprintf (widthbuf, sizeof (widthbuf), "%d",
                   gtk_paned_get_position (GTK_PANED (private->left_hpane)));
@@ -1065,12 +1065,12 @@ gimp_image_window_get_aux_info (GimpSessionManaged *session_managed)
       aux = gimp_session_info_aux_new (GIMP_IMAGE_WINDOW_RIGHT_DOCKS_WIDTH,
                                        widthbuf);
       aux_info = g_list_append (aux_info, aux);
-
-      aux = gimp_session_info_aux_new (GIMP_IMAGE_WINDOW_MAXIMIZED,
-                                       gimp_image_window_is_maximized (GIMP_IMAGE_WINDOW (session_managed)) ?
-                                       "yes" : "no");
-      aux_info = g_list_append (aux_info, aux);
     }
+
+  aux = gimp_session_info_aux_new (GIMP_IMAGE_WINDOW_MAXIMIZED,
+                                   gimp_image_window_is_maximized (GIMP_IMAGE_WINDOW (session_managed)) ?
+                                   "yes" : "no");
+  aux_info = g_list_append (aux_info, aux);
 
   return aux_info;
 }
