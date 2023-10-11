@@ -784,17 +784,17 @@ gimp_editor_set_action_sensitive (GimpEditor  *editor,
   GimpActionGroup *group;
   GimpAction      *action;
 
-  g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
-  g_return_val_if_fail (action_name != NULL, NULL);
-  g_return_val_if_fail (editor->priv->ui_manager != NULL, NULL);
+  g_return_if_fail (GIMP_IS_EDITOR (editor));
+  g_return_if_fail (action_name != NULL);
+  g_return_if_fail (editor->priv->ui_manager != NULL);
 
   group = gimp_ui_manager_get_action_group (editor->priv->ui_manager,
                                             group_name);
 
-  g_return_val_if_fail (group != NULL, NULL);
+  g_return_if_fail (group != NULL);
 
   action = gimp_action_group_get_action (group, action_name);
-  g_return_val_if_fail (action != NULL, NULL);
+  g_return_if_fail (action != NULL);
 
   gimp_action_set_sensitive (action, sensitive, reason);
 }
