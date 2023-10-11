@@ -5,23 +5,15 @@ set -e
 if [[ "$MSYSTEM" == "MINGW32" ]]; then
     export ARTIFACTS_SUFFIX="-w32"
     export MSYS2_ARCH="i686"
-    # vapi build fails on 32-bit, with no error output. Let's just drop
-    # it for this architecture.
-    export BABL_OPTIONS="-Denable-vapi=false"
-    export GEGL_OPTIONS="-Dvapigen=disabled"
-    export MSYS_PREFIX="/c/msys64/mingw32/"
+    export MSYS2_ARCH_FOLDER="mingw32"
 elif [[ "$MSYSTEM" == "MINGW64" ]]; then
     export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
-    export BABL_OPTIONS=""
-    export GEGL_OPTIONS=""
-    export MSYS_PREFIX="/c/msys64/mingw64/"
+    export MSYS2_ARCH_FOLDER="mingw64"
 else # [[ "$MSYSTEM" == "CLANGARM64" ]];
     export ARTIFACTS_SUFFIX="-arm64"
     export MSYS2_ARCH="clang-aarch64"
-    export BABL_OPTIONS=""
-    export GEGL_OPTIONS=""
-    export MSYS_PREFIX="/c/msys64/clangarm64/"
+    export MSYS2_ARCH_FOLDER="clangarm64"
 fi
 
 # Update everything
@@ -54,8 +46,8 @@ export PATH="$GIMP_PREFIX/bin:$PATH"
 export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PKG_CONFIG_PATH="${GIMP_PREFIX}/share/pkgconfig:$PKG_CONFIG_PATH"
 export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}"
-export ACLOCAL_FLAGS="-I/c/msys64/mingw64/share/aclocal"
-export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/mingw64/share/"
+export ACLOCAL_FLAGS="-I/c/msys64/${MSYS2_ARCH_FOLDER}/share/aclocal"
+export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/${MSYS2_ARCH_FOLDER}/share/"
 
 ## babl and GEGL (follow master branch) ##
 
@@ -73,8 +65,7 @@ mkdir ../../_gegl/_build
 cd ../../_gegl/_build
 meson setup -Dprefix="${GIMP_PREFIX}" -Ddocs=false \
       -Dcairo=enabled -Dumfpack=enabled \
-      -Dopenexr=enabled -Dworkshop=true \
-      ${GEGL_OPTIONS} ..
+      -Dopenexr=enabled -Dworkshop=true ..
 ninja
 ninja install
 cd ../..
