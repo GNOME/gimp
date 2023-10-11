@@ -244,7 +244,7 @@ gimp_prop_resource_chooser_factory (GimpResourceWidgetCreator  widget_creator_fu
    * property from context.
    */
   prop_chooser = widget_creator_func (chooser_title, label, initial_resource);
-  g_object_unref (initial_resource);
+  g_clear_object (&initial_resource);
 
   g_object_bind_property (prop_chooser, "resource",
                           config,       property_name,
