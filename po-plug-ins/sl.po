@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-10-07 14:49+0000\n"
-"PO-Revision-Date: 2023-10-10 09:10+0200\n"
+"PO-Revision-Date: 2023-10-11 17:50+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -983,12 +983,11 @@ msgid "Parameter URI"
 msgstr "Parameter URI"
 
 #: plug-ins/common/cml-explorer.c:535
-#, fuzzy
 msgid ""
 "The local file:// URI of parameter file. CML_explorer makes an image with "
 "its settings."
 msgstr ""
-"Lokalni datotečni:// URI datoteke parametra. CML_explorer ustvari sliko s "
+"Krajevni URI file:// datoteke parametrov. CML_explorer ustvari sliko s "
 "svojimi nastavitvami."
 
 #: plug-ins/common/cml-explorer.c:884
@@ -1304,23 +1303,20 @@ msgid "Rearrange the colormap"
 msgstr "Prerazporedi barve"
 
 #: plug-ins/common/colormap-remap.c:193
-#, fuzzy
 msgid ""
 "This procedure takes an indexed image and lets you alter the positions of "
 "colors in the colormap without visually changing the image."
 msgstr ""
 "Ta postopek vzame indeksirano sliko in omogoča spreminjanje položajev barv v "
-"barvni karti, ne da bi sliko vizualno spremenili."
+"katalogu barv, ne da bi sliko vizualno spremenil."
 
 #: plug-ins/common/colormap-remap.c:204
 msgid "Map"
 msgstr "Preslikaj"
 
 #: plug-ins/common/colormap-remap.c:205
-#, fuzzy
-#| msgid "Rearrange the colormap"
 msgid "Remap array for the colormap"
-msgstr "Prerazporedi barve"
+msgstr "Polje preslikav za katalog barv"
 
 #: plug-ins/common/colormap-remap.c:220
 msgid "_Swap Colors"
@@ -1331,37 +1327,28 @@ msgid "Swap two colors in the colormap"
 msgstr "Zamenja dve barvi v katalogu barv"
 
 #: plug-ins/common/colormap-remap.c:225
-#, fuzzy
 msgid ""
 "This procedure takes an indexed image and lets you swap the positions of two "
 "colors in the colormap without visually changing the image."
 msgstr ""
 "Ta postopek vzame indeksirano sliko in omogoča zamenjavo položajev dveh barv "
-"v barvni karti, ne da bi sliko vizualno spremenili."
+"v katalogu barv, ne da bi sliko vizualno spremenili."
 
 #: plug-ins/common/colormap-remap.c:237
-#, fuzzy
-#| msgid "Indexed"
 msgid "Index 1"
-msgstr "Indeksirana"
+msgstr "Indeks 1"
 
 #: plug-ins/common/colormap-remap.c:238
-#, fuzzy
-#| msgid "Rearranging the colormap"
 msgid "First index in the colormap"
-msgstr "Prerazporejanje barv v katalogu ..."
+msgstr "Prvi indeks v katalogu barv"
 
 #: plug-ins/common/colormap-remap.c:243
-#, fuzzy
-#| msgid "Indexed"
 msgid "Index 2"
-msgstr "Indeksirana"
+msgstr "Indeks 2"
 
 #: plug-ins/common/colormap-remap.c:244
-#, fuzzy
-#| msgid "Swap two colors in the colormap"
 msgid "Second (other) index in the colormap"
-msgstr "Zamenja dve barvi v katalogu barv"
+msgstr "Drugi indeks v katalogu barv"
 
 #: plug-ins/common/colormap-remap.c:277
 msgid "Sort on Hue"
@@ -1579,10 +1566,8 @@ msgid "Create an image using multiple gray images as color channels"
 msgstr "Ustvari sliko z uporabo več sivinskih slik kot barvnih kanalov"
 
 #: plug-ins/common/compose.c:409
-#, fuzzy
-#| msgid "Create an image using multiple gray images as color channels"
 msgid "This function creates a new image from multiple gray images"
-msgstr "Ustvari sliko z uporabo več sivinskih slik kot barvnih kanalov"
+msgstr "Ta funkcija ustvari novo sliko iz več sivinskih slik"
 
 #: plug-ins/common/compose.c:418
 msgid "Image 2"
@@ -1639,15 +1624,13 @@ msgid "Output image"
 msgstr "Izhodna slka"
 
 #: plug-ins/common/compose.c:470
-#, fuzzy
 msgid "Compose an image from multiple drawables of gray images"
-msgstr "Sestavite sliko iz več risljivih sivih slik"
+msgstr "Sestavite sliko iz več risanih predmetov sivinskih slik"
 
 #: plug-ins/common/compose.c:472
-#, fuzzy
 msgid ""
 "This function creates a new image from multiple drawables of gray images"
-msgstr "Ta funkcija ustvari novo sliko iz več risalnikov sivih slik"
+msgstr "Ta funkcija ustvari novo sliko iz več risanih predmetov sivinskih slik"
 
 #: plug-ins/common/compose.c:481
 msgid "Drawable 2"
@@ -1688,9 +1671,9 @@ msgid ""
 "single RGB or RGBA layer, and replaces the originally decomposed layer with "
 "the result."
 msgstr ""
-"Ta funkcija ponovno združi sloje sivine, ki jih ustvari funkcija Decompose, "
-"v en sam sloj RGB ali RGBA in z rezultatom nadomesti prvotno razčlenjeni "
-"sloj."
+"Ta funkcija ponovno združi sivinske plasti, ki jih ustvari funkcija "
+"Decompose, v en samo plast RGB ali RGBA in z rezultatom nadomesti prvotno "
+"razčlenjeno plast."
 
 #: plug-ins/common/compose.c:604
 msgid ""
@@ -1893,7 +1876,6 @@ msgid "Rotat_e"
 msgstr "Zasu_kaj"
 
 #: plug-ins/common/curve-bend.c:443
-#, fuzzy
 msgid "Direction {angle 0 to 360 degree } of the bend effect"
 msgstr "Smer {kot 0 do 360 stopinj } učinka upogibanja"
 
@@ -1919,28 +1901,25 @@ msgid "Work on cop_y"
 msgstr "Obdeluj _kopijo"
 
 #: plug-ins/common/curve-bend.c:462
-#, fuzzy
 msgid "Copy the drawable and bend the copy"
-msgstr "Kopirajte risalo in upognite kopijo"
+msgstr "Kopirajte risani predmet in upognite kopijo"
 
 #: plug-ins/common/curve-bend.c:467
 msgid "Curve Type"
 msgstr "Vrsta krivulje"
 
 #: plug-ins/common/curve-bend.c:468
-#, fuzzy
 msgid "{ 0 == smooth (use 17 points), 1 == freehand (use 256 val_y) }"
 msgstr ""
-"{ 0 == gladko (uporabite 17 točk), 1 == prostoročno (uporabite 256 val_y) }"
+"{ 0 == gladko (uporabi 17 točk), 1 == prostoročno (uporabi 256 val_y) }"
 
 #: plug-ins/common/curve-bend.c:474
 msgid "Curve for Border"
 msgstr "Krivulja roba"
 
 #: plug-ins/common/curve-bend.c:475
-#, fuzzy
 msgid "Choose the active border line to edit"
-msgstr "Izberite aktivno mejno črto za urejanje"
+msgstr "Izberite dejavno robno črto za urejanje"
 
 #: plug-ins/common/curve-bend.c:480 plug-ins/common/curve-bend.c:481
 #, fuzzy
@@ -7163,7 +7142,6 @@ msgid "_Low"
 msgstr "_spodnja"
 
 #: plug-ins/common/sample-colorize.c:376
-#, fuzzy
 msgid "Intensity of lowest input"
 msgstr "Intenzivnost najnižjega vnosa"
 
@@ -7174,9 +7152,8 @@ msgid "_High"
 msgstr "visoko"
 
 #: plug-ins/common/sample-colorize.c:382
-#, fuzzy
 msgid "Intensity of highest input"
-msgstr "Jakost najvišjega vnosa"
+msgstr "Intenzivnost najvišjega vnosa"
 
 #: plug-ins/common/sample-colorize.c:387
 msgid "Ga_mma"
@@ -7187,8 +7164,9 @@ msgid "Gamma adjustment factor, 1.0 is linear"
 msgstr "Faktor prilagoditve gama, 1,0 je linearen"
 
 #: plug-ins/common/sample-colorize.c:393
+#, fuzzy
 msgid "Lo_w"
-msgstr ""
+msgstr "Ni_zko"
 
 #: plug-ins/common/sample-colorize.c:394
 #, fuzzy
@@ -7699,8 +7677,6 @@ msgid "_n²"
 msgstr "_n²"
 
 #: plug-ins/common/tile-small.c:286
-#, fuzzy
-#| msgid "Number of Tiles"
 msgid "Number of tiles to make"
 msgstr "Število tlakovcev"
 
@@ -8210,7 +8186,6 @@ msgid "Enter location (_URI)"
 msgstr "Vnesite mesto (_URI)"
 
 #: plug-ins/common/web-page.c:140
-#, fuzzy
 msgid "URL of the webpage to screenshot"
 msgstr "URL spletne strani za posnetek zaslona"
 
@@ -10765,8 +10740,9 @@ msgid "Lef_t"
 msgstr "Lev_o"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:274
+#, fuzzy
 msgid "X min fractal image delimiter"
-msgstr ""
+msgstr "X min razmejitev fraktalne slike"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:279
 #: plug-ins/map-object/map-object-main.c:382
@@ -10776,17 +10752,20 @@ msgid "Ri_ght"
 msgstr "Svet_la področja"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:280
+#, fuzzy
 msgid "X max fractal image delimiter"
-msgstr ""
+msgstr "X max razmejitev fraktalne slike"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:285
 #: plug-ins/map-object/map-object-main.c:367
+#, fuzzy
 msgid "To_p"
-msgstr ""
+msgstr "Na vr_hu"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:286
+#, fuzzy
 msgid "y min fractal image delimiter"
-msgstr ""
+msgstr "y min razmejitev fraktalne slike"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:291
 #: plug-ins/map-object/map-object-main.c:411
@@ -10796,8 +10775,9 @@ msgid "_Bottom"
 msgstr "_Na dnu:"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:292
+#, fuzzy
 msgid "ymax fractal image delimiter"
-msgstr ""
+msgstr "ymax razmejitev fraktalne slike"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:297
 msgid "Iteratio_ns"
@@ -10878,7 +10858,7 @@ msgstr "_Rdeča"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:341
 msgid "Red application mode"
-msgstr ""
+msgstr "Način uporabe rdeče"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:342
 #: plug-ins/fractal-explorer/fractal-explorer.c:352
@@ -10902,7 +10882,7 @@ msgstr "_Modra"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:361
 msgid "Blue application mode"
-msgstr ""
+msgstr "Način uporabe modre"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:370
 msgid "In_version"
@@ -10913,10 +10893,8 @@ msgid "_Number of colors"
 msgstr "_Število barv"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:389
-#, fuzzy
-#| msgid "Number of Colors"
 msgid "Number of Colors for mapping"
-msgstr "Število barv"
+msgstr "Število barv za preslikavo"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:493
 msgid "Rendering fractal"
@@ -13468,7 +13446,7 @@ msgstr "Kri_vulja"
 #: plug-ins/lighting/lighting-main.c:162
 #: plug-ins/map-object/map-object-main.c:136
 msgid "Type of mapping"
-msgstr ""
+msgstr "Vrsta preslikave"
 
 #: plug-ins/lighting/lighting-main.c:164
 msgid "Logarithmic"
@@ -13487,8 +13465,9 @@ msgid "Active"
 msgstr "Dejavno"
 
 #: plug-ins/lighting/lighting-main.c:179
+#, fuzzy
 msgid "Which light is active in the GUI"
-msgstr ""
+msgstr "Katera luč je aktivna v grafičnem uporabniškem vmesniku"
 
 #: plug-ins/lighting/lighting-main.c:180
 msgid "Light 1"
@@ -13737,14 +13716,14 @@ msgid "Light Settings"
 msgstr "Nastavitve luči"
 
 #: plug-ins/lighting/lighting-ui.c:325
-#, c-format
+#, fuzzy, c-format
 msgid "light-color-label-%d"
-msgstr ""
+msgstr "svetlo-barvna oznaka-%d"
 
 #: plug-ins/lighting/lighting-ui.c:330
-#, c-format
+#, fuzzy, c-format
 msgid "light-position-label-%d"
-msgstr ""
+msgstr "oznaka za položaj svetlobe-%d"
 
 #: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:520
 #: plug-ins/map-object/map-object-ui.c:718
@@ -13753,9 +13732,9 @@ msgid "Position"
 msgstr "Položaj"
 
 #: plug-ins/lighting/lighting-ui.c:335
-#, c-format
+#, fuzzy, c-format
 msgid "light-direction-label-%d"
-msgstr ""
+msgstr "nalepka za smer svetlobe-%d"
 
 #: plug-ins/lighting/lighting-ui.c:337
 msgid "Direction"
@@ -13766,14 +13745,14 @@ msgstr "Smer"
 #: plug-ins/lighting/lighting-ui.c:392 plug-ins/lighting/lighting-ui.c:397
 #: plug-ins/lighting/lighting-ui.c:421 plug-ins/lighting/lighting-ui.c:426
 #: plug-ins/lighting/lighting-ui.c:431
-#, c-format
+#, fuzzy, c-format
 msgid "notify::%s"
-msgstr ""
+msgstr "obvestilo::%s"
 
 #: plug-ins/lighting/lighting-ui.c:375
-#, c-format
+#, fuzzy, c-format
 msgid "light-position-vbox-%d"
-msgstr ""
+msgstr "light-position-vbox-%d"
 
 #: plug-ins/lighting/lighting-ui.c:478
 msgid "Lighting presets: "
@@ -13792,9 +13771,9 @@ msgid "Load Lighting Preset"
 msgstr "Naloži privzete vrednosti osvetlitve"
 
 #: plug-ins/lighting/lighting-ui.c:1049
-#, c-format
+#, fuzzy, c-format
 msgid "light-hbox-%d"
-msgstr ""
+msgstr "light-hbox-%d"
 
 #: plug-ins/map-object/map-object-apply.c:241
 #: plug-ins/map-object/map-object-apply.c:266
@@ -13850,7 +13829,7 @@ msgstr "X"
 #: plug-ins/map-object/map-object-main.c:152
 #: plug-ins/map-object/map-object-main.c:157
 msgid "Position of viewpoint (x,y,z)"
-msgstr ""
+msgstr "Položaj gledišča (x,y,z)"
 
 #: plug-ins/map-object/map-object-main.c:151
 #: plug-ins/map-object/map-object-main.c:199
@@ -13885,7 +13864,7 @@ msgstr "Položaj Z"
 #: plug-ins/map-object/map-object-main.c:184
 #: plug-ins/map-object/map-object-main.c:189
 msgid "First axis of object (x,y,z)"
-msgstr ""
+msgstr "Prva os predmeta (x,y,z)"
 
 #: plug-ins/map-object/map-object-main.c:183
 msgid "y"
@@ -13895,7 +13874,7 @@ msgstr "y"
 #: plug-ins/map-object/map-object-main.c:200
 #: plug-ins/map-object/map-object-main.c:205
 msgid "Second axis of object (x,y,z)"
-msgstr ""
+msgstr "Druga os predmeta (x,y,z)"
 
 #: plug-ins/map-object/map-object-main.c:210
 msgid "Angle X"
@@ -13970,16 +13949,18 @@ msgid "Di_ffuse"
 msgstr "Ra_zpršena"
 
 #: plug-ins/map-object/map-object-main.c:288
+#, fuzzy
 msgid "Material diffuse reflectivity"
-msgstr ""
+msgstr "Razpršena odbojnost materiala"
 
 #: plug-ins/map-object/map-object-main.c:293
 msgid "Spec_ular"
 msgstr "Zrca_lna"
 
 #: plug-ins/map-object/map-object-main.c:294
+#, fuzzy
 msgid "Material specular reflectivity"
-msgstr ""
+msgstr "Zrcalna odbojnost materiala"
 
 #: plug-ins/map-object/map-object-main.c:299
 #, fuzzy
@@ -14043,24 +14024,29 @@ msgid "Sphere radius"
 msgstr "Radij točke:"
 
 #: plug-ins/map-object/map-object-main.c:356
+#, fuzzy
 msgid "Fro_nt"
-msgstr ""
+msgstr "_Sprednja"
 
 #: plug-ins/map-object/map-object-main.c:357
+#, fuzzy
 msgid "Box front face (set this to NULL if not used)"
-msgstr ""
+msgstr "Sprednja stran polja (če se ne uporablja, nastavite na NULL)"
 
 #: plug-ins/map-object/map-object-main.c:362
+#, fuzzy
 msgid "B_ack"
-msgstr ""
+msgstr "_Hrbtna"
 
 #: plug-ins/map-object/map-object-main.c:363
+#, fuzzy
 msgid "Box back face"
-msgstr ""
+msgstr "Hrbtna ploskev škatle"
 
 #: plug-ins/map-object/map-object-main.c:368
+#, fuzzy
 msgid "Box top face"
-msgstr ""
+msgstr "Vrhnja ploskev škatle"
 
 #: plug-ins/map-object/map-object-main.c:372
 #, fuzzy
@@ -14079,8 +14065,9 @@ msgid "Le_ft"
 msgstr "Le_vo"
 
 #: plug-ins/map-object/map-object-main.c:378
+#, fuzzy
 msgid "Box left face"
-msgstr ""
+msgstr "Leva ploskev škatle"
 
 #: plug-ins/map-object/map-object-main.c:383
 #, fuzzy
@@ -14125,12 +14112,14 @@ msgid "_Top"
 msgstr "_Na vrhu:"
 
 #: plug-ins/map-object/map-object-main.c:406
+#, fuzzy
 msgid "Cylinder top face (set this to NULL if not used)"
-msgstr ""
+msgstr "Zgornja stran valja (če se ne uporablja, nastavite na NULL)"
 
 #: plug-ins/map-object/map-object-main.c:412
+#, fuzzy
 msgid "Cylinder bottom face (set this to NULL if not used)"
-msgstr ""
+msgstr "Spodnja stran valja (če se ne uporablja, nastavite na NULL)"
 
 #: plug-ins/map-object/map-object-main.c:418
 msgid "Cylinder radius"
@@ -15064,8 +15053,9 @@ msgid "Lower right"
 msgstr "desno spodaj"
 
 #: plug-ins/pagecurl/pagecurl.c:257
+#, fuzzy
 msgid "Sh_ade"
-msgstr ""
+msgstr "Sen_ca"
 
 #: plug-ins/pagecurl/pagecurl.c:258
 #, fuzzy
@@ -15181,8 +15171,9 @@ msgid "Create an image from an area of the screen"
 msgstr "Ustvari sliko iz področja zaslona"
 
 #: plug-ins/screenshot/screenshot.c:164
+#, fuzzy
 msgid "Shoot _area"
-msgstr ""
+msgstr "_Območje snemanja"
 
 #: plug-ins/screenshot/screenshot.c:224
 msgid "Color _Profile"
@@ -15195,8 +15186,9 @@ msgid "GDK initialization failed."
 msgstr "Transakcija DDE ni uspela."
 
 #: plug-ins/screenshot/screenshot.c:302
+#, fuzzy
 msgid "No screenshot backends available."
-msgstr ""
+msgstr "Na voljo ni zaledja za posnetke zaslona."
 
 #: plug-ins/screenshot/screenshot.c:504
 #: plug-ins/screenshot/screenshot-x11.c:443
