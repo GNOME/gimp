@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-09 21:43+0000\n"
-"PO-Revision-Date: 2023-10-10 22:34+0300\n"
+"POT-Creation-Date: 2023-10-10 21:14+0000\n"
+"PO-Revision-Date: 2023-10-12 09:45+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -1249,7 +1249,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/file-mng.c:1402 plug-ins/common/file-pcx.c:509
 #: plug-ins/common/file-pcx.c:552 plug-ins/common/file-png.c:658
 #: plug-ins/common/file-ps.c:1109 plug-ins/common/file-ps.c:3619
-#: plug-ins/common/file-psp.c:2444 plug-ins/common/file-psp.c:2494
+#: plug-ins/common/file-psp.c:2504 plug-ins/common/file-psp.c:2554
 #: plug-ins/common/file-qoi.c:299 plug-ins/common/file-raw-data.c:515
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:457
 #: plug-ins/common/file-svg.c:380 plug-ins/common/file-svg.c:809
@@ -1845,18 +1845,6 @@ msgid "Bend the image using two control curves"
 msgstr "Вигнути зображення, використовуючи дві напрямні криві"
 
 #: plug-ins/common/curve-bend.c:418
-#| msgid ""
-#| "This plug-in does bend the active layer If there is a current selection "
-#| "it is copied to floating selection and the curve_bend distortion is done "
-#| "on the floating selection. If work_on_copy parameter is TRUE, the "
-#| "curve_bend distortion is done on a copy of the active layer (or floating "
-#| "selection). The upper and lower edges are bent in shape of 2 spline "
-#| "curves. both (upper and lower) curves are determined by upto 17 points or "
-#| "by 256 Y-Values if curve_type == 1 (freehand mode) If rotation is not 0, "
-#| "the layer is rotated before and rotated back after the bend operation. "
-#| "This enables bending in other directions than vertical. bending usually "
-#| "changes the size of the handled layer. this plug-in sets the offsets of "
-#| "the handled layer to keep its center at the same position"
 msgid ""
 "This plug-in bends the active layer. If there is a current selection it is "
 "copied to floating selection and the curve_bend distortion is done on the "
@@ -2056,7 +2044,6 @@ msgid "Upper"
 msgstr "Верхня"
 
 #: plug-ins/common/curve-bend.c:1209
-#| msgid "Lower"
 msgctxt "adjective"
 msgid "Lower"
 msgstr "Нижня"
@@ -5264,37 +5251,52 @@ msgstr "Хибний тип каналу %d у фрагменті інформа
 msgid "Error reading tube data chunk"
 msgstr "Помилка при читання фрагмента даних тюбика"
 
-#: plug-ins/common/file-psp.c:2379 plug-ins/common/file-psp.c:2391
-#: plug-ins/common/file-psp.c:2402
+#: plug-ins/common/file-psp.c:2384 plug-ins/common/file-psp.c:2400
+#| msgid "Error reading layer information chunk"
+msgid "Error reading selection chunk"
+msgstr "Помилка зчитування фрагмента позначеного"
+
+#: plug-ins/common/file-psp.c:2393
+#| msgid "invalid block size"
+msgid "Invalid selection chunk size"
+msgstr "Некоректний розмір фрагмента позначеного"
+
+#: plug-ins/common/file-psp.c:2417
+#| msgid "Error reading layer information chunk"
+msgid "Error reading end of selection chunk"
+msgstr "Помилка зчитування кінця фрагмента позначеного"
+
+#: plug-ins/common/file-psp.c:2439 plug-ins/common/file-psp.c:2451
+#: plug-ins/common/file-psp.c:2462
 msgid "Error reading colorprofile chunk"
 msgstr "Помилка під час читання фрагмента профілю кольорів"
 
-#: plug-ins/common/file-psp.c:2455
+#: plug-ins/common/file-psp.c:2515
 msgid "Error reading file header."
 msgstr "Помилка при читанні заголовка файлу."
 
-#: plug-ins/common/file-psp.c:2462
+#: plug-ins/common/file-psp.c:2522
 msgid "Incorrect file signature."
 msgstr "Хибна сигнатура файлу."
 
-#: plug-ins/common/file-psp.c:2476
+#: plug-ins/common/file-psp.c:2536
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Непідтримувана версія формату файлу PSP %d.%d."
 
-#: plug-ins/common/file-psp.c:2496
+#: plug-ins/common/file-psp.c:2556
 msgid "invalid block size"
 msgstr "хибний розмір блока"
 
-#: plug-ins/common/file-psp.c:2505
+#: plug-ins/common/file-psp.c:2565
 msgid "Duplicate General Image Attributes block."
 msgstr "Повторний блок загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:2533
+#: plug-ins/common/file-psp.c:2593
 msgid "Missing General Image Attributes block."
 msgstr "Відсутній блок загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:2652
+#: plug-ins/common/file-psp.c:2715
 msgid "Exporting not implemented yet."
 msgstr "Експорт ще не реалізовано."
 
@@ -5398,9 +5400,6 @@ msgid "Palette's la_yout"
 msgstr "_Компонування палітри"
 
 #: plug-ins/common/file-raw-data.c:401 plug-ins/common/file-raw-data.c:477
-#| msgid ""
-#| "The layout for the palette's color channels{ RAW_PALETTE_RGB (0), "
-#| "RAW_PALETTE_BGR (1) }"
 msgid ""
 "The layout for the palette's color channels { RAW_PALETTE_RGB (0), "
 "RAW_PALETTE_BGR (1) }"
@@ -10783,7 +10782,6 @@ msgid "To_p"
 msgstr "В_горі"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:286
-#| msgid "X min fractal image delimiter"
 msgid "Y min fractal image delimiter"
 msgstr "Мінімальний обмежувач за Y фрактального зображення"
 
@@ -10793,7 +10791,6 @@ msgid "_Bottom"
 msgstr "В_низу"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:292
-#| msgid "X max fractal image delimiter"
 msgid "Y max fractal image delimiter"
 msgstr "Максимальний обмежувач за Y фрактального зображення"
 
@@ -13926,7 +13923,6 @@ msgid "Material ambient intensity"
 msgstr "Інтенсивність, яку розсіяно матеріалом"
 
 #: plug-ins/map-object/map-object-main.c:280
-#| msgid "_D_iffuse"
 msgid "D_iffuse"
 msgstr "_Розсіювання"
 
@@ -15405,7 +15401,6 @@ msgstr ""
 "кращою для поділу."
 
 #: plug-ins/selection-to-path/selection-to-path.c:294
-#| msgid "Subdivide_ Threshold"
 msgid "Subdivide Th_reshold"
 msgstr "По_ріг поділу"
 
