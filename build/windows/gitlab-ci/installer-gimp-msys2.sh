@@ -84,7 +84,7 @@ VERSION=`grep -rI '\<version *:' meson.build | head -1 | sed "s/^.*version *: *'
 #MINOR_VERSION=`echo $VERSION | sed "s/^\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)$/\2/"`
 #MICRO_VERSION=`echo $VERSION | sed "s/^\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)$/\3/"`
 cd build/windows/installer
-./compile.bat ${VERSION} ../../.. gimp-w32 gimp-w64 ../../.. gimp-w32 gimp-w64
+./compile.bat ${VERSION} ../../.. gimp-w32 gimp-w64 gimp-arm64 ../../.. gimp-w32 gimp-w64 gimp-arm64
 
 # Test if the installer was created and return success/failure.
 if [ -f "_Output/gimp-${VERSION}-setup.exe" ]; then

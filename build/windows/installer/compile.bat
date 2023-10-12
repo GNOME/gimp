@@ -6,13 +6,17 @@ if [%4]==[] goto help
 if [%5]==[] goto help
 if [%6]==[] goto help
 if [%7]==[] goto help
+if [%8]==[] goto help
+if [%9]==[] goto help
 set VER=%~1
 set GIMP_BASE=%~2
 set GIMP32=%~3
 set GIMP64=%~4
-set DEPS_BASE=%~5
-set DEPS32=%~6
-set DEPS64=%~7
+set GIMPA64=%~5
+set DEPS_BASE=%~6
+set DEPS32=%~7
+set DEPS64=%~8
+set DEPSA64=%~9
 
 if [%INNOPATH%]==[] (
 FOR /F "usebackq tokens=5,* skip=2" %%A IN (`REG QUERY "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup 6_is1" /v "Inno Setup: App Path" /reg:32`) DO set INNOPATH=%%B
@@ -29,6 +33,8 @@ shift
 shift
 shift
 shift
+shift
+shift
 set PARAMS=
 :doparams
 if "%1"=="" goto paramsdone
@@ -37,7 +43,7 @@ shift
 goto doparams
 :paramsdone
 
-"%INNOPATH%\iscc.exe" -DVERSION="%VER%" -DGIMP_DIR="%GIMP_BASE%" -DDIR32="%GIMP32%" -DDIR64="%GIMP64%" -DDEPS_DIR="%DEPS_BASE%" -DDDIR32="%DEPS32%" -DDDIR64="%DEPS64%" -DDEBUG_SYMBOLS -DPYTHON -DLUA %PARAMS% gimp3264.iss
+"%INNOPATH%\iscc.exe" -DVERSION="%VER%" -DGIMP_DIR="%GIMP_BASE%" -DDIR32="%GIMP32%" -DDIR64="%GIMP64%" -DDEPS_DIR="%DEPS_BASE%" -DDDIR32="%DEPS32%" -DDDIR64="%DEPS64%" -DDIRA64="%GIMPA64%" -DDDIRA64="%DEPSA64%" -DDEBUG_SYMBOLS -DPYTHON -DLUA %PARAMS% gimp3264.iss
 goto :eof
 
 :help

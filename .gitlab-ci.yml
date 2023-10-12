@@ -913,6 +913,7 @@ win-installer-nightly:
   dependencies:
     - packaging-win64-native
     - packaging-win32-native
+    - packaging-win-aarch64-native
     # This is needed for the BMP image generation for the installer.
     # See commit e1203e9f76f.
     - gimp-meson-debian
@@ -926,7 +927,7 @@ win-installer-nightly:
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/installer-gimp-msys2.sh > installer.log 2>&1"
-  needs: ["packaging-win32-native", "packaging-win64-native", "gimp-meson-debian"]
+  needs: ["packaging-win32-native", "packaging-win64-native", "packaging-win-aarch64-native", "gimp-meson-debian"]
 
 sources-meson:
   rules:
