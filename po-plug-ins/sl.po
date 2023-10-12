@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-07 14:49+0000\n"
-"PO-Revision-Date: 2023-10-11 17:50+0200\n"
+"POT-Creation-Date: 2023-10-11 15:52+0000\n"
+"PO-Revision-Date: 2023-10-11 17:54+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1250,7 +1250,7 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: plug-ins/common/file-mng.c:1402 plug-ins/common/file-pcx.c:509
 #: plug-ins/common/file-pcx.c:552 plug-ins/common/file-png.c:658
 #: plug-ins/common/file-ps.c:1109 plug-ins/common/file-ps.c:3619
-#: plug-ins/common/file-psp.c:2444 plug-ins/common/file-psp.c:2494
+#: plug-ins/common/file-psp.c:2504 plug-ins/common/file-psp.c:2554
 #: plug-ins/common/file-qoi.c:299 plug-ins/common/file-raw-data.c:515
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:457
 #: plug-ins/common/file-svg.c:380 plug-ins/common/file-svg.c:809
@@ -1847,17 +1847,17 @@ msgstr "Ukrivi sliko z dvema nadzornima krivuljama"
 #: plug-ins/common/curve-bend.c:418
 #, fuzzy
 msgid ""
-"This plug-in does bend the active layer If there is a current selection it "
-"is copied to floating selection and the curve_bend distortion is done on the "
+"This plug-in bends the active layer. If there is a current selection it is "
+"copied to floating selection and the curve_bend distortion is done on the "
 "floating selection. If work_on_copy parameter is TRUE, the curve_bend "
 "distortion is done on a copy of the active layer (or floating selection). "
-"The upper and lower edges are bent in shape of 2 spline curves. both (upper "
-"and lower) curves are determined by upto 17 points or by 256 Y-Values if "
-"curve_type == 1 (freehand mode) If rotation is not 0, the layer is rotated "
+"The upper and lower edges are bent in shape of 2 spline curves. Both (upper "
+"and lower) curves are determined by up to 17 points or by 256 Y-Values if "
+"curve_type == 1 (freehand mode). If rotation is not 0, the layer is rotated "
 "before and rotated back after the bend operation. This enables bending in "
-"other directions than vertical. bending usually changes the size of the "
-"handled layer. this plug-in sets the offsets of the handled layer to keep "
-"its center at the same position"
+"other directions than vertical. Bending usually changes the size of the "
+"handled layer. This plug-in sets the offsets of the handled layer to keep "
+"its center at the same position."
 msgstr ""
 "Ta vtičnik upogne aktivno plast Če obstaja trenutna izbira, se kopira v "
 "plavajočo izbiro in izkrivljanje krivulje_bend se izvede na plavajoči "
@@ -2062,8 +2062,10 @@ msgstr "Sprosti"
 msgid "Upper"
 msgstr "_zgornja"
 
-#: plug-ins/common/curve-bend.c:1209 plug-ins/gfig/gfig-dialog.c:417
-#: plug-ins/gfig/gfig-menu.ui:120
+#: plug-ins/common/curve-bend.c:1209
+#, fuzzy
+#| msgid "Lower"
+msgctxt "adjective"
 msgid "Lower"
 msgstr "Spusti"
 
@@ -5254,37 +5256,55 @@ msgstr "Neveljavna vrsta kanala %d v informacijskem koščku kanala"
 msgid "Error reading tube data chunk"
 msgstr "Napaka pri branju kosa podatkov o cevi"
 
-#: plug-ins/common/file-psp.c:2379 plug-ins/common/file-psp.c:2391
-#: plug-ins/common/file-psp.c:2402
+#: plug-ins/common/file-psp.c:2384 plug-ins/common/file-psp.c:2400
+#, fuzzy
+#| msgid "Error reading layer information chunk"
+msgid "Error reading selection chunk"
+msgstr "Napaka pri branju kosa podatkov o plasti"
+
+#: plug-ins/common/file-psp.c:2393
+#, fuzzy
+#| msgid "invalid block size"
+msgid "Invalid selection chunk size"
+msgstr "neveljavna velikost bloka"
+
+#: plug-ins/common/file-psp.c:2417
+#, fuzzy
+#| msgid "Error reading layer information chunk"
+msgid "Error reading end of selection chunk"
+msgstr "Napaka pri branju kosa podatkov o plasti"
+
+#: plug-ins/common/file-psp.c:2439 plug-ins/common/file-psp.c:2451
+#: plug-ins/common/file-psp.c:2462
 msgid "Error reading colorprofile chunk"
 msgstr "Napaka pri branju kosa podatkov o barvnem profilu"
 
-#: plug-ins/common/file-psp.c:2455
+#: plug-ins/common/file-psp.c:2515
 msgid "Error reading file header."
 msgstr "Napaka pri branju glave datoteke."
 
-#: plug-ins/common/file-psp.c:2462
+#: plug-ins/common/file-psp.c:2522
 msgid "Incorrect file signature."
 msgstr "Neveljaven podpis datoteke."
 
-#: plug-ins/common/file-psp.c:2476
+#: plug-ins/common/file-psp.c:2536
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Nepodprta različica datoteke vrste PSP %d.%d."
 
-#: plug-ins/common/file-psp.c:2496
+#: plug-ins/common/file-psp.c:2556
 msgid "invalid block size"
 msgstr "neveljavna velikost bloka"
 
-#: plug-ins/common/file-psp.c:2505
+#: plug-ins/common/file-psp.c:2565
 msgid "Duplicate General Image Attributes block."
 msgstr "Podvojeni blok splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:2533
+#: plug-ins/common/file-psp.c:2593
 msgid "Missing General Image Attributes block."
 msgstr "Manjkajoči blok splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:2652
+#: plug-ins/common/file-psp.c:2715
 msgid "Exporting not implemented yet."
 msgstr "Izvoz še ni implementiran."
 
@@ -5390,8 +5410,12 @@ msgid "Palette's la_yout"
 msgstr "Pos_tavitev palete"
 
 #: plug-ins/common/file-raw-data.c:401 plug-ins/common/file-raw-data.c:477
+#, fuzzy
+#| msgid ""
+#| "The layout for the palette's color channels{ RAW_PALETTE_RGB (0), "
+#| "RAW_PALETTE_BGR (1) }"
 msgid ""
-"The layout for the palette's color channels{ RAW_PALETTE_RGB (0), "
+"The layout for the palette's color channels { RAW_PALETTE_RGB (0), "
 "RAW_PALETTE_BGR (1) }"
 msgstr ""
 "Razporeditev barvnih kanalov palete { RAW_PALETTE_RGB (0), RAW_PALETTE_BGR "
@@ -10764,8 +10788,8 @@ msgstr "Na vr_hu"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:286
 #, fuzzy
-msgid "y min fractal image delimiter"
-msgstr "y min razmejitev fraktalne slike"
+msgid "Y min fractal image delimiter"
+msgstr "X min razmejitev fraktalne slike"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:291
 #: plug-ins/map-object/map-object-main.c:411
@@ -10776,8 +10800,8 @@ msgstr "_Na dnu:"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:292
 #, fuzzy
-msgid "ymax fractal image delimiter"
-msgstr "ymax razmejitev fraktalne slike"
+msgid "Y max fractal image delimiter"
+msgstr "X max razmejitev fraktalne slike"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:297
 msgid "Iteratio_ns"
@@ -11099,6 +11123,10 @@ msgstr "Dvigni"
 #: plug-ins/gfig/gfig-dialog.c:415
 msgid "Raise selected object"
 msgstr "Dvigni izbrani predmet"
+
+#: plug-ins/gfig/gfig-dialog.c:417 plug-ins/gfig/gfig-menu.ui:120
+msgid "Lower"
+msgstr "Spusti"
 
 #: plug-ins/gfig/gfig-dialog.c:417
 msgid "Lower selected object"
@@ -13935,7 +13963,9 @@ msgid "Material ambient intensity"
 msgstr "Lastnosti materiala"
 
 #: plug-ins/map-object/map-object-main.c:280
-msgid "_D_iffuse"
+#, fuzzy
+#| msgid "_D_iffuse"
+msgid "D_iffuse"
 msgstr "_Razpršena"
 
 #: plug-ins/map-object/map-object-main.c:281
@@ -15228,10 +15258,8 @@ msgid "Tag image with monitor profile"
 msgstr "Označi sliko s profilom _zaslona"
 
 #: plug-ins/screenshot/screenshot.c:604
-#, fuzzy
-#| msgid "Convert image to sR_GB"
 msgid "Convert image with sRGB"
-msgstr "Pretvori sliko v barvni prostor sR_GB"
+msgstr "Pretvori sliko s sRGB"
 
 #: plug-ins/screenshot/screenshot-win32.c:304
 msgid "No data captured"
@@ -15260,10 +15288,8 @@ msgstr "Izbor v pot"
 
 #: plug-ins/selection-to-path/selection-to-path.c:143
 #: plug-ins/selection-to-path/selection-to-path.c:144
-#, fuzzy
-#| msgid "Selection to Path"
 msgid "Converts a selection to a path"
-msgstr "Izbor v pot"
+msgstr "Pretvori izbor v pot"
 
 #: plug-ins/selection-to-path/selection-to-path.c:152
 msgid "_Align Threshold"
@@ -15325,10 +15351,8 @@ msgstr ""
 "poskusimo znova."
 
 #: plug-ins/selection-to-path/selection-to-path.c:190
-#, fuzzy
-#| msgid "Filter Alternative Surround:"
 msgid "_Filter Alternative Surround"
-msgstr "Nadomestna okolica filtra:"
+msgstr "_Nadomestna okolica filtra"
 
 #: plug-ins/selection-to-path/selection-to-path.c:191
 msgid "A second number of adjacent points to consider when filtering."
@@ -15376,10 +15400,8 @@ msgstr ""
 "sosednjih točk."
 
 #: plug-ins/selection-to-path/selection-to-path.c:223
-#, fuzzy
-#| msgid "Filter Secondary Surround:"
 msgid "Filter Secondar_y Surround"
-msgstr "Drugotna okolica filtra:"
+msgstr "_Drugotna okolica filtra"
 
 #: plug-ins/selection-to-path/selection-to-path.c:224
 msgid ""
@@ -15390,20 +15412,16 @@ msgstr ""
 "(»filter_surround«) določajo ravno črto."
 
 #: plug-ins/selection-to-path/selection-to-path.c:230
-#, fuzzy
-#| msgid "Filter Surround:"
 msgid "Filter Surroun_d"
-msgstr "Okolica filtra:"
+msgstr "O_kolica filtra"
 
 #: plug-ins/selection-to-path/selection-to-path.c:231
 msgid "Number of adjacent points to consider when filtering."
 msgstr "Število soležnih točk, upoštevanih pri filtriranju."
 
 #: plug-ins/selection-to-path/selection-to-path.c:236
-#, fuzzy
-#| msgid "Keep Knees"
 msgid "_Keep Knees"
-msgstr "Ohrani kolena"
+msgstr "O_hrani kolena"
 
 #: plug-ins/selection-to-path/selection-to-path.c:237
 msgid "Says whether or not to remove 'knee' points after finding the outline."
@@ -15411,9 +15429,8 @@ msgstr "Pove, ali naj bodo »kolenske« točke odstranjene po določitvi orisa."
 
 #: plug-ins/selection-to-path/selection-to-path.c:243
 #, fuzzy
-#| msgid "Line Reversion Threshold:"
 msgid "_Line Reversion Threshold"
-msgstr "Prag preobrnitve vrstic:"
+msgstr "Prag preobrnitve vrstic"
 
 #: plug-ins/selection-to-path/selection-to-path.c:244
 msgid ""
@@ -15428,9 +15445,8 @@ msgstr ""
 
 #: plug-ins/selection-to-path/selection-to-path.c:253
 #, fuzzy
-#| msgid "Line Threshold:"
 msgid "L_ine Threshold"
-msgstr "Prag črte:"
+msgstr "Prag _črte"
 
 #: plug-ins/selection-to-path/selection-to-path.c:254
 msgid ""
@@ -15441,10 +15457,8 @@ msgstr ""
 "določata končni točki, preden se pretvori v ravno črto."
 
 #: plug-ins/selection-to-path/selection-to-path.c:261
-#, fuzzy
-#| msgid "Reparametrize Improvement:"
 msgid "Reparametri_ze Improvement"
-msgstr "Izboljšava z reparametrizacijo:"
+msgstr "Izboljšava z reparametri_zacijo"
 
 #: plug-ins/selection-to-path/selection-to-path.c:262
 msgid ""
@@ -15455,10 +15469,8 @@ msgstr ""
 "prekini. Količina napake, pri kateri je nesmiselno reparametrizirati."
 
 #: plug-ins/selection-to-path/selection-to-path.c:269
-#, fuzzy
-#| msgid "Reparametrize Threshold:"
 msgid "Repara_metrize Threshold"
-msgstr "Prag z reparametrizacijo:"
+msgstr "Prag repara_metrizacije"
 
 #: plug-ins/selection-to-path/selection-to-path.c:270
 msgid ""
@@ -15499,7 +15511,7 @@ msgstr ""
 "boljše mesto za podrazdeljevanje."
 
 #: plug-ins/selection-to-path/selection-to-path.c:294
-msgid "Subdivide_ Threshold"
+msgid "Subdivide Th_reshold"
 msgstr "Prag po_drazdelitve"
 
 #: plug-ins/selection-to-path/selection-to-path.c:295
@@ -15546,3 +15558,11 @@ msgstr "_Skener/Fotoaparat ..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Prenos podatkov iz skenerja/fotoaparata"
+
+#, fuzzy
+#~ msgid "y min fractal image delimiter"
+#~ msgstr "y min razmejitev fraktalne slike"
+
+#, fuzzy
+#~ msgid "ymax fractal image delimiter"
+#~ msgstr "ymax razmejitev fraktalne slike"
