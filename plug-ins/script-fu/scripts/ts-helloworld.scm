@@ -38,7 +38,7 @@
     (gimp-image-undo-disable img)
     (gimp-context-set-foreground color)
 
-    (set! text-layer (car (gimp-text-fontname img -1 0 0 text 10 TRUE size PIXELS font)))
+    (set! text-layer (car (gimp-text-font img -1 0 0 text 10 TRUE size font)))
     (set! width (car (gimp-drawable-get-width text-layer)))
     (set! height (car (gimp-drawable-get-height text-layer)))
     (gimp-image-resize img width height 0 0)
@@ -52,7 +52,7 @@
 
 (script-fu-register "script-fu-helloworld"
     "_Hello World..."
-    "Creates an image with a user specified text string."
+    "Creates an image of a text string."
     "Kevin Cozens <kcozens@interlog.com>"
     "Kevin Cozens"
     "February 29, 2004"

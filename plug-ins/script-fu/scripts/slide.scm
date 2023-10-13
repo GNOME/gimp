@@ -47,7 +47,7 @@
                          drawable
                          text
                          number
-                         fontname
+                         font
                          font-color
                          work-on-copy)
 
@@ -134,50 +134,55 @@
 
 ; add the text
   (gimp-context-set-foreground font-color)
-  (gimp-floating-sel-anchor (car (gimp-text-fontname image
+  (gimp-floating-sel-anchor (car (gimp-text-font
+                                            image
                                             film-layer
                                             (+ hole-start (* -0.25 width))
                                             (* 0.01 height)
                                             text
                                             0
                                             TRUE
-                                            (* 0.040 height) PIXELS fontname)))
-  (gimp-floating-sel-anchor (car (gimp-text-fontname image
+                                            (* 0.040 height)  font)))
+  (gimp-floating-sel-anchor (car (gimp-text-font
+                                            image
                                             film-layer
                                             (+ hole-start (* 0.75 width))
                                             (* 0.01 height)
                                             text
                                             0
                                             TRUE
-                                            (* 0.040 height) PIXELS
-                                            fontname )))
-  (gimp-floating-sel-anchor (car (gimp-text-fontname image
+                                            (* 0.040 height)
+                                            font )))
+  (gimp-floating-sel-anchor (car (gimp-text-font
+                                            image
                                             film-layer
                                             (+ hole-start (* 0.35 width))
                                             0.0
                                             number
                                             0
                                             TRUE
-                                            (* 0.050 height) PIXELS
-                                            fontname )))
-  (gimp-floating-sel-anchor (car (gimp-text-fontname image
+                                            (* 0.050 height)
+                                            font )))
+  (gimp-floating-sel-anchor (car (gimp-text-font
+                                            image
                                             film-layer
                                             (+ hole-start (* 0.35 width))
                                             (* 0.94 height)
                                             number
                                             0
                                             TRUE
-                                            (* 0.050 height) PIXELS
-                                            fontname )))
-  (gimp-floating-sel-anchor (car (gimp-text-fontname image
+                                            (* 0.050 height)
+                                            font )))
+  (gimp-floating-sel-anchor (car (gimp-text-font
+                                            image
                                             film-layer
                                             (+ hole-start (* 0.85 width))
                                             (* 0.945 height)
                                             numbera
                                             0
                                             TRUE
-                                            (* 0.045 height) PIXELS
-                                            fontname )))
+                                            (* 0.045 height)
+                                            font )))
 
 ; create a mask for the holes and cut them out
   (let* (

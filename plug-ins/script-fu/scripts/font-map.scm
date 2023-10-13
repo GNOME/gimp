@@ -28,8 +28,8 @@
 
         (if (= use-name TRUE)
             (set! text font))
-        (set! extents (gimp-text-get-extents-fontname text
-                                                      font-size PIXELS
+        (set! extents (gimp-text-get-extents-font     text
+                                                      font-size
                                                       font))
         (set! width (car extents))
         (if (> width maxwidth)
@@ -55,8 +55,8 @@
         (if (= use-name TRUE)
             (set! text font)
         )
-        (set! extents (gimp-text-get-extents-fontname text
-                                                      font-size PIXELS
+        (set! extents (gimp-text-get-extents-font     text
+                                                      font-size
                                                       font))
         (set! height (cadr extents))
         (if (> height maxheight)
@@ -120,25 +120,25 @@
       (if (= use-name TRUE)
           (set! text font))
 
-      (gimp-text-fontname img -1
+      (gimp-text-font     img -1
                           border
                           y
                           text
-                          0 TRUE font-size PIXELS
+                          0 TRUE font-size
                           font)
 
       (set! y (+ y maxheight))
 
       (if (= labels TRUE)
           (begin
-            (gimp-floating-sel-anchor (car (gimp-text-fontname img drawable
+            (gimp-floating-sel-anchor (car (gimp-text-font     img drawable
                                                                (- border
                                                                   (/ label-size 2))
                                                                (- y
                                                                   (/ label-size 2))
                                                                font
                                                                0 TRUE
-                                                               label-size PIXELS
+                                                               label-size
                                                                "Sans")))
           (set! y (+ y label-size))
           )

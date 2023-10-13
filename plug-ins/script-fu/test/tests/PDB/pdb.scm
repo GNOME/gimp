@@ -21,9 +21,7 @@
 (testing:load-test "layer-mask.scm")
 ; TODO layer stack ops
 
-; Commented out until PDB is fixed
-; Known to crash GIMP
-;(testing:load-test "text-layer-new.scm")
+(testing:load-test "text-layer-new.scm")
 
 (testing:load-test "vectors-new.scm")
 (testing:load-test "channel-new.scm")
@@ -36,9 +34,7 @@
 ; Drawable and Item are superclasses
 ; Testing Drawable and Item uses extant instances;
 ; must be after instances of subclasses are created.
-; commented out until text-get-fontname is fixed
-; Known to crash GIMP
-;(testing:load-test "item.scm")
+(testing:load-test "item.scm")
 ; todo item ordering operations
 
 ; TODO drawable

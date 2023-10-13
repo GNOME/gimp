@@ -51,9 +51,9 @@
         (light-end-x (+ cx (* radius (cos (+ *pi* radians)))))
         (light-end-y (- cy (* radius (sin (+ *pi* radians)))))
         (offset (* radius 0.1))
-        (text-extents (gimp-text-get-extents-fontname multi-text
-                                                      size PIXELS
-                                                      font))
+        (text-extents (gimp-text-get-extents-font multi-text
+                                                  size
+                                                  font))
         (x-position (- cx (/ (car text-extents) 2)))
         (y-position (- cy (/ (cadr text-extents) 2)))
         (shadow-w 0)
@@ -116,11 +116,11 @@
     (gimp-selection-none img)
 
     (gimp-context-set-foreground '(0 0 0))
-    (gimp-floating-sel-anchor (car (gimp-text-fontname img drawable
+    (gimp-floating-sel-anchor (car (gimp-text-font     img drawable
                                                        x-position y-position
                                                        multi-text
                                                        0 TRUE
-                                                       size PIXELS
+                                                       size
                                                        font)))
 
     (gimp-image-undo-enable img)

@@ -135,9 +135,10 @@
 (define testLayer (vector-ref (cadr (gimp-image-get-layers testImage ))
                                   0))
 (define testSelection (car (gimp-image-get-selection testImage)))
+(define testFont (car (gimp-context-get-font)))
 (define
   testTextLayer
-   (car (gimp-text-fontname
+   (car (gimp-text-font
               testImage
               -1     ; drawable.  -1 means NULL means create new text layer
               0 0   ; coords
@@ -145,8 +146,7 @@
               1     ; border size
               1     ; antialias true
               31    ; fontsize
-              PIXELS  ; size units.  !!! See UNIT-PIXEL
-              "fontName" )))
+              testFont )))
 (define testChannel (car (gimp-channel-new
             testImage    ; image
             23 24          ; width, height

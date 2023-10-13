@@ -115,11 +115,11 @@
       (gimp-drawable-fill (aref (cadr (gimp-image-get-selected-layers img)) 0)
                           FILL-BACKGROUND)
       (gimp-selection-none img)
-      (set! text-layer (car (gimp-text-fontname img -1 0 0
+      (set! text-layer (car (gimp-text-font img -1 0 0
                               (string-append _"Contact Sheet "
                                              (number->string num)
                                              _" for directory " dir)
-                                             0 TRUE 14 PIXELS title-font)))
+                                             0 TRUE 14  title-font)))
       (set! text-width (car (gimp-drawable-get-width text-layer)))
       (set! text-height (car (gimp-drawable-get-height text-layer)))
       (gimp-layer-set-offsets text-layer
@@ -246,8 +246,8 @@
 
               (gimp-image-delete new-img)
 
-              (set! tmp-layer (car (gimp-text-fontname sheet-img -1 0 0 file
-                                     0 TRUE 12 PIXELS legend-font)))
+              (set! tmp-layer (car (gimp-text-font sheet-img -1 0 0 file
+                                     0 TRUE 12  legend-font)))
               (gimp-layer-set-offsets tmp-layer
                 (+ border-x off-x (* pos-x (+ thumb-w border-x))
                    (/ (- thumb-w (car (gimp-drawable-get-width tmp-layer))) 2))

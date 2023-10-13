@@ -24,21 +24,16 @@
 ;
 ; ----------------------------------------------------------------------
 ; SF-FONT
-; creates a font-selection widget in the dialog. It returns a fontname as
-; a string. There are two new gimp-text procedures to ease the use of this
-; return parameter:
+; creates a font-selection widget in the dialog. It returns a font.
 ;
-;  (gimp-text-fontname image drawable
-;                      x-pos y-pos text border antialias size unit font)
-;  (gimp-text-get-extents-fontname text size unit font))
+; There are two gimp-text procedures to use a font:
 ;
-; where font is the fontname you get. The size specified in the fontname
-; is silently ignored. It is only used in the font-selector. So you are
-; asked to set it to a useful value (24 pixels is a good choice) when
-; using SF-FONT.
+;  (gimp-text-font image drawable
+;                      x-pos y-pos text border antialias size font)
+;  (gimp-text-get-extents-font text size font))
 ;
 ; Usage:
-; SF-FONT "label" "fontname"
+; SF-FONT "label" "font name"
 ;
 ; ----------------------------------------------------------------------
 ; SF-BRUSH
@@ -189,9 +184,9 @@
         (light-end-x (+ cx (* radius (cos (+ *pi* radians)))))
         (light-end-y (- cy (* radius (sin (+ *pi* radians)))))
         (offset (* radius 0.1))
-        (text-extents (gimp-text-get-extents-fontname multi-text
-                                                      size PIXELS
-                                                      font))
+        (text-extents (gimp-text-get-extents-font multi-text
+                                                  size
+                                                  font))
         (x-position (- cx (/ (car text-extents) 2)))
         (y-position (- cy (/ (cadr text-extents) 2)))
         (shadow-w 0)
@@ -254,11 +249,11 @@
     (gimp-selection-none img)
 
     (gimp-context-set-foreground '(0 0 0))
-    (gimp-floating-sel-anchor (car (gimp-text-fontname img drawable
+    (gimp-floating-sel-anchor (car (gimp-text-font     img drawable
                                                        x-position y-position
                                                        multi-text
                                                        0 TRUE
-                                                       size PIXELS
+                                                       size
                                                        font)))
 
     (gimp-image-undo-enable img)

@@ -1,7 +1,7 @@
 ; tests of TextLayer class
 
 ; !!! Some methods tested here are named strangely:
-; text-fontname returns a new TextLayer
+; text-font returns a new TextLayer
 
 
 
@@ -11,23 +11,21 @@
 ; Require image has no layer
 (define testImage (car (gimp-image-new 21 22 RGB)))
 
+(define testFont (car (gimp-context-get-font)))
+
 ; setup (not an assert )
 (define
     testTextLayer
        (car (gimp-text-layer-new
               testImage
               "textOfTestTextLayer" ; text
-              "fontName" ; fontname
+              testFont ; font
               30 ; fontsize
               UNIT-PIXEL)))
 
 
-; !!!! fontName is not valid
-; The text displays anyway, using some font family, without error.
-; The docs don't seem to say which font family is used.
-; TODO better documentation
-; The text layer still says it is using the given font family.
-; TODO yield actual font family used.
+; TOTO test if font is not valid or NULL
+
 
 ; !!! UNIT-PIXEL GimpUnitsType is distinct from PIXELS GimpSizeType
 
@@ -77,9 +75,9 @@
 ; text
 (assert `(string=? (car (gimp-text-layer-get-text ,testTextLayer))
                         "textOfTestTextLayer"))
-; font
-(assert `(string=? (car (gimp-text-layer-get-font ,testTextLayer))
-                        "fontName"))
+; font, numeric ID's equal
+(assert `(= (car (gimp-text-layer-get-font ,testTextLayer))
+            ,testFont))
 ; font-size
 (assert `(= (car (gimp-text-layer-get-font-size ,testTextLayer))
             30))
@@ -100,15 +98,14 @@
 
 ;                  misc method
 
-; gimp-text-get-extents-fontname
+; gimp-text-get-extents-font
 ; Yields extent of rendered text, independent of image or layer.
 ; Extent is (width, height, ascent, descent) in unstated units, pixels?
 ; Does not affect image.
-(assert `(= (car (gimp-text-get-extents-fontname
+(assert `(= (car (gimp-text-get-extents-font
               "zed" ; text
               32    ; fontsize
-              POINTS  ; size units.  !!! See UNIT-PIXEL
-              "fontName" )) ; fontname
+              ,testFont ))
             57))
 ; usual result is (57 38 30 -8)
 
@@ -117,11 +114,11 @@
 ;           alternate method for creating text layer
 
 
-; gimp-text-fontname creates text layer AND inserts it into image
+; gimp-text-font creates text layer AND inserts it into image
 ; setup, not assert
 (define
   testTextLayer2
-   (car (gimp-text-fontname
+   (car (gimp-text-font
               testImage
               -1     ; drawable.  -1 means NULL means create new text layer
               0 0   ; coords
@@ -129,11 +126,10 @@
               1     ; border size
               1     ; antialias true
               31    ; fontsize
-              PIXELS  ; size units.  !!! See UNIT-PIXEL
-              "fontName" )))
+              testFont )))
 
 
-; error to insert layer created by gimp-text-fontname
+; error to insert layer created by gimp-text-font
 ; TODO make the error message matching by prefix only
 (assert-error `(gimp-image-insert-layer
                   ,testImage
