@@ -20,8 +20,10 @@ else # [[ "$MSYSTEM" == "CLANGARM64" ]];
 fi
 
 export OPTIONAL_PACKAGES=""
-if [[ "$MSYSTEM" != "CLANGARM64" ]]; then
+if [[ "$MSYSTEM" == "CLANGARM64" ]]; then
   # No luajit package on clangarm64 for the time being.
+  export OPTIONAL_PACKAGES="mingw-w64-$MSYS2_ARCH-lua51"
+else
   export OPTIONAL_PACKAGES="mingw-w64-$MSYS2_ARCH-luajit"
 fi
 
@@ -39,6 +41,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-meson \
     \
     $OPTIONAL_PACKAGES \
+    mingw-w64-$MSYS2_ARCH-lua51-lgi \
     \
     mingw-w64-$MSYS2_ARCH-aalib \
     mingw-w64-$MSYS2_ARCH-appstream-glib \

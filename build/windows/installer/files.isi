@@ -59,7 +59,11 @@ Source: "{#DEPS_DIR}\{#DDIR}\lib\python3.11\*"; DestDir: "{app}\lib\python3.11";
 #endif
 
 #ifdef LUA
+#if PLATFORM==ARM64
+Source: "{#DEPS_DIR}\{#DDIR}\bin\lua5.1.exe"; DestDir: "{app}\bin"; Components: lua and gimp{#COMPONENT}; Flags: restartreplace uninsrestartdelete ignoreversion
+#else
 Source: "{#DEPS_DIR}\{#DDIR}\bin\luajit.exe"; DestDir: "{app}\bin"; Components: lua and gimp{#COMPONENT}; Flags: restartreplace uninsrestartdelete ignoreversion
+#endif
 Source: "{#DEPS_DIR}\{#DDIR}\bin\lua51.dll"; DestDir: "{app}\bin"; Components: lua and gimp{#COMPONENT}; Flags: restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR}\{#DDIR}\share\lua\*"; DestDir: "{app}\share\lua"; Components: lua and gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\lib\lua\*"; DestDir: "{app}\lib\lua"; Components: lua and gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete

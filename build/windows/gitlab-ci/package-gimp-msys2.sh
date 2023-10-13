@@ -23,8 +23,10 @@ else # [[ "$MSYSTEM" == "CLANGARM64" ]];
 fi
 
 export OPTIONAL_PACKAGES=""
-if [[ "$MSYSTEM" != "CLANGARM64" ]]; then
-  export OPTIONAL_PACKAGES="mingw-w64-$MSYS2_ARCH-luajit mingw-w64-$MSYS2_ARCH-lua51-lgi"
+if [[ "$MSYSTEM" == "CLANGARM64" ]]; then
+  export OPTIONAL_PACKAGES="mingw-w64-$MSYS2_ARCH-lua51"
+else
+  export OPTIONAL_PACKAGES="mingw-w64-$MSYS2_ARCH-luajit"
 fi
 
 # Update everything
@@ -38,6 +40,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-ccache \
     \
     $OPTIONAL_PACKAGES \
+    mingw-w64-$MSYS2_ARCH-lua51-lgi \
     \
     mingw-w64-$MSYS2_ARCH-aalib \
     mingw-w64-$MSYS2_ARCH-appstream-glib \
@@ -127,10 +130,8 @@ cp -fr ${MSYS_PREFIX}/share/libwmf ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/mypaint-data ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/poppler ${GIMP_DISTRIB}/share/
 
-if [[ "$MSYSTEM" != "CLANGARM64" ]]; then
-  cp -fr ${MSYS_PREFIX}/share/lua/ ${GIMP_DISTRIB}/share/
-  cp -fr ${MSYS_PREFIX}/lib/lua/ ${GIMP_DISTRIB}/lib/
-fi
+cp -fr ${MSYS_PREFIX}/share/lua/ ${GIMP_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/lib/lua/ ${GIMP_DISTRIB}/lib/
 
 # XXX Are these themes really needed?
 cp -fr ${MSYS_PREFIX}/share/themes ${GIMP_DISTRIB}/share/
@@ -179,7 +180,10 @@ python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/python3w.exe ${G
 cp -fr ${MSYS_PREFIX}/bin/python3.exe ${GIMP_DISTRIB}/bin/
 python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/python3.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
 
-if [[ "$MSYSTEM" != "CLANGARM64" ]]; then
+if [[ "$MSYSTEM" == "CLANGARM64" ]]; then
+  cp -fr ${MSYS_PREFIX}/bin/lua5.1.exe ${GIMP_DISTRIB}/bin/
+  python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/lua5.1.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+else
   cp -fr ${MSYS_PREFIX}/bin/luajit.exe ${GIMP_DISTRIB}/bin/
   python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/luajit.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
 fi

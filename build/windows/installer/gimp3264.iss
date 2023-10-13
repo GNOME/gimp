@@ -819,7 +819,7 @@ end;
 
 
 procedure PrepareInterp();
-var InterpFile,InterpContent: String;
+var InterpFile,InterpContent,LuaBin: String;
 begin
 #ifdef PYTHON
 	if IsComponentSelected('py') then
@@ -856,11 +856,19 @@ begin
 		InterpFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\interpreters\lua.interp');
         DebugMsg('PrepareInterp','Writing interpreter file for lua: ' + InterpFile);
 
-		InterpContent := 'lua=' + ExpandConstant('{app}\bin\luajit.exe') + #10 +
-		          'luajit=' + ExpandConstant('{app}\bin\luajit.exe') + #10 +
-		          '/usr/bin/luajit=' + ExpandConstant('{app}\bin\luajit.exe') + #10 +
-		          '/usr/bin/lua=' + ExpandConstant('{app}\bin\luajit.exe') + #10 +
-		          ':Lua:E::lua::luajit:'#10;
+		if IsComponentSelected('gimpARM64') then
+		begin
+			LuaBin := 'lua5.1.exe'
+		end else
+		begin
+			LuaBin := 'luajit.exe'
+		end;
+
+		InterpContent := 'lua=' + ExpandConstant('{app}\bin\') + LuaBin + #10 +
+		          'luajit=' + ExpandConstant('{app}\bin\') + LuaBin + #10 +
+		          '/usr/bin/luajit=' + ExpandConstant('{app}\bin\') + LuaBin + #10 +
+		          '/usr/bin/lua=' + ExpandConstant('{app}\bin\') + LuaBin + #10 +
+		          ':Lua:E::lua::' + LuaBin + ':'#10;
 
 		if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
 		begin
