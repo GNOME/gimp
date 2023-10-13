@@ -1142,13 +1142,16 @@ endif
 
 ## Lua
 
-lua = find_program('luajit', required: get_option('lua'))
+# At time of writing, lua-lgi works Lua 5.1, Lua 5.2, Lua 5.3 and LuaJIT2. On
+# most platforms, we use luajit. On MSYS2, only lua5.1 works with lua-lgi. This
+# is why we use this order for lua detection.
+lua = find_program('luajit', 'lua5.1', 'lua5.2', 'lua5.3', required: get_option('lua'))
 have_lua = get_option('lua').enabled() or (lua.found() and get_option('lua').auto())
 if not lua.found() and have_lua
   lua_warning = '''
-  Luajit was not found.
+  Neither Luajit nor Lua was found.
   Lua plug-ins will be installed anyway but you should make sure that
-  luajit and LGI are available at installation, otherwise
+  luajit or lua and that LGI are available at installation, otherwise
   installed plug-ins won't be usable.
   '''
   warning(lua_warning)
