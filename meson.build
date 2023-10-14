@@ -1751,12 +1751,13 @@ custom_target('AUTHORS',
   ],
   build_by_default: false,
 )
+date = run_command('date', '--iso-8601=seconds', check: true)
 custom_target('authors.md',
   input : [ 'authors4gimp-web.xsl', 'authors.xml', ],
   output: 'authors.md',
   command: [
     xsltproc,
-    '--stringparam', 'today', '`date --iso-8601=seconds`',
+    '--stringparam', 'today', date.stdout().strip(),
     '-o', '@OUTPUT@',
     '@INPUT@',
   ],
