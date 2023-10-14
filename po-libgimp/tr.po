@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-29 21:05+0000\n"
-"PO-Revision-Date: 2023-09-30 00:16+0300\n"
+"POT-Creation-Date: 2023-10-04 12:21+0000\n"
+"PO-Revision-Date: 2023-10-14 13:04+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -24,14 +24,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 "X-Launchpad-Export-Date: 2010-10-09 17:28+0000\n"
 "X-POOTLE-MTIME: 1436650713.000000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: libgimp/gimpbrushselectbutton.c:130 libgimp/gimppatternselectbutton.c:142
+#: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
 msgstr "_Gözat..."
+
+#: libgimp/gimpdrawablechooser.c:238
+msgid "Browse..."
+msgstr "Göz At..."
 
 #: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
 #, c-format
@@ -170,14 +174,14 @@ msgid "Confirm Save"
 msgstr "Kaydetmeyi Onayla"
 
 #: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:557
+#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
 #: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
 #: libgimpwidgets/gimpquerybox.c:479
 msgid "_Cancel"
-msgstr "_İptal"
+msgstr "İ_ptal"
 
 #: libgimp/gimpexport.c:547
 msgid "C_onfirm"
@@ -192,7 +196,7 @@ msgid "_Ignore"
 msgstr "_Yoksay"
 
 #: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
-#: libgimp/gimpproceduredialog.c:277
+#: libgimp/gimpproceduredialog.c:296 libgimp/gimpproceduredialog.c:569
 msgid "_Export"
 msgstr "_Dışa Aktar"
 
@@ -231,18 +235,28 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:397
+#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:396
 #, c-format
 msgid "Export Image as %s"
 msgstr "Görüntüyü %s Olarak Dışa Aktar"
 
-#: libgimp/gimpimagemetadata.c:284
+#: libgimp/gimpimagemetadata.c:283
 msgid "Background"
 msgstr "Artalan"
 
 #: libgimp/gimpimagemetadata-save.c:760 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
+
+#: libgimp/gimploadprocedure.c:260
+msgid ""
+"This file loading plug-in returned SUCCESS as a status without an image. "
+"This is a bug in the plug-in code. Contact the plug-in developer."
+msgstr ""
+
+#: libgimp/gimpparamspecs-desc.c:54
+msgid "Allowed values:"
+msgstr "İzin verilen değerler:"
 
 #. procedure executed successfully
 #: libgimp/gimppdb.c:552
@@ -350,12 +364,12 @@ msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d yordam sorgulamanız ile eşleşiyor"
 
-#: libgimp/gimpprocedure.c:1924
+#: libgimp/gimpprocedure.c:1959
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "'%s' yordamı dönüş değeri döndürmedi"
 
-#: libgimp/gimpprocedure.c:2015
+#: libgimp/gimpprocedure.c:2050
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -364,7 +378,7 @@ msgstr ""
 "'%s' yordamı, '%s' dönüş değeri için yanlış bir değer türünü döndürdü (#%d). "
 "%s istendi, %s alındı."
 
-#: libgimp/gimpprocedure.c:2027
+#: libgimp/gimpprocedure.c:2062
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
@@ -373,7 +387,7 @@ msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için yanlış bir değer türü ile "
 "çağrıldı (#%d). %s istendi, %s alındı."
 
-#: libgimp/gimpprocedure.c:2062
+#: libgimp/gimpprocedure.c:2097
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -382,7 +396,7 @@ msgstr ""
 "'%s' yordamı, '%s' e, '%s' dönüş değeri olarak dönüştü (#%d, %s türü). Bu "
 "değer, istenenin dışındadır."
 
-#: libgimp/gimpprocedure.c:2076
+#: libgimp/gimpprocedure.c:2111
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -391,13 +405,13 @@ msgstr ""
 "'%s' yordamı, '%s' ile, '%s' bağımsız değişkeni için çağrıldı (#%d,%s türü). "
 "Bu değer istenenin dışındadır."
 
-#: libgimp/gimpprocedure.c:2120
+#: libgimp/gimpprocedure.c:2155
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için geçersiz UTF-8 dizgesi döndürdü."
 
-#: libgimp/gimpprocedure.c:2130
+#: libgimp/gimpprocedure.c:2165
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -406,63 +420,63 @@ msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için geçersiz UTF-8 dizgesiyle "
 "çağrıldı."
 
-#: libgimp/gimpproceduredialog.c:275
+#: libgimp/gimpproceduredialog.c:294 libgimp/gimpproceduredialog.c:567
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Aç"
 
-#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:558
-#: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libgimp/gimpproceduredialog.c:298 libgimp/gimpproceduredialog.c:571
+#: libgimpwidgets/gimpcolorbutton.c:558 libgimpwidgets/gimpfileentry.c:467
+#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
+#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Tamam"
 
-#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:556
+#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:556
 msgid "_Reset"
 msgstr "_Sıfırla"
 
-#: libgimp/gimpproceduredialog.c:339
+#: libgimp/gimpproceduredialog.c:359
 msgid "_Load Saved Settings"
 msgstr "Kaydedilmiş Ayarları _Yükle"
 
-#: libgimp/gimpproceduredialog.c:340
+#: libgimp/gimpproceduredialog.c:360
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "\"Ayarları Kaydet\" düğmesiyle kaydedilen ayarları yükle"
 
-#: libgimp/gimpproceduredialog.c:352
+#: libgimp/gimpproceduredialog.c:372
 msgid "_Save Settings"
 msgstr "Ayarları _Kaydet"
 
-#: libgimp/gimpproceduredialog.c:353
+#: libgimp/gimpproceduredialog.c:373
 msgid "Store current settings for later reuse"
 msgstr "Geçerli ayarları daha sonra yeniden kullanmak için depola"
 
-#: libgimp/gimpproceduredialog.c:734
+#: libgimp/gimpproceduredialog.c:784
 msgid "Brush Chooser"
 msgstr "Fırça Seçici"
 
-#: libgimp/gimpproceduredialog.c:738
+#: libgimp/gimpproceduredialog.c:788
 msgid "Font Chooser"
 msgstr "Yazı Tipi Seçici"
 
-#: libgimp/gimpproceduredialog.c:742
+#: libgimp/gimpproceduredialog.c:792
 msgid "Gradient Chooser"
 msgstr "Renk Geçişi Seçici"
 
-#: libgimp/gimpproceduredialog.c:746
+#: libgimp/gimpproceduredialog.c:796
 msgid "Palette Chooser"
 msgstr "Palet Seçici"
 
-#: libgimp/gimpproceduredialog.c:750
+#: libgimp/gimpproceduredialog.c:800
 msgid "Pattern Chooser"
 msgstr "Desen Seçici"
 
-#: libgimp/gimpproceduredialog.c:2128
+#: libgimp/gimpproceduredialog.c:2492
 msgid "Reset to _Initial Values"
 msgstr "_Başlangıç Değerlerine Sıfırla"
 
-#: libgimp/gimpproceduredialog.c:2137
+#: libgimp/gimpproceduredialog.c:2501
 msgid "Reset to _Factory Defaults"
 msgstr "_Fabrika Öntanımlılarına Sıfırla"
 
@@ -502,60 +516,76 @@ msgstr "Tarih:"
 msgid "Copyright:"
 msgstr "Telif Hakkı:"
 
-#: libgimp/gimpsaveprocedure.c:408
+#: libgimp/gimppropwidgets.c:191
+#, c-format
+msgid "Choose layer: %s"
+msgstr "Katman seç: %s"
+
+#: libgimp/gimppropwidgets.c:193
+#, c-format
+#| msgid "Channel:"
+msgid "Choose channel: %s"
+msgstr "Kanal seç: %s"
+
+#: libgimp/gimppropwidgets.c:195
+#, c-format
+msgid "Choose drawable: %s"
+msgstr "Çizilebilir seç: %s"
+
+#: libgimp/gimpsaveprocedure.c:460
 msgid "Save _Exif"
 msgstr "_Exif Kaydet"
 
-#: libgimp/gimpsaveprocedure.c:409
+#: libgimp/gimpsaveprocedure.c:461
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Exif (Exchangeable image file format) üst verilerini kaydet"
 
-#: libgimp/gimpsaveprocedure.c:414
+#: libgimp/gimpsaveprocedure.c:466
 msgid "Save _IPTC"
 msgstr "_IPTC Kaydet"
 
-#: libgimp/gimpsaveprocedure.c:415
+#: libgimp/gimpsaveprocedure.c:467
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
 "IPTC (International Press Telecommunications Council) üst verilerini kaydet"
 
-#: libgimp/gimpsaveprocedure.c:420
+#: libgimp/gimpsaveprocedure.c:472
 msgid "Save _XMP"
 msgstr "_XMP Kaydet"
 
-#: libgimp/gimpsaveprocedure.c:421
+#: libgimp/gimpsaveprocedure.c:473
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "XMP (Extensible Metadata Platform) üst verilerini kaydet"
 
-#: libgimp/gimpsaveprocedure.c:426
+#: libgimp/gimpsaveprocedure.c:478
 msgid "Save color _profile"
 msgstr "Renk profilini _kaydet"
 
-#: libgimp/gimpsaveprocedure.c:427
+#: libgimp/gimpsaveprocedure.c:479
 msgid "Save the ICC color profile as metadata"
 msgstr "ICC renk profilini üst veri olarak kaydet"
 
-#: libgimp/gimpsaveprocedure.c:432
+#: libgimp/gimpsaveprocedure.c:484
 msgid "Save _thumbnail"
 msgstr "_Küçük resmi kaydet"
 
-#: libgimp/gimpsaveprocedure.c:433
+#: libgimp/gimpsaveprocedure.c:485
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Görüntünün küçük bir sunumunu üst veri olarak kaydet"
 
-#: libgimp/gimpsaveprocedure.c:439
+#: libgimp/gimpsaveprocedure.c:491
 msgid "Save c_omment"
 msgstr "_Yorumu kaydet"
 
-#: libgimp/gimpsaveprocedure.c:440
+#: libgimp/gimpsaveprocedure.c:492
 msgid "Save a comment as metadata"
 msgstr "Yorumu üst veri olarak kaydet"
 
-#: libgimp/gimpsaveprocedure.c:444
+#: libgimp/gimpsaveprocedure.c:496
 msgid "Comment"
 msgstr "Yorum"
 
-#: libgimp/gimpsaveprocedure.c:445
+#: libgimp/gimpsaveprocedure.c:497
 msgid "Image comment"
 msgstr "Görüntü yorumu"
 
@@ -1949,29 +1979,29 @@ msgstr "'%s' renk profili GRİ renk uzayı için değildir."
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "'%s' renk profili CMYK renk uzayı için değildir."
 
-#: libgimpconfig/gimpconfig-deserialize.c:117
+#: libgimpconfig/gimpconfig-deserialize.c:120
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s için alınan jeton geçerli bir UTF-8 dizgesi değil"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:485
+#: libgimpconfig/gimpconfig-deserialize.c:492
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "%s boolean jetonu için beklenen değer 'yes' ya da 'no', alınan değer '%s'"
 
-#: libgimpconfig/gimpconfig-deserialize.c:600
+#: libgimpconfig/gimpconfig-deserialize.c:607
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "geçersiz değer '%s' (jeton %s)"
 
-#: libgimpconfig/gimpconfig-deserialize.c:615
+#: libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "geçersiz değer '%ld' (jeton %s)"
 
-#: libgimpconfig/gimpconfig-deserialize.c:684
+#: libgimpconfig/gimpconfig-deserialize.c:691
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "'%s' jetonu ayrıştırılırken: '%s"
@@ -2173,7 +2203,7 @@ msgstr "Eski:"
 msgid "HTML _notation:"
 msgstr "HTML _gösterimi:"
 
-#: libgimpwidgets/gimpdialog.c:177
+#: libgimpwidgets/gimpdialog.c:181
 msgid "_Help"
 msgstr "Ya_rdım"
 
@@ -2338,7 +2368,7 @@ msgstr "Özel Denetimler Rengi 1"
 msgid "Custom Checks Color 2"
 msgstr "Özel Denetimler Rengi 2"
 
-#: libgimpwidgets/gimppropwidgets.c:2475
+#: libgimpwidgets/gimppropwidgets.c:2474
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
