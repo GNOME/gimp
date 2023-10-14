@@ -11,8 +11,8 @@
 msgid ""
 msgstr "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-05-28 03:13+0000\n"
-"PO-Revision-Date: 2023-06-04 10:00+0100\n"
+"POT-Creation-Date: 2023-10-04 12:21+0000\n"
+"PO-Revision-Date: 2023-10-14 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -21,9 +21,13 @@ msgstr "Project-Id-Version: gimp master\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: libgimp/gimpbrushselectbutton.c:325 libgimp/gimppatternselectbutton.c:335
+#: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
 msgstr "_Arakatu..."
+
+#: libgimp/gimpdrawablechooser.c:238
+msgid "Browse..."
+msgstr "Arakatu..."
 
 #: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
 #, c-format
@@ -157,7 +161,7 @@ msgid "Confirm Save"
 msgstr "Berretsi gordetzea"
 
 #: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:571
+#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -179,7 +183,7 @@ msgid "_Ignore"
 msgstr "E_zikusi egin"
 
 #: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
-#: libgimp/gimpproceduredialog.c:277
+#: libgimp/gimpproceduredialog.c:296 libgimp/gimpproceduredialog.c:569
 msgid "_Export"
 msgstr "_Esportatu"
 
@@ -214,18 +218,28 @@ msgstr "Kanal bat (gordetako hautaketa) %s gisa gordetzera zoaz.\n"
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:397
+#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:396
 #, c-format
 msgid "Export Image as %s"
 msgstr "Esportatu irudia %s gisa"
 
-#: libgimp/gimpimagemetadata.c:284
+#: libgimp/gimpimagemetadata.c:283
 msgid "Background"
 msgstr "Atzeko planoa"
 
 #: libgimp/gimpimagemetadata-save.c:760 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
+
+#: libgimp/gimploadprocedure.c:260
+msgid ""
+"This file loading plug-in returned SUCCESS as a status without an image. "
+"This is a bug in the plug-in code. Contact the plug-in developer."
+msgstr "Fitxategiak kargatzeko plugin honek ARRAKASTA itzuli du egoera gisa, baina irudirik gabe. Pluginaren kodeak akatsa du, jarri harremanetan pluginaren garatzailearekin."
+
+#: libgimp/gimpparamspecs-desc.c:54
+msgid "Allowed values:"
+msgstr "Onartutako balioak:"
 
 #. procedure executed successfully
 #: libgimp/gimppdb.c:552
@@ -335,108 +349,108 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "prozedura %d bat dator kontsultarekin"
 msgstr[1] "%d prozedura bat datoz kontsultarekin"
 
-#: libgimp/gimpprocedure.c:1913
+#: libgimp/gimpprocedure.c:1959
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "'%s' prozedurak ez du itzulerako baliorik itzuli"
 
-#: libgimp/gimpprocedure.c:2004
+#: libgimp/gimpprocedure.c:2050
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr "'%s' prozedurak itzulerako '%s' (#%d) balioaren okerreko balio mota itzuli du. %s espero zen, baina %s jaso da."
 
-#: libgimp/gimpprocedure.c:2016
+#: libgimp/gimpprocedure.c:2062
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
 "'%s' (#%d). Expected %s, got %s."
 msgstr "'%s' prozedurak itzulerako '%s' (#%d) argumentuaren okerreko balio mota itzuli du. %s espero zen, baina %s jaso da."
 
-#: libgimp/gimpprocedure.c:2051
+#: libgimp/gimpprocedure.c:2097
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr "'%s' prozedurak '%s' itzuli du '%s' (#%d, %s mota) itzulerako balio gisa. Balio hau barrutiz kanpo dago."
 
-#: libgimp/gimpprocedure.c:2065
+#: libgimp/gimpprocedure.c:2111
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr "'%1$s' prozedurak '%3$s' (#%4$d, %5$s mota) argumentua '%2$s' balioarekin deitu du. Balio hau barrutiz kanpo dago."
 
-#: libgimp/gimpprocedure.c:2109
+#: libgimp/gimpprocedure.c:2155
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "'%s' prozedurak baliogabeko UTF-8 kate bat itzuli du '%s' argumenturako."
 
-#: libgimp/gimpprocedure.c:2119
+#: libgimp/gimpprocedure.c:2165
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr "'%s' prozedura baliogabeko UTF-8 kate batekin deitu da '%s' argumenturako."
 
-#: libgimp/gimpproceduredialog.c:275
+#: libgimp/gimpproceduredialog.c:294 libgimp/gimpproceduredialog.c:567
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Ireki"
 
-#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:572
-#: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libgimp/gimpproceduredialog.c:298 libgimp/gimpproceduredialog.c:571
+#: libgimpwidgets/gimpcolorbutton.c:558 libgimpwidgets/gimpfileentry.c:467
+#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
+#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Ados"
 
-#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:570
+#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:556
 msgid "_Reset"
 msgstr "_Berrezarri"
 
-#: libgimp/gimpproceduredialog.c:339
+#: libgimp/gimpproceduredialog.c:359
 msgid "_Load Saved Settings"
 msgstr "_Kargatu gordetako ezarpenak"
 
-#: libgimp/gimpproceduredialog.c:340
+#: libgimp/gimpproceduredialog.c:360
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Kargatu \"Gorde ezarpenak\" botoiarekin gordetako ezarpenak"
 
-#: libgimp/gimpproceduredialog.c:352
+#: libgimp/gimpproceduredialog.c:372
 msgid "_Save Settings"
 msgstr "_Gorde ezarpenak"
 
-#: libgimp/gimpproceduredialog.c:353
+#: libgimp/gimpproceduredialog.c:373
 msgid "Store current settings for later reuse"
 msgstr "Bitegiratu uneko ezarpenak geroago erabili ahal izateko"
 
-#: libgimp/gimpproceduredialog.c:734
+#: libgimp/gimpproceduredialog.c:784
 msgid "Brush Chooser"
 msgstr "Brotxaren hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:738
+#: libgimp/gimpproceduredialog.c:788
 msgid "Font Chooser"
 msgstr "Letra-tipoen hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:742
+#: libgimp/gimpproceduredialog.c:792
 msgid "Gradient Chooser"
 msgstr "Gradienteen hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:746
+#: libgimp/gimpproceduredialog.c:796
 msgid "Palette Chooser"
 msgstr "Paleten hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:750
+#: libgimp/gimpproceduredialog.c:800
 msgid "Pattern Chooser"
 msgstr "Ereduen hautatzailea"
 
-#: libgimp/gimpproceduredialog.c:2036
+#: libgimp/gimpproceduredialog.c:2492
 msgid "Reset to _Initial Values"
 msgstr "Berrezarri _hasierako balioak"
 
-#: libgimp/gimpproceduredialog.c:2045
+#: libgimp/gimpproceduredialog.c:2501
 msgid "Reset to _Factory Defaults"
 msgstr "Berrezarri _fabrikako lehenetsiak"
 
@@ -475,6 +489,77 @@ msgstr "Eguna:"
 #: libgimp/gimpprocview.c:269
 msgid "Copyright:"
 msgstr "Copyright-a:"
+
+#: libgimp/gimppropwidgets.c:191
+#, c-format
+msgid "Choose layer: %s"
+msgstr "Aukeratu geruza: %s"
+
+#: libgimp/gimppropwidgets.c:193
+#, c-format
+msgid "Choose channel: %s"
+msgstr "Aukeratu kanala: %s"
+
+#: libgimp/gimppropwidgets.c:195
+#, c-format
+msgid "Choose drawable: %s"
+msgstr "Aukeratu marrazgaia: %s"
+
+#: libgimp/gimpsaveprocedure.c:460
+msgid "Save _Exif"
+msgstr "Gorde _EXIFa"
+
+#: libgimp/gimpsaveprocedure.c:461
+msgid "Save Exif (Exchangeable image file format) metadata"
+msgstr "Gorde EXIF (Exchangeable image file format) metadatuak"
+
+#: libgimp/gimpsaveprocedure.c:466
+msgid "Save _IPTC"
+msgstr "Gorde _IPTCa"
+
+#: libgimp/gimpsaveprocedure.c:467
+msgid "Save IPTC (International Press Telecommunications Council) metadata"
+msgstr "Gorde IPTC (International Press Telecommunications Council) metadatuak"
+
+#: libgimp/gimpsaveprocedure.c:472
+msgid "Save _XMP"
+msgstr "Gorde _XMPa"
+
+#: libgimp/gimpsaveprocedure.c:473
+msgid "Save XMP (Extensible Metadata Platform) metadata"
+msgstr "Gorde XMP (Extensible Metadata Platforma) metadatuak"
+
+#: libgimp/gimpsaveprocedure.c:478
+msgid "Save color _profile"
+msgstr "Gorde kolore-_profila"
+
+#: libgimp/gimpsaveprocedure.c:479
+msgid "Save the ICC color profile as metadata"
+msgstr "Gorde ICC kolore-profila metadatu gisa"
+
+#: libgimp/gimpsaveprocedure.c:484
+msgid "Save _thumbnail"
+msgstr "Gorde _miniatura"
+
+#: libgimp/gimpsaveprocedure.c:485
+msgid "Save a smaller representation of the image as metadata"
+msgstr "Gorde irudiaren ordezko txikiagoa metadatu gisa"
+
+#: libgimp/gimpsaveprocedure.c:491
+msgid "Save c_omment"
+msgstr "Gorde ir_uzkina"
+
+#: libgimp/gimpsaveprocedure.c:492
+msgid "Save a comment as metadata"
+msgstr "Gorde iruzkina metadatu gisa"
+
+#: libgimp/gimpsaveprocedure.c:496
+msgid "Comment"
+msgstr "Iruzkina"
+
+#: libgimp/gimpsaveprocedure.c:497
+msgid "Image comment"
+msgstr "Irudi-iruzkina"
 
 #: libgimp/gimpsaveproceduredialog.c:166
 msgid "Metadata"
@@ -1552,32 +1637,32 @@ msgstr "IPTC datuen analisiak huts egin du."
 msgid "Parsing XMP data failed."
 msgstr "XMP datuen analisiak huts egin du."
 
-#: libgimpbase/gimputils.c:219 libgimpbase/gimputils.c:224
+#: libgimpbase/gimputils.c:220 libgimpbase/gimputils.c:225
 msgid "(invalid UTF-8 string)"
 msgstr "(UTF-8 kate baliogabea)"
 
-#: libgimpbase/gimputils.c:394
+#: libgimpbase/gimputils.c:395
 msgid "File path is NULL"
 msgstr "Fitxategi-bidea NULL da"
 
-#: libgimpbase/gimputils.c:402
+#: libgimpbase/gimputils.c:403
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Errorea UTF-8 fitxategi-izena karaktere zabaletara bihurtzean"
 
-#: libgimpbase/gimputils.c:410
+#: libgimpbase/gimputils.c:411
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() funtzioak huts egin du"
 
-#: libgimpbase/gimputils.c:449
+#: libgimpbase/gimputils.c:450
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Ezin da '%s' baliozko NSURL bihurtu."
 
-#: libgimpbase/gimputils.c:477
+#: libgimpbase/gimputils.c:478
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "org.freedesktop.FileManager1 konexioak huts egin du: "
 
-#: libgimpbase/gimputils.c:501
+#: libgimpbase/gimputils.c:502
 msgid "Calling ShowItems failed: "
 msgstr "ShowItems deiak huts egin du: "
 
@@ -1831,28 +1916,28 @@ msgstr "'%s' kolore-profila ez da GRAY kolore-espaziorako."
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "'%s' kolore-profila ez da CMYK kolore-espaziorako."
 
-#: libgimpconfig/gimpconfig-deserialize.c:116
+#: libgimpconfig/gimpconfig-deserialize.c:120
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s tokenarentzako balioa ez da baliozko UTF-8 katea"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:480
+#: libgimpconfig/gimpconfig-deserialize.c:492
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "'yes' edo 'no' espero zen %s token boolearrarentzat, baina '%s' jaso da"
 
-#: libgimpconfig/gimpconfig-deserialize.c:595
+#: libgimpconfig/gimpconfig-deserialize.c:607
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "baliogabeko '%s' balioa %s tokenarentzat"
 
-#: libgimpconfig/gimpconfig-deserialize.c:610
+#: libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "Baliogabeko '%ld' balioa %s tokenarentzat"
 
-#: libgimpconfig/gimpconfig-deserialize.c:679
+#: libgimpconfig/gimpconfig-deserialize.c:691
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "'%s' tokena analizatzen zen bitartean: %s"
@@ -1956,6 +2041,22 @@ msgstr "Ezin izan da '%s'(r)en koadro txikia sortu: %s"
 msgid "_Search:"
 msgstr "_Bilatu:"
 
+#: libgimpwidgets/gimpcolorbutton.c:380
+msgid "_Foreground Color"
+msgstr "A_urreko planoaren kolorea"
+
+#: libgimpwidgets/gimpcolorbutton.c:381
+msgid "_Background Color"
+msgstr "A_tzeko planoaren kolorea"
+
+#: libgimpwidgets/gimpcolorbutton.c:386
+msgid "Blac_k"
+msgstr "_Beltza"
+
+#: libgimpwidgets/gimpcolorbutton.c:387
+msgid "_White"
+msgstr "_Zuria"
+
 #: libgimpwidgets/gimpcolorhexentry.c:134
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
@@ -2032,6 +2133,10 @@ msgstr "Zaharra:"
 msgid "HTML _notation:"
 msgstr "HTML -notazioa:"
 
+#: libgimpwidgets/gimpdialog.c:181
+msgid "_Help"
+msgstr "_Laguntza"
+
 #: libgimpwidgets/gimpfileentry.c:167
 msgid "Show file location in the file manager"
 msgstr "Erakutsi fitxategiaren kokalekua fitxategi-kudeatzailean"
@@ -2087,6 +2192,22 @@ msgstr "Mebibyteak"
 #: libgimpwidgets/gimpmemsizeentry.c:254
 msgid "Gibibyte"
 msgstr "Gibibyteak"
+
+#: libgimpwidgets/gimppageselector.c:185
+msgid "N Pages"
+msgstr "N orri"
+
+#: libgimpwidgets/gimppageselector.c:186
+msgid "The number of pages to open"
+msgstr "Irekiko den orri kopurua"
+
+#: libgimpwidgets/gimppageselector.c:199
+msgid "Target"
+msgstr "Helburua"
+
+#: libgimpwidgets/gimppageselector.c:200
+msgid "the target to open to"
+msgstr "zein helburutan irekiko den"
 
 #. Count label
 #: libgimpwidgets/gimppageselector.c:283 libgimpwidgets/gimppageselector.c:1079
@@ -2169,7 +2290,7 @@ msgstr "Lauza pertsonalizatuen 1. kolorea"
 msgid "Custom Checks Color 2"
 msgstr "Lauza pertsonalizatuen 2. kolorea"
 
-#: libgimpwidgets/gimppropwidgets.c:2475
+#: libgimpwidgets/gimppropwidgets.c:2474
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2778,75 +2899,78 @@ msgstr "Aurre-eraldaketaren aldaketa geldiuneetan"
 msgid "Aces RRT"
 msgstr "Aces RRT"
 
-#: modules/display-filter-clip-warning.c:121
+#. Translators: "Clip Warning" is the name of a (color) display filter
+#. * that highlights pixels outside of the color space range.
+#. * Shown as a label description.
+#: modules/display-filter-clip-warning.c:124
 msgid "Clip warning color display filter"
 msgstr "Mozte-abisuko kolorea bistaratzeko iragazkia"
 
-#: modules/display-filter-clip-warning.c:158
+#: modules/display-filter-clip-warning.c:161
 msgid "Show shadows"
 msgstr "Erakutsi itzalak"
 
-#: modules/display-filter-clip-warning.c:159
+#: modules/display-filter-clip-warning.c:162
 msgid "Show warning for pixels with a negative component"
 msgstr "Erakutsi abisua osagai negatiboa duten pixeletarako"
 
-#: modules/display-filter-clip-warning.c:165
+#: modules/display-filter-clip-warning.c:168
 msgid "Shadows color"
 msgstr "Itzalen kolorea"
 
-#: modules/display-filter-clip-warning.c:166
+#: modules/display-filter-clip-warning.c:169
 msgid "Shadows warning color"
 msgstr "Itzalen abisuaren kolorea"
 
-#: modules/display-filter-clip-warning.c:178
+#: modules/display-filter-clip-warning.c:181
 msgid "Show highlights"
 msgstr "Erakutsi distirak"
 
-#: modules/display-filter-clip-warning.c:179
+#: modules/display-filter-clip-warning.c:182
 msgid "Show warning for pixels with a component greater than one"
 msgstr "Erakutsi abisua bat baino handiagoa den osagaia duten pixeletarako"
 
-#: modules/display-filter-clip-warning.c:185
+#: modules/display-filter-clip-warning.c:188
 msgid "Highlights color"
 msgstr "Distiren kolorea"
 
-#: modules/display-filter-clip-warning.c:186
+#: modules/display-filter-clip-warning.c:189
 msgid "Highlights warning color"
 msgstr "Distiren abisuaren kolorea"
 
-#: modules/display-filter-clip-warning.c:198
+#: modules/display-filter-clip-warning.c:201
 msgid "Show bogus"
 msgstr "Erakutsi faltsuak"
 
-#: modules/display-filter-clip-warning.c:199
+#: modules/display-filter-clip-warning.c:202
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr "Erakutsi abisua osagai mugagabea edo NaN osagaia duten pixeletarako"
 
-#: modules/display-filter-clip-warning.c:205
+#: modules/display-filter-clip-warning.c:208
 msgid "Bogus color"
 msgstr "Faltsuen kolorea"
 
-#: modules/display-filter-clip-warning.c:206
+#: modules/display-filter-clip-warning.c:209
 msgid "Bogus warning color"
 msgstr "Faltsuen abisuaren kolorea"
 
-#: modules/display-filter-clip-warning.c:218
+#: modules/display-filter-clip-warning.c:221
 msgid "Include alpha component"
 msgstr "Sartu alfa osagaia"
 
-#: modules/display-filter-clip-warning.c:219
+#: modules/display-filter-clip-warning.c:222
 msgid "Include alpha component in the warning"
 msgstr "Sartu alfa osagaia abisuan"
 
-#: modules/display-filter-clip-warning.c:225
+#: modules/display-filter-clip-warning.c:228
 msgid "Include transparent pixels"
 msgstr "Sartu pixel gardenak"
 
-#: modules/display-filter-clip-warning.c:226
+#: modules/display-filter-clip-warning.c:229
 msgid "Include fully transparent pixels in the warning"
 msgstr "Sartu pixel erabat gardenak abisuan"
 
-#: modules/display-filter-clip-warning.c:230
+#: modules/display-filter-clip-warning.c:233
 msgid "Clip Warning"
 msgstr "Mozte-abisua"
 
@@ -2897,18 +3021,6 @@ msgstr "Kontraste-zikloak"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrastea"
-
-#~ msgid "_Foreground Color"
-#~ msgstr "A_urreko planoaren kolorea"
-
-#~ msgid "_Background Color"
-#~ msgstr "A_tzeko planoaren kolorea"
-
-#~ msgid "Blac_k"
-#~ msgstr "_Beltza"
-
-#~ msgid "_White"
-#~ msgstr "_Zuria"
 
 #~ msgid "Brush Selection"
 #~ msgstr "Brotxaren hautapena"
