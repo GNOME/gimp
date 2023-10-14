@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-06 20:17+0000\n"
-"PO-Revision-Date: 2023-09-07 00:26+0300\n"
+"POT-Creation-Date: 2023-10-04 12:22+0000\n"
+"PO-Revision-Date: 2023-10-14 13:07+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2010-10-09 17:28+0000\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #: plug-ins/script-fu/script-fu.c:122
 msgid "Script-Fu _Console"
@@ -104,48 +104,48 @@ msgstr ""
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu değerlendirme kipi yalnızca etkileşimsiz çağrıma izin verir"
 
-#: plug-ins/script-fu/console/script-fu-console.c:125
+#: plug-ins/script-fu/console/script-fu-console.c:119
 msgid "Script Console"
 msgstr "Betik Uçbirimi"
 
-#: plug-ins/script-fu/console/script-fu-console.c:130
-#: plug-ins/script-fu/console/script-fu-console.c:259
+#: plug-ins/script-fu/console/script-fu-console.c:124
+#: plug-ins/script-fu/console/script-fu-console.c:251
 msgid "_Save"
 msgstr "_Kaydet"
 
-#: plug-ins/script-fu/console/script-fu-console.c:131
+#: plug-ins/script-fu/console/script-fu-console.c:125
 msgid "C_lear"
 msgstr "_Temizle"
 
-#: plug-ins/script-fu/console/script-fu-console.c:132
-#: plug-ins/script-fu/console/script-fu-console.c:332
+#: plug-ins/script-fu/console/script-fu-console.c:126
+#: plug-ins/script-fu/console/script-fu-console.c:324
 msgid "_Close"
 msgstr "_Kapat"
 
-#: plug-ins/script-fu/console/script-fu-console.c:193
+#: plug-ins/script-fu/console/script-fu-console.c:187
 msgid "_Browse..."
 msgstr "_Gözat..."
 
-#: plug-ins/script-fu/console/script-fu-console.c:254
+#: plug-ins/script-fu/console/script-fu-console.c:246
 msgid "Save Script-Fu Console Output"
 msgstr "Script-Fu Uçbirimi Çıktısını Kaydet"
 
-#: plug-ins/script-fu/console/script-fu-console.c:258
-#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/console/script-fu-console.c:250
+#: plug-ins/script-fu/server/script-fu-server.c:888
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:218
 msgid "_Cancel"
-msgstr "_İptal"
+msgstr "İ_ptal"
 
-#: plug-ins/script-fu/console/script-fu-console.c:301
+#: plug-ins/script-fu/console/script-fu-console.c:293
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Yazma için '%s' açılamadı: %s"
 
-#: plug-ins/script-fu/console/script-fu-console.c:327
+#: plug-ins/script-fu/console/script-fu-console.c:319
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu Yordam Tarayıcı"
 
-#: plug-ins/script-fu/console/script-fu-console.c:331
+#: plug-ins/script-fu/console/script-fu-console.c:323
 msgid "_Apply"
 msgstr "_Uygula"
 
@@ -158,27 +158,27 @@ msgstr "TinyScheme'ya hoşgeldiniz"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Scheme dilinde GIMP betiği oluşturma"
 
-#: plug-ins/script-fu/server/script-fu-server.c:880
+#: plug-ins/script-fu/server/script-fu-server.c:884
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu Sunucu Seçenekleri"
 
-#: plug-ins/script-fu/server/script-fu-server.c:885
+#: plug-ins/script-fu/server/script-fu-server.c:889
 msgid "_Start Server"
 msgstr "_Sunucuyu Başlat"
 
-#: plug-ins/script-fu/server/script-fu-server.c:918
+#: plug-ins/script-fu/server/script-fu-server.c:922
 msgid "Listen on IP:"
 msgstr "IP'yi dinle:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:925
+#: plug-ins/script-fu/server/script-fu-server.c:929
 msgid "Server port:"
 msgstr "Sunucu bağlantı noktası:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:931
+#: plug-ins/script-fu/server/script-fu-server.c:935
 msgid "Server logfile:"
 msgstr "Sunucu günlük dosyası:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:944
+#: plug-ins/script-fu/server/script-fu-server.c:948
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -253,7 +253,7 @@ msgstr "Script-Fu Renk Geçişi Seçimi"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu Fırça Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:868
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:849
 #, c-format
 msgid "Error while executing %s:"
 msgstr "%s yürütülürken hata:"
@@ -575,23 +575,23 @@ msgstr "Yükselme"
 msgid "Depth"
 msgstr "Derinlik"
 
-#: plug-ins/script-fu/scripts/coffee.scm:36
+#: plug-ins/script-fu/scripts/coffee.scm:37
 msgid "Stain"
 msgstr "Leke"
 
-#: plug-ins/script-fu/scripts/coffee.scm:82
+#: plug-ins/script-fu/scripts/coffee.scm:91
 msgid "_Coffee Stain..."
 msgstr "_Kahve Lekesi..."
 
-#: plug-ins/script-fu/scripts/coffee.scm:83
+#: plug-ins/script-fu/scripts/coffee.scm:92
 msgid "Add realistic looking coffee stains to the image"
 msgstr "Görüntüye gerçek gibi görünen kahve lekesi ekle"
 
-#: plug-ins/script-fu/scripts/coffee.scm:90
+#: plug-ins/script-fu/scripts/coffee.scm:99
 msgid "Stains"
 msgstr "Lekeler"
 
-#: plug-ins/script-fu/scripts/coffee.scm:91
+#: plug-ins/script-fu/scripts/coffee.scm:100
 msgid "Darken only"
 msgstr "Yalnızca koyulaştır"
 
