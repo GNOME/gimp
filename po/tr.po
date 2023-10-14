@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-04 12:21+0000\n"
-"PO-Revision-Date: 2023-10-06 04:09+0300\n"
+"POT-Creation-Date: 2023-10-09 13:47+0000\n"
+"PO-Revision-Date: 2023-10-14 12:56+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnometurk@gnome.org>\n"
 "Language: tr\n"
@@ -52,7 +52,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 "X-POOTLE-MTIME: 1437505389.000000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -364,6 +364,7 @@ msgstr "Tamponlar"
 
 #: app/actions/actions.c:121 app/dialogs/dialogs.c:379
 #: app/propgui/gimppropgui-newsprint.c:160
+#: app/widgets/gimppickablechooser.c:295
 msgid "Channels"
 msgstr "Kanallar"
 
@@ -471,11 +472,12 @@ msgid "Image"
 msgstr "Görüntü"
 
 #: app/actions/actions.c:193 app/dialogs/dialogs.c:337
+#: app/widgets/gimppickablechooser.c:214
 msgid "Images"
 msgstr "Görüntüler"
 
 #: app/actions/actions.c:196 app/dialogs/dialogs.c:375
-#: app/dialogs/resize-dialog.c:171
+#: app/dialogs/resize-dialog.c:171 app/widgets/gimppickablechooser.c:270
 msgid "Layers"
 msgstr "Katmanlar"
 
@@ -1087,72 +1089,88 @@ msgstr "%d Kanalı Kaldır"
 msgid "Channels to selection"
 msgstr "Kanallardan seçime"
 
-#: app/actions/colormap-actions.c:45
+#: app/actions/colormap-actions.c:46
 msgctxt "colormap-action"
 msgid "_Edit Color..."
 msgstr "_Renk Düzenle..."
 
-#: app/actions/colormap-actions.c:46 app/widgets/gimpcolordialog.c:201
+#: app/actions/colormap-actions.c:47 app/widgets/gimpcolordialog.c:201
 msgctxt "colormap-action"
 msgid "Edit this color"
 msgstr "Bu rengi düzenle"
 
-#: app/actions/colormap-actions.c:54
+#: app/actions/colormap-actions.c:52
+#, fuzzy
+#| msgctxt "palette-editor-action"
+#| msgid "_Delete Color"
+msgctxt "colormap-action"
+msgid "_Delete Color..."
+msgstr "_Rengi Sil"
+
+#: app/actions/colormap-actions.c:53
+#, fuzzy
+#| msgctxt "colormap-action"
+#| msgid "_Select this Color"
+msgctxt "colormap-action"
+msgid "Delete this color"
+msgstr "Bu Rengi _Seç"
+
+#: app/actions/colormap-actions.c:61
 msgctxt "colormap-action"
 msgid "_Add Color from FG"
 msgstr "_ÖA'dan Renk Ekle"
 
-#: app/actions/colormap-actions.c:55 app/widgets/gimpcolordialog.c:219
+#: app/actions/colormap-actions.c:62 app/widgets/gimpcolordialog.c:219
 msgctxt "colormap-action"
 msgid "Add current foreground color"
 msgstr "Geçerli önalan rengini ekle"
 
-#: app/actions/colormap-actions.c:60
+#: app/actions/colormap-actions.c:67
 msgctxt "colormap-action"
 msgid "_Add Color from BG"
 msgstr "_AA'ya Renk Ekle"
 
-#: app/actions/colormap-actions.c:61
+#: app/actions/colormap-actions.c:68
 msgctxt "colormap-action"
 msgid "Add current background color"
 msgstr "Geçerli artalan rengini ekle"
 
-#: app/actions/colormap-actions.c:69
+#: app/actions/colormap-actions.c:76
 msgctxt "colormap-action"
 msgid "_Select this Color"
 msgstr "Bu Rengi _Seç"
 
-#: app/actions/colormap-actions.c:70
+#: app/actions/colormap-actions.c:77
 msgctxt "colormap-action"
 msgid "Select all pixels with this color"
 msgstr "Bu renkteki tüm pikselleri seç"
 
-#: app/actions/colormap-actions.c:75
+#: app/actions/colormap-actions.c:82
 msgctxt "colormap-action"
 msgid "_Add to Selection"
 msgstr "Seçime _Ekle"
 
-#: app/actions/colormap-actions.c:76
+#: app/actions/colormap-actions.c:83
 msgctxt "colormap-action"
 msgid "Add all pixels with this color to the current selection"
 msgstr "Bu renkteki tüm pikselleri geçerli seçime ekle"
 
-#: app/actions/colormap-actions.c:81
+#: app/actions/colormap-actions.c:88
 msgctxt "colormap-action"
 msgid "_Subtract from Selection"
 msgstr "Seçimden Çık_ar"
 
-#: app/actions/colormap-actions.c:82
+#: app/actions/colormap-actions.c:89
 msgctxt "colormap-action"
 msgid "Subtract all pixels with this color from the current selection"
 msgstr "Bu renkteki tüm pikselleri geçerli seçimden çıkar"
 
-#: app/actions/colormap-actions.c:87
+#: app/actions/colormap-actions.c:94
 msgctxt "colormap-action"
 msgid "_Intersect with Selection"
 msgstr "Seçimle Ke_siştir"
 
-#: app/actions/colormap-actions.c:88
+#: app/actions/colormap-actions.c:95
 msgctxt "colormap-action"
 msgid "Intersect all pixels with this color with the current selection"
 msgstr "Bu renkteki tüm pikselleri geçerli seçimle kesiştir"
@@ -2465,7 +2483,7 @@ msgstr "240 Saniye"
 #: app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91
 #: app/widgets/gimpsettingsbox.c:711
 msgid "_Cancel"
-msgstr "_İptal"
+msgstr "İ_ptal"
 
 #: app/actions/dashboard-commands.c:119
 msgid "_Record"
@@ -2538,7 +2556,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2430
-#: app/core/gimppalette.c:428 app/core/gimppalette-import.c:213
+#: app/core/gimppalette.c:465 app/core/gimppalette-import.c:213
 #: app/core/gimppalette-load.c:243 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -5567,7 +5585,7 @@ msgstr "Görüntüye bir renk profili uygula"
 #: app/actions/image-actions.c:79
 msgctxt "image-action"
 msgid "_Discard Color Profile"
-msgstr "Renk Profilinden _Vazgeç"
+msgstr "Renk Profilini _Gözden Çıkar"
 
 #: app/actions/image-actions.c:80
 msgctxt "image-action"
@@ -5719,7 +5737,7 @@ msgid ""
 "profile."
 msgstr ""
 "Görüntü için geçici olarak bir sRGB profili kullan. Bu, görüntünün renk "
-"profilinden vazgeçmekle aynıdır, ancak profili kolayca geri yüklemenizi "
+"profilini gözden çıkarmakla aynıdır, ancak profili kolayca geri yüklemenizi "
 "sağlar."
 
 #: app/actions/image-actions.c:175
@@ -6292,7 +6310,7 @@ msgstr "Görünen tüm katmanları bir katmana birleştir ve saydamlığı kald�
 #: app/actions/layers-actions.c:177
 msgctxt "layers-action"
 msgid "_Discard Text Information"
-msgstr "_Metin Bilgisinden Vazgeç"
+msgstr "_Metin Bilgisini Gözden Çıkar"
 
 #: app/actions/layers-actions.c:178
 msgctxt "layers-action"
@@ -6930,7 +6948,7 @@ msgstr "%d Katmanı Kaldır"
 
 #: app/actions/layers-commands.c:994 app/text/gimptextlayer.c:585
 msgid "Discard Text Information"
-msgstr "Metin Bilgisinden Vazgeç"
+msgstr "Metin Bilgisini Gözden Çıkar"
 
 #: app/actions/layers-commands.c:1013
 msgid "Add Paths"
@@ -10350,8 +10368,10 @@ msgid "Timestamp of the last update check."
 msgstr "Son güncelleme denetiminin zaman damgası."
 
 #: app/config/gimprc-blurbs.h:53
-msgid "How to handle embedded color profiles when opening a file."
-msgstr "Gömülü kullanım profillerinin bir dosya açarken nasıl ele alınacağı."
+#, fuzzy
+#| msgid "The image '%s' has an embedded color profile"
+msgid "What to do when opening a file with an embedded ICC color profile."
+msgstr "'%s' görüntüsü yerleşik bir renk profiline sahip"
 
 #: app/config/gimprc-blurbs.h:56
 msgid "Sets the default folder path for all color profile file dialogs."
@@ -11170,7 +11190,7 @@ msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "'Görünen Katmanları Birleştir' iletişim kutusu için öntanımlı 'Görünmez "
-"katmanlardan vazgeç' durumunu ayarlar."
+"katmanları gözden çıkar' durumunu ayarlar."
 
 #: app/config/gimprc-blurbs.h:653
 msgid "Sets the default channel name for the 'New Channel' dialog."
@@ -11919,12 +11939,12 @@ msgstr "Ne yapılacağını sor"
 #: app/core/core-enums.c:956
 msgctxt "metadata-rotation-policy"
 msgid "Discard metadata without rotating"
-msgstr "Döndürmeden üst veriden vazgeç"
+msgstr "Döndürmeden üst verileri gözden çıkar"
 
 #: app/core/core-enums.c:957
 msgctxt "metadata-rotation-policy"
 msgid "Rotate the image then discard metadata"
-msgstr "Görüntüyü döndür ve üst verilerden vazgeç"
+msgstr "Görüntüyü döndür ve üst verileri gözden çıkar"
 
 # Wintab burada Windows işletim sisteminde kullanılan bir programın adı, çevirmeyin!
 #: app/core/core-enums.c:1030
@@ -11968,504 +11988,512 @@ msgctxt "trc-type"
 msgid "Perceptual"
 msgstr "Algısal"
 
-#: app/core/core-enums.c:1292
+#: app/core/core-enums.c:1293
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<geçersiz>>"
 
-#: app/core/core-enums.c:1293
+#: app/core/core-enums.c:1294
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Görüntüyü ölçekle"
 
-#: app/core/core-enums.c:1294
+#: app/core/core-enums.c:1295
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Görüntü boyutunu değiştir"
 
-#: app/core/core-enums.c:1295
+#: app/core/core-enums.c:1296
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Görüntüyü çevir"
 
-#: app/core/core-enums.c:1296
+#: app/core/core-enums.c:1297
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Görüntüyü döndür"
 
-#: app/core/core-enums.c:1297
+#: app/core/core-enums.c:1298
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "Görüntüyü dönüştür"
 
-#: app/core/core-enums.c:1298
+#: app/core/core-enums.c:1299
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Görüntüyü kırp"
 
-#: app/core/core-enums.c:1299
+#: app/core/core-enums.c:1300
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Görüntüyü dönüştür"
 
-#: app/core/core-enums.c:1300
+#: app/core/core-enums.c:1301
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Ögeyi kaldır"
 
-#: app/core/core-enums.c:1301 app/core/core-enums.c:1354
+#: app/core/core-enums.c:1302 app/core/core-enums.c:1356
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Ögeyi yeniden sırala"
 
-#: app/core/core-enums.c:1302
+#: app/core/core-enums.c:1303
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Katmanları birleştir"
 
-#: app/core/core-enums.c:1303
+#: app/core/core-enums.c:1304
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Yolları birleştir"
 
-#: app/core/core-enums.c:1304
+#: app/core/core-enums.c:1305
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Hızlı Maske"
 
-#: app/core/core-enums.c:1305 app/core/core-enums.c:1344
+#: app/core/core-enums.c:1306 app/core/core-enums.c:1346
 #: app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Izgara"
 
-#: app/core/core-enums.c:1306 app/core/core-enums.c:1348
+#: app/core/core-enums.c:1307
+#, fuzzy
+#| msgctxt "colormap-action"
+#| msgid "Colormap Menu"
+msgctxt "undo-type"
+msgid "Colormap remapping"
+msgstr "Renk Eşlemi Menüsü"
+
+#: app/core/core-enums.c:1308 app/core/core-enums.c:1350
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Kılavuz"
 
-#: app/core/core-enums.c:1307 app/core/core-enums.c:1349
+#: app/core/core-enums.c:1309 app/core/core-enums.c:1351
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Örnek Nokta"
 
-#: app/core/core-enums.c:1308 app/core/core-enums.c:1350
+#: app/core/core-enums.c:1310 app/core/core-enums.c:1352
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Katman/Kanal"
 
-#: app/core/core-enums.c:1309 app/core/core-enums.c:1351
+#: app/core/core-enums.c:1311 app/core/core-enums.c:1353
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Katman/Kanal değişikliği"
 
-#: app/core/core-enums.c:1310 app/core/core-enums.c:1353
+#: app/core/core-enums.c:1312 app/core/core-enums.c:1355
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Seçim maskesi"
 
-#: app/core/core-enums.c:1311 app/core/core-enums.c:1357
+#: app/core/core-enums.c:1313 app/core/core-enums.c:1359
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Nesne görünürlüğü"
 
-#: app/core/core-enums.c:1312
+#: app/core/core-enums.c:1314
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "İçerikleri Kilitle/Kilidini Aç"
 
-#: app/core/core-enums.c:1313 app/core/core-enums.c:1360
+#: app/core/core-enums.c:1315 app/core/core-enums.c:1362
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Konumu Kilitle/Kilidini Aç"
 
-#: app/core/core-enums.c:1314 app/core/core-enums.c:1361
+#: app/core/core-enums.c:1316 app/core/core-enums.c:1363
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
 msgstr "Görünürlüğü Kilitle/Kilidini Aç"
 
-#: app/core/core-enums.c:1315
+#: app/core/core-enums.c:1317
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Nesne özellikleri"
 
-#: app/core/core-enums.c:1316 app/core/core-enums.c:1356
+#: app/core/core-enums.c:1318 app/core/core-enums.c:1358
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Ögeyi taşı"
 
-#: app/core/core-enums.c:1317
+#: app/core/core-enums.c:1319
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Ögeyi ölçekle"
 
-#: app/core/core-enums.c:1318
+#: app/core/core-enums.c:1320
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Ögeyi yeniden boyutlandır"
 
-#: app/core/core-enums.c:1319
+#: app/core/core-enums.c:1321
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Katman ekle"
 
-#: app/core/core-enums.c:1320
+#: app/core/core-enums.c:1322
 msgctxt "undo-type"
 msgid "Add alpha channel"
 msgstr "Alfa kanalı ekle"
 
-#: app/core/core-enums.c:1321 app/core/core-enums.c:1377
+#: app/core/core-enums.c:1323 app/core/core-enums.c:1379
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Katman maskesi ekle"
 
-#: app/core/core-enums.c:1322 app/core/core-enums.c:1379
+#: app/core/core-enums.c:1324 app/core/core-enums.c:1381
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Katman maskesi uygula"
 
-#: app/core/core-enums.c:1323
+#: app/core/core-enums.c:1325
 msgctxt "undo-type"
 msgid "Remove alpha channel"
 msgstr "Alfa kanalını kaldır"
 
-#: app/core/core-enums.c:1324
+#: app/core/core-enums.c:1326
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
 msgstr "Alfa kanallarını Kilitle/Kilidini aç"
 
-#: app/core/core-enums.c:1325
+#: app/core/core-enums.c:1327
 msgctxt "undo-type"
 msgid "Set layers opacity"
 msgstr "Katmanların matlığını ayarla"
 
-#: app/core/core-enums.c:1326
+#: app/core/core-enums.c:1328
 msgctxt "undo-type"
 msgid "Set layers mode"
 msgstr "Katmanların kipini ayarla"
 
-#: app/core/core-enums.c:1327
+#: app/core/core-enums.c:1329
 msgctxt "undo-type"
 msgid "Add channels"
 msgstr "Kanal ekle"
 
-#: app/core/core-enums.c:1328 app/core/core-enums.c:1387
+#: app/core/core-enums.c:1330 app/core/core-enums.c:1389
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Yüzen seçimden katmana"
 
-#: app/core/core-enums.c:1329
+#: app/core/core-enums.c:1331
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Seçimi yüzdür"
 
-#: app/core/core-enums.c:1330
+#: app/core/core-enums.c:1332
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Yüzen seçimi çıpala"
 
-#: app/core/core-enums.c:1331 app/core/gimp-edit.c:764
+#: app/core/core-enums.c:1333 app/core/gimp-edit.c:764
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Yapıştır"
 
-#: app/core/core-enums.c:1332 app/core/gimp-edit.c:1116
+#: app/core/core-enums.c:1334 app/core/gimp-edit.c:1116
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Kes"
 
-#: app/core/core-enums.c:1333
+#: app/core/core-enums.c:1335
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Metin"
 
-#: app/core/core-enums.c:1334 app/core/gimpdrawable-transform.c:721
+#: app/core/core-enums.c:1336 app/core/gimpdrawable-transform.c:721
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Dönüşüm"
 
-#: app/core/core-enums.c:1335 app/core/core-enums.c:1389
+#: app/core/core-enums.c:1337 app/core/core-enums.c:1391
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Boya"
 
-#: app/core/core-enums.c:1336 app/core/core-enums.c:1392
+#: app/core/core-enums.c:1338 app/core/core-enums.c:1394
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Paraziti iliştir"
 
-#: app/core/core-enums.c:1337 app/core/core-enums.c:1393
+#: app/core/core-enums.c:1339 app/core/core-enums.c:1395
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Paraziti kaldır"
 
-#: app/core/core-enums.c:1338
+#: app/core/core-enums.c:1340
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Yolları içe aktar"
 
-#: app/core/core-enums.c:1339
+#: app/core/core-enums.c:1341
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Eklenti"
 
-#: app/core/core-enums.c:1340
+#: app/core/core-enums.c:1342
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Görüntü türü"
 
-#: app/core/core-enums.c:1341
+#: app/core/core-enums.c:1343
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Görüntü hassasiyeti"
 
-#: app/core/core-enums.c:1342
+#: app/core/core-enums.c:1344
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Görüntü boyutu"
 
-#: app/core/core-enums.c:1343
+#: app/core/core-enums.c:1345
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Görüntü çözünürlüğü değiştirme"
 
-#: app/core/core-enums.c:1345
+#: app/core/core-enums.c:1347
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Üst veriyi değiştir"
 
-#: app/core/core-enums.c:1346
+#: app/core/core-enums.c:1348
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "İndekli paleti değiştir"
 
-#: app/core/core-enums.c:1347
+#: app/core/core-enums.c:1349
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
 msgstr "Renk profilini gizle/göster"
 
-#: app/core/core-enums.c:1352
+#: app/core/core-enums.c:1354
 msgctxt "undo-type"
 msgid "Layer/Channel format"
 msgstr "Katman/Kanal biçimi"
 
-#: app/core/core-enums.c:1355
+#: app/core/core-enums.c:1357
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Ögeyi yeniden adlandır"
 
-#: app/core/core-enums.c:1358
+#: app/core/core-enums.c:1360
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Nesne renk etiketi"
 
-#: app/core/core-enums.c:1359
+#: app/core/core-enums.c:1361
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "İçeriği Kilitle/Kilidini Aç"
 
-#: app/core/core-enums.c:1362
+#: app/core/core-enums.c:1364
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Yeni katman"
 
-#: app/core/core-enums.c:1363
+#: app/core/core-enums.c:1365
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Katmanı sil"
 
-#: app/core/core-enums.c:1364
+#: app/core/core-enums.c:1366
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Katman kipini ayarla"
 
-#: app/core/core-enums.c:1365
+#: app/core/core-enums.c:1367
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Katman matlığını ayarla"
 
-#: app/core/core-enums.c:1366
+#: app/core/core-enums.c:1368
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Alfa kanalını Kilitle/Kilidini Aç"
 
-#: app/core/core-enums.c:1367
+#: app/core/core-enums.c:1369
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Katman kümesi boyutlandırmasını askıya al"
 
-#: app/core/core-enums.c:1368
+#: app/core/core-enums.c:1370
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Katman kümesi boyutlandırmasına devam et"
 
-#: app/core/core-enums.c:1369
+#: app/core/core-enums.c:1371
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "Katman kümesi maskesini askıya al"
 
-#: app/core/core-enums.c:1370
+#: app/core/core-enums.c:1372
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "Katman kümesi maskesine devam et"
 
-#: app/core/core-enums.c:1371
+#: app/core/core-enums.c:1373
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Katman kümesi dönüştürmeyi başlat"
 
-#: app/core/core-enums.c:1372
+#: app/core/core-enums.c:1374
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Katman kümesi dönüştürmeyi bitir"
 
-#: app/core/core-enums.c:1373
+#: app/core/core-enums.c:1375
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Kümelenmiş katmanları dönüştür"
 
-#: app/core/core-enums.c:1374
+#: app/core/core-enums.c:1376
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Metin katmanı"
 
-#: app/core/core-enums.c:1375
+#: app/core/core-enums.c:1377
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Metin katmanı değişikliği"
 
-#: app/core/core-enums.c:1376
+#: app/core/core-enums.c:1378
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Metin katmanını dönüştür"
 
-#: app/core/core-enums.c:1378
+#: app/core/core-enums.c:1380
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Katman maskesini sil"
 
-#: app/core/core-enums.c:1380
+#: app/core/core-enums.c:1382
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Katman maskesini göster"
 
-#: app/core/core-enums.c:1381
+#: app/core/core-enums.c:1383
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Yeni kanal"
 
-#: app/core/core-enums.c:1382
+#: app/core/core-enums.c:1384
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Kanalı sil"
 
-#: app/core/core-enums.c:1383
+#: app/core/core-enums.c:1385
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Kanal rengi"
 
-#: app/core/core-enums.c:1384
+#: app/core/core-enums.c:1386
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Yeni yol"
 
-#: app/core/core-enums.c:1385
+#: app/core/core-enums.c:1387
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Yolu sil"
 
-#: app/core/core-enums.c:1386
+#: app/core/core-enums.c:1388
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Yol değişikliği"
 
-#: app/core/core-enums.c:1388
+#: app/core/core-enums.c:1390
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Izgarayı döndür"
 
-#: app/core/core-enums.c:1390
+#: app/core/core-enums.c:1392
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Mürekkep"
 
-#: app/core/core-enums.c:1391
+#: app/core/core-enums.c:1393
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Önalanı seç"
 
-#: app/core/core-enums.c:1394
+#: app/core/core-enums.c:1396
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Geri alınabilir değil"
 
-#: app/core/core-enums.c:1429
+#: app/core/core-enums.c:1431
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Ufak"
 
-#: app/core/core-enums.c:1430
+#: app/core/core-enums.c:1432
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Çok küçük"
 
-#: app/core/core-enums.c:1431
+#: app/core/core-enums.c:1433
 msgctxt "view-size"
 msgid "Small"
 msgstr "Küçük"
 
-#: app/core/core-enums.c:1432
+#: app/core/core-enums.c:1434
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Orta"
 
-#: app/core/core-enums.c:1433
+#: app/core/core-enums.c:1435
 msgctxt "view-size"
 msgid "Large"
 msgstr "Büyük"
 
-#: app/core/core-enums.c:1434
+#: app/core/core-enums.c:1436
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Çok büyük"
 
-#: app/core/core-enums.c:1435
+#: app/core/core-enums.c:1437
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Kocaman"
 
-#: app/core/core-enums.c:1436
+#: app/core/core-enums.c:1438
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Muazzam"
 
-#: app/core/core-enums.c:1437
+#: app/core/core-enums.c:1439
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Devasa"
 
-#: app/core/core-enums.c:1465
+#: app/core/core-enums.c:1467
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Liste olarak göster"
 
-#: app/core/core-enums.c:1466
+#: app/core/core-enums.c:1468
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Izgara olarak göster"
 
-#: app/core/core-enums.c:1495
+#: app/core/core-enums.c:1497
 msgctxt "select-method"
 msgid "Selection by basic text search"
 msgstr "Temel metin aramasıyla seçim"
 
-#: app/core/core-enums.c:1496
+#: app/core/core-enums.c:1498
 msgctxt "select-method"
 msgid "Selection by regular expression search"
 msgstr "Düzenli ifade aramasıyla seçim"
 
 # Glob burada program adı: https://man7.org/linux/man-pages/man7/glob.7.html
-#: app/core/core-enums.c:1497
+#: app/core/core-enums.c:1499
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
 msgstr "Glob desen aramasıyla seçim"
@@ -12675,12 +12703,12 @@ msgid "Please wait: %s\n"
 msgstr "Lütfen bekleyin: %s\n"
 
 #: app/core/gimp-internal-data.c:286 app/core/gimp-internal-data.c:299
-#: app/core/gimpdata.c:627 app/core/gimpdata.c:640
+#: app/core/gimpdata.c:650 app/core/gimpdata.c:663
 #, c-format
 msgid "Error saving '%s': "
 msgstr "'%s' kaydedilirken hata: "
 
-#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:646
+#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:669
 #, c-format
 msgid "Error saving '%s'"
 msgstr "'%s' kaydedilirken hata"
@@ -13196,8 +13224,8 @@ msgstr "Yazı tipi"
 msgid "Tool Preset"
 msgstr "Araç Önayarları"
 
-#: app/core/gimpdatafactory.c:388 app/core/gimpdatafactory.c:422
-#: app/core/gimpdatafactory.c:768 app/core/gimpdatafactory.c:799
+#: app/core/gimpdatafactory.c:388 app/core/gimpdatafactory.c:425
+#: app/core/gimpdatafactory.c:776 app/core/gimpdatafactory.c:807
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -13208,22 +13236,22 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdatafactory.c:461 app/core/gimpdatafactory.c:464
+#: app/core/gimpdatafactory.c:465 app/core/gimpdatafactory.c:468
 #: app/core/gimpitem.c:572 app/core/gimpitem.c:575
 msgid "copy"
 msgstr "kopyala"
 
-#: app/core/gimpdatafactory.c:473 app/core/gimpitem.c:583
+#: app/core/gimpdatafactory.c:477 app/core/gimpitem.c:583
 #, c-format
 msgid "%s copy"
 msgstr "%s kopyası"
 
-#: app/core/gimpdatafactory.c:630 app/tools/gimptextoptions.c:781
+#: app/core/gimpdatafactory.c:638 app/tools/gimptextoptions.c:781
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Yazı tipleri yükleniyor (bu biraz zaman alabilir...)"
 
-#: app/core/gimpdatafactory.c:973
+#: app/core/gimpdatafactory.c:981
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -13234,7 +13262,7 @@ msgstr ""
 "klasörü oluşturun veya Tercihler iletişim kutusunun 'Klasörler' bölümünden "
 "yapılandırmanızı düzeltin."
 
-#: app/core/gimpdatafactory.c:992
+#: app/core/gimpdatafactory.c:1000
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
 "your data search path. You probably edited the gimprc file manually, please "
@@ -13244,7 +13272,7 @@ msgstr ""
 "yolunuzun bir parçası değil. Muhtemelen gimprc dosyasını elle düzenlediniz. "
 "Lütfen Tercihler iletişim kutusunun 'Klasörler' bölümünden bunu düzeltin."
 
-#: app/core/gimpdatafactory.c:1002
+#: app/core/gimpdatafactory.c:1010
 msgid "You don't have any writable data folder configured."
 msgstr "Yapılandırılmış, yazılabilir bir veri klasörüne sahip değilsiniz."
 
@@ -13795,7 +13823,7 @@ msgstr "Renk profili atanıyor"
 
 #: app/core/gimpimage-color-profile.c:617
 msgid "Discarding color profile"
-msgstr "Renk profilinden vazgeçiliyor"
+msgstr "Renk profili gözden çıkarılıyor"
 
 #: app/core/gimpimage-color-profile.c:621
 msgid "Assign color profile"
@@ -13803,7 +13831,7 @@ msgstr "Renk profili ata"
 
 #: app/core/gimpimage-color-profile.c:622
 msgid "Discard color profile"
-msgstr "Renk profilinden vazgeç"
+msgstr "Renk profilini gözden çıkar"
 
 #: app/core/gimpimage-color-profile.c:665
 #, c-format
@@ -13814,30 +13842,38 @@ msgstr "'%s' '%s' ye dönüştürülüyor"
 msgid "Color profile conversion"
 msgstr "Renk profili dönüştürme"
 
-#: app/core/gimpimage-colormap.c:67
+#: app/core/gimpimage-colormap.c:85
 #, c-format
 msgid "Colormap of Image #%d (%s)"
 msgstr "Görüntünün renk eşlemi #%d (%s)"
 
-#: app/core/gimpimage-colormap.c:213 app/core/gimpimage-colormap.c:297
+#: app/core/gimpimage-colormap.c:231 app/core/gimpimage-colormap.c:315
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Renk Eşlemini Ayarla"
 
-#: app/core/gimpimage-colormap.c:335
+#: app/core/gimpimage-colormap.c:352
 msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Renk Eşlemini Geri Al"
 
-#: app/core/gimpimage-colormap.c:389
+#: app/core/gimpimage-colormap.c:445 app/core/gimppalette.c:561
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Renk Eşlemi Girişini Değiştir"
 
-#: app/core/gimpimage-colormap.c:411
+#: app/core/gimpimage-colormap.c:467
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Renk Eşlemine Renk Ekle"
+
+#: app/core/gimpimage-colormap.c:492
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Change Colormap entry"
+msgctxt "undo-type"
+msgid "Delete Colormap entry"
+msgstr "Renk Eşlemi Girişini Değiştir"
 
 #: app/core/gimpimage-convert-indexed.c:795
 msgid "Cannot convert image: palette is empty."
@@ -15546,7 +15582,7 @@ msgstr "Görüntüyü her şeye rağmen bu adı kullanarak kaydetmek istiyor mus
 
 #: app/dialogs/file-save-dialog.c:838
 msgid "Saving canceled"
-msgstr "Kaydetmeden vazgeçildi"
+msgstr "Kaydetme iptal edildi"
 
 #: app/dialogs/file-save-dialog.c:844 app/widgets/gimpdnd-xds.c:190
 #, c-format
@@ -15605,7 +15641,7 @@ msgstr "Yalnızca etkin _kümeler içinde birleştir"
 
 #: app/dialogs/image-merge-layers-dialog.c:151
 msgid "_Discard invisible layers"
-msgstr "Görünmez katmanlardan _vazgeç"
+msgstr "Görünmez katmanları _gözden çıkar"
 
 #: app/dialogs/image-new-dialog.c:100
 msgid "Create a New Image"
@@ -16954,7 +16990,7 @@ msgstr "Yalnızca etkin kümeler içinde birleştir"
 
 #: app/dialogs/preferences-dialog.c:2557
 msgid "Discard invisible layers"
-msgstr "Görünmez katmanlardan vazgeç"
+msgstr "Görünmez katmanları gözden çıkar"
 
 #. New Channel Dialog
 #: app/dialogs/preferences-dialog.c:2561
@@ -17765,18 +17801,18 @@ msgstr "Ka_pat"
 #: app/dialogs/quit-dialog.c:388
 #, c-format
 msgid "Press %s to discard all changes and quit."
-msgstr "Tüm değişikliklerden vazgeçmek ve çıkmak için %s tuşuna basın."
+msgstr "Tüm değişiklikleri gözden çıkarmak ve çıkmak için %s tuşuna basın."
 
 #: app/dialogs/quit-dialog.c:391
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr ""
-"Tüm değişikliklerden vazgeçmek ve tüm görüntüleri kapatmak için %s tuşuna "
-"basın."
+"Tüm değişiklikleri gözden çıkarmak ve tüm görüntüleri kapatmak için %s "
+"tuşuna basın."
 
 #: app/dialogs/quit-dialog.c:399 app/display/gimpdisplayshell-close.c:182
 msgid "_Discard Changes"
-msgstr "Değişikliklerden Va_zgeç"
+msgstr "Değişiklikleri _Gözden Çıkar"
 
 #: app/dialogs/quit-dialog.c:497
 #, c-format
@@ -18365,7 +18401,8 @@ msgstr "_Farklı Kaydet"
 #, c-format
 msgid "Press %s to discard all changes and close the image."
 msgstr ""
-"Tüm değişikliklerden vazgeçmek ve görüntüyü kapatmak için %s tuşuna basın."
+"Tüm değişiklikleri gözden çıkarmak ve görüntüyü kapatmak için %s tuşuna "
+"basın."
 
 #: app/display/gimpdisplayshell-close.c:276
 #, c-format
@@ -18604,7 +18641,7 @@ msgstr "_Dizi Renklerinin Dışındakileri İşaretle"
 #: app/display/gimpstatusbar.c:702
 #, c-format
 msgid "Cancel <i>%s</i>"
-msgstr "Vazgeç <i>%s</i>"
+msgstr "İptal <i>%s</i>"
 
 #: app/display/gimptoolcompass.c:847
 msgid "Click to place vertical and horizontal guides"
@@ -18942,12 +18979,12 @@ msgstr "Kesimin tepe noktasına taşımak için sürükleyi tıklayın"
 #: app/display/gimptoolpolygon.c:899
 msgid "Return commits, Escape cancels, Backspace re-opens shape"
 msgstr ""
-"\"Enter\" üstlenir, \"Esc\" vazgeçer, \"Geri silme\" son şekli yeniden açar"
+"\"Enter\" üstlenir, \"Esc\" iptal eder, \"Geri silme\" son şekli yeniden açar"
 
 #: app/display/gimptoolpolygon.c:903
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
-"\"Enter\" üstlenir, \"Esc\" vazgeçer, \"Geri silme\" son kesimi kaldırır"
+"\"Enter\" üstlenir, \"Esc\" iptal eder, \"Geri silme\" son kesimi kaldırır"
 
 #: app/display/gimptoolpolygon.c:907
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
@@ -20069,7 +20106,7 @@ msgstr "Görüntü Kurtar"
 
 #: app/gui/gui.c:322
 msgid "_Discard"
-msgstr "Va_zgeç"
+msgstr "_Gözden Çıkar"
 
 #: app/gui/gui.c:323
 msgid "_Recover"
@@ -21002,7 +21039,7 @@ msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için geçersiz UTF-8 dizgesiyle "
 "çağrıldı."
 
-#: app/pdb/image-cmds.c:2473
+#: app/pdb/image-cmds.c:2503
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -21512,7 +21549,7 @@ msgstr ""
 
 #: app/plug-in/gimpplugin-progress.c:337
 msgid "Cancelled"
-msgstr "Vazgeçildi"
+msgstr "İptal Edildi"
 
 #: app/plug-in/gimppluginmanager.c:237
 msgid "Plug-in Interpreters"
@@ -22828,7 +22865,7 @@ msgstr "Kırpılmış piksellerini sil"
 
 #: app/tools/gimpcropoptions.c:103
 msgid "Discard non-locked layer data that falls out of the crop region"
-msgstr "Kırpma bölgesinin dışındaki kilitsiz katman verisini göz ardı et"
+msgstr "Kırpma bölgesinin dışındaki kilitsiz katman verisini gözden çıkar"
 
 #: app/tools/gimpcropoptions.c:109
 msgid "Allow growing"
@@ -23572,7 +23609,7 @@ msgstr "Kılavuzu Kaldır"
 
 #: app/tools/gimpguidetool.c:426
 msgid "Cancel Guide"
-msgstr "Kılavuzdan Vazgeç"
+msgstr "Kılavuzu İptal Et"
 
 #: app/tools/gimpguidetool.c:463
 msgid "Move Guide: "
@@ -24445,7 +24482,7 @@ msgstr "Örnek Noktayı Kaldır"
 
 #: app/tools/gimpsamplepointtool.c:238
 msgid "Cancel Sample Point"
-msgstr "Örnek Noktadan Vazgeç"
+msgstr "Örnek Noktayı İptal Et"
 
 #: app/tools/gimpsamplepointtool.c:244 app/tools/gimpsamplepointtool.c:330
 msgid "Move Sample Point: "
@@ -24780,8 +24817,8 @@ msgid ""
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
 "Seçtiğiniz katman bir metin katmanı ama başka araçlar kullanılarak "
-"değiştirilmiş. Katmanı metin aracı ile düzenlemek bu değişikliklerden "
-"vazgeçilmesini sağlayacaktır.\n"
+"değiştirilmiş. Katmanı metin aracı ile düzenlemek bu değişikliklerin gözden "
+"çıkarılmasını sağlayacaktır.\n"
 "\n"
 "Katmanı düzenleyebilirsiniz veya metin özniteliklerinden yeni metin katmanı "
 "oluşturabilirsiniz."
@@ -25750,7 +25787,7 @@ msgid "Percentage of width of brush"
 msgstr "Fırça genişliğinin yüzdesi"
 
 #: app/widgets/gimpbufferview.c:189 app/widgets/gimpbufferview.c:290
-#: app/widgets/gimpeditor.c:793
+#: app/widgets/gimpeditor.c:818
 msgid "(None)"
 msgstr "(Hiçbiri)"
 
@@ -25990,24 +26027,31 @@ msgctxt "Color value"
 msgid "n/a"
 msgstr "yok"
 
-#: app/widgets/gimpcolormapeditor.c:234
+#: app/widgets/gimpcolormapeditor.c:244
 #, c-format
 msgid "Edit colormap entry #%d"
 msgstr "Renk eşlemi girişini düzenle #%d"
 
-#: app/widgets/gimpcolormapeditor.c:242
+#: app/widgets/gimpcolormapeditor.c:252
 msgid "Edit Colormap Entry"
 msgstr "Renk Eşlemi Girişini Düzenle"
 
-#: app/widgets/gimpcolormapselection.c:233
+#: app/widgets/gimpcolormapeditor.c:468
+#, fuzzy
+#| msgctxt "image-action"
+#| msgid "Set a color profile on the image"
+msgid "The color is used in this indexed image"
+msgstr "Görüntüde bir renk profili ayarla"
+
+#: app/widgets/gimpcolormapselection.c:238
 msgid "Color index:"
 msgstr "Renk içeriği:"
 
-#: app/widgets/gimpcolormapselection.c:243
+#: app/widgets/gimpcolormapselection.c:248
 msgid "HTML notation:"
 msgstr "HTML gösterim:"
 
-#: app/widgets/gimpcolormapselection.c:496
+#: app/widgets/gimpcolormapselection.c:505
 msgid "Only indexed images have a colormap."
 msgstr "Yalnızca indeksli görüntülerin bir renk eşlemi olabilir."
 
@@ -27613,6 +27657,10 @@ msgstr ""
 "%s geri çağırmasını çalıştırmak olanaksız.\n"
 "%s"
 
+#: app/widgets/gimppickablechooser.c:244 app/widgets/gimppickablechooser.c:529
+msgid "Select an image in the left pane"
+msgstr "Sol bölümden bir görüntü seç"
+
 #: app/widgets/gimppluginview.c:146
 msgid "Plug-In"
 msgstr "Uyumlu ek"
@@ -28945,12 +28993,13 @@ msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Yollar Menüsü"
 
+#~ msgid "How to handle embedded color profiles when opening a file."
+#~ msgstr ""
+#~ "Gömülü kullanım profillerinin bir dosya açarken nasıl ele alınacağı."
+
 #, c-format
 #~ msgid "Skipping '%s': wrong shortcutsrc file format version."
 #~ msgstr "'%s' geçiliyor: yanlış shortcutsrc dosya biçimi sürümü."
-
-#~ msgid "Select an image in the left pane"
-#~ msgstr "Sol bölümden bir görüntü seç"
 
 #~ msgid "Invalid empty brush name"
 #~ msgstr "Geçersiz boş fırça adı"
@@ -29050,10 +29099,6 @@ msgstr "Yollar Menüsü"
 #~ msgctxt "buffers-action"
 #~ msgid "Buffers Menu"
 #~ msgstr "Tamponlar Menüsü"
-
-#~ msgctxt "colormap-action"
-#~ msgid "Colormap Menu"
-#~ msgstr "Renk Eşlemi Menüsü"
 
 #~ msgctxt "context-action"
 #~ msgid "_Context"
