@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-26 20:31+0000\n"
-"PO-Revision-Date: 2023-07-30 02:50+0300\n"
+"POT-Creation-Date: 2023-10-04 12:22+0000\n"
+"PO-Revision-Date: 2023-10-14 13:06+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4\n"
 "X-POOTLE-MTIME: 1420937120.000000\n"
 
 #: plug-ins/python/colorxhtml.py:91
@@ -33,20 +33,16 @@ msgid "Save as colored HTML text..."
 msgstr "Renkli HTML metni olarak kaydet..."
 
 #: plug-ins/python/colorxhtml.py:92 plug-ins/python/colorxhtml.py:98
-#: plug-ins/python/gradients-save-as-css.py:124
-#: plug-ins/python/histogram-export.py:204
-#: plug-ins/python/histogram-export.py:246
-#: plug-ins/python/palette-offset.py:145
-#: plug-ins/python/python-console/python-console.py:311
+#: plug-ins/python/gradients-save-as-css.py:116
+#: plug-ins/python/palette-offset.py:135
+#: plug-ins/python/python-console/python-console.py:312
 #: plug-ins/python/spyro-plus.py:1724
 msgid "_Cancel"
-msgstr "İ_ptal Et"
+msgstr "İ_ptal"
 
 #: plug-ins/python/colorxhtml.py:93 plug-ins/python/colorxhtml.py:99
-#: plug-ins/python/gradients-save-as-css.py:125
-#: plug-ins/python/histogram-export.py:205
-#: plug-ins/python/histogram-export.py:247
-#: plug-ins/python/palette-offset.py:146 plug-ins/python/spyro-plus.py:1725
+#: plug-ins/python/gradients-save-as-css.py:117
+#: plug-ins/python/palette-offset.py:136 plug-ins/python/spyro-plus.py:1725
 msgid "_OK"
 msgstr "_Tamam"
 
@@ -96,119 +92,118 @@ msgstr "Ayrı CSS dosyası yaz"
 msgid "Saving as colored XHTML"
 msgstr "Renkli XHTML olarak kaydediliyor"
 
-#: plug-ins/python/colorxhtml.py:284 plug-ins/python/colorxhtml.py:285
+#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
 msgid "_Read characters from file, if true, or use text entry"
 msgstr ""
 "_Karakterleri dosyadan oku, eğer doğru ise, veya metin girdisini kullan"
 
-#: plug-ins/python/colorxhtml.py:289 plug-ins/python/colorxhtml.py:290
+#: plug-ins/python/colorxhtml.py:291 plug-ins/python/colorxhtml.py:292
 msgid "_File to read or characters to use"
 msgstr "Okunacak _dosya ya da kullanılacak karakterler"
 
-#: plug-ins/python/colorxhtml.py:294 plug-ins/python/colorxhtml.py:295
+#: plug-ins/python/colorxhtml.py:296 plug-ins/python/colorxhtml.py:297
 msgid "Fo_nt size in pixels"
 msgstr "Piksel olarak _yazı tipi boyutu"
 
-#: plug-ins/python/colorxhtml.py:299 plug-ins/python/colorxhtml.py:300
+#: plug-ins/python/colorxhtml.py:301 plug-ins/python/colorxhtml.py:302
 msgid "_Write a separate CSS file"
 msgstr "Ayrı bir CSS dosyası _yaz"
 
-#: plug-ins/python/colorxhtml.py:320
+#: plug-ins/python/colorxhtml.py:322
 msgid "Save as colored HTML text"
 msgstr "Renkli HTML metni olarak kaydet"
 
-#: plug-ins/python/colorxhtml.py:323
+#: plug-ins/python/colorxhtml.py:325
 msgid "Colored HTML text"
 msgstr "Renkli HTML metni"
 
-#: plug-ins/python/foggify.py:104
+#: plug-ins/python/foggify.py:99
 msgid "Layer _name"
 msgstr "Katman _adı"
 
-#: plug-ins/python/foggify.py:105
+#: plug-ins/python/foggify.py:100
 msgid "Layer name"
 msgstr "Katman adı"
 
-#: plug-ins/python/foggify.py:106
+#: plug-ins/python/foggify.py:101
 msgid "Clouds"
 msgstr "Bulutlar"
 
-#: plug-ins/python/foggify.py:109
+#: plug-ins/python/foggify.py:104
 msgid "_Turbulence"
 msgstr "_Türbülans"
 
-#: plug-ins/python/foggify.py:110
+#: plug-ins/python/foggify.py:105
 msgid "Turbulence"
 msgstr "Türbülans"
 
-#: plug-ins/python/foggify.py:114
+#: plug-ins/python/foggify.py:109
 msgid "O_pacity"
 msgstr "_Matlık"
 
-#: plug-ins/python/foggify.py:115
+#: plug-ins/python/foggify.py:110
 msgid "Opacity"
 msgstr "Matlık"
 
-#: plug-ins/python/foggify.py:124
+#: plug-ins/python/foggify.py:119
 msgid "_Fog color"
 msgstr "_Sis rengi"
 
-#: plug-ins/python/foggify.py:125
+#: plug-ins/python/foggify.py:120
 msgid "Fog color"
 msgstr "Sis rengi"
 
-#: plug-ins/python/foggify.py:141
+#: plug-ins/python/foggify.py:136
 msgid "Add a layer of fog"
 msgstr "Sisli bir katman ekle"
 
-#: plug-ins/python/foggify.py:142
+#: plug-ins/python/foggify.py:137
 msgid "Adds a layer of fog to the image."
 msgstr "Görüntüye sis katmanı ekler."
 
-#: plug-ins/python/foggify.py:144
+#: plug-ins/python/foggify.py:139
 msgid "_Fog..."
 msgstr "_Sis..."
 
-#: plug-ins/python/gradients-save-as-css.py:105
-#: plug-ins/python/histogram-export.py:230
+#: plug-ins/python/gradients-save-as-css.py:97
 msgid "_File..."
 msgstr "_Dosya..."
 
-#: plug-ins/python/gradients-save-as-css.py:113
+#: plug-ins/python/gradients-save-as-css.py:105
 msgid "Choose CSS file..."
 msgstr "CSS dosyası seç..."
 
-#: plug-ins/python/gradients-save-as-css.py:122
+#: plug-ins/python/gradients-save-as-css.py:114
 msgid "Save as CSS file..."
 msgstr "CSS dosyası olarak kaydet..."
 
-#: plug-ins/python/gradients-save-as-css.py:201
+#: plug-ins/python/gradients-save-as-css.py:190
 #: plug-ins/python/palette-sort.py:345
-#: plug-ins/python/python-console/python-console.py:336
+#: plug-ins/python/python-console/python-console.py:337
 msgid "Run mode"
 msgstr "Çalıştırma kipi"
 
-#: plug-ins/python/gradients-save-as-css.py:202
-#: plug-ins/python/python-console/python-console.py:336
+#: plug-ins/python/gradients-save-as-css.py:191
+#: plug-ins/python/python-console/python-console.py:337
 msgid "The run mode"
 msgstr "Çalıştırma kipi"
 
-#: plug-ins/python/gradients-save-as-css.py:206
+#: plug-ins/python/gradients-save-as-css.py:195
 msgid "_Gradient to use"
 msgstr "Kullanılacak _renk geçişi"
 
-#: plug-ins/python/gradients-save-as-css.py:209
+#: plug-ins/python/gradients-save-as-css.py:198
 msgid "_File"
 msgstr "_Dosya"
 
-#: plug-ins/python/gradients-save-as-css.py:225
-#: plug-ins/python/gradients-save-as-css.py:226
+#: plug-ins/python/gradients-save-as-css.py:214
+#: plug-ins/python/gradients-save-as-css.py:215
 msgid "Creates a new palette from a given gradient"
 msgstr "Verilen renk geçişini kullanarak yeni palet oluştur"
 
-#: plug-ins/python/gradients-save-as-css.py:228
-msgid "Save as CSS..."
-msgstr "CSS Olarak Kaydet..."
+#: plug-ins/python/gradients-save-as-css.py:217
+msgid "Save Gradient as CSS..."
+msgstr "Renk Geçişini CSS Olarak Kaydet..."
 
 #: plug-ins/python/histogram-export.py:92
 msgid "Pixel count"
@@ -222,72 +217,46 @@ msgstr "Normalleştirilmiş"
 msgid "Percent"
 msgstr "Yüzde"
 
-#: plug-ins/python/histogram-export.py:166
+#: plug-ins/python/histogram-export.py:161
 msgid "File is either a directory or file name is empty."
 msgstr "Dosya bir dizin ya da dosya adı boş."
 
-#: plug-ins/python/histogram-export.py:169
+#: plug-ins/python/histogram-export.py:164
 msgid "Directory not found."
 msgstr "Dizin bulunamadı."
 
-#: plug-ins/python/histogram-export.py:203
+#: plug-ins/python/histogram-export.py:179
 msgid "Histogram Export..."
 msgstr "Histogram Dışa Aktar..."
 
-#: plug-ins/python/histogram-export.py:238
-msgid "Choose export file..."
-msgstr "Dışa aktarma dosyası seç..."
-
-#: plug-ins/python/histogram-export.py:244
-msgid "Histogram Export file..."
-msgstr "Histogram Dışa Aktarma dosyası..."
-
-#. Bucket size parameter
-#: plug-ins/python/histogram-export.py:250
-#: plug-ins/python/histogram-export.py:320
-msgid "_Bucket Size"
-msgstr "_Kova Boyutu"
-
-#. Sample average parameter
-#: plug-ins/python/histogram-export.py:258
-#: plug-ins/python/histogram-export.py:325
-msgid "Sample _Average"
-msgstr "Örnek _Ortalama"
-
-#: plug-ins/python/histogram-export.py:259
-msgid ""
-"If checked, the histogram is generated from merging all visible layers. "
-"Otherwise, the histogram is only for the current layer."
-msgstr ""
-"İşaretlenirse, histogram tüm görünür katmanların birleştirilmesinden "
-"oluşturulur. Aksi takdirde, yalnızca geçerli katman için oluşturulur."
-
-#. Output format parameter
-#: plug-ins/python/histogram-export.py:265
-msgid "_Output Format"
-msgstr "Çıktı _Biçimi"
-
-#: plug-ins/python/histogram-export.py:316
+#: plug-ins/python/histogram-export.py:209
 msgid "Histogram _File"
 msgstr "Histogram _Dosyası"
 
-#: plug-ins/python/histogram-export.py:330
-msgid "Output format"
-msgstr "Çıktı biçimi"
+#: plug-ins/python/histogram-export.py:213
+msgid "_Bucket Size"
+msgstr "_Kova Boyutu"
 
-#: plug-ins/python/histogram-export.py:352
+#: plug-ins/python/histogram-export.py:218
+msgid "Sample _Average"
+msgstr "Örnek _Ortalama"
+
+#: plug-ins/python/histogram-export.py:223
+msgid "Output _format"
+msgstr "Çıktı _biçimi"
+
+#: plug-ins/python/histogram-export.py:245
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Görüntü histogramını bir metin dosyasına aktar (CSV)"
 
 # komut olduğu için Başlık Düzeni tercih edildi
-#: plug-ins/python/histogram-export.py:355
+#: plug-ins/python/histogram-export.py:248
 msgid "_Export histogram..."
 msgstr "_Histogramı Dışa Aktar..."
 
 #: plug-ins/python/palette-offset.py:50 plug-ins/python/palette-offset.py:51
 #: plug-ins/python/palette-sort.py:351 plug-ins/python/palette-sort.py:403
 #: plug-ins/python/palette-sort.py:404
-#: plug-ins/python/palette-to-gradient.py:135
 msgid "Palette"
 msgstr "Palet"
 
@@ -297,7 +266,7 @@ msgid "Off_set"
 msgstr "Den_gele"
 
 # Normalden farklı çevrildi
-#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:153
+#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:143
 msgid "Offset"
 msgstr "Dengele"
 
@@ -320,7 +289,7 @@ msgid "Offset the colors in a palette"
 msgstr "Paletteki renkleri dengele"
 
 # Normalden farklı çevrildi
-#: plug-ins/python/palette-offset.py:143
+#: plug-ins/python/palette-offset.py:133
 msgid "Offset Palette..."
 msgstr "Paleti Dengele..."
 
@@ -405,6 +374,7 @@ msgid "Partitioned"
 msgstr "Bölümlenmiş"
 
 #: plug-ins/python/palette-sort.py:350
+#: plug-ins/python/palette-to-gradient.py:129
 msgid "_Palette"
 msgstr "_Palet"
 
@@ -464,88 +434,88 @@ msgstr "_Paleti Sırala..."
 msgid "Sort the colors in a palette"
 msgstr "Paletteki renkleri sırala"
 
-#: plug-ins/python/palette-to-gradient.py:147
-#: plug-ins/python/palette-to-gradient.py:148
+#: plug-ins/python/palette-to-gradient.py:141
+#: plug-ins/python/palette-to-gradient.py:142
 msgid "The newly created gradient"
 msgstr "Yeni oluşturulan renk geçişi"
 
-#: plug-ins/python/palette-to-gradient.py:170
+#: plug-ins/python/palette-to-gradient.py:164
 msgid "Palette to _Gradient"
 msgstr "Paletten Renk _Geçişi"
 
-#: plug-ins/python/palette-to-gradient.py:171
+#: plug-ins/python/palette-to-gradient.py:165
 msgid "Create a gradient using colors from the palette"
 msgstr "Paletteki renkleri kullanarak bir renk geçişi oluştur"
 
-#: plug-ins/python/palette-to-gradient.py:172
+#: plug-ins/python/palette-to-gradient.py:166
 msgid "Create a new gradient using colors from the palette."
 msgstr "Paletteki renkleri kullanarak yeni bir renk geçişi oluştur."
 
-#: plug-ins/python/palette-to-gradient.py:175
+#: plug-ins/python/palette-to-gradient.py:169
 msgid "Palette to _Repeating Gradient"
 msgstr "Paletten _Yinelemeli Renk Geçişi"
 
-#: plug-ins/python/palette-to-gradient.py:176
+#: plug-ins/python/palette-to-gradient.py:170
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Paletteki renkleri kullanarak yinelemeli bir renk geçişi oluştur"
 
-#: plug-ins/python/palette-to-gradient.py:177
+#: plug-ins/python/palette-to-gradient.py:171
 msgid "Create a new repeating gradient using colors from the palette."
 msgstr "Paletteki renkleri kullanarak yeni bir yinelemeli renk geçişi oluştur."
 
-#: plug-ins/python/python-console/python-console.py:77
+#: plug-ins/python/python-console/python-console.py:78
 msgid "Python Console"
 msgstr "Python Uçbirimi"
 
-#: plug-ins/python/python-console/python-console.py:79
-#: plug-ins/python/python-console/python-console.py:312
+#: plug-ins/python/python-console/python-console.py:80
+#: plug-ins/python/python-console/python-console.py:313
 msgid "_Save"
 msgstr "Kayd_et"
 
-#: plug-ins/python/python-console/python-console.py:80
+#: plug-ins/python/python-console/python-console.py:81
 msgid "Cl_ear"
 msgstr "_Temizle"
 
-#: plug-ins/python/python-console/python-console.py:81
+#: plug-ins/python/python-console/python-console.py:82
 msgid "_Browse..."
 msgstr "_Gözat..."
 
-#: plug-ins/python/python-console/python-console.py:82
-#: plug-ins/python/python-console/python-console.py:260
+#: plug-ins/python/python-console/python-console.py:83
+#: plug-ins/python/python-console/python-console.py:261
 msgid "_Close"
 msgstr "_Kapat"
 
-#: plug-ins/python/python-console/python-console.py:257
+#: plug-ins/python/python-console/python-console.py:258
 msgid "Python Procedure Browser"
 msgstr "Python Yordam Tarayıcı"
 
-#: plug-ins/python/python-console/python-console.py:259
+#: plug-ins/python/python-console/python-console.py:260
 msgid "_Apply"
 msgstr "_Uygula"
 
-#: plug-ins/python/python-console/python-console.py:285
+#: plug-ins/python/python-console/python-console.py:286
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "'%s', yazma için açılamadı: %s"
 
-#: plug-ins/python/python-console/python-console.py:300
+#: plug-ins/python/python-console/python-console.py:301
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "'%s'ye yazılamadı: %s"
 
-#: plug-ins/python/python-console/python-console.py:309
+#: plug-ins/python/python-console/python-console.py:310
 msgid "Save Python-Fu Console Output"
 msgstr "Python-Fu Uçbirim Çıktısını Kaydet"
 
-#: plug-ins/python/python-console/python-console.py:357
+#: plug-ins/python/python-console/python-console.py:358
 msgid "Python _Console"
 msgstr "Python _Uçbirimi"
 
-#: plug-ins/python/python-console/python-console.py:358
+#: plug-ins/python/python-console/python-console.py:359
 msgid "Interactive GIMP Python interpreter"
 msgstr "Etkileşimli GIMP Python yorumlayıcısı"
 
-#: plug-ins/python/python-console/python-console.py:359
+#: plug-ins/python/python-console/python-console.py:360
 msgid "Type in commands and see results"
 msgstr "Komutları yazın ve sonuçları görün"
 
@@ -995,3 +965,19 @@ msgstr ""
 #: plug-ins/python/spyro-plus.py:2304
 msgid "Spyrogimp..."
 msgstr "Spyrogimp..."
+
+#~ msgid "Choose export file..."
+#~ msgstr "Dışa aktarma dosyası seç..."
+
+#~ msgid "Histogram Export file..."
+#~ msgstr "Histogram Dışa Aktarma dosyası..."
+
+#~ msgid ""
+#~ "If checked, the histogram is generated from merging all visible layers. "
+#~ "Otherwise, the histogram is only for the current layer."
+#~ msgstr ""
+#~ "İşaretlenirse, histogram tüm görünür katmanların birleştirilmesinden "
+#~ "oluşturulur. Aksi takdirde, yalnızca geçerli katman için oluşturulur."
+
+#~ msgid "_Output Format"
+#~ msgstr "Çıktı _Biçimi"
