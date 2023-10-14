@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-11 15:52+0000\n"
-"PO-Revision-Date: 2023-10-11 17:54+0200\n"
+"POT-Creation-Date: 2023-10-12 09:23+0000\n"
+"PO-Revision-Date: 2023-10-14 16:40+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1922,77 +1922,58 @@ msgid "Choose the active border line to edit"
 msgstr "Izberite dejavno robno črto za urejanje"
 
 #: plug-ins/common/curve-bend.c:480 plug-ins/common/curve-bend.c:481
-#, fuzzy
 msgid "Argc upper point X"
-msgstr "Argc zgornja točka X"
+msgstr "X zgornje točke argc"
 
 #: plug-ins/common/curve-bend.c:486
-#, fuzzy
-#| msgid "Upper right"
 msgid "Upper point X"
-msgstr "desno zgoraj"
+msgstr "Zgornja točka, X"
 
 #: plug-ins/common/curve-bend.c:487 plug-ins/common/curve-bend.c:511
-#, fuzzy
 msgid "Array of 17 x point coords { 0.0 <= x <= 1.0 or -1 for unused point }"
 msgstr ""
 "Polje 17 x koordinat točk { 0,0 <= x <= 1,0 ali -1 za neuporabljeno točko }"
 
 #: plug-ins/common/curve-bend.c:492 plug-ins/common/curve-bend.c:493
-#, fuzzy
 msgid "Argc upper point Y"
-msgstr "Argc zgornja točka Y"
+msgstr "Y zgornje točke argc"
 
 #: plug-ins/common/curve-bend.c:498
-#, fuzzy
-#| msgid "Upper right"
 msgid "Upper point Y"
-msgstr "desno zgoraj"
+msgstr "Zgornja točka, Y"
 
 #: plug-ins/common/curve-bend.c:499 plug-ins/common/curve-bend.c:523
-#, fuzzy
 msgid "Array of 17 y point coords { 0.0 <= y <= 1.0 or -1 for unused point }"
 msgstr ""
 "Polje 17 koordinat točk y { 0,0 <= y <= 1,0 ali -1 za neuporabljeno točko }"
 
 #: plug-ins/common/curve-bend.c:504 plug-ins/common/curve-bend.c:505
-#, fuzzy
 msgid "Argc lower point X"
-msgstr "Argc spodnja točka X"
+msgstr "X spodnje točke argc"
 
 #: plug-ins/common/curve-bend.c:510
-#, fuzzy
-#| msgid "Lower right"
 msgid "Lower point X"
-msgstr "desno spodaj"
+msgstr "Spodnja točka, X"
 
 #: plug-ins/common/curve-bend.c:516 plug-ins/common/curve-bend.c:517
-#, fuzzy
 msgid "Argc lower point Y"
-msgstr "Argc spodnja točka Y"
+msgstr "Y spodnje točke argc"
 
 #: plug-ins/common/curve-bend.c:522
-#, fuzzy
-#| msgid "Lower right"
 msgid "Lower point Y"
-msgstr "desno spodaj"
+msgstr "Spodnja točka, Y"
 
 #: plug-ins/common/curve-bend.c:528
-#, fuzzy
-#| msgid "Upper left"
 msgid "Upper val Y"
-msgstr "levo zgoraj"
+msgstr "Zgornja vrednost, Y"
 
 #: plug-ins/common/curve-bend.c:529 plug-ins/common/curve-bend.c:535
-#, fuzzy
 msgid "Array of 256 y freehand coords { 0 <= y <= 255 }"
-msgstr "Polje 256 y prostoročnih koordinat { 0 <= y <= 255 }"
+msgstr "Polje 256 prostoročnih koordinat y { 0 <= y <= 255 }"
 
 #: plug-ins/common/curve-bend.c:534
-#, fuzzy
-#| msgid "Lower left"
 msgid "Lower val Y"
-msgstr "levo spodaj"
+msgstr "Spodnja vrednost, Y"
 
 #: plug-ins/common/curve-bend.c:540
 msgid "Bent layer"
@@ -2056,18 +2037,13 @@ msgid "Free"
 msgstr "Sprosti"
 
 #: plug-ins/common/curve-bend.c:1208
-#, fuzzy
-#| msgctxt "curve-border"
-#| msgid "_Upper"
 msgid "Upper"
-msgstr "_zgornja"
+msgstr "Zgornja"
 
 #: plug-ins/common/curve-bend.c:1209
-#, fuzzy
-#| msgid "Lower"
 msgctxt "adjective"
 msgid "Lower"
-msgstr "Spusti"
+msgstr "Spodnja"
 
 #: plug-ins/common/curve-bend.c:1227
 msgid "Modify Curves"
@@ -2343,21 +2319,17 @@ msgid "Depth relative offset"
 msgstr "Relativni zamik globine"
 
 #: plug-ins/common/depth-merge.c:259
-#, fuzzy
-#| msgid "Sc_ale 1:"
 msgid "Sc_ale 1"
-msgstr "Spremem_ba merila 1:"
+msgstr "Spremem_ba merila 1"
 
 #: plug-ins/common/depth-merge.c:265
-#, fuzzy
 #| msgid "Scal_e"
 msgid "Scal_e 2"
-msgstr "M_erilo"
+msgstr "Spre_memba merila 2"
 
 #: plug-ins/common/depth-merge.c:313
-#, fuzzy
 msgid "The selection does not intersect with the input drawable."
-msgstr "Izbor se ne križa z vhodnim risalnim elementom."
+msgstr "Izbor ne seka vhodnega risalnega elementa."
 
 #: plug-ins/common/depth-merge.c:366
 msgid "Depth-merging"
@@ -2516,10 +2488,8 @@ msgid "_Palette file"
 msgstr "_Datoteka palete"
 
 #: plug-ins/common/file-cel.c:160
-#, fuzzy
-#| msgid "Error: failed to load parameters"
 msgid "KCF file to load palette from"
-msgstr "Napaka: parametrov ni mogoče naložiti"
+msgstr "Datoteka KCF za nalaganje palete"
 
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/file-cel.c:227
@@ -2527,9 +2497,8 @@ msgid "Load KISS Palette"
 msgstr "Naloži paleto KISS"
 
 #: plug-ins/common/file-cel.c:253
-#, fuzzy
 msgid "This KISS CEL image requires a palette file."
-msgstr "Za to sliko KISS CEL je potrebna datoteka s paleto."
+msgstr "Za to sliko KISS CEL je potrebna datoteka palete."
 
 #: plug-ins/common/file-cel.c:317
 msgid "CEL format does not support multiple layers."
@@ -2937,11 +2906,11 @@ msgid "local colormap"
 msgstr "krajevni katalog barv"
 
 #: plug-ins/common/file-gif-load.c:569
-#, fuzzy
-#| msgid "Non-square pixels.  Image might look squashed."
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
-msgstr "Nekvadratne slikovne točke.  Slika bo morda videti raztegnjena."
+msgstr ""
+"Nekvadratne slikovne točke.  Slika bo morda videti raztegnjena, če je "
+"omogočen način točka za točko."
 
 #: plug-ins/common/file-gif-load.c:606 plug-ins/common/file-gif-load.c:611
 #, c-format
@@ -3245,16 +3214,13 @@ msgid "Brush Pipe"
 msgstr "Cev čopičev"
 
 #: plug-ins/common/file-gih.c:187
-#, fuzzy
-#| msgid "_Spacing (percent):"
 msgid "Spacing (_percent)"
-msgstr "_Razmik (v odstotkih):"
+msgstr "_Razmik (v odstotkih)"
 
 #: plug-ins/common/file-gih.c:194
 #, fuzzy
-#| msgid "Short description of the brush"
 msgid "Short description of the GIH brush pipe"
-msgstr "Kratek opis čopiča"
+msgstr "Kratek opis cevovoda čopiča GIH"
 
 #: plug-ins/common/file-gih.c:199
 msgid "Cell _width"
@@ -3284,9 +3250,8 @@ msgstr "_Število celic:"
 
 #: plug-ins/common/file-gih.c:217
 #, fuzzy
-#| msgid "Ranks:"
 msgid "_Rank"
-msgstr "Razred:"
+msgstr "_Razred"
 
 #: plug-ins/common/file-gih.c:218
 #, fuzzy
@@ -3304,9 +3269,8 @@ msgstr "Opišite, kako bodo plasti razdeljene"
 
 #: plug-ins/common/file-gih.c:234
 #, fuzzy
-#| msgid "Dimensions"
 msgid "D_imension"
-msgstr "Mere"
+msgstr "D_imenzija"
 
 #: plug-ins/common/file-gih.c:235
 #, fuzzy
@@ -3322,7 +3286,7 @@ msgid "Height Mismatch!"
 msgstr "Neujemanje po višini!"
 
 #: plug-ins/common/file-gih.c:525
-#, fuzzy, c-format
+#, c-format
 msgid "Displays as a %d × %d grid on each layer"
 msgstr "Prikaže se kot mreža %d × %d na vsaki plasti"
 
@@ -5257,22 +5221,16 @@ msgid "Error reading tube data chunk"
 msgstr "Napaka pri branju kosa podatkov o cevi"
 
 #: plug-ins/common/file-psp.c:2384 plug-ins/common/file-psp.c:2400
-#, fuzzy
-#| msgid "Error reading layer information chunk"
 msgid "Error reading selection chunk"
-msgstr "Napaka pri branju kosa podatkov o plasti"
+msgstr "Napaka pri branju kosa izbora"
 
 #: plug-ins/common/file-psp.c:2393
-#, fuzzy
-#| msgid "invalid block size"
 msgid "Invalid selection chunk size"
-msgstr "neveljavna velikost bloka"
+msgstr "Neveljavna velikost kosa izbora"
 
 #: plug-ins/common/file-psp.c:2417
-#, fuzzy
-#| msgid "Error reading layer information chunk"
 msgid "Error reading end of selection chunk"
-msgstr "Napaka pri branju kosa podatkov o plasti"
+msgstr "Napaka pri branju konca kosa izbora"
 
 #: plug-ins/common/file-psp.c:2439 plug-ins/common/file-psp.c:2451
 #: plug-ins/common/file-psp.c:2462
@@ -5410,10 +5368,6 @@ msgid "Palette's la_yout"
 msgstr "Pos_tavitev palete"
 
 #: plug-ins/common/file-raw-data.c:401 plug-ins/common/file-raw-data.c:477
-#, fuzzy
-#| msgid ""
-#| "The layout for the palette's color channels{ RAW_PALETTE_RGB (0), "
-#| "RAW_PALETTE_BGR (1) }"
 msgid ""
 "The layout for the palette's color channels { RAW_PALETTE_RGB (0), "
 "RAW_PALETTE_BGR (1) }"
@@ -6558,9 +6512,8 @@ msgid "Composing images"
 msgstr "Sestavljanje slik ..."
 
 #: plug-ins/common/film.c:700
-#, fuzzy
 msgid "\"Filmstrip\" cannot be run without any input images"
-msgstr "\"Filmskega traku\" ni mogoče zagnati brez vhodnih slik"
+msgstr "»Filmskega traku« ni mogoče zagnati brez vhodnih slik"
 
 #: plug-ins/common/film.c:970
 msgid "Available images:"
@@ -7056,7 +7009,7 @@ msgid "Procedure Browser"
 msgstr "Brskalnik procedur"
 
 #: plug-ins/common/procedure-browser.c:184
-#, fuzzy, c-format
+#, c-format
 msgid "Procedure %s allows only interactive invocation."
 msgstr "Postopek %s omogoča samo interaktivni klic."
 
@@ -7106,9 +7059,8 @@ msgid "Sample drawable"
 msgstr "Vzorči risani predmet"
 
 #: plug-ins/common/sample-colorize.c:341
-#, fuzzy
 msgid "Sample drawable (should be of Type RGB or RGBA)"
-msgstr "Vzorec drawable (mora biti tipa RGB ali RGBA)"
+msgstr "Vzorec risanega predmeta (mora biti vrste RGB ali RGBA)"
 
 #: plug-ins/common/sample-colorize.c:346
 msgid "Hold _intensity"
@@ -14137,9 +14089,8 @@ msgstr "Velikost pisave:"
 
 #: plug-ins/map-object/map-object-main.c:405
 #, fuzzy
-#| msgid "_Top:"
 msgid "_Top"
-msgstr "_Na vrhu:"
+msgstr "_Na vrhu"
 
 #: plug-ins/map-object/map-object-main.c:406
 #, fuzzy
@@ -14192,22 +14143,16 @@ msgid "Li_ght"
 msgstr "Svet_la področja"
 
 #: plug-ins/map-object/map-object-ui.c:435
-#, fuzzy
-#| msgid "Spike _points"
 msgid "_Viewpoint"
-msgstr "Točke _žarka"
+msgstr "_Gledišče"
 
 #: plug-ins/map-object/map-object-ui.c:439
-#, fuzzy
-#| msgid "Orientation"
 msgid "Orient_ation"
-msgstr "Usmerjenost"
+msgstr "Usmer_jenost"
 
 #: plug-ins/map-object/map-object-ui.c:442
-#, fuzzy
-#| msgid "Sphere"
 msgid "Sp_here"
-msgstr "kroglo"
+msgstr "_Krogla"
 
 #: plug-ins/map-object/map-object-ui.c:444
 msgid "_Box"
@@ -14222,10 +14167,8 @@ msgid "Direction Vector"
 msgstr "Vektor smeri"
 
 #: plug-ins/map-object/map-object-ui.c:563
-#, fuzzy
-#| msgid "Position"
 msgid "Viewpoint Position"
-msgstr "Položaj"
+msgstr "Položaj gledišča"
 
 #: plug-ins/map-object/map-object-ui.c:585
 msgid "First Axis"
