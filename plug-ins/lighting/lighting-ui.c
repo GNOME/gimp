@@ -322,27 +322,27 @@ main_dialog (GimpProcedure       *procedure,
       gchar *temp_field_3;
       gchar *temp_notify;
 
-      temp_label = g_strdup_printf (_("light-color-label-%d"), i);
+      temp_label = g_strdup_printf ("light-color-label-%d", i);
       gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
                                        temp_label, _("Color"),
                                        FALSE, FALSE);
       g_free (temp_label);
-      temp_label = g_strdup_printf (_("light-position-label-%d"), i);
+      temp_label = g_strdup_printf ("light-position-label-%d", i);
       gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
                                        temp_label, _("Position"),
                                        FALSE, FALSE);
       g_free (temp_label);
-      temp_label = g_strdup_printf (_("light-direction-label-%d"), i);
+      temp_label = g_strdup_printf ("light-direction-label-%d", i);
       gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
                                        temp_label, _("Direction"),
                                        FALSE, FALSE);
       g_free (temp_label);
 
-      temp_box = g_strdup_printf (("light-color-vbox-%d"), i);
-      temp_label = g_strdup_printf (("light-color-label-%d"), i);
-      temp_field_1 = g_strdup_printf (("light-type-%d"), i);
-      temp_field_2 = g_strdup_printf (("light-color-%d"), i);
-      temp_field_3 = g_strdup_printf (("light-intensity-%d"), i);
+      temp_box = g_strdup_printf ("light-color-vbox-%d", i);
+      temp_label = g_strdup_printf ("light-color-label-%d", i);
+      temp_field_1 = g_strdup_printf ("light-type-%d", i);
+      temp_field_2 = g_strdup_printf ("light-color-%d", i);
+      temp_field_3 = g_strdup_printf ("light-intensity-%d", i);
       gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), temp_box,
                                       temp_label,
                                       temp_field_1,
@@ -350,17 +350,17 @@ main_dialog (GimpProcedure       *procedure,
                                       temp_field_3,
                                       NULL);
 
-      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_1);
+      temp_notify = g_strdup_printf ("notify::%s", temp_field_1);
       g_signal_connect (config, temp_notify,
                         G_CALLBACK (update_preview),
                         config);
       g_free (temp_notify);
-      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_2);
+      temp_notify = g_strdup_printf ("notify::%s", temp_field_2);
       g_signal_connect (config, temp_notify,
                         G_CALLBACK (update_preview),
                         config);
       g_free (temp_notify);
-      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_3);
+      temp_notify = g_strdup_printf ("notify::%s", temp_field_3);
       g_signal_connect (config, temp_notify,
                         G_CALLBACK (update_preview),
                         config);
@@ -372,11 +372,11 @@ main_dialog (GimpProcedure       *procedure,
       g_free (temp_field_2);
       g_free (temp_field_3);
 
-      temp_box = g_strdup_printf (_("light-position-vbox-%d"), i);
-      temp_label = g_strdup_printf (("light-position-label-%d"), i);
-      temp_field_1 = g_strdup_printf (("light-position-x-%d"), i);
-      temp_field_2 = g_strdup_printf (("light-position-y-%d"), i);
-      temp_field_3 = g_strdup_printf (("light-position-z-%d"), i);
+      temp_box = g_strdup_printf ("light-position-vbox-%d", i);
+      temp_label = g_strdup_printf ("light-position-label-%d", i);
+      temp_field_1 = g_strdup_printf ("light-position-x-%d", i);
+      temp_field_2 = g_strdup_printf ("light-position-y-%d", i);
+      temp_field_3 = g_strdup_printf ("light-position-z-%d", i);
       gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), temp_box,
                                       temp_label,
                                       temp_field_1,
@@ -384,17 +384,17 @@ main_dialog (GimpProcedure       *procedure,
                                       temp_field_3,
                                       NULL);
 
-      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_1);
+      temp_notify = g_strdup_printf ("notify::%s", temp_field_1);
       g_signal_connect (config, temp_notify,
                         G_CALLBACK (update_preview),
                         config);
       g_free (temp_notify);
-      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_2);
+      temp_notify = g_strdup_printf ("notify::%s", temp_field_2);
       g_signal_connect (config, temp_notify,
                         G_CALLBACK (update_preview),
                         config);
       g_free (temp_notify);
-      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_3);
+      temp_notify = g_strdup_printf ("notify::%s", temp_field_3);
       g_signal_connect (config, temp_notify,
                         G_CALLBACK (update_preview),
                         config);
@@ -406,11 +406,11 @@ main_dialog (GimpProcedure       *procedure,
       g_free (temp_field_2);
       g_free (temp_field_3);
 
-      temp_box = g_strdup_printf (("light-direction-vbox-%d"), i);
-      temp_label = g_strdup_printf (("light-direction-label-%d"), i);
-      temp_field_1 = g_strdup_printf (("light-direction-x-%d"), i);
-      temp_field_2 = g_strdup_printf (("light-direction-y-%d"), i);
-      temp_field_3 = g_strdup_printf (("light-direction-z-%d"), i);
+      temp_box = g_strdup_printf ("light-direction-vbox-%d", i);
+      temp_label = g_strdup_printf ("light-direction-label-%d", i);
+      temp_field_1 = g_strdup_printf ("light-direction-x-%d", i);
+      temp_field_2 = g_strdup_printf ("light-direction-y-%d", i);
+      temp_field_3 = g_strdup_printf ("light-direction-z-%d", i);
       gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), temp_box,
                                       temp_label,
                                       temp_field_1,
@@ -418,17 +418,17 @@ main_dialog (GimpProcedure       *procedure,
                                       temp_field_3,
                                       NULL);
 
-      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_1);
+      temp_notify = g_strdup_printf ("notify::%s", temp_field_1);
       g_signal_connect (config, temp_notify,
                         G_CALLBACK (update_preview),
                         config);
       g_free (temp_notify);
-      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_2);
+      temp_notify = g_strdup_printf ("notify::%s", temp_field_2);
       g_signal_connect (config, temp_notify,
                         G_CALLBACK (update_preview),
                         config);
       g_free (temp_notify);
-      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_3);
+      temp_notify = g_strdup_printf ("notify::%s", temp_field_3);
       g_signal_connect (config, temp_notify,
                         G_CALLBACK (update_preview),
                         config);
@@ -440,10 +440,10 @@ main_dialog (GimpProcedure       *procedure,
       g_free (temp_field_2);
       g_free (temp_field_3);
 
-      temp_box = g_strdup_printf (("light-hbox-%d"), i);
-      temp_field_1 = g_strdup_printf (("light-color-vbox-%d"), i);
-      temp_field_2 = g_strdup_printf (("light-position-vbox-%d"), i);
-      temp_field_3 = g_strdup_printf (("light-direction-vbox-%d"), i);
+      temp_box = g_strdup_printf ("light-hbox-%d", i);
+      temp_field_1 = g_strdup_printf ("light-color-vbox-%d", i);
+      temp_field_2 = g_strdup_printf ("light-position-vbox-%d", i);
+      temp_field_3 = g_strdup_printf ("light-direction-vbox-%d", i);
       hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), temp_box,
                                              temp_field_1,
                                              temp_field_2,
