@@ -460,7 +460,7 @@ typedef enum {
   PSP_XDATA_GRID,               /* Image grid information (since PSP7) */
   PSP_XDATA_GUIDE,              /* Image guide information (since PSP7) */
   PSP_XDATA_EXIF,               /* Image Exif information (since PSP8) */
-  PSP_XDATA_IPTC,               /* Image IPTC information (since PSP10) */
+  PSP_XDATA_IPTC,               /* Image IPTC information (since PSP8) */
 } PSPExtendedDataID;
 
 /* Creator field types.
@@ -2422,6 +2422,133 @@ read_selection_block (FILE      *f,
 }
 
 static gint
+read_extended_block (FILE      *f,
+                     GimpImage *image,
+                     guint      total_len,
+                     PSPimage  *ia,
+                     GError   **error)
+{
+  guchar   header[4];
+  guint16  field_type;
+  guint32  field_length;
+
+  while (total_len > 0)
+    {
+      if (fread (header, 4, 1, f) < 1      ||
+          fread (&field_type, 2, 1, f) < 1 ||
+          fread (&field_length, 4, 1, f) < 1)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading extended block chunk header"));
+          return -1;
+        }
+
+      if (memcmp (header, "~FL\0", 4) != 0)
+        {
+          g_print ("Header: %s\n", header);
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Invalid extended block chunk header"));
+          return -1;
+        }
+      total_len -= sizeof (header) + sizeof (field_type) + sizeof (field_length);
+
+      field_type   = GUINT16_FROM_LE (field_type);
+      field_length = GUINT32_FROM_LE (field_length);
+
+      if (field_length > total_len)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Invalid extended block chunk size"));
+          return -1;
+        }
+
+      switch (field_type)
+        {
+        case PSP_XDATA_GRID:
+          {
+            GimpRGB color;
+            guchar  rgb[4];
+            guint32 h_spacing;
+            guint32 v_spacing;
+            guint16 unit; /* Unused */
+
+            if (field_length != 14              ||
+                fread (rgb, 4, 1, f) < 1        ||
+                fread (&h_spacing, 4, 1, f) < 1 ||
+                fread (&v_spacing, 4, 1, f) < 1 ||
+                fread (&unit, 2, 1, f) < 1)
+              {
+                g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading extended chunk grid data"));
+                return -1;
+              }
+
+            h_spacing = GUINT32_FROM_LE (h_spacing);
+            v_spacing = GUINT32_FROM_LE (v_spacing);
+            gimp_image_grid_set_spacing (image, h_spacing, v_spacing);
+
+            gimp_rgba_set_uchar (&color, rgb[0], rgb[1], rgb[2], 255);
+            gimp_image_grid_set_foreground_color (image, &color);
+            gimp_image_grid_set_background_color (image, &color);
+          }
+          break;
+
+        case PSP_XDATA_GUIDE:
+          {
+            guchar  rgb[4]; /* Unused */
+            guint32 offset;
+            guint16 orientation;
+
+            if (field_length != 10           ||
+                fread (rgb, 4, 1, f) < 1     ||
+                fread (&offset, 4, 1, f) < 1 ||
+                fread (&orientation, 2, 1, f) < 1)
+              {
+                g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading extended chunk guide data"));
+                return -1;
+              }
+
+            offset      = GUINT32_FROM_LE (offset);
+            orientation = GUINT16_FROM_LE (orientation);
+
+            if (orientation == keHorizontalGuide)
+              {
+                gimp_image_add_hguide (image, offset);
+              }
+            else if (orientation == keVerticalGuide)
+              {
+                gimp_image_add_vguide (image, offset);
+              }
+            else
+              {
+                g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                             _("Invalid guide orientation"));
+                return -1;
+              }
+          }
+          break;
+
+        /* Not yet implemented */
+        case PSP_XDATA_TRNS_INDEX:
+        case PSP_XDATA_EXIF:
+        case PSP_XDATA_IPTC:
+        default:
+          if (try_fseek (f, field_length, SEEK_CUR, error) < 0)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading extended block chunk"));
+              return -1;
+            }
+          break;
+        }
+      total_len -= field_length;
+    }
+
+  return 0;
+}
+
+static gint
 read_colorprofile_block (FILE      *f,
                          GimpImage *image,
                          guint      total_len,
@@ -2624,7 +2751,10 @@ load_image (GFile   *file,
               break;            /* No use for it */
 
             case PSP_EXTENDED_DATA_BLOCK:
-              break;            /* Not yet implemented */
+              if (read_extended_block (f, image, block_total_len, &ia,
+                                       error) == -1)
+                goto error;
+              break;
 
             case PSP_TUBE_BLOCK:
               if (read_tube_block (f, image, block_total_len, &ia, error) == -1)
