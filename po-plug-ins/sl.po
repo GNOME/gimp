@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-10-12 09:23+0000\n"
-"PO-Revision-Date: 2023-10-14 16:40+0200\n"
+"PO-Revision-Date: 2023-10-14 17:00+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1665,15 +1665,14 @@ msgid "Recompose an image that was previously decomposed"
 msgstr "Ponovno sestavi sliko, ki je bila prej razstavljena"
 
 #: plug-ins/common/compose.c:540
-#, fuzzy
 msgid ""
 "This function recombines the grayscale layers produced by Decompose into a "
 "single RGB or RGBA layer, and replaces the originally decomposed layer with "
 "the result."
 msgstr ""
 "Ta funkcija ponovno združi sivinske plasti, ki jih ustvari funkcija "
-"Decompose, v en samo plast RGB ali RGBA in z rezultatom nadomesti prvotno "
-"razčlenjeno plast."
+"Razstavi, v en samo plast RGB ali RGBA in z rezultatom nadomesti prvotno "
+"razstavljeno plast."
 
 #: plug-ins/common/compose.c:604
 msgid ""
@@ -3218,9 +3217,8 @@ msgid "Spacing (_percent)"
 msgstr "_Razmik (v odstotkih)"
 
 #: plug-ins/common/file-gih.c:194
-#, fuzzy
 msgid "Short description of the GIH brush pipe"
-msgstr "Kratek opis cevovoda čopiča GIH"
+msgstr "Kratek opis cevi čopičev GIH"
 
 #: plug-ins/common/file-gih.c:199
 msgid "Cell _width"
@@ -3244,20 +3242,17 @@ msgstr "_Število celic"
 
 #: plug-ins/common/file-gih.c:212
 #, fuzzy
-#| msgid "_Number of cells:"
 msgid "Number of cells to cut up"
-msgstr "_Število celic:"
+msgstr "Število celic za porezavo"
 
 #: plug-ins/common/file-gih.c:217
-#, fuzzy
 msgid "_Rank"
-msgstr "_Razred"
+msgstr "_Rang"
 
 #: plug-ins/common/file-gih.c:218
 #, fuzzy
-#| msgid "Invalid frame dimensions"
 msgid "Ranks of the dimensions"
-msgstr "Neveljavne mere sličice"
+msgstr "Rangi mer"
 
 #: plug-ins/common/file-gih.c:229
 msgid "Display as"
@@ -5741,15 +5736,9 @@ msgid "_Paths"
 msgstr "_Poti"
 
 #: plug-ins/common/file-svg.c:206
-#, fuzzy
-#| msgid ""
-#| "Import path elements of the SVG so they can be used with the GIMP path "
-#| "tool"
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
-msgstr ""
-"Uvozi elemente poti iz SVG, da jih je mogoče uporabiti z orodjem poti v GIMP-"
-"u"
+msgstr "Ali in kako uvoziti poti, da jih je mogoče uporabiti z orodjem poti"
 
 #: plug-ins/common/file-svg.c:207
 msgid "Don't import paths"
@@ -7067,16 +7056,14 @@ msgid "Hold _intensity"
 msgstr "Obdrži _intenziteto"
 
 #: plug-ins/common/sample-colorize.c:347
-#, fuzzy
 msgid "Hold brightness intensity levels"
-msgstr "Držite ravni intenzivnosti svetlosti"
+msgstr "Zadrži ravni intenzivnosti svetlosti"
 
 #: plug-ins/common/sample-colorize.c:352
 msgid "Original i_ntensity"
 msgstr "Izvorna i_ntenziteta"
 
 #: plug-ins/common/sample-colorize.c:353
-#, fuzzy
 msgid ""
 "TRUE: hold brightness of original intensity levels, FALSE: Hold Intensity of "
 "input levels"
@@ -7089,12 +7076,11 @@ msgid "Us_e subcolors"
 msgstr "Uporab_i podbarve"
 
 #: plug-ins/common/sample-colorize.c:361
-#, fuzzy
 msgid ""
 "TRUE: Use all subcolors of same intensity, FALSE: Use only one color per "
 "intensity"
 msgstr ""
-"TRUE: Uporabite vse podbarve enake intenzivnosti, FALSE: Uporabite samo eno "
+"TRUE: uporabi vse podbarve enake intenzivnosti, FALSE: uporabi samo eno "
 "barvo na intenzivnost"
 
 #: plug-ins/common/sample-colorize.c:367
@@ -7102,13 +7088,12 @@ msgid "Smooth sam_ples"
 msgstr "Z_gladi vzorce"
 
 #: plug-ins/common/sample-colorize.c:368
-#, fuzzy
 msgid ""
 "TRUE: guess samplecolors for the missing intensity values, FALSE: use only "
 "colors found in the sample"
 msgstr ""
-"TRUE: uganite vzorčne barve za manjkajoče vrednosti intenzivnosti, FALSE: "
-"uporabite samo barve, najdene v vzorcu"
+"TRUE: ugani vzorčne barve za manjkajoče vrednosti intenzivnosti, FALSE: "
+"uporabi samo barve, najdene v vzorcu"
 
 #: plug-ins/common/sample-colorize.c:375
 #, fuzzy
@@ -7146,21 +7131,18 @@ msgstr "Ni_zko"
 
 #: plug-ins/common/sample-colorize.c:394
 #, fuzzy
-#| msgid "Adjust the flare intensity"
 msgid "Lowest sample color intensity"
-msgstr "Prilagodi intenzivnost odbleska"
+msgstr "Najnižja intenzivnost barve vzorca"
 
 #: plug-ins/common/sample-colorize.c:399
 #, fuzzy
-#| msgid "Hi_ghlight"
 msgid "Hi_gh"
-msgstr "Svet_la področja"
+msgstr "_Visoko"
 
 #: plug-ins/common/sample-colorize.c:400
 #, fuzzy
-#| msgid "Light intensity"
 msgid "Highest sample color intensity"
-msgstr "Jakost svetlobe"
+msgstr "Najvišja intenzivnost barve vzorca"
 
 #: plug-ins/common/sample-colorize.c:1406
 msgid "Sample Colorize"
@@ -8170,20 +8152,16 @@ msgid "_Width (pixels)"
 msgstr "_Širina (slik. točke)"
 
 #: plug-ins/common/web-page.c:146
-#, fuzzy
-#| msgid "Adjust the spike length (in pixels)"
 msgid "The width of the screenshot (in pixels)"
-msgstr "Prilagodite dolžino žarkov (v slik. točkah)"
+msgstr "Širina slike zaslona (v slik. točkah)"
 
 #: plug-ins/common/web-page.c:151
 msgid "_Font size"
 msgstr "_Velikost pisave"
 
 #: plug-ins/common/web-page.c:152
-#, fuzzy
-#| msgid "The name of the file to save the image in"
 msgid "The font size to use in the page (in pt)"
-msgstr "Ime datoteke, v katero bo shranjena slika"
+msgstr "Velikost pisave, ki bo uporabljena na strani (v tč.)"
 
 #: plug-ins/common/web-page.c:214
 msgid "Create from webpage"
@@ -9717,10 +9695,8 @@ msgid "Co_mpression"
 msgstr "_Stiskanje"
 
 #: plug-ins/file-tiff/file-tiff.c:222
-#, fuzzy
-#| msgid "Compression _type"
 msgid "Compression type"
-msgstr "Vrsta s_tiskanja"
+msgstr "Vrsta stiskanja"
 
 #: plug-ins/file-tiff/file-tiff.c:224
 msgid "LZW"
@@ -10746,9 +10722,8 @@ msgstr "X min razmejitev fraktalne slike"
 #: plug-ins/fractal-explorer/fractal-explorer.c:291
 #: plug-ins/map-object/map-object-main.c:411
 #, fuzzy
-#| msgid "_Bottom:"
 msgid "_Bottom"
-msgstr "_Na dnu:"
+msgstr "_Na dnu"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:292
 #, fuzzy
@@ -10784,49 +10759,42 @@ msgid "Color mode"
 msgstr "Barvni način"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:316
-#, fuzzy
 msgid ""
 "0: Apply colormap as specified by the parameters below; 1: Apply active "
 "gradient to final image"
 msgstr ""
-"0: uporabi barvno karto, kot je določeno s spodnjimi parametri; 1: uporabi "
-"aktivni gradient za končno sliko"
+"0: uveljavi katalog barv, kot je določeno s spodnjimi parametri; 1: uveljavi "
+"dejavni preliv na končni sliki"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:322
 #, fuzzy
-#| msgid "Stretch"
 msgid "Red stretch"
-msgstr "Raztegni"
+msgstr "Razteg rdeče"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:323
 #, fuzzy
-#| msgid "JPEG smoothing factor"
 msgid "Red stretching factor"
-msgstr "Faktor glajenja JPEG"
+msgstr "Faktor raztega rdeče"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:328
 #, fuzzy
-#| msgid "Stretch"
 msgid "Green stretch"
-msgstr "Raztegni"
+msgstr "Razteg zelene"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:329
 #, fuzzy
-#| msgid "JPEG smoothing factor"
 msgid "Green stretching factor"
-msgstr "Faktor glajenja JPEG"
+msgstr "Faktor raztega zelene"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:334
 #, fuzzy
-#| msgid "Stretch"
 msgid "Blue stretch"
-msgstr "Raztegni"
+msgstr "Razteg modre"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:335
 #, fuzzy
-#| msgid "JPEG smoothing factor"
 msgid "Blue stretching factor"
-msgstr "Faktor glajenja JPEG"
+msgstr "Faktor raztega modre"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:340
 msgid "_Red"
@@ -13445,7 +13413,6 @@ msgid "Active"
 msgstr "Dejavno"
 
 #: plug-ins/lighting/lighting-main.c:179
-#, fuzzy
 msgid "Which light is active in the GUI"
 msgstr "Katera luč je aktivna v grafičnem uporabniškem vmesniku"
 
@@ -13478,9 +13445,8 @@ msgid "Isolate"
 msgstr "Izoliraj"
 
 #: plug-ins/lighting/lighting-main.c:192
-#, fuzzy
 msgid "Only show the active lighting in the preview"
-msgstr "V predogledu prikažite samo aktivno osvetlitev"
+msgstr "V predogledu prikaži samo aktivno osvetlitev"
 
 #: plug-ins/lighting/lighting-main.c:199 plug-ins/lighting/lighting-main.c:322
 #: plug-ins/lighting/lighting-main.c:381 plug-ins/lighting/lighting-main.c:440
@@ -13946,9 +13912,8 @@ msgstr "Zrcalna odbojnost materiala"
 
 #: plug-ins/map-object/map-object-main.c:299
 #, fuzzy
-#| msgid "Highlight:"
 msgid "Highligh_t"
-msgstr "Svetla področja:"
+msgstr "Svetla področja"
 
 #: plug-ins/map-object/map-object-main.c:300
 #, fuzzy
@@ -14000,117 +13965,92 @@ msgid "Transparent bac_kground"
 msgstr "Pro_sojno ozadje"
 
 #: plug-ins/map-object/map-object-main.c:350
-#, fuzzy
-#| msgid "Spot radius:"
 msgid "Sphere radius"
-msgstr "Radij točke:"
+msgstr "Polmer krogle"
 
 #: plug-ins/map-object/map-object-main.c:356
-#, fuzzy
 msgid "Fro_nt"
 msgstr "_Sprednja"
 
 #: plug-ins/map-object/map-object-main.c:357
-#, fuzzy
 msgid "Box front face (set this to NULL if not used)"
-msgstr "Sprednja stran polja (če se ne uporablja, nastavite na NULL)"
+msgstr "Sprednja stran škatle (če se ne uporablja, nastavite na NULL)"
 
 #: plug-ins/map-object/map-object-main.c:362
-#, fuzzy
 msgid "B_ack"
 msgstr "_Hrbtna"
 
 #: plug-ins/map-object/map-object-main.c:363
-#, fuzzy
 msgid "Box back face"
 msgstr "Hrbtna ploskev škatle"
 
 #: plug-ins/map-object/map-object-main.c:368
-#, fuzzy
 msgid "Box top face"
 msgstr "Vrhnja ploskev škatle"
 
 #: plug-ins/map-object/map-object-main.c:372
-#, fuzzy
-#| msgid "Bottom"
 msgid "Bo_ttom"
-msgstr "Spodaj"
+msgstr "Spodn_ja"
 
 #: plug-ins/map-object/map-object-main.c:373
-#, fuzzy
-#| msgid "Bottom edge"
 msgid "Box bottom face"
-msgstr "spodnji rob"
+msgstr "Spodnja ploskev škatle"
 
 #: plug-ins/map-object/map-object-main.c:377
 msgid "Le_ft"
 msgstr "Le_vo"
 
 #: plug-ins/map-object/map-object-main.c:378
-#, fuzzy
 msgid "Box left face"
 msgstr "Leva ploskev škatle"
 
 #: plug-ins/map-object/map-object-main.c:383
-#, fuzzy
-#| msgid "Copyright Notice"
 msgid "Box right face"
-msgstr "Opozorilo avtorske pravice"
+msgstr "Desna ploskev škatle"
 
 #: plug-ins/map-object/map-object-main.c:388
 msgid "Scale X"
 msgstr "Sprememba merila X"
 
 #: plug-ins/map-object/map-object-main.c:389
-#, fuzzy
-#| msgid "Font size:"
 msgid "Box X size"
-msgstr "Velikost pisave:"
+msgstr "Velikost X škatle"
 
 #: plug-ins/map-object/map-object-main.c:393
 msgid "Scale Y"
 msgstr "Sprememba merila Y"
 
 #: plug-ins/map-object/map-object-main.c:394
-#, fuzzy
-#| msgid "Font size:"
 msgid "Box Y size"
-msgstr "Velikost pisave:"
+msgstr "Velikost Y škatle"
 
 #: plug-ins/map-object/map-object-main.c:398
 msgid "Scale Z"
 msgstr "Sprememba merila Z"
 
 #: plug-ins/map-object/map-object-main.c:399
-#, fuzzy
-#| msgid "Font size:"
 msgid "Box Z size"
-msgstr "Velikost pisave:"
+msgstr "Velikost Z škatle"
 
 #: plug-ins/map-object/map-object-main.c:405
-#, fuzzy
 msgid "_Top"
 msgstr "_Na vrhu"
 
 #: plug-ins/map-object/map-object-main.c:406
-#, fuzzy
 msgid "Cylinder top face (set this to NULL if not used)"
-msgstr "Zgornja stran valja (če se ne uporablja, nastavite na NULL)"
+msgstr "Zgornja ploskev valja (če se ne uporablja, nastavite na NULL)"
 
 #: plug-ins/map-object/map-object-main.c:412
-#, fuzzy
 msgid "Cylinder bottom face (set this to NULL if not used)"
-msgstr "Spodnja stran valja (če se ne uporablja, nastavite na NULL)"
+msgstr "Spodnja ploskev valja (če se ne uporablja, nastavite na NULL)"
 
 #: plug-ins/map-object/map-object-main.c:418
 msgid "Cylinder radius"
 msgstr "Radij valja"
 
 #: plug-ins/map-object/map-object-main.c:422
-#, fuzzy
-#| msgid "Cylinder length"
 msgid "Cylin_der length"
-msgstr "Dolžina valja"
+msgstr "Dol_žina valja"
 
 #: plug-ins/map-object/map-object-main.c:423
 msgid "Cylinder length"
@@ -14156,11 +14096,11 @@ msgstr "_Krogla"
 
 #: plug-ins/map-object/map-object-ui.c:444
 msgid "_Box"
-msgstr "_kocka"
+msgstr "Ko_cka"
 
 #: plug-ins/map-object/map-object-ui.c:446
 msgid "C_ylinder"
-msgstr "_valj"
+msgstr "_Valj"
 
 #: plug-ins/map-object/map-object-ui.c:506
 msgid "Direction Vector"
@@ -14999,13 +14939,10 @@ msgid "Current gradient (reversed)"
 msgstr "Trenutni preliv (obratni)"
 
 #: plug-ins/pagecurl/pagecurl.c:238
-#, fuzzy
-#| msgid "Curl Location"
 msgid "Locatio_n"
-msgstr "Položaj zavihka"
+msgstr "Polo_žaj"
 
 #: plug-ins/pagecurl/pagecurl.c:239
-#, fuzzy
 msgid "Corner which is curled"
 msgstr "Oglišče, ki je zvito"
 
@@ -15026,15 +14963,12 @@ msgid "Lower right"
 msgstr "desno spodaj"
 
 #: plug-ins/pagecurl/pagecurl.c:257
-#, fuzzy
 msgid "Sh_ade"
-msgstr "Sen_ca"
+msgstr "Sen_či"
 
 #: plug-ins/pagecurl/pagecurl.c:258
-#, fuzzy
-#| msgid "_Shade under curl"
 msgid "Shade the region under the curl"
-msgstr "_Senca pod zavihkom"
+msgstr "Senči območje pod zavihkom"
 
 #: plug-ins/pagecurl/pagecurl.c:456
 msgid "Pagecurl Effect"
@@ -15144,7 +15078,6 @@ msgid "Create an image from an area of the screen"
 msgstr "Ustvari sliko iz področja zaslona"
 
 #: plug-ins/screenshot/screenshot.c:164
-#, fuzzy
 msgid "Shoot _area"
 msgstr "_Območje snemanja"
 
@@ -15153,15 +15086,12 @@ msgid "Color _Profile"
 msgstr "Barvni _profil"
 
 #: plug-ins/screenshot/screenshot.c:264
-#, fuzzy
-#| msgid "The DDE transaction failed."
 msgid "GDK initialization failed."
-msgstr "Transakcija DDE ni uspela."
+msgstr "Inicializacija GDK je spodletela."
 
 #: plug-ins/screenshot/screenshot.c:302
-#, fuzzy
 msgid "No screenshot backends available."
-msgstr "Na voljo ni zaledja za posnetke zaslona."
+msgstr "Zaledje za posnetke zaslona ni na voljo."
 
 #: plug-ins/screenshot/screenshot.c:504
 #: plug-ins/screenshot/screenshot-x11.c:443
@@ -15173,32 +15103,24 @@ msgid "S_nap"
 msgstr "_Pripni"
 
 #: plug-ins/screenshot/screenshot.c:507
-#, fuzzy
-#| msgid "Take a screenshot of a single _window"
 msgid "Take a screenshot of a single window"
-msgstr "Naredi posnetek posameznega _okna"
+msgstr "Naredi posnetek posameznega okna"
 
 #: plug-ins/screenshot/screenshot.c:508
-#, fuzzy
-#| msgid "Take a screenshot of the entire _screen"
 msgid "Take a screenshot of the entire screen"
-msgstr "Naredi posnetek _celega zaslona"
+msgstr "Naredi posnetek celega zaslona"
 
 #: plug-ins/screenshot/screenshot.c:509
-#, fuzzy
-#| msgid "Select a _region to grab"
 msgid "Select a region to grab"
-msgstr "Izberi _področje za zajem"
+msgstr "Izberite področje za zajem"
 
 #: plug-ins/screenshot/screenshot.c:595
 msgid "Delay"
 msgstr "Zakasni"
 
 #: plug-ins/screenshot/screenshot.c:603
-#, fuzzy
-#| msgid "Tag image with _monitor profile"
 msgid "Tag image with monitor profile"
-msgstr "Označi sliko s profilom _zaslona"
+msgstr "Označi sliko s profilom zaslona"
 
 #: plug-ins/screenshot/screenshot.c:604
 msgid "Convert image with sRGB"
@@ -15501,11 +15423,3 @@ msgstr "_Skener/Fotoaparat ..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Prenos podatkov iz skenerja/fotoaparata"
-
-#, fuzzy
-#~ msgid "y min fractal image delimiter"
-#~ msgstr "y min razmejitev fraktalne slike"
-
-#, fuzzy
-#~ msgid "ymax fractal image delimiter"
-#~ msgstr "ymax razmejitev fraktalne slike"
