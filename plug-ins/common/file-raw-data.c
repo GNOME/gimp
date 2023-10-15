@@ -1730,9 +1730,9 @@ load_image (GFile                *file,
       ltype = GIMP_RGBA_IMAGE;
       itype = GIMP_RGB;
       if (encoding == RAW_ENCODING_FLOAT)
-        precision = GIMP_PRECISION_U32_NON_LINEAR;
-      else
         precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
+      else
+        precision = GIMP_PRECISION_U32_NON_LINEAR;
       break;
 
     case RAW_GRAY_1BPP:
