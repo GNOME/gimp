@@ -22,6 +22,9 @@
 #ifndef __GIMP_PROCEDURE_CONFIG_PRIVATE_H__
 #define __GIMP_PROCEDURE_CONFIG_PRIVATE_H__
 
+G_BEGIN_DECLS
+
+
 void       _gimp_procedure_config_get_values   (GimpProcedureConfig  *config,
                                                 GimpValueArray       *values);
 
@@ -44,12 +47,18 @@ void       _gimp_procedure_config_end_export   (GimpProcedureConfig  *config,
                                                 GimpPDBStatusType     status);
 
 
-gboolean   _gimp_procedure_config_has_default  (GimpProcedureConfig  *config);
+/* These 3 functions are not marked internal because they are used in libgimpui.
+ * The headers is not installed so these functions should be considered not
+ * existing. Yet they are still exported in the library.
+ */
+gboolean   gimp_procedure_config_has_default   (GimpProcedureConfig  *config);
 
-gboolean   _gimp_procedure_config_load_default (GimpProcedureConfig  *config,
+gboolean   gimp_procedure_config_load_default  (GimpProcedureConfig  *config,
                                                 GError              **error);
-gboolean   _gimp_procedure_config_save_default (GimpProcedureConfig  *config,
+gboolean   gimp_procedure_config_save_default  (GimpProcedureConfig  *config,
                                                 GError              **error);
 
+
+G_END_DECLS
 
 #endif /* __GIMP_PROCEDURE_CONFIG_PRIVATE_H__ */

@@ -927,7 +927,7 @@ _gimp_procedure_config_end_export (GimpProcedureConfig *config,
 }
 
 gboolean
-_gimp_procedure_config_has_default (GimpProcedureConfig *config)
+gimp_procedure_config_has_default (GimpProcedureConfig *config)
 {
   GFile    *file;
   gboolean  success;
@@ -943,8 +943,8 @@ _gimp_procedure_config_has_default (GimpProcedureConfig *config)
 }
 
 gboolean
-_gimp_procedure_config_load_default (GimpProcedureConfig  *config,
-                                     GError              **error)
+gimp_procedure_config_load_default (GimpProcedureConfig  *config,
+                                    GError              **error)
 {
   GFile    *file;
   gboolean  success;
@@ -969,8 +969,8 @@ _gimp_procedure_config_load_default (GimpProcedureConfig  *config,
 }
 
 gboolean
-_gimp_procedure_config_save_default (GimpProcedureConfig  *config,
-                                     GError              **error)
+gimp_procedure_config_save_default (GimpProcedureConfig  *config,
+                                    GError              **error)
 {
   GFile    *file;
   gboolean  success;

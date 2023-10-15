@@ -733,6 +733,9 @@ EXPORTS
 	gimp_procedure_config_get_choice_id
 	gimp_procedure_config_get_procedure
 	gimp_procedure_config_get_type
+	gimp_procedure_config_has_default
+	gimp_procedure_config_load_default
+	gimp_procedure_config_save_default
 	gimp_procedure_config_save_metadata
 	gimp_procedure_create_config
 	gimp_procedure_extension_ready
