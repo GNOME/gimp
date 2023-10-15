@@ -22,8 +22,11 @@
 
 #include "gimp.h"
 
+#include "libgimpbase/gimpwire.h" /* FIXME kill this include */
+
 #include "gimploadprocedure.h"
 #include "gimppdb_pdb.h"
+#include "gimpplugin-private.h"
 
 #include "libgimp-intl.h"
 
@@ -176,6 +179,7 @@ static GimpValueArray *
 gimp_load_procedure_run (GimpProcedure        *procedure,
                          const GimpValueArray *args)
 {
+  GimpPlugIn            *plug_in;
   GimpLoadProcedure     *load_proc = GIMP_LOAD_PROCEDURE (procedure);
   GimpValueArray        *remaining;
   GimpValueArray        *return_values;
@@ -274,7 +278,9 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
   /* This is debug printing to help plug-in developers figure out best
    * practices.
    */
-  if (G_OBJECT (config)->ref_count > 1)
+  plug_in = gimp_procedure_get_plug_in (procedure);
+  if (G_OBJECT (config)->ref_count > 1 &&
+      _gimp_plug_in_manage_memory_manually (plug_in))
     g_printerr ("%s: ERROR: the GimpSaveProcedureConfig object was refed "
                 "by plug-in, it MUST NOT do that!\n", G_STRFUNC);
 

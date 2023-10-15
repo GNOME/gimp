@@ -22,7 +22,10 @@
 
 #include "gimp.h"
 
+#include "libgimpbase/gimpwire.h" /* FIXME kill this include */
+
 #include "gimpimageprocedure.h"
+#include "gimpplugin-private.h"
 
 
 /**
@@ -144,6 +147,7 @@ static GimpValueArray *
 gimp_image_procedure_run (GimpProcedure        *procedure,
                           const GimpValueArray *args)
 {
+  GimpPlugIn          *plug_in;
   GimpImageProcedure  *image_proc = GIMP_IMAGE_PROCEDURE (procedure);
   GimpPDBStatusType    status     = GIMP_PDB_EXECUTION_ERROR;
   GimpProcedureConfig *config;
@@ -188,10 +192,11 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
   /* This is debug printing to help plug-in developers figure out best
    * practices.
    */
-  if (G_OBJECT (config)->ref_count > 1)
+  plug_in = gimp_procedure_get_plug_in (procedure);
+  if (G_OBJECT (config)->ref_count > 1 &&
+      _gimp_plug_in_manage_memory_manually (plug_in))
     g_printerr ("%s: ERROR: the GimpProcedureConfig object was refed "
                 "by plug-in, it MUST NOT do that!\n", G_STRFUNC);
-
 
   g_object_unref (config);
   gimp_value_array_unref (remaining);

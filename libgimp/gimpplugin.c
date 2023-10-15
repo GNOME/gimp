@@ -114,6 +114,7 @@ G_DEFINE_QUARK (gimp-plug-in-error-quark, gimp_plug_in_error)
 enum
 {
   PROP_0,
+  PROP_PROGRAM_NAME,
   PROP_READ_CHANNEL,
   PROP_WRITE_CHANNEL,
   N_PROPS
@@ -130,6 +131,8 @@ struct _GimpPlugInMenuBranch
 
 struct _GimpPlugInPrivate
 {
+  gchar      *program_name;
+
   GIOChannel *read_channel;
   GIOChannel *write_channel;
 
@@ -207,7 +210,8 @@ static void       gimp_plug_in_push_procedure    (GimpPlugIn      *plug_in,
 static void       gimp_plug_in_pop_procedure     (GimpPlugIn      *plug_in,
                                                   GimpProcedure   *procedure);
 static void       gimp_plug_in_destroy_hashes    (GimpPlugIn      *plug_in);
-static void       gimp_plug_in_destroy_proxies   (GHashTable      *hash_table,
+static void       gimp_plug_in_destroy_proxies   (GimpPlugIn      *plug_in,
+                                                  GHashTable      *hash_table,
                                                   const gchar     *type,
                                                   gboolean         destroy_all);
 
@@ -233,6 +237,19 @@ gimp_plug_in_class_init (GimpPlugInClass *klass)
   object_class->get_property = gimp_plug_in_get_property;
 
   klass->set_i18n            = gimp_plug_in_real_set_i18n;
+
+  /**
+   * GimpPlugIn:program-name:
+   *
+   * The program name as usually found on argv[0]
+   */
+  props[PROP_PROGRAM_NAME] =
+    g_param_spec_string ("program-name",
+                         "The plug-in executable",
+                         "The executable name as usually found on argv[0]",
+                         NULL,
+                         GIMP_PARAM_WRITABLE |
+                         G_PARAM_CONSTRUCT_ONLY);
 
   /**
    * GimpPlugIn:read-channel:
@@ -311,6 +328,7 @@ gimp_plug_in_finalize (GObject *object)
   GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
   GList      *list;
 
+  g_clear_pointer (&plug_in->priv->program_name, g_free);
   g_clear_pointer (&plug_in->priv->translation_domain_name, g_free);
   g_clear_object  (&plug_in->priv->translation_domain_path);
 
@@ -328,10 +346,10 @@ gimp_plug_in_finalize (GObject *object)
 
   g_clear_pointer (&plug_in->priv->menu_branches, g_list_free);
 
-  gimp_plug_in_destroy_proxies (plug_in->priv->displays,  "display",  TRUE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->images,    "image",    TRUE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->items,     "item",     TRUE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->resources, "resource", TRUE);
+  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->displays,  "display",  TRUE);
+  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->images,    "image",    TRUE);
+  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->items,     "item",     TRUE);
+  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->resources, "resource", TRUE);
 
   gimp_plug_in_destroy_hashes (plug_in);
 
@@ -348,6 +366,10 @@ gimp_plug_in_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_PROGRAM_NAME:
+      plug_in->priv->program_name = g_value_dup_string (value);
+      break;
+
     case PROP_READ_CHANNEL:
       plug_in->priv->read_channel = g_value_get_boxed (value);
       break;
@@ -1442,17 +1464,17 @@ gimp_plug_in_pop_procedure (GimpPlugIn    *plug_in,
 
   _gimp_procedure_destroy_proxies (procedure);
 
-  gimp_plug_in_destroy_proxies (plug_in->priv->displays,  "display",  FALSE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->images,    "image",    FALSE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->items,     "item",     FALSE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->resources, "resource", FALSE);
+  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->displays,  "display",  FALSE);
+  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->images,    "image",    FALSE);
+  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->items,     "item",     FALSE);
+  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->resources, "resource", FALSE);
 
   if (! plug_in->priv->procedure_stack)
     {
-      gimp_plug_in_destroy_proxies (plug_in->priv->displays,  "display",  TRUE);
-      gimp_plug_in_destroy_proxies (plug_in->priv->images,    "image",    TRUE);
-      gimp_plug_in_destroy_proxies (plug_in->priv->items,     "item",     TRUE);
-      gimp_plug_in_destroy_proxies (plug_in->priv->resources, "resource", TRUE);
+      gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->displays,  "display",  TRUE);
+      gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->images,    "image",    TRUE);
+      gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->items,     "item",     TRUE);
+      gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->resources, "resource", TRUE);
 
       gimp_plug_in_destroy_hashes (plug_in);
     }
@@ -1648,6 +1670,42 @@ _gimp_plug_in_get_resource (GimpPlugIn *plug_in,
   return resource;
 }
 
+gboolean
+_gimp_plug_in_manage_memory_manually (GimpPlugIn *plug_in)
+{
+  gboolean manual_management = TRUE;
+
+  if (plug_in->priv->program_name)
+    {
+      GFile *file = g_file_new_for_path (plug_in->priv->program_name);
+
+      /* Limitations:
+       * 1. Checking a file extension (and trusting argv[0] in general) is not
+       *    the best idea. I thought about the possibility of passing through
+       *    the name of the used interpreter from core to plug-in, but even this
+       *    should not be trusted because it is configurable.
+       * 2. An alternative could be to pass the information if a plug-in is
+       *    interpreted (i.e. it has an interp file). Though I'm unsure if there
+       *    might be some interpreted language out there with manual memory
+       *    management.
+       * 3. This list only contains the bindings we actually tested with (and
+       *    have demo plug-ins for). Much more bindings are possible.
+       *
+       * So in the end, this test is just worth so far, but it's
+       * acceptable for the officially supported bindings at least.
+       */
+      if (gimp_file_has_extension (file, ".lua") ||
+          gimp_file_has_extension (file, ".py")  ||
+          gimp_file_has_extension (file, ".js")  ||
+          gimp_file_has_extension (file, ".gjs"))
+        manual_management = FALSE;
+
+      g_object_unref (file);
+    }
+
+  return manual_management;
+}
+
 static void
 gimp_plug_in_destroy_hashes (GimpPlugIn *plug_in)
 {
@@ -1658,7 +1716,8 @@ gimp_plug_in_destroy_hashes (GimpPlugIn *plug_in)
 }
 
 static void
-gimp_plug_in_destroy_proxies (GHashTable  *hash_table,
+gimp_plug_in_destroy_proxies (GimpPlugIn  *plug_in,
+                              GHashTable  *hash_table,
                               const gchar *type,
                               gboolean     destroy_all)
 {
@@ -1701,15 +1760,26 @@ gimp_plug_in_destroy_proxies (GHashTable  *hash_table,
 
           g_object_get (object, "id", &id, NULL);
 
-          g_printerr ("%s: ERROR: %s proxy with ID %d was refed "
-                      "by plug-in, it MUST NOT do that!\n",
-                      G_STRFUNC, G_OBJECT_TYPE_NAME (object), id);
+          /* Some bindings are always keeping a reference to objects, in
+           * particular this is the behavior of lua and gjs bindings where
+           * object->ref_count == 2 at this point.
+           * As for the Python binding, it is only true for global
+           * variables (scoped variables are properly freed before the
+           * plug-in ends), which anyway is not the best practice.
+           * In any case, it's not something which the plug-in developer can do
+           * anything about so this error is only confusing.
+           * See #3912.
+           */
+          if (_gimp_plug_in_manage_memory_manually (plug_in))
+            g_printerr ("%s: ERROR: %s proxy with ID %d was refed "
+                        "by plug-in, it MUST NOT do that!\n",
+                        G_STRFUNC, G_OBJECT_TYPE_NAME (object), id);
 
 #if 0
-          /* the code used to do this, but it appears that some bindings
-           * keep references around until later, let's keep this for
-           * reference and as a reminder to figure if we can do anything
-           * generic about it that works for all bindings.
+          /* The code used to do this, which is only meaningful when the bug is
+           * really in the plug-in code. If it's one of the cases where the
+           * reference is actually held by a bindings, it's unwise and will
+           * likely end up in double-free crashes.
            */
           while (object->ref_count > 1)
             g_object_unref (object);

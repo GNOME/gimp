@@ -32,6 +32,7 @@
 #include "gimppdb-private.h"
 #include "gimpplugin-private.h"
 #include "gimppdb_pdb.h"
+#include "gimpplugin-private.h"
 #include "gimpplugin_pdb.h"
 #include "gimpprocedure-private.h"
 #include "gimpprocedureconfig-private.h"
@@ -480,6 +481,7 @@ static GimpValueArray *
 gimp_procedure_real_run (GimpProcedure        *procedure,
                          const GimpValueArray *args)
 {
+  GimpPlugIn          *plug_in;
   GimpProcedureConfig *config;
   GimpImage           *image    = NULL;
   GimpRunMode          run_mode = GIMP_RUN_NONINTERACTIVE;
@@ -511,7 +513,9 @@ gimp_procedure_real_run (GimpProcedure        *procedure,
   /* This is debug printing to help plug-in developers figure out best
    * practices.
    */
-  if (G_OBJECT (config)->ref_count > 1)
+  plug_in = gimp_procedure_get_plug_in (procedure);
+  if (G_OBJECT (config)->ref_count > 1 &&
+      _gimp_plug_in_manage_memory_manually (plug_in))
     g_printerr ("%s: ERROR: the GimpProcedureConfig object was refed "
                 "by plug-in, it MUST NOT do that!\n", G_STRFUNC);
 

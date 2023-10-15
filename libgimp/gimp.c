@@ -497,6 +497,7 @@ gimp_main (GType  plug_in_type,
   _gimp_debug_configure (stack_trace_mode);
 
   PLUG_IN = g_object_new (plug_in_type,
+                          "program-name",  progname,
                           "read-channel",  read_channel,
                           "write-channel", write_channel,
                           NULL);
