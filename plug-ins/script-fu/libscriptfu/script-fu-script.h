@@ -53,7 +53,7 @@ gchar    * script_fu_script_get_command_for_image_proc (
                                                      GimpImage            *image,
                                                      guint                 n_drawables,
                                                      GimpDrawable        **drawables,
-                                                     const GimpValueArray *args);
+                                                     GimpProcedureConfig  *config);
 
 GimpProcedure * script_fu_script_create_PDB_procedure (GimpPlugIn         *plug_in,
                                                        SFScript           *script,

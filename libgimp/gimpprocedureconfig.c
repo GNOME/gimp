@@ -79,6 +79,10 @@ static void       gimp_procedure_config_get_property  (GObject             *obje
                                                        GValue              *value,
                                                        GParamSpec          *pspec);
 
+
+static void       gimp_procedure_config_set_values    (GimpProcedureConfig  *config,
+                                                       const GimpValueArray *values);
+
 static gboolean   gimp_procedure_config_load_last     (GimpProcedureConfig  *config,
                                                         GError              **error);
 static gboolean   gimp_procedure_config_save_last     (GimpProcedureConfig  *config,
@@ -231,98 +235,6 @@ gimp_procedure_config_get_procedure (GimpProcedureConfig *config)
   g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
 
   return config->priv->procedure;
-}
-
-/**
- * gimp_procedure_config_set_values:
- * @config: a #GimpProcedureConfig
- * @values: a #GimpValueArray
- *
- * Sets the values from @values on @config's properties.
- *
- * The number, order and types of values in @values must match the
- * number, order and types of @config's properties.
- *
- * This function is meant to be used on @values which are passed as
- * arguments to the run() function of the [class@Procedure] which created
- * this @config. See [method@Procedure.create_config].
- *
- * Since: 3.0
- **/
-void
-gimp_procedure_config_set_values (GimpProcedureConfig  *config,
-                                  const GimpValueArray *values)
-{
-  GParamSpec **pspecs;
-  guint        n_pspecs;
-  gint         n_aux_args;
-  gint         n_values;
-  gint         i;
-
-  g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
-  g_return_if_fail (values != NULL);
-
-  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
-                                           &n_pspecs);
-  gimp_procedure_get_aux_arguments (config->priv->procedure, &n_aux_args);
-  n_values = gimp_value_array_length (values);
-
-  /* The first property is the procedure, all others are arguments. */
-  g_return_if_fail (n_pspecs == n_values + n_aux_args + 1);
-
-  for (i = 0; i < n_values; i++)
-    {
-      GParamSpec *pspec = pspecs[i + 1];
-      GValue     *value = gimp_value_array_index (values, i);
-
-      g_object_set_property (G_OBJECT (config), pspec->name, value);
-    }
-
-  g_free (pspecs);
-}
-
-/**
- * gimp_procedure_config_get_values:
- * @config: a #GimpProcedureConfig
- * @values: a #GimpValueArray
- *
- * Gets the values from @config's properties and stores them in
- * @values.
- *
- * See [method@ProcedureConfig.set_values].
- *
- * Since: 3.0
- **/
-void
-gimp_procedure_config_get_values (GimpProcedureConfig  *config,
-                                  GimpValueArray       *values)
-{
-  GParamSpec **pspecs;
-  guint        n_pspecs;
-  gint         n_aux_args;
-  gint         n_values;
-  gint         i;
-
-  g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
-  g_return_if_fail (values != NULL);
-
-  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
-                                           &n_pspecs);
-  gimp_procedure_get_aux_arguments (config->priv->procedure, &n_aux_args);
-  n_values = gimp_value_array_length (values);
-
-  /* The config will have 1 additional property: "procedure". */
-  g_return_if_fail (n_pspecs == n_values + n_aux_args + 1);
-
-  for (i = 1; i < n_pspecs; i++)
-    {
-      GParamSpec *pspec = pspecs[i];
-      GValue     *value = gimp_value_array_index (values, i - 1);
-
-      g_object_get_property (G_OBJECT (config), pspec->name, value);
-    }
-
-  g_free (pspecs);
 }
 
 static void
@@ -589,6 +501,50 @@ gimp_procedure_config_get_choice_id (GimpProcedureConfig *config,
 
 
 /*  Functions only used by GimpProcedure classes  */
+
+/**
+ * _gimp_procedure_config_get_values:
+ * @config: a #GimpProcedureConfig
+ * @values: a #GimpValueArray
+ *
+ * Gets the values from @config's properties and stores them in
+ * @values.
+ *
+ * See [method@ProcedureConfig.set_values].
+ *
+ * Since: 3.0
+ **/
+void
+_gimp_procedure_config_get_values (GimpProcedureConfig  *config,
+                                   GimpValueArray       *values)
+{
+  GParamSpec **pspecs;
+  guint        n_pspecs;
+  gint         n_aux_args;
+  gint         n_values;
+  gint         i;
+
+  g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
+  g_return_if_fail (values != NULL);
+
+  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
+                                           &n_pspecs);
+  gimp_procedure_get_aux_arguments (config->priv->procedure, &n_aux_args);
+  n_values = gimp_value_array_length (values);
+
+  /* The config will have 1 additional property: "procedure". */
+  g_return_if_fail (n_pspecs == n_values + n_aux_args + 1);
+
+  for (i = 1; i < n_pspecs; i++)
+    {
+      GParamSpec *pspec = pspecs[i];
+      GValue     *value = gimp_value_array_index (values, i - 1);
+
+      g_object_get_property (G_OBJECT (config), pspec->name, value);
+    }
+
+  g_free (pspecs);
+}
 
 /**
  * _gimp_procedure_config_begin_run:
@@ -1037,6 +993,54 @@ _gimp_procedure_config_save_default (GimpProcedureConfig  *config,
 
 
 /*  private functions  */
+
+/**
+ * gimp_procedure_config_set_values:
+ * @config: a #GimpProcedureConfig
+ * @values: a #GimpValueArray
+ *
+ * Sets the values from @values on @config's properties.
+ *
+ * The number, order and types of values in @values must match the
+ * number, order and types of @config's properties.
+ *
+ * This function is meant to be used on @values which are passed as
+ * arguments to the run() function of the [class@Procedure] which created
+ * this @config. See [method@Procedure.create_config].
+ *
+ * Since: 3.0
+ **/
+static void
+gimp_procedure_config_set_values (GimpProcedureConfig  *config,
+                                  const GimpValueArray *values)
+{
+  GParamSpec **pspecs;
+  guint        n_pspecs;
+  gint         n_aux_args;
+  gint         n_values;
+  gint         i;
+
+  g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
+  g_return_if_fail (values != NULL);
+
+  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
+                                           &n_pspecs);
+  gimp_procedure_get_aux_arguments (config->priv->procedure, &n_aux_args);
+  n_values = gimp_value_array_length (values);
+
+  /* The first property is the procedure, all others are arguments. */
+  g_return_if_fail (n_pspecs == n_values + n_aux_args + 1);
+
+  for (i = 0; i < n_values; i++)
+    {
+      GParamSpec *pspec = pspecs[i + 1];
+      GValue     *value = gimp_value_array_index (values, i);
+
+      g_object_set_property (G_OBJECT (config), pspec->name, value);
+    }
+
+  g_free (pspecs);
+}
 
 static gboolean
 gimp_procedure_config_load_last (GimpProcedureConfig  *config,

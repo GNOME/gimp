@@ -22,6 +22,9 @@
 #ifndef __GIMP_PROCEDURE_CONFIG_PRIVATE_H__
 #define __GIMP_PROCEDURE_CONFIG_PRIVATE_H__
 
+void       _gimp_procedure_config_get_values   (GimpProcedureConfig  *config,
+                                                GimpValueArray       *values);
+
 void       _gimp_procedure_config_begin_run    (GimpProcedureConfig  *config,
                                                 GimpImage            *image,
                                                 GimpRunMode           run_mode,

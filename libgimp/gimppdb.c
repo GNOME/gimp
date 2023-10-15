@@ -31,6 +31,7 @@
 #include "gimppdb_pdb.h"
 #include "gimppdbprocedure.h"
 #include "gimpplugin-private.h"
+#include "gimpprocedureconfig-private.h"
 
 #include "libgimp-intl.h"
 
@@ -394,7 +395,7 @@ gimp_pdb_run_procedure_config (GimpPDB             *pdb,
 
   args = gimp_procedure_new_arguments (procedure);
 
-  gimp_procedure_config_get_values (config, args);
+  _gimp_procedure_config_get_values (config, args);
   return_values = gimp_pdb_run_procedure_array (pdb, procedure_name, args);
 
   gimp_value_array_unref (args);

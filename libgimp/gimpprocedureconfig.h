@@ -70,10 +70,6 @@ GType   gimp_procedure_config_get_type      (void) G_GNUC_CONST;
 GimpProcedure *
         gimp_procedure_config_get_procedure (GimpProcedureConfig *config);
 
-void    gimp_procedure_config_set_values    (GimpProcedureConfig  *config,
-                                             const GimpValueArray *values);
-void    gimp_procedure_config_get_values    (GimpProcedureConfig  *config,
-                                             GimpValueArray       *values);
 
 void    gimp_procedure_config_save_metadata (GimpProcedureConfig  *config,
                                              GimpImage            *exported_image,

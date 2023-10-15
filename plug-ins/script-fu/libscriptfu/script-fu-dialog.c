@@ -60,72 +60,37 @@ dump_properties (GimpProcedureConfig *config)
   g_free (pspecs);
 }
 
-static gint
-get_length (GimpProcedureConfig *config)
-{
-  GParamSpec **pspecs;
-  guint        n_pspecs;
-
-  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
-                                           &n_pspecs);
-  g_free (pspecs);
-  g_debug ("length config: %d", n_pspecs);
-
-  return n_pspecs;
-}
-
-/* Fill a new (length zero) gva with new gvalues (empty but holding the correct type)
- from the config.
- */
 static void
-fill_gva_from (GimpProcedureConfig *config,
-               GimpValueArray      *gva)
-{
-  GParamSpec **pspecs;
-  guint        n_pspecs;
-
-  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
-                                           &n_pspecs);
-  /* !!! Start at property 1 */
-  for (guint i = 1; i < n_pspecs; i++)
-    {
-      g_debug ("%s %s\n", pspecs[i]->name, G_PARAM_SPEC_TYPE_NAME (pspecs[i]));
-      /* append empty gvalue */
-      gimp_value_array_append (gva, NULL);
-    }
-
-  g_free (pspecs);
-}
-
-static void
-dump_objects (GimpProcedureConfig  *config)
+dump_objects (GimpProcedureConfig *config)
 {
   /* Check it will return non-null objects. */
-  GimpValueArray *args;
-  gint length;
+  GParamSpec **pspecs;
+  guint        n_pspecs;
 
-  /* Need one less gvalue !!! */
-  args = gimp_value_array_new (get_length (config) - 1);
-  /* The array still has length zero. */
-  g_debug ("GVA length: %d", gimp_value_array_length (args));
+  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config), &n_pspecs);
 
-  fill_gva_from (config, args);
-
-  gimp_procedure_config_get_values (config, args);
-  if (args == NULL)
+  /* config will have at least 1 property: "procedure". */
+  if (n_pspecs == 1)
     {
       g_debug ("config holds no values");
       return;
     }
-  length = gimp_value_array_length (args);
 
-  for (guint i = 1; i < length; i++)
+  for (gint i = 1; i < n_pspecs; i++)
     {
-      GValue *gvalue = gimp_value_array_index (args, i);
-      if (G_VALUE_HOLDS_OBJECT (gvalue))
-        if (g_value_get_object (gvalue) == NULL)
+      GParamSpec *pspec = pspecs[i];
+      GValue      value = G_VALUE_INIT;
+
+      g_value_init (&value, pspec->value_type);
+      g_object_get_property (G_OBJECT (config), pspec->name, &value);
+
+      if (G_VALUE_HOLDS_OBJECT (&value))
+        if (g_value_get_object (&value) == NULL)
           g_debug ("gvalue %d holds NULL object", i);
+
+      g_value_unset (&value);
     }
+  g_free (pspecs);
 }
 
 #endif
