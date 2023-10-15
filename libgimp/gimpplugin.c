@@ -1713,8 +1713,6 @@ gimp_plug_in_destroy_proxies (GHashTable  *hash_table,
            */
           while (object->ref_count > 1)
             g_object_unref (object);
-#else
-          g_object_unref (object);
 #endif
           g_hash_table_iter_remove (&iter);
         }
