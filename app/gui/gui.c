@@ -86,6 +86,12 @@
 #include "splash.h"
 #include "themes.h"
 
+#ifdef G_OS_WIN32
+#include <windef.h>
+#include <winbase.h>
+#include <windows.h>
+#endif
+
 #ifdef GDK_WINDOWING_QUARTZ
 #import <AppKit/AppKit.h>
 
@@ -539,6 +545,11 @@ gui_restore_after_callback (Gimp               *gimp,
   GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (gimp->config);
   GimpUIManager *image_ui_manager;
   GimpDisplay   *display;
+#ifdef G_OS_WIN32
+  STARTUPINFO    StartupInfo;
+
+  GetStartupInfo (&StartupInfo);
+#endif
 
   if (gimp->be_verbose)
     g_print ("INIT: %s\n", G_STRFUNC);
@@ -611,6 +622,14 @@ gui_restore_after_callback (Gimp               *gimp,
 
       toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
 
+#ifdef G_OS_WIN32
+      /* Prevents window from reappearing on start-up if the user
+       * requested it to be minimized via window hints 
+       */
+      if (StartupInfo.wShowWindow != SW_SHOWMINIMIZED   &&
+          StartupInfo.wShowWindow != SW_SHOWMINNOACTIVE &&
+          StartupInfo.wShowWindow != SW_MINIMIZE)
+#endif
       /*  move keyboard focus to the display  */
       gtk_window_present (GTK_WINDOW (toplevel));
     }
