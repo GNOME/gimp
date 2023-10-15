@@ -499,7 +499,7 @@ gimp_procedure_real_run (GimpProcedure        *procedure,
     }
 
   config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  _gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   retvals = procedure->priv->run_func (procedure, config,
                                        procedure->priv->run_data);
@@ -508,7 +508,7 @@ gimp_procedure_real_run (GimpProcedure        *procedure,
       G_VALUE_HOLDS_ENUM (gimp_value_array_index (retvals, 0)))
     status = GIMP_VALUES_GET_ENUM (retvals, 0);
 
-  gimp_procedure_config_end_run (config, status);
+  _gimp_procedure_config_end_run (config, status);
 
   /* This is debug printing to help plug-in developers figure out best
    * practices.
@@ -1665,10 +1665,9 @@ gimp_procedure_get_return_values (GimpProcedure *procedure,
  * @arg_name:  the name of one of @procedure's arguments or auxiliary arguments.
  * @sync:      how to sync the argument or auxiliary argument.
  *
- * When using #GimpProcedureConfig, gimp_procedure_config_begin_run()
- * and gimp_procedure_config_end_run(), a #GimpProcedure's arguments
- * or auxiliary arguments can be automatically synced with a
- * #GimpParasite of the #GimpImage the procedure is running on.
+ * When the procedure's run() function exits, a #GimpProcedure's arguments
+ * or auxiliary arguments can be automatically synced with a #GimpParasite of
+ * the #GimpImage the procedure is running on.
  *
  * In order to enable this, set @sync to %GIMP_ARGUMENT_SYNC_PARASITE.
  *

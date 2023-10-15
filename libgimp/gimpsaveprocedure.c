@@ -27,6 +27,7 @@
 #include "gimppdb_pdb.h"
 #include "gimpplugin-private.h"
 #include "gimpsaveprocedure.h"
+#include "gimpprocedureconfig-private.h"
 
 #include "libgimp-intl.h"
 
@@ -399,7 +400,7 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
             *delim = '\0';
         }
     }
-  metadata = gimp_procedure_config_begin_export (config, image, run_mode, remaining, mimetype);
+  metadata = _gimp_procedure_config_begin_export (config, image, run_mode, remaining, mimetype);
   g_free (mimetype);
 
   return_values = save_proc->priv->run_func (procedure, run_mode,
@@ -412,7 +413,7 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
       G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
     status = GIMP_VALUES_GET_ENUM (return_values, 0);
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  _gimp_procedure_config_end_export (config, image, file, status);
 
   /* This is debug printing to help plug-in developers figure out best
    * practices.

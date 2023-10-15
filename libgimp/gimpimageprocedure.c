@@ -26,6 +26,7 @@
 
 #include "gimpimageprocedure.h"
 #include "gimpplugin-private.h"
+#include "gimpprocedureconfig-private.h"
 
 
 /**
@@ -174,7 +175,7 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
     }
 
   config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, remaining);
+  _gimp_procedure_config_begin_run (config, image, run_mode, remaining);
 
   return_values = image_proc->priv->run_func (procedure,
                                               run_mode,
@@ -187,7 +188,7 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
       G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
     status = GIMP_VALUES_GET_ENUM (return_values, 0);
 
-  gimp_procedure_config_end_run (config, status);
+  _gimp_procedure_config_end_run (config, status);
 
   /* This is debug printing to help plug-in developers figure out best
    * practices.

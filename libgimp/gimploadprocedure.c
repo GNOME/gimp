@@ -27,6 +27,7 @@
 #include "gimploadprocedure.h"
 #include "gimppdb_pdb.h"
 #include "gimpplugin-private.h"
+#include "gimpprocedureconfig-private.h"
 
 #include "libgimp-intl.h"
 
@@ -238,6 +239,8 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
   if (metadata == NULL)
     metadata = gimp_metadata_new ();
 
+  _gimp_procedure_config_begin_run (config, image, run_mode, remaining);
+
   return_values = load_proc->priv->run_func (procedure,
                                              run_mode,
                                              file,
@@ -250,7 +253,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
       G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
     status = GIMP_VALUES_GET_ENUM (return_values, 0);
 
-  gimp_procedure_config_end_run (config, status);
+  _gimp_procedure_config_end_run (config, status);
 
   if (status == GIMP_PDB_SUCCESS)
     {

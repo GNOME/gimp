@@ -22,6 +22,7 @@
 
 #include "gimp.h"
 #include "gimpbatchprocedure.h"
+#include "gimpprocedureconfig-private.h"
 #include "gimppdb_pdb.h"
 
 
@@ -146,7 +147,7 @@ gimp_batch_procedure_run (GimpProcedure        *procedure,
     }
 
   config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, remaining);
+  _gimp_procedure_config_begin_run (config, NULL, run_mode, remaining);
   gimp_value_array_unref (remaining);
 
   return_values = batch_proc->priv->run_func (procedure,
@@ -159,7 +160,7 @@ gimp_batch_procedure_run (GimpProcedure        *procedure,
       G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
     status = GIMP_VALUES_GET_ENUM (return_values, 0);
 
-  gimp_procedure_config_end_run (config, status);
+  _gimp_procedure_config_end_run (config, status);
   g_object_unref (config);
 
   return return_values;

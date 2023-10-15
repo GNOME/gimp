@@ -75,24 +75,6 @@ void    gimp_procedure_config_set_values    (GimpProcedureConfig  *config,
 void    gimp_procedure_config_get_values    (GimpProcedureConfig  *config,
                                              GimpValueArray       *values);
 
-void    gimp_procedure_config_begin_run     (GimpProcedureConfig  *config,
-                                             GimpImage            *image,
-                                             GimpRunMode           run_mode,
-                                             const GimpValueArray *args);
-void    gimp_procedure_config_end_run       (GimpProcedureConfig  *config,
-                                             GimpPDBStatusType     status);
-
-GimpMetadata *
-        gimp_procedure_config_begin_export  (GimpProcedureConfig  *config,
-                                             GimpImage            *original_image,
-                                             GimpRunMode           run_mode,
-                                             const GimpValueArray *args,
-                                             const gchar          *mime_type);
-void    gimp_procedure_config_end_export    (GimpProcedureConfig  *config,
-                                             GimpImage            *exported_image,
-                                             GFile                *file,
-                                             GimpPDBStatusType     status);
-
 void    gimp_procedure_config_save_metadata (GimpProcedureConfig  *config,
                                              GimpImage            *exported_image,
                                              GFile                *file);
