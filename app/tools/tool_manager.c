@@ -184,6 +184,11 @@ tool_manager_exit (Gimp *gimp)
                                         tool_manager_image_changed,
                                         tool_manager);
 
+  if (tool_manager->image)
+    g_signal_handlers_disconnect_by_func (tool_manager->image,
+                                          tool_manager_selected_layers_changed,
+                                          tool_manager);
+
   gimp_container_remove_handler (gimp->images,
                                  tool_manager->image_clean_handler_id);
   gimp_container_remove_handler (gimp->images,
