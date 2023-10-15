@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-12 09:23+0000\n"
-"PO-Revision-Date: 2023-10-14 17:00+0200\n"
+"POT-Creation-Date: 2023-10-14 17:07+0000\n"
+"PO-Revision-Date: 2023-10-15 11:43+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -966,14 +966,13 @@ msgid "Create abstract Coupled-Map Lattice patterns"
 msgstr "Ustvari abstraktne vzorce mreže združenih poslikav"
 
 #: plug-ins/common/cml-explorer.c:515
-#, fuzzy
 msgid ""
 "Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellular "
 "Automata on continuous (value) domain. In GIMP_RUN_NONINTERACTIVE, the name "
 "of a parameter file is passed as the 4th arg. You can control CML_explorer "
 "via parameter file."
 msgstr ""
-"Ustvarite sliko mreže Coupled-Map Lattice (CML). CML je vrsta celičnega "
+"Ustvarite sliko mreže CML (Coupled-Map Lattice). CML je vrsta celičnega "
 "avtomata na zveznem (vrednostnem) področju. V GIMP_RUN_NONINTERACTIVE se ime "
 "datoteke s parametri posreduje kot 4. argument. Preko datoteke parametrov "
 "lahko upravljate raziskovalca CML_explorer."
@@ -1844,7 +1843,6 @@ msgid "Bend the image using two control curves"
 msgstr "Ukrivi sliko z dvema nadzornima krivuljama"
 
 #: plug-ins/common/curve-bend.c:418
-#, fuzzy
 msgid ""
 "This plug-in bends the active layer. If there is a current selection it is "
 "copied to floating selection and the curve_bend distortion is done on the "
@@ -1858,17 +1856,17 @@ msgid ""
 "handled layer. This plug-in sets the offsets of the handled layer to keep "
 "its center at the same position."
 msgstr ""
-"Ta vtičnik upogne aktivno plast Če obstaja trenutna izbira, se kopira v "
-"plavajočo izbiro in izkrivljanje krivulje_bend se izvede na plavajoči "
-"izbiri. Če je parameter work_on_copy enak TRUE, se popačenje curve_bend "
-"izvede na kopiji aktivnega sloja (ali plavajočega izbora). Zgornji in "
-"spodnji rob se upogneta v obliki dveh krivulj spline. obe (zgornja in "
-"spodnja) krivulji sta določeni z do 17 točkami ali z 256 vrednostmi Y, če "
-"curve_type == 1 (prostoročni način) Če vrtenje ni enako 0, se plast pred "
-"operacijo upogibanja zavrti in po njej zavrti nazaj. To omogoča upogibanje v "
-"drugih smereh, ne le v navpični. upogibanje običajno spremeni velikost "
-"obdelane plasti. ta vtičnik nastavi odmike obdelane plasti, da njeno "
-"središče ostane na istem položaju"
+"Ta vstavek upogne aktivno plast. Če obstaja trenutna izbira, se kopira v "
+"plavajočo izbiro in izkrivljanje curve_bend se izvede na plavajoči izbiri. "
+"Če je parameter work_on_copy enak TRUE, se popačenje curve_bend izvede na "
+"kopiji dejavne plasti (ali plavajočega izbora). Zgornji in spodnji rob se "
+"upogneta v obliki dveh krivulj zlepkov. Obe (zgornja in spodnja) krivulji "
+"sta določeni z do 17 točkami ali z 256 vrednostmi Y, če je curve_type == 1 "
+"(prostoročni način). Če vrtenje ni enako 0, se plast pred operacijo "
+"upogibanja zavrti in po njej zavrti nazaj. To omogoča upogibanje v drugih "
+"smereh, ne le v navpični. Upogibanje običajno spremeni velikost obdelane "
+"plasti. Vstavek nastavi odmike obdelane plasti, da njeno središče ostane na "
+"istem položaju."
 
 #: plug-ins/common/curve-bend.c:442
 msgid "Rotat_e"
@@ -2322,7 +2320,6 @@ msgid "Sc_ale 1"
 msgstr "Spremem_ba merila 1"
 
 #: plug-ins/common/depth-merge.c:265
-#| msgid "Scal_e"
 msgid "Scal_e 2"
 msgstr "Spre_memba merila 2"
 
@@ -2463,7 +2460,7 @@ msgid ""
 "This plug-in uses aalib to save grayscale image as ascii art into a variety "
 "of text formats"
 msgstr ""
-"Ta vtičnik uporablja aalib za shranjevanje sivinske slike kot slike ascii v "
+"Ta vstavek uporablja aalib za shranjevanje sivinske slike kot slike ascii v "
 "različnih oblikah besedila"
 
 #: plug-ins/common/file-aa.c:156
@@ -7096,21 +7093,16 @@ msgstr ""
 "uporabi samo barve, najdene v vzorcu"
 
 #: plug-ins/common/sample-colorize.c:375
-#, fuzzy
-#| msgctxt "curve-border"
-#| msgid "_Lower"
 msgid "_Low"
-msgstr "_spodnja"
+msgstr "_Nizka"
 
 #: plug-ins/common/sample-colorize.c:376
 msgid "Intensity of lowest input"
 msgstr "Intenzivnost najnižjega vnosa"
 
 #: plug-ins/common/sample-colorize.c:381
-#, fuzzy
-#| msgid "High"
 msgid "_High"
-msgstr "visoko"
+msgstr "_Visoka"
 
 #: plug-ins/common/sample-colorize.c:382
 msgid "Intensity of highest input"
@@ -7125,22 +7117,18 @@ msgid "Gamma adjustment factor, 1.0 is linear"
 msgstr "Faktor prilagoditve gama, 1,0 je linearen"
 
 #: plug-ins/common/sample-colorize.c:393
-#, fuzzy
 msgid "Lo_w"
-msgstr "Ni_zko"
+msgstr "Ni_zka"
 
 #: plug-ins/common/sample-colorize.c:394
-#, fuzzy
 msgid "Lowest sample color intensity"
 msgstr "Najnižja intenzivnost barve vzorca"
 
 #: plug-ins/common/sample-colorize.c:399
-#, fuzzy
 msgid "Hi_gh"
-msgstr "_Visoko"
+msgstr "_Visoka"
 
 #: plug-ins/common/sample-colorize.c:400
-#, fuzzy
 msgid "Highest sample color intensity"
 msgstr "Najvišja intenzivnost barve vzorca"
 
@@ -10694,41 +10682,37 @@ msgstr "Lev_o"
 #: plug-ins/fractal-explorer/fractal-explorer.c:274
 #, fuzzy
 msgid "X min fractal image delimiter"
-msgstr "X min razmejitev fraktalne slike"
+msgstr "Najmanjši X razmejitve fraktalne slike"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:279
 #: plug-ins/map-object/map-object-main.c:382
-#, fuzzy
-#| msgid "Hi_ghlight"
 msgid "Ri_ght"
-msgstr "Svet_la področja"
+msgstr "_Desno"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:280
 #, fuzzy
 msgid "X max fractal image delimiter"
-msgstr "X max razmejitev fraktalne slike"
+msgstr "Največji X razmejitve fraktalne slike"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:285
 #: plug-ins/map-object/map-object-main.c:367
-#, fuzzy
 msgid "To_p"
 msgstr "Na vr_hu"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:286
 #, fuzzy
 msgid "Y min fractal image delimiter"
-msgstr "X min razmejitev fraktalne slike"
+msgstr "Najmanjši Y razmejitve fraktalne slike"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:291
 #: plug-ins/map-object/map-object-main.c:411
-#, fuzzy
 msgid "_Bottom"
 msgstr "_Na dnu"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:292
 #, fuzzy
 msgid "Y max fractal image delimiter"
-msgstr "X max razmejitev fraktalne slike"
+msgstr "Največji Y razmejitve fraktalne slike"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:297
 msgid "Iteratio_ns"
@@ -10767,32 +10751,26 @@ msgstr ""
 "dejavni preliv na končni sliki"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:322
-#, fuzzy
 msgid "Red stretch"
 msgstr "Razteg rdeče"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:323
-#, fuzzy
 msgid "Red stretching factor"
 msgstr "Faktor raztega rdeče"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:328
-#, fuzzy
 msgid "Green stretch"
 msgstr "Razteg zelene"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:329
-#, fuzzy
 msgid "Green stretching factor"
 msgstr "Faktor raztega zelene"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:334
-#, fuzzy
 msgid "Blue stretch"
 msgstr "Razteg modre"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:335
-#, fuzzy
 msgid "Blue stretching factor"
 msgstr "Faktor raztega modre"
 
@@ -10815,10 +10793,8 @@ msgid "_Green"
 msgstr "_Zelena"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:351
-#, fuzzy
-#| msgid "Gradient map selection menu"
 msgid "Green application mode"
-msgstr "Izbirnik poslikave s prelivom"
+msgstr "Način uporabe zelene"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:360
 msgid "_Blue"
@@ -11542,10 +11518,8 @@ msgid "Performs various artistic operations"
 msgstr "Izvede različne umetniške operacije"
 
 #: plug-ins/gimpressionist/gimp.c:127
-#, fuzzy
-#| msgid "Performs various artistic operations"
 msgid "Performs various artistic operations on an image"
-msgstr "Izvede različne umetniške operacije"
+msgstr "Izvede različne umetniške operacije na sliki"
 
 #: plug-ins/gimpressionist/gimp.c:136
 msgid "Preset"
@@ -13360,7 +13334,8 @@ msgstr "Slika _odtisa za poslikavo"
 #: plug-ins/lighting/lighting-main.c:137
 #, fuzzy
 msgid "Bumpmap drawable (set to NULL if disabled)"
-msgstr "Bumpmap drawable (nastavi se na NULL, če je onemogočen)"
+msgstr ""
+"Risani predmet poslikave odtisa (nastavljeno na NULL, če je onemogočen)"
 
 #: plug-ins/lighting/lighting-main.c:142
 msgid "Enviro_nment map image"
@@ -13369,7 +13344,8 @@ msgstr "Slika odtisa _okolja"
 #: plug-ins/lighting/lighting-main.c:143
 #, fuzzy
 msgid "Environmentmap drawable (set to NULL if disabled)"
-msgstr "Risalnik zemljevida okolja (nastavi na NULL, če je onemogočen)"
+msgstr ""
+"Risani predmet zemljevida okolja (nastavljeno na NULL, če je onemogočen)"
 
 #: plug-ins/lighting/lighting-main.c:149
 msgid "Enable bump mappi_ng"
@@ -13565,25 +13541,23 @@ msgstr "Smer svetlobe Z"
 
 #: plug-ins/lighting/lighting-main.c:257
 #, fuzzy
-#| msgid "Light intensity"
 msgid "Ambient intensity"
-msgstr "Jakost svetlobe"
+msgstr "Intenzivnost okoljske"
 
 #: plug-ins/lighting/lighting-main.c:258
 #, fuzzy
 msgid "Material ambient intensity (Glowing)"
-msgstr "Intenzivnost okolice materiala (Žareče)"
+msgstr "Intenzivnost okolice materiala (žareče)"
 
 #: plug-ins/lighting/lighting-main.c:264
 #, fuzzy
-#| msgid "Light intensity"
 msgid "Diffuse intensity"
-msgstr "Jakost svetlobe"
+msgstr "Intenzivnost razpršenosti"
 
 #: plug-ins/lighting/lighting-main.c:265
 #, fuzzy
 msgid "Material diffuse intensity (Bright)"
-msgstr "Razpršena intenzivnost materiala (Svetlo)"
+msgstr "Razpršena intenzivnost materiala (svetlo)"
 
 #: plug-ins/lighting/lighting-main.c:290
 msgid "Metallic"
@@ -13617,7 +13591,6 @@ msgid "_Distance"
 msgstr "Raz_dalja"
 
 #: plug-ins/lighting/lighting-main.c:315
-#, fuzzy
 msgid "Distance of observer from surface"
 msgstr "Oddaljenost opazovalca od površine"
 
@@ -13661,44 +13634,15 @@ msgstr "Splošne možnosti"
 msgid "Light Settings"
 msgstr "Nastavitve luči"
 
-#: plug-ins/lighting/lighting-ui.c:325
-#, fuzzy, c-format
-msgid "light-color-label-%d"
-msgstr "svetlo-barvna oznaka-%d"
-
-#: plug-ins/lighting/lighting-ui.c:330
-#, fuzzy, c-format
-msgid "light-position-label-%d"
-msgstr "oznaka za položaj svetlobe-%d"
-
 #: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:520
 #: plug-ins/map-object/map-object-ui.c:718
 #: plug-ins/print/print-page-layout.c:384
 msgid "Position"
 msgstr "Položaj"
 
-#: plug-ins/lighting/lighting-ui.c:335
-#, fuzzy, c-format
-msgid "light-direction-label-%d"
-msgstr "nalepka za smer svetlobe-%d"
-
 #: plug-ins/lighting/lighting-ui.c:337
 msgid "Direction"
 msgstr "Smer"
-
-#: plug-ins/lighting/lighting-ui.c:353 plug-ins/lighting/lighting-ui.c:358
-#: plug-ins/lighting/lighting-ui.c:363 plug-ins/lighting/lighting-ui.c:387
-#: plug-ins/lighting/lighting-ui.c:392 plug-ins/lighting/lighting-ui.c:397
-#: plug-ins/lighting/lighting-ui.c:421 plug-ins/lighting/lighting-ui.c:426
-#: plug-ins/lighting/lighting-ui.c:431
-#, fuzzy, c-format
-msgid "notify::%s"
-msgstr "obvestilo::%s"
-
-#: plug-ins/lighting/lighting-ui.c:375
-#, fuzzy, c-format
-msgid "light-position-vbox-%d"
-msgstr "light-position-vbox-%d"
 
 #: plug-ins/lighting/lighting-ui.c:478
 msgid "Lighting presets: "
@@ -13876,9 +13820,8 @@ msgstr "_Okoljska"
 
 #: plug-ins/map-object/map-object-main.c:275
 #, fuzzy
-#| msgid "Material Properties"
 msgid "Material ambient intensity"
-msgstr "Lastnosti materiala"
+msgstr "Intenzivnost okoljske materiala"
 
 #: plug-ins/map-object/map-object-main.c:280
 #, fuzzy
@@ -13888,9 +13831,8 @@ msgstr "_Razpršena"
 
 #: plug-ins/map-object/map-object-main.c:281
 #, fuzzy
-#| msgid "Original i_ntensity"
 msgid "Material diffuse intensity"
-msgstr "Izvorna i_ntenziteta"
+msgstr "I_ntenziteta razpršenosti materiala"
 
 #: plug-ins/map-object/map-object-main.c:287
 msgid "Di_ffuse"
@@ -13913,12 +13855,12 @@ msgstr "Zrcalna odbojnost materiala"
 #: plug-ins/map-object/map-object-main.c:299
 #, fuzzy
 msgid "Highligh_t"
-msgstr "Svetla področja"
+msgstr "Svetla podro_čja"
 
 #: plug-ins/map-object/map-object-main.c:300
 #, fuzzy
 msgid "Material highlight (note, it's exponential)"
-msgstr "Poudarjanje materiala (upoštevajte, da je eksponentno)"
+msgstr "Svetlobno poudarjanje materiala (upoštevajte, da je eksponentno)"
 
 #: plug-ins/map-object/map-object-main.c:306
 msgid "Antialia_sing"
@@ -14078,9 +14020,8 @@ msgstr "_Možnosti"
 
 #: plug-ins/map-object/map-object-ui.c:433
 #, fuzzy
-#| msgid "Hi_ghlight"
 msgid "Li_ght"
-msgstr "Svet_la področja"
+msgstr "Svet_loba"
 
 #: plug-ins/map-object/map-object-ui.c:435
 msgid "_Viewpoint"
