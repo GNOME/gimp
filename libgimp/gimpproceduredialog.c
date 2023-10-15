@@ -366,7 +366,7 @@ gimp_procedure_dialog_constructed (GObject *object)
                     G_CALLBACK (gimp_procedure_dialog_load_defaults),
                     dialog);
   gtk_widget_set_sensitive (button,
-                            gimp_procedure_config_has_default (dialog->priv->config));
+                            _gimp_procedure_config_has_default (dialog->priv->config));
   dialog->priv->load_settings_button = button;
 
   button = gtk_button_new_with_mnemonic (_("_Save Settings"));
@@ -2546,7 +2546,7 @@ gimp_procedure_dialog_load_defaults (GtkWidget           *button,
 {
   GError *error = NULL;
 
-  if (! gimp_procedure_config_load_default (dialog->priv->config, &error))
+  if (! _gimp_procedure_config_load_default (dialog->priv->config, &error))
     {
       if (error)
         {
@@ -2567,14 +2567,14 @@ gimp_procedure_dialog_save_defaults (GtkWidget           *button,
 {
   GError *error = NULL;
 
-  if (! gimp_procedure_config_save_default (dialog->priv->config, &error))
+  if (! _gimp_procedure_config_save_default (dialog->priv->config, &error))
     {
       g_printerr ("Saving default values to disk failed: %s\n",
                   error->message);
       g_clear_error (&error);
     }
   gtk_widget_set_sensitive (dialog->priv->load_settings_button,
-                            gimp_procedure_config_has_default (dialog->priv->config));
+                            _gimp_procedure_config_has_default (dialog->priv->config));
 }
 
 static gboolean

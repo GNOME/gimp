@@ -41,23 +41,11 @@ void       _gimp_procedure_config_end_export   (GimpProcedureConfig  *config,
                                                 GimpPDBStatusType     status);
 
 
-gboolean   gimp_procedure_config_has_default   (GimpProcedureConfig  *config);
+gboolean   _gimp_procedure_config_has_default  (GimpProcedureConfig  *config);
 
-gboolean   gimp_procedure_config_load_default  (GimpProcedureConfig  *config,
+gboolean   _gimp_procedure_config_load_default (GimpProcedureConfig  *config,
                                                 GError              **error);
-gboolean   gimp_procedure_config_save_default  (GimpProcedureConfig  *config,
-                                                GError              **error);
-
-gboolean   gimp_procedure_config_load_last     (GimpProcedureConfig  *config,
-                                                GError              **error);
-gboolean   gimp_procedure_config_save_last     (GimpProcedureConfig  *config,
-                                                GError              **error);
-
-gboolean   gimp_procedure_config_load_parasite (GimpProcedureConfig  *config,
-                                                GimpImage            *image,
-                                                GError              **error);
-gboolean   gimp_procedure_config_save_parasite (GimpProcedureConfig  *config,
-                                                GimpImage            *image,
+gboolean   _gimp_procedure_config_save_default (GimpProcedureConfig  *config,
                                                 GError              **error);
 
 

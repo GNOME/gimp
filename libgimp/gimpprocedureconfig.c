@@ -68,21 +68,33 @@ struct _GimpProcedureConfigPrivate
 };
 
 
-static void    gimp_procedure_config_constructed   (GObject             *object);
-static void    gimp_procedure_config_dispose       (GObject             *object);
-static void    gimp_procedure_config_set_property  (GObject             *object,
-                                                    guint                property_id,
-                                                    const GValue        *value,
-                                                    GParamSpec          *pspec);
-static void    gimp_procedure_config_get_property  (GObject             *object,
-                                                    guint                property_id,
-                                                    GValue              *value,
-                                                    GParamSpec          *pspec);
+static void       gimp_procedure_config_constructed   (GObject             *object);
+static void       gimp_procedure_config_dispose       (GObject             *object);
+static void       gimp_procedure_config_set_property  (GObject             *object,
+                                                       guint                property_id,
+                                                       const GValue        *value,
+                                                       GParamSpec          *pspec);
+static void       gimp_procedure_config_get_property  (GObject             *object,
+                                                       guint                property_id,
+                                                       GValue              *value,
+                                                       GParamSpec          *pspec);
 
-static GFile * gimp_procedure_config_get_file      (GimpProcedureConfig *config,
-                                                    const gchar         *extension);
-static gchar * gimp_procedure_config_parasite_name (GimpProcedureConfig *config,
-                                                    const gchar         *suffix);
+static gboolean   gimp_procedure_config_load_last     (GimpProcedureConfig  *config,
+                                                        GError              **error);
+static gboolean   gimp_procedure_config_save_last     (GimpProcedureConfig  *config,
+                                                       GError              **error);
+
+static gboolean   gimp_procedure_config_load_parasite (GimpProcedureConfig  *config,
+                                                       GimpImage            *image,
+                                                       GError              **error);
+static gboolean   gimp_procedure_config_save_parasite (GimpProcedureConfig  *config,
+                                                       GimpImage            *image,
+                                                       GError              **error);
+
+static GFile    * gimp_procedure_config_get_file      (GimpProcedureConfig *config,
+                                                       const gchar         *extension);
+static gchar    * gimp_procedure_config_parasite_name (GimpProcedureConfig *config,
+                                                       const gchar         *suffix);
 
 
 G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpProcedureConfig, gimp_procedure_config,
@@ -959,7 +971,7 @@ _gimp_procedure_config_end_export (GimpProcedureConfig *config,
 }
 
 gboolean
-gimp_procedure_config_has_default (GimpProcedureConfig *config)
+_gimp_procedure_config_has_default (GimpProcedureConfig *config)
 {
   GFile    *file;
   gboolean  success;
@@ -975,8 +987,8 @@ gimp_procedure_config_has_default (GimpProcedureConfig *config)
 }
 
 gboolean
-gimp_procedure_config_load_default (GimpProcedureConfig  *config,
-                                    GError              **error)
+_gimp_procedure_config_load_default (GimpProcedureConfig  *config,
+                                     GError              **error)
 {
   GFile    *file;
   gboolean  success;
@@ -1001,8 +1013,8 @@ gimp_procedure_config_load_default (GimpProcedureConfig  *config,
 }
 
 gboolean
-gimp_procedure_config_save_default (GimpProcedureConfig  *config,
-                                    GError              **error)
+_gimp_procedure_config_save_default (GimpProcedureConfig  *config,
+                                     GError              **error)
 {
   GFile    *file;
   gboolean  success;
@@ -1023,7 +1035,10 @@ gimp_procedure_config_save_default (GimpProcedureConfig  *config,
   return success;
 }
 
-gboolean
+
+/*  private functions  */
+
+static gboolean
 gimp_procedure_config_load_last (GimpProcedureConfig  *config,
                                  GError              **error)
 {
@@ -1049,7 +1064,7 @@ gimp_procedure_config_load_last (GimpProcedureConfig  *config,
   return success;
 }
 
-gboolean
+static gboolean
 gimp_procedure_config_save_last (GimpProcedureConfig  *config,
                                  GError              **error)
 {
@@ -1072,7 +1087,7 @@ gimp_procedure_config_save_last (GimpProcedureConfig  *config,
   return success;
 }
 
-gboolean
+static gboolean
 gimp_procedure_config_load_parasite (GimpProcedureConfig  *config,
                                      GimpImage            *image,
                                      GError              **error)
@@ -1100,7 +1115,7 @@ gimp_procedure_config_load_parasite (GimpProcedureConfig  *config,
   return success;
 }
 
-gboolean
+static gboolean
 gimp_procedure_config_save_parasite (GimpProcedureConfig  *config,
                                      GimpImage            *image,
                                      GError              **error)
@@ -1127,9 +1142,6 @@ gimp_procedure_config_save_parasite (GimpProcedureConfig  *config,
 
   return TRUE;
 }
-
-
-/*  private functions  */
 
 static GFile *
 gimp_procedure_config_get_file (GimpProcedureConfig *config,
