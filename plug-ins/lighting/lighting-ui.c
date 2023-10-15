@@ -1046,7 +1046,7 @@ light_source_changed (GtkWidget *widget,
       GtkWidget *hbox;
       gchar     *temp_box;
 
-      temp_box = g_strdup_printf (_("light-hbox-%d"), i);
+      temp_box = g_strdup_printf ("light-hbox-%d", i);
       hbox = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (appwin),
                                                temp_box, G_TYPE_NONE);
       g_free (temp_box);
