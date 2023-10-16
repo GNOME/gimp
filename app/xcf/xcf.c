@@ -143,7 +143,7 @@ xcf_init (Gimp *gimp)
                                          "1995-1996");
 
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_enum ("dummy-param",
+                               gimp_param_spec_enum ("run-mode",
                                                      "Dummy Param",
                                                      "Dummy parameter",
                                                      GIMP_TYPE_RUN_MODE,
@@ -212,7 +212,7 @@ xcf_init (Gimp *gimp)
                                          "1995-1996");
 
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_enum ("dummy-param",
+                               gimp_param_spec_enum ("run-mode",
                                                      "Dummy Param",
                                                      "Dummy parameter",
                                                      GIMP_TYPE_RUN_MODE,
