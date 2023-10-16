@@ -59,9 +59,9 @@ gimp_dynamics_refresh (void)
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-dynamics-refresh",
-                                              args);
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-dynamics-refresh",
+                                               args);
   gimp_value_array_unref (args);
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
@@ -97,9 +97,9 @@ gimp_dynamics_get_list (const gchar *filter)
                                           G_TYPE_STRING, filter,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-dynamics-get-list",
-                                              args);
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-dynamics-get-list",
+                                               args);
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)

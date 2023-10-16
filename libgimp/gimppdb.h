@@ -81,9 +81,6 @@ GimpValueArray * gimp_pdb_run_procedure_valist (GimpPDB              *pdb,
                                                 const gchar          *procedure_name,
                                                 const gchar          *first_arg_name,
                                                 va_list               args);
-GimpValueArray * gimp_pdb_run_procedure_array  (GimpPDB              *pdb,
-                                                const gchar          *procedure_name,
-                                                const GimpValueArray *arguments);
 GimpValueArray * gimp_pdb_run_procedure_config (GimpPDB              *pdb,
                                                 const gchar          *procedure_name,
                                                 GimpProcedureConfig  *config);
@@ -114,6 +111,12 @@ gint       gimp_pdb_get_data_size (const gchar      *identifier);
 gboolean   gimp_pdb_set_data      (const gchar      *identifier,
                                    gconstpointer     data,
                                    guint32           data_len);
+
+/* Internal use */
+
+G_GNUC_INTERNAL GimpValueArray * _gimp_pdb_run_procedure_array  (GimpPDB              *pdb,
+                                                                 const gchar          *procedure_name,
+                                                                 const GimpValueArray *arguments);
 
 
 G_END_DECLS

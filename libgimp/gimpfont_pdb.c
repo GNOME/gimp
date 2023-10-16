@@ -64,9 +64,9 @@ gimp_font_get_by_name (const gchar *name)
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-font-get-by-name",
-                                              args);
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-font-get-by-name",
+                                               args);
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
@@ -104,9 +104,9 @@ gimp_fonts_get_by_name (const gchar *name,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-fonts-get-by-name",
-                                              args);
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-fonts-get-by-name",
+                                               args);
   gimp_value_array_unref (args);
 
   *num_fonts = 0;

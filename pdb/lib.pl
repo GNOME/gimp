@@ -534,9 +534,9 @@ $wrapped$funcname ($clist)
   args = gimp_value_array_new_from_types (NULL,
                                           ${value_array}G_TYPE_NONE);
 $arg_array
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-$proc->{canonical_name}",
-                                              args);
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-$proc->{canonical_name}",
+                                               args);
   gimp_value_array_unref (args);
 
   $return_marshal

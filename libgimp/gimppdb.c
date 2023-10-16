@@ -316,59 +316,6 @@ gimp_pdb_run_procedure_valist (GimpPDB     *pdb,
 }
 
 /**
- * gimp_pdb_run_procedure_array:
- * @pdb:            the #GimpPDB object.
- * @procedure_name: the procedure registered name.
- * @arguments:      the call arguments.
- *
- * Runs the procedure named @procedure_name with @arguments.
- *
- * Returns: (transfer full): the return values for the procedure call.
- *
- * Since: 3.0
- */
-GimpValueArray *
-gimp_pdb_run_procedure_array (GimpPDB              *pdb,
-                              const gchar          *procedure_name,
-                              const GimpValueArray *arguments)
-{
-  GPProcRun        proc_run;
-  GPProcReturn    *proc_return;
-  GimpWireMessage  msg;
-  GimpValueArray  *return_values;
-
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
-  g_return_val_if_fail (arguments != NULL, NULL);
-
-  proc_run.name     = (gchar *) procedure_name;
-  proc_run.n_params = gimp_value_array_length (arguments);
-  proc_run.params   = _gimp_value_array_to_gp_params (arguments, FALSE);
-
-  if (! gp_proc_run_write (_gimp_plug_in_get_write_channel (pdb->priv->plug_in),
-                           &proc_run, pdb->priv->plug_in))
-    gimp_quit ();
-
-  _gimp_gp_params_free (proc_run.params, proc_run.n_params, FALSE);
-
-  _gimp_plug_in_read_expect_msg (pdb->priv->plug_in, &msg, GP_PROC_RETURN);
-
-  proc_return = msg.data;
-
-  return_values = _gimp_gp_params_to_value_array (NULL,
-                                                  NULL, 0,
-                                                  proc_return->params,
-                                                  proc_return->n_params,
-                                                  TRUE);
-
-  gimp_wire_destroy (&msg);
-
-  gimp_pdb_set_error (pdb, return_values);
-
-  return return_values;
-}
-
-/**
  * gimp_pdb_run_procedure_config:
  * @pdb:            the #GimpPDB object.
  * @procedure_name: the registered name to call.
@@ -401,7 +348,7 @@ gimp_pdb_run_procedure_config (GimpPDB             *pdb,
   args = gimp_procedure_new_arguments (procedure);
 
   _gimp_procedure_config_get_values (config, args);
-  return_values = gimp_pdb_run_procedure_array (pdb, procedure_name, args);
+  return_values = _gimp_pdb_run_procedure_array (pdb, procedure_name, args);
 
   gimp_value_array_unref (args);
 
@@ -671,6 +618,59 @@ gimp_pdb_set_data (const gchar   *identifier,
   g_bytes_unref (bytes);
 
   return ret;
+}
+
+/**
+ * _gimp_pdb_run_procedure_array:
+ * @pdb:            the #GimpPDB object.
+ * @procedure_name: the procedure registered name.
+ * @arguments:      the call arguments.
+ *
+ * Runs the procedure named @procedure_name with @arguments.
+ *
+ * Returns: (transfer full): the return values for the procedure call.
+ *
+ * Since: 3.0
+ */
+GimpValueArray *
+_gimp_pdb_run_procedure_array (GimpPDB              *pdb,
+                               const gchar          *procedure_name,
+                               const GimpValueArray *arguments)
+{
+  GPProcRun        proc_run;
+  GPProcReturn    *proc_return;
+  GimpWireMessage  msg;
+  GimpValueArray  *return_values;
+
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
+  g_return_val_if_fail (arguments != NULL, NULL);
+
+  proc_run.name     = (gchar *) procedure_name;
+  proc_run.n_params = gimp_value_array_length (arguments);
+  proc_run.params   = _gimp_value_array_to_gp_params (arguments, FALSE);
+
+  if (! gp_proc_run_write (_gimp_plug_in_get_write_channel (pdb->priv->plug_in),
+                           &proc_run, pdb->priv->plug_in))
+    gimp_quit ();
+
+  _gimp_gp_params_free (proc_run.params, proc_run.n_params, FALSE);
+
+  _gimp_plug_in_read_expect_msg (pdb->priv->plug_in, &msg, GP_PROC_RETURN);
+
+  proc_return = msg.data;
+
+  return_values = _gimp_gp_params_to_value_array (NULL,
+                                                  NULL, 0,
+                                                  proc_return->params,
+                                                  proc_return->n_params,
+                                                  TRUE);
+
+  gimp_wire_destroy (&msg);
+
+  gimp_pdb_set_error (pdb, return_values);
+
+  return return_values;
 }
 
 

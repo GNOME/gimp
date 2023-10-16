@@ -92,9 +92,9 @@ gimp_text_font (GimpImage    *image,
                                           GIMP_TYPE_FONT, font,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-font",
-                                              args);
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-font",
+                                               args);
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
@@ -150,9 +150,9 @@ gimp_text_get_extents_font (const gchar *text,
                                           GIMP_TYPE_FONT, font,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-get-extents-font",
-                                              args);
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-get-extents-font",
+                                               args);
   gimp_value_array_unref (args);
 
   *width = 0;

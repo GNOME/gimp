@@ -62,9 +62,9 @@ gimp_file_load (GimpRunMode  run_mode,
                                           G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-file-load",
-                                              args);
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-file-load",
+                                               args);
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
@@ -107,9 +107,9 @@ gimp_file_load_layer (GimpRunMode  run_mode,
                                           G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-file-load-layer",
-                                              args);
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-file-load-layer",
+                                               args);
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
@@ -156,9 +156,9 @@ gimp_file_load_layers (GimpRunMode  run_mode,
                                           G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-file-load-layers",
-                                              args);
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-file-load-layers",
+                                               args);
   gimp_value_array_unref (args);
 
   *num_layers = 0;
@@ -209,9 +209,9 @@ gimp_file_save (GimpRunMode      run_mode,
                                           G_TYPE_NONE);
   gimp_value_set_object_array (gimp_value_array_index (args, 3), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-file-save",
-                                              args);
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-file-save",
+                                               args);
   gimp_value_array_unref (args);
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
@@ -250,9 +250,9 @@ gimp_file_save_thumbnail (GimpImage *image,
                                           G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-file-save-thumbnail",
-                                              args);
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-file-save-thumbnail",
+                                               args);
   gimp_value_array_unref (args);
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;

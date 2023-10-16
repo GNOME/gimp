@@ -177,9 +177,9 @@ gimp_pdb_procedure_run (GimpProcedure        *procedure,
 {
   GimpPDBProcedure *pdb_procedure = GIMP_PDB_PROCEDURE (procedure);
 
-  return gimp_pdb_run_procedure_array (pdb_procedure->priv->pdb,
-                                       gimp_procedure_get_name (procedure),
-                                       (GimpValueArray *) args);
+  return _gimp_pdb_run_procedure_array (pdb_procedure->priv->pdb,
+                                        gimp_procedure_get_name (procedure),
+                                        (GimpValueArray *) args);
 }
 
 
