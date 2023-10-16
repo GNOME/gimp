@@ -223,16 +223,6 @@ gbr_save (GimpProcedure        *procedure,
       break;
     }
 
-  if (n_drawables != 1)
-    {
-      g_set_error (&error, G_FILE_ERROR, 0,
-                   _("GBR format does not support multiple layers."));
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
-    }
-
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config), image))
@@ -241,25 +231,32 @@ gbr_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      GimpValueArray *save_retvals;
-      gint            spacing;
+      GimpValueArray  *args;
+      GimpValueArray  *save_retvals;
+      GimpObjectArray *drawables_array;
+      gint             spacing;
 
       g_object_get (config,
                     "description", &description,
                     "spacing",     &spacing,
                     NULL);
 
-      save_retvals =
-        gimp_pdb_run_procedure (gimp_get_pdb (),
-                                "file-gbr-save-internal",
-                                GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
-                                GIMP_TYPE_IMAGE,    image,
-                                GIMP_TYPE_DRAWABLE, drawables[0],
-                                G_TYPE_FILE,        file,
-                                G_TYPE_INT,         spacing,
-                                G_TYPE_STRING,      description,
-                                G_TYPE_NONE);
-
+      drawables_array = gimp_object_array_new (GIMP_TYPE_ITEM, (GObject **) drawables,
+                                               n_drawables, FALSE);
+      args = gimp_value_array_new_from_types (NULL,
+                                              GIMP_TYPE_RUN_MODE,     GIMP_RUN_NONINTERACTIVE,
+                                              GIMP_TYPE_IMAGE,        image,
+                                              G_TYPE_INT,             n_drawables,
+                                              GIMP_TYPE_OBJECT_ARRAY, drawables_array,
+                                              G_TYPE_FILE,            file,
+                                              G_TYPE_INT,             spacing,
+                                              G_TYPE_STRING,          description,
+                                              G_TYPE_NONE);
+      save_retvals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                                   "file-gbr-save-internal",
+                                                   args);
+      gimp_value_array_unref (args);
+      gimp_object_array_free (drawables_array);
       g_free (description);
 
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) != GIMP_PDB_SUCCESS)
