@@ -442,9 +442,9 @@ icns_attach_image (GimpImage    *image,
           return_vals =
             gimp_pdb_run_procedure (gimp_get_pdb (),
                                     procedure_name,
-                                    GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
-                                    G_TYPE_FILE,        temp_file,
-                                    G_TYPE_NONE);
+                                    "run-mode", GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
+                                    "file",     G_TYPE_FILE,        temp_file,
+                                    NULL);
         }
 
       if (temp_image && return_vals)

@@ -828,11 +828,11 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
           return_vals =
             gimp_pdb_run_procedure (gimp_get_pdb (),
                                     "plug-in-threshold-alpha",
-                                    GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
-                                    GIMP_TYPE_IMAGE,    tmp_image,
-                                    GIMP_TYPE_DRAWABLE, tmp_layer,
-                                    G_TYPE_INT,         ICO_ALPHA_THRESHOLD,
-                                    G_TYPE_NONE);
+                                    "run-mode",  GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
+                                    "image",     GIMP_TYPE_IMAGE,    tmp_image,
+                                    "drawable",  GIMP_TYPE_DRAWABLE, tmp_layer,
+                                    "threshold", G_TYPE_INT,         ICO_ALPHA_THRESHOLD,
+                                    NULL);
 
           gimp_value_array_unref (return_vals);
         }

@@ -435,6 +435,7 @@ file_gbr_image_to_brush (GimpImage     *image,
   gint          height;
 
   g_return_val_if_fail (n_drawables > 0, NULL);
+  g_return_val_if_fail (drawables != NULL, NULL);
 
   if (n_drawables > 1)
     {

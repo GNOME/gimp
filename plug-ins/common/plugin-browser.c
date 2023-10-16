@@ -373,8 +373,8 @@ browser_search (GimpBrowser   *gimp_browser,
 
   return_vals = gimp_pdb_run_procedure (gimp_get_pdb (),
                                         "gimp-plug-ins-query",
-                                        G_TYPE_STRING, search_text,
-                                        G_TYPE_NONE);
+                                        "search-string", G_TYPE_STRING, search_text,
+                                        NULL);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {

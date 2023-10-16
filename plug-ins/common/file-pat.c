@@ -209,28 +209,23 @@ pat_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      GimpValueArray *save_retvals;
-      GimpValueArray *args;
+      GimpValueArray  *save_retvals;
+      GimpObjectArray *drawables_array;
+
+      drawables_array = gimp_object_array_new (GIMP_TYPE_DRAWABLE, (GObject **) drawables, n_drawables, FALSE);
 
       g_object_get (config,
                     "description", &description,
                     NULL);
 
-      args = gimp_value_array_new_from_types (NULL,
-                                              GIMP_TYPE_RUN_MODE,     GIMP_RUN_NONINTERACTIVE,
-                                              GIMP_TYPE_IMAGE,        image,
-                                              G_TYPE_INT,             n_drawables,
-                                              GIMP_TYPE_OBJECT_ARRAY, NULL,
-                                              G_TYPE_FILE,            file,
-                                              G_TYPE_STRING,          description,
-                                              G_TYPE_NONE);
-      gimp_value_set_object_array (gimp_value_array_index (args, 3),
-                                   GIMP_TYPE_ITEM, (GObject **) drawables, n_drawables);
-
-      save_retvals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                                   "file-pat-save-internal",
-                                                   args);
-      gimp_value_array_unref (args);
+      save_retvals = gimp_pdb_run_procedure (gimp_get_pdb (),
+                                             "file-pat-save-internal",
+                                             "image",         GIMP_TYPE_IMAGE,        image,
+                                             "num-drawables", G_TYPE_INT,             n_drawables,
+                                             "drawables",     GIMP_TYPE_OBJECT_ARRAY, drawables_array,
+                                             "file",          G_TYPE_FILE,            file,
+                                             "name",          G_TYPE_STRING,          description,
+                                             NULL);
 
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) != GIMP_PDB_SUCCESS)
         {
@@ -243,6 +238,7 @@ pat_save (GimpProcedure        *procedure,
         }
 
       gimp_value_array_unref (save_retvals);
+      gimp_object_array_free (drawables_array);
     }
 
   if (export == GIMP_EXPORT_EXPORT)

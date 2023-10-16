@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <gobject/gvaluecollector.h>
+
 #include "gimp.h"
 
 #include "libgimpbase/gimpprotocol.h"
@@ -192,11 +194,15 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
  * gimp_pdb_run_procedure: (skip)
  * @pdb:            the #GimpPDB object.
  * @procedure_name: the procedure registered name.
- * @first_type:     the #GType of the first argument, or #G_TYPE_NONE.
+ * @first_arg_name: the name of an argument of @procedure_name.
  * @...:            the call arguments.
  *
  * Runs the procedure named @procedure_name with arguments given as
- * list of (#GType, value) pairs, terminated by #G_TYPE_NONE.
+ * list of `(const gchar *, GType, value)` triplet, terminated by %NULL.
+ *
+ * The order of arguments does not matter and if any argument is missing, its
+ * default value will be used. The %GType must correspond to the argument type
+ * as registered for @procedure_name.
  *
  * Returns: (transfer full): the return values for the procedure call.
  *
@@ -205,7 +211,7 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
 GimpValueArray *
 gimp_pdb_run_procedure (GimpPDB     *pdb,
                         const gchar *procedure_name,
-                        GType        first_type,
+                        const gchar *first_arg_name,
                         ...)
 {
   GimpValueArray *return_values;
@@ -214,10 +220,10 @@ gimp_pdb_run_procedure (GimpPDB     *pdb,
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
 
-  va_start (args, first_type);
+  va_start (args, first_arg_name);
 
   return_values = gimp_pdb_run_procedure_valist (pdb, procedure_name,
-                                                 first_type, args);
+                                                 first_arg_name, args);
 
   va_end (args);
 
@@ -228,11 +234,11 @@ gimp_pdb_run_procedure (GimpPDB     *pdb,
  * gimp_pdb_run_procedure_valist: (skip)
  * @pdb:            the #GimpPDB object.
  * @procedure_name: the procedure registered name.
- * @first_type:     the #GType of the first argument, or #G_TYPE_NONE.
+ * @first_arg_name: the name of an argument of @procedure_name.
  * @args:           the call arguments.
  *
- * Runs the procedure named @procedure_name with @args given in the
- * order as passed to [method@PDB.run_procedure].
+ * Runs the procedure named @procedure_name with arguments name, type and value
+ * given in the order as passed to [method@PDB.run_procedure].
  *
  * Returns: (transfer full): the return values for the procedure call.
  *
@@ -241,71 +247,70 @@ gimp_pdb_run_procedure (GimpPDB     *pdb,
 GimpValueArray *
 gimp_pdb_run_procedure_valist (GimpPDB     *pdb,
                                const gchar *procedure_name,
-                               GType        first_type,
+                               const gchar *first_arg_name,
                                va_list      args)
 {
-  GimpValueArray *arguments;
-  GimpValueArray *return_values;
-  gchar          *error_msg = NULL;
+  GimpValueArray      *return_values;
+  GimpProcedure       *procedure;
+  GimpProcedureConfig *config;
+  const gchar         *arg_name;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
 
-  arguments = gimp_value_array_new_from_types_valist (&error_msg,
-                                                      first_type,
-                                                      args);
+  procedure = gimp_pdb_lookup_procedure (pdb, procedure_name);
+  config    = gimp_procedure_create_config (procedure);
 
-  if (! arguments)
+  arg_name = first_arg_name;
+
+  while (arg_name != NULL)
     {
-      GError *error = g_error_new_literal (GIMP_PDB_ERROR,
-                                           GIMP_PDB_ERROR_INTERNAL_ERROR,
-                                           error_msg);
-      g_printerr ("%s: %s", G_STRFUNC, error_msg);
-      g_free (error_msg);
+      GParamSpec *pspec;
+      gchar      *error = NULL;
+      GValue      value = G_VALUE_INIT;
+      GType       type;
 
-      return gimp_procedure_new_return_values (NULL,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
+      type = va_arg (args, GType);
+
+      if (type == G_TYPE_NONE)
+        {
+          g_warning ("%s: invalid argument '%s' with type G_TYPE_NONE.", G_STRFUNC, arg_name);
+          g_clear_object (&config);
+          return NULL;
+        }
+
+      g_value_init (&value, type);
+
+      G_VALUE_COLLECT (&value, args, G_VALUE_NOCOPY_CONTENTS, &error);
+
+      if (error)
+        {
+          g_warning ("%s: %s", G_STRFUNC, error);
+          g_free (error);
+          g_clear_object (&config);
+          return NULL;
+        }
+
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), arg_name);
+      if (pspec == NULL)
+        g_warning ("%s: %s has no property named '%s'",
+                   G_STRFUNC,
+                   g_type_name (G_TYPE_FROM_INSTANCE (config)),
+                   arg_name);
+      else if (! g_type_is_a (type, pspec->value_type))
+        g_warning ("%s: value of type %s is incompatible with argument '%s' of type %s",
+                   G_STRFUNC, g_type_name (type),
+                   arg_name, g_type_name (pspec->value_type));
+      else
+        g_object_set_property (G_OBJECT (config), arg_name, &value);
+
+      g_value_unset (&value);
+
+      arg_name = va_arg (args, const gchar *);
     }
 
-  return_values = gimp_pdb_run_procedure_array (pdb, procedure_name,
-                                                arguments);
-  gimp_value_array_unref (arguments);
-
-  return return_values;
-}
-
-/**
- * gimp_pdb_run_procedure_argv: (rename-to gimp_pdb_run_procedure)
- * @pdb:                                              the #GimpPDB object.
- * @procedure_name:                                   the registered name to call.
- * @arguments: (array length=n_arguments) (nullable): the call arguments or %NULL.
- * @n_arguments:                                      the number of arguments.
- *
- * Runs the procedure named @procedure_name with @arguments.
- *
- * Returns: (transfer full): the return values for the procedure call.
- *
- * Since: 3.0
- */
-GimpValueArray *
-gimp_pdb_run_procedure_argv (GimpPDB      *pdb,
-                             const gchar  *procedure_name,
-                             const GValue *arguments,
-                             gint          n_arguments)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_values;
-
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
-  /* Not require arguments != NULL.
-   * gimp_value_array_new_from_values(NULL, 0) will return empty GValueArray.
-   */
-
-  args = gimp_value_array_new_from_values (arguments, n_arguments);
-  return_values = gimp_pdb_run_procedure_array (pdb, procedure_name, args);
-  gimp_value_array_unref (args);
+  return_values = gimp_pdb_run_procedure_config (pdb, procedure_name, config);
+  g_clear_object (&config);
 
   return return_values;
 }

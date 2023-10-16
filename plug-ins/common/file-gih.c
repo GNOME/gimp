@@ -382,29 +382,25 @@ gih_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      GimpValueArray *save_retvals;
-      gchar          *paramstring;
-      GimpValueArray *args;
+      GimpValueArray  *save_retvals;
+      GimpObjectArray *drawables_array;
+      gchar           *paramstring;
 
       paramstring = gimp_pixpipe_params_build (&gihparams);
 
-      args = gimp_value_array_new_from_types (NULL,
-                                              GIMP_TYPE_RUN_MODE,     GIMP_RUN_NONINTERACTIVE,
-                                              GIMP_TYPE_IMAGE,        image,
-                                              G_TYPE_INT,             n_drawables,
-                                              GIMP_TYPE_OBJECT_ARRAY, NULL,
-                                              G_TYPE_FILE,            file,
-                                              G_TYPE_INT,             spacing,
-                                              G_TYPE_STRING,          description,
-                                              G_TYPE_STRING,          paramstring,
-                                              G_TYPE_NONE);
-      gimp_value_set_object_array (gimp_value_array_index (args, 3),
-                                   GIMP_TYPE_ITEM, (GObject **) drawables, n_drawables);
-
-      save_retvals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                                   "file-gih-save-internal",
-                                                   args);
-      gimp_value_array_unref (args);
+      drawables_array = gimp_object_array_new (GIMP_TYPE_DRAWABLE, (GObject **) drawables,
+                                               n_drawables, FALSE);
+      save_retvals = gimp_pdb_run_procedure (gimp_get_pdb (),
+                                             "file-gih-save-internal",
+                                             "image",         GIMP_TYPE_IMAGE,        image,
+                                             "num-drawables", G_TYPE_INT,             n_drawables,
+                                             "drawables",     GIMP_TYPE_OBJECT_ARRAY, drawables_array,
+                                             "file",          G_TYPE_FILE,            file,
+                                             "spacing",       G_TYPE_INT,             spacing,
+                                             "name",          G_TYPE_STRING,          description,
+                                             "params",        G_TYPE_STRING,          paramstring,
+                                             NULL);
+      gimp_object_array_free (drawables_array);
 
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) == GIMP_PDB_SUCCESS)
         {

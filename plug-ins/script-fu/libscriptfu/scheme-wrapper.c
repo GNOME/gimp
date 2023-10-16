@@ -638,18 +638,17 @@ script_fu_marshal_procedure_call (scheme   *sc,
                                   gboolean  permissive,
                                   gboolean  deprecated)
 {
-  GimpProcedure   *procedure;
-  GimpValueArray  *args;
-  GimpValueArray  *values = NULL;
-  gchar           *proc_name;
-  GParamSpec     **arg_specs;
-  gint             n_arg_specs;
-  gint             actual_arg_count;
-  gint             consumed_arg_count = 0;
-  gchar            error_str[1024];
-  gint             i;
-  pointer          return_val = sc->NIL;
-
+  GimpProcedure        *procedure;
+  GimpProcedureConfig  *config;
+  GimpValueArray       *values = NULL;
+  gchar                *proc_name;
+  GParamSpec          **arg_specs;
+  gint                  n_arg_specs;
+  gint                  actual_arg_count;
+  gint                  consumed_arg_count = 0;
+  gchar                 error_str[1024];
+  gint                  i;
+  pointer               return_val = sc->NIL;
 
   g_debug ("In %s()", G_STRFUNC);
 
@@ -688,6 +687,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
       return script_error (sc, error_str, 0);
     }
 
+  config    = gimp_procedure_create_config (procedure);
   arg_specs = gimp_procedure_get_arguments (procedure, &n_arg_specs);
   actual_arg_count = sc->vptr->list_length (sc, a) - 1;
 
@@ -720,8 +720,6 @@ script_fu_marshal_procedure_call (scheme   *sc,
   }
 
   /*  Marshall the supplied arguments  */
-  args = gimp_value_array_new (n_arg_specs);
-
   for (i = 0; i < n_arg_specs; i++)
     {
       GParamSpec *arg_spec = arg_specs[i];
@@ -846,8 +844,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
                   {
                     g_printerr ("     ");
                     for (j = 0; j < count; ++j)
-                      g_printerr (" \"%s\"",
-                                  args[i].data.d_strv[j]);
+                      g_printerr (" \"%s\"", array[j]);
                     g_printerr ("\n");
                   }
               }
@@ -988,7 +985,12 @@ script_fu_marshal_procedure_call (scheme   *sc,
                */
               gint32 *array;
 
-              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
+              if (i == 0)
+                return script_error (sc, "The first argument cannot be an array", a);
+              else if (! g_type_is_a (arg_specs[i - 1]->value_type, G_TYPE_INT))
+                return script_error (sc, "Array arguments must be preceded by an int argument (number of items)", a);
+
+              g_object_get (config, arg_specs[i - 1]->name, &n_elements, NULL);
 
               if (n_elements > sc->vptr->vector_length (vector))
                 return script_length_error_in_vector (sc, i, proc_name, n_elements, vector);
@@ -1054,7 +1056,12 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               gdouble *array;
 
-              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
+              if (i == 0)
+                return script_error (sc, "The first argument cannot be an array", a);
+              else if (! g_type_is_a (arg_specs[i - 1]->value_type, G_TYPE_INT))
+                return script_error (sc, "Array arguments must be preceded by an int argument (number of items)", a);
+
+              g_object_get (config, arg_specs[i - 1]->name, &n_elements, NULL);
 
               if (n_elements > sc->vptr->vector_length (vector))
                 return script_length_error_in_vector (sc, i, proc_name, n_elements, vector);
@@ -1138,7 +1145,12 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               GimpRGB *array;
 
-              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
+              if (i == 0)
+                return script_error (sc, "The first argument cannot be an array", a);
+              else if (! g_type_is_a (arg_specs[i - 1]->value_type, G_TYPE_INT))
+                return script_error (sc, "Array arguments must be preceded by an int argument (number of items)", a);
+
+              g_object_get (config, arg_specs[i - 1]->name, &n_elements, NULL);
 
               if (n_elements > sc->vptr->vector_length (vector))
                 return script_length_error_in_vector (sc, i, proc_name, n_elements, vector);
@@ -1283,7 +1295,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
           return implementation_error (sc, error_str, 0);
         }
       debug_gvalue (&value);
-      gimp_value_array_append (args, &value);
+      g_object_set_property (G_OBJECT (config), arg_specs[i]->name, &value);
       g_value_unset (&value);
     }
 
@@ -1292,9 +1304,9 @@ script_fu_marshal_procedure_call (scheme   *sc,
       return script_error (sc, "A script cannot refresh scripts", 0);
 
   g_debug ("calling %s", proc_name);
-  values = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                         proc_name, args);
+  values = gimp_pdb_run_procedure_config (gimp_get_pdb (), proc_name, config);
   g_debug ("done.");
+  g_clear_object (&config);
 
   /*  Check the return status  */
   if (! values)
@@ -1326,7 +1338,6 @@ script_fu_marshal_procedure_call (scheme   *sc,
   gimp_value_array_unref (values);
 
   /*  free arguments and values  */
-  gimp_value_array_unref (args);
 
   /* The callback is NULL except for script-fu-server.  See explanation there. */
   if (post_command_callback != NULL)
