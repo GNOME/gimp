@@ -429,7 +429,7 @@ file_data_init (Gimp *gimp)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("n-drawables",
+                               g_param_spec_int ("num-drawables",
                                                  "Num drawables",
                                                  "Number of drawables",
                                                  1, G_MAXINT, 1,

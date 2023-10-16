@@ -442,7 +442,7 @@ gimp_gegl_procedure_new (Gimp        *gimp,
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("n-drawables",
+                               g_param_spec_int ("num-drawables",
                                                  "N drawables",
                                                  "The number of drawables",
                                                  0, G_MAXINT32, 0,
