@@ -19,7 +19,8 @@
 #define __ABOUT_DIALOG_H__
 
 
-GtkWidget * about_dialog_create (GimpCoreConfig *config);
+GtkWidget * about_dialog_create (Gimp           *gimp,
+                                 GimpCoreConfig *config);
 
 
 #endif /* __ABOUT_DIALOG_H__ */

@@ -30,6 +30,8 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "about.h"
 #include "git-version.h"
 
@@ -50,23 +52,25 @@
 
 typedef struct
 {
-  GtkWidget   *dialog;
+  GtkWidget      *dialog;
+
+  Gimp           *gimp;
 
   GtkWidget      *update_frame;
   GimpCoreConfig *config;
 
-  GtkWidget   *anim_area;
-  PangoLayout *layout;
+  GtkWidget      *anim_area;
+  PangoLayout    *layout;
 
-  gint         n_authors;
-  gint         shuffle[G_N_ELEMENTS (authors) - 1];  /* NULL terminated */
+  gint            n_authors;
+  gint            shuffle[G_N_ELEMENTS (authors) - 1];  /* NULL terminated */
 
-  guint        timer;
+  guint           timer;
 
-  gint         index;
-  gint         animstep;
-  gint         state;
-  gboolean     visible;
+  gint            index;
+  gint            animstep;
+  gint            state;
+  gboolean        visible;
 } GimpAboutDialog;
 
 
@@ -99,7 +103,8 @@ static void        about_dialog_download_clicked
                                                const gchar *link);
 
 GtkWidget *
-about_dialog_create (GimpCoreConfig *config)
+about_dialog_create (Gimp           *gimp,
+                     GimpCoreConfig *config)
 {
   static GimpAboutDialog dialog;
 
@@ -112,6 +117,7 @@ about_dialog_create (GimpCoreConfig *config)
       gchar     *copyright;
       gchar     *version;
 
+      dialog.gimp      = gimp;
       dialog.n_authors = G_N_ELEMENTS (authors) - 1;
       dialog.config    = config;
 
@@ -206,6 +212,10 @@ about_dialog_map (GtkWidget       *widget,
 
       dialog->timer = g_timeout_add (800, about_dialog_timer, dialog);
     }
+
+#ifdef G_OS_WIN32
+  gimp_window_set_title_bar_theme (dialog->gimp, widget, FALSE);
+#endif
 }
 
 static void

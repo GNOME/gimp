@@ -30,5 +30,6 @@ GFile  * themes_get_theme_file (Gimp        *gimp,
                                 const gchar *first_component,
                                 ...) G_GNUC_NULL_TERMINATED;
 
+void     themes_set_title_bar  (Gimp        *gimp);
 
 #endif /* __THEMES_H__ */

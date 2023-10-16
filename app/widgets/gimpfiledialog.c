@@ -86,6 +86,8 @@ static gboolean gimp_file_dialog_delete_event            (GtkWidget           *w
                                                           GdkEventAny         *event);
 static void     gimp_file_dialog_response                (GtkDialog           *dialog,
                                                           gint                 response_id);
+static void     gimp_file_dialog_map                     (GimpFileDialog      *dialog,
+                                                          gpointer             data);
 static GFile  * gimp_file_dialog_real_get_default_folder (GimpFileDialog      *dialog);
 static void     gimp_file_dialog_real_save_state         (GimpFileDialog      *dialog,
                                                           const gchar         *state_name);
@@ -225,6 +227,11 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
 static void
 gimp_file_dialog_init (GimpFileDialog *dialog)
 {
+#ifdef G_OS_WIN32
+  g_signal_connect (dialog, "map",
+                    G_CALLBACK (gimp_file_dialog_map),
+                    NULL);
+#endif
 }
 
 static void
@@ -418,6 +425,15 @@ gimp_file_dialog_response (GtkDialog *dialog,
           gimp_progress_cancel (GIMP_PROGRESS (dialog));
         }
     }
+}
+
+static void
+gimp_file_dialog_map (GimpFileDialog *dialog,
+                      gpointer        data)
+{
+#ifdef G_OS_WIN32
+  gimp_window_set_title_bar_theme (dialog->gimp, GTK_WIDGET (dialog), FALSE);
+#endif
 }
 
 static GFile *

@@ -26,7 +26,12 @@
 #include <gtk/gtk.h>
 
 #ifdef GDK_WINDOWING_WIN32
+#include <dwmapi.h>
 #include <gdk/gdkwin32.h>
+
+#ifndef DWMWA_USE_IMMERSIVE_DARK_MODE
+#define DWMWA_USE_IMMERSIVE_DARK_MODE 20
+#endif
 #endif
 
 #ifdef GDK_WINDOWING_X11
@@ -50,6 +55,8 @@
 #include "widgets-types.h"
 
 #include "gegl/gimp-babl.h"
+
+#include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpprogress.h"
@@ -2613,6 +2620,62 @@ gimp_window_set_transient_cb (GtkWidget   *window,
         gdk_window_set_transient_for (gtk_widget_get_window (window), parent);
 
       transient_set = TRUE;
+    }
+#endif
+}
+
+void
+gimp_window_set_title_bar_theme (Gimp      *gimp,
+                                 GtkWidget *dialog,
+                                 gboolean   is_main_window)
+{
+#ifdef G_OS_WIN32
+  HWND           hwnd;
+  GdkWindow     *window        = NULL;
+  gboolean       use_dark_mode = FALSE;
+
+  window = gtk_widget_get_window (GTK_WIDGET (dialog));
+  if (window)
+    {
+      if (gimp)
+        {
+          GimpGuiConfig *config;
+
+          config = GIMP_GUI_CONFIG (gimp->config);
+          use_dark_mode = config->prefer_dark_theme;
+        }
+      else
+        {
+          GtkStyleContext *style;
+          GdkRGBA         *color = NULL;
+
+          /* Workaround if we don't have access to GimpGuiConfig.
+           * If the background color is below the threshold, then we're
+           * likely in dark mode.
+           */
+          style = gtk_widget_get_style_context (dialog);
+          gtk_style_context_get (style, gtk_style_context_get_state (style),
+                                 GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
+                                 NULL);
+          if (color)
+            {
+              if (color->red < 0.5 && color->green < 0.5 && color->blue < 0.5)
+                use_dark_mode = TRUE;
+
+              gdk_rgba_free (color);
+            }
+        }
+
+        hwnd = (HWND) gdk_win32_window_get_handle (window);
+        DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
+                               &use_dark_mode, sizeof (use_dark_mode));
+
+        if (! is_main_window)
+          {
+            /* Toggle the window's visibility so the title bar change appears */
+            gdk_window_hide (window);
+            gdk_window_show (window);
+          }
     }
 #endif
 }

@@ -435,14 +435,18 @@ gimp_update_about_dialog (GimpCoreConfig   *config,
                           const GParamSpec *pspec,
                           gpointer          user_data)
 {
+#ifndef GIMP_CONSOLE_COMPILATION
+  Gimp *gimp = user_data;
+#endif
+
   g_signal_handlers_disconnect_by_func (config,
                                         (GCallback) gimp_update_about_dialog,
-                                        NULL);
+                                        user_data);
 
   if (config->last_known_release != NULL)
     {
 #ifndef GIMP_CONSOLE_COMPILATION
-      gtk_widget_show (about_dialog_create (config));
+      gtk_widget_show (about_dialog_create (gimp, config));
 #else
       g_printerr (_("A new version of GIMP (%s) was released.\n"
                     "It is recommended to update."),
@@ -639,7 +643,7 @@ gimp_update_auto_check (GimpCoreConfig *config,
 
   g_signal_connect (config, "notify::last-known-release",
                     (GCallback) gimp_update_about_dialog,
-                    NULL);
+                    gimp);
 
   gimp_update_check (config);
 

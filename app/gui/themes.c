@@ -31,6 +31,10 @@
 
 #include "core/gimp.h"
 
+#include "display/gimpimagewindow.h"
+
+#include "widgets/gimpwidgets-utils.h"
+
 #include "themes.h"
 
 #include "gimp-intl.h"
@@ -105,6 +109,10 @@ themes_init (Gimp *gimp)
                     gimp);
 
   themes_theme_change_notify (config, NULL, gimp);
+
+#ifdef G_OS_WIN32
+  themes_set_title_bar (gimp);
+#endif
 }
 
 void
@@ -469,6 +477,10 @@ themes_theme_change_notify (GimpGuiConfig *config,
   g_object_unref (theme_css);
 
   gtk_style_context_reset_widgets (gdk_screen_get_default ());
+
+#ifdef G_OS_WIN32
+  themes_set_title_bar (gimp);
+#endif
 }
 
 static void
@@ -548,4 +560,23 @@ themes_theme_paths_notify (GimpExtensionManager *manager,
 
       g_list_free_full (path, (GDestroyNotify) g_object_unref);
     }
+}
+
+void
+themes_set_title_bar (Gimp *gimp)
+{
+#ifdef G_OS_WIN32
+  GList *windows = gimp_get_image_windows (gimp);
+  GList *iter;
+
+  for (iter = windows; iter; iter = g_list_next (iter))
+    {
+      GtkWidget *window = GTK_WIDGET (windows->data);
+
+      gimp_window_set_title_bar_theme (gimp, window, TRUE);
+    }
+
+  if (windows)
+    g_list_free (windows);
+#endif
 }

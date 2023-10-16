@@ -617,6 +617,10 @@ gui_restore_after_callback (Gimp               *gimp,
 
       shell = gimp_display_get_shell (display);
 
+#ifdef G_OS_WIN32
+      themes_set_title_bar (gimp);
+#endif
+
       if (gui_config->restore_session)
         session_restore (gimp, initial_monitor);
 
@@ -624,7 +628,7 @@ gui_restore_after_callback (Gimp               *gimp,
 
 #ifdef G_OS_WIN32
       /* Prevents window from reappearing on start-up if the user
-       * requested it to be minimized via window hints 
+       * requested it to be minimized via window hints
        */
       if (StartupInfo.wShowWindow != SW_SHOWMINIMIZED   &&
           StartupInfo.wShowWindow != SW_SHOWMINNOACTIVE &&

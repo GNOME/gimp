@@ -34,6 +34,14 @@
 
 #include "libgimp/libgimp-intl.h"
 
+#ifdef G_OS_WIN32
+#include <dwmapi.h>
+#include <gdk/gdkwin32.h>
+
+#ifndef DWMWA_USE_IMMERSIVE_DARK_MODE
+#define DWMWA_USE_IMMERSIVE_DARK_MODE 20
+#endif
+#endif
 
 /**
  * SECTION: gimpdialog
@@ -67,27 +75,28 @@ struct _GimpDialogPrivate
 #define GET_PRIVATE(obj) (((GimpDialog *) (obj))->priv)
 
 
-static void       gimp_dialog_constructed  (GObject      *object);
-static void       gimp_dialog_dispose      (GObject      *object);
-static void       gimp_dialog_finalize     (GObject      *object);
-static void       gimp_dialog_set_property (GObject      *object,
-                                            guint         property_id,
-                                            const GValue *value,
-                                            GParamSpec   *pspec);
-static void       gimp_dialog_get_property (GObject      *object,
-                                            guint         property_id,
-                                            GValue       *value,
-                                            GParamSpec   *pspec);
+static void       gimp_dialog_constructed         (GObject      *object);
+static void       gimp_dialog_dispose             (GObject      *object);
+static void       gimp_dialog_finalize            (GObject      *object);
+static void       gimp_dialog_set_property        (GObject      *object,
+                                                   guint         property_id,
+                                                   const GValue *value,
+                                                   GParamSpec   *pspec);
+static void       gimp_dialog_get_property        (GObject      *object,
+                                                   guint         property_id,
+                                                   GValue       *value,
+                                                   GParamSpec   *pspec);
 
-static void       gimp_dialog_hide         (GtkWidget    *widget);
-static gboolean   gimp_dialog_delete_event (GtkWidget    *widget,
-                                            GdkEventAny  *event);
+static void       gimp_dialog_hide                (GtkWidget    *widget);
+static gboolean   gimp_dialog_delete_event        (GtkWidget    *widget,
+                                                   GdkEventAny  *event);
 
-static void       gimp_dialog_close        (GtkDialog    *dialog);
+static void       gimp_dialog_close               (GtkDialog    *dialog);
 
-static void       gimp_dialog_response     (GtkDialog    *dialog,
-                                            gint          response_id);
+static void       gimp_dialog_response            (GtkDialog    *dialog,
+                                                   gint          response_id);
 
+static void       gimp_dialog_set_title_bar_theme (GtkWidget    *dialog);
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG)
 
@@ -161,6 +170,12 @@ gimp_dialog_init (GimpDialog *dialog)
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gimp_dialog_response),
                     NULL);
+
+#ifdef G_OS_WIN32
+  g_signal_connect (GTK_WIDGET (dialog), "map",
+                    G_CALLBACK (gimp_dialog_set_title_bar_theme),
+                    NULL);
+#endif
 }
 
 static void
@@ -656,6 +671,10 @@ gimp_dialog_run (GimpDialog *dialog)
 
   gtk_window_present (GTK_WINDOW (dialog));
 
+#ifdef G_OS_WIN32
+  gimp_dialog_set_title_bar_theme (GTK_WIDGET (dialog));
+#endif
+
   response_handler = g_signal_connect (dialog, "response",
                                        G_CALLBACK (run_response_handler),
                                        &ri);
@@ -749,4 +768,47 @@ void
 gimp_dialogs_show_help_button (gboolean  show)
 {
   show_help_button = show ? TRUE : FALSE;
+}
+
+void
+gimp_dialog_set_title_bar_theme (GtkWidget *dialog)
+{
+#ifdef G_OS_WIN32
+  HWND             hwnd;
+  gboolean         use_dark_mode = FALSE;
+  GdkWindow       *window        = NULL;
+
+  window = gtk_widget_get_window (GTK_WIDGET (dialog));
+  if (window)
+    {
+      GtkStyleContext *style;
+      GdkRGBA         *color = NULL;
+
+      hwnd = (HWND) gdk_win32_window_get_handle (window);
+      /* Workaround since we don't have access to GimpGuiConfig.
+       * If the background color is below the threshold, then we're
+       * likely in dark mode.
+       */
+      style = gtk_widget_get_style_context (GTK_WIDGET (dialog));
+      gtk_style_context_get (style, gtk_style_context_get_state (style),
+                             GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
+                             NULL);
+      if (color)
+        {
+          if (color->red < 0.5 && color->green < 0.5 && color->blue < 0.5)
+            use_dark_mode = TRUE;
+
+          gdk_rgba_free (color);
+        }
+
+      DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
+                             &use_dark_mode, sizeof (use_dark_mode));
+      UpdateWindow (hwnd);
+      ShowWindow (hwnd, 5);
+
+      /* Toggle the window's visibility so the title bar change appears */
+      gdk_window_hide (window);
+      gdk_window_show (window);
+    }
+#endif
 }
