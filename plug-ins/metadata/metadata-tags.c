@@ -177,12 +177,21 @@ const gint n_equivalent_metadata_tags = G_N_ELEMENTS (equivalent_metadata_tags);
  */
 const combobox_str_tag digitalsourcetype[] =
 {
-  { "",                                                              N_("Select a value")                                   },
-  { "http://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture", N_("Original digital capture of a real life scene")    },
-  { "http://cv.iptc.org/newscodes/digitalsourcetype/negativeFilm",   N_("Digitized from a negative on film")                },
-  { "http://cv.iptc.org/newscodes/digitalsourcetype/positiveFilm",   N_("Digitized from a positive on film")                },
-  { "http://cv.iptc.org/newscodes/digitalsourcetype/print",          N_("Digitized from a print on non-transparent medium") },
-  { "http://cv.iptc.org/newscodes/digitalsourcetype/softwareImage",  N_("Created by software")                              }
+  { "",                                                                       N_("Select a value")                                   },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture",          N_("Original digital capture of a real life scene")    },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/negativeFilm",            N_("Digitized from a negative on film")                },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/positiveFilm",            N_("Digitized from a positive on film")                },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/print",                   N_("Digitized from a print on non-transparent medium") },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/minorHumanEdits",         N_("Original media with minor human edits")            },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/compositeCapture",        N_("Composite of captured elements")                   },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/algorithmicallyEnhanced", N_("Algorithmically-enhanced media")                   },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/dataDrivenMedia",         N_("Data-driven media")                                },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/digitalArt",              N_("Digital art")                                      },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/virtualRecording",        N_("Virtual recording")                                },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/compositeSynthetic",      N_("Composite including synthetic elements")           },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia", N_("Trained algorithmic media")                        },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/algorithmicMedia",        N_("Pure algorithmic media")                           },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/softwareImage",           N_("Created by software")                              }
 };
 const gint n_digitalsourcetype = G_N_ELEMENTS (digitalsourcetype);
 
