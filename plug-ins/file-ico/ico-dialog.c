@@ -507,10 +507,10 @@ ico_dialog_update_icon_preview (GtkWidget    *dialog,
       return_vals =
         gimp_pdb_run_procedure (gimp_get_pdb (),
                                 "plug-in-threshold-alpha",
-                                "run-mode",  GIMP_TYPE_RUN_MODE,  GIMP_RUN_NONINTERACTIVE,
-                                "image",     GIMP_TYPE_IMAGE,     tmp_image,
-                                "drawable",  GIMP_TYPE_DRAWABLE,  tmp_layer,
-                                "threshold", G_TYPE_INT,          ICO_ALPHA_THRESHOLD,
+                                "run-mode",  GIMP_RUN_NONINTERACTIVE,
+                                "image",     tmp_image,
+                                "drawable",  tmp_layer,
+                                "threshold", ICO_ALPHA_THRESHOLD,
                                 NULL);
 
       gimp_value_array_unref (return_vals);

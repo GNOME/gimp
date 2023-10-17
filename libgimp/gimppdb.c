@@ -198,11 +198,11 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
  * @...:            the call arguments.
  *
  * Runs the procedure named @procedure_name with arguments given as
- * list of `(const gchar *, GType, value)` triplet, terminated by %NULL.
+ * list of `(name, value)` pairs, terminated by %NULL.
  *
  * The order of arguments does not matter and if any argument is missing, its
- * default value will be used. The %GType must correspond to the argument type
- * as registered for @procedure_name.
+ * default value will be used. The value type must correspond to the argument
+ * type as registered for @procedure_name.
  *
  * Returns: (transfer full): the return values for the procedure call.
  *
@@ -268,19 +268,20 @@ gimp_pdb_run_procedure_valist (GimpPDB     *pdb,
       GParamSpec *pspec;
       gchar      *error = NULL;
       GValue      value = G_VALUE_INIT;
-      GType       type;
 
-      type = va_arg (args, GType);
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), arg_name);
 
-      if (type == G_TYPE_NONE)
+      if (pspec == NULL)
         {
-          g_warning ("%s: invalid argument '%s' with type G_TYPE_NONE.", G_STRFUNC, arg_name);
+          g_warning ("%s: %s has no property named '%s'",
+                     G_STRFUNC,
+                     g_type_name (G_TYPE_FROM_INSTANCE (config)),
+                     arg_name);
           g_clear_object (&config);
           return NULL;
         }
 
-      g_value_init (&value, type);
-
+      g_value_init (&value, pspec->value_type);
       G_VALUE_COLLECT (&value, args, G_VALUE_NOCOPY_CONTENTS, &error);
 
       if (error)
@@ -291,19 +292,7 @@ gimp_pdb_run_procedure_valist (GimpPDB     *pdb,
           return NULL;
         }
 
-      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), arg_name);
-      if (pspec == NULL)
-        g_warning ("%s: %s has no property named '%s'",
-                   G_STRFUNC,
-                   g_type_name (G_TYPE_FROM_INSTANCE (config)),
-                   arg_name);
-      else if (! g_type_is_a (type, pspec->value_type))
-        g_warning ("%s: value of type %s is incompatible with argument '%s' of type %s",
-                   G_STRFUNC, g_type_name (type),
-                   arg_name, g_type_name (pspec->value_type));
-      else
-        g_object_set_property (G_OBJECT (config), arg_name, &value);
-
+      g_object_set_property (G_OBJECT (config), arg_name, &value);
       g_value_unset (&value);
 
       arg_name = va_arg (args, const gchar *);

@@ -403,7 +403,7 @@ page_setup (GimpImage *image)
 
   return_vals = gimp_pdb_run_procedure (gimp_get_pdb (),
                                         name,
-                                        "image", GIMP_TYPE_IMAGE, image,
+                                        "image", image,
                                         G_TYPE_NONE);
   gimp_value_array_unref (return_vals);
 

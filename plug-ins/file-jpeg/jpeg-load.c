@@ -499,11 +499,11 @@ load_image (GFile        *file,
       return_vals =
         gimp_pdb_run_procedure (gimp_get_pdb (),
                                 "file-psd-load-metadata",
-                                "run-mode",      GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
-                                "file",          G_TYPE_FILE,        temp_file,
-                                "size",          G_TYPE_INT,         photoshop_len,
-                                "image",         GIMP_TYPE_IMAGE,    image,
-                                "metadata-type", G_TYPE_BOOLEAN,     FALSE,
+                                "run-mode",      GIMP_RUN_NONINTERACTIVE,
+                                "file",          temp_file,
+                                "size",          photoshop_len,
+                                "image",         image,
+                                "metadata-type", FALSE,
                                 NULL);
 
       g_file_delete (temp_file, NULL, NULL);

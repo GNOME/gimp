@@ -392,13 +392,13 @@ gih_save (GimpProcedure        *procedure,
                                                n_drawables, FALSE);
       save_retvals = gimp_pdb_run_procedure (gimp_get_pdb (),
                                              "file-gih-save-internal",
-                                             "image",         GIMP_TYPE_IMAGE,        image,
-                                             "num-drawables", G_TYPE_INT,             n_drawables,
-                                             "drawables",     GIMP_TYPE_OBJECT_ARRAY, drawables_array,
-                                             "file",          G_TYPE_FILE,            file,
-                                             "spacing",       G_TYPE_INT,             spacing,
-                                             "name",          G_TYPE_STRING,          description,
-                                             "params",        G_TYPE_STRING,          paramstring,
+                                             "image",         image,
+                                             "num-drawables", n_drawables,
+                                             "drawables",     drawables_array,
+                                             "file",          file,
+                                             "spacing",       spacing,
+                                             "name",          description,
+                                             "params",        paramstring,
                                              NULL);
       gimp_object_array_free (drawables_array);
 

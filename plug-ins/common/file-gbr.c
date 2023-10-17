@@ -245,12 +245,12 @@ gbr_save (GimpProcedure        *procedure,
       save_retvals =
         gimp_pdb_run_procedure (gimp_get_pdb (),
                                 "file-gbr-save-internal",
-                                "image",         GIMP_TYPE_IMAGE,        image,
-                                "num-drawables", G_TYPE_INT,             n_drawables,
-                                "drawables",     GIMP_TYPE_OBJECT_ARRAY, drawables_array,
-                                "file",          G_TYPE_FILE,            file,
-                                "spacing",       G_TYPE_INT,             spacing,
-                                "name",          G_TYPE_STRING,          description,
+                                "image",         image,
+                                "num-drawables", n_drawables,
+                                "drawables",     drawables_array,
+                                "file",          file,
+                                "spacing",       spacing,
+                                "name",          description,
                                 NULL);
 
       gimp_object_array_free (drawables_array);
