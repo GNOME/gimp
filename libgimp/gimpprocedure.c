@@ -99,38 +99,36 @@ struct _GimpProcedurePrivate
 };
 
 
-static void       gimp_procedure_constructed    (GObject              *object);
-static void       gimp_procedure_finalize       (GObject              *object);
-static void       gimp_procedure_set_property   (GObject              *object,
-                                                 guint                 property_id,
-                                                 const GValue         *value,
-                                                 GParamSpec           *pspec);
-static void       gimp_procedure_get_property   (GObject              *object,
-                                                 guint                 property_id,
-                                                 GValue               *value,
-                                                 GParamSpec           *pspec);
+static void                  gimp_procedure_constructed        (GObject              *object);
+static void                  gimp_procedure_finalize           (GObject              *object);
+static void                  gimp_procedure_set_property       (GObject              *object,
+                                                                guint                 property_id,
+                                                                const GValue         *value,
+                                                                GParamSpec           *pspec);
+static void                  gimp_procedure_get_property       (GObject              *object,
+                                                                guint                 property_id,
+                                                                GValue               *value,
+                                                                GParamSpec           *pspec);
 
-static void       gimp_procedure_real_install   (GimpProcedure        *procedure);
-static void       gimp_procedure_real_uninstall (GimpProcedure        *procedure);
-static GimpValueArray *
-                  gimp_procedure_real_run       (GimpProcedure        *procedure,
-                                                 const GimpValueArray *args);
-static GimpProcedureConfig *
-                  gimp_procedure_real_create_config
-                                                (GimpProcedure        *procedure,
-                                                 GParamSpec          **args,
-                                                 gint                  n_args);
+static void                  gimp_procedure_real_install       (GimpProcedure        *procedure);
+static void                  gimp_procedure_real_uninstall     (GimpProcedure        *procedure);
+static GimpValueArray      * gimp_procedure_real_run           (GimpProcedure        *procedure,
+                                                                const GimpValueArray *args);
+static GimpProcedureConfig * gimp_procedure_real_create_config (GimpProcedure        *procedure,
+                                                                GParamSpec          **args,
+                                                                gint                  n_args);
 
-static gboolean   gimp_procedure_validate_args  (GimpProcedure        *procedure,
-                                                 GParamSpec          **param_specs,
-                                                 gint                  n_param_specs,
-                                                 GimpValueArray       *args,
-                                                 gboolean              return_vals,
-                                                 GError              **error);
+static GimpValueArray      * gimp_procedure_new_arguments      (GimpProcedure        *procedure);
+static gboolean              gimp_procedure_validate_args      (GimpProcedure        *procedure,
+                                                                GParamSpec          **param_specs,
+                                                                gint                  n_param_specs,
+                                                                GimpValueArray       *args,
+                                                                gboolean              return_vals,
+                                                                GError              **error);
 
-static void       gimp_procedure_set_icon       (GimpProcedure        *procedure,
-                                                 GimpIconType          icon_type,
-                                                 gconstpointer         icon_data);
+static void                  gimp_procedure_set_icon           (GimpProcedure        *procedure,
+                                                                GimpIconType          icon_type,
+                                                                gconstpointer         icon_data);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedure, gimp_procedure, G_TYPE_OBJECT)
@@ -1748,43 +1746,6 @@ gimp_procedure_get_argument_sync (GimpProcedure *procedure,
 }
 
 /**
- * gimp_procedure_new_arguments:
- * @procedure: the #GimpProcedure.
- *
- * Format the expected argument values of procedures, in the order as
- * added with [method@Procedure.add_argument].
- *
- * Returns: (transfer full): the expected #GimpValueArray which could be given as
- *          arguments to run @procedure, with all values set to
- *          defaults. Free with gimp_value_array_unref().
- *
- * Since: 3.0
- **/
-GimpValueArray *
-gimp_procedure_new_arguments (GimpProcedure *procedure)
-{
-  GimpValueArray *args;
-  GValue          value = G_VALUE_INIT;
-  gint            i;
-
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-
-  args = gimp_value_array_new (procedure->priv->n_args);
-
-  for (i = 0; i < procedure->priv->n_args; i++)
-    {
-      GParamSpec *pspec = procedure->priv->args[i];
-
-      g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (pspec));
-      g_param_value_set_default (pspec, &value);
-      gimp_value_array_append (args, &value);
-      g_value_unset (&value);
-    }
-
-  return args;
-}
-
-/**
  * gimp_procedure_new_return_values:
  * @procedure: the procedure.
  * @status:    the success status of the procedure run.
@@ -2155,6 +2116,43 @@ gimp_procedure_create_config (GimpProcedure *procedure)
 
 
 /*  private functions  */
+
+/**
+ * gimp_procedure_new_arguments:
+ * @procedure: the #GimpProcedure.
+ *
+ * Format the expected argument values of procedures, in the order as
+ * added with [method@Procedure.add_argument].
+ *
+ * Returns: (transfer full): the expected #GimpValueArray which could be given as
+ *          arguments to run @procedure, with all values set to
+ *          defaults. Free with gimp_value_array_unref().
+ *
+ * Since: 3.0
+ **/
+static GimpValueArray *
+gimp_procedure_new_arguments (GimpProcedure *procedure)
+{
+  GimpValueArray *args;
+  GValue          value = G_VALUE_INIT;
+  gint            i;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  args = gimp_value_array_new (procedure->priv->n_args);
+
+  for (i = 0; i < procedure->priv->n_args; i++)
+    {
+      GParamSpec *pspec = procedure->priv->args[i];
+
+      g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (pspec));
+      g_param_value_set_default (pspec, &value);
+      gimp_value_array_append (args, &value);
+      g_value_unset (&value);
+    }
+
+  return args;
+}
 
 static gboolean
 gimp_procedure_validate_args (GimpProcedure   *procedure,

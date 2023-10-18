@@ -230,7 +230,6 @@ void             gimp_procedure_set_argument_sync  (GimpProcedure        *proced
 GimpArgumentSync gimp_procedure_get_argument_sync  (GimpProcedure        *procedure,
                                                     const gchar          *arg_name);
 
-GimpValueArray * gimp_procedure_new_arguments      (GimpProcedure        *procedure);
 GimpValueArray * gimp_procedure_new_return_values  (GimpProcedure        *procedure,
                                                     GimpPDBStatusType     status,
                                                     GError               *error);
