@@ -55,7 +55,7 @@ struct _ScreenshotClass
 };
 
 #define SCREENSHOT_TYPE  (screenshot_get_type ())
-#define SCREENSHOT (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCREENSHOT_TYPE, Screenshot))
+#define SCREENSHOT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCREENSHOT_TYPE, Screenshot))
 
 GType                   screenshot_get_type         (void) G_GNUC_CONST;
 

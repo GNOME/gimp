@@ -65,7 +65,7 @@ struct _SparkleClass
 
 
 #define SPARKLE_TYPE  (sparkle_get_type ())
-#define SPARKLE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SPARKLE_TYPE, Sparkle))
+#define SPARKLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SPARKLE_TYPE, Sparkle))
 
 GType                   sparkle_get_type         (void) G_GNUC_CONST;
 

@@ -61,7 +61,7 @@ struct _IcoClass
 
 
 #define ICO_TYPE  (ico_get_type ())
-#define ICO (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), ICO_TYPE, Ico))
+#define ICO(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), ICO_TYPE, Ico))
 
 GType                   ico_get_type         (void) G_GNUC_CONST;
 

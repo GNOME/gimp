@@ -166,7 +166,7 @@ struct _TgaClass
 
 
 #define TGA_TYPE  (tga_get_type ())
-#define TGA (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TGA_TYPE, Tga))
+#define TGA(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TGA_TYPE, Tga))
 
 GType                   tga_get_type         (void) G_GNUC_CONST;
 

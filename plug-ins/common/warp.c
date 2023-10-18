@@ -103,7 +103,7 @@ struct _WarpClass
 
 
 #define WARP_TYPE  (warp_get_type ())
-#define WARP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WARP_TYPE, Warp))
+#define WARP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WARP_TYPE, Warp))
 
 GType                   warp_get_type         (void) G_GNUC_CONST;
 

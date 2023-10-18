@@ -66,7 +66,7 @@ struct _FilmClass
 
 
 #define FILM_TYPE  (film_get_type ())
-#define FILM (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FILM_TYPE, Film))
+#define FILM(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FILM_TYPE, Film))
 
 GType                   film_get_type         (void) G_GNUC_CONST;
 

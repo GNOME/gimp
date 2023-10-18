@@ -51,7 +51,7 @@ struct _JpegXLClass
 
 
 #define JPEGXL_TYPE  (jpegxl_get_type ())
-#define JPEGXL (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), JPEGXL_TYPE, JpegXL))
+#define JPEGXL(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), JPEGXL_TYPE, JpegXL))
 
 GType                   jpegxl_get_type (void) G_GNUC_CONST;
 

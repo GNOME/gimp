@@ -51,7 +51,7 @@ struct _RawtherapeeClass
 
 
 #define RAWTHERAPEE_TYPE  (rawtherapee_get_type ())
-#define RAWTHERAPEE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RAWTHERAPEE_TYPE, Rawtherapee))
+#define RAWTHERAPEE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RAWTHERAPEE_TYPE, Rawtherapee))
 
 GType                   rawtherapee_get_type         (void) G_GNUC_CONST;
 

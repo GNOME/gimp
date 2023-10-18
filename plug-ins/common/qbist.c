@@ -99,7 +99,7 @@ struct _QbistClass
 
 
 #define QBIST_TYPE  (qbist_get_type ())
-#define QBIST (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), QBIST_TYPE, Qbist))
+#define QBIST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), QBIST_TYPE, Qbist))
 
 GType                   qbist_get_type         (void) G_GNUC_CONST;
 

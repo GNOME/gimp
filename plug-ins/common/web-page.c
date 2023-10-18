@@ -58,7 +58,7 @@ struct _WebpageClass
 
 
 #define WEBPAGE_TYPE  (webpage_get_type ())
-#define WEBPAGE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WEBPAGE_TYPE, Webpage))
+#define WEBPAGE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WEBPAGE_TYPE, Webpage))
 
 GType                   webpage_get_type         (void) G_GNUC_CONST;
 

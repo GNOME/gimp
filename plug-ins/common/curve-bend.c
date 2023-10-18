@@ -237,7 +237,7 @@ struct _BenderClass
 
 
 #define BENDER_TYPE  (bender_get_type ())
-#define BENDER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BENDER_TYPE, Bender))
+#define BENDER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BENDER_TYPE, Bender))
 
 GType                   bender_get_type         (void) G_GNUC_CONST;
 

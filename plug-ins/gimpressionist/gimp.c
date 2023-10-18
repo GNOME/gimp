@@ -51,7 +51,7 @@ struct _GimpressionistClass
 
 
 #define GIMPRESSIONIST_TYPE  (gimpressionist_get_type ())
-#define GIMPRESSIONIST (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMPRESSIONIST_TYPE, Gimpressionist))
+#define GIMPRESSIONIST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMPRESSIONIST_TYPE, Gimpressionist))
 
 GType                   gimpressionist_get_type         (void) G_GNUC_CONST;
 

@@ -142,7 +142,7 @@ struct _TwainClass
 
 
 #define TWAIN_TYPE  (twain_get_type ())
-#define TWAIN (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TWAIN_TYPE, Twain))
+#define TWAIN(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TWAIN_TYPE, Twain))
 
 GType                   twain_get_type         (void) G_GNUC_CONST;
 

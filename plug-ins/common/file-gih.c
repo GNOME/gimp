@@ -75,7 +75,7 @@ struct _GihClass
 
 
 #define GIH_TYPE  (gih_get_type ())
-#define GIH (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIH_TYPE, Gih))
+#define GIH(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIH_TYPE, Gih))
 
 GType                   gih_get_type          (void) G_GNUC_CONST;
 

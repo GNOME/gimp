@@ -61,7 +61,7 @@ struct _SgiClass
 
 
 #define SGI_TYPE  (sgi_get_type ())
-#define SGI (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SGI_TYPE, Sgi))
+#define SGI(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SGI_TYPE, Sgi))
 
 GType                   sgi_get_type         (void) G_GNUC_CONST;
 

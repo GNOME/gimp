@@ -102,7 +102,7 @@ struct _SunrasClass
 
 
 #define SUNRAS_TYPE  (sunras_get_type ())
-#define SUNRAS (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SUNRAS_TYPE, Sunras))
+#define SUNRAS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SUNRAS_TYPE, Sunras))
 
 GType                   sunras_get_type         (void) G_GNUC_CONST;
 

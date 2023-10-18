@@ -59,7 +59,7 @@ struct _PrintClass
 
 
 #define PRINT_TYPE  (print_get_type ())
-#define PRINT (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PRINT_TYPE, Print))
+#define PRINT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PRINT_TYPE, Print))
 
 GType                     print_get_type         (void) G_GNUC_CONST;
 

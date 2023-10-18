@@ -367,7 +367,7 @@ struct _GflareClass
 
 
 #define GFLARE_TYPE  (gflare_get_type ())
-#define GFLARE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GFLARE_TYPE, Gflare))
+#define GFLARE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GFLARE_TYPE, Gflare))
 
 GType                   gflare_get_type         (void) G_GNUC_CONST;
 

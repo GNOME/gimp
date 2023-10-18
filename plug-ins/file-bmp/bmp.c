@@ -81,7 +81,7 @@ struct _BmpClass
 
 
 #define BMP_TYPE  (bmp_get_type ())
-#define BMP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BMP_TYPE, Bmp))
+#define BMP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BMP_TYPE, Bmp))
 
 GType                   bmp_get_type         (void) G_GNUC_CONST;
 

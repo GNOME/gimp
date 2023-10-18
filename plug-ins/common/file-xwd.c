@@ -151,7 +151,7 @@ struct _XwdClass
 
 
 #define XWD_TYPE  (xwd_get_type ())
-#define XWD (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XWD_TYPE, Xwd))
+#define XWD(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XWD_TYPE, Xwd))
 
 GType                   xwd_get_type         (void) G_GNUC_CONST;
 

@@ -123,7 +123,7 @@ struct _PostScriptClass
 
 
 #define PS_TYPE  (ps_get_type ())
-#define PS (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PS_TYPE, PostScript))
+#define PS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PS_TYPE, PostScript))
 
 GType                   ps_get_type         (void) G_GNUC_CONST;
 

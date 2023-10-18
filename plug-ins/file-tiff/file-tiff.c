@@ -76,7 +76,7 @@ struct _TiffClass
 
 
 #define TIFF_TYPE  (tiff_get_type ())
-#define TIFF (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TIFF_TYPE, Tiff))
+#define TIFF(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TIFF_TYPE, Tiff))
 
 GType                    tiff_get_type         (void) G_GNUC_CONST;
 

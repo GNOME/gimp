@@ -87,7 +87,7 @@ struct _DecomposeClass
 
 
 #define DECOMPOSE_TYPE  (decompose_get_type ())
-#define DECOMPOSE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DECOMPOSE_TYPE, Decompose))
+#define DECOMPOSE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DECOMPOSE_TYPE, Decompose))
 
 GType                   decompose_get_type         (void) G_GNUC_CONST;
 

@@ -50,7 +50,7 @@ struct _DarktableClass
 
 
 #define DARKTABLE_TYPE  (darktable_get_type ())
-#define DARKTABLE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DARKTABLE_TYPE, Darktable))
+#define DARKTABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DARKTABLE_TYPE, Darktable))
 
 GType                   darktable_get_type         (void) G_GNUC_CONST;
 

@@ -98,7 +98,7 @@ struct _GifClass
 
 
 #define GIF_TYPE  (gif_get_type ())
-#define GIF (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIF_TYPE, Gif))
+#define GIF(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIF_TYPE, Gif))
 
 GType                   gif_get_type         (void) G_GNUC_CONST;
 

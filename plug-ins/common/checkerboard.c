@@ -46,7 +46,7 @@ struct _CheckerboardClass
 
 
 #define CHECKERBOARD_TYPE  (checkerboard_get_type ())
-#define CHECKERBOARD (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), CHECKERBOARD_TYPE, Checkerboard))
+#define CHECKERBOARD(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), CHECKERBOARD_TYPE, Checkerboard))
 
 GType                   checkerboard_get_type         (void) G_GNUC_CONST;
 

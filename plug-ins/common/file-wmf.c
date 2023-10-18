@@ -65,7 +65,7 @@ struct _WmfClass
 
 
 #define WMF_TYPE  (wmf_get_type ())
-#define WMF (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WMF_TYPE, Wmf))
+#define WMF(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WMF_TYPE, Wmf))
 
 GType                   wmf_get_type         (void) G_GNUC_CONST;
 

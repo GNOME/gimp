@@ -51,7 +51,7 @@ struct _DesktopClass
 
 
 #define DESKTOP_TYPE  (desktop_get_type ())
-#define DESKTOP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DESKTOP_TYPE, Desktop))
+#define DESKTOP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DESKTOP_TYPE, Desktop))
 
 GType                   desktop_get_type         (void) G_GNUC_CONST;
 

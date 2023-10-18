@@ -327,7 +327,7 @@ struct _ExplorerClass
 
 
 #define EXPLORER_TYPE  (explorer_get_type ())
-#define EXPLORER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), EXPLORER_TYPE, Explorer))
+#define EXPLORER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), EXPLORER_TYPE, Explorer))
 
 GType                   explorer_get_type         (void) G_GNUC_CONST;
 

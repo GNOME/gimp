@@ -81,7 +81,7 @@ struct _DespeckleClass
 
 
 #define DESPECKLE_TYPE  (despeckle_get_type ())
-#define DESPECKLE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DESPECKLE_TYPE, Despeckle))
+#define DESPECKLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DESPECKLE_TYPE, Despeckle))
 
 GType                   despeckle_get_type         (void) G_GNUC_CONST;
 

@@ -53,7 +53,7 @@ struct _LightingClass
 
 
 #define LIGHTING_TYPE  (lighting_get_type ())
-#define LIGHTING (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGHTING_TYPE, Lighting))
+#define LIGHTING(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGHTING_TYPE, Lighting))
 
 GType                   lighting_get_type         (void) G_GNUC_CONST;
 

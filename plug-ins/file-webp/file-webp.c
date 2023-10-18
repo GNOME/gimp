@@ -51,7 +51,7 @@ struct _WebpClass
 
 
 #define WEBP_TYPE  (webp_get_type ())
-#define WEBP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WEBP_TYPE, Webp))
+#define WEBP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WEBP_TYPE, Webp))
 
 GType                   webp_get_type         (void) G_GNUC_CONST;
 

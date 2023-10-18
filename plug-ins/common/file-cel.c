@@ -52,7 +52,7 @@ struct _CelClass
 
 
 #define CEL_TYPE  (cel_get_type ())
-#define CEL (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), CEL_TYPE, Cel))
+#define CEL(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), CEL_TYPE, Cel))
 
 GType                   cel_get_type         (void) G_GNUC_CONST;
 

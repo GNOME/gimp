@@ -59,7 +59,7 @@ struct _GbrClass
 
 
 #define GBR_TYPE  (gbr_get_type ())
-#define GBR (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GBR_TYPE, Gbr))
+#define GBR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GBR_TYPE, Gbr))
 
 GType                   gbr_get_type         (void) G_GNUC_CONST;
 

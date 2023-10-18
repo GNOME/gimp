@@ -50,7 +50,7 @@ struct _JpegClass
 
 
 #define JPEG_TYPE  (jpeg_get_type ())
-#define JPEG (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), JPEG_TYPE, Jpeg))
+#define JPEG(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), JPEG_TYPE, Jpeg))
 
 GType                   jpeg_get_type         (void) G_GNUC_CONST;
 

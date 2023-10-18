@@ -53,7 +53,7 @@ struct _BusyDialogClass
 
 
 #define BUSY_DIALOG_TYPE  (busy_dialog_get_type ())
-#define BUSY_DIALOG (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BUSY_DIALOG_TYPE, BusyDialog))
+#define BUSY_DIALOG(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BUSY_DIALOG_TYPE, BusyDialog))
 
 GType                     busy_dialog_get_type         (void) G_GNUC_CONST;
 

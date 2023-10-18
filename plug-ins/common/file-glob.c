@@ -42,8 +42,8 @@ struct _GlobClass
 };
 
 
-#define GLOB_TYPE  (glob_get_type ())
-#define GLOB (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GLOB_TYPE, Glob))
+#define GLOB_TYPE (glob_get_type ())
+#define GLOB(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GLOB_TYPE, Glob))
 
 GType                   glob_get_type         (void) G_GNUC_CONST;
 

@@ -54,7 +54,7 @@ struct _PcxClass
 
 
 #define PCX_TYPE  (pcx_get_type ())
-#define PCX (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PCX_TYPE, Pcx))
+#define PCX(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PCX_TYPE, Pcx))
 
 GType                   pcx_get_type         (void) G_GNUC_CONST;
 

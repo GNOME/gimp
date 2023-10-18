@@ -272,7 +272,7 @@ struct _DesignerClass
 
 
 #define DESIGNER_TYPE  (designer_get_type ())
-#define DESIGNER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DESIGNER_TYPE, Designer))
+#define DESIGNER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DESIGNER_TYPE, Designer))
 
 GType                   designer_get_type         (void) G_GNUC_CONST;
 

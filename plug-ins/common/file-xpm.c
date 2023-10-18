@@ -96,7 +96,7 @@ struct _XpmClass
 
 
 #define XPM_TYPE  (xpm_get_type ())
-#define XPM (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XPM_TYPE, Xpm))
+#define XPM(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XPM_TYPE, Xpm))
 
 GType                   xpm_get_type         (void) G_GNUC_CONST;
 

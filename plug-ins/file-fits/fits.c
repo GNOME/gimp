@@ -70,7 +70,7 @@ struct _FitsClass
 
 
 #define FITS_TYPE  (fits_get_type ())
-#define FITS (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FITS_TYPE, Fits))
+#define FITS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FITS_TYPE, Fits))
 
 GType                   fits_get_type         (void) G_GNUC_CONST;
 

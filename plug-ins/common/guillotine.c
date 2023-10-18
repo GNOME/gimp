@@ -46,7 +46,7 @@ struct _GuillotineClass
 
 
 #define GUILLOTINE_TYPE  (guillotine_get_type ())
-#define GUILLOTINE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GUILLOTINE_TYPE, Guillotine))
+#define GUILLOTINE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GUILLOTINE_TYPE, Guillotine))
 
 GType                   guillotine_get_type         (void) G_GNUC_CONST;
 

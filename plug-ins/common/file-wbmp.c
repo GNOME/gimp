@@ -48,7 +48,7 @@ struct _WbmpClass
 };
 
 #define WBMP_TYPE  (wbmp_get_type ())
-#define WBMP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WBMP_TYPE, Wbmp))
+#define WBMP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WBMP_TYPE, Wbmp))
 
 GType                   wbmp_get_type         (void) G_GNUC_CONST;
 

@@ -67,7 +67,7 @@ struct _SvgClass
 
 
 #define SVG_TYPE  (svg_get_type ())
-#define SVG (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SVG_TYPE, Svg))
+#define SVG(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SVG_TYPE, Svg))
 
 GType                   svg_get_type         (void) G_GNUC_CONST;
 

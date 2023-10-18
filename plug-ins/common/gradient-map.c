@@ -55,7 +55,7 @@ struct _MapClass
 
 
 #define MAP_TYPE  (map_get_type ())
-#define MAP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), MAP_TYPE, Map))
+#define MAP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), MAP_TYPE, Map))
 
 GType                   map_get_type         (void) G_GNUC_CONST;
 

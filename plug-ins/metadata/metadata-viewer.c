@@ -84,7 +84,7 @@ struct _MetadataClass
 
 
 #define METADATA_TYPE  (metadata_get_type ())
-#define METADATA (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), METADATA_TYPE, Metadata))
+#define METADATA(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), METADATA_TYPE, Metadata))
 
 GType                   metadata_get_type         (void) G_GNUC_CONST;
 

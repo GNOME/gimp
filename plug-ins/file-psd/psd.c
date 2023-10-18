@@ -48,7 +48,7 @@ struct _PsdClass
 
 
 #define PSD_TYPE  (psd_get_type ())
-#define PSD (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PSD_TYPE, Psd))
+#define PSD(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PSD_TYPE, Psd))
 
 GType                   psd_get_type         (void) G_GNUC_CONST;
 

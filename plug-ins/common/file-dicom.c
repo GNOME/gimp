@@ -77,7 +77,7 @@ struct _DicomClass
 
 
 #define DICOM_TYPE  (dicom_get_type ())
-#define DICOM (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DICOM_TYPE, Dicom))
+#define DICOM(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DICOM_TYPE, Dicom))
 
 GType                   dicom_get_type         (void) G_GNUC_CONST;
 

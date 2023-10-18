@@ -175,7 +175,7 @@ struct _ColorizeClass
 
 
 #define COLORIZE_TYPE  (colorize_get_type ())
-#define COLORIZE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), COLORIZE_TYPE, Colorize))
+#define COLORIZE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), COLORIZE_TYPE, Colorize))
 
 GType                   colorize_get_type         (void) G_GNUC_CONST;
 

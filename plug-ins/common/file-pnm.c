@@ -136,7 +136,7 @@ struct _PnmClass
 
 
 #define PNM_TYPE  (pnm_get_type ())
-#define PNM (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PNM_TYPE, Pnm))
+#define PNM(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PNM_TYPE, Pnm))
 
 GType                   pnm_get_type         (void) G_GNUC_CONST;
 

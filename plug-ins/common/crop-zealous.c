@@ -44,7 +44,7 @@ struct _CropClass
 };
 
 #define CROP_TYPE  (crop_get_type ())
-#define CROP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), CROP_TYPE, Crop))
+#define CROP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), CROP_TYPE, Crop))
 
 GType                   crop_get_type         (void) G_GNUC_CONST;
 

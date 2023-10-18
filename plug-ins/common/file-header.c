@@ -45,7 +45,7 @@ struct _HeaderClass
 
 
 #define HEADER_TYPE  (header_get_type ())
-#define HEADER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), HEADER_TYPE, Header))
+#define HEADER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), HEADER_TYPE, Header))
 
 GType                   header_get_type         (void) G_GNUC_CONST;
 

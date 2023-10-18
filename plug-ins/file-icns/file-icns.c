@@ -55,8 +55,8 @@ struct _IcnsClass
 };
 
 
-#define ICNS_TYPE  (icns_get_type ())
-#define ICNS (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), ICNS_TYPE, Icns))
+#define ICNS_TYPE (icns_get_type ())
+#define ICNS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), ICNS_TYPE, Icns))
 
 GType                   icns_get_type         (void) G_GNUC_CONST;
 

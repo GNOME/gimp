@@ -126,7 +126,7 @@ struct _ComposeClass
 
 
 #define COMPOSE_TYPE  (compose_get_type ())
-#define COMPOSE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), COMPOSE_TYPE, Compose))
+#define COMPOSE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), COMPOSE_TYPE, Compose))
 
 GType                   compose_get_type         (void) G_GNUC_CONST;
 

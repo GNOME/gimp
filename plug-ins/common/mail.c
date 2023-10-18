@@ -67,7 +67,7 @@ struct _MailClass
 
 
 #define MAIL_TYPE  (mail_get_type ())
-#define MAIL (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), MAIL_TYPE, Mail))
+#define MAIL(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), MAIL_TYPE, Mail))
 
 GType                   mail_get_type         (void) G_GNUC_CONST;
 

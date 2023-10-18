@@ -44,7 +44,7 @@ struct _ExrClass
 
 
 #define EXR_TYPE  (exr_get_type ())
-#define EXR (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), EXR_TYPE, Exr))
+#define EXR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), EXR_TYPE, Exr))
 
 GType                   exr_get_type         (void) G_GNUC_CONST;
 

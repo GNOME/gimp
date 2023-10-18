@@ -46,7 +46,7 @@ struct _PatClass
 
 
 #define PAT_TYPE  (pat_get_type ())
-#define PAT (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PAT_TYPE, Pat))
+#define PAT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PAT_TYPE, Pat))
 
 GType                   pat_get_type         (void) G_GNUC_CONST;
 

@@ -576,7 +576,7 @@ struct _PspClass
 
 
 #define PSP_TYPE  (psp_get_type ())
-#define PSP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PSP_TYPE, Psp))
+#define PSP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PSP_TYPE, Psp))
 
 GType                   psp_get_type         (void) G_GNUC_CONST;
 

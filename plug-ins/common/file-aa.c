@@ -56,7 +56,7 @@ struct _AsciiClass
 
 
 #define ASCII_TYPE  (ascii_get_type ())
-#define ASCII (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), ASCII_TYPE, Ascii))
+#define ASCII(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), ASCII_TYPE, Ascii))
 
 GType                   ascii_get_type         (void) G_GNUC_CONST;
 

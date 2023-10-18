@@ -75,7 +75,7 @@ struct _OptimizeClass
 
 
 #define OPTIMIZE_TYPE  (optimize_get_type ())
-#define OPTIMIZE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), OPTIMIZE_TYPE, Optimize))
+#define OPTIMIZE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), OPTIMIZE_TYPE, Optimize))
 
 GType                   optimize_get_type         (void) G_GNUC_CONST;
 

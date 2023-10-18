@@ -73,7 +73,7 @@ struct _NlfilterClass
 
 
 #define NLFILTER_TYPE  (nlfilter_get_type ())
-#define NLFILTER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), NLFILTER_TYPE, Nlfilter))
+#define NLFILTER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), NLFILTER_TYPE, Nlfilter))
 
 GType                   nlfilter_get_type         (void) G_GNUC_CONST;
 

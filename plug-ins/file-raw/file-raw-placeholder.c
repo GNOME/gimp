@@ -44,7 +44,7 @@ struct _PlaceholderClass
 
 
 #define PLACEHOLDER_TYPE  (placeholder_get_type ())
-#define PLACEHOLDER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PLACEHOLDER_TYPE, Placeholder))
+#define PLACEHOLDER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PLACEHOLDER_TYPE, Placeholder))
 
 GType                   placeholder_get_type         (void) G_GNUC_CONST;
 

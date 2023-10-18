@@ -145,7 +145,7 @@ struct _HotClass
 
 
 #define HOT_TYPE  (hot_get_type ())
-#define HOT (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), HOT_TYPE, Hot))
+#define HOT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), HOT_TYPE, Hot))
 
 GType                   hot_get_type         (void) G_GNUC_CONST;
 

@@ -64,7 +64,7 @@ typedef struct
 /*  forward declarations  */
 
 #define HELP_TYPE  (help_get_type ())
-#define HELP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), HELP_TYPE, Help))
+#define HELP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), HELP_TYPE, Help))
 
 GType                   help_get_type          (void) G_GNUC_CONST;
 

@@ -76,7 +76,7 @@ struct _HtmlClass
 
 
 #define HTML_TYPE  (html_get_type ())
-#define HTML (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), HTML_TYPE, Html))
+#define HTML(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), HTML_TYPE, Html))
 
 GType                   html_get_type          (void) G_GNUC_CONST;
 

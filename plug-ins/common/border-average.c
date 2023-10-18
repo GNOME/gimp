@@ -45,7 +45,7 @@ struct _BorderAverageClass
 
 
 #define BORDER_AVERAGE_TYPE  (border_average_get_type ())
-#define BORDER_AVERAGE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BORDER_AVERAGE_TYPE, BorderAverage))
+#define BORDER_AVERAGE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BORDER_AVERAGE_TYPE, BorderAverage))
 
 
 GType                   border_average_get_type               (void) G_GNUC_CONST;

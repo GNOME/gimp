@@ -70,7 +70,7 @@ struct _XbmClass
 
 
 #define XBM_TYPE  (xbm_get_type ())
-#define XBM (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XBM_TYPE, Xbm))
+#define XBM(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XBM_TYPE, Xbm))
 
 GType                   xbm_get_type         (void) G_GNUC_CONST;
 

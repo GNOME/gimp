@@ -149,7 +149,7 @@ struct _XmcClass
 
 
 #define XMC_TYPE  (xmc_get_type ())
-#define XMC (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XMC_TYPE, Xmc))
+#define XMC(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XMC_TYPE, Xmc))
 
 GType                   xmc_get_type                 (void) G_GNUC_CONST;
 

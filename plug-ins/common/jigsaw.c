@@ -188,7 +188,7 @@ struct _JigsawClass
 
 
 #define JIGSAW_TYPE  (jigsaw_get_type ())
-#define JIGSAW (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), JIGSAW_TYPE, Jigsaw))
+#define JIGSAW(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), JIGSAW_TYPE, Jigsaw))
 
 GType                   jigsaw_get_type         (void) G_GNUC_CONST;
 

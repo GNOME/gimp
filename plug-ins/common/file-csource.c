@@ -51,7 +51,7 @@ struct _CsourceClass
 
 
 #define CSOURCE_TYPE  (csource_get_type ())
-#define CSOURCE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), CSOURCE_TYPE, Csource))
+#define CSOURCE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), CSOURCE_TYPE, Csource))
 
 GType                   csource_get_type         (void) G_GNUC_CONST;
 

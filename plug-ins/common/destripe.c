@@ -53,7 +53,7 @@ struct _DestripeClass
 
 
 #define DESTRIPE_TYPE  (destripe_get_type ())
-#define DESTRIPE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DESTRIPE_TYPE, Destripe))
+#define DESTRIPE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DESTRIPE_TYPE, Destripe))
 
 GType                   destripe_get_type         (void) G_GNUC_CONST;
 
