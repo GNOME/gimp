@@ -389,7 +389,7 @@ deps-win64-native:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
   stage: dependencies
   variables:
-    MSYSTEM: "MINGW64"
+    MSYSTEM: "UCRT64"
     CHERE_INVOKING: "yes"
   tags:
     - win32-ps
@@ -415,7 +415,7 @@ gimp-win64-native:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
   stage: gimp
   variables:
-    MSYSTEM: "MINGW64"
+    MSYSTEM: "UCRT64"
     CHERE_INVOKING: "yes"
   tags:
     - win32-ps
@@ -445,7 +445,7 @@ packaging-win64-native:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
   stage: packaging
   variables:
-    MSYSTEM: "MINGW64"
+    MSYSTEM: "UCRT64"
     CHERE_INVOKING: "yes"
   tags:
     - win32-ps

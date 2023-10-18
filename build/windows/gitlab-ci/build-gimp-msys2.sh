@@ -2,29 +2,24 @@
 
 set -e
 
-if [[ "$MSYSTEM" == "MINGW32" ]]; then
+# $MINGW_PREFIX, $MINGW_PACKAGE_PREFIX and $MSYSTEM_ARCH are environment
+# variables defined by MSYS2 filesytem package.
+# https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
+
+if [[ "$MSYSTEM_CARCH" == "i686" ]]; then
     export ARTIFACTS_SUFFIX="-w32"
-    export MSYS2_ARCH="i686"
-    export MSYS2_ARCH_FOLDER="mingw32"
-    export MSYS2_PREFIX="/c/msys64/mingw32"
-elif [[ "$MSYSTEM" == "MINGW64" ]]; then
+elif [[ "$MSYSTEM_CARCH" == "x86_64" ]]; then
     export ARTIFACTS_SUFFIX="-w64"
-    export MSYS2_ARCH="x86_64"
-    export MSYS2_ARCH_FOLDER="mingw64"
-    export MSYS2_PREFIX="/c/msys64/mingw64/"
-else # [[ "$MSYSTEM" == "CLANGARM64" ]];
+else # [[ "$MSYSTEM_CARCH" == "aarch64" ]]
     export ARTIFACTS_SUFFIX="-arm64"
-    export MSYS2_ARCH="clang-aarch64"
-    export MSYS2_ARCH_FOLDER="clangarm64"
-    export MSYS2_PREFIX="/c/msys64/clangarm64/"
 fi
 
 export OPTIONAL_PACKAGES=""
 if [[ "$MSYSTEM" == "CLANGARM64" ]]; then
   # No luajit package on clangarm64 for the time being.
-  export OPTIONAL_PACKAGES="mingw-w64-$MSYS2_ARCH-lua51"
+  export OPTIONAL_PACKAGES="${MINGW_PACKAGE_PREFIX}-lua51"
 else
-  export OPTIONAL_PACKAGES="mingw-w64-$MSYS2_ARCH-luajit"
+  export OPTIONAL_PACKAGES="${MINGW_PACKAGE_PREFIX}-luajit"
 fi
 
 export PATH="${MSYS2_PREFIX}/bin:$PATH"
@@ -35,57 +30,58 @@ pacman --noconfirm -Suy
 # Install the required packages
 pacman --noconfirm -S --needed \
     base-devel \
-    mingw-w64-$MSYS2_ARCH-toolchain \
-    mingw-w64-$MSYS2_ARCH-autotools \
-    mingw-w64-$MSYS2_ARCH-ccache \
-    mingw-w64-$MSYS2_ARCH-meson \
+    ${MINGW_PACKAGE_PREFIX}-toolchain \
+    ${MINGW_PACKAGE_PREFIX}-autotools \
+    ${MINGW_PACKAGE_PREFIX}-ccache \
+    ${MINGW_PACKAGE_PREFIX}-meson \
+    ${MINGW_PACKAGE_PREFIX}-pkgconf \
     \
     $OPTIONAL_PACKAGES \
-    mingw-w64-$MSYS2_ARCH-lua51-lgi \
+    ${MINGW_PACKAGE_PREFIX}-lua51-lgi \
     \
-    mingw-w64-$MSYS2_ARCH-aalib \
-    mingw-w64-$MSYS2_ARCH-appstream-glib \
-    mingw-w64-$MSYS2_ARCH-atk \
-    mingw-w64-$MSYS2_ARCH-brotli \
-    mingw-w64-$MSYS2_ARCH-cairo \
-    mingw-w64-$MSYS2_ARCH-cfitsio \
-    mingw-w64-$MSYS2_ARCH-drmingw \
-    mingw-w64-$MSYS2_ARCH-gexiv2 \
-    mingw-w64-$MSYS2_ARCH-ghostscript \
-    mingw-w64-$MSYS2_ARCH-gi-docgen \
-    mingw-w64-$MSYS2_ARCH-glib-networking \
-    mingw-w64-$MSYS2_ARCH-gobject-introspection \
-    mingw-w64-$MSYS2_ARCH-gobject-introspection-runtime \
-    mingw-w64-$MSYS2_ARCH-graphviz \
-    mingw-w64-$MSYS2_ARCH-gtk3 \
-    mingw-w64-$MSYS2_ARCH-headers-git \
-    mingw-w64-$MSYS2_ARCH-iso-codes \
-    mingw-w64-$MSYS2_ARCH-json-c \
-    mingw-w64-$MSYS2_ARCH-json-glib \
-    mingw-w64-$MSYS2_ARCH-lcms2 \
-    mingw-w64-$MSYS2_ARCH-lensfun \
-    mingw-w64-$MSYS2_ARCH-libarchive \
-    mingw-w64-$MSYS2_ARCH-libheif \
-    mingw-w64-$MSYS2_ARCH-libiff \
-    mingw-w64-$MSYS2_ARCH-libilbm \
-    mingw-w64-$MSYS2_ARCH-libjxl \
-    mingw-w64-$MSYS2_ARCH-libmypaint \
-    mingw-w64-$MSYS2_ARCH-libspiro \
-    mingw-w64-$MSYS2_ARCH-libwebp \
-    mingw-w64-$MSYS2_ARCH-libwmf \
-    mingw-w64-$MSYS2_ARCH-maxflow \
-    mingw-w64-$MSYS2_ARCH-mypaint-brushes \
-    mingw-w64-$MSYS2_ARCH-openexr \
-    mingw-w64-$MSYS2_ARCH-pango \
-    mingw-w64-$MSYS2_ARCH-poppler \
-    mingw-w64-$MSYS2_ARCH-poppler-data \
-    mingw-w64-$MSYS2_ARCH-python \
-    mingw-w64-$MSYS2_ARCH-python-gobject \
-    mingw-w64-$MSYS2_ARCH-qoi \
-    mingw-w64-$MSYS2_ARCH-shared-mime-info \
-    mingw-w64-$MSYS2_ARCH-suitesparse \
-    mingw-w64-$MSYS2_ARCH-vala \
-    mingw-w64-$MSYS2_ARCH-xpm-nox
+    ${MINGW_PACKAGE_PREFIX}-aalib \
+    ${MINGW_PACKAGE_PREFIX}-appstream-glib \
+    ${MINGW_PACKAGE_PREFIX}-atk \
+    ${MINGW_PACKAGE_PREFIX}-brotli \
+    ${MINGW_PACKAGE_PREFIX}-cairo \
+    ${MINGW_PACKAGE_PREFIX}-cfitsio \
+    ${MINGW_PACKAGE_PREFIX}-drmingw \
+    ${MINGW_PACKAGE_PREFIX}-gexiv2 \
+    ${MINGW_PACKAGE_PREFIX}-ghostscript \
+    ${MINGW_PACKAGE_PREFIX}-gi-docgen \
+    ${MINGW_PACKAGE_PREFIX}-glib-networking \
+    ${MINGW_PACKAGE_PREFIX}-gobject-introspection \
+    ${MINGW_PACKAGE_PREFIX}-gobject-introspection-runtime \
+    ${MINGW_PACKAGE_PREFIX}-graphviz \
+    ${MINGW_PACKAGE_PREFIX}-gtk3 \
+    ${MINGW_PACKAGE_PREFIX}-headers-git \
+    ${MINGW_PACKAGE_PREFIX}-iso-codes \
+    ${MINGW_PACKAGE_PREFIX}-json-c \
+    ${MINGW_PACKAGE_PREFIX}-json-glib \
+    ${MINGW_PACKAGE_PREFIX}-lcms2 \
+    ${MINGW_PACKAGE_PREFIX}-lensfun \
+    ${MINGW_PACKAGE_PREFIX}-libarchive \
+    ${MINGW_PACKAGE_PREFIX}-libheif \
+    ${MINGW_PACKAGE_PREFIX}-libiff \
+    ${MINGW_PACKAGE_PREFIX}-libilbm \
+    ${MINGW_PACKAGE_PREFIX}-libjxl \
+    ${MINGW_PACKAGE_PREFIX}-libmypaint \
+    ${MINGW_PACKAGE_PREFIX}-libspiro \
+    ${MINGW_PACKAGE_PREFIX}-libwebp \
+    ${MINGW_PACKAGE_PREFIX}-libwmf \
+    ${MINGW_PACKAGE_PREFIX}-maxflow \
+    ${MINGW_PACKAGE_PREFIX}-mypaint-brushes \
+    ${MINGW_PACKAGE_PREFIX}-openexr \
+    ${MINGW_PACKAGE_PREFIX}-pango \
+    ${MINGW_PACKAGE_PREFIX}-poppler \
+    ${MINGW_PACKAGE_PREFIX}-poppler-data \
+    ${MINGW_PACKAGE_PREFIX}-python \
+    ${MINGW_PACKAGE_PREFIX}-python-gobject \
+    ${MINGW_PACKAGE_PREFIX}-qoi \
+    ${MINGW_PACKAGE_PREFIX}-shared-mime-info \
+    ${MINGW_PACKAGE_PREFIX}-suitesparse \
+    ${MINGW_PACKAGE_PREFIX}-vala \
+    ${MINGW_PACKAGE_PREFIX}-xpm-nox
 
 # XXX We've got a weird error when the prefix is in the current dir.
 # Until we figure it out, this trick seems to work, even though it's
@@ -93,13 +89,14 @@ pacman --noconfirm -S --needed \
 rm -fr ~/_install${ARTIFACTS_SUFFIX}
 mv "_install${ARTIFACTS_SUFFIX}" ~
 
+export MSYS2_PREFIX="/c/msys64${MINGW_PREFIX}/"
 export GIMP_PREFIX="`realpath ~/_install`${ARTIFACTS_SUFFIX}"
-export PATH="$GIMP_PREFIX/bin:$PATH"
+export PATH="$GIMP_PREFIX/bin:${MSYS2_PREFIX}/bin:$PATH"
 export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PKG_CONFIG_PATH="${GIMP_PREFIX}/share/pkgconfig:$PKG_CONFIG_PATH"
 export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}"
-export ACLOCAL_FLAGS="-I/c/msys64/${MSYS2_ARCH_FOLDER}/share/aclocal"
-export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/${MSYS2_ARCH_FOLDER}/share/"
+export ACLOCAL_FLAGS="-I${MSYS2_PREFIX}share/aclocal"
+export XDG_DATA_DIRS="${GIMP_PREFIX}/share:${MINGW_PREFIX}/share/"
 
 mkdir -p _ccache
 export CCACHE_BASEDIR="$(pwd)"
