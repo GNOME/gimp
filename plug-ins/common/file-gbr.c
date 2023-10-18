@@ -231,6 +231,7 @@ gbr_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
+      GimpProcedure   *procedure;
       GimpValueArray  *save_retvals;
       GimpObjectArray *drawables_array;
       gint             spacing;
@@ -242,16 +243,16 @@ gbr_save (GimpProcedure        *procedure,
 
       drawables_array = gimp_object_array_new (GIMP_TYPE_DRAWABLE, (GObject **) drawables,
                                                n_drawables, FALSE);
-      save_retvals =
-        gimp_pdb_run_procedure (gimp_get_pdb (),
-                                "file-gbr-save-internal",
-                                "image",         image,
-                                "num-drawables", n_drawables,
-                                "drawables",     drawables_array,
-                                "file",          file,
-                                "spacing",       spacing,
-                                "name",          description,
-                                NULL);
+      procedure    = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                                "file-gbr-save-internal");
+      save_retvals = gimp_procedure_run (procedure,
+                                         "image",         image,
+                                         "num-drawables", n_drawables,
+                                         "drawables",     drawables_array,
+                                         "file",          file,
+                                         "spacing",       spacing,
+                                         "name",          description,
+                                         NULL);
 
       gimp_object_array_free (drawables_array);
       g_free (description);

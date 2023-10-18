@@ -413,7 +413,6 @@ icns_export_image (GFile        *file,
   GList          *iter;
   gint            i;
   guint32         file_size   = 8;
-  GimpValueArray *return_vals = NULL;
   gint            duplicates[ICNS_TYPE_NUM];
 
   for (i = 0; i < ICNS_TYPE_NUM; i++)
@@ -452,6 +451,8 @@ icns_export_image (GFile        *file,
       /* MacOS X format icons */
       if (match != -1 && duplicates[match] == 0)
         {
+          GimpProcedure   *procedure;
+          GimpValueArray  *return_vals;
           GimpDrawable   **drawables = NULL;
           GFile           *temp_file = NULL;
           GimpObjectArray *args;
@@ -466,23 +467,22 @@ icns_export_image (GFile        *file,
 
           args = gimp_object_array_new (GIMP_TYPE_DRAWABLE, (GObject **) drawables, 1, FALSE);
 
-          return_vals =
-            gimp_pdb_run_procedure (gimp_get_pdb (),
-                                    "file-png-save",
-                                    "run-mode",         GIMP_RUN_NONINTERACTIVE,
-                                    "image",            image,
-                                    "num-drawables",    1,
-                                    "drawables",        args,
-                                    "file",             temp_file,
-                                    "interlaced",       FALSE,
-                                    "compression",      9,
-                                    "bkgd",             FALSE,
-                                    "offs",             FALSE,
-                                    "phys",             FALSE,
-                                    "time",             FALSE,
-                                    "save-transparent", FALSE,
-                                    "optimize-palette", FALSE,
-                                    NULL);
+          procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), "file-png-save");
+          return_vals = gimp_procedure_run (procedure,
+                                            "run-mode",         GIMP_RUN_NONINTERACTIVE,
+                                            "image",            image,
+                                            "num-drawables",    1,
+                                            "drawables",        args,
+                                            "file",             temp_file,
+                                            "interlaced",       FALSE,
+                                            "compression",      9,
+                                            "bkgd",             FALSE,
+                                            "offs",             FALSE,
+                                            "phys",             FALSE,
+                                            "time",             FALSE,
+                                            "save-transparent", FALSE,
+                                            "optimize-palette", FALSE,
+                                            NULL);
 
           gimp_object_array_free (args);
           g_clear_pointer (&drawables, g_free);

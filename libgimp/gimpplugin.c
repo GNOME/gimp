@@ -1410,7 +1410,7 @@ gimp_plug_in_proc_run_internal (GimpPlugIn    *plug_in,
                                               proc_run->n_params,
                                               FALSE);
 
-  return_values = gimp_procedure_run (procedure, arguments);
+  return_values = _gimp_procedure_run_array (procedure, arguments);
 
   gimp_value_array_unref (arguments);
 

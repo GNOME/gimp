@@ -236,12 +236,24 @@ GimpValueArray * gimp_procedure_new_return_values  (GimpProcedure        *proced
                                                     GError               *error);
 
 GimpValueArray * gimp_procedure_run                (GimpProcedure        *procedure,
-                                                    GimpValueArray       *args);
+                                                    const gchar          *first_arg_name,
+                                                    ...) G_GNUC_NULL_TERMINATED;
+GimpValueArray * gimp_procedure_run_valist         (GimpProcedure        *procedure,
+                                                    const gchar          *first_arg_name,
+                                                    va_list               args);
+GimpValueArray * gimp_procedure_run_config         (GimpProcedure        *procedure,
+                                                    GimpProcedureConfig  *config);
 
 void             gimp_procedure_extension_ready    (GimpProcedure        *procedure);
 
 GimpProcedureConfig *
                  gimp_procedure_create_config      (GimpProcedure        *procedure);
+
+
+/* Internal use */
+
+G_GNUC_INTERNAL GimpValueArray * _gimp_procedure_run_array (GimpProcedure  *procedure,
+                                                            GimpValueArray *args);
 
 
 G_END_DECLS

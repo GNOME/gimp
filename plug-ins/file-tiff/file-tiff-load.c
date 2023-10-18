@@ -1750,6 +1750,7 @@ load_image (GFile        *file,
     {
       FILE           *fp;
       GFile          *temp_file   = NULL;
+      GimpProcedure  *procedure;
       GimpValueArray *return_vals = NULL;
 
       temp_file = gimp_temp_file ("tmp");
@@ -1766,15 +1767,15 @@ load_image (GFile        *file,
       fwrite (photoshop_data, sizeof (guchar), photoshop_len, fp);
       fclose (fp);
 
-      return_vals =
-        gimp_pdb_run_procedure (gimp_get_pdb (),
-                                "file-psd-load-metadata",
-                                "run-mode",      GIMP_RUN_NONINTERACTIVE,
-                                "file",          temp_file,
-                                "size",          photoshop_len,
-                                "image",         *image,
-                                "metadata-type", FALSE,
-                                NULL);
+      procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                               "file-psd-load-metadata");
+      return_vals = gimp_procedure_run (procedure,
+                                        "run-mode",      GIMP_RUN_NONINTERACTIVE,
+                                        "file",          temp_file,
+                                        "size",          photoshop_len,
+                                        "image",         *image,
+                                        "metadata-type", FALSE,
+                                        NULL);
 
       g_file_delete (temp_file, NULL, NULL);
       g_object_unref (temp_file);
@@ -1787,6 +1788,7 @@ load_image (GFile        *file,
     {
       FILE           *fp;
       GFile          *temp_file   = NULL;
+      GimpProcedure  *procedure;
       GimpValueArray *return_vals = NULL;
 
       /* Photoshop metadata starts with 'Adobe Photoshop Document Data Block'
@@ -1808,16 +1810,16 @@ load_image (GFile        *file,
       fwrite (photoshop_data, sizeof (guchar), photoshop_len, fp);
       fclose (fp);
 
-      return_vals =
-        gimp_pdb_run_procedure (gimp_get_pdb (),
-                                "file-psd-load-metadata",
-                                "run-mode",      run_mode,
-                                "file",          temp_file,
-                                "size",          photoshop_len,
-                                "image",         *image,
-                                "metadata-type", TRUE,
-                                "cmyk",          is_cmyk,
-                                NULL);
+      procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                               "file-psd-load-metadata");
+      return_vals = gimp_procedure_run (procedure,
+                                        "run-mode",      run_mode,
+                                        "file",          temp_file,
+                                        "size",          photoshop_len,
+                                        "image",         *image,
+                                        "metadata-type", TRUE,
+                                        "cmyk",          is_cmyk,
+                                        NULL);
 
       g_file_delete (temp_file, NULL, NULL);
       g_object_unref (temp_file);

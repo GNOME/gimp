@@ -423,6 +423,8 @@ icns_attach_image (GimpImage    *image,
 
       if (temp_file_type && procedure_name)
         {
+          GimpProcedure *procedure;
+
           temp_file = gimp_temp_file (temp_file_type);
           fp = g_fopen (g_file_peek_path (temp_file), "wb");
 
@@ -439,12 +441,11 @@ icns_attach_image (GimpImage    *image,
           fwrite (icns->data + 8, sizeof (guchar), icns->size - 8, fp);
           fclose (fp);
 
-          return_vals =
-            gimp_pdb_run_procedure (gimp_get_pdb (),
-                                    procedure_name,
-                                    "run-mode", GIMP_RUN_NONINTERACTIVE,
-                                    "file",     temp_file,
-                                    NULL);
+          procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), procedure_name);
+          return_vals = gimp_procedure_run (procedure,
+                                            "run-mode", GIMP_RUN_NONINTERACTIVE,
+                                            "file",     temp_file,
+                                            NULL);
         }
 
       if (temp_image && return_vals)
@@ -460,9 +461,9 @@ icns_attach_image (GimpImage    *image,
 
           g_file_delete (temp_file, NULL, NULL);
           g_object_unref (temp_file);
-          gimp_value_array_unref (return_vals);
           g_free (layers);
         }
+      g_clear_pointer (&return_vals, gimp_value_array_unref);
     }
   else
     {

@@ -378,9 +378,10 @@ print_image (GimpImage *image,
 static GimpPDBStatusType
 page_setup (GimpImage *image)
 {
-  GtkPrintOperation  *operation;
-  GimpValueArray     *return_vals;
-  gchar              *name;
+  GtkPrintOperation *operation;
+  GimpProcedure     *procedure;
+  GimpValueArray    *return_vals;
+  gchar             *name;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -401,10 +402,8 @@ page_setup (GimpImage *image)
   gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
                                       GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
-  return_vals = gimp_pdb_run_procedure (gimp_get_pdb (),
-                                        name,
-                                        "image", image,
-                                        G_TYPE_NONE);
+  procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), name);
+  return_vals = gimp_procedure_run (procedure, "image", image, NULL);
   gimp_value_array_unref (return_vals);
 
   g_free (name);

@@ -322,6 +322,7 @@ help_load_idle (gpointer data)
 
       if (uri)
         {
+          GimpProcedure  *procedure;
           GimpValueArray *return_vals;
 
 #ifdef GIMP_HELP_DEBUG
@@ -329,10 +330,9 @@ help_load_idle (gpointer data)
                       idle_help->procedure, uri);
 #endif
 
-          return_vals = gimp_pdb_run_procedure (gimp_get_pdb (),
-                                                idle_help->procedure,
-                                                "domain-names", uri,
-                                                NULL);
+          procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                                   idle_help->procedure);
+          return_vals = gimp_procedure_run (procedure, "domain-names", uri, NULL);
           gimp_value_array_unref (return_vals);
 
           g_free (uri);

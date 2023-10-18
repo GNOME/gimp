@@ -361,6 +361,7 @@ browser_search (GimpBrowser   *gimp_browser,
                 gint           search_type,
                 PluginBrowser *browser)
 {
+  GimpProcedure  *procedure;
   GimpValueArray *return_vals;
   const gchar   **procedure_strs;
   gint            num_plugins = 0;
@@ -371,10 +372,11 @@ browser_search (GimpBrowser   *gimp_browser,
   gimp_browser_show_message (GIMP_BROWSER (browser->browser),
                              _("Searching by name"));
 
-  return_vals = gimp_pdb_run_procedure (gimp_get_pdb (),
-                                        "gimp-plug-ins-query",
-                                        "search-string", search_text,
-                                        NULL);
+  procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                           "gimp-plug-ins-query");
+  return_vals = gimp_procedure_run (procedure,
+                                    "search-string", search_text,
+                                    NULL);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {

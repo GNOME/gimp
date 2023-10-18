@@ -209,6 +209,7 @@ pat_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
+      GimpProcedure   *procedure;
       GimpValueArray  *save_retvals;
       GimpObjectArray *drawables_array;
 
@@ -218,14 +219,15 @@ pat_save (GimpProcedure        *procedure,
                     "description", &description,
                     NULL);
 
-      save_retvals = gimp_pdb_run_procedure (gimp_get_pdb (),
-                                             "file-pat-save-internal",
-                                             "image",         image,
-                                             "num-drawables", n_drawables,
-                                             "drawables",     drawables_array,
-                                             "file",          file,
-                                             "name",          description,
-                                             NULL);
+      procedure    = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                                "file-pat-save-internal");
+      save_retvals = gimp_procedure_run (procedure,
+                                         "image",         image,
+                                         "num-drawables", n_drawables,
+                                         "drawables",     drawables_array,
+                                         "file",          file,
+                                         "name",          description,
+                                         NULL);
 
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) != GIMP_PDB_SUCCESS)
         {

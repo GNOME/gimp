@@ -823,16 +823,17 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
         }
       else if (bpp == 24)
         {
+          GimpProcedure  *procedure;
           GimpValueArray *return_vals;
 
-          return_vals =
-            gimp_pdb_run_procedure (gimp_get_pdb (),
-                                    "plug-in-threshold-alpha",
-                                    "run-mode",  GIMP_RUN_NONINTERACTIVE,
-                                    "image",     tmp_image,
-                                    "drawable",  tmp_layer,
-                                    "threshold", ICO_ALPHA_THRESHOLD,
-                                    NULL);
+          procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                                   "plug-in-threshold-alpha");
+          return_vals = gimp_procedure_run (procedure,
+                                            "run-mode",  GIMP_RUN_NONINTERACTIVE,
+                                            "image",     tmp_image,
+                                            "drawable",  tmp_layer,
+                                            "threshold", ICO_ALPHA_THRESHOLD,
+                                            NULL);
 
           gimp_value_array_unref (return_vals);
         }

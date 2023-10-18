@@ -703,9 +703,6 @@ EXPORTS
 	gimp_pdb_lookup_procedure
 	gimp_pdb_procedure_exists
 	gimp_pdb_query_procedures
-	gimp_pdb_run_procedure
-	gimp_pdb_run_procedure_config
-	gimp_pdb_run_procedure_valist
 	gimp_pdb_set_data
 	gimp_pdb_temp_procedure_name
 	gimp_pencil
@@ -766,6 +763,8 @@ EXPORTS
 	gimp_procedure_new_arguments
 	gimp_procedure_new_return_values
 	gimp_procedure_run
+	gimp_procedure_run_config
+	gimp_procedure_run_valist
 	gimp_procedure_set_argument_sync
 	gimp_procedure_set_attribution
 	gimp_procedure_set_documentation

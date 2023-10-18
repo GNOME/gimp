@@ -569,7 +569,6 @@ load_esm_image (GInputStream  *input,
                 GError       **error)
 {
   GimpImage      *image       = NULL;
-  GimpValueArray *return_vals = NULL;
   GFile          *temp_file   = NULL;
   FILE           *fp;
   goffset         file_size;
@@ -595,7 +594,9 @@ load_esm_image (GInputStream  *input,
     }
   else
     {
-      guchar buffer[file_size - 21];
+      GimpProcedure  *procedure;
+      GimpValueArray *return_vals;
+      guchar          buffer[file_size - 21];
 
       if (! g_input_stream_read_all (input, buffer, sizeof (buffer),
                                      NULL, NULL, error))
@@ -610,12 +611,11 @@ load_esm_image (GInputStream  *input,
       fwrite (buffer, sizeof (guchar), file_size, fp);
       fclose (fp);
 
-      return_vals =
-        gimp_pdb_run_procedure (gimp_get_pdb (),
-                                "file-jpeg-load",
-                                "run-mode", GIMP_RUN_NONINTERACTIVE,
-                                "file",     temp_file,
-                                NULL);
+      procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), "file-jpeg-load");
+      return_vals = gimp_procedure_run (procedure,
+                                        "run-mode", GIMP_RUN_NONINTERACTIVE,
+                                        "file",     temp_file,
+                                        NULL);
 
       if (return_vals)
         {

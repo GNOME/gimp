@@ -328,11 +328,13 @@ static gpointer
 gimp_save_procedure_dialog_edit_metadata_thread (gpointer data)
 {
   GimpSaveProcedureDialog *dialog = data;
+  GimpProcedure           *procedure;
 
-  gimp_pdb_run_procedure (gimp_get_pdb (),    "plug-in-metadata-editor",
-                          "run-mode", GIMP_RUN_INTERACTIVE,
-                          "image",    dialog->priv->image,
-                          NULL);
+  procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (), "plug-in-metadata-editor");
+  gimp_procedure_run (procedure,
+                      "run-mode", GIMP_RUN_INTERACTIVE,
+                      "image",    dialog->priv->image,
+                      NULL);
 
   g_mutex_lock (&dialog->priv->metadata_thread_mutex);
   g_thread_unref (dialog->priv->metadata_thread);

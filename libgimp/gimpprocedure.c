@@ -23,6 +23,8 @@
 #include <stdarg.h>
 #include <sys/types.h>
 
+#include <gobject/gvaluecollector.h>
+
 #include "gimp.h"
 
 #include "libgimpbase/gimpprotocol.h"
@@ -1862,19 +1864,146 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
 }
 
 /**
- * gimp_procedure_run:
+ * gimp_procedure_run: (skip)
+ * @pdb:            the #GimpPDB object.
+ * @procedure_name: the procedure registered name.
+ * @first_arg_name: the name of an argument of @procedure_name.
+ * @...:            the call arguments.
+ *
+ * Runs the procedure named @procedure_name with arguments given as
+ * list of `(name, value)` pairs, terminated by %NULL.
+ *
+ * The order of arguments does not matter and if any argument is missing, its
+ * default value will be used. The value type must correspond to the argument
+ * type as registered for @procedure_name.
+ *
+ * Returns: (transfer full): the return values for the procedure call.
+ *
+ * Since: 3.0
+ */
+GimpValueArray *
+gimp_procedure_run (GimpProcedure *procedure,
+                    const gchar   *first_arg_name,
+                    ...)
+{
+  GimpValueArray *return_values;
+  va_list         args;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  va_start (args, first_arg_name);
+
+  return_values = gimp_procedure_run_valist (procedure, first_arg_name, args);
+
+  va_end (args);
+
+  return return_values;
+}
+
+/**
+ * gimp_procedure_run_valist: (skip)
+ * @pdb:            the #GimpPDB object.
+ * @procedure_name: the procedure registered name.
+ * @first_arg_name: the name of an argument of @procedure_name.
+ * @args:           the call arguments.
+ *
+ * Runs @procedure with arguments names and values, given in the order as passed
+ * to [method@Procedure.run].
+ *
+ * Returns: (transfer full): the return values for the procedure call.
+ *
+ * Since: 3.0
+ */
+GimpValueArray *
+gimp_procedure_run_valist (GimpProcedure *procedure,
+                           const gchar   *first_arg_name,
+                           va_list        args)
+{
+  GimpValueArray      *return_values;
+  GimpProcedureConfig *config;
+  const gchar         *arg_name;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  config   = gimp_procedure_create_config (procedure);
+  arg_name = first_arg_name;
+
+  while (arg_name != NULL)
+    {
+      GParamSpec *pspec;
+      gchar      *error = NULL;
+      GValue      value = G_VALUE_INIT;
+
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), arg_name);
+
+      if (pspec == NULL)
+        {
+          g_warning ("%s: %s has no property named '%s'",
+                     G_STRFUNC,
+                     g_type_name (G_TYPE_FROM_INSTANCE (config)),
+                     arg_name);
+          g_clear_object (&config);
+          return NULL;
+        }
+
+      g_value_init (&value, pspec->value_type);
+      G_VALUE_COLLECT (&value, args, G_VALUE_NOCOPY_CONTENTS, &error);
+
+      if (error)
+        {
+          g_warning ("%s: %s", G_STRFUNC, error);
+          g_free (error);
+          g_clear_object (&config);
+          return NULL;
+        }
+
+      g_object_set_property (G_OBJECT (config), arg_name, &value);
+      g_value_unset (&value);
+
+      arg_name = va_arg (args, const gchar *);
+    }
+
+  return_values = gimp_procedure_run_config (procedure, config);
+  g_clear_object (&config);
+
+  return return_values;
+}
+
+/**
+ * gimp_procedure_run_config: (rename-to gimp_procedure_run)
  * @procedure: a @GimpProcedure.
  * @args:      the @procedure's arguments.
  *
- * Runs the procedure, calling the run_func given in [ctor@Procedure.new].
+ * Runs @procedure, calling the run_func given in [ctor@Procedure.new].
  *
  * Returns: (transfer full): The @procedure's return values.
  *
  * Since: 3.0
  **/
 GimpValueArray *
-gimp_procedure_run (GimpProcedure  *procedure,
-                    GimpValueArray *args)
+gimp_procedure_run_config (GimpProcedure       *procedure,
+                           GimpProcedureConfig *config)
+{
+  GimpValueArray *return_vals;
+  GimpValueArray *args;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
+  g_return_val_if_fail (gimp_procedure_config_get_procedure (config) == procedure, NULL);
+
+  args = gimp_procedure_new_arguments (procedure);
+  _gimp_procedure_config_get_values (config, args);
+
+  return_vals = _gimp_procedure_run_array (procedure, args);
+
+  gimp_value_array_unref (args);
+
+  return return_vals;
+}
+
+GimpValueArray *
+_gimp_procedure_run_array (GimpProcedure  *procedure,
+                           GimpValueArray *args)
 {
   GimpValueArray *return_vals;
   GError         *error = NULL;

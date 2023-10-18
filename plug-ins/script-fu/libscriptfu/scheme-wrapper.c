@@ -1304,7 +1304,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
       return script_error (sc, "A script cannot refresh scripts", 0);
 
   g_debug ("calling %s", proc_name);
-  values = gimp_pdb_run_procedure_config (gimp_get_pdb (), proc_name, config);
+  values = gimp_procedure_run_config (procedure, config);
   g_debug ("done.");
   g_clear_object (&config);
 

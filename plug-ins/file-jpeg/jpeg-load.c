@@ -475,6 +475,7 @@ load_image (GFile        *file,
     {
       FILE           *fp;
       GFile          *temp_file   = NULL;
+      GimpProcedure  *procedure;
       GimpValueArray *return_vals = NULL;
 
       temp_file = gimp_temp_file ("tmp");
@@ -496,15 +497,15 @@ load_image (GFile        *file,
 
       g_free (photoshop_data);
 
-      return_vals =
-        gimp_pdb_run_procedure (gimp_get_pdb (),
-                                "file-psd-load-metadata",
-                                "run-mode",      GIMP_RUN_NONINTERACTIVE,
-                                "file",          temp_file,
-                                "size",          photoshop_len,
-                                "image",         image,
-                                "metadata-type", FALSE,
-                                NULL);
+      procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                               "file-psd-load-metadata");
+      return_vals = gimp_procedure_run (procedure,
+                                        "run-mode",      GIMP_RUN_NONINTERACTIVE,
+                                        "file",          temp_file,
+                                        "size",          photoshop_len,
+                                        "image",         image,
+                                        "metadata-type", FALSE,
+                                        NULL);
 
       g_file_delete (temp_file, NULL, NULL);
       g_object_unref (temp_file);
