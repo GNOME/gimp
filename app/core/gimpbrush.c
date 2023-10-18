@@ -303,7 +303,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 
                mask_buf = gimp_brush_transform_mask (brush, scale,
                                                      (gimp_brush_generated_get_aspect_ratio (gen_brush) - 1.0) * 20.0 / 19.0,
-                                                     gimp_brush_generated_get_angle (gen_brush) / 360.0,
+                                                     gimp_brush_generated_get_angle (gen_brush) / -360.0,
                                                      FALSE,
                                                      gimp_brush_generated_get_hardness (gen_brush));
             }
