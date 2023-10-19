@@ -553,6 +553,7 @@ static void
 gimp_gp_param_to_value (gpointer        gimp,
                         const GPParam  *param,
                         GType           type,
+                        GParamSpec     *pspec,
                         GValue         *value)
 {
   g_return_if_fail (param != NULL);
@@ -652,7 +653,15 @@ gimp_gp_param_to_value (gpointer        gimp,
       GObject **objects;
       gint      i;
 
-      object_type = g_type_from_name (param->data.d_id_array.type_name);
+      if (param->data.d_id_array.type_name == NULL)
+        {
+          g_return_if_fail (param->data.d_id_array.size == 0 && pspec != NULL);
+          object_type = GIMP_PARAM_SPEC_OBJECT_ARRAY (pspec)->object_type;
+        }
+      else
+        {
+          object_type = g_type_from_name (param->data.d_id_array.type_name);
+        }
 
       objects = g_new (GObject *, param->data.d_id_array.size);
 
@@ -732,8 +741,9 @@ _gimp_gp_params_to_value_array (gpointer        gimp,
 
   for (i = 0; i < n_params; i++)
     {
-      GValue value = G_VALUE_INIT;
-      GType  type;
+      GParamSpec *pspec = NULL;
+      GValue      value = G_VALUE_INIT;
+      GType       type;
 
       /*  first get the GType from the passed GPParam  */
       type = g_type_from_name (params[i].type_name);
@@ -753,6 +763,8 @@ _gimp_gp_params_to_value_array (gpointer        gimp,
           if (pspec_index < n_pspecs)
             {
               GType pspec_type = G_PARAM_SPEC_VALUE_TYPE (pspecs[pspec_index]);
+
+              pspec = pspecs[pspec_index];
 
               if (type != pspec_type)
                 {
@@ -786,7 +798,7 @@ _gimp_gp_params_to_value_array (gpointer        gimp,
             }
         }
 
-      gimp_gp_param_to_value (gimp, &params[i], type, &value);
+      gimp_gp_param_to_value (gimp, &params[i], type, pspec, &value);
 
       gimp_value_array_append (args, &value);
       g_value_unset (&value);
