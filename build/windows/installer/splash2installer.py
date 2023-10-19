@@ -30,7 +30,7 @@ def export_scaled_img(image, target_width, target_height, export_path):
   config.set_property("num-drawables", len(drawables))
   config.set_property("drawables", Gimp.ObjectArray.new(Gimp.Drawable, drawables, False))
   config.set_property("file", Gio.file_new_for_path(export_path))
-  Gimp.run_procedure_config(procedure, config)
+  procedure.run_config(config)
 
 # These sizes are pretty much hardcoded, and in particular the ratio matters in
 # InnoSetup. Or so am I told. XXX
