@@ -819,14 +819,29 @@ gimp_layer_tree_view_select_items (GimpContainerView *view,
     {
       if (success)
         {
-          for (layers = items, path = paths;
-               layers && path;
-               layers = layers->next, path = path->next)
+          if (g_list_length (items) == 1)
             {
-              GtkTreeIter iter;
+              GtkTreeIter *iter = NULL;
 
-              gtk_tree_model_get_iter (tree_view->model, &iter, path->data);
-              gimp_layer_tree_view_update_borders (layer_view, &iter);
+              iter =
+                gimp_container_view_lookup (GIMP_CONTAINER_VIEW (layer_view),
+                                            GIMP_VIEWABLE (layers->data));
+
+              if (iter)
+                gimp_layer_tree_view_update_borders (layer_view, iter);
+            }
+          else
+            {
+              for (layers = items, path = paths;
+                   layers && path;
+                   layers = layers->next, path = path->next)
+                {
+                  GtkTreeIter iter;
+
+                  gtk_tree_model_get_iter (tree_view->model, &iter,
+                                           path->data);
+                  gimp_layer_tree_view_update_borders (layer_view, &iter);
+                }
             }
 
           gimp_layer_tree_view_update_options (layer_view, items);
@@ -2152,13 +2167,14 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
             }
           else
 #endif
-          if (! modifiers && mask && gimp_layer_get_edit_mask (layer))
+          if (! modifiers)
             {
               /* Simple clicks (without modifiers) activate the layer */
-
-              if (mask)
+              if (mask && gimp_layer_get_edit_mask (layer))
                 gimp_action_group_set_action_active (group,
                                                      "layers-mask-edit", FALSE);
+              else
+                gimp_layer_tree_view_update_borders (layer_view, &iter);
             }
 
           g_object_unref (renderer);
