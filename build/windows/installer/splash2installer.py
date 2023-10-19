@@ -1,5 +1,6 @@
-image  = Gimp.list_images()[0]
-config = Gimp.get_pdb().lookup_procedure("file-bmp-save").create_config()
+image     = Gimp.list_images()[0]
+procedure = Gimp.get_pdb().lookup_procedure("file-bmp-save")
+config    = procedure.create_config()
 
 def export_scaled_img(image, target_width, target_height, export_path):
   img        = image.duplicate()
@@ -29,7 +30,7 @@ def export_scaled_img(image, target_width, target_height, export_path):
   config.set_property("num-drawables", len(drawables))
   config.set_property("drawables", Gimp.ObjectArray.new(Gimp.Drawable, drawables, False))
   config.set_property("file", Gio.file_new_for_path(export_path))
-  Gimp.get_pdb().run_procedure_config("file-bmp-save", config)
+  Gimp.run_procedure_config(procedure, config)
 
 # These sizes are pretty much hardcoded, and in particular the ratio matters in
 # InnoSetup. Or so am I told. XXX
