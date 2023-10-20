@@ -353,7 +353,10 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
           g_strcmp0 (type_name, "GimpImage")     == 0 ||
           g_strcmp0 (type_name, "GimpDrawable")  == 0 ||
           g_strcmp0 (type_name, "GimpLayer")     == 0 ||
+          g_strcmp0 (type_name, "GimpTextLayer") == 0 ||
           g_strcmp0 (type_name, "GimpChannel")   == 0 ||
+          g_strcmp0 (type_name, "GimpItem")      == 0 ||
+          g_strcmp0 (type_name, "GimpLayerMask") == 0 ||
           g_strcmp0 (type_name, "GimpSelection") == 0 ||
           g_strcmp0 (type_name, "GimpResource")  == 0 ||
           g_strcmp0 (type_name, "GimpBrush")     == 0 ||
