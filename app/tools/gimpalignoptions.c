@@ -540,10 +540,10 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
     gimp_align_options_button_new (options, GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP, hbox,
                                    _("Distribute vertically with even vertical gaps"));
 
-  g_signal_connect (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
-                    "image-changed",
-                    G_CALLBACK (gimp_align_options_image_changed),
-                    tool_options);
+  g_signal_connect_object (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
+                           "image-changed",
+                           G_CALLBACK (gimp_align_options_image_changed),
+                           tool_options, 0);
   gimp_align_options_image_changed (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
                                     gimp_context_get_image (gimp_get_user_context (GIMP_CONTEXT (options)->gimp)),
                                     options);
