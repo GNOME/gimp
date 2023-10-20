@@ -116,6 +116,9 @@ def histogram_export(procedure, img, layers, gio_file,
     try:
         with open(gio_file.get_path(), "wt") as hfile:
             writer = csv.writer(hfile)
+            histo_proc = Gimp.get_pdb().lookup_procedure('gimp-drawable-histogram')
+            histo_config = histo_proc.create_config()
+            histo_config.set_property('drawable', layer)
 
             # Write headers:
             writer.writerow(["Range start"] + channels_txt)
@@ -129,15 +132,12 @@ def histogram_export(procedure, img, layers, gio_file,
                 if start_range >= 1.0:
                     break
 
+                histo_config.set_property('start-range', float(start_range))
+                histo_config.set_property('end-range', float(min(start_range + bucket_size, 1.0)))
                 row = [start_range]
                 for channel in channels_gimp:
-                    result = Gimp.get_pdb().run_procedure('gimp-drawable-histogram',
-                                                          [ GObject.Value(Gimp.Drawable, layer),
-                                                            GObject.Value(Gimp.HistogramChannel, channel),
-                                                            GObject.Value(GObject.TYPE_DOUBLE,
-                                                                          float(start_range)),
-                                                            GObject.Value(GObject.TYPE_DOUBLE,
-                                                                          float(min(start_range + bucket_size, 1.0))) ])
+                    histo_config.set_property('channel', channel)
+                    result = histo_proc.run(histo_config)
 
                     if output_format == output_format_enum.pixel_count:
                         count = int(result.index(5))

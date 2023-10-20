@@ -375,15 +375,10 @@ class SelectionToPath:
         else:
             selection_was_empty = False
 
-        result = Gimp.get_pdb().run_procedure('plug-in-sel2path', [
-            GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
-            GObject.Value(Gimp.Image, self.image),
-            GObject.Value(GObject.TYPE_INT, 0),
-            # XXX: I could use self.image.list_selected_layers() but for
-            # this call, it doesn't matter anyway.
-            GObject.Value(Gimp.ObjectArray,
-                          Gimp.ObjectArray.new(Gimp.Drawable, [], False)),
-        ])
+        proc   = Gimp.get_pdb().lookup_procedure('plug-in-sel2path')
+        config = proc.create_config()
+        config.set_property('image', self.image)
+        result = proc.run(config)
 
         self.path = self.image.list_vectors()[0]
         self.stroke_ids = self.path.get_strokes()

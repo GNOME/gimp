@@ -161,70 +161,29 @@ def run(procedure, config, data):
             if proc is None:
                 return None
 
-            cmd = ''
-
             return_values = proc.get_return_values()
-            # assert is list of GParamSpec
+            param_specs   = proc.get_arguments()
 
-            '''
-            Cat str of variable names to which unpack return values
-            Variable names same as return value name, mangled
-            Str like: 'retval_1, ret_val_2 = '
-            '''
+            cmd  = f"procedure = Gimp.get_pdb().lookup_procedure('{proc_name}'); "
+            cmd += f"config = procedure.create_config(); "
+
+            for arg in param_specs:
+              if arg.name == 'run-mode':
+                # Special handling for run mode.
+                cmd += "config.set_property('" + arg.name + "', Gimp.RunMode.INTERACTIVE); "
+              else:
+                cmd += "config.set_property('" + arg.name + "', " + arg.name.replace('-', '_') + "); "
+
+            cmd += f"result = procedure.run(config); "
+
+            cmd += f"success = result.index(0)"
             if len(return_values) > 0:
-                cmd += ', '.join(x.name.replace('-', '_') for x in return_values)
-                cmd += ' = '
-            # else is a void PDB procedure
-
-            '''
-            Cat prefix of str for a call to procedure name
-            Prefix like: Gimp.get_pdb().run_procedure('<foo>',
-            Note:
-             - proc name is quoted, run_procedure wants a string.
-             - proc name has hyphens. Not a Python name. Matches name in PDB.
-             - trailing comma, another arg to follow:
-               run_procedure takes two args: string name, and GValueArray of args
-            '''
-            cmd += f"Gimp.get_pdb().run_procedure('{proc_name}', "
-
-            '''
-            Assemble argument string.
-            Using names of formal args, which might not match names already
-            defined in the browsing environment (the REPL).
-
-            Args are passed to a PDB procedure in a GValueArray.
-            Assemble a string like '[arg_1, arg_2]'.
-            When eval'd, the Python binding will convert to a GValueArray.
-            '''
-            param_specs = proc.get_arguments()
-            cmd += '[ '
-
-            '''
-            Special handling for run mode.
-            GIMP v2: GimpFu had different handling for run mode.
-            Insure run mode interactive, i.e. called procedure may open a GUI.
-
-            This assumes that procedures use the same formal name for runmode arg.
-            There might be rare other cases, especially for third party plugins?
-            E.G. See formal signature of file-gex-load
-
-            There is no other way to distinguish the run mode formal argument,
-            as its formal type is GimpParamEnum, a generic enum.
-            '''
-            if len(param_specs) > 0 and param_specs[0].name == 'run-mode':
-                cmd += 'Gimp.RunMode.INTERACTIVE, '
-                param_specs = param_specs[1:]
-            # else doesn't take a run mode arg
-
-            # Cat string of arg names to a call
-            # Like:  'arg_1, arg_2' where formal names arg-1 and arg-2
-            cmd += ', '.join(x.name.replace('-', '_') for x in param_specs)
-
-            # terminate the arg array, and close parens the call
-            cmd += '])'
+              i = 1
+              for retval in return_values:
+                cmd += '; {} = result.index({})'.format(retval.name.replace('-', '_'), i)
+                i += 1
 
             return cmd
-
 
         def browse_response(self, dlg, response_id):
             if response_id != Gtk.ResponseType.APPLY:

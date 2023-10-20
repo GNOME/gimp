@@ -165,10 +165,11 @@ def thumbnail_ora(procedure, file, thumb_size, args, data):
         fid.write(orafile.read('Thumbnails/thumbnail.png'))
 
     thumb_file = Gio.file_new_for_path(tmp)
-    result = Gimp.get_pdb().run_procedure('file-png-load', [
-        GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
-        GObject.Value(Gio.File, thumb_file),
-    ])
+    pdb_proc   = Gimp.get_pdb().lookup_procedure('file-png-load')
+    pdb_config = pdb_proc.create_config()
+    pdb_config.set_property('run-mode', Gimp.RunMode.NONINTERACTIVE)
+    pdb_config.set_property('file', thumb_file)
+    result = pdb_proc.run(pdb_config)
     os.remove(tmp)
     os.rmdir(tempdir)
 
@@ -218,22 +219,22 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, metadata,
         tmp = os.path.join(tempdir, 'tmp.png')
         interlace, compression = 0, 2
 
-        Gimp.get_pdb().run_procedure('file-png-save', [
-            GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
-            GObject.Value(Gimp.Image, image),
-            GObject.Value(GObject.TYPE_INT, 1),
-            GObject.Value(Gimp.ObjectArray, Gimp.ObjectArray.new(Gimp.Drawable, [drawable], False)),
-            GObject.Value(Gio.File, Gio.File.new_for_path(tmp)),
-            GObject.Value(GObject.TYPE_BOOLEAN, interlace),
-            GObject.Value(GObject.TYPE_INT, compression),
-            # write all PNG chunks except oFFs(ets)
-            GObject.Value(GObject.TYPE_BOOLEAN, True),      # Save background color (bKGD chunk)
-            GObject.Value(GObject.TYPE_BOOLEAN, False),     # Save layer offset (oFFs chunk)
-            GObject.Value(GObject.TYPE_BOOLEAN, True),      # Save resolution (pHYs chunk)
-            GObject.Value(GObject.TYPE_BOOLEAN, True),      # Save creation time (tIME chunk)
-            # Other settings
-            GObject.Value(GObject.TYPE_BOOLEAN, True),      # Save color values from transparent pixels
-        ])
+        pdb_proc   = Gimp.get_pdb().lookup_procedure('file-png-save')
+        pdb_config = pdb_proc.create_config()
+        pdb_config.set_property('run-mode', Gimp.RunMode.NONINTERACTIVE)
+        pdb_config.set_property('image', image)
+        pdb_config.set_property('num-drawables', 1)
+        pdb_config.set_property('drawables', Gimp.ObjectArray.new(Gimp.Drawable, [drawable], False))
+        pdb_config.set_property('file', Gio.File.new_for_path(tmp))
+        pdb_config.set_property('interlaced', interlace)
+        pdb_config.set_property('compression', compression)
+        # write all PNG chunks except oFFs(ets)
+        pdb_config.set_property('bkgd', True)
+        pdb_config.set_property('offs', False)
+        pdb_config.set_property('phys', True)
+        pdb_config.set_property('time', True)
+        pdb_config.set_property('save-transparent', True)
+        pdb_proc.run(pdb_config)
         if (os.path.exists(tmp)):
             orafile.write(tmp, path)
             os.remove(tmp)
@@ -409,13 +410,14 @@ def load_ora(procedure, run_mode, file, metadata, flags, config, data):
                 fid.write(data)
 
             # import layer, set attributes and add to image
-            result = gimp_layer = Gimp.get_pdb().run_procedure('gimp-file-load-layer', [
-                GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
-                GObject.Value(Gimp.Image, img),
-                GObject.Value(Gio.File, Gio.File.new_for_path(tmp)),
-            ])
+            pdb_proc   = Gimp.get_pdb().lookup_procedure('gimp-file-load-layer')
+            pdb_config = pdb_proc.create_config()
+            pdb_config.set_property('run-mode', Gimp.RunMode.NONINTERACTIVE)
+            pdb_config.set_property('image', img)
+            pdb_config.set_property('file', Gio.File.new_for_path(tmp))
+            result = pdb_proc.run(pdb_config)
             if (result.index(0) == Gimp.PDBStatusType.SUCCESS):
-                gimp_layer = gimp_layer.index(1)
+                gimp_layer = result.index(1)
                 os.remove(tmp)
             else:
                 print("Error loading layer from openraster image.")
