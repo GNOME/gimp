@@ -59,6 +59,13 @@
   border: 1px solid @stronger-border-color;
 }
 
+/* Define the mouse-over color for the path
+ * buttons in the various file dialogs.
+ */
+#pathbarbox button:hover {
+  background-color: @hover-color;
+}
+
 /* The main image window before it has an image in it,
  * and the buttonbar along the bottoms of dialogs.
  * Foreground color here is the text color, not the Wilber color.
