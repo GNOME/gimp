@@ -1981,8 +1981,6 @@ _gimp_procedure_run_array (GimpProcedure  *procedure,
       return_vals = gimp_procedure_new_return_values (procedure,
                                                       GIMP_PDB_CALLING_ERROR,
                                                       error);
-      g_clear_error (&error);
-
       return return_vals;
     }
 
@@ -2055,7 +2053,6 @@ _gimp_procedure_run_array (GimpProcedure  *procedure,
       return_vals = gimp_procedure_new_return_values (procedure,
                                                       GIMP_PDB_EXECUTION_ERROR,
                                                       error);
-      g_clear_error (&error);
     }
 
   return return_vals;
