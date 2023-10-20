@@ -147,6 +147,13 @@ quit_close_all_dialog_new (Gimp     *gimp,
   GClosure              *closure;
   gint                   rows;
   gint                   view_size;
+  GdkRectangle           geometry;
+  GdkMonitor            *monitor;
+  gint                   max_rows;
+  gint                   scale_factor;
+  const gfloat           rows_per_height   = 32 / 1440.0f;
+  const gint             greatest_max_rows = 36;
+  const gint             least_max_rows    = 6;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -202,8 +209,28 @@ quit_close_all_dialog_new (Gimp     *gimp,
 
   private->box = GIMP_MESSAGE_DIALOG (private->dialog)->box;
 
+  monitor      = gimp_widget_get_monitor (private->dialog);
+  scale_factor = gdk_monitor_get_scale_factor (monitor);
+  gdk_monitor_get_geometry (monitor, &geometry);
+
+  if (scale_factor > 1)
+    {
+      #ifdef GDK_WINDOWING_WIN32
+        max_rows = (geometry.height * scale_factor * rows_per_height)
+                      / (scale_factor + 1);
+      #else
+        max_rows = (geometry.height * rows_per_height) / (scale_factor + 1);
+      #endif
+    }
+  else
+    {
+      max_rows = geometry.height * rows_per_height;
+    }
+
+  max_rows = CLAMP (max_rows, least_max_rows, greatest_max_rows);
+
   view_size = gimp->config->layer_preview_size;
-  rows      = CLAMP (gimp_container_get_n_children (private->images), 3, 6);
+  rows      = CLAMP (gimp_container_get_n_children (private->images), 3, max_rows);
 
   view = gimp_container_tree_view_new (private->images, private->context,
                                        view_size, 1);
