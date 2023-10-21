@@ -117,7 +117,7 @@ static void   gimp_align_options_pivot_changed          (GimpPivotSelector *sele
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpAlignOptions, gimp_align_options, GIMP_TYPE_TOOL_OPTIONS)
 
-#define parent_class gimp_selection_options_parent_class
+#define parent_class gimp_align_options_parent_class
 
 static guint align_options_signals[LAST_SIGNAL] = { 0 };
 
@@ -201,6 +201,8 @@ gimp_align_options_finalize (GObject *object)
   if (GIMP_CONTEXT (options)->gimp)
     gimp_align_options_image_changed (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
                                       NULL, options);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
