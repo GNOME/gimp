@@ -43,16 +43,26 @@
  * A button which pops up a gradient select dialog.
  **/
 
+/* Local data needed to draw preview. */
+typedef struct
+{
+  gint     allocation_width;
+
+  gdouble *data;
+  gint     n_samples;
+} GimpGradientPreviewData;
 
 struct _GimpGradientChooser
 {
-  GimpResourceChooser  parent_instance;
-
-  GtkWidget           *preview;
+  GimpResourceChooser      parent_instance;
+  GimpGradientPreviewData *local_grad_data;
+  GtkWidget               *preview;
 };
 
 
 /*  local function prototypes  */
+
+static void     gimp_gradient_chooser_finalize             (GObject             *object);
 
 static void     gimp_gradient_chooser_draw_interior        (GimpResourceChooser *self);
 
@@ -62,6 +72,16 @@ static void     gimp_gradient_select_preview_size_allocate (GtkWidget           
 static gboolean gimp_gradient_select_preview_draw_handler  (GtkWidget           *preview,
                                                             cairo_t             *cr,
                                                             GimpGradientChooser *self);
+static gboolean gimp_gradient_select_model_change_handler  (GimpGradientChooser *self,
+                                                            GimpResource        *resource,
+                                                            gboolean   is_closing);
+
+static void     local_grad_data_new                         (GimpGradientChooser *self);
+static gboolean local_grad_data_exists                      (GimpGradientChooser *self);
+static gboolean local_grad_data_refresh                     (GimpGradientChooser *self,
+                                                             GimpGradient        *gradient);
+static void     local_grad_data_set_allocation_width        (GimpGradientChooser *self,
+                                                             gint                width);
 
 
 static const GtkTargetEntry drag_target = { "application/x-gimp-gradient-name", 0 };
@@ -78,9 +98,12 @@ static void
 gimp_gradient_chooser_class_init (GimpGradientChooserClass *klass)
 {
   GimpResourceChooserClass *superclass = GIMP_RESOURCE_CHOOSER_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   superclass->draw_interior = gimp_gradient_chooser_draw_interior;
   superclass->resource_type = GIMP_TYPE_GRADIENT;
+
+  object_class->finalize    = gimp_gradient_chooser_finalize;
 }
 
 static void
@@ -103,12 +126,29 @@ gimp_gradient_chooser_init (GimpGradientChooser *self)
                     G_CALLBACK (gimp_gradient_select_preview_draw_handler),
                     self);
 
+  g_signal_connect (self, "resource-set",
+                    G_CALLBACK (gimp_gradient_select_model_change_handler),
+                    self);
+
   gtk_widget_show_all (GTK_WIDGET (self));
 
   gimp_resource_chooser_set_drag_target (GIMP_RESOURCE_CHOOSER (self),
                                          self->preview, &drag_target);
 
   gimp_resource_chooser_set_clickable (GIMP_RESOURCE_CHOOSER (self), button);
+}
+
+/* Called when dialog is closed and owning ResourceSelect button is disposed. */
+static void
+gimp_gradient_chooser_finalize (GObject *object)
+{
+  GimpGradientChooser *self = GIMP_GRADIENT_CHOOSER (object);
+
+  g_free (self->local_grad_data->data);
+  g_free (self->local_grad_data);
+
+  /* chain up. */
+  G_OBJECT_CLASS (gimp_gradient_chooser_parent_class)->finalize (object);
 }
 
 static void
@@ -155,6 +195,8 @@ gimp_gradient_chooser_new (const gchar  *title,
                          "resource", gradient,
                          NULL);
 
+  local_grad_data_new (GIMP_GRADIENT_CHOOSER (self));
+
   gimp_gradient_chooser_draw_interior (GIMP_RESOURCE_CHOOSER (self));
 
   return self;
@@ -166,19 +208,19 @@ gimp_gradient_chooser_new (const gchar  *title,
 /* Get array of samples from self's gradient.
  * Return array and size at given handles.
  * Return success.
+ *
+ * Crosses the wire to core.
+ * Doesn't know we keep the data locally.
  */
 static gboolean
-get_gradient_data (GimpGradientChooser  *self,
-                   gint                 allocation_width,
-                   gint                 *sample_count,
-                   gdouble             **sample_array)
+get_gradient_data (GimpGradient  *gradient,
+                   gint           allocation_width,
+                   gint          *sample_count,
+                   gdouble      **sample_array)
 {
-  GimpGradient *gradient;
-  gboolean      result;
-  gdouble      *samples;
-  gint          n_samples;
-
-  g_object_get (self, "resource", &gradient, NULL);
+  gboolean  result;
+  gdouble  *samples;
+  gint      n_samples;
 
   result = gimp_gradient_get_uniform_samples (gradient,
                                               allocation_width,
@@ -193,8 +235,6 @@ get_gradient_data (GimpGradientChooser  *self,
       *sample_count = n_samples;
     }
 
-  g_object_unref (gradient);
-
   /* When result is true, caller must free the array. */
   return result;
 }
@@ -206,21 +246,14 @@ gimp_gradient_select_preview_size_allocate (GtkWidget           *widget,
                                             GtkAllocation       *allocation,
                                             GimpGradientChooser *self)
 {
-  /* Do nothing.
-   *
-   * In former code, we cached the gradient data in self, on allocate event.
-   * But allocate event always seems to be paired with a draw event,
-   * so there is no point in caching the gradient data.
-   * And caching gradient data is a premature optimization,
-   * without deep knowledge of Gtk and actual performance testing,
-   * you can't know caching helps performance.
-   */
+  /* Width needed to draw preview. */
+  local_grad_data_set_allocation_width (self, allocation->width);
 }
-
-
 
 /* Draw array of samples.
  * This understands mostly cairo, and little about gradient.
+ *
+ * src is a local copy of gradient data.
  */
 static void
 gimp_gradient_select_preview_draw (cairo_t *cr,
@@ -280,24 +313,110 @@ gimp_gradient_select_preview_draw_handler (GtkWidget           *widget,
                                            cairo_t             *cr,
                                            GimpGradientChooser *self)
 {
-  GtkAllocation    allocation;
+  /* Ensure local gradient data exists.
+   * Draw from local data to avoid crossing wire on expose events.
+   */
+  if (! local_grad_data_exists (self))
+    {
+      /* This is first draw, self's resource is the initial one.
+       * Cross wire to get local data.
+       */
+      GimpGradient *gradient = NULL;
 
-  /* Attributes of the source.*/
-  gdouble   *src;
-  gint       n_samples;
-  gint       src_width;
-
-  gtk_widget_get_allocation (widget, &allocation);
-
-  if (!get_gradient_data (self, allocation.width, &n_samples, &src))
-    return FALSE;
+      g_object_get (self, "resource", &gradient, NULL);
+      if ( ! local_grad_data_refresh (self, gradient))
+        {
+          /* Failed to get data for initial gradient.  Return without drawing. */
+          g_object_unref (gradient);
+          return FALSE;
+        }
+      g_object_unref (gradient);
+    }
 
   /* Width in pixels of src, since BPP is 4. */
-  src_width = n_samples / 4;
-
-  gimp_gradient_select_preview_draw (cr, src_width, allocation.width, src);
-
-  g_free (src);
+  gimp_gradient_select_preview_draw (cr,
+                                     self->local_grad_data->n_samples / 4,
+                                     self->local_grad_data->allocation_width,
+                                     self->local_grad_data->data);
 
   return FALSE;
+}
+
+/* Handler for event resource-set.
+ * From superclass, but ultimately from remote chooser.
+ *
+ * Event comes only when user touches the remote chooser.
+ * Event not come when plugin dialog widget is exposed and needs redraw.
+ */
+static gboolean
+gimp_gradient_select_model_change_handler (GimpGradientChooser *self,
+                                           GimpResource        *resource,
+                                           gboolean             is_closing)
+{
+  local_grad_data_refresh (self, GIMP_GRADIENT (resource));
+  return FALSE;
+  /* is_closing is not used, but handled upstream, in GimpResourceSelect. */
+}
+
+
+/* Methods for gradient data stored locally.
+ *
+ * Could be a class.
+ * Mostly encapsulated except preview_draw_handler accesses it also.
+ *
+ * Store grad data locally.
+ * To avoid an asynchronous call back to core
+ * to get gradient data at redraw for expose events.
+ * Such an asynch call can improperly interleave
+ * with transactions in other direction, across wire from core to plugin.
+ * This is not just for performance, i.e. not just to save wire crossings.
+ */
+
+static gboolean
+local_grad_data_exists (GimpGradientChooser *self)
+{
+  return self->local_grad_data->data != 0;
+}
+
+static void
+local_grad_data_new (GimpGradientChooser *self)
+{
+  self->local_grad_data = g_slice_new0 (GimpGradientPreviewData);
+}
+
+/* Called at initial draw to get local data for the model gradient.
+ * Also called when remote chooser sets a new gradient into model.
+ *
+ * Returns success in crossing the wire and looking up gradient.
+ */
+static gboolean
+local_grad_data_refresh (GimpGradientChooser *self, GimpGradient *gradient)
+{
+  gdouble *src;
+  gint     n_samples;
+
+  /* Must not be called before widget is allocated. */
+  g_assert (self->local_grad_data->allocation_width != 0);
+
+  if (!get_gradient_data (gradient,
+                          self->local_grad_data->allocation_width,
+                          &n_samples,
+                          &src))
+    {
+      g_warning ("Failed get gradient data");
+      return FALSE;
+    }
+  else
+    {
+      g_free (self->local_grad_data->data);
+      self->local_grad_data->data = src;
+      self->local_grad_data->n_samples = n_samples;
+      return TRUE;
+    }
+}
+
+static void
+local_grad_data_set_allocation_width (GimpGradientChooser *self, gint width)
+{
+  self->local_grad_data->allocation_width = width;
 }
