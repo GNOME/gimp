@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-25 21:07+0000\n"
-"PO-Revision-Date: 2023-03-08 00:47+0300\n"
+"POT-Creation-Date: 2023-10-19 03:17+0000\n"
+"PO-Revision-Date: 2023-10-19 21:47+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -52,7 +52,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.4\n"
 "X-POOTLE-MTIME: 1437505389.000000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -11259,8 +11259,8 @@ msgstr "Yol"
 #: ../app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to "
-"focus\"."
+"receives the focus. This is useful for window managers using \"click to focus"
+"\"."
 msgstr ""
 "Bu özelliği etkinleştirdiğinizde, tıkladığınız görüntünün penceresi etkin "
 "hale gelir. Bu özellik tıklayarak etkinleştirme yapan pencere yöneticilerini "
@@ -13233,29 +13233,33 @@ msgstr "Yapıştırılan Katman"
 msgid "Global Buffer"
 msgstr "Evrensel Tampon"
 
-#: ../app/core/gimp-gradients.c:64
+#: ../app/core/gimp-gradients.c:65
 msgid "Custom"
 msgstr "Özel"
 
-#: ../app/core/gimp-gradients.c:74
+#: ../app/core/gimp-gradients.c:75
 msgid "FG to BG (RGB)"
 msgstr "ÖA'dan AA'ya (RGB)"
 
-#: ../app/core/gimp-gradients.c:82
+#: ../app/core/gimp-gradients.c:83
 msgid "FG to BG (Hardedge)"
 msgstr "ÖA'dan AA'ya (Sert Kenarlı)"
 
-#: ../app/core/gimp-gradients.c:90
+#: ../app/core/gimp-gradients.c:91
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "ÖA'dan AA'ya (HSV saat yönünün tersi)"
 
-#: ../app/core/gimp-gradients.c:98
+#: ../app/core/gimp-gradients.c:99
 msgid "FG to BG (HSV clockwise hue)"
 msgstr "ÖA'dan AA'ya (HSV saat yönünde renk tonu)"
 
-#: ../app/core/gimp-gradients.c:106
+#: ../app/core/gimp-gradients.c:107
 msgid "FG to Transparent"
 msgstr "ÖA'dan Saydama"
+
+#: ../app/core/gimp-gradients.c:114
+msgid "FG to Transparent (Hardedge)"
+msgstr "ÖA'dan Saydama (Sert Kenarlı)"
 
 #. Translator:  This message is displayed while GIMP is waiting for
 #. * some operation to finish.  The %s argument is a message describing
@@ -14993,8 +14997,8 @@ msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
 "%lu), bytes=%lu"
 msgstr ""
-"'%s' içinde geçersiz başlık verisi: genişlik=%lu (en fazla %lu), "
-"yükseklik=%lu (en fazla %lu), byte=%lu"
+"'%s' içinde geçersiz başlık verisi: genişlik=%lu (en fazla %lu), yükseklik="
+"%lu (en fazla %lu), byte=%lu"
 
 #: ../app/core/gimppattern-load.c:116
 #, c-format
@@ -19066,13 +19070,13 @@ msgstr ""
 "Sürükleyi tıklamak serbest bir kesim ekler, tıklamak çok köşeli bir kesim "
 "ekler"
 
-#: ../app/display/gimptoolrectangle.c:569
-#: ../app/display/gimptoolrectangle.c:877
+#: ../app/display/gimptoolrectangle.c:577
+#: ../app/display/gimptoolrectangle.c:886
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Dikdörtgen: "
 
-#: ../app/display/gimptoolrectangle.c:2141
+#: ../app/display/gimptoolrectangle.c:2167
 msgid "Position: "
 msgstr "Konum: "
 
@@ -21036,8 +21040,8 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:765
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için yanlış bir değer türü ile "
 "çağrıldı (#%d). İstenen %s, olan %s."
@@ -23193,11 +23197,11 @@ msgstr "_GEGL İşlemi..."
 msgid "Select an operation from the list above"
 msgstr "Yukarıda listelenen işlemlerden birini seç"
 
-#: ../app/tools/gimpgenerictransformtool.c:101
+#: ../app/tools/gimpgenerictransformtool.c:99
 msgid "Transform Matrix"
 msgstr "Dönüşüm Matrisi"
 
-#: ../app/tools/gimpgenerictransformtool.c:135
+#: ../app/tools/gimpgenerictransformtool.c:119
 msgid "Invalid transform"
 msgstr "Geçersiz dönüşüm"
 
@@ -27236,7 +27240,7 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "renk"
 
-#: ../app/widgets/gimpitemtreeview.c:763
+#: ../app/widgets/gimpitemtreeview.c:765
 msgid "Lock:"
 msgstr "Kilitle:"
 
