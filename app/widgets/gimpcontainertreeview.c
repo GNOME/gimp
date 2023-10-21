@@ -1189,9 +1189,6 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 
   tree_view->priv->dnd_renderer = NULL;
 
-  if (! gtk_widget_has_focus (widget))
-    gtk_widget_grab_focus (widget);
-
   if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget),
                                      bevent->x, bevent->y,
                                      &path, &column, NULL, NULL))
@@ -1204,6 +1201,13 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
       GtkTreeIter               iter;
       gboolean                  handled = TRUE;
       gboolean                  multisel_mode;
+
+      /* Confirm the path is set before grabbing focus, as it can cause
+       * the list to auto-scroll to the top on first click otherwise
+       */
+      gtk_tree_view_set_cursor (GTK_TREE_VIEW (widget), path, NULL, FALSE);
+      if (! gtk_widget_has_focus (widget))
+        gtk_widget_grab_focus (widget);
 
       multisel_mode = (gtk_tree_selection_get_mode (tree_view->priv->selection)
                        == GTK_SELECTION_MULTIPLE);
