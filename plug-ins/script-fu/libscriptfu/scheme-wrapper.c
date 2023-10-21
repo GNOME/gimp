@@ -750,34 +750,98 @@ script_fu_marshal_procedure_call (scheme   *sc,
       if (G_VALUE_HOLDS_INT (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            return script_type_error (sc, "numeric", i, proc_name);
+            {
+              return script_type_error (sc, "numeric", i, proc_name);
+            }
           else
-            g_value_set_int (&value,
-                             sc->vptr->ivalue (sc->vptr->pair_car (a)));
+            {
+              GParamSpecInt *ispec = G_PARAM_SPEC_INT (arg_spec);
+              gint           v     = sc->vptr->ivalue (sc->vptr->pair_car (a));
+
+              if (v < ispec->minimum || v > ispec->maximum)
+                {
+                  gchar error_message[1024];
+
+                  g_snprintf (error_message, sizeof (error_message),
+                              "Invalid value %d for argument %d: expected value between %d and %d",
+                              v, i, ispec->minimum, ispec->maximum);
+                  return script_error (sc, error_message, 0);
+                }
+
+              g_value_set_int (&value, v);
+            }
         }
       else if (G_VALUE_HOLDS_UINT (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            return script_type_error (sc, "numeric", i, proc_name);
+            {
+              return script_type_error (sc, "numeric", i, proc_name);
+            }
           else
-            g_value_set_uint (&value,
-                              sc->vptr->ivalue (sc->vptr->pair_car (a)));
+            {
+              GParamSpecUInt *ispec = G_PARAM_SPEC_UINT (arg_spec);
+              gint            v     = sc->vptr->ivalue (sc->vptr->pair_car (a));
+
+              if (v < ispec->minimum || v > ispec->maximum)
+                {
+                  gchar error_message[1024];
+
+                  g_snprintf (error_message, sizeof (error_message),
+                              "Invalid value %d for argument %d: expected value between %d and %d",
+                              v, i, ispec->minimum, ispec->maximum);
+                  return script_error (sc, error_message, 0);
+                }
+
+              g_value_set_uint (&value, v);
+            }
         }
       else if (G_VALUE_HOLDS_UCHAR (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            return script_type_error (sc, "numeric", i, proc_name);
+            {
+              return script_type_error (sc, "numeric", i, proc_name);
+            }
           else
-            g_value_set_uchar (&value,
-                               sc->vptr->ivalue (sc->vptr->pair_car (a)));
+            {
+              GParamSpecUChar *cspec = G_PARAM_SPEC_UCHAR (arg_spec);
+              gint             c     = sc->vptr->ivalue (sc->vptr->pair_car (a));
+
+              if (c < cspec->minimum || c > cspec->maximum)
+                {
+                  gchar error_message[1024];
+
+                  g_snprintf (error_message, sizeof (error_message),
+                              "Invalid value %d for argument %d: expected value between %d and %d",
+                              c, i, cspec->minimum, cspec->maximum);
+                  return script_error (sc, error_message, 0);
+                }
+
+              g_value_set_uchar (&value, c);
+            }
         }
       else if (G_VALUE_HOLDS_DOUBLE (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            return script_type_error (sc, "numeric", i, proc_name);
+            {
+              return script_type_error (sc, "numeric", i, proc_name);
+            }
           else
-            g_value_set_double (&value,
-                                sc->vptr->rvalue (sc->vptr->pair_car (a)));
+            {
+              GParamSpecDouble *dspec = G_PARAM_SPEC_DOUBLE (arg_spec);
+              gdouble           d     = sc->vptr->rvalue (sc->vptr->pair_car (a));
+
+              if (d < dspec->minimum || d > dspec->maximum)
+                {
+                  gchar error_message[1024];
+
+                  g_snprintf (error_message, sizeof (error_message),
+                              "Invalid value %f for argument %d: expected value between %f and %f",
+                              d, i, dspec->minimum, dspec->maximum);
+                  return script_error (sc, error_message, 0);
+                }
+
+              g_value_set_double (&value, d);
+            }
         }
       else if (G_VALUE_HOLDS_ENUM (&value))
         {
@@ -1297,6 +1361,17 @@ script_fu_marshal_procedure_call (scheme   *sc,
           return implementation_error (sc, error_str, 0);
         }
       debug_gvalue (&value);
+      if (g_param_value_validate (arg_spec, &value))
+        {
+          gchar error_message[1024];
+
+          g_snprintf (error_message, sizeof (error_message),
+                      "Invalid value for argument %d",
+                      i);
+          g_value_unset (&value);
+
+          return script_error (sc, error_message, 0);
+        }
       g_object_set_property (G_OBJECT (config), arg_specs[i]->name, &value);
       g_value_unset (&value);
     }
