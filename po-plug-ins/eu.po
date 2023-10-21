@@ -12,7 +12,7 @@ msgid ""
 msgstr "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-10-13 12:08+0000\n"
-"PO-Revision-Date: 2023-10-15 20:00+0100\n"
+"PO-Revision-Date: 2023-10-21 20:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -534,7 +534,7 @@ msgstr "Fotograma bat geruzako (ordeztu)"
 
 #: plug-ins/common/animation-play.c:971
 msgid "Memory could not be allocated to the frame container."
-msgstr ""
+msgstr "Fotograma-edukiontziari ezin zaio memoria esleitu."
 
 #: plug-ins/common/animation-play.c:1038
 msgid "Invalid image. Did you close it?"
@@ -958,7 +958,7 @@ msgid ""
 "Automata on continuous (value) domain. In GIMP_RUN_NONINTERACTIVE, the name "
 "of a parameter file is passed as the 4th arg. You can control CML_explorer "
 "via parameter file."
-msgstr ""
+msgstr "Sortu Coupled-Map Lattice (CML) baten irudia. CML domeinu jarraituko (etengabeko) automata zelularra da. GIMP_RUN_NONINTERACTIVE funtzioan, parametro-fitxategi baten izena 4. argumentu gisa pasatzen da. Parametro-fitxategi bat erabili daiteke CML_explorer kontrolatzeko."
 
 #: plug-ins/common/cml-explorer.c:534
 msgid "Parameter URI"
@@ -1810,7 +1810,7 @@ msgid ""
 "other directions than vertical. Bending usually changes the size of the "
 "handled layer. This plug-in sets the offsets of the handled layer to keep "
 "its center at the same position."
-msgstr ""
+msgstr "Plugin honek geruza aktiboa tolesten du. Hautapen bat badago, hautapen mugikor batera kopiatuko da eta kurba-tolesduraren distortsioa hautapen mugikorrean egingo da. 'lan_egin_kopian' parametroa EGIA bada, kurba-tolesduraren distortsioa geruza aktiboaren (edo hautapen mugikorraren) kopia batean egingo da. Goiko eta beheko ertzak 2 spline-kurben forman tolestuko dira. Bi kurbak (goikoa eta behekoa) 17 puntura arte erabiliz edo 257 U balio erabiliz zehazten dira 'kurba_mota == 1' bada (marrazte librearen moduan). Biraketa 0 ez bada, geruza tolesdura-eragiketaren aurretik biratuko da eta ondoren jatorrizkora itzuliko da. Horrela, bertikala ez den beste noranzko batzuetan ere tolestu daiteke. Tolesteak normalean geruzaren tamaina aldatzen du. Plugin honek geruzaren desplazamenduak ezartzen ditu erdigunea toki berean mantendu dadin."
 
 #: plug-ins/common/curve-bend.c:442
 msgid "Rotat_e"
@@ -1863,55 +1863,55 @@ msgstr "Aukeratu ertz-lerro aktiboa hura editatzeko"
 
 #: plug-ins/common/curve-bend.c:480 plug-ins/common/curve-bend.c:481
 msgid "Argc upper point X"
-msgstr ""
+msgstr "Argc goiko X puntua"
 
 #: plug-ins/common/curve-bend.c:486
 msgid "Upper point X"
-msgstr ""
+msgstr "Goiko X puntua"
 
 #: plug-ins/common/curve-bend.c:487 plug-ins/common/curve-bend.c:511
 msgid "Array of 17 x point coords { 0.0 <= x <= 1.0 or -1 for unused point }"
-msgstr ""
+msgstr "17 X puntu-koordenaturen matrizea { 0.0 <= x <= 1.0 edo -1 erabili gabeko puntuentzat }"
 
 #: plug-ins/common/curve-bend.c:492 plug-ins/common/curve-bend.c:493
 msgid "Argc upper point Y"
-msgstr ""
+msgstr "Argc goiko Y puntua"
 
 #: plug-ins/common/curve-bend.c:498
 msgid "Upper point Y"
-msgstr ""
+msgstr "Goiko Y puntua"
 
 #: plug-ins/common/curve-bend.c:499 plug-ins/common/curve-bend.c:523
 msgid "Array of 17 y point coords { 0.0 <= y <= 1.0 or -1 for unused point }"
-msgstr ""
+msgstr "17 Y puntu-koordenaturen matrizea { 0.0 <= x <= 1.0 edo -1 erabili gabeko puntuentzat }"
 
 #: plug-ins/common/curve-bend.c:504 plug-ins/common/curve-bend.c:505
 msgid "Argc lower point X"
-msgstr ""
+msgstr "Argc beheko X puntua"
 
 #: plug-ins/common/curve-bend.c:510
 msgid "Lower point X"
-msgstr ""
+msgstr "Beheko X puntua"
 
 #: plug-ins/common/curve-bend.c:516 plug-ins/common/curve-bend.c:517
 msgid "Argc lower point Y"
-msgstr ""
+msgstr "Argc beheko Y puntua"
 
 #: plug-ins/common/curve-bend.c:522
 msgid "Lower point Y"
-msgstr ""
+msgstr "Beheko Y puntua"
 
 #: plug-ins/common/curve-bend.c:528
 msgid "Upper val Y"
-msgstr ""
+msgstr "Goiko Y balioa"
 
 #: plug-ins/common/curve-bend.c:529 plug-ins/common/curve-bend.c:535
 msgid "Array of 256 y freehand coords { 0 <= y <= 255 }"
-msgstr ""
+msgstr "Marrazte libreko 256 Y koordenaturen matrizea { 0 <= y <= 255 }"
 
 #: plug-ins/common/curve-bend.c:534
 msgid "Lower val Y"
-msgstr ""
+msgstr "Beheko Y balioa"
 
 #: plug-ins/common/curve-bend.c:540
 msgid "Bent layer"
@@ -3181,7 +3181,7 @@ msgstr "Altuera ez dator bat"
 #: plug-ins/common/file-gih.c:525
 #, c-format
 msgid "Displays as a %d × %d grid on each layer"
-msgstr ""
+msgstr "Geruza bakoitzean %d × %d sareta gisa bistaratzen du"
 
 #: plug-ins/common/file-gih.c:711
 msgid "Ranks:"
@@ -3666,7 +3666,7 @@ msgstr "Irudiak JPEG XL fitxategi-formatuan gordetzen ditu"
 
 #: plug-ins/common/file-jpegxl.c:194
 msgid "Co_mpression/maxError"
-msgstr "Ko_nprexioa/gehErrorea"
+msgstr "Ko_npresioa/gehErrorea"
 
 #: plug-ins/common/file-jpegxl.c:195
 msgid ""
@@ -4297,7 +4297,8 @@ msgstr "PIX formatuak ez du onartzen geruza bat baino gehiago."
 msgid ""
 "Error trying to open temporary JPEG file '%s' for Esm Software pix loading: "
 "%s"
-msgstr ""
+msgstr "Errorea aldi baterako '%s' JPEG fitxategia irekitzean Esm Softwarearen pixel-kargarako: "
+"%s"
 
 #: plug-ins/common/file-pix.c:606
 msgid "Invalid Esm Software PIX file"
@@ -4798,11 +4799,11 @@ msgstr "PostScript 2. maila"
 
 #: plug-ins/common/file-ps.c:546
 msgid "FALSE: PostScript Level 1, TRUE: PostScript Level 2"
-msgstr ""
+msgstr "FALTSUA: PostScript 1. maila, EGIA: PostScript 2. maila"
 
 #: plug-ins/common/file-ps.c:551
 msgid "Encapsula_ted PostScript"
-msgstr ""
+msgstr "PostScript _kapsulatua"
 
 #: plug-ins/common/file-ps.c:552
 msgid "FALSE: PostScript, TRUE: Encapsulated PostScript"
@@ -5166,7 +5167,7 @@ msgstr "Datu _mota"
 msgid ""
 "Data type used to represent pixel values { RAW_ENCODING_UNSIGNED (0), "
 "RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }"
-msgstr ""
+msgstr "Pixel-balioak ordezkatzeko erabilitako datu mota { RAW_ENCODING_UNSIGNED (0), RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }"
 
 #: plug-ins/common/file-raw-data.c:381
 msgid "Endianness"
@@ -6142,14 +6143,16 @@ msgstr "Ezin da XWD goiburua irakurri '%s'(e)tik"
 msgid ""
 "'%s':\n"
 "Seek error"
-msgstr ""
+msgstr "'%s':\n"
+"Bilatze-errorea"
 
 #: plug-ins/common/file-xwd.c:551
 #, c-format
 msgid ""
 "'%s':\n"
 "Illegal number of colormap entries: %u"
-msgstr ""
+msgstr "'%s':\n"
+"Kolore-maparen sarreren legez kanpoko zenbakia: %u"
 
 #: plug-ins/common/file-xwd.c:562
 #, c-format
@@ -6187,7 +6190,7 @@ msgstr "Errorea '%s' esportatzean: "
 #: plug-ins/common/file-xwd.c:961 plug-ins/common/file-xwd.c:995
 #: plug-ins/common/file-xwd.c:1032
 msgid "Seek error"
-msgstr ""
+msgstr "Bilatze-errorea"
 
 #: plug-ins/common/file-xwd.c:1884 plug-ins/common/file-xwd.c:2135
 #: plug-ins/common/file-xwd.c:2330
@@ -6225,51 +6228,51 @@ msgstr "Irudi-_tartea"
 
 #: plug-ins/common/film.c:252
 msgid "The spacing between 2 images, as fraction of the strip height"
-msgstr ""
+msgstr "Bi irudiren arteko tartea, zatiaren altueraren zatiki gisa"
 
 #: plug-ins/common/film.c:257
 msgid "Hole offse_t"
-msgstr ""
+msgstr "Zuloaren _desplazamendua"
 
 #: plug-ins/common/film.c:258
 msgid "The offset from the edge of film, as fraction of the strip height"
-msgstr ""
+msgstr "Filmaren ertzaren desplazamendua, zatiaren altueraren zatiki gisa"
 
 #: plug-ins/common/film.c:263
 msgid "Hole _width"
-msgstr ""
+msgstr "Z_ulo-zabalera"
 
 #: plug-ins/common/film.c:264
 msgid "The width of the holes, as fraction of the strip height"
-msgstr ""
+msgstr "Zuloen zabalera, zatiaren altueraren zatiki gisa"
 
 #: plug-ins/common/film.c:269
 msgid "Hole hei_ght"
-msgstr ""
+msgstr "_Zulo-altuera"
 
 #: plug-ins/common/film.c:270
 msgid "The height of the holes, as fraction of the strip height"
-msgstr ""
+msgstr "Zuloen altuera, zatiaren altueraren zatiki gisa"
 
 #: plug-ins/common/film.c:275
 msgid "Hole _distance"
-msgstr ""
+msgstr "Zuloen _distantzia"
 
 #: plug-ins/common/film.c:276
 msgid "The distance between holes, as fraction of the strip height"
-msgstr ""
+msgstr "Zuloen arteko distantzea, zatiaren altueraren zatiki gisa"
 
 #: plug-ins/common/film.c:281
 msgid "_Number height"
-msgstr ""
+msgstr "_Zenbakien altuera"
 
 #: plug-ins/common/film.c:282
 msgid "The height of drawn numbers, as fraction of the strip height"
-msgstr ""
+msgstr "Marraztutako zenbakien altuera, zatiaren altueraren zatiki gisa"
 
 #: plug-ins/common/film.c:289
 msgid "F_it height to images"
-msgstr ""
+msgstr "_Doitu altuera irudiei"
 
 #: plug-ins/common/film.c:365
 msgid "Composing images"
@@ -6804,11 +6807,11 @@ msgstr "Koloreztatu irudia, irudiaren lagin bat gida gisa erabiliz"
 
 #: plug-ins/common/sample-colorize.c:340
 msgid "Sample drawable"
-msgstr ""
+msgstr "Marrazgai-lagina"
 
 #: plug-ins/common/sample-colorize.c:341
 msgid "Sample drawable (should be of Type RGB or RGBA)"
-msgstr ""
+msgstr "Marrazgai-lagina (RGB edo RGBA motakoa izan behar du)"
 
 #: plug-ins/common/sample-colorize.c:346
 msgid "Hold _intensity"
@@ -6816,7 +6819,7 @@ msgstr "Eutsi _intentsitateari"
 
 #: plug-ins/common/sample-colorize.c:347
 msgid "Hold brightness intensity levels"
-msgstr ""
+msgstr "Eutsi distiraren intentsitate-mailei"
 
 #: plug-ins/common/sample-colorize.c:352
 msgid "Original i_ntensity"
@@ -6826,7 +6829,7 @@ msgstr "Jatorriko i_ntentsitatea"
 msgid ""
 "TRUE: hold brightness of original intensity levels, FALSE: Hold Intensity of "
 "input levels"
-msgstr ""
+msgstr "EGIA: eutsi jatorrizko intentsitate-mailen distira, FALTSUA: eutsi sarrerako mailen intentsitateari"
 
 #: plug-ins/common/sample-colorize.c:360
 msgid "Us_e subcolors"
@@ -6836,17 +6839,17 @@ msgstr "Er_abili azpikoloreak"
 msgid ""
 "TRUE: Use all subcolors of same intensity, FALSE: Use only one color per "
 "intensity"
-msgstr ""
+msgstr "EGIA: Erabili intentsitate bereko azpikolore guztiak, FALTSUA: Erabili kolore bakarra intentsitateko"
 
 #: plug-ins/common/sample-colorize.c:367
 msgid "Smooth sam_ples"
-msgstr ""
+msgstr "Leunu _laginak"
 
 #: plug-ins/common/sample-colorize.c:368
 msgid ""
 "TRUE: guess samplecolors for the missing intensity values, FALSE: use only "
 "colors found in the sample"
-msgstr ""
+msgstr "EGIA: Asmatu lagin-koloreak falta diren intentsitate-balioetatik, FALTSUA: erabili laginean dauden koloreak soilik"
 
 #: plug-ins/common/sample-colorize.c:375
 msgid "_Low"
@@ -8859,7 +8862,7 @@ msgid ""
 "Sub-sampling type { 0 == 4:2:0 (chroma quartered), 1 == 4:2:2 (chroma halved "
 "horizontally), 2 == 4:4:4 (best quality), 3 == 4:4:0 (chroma halved "
 "vertically)"
-msgstr ""
+msgstr "Azpilaginketaren mota { 0 == 4:2:0 (chroma lautan zatituta), 1 == 4:2:2 (chroma horizontalean erdibituta), 2 == 4:4:4 (kalitate onena), 3 == 4:4:0 (chroma bertikalean erdibituta)"
 
 #: plug-ins/file-jpeg/jpeg.c:247
 msgid "Baseline"
@@ -8869,7 +8872,7 @@ msgstr "Oinarri-lerroa"
 msgid ""
 "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
 "decoders)"
-msgstr ""
+msgstr "Behartu oinarri-lerroko JPEG bat sortzea (deskodetzaile guztiek ezin dituzte oinarri-lerrokoak ez diren JPEGak irakurri)"
 
 #: plug-ins/file-jpeg/jpeg.c:254
 msgid "Inter_val (MCU rows):"
@@ -8885,7 +8888,7 @@ msgstr "_DCT metodoa"
 
 #: plug-ins/file-jpeg/jpeg.c:262
 msgid "DCT method to use { INTEGER (0), FIXED (1), FLOAT (2) }"
-msgstr ""
+msgstr "Erabiliko den DCT metodoa { INTEGER (0), FIXED (1), FLOAT (2) }"
 
 #: plug-ins/file-jpeg/jpeg.c:270
 msgid "_Use quality settings from original image"
@@ -8904,11 +8907,11 @@ msgstr "Erakutsi _aurrebista irudi-leihoan"
 
 #: plug-ins/file-jpeg/jpeg.c:294
 msgid "Creates a temporary layer with an export preview"
-msgstr ""
+msgstr "Esportazioaren aurrebista duen aldi baterako geruza bat sortzen du"
 
 #: plug-ins/file-jpeg/jpeg.c:298
 msgid "Use _arithmetic coding"
-msgstr ""
+msgstr "Erabili _kodeketa aritmetikoa"
 
 #: plug-ins/file-jpeg/jpeg.c:299
 msgid "Older software may have trouble opening arithmetic-coded images"
@@ -9361,21 +9364,21 @@ msgstr "TIFF"
 
 #: plug-ins/file-tiff/file-tiff.c:214
 msgid "Export in _BigTIFF variant file format"
-msgstr ""
+msgstr "Esportatu _BigTIFF aldaerako fitxategi-formatuan"
 
 #: plug-ins/file-tiff/file-tiff.c:215
 msgid ""
 "The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
 "4GiB files and bigger"
-msgstr ""
+msgstr "BigTIFF aldaerako fitxategi-formatuak 64 bit-eko desplazamenduak erabiltzen ditu eta, beraz, 4 GiB edo gehiago dituzten fitxategiak ere onartzen ditu"
 
 #: plug-ins/file-tiff/file-tiff.c:221
 msgid "Co_mpression"
-msgstr ""
+msgstr "Ko_npresioa"
 
 #: plug-ins/file-tiff/file-tiff.c:222
 msgid "Compression type"
-msgstr ""
+msgstr "Konpresio mota"
 
 #: plug-ins/file-tiff/file-tiff.c:224
 msgid "LZW"
@@ -9405,31 +9408,31 @@ msgstr ""
 
 #: plug-ins/file-tiff/file-tiff.c:242
 msgid "Create a CMYK TIFF image using the soft-proofing color profile"
-msgstr ""
+msgstr "Sortu CMYK TIFF irudi bat pantailako probetarako kolore-profila erabiliz"
 
 #: plug-ins/file-tiff/file-tiff.c:247
 msgid "Save La_yers"
-msgstr ""
+msgstr "Gorde _geruzak"
 
 #: plug-ins/file-tiff/file-tiff.c:248
 msgid "Save Layers"
-msgstr ""
+msgstr "Gorde geruzak"
 
 #: plug-ins/file-tiff/file-tiff.c:253
 msgid "Crop L_ayers"
-msgstr ""
+msgstr "_Moztu geruzak"
 
 #: plug-ins/file-tiff/file-tiff.c:254
 msgid "Crop Layers"
-msgstr ""
+msgstr "Moztu geruzak"
 
 #: plug-ins/file-tiff/file-tiff.c:259
 msgid "Save _GeoTIFF data"
-msgstr ""
+msgstr "Gorde G_eoTIFF datuak"
 
 #: plug-ins/file-tiff/file-tiff.c:260
 msgid "Save GeoTIFF data"
-msgstr ""
+msgstr "Gorde GeoTIFF datuak"
 
 #: plug-ins/file-tiff/file-tiff.c:446
 msgid "\"Save layers\" option not set while trying to export multiple layers."
@@ -10204,7 +10207,7 @@ msgstr "_Parametroak"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:760
 msgid "_Colors"
-msgstr ""
+msgstr "_Koloreak"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:762
 msgid "_Fractals"
@@ -10248,7 +10251,7 @@ msgstr "FractalExplorer gradientea"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1036
 msgid "Presets"
-msgstr ""
+msgstr "Aurrezarpenak"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1455
 #, c-format
@@ -10283,11 +10286,11 @@ msgstr "Fraktala errendatzearen artea"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:257
 msgid "Fr_actal Type"
-msgstr ""
+msgstr "F_raktal mota"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:258
 msgid "Type of Fractal Pattern"
-msgstr ""
+msgstr "Eredu fraktalaren mota"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:259
 msgid "Mandelbrot"
@@ -10311,7 +10314,7 @@ msgstr "Armiarma"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:265
 msgid "Man-o-War"
-msgstr ""
+msgstr "Man-o-War"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:266
 msgid "Lambda"
@@ -10323,7 +10326,7 @@ msgstr "Sierpinski"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:273
 msgid "Lef_t"
-msgstr ""
+msgstr "E_zkerra"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:274
 msgid "X min fractal image delimiter"
@@ -10332,7 +10335,7 @@ msgstr ""
 #: plug-ins/fractal-explorer/fractal-explorer.c:279
 #: plug-ins/map-object/map-object-main.c:382
 msgid "Ri_ght"
-msgstr ""
+msgstr "E_skuina"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:280
 msgid "X max fractal image delimiter"
@@ -10341,7 +10344,7 @@ msgstr ""
 #: plug-ins/fractal-explorer/fractal-explorer.c:285
 #: plug-ins/map-object/map-object-main.c:367
 msgid "To_p"
-msgstr ""
+msgstr "_Goia"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:286
 msgid "Y min fractal image delimiter"
@@ -10350,7 +10353,7 @@ msgstr ""
 #: plug-ins/fractal-explorer/fractal-explorer.c:291
 #: plug-ins/map-object/map-object-main.c:411
 msgid "_Bottom"
-msgstr ""
+msgstr "_Behea"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:292
 msgid "Y max fractal image delimiter"
@@ -10358,69 +10361,69 @@ msgstr ""
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:297
 msgid "Iteratio_ns"
-msgstr ""
+msgstr "_Iterazioak"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:298
 msgid "Iteration value"
-msgstr ""
+msgstr "Iterazio-balioa"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:303
 msgid "C_X"
-msgstr ""
+msgstr "C_X"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:304
 msgid "cx value"
-msgstr ""
+msgstr "cx balioa"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:309
 msgid "C_Y"
-msgstr ""
+msgstr "C_Y"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:310
 msgid "cy value"
-msgstr ""
+msgstr "cy balioa"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:315
 msgid "Color mode"
-msgstr ""
+msgstr "Kolore modua"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:316
 msgid ""
 "0: Apply colormap as specified by the parameters below; 1: Apply active "
 "gradient to final image"
-msgstr ""
+msgstr "0: Aplikatu kolore-mapa beheko parametroen arabera; 1: Aplikatu gradiente aktiboa azken irudiari"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:322
 msgid "Red stretch"
-msgstr ""
+msgstr "Gorriaren tiratzea"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:323
 msgid "Red stretching factor"
-msgstr ""
+msgstr "Gorrira tiratzeko faktorea"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:328
 msgid "Green stretch"
-msgstr ""
+msgstr "Berdearen tiratzea"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:329
 msgid "Green stretching factor"
-msgstr ""
+msgstr "Berdera tiratzeko faktorea"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:334
 msgid "Blue stretch"
-msgstr ""
+msgstr "Urdinaren tiratzea"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:335
 msgid "Blue stretching factor"
-msgstr ""
+msgstr "Urdinera tiratzeko faktorea"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:340
 msgid "_Red"
-msgstr ""
+msgstr "_Gorria"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:341
 msgid "Red application mode"
-msgstr ""
+msgstr "Gorria aplikatzeko modua"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:342
 #: plug-ins/fractal-explorer/fractal-explorer.c:352
@@ -10430,31 +10433,31 @@ msgstr "Sinua"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:350
 msgid "_Green"
-msgstr ""
+msgstr "Be_rdea"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:351
 msgid "Green application mode"
-msgstr ""
+msgstr "Berdea aplikatzeko modua"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:360
 msgid "_Blue"
-msgstr ""
+msgstr "_Urdina"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:361
 msgid "Blue application mode"
-msgstr ""
+msgstr "Urdina aplikatzeko modua"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:370
 msgid "In_version"
-msgstr ""
+msgstr "Al_derantzikatzea"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:388
 msgid "_Number of colors"
-msgstr ""
+msgstr "Kolore ko_purua"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:389
 msgid "Number of Colors for mapping"
-msgstr ""
+msgstr "Mapatzeko kolore kopurua"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:493
 msgid "Rendering fractal"
@@ -10930,7 +10933,7 @@ msgstr "Errorea '%s' aldi baterako fitxategia irekitzean parasitoa kargatzeko: %
 
 #: plug-ins/gfig/gfig-menu.ui:6 plug-ins/imagemap/imap-menu.ui:5
 msgid "File"
-msgstr ""
+msgstr "Fitxategia"
 
 #: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1522
 #: plug-ins/imagemap/imap-menu.ui:8
@@ -10945,11 +10948,11 @@ msgstr "Gorde"
 #: plug-ins/gfig/gfig-menu.ui:16 plug-ins/help-browser/help-menu.ui:58
 #: plug-ins/imagemap/imap-menu.ui:22
 msgid "Close"
-msgstr ""
+msgstr "Itxi"
 
 #: plug-ins/gfig/gfig-menu.ui:21 plug-ins/imagemap/imap-menu.ui:32
 msgid "Edit"
-msgstr ""
+msgstr "Editatu"
 
 #: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:956
 #: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1530
@@ -10969,11 +10972,11 @@ msgstr "Hobespenak"
 
 #: plug-ins/gfig/gfig-menu.ui:124
 msgid "Top"
-msgstr ""
+msgstr "Goia"
 
 #: plug-ins/gfig/gfig-menu.ui:128
 msgid "Bottom"
-msgstr ""
+msgstr "Behea"
 
 #: plug-ins/gimpressionist/brush.c:261
 msgid "Can only save drawables!"
@@ -11151,15 +11154,15 @@ msgstr "Egin eragiketa artistiko batzuk"
 
 #: plug-ins/gimpressionist/gimp.c:127
 msgid "Performs various artistic operations on an image"
-msgstr ""
+msgstr "Zenbait eragiketa artistiko aplikatzen ditu irudi batean"
 
 #: plug-ins/gimpressionist/gimp.c:136
 msgid "Preset"
-msgstr ""
+msgstr "Aurrezarpena"
 
 #: plug-ins/gimpressionist/gimp.c:137
 msgid "Preset Name"
-msgstr ""
+msgstr "Aurrezarpenaren izena"
 
 #: plug-ins/gimpressionist/gimp.c:451
 msgid "Painting"
@@ -11942,7 +11945,7 @@ msgstr "_Aurrekoa"
 
 #: plug-ins/help-browser/help-menu.ui:24
 msgid "_Home"
-msgstr ""
+msgstr "_Nagusia"
 
 #: plug-ins/help-browser/help-menu.ui:28
 msgid "C_opy location"
@@ -12464,11 +12467,11 @@ msgstr "ALT te_stua: (hautazkoa)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:299
 msgid "Access _Key: (optional)"
-msgstr ""
+msgstr "Sarbide-_tekla: (aukerakoa)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:302
 msgid "Ta_b Index: (optional)"
-msgstr ""
+msgstr "_Fitxa-indizea: (aukerakoa)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:305
 msgid "_Link"
@@ -12947,44 +12950,44 @@ msgstr "Aplikatu hainbat argi-efektu irudi bati"
 
 #: plug-ins/lighting/lighting-main.c:136
 msgid "B_ump map image"
-msgstr ""
+msgstr "E_rliebe-maparen irudia"
 
 #: plug-ins/lighting/lighting-main.c:137
 msgid "Bumpmap drawable (set to NULL if disabled)"
-msgstr ""
+msgstr "Erliebe-maparen marrazgaia (ezarri NULUA desgaituta badago)"
 
 #: plug-ins/lighting/lighting-main.c:142
 msgid "Enviro_nment map image"
-msgstr ""
+msgstr "_Ingurune-maparen iruai"
 
 #: plug-ins/lighting/lighting-main.c:143
 msgid "Environmentmap drawable (set to NULL if disabled)"
-msgstr ""
+msgstr "Ingurune-maparen marrazgaia (ezarri NULUA desgaituta badago)"
 
 #: plug-ins/lighting/lighting-main.c:149
 msgid "Enable bump mappi_ng"
-msgstr ""
+msgstr "Gaitu _erliebe-mapa"
 
 #: plug-ins/lighting/lighting-main.c:150
 msgid "Enable bumpmapping"
-msgstr ""
+msgstr "Gaitu erliebe-mapa"
 
 #: plug-ins/lighting/lighting-main.c:155
 msgid "Enable en_vironment mapping"
-msgstr ""
+msgstr "Gaitu i_ngurune-mapa"
 
 #: plug-ins/lighting/lighting-main.c:156 plug-ins/lighting/lighting-main.c:291
 msgid "Enable envmapping"
-msgstr ""
+msgstr "Gaitu ingurune-mapa"
 
 #: plug-ins/lighting/lighting-main.c:161
 msgid "Cur_ve"
-msgstr ""
+msgstr "K_urba"
 
 #: plug-ins/lighting/lighting-main.c:162
 #: plug-ins/map-object/map-object-main.c:136
 msgid "Type of mapping"
-msgstr ""
+msgstr "Mapatze mota"
 
 #: plug-ins/lighting/lighting-main.c:164
 msgid "Logarithmic"
@@ -12992,19 +12995,19 @@ msgstr "Logaritmikoa"
 
 #: plug-ins/lighting/lighting-main.c:172
 msgid "Ma_ximum height"
-msgstr ""
+msgstr "Ge_hieneko altuera"
 
 #: plug-ins/lighting/lighting-main.c:173
 msgid "The maximum height of the bumpmap"
-msgstr ""
+msgstr "Erliebe-maparen gehieneko altuera"
 
 #: plug-ins/lighting/lighting-main.c:178
 msgid "Active"
-msgstr ""
+msgstr "Aktiboa"
 
 #: plug-ins/lighting/lighting-main.c:179
 msgid "Which light is active in the GUI"
-msgstr ""
+msgstr "Zein argi egongo den aktibo erabiltzaile-interfaze grafikoan"
 
 #: plug-ins/lighting/lighting-main.c:180
 msgid "Light 1"
@@ -13036,13 +13039,13 @@ msgstr "Isolatu"
 
 #: plug-ins/lighting/lighting-main.c:192
 msgid "Only show the active lighting in the preview"
-msgstr ""
+msgstr "Erakutsi aurrebistaren argiztatze aktiboa soilik"
 
 #: plug-ins/lighting/lighting-main.c:199 plug-ins/lighting/lighting-main.c:322
 #: plug-ins/lighting/lighting-main.c:381 plug-ins/lighting/lighting-main.c:440
 #: plug-ins/lighting/lighting-main.c:499 plug-ins/lighting/lighting-main.c:558
 msgid "Type of light source"
-msgstr ""
+msgstr "Argi-iturriaren mota"
 
 #: plug-ins/lighting/lighting-main.c:201 plug-ins/lighting/lighting-main.c:324
 #: plug-ins/lighting/lighting-main.c:383 plug-ins/lighting/lighting-main.c:442
@@ -13155,11 +13158,11 @@ msgstr "Argiaren Z norabidea"
 
 #: plug-ins/lighting/lighting-main.c:257
 msgid "Ambient intensity"
-msgstr ""
+msgstr "Giro-intentsitatea"
 
 #: plug-ins/lighting/lighting-main.c:258
 msgid "Material ambient intensity (Glowing)"
-msgstr ""
+msgstr "Materialaren giro-intentsitatea (dirdira)"
 
 #: plug-ins/lighting/lighting-main.c:264
 msgid "Diffuse intensity"
@@ -13247,12 +13250,12 @@ msgstr "Argi-ezarpenak"
 #: plug-ins/lighting/lighting-ui.c:325
 #, c-format
 msgid "light-color-label-%d"
-msgstr ""
+msgstr "argi-kolore-etiketa-%d"
 
 #: plug-ins/lighting/lighting-ui.c:330
 #, c-format
 msgid "light-position-label-%d"
-msgstr ""
+msgstr "argi-kokapen-etiketa-%d"
 
 #: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:520
 #: plug-ins/map-object/map-object-ui.c:718
@@ -13263,7 +13266,7 @@ msgstr "Posizioa"
 #: plug-ins/lighting/lighting-ui.c:335
 #, c-format
 msgid "light-direction-label-%d"
-msgstr ""
+msgstr "argi-norabide-etiketa-%d"
 
 #: plug-ins/lighting/lighting-ui.c:337
 msgid "Direction"
@@ -13276,16 +13279,16 @@ msgstr "Noranzkoa"
 #: plug-ins/lighting/lighting-ui.c:431
 #, c-format
 msgid "notify::%s"
-msgstr ""
+msgstr "jakinarazi::%s"
 
 #: plug-ins/lighting/lighting-ui.c:375
 #, c-format
 msgid "light-position-vbox-%d"
-msgstr ""
+msgstr "argi-kokapen-koadrob-%d"
 
 #: plug-ins/lighting/lighting-ui.c:478
 msgid "Lighting presets: "
-msgstr ""
+msgstr "Argiztatzearen aurrezarpenak: "
 
 #: plug-ins/lighting/lighting-ui.c:511
 msgid "Material Properties"
@@ -13302,7 +13305,7 @@ msgstr "Kargatu argiztatze-aurrezarpena"
 #: plug-ins/lighting/lighting-ui.c:1049
 #, c-format
 msgid "light-hbox-%d"
-msgstr ""
+msgstr "argi-koadrob-%d"
 
 #: plug-ins/map-object/map-object-apply.c:241
 #: plug-ins/map-object/map-object-apply.c:266
@@ -13334,7 +13337,7 @@ msgstr "Egin irudiaren mapa objektu batean (planoa, esfera, kutxa edo zilindroa)
 
 #: plug-ins/map-object/map-object-main.c:135
 msgid "Map _to"
-msgstr ""
+msgstr "Mapatu _hemen"
 
 #: plug-ins/map-object/map-object-main.c:137
 msgid "Plane"
@@ -13455,11 +13458,11 @@ msgstr "Argi-iturriaren _kolorea"
 
 #: plug-ins/map-object/map-object-main.c:274
 msgid "Ambie_nt"
-msgstr ""
+msgstr "Gir_oa"
 
 #: plug-ins/map-object/map-object-main.c:275
 msgid "Material ambient intensity"
-msgstr ""
+msgstr "Materialaren giro-intentsitatea"
 
 #: plug-ins/map-object/map-object-main.c:280
 msgid "D_iffuse"
@@ -13479,23 +13482,23 @@ msgstr ""
 
 #: plug-ins/map-object/map-object-main.c:293
 msgid "Spec_ular"
-msgstr ""
+msgstr "_Ispilua"
 
 #: plug-ins/map-object/map-object-main.c:294
 msgid "Material specular reflectivity"
-msgstr ""
+msgstr "Materialaren ispilu-islagarritasuna"
 
 #: plug-ins/map-object/map-object-main.c:299
 msgid "Highligh_t"
-msgstr ""
+msgstr "Na_barmentzea"
 
 #: plug-ins/map-object/map-object-main.c:300
 msgid "Material highlight (note, it's exponential)"
-msgstr ""
+msgstr "Materialaren nabarmentzea (oharra, esponentziala da)"
 
 #: plug-ins/map-object/map-object-main.c:306
 msgid "Antialia_sing"
-msgstr ""
+msgstr "_Antialiasinga"
 
 #: plug-ins/map-object/map-object-main.c:311
 msgid "_Depth"
@@ -13515,7 +13518,7 @@ msgstr "Gelditu pixel-desberdintasunak balio hau baino txikiagoak direnean"
 
 #: plug-ins/map-object/map-object-main.c:324
 msgid "_Tile source image"
-msgstr ""
+msgstr "_Mosaikoa sorburuko irudiarekin"
 
 #: plug-ins/map-object/map-object-main.c:325
 msgid "Tile source image"
@@ -13543,43 +13546,43 @@ msgstr "Esferaren erradioa"
 
 #: plug-ins/map-object/map-object-main.c:356
 msgid "Fro_nt"
-msgstr ""
+msgstr "A_urrea"
 
 #: plug-ins/map-object/map-object-main.c:357
 msgid "Box front face (set this to NULL if not used)"
-msgstr ""
+msgstr "Kutxaren aurreko aurpegia (ezarri NULUA erabiliko ez bada)"
 
 #: plug-ins/map-object/map-object-main.c:362
 msgid "B_ack"
-msgstr ""
+msgstr "At_zea"
 
 #: plug-ins/map-object/map-object-main.c:363
 msgid "Box back face"
-msgstr ""
+msgstr "Kutxaren atzeko aurpegia"
 
 #: plug-ins/map-object/map-object-main.c:368
 msgid "Box top face"
-msgstr ""
+msgstr "Kutxaren goiko aurpegia"
 
 #: plug-ins/map-object/map-object-main.c:372
 msgid "Bo_ttom"
-msgstr ""
+msgstr "_Behea"
 
 #: plug-ins/map-object/map-object-main.c:373
 msgid "Box bottom face"
-msgstr ""
+msgstr "Kutxaren beheko aurpegia"
 
 #: plug-ins/map-object/map-object-main.c:377
 msgid "Le_ft"
-msgstr ""
+msgstr "E_zkerra"
 
 #: plug-ins/map-object/map-object-main.c:378
 msgid "Box left face"
-msgstr ""
+msgstr "Kutxaren ezkerreko aurpegia"
 
 #: plug-ins/map-object/map-object-main.c:383
 msgid "Box right face"
-msgstr ""
+msgstr "Kutxaren eskuineko aurpegia"
 
 #: plug-ins/map-object/map-object-main.c:388
 msgid "Scale X"
@@ -13607,15 +13610,15 @@ msgstr "Koadroaren Z tamaina"
 
 #: plug-ins/map-object/map-object-main.c:405
 msgid "_Top"
-msgstr ""
+msgstr "_Goia"
 
 #: plug-ins/map-object/map-object-main.c:406
 msgid "Cylinder top face (set this to NULL if not used)"
-msgstr ""
+msgstr "Zilindroaren goiko aurpegia (ezarri NULUA erabiliko ez bada)"
 
 #: plug-ins/map-object/map-object-main.c:412
 msgid "Cylinder bottom face (set this to NULL if not used)"
-msgstr ""
+msgstr "Zilindroaren beheko aurpegia (ezarri NULUA erabiliko ez bada)"
 
 #: plug-ins/map-object/map-object-main.c:418
 msgid "Cylinder radius"
@@ -13623,7 +13626,7 @@ msgstr "Zilindroaren erradioa"
 
 #: plug-ins/map-object/map-object-main.c:422
 msgid "Cylin_der length"
-msgstr ""
+msgstr "Zilindroaren _luzera"
 
 #: plug-ins/map-object/map-object-main.c:423
 msgid "Cylinder length"
@@ -14238,7 +14241,7 @@ msgstr "Kapturatutako elementuen koponsatua"
 
 #: plug-ins/metadata/metadata-tags.c:194
 msgid "Algorithmically-enhanced media"
-msgstr ""
+msgstr "Algoritmikoki hobetutako multimedia"
 
 #: plug-ins/metadata/metadata-tags.c:195
 msgid "Data-driven media"
@@ -14643,7 +14646,7 @@ msgstr "Sortu irudia pantailako area batetik"
 
 #: plug-ins/screenshot/screenshot.c:164
 msgid "Shoot _area"
-msgstr ""
+msgstr "Kapturaren _area"
 
 #: plug-ins/screenshot/screenshot.c:224
 msgid "Color _Profile"
@@ -14655,7 +14658,7 @@ msgstr "GDK hasieratzeak huts egin du."
 
 #: plug-ins/screenshot/screenshot.c:302
 msgid "No screenshot backends available."
-msgstr ""
+msgstr "Ez dago pantaila-argazkirako motorrik."
 
 #: plug-ins/screenshot/screenshot.c:504
 #: plug-ins/screenshot/screenshot-x11.c:443
@@ -14722,7 +14725,7 @@ msgstr "Hautapen bat bide bihurtzen du"
 
 #: plug-ins/selection-to-path/selection-to-path.c:152
 msgid "_Align Threshold"
-msgstr ""
+msgstr "_Lerrokatu atalasea"
 
 #: plug-ins/selection-to-path/selection-to-path.c:153
 msgid "If two endpoints are closer than this, they are made to be equal."
@@ -14730,7 +14733,7 @@ msgstr "Bi amaiera-puntu hau baino hurbilago badaude, berdintzat hartuko dira."
 
 #: plug-ins/selection-to-path/selection-to-path.c:159
 msgid "Corner Al_ways Threshold"
-msgstr ""
+msgstr "_Beti izkinaratzeko atalasea"
 
 #: plug-ins/selection-to-path/selection-to-path.c:160
 msgid ""
@@ -14741,7 +14744,7 @@ msgstr "Puntu batek eta bere aurrekoek eta ondorengoek definitutako angelu bat h
 
 #: plug-ins/selection-to-path/selection-to-path.c:168
 msgid "Corner _Surround"
-msgstr ""
+msgstr "Izkina-in_gurua"
 
 #: plug-ins/selection-to-path/selection-to-path.c:169
 msgid ""
@@ -14750,7 +14753,7 @@ msgstr "Puntu bat izkina den ala ez zehazteko erabiliko den puntu kopurua."
 
 #: plug-ins/selection-to-path/selection-to-path.c:175
 msgid "Cor_ner Threshold"
-msgstr ""
+msgstr "Izkina-atala_sea"
 
 #: plug-ins/selection-to-path/selection-to-path.c:176
 msgid ""
@@ -14760,7 +14763,7 @@ msgstr "Puntu batek eta bere aurrekoek eta ondorengoek hau baino txikiagoa den a
 
 #: plug-ins/selection-to-path/selection-to-path.c:182
 msgid "Error Thres_hold"
-msgstr ""
+msgstr "E_rrore-atalasea"
 
 #: plug-ins/selection-to-path/selection-to-path.c:183
 msgid ""
@@ -14770,7 +14773,7 @@ msgstr "Spline doitu bat onargarria ez izateko errore-maila. Edozein pixel balio
 
 #: plug-ins/selection-to-path/selection-to-path.c:190
 msgid "_Filter Alternative Surround"
-msgstr ""
+msgstr "Iragazkiaren inguru _alternatiboa"
 
 #: plug-ins/selection-to-path/selection-to-path.c:191
 msgid "A second number of adjacent points to consider when filtering."
@@ -14778,18 +14781,18 @@ msgstr "Iragazkia aplikatzean, kontuan hartuko diren alboko puntuen bigarren kop
 
 #: plug-ins/selection-to-path/selection-to-path.c:197
 msgid "Filter E_psilon"
-msgstr ""
+msgstr "Iragazkiaren e_psilona"
 
 #: plug-ins/selection-to-path/selection-to-path.c:198
 msgid ""
 "If the angles between the vectors produced by filter_surround and "
 "filter_alternative_surround points differ by more than this, use the one "
 "from filter_alternative_surround."
-msgstr "iragazki_ingurua eta iragazkiaren_inguru_alternatiboa aukerek sortutako bektoreen arteko angeluek balio hau baino gehiagotan desberdintzen badira, erabili iragazkiaren_inguru_alternatiboa aukerakoa."
+msgstr "iragazki_ingurua eta 'iragazkiaren_inguru_alternatiboa' aukerek sortutako bektoreen arteko angeluek balio hau baino gehiagotan desberdintzen badira, erabili 'iragazkiaren_inguru_alternatiboa' aukerakoa."
 
 #: plug-ins/selection-to-path/selection-to-path.c:206
 msgid "Filter Iteration Co_unt"
-msgstr ""
+msgstr "Iragazkiaren iterazio-_zenbaketa"
 
 #: plug-ins/selection-to-path/selection-to-path.c:207
 msgid ""
@@ -14801,7 +14804,7 @@ msgstr "Jatorrizko datu-puntuak leuntzeko aldi kopurua.  Zenbaki hau asko handit
 
 #: plug-ins/selection-to-path/selection-to-path.c:216
 msgid "Filt_er Percent"
-msgstr ""
+msgstr "Iragazkiaren e_hunekoa"
 
 #: plug-ins/selection-to-path/selection-to-path.c:217
 msgid ""
@@ -14810,7 +14813,7 @@ msgstr "Puntu berria ekoizteko, erabili puntu zaharra gehi albokoak, honek marka
 
 #: plug-ins/selection-to-path/selection-to-path.c:223
 msgid "Filter Secondar_y Surround"
-msgstr ""
+msgstr "Iragazkiaren _bigarren mailako ingurua"
 
 #: plug-ins/selection-to-path/selection-to-path.c:224
 msgid ""
@@ -14820,7 +14823,7 @@ msgstr "Kontuan hartuko diren alboko puntuen kopurua 'iragazki_ingurua' puntuek 
 
 #: plug-ins/selection-to-path/selection-to-path.c:230
 msgid "Filter Surroun_d"
-msgstr ""
+msgstr "Iragazki-ing_urua"
 
 #: plug-ins/selection-to-path/selection-to-path.c:231
 msgid "Number of adjacent points to consider when filtering."
@@ -14828,7 +14831,7 @@ msgstr "Kontuan hartuko diren alboko puntuen kopurua iragazkia aplikatzean."
 
 #: plug-ins/selection-to-path/selection-to-path.c:236
 msgid "_Keep Knees"
-msgstr ""
+msgstr "Mantendu u_kondoak"
 
 #: plug-ins/selection-to-path/selection-to-path.c:237
 msgid "Says whether or not to remove 'knee' points after finding the outline."
@@ -14836,7 +14839,7 @@ msgstr "Eskema aurkitu ondoren 'ukondo' puntuak kenduko diren ala ez esaten du."
 
 #: plug-ins/selection-to-path/selection-to-path.c:243
 msgid "_Line Reversion Threshold"
-msgstr ""
+msgstr "_Marra alderantzikatzeko atalasea"
 
 #: plug-ins/selection-to-path/selection-to-path.c:244
 msgid ""
@@ -14848,7 +14851,7 @@ msgstr "Spline bat hau baino hurbilago badago marra zuzen batetik, marra zuzen m
 
 #: plug-ins/selection-to-path/selection-to-path.c:253
 msgid "L_ine Threshold"
-msgstr ""
+msgstr "M_arra-atalasea"
 
 #: plug-ins/selection-to-path/selection-to-path.c:254
 msgid ""
@@ -14858,7 +14861,7 @@ msgstr "Zenbat pixel (batez beste) aldendu daitekeen spline bat bere amaiera-pun
 
 #: plug-ins/selection-to-path/selection-to-path.c:261
 msgid "Reparametri_ze Improvement"
-msgstr ""
+msgstr "Berriro parametri_zatzearen hobekuntza"
 
 #: plug-ins/selection-to-path/selection-to-path.c:262
 msgid ""
@@ -14868,7 +14871,7 @@ msgstr "Berriro parametrizatzeak ez badu doiketa hobetzen ehuneko honetan, geldi
 
 #: plug-ins/selection-to-path/selection-to-path.c:269
 msgid "Repara_metrize Threshold"
-msgstr ""
+msgstr "Berriro para_metrizatzeko atalasea"
 
 #: plug-ins/selection-to-path/selection-to-path.c:270
 msgid ""
@@ -14881,7 +14884,7 @@ msgstr "Zein errore kantitatearekin berriro parametrizatzeak merezi ez duen.  Ho
 
 #: plug-ins/selection-to-path/selection-to-path.c:280
 msgid "Subdi_vide Search"
-msgstr ""
+msgstr "_Azpibanatze-bilaketa"
 
 #: plug-ins/selection-to-path/selection-to-path.c:281
 msgid ""
@@ -14891,7 +14894,7 @@ msgstr "Punturik okerrenetik urruneneko kurba-ehunekoa, azpibanatzeko tokirik ho
 
 #: plug-ins/selection-to-path/selection-to-path.c:287
 msgid "Su_bdivide Surround"
-msgstr ""
+msgstr "Az_pibanatze-ingurua"
 
 #: plug-ins/selection-to-path/selection-to-path.c:288
 msgid ""
@@ -14901,7 +14904,7 @@ msgstr "Emandako puntu bat azpibanaketa egiteko toki hobeagoa dela erabakitzeko 
 
 #: plug-ins/selection-to-path/selection-to-path.c:294
 msgid "Subdivide Th_reshold"
-msgstr ""
+msgstr "Azp_ibanatze-atalasea"
 
 #: plug-ins/selection-to-path/selection-to-path.c:295
 msgid ""
@@ -14911,7 +14914,7 @@ msgstr "Puntu bat zenbat pixeletan aldendu daitekeen marra zuzen batetik, eta ha
 
 #: plug-ins/selection-to-path/selection-to-path.c:302
 msgid "_Tangent Surround"
-msgstr ""
+msgstr "_Tangente-ingurua"
 
 #: plug-ins/selection-to-path/selection-to-path.c:303
 msgid ""
