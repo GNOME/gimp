@@ -210,12 +210,21 @@ toolbutton button.flat {
   color: @fg-color;
 }
 
-toolbutton button.flat:checked {
+toolbutton button.flat:hover {
   background: @selected-color;
 }
 
-toolbutton button.flat:hover {
+toolbutton button.flat:checked,
+toolbutton button.flat:checked:hover {
   background: @selected-color;
+}
+
+/* Visual indication of clicking an already
+ * selected button 
+ */
+toolbutton button.flat:checked:active:hover {
+  background-color: @hover-color;
+  border-color: @hover-color;
 }
 
 /* Color the toolbox Wilber icon */
