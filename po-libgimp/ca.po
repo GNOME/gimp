@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-15 14:41+0000\n"
-"PO-Revision-Date: 2023-07-25 21:55+0100\n"
+"POT-Creation-Date: 2023-10-21 01:50+0000\n"
+"PO-Revision-Date: 2023-10-22 21:55+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -27,9 +27,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 1.8.12\n"
 
-#: libgimp/gimpbrushselectbutton.c:130 libgimp/gimppatternselectbutton.c:142
+#: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
 msgstr "_Navega..."
+
+#: libgimp/gimpdrawablechooser.c:238
+msgid "Browse..."
+msgstr "Navega..."
 
 #: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
 #, c-format
@@ -51,7 +55,8 @@ msgstr ""
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr ""
-"El connector %s només pot gestionar les capes com a fotogrames d'una animació"
+"El connector %s només pot gestionar les capes com a fotogrames d'una "
+"animació"
 
 #: libgimp/gimpexport.c:351 libgimp/gimpexport.c:360
 msgid "Save as Animation"
@@ -171,7 +176,7 @@ msgid "Confirm Save"
 msgstr "Confirmeu què voleu desar"
 
 #: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:571
+#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -193,7 +198,7 @@ msgid "_Ignore"
 msgstr "_Ignora"
 
 #: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
-#: libgimp/gimpproceduredialog.c:277
+#: libgimp/gimpproceduredialog.c:296 libgimp/gimpproceduredialog.c:569
 msgid "_Export"
 msgstr "_Exporta"
 
@@ -201,11 +206,11 @@ msgstr "_Exporta"
 #: libgimp/gimpexport.c:659
 #, c-format
 msgid ""
-"Your image should be exported before it can be saved as %s for the following "
-"reasons:"
+"Your image should be exported before it can be saved as %s for the following"
+" reasons:"
 msgstr ""
-"Pels motius següents, heu d'exportar la imatge abans de poder-la desar com a "
-"%s:"
+"Pels motius següents, heu d'exportar la imatge abans de poder-la desar com a"
+" %s:"
 
 #. the footline
 #: libgimp/gimpexport.c:733
@@ -232,12 +237,12 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:397
+#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:398
 #, c-format
 msgid "Export Image as %s"
 msgstr "Exporta la imatge com a %s"
 
-#: libgimp/gimpimagemetadata.c:284
+#: libgimp/gimpimagemetadata.c:283
 msgid "Background"
 msgstr "Fons"
 
@@ -245,23 +250,36 @@ msgstr "Fons"
 msgid "GIMP"
 msgstr "GIMP"
 
+#: libgimp/gimploadprocedure.c:267
+msgid ""
+"This file loading plug-in returned SUCCESS as a status without an image. "
+"This is a bug in the plug-in code. Contact the plug-in developer."
+msgstr ""
+"Aquest connector de càrrega de fitxers ha retornat èxit com a estat sense "
+"imatge. Això és un error en el codi del connector. Poseu-vos en contacte "
+"amb el desenvolupador del connector."
+
+#: libgimp/gimpparamspecs-desc.c:54
+msgid "Allowed values:"
+msgstr "Valors permesos:"
+
 #. procedure executed successfully
-#: libgimp/gimppdb.c:552
+#: libgimp/gimppdb.c:336
 msgid "success"
 msgstr "èxit"
 
 #. procedure execution failed
-#: libgimp/gimppdb.c:556
+#: libgimp/gimppdb.c:340
 msgid "execution error"
 msgstr "error d'execució"
 
 #. procedure called incorrectly
-#: libgimp/gimppdb.c:560
+#: libgimp/gimppdb.c:344
 msgid "calling error"
 msgstr "error en la crida"
 
 #. procedure execution cancelled
-#: libgimp/gimppdb.c:564
+#: libgimp/gimppdb.c:348
 msgid "cancelled"
 msgstr "cancel·lada"
 
@@ -353,12 +371,12 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d procediment es correspon amb la vostra cerca"
 msgstr[1] "%d procediments es corresponen amb la vostra cerca"
 
-#: libgimp/gimpprocedure.c:1925
+#: libgimp/gimpprocedure.c:2050
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "El procediment «%s» no ha tornat cap valor de retorn"
 
-#: libgimp/gimpprocedure.c:2016
+#: libgimp/gimpprocedure.c:2177
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -367,41 +385,41 @@ msgstr ""
 "El procediment «%s» ha tornat un tipus de valor incorrecte per al valor de "
 "retorn «%s» (#%d). Esperat %s, obtingut %s."
 
-#: libgimp/gimpprocedure.c:2028
+#: libgimp/gimpprocedure.c:2189
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' "
+"(#%d). Expected %s, got %s."
 msgstr ""
 "El procediment «%s» s'ha cridat amb un tipus de valor erroni per a "
 "l'argument «%s» (#%d). Esperat %s, obtingut %s."
 
-#: libgimp/gimpprocedure.c:2063
+#: libgimp/gimpprocedure.c:2224
 #, c-format
 msgid ""
-"Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
-"is out of range."
+"Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value"
+" is out of range."
 msgstr ""
 "El procediment «%s» ha tornat «%s» com a valor de retorn «%s» (#%d, tipus "
 "%s). Aquest valor està fora de l'interval."
 
-#: libgimp/gimpprocedure.c:2077
+#: libgimp/gimpprocedure.c:2238
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
-"El procediment «%s» s'ha cridat amb un valor «%s» per a l'argument "
-"«%s» (#%d, tipus %s). Aquest valor està fora de l'interval."
+"El procediment «%s» s'ha cridat amb un valor «%s» per a l'argument «%s» "
+"(#%d, tipus %s). Aquest valor està fora de l'interval."
 
-#: libgimp/gimpprocedure.c:2121
+#: libgimp/gimpprocedure.c:2282
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "El procediment «%s» ha tornat una cadena UTF-8 no vàlida per a l'argument "
 "«%s»."
 
-#: libgimp/gimpprocedure.c:2131
+#: libgimp/gimpprocedure.c:2292
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -410,63 +428,63 @@ msgstr ""
 "El procediment «%s» s'ha cridat amb una cadena UTF-8 no vàlida per a "
 "l'argument «%s»."
 
-#: libgimp/gimpproceduredialog.c:275
+#: libgimp/gimpproceduredialog.c:294 libgimp/gimpproceduredialog.c:567
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Obre"
 
-#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:572
-#: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libgimp/gimpproceduredialog.c:298 libgimp/gimpproceduredialog.c:571
+#: libgimpwidgets/gimpcolorbutton.c:558 libgimpwidgets/gimpfileentry.c:467
+#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
+#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_D'acord"
 
-#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:570
+#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:556
 msgid "_Reset"
 msgstr "_Restableix"
 
-#: libgimp/gimpproceduredialog.c:339
+#: libgimp/gimpproceduredialog.c:359
 msgid "_Load Saved Settings"
 msgstr "_Carrega els paràmetres desats"
 
-#: libgimp/gimpproceduredialog.c:340
+#: libgimp/gimpproceduredialog.c:360
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Carrega la configuració desada amb el botó «Desa la configuració»"
 
-#: libgimp/gimpproceduredialog.c:352
+#: libgimp/gimpproceduredialog.c:372
 msgid "_Save Settings"
 msgstr "_Desa la configuració"
 
-#: libgimp/gimpproceduredialog.c:353
+#: libgimp/gimpproceduredialog.c:373
 msgid "Store current settings for later reuse"
 msgstr "Desa la configuració actual per a usar-la després"
 
-#: libgimp/gimpproceduredialog.c:734
+#: libgimp/gimpproceduredialog.c:784
 msgid "Brush Chooser"
 msgstr "Selector de pinzells"
 
-#: libgimp/gimpproceduredialog.c:738
+#: libgimp/gimpproceduredialog.c:788
 msgid "Font Chooser"
 msgstr "Selector de tipus de lletra"
 
-#: libgimp/gimpproceduredialog.c:742
+#: libgimp/gimpproceduredialog.c:792
 msgid "Gradient Chooser"
 msgstr "Selector de degradat"
 
-#: libgimp/gimpproceduredialog.c:746
+#: libgimp/gimpproceduredialog.c:796
 msgid "Palette Chooser"
 msgstr "Selector de paleta"
 
-#: libgimp/gimpproceduredialog.c:750
+#: libgimp/gimpproceduredialog.c:800
 msgid "Pattern Chooser"
 msgstr "Selector de patró"
 
-#: libgimp/gimpproceduredialog.c:2128
+#: libgimp/gimpproceduredialog.c:2492
 msgid "Reset to _Initial Values"
 msgstr "Restable_ix els valors inicials"
 
-#: libgimp/gimpproceduredialog.c:2137
+#: libgimp/gimpproceduredialog.c:2501
 msgid "Reset to _Factory Defaults"
 msgstr "_Restableix els valors predeterminats de fàbrica"
 
@@ -505,6 +523,79 @@ msgstr "Data:"
 #: libgimp/gimpprocview.c:269
 msgid "Copyright:"
 msgstr "Copyright:"
+
+#: libgimp/gimppropwidgets.c:191
+#, c-format
+msgid "Choose layer: %s"
+msgstr "Trieu la capa: %s"
+
+#: libgimp/gimppropwidgets.c:193
+#, c-format
+msgid "Choose channel: %s"
+msgstr "Trieu el canal: %s"
+
+#: libgimp/gimppropwidgets.c:195
+#, c-format
+msgid "Choose drawable: %s"
+msgstr "Trieu el dibuixable: %s"
+
+#: libgimp/gimpsaveprocedure.c:467
+msgid "Save _Exif"
+msgstr "Desa _Exif"
+
+#: libgimp/gimpsaveprocedure.c:468
+msgid "Save Exif (Exchangeable image file format) metadata"
+msgstr "Desa les metadades Exif (format de fitxer d'imatge intercanviable)"
+
+#: libgimp/gimpsaveprocedure.c:473
+msgid "Save _IPTC"
+msgstr "Desa _IPTC"
+
+#: libgimp/gimpsaveprocedure.c:474
+msgid "Save IPTC (International Press Telecommunications Council) metadata"
+msgstr ""
+"Desa les metadades IPTC (Consell Internacional de Telecomunicacions de "
+"Premsa)"
+
+#: libgimp/gimpsaveprocedure.c:479
+msgid "Save _XMP"
+msgstr "Desa _XMP"
+
+#: libgimp/gimpsaveprocedure.c:480
+msgid "Save XMP (Extensible Metadata Platform) metadata"
+msgstr "Desa les metadades XMP (Plataforma de metadades extensible)"
+
+#: libgimp/gimpsaveprocedure.c:485
+msgid "Save color _profile"
+msgstr "D_esa el perfil de color"
+
+#: libgimp/gimpsaveprocedure.c:486
+msgid "Save the ICC color profile as metadata"
+msgstr "Desa el perfil de color ICC com a metadades"
+
+#: libgimp/gimpsaveprocedure.c:491
+msgid "Save _thumbnail"
+msgstr "Desa _la miniatura"
+
+#: libgimp/gimpsaveprocedure.c:492
+msgid "Save a smaller representation of the image as metadata"
+msgstr "Desa una representació més petita de la imatge com a metadades"
+
+#: libgimp/gimpsaveprocedure.c:498
+msgid "Save c_omment"
+msgstr "Desa el c_omentari"
+
+#: libgimp/gimpsaveprocedure.c:499
+msgid "Save a comment as metadata"
+msgstr "_Desa un comentari com a metadades"
+
+#: libgimp/gimpsaveprocedure.c:503
+msgid "Comment"
+msgstr "Comentari"
+
+#: libgimp/gimpsaveprocedure.c:504
+msgid "Image comment"
+msgstr "Comentari de la imatge"
 
 #: libgimp/gimpsaveproceduredialog.c:166
 msgid "Metadata"
@@ -892,7 +983,8 @@ msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (to antihorari)"
 
-#. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
+#. Translators: this is an abbreviated version of "HSV (counter-clockwise
+#. hue)".
 #. Keep it short.
 #: libgimpbase/gimpbaseenums.c:619
 msgctxt "gradient-segment-color"
@@ -1031,7 +1123,8 @@ msgctxt "gradient-type"
 msgid "Spiral (counter-clockwise)"
 msgstr "Espiral (antihorari)"
 
-#. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
+#. Translators: this is an abbreviated version of "Spiral (counter-
+#. clockwise)".
 #. Keep it short.
 #: libgimpbase/gimpbaseenums.c:727
 msgctxt "gradient-type"
@@ -1582,34 +1675,34 @@ msgstr "L'anàlisi de les dades IPTC ha fallat."
 msgid "Parsing XMP data failed."
 msgstr "L'anàlisi de les dades XMP ha fallat."
 
-#: libgimpbase/gimputils.c:219 libgimpbase/gimputils.c:224
+#: libgimpbase/gimputils.c:220 libgimpbase/gimputils.c:225
 msgid "(invalid UTF-8 string)"
 msgstr "(la cadena de text UTF-8 no és vàlida)"
 
-#: libgimpbase/gimputils.c:394
+#: libgimpbase/gimputils.c:395
 msgid "File path is NULL"
 msgstr "El camí dels fitxers és nul"
 
-#: libgimpbase/gimputils.c:402
+#: libgimpbase/gimputils.c:403
 msgid "Error converting UTF-8 filename to wide char"
 msgstr ""
 "S'ha produït un error en convertir un nom de fitxer UTF-8 a un de caràcter "
 "ample"
 
-#: libgimpbase/gimputils.c:410
+#: libgimpbase/gimputils.c:411
 msgid "ILCreateFromPath() failed"
 msgstr "IL Crea des d'un camí() ha fallat"
 
-#: libgimpbase/gimputils.c:449
+#: libgimpbase/gimputils.c:450
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "No es pot convertir «%s» en un NSURL vàlida."
 
-#: libgimpbase/gimputils.c:477
+#: libgimpbase/gimputils.c:478
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "La connexió a org.freedesktop.FileManager1 ha fallat:"
 
-#: libgimpbase/gimputils.c:501
+#: libgimpbase/gimputils.c:502
 msgid "Calling ShowItems failed: "
 msgstr "Ha fallat la crida per a mostrar els articles:"
 
@@ -1702,8 +1795,8 @@ msgid ""
 "fallback."
 msgstr ""
 "Si es marca l'opció, el GIMP intentarà fer servir el perfil de color del "
-"sistema. El perfil configurat del monitor només es faria servir com a última "
-"opció."
+"sistema. El perfil configurat del monitor només es faria servir com a última"
+" opció."
 
 #: libgimpconfig/gimpcolorconfig.c:63
 msgid ""
@@ -1715,11 +1808,11 @@ msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:67
 msgid ""
-"The preferred grayscale working space color profile. It will be offered next "
-"to the built-in grayscale profile when a color profile can be chosen."
+"The preferred grayscale working space color profile. It will be offered next"
+" to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
-"El perfil preferit del color del lloc de treball en escala de grisos. Estarà "
-"al costat del perfil en escala de grisos creat, quan un perfil del color "
+"El perfil preferit del color del lloc de treball en escala de grisos. Estarà"
+" al costat del perfil en escala de grisos creat, quan un perfil del color "
 "pugui ser elegit."
 
 #: libgimpconfig/gimpcolorconfig.c:71
@@ -1729,8 +1822,8 @@ msgstr "El perfil de color CMYK emprat per a convertir entre RGB i CMYK."
 #: libgimpconfig/gimpcolorconfig.c:74
 msgid ""
 "The color profile to use for soft-proofing from your image's color space to "
-"some other color space, including soft-proofing to a printer or other output "
-"device profile."
+"some other color space, including soft-proofing to a printer or other output"
+" device profile."
 msgstr ""
 "El perfil del color que s'utilitza per a les proves en pantalla va des de "
 "l'espai del color de la imatge a algun altre espai del color, incloent-hi "
@@ -1758,7 +1851,8 @@ msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:90
 msgid ""
-"When disabled, image display might be of better quality at the cost of speed."
+"When disabled, image display might be of better quality at the cost of "
+"speed."
 msgstr ""
 "Quan es desactiva, la visualització de la imatge podria ser de millor "
 "qualitat a costa de la velocitat."
@@ -1766,8 +1860,8 @@ msgstr ""
 #: libgimpconfig/gimpcolorconfig.c:94
 msgid ""
 "How colors are converted from your image's color space to the output "
-"simulation device (usually your monitor). Try them all and choose what looks "
-"the best."
+"simulation device (usually your monitor). Try them all and choose what looks"
+" the best."
 msgstr ""
 "Com es converteixen els colors des de l'espai del color de la imatge pel "
 "dispositiu de simulació de sortida (en general el monitor). Proveu-los tots "
@@ -1782,7 +1876,8 @@ msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:103
 msgid ""
-"When disabled, soft-proofing might be of better quality at the cost of speed."
+"When disabled, soft-proofing might be of better quality at the cost of "
+"speed."
 msgstr ""
 "Quan es desactiva, les proves en pantalla podrien ser de millor qualitat a "
 "costa de la velocitat."
@@ -1797,21 +1892,22 @@ msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
-msgstr "El color utilitzat per a marcar els colors que estan fora de la gamma."
+msgstr ""
+"El color utilitzat per a marcar els colors que estan fora de la gamma."
 
 #: libgimpconfig/gimpcolorconfig.c:114
 msgid ""
 "When enabled, set the color scales to display 0...255 instead of percentages"
 msgstr ""
-"Quan està habilitat, estableix les escales de color per a mostrar 0...255 en "
-"lloc de percentatges"
+"Quan està habilitat, estableix les escales de color per a mostrar 0...255 en"
+" lloc de percentatges"
 
 #: libgimpconfig/gimpcolorconfig.c:118
 msgid ""
 "When enabled, set the color scales to display HSV blend mode instead of LCh"
 msgstr ""
-"Quan està habilitat, estableix les escales de color per a mostrar el mode de "
-"barreja HSV en lloc de LCh"
+"Quan està habilitat, estableix les escales de color per a mostrar el mode de"
+" barreja HSV en lloc de LCh"
 
 #: libgimpconfig/gimpcolorconfig.c:222
 msgid "Mode of operation"
@@ -1896,29 +1992,29 @@ msgstr "El perfil del color «%s» no és pel lloc del color gris."
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "El perfil de color «%s» no és pel lloc del color CMYK."
 
-#: libgimpconfig/gimpconfig-deserialize.c:117
+#: libgimpconfig/gimpconfig-deserialize.c:120
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "el valor per a l'element %s no és una cadena de text UTF-8 vàlida"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:485
+#: libgimpconfig/gimpconfig-deserialize.c:492
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "S'esperava «yes» o «no» per a l'element booleà %s. Però s'ha trobat «%s»"
 
-#: libgimpconfig/gimpconfig-deserialize.c:600
+#: libgimpconfig/gimpconfig-deserialize.c:607
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "El valor «%s» no és vàlid per a l'element %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:615
+#: libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "El valor «%ld» no és vàlid per a l'element %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:684
+#: libgimpconfig/gimpconfig-deserialize.c:691
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "en analitzar l'element «%s»: %s"
@@ -2023,10 +2119,26 @@ msgstr "No s'ha pogut crear la miniatura de %s: %s"
 msgid "_Search:"
 msgstr "_Cerca:"
 
+#: libgimpwidgets/gimpcolorbutton.c:380
+msgid "_Foreground Color"
+msgstr "Color de _primer pla"
+
+#: libgimpwidgets/gimpcolorbutton.c:381
+msgid "_Background Color"
+msgstr "Color de _fons"
+
+#: libgimpwidgets/gimpcolorbutton.c:386
+msgid "Blac_k"
+msgstr "_Negre"
+
+#: libgimpwidgets/gimpcolorbutton.c:387
+msgid "_White"
+msgstr "_Blanc"
+
 #: libgimpwidgets/gimpcolorhexentry.c:134
 msgid ""
-"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
-"CSS color names."
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts"
+" CSS color names."
 msgstr ""
 "Notació hexadecimal utilitzada en l'HTML i el CSS. També permet utilitzar "
 "els noms de colors del CSS."
@@ -2101,7 +2213,7 @@ msgstr "Antic:"
 msgid "HTML _notation:"
 msgstr "_Notació HTML:"
 
-#: libgimpwidgets/gimpdialog.c:177
+#: libgimpwidgets/gimpdialog.c:196
 msgid "_Help"
 msgstr "_Ajuda"
 
@@ -2144,7 +2256,6 @@ msgstr "Premeu F1 per a més ajuda"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
-#.
 #: libgimpwidgets/gimpintstore.c:255
 msgid "(Empty)"
 msgstr "(Buit)"
@@ -2161,8 +2272,25 @@ msgstr "Mebibyte"
 msgid "Gibibyte"
 msgstr "Gibibyte"
 
+#: libgimpwidgets/gimppageselector.c:185
+msgid "N Pages"
+msgstr "N pàgines"
+
+#: libgimpwidgets/gimppageselector.c:186
+msgid "The number of pages to open"
+msgstr "El nombre de pàgines a obrir"
+
+#: libgimpwidgets/gimppageselector.c:199
+msgid "Target"
+msgstr "Destí"
+
+#: libgimpwidgets/gimppageselector.c:200
+msgid "the target to open to"
+msgstr "destí en el qual obrir"
+
 #. Count label
-#: libgimpwidgets/gimppageselector.c:283 libgimpwidgets/gimppageselector.c:1079
+#: libgimpwidgets/gimppageselector.c:283
+#: libgimpwidgets/gimppageselector.c:1079
 msgid "Nothing selected"
 msgstr "Selecció buida"
 
@@ -2220,8 +2348,8 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
-"Feu clic en el comptagotes, després feu clic en un color a la pantalla per a "
-"seleccionar-lo."
+"Feu clic en el comptagotes, després feu clic en un color a la pantalla per a"
+" seleccionar-lo."
 
 #  toggle button to (des)activate the instant preview
 #. toggle button to (de)activate the instant preview
@@ -2245,7 +2373,7 @@ msgstr "Color personalitzat 1 de les comprovacions"
 msgid "Custom Checks Color 2"
 msgstr "Color personalitzat 2 de les comprovacions"
 
-#: libgimpwidgets/gimppropwidgets.c:2475
+#: libgimpwidgets/gimppropwidgets.c:2474
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2864,75 +2992,78 @@ msgstr "Canvia les pretransformacions en parades"
 msgid "Aces RRT"
 msgstr "Aces RRT"
 
-#: modules/display-filter-clip-warning.c:121
+#. Translators: "Clip Warning" is the name of a (color) display filter
+#. * that highlights pixels outside of the color space range.
+#. * Shown as a label description.
+#: modules/display-filter-clip-warning.c:124
 msgid "Clip warning color display filter"
 msgstr "Filtre de visualització del color d'avís del clip"
 
-#: modules/display-filter-clip-warning.c:158
+#: modules/display-filter-clip-warning.c:161
 msgid "Show shadows"
 msgstr "Mostra les ombres"
 
-#: modules/display-filter-clip-warning.c:159
+#: modules/display-filter-clip-warning.c:162
 msgid "Show warning for pixels with a negative component"
 msgstr "Mostra l'avís per a píxels amb un component negatiu"
 
-#: modules/display-filter-clip-warning.c:165
+#: modules/display-filter-clip-warning.c:168
 msgid "Shadows color"
 msgstr "Mostra el color"
 
-#: modules/display-filter-clip-warning.c:166
+#: modules/display-filter-clip-warning.c:169
 msgid "Shadows warning color"
 msgstr "Color d'advertència d'ombres"
 
-#: modules/display-filter-clip-warning.c:178
+#: modules/display-filter-clip-warning.c:181
 msgid "Show highlights"
 msgstr "Mostra els ressaltats"
 
-#: modules/display-filter-clip-warning.c:179
+#: modules/display-filter-clip-warning.c:182
 msgid "Show warning for pixels with a component greater than one"
 msgstr "Mostra l'avís per a píxels amb un component superior a un"
 
-#: modules/display-filter-clip-warning.c:185
+#: modules/display-filter-clip-warning.c:188
 msgid "Highlights color"
 msgstr "Color ressaltat"
 
-#: modules/display-filter-clip-warning.c:186
+#: modules/display-filter-clip-warning.c:189
 msgid "Highlights warning color"
 msgstr "Ressalta el color d'avís"
 
-#: modules/display-filter-clip-warning.c:198
+#: modules/display-filter-clip-warning.c:201
 msgid "Show bogus"
 msgstr "Mostra falsa"
 
-#: modules/display-filter-clip-warning.c:199
+#: modules/display-filter-clip-warning.c:202
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr "Mostra l'avís per a píxels amb un component infinit o NaN"
 
-#: modules/display-filter-clip-warning.c:205
+#: modules/display-filter-clip-warning.c:208
 msgid "Bogus color"
 msgstr "Color fals"
 
-#: modules/display-filter-clip-warning.c:206
+#: modules/display-filter-clip-warning.c:209
 msgid "Bogus warning color"
 msgstr "Color d'avís fals"
 
-#: modules/display-filter-clip-warning.c:218
+#: modules/display-filter-clip-warning.c:221
 msgid "Include alpha component"
 msgstr "Inclou el component alfa"
 
-#: modules/display-filter-clip-warning.c:219
+#: modules/display-filter-clip-warning.c:222
 msgid "Include alpha component in the warning"
 msgstr "Inclou el component alfa en l'avís"
 
-#: modules/display-filter-clip-warning.c:225
+#: modules/display-filter-clip-warning.c:228
 msgid "Include transparent pixels"
 msgstr "Inclou píxels transparents"
 
-#: modules/display-filter-clip-warning.c:226
+#: modules/display-filter-clip-warning.c:229
 msgid "Include fully transparent pixels in the warning"
 msgstr "Inclou píxels totalment transparents en l'avís"
 
-#: modules/display-filter-clip-warning.c:230
+#: modules/display-filter-clip-warning.c:233
 msgid "Clip Warning"
 msgstr "Avís del clip"
 
@@ -3003,20 +3134,8 @@ msgstr "Contrast"
 #, c-format
 #~ msgid "Conversion of the filename to system codepage failed."
 #~ msgstr ""
-#~ "La conversió del nom del fitxer a la codificació de la pàgina del sistema "
-#~ "ha fallat."
-
-#~ msgid "_Foreground Color"
-#~ msgstr "Color de _primer pla"
-
-#~ msgid "_Background Color"
-#~ msgstr "Color de _fons"
-
-#~ msgid "Blac_k"
-#~ msgstr "_Negre"
-
-#~ msgid "_White"
-#~ msgstr "_Blanc"
+#~ "La conversió del nom del fitxer a la codificació de la pàgina del sistema ha"
+#~ " fallat."
 
 #~ msgid "_Load Defaults"
 #~ msgstr "Carrega els va_lors predeterminats"
@@ -3213,11 +3332,11 @@ msgstr "Contrast"
 #~ msgstr "Gestió del color"
 
 #~ msgid ""
-#~ "This filter takes its configuration from the Color Management section in "
-#~ "the Preferences dialog."
+#~ "This filter takes its configuration from the Color Management section in the"
+#~ " Preferences dialog."
 #~ msgstr ""
-#~ "Aquest filtre pren la seva configuració de la secció de «Gestió del "
-#~ "color» en el diàleg de «Preferències»."
+#~ "Aquest filtre pren la seva configuració de la secció de «Gestió del color» "
+#~ "en el diàleg de «Preferències»."
 
 #~ msgid "Mode of operation:"
 #~ msgstr "Mode d'operació:"
@@ -3291,15 +3410,14 @@ msgstr "Contrast"
 #~ msgstr "Cap"
 
 #~ msgid "The color profile used for simulating a printed version (softproof)."
-#~ msgstr ""
-#~ "El perfil de color emprat per simular una versió impresa (softproof)."
+#~ msgstr "El perfil de color emprat per simular una versió impresa (softproof)."
 
 #~ msgid "Sets how colors are mapped for your display."
 #~ msgstr "Estableix com estan mapats els colors en la vostra pantalla."
 
 #~ msgid ""
-#~ "Sets how colors are converted from RGB working space to the print "
-#~ "simulation device."
+#~ "Sets how colors are converted from RGB working space to the print simulation"
+#~ " device."
 #~ msgstr ""
 #~ "Estableix com es converteixen els colors RGB de l'espai de treball al "
 #~ "dispositiu de simulació d'impressió."
