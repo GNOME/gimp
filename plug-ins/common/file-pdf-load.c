@@ -64,7 +64,7 @@ typedef struct
 static PdfLoadVals loadvals =
 {
   GIMP_PAGE_SELECTOR_TARGET_LAYERS,
-  100.00,  /* resolution in dpi   */
+  300.00,  /* resolution in dpi */
   TRUE,    /* antialias */
   FALSE,   /* reverse_order */
   NULL,    /* pdf_password */
