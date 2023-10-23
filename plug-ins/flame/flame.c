@@ -51,13 +51,15 @@
 #define TABLE_DRAWABLE    (-4)
 
 
-struct
+typedef struct
 {
   gint          randomize;  /* superseded */
   gint          variation;
   gint32        cmap_drawable_id;
   control_point cp;
-} config;
+} FlameSettings;
+
+FlameSettings config;
 
 
 typedef struct _Flame      Flame;
@@ -88,26 +90,29 @@ static GimpValueArray * flame_run              (GimpProcedure        *procedure,
                                                 GimpImage            *image,
                                                 gint                  n_drawables,
                                                 GimpDrawable        **drawables,
-                                                GimpProcedureConfig  *config,
+                                                GimpProcedureConfig  *proc_config,
                                                 gpointer              run_data);
 
 static void             flame                  (GimpDrawable         *drawable);
 
-static gboolean         flame_dialog           (void);
-static void             set_flame_preview      (void);
+static gboolean         flame_dialog           (Flame                *flame,
+                                                GimpProcedure        *procedure,
+                                                GimpProcedureConfig  *proc_config);
+static void             set_flame_preview      (GimpProcedureConfig  *proc_config);
 static void             load_callback          (GtkWidget            *widget,
-                                                gpointer              data);
+                                                GimpProcedureConfig  *proc_config);
 static void             save_callback          (GtkWidget            *widget,
-                                                gpointer              data);
-static void             set_edit_preview       (void);
+                                                GimpProcedureConfig  *proc_config);
+static void             set_edit_preview       (GimpProcedureConfig  *proc_config);
 static void             combo_callback         (GtkWidget            *widget,
                                                 gpointer              data);
-static void             init_mutants           (void);
+static void             init_mutants           (GimpProcedureConfig  *proc_config);
 
-static void       flame_scale_entry_update_int (GimpLabelSpin        *entry,
-                                                gint                 *value);
 static void    flame_scale_entry_update_double (GimpLabelSpin        *entry,
                                                 gdouble              *value);
+
+static void          flame_update_settings_aux (GimpProcedureConfig  *proc_config);
+
 
 G_DEFINE_TYPE (Flame, flame, GIMP_TYPE_PLUG_IN)
 
@@ -185,13 +190,63 @@ flame_create_procedure (GimpPlugIn  *plug_in,
                                       "Scott Draves",
                                       "Scott Draves",
                                       "1997");
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "brightness",
+                            _("_Brightness"), NULL,
+                            0.0, 5.0, 1.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "contrast",
+                            _("Co_ntrast"), NULL,
+                            0.0, 5.0, 1.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "gamma",
+                            _("_Gamma"), NULL,
+                            1.0, 5.0, 1.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "sample-density",
+                            _("_Brightness"), NULL,
+                            0.1, 20.0, 5.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "spatial-oversample",
+                            _("Spa_tial oversample"), NULL,
+                            1, 4, 2.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "spatial-filter-radius",
+                            _("_Brightness"), NULL,
+                            0.0, 4.0, 0.75,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "zoom",
+                            _("_Zoom"), NULL,
+                            -4.0, 4.0, 0.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "x",
+                            _("_X"), NULL,
+                            -2.0, 2.0, 0.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "y",
+                            _("_Y"), NULL,
+                            -2.0, 2.0, 0.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_BYTES (procedure, "settings-data",
+                               "Settings data",
+                               "TODO: eventually we must implement proper args for every settings",
+                               GIMP_PARAM_READWRITE);
     }
 
   return procedure;
 }
 
 static void
-maybe_init_cp (void)
+maybe_init_cp (GimpProcedureConfig *proc_config)
 {
   if (0 == config.cp.spatial_oversample)
     {
@@ -217,6 +272,8 @@ maybe_init_cp (void)
       /* cheating */
       config.cp.width                 = 256;
       config.cp.height                = 256;
+
+      flame_update_settings_aux (proc_config);
     }
 }
 
@@ -230,6 +287,7 @@ flame_run (GimpProcedure        *procedure,
            gpointer              run_data)
 {
   GimpDrawable *drawable;
+  GBytes       *settings_bytes = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -257,15 +315,23 @@ flame_run (GimpProcedure        *procedure,
                                                NULL);
     }
 
-  gimp_get_data (PLUG_IN_PROC, &config);
-  maybe_init_cp ();
+  g_object_get (proc_config, "settings-data", &settings_bytes, NULL);
+  if (settings_bytes != NULL)
+    {
+      if (g_bytes_get_size (settings_bytes) == sizeof (FlameSettings))
+        config = *((FlameSettings *) g_bytes_get_data (settings_bytes, NULL));
+
+      g_bytes_unref (settings_bytes);
+    }
+
+  maybe_init_cp (proc_config);
 
   config.cp.width  = gimp_drawable_get_width  (drawable);
   config.cp.height = gimp_drawable_get_height (drawable);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! flame_dialog ())
+      if (! flame_dialog (FLAME (gimp_procedure_get_plug_in (procedure)), procedure, proc_config))
         {
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_CANCEL,
@@ -287,8 +353,6 @@ flame_run (GimpProcedure        *procedure,
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
-
-      gimp_set_data (PLUG_IN_PROC, &config, sizeof (config));
     }
   else
     {
@@ -296,6 +360,8 @@ flame_run (GimpProcedure        *procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
                                                NULL);
     }
+
+  flame_update_settings_aux (proc_config);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
@@ -449,9 +515,9 @@ flame (GimpDrawable *drawable)
 }
 
 static void
-file_response_callback (GtkFileChooser *chooser,
-                        gint            response_id,
-                        gpointer        data)
+file_response_callback (GtkFileChooser      *chooser,
+                        gint                 response_id,
+                        GimpProcedureConfig *proc_config)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -493,12 +559,27 @@ file_response_callback (GtkFileChooser *chooser,
           while (i < BUFFER_SIZE && ';' != c);
           parse_control_point (&ss, &config.cp);
           fclose (f);
-          /* i want to update the existing dialogue, but it's
-             too painful */
-          gimp_set_data (PLUG_IN_PROC, &config, sizeof (config));
-          /* gtk_widget_destroy(dialog); */
-          set_flame_preview ();
-          set_edit_preview ();
+
+          g_signal_handlers_block_by_func (proc_config,
+                                           G_CALLBACK (set_flame_preview),
+                                           NULL);
+          flame_update_settings_aux (proc_config);
+          g_object_set (proc_config,
+                        "x",                     config.cp.center[0],
+                        "y",                     config.cp.center[1],
+                        "spatial-oversample",    config.cp.spatial_oversample,
+                        "gamma",                 config.cp.gamma,
+                        "contrast",              config.cp.contrast,
+                        "brightness",            config.cp.brightness,
+                        "spatial-filter-radius", config.cp.spatial_filter_radius,
+                        "sample-density",        config.cp.sample_density,
+                        "zoom",                  config.cp.zoom,
+                        NULL);
+          g_signal_handlers_unblock_by_func (proc_config,
+                                           G_CALLBACK (set_flame_preview),
+                                           NULL);
+          set_flame_preview (proc_config);
+          set_edit_preview (proc_config);
         }
       else
         {
@@ -529,8 +610,9 @@ file_response_callback (GtkFileChooser *chooser,
 }
 
 static void
-make_file_dialog (const gchar *title,
-                  GtkWidget   *parent)
+make_file_dialog (const gchar         *title,
+                  GtkWidget           *parent,
+                  GimpProcedureConfig *proc_config)
 {
   file_dialog = gtk_file_chooser_dialog_new (title, GTK_WINDOW (parent),
                                              load_save ?
@@ -563,34 +645,53 @@ make_file_dialog (const gchar *title,
                     NULL);
   g_signal_connect (file_dialog, "response",
                     G_CALLBACK (file_response_callback),
-                    NULL);
+                    proc_config);
 }
 
 static void
-randomize_callback (GtkWidget *widget,
-                    gpointer   data)
+randomize_callback (GtkWidget           *widget,
+                    GimpProcedureConfig *proc_config)
 {
   random_control_point (&edit_cp, config.variation);
-  init_mutants ();
-  set_edit_preview ();
+  init_mutants (proc_config);
+  set_edit_preview (proc_config);
 }
 
 static void
-edit_response (GtkWidget *widget,
-               gint       response_id,
-               gpointer   data)
+edit_response (GtkWidget           *widget,
+               gint                 response_id,
+               GimpProcedureConfig *proc_config)
 {
   gtk_widget_hide (widget);
 
   if (response_id == GTK_RESPONSE_OK)
     {
       config.cp = edit_cp;
-      set_flame_preview ();
+
+      g_signal_handlers_block_by_func (proc_config,
+                                       G_CALLBACK (set_flame_preview),
+                                       NULL);
+      flame_update_settings_aux (proc_config);
+      g_object_set (proc_config,
+                    "x",                     config.cp.center[0],
+                    "y",                     config.cp.center[1],
+                    "spatial-oversample",    config.cp.spatial_oversample,
+                    "gamma",                 config.cp.gamma,
+                    "contrast",              config.cp.contrast,
+                    "brightness",            config.cp.brightness,
+                    "spatial-filter-radius", config.cp.spatial_filter_radius,
+                    "sample-density",        config.cp.sample_density,
+                    "zoom",                  config.cp.zoom,
+                    NULL);
+      g_signal_handlers_unblock_by_func (proc_config,
+                                         G_CALLBACK (set_flame_preview),
+                                         NULL);
+      set_flame_preview (proc_config);
     }
 }
 
 static void
-init_mutants (void)
+init_mutants (GimpProcedureConfig *proc_config)
 {
   gint i;
 
@@ -601,10 +702,12 @@ init_mutants (void)
       if (VARIATION_SAME == config.variation)
         copy_variation (mutants + i, &edit_cp);
     }
+
+  flame_update_settings_aux (proc_config);
 }
 
 static void
-set_edit_preview (void)
+set_edit_preview (GimpProcedureConfig *proc_config)
 {
   gint           i, j;
   guchar        *b;
@@ -617,7 +720,7 @@ set_edit_preview (void)
     return;
 
   b = g_new (guchar, nbytes);
-  maybe_init_cp ();
+  maybe_init_cp (proc_config);
   drawable_to_cmap (&edit_cp);
   for (i = 0; i < 3; i++)
     for (j = 0; j < 3; j++)
@@ -657,25 +760,30 @@ set_edit_preview (void)
                                 b,
                                 EDIT_PREVIEW_SIZE * 3);
       }
+
   g_free (b);
 }
 
 static void
-edit_preview_size_allocate (GtkWidget *widget)
+edit_preview_size_allocate (GtkWidget           *widget,
+                            GimpProcedureConfig *proc_config)
 {
-  set_edit_preview ();
+  set_edit_preview (proc_config);
 }
 
 static void
 preview_clicked (GtkWidget *widget,
                  gpointer   data)
 {
-  gint mut = GPOINTER_TO_INT (data);
+  GimpProcedureConfig *proc_config;
+  gint                 mut = GPOINTER_TO_INT (data);
+
+  proc_config = g_object_get_data (G_OBJECT (widget), "config");
 
   if (mut == 4)
     {
       control_point t = edit_cp;
-      init_mutants ();
+      init_mutants (proc_config);
       edit_cp = t;
     }
   else
@@ -687,14 +795,17 @@ preview_clicked (GtkWidget *widget,
       ends[1].time = 1.0;
       interpolate (ends, 2, pick_speed, &edit_cp);
     }
-  set_edit_preview ();
+  set_edit_preview (proc_config);
 }
 
 static void
 edit_callback (GtkWidget *widget,
                GtkWidget *parent)
 {
-  edit_cp = config.cp;
+  GimpProcedureConfig *proc_config;
+
+  proc_config = g_object_get_data (G_OBJECT (parent), "config");
+  edit_cp     = config.cp;
 
   if (edit_dialog == NULL)
     {
@@ -725,7 +836,7 @@ edit_callback (GtkWidget *widget,
 
       g_signal_connect (edit_dialog, "response",
                         G_CALLBACK (edit_response),
-                        edit_dialog);
+                        proc_config);
 
       main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
       gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -760,6 +871,7 @@ edit_callback (GtkWidget *widget,
 
             gtk_widget_show (button);
 
+            g_object_set_data (G_OBJECT (button), "config",  proc_config);
             g_signal_connect (button, "clicked",
                               G_CALLBACK (preview_clicked),
                               GINT_TO_POINTER (mut));
@@ -767,7 +879,7 @@ edit_callback (GtkWidget *widget,
 
       g_signal_connect (edit_previews[0], "size-allocate",
                         G_CALLBACK (edit_preview_size_allocate),
-                        NULL);
+                        proc_config);
 
       frame = gimp_frame_new (_("Controls"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -780,12 +892,13 @@ edit_callback (GtkWidget *widget,
       scale = gimp_scale_entry_new (_("_Speed:"), pick_speed, 0.05, 0.5, 2);
       gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.01, 0.1);
 
+      g_object_set_data (G_OBJECT (scale), "config",  proc_config);
       g_signal_connect (scale, "value-changed",
                         G_CALLBACK (flame_scale_entry_update_double),
                         &pick_speed);
-      g_signal_connect (scale, "value-changed",
-                        G_CALLBACK (set_edit_preview),
-                        NULL);
+      g_signal_connect_swapped (scale, "value-changed",
+                                G_CALLBACK (set_edit_preview),
+                                proc_config);
       gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 6);
       gtk_widget_show (scale);
 
@@ -803,7 +916,7 @@ edit_callback (GtkWidget *widget,
 
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (randomize_callback),
-                                NULL);
+                                proc_config);
 
       combo = gimp_int_combo_box_new (_("Same"),         VARIATION_SAME,
                                       _("Random"),       variation_random,
@@ -841,6 +954,7 @@ edit_callback (GtkWidget *widget,
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                      VARIATION_SAME);
 
+      g_object_set_data (G_OBJECT (combo), "config",  proc_config);
       g_signal_connect (combo, "changed",
                         G_CALLBACK (combo_callback),
                         &config.variation);
@@ -855,22 +969,22 @@ edit_callback (GtkWidget *widget,
 
       gtk_widget_show (main_vbox);
 
-      init_mutants ();
+      init_mutants (proc_config);
     }
 
-  set_edit_preview ();
+  set_edit_preview (proc_config);
 
   gtk_window_present (GTK_WINDOW (edit_dialog));
 }
 
 static void
-load_callback (GtkWidget *widget,
-               gpointer   data)
+load_callback (GtkWidget           *widget,
+               GimpProcedureConfig *proc_config)
 {
   if (! file_dialog)
     {
       load_save = 1;
-      make_file_dialog (_("Load Flame"), gtk_widget_get_toplevel (widget));
+      make_file_dialog (_("Load Flame"), gtk_widget_get_toplevel (widget), proc_config);
 
       gtk_widget_set_sensitive (save_button, FALSE);
     }
@@ -879,13 +993,13 @@ load_callback (GtkWidget *widget,
 }
 
 static void
-save_callback (GtkWidget *widget,
-               gpointer   data)
+save_callback (GtkWidget           *widget,
+               GimpProcedureConfig *proc_config)
 {
   if (! file_dialog)
     {
       load_save = 0;
-      make_file_dialog (_("Save Flame"), gtk_widget_get_toplevel (widget));
+      make_file_dialog (_("Save Flame"), gtk_widget_get_toplevel (widget), proc_config);
 
       gtk_widget_set_sensitive (load_button, FALSE);
     }
@@ -897,18 +1011,25 @@ static void
 combo_callback (GtkWidget *widget,
                 gpointer   data)
 {
+  GimpProcedureConfig *proc_config;
+
+  proc_config = g_object_get_data (G_OBJECT (widget), "config");
+
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
   if (VARIATION_SAME != config.variation)
     random_control_point (&edit_cp, config.variation);
 
-  init_mutants ();
-  set_edit_preview ();
+  init_mutants (proc_config);
+  set_edit_preview (proc_config);
+
+  flame_update_settings_aux (proc_config);
 }
 
 static void
-set_flame_preview (void)
+set_flame_preview (GimpProcedureConfig *proc_config)
 {
+  GBytes *settings_bytes = NULL;
   guchar *b;
   control_point pcp;
 
@@ -917,9 +1038,30 @@ set_flame_preview (void)
   if (NULL == flame_preview)
     return;
 
+  g_object_get (proc_config, "settings-data", &settings_bytes, NULL);
+  if (settings_bytes != NULL)
+    {
+      if (g_bytes_get_size (settings_bytes) == sizeof (FlameSettings))
+        config = *((FlameSettings *) g_bytes_get_data (settings_bytes, NULL));
+
+      g_bytes_unref (settings_bytes);
+    }
+
+  g_object_get (proc_config,
+                "x",                     &config.cp.center[0],
+                "y",                     &config.cp.center[1],
+                "spatial-oversample",    &config.cp.spatial_oversample,
+                "gamma",                 &config.cp.gamma,
+                "contrast",              &config.cp.contrast,
+                "brightness",            &config.cp.brightness,
+                "spatial-filter-radius", &config.cp.spatial_filter_radius,
+                "sample-density",        &config.cp.sample_density,
+                "zoom",                  &config.cp.zoom,
+                NULL);
+
   b = g_new (guchar, preview_width * preview_height * 3);
 
-  maybe_init_cp ();
+  maybe_init_cp (proc_config);
   drawable_to_cmap (&config.cp);
 
   pf.cps = &pcp;
@@ -942,9 +1084,9 @@ set_flame_preview (void)
 }
 
 static void
-flame_preview_size_allocate (GtkWidget *preview)
+flame_preview_size_allocate (GimpProcedureConfig *proc_config)
 {
-  set_flame_preview ();
+  set_flame_preview (proc_config);
 }
 
 static void
@@ -991,14 +1133,14 @@ set_cmap_preview (void)
 }
 
 static void
-cmap_callback (GtkWidget *widget,
-               gpointer   data)
+cmap_callback (GtkWidget           *widget,
+               GimpProcedureConfig *proc_config)
 {
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
                                  &config.cmap_drawable_id);
 
   set_cmap_preview ();
-  set_flame_preview ();
+  set_flame_preview (proc_config);
   /* set_edit_preview(); */
 }
 
@@ -1012,35 +1154,21 @@ cmap_constrain (GimpImage *image,
 
 
 static gboolean
-flame_dialog (void)
+flame_dialog (Flame                *flame,
+              GimpProcedure        *procedure,
+              GimpProcedureConfig  *proc_config)
 {
   GtkWidget *main_vbox;
   GtkWidget *notebook;
-  GtkWidget *label;
   GtkWidget *frame;
   GtkWidget *button;
-  GtkWidget *grid;
   GtkWidget *box;
-  GtkWidget *scale;
   gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Flame"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
-
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  dialog = gimp_procedure_dialog_new (procedure, proc_config, _("Flame"));
+  g_object_set_data (G_OBJECT (dialog), "config",  proc_config);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -1059,269 +1187,175 @@ flame_dialog (void)
   gtk_widget_show (frame);
 
   flame_preview = gimp_preview_area_new ();
-  {
-    gdouble aspect = config.cp.width / (double) config.cp.height;
+    {
+      gdouble aspect = config.cp.width / (double) config.cp.height;
 
-    if (aspect > 1.0)
-      {
-        preview_width = PREVIEW_SIZE;
-        preview_height = PREVIEW_SIZE / aspect;
-      }
-    else
-      {
-        preview_width = PREVIEW_SIZE * aspect;
-        preview_height = PREVIEW_SIZE;
-      }
-  }
+      if (aspect > 1.0)
+        {
+          preview_width = PREVIEW_SIZE;
+          preview_height = PREVIEW_SIZE / aspect;
+        }
+      else
+        {
+          preview_width = PREVIEW_SIZE * aspect;
+          preview_height = PREVIEW_SIZE;
+        }
+    }
   gtk_widget_set_size_request (flame_preview, preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (frame), flame_preview);
   gtk_widget_show (flame_preview);
-  g_signal_connect (flame_preview, "size-allocate",
-                    G_CALLBACK (flame_preview_size_allocate), NULL);
-
-  {
-    GtkWidget *vbox;
-    GtkWidget *vbbox;
-
-    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-    gtk_box_pack_start (GTK_BOX (box), vbox, FALSE, FALSE, 0);
-    gtk_widget_show (vbox);
-
-    vbbox= gtk_button_box_new (GTK_ORIENTATION_VERTICAL);
-    gtk_box_set_homogeneous (GTK_BOX (vbbox), FALSE);
-    gtk_box_set_spacing (GTK_BOX (vbbox), 6);
-    gtk_box_pack_start (GTK_BOX (vbox), vbbox, FALSE, FALSE, 0);
-    gtk_widget_show (vbbox);
-
-    button = gtk_button_new_with_mnemonic (_("_Edit"));
-    gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
-    gtk_widget_show (button);
-
-    g_signal_connect (button, "clicked",
-                      G_CALLBACK (edit_callback),
-                      dialog);
-
-    load_button = button = gtk_button_new_with_mnemonic (_("_Open"));
-    gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
-    gtk_widget_show (button);
-
-    g_signal_connect (button, "clicked",
-                      G_CALLBACK (load_callback),
-                      NULL);
-
-    save_button = button = gtk_button_new_with_mnemonic (_("_Save"));
-    gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
-    gtk_widget_show (button);
-
-    g_signal_connect (button, "clicked",
-                      G_CALLBACK (save_callback),
-                      NULL);
-  }
-
-  notebook = gtk_notebook_new ();
-  gtk_box_pack_start (GTK_BOX (main_vbox), notebook, FALSE, FALSE, 0);
-  gtk_widget_show (notebook);
-
-  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (box), 12);
-  label = gtk_label_new_with_mnemonic(_("_Rendering"));
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), box, label);
-  gtk_widget_show (box);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (box), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
-  scale = gimp_scale_entry_new (_("_Brightness:"), config.cp.brightness, 0, 5, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.1, 1.0);
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (flame_scale_entry_update_double),
-                    &config.cp.brightness);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (set_flame_preview),
-                    NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
-  gtk_widget_show (scale);
-
-  scale = gimp_scale_entry_new (_("Co_ntrast:"), config.cp.contrast, 0, 5, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.1, 1.0);
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (flame_scale_entry_update_double),
-                    &config.cp.contrast);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (set_flame_preview),
-                    NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
-  gtk_widget_show (scale);
-
-  scale = gimp_scale_entry_new (_("_Gamma:"), config.cp.gamma, 1, 5, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.1, 1.0);
-  gtk_widget_set_margin_bottom (gimp_labeled_get_label (GIMP_LABELED (scale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scale)), 6);
-  gtk_widget_set_margin_bottom (gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (scale)), 6);
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (flame_scale_entry_update_double),
-                    &config.cp.gamma);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (set_flame_preview),
-                    NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
-  gtk_widget_show (scale);
-
-  scale = gimp_scale_entry_new (_("Sample _density:"), config.cp.sample_density, 0.1, 20, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.1, 5.0);
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (flame_scale_entry_update_double),
-                    &config.cp.sample_density);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 3, 3, 1);
-  gtk_widget_show (scale);
-
-  scale = gimp_scale_entry_new (_("Spa_tial oversample:"), config.cp.spatial_oversample, 1, 4, 0);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.01, 0.1);
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (flame_scale_entry_update_int),
-                    &config.cp.spatial_oversample);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 4, 3, 1);
-  gtk_widget_show (scale);
-
-  scale = gimp_scale_entry_new (_("Spatial _filter radius:"), config.cp.spatial_filter_radius, 0, 4, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.2, 1.0);
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (flame_scale_entry_update_double),
-                    &config.cp.spatial_filter_radius);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 5, 3, 1);
-  gtk_widget_show (scale);
-
-  {
-    GtkWidget *hbox;
-    GtkWidget *label;
-    GtkWidget *combo;
-
-    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-    gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbox);
-
-    label = gtk_label_new_with_mnemonic (_("Color_map:"));
-    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-    gtk_widget_show (label);
-
-    combo = gimp_drawable_combo_box_new (cmap_constrain, NULL, NULL);
-
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
-
-#if 0
-    gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
-                                GIMP_INT_STORE_VALUE, BLACK_DRAWABLE,
-                                GIMP_INT_STORE_LABEL, _("Black"),
-                                -1);
-#endif
+  g_signal_connect_swapped (flame_preview, "size-allocate",
+                            G_CALLBACK (flame_preview_size_allocate),
+                            proc_config);
 
     {
-      static const gchar *names[] =
-      {
-        "sunny harvest",
-        "rose",
-        "calcoast09",
-        "klee insula-dulcamara",
-        "ernst anti-pope",
-        "gris josette"
-      };
-      static const gint good[] = { 10, 20, 68, 79, 70, 75 };
+      GtkWidget *vbox;
+      GtkWidget *vbbox;
 
-      gint i;
+      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+      gtk_box_pack_start (GTK_BOX (box), vbox, FALSE, FALSE, 0);
+      gtk_widget_show (vbox);
 
-      for (i = 0; i < G_N_ELEMENTS (good); i++)
-        {
-          gint value = TABLE_DRAWABLE - good[i];
+      vbbox= gtk_button_box_new (GTK_ORIENTATION_VERTICAL);
+      gtk_box_set_homogeneous (GTK_BOX (vbbox), FALSE);
+      gtk_box_set_spacing (GTK_BOX (vbbox), 6);
+      gtk_box_pack_start (GTK_BOX (vbox), vbbox, FALSE, FALSE, 0);
+      gtk_widget_show (vbbox);
 
-          gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
-                                      GIMP_INT_STORE_VALUE, value,
-                                      GIMP_INT_STORE_LABEL, names[i],
-                                      -1);
-        }
+      button = gtk_button_new_with_mnemonic (_("_Edit"));
+      gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      g_signal_connect (button, "clicked",
+                        G_CALLBACK (edit_callback),
+                        dialog);
+
+      load_button = button = gtk_button_new_with_mnemonic (_("_Open"));
+      gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      g_signal_connect (button, "clicked",
+                        G_CALLBACK (load_callback),
+                        proc_config);
+
+      save_button = button = gtk_button_new_with_mnemonic (_("_Save"));
+      gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      g_signal_connect (button, "clicked",
+                        G_CALLBACK (save_callback),
+                        proc_config);
     }
 
-    gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
-                                GIMP_INT_STORE_VALUE,     GRADIENT_DRAWABLE,
-                                GIMP_INT_STORE_LABEL,     _("Custom gradient"),
-                                GIMP_INT_STORE_ICON_NAME, GIMP_ICON_GRADIENT,
-                                -1);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog), "brightness", 1.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog), "contrast", 1.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog), "gamma", 1.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog), "sample-density", 1.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog), "spatial-oversample", 1.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog), "spatial-filter-radius", 1.0);
+  box = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "rendering-box",
+                                        "brightness", "contrast", "gamma",
+                                        "sample-density", "spatial-oversample",
+                                        "spatial-filter-radius", NULL);
 
-    gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                                config.cmap_drawable_id,
-                                G_CALLBACK (cmap_callback),
-                                NULL, NULL);
+    {
+      GtkWidget *hbox;
+      GtkWidget *label;
+      GtkWidget *combo;
 
-    gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-    gtk_widget_show (combo);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+      gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
 
-    cmap_preview = gimp_preview_area_new ();
-    gtk_widget_set_size_request (cmap_preview, 32, 32);
+      label = gtk_label_new_with_mnemonic (_("Color_map:"));
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
 
-    gtk_box_pack_end (GTK_BOX (hbox), cmap_preview, FALSE, FALSE, 0);
-    gtk_widget_show (cmap_preview);
+      combo = gimp_drawable_combo_box_new (cmap_constrain, NULL, NULL);
 
-    set_cmap_preview ();
-  }
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+#if 0
+      gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
+                                  GIMP_INT_STORE_VALUE, BLACK_DRAWABLE,
+                                  GIMP_INT_STORE_LABEL, _("Black"),
+                                  -1);
+#endif
 
-  label = gtk_label_new_with_mnemonic(_("C_amera"));
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), grid, label);
-  gtk_widget_show (grid);
+        {
+          static const gchar *names[] =
+            {
+              "sunny harvest",
+              "rose",
+              "calcoast09",
+              "klee insula-dulcamara",
+              "ernst anti-pope",
+              "gris josette"
+            };
+          static const gint good[] = { 10, 20, 68, 79, 70, 75 };
 
-  scale = gimp_scale_entry_new (_("_Zoom:"), config.cp.zoom, -4, 4, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.5, 1.0);
+          gint i;
 
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (flame_scale_entry_update_double),
-                    &config.cp.zoom);
-  g_signal_connect (scale, "value-changed",
+          for (i = 0; i < G_N_ELEMENTS (good); i++)
+            {
+              gint value = TABLE_DRAWABLE - good[i];
+
+              gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
+                                          GIMP_INT_STORE_VALUE, value,
+                                          GIMP_INT_STORE_LABEL, names[i],
+                                          -1);
+            }
+        }
+
+      gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
+                                  GIMP_INT_STORE_VALUE,     GRADIENT_DRAWABLE,
+                                  GIMP_INT_STORE_LABEL,     _("Custom gradient"),
+                                  GIMP_INT_STORE_ICON_NAME, GIMP_ICON_GRADIENT,
+                                  -1);
+
+      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                  config.cmap_drawable_id,
+                                  G_CALLBACK (cmap_callback),
+                                  proc_config, NULL);
+
+      gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+      gtk_widget_show (combo);
+
+      cmap_preview = gimp_preview_area_new ();
+      gtk_widget_set_size_request (cmap_preview, 32, 32);
+
+      gtk_box_pack_end (GTK_BOX (hbox), cmap_preview, FALSE, FALSE, 0);
+      gtk_widget_show (cmap_preview);
+
+      set_cmap_preview ();
+    }
+
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog), "zoom", 1.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog), "x", 1.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog), "y", 1.0);
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "camera-box", "zoom", "x", "y", NULL);
+
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "rendering-label", "_Rendering",
+                                   FALSE, TRUE);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "camera-label", "C_amera",
+                                   FALSE, TRUE);
+  notebook = gimp_procedure_dialog_fill_notebook (GIMP_PROCEDURE_DIALOG (dialog),
+                                                  "settings-notebook",
+                                                  "rendering-label", "rendering-box",
+                                                  "camera-label",    "camera-box",
+                                                  NULL);
+  gtk_widget_show (notebook);
+  gtk_box_pack_start (GTK_BOX (main_vbox), notebook, FALSE, FALSE, 0);
+
+  g_signal_connect (proc_config, "notify",
                     G_CALLBACK (set_flame_preview),
                     NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
-  gtk_widget_show (scale);
-
-  scale = gimp_scale_entry_new (_("_X:"), config.cp.center[0], -2, 2, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.5, 1.0);
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (flame_scale_entry_update_double),
-                    &config.cp.center[0]);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (set_flame_preview),
-                    NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
-  gtk_widget_show (scale);
-
-  scale = gimp_scale_entry_new (_("_Y:"), config.cp.center[1], -2, 2, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.5, 1.0);
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (flame_scale_entry_update_double),
-                    &config.cp.center[1]);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (set_flame_preview),
-                    NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
-  gtk_widget_show (scale);
-
-  set_flame_preview ();
-
-  gtk_widget_show (dialog);
-
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  set_flame_preview (proc_config);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -1329,15 +1363,24 @@ flame_dialog (void)
 }
 
 static void
-flame_scale_entry_update_int (GimpLabelSpin *entry,
-                              gint          *value)
-{
-  *value = (gint) gimp_label_spin_get_value (entry);
-}
-
-static void
 flame_scale_entry_update_double (GimpLabelSpin *entry,
                                  gdouble       *value)
 {
+  GimpProcedureConfig *proc_config;
+
+  proc_config = g_object_get_data (G_OBJECT (entry), "config");
+
   *value = gimp_label_spin_get_value (entry);
+
+  flame_update_settings_aux (proc_config);
+}
+
+static void
+flame_update_settings_aux (GimpProcedureConfig *proc_config)
+{
+  GBytes *settings_bytes;
+
+  settings_bytes = g_bytes_new (&config, sizeof (FlameSettings));
+  g_object_set (proc_config, "settings-data", settings_bytes, NULL);
+  g_bytes_unref (settings_bytes);
 }
