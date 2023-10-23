@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-19 19:54+0000\n"
-"PO-Revision-Date: 2023-10-20 21:41+0300\n"
+"POT-Creation-Date: 2023-10-23 15:26+0000\n"
+"PO-Revision-Date: 2023-10-23 19:26+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
@@ -43,7 +43,7 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/common/sphere-designer.c:3179 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:913
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:181
-#: plug-ins/file-dds/dds.c:511 plug-ins/flame/flame.c:241
+#: plug-ins/file-dds/dds.c:511 plug-ins/flame/flame.c:299
 #: plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:178
 #: plug-ins/gradient-flare/gradient-flare.c:925
@@ -73,8 +73,8 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/qbist.c:932 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:472
-#: plug-ins/file-tiff/file-tiff-load.c:2555 plug-ins/flame/flame.c:540
-#: plug-ins/flame/flame.c:716 plug-ins/flame/flame.c:1033
+#: plug-ins/file-tiff/file-tiff-load.c:2555 plug-ins/flame/flame.c:622
+#: plug-ins/flame/flame.c:827
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1540
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1578
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
@@ -152,8 +152,7 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/sphere-designer.c:2633 plug-ins/common/unit-editor.c:266
 #: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:473
 #: plug-ins/file-exr/file-exr.c:422 plug-ins/file-psd/psd-load.c:3533
-#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
-#: plug-ins/fractal-explorer/fractal-explorer.c:1391
+#: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3446
@@ -1014,8 +1013,8 @@ msgstr "База випадковості"
 #: plug-ins/common/curve-bend.c:1313 plug-ins/common/curve-bend.c:1856
 #: plug-ins/common/file-cel.c:1009 plug-ins/common/qbist.c:837
 #: plug-ins/common/qbist.c:1020 plug-ins/common/sphere-designer.c:2290
-#: plug-ins/common/sphere-designer.c:2681 plug-ins/flame/flame.c:542
-#: plug-ins/flame/flame.c:1104
+#: plug-ins/common/sphere-designer.c:2681 plug-ins/flame/flame.c:624
+#: plug-ins/flame/flame.c:1233
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:817
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1541
 #: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:905
@@ -1030,8 +1029,8 @@ msgstr "_Відкрити"
 #: plug-ins/common/curve-bend.c:1325 plug-ins/common/curve-bend.c:1891
 #: plug-ins/common/file-pdf-save.c:1100 plug-ins/common/qbist.c:879
 #: plug-ins/common/qbist.c:1028 plug-ins/common/sphere-designer.c:2290
-#: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:542
-#: plug-ins/flame/flame.c:1112
+#: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:624
+#: plug-ins/flame/flame.c:1241
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:825
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1579
 #: plug-ins/gfig/gfig-dialog.c:832 plug-ins/gimpressionist/brush.c:271
@@ -1225,7 +1224,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/file-ico/ico-save.c:1342 plug-ins/file-ico/ico-save.c:1559
 #: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
 #: plug-ins/file-tiff/file-tiff-save.c:1084
-#: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
+#: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:590
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1441
 #: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2414
 #: plug-ins/lighting/lighting-ui.c:808
@@ -1265,7 +1264,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
 #: plug-ins/file-psd/psd-load.c:169 plug-ins/file-psd/psd-load.c:174
 #: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
-#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
+#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1764
 #: plug-ins/fractal-explorer/fractal-explorer.c:1159 plug-ins/gfig/gfig.c:527
 #: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
@@ -1785,8 +1784,7 @@ msgstr "_Рівень"
 
 #: plug-ins/common/contrast-retinex.c:212
 msgid "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
-msgstr ""
-"Ретінекс-розподіл шкалами { Однорідний (0), Низький (1), Високий (2) }"
+msgstr "Ретінекс-розподіл шкалами { Однорідний (0), Низький (1), Високий (2) }"
 
 #: plug-ins/common/contrast-retinex.c:218
 msgid "Dy_namic"
@@ -1987,8 +1985,7 @@ msgstr "Перетворений шар"
 
 #: plug-ins/common/curve-bend.c:672
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr ""
-"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:686
 msgid "Cannot operate on layers with masks."
@@ -2236,7 +2233,7 @@ msgid "Yellow"
 msgstr "Жовтий"
 
 #: plug-ins/common/decompose.c:215 plug-ins/common/warp.c:599
-#: plug-ins/file-fits/fits.c:1027 plug-ins/flame/flame.c:1223
+#: plug-ins/file-fits/fits.c:1027 plug-ins/flame/flame.c:1282
 #: plug-ins/gfig/gfig-dialog.c:1459
 msgid "Black"
 msgstr "Чорний"
@@ -2634,8 +2631,7 @@ msgstr "Програма на C"
 
 #: plug-ins/common/file-csource.c:126
 msgid "Dump image data in RGB(A) format for C source"
-msgstr ""
-"Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
+msgstr "Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
 
 #: plug-ins/common/file-csource.c:128
 msgid "CSource cannot be run non-interactively."
@@ -4631,13 +4627,11 @@ msgstr ""
 #: plug-ins/common/file-png.c:1445
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr ""
-"Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: plug-ins/common/file-png.c:1454
 #, c-format
-msgid ""
-"Error while exporting '%s'. Could not create PNG header info structure."
+msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -5003,8 +4997,7 @@ msgstr "_Розмір перегляду"
 
 #: plug-ins/common/file-ps.c:564
 msgid "0: no preview, >0: max. size of preview"
-msgstr ""
-"0: без попереднього перегляду, >0: макс. розмір попереднього перегляду"
+msgstr "0: без попереднього перегляду, >0: макс. розмір попереднього перегляду"
 
 #: plug-ins/common/file-ps.c:708
 msgid "PostScript plug-in does not support multiple layers."
@@ -5260,37 +5253,30 @@ msgid "Error reading end of selection chunk"
 msgstr "Помилка зчитування кінця фрагмента позначеного"
 
 #: plug-ins/common/file-psp.c:2442
-#| msgid "Error reading block header"
 msgid "Error reading extended block chunk header"
 msgstr "Помилка при читанні заголовка фрагмента розширеного блока"
 
 #: plug-ins/common/file-psp.c:2450
-#| msgid "Invalid keyword chunk header"
 msgid "Invalid extended block chunk header"
 msgstr "Некоректний заголовок фрагмента розширеного блоку"
 
 #: plug-ins/common/file-psp.c:2461
-#| msgid "Invalid selection chunk size"
 msgid "Invalid extended block chunk size"
 msgstr "Некоректний розмір фрагмента розширеного блоку"
 
 #: plug-ins/common/file-psp.c:2482
-#| msgid "Error reading creator keyword data"
 msgid "Error reading extended chunk grid data"
 msgstr "Помилка зчитування даних ґратки розширеного фрагмента"
 
 #: plug-ins/common/file-psp.c:2508
-#| msgid "Error reading tube data chunk"
 msgid "Error reading extended chunk guide data"
 msgstr "Помилка при читанні розширеного фрагмента даних напрямної"
 
 #: plug-ins/common/file-psp.c:2526
-#| msgid "Invalid frame dimensions"
 msgid "Invalid guide orientation"
 msgstr "Некоректна орієнтація напрямної"
 
 #: plug-ins/common/file-psp.c:2540
-#| msgid "Error reading end of selection chunk"
 msgid "Error reading extended block chunk"
 msgstr "Помилка зчитування фрагмента розширеного блоку"
 
@@ -5884,8 +5870,7 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:778
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr ""
-"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:785
 msgid "Retry without limits preventing to parse huge data?"
@@ -7504,7 +7489,7 @@ msgstr "Ящірка"
 msgid "Phong"
 msgstr "Фонг"
 
-#: plug-ins/common/sphere-designer.c:341 plug-ins/flame/flame.c:836
+#: plug-ins/common/sphere-designer.c:341 plug-ins/flame/flame.c:949
 msgid "Noise"
 msgstr "Шум"
 
@@ -7512,7 +7497,7 @@ msgstr "Шум"
 msgid "Wood"
 msgstr "Дерево"
 
-#: plug-ins/common/sphere-designer.c:343 plug-ins/flame/flame.c:820
+#: plug-ins/common/sphere-designer.c:343 plug-ins/flame/flame.c:933
 #: plug-ins/gfig/gfig-dialog.c:399 plug-ins/gfig/gfig-menu.ui:79
 msgid "Spiral"
 msgstr "Спіраль"
@@ -7925,7 +7910,8 @@ msgstr "Канал ефекту"
 msgid "_Saturation"
 msgstr "_Насиченість"
 
-#: plug-ins/common/van-gogh-lic.c:738
+#: plug-ins/common/van-gogh-lic.c:738 plug-ins/flame/flame.c:195
+#: plug-ins/flame/flame.c:210 plug-ins/flame/flame.c:220
 msgid "_Brightness"
 msgstr "_Яскравість"
 
@@ -8596,7 +8582,7 @@ msgstr "Зас_тосувати корекцію гами"
 msgid "Use s_RGB colorspace"
 msgstr "В_икористати колірний простір sRGB"
 
-#: plug-ins/file-dds/ddswrite.c:2154 plug-ins/flame/flame.c:1161
+#: plug-ins/file-dds/ddswrite.c:2154
 msgid "_Gamma:"
 msgstr "Г_ама:"
 
@@ -10387,231 +10373,220 @@ msgstr "Не вдається відкрити «%s» для запису: %s"
 msgid "WebP error: '%s'"
 msgstr "Помилка WebP: «%s»"
 
-#: plug-ins/flame/flame.c:175
+#: plug-ins/flame/flame.c:180
 msgid "_Flame..."
 msgstr "_Полум'я..."
 
-#: plug-ins/flame/flame.c:180
+#: plug-ins/flame/flame.c:185
 msgid "Create cosmic recursive fractal flames"
 msgstr "Створити ефект спалахів полум'я з використанням фракталів"
 
-#: plug-ins/flame/flame.c:284
+#: plug-ins/flame/flame.c:200
+#| msgid "Co_ntrast:"
+msgid "Co_ntrast"
+msgstr "_Контраст"
+
+#: plug-ins/flame/flame.c:205
+#| msgid "_Gamma:"
+msgid "_Gamma"
+msgstr "Г_ама"
+
+#: plug-ins/flame/flame.c:215
+#| msgid "Spa_tial oversample:"
+msgid "Spa_tial oversample"
+msgstr "П_ерекриття"
+
+#: plug-ins/flame/flame.c:225
+msgid "_Zoom"
+msgstr "_Масштаб"
+
+#: plug-ins/flame/flame.c:230
+#| msgid "_X:"
+msgid "_X"
+msgstr "_X"
+
+#: plug-ins/flame/flame.c:235
+#| msgid "_Y:"
+msgid "_Y"
+msgstr "_Y"
+
+#: plug-ins/flame/flame.c:350
 msgid "Drawing flame"
 msgstr "Малювання полум'я"
 
-#: plug-ins/flame/flame.c:468
+#: plug-ins/flame/flame.c:534
 #, c-format
 msgid "'%s' is not a regular file"
 msgstr "«%s» не є звичайним файлом"
 
-#: plug-ins/flame/flame.c:712
+#: plug-ins/flame/flame.c:823
 msgid "Edit Flame"
 msgstr "Правка полум'я"
 
-#: plug-ins/flame/flame.c:735
+#: plug-ins/flame/flame.c:846
 msgid "Directions"
 msgstr "Напрямки"
 
-#: plug-ins/flame/flame.c:772
+#: plug-ins/flame/flame.c:884
 msgid "Controls"
 msgstr "Керування"
 
-#: plug-ins/flame/flame.c:780
+#: plug-ins/flame/flame.c:892
 msgid "_Speed:"
 msgstr "_Швидкість:"
 
-#: plug-ins/flame/flame.c:796
+#: plug-ins/flame/flame.c:909
 msgid "_Randomize"
 msgstr "Пере_мішати"
 
-#: plug-ins/flame/flame.c:808
+#: plug-ins/flame/flame.c:921
 msgid "Same"
 msgstr "Залишити попередні"
 
-#: plug-ins/flame/flame.c:809 plug-ins/gimpressionist/orientation.c:156
+#: plug-ins/flame/flame.c:922 plug-ins/gimpressionist/orientation.c:156
 #: plug-ins/gimpressionist/size.c:163
 msgid "Random"
 msgstr "Випадковість"
 
-#: plug-ins/flame/flame.c:810 plug-ins/lighting/lighting-main.c:163
+#: plug-ins/flame/flame.c:923 plug-ins/lighting/lighting-main.c:163
 msgid "Linear"
 msgstr "Лінійний"
 
-#: plug-ins/flame/flame.c:811 plug-ins/lighting/lighting-main.c:165
+#: plug-ins/flame/flame.c:924 plug-ins/lighting/lighting-main.c:165
 msgid "Sinusoidal"
 msgstr "Синусоїдний"
 
-#: plug-ins/flame/flame.c:812 plug-ins/lighting/lighting-main.c:166
+#: plug-ins/flame/flame.c:925 plug-ins/lighting/lighting-main.c:166
 msgid "Spherical"
 msgstr "Сферичний"
 
-#: plug-ins/flame/flame.c:813
+#: plug-ins/flame/flame.c:926
 msgid "Swirl"
 msgstr "Вихор"
 
-#: plug-ins/flame/flame.c:814
+#: plug-ins/flame/flame.c:927
 msgid "Horseshoe"
 msgstr "Підкова"
 
-#: plug-ins/flame/flame.c:815 plug-ins/gfig/gfig-dialog.c:1441
+#: plug-ins/flame/flame.c:928 plug-ins/gfig/gfig-dialog.c:1441
 msgid "Polar"
 msgstr "Полярність"
 
-#: plug-ins/flame/flame.c:816
+#: plug-ins/flame/flame.c:929
 msgid "Bent"
 msgstr "Згин"
 
-#: plug-ins/flame/flame.c:817
+#: plug-ins/flame/flame.c:930
 msgid "Handkerchief"
 msgstr "Носовичок"
 
-#: plug-ins/flame/flame.c:818
+#: plug-ins/flame/flame.c:931
 msgid "Heart"
 msgstr "Серце"
 
-#: plug-ins/flame/flame.c:819
+#: plug-ins/flame/flame.c:932
 msgid "Disc"
 msgstr "Диск"
 
-#: plug-ins/flame/flame.c:821
+#: plug-ins/flame/flame.c:934
 msgid "Hyperbolic"
 msgstr "Гіперболічне"
 
-#: plug-ins/flame/flame.c:822
+#: plug-ins/flame/flame.c:935
 msgid "Diamond"
 msgstr "Ромб"
 
-#: plug-ins/flame/flame.c:823
+#: plug-ins/flame/flame.c:936
 msgid "Ex"
 msgstr "Колишнє"
 
-#: plug-ins/flame/flame.c:824 plug-ins/fractal-explorer/fractal-explorer.c:260
+#: plug-ins/flame/flame.c:937 plug-ins/fractal-explorer/fractal-explorer.c:260
 msgid "Julia"
 msgstr "Джулія"
 
-#: plug-ins/flame/flame.c:825
+#: plug-ins/flame/flame.c:938
 msgid "Waves"
 msgstr "Хвилі"
 
-#: plug-ins/flame/flame.c:826
+#: plug-ins/flame/flame.c:939
 msgid "Fisheye"
 msgstr "Риб'яче око"
 
-#: plug-ins/flame/flame.c:827
+#: plug-ins/flame/flame.c:940
 msgid "Popcorn"
 msgstr "Попкорн"
 
-#: plug-ins/flame/flame.c:828
+#: plug-ins/flame/flame.c:941
 msgid "Exponential"
 msgstr "Експонентне"
 
-#: plug-ins/flame/flame.c:829
+#: plug-ins/flame/flame.c:942
 msgid "Power"
 msgstr "Енергія"
 
-#: plug-ins/flame/flame.c:830 plug-ins/fractal-explorer/fractal-explorer.c:343
+#: plug-ins/flame/flame.c:943 plug-ins/fractal-explorer/fractal-explorer.c:343
 #: plug-ins/fractal-explorer/fractal-explorer.c:353
 #: plug-ins/fractal-explorer/fractal-explorer.c:363
 msgid "Cosine"
 msgstr "Косинус"
 
-#: plug-ins/flame/flame.c:831
+#: plug-ins/flame/flame.c:944
 msgid "Rings"
 msgstr "Кільця"
 
-#: plug-ins/flame/flame.c:832
+#: plug-ins/flame/flame.c:945
 msgid "Fan"
 msgstr "Вентилятор"
 
-#: plug-ins/flame/flame.c:833
+#: plug-ins/flame/flame.c:946
 msgid "Eyefish"
 msgstr "Eyefish"
 
-#: plug-ins/flame/flame.c:834
+#: plug-ins/flame/flame.c:947
 msgid "Bubble"
 msgstr "Пузир"
 
-#: plug-ins/flame/flame.c:835 plug-ins/map-object/map-object-main.c:140
+#: plug-ins/flame/flame.c:948 plug-ins/map-object/map-object-main.c:140
 msgid "Cylinder"
 msgstr "Циліндр"
 
-#: plug-ins/flame/flame.c:837
+#: plug-ins/flame/flame.c:950
 msgid "Blur"
 msgstr "Розмивання"
 
-#: plug-ins/flame/flame.c:838
+#: plug-ins/flame/flame.c:951
 msgid "Gaussian"
 msgstr "Гаусове розмивання"
 
-#: plug-ins/flame/flame.c:851
+#: plug-ins/flame/flame.c:965
 msgid "_Variation:"
 msgstr "_Зміна:"
 
-#: plug-ins/flame/flame.c:873
+#: plug-ins/flame/flame.c:987
 msgid "Load Flame"
 msgstr "Завантаження полум'я"
 
-#: plug-ins/flame/flame.c:888
+#: plug-ins/flame/flame.c:1002
 msgid "Save Flame"
 msgstr "Збереження полум'я"
 
-#: plug-ins/flame/flame.c:1029
+#: plug-ins/flame/flame.c:1170
 msgid "Flame"
 msgstr "Полум'я"
 
-#: plug-ins/flame/flame.c:1096 plug-ins/gimpressionist/orientation.c:190
+#: plug-ins/flame/flame.c:1225 plug-ins/gimpressionist/orientation.c:190
 #: plug-ins/gimpressionist/size.c:199
 #: plug-ins/gradient-flare/gradient-flare.c:3046
 msgid "_Edit"
 msgstr "З_міни"
 
-#: plug-ins/flame/flame.c:1127
-msgid "_Rendering"
-msgstr "_Візуалізація"
-
-#: plug-ins/flame/flame.c:1137
-msgid "_Brightness:"
-msgstr "_Яскравість:"
-
-#: plug-ins/flame/flame.c:1149
-msgid "Co_ntrast:"
-msgstr "_Контраст:"
-
-#: plug-ins/flame/flame.c:1176
-msgid "Sample _density:"
-msgstr "_Щільність зразка:"
-
-#: plug-ins/flame/flame.c:1185
-msgid "Spa_tial oversample:"
-msgstr "П_ерекриття:"
-
-#: plug-ins/flame/flame.c:1194
-msgid "Spatial _filter radius:"
-msgstr "Радіус просторового _фільтра:"
-
-#: plug-ins/flame/flame.c:1212
+#: plug-ins/flame/flame.c:1271
 msgid "Color_map:"
 msgstr "_Мапа кольорів:"
 
-#: plug-ins/flame/flame.c:1254
+#: plug-ins/flame/flame.c:1313
 msgid "Custom gradient"
 msgstr "Власний градієнт"
-
-#: plug-ins/flame/flame.c:1280
-msgid "C_amera"
-msgstr "_Камера"
-
-#: plug-ins/flame/flame.c:1284
-msgid "_Zoom:"
-msgstr "Мас_штаб:"
-
-#: plug-ins/flame/flame.c:1296 plug-ins/gradient-flare/gradient-flare.c:2899
-msgid "_X:"
-msgstr "_X:"
-
-#: plug-ins/flame/flame.c:1308 plug-ins/gradient-flare/gradient-flare.c:2903
-msgid "_Y:"
-msgstr "_Y:"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:617
 #: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
@@ -11697,8 +11672,7 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid ""
-"Let the direction from the center determine the direction of the stroke"
+msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -11808,8 +11782,7 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr ""
-"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -12190,6 +12163,14 @@ msgstr "_Автоматичний перегляд"
 msgid "'Default' is created."
 msgstr "\"Типовий\" створено."
 
+#: plug-ins/gradient-flare/gradient-flare.c:2899
+msgid "_X:"
+msgstr "_X:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:2903
+msgid "_Y:"
+msgstr "_Y:"
+
 #.
 #. *  Scales
 #.
@@ -12239,8 +12220,7 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: plug-ins/gradient-flare/gradient-flare.c:3316
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr ""
-"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: plug-ins/gradient-flare/gradient-flare.c:3326
 msgid "Delete Gradient Flare"
@@ -15244,8 +15224,7 @@ msgstr "Альтернативне ото_чення фільтра"
 
 #: plug-ins/selection-to-path/selection-to-path.c:191
 msgid "A second number of adjacent points to consider when filtering."
-msgstr ""
-"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path.c:197
 msgid "Filter E_psilon"
@@ -15444,6 +15423,24 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "_Rendering"
+#~ msgstr "_Візуалізація"
+
+#~ msgid "_Brightness:"
+#~ msgstr "_Яскравість:"
+
+#~ msgid "Sample _density:"
+#~ msgstr "_Щільність зразка:"
+
+#~ msgid "Spatial _filter radius:"
+#~ msgstr "Радіус просторового _фільтра:"
+
+#~ msgid "C_amera"
+#~ msgstr "_Камера"
+
+#~ msgid "_Zoom:"
+#~ msgstr "Мас_штаб:"
 
 #~ msgid "GBR format does not support multiple layers."
 #~ msgstr "Для формату GBR не передбачено підтримку декількох шарів."
@@ -16155,9 +16152,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "_Preferences"
 #~ msgstr "_Параметри"
-
-#~ msgid "_Zoom"
-#~ msgstr "_Масштаб"
 
 #~ msgid "_Clear"
 #~ msgstr "О_чистити"
