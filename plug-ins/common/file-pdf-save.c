@@ -479,7 +479,6 @@ pdf_save (GimpProcedure        *procedure,
 {
   GError            *error          = NULL;
   GimpPDBStatusType  status         = GIMP_PDB_SUCCESS;
-  gboolean           had_saved_list = FALSE;
 
   gegl_init (NULL, NULL);
 
@@ -488,28 +487,7 @@ pdf_save (GimpProcedure        *procedure,
 
   file_name = g_file_get_path (file);
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_NONINTERACTIVE:
-      init_image_list_defaults (image);
-      break;
-
-    case GIMP_RUN_INTERACTIVE:
-      /* Possibly retrieve data */
-      had_saved_list = gimp_get_data (DATA_IMAGE_LIST, &multi_page);
-
-      if (had_saved_list && (file_name == NULL || strlen (file_name) == 0))
-        {
-          file_name = multi_page.file_name;
-        }
-
-      init_image_list_defaults (image);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      init_image_list_defaults (image);
-      break;
-    }
+  init_image_list_defaults (image);
 
   validate_image_list ();
 
@@ -532,15 +510,13 @@ pdf_save_multi (GimpProcedure        *procedure,
                 GimpProcedureConfig  *config,
                 gpointer              run_data)
 {
-  GError              *error  = NULL;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpRunMode          run_mode;
-  gchar               *uri;
-  const gint32        *image_ids;
-
-  GimpImage   *image = NULL;
-  GFile       *file;
-  gboolean     had_saved_list = FALSE;
+  GError            *error  = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
+  gchar             *uri;
+  const gint32      *image_ids = NULL;
+  GimpImage         *image = NULL;
+  GFile             *file;
 
   gegl_init (NULL, NULL);
 
@@ -555,36 +531,11 @@ pdf_save_multi (GimpProcedure        *procedure,
   g_free (uri);
   file_name = g_file_get_path (file);
 
-  switch (run_mode)
-    {
-      gint i;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      if (image_ids)
-        for (i = 0; i < multi_page.image_count; i++)
-          multi_page.images[i] = gimp_image_get_by_id (image_ids[i]);
-      break;
-
-    case GIMP_RUN_INTERACTIVE:
-      /* Possibly retrieve data */
-      had_saved_list = gimp_get_data (DATA_IMAGE_LIST, &multi_page);
-
-      if (had_saved_list && (file_name == NULL || strlen (file_name) == 0))
-        {
-          file_name = multi_page.file_name;
-        }
-
-      if (! had_saved_list)
-        init_image_list_defaults (image);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      /* Possibly retrieve data */
-      had_saved_list = gimp_get_data (DATA_IMAGE_LIST, &multi_page);
-      if (had_saved_list)
-        file_name = multi_page.file_name;
-      break;
-    }
+  if (image_ids)
+    for (gint i = 0; i < multi_page.image_count; i++)
+      multi_page.images[i] = gimp_image_get_by_id (image_ids[i]);
+  else
+    init_image_list_defaults (image);
 
   validate_image_list ();
 
@@ -875,12 +826,6 @@ pdf_save_image (GimpProcedure        *procedure,
   cairo_destroy (cr);
 
   fclose (fp);
-
-  if (! single_image)
-    {
-      g_strlcpy (multi_page.file_name, file_name, MAX_FILE_NAME_LENGTH);
-      gimp_set_data (DATA_IMAGE_LIST, &multi_page, sizeof (multi_page));
-    }
 
   return GIMP_PDB_SUCCESS;
 }
