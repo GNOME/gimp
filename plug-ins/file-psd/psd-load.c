@@ -2222,6 +2222,22 @@ add_layers (GimpImage     *image,
                   l_y = lyr_a[lidx]->top;
                   l_w = lyr_a[lidx]->right - lyr_a[lidx]->left;
                   l_h = lyr_a[lidx]->bottom - lyr_a[lidx]->top;
+
+                  if (l_h <= 0)
+                    {
+                      /* For fill layers this can be -1 apparently;
+                         e.g. test file CT_SkillTest_v1.psd
+                         Mark as empty and set height to 1.
+                       */
+                      empty = TRUE;
+                      l_h = 1;
+                    }
+                  if (l_w <= 0)
+                    {
+                      g_warning ("Unexpected layer width: %d", l_w);
+                      empty = TRUE;
+                      l_w = 1;
+                    }
                 }
 
               image_type = get_gimp_image_type (img_a->base_type, TRUE);
