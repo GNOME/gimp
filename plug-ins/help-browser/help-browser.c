@@ -62,6 +62,7 @@ struct _GimpHelpBrowser
 {
   GimpPlugIn parent_instance;
 
+  GimpProcedureConfig   *config;
   GtkApplication        *app;
   GimpHelpBrowserDialog *window;
 };
@@ -119,6 +120,11 @@ help_browser_create_procedure (GimpPlugIn  *plug_in,
                           "Domain URIs",
                           "Domain URIs",
                           G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_BYTES (procedure, "dialog-data",
+                               "Dialog data",
+                               "Remembering dialog's basic features; this is never meant to be a public argument",
+                               GIMP_PARAM_READWRITE);
     }
 
   return procedure;
@@ -131,7 +137,7 @@ on_app_activate (GApplication *gapp,
   GimpHelpBrowser *browser = GIMP_HELP_BROWSER (user_data);
   GtkApplication  *app     = GTK_APPLICATION (gapp);
 
-  browser->window = gimp_help_browser_dialog_new (PLUG_IN_BINARY, gapp);
+  browser->window = gimp_help_browser_dialog_new (PLUG_IN_BINARY, gapp, browser->config);
 
   gtk_application_set_accels_for_action (app, "win.back", (const char*[]) { "<alt>Left", NULL });
   gtk_application_set_accels_for_action (app, "win.forward", (const char*[]) { "<alt>Right", NULL });
@@ -156,6 +162,7 @@ help_browser_run (GimpProcedure        *procedure,
   gchar           **domain_names = NULL;
   gchar           **domain_uris  = NULL;
 
+  browser->config = config;
   g_object_get (config,
                 "domain-names", &domain_names,
                 "domain-uris",  &domain_uris,

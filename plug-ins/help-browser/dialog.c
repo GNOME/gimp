@@ -76,6 +76,8 @@ struct _GimpHelpBrowserDialog
 
   GMenuModel           *popup_menu_model;
   GMenuModel           *copy_popup_menu_model;
+
+  GimpProcedureConfig  *config;
 };
 
 G_DEFINE_TYPE (GimpHelpBrowserDialog, gimp_help_browser_dialog, GTK_TYPE_APPLICATION_WINDOW)
@@ -402,15 +404,20 @@ gimp_help_browser_dialog_finalize (GObject *object)
 /* Public functions. */
 
 GimpHelpBrowserDialog *
-gimp_help_browser_dialog_new (const gchar  *plug_in_binary,
-                              GApplication *app)
+gimp_help_browser_dialog_new (const gchar         *plug_in_binary,
+                              GApplication        *app,
+                              GimpProcedureConfig *config)
 {
   GimpHelpBrowserDialog *window;
-  DialogData             data = { 720, 560, 240, TRUE, 1.0 };
+  GBytes                *bytes = NULL;
+  DialogData             data  = { 720, 560, 240, TRUE, 1.0 };
+
+  g_object_get (config, "dialog-data", &bytes, NULL);
+  if (bytes != NULL && g_bytes_get_size (bytes) == sizeof (DialogData))
+    data = *((DialogData *) g_bytes_get_data (bytes, NULL));
+  g_bytes_unref (bytes);
 
   gimp_ui_init (plug_in_binary);
-
-  gimp_get_data (GIMP_HELP_BROWSER_DIALOG_DATA, &data);
 
   window = g_object_new (GIMP_TYPE_HELP_BROWSER_DIALOG,
                          "application", app,
@@ -418,6 +425,8 @@ gimp_help_browser_dialog_new (const gchar  *plug_in_binary,
                          "default-width", data.width,
                          "default-height", data.height,
                          NULL);
+  window->config = config;
+
   gtk_paned_set_position (GTK_PANED (window->paned), data.paned_position);
   if (data.show_index)
     gtk_widget_show (window->sidebar);
@@ -1001,7 +1010,8 @@ dialog_unmap (GtkWidget *window,
               gpointer   user_data)
 {
   GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
-  DialogData             data;
+  GBytes                *bytes;
+  DialogData             data = { 720, 560, 240, TRUE, 1.0 };
 
   gtk_window_get_size (GTK_WINDOW (window), &data.width, &data.height);
 
@@ -1011,7 +1021,9 @@ dialog_unmap (GtkWidget *window,
   data.zoom = (self->webview ?
                webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (self->webview)) : 1.0);
 
-  gimp_set_data (GIMP_HELP_BROWSER_DIALOG_DATA, &data, sizeof (data));
+  bytes = g_bytes_new (&data, sizeof (DialogData));
+  g_object_set (self->config, "dialog-data", bytes, NULL);
+  g_bytes_unref (bytes);
 }
 
 static void

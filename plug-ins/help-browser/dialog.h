@@ -28,11 +28,11 @@
 
 #define GIMP_TYPE_HELP_BROWSER_DIALOG (gimp_help_browser_dialog_get_type ())
 G_DECLARE_FINAL_TYPE (GimpHelpBrowserDialog, gimp_help_browser_dialog,
-                      GIMP, HELP_BROWSER_DIALOG,
-                      GtkApplicationWindow)
+                      GIMP, HELP_BROWSER_DIALOG, GtkApplicationWindow)
 
-GimpHelpBrowserDialog * gimp_help_browser_dialog_new         (const char   *plug_in_binary,
-                                                              GApplication *app);
+GimpHelpBrowserDialog * gimp_help_browser_dialog_new         (const char            *plug_in_binary,
+                                                              GApplication          *app,
+                                                              GimpProcedureConfig   *config);
 
 void                    gimp_help_browser_dialog_load        (GimpHelpBrowserDialog *self,
                                                               const char            *uri);
