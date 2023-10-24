@@ -767,8 +767,6 @@ lighting_run (GimpProcedure        *procedure,
 
   set_default_settings ();
 
-  gimp_get_data (PLUG_IN_PROC, &mapvals);
-
   mapvals.drawable_id = gimp_item_get_id (GIMP_ITEM (drawable));
 
   check_drawables ();
@@ -790,7 +788,6 @@ lighting_run (GimpProcedure        *procedure,
 
           compute_image ();
 
-          gimp_set_data (PLUG_IN_PROC, &mapvals, sizeof (LightingValues));
           gimp_displays_flush ();
           break;
 
