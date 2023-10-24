@@ -263,7 +263,6 @@ typedef struct
   gint      scale;
   gint      start_offset;
   gint      seed;
-  gchar     last_file_name[256];
 } ValueType;
 
 static ValueType VALS =
@@ -286,7 +285,6 @@ static ValueType VALS =
   1,    /* scale */
   0,    /* start_offset */
   0,    /* seed */
-  ""    /* last filename */
 };
 
 static CML_PARAM *channel_params[] =
@@ -343,82 +341,86 @@ static GimpValueArray * explorer_run              (GimpProcedure        *procedu
                                                    GimpProcedureConfig  *config,
                                                    gpointer              run_data);
 
-static gboolean          CML_main_function     (gboolean   preview_p);
-static void              CML_compute_next_step (gint       size,
-                                                gdouble  **h,
-                                                gdouble  **s,
-                                                gdouble  **v,
-                                                gdouble  **hn,
-                                                gdouble  **sn,
-                                                gdouble  **vn,
-                                                gdouble  **haux,
-                                                gdouble  **saux,
-                                                gdouble  **vaux);
-static gdouble           CML_next_value        (gdouble   *vec,
-                                                gint       pos,
-                                                gint       size,
-                                                gdouble    c1,
-                                                gdouble    c2,
-                                                CML_PARAM *param,
-                                                gdouble    aux);
-static gdouble           logistic_function     (CML_PARAM *param,
-                                                gdouble    x,
-                                                gdouble    power);
+static gboolean          CML_main_function        (gboolean              preview_p);
+static void              CML_compute_next_step    (gint                  size,
+                                                   gdouble             **h,
+                                                   gdouble             **s,
+                                                   gdouble             **v,
+                                                   gdouble             **hn,
+                                                   gdouble             **sn,
+                                                   gdouble             **vn,
+                                                   gdouble             **haux,
+                                                   gdouble             **saux,
+                                                   gdouble             **vaux);
+static gdouble           CML_next_value           (gdouble              *vec,
+                                                   gint                  pos,
+                                                   gint                  size,
+                                                   gdouble               c1,
+                                                   gdouble               c2,
+                                                   CML_PARAM            *param,
+                                                   gdouble               aux);
+static gdouble           logistic_function        (CML_PARAM            *param,
+                                                   gdouble               x,
+                                                   gdouble               power);
 
 
-static gint        CML_explorer_dialog           (void);
-static GtkWidget * CML_dialog_channel_panel_new  (CML_PARAM     *param,
-                                                  gint           channel_id);
-static GtkWidget * CML_dialog_advanced_panel_new (void);
+static gint        CML_explorer_dialog            (GimpProcedureConfig  *config);
+static GtkWidget * CML_dialog_channel_panel_new   (CML_PARAM            *param,
+                                                   gint                  channel_id);
+static GtkWidget * CML_dialog_advanced_panel_new  (void);
 
-static void     CML_explorer_toggle_entry_init   (WidgetEntry   *widget_entry,
-                                                  GtkWidget     *widget,
-                                                  gpointer       value_ptr);
+static void     CML_explorer_toggle_entry_init    (WidgetEntry          *widget_entry,
+                                                   GtkWidget            *widget,
+                                                   gpointer              value_ptr);
 
-static void     CML_explorer_int_entry_init      (WidgetEntry   *widget_entry,
-                                                  GtkWidget     *scale,
-                                                  gpointer        value_ptr);
+static void     CML_explorer_int_entry_init       (WidgetEntry          *widget_entry,
+                                                   GtkWidget            *scale,
+                                                   gpointer               value_ptr);
 
-static void     CML_explorer_double_entry_init   (WidgetEntry   *widget_entry,
-                                                  GtkWidget     *scale,
-                                                  gpointer       value_ptr);
+static void     CML_explorer_double_entry_init    (WidgetEntry          *widget_entry,
+                                                   GtkWidget            *scale,
+                                                   gpointer              value_ptr);
 
-static void     CML_explorer_menu_update         (GtkWidget   *widget,
-                                                  gpointer     data);
-static void     CML_initial_value_menu_update    (GtkWidget   *widget,
-                                                  gpointer     data);
-static void     CML_explorer_menu_entry_init     (WidgetEntry *widget_entry,
-                                                  GtkWidget   *widget,
-                                                  gpointer     value_ptr);
+static void     CML_explorer_menu_update          (GtkWidget             *widget,
+                                                   gpointer               data);
+static void     CML_initial_value_menu_update     (GtkWidget             *widget,
+                                                   gpointer               data);
+static void     CML_explorer_menu_entry_init      (WidgetEntry           *widget_entry,
+                                                   GtkWidget             *widget,
+                                                   gpointer               value_ptr);
 
 static void    preview_update                      (void);
-static void    function_graph_new                  (GtkWidget *widget,
-                                                    gpointer  *data);
-static void    CML_set_or_randomize_seed_callback  (GtkWidget *widget,
-                                                    gpointer   data);
-static void    CML_copy_parameters_callback        (GtkWidget *widget,
-                                                    gpointer   data);
+static void    function_graph_new                  (GtkWidget            *widget,
+                                                    gpointer             *data);
+static void    CML_set_or_randomize_seed_callback  (GtkWidget            *widget,
+                                                    gpointer              data);
+static void    CML_copy_parameters_callback        (GtkWidget            *widget,
+                                                    gpointer              data);
 static void    CML_initial_value_sensitives_update (void);
 
-static void    CML_save_to_file_callback   (GtkWidget        *widget,
-                                            gpointer          data);
-static void    CML_save_to_file_response   (GtkWidget        *dialog,
-                                            gint              response_id,
-                                            gpointer          data);
+static void    CML_save_to_file_callback           (GtkWidget            *widget,
+                                                    GimpProcedureConfig  *config);
+static void    CML_save_to_file_response           (GtkWidget            *dialog,
+                                                    gint                  response_id,
+                                                    GimpProcedureConfig  *config);
 
-static void    CML_preview_update_callback (GtkWidget        *widget,
-                                            gpointer          data);
-static void    CML_load_from_file_callback (GtkWidget        *widget,
-                                            gpointer          data);
-static gboolean CML_load_parameter_file     (const gchar     *filename,
-                                             gboolean         interactive_mode);
-static void    CML_load_from_file_response (GtkWidget        *dialog,
-                                            gint              response_id,
-                                            gpointer          data);
-static gint    parse_line_to_gint          (FILE             *file,
-                                            gboolean         *flag);
-static gdouble parse_line_to_gdouble       (FILE             *file,
-                                            gboolean         *flag);
+static void    CML_preview_update_callback         (GtkWidget            *widget,
+                                                    gpointer              data);
+static void    CML_load_from_file_callback         (GtkWidget            *widget,
+                                                    GimpProcedureConfig  *config);
+static gboolean CML_load_parameter_file            (GFile                *file,
+                                                    gboolean              interactive_mode,
+                                                    GimpProcedureConfig  *config,
+                                                    GError              **error);
+static void    CML_load_from_file_response         (GtkWidget            *dialog,
+                                                    gint                  response_id,
+                                                    GimpProcedureConfig  *config);
+static gint    parse_line_to_gint                  (GDataInputStream         *input,
+                                                    gboolean             *flag,
+                                                    GError              **error);
+static gdouble parse_line_to_gdouble               (GDataInputStream         *input,
+                                                    gboolean             *flag,
+                                                    GError              **error);
 
 
 G_DEFINE_TYPE (Explorer, explorer, GIMP_TYPE_PLUG_IN)
@@ -530,12 +532,16 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
                                       "Shuji Narazaki",
                                       "1997");
 
-      GIMP_PROC_ARG_STRING (procedure, "parameter-uri",
-                            _("Parameter URI"),
-                            _("The local file:// URI of parameter file. "
-                              "CML_explorer makes an image with its settings."),
-                            NULL,
-                            G_PARAM_READWRITE);
+      GIMP_PROC_ARG_FILE (procedure, "parameter-file",
+                          _("Parameter File"),
+                          _("The parameter file from which CML_explorer makes an image. "
+                            "This argument is only used in non-interactive runs."),
+                          G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_BYTES (procedure, "settings-data",
+                               "Settings data",
+                               "TODO: eventually we must implement proper args for every settings",
+                               GIMP_PARAM_READWRITE);
     }
 
   return procedure;
@@ -550,10 +556,11 @@ explorer_run (GimpProcedure        *procedure,
               GimpProcedureConfig  *config,
               gpointer              run_data)
 {
+  GBytes *settings_bytes = NULL;
+  GError *error          = NULL;
+
   if (n_drawables != 1)
     {
-      GError *error = NULL;
-
       g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
@@ -567,12 +574,22 @@ explorer_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
+  gegl_init (NULL, NULL);
+
+  /* Temporary code replacing legacy gimp_[gs]et_data() using an AUX argument.
+   * This doesn't actually fix the "Reset to initial values|factory defaults"
+   * features, but at least makes per-run value storage work.
+   * TODO: eventually we want proper separate arguments as a complete fix.
+   */
+  g_object_get (config, "settings-data", &settings_bytes, NULL);
+  if (settings_bytes != NULL && g_bytes_get_size (settings_bytes) == sizeof (ValueType))
+    VALS = *((ValueType *) g_bytes_get_data (settings_bytes, NULL));
+  g_bytes_unref (settings_bytes);
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &VALS);
-
-      if (! CML_explorer_dialog ())
+      if (! CML_explorer_dialog (config))
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_CANCEL,
                                                  NULL);
@@ -580,31 +597,37 @@ explorer_run (GimpProcedure        *procedure,
 
     case GIMP_RUN_NONINTERACTIVE:
       {
-        gchar *uri;
-        GFile *file;
+        GFile *file = NULL;
 
         g_object_get (config,
-                      "parameter-uri", &uri,
+                      "parameter-file", &file,
                       NULL);
-        file = g_file_new_for_uri (uri);
 
-        if (! CML_load_parameter_file (g_file_peek_path (file), FALSE))
+        if (file == NULL)
+          {
+            g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                         "Procedure '%s' requires \"parameter-file\" argument "
+                         "in non-interactive runs.",
+                         PLUG_IN_PROC);
+
+            return gimp_procedure_new_return_values (procedure,
+                                                     GIMP_PDB_CALLING_ERROR,
+                                                     error);
+          }
+        else if (! CML_load_parameter_file (file, FALSE, config, &error))
           {
             g_object_unref (file);
 
             return gimp_procedure_new_return_values (procedure,
                                                      GIMP_PDB_CALLING_ERROR,
-                                                     NULL);
+                                                     error);
           }
 
-        if (uri)
-          g_free (uri);
         g_object_unref (file);
       }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &VALS);
       break;
     }
 
@@ -612,9 +635,6 @@ explorer_run (GimpProcedure        *procedure,
     {
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush();
-
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &VALS, sizeof (ValueType));
     }
   else
     {
@@ -622,6 +642,10 @@ explorer_run (GimpProcedure        *procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
                                                NULL);
     }
+
+  settings_bytes = g_bytes_new (&VALS, sizeof (ValueType));
+  g_object_set (config, "settings-data", settings_bytes, NULL);
+  g_bytes_unref (settings_bytes);
 
   g_free (mem_chank0);
   g_free (mem_chank1);
@@ -1336,7 +1360,7 @@ logistic_function (CML_PARAM *param,
 
 /* dialog stuff */
 static gint
-CML_explorer_dialog (void)
+CML_explorer_dialog (GimpProcedureConfig *config)
 {
   GtkWidget *dialog;
   GtkWidget *hbox;
@@ -1435,7 +1459,7 @@ CML_explorer_dialog (void)
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (CML_load_from_file_callback),
-                    &VALS);
+                    config);
 
   button = gtk_button_new_with_mnemonic (_("_Save"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
@@ -1443,7 +1467,7 @@ CML_explorer_dialog (void)
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (CML_save_to_file_callback),
-                    &VALS);
+                    config);
 
   {
     GtkWidget *notebook;
@@ -2106,10 +2130,11 @@ CML_preview_update_callback (GtkWidget *widget,
 /*  parameter file saving functions  */
 
 static void
-CML_save_to_file_callback (GtkWidget *widget,
-                           gpointer   data)
+CML_save_to_file_callback (GtkWidget           *widget,
+                           GimpProcedureConfig *config)
 {
   static GtkWidget *dialog = NULL;
+  GFile            *file   = NULL;
 
   if (! dialog)
     {
@@ -2134,27 +2159,38 @@ CML_save_to_file_callback (GtkWidget *widget,
 
       g_signal_connect (dialog, "response",
                         G_CALLBACK (CML_save_to_file_response),
-                        NULL);
+                        config);
       g_signal_connect (dialog, "delete-event",
                         G_CALLBACK (gtk_true),
                         NULL);
     }
 
-  if (strlen (VALS.last_file_name))
-    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
-                                   VALS.last_file_name);
+  g_object_get (config, "parameter-file", &file, NULL);
+  if (file != NULL)
+    {
+      GError *error = NULL;
+
+      gtk_file_chooser_set_file (GTK_FILE_CHOOSER (dialog), file, &error);
+      if (error != NULL)
+        g_printerr ("%s: failed to set file '%s'.\n", PLUG_IN_PROC,
+                    g_file_peek_path (file));
+      g_clear_error (&error);
+    }
+  g_clear_object (&file);
 
   gtk_window_present (GTK_WINDOW (dialog));
 }
 
 static void
-CML_save_to_file_response (GtkWidget *dialog,
-                           gint       response_id,
-                           gpointer   data)
+CML_save_to_file_response (GtkWidget           *dialog,
+                           gint                 response_id,
+                           GimpProcedureConfig *config)
 {
-  gchar *filename;
-  FILE  *file;
-  gint   channel_id;
+  GFile             *file;
+  GFileOutputStream *fstream;
+  GOutputStream     *output;
+  GError            *error = NULL;
+  gint               channel_id;
 
   if (response_id != GTK_RESPONSE_OK)
     {
@@ -2162,23 +2198,37 @@ CML_save_to_file_response (GtkWidget *dialog,
       return;
     }
 
-  filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-  if (! filename)
+  file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
+  if (! file)
     return;
 
-  file = g_fopen (filename, "wb");
+  fstream = g_file_replace (file, NULL, FALSE,
+                            G_FILE_CREATE_REPLACE_DESTINATION,
+                            NULL, &error);
+  output  = G_OUTPUT_STREAM (fstream);
 
-  if (! file)
+  if (error != NULL)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
-      g_free (filename);
+                 g_file_peek_path (file), error->message);
+      g_object_unref (file);
+      g_clear_error (&error);
       return;
     }
 
-  fprintf (file, "; This is a parameter file for CML_explorer\n");
-  fprintf (file, "; File format version: %1.1f\n", PARAM_FILE_FORMAT_VERSION);
-  fprintf (file, ";\n");
+  if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                "; This is a parameter file for CML_explorer\n") ||
+      ! g_output_stream_printf (output, NULL, NULL, &error,
+                                "; File format version: %1.1f\n", PARAM_FILE_FORMAT_VERSION) ||
+      ! g_output_stream_printf (output, NULL, NULL, &error, ";\n"))
+    {
+      g_message (_("Could not write to '%s': %s"),
+                 g_file_peek_path (file), error->message);
+      g_object_unref (file);
+      g_clear_error (&error);
+      g_object_unref (fstream);
+      return;
+    }
 
   for (channel_id = 0; channel_id < 3; channel_id++)
     {
@@ -2186,52 +2236,103 @@ CML_save_to_file_response (GtkWidget *dialog,
 
       CML_PARAM param = *(CML_PARAM *)(channel_params[channel_id]);
 
-      fprintf (file, "\t%s\n", channel_names[channel_id]);
-      fprintf (file, "Function_type    : %d (%s)\n",
-               param.function, function_names[param.function]);
-      fprintf (file, "Compostion_type  : %d (%s)\n",
-               param.composition, composition_names[param.composition]);
-      fprintf (file, "Arrange          : %d (%s)\n",
-               param.arrange, arrange_names[param.arrange]);
-      fprintf (file, "Cyclic_range     : %d (%s)\n",
-               param.cyclic_range, (param.cyclic_range ? "TRUE" : "FALSE"));
-      fprintf (file, "Mod. rate        : %s\n",
-               g_ascii_dtostr (buf, sizeof (buf), param.mod_rate));
-      fprintf (file, "Env_sensitivtiy  : %s\n",
-               g_ascii_dtostr (buf, sizeof (buf), param.env_sensitivity));
-      fprintf (file, "Diffusion dist.  : %d\n", param.diffusion_dist);
-      fprintf (file, "Ch. sensitivity  : %s\n",
-               g_ascii_dtostr (buf, sizeof (buf), param.ch_sensitivity));
-      fprintf (file, "Num. of Subranges: %d\n", param.range_num);
-      fprintf (file, "Power_factor     : %s\n",
-               g_ascii_dtostr (buf, sizeof (buf), param.power));
-      fprintf (file, "Parameter_k      : %s\n",
-               g_ascii_dtostr (buf, sizeof (buf), param.parameter_k));
-      fprintf (file, "Range_low        : %s\n",
-               g_ascii_dtostr (buf, sizeof (buf), param.range_l));
-      fprintf (file, "Range_high       : %s\n",
-               g_ascii_dtostr (buf, sizeof (buf), param.range_h));
-      fprintf (file, "Mutation_rate    : %s\n",
-               g_ascii_dtostr (buf, sizeof (buf), param.mutation_rate));
-      fprintf (file, "Mutation_distance: %s\n",
-               g_ascii_dtostr (buf, sizeof (buf), param.mutation_dist));
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "\t%s\n", channel_names[channel_id]))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Function_type    : %d (%s)\n",
+                                    param.function, function_names[param.function]))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Compostion_type  : %d (%s)\n",
+                                    param.composition, composition_names[param.composition]))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Arrange          : %d (%s)\n",
+                                    param.arrange, arrange_names[param.arrange]))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Cyclic_range     : %d (%s)\n",
+                                    param.cyclic_range, (param.cyclic_range ? "TRUE" : "FALSE")))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Mod. rate        : %s\n",
+                                    g_ascii_dtostr (buf, sizeof (buf), param.mod_rate)))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Env_sensitivtiy  : %s\n",
+                                    g_ascii_dtostr (buf, sizeof (buf), param.env_sensitivity)))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Diffusion dist.  : %d\n", param.diffusion_dist))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Ch. sensitivity  : %s\n",
+                                    g_ascii_dtostr (buf, sizeof (buf), param.ch_sensitivity)))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Num. of Subranges: %d\n", param.range_num))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Power_factor     : %s\n",
+                                    g_ascii_dtostr (buf, sizeof (buf), param.power)))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Parameter_k      : %s\n",
+                                    g_ascii_dtostr (buf, sizeof (buf), param.parameter_k)))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Range_low        : %s\n",
+                                    g_ascii_dtostr (buf, sizeof (buf), param.range_l)))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Range_high       : %s\n",
+                                    g_ascii_dtostr (buf, sizeof (buf), param.range_h)))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Mutation_rate    : %s\n",
+                                    g_ascii_dtostr (buf, sizeof (buf), param.mutation_rate)))
+        break;
+      if (! g_output_stream_printf (output, NULL, NULL, &error,
+                                    "Mutation_distance: %s\n",
+                                    g_ascii_dtostr (buf, sizeof (buf), param.mutation_dist)))
+        break;
     }
 
-  fprintf (file, "\n");
-  fprintf (file, "Initial value  : %d (%s)\n",
-           VALS.initial_value, initial_value_names[VALS.initial_value]);
-  fprintf (file, "Zoom scale     : %d\n", VALS.scale);
-  fprintf (file, "Start offset   : %d\n", VALS.start_offset);
-  fprintf (file, "Random seed    : %d\n", VALS.seed);
-  fclose(file);
+  if (error != NULL)
+    {
+      g_message (_("Could not write to '%s': %s"),
+                 g_file_peek_path (file), error->message);
+      g_object_unref (file);
+      g_clear_error (&error);
+      g_object_unref (fstream);
+      return;
+    }
 
-  g_message (_("Parameters were saved to '%s'"),
-             gimp_filename_to_utf8 (filename));
+  if (! g_output_stream_printf (output, NULL, NULL, &error, "\n") ||
+      ! g_output_stream_printf (output, NULL, NULL, &error,
+                                "Initial value  : %d (%s)\n", VALS.initial_value, initial_value_names[VALS.initial_value]) ||
+      ! g_output_stream_printf (output, NULL, NULL, &error,
+                                "Zoom scale     : %d\n", VALS.scale) ||
+      ! g_output_stream_printf (output, NULL, NULL, &error,
+                                "Start offset   : %d\n", VALS.start_offset) ||
+      ! g_output_stream_printf (output, NULL, NULL, &error,
+                                "Random seed    : %d\n", VALS.seed))
+    {
+      g_message (_("Could not write to '%s': %s"),
+                 g_file_peek_path (file), error->message);
+      g_object_unref (file);
+      g_clear_error (&error);
+      g_object_unref (fstream);
+      return;
+    }
+  g_object_unref (fstream);
 
-  g_strlcpy (VALS.last_file_name, filename,
-             sizeof (VALS.last_file_name));
+  g_message (_("Parameters were saved to '%s'"), g_file_peek_path (file));
 
-  g_free (filename);
+  g_object_set (config, "parameter-file", file, NULL);
+
+  g_clear_object (&file);
 
   gtk_widget_hide (dialog);
 }
@@ -2239,10 +2340,11 @@ CML_save_to_file_response (GtkWidget *dialog,
 /*  parameter file loading functions  */
 
 static void
-CML_load_from_file_callback (GtkWidget *widget,
-                             gpointer   data)
+CML_load_from_file_callback (GtkWidget           *widget,
+                             GimpProcedureConfig *config)
 {
   static GtkWidget *dialog = NULL;
+  GFile            *file   = NULL;
 
   if (! dialog)
     {
@@ -2265,36 +2367,50 @@ CML_load_from_file_callback (GtkWidget *widget,
 
       g_signal_connect (dialog, "response",
                         G_CALLBACK (CML_load_from_file_response),
-                        NULL);
+                        config);
       g_signal_connect (dialog, "delete-event",
                         G_CALLBACK (gtk_true),
                         NULL);
     }
 
-  if (strlen (VALS.last_file_name) > 0)
-    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
-                                   VALS.last_file_name);
+  g_object_get (config, "parameter-file", &file, NULL);
+  if (file != NULL)
+    {
+      GError *error = NULL;
+
+      gtk_file_chooser_set_file (GTK_FILE_CHOOSER (dialog), file, &error);
+      if (error != NULL)
+        g_printerr ("%s: failed to set file '%s'.\n", PLUG_IN_PROC,
+                    g_file_peek_path (file));
+      g_clear_error (&error);
+    }
+  g_clear_object (&file);
 
   gtk_window_present (GTK_WINDOW (dialog));
 }
 
 static void
-CML_load_from_file_response (GtkWidget *dialog,
-                             gint       response_id,
-                             gpointer   data)
+CML_load_from_file_response (GtkWidget           *dialog,
+                             gint                 response_id,
+                             GimpProcedureConfig *config)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      gchar    *filename;
+      GFile    *file = NULL;
       gint      channel_id;
       gboolean  flag = TRUE;
+      GError   *error = NULL;
 
-      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+      file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
 
-      gtk_widget_set_sensitive (dialog, FALSE);
-      flag = CML_load_parameter_file (filename, TRUE);
+      flag = CML_load_parameter_file (file, TRUE, config, &error);
 
-      g_free (filename);
+      if (error != NULL)
+        g_printerr ("%s: loading file '%s' failed: %s\n", PLUG_IN_PROC,
+                    g_file_peek_path (file), error->message);
+
+      g_clear_error (&error);
+      g_clear_object (&file);
 
       if (flag)
         {
@@ -2326,114 +2442,124 @@ CML_load_from_file_response (GtkWidget *dialog,
 }
 
 static gboolean
-CML_load_parameter_file (const gchar *filename,
-                         gboolean     interactive_mode)
+CML_load_parameter_file (GFile                *file,
+                         gboolean              interactive_mode,
+                         GimpProcedureConfig  *config,
+                         GError              **error)
 {
-  FILE      *file;
-  gint       channel_id;
-  gboolean   flag = TRUE;
-  CML_PARAM  ch[3];
-  gint       initial_value = 0;
-  gint       scale = 1;
-  gint       start_offset = 0;
-  gint       seed = 0;
-  gint       old2new_function_id[] = { 3, 4, 5, 6, 7, 9, 10, 11, 1, 2 };
+  GIOStream        *iostream;
+  GDataInputStream *input;
+  gint              channel_id;
+  gboolean          flag = TRUE;
+  CML_PARAM         ch[3];
+  gint              initial_value = 0;
+  gint              scale = 1;
+  gint              start_offset = 0;
+  gint              seed = 0;
+  gint              old2new_function_id[] = { 3, 4, 5, 6, 7, 9, 10, 11, 1, 2 };
+  gdouble           version = 0.99;
 
-  file = g_fopen (filename, "rb");
+  iostream = G_IO_STREAM (g_file_open_readwrite (file, NULL, error));
 
-  if (!file)
+  if (iostream == NULL)
+    return FALSE;
+
+  input = g_data_input_stream_new (g_io_stream_get_input_stream (iostream));
+
+  version = parse_line_to_gdouble (input, &flag, error); /* old format returns 1 */
+  if (version == 1.0)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      version = 0.99;
+    }
+  else if (! flag)
+    {
+      flag = TRUE;
+      g_clear_error (error);
+      version = parse_line_to_gdouble (input, &flag, error); /* maybe new format */
+      if (flag)
+        /* one more comment line */
+        g_free (g_data_input_stream_read_line (input, NULL, NULL, NULL));
+    }
+  if (version == 0)
+    {
+      if (interactive_mode)
+        g_message (_("Error: \"%s\" is not a CML parameter file."), g_file_peek_path (file));
+      g_object_unref (iostream);
       return FALSE;
     }
-  else
+  if (interactive_mode)
     {
-      gchar line[CML_LINE_SIZE];
-      gdouble version = 0.99;
+      if (version < PARAM_FILE_FORMAT_VERSION)
+        g_message (_("Warning: '%s' is an old format file."),
+                   g_file_peek_path (file));
 
-      version = parse_line_to_gdouble (file, &flag); /* old format returns 1 */
-      if (version == 1.0)
-        version = 0.99;
-      else if (! flag)
-        {
-          flag = TRUE;
-          version = parse_line_to_gdouble (file, &flag); /* maybe new format */
-          if (flag)
-            fgets (line, CML_LINE_SIZE - 1, file); /* one more comment line */
-        }
-      if (version == 0)
-        {
-          if (interactive_mode)
-            gimp_message (_("Error: it's not CML parameter file."));
-          fclose(file);
-          return FALSE;
-        }
-      if (interactive_mode)
-        {
-          if (version < PARAM_FILE_FORMAT_VERSION)
-            g_message (_("Warning: '%s' is an old format file."),
-                       gimp_filename_to_utf8 (filename));
+      if (PARAM_FILE_FORMAT_VERSION < version)
+        g_message (_("Warning: '%s' is a parameter file for a newer "
+                     "version of CML Explorer."),
+                   g_file_peek_path (file));
+    }
+  for (channel_id = 0; flag && (channel_id < 3); channel_id++)
+    {
+      gchar *line;
 
-          if (PARAM_FILE_FORMAT_VERSION < version)
-            g_message (_("Warning: '%s' is a parameter file for a newer "
-                         "version of CML Explorer."),
-                       gimp_filename_to_utf8 (filename));
-        }
-      for (channel_id = 0; flag && (channel_id < 3); channel_id++)
+      /* patched by Tim Mooney <mooney@dogbert.cc.ndsu.NoDak.edu> */
+      /* skip channel name */
+      line = g_data_input_stream_read_line (input, NULL, NULL, NULL);
+      if (line == NULL)
         {
-          /* patched by Tim Mooney <mooney@dogbert.cc.ndsu.NoDak.edu> */
-          if (fgets (line, CML_LINE_SIZE - 1, file) == NULL) /* skip channel name */
-            {
-              flag = FALSE;
-              break;
-            }
-          ch[channel_id].function = parse_line_to_gint (file, &flag);
-          if (version < 1.0)
-            ch[channel_id].function = old2new_function_id [ch[channel_id].function];
-          if (1.0 <= version)
-            ch[channel_id].composition = parse_line_to_gint (file, &flag);
-          else
-            ch[channel_id].composition = COMP_NONE;
-          ch[channel_id].arrange = parse_line_to_gint (file, &flag);
-          ch[channel_id].cyclic_range = parse_line_to_gint (file, &flag);
-          ch[channel_id].mod_rate = parse_line_to_gdouble (file, &flag);
-          ch[channel_id].env_sensitivity = parse_line_to_gdouble (file, &flag);
-          if (1.0 <= version)
-            ch[channel_id].diffusion_dist = parse_line_to_gint (file, &flag);
-          else
-            ch[channel_id].diffusion_dist = 2;
-          ch[channel_id].ch_sensitivity = parse_line_to_gdouble (file, &flag);
-          ch[channel_id].range_num = parse_line_to_gint (file, &flag);
-          ch[channel_id].power = parse_line_to_gdouble (file, &flag);
-          ch[channel_id].parameter_k = parse_line_to_gdouble (file, &flag);
-          ch[channel_id].range_l = parse_line_to_gdouble (file, &flag);
-          ch[channel_id].range_h = parse_line_to_gdouble (file, &flag);
-          ch[channel_id].mutation_rate = parse_line_to_gdouble (file, &flag);
-          ch[channel_id].mutation_dist = parse_line_to_gdouble (file, &flag);
+          flag = FALSE;
+          break;
         }
-      if (flag)
-        {
-          gint dummy = 0;
+      ch[channel_id].function = parse_line_to_gint (input, &flag, error);
+      if (version < 1.0)
+        ch[channel_id].function = old2new_function_id [ch[channel_id].function];
+      if (1.0 <= version)
+        ch[channel_id].composition = parse_line_to_gint (input, &flag, error);
+      else
+        ch[channel_id].composition = COMP_NONE;
+      ch[channel_id].arrange = parse_line_to_gint (input, &flag, error);
+      ch[channel_id].cyclic_range = parse_line_to_gint (input, &flag, error);
+      ch[channel_id].mod_rate = parse_line_to_gdouble (input, &flag, error);
+      ch[channel_id].env_sensitivity = parse_line_to_gdouble (input, &flag, error);
+      if (1.0 <= version)
+        ch[channel_id].diffusion_dist = parse_line_to_gint (input, &flag, error);
+      else
+        ch[channel_id].diffusion_dist = 2;
+      ch[channel_id].ch_sensitivity = parse_line_to_gdouble (input, &flag, error);
+      ch[channel_id].range_num = parse_line_to_gint (input, &flag, error);
+      ch[channel_id].power = parse_line_to_gdouble (input, &flag, error);
+      ch[channel_id].parameter_k = parse_line_to_gdouble (input, &flag, error);
+      ch[channel_id].range_l = parse_line_to_gdouble (input, &flag, error);
+      ch[channel_id].range_h = parse_line_to_gdouble (input, &flag, error);
+      ch[channel_id].mutation_rate = parse_line_to_gdouble (input, &flag, error);
+      ch[channel_id].mutation_dist = parse_line_to_gdouble (input, &flag, error);
+    }
+  if (flag)
+    {
+      gchar    *line;
+      gboolean  dummy = TRUE;
 
-          if (fgets (line, CML_LINE_SIZE - 1, file) == NULL) /* skip a line */
-            dummy = 1;
-          else
-            {
-              initial_value = parse_line_to_gint (file, &dummy);
-              scale = parse_line_to_gint (file, &dummy);
-              start_offset = parse_line_to_gint (file, &dummy);
-              seed = parse_line_to_gint (file, &dummy);
-            }
-          if (! dummy)
-            {
-              initial_value = 0;
-              scale = 1;
-              start_offset = 0;
-              seed = 0;
-            }
+      /* skip a line */
+      line = g_data_input_stream_read_line (input, NULL, NULL, NULL);
+      if (line == NULL)
+        {
+          dummy = FALSE;
         }
-      fclose (file);
+      else
+        {
+          g_free (line);
+          initial_value = parse_line_to_gint (input, &dummy, error);
+          scale = parse_line_to_gint (input, &dummy, error);
+          start_offset = parse_line_to_gint (input, &dummy, error);
+          seed = parse_line_to_gint (input, &dummy, error);
+        }
+      if (! dummy)
+        {
+          initial_value = 0;
+          scale = 1;
+          start_offset = 0;
+          seed = 0;
+        }
     }
 
   if (! flag)
@@ -2461,69 +2587,103 @@ CML_load_parameter_file (const gchar *filename,
                   sizeof (CML_PARAM));
         }
 
-      g_strlcpy (VALS.last_file_name, filename,
-                 sizeof (VALS.last_file_name));
+      g_object_set (config, "parameter-file", file, NULL);
     }
+
+  g_object_unref (input);
+  g_object_unref (iostream);
   return flag;
 }
 
 static gint
-parse_line_to_gint (FILE     *file,
-                    gboolean *flag)
+parse_line_to_gint (GDataInputStream  *input,
+                    gboolean          *flag,
+                    GError           **error)
 {
-  gchar  line[CML_LINE_SIZE];
+  gint   i;
+  gchar *line;
   gchar *str;
+  gsize  read;
 
   if (! *flag)
     return 0;
-  if (fgets (line, CML_LINE_SIZE - 1, file) == NULL)
-    {
-      *flag = FALSE;            /* set FALSE if fail to parse */
-      return 0;
-    }
-  str = &line[0];
-  while (*str != ':')
-    if (*str == '\000')
-      {
-        *flag = FALSE;
-        return 0;
-      }
-    else
-      {
-        str++;
-      }
 
-  return atoi (str + 1);
+  line = g_data_input_stream_read_line (input, &read, NULL, error);
+  if (line == NULL)
+    {
+      /* set FALSE if fail to parse */
+      *flag = FALSE;
+      return 0.0;
+    }
+
+  line[read] = '\0';
+  str = line;
+  while (read > 1 && *str != ':')
+    {
+      str++;
+      read--;
+    }
+
+  if (read == 1)
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   "%s: invalid line in the CML file: %s",
+                   PLUG_IN_PROC, line);
+      *flag = FALSE;
+      g_free (line);
+      return 0.0;
+    }
+
+  i = atoi (str + 1);
+  g_free (line);
+
+  return i;
 }
 
 static gdouble
-parse_line_to_gdouble (FILE     *file,
-                       gboolean *flag)
+parse_line_to_gdouble (GDataInputStream  *input,
+                       gboolean          *flag,
+                       GError           **error)
 {
-  gchar    line[CML_LINE_SIZE];
+  gdouble  d;
+  gchar   *line;
   gchar   *str;
+  gsize    read;
 
   if (! *flag)
     return 0.0;
 
-  if (fgets (line, CML_LINE_SIZE - 1, file) == NULL)
+  line = g_data_input_stream_read_line (input, &read, NULL, error);
+
+  if (line == NULL)
     {
-      *flag = FALSE;            /* set FALSE if fail to parse */
+      /* set FALSE if fail to parse */
+      *flag = FALSE;
       return 0.0;
     }
-  str = &line[0];
-  while (*str != ':')
-    if (*str == '\000')
-      {
-        *flag = FALSE;
-        return 0.0;
-      }
-    else
-      {
-        str++;
-      }
 
-  return g_ascii_strtod (str + 1, NULL);
+  line[read] = '\0';
+  str = line;
+  while (read > 1 && *str != ':')
+    {
+      str++;
+      read--;
+    }
+
+  if (read == 1)
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   "%s: invalid line in the CML file: %s",
+                   PLUG_IN_PROC, line);
+      *flag = FALSE;
+      g_free (line);
+      return 0.0;
+    }
+
+  d = g_ascii_strtod (str + 1, NULL);
+  g_free (line);
+
+  return d;
 }
 
 
