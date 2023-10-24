@@ -137,6 +137,11 @@ gimpressionist_create_procedure (GimpPlugIn  *plug_in,
                             _("Preset Name"),
                             NULL,
                             G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_BYTES (procedure, "settings-data",
+                               "Settings data",
+                               "TODO: eventually we must implement proper args for every settings",
+                               GIMP_PARAM_READWRITE);
     }
 
   return procedure;
@@ -166,7 +171,8 @@ gimpressionist_run (GimpProcedure        *procedure,
                     GimpProcedureConfig  *config,
                     gpointer              run_data)
 {
-  gchar *preset_name;
+  GBytes *settings_bytes = NULL;
+  gchar  *preset_name    = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -205,17 +211,23 @@ gimpressionist_run (GimpProcedure        *procedure,
 
   restore_default_values ();
 
+  /* Temporary code replacing legacy gimp_[gs]et_data() using an AUX argument.
+   * This doesn't actually fix the "Reset to initial values|factory defaults"
+   * features, but at least makes per-run value storage work.
+   * TODO: eventually we want proper separate arguments as a complete fix.
+   */
+  g_object_get (config, "settings-data", &settings_bytes, NULL);
+  if (settings_bytes != NULL && g_bytes_get_size (settings_bytes) == sizeof (gimpressionist_vals_t))
+    pcvals = *((gimpressionist_vals_t *) g_bytes_get_data (settings_bytes, NULL));
+  g_bytes_unref (settings_bytes);
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &pcvals);
-
       if (! create_gimpressionist (procedure, config))
-        {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -225,6 +237,7 @@ gimpressionist_run (GimpProcedure        *procedure,
 
       if (select_preset (preset_name))
         {
+          g_free (preset_name);
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_EXECUTION_ERROR,
                                                    NULL);
@@ -232,7 +245,6 @@ gimpressionist_run (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &pcvals);
       break;
     }
 
@@ -254,9 +266,6 @@ gimpressionist_run (GimpProcedure        *procedure,
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
-
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &pcvals, sizeof (gimpressionist_vals_t));
     }
   else
     {
@@ -265,7 +274,12 @@ gimpressionist_run (GimpProcedure        *procedure,
                                                NULL);
     }
 
+  settings_bytes = g_bytes_new (&pcvals, sizeof (gimpressionist_vals_t));
+  g_object_set (config, "settings-data", settings_bytes, NULL);
+  g_bytes_unref (settings_bytes);
+
   /* Resources Cleanup */
+  g_free (preset_name);
   g_rand_free (random_generator);
   free_parsepath_cache ();
   brush_reload (NULL, NULL);
