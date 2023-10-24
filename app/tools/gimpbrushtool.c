@@ -31,6 +31,7 @@
 #include "core/gimp.h"
 #include "core/gimpbezierdesc.h"
 #include "core/gimpbrush.h"
+#include "core/gimpbrushgenerated.h"
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 
@@ -437,10 +438,16 @@ gimp_brush_tool_get_boundary (GimpBrushTool *brush_tool,
       brush_core->dynamics   &&
       brush_core->scale > 0.0)
     {
+      gfloat angle = brush_core->angle;
+
+      /* Generated Brushes should be drawn counter-clockwise */
+      if (GIMP_IS_BRUSH_GENERATED (brush_core->main_brush))
+        angle *= -1;
+        
       return gimp_brush_transform_boundary (brush_core->main_brush,
                                             brush_core->scale,
                                             brush_core->aspect_ratio,
-                                            brush_core->angle,
+                                            angle,
                                             brush_core->reflect,
                                             brush_core->hardness,
                                             width,

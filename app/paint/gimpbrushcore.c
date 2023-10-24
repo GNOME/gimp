@@ -1057,6 +1057,10 @@ gimp_brush_core_get_angle (GimpBrushCore *core)
   if (angle < 0.0)
     angle += 1.0;
 
+  /* Generated Brushes should be drawn counter-clockwise */
+  if (GIMP_IS_BRUSH_GENERATED (core->main_brush))
+    angle = 1.0 - angle;
+
   return angle;
 }
 
