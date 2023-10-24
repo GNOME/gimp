@@ -423,6 +423,11 @@ designer_create_procedure (GimpPlugIn  *plug_in,
                                       "Vidar Madsen",
                                       "Vidar Madsen",
                                       "1999");
+
+      GIMP_PROC_AUX_ARG_BYTES (procedure, "settings-data",
+                               "Settings data",
+                               "TODO: eventually we must implement proper args for every settings",
+                               GIMP_PARAM_READWRITE);
     }
 
   return procedure;
@@ -3166,6 +3171,7 @@ designer_run (GimpProcedure        *procedure,
               GimpProcedureConfig  *config,
               gpointer              run_data)
 {
+  GBytes       *settings_bytes = NULL;
   GimpDrawable *drawable;
   gint          x, y, w, h;
 
@@ -3197,24 +3203,27 @@ designer_run (GimpProcedure        *procedure,
                                                NULL);
     }
 
+  s.com.numtexture = 0;
+  /* Temporary code replacing legacy gimp_[gs]et_data() using an AUX argument.
+   * This doesn't actually fix the "Reset to initial values|factory defaults"
+   * features, but at least makes per-run value storage work.
+   * TODO: eventually we want proper separate arguments as a complete fix.
+   */
+  g_object_get (config, "settings-data", &settings_bytes, NULL);
+  if (settings_bytes != NULL && g_bytes_get_size (settings_bytes) == sizeof (sphere))
+    s = *((sphere *) g_bytes_get_data (settings_bytes, NULL));
+  g_bytes_unref (settings_bytes);
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      s.com.numtexture = 0;
-      gimp_get_data (PLUG_IN_PROC, &s);
-
       if (! sphere_main (drawable))
-        {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      s.com.numtexture = 0;
-      gimp_get_data (PLUG_IN_PROC, &s);
-
       if (s.com.numtexture == 0)
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_EXECUTION_ERROR,
@@ -3227,7 +3236,9 @@ designer_run (GimpProcedure        *procedure,
                                                NULL);
     }
 
-  gimp_set_data (PLUG_IN_PROC, &s, sizeof (s));
+  settings_bytes = g_bytes_new (&s, sizeof (sphere));
+  g_object_set (config, "settings-data", settings_bytes, NULL);
+  g_bytes_unref (settings_bytes);
 
   realrender (drawable);
   gimp_displays_flush ();
