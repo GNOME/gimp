@@ -232,6 +232,7 @@ twain_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
+#if 0
 /* Data structure holding data between runs */
 /* Currently unused... Eventually may be used
  * to track dialog data.
@@ -257,6 +258,7 @@ static TwainValues twainvals =
   0, 0,
   TWPT_RGB
 };
+#endif
 
 /* The standard callback functions */
 TXFR_CB_FUNCS standardCbFuncs =
@@ -416,33 +418,11 @@ twain_run (GimpProcedure        *procedure,
                                                NULL);
     }
 
-  /* How are we running today? */
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-      /* Retrieve values from the last run...
-       * Currently ignored
-       */
-      gimp_get_data (PLUG_IN_NAME, &twainvals);
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      /* Currently, we don't do non-interactive calls.
-       * Bail if someone tries to call us non-interactively
-       */
-      return gimp_procedure_new_return_values (procedure, GIMP_PDB_CALLING_ERROR,
-                                               NULL);
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      /* Retrieve values from the last run...
-       * Currently ignored
-       */
-      gimp_get_data (PLUG_IN_NAME, &twainvals);
-      break;
-
-    default:
-      break;
-    }
+  if (run_mode == GIMP_RUN_NONINTERACTIVE)
+    /* Currently, we don't do non-interactive calls.
+     * Bail if someone tries to call us non-interactively
+     */
+    return gimp_procedure_new_return_values (procedure, GIMP_PDB_CALLING_ERROR, NULL);
 
   /* Have we succeeded so far? */
   if (status == GIMP_PDB_SUCCESS)
@@ -457,11 +437,6 @@ twain_run (GimpProcedure        *procedure,
        * datasource.  Do final Interactive
        * steps.
        */
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        {
-          /* Store variable states for next run */
-          gimp_set_data (PLUG_IN_NAME, &twainvals, sizeof (TwainValues));
-        }
 
       num_images = g_list_length (image_list);
       images     = g_new (GimpImage *, num_images);
