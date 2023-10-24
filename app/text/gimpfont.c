@@ -402,13 +402,6 @@ gimp_font_deserialize_create (GType     type,
 
       font = GIMP_FONT (gimp_container_get_child_by_index (fonts_container, i));
 
-      if (fonthash != NULL && font->hash != NULL && !g_strcmp0 (font->hash, fonthash))
-        {
-          most_similar_font_index = i;
-          g_clear_pointer (&similar_fonts, g_list_free);
-          break;
-        }
-
       /* Some attrs are more identifying than others,
        * hence their higher importance in measuring similarity.
        */
