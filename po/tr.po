@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-09 13:47+0000\n"
-"PO-Revision-Date: 2023-10-14 12:56+0300\n"
+"POT-Creation-Date: 2023-10-22 19:18+0000\n"
+"PO-Revision-Date: 2023-10-24 02:26+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnometurk@gnome.org>\n"
 "Language: tr\n"
@@ -86,7 +86,7 @@ msgid ""
 "a mass production image renderer, an image format converter, etc."
 msgstr ""
 "Birçok yeteneğe sahiptir. Basit bir boyama programı, uzman kalite fotoğraf "
-"rötuş programı, çevrimiçi toplu işleme sistemi, seri üretim görüntü "
+"rötuş programı, çevrim içi toplu işleme sistemi, seri üretim görüntü "
 "gerçekleyici, görüntü biçim dönüştürücü vb. olarak kullanılabilir."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:30
@@ -165,7 +165,7 @@ msgstr ""
 "GIMP ile beraber GNU Genel Kamu Lisansını da almış olmalısınız; eğer "
 "almadıysanız, https://www.gnu.org/licenses/ adresine bakın."
 
-#: app/gimp-update.c:447
+#: app/gimp-update.c:451
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -535,7 +535,7 @@ msgstr "Metin Aracı"
 msgid "Text Editor"
 msgstr "Metin Düzenleyici"
 
-#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:531
+#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:537
 msgid "Tool Options"
 msgstr "Araç Seçenekleri"
 
@@ -1070,7 +1070,7 @@ msgstr[0] "Kanalları En Alta İndir"
 
 #: app/actions/channels-commands.c:384 app/core/gimpimage-new.c:507
 #: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:259
-#: app/widgets/gimplayertreeview.c:1055
+#: app/widgets/gimplayertreeview.c:1070
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s Kanal Kopyası"
@@ -1100,20 +1100,14 @@ msgid "Edit this color"
 msgstr "Bu rengi düzenle"
 
 #: app/actions/colormap-actions.c:52
-#, fuzzy
-#| msgctxt "palette-editor-action"
-#| msgid "_Delete Color"
 msgctxt "colormap-action"
 msgid "_Delete Color..."
-msgstr "_Rengi Sil"
+msgstr "Rengi _Sil..."
 
 #: app/actions/colormap-actions.c:53
-#, fuzzy
-#| msgctxt "colormap-action"
-#| msgid "_Select this Color"
 msgctxt "colormap-action"
 msgid "Delete this color"
-msgstr "Bu Rengi _Seç"
+msgstr "Bu rengi sil"
 
 #: app/actions/colormap-actions.c:61
 msgctxt "colormap-action"
@@ -2462,7 +2456,7 @@ msgstr "240 Saniye"
 #: app/dialogs/layer-add-mask-dialog.c:120
 #: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:311
 #: app/dialogs/preferences-dialog.c:691 app/dialogs/preferences-dialog.c:1262
-#: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:171
+#: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:178
 #: app/dialogs/resize-dialog.c:225 app/dialogs/resolution-calibrate-dialog.c:73
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:128
 #: app/dialogs/template-options-dialog.c:118
@@ -2477,7 +2471,7 @@ msgstr "240 Saniye"
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:463 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
-#: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:327
+#: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:334
 #: app/widgets/gimphelp.c:439 app/widgets/gimphelp.c:774
 #: app/widgets/gimpiconpicker.c:484 app/widgets/gimpmodifierseditor.c:684
 #: app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91
@@ -2542,7 +2536,7 @@ msgstr "İşaretçi için bir açıklama girin"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:630 app/widgets/gimplayertreeview.c:1013
+#: app/display/gimpdisplayshell-dnd.c:630 app/widgets/gimplayertreeview.c:1028
 #: app/widgets/gimptoolbox.c:752 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -6252,7 +6246,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "Yüzen Katmanı veya Maskeyi _Çıpala"
 
-#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1860
+#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1875
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "Yüzen katmanı veya maskeyi çıpala"
@@ -6310,7 +6304,7 @@ msgstr "Görünen tüm katmanları bir katmana birleştir ve saydamlığı kald�
 #: app/actions/layers-actions.c:177
 msgctxt "layers-action"
 msgid "_Discard Text Information"
-msgstr "_Metin Bilgisini Gözden Çıkar"
+msgstr "Metin Bilgisini _Gözden Çıkar"
 
 #: app/actions/layers-actions.c:178
 msgctxt "layers-action"
@@ -6885,7 +6879,7 @@ msgid "Edit Layer Attributes"
 msgstr "Katman Özniteliklerini Düzenle"
 
 #: app/actions/layers-commands.c:355 app/widgets/gimpdrawabletreeview.c:354
-#: app/widgets/gimplayertreeview.c:1142
+#: app/widgets/gimplayertreeview.c:1157
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Yeni Katman"
@@ -7060,7 +7054,7 @@ msgid "Empty Selection"
 msgstr "Boş Seçim"
 
 #: app/actions/layers-commands.c:1824 app/actions/layers-commands.c:1868
-#: app/widgets/gimplayertreeview.c:1663
+#: app/widgets/gimplayertreeview.c:1678
 msgid "Set layers opacity"
 msgstr "Katmanların matlığını ayarla"
 
@@ -9937,10 +9931,10 @@ msgstr "Bu pencereyi %s ekranına taşı"
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
-#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:184
+#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:190
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
 #: app/widgets/gimpcontrollereditor.c:663 app/widgets/gimperrordialog.c:76
-#: app/widgets/gimpfiledialog.c:176 app/widgets/gimpmodifierseditor.c:685
+#: app/widgets/gimpfiledialog.c:178 app/widgets/gimpmodifierseditor.c:685
 #: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
 msgstr "_Tamam"
@@ -10279,7 +10273,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "'%%s' ayrıştırma hatası: satır %s karakterden daha uzun."
 
 #: app/config/gimpconfig-file.c:153 app/config/gimpconfig-file.c:197
-#: app/core/gimp-tags.c:145 app/gui/themes.c:398
+#: app/core/gimp-tags.c:145 app/gui/themes.c:406
 #: app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -10327,8 +10321,8 @@ msgstr "Yol"
 #: app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to "
-"focus\"."
+"receives the focus. This is useful for window managers using \"click to focus"
+"\"."
 msgstr ""
 "Bu özelliği etkinleştirdiğinizde, tıkladığınız görüntünün penceresi etkin "
 "hale gelir. Bu özellik tıklayarak etkinleştirme yapan pencere yöneticilerini "
@@ -10368,10 +10362,8 @@ msgid "Timestamp of the last update check."
 msgstr "Son güncelleme denetiminin zaman damgası."
 
 #: app/config/gimprc-blurbs.h:53
-#, fuzzy
-#| msgid "The image '%s' has an embedded color profile"
 msgid "What to do when opening a file with an embedded ICC color profile."
-msgstr "'%s' görüntüsü yerleşik bir renk profiline sahip"
+msgstr "Gömülü ICC renk profili içeren dosyayı açarken yapılması gerektiği."
 
 #: app/config/gimprc-blurbs.h:56
 msgid "Sets the default folder path for all color profile file dialogs."
@@ -12060,12 +12052,9 @@ msgid "Grid"
 msgstr "Izgara"
 
 #: app/core/core-enums.c:1307
-#, fuzzy
-#| msgctxt "colormap-action"
-#| msgid "Colormap Menu"
 msgctxt "undo-type"
 msgid "Colormap remapping"
-msgstr "Renk Eşlemi Menüsü"
+msgstr "Renk eşlemi yeniden eşleme"
 
 #: app/core/core-enums.c:1308 app/core/core-enums.c:1350
 msgctxt "undo-type"
@@ -12733,7 +12722,7 @@ msgstr "“%s” alt süreci çalıştırılamadı (%s)"
 msgid "tags-locale:C"
 msgstr "tags-locale:tr"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:410
+#: app/core/gimp-tags.c:156 app/gui/themes.c:418
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "'%s': %s kapatılırken hata"
@@ -13286,7 +13275,7 @@ msgstr "'%s' yüklenirken hata: "
 msgid "Error loading '%s'"
 msgstr "'%s' yüklenirken hata"
 
-#: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:95
+#: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101
 #: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
 #: app/xcf/xcf.c:444
@@ -13860,7 +13849,7 @@ msgstr "Renk Eşlemini Geri Al"
 #: app/core/gimpimage-colormap.c:445 app/core/gimppalette.c:561
 msgctxt "undo-type"
 msgid "Change Colormap entry"
-msgstr "Renk Eşlemi Girişini Değiştir"
+msgstr "Renk Eşlemi girdisini değiştir"
 
 #: app/core/gimpimage-colormap.c:467
 msgctxt "undo-type"
@@ -13868,12 +13857,9 @@ msgid "Add Color to Colormap"
 msgstr "Renk Eşlemine Renk Ekle"
 
 #: app/core/gimpimage-colormap.c:492
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Change Colormap entry"
 msgctxt "undo-type"
 msgid "Delete Colormap entry"
-msgstr "Renk Eşlemi Girişini Değiştir"
+msgstr "Renk Eşlemi girdisini sil"
 
 #: app/core/gimpimage-convert-indexed.c:795
 msgid "Cannot convert image: palette is empty."
@@ -15054,51 +15040,51 @@ msgstr "yüzde"
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: app/dialogs/about-dialog.c:126
+#: app/dialogs/about-dialog.c:132
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (revizyon %d)"
 
-#: app/dialogs/about-dialog.c:134
+#: app/dialogs/about-dialog.c:140
 msgid "About GIMP"
 msgstr "GIMP Hakkında"
 
-#: app/dialogs/about-dialog.c:143
+#: app/dialogs/about-dialog.c:149
 msgid "Visit the GIMP website"
 msgstr "GIMP web sitesini ziyaret edin"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:149
+#: app/dialogs/about-dialog.c:155
 msgid "translator-credits"
 msgstr ""
 "Muhammet Kara <muhammetk@gmail.com>\n"
 "Sabri Ünal <libreajans@gmail.com>, 2019-2020, 2022\n"
 "Emin Tufan Çetin <etcetin@gmail.com>, 2019-2022."
 
-#: app/dialogs/about-dialog.c:339
+#: app/dialogs/about-dialog.c:349
 msgid "Update available!"
 msgstr "Güncelleme var!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:369
+#: app/dialogs/about-dialog.c:379
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "GIMP %s revizyon %d (%s tarihinde yayınlandı) indir\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:379
+#: app/dialogs/about-dialog.c:389
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Sürüm açıklaması</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:384
+#: app/dialogs/about-dialog.c:394
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "GIMP %s (%s tarihli) indir\n"
 
-#: app/dialogs/about-dialog.c:409 app/dialogs/about-dialog.c:430
+#: app/dialogs/about-dialog.c:419 app/dialogs/about-dialog.c:440
 msgid "Check for updates"
 msgstr "Güncellemeleri denetle"
 
@@ -15107,16 +15093,16 @@ msgstr "Güncellemeleri denetle"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:449
+#: app/dialogs/about-dialog.c:459
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Son denetim: %s %s"
 
-#: app/dialogs/about-dialog.c:676
+#: app/dialogs/about-dialog.c:686
 msgid "GIMP is brought to you by"
 msgstr "GIMP'i sizlere sunanlar"
 
-#: app/dialogs/about-dialog.c:752
+#: app/dialogs/about-dialog.c:762
 #, c-format
 msgid ""
 "This is an unstable development release\n"
@@ -15280,7 +15266,7 @@ msgstr "D_önüştür"
 #: app/dialogs/color-profile-import-dialog.c:130
 #, c-format
 msgid "The image '%s' has an embedded color profile"
-msgstr "'%s' görüntüsü yerleşik bir renk profiline sahip"
+msgstr "'%s' görüntüsü gömülü renk profiline sahip"
 
 #: app/dialogs/color-profile-import-dialog.c:151
 msgid "Built-in Profile"
@@ -15399,7 +15385,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "'%s', listeden kaldırmak ve diskten silmek istediğinize emin misiniz?"
 
-#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:181
+#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:187
 #: app/gui/gui-message.c:268
 msgid "GIMP Message"
 msgstr "GIMP İletisi"
@@ -17121,7 +17107,7 @@ msgstr "_Yardım düğmelerini göster"
 
 #: app/dialogs/preferences-dialog.c:2717
 msgid "Use the online version"
-msgstr "Çevrimiçi sürümü kullan"
+msgstr "Çevrim içi sürümü kullan"
 
 #: app/dialogs/preferences-dialog.c:2718
 msgid "Use a locally installed copy"
@@ -17755,75 +17741,75 @@ msgstr "_Y çözünürlüğü:"
 msgid "pixels/%a"
 msgstr "piksel/%a"
 
-#: app/dialogs/quit-dialog.c:164
+#: app/dialogs/quit-dialog.c:171
 msgid "Quit GIMP"
 msgstr "GIMP'ten Çık"
 
-#: app/dialogs/quit-dialog.c:164
+#: app/dialogs/quit-dialog.c:171
 msgid "Close All Images"
 msgstr "Tüm Görüntüleri Kapat"
 
-#: app/dialogs/quit-dialog.c:256
+#: app/dialogs/quit-dialog.c:283
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "GIMP'ten şimdi çıkarsanız, değişiklikler kaybedilecektir."
 
-#: app/dialogs/quit-dialog.c:259
+#: app/dialogs/quit-dialog.c:286
 msgid "If you close these images now, changes will be lost."
 msgstr "Eğer görüntüleri şimdi kapatırsanız, değişiklikler kaybedilecektir."
 
 #. TRANSLATORS: unless your language
 #. msgstr[0] applies to 1 only (as
 #. in English), replace "one" with %d.
-#: app/dialogs/quit-dialog.c:346
+#: app/dialogs/quit-dialog.c:373
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "Değişikliklerin kaydedilmediği %d görüntü:"
 
-#: app/dialogs/quit-dialog.c:357
+#: app/dialogs/quit-dialog.c:384
 #, c-format
 msgid "Press %s to quit."
 msgstr "Çıkmak için %s tuşuna basın."
 
-#: app/dialogs/quit-dialog.c:360
+#: app/dialogs/quit-dialog.c:387
 #, c-format
 msgid "Press %s to close all images."
 msgstr "Tüm görüntüleri kapatmak için %s tuşuna basın."
 
-#: app/dialogs/quit-dialog.c:364 app/dialogs/user-install-dialog.c:90
+#: app/dialogs/quit-dialog.c:391 app/dialogs/user-install-dialog.c:90
 msgid "_Quit"
 msgstr "Çı_k"
 
-#: app/dialogs/quit-dialog.c:364
+#: app/dialogs/quit-dialog.c:391
 msgid "Cl_ose"
 msgstr "Ka_pat"
 
-#: app/dialogs/quit-dialog.c:388
+#: app/dialogs/quit-dialog.c:415
 #, c-format
 msgid "Press %s to discard all changes and quit."
 msgstr "Tüm değişiklikleri gözden çıkarmak ve çıkmak için %s tuşuna basın."
 
-#: app/dialogs/quit-dialog.c:391
+#: app/dialogs/quit-dialog.c:418
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr ""
 "Tüm değişiklikleri gözden çıkarmak ve tüm görüntüleri kapatmak için %s "
 "tuşuna basın."
 
-#: app/dialogs/quit-dialog.c:399 app/display/gimpdisplayshell-close.c:182
+#: app/dialogs/quit-dialog.c:426 app/display/gimpdisplayshell-close.c:182
 msgid "_Discard Changes"
 msgstr "Değişiklikleri _Gözden Çıkar"
 
-#: app/dialogs/quit-dialog.c:497
+#: app/dialogs/quit-dialog.c:524
 #, c-format
 msgid "Exported to %s"
 msgstr "%s konumuna dışa aktarıldı"
 
-#: app/dialogs/quit-dialog.c:598
+#: app/dialogs/quit-dialog.c:625
 msgid "Save this image"
 msgstr "Bu görüntüyü kaydet"
 
-#: app/dialogs/quit-dialog.c:600
+#: app/dialogs/quit-dialog.c:627
 msgid "Save as"
 msgstr "Farklı Kaydet"
 
@@ -18139,8 +18125,8 @@ msgid ""
 "This welcome dialog is only shown at first launch. You can show it again "
 "from the \"Help\" menu."
 msgstr ""
-"Bu hoş geldiniz iletişim kutusu yalnızca ilk başlatmada gösterilir. "
-"\"Yardım\" menüsünden yeniden gösterebilirsiniz."
+"Bu hoş geldiniz iletişim kutusu yalnızca ilk başlatmada gösterilir. \"Yardım"
+"\" menüsünden yeniden gösterebilirsiniz."
 
 #: app/display/display-enums.c:89
 msgctxt "compass-orientation"
@@ -18480,12 +18466,12 @@ msgid "Drop color to layer"
 msgstr "Rengi katmana bırak"
 
 #: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1424
-#: app/widgets/gimplayertreeview.c:1004
+#: app/widgets/gimplayertreeview.c:1019
 msgid "Drop layers"
 msgstr "Katmanları Düşür"
 
 #: app/display/gimpdisplayshell-dnd.c:723
-#: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:1081
+#: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:1096
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Düşürülmüş Tampon"
@@ -19169,15 +19155,15 @@ msgstr "Eksi y konumu: %d, %s katmanı için düzeltildi."
 msgid "GIMP brush"
 msgstr "GIMP fırçası"
 
-#: app/file-data/file-data.c:196 app/file-data/file-data.c:250
+#: app/file-data/file-data.c:201 app/file-data/file-data.c:255
 msgid "GIMP brush (animated)"
 msgstr "GIMP fırçası (hareketli)"
 
-#: app/file-data/file-data.c:340 app/file-data/file-data.c:393
+#: app/file-data/file-data.c:345 app/file-data/file-data.c:398
 msgid "GIMP pattern"
 msgstr "GIMP deseni"
 
-#: app/file-data/file-data.c:470
+#: app/file-data/file-data.c:475
 msgid "GIMP extension"
 msgstr "GIMP uzantısı"
 
@@ -20100,19 +20086,19 @@ msgstr "Değer"
 msgid "The alpha value"
 msgstr "Alfa değeri"
 
-#: app/gui/gui.c:320
+#: app/gui/gui.c:326
 msgid "Image Recovery"
 msgstr "Görüntü Kurtar"
 
-#: app/gui/gui.c:322
+#: app/gui/gui.c:328
 msgid "_Discard"
 msgstr "_Gözden Çıkar"
 
-#: app/gui/gui.c:323
+#: app/gui/gui.c:329
 msgid "_Recover"
 msgstr "Kurta_r"
 
-#: app/gui/gui.c:334
+#: app/gui/gui.c:340
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "Hımm! GIMP bir çökmeden kurtulmuş gibi görünüyor!"
 
@@ -20122,7 +20108,7 @@ msgstr "Hımm! GIMP bir çökmeden kurtulmuş gibi görünüyor!"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:343
+#: app/gui/gui.c:349
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -20133,11 +20119,11 @@ msgstr[0] "%d görüntü çökmeden etkilendi. Denemek ve kurtarmak ister misini
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:551
+#: app/gui/gui.c:562
 msgid "Documents"
 msgstr "Belgeler"
 
-#: app/gui/splash.c:170
+#: app/gui/splash.c:181
 msgid "GIMP Startup"
 msgstr "GIMP Başlangıcı"
 
@@ -20955,8 +20941,8 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için yanlış bir değer türü ile "
 "çağrıldı (#%d). İstenen %s, olan %s."
@@ -22181,7 +22167,7 @@ msgstr "Hava Fırçası Aracı: Değişken basınç ile boyarken bir fırça kul
 msgid "_Airbrush"
 msgstr "_Hava Fırçası"
 
-#: app/tools/gimpalignoptions.c:148 app/tools/gimpalignoptions.c:451
+#: app/tools/gimpalignoptions.c:148 app/tools/gimpalignoptions.c:453
 msgid "Relative to"
 msgstr "Göre"
 
@@ -22219,96 +22205,96 @@ msgstr ""
 "kutusunu kullan"
 
 #. Selected objects
-#: app/tools/gimpalignoptions.c:383
+#: app/tools/gimpalignoptions.c:385
 msgid "Targets"
 msgstr "Hedefler"
 
-#: app/tools/gimpalignoptions.c:405
+#: app/tools/gimpalignoptions.c:407
 msgid "Set anchor point of targets"
 msgstr "Hedeflerin çapa noktasını ayarla"
 
 #. TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd.
-#: app/tools/gimpalignoptions.c:424
+#: app/tools/gimpalignoptions.c:426
 #, c-format
 msgid "%s-pick target guides (%s-%s to add more)"
 msgstr "Hedef kılavuzları %s-tık ile seç (%s-%s ile daha çoğunu ekle)"
 
 #. Align frame
-#: app/tools/gimpalignoptions.c:441
+#: app/tools/gimpalignoptions.c:443
 msgid "Align"
 msgstr "Hizala"
 
-#: app/tools/gimpalignoptions.c:465
+#: app/tools/gimpalignoptions.c:467
 msgid "Select the reference object"
 msgstr "Referans nesneyi seç"
 
-#: app/tools/gimpalignoptions.c:483
+#: app/tools/gimpalignoptions.c:485
 msgid "Align anchor points of targets on left edge of reference"
 msgstr "Hedeflerin çapa noktalarını referansın sol kenarına hizala"
 
-#: app/tools/gimpalignoptions.c:487
+#: app/tools/gimpalignoptions.c:489
 msgid "Align anchor points of targets on vertical middle of reference"
 msgstr "Hedeflerin çapa noktalarını referansın dikey ortasına hizala"
 
-#: app/tools/gimpalignoptions.c:491
+#: app/tools/gimpalignoptions.c:493
 msgid "Align anchor points of targets on right edge of reference"
 msgstr "Hedeflerin çapa noktalarını referansın sağ kenarına hizala"
 
-#: app/tools/gimpalignoptions.c:500
+#: app/tools/gimpalignoptions.c:502
 msgid "Align anchor points of targets on top edge of reference"
 msgstr "Hedeflerin çapa noktalarını referansın üst kenarına hizala"
 
-#: app/tools/gimpalignoptions.c:504
+#: app/tools/gimpalignoptions.c:506
 msgid "Align anchor points of targets on horizontal middle of reference"
 msgstr "Hedeflerin çapa noktalarını referansın yatay ortasına hizala"
 
-#: app/tools/gimpalignoptions.c:508
+#: app/tools/gimpalignoptions.c:510
 msgid "Align anchor points of targets on bottom of reference"
 msgstr "Hedeflerin çapa noktalarını referansın alt kenarına hizala"
 
 #. Distribute frame
-#: app/tools/gimpalignoptions.c:511
+#: app/tools/gimpalignoptions.c:513
 msgid "Distribute"
 msgstr "Dağıt"
 
-#: app/tools/gimpalignoptions.c:526
+#: app/tools/gimpalignoptions.c:528
 msgid "Distribute anchor points of targets evenly in the horizontal"
 msgstr "Hedeflerin çapa noktalarını yatayda eşit olarak dağıt"
 
-#: app/tools/gimpalignoptions.c:529
+#: app/tools/gimpalignoptions.c:531
 msgid "Distribute horizontally with even horizontal gaps"
 msgstr "Eşit yatay boşluklarla yatay olarak dağıt"
 
-#: app/tools/gimpalignoptions.c:538
+#: app/tools/gimpalignoptions.c:540
 msgid "Distribute anchor points of targets evenly in the vertical"
 msgstr "Hedeflerin çapa noktalarını dikeyde eşit olarak dağıt"
 
-#: app/tools/gimpalignoptions.c:541
+#: app/tools/gimpalignoptions.c:543
 msgid "Distribute vertically with even vertical gaps"
 msgstr "Eşit dikey boşluklarla dikey olarak dağıt"
 
-#: app/tools/gimpalignoptions.c:796
+#: app/tools/gimpalignoptions.c:798
 #, c-format
 msgid "1 guide will be aligned or distributed"
 msgid_plural "%d guides will be aligned or distributed"
 msgstr[0] "%d kılavuz hizalanacak ya da dağıtılacak"
 
-#: app/tools/gimpalignoptions.c:822
+#: app/tools/gimpalignoptions.c:824
 #, c-format
 msgid "Reference layer: %s"
 msgstr "Referans katman: %s"
 
-#: app/tools/gimpalignoptions.c:825
+#: app/tools/gimpalignoptions.c:827
 #, c-format
 msgid "Reference channel: %s"
 msgstr "Referans kanal: %s"
 
-#: app/tools/gimpalignoptions.c:828
+#: app/tools/gimpalignoptions.c:830
 #, c-format
 msgid "Reference path: %s"
 msgstr "Referans yol: %s"
 
-#: app/tools/gimpalignoptions.c:831
+#: app/tools/gimpalignoptions.c:833
 msgid "Reference guide"
 msgstr "Referans kılavuzu"
 
@@ -26030,18 +26016,15 @@ msgstr "yok"
 #: app/widgets/gimpcolormapeditor.c:244
 #, c-format
 msgid "Edit colormap entry #%d"
-msgstr "Renk eşlemi girişini düzenle #%d"
+msgstr "Renk eşlemi girdisini düzenle #%d"
 
 #: app/widgets/gimpcolormapeditor.c:252
 msgid "Edit Colormap Entry"
-msgstr "Renk Eşlemi Girişini Düzenle"
+msgstr "Renk Eşlemi Girdisini Düzenle"
 
 #: app/widgets/gimpcolormapeditor.c:468
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Set a color profile on the image"
 msgid "The color is used in this indexed image"
-msgstr "Görüntüde bir renk profili ayarla"
+msgstr "İndeksli görüntüde kullanılan renk"
 
 #: app/widgets/gimpcolormapselection.c:238
 msgid "Color index:"
@@ -27108,20 +27091,20 @@ msgstr "Uzantıya Göre"
 msgid "All export images"
 msgstr "Tüm dışa aktarılan görüntüler"
 
-#: app/widgets/gimpfiledialog.c:350
+#: app/widgets/gimpfiledialog.c:357
 msgid "_Help"
 msgstr "_Yardım"
 
-#: app/widgets/gimpfiledialog.c:761
+#: app/widgets/gimpfiledialog.c:777
 msgid "Show _All Files"
 msgstr "Tüm _Dosyaları Göster"
 
-#: app/widgets/gimpfiledialog.c:793
+#: app/widgets/gimpfiledialog.c:809
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "_Dosya Türünü Seç (%s)"
 
-#: app/widgets/gimpfiledialog.c:795
+#: app/widgets/gimpfiledialog.c:811
 msgid "Select File _Type"
 msgstr "Dosya _Türünü Seç"
 
@@ -27311,7 +27294,7 @@ msgid ""
 "You may either select a manual in another language or read the online "
 "version."
 msgstr ""
-"Başka dildeki bir kılavuzu seçebilir veya çevrimiçi sürümü okuyabilirsiniz."
+"Başka dildeki bir kılavuzu seçebilir veya çevrim içi sürümü okuyabilirsiniz."
 
 #: app/widgets/gimphelp.c:815
 msgid ""
@@ -27319,11 +27302,11 @@ msgid ""
 "preferences to use the online version."
 msgstr ""
 "Eklenebilir yardım paketini kurabilirsiniz ya da tercihlerinizi değiştirerek "
-"çevrimiçi sürümü kullanabilirsiniz."
+"çevrim içi sürümü kullanabilirsiniz."
 
 #: app/widgets/gimphelp.c:820
 msgid "Read _Online"
-msgstr "Çevrimiçi _Oku"
+msgstr "Çevrim İçi _Oku"
 
 #: app/widgets/gimphistogrameditor.c:135
 msgid "Mean:"
@@ -27510,66 +27493,66 @@ msgstr "Alfa kanalının kilidini aç"
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Ögeye Özel Alfa Kanalı Kilidi Ayarla"
 
-#: app/widgets/gimplayertreeview.c:1247
+#: app/widgets/gimplayertreeview.c:1262
 msgid "search"
 msgstr "ara"
 
 # Glob burada program adı: https://man7.org/linux/man-pages/man7/glob.7.html
-#: app/widgets/gimplayertreeview.c:1248
+#: app/widgets/gimplayertreeview.c:1263
 msgid "glob"
 msgstr "glob"
 
 # Kurallı ifade programının adı, çevirmeyin!
-#: app/widgets/gimplayertreeview.c:1248
+#: app/widgets/gimplayertreeview.c:1263
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimplayertreeview.c:1352 app/widgets/gimplayertreeview.c:1365
+#: app/widgets/gimplayertreeview.c:1367 app/widgets/gimplayertreeview.c:1380
 msgid "Select layers by text search"
 msgstr "Metin aramasıyla katmanları seç"
 
-#: app/widgets/gimplayertreeview.c:1354 app/widgets/gimplayertreeview.c:1367
+#: app/widgets/gimplayertreeview.c:1369 app/widgets/gimplayertreeview.c:1382
 msgid "Text search"
 msgstr "Metin ara"
 
-#: app/widgets/gimplayertreeview.c:1371
+#: app/widgets/gimplayertreeview.c:1386
 msgid "Select layers by glob patterns"
 msgstr "Glob desenleriyle katmanları seç"
 
-#: app/widgets/gimplayertreeview.c:1373
+#: app/widgets/gimplayertreeview.c:1388
 msgid "Glob pattern search"
 msgstr "Glob desen arama"
 
-#: app/widgets/gimplayertreeview.c:1377
+#: app/widgets/gimplayertreeview.c:1392
 msgid "Select layers by regular expressions"
 msgstr "Düzenli ifadelerle katmanları seç"
 
-#: app/widgets/gimplayertreeview.c:1379
+#: app/widgets/gimplayertreeview.c:1394
 msgid "Regular Expression search"
 msgstr "Düzenli İfade ara"
 
-#: app/widgets/gimplayertreeview.c:1443
+#: app/widgets/gimplayertreeview.c:1458
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Geçersiz düzenli ifade: %s\n"
 
-#: app/widgets/gimplayertreeview.c:1606
+#: app/widgets/gimplayertreeview.c:1621
 msgid "Set layers mode"
 msgstr "Katman kipini ayarla"
 
-#: app/widgets/gimplayertreeview.c:1852
+#: app/widgets/gimplayertreeview.c:1867
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "Yüzen maskeyi çıpala"
 
-#: app/widgets/gimplayertreeview.c:1855
+#: app/widgets/gimplayertreeview.c:1870
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Yüzen katmanı çıpala"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:2116
+#: app/widgets/gimplayertreeview.c:2131
 msgid "No channels to create a layer mask from."
 msgstr "Katman maskesi oluşturulacak kanal yok."
 
@@ -27642,7 +27625,7 @@ msgstr "Palet Rengini Düzenle"
 
 #: app/widgets/gimppaletteeditor.c:492
 msgid "Edit Color Palette Entry"
-msgstr "Renk Paleti Girişini Düzenle"
+msgstr "Renk Paleti Girdisini Düzenle"
 
 #: app/widgets/gimppdbdialog.c:319
 msgid "The corresponding plug-in may have crashed."
@@ -28193,22 +28176,22 @@ msgstr "Palet seçim iletişim kutusunu aç"
 msgid "Open the font selection dialog"
 msgstr "Yazı tipi seçim iletişim kutusunu aç"
 
-#: app/widgets/gimpwidgets-utils.c:658
+#: app/widgets/gimpwidgets-utils.c:665
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (%s dene)"
 
-#: app/widgets/gimpwidgets-utils.c:658
+#: app/widgets/gimpwidgets-utils.c:665
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:662
+#: app/widgets/gimpwidgets-utils.c:669
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (%s, %s dene)"
 
-#: app/widgets/gimpwidgets-utils.c:666
+#: app/widgets/gimpwidgets-utils.c:673
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (%s, %s, %s dene)"
@@ -28218,12 +28201,12 @@ msgstr "%s (%s, %s, %s dene)"
 #. * (e.g. a checkbox settings) displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1460
+#: app/widgets/gimpwidgets-utils.c:1467
 #, c-format
 msgid "Switch \"%s\" ON"
 msgstr "\"%s\" Aç"
 
-#: app/widgets/gimpwidgets-utils.c:1462
+#: app/widgets/gimpwidgets-utils.c:1469
 #, c-format
 msgid "Switch \"%s\" OFF"
 msgstr "\"%s\" Kapat"
@@ -28233,7 +28216,7 @@ msgstr "\"%s\" Kapat"
 #. * multi-choice settings displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1481
+#: app/widgets/gimpwidgets-utils.c:1488
 #, c-format
 msgid "Select \"%s\""
 msgstr "\"%s\" seç"
@@ -28241,27 +28224,27 @@ msgstr "\"%s\" seç"
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
-#: app/widgets/gimpwidgets-utils.c:1504
+#: app/widgets/gimpwidgets-utils.c:1511
 #, c-format
 msgid "Activate the \"%s\" tool"
 msgstr "\"%s\" aracını etkinleştir"
 
-#: app/widgets/gimpwidgets-utils.c:2103
+#: app/widgets/gimpwidgets-utils.c:2110
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Yerleşik gri tonlamalı (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2110
+#: app/widgets/gimpwidgets-utils.c:2117
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Yerleşik RGB (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2130
+#: app/widgets/gimpwidgets-utils.c:2137
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Yeğlenen gri tonlamalı (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2139
+#: app/widgets/gimpwidgets-utils.c:2146
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Yeğlenen RGB (%s)"
@@ -28997,7 +28980,6 @@ msgstr "Yollar Menüsü"
 #~ msgstr ""
 #~ "Gömülü kullanım profillerinin bir dosya açarken nasıl ele alınacağı."
 
-#, c-format
 #~ msgid "Skipping '%s': wrong shortcutsrc file format version."
 #~ msgstr "'%s' geçiliyor: yanlış shortcutsrc dosya biçimi sürümü."
 
@@ -29007,71 +28989,57 @@ msgstr "Yollar Menüsü"
 #~ msgid "Invalid empty paint dynamics name"
 #~ msgstr "Geçersiz boş boyama hareketi adı"
 
-#, c-format
 #~ msgid "Paint dynamics '%s' not found"
 #~ msgstr "'%s' boyama hareketleri bulunamadı"
 
-#, c-format
 #~ msgid "Paint dynamics '%s' is not editable"
 #~ msgstr "'%s' boyama hareketleri düzenlenebilir değil"
 
-#, c-format
 #~ msgid "Paint dynamics '%s' is not renamable"
 #~ msgstr "'%s' boyama hareketleri yeniden adlandırılabilir değil"
 
 #~ msgid "Invalid empty MyPaint brush name"
 #~ msgstr "Geçersiz boş MyPaint fırça adı"
 
-#, c-format
 #~ msgid "MyPaint brush '%s' not found"
 #~ msgstr "'%s' MyPaint fırçası bulunamadı"
 
-#, c-format
 #~ msgid "MyPaint brush '%s' is not editable"
 #~ msgstr "'%s' MyPaint fırçası düzenlenebilir değil"
 
-#, c-format
 #~ msgid "MyPaint brush '%s' is not renamable"
 #~ msgstr "'%s' MyPaint fırçası yeniden adlandırılabilir değil"
 
 #~ msgid "Invalid empty pattern name"
 #~ msgstr "Geçersiz boş desen adı"
 
-#, c-format
 #~ msgid "Pattern '%s' not found"
 #~ msgstr "'%s' deseni bulunamadı"
 
 #~ msgid "Invalid empty gradient name"
 #~ msgstr "Geçersiz boş renk geçişi adı"
 
-#, c-format
 #~ msgid "Gradient '%s' not found"
 #~ msgstr "'%s' renk geçişi bulunamadı"
 
-#, c-format
 #~ msgid "Gradient '%s' is not editable"
 #~ msgstr "'%s' renk geçişi düzenlenebilir değil"
 
-#, c-format
 #~ msgid "Gradient '%s' is not renamable"
 #~ msgstr "'%s' renk geçişi yeniden adlandırılabilir değil"
 
-#, c-format
 #~ msgid "Palette '%s' not found"
 #~ msgstr "'%s' paleti bulunamadı"
 
-#, c-format
 #~ msgid "Palette '%s' is not editable"
 #~ msgstr "'%s' paleti düzenlenebilir değil"
 
-#, c-format
 #~ msgid "Palette '%s' is not renamable"
 #~ msgstr "'%s' paleti yeniden adlandırılabilir değil"
 
 #~ msgid "Invalid empty font name"
 #~ msgstr "Geçersiz boş yazı tipi adı"
 
-#, c-format
 #~ msgid "Font '%s' not found"
 #~ msgstr "'%s' yazı tipi bulunamadı"
 
@@ -29086,7 +29054,6 @@ msgstr "Yollar Menüsü"
 #~ msgid "_Preferences Dialog"
 #~ msgstr "_Tercihler İletişim Kutusu"
 
-#, c-format
 #~ msgid "Rotate %s?"
 #~ msgstr "%s döndürülsün mü?"
 
