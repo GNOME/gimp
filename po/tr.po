@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-19 03:17+0000\n"
-"PO-Revision-Date: 2023-10-19 21:47+0300\n"
+"POT-Creation-Date: 2023-10-22 23:35+0000\n"
+"PO-Revision-Date: 2023-10-24 02:25+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -83,7 +83,7 @@ msgid ""
 "a mass production image renderer, an image format converter, etc."
 msgstr ""
 "Birçok yeteneğe sahiptir. Basit bir boyama programı, uzman kalite fotoğraf "
-"rötuş programı, çevrimiçi toplu işleme sistemi, seri üretim görüntü "
+"rötuş programı, çevrim içi toplu işleme sistemi, seri üretim görüntü "
 "gerçekleyici, görüntü biçim dönüştürücü vb. olarak kullanılabilir."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:5
@@ -6623,7 +6623,7 @@ msgstr "Görüntüye bir renk profili uygula"
 #: ../app/actions/image-actions.c:103
 msgctxt "image-action"
 msgid "_Discard Color Profile"
-msgstr "Renk Profilinden _Vazgeç"
+msgstr "Renk Profilini _Gözden Çıkar"
 
 #: ../app/actions/image-actions.c:104
 msgctxt "image-action"
@@ -7338,7 +7338,7 @@ msgstr "Görünen bütün katmanları bir katmana birleştir ve saydamlığı ka
 #: ../app/actions/layers-actions.c:214
 msgctxt "layers-action"
 msgid "_Discard Text Information"
-msgstr "_Metin Bilgisinden Vazgeç"
+msgstr "Metin Bilgisini _Gözden Çıkar"
 
 #: ../app/actions/layers-actions.c:215
 msgctxt "layers-action"
@@ -12050,7 +12050,7 @@ msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "'Görünen Katmanları Birleştir' iletişim kutusu için öntanımlı 'Görünmez "
-"katmanlardan vazgeç' durumunu ayarlar."
+"katmanları gözden çıkar' durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:610
 msgid "Sets the default channel name for the 'New Channel' dialog."
@@ -15714,7 +15714,7 @@ msgstr "_Koru"
 #: ../app/dialogs/color-profile-import-dialog.c:122
 #, c-format
 msgid "The image '%s' has an embedded color profile"
-msgstr "'%s' görüntüsü yerleşik bir renk profiline sahip"
+msgstr "'%s' görüntüsü gömülü renk profiline sahip"
 
 #: ../app/dialogs/color-profile-import-dialog.c:185
 msgid "_Don't ask me again"
@@ -15966,7 +15966,7 @@ msgstr "Görüntüyü her şeye rağmen bu adı kullanarak kaydetmek istiyor mus
 
 #: ../app/dialogs/file-save-dialog.c:794
 msgid "Saving canceled"
-msgstr "Kaydetmeden vazgeçildi"
+msgstr "Kaydetme iptal edildi"
 
 #: ../app/dialogs/file-save-dialog.c:800 ../app/widgets/gimpdnd-xds.c:190
 #, c-format
@@ -16025,7 +16025,7 @@ msgstr "Yalnızca etkin _küme içinde birleştir"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:151
 msgid "_Discard invisible layers"
-msgstr "Görünmez katmanlardan _vazgeç"
+msgstr "Görünmez katmanları _gözden çıkar"
 
 #: ../app/dialogs/image-new-dialog.c:100
 msgid "Create a New Image"
@@ -17305,7 +17305,7 @@ msgstr "Yalnızca etkin küme içinde birleştir"
 
 #: ../app/dialogs/preferences-dialog.c:2399
 msgid "Discard invisible layers"
-msgstr "Görünmez katmanlardan vazgeç"
+msgstr "Görünmez katmanları gözden çıkar"
 
 #. New Channel Dialog
 #: ../app/dialogs/preferences-dialog.c:2403
@@ -17442,7 +17442,7 @@ msgstr "_Yardım düğmelerini göster"
 
 #: ../app/dialogs/preferences-dialog.c:2562
 msgid "Use the online version"
-msgstr "Çevrimiçi sürümü kullan"
+msgstr "Çevrim içi sürümü kullan"
 
 #: ../app/dialogs/preferences-dialog.c:2563
 msgid "Use a locally installed copy"
@@ -18076,18 +18076,18 @@ msgstr "Ka_pat"
 #: ../app/dialogs/quit-dialog.c:388
 #, c-format
 msgid "Press %s to discard all changes and quit."
-msgstr "Bütün değişikliklerden vazgeçmek ve çıkmak için %s tuşuna basın."
+msgstr "Bütün değişiklikleri gözden çıkarmak ve çıkmak için %s tuşuna basın."
 
 #: ../app/dialogs/quit-dialog.c:391
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr ""
-"Bütün değişikliklerden vazgeçmek ve bütün görüntüleri kapatmak için %s "
+"Bütün değişiklikleri gözden çıkarmak ve bütün görüntüleri kapatmak için %s "
 "tuşuna basın."
 
 #: ../app/dialogs/quit-dialog.c:399 ../app/display/gimpdisplayshell-close.c:180
 msgid "_Discard Changes"
-msgstr "Değişikliklerden Va_zgeç"
+msgstr "Değişiklikleri _Gözden Çıkar"
 
 #: ../app/dialogs/quit-dialog.c:486
 #, c-format
@@ -18539,7 +18539,8 @@ msgstr "_Farklı Kaydet"
 #, c-format
 msgid "Press %s to discard all changes and close the image."
 msgstr ""
-"Bütün değişikliklerden vazgeçmek ve görüntüyü kapatmak için %s tuşuna basın."
+"Bütün değişiklikleri gözden çıkarmak ve görüntüyü kapatmak için %s tuşuna "
+"basın."
 
 #: ../app/display/gimpdisplayshell-close.c:274
 #, c-format
@@ -18724,7 +18725,7 @@ msgstr "piksel"
 #: ../app/display/gimpstatusbar.c:475
 #, c-format
 msgid "Cancel <i>%s</i>"
-msgstr "Vazgeç <i>%s</i>"
+msgstr "İptal et <i>%s</i>"
 
 #: ../app/display/gimptoolcompass.c:847
 msgid "Click to place vertical and horizontal guides"
@@ -19058,11 +19059,11 @@ msgstr "Kesimin tepe noktasına taşımak için sürükleyi tıklayın"
 #: ../app/display/gimptoolpolygon.c:901
 msgid "Return commits, Escape cancels, Backspace re-opens shape"
 msgstr ""
-"\"Enter\" üstlenir, \"Esc\" vazgeçer, \"Boşluk\" son şekli yeniden açar"
+"\"Enter\" üstlenir, \"Esc\" iptal eder, \"Boşluk\" son şekli yeniden açar"
 
 #: ../app/display/gimptoolpolygon.c:905
 msgid "Return commits, Escape cancels, Backspace removes last segment"
-msgstr "\"Enter\" üstlenir, \"Esc\" vazgeçer, \"Boşluk\" son kesimi kaldırır"
+msgstr "\"Enter\" üstlenir, \"Esc\" iptal eder, \"Boşluk\" son kesimi kaldırır"
 
 #: ../app/display/gimptoolpolygon.c:909
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
@@ -20145,7 +20146,7 @@ msgstr "Görüntü Kurtar"
 
 #: ../app/gui/gui.c:345
 msgid "_Discard"
-msgstr "Va_zgeç"
+msgstr "_Gözden Çıkar"
 
 #: ../app/gui/gui.c:346
 msgid "_Recover"
@@ -21561,7 +21562,7 @@ msgstr ""
 
 #: ../app/plug-in/gimpplugin-progress.c:334
 msgid "Cancelled"
-msgstr "Vazgeçildi"
+msgstr "İptal Edildi"
 
 #: ../app/plug-in/gimppluginmanager.c:240
 msgid "Plug-in Interpreters"
@@ -22103,7 +22104,7 @@ msgstr "Metin Katmanını Dönüştür"
 
 #: ../app/text/gimptextlayer.c:576
 msgid "Discard Text Information"
-msgstr "Metin Bilgisinden Vazgeç"
+msgstr "Metin Bilgisini Gözden Çıkar"
 
 #: ../app/text/gimptextlayer.c:711
 msgid "Due to lack of any fonts, text functionality is not available."
@@ -22662,7 +22663,8 @@ msgstr "Kırpılmış piksellerini sil"
 
 #: ../app/tools/gimpcropoptions.c:102
 msgid "Discard non-locked layer data that falls out of the crop region"
-msgstr "Kırpma bölgesinin dışında kalan kilitsiz katman verilerini gözardı et"
+msgstr ""
+"Kırpma bölgesinin dışında kalan kilitsiz katman verilerini gözden çıkar"
 
 #: ../app/tools/gimpcropoptions.c:108
 msgid "Allow growing"
@@ -23382,7 +23384,7 @@ msgstr "Kılavuzu Kaldır"
 
 #: ../app/tools/gimpguidetool.c:434
 msgid "Cancel Guide"
-msgstr "Kılavuzdan Vazgeç"
+msgstr "Kılavuzu İptal Et"
 
 #: ../app/tools/gimpguidetool.c:471
 msgid "Move Guide: "
@@ -24218,7 +24220,7 @@ msgstr "Örnek Noktayı Kaldır"
 
 #: ../app/tools/gimpsamplepointtool.c:238
 msgid "Cancel Sample Point"
-msgstr "Örnek Noktadan Vazgeç"
+msgstr "Örnek Noktayı İptal Et"
 
 #: ../app/tools/gimpsamplepointtool.c:244
 #: ../app/tools/gimpsamplepointtool.c:330
@@ -24526,8 +24528,8 @@ msgid ""
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
 "Seçtiğiniz katman bir metin katmanı ama başka araçlar kullanılarak "
-"değiştirilmiş. Katmanı metin aracı ile düzenlemek bu değişikliklerden "
-"vazgeçilmesini sağlayacaktır.\n"
+"değiştirilmiş. Katmanı metin aracı ile düzenlemek bu değişikliklerin gözden "
+"çıkarılmasını sağlayacaktır.\n"
 "\n"
 "Katmanı düzenleyebilirsiniz veya metin özniteliklerinden yeni metin katmanı "
 "oluşturabilirsiniz."
@@ -27050,7 +27052,7 @@ msgid ""
 "You may either select a manual in another language or read the online "
 "version."
 msgstr ""
-"Başka dildeki bir kılavuzu seçebilir veya çevrimiçi sürümü okuyabilirsiniz."
+"Başka dildeki bir kılavuzu seçebilir veya çevrim içi sürümü okuyabilirsiniz."
 
 #: ../app/widgets/gimphelp.c:842
 msgid ""
@@ -27058,11 +27060,11 @@ msgid ""
 "preferences to use the online version."
 msgstr ""
 "Eklenebilir yardım paketini kurabilirsiniz ya da tercihlerinizi değiştirerek "
-"çevrimiçi sürümü kullanabilirsiniz."
+"çevrim içi sürümü kullanabilirsiniz."
 
 #: ../app/widgets/gimphelp.c:847
 msgid "Read _Online"
-msgstr "Çevrimiçi _Oku"
+msgstr "Çevrim İçi _Oku"
 
 #: ../app/widgets/gimphistogrameditor.c:129
 msgid "Mean:"
