@@ -450,6 +450,11 @@ ifs_create_procedure (GimpPlugIn  *plug_in,
                                       "Owen Taylor",
                                       "Owen Taylor",
                                       "1997");
+
+      GIMP_PROC_AUX_ARG_STRING (procedure, "fractal-str",
+                                "The fractal description serialized as string",
+                                NULL, NULL,
+                                GIMP_PARAM_READWRITE);
     }
 
   return procedure;
@@ -518,16 +523,12 @@ ifs_run (GimpProcedure        *procedure,
 
       if (! found_parasite)
         {
-          gint length = gimp_get_data_size (PLUG_IN_PROC);
+          gchar *data = NULL;
 
-          if (length > 0)
-            {
-              gchar *data = g_new (gchar, length);
-
-              gimp_get_data (PLUG_IN_PROC, data);
-              ifsvals_parse_string (data, &ifsvals, &elements);
-              g_free (data);
-            }
+          g_object_get (config, "fractal-str", &data, NULL);
+          if (data != NULL && strlen (data) > 0)
+            ifsvals_parse_string (data, &ifsvals, &elements);
+          g_free (data);
         }
 
       /* after ifsvals_parse_string, need to set up naming */
@@ -553,22 +554,28 @@ ifs_run (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      {
-        gint length = gimp_get_data_size (PLUG_IN_PROC);
+        {
+          gchar *data = NULL;
 
-        if (length > 0)
-          {
-            gchar *data = g_new (gchar, length);
+          g_object_get (config, "fractal-str", &data, NULL);
+          if (data != NULL && strlen (data) > 0)
+            {
+              ifsvals_parse_string (data, &ifsvals, &elements);
+            }
+          else
+            {
+              /* FIXME: there is a known crash in this code path, because some
+               * base structures (which are visibly created as part of the
+               * dialog or with ifsvals_parse_string() on a valid serialized
+               * fractal) don't exist. This should be fixed so that we can run
+               * with last vals even when no last vals exist (which should use
+               * defaults).
+               */
+              ifs_compose_set_defaults ();
+            }
 
-            gimp_get_data (PLUG_IN_PROC, data);
-            ifsvals_parse_string (data, &ifsvals, &elements);
-            g_free (data);
-          }
-        else
-          {
-            ifs_compose_set_defaults ();
-          }
-      }
+          g_free (data);
+        }
       break;
 
     default:
@@ -589,8 +596,7 @@ ifs_run (GimpProcedure        *procedure,
        *  as a parasite on this layer
        */
       str = ifsvals_stringify (&ifsvals, elements);
-
-      gimp_set_data (PLUG_IN_PROC, str, strlen (str) + 1);
+      g_object_set (config, "fractal-str", str, NULL);
 
       parasite = gimp_parasite_new (PLUG_IN_PARASITE,
                                     GIMP_PARASITE_PERSISTENT |
