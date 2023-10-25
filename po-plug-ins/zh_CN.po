@@ -11,16 +11,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-23 16:27+0000\n"
-"PO-Revision-Date: 2023-10-24 13:30-0400\n"
-"Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
+"POT-Creation-Date: 2023-10-24 20:29+0000\n"
+"PO-Revision-Date: 2023-10-25 07:55+0800\n"
+"Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Gtranslator 45.2\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -32,7 +32,7 @@ msgstr "在 C 语言中锻炼一只山羊"
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:201
 #: plug-ins/common/border-average.c:185 plug-ins/common/checkerboard.c:176
-#: plug-ins/common/cml-explorer.c:558 plug-ins/common/compose.c:584
+#: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:584
 #: plug-ins/common/contrast-retinex.c:246 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:653 plug-ins/common/decompose.c:375
 #: plug-ins/common/depth-merge.c:293 plug-ins/common/despeckle.c:231
@@ -46,7 +46,7 @@ msgstr "在 C 语言中锻炼一只山羊"
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:181
 #: plug-ins/file-dds/dds.c:511 plug-ins/flame/flame.c:299
 #: plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:215
-#: plug-ins/gimpressionist/gimp.c:178
+#: plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
 #: plug-ins/ifs-compose/ifs-compose.c:487 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:756
@@ -64,8 +64,8 @@ msgstr "锻炼一只山羊（C）"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1355
-#: plug-ins/common/cml-explorer.c:2121 plug-ins/common/cml-explorer.c:2254
+#: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1379
+#: plug-ins/common/cml-explorer.c:2146 plug-ins/common/cml-explorer.c:2356
 #: plug-ins/common/colormap-remap.c:694 plug-ins/common/curve-bend.c:1855
 #: plug-ins/common/curve-bend.c:1890 plug-ins/common/file-gif-save.c:1159
 #: plug-ins/common/file-heif.c:2345 plug-ins/common/file-pdf-load.c:686
@@ -146,7 +146,7 @@ msgstr "锻炼一只山羊（JavaScript）"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1356 plug-ins/common/colormap-remap.c:695
+#: plug-ins/common/cml-explorer.c:1380 plug-ins/common/colormap-remap.c:695
 #: plug-ins/common/file-heif.c:2346 plug-ins/common/file-pdf-load.c:687
 #: plug-ins/common/grid.c:787 plug-ins/common/qbist.c:933
 #: plug-ins/common/sphere-designer.c:2633 plug-ins/common/unit-editor.c:266
@@ -635,7 +635,7 @@ msgstr "竖直"
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
-#: plug-ins/screenshot/screenshot-win32.c:317 plug-ins/twain/twain.c:661
+#: plug-ins/screenshot/screenshot-win32.c:317 plug-ins/twain/twain.c:636
 msgid "Background"
 msgstr "背景"
 
@@ -926,18 +926,18 @@ msgstr "来自种子的随机数"
 msgid "Randoms from seed (shared)"
 msgstr "来自种子的随机数（共享）"
 
-#: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
+#: plug-ins/common/cml-explorer.c:299 plug-ins/common/cml-explorer.c:307
 #: plug-ins/common/decompose.c:202 plug-ins/gimpressionist/orientation.c:172
 #: plug-ins/gimpressionist/size.c:179
 msgid "Hue"
 msgstr "色相"
 
-#: plug-ins/common/cml-explorer.c:302 plug-ins/common/cml-explorer.c:310
+#: plug-ins/common/cml-explorer.c:300 plug-ins/common/cml-explorer.c:308
 #: plug-ins/common/decompose.c:203
 msgid "Saturation"
 msgstr "饱和度"
 
-#: plug-ins/common/cml-explorer.c:303 plug-ins/common/cml-explorer.c:311
+#: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
 #: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:317
 #: plug-ins/metadata/metadata-viewer.c:355
@@ -945,19 +945,19 @@ msgstr "饱和度"
 msgid "Value"
 msgstr "明度"
 
-#: plug-ins/common/cml-explorer.c:308
+#: plug-ins/common/cml-explorer.c:306
 msgid "(None)"
 msgstr "（无）"
 
-#: plug-ins/common/cml-explorer.c:508
+#: plug-ins/common/cml-explorer.c:510
 msgid "CML _Explorer..."
 msgstr "CML 探索器(_E)..."
 
-#: plug-ins/common/cml-explorer.c:513
+#: plug-ins/common/cml-explorer.c:515
 msgid "Create abstract Coupled-Map Lattice patterns"
 msgstr "创建抽像耦合映像格子图案"
 
-#: plug-ins/common/cml-explorer.c:515
+#: plug-ins/common/cml-explorer.c:517
 msgid ""
 "Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellular "
 "Automata on continuous (value) domain. In GIMP_RUN_NONINTERACTIVE, the name "
@@ -968,38 +968,38 @@ msgstr ""
 "GIMP_RUN_NONINTERACTIVE 中，参数文件名称被作为第 4 参数传递。您可以通过参数文"
 "件控制 CML 探索器。"
 
-#: plug-ins/common/cml-explorer.c:534
-msgid "Parameter URI"
-msgstr "参数 URI"
+#: plug-ins/common/cml-explorer.c:536
+msgid "Parameter File"
+msgstr "参数文件"
 
-#: plug-ins/common/cml-explorer.c:535
+#: plug-ins/common/cml-explorer.c:537
 msgid ""
-"The local file:// URI of parameter file. CML_explorer makes an image with "
-"its settings."
-msgstr "参数文件的 file:// 本地地址。CML 探索器使用其设定制作图像。"
+"The parameter file from which CML_explorer makes an image. This argument is "
+"only used in non-interactive runs."
+msgstr "CML 探索器使用其设定制作图像的参数文件。该参数仅在非交互式运行中使用。"
 
-#: plug-ins/common/cml-explorer.c:884
+#: plug-ins/common/cml-explorer.c:908
 msgid "CML Explorer: evoluting"
 msgstr "CML 探索器：演化"
 
-#: plug-ins/common/cml-explorer.c:1351
+#: plug-ins/common/cml-explorer.c:1375
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "耦合映像格子探索器"
 
-#: plug-ins/common/cml-explorer.c:1395
+#: plug-ins/common/cml-explorer.c:1419
 msgid "New Seed"
 msgstr "新的种子"
 
-#: plug-ins/common/cml-explorer.c:1406
+#: plug-ins/common/cml-explorer.c:1430
 msgid "Fix Seed"
 msgstr "固定种子"
 
-#: plug-ins/common/cml-explorer.c:1417
+#: plug-ins/common/cml-explorer.c:1441
 msgid "Random Seed"
 msgstr "随机种子"
 
 #. The Load button
-#: plug-ins/common/cml-explorer.c:1432 plug-ins/common/cml-explorer.c:2255
+#: plug-ins/common/cml-explorer.c:1456 plug-ins/common/cml-explorer.c:2357
 #: plug-ins/common/curve-bend.c:1313 plug-ins/common/curve-bend.c:1856
 #: plug-ins/common/file-cel.c:1009 plug-ins/common/qbist.c:837
 #: plug-ins/common/qbist.c:1020 plug-ins/common/sphere-designer.c:2290
@@ -1015,7 +1015,7 @@ msgid "_Open"
 msgstr "打开(_O)"
 
 #. The Save button
-#: plug-ins/common/cml-explorer.c:1440 plug-ins/common/cml-explorer.c:2122
+#: plug-ins/common/cml-explorer.c:1464 plug-ins/common/cml-explorer.c:2147
 #: plug-ins/common/curve-bend.c:1325 plug-ins/common/curve-bend.c:1891
 #: plug-ins/common/file-pdf-save.c:1045 plug-ins/common/qbist.c:879
 #: plug-ins/common/qbist.c:1028 plug-ins/common/sphere-designer.c:2290
@@ -1030,51 +1030,51 @@ msgstr "打开(_O)"
 msgid "_Save"
 msgstr "保存(_S)"
 
-#: plug-ins/common/cml-explorer.c:1459 plug-ins/common/van-gogh-lic.c:736
+#: plug-ins/common/cml-explorer.c:1483 plug-ins/common/van-gogh-lic.c:736
 msgid "_Hue"
 msgstr "色相(_H)"
 
-#: plug-ins/common/cml-explorer.c:1463
+#: plug-ins/common/cml-explorer.c:1487
 msgid "Sat_uration"
 msgstr "饱和度(_U)"
 
-#: plug-ins/common/cml-explorer.c:1467
+#: plug-ins/common/cml-explorer.c:1491
 msgid "_Value"
 msgstr "明度(_V)"
 
-#: plug-ins/common/cml-explorer.c:1471
+#: plug-ins/common/cml-explorer.c:1495
 msgid "_Advanced"
 msgstr "高级(_A)"
 
-#: plug-ins/common/cml-explorer.c:1486
+#: plug-ins/common/cml-explorer.c:1510
 msgid "Channel Independent Parameters"
 msgstr "通道独立参数"
 
-#: plug-ins/common/cml-explorer.c:1508
+#: plug-ins/common/cml-explorer.c:1532
 msgid "Initial value:"
 msgstr "初始值："
 
-#: plug-ins/common/cml-explorer.c:1513
+#: plug-ins/common/cml-explorer.c:1537
 msgid "Zoom scale:"
 msgstr "缩放比："
 
-#: plug-ins/common/cml-explorer.c:1520
+#: plug-ins/common/cml-explorer.c:1544
 msgid "Start offset:"
 msgstr "起始位移："
 
-#: plug-ins/common/cml-explorer.c:1528
+#: plug-ins/common/cml-explorer.c:1552
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "随机种子（仅用于“来自种子”模式）"
 
-#: plug-ins/common/cml-explorer.c:1538
+#: plug-ins/common/cml-explorer.c:1562
 msgid "Seed:"
 msgstr "种子："
 
-#: plug-ins/common/cml-explorer.c:1550
+#: plug-ins/common/cml-explorer.c:1574
 msgid "Switch to \"From seed\" With the Last Seed"
 msgstr "按上次种子切换至“来自种子”"
 
-#: plug-ins/common/cml-explorer.c:1562
+#: plug-ins/common/cml-explorer.c:1586
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -1085,107 +1085,107 @@ msgstr ""
 "相同的种子产生相同的图像，只要（1）图像宽度相同（这就是可绘图像不同于预览图像"
 "的原因）， 并且（2）所有的变化率都等于零。"
 
-#: plug-ins/common/cml-explorer.c:1570
+#: plug-ins/common/cml-explorer.c:1594
 msgid "O_thers"
 msgstr "其它(_T)"
 
-#: plug-ins/common/cml-explorer.c:1585
+#: plug-ins/common/cml-explorer.c:1609
 msgid "Copy Settings"
 msgstr "复制设置"
 
-#: plug-ins/common/cml-explorer.c:1604
+#: plug-ins/common/cml-explorer.c:1628
 msgid "Source channel:"
 msgstr "来源通道："
 
-#: plug-ins/common/cml-explorer.c:1619 plug-ins/common/cml-explorer.c:1666
+#: plug-ins/common/cml-explorer.c:1643 plug-ins/common/cml-explorer.c:1690
 msgid "Destination channel:"
 msgstr "目标通道："
 
-#: plug-ins/common/cml-explorer.c:1623
+#: plug-ins/common/cml-explorer.c:1647
 msgid "Copy Parameters"
 msgstr "复制参数"
 
-#: plug-ins/common/cml-explorer.c:1631
+#: plug-ins/common/cml-explorer.c:1655
 msgid "Selective Load Settings"
 msgstr "选择性加载设置"
 
-#: plug-ins/common/cml-explorer.c:1651
+#: plug-ins/common/cml-explorer.c:1675
 msgid "Source channel in file:"
 msgstr "文件中的源通道："
 
-#: plug-ins/common/cml-explorer.c:1672
+#: plug-ins/common/cml-explorer.c:1696
 msgid "_Misc"
 msgstr "杂项(_M)"
 
-#: plug-ins/common/cml-explorer.c:1731
+#: plug-ins/common/cml-explorer.c:1755
 msgid "Function type:"
 msgstr "函数类型："
 
-#: plug-ins/common/cml-explorer.c:1747
+#: plug-ins/common/cml-explorer.c:1771
 msgid "Composition:"
 msgstr "合成："
 
-#: plug-ins/common/cml-explorer.c:1761
+#: plug-ins/common/cml-explorer.c:1785
 msgid "Misc arrange:"
 msgstr "其他处理："
 
-#: plug-ins/common/cml-explorer.c:1765
+#: plug-ins/common/cml-explorer.c:1789
 msgid "Use cyclic range"
 msgstr "使用循环范围"
 
-#: plug-ins/common/cml-explorer.c:1774
+#: plug-ins/common/cml-explorer.c:1798
 msgid "Mod. rate:"
 msgstr "修改率："
 
-#: plug-ins/common/cml-explorer.c:1781
+#: plug-ins/common/cml-explorer.c:1805
 msgid "Env. sensitivity:"
 msgstr "环境敏感度："
 
-#: plug-ins/common/cml-explorer.c:1788
+#: plug-ins/common/cml-explorer.c:1812
 msgid "Diffusion dist.:"
 msgstr "漫反射分布："
 
-#: plug-ins/common/cml-explorer.c:1795
+#: plug-ins/common/cml-explorer.c:1819
 msgid "# of subranges:"
 msgstr "子范围 #："
 
-#: plug-ins/common/cml-explorer.c:1802
+#: plug-ins/common/cml-explorer.c:1826
 msgid "P(ower factor):"
 msgstr "P（幂系数）："
 
-#: plug-ins/common/cml-explorer.c:1810
+#: plug-ins/common/cml-explorer.c:1834
 msgid "Parameter k:"
 msgstr "参数 k："
 
-#: plug-ins/common/cml-explorer.c:1818
+#: plug-ins/common/cml-explorer.c:1842
 msgid "Range low:"
 msgstr "低范围："
 
-#: plug-ins/common/cml-explorer.c:1825
+#: plug-ins/common/cml-explorer.c:1849
 msgid "Range high:"
 msgstr "高范围："
 
-#: plug-ins/common/cml-explorer.c:1836
+#: plug-ins/common/cml-explorer.c:1860
 msgid "Plot a Graph of the Settings"
 msgstr "绘制此设置的曲线图"
 
-#: plug-ins/common/cml-explorer.c:1878
+#: plug-ins/common/cml-explorer.c:1902
 msgid "Ch. sensitivity:"
 msgstr "通道灵敏度："
 
-#: plug-ins/common/cml-explorer.c:1886
+#: plug-ins/common/cml-explorer.c:1910
 msgid "Mutation rate:"
 msgstr "变化率："
 
-#: plug-ins/common/cml-explorer.c:1894
+#: plug-ins/common/cml-explorer.c:1918
 msgid "Mutation dist.:"
 msgstr "变化分布："
 
-#: plug-ins/common/cml-explorer.c:1986
+#: plug-ins/common/cml-explorer.c:2010
 msgid "Graph of the Current Settings"
 msgstr "当前设置的曲线图"
 
-#: plug-ins/common/cml-explorer.c:1990 plug-ins/common/plugin-browser.c:562
+#: plug-ins/common/cml-explorer.c:2014 plug-ins/common/plugin-browser.c:562
 #: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
 #: plug-ins/ifs-compose/ifs-compose.c:1208
@@ -1193,15 +1193,15 @@ msgstr "当前设置的曲线图"
 msgid "_Close"
 msgstr "关闭(_C)"
 
-#: plug-ins/common/cml-explorer.c:2058
+#: plug-ins/common/cml-explorer.c:2082
 msgid "Warning: the source and the destination are the same channel."
 msgstr "警告：源和目标是同一个通道。"
 
-#: plug-ins/common/cml-explorer.c:2117
+#: plug-ins/common/cml-explorer.c:2142
 msgid "Save CML Explorer Parameters"
 msgstr "保存 CML 探索器参数"
 
-#: plug-ins/common/cml-explorer.c:2173 plug-ins/common/curve-bend.c:792
+#: plug-ins/common/cml-explorer.c:2212 plug-ins/common/curve-bend.c:792
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
 #: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1218
 #: plug-ins/common/file-pcx.c:1216 plug-ins/common/file-pdf-save.c:659
@@ -1221,62 +1221,37 @@ msgstr "保存 CML 探索器参数"
 msgid "Could not open '%s' for writing: %s"
 msgstr "无法打开“%s”并写入：%s"
 
-#: plug-ins/common/cml-explorer.c:2228
+#: plug-ins/common/cml-explorer.c:2225 plug-ins/common/cml-explorer.c:2304
+#: plug-ins/common/cml-explorer.c:2322
+#, c-format
+msgid "Could not write to '%s': %s"
+msgstr "无法写入到“%s”：%s"
+
+#: plug-ins/common/cml-explorer.c:2331
 #, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "参数已保存至“%s”"
 
-#: plug-ins/common/cml-explorer.c:2250
+#: plug-ins/common/cml-explorer.c:2352
 msgid "Load CML Explorer Parameters"
 msgstr "加载 CML 探索器参数"
 
-#: plug-ins/common/cml-explorer.c:2346 plug-ins/common/curve-bend.c:845
-#: plug-ins/common/file-cel.c:350 plug-ins/common/file-cel.c:402
-#: plug-ins/common/file-dicom.c:383 plug-ins/common/file-farbfeld.c:298
-#: plug-ins/common/file-gif-load.c:414 plug-ins/common/file-iff.c:219
-#: plug-ins/common/file-mng.c:1402 plug-ins/common/file-pcx.c:509
-#: plug-ins/common/file-pcx.c:552 plug-ins/common/file-png.c:658
-#: plug-ins/common/file-ps.c:1109 plug-ins/common/file-ps.c:3619
-#: plug-ins/common/file-psp.c:2631 plug-ins/common/file-psp.c:2681
-#: plug-ins/common/file-qoi.c:299 plug-ins/common/file-raw-data.c:515
-#: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:457
-#: plug-ins/common/file-svg.c:380 plug-ins/common/file-svg.c:809
-#: plug-ins/common/file-tga.c:447 plug-ins/common/file-wbmp.c:188
-#: plug-ins/common/file-xbm.c:749 plug-ins/common/file-xmc.c:656
-#: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:492
-#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
-#: plug-ins/file-dds/ddsread.c:156 plug-ins/file-faxg3/faxg3.c:260
-#: plug-ins/file-fits/fits.c:395 plug-ins/file-fli/fli-gimp.c:450
-#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-icns/file-icns-load.c:516
-#: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
-#: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
-#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
-#: plug-ins/file-psd/psd-load.c:169 plug-ins/file-psd/psd-load.c:174
-#: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
-#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1764
-#: plug-ins/fractal-explorer/fractal-explorer.c:1159 plug-ins/gfig/gfig.c:527
-#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
-#: plug-ins/lighting/lighting-ui.c:952
+#: plug-ins/common/cml-explorer.c:2486
 #, c-format
-msgid "Could not open '%s' for reading: %s"
-msgstr "无法打开“%s”并读取：%s"
+msgid "Error: \"%s\" is not a CML parameter file."
+msgstr "错误：“%s”不是 CML 参数文件。"
 
-#: plug-ins/common/cml-explorer.c:2368
-msgid "Error: it's not CML parameter file."
-msgstr "错误：这不是 CML 参数文件。"
-
-#: plug-ins/common/cml-explorer.c:2375
+#: plug-ins/common/cml-explorer.c:2493
 #, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr "警告：“%s”是一个旧格式的文件。"
 
-#: plug-ins/common/cml-explorer.c:2379
+#: plug-ins/common/cml-explorer.c:2497
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr "警告：“%s”是一个较新版本的 CML 探索器的参数文件。"
 
-#: plug-ins/common/cml-explorer.c:2442
+#: plug-ins/common/cml-explorer.c:2568
 msgid "Error: failed to load parameters"
 msgstr "错误：加载参数失败"
 
@@ -1956,6 +1931,38 @@ msgstr "无法对带蒙板的图层进行操作。"
 #: plug-ins/common/curve-bend.c:701
 msgid "Cannot operate on empty selections."
 msgstr "无法对空选区进行操作。"
+
+#: plug-ins/common/curve-bend.c:845 plug-ins/common/file-cel.c:350
+#: plug-ins/common/file-cel.c:402 plug-ins/common/file-dicom.c:383
+#: plug-ins/common/file-farbfeld.c:298 plug-ins/common/file-gif-load.c:414
+#: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1402
+#: plug-ins/common/file-pcx.c:509 plug-ins/common/file-pcx.c:552
+#: plug-ins/common/file-png.c:658 plug-ins/common/file-ps.c:1109
+#: plug-ins/common/file-ps.c:3619 plug-ins/common/file-psp.c:2631
+#: plug-ins/common/file-psp.c:2681 plug-ins/common/file-qoi.c:299
+#: plug-ins/common/file-raw-data.c:515 plug-ins/common/file-raw-data.c:1665
+#: plug-ins/common/file-sunras.c:457 plug-ins/common/file-svg.c:380
+#: plug-ins/common/file-svg.c:809 plug-ins/common/file-tga.c:447
+#: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
+#: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
+#: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2090
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:156
+#: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
+#: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
+#: plug-ins/file-icns/file-icns-load.c:516
+#: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
+#: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
+#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
+#: plug-ins/file-psd/psd-load.c:169 plug-ins/file-psd/psd-load.c:174
+#: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1764
+#: plug-ins/fractal-explorer/fractal-explorer.c:1159 plug-ins/gfig/gfig.c:527
+#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
+#: plug-ins/lighting/lighting-ui.c:952
+#, c-format
+msgid "Could not open '%s' for reading: %s"
+msgstr "无法打开“%s”并读取：%s"
 
 #: plug-ins/common/curve-bend.c:855
 #, c-format
@@ -6534,7 +6541,7 @@ msgstr "沿参考线切开图像为多幅子图像"
 msgid "Guillotine"
 msgstr "分块"
 
-#: plug-ins/common/guillotine.c:266 plug-ins/help-browser/dialog.c:821
+#: plug-ins/common/guillotine.c:266 plug-ins/help-browser/dialog.c:830
 msgid "Untitled"
 msgstr "无标题"
 
@@ -11309,7 +11316,7 @@ msgstr "预设"
 msgid "Preset Name"
 msgstr "预设名称"
 
-#: plug-ins/gimpressionist/gimp.c:451
+#: plug-ins/gimpressionist/gimp.c:465
 msgid "Painting"
 msgstr "绘制"
 
@@ -12045,49 +12052,49 @@ msgid "_Second Flares"
 msgstr "二次闪光(_S)"
 
 #. the dialog window
-#: plug-ins/help-browser/dialog.c:261 plug-ins/help-browser/dialog.c:822
+#: plug-ins/help-browser/dialog.c:263 plug-ins/help-browser/dialog.c:831
 msgid "GIMP Help Browser"
 msgstr "GIMP 帮助浏览器"
 
-#: plug-ins/help-browser/dialog.c:275 plug-ins/help-browser/help-menu.ui:14
+#: plug-ins/help-browser/dialog.c:277 plug-ins/help-browser/help-menu.ui:14
 msgid "_Reload"
 msgstr "重新载入(_R)"
 
-#: plug-ins/help-browser/dialog.c:275
+#: plug-ins/help-browser/dialog.c:277
 msgid "Reload current page"
 msgstr "重新载入当前页"
 
-#: plug-ins/help-browser/dialog.c:276 plug-ins/help-browser/help-menu.ui:18
+#: plug-ins/help-browser/dialog.c:278 plug-ins/help-browser/help-menu.ui:18
 msgid "_Stop"
 msgstr "停止(_S)"
 
-#: plug-ins/help-browser/dialog.c:276
+#: plug-ins/help-browser/dialog.c:278
 msgid "Stop loading this page"
 msgstr "停止读入此页面"
 
-#: plug-ins/help-browser/dialog.c:277
+#: plug-ins/help-browser/dialog.c:279
 msgid "Go to the index page"
 msgstr "转到索引页面"
 
-#: plug-ins/help-browser/dialog.c:283
+#: plug-ins/help-browser/dialog.c:285
 msgid "Visit the GIMP documentation website"
 msgstr "浏览 GIMP 文档网站"
 
-#: plug-ins/help-browser/dialog.c:1165
+#: plug-ins/help-browser/dialog.c:1177
 msgid "Find:"
 msgstr "查找："
 
-#: plug-ins/help-browser/dialog.c:1181
+#: plug-ins/help-browser/dialog.c:1193
 msgctxt "search"
 msgid "_Previous"
 msgstr "上一个(_P)"
 
-#: plug-ins/help-browser/dialog.c:1190
+#: plug-ins/help-browser/dialog.c:1202
 msgctxt "search"
 msgid "_Next"
 msgstr "下一个(_N)"
 
-#: plug-ins/help-browser/dialog.c:1199
+#: plug-ins/help-browser/dialog.c:1211
 msgctxt "search"
 msgid "_Close"
 msgstr "关闭(_C)"
@@ -15084,9 +15091,12 @@ msgid "_Scanner/Camera..."
 msgstr "扫描仪/相机(_S)…"
 
 #. Initialize our progress dialog
-#: plug-ins/twain/twain.c:521
+#: plug-ins/twain/twain.c:496
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#~ msgid "Parameter URI"
+#~ msgstr "参数 URI"
 
 #~ msgid "_Rendering"
 #~ msgstr "渲染(_R)"
