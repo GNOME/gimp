@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-23 15:26+0000\n"
-"PO-Revision-Date: 2023-10-23 19:26+0300\n"
+"POT-Creation-Date: 2023-10-24 20:29+0000\n"
+"PO-Revision-Date: 2023-10-25 12:39+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
@@ -31,7 +31,7 @@ msgstr "Потренувати козу у мові Сі"
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:201
 #: plug-ins/common/border-average.c:185 plug-ins/common/checkerboard.c:176
-#: plug-ins/common/cml-explorer.c:558 plug-ins/common/compose.c:584
+#: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:584
 #: plug-ins/common/contrast-retinex.c:246 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:653 plug-ins/common/decompose.c:375
 #: plug-ins/common/depth-merge.c:293 plug-ins/common/despeckle.c:231
@@ -45,7 +45,7 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:181
 #: plug-ins/file-dds/dds.c:511 plug-ins/flame/flame.c:299
 #: plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:215
-#: plug-ins/gimpressionist/gimp.c:178
+#: plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
 #: plug-ins/ifs-compose/ifs-compose.c:487 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:756
@@ -63,12 +63,12 @@ msgstr "Потренувати козу (Сі)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1355
-#: plug-ins/common/cml-explorer.c:2121 plug-ins/common/cml-explorer.c:2254
+#: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1379
+#: plug-ins/common/cml-explorer.c:2146 plug-ins/common/cml-explorer.c:2356
 #: plug-ins/common/colormap-remap.c:694 plug-ins/common/curve-bend.c:1855
 #: plug-ins/common/curve-bend.c:1890 plug-ins/common/file-gif-save.c:1159
 #: plug-ins/common/file-heif.c:2345 plug-ins/common/file-pdf-load.c:686
-#: plug-ins/common/file-pdf-save.c:1101 plug-ins/common/grid.c:786
+#: plug-ins/common/file-pdf-save.c:1046 plug-ins/common/grid.c:786
 #: plug-ins/common/qbist.c:836 plug-ins/common/qbist.c:878
 #: plug-ins/common/qbist.c:932 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/unit-editor.c:435
@@ -146,7 +146,7 @@ msgstr "Потренувати козу (Javascript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1356 plug-ins/common/colormap-remap.c:695
+#: plug-ins/common/cml-explorer.c:1380 plug-ins/common/colormap-remap.c:695
 #: plug-ins/common/file-heif.c:2346 plug-ins/common/file-pdf-load.c:687
 #: plug-ins/common/grid.c:787 plug-ins/common/qbist.c:933
 #: plug-ins/common/sphere-designer.c:2633 plug-ins/common/unit-editor.c:266
@@ -640,7 +640,7 @@ msgstr "Вертикально"
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
-#: plug-ins/screenshot/screenshot-win32.c:317 plug-ins/twain/twain.c:661
+#: plug-ins/screenshot/screenshot-win32.c:317 plug-ins/twain/twain.c:636
 msgid "Background"
 msgstr "Тло"
 
@@ -933,18 +933,18 @@ msgstr "Випадкові з бази"
 msgid "Randoms from seed (shared)"
 msgstr "Випадкове з бази (shared)"
 
-#: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
+#: plug-ins/common/cml-explorer.c:299 plug-ins/common/cml-explorer.c:307
 #: plug-ins/common/decompose.c:202 plug-ins/gimpressionist/orientation.c:172
 #: plug-ins/gimpressionist/size.c:179
 msgid "Hue"
 msgstr "Відтінок"
 
-#: plug-ins/common/cml-explorer.c:302 plug-ins/common/cml-explorer.c:310
+#: plug-ins/common/cml-explorer.c:300 plug-ins/common/cml-explorer.c:308
 #: plug-ins/common/decompose.c:203
 msgid "Saturation"
 msgstr "Насиченість"
 
-#: plug-ins/common/cml-explorer.c:303 plug-ins/common/cml-explorer.c:311
+#: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
 #: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:317
 #: plug-ins/metadata/metadata-viewer.c:355
@@ -952,19 +952,19 @@ msgstr "Насиченість"
 msgid "Value"
 msgstr "Яскравість"
 
-#: plug-ins/common/cml-explorer.c:308
+#: plug-ins/common/cml-explorer.c:306
 msgid "(None)"
 msgstr "(Немає)"
 
-#: plug-ins/common/cml-explorer.c:508
+#: plug-ins/common/cml-explorer.c:510
 msgid "CML _Explorer..."
 msgstr "Досл_ідник CML..."
 
-#: plug-ins/common/cml-explorer.c:513
+#: plug-ins/common/cml-explorer.c:515
 msgid "Create abstract Coupled-Map Lattice patterns"
 msgstr "Створити абстрактні текстури Coupled-Map-Lattice"
 
-#: plug-ins/common/cml-explorer.c:515
+#: plug-ins/common/cml-explorer.c:517
 msgid ""
 "Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellular "
 "Automata on continuous (value) domain. In GIMP_RUN_NONINTERACTIVE, the name "
@@ -976,40 +976,44 @@ msgstr ""
 "GIMP_RUN_NONINTERACTIVE назву файла параметрів передають як четвертий "
 "аргумент. Ви можете керувати CML_explorer за допомогою файла параметрів."
 
-#: plug-ins/common/cml-explorer.c:534
-msgid "Parameter URI"
-msgstr "Адреса параметрів"
+#: plug-ins/common/cml-explorer.c:536
+#| msgid "Parameter k:"
+msgid "Parameter File"
+msgstr "Файл параметрів"
 
-#: plug-ins/common/cml-explorer.c:535
+#: plug-ins/common/cml-explorer.c:537
+#| msgid ""
+#| "The local file:// URI of parameter file. CML_explorer makes an image with "
+#| "its settings."
 msgid ""
-"The local file:// URI of parameter file. CML_explorer makes an image with "
-"its settings."
+"The parameter file from which CML_explorer makes an image. This argument is "
+"only used in non-interactive runs."
 msgstr ""
-"Локальна адреса file:// файла параметрів. CML_explorer створює зображення на "
-"основі цих параметрів."
+"Файл параметрів, на основі якого CML_explorer створює зображення. Цей"
+" аргумент використовують лише для неінтерактивного запуску."
 
-#: plug-ins/common/cml-explorer.c:884
+#: plug-ins/common/cml-explorer.c:908
 msgid "CML Explorer: evoluting"
 msgstr "Дослідник CML: викується"
 
-#: plug-ins/common/cml-explorer.c:1351
+#: plug-ins/common/cml-explorer.c:1375
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "Дослідник Coupled-Map-Lattice"
 
-#: plug-ins/common/cml-explorer.c:1395
+#: plug-ins/common/cml-explorer.c:1419
 msgid "New Seed"
 msgstr "Нова база"
 
-#: plug-ins/common/cml-explorer.c:1406
+#: plug-ins/common/cml-explorer.c:1430
 msgid "Fix Seed"
 msgstr "Фіксована база"
 
-#: plug-ins/common/cml-explorer.c:1417
+#: plug-ins/common/cml-explorer.c:1441
 msgid "Random Seed"
 msgstr "База випадковості"
 
 #. The Load button
-#: plug-ins/common/cml-explorer.c:1432 plug-ins/common/cml-explorer.c:2255
+#: plug-ins/common/cml-explorer.c:1456 plug-ins/common/cml-explorer.c:2357
 #: plug-ins/common/curve-bend.c:1313 plug-ins/common/curve-bend.c:1856
 #: plug-ins/common/file-cel.c:1009 plug-ins/common/qbist.c:837
 #: plug-ins/common/qbist.c:1020 plug-ins/common/sphere-designer.c:2290
@@ -1025,9 +1029,9 @@ msgid "_Open"
 msgstr "_Відкрити"
 
 #. The Save button
-#: plug-ins/common/cml-explorer.c:1440 plug-ins/common/cml-explorer.c:2122
+#: plug-ins/common/cml-explorer.c:1464 plug-ins/common/cml-explorer.c:2147
 #: plug-ins/common/curve-bend.c:1325 plug-ins/common/curve-bend.c:1891
-#: plug-ins/common/file-pdf-save.c:1100 plug-ins/common/qbist.c:879
+#: plug-ins/common/file-pdf-save.c:1045 plug-ins/common/qbist.c:879
 #: plug-ins/common/qbist.c:1028 plug-ins/common/sphere-designer.c:2290
 #: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1241
@@ -1040,51 +1044,51 @@ msgstr "_Відкрити"
 msgid "_Save"
 msgstr "_Зберегти"
 
-#: plug-ins/common/cml-explorer.c:1459 plug-ins/common/van-gogh-lic.c:736
+#: plug-ins/common/cml-explorer.c:1483 plug-ins/common/van-gogh-lic.c:736
 msgid "_Hue"
 msgstr "Від_тінок"
 
-#: plug-ins/common/cml-explorer.c:1463
+#: plug-ins/common/cml-explorer.c:1487
 msgid "Sat_uration"
 msgstr "_Насиченість"
 
-#: plug-ins/common/cml-explorer.c:1467
+#: plug-ins/common/cml-explorer.c:1491
 msgid "_Value"
 msgstr "_Яскравість:"
 
-#: plug-ins/common/cml-explorer.c:1471
+#: plug-ins/common/cml-explorer.c:1495
 msgid "_Advanced"
 msgstr "Д_одатково"
 
-#: plug-ins/common/cml-explorer.c:1486
+#: plug-ins/common/cml-explorer.c:1510
 msgid "Channel Independent Parameters"
 msgstr "Незалежні від каналу параметри"
 
-#: plug-ins/common/cml-explorer.c:1508
+#: plug-ins/common/cml-explorer.c:1532
 msgid "Initial value:"
 msgstr "Початкове значення:"
 
-#: plug-ins/common/cml-explorer.c:1513
+#: plug-ins/common/cml-explorer.c:1537
 msgid "Zoom scale:"
 msgstr "Масштаб:"
 
-#: plug-ins/common/cml-explorer.c:1520
+#: plug-ins/common/cml-explorer.c:1544
 msgid "Start offset:"
 msgstr "Початковий зсув:"
 
-#: plug-ins/common/cml-explorer.c:1528
+#: plug-ins/common/cml-explorer.c:1552
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "Випадкова база (лише для режиму \"З бази\")"
 
-#: plug-ins/common/cml-explorer.c:1538
+#: plug-ins/common/cml-explorer.c:1562
 msgid "Seed:"
 msgstr "База:"
 
-#: plug-ins/common/cml-explorer.c:1550
+#: plug-ins/common/cml-explorer.c:1574
 msgid "Switch to \"From seed\" With the Last Seed"
 msgstr "Перемикнутись на \"З бази\" з останньою базою"
 
-#: plug-ins/common/cml-explorer.c:1562
+#: plug-ins/common/cml-explorer.c:1586
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -1096,107 +1100,107 @@ msgstr ""
 "однакова (з цієї причини зображення та його попередній перегляд "
 "відрізняються) і (2) швидкості всіх мутацій дорівнюють 0."
 
-#: plug-ins/common/cml-explorer.c:1570
+#: plug-ins/common/cml-explorer.c:1594
 msgid "O_thers"
 msgstr "_Інші"
 
-#: plug-ins/common/cml-explorer.c:1585
+#: plug-ins/common/cml-explorer.c:1609
 msgid "Copy Settings"
 msgstr "Скопіювати параметри"
 
-#: plug-ins/common/cml-explorer.c:1604
+#: plug-ins/common/cml-explorer.c:1628
 msgid "Source channel:"
 msgstr "Вихідний канал:"
 
-#: plug-ins/common/cml-explorer.c:1619 plug-ins/common/cml-explorer.c:1666
+#: plug-ins/common/cml-explorer.c:1643 plug-ins/common/cml-explorer.c:1690
 msgid "Destination channel:"
 msgstr "Цільовий канал:"
 
-#: plug-ins/common/cml-explorer.c:1623
+#: plug-ins/common/cml-explorer.c:1647
 msgid "Copy Parameters"
 msgstr "Скопіювати параметри"
 
-#: plug-ins/common/cml-explorer.c:1631
+#: plug-ins/common/cml-explorer.c:1655
 msgid "Selective Load Settings"
 msgstr "Вибіркове завантаження параметрів"
 
-#: plug-ins/common/cml-explorer.c:1651
+#: plug-ins/common/cml-explorer.c:1675
 msgid "Source channel in file:"
 msgstr "Вихідний канал у файлі:"
 
-#: plug-ins/common/cml-explorer.c:1672
+#: plug-ins/common/cml-explorer.c:1696
 msgid "_Misc"
 msgstr "І_нше"
 
-#: plug-ins/common/cml-explorer.c:1731
+#: plug-ins/common/cml-explorer.c:1755
 msgid "Function type:"
 msgstr "Тип функції:"
 
-#: plug-ins/common/cml-explorer.c:1747
+#: plug-ins/common/cml-explorer.c:1771
 msgid "Composition:"
 msgstr "Збірка:"
 
-#: plug-ins/common/cml-explorer.c:1761
+#: plug-ins/common/cml-explorer.c:1785
 msgid "Misc arrange:"
 msgstr "Порядок:"
 
-#: plug-ins/common/cml-explorer.c:1765
+#: plug-ins/common/cml-explorer.c:1789
 msgid "Use cyclic range"
 msgstr "Використовувати циклічний діапазон"
 
-#: plug-ins/common/cml-explorer.c:1774
+#: plug-ins/common/cml-explorer.c:1798
 msgid "Mod. rate:"
 msgstr "Частота модифікації:"
 
-#: plug-ins/common/cml-explorer.c:1781
+#: plug-ins/common/cml-explorer.c:1805
 msgid "Env. sensitivity:"
 msgstr "Чутливість середовища:"
 
-#: plug-ins/common/cml-explorer.c:1788
+#: plug-ins/common/cml-explorer.c:1812
 msgid "Diffusion dist.:"
 msgstr "Дистанція дифузії:"
 
-#: plug-ins/common/cml-explorer.c:1795
+#: plug-ins/common/cml-explorer.c:1819
 msgid "# of subranges:"
 msgstr "Кількість піддіапазонів:"
 
-#: plug-ins/common/cml-explorer.c:1802
+#: plug-ins/common/cml-explorer.c:1826
 msgid "P(ower factor):"
 msgstr "Показник степені:"
 
-#: plug-ins/common/cml-explorer.c:1810
+#: plug-ins/common/cml-explorer.c:1834
 msgid "Parameter k:"
 msgstr "Параметр k:"
 
-#: plug-ins/common/cml-explorer.c:1818
+#: plug-ins/common/cml-explorer.c:1842
 msgid "Range low:"
 msgstr "Нижній діапазон:"
 
-#: plug-ins/common/cml-explorer.c:1825
+#: plug-ins/common/cml-explorer.c:1849
 msgid "Range high:"
 msgstr "Верхній діапазон:"
 
-#: plug-ins/common/cml-explorer.c:1836
+#: plug-ins/common/cml-explorer.c:1860
 msgid "Plot a Graph of the Settings"
 msgstr "Накреслити графік параметрів"
 
-#: plug-ins/common/cml-explorer.c:1878
+#: plug-ins/common/cml-explorer.c:1902
 msgid "Ch. sensitivity:"
 msgstr "Чутливість каналу:"
 
-#: plug-ins/common/cml-explorer.c:1886
+#: plug-ins/common/cml-explorer.c:1910
 msgid "Mutation rate:"
 msgstr "Швидкість мутації:"
 
-#: plug-ins/common/cml-explorer.c:1894
+#: plug-ins/common/cml-explorer.c:1918
 msgid "Mutation dist.:"
 msgstr "Відстань мутацій:"
 
-#: plug-ins/common/cml-explorer.c:1986
+#: plug-ins/common/cml-explorer.c:2010
 msgid "Graph of the Current Settings"
 msgstr "Графік поточних параметрів"
 
-#: plug-ins/common/cml-explorer.c:1990 plug-ins/common/plugin-browser.c:562
+#: plug-ins/common/cml-explorer.c:2014 plug-ins/common/plugin-browser.c:562
 #: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
 #: plug-ins/ifs-compose/ifs-compose.c:1208
@@ -1204,18 +1208,18 @@ msgstr "Графік поточних параметрів"
 msgid "_Close"
 msgstr "З_акрити"
 
-#: plug-ins/common/cml-explorer.c:2058
+#: plug-ins/common/cml-explorer.c:2082
 msgid "Warning: the source and the destination are the same channel."
 msgstr "Увага: джерело і призначення в одному каналі."
 
-#: plug-ins/common/cml-explorer.c:2117
+#: plug-ins/common/cml-explorer.c:2142
 msgid "Save CML Explorer Parameters"
 msgstr "Збереження параметрів CML Explorer"
 
-#: plug-ins/common/cml-explorer.c:2173 plug-ins/common/curve-bend.c:792
+#: plug-ins/common/cml-explorer.c:2212 plug-ins/common/curve-bend.c:792
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
 #: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1218
-#: plug-ins/common/file-pcx.c:1216 plug-ins/common/file-pdf-save.c:708
+#: plug-ins/common/file-pcx.c:1216 plug-ins/common/file-pdf-save.c:659
 #: plug-ins/common/file-png.c:1488 plug-ins/common/file-raw-data.c:1337
 #: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
 #: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1381
@@ -1232,64 +1236,41 @@ msgstr "Збереження параметрів CML Explorer"
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не вдається відкрити файл «%s» для запису: %s"
 
-#: plug-ins/common/cml-explorer.c:2228
+#: plug-ins/common/cml-explorer.c:2225 plug-ins/common/cml-explorer.c:2304
+#: plug-ins/common/cml-explorer.c:2322
+#, c-format
+#| msgid "Could not write '%s': %s"
+msgid "Could not write to '%s': %s"
+msgstr "Не вдалося записати дані до «%s»: %s"
+
+#: plug-ins/common/cml-explorer.c:2331
 #, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "Параметри збережено до «%s»"
 
-#: plug-ins/common/cml-explorer.c:2250
+#: plug-ins/common/cml-explorer.c:2352
 msgid "Load CML Explorer Parameters"
 msgstr "Завантажити параметри CML Explorer"
 
-#: plug-ins/common/cml-explorer.c:2346 plug-ins/common/curve-bend.c:845
-#: plug-ins/common/file-cel.c:350 plug-ins/common/file-cel.c:402
-#: plug-ins/common/file-dicom.c:383 plug-ins/common/file-farbfeld.c:298
-#: plug-ins/common/file-gif-load.c:414 plug-ins/common/file-iff.c:219
-#: plug-ins/common/file-mng.c:1402 plug-ins/common/file-pcx.c:509
-#: plug-ins/common/file-pcx.c:552 plug-ins/common/file-png.c:658
-#: plug-ins/common/file-ps.c:1109 plug-ins/common/file-ps.c:3619
-#: plug-ins/common/file-psp.c:2631 plug-ins/common/file-psp.c:2681
-#: plug-ins/common/file-qoi.c:299 plug-ins/common/file-raw-data.c:515
-#: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:457
-#: plug-ins/common/file-svg.c:380 plug-ins/common/file-svg.c:809
-#: plug-ins/common/file-tga.c:447 plug-ins/common/file-wbmp.c:188
-#: plug-ins/common/file-xbm.c:749 plug-ins/common/file-xmc.c:656
-#: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:492
-#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
-#: plug-ins/file-dds/ddsread.c:156 plug-ins/file-faxg3/faxg3.c:260
-#: plug-ins/file-fits/fits.c:395 plug-ins/file-fli/fli-gimp.c:450
-#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-icns/file-icns-load.c:516
-#: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
-#: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
-#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
-#: plug-ins/file-psd/psd-load.c:169 plug-ins/file-psd/psd-load.c:174
-#: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
-#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1764
-#: plug-ins/fractal-explorer/fractal-explorer.c:1159 plug-ins/gfig/gfig.c:527
-#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
-#: plug-ins/lighting/lighting-ui.c:952
+#: plug-ins/common/cml-explorer.c:2486
 #, c-format
-msgid "Could not open '%s' for reading: %s"
-msgstr "Не вдається відкрити файл «%s» для читання: %s"
+#| msgid "Error: it's not CML parameter file."
+msgid "Error: \"%s\" is not a CML parameter file."
+msgstr "Помилка: «%s» не є файлом параметрів CML."
 
-#: plug-ins/common/cml-explorer.c:2368
-msgid "Error: it's not CML parameter file."
-msgstr "Помилка: це не файл параметрів CML."
-
-#: plug-ins/common/cml-explorer.c:2375
+#: plug-ins/common/cml-explorer.c:2493
 #, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr "Попередження: «%s» - це файл старого формату."
 
-#: plug-ins/common/cml-explorer.c:2379
+#: plug-ins/common/cml-explorer.c:2497
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr ""
 "Попередження: «%s» - цей файл параметрів призначений для більш нової версії "
 "\"CML Explorer\"."
 
-#: plug-ins/common/cml-explorer.c:2442
+#: plug-ins/common/cml-explorer.c:2568
 msgid "Error: failed to load parameters"
 msgstr "Помилка: не вдається завантажити параметри"
 
@@ -1784,7 +1765,8 @@ msgstr "_Рівень"
 
 #: plug-ins/common/contrast-retinex.c:212
 msgid "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
-msgstr "Ретінекс-розподіл шкалами { Однорідний (0), Низький (1), Високий (2) }"
+msgstr ""
+"Ретінекс-розподіл шкалами { Однорідний (0), Низький (1), Високий (2) }"
 
 #: plug-ins/common/contrast-retinex.c:218
 msgid "Dy_namic"
@@ -1985,7 +1967,8 @@ msgstr "Перетворений шар"
 
 #: plug-ins/common/curve-bend.c:672
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr ""
+"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:686
 msgid "Cannot operate on layers with masks."
@@ -1994,6 +1977,38 @@ msgstr "Не можна використовувати на шарах з мас
 #: plug-ins/common/curve-bend.c:701
 msgid "Cannot operate on empty selections."
 msgstr "Неможливо виконувати дії з порожнім виділенням."
+
+#: plug-ins/common/curve-bend.c:845 plug-ins/common/file-cel.c:350
+#: plug-ins/common/file-cel.c:402 plug-ins/common/file-dicom.c:383
+#: plug-ins/common/file-farbfeld.c:298 plug-ins/common/file-gif-load.c:414
+#: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1402
+#: plug-ins/common/file-pcx.c:509 plug-ins/common/file-pcx.c:552
+#: plug-ins/common/file-png.c:658 plug-ins/common/file-ps.c:1109
+#: plug-ins/common/file-ps.c:3619 plug-ins/common/file-psp.c:2631
+#: plug-ins/common/file-psp.c:2681 plug-ins/common/file-qoi.c:299
+#: plug-ins/common/file-raw-data.c:515 plug-ins/common/file-raw-data.c:1665
+#: plug-ins/common/file-sunras.c:457 plug-ins/common/file-svg.c:380
+#: plug-ins/common/file-svg.c:809 plug-ins/common/file-tga.c:447
+#: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
+#: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
+#: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2090
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:156
+#: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
+#: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
+#: plug-ins/file-icns/file-icns-load.c:516
+#: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
+#: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
+#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
+#: plug-ins/file-psd/psd-load.c:169 plug-ins/file-psd/psd-load.c:174
+#: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1764
+#: plug-ins/fractal-explorer/fractal-explorer.c:1159 plug-ins/gfig/gfig.c:527
+#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
+#: plug-ins/lighting/lighting-ui.c:952
+#, c-format
+msgid "Could not open '%s' for reading: %s"
+msgstr "Не вдається відкрити файл «%s» для читання: %s"
 
 #: plug-ins/common/curve-bend.c:855
 #, c-format
@@ -2631,7 +2646,8 @@ msgstr "Програма на C"
 
 #: plug-ins/common/file-csource.c:126
 msgid "Dump image data in RGB(A) format for C source"
-msgstr "Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
+msgstr ""
+"Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
 
 #: plug-ins/common/file-csource.c:128
 msgid "CSource cannot be run non-interactively."
@@ -4343,7 +4359,7 @@ msgid "PDF"
 msgstr "PDF"
 
 #: plug-ins/common/file-pdf-save.c:381 plug-ins/common/file-pdf-save.c:453
-#: plug-ins/common/file-pdf-save.c:1153
+#: plug-ins/common/file-pdf-save.c:1098
 msgid "_Fill transparent areas with background color"
 msgstr "Запов_нити прозорі області кольором тла"
 
@@ -4356,7 +4372,7 @@ msgstr "Заповнити прозорі області кольором тла
 msgid "_Create multipage PDF..."
 msgstr "_Створити PDF з кількома сторінками…"
 
-#: plug-ins/common/file-pdf-save.c:719
+#: plug-ins/common/file-pdf-save.c:670
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -4369,7 +4385,7 @@ msgstr ""
 "Переконайтесь, що ввели правильну назву файла й вибрана адреса не лише для "
 "читання! "
 
-#: plug-ins/common/file-pdf-save.c:994
+#: plug-ins/common/file-pdf-save.c:939
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -4381,55 +4397,55 @@ msgstr ""
 "шрифти, яких не вистачає, до експортування зображення. Якщо ви цього не "
 "зробите, досягти прийнятних результатів не вдасться."
 
-#: plug-ins/common/file-pdf-save.c:1092
+#: plug-ins/common/file-pdf-save.c:1037
 msgid "Save to:"
 msgstr "Зберегти у:"
 
-#: plug-ins/common/file-pdf-save.c:1096
+#: plug-ins/common/file-pdf-save.c:1041
 msgid "Browse..."
 msgstr "Огляд…"
 
-#: plug-ins/common/file-pdf-save.c:1097
+#: plug-ins/common/file-pdf-save.c:1042
 msgid "Multipage PDF export"
 msgstr "Експортування в PDF з кількома сторінками"
 
-#: plug-ins/common/file-pdf-save.c:1133
+#: plug-ins/common/file-pdf-save.c:1078
 msgid "Remove the selected pages"
 msgstr "Вилучити вибрані сторінки"
 
-#: plug-ins/common/file-pdf-save.c:1143
+#: plug-ins/common/file-pdf-save.c:1088
 msgid "Add this image"
 msgstr "Додати це зображення"
 
-#: plug-ins/common/file-pdf-save.c:1148
+#: plug-ins/common/file-pdf-save.c:1093
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr "_Пропустити приховані шари і шари без прозорості"
 
-#: plug-ins/common/file-pdf-save.c:1158
+#: plug-ins/common/file-pdf-save.c:1103
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "Перетворити _растрові малюнки у векторну графіку, де це можливо "
 
-#: plug-ins/common/file-pdf-save.c:1163
+#: plug-ins/common/file-pdf-save.c:1108
 msgid "_Apply layer masks before saving"
 msgstr "З_астосувати маски шарів перед збереженням"
 
-#: plug-ins/common/file-pdf-save.c:1167
+#: plug-ins/common/file-pdf-save.c:1112
 msgid "Keeping the masks will not change the output"
 msgstr "Утримання маски не вплине на результат"
 
-#: plug-ins/common/file-pdf-save.c:1256 plug-ins/common/file-pdf-save.c:1329
-#: plug-ins/common/file-pdf-save.c:1427 plug-ins/common/file-ps.c:2098
+#: plug-ins/common/file-pdf-save.c:1201 plug-ins/common/file-pdf-save.c:1274
+#: plug-ins/common/file-pdf-save.c:1372 plug-ins/common/file-ps.c:2098
 #: plug-ins/file-tiff/file-tiff-load.c:1536
 #, c-format
 msgid "Page %d"
 msgstr "Сторінка %d"
 
-#: plug-ins/common/file-pdf-save.c:1296
+#: plug-ins/common/file-pdf-save.c:1241
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
 "Помилка! Щоб зберегти файл, потрібно додати щонайменше одне зображення!"
 
-#: plug-ins/common/file-pdf-save.c:1474 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-save.c:1419 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Неможливо опрацювати розмір (ширину чи висоту) зображення."
 
@@ -4627,11 +4643,13 @@ msgstr ""
 #: plug-ins/common/file-png.c:1445
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr ""
+"Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: plug-ins/common/file-png.c:1454
 #, c-format
-msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgid ""
+"Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -4997,7 +5015,8 @@ msgstr "_Розмір перегляду"
 
 #: plug-ins/common/file-ps.c:564
 msgid "0: no preview, >0: max. size of preview"
-msgstr "0: без попереднього перегляду, >0: макс. розмір попереднього перегляду"
+msgstr ""
+"0: без попереднього перегляду, >0: макс. розмір попереднього перегляду"
 
 #: plug-ins/common/file-ps.c:708
 msgid "PostScript plug-in does not support multiple layers."
@@ -5870,7 +5889,8 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:778
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr ""
+"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:785
 msgid "Retry without limits preventing to parse huge data?"
@@ -6706,7 +6726,7 @@ msgstr "Розрізати зображення на частини, вказа�
 msgid "Guillotine"
 msgstr "Гільйотина"
 
-#: plug-ins/common/guillotine.c:266 plug-ins/help-browser/dialog.c:821
+#: plug-ins/common/guillotine.c:266 plug-ins/help-browser/dialog.c:830
 msgid "Untitled"
 msgstr "Без назви"
 
@@ -10382,17 +10402,14 @@ msgid "Create cosmic recursive fractal flames"
 msgstr "Створити ефект спалахів полум'я з використанням фракталів"
 
 #: plug-ins/flame/flame.c:200
-#| msgid "Co_ntrast:"
 msgid "Co_ntrast"
 msgstr "_Контраст"
 
 #: plug-ins/flame/flame.c:205
-#| msgid "_Gamma:"
 msgid "_Gamma"
 msgstr "Г_ама"
 
 #: plug-ins/flame/flame.c:215
-#| msgid "Spa_tial oversample:"
 msgid "Spa_tial oversample"
 msgstr "П_ерекриття"
 
@@ -10401,12 +10418,10 @@ msgid "_Zoom"
 msgstr "_Масштаб"
 
 #: plug-ins/flame/flame.c:230
-#| msgid "_X:"
 msgid "_X"
 msgstr "_X"
 
 #: plug-ins/flame/flame.c:235
-#| msgid "_Y:"
 msgid "_Y"
 msgstr "_Y"
 
@@ -11611,7 +11626,7 @@ msgstr "Шаблон"
 msgid "Preset Name"
 msgstr "Назва налаштувань"
 
-#: plug-ins/gimpressionist/gimp.c:451
+#: plug-ins/gimpressionist/gimp.c:465
 msgid "Painting"
 msgstr "Малювання"
 
@@ -11672,7 +11687,8 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid "Let the direction from the center determine the direction of the stroke"
+msgid ""
+"Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -11782,7 +11798,8 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr ""
+"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -12220,7 +12237,8 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: plug-ins/gradient-flare/gradient-flare.c:3316
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr ""
+"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: plug-ins/gradient-flare/gradient-flare.c:3326
 msgid "Delete Gradient Flare"
@@ -12349,49 +12367,49 @@ msgid "_Second Flares"
 msgstr "_Другорядні спалахи"
 
 #. the dialog window
-#: plug-ins/help-browser/dialog.c:261 plug-ins/help-browser/dialog.c:822
+#: plug-ins/help-browser/dialog.c:263 plug-ins/help-browser/dialog.c:831
 msgid "GIMP Help Browser"
 msgstr "Перегляд довідки GIMP"
 
-#: plug-ins/help-browser/dialog.c:275 plug-ins/help-browser/help-menu.ui:14
+#: plug-ins/help-browser/dialog.c:277 plug-ins/help-browser/help-menu.ui:14
 msgid "_Reload"
 msgstr "О_новити"
 
-#: plug-ins/help-browser/dialog.c:275
+#: plug-ins/help-browser/dialog.c:277
 msgid "Reload current page"
 msgstr "Повторно завантажити цю сторінку"
 
-#: plug-ins/help-browser/dialog.c:276 plug-ins/help-browser/help-menu.ui:18
+#: plug-ins/help-browser/dialog.c:278 plug-ins/help-browser/help-menu.ui:18
 msgid "_Stop"
 msgstr "З_упинити"
 
-#: plug-ins/help-browser/dialog.c:276
+#: plug-ins/help-browser/dialog.c:278
 msgid "Stop loading this page"
 msgstr "Зупинити завантаження цієї сторінки"
 
-#: plug-ins/help-browser/dialog.c:277
+#: plug-ins/help-browser/dialog.c:279
 msgid "Go to the index page"
 msgstr "До змісту"
 
-#: plug-ins/help-browser/dialog.c:283
+#: plug-ins/help-browser/dialog.c:285
 msgid "Visit the GIMP documentation website"
 msgstr "Відвідайте сайт документації GIMP"
 
-#: plug-ins/help-browser/dialog.c:1165
+#: plug-ins/help-browser/dialog.c:1177
 msgid "Find:"
 msgstr "Шукати:"
 
-#: plug-ins/help-browser/dialog.c:1181
+#: plug-ins/help-browser/dialog.c:1193
 msgctxt "search"
 msgid "_Previous"
 msgstr "_Попереднє"
 
-#: plug-ins/help-browser/dialog.c:1190
+#: plug-ins/help-browser/dialog.c:1202
 msgctxt "search"
 msgid "_Next"
 msgstr "_Наступне"
 
-#: plug-ins/help-browser/dialog.c:1199
+#: plug-ins/help-browser/dialog.c:1211
 msgctxt "search"
 msgid "_Close"
 msgstr "З_акрити"
@@ -15224,7 +15242,8 @@ msgstr "Альтернативне ото_чення фільтра"
 
 #: plug-ins/selection-to-path/selection-to-path.c:191
 msgid "A second number of adjacent points to consider when filtering."
-msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr ""
+"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path.c:197
 msgid "Filter E_psilon"
@@ -15420,9 +15439,12 @@ msgid "_Scanner/Camera..."
 msgstr "_Сканер/Камера..."
 
 #. Initialize our progress dialog
-#: plug-ins/twain/twain.c:521
+#: plug-ins/twain/twain.c:496
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Parameter URI"
+#~ msgstr "Адреса параметрів"
 
 #~ msgid "_Rendering"
 #~ msgstr "_Візуалізація"
