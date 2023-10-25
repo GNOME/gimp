@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-03 23:14+0000\n"
-"PO-Revision-Date: 2022-08-16 18:50+0300\n"
+"POT-Creation-Date: 2023-10-22 23:36+0000\n"
+"PO-Revision-Date: 2023-10-23 02:48+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.4\n"
 "X-POOTLE-MTIME: 1420937120.000000\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:396
@@ -812,7 +812,7 @@ msgstr "_Sıfırla"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1660
 msgid "_Cancel"
-msgstr "İptal _Et"
+msgstr "İ_ptal"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1661
 msgid "_OK"
