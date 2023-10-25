@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-03 23:14+0000\n"
-"PO-Revision-Date: 2022-08-16 18:52+0300\n"
+"POT-Creation-Date: 2023-10-22 23:36+0000\n"
+"PO-Revision-Date: 2023-10-24 02:23+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2010-10-09 17:28+0000\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.4\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -45,7 +45,7 @@ msgstr "Sunucuyu _Başlat..."
 
 #: ../plug-ins/script-fu/script-fu.c:306
 msgid "_GIMP Online"
-msgstr "Çevrimiçi _GIMP"
+msgstr "Çevrim İçi _GIMP"
 
 #: ../plug-ins/script-fu/script-fu.c:307
 msgid "_User Manual"
@@ -827,93 +827,98 @@ msgstr "Gölge ağırlığı (%)"
 msgid "Flatten image"
 msgstr "Görüntüyü düzleştir"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:63
 msgid "Using _Paths"
 msgstr "_Yolları Kullanmak"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:64
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:77
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:90
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:103
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:116
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:129
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:142
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:155
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:167
 msgid "Bookmark to the user manual"
 msgstr "Kullanıcı kılavuzunu görüntüle"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:76
 msgid "_Preparing your Images for the Web"
 msgstr "Web İçin Kendi Görüntülerinizi _Hazırlamak"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:89
 msgid "_Working with Digital Camera Photos"
 msgstr "Sayısal Kamera Görüntüleri İle _Çalışmak"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:102
 msgid "Create, Open and Save _Files"
 msgstr "_Dosyaları Oluşturmak, Açmak ve Kaydetmek"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:115
 msgid "_Basic Concepts"
 msgstr "_Temel Kavramlar"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:128
 msgid "How to Use _Dialogs"
 msgstr "İletişim _Kutuları Nasıl Kullanılır"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:141
 msgid "Drawing _Simple Objects"
 msgstr "_Basit Nesneler Çizmek"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:154
 msgid "Create and Use _Selections"
 msgstr "_Seçim Oluşturmak ve Kullanmak"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:166
+msgid "_[Table of Contents]"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:206
 msgid "_Main Web Site"
 msgstr "_Ana Web Sitesi"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:207
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:220
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:272
 msgid "Bookmark to the GIMP web site"
 msgstr "GIMP web sitesini görüntüle"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:219
 msgid "_Developer Web Site"
 msgstr "_Geliştirici Web Sitesi"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:232
 msgid "_Roadmap"
 msgstr "_Yol Haritası"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:233
 msgid "Bookmark to the roadmap of GIMP"
 msgstr "GIMP yol haritasını görüntüle"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:245
 msgid "_Wiki"
 msgstr "_Wiki"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:246
 msgid "Bookmark to the wiki of GIMP"
 msgstr "GIMP wiki sayfasını görüntüle"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:258
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Hata Raporları ve Özellik İstekleri"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:259
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "GIMP hata izleyicisini görüntüle"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:271
 msgid "_User Manual Web Site"
 msgstr "_Kullanıcı Kılavuzu Web Sitesi"
 
