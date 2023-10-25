@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-calculator\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-19 19:54+0000\n"
-"PO-Revision-Date: 2023-10-20 06:00+0200\n"
+"POT-Creation-Date: 2023-10-25 17:01+0000\n"
+"PO-Revision-Date: 2023-10-25 23:23+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -28,7 +28,7 @@ msgstr "ავარჯიშეთ თხა C-ში"
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:201
 #: plug-ins/common/border-average.c:185 plug-ins/common/checkerboard.c:176
-#: plug-ins/common/cml-explorer.c:558 plug-ins/common/compose.c:584
+#: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:584
 #: plug-ins/common/contrast-retinex.c:246 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:653 plug-ins/common/decompose.c:375
 #: plug-ins/common/depth-merge.c:293 plug-ins/common/despeckle.c:231
@@ -37,14 +37,14 @@ msgstr "ავარჯიშეთ თხა C-ში"
 #: plug-ins/common/jigsaw.c:466 plug-ins/common/nl-filter.c:217
 #: plug-ins/common/qbist.c:252 plug-ins/common/sample-colorize.c:427
 #: plug-ins/common/smooth-palette.c:195 plug-ins/common/sparkle.c:300
-#: plug-ins/common/sphere-designer.c:3179 plug-ins/common/tile.c:218
+#: plug-ins/common/sphere-designer.c:3185 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:913
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:181
-#: plug-ins/file-dds/dds.c:511 plug-ins/flame/flame.c:241
+#: plug-ins/file-dds/dds.c:511 plug-ins/flame/flame.c:299
 #: plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:215
-#: plug-ins/gimpressionist/gimp.c:178
+#: plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
-#: plug-ins/ifs-compose/ifs-compose.c:487 plug-ins/imagemap/imap_main.c:264
+#: plug-ins/ifs-compose/ifs-compose.c:492 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:756
 #: plug-ins/map-object/map-object-main.c:532 plug-ins/pagecurl/pagecurl.c:299
 #, c-format
@@ -60,18 +60,18 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1355
-#: plug-ins/common/cml-explorer.c:2121 plug-ins/common/cml-explorer.c:2254
+#: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1379
+#: plug-ins/common/cml-explorer.c:2146 plug-ins/common/cml-explorer.c:2356
 #: plug-ins/common/colormap-remap.c:694 plug-ins/common/curve-bend.c:1855
 #: plug-ins/common/curve-bend.c:1890 plug-ins/common/file-gif-save.c:1159
 #: plug-ins/common/file-heif.c:2345 plug-ins/common/file-pdf-load.c:686
-#: plug-ins/common/file-pdf-save.c:1101 plug-ins/common/grid.c:786
+#: plug-ins/common/file-pdf-save.c:1046 plug-ins/common/grid.c:786
 #: plug-ins/common/qbist.c:836 plug-ins/common/qbist.c:878
-#: plug-ins/common/qbist.c:932 plug-ins/common/sphere-designer.c:2287
-#: plug-ins/common/sphere-designer.c:2632 plug-ins/common/unit-editor.c:435
+#: plug-ins/common/qbist.c:932 plug-ins/common/sphere-designer.c:2292
+#: plug-ins/common/sphere-designer.c:2637 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:472
-#: plug-ins/file-tiff/file-tiff-load.c:2555 plug-ins/flame/flame.c:540
-#: plug-ins/flame/flame.c:716 plug-ins/flame/flame.c:1033
+#: plug-ins/file-tiff/file-tiff-load.c:2555 plug-ins/flame/flame.c:622
+#: plug-ins/flame/flame.c:827
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1540
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1578
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
@@ -82,9 +82,9 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/gimpressionist/presets.c:642 plug-ins/gimpressionist/sizemap.c:401
 #: plug-ins/gradient-flare/gradient-flare.c:3331
 #: plug-ins/gradient-flare/gradient-flare.c:3445
-#: plug-ins/ifs-compose/ifs-compose.c:908
-#: plug-ins/ifs-compose/ifs-compose.c:2554
-#: plug-ins/ifs-compose/ifs-compose.c:2591 plug-ins/imagemap/imap_browse.c:80
+#: plug-ins/ifs-compose/ifs-compose.c:914
+#: plug-ins/ifs-compose/ifs-compose.c:2560
+#: plug-ins/ifs-compose/ifs-compose.c:2597 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:738
 #: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1185
@@ -140,18 +140,17 @@ msgstr ""
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1356 plug-ins/common/colormap-remap.c:695
+#: plug-ins/common/cml-explorer.c:1380 plug-ins/common/colormap-remap.c:695
 #: plug-ins/common/file-heif.c:2346 plug-ins/common/file-pdf-load.c:687
 #: plug-ins/common/grid.c:787 plug-ins/common/qbist.c:933
-#: plug-ins/common/sphere-designer.c:2633 plug-ins/common/unit-editor.c:266
+#: plug-ins/common/sphere-designer.c:2638 plug-ins/common/unit-editor.c:266
 #: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:473
-#: plug-ins/file-exr/file-exr.c:422 plug-ins/file-psd/psd-load.c:3533
-#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
-#: plug-ins/fractal-explorer/fractal-explorer.c:1391
+#: plug-ins/file-exr/file-exr.c:422 plug-ins/file-psd/psd-load.c:3549
+#: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3446
-#: plug-ins/ifs-compose/ifs-compose.c:909
+#: plug-ins/ifs-compose/ifs-compose.c:915
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
 msgstr "_დიახ"
@@ -431,117 +430,122 @@ msgstr ""
 msgid "Preview a GIMP layer-based animation"
 msgstr ""
 
-#: plug-ins/common/animation-play.c:370 plug-ins/common/animation-play.c:736
-#: plug-ins/common/animation-play.c:1352
+#: plug-ins/common/animation-play.c:371
+#, c-format
+msgid "Procedure '%s' only works in interactive mode."
+msgstr ""
+
+#: plug-ins/common/animation-play.c:389 plug-ins/common/animation-play.c:765
+#: plug-ins/common/animation-play.c:1381
 msgid "Start playback"
 msgstr ""
 
-#: plug-ins/common/animation-play.c:371 plug-ins/common/animation-play.c:738
+#: plug-ins/common/animation-play.c:390 plug-ins/common/animation-play.c:767
 msgid "Step back to previous frame"
 msgstr ""
 
-#: plug-ins/common/animation-play.c:372 plug-ins/common/animation-play.c:740
+#: plug-ins/common/animation-play.c:391 plug-ins/common/animation-play.c:769
 msgid "Step to next frame"
 msgstr "შემდეგ კადრზე გადასვლა"
 
-#: plug-ins/common/animation-play.c:373 plug-ins/common/animation-play.c:742
+#: plug-ins/common/animation-play.c:392 plug-ins/common/animation-play.c:771
 msgid "Rewind the animation"
 msgstr "_ანიმაციის გადახვევა"
 
-#: plug-ins/common/animation-play.c:378
+#: plug-ins/common/animation-play.c:397
 msgid "Increase the speed of the animation"
 msgstr ""
 
-#: plug-ins/common/animation-play.c:379
+#: plug-ins/common/animation-play.c:398
 msgid "Decrease the speed of the animation"
 msgstr ""
 
-#: plug-ins/common/animation-play.c:380
+#: plug-ins/common/animation-play.c:399
 msgid "Reset the speed of the animation"
 msgstr "ანიმაციის სიჩქარის ნაგულისხმევზე დაბრუნება"
 
-#: plug-ins/common/animation-play.c:385 plug-ins/common/animation-play.c:745
+#: plug-ins/common/animation-play.c:404 plug-ins/common/animation-play.c:774
 msgid "Detach the animation from the dialog window"
 msgstr ""
 
-#: plug-ins/common/animation-play.c:386 plug-ins/common/animation-play.c:747
+#: plug-ins/common/animation-play.c:405 plug-ins/common/animation-play.c:776
 msgid "Reload the image"
 msgstr "გამოსახულების თავიდან ჩატვირთვა"
 
-#: plug-ins/common/animation-play.c:387 plug-ins/imagemap/imap-menu.ui:26
+#: plug-ins/common/animation-play.c:406 plug-ins/imagemap/imap-menu.ui:26
 msgid "Quit"
 msgstr "გასვლა"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:467 plug-ins/common/animation-play.c:525
-#: plug-ins/common/animation-play.c:803
+#: plug-ins/common/animation-play.c:496 plug-ins/common/animation-play.c:554
+#: plug-ins/common/animation-play.c:832
 #, c-format
 msgid "%.1f %%"
 msgstr "%.1f %%"
 
 #. Image Name
-#: plug-ins/common/animation-play.c:658
+#: plug-ins/common/animation-play.c:687
 msgid "Animation Playback:"
 msgstr ""
 
-#: plug-ins/common/animation-play.c:738
+#: plug-ins/common/animation-play.c:767
 msgid "Step _back"
 msgstr "ერთი ნაბიჯით უკან"
 
-#: plug-ins/common/animation-play.c:740
+#: plug-ins/common/animation-play.c:769
 msgid "_Step"
 msgstr "_ბიჯი"
 
-#: plug-ins/common/animation-play.c:745
+#: plug-ins/common/animation-play.c:774
 msgid "Detach"
 msgstr "მოხსნა"
 
 #. Zoom Options
-#: plug-ins/common/animation-play.c:818
+#: plug-ins/common/animation-play.c:847
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:702
 #: plug-ins/imagemap/imap-menu.ui:276
 msgid "Zoom"
 msgstr "გადიდება"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:828
+#: plug-ins/common/animation-play.c:857
 #, c-format
 msgid "%d fps"
 msgstr "%d კადრი/წმ"
 
-#: plug-ins/common/animation-play.c:839
+#: plug-ins/common/animation-play.c:868
 msgid "Default framerate"
 msgstr "ნაგულისხმები კადრების სიხშირეა"
 
-#: plug-ins/common/animation-play.c:859
+#: plug-ins/common/animation-play.c:888
 msgid "Playback speed"
 msgstr "დაკვრის სიჩქარე"
 
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:870 plug-ins/common/file-gif-save.c:1269
+#: plug-ins/common/animation-play.c:899 plug-ins/common/file-gif-save.c:1269
 msgid "Cumulative layers (combine)"
 msgstr ""
 
-#: plug-ins/common/animation-play.c:875 plug-ins/common/file-gif-save.c:1271
+#: plug-ins/common/animation-play.c:904 plug-ins/common/file-gif-save.c:1271
 msgid "One frame per layer (replace)"
 msgstr ""
 
-#: plug-ins/common/animation-play.c:971
+#: plug-ins/common/animation-play.c:1000
 msgid "Memory could not be allocated to the frame container."
 msgstr ""
 
-#: plug-ins/common/animation-play.c:1038
+#: plug-ins/common/animation-play.c:1067
 msgid "Invalid image. Did you close it?"
 msgstr ""
 
-#: plug-ins/common/animation-play.c:1150
+#: plug-ins/common/animation-play.c:1179
 #, c-format
 msgid "Frame %d of %d"
 msgstr "კადრი %d %d-დან"
 
-#: plug-ins/common/animation-play.c:1352
+#: plug-ins/common/animation-play.c:1381
 msgid "Stop playback"
 msgstr "დაკვრის გაჩერება"
 
@@ -621,12 +625,12 @@ msgstr "ვერტიკალური"
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:700
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2733 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2749 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1534
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
-#: plug-ins/screenshot/screenshot-win32.c:317 plug-ins/twain/twain.c:661
+#: plug-ins/screenshot/screenshot-win32.c:317 plug-ins/twain/twain.c:636
 msgid "Background"
 msgstr "ფონი"
 
@@ -917,18 +921,18 @@ msgstr ""
 msgid "Randoms from seed (shared)"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
+#: plug-ins/common/cml-explorer.c:299 plug-ins/common/cml-explorer.c:307
 #: plug-ins/common/decompose.c:202 plug-ins/gimpressionist/orientation.c:172
 #: plug-ins/gimpressionist/size.c:179
 msgid "Hue"
 msgstr "ჰუე"
 
-#: plug-ins/common/cml-explorer.c:302 plug-ins/common/cml-explorer.c:310
+#: plug-ins/common/cml-explorer.c:300 plug-ins/common/cml-explorer.c:308
 #: plug-ins/common/decompose.c:203
 msgid "Saturation"
 msgstr "გაჯერებულობა"
 
-#: plug-ins/common/cml-explorer.c:303 plug-ins/common/cml-explorer.c:311
+#: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
 #: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:317
 #: plug-ins/metadata/metadata-viewer.c:355
@@ -936,19 +940,19 @@ msgstr "გაჯერებულობა"
 msgid "Value"
 msgstr "მნიშვნელობა"
 
-#: plug-ins/common/cml-explorer.c:308
+#: plug-ins/common/cml-explorer.c:306
 msgid "(None)"
 msgstr "(არცერთი)"
 
-#: plug-ins/common/cml-explorer.c:508
+#: plug-ins/common/cml-explorer.c:510
 msgid "CML _Explorer..."
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:513
+#: plug-ins/common/cml-explorer.c:515
 msgid "Create abstract Coupled-Map Lattice patterns"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:515
+#: plug-ins/common/cml-explorer.c:517
 msgid ""
 "Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellular "
 "Automata on continuous (value) domain. In GIMP_RUN_NONINTERACTIVE, the name "
@@ -956,113 +960,113 @@ msgid ""
 "via parameter file."
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:534
-msgid "Parameter URI"
-msgstr "პარამეტრის URI"
+#: plug-ins/common/cml-explorer.c:536
+msgid "Parameter File"
+msgstr "პარამეტრის ფაილი"
 
-#: plug-ins/common/cml-explorer.c:535
+#: plug-ins/common/cml-explorer.c:537
 msgid ""
-"The local file:// URI of parameter file. CML_explorer makes an image with "
-"its settings."
+"The parameter file from which CML_explorer makes an image. This argument is "
+"only used in non-interactive runs."
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:884
+#: plug-ins/common/cml-explorer.c:908
 msgid "CML Explorer: evoluting"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1351
+#: plug-ins/common/cml-explorer.c:1375
 msgid "Coupled-Map-Lattice Explorer"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1395
+#: plug-ins/common/cml-explorer.c:1419
 msgid "New Seed"
 msgstr "ახალი მარცვალი"
 
-#: plug-ins/common/cml-explorer.c:1406
+#: plug-ins/common/cml-explorer.c:1430
 msgid "Fix Seed"
 msgstr "მარცვლის გასწორება"
 
-#: plug-ins/common/cml-explorer.c:1417
+#: plug-ins/common/cml-explorer.c:1441
 msgid "Random Seed"
 msgstr "შემთხვევითი მარცვალი"
 
 #. The Load button
-#: plug-ins/common/cml-explorer.c:1432 plug-ins/common/cml-explorer.c:2255
+#: plug-ins/common/cml-explorer.c:1456 plug-ins/common/cml-explorer.c:2357
 #: plug-ins/common/curve-bend.c:1313 plug-ins/common/curve-bend.c:1856
 #: plug-ins/common/file-cel.c:1009 plug-ins/common/qbist.c:837
-#: plug-ins/common/qbist.c:1020 plug-ins/common/sphere-designer.c:2290
-#: plug-ins/common/sphere-designer.c:2681 plug-ins/flame/flame.c:542
-#: plug-ins/flame/flame.c:1104
+#: plug-ins/common/qbist.c:1020 plug-ins/common/sphere-designer.c:2295
+#: plug-ins/common/sphere-designer.c:2686 plug-ins/flame/flame.c:624
+#: plug-ins/flame/flame.c:1233
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:817
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1541
-#: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:905
-#: plug-ins/ifs-compose/ifs-compose.c:2592 plug-ins/imagemap/imap_browse.c:81
+#: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:911
+#: plug-ins/ifs-compose/ifs-compose.c:2598 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:492
 #: plug-ins/lighting/lighting-ui.c:883
 msgid "_Open"
 msgstr "_გახსნა"
 
 #. The Save button
-#: plug-ins/common/cml-explorer.c:1440 plug-ins/common/cml-explorer.c:2122
+#: plug-ins/common/cml-explorer.c:1464 plug-ins/common/cml-explorer.c:2147
 #: plug-ins/common/curve-bend.c:1325 plug-ins/common/curve-bend.c:1891
-#: plug-ins/common/file-pdf-save.c:1100 plug-ins/common/qbist.c:879
-#: plug-ins/common/qbist.c:1028 plug-ins/common/sphere-designer.c:2290
-#: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:542
-#: plug-ins/flame/flame.c:1112
+#: plug-ins/common/file-pdf-save.c:1045 plug-ins/common/qbist.c:879
+#: plug-ins/common/qbist.c:1028 plug-ins/common/sphere-designer.c:2295
+#: plug-ins/common/sphere-designer.c:2694 plug-ins/flame/flame.c:624
+#: plug-ins/flame/flame.c:1241
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:825
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1579
 #: plug-ins/gfig/gfig-dialog.c:832 plug-ins/gimpressionist/brush.c:271
-#: plug-ins/ifs-compose/ifs-compose.c:906
-#: plug-ins/ifs-compose/ifs-compose.c:2555 plug-ins/imagemap/imap_file.c:129
+#: plug-ins/ifs-compose/ifs-compose.c:912
+#: plug-ins/ifs-compose/ifs-compose.c:2561 plug-ins/imagemap/imap_file.c:129
 #: plug-ins/lighting/lighting-ui.c:486 plug-ins/lighting/lighting-ui.c:739
 msgid "_Save"
 msgstr "_შენახვა"
 
-#: plug-ins/common/cml-explorer.c:1459 plug-ins/common/van-gogh-lic.c:736
+#: plug-ins/common/cml-explorer.c:1483 plug-ins/common/van-gogh-lic.c:736
 msgid "_Hue"
 msgstr "_ტონი"
 
-#: plug-ins/common/cml-explorer.c:1463
+#: plug-ins/common/cml-explorer.c:1487
 msgid "Sat_uration"
 msgstr "_გაჯერებულობა"
 
-#: plug-ins/common/cml-explorer.c:1467
+#: plug-ins/common/cml-explorer.c:1491
 msgid "_Value"
 msgstr "_მნიშვნელობა"
 
-#: plug-ins/common/cml-explorer.c:1471
+#: plug-ins/common/cml-explorer.c:1495
 msgid "_Advanced"
 msgstr "დამატებითი"
 
-#: plug-ins/common/cml-explorer.c:1486
+#: plug-ins/common/cml-explorer.c:1510
 msgid "Channel Independent Parameters"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1508
+#: plug-ins/common/cml-explorer.c:1532
 msgid "Initial value:"
 msgstr "საწყისი მნიშვნელობა:"
 
-#: plug-ins/common/cml-explorer.c:1513
+#: plug-ins/common/cml-explorer.c:1537
 msgid "Zoom scale:"
 msgstr "გადიდების მასშტაბი:"
 
-#: plug-ins/common/cml-explorer.c:1520
+#: plug-ins/common/cml-explorer.c:1544
 msgid "Start offset:"
 msgstr "წანაცვლების საწყისი:"
 
-#: plug-ins/common/cml-explorer.c:1528
+#: plug-ins/common/cml-explorer.c:1552
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1538
+#: plug-ins/common/cml-explorer.c:1562
 msgid "Seed:"
 msgstr "მარცვალი:"
 
-#: plug-ins/common/cml-explorer.c:1550
+#: plug-ins/common/cml-explorer.c:1574
 msgid "Switch to \"From seed\" With the Last Seed"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1562
+#: plug-ins/common/cml-explorer.c:1586
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -1070,198 +1074,173 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1570
+#: plug-ins/common/cml-explorer.c:1594
 msgid "O_thers"
 msgstr "_სხვები"
 
-#: plug-ins/common/cml-explorer.c:1585
+#: plug-ins/common/cml-explorer.c:1609
 msgid "Copy Settings"
 msgstr "პარამეტრების კოპირება"
 
-#: plug-ins/common/cml-explorer.c:1604
+#: plug-ins/common/cml-explorer.c:1628
 msgid "Source channel:"
 msgstr "წყარო არხი:"
 
-#: plug-ins/common/cml-explorer.c:1619 plug-ins/common/cml-explorer.c:1666
+#: plug-ins/common/cml-explorer.c:1643 plug-ins/common/cml-explorer.c:1690
 msgid "Destination channel:"
 msgstr "სამიზნე არხი:"
 
-#: plug-ins/common/cml-explorer.c:1623
+#: plug-ins/common/cml-explorer.c:1647
 msgid "Copy Parameters"
 msgstr "პარამეტრების კოირება"
 
-#: plug-ins/common/cml-explorer.c:1631
+#: plug-ins/common/cml-explorer.c:1655
 msgid "Selective Load Settings"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1651
+#: plug-ins/common/cml-explorer.c:1675
 msgid "Source channel in file:"
 msgstr "წყაროს არხი ფაილში:"
 
-#: plug-ins/common/cml-explorer.c:1672
+#: plug-ins/common/cml-explorer.c:1696
 msgid "_Misc"
 msgstr "_სხვ"
 
-#: plug-ins/common/cml-explorer.c:1731
+#: plug-ins/common/cml-explorer.c:1755
 msgid "Function type:"
 msgstr "ფუნქციის ტიპი:"
 
-#: plug-ins/common/cml-explorer.c:1747
+#: plug-ins/common/cml-explorer.c:1771
 msgid "Composition:"
 msgstr "შემადგენლობა:"
 
-#: plug-ins/common/cml-explorer.c:1761
+#: plug-ins/common/cml-explorer.c:1785
 msgid "Misc arrange:"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1765
+#: plug-ins/common/cml-explorer.c:1789
 msgid "Use cyclic range"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1774
+#: plug-ins/common/cml-explorer.c:1798
 msgid "Mod. rate:"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1781
+#: plug-ins/common/cml-explorer.c:1805
 msgid "Env. sensitivity:"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1788
+#: plug-ins/common/cml-explorer.c:1812
 msgid "Diffusion dist.:"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1795
+#: plug-ins/common/cml-explorer.c:1819
 msgid "# of subranges:"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1802
+#: plug-ins/common/cml-explorer.c:1826
 msgid "P(ower factor):"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1810
+#: plug-ins/common/cml-explorer.c:1834
 msgid "Parameter k:"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1818
+#: plug-ins/common/cml-explorer.c:1842
 msgid "Range low:"
 msgstr "დაბალი დიაპაზონი:"
 
-#: plug-ins/common/cml-explorer.c:1825
+#: plug-ins/common/cml-explorer.c:1849
 msgid "Range high:"
 msgstr "მაღალი დიაპაზონი:"
 
-#: plug-ins/common/cml-explorer.c:1836
+#: plug-ins/common/cml-explorer.c:1860
 msgid "Plot a Graph of the Settings"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1878
+#: plug-ins/common/cml-explorer.c:1902
 msgid "Ch. sensitivity:"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1886
+#: plug-ins/common/cml-explorer.c:1910
 msgid "Mutation rate:"
 msgstr "მუტაციის სიხშირე:"
 
-#: plug-ins/common/cml-explorer.c:1894
+#: plug-ins/common/cml-explorer.c:1918
 msgid "Mutation dist.:"
 msgstr "მუტაციის განაწილება:"
 
-#: plug-ins/common/cml-explorer.c:1986
+#: plug-ins/common/cml-explorer.c:2010
 msgid "Graph of the Current Settings"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:1990 plug-ins/common/plugin-browser.c:562
+#: plug-ins/common/cml-explorer.c:2014 plug-ins/common/plugin-browser.c:562
 #: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
-#: plug-ins/ifs-compose/ifs-compose.c:1208
+#: plug-ins/ifs-compose/ifs-compose.c:1214
 #: plug-ins/metadata/metadata-viewer.c:272
 msgid "_Close"
 msgstr "_დახურვა"
 
-#: plug-ins/common/cml-explorer.c:2058
+#: plug-ins/common/cml-explorer.c:2082
 msgid "Warning: the source and the destination are the same channel."
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:2117
+#: plug-ins/common/cml-explorer.c:2142
 msgid "Save CML Explorer Parameters"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:2173 plug-ins/common/curve-bend.c:792
+#: plug-ins/common/cml-explorer.c:2212 plug-ins/common/curve-bend.c:792
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
 #: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1218
-#: plug-ins/common/file-pcx.c:1216 plug-ins/common/file-pdf-save.c:708
+#: plug-ins/common/file-pcx.c:1216 plug-ins/common/file-pdf-save.c:659
 #: plug-ins/common/file-png.c:1488 plug-ins/common/file-raw-data.c:1337
 #: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
 #: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1381
-#: plug-ins/common/sphere-designer.c:2201 plug-ins/file-bmp/bmp-save.c:341
+#: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-save.c:341
 #: plug-ins/file-fli/fli-gimp.c:808 plug-ins/file-icns/file-icns-save.c:427
 #: plug-ins/file-ico/ico-save.c:1342 plug-ins/file-ico/ico-save.c:1559
 #: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
 #: plug-ins/file-tiff/file-tiff-save.c:1084
-#: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
+#: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:590
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1441
-#: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2414
+#: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2420
 #: plug-ins/lighting/lighting-ui.c:808
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "შეცდომა '%s'-ში ჩაწერისას: %s"
 
-#: plug-ins/common/cml-explorer.c:2228
+#: plug-ins/common/cml-explorer.c:2225 plug-ins/common/cml-explorer.c:2304
+#: plug-ins/common/cml-explorer.c:2322
+#, c-format
+msgid "Could not write to '%s': %s"
+msgstr "'%s'-ში ჩაწერა შეუძლებელია: %s"
+
+#: plug-ins/common/cml-explorer.c:2331
 #, c-format
 msgid "Parameters were saved to '%s'"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:2250
+#: plug-ins/common/cml-explorer.c:2352
 msgid "Load CML Explorer Parameters"
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:2346 plug-ins/common/curve-bend.c:845
-#: plug-ins/common/file-cel.c:350 plug-ins/common/file-cel.c:402
-#: plug-ins/common/file-dicom.c:383 plug-ins/common/file-farbfeld.c:298
-#: plug-ins/common/file-gif-load.c:414 plug-ins/common/file-iff.c:219
-#: plug-ins/common/file-mng.c:1402 plug-ins/common/file-pcx.c:509
-#: plug-ins/common/file-pcx.c:552 plug-ins/common/file-png.c:658
-#: plug-ins/common/file-ps.c:1109 plug-ins/common/file-ps.c:3619
-#: plug-ins/common/file-psp.c:2631 plug-ins/common/file-psp.c:2681
-#: plug-ins/common/file-qoi.c:299 plug-ins/common/file-raw-data.c:515
-#: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:457
-#: plug-ins/common/file-svg.c:380 plug-ins/common/file-svg.c:809
-#: plug-ins/common/file-tga.c:447 plug-ins/common/file-wbmp.c:188
-#: plug-ins/common/file-xbm.c:749 plug-ins/common/file-xmc.c:656
-#: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:492
-#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
-#: plug-ins/file-dds/ddsread.c:156 plug-ins/file-faxg3/faxg3.c:260
-#: plug-ins/file-fits/fits.c:395 plug-ins/file-fli/fli-gimp.c:450
-#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-icns/file-icns-load.c:516
-#: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
-#: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
-#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
-#: plug-ins/file-psd/psd-load.c:169 plug-ins/file-psd/psd-load.c:174
-#: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
-#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1764
-#: plug-ins/fractal-explorer/fractal-explorer.c:1159 plug-ins/gfig/gfig.c:527
-#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
-#: plug-ins/lighting/lighting-ui.c:952
+#: plug-ins/common/cml-explorer.c:2486
 #, c-format
-msgid "Could not open '%s' for reading: %s"
-msgstr "შეცდომა '%s'-ის კითხვისას: %s"
+msgid "Error: \"%s\" is not a CML parameter file."
+msgstr "შეცდომა: \"%s\" CML პარამეტრის ფაილი არაა."
 
-#: plug-ins/common/cml-explorer.c:2368
-msgid "Error: it's not CML parameter file."
-msgstr ""
-
-#: plug-ins/common/cml-explorer.c:2375
+#: plug-ins/common/cml-explorer.c:2493
 #, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:2379
+#: plug-ins/common/cml-explorer.c:2497
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr ""
 
-#: plug-ins/common/cml-explorer.c:2442
+#: plug-ins/common/cml-explorer.c:2568
 msgid "Error: failed to load parameters"
 msgstr "შეცდომა: პარამეტრების ჩატვირთვა შეუძლებელია"
 
@@ -1352,8 +1331,8 @@ msgstr ""
 
 #. The Reset button
 #: plug-ins/common/colormap-remap.c:693 plug-ins/common/curve-bend.c:1296
-#: plug-ins/common/sphere-designer.c:2631 plug-ins/common/tile-small.c:525
-#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:907
+#: plug-ins/common/sphere-designer.c:2636 plug-ins/common/tile-small.c:525
+#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:913
 msgid "_Reset"
 msgstr "_განულება"
 
@@ -1928,6 +1907,38 @@ msgstr ""
 msgid "Cannot operate on empty selections."
 msgstr ""
 
+#: plug-ins/common/curve-bend.c:845 plug-ins/common/file-cel.c:350
+#: plug-ins/common/file-cel.c:402 plug-ins/common/file-dicom.c:383
+#: plug-ins/common/file-farbfeld.c:298 plug-ins/common/file-gif-load.c:414
+#: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1402
+#: plug-ins/common/file-pcx.c:509 plug-ins/common/file-pcx.c:552
+#: plug-ins/common/file-png.c:658 plug-ins/common/file-ps.c:1109
+#: plug-ins/common/file-ps.c:3619 plug-ins/common/file-psp.c:2631
+#: plug-ins/common/file-psp.c:2681 plug-ins/common/file-qoi.c:299
+#: plug-ins/common/file-raw-data.c:515 plug-ins/common/file-raw-data.c:1665
+#: plug-ins/common/file-sunras.c:457 plug-ins/common/file-svg.c:380
+#: plug-ins/common/file-svg.c:809 plug-ins/common/file-tga.c:447
+#: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
+#: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
+#: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:156
+#: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
+#: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
+#: plug-ins/file-icns/file-icns-load.c:516
+#: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
+#: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
+#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
+#: plug-ins/file-psd/psd-load.c:169 plug-ins/file-psd/psd-load.c:174
+#: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1764
+#: plug-ins/fractal-explorer/fractal-explorer.c:1159 plug-ins/gfig/gfig.c:527
+#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
+#: plug-ins/lighting/lighting-ui.c:952
+#, c-format
+msgid "Could not open '%s' for reading: %s"
+msgstr "შეცდომა '%s'-ის კითხვისას: %s"
+
 #: plug-ins/common/curve-bend.c:855
 #, c-format
 msgid "Error while reading '%s': %s"
@@ -2166,7 +2177,7 @@ msgid "Yellow"
 msgstr "ყვითელი"
 
 #: plug-ins/common/decompose.c:215 plug-ins/common/warp.c:599
-#: plug-ins/file-fits/fits.c:1027 plug-ins/flame/flame.c:1223
+#: plug-ins/file-fits/fits.c:1027 plug-ins/flame/flame.c:1282
 #: plug-ins/gfig/gfig-dialog.c:1459
 msgid "Black"
 msgstr "შავი"
@@ -4190,7 +4201,7 @@ msgid "PDF"
 msgstr "PDF"
 
 #: plug-ins/common/file-pdf-save.c:381 plug-ins/common/file-pdf-save.c:453
-#: plug-ins/common/file-pdf-save.c:1153
+#: plug-ins/common/file-pdf-save.c:1098
 msgid "_Fill transparent areas with background color"
 msgstr "გამჭვირვალე ადგილების ფონის ფერით _შევსება"
 
@@ -4203,7 +4214,7 @@ msgstr ""
 msgid "_Create multipage PDF..."
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:719
+#: plug-ins/common/file-pdf-save.c:670
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -4212,7 +4223,7 @@ msgid ""
 "read only!"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:994
+#: plug-ins/common/file-pdf-save.c:939
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -4220,54 +4231,54 @@ msgid ""
 "missing fonts before exporting, otherwise your design may not look right."
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1092
+#: plug-ins/common/file-pdf-save.c:1037
 msgid "Save to:"
 msgstr "შენახვა მისამართზე:"
 
-#: plug-ins/common/file-pdf-save.c:1096
+#: plug-ins/common/file-pdf-save.c:1041
 msgid "Browse..."
 msgstr "მოძებნა..."
 
-#: plug-ins/common/file-pdf-save.c:1097
+#: plug-ins/common/file-pdf-save.c:1042
 msgid "Multipage PDF export"
 msgstr "მულტიგვერდიან PDF-ში გატანა"
 
-#: plug-ins/common/file-pdf-save.c:1133
+#: plug-ins/common/file-pdf-save.c:1078
 msgid "Remove the selected pages"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1143
+#: plug-ins/common/file-pdf-save.c:1088
 msgid "Add this image"
 msgstr "ამ გამოსახულების დამატება"
 
-#: plug-ins/common/file-pdf-save.c:1148
+#: plug-ins/common/file-pdf-save.c:1093
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1158
+#: plug-ins/common/file-pdf-save.c:1103
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1163
+#: plug-ins/common/file-pdf-save.c:1108
 msgid "_Apply layer masks before saving"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1167
+#: plug-ins/common/file-pdf-save.c:1112
 msgid "Keeping the masks will not change the output"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1256 plug-ins/common/file-pdf-save.c:1329
-#: plug-ins/common/file-pdf-save.c:1427 plug-ins/common/file-ps.c:2098
+#: plug-ins/common/file-pdf-save.c:1201 plug-ins/common/file-pdf-save.c:1274
+#: plug-ins/common/file-pdf-save.c:1372 plug-ins/common/file-ps.c:2098
 #: plug-ins/file-tiff/file-tiff-load.c:1536
 #, c-format
 msgid "Page %d"
 msgstr "%d გვერდი"
 
-#: plug-ins/common/file-pdf-save.c:1296
+#: plug-ins/common/file-pdf-save.c:1241
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1474 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-save.c:1419 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
 
@@ -6403,7 +6414,7 @@ msgstr ""
 msgid "Guillotine"
 msgstr "გილიოტიკა"
 
-#: plug-ins/common/guillotine.c:266 plug-ins/help-browser/dialog.c:821
+#: plug-ins/common/guillotine.c:266 plug-ins/help-browser/dialog.c:830
 msgid "Untitled"
 msgstr "უსახელო"
 
@@ -7163,7 +7174,7 @@ msgstr "ხვლიკი"
 msgid "Phong"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:341 plug-ins/flame/flame.c:836
+#: plug-ins/common/sphere-designer.c:341 plug-ins/flame/flame.c:949
 msgid "Noise"
 msgstr "ხმაური"
 
@@ -7171,7 +7182,7 @@ msgstr "ხმაური"
 msgid "Wood"
 msgstr "შეშა"
 
-#: plug-ins/common/sphere-designer.c:343 plug-ins/flame/flame.c:820
+#: plug-ins/common/sphere-designer.c:343 plug-ins/flame/flame.c:933
 #: plug-ins/gfig/gfig-dialog.c:399 plug-ins/gfig/gfig-menu.ui:79
 msgid "Spiral"
 msgstr "სპირალური"
@@ -7188,51 +7199,51 @@ msgstr ""
 msgid "Create an image of a textured sphere"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:1830
-#: plug-ins/common/sphere-designer.c:2775
+#: plug-ins/common/sphere-designer.c:1835
+#: plug-ins/common/sphere-designer.c:2780
 msgid "Texture"
 msgstr "ტექსტურა"
 
-#: plug-ins/common/sphere-designer.c:1832
+#: plug-ins/common/sphere-designer.c:1837
 msgid "Bumpmap"
 msgstr "რელიეფური"
 
-#: plug-ins/common/sphere-designer.c:1834
-#: plug-ins/common/sphere-designer.c:2777
+#: plug-ins/common/sphere-designer.c:1839
+#: plug-ins/common/sphere-designer.c:2782
 msgid "Light"
 msgstr "მსუბუქი"
 
-#: plug-ins/common/sphere-designer.c:2097
+#: plug-ins/common/sphere-designer.c:2102
 #, c-format
 msgid "File '%s' is not a valid save file."
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2277
+#: plug-ins/common/sphere-designer.c:2282
 msgid "Open File"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2277
+#: plug-ins/common/sphere-designer.c:2282
 msgid "Save File"
-msgstr ""
+msgstr "ფაილის შენახვა"
 
-#: plug-ins/common/sphere-designer.c:2627
+#: plug-ins/common/sphere-designer.c:2632
 msgid "Sphere Designer"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2728
+#: plug-ins/common/sphere-designer.c:2733
 msgid "Layers"
 msgstr "ფენები"
 
-#: plug-ins/common/sphere-designer.c:2739
+#: plug-ins/common/sphere-designer.c:2744
 #: plug-ins/gradient-flare/gradient-flare.c:3045
 msgid "_New"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2745
+#: plug-ins/common/sphere-designer.c:2750
 msgid "D_uplicate"
 msgstr "_დუბლირება"
 
-#: plug-ins/common/sphere-designer.c:2751
+#: plug-ins/common/sphere-designer.c:2756
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1357
 #: plug-ins/gimpressionist/presets.c:1067
@@ -7241,94 +7252,94 @@ msgstr "_დუბლირება"
 msgid "_Delete"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2761
+#: plug-ins/common/sphere-designer.c:2766
 msgid "Properties"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2776
+#: plug-ins/common/sphere-designer.c:2781
 msgid "Bump"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2784
+#: plug-ins/common/sphere-designer.c:2789
 msgid "Type:"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2803
+#: plug-ins/common/sphere-designer.c:2808
 msgid "Texture:"
 msgstr "ტექსტურა:"
 
-#: plug-ins/common/sphere-designer.c:2808
+#: plug-ins/common/sphere-designer.c:2813
 msgid "Colors:"
 msgstr "ფერები:"
 
-#: plug-ins/common/sphere-designer.c:2811
-#: plug-ins/common/sphere-designer.c:2822
+#: plug-ins/common/sphere-designer.c:2816
+#: plug-ins/common/sphere-designer.c:2827
 msgid "Color Selection Dialog"
 msgstr ""
 
 #. Scale
-#: plug-ins/common/sphere-designer.c:2833 plug-ins/gimpressionist/paper.c:191
-#: plug-ins/ifs-compose/ifs-compose.c:663
+#: plug-ins/common/sphere-designer.c:2838 plug-ins/gimpressionist/paper.c:191
+#: plug-ins/ifs-compose/ifs-compose.c:669
 msgid "Scale:"
 msgstr "გაფართოება:"
 
-#: plug-ins/common/sphere-designer.c:2841
+#: plug-ins/common/sphere-designer.c:2846
 msgid "Turbulence:"
 msgstr "ტურბულენტობა:"
 
-#: plug-ins/common/sphere-designer.c:2849
+#: plug-ins/common/sphere-designer.c:2854
 msgid "Amount:"
 msgstr "რაოდენობა:"
 
-#: plug-ins/common/sphere-designer.c:2856
+#: plug-ins/common/sphere-designer.c:2861
 msgid "Exp.:"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2863
+#: plug-ins/common/sphere-designer.c:2868
 msgid "Transformations"
 msgstr "გარდაქმნები"
 
-#: plug-ins/common/sphere-designer.c:2877
+#: plug-ins/common/sphere-designer.c:2882
 msgid "Scale X:"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2885
+#: plug-ins/common/sphere-designer.c:2890
 msgid "Scale Y:"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2893
+#: plug-ins/common/sphere-designer.c:2898
 msgid "Scale Z:"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2904
+#: plug-ins/common/sphere-designer.c:2909
 msgid "Rotate X:"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2911
+#: plug-ins/common/sphere-designer.c:2916
 msgid "Rotate Y:"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2918
+#: plug-ins/common/sphere-designer.c:2923
 msgid "Rotate Z:"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:2928
+#: plug-ins/common/sphere-designer.c:2933
 msgid "Position X:"
 msgstr "მდებარეობის X:"
 
-#: plug-ins/common/sphere-designer.c:2936
+#: plug-ins/common/sphere-designer.c:2941
 msgid "Position Y:"
 msgstr "მდებარეობის Y:"
 
-#: plug-ins/common/sphere-designer.c:2944
+#: plug-ins/common/sphere-designer.c:2949
 msgid "Position Z:"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:3074
+#: plug-ins/common/sphere-designer.c:3079
 msgid "Rendering sphere"
 msgstr ""
 
-#: plug-ins/common/sphere-designer.c:3193
+#: plug-ins/common/sphere-designer.c:3199
 msgid "Region selected for plug-in is empty"
 msgstr ""
 
@@ -7378,7 +7389,7 @@ msgstr ""
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:492 plug-ins/ifs-compose/ifs-compose.c:719
+#: plug-ins/common/tile-small.c:492 plug-ins/ifs-compose/ifs-compose.c:725
 msgid "Flip"
 msgstr "გადაბრუნება"
 
@@ -7575,7 +7586,8 @@ msgstr ""
 msgid "_Saturation"
 msgstr "_გაჯერებულობა"
 
-#: plug-ins/common/van-gogh-lic.c:738
+#: plug-ins/common/van-gogh-lic.c:738 plug-ins/flame/flame.c:195
+#: plug-ins/flame/flame.c:210 plug-ins/flame/flame.c:220
 msgid "_Brightness"
 msgstr "სიკა_შკაშე"
 
@@ -7655,7 +7667,7 @@ msgstr "ძირითადი პარამეტრები"
 msgid "Step size:"
 msgstr "ბიჯის ზომა:"
 
-#: plug-ins/common/warp.c:525 plug-ins/ifs-compose/ifs-compose.c:1239
+#: plug-ins/common/warp.c:525 plug-ins/ifs-compose/ifs-compose.c:1245
 msgid "Iterations:"
 msgstr "იტერაციები:"
 
@@ -7676,7 +7688,7 @@ msgstr "შემოხვევა"
 
 #: plug-ins/common/warp.c:584
 msgid "Smear"
-msgstr ""
+msgstr "ნაცხი"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary grid          --------------------------
@@ -7725,7 +7737,7 @@ msgid "Vector mag:"
 msgstr ""
 
 #. Angle
-#: plug-ins/common/warp.c:790 plug-ins/ifs-compose/ifs-compose.c:677
+#: plug-ins/common/warp.c:790 plug-ins/ifs-compose/ifs-compose.c:683
 msgid "Angle:"
 msgstr "კუთხე:"
 
@@ -7880,7 +7892,7 @@ msgstr ""
 
 #: plug-ins/common/web-page.c:151
 msgid "_Font size"
-msgstr ""
+msgstr "ფონტის _ზომა"
 
 #: plug-ins/common/web-page.c:152
 msgid "The font size to use in the page (in pt)"
@@ -8239,7 +8251,7 @@ msgstr ""
 msgid "Use s_RGB colorspace"
 msgstr ""
 
-#: plug-ins/file-dds/ddswrite.c:2154 plug-ins/flame/flame.c:1161
+#: plug-ins/file-dds/ddswrite.c:2154
 msgid "_Gamma:"
 msgstr "გამა:"
 
@@ -8988,39 +9000,39 @@ msgstr ""
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:2066 plug-ins/file-psd/psd-load.c:2706
+#: plug-ins/file-psd/psd-load.c:2066 plug-ins/file-psd/psd-load.c:2722
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:2899
+#: plug-ins/file-psd/psd-load.c:2915
 msgid "Extra"
 msgstr "დამატებით"
 
-#: plug-ins/file-psd/psd-load.c:3099
+#: plug-ins/file-psd/psd-load.c:3115
 msgid "Unsupported or invalid channel size"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3168
+#: plug-ins/file-psd/psd-load.c:3184
 msgid "Failed to decompress data"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3549
+#: plug-ins/file-psd/psd-load.c:3565
 msgid "Duotone Import"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3550
+#: plug-ins/file-psd/psd-load.c:3566
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
 "and can be reapplied on export."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3572 plug-ins/file-psd/psd-save.c:2665
+#: plug-ins/file-psd/psd-load.c:3588 plug-ins/file-psd/psd-save.c:2665
 msgid "Compatibility Notice"
 msgstr "თავსებადობის შენიშვნა"
 
-#: plug-ins/file-psd/psd-load.c:3573
+#: plug-ins/file-psd/psd-load.c:3589
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -9891,230 +9903,214 @@ msgstr ""
 msgid "WebP error: '%s'"
 msgstr ""
 
-#: plug-ins/flame/flame.c:175
+#: plug-ins/flame/flame.c:180
 msgid "_Flame..."
 msgstr ""
 
-#: plug-ins/flame/flame.c:180
+#: plug-ins/flame/flame.c:185
 msgid "Create cosmic recursive fractal flames"
 msgstr ""
 
-#: plug-ins/flame/flame.c:284
+#: plug-ins/flame/flame.c:200
+msgid "Co_ntrast"
+msgstr "_კონტრასტი"
+
+#: plug-ins/flame/flame.c:205
+msgid "_Gamma"
+msgstr "_გამა"
+
+#: plug-ins/flame/flame.c:215
+msgid "Spa_tial oversample"
+msgstr ""
+
+#: plug-ins/flame/flame.c:225
+msgid "_Zoom"
+msgstr "_გადიდება"
+
+#: plug-ins/flame/flame.c:230
+msgid "_X"
+msgstr ""
+
+#: plug-ins/flame/flame.c:235
+msgid "_Y"
+msgstr "_დიახ"
+
+#: plug-ins/flame/flame.c:350
 msgid "Drawing flame"
 msgstr ""
 
-#: plug-ins/flame/flame.c:468
+#: plug-ins/flame/flame.c:534
 #, c-format
 msgid "'%s' is not a regular file"
 msgstr ""
 
-#: plug-ins/flame/flame.c:712
+#: plug-ins/flame/flame.c:823
 msgid "Edit Flame"
 msgstr ""
 
-#: plug-ins/flame/flame.c:735
+#: plug-ins/flame/flame.c:846
 msgid "Directions"
 msgstr "მიმართულებები"
 
-#: plug-ins/flame/flame.c:772
+#: plug-ins/flame/flame.c:884
 msgid "Controls"
 msgstr "მმართველები"
 
-#: plug-ins/flame/flame.c:780
+#: plug-ins/flame/flame.c:892
 msgid "_Speed:"
 msgstr "_სიჩქარე:"
 
-#: plug-ins/flame/flame.c:796
+#: plug-ins/flame/flame.c:909
 msgid "_Randomize"
 msgstr ""
 
-#: plug-ins/flame/flame.c:808
+#: plug-ins/flame/flame.c:921
 msgid "Same"
 msgstr "იგივე"
 
-#: plug-ins/flame/flame.c:809 plug-ins/gimpressionist/orientation.c:156
+#: plug-ins/flame/flame.c:922 plug-ins/gimpressionist/orientation.c:156
 #: plug-ins/gimpressionist/size.c:163
 msgid "Random"
 msgstr "შემთხვევითი"
 
-#: plug-ins/flame/flame.c:810 plug-ins/lighting/lighting-main.c:163
+#: plug-ins/flame/flame.c:923 plug-ins/lighting/lighting-main.c:163
 msgid "Linear"
 msgstr "ხაზოვანი"
 
-#: plug-ins/flame/flame.c:811 plug-ins/lighting/lighting-main.c:165
+#: plug-ins/flame/flame.c:924 plug-ins/lighting/lighting-main.c:165
 msgid "Sinusoidal"
 msgstr "სინუსოიდალური"
 
-#: plug-ins/flame/flame.c:812 plug-ins/lighting/lighting-main.c:166
+#: plug-ins/flame/flame.c:925 plug-ins/lighting/lighting-main.c:166
 msgid "Spherical"
 msgstr "სფერული"
 
-#: plug-ins/flame/flame.c:813
+#: plug-ins/flame/flame.c:926
 msgid "Swirl"
 msgstr "გრიგალი"
 
-#: plug-ins/flame/flame.c:814
+#: plug-ins/flame/flame.c:927
 msgid "Horseshoe"
 msgstr ""
 
-#: plug-ins/flame/flame.c:815 plug-ins/gfig/gfig-dialog.c:1441
+#: plug-ins/flame/flame.c:928 plug-ins/gfig/gfig-dialog.c:1441
 msgid "Polar"
 msgstr "პოლარული"
 
-#: plug-ins/flame/flame.c:816
+#: plug-ins/flame/flame.c:929
 msgid "Bent"
 msgstr ""
 
-#: plug-ins/flame/flame.c:817
+#: plug-ins/flame/flame.c:930
 msgid "Handkerchief"
 msgstr ""
 
-#: plug-ins/flame/flame.c:818
+#: plug-ins/flame/flame.c:931
 msgid "Heart"
 msgstr "გული"
 
-#: plug-ins/flame/flame.c:819
+#: plug-ins/flame/flame.c:932
 msgid "Disc"
 msgstr "დისკი"
 
-#: plug-ins/flame/flame.c:821
+#: plug-ins/flame/flame.c:934
 msgid "Hyperbolic"
 msgstr ""
 
-#: plug-ins/flame/flame.c:822
+#: plug-ins/flame/flame.c:935
 msgid "Diamond"
 msgstr "პრიზმა"
 
-#: plug-ins/flame/flame.c:823
+#: plug-ins/flame/flame.c:936
 msgid "Ex"
 msgstr ""
 
-#: plug-ins/flame/flame.c:824 plug-ins/fractal-explorer/fractal-explorer.c:260
+#: plug-ins/flame/flame.c:937 plug-ins/fractal-explorer/fractal-explorer.c:260
 msgid "Julia"
 msgstr "Julia"
 
-#: plug-ins/flame/flame.c:825
+#: plug-ins/flame/flame.c:938
 msgid "Waves"
 msgstr "ტალღები"
 
-#: plug-ins/flame/flame.c:826
+#: plug-ins/flame/flame.c:939
 msgid "Fisheye"
 msgstr ""
 
-#: plug-ins/flame/flame.c:827
+#: plug-ins/flame/flame.c:940
 msgid "Popcorn"
 msgstr ""
 
-#: plug-ins/flame/flame.c:828
+#: plug-ins/flame/flame.c:941
 msgid "Exponential"
 msgstr "ექსპოტენციალური"
 
-#: plug-ins/flame/flame.c:829
+#: plug-ins/flame/flame.c:942
 msgid "Power"
 msgstr "კვება"
 
-#: plug-ins/flame/flame.c:830 plug-ins/fractal-explorer/fractal-explorer.c:343
+#: plug-ins/flame/flame.c:943 plug-ins/fractal-explorer/fractal-explorer.c:343
 #: plug-ins/fractal-explorer/fractal-explorer.c:353
 #: plug-ins/fractal-explorer/fractal-explorer.c:363
 msgid "Cosine"
 msgstr "Cosine"
 
-#: plug-ins/flame/flame.c:831
+#: plug-ins/flame/flame.c:944
 msgid "Rings"
 msgstr "ბეჭდები"
 
-#: plug-ins/flame/flame.c:832
+#: plug-ins/flame/flame.c:945
 msgid "Fan"
 msgstr "ვენტილატორი"
 
-#: plug-ins/flame/flame.c:833
+#: plug-ins/flame/flame.c:946
 msgid "Eyefish"
 msgstr ""
 
-#: plug-ins/flame/flame.c:834
+#: plug-ins/flame/flame.c:947
 msgid "Bubble"
 msgstr "ბუშტი"
 
-#: plug-ins/flame/flame.c:835 plug-ins/map-object/map-object-main.c:140
+#: plug-ins/flame/flame.c:948 plug-ins/map-object/map-object-main.c:140
 msgid "Cylinder"
 msgstr "ცილინდრი"
 
-#: plug-ins/flame/flame.c:837
+#: plug-ins/flame/flame.c:950
 msgid "Blur"
 msgstr "ბუნდოვნება"
 
-#: plug-ins/flame/flame.c:838
+#: plug-ins/flame/flame.c:951
 msgid "Gaussian"
 msgstr "გაუსის"
 
-#: plug-ins/flame/flame.c:851
+#: plug-ins/flame/flame.c:965
 msgid "_Variation:"
 msgstr ""
 
-#: plug-ins/flame/flame.c:873
+#: plug-ins/flame/flame.c:987
 msgid "Load Flame"
 msgstr ""
 
-#: plug-ins/flame/flame.c:888
+#: plug-ins/flame/flame.c:1002
 msgid "Save Flame"
 msgstr ""
 
-#: plug-ins/flame/flame.c:1029
+#: plug-ins/flame/flame.c:1170
 msgid "Flame"
 msgstr ""
 
-#: plug-ins/flame/flame.c:1096 plug-ins/gimpressionist/orientation.c:190
+#: plug-ins/flame/flame.c:1225 plug-ins/gimpressionist/orientation.c:190
 #: plug-ins/gimpressionist/size.c:199
 #: plug-ins/gradient-flare/gradient-flare.c:3046
 msgid "_Edit"
 msgstr ""
 
-#: plug-ins/flame/flame.c:1127
-msgid "_Rendering"
-msgstr ""
-
-#: plug-ins/flame/flame.c:1137
-msgid "_Brightness:"
-msgstr "სიკა_შკაშე:"
-
-#: plug-ins/flame/flame.c:1149
-msgid "Co_ntrast:"
-msgstr "კონტრასტი:"
-
-#: plug-ins/flame/flame.c:1176
-msgid "Sample _density:"
-msgstr ""
-
-#: plug-ins/flame/flame.c:1185
-msgid "Spa_tial oversample:"
-msgstr ""
-
-#: plug-ins/flame/flame.c:1194
-msgid "Spatial _filter radius:"
-msgstr ""
-
-#: plug-ins/flame/flame.c:1212
+#: plug-ins/flame/flame.c:1271
 msgid "Color_map:"
 msgstr "ფერების _რუკა:"
 
-#: plug-ins/flame/flame.c:1254
+#: plug-ins/flame/flame.c:1313
 msgid "Custom gradient"
-msgstr ""
-
-#: plug-ins/flame/flame.c:1280
-msgid "C_amera"
-msgstr "_კამერა"
-
-#: plug-ins/flame/flame.c:1284
-msgid "_Zoom:"
-msgstr ""
-
-#: plug-ins/flame/flame.c:1296 plug-ins/gradient-flare/gradient-flare.c:2899
-msgid "_X:"
-msgstr ""
-
-#: plug-ins/flame/flame.c:1308 plug-ins/gradient-flare/gradient-flare.c:2903
-msgid "_Y:"
 msgstr ""
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:617
@@ -10382,7 +10378,7 @@ msgstr "ლურჯის გაწელვის ფაქტორი"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:340
 msgid "_Red"
-msgstr ""
+msgstr "_წითელი"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:341
 msgid "Red application mode"
@@ -10412,7 +10408,7 @@ msgstr ""
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:370
 msgid "In_version"
-msgstr ""
+msgstr "_ინვერსია"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:388
 msgid "_Number of colors"
@@ -10598,7 +10594,7 @@ msgid "Copy an object"
 msgstr "ობიექტის კოპირება"
 
 #: plug-ins/gfig/gfig-dialog.c:410 plug-ins/gfig/gfig-menu.ui:104
-#: plug-ins/ifs-compose/ifs-compose.c:954 plug-ins/ifs-compose/ifs-menus.ui:27
+#: plug-ins/ifs-compose/ifs-compose.c:960 plug-ins/ifs-compose/ifs-menus.ui:27
 #: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
 msgid "Delete"
 msgstr ""
@@ -10916,7 +10912,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:956
+#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:962
 #: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1530
 #: plug-ins/imagemap/imap-menu.ui:35
 msgid "Undo"
@@ -11126,7 +11122,7 @@ msgstr "პრესეტი"
 msgid "Preset Name"
 msgstr "პრესეტის სახელი"
 
-#: plug-ins/gimpressionist/gimp.c:451
+#: plug-ins/gimpressionist/gimp.c:465
 msgid "Painting"
 msgstr "დახატვა"
 
@@ -11669,6 +11665,14 @@ msgstr ""
 msgid "'Default' is created."
 msgstr ""
 
+#: plug-ins/gradient-flare/gradient-flare.c:2899
+msgid "_X:"
+msgstr ""
+
+#: plug-ins/gradient-flare/gradient-flare.c:2903
+msgid "_Y:"
+msgstr ""
+
 #.
 #. *  Scales
 #.
@@ -11840,56 +11844,56 @@ msgstr ""
 
 #: plug-ins/gradient-flare/gradient-flare.c:4038
 msgid "Random seed:"
-msgstr ""
+msgstr "შემთხვევითი მარცვალი:"
 
 #: plug-ins/gradient-flare/gradient-flare.c:4052
 msgid "_Second Flares"
 msgstr ""
 
 #. the dialog window
-#: plug-ins/help-browser/dialog.c:261 plug-ins/help-browser/dialog.c:822
+#: plug-ins/help-browser/dialog.c:263 plug-ins/help-browser/dialog.c:831
 msgid "GIMP Help Browser"
 msgstr ""
 
-#: plug-ins/help-browser/dialog.c:275 plug-ins/help-browser/help-menu.ui:14
+#: plug-ins/help-browser/dialog.c:277 plug-ins/help-browser/help-menu.ui:14
 msgid "_Reload"
 msgstr "თავიდან ჩატვირთვა"
 
-#: plug-ins/help-browser/dialog.c:275
+#: plug-ins/help-browser/dialog.c:277
 msgid "Reload current page"
 msgstr "მიმდინარე გვერდის თავიდან ჩატვირთვა"
 
-#: plug-ins/help-browser/dialog.c:276 plug-ins/help-browser/help-menu.ui:18
+#: plug-ins/help-browser/dialog.c:278 plug-ins/help-browser/help-menu.ui:18
 msgid "_Stop"
 msgstr "_შეჩერება"
 
-#: plug-ins/help-browser/dialog.c:276
+#: plug-ins/help-browser/dialog.c:278
 msgid "Stop loading this page"
 msgstr "გვერდის ჩატვირთვის გაჩერება"
 
-#: plug-ins/help-browser/dialog.c:277
+#: plug-ins/help-browser/dialog.c:279
 msgid "Go to the index page"
 msgstr ""
 
-#: plug-ins/help-browser/dialog.c:283
+#: plug-ins/help-browser/dialog.c:285
 msgid "Visit the GIMP documentation website"
 msgstr ""
 
-#: plug-ins/help-browser/dialog.c:1165
+#: plug-ins/help-browser/dialog.c:1177
 msgid "Find:"
 msgstr "მოძებნა:"
 
-#: plug-ins/help-browser/dialog.c:1181
+#: plug-ins/help-browser/dialog.c:1193
 msgctxt "search"
 msgid "_Previous"
 msgstr "_წინა"
 
-#: plug-ins/help-browser/dialog.c:1190
+#: plug-ins/help-browser/dialog.c:1202
 msgctxt "search"
 msgid "_Next"
 msgstr "_შემდეგი"
 
-#: plug-ins/help-browser/dialog.c:1199
+#: plug-ins/help-browser/dialog.c:1211
 msgctxt "search"
 msgid "_Close"
 msgstr "_დახურვა"
@@ -11992,160 +11996,160 @@ msgid "Create an Iterated Function System (IFS) fractal"
 msgstr ""
 
 #. X
-#: plug-ins/ifs-compose/ifs-compose.c:635
+#: plug-ins/ifs-compose/ifs-compose.c:641
 msgid "X:"
 msgstr "X:"
 
 #. Y
-#: plug-ins/ifs-compose/ifs-compose.c:649
+#: plug-ins/ifs-compose/ifs-compose.c:655
 msgid "Y:"
 msgstr "Y:"
 
 #. Asym
-#: plug-ins/ifs-compose/ifs-compose.c:691
+#: plug-ins/ifs-compose/ifs-compose.c:697
 msgid "Asymmetry:"
 msgstr "ასიმეტრია:"
 
 #. Shear
-#: plug-ins/ifs-compose/ifs-compose.c:705
+#: plug-ins/ifs-compose/ifs-compose.c:711
 msgid "Shear:"
 msgstr "დახრა:"
 
 #. Simple color control section
-#: plug-ins/ifs-compose/ifs-compose.c:750
+#: plug-ins/ifs-compose/ifs-compose.c:756
 msgid "Simple"
 msgstr "მარტივი"
 
-#: plug-ins/ifs-compose/ifs-compose.c:759
+#: plug-ins/ifs-compose/ifs-compose.c:765
 msgid "IFS Fractal: Target"
 msgstr "IFS ფრაქტალი: სამიზნე"
 
-#: plug-ins/ifs-compose/ifs-compose.c:765
+#: plug-ins/ifs-compose/ifs-compose.c:771
 msgid "Scale hue by:"
 msgstr ""
 
-#: plug-ins/ifs-compose/ifs-compose.c:780
+#: plug-ins/ifs-compose/ifs-compose.c:786
 msgid "Scale value by:"
 msgstr ""
 
 #. Full color control section
-#: plug-ins/ifs-compose/ifs-compose.c:797
+#: plug-ins/ifs-compose/ifs-compose.c:803
 msgid "Full"
 msgstr "სრული"
 
-#: plug-ins/ifs-compose/ifs-compose.c:805
+#: plug-ins/ifs-compose/ifs-compose.c:811
 msgid "IFS Fractal: Red"
 msgstr "IFS ფრაქტალი: წითელი"
 
-#: plug-ins/ifs-compose/ifs-compose.c:813
+#: plug-ins/ifs-compose/ifs-compose.c:819
 msgid "IFS Fractal: Green"
 msgstr "IFS ფრაქტალი: მწვანე"
 
-#: plug-ins/ifs-compose/ifs-compose.c:821
+#: plug-ins/ifs-compose/ifs-compose.c:827
 msgid "IFS Fractal: Blue"
 msgstr "IFS ფრაქტალი: ლურჯი"
 
-#: plug-ins/ifs-compose/ifs-compose.c:829
+#: plug-ins/ifs-compose/ifs-compose.c:835
 msgid "IFS Fractal: Black"
 msgstr "IFS ფრაქტალი: შავი"
 
-#: plug-ins/ifs-compose/ifs-compose.c:901
+#: plug-ins/ifs-compose/ifs-compose.c:907
 msgid "IFS Fractal"
 msgstr "IFS ფრაქტალი"
 
-#: plug-ins/ifs-compose/ifs-compose.c:945 plug-ins/ifs-compose/ifs-menus.ui:6
+#: plug-ins/ifs-compose/ifs-compose.c:951 plug-ins/ifs-compose/ifs-menus.ui:6
 #: plug-ins/imagemap/imap_cmd_move.c:85
 #: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "გადატანა"
 
-#: plug-ins/ifs-compose/ifs-compose.c:947 plug-ins/ifs-compose/ifs-menus.ui:11
+#: plug-ins/ifs-compose/ifs-compose.c:953 plug-ins/ifs-compose/ifs-menus.ui:11
 msgid "Rotate"
 msgstr "შემობრუნება"
 
-#: plug-ins/ifs-compose/ifs-compose.c:949 plug-ins/ifs-compose/ifs-menus.ui:16
+#: plug-ins/ifs-compose/ifs-compose.c:955 plug-ins/ifs-compose/ifs-menus.ui:16
 msgid "Stretch"
 msgstr "გაწელვა"
 
-#: plug-ins/ifs-compose/ifs-compose.c:952 plug-ins/ifs-compose/ifs-menus.ui:23
+#: plug-ins/ifs-compose/ifs-compose.c:958 plug-ins/ifs-compose/ifs-menus.ui:23
 msgid "New"
 msgstr "ახალი"
 
-#: plug-ins/ifs-compose/ifs-compose.c:958 plug-ins/ifs-compose/ifs-menus.ui:35
+#: plug-ins/ifs-compose/ifs-compose.c:964 plug-ins/ifs-compose/ifs-menus.ui:35
 #: plug-ins/imagemap/imap_main.c:1532 plug-ins/imagemap/imap-menu.ui:39
 msgid "Redo"
 msgstr "გამეოერბა"
 
-#: plug-ins/ifs-compose/ifs-compose.c:960 plug-ins/ifs-compose/ifs-menus.ui:39
+#: plug-ins/ifs-compose/ifs-compose.c:966 plug-ins/ifs-compose/ifs-menus.ui:39
 #: plug-ins/imagemap/imap_cmd_select_all.c:50 plug-ins/imagemap/imap-menu.ui:61
 msgid "Select All"
 msgstr "ყველაფრის მონიშვნა"
 
-#: plug-ins/ifs-compose/ifs-compose.c:962 plug-ins/ifs-compose/ifs-menus.ui:43
+#: plug-ins/ifs-compose/ifs-compose.c:968 plug-ins/ifs-compose/ifs-menus.ui:43
 msgid "Recompute Center"
 msgstr "ცენტრის გადათვლა"
 
-#: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:49
+#: plug-ins/ifs-compose/ifs-compose.c:971 plug-ins/ifs-compose/ifs-menus.ui:49
 msgid "Render Options"
 msgstr "რენდერის მორგება"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1024
+#: plug-ins/ifs-compose/ifs-compose.c:1030
 msgid "Spatial Transformation"
 msgstr ""
 
-#: plug-ins/ifs-compose/ifs-compose.c:1030
+#: plug-ins/ifs-compose/ifs-compose.c:1036
 msgid "Color Transformation"
 msgstr ""
 
-#: plug-ins/ifs-compose/ifs-compose.c:1040
+#: plug-ins/ifs-compose/ifs-compose.c:1046
 msgid "Relative probability:"
 msgstr ""
 
-#: plug-ins/ifs-compose/ifs-compose.c:1204
+#: plug-ins/ifs-compose/ifs-compose.c:1210
 msgid "IFS Fractal Render Options"
 msgstr "IFS ფრაქტალის რენდერის პარამეტრები"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1226
+#: plug-ins/ifs-compose/ifs-compose.c:1232
 msgid "Max. memory:"
 msgstr "მაქს მეხსიერება:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1254
+#: plug-ins/ifs-compose/ifs-compose.c:1260
 msgid "Subdivide:"
 msgstr "ქვეგაყოფა:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1268
+#: plug-ins/ifs-compose/ifs-compose.c:1274
 msgid "Spot radius:"
 msgstr ""
 
-#: plug-ins/ifs-compose/ifs-compose.c:1341
+#: plug-ins/ifs-compose/ifs-compose.c:1347
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr ""
 
-#: plug-ins/ifs-compose/ifs-compose.c:1493
+#: plug-ins/ifs-compose/ifs-compose.c:1499
 #, c-format
 msgid "Transformation %s"
 msgstr ""
 
-#: plug-ins/ifs-compose/ifs-compose.c:2419
+#: plug-ins/ifs-compose/ifs-compose.c:2425
 msgid "Save failed"
 msgstr "შენახვის შეცდომა"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2502
-#: plug-ins/ifs-compose/ifs-compose.c:2515
+#: plug-ins/ifs-compose/ifs-compose.c:2508
+#: plug-ins/ifs-compose/ifs-compose.c:2521
 msgid "Open failed"
 msgstr "გახსნის შეცდომა"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2510
+#: plug-ins/ifs-compose/ifs-compose.c:2516
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr ""
 
-#: plug-ins/ifs-compose/ifs-compose.c:2550
+#: plug-ins/ifs-compose/ifs-compose.c:2556
 msgid "Save as IFS Fractal file"
 msgstr ""
 
-#: plug-ins/ifs-compose/ifs-compose.c:2587
+#: plug-ins/ifs-compose/ifs-compose.c:2593
 msgid "Open IFS Fractal file"
 msgstr ""
 
@@ -12697,7 +12701,7 @@ msgstr "ნორმალური:"
 
 #: plug-ins/imagemap/imap_preferences.c:459
 msgid "Selected:"
-msgstr ""
+msgstr "არჩეულია:"
 
 #: plug-ins/imagemap/imap_preferences.c:463
 msgid "Interaction:"
@@ -14859,9 +14863,18 @@ msgid "_Scanner/Camera..."
 msgstr "_სკანერი/კამერა..."
 
 #. Initialize our progress dialog
-#: plug-ins/twain/twain.c:521
+#: plug-ins/twain/twain.c:496
 msgid "Transferring data from scanner/camera"
 msgstr ""
+
+#~ msgid "Parameter URI"
+#~ msgstr "პარამეტრის URI"
+
+#~ msgid "_Brightness:"
+#~ msgstr "სიკა_შკაშე:"
+
+#~ msgid "C_amera"
+#~ msgstr "_კამერა"
 
 #~ msgid "Calculator"
 #~ msgstr "კალკულატორი"
