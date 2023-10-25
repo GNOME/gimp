@@ -56,10 +56,6 @@
 #define PLUG_IN_AUTHOR      "Wolfgang Hofer (hof@hotbot.com)"
 #define PLUG_IN_COPYRIGHT   "Wolfgang Hofer"
 
-#define PLUG_IN_ITER_NAME       "plug-in-curve-bend-Iterator"
-#define PLUG_IN_DATA_ITER_FROM  "plug_in_curve_bend_ITER_FROM"
-#define PLUG_IN_DATA_ITER_TO    "plug_in_curve_bend_ITER_TO"
-
 #define KEY_POINTFILE "POINTFILE_CURVE_BEND"
 #define KEY_POINTS    "POINTS"
 #define KEY_VAL_Y     "VAL_Y"
@@ -108,9 +104,6 @@ struct _BenderValues
 
   gint     curve_type;
   gboolean work_on_copy;
-
-  gint32  total_steps;
-  gdouble current_step;
 };
 
 typedef struct _Curves Curves;
@@ -159,10 +152,6 @@ struct _BenderDialog
   GimpImage *preview_image;
   GimpLayer *preview_layer1;
   GimpLayer *preview_layer2;
-
-  BenderValues  *bval_from;
-  BenderValues  *bval_to;
-  BenderValues  *bval_curr;
 
   gboolean   run;
 };
@@ -304,55 +293,50 @@ static void             bender_init_min_max           (BenderDialog *,
 static BenderDialog   * do_dialog                     (GimpProcedure       *procedure,
                                                        GimpProcedureConfig *config,
                                                        GimpDrawable        *drawable);
-static void             p_init_gdrw                   (t_GDRW        *gdrw,
-                                                       GimpDrawable  *drawable,
-                                                       int            shadow);
-static void             p_end_gdrw                    (t_GDRW        *gdrw);
-static GimpLayer      * p_main_bend                   (BenderDialog  *cd,
-                                                       GimpDrawable  *original_drawable,
-                                                       GimpProcedureConfig
-                                                                     *config,
-                                                       gint           work_on_copy);
-static GimpImage      * p_create_pv_image             (GimpDrawable  *src_drawable,
-                                                       GimpLayer    **layer);
-static void             p_render_preview              (BenderDialog  *cd,
-                                                       GimpLayer     *layer);
-static void             p_get_pixel                   (t_GDRW        *gdrw,
-                                                       gint32         x,
-                                                       gint32         y,
-                                                       guchar        *pixel);
-static void             p_put_pixel                   (t_GDRW        *gdrw,
-                                                       gint32         x,
-                                                       gint32         y,
-                                                       guchar        *pixel);
-static void             p_put_mix_pixel               (t_GDRW        *gdrw,
-                                                       gint32         x,
-                                                       gint32         y,
-                                                       guchar        *color,
-                                                       gint32         nb_curvy,
-                                                       gint32         nb2_curvy,
-                                                       gint32         curvy);
-static void             p_stretch_curves              (BenderDialog  *cd,
-                                                       gint32         xmax,
-                                                       gint32         ymax);
-static void             p_cd_to_bval                  (BenderDialog  *cd,
-                                                       BenderValues  *bval);
-static void             p_cd_from_bval                (BenderDialog  *cd,
-                                                       BenderValues  *bval);
-static void             p_store_values                (BenderDialog  *cd);
-static void             p_retrieve_values             (BenderDialog  *cd);
-static void             p_bender_calculate_iter_curve (BenderDialog  *cd,
-                                                       GimpProcedureConfig
-                                                                     *config,
-                                                       gint32         xmax,
-                                                       gint32         ymax);
-static void             p_delta_gint32                (gint32        *val,
-                                                       gint32         val_from,
-                                                       gint32         val_to,
-                                                       gint32         total_steps,
-                                                       gdouble        current_step);
-static int              p_save_pointfile              (BenderDialog  *cd,
-                                                       const gchar   *filename);
+static void             p_init_gdrw                   (t_GDRW              *gdrw,
+                                                       GimpDrawable        *drawable,
+                                                       int                  shadow);
+static void             p_end_gdrw                    (t_GDRW              *gdrw);
+static GimpLayer      * p_main_bend                   (BenderDialog        *cd,
+                                                       GimpDrawable        *original_drawable,
+                                                       GimpProcedureConfig *config,
+                                                       gint                 work_on_copy);
+static GimpImage      * p_create_pv_image             (GimpDrawable        *src_drawable,
+                                                       GimpLayer          **layer);
+static void             p_render_preview              (BenderDialog        *cd,
+                                                       GimpLayer           *layer);
+static void             p_get_pixel                   (t_GDRW              *gdrw,
+                                                       gint32               x,
+                                                       gint32               y,
+                                                       guchar              *pixel);
+static void             p_put_pixel                   (t_GDRW              *gdrw,
+                                                       gint32               x,
+                                                       gint32               y,
+                                                       guchar              *pixel);
+static void             p_put_mix_pixel               (t_GDRW              *gdrw,
+                                                       gint32               x,
+                                                       gint32               y,
+                                                       guchar              *color,
+                                                       gint32               nb_curvy,
+                                                       gint32               nb2_curvy,
+                                                       gint32               curvy);
+static void             p_stretch_curves              (BenderDialog        *cd,
+                                                       gint32               xmax,
+                                                       gint32               ymax);
+static void             p_cd_to_bval                  (BenderDialog        *cd,
+                                                       BenderValues        *bval);
+static void             p_cd_from_bval                (BenderDialog        *cd,
+                                                       BenderValues        *bval);
+static void             p_store_values                (GimpProcedureConfig *config,
+                                                       BenderDialog        *cd);
+static void             p_retrieve_values             (GimpProcedureConfig *config,
+                                                       BenderDialog        *cd);
+static void             p_bender_calculate_iter_curve (BenderDialog        *cd,
+                                                       GimpProcedureConfig *config,
+                                                       gint32               xmax,
+                                                       gint32               ymax);
+static int              p_save_pointfile              (BenderDialog        *cd,
+                                                       const gchar         *filename);
 
 
 G_DEFINE_TYPE (Bender, bender, GIMP_TYPE_PLUG_IN)
@@ -541,6 +525,11 @@ bender_create_procedure (GimpPlugIn  *plug_in,
                            _("The transformed layer"),
                            FALSE,
                            G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_BYTES (procedure, "settings-data",
+                               "Settings data",
+                               "TODO: eventually we must implement proper args for every settings",
+                               GIMP_PARAM_READWRITE);
     }
 
   return procedure;
@@ -730,7 +719,7 @@ bender_run (GimpProcedure        *procedure,
       cd->drawable      = active_drawable;
       cd->config        = config;
 
-      p_retrieve_values (cd);  /* Possibly retrieve data from a previous run */
+      p_retrieve_values (config, cd);  /* Possibly retrieve data from a previous run */
       break;
     }
 
@@ -758,7 +747,7 @@ bender_run (GimpProcedure        *procedure,
 
       /* Store variable states for next run */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        p_store_values (cd);
+        p_store_values (config, cd);
     }
   else
     {
@@ -927,9 +916,6 @@ p_cd_to_bval (BenderDialog *cd,
           bval->points[i][j][1] = cd->points[i][j][1];  /* y */
         }
     }
-
-  bval->total_steps = 0;
-  bval->current_step = 0.0;
 }
 
 static void
@@ -954,63 +940,34 @@ p_cd_from_bval (BenderDialog *cd,
 }
 
 static void
-p_store_values (BenderDialog *cd)
+p_store_values (GimpProcedureConfig *config,
+                BenderDialog        *cd)
 {
-  BenderValues bval;
+  BenderValues  bval;
+  GBytes       *settings_bytes;
 
   p_cd_to_bval (cd, &bval);
-  gimp_set_data (PLUG_IN_PROC, &bval, sizeof (bval));
+
+  settings_bytes = g_bytes_new (&bval, sizeof (BenderValues));
+  g_object_set (config, "settings-data", settings_bytes, NULL);
+  g_bytes_unref (settings_bytes);
 }
 
 static void
-p_retrieve_values (BenderDialog *cd)
+p_retrieve_values (GimpProcedureConfig *config,
+                   BenderDialog        *cd)
 {
-  BenderValues bval;
+  GBytes *settings_bytes;
 
-  bval.total_steps = 0;
-  bval.current_step = -444.4;  /* init with an invalid  dummy value */
-
-  gimp_get_data (PLUG_IN_PROC, &bval);
-
-  if (bval.total_steps == 0)
+  g_object_get (config, "settings-data", &settings_bytes, NULL);
+  if (settings_bytes != NULL && g_bytes_get_size (settings_bytes) == sizeof (BenderValues))
     {
-      cd->bval_from = NULL;
-      cd->bval_to = NULL;
-      if(bval.current_step != -444.4)
-        {
-          /* last_value data was retrieved (and dummy value was overwritten) */
-          p_cd_from_bval(cd, &bval);
-        }
+      BenderValues bval;
+
+      bval = *((BenderValues *) g_bytes_get_data (settings_bytes, NULL));
+      p_cd_from_bval(cd, &bval);
     }
-  else
-    {
-      cd->bval_from = g_new (BenderValues, 1);
-      cd->bval_to   = g_new (BenderValues, 1);
-      cd->bval_curr = g_new (BenderValues, 1);
-      *cd->bval_curr = bval;
-
-      /* it seems that we are called from GAP with "Varying Values" */
-      gimp_get_data(PLUG_IN_DATA_ITER_FROM, cd->bval_from);
-      gimp_get_data(PLUG_IN_DATA_ITER_TO,   cd->bval_to);
-      *cd->bval_curr = bval;
-      p_cd_from_bval(cd, cd->bval_curr);
-    }
-}
-
-static void
-p_delta_gint32 (gint32  *val,
-                gint32   val_from,
-                gint32   val_to,
-                gint32   total_steps,
-                gdouble  current_step)
-{
-  double delta;
-
-  if (total_steps < 1)
-    return;
-
-  delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
-  *val  = val_from + delta;
+  g_bytes_unref (settings_bytes);
 }
 
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
@@ -1083,9 +1040,6 @@ bender_new_dialog (GimpProcedure       *procedure,
   cd->color = gimp_drawable_is_rgb (drawable);
 
   cd->run = FALSE;
-  cd->bval_from = NULL;
-  cd->bval_to = NULL;
-  cd->bval_curr = NULL;
 
   for (i = 0; i < 2; i++)
     for (j = 0; j < 256; j++)
@@ -1105,7 +1059,7 @@ bender_new_dialog (GimpProcedure       *procedure,
       cd->points[i][16][1] = 0.5;       /* y */
     }
 
-  p_retrieve_values (cd);       /* Possibly retrieve data from a previous run */
+  p_retrieve_values (config, cd);       /* Possibly retrieve data from a previous run */
 
   /*  The shell and main vbox  */
   cd->shell = gimp_procedure_dialog_new (procedure,
@@ -2648,102 +2602,31 @@ p_bender_calculate_iter_curve (BenderDialog        *cd,
                                gint32               xmax,
                                gint32               ymax)
 {
-   gint          x;
-   gint          outline;
-   gint          curve_type;
-   BenderDialog *cd_from;
-   BenderDialog *cd_to;
+   gint outline;
+   gint curve_type;
 
    g_object_get (config,
                  "curve-type",   &curve_type,
                  "curve-border", &outline,
                  NULL);
 
-   if ((cd->bval_from == NULL) ||
-       (cd->bval_to == NULL) ||
-       (cd->bval_curr == NULL))
+   if (gb_debug)
+     g_printf ("p_bender_calculate_iter_curve NORMAL1\n");
+
+   if (curve_type == SMOOTH)
      {
-       if(gb_debug)  g_printf("p_bender_calculate_iter_curve NORMAL1\n");
-       if (curve_type == SMOOTH)
-         {
-           g_object_set (cd->config,
-                         "curve-border", OUTLINE_UPPER,
-                         NULL);
-           bender_calculate_curve (cd, xmax, ymax, FALSE);
-           g_object_set (cd->config,
-                         "curve-border", OUTLINE_LOWER,
-                         NULL);
-           bender_calculate_curve (cd, xmax, ymax, FALSE);
-         }
-       else
-         {
-           p_stretch_curves (cd, xmax, ymax);
-         }
+       g_object_set (cd->config,
+                     "curve-border", OUTLINE_UPPER,
+                     NULL);
+       bender_calculate_curve (cd, xmax, ymax, FALSE);
+       g_object_set (cd->config,
+                     "curve-border", OUTLINE_LOWER,
+                     NULL);
+       bender_calculate_curve (cd, xmax, ymax, FALSE);
      }
    else
      {
-       /* compose curves by iterating between FROM/TO values */
-       if(gb_debug)  g_printf ("p_bender_calculate_iter_curve ITERmode 1\n");
-
-       /* init FROM curves */
-       cd_from = g_new (BenderDialog, 1);
-       p_cd_from_bval (cd_from, cd->bval_from);
-       cd_from->curve_ptr[OUTLINE_UPPER] = g_new (gint32, 1+xmax);
-       cd_from->curve_ptr[OUTLINE_LOWER] = g_new (gint32, 1+xmax);
-
-       /* init TO curves */
-       cd_to = g_new (BenderDialog, 1);
-       p_cd_from_bval (cd_to, cd->bval_to);
-       cd_to->curve_ptr[OUTLINE_UPPER] = g_new (gint32, 1+xmax);
-       cd_to->curve_ptr[OUTLINE_LOWER] = g_new (gint32, 1+xmax);
-
-       if (curve_type == SMOOTH)
-         {
-           /* calculate FROM curves */
-           cd_from->outline = OUTLINE_UPPER;
-           bender_calculate_curve (cd_from, xmax, ymax, FALSE);
-           cd_from->outline = OUTLINE_LOWER;
-           bender_calculate_curve (cd_from, xmax, ymax, FALSE);
-         }
-       else
-         {
-           p_stretch_curves (cd_from, xmax, ymax);
-         }
-
-       if (curve_type == SMOOTH)
-         {
-           /* calculate TO curves */
-           cd_to->outline = OUTLINE_UPPER;
-           bender_calculate_curve (cd_to, xmax, ymax, FALSE);
-           cd_to->outline = OUTLINE_LOWER;
-           bender_calculate_curve (cd_to, xmax, ymax, FALSE);
-         }
-       else
-         {
-           p_stretch_curves (cd_to, xmax, ymax);
-         }
-
-       /* MIX Y-koords of the curves according to current iteration step */
-       for (x = 0; x <= xmax; x++)
-         {
-           p_delta_gint32 (&cd->curve_ptr[OUTLINE_UPPER][x],
-                           cd_from->curve_ptr[OUTLINE_UPPER][x],
-                           cd_to->curve_ptr[OUTLINE_UPPER][x],
-                           cd->bval_curr->total_steps,
-                           cd->bval_curr->current_step);
-
-           p_delta_gint32 (&cd->curve_ptr[OUTLINE_LOWER][x],
-                           cd_from->curve_ptr[OUTLINE_LOWER][x],
-                           cd_to->curve_ptr[OUTLINE_LOWER][x],
-                           cd->bval_curr->total_steps,
-                           cd->bval_curr->current_step);
-         }
-
-       g_free (cd_from->curve_ptr[OUTLINE_UPPER]);
-       g_free (cd_from->curve_ptr[OUTLINE_LOWER]);
-
-       g_free (cd_from);
-       g_free (cd_to);
+       p_stretch_curves (cd, xmax, ymax);
      }
 
    g_object_set (config,
