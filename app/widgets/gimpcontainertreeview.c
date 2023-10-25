@@ -705,6 +705,9 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
       g_signal_connect (tree_view->view, "button-press-event",
                         G_CALLBACK (gimp_container_tree_view_button),
                         tree_view);
+      g_signal_connect_after (tree_view->view, "button-press-event",
+                              G_CALLBACK (gtk_widget_grab_focus),
+                              tree_view);
       g_signal_connect (tree_view->view, "button-release-event",
                         G_CALLBACK (gimp_container_tree_view_button),
                         tree_view);
@@ -1281,13 +1284,6 @@ gimp_container_tree_view_button (GtkWidget             *widget,
       gboolean                  handled = TRUE;
       gboolean                  multisel_mode;
       GdkModifierType           modifiers = (bevent->state & gimp_get_all_modifiers_mask ());
-
-      /* Confirm the path is set before grabbing focus, as it can cause
-       * the list to auto-scroll to the top on first click otherwise
-       */
-      gtk_tree_view_set_cursor (GTK_TREE_VIEW (widget), path, NULL, FALSE);
-      if (bevent->type != GDK_BUTTON_RELEASE && ! gtk_widget_has_focus (widget))
-        gtk_widget_grab_focus (widget);
 
       multisel_mode = (gtk_tree_selection_get_mode (tree_view->priv->selection)
                        == GTK_SELECTION_MULTIPLE);
