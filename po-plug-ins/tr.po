@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-19 03:21+0000\n"
-"PO-Revision-Date: 2023-10-19 21:45+0300\n"
+"POT-Creation-Date: 2023-10-22 23:36+0000\n"
+"PO-Revision-Date: 2023-10-24 02:20+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -10608,7 +10608,7 @@ msgid ""
 "Please install the additional help package or use the online user manual at: "
 "https://docs.gimp.org/"
 msgstr ""
-"Lütfen ilave yardım paketlerini kurun veya https://docs.gimp.org/ çevrimiçi "
+"Lütfen ilave yardım paketlerini kurun veya https://docs.gimp.org/ çevrim içi "
 "kullanıcı kılavuzunu kullanın"
 
 #: ../plug-ins/help/gimphelpdomain.c:202
@@ -11209,7 +11209,7 @@ msgstr "Bazı veriler değişti!"
 
 #: ../plug-ins/imagemap/imap_main.c:625
 msgid "Do you really want to discard your changes?"
-msgstr "Yaptığınız değişikliklerden vazgeçmek istiyor musunuz?"
+msgstr "Yaptığınız değişiklikleri gözden çıkarmak istiyor musunuz?"
 
 #: ../plug-ins/imagemap/imap_main.c:837
 #, c-format
