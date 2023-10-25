@@ -2022,8 +2022,10 @@ static void
 gimp_tool_rectangle_update_options (GimpToolRectangle *rectangle)
 {
   GimpToolRectanglePrivate *private = rectangle->private;
-  gdouble                   x1, y1;
-  gdouble                   x2, y2;
+  gdouble                   x1      = 0;
+  gdouble                   y1      = 0;
+  gdouble                   x2      = 0;
+  gdouble                   y2      = 0;
 
   gimp_tool_rectangle_get_public_rect (rectangle, &x1, &y1, &x2, &y2);
 
@@ -2158,7 +2160,10 @@ static void
 gimp_tool_rectangle_update_status (GimpToolRectangle *rectangle)
 {
   GimpToolRectanglePrivate *private = rectangle->private;
-  gdouble                   x1, y1, x2, y2;
+  gdouble                   x1      = 0;
+  gdouble                   y1      = 0;
+  gdouble                   x2      = 0;
+  gdouble                   y2      = 0;
 
   gimp_tool_rectangle_get_public_rect (rectangle, &x1, &y1, &x2, &y2);
 
@@ -2432,7 +2437,10 @@ gimp_tool_rectangle_coord_on_handle (GimpToolRectangle *rectangle,
 {
   GimpToolRectanglePrivate *private = rectangle->private;
   GimpDisplayShell         *shell;
-  gdouble                   x1, y1, x2, y2;
+  gdouble                   x1 = 0;
+  gdouble                   y1 = 0;
+  gdouble                   x2 = 0;
+  gdouble                   y2 = 0;
   gdouble                   rect_w, rect_h;
   gdouble                   handle_x          = 0;
   gdouble                   handle_y          = 0;
@@ -2834,7 +2842,10 @@ gimp_tool_rectangle_setup_snap_offsets (GimpToolRectangle *rectangle,
 {
   GimpToolWidget           *widget  = GIMP_TOOL_WIDGET (rectangle);
   GimpToolRectanglePrivate *private = rectangle->private;
-  gdouble                   x1, y1, x2, y2;
+  gdouble                   x1      = 0;
+  gdouble                   y1      = 0;
+  gdouble                   x2      = 0;
+  gdouble                   y2      = 0;
   gdouble                   coord_x, coord_y;
 
   gimp_tool_rectangle_get_public_rect (rectangle, &x1, &y1, &x2, &y2);
@@ -4181,7 +4192,10 @@ gimp_tool_rectangle_point_in_rectangle (GimpToolRectangle *rectangle,
                                         gdouble            x,
                                         gdouble            y)
 {
-  gdouble  x1, y1, x2, y2;
+  gdouble x1 = 0;
+  gdouble y1 = 0;
+  gdouble x2 = 0;
+  gdouble y2 = 0;
 
   g_return_val_if_fail (GIMP_IS_TOOL_RECTANGLE (rectangle), FALSE);
 

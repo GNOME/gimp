@@ -390,10 +390,10 @@ gimp_ruler_update_position (GimpRuler *ruler,
                             gdouble    x,
                             gdouble    y)
 {
-  GimpRulerPrivate *priv = GET_PRIVATE (ruler);
+  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
   GtkAllocation     allocation;
-  gdouble           lower;
-  gdouble           upper;
+  gdouble           lower = 0;
+  gdouble           upper = 0;
 
   gtk_widget_get_allocation (GTK_WIDGET (ruler), &allocation);
   gimp_ruler_get_range (ruler, &lower, &upper, NULL);
@@ -1005,7 +1005,8 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
   gint               i;
   gint               width, height;
   gint               length, ideal_length;
-  gdouble            lower, upper;  /* Upper and lower limits, in ruler units */
+  gdouble            lower = 0;     /* Upper and lower limits, in ruler units */
+  gdouble            upper = 0;
   gdouble            increment;     /* Number of pixels per unit */
   gint               scale;         /* Number of units per major unit */
   gdouble            start, end, cur;
@@ -1209,7 +1210,8 @@ gimp_ruler_get_pos_rect (GimpRuler *ruler,
   GtkAllocation     allocation;
   GtkBorder         border;
   gint              width, height;
-  gdouble           upper, lower;
+  gdouble           upper = 0;
+  gdouble           lower = 0;
   gdouble           increment;
   GdkRectangle      rect = { 0, };
 
