@@ -340,6 +340,11 @@ play_create_procedure (GimpPlugIn  *plug_in,
                                       "Adam D. Moss <adam@gimp.org>",
                                       "Adam D. Moss <adam@gimp.org>",
                                       "1997, 1998...");
+
+      GIMP_PROC_AUX_ARG_BYTES (procedure, "settings-data",
+                               "Settings data",
+                               "TODO: eventually we must implement proper args for every settings",
+                               GIMP_PARAM_READWRITE);
     }
 
   return procedure;
@@ -354,8 +359,22 @@ play_run (GimpProcedure        *procedure,
           GimpProcedureConfig  *config,
           gpointer              run_data)
 {
+  GBytes   *settings_bytes = NULL;
   GMenu    *section;
   GimpPlay *play;
+
+  if (run_mode != GIMP_RUN_INTERACTIVE)
+    {
+      GError *error = NULL;
+
+      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Procedure '%s' only works in interactive mode."),
+                   gimp_procedure_get_name (procedure));
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
+    }
 
   play = GIMP_PLAY (gimp_procedure_get_plug_in (procedure));
 #if GLIB_CHECK_VERSION(2,74,0)
@@ -392,7 +411,15 @@ play_run (GimpProcedure        *procedure,
 
   image = _image;
 
-  gimp_get_data (PLUG_IN_PROC, &settings);
+  /* Temporary code replacing legacy gimp_[gs]et_data() using an AUX argument.
+   * This doesn't actually fix the "Reset to initial values|factory defaults"
+   * features, but at least makes per-run value storage work.
+   * TODO: eventually we want proper separate arguments as a complete fix.
+   */
+  g_object_get (config, "settings-data", &settings_bytes, NULL);
+  if (settings_bytes != NULL && g_bytes_get_size (settings_bytes) == sizeof (AnimationSettings))
+    settings = *((AnimationSettings *) g_bytes_get_data (settings_bytes, NULL));
+  g_bytes_unref (settings_bytes);
 
   g_signal_connect (play->app, "activate", G_CALLBACK (on_app_activate), play);
 
@@ -400,7 +427,9 @@ play_run (GimpProcedure        *procedure,
 
   g_clear_object (&play->app);
 
-  gimp_set_data (PLUG_IN_PROC, &settings, sizeof (settings));
+  settings_bytes = g_bytes_new (&settings, sizeof (AnimationSettings));
+  g_object_set (config, "settings-data", settings_bytes, NULL);
+  g_bytes_unref (settings_bytes);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
