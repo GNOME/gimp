@@ -1246,50 +1246,6 @@ CODE
     );
 }
 
-sub pdb_get_data_size {
-    $blurb = 'Returns size of data associated with the specified identifier.';
-
-    $help = <<'HELP';
-This procedure returns the size of any data which may have been associated with
-the specified identifier. If no data has been associated with the identifier,
-an error is returned.
-HELP
-
-    &nick_pdb_misc('1998');
-
-    $lib_private = 1;
-
-    @inargs = (
-	{ name => 'identifier', type => 'string', non_empty => 1,
-	  desc => 'The identifier associated with data' }
-    );
-
-    @outargs = (
-	{ name => 'bytes', type => '1 <= int32',
-	  desc => 'The number of bytes in the data' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_is_canonical_identifier (identifier))
-    {
-      if (! gimp_plug_in_manager_get_data (gimp->plug_in_manager,
-                                           identifier, &bytes))
-        success = FALSE;
-    }
-  else
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Data label '%s' is not a canonical identifier"),
-                   identifier);
-      success = FALSE;
-    }
-}
-CODE
-    );
-}
-
 sub pdb_set_data {
     $blurb = 'Associates the specified identifier with the supplied data.';
 
@@ -1398,7 +1354,6 @@ CODE
             pdb_set_file_proc_thumbnail_loader
             pdb_set_batch_interpreter
             pdb_get_data
-            pdb_get_data_size
             pdb_set_data);
 
 %exports = (app => [@procs], lib => [@procs]);

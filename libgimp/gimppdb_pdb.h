@@ -100,7 +100,6 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_set_batch_interpreter          (const gcha
                                                                       const gchar       *interpreter_name);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_get_data                       (const gchar       *identifier,
                                                                       GBytes           **data);
-G_GNUC_INTERNAL gint        _gimp_pdb_get_data_size                  (const gchar       *identifier);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_data                       (const gchar       *identifier,
                                                                       GBytes            *data);
 

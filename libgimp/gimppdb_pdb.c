@@ -1216,42 +1216,6 @@ _gimp_pdb_get_data (const gchar  *identifier,
 }
 
 /**
- * _gimp_pdb_get_data_size:
- * @identifier: The identifier associated with data.
- *
- * Returns size of data associated with the specified identifier.
- *
- * This procedure returns the size of any data which may have been
- * associated with the specified identifier. If no data has been
- * associated with the identifier, an error is returned.
- *
- * Returns: The number of bytes in the data.
- **/
-gint
-_gimp_pdb_get_data_size (const gchar *identifier)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint bytes = 0;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, identifier,
-                                          G_TYPE_NONE);
-
-  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-pdb-get-data-size",
-                                               args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    bytes = GIMP_VALUES_GET_INT (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return bytes;
-}
-
-/**
  * _gimp_pdb_set_data:
  * @identifier: The identifier associated with data.
  * @data: A byte array containing data.

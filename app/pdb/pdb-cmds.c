@@ -1164,47 +1164,6 @@ pdb_get_data_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-pdb_get_data_size_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
-                           GError               **error)
-{
-  gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  const gchar *identifier;
-  gint bytes = 0;
-
-  identifier = g_value_get_string (gimp_value_array_index (args, 0));
-
-  if (success)
-    {
-      if (gimp_is_canonical_identifier (identifier))
-        {
-          if (! gimp_plug_in_manager_get_data (gimp->plug_in_manager,
-                                               identifier, &bytes))
-            success = FALSE;
-        }
-      else
-        {
-          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                       _("Data label '%s' is not a canonical identifier"),
-                       identifier);
-          success = FALSE;
-        }
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-
-  if (success)
-    g_value_set_int (gimp_value_array_index (return_vals, 1), bytes);
-
-  return return_vals;
-}
-
-static GimpValueArray *
 pdb_set_data_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
@@ -2223,36 +2182,6 @@ register_pdb_procs (GimpPDB *pdb)
                                                        "A byte array containing data",
                                                        G_TYPE_BYTES,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-pdb-get-data-size
-   */
-  procedure = gimp_procedure_new (pdb_get_data_size_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-pdb-get-data-size");
-  gimp_procedure_set_static_help (procedure,
-                                  "Returns size of data associated with the specified identifier.",
-                                  "This procedure returns the size of any data which may have been associated with the specified identifier. If no data has been associated with the identifier, an error is returned.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Nick Lamb",
-                                         "Nick Lamb",
-                                         "1998");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("identifier",
-                                                       "identifier",
-                                                       "The identifier associated with data",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("bytes",
-                                                     "bytes",
-                                                     "The number of bytes in the data",
-                                                     1, G_MAXINT32, 1,
-                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
