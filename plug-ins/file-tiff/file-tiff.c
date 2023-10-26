@@ -179,6 +179,23 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                           "tif,tiff");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,II*\\0,0,string,MM\\0*");
+
+      /* TODO: the 2 below AUX arguments should likely be real arguments, but I
+       * just wanted to get rid of gimp_get_data/gimp_set_data() usage at first
+       * and didn't dig much into proper and full usage. Since it's always
+       * possible to add arguments, but not to remove them, I prefer to make
+       * them AUX for now and leave it as further exercise to decide whether it
+       * should be part of the PDB API.
+       */
+      GIMP_PROC_AUX_ARG_ENUM (procedure, "target",
+                              "Open _pages as", NULL,
+                              GIMP_TYPE_PAGE_SELECTOR_TARGET,
+                              GIMP_PAGE_SELECTOR_TARGET_LAYERS,
+                              G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "keep-empty-space",
+                                 _("_Keep empty space around imported layers"),
+                                 NULL, TRUE, GIMP_PARAM_READWRITE);
     }
   else if (! strcmp (name, SAVE_PROC))
     {
@@ -300,7 +317,7 @@ tiff_load (GimpProcedure         *procedure,
                        &resolution_loaded,
                        &profile_loaded,
                        &ps_metadata_loaded,
-                       &error);
+                       config, &error);
 
   if (!image)
     return gimp_procedure_new_return_values (procedure, status, error);

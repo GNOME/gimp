@@ -259,13 +259,14 @@ get_extra_channels_count (gushort photomet, gushort spp, gboolean alpha)
 }
 
 GimpPDBStatusType
-load_image (GFile        *file,
-            GimpRunMode   run_mode,
-            GimpImage   **image,
-            gboolean     *resolution_loaded,
-            gboolean     *profile_loaded,
-            gboolean     *ps_metadata_loaded,
-            GError      **error)
+load_image (GFile                *file,
+            GimpRunMode           run_mode,
+            GimpImage           **image,
+            gboolean             *resolution_loaded,
+            gboolean             *profile_loaded,
+            gboolean             *ps_metadata_loaded,
+            GimpProcedureConfig  *config,
+            GError              **error)
 {
   TIFF              *tif;
   TiffSelectedPages  pages;
@@ -300,12 +301,8 @@ load_image (GFile        *file,
       return  GIMP_PDB_EXECUTION_ERROR;
     }
 
-  pages.target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
-  gimp_get_data (LOAD_PROC "-target", &pages.target);
-
-  pages.keep_empty_space = TRUE;
-  gimp_get_data (LOAD_PROC "-keep-empty-space",
-                 &pages.keep_empty_space);
+  g_object_get (config, "target", &pages.target, NULL);
+  g_object_get (config, "keep-empty-space", &pages.keep_empty_space, NULL);
 
   pages.n_pages = pages.o_pages = TIFFNumberOfDirectories (tif);
   if (pages.n_pages == 0)
@@ -524,11 +521,8 @@ load_image (GFile        *file,
         }
     }
 
-  gimp_set_data (LOAD_PROC "-target",
-                 &pages.target, sizeof (pages.target));
-  gimp_set_data (LOAD_PROC "-keep-empty-space",
-                 &pages.keep_empty_space,
-                 sizeof (pages.keep_empty_space));
+  g_object_set (config, "target", pages.target, NULL);
+  g_object_set (config, "keep-empty-space", pages.keep_empty_space, NULL);
 
   /* We will loop through the all pages in case of multipage TIFF
    * and load every page as a separate layer.
