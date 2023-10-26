@@ -325,13 +325,13 @@ dds_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_DOUBLE (procedure, "gamma",
                             _("_Gamma"),
-                            _("Gamma value to use for gamma correction (i.e. 2.2)"),
+                            _("Gamma value to use for gamma correction (e.g. 2.2)"),
                             0.0, 10.0, 0.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "preserve-alpha-coverage",
                              _("Preserve al_pha test coverage"),
-                             _("Preserve alpha test converage for alpha "
+                             _("Preserve alpha test coverage for alpha "
                                "channel maps"),
                              FALSE,
                              G_PARAM_READWRITE);
@@ -339,7 +339,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_DOUBLE (procedure, "alpha-test-threshold",
                             _("Alp_ha test threshold"),
                             _("Alpha test threshold value for which alpha test "
-                              "converage should be preserved"),
+                              "coverage should be preserved"),
                             0.0, 1.0, 0.5,
                             G_PARAM_READWRITE);
     }
