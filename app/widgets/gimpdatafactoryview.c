@@ -222,7 +222,7 @@ gimp_data_factory_view_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_container_editor_set_selection_mode (editor, GTK_SELECTION_MULTIPLE);
+  gimp_container_editor_set_selection_mode (editor, GTK_SELECTION_SINGLE);
 
   if (GIMP_IS_CONTAINER_TREE_VIEW (editor->view))
     {
