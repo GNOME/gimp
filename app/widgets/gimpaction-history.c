@@ -362,6 +362,8 @@ gimp_action_history_action_activated (GimpAction *action)
   GList                 *link;
   GimpActionHistoryItem *item;
 
+  g_return_if_fail (GIMP_IS_ACTION (action));
+
   /* Silently return when called at the wrong time, like when the
    * activated action was "quit" and the history is already gone.
    */

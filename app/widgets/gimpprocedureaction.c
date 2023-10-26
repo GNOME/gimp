@@ -157,10 +157,20 @@ gimp_procedure_action_activate (GAction  *action,
     {
       gsize hack = GPOINTER_TO_SIZE (procedure_action->procedure);
 
+      g_object_add_weak_pointer (G_OBJECT (action), (gpointer) &action);
       gimp_action_emit_activate (GIMP_ACTION (action),
                                  g_variant_new_uint64 (hack));
 
-      gimp_action_history_action_activated (GIMP_ACTION (action));
+      if (action != NULL)
+        {
+          g_object_remove_weak_pointer (G_OBJECT (action), (gpointer) &action);
+          /* An action might disappear between the moment it's run and the
+           * moment we log it. I experienced this when script-fu crashed, though
+           * we could imagine that it may be soon possible in normal process too
+           * for procedures to get un-registered (e.g. in extensions).
+           */
+          gimp_action_history_action_activated (GIMP_ACTION (action));
+        }
     }
 }
 
