@@ -185,10 +185,13 @@ dds_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB");
 
       gimp_procedure_set_menu_label (procedure, _("DDS image"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("DDS"));
+
 
       gimp_procedure_set_documentation (procedure,
-                                        "Saves files in DDS image format",
-                                        "Saves files in DDS image format",
+                                        _("Saves files in DDS image format"),
+                                        _("Saves files in DDS image format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Shawn Kirst",
@@ -200,14 +203,77 @@ dds_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "dds");
 
-      GIMP_PROC_ARG_INT (procedure, "compression-format",
-                         "Compression format",
-                         "Compression format (0 = None, 1 = BC1/DXT1, "
-                         "2 = BC2/DXT3, 3 = BC3/DXT5, 4 = BC3n/DXT5nm, "
-                         "5 = BC4/ATI1N, 6 = BC5/ATI2N, 7 = RXGB (DXT5), "
-                         "8 = Alpha Exponent (DXT5), 9 = YCoCg (DXT5), "
-                         "10 = YCoCg scaled (DXT5))",
-                         0, 10, DDS_COMPRESS_NONE,
+      GIMP_PROC_ARG_CHOICE (procedure, "compression-format",
+                            _("Compressio_n"),
+                            _("Compression format"),
+                            gimp_choice_new_with_values ("none",   DDS_COMPRESS_NONE,    _("None"),                 NULL,
+                                                         "bc1",    DDS_COMPRESS_BC1,    _("BC1 / DXT1"),            NULL,
+                                                         "bc2",    DDS_COMPRESS_BC2,    _("BC2 / DXT3"),            NULL,
+                                                         "bc3, ",  DDS_COMPRESS_BC3,    _("BC3 / DXT5"),            NULL,
+                                                         "bc3n",   DDS_COMPRESS_BC3N,   _("BC3nm / DXT5nm"),        NULL,
+                                                         "bc4",    DDS_COMPRESS_BC4,    _("BC4 / ATI1 (3Dc+)"),     NULL,
+                                                         "bc5",    DDS_COMPRESS_BC5,    _("BC5 / ATI2 (3Dc)"),      NULL,
+                                                         "rxgb",   DDS_COMPRESS_RXGB,   _("RXGB (DXT5)"),           NULL,
+                                                         "aexp",   DDS_COMPRESS_AEXP,   _("Alpha Exponent (DXT5)"), NULL,
+                                                         "ycocg",  DDS_COMPRESS_YCOCG,  _("YCoCg (DXT5)"),          NULL,
+                                                         "ycocgs", DDS_COMPRESS_YCOCGS, _("YCoCg scaled (DXT5)"),   NULL,
+                                                         NULL),
+                            "none",
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "perceptual-metric",
+                             _("Use percept_ual error metric"),
+                             _("Use a perceptual error metric during compression"),
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_CHOICE (procedure, "format",
+                            _("_Format"),
+                            _("Pixel format"),
+                            gimp_choice_new_with_values ("default", DDS_FORMAT_DEFAULT, _("Default"), NULL,
+                                                         "rgb8",    DDS_FORMAT_RGB8,    _("RGB8"),    NULL,
+                                                         "rgba8",   DDS_FORMAT_RGBA8,   _("RGBA8"),   NULL,
+                                                         "bgr8",    DDS_FORMAT_BGR8,    _("BGR8"),    NULL,
+                                                         "abgr8, ", DDS_FORMAT_ABGR8,   _("ABGR8"),   NULL,
+                                                         "r5g6b5",  DDS_FORMAT_R5G6B5,  _("R5G6B5"),  NULL,
+                                                         "rgba4",   DDS_FORMAT_RGBA4,   _("RGBA4"),   NULL,
+                                                         "rgb5a1",  DDS_FORMAT_RGB5A1,  _("RGB5A1"),  NULL,
+                                                         "rgb10a2", DDS_FORMAT_RGB10A2, _("RGB10A2"), NULL,
+                                                         "r3g3b2",  DDS_FORMAT_R3G3B2,  _("R3G3B2"),  NULL,
+                                                         "a8",      DDS_FORMAT_A8,      _("A8"),      NULL,
+                                                         "l8",      DDS_FORMAT_L8,      _("L8"),      NULL,
+                                                         "l8a8",    DDS_FORMAT_L8A8,    _("L8A8"),    NULL,
+                                                         "aexp",    DDS_FORMAT_AEXP,    _("AEXP"),    NULL,
+                                                         "ycocg",   DDS_FORMAT_YCOCG,   _("YCOCG"),   NULL,
+                                                         NULL),
+                            "default",
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "save-type",
+                         "Save type",
+                         "How to save the image (0 = selected layer, "
+                         "1 = cube map, 2 = volume map, 3 = texture array, "
+                         "4 = all visible layers)",
+                         0, 4, DDS_SAVE_SELECTED_LAYER,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "flip-image",
+                             _("Flip image _vertically on export"),
+                             _("Flip the image vertically on export"),
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "transparent-color",
+                             _("Set _transparent color"),
+                             _("Make an indexed color transparent"),
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "transparent-index",
+                         _("Transparent inde_x"),
+                         _("Index of transparent color or -1 to disable "
+                           "(for indexed images only)."),
+                         0, 255, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "mipmaps",
@@ -218,97 +284,62 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                          0, 2, DDS_MIPMAP_NONE,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "save-type",
-                         "Save type",
-                         "How to save the image (0 = selected layer, "
-                         "1 = cube map, 2 = volume map, 3 = texture array, "
-                         "4 = all visible layers)",
-                         0, 4, DDS_SAVE_SELECTED_LAYER,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "mipmap-filter",
+                            _("F_ilter"),
+                            _("Filtering to use when generating mipmaps"),
+                            gimp_choice_new_with_values ("default",   DDS_MIPMAP_FILTER_DEFAULT,   _("Default"),   NULL,
+                                                         "nearest",   DDS_MIPMAP_FILTER_NEAREST,   _("Nearest"),   NULL,
+                                                         "box",       DDS_MIPMAP_FILTER_BOX,       _("Box"),       NULL,
+                                                         "triangle",  DDS_MIPMAP_FILTER_TRIANGLE,  _("Triangle"),  NULL,
+                                                         "quadratic", DDS_MIPMAP_FILTER_QUADRATIC, _("Quadratic"), NULL,
+                                                         "bspline",   DDS_MIPMAP_FILTER_BSPLINE,   _("B-Spline"),  NULL,
+                                                         "mitchell",  DDS_MIPMAP_FILTER_MITCHELL,  _("Mitchell"),  NULL,
+                                                         "lanczos",   DDS_MIPMAP_FILTER_LANCZOS,   _("Lanczos"),   NULL,
+                                                         "kaiser",    DDS_MIPMAP_FILTER_KAISER,    _("Kaiser"),    NULL,
+                                                         NULL),
+                            "default",
+                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "format",
-                         "Format",
-                         "Pixel format (0 = default, 1 = DDS_FORMAT_RGB8, "
-                         "2 = DDS_FORMAT_RGBA8, 3 = DDS_FORMAT_BGR8, "
-                         "4 = DDS_FORMAT_ABGR8, 5 = DDS_FORMAT_R5G6B5, "
-                         "6 = DDS_FORMAT_RGBA4, 7 = DDS_FORMAT_RGB5A1, "
-                         "8 = DDS_FORMAT_RGB10A2, 9 = DDS_FORMAT_R3G3B2, "
-                         "10 = DDS_FORMAT_A8, 11 = DDS_FORMAT_L8, "
-                         "12 = DDS_FORMAT_L8A8, 13 = DDS_FORMAT_AEXP, "
-                         "14 = DDS_FORMAT_YCOCG)",
-                         0, 14, DDS_FORMAT_DEFAULT,
-                         G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_BOOLEAN (procedure, "flip-image",
-                             "Flip image vertically",
-                             "Flip the image vertically on export",
-                             FALSE,
-                             G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_BOOLEAN (procedure, "transparent-color",
-                             "Transparent color",
-                             "Make an indexed color transparent",
-                             FALSE,
-                             G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "transparent-index",
-                         "Transparent index",
-                         "Index of transparent color or -1 to disable "
-                         "(for indexed images only).",
-                         0, 255, 0,
-                         G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "mipmap-filter",
-                         "Mipmap filter",
-                         "Filtering to use when generating mipmaps "
-                         "(0 = default, 1 = nearest, 2 = box, 3 = triangle, "
-                         "4 = quadratic, 5 = bspline, 6 = mitchell, "
-                         "7 = lanczos, 8 = kaiser)",
-                         0, 8, DDS_MIPMAP_FILTER_DEFAULT,
-                         G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "mipmap-wrap",
-                         "Mipmap wrap",
-                         "Wrap mode to use when generating mipmaps "
-                         "(0 = default, 1 = mirror, 2 = repeat, 3 = clamp)",
-                         0, 3, DDS_MIPMAP_WRAP_DEFAULT,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "mipmap-wrap",
+                            _("_Wrap mode"),
+                            _("Wrap mode to use when generating mipmaps"),
+                            gimp_choice_new_with_values ("default", DDS_MIPMAP_WRAP_DEFAULT, _("Default"), NULL,
+                                                         "mirror",  DDS_MIPMAP_WRAP_MIRROR,  _("Mirror"),  NULL,
+                                                         "repeat",  DDS_MIPMAP_WRAP_REPEAT,  _("Repeat"),  NULL,
+                                                         "clamp",   DDS_MIPMAP_WRAP_CLAMP,   _("Clamp"),   NULL,
+                                                         NULL),
+                            "default",
+                            G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "gamma-correct",
-                             "Gamma correct",
-                             "Use gamma correct mipmap filtering",
+                             _("Appl_y gamma correction"),
+                             _("Use gamma correct mipmap filtering"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "srgb",
-                             "sRGB",
-                             "Use sRGB colorspace for gamma correction",
+                             _("Use sRG_B colorspace"),
+                             _("Use sRGB colorspace for gamma correction"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "gamma",
-                            "Gamma",
-                            "Gamma value to use for gamma correction (i.e. 2.2)",
+                            _("_Gamma"),
+                            _("Gamma value to use for gamma correction (i.e. 2.2)"),
                             0.0, 10.0, 0.0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "perceptual-metric",
-                             "Perceptual metric",
-                             "Use a perceptual error metric during compression",
-                             FALSE,
-                             G_PARAM_READWRITE);
-
       GIMP_PROC_ARG_BOOLEAN (procedure, "preserve-alpha-coverage",
-                             "Preserve alpha coverage",
-                             "Preserve alpha test converage for alpha "
-                             "channel maps",
+                             _("Preserve al_pha test coverage"),
+                             _("Preserve alpha test converage for alpha "
+                               "channel maps"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "alpha-test-threshold",
-                            "Alpha test threshold",
-                            "Alpha test threshold value for which alpha test "
-                            "converage should be preserved",
+                            _("Alp_ha test threshold"),
+                            _("Alpha test threshold value for which alpha test "
+                              "converage should be preserved"),
                             0.0, 1.0, 0.5,
                             G_PARAM_READWRITE);
     }
@@ -478,7 +509,7 @@ dds_save (GimpProcedure        *procedure,
    */
   status = write_dds (file, image, drawables[0],
                       run_mode == GIMP_RUN_INTERACTIVE,
-                      procedure, G_OBJECT (config),
+                      procedure, config,
                       export == GIMP_EXPORT_EXPORT);
 
   if (export == GIMP_EXPORT_EXPORT)

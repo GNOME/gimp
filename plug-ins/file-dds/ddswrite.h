@@ -22,13 +22,13 @@
 #define __DDSWRITE_H__
 
 
-extern GimpPDBStatusType write_dds (GFile         *file,
-                                    GimpImage     *image,
-                                    GimpDrawable  *drawable,
-                                    gboolean       interactive,
-                                    GimpProcedure *procedure,
-                                    GObject       *config,
-                                    gboolean       is_duplicate_image);
+extern GimpPDBStatusType write_dds (GFile               *file,
+                                    GimpImage           *image,
+                                    GimpDrawable        *drawable,
+                                    gboolean             interactive,
+                                    GimpProcedure       *procedure,
+                                    GimpProcedureConfig *config,
+                                    gboolean             is_duplicate_image);
 
 
 #endif /* __DDSWRITE_H__ */

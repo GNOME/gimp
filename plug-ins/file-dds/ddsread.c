@@ -212,17 +212,6 @@ read_dds (GFile          *file,
         }
     }
 
-  /* verify header information is accurate */
-  if (hdr.depth < 1                                       ||
-      (hdr.pitch_or_linsize > (file_size - sizeof (hdr))) ||
-      (((guint64) hdr.height * hdr.width * hdr.depth) > (file_size - sizeof (hdr))))
-    {
-      fclose (fp);
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Invalid or corrupted DDS header"));
-      return GIMP_PDB_EXECUTION_ERROR;
-    }
-
   if (hdr.pixelfmt.flags & DDPF_FOURCC)
     {
       /* fourcc is dXt* or rXgb */
@@ -372,6 +361,17 @@ read_dds (GFile          *file,
   else
     {
       precision = GIMP_PRECISION_U8_NON_LINEAR;
+    }
+
+  /* verify header information is accurate */
+  if (d.bpp < 1                                           ||
+      (hdr.pitch_or_linsize > (file_size - sizeof (hdr))) ||
+      (((guint64) hdr.height * hdr.width * d.gimp_bps) > (file_size - sizeof (hdr))))
+    {
+      fclose (fp);
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Invalid or corrupted DDS header"));
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 
   image = gimp_image_new_with_precision (hdr.width, hdr.height, type, precision);

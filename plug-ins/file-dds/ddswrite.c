@@ -44,14 +44,14 @@
 #include "color.h"
 
 
-static gboolean   write_image (FILE          *fp,
-                               GimpImage     *image,
-                               GimpDrawable  *drawable,
-                               GObject       *config);
-static gboolean   save_dialog (GimpImage     *image,
-                               GimpDrawable  *drawable,
-                               GimpProcedure *procedure,
-                               GObject       *config);
+static gboolean   write_image (FILE                *fp,
+                               GimpImage           *image,
+                               GimpDrawable        *drawable,
+                               GimpProcedureConfig *config);
+static gboolean   save_dialog (GimpImage           *image,
+                               GimpDrawable        *drawable,
+                               GimpProcedure       *procedure,
+                               GimpProcedureConfig *config);
 
 
 static const char *cubemap_face_names[4][6] =
@@ -78,25 +78,14 @@ static const char *cubemap_face_names[4][6] =
   }
 };
 
+static GimpImage *global_image          = NULL;
 static GimpLayer *cubemap_faces[6];
 static gboolean   is_cubemap            = FALSE;
 static gboolean   is_volume             = FALSE;
 static gboolean   is_array              = FALSE;
 static gboolean   is_mipmap_chain_valid = FALSE;
 
-static GtkWidget *compress_opt;
-static GtkWidget *format_opt;
-static GtkWidget *mipmap_opt;
-static GtkWidget *mipmap_filter_opt;
-static GtkWidget *mipmap_wrap_opt;
-static GtkWidget *transparent_spin;
-static GtkWidget *srgb_check;
-static GtkWidget *flip_check;
-static GtkWidget *gamma_check;
-static GtkWidget *gamma_spin;
-static GtkWidget *pm_check;
-static GtkWidget *alpha_coverage_check;
-static GtkWidget *alpha_test_threshold_spin;
+static GtkWidget *transparent_check;
 
 static struct
 {
@@ -128,8 +117,7 @@ static struct
 
 
 static gboolean
-check_mipmaps (GimpImage *image,
-               gint       savetype)
+check_mipmaps (gint savetype)
 {
   GList         *layers;
   GList         *list;
@@ -159,11 +147,11 @@ check_mipmaps (GimpImage *image,
       max_surfaces = INT_MAX;
     }
 
-  layers = gimp_image_list_layers (image);
+  layers = gimp_image_list_layers (global_image);
   num_layers = g_list_length (layers);
 
-  w = gimp_image_get_width (image);
-  h = gimp_image_get_height (image);
+  w = gimp_image_get_width (global_image);
+  h = gimp_image_get_height (global_image);
 
   num_mipmaps = get_num_mipmaps (w, h);
 
@@ -237,7 +225,7 @@ check_cubemap (GimpImage *image)
   if (num_layers > 6)
     {
       /* check that mipmap layers are in order for a cubemap */
-      if (! check_mipmaps (image, DDS_SAVE_CUBEMAP))
+      if (! check_mipmaps (DDS_SAVE_CUBEMAP))
         return FALSE;
 
       /* invalidate cubemap faces */
@@ -425,7 +413,7 @@ check_array (GimpImage *image)
   gint           w, h;
   GimpImageType  type;
 
-  if (check_mipmaps (image, DDS_SAVE_ARRAY))
+  if (check_mipmaps (DDS_SAVE_ARRAY))
     return 1;
 
   layers = gimp_image_list_layers (image);
@@ -506,13 +494,13 @@ get_array_size (GimpImage *image)
 }
 
 GimpPDBStatusType
-write_dds (GFile         *file,
-           GimpImage     *image,
-           GimpDrawable  *drawable,
-           gboolean       interactive,
-           GimpProcedure *procedure,
-           GObject       *config,
-           gboolean       is_duplicate_image)
+write_dds (GFile               *file,
+           GimpImage           *image,
+           GimpDrawable        *drawable,
+           gboolean             interactive,
+           GimpProcedure       *procedure,
+           GimpProcedureConfig *config,
+           gboolean             is_duplicate_image)
 {
   FILE *fp;
   gint  rc = 0;
@@ -520,13 +508,16 @@ write_dds (GFile         *file,
   gint  mipmaps;
   gint  savetype;
 
+  compression = gimp_procedure_config_get_choice_id (config,
+                                                     "compression-format");
   g_object_get (config,
-                "compression-format", &compression,
-                "mipmaps",            &mipmaps,
-                "save-type",          &savetype,
+                "save-type", &savetype,
+                "mipmaps",   &mipmaps,
                 NULL);
 
-  is_mipmap_chain_valid = check_mipmaps (image, savetype);
+  global_image = image;
+
+  is_mipmap_chain_valid = check_mipmaps (savetype);
 
   is_cubemap = check_cubemap (image);
   is_volume  = check_volume (image);
@@ -850,15 +841,15 @@ get_mipmap_chain (unsigned char *dst,
 }
 
 static void
-write_layer (FILE         *fp,
-             GimpImage    *image,
-             GimpDrawable *drawable,
-             GObject      *config,
-             int           w,
-             int           h,
-             int           bpp,
-             int           fmtbpp,
-             int           num_mipmaps)
+write_layer (FILE                *fp,
+             GimpImage           *image,
+             GimpDrawable        *drawable,
+             GimpProcedureConfig *config,
+             int                  w,
+             int                  h,
+             int                  bpp,
+             int                  fmtbpp,
+             int                  num_mipmaps)
 {
   GeglBuffer        *buffer;
   const Babl        *format;
@@ -882,11 +873,12 @@ write_layer (FILE         *fp,
   gint               flags = 0;
 
   g_object_get (config,
-                "compression-format", &compression,
-                "mipmaps",            &mipmaps,
-                "format",             &pixel_format,
                 "perceptual-metric",  &perceptual_metric,
+                "mipmaps",            &mipmaps,
                 NULL);
+  compression  = gimp_procedure_config_get_choice_id (config,
+                                                      "compression-format");
+  pixel_format = gimp_procedure_config_get_choice_id (config, "format");
 
   basetype = gimp_image_get_base_type (image);
   type = gimp_drawable_type (drawable);
@@ -1037,14 +1029,16 @@ write_layer (FILE         *fp,
               gdouble  alpha_test_threshold;
 
               g_object_get (config,
-                            "mipmap-filter",           &mipmap_filter,
-                            "mipmap-wrap",             &mipmap_wrap,
                             "gamma-correct",           &gamma_correct,
                             "srgb",                    &srgb,
                             "gamma",                   &gamma,
                             "preserve-alpha-coverage", &preserve_alpha_coverage,
                             "alpha-test-threshold",    &alpha_test_threshold,
                             NULL);
+              mipmap_filter = gimp_procedure_config_get_choice_id (config,
+                                                                   "mipmap-filter");
+              mipmap_wrap   = gimp_procedure_config_get_choice_id (config,
+                                                                   "mipmap-wrap");
 
               generate_mipmaps (dst, src, w, h, bpp, palette != NULL,
                                 num_mipmaps,
@@ -1135,14 +1129,16 @@ write_layer (FILE         *fp,
               gdouble  alpha_test_threshold;
 
               g_object_get (config,
-                            "mipmap-filter",           &mipmap_filter,
-                            "mipmap-wrap",             &mipmap_wrap,
                             "gamma-correct",           &gamma_correct,
                             "srgb",                    &srgb,
                             "gamma",                   &gamma,
                             "preserve-alpha-coverage", &preserve_alpha_coverage,
                             "alpha-test-threshold",    &alpha_test_threshold,
                             NULL);
+              mipmap_filter = gimp_procedure_config_get_choice_id (config,
+                                                                   "mipmap-filter");
+              mipmap_wrap   = gimp_procedure_config_get_choice_id (config,
+                                                                   "mipmap-wrap");
 
               generate_mipmaps (fmtdst, src, w, h, bpp, 0, num_mipmaps,
                                 mipmap_filter,
@@ -1179,16 +1175,16 @@ write_layer (FILE         *fp,
 }
 
 static void
-write_volume_mipmaps (FILE      *fp,
-                      GimpImage *image,
-                      GObject   *config,
-                      GList     *layers,
-                      int        w,
-                      int        h,
-                      int        d,
-                      int        bpp,
-                      int        fmtbpp,
-                      int        num_mipmaps)
+write_volume_mipmaps (FILE                *fp,
+                      GimpImage           *image,
+                      GimpProcedureConfig *config,
+                      GList               *layers,
+                      int                  w,
+                      int                  h,
+                      int                  d,
+                      int                  bpp,
+                      int                  fmtbpp,
+                      int                  num_mipmaps)
 {
   GList             *list;
   gint               i;
@@ -1212,14 +1208,16 @@ write_volume_mipmaps (FILE      *fp,
   gdouble            gamma;
 
   g_object_get (config,
-                "compression-format", &compression,
-                "format",             &pixel_format,
-                "mipmap-filter",      &mipmap_filter,
-                "mipmap-wrap",        &mipmap_wrap,
                 "gamma-correct",      &gamma_correct,
                 "srgb",               &srgb,
                 "gamma",              &gamma,
                 NULL);
+  compression = gimp_procedure_config_get_choice_id (config,
+                                                     "compression-format");
+  pixel_format = gimp_procedure_config_get_choice_id (config, "format");
+  mipmap_filter = gimp_procedure_config_get_choice_id (config,
+                                                       "mipmap-filter");
+  mipmap_wrap = gimp_procedure_config_get_choice_id (config, "mipmap-wrap");
 
   type = gimp_image_get_base_type (image);
 
@@ -1317,10 +1315,10 @@ write_volume_mipmaps (FILE      *fp,
 }
 
 static gboolean
-write_image (FILE         *fp,
-             GimpImage    *image,
-             GimpDrawable *drawable,
-             GObject      *config)
+write_image (FILE                *fp,
+             GimpImage           *image,
+             GimpDrawable        *drawable,
+             GimpProcedureConfig *config)
 {
   GimpImageType      drawable_type;
   GimpImageBaseType  basetype;
@@ -1351,13 +1349,14 @@ write_image (FILE         *fp,
   gboolean           flip_export;
 
   g_object_get (config,
-                "compression-format", &compression,
-                "mipmaps",            &mipmaps,
-                "save-type",          &savetype,
-                "format",             &pixel_format,
                 "transparent-index",  &transindex,
                 "flip-image",         &flip_export,
+                "mipmaps",            &mipmaps,
+                "save-type",          &savetype,
                 NULL);
+  compression = gimp_procedure_config_get_choice_id (config,
+                                                     "compression-format");
+  pixel_format = gimp_procedure_config_get_choice_id (config, "format");
 
   if (flip_export)
     gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
@@ -1804,29 +1803,32 @@ combo_set_item_sensitive (GtkWidget *widget,
 }
 
 static void
-config_notify (GObject          *config,
-               const GParamSpec *pspec,
-               GimpImage        *image)
+config_notify (GimpProcedureConfig *config,
+               const GParamSpec    *pspec,
+               GimpProcedureDialog *dialog)
 {
   if (! strcmp (pspec->name, "compression-format"))
     {
       gint compression;
 
-      g_object_get (config,
-                    "compression-format", &compression,
-                    NULL);
+      compression = gimp_procedure_config_get_choice_id (config,
+                                                         "compression-format");
 
-      if (format_opt)
-        gtk_widget_set_sensitive (format_opt,
-                                  compression == DDS_COMPRESS_NONE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "format",
+                                           compression == DDS_COMPRESS_NONE,
+                                           NULL, NULL, FALSE);
 
-      if (pm_check)
-        gtk_widget_set_sensitive (pm_check,
-                                  compression != DDS_COMPRESS_NONE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "perceptual-metric",
+                                           compression != DDS_COMPRESS_NONE,
+                                           NULL, NULL, FALSE);
     }
   else if (! strcmp (pspec->name, "save-type"))
     {
-      gint savetype;
+      gint       savetype;
+      GtkWidget *widget;
+      GtkWidget *combo;
 
       g_object_get (config,
                     "save-type", &savetype,
@@ -1838,20 +1840,26 @@ config_notify (GObject          *config,
         case DDS_SAVE_VISIBLE_LAYERS:
         case DDS_SAVE_CUBEMAP:
         case DDS_SAVE_ARRAY:
-          gtk_widget_set_sensitive (compress_opt, TRUE);
+          gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                               "compression-format", TRUE,
+                                               NULL, NULL, FALSE);
           break;
 
         case DDS_SAVE_VOLUMEMAP:
           g_object_set (config,
-                        "compression-format", DDS_COMPRESS_NONE,
+                        "compression-format", "none",
                         NULL);
-          gtk_widget_set_sensitive (compress_opt, FALSE);
+          gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                               "compression-format", FALSE,
+                                               NULL, NULL, FALSE);
           break;
         }
 
-      if (mipmap_opt)
-        combo_set_item_sensitive (mipmap_opt, DDS_MIPMAP_EXISTING,
-                                  check_mipmaps (image, savetype));
+      widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "mipmaps", G_TYPE_NONE);
+      combo = gimp_label_int_widget_get_widget (GIMP_LABEL_INT_WIDGET (widget));
+      combo_set_item_sensitive (combo, DDS_MIPMAP_EXISTING,
+                                check_mipmaps (savetype));
     }
   else if (! strcmp (pspec->name, "mipmaps"))
     {
@@ -1861,59 +1869,64 @@ config_notify (GObject          *config,
       gboolean preserve_alpha_coverage;
 
       g_object_get (config,
-                    "mipmaps",                 &mipmaps,
                     "gamma-correct",           &gamma_correct,
                     "srgb",                    &srgb,
                     "preserve-alpha-coverage", &preserve_alpha_coverage,
+                    "mipmaps",                 &mipmaps,
                     NULL);
 
-      if (mipmap_filter_opt)
-        gtk_widget_set_sensitive (mipmap_filter_opt,
-                                  mipmaps == DDS_MIPMAP_GENERATE);
+     gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "mipmap-filter",
+                                           mipmaps == DDS_MIPMAP_GENERATE,
+                                           NULL, NULL, FALSE);
 
-      if (mipmap_wrap_opt)
-        gtk_widget_set_sensitive (mipmap_wrap_opt,
-                                  mipmaps == DDS_MIPMAP_GENERATE);
+     gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "mipmap-wrap",
+                                           mipmaps == DDS_MIPMAP_GENERATE,
+                                           NULL, NULL, FALSE);
 
-      if (gamma_check)
-        gtk_widget_set_sensitive (gamma_check,
-                                  mipmaps == DDS_MIPMAP_GENERATE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "gamma-correct",
+                                           mipmaps == DDS_MIPMAP_GENERATE,
+                                           NULL, NULL, FALSE);
 
-      if (srgb_check)
-        gtk_widget_set_sensitive (srgb_check,
-                                  (mipmaps == DDS_MIPMAP_GENERATE) &&
-                                  gamma_correct);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "srgb",
+                                           ((mipmaps == DDS_MIPMAP_GENERATE) &&
+                                            gamma_correct),
+                                           NULL, NULL, FALSE);
 
-      if (gamma_spin)
-        gtk_widget_set_sensitive (gamma_spin,
-                                  (mipmaps == DDS_MIPMAP_GENERATE) &&
-                                  gamma_correct &&
-                                  ! srgb);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "gamma",
+                                           ((mipmaps == DDS_MIPMAP_GENERATE) &&
+                                            gamma_correct && ! srgb),
+                                           NULL, NULL, FALSE);
 
-      if (alpha_coverage_check)
-        gtk_widget_set_sensitive (alpha_coverage_check,
-                                  mipmaps == DDS_MIPMAP_GENERATE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "preserve-alpha-coverage",
+                                           mipmaps == DDS_MIPMAP_GENERATE,
+                                           NULL, NULL, FALSE);
 
-      if (alpha_test_threshold_spin)
-        gtk_widget_set_sensitive (alpha_test_threshold_spin,
-                                  (mipmaps == DDS_MIPMAP_GENERATE) &&
-                                  preserve_alpha_coverage);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "alpha-test-threshold",
+                                           ((mipmaps == DDS_MIPMAP_GENERATE) &&
+                                            preserve_alpha_coverage),
+                                           NULL, NULL, FALSE);
     }
   else if (! strcmp (pspec->name, "transparent-color"))
     {
-      GimpImageBaseType base_type;
-      gboolean          transparent_color;
-
-      base_type = gimp_image_get_base_type (image);
+      gboolean transparent_color;
 
       g_object_get (config,
                     "transparent-color", &transparent_color,
                     NULL);
 
-      if (transparent_spin)
-        gtk_widget_set_sensitive (transparent_spin,
-                                  transparent_color &&
-                                  base_type == GIMP_INDEXED);
+      if (transparent_check &&
+          gtk_widget_get_sensitive (transparent_check))
+        gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                             "transparent-index",
+                                             transparent_color,
+                                             NULL, NULL, FALSE);
     }
   else if (! strcmp (pspec->name, "gamma-correct"))
     {
@@ -1925,11 +1938,14 @@ config_notify (GObject          *config,
                     "srgb",          &srgb,
                     NULL);
 
-      if (srgb_check)
-        gtk_widget_set_sensitive (srgb_check, gamma_correct);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "srgb", gamma_correct,
+                                           NULL, NULL, FALSE);
 
-      if (gamma_spin)
-        gtk_widget_set_sensitive (gamma_spin, gamma_correct && ! srgb);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "gamma",
+                                           (gamma_correct && ! srgb),
+                                           NULL, NULL, FALSE);
     }
   else if (! strcmp (pspec->name, "srgb"))
     {
@@ -1941,8 +1957,10 @@ config_notify (GObject          *config,
                     "srgb",          &srgb,
                     NULL);
 
-      if (gamma_spin)
-        gtk_widget_set_sensitive (gamma_spin, gamma_correct && ! srgb);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "gamma",
+                                           (gamma_correct && ! srgb),
+                                           NULL, NULL, FALSE);
     }
   else if (! strcmp (pspec->name, "preserve-alpha-coverage"))
     {
@@ -1952,251 +1970,137 @@ config_notify (GObject          *config,
                     "preserve-alpha-coverage", &preserve_alpha_coverage,
                     NULL);
 
-      if (alpha_test_threshold_spin)
-        gtk_widget_set_sensitive (alpha_test_threshold_spin,
-                                  preserve_alpha_coverage);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "alpha-test-threshold",
+                                           preserve_alpha_coverage,
+                                           NULL, NULL, FALSE);
     }
 }
 
 static gboolean
-save_dialog (GimpImage     *image,
-             GimpDrawable  *drawable,
-             GimpProcedure *procedure,
-             GObject       *config)
+save_dialog (GimpImage           *image,
+             GimpDrawable        *drawable,
+             GimpProcedure       *procedure,
+             GimpProcedureConfig *config)
 {
-  GtkWidget    *dialog;
-  GtkWidget    *vbox;
-  GtkWidget    *hbox;
-  GtkWidget    *grid;
-  GtkListStore *store;
-  GtkWidget    *opt;
-  GtkWidget    *check;
-  GtkWidget    *frame;
-  gboolean      run;
+  GtkWidget         *dialog;
+  GtkWidget         *widget;
+  GtkWidget         *combo;
+  GtkListStore      *store;
+  GimpImageBaseType  base_type;
+  gboolean           run;
+
+  base_type = gimp_image_get_base_type (image);
 
   if (is_cubemap || is_volume || is_array)
     g_object_set (config,
                   "save-type", DDS_SAVE_SELECTED_LAYER,
                   NULL);
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as DDS"));
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  transparent_check =
+    gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                      "transparent-color",
+                                      G_TYPE_NONE);
+  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "transparent-color",
+                                       base_type == GIMP_INDEXED,
+                                       NULL, NULL, FALSE);
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "transparency-frame",
+                                    "transparent-color", FALSE,
+                                    "transparent-index");
 
-  store = gimp_int_store_new ("None",                  DDS_COMPRESS_NONE,
-                              "BC1 / DXT1",            DDS_COMPRESS_BC1,
-                              "BC2 / DXT3",            DDS_COMPRESS_BC2,
-                              "BC3 / DXT5",            DDS_COMPRESS_BC3,
-                              "BC3nm / DXT5nm",        DDS_COMPRESS_BC3N,
-                              "BC4 / ATI1 (3Dc+)",     DDS_COMPRESS_BC4,
-                              "BC5 / ATI2 (3Dc)",      DDS_COMPRESS_BC5,
-                              "RXGB (DXT5)",           DDS_COMPRESS_RXGB,
-                              "Alpha Exponent (DXT5)", DDS_COMPRESS_AEXP,
-                              "YCoCg (DXT5)",          DDS_COMPRESS_YCOCG,
-                              "YCoCg scaled (DXT5)",   DDS_COMPRESS_YCOCGS,
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "mipmap-options-label",
+                                   _("Mipmap Options"),
+                                   FALSE, FALSE);
+
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "mipmap-options-box",
+                                  "mipmap-filter", "mipmap-wrap",
+                                  "gamma-correct", "srgb", "gamma",
+                                  "preserve-alpha-coverage",
+                                  "alpha-test-threshold", NULL);
+
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "mipmap-options-frame",
+                                    "mipmap-options-label", FALSE,
+                                    "mipmap-options-box");
+
+  store = gimp_int_store_new (_("Selected layer"),     DDS_SAVE_SELECTED_LAYER,
+                              _("All visible layers"), DDS_SAVE_VISIBLE_LAYERS,
+                              _("As cube map"),        DDS_SAVE_CUBEMAP,
+                              _("As volume map"),      DDS_SAVE_VOLUMEMAP,
+                              _("As texture array"),   DDS_SAVE_ARRAY,
                               NULL);
-  compress_opt = gimp_prop_int_combo_box_new (config, "compression-format",
-                                              GIMP_INT_STORE (store));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("_Compression:"),
-                            0.0, 0.5,
-                            compress_opt, 1);
-
-  pm_check = gimp_prop_check_button_new (config, "perceptual-metric",
-                                         _("Use _perceptual error metric"));
-  gtk_grid_attach (GTK_GRID (grid), pm_check, 1, 1, 1, 1);
-
-  store = gimp_int_store_new ("Default", DDS_FORMAT_DEFAULT,
-                              "RGB8",    DDS_FORMAT_RGB8,
-                              "RGBA8",   DDS_FORMAT_RGBA8,
-                              "BGR8",    DDS_FORMAT_BGR8,
-                              "ABGR8",   DDS_FORMAT_ABGR8,
-                              "R5G6B5",  DDS_FORMAT_R5G6B5,
-                              "RGBA4",   DDS_FORMAT_RGBA4,
-                              "RGB5A1",  DDS_FORMAT_RGB5A1,
-                              "RGB10A2", DDS_FORMAT_RGB10A2,
-                              "R3G3B2",  DDS_FORMAT_R3G3B2,
-                              "A8",      DDS_FORMAT_A8,
-                              "L8",      DDS_FORMAT_L8,
-                              "L8A8",    DDS_FORMAT_L8A8,
-                              "AExp",    DDS_FORMAT_AEXP,
-                              "YCoCg",   DDS_FORMAT_YCOCG,
-                              NULL);
-  format_opt = gimp_prop_int_combo_box_new (config, "format",
-                                            GIMP_INT_STORE (store));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
-                            _("_Format:"),
-                            0.0, 0.5,
-                            format_opt, 1);
-
-  store = gimp_int_store_new (_("Selected layer"),         DDS_SAVE_SELECTED_LAYER,
-                              _("All visible layers"),     DDS_SAVE_VISIBLE_LAYERS,
-                              _("As cube map"),            DDS_SAVE_CUBEMAP,
-                              _("As volume map"),          DDS_SAVE_VOLUMEMAP,
-                              _("As texture array"),       DDS_SAVE_ARRAY,
-                              NULL);
-  opt = gimp_prop_int_combo_box_new (config, "save-type",
-                                     GIMP_INT_STORE (store));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
-                            _("_Save:"),
-                            0.0, 0.5,
-                            opt, 1);
-
-  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (opt),
-                                      combo_sensitivity_func,
-                                      opt, NULL);
-
-  combo_set_item_sensitive (opt, DDS_SAVE_CUBEMAP,   is_cubemap);
-  combo_set_item_sensitive (opt, DDS_SAVE_VOLUMEMAP, is_volume);
-  combo_set_item_sensitive (opt, DDS_SAVE_ARRAY,     is_array);
-
-  flip_check = gimp_prop_check_button_new (config, "flip-image",
-                                           _("Flip image _vertically on export"));
-  gtk_grid_attach (GTK_GRID (grid), flip_check, 1, 4, 1, 1);
+  widget = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "save-type",
+                                                GIMP_INT_STORE (store));
+  combo = gimp_label_int_widget_get_widget (GIMP_LABEL_INT_WIDGET (widget));
+  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (combo),
+                                      combo_sensitivity_func, combo, NULL);
+  combo_set_item_sensitive (combo, DDS_SAVE_CUBEMAP, is_cubemap);
+  combo_set_item_sensitive (combo, DDS_SAVE_VOLUMEMAP, is_volume);
+  combo_set_item_sensitive (combo, DDS_SAVE_ARRAY, is_array);
 
   store = gimp_int_store_new (_("No mipmaps"),           DDS_MIPMAP_NONE,
                               _("Generate mipmaps"),     DDS_MIPMAP_GENERATE,
                               _("Use existing mipmaps"), DDS_MIPMAP_EXISTING,
                               NULL);
-  mipmap_opt = gimp_prop_int_combo_box_new (config, "mipmaps",
-                                            GIMP_INT_STORE (store));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 5,
-                            _("_Mipmaps:"),
-                            0.0, 0.5,
-                            mipmap_opt, 1);
-
-  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (mipmap_opt),
-                                      combo_sensitivity_func,
-                                      mipmap_opt, NULL);
-
-  combo_set_item_sensitive (mipmap_opt, DDS_MIPMAP_EXISTING,
+  widget = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                               "mipmaps",
+                                               GIMP_INT_STORE (store));
+  combo = gimp_label_int_widget_get_widget (GIMP_LABEL_INT_WIDGET (widget));
+  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (combo),
+                                      combo_sensitivity_func, combo, NULL);
+  combo_set_item_sensitive (combo, DDS_MIPMAP_EXISTING,
                             ! (is_volume || is_cubemap) &&
                             is_mipmap_chain_valid);
 
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "compression-format", "perceptual-metric",
+                              "format", "save-type", "flip-image",
+                              "mipmaps", "transparency-frame",
+                              "mipmap-options-frame", NULL);
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 8);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  check = gimp_prop_check_button_new (config, "transparent-color",
-                                      _("Transparent index:"));
-  gtk_box_pack_start (GTK_BOX (hbox), check, FALSE, FALSE, 0);
-  gtk_widget_show (check);
-
-  transparent_spin = gimp_prop_spin_button_new (config, "transparent-index",
-                                                1, 8, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), transparent_spin, TRUE, TRUE, 0);
-
-  frame = gimp_frame_new (_("Mipmap Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 8);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
-
-  store = gimp_int_store_new ("Default",   DDS_MIPMAP_FILTER_DEFAULT,
-                              "Nearest",   DDS_MIPMAP_FILTER_NEAREST,
-                              "Box",       DDS_MIPMAP_FILTER_BOX,
-                              "Triangle",  DDS_MIPMAP_FILTER_TRIANGLE,
-                              "Quadratic", DDS_MIPMAP_FILTER_QUADRATIC,
-                              "B-Spline",  DDS_MIPMAP_FILTER_BSPLINE,
-                              "Mitchell",  DDS_MIPMAP_FILTER_MITCHELL,
-                              "Lanczos",   DDS_MIPMAP_FILTER_LANCZOS,
-                              "Kaiser",    DDS_MIPMAP_FILTER_KAISER,
-                              NULL);
-  mipmap_filter_opt = gimp_prop_int_combo_box_new (config, "mipmap-filter",
-                                                   GIMP_INT_STORE (store));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("F_ilter:"),
-                            0.0, 0.5,
-                            mipmap_filter_opt, 1);
-
-  store = gimp_int_store_new ("Default", DDS_MIPMAP_WRAP_DEFAULT,
-                              "Mirror",  DDS_MIPMAP_WRAP_MIRROR,
-                              "Repeat",  DDS_MIPMAP_WRAP_REPEAT,
-                              "Clamp",   DDS_MIPMAP_WRAP_CLAMP,
-                              NULL);
-  mipmap_wrap_opt = gimp_prop_int_combo_box_new (config, "mipmap-wrap",
-                                                 GIMP_INT_STORE (store));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("_Wrap mode:"),
-                            0.0, 0.5,
-                            mipmap_wrap_opt, 1);
-
-  gamma_check = gimp_prop_check_button_new (config, "gamma-correct",
-                                            _("Appl_y gamma correction"));
-  gtk_grid_attach (GTK_GRID (grid), gamma_check, 1, 2, 1, 1);
-
-  srgb_check = gimp_prop_check_button_new (config, "srgb",
-                                           _("Use s_RGB colorspace"));
-  gtk_grid_attach (GTK_GRID (grid), srgb_check, 1, 3, 1, 1);
-
-  gamma_spin = gimp_prop_spin_button_new (config, "gamma",
-                                          0.1, 0.5, 1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
-                            _("_Gamma:"), 0.0, 0.5,
-                            gamma_spin, 1);
-
-  alpha_coverage_check =
-    gimp_prop_check_button_new (config, "preserve-alpha-coverage",
-                                _("Preserve alpha _test coverage"));
-  gtk_grid_attach (GTK_GRID (grid), alpha_coverage_check, 1, 5, 1, 1);
-
-  alpha_test_threshold_spin =
-    gimp_prop_spin_button_new (config, "alpha-test-threshold",
-                               0.01, 0.1, 2);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 6,
-                            _("_Alpha test threshold:"), 0.0, 0.5,
-                            alpha_test_threshold_spin, 1);
-
-  config_notify (config,
+  config_notify (GIMP_PROCEDURE_CONFIG (config),
                  g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                                "compression-format"),
-                 image);
+                 GIMP_PROCEDURE_DIALOG (dialog));
 
-  config_notify (config,
+  config_notify (GIMP_PROCEDURE_CONFIG (config),
                  g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                                "mipmaps"),
-                 image);
+                 GIMP_PROCEDURE_DIALOG (dialog));
 
-  config_notify (config,
+  config_notify (GIMP_PROCEDURE_CONFIG (config),
                  g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                                "save-type"),
-                 image);
+                 GIMP_PROCEDURE_DIALOG (dialog));
 
-  config_notify (config,
+  config_notify (GIMP_PROCEDURE_CONFIG (config),
                  g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                                "transparent-color"),
-                 image);
+                 GIMP_PROCEDURE_DIALOG (dialog));
 
-  g_signal_connect (config, "notify",
+  g_signal_connect (GIMP_PROCEDURE_CONFIG (config), "notify",
                     G_CALLBACK (config_notify),
-                    image);
+                    GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_show (dialog);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
-  g_signal_handlers_disconnect_by_func (config,
+  g_signal_handlers_disconnect_by_func (GIMP_PROCEDURE_CONFIG (config),
                                         config_notify,
-                                        image);
+                                        GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
