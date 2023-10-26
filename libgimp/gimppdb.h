@@ -91,15 +91,6 @@ const gchar       * gimp_pdb_get_last_error    (GimpPDB              *pdb);
 GimpPDBStatusType   gimp_pdb_get_last_status   (GimpPDB              *pdb);
 
 
-/*  Cruft API  */
-
-gboolean   gimp_pdb_get_data      (const gchar      *identifier,
-                                   gpointer          data);
-gint       gimp_pdb_get_data_size (const gchar      *identifier);
-gboolean   gimp_pdb_set_data      (const gchar      *identifier,
-                                   gconstpointer     data,
-                                   guint32           data_len);
-
 /* Internal use */
 
 G_GNUC_INTERNAL GimpValueArray * _gimp_pdb_run_procedure_array  (GimpPDB              *pdb,

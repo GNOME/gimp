@@ -696,7 +696,6 @@ EXPORTS
 	gimp_patterns_set_popup
 	gimp_pdb_dump_to_file
 	gimp_pdb_get_data
-	gimp_pdb_get_data_size
 	gimp_pdb_get_last_error
 	gimp_pdb_get_last_status
 	gimp_pdb_get_type

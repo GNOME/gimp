@@ -383,43 +383,19 @@ gimp_pdb_get_last_status (GimpPDB *pdb)
  * the specified identifier. The data is copied into the given memory
  * location.
  *
+ * WARNING: this function is exported in the library so that it can be used by
+ * libgimpwidgets. Nevertheless it is considered internal, and is not declared
+ * in any public header on purpose. It should not be considered part of the API
+ * and therefore should not be used in plug-ins. It may disappear at any time.
+ *
  * Returns: TRUE on success, FALSE if no data has been associated with
  * the identifier
  */
 gboolean
-gimp_pdb_get_data (const gchar *identifier,
-                   gpointer     data)
+gimp_pdb_get_data (const gchar  *identifier,
+                   GBytes      **data)
 {
-  GBytes   *hack = NULL;
-  gboolean  success;
-
-  success = _gimp_pdb_get_data (identifier, &hack);
-
-  if (hack)
-    {
-      memcpy (data, g_bytes_get_data (hack, NULL), g_bytes_get_size (hack));
-      g_free (hack);
-    }
-
-  return success;
-}
-
-/**
- * gimp_pdb_get_data_size:
- * @identifier: The identifier associated with data.
- *
- * Returns size of data associated with the specified identifier.
- *
- * This procedure returns the size of any data which may have been
- * associated with the specified identifier. If no data has been
- * associated with the identifier, an error is returned.
- *
- * Returns: The number of bytes in the data.
- **/
-gint
-gimp_pdb_get_data_size (const gchar *identifier)
-{
-  return _gimp_pdb_get_data_size (identifier);
+  return _gimp_pdb_get_data (identifier, data);
 }
 
 /**
@@ -432,23 +408,21 @@ gimp_pdb_get_data_size (const gchar *identifier)
  *
  * This procedure associates the supplied data with the provided
  * identifier. The data may be subsequently retrieved by a call to
- * 'procedural-db-get-data'.
+ * 'procedural-db-get-data'. This storage is global within the session, even
+ * shareable between plug-ins, though it won't survive a restart of GIMP.
  *
+ * WARNING: this function is exported in the library so that it can be used by
+ * libgimpwidgets. Nevertheless it is considered internal, and is not declared
+ * in any public header on purpose. It should not be considered part of the API
+ * and therefore should not be used in plug-ins. It may disappear at any time.
+
  * Returns: TRUE on success.
  */
 gboolean
-gimp_pdb_set_data (const gchar   *identifier,
-                   gconstpointer  data,
-                   guint32        data_len)
+gimp_pdb_set_data (const gchar *identifier,
+                   GBytes      *data)
 {
-  GBytes   *bytes;
-  gboolean  ret;
-
-  bytes = g_bytes_new_static (data, data_len);
-  ret = _gimp_pdb_set_data (identifier, bytes);
-  g_bytes_unref (bytes);
-
-  return ret;
+  return _gimp_pdb_set_data (identifier, data);
 }
 
 /**

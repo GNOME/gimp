@@ -28,6 +28,7 @@
 #include "gimpuitypes.h"
 
 #include "gimp.h"
+#include "gimppdb-private.h"
 
 #include "gimpdrawablepreview.h"
 
@@ -152,6 +153,7 @@ gimp_drawable_preview_constructed (GObject *object)
 {
   gchar           *data_name;
   PreviewSettings  settings;
+  GBytes          *settings_bytes = NULL;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -159,12 +161,15 @@ gimp_drawable_preview_constructed (GObject *object)
                                g_get_prgname (),
                                ++gimp_drawable_preview_counter);
 
-  if (gimp_get_data (data_name, &settings))
+  if (gimp_pdb_get_data (data_name, &settings_bytes) &&
+      g_bytes_get_size (settings_bytes) == sizeof (PreviewSettings))
     {
+      settings = *((PreviewSettings *) g_bytes_get_data (settings_bytes, NULL));
       gimp_preview_set_update (GIMP_PREVIEW (object), settings.update);
       gimp_scrolled_preview_set_position (GIMP_SCROLLED_PREVIEW (object),
                                           settings.x, settings.y);
     }
+  g_bytes_unref (settings_bytes);
 
   g_object_set_data_full (object, "gimp-drawable-preview-data-name",
                           data_name, (GDestroyNotify) g_free);
@@ -181,12 +186,15 @@ gimp_drawable_preview_dispose (GObject *object)
   if (data_name)
     {
       GimpPreview     *preview = GIMP_PREVIEW (object);
+      GBytes          *bytes;
       PreviewSettings  settings;
 
       gimp_preview_get_position (preview, &settings.x, &settings.y);
       settings.update = gimp_preview_get_update (preview);
 
-      gimp_set_data (data_name, &settings, sizeof (PreviewSettings));
+      bytes = g_bytes_new_static (&settings, sizeof (PreviewSettings));
+      gimp_pdb_set_data (data_name, bytes);
+      g_bytes_unref (bytes);
     }
 
   g_clear_object (&priv->drawable);
