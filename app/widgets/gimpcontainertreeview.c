@@ -926,19 +926,67 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
   gtk_tree_view_get_cursor (tree_view->view, &focused_path, NULL);
   if (focused_path != NULL)
     {
+      GtkTreePath *closer_up   = NULL;
+      GtkTreePath *closer_down = NULL;
+
       for (path = paths; path; path = path->next)
         {
           if (gtk_tree_path_compare (path->data, focused_path) == 0)
-            break;
+            {
+              break;
+            }
+          else if (gtk_tree_path_compare (path->data, focused_path) == -1)
+            {
+              if (closer_up == NULL || gtk_tree_path_compare (path->data, closer_up) == 1)
+                closer_up = path->data;
+            }
+          else
+            {
+              if (closer_down == NULL || gtk_tree_path_compare (path->data, closer_down) == -1)
+                closer_down = path->data;
+            }
         }
+
       if (path == NULL)
         {
-          /* The current cursor is not part of the selection. Use the top item
-           * instead.
+          /* The current cursor is not part of the selection. This may happen in
+           * particular with a ctrl-click interaction which would deselect the
+           * item the cursor is now on.
            */
           g_clear_pointer (&focused_path, gtk_tree_path_free);
-          if (paths != NULL)
-            focused_path = gtk_tree_path_copy (paths->data);
+
+          if (closer_up != NULL || closer_down != NULL)
+            {
+              GtkTreePath *first = NULL;
+              GtkTreePath *last  = NULL;
+
+              if (gtk_tree_view_get_visible_range (tree_view->view, &first, &last))
+                {
+                  if (closer_up != NULL                             &&
+                      gtk_tree_path_compare (closer_up, first) >= 0 &&
+                      gtk_tree_path_compare (closer_up, last) <= 0)
+                    focused_path = gtk_tree_path_copy (closer_up);
+                  else if (closer_down != NULL                             &&
+                           gtk_tree_path_compare (closer_down, first) >= 0 &&
+                           gtk_tree_path_compare (closer_down, last) <= 0)
+                    focused_path = gtk_tree_path_copy (closer_down);
+                }
+
+              if (focused_path == NULL)
+                {
+                  if (closer_up != NULL)
+                    focused_path = gtk_tree_path_copy (closer_up);
+                  else
+                    focused_path = gtk_tree_path_copy (closer_down);
+                }
+
+              gtk_tree_path_free (first);
+              gtk_tree_path_free (last);
+            }
+          else if (paths != NULL)
+            {
+              focused_path = gtk_tree_path_copy (paths->data);
+            }
         }
     }
   else if (paths != NULL)
@@ -949,8 +997,16 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
    * want to change the cursor (which is likely the last clicked item), yet we
    * also want to make sure that the cursor cannot end up out of the selected
    * items, leading to discrepancy between pointer and keyboard navigation. This
-   * is why we verify that the cursor is within selection or default to the top
-   * item otherwise (as good as any).
+   * is why we set the cursor with this priority:
+   * 1. unchanged if it stays within selection;
+   * 2. closer item above the current cursor, if visible;
+   * 3. closer item below the current cursor, if visible;
+   * 4. closer item above the current cursor (even though invisible, which will
+   *    make the view scroll up);
+   * 5. closer item below the current cursor if there are no items above (view
+   *    will scroll down);
+   * 6. top selected item if there was no current cursor;
+   * 7. nothing if no selected items.
    */
   if (focused_path != NULL)
     gtk_tree_view_set_cursor (tree_view->view, focused_path, NULL, FALSE);
