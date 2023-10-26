@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-10-26 17:17+0000\n"
-"PO-Revision-Date: 2023-10-26 21:09+0200\n"
+"PO-Revision-Date: 2023-10-26 21:19+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -5264,9 +5264,8 @@ msgstr "Napaka pri branju kosa podatkov o cevi"
 
 #: plug-ins/common/file-psp.c:2526
 #, fuzzy
-#| msgid "Invalid frame dimensions"
 msgid "Invalid guide orientation"
-msgstr "Neveljavne mere sličice"
+msgstr "Neveljavne usmerjenost vodila"
 
 #: plug-ins/common/file-psp.c:2540
 #, fuzzy
@@ -8416,10 +8415,8 @@ msgid "DDS"
 msgstr "DDS"
 
 #: plug-ins/file-dds/dds.c:193 plug-ins/file-dds/dds.c:194
-#, fuzzy
-#| msgid "Loads files in DDS image format"
 msgid "Saves files in DDS image format"
-msgstr "Naloži datoteke v zapisu DDS"
+msgstr "Shrani datoteke v zapisu DDS"
 
 #: plug-ins/file-dds/dds.c:207
 msgid "Compressio_n"
@@ -8582,21 +8579,22 @@ msgstr "Naj bo ozadje prosojno"
 
 #: plug-ins/file-dds/dds.c:273
 #, fuzzy
-#| msgid "Transparent index:"
 msgid "Transparent inde_x"
-msgstr "Indeks prosojnosti:"
+msgstr "Indeks prosojnosti"
 
 #: plug-ins/file-dds/dds.c:274
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
 msgstr ""
+"Indeks prosojne barve ali -1 za onemogočanje (samo za indeksirane slike)."
 
 #: plug-ins/file-dds/dds.c:288
 msgid "F_ilter"
 msgstr "F_ilter"
 
 #: plug-ins/file-dds/dds.c:289
+#, fuzzy
 msgid "Filtering to use when generating mipmaps"
-msgstr ""
+msgstr "Filtriranje, ki se uporablja pri ustvarjanju mipmap"
 
 #: plug-ins/file-dds/dds.c:291
 msgid "Nearest"
@@ -8607,10 +8605,8 @@ msgid "Box"
 msgstr "kocko"
 
 #: plug-ins/file-dds/dds.c:293
-#, fuzzy
-#| msgid "Start angle:"
 msgid "Triangle"
-msgstr "Začetni kot:"
+msgstr "Trikotnik"
 
 #: plug-ins/file-dds/dds.c:294
 msgid "Quadratic"
@@ -8618,9 +8614,8 @@ msgstr "Kvadratno"
 
 #: plug-ins/file-dds/dds.c:295
 #, fuzzy
-#| msgid "Baseline"
 msgid "B-Spline"
-msgstr "Osnovnica besedila"
+msgstr "B-zlepek"
 
 #: plug-ins/file-dds/dds.c:296
 msgid "Mitchell"
@@ -8631,20 +8626,17 @@ msgid "Lanczos"
 msgstr "Lanczos"
 
 #: plug-ins/file-dds/dds.c:298
-#, fuzzy
-#| msgid "Raise"
 msgid "Kaiser"
-msgstr "Dvigni"
+msgstr "Kaiser"
 
 #: plug-ins/file-dds/dds.c:304
-#, fuzzy
-#| msgid "_Wrap mode:"
 msgid "_Wrap mode"
-msgstr "Način ob_livanja:"
+msgstr "Način ob_livanja"
 
 #: plug-ins/file-dds/dds.c:305
+#, fuzzy
 msgid "Wrap mode to use when generating mipmaps"
-msgstr ""
+msgstr "Način ovijanja za uporabo pri ustvarjanju mipmap"
 
 #: plug-ins/file-dds/dds.c:307
 msgid "Mirror"
@@ -8663,8 +8655,9 @@ msgid "Appl_y gamma correction"
 msgstr "Uporabi poprave_k game"
 
 #: plug-ins/file-dds/dds.c:316
+#, fuzzy
 msgid "Use gamma correct mipmap filtering"
-msgstr ""
+msgstr "Uporaba filtriranja pravilne game mipmap"
 
 #: plug-ins/file-dds/dds.c:321
 msgid "Use sRG_B colorspace"
@@ -8680,28 +8673,28 @@ msgstr "_Gama"
 
 #: plug-ins/file-dds/dds.c:328
 msgid "Gamma value to use for gamma correction (i.e. 2.2)"
-msgstr ""
+msgstr "Vrednost gama za korekcijo game (npr. 2,2)"
 
 #: plug-ins/file-dds/dds.c:333
-#, fuzzy
-#| msgid "Preserve alpha _test coverage"
 msgid "Preserve al_pha test coverage"
 msgstr "Ohrani pokritje preizkusa al_fe"
 
 #: plug-ins/file-dds/dds.c:334
-#, fuzzy
-#| msgid "Preserve alpha _test coverage"
 msgid "Preserve alpha test converage for alpha channel maps"
-msgstr "Ohrani pokritje preizkusa al_fe"
+msgstr ""
+"Ohrani pokritje preizkusa alfe za preslikave oz. zemljevide alfa kanala"
 
 #: plug-ins/file-dds/dds.c:340
 msgid "Alp_ha test threshold"
 msgstr "Prag preizkusa _alfe"
 
 #: plug-ins/file-dds/dds.c:341
+#, fuzzy
 msgid ""
 "Alpha test threshold value for which alpha test converage should be preserved"
 msgstr ""
+"Vrednost praga preizkusa alfe, za katero je treba ohraniti povprečje "
+"preizkusa alfe"
 
 #: plug-ins/file-dds/dds.c:357
 msgid "Decode YCoCg"
