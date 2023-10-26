@@ -895,6 +895,7 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
   GList                 *path;
   gboolean               free_paths      = FALSE;
   gboolean               scroll_to_first = TRUE;
+  GtkTreePath           *focused_path    = NULL;
 
   /* If @paths is not set, compute it ourselves. */
   if (g_list_length (items) != g_list_length (paths))
@@ -922,6 +923,39 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
                                    gimp_container_tree_view_selection_changed,
                                    tree_view);
   gtk_tree_selection_unselect_all (tree_view->priv->selection);
+  gtk_tree_view_get_cursor (tree_view->view, &focused_path, NULL);
+  if (focused_path != NULL)
+    {
+      for (path = paths; path; path = path->next)
+        {
+          if (gtk_tree_path_compare (path->data, focused_path) == 0)
+            break;
+        }
+      if (path == NULL)
+        {
+          /* The current cursor is not part of the selection. Use the top item
+           * instead.
+           */
+          g_clear_pointer (&focused_path, gtk_tree_path_free);
+          if (paths != NULL)
+            focused_path = gtk_tree_path_copy (paths->data);
+        }
+    }
+  else if (paths != NULL)
+    {
+      focused_path = gtk_tree_path_copy (paths->data);
+    }
+  /* Setting a cursor will reset the selection, so we must do it first. We don't
+   * want to change the cursor (which is likely the last clicked item), yet we
+   * also want to make sure that the cursor cannot end up out of the selected
+   * items, leading to discrepancy between pointer and keyboard navigation. This
+   * is why we verify that the cursor is within selection or default to the top
+   * item otherwise (as good as any).
+   */
+  if (focused_path != NULL)
+    gtk_tree_view_set_cursor (tree_view->view, focused_path, NULL, FALSE);
+  gtk_tree_path_free (focused_path);
+
   for (item = items, path = paths; item && path; item = item->next, path = path->next)
     {
       GtkTreePath *parent_path;
@@ -934,8 +968,6 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
 
       /* Add to the selection. */
       gtk_tree_selection_select_path (tree_view->priv->selection, path->data);
-      if (path == paths)
-        gtk_tree_view_set_cursor (tree_view->view, path->data, NULL, FALSE);
     }
   g_signal_handlers_unblock_by_func (tree_view->priv->selection,
                                      gimp_container_tree_view_selection_changed,
