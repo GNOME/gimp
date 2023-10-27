@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-26 19:12+0000\n"
-"PO-Revision-Date: 2023-10-26 22:59+0300\n"
+"POT-Creation-Date: 2023-10-27 01:18+0000\n"
+"PO-Revision-Date: 2023-10-27 21:16+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -41,7 +41,7 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/common/qbist.c:252 plug-ins/common/sample-colorize.c:427
 #: plug-ins/common/smooth-palette.c:195 plug-ins/common/sparkle.c:300
 #: plug-ins/common/sphere-designer.c:3185 plug-ins/common/tile.c:218
-#: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:913
+#: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:243
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:181
 #: plug-ins/file-dds/dds.c:542 plug-ins/flame/flame.c:299
 #: plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:215
@@ -72,9 +72,8 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/qbist.c:836 plug-ins/common/qbist.c:878
 #: plug-ins/common/qbist.c:932 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2637 plug-ins/common/unit-editor.c:435
-#: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:472
-#: plug-ins/file-tiff/file-tiff-load.c:2555 plug-ins/flame/flame.c:622
-#: plug-ins/flame/flame.c:827
+#: plug-ins/common/warp.c:472 plug-ins/file-tiff/file-tiff-load.c:2549
+#: plug-ins/flame/flame.c:622 plug-ins/flame/flame.c:827
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1540
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1578
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
@@ -150,9 +149,9 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/file-heif.c:2346 plug-ins/common/file-pdf-load.c:687
 #: plug-ins/common/grid.c:787 plug-ins/common/qbist.c:933
 #: plug-ins/common/sphere-designer.c:2638 plug-ins/common/unit-editor.c:266
-#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:473
-#: plug-ins/file-exr/file-exr.c:422 plug-ins/file-psd/psd-load.c:3549
-#: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
+#: plug-ins/common/warp.c:473 plug-ins/file-exr/file-exr.c:422
+#: plug-ins/file-psd/psd-load.c:3549 plug-ins/flame/flame.c:828
+#: plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3446
@@ -331,7 +330,7 @@ msgstr "Вирівнювання видимих шарів"
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
 #: plug-ins/common/file-ps.c:3729 plug-ins/common/file-ps.c:3737
 #: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:209
-#: plug-ins/file-tiff/file-tiff.c:223
+#: plug-ins/file-tiff/file-tiff.c:240
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
 #: plug-ins/fractal-explorer/fractal-explorer.c:354
 #: plug-ins/fractal-explorer/fractal-explorer.c:364
@@ -448,7 +447,6 @@ msgstr "Попередній перегляд анімаційного зобр�
 
 #: plug-ins/common/animation-play.c:371
 #, c-format
-#| msgid "Procedure '%s' only works with one drawable."
 msgid "Procedure '%s' only works in interactive mode."
 msgstr "Процедура «%s» працює лише в інтерактивному режимі."
 
@@ -643,7 +641,7 @@ msgstr "Вертикально"
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2749 plug-ins/file-sgi/sgi.c:474
-#: plug-ins/file-tiff/file-tiff-load.c:1534
+#: plug-ins/file-tiff/file-tiff-load.c:1528
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
@@ -941,13 +939,13 @@ msgid "Randoms from seed (shared)"
 msgstr "Випадкове з бази (shared)"
 
 #: plug-ins/common/cml-explorer.c:299 plug-ins/common/cml-explorer.c:307
-#: plug-ins/common/decompose.c:202 plug-ins/gimpressionist/orientation.c:172
-#: plug-ins/gimpressionist/size.c:179
+#: plug-ins/common/decompose.c:202 plug-ins/common/van-gogh-lic.c:160
+#: plug-ins/gimpressionist/orientation.c:172 plug-ins/gimpressionist/size.c:179
 msgid "Hue"
 msgstr "Відтінок"
 
 #: plug-ins/common/cml-explorer.c:300 plug-ins/common/cml-explorer.c:308
-#: plug-ins/common/decompose.c:203
+#: plug-ins/common/decompose.c:203 plug-ins/common/van-gogh-lic.c:161
 msgid "Saturation"
 msgstr "Насиченість"
 
@@ -1047,7 +1045,7 @@ msgstr "_Відкрити"
 msgid "_Save"
 msgstr "_Зберегти"
 
-#: plug-ins/common/cml-explorer.c:1483 plug-ins/common/van-gogh-lic.c:736
+#: plug-ins/common/cml-explorer.c:1483
 msgid "_Hue"
 msgstr "Від_тінок"
 
@@ -2562,7 +2560,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
 #: plug-ins/file-psd/psd-load.c:182 plug-ins/file-raw/file-darktable.c:417
 #: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:333
-#: plug-ins/file-tiff/file-tiff-load.c:290
+#: plug-ins/file-tiff/file-tiff-load.c:291
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається «%s»"
@@ -3830,7 +3828,7 @@ msgstr "Зберегти _початковий профіль"
 msgid "Store ICC profile to exported JXL file"
 msgstr "Зберегти профіль ICC у експортованому файлі JXL"
 
-#: plug-ins/common/file-jpegxl.c:219 plug-ins/file-tiff/file-tiff.c:241
+#: plug-ins/common/file-jpegxl.c:219 plug-ins/file-tiff/file-tiff.c:258
 msgid "Export as CMY_K"
 msgstr "Експортувати як CMY_K"
 
@@ -4436,7 +4434,7 @@ msgstr "Утримання маски не вплине на результат"
 
 #: plug-ins/common/file-pdf-save.c:1201 plug-ins/common/file-pdf-save.c:1274
 #: plug-ins/common/file-pdf-save.c:1372 plug-ins/common/file-ps.c:2098
-#: plug-ins/file-tiff/file-tiff-load.c:1536
+#: plug-ins/file-tiff/file-tiff-load.c:1530
 #, c-format
 msgid "Page %d"
 msgstr "Сторінка %d"
@@ -4515,7 +4513,7 @@ msgstr "Записати фрагмент pHYs (метадані PNG)"
 msgid "Write tIME chunk (PNG metadata)"
 msgstr "Записати фрагмент tIME (метадані PNG)"
 
-#: plug-ins/common/file-png.c:272 plug-ins/file-tiff/file-tiff.c:234
+#: plug-ins/common/file-png.c:272 plug-ins/file-tiff/file-tiff.c:251
 msgid "Save color _values from transparent pixels"
 msgstr "Зберігати значення _кольору прозорих точок"
 
@@ -7919,78 +7917,129 @@ msgstr "Незавершений ввід"
 msgid "Please fill in all text fields."
 msgstr "Заповніть всі поля"
 
-#: plug-ins/common/van-gogh-lic.c:632 plug-ins/common/van-gogh-lic.c:705
-msgid "Van Gogh (LIC)"
-msgstr "Ван Гог (LIC)"
-
-#: plug-ins/common/van-gogh-lic.c:731
-msgid "Effect Channel"
-msgstr "Канал ефекту"
-
-#: plug-ins/common/van-gogh-lic.c:737
-msgid "_Saturation"
-msgstr "_Насиченість"
-
-#: plug-ins/common/van-gogh-lic.c:738 plug-ins/flame/flame.c:195
-#: plug-ins/flame/flame.c:210 plug-ins/flame/flame.c:220
-msgid "_Brightness"
-msgstr "_Яскравість"
-
-#: plug-ins/common/van-gogh-lic.c:744
-msgid "Effect Operator"
-msgstr "Оператор ефекту"
-
-#: plug-ins/common/van-gogh-lic.c:749
-msgid "_Derivative"
-msgstr "По_хідна"
-
-#: plug-ins/common/van-gogh-lic.c:750
-msgid "_Gradient"
-msgstr "Г_радієнт"
-
-#: plug-ins/common/van-gogh-lic.c:756
-msgid "Convolve"
-msgstr "Згортання"
-
-#: plug-ins/common/van-gogh-lic.c:761
-msgid "_With white noise"
-msgstr "З _білим шумом"
-
-#: plug-ins/common/van-gogh-lic.c:762
-msgid "W_ith source image"
-msgstr "З _початковим  зображенням"
-
-#: plug-ins/common/van-gogh-lic.c:781
-msgid "_Effect image:"
-msgstr "Зображення _ефекту:"
-
-#: plug-ins/common/van-gogh-lic.c:791
-msgid "_Filter length:"
-msgstr "Довжина _фільтра"
-
-#: plug-ins/common/van-gogh-lic.c:799
-msgid "_Noise magnitude:"
-msgstr "Величина _шуму:"
-
-#: plug-ins/common/van-gogh-lic.c:807
-msgid "In_tegration steps:"
-msgstr "Ін_теграційні кроки:"
-
-#: plug-ins/common/van-gogh-lic.c:814
-msgid "_Minimum value:"
-msgstr "М_інімальне значення:"
-
-#: plug-ins/common/van-gogh-lic.c:821
-msgid "M_aximum value:"
-msgstr "М_аксимальне значення:"
-
-#: plug-ins/common/van-gogh-lic.c:878
+#: plug-ins/common/van-gogh-lic.c:144
 msgid "_Van Gogh (LIC)..."
 msgstr "_Ван Гог (LIC)..."
 
-#: plug-ins/common/van-gogh-lic.c:882
+#: plug-ins/common/van-gogh-lic.c:148
 msgid "Special effects that nobody understands"
 msgstr "Спеціальні ефекти, сенс яких нікому не відомий"
+
+#: plug-ins/common/van-gogh-lic.c:158
+#| msgid "Effect Channel"
+msgid "E_ffect Channel"
+msgstr "Канал е_фекту"
+
+#: plug-ins/common/van-gogh-lic.c:159
+msgid "Effect Channel"
+msgstr "Канал ефекту"
+
+#: plug-ins/common/van-gogh-lic.c:162
+#| msgid "_Brightness"
+msgid "Brightness"
+msgstr "Яскравість"
+
+#: plug-ins/common/van-gogh-lic.c:168
+#| msgid "Effect Operator"
+msgid "Effect O_perator"
+msgstr "_Оператор ефекту"
+
+#: plug-ins/common/van-gogh-lic.c:169
+msgid "Effect Operator"
+msgstr "Оператор ефекту"
+
+#: plug-ins/common/van-gogh-lic.c:170
+#| msgid "_Derivative"
+msgid "Derivative"
+msgstr "Похідна"
+
+#: plug-ins/common/van-gogh-lic.c:171
+#| msgid "_Gradient"
+msgid "Gradient"
+msgstr "Градієнт"
+
+#: plug-ins/common/van-gogh-lic.c:177
+#| msgid "Convolve"
+msgid "Con_volve"
+msgstr "З_гортання"
+
+#: plug-ins/common/van-gogh-lic.c:178
+msgid "Convolve"
+msgstr "Згортання"
+
+#: plug-ins/common/van-gogh-lic.c:179
+#| msgid "_With white noise"
+msgid "With white noise"
+msgstr "З білим шумом"
+
+#: plug-ins/common/van-gogh-lic.c:180
+#| msgid "W_ith source image"
+msgid "With source image"
+msgstr "З початковим  зображенням"
+
+#: plug-ins/common/van-gogh-lic.c:186
+#| msgid "_Effect image:"
+msgid "Effect i_mage"
+msgstr "Зобра_ження _ефекту"
+
+#: plug-ins/common/van-gogh-lic.c:187
+#| msgid "_Effect image:"
+msgid "Effect image"
+msgstr "Зображення ефекту"
+
+#: plug-ins/common/van-gogh-lic.c:192
+#| msgid "_Filter length:"
+msgid "Fil_ter length"
+msgstr "Довжина _фільтра"
+
+#: plug-ins/common/van-gogh-lic.c:193
+#| msgid "_Filter length:"
+msgid "Filter length"
+msgstr "Довжина фільтра"
+
+#: plug-ins/common/van-gogh-lic.c:198
+#| msgid "_Noise magnitude:"
+msgid "_Noise Magnitude"
+msgstr "Величина _шуму"
+
+#: plug-ins/common/van-gogh-lic.c:199
+#| msgid "_Noise magnitude:"
+msgid "Noise Magnitude"
+msgstr "Величина шуму"
+
+#: plug-ins/common/van-gogh-lic.c:204
+#| msgid "In_tegration steps:"
+msgid "Inte_gration steps"
+msgstr "Кроки ін_тегрування"
+
+#: plug-ins/common/van-gogh-lic.c:205
+#| msgid "In_tegration steps:"
+msgid "Integration steps"
+msgstr "Кроки інтегрування"
+
+#: plug-ins/common/van-gogh-lic.c:210
+#| msgid "_Minimum value:"
+msgid "Minimum v_alue"
+msgstr "М_інімальне значення"
+
+#: plug-ins/common/van-gogh-lic.c:211
+#| msgid "_Minimum value:"
+msgid "Minimum value"
+msgstr "Мінімальне значення"
+
+#: plug-ins/common/van-gogh-lic.c:216
+#| msgid "M_aximum value:"
+msgid "Ma_ximum value"
+msgstr "Ма_ксимальне значення"
+
+#: plug-ins/common/van-gogh-lic.c:217
+#| msgid "M_aximum value:"
+msgid "Maximum value"
+msgstr "Максимальне значення"
+
+#: plug-ins/common/van-gogh-lic.c:815 plug-ins/common/van-gogh-lic.c:876
+msgid "Van Gogh (LIC)"
+msgstr "Ван Гог (LIC)"
 
 #: plug-ins/common/warp.c:219
 msgid "_Warp..."
@@ -8457,17 +8506,14 @@ msgid "DDS"
 msgstr "DDS"
 
 #: plug-ins/file-dds/dds.c:193 plug-ins/file-dds/dds.c:194
-#| msgid "Loads files in DDS image format"
 msgid "Saves files in DDS image format"
 msgstr "Зберігає файли у форматі зображень DDS"
 
 #: plug-ins/file-dds/dds.c:207
-#| msgid "Co_mpression"
 msgid "Compressio_n"
 msgstr "С_тиснення"
 
 #: plug-ins/file-dds/dds.c:208
-#| msgid "Compression type"
 msgid "Compression format"
 msgstr "Формат стиснення"
 
@@ -8500,7 +8546,6 @@ msgid "RXGB (DXT5)"
 msgstr "RXGB (DXT5)"
 
 #: plug-ins/file-dds/dds.c:217
-#| msgid "Decode Alpha exponent"
 msgid "Alpha Exponent (DXT5)"
 msgstr "Альфа-експоненційний (DXT5)"
 
@@ -8509,22 +8554,18 @@ msgid "YCoCg (DXT5)"
 msgstr "YCoCg (DXT5)"
 
 #: plug-ins/file-dds/dds.c:219
-#| msgid "Decode YCoCg (scaled)"
 msgid "YCoCg scaled (DXT5)"
 msgstr "Масштабований YCoCg (DXT5)"
 
 #: plug-ins/file-dds/dds.c:225
-#| msgid "Use _perceptual error metric"
 msgid "Use percept_ual error metric"
 msgstr "_Використати нелінійну метрику помилок"
 
 #: plug-ins/file-dds/dds.c:226
-#| msgid "Use _perceptual error metric"
 msgid "Use a perceptual error metric during compression"
 msgstr "Використати нелінійну метрику помилок під час стискання"
 
 #: plug-ins/file-dds/dds.c:232
-#| msgid "_Pixel format"
 msgid "Pixel format"
 msgstr "Формат у пікселях"
 
@@ -8540,7 +8581,6 @@ msgid "RGB8"
 msgstr "RGB8"
 
 #: plug-ins/file-dds/dds.c:235
-#| msgid "RGBA"
 msgid "RGBA8"
 msgstr "RGBA8"
 
@@ -8557,12 +8597,10 @@ msgid "R5G6B5"
 msgstr "R5G6B5"
 
 #: plug-ins/file-dds/dds.c:239
-#| msgid "RGBA"
 msgid "RGBA4"
 msgstr "RGBA4"
 
 #: plug-ins/file-dds/dds.c:240
-#| msgid "RGB565"
 msgid "RGB5A1"
 msgstr "RGB5A1"
 
@@ -8575,12 +8613,10 @@ msgid "R3G3B2"
 msgstr "R3G3B2"
 
 #: plug-ins/file-dds/dds.c:243
-#| msgid "A"
 msgid "A8"
 msgstr "A8"
 
 #: plug-ins/file-dds/dds.c:244
-#| msgid "L"
 msgid "L8"
 msgstr "L8"
 
@@ -8601,33 +8637,28 @@ msgid "Flip image _vertically on export"
 msgstr "Віддзеркалити зображення _вертикально при експортуванні"
 
 #: plug-ins/file-dds/dds.c:262
-#| msgid "Flip image _vertically on export"
 msgid "Flip the image vertically on export"
 msgstr "Віддзеркалити зображення вертикально при експортуванні"
 
 #: plug-ins/file-dds/dds.c:267
-#| msgid "_Transparent"
 msgid "Set _transparent color"
 msgstr "Встановити колір п_розорого"
 
 #: plug-ins/file-dds/dds.c:268
-#| msgid "Make background transparent"
 msgid "Make an indexed color transparent"
 msgstr "Зробити індексований колір прозорим"
 
 #: plug-ins/file-dds/dds.c:273
-#| msgid "Transparent index:"
 msgid "Transparent inde_x"
 msgstr "І_ндекс прозорого"
 
 #: plug-ins/file-dds/dds.c:274
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
 msgstr ""
-"Індекс прозорого кольору або -1 для вимикання (лише для індексованих"
-" зображень)."
+"Індекс прозорого кольору або -1 для вимикання (лише для індексованих "
+"зображень)."
 
 #: plug-ins/file-dds/dds.c:288
-#| msgid "F_ilter:"
 msgid "F_ilter"
 msgstr "_Фільтрувати"
 
@@ -8644,7 +8675,6 @@ msgid "Box"
 msgstr "Паралелепіпед"
 
 #: plug-ins/file-dds/dds.c:293
-#| msgid "Start angle:"
 msgid "Triangle"
 msgstr "Трикутник"
 
@@ -8653,7 +8683,6 @@ msgid "Quadratic"
 msgstr "Квадратичний"
 
 #: plug-ins/file-dds/dds.c:295
-#| msgid "Baseline"
 msgid "B-Spline"
 msgstr "B-сплайн"
 
@@ -8666,12 +8695,10 @@ msgid "Lanczos"
 msgstr "Ланцоша"
 
 #: plug-ins/file-dds/dds.c:298
-#| msgid "Raise"
 msgid "Kaiser"
 msgstr "Кайзер"
 
 #: plug-ins/file-dds/dds.c:304
-#| msgid "_Wrap mode:"
 msgid "_Wrap mode"
 msgstr "Режим за_гортання"
 
@@ -8680,7 +8707,6 @@ msgid "Wrap mode to use when generating mipmaps"
 msgstr "Режим загортання при створенні множинних зображень"
 
 #: plug-ins/file-dds/dds.c:307
-#| msgid "_Mirror"
 msgid "Mirror"
 msgstr "Віддзеркалення"
 
@@ -8701,12 +8727,10 @@ msgid "Use gamma correct mipmap filtering"
 msgstr "Гамма-корекція при фільтрування множинного зображення"
 
 #: plug-ins/file-dds/dds.c:321
-#| msgid "Use s_RGB colorspace"
 msgid "Use sRG_B colorspace"
 msgstr "В_икористати колірний простір sRGB"
 
 #: plug-ins/file-dds/dds.c:322
-#| msgid "Use s_RGB colorspace"
 msgid "Use sRGB colorspace for gamma correction"
 msgstr "Використати колірний простір sRGB для гамма-корекції"
 
@@ -8715,27 +8739,29 @@ msgid "_Gamma"
 msgstr "Г_ама"
 
 #: plug-ins/file-dds/dds.c:328
-msgid "Gamma value to use for gamma correction (i.e. 2.2)"
+#| msgid "Gamma value to use for gamma correction (i.e. 2.2)"
+msgid "Gamma value to use for gamma correction (e.g. 2.2)"
 msgstr "Значення гамми при гамма-корекції (наприклад 2.2)"
 
 #: plug-ins/file-dds/dds.c:333
-#| msgid "Preserve alpha _test coverage"
 msgid "Preserve al_pha test coverage"
 msgstr "Зберег_ти покриття альфа-тесту"
 
 #: plug-ins/file-dds/dds.c:334
-#| msgid "Preserve alpha _test coverage"
-msgid "Preserve alpha test converage for alpha channel maps"
+#| msgid "Preserve alpha test converage for alpha channel maps"
+msgid "Preserve alpha test coverage for alpha channel maps"
 msgstr "Зберегти покриття альфа-тесту для відображень альфа-каналів"
 
 #: plug-ins/file-dds/dds.c:340
-#| msgid "_Alpha test threshold:"
 msgid "Alp_ha test threshold"
 msgstr "Поріг _альфа-тесту"
 
 #: plug-ins/file-dds/dds.c:341
+#| msgid ""
+#| "Alpha test threshold value for which alpha test converage should be "
+#| "preserved"
 msgid ""
-"Alpha test threshold value for which alpha test converage should be preserved"
+"Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr ""
 "Порогове значення альфа-тесту, для якого слід зберігати покриття альфа-тестом"
 
@@ -9414,7 +9440,7 @@ msgstr "З рухомою комою"
 msgid "JPEG image"
 msgstr "Перегляд JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:196 plug-ins/file-tiff/file-tiff.c:227
+#: plug-ins/file-jpeg/jpeg.c:196 plug-ins/file-tiff/file-tiff.c:244
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -9990,19 +10016,27 @@ msgstr "RLE стиснення"
 msgid "Aggressive RLE (not supported by SGI)"
 msgstr "Агресивне RLE (не підтримується SGI)"
 
-#: plug-ins/file-tiff/file-tiff.c:162 plug-ins/file-tiff/file-tiff.c:191
+#: plug-ins/file-tiff/file-tiff.c:162 plug-ins/file-tiff/file-tiff.c:208
 msgid "TIFF or BigTIFF image"
 msgstr "Зображення TIFF або BigTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:207
+#. Option to shrink the loaded image to its bounding box
+#. or keep as much empty space as possible.
+#. Note that there seems to be no way to keep the empty
+#. space on the right and bottom.
+#: plug-ins/file-tiff/file-tiff.c:197 plug-ins/file-tiff/file-tiff-load.c:2600
+msgid "_Keep empty space around imported layers"
+msgstr "За_лишати порожнє місце навколо імпортованих шарів"
+
+#: plug-ins/file-tiff/file-tiff.c:224
 msgid "TIFF"
 msgstr "TIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:214
+#: plug-ins/file-tiff/file-tiff.c:231
 msgid "Export in _BigTIFF variant file format"
 msgstr "Експортувати у варіантів формату файлів _BigTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:215
+#: plug-ins/file-tiff/file-tiff.c:232
 msgid ""
 "The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
 "4GiB files and bigger"
@@ -10010,35 +10044,35 @@ msgstr ""
 "Варіант формату файлів BigTIFF використовує 64-бітові відступи, таким чином, "
 "підтримуючи файли розміром 4 ГіБ та більші"
 
-#: plug-ins/file-tiff/file-tiff.c:221
+#: plug-ins/file-tiff/file-tiff.c:238
 msgid "Co_mpression"
 msgstr "С_тиснення"
 
-#: plug-ins/file-tiff/file-tiff.c:222
+#: plug-ins/file-tiff/file-tiff.c:239
 msgid "Compression type"
 msgstr "Тип стиснення"
 
-#: plug-ins/file-tiff/file-tiff.c:224
+#: plug-ins/file-tiff/file-tiff.c:241
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/file-tiff/file-tiff.c:225
+#: plug-ins/file-tiff/file-tiff.c:242
 msgid "Pack Bits"
 msgstr "Упаковані біти"
 
-#: plug-ins/file-tiff/file-tiff.c:226
+#: plug-ins/file-tiff/file-tiff.c:243
 msgid "Deflate"
 msgstr "Deflate"
 
-#: plug-ins/file-tiff/file-tiff.c:228
+#: plug-ins/file-tiff/file-tiff.c:245
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3 fax"
 
-#: plug-ins/file-tiff/file-tiff.c:229
+#: plug-ins/file-tiff/file-tiff.c:246
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4 fax"
 
-#: plug-ins/file-tiff/file-tiff.c:235
+#: plug-ins/file-tiff/file-tiff.c:252
 msgid ""
 "Keep the color data masked by an alpha channel intact (do not store "
 "premultiplied components)"
@@ -10046,51 +10080,51 @@ msgstr ""
 "Зберегти дані кольорів, які замасковано із незмінним альфа-каналом (не "
 "зберігати попередньо перемножені компоненти)"
 
-#: plug-ins/file-tiff/file-tiff.c:242
+#: plug-ins/file-tiff/file-tiff.c:259
 msgid "Create a CMYK TIFF image using the soft-proofing color profile"
 msgstr ""
 "Створити зображення TIFF CMYK з використанням профілю кольорів із пробником"
 
-#: plug-ins/file-tiff/file-tiff.c:247
+#: plug-ins/file-tiff/file-tiff.c:264
 msgid "Save La_yers"
 msgstr "Зберегти _шари"
 
-#: plug-ins/file-tiff/file-tiff.c:248
+#: plug-ins/file-tiff/file-tiff.c:265
 msgid "Save Layers"
 msgstr "Зберегти шари"
 
-#: plug-ins/file-tiff/file-tiff.c:253
+#: plug-ins/file-tiff/file-tiff.c:270
 msgid "Crop L_ayers"
 msgstr "Обрізати ш_ари"
 
-#: plug-ins/file-tiff/file-tiff.c:254
+#: plug-ins/file-tiff/file-tiff.c:271
 msgid "Crop Layers"
 msgstr "Обрізати шари"
 
-#: plug-ins/file-tiff/file-tiff.c:259
+#: plug-ins/file-tiff/file-tiff.c:276
 msgid "Save _GeoTIFF data"
 msgstr "Зберегти дані _GeoTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:260
+#: plug-ins/file-tiff/file-tiff.c:277
 msgid "Save GeoTIFF data"
 msgstr "Зберегти дані GeoTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:446
+#: plug-ins/file-tiff/file-tiff.c:463
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
 "Під час спроби експортування декількох шарів не було позначено пункт "
 "«Зберегти шари»."
 
-#: plug-ins/file-tiff/file-tiff-load.c:298
+#: plug-ins/file-tiff/file-tiff-load.c:299
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Не є зображенням TIFF або зображення пошкоджено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:329
+#: plug-ins/file-tiff/file-tiff-load.c:326
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF «%s» не містить каталоги"
 
-#: plug-ins/file-tiff/file-tiff-load.c:336
+#: plug-ins/file-tiff/file-tiff-load.c:333
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -10108,7 +10142,7 @@ msgstr[2] ""
 "Не вдалося виконати облік каталогу TIFF «%s» за заголовком, хоча, здається, "
 "маємо %d сторінок. Буде виконано спробу завантажити файл із цим припущенням."
 
-#: plug-ins/file-tiff/file-tiff-load.c:467
+#: plug-ins/file-tiff/file-tiff-load.c:464
 msgid "Extra channels with unspecified data."
 msgstr "Зайві канали із даними поза специфікацією."
 
@@ -10119,17 +10153,17 @@ msgstr "Зайві канали із даними поза специфікац�
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:479
+#: plug-ins/file-tiff/file-tiff-load.c:476
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Нестандартний TIFF: зайві канали без поля «ExtraSamples»."
 
-#: plug-ins/file-tiff/file-tiff-load.c:573
+#: plug-ins/file-tiff/file-tiff-load.c:567
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 "Не вдалося прочитати сторінку %d з %d. Зображення може бути пошкоджено.\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:602
+#: plug-ins/file-tiff/file-tiff-load.c:596
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -10138,7 +10172,7 @@ msgstr ""
 "Для цього зображення визначено лінійний колірний профіль, але цей профіль не "
 "встановлено на першому шарі. Шари під шаром %d буде оброблено як нелінійні."
 
-#: plug-ins/file-tiff/file-tiff-load.c:610
+#: plug-ins/file-tiff/file-tiff-load.c:604
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -10148,36 +10182,36 @@ msgstr ""
 "використовуватимемо лише перший з них. Якщо це призведе до некоректних "
 "результатів, вам варто завантажити кожен з шарів як окреме зображення."
 
-#: plug-ins/file-tiff/file-tiff-load.c:622
+#: plug-ins/file-tiff/file-tiff-load.c:616
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 "Підозрілива бітова глибина: %d для сторінки %d. Можливо, зображення "
 "пошкоджено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:696
+#: plug-ins/file-tiff/file-tiff-load.c:690
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Непідтримувана розрядність на канал %d для сторінки %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:711
+#: plug-ins/file-tiff/file-tiff-load.c:705
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Не вдалося отримати ширину зображення з «%s»"
 
-#: plug-ins/file-tiff/file-tiff-load.c:719
+#: plug-ins/file-tiff/file-tiff-load.c:713
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Не вдалося отримати довжину зображення з «%s»"
 
-#: plug-ins/file-tiff/file-tiff-load.c:727
+#: plug-ins/file-tiff/file-tiff-load.c:721
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 "Некоректні розміри зображення (%u x %u) для сторінки %d. Можливо, зображення "
 "пошкоджено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:748
+#: plug-ins/file-tiff/file-tiff-load.c:742
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -10186,7 +10220,7 @@ msgstr ""
 "Не вдалося отримати фотометричні дані з «%s». Зображення стиснено CCITT. "
 "Припускаємо, мінімальний колір — білий."
 
-#: plug-ins/file-tiff/file-tiff-load.c:755
+#: plug-ins/file-tiff/file-tiff-load.c:749
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -10196,7 +10230,7 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:787
+#: plug-ins/file-tiff/file-tiff-load.c:781
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -10204,7 +10238,7 @@ msgstr ""
 "Для %s не визначено тип каналу прозорості. Припускаємо, що прозорість не "
 "перемножено попередньо"
 
-#: plug-ins/file-tiff/file-tiff-load.c:812
+#: plug-ins/file-tiff/file-tiff-load.c:806
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -10215,42 +10249,42 @@ msgstr ""
 "встановлено, хоча є додаткові канали. Припускаємо, що перший додатковий "
 "канал не є попередньо помноженими даними прозорості."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1101
+#: plug-ins/file-tiff/file-tiff-load.c:1095
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "Некоректне або невідоме стискання %u. Вимикаємо стискання."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1159
+#: plug-ins/file-tiff/file-tiff-load.c:1153
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Не вдалося створити зображення: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1329
+#: plug-ins/file-tiff/file-tiff-load.c:1323
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Невідомий тип одиниці роздільності %d. Припускаємо точки на дюйм."
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1339
+#: plug-ins/file-tiff/file-tiff-load.c:1333
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 "Попередження: роздільність вказано без типу одиниці. Припускаємо точки на "
 "дюйм."
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1347
+#: plug-ins/file-tiff/file-tiff-load.c:1341
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 "Попередження: немає даних щодо роздільності y, припускаємо ту саму, що і для "
 "x"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1364
+#: plug-ins/file-tiff/file-tiff-load.c:1358
 msgid "Invalid image resolution info, using default"
 msgstr ""
 "Некоректні дані щодо роздільності зображення, використовуємо типові значення"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1423
+#: plug-ins/file-tiff/file-tiff-load.c:1417
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Не вдалося отримати мапи кольорів з «%s»"
@@ -10260,25 +10294,25 @@ msgstr "Не вдалося отримати мапи кольорів з «%s»
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1511
+#: plug-ins/file-tiff/file-tiff-load.c:1505
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr ""
 "Підозрілива кількість додаткових каналів: %d. Ймовірно, пошкоджене "
 "зображення."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1573
+#: plug-ins/file-tiff/file-tiff-load.c:1567
 msgid "TIFF Channel"
 msgstr "Канал TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1726
+#: plug-ins/file-tiff/file-tiff-load.c:1720
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Не вдалося прочитати дані з TIFF «%s». Ймовірно, вміст файла пошкоджено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1761
-#: plug-ins/file-tiff/file-tiff-load.c:1804
+#: plug-ins/file-tiff/file-tiff-load.c:1755
+#: plug-ins/file-tiff/file-tiff-load.c:1798
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
@@ -10286,14 +10320,14 @@ msgstr ""
 "Помилка при відкриванні тимчасового файла %s, «%s», для завантаження "
 "метаданих tiff: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1880
+#: plug-ins/file-tiff/file-tiff-load.c:1874
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 "%s: непідтримуваний формат зображення, немає доступного завантажувача RGBA"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1995
-#: plug-ins/file-tiff/file-tiff-load.c:2192
+#: plug-ins/file-tiff/file-tiff-load.c:1989
+#: plug-ins/file-tiff/file-tiff-load.c:2186
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
@@ -10301,48 +10335,40 @@ msgstr ""
 "— %d."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2004
-#: plug-ins/file-tiff/file-tiff-load.c:2201
+#: plug-ins/file-tiff/file-tiff-load.c:1998
+#: plug-ins/file-tiff/file-tiff-load.c:2195
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Не вдалося прочитати рядок сканування. Зображення може бути пошкоджено. "
 "Рядок помилки — %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2551
+#: plug-ins/file-tiff/file-tiff-load.c:2545
 msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2556
+#: plug-ins/file-tiff/file-tiff-load.c:2550
 #: plug-ins/metadata/metadata-editor.c:5533
 msgid "_Import"
 msgstr "_Імпортувати"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2572
+#: plug-ins/file-tiff/file-tiff-load.c:2566
 msgid "_Show reduced images"
 msgstr "Показати з_меншені зображення"
 
-#. Option to shrink the loaded image to its bounding box
-#. or keep as much empty space as possible.
-#. Note that there seems to be no way to keep the empty
-#. space on the right and bottom.
-#: plug-ins/file-tiff/file-tiff-load.c:2606
-msgid "_Keep empty space around imported layers"
-msgstr "За_лишати порожнє місце навколо імпортованих шарів"
-
-#: plug-ins/file-tiff/file-tiff-load.c:2623
+#: plug-ins/file-tiff/file-tiff-load.c:2617
 msgid "Process extra channel as:"
 msgstr "Обробляти зайвий канал як:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2626
+#: plug-ins/file-tiff/file-tiff-load.c:2620
 msgid "_Non-premultiplied alpha"
 msgstr "Б_ез попередньо помноженої альфи"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2627
+#: plug-ins/file-tiff/file-tiff-load.c:2621
 msgid "Pre_multiplied alpha"
 msgstr "_Попередньо помножена альфа"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2628
+#: plug-ins/file-tiff/file-tiff-load.c:2622
 msgid "Channe_l"
 msgstr "_Канал"
 
@@ -10622,6 +10648,11 @@ msgstr "_Полум'я..."
 #: plug-ins/flame/flame.c:185
 msgid "Create cosmic recursive fractal flames"
 msgstr "Створити ефект спалахів полум'я з використанням фракталів"
+
+#: plug-ins/flame/flame.c:195 plug-ins/flame/flame.c:210
+#: plug-ins/flame/flame.c:220
+msgid "_Brightness"
+msgstr "_Яскравість"
 
 #: plug-ins/flame/flame.c:200
 msgid "Co_ntrast"
@@ -15656,6 +15687,9 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:496
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "_Saturation"
+#~ msgstr "_Насиченість"
 
 #~ msgid "Export Image as DDS"
 #~ msgstr "Експортувати зображення як DDS"
