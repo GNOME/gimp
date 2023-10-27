@@ -1186,6 +1186,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
   GimpContainerView *container_view = GIMP_CONTAINER_VIEW (tree_view);
   GtkTreeViewColumn *column;
   GtkTreePath       *path;
+  gboolean           handled        = TRUE;
 
   tree_view->priv->dnd_renderer = NULL;
 
@@ -1199,16 +1200,9 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
       GtkCellRenderer          *edit_cell    = NULL;
       GdkRectangle              column_area;
       GtkTreeIter               iter;
-      gboolean                  handled = TRUE;
       gboolean                  multisel_mode;
 
-      /* Confirm the path is set before grabbing focus, as it can cause
-       * the list to auto-scroll to the top on first click otherwise
-       */
-      gtk_tree_view_set_cursor (GTK_TREE_VIEW (widget), path, NULL, FALSE);
-      if (! gtk_widget_has_focus (widget))
-        gtk_widget_grab_focus (widget);
-
+      handled       = TRUE;
       multisel_mode = (gtk_tree_selection_get_mode (tree_view->priv->selection)
                        == GTK_SELECTION_MULTIPLE);
 
@@ -1222,6 +1216,16 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
            */
           multisel_mode = FALSE;
         }
+
+      /* We need to grab focus after a button click, in order to make keyboard
+       * navigation possible.
+       * For single selection, grab must happen after we changed
+       * the selection (which will happen in this function) otherwise we end up
+       * first scrolling to the current selection. So we have a separate
+       * gtk_widget_grab_focus() at the end of the function.
+       */
+      if (multisel_mode && bevent->type == GDK_BUTTON_PRESS && ! gtk_widget_has_focus (widget))
+        gtk_widget_grab_focus (widget);
 
       gtk_tree_model_get_iter (tree_view->model, &iter, path);
 
@@ -1433,7 +1437,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
       gtk_tree_path_free (path);
       g_object_unref (renderer);
 
-      return multisel_mode ? handled : TRUE;
+      handled = (multisel_mode ? handled : (bevent->type == GDK_BUTTON_RELEASE ? FALSE : TRUE));
     }
   else
     {
@@ -1442,8 +1446,13 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
           gimp_editor_popup_menu (GIMP_EDITOR (tree_view), NULL, NULL);
         }
 
-      return TRUE;
+      handled = TRUE;
     }
+
+  if (handled && bevent->type == GDK_BUTTON_PRESS && ! gtk_widget_has_focus (widget))
+    gtk_widget_grab_focus (widget);
+
+  return handled;
 }
 
 static gboolean
