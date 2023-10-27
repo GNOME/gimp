@@ -191,16 +191,6 @@ read_dds (gchar    *filename,
         }
     }
 
-  /* verify header information is accurate */
-  if (hdr.depth < 1                                       ||
-      (hdr.pitch_or_linsize > (file_size - sizeof (hdr))) ||
-      (((guint64) hdr.height * hdr.width * hdr.depth) > (file_size - sizeof (hdr))))
-    {
-      fclose (fp);
-      g_message ("Invalid or corrupted DDS header\n");
-      return GIMP_PDB_EXECUTION_ERROR;
-    }
-
   if (hdr.pixelfmt.flags & DDPF_FOURCC)
     {
       /* fourcc is dXt* or rXgb */
@@ -308,6 +298,15 @@ read_dds (gchar    *filename,
   else
     {
       precision = GIMP_PRECISION_U8_GAMMA;
+    }
+
+  /* verify header information is accurate */
+  if (d.bpp < 1 ||
+      (hdr.pitch_or_linsize > (file_size - sizeof (hdr))))
+    {
+      fclose (fp);
+      g_message ("Invalid or corrupted DDS header\n");
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 
   image = gimp_image_new_with_precision (hdr.width, hdr.height, type, precision);
@@ -923,6 +922,13 @@ load_layer (FILE            *fp,
   unsigned int   size = hdr->pitch_or_linsize >> (2 * level);
   unsigned int   layerw;
   int            format = DDS_COMPRESS_NONE;
+  gsize          file_size;
+  gsize          current_position;
+
+  current_position = ftell (fp);
+  fseek (fp, 0L, SEEK_END);
+  file_size = ftell (fp);
+  fseek (fp, current_position, SEEK_SET);
 
   if (width < 1) width = 1;
   if (height < 1) height = 1;
@@ -1027,6 +1033,12 @@ load_layer (FILE            *fp,
         size *= 16;
     }
 
+  if (size > (file_size - current_position))
+    {
+      g_message ("Requested data exceeds size of file.\n");
+      return 0;
+    }
+
   if ((hdr->flags & DDSD_LINEARSIZE) &&
       !fread (buf, size, 1, fp))
     {
@@ -1063,6 +1075,13 @@ load_layer (FILE            *fp,
                                bablfmt, pixels, GEGL_AUTO_ROWSTRIDE);
               n = 0;
               gimp_progress_update ((double)y / (double)hdr->height);
+            }
+
+          current_position = ftell (fp);
+          if ((width * d->bpp) > (file_size - current_position))
+            {
+              g_message ("Requested data exceeds size of file.\n");
+              return 0;
             }
 
           if ((hdr->flags & DDSD_PITCH) &&
