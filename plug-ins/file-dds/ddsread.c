@@ -364,9 +364,8 @@ read_dds (GFile          *file,
     }
 
   /* verify header information is accurate */
-  if (d.bpp < 1                                           ||
-      (hdr.pitch_or_linsize > (file_size - sizeof (hdr))) ||
-      (((guint64) hdr.height * hdr.width * d.gimp_bps) > (file_size - sizeof (hdr))))
+  if (d.bpp < 1 ||
+      (hdr.pitch_or_linsize > (file_size - sizeof (hdr))))
     {
       fclose (fp);
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
@@ -1028,6 +1027,13 @@ load_layer (FILE             *fp,
   guint          size = hdr->pitch_or_linsize >> (2 * level);
   guint          layerw;
   gint           format = DDS_COMPRESS_NONE;
+  gsize          file_size;
+  gsize          current_position;
+
+  current_position = ftell (fp);
+  fseek (fp, 0L, SEEK_END);
+  file_size = ftell (fp);
+  fseek (fp, current_position, SEEK_SET);
 
   if (width < 1) width = 1;
   if (height < 1) height = 1;
@@ -1144,6 +1150,13 @@ load_layer (FILE             *fp,
         size *= 16;
     }
 
+  if (size > (file_size - current_position))
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Requested data exceeds size of file.\n"));
+      return FALSE;
+    }
+
   if ((hdr->flags & DDSD_LINEARSIZE) &&
       !fread (buf, size, 1, fp))
     {
@@ -1181,6 +1194,14 @@ load_layer (FILE             *fp,
                                bablfmt, pixels, GEGL_AUTO_ROWSTRIDE);
               n = 0;
               gimp_progress_update ((double) y / (double) hdr->height);
+            }
+
+          current_position = ftell (fp);
+          if ((width * d->bpp) > (file_size - current_position))
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Requested data exceeds size of file.\n"));
+              return FALSE;
             }
 
           if ((hdr->flags & DDSD_PITCH) &&
