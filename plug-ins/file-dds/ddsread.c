@@ -928,6 +928,7 @@ load_layer (FILE            *fp,
   current_position = ftell (fp);
   fseek (fp, 0L, SEEK_END);
   file_size = ftell (fp);
+  fseek (fp, 0, SEEK_SET);
   fseek (fp, current_position, SEEK_SET);
 
   if (width < 1) width = 1;
@@ -1033,7 +1034,8 @@ load_layer (FILE            *fp,
         size *= 16;
     }
 
-  if (size > (file_size - current_position))
+  if (size > (file_size - current_position) ||
+      size > hdr->pitch_or_linsize)
     {
       g_message ("Requested data exceeds size of file.\n");
       return 0;
@@ -1078,7 +1080,9 @@ load_layer (FILE            *fp,
             }
 
           current_position = ftell (fp);
-          if ((width * d->bpp) > (file_size - current_position))
+          if ((hdr->flags & DDSD_PITCH)                          &&
+              ((width * d->bpp) > (file_size - current_position) ||
+               (width * d->bpp) > hdr->pitch_or_linsize))
             {
               g_message ("Requested data exceeds size of file.\n");
               return 0;
