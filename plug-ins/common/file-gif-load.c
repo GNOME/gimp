@@ -415,10 +415,8 @@ load_image (const gchar  *filename,
     }
 
   if (GifScreen.AspectRatio != 0 && GifScreen.AspectRatio != 49)
-    {
-      g_message (_("Non-square pixels.  Image might look squashed."));
-    }
-
+    g_message ("Non-square pixels. Image might look squashed if "
+               "Dot for Dot mode is enabled.");
 
   highest_used_index = 0;
 
@@ -507,9 +505,27 @@ load_image (const gchar  *filename,
         }
 
       if (!status)
-        {
-          break;
-        }
+        break;
+
+     if (GifScreen.AspectRatio != 0 && GifScreen.AspectRatio != 49)
+       {
+         /* Byte overflow is allowed per the GIF specification */
+         guint8 par = GifScreen.AspectRatio + 15;
+
+         if (par > 0)
+           {
+             gdouble image_xres;
+             gdouble image_yres;
+             gfloat  ratio = par / 64.0;
+
+             gimp_image_get_resolution (image_ID, &image_xres, &image_yres);
+             if (ratio < 1)
+               image_xres = image_yres * (1 / ratio);
+             else
+               image_yres = image_xres * ratio;
+             gimp_image_set_resolution (image_ID, image_xres, image_yres);
+           }
+       }
 
       if (comment_parasite != NULL)
         {
