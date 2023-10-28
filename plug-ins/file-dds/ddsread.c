@@ -1150,7 +1150,8 @@ load_layer (FILE             *fp,
         size *= 16;
     }
 
-  if (size > (file_size - current_position))
+  if (size > (file_size - current_position) ||
+      size > hdr->pitch_or_linsize)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Requested data exceeds size of file.\n"));
@@ -1197,7 +1198,9 @@ load_layer (FILE             *fp,
             }
 
           current_position = ftell (fp);
-          if ((width * d->bpp) > (file_size - current_position))
+          if ((hdr->flags & DDSD_PITCH)                          &&
+              ((width * d->bpp) > (file_size - current_position) ||
+               (width * d->bpp) > hdr->pitch_or_linsize))
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Requested data exceeds size of file.\n"));
