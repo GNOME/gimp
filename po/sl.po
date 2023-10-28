@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-11 07:26+0000\n"
-"PO-Revision-Date: 2023-08-12 00:59+0200\n"
+"POT-Creation-Date: 2023-10-27 21:13+0000\n"
+"PO-Revision-Date: 2023-10-28 21:41+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -3546,7 +3546,7 @@ msgstr ""
 #: ../app/actions/data-commands.c:116 ../app/actions/tool-options-commands.c:75
 #: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2195
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
-#: ../app/core/gimppalette-load.c:194
+#: ../app/core/gimppalette-load.c:202
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
 msgid "Untitled"
 msgstr "Neimenovano"
@@ -14825,27 +14825,27 @@ msgstr "%s (se pojavi %u)"
 msgid "Index %d"
 msgstr "Števec %d"
 
-#: ../app/core/gimppalette-import.c:547
+#: ../app/core/gimppalette-import.c:555
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Neznana vrsta datoteke palete: %s"
 
-#: ../app/core/gimppalette-load.c:71
+#: ../app/core/gimppalette-load.c:79
 #, c-format
 msgid "Missing magic header."
 msgstr "Manjka čarovna glava."
 
-#: ../app/core/gimppalette-load.c:94
+#: ../app/core/gimppalette-load.c:102
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Neveljaven niz UTF-8 v datoteki palete »%s«"
 
-#: ../app/core/gimppalette-load.c:114
+#: ../app/core/gimppalette-load.c:122
 #, c-format
 msgid "Invalid column count."
 msgstr "Neveljavno število stolpcev."
 
-#: ../app/core/gimppalette-load.c:121
+#: ../app/core/gimppalette-load.c:129
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -14854,48 +14854,133 @@ msgstr ""
 "Branje datoteke palete »%s«: Nepravilno število stolpcev v vrstici %d. "
 "Uporabljena bo privzeta vrednost."
 
-#: ../app/core/gimppalette-load.c:155
+#: ../app/core/gimppalette-load.c:163
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr ""
 "Branje datoteke palete »%s«: V vrstici %d manjka rdeča komponenta (RED)."
 
-#: ../app/core/gimppalette-load.c:163
+#: ../app/core/gimppalette-load.c:171
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr ""
 "Branje datoteke palete »%s«: V vrstici %d manjka zelena komponenta (GREEN)."
 
-#: ../app/core/gimppalette-load.c:171
+#: ../app/core/gimppalette-load.c:179
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr ""
 "Branje datoteke palete »%s«: V vrstici %d manjka modra komponenta (BLUE)."
 
-#: ../app/core/gimppalette-load.c:181
+#: ../app/core/gimppalette-load.c:189
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
 "Branje datoteke palete »%s«: V vrstici %d je vrednost RGB izven dosega."
 
-#: ../app/core/gimppalette-load.c:209 ../app/core/gimppalette-load.c:454
+#: ../app/core/gimppalette-load.c:217 ../app/core/gimppalette-load.c:462
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr "Branje datoteke palete »%s«: prebranih %d barv prekinjene datoteke: %s"
 
-#: ../app/core/gimppalette-load.c:231
+#: ../app/core/gimppalette-load.c:239
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "V vrstici %d datoteke palete: "
 
-#: ../app/core/gimppalette-load.c:427
+#: ../app/core/gimppalette-load.c:435 ../app/core/gimppalette-load.c:619
+#: ../app/core/gimppalette-load.c:962
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Ni mogoče brati glave iz datoteke palete ‘%s’: "
 
-#: ../app/core/gimppalette-load.c:459
+#: ../app/core/gimppalette-load.c:467
 msgid "Premature end of file."
 msgstr "Predčasen konec datoteke."
+
+#: ../app/core/gimppalette-load.c:628
+msgid "Invalid ACB palette version."
+msgstr "Neveljavno različica palete ACB."
+
+#: ../app/core/gimppalette-load.c:634
+msgid "GIMP only supports version 1 ACB palettes"
+msgstr "GIMP podpira le palete ACB različice 1"
+
+#: ../app/core/gimppalette-load.c:641
+msgid "Invalid ACB palette identifier."
+msgstr "Neveljaven identifikator palete ACB."
+
+#: ../app/core/gimppalette-load.c:656 ../app/core/gimppalette-load.c:895
+#: ../app/core/gimppalette-load.c:916
+#, c-format
+msgid "Invalid ACB palette name."
+msgstr "Neveljavno ime palete ACB."
+
+#: ../app/core/gimppalette-load.c:674
+msgid "Invalid ACB palette prefix."
+msgstr "Neveljavna predpona palete ACB."
+
+#: ../app/core/gimppalette-load.c:689
+msgid "Invalid ACB palette suffix."
+msgstr "Neveljavna pripona palete ACB."
+
+#: ../app/core/gimppalette-load.c:707 ../app/core/gimppalette-load.c:981
+msgid "Invalid number of colors in palette."
+msgstr "Neveljavno število barv v paleti."
+
+#: ../app/core/gimppalette-load.c:713 ../app/core/gimppalette-load.c:987
+#, c-format
+msgid "Invalid number of colors: %s."
+msgstr "Neveljavno število barv: %s."
+
+#: ../app/core/gimppalette-load.c:725 ../app/core/gimppalette-load.c:734
+msgid "Invalid ACB palette page info."
+msgstr "Neveljavne informacije o strani palete ACB."
+
+#: ../app/core/gimppalette-load.c:745 ../app/core/gimppalette-load.c:767
+msgid "Invalid ACB palette color space."
+msgstr "Neveljaven barvni prostor palete ACB."
+
+#: ../app/core/gimppalette-load.c:905
+#, c-format
+msgid "Invalid ACB name size."
+msgstr "Neveljavna velikost imena ACB."
+
+#: ../app/core/gimppalette-load.c:972
+#, c-format
+msgid "Invalid ASE header: %s"
+msgstr "Neveljavna glava ASE: %s"
+
+#: ../app/core/gimppalette-load.c:997
+#, c-format
+msgid "Invalid ASE file: %s."
+msgstr "Neveljavna datoteka ASE: %s."
+
+#: ../app/core/gimppalette-load.c:1075
+#, c-format
+msgid "Invalid color components: %s."
+msgstr "Neveljavne komponente barve: %s."
+
+#: ../app/core/gimppalette-load.c:1089 ../app/core/gimppalette-load.c:1116
+#, c-format
+msgid "Invalid ASE color entry: %s."
+msgstr "Neveljaven barvni vnos ASE: %s."
+
+#: ../app/core/gimppalette-load.c:1144 ../app/core/gimppalette-load.c:1160
+#: ../app/core/gimppalette-load.c:1179
+#, c-format
+msgid "Invalid ASE palette name."
+msgstr "Neveljavno ime palete ASE."
+
+#: ../app/core/gimppalette-load.c:1153
+#, c-format
+msgid "Invalid ASE block size."
+msgstr "Neveljavna velikost bloka ASE."
+
+#: ../app/core/gimppalette-load.c:1169
+#, c-format
+msgid "Invalid ASE name size."
+msgstr "Neveljavna velikost imena ASE."
 
 #: ../app/core/gimppalettemru.c:123 ../app/core/gimppalettemru.c:229
 msgid "History Color"
@@ -18980,13 +19065,13 @@ msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "S klikom in vleko dodate prosti odsek, s klikom dodate mnogokotni odsek"
 
-#: ../app/display/gimptoolrectangle.c:569
-#: ../app/display/gimptoolrectangle.c:877
+#: ../app/display/gimptoolrectangle.c:577
+#: ../app/display/gimptoolrectangle.c:886
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Pravokotnik: "
 
-#: ../app/display/gimptoolrectangle.c:2141
+#: ../app/display/gimptoolrectangle.c:2167
 msgid "Position: "
 msgstr "Položaj: "
 
@@ -23093,11 +23178,11 @@ msgstr "Operacija _GEGL ..."
 msgid "Select an operation from the list above"
 msgstr "Izberite dejanje z zgornjega seznama"
 
-#: ../app/tools/gimpgenerictransformtool.c:101
+#: ../app/tools/gimpgenerictransformtool.c:99
 msgid "Transform Matrix"
 msgstr "Matrika transformacije"
 
-#: ../app/tools/gimpgenerictransformtool.c:135
+#: ../app/tools/gimpgenerictransformtool.c:119
 msgid "Invalid transform"
 msgstr "Neveljavno preoblikovanje"
 
@@ -27124,7 +27209,7 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "barve"
 
-#: ../app/widgets/gimpitemtreeview.c:763
+#: ../app/widgets/gimpitemtreeview.c:765
 msgid "Lock:"
 msgstr "Zakleni:"
 
