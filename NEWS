@@ -8,6 +8,78 @@ we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
 
+Overview of Changes from GIMP 2.10.34 to GIMP 2.10.36
+=====================================================
+
+Core:
+
+  - Disable Arbitrary Rotation menus (under both Image and Layer menus) if no
+    image is active, for consistency.
+  - New gradient available: FG to Transparent (Hardedge) gradient.
+  - A change in linuxwacom made some graphics tablet crash GIMP. Though the
+    issue is in the driver (downgrading it "fixes" the issue), it was bad enough
+    that a workaround was also added in GIMP code so that we don't crash with
+    the newer driver. A fix was also merged on linuxwacom itself:
+    https://github.com/linuxwacom/xf86-input-wacom/issues/307
+    https://github.com/linuxwacom/xf86-input-wacom/pull/309
+  - New Adobe ACB and ASE palette support.
+
+Tool:
+
+  - Text tool:
+    * When replacing a selection, take and apply markup (if any) from
+      the first character of the selection for the entered text. This fixes the
+      case when you no longer can change the global layer text properties after
+      replacing the text.
+    * Set the blank font name for the standard font instead of 'Standard'
+      to fix the issue when 'Standard' can be actual font from the list or a
+      font which starts with (e.g. Standard Symbols PS).
+
+User Interface:
+
+  - Item tree view lock boxes:
+    * now separately themable with gtkrc;
+    * showing a white frame when hovering over lock buttons;
+    * showing a small padlock next the lock icon when it's active.
+  - Add Table of Contents to User Manual submenu (in Help menu).
+
+Plug-ins:
+
+  - Fixed vulnerabilities:
+    * DDS: ZDI-CAN-22093
+    * PSD: ZDI-CAN-22094
+    * PSP: ZDI-CAN-22096 and ZDI-CAN-22097
+  - JPEG-XL: support libjxl v0.9 decoding API.
+  - Metadata editor: more DigitalSourceType values.
+  - PDF are now loaded at 300PPI by default.
+  - GIF:
+    * Added support of non-square aspect ratio by setting different vertical and
+      horizontal resolution when a loaded file has the PixelAspectRatio metadata
+      set.
+  - Various more file format fixes (at least GIF, PDF import, HEIF/AVIF, JPEG
+    XL, XWD, DDS) and various fixes in non-file format related plug-ins too.
+
+Libgimpbase:
+
+  - Do not save Photoshop specific EXIF metadata when exporting images because
+    they can contain sensitive data and we cannot update them.
+  - We now update Exif.Photo.PixelX/YDimension Exif tags when resizing and
+    exporting (but only if they were already present, as they are
+    non-essential).
+
+Translation:
+
+  - 19 translations were updated: Belarusian, Catalan, Chinese (China), Dutch,
+    Georgian, German, Greek, Hungarian, Icelandic, Italian, Lithuanian, Polish,
+    Portuguese, Romanian, Slovenian, Spanish, Swedish, Turkish, Ukrainian.
+
+Build:
+
+  - Added code in the Windows installer script for the ARM 64-bit build, bundled
+    into the same universal installer (though the first experimental installer
+    with Aarch64 support was for GIMP 2.10.34 revision 2).
+
+
 Overview of Changes from GIMP 2.10.32 to GIMP 2.10.34
 =====================================================
 
