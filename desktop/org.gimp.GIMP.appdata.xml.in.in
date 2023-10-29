@@ -73,6 +73,32 @@
   </provides>
 
   <releases>
+    <release version="2.10.36" date="TODO">
+      <description>
+        <_p>
+            This new version of GIMP comes with many fixes, including
+            vulnerability corrections. It is highly recommended to update. It
+            also provides a few interesting changes, such as:
+        </_p>
+        <ul>
+          <_li>
+          Adobe ACB and ASE palette support
+          </_li>
+          <_li>
+          New gradient: FG to Transparent (Hardedge)
+          </_li>
+          <_li>
+          Some text tool algorithm enhancement when replacing formatted text
+          </_li>
+          <_li>
+          Better theming of item locks (when hovering them or setting them active)
+          </_li>
+          <_li>
+          Improvements in handling a few specific metadata
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.10.34" date="2023-02-21">
       <description>
         <_p>
