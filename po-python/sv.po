@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-25 21:27+0000\n"
-"PO-Revision-Date: 2023-07-25 23:30+0200\n"
+"POT-Creation-Date: 2023-10-02 00:04+0000\n"
+"PO-Revision-Date: 2023-10-02 02:13+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -26,20 +26,16 @@ msgid "Save as colored HTML text..."
 msgstr "Spara som färglagd HTML-text…"
 
 #: plug-ins/python/colorxhtml.py:92 plug-ins/python/colorxhtml.py:98
-#: plug-ins/python/gradients-save-as-css.py:124
-#: plug-ins/python/histogram-export.py:204
-#: plug-ins/python/histogram-export.py:246
-#: plug-ins/python/palette-offset.py:145
+#: plug-ins/python/gradients-save-as-css.py:116
+#: plug-ins/python/palette-offset.py:135
 #: plug-ins/python/python-console/python-console.py:311
 #: plug-ins/python/spyro-plus.py:1724
 msgid "_Cancel"
 msgstr "A_vbryt"
 
 #: plug-ins/python/colorxhtml.py:93 plug-ins/python/colorxhtml.py:99
-#: plug-ins/python/gradients-save-as-css.py:125
-#: plug-ins/python/histogram-export.py:205
-#: plug-ins/python/histogram-export.py:247
-#: plug-ins/python/palette-offset.py:146 plug-ins/python/spyro-plus.py:1725
+#: plug-ins/python/gradients-save-as-css.py:117
+#: plug-ins/python/palette-offset.py:136 plug-ins/python/spyro-plus.py:1725
 msgid "_OK"
 msgstr "_OK"
 
@@ -89,118 +85,117 @@ msgstr "Skriv separat CSS-fil"
 msgid "Saving as colored XHTML"
 msgstr "Sparar som färglagd XHTML"
 
-#: plug-ins/python/colorxhtml.py:284 plug-ins/python/colorxhtml.py:285
+#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
 msgid "_Read characters from file, if true, or use text entry"
 msgstr "_Läs tecken från fil om sant, eller använd textinmatning"
 
-#: plug-ins/python/colorxhtml.py:289 plug-ins/python/colorxhtml.py:290
+#: plug-ins/python/colorxhtml.py:291 plug-ins/python/colorxhtml.py:292
 msgid "_File to read or characters to use"
 msgstr "_Fil att läsa eller tecken att använda"
 
-#: plug-ins/python/colorxhtml.py:294 plug-ins/python/colorxhtml.py:295
+#: plug-ins/python/colorxhtml.py:296 plug-ins/python/colorxhtml.py:297
 msgid "Fo_nt size in pixels"
 msgstr "Typs_nittsstorlek i bildpunkter"
 
-#: plug-ins/python/colorxhtml.py:299 plug-ins/python/colorxhtml.py:300
+#: plug-ins/python/colorxhtml.py:301 plug-ins/python/colorxhtml.py:302
 msgid "_Write a separate CSS file"
 msgstr "Sk_riv en separat CSS-fil"
 
-#: plug-ins/python/colorxhtml.py:320
+#: plug-ins/python/colorxhtml.py:322
 msgid "Save as colored HTML text"
 msgstr "Spara som färglagd HTML-text"
 
-#: plug-ins/python/colorxhtml.py:323
+#: plug-ins/python/colorxhtml.py:325
 msgid "Colored HTML text"
 msgstr "Färglagd HTML-text"
 
-#: plug-ins/python/foggify.py:104
+#: plug-ins/python/foggify.py:99
 msgid "Layer _name"
 msgstr "Lager_namn"
 
-#: plug-ins/python/foggify.py:105
+#: plug-ins/python/foggify.py:100
 msgid "Layer name"
 msgstr "Lagernamn"
 
-#: plug-ins/python/foggify.py:106
+#: plug-ins/python/foggify.py:101
 msgid "Clouds"
 msgstr "Moln"
 
-#: plug-ins/python/foggify.py:109
+#: plug-ins/python/foggify.py:104
 msgid "_Turbulence"
 msgstr "_Turbulens"
 
-#: plug-ins/python/foggify.py:110
+#: plug-ins/python/foggify.py:105
 msgid "Turbulence"
 msgstr "Turbulens"
 
-#: plug-ins/python/foggify.py:114
+#: plug-ins/python/foggify.py:109
 msgid "O_pacity"
 msgstr "O_pacitet"
 
-#: plug-ins/python/foggify.py:115
+#: plug-ins/python/foggify.py:110
 msgid "Opacity"
 msgstr "Opacitet"
 
-#: plug-ins/python/foggify.py:124
+#: plug-ins/python/foggify.py:119
 msgid "_Fog color"
 msgstr "Färg på _dimma"
 
-#: plug-ins/python/foggify.py:125
+#: plug-ins/python/foggify.py:120
 msgid "Fog color"
 msgstr "Färg på dimma"
 
-#: plug-ins/python/foggify.py:141
+#: plug-ins/python/foggify.py:136
 msgid "Add a layer of fog"
 msgstr "Lägg till ett lager av dimma"
 
-#: plug-ins/python/foggify.py:142
+#: plug-ins/python/foggify.py:137
 msgid "Adds a layer of fog to the image."
 msgstr "Lägger till ett lager av dimma till bilden."
 
-#: plug-ins/python/foggify.py:144
+#: plug-ins/python/foggify.py:139
 msgid "_Fog..."
 msgstr "_Dimma…"
 
-#: plug-ins/python/gradients-save-as-css.py:105
-#: plug-ins/python/histogram-export.py:230
+#: plug-ins/python/gradients-save-as-css.py:97
 msgid "_File..."
 msgstr "_Fil…"
 
-#: plug-ins/python/gradients-save-as-css.py:113
+#: plug-ins/python/gradients-save-as-css.py:105
 msgid "Choose CSS file..."
 msgstr "Välj CSS-fil…"
 
-#: plug-ins/python/gradients-save-as-css.py:122
+#: plug-ins/python/gradients-save-as-css.py:114
 msgid "Save as CSS file..."
 msgstr "Spara som CSS-fil…"
 
-#: plug-ins/python/gradients-save-as-css.py:201
+#: plug-ins/python/gradients-save-as-css.py:190
 #: plug-ins/python/palette-sort.py:345
 #: plug-ins/python/python-console/python-console.py:336
 msgid "Run mode"
 msgstr "Körläge"
 
-#: plug-ins/python/gradients-save-as-css.py:202
+#: plug-ins/python/gradients-save-as-css.py:191
 #: plug-ins/python/python-console/python-console.py:336
 msgid "The run mode"
 msgstr "Körläget"
 
-#: plug-ins/python/gradients-save-as-css.py:206
+#: plug-ins/python/gradients-save-as-css.py:195
 msgid "_Gradient to use"
 msgstr "_Gradient att använda"
 
-#: plug-ins/python/gradients-save-as-css.py:209
+#: plug-ins/python/gradients-save-as-css.py:198
 msgid "_File"
 msgstr "_Fil"
 
-#: plug-ins/python/gradients-save-as-css.py:225
-#: plug-ins/python/gradients-save-as-css.py:226
+#: plug-ins/python/gradients-save-as-css.py:214
+#: plug-ins/python/gradients-save-as-css.py:215
 msgid "Creates a new palette from a given gradient"
 msgstr "Skapar en ny palett från en angiven gradient"
 
-#: plug-ins/python/gradients-save-as-css.py:228
-msgid "Save as CSS..."
-msgstr "Spara som CSS…"
+#: plug-ins/python/gradients-save-as-css.py:217
+msgid "Save Gradient as CSS..."
+msgstr "Spara gradient som CSS…"
 
 #: plug-ins/python/histogram-export.py:92
 msgid "Pixel count"
@@ -214,71 +209,45 @@ msgstr "Normaliserad"
 msgid "Percent"
 msgstr "Procent"
 
-#: plug-ins/python/histogram-export.py:166
+#: plug-ins/python/histogram-export.py:161
 msgid "File is either a directory or file name is empty."
 msgstr "Filen är antingen en katalog eller så är filnamnet tomt."
 
-#: plug-ins/python/histogram-export.py:169
+#: plug-ins/python/histogram-export.py:164
 msgid "Directory not found."
 msgstr "Katalogen hittades inte."
 
-#: plug-ins/python/histogram-export.py:203
+#: plug-ins/python/histogram-export.py:179
 msgid "Histogram Export..."
 msgstr "Histogramexport…"
 
-#: plug-ins/python/histogram-export.py:238
-msgid "Choose export file..."
-msgstr "Välj exportfil…"
-
-#: plug-ins/python/histogram-export.py:244
-msgid "Histogram Export file..."
-msgstr "Fil för histogramexport…"
-
-#. Bucket size parameter
-#: plug-ins/python/histogram-export.py:250
-#: plug-ins/python/histogram-export.py:320
-msgid "_Bucket Size"
-msgstr "_Hinkstorlek"
-
-#. Sample average parameter
-#: plug-ins/python/histogram-export.py:258
-#: plug-ins/python/histogram-export.py:325
-msgid "Sample _Average"
-msgstr "Samplings_medel"
-
-#: plug-ins/python/histogram-export.py:259
-msgid ""
-"If checked, the histogram is generated from merging all visible layers. "
-"Otherwise, the histogram is only for the current layer."
-msgstr ""
-"Om ikryssad genereras histogrammet från sammanfogning av alla synliga lager. "
-"Annars är histogrammet bara för det aktuella lagret."
-
-#. Output format parameter
-#: plug-ins/python/histogram-export.py:265
-msgid "_Output Format"
-msgstr "_Utmatningsformat"
-
-#: plug-ins/python/histogram-export.py:316
+#: plug-ins/python/histogram-export.py:209
 msgid "Histogram _File"
 msgstr "Histogram_fil"
 
-#: plug-ins/python/histogram-export.py:330
-msgid "Output format"
-msgstr "Utmatningsformat"
+#: plug-ins/python/histogram-export.py:213
+msgid "_Bucket Size"
+msgstr "_Hinkstorlek"
 
-#: plug-ins/python/histogram-export.py:352
+#: plug-ins/python/histogram-export.py:218
+msgid "Sample _Average"
+msgstr "Samplings_medel"
+
+#: plug-ins/python/histogram-export.py:223
+msgid "Output _format"
+msgstr "Utmatnings_format"
+
+#: plug-ins/python/histogram-export.py:245
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Exporterar bildens histogram till en textfil (CSV)"
 
-#: plug-ins/python/histogram-export.py:355
+#: plug-ins/python/histogram-export.py:248
 msgid "_Export histogram..."
 msgstr "_Exportera histogram…"
 
 #: plug-ins/python/palette-offset.py:50 plug-ins/python/palette-offset.py:51
 #: plug-ins/python/palette-sort.py:351 plug-ins/python/palette-sort.py:403
 #: plug-ins/python/palette-sort.py:404
-#: plug-ins/python/palette-to-gradient.py:135
 msgid "Palette"
 msgstr "Palett"
 
@@ -286,7 +255,7 @@ msgstr "Palett"
 msgid "Off_set"
 msgstr "Po_sition"
 
-#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:153
+#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:143
 msgid "Offset"
 msgstr "Position"
 
@@ -306,7 +275,7 @@ msgstr "_Skifta i palett…"
 msgid "Offset the colors in a palette"
 msgstr "Skifta färgerna i en palett"
 
-#: plug-ins/python/palette-offset.py:143
+#: plug-ins/python/palette-offset.py:133
 msgid "Offset Palette..."
 msgstr "Skifta i palett…"
 
@@ -391,6 +360,7 @@ msgid "Partitioned"
 msgstr "Partitionerad"
 
 #: plug-ins/python/palette-sort.py:350
+#: plug-ins/python/palette-to-gradient.py:129
 msgid "_Palette"
 msgstr "_Palett"
 
@@ -450,32 +420,32 @@ msgstr "_Sortera palett…"
 msgid "Sort the colors in a palette"
 msgstr "Sortera färgerna i en palett"
 
-#: plug-ins/python/palette-to-gradient.py:147
-#: plug-ins/python/palette-to-gradient.py:148
+#: plug-ins/python/palette-to-gradient.py:141
+#: plug-ins/python/palette-to-gradient.py:142
 msgid "The newly created gradient"
 msgstr "Gradienten som skapas"
 
-#: plug-ins/python/palette-to-gradient.py:170
+#: plug-ins/python/palette-to-gradient.py:164
 msgid "Palette to _Gradient"
 msgstr "Palett till _gradient"
 
-#: plug-ins/python/palette-to-gradient.py:171
+#: plug-ins/python/palette-to-gradient.py:165
 msgid "Create a gradient using colors from the palette"
 msgstr "Skapa en gradient med färger från paletten"
 
-#: plug-ins/python/palette-to-gradient.py:172
+#: plug-ins/python/palette-to-gradient.py:166
 msgid "Create a new gradient using colors from the palette."
 msgstr "Skapa en ny gradient med färger från paletten."
 
-#: plug-ins/python/palette-to-gradient.py:175
+#: plug-ins/python/palette-to-gradient.py:169
 msgid "Palette to _Repeating Gradient"
 msgstr "Palett till _upprepande gradient"
 
-#: plug-ins/python/palette-to-gradient.py:176
+#: plug-ins/python/palette-to-gradient.py:170
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Skapa en upprepande gradient med färger från paletten"
 
-#: plug-ins/python/palette-to-gradient.py:177
+#: plug-ins/python/palette-to-gradient.py:171
 msgid "Create a new repeating gradient using colors from the palette."
 msgstr "Skapa en ny upprepande gradient med färger från paletten."
 
@@ -985,3 +955,19 @@ msgstr ""
 #: plug-ins/python/spyro-plus.py:2304
 msgid "Spyrogimp..."
 msgstr "Spirogimp…"
+
+#~ msgid "Choose export file..."
+#~ msgstr "Välj exportfil…"
+
+#~ msgid "Histogram Export file..."
+#~ msgstr "Fil för histogramexport…"
+
+#~ msgid ""
+#~ "If checked, the histogram is generated from merging all visible layers. "
+#~ "Otherwise, the histogram is only for the current layer."
+#~ msgstr ""
+#~ "Om ikryssad genereras histogrammet från sammanfogning av alla synliga "
+#~ "lager. Annars är histogrammet bara för det aktuella lagret."
+
+#~ msgid "_Output Format"
+#~ msgstr "_Utmatningsformat"
