@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-14 00:03+0000\n"
-"PO-Revision-Date: 2020-02-16 13:35+0100\n"
+"POT-Creation-Date: 2023-10-29 22:34+0000\n"
+"PO-Revision-Date: 2023-10-30 07:19+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Language: da_DK\n"
 "X-Source-Language: C\n"
 
@@ -146,8 +146,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "Gem konsoloutput fra Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:292
-#: ../plug-ins/script-fu/script-fu-interface.c:236
-#: ../plug-ins/script-fu/script-fu-server.c:836
+#: ../plug-ins/script-fu/script-fu-interface.c:238
+#: ../plug-ins/script-fu/script-fu-server.c:839
 msgid "_Cancel"
 msgstr "_Annullér"
 
@@ -168,69 +168,69 @@ msgstr "An_vend"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu evalueringstilstand kan kun startes ikke-interaktivt"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:200
+#: ../plug-ins/script-fu/script-fu-interface.c:202
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kan ikke behandle to programmer på samme tid."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:204
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Du kører allerede programmet \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:228
+#: ../plug-ins/script-fu/script-fu-interface.c:230
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:235
+#: ../plug-ins/script-fu/script-fu-interface.c:237
 msgid "_Reset"
 msgstr "_Nulstil"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:239
 msgid "_OK"
 msgstr "_OK"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:291
+#: ../plug-ins/script-fu/script-fu-interface.c:293
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:341
+#: ../plug-ins/script-fu/script-fu-interface.c:343
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-farvevælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:457
+#: ../plug-ins/script-fu/script-fu-interface.c:459
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mappevælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:473
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu-skrifttypevælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:481
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu-paletvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:490
+#: ../plug-ins/script-fu/script-fu-interface.c:492
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu-mønstervælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:499
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-farveovergangsvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:508
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penselvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:877
+#: ../plug-ins/script-fu/script-fu-interface.c:880
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Fejl ved kørsel af %s:"
@@ -244,27 +244,27 @@ msgstr "For få argumenter til kaldet \"script-fu-register\""
 msgid "Error while loading %s:"
 msgstr "Fejl ved indlæsning af %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:832
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-serverindstillinger"
 
-#: ../plug-ins/script-fu/script-fu-server.c:837
+#: ../plug-ins/script-fu/script-fu-server.c:840
 msgid "_Start Server"
 msgstr "_Start server"
 
-#: ../plug-ins/script-fu/script-fu-server.c:870
+#: ../plug-ins/script-fu/script-fu-server.c:873
 msgid "Listen on IP:"
 msgstr "Lyt på IP:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:877
+#: ../plug-ins/script-fu/script-fu-server.c:880
 msgid "Server port:"
 msgstr "Serverport:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:883
+#: ../plug-ins/script-fu/script-fu-server.c:886
 msgid "Server logfile:"
 msgstr "Serverlogfil:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:896
+#: ../plug-ins/script-fu/script-fu-server.c:899
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -291,7 +291,7 @@ msgstr "Tykkelse"
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:198
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
 #: ../plug-ins/script-fu/scripts/old-photo.scm:104
-#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/round-corners.scm:145
 #: ../plug-ins/script-fu/scripts/slide.scm:257
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
 msgid "Work on copy"
@@ -677,7 +677,7 @@ msgstr "Forskydning y"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
-#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Blur radius"
 msgstr "Sløringsradius"
 
@@ -839,88 +839,93 @@ msgstr "Forén billedets lag (fjern gennemsigtighed)"
 
 # "Brugsmønstre" - jeg forestiller mig at dette er henvisninger til et
 # afsnit i en manual eller lignende.
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:63
 msgid "Using _Paths"
 msgstr "_Brug af kurver"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:64
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:77
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:90
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:103
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:116
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:129
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:142
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:155
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:167
 msgid "Bookmark to the user manual"
 msgstr "Bogmærke til brugermanualen"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:76
 msgid "_Preparing your Images for the Web"
 msgstr "T_ilpas dine billeder til internettet"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:89
 msgid "_Working with Digital Camera Photos"
 msgstr "_Arbejd med billeder fra digitale kameraer"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:102
 msgid "Create, Open and Save _Files"
 msgstr "_Opret, åbn og gem filer"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:115
 msgid "_Basic Concepts"
 msgstr "_Grundlæggende idéer"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:128
 msgid "How to Use _Dialogs"
 msgstr "_Sådan bruges dialoger"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:141
 msgid "Drawing _Simple Objects"
 msgstr "_Tegn enkle objekter"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:154
 msgid "Create and Use _Selections"
 msgstr "O_pret og brug markeringer"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:166
+msgid "_[Table of Contents]"
+msgstr "_[Indholdsfortegnelse]"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:206
 msgid "_Main Web Site"
 msgstr "_Hovedwebsted"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:207
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:220
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:272
 msgid "Bookmark to the GIMP web site"
 msgstr "Bogmærke til GIMP-webstedet"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:219
 msgid "_Developer Web Site"
 msgstr "_Websted for udviklere"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:232
 msgid "_Roadmap"
 msgstr "_Roadmap"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:233
 msgid "Bookmark to the roadmap of GIMP"
 msgstr "Bogmærke til GIMPs roadmap"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:245
 msgid "_Wiki"
 msgstr "_Wiki"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:246
 msgid "Bookmark to the wiki of GIMP"
 msgstr "Bogmærke til GIMPs wiki"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:258
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Fejlrapporter og anmodninger om funktioner"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:259
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Bogmærke til GIMPs fejlsporing"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:271
 msgid "_User Manual Web Site"
 msgstr "_Brugermanualens webside"
 
@@ -1347,37 +1352,37 @@ msgstr "Udtvær"
 msgid "Black"
 msgstr "Sort"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+#: ../plug-ins/script-fu/scripts/round-corners.scm:131
 msgid "_Round Corners..."
 msgstr "_Runde hjørner …"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+#: ../plug-ins/script-fu/scripts/round-corners.scm:132
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
 "Afrund et billedes hjørner og tilføj valgfrit en skyggeeffekt og baggrund"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
 msgid "Edge radius"
 msgstr "Kantradius"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
 msgid "Add drop-shadow"
 msgstr "Tilføj skyggeeffekt"
 
 # "X-forskydning for skygge" / "Skyggeforskydning X" / "Vandret
 # forskydning for skygge"
-#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Shadow X offset"
 msgstr "Skygge x-forskydning"
 
 # "Y-forskydning for skygge" / "Skyggeforskydning Y" / "Lodret forskydning
 # for skygge"
-#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Shadow Y offset"
 msgstr "Skygge y-forskydning"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+#: ../plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Add background"
 msgstr "Tilføj baggrund"
 
