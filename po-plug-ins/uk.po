@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-27 01:18+0000\n"
-"PO-Revision-Date: 2023-10-27 21:16+0300\n"
+"POT-Creation-Date: 2023-10-31 15:38+0000\n"
+"PO-Revision-Date: 2023-10-31 21:20+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -4827,7 +4827,8 @@ msgid "Unsupported maximum value."
 msgstr "Не підтримується максимальне значення."
 
 #: plug-ins/common/file-pnm.c:943
-msgid "PAM: Unsupported inofficial PNM variant."
+#| msgid "PAM: Unsupported inofficial PNM variant."
+msgid "PAM: Unsupported unofficial PNM variant."
 msgstr "PAM: непідтримуваний неофіційний варіант PNM."
 
 #: plug-ins/common/file-pnm.c:947
@@ -7926,7 +7927,6 @@ msgid "Special effects that nobody understands"
 msgstr "Спеціальні ефекти, сенс яких нікому не відомий"
 
 #: plug-ins/common/van-gogh-lic.c:158
-#| msgid "Effect Channel"
 msgid "E_ffect Channel"
 msgstr "Канал е_фекту"
 
@@ -7935,12 +7935,10 @@ msgid "Effect Channel"
 msgstr "Канал ефекту"
 
 #: plug-ins/common/van-gogh-lic.c:162
-#| msgid "_Brightness"
 msgid "Brightness"
 msgstr "Яскравість"
 
 #: plug-ins/common/van-gogh-lic.c:168
-#| msgid "Effect Operator"
 msgid "Effect O_perator"
 msgstr "_Оператор ефекту"
 
@@ -7949,17 +7947,14 @@ msgid "Effect Operator"
 msgstr "Оператор ефекту"
 
 #: plug-ins/common/van-gogh-lic.c:170
-#| msgid "_Derivative"
 msgid "Derivative"
 msgstr "Похідна"
 
 #: plug-ins/common/van-gogh-lic.c:171
-#| msgid "_Gradient"
 msgid "Gradient"
 msgstr "Градієнт"
 
 #: plug-ins/common/van-gogh-lic.c:177
-#| msgid "Convolve"
 msgid "Con_volve"
 msgstr "З_гортання"
 
@@ -7968,72 +7963,58 @@ msgid "Convolve"
 msgstr "Згортання"
 
 #: plug-ins/common/van-gogh-lic.c:179
-#| msgid "_With white noise"
 msgid "With white noise"
 msgstr "З білим шумом"
 
 #: plug-ins/common/van-gogh-lic.c:180
-#| msgid "W_ith source image"
 msgid "With source image"
 msgstr "З початковим  зображенням"
 
 #: plug-ins/common/van-gogh-lic.c:186
-#| msgid "_Effect image:"
 msgid "Effect i_mage"
 msgstr "Зобра_ження _ефекту"
 
 #: plug-ins/common/van-gogh-lic.c:187
-#| msgid "_Effect image:"
 msgid "Effect image"
 msgstr "Зображення ефекту"
 
 #: plug-ins/common/van-gogh-lic.c:192
-#| msgid "_Filter length:"
 msgid "Fil_ter length"
 msgstr "Довжина _фільтра"
 
 #: plug-ins/common/van-gogh-lic.c:193
-#| msgid "_Filter length:"
 msgid "Filter length"
 msgstr "Довжина фільтра"
 
 #: plug-ins/common/van-gogh-lic.c:198
-#| msgid "_Noise magnitude:"
 msgid "_Noise Magnitude"
 msgstr "Величина _шуму"
 
 #: plug-ins/common/van-gogh-lic.c:199
-#| msgid "_Noise magnitude:"
 msgid "Noise Magnitude"
 msgstr "Величина шуму"
 
 #: plug-ins/common/van-gogh-lic.c:204
-#| msgid "In_tegration steps:"
 msgid "Inte_gration steps"
 msgstr "Кроки ін_тегрування"
 
 #: plug-ins/common/van-gogh-lic.c:205
-#| msgid "In_tegration steps:"
 msgid "Integration steps"
 msgstr "Кроки інтегрування"
 
 #: plug-ins/common/van-gogh-lic.c:210
-#| msgid "_Minimum value:"
 msgid "Minimum v_alue"
 msgstr "М_інімальне значення"
 
 #: plug-ins/common/van-gogh-lic.c:211
-#| msgid "_Minimum value:"
 msgid "Minimum value"
 msgstr "Мінімальне значення"
 
 #: plug-ins/common/van-gogh-lic.c:216
-#| msgid "M_aximum value:"
 msgid "Ma_ximum value"
 msgstr "Ма_ксимальне значення"
 
 #: plug-ins/common/van-gogh-lic.c:217
-#| msgid "M_aximum value:"
 msgid "Maximum value"
 msgstr "Максимальне значення"
 
@@ -8739,7 +8720,6 @@ msgid "_Gamma"
 msgstr "Г_ама"
 
 #: plug-ins/file-dds/dds.c:328
-#| msgid "Gamma value to use for gamma correction (i.e. 2.2)"
 msgid "Gamma value to use for gamma correction (e.g. 2.2)"
 msgstr "Значення гамми при гамма-корекції (наприклад 2.2)"
 
@@ -8748,7 +8728,6 @@ msgid "Preserve al_pha test coverage"
 msgstr "Зберег_ти покриття альфа-тесту"
 
 #: plug-ins/file-dds/dds.c:334
-#| msgid "Preserve alpha test converage for alpha channel maps"
 msgid "Preserve alpha test coverage for alpha channel maps"
 msgstr "Зберегти покриття альфа-тесту для відображень альфа-каналів"
 
@@ -8757,9 +8736,6 @@ msgid "Alp_ha test threshold"
 msgstr "Поріг _альфа-тесту"
 
 #: plug-ins/file-dds/dds.c:341
-#| msgid ""
-#| "Alpha test threshold value for which alpha test converage should be "
-#| "preserved"
 msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr ""
@@ -8789,46 +8765,50 @@ msgstr "Декодувати Alpha exponent"
 msgid "Converts alpha exponent encoded pixels to RGB"
 msgstr "Перетворює кодовані у альфа-степеневі пікселі до RGB"
 
-#: plug-ins/file-dds/ddsread.c:373
+#: plug-ins/file-dds/ddsread.c:372
 msgid "Invalid or corrupted DDS header"
 msgstr "Некоректний або пошкоджений заголовок DDS"
 
-#: plug-ins/file-dds/ddsread.c:382
+#: plug-ins/file-dds/ddsread.c:381
 msgid "Could not allocate a new image."
 msgstr "Не вдалося розмістити нове зображення."
 
-#: plug-ins/file-dds/ddsread.c:393
+#: plug-ins/file-dds/ddsread.c:392
 msgid "Error reading palette."
 msgstr "Помилка під час спроби читання палітри."
 
-#: plug-ins/file-dds/ddsread.c:676
+#: plug-ins/file-dds/ddsread.c:675
 msgid "Invalid DDS format magic number."
 msgstr "Некоректна контрольна сума у форматі DOS."
 
-#: plug-ins/file-dds/ddsread.c:755
+#: plug-ins/file-dds/ddsread.c:754
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Некоректне значення бітів на піксель для даних RGB: %d"
 
-#: plug-ins/file-dds/ddsread.c:766
+#: plug-ins/file-dds/ddsread.c:765
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Некоректне значення бітів на піксель для даних освітленості: %d"
 
-#: plug-ins/file-dds/ddsread.c:817
+#: plug-ins/file-dds/ddsread.c:816
 msgid "Invalid pixel format."
 msgstr "Некоректний піксельний формат."
 
-#: plug-ins/file-dds/ddsread.c:986
+#: plug-ins/file-dds/ddsread.c:985
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "Непідтримуваний формат DXGI (%d)"
 
-#: plug-ins/file-dds/ddsread.c:1151 plug-ins/file-dds/ddsread.c:1190
+#: plug-ins/file-dds/ddsread.c:1157 plug-ins/file-dds/ddsread.c:1206
+msgid "Requested data exceeds size of file.\n"
+msgstr "Розмір даних, на які надійшов запит, перевищує розмір файла.\n"
+
+#: plug-ins/file-dds/ddsread.c:1165 plug-ins/file-dds/ddsread.c:1214
 msgid "Unexpected EOF.\n"
 msgstr "Неочікуваний кінець файла.\n"
 
-#: plug-ins/file-dds/ddsread.c:1530
+#: plug-ins/file-dds/ddsread.c:1554
 msgid "Open DDS"
 msgstr "Відкрити DDS"
 
