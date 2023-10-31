@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-10-19 10:04+0000\n"
-"PO-Revision-Date: 2023-10-20 09:49+0200\n"
+"PO-Revision-Date: 2023-10-31 14:13+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -539,7 +539,7 @@ msgstr "Vælg kanal: %s"
 #: libgimp/gimppropwidgets.c:195
 #, c-format
 msgid "Choose drawable: %s"
-msgstr "Vælg tegneobjekt: %s"
+msgstr "Vælg tegneflade: %s"
 
 #: libgimp/gimpsaveprocedure.c:467
 msgid "Save _Exif"
