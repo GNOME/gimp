@@ -940,7 +940,7 @@ process_pam_header (PNMScanner *scan,
         {
           /* skip unknown headers but recognize xv's thumbnail format */
           CHECK_FOR_ERROR (g_ascii_isdigit (*buf), pnminfo->jmpbuf,
-                           _("PAM: Unsupported inofficial PNM variant."));
+                           _("PAM: Unsupported unofficial PNM variant."));
         }
     }
     CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
