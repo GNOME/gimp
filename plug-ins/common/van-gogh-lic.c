@@ -77,7 +77,7 @@ struct _LicClass
 
 
 #define LIC_TYPE  (lic_get_type ())
-#define LIC (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIC_TYPE, Lic))
+#define LIC(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIC_TYPE, Lic))
 
 GType                   lic_get_type         (void) G_GNUC_CONST;
 
