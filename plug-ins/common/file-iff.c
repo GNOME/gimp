@@ -230,10 +230,10 @@ load_image (GFile        *file,
     {
       ILBM_Image        *true_image   = iff_image[i];
       /* Struct representing bitmap header properties */
-      ILBM_BitMapHeader *bitMapHeader = true_image->bitMapHeader;
+      ILBM_BitMapHeader *bitMapHeader;
       /* Struct containing the color palette */
-      ILBM_ColorMap     *colorMap     = true_image->colorMap;
-      ILBM_Viewport     *camg         = true_image->viewport;
+      ILBM_ColorMap     *colorMap;
+      ILBM_Viewport     *camg;
       IFF_UByte         *bitplanes;
       GimpImageType      image_type;
       guchar             gimp_cmap[768];  /* Max index is (2^nplanes) - 1 */
@@ -244,29 +244,38 @@ load_image (GFile        *file,
       gint               row_length;
       gint               pixel_size   = 1;
       gint               y_height     = 0;
+      gint               aspect_x     = 0;
+      gint               aspect_y     = 0;
       gboolean           ehb_mode     = FALSE;
       gboolean           ham_mode     = FALSE;
 
-      if (! true_image || ! bitMapHeader)
+      if (! true_image)
         {
           g_message (_("Invalid or missing ILBM image"));
           return image;
         }
-      if (! true_image->body)
-        {
-          g_message (_("ILBM contains no image data - likely a palette file"));
-          return NULL;
-        }
+
+      colorMap = true_image->colorMap;
+      camg     = true_image->viewport;
 
       /* Convert ACBM files to ILBM format */
       if (ILBM_imageIsACBM (true_image))
         ILBM_convertACBMToILBM (true_image);
+
+      bitMapHeader = true_image->bitMapHeader;
+      if (! bitMapHeader || ! true_image->body)
+        {
+          g_message (_("ILBM contains no image data - likely a palette file"));
+          return NULL;
+        }
 
       width      = bitMapHeader->w;
       height     = bitMapHeader->h;
       nPlanes    = bitMapHeader->nPlanes;
       row_length = (width + 15) / 16;
       pixel_size = nPlanes / 8;
+      aspect_x   = bitMapHeader->xAspect;
+      aspect_y   = bitMapHeader->yAspect;
 
       /* Check for ILBM variants in CMAG chunk */
       if (camg)
@@ -329,8 +338,9 @@ load_image (GFile        *file,
 
       ILBM_unpackByteRun (true_image);
 
-      image = gimp_image_new (width, height,
-                              pixel_size == 1 ? GIMP_INDEXED : GIMP_RGB);
+      if (! image)
+        image = gimp_image_new (width, height,
+                                pixel_size == 1 ? GIMP_INDEXED : GIMP_RGB);
 
       layer = gimp_layer_new (image, _("Background"), width, height,
                               image_type, 100,
@@ -340,6 +350,24 @@ load_image (GFile        *file,
       buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
       bitplanes = true_image->body->chunkData;
+
+      /* Setting resolution for non-square pixel aspect ratios */
+      if (aspect_x != aspect_y && aspect_x > 0 && aspect_y > 0)
+        {
+          gdouble image_xres;
+          gdouble image_yres;
+          gfloat  ratio = (gfloat) aspect_x / aspect_y;
+
+          g_message (_("Non-square pixels. Image might look squashed if "
+                       "Dot for Dot mode is enabled."));
+
+          gimp_image_get_resolution (image, &image_xres, &image_yres);
+          if (ratio < 1)
+            image_xres = image_yres * (1 / ratio);
+          else
+            image_yres = image_xres * ratio;
+          gimp_image_set_resolution (image, image_xres, image_yres);
+        }
 
       /* Loading rows */
       for (gint j = 0; j < height; j++)
