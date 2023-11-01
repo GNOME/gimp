@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-24 20:29+0000\n"
-"PO-Revision-Date: 2023-10-25 07:55+0800\n"
+"POT-Creation-Date: 2023-10-25 17:01+0000\n"
+"PO-Revision-Date: 2023-10-26 08:59+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: Gtranslator 45.2\n"
+"X-Generator: Gtranslator 45.3\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -41,14 +41,14 @@ msgstr "在 C 语言中锻炼一只山羊"
 #: plug-ins/common/jigsaw.c:466 plug-ins/common/nl-filter.c:217
 #: plug-ins/common/qbist.c:252 plug-ins/common/sample-colorize.c:427
 #: plug-ins/common/smooth-palette.c:195 plug-ins/common/sparkle.c:300
-#: plug-ins/common/sphere-designer.c:3179 plug-ins/common/tile.c:218
+#: plug-ins/common/sphere-designer.c:3185 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:913
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:181
 #: plug-ins/file-dds/dds.c:511 plug-ins/flame/flame.c:299
 #: plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
-#: plug-ins/ifs-compose/ifs-compose.c:487 plug-ins/imagemap/imap_main.c:264
+#: plug-ins/ifs-compose/ifs-compose.c:492 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:756
 #: plug-ins/map-object/map-object-main.c:532 plug-ins/pagecurl/pagecurl.c:299
 #, c-format
@@ -71,8 +71,8 @@ msgstr "锻炼一只山羊（C）"
 #: plug-ins/common/file-heif.c:2345 plug-ins/common/file-pdf-load.c:686
 #: plug-ins/common/file-pdf-save.c:1046 plug-ins/common/grid.c:786
 #: plug-ins/common/qbist.c:836 plug-ins/common/qbist.c:878
-#: plug-ins/common/qbist.c:932 plug-ins/common/sphere-designer.c:2287
-#: plug-ins/common/sphere-designer.c:2632 plug-ins/common/unit-editor.c:435
+#: plug-ins/common/qbist.c:932 plug-ins/common/sphere-designer.c:2292
+#: plug-ins/common/sphere-designer.c:2637 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:472
 #: plug-ins/file-tiff/file-tiff-load.c:2555 plug-ins/flame/flame.c:622
 #: plug-ins/flame/flame.c:827
@@ -86,9 +86,9 @@ msgstr "锻炼一只山羊（C）"
 #: plug-ins/gimpressionist/presets.c:642 plug-ins/gimpressionist/sizemap.c:401
 #: plug-ins/gradient-flare/gradient-flare.c:3331
 #: plug-ins/gradient-flare/gradient-flare.c:3445
-#: plug-ins/ifs-compose/ifs-compose.c:908
-#: plug-ins/ifs-compose/ifs-compose.c:2554
-#: plug-ins/ifs-compose/ifs-compose.c:2591 plug-ins/imagemap/imap_browse.c:80
+#: plug-ins/ifs-compose/ifs-compose.c:914
+#: plug-ins/ifs-compose/ifs-compose.c:2560
+#: plug-ins/ifs-compose/ifs-compose.c:2597 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:738
 #: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1185
@@ -149,14 +149,14 @@ msgstr "锻炼一只山羊（JavaScript）"
 #: plug-ins/common/cml-explorer.c:1380 plug-ins/common/colormap-remap.c:695
 #: plug-ins/common/file-heif.c:2346 plug-ins/common/file-pdf-load.c:687
 #: plug-ins/common/grid.c:787 plug-ins/common/qbist.c:933
-#: plug-ins/common/sphere-designer.c:2633 plug-ins/common/unit-editor.c:266
+#: plug-ins/common/sphere-designer.c:2638 plug-ins/common/unit-editor.c:266
 #: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:473
-#: plug-ins/file-exr/file-exr.c:422 plug-ins/file-psd/psd-load.c:3533
+#: plug-ins/file-exr/file-exr.c:422 plug-ins/file-psd/psd-load.c:3549
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3446
-#: plug-ins/ifs-compose/ifs-compose.c:909
+#: plug-ins/ifs-compose/ifs-compose.c:915
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
 msgstr "确认(_O)"
@@ -440,117 +440,122 @@ msgstr "回放(_P)..."
 msgid "Preview a GIMP layer-based animation"
 msgstr "预览一个基于 GIMP 图层的动画"
 
-#: plug-ins/common/animation-play.c:370 plug-ins/common/animation-play.c:736
-#: plug-ins/common/animation-play.c:1352
+#: plug-ins/common/animation-play.c:371
+#, c-format
+msgid "Procedure '%s' only works in interactive mode."
+msgstr "程序“%s”仅在交互式模式中有效。"
+
+#: plug-ins/common/animation-play.c:389 plug-ins/common/animation-play.c:765
+#: plug-ins/common/animation-play.c:1381
 msgid "Start playback"
 msgstr "开始回放"
 
-#: plug-ins/common/animation-play.c:371 plug-ins/common/animation-play.c:738
+#: plug-ins/common/animation-play.c:390 plug-ins/common/animation-play.c:767
 msgid "Step back to previous frame"
 msgstr "后退到上一帧"
 
-#: plug-ins/common/animation-play.c:372 plug-ins/common/animation-play.c:740
+#: plug-ins/common/animation-play.c:391 plug-ins/common/animation-play.c:769
 msgid "Step to next frame"
 msgstr "跳到下一帧"
 
-#: plug-ins/common/animation-play.c:373 plug-ins/common/animation-play.c:742
+#: plug-ins/common/animation-play.c:392 plug-ins/common/animation-play.c:771
 msgid "Rewind the animation"
 msgstr "快退动画"
 
-#: plug-ins/common/animation-play.c:378
+#: plug-ins/common/animation-play.c:397
 msgid "Increase the speed of the animation"
 msgstr "提高动画的速度"
 
-#: plug-ins/common/animation-play.c:379
+#: plug-ins/common/animation-play.c:398
 msgid "Decrease the speed of the animation"
 msgstr "降低动画的速度"
 
-#: plug-ins/common/animation-play.c:380
+#: plug-ins/common/animation-play.c:399
 msgid "Reset the speed of the animation"
 msgstr "重置动画速度"
 
-#: plug-ins/common/animation-play.c:385 plug-ins/common/animation-play.c:745
+#: plug-ins/common/animation-play.c:404 plug-ins/common/animation-play.c:774
 msgid "Detach the animation from the dialog window"
 msgstr "从对话窗口中分离动画"
 
-#: plug-ins/common/animation-play.c:386 plug-ins/common/animation-play.c:747
+#: plug-ins/common/animation-play.c:405 plug-ins/common/animation-play.c:776
 msgid "Reload the image"
 msgstr "重新载入图像"
 
-#: plug-ins/common/animation-play.c:387 plug-ins/imagemap/imap-menu.ui:26
+#: plug-ins/common/animation-play.c:406 plug-ins/imagemap/imap-menu.ui:26
 msgid "Quit"
 msgstr "退出"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:467 plug-ins/common/animation-play.c:525
-#: plug-ins/common/animation-play.c:803
+#: plug-ins/common/animation-play.c:496 plug-ins/common/animation-play.c:554
+#: plug-ins/common/animation-play.c:832
 #, c-format
 msgid "%.1f %%"
 msgstr "%.1f %%"
 
 #. Image Name
-#: plug-ins/common/animation-play.c:658
+#: plug-ins/common/animation-play.c:687
 msgid "Animation Playback:"
 msgstr "动画回放："
 
-#: plug-ins/common/animation-play.c:738
+#: plug-ins/common/animation-play.c:767
 msgid "Step _back"
 msgstr "后退(_B)"
 
-#: plug-ins/common/animation-play.c:740
+#: plug-ins/common/animation-play.c:769
 msgid "_Step"
 msgstr "单步(_S)"
 
-#: plug-ins/common/animation-play.c:745
+#: plug-ins/common/animation-play.c:774
 msgid "Detach"
 msgstr "分离"
 
 #. Zoom Options
-#: plug-ins/common/animation-play.c:818
+#: plug-ins/common/animation-play.c:847
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:702
 #: plug-ins/imagemap/imap-menu.ui:276
 msgid "Zoom"
 msgstr "缩放"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:828
+#: plug-ins/common/animation-play.c:857
 #, c-format
 msgid "%d fps"
 msgstr "%d fps"
 
-#: plug-ins/common/animation-play.c:839
+#: plug-ins/common/animation-play.c:868
 msgid "Default framerate"
 msgstr "默认帧率"
 
-#: plug-ins/common/animation-play.c:859
+#: plug-ins/common/animation-play.c:888
 msgid "Playback speed"
 msgstr "回放速度"
 
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:870 plug-ins/common/file-gif-save.c:1269
+#: plug-ins/common/animation-play.c:899 plug-ins/common/file-gif-save.c:1269
 msgid "Cumulative layers (combine)"
 msgstr "累积图层（组合）"
 
-#: plug-ins/common/animation-play.c:875 plug-ins/common/file-gif-save.c:1271
+#: plug-ins/common/animation-play.c:904 plug-ins/common/file-gif-save.c:1271
 msgid "One frame per layer (replace)"
 msgstr "每图层一帧（替换）"
 
-#: plug-ins/common/animation-play.c:971
+#: plug-ins/common/animation-play.c:1000
 msgid "Memory could not be allocated to the frame container."
 msgstr "无法将内存分配到该帧容器。"
 
-#: plug-ins/common/animation-play.c:1038
+#: plug-ins/common/animation-play.c:1067
 msgid "Invalid image. Did you close it?"
 msgstr "无效图像。您关闭了它吗？"
 
-#: plug-ins/common/animation-play.c:1150
+#: plug-ins/common/animation-play.c:1179
 #, c-format
 msgid "Frame %d of %d"
 msgstr "帧 %d/%d"
 
-#: plug-ins/common/animation-play.c:1352
+#: plug-ins/common/animation-play.c:1381
 msgid "Stop playback"
 msgstr "停止回放"
 
@@ -630,7 +635,7 @@ msgstr "竖直"
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:700
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2733 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2749 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1534
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gimpressionist/general.c:139
@@ -1002,13 +1007,13 @@ msgstr "随机种子"
 #: plug-ins/common/cml-explorer.c:1456 plug-ins/common/cml-explorer.c:2357
 #: plug-ins/common/curve-bend.c:1313 plug-ins/common/curve-bend.c:1856
 #: plug-ins/common/file-cel.c:1009 plug-ins/common/qbist.c:837
-#: plug-ins/common/qbist.c:1020 plug-ins/common/sphere-designer.c:2290
-#: plug-ins/common/sphere-designer.c:2681 plug-ins/flame/flame.c:624
+#: plug-ins/common/qbist.c:1020 plug-ins/common/sphere-designer.c:2295
+#: plug-ins/common/sphere-designer.c:2686 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1233
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:817
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1541
-#: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:905
-#: plug-ins/ifs-compose/ifs-compose.c:2592 plug-ins/imagemap/imap_browse.c:81
+#: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:911
+#: plug-ins/ifs-compose/ifs-compose.c:2598 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:492
 #: plug-ins/lighting/lighting-ui.c:883
 msgid "_Open"
@@ -1018,14 +1023,14 @@ msgstr "打开(_O)"
 #: plug-ins/common/cml-explorer.c:1464 plug-ins/common/cml-explorer.c:2147
 #: plug-ins/common/curve-bend.c:1325 plug-ins/common/curve-bend.c:1891
 #: plug-ins/common/file-pdf-save.c:1045 plug-ins/common/qbist.c:879
-#: plug-ins/common/qbist.c:1028 plug-ins/common/sphere-designer.c:2290
-#: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:624
+#: plug-ins/common/qbist.c:1028 plug-ins/common/sphere-designer.c:2295
+#: plug-ins/common/sphere-designer.c:2694 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1241
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:825
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1579
 #: plug-ins/gfig/gfig-dialog.c:832 plug-ins/gimpressionist/brush.c:271
-#: plug-ins/ifs-compose/ifs-compose.c:906
-#: plug-ins/ifs-compose/ifs-compose.c:2555 plug-ins/imagemap/imap_file.c:129
+#: plug-ins/ifs-compose/ifs-compose.c:912
+#: plug-ins/ifs-compose/ifs-compose.c:2561 plug-ins/imagemap/imap_file.c:129
 #: plug-ins/lighting/lighting-ui.c:486 plug-ins/lighting/lighting-ui.c:739
 msgid "_Save"
 msgstr "保存(_S)"
@@ -1188,7 +1193,7 @@ msgstr "当前设置的曲线图"
 #: plug-ins/common/cml-explorer.c:2014 plug-ins/common/plugin-browser.c:562
 #: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
-#: plug-ins/ifs-compose/ifs-compose.c:1208
+#: plug-ins/ifs-compose/ifs-compose.c:1214
 #: plug-ins/metadata/metadata-viewer.c:272
 msgid "_Close"
 msgstr "关闭(_C)"
@@ -1208,14 +1213,14 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/common/file-png.c:1488 plug-ins/common/file-raw-data.c:1337
 #: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
 #: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1381
-#: plug-ins/common/sphere-designer.c:2201 plug-ins/file-bmp/bmp-save.c:341
+#: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-save.c:341
 #: plug-ins/file-fli/fli-gimp.c:808 plug-ins/file-icns/file-icns-save.c:427
 #: plug-ins/file-ico/ico-save.c:1342 plug-ins/file-ico/ico-save.c:1559
 #: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:590
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1441
-#: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2414
+#: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2420
 #: plug-ins/lighting/lighting-ui.c:808
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1345,8 +1350,8 @@ msgstr "重新整理颜色表"
 
 #. The Reset button
 #: plug-ins/common/colormap-remap.c:693 plug-ins/common/curve-bend.c:1296
-#: plug-ins/common/sphere-designer.c:2631 plug-ins/common/tile-small.c:525
-#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:907
+#: plug-ins/common/sphere-designer.c:2636 plug-ins/common/tile-small.c:525
+#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:913
 msgid "_Reset"
 msgstr "重置(_R)"
 
@@ -1945,7 +1950,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-svg.c:809 plug-ins/common/file-tga.c:447
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
-#: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2090
+#: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
 #: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:156
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
@@ -7328,51 +7333,51 @@ msgstr "球面设计器(_D)…"
 msgid "Create an image of a textured sphere"
 msgstr "创建一幅带纹理的球体图像"
 
-#: plug-ins/common/sphere-designer.c:1830
-#: plug-ins/common/sphere-designer.c:2775
+#: plug-ins/common/sphere-designer.c:1835
+#: plug-ins/common/sphere-designer.c:2780
 msgid "Texture"
 msgstr "纹理"
 
-#: plug-ins/common/sphere-designer.c:1832
+#: plug-ins/common/sphere-designer.c:1837
 msgid "Bumpmap"
 msgstr "凹凸映射"
 
-#: plug-ins/common/sphere-designer.c:1834
-#: plug-ins/common/sphere-designer.c:2777
+#: plug-ins/common/sphere-designer.c:1839
+#: plug-ins/common/sphere-designer.c:2782
 msgid "Light"
 msgstr "光线"
 
-#: plug-ins/common/sphere-designer.c:2097
+#: plug-ins/common/sphere-designer.c:2102
 #, c-format
 msgid "File '%s' is not a valid save file."
 msgstr "文件“%s”不是有效的保存文件。"
 
-#: plug-ins/common/sphere-designer.c:2277
+#: plug-ins/common/sphere-designer.c:2282
 msgid "Open File"
 msgstr "打开文件"
 
-#: plug-ins/common/sphere-designer.c:2277
+#: plug-ins/common/sphere-designer.c:2282
 msgid "Save File"
 msgstr "保存文件"
 
-#: plug-ins/common/sphere-designer.c:2627
+#: plug-ins/common/sphere-designer.c:2632
 msgid "Sphere Designer"
 msgstr "球面设计器"
 
-#: plug-ins/common/sphere-designer.c:2728
+#: plug-ins/common/sphere-designer.c:2733
 msgid "Layers"
 msgstr "图层"
 
-#: plug-ins/common/sphere-designer.c:2739
+#: plug-ins/common/sphere-designer.c:2744
 #: plug-ins/gradient-flare/gradient-flare.c:3045
 msgid "_New"
 msgstr "新建(_N)"
 
-#: plug-ins/common/sphere-designer.c:2745
+#: plug-ins/common/sphere-designer.c:2750
 msgid "D_uplicate"
 msgstr "再制(_U)"
 
-#: plug-ins/common/sphere-designer.c:2751
+#: plug-ins/common/sphere-designer.c:2756
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1357
 #: plug-ins/gimpressionist/presets.c:1067
@@ -7381,94 +7386,94 @@ msgstr "再制(_U)"
 msgid "_Delete"
 msgstr "删除(_D)"
 
-#: plug-ins/common/sphere-designer.c:2761
+#: plug-ins/common/sphere-designer.c:2766
 msgid "Properties"
 msgstr "属性"
 
-#: plug-ins/common/sphere-designer.c:2776
+#: plug-ins/common/sphere-designer.c:2781
 msgid "Bump"
 msgstr "凹凸"
 
-#: plug-ins/common/sphere-designer.c:2784
+#: plug-ins/common/sphere-designer.c:2789
 msgid "Type:"
 msgstr "类型："
 
-#: plug-ins/common/sphere-designer.c:2803
+#: plug-ins/common/sphere-designer.c:2808
 msgid "Texture:"
 msgstr "纹理："
 
-#: plug-ins/common/sphere-designer.c:2808
+#: plug-ins/common/sphere-designer.c:2813
 msgid "Colors:"
 msgstr "颜色："
 
-#: plug-ins/common/sphere-designer.c:2811
-#: plug-ins/common/sphere-designer.c:2822
+#: plug-ins/common/sphere-designer.c:2816
+#: plug-ins/common/sphere-designer.c:2827
 msgid "Color Selection Dialog"
 msgstr "颜色选择对话框"
 
 #. Scale
-#: plug-ins/common/sphere-designer.c:2833 plug-ins/gimpressionist/paper.c:191
-#: plug-ins/ifs-compose/ifs-compose.c:663
+#: plug-ins/common/sphere-designer.c:2838 plug-ins/gimpressionist/paper.c:191
+#: plug-ins/ifs-compose/ifs-compose.c:669
 msgid "Scale:"
 msgstr "缩放："
 
-#: plug-ins/common/sphere-designer.c:2841
+#: plug-ins/common/sphere-designer.c:2846
 msgid "Turbulence:"
 msgstr "湍流："
 
-#: plug-ins/common/sphere-designer.c:2849
+#: plug-ins/common/sphere-designer.c:2854
 msgid "Amount:"
 msgstr "量值："
 
-#: plug-ins/common/sphere-designer.c:2856
+#: plug-ins/common/sphere-designer.c:2861
 msgid "Exp.:"
 msgstr "指数："
 
-#: plug-ins/common/sphere-designer.c:2863
+#: plug-ins/common/sphere-designer.c:2868
 msgid "Transformations"
 msgstr "变换"
 
-#: plug-ins/common/sphere-designer.c:2877
+#: plug-ins/common/sphere-designer.c:2882
 msgid "Scale X:"
 msgstr "缩放 X："
 
-#: plug-ins/common/sphere-designer.c:2885
+#: plug-ins/common/sphere-designer.c:2890
 msgid "Scale Y:"
 msgstr "缩放 Y："
 
-#: plug-ins/common/sphere-designer.c:2893
+#: plug-ins/common/sphere-designer.c:2898
 msgid "Scale Z:"
 msgstr "缩放 Z："
 
-#: plug-ins/common/sphere-designer.c:2904
+#: plug-ins/common/sphere-designer.c:2909
 msgid "Rotate X:"
 msgstr "旋转 X："
 
-#: plug-ins/common/sphere-designer.c:2911
+#: plug-ins/common/sphere-designer.c:2916
 msgid "Rotate Y:"
 msgstr "旋转 Y："
 
-#: plug-ins/common/sphere-designer.c:2918
+#: plug-ins/common/sphere-designer.c:2923
 msgid "Rotate Z:"
 msgstr "旋转 Z："
 
-#: plug-ins/common/sphere-designer.c:2928
+#: plug-ins/common/sphere-designer.c:2933
 msgid "Position X:"
 msgstr "位置 X："
 
-#: plug-ins/common/sphere-designer.c:2936
+#: plug-ins/common/sphere-designer.c:2941
 msgid "Position Y:"
 msgstr "位置 Y："
 
-#: plug-ins/common/sphere-designer.c:2944
+#: plug-ins/common/sphere-designer.c:2949
 msgid "Position Z:"
 msgstr "位置 Z："
 
-#: plug-ins/common/sphere-designer.c:3074
+#: plug-ins/common/sphere-designer.c:3079
 msgid "Rendering sphere"
 msgstr "绘制球面"
 
-#: plug-ins/common/sphere-designer.c:3193
+#: plug-ins/common/sphere-designer.c:3199
 msgid "Region selected for plug-in is empty"
 msgstr "为插件选中的范围是空的"
 
@@ -7518,7 +7523,7 @@ msgstr "小块平铺"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:492 plug-ins/ifs-compose/ifs-compose.c:719
+#: plug-ins/common/tile-small.c:492 plug-ins/ifs-compose/ifs-compose.c:725
 msgid "Flip"
 msgstr "翻转"
 
@@ -7800,7 +7805,7 @@ msgstr "基本选项"
 msgid "Step size:"
 msgstr "单步大小："
 
-#: plug-ins/common/warp.c:525 plug-ins/ifs-compose/ifs-compose.c:1239
+#: plug-ins/common/warp.c:525 plug-ins/ifs-compose/ifs-compose.c:1245
 msgid "Iterations:"
 msgstr "迭代次数："
 
@@ -7870,7 +7875,7 @@ msgid "Vector mag:"
 msgstr "矢量幅度："
 
 #. Angle
-#: plug-ins/common/warp.c:790 plug-ins/ifs-compose/ifs-compose.c:677
+#: plug-ins/common/warp.c:790 plug-ins/ifs-compose/ifs-compose.c:683
 msgid "Angle:"
 msgstr "角度："
 
@@ -9153,28 +9158,28 @@ msgstr "不支持的或无效的图层蒙板宽度：%d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "不支持的或无效的图层蒙板尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2066 plug-ins/file-psd/psd-load.c:2706
+#: plug-ins/file-psd/psd-load.c:2066 plug-ins/file-psd/psd-load.c:2722
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "不支持的压缩模式：%d"
 
-#: plug-ins/file-psd/psd-load.c:2899
+#: plug-ins/file-psd/psd-load.c:2915
 msgid "Extra"
 msgstr "附加的"
 
-#: plug-ins/file-psd/psd-load.c:3099
+#: plug-ins/file-psd/psd-load.c:3115
 msgid "Unsupported or invalid channel size"
 msgstr "不支持或无效的通道尺寸"
 
-#: plug-ins/file-psd/psd-load.c:3168
+#: plug-ins/file-psd/psd-load.c:3184
 msgid "Failed to decompress data"
 msgstr "解压缩数据失败"
 
-#: plug-ins/file-psd/psd-load.c:3549
+#: plug-ins/file-psd/psd-load.c:3565
 msgid "Duotone Import"
 msgstr "双色导入"
 
-#: plug-ins/file-psd/psd-load.c:3550
+#: plug-ins/file-psd/psd-load.c:3566
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -9184,11 +9189,11 @@ msgstr ""
 "双色调颜色空间数据已保存\n"
 "且可在导出时重新应用。"
 
-#: plug-ins/file-psd/psd-load.c:3572 plug-ins/file-psd/psd-save.c:2665
+#: plug-ins/file-psd/psd-load.c:3588 plug-ins/file-psd/psd-save.c:2665
 msgid "Compatibility Notice"
 msgstr "兼容性注意"
 
-#: plug-ins/file-psd/psd-load.c:3573
+#: plug-ins/file-psd/psd-load.c:3589
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -10788,7 +10793,7 @@ msgid "Copy an object"
 msgstr "复制一个对象"
 
 #: plug-ins/gfig/gfig-dialog.c:410 plug-ins/gfig/gfig-menu.ui:104
-#: plug-ins/ifs-compose/ifs-compose.c:954 plug-ins/ifs-compose/ifs-menus.ui:27
+#: plug-ins/ifs-compose/ifs-compose.c:960 plug-ins/ifs-compose/ifs-menus.ui:27
 #: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
 msgid "Delete"
 msgstr "删除"
@@ -11106,7 +11111,7 @@ msgstr "关闭"
 msgid "Edit"
 msgstr "编辑"
 
-#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:956
+#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:962
 #: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1530
 #: plug-ins/imagemap/imap-menu.ui:35
 msgid "Undo"
@@ -12197,160 +12202,160 @@ msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "创建一个迭代函数系统（IFS）分形"
 
 #. X
-#: plug-ins/ifs-compose/ifs-compose.c:635
+#: plug-ins/ifs-compose/ifs-compose.c:641
 msgid "X:"
 msgstr "X："
 
 #. Y
-#: plug-ins/ifs-compose/ifs-compose.c:649
+#: plug-ins/ifs-compose/ifs-compose.c:655
 msgid "Y:"
 msgstr "Y："
 
 #. Asym
-#: plug-ins/ifs-compose/ifs-compose.c:691
+#: plug-ins/ifs-compose/ifs-compose.c:697
 msgid "Asymmetry:"
 msgstr "不对称度："
 
 #. Shear
-#: plug-ins/ifs-compose/ifs-compose.c:705
+#: plug-ins/ifs-compose/ifs-compose.c:711
 msgid "Shear:"
 msgstr "切变："
 
 #. Simple color control section
-#: plug-ins/ifs-compose/ifs-compose.c:750
+#: plug-ins/ifs-compose/ifs-compose.c:756
 msgid "Simple"
 msgstr "简单"
 
-#: plug-ins/ifs-compose/ifs-compose.c:759
+#: plug-ins/ifs-compose/ifs-compose.c:765
 msgid "IFS Fractal: Target"
 msgstr "IFS 分形：目标"
 
-#: plug-ins/ifs-compose/ifs-compose.c:765
+#: plug-ins/ifs-compose/ifs-compose.c:771
 msgid "Scale hue by:"
 msgstr "色相尺度："
 
-#: plug-ins/ifs-compose/ifs-compose.c:780
+#: plug-ins/ifs-compose/ifs-compose.c:786
 msgid "Scale value by:"
 msgstr "亮度尺度："
 
 #. Full color control section
-#: plug-ins/ifs-compose/ifs-compose.c:797
+#: plug-ins/ifs-compose/ifs-compose.c:803
 msgid "Full"
 msgstr "完全"
 
-#: plug-ins/ifs-compose/ifs-compose.c:805
+#: plug-ins/ifs-compose/ifs-compose.c:811
 msgid "IFS Fractal: Red"
 msgstr "IFS 分形：红"
 
-#: plug-ins/ifs-compose/ifs-compose.c:813
+#: plug-ins/ifs-compose/ifs-compose.c:819
 msgid "IFS Fractal: Green"
 msgstr "IFS 分形：绿"
 
-#: plug-ins/ifs-compose/ifs-compose.c:821
+#: plug-ins/ifs-compose/ifs-compose.c:827
 msgid "IFS Fractal: Blue"
 msgstr "IFS 分形：蓝"
 
-#: plug-ins/ifs-compose/ifs-compose.c:829
+#: plug-ins/ifs-compose/ifs-compose.c:835
 msgid "IFS Fractal: Black"
 msgstr "IFS 分形：黑"
 
-#: plug-ins/ifs-compose/ifs-compose.c:901
+#: plug-ins/ifs-compose/ifs-compose.c:907
 msgid "IFS Fractal"
 msgstr "IFS 分形"
 
-#: plug-ins/ifs-compose/ifs-compose.c:945 plug-ins/ifs-compose/ifs-menus.ui:6
+#: plug-ins/ifs-compose/ifs-compose.c:951 plug-ins/ifs-compose/ifs-menus.ui:6
 #: plug-ins/imagemap/imap_cmd_move.c:85
 #: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "移动"
 
-#: plug-ins/ifs-compose/ifs-compose.c:947 plug-ins/ifs-compose/ifs-menus.ui:11
+#: plug-ins/ifs-compose/ifs-compose.c:953 plug-ins/ifs-compose/ifs-menus.ui:11
 msgid "Rotate"
 msgstr "旋转"
 
-#: plug-ins/ifs-compose/ifs-compose.c:949 plug-ins/ifs-compose/ifs-menus.ui:16
+#: plug-ins/ifs-compose/ifs-compose.c:955 plug-ins/ifs-compose/ifs-menus.ui:16
 msgid "Stretch"
 msgstr "拉伸"
 
-#: plug-ins/ifs-compose/ifs-compose.c:952 plug-ins/ifs-compose/ifs-menus.ui:23
+#: plug-ins/ifs-compose/ifs-compose.c:958 plug-ins/ifs-compose/ifs-menus.ui:23
 msgid "New"
 msgstr "新建"
 
-#: plug-ins/ifs-compose/ifs-compose.c:958 plug-ins/ifs-compose/ifs-menus.ui:35
+#: plug-ins/ifs-compose/ifs-compose.c:964 plug-ins/ifs-compose/ifs-menus.ui:35
 #: plug-ins/imagemap/imap_main.c:1532 plug-ins/imagemap/imap-menu.ui:39
 msgid "Redo"
 msgstr "重做"
 
-#: plug-ins/ifs-compose/ifs-compose.c:960 plug-ins/ifs-compose/ifs-menus.ui:39
+#: plug-ins/ifs-compose/ifs-compose.c:966 plug-ins/ifs-compose/ifs-menus.ui:39
 #: plug-ins/imagemap/imap_cmd_select_all.c:50 plug-ins/imagemap/imap-menu.ui:61
 msgid "Select All"
 msgstr "全部选择"
 
-#: plug-ins/ifs-compose/ifs-compose.c:962 plug-ins/ifs-compose/ifs-menus.ui:43
+#: plug-ins/ifs-compose/ifs-compose.c:968 plug-ins/ifs-compose/ifs-menus.ui:43
 msgid "Recompute Center"
 msgstr "重新计算中心"
 
-#: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:49
+#: plug-ins/ifs-compose/ifs-compose.c:971 plug-ins/ifs-compose/ifs-menus.ui:49
 msgid "Render Options"
 msgstr "渲染选项"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1024
+#: plug-ins/ifs-compose/ifs-compose.c:1030
 msgid "Spatial Transformation"
 msgstr "空间变换"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1030
+#: plug-ins/ifs-compose/ifs-compose.c:1036
 msgid "Color Transformation"
 msgstr "颜色变换"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1040
+#: plug-ins/ifs-compose/ifs-compose.c:1046
 msgid "Relative probability:"
 msgstr "相对概率："
 
-#: plug-ins/ifs-compose/ifs-compose.c:1204
+#: plug-ins/ifs-compose/ifs-compose.c:1210
 msgid "IFS Fractal Render Options"
 msgstr "IFS 分形渲染选项"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1226
+#: plug-ins/ifs-compose/ifs-compose.c:1232
 msgid "Max. memory:"
 msgstr "最大内存："
 
-#: plug-ins/ifs-compose/ifs-compose.c:1254
+#: plug-ins/ifs-compose/ifs-compose.c:1260
 msgid "Subdivide:"
 msgstr "细分："
 
-#: plug-ins/ifs-compose/ifs-compose.c:1268
+#: plug-ins/ifs-compose/ifs-compose.c:1274
 msgid "Spot radius:"
 msgstr "点半径："
 
-#: plug-ins/ifs-compose/ifs-compose.c:1341
+#: plug-ins/ifs-compose/ifs-compose.c:1347
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "渲染 IFS（%d/%d）"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1493
+#: plug-ins/ifs-compose/ifs-compose.c:1499
 #, c-format
 msgid "Transformation %s"
 msgstr "变换 %s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2419
+#: plug-ins/ifs-compose/ifs-compose.c:2425
 msgid "Save failed"
 msgstr "保存失败"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2502
-#: plug-ins/ifs-compose/ifs-compose.c:2515
+#: plug-ins/ifs-compose/ifs-compose.c:2508
+#: plug-ins/ifs-compose/ifs-compose.c:2521
 msgid "Open failed"
 msgstr "打开失败"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2510
+#: plug-ins/ifs-compose/ifs-compose.c:2516
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "文件“%s”似乎不是 IFS 分形文件。"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2550
+#: plug-ins/ifs-compose/ifs-compose.c:2556
 msgid "Save as IFS Fractal file"
 msgstr "另存为 IFS 分形文件"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2587
+#: plug-ins/ifs-compose/ifs-compose.c:2593
 msgid "Open IFS Fractal file"
 msgstr "打开 IFS 分形文件"
 
