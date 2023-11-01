@@ -227,22 +227,31 @@ read_dds (GFile          *file,
   d.gbits  = color_bits (hdr.pixelfmt.gmask);
   d.bbits  = color_bits (hdr.pixelfmt.bmask);
   d.abits  = color_bits (hdr.pixelfmt.amask);
-  if (d.rbits <= 8)
-    d.rmask  = (hdr.pixelfmt.rmask >> d.rshift) << (8 - d.rbits);
+
+  if (d.rbits <= 8 && d.gbits <= 8 && d.bbits <= 8 && d.abits <= 8)
+    {
+      /* 8 bits per sample */
+      d.rmask  = (hdr.pixelfmt.rmask >> d.rshift) << (8 - d.rbits);
+      d.gmask  = (hdr.pixelfmt.gmask >> d.gshift) << (8 - d.gbits);
+      d.bmask  = (hdr.pixelfmt.bmask >> d.bshift) << (8 - d.bbits);
+      d.amask  = (hdr.pixelfmt.amask >> d.ashift) << (8 - d.abits);
+    }
+  else if (d.rbits <= 16 && d.gbits <= 16 && d.bbits <= 16 && d.abits <= 16)
+    {
+      /* 16 bits per sample */
+      d.rmask  = (hdr.pixelfmt.rmask >> d.rshift) << (16 - d.rbits);
+      d.gmask  = (hdr.pixelfmt.gmask >> d.gshift) << (16 - d.gbits);
+      d.bmask  = (hdr.pixelfmt.bmask >> d.bshift) << (16 - d.bbits);
+      d.amask  = (hdr.pixelfmt.amask >> d.ashift) << (16 - d.abits);
+    }
   else
-    d.rmask  = (hdr.pixelfmt.rmask >> d.rshift) << (16 - d.rbits);
-  if (d.gbits <= 8)
-    d.gmask  = (hdr.pixelfmt.gmask >> d.gshift) << (8 - d.gbits);
-  else
-    d.gmask  = (hdr.pixelfmt.gmask >> d.gshift) << (16 - d.gbits);
-  if (d.bbits <= 8)
-    d.bmask  = (hdr.pixelfmt.bmask >> d.bshift) << (8 - d.bbits);
-  else
-    d.bmask  = (hdr.pixelfmt.bmask >> d.bshift) << (16 - d.bbits);
-  if (d.abits <= 8)
-    d.amask  = (hdr.pixelfmt.amask >> d.ashift) << (8 - d.abits);
-  else
-    d.amask  = (hdr.pixelfmt.amask >> d.ashift) << (16 - d.abits);
+    {
+      /* 32 bits per sample in case we need this in the future */
+      d.rmask  = (hdr.pixelfmt.rmask >> d.rshift) << (32 - d.rbits);
+      d.gmask  = (hdr.pixelfmt.gmask >> d.gshift) << (32 - d.gbits);
+      d.bmask  = (hdr.pixelfmt.bmask >> d.bshift) << (32 - d.bbits);
+      d.amask  = (hdr.pixelfmt.amask >> d.ashift) << (32 - d.abits);
+    }
 
   d.gimp_bps = 1; /* Most formats will be converted to 1 byte per sample */
   if (hdr.pixelfmt.flags & DDPF_FOURCC)
@@ -1230,11 +1239,15 @@ load_layer (FILE             *fp,
                 {
                   if (hdr->pixelfmt.amask == 0xc0000000) /* handle RGB10A2 */
                     {
-                      pixels[pos + ired]  = (pixel >> d->rshift) >> 2;
-                      pixels[pos + 1]     = (pixel >> d->gshift) >> 2;
-                      pixels[pos + iblue] = (pixel >> d->bshift) >> 2;
+                      guint16 *pixels16 = (guint16 *) &pixels[pos];
+
+                      pixels16[ired]  = (guint16) (pixel >> d->rshift << (16 - d->rbits));
+                      pixels16[1]     = (guint16) (pixel >> d->gshift << (16 - d->gbits));
+                      pixels16[iblue] = (guint16) (pixel >> d->bshift << (16 - d->bbits));
                       if (hdr->pixelfmt.flags & DDPF_ALPHAPIXELS)
-                        pixels[pos + 3] = (pixel >> d->ashift << (8 - d->abits) & d->amask) * 255 / d->amask;
+                        {
+                          pixels16[3] = (guint16) ((pixel >> d->ashift << (16 - d->abits) & d->amask) * 65535 / d->amask);
+                        }
                     }
                   else if (d->rmask > 0 && d->gmask > 0 && d->bmask > 0)
                     {
