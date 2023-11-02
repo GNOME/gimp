@@ -1178,8 +1178,10 @@ load_layer (FILE             *fp,
   if ((hdr->pixelfmt.flags & DDPF_RGB) ||
       (hdr->pixelfmt.flags & DDPF_ALPHA))
     {
-      guint ired  = 0;
-      guint iblue = 2;
+      guint rshiftbits, gshiftbits, bshiftbits, ashiftbits;
+      guint rowstride = width * d->bpp;
+      guint ired      = 0;
+      guint iblue     = 2;
 
       if (hdr->reserved.gimp_dds_special.magic1 == FOURCC ('G','I','M','P') &&
           hdr->reserved.gimp_dds_special.version <= 199003 &&
@@ -1195,6 +1197,36 @@ load_layer (FILE             *fp,
           iblue = 0;
         }
 
+      if (d->gimp_bps == 1)
+        {
+          rshiftbits = (8 - d->rbits);
+          gshiftbits = (8 - d->gbits);
+          bshiftbits = (8 - d->bbits);
+          ashiftbits = (8 - d->abits);
+        }
+      else if (d->gimp_bps == 2)
+        {
+          rshiftbits = (16 - d->rbits);
+          gshiftbits = (16 - d->gbits);
+          bshiftbits = (16 - d->bbits);
+          ashiftbits = (16 - d->abits);
+        }
+      else
+        {
+          /* assuming 4 bytes per sample */
+          rshiftbits = (32 - d->rbits);
+          gshiftbits = (32 - d->gbits);
+          bshiftbits = (32 - d->bbits);
+          ashiftbits = (32 - d->abits);
+        }
+
+      if ((hdr->flags & DDSD_PITCH) && (rowstride > hdr->pitch_or_linsize))
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Requested data exceeds size of file.\n"));
+          return FALSE;
+        }
+
       z = 0;
       for (y = 0, n = 0; y < height; ++y, ++n)
         {
@@ -1206,22 +1238,21 @@ load_layer (FILE             *fp,
               gimp_progress_update ((double) y / (double) hdr->height);
             }
 
-          current_position = ftell (fp);
-          if ((hdr->flags & DDSD_PITCH)                          &&
-              ((width * d->bpp) > (file_size - current_position) ||
-               (width * d->bpp) > hdr->pitch_or_linsize))
+          if (hdr->flags & DDSD_PITCH)
             {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Requested data exceeds size of file.\n"));
-              return FALSE;
-            }
-
-          if ((hdr->flags & DDSD_PITCH) &&
-              ! fread (buf, width * d->bpp, 1, fp))
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Unexpected EOF.\n"));
-              return FALSE;
+              current_position = ftell (fp);
+              if (rowstride > (file_size - current_position))
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                               _("Requested data exceeds size of file.\n"));
+                  return FALSE;
+                }
+              if (! fread (buf, rowstride, 1, fp))
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                               _("Unexpected EOF.\n"));
+                  return FALSE;
+                }
             }
 
           if (!(hdr->flags & DDSD_LINEARSIZE)) z = 0;
@@ -1241,27 +1272,27 @@ load_layer (FILE             *fp,
                     {
                       guint16 *pixels16 = (guint16 *) &pixels[pos];
 
-                      pixels16[ired]  = (guint16) (pixel >> d->rshift << (16 - d->rbits));
-                      pixels16[1]     = (guint16) (pixel >> d->gshift << (16 - d->gbits));
-                      pixels16[iblue] = (guint16) (pixel >> d->bshift << (16 - d->bbits));
+                      pixels16[ired]  = (guint16) (pixel >> d->rshift << rshiftbits);
+                      pixels16[1]     = (guint16) (pixel >> d->gshift << gshiftbits);
+                      pixels16[iblue] = (guint16) (pixel >> d->bshift << bshiftbits);
                       if (hdr->pixelfmt.flags & DDPF_ALPHAPIXELS)
                         {
-                          pixels16[3] = (guint16) ((pixel >> d->ashift << (16 - d->abits) & d->amask) * 65535 / d->amask);
+                          pixels16[3] = (guint16) ((pixel >> d->ashift << ashiftbits & d->amask) * 65535 / d->amask);
                         }
                     }
                   else if (d->rmask > 0 && d->gmask > 0 && d->bmask > 0)
                     {
                       pixels[pos] =
-                        (pixel >> d->rshift << (8 - d->rbits) & d->rmask) * 255 / d->rmask;
+                        (pixel >> d->rshift << rshiftbits & d->rmask) * 255 / d->rmask;
                       pixels[pos + 1] =
-                        (pixel >> d->gshift << (8 - d->gbits) & d->gmask) * 255 / d->gmask;
+                        (pixel >> d->gshift << gshiftbits & d->gmask) * 255 / d->gmask;
                       pixels[pos + 2] =
-                        (pixel >> d->bshift << (8 - d->bbits) & d->bmask) * 255 / d->bmask;
+                        (pixel >> d->bshift << bshiftbits & d->bmask) * 255 / d->bmask;
                       if (hdr->pixelfmt.flags & DDPF_ALPHAPIXELS && d->bpp == 4)
                         {
                           if (d->amask > 0)
                             pixels[pos + 3] =
-                              (pixel >> d->ashift << (8 - d->abits) & d->amask) * 255 / d->amask;
+                              (pixel >> d->ashift << ashiftbits & d->amask) * 255 / d->amask;
                           else
                             pixels[pos + 3] = 255;
                         }
@@ -1312,33 +1343,33 @@ load_layer (FILE             *fp,
                   if (hdr->pixelfmt.amask == 0xf000) /* RGBA4 */
                     {
                       pixels[pos] =
-                        (pixel >> d->rshift << (8 - d->rbits) & d->rmask) * 255 / d->rmask;
+                        (pixel >> d->rshift << rshiftbits & d->rmask) * 255 / d->rmask;
                       pixels[pos + 1] =
-                        (pixel >> d->gshift << (8 - d->gbits) & d->gmask) * 255 / d->gmask;
+                        (pixel >> d->gshift << gshiftbits & d->gmask) * 255 / d->gmask;
                       pixels[pos + 2] =
-                        (pixel >> d->bshift << (8 - d->bbits) & d->bmask) * 255 / d->bmask;
+                        (pixel >> d->bshift << bshiftbits & d->bmask) * 255 / d->bmask;
                       pixels[pos + 3] =
-                        (pixel >> d->ashift << (8 - d->abits) & d->amask) * 255 / d->amask;
+                        (pixel >> d->ashift << ashiftbits & d->amask) * 255 / d->amask;
                     }
                   else if (hdr->pixelfmt.amask == 0xff00) /* L8A8 */
                     {
                       pixels[pos] =
-                        (pixel >> d->rshift << (8 - d->rbits) & d->rmask) * 255 / d->rmask;
+                        (pixel >> d->rshift << rshiftbits & d->rmask) * 255 / d->rmask;
                       pixels[pos + 1] =
-                        (pixel >> d->ashift << (8 - d->abits) & d->amask) * 255 / d->amask;
+                        (pixel >> d->ashift << ashiftbits & d->amask) * 255 / d->amask;
                     }
                   else if (hdr->pixelfmt.bmask == 0x1f) /* R5G6B5 or RGB5A1 */
                     {
                       pixels[pos] =
-                        (pixel >> d->rshift << (8 - d->rbits) & d->rmask) * 255 / d->rmask;
+                        (pixel >> d->rshift << rshiftbits & d->rmask) * 255 / d->rmask;
                       pixels[pos + 1] =
-                        (pixel >> d->gshift << (8 - d->gbits) & d->gmask) * 255 / d->gmask;
+                        (pixel >> d->gshift << gshiftbits & d->gmask) * 255 / d->gmask;
                       pixels[pos + 2] =
-                        (pixel >> d->bshift << (8 - d->bbits) & d->bmask) * 255 / d->bmask;
+                        (pixel >> d->bshift << bshiftbits & d->bmask) * 255 / d->bmask;
                       if (hdr->pixelfmt.amask == 0x8000)
                         {
                           pixels[pos + 3] =
-                            (pixel >> d->ashift << (8 - d->abits) & d->amask) * 255 / d->amask;
+                            (pixel >> d->ashift << ashiftbits & d->amask) * 255 / d->amask;
                         }
                     }
                   else if (hdr->pixelfmt.rmask == 0xffff || /* L16 */
@@ -1360,11 +1391,11 @@ load_layer (FILE             *fp,
                   else if (hdr->pixelfmt.rmask == 0xe0) /* R3G3B2 */
                     {
                       pixels[pos] =
-                        (pixel >> d->rshift << (8 - d->rbits) & d->rmask) * 255 / d->rmask;
+                        (pixel >> d->rshift << rshiftbits & d->rmask) * 255 / d->rmask;
                       pixels[pos + 1] =
-                        (pixel >> d->gshift << (8 - d->gbits) & d->gmask) * 255 / d->gmask;
+                        (pixel >> d->gshift << gshiftbits & d->gmask) * 255 / d->gmask;
                       pixels[pos + 2] =
-                        (pixel >> d->bshift << (8 - d->bbits) & d->bmask) * 255 / d->bmask;
+                        (pixel >> d->bshift << bshiftbits & d->bmask) * 255 / d->bmask;
                     }
                   else if (hdr->pixelfmt.flags & DDPF_ALPHA)
                     {
