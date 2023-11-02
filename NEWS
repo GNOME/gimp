@@ -26,13 +26,7 @@ Core:
     for internal data, or a string constructed from the local file path for
     external data. This will be used to serialize data objects hence easily
     retrieve the proper data even when some data may have duplicate names.
-  - New "FG to Transparent (Hardedge)" gradient.
-  - New palette import supports:
-    * Adobe Swatch Exchange
-    * SwatchBooker
-    * Adobe Color Book (ACB)
-  - More robust support for ASE palette loading, by stripping space paddings and
-    being more warry of maliciously built files with invalid string data.
+  - New palette import support: SwatchBooker.
   - Artifically set PANGOCAIRO_BACKEND=fc when running on Windows to use the
     fontconfig backend, which enables anti-aliasing on Windows, unlike the
     default pangocairo backend.
@@ -165,14 +159,8 @@ Plug-ins:
     * tabindex: What order to select the area when the user presses Tab.
     * onClick: Run a Javascript function when the user clicks on the area.
   - Esm Software PIX: new import support.
-  - PSD: fixed vulnerabilities: ZDI-CAN-22094.
-  - DDS: fixed vulnerabilities: ZDI-CAN-22093.
   - All plug-ins were ported to the new Gimp*Procedure API using
     GimpProcedureConfig instead of GimpValueArray arguments.
-  - GIF:
-    * Added support of non-square aspect ratio by setting different vertical and
-      horizontal resolution when a loaded file has the PixelAspectRatio metadata
-      set.
   - Add Border (script-fu): add a 'Allow resizing' toggle.
   - Plug-ins ported to GimpProcedureDialog: van-gogh-lic, dds-write, flame,
     histogram-export, lighting, fractal-explorer, map-object, sample-colorize,
