@@ -96,7 +96,9 @@ static void       gimp_dialog_close               (GtkDialog    *dialog);
 static void       gimp_dialog_response            (GtkDialog    *dialog,
                                                    gint          response_id);
 
+#ifdef G_OS_WIN32
 static void       gimp_dialog_set_title_bar_theme (GtkWidget    *dialog);
+#endif
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG)
 
@@ -770,10 +772,10 @@ gimp_dialogs_show_help_button (gboolean  show)
   show_help_button = show ? TRUE : FALSE;
 }
 
+#ifdef G_OS_WIN32
 void
 gimp_dialog_set_title_bar_theme (GtkWidget *dialog)
 {
-#ifdef G_OS_WIN32
   HWND             hwnd;
   gboolean         use_dark_mode = FALSE;
   GdkWindow       *window        = NULL;
@@ -810,5 +812,5 @@ gimp_dialog_set_title_bar_theme (GtkWidget *dialog)
       gdk_window_hide (window);
       gdk_window_show (window);
     }
-#endif
 }
+#endif
