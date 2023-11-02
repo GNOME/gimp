@@ -134,6 +134,7 @@ read_dds (GFile          *file,
   gboolean           read_mipmaps;
   gboolean           decode_images;
   gint               i, j;
+  guint              computed_pitch_or_linsize;
 
   if (interactive)
     {
@@ -187,29 +188,34 @@ read_dds (GFile          *file,
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  /* a lot of DDS images out there don't have this for some reason -_- */
-  if (hdr.pitch_or_linsize == 0)
+  /* A lot of DDS images out there don't set pitch_or_linsize, or set it to a
+     value we didn't expect. So we will always compute it ourselves. */
+  if (hdr.pixelfmt.flags & DDPF_FOURCC) /* assume linear size */
     {
-      if (hdr.pixelfmt.flags & DDPF_FOURCC) /* assume linear size */
+      computed_pitch_or_linsize = ((hdr.width + 3) >> 2) * ((hdr.height + 3) >> 2);
+      switch (GETL32 (hdr.pixelfmt.fourcc))
         {
-          hdr.pitch_or_linsize = ((hdr.width + 3) >> 2) * ((hdr.height + 3) >> 2);
-          switch (GETL32 (hdr.pixelfmt.fourcc))
-            {
-            case FOURCC ('D','X','T','1'):
-            case FOURCC ('A','T','I','1'):
-            case FOURCC ('B','C','4','U'):
-            case FOURCC ('B','C','4','S'):
-              hdr.pitch_or_linsize *= 8;
-              break;
-            default:
-              hdr.pitch_or_linsize *= 16;
-              break;
-            }
+        case FOURCC ('D','X','T','1'):
+        case FOURCC ('A','T','I','1'):
+        case FOURCC ('B','C','4','U'):
+        case FOURCC ('B','C','4','S'):
+          computed_pitch_or_linsize *= 8;
+          break;
+        default:
+          computed_pitch_or_linsize *= 16;
+          break;
         }
-      else /* assume pitch */
-        {
-          hdr.pitch_or_linsize = hdr.height * hdr.width * (hdr.pixelfmt.bpp >> 3);
-        }
+    }
+  else /* assume pitch */
+    {
+      computed_pitch_or_linsize = hdr.height * hdr.width * (hdr.pixelfmt.bpp >> 3);
+    }
+
+  if (computed_pitch_or_linsize != hdr.pitch_or_linsize)
+    {
+      g_printerr ("Unexpected 'pitch_or_linsize' (%u) set to %u\n",
+                  hdr.pitch_or_linsize, computed_pitch_or_linsize);
+      hdr.pitch_or_linsize = computed_pitch_or_linsize;
     }
 
   if (hdr.pixelfmt.flags & DDPF_FOURCC)
