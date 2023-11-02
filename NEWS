@@ -22,7 +22,9 @@ Core:
     the newer driver. A fix was also merged on linuxwacom itself:
     https://github.com/linuxwacom/xf86-input-wacom/issues/307
     https://github.com/linuxwacom/xf86-input-wacom/pull/309
-  - New Adobe ACB and ASE palette support.
+  - New palette import supports:
+    * Adobe Swatch Exchange (ASE)
+    * Adobe Color Book (ACB)
 
 Tool:
 
