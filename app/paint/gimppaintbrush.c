@@ -189,7 +189,8 @@ gimp_paintbrush_real_get_paint_params (GimpPaintbrush            *paintbrush,
 
   *paint_mode = gimp_context_get_paint_mode (context);
 
-  if (gimp_paint_options_get_gradient_color (paint_options, image,
+  if (gimp_paint_options_are_dynamics_enabled (paint_options) &&
+      gimp_paint_options_get_gradient_color (paint_options, image,
                                              grad_point,
                                              paint_core->pixel_dist,
                                              paint_color))
