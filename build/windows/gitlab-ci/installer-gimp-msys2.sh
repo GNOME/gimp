@@ -57,7 +57,6 @@ download_lang Galician.isl
 download_lang Georgian.isl
 download_lang Greek.isl
 download_lang Indonesian.isl
-download_lang Korean.isl
 download_lang Latvian.isl
 download_lang Lithuanian.isl
 download_lang Malaysian.isl
@@ -67,9 +66,9 @@ download_lang Swedish.isl
 download_lang Vietnamese.isl
 cd -
 
-# Hungarian is not in a release yet, but was moved from Unofficial
+# Any language not in a release yet, but moved from Unofficial, should be added here
 cd "${ISCCDIR}/Languages/"
-download_lang_official Hungarian.isl
+download_lang_official Korean.isl
 cd -
 
 # Copy generated language files into the source directory.
