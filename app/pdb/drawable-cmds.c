@@ -121,6 +121,97 @@ drawable_get_thumbnail_format_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+drawable_get_pixel_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpDrawable *drawable;
+  gint x_coord;
+  gint y_coord;
+  GeglColor *color = NULL;
+
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  x_coord = g_value_get_int (gimp_value_array_index (args, 1));
+  y_coord = g_value_get_int (gimp_value_array_index (args, 2));
+
+  if (success)
+    {
+      const Babl *format = gimp_drawable_get_format (drawable);
+
+      if (x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
+          y_coord < gimp_item_get_height (GIMP_ITEM (drawable)))
+        {
+          gint     n_bytes = babl_format_get_bytes_per_pixel (format);
+          gpointer pixel;
+
+          pixel = g_malloc0 (n_bytes);
+
+          gegl_buffer_sample (gimp_drawable_get_buffer (drawable),
+                              x_coord, y_coord, NULL, pixel, format,
+                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+          color = gegl_color_new ("black");
+          gegl_color_set_pixel (color, format, pixel);
+
+          g_free (pixel);
+        }
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_object (gimp_value_array_index (return_vals, 1), color);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+drawable_set_pixel_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint x_coord;
+  gint y_coord;
+  GeglColor *color;
+
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  x_coord = g_value_get_int (gimp_value_array_index (args, 1));
+  y_coord = g_value_get_int (gimp_value_array_index (args, 2));
+  color = g_value_get_object (gimp_value_array_index (args, 3));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (drawable),
+                                       GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+          x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
+          y_coord < gimp_item_get_height (GIMP_ITEM (drawable)))
+        {
+          gegl_buffer_set_color (gimp_drawable_get_buffer (drawable),
+                                 GEGL_RECTANGLE (x_coord, y_coord, 1, 1),
+                                 color);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 drawable_type_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
@@ -963,6 +1054,88 @@ register_drawable_procs (GimpPDB *pdb)
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-get-pixel
+   */
+  procedure = gimp_procedure_new (drawable_get_pixel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-get-pixel");
+  gimp_procedure_set_static_help (procedure,
+                                  "Gets the value of the pixel at the specified coordinates.",
+                                  "This procedure gets the pixel value at the specified coordinates.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1997");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("x-coord",
+                                                 "x coord",
+                                                 "The x coordinate",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("y-coord",
+                                                 "y coord",
+                                                 "The y coordinate",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gegl_param_spec_color ("color",
+                                                          "color",
+                                                          "The pixel color",
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-set-pixel
+   */
+  procedure = gimp_procedure_new (drawable_set_pixel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-set-pixel");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the value of the pixel at the specified coordinates.",
+                                  "This procedure sets the pixel value at the specified coordinates. Note that this function is not undoable, you should use it only on drawables you just created yourself.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1997");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("x-coord",
+                                                 "x coord",
+                                                 "The x coordinate",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("y-coord",
+                                                 "y coord",
+                                                 "The y coordinate",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gegl_param_spec_color ("color",
+                                                      "color",
+                                                      "The pixel color",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

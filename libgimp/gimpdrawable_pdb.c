@@ -116,6 +116,90 @@ _gimp_drawable_get_thumbnail_format (GimpDrawable *drawable)
 }
 
 /**
+ * gimp_drawable_get_pixel:
+ * @drawable: The drawable.
+ * @x_coord: The x coordinate.
+ * @y_coord: The y coordinate.
+ *
+ * Gets the value of the pixel at the specified coordinates.
+ *
+ * This procedure gets the pixel value at the specified coordinates.
+ *
+ * Returns: (transfer full): The pixel color.
+ **/
+GeglColor *
+gimp_drawable_get_pixel (GimpDrawable *drawable,
+                         gint          x_coord,
+                         gint          y_coord)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GeglColor *color = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          G_TYPE_INT, x_coord,
+                                          G_TYPE_INT, y_coord,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-get-pixel",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    color = g_value_dup_object (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return color;
+}
+
+/**
+ * gimp_drawable_set_pixel:
+ * @drawable: The drawable.
+ * @x_coord: The x coordinate.
+ * @y_coord: The y coordinate.
+ * @color: The pixel color.
+ *
+ * Sets the value of the pixel at the specified coordinates.
+ *
+ * This procedure sets the pixel value at the specified coordinates.
+ * Note that this function is not undoable, you should use it only on
+ * drawables you just created yourself.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_drawable_set_pixel (GimpDrawable *drawable,
+                         gint          x_coord,
+                         gint          y_coord,
+                         GeglColor    *color)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          G_TYPE_INT, x_coord,
+                                          G_TYPE_INT, y_coord,
+                                          GEGL_TYPE_COLOR, color,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-set-pixel",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_drawable_type:
  * @drawable: The drawable.
  *

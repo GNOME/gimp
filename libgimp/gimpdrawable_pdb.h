@@ -34,6 +34,13 @@ G_BEGIN_DECLS
 
 G_GNUC_INTERNAL gchar*   _gimp_drawable_get_format           (GimpDrawable               *drawable);
 G_GNUC_INTERNAL gchar*   _gimp_drawable_get_thumbnail_format (GimpDrawable               *drawable);
+GeglColor*               gimp_drawable_get_pixel             (GimpDrawable               *drawable,
+                                                              gint                        x_coord,
+                                                              gint                        y_coord);
+gboolean                 gimp_drawable_set_pixel             (GimpDrawable               *drawable,
+                                                              gint                        x_coord,
+                                                              gint                        y_coord,
+                                                              GeglColor                  *color);
 GimpImageType            gimp_drawable_type                  (GimpDrawable               *drawable);
 GimpImageType            gimp_drawable_type_with_alpha       (GimpDrawable               *drawable);
 gboolean                 gimp_drawable_has_alpha             (GimpDrawable               *drawable);
