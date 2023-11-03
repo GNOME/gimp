@@ -6,7 +6,7 @@
 This is an unstable development release, an intermediate state on the
 way to the next stable release: GIMP 3.0. GIMP 2.99 may or may not do
 what you expect. Save your work early and often. If you want a stable
-version, please use GIMP 2.10 instead.
+version, please use GIMP 2.10 instead or any alternative options available at https://www.gimp.org
 
 If you think you found a bug in this version, please make sure that it
 hasn't been reported earlier and that it is not just new stuff that is
@@ -70,7 +70,7 @@ want to help with GUI design, the gimp-gui list is where you want to
 subscribe.
 
 Other discussion channels can be listed on this page when they are
-moderated by a team member, such as forums.
+moderated by a team member, such as forums and more.
 
 Finally, for the real junkies, there are IRC channels devoted to GIMP.
 On GIMPNet (a private free software oriented network) there is #gimp.
@@ -94,8 +94,7 @@ You can also manually change the keybindings to any of your choice by
 editing: `${XDG_CONFIG_HOME}/GIMP/2.99/shortcutsrc`.
 
 
-Have fun,
-
+Have fun and keep using GIMP,
   Spencer Kimball
   Peter Mattis
   Federico Mena
