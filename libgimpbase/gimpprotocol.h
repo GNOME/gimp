@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0110
+#define GIMP_PROTOCOL_VERSION  0x0111
 
 
 enum
@@ -70,6 +70,7 @@ typedef enum
   GP_PARAM_TYPE_BYTES,
   GP_PARAM_TYPE_FILE,
   GP_PARAM_TYPE_COLOR,
+  GP_PARAM_TYPE_GEGL_COLOR,
   GP_PARAM_TYPE_PARASITE,
   GP_PARAM_TYPE_ARRAY,
   GP_PARAM_TYPE_ID_ARRAY,
@@ -96,6 +97,7 @@ typedef struct _GPParamDefIDArray  GPParamDefIDArray;
 typedef struct _GPParam            GPParam;
 typedef struct _GPParamArray       GPParamArray;
 typedef struct _GPParamIDArray     GPParamIDArray;
+typedef struct _GPParamColor       GPParamColor;
 typedef struct _GPProcRun          GPProcRun;
 typedef struct _GPProcReturn       GPProcReturn;
 typedef struct _GPProcInstall      GPProcInstall;
@@ -249,6 +251,17 @@ struct _GPParamIDArray
   gint32  *data;
 };
 
+struct _GPParamColor
+{
+  guint32  size;
+  guint8   data[40];
+
+  /* Transferring a BablFormat with the encoding and the ICC data. */
+  gchar   *encoding;
+  guint32  profile_size;
+  guint8  *profile_data;
+};
+
 struct _GPParam
 {
   GPParamType  param_type;
@@ -261,6 +274,7 @@ struct _GPParam
     gchar              *d_string;
     gchar             **d_strv;
     GBytes             *d_bytes;
+    GPParamColor        d_gegl_color;
     GimpRGB             d_color;
     GimpParasite        d_parasite;
     GPParamArray        d_array;

@@ -1710,6 +1710,48 @@ _gp_params_read (GIOChannel  *channel,
             goto cleanup;
           break;
 
+        case GP_PARAM_TYPE_GEGL_COLOR:
+          /* Read the color data. */
+          if (! _gimp_wire_read_int32 (channel,
+                                       &(*params)[i].data.d_gegl_color.size, 1,
+                                       user_data))
+            goto cleanup;
+
+          if ((*params)[i].data.d_gegl_color.size > 40 ||
+              ! _gimp_wire_read_int8 (channel,
+                                      (*params)[i].data.d_gegl_color.data,
+                                      (*params)[i].data.d_gegl_color.size,
+                                      user_data))
+            goto cleanup;
+
+          /* Read encoding. */
+          if (! _gimp_wire_read_string (channel,
+                                        &(*params)[i].data.d_gegl_color.encoding, 1,
+                                        user_data))
+            goto cleanup;
+
+          /* Read space (profile data). */
+          if (! _gimp_wire_read_int32 (channel,
+                                       &(*params)[i].data.d_gegl_color.profile_size, 1,
+                                       user_data))
+            {
+              g_clear_pointer (&(*params)[i].data.d_gegl_color.encoding, g_free);
+              goto cleanup;
+            }
+
+          (*params)[i].data.d_gegl_color.profile_data = g_new0 (guint8, (*params)[i].data.d_gegl_color.profile_size);
+          if (! _gimp_wire_read_int8 (channel,
+                                      (*params)[i].data.d_gegl_color.profile_data,
+                                      (*params)[i].data.d_gegl_color.profile_size,
+                                      user_data))
+            {
+              g_clear_pointer (&(*params)[i].data.d_gegl_color.encoding, g_free);
+              g_clear_pointer (&(*params)[i].data.d_gegl_color.profile_data, g_free);
+              goto cleanup;
+            }
+
+          break;
+
         case GP_PARAM_TYPE_ARRAY:
           if (! _gimp_wire_read_int32 (channel,
                                        &(*params)[i].data.d_array.size, 1,
@@ -1904,6 +1946,27 @@ _gp_params_write (GIOChannel *channel,
             return;
           break;
 
+        case GP_PARAM_TYPE_GEGL_COLOR:
+          if (! _gimp_wire_write_int32 (channel,
+                                        (const guint32 *) &params[i].data.d_gegl_color.size, 1,
+                                        user_data)  ||
+              ! _gimp_wire_write_int8 (channel,
+                                       (const guint8 *) params[i].data.d_gegl_color.data,
+                                       params[i].data.d_gegl_color.size,
+                                       user_data)   ||
+              ! _gimp_wire_write_string (channel,
+                                         &params[i].data.d_gegl_color.encoding, 1,
+                                         user_data) ||
+              ! _gimp_wire_write_int32 (channel,
+                                        (const guint32 *) &params[i].data.d_gegl_color.profile_size, 1,
+                                        user_data)  ||
+              ! _gimp_wire_write_int8 (channel,
+                                       (const guint8 *) params[i].data.d_gegl_color.profile_data,
+                                       params[i].data.d_gegl_color.profile_size,
+                                       user_data))
+            return;
+          break;
+
         case GP_PARAM_TYPE_ARRAY:
           if (! _gimp_wire_write_int32 (channel,
                                         (const guint32 *) &params[i].data.d_array.size, 1,
@@ -2024,6 +2087,11 @@ _gp_params_destroy (GPParam *params,
           break;
 
         case GP_PARAM_TYPE_COLOR:
+          break;
+
+        case GP_PARAM_TYPE_GEGL_COLOR:
+          g_free (params[i].data.d_gegl_color.encoding);
+          g_free (params[i].data.d_gegl_color.profile_data);
           break;
 
         case GP_PARAM_TYPE_ARRAY:

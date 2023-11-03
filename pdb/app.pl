@@ -591,6 +591,16 @@ gimp_param_spec_rgb ("$name",
                      $flags)
 CODE
     }
+    elsif ($pdbtype eq 'geglcolor') {
+	$default = exists $arg->{default} ? $arg->{default} : NULL;
+	$pspec = <<CODE;
+gegl_param_spec_color ("$name",
+                       "$nick",
+                       "$blurb",
+                       $default,
+                       $flags)
+CODE
+    }
     elsif ($pdbtype eq 'parasite') {
 	$pspec = <<CODE;
 gimp_param_spec_parasite ("$name",

@@ -29,6 +29,12 @@ G_BEGIN_DECLS
 
 
 /*
+ * GIMP_TYPE_COLOR
+ */
+
+#define GIMP_VALUE_HOLDS_COLOR(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GEGL_TYPE_COLOR))
+
+/*
  * GIMP_TYPE_RGB
  */
 

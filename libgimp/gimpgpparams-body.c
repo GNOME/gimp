@@ -616,6 +616,48 @@ gimp_gp_param_to_value (gpointer        gimp,
                                    g_file_new_for_uri (param->data.d_string) :
                                    NULL));
     }
+  else if (GIMP_VALUE_HOLDS_COLOR (value))
+    {
+      GeglColor        *color;
+      const Babl       *format = NULL;
+      const Babl       *space  = NULL;
+      const gchar      *encoding;
+      GimpColorProfile *profile;
+      gint              bpp;
+
+      encoding = param->data.d_gegl_color.encoding;
+      profile = gimp_color_profile_new_from_icc_profile (param->data.d_gegl_color.profile_data,
+                                                         param->data.d_gegl_color.profile_size,
+                                                         NULL);
+
+      if (profile)
+        {
+          GError *error = NULL;
+
+          space = gimp_color_profile_get_space (profile,
+                                                GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                &error);
+
+          if (! space)
+            {
+              g_printerr ("%s: failed to create Babl space from profile: %s\n",
+                          G_STRFUNC, error->message);
+              g_clear_error (&error);
+            }
+          g_object_unref (profile);
+        }
+      format = babl_format_with_space (encoding, space);
+      color  = gegl_color_new ("black");
+
+      bpp = babl_format_get_bytes_per_pixel (format);
+      if (bpp != param->data.d_gegl_color.size)
+        g_printerr ("%s: encoding \"%s\" expects %d bpp but data size is %d bpp.\n",
+                    G_STRFUNC, encoding, bpp, param->data.d_gegl_color.size);
+      else
+        gegl_color_set_pixel (color, format, param->data.d_gegl_color.data);
+
+      g_value_take_object (value, color);
+    }
   else if (GIMP_VALUE_HOLDS_RGB (value))
     {
       gimp_value_set_rgb (value, &param->data.d_color);
@@ -886,6 +928,25 @@ gimp_value_to_gp_param (const GValue *value,
 
       gimp_value_get_rgb (value, &param->data.d_color);
     }
+  else if (GIMP_VALUE_HOLDS_COLOR (value))
+    {
+      GeglColor  *color;
+      const Babl *format;
+      int         icc_length = 0;
+
+      param->param_type = GP_PARAM_TYPE_GEGL_COLOR;
+
+      color  = g_value_get_object (value);
+      format = gegl_color_get_format (color);
+
+      param->data.d_gegl_color.size = babl_format_get_bytes_per_pixel (format);
+      gegl_color_get_pixel (color, format, &param->data.d_gegl_color.data);
+
+      param->data.d_gegl_color.encoding     = (gchar *) babl_format_get_encoding (format);
+      param->data.d_gegl_color.profile_data = (guint8 *) babl_space_get_icc (babl_format_get_space (format),
+                                                                             &icc_length);
+      param->data.d_gegl_color.profile_size = icc_length;
+    }
   else if (GIMP_VALUE_HOLDS_PARASITE (value))
     {
       GimpParasite *parasite = (full_copy ?
@@ -1122,6 +1183,9 @@ _gimp_gp_params_free (GPParam  *params,
           break;
 
         case GP_PARAM_TYPE_COLOR:
+          break;
+
+        case GP_PARAM_TYPE_GEGL_COLOR:
           break;
 
         case GP_PARAM_TYPE_ARRAY:
