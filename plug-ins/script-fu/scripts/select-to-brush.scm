@@ -108,7 +108,7 @@
                                    (number->string image)
                                    ".gbr"))
 
-    (file-gbr-save 1 brush-image brush-draw filename2 "" spacing name)
+    (file-gbr-save 1 brush-image brush-draw filename2 filename2 spacing name)
 
     (if (= from-selection TRUE)
         (begin
