@@ -40,6 +40,23 @@
 
 static gboolean callback_lock;
 
+static void select_web_cb    (GtkWidget        *widget,
+                              AreaInfoDialog_t *param);
+static void select_ftp_cb    (GtkWidget        *widget,
+                              AreaInfoDialog_t *param);
+static void select_gopher_cb (GtkWidget        *widget,
+                              AreaInfoDialog_t *param);
+static void select_other_cb  (GtkWidget        *widget,
+                              AreaInfoDialog_t *param);
+static void select_file_cb   (GtkWidget        *widget,
+                              AreaInfoDialog_t *param);
+static void select_wais_cb   (GtkWidget        *widget,
+                              AreaInfoDialog_t *param);
+static void select_telnet_cb (GtkWidget        *widget,
+                              AreaInfoDialog_t *param);
+static void select_email_cb  (GtkWidget        *widget,
+                              AreaInfoDialog_t *param);
+
 
 static gchar*
 relative_filter(const char *name, gpointer data)
@@ -77,7 +94,23 @@ url_changed (GtkWidget *widget,
     button = param->other;
 
   callback_lock = TRUE;
+  g_signal_handlers_block_by_func (param->web_site, G_CALLBACK (select_web_cb), data);
+  g_signal_handlers_block_by_func (param->ftp_site, G_CALLBACK (select_ftp_cb), data);
+  g_signal_handlers_block_by_func (param->gopher, G_CALLBACK (select_gopher_cb), data);
+  g_signal_handlers_block_by_func (param->other, G_CALLBACK (select_other_cb), data);
+  g_signal_handlers_block_by_func (param->file, G_CALLBACK (select_file_cb), data);
+  g_signal_handlers_block_by_func (param->wais, G_CALLBACK (select_wais_cb), data);
+  g_signal_handlers_block_by_func (param->telnet, G_CALLBACK (select_telnet_cb), data);
+  g_signal_handlers_block_by_func (param->email, G_CALLBACK (select_email_cb), data);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+  g_signal_handlers_unblock_by_func (param->web_site, G_CALLBACK (select_web_cb), data);
+  g_signal_handlers_unblock_by_func (param->ftp_site, G_CALLBACK (select_ftp_cb), data);
+  g_signal_handlers_unblock_by_func (param->gopher, G_CALLBACK (select_gopher_cb), data);
+  g_signal_handlers_unblock_by_func (param->other, G_CALLBACK (select_other_cb), data);
+  g_signal_handlers_unblock_by_func (param->file, G_CALLBACK (select_file_cb), data);
+  g_signal_handlers_unblock_by_func (param->wais, G_CALLBACK (select_wais_cb), data);
+  g_signal_handlers_unblock_by_func (param->telnet, G_CALLBACK (select_telnet_cb), data);
+  g_signal_handlers_unblock_by_func (param->email, G_CALLBACK (select_email_cb), data);
 }
 
 static void
