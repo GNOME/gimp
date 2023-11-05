@@ -30,6 +30,10 @@ The latest version of GIMP can be found at:
 
 	https://www.gimp.org/downloads/
 
+We also have a website dedicated to documentation at:
+
+        https://docs.gimp.org/
+
 
 2. Contributing
 ===============
@@ -58,28 +62,18 @@ development discussion. There is more info at:
 
         https://www.gimp.org/discuss.html
 
-Links to several archives of the mailing lists are included in that page.
-
-Gimp-user-list is a mailing list dedicated to user problems, hints and
-tips, discussion of cool effects, etc.  Gimp-developer-list is oriented
-to GIMP core and plug-in developers.  Gimp-gui-list is for discussing
-about GIMP interface to improve user experience. Most people will only
-want to be subscribed to gimp-user-list. If you want to help develop
-GIMP, the gimp-developer mailing list is a good starting point; if you
-want to help with GUI design, the gimp-gui list is where you want to
-subscribe.
-
-Other discussion channels can be listed on this page when they are
-moderated by a team member, such as forums.
-
-Finally, for the real junkies, there are IRC channels devoted to GIMP.
-On GIMPNet (a private free software oriented network) there is #gimp.
+For the real junkies, there are IRC channels (e.g. #gimp or #gimp-user)
+devoted to GIMP on GIMPNet (a private free software oriented network).
 Many of the developers hang out there. Some of the GIMPNet servers are:
 
 	irc.gimp.org:6667
 	irc.us.gimp.org:6667
 	irc.eu.gimp.org:6667
 
+More discussion channels, such as forums, will be listed on the above
+"discuss" page when they are moderated by a team member.
+Links to archives of former discussion methods (e.g. mailing lists) are
+also included in that page.
 
 4. Customizing
 ==============
