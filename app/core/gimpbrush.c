@@ -284,7 +284,8 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
   guchar            *mask;
   guchar            *buf;
   gint               x, y;
-  gboolean           scaled = FALSE;
+  gboolean           free_mask = FALSE;
+  gdouble            scale     = 1.0;
 
   mask_width  = gimp_temp_buf_get_width  (mask_buf);
   mask_height = gimp_temp_buf_get_height (mask_buf);
@@ -293,45 +294,47 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
     {
       gdouble ratio_x = (gdouble) width  / (gdouble) mask_width;
       gdouble ratio_y = (gdouble) height / (gdouble) mask_height;
-      gdouble scale   = MIN (ratio_x, ratio_y);
 
-      if (scale != 1.0)
+      scale = MIN (ratio_x, ratio_y);
+    }
+
+  if (GIMP_IS_BRUSH_GENERATED (brush) || scale != 1.0)
+    {
+      gimp_brush_begin_use (brush);
+
+      if (GIMP_IS_BRUSH_GENERATED (brush))
         {
-          gimp_brush_begin_use (brush);
+          GimpBrushGenerated *gen_brush = GIMP_BRUSH_GENERATED (brush);
 
-          if (GIMP_IS_BRUSH_GENERATED (brush))
-            {
-               GimpBrushGenerated *gen_brush = GIMP_BRUSH_GENERATED (brush);
+          mask_buf = gimp_brush_transform_mask (brush, scale,
+                                                (gimp_brush_generated_get_aspect_ratio (gen_brush) - 1.0) * 20.0 / 19.0,
+                                                gimp_brush_generated_get_angle (gen_brush) / -360.0,
+                                                FALSE,
+                                                gimp_brush_generated_get_hardness (gen_brush));
+        }
+      else
+        {
+          mask_buf = gimp_brush_transform_mask (brush, scale, 0.0, 0.0, FALSE, 1.0);
+        }
 
-               mask_buf = gimp_brush_transform_mask (brush, scale,
-                                                     (gimp_brush_generated_get_aspect_ratio (gen_brush) - 1.0) * 20.0 / 19.0,
-                                                     gimp_brush_generated_get_angle (gen_brush) / 360.0,
-                                                     FALSE,
-                                                     gimp_brush_generated_get_hardness (gen_brush));
-            }
-          else
-            mask_buf = gimp_brush_transform_mask (brush, scale,
+      if (! mask_buf)
+        {
+          mask_buf = gimp_temp_buf_new (1, 1, babl_format ("Y u8"));
+          gimp_temp_buf_data_clear ((GimpTempBuf *) mask_buf);
+        }
+      else
+        {
+          gimp_temp_buf_ref ((GimpTempBuf *) mask_buf);
+        }
+
+      if (pixmap_buf)
+        pixmap_buf = gimp_brush_transform_pixmap (brush, scale,
                                                   0.0, 0.0, FALSE, 1.0);
 
-          if (! mask_buf)
-            {
-              mask_buf = gimp_temp_buf_new (1, 1, babl_format ("Y u8"));
-              gimp_temp_buf_data_clear ((GimpTempBuf *) mask_buf);
-            }
-          else
-            {
-              gimp_temp_buf_ref ((GimpTempBuf *) mask_buf);
-            }
+      mask_width  = gimp_temp_buf_get_width  (mask_buf);
+      mask_height = gimp_temp_buf_get_height (mask_buf);
 
-          if (pixmap_buf)
-            pixmap_buf = gimp_brush_transform_pixmap (brush, scale,
-                                                      0.0, 0.0, FALSE, 1.0);
-
-          mask_width  = gimp_temp_buf_get_width  (mask_buf);
-          mask_height = gimp_temp_buf_get_height (mask_buf);
-
-          scaled = TRUE;
-        }
+      free_mask = TRUE;
     }
 
   return_buf = gimp_temp_buf_new (mask_width, mask_height,
@@ -379,7 +382,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 
   gimp_temp_buf_unlock (mask_buf, mask_data);
 
-  if (scaled)
+  if (free_mask)
     {
       gimp_temp_buf_unref ((GimpTempBuf *) mask_buf);
 
