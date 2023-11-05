@@ -1,0 +1,22 @@
+--- gtk/gtkfilesystemmodel.c	2020-12-18 06:29:40.000000000 +0100
++++ gtk/gtkfilesystemmodel-patched.c	2023-09-24 19:24:51.000000000 +0200
+@@ -444,13 +444,18 @@
+ node_should_be_visible (GtkFileSystemModel *model, guint id, gboolean filtered_out)
+ {
+   FileModelNode *node = get_node (model, id);
++  gboolean has_is_hidden, has_is_backup;
+   gboolean result;
+ 
+   if (node->info == NULL)
+     return FALSE;
++    
++  has_is_hidden = g_file_info_has_attribute (node->info, "standard::is-hidden");
++  has_is_backup = g_file_info_has_attribute (node->info, "standard::is-backup");
+ 
+   if (!model->show_hidden &&
+-      (g_file_info_get_is_hidden (node->info) || g_file_info_get_is_backup (node->info)))
++      ((has_is_hidden && g_file_info_get_is_hidden (node->info)) ||
++       (has_is_backup && g_file_info_get_is_backup (node->info))))
+     return FALSE;
+ 
+   if (_gtk_file_info_consider_as_directory (node->info))

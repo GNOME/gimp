@@ -1,0 +1,12 @@
+--- gtk/gtkpathbar.c	2020-12-18 06:29:40.000000000 +0100
++++ gtk/gtkpathbar-patched.c	2023-09-24 19:24:45.000000000 +0200
+@@ -1659,7 +1659,8 @@
+     }
+ 
+   display_name = g_file_info_get_display_name (info);
+-  is_hidden = g_file_info_get_is_hidden (info) || g_file_info_get_is_backup (info);
++  is_hidden = g_file_info_get_attribute_boolean (info, "standard::is-hidden") ||
++              g_file_info_get_attribute_boolean (info, "standard::is-backup");
+ 
+   gtk_widget_push_composite_child ();
+   button_data = make_directory_button (file_info->path_bar, display_name,
