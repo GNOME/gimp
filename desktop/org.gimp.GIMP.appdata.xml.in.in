@@ -73,7 +73,7 @@
   </provides>
 
   <releases>
-    <release version="2.10.36" date="TODO">
+    <release version="2.10.36" date="2023-11-05">
       <description>
         <_p>
             This new version of GIMP comes with many fixes, including
