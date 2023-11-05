@@ -25,6 +25,11 @@ Core:
   - New palette import supports:
     * Adobe Swatch Exchange (ASE)
     * Adobe Color Book (ACB)
+  - Generated Brush previews are now rotated clockwise with the brush angle,
+    which goes against the documentation. Nevertheless this is how angles were
+    used on canvas in the 2.10 branch until now, so to avoid breaking existing
+    workflows while having consistent preview, we chose to follow actual
+    on-canvas usage over documentation. It may be re-evaluated for GIMP 3.
 
 Tool:
 
@@ -60,6 +65,7 @@ Plug-ins:
       set.
   - Various more file format fixes (at least GIF, PDF import, HEIF/AVIF, JPEG
     XL, XWD, DDS) and various fixes in non-file format related plug-ins too.
+  - Image Map: HTTPS scheme now accepted in the URL field.
 
 Libgimpbase:
 
@@ -71,9 +77,10 @@ Libgimpbase:
 
 Translation:
 
-  - 19 translations were updated: Belarusian, Catalan, Chinese (China), Dutch,
-    Georgian, German, Greek, Hungarian, Icelandic, Italian, Lithuanian, Polish,
-    Portuguese, Romanian, Slovenian, Spanish, Swedish, Turkish, Ukrainian.
+  - 20 translations were updated: Belarusian, Catalan, Chinese (China), Danish,
+    Dutch, Georgian, German, Greek, Hungarian, Icelandic, Italian, Lithuanian,
+    Polish, Portuguese, Romanian, Slovenian, Spanish, Swedish, Turkish,
+    Ukrainian.
 
 Build:
 
