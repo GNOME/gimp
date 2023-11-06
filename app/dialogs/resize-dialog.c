@@ -608,12 +608,19 @@ resize_dialog_reset (ResizeDialog *private)
                 NULL);
 
   g_object_set (private->box,
-                "width",           private->old_width,
-                "height",          private->old_height,
                 "unit",            private->old_unit,
                 "xresolution",     private->old_xres,
                 "yresolution",     private->old_yres,
                 "resolution-unit", private->old_res_unit,
+                NULL);
+  /**
+   * reset width and height after the other properties to avoid the problems
+   * noted in issue #10225
+   **/
+
+  g_object_set (private->box,
+                "width",           private->old_width,
+                "height",          private->old_height,
                 NULL);
 
   if (private->layer_set_combo)
