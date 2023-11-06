@@ -882,12 +882,13 @@ gui_single (GimpProcedure       *procedure,
             GimpProcedureConfig *config,
             GimpImage           *image)
 {
-  GtkWidget *window;
-  GtkWidget *widget;
-  GList     *missing_fonts;
-  GList     *dialog_props = NULL;
-  gboolean   run;
-  gint32     n_layers;
+  GtkWidget  *window;
+  GtkWidget  *widget;
+  GimpLayer **layers;
+  GList      *missing_fonts;
+  GList      *dialog_props = NULL;
+  gboolean    run;
+  gint32      n_layers;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -906,7 +907,13 @@ gui_single (GimpProcedure       *procedure,
   widget = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (window),
                                             "pages-frame", "layers-as-pages", FALSE,
                                             "pages-box");
-  g_free (gimp_image_get_layers (multi_page.images[0], &n_layers));
+  /* Enable "layers-as-pages" if more than one layer, or there's a single
+   * layer group has more than one layer */
+  layers = gimp_image_get_layers (multi_page.images[0], &n_layers);
+  if (n_layers == 1 && gimp_item_is_group (GIMP_ITEM (layers[0])))
+    g_free (gimp_item_get_children (GIMP_ITEM (layers[0]), &n_layers));
+  g_free (layers);
+
   gtk_widget_set_sensitive (widget, n_layers > 1);
 
   /* Warning for missing fonts (non-embeddable with rasterization
