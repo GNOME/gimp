@@ -103,6 +103,8 @@ static GimpValueArray * heif_av1_save         (GimpProcedure                *pro
 #endif
 
 static GimpImage      * load_image            (GFile                        *file,
+                                               GimpMetadata                 *metadata,
+                                               GimpMetadataLoadFlags        *flags,
                                                gboolean                      interactive,
                                                GimpPDBStatusType            *status,
                                                GError                      **error);
@@ -442,7 +444,7 @@ heif_load (GimpProcedure         *procedure,
   heif_init (NULL);
 #endif
 
-  image = load_image (file, interactive, &status, &error);
+  image = load_image (file, metadata, flags, interactive, &status, &error);
 
 #if LIBHEIF_HAVE_VERSION(1,13,0)
   heif_deinit ();
@@ -836,10 +838,12 @@ nclx_to_gimp_profile (const struct heif_color_profile_nclx *nclx)
 #endif
 
 GimpImage *
-load_image (GFile              *file,
-            gboolean            interactive,
-            GimpPDBStatusType  *status,
-            GError            **error)
+load_image (GFile                 *file,
+            GimpMetadata          *metadata,
+            GimpMetadataLoadFlags *flags,
+            gboolean               interactive,
+            GimpPDBStatusType     *status,
+            GError               **error)
 {
   GInputStream             *input;
   goffset                   file_size;
@@ -1267,117 +1271,111 @@ load_image (GFile              *file,
 
   g_object_unref (buffer);
 
-  {
-    size_t        exif_data_size = 0;
-    uint8_t      *exif_data      = NULL;
-    size_t        xmp_data_size  = 0;
-    uint8_t      *xmp_data       = NULL;
-    gint          n_metadata;
-    heif_item_id  metadata_id;
+  if (metadata)
+    {
+      size_t       exif_data_size = 0;
+      uint8_t     *exif_data      = NULL;
+      size_t       xmp_data_size  = 0;
+      uint8_t     *xmp_data       = NULL;
+      gint         n_metadata;
+      heif_item_id metadata_id;
 
-    n_metadata =
-      heif_image_handle_get_list_of_metadata_block_IDs (handle,
-                                                        "Exif",
-                                                        &metadata_id, 1);
-    if (n_metadata > 0)
-      {
-        exif_data_size = heif_image_handle_get_metadata_size (handle,
-                                                              metadata_id);
-        exif_data = g_alloca (exif_data_size);
+      n_metadata = heif_image_handle_get_list_of_metadata_block_IDs (handle, "Exif",
+                                                                     &metadata_id, 1);
+      if (n_metadata > 0)
+        {
+          exif_data_size = heif_image_handle_get_metadata_size (handle, metadata_id);
 
-        err = heif_image_handle_get_metadata (handle, metadata_id, exif_data);
-        if (err.code != 0)
-          {
-            exif_data      = NULL;
-            exif_data_size = 0;
-          }
-      }
+          exif_data = g_alloca (exif_data_size);
 
-    n_metadata =
-      heif_image_handle_get_list_of_metadata_block_IDs (handle,
-                                                        "mime",
-                                                        &metadata_id, 1);
-    if (n_metadata > 0)
-      {
-        if (g_strcmp0 (
-              heif_image_handle_get_metadata_content_type (handle, metadata_id),
-              "application/rdf+xml") == 0)
-          {
-            xmp_data_size = heif_image_handle_get_metadata_size (handle,
-                            metadata_id);
-            xmp_data = g_alloca (xmp_data_size);
+          err = heif_image_handle_get_metadata (handle, metadata_id, exif_data);
+          if (err.code != 0)
+            {
+              exif_data      = NULL;
+              exif_data_size = 0;
+            }
+        }
 
-            err = heif_image_handle_get_metadata (handle, metadata_id, xmp_data);
-            if (err.code != 0)
-              {
-                xmp_data      = NULL;
-                xmp_data_size = 0;
-              }
-          }
-      }
+      n_metadata = heif_image_handle_get_list_of_metadata_block_IDs (handle, "mime",
+                                                                     &metadata_id, 1);
+      if (n_metadata > 0)
+        {
+          if (g_strcmp0 (heif_image_handle_get_metadata_content_type (handle, metadata_id), "application/rdf+xml")
+              == 0)
+            {
+              xmp_data_size = heif_image_handle_get_metadata_size (handle, metadata_id);
 
-    if (exif_data || xmp_data)
-      {
-        GimpMetadata          *metadata = gimp_metadata_new ();
-        GimpMetadataLoadFlags  flags    = GIMP_METADATA_LOAD_COMMENT | GIMP_METADATA_LOAD_RESOLUTION;
+              xmp_data = g_alloca (xmp_data_size);
 
-        if (exif_data)
-          {
-            const guint8 tiffHeaderBE[4] = { 'M', 'M', 0, 42 };
-            const guint8 tiffHeaderLE[4] = { 'I', 'I', 42, 0 };
-            GExiv2Metadata *exif_metadata = GEXIV2_METADATA (metadata);
-            const guint8 *tiffheader = exif_data;
-            glong new_exif_size = exif_data_size;
+              err = heif_image_handle_get_metadata (handle, metadata_id, xmp_data);
+              if (err.code != 0)
+                {
+                  xmp_data      = NULL;
+                  xmp_data_size = 0;
+                }
+            }
+        }
 
-            while (new_exif_size >= 4)  /*Searching for TIFF Header*/
-              {
-                if (tiffheader[0] == tiffHeaderBE[0] && tiffheader[1] == tiffHeaderBE[1] &&
-                    tiffheader[2] == tiffHeaderBE[2] && tiffheader[3] == tiffHeaderBE[3])
-                  {
-                    break;
-                  }
-                if (tiffheader[0] == tiffHeaderLE[0] && tiffheader[1] == tiffHeaderLE[1] &&
-                    tiffheader[2] == tiffHeaderLE[2] && tiffheader[3] == tiffHeaderLE[3])
-                  {
-                    break;
-                  }
-                new_exif_size--;
-                tiffheader++;
-              }
+      if (exif_data || xmp_data)
+        {
+          gexiv2_metadata_clear (GEXIV2_METADATA (metadata));
 
-            if (new_exif_size > 4)   /* TIFF header + some data found*/
-              {
-                if (! gexiv2_metadata_open_buf (exif_metadata, tiffheader, new_exif_size, error))
-                  {
-                    g_printerr ("%s: Failed to set EXIF metadata: %s\n", G_STRFUNC, (*error)->message);
-                    g_clear_error (error);
-                  }
-              }
-            else
-              {
-                g_printerr ("%s: EXIF metadata not set\n", G_STRFUNC);
-              }
-          }
+          if (exif_data)
+            {
+              const guint8    tiffHeaderBE[4] = { 'M', 'M', 0, 42 };
+              const guint8    tiffHeaderLE[4] = { 'I', 'I', 42, 0 };
+              GExiv2Metadata *exif_metadata   = GEXIV2_METADATA (metadata);
+              const guint8   *tiffheader      = exif_data;
+              glong           new_exif_size   = exif_data_size;
 
-        if (xmp_data)
-          {
-            if (!gimp_metadata_set_from_xmp (metadata, xmp_data, xmp_data_size, error))
-              {
-                g_printerr ("%s: Failed to set XMP metadata: %s\n", G_STRFUNC, (*error)->message);
-                g_clear_error (error);
-              }
-          }
+              while (new_exif_size >= 4) /*Searching for TIFF Header*/
+                {
+                  if (tiffheader[0] == tiffHeaderBE[0] && tiffheader[1] == tiffHeaderBE[1] &&
+                      tiffheader[2] == tiffHeaderBE[2] && tiffheader[3] == tiffHeaderBE[3])
+                    {
+                      break;
+                    }
+                  if (tiffheader[0] == tiffHeaderLE[0] && tiffheader[1] == tiffHeaderLE[1] &&
+                      tiffheader[2] == tiffHeaderLE[2] && tiffheader[3] == tiffHeaderLE[3])
+                    {
+                      break;
+                    }
+                  new_exif_size--;
+                  tiffheader++;
+                }
 
-        gexiv2_metadata_try_set_orientation (GEXIV2_METADATA (metadata),
-                                             GEXIV2_ORIENTATION_NORMAL, NULL);
-        gexiv2_metadata_try_set_metadata_pixel_width (GEXIV2_METADATA (metadata),
-                                                      width, NULL);
-        gexiv2_metadata_try_set_metadata_pixel_height (GEXIV2_METADATA (metadata),
-                                                       height, NULL);
-        gimp_image_metadata_load_finish (image, "image/heif",
-                                         metadata, flags);
-      }
-  }
+              if (new_exif_size > 4) /* TIFF header + some data found*/
+                {
+                  if (! gexiv2_metadata_open_buf (exif_metadata, tiffheader, new_exif_size, error))
+                    {
+                      g_printerr ("%s: Failed to set EXIF metadata: %s\n", G_STRFUNC, (*error)->message);
+                      g_clear_error (error);
+                    }
+                }
+              else
+                {
+                  g_printerr ("%s: EXIF metadata not set\n", G_STRFUNC);
+                }
+            }
+
+          if (xmp_data)
+            {
+              if (! gimp_metadata_set_from_xmp (metadata, xmp_data, xmp_data_size, error))
+                {
+                  g_printerr ("%s: Failed to set XMP metadata: %s\n", G_STRFUNC, (*error)->message);
+                  g_clear_error (error);
+                }
+            }
+        }
+
+      gexiv2_metadata_try_set_orientation (GEXIV2_METADATA (metadata),
+                                           GEXIV2_ORIENTATION_NORMAL, NULL);
+      gexiv2_metadata_try_set_metadata_pixel_width (GEXIV2_METADATA (metadata), width, NULL);
+      gexiv2_metadata_try_set_metadata_pixel_height (GEXIV2_METADATA (metadata),
+                                                     height, NULL);
+
+      *flags = GIMP_METADATA_LOAD_COMMENT | GIMP_METADATA_LOAD_RESOLUTION;
+    }
 
   if (profile)
     g_object_unref (profile);
