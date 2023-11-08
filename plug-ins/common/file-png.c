@@ -61,6 +61,7 @@ typedef enum _PngExportformat
   PNG_FORMAT_GRAYA16
 } PngExportFormat;
 
+static GSList *safe_to_copy_chunks;
 
 typedef struct _Png      Png;
 typedef struct _PngClass PngClass;
@@ -134,6 +135,9 @@ static gboolean    ia_has_transparent_pixels (GeglBuffer            *buffer);
 
 static gint        find_unused_ia_color      (GeglBuffer            *buffer,
                                               gint                  *colors);
+
+static gint        read_unknown_chunk        (png_structp            png_ptr,
+                                              png_unknown_chunkp     chunk);
 
 
 G_DEFINE_TYPE (Png, png, GIMP_TYPE_PLUG_IN)
@@ -598,12 +602,15 @@ load_image (GFile        *file,
   const Babl       *file_format;          /* BABL format for layer */
   png_structp       pp;                   /* PNG read pointer */
   png_infop         info;                 /* PNG info pointers */
+  png_voidp         user_chunkp;          /* PNG unknown chunk pointer */
   guchar          **pixels;               /* Pixel rows */
   guchar           *pixel;                /* Pixel data */
   guchar            alpha[256];           /* Index -> Alpha */
   png_textp         text;
   gint              num_texts;
   struct read_error_data error_data;
+
+  safe_to_copy_chunks = NULL;
 
   pp = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   if (! pp)
@@ -662,6 +669,11 @@ load_image (GFile        *file,
 
   png_init_io (pp, fp);
   png_set_compression_buffer_size (pp, 512);
+
+  /* Set up callback to save "safe to copy" chunks */
+  png_set_keep_unknown_chunks (pp, PNG_HANDLE_CHUNK_IF_SAFE, NULL, 0);
+  user_chunkp = png_get_user_chunk_ptr (pp);
+  png_set_read_user_chunk_fn (pp, user_chunkp, read_unknown_chunk);
 
   /*
    * Get the image info
@@ -1180,6 +1192,23 @@ load_image (GFile        *file,
       g_object_unref (buffer);
     }
 
+  /* If any safe-to-copy chunks were saved,
+   * store them in the image as parasite */
+  if (safe_to_copy_chunks)
+    {
+      GSList *iter;
+
+      for (iter = safe_to_copy_chunks; iter; iter = iter->next)
+        {
+          GimpParasite *parasite = iter->data;
+
+          gimp_image_attach_parasite ((GimpImage *) image, parasite);
+          gimp_parasite_free (parasite);
+        }
+
+      g_slist_free (safe_to_copy_chunks);
+    }
+
   return (GimpImage *) image;
 }
 
@@ -1288,6 +1317,7 @@ save_image (GFile        *file,
   gint              num;              /* Number of rows to load */
   FILE             *fp;               /* File pointer */
   GimpColorProfile *profile = NULL;   /* Color profile */
+  gchar           **parasites;        /* Safe-to-copy chunks */
   gboolean          out_linear;       /* Save linear RGB */
   GeglBuffer       *buffer;           /* GEGL buffer for layer */
   const Babl       *file_format = NULL; /* BABL format of file */
@@ -1910,6 +1940,51 @@ save_image (GFile        *file,
   if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
     png_set_swap (pp);
 
+  /* Write any safe-to-copy chunks saved from import */
+  parasites = gimp_image_get_parasite_list (image);
+
+  if (parasites)
+    {
+      gint count;
+
+      count = g_strv_length (parasites);
+      for (gint i = 0; i < count; i++)
+        {
+          if (strncmp (parasites[i], "png", 3) == 0)
+            {
+              GimpParasite *parasite;
+
+              parasite = gimp_image_get_parasite (image, parasites[i]);
+
+              if (parasite)
+                {
+                  gchar  buf[1024];
+                  gchar *chunk_name;
+
+                  g_strlcpy (buf, parasites[i], sizeof (buf));
+                  chunk_name = strchr (buf, '/');
+                  chunk_name++;
+
+                  if (chunk_name)
+                    {
+                      png_byte      name[4];
+                      const guint8 *data;
+                      guint32       len;
+
+                      for (gint j = 0; j < 4; j++)
+                        name[j] = chunk_name[j];
+
+                      data = (const guint8 *) gimp_parasite_get_data (parasite, &len);
+
+                      png_write_chunk (pp, name, data, len);
+                    }
+                  gimp_parasite_free (parasite);
+                }
+            }
+        }
+    }
+  g_strfreev (parasites);
+
   /*
    * Turn on interlace handling...
    */
@@ -2257,6 +2332,28 @@ respin_cmap (png_structp   pp,
   g_object_unref (buffer);
 
   return get_bit_depth_for_palette (colors);
+}
+
+static gint
+read_unknown_chunk (png_structp        png_ptr,
+                    png_unknown_chunkp chunk)
+{
+  /* Chunks with a lowercase letter in the 4th byte
+   * are safe to copy */
+  if (g_ascii_islower (chunk->name[3]))
+    {
+      GimpParasite *parasite;
+      gchar         pname[255];
+
+      g_snprintf (pname, sizeof (pname), "png/%s", chunk->name);
+
+      if ((parasite = gimp_parasite_new (pname,
+                                         GIMP_PARASITE_PERSISTENT,
+                                         chunk->size, chunk->data)))
+        safe_to_copy_chunks = g_slist_prepend (safe_to_copy_chunks, parasite);
+    }
+
+  return 0;
 }
 
 static gboolean
