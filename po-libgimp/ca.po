@@ -587,7 +587,7 @@ msgstr "Desa el c_omentari"
 
 #: libgimp/gimpsaveprocedure.c:499
 msgid "Save a comment as metadata"
-msgstr "_Desa un comentari com a metadades"
+msgstr "Desa un comentari com a metadades"
 
 #: libgimp/gimpsaveprocedure.c:503
 msgid "Comment"
