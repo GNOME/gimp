@@ -1220,6 +1220,8 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
       g_list_free (all_layers);
     }
 
+  gtk_widget_set_sensitive (layer_view->priv->link_button, ! floating_sel);
+
   gimp_layer_tree_view_update_highlight (layer_view);
 }
 

@@ -968,7 +968,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-new",              image);
   SET_SENSITIVE ("layers-new-last-values",  image);
   SET_SENSITIVE ("layers-new-from-visible", image);
-  SET_SENSITIVE ("layers-new-group",        image && !indexed);
+  SET_SENSITIVE ("layers-new-group",        image && !indexed && !fs);
   SET_SENSITIVE ("layers-duplicate",        n_selected_layers > 0 && !fs && !ac);
   SET_SENSITIVE ("layers-delete",           n_selected_layers > 0 && !ac);
 

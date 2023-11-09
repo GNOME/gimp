@@ -100,6 +100,8 @@ static void   gimp_action_proxy_button_activate  (GtkButton         *button,
 
 static void   gimp_action_update_proxy_sensitive (GimpAction        *action,
                                                   GtkWidget         *proxy);
+static void   gimp_action_update_proxy_visible   (GimpAction        *action,
+                                                  GtkWidget         *proxy);
 static void   gimp_action_update_proxy_tooltip   (GimpAction        *action,
                                                   GtkWidget         *proxy);
 
@@ -442,9 +444,20 @@ void
 gimp_action_set_visible (GimpAction *action,
                          gboolean    visible)
 {
-  g_object_set (action,
-                "visible", visible,
-                NULL);
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
+  /* Only notify when the state actually changed. This is important for
+   * handlers such as visibility of menu items in GimpMenuModel which
+   * will assume that the action visibility changed. Otherwise we might
+   * remove items by mistake.
+   */
+  if (priv->visible != visible)
+    {
+      priv->visible = visible;
+
+      gimp_action_update_proxy_visible (action, NULL);
+      g_object_notify (G_OBJECT (action), "visible");
+    }
 }
 
 gboolean
@@ -925,16 +938,8 @@ gimp_action_set_property (GObject      *object,
                                  NULL);
       break;
     case GIMP_ACTION_PROP_VISIBLE:
-      if (priv->visible != g_value_get_boolean (value))
-        {
-          priv->visible = g_value_get_boolean (value);
-          /* Only notify when the state actually changed. This is important for
-           * handlers such as visibility of menu items in GimpMenuModel which
-           * will assume that the action visibility changed. Otherwise we might
-           * remove items by mistake.
-           */
-          g_object_notify (object, "visible");
-        }
+      gimp_action_set_visible (GIMP_ACTION (object),
+                               g_value_get_boolean (value));
       break;
 
     case GIMP_ACTION_PROP_LABEL:
@@ -1384,6 +1389,24 @@ gimp_action_update_proxy_sensitive (GimpAction *action,
         gtk_widget_set_sensitive (list->data, sensitive);
 
       gimp_action_update_proxy_tooltip (action, NULL);
+    }
+}
+
+static void
+gimp_action_update_proxy_visible (GimpAction *action,
+                                  GtkWidget  *proxy)
+{
+  GimpActionPrivate *priv    = GET_PRIVATE (action);
+  gboolean           visible = gimp_action_is_visible (action);
+
+  if (proxy)
+    {
+      gtk_widget_set_visible (proxy, visible);
+    }
+  else
+    {
+      for (GList *list = priv->proxies; list; list = list->next)
+        gtk_widget_set_visible (list->data, visible);
     }
 }
 
