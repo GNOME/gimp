@@ -1350,10 +1350,12 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                                  GdkEventButton        *bevent,
                                  GimpContainerTreeView *tree_view)
 {
-  GimpContainerView *container_view = GIMP_CONTAINER_VIEW (tree_view);
-  GtkTreeViewColumn *column;
-  GtkTreePath       *path;
-  gboolean           handled        = TRUE;
+  GimpContainerView        *container_view = GIMP_CONTAINER_VIEW (tree_view);
+  GtkTreeViewColumn        *column;
+  GtkTreePath              *path;
+  gboolean                  handled        = TRUE;
+  GtkCellRenderer          *toggled_cell   = NULL;
+  GimpCellRendererViewable *clicked_cell   = NULL;
 
   tree_view->priv->dnd_renderer = NULL;
 
@@ -1362,8 +1364,6 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                                      &path, &column, NULL, NULL))
     {
       GimpViewRenderer         *renderer;
-      GtkCellRenderer          *toggled_cell = NULL;
-      GimpCellRendererViewable *clicked_cell = NULL;
       GtkCellRenderer          *edit_cell    = NULL;
       GdkRectangle              column_area;
       GtkTreeIter               iter;
@@ -1385,15 +1385,21 @@ gimp_container_tree_view_button (GtkWidget             *widget,
           multisel_mode = FALSE;
         }
 
-      /* We need to grab focus after a button click, in order to make keyboard
-       * navigation possible. For multi-selection though, actual selection will
-       * happen in gimp_container_tree_view_selection_changed() but the widget
-       * must already be focused or the handler won't run.
-       * Whereas for single selection, grab must happen after we changed the
-       * selection (which will happen in this function) otherwise we end up
-       * first scrolling to the current selection. So we have a separate
-       * gtk_widget_grab_focus() at the end of the function.
-       * See also commit 3e101922 and MR !1128.
+      /* We need to grab focus at button click, in order to make keyboard
+       * navigation possible; yet the timing matters:
+       * 1. For multi-selection, actual selection will happen in
+       * gimp_container_tree_view_selection_changed() but the widget
+       * must already be focused or the handler won't run. So we grab first.
+       * 2. For toggled and clicked cells, we must also grab first (see code
+       * below), and absolutely not in the end, because some toggle cells may
+       * trigger a popup (and the grab on the source widget would close the
+       * popup).
+       * 3. Finally for single selection, grab must happen after we changed
+       * the selection (which will happen in this function) otherwise we
+       * end up first scrolling to the current selection.
+       * This is why we have a few separate calls to gtk_widget_grab_focus()
+       * in this function.
+       * See also commit 3e101922, MR !1128 and #10281.
        */
       if (multisel_mode && bevent->type == GDK_BUTTON_PRESS && ! gtk_widget_has_focus (widget))
         gtk_widget_grab_focus (widget);
@@ -1519,6 +1525,10 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                                                     tree_view->priv->renderer_cells,
                                                     column, &column_area,
                                                     bevent->x, bevent->y);
+
+      if ((toggled_cell || clicked_cell) &&
+          bevent->type == GDK_BUTTON_PRESS && ! gtk_widget_has_focus (widget))
+        gtk_widget_grab_focus (widget);
 
       if (! toggled_cell && ! clicked_cell)
         {
@@ -1716,7 +1726,8 @@ gimp_container_tree_view_button (GtkWidget             *widget,
       handled = TRUE;
     }
 
-  if (handled && bevent->type == GDK_BUTTON_PRESS && ! gtk_widget_has_focus (widget))
+  if (handled && bevent->type == GDK_BUTTON_PRESS && ! gtk_widget_has_focus (widget) &&
+      ! toggled_cell && ! clicked_cell)
     gtk_widget_grab_focus (widget);
 
   return handled;
