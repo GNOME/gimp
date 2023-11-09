@@ -345,6 +345,12 @@ spinbutton, entry {
   border-color: @strong-border-color;
 }
 
+spinbutton
+{
+  background-image: none;
+  background-color: @bg-color;
+}
+
 /* Styling for the +/- buttons */
 spinbutton button.up, spinbutton button.down {
   background-color: @bg-color;
