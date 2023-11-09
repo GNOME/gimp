@@ -228,6 +228,41 @@ read_dds (GFile          *file,
           hdr.pixelfmt.bpp    = 128;
           d.dxgi_format       = DXGI_FORMAT_R32G32B32A32_FLOAT;
           break;
+
+        case D3DFMT_D16_LOCKABLE:
+        case D3DFMT_D16:
+        case D3DFMT_L16:
+        case D3DFMT_INDEX16:
+          hdr.pixelfmt.flags |= DDPF_RGB;
+          hdr.pixelfmt.bpp    = 16;
+          hdr.pixelfmt.rmask  = 0x0000ffff;
+          hdr.pixelfmt.gmask  = hdr.pixelfmt.bmask = hdr.pixelfmt.amask = 0;
+          d.dxgi_format       = DXGI_FORMAT_R16_UNORM;
+          break;
+        case D3DFMT_G16R16:
+          hdr.pixelfmt.flags |= DDPF_RGB;
+          hdr.pixelfmt.bpp    = 32;
+          hdr.pixelfmt.rmask  = 0x0000ffff;
+          hdr.pixelfmt.gmask  = 0xffff0000;
+          hdr.pixelfmt.bmask  = hdr.pixelfmt.amask = 0;
+          d.dxgi_format       = DXGI_FORMAT_R16G16_UNORM;
+          break;
+        case D3DFMT_G16R16F:
+          hdr.pixelfmt.flags |= DDPF_RGB;
+          hdr.pixelfmt.bpp    = 32;
+          hdr.pixelfmt.rmask  = 0x0000ffff;
+          hdr.pixelfmt.gmask  = 0xffff0000;
+          hdr.pixelfmt.bmask  = hdr.pixelfmt.amask = 0;
+          d.dxgi_format       = DXGI_FORMAT_R16G16_FLOAT;
+          break;
+        case D3DFMT_R8G8B8:
+          hdr.pixelfmt.flags |= DDPF_RGB;
+          hdr.pixelfmt.bpp    = 16;
+          hdr.pixelfmt.rmask  = 0x000000ff;
+          hdr.pixelfmt.gmask  = 0x0000ff00;
+          hdr.pixelfmt.bmask  = hdr.pixelfmt.amask = 0;
+          d.dxgi_format       = DXGI_FORMAT_R16_UNORM;
+          break;
         default:
           fclose (fp);
           g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
@@ -335,6 +370,11 @@ read_dds (GFile          *file,
     {
       d.bpp = hdr.pixelfmt.bpp >> 3;
 
+      if (hdr.pixelfmt.flags & DDPF_BUMPDUDV)
+        {
+          d.is_signed = TRUE;
+        }
+
       if (d.bpp == 2)
         {
           if (hdr.pixelfmt.amask == 0xf000) /* RGBA4 */
@@ -344,8 +384,21 @@ read_dds (GFile          *file,
             }
           else if (hdr.pixelfmt.amask == 0xff00) /* L8A8 */
             {
-              d.gimp_bpp = 2;
-              type = GIMP_GRAY;
+              if (hdr.pixelfmt.flags & DDPF_LUMINANCE)
+                {
+                  d.gimp_bpp = 2;
+                  type = GIMP_GRAY;
+                }
+              else
+                {
+                  d.gimp_bpp = 4;
+                  type = GIMP_RGB;
+                }
+            }
+          else if (hdr.pixelfmt.rmask == 0xff) /* R8G8 */
+            {
+              d.gimp_bpp = 3;
+              type = GIMP_RGB;
             }
           else if (hdr.pixelfmt.bmask == 0x1f) /* R5G6B5 or RGB5A1 */
             {
@@ -391,7 +444,14 @@ read_dds (GFile          *file,
           else if (d.bpp == 4)
             {
               type = GIMP_RGB;
-              if (d.rbits > 8 || d.gbits > 8 || d.bbits > 8 || d.abits > 8)
+              if (d.dxgi_format == DXGI_FORMAT_R16G16_UINT ||
+                  d.dxgi_format == DXGI_FORMAT_R16G16_FLOAT)
+                {
+                  /* Output 16-bit RGB */
+                  d.gimp_bps = 2;
+                  d.gimp_bpp = 6;
+                }
+              else if (d.rbits > 8 || d.gbits > 8 || d.bbits > 8 || d.abits > 8)
                 {
                   d.gimp_bps = 2;
                   d.gimp_bpp = 8;
@@ -430,7 +490,8 @@ read_dds (GFile          *file,
     }
   else if (d.gimp_bps == 2)
     {
-      if (d.dxgi_format == DXGI_FORMAT_R16G16B16A16_FLOAT)
+      if (d.dxgi_format == DXGI_FORMAT_R16G16B16A16_FLOAT ||
+          d.dxgi_format == DXGI_FORMAT_R16G16_FLOAT)
         precision = GIMP_PRECISION_HALF_LINEAR;
       else
         precision = GIMP_PRECISION_U16_NON_LINEAR;
@@ -814,6 +875,7 @@ validate_header (dds_header_t  *hdr,
       fourcc != D3DFMT_A16B16G16R16      &&
       fourcc != D3DFMT_Q16W16V16U16      &&
       fourcc != D3DFMT_A16B16G16R16F     &&
+      fourcc != D3DFMT_G16R16F           &&
       fourcc != D3DFMT_A32B32G32R32F     &&
       fourcc != FOURCC ('D','X','1','0'))
     {
@@ -1067,6 +1129,57 @@ setup_dxgi_format (dds_header_t       *hdr,
           hdr->pixelfmt.amask = 0x0000f000;
           break;
 
+        case DXGI_FORMAT_R8G8_TYPELESS:
+        case DXGI_FORMAT_R8G8_UNORM:
+        case DXGI_FORMAT_R8G8_UINT:
+        case DXGI_FORMAT_R8G8_SNORM:
+        case DXGI_FORMAT_R8G8_SINT:
+          hdr->pixelfmt.flags |= DDPF_RGB;
+          hdr->pixelfmt.bpp    = 16;
+          hdr->pixelfmt.rmask  = 0x000000ff;
+          hdr->pixelfmt.gmask  = 0x0000ff00;
+          hdr->pixelfmt.bmask  = hdr->pixelfmt.amask = 0;
+          d->dxgi_format       = DXGI_FORMAT_R8G8_UINT;
+          if (dx10hdr->dxgiFormat >= DXGI_FORMAT_R8G8_SNORM)
+            d->is_signed = TRUE;
+          break;
+        case DXGI_FORMAT_R16_TYPELESS:
+        case DXGI_FORMAT_D16_UNORM:
+        case DXGI_FORMAT_R16_UNORM:
+        case DXGI_FORMAT_R16_UINT:
+        case DXGI_FORMAT_R16_SNORM:
+        case DXGI_FORMAT_R16_SINT:
+          hdr->pixelfmt.flags |= DDPF_RGB;
+          hdr->pixelfmt.bpp    = 16;
+          hdr->pixelfmt.rmask  = 0x0000ffff;
+          hdr->pixelfmt.gmask  = hdr->pixelfmt.bmask = hdr->pixelfmt.amask = 0;
+          d->dxgi_format       = DXGI_FORMAT_R16_UNORM;
+          if (dx10hdr->dxgiFormat >= DXGI_FORMAT_R16_SNORM)
+            d->is_signed = TRUE;
+          break;
+        case DXGI_FORMAT_R16G16_TYPELESS:
+        case DXGI_FORMAT_R16G16_UNORM:
+        case DXGI_FORMAT_R16G16_UINT:
+        case DXGI_FORMAT_R16G16_SNORM:
+        case DXGI_FORMAT_R16G16_SINT:
+          hdr->pixelfmt.flags |= DDPF_RGB;
+          hdr->pixelfmt.bpp    = 32;
+          hdr->pixelfmt.rmask  = 0x0000ffff;
+          hdr->pixelfmt.gmask  = 0xffff0000;
+          hdr->pixelfmt.bmask  = hdr->pixelfmt.amask = 0;
+          d->dxgi_format       = DXGI_FORMAT_R16G16_UINT;
+          if (dx10hdr->dxgiFormat >= DXGI_FORMAT_R16G16_SNORM)
+            d->is_signed = TRUE;
+          break;
+        case DXGI_FORMAT_R16G16_FLOAT:
+          hdr->pixelfmt.flags |= DDPF_RGB;
+          hdr->pixelfmt.bpp    = 32;
+          hdr->pixelfmt.rmask  = 0x0000ffff;
+          hdr->pixelfmt.gmask  = 0xffff0000;
+          hdr->pixelfmt.bmask  = hdr->pixelfmt.amask = 0;
+          d->dxgi_format       = DXGI_FORMAT_R16G16_FLOAT;
+          break;
+
         case DXGI_FORMAT_R16G16B16A16_TYPELESS:
         case DXGI_FORMAT_R16G16B16A16_UNORM:
         case DXGI_FORMAT_R16G16B16A16_UINT:
@@ -1202,8 +1315,21 @@ load_layer (FILE             *fp,
         }
       else if (hdr->pixelfmt.amask == 0xff00) /* L8A8 */
         {
-          type = GIMP_GRAYA_IMAGE;
-          bablfmt = babl_format ("Y'A u8");
+          if (hdr->pixelfmt.flags & DDPF_LUMINANCE)
+            {
+              type = GIMP_GRAYA_IMAGE;
+              bablfmt = babl_format ("Y'A u8");
+            }
+          else
+            {
+              type = GIMP_RGB_IMAGE;
+              bablfmt = babl_format ("R'G'B'A u8");
+            }
+        }
+      else if (hdr->pixelfmt.rmask == 0xff) /* R8G8 */
+        {
+          type = GIMP_RGB_IMAGE;
+          bablfmt = babl_format ("R'G'B' u8");
         }
       else if (hdr->pixelfmt.bmask == 0x1f) /* R5G6B5 or RGB5A1 */
         {
@@ -1232,6 +1358,8 @@ load_layer (FILE             *fp,
           {
             if (d->dxgi_format == DXGI_FORMAT_R16G16B16A16_FLOAT)
               bablfmt = babl_format ("R'G'B'A half");
+            else if (d->dxgi_format == DXGI_FORMAT_R16G16_FLOAT)
+              bablfmt = babl_format ("R'G'B' half");
             else
               bablfmt = babl_format ("R'G'B'A u16");
           }
@@ -1477,6 +1605,20 @@ load_layer (FILE             *fp,
                             {
                               pixels16[3] = 0xffff;
                             }
+
+                          if (d->is_signed)
+                            {
+                              gint16 *signed16 = (gint16 *) &pixels16[0];
+
+                              if (d->rbits == 16)
+                                pixels16[0] = (gint16) ((gint32) signed16[0] + 32768);
+                              if (d->gbits == 16)
+                                pixels16[1] = (gint16) ((gint32) signed16[1] + 32768);
+                              if (d->bbits == 16)
+                                pixels16[2] = (gint16) ((gint32) signed16[2] + 32768);
+                              if (d->abits == 16)
+                                pixels16[3] = (gint16) ((gint32) signed16[3] + 32768);
+                            }
                         }
                     }
                   else if (d->bpp == 8 && d->gimp_bps == 2)
@@ -1557,7 +1699,16 @@ load_layer (FILE             *fp,
                 }
               else if (d->bpp == 2)
                 {
-                  if (hdr->pixelfmt.amask == 0xf000) /* RGBA4 */
+                  if (d->dxgi_format == DXGI_FORMAT_R16G16_FLOAT)
+                    {
+                      guint16 *pixels16 = (guint16 *) &pixels[pos];
+                      guint16 *srcbuf   = (guint16 *) &buf[z];
+
+                      pixels16[0] = srcbuf[0];
+                      pixels16[1] = srcbuf[1];
+                      pixels16[2] = 0;
+                    }
+                  else if (hdr->pixelfmt.amask == 0xf000) /* RGBA4 */
                     {
                       pixels[pos] =
                         (pixel >> d->rshift << rshiftbits & d->rmask) * 255 / d->rmask;
@@ -1570,10 +1721,42 @@ load_layer (FILE             *fp,
                     }
                   else if (hdr->pixelfmt.amask == 0xff00) /* L8A8 */
                     {
+                      if (hdr->pixelfmt.flags & DDPF_LUMINANCE)
+                        {
+                          pixels[pos] =
+                            (pixel >> d->rshift << rshiftbits & d->rmask) * 255 / d->rmask;
+                          pixels[pos + 1] =
+                            (pixel >> d->ashift << ashiftbits & d->amask) * 255 / d->amask;
+                        }
+                      else /* R8A8 */
+                        {
+                          pixels[pos] =
+                            (pixel >> d->rshift << rshiftbits & d->rmask) * 255 / d->rmask;
+                          pixels[pos + 3] =
+                            (pixel >> d->ashift << ashiftbits & d->amask) * 255 / d->amask;
+                          pixels[pos + 1] = 0;
+                          pixels[pos + 2] = 0;
+
+                          if (d->is_signed)
+                            {
+                              pixels[pos]   = (guint8) ((gint16) pixels[pos]   + 128);
+                              pixels[pos+3] = (guint8) ((gint16) pixels[pos+3] + 128);
+                            }
+                        }
+                    }
+                  else if (hdr->pixelfmt.rmask == 0xff) /* R8G8 */
+                    {
                       pixels[pos] =
                         (pixel >> d->rshift << rshiftbits & d->rmask) * 255 / d->rmask;
                       pixels[pos + 1] =
-                        (pixel >> d->ashift << ashiftbits & d->amask) * 255 / d->amask;
+                        (pixel >> d->gshift << gshiftbits & d->gmask) * 255 / d->gmask;
+                      pixels[pos + 2] = 0;
+
+                      if (d->is_signed)
+                        {
+                          pixels[pos]   = (guint8) ((gint16) pixels[pos]   + 128);
+                          pixels[pos+1] = (guint8) ((gint16) pixels[pos+1] + 128);
+                        }
                     }
                   else if (hdr->pixelfmt.bmask == 0x1f) /* R5G6B5 or RGB5A1 */
                     {
@@ -1597,6 +1780,13 @@ load_layer (FILE             *fp,
                       guint16 *pixels16 = (guint16 *) &pixels[pos];
 
                       *pixels16 = (guint16) (pixel & 0xffff);
+
+                      if (d->is_signed)
+                        {
+                          gint16 *signed16 = (gint16 *) &pixels16[0];
+
+                          pixels16[0] = (gint16) ((gint32) signed16[0] + 32768);
+                        }
                     }
                 }
               else
