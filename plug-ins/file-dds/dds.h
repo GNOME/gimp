@@ -122,17 +122,42 @@ typedef enum
 #define DDSD_HEIGHT                0x00000002
 #define DDSD_WIDTH                 0x00000004
 #define DDSD_PITCH                 0x00000008
+#define DDSD_BACKBUFFERCOUNT       0x00000020
+#define DDSD_ZBUFFERBITDEPTH       0x00000040
+#define DDSD_ALPHABITDEPTH         0x00000080
+#define DDSD_LPSURFACE             0x00000800
 #define DDSD_PIXELFORMAT           0x00001000
+#define DDSD_CKDESTOVERLAY         0x00002000
+#define DDSD_CKDESTBLT             0x00004000
+#define DDSD_CKSRCOVERLAY          0x00008000
+#define DDSD_CKSRCBLT              0x00010000
 #define DDSD_MIPMAPCOUNT           0x00020000
+#define DDSD_REFRESHRATE           0x00040000
 #define DDSD_LINEARSIZE            0x00080000
+#define DDSD_TEXTURESTAGE          0x00100000
+#define DDSD_FVF                   0x00200000
+#define DDSD_SRCVBHANDLE           0x00400000
 #define DDSD_DEPTH                 0x00800000
 
 #define DDPF_ALPHAPIXELS           0x00000001
 #define DDPF_ALPHA                 0x00000002
 #define DDPF_FOURCC                0x00000004
+#define DDPF_PALETTEINDEXED4       0x00000008
+#define DDPF_PALETTEINDEXEDTO8     0x00000010
 #define DDPF_PALETTEINDEXED8       0x00000020
 #define DDPF_RGB                   0x00000040
+#define DDPF_COMPRESSED            0x00000080
+#define DDPF_RGBTOYUV              0x00000100
+#define DDPF_YUV                   0x00000200
+#define DDPF_ZBUFFER               0x00000400
+#define DDPF_PALETTEINDEXED1       0x00000800
+#define DDPF_PALETTEINDEXED2       0x00001000
+#define DDPF_ZPIXELS               0x00002000
+#define DDPF_STENCILBUFFER         0x00004000
+#define DDPF_ALPHAPREMULT          0x00008000
 #define DDPF_LUMINANCE             0x00020000
+#define DDPF_BUMPLUMINANCE         0x00040000
+#define DDPF_BUMPDUDV              0x00080000
 #define DDPF_NORMAL                0x80000000  // nvidia specific
 
 #define DDSCAPS_COMPLEX            0x00000008
