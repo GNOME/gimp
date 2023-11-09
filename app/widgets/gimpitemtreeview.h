@@ -96,10 +96,6 @@ struct _GimpItemTreeViewClass
   const gchar          *activate_action;
   const gchar          *new_action;
   const gchar          *new_default_action;
-  const gchar          *raise_action;
-  const gchar          *raise_top_action;
-  const gchar          *lower_action;
-  const gchar          *lower_bottom_action;
   const gchar          *duplicate_action;
   const gchar          *delete_action;
 

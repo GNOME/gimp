@@ -101,10 +101,6 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   iv_class->activate_action         = "vectors-edit";
   iv_class->new_action              = "vectors-new";
   iv_class->new_default_action      = "vectors-new-last-values";
-  iv_class->raise_action            = "vectors-raise";
-  iv_class->raise_top_action        = "vectors-raise-to-top";
-  iv_class->lower_action            = "vectors-lower";
-  iv_class->lower_bottom_action     = "vectors-lower-to-bottom";
   iv_class->duplicate_action        = "vectors-duplicate";
   iv_class->delete_action           = "vectors-delete";
   iv_class->lock_content_icon_name  = GIMP_ICON_TOOL_PATH;

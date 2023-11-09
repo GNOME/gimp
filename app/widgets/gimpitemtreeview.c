@@ -83,8 +83,6 @@ struct _GimpItemTreeViewPrivate
   GList           *locks;
 
   GtkWidget       *new_button;
-  GtkWidget       *raise_button;
-  GtkWidget       *lower_button;
   GtkWidget       *duplicate_button;
   GtkWidget       *delete_button;
 
@@ -292,10 +290,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->action_group            = NULL;
   klass->new_action              = NULL;
   klass->new_default_action      = NULL;
-  klass->raise_action            = NULL;
-  klass->raise_top_action        = NULL;
-  klass->lower_action            = NULL;
-  klass->lower_bottom_action     = NULL;
   klass->duplicate_action        = NULL;
   klass->delete_action           = NULL;
 
@@ -488,20 +482,6 @@ gimp_item_tree_view_constructed (GObject *object)
                               item_view_class->item_type,
                               gimp_item_tree_view_new_dropped,
                               item_view);
-
-  item_view->priv->raise_button =
-    gimp_editor_add_action_button (editor, item_view_class->action_group,
-                                   item_view_class->raise_action,
-                                   item_view_class->raise_top_action,
-                                   GDK_SHIFT_MASK,
-                                   NULL);
-
-  item_view->priv->lower_button =
-    gimp_editor_add_action_button (editor, item_view_class->action_group,
-                                   item_view_class->lower_action,
-                                   item_view_class->lower_bottom_action,
-                                   GDK_SHIFT_MASK,
-                                   NULL);
 
   item_view->priv->duplicate_button =
     gimp_editor_add_action_button (editor, item_view_class->action_group,

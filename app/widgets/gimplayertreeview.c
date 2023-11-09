@@ -257,10 +257,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->activate_action       = "layers-edit";
   item_view_class->new_action            = "layers-new";
   item_view_class->new_default_action    = "layers-new-last-values";
-  item_view_class->raise_action          = "layers-raise";
-  item_view_class->raise_top_action      = "layers-raise-to-top";
-  item_view_class->lower_action          = "layers-lower";
-  item_view_class->lower_bottom_action   = "layers-lower-to-bottom";
   item_view_class->duplicate_action      = "layers-duplicate";
   item_view_class->delete_action         = "layers-delete";
   item_view_class->lock_content_help_id  = GIMP_HELP_LAYER_LOCK_PIXELS;

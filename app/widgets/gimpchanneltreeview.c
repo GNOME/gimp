@@ -118,10 +118,6 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   iv_class->activate_action       = "channels-edit-attributes";
   iv_class->new_action            = "channels-new";
   iv_class->new_default_action    = "channels-new-last-values";
-  iv_class->raise_action          = "channels-raise";
-  iv_class->raise_top_action      = "channels-raise-to-top";
-  iv_class->lower_action          = "channels-lower";
-  iv_class->lower_bottom_action   = "channels-lower-to-bottom";
   iv_class->duplicate_action      = "channels-duplicate";
   iv_class->delete_action         = "channels-delete";
   iv_class->lock_content_help_id  = GIMP_HELP_CHANNEL_LOCK_PIXELS;
