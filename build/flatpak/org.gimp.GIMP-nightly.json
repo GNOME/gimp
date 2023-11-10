@@ -86,13 +86,13 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/Exiv2/exiv2/releases/download/v0.28.0/exiv2-0.28.0-Source.tar.gz",
-                            "sha256": "89af3b5ef7277753ef7a7b5374ae017c6b9e304db3b688f1948e73e103491f3d",
+                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.1.tar.gz",
+                            "sha256": "3078651f995cb6313b1041f07f4dd1bf0e9e4d394d6e2adc6e92ad0b621291fa",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 769,
                                 "stable-only": true,
-                                "url-template": "https://github.com/Exiv2/exiv2/releases/download/v$version/exiv2-$version-Source.tar.gz"
+                                "url-template": "https://github.com/Exiv2/exiv2/archive/refs/tags/v$version.tar.gz"
                             }
                         }
                     ]
@@ -119,7 +119,7 @@
             ]
         },
         {
-            "name" : "openexr",
+            "name": "openexr",
             "config-opts": [
                 "-DBUILD_SHARED_LIBS=ON",
                 "-DOPENEXR_INSTALL_EXAMPLES=OFF",
@@ -201,7 +201,8 @@
                 "-DOpenJPEG_DIR=/usr/lib64/openjpeg-2.3",
                 "-DENABLE_BOOST=OFF",
                 "-DWITH_NSS3:BOOL=OFF",
-                "-DENABLE_QT5:BOOL=OFF"
+                "-DENABLE_QT5:BOOL=OFF",
+                "-DENABLE_QT6:BOOL=OFF"
             ],
             "cleanup": [
                 "/bin",
@@ -212,8 +213,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-23.08.0.tar.xz",
-                    "sha256": "4a4bf7fc903b9f1a2ab7d04b7c5d8220db9bc6261cc73fdb9a826dc272f49aa8",
+                    "url": "https://poppler.freedesktop.org/poppler-23.11.0.tar.xz",
+                    "sha256": "f99cca6799cb9cb6c92fc1e0eb78547b611cb733750ab7cb047cb0e6c246539c",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -314,8 +315,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10012/ghostscript-10.01.2.tar.gz",
-                    "sha512": "11887850d440b8bbd8b83b8b58df8c743cf94be8fdbcfbda1a5fce55ce7c6a963d94b41a4ebcf1ba48f64f8af01e76dec789e2711212b1f7a32f98c42d75e0ff",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10021/ghostscript-10.02.1.tar.gz",
+                    "sha512": "24eeff047a24085413283ee42539a2feea4d3de81077664861399055a9d30349a0ef0950746bb0b0ee2237b4b9ee215340204ab0e33347b53dc2acee85fcfc19",
                     "x-checker-data": {
                         "//": "Bypass broken url-template with anitya checker - See https://github.com/flathub/flatpak-external-data-checker/issues/360",
                         "type": "json",
@@ -365,8 +366,8 @@
                         {
                             "type": "git",
                             "url": "https://github.com/json-c/json-c.git",
-                            "tag": "json-c-0.16-20220414",
-                            "commit": "2f2ddc1f2dbca56c874e8f9c31b5b963202d80e7",
+                            "tag": "json-c-0.17-20230812",
+                            "commit": "b4c371fa0cbc4dcbaccc359ce9e957a22988fb34",
                             "x-checker-data": {
                                 "type": "git",
                                 "tag-pattern": "^json-c-([\\d.]+)-[\\d]+$"
@@ -469,8 +470,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.23.tar.gz",
-                            "sha256": "5d9491d07168a5d00116cdc068a40022c3455bf9293c7cb86a65b1054d7e5114",
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.24.tar.gz",
+                            "sha256": "ceadc5065da97bd92404cac7254da66cc6eb192679cf1002098688978d4d5132",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 2540,
@@ -616,8 +617,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/strukturag/libheif/releases/download/v1.16.2/libheif-1.16.2.tar.gz",
-                    "sha256": "7f97e4205c0bd9f9b8560536c8bd2e841d1c9a6d610401eb3eb87ed9cdfe78ea",
+                    "url": "https://github.com/strukturag/libheif/releases/download/v1.17.3/libheif-1.17.3.tar.gz",
+                    "sha256": "8d5b6292e7931324f81f871f250ecbb9f874aa3c66b4f6f35ceb0bf3163b53ea",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 64439,
