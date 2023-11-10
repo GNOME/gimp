@@ -170,6 +170,12 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                              TRUE,
                              G_PARAM_READWRITE);
 
+      GIMP_PROC_ARG_BOOLEAN (procedure, "flip-image",
+                             _("Flip image _vertically"),
+                             _("Flip the image vertically on import"),
+                             FALSE,
+                             G_PARAM_READWRITE);
+
       GIMP_PROC_ARG_BOOLEAN (procedure, "decode-images",
                              _("Automatically decode YCoCg/AE_xp images when detected"),
                              _("Decode YCoCg/AExp images when detected"),

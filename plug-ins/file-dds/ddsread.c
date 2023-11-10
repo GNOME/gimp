@@ -138,6 +138,7 @@ read_dds (GFile          *file,
   gboolean           decode_images;
   gint               i, j;
   guint              computed_pitch_or_linsize;
+  gboolean           flip_import;
 
   if (interactive)
     {
@@ -149,6 +150,7 @@ read_dds (GFile          *file,
 
   g_object_get (config,
                 "load-mipmaps",  &read_mipmaps,
+                "flip-image",    &flip_import,
                 "decode-images", &decode_images,
                 NULL);
 
@@ -729,6 +731,9 @@ read_dds (GFile          *file,
     }
 
   gimp_image_take_selected_layers (image, layers);
+
+  if (flip_import)
+    gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
 
   *ret_image = image;
 
@@ -2007,6 +2012,7 @@ load_dialog (GimpProcedure *procedure,
   vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                          "dds-read-box",
                                          "load-mipmaps",
+                                         "flip-image",
                                          "decode-images",
                                          NULL);
   gtk_box_set_spacing (GTK_BOX (vbox), 8);
