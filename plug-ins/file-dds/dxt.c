@@ -1329,7 +1329,18 @@ decode_color_block (unsigned char *block,
           d[1] = colors[idx][1];
           d[2] = colors[idx][0];
           if (format == DDS_COMPRESS_BC1)
-            d[3] = ((c0 <= c1) && idx == 3) ? 0 : 255;
+            {
+              d[3] = ((c0 <= c1) && idx == 3) ? 0 : 255;
+            }
+          else if (format == _DDS_COMPRESS_BC1_NO_ALPHA)
+            {
+              /* BC1, but interpret transparent as black */
+              if ((c0 <= c1) && idx == 3)
+                {
+                  d[0] = d[1] = d[2] = 0;
+                }
+              d[3] = 255;
+            }
           indices >>= 2;
           d += 4;
         }
@@ -1486,7 +1497,7 @@ dxt_decompress (unsigned char *dst,
         {
           memset(block, 0, 16 * 4);
 
-          if (format == DDS_COMPRESS_BC1)
+          if (format == DDS_COMPRESS_BC1 || format == _DDS_COMPRESS_BC1_NO_ALPHA)
             {
               decode_color_block(block, s, format);
               s += 8;
