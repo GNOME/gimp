@@ -98,10 +98,6 @@ static void          gimp_container_tree_view_set_view_size     (GimpContainerVi
 
 static void          gimp_container_tree_view_real_edit_name    (GimpContainerTreeView       *tree_view);
 
-static void     gimp_container_tree_view_selection_label_notify (GtkLabel                    *label,
-                                                                 GParamSpec                  *pspec,
-                                                                 GimpItemTreeView            *view);
-
 static gboolean      gimp_container_tree_view_edit_focus_out    (GtkWidget                   *widget,
                                                                  GdkEvent                    *event,
                                                                  gpointer                     user_data);
@@ -292,12 +288,6 @@ gimp_container_tree_view_constructed (GObject *object)
   gtk_label_set_selectable (GTK_LABEL (tree_view->priv->multi_selection_label), TRUE);
   gtk_tree_view_column_set_widget (tree_view->main_column,
                                    tree_view->priv->multi_selection_label);
-  g_signal_connect (tree_view->priv->multi_selection_label, "notify::label",
-                    G_CALLBACK (gimp_container_tree_view_selection_label_notify),
-                    tree_view);
-  g_signal_connect (tree_view->priv->multi_selection_label, "notify::selection-bound",
-                    G_CALLBACK (gimp_container_tree_view_selection_label_notify),
-                    tree_view);
   gtk_widget_show (tree_view->priv->multi_selection_label);
   gtk_tree_view_insert_column (tree_view->view, tree_view->main_column, 0);
 
@@ -1199,20 +1189,6 @@ gimp_container_tree_view_real_edit_name (GimpContainerTreeView *tree_view)
 
 
 /*  callbacks  */
-
-static void
-gimp_container_tree_view_selection_label_notify (GtkLabel         *label,
-                                                 GParamSpec       *pspec,
-                                                 GimpItemTreeView *view)
-{
-  /* This is a weird trick to make the label follow the color scheme of
-   * selected items in whatever theme is selected. It seems we cannot
-   * link to the color of another widget whose theme we don't control.
-   * Faking selection is the only way I found, though it is quite ugly
-   * semantically.
-   */
-  gtk_label_select_region (label, 0, -1);
-}
 
 static gboolean
 gimp_container_tree_view_edit_focus_out (GtkWidget *widget,
