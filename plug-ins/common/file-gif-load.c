@@ -352,7 +352,8 @@ static struct
   gint delayTime;
   gint inputFlag;
   gint disposal;
-} Gif89 = { -1, -1, -1, 0 };
+  gint num_loops;
+} Gif89 = { -1, -1, -1, 0, -1 };
 
 static void     read_error   (const gchar *error_type,
                               GimpImage   *image,
@@ -399,9 +400,10 @@ load_image (GFile     *file,
   gint       grayScale;
   gboolean   useGlobalColormap;
   gint       bitPixel;
-  gint       imageCount = 0;
-  GimpImage *image      = NULL;
+  gint       imageCount     = 0;
+  GimpImage *image          = NULL;
   gboolean   status;
+  gboolean   saved_parasite = FALSE;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
@@ -590,6 +592,24 @@ load_image (GFile     *file,
       /* If we are loading a thumbnail, we stop after the first frame. */
       if (thumbnail)
         break;
+
+      /* If there is more than one frame, we add a parasite so that
+       * we know to export as an animation on overwrite */
+      if (Gif89.num_loops > -1 && ! saved_parasite)
+        {
+          GimpParasite *parasite;
+          gchar        *str;
+
+          parasite = gimp_parasite_new ("gif/animated",
+                                        GIMP_PARASITE_PERSISTENT,
+                                        strlen (str) + 1,
+                                        (gpointer) str);
+          g_free (str);
+
+          gimp_image_attach_parasite (image, parasite);
+          gimp_parasite_free (parasite);
+          saved_parasite = TRUE;
+        }
     }
 
   fclose (fd);
@@ -690,6 +710,15 @@ DoExtension (FILE *fd,
 #ifdef GIFDEBUG
       str = "Application Extension";
 #endif
+      /* Animation block */
+      if (GetDataBlock (fd, (guchar *) buf))
+        {
+          if (strncmp ((const gchar *) buf, "NETSCAPE2.0", 8) == 0)
+            {
+              if (GetDataBlock (fd, (guchar *) buf))
+                Gif89.num_loops = (buf[0] << 8) | buf[1];
+            }
+        }
       break;
     case 0xfe:                  /* Comment Extension */
 #ifdef GIFDEBUG

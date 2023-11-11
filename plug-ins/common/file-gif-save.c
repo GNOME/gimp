@@ -268,6 +268,7 @@ gif_save (GimpProcedure        *procedure,
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GimpImage         *orig_image;
   GimpImage         *sanitized_image = NULL;
+  GimpParasite      *parasite        = NULL;
   GError            *error           = NULL;
 
   gegl_init (NULL, NULL);
@@ -287,6 +288,34 @@ gif_save (GimpProcedure        *procedure,
        * duplicate image to delete later.
        */
       sanitized_image = image;
+
+      /* If imported as an animation, set the animation configurations
+       * when overwriting the file */
+      parasite = gimp_image_get_parasite (image, "gif/animated");
+      if (parasite)
+        {
+          gint     num_loops;
+          gchar   *parasite_data;
+          guint32  parasite_size;
+
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = g_strndup (parasite_data, parasite_size);
+
+          if (sscanf (parasite_data, "%i", &num_loops) == 1)
+            {
+              gboolean loop = (num_loops == 0);
+
+              g_object_set (config,
+                            "as-animation",      TRUE,
+                            "loop",              loop,
+                            "number-of-repeats", num_loops,
+                            NULL);
+            }
+
+          gimp_image_detach_parasite (image, "gif/animated");
+          g_free (parasite);
+          g_free (parasite_data);
+        }
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
