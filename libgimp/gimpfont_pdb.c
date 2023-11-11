@@ -37,6 +37,41 @@
 
 
 /**
+ * _gimp_font_get_lookup_name:
+ * @font: GimpFont object.
+ *
+ * Retrieve the font lookup name.
+ *
+ * Retrieve the font lookup name.
+ *
+ * Returns: (transfer full): font lookup name.
+ *          The returned value must be freed with g_free().
+ **/
+gchar *
+_gimp_font_get_lookup_name (GimpFont *font)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar *lookup_name = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_FONT, font,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-font-get-lookup-name",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    lookup_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return lookup_name;
+}
+
+/**
  * gimp_font_get_by_name:
  * @name: The name of the font.
  *

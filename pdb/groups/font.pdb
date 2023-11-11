@@ -99,10 +99,39 @@ CODE
     );
 }
 
+sub font_get_lookup_name {
+    $blurb = 'Retrieve the font lookup name.';
+
+    $help = <<'HELP';
+Retrieve the font lookup name.
+HELP
+
+    $lib_private = 1;
+
+    @inargs = (
+      { name => 'font', type => 'font',
+        desc => 'GimpFont object' }
+    );
+
+    @outargs = (
+      { name => 'lookup_name', type => 'string',
+        desc => 'font lookup name' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+    lookup_name = g_strdup (gimp_font_get_lookup_name (font));
+}
+CODE
+    );
+}
+
 @headers = qw("core/gimp.h"
+              "text/gimpfont.h"
               "gimppdb-utils.h");
 
-@procs = qw(font_get_by_name fonts_get_by_name);
+@procs = qw(font_get_lookup_name font_get_by_name fonts_get_by_name);
 
 %exports = (app => [@procs], lib => [@procs]);
 

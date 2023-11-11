@@ -71,19 +71,21 @@ static gboolean   gimp_font_factory_data_delete     (GimpDataFactory *factory,
                                                      GimpData        *data,
                                                      gboolean         delete_from_disk,
                                                      GError         **error);
+static void       gimp_font_factory_finalize        (GObject         *object);
 
 static void       gimp_font_factory_load            (GimpFontFactory *factory,
                                                      GError         **error);
 static gboolean   gimp_font_factory_load_fonts_conf (FcConfig        *config,
                                                      GFile           *fonts_conf);
-static void       gimp_font_factory_add_directories (FcConfig        *config,
+static void       gimp_font_factory_add_directories (GimpFontFactory *factory,
+                                                     FcConfig        *config,
                                                      GList           *path,
                                                      GError         **error);
 static void       gimp_font_factory_recursive_add_fontdir
                                                     (FcConfig        *config,
                                                      GFile           *file,
                                                      GError         **error);
-static void       gimp_font_factory_load_names      (GimpContainer   *container,
+static void       gimp_font_factory_load_names      (GimpFontFactory *container,
                                                      PangoFontMap    *fontmap,
                                                      PangoContext    *context);
 
@@ -97,7 +99,10 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpFontFactory, gimp_font_factory,
 static void
 gimp_font_factory_class_init (GimpFontFactoryClass *klass)
 {
+  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
   GimpDataFactoryClass *factory_class = GIMP_DATA_FACTORY_CLASS (klass);
+
+  object_class->finalize        = gimp_font_factory_finalize;
 
   factory_class->data_init      = gimp_font_factory_data_init;
   factory_class->data_refresh   = gimp_font_factory_data_refresh;
@@ -195,6 +200,18 @@ gimp_font_factory_data_delete (GimpDataFactory  *factory,
   return TRUE;
 }
 
+static void
+gimp_font_factory_finalize (GObject  *object)
+{
+  GimpFontFactory *font_factory = GIMP_FONT_FACTORY(object);
+
+  g_free (font_factory->fonts_renaming_config);
+  g_free (font_factory->sysconf);
+  g_free (font_factory->conf);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
 
 /*  public functions  */
 
@@ -214,6 +231,26 @@ gimp_font_factory_new (Gimp        *gimp,
                        NULL);
 }
 
+GList *
+gimp_font_factory_get_custom_fonts_dirs (GimpFontFactory  *factory)
+{
+  return gimp_data_factory_get_data_path (GIMP_DATA_FACTORY (factory));
+}
+
+void
+gimp_font_factory_get_custom_config_path (GimpFontFactory  *factory,
+                                          gchar           **conf,
+                                          gchar           **sysconf)
+{
+  *conf    = factory->conf;
+  *sysconf = factory->sysconf;
+}
+
+gchar *
+gimp_font_factory_get_fonts_renaming_config (GimpFontFactory  *factory)
+{
+  return factory->fonts_renaming_config;
+}
 
 /*  private functions  */
 
@@ -265,7 +302,7 @@ gimp_font_factory_load_async_callback (GimpAsync       *async,
       context = pango_font_map_create_context (fontmap);
       g_object_unref (fontmap);
 
-      gimp_font_factory_load_names (container, PANGO_FONT_MAP (fontmap), context);
+      gimp_font_factory_load_names (factory, PANGO_FONT_MAP (fontmap), context);
       g_object_unref (context);
       FcConfigDestroy (config);
     }
@@ -307,14 +344,30 @@ gimp_font_factory_load (GimpFontFactory  *factory,
 
   fonts_conf = gimp_directory_file (CONF_FNAME, NULL);
   if (! gimp_font_factory_load_fonts_conf (config, fonts_conf))
-    g_printerr ("%s: failed to read '%s'.\n",
-                G_STRFUNC, g_file_peek_path (fonts_conf));
+    {
+      g_printerr ("%s: failed to read '%s'.\n",
+                  G_STRFUNC, g_file_peek_path (fonts_conf));
+    }
+  else
+    {
+      g_free (factory->conf);
+      factory->conf = g_file_get_path (fonts_conf);
+    }
+
   g_object_unref (fonts_conf);
 
   fonts_conf = gimp_sysconf_directory_file (CONF_FNAME, NULL);
   if (! gimp_font_factory_load_fonts_conf (config, fonts_conf))
-    g_printerr ("%s: failed to read '%s'.\n",
-                G_STRFUNC, g_file_peek_path (fonts_conf));
+    {
+      g_printerr ("%s: failed to read '%s'.\n",
+                  G_STRFUNC, g_file_peek_path (fonts_conf));
+    }
+  else
+    {
+      g_free (factory->sysconf);
+      factory->sysconf = g_file_get_path (fonts_conf);
+    }
+
   g_object_unref (fonts_conf);
 
   path = gimp_data_factory_get_data_path (GIMP_DATA_FACTORY (factory));
@@ -324,7 +377,7 @@ gimp_font_factory_load (GimpFontFactory  *factory,
   gimp_container_freeze (container);
   gimp_container_clear (container);
 
-  gimp_font_factory_add_directories (config, path, error);
+  gimp_font_factory_add_directories (factory, config, path, error);
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   /* We perform font cache initialization in a separate thread, so
@@ -363,9 +416,10 @@ gimp_font_factory_load_fonts_conf (FcConfig *config,
 }
 
 static void
-gimp_font_factory_add_directories (FcConfig  *config,
-                                   GList     *path,
-                                   GError   **error)
+gimp_font_factory_add_directories (GimpFontFactory *factory,
+                                   FcConfig        *config,
+                                   GList           *path,
+                                   GError         **error)
 {
   GList *list;
 
@@ -655,16 +709,20 @@ gimp_font_factory_load_aliases (GimpContainer *container,
 }
 
 static void
-gimp_font_factory_load_names (GimpContainer *container,
-                              PangoFontMap  *fontmap,
-                              PangoContext  *context)
+gimp_font_factory_load_names (GimpFontFactory *factory,
+                              PangoFontMap    *fontmap,
+                              PangoContext    *context)
 {
-  FcObjectSet *os;
-  FcPattern   *pat;
-  FcFontSet   *fontset;
-  GString     *ignored_fonts;
-  gint         n_ignored = 0;
-  gint         i;
+  GimpContainer *container;
+  FcObjectSet   *os;
+  FcPattern     *pat;
+  FcFontSet     *fontset;
+  GString       *ignored_fonts;
+  GString       *global_xml = g_string_new ("<fontconfig>\n");
+  gint           n_ignored  = 0;
+  gint           i;
+
+  container = gimp_data_factory_get_container (GIMP_DATA_FACTORY (factory));
 
   os = FcObjectSetBuild (FC_FAMILY,
                          FC_STYLE,
@@ -791,7 +849,7 @@ gimp_font_factory_load_names (GimpContainer *container,
 
       newname = g_strdup_printf ("gimpfont%i", i);
 
-      xml = g_string_new ("<?xml version=\"1.0\"?>\n<match>");
+      xml = g_string_new ("<match>");
 
       /*We can't use faux bold (sometimes real bold) unless it is specified in fontconfig*/
       xml_bold_variant = g_string_new ("<?xml version=\"1.0\"?>\n<match>");
@@ -917,6 +975,8 @@ gimp_font_factory_load_names (GimpContainer *container,
 
       gimp_font_factory_add_font (container, context, pfd, fullname, (const gchar *) file, font_info);
 
+      g_string_append (global_xml, xml->str);
+
       pango_font_description_free (pattern_pfd);
       g_free (pattern_pfd_desc);
       pango_font_description_free (pfd);
@@ -924,6 +984,11 @@ gimp_font_factory_load_names (GimpContainer *container,
       g_string_free (xml, TRUE);
       g_string_free (xml_bold_variant, TRUE);
     }
+
+  g_string_append (global_xml, "</fontconfig>");
+
+  g_free (factory->fonts_renaming_config);
+  factory->fonts_renaming_config = g_strdup (global_xml->str);
 
   if (n_ignored > 0)
     {
@@ -934,6 +999,7 @@ gimp_font_factory_load_names (GimpContainer *container,
     }
 
   g_string_free (ignored_fonts, TRUE);
+  g_string_free (global_xml, TRUE);
 
   /*  only create aliases if there is at least one font available  */
   if (fontset->nfont > 0)

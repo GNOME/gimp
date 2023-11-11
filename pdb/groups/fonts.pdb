@@ -73,13 +73,72 @@ CODE
     );
 }
 
+sub fonts_get_custom_configs {
+    $blurb = 'Retrieve custom configs.';
+
+    $help = <<'HELP';
+This procedure returns custom FontConfig configs along with the fonts renaming config.
+HELP
+
+    $lib_private = 1;
+
+    @inargs = (
+    );
+
+    @outargs = (
+	{ name => 'config', type => 'string',
+	  desc => 'config path' },
+	{ name => 'sysconfig', type => 'string',
+	  desc => 'sysconfig path' },
+	{ name => 'renaming_config', type => 'string',
+	  desc => 'fonts renaming config' },
+	{ name => 'dirs', type => 'strv',
+	  desc => 'custom fonts directories' }
+
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (! gimp_data_factory_data_wait (gimp->font_factory))
+    success = FALSE;
+
+  if (success)
+    {
+      GList *list   = gimp_font_factory_get_custom_fonts_dirs (GIMP_FONT_FACTORY (gimp->font_factory));
+      guint  length = g_list_length (list);
+      gint   i;
+
+
+      gimp_font_factory_get_custom_config_path (GIMP_FONT_FACTORY (gimp->font_factory),
+                                                &config,
+                                                &sysconfig);
+      config    = g_strdup (config);
+      sysconfig = g_strdup (sysconfig);
+
+      renaming_config = g_strdup (gimp_font_factory_get_fonts_renaming_config (GIMP_FONT_FACTORY (gimp->font_factory)));
+
+      dirs = g_new0 (gchar *, length + 1);
+
+      for (i = 0; list; list = g_list_next (list), i++)
+        dirs[i] = g_file_get_path (list->data);
+
+      g_list_free_full (list, (GDestroyNotify) g_object_unref);
+    }
+}
+CODE
+    );
+}
 
 @headers = qw("core/gimp.h"
               "core/gimpcontainer.h"
-              "core/gimpdatafactory.h");
+              "core/gimpdatafactory.h"
+              "text/gimpfontfactory.h");
 
 @procs = qw(fonts_refresh
-            fonts_get_list);
+            fonts_get_custom_configs
+            fonts_get_list
+            );
 
 %exports = (app => [@procs], lib => [@procs]);
 

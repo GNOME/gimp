@@ -40,6 +40,10 @@ struct _GimpFontFactory
 {
   GimpDataFactory         parent_instance;
 
+  gchar                  *fonts_renaming_config;
+  gchar                  *conf;
+  gchar                  *sysconf;
+
   GimpFontFactoryPrivate *priv;
 };
 
@@ -51,8 +55,13 @@ struct _GimpFontFactoryClass
 
 GType             gimp_font_factory_get_type (void) G_GNUC_CONST;
 
-GimpDataFactory * gimp_font_factory_new      (Gimp        *gimp,
-                                              const gchar *path_property_name);
+GimpDataFactory * gimp_font_factory_new                        (Gimp             *gimp,
+                                                                const gchar      *path_property_name);
+GList           * gimp_font_factory_get_custom_fonts_dirs      (GimpFontFactory  *factory);
+void              gimp_font_factory_get_custom_config_path     (GimpFontFactory  *factory,
+                                                                gchar           **conf,
+                                                                gchar           **sysconf);
+gchar           * gimp_font_factory_get_fonts_renaming_config  (GimpFontFactory  *factory);
 
 
 #endif  /*  __GIMP_FONT_FACTORY_H__  */

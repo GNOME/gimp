@@ -32,9 +32,10 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpFont*  gimp_font_get_by_name  (const gchar *name);
-GimpFont** gimp_fonts_get_by_name (const gchar *name,
-                                   gint        *num_fonts);
+G_GNUC_INTERNAL gchar* _gimp_font_get_lookup_name (GimpFont    *font);
+GimpFont*              gimp_font_get_by_name      (const gchar *name);
+GimpFont**             gimp_fonts_get_by_name     (const gchar *name,
+                                                   gint        *num_fonts);
 
 
 G_END_DECLS

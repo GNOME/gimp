@@ -56,31 +56,45 @@ static void  gimp_font_init (GimpFont *font)
 PangoFontDescription *
 gimp_font_get_pango_font_description (GimpFont *font)
 {
-  PangoFontDescription *desc          = NULL;
-  gchar                *name          = NULL;
-  gchar                *collection_id = NULL;
-  gboolean              is_internal;
+  static gboolean       fc_configs_loaded = FALSE;
+  PangoFontDescription *desc              = NULL;
 
-  is_internal = _gimp_resource_get_identifiers (GIMP_RESOURCE (font),
-                                                &name, &collection_id);
-  /* TODO: we can't create fonts from internal fonts right now, but it should
-   * actually be possible because these are in fact alias to non-internal fonts.
-   * See #9985.
-   */
-  if (! is_internal)
+  if (!fc_configs_loaded)
     {
-      gchar *expanded_path;
+      gchar  *config;
+      gchar  *sysconfig;
+      gchar  *fonts_renaming_config;
+      gchar **dirs;
 
-      expanded_path = gimp_config_path_expand (collection_id, FALSE, NULL);
-      if (expanded_path != NULL &&
-          FcConfigAppFontAddFile (FcConfigGetCurrent (), (const FcChar8 *) expanded_path))
-        desc = pango_font_description_from_string (name);
+      FcConfigSetCurrent (FcInitLoadConfig ());
 
-      g_free (expanded_path);
+      config = _gimp_fonts_get_custom_configs (&sysconfig, &fonts_renaming_config, &dirs);
+
+      FcConfigParseAndLoad (FcConfigGetCurrent (),
+                            (const guchar *)config ,
+                            FcFalse);
+
+      FcConfigParseAndLoad (FcConfigGetCurrent (),
+                            (const guchar *)sysconfig ,
+                            FcFalse);
+
+      for (int i = 0; dirs[i] != NULL; ++i)
+        if (dirs[i])
+          FcConfigAppFontAddDir (FcConfigGetCurrent (), (const FcChar8 *)dirs[i]);
+
+      FcConfigParseAndLoadFromMemory (FcConfigGetCurrent (),
+                                      (const FcChar8 *) fonts_renaming_config,
+                                      FcTrue);
+
+      g_free (fonts_renaming_config);
+      g_free (sysconfig);
+      g_free (config);
+      g_strfreev (dirs);
+
+      fc_configs_loaded = TRUE;
     }
 
-  g_free (name);
-  g_free (collection_id);
+  desc = pango_font_description_from_string (_gimp_font_get_lookup_name (font));
 
   return desc;
 }

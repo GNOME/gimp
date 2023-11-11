@@ -70,6 +70,50 @@ gimp_fonts_refresh (void)
 }
 
 /**
+ * _gimp_fonts_get_custom_configs:
+ * @sysconfig: (out) (transfer full): sysconfig path.
+ * @renaming_config: (out) (transfer full): fonts renaming config.
+ * @dirs: (out) (array zero-terminated=1) (transfer full): custom fonts directories.
+ *
+ * Retrieve custom configs.
+ *
+ * This procedure returns custom FontConfig configs along with the
+ * fonts renaming config.
+ *
+ * Returns: (transfer full): config path.
+ *          The returned value must be freed with g_free().
+ **/
+gchar *
+_gimp_fonts_get_custom_configs (gchar  **sysconfig,
+                                gchar  **renaming_config,
+                                gchar ***dirs)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar *config = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-fonts-get-custom-configs",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    {
+      config = GIMP_VALUES_DUP_STRING (return_vals, 1);
+      *sysconfig = GIMP_VALUES_DUP_STRING (return_vals, 2);
+      *renaming_config = GIMP_VALUES_DUP_STRING (return_vals, 3);
+      *dirs = GIMP_VALUES_DUP_STRV (return_vals, 4);
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return config;
+}
+
+/**
  * gimp_fonts_get_list:
  * @filter: An optional regular expression used to filter the list.
  *

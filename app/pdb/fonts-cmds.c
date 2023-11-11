@@ -34,6 +34,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpparamspecs.h"
+#include "text/gimpfontfactory.h"
 
 #include "gimppdb.h"
 #include "gimpprocedure.h"
@@ -52,6 +53,60 @@ fonts_refresh_invoker (GimpProcedure         *procedure,
   gimp_data_factory_data_wait (gimp->font_factory);
 
   return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+}
+
+static GimpValueArray *
+fonts_get_custom_configs_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  gchar *config = NULL;
+  gchar *sysconfig = NULL;
+  gchar *renaming_config = NULL;
+  gchar **dirs = NULL;
+
+  if (! gimp_data_factory_data_wait (gimp->font_factory))
+    success = FALSE;
+
+  if (success)
+    {
+      GList *list   = gimp_font_factory_get_custom_fonts_dirs (GIMP_FONT_FACTORY (gimp->font_factory));
+      guint  length = g_list_length (list);
+      gint   i;
+
+      gimp_font_factory_get_custom_config_path (GIMP_FONT_FACTORY (gimp->font_factory),
+                                                &config,
+                                                &sysconfig);
+      config    = g_strdup (config);
+      sysconfig = g_strdup (sysconfig);
+
+      renaming_config = g_strdup (gimp_font_factory_get_fonts_renaming_config (GIMP_FONT_FACTORY (gimp->font_factory)));
+
+      dirs = g_new0 (gchar *, length + 1);
+
+      for (i = 0; list; list = g_list_next (list), i++)
+        dirs[i] = g_file_get_path (list->data);
+
+      g_list_free_full (list, (GDestroyNotify) g_object_unref);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_take_string (gimp_value_array_index (return_vals, 1), config);
+      g_value_take_string (gimp_value_array_index (return_vals, 2), sysconfig);
+      g_value_take_string (gimp_value_array_index (return_vals, 3), renaming_config);
+      g_value_take_boxed (gimp_value_array_index (return_vals, 4), dirs);
+    }
+
+  return return_vals;
 }
 
 static GimpValueArray *
@@ -109,6 +164,50 @@ register_fonts_procs (GimpPDB *pdb)
                                          "Sven Neumann <sven@gimp.org>",
                                          "Sven Neumann",
                                          "2003");
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-fonts-get-custom-configs
+   */
+  procedure = gimp_procedure_new (fonts_get_custom_configs_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-fonts-get-custom-configs");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve custom configs.",
+                                  "This procedure returns custom FontConfig configs along with the fonts renaming config.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "",
+                                         "",
+                                         "");
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("config",
+                                                           "config",
+                                                           "config path",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("sysconfig",
+                                                           "sysconfig",
+                                                           "sysconfig path",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("renaming-config",
+                                                           "renaming config",
+                                                           "fonts renaming config",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boxed ("dirs",
+                                                       "dirs",
+                                                       "custom fonts directories",
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

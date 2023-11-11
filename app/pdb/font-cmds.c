@@ -40,6 +40,35 @@
 
 
 static GimpValueArray *
+font_get_lookup_name_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpFont *font;
+  gchar *lookup_name = NULL;
+
+  font = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+        lookup_name = g_strdup (gimp_font_get_lookup_name (font));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (gimp_value_array_index (return_vals, 1), lookup_name);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 font_get_by_name_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
@@ -126,6 +155,36 @@ void
 register_font_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
+
+  /*
+   * gimp-font-get-lookup-name
+   */
+  procedure = gimp_procedure_new (font_get_lookup_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-font-get-lookup-name");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve the font lookup name.",
+                                  "Retrieve the font lookup name.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "",
+                                         "",
+                                         "");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_font ("font",
+                                                     "font",
+                                                     "GimpFont object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("lookup-name",
+                                                           "lookup name",
+                                                           "font lookup name",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-font-get-by-name
