@@ -10,7 +10,10 @@
       <item><attribute name="action">app.select-none</attribute></item>
       <item><attribute name="action">app.select-invert</attribute></item>
       <item><attribute name="action">app.vectors-selection-from-vectors</attribute></item>
-      <item><attribute name="action">app.select-float</attribute></item>
+      <section>
+        <item><attribute name="action">app.select-cut-float</attribute></item>
+        <item><attribute name="action">app.select-copy-float</attribute></item>
+      </section>
       <section>
         <item><attribute name="action">app.select-feather</attribute></item>
         <item><attribute name="action">app.select-sharpen</attribute></item>

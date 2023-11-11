@@ -90,10 +90,16 @@
         <item><attribute name="action">app.edit-paste-in-place</attribute></item>
         <submenu>
           <attribute name="label" translatable="yes" context="edit-action">Paste _as</attribute>
-          <item><attribute name="action">app.edit-paste-merged</attribute></item>
-          <item><attribute name="action">app.edit-paste-merged-in-place</attribute></item>
-          <item><attribute name="action">app.edit-paste-into</attribute></item>
-          <item><attribute name="action">app.edit-paste-into-in-place</attribute></item>
+          <section>
+            <item><attribute name="action">app.edit-paste-merged</attribute></item>
+            <item><attribute name="action">app.edit-paste-merged-in-place</attribute></item>
+          </section>
+          <section>
+            <item><attribute name="action">app.edit-paste-float</attribute></item>
+            <item><attribute name="action">app.edit-paste-float-in-place</attribute></item>
+            <item><attribute name="action">app.edit-paste-into</attribute></item>
+            <item><attribute name="action">app.edit-paste-into-in-place</attribute></item>
+          </section>
           <item><attribute name="action">app.edit-paste-as-new-image</attribute><attribute name="label-variant">long</attribute></item>
         </submenu>
         <submenu>
@@ -143,7 +149,11 @@
         <item><attribute name="action">app.select-all</attribute></item>
         <item><attribute name="action">app.select-none</attribute></item>
         <item><attribute name="action">app.select-invert</attribute></item>
-        <item><attribute name="action">app.select-float</attribute></item>
+        <submenu>
+          <attribute name="label" translatable="yes" context="view-action">_Float</attribute>
+          <item><attribute name="action">app.select-cut-float</attribute></item>
+          <item><attribute name="action">app.select-copy-float</attribute></item>
+        </submenu>
         <item><attribute name="action">app.tools-by-color-select-short</attribute></item>
         <item><attribute name="action">app.vectors-selection-from-vectors</attribute></item>
         <item><attribute name="action">app.dialogs-selection-editor</attribute></item>

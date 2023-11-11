@@ -58,10 +58,16 @@ static const GimpActionEntry select_actions[] =
     select_invert_cmd_callback,
     GIMP_HELP_SELECTION_INVERT },
 
-  { "select-float", GIMP_ICON_LAYER_FLOATING_SELECTION,
-    NC_("select-action", "_Float"), NULL, { "<primary><shift>L", NULL },
-    NC_("select-action", "Create a floating selection"),
-    select_float_cmd_callback,
+  { "select-cut-float", GIMP_ICON_LAYER_FLOATING_SELECTION,
+    NC_("select-action", "Cu_t and Float"), NULL, { "<primary><shift>L", NULL },
+    NC_("select-action", "Cut the selection directly into a floating selection"),
+    select_cut_float_cmd_callback,
+    GIMP_HELP_SELECTION_FLOAT },
+
+  { "select-copy-float", GIMP_ICON_LAYER_FLOATING_SELECTION,
+    NC_("select-action", "_Copy and Float"), NULL, { NULL },
+    NC_("select-action", "Copy the selection directly into a floating selection"),
+    select_copy_float_cmd_callback,
     GIMP_HELP_SELECTION_FLOAT },
 
   { "select-feather", NULL,
@@ -182,9 +188,13 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-all",    image && ! sel_all);
   SET_SENSITIVE ("select-none",   image && sel);
   SET_SENSITIVE ("select-invert", image);
-  SET_SENSITIVE ("select-float",  g_list_length (drawables) == 1 && sel                 &&
-                                  ! gimp_item_is_content_locked (drawables->data, NULL) &&
-                                  ! gimp_viewable_get_children (drawables->data));
+
+  SET_SENSITIVE ("select-cut-float",  g_list_length (drawables) == 1 && sel                 &&
+                                      ! gimp_item_is_content_locked (drawables->data, NULL) &&
+                                      ! gimp_viewable_get_children (drawables->data));
+  SET_SENSITIVE ("select-copy-float", g_list_length (drawables) == 1 && sel                 &&
+                                      ! gimp_item_is_content_locked (drawables->data, NULL) &&
+                                      ! gimp_viewable_get_children (drawables->data));
 
   SET_SENSITIVE ("select-feather", image && sel);
   SET_SENSITIVE ("select-sharpen", image && sel);

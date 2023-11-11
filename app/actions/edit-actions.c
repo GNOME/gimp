@@ -180,19 +180,31 @@ static const GimpEnumActionEntry edit_paste_actions[] =
     GIMP_HELP_EDIT_PASTE_IN_PLACE },
 
   { "edit-paste-into", GIMP_ICON_EDIT_PASTE_INTO,
-    NC_("edit-action", "Paste _Into Selection"), NULL, { NULL },
+    NC_("edit-action", "Paste as Floating Data _Into Selection"), NULL, { NULL },
     NC_("edit-action",
         "Paste the content of the clipboard into the current selection"),
     GIMP_PASTE_TYPE_FLOATING_INTO, FALSE,
     GIMP_HELP_EDIT_PASTE_INTO },
 
   { "edit-paste-into-in-place", GIMP_ICON_EDIT_PASTE_INTO,
-    NC_("edit-action", "Paste Int_o Selection In Place"), NULL, { NULL },
+    NC_("edit-action", "Paste as Floating Data Int_o Selection In Place"), NULL, { NULL },
     NC_("edit-action",
         "Paste the content of the clipboard into the current selection "
         "at its original position"),
     GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE, FALSE,
-    GIMP_HELP_EDIT_PASTE_INTO_IN_PLACE }
+    GIMP_HELP_EDIT_PASTE_INTO_IN_PLACE },
+
+  { "edit-paste-float", GIMP_ICON_EDIT_PASTE,
+    NC_("edit-action", "Paste as _Floating Data"), NULL, { NULL },
+    NC_("edit-action", "Paste the content of the clipboard as Floating Data"),
+    GIMP_PASTE_TYPE_FLOATING, FALSE,
+    GIMP_HELP_EDIT_PASTE },
+
+  { "edit-paste-float-in-place", GIMP_ICON_EDIT_PASTE,
+    NC_("edit-action", "Paste as Floa_ting Data In Place"), NULL, { NULL },
+    NC_("edit-action", "Paste the content of the clipboard as Floating Data at its original position"),
+    GIMP_PASTE_TYPE_FLOATING_IN_PLACE, FALSE,
+    GIMP_HELP_EDIT_PASTE }
 };
 
 static const GimpEnumActionEntry edit_fill_actions[] =

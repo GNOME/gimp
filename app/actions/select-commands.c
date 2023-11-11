@@ -67,6 +67,10 @@ static void   select_shrink_callback  (GtkWidget *widget,
                                        gdouble    size,
                                        GimpUnit   unit,
                                        gpointer   data);
+static void   select_float            (GimpAction *action,
+                                       GVariant   *value,
+                                       gboolean    cut,
+                                       gpointer    data);
 
 
 /*  public functions  */
@@ -108,33 +112,19 @@ select_invert_cmd_callback (GimpAction *action,
 }
 
 void
-select_float_cmd_callback (GimpAction *action,
-                           GVariant   *value,
-                           gpointer    data)
+select_cut_float_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
-  GimpImage *image;
-  GtkWidget *widget;
-  GList     *drawables;
-  GError    *error = NULL;
-  return_if_no_image (image, data);
-  return_if_no_widget (widget, data);
+  select_float (action, value, TRUE, data);
+}
 
-  drawables = gimp_image_get_selected_drawables (image);
-  if (gimp_selection_float (GIMP_SELECTION (gimp_image_get_mask (image)),
-                            drawables,
-                            action_data_get_context (data),
-                            TRUE, 0, 0, &error))
-    {
-      gimp_image_flush (image);
-    }
-  else
-    {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            error->message);
-      g_clear_error (&error);
-    }
-  g_list_free (drawables);
+void
+select_copy_float_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
+{
+  select_float (action, value, FALSE, data);
 }
 
 void
@@ -691,4 +681,35 @@ select_shrink_callback (GtkWidget *widget,
                        config->selection_shrink_edge_lock,
                        TRUE);
   gimp_image_flush (image);
+}
+
+static void
+select_float (GimpAction *action,
+              GVariant   *value,
+              gboolean    cut,
+              gpointer    data)
+{
+  GimpImage *image;
+  GtkWidget *widget;
+  GList     *drawables;
+  GError    *error = NULL;
+  return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
+
+  drawables = gimp_image_get_selected_drawables (image);
+  if (gimp_selection_float (GIMP_SELECTION (gimp_image_get_mask (image)),
+                            drawables,
+                            action_data_get_context (data),
+                            cut, 0, 0, &error))
+    {
+      gimp_image_flush (image);
+    }
+  else
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            error->message);
+      g_clear_error (&error);
+    }
+  g_list_free (drawables);
 }

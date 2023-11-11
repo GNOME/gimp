@@ -28,7 +28,10 @@ void   select_none_cmd_callback             (GimpAction *action,
 void   select_invert_cmd_callback           (GimpAction *action,
                                              GVariant   *value,
                                              gpointer    data);
-void   select_float_cmd_callback            (GimpAction *action,
+void   select_cut_float_cmd_callback        (GimpAction *action,
+                                             GVariant   *value,
+                                             gpointer    data);
+void   select_copy_float_cmd_callback       (GimpAction *action,
                                              GVariant   *value,
                                              gpointer    data);
 void   select_feather_cmd_callback          (GimpAction *action,
