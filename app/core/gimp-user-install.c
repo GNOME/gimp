@@ -553,6 +553,9 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
       else if (g_strcmp0 (action_match, "view-rotate-reset") == 0 &&
                install->old_major == 2)
         new_action_name = g_strdup ("view-reset");
+      /* select-float became select-cut-float in 3.0 (select-copy-float added). */
+      else if (g_strcmp0 (action_match, "select-float") == 0)
+        new_action_name = g_strdup ("select-cut-float");
 
       if (new_action_name == NULL)
         new_action_name = g_strdup (action_match);
