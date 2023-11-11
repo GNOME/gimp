@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-11-06 21:29+0000\n"
-"PO-Revision-Date: 2023-11-06 23:46+0200\n"
+"POT-Creation-Date: 2023-11-10 23:31+0000\n"
+"PO-Revision-Date: 2023-11-11 18:53+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -43,7 +43,7 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/common/sphere-designer.c:3185 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:243
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:181
-#: plug-ins/file-dds/dds.c:542 plug-ins/flame/flame.c:299
+#: plug-ins/file-dds/dds.c:556 plug-ins/flame/flame.c:299
 #: plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
@@ -329,7 +329,7 @@ msgstr "Вирівнювання видимих шарів"
 #. file save type
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
 #: plug-ins/common/file-ps.c:3729 plug-ins/common/file-ps.c:3737
-#: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:209
+#: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:223
 #: plug-ins/file-tiff/file-tiff.c:240
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
 #: plug-ins/fractal-explorer/fractal-explorer.c:354
@@ -1991,7 +1991,7 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:160
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:164
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
 #: plug-ins/file-icns/file-icns-load.c:516
@@ -2481,7 +2481,7 @@ msgstr ""
 "Цей додаток використовує aalib для збереження зображення у відтінках сірого "
 "у формі ascii-арту у спектрі текстових форматів"
 
-#: plug-ins/common/file-aa.c:156 plug-ins/file-dds/dds.c:231
+#: plug-ins/common/file-aa.c:156 plug-ins/file-dds/dds.c:245
 msgid "_Format"
 msgstr "_Формат"
 
@@ -8457,7 +8457,7 @@ msgstr ""
 msgid "BMP format does not support multiple layers."
 msgstr "Для формату BMP не передбачено підтримку декількох шарів."
 
-#: plug-ins/file-dds/dds.c:149 plug-ins/file-dds/dds.c:187
+#: plug-ins/file-dds/dds.c:149 plug-ins/file-dds/dds.c:201
 msgid "DDS image"
 msgstr "Зображення DDS"
 
@@ -8474,353 +8474,374 @@ msgid "Load mipmaps if present"
 msgstr "Завантажити MIP-текстури, якщо такі є"
 
 #: plug-ins/file-dds/dds.c:174
+#| msgid "Flip image _vertically on export"
+msgid "Flip image _vertically"
+msgstr "Віддзеркалити зображення _вертикально"
+
+#: plug-ins/file-dds/dds.c:175
+#| msgid "Flip the image vertically on export"
+msgid "Flip the image vertically on import"
+msgstr "Віддзеркалити зображення вертикально при імпортуванні"
+
+#: plug-ins/file-dds/dds.c:180
+msgid "Always use _transparency for BC1/DXT1"
+msgstr "Завжди використовувати _прозорість для BC1/DXT1"
+
+#: plug-ins/file-dds/dds.c:181
+msgid ""
+"Interprets transparency for BC1/DXT1 images even when DDPF_ALPHAPIXELS is "
+"not set; if disabled, sets it to opaque black"
+msgstr ""
+"Обробляє прозорість для зображень BC1/DXT1, навіть якщо не встановлено"
+" DDPF_ALPHAPIXELS; якщо вимкнено, встановлює для відповідних пікселів"
+" непрозорий чорний колір"
+
+#: plug-ins/file-dds/dds.c:188
 msgid "Automatically decode YCoCg/AE_xp images when detected"
 msgstr "Автоматично декодувати виявлені зображення YCoCg/AE_xp"
 
-#: plug-ins/file-dds/dds.c:175
+#: plug-ins/file-dds/dds.c:189
 msgid "Decode YCoCg/AExp images when detected"
 msgstr "Декодувати виявлені зображення YCoCg/AExp"
 
-#: plug-ins/file-dds/dds.c:189
+#: plug-ins/file-dds/dds.c:203
 msgid "DDS"
 msgstr "DDS"
 
-#: plug-ins/file-dds/dds.c:193 plug-ins/file-dds/dds.c:194
+#: plug-ins/file-dds/dds.c:207 plug-ins/file-dds/dds.c:208
 msgid "Saves files in DDS image format"
 msgstr "Зберігає файли у форматі зображень DDS"
 
-#: plug-ins/file-dds/dds.c:207
+#: plug-ins/file-dds/dds.c:221
 msgid "Compressio_n"
 msgstr "С_тиснення"
 
-#: plug-ins/file-dds/dds.c:208
+#: plug-ins/file-dds/dds.c:222
 msgid "Compression format"
 msgstr "Формат стиснення"
 
-#: plug-ins/file-dds/dds.c:210
+#: plug-ins/file-dds/dds.c:224
 msgid "BC1 / DXT1"
 msgstr "BC1 / DXT1"
 
-#: plug-ins/file-dds/dds.c:211
+#: plug-ins/file-dds/dds.c:225
 msgid "BC2 / DXT3"
 msgstr "BC2 / DXT3"
 
-#: plug-ins/file-dds/dds.c:212
+#: plug-ins/file-dds/dds.c:226
 msgid "BC3 / DXT5"
 msgstr "BC3 / DXT5"
 
-#: plug-ins/file-dds/dds.c:213
+#: plug-ins/file-dds/dds.c:227
 msgid "BC3nm / DXT5nm"
 msgstr "BC3nm / DXT5nm"
 
-#: plug-ins/file-dds/dds.c:214
+#: plug-ins/file-dds/dds.c:228
 msgid "BC4 / ATI1 (3Dc+)"
 msgstr "BC4 / ATI1 (3Dc+)"
 
-#: plug-ins/file-dds/dds.c:215
+#: plug-ins/file-dds/dds.c:229
 msgid "BC5 / ATI2 (3Dc)"
 msgstr "BC5 / ATI2 (3Dc)"
 
-#: plug-ins/file-dds/dds.c:216
+#: plug-ins/file-dds/dds.c:230
 msgid "RXGB (DXT5)"
 msgstr "RXGB (DXT5)"
 
-#: plug-ins/file-dds/dds.c:217
+#: plug-ins/file-dds/dds.c:231
 msgid "Alpha Exponent (DXT5)"
 msgstr "Альфа-експоненційний (DXT5)"
 
-#: plug-ins/file-dds/dds.c:218
+#: plug-ins/file-dds/dds.c:232
 msgid "YCoCg (DXT5)"
 msgstr "YCoCg (DXT5)"
 
-#: plug-ins/file-dds/dds.c:219
+#: plug-ins/file-dds/dds.c:233
 msgid "YCoCg scaled (DXT5)"
 msgstr "Масштабований YCoCg (DXT5)"
 
-#: plug-ins/file-dds/dds.c:225
+#: plug-ins/file-dds/dds.c:239
 msgid "Use percept_ual error metric"
 msgstr "_Використати нелінійну метрику помилок"
 
-#: plug-ins/file-dds/dds.c:226
+#: plug-ins/file-dds/dds.c:240
 msgid "Use a perceptual error metric during compression"
 msgstr "Використати нелінійну метрику помилок під час стискання"
 
-#: plug-ins/file-dds/dds.c:232
+#: plug-ins/file-dds/dds.c:246
 msgid "Pixel format"
 msgstr "Формат у пікселях"
 
 #. Create the combobox containing the presets
-#: plug-ins/file-dds/dds.c:233 plug-ins/file-dds/dds.c:290
-#: plug-ins/file-dds/dds.c:306 plug-ins/file-webp/file-webp-dialog.c:80
+#: plug-ins/file-dds/dds.c:247 plug-ins/file-dds/dds.c:304
+#: plug-ins/file-dds/dds.c:320 plug-ins/file-webp/file-webp-dialog.c:80
 #: plug-ins/gradient-flare/gradient-flare.c:2599
 msgid "Default"
 msgstr "Типовий"
 
-#: plug-ins/file-dds/dds.c:234
+#: plug-ins/file-dds/dds.c:248
 msgid "RGB8"
 msgstr "RGB8"
 
-#: plug-ins/file-dds/dds.c:235
+#: plug-ins/file-dds/dds.c:249
 msgid "RGBA8"
 msgstr "RGBA8"
 
-#: plug-ins/file-dds/dds.c:236
+#: plug-ins/file-dds/dds.c:250
 msgid "BGR8"
 msgstr "BGR8"
 
-#: plug-ins/file-dds/dds.c:237
+#: plug-ins/file-dds/dds.c:251
 msgid "ABGR8"
 msgstr "ABGR8"
 
-#: plug-ins/file-dds/dds.c:238
+#: plug-ins/file-dds/dds.c:252
 msgid "R5G6B5"
 msgstr "R5G6B5"
 
-#: plug-ins/file-dds/dds.c:239
+#: plug-ins/file-dds/dds.c:253
 msgid "RGBA4"
 msgstr "RGBA4"
 
-#: plug-ins/file-dds/dds.c:240
+#: plug-ins/file-dds/dds.c:254
 msgid "RGB5A1"
 msgstr "RGB5A1"
 
-#: plug-ins/file-dds/dds.c:241
+#: plug-ins/file-dds/dds.c:255
 msgid "RGB10A2"
 msgstr "RGB10A2"
 
-#: plug-ins/file-dds/dds.c:242
+#: plug-ins/file-dds/dds.c:256
 msgid "R3G3B2"
 msgstr "R3G3B2"
 
-#: plug-ins/file-dds/dds.c:243
+#: plug-ins/file-dds/dds.c:257
 msgid "A8"
 msgstr "A8"
 
-#: plug-ins/file-dds/dds.c:244
+#: plug-ins/file-dds/dds.c:258
 msgid "L8"
 msgstr "L8"
 
-#: plug-ins/file-dds/dds.c:245
+#: plug-ins/file-dds/dds.c:259
 msgid "L8A8"
 msgstr "L8A8"
 
-#: plug-ins/file-dds/dds.c:246
+#: plug-ins/file-dds/dds.c:260
 msgid "AEXP"
 msgstr "AEXP"
 
-#: plug-ins/file-dds/dds.c:247
+#: plug-ins/file-dds/dds.c:261
 msgid "YCOCG"
 msgstr "YCOCG"
 
-#: plug-ins/file-dds/dds.c:261
+#: plug-ins/file-dds/dds.c:275
 msgid "Flip image _vertically on export"
 msgstr "Віддзеркалити зображення _вертикально при експортуванні"
 
-#: plug-ins/file-dds/dds.c:262
+#: plug-ins/file-dds/dds.c:276
 msgid "Flip the image vertically on export"
 msgstr "Віддзеркалити зображення вертикально при експортуванні"
 
-#: plug-ins/file-dds/dds.c:267
+#: plug-ins/file-dds/dds.c:281
 msgid "Set _transparent color"
 msgstr "Встановити колір п_розорого"
 
-#: plug-ins/file-dds/dds.c:268
+#: plug-ins/file-dds/dds.c:282
 msgid "Make an indexed color transparent"
 msgstr "Зробити індексований колір прозорим"
 
-#: plug-ins/file-dds/dds.c:273
+#: plug-ins/file-dds/dds.c:287
 msgid "Transparent inde_x"
 msgstr "І_ндекс прозорого"
 
-#: plug-ins/file-dds/dds.c:274
+#: plug-ins/file-dds/dds.c:288
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
 msgstr ""
 "Індекс прозорого кольору або -1 для вимикання (лише для індексованих "
 "зображень)."
 
-#: plug-ins/file-dds/dds.c:288
+#: plug-ins/file-dds/dds.c:302
 msgid "F_ilter"
 msgstr "_Фільтрувати"
 
-#: plug-ins/file-dds/dds.c:289
+#: plug-ins/file-dds/dds.c:303
 msgid "Filtering to use when generating mipmaps"
 msgstr "Фільтрування при створенні множинних зображень"
 
-#: plug-ins/file-dds/dds.c:291
+#: plug-ins/file-dds/dds.c:305
 msgid "Nearest"
 msgstr "Найближче"
 
-#: plug-ins/file-dds/dds.c:292 plug-ins/map-object/map-object-main.c:139
+#: plug-ins/file-dds/dds.c:306 plug-ins/map-object/map-object-main.c:139
 msgid "Box"
 msgstr "Паралелепіпед"
 
-#: plug-ins/file-dds/dds.c:293
+#: plug-ins/file-dds/dds.c:307
 msgid "Triangle"
 msgstr "Трикутник"
 
-#: plug-ins/file-dds/dds.c:294
+#: plug-ins/file-dds/dds.c:308
 msgid "Quadratic"
 msgstr "Квадратичний"
 
-#: plug-ins/file-dds/dds.c:295
+#: plug-ins/file-dds/dds.c:309
 msgid "B-Spline"
 msgstr "B-сплайн"
 
-#: plug-ins/file-dds/dds.c:296
+#: plug-ins/file-dds/dds.c:310
 msgid "Mitchell"
 msgstr "Мітчелл"
 
-#: plug-ins/file-dds/dds.c:297
+#: plug-ins/file-dds/dds.c:311
 msgid "Lanczos"
 msgstr "Ланцоша"
 
-#: plug-ins/file-dds/dds.c:298
+#: plug-ins/file-dds/dds.c:312
 msgid "Kaiser"
 msgstr "Кайзер"
 
-#: plug-ins/file-dds/dds.c:304
+#: plug-ins/file-dds/dds.c:318
 msgid "_Wrap mode"
 msgstr "Режим за_гортання"
 
-#: plug-ins/file-dds/dds.c:305
+#: plug-ins/file-dds/dds.c:319
 msgid "Wrap mode to use when generating mipmaps"
 msgstr "Режим загортання при створенні множинних зображень"
 
-#: plug-ins/file-dds/dds.c:307
+#: plug-ins/file-dds/dds.c:321
 msgid "Mirror"
 msgstr "Віддзеркалення"
 
-#: plug-ins/file-dds/dds.c:308
+#: plug-ins/file-dds/dds.c:322
 msgid "Repeat"
 msgstr "Повторення"
 
-#: plug-ins/file-dds/dds.c:309
+#: plug-ins/file-dds/dds.c:323
 msgid "Clamp"
 msgstr "Затискання"
 
-#: plug-ins/file-dds/dds.c:315
+#: plug-ins/file-dds/dds.c:329
 msgid "Appl_y gamma correction"
 msgstr "Зас_тосувати корекцію гами"
 
-#: plug-ins/file-dds/dds.c:316
+#: plug-ins/file-dds/dds.c:330
 msgid "Use gamma correct mipmap filtering"
 msgstr "Гамма-корекція при фільтрування множинного зображення"
 
-#: plug-ins/file-dds/dds.c:321
+#: plug-ins/file-dds/dds.c:335
 msgid "Use sRG_B colorspace"
 msgstr "В_икористати колірний простір sRGB"
 
-#: plug-ins/file-dds/dds.c:322
+#: plug-ins/file-dds/dds.c:336
 msgid "Use sRGB colorspace for gamma correction"
 msgstr "Використати колірний простір sRGB для гамма-корекції"
 
-#: plug-ins/file-dds/dds.c:327 plug-ins/flame/flame.c:205
+#: plug-ins/file-dds/dds.c:341 plug-ins/flame/flame.c:205
 msgid "_Gamma"
 msgstr "Г_ама"
 
-#: plug-ins/file-dds/dds.c:328
+#: plug-ins/file-dds/dds.c:342
 msgid "Gamma value to use for gamma correction (e.g. 2.2)"
 msgstr "Значення гамми при гамма-корекції (наприклад 2.2)"
 
-#: plug-ins/file-dds/dds.c:333
+#: plug-ins/file-dds/dds.c:347
 msgid "Preserve al_pha test coverage"
 msgstr "Зберег_ти покриття альфа-тесту"
 
-#: plug-ins/file-dds/dds.c:334
+#: plug-ins/file-dds/dds.c:348
 msgid "Preserve alpha test coverage for alpha channel maps"
 msgstr "Зберегти покриття альфа-тесту для відображень альфа-каналів"
 
-#: plug-ins/file-dds/dds.c:340
+#: plug-ins/file-dds/dds.c:354
 msgid "Alp_ha test threshold"
 msgstr "Поріг _альфа-тесту"
 
-#: plug-ins/file-dds/dds.c:341
+#: plug-ins/file-dds/dds.c:355
 msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr ""
 "Порогове значення альфа-тесту, для якого слід зберігати покриття альфа-тестом"
 
-#: plug-ins/file-dds/dds.c:357
+#: plug-ins/file-dds/dds.c:371
 msgid "Decode YCoCg"
 msgstr "Декодувати YCoCg"
 
-#: plug-ins/file-dds/dds.c:361 plug-ins/file-dds/dds.c:362
+#: plug-ins/file-dds/dds.c:375 plug-ins/file-dds/dds.c:376
 msgid "Converts YCoCg encoded pixels to RGB"
 msgstr "Перетворює кодовані у YCoCg пікселі до RGB"
 
-#: plug-ins/file-dds/dds.c:379
+#: plug-ins/file-dds/dds.c:393
 msgid "Decode YCoCg (scaled)"
 msgstr "Декодувати YCoCg (масштабоване)"
 
-#: plug-ins/file-dds/dds.c:383 plug-ins/file-dds/dds.c:385
+#: plug-ins/file-dds/dds.c:397 plug-ins/file-dds/dds.c:399
 msgid "Converts YCoCg (scaled) encoded pixels to RGB"
 msgstr "Перетворює кодовані у YCoCg (масштабованому) пікселі до RGB"
 
-#: plug-ins/file-dds/dds.c:403
+#: plug-ins/file-dds/dds.c:417
 msgid "Decode Alpha exponent"
 msgstr "Декодувати Alpha exponent"
 
-#: plug-ins/file-dds/dds.c:409 plug-ins/file-dds/dds.c:407
+#: plug-ins/file-dds/dds.c:423 plug-ins/file-dds/dds.c:421
 msgid "Converts alpha exponent encoded pixels to RGB"
 msgstr "Перетворює кодовані у альфа-степеневі пікселі до RGB"
 
-#: plug-ins/file-dds/ddsread.c:234
+#: plug-ins/file-dds/ddsread.c:273
 #, c-format
-#| msgid "Unsupported compression mode: %d"
 msgid "Unsupported uncompressed FOURCC type %u"
 msgstr "Непідтримуваний розпакований тип FOURCC %u"
 
-#: plug-ins/file-dds/ddsread.c:452
+#: plug-ins/file-dds/ddsread.c:518
 msgid "Invalid or corrupted DDS header"
 msgstr "Некоректний або пошкоджений заголовок DDS"
 
-#: plug-ins/file-dds/ddsread.c:461
+#: plug-ins/file-dds/ddsread.c:527
 msgid "Could not allocate a new image."
 msgstr "Не вдалося розмістити нове зображення."
 
-#: plug-ins/file-dds/ddsread.c:472
+#: plug-ins/file-dds/ddsread.c:538
 msgid "Error reading palette."
 msgstr "Помилка під час спроби читання палітри."
 
-#: plug-ins/file-dds/ddsread.c:755
+#: plug-ins/file-dds/ddsread.c:824
 msgid "Invalid DDS format magic number."
 msgstr "Некоректна контрольна сума у форматі DOS."
 
-#: plug-ins/file-dds/ddsread.c:842
+#: plug-ins/file-dds/ddsread.c:912
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Некоректне значення бітів на піксель для даних RGB: %d"
 
-#: plug-ins/file-dds/ddsread.c:853
+#: plug-ins/file-dds/ddsread.c:923
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Некоректне значення бітів на піксель для даних освітленості: %d"
 
-#: plug-ins/file-dds/ddsread.c:904
+#: plug-ins/file-dds/ddsread.c:974
 msgid "Invalid pixel format."
 msgstr "Некоректний піксельний формат."
 
-#: plug-ins/file-dds/ddsread.c:1113
+#: plug-ins/file-dds/ddsread.c:1234
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "Непідтримуваний формат DXGI (%d)"
 
-#: plug-ins/file-dds/ddsread.c:1253
+#: plug-ins/file-dds/ddsread.c:1389
 #, c-format
-#| msgid "Unsupported file format version: %d"
 msgid "Unsupported value for bytes per pixel: %d"
 msgstr "Непідтримуване значення байтів на піксель: %d"
 
-#: plug-ins/file-dds/ddsread.c:1308 plug-ins/file-dds/ddsread.c:1368
-#: plug-ins/file-dds/ddsread.c:1389
+#: plug-ins/file-dds/ddsread.c:1444 plug-ins/file-dds/ddsread.c:1504
+#: plug-ins/file-dds/ddsread.c:1525
 msgid "Requested data exceeds size of file.\n"
 msgstr "Розмір даних, на які надійшов запит, перевищує розмір файла.\n"
 
-#: plug-ins/file-dds/ddsread.c:1316 plug-ins/file-dds/ddsread.c:1395
+#: plug-ins/file-dds/ddsread.c:1452 plug-ins/file-dds/ddsread.c:1531
 msgid "Unexpected EOF.\n"
 msgstr "Неочікуваний кінець файла.\n"
 
-#: plug-ins/file-dds/ddsread.c:1815
+#: plug-ins/file-dds/ddsread.c:2019
 msgid "Open DDS"
 msgstr "Відкрити DDS"
 
