@@ -106,7 +106,7 @@ static gboolean   gimp_color_tool_real_pick  (GimpColorTool         *color_tool,
                                               GimpDisplay           *display,
                                               const Babl           **sample_format,
                                               gpointer               pixel,
-                                              GimpRGB               *color);
+                                              GeglColor            **color);
 static void   gimp_color_tool_real_picked    (GimpColorTool         *color_tool,
                                               const GimpCoords      *coords,
                                               GimpDisplay           *display,
@@ -458,13 +458,14 @@ gimp_color_tool_real_pick (GimpColorTool     *color_tool,
                            GimpDisplay       *display,
                            const Babl       **sample_format,
                            gpointer           pixel,
-                           GimpRGB           *color)
+                           GeglColor        **color)
 {
   GimpDisplayShell *shell     = gimp_display_get_shell (display);
   GimpImage        *image     = gimp_display_get_image (display);
   GList            *drawables = gimp_image_get_selected_drawables (image);
 
   g_return_val_if_fail (drawables != NULL, FALSE);
+  g_return_val_if_fail (color != NULL && GEGL_IS_COLOR (*color), FALSE);
 
   return gimp_image_pick_color (image, drawables,
                                 coords->x, coords->y,
@@ -628,17 +629,24 @@ gimp_color_tool_pick (GimpColorTool      *tool,
   GimpColorToolClass *klass;
   const Babl         *sample_format;
   gdouble             pixel[4];
-  GimpRGB             color;
+  GeglColor          *color;
 
   klass = GIMP_COLOR_TOOL_GET_CLASS (tool);
+  color = gegl_color_new ("black");
 
   if (klass->pick &&
       klass->pick (tool, coords, display, &sample_format, pixel, &color))
     {
+      GimpRGB rgb;
+
+      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
+      /* TODO: the "picked" signal should emit a GeglColor. */
       g_signal_emit (tool, gimp_color_tool_signals[PICKED], 0,
                      coords, display, pick_state,
-                     sample_format, pixel, &color);
+                     sample_format, pixel, &rgb);
     }
+
+  g_object_unref (color);
 }
 
 

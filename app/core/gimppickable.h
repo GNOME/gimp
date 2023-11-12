@@ -70,10 +70,9 @@ gboolean        gimp_pickable_get_pixel_at            (GimpPickable        *pick
                                                        gint                 y,
                                                        const Babl          *format,
                                                        gpointer             pixel);
-gboolean        gimp_pickable_get_color_at            (GimpPickable        *pickable,
+GeglColor     * gimp_pickable_get_color_at            (GimpPickable        *pickable,
                                                        gint                 x,
-                                                       gint                 y,
-                                                       GimpRGB             *color);
+                                                       gint                 y);
 gdouble         gimp_pickable_get_opacity_at          (GimpPickable        *pickable,
                                                        gint                 x,
                                                        gint                 y);
@@ -99,7 +98,7 @@ gboolean        gimp_pickable_pick_color              (GimpPickable        *pick
                                                        gboolean             sample_average,
                                                        gdouble              average_radius,
                                                        gpointer             pixel,
-                                                       GimpRGB             *color);
+                                                       GeglColor          **color);
 
 
 #endif  /* __GIMP_PICKABLE_H__ */

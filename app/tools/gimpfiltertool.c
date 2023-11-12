@@ -137,7 +137,7 @@ static gboolean  gimp_filter_tool_pick_color     (GimpColorTool       *color_too
                                                   GimpDisplay         *display,
                                                   const Babl         **sample_format,
                                                   gpointer             pixel,
-                                                  GimpRGB             *color);
+                                                  GeglColor          **color);
 static void      gimp_filter_tool_color_picked   (GimpColorTool       *color_tool,
                                                   const GimpCoords    *coords,
                                                   GimpDisplay         *display,
@@ -828,13 +828,15 @@ gimp_filter_tool_pick_color (GimpColorTool     *color_tool,
                              GimpDisplay       *display,
                              const Babl       **sample_format,
                              gpointer           pixel,
-                             GimpRGB           *color)
+                             GeglColor        **color)
 {
   GimpTool       *tool        = GIMP_TOOL (color_tool);
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
   gboolean        picked;
 
   g_return_val_if_fail (g_list_length (tool->drawables) == 1, FALSE);
+  g_return_val_if_fail (color != NULL && GEGL_IS_COLOR (*color), FALSE);
+  g_return_val_if_fail (sample_format != NULL, FALSE);
 
   picked = GIMP_COLOR_TOOL_CLASS (parent_class)->pick (color_tool, coords,
                                                        display, sample_format,
@@ -842,10 +844,7 @@ gimp_filter_tool_pick_color (GimpColorTool     *color_tool,
 
   if (! picked && filter_tool->pick_abyss)
     {
-      color->r = 0.0;
-      color->g = 0.0;
-      color->b = 0.0;
-      color->a = 0.0;
+      gegl_color_set_rgba_with_space (*color, 0.0, 0.0, 0.0, 0.0, *sample_format);
 
       picked = TRUE;
     }

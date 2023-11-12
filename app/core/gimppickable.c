@@ -251,23 +251,23 @@ gimp_pickable_get_pixel_average (GimpPickable        *pickable,
     memset (pixel, 0, babl_format_get_bytes_per_pixel (format));
 }
 
-gboolean
+GeglColor *
 gimp_pickable_get_color_at (GimpPickable *pickable,
                             gint          x,
-                            gint          y,
-                            GimpRGB      *color)
+                            gint          y)
 {
-  gdouble pixel[4];
+  GeglColor *color = NULL;
+  gdouble    pixel[4];
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), FALSE);
-  g_return_val_if_fail (color != NULL, FALSE);
 
-  if (! gimp_pickable_get_pixel_at (pickable, x, y, NULL, pixel))
-    return FALSE;
+  if (gimp_pickable_get_pixel_at (pickable, x, y, NULL, pixel))
+    {
+      color = gegl_color_new ("black");
+      gegl_color_set_pixel (color, gimp_pickable_get_format (pickable), pixel);
+    }
 
-  gimp_pickable_pixel_to_rgb (pickable, NULL, pixel, color);
-
-  return TRUE;
+  return color;
 }
 
 gdouble
@@ -287,6 +287,9 @@ gimp_pickable_get_opacity_at (GimpPickable *pickable,
   return GIMP_OPACITY_TRANSPARENT;
 }
 
+/* TODO: this will have to be removed eventually and replaced with
+ * gegl_color_set_pixel(). We should not need GimpRGB anymore!
+ */
 void
 gimp_pickable_pixel_to_rgb (GimpPickable *pickable,
                             const Babl   *format,
@@ -363,13 +366,13 @@ gimp_pickable_pick_color (GimpPickable *pickable,
                           gboolean      sample_average,
                           gdouble       average_radius,
                           gpointer      pixel,
-                          GimpRGB      *color)
+                          GeglColor   **color)
 {
   const Babl *format;
   gdouble     sample[4];
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), FALSE);
-  g_return_val_if_fail (color != NULL, FALSE);
+  g_return_val_if_fail (color != NULL && GEGL_IS_COLOR (*color), FALSE);
 
   format = gimp_pickable_get_format (pickable);
 
@@ -394,7 +397,7 @@ gimp_pickable_pick_color (GimpPickable *pickable,
                                        format, sample);
     }
 
-  gimp_pickable_pixel_to_rgb (pickable, format, sample, color);
+  gegl_color_set_pixel (*color, format, sample);
 
   return TRUE;
 }

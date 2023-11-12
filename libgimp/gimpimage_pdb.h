@@ -65,7 +65,7 @@ gboolean                 gimp_image_pick_color                 (GimpImage       
                                                                 gboolean             sample_merged,
                                                                 gboolean             sample_average,
                                                                 gdouble              average_radius,
-                                                                GimpRGB             *color);
+                                                                GeglColor          **color);
 GimpLayer*               gimp_image_pick_correlate_layer       (GimpImage           *image,
                                                                 gint                 x,
                                                                 gint                 y);

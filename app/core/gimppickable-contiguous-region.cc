@@ -194,7 +194,7 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
                                           gfloat               threshold,
                                           gboolean             select_transparent,
                                           GimpSelectCriterion  select_criterion,
-                                          const GimpRGB       *color)
+                                          GeglColor           *color)
 {
   /*  Scan over the pickable's active layer, finding pixels within the
    *  specified threshold from the given R, G, & B values.  If
@@ -210,7 +210,7 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
   gfloat      start_col[MAX_CHANNELS];
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
-  g_return_val_if_fail (color != NULL, NULL);
+  g_return_val_if_fail (GEGL_IS_COLOR (color), NULL);
 
   /* increase the threshold by EPSILON, to allow for conversion errors,
    * especially when threshold == 0 (see issue #1554.)  we need to do this
@@ -227,7 +227,7 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
   format = choose_format (src_buffer, select_criterion,
                           &n_components, &has_alpha);
 
-  gimp_rgba_get_pixel (color, format, start_col);
+  gegl_color_get_pixel (color, format, start_col);
 
   if (has_alpha)
     {

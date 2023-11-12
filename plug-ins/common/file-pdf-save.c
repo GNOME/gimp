@@ -1554,7 +1554,7 @@ drawText (GimpLayer *layer,
   cairo_font_options_t *options;
   gint                  x;
   gint                  y;
-  GimpRGB               color;
+  GimpRGB               rgb;
   GimpUnit              unit;
   gdouble               size;
   GimpTextHintStyle     hinting;
@@ -1587,13 +1587,20 @@ drawText (GimpLayer *layer,
   /* When dealing with a gray/indexed image, the viewed color of the text layer
    * can be different than the one kept in the memory */
   if (type == GIMP_RGBA_IMAGE)
-    gimp_text_layer_get_color (GIMP_TEXT_LAYER (layer), &color);
+    {
+      gimp_text_layer_get_color (GIMP_TEXT_LAYER (layer), &rgb);
+    }
   else
-    gimp_image_pick_color (gimp_item_get_image (GIMP_ITEM (layer)), 1,
-                           (const GimpItem**) &layer, x, y, FALSE, FALSE, 0,
-                           &color);
+    {
+      GeglColor *color;
 
-  cairo_set_source_rgba (cr, color.r, color.g, color.b, opacity);
+      gimp_image_pick_color (gimp_item_get_image (GIMP_ITEM (layer)), 1,
+                             (const GimpItem**) &layer, x, y, FALSE, FALSE, 0,
+                             &color);
+      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
+    }
+
+  cairo_set_source_rgba (cr, rgb.r, rgb.g, rgb.b, opacity);
 
   /* Hinting */
   hinting = gimp_text_layer_get_hint_style (GIMP_TEXT_LAYER (layer));

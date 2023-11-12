@@ -71,7 +71,7 @@ gboolean
 gimp_image_select_color (GimpImage      *image,
                          GimpChannelOps  operation,
                          GimpDrawable   *drawable,
-                         const GimpRGB  *color)
+                         GeglColor      *color)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -81,7 +81,7 @@ gimp_image_select_color (GimpImage      *image,
                                           GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_RGB, color,
+                                          GEGL_TYPE_COLOR, color,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),

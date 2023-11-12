@@ -21,14 +21,11 @@
 
 #include "stamp-pdbgen.h"
 
-#include <cairo.h>
-
 #include <gegl.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "libgimpbase/gimpbase.h"
@@ -657,7 +654,7 @@ image_pick_color_invoker (GimpProcedure         *procedure,
   gboolean sample_merged;
   gboolean sample_average;
   gdouble average_radius;
-  GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
+  GeglColor *color = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   num_drawables = g_value_get_int (gimp_value_array_index (args, 1));
@@ -711,6 +708,7 @@ image_pick_color_invoker (GimpProcedure         *procedure,
           if (sample_merged)
             gimp_pickable_flush (GIMP_PICKABLE (image));
 
+          color   = gegl_color_new ("black");
           success = gimp_image_pick_color (image,
                                            drawable_list,
                                            (gint) x, (gint) y,
@@ -730,7 +728,7 @@ image_pick_color_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &color);
+    g_value_take_object (gimp_value_array_index (return_vals, 1), color);
 
   return return_vals;
 }
@@ -3576,12 +3574,11 @@ register_image_procs (GimpPDB *pdb)
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("color",
-                                                        "color",
-                                                        "The return color",
-                                                        TRUE,
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                   gegl_param_spec_color ("color",
+                                                          "color",
+                                                          "The return color",
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

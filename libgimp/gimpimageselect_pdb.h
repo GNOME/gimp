@@ -35,7 +35,7 @@ G_BEGIN_DECLS
 gboolean gimp_image_select_color            (GimpImage      *image,
                                              GimpChannelOps  operation,
                                              GimpDrawable   *drawable,
-                                             const GimpRGB  *color);
+                                             GeglColor      *color);
 gboolean gimp_image_select_contiguous_color (GimpImage      *image,
                                              GimpChannelOps  operation,
                                              GimpDrawable   *drawable,

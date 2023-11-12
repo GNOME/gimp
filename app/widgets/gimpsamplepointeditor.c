@@ -553,7 +553,7 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
           GimpSamplePoint   *sample_point = list->data;
           const Babl        *format;
           gdouble            pixel[4];
-          GimpRGB            color;
+          GeglColor         *color;
           GimpColorPickMode  pick_mode;
           gint               x;
           gint               y;
@@ -563,6 +563,7 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
 
           gimp_sample_point_get_position (sample_point, &x, &y);
 
+          color = gegl_color_new ("black");
           if (gimp_image_pick_color (image_editor->image, NULL,
                                      x, y,
                                      FALSE,
@@ -572,8 +573,12 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
                                      pixel,
                                      &color))
             {
+              GimpRGB rgb;
+
+              /* TODO: use GeglColor. */
+              gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
               gimp_color_frame_set_color (color_frame, FALSE,
-                                          format, pixel, &color,
+                                          format, pixel, &rgb,
                                           x, y);
             }
           else
@@ -584,6 +589,8 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
           pick_mode = gimp_sample_point_get_pick_mode (sample_point);
 
           gimp_color_frame_set_mode (color_frame, pick_mode);
+
+          g_object_unref (color);
         }
     }
 

@@ -51,7 +51,7 @@ HELP
 	  desc => 'The selection operation' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
-	{ name => 'color', type => 'color',
+	{ name => 'color', type => 'geglcolor',
 	  desc => 'The color to select' }
     );
 
@@ -66,7 +66,7 @@ HELP
       GList *drawables = g_list_prepend (NULL, drawable);
       gimp_channel_select_by_color (gimp_image_get_mask (image), drawables,
                                     pdb_context->sample_merged,
-                                    &color,
+                                    color,
                                     pdb_context->sample_threshold,
                                     pdb_context->sample_transparent,
                                     pdb_context->sample_criterion,

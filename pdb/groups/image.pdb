@@ -457,7 +457,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'color', type => 'color', has_alpha => 1, void_ret => 1,
+        { name => 'color', type => 'geglcolor', has_alpha => 1, void_ret => 1,
           desc => 'The return color' }
     );
 
@@ -506,6 +506,7 @@ HELP
       if (sample_merged)
         gimp_pickable_flush (GIMP_PICKABLE (image));
 
+      color   = gegl_color_new ("black");
       success = gimp_image_pick_color (image,
                                        drawable_list,
                                        (gint) x, (gint) y,

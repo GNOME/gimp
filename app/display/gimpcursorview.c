@@ -758,7 +758,7 @@ gimp_cursor_view_cursor_idle (GimpCursorView *view)
       gchar       buf[32];
       const Babl *sample_format;
       gdouble     pixel[4];
-      GimpRGB     color;
+      GeglColor  *color;
       gdouble     xres;
       gdouble     yres;
       gint        int_x;
@@ -791,6 +791,7 @@ gimp_cursor_view_cursor_idle (GimpCursorView *view)
       int_x = (gint) floor (x);
       int_y = (gint) floor (y);
 
+      color = gegl_color_new ("black");
       if (gimp_image_pick_color (image, NULL,
                                  int_x, int_y,
                                  view->priv->shell->show_all,
@@ -798,11 +799,15 @@ gimp_cursor_view_cursor_idle (GimpCursorView *view)
                                  FALSE, 0.0,
                                  &sample_format, pixel, &color))
         {
+          GimpRGB rgb;
+
+          /* TODO: get rid of GimpRGB. */
+          gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
           gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_1),
-                                      FALSE, sample_format, pixel, &color,
+                                      FALSE, sample_format, pixel, &rgb,
                                       int_x, int_y);
           gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_2),
-                                      FALSE, sample_format, pixel, &color,
+                                      FALSE, sample_format, pixel, &rgb,
                                       int_x, int_y);
         }
       else
@@ -817,6 +822,7 @@ gimp_cursor_view_cursor_idle (GimpCursorView *view)
                                               view->priv->cursor_unit);
 
       g_clear_object (&view->priv->cursor_image);
+      g_object_unref (color);
     }
   else
     {

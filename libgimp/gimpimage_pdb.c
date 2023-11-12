@@ -723,7 +723,7 @@ gimp_image_floating_sel_attached_to (GimpImage *image)
  * @sample_merged: Use the composite image, not the drawables.
  * @sample_average: Average the color of all the pixels in a specified radius.
  * @average_radius: The radius of pixels to average.
- * @color: (out caller-allocates): The return color.
+ * @color: (out) (transfer full): The return color.
  *
  * Determine the color at the given coordinates
  *
@@ -754,7 +754,7 @@ gimp_image_pick_color (GimpImage       *image,
                        gboolean         sample_merged,
                        gboolean         sample_average,
                        gdouble          average_radius,
-                       GimpRGB         *color)
+                       GeglColor      **color)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -777,10 +777,12 @@ gimp_image_pick_color (GimpImage       *image,
                                                args);
   gimp_value_array_unref (args);
 
+  *color = NULL;
+
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
+    *color = g_value_dup_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 

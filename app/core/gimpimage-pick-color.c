@@ -52,7 +52,7 @@ gimp_image_pick_color (GimpImage   *image,
                        gdouble      average_radius,
                        const Babl **sample_format,
                        gpointer     pixel,
-                       GimpRGB     *color)
+                       GeglColor  **color)
 {
   GimpImage    *pick_image = NULL;
   GimpPickable *pickable;
@@ -60,6 +60,7 @@ gimp_image_pick_color (GimpImage   *image,
   gboolean      result;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (color != NULL && GEGL_IS_COLOR (*color), FALSE);
 
   for (iter = drawables; iter; iter = iter->next)
     {
@@ -177,7 +178,7 @@ gimp_image_pick_color (GimpImage   *image,
         }
 
       if (! result || sample_average)
-        gimp_pickable_pixel_to_rgb (pickable, format, sample, color);
+        gegl_color_set_pixel (*color, format, sample);
 
       result = TRUE;
     }

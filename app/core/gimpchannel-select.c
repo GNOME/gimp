@@ -542,7 +542,7 @@ void
 gimp_channel_select_by_color (GimpChannel         *channel,
                               GList               *drawables,
                               gboolean             sample_merged,
-                              const GimpRGB       *color,
+                              GeglColor           *color,
                               gfloat               threshold,
                               gboolean             select_transparent,
                               GimpSelectCriterion  select_criterion,
