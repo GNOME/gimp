@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-11-06 21:29+0000\n"
-"PO-Revision-Date: 2023-11-07 06:32+0800\n"
+"POT-Creation-Date: 2023-11-10 23:31+0000\n"
+"PO-Revision-Date: 2023-11-11 09:55+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -44,7 +44,7 @@ msgstr "在 C 语言中锻炼一只山羊"
 #: plug-ins/common/sphere-designer.c:3185 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:243
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:181
-#: plug-ins/file-dds/dds.c:542 plug-ins/flame/flame.c:299
+#: plug-ins/file-dds/dds.c:556 plug-ins/flame/flame.c:299
 #: plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
@@ -326,7 +326,7 @@ msgstr "对齐可见图层"
 #. file save type
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
 #: plug-ins/common/file-ps.c:3729 plug-ins/common/file-ps.c:3737
-#: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:209
+#: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:223
 #: plug-ins/file-tiff/file-tiff.c:240
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
 #: plug-ins/fractal-explorer/fractal-explorer.c:354
@@ -1951,7 +1951,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:160
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:164
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
 #: plug-ins/file-icns/file-icns-load.c:516
@@ -2434,7 +2434,7 @@ msgid ""
 "of text formats"
 msgstr "该插件使用 aalib 将灰阶图像作为 ascii 艺术保存为多种文本格式"
 
-#: plug-ins/common/file-aa.c:156 plug-ins/file-dds/dds.c:231
+#: plug-ins/common/file-aa.c:156 plug-ins/file-dds/dds.c:245
 msgid "_Format"
 msgstr "格式(_F)"
 
@@ -8247,7 +8247,7 @@ msgstr ""
 msgid "BMP format does not support multiple layers."
 msgstr "BMP 格式不支持多图层。"
 
-#: plug-ins/file-dds/dds.c:149 plug-ins/file-dds/dds.c:187
+#: plug-ins/file-dds/dds.c:149 plug-ins/file-dds/dds.c:201
 msgid "DDS image"
 msgstr "DDS 图像"
 
@@ -8264,348 +8264,368 @@ msgid "Load mipmaps if present"
 msgstr "如果可用则载入多级纹理"
 
 #: plug-ins/file-dds/dds.c:174
+msgid "Flip image _vertically"
+msgstr "竖直翻转图像(_V)"
+
+#: plug-ins/file-dds/dds.c:175
+msgid "Flip the image vertically on import"
+msgstr "导入时竖直翻转图像"
+
+#: plug-ins/file-dds/dds.c:180
+msgid "Always use _transparency for BC1/DXT1"
+msgstr "总是为 BC1/DXT1 使用透明(_T)"
+
+#: plug-ins/file-dds/dds.c:181
+msgid ""
+"Interprets transparency for BC1/DXT1 images even when DDPF_ALPHAPIXELS is "
+"not set; if disabled, sets it to opaque black"
+msgstr ""
+"即使 DDPF_ALPHAPIXELS 未设置仍为 BC1/DXT1 图像使用透明；如果禁用，则将其设为"
+"不透明的黑色"
+
+#: plug-ins/file-dds/dds.c:188
 msgid "Automatically decode YCoCg/AE_xp images when detected"
 msgstr "当检测到时自动解码 YCoCg/AExp 图像(_X)"
 
-#: plug-ins/file-dds/dds.c:175
+#: plug-ins/file-dds/dds.c:189
 msgid "Decode YCoCg/AExp images when detected"
 msgstr "当检测到时自动解码 YCoCg/AExp 图像"
 
-#: plug-ins/file-dds/dds.c:189
+#: plug-ins/file-dds/dds.c:203
 msgid "DDS"
 msgstr "DDS"
 
-#: plug-ins/file-dds/dds.c:193 plug-ins/file-dds/dds.c:194
+#: plug-ins/file-dds/dds.c:207 plug-ins/file-dds/dds.c:208
 msgid "Saves files in DDS image format"
 msgstr "以 DDS 图像格式保存文件"
 
-#: plug-ins/file-dds/dds.c:207
+#: plug-ins/file-dds/dds.c:221
 msgid "Compressio_n"
 msgstr "压缩(_N)"
 
-#: plug-ins/file-dds/dds.c:208
+#: plug-ins/file-dds/dds.c:222
 msgid "Compression format"
 msgstr "压缩格式"
 
-#: plug-ins/file-dds/dds.c:210
+#: plug-ins/file-dds/dds.c:224
 msgid "BC1 / DXT1"
 msgstr "BC1 / DXT1"
 
-#: plug-ins/file-dds/dds.c:211
+#: plug-ins/file-dds/dds.c:225
 msgid "BC2 / DXT3"
 msgstr "BC2 / DXT3"
 
-#: plug-ins/file-dds/dds.c:212
+#: plug-ins/file-dds/dds.c:226
 msgid "BC3 / DXT5"
 msgstr "BC3 / DXT5"
 
-#: plug-ins/file-dds/dds.c:213
+#: plug-ins/file-dds/dds.c:227
 msgid "BC3nm / DXT5nm"
 msgstr "BC3nm / DXT5nm"
 
-#: plug-ins/file-dds/dds.c:214
+#: plug-ins/file-dds/dds.c:228
 msgid "BC4 / ATI1 (3Dc+)"
 msgstr "BC4 / ATI1 (3Dc+)"
 
-#: plug-ins/file-dds/dds.c:215
+#: plug-ins/file-dds/dds.c:229
 msgid "BC5 / ATI2 (3Dc)"
 msgstr "BC5 / ATI2 (3Dc)"
 
-#: plug-ins/file-dds/dds.c:216
+#: plug-ins/file-dds/dds.c:230
 msgid "RXGB (DXT5)"
 msgstr "RXGB (DXT5)"
 
-#: plug-ins/file-dds/dds.c:217
+#: plug-ins/file-dds/dds.c:231
 msgid "Alpha Exponent (DXT5)"
 msgstr "透明指数（DXT5）"
 
-#: plug-ins/file-dds/dds.c:218
+#: plug-ins/file-dds/dds.c:232
 msgid "YCoCg (DXT5)"
 msgstr "YCoCg (DXT5)"
 
-#: plug-ins/file-dds/dds.c:219
+#: plug-ins/file-dds/dds.c:233
 msgid "YCoCg scaled (DXT5)"
 msgstr "YCoCg 已缩放（DXT5）"
 
-#: plug-ins/file-dds/dds.c:225
+#: plug-ins/file-dds/dds.c:239
 msgid "Use percept_ual error metric"
 msgstr "使用感官错误度量(_U)"
 
-#: plug-ins/file-dds/dds.c:226
+#: plug-ins/file-dds/dds.c:240
 msgid "Use a perceptual error metric during compression"
 msgstr "在压缩过程中使用感官错误度量"
 
-#: plug-ins/file-dds/dds.c:232
+#: plug-ins/file-dds/dds.c:246
 msgid "Pixel format"
 msgstr "像素格式"
 
 #. Create the combobox containing the presets
-#: plug-ins/file-dds/dds.c:233 plug-ins/file-dds/dds.c:290
-#: plug-ins/file-dds/dds.c:306 plug-ins/file-webp/file-webp-dialog.c:80
+#: plug-ins/file-dds/dds.c:247 plug-ins/file-dds/dds.c:304
+#: plug-ins/file-dds/dds.c:320 plug-ins/file-webp/file-webp-dialog.c:80
 #: plug-ins/gradient-flare/gradient-flare.c:2599
 msgid "Default"
 msgstr "默认"
 
-#: plug-ins/file-dds/dds.c:234
+#: plug-ins/file-dds/dds.c:248
 msgid "RGB8"
 msgstr "RGB8"
 
-#: plug-ins/file-dds/dds.c:235
+#: plug-ins/file-dds/dds.c:249
 msgid "RGBA8"
 msgstr "RGBA8"
 
-#: plug-ins/file-dds/dds.c:236
+#: plug-ins/file-dds/dds.c:250
 msgid "BGR8"
 msgstr "BGR8"
 
-#: plug-ins/file-dds/dds.c:237
+#: plug-ins/file-dds/dds.c:251
 msgid "ABGR8"
 msgstr "ABGR8"
 
-#: plug-ins/file-dds/dds.c:238
+#: plug-ins/file-dds/dds.c:252
 msgid "R5G6B5"
 msgstr "R5G6B5"
 
-#: plug-ins/file-dds/dds.c:239
+#: plug-ins/file-dds/dds.c:253
 msgid "RGBA4"
 msgstr "RGBA4"
 
-#: plug-ins/file-dds/dds.c:240
+#: plug-ins/file-dds/dds.c:254
 msgid "RGB5A1"
 msgstr "RGB5A1"
 
-#: plug-ins/file-dds/dds.c:241
+#: plug-ins/file-dds/dds.c:255
 msgid "RGB10A2"
 msgstr "RGB10A2"
 
-#: plug-ins/file-dds/dds.c:242
+#: plug-ins/file-dds/dds.c:256
 msgid "R3G3B2"
 msgstr "R3G3B2"
 
-#: plug-ins/file-dds/dds.c:243
+#: plug-ins/file-dds/dds.c:257
 msgid "A8"
 msgstr "A8"
 
-#: plug-ins/file-dds/dds.c:244
+#: plug-ins/file-dds/dds.c:258
 msgid "L8"
 msgstr "L8"
 
-#: plug-ins/file-dds/dds.c:245
+#: plug-ins/file-dds/dds.c:259
 msgid "L8A8"
 msgstr "L8A8"
 
-#: plug-ins/file-dds/dds.c:246
+#: plug-ins/file-dds/dds.c:260
 msgid "AEXP"
 msgstr "AEXP"
 
-#: plug-ins/file-dds/dds.c:247
+#: plug-ins/file-dds/dds.c:261
 msgid "YCOCG"
 msgstr "YCOCG"
 
-#: plug-ins/file-dds/dds.c:261
+#: plug-ins/file-dds/dds.c:275
 msgid "Flip image _vertically on export"
 msgstr "导出时竖直翻转图像(_V)"
 
-#: plug-ins/file-dds/dds.c:262
+#: plug-ins/file-dds/dds.c:276
 msgid "Flip the image vertically on export"
 msgstr "导出时竖直翻转图像"
 
-#: plug-ins/file-dds/dds.c:267
+#: plug-ins/file-dds/dds.c:281
 msgid "Set _transparent color"
 msgstr "设置透明颜色(_T)"
 
-#: plug-ins/file-dds/dds.c:268
+#: plug-ins/file-dds/dds.c:282
 msgid "Make an indexed color transparent"
 msgstr "使索引颜色透明"
 
-#: plug-ins/file-dds/dds.c:273
+#: plug-ins/file-dds/dds.c:287
 msgid "Transparent inde_x"
 msgstr "透明索引(_X)"
 
-#: plug-ins/file-dds/dds.c:274
+#: plug-ins/file-dds/dds.c:288
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
 msgstr "透明颜色的索引或 -1 以禁用（仅适用于索引图像）。"
 
-#: plug-ins/file-dds/dds.c:288
+#: plug-ins/file-dds/dds.c:302
 msgid "F_ilter"
 msgstr "滤波器(_I)"
 
-#: plug-ins/file-dds/dds.c:289
+#: plug-ins/file-dds/dds.c:303
 msgid "Filtering to use when generating mipmaps"
 msgstr "生成多级纹理时使用的滤波器"
 
-#: plug-ins/file-dds/dds.c:291
+#: plug-ins/file-dds/dds.c:305
 msgid "Nearest"
 msgstr "最邻近"
 
-#: plug-ins/file-dds/dds.c:292 plug-ins/map-object/map-object-main.c:139
+#: plug-ins/file-dds/dds.c:306 plug-ins/map-object/map-object-main.c:139
 msgid "Box"
 msgstr "方盒"
 
-#: plug-ins/file-dds/dds.c:293
+#: plug-ins/file-dds/dds.c:307
 msgid "Triangle"
 msgstr "三角形"
 
-#: plug-ins/file-dds/dds.c:294
+#: plug-ins/file-dds/dds.c:308
 msgid "Quadratic"
 msgstr "平方"
 
-#: plug-ins/file-dds/dds.c:295
+#: plug-ins/file-dds/dds.c:309
 msgid "B-Spline"
 msgstr "B 样条"
 
-#: plug-ins/file-dds/dds.c:296
+#: plug-ins/file-dds/dds.c:310
 msgid "Mitchell"
 msgstr "米切尔"
 
-#: plug-ins/file-dds/dds.c:297
+#: plug-ins/file-dds/dds.c:311
 msgid "Lanczos"
 msgstr "兰索斯法"
 
-#: plug-ins/file-dds/dds.c:298
+#: plug-ins/file-dds/dds.c:312
 msgid "Kaiser"
 msgstr "凯撒"
 
-#: plug-ins/file-dds/dds.c:304
+#: plug-ins/file-dds/dds.c:318
 msgid "_Wrap mode"
 msgstr "包裹模式(_W)"
 
-#: plug-ins/file-dds/dds.c:305
+#: plug-ins/file-dds/dds.c:319
 msgid "Wrap mode to use when generating mipmaps"
 msgstr "生成多级纹理时使用的包裹模式"
 
-#: plug-ins/file-dds/dds.c:307
+#: plug-ins/file-dds/dds.c:321
 msgid "Mirror"
 msgstr "镜像"
 
-#: plug-ins/file-dds/dds.c:308
+#: plug-ins/file-dds/dds.c:322
 msgid "Repeat"
 msgstr "重复"
 
-#: plug-ins/file-dds/dds.c:309
+#: plug-ins/file-dds/dds.c:323
 msgid "Clamp"
 msgstr "固定"
 
-#: plug-ins/file-dds/dds.c:315
+#: plug-ins/file-dds/dds.c:329
 msgid "Appl_y gamma correction"
 msgstr "应用伽马校正(_Y)"
 
-#: plug-ins/file-dds/dds.c:316
+#: plug-ins/file-dds/dds.c:330
 msgid "Use gamma correct mipmap filtering"
 msgstr "使用伽马校正多级纹理滤波器"
 
-#: plug-ins/file-dds/dds.c:321
+#: plug-ins/file-dds/dds.c:335
 msgid "Use sRG_B colorspace"
 msgstr "使用 sRGB 色彩空间(_B)"
 
-#: plug-ins/file-dds/dds.c:322
+#: plug-ins/file-dds/dds.c:336
 msgid "Use sRGB colorspace for gamma correction"
 msgstr "为伽马校正使用 sRGB 色彩空间"
 
-#: plug-ins/file-dds/dds.c:327 plug-ins/flame/flame.c:205
+#: plug-ins/file-dds/dds.c:341 plug-ins/flame/flame.c:205
 msgid "_Gamma"
 msgstr "伽马(_G)"
 
-#: plug-ins/file-dds/dds.c:328
+#: plug-ins/file-dds/dds.c:342
 msgid "Gamma value to use for gamma correction (e.g. 2.2)"
 msgstr "用于伽马校正的伽马值（如 2.2）"
 
-#: plug-ins/file-dds/dds.c:333
+#: plug-ins/file-dds/dds.c:347
 msgid "Preserve al_pha test coverage"
 msgstr "保持透明测试覆盖(_P)"
 
-#: plug-ins/file-dds/dds.c:334
+#: plug-ins/file-dds/dds.c:348
 msgid "Preserve alpha test coverage for alpha channel maps"
 msgstr "为透明通道映射保持透明测试覆盖"
 
-#: plug-ins/file-dds/dds.c:340
+#: plug-ins/file-dds/dds.c:354
 msgid "Alp_ha test threshold"
 msgstr "透明测试阈值(_H)"
 
-#: plug-ins/file-dds/dds.c:341
+#: plug-ins/file-dds/dds.c:355
 msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr "用于应保持透明测试覆盖的透明测试阈值"
 
-#: plug-ins/file-dds/dds.c:357
+#: plug-ins/file-dds/dds.c:371
 msgid "Decode YCoCg"
 msgstr "解码 YCoCg"
 
-#: plug-ins/file-dds/dds.c:361 plug-ins/file-dds/dds.c:362
+#: plug-ins/file-dds/dds.c:375 plug-ins/file-dds/dds.c:376
 msgid "Converts YCoCg encoded pixels to RGB"
 msgstr "将 YCoCg 编码的像素转换为 RGB"
 
-#: plug-ins/file-dds/dds.c:379
+#: plug-ins/file-dds/dds.c:393
 msgid "Decode YCoCg (scaled)"
 msgstr "解码 YCoCg（已缩放）"
 
-#: plug-ins/file-dds/dds.c:383 plug-ins/file-dds/dds.c:385
+#: plug-ins/file-dds/dds.c:397 plug-ins/file-dds/dds.c:399
 msgid "Converts YCoCg (scaled) encoded pixels to RGB"
 msgstr "将 YCoCg（已缩放）编码的像素转换为 RGB"
 
-#: plug-ins/file-dds/dds.c:403
+#: plug-ins/file-dds/dds.c:417
 msgid "Decode Alpha exponent"
 msgstr "解码透明指数"
 
-#: plug-ins/file-dds/dds.c:409 plug-ins/file-dds/dds.c:407
+#: plug-ins/file-dds/dds.c:423 plug-ins/file-dds/dds.c:421
 msgid "Converts alpha exponent encoded pixels to RGB"
 msgstr "将透明指数编码的像素转换为 RGB"
 
-#: plug-ins/file-dds/ddsread.c:234
+#: plug-ins/file-dds/ddsread.c:273
 #, c-format
 msgid "Unsupported uncompressed FOURCC type %u"
 msgstr "不支持的解压缩四字符代码类型 %u"
 
-#: plug-ins/file-dds/ddsread.c:452
+#: plug-ins/file-dds/ddsread.c:518
 msgid "Invalid or corrupted DDS header"
 msgstr "无效或损坏的 DDS 头部信息"
 
-#: plug-ins/file-dds/ddsread.c:461
+#: plug-ins/file-dds/ddsread.c:527
 msgid "Could not allocate a new image."
 msgstr "无法分配新图像。"
 
-#: plug-ins/file-dds/ddsread.c:472
+#: plug-ins/file-dds/ddsread.c:538
 msgid "Error reading palette."
 msgstr "读取色板出错。"
 
-#: plug-ins/file-dds/ddsread.c:755
+#: plug-ins/file-dds/ddsread.c:824
 msgid "Invalid DDS format magic number."
 msgstr "无效的 DDS 格式魔法数字。"
 
-#: plug-ins/file-dds/ddsread.c:842
+#: plug-ins/file-dds/ddsread.c:912
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "用于 RGB 数据的无效 bpp 值：%d"
 
-#: plug-ins/file-dds/ddsread.c:853
+#: plug-ins/file-dds/ddsread.c:923
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "用于亮度数据的无效 bpp 值：%d"
 
-#: plug-ins/file-dds/ddsread.c:904
+#: plug-ins/file-dds/ddsread.c:974
 msgid "Invalid pixel format."
 msgstr "无效的像素格式。"
 
-#: plug-ins/file-dds/ddsread.c:1113
+#: plug-ins/file-dds/ddsread.c:1234
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "不支持的 DXGI 格式（%d）"
 
-#: plug-ins/file-dds/ddsread.c:1253
+#: plug-ins/file-dds/ddsread.c:1389
 #, c-format
 msgid "Unsupported value for bytes per pixel: %d"
 msgstr "不支持的每像素字节值：%d"
 
-#: plug-ins/file-dds/ddsread.c:1308 plug-ins/file-dds/ddsread.c:1368
-#: plug-ins/file-dds/ddsread.c:1389
+#: plug-ins/file-dds/ddsread.c:1444 plug-ins/file-dds/ddsread.c:1504
+#: plug-ins/file-dds/ddsread.c:1525
 msgid "Requested data exceeds size of file.\n"
 msgstr "请求的数据超出文件大小。\n"
 
-#: plug-ins/file-dds/ddsread.c:1316 plug-ins/file-dds/ddsread.c:1395
+#: plug-ins/file-dds/ddsread.c:1452 plug-ins/file-dds/ddsread.c:1531
 msgid "Unexpected EOF.\n"
 msgstr "意料之外的文件尾。\n"
 
-#: plug-ins/file-dds/ddsread.c:1815
+#: plug-ins/file-dds/ddsread.c:2019
 msgid "Open DDS"
 msgstr "打开 DDS"
 
