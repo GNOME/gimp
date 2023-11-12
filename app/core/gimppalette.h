@@ -99,7 +99,7 @@ void               gimp_palette_set_columns     (GimpPalette      *palette,
 gint               gimp_palette_get_columns     (GimpPalette      *palette);
 
 GimpPaletteEntry * gimp_palette_find_entry      (GimpPalette      *palette,
-                                                 const GimpRGB    *color,
+                                                 GeglColor        *color,
                                                  GimpPaletteEntry *start_from);
 
 

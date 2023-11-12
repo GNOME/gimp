@@ -869,7 +869,7 @@ gimp_fg_bg_editor_image_changed (GimpFgBgEditor *editor,
 static void
 gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
                                     cairo_t        *cr,
-                                    const GimpRGB  *color,
+                                    const GimpRGB  *rgb,
                                     gint            x,
                                     gint            y,
                                     gint            width,
@@ -877,6 +877,7 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
                                     gint            corner_dx,
                                     gint            corner_dy)
 {
+  GeglColor         *color;
   GimpPalette       *colormap_palette = NULL;
   GimpImageBaseType  base_type        = GIMP_RGB;
   GimpRGB            transformed_color;
@@ -896,14 +897,14 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
     {
       gimp_color_transform_process_pixels (editor->transform,
                                            babl_format ("R'G'B'A double"),
-                                           color,
+                                           rgb,
                                            babl_format ("R'G'B'A double"),
                                            &transformed_color,
                                            1);
     }
   else
     {
-      transformed_color = *color;
+      transformed_color = *rgb;
     }
 
   cairo_save (cr);
@@ -913,19 +914,22 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
   cairo_rectangle (cr, x, y, width, height);
   cairo_fill (cr);
 
+  color = gegl_color_new ("black");
+  gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
+
   if (editor->color_config &&
       /* Common out-of-gamut case */
-      ((color->r < 0.0 || color->r > 1.0 ||
-        color->g < 0.0 || color->g > 1.0 ||
-        color->b < 0.0 || color->b > 1.0) ||
+      ((rgb->r < 0.0 || rgb->r > 1.0 ||
+        rgb->g < 0.0 || rgb->g > 1.0 ||
+        rgb->b < 0.0 || rgb->b > 1.0) ||
        /* Indexed images */
        (colormap_palette &&
         ! gimp_palette_find_entry (colormap_palette, color, NULL)) ||
        /* Grayscale images */
        (base_type == GIMP_GRAY &&
-        (ABS (color->r - color->g) > CHANNEL_EPSILON ||
-         ABS (color->r - color->b) > CHANNEL_EPSILON ||
-         ABS (color->g - color->b) > CHANNEL_EPSILON))))
+        (ABS (rgb->r - rgb->g) > CHANNEL_EPSILON ||
+         ABS (rgb->r - rgb->b) > CHANNEL_EPSILON ||
+         ABS (rgb->g - rgb->b) > CHANNEL_EPSILON))))
     {
       gint    corner_x = x + 0.5 * (1.0 - corner_dx) * width;
       gint    corner_y = y + 0.5 * (1.0 - corner_dy) * height;
@@ -954,4 +958,6 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
   cairo_stroke (cr);
 
   cairo_restore (cr);
+
+  g_object_unref (color);
 }

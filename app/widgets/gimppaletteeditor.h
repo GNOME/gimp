@@ -65,13 +65,13 @@ GtkWidget * gimp_palette_editor_new        (GimpContext        *context,
 
 void        gimp_palette_editor_edit_color (GimpPaletteEditor  *editor);
 void        gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
-                                            const GimpRGB      *color,
+                                            GeglColor          *color,
                                             GimpColorPickState  pick_state);
 void        gimp_palette_editor_zoom       (GimpPaletteEditor  *editor,
                                             GimpZoomType        zoom_type);
 
 gint        gimp_palette_editor_get_index  (GimpPaletteEditor *editor,
-                                            const GimpRGB     *search);
+                                            GeglColor         *search);
 gboolean    gimp_palette_editor_set_index  (GimpPaletteEditor *editor,
                                             gint               index,
                                             GimpRGB           *color);

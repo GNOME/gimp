@@ -524,16 +524,17 @@ gimp_palette_editor_edit_color (GimpPaletteEditor *editor)
 
 void
 gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
-                                const GimpRGB      *color,
+                                GeglColor          *color,
                                 GimpColorPickState  pick_state)
 {
   g_return_if_fail (GIMP_IS_PALETTE_EDITOR (editor));
-  g_return_if_fail (color != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
   if (GIMP_DATA_EDITOR (editor)->data_editable)
     {
       GimpPaletteEntry *entry;
       GimpData         *data;
+      GimpRGB           rgb;
       gint              index = -1;
 
       data = gimp_data_editor_get_data (GIMP_DATA_EDITOR (editor));
@@ -541,6 +542,7 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
         index = gimp_palette_get_entry_position (GIMP_PALETTE (data),
                                                  editor->color);
 
+      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
       switch (pick_state)
         {
         case GIMP_COLOR_PICK_STATE_START:
@@ -548,7 +550,7 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
             index += 1;
 
           entry = gimp_palette_add_entry (GIMP_PALETTE (data), index,
-                                          NULL, color);
+                                          NULL, &rgb);
           gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view),
                                           entry);
           break;
@@ -556,7 +558,7 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
         case GIMP_COLOR_PICK_STATE_UPDATE:
         case GIMP_COLOR_PICK_STATE_END:
           gimp_palette_set_entry_color (GIMP_PALETTE (data),
-                                        index, color, FALSE);
+                                        index, &rgb, FALSE);
           break;
         }
     }
@@ -635,12 +637,12 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
 
 gint
 gimp_palette_editor_get_index (GimpPaletteEditor *editor,
-                               const GimpRGB     *search)
+                               GeglColor         *search)
 {
   GimpPalette *palette;
 
   g_return_val_if_fail (GIMP_IS_PALETTE_EDITOR (editor), -1);
-  g_return_val_if_fail (search != NULL, -1);
+  g_return_val_if_fail (GEGL_IS_COLOR (search), -1);
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 

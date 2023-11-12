@@ -67,7 +67,7 @@ static void     context_select_color     (GimpActionSelectType  select_type,
 
 static gint     context_get_color_index  (gboolean              use_colormap,
                                           gboolean              use_palette,
-                                          const GimpRGB        *color);
+                                          GeglColor            *color);
 static gint     context_max_color_index  (gboolean              use_colormap,
                                           gboolean              use_palette);
 static gboolean context_set_color_index  (gint                  index,
@@ -868,13 +868,16 @@ context_paint_mode_index (GimpLayerMode        paint_mode,
 
 static void
 context_select_color (GimpActionSelectType  select_type,
-                      GimpRGB              *color,
+                      GimpRGB              *rgb,
                       gboolean              use_colormap,
                       gboolean              use_palette)
 {
-  gint index;
-  gint max;
+  GeglColor *color;
+  gint       index;
+  gint       max;
 
+  color = gegl_color_new ("black");
+  gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
   index = context_get_color_index (use_colormap, use_palette, color);
   max   = context_max_color_index (use_colormap, use_palette);
 
@@ -883,13 +886,15 @@ context_select_color (GimpActionSelectType  select_type,
                                0, max, 0,
                                0, 1, 4, 0, FALSE);
 
-  context_set_color_index (index, use_colormap, use_palette, color);
+  context_set_color_index (index, use_colormap, use_palette, rgb);
+
+  g_object_unref (color);
 }
 
 static gint
-context_get_color_index (gboolean       use_colormap,
-                         gboolean       use_palette,
-                         const GimpRGB *color)
+context_get_color_index (gboolean   use_colormap,
+                         gboolean   use_palette,
+                         GeglColor *color)
 {
   if (use_colormap)
     {

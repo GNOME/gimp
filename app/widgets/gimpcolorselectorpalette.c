@@ -86,13 +86,17 @@ gimp_color_selector_palette_set_color (GimpColorSelector *selector,
       if (palette && gimp_palette_get_n_colors (palette) > 0)
         {
           GimpPaletteEntry *entry;
+          GeglColor        *color = gegl_color_new ("black");
 
-          entry = gimp_palette_find_entry (palette, rgb,
+          gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
+          entry = gimp_palette_find_entry (palette, color,
                                            GIMP_PALETTE_VIEW (select->view)->selected);
 
           if (entry)
             gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (select->view),
                                             entry);
+
+          g_object_unref (color);
         }
     }
 }

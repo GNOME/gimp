@@ -368,7 +368,7 @@ gimp_colormap_selection_new (GimpContext *context)
 
 gint
 gimp_colormap_selection_get_index (GimpColormapSelection *selection,
-                                   const GimpRGB         *search)
+                                   GeglColor             *search)
 {
   GimpImage *image;
   gint       index;
@@ -385,10 +385,16 @@ gimp_colormap_selection_get_index (GimpColormapSelection *selection,
   if (search)
     {
       GimpRGB temp;
+      GimpRGB search_rgb;
 
+      /* TODO: this is likely very wrong as we don't seem to care about the
+       * color space of neither search nor temp. They should be fit into a same
+       * space before comparing.
+       */
+      gegl_color_get_rgba_with_space (search, &search_rgb.r, &search_rgb.g, &search_rgb.b, &search_rgb.a, NULL);
       gimp_image_get_colormap_entry (image, index, &temp);
 
-      if (gimp_rgb_distance (&temp, search) > RGB_EPSILON)
+      if (gimp_rgb_distance (&temp, &search_rgb) > RGB_EPSILON)
         {
           gint n_colors = gimp_image_get_colormap_size (image);
           gint i;
@@ -397,7 +403,7 @@ gimp_colormap_selection_get_index (GimpColormapSelection *selection,
             {
               gimp_image_get_colormap_entry (image, i, &temp);
 
-              if (gimp_rgb_distance (&temp, search) < RGB_EPSILON)
+              if (gimp_rgb_distance (&temp, &search_rgb) < RGB_EPSILON)
                 {
                   index = i;
                   break;

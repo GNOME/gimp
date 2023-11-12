@@ -55,7 +55,7 @@ void        gimp_colormap_editor_delete_color       (GimpColormapEditor *editor)
 gboolean    gimp_colormap_editor_is_color_deletable (GimpColormapEditor *editor);
 
 gint        gimp_colormap_editor_get_index          (GimpColormapEditor *editor,
-                                                     const GimpRGB      *search);
+                                                     GeglColor          *search);
 gboolean    gimp_colormap_editor_set_index          (GimpColormapEditor *editor,
                                                      gint                index,
                                                      GimpRGB            *color);

@@ -72,7 +72,7 @@ struct _GimpColorToolClass
                          GimpColorPickState  pick_state,
                          const Babl         *sample_format,
                          gpointer            pixel,
-                         const GimpRGB      *color);
+                         GeglColor          *color);
 };
 
 

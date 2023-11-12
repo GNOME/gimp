@@ -113,7 +113,7 @@ static void   gimp_color_tool_real_picked    (GimpColorTool         *color_tool,
                                               GimpColorPickState     pick_state,
                                               const Babl            *sample_format,
                                               gpointer               pixel,
-                                              const GimpRGB         *color);
+                                              GeglColor             *color);
 
 static gboolean   gimp_color_tool_can_pick   (GimpColorTool         *tool,
                                               const GimpCoords      *coords,
@@ -151,7 +151,7 @@ gimp_color_tool_class_init (GimpColorToolClass *klass)
                   GIMP_TYPE_COLOR_PICK_STATE,
                   G_TYPE_POINTER,
                   G_TYPE_POINTER,
-                  GIMP_TYPE_RGB | G_SIGNAL_TYPE_STATIC_SCOPE);
+                  GEGL_TYPE_COLOR);
 
   object_class->finalize     = gimp_color_tool_finalize;
 
@@ -485,13 +485,16 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
                              GimpColorPickState  pick_state,
                              const Babl         *sample_format,
                              gpointer            pixel,
-                             const GimpRGB      *color)
+                             GeglColor          *color)
 {
   GimpTool          *tool  = GIMP_TOOL (color_tool);
   GimpDisplayShell  *shell = gimp_display_get_shell (display);
   GimpImageWindow   *image_window;
   GimpDialogFactory *dialog_factory;
   GimpContext       *context;
+  GimpRGB            rgb   = { 0 };
+
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
   image_window   = gimp_display_shell_get_window (shell);
   dialog_factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (image_window));
@@ -554,17 +557,19 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
         }
     }
 
+  gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, sample_format);
   switch (color_tool->pick_target)
     {
     case GIMP_COLOR_PICK_TARGET_NONE:
       break;
 
     case GIMP_COLOR_PICK_TARGET_FOREGROUND:
-      gimp_context_set_foreground (context, color);
+      /* TODO: FG/BG colors should be stored as GeglColor. */
+      gimp_context_set_foreground (context, &rgb);
       break;
 
     case GIMP_COLOR_PICK_TARGET_BACKGROUND:
-      gimp_context_set_background (context, color);
+      gimp_context_set_background (context, &rgb);
       break;
 
     case GIMP_COLOR_PICK_TARGET_PALETTE:
@@ -636,15 +641,9 @@ gimp_color_tool_pick (GimpColorTool      *tool,
 
   if (klass->pick &&
       klass->pick (tool, coords, display, &sample_format, pixel, &color))
-    {
-      GimpRGB rgb;
-
-      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
-      /* TODO: the "picked" signal should emit a GeglColor. */
-      g_signal_emit (tool, gimp_color_tool_signals[PICKED], 0,
-                     coords, display, pick_state,
-                     sample_format, pixel, &rgb);
-    }
+    g_signal_emit (tool, gimp_color_tool_signals[PICKED], 0,
+                   coords, display, pick_state,
+                   sample_format, pixel, color);
 
   g_object_unref (color);
 }

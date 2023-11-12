@@ -1305,15 +1305,20 @@ gimp_palette_load_css (GimpContext   *context,
 
           if (g_regex_match (regex, buf, 0, &matches))
             {
-              GimpRGB  color;
+              GimpRGB  rgb;
               gchar   *word = g_match_info_fetch_named (matches, "param");
 
-              if (gimp_rgb_parse_css (&color, word, -1))
+              if (gimp_rgb_parse_css (&rgb, word, -1))
                 {
-                  if (! gimp_palette_find_entry (palette, &color, NULL))
+                  GeglColor *color = gegl_color_new ("black");
+
+                  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+                  if (! gimp_palette_find_entry (palette, color, NULL))
                     {
-                      gimp_palette_add_entry (palette, -1, NULL, &color);
+                      gimp_palette_add_entry (palette, -1, NULL, &rgb);
                     }
+
+                  g_object_unref (color);
                 }
 
               g_free (word);

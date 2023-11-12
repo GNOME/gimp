@@ -642,14 +642,19 @@ gimp_palette_get_columns (GimpPalette *palette)
 
 GimpPaletteEntry *
 gimp_palette_find_entry (GimpPalette      *palette,
-                         const GimpRGB    *color,
+                         GeglColor        *color,
                          GimpPaletteEntry *start_from)
 {
   GimpPaletteEntry *entry;
+  GimpRGB           rgb;
 
   g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
-  g_return_val_if_fail (color != NULL, NULL);
+  g_return_val_if_fail (GEGL_IS_COLOR (color), NULL);
 
+  /* TODO: we should have a gimp_color_distance() function to compare 2
+   * GeglColor.
+   */
+  gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
   if (! start_from)
     {
       GList *list;
@@ -659,11 +664,11 @@ gimp_palette_find_entry (GimpPalette      *palette,
       for (list = palette->colors; list; list = g_list_next (list))
         {
           entry = (GimpPaletteEntry *) list->data;
-          if (gimp_rgb_distance (&entry->color, color) < RGB_EPSILON)
+          if (gimp_rgb_distance (&entry->color, &rgb) < RGB_EPSILON)
             return entry;
         }
     }
-  else if (gimp_rgb_distance (&start_from->color, color) < RGB_EPSILON)
+  else if (gimp_rgb_distance (&start_from->color, &rgb) < RGB_EPSILON)
     {
       return start_from;
     }
@@ -685,7 +690,7 @@ gimp_palette_find_entry (GimpPalette      *palette,
           if (next)
             {
               entry = (GimpPaletteEntry *) next->data;
-              if (gimp_rgb_distance (&entry->color, color) < RGB_EPSILON)
+              if (gimp_rgb_distance (&entry->color, &rgb) < RGB_EPSILON)
                 return entry;
 
               next = next->next;
@@ -694,7 +699,7 @@ gimp_palette_find_entry (GimpPalette      *palette,
           if (prev)
             {
               entry = (GimpPaletteEntry *) prev->data;
-              if (gimp_rgb_distance (&entry->color, color) < RGB_EPSILON)
+              if (gimp_rgb_distance (&entry->color, &rgb) < RGB_EPSILON)
                 return entry;
 
               prev = prev->prev;

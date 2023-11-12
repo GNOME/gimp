@@ -487,8 +487,9 @@ gimp_color_history_palette_dirty (GimpColorHistory *history)
   for (i = 0; i < history->history_size; i++)
     {
       GimpPaletteEntry *entry = gimp_palette_get_entry (palette, i);
+      GeglColor        *color = gegl_color_new ("black");
       GimpRGB           black = { 0.0, 0.0, 0.0, 1.0 };
-      GimpRGB           color = entry ? entry->color : black;
+      GimpRGB           rgb   = entry ? entry->color : black;
       gboolean          oog   = FALSE;
 
       g_signal_handlers_block_by_func (history->color_areas[i],
@@ -496,24 +497,28 @@ gimp_color_history_palette_dirty (GimpColorHistory *history)
                                        GINT_TO_POINTER (i));
 
       gimp_color_area_set_color (GIMP_COLOR_AREA (history->color_areas[i]),
-                                 &color);
+                                 &rgb);
+
+      gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
       if (/* Common out-of-gamut case */
-          (color.r < 0.0 || color.r > 1.0 ||
-           color.g < 0.0 || color.g > 1.0 ||
-           color.b < 0.0 || color.b > 1.0) ||
+          (rgb.r < 0.0 || rgb.r > 1.0 ||
+           rgb.g < 0.0 || rgb.g > 1.0 ||
+           rgb.b < 0.0 || rgb.b > 1.0) ||
           /* Indexed images */
-          (colormap_palette && ! gimp_palette_find_entry (colormap_palette, &color, NULL)) ||
+          (colormap_palette && ! gimp_palette_find_entry (colormap_palette, color, NULL)) ||
           /* Grayscale images */
           (base_type == GIMP_GRAY &&
-           (ABS (color.r - color.g) > CHANNEL_EPSILON ||
-            ABS (color.r - color.b) > CHANNEL_EPSILON ||
-            ABS (color.g - color.b) > CHANNEL_EPSILON)))
+           (ABS (rgb.r - rgb.g) > CHANNEL_EPSILON ||
+            ABS (rgb.r - rgb.b) > CHANNEL_EPSILON ||
+            ABS (rgb.g - rgb.b) > CHANNEL_EPSILON)))
         oog = TRUE;
       gimp_color_area_set_out_of_gamut (GIMP_COLOR_AREA (history->color_areas[i]), oog);
 
       g_signal_handlers_unblock_by_func (history->color_areas[i],
                                          gimp_color_history_color_changed,
                                          GINT_TO_POINTER (i));
+
+      g_object_unref (color);
     }
 }
 
