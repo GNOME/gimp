@@ -375,7 +375,8 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
                                     GError          **error)
 {
   GimpFillOptionsPrivate *private;
-  GimpRGB                 color;
+  GeglColor              *color;
+  GimpRGB                 rgb;
   const gchar            *undo_desc;
 
   g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
@@ -389,12 +390,12 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
   switch (fill_type)
     {
     case GIMP_FILL_FOREGROUND:
-      gimp_context_get_foreground (context, &color);
+      gimp_context_get_foreground (context, &rgb);
       undo_desc = C_("undo-type", "Fill with Foreground Color");
       break;
 
     case GIMP_FILL_BACKGROUND:
-      gimp_context_get_background (context, &color);
+      gimp_context_get_background (context, &rgb);
       undo_desc = C_("undo-type", "Fill with Background Color");
       break;
 
@@ -417,18 +418,18 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
         babl_process (babl_fish (babl_format ("CIE Lab float"), format),
                       cielab_pixel, pixel, 1);
 
-        gimp_rgba_set (&color, pixel[0], pixel[1], pixel[2], GIMP_OPACITY_OPAQUE);
+        gimp_rgba_set (&rgb, pixel[0], pixel[1], pixel[2], GIMP_OPACITY_OPAQUE);
         undo_desc = C_("undo-type", "Fill with Middle Gray (CIELAB) Color");
       }
       break;
 
     case GIMP_FILL_WHITE:
-      gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+      gimp_rgba_set (&rgb, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
       undo_desc = C_("undo-type", "Fill with White");
       break;
 
     case GIMP_FILL_TRANSPARENT:
-      gimp_context_get_background (context, &color);
+      gimp_context_get_background (context, &rgb);
       gimp_context_set_paint_mode (GIMP_CONTEXT (options),
                                    GIMP_LAYER_MODE_ERASE);
       undo_desc = C_("undo-type", "Fill with Transparency");
@@ -459,8 +460,12 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
     }
 
   gimp_fill_options_set_style (options, GIMP_FILL_STYLE_FG_COLOR);
-  gimp_context_set_foreground (GIMP_CONTEXT (options), &color);
+  color = gegl_color_new ("black");
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+  gimp_context_set_foreground (GIMP_CONTEXT (options), color);
   private->undo_desc = undo_desc;
+
+  g_object_unref (color);
 
   return TRUE;
 }

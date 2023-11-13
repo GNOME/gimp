@@ -110,16 +110,19 @@ context_##name##_##fgbg##ground_cmd_callback (GimpAction *action, \
                                               gpointer    data) \
 { \
   GimpContext          *context; \
-  GimpRGB               color; \
+  GimpRGB               rgb; \
+  GeglColor            *color = gegl_color_new ("black"); \
   GimpActionSelectType  select_type; \
   return_if_no_context (context, data); \
   \
   select_type = (GimpActionSelectType) g_variant_get_int32 (value); \
   \
-  gimp_context_get_##fgbg##ground (context, &color); \
-  context_select_color (select_type, &color, \
+  gimp_context_get_##fgbg##ground (context, &rgb); \
+  context_select_color (select_type, &rgb, \
                         use_colormap, use_palette); \
-  gimp_context_set_##fgbg##ground (context, &color); \
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL); \
+  gimp_context_set_##fgbg##ground (context, color); \
+  g_object_unref (color); \
 }
 
 SELECT_COLOR_CMD_CALLBACK (palette,  fore, FALSE, TRUE)
@@ -135,18 +138,21 @@ context_foreground_red_cmd_callback (GimpAction *action,
                                      gpointer    data)
 {
   GimpContext          *context;
-  GimpRGB               color;
+  GeglColor            *color = gegl_color_new ("black");
+  GimpRGB               rgb;
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_foreground (context, &color);
-  color.r = action_select_value (select_type,
-                                 color.r,
+  gimp_context_get_foreground (context, &rgb);
+  rgb.r = action_select_value (select_type,
+                                 rgb.r,
                                  0.0, 1.0, 1.0,
                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_context_set_foreground (context, &color);
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+  gimp_context_set_foreground (context, color);
+  g_object_unref (color);
 }
 
 void
@@ -155,18 +161,21 @@ context_foreground_green_cmd_callback (GimpAction *action,
                                        gpointer    data)
 {
   GimpContext          *context;
-  GimpRGB               color;
+  GeglColor            *color = gegl_color_new ("black");
+  GimpRGB               rgb;
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_foreground (context, &color);
-  color.g = action_select_value (select_type,
-                                 color.g,
-                                 0.0, 1.0, 1.0,
-                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_context_set_foreground (context, &color);
+  gimp_context_get_foreground (context, &rgb);
+  rgb.g = action_select_value (select_type,
+                               rgb.g,
+                               0.0, 1.0, 1.0,
+                               1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+  gimp_context_set_foreground (context, color);
+  g_object_unref (color);
 }
 
 void
@@ -175,18 +184,21 @@ context_foreground_blue_cmd_callback (GimpAction *action,
                                       gpointer    data)
 {
   GimpContext          *context;
-  GimpRGB               color;
+  GeglColor            *color = gegl_color_new ("black");
+  GimpRGB               rgb;
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_foreground (context, &color);
-  color.b = action_select_value (select_type,
-                                 color.b,
-                                 0.0, 1.0, 1.0,
-                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_context_set_foreground (context, &color);
+  gimp_context_get_foreground (context, &rgb);
+  rgb.b = action_select_value (select_type,
+                               rgb.b,
+                               0.0, 1.0, 1.0,
+                               1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+  gimp_context_set_foreground (context, color);
+  g_object_unref (color);
 }
 
 void
@@ -195,18 +207,21 @@ context_background_red_cmd_callback (GimpAction *action,
                                      gpointer    data)
 {
   GimpContext          *context;
-  GimpRGB               color;
+  GeglColor            *color = gegl_color_new ("black");
+  GimpRGB               rgb;
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_background (context, &color);
-  color.r = action_select_value (select_type,
-                                 color.r,
-                                 0.0, 1.0, 1.0,
-                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_context_set_background (context, &color);
+  gimp_context_get_background (context, &rgb);
+  rgb.r = action_select_value (select_type,
+                               rgb.r,
+                               0.0, 1.0, 1.0,
+                               1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+  gimp_context_set_background (context, color);
+  g_object_unref (color);
 }
 
 void
@@ -215,18 +230,21 @@ context_background_green_cmd_callback (GimpAction *action,
                                        gpointer    data)
 {
   GimpContext          *context;
-  GimpRGB               color;
+  GeglColor            *color = gegl_color_new ("black");
+  GimpRGB               rgb;
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_background (context, &color);
-  color.g = action_select_value (select_type,
-                                 color.g,
-                                 0.0, 1.0, 1.0,
-                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_context_set_background (context, &color);
+  gimp_context_get_background (context, &rgb);
+  rgb.g = action_select_value (select_type,
+                               rgb.g,
+                               0.0, 1.0, 1.0,
+                               1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+  gimp_context_set_background (context, color);
+  g_object_unref (color);
 }
 
 void
@@ -235,18 +253,21 @@ context_background_blue_cmd_callback (GimpAction *action,
                                       gpointer    data)
 {
   GimpContext          *context;
-  GimpRGB               color;
+  GeglColor            *color = gegl_color_new ("black");
+  GimpRGB               rgb;
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_background (context, &color);
-  color.b = action_select_value (select_type,
-                                 color.b,
-                                 0.0, 1.0, 1.0,
-                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_context_set_background (context, &color);
+  gimp_context_get_background (context, &rgb);
+  rgb.b = action_select_value (select_type,
+                               rgb.b,
+                               0.0, 1.0, 1.0,
+                               1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+  gimp_context_set_background (context, color);
+  g_object_unref (color);
 }
 
 void
@@ -255,21 +276,24 @@ context_foreground_hue_cmd_callback (GimpAction *action,
                                      gpointer    data)
 {
   GimpContext          *context;
-  GimpRGB               color;
+  GeglColor            *color = gegl_color_new ("black");
+  GimpRGB               rgb;
   GimpHSV               hsv;
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_foreground (context, &color);
-  gimp_rgb_to_hsv (&color, &hsv);
+  gimp_context_get_foreground (context, &rgb);
+  gimp_rgb_to_hsv (&rgb, &hsv);
   hsv.h = action_select_value (select_type,
                                hsv.h,
                                0.0, 1.0, 1.0,
                                1.0 / 360.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_hsv_to_rgb (&hsv, &color);
-  gimp_context_set_foreground (context, &color);
+  gimp_hsv_to_rgb (&hsv, &rgb);
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+  gimp_context_set_foreground (context, color);
+  g_object_unref (color);
 }
 
 void
@@ -278,21 +302,24 @@ context_foreground_saturation_cmd_callback (GimpAction *action,
                                             gpointer    data)
 {
   GimpContext          *context;
-  GimpRGB               color;
+  GeglColor            *color = gegl_color_new ("black");
+  GimpRGB               rgb;
   GimpHSV               hsv;
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_foreground (context, &color);
-  gimp_rgb_to_hsv (&color, &hsv);
+  gimp_context_get_foreground (context, &rgb);
+  gimp_rgb_to_hsv (&rgb, &hsv);
   hsv.s = action_select_value (select_type,
                                hsv.s,
                                0.0, 1.0, 1.0,
                                0.01, 0.01, 0.1, 0.0, FALSE);
-  gimp_hsv_to_rgb (&hsv, &color);
-  gimp_context_set_foreground (context, &color);
+  gimp_hsv_to_rgb (&hsv, &rgb);
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+  gimp_context_set_foreground (context, color);
+  g_object_unref (color);
 }
 
 void
@@ -301,21 +328,24 @@ context_foreground_value_cmd_callback (GimpAction *action,
                                        gpointer    data)
 {
   GimpContext          *context;
-  GimpRGB               color;
+  GeglColor            *color = gegl_color_new ("black");
+  GimpRGB               rgb;
   GimpHSV               hsv;
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_foreground (context, &color);
-  gimp_rgb_to_hsv (&color, &hsv);
+  gimp_context_get_foreground (context, &rgb);
+  gimp_rgb_to_hsv (&rgb, &hsv);
   hsv.v = action_select_value (select_type,
                                hsv.v,
                                0.0, 1.0, 1.0,
                                0.01, 0.01, 0.1, 0.0, FALSE);
-  gimp_hsv_to_rgb (&hsv, &color);
-  gimp_context_set_foreground (context, &color);
+  gimp_hsv_to_rgb (&hsv, &rgb);
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+  gimp_context_set_foreground (context, color);
+  g_object_unref (color);
 }
 
 void
@@ -324,21 +354,24 @@ context_background_hue_cmd_callback (GimpAction *action,
                                      gpointer    data)
 {
   GimpContext          *context;
-  GimpRGB               color;
+  GeglColor            *color = gegl_color_new ("black");
+  GimpRGB               rgb;
   GimpHSV               hsv;
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_background (context, &color);
-  gimp_rgb_to_hsv (&color, &hsv);
+  gimp_context_get_background (context, &rgb);
+  gimp_rgb_to_hsv (&rgb, &hsv);
   hsv.h = action_select_value (select_type,
                                hsv.h,
                                0.0, 1.0, 1.0,
                                1.0 / 360.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_hsv_to_rgb (&hsv, &color);
-  gimp_context_set_background (context, &color);
+  gimp_hsv_to_rgb (&hsv, &rgb);
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+  gimp_context_set_background (context, color);
+  g_object_unref (color);
 }
 
 void
@@ -347,21 +380,24 @@ context_background_saturation_cmd_callback (GimpAction *action,
                                             gpointer    data)
 {
   GimpContext          *context;
-  GimpRGB               color;
+  GeglColor            *color = gegl_color_new ("black");
+  GimpRGB               rgb;
   GimpHSV               hsv;
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_background (context, &color);
-  gimp_rgb_to_hsv (&color, &hsv);
+  gimp_context_get_background (context, &rgb);
+  gimp_rgb_to_hsv (&rgb, &hsv);
   hsv.s = action_select_value (select_type,
                                hsv.s,
                                0.0, 1.0, 1.0,
                                0.01, 0.01, 0.1, 0.0, FALSE);
-  gimp_hsv_to_rgb (&hsv, &color);
-  gimp_context_set_background (context, &color);
+  gimp_hsv_to_rgb (&hsv, &rgb);
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+  gimp_context_set_background (context, color);
+  g_object_unref (color);
 }
 
 void
@@ -370,21 +406,24 @@ context_background_value_cmd_callback (GimpAction *action,
                                        gpointer    data)
 {
   GimpContext          *context;
-  GimpRGB               color;
+  GeglColor            *color = gegl_color_new ("black");
+  GimpRGB               rgb;
   GimpHSV               hsv;
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  gimp_context_get_background (context, &color);
-  gimp_rgb_to_hsv (&color, &hsv);
+  gimp_context_get_background (context, &rgb);
+  gimp_rgb_to_hsv (&rgb, &hsv);
   hsv.v = action_select_value (select_type,
                                hsv.v,
                                0.0, 1.0, 1.0,
                                0.01, 0.01, 0.1, 0.0, FALSE);
-  gimp_hsv_to_rgb (&hsv, &color);
-  gimp_context_set_background (context, &color);
+  gimp_hsv_to_rgb (&hsv, &rgb);
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+  gimp_context_set_background (context, color);
+  g_object_unref (color);
 }
 
 void

@@ -610,12 +610,17 @@ gfig_style_copy (Style       *style1,
 void
 gfig_style_apply (Style *style)
 {
+  GeglColor *color = gegl_color_new ("black");
+
   if (gfig_context->debug_styles)
     g_printerr ("Applying style '%s' -- ", style->name);
 
-  gimp_context_set_foreground (&style->foreground);
+  gegl_color_set_rgba_with_space (color, style->foreground.r, style->foreground.g, style->foreground.b, style->foreground.a, NULL);
+  gimp_context_set_foreground (color);
 
-  gimp_context_set_background (&style->background);
+  gegl_color_set_rgba_with_space (color, style->background.r, style->background.g, style->background.b, style->background.a, NULL);
+  gimp_context_set_background (color);
+  g_object_unref (color);
 
   if (! gimp_context_set_brush (style->brush))
     g_message ("Style apply: Failed to set brush to '%s' in style '%s'",

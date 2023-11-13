@@ -492,7 +492,6 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
   GimpImageWindow   *image_window;
   GimpDialogFactory *dialog_factory;
   GimpContext       *context;
-  GimpRGB            rgb   = { 0 };
 
   g_return_if_fail (GEGL_IS_COLOR (color));
 
@@ -557,19 +556,17 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
         }
     }
 
-  gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, sample_format);
   switch (color_tool->pick_target)
     {
     case GIMP_COLOR_PICK_TARGET_NONE:
       break;
 
     case GIMP_COLOR_PICK_TARGET_FOREGROUND:
-      /* TODO: FG/BG colors should be stored as GeglColor. */
-      gimp_context_set_foreground (context, &rgb);
+      gimp_context_set_foreground (context, color);
       break;
 
     case GIMP_COLOR_PICK_TARGET_BACKGROUND:
-      gimp_context_set_background (context, &rgb);
+      gimp_context_set_background (context, color);
       break;
 
     case GIMP_COLOR_PICK_TARGET_PALETTE:

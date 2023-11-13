@@ -380,14 +380,14 @@ gimp_context_get_foreground (GimpRGB *foreground)
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_foreground (const GimpRGB *foreground)
+gimp_context_set_foreground (GeglColor *foreground)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_RGB, foreground,
+                                          GEGL_TYPE_COLOR, foreground,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -456,14 +456,14 @@ gimp_context_get_background (GimpRGB *background)
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_background (const GimpRGB *background)
+gimp_context_set_background (GeglColor *background)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_RGB, background,
+                                          GEGL_TYPE_COLOR, background,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),

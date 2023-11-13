@@ -468,12 +468,12 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable      *drawable,
       GList             *drawables;
       GimpContext       *context = gimp_get_user_context (image->gimp);
       GError            *error   = NULL;
-      const GimpRGB      white   = {1.0, 1.0, 1.0, 1.0};
+      GeglColor         *white   = gegl_color_new ("white");
 
       context = gimp_config_duplicate (GIMP_CONFIG (context));
       /* As we are stroking a mask, we need to set color to white. */
-      gimp_context_set_foreground (GIMP_CONTEXT (context),
-                                   &white);
+      gimp_context_set_foreground (GIMP_CONTEXT (context), white);
+      g_object_unref (white);
 
       channel = gimp_channel_new_from_buffer (image, new_mask, NULL, NULL);
       stroked = gimp_channel_new_from_buffer (image, rendered_mask, NULL, NULL);

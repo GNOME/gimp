@@ -591,13 +591,16 @@ gimp_color_editor_color_changed (GimpColorSelector *selector,
 {
   if (editor->context)
     {
+      GeglColor *color = gegl_color_new ("black");
+
+      gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
       if (editor->edit_bg)
         {
           g_signal_handlers_block_by_func (editor->context,
                                            gimp_color_editor_bg_changed,
                                            editor);
 
-          gimp_context_set_background (editor->context, rgb);
+          gimp_context_set_background (editor->context, color);
 
           g_signal_handlers_unblock_by_func (editor->context,
                                              gimp_color_editor_bg_changed,
@@ -609,12 +612,14 @@ gimp_color_editor_color_changed (GimpColorSelector *selector,
                                            gimp_color_editor_fg_changed,
                                            editor);
 
-          gimp_context_set_foreground (editor->context, rgb);
+          gimp_context_set_foreground (editor->context, color);
 
           g_signal_handlers_unblock_by_func (editor->context,
                                              gimp_color_editor_fg_changed,
                                              editor);
         }
+
+      g_object_unref (color);
     }
 
   g_signal_handlers_block_by_func (editor->hex_entry,
@@ -693,10 +698,16 @@ gimp_color_editor_color_picked (GtkWidget       *widget,
 {
   if (editor->context)
     {
+      GeglColor *color = gegl_color_new ("black");
+
+      gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
+
       if (editor->edit_bg)
-        gimp_context_set_background (editor->context, rgb);
+        gimp_context_set_background (editor->context, color);
       else
-        gimp_context_set_foreground (editor->context, rgb);
+        gimp_context_set_foreground (editor->context, color);
+
+      g_object_unref (color);
     }
 }
 
@@ -704,17 +715,21 @@ static void
 gimp_color_editor_entry_changed (GimpColorHexEntry *entry,
                                  GimpColorEditor   *editor)
 {
-  GimpRGB  rgb;
+  GeglColor *color = gegl_color_new ("black");
+  GimpRGB    rgb;
 
   gimp_color_hex_entry_get_color (entry, &rgb);
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
 
   if (editor->context)
     {
       if (editor->edit_bg)
-        gimp_context_set_background (editor->context, &rgb);
+        gimp_context_set_background (editor->context, color);
       else
-        gimp_context_set_foreground (editor->context, &rgb);
+        gimp_context_set_foreground (editor->context, color);
     }
+
+  g_object_unref (color);
 }
 
 static void
@@ -724,9 +739,15 @@ gimp_color_editor_history_selected (GimpColorHistory *history,
 {
   if (editor->context)
     {
+      GeglColor *color = gegl_color_new ("black");
+
+      gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
+
       if (editor->edit_bg)
-        gimp_context_set_background (editor->context, rgb);
+        gimp_context_set_background (editor->context, color);
       else
-        gimp_context_set_foreground (editor->context, rgb);
+        gimp_context_set_foreground (editor->context, color);
+
+      g_object_unref (color);
     }
 }

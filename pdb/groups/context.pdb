@@ -275,15 +275,15 @@ HELP
     &pdb_misc;
 
     @inargs = (
-        { name => 'foreground', type => 'color', void_ret => 1,
+        { name => 'foreground', type => 'geglcolor', void_ret => 1,
           desc => 'The foreground color' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_rgb_set_alpha (&foreground, 1.0);
-  gimp_context_set_foreground (context, &foreground);
+  gimp_color_set_alpha (foreground, 1.0);
+  gimp_context_set_foreground (context, foreground);
 }
 CODE
     );
@@ -327,15 +327,15 @@ HELP
     &pdb_misc;
 
     @inargs = (
-        { name => 'background', type => 'color', void_ret => 1,
+        { name => 'background', type => 'geglcolor', void_ret => 1,
           desc => 'The background color' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_rgb_set_alpha (&background, 1.0);
-  gimp_context_set_background (context, &background);
+  gimp_color_set_alpha (background, 1.0);
+  gimp_context_set_background (context, background);
 }
 CODE
     );

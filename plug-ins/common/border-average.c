@@ -209,7 +209,13 @@ border_average_run (GimpProcedure        *procedure,
           borderaverage (G_OBJECT (config), buffer, drawable, &result_color);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
-            gimp_context_set_foreground (&result_color);
+            {
+              GeglColor *color = gegl_color_new ("black");
+
+              gegl_color_set_rgba_with_space (color, result_color.r, result_color.g, result_color.b, result_color.a, NULL);
+              gimp_context_set_foreground (color);
+              g_object_unref (color);
+            }
         }
       else
         {

@@ -774,11 +774,15 @@ palette_editor_entry_clicked (GimpPaletteView   *view,
   if (entry)
     {
       GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+      GeglColor      *color       = gegl_color_new ("black");
 
+      gegl_color_set_rgba_with_space (color, entry->color.r, entry->color.g, entry->color.b, entry->color.a, NULL);
       if (state & gimp_get_toggle_behavior_mask ())
-        gimp_context_set_background (data_editor->context, &entry->color);
+        gimp_context_set_background (data_editor->context, color);
       else
-        gimp_context_set_foreground (data_editor->context, &entry->color);
+        gimp_context_set_foreground (data_editor->context, color);
+
+      g_object_unref (color);
     }
 }
 

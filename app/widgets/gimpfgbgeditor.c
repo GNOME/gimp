@@ -766,10 +766,13 @@ static void
 gimp_fg_bg_editor_drop_color (GtkWidget     *widget,
                               gint           x,
                               gint           y,
-                              const GimpRGB *color,
+                              const GimpRGB *rgb,
                               gpointer       data)
 {
   GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
+  GeglColor      *color  = gegl_color_new ("black");
+
+  gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
 
   if (editor->context)
     {
@@ -791,6 +794,8 @@ gimp_fg_bg_editor_drop_color (GtkWidget     *widget,
           break;
         }
     }
+
+  g_object_unref (color);
 }
 
 static void

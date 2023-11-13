@@ -353,7 +353,7 @@ gimp_colormap_editor_max_index (GimpColormapEditor *editor)
 
 static void
 gimp_colormap_editor_color_update (GimpColorDialog      *dialog,
-                                   const GimpRGB        *color,
+                                   const GimpRGB        *rgb,
                                    GimpColorDialogState  state,
                                    GimpColormapEditor   *editor)
 {
@@ -364,12 +364,20 @@ gimp_colormap_editor_color_update (GimpColorDialog      *dialog,
   switch (state)
     {
     case GIMP_COLOR_DIALOG_OK:
-      push_undo = TRUE;
+        {
+          GeglColor *color = gegl_color_new ("black");
 
-      if (state & gimp_get_toggle_behavior_mask ())
-        gimp_context_set_background (image_editor->context, color);
-      else
-        gimp_context_set_foreground (image_editor->context, color);
+          push_undo = TRUE;
+
+          gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
+
+          if (state & gimp_get_toggle_behavior_mask ())
+            gimp_context_set_background (image_editor->context, color);
+          else
+            gimp_context_set_foreground (image_editor->context, color);
+
+          g_object_unref (color);
+        }
       /* Fall through */
 
     case GIMP_COLOR_DIALOG_CANCEL:
@@ -398,8 +406,7 @@ gimp_colormap_editor_color_update (GimpColorDialog      *dialog,
                                          FALSE);
         }
 
-      gimp_image_set_colormap_entry (image, col_index, color,
-                                     push_undo);
+      gimp_image_set_colormap_entry (image, col_index, rgb, push_undo);
 
       if (push_undo)
         gimp_image_flush (image);
@@ -448,11 +455,16 @@ gimp_colormap_editor_color_clicked (GimpColormapEditor *editor,
                                     GdkModifierType     state)
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+  GeglColor       *color        = gegl_color_new ("black");
+
+  gegl_color_set_rgba_with_space (color, entry->color.r, entry->color.g, entry->color.b, entry->color.a, NULL);
 
   if (state & gimp_get_toggle_behavior_mask ())
-    gimp_context_set_background (image_editor->context, &entry->color);
+    gimp_context_set_background (image_editor->context, color);
   else
-    gimp_context_set_foreground (image_editor->context, &entry->color);
+    gimp_context_set_foreground (image_editor->context, color);
+
+  g_object_unref (color);
 }
 
 static void

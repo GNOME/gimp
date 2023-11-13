@@ -64,8 +64,8 @@ struct _GimpContext
   GimpPaintInfo        *paint_info;
   gchar                *paint_name;
 
-  GimpRGB               foreground;
-  GimpRGB               background;
+  GeglColor            *foreground;
+  GeglColor            *background;
 
   gdouble               opacity;
   GimpLayerMode         paint_mode;
@@ -249,7 +249,7 @@ void             gimp_context_paint_info_changed  (GimpContext     *context);
 void             gimp_context_get_foreground       (GimpContext     *context,
                                                     GimpRGB         *color);
 void             gimp_context_set_foreground       (GimpContext     *context,
-                                                    const GimpRGB   *color);
+                                                    GeglColor       *color);
 void             gimp_context_foreground_changed   (GimpContext     *context);
 
 
@@ -257,7 +257,7 @@ void             gimp_context_foreground_changed   (GimpContext     *context);
 void             gimp_context_get_background       (GimpContext     *context,
                                                     GimpRGB         *color);
 void             gimp_context_set_background       (GimpContext     *context,
-                                                    const GimpRGB   *color);
+                                                    GeglColor       *color);
 void             gimp_context_background_changed   (GimpContext     *context);
 
 

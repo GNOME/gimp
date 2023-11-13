@@ -703,13 +703,18 @@ gimp_text_options_notify_text_color (GimpText    *text,
                                      GParamSpec  *pspec,
                                      GimpContext *context)
 {
+  GeglColor *color = gegl_color_new ("black");
+
   g_signal_handlers_block_by_func (context,
                                    gimp_text_options_notify_color, text);
 
-  gimp_context_set_foreground (context, &text->color);
+  gegl_color_set_rgba_with_space (color, text->color.r, text->color.g, text->color.b, text->color.a, NULL);
+  gimp_context_set_foreground (context, color);
 
   g_signal_handlers_unblock_by_func (context,
                                      gimp_text_options_notify_color, text);
+
+  g_object_unref (color);
 }
 
 /*  This function could live in gimptexttool.c also.

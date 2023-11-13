@@ -1325,41 +1325,44 @@ view_pick_color (GimpGradientEditor  *editor,
                  gint                 x)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-  GimpRGB         color;
+  GimpRGB         rgb;
   gdouble         xpos;
   gchar          *str2;
   gchar          *str3;
+  GeglColor      *color  = gegl_color_new ("black");
 
   xpos = control_calc_g_pos (editor, x);
 
   gimp_gradient_get_color_at (GIMP_GRADIENT (data_editor->data),
                               data_editor->context, NULL,
-                              xpos, FALSE, FALSE, &color);
+                              xpos, FALSE, FALSE, &rgb);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (editor->current_color), &color);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (editor->current_color), &rgb);
 
   str2 = g_strdup_printf (_("RGB (%d, %d, %d)"),
-                          (gint) (color.r * 255.0),
-                          (gint) (color.g * 255.0),
-                          (gint) (color.b * 255.0));
+                          (gint) (rgb.r * 255.0),
+                          (gint) (rgb.g * 255.0),
+                          (gint) (rgb.b * 255.0));
 
-  str3 = g_strdup_printf ("(%0.3f, %0.3f, %0.3f)", color.r, color.g, color.b);
+  str3 = g_strdup_printf ("(%0.3f, %0.3f, %0.3f)", rgb.r, rgb.g, rgb.b);
 
+  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
   if (pick_target == GIMP_COLOR_PICK_TARGET_FOREGROUND)
     {
-      gimp_context_set_foreground (data_editor->context, &color);
+      gimp_context_set_foreground (data_editor->context, color);
 
       gradient_editor_set_hint (editor, _("Foreground color set to:"),
                                 str2, str3, NULL);
     }
   else
     {
-      gimp_context_set_background (data_editor->context, &color);
+      gimp_context_set_background (data_editor->context, color);
 
       gradient_editor_set_hint (editor, _("Background color set to:"),
                                 str2, str3, NULL);
     }
 
+  g_object_unref (color);
   g_free (str2);
   g_free (str3);
 }

@@ -281,7 +281,7 @@ gimp_drawable_tree_view_drop_viewables (GimpContainerTreeView   *view,
 
 static void
 gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
-                                    const GimpRGB           *color,
+                                    const GimpRGB           *rgb,
                                     GimpViewable            *dest_viewable,
                                     GtkTreeViewDropPosition  drop_pos)
 {
@@ -289,6 +289,9 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
     {
       GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (dest_viewable));
       GimpFillOptions *options = gimp_fill_options_new (image->gimp, NULL, FALSE);
+      GeglColor       *color   = gegl_color_new ("black");
+
+      gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
 
       gimp_fill_options_set_style (options, GIMP_FILL_STYLE_FG_COLOR);
       gimp_context_set_foreground (GIMP_CONTEXT (options), color);
@@ -298,6 +301,7 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
                                C_("undo-type", "Drop color to layer"));
 
       g_object_unref (options);
+      g_object_unref (color);
 
       gimp_image_flush (image);
     }
@@ -387,12 +391,15 @@ static void
 gimp_drawable_tree_view_new_color_dropped (GtkWidget     *widget,
                                            gint           x,
                                            gint           y,
-                                           const GimpRGB *color,
+                                           const GimpRGB *rgb,
                                            gpointer       data)
 {
   GimpItemTreeView *view    = GIMP_ITEM_TREE_VIEW (data);
   GimpImage        *image   = gimp_item_tree_view_get_image (view);
   GimpFillOptions  *options = gimp_fill_options_new (image->gimp, NULL, FALSE);
+  GeglColor        *color   = gegl_color_new ("black");
+
+  gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
 
   gimp_fill_options_set_style (options, GIMP_FILL_STYLE_FG_COLOR);
   gimp_context_set_foreground (GIMP_CONTEXT (options), color);
@@ -401,4 +408,5 @@ gimp_drawable_tree_view_new_color_dropped (GtkWidget     *widget,
                                        C_("undo-type", "Drop color to layer"));
 
   g_object_unref (options);
+  g_object_unref (color);
 }

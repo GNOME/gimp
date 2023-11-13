@@ -164,10 +164,14 @@ color_area_background_changed (GimpContext     *context,
 
 static void
 color_area_dialog_update (GimpColorDialog      *dialog,
-                          const GimpRGB        *color,
+                          const GimpRGB        *rgb,
                           GimpColorDialogState  state,
                           GimpContext          *context)
 {
+  GeglColor *color  = gegl_color_new ("black");
+
+  gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
+
   switch (state)
     {
     case GIMP_COLOR_DIALOG_OK:
@@ -205,13 +209,17 @@ color_area_dialog_update (GimpColorDialog      *dialog,
     case GIMP_COLOR_DIALOG_CANCEL:
       gtk_widget_hide (color_dialog);
       color_dialog_active = FALSE;
-      gimp_context_set_foreground (context, &revert_fg);
-      gimp_context_set_background (context, &revert_bg);
+      gegl_color_set_rgba_with_space (color, revert_fg.r, revert_fg.g, revert_fg.b, revert_fg.a, NULL);
+      gimp_context_set_foreground (context, color);
+      gegl_color_set_rgba_with_space (color, revert_bg.r, revert_bg.g, revert_bg.b, revert_bg.a, NULL);
+      gimp_context_set_background (context, color);
       break;
     }
 
   if (gimp_context_get_display (context))
     gimp_display_grab_focus (gimp_context_get_display (context));
+
+  g_object_unref (color);
 }
 
 static void

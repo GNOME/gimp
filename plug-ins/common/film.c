@@ -418,6 +418,7 @@ film (GimpProcedureConfig *config)
   gint             picture_count;
   GimpRGB         *number_color;
   GimpRGB         *film_color;
+  GeglColor       *color;
   gboolean         keep_height;
   gdouble          f;
   GimpImage       *image_dst;
@@ -456,8 +457,12 @@ film (GimpProcedureConfig *config)
     return NULL;
 
   gimp_context_push ();
-  gimp_context_set_foreground (number_color);
-  gimp_context_set_background (film_color);
+  color = gegl_color_new ("black");
+  gegl_color_set_rgba_with_space (color, number_color->r, number_color->g, number_color->b, number_color->a, NULL);
+  gimp_context_set_foreground (color);
+  gegl_color_set_rgba_with_space (color, film_color->r, film_color->g, film_color->b, film_color->a, NULL);
+  gimp_context_set_background (color);
+  g_object_unref (color);
 
   if (keep_height) /* Search maximum picture height */
     {
