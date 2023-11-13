@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-27 20:11+0000\n"
-"PO-Revision-Date: 2023-10-28 21:48+0200\n"
+"POT-Creation-Date: 2023-11-10 23:31+0000\n"
+"PO-Revision-Date: 2023-11-13 15:39+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -46,7 +46,7 @@ msgstr "Povadi kozo v jeziku C"
 #: plug-ins/common/sphere-designer.c:3185 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:243
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:181
-#: plug-ins/file-dds/dds.c:542 plug-ins/flame/flame.c:299
+#: plug-ins/file-dds/dds.c:556 plug-ins/flame/flame.c:299
 #: plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
@@ -70,8 +70,8 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/common/cml-explorer.c:2146 plug-ins/common/cml-explorer.c:2356
 #: plug-ins/common/colormap-remap.c:694 plug-ins/common/curve-bend.c:1809
 #: plug-ins/common/curve-bend.c:1844 plug-ins/common/file-gif-save.c:1159
-#: plug-ins/common/file-heif.c:2345 plug-ins/common/file-pdf-load.c:686
-#: plug-ins/common/file-pdf-save.c:1046 plug-ins/common/grid.c:786
+#: plug-ins/common/file-heif.c:2343 plug-ins/common/file-pdf-load.c:686
+#: plug-ins/common/file-pdf-save.c:1053 plug-ins/common/grid.c:786
 #: plug-ins/common/qbist.c:836 plug-ins/common/qbist.c:878
 #: plug-ins/common/qbist.c:932 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2637 plug-ins/common/unit-editor.c:435
@@ -149,7 +149,7 @@ msgstr "Povadi kozo (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1380 plug-ins/common/colormap-remap.c:695
-#: plug-ins/common/file-heif.c:2346 plug-ins/common/file-pdf-load.c:687
+#: plug-ins/common/file-heif.c:2344 plug-ins/common/file-pdf-load.c:687
 #: plug-ins/common/grid.c:787 plug-ins/common/qbist.c:933
 #: plug-ins/common/sphere-designer.c:2638 plug-ins/common/unit-editor.c:266
 #: plug-ins/common/warp.c:473 plug-ins/file-exr/file-exr.c:422
@@ -332,7 +332,7 @@ msgstr "Poravnaj vidne plasti"
 #. file save type
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
 #: plug-ins/common/file-ps.c:3729 plug-ins/common/file-ps.c:3737
-#: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:209
+#: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:223
 #: plug-ins/file-tiff/file-tiff.c:240
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
 #: plug-ins/fractal-explorer/fractal-explorer.c:354
@@ -629,7 +629,7 @@ msgstr "Navpične"
 #: plug-ins/common/decompose.c:645 plug-ins/common/file-cel.c:495
 #: plug-ins/common/file-cel.c:500 plug-ins/common/file-dicom.c:751
 #: plug-ins/common/file-farbfeld.c:321 plug-ins/common/file-gegl.c:471
-#: plug-ins/common/file-gif-load.c:1117 plug-ins/common/file-iff.c:335
+#: plug-ins/common/file-gif-load.c:1117 plug-ins/common/file-iff.c:345
 #: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:728
 #: plug-ins/common/file-pcx.c:736 plug-ins/common/file-pcx.c:744
 #: plug-ins/common/file-pix.c:456 plug-ins/common/file-png.c:935
@@ -986,16 +986,12 @@ msgid "Parameter File"
 msgstr "Datoteka parametrov"
 
 #: plug-ins/common/cml-explorer.c:537
-#, fuzzy
-#| msgid ""
-#| "The local file:// URI of parameter file. CML_explorer makes an image with "
-#| "its settings."
 msgid ""
 "The parameter file from which CML_explorer makes an image. This argument is "
 "only used in non-interactive runs."
 msgstr ""
-"Krajevni URI file:// datoteke parametrov. CML_explorer ustvari sliko s "
-"svojimi nastavitvami."
+"Datoteka s parametri, iz katere CML_explorer ustvari sliko. Ta argument se "
+"uporablja samo pri neinteraktivnem zagonu."
 
 #: plug-ins/common/cml-explorer.c:908
 msgid "CML Explorer: evoluting"
@@ -1036,7 +1032,7 @@ msgstr "_Odpri"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1464 plug-ins/common/cml-explorer.c:2147
 #: plug-ins/common/curve-bend.c:1279 plug-ins/common/curve-bend.c:1845
-#: plug-ins/common/file-pdf-save.c:1045 plug-ins/common/qbist.c:879
+#: plug-ins/common/file-pdf-save.c:1052 plug-ins/common/qbist.c:879
 #: plug-ins/common/qbist.c:1028 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2694 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1241
@@ -1488,7 +1484,7 @@ msgstr "_Pordelost cr709:"
 
 #: plug-ins/common/compose.c:244 plug-ins/common/compose.c:438
 #: plug-ins/common/compose.c:501 plug-ins/common/decompose.c:193
-#: plug-ins/common/file-heif.c:2511
+#: plug-ins/common/file-heif.c:2509
 msgid "RGB"
 msgstr "RGB"
 
@@ -1989,7 +1985,7 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:156
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:164
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
 #: plug-ins/file-icns/file-icns-load.c:516
@@ -2478,7 +2474,7 @@ msgstr ""
 "Ta vstavek uporablja aalib za shranjevanje sivinske slike kot slike ascii v "
 "različnih oblikah besedila"
 
-#: plug-ins/common/file-aa.c:156 plug-ins/file-dds/dds.c:231
+#: plug-ins/common/file-aa.c:156 plug-ins/file-dds/dds.c:245
 msgid "_Format"
 msgstr "_Oblika"
 
@@ -2541,7 +2537,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #.
 #: plug-ins/common/file-cel.c:393 plug-ins/common/file-dicom.c:375
 #: plug-ins/common/file-gegl.c:358 plug-ins/common/file-gif-load.c:406
-#: plug-ins/common/file-heif.c:871 plug-ins/common/file-jp2-load.c:1077
+#: plug-ins/common/file-heif.c:875 plug-ins/common/file-jp2-load.c:1077
 #: plug-ins/common/file-pcx.c:501 plug-ins/common/file-pcx.c:544
 #: plug-ins/common/file-pdf-load.c:856 plug-ins/common/file-pix.c:393
 #: plug-ins/common/file-png.c:650 plug-ins/common/file-pnm.c:713
@@ -2620,7 +2616,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #.
 #: plug-ins/common/file-cel.c:845 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-gif-save.c:912 plug-ins/common/file-html-table.c:359
-#: plug-ins/common/file-jpegxl.c:1376 plug-ins/common/file-pcx.c:1100
+#: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1100
 #: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1480
 #: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1321
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
@@ -2912,7 +2908,7 @@ msgstr "podatki o sličici"
 msgid "local colormap"
 msgstr "krajevni katalog barv"
 
-#: plug-ins/common/file-gif-load.c:569
+#: plug-ins/common/file-gif-load.c:569 plug-ins/common/file-iff.c:361
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr ""
@@ -3301,15 +3297,15 @@ msgstr "Glava izvorne kode programskega jezika C"
 msgid "Header plug-in does not support multiple layers."
 msgstr "Vstavek glave ne podpira več plasti."
 
-#: plug-ins/common/file-heif.c:194 plug-ins/common/file-heif.c:234
+#: plug-ins/common/file-heif.c:196 plug-ins/common/file-heif.c:236
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: plug-ins/common/file-heif.c:197
+#: plug-ins/common/file-heif.c:199
 msgid "Loads HEIF images"
 msgstr "Naloži slike HEIF"
 
-#: plug-ins/common/file-heif.c:198
+#: plug-ins/common/file-heif.c:200
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -3317,179 +3313,179 @@ msgstr ""
 "Naloži sliko, shranjeno v zapisu HEIF (High Efficiency Image File Format). "
 "Običajne končnice za datoteke HEIF so .heif, .heic."
 
-#: plug-ins/common/file-heif.c:239
+#: plug-ins/common/file-heif.c:241
 msgid "Exports HEIF images"
 msgstr "Izvozi slike HEIF"
 
-#: plug-ins/common/file-heif.c:240
+#: plug-ins/common/file-heif.c:242
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr "Shrani sliko v zapisu HEIF (High Efficiency Image File Format)."
 
-#: plug-ins/common/file-heif.c:256 plug-ins/common/file-heif.c:366
+#: plug-ins/common/file-heif.c:258 plug-ins/common/file-heif.c:368
 #: plug-ins/file-jpeg/jpeg.c:206
 msgid "_Quality"
 msgstr "_Kakovost"
 
-#: plug-ins/common/file-heif.c:257 plug-ins/common/file-heif.c:367
+#: plug-ins/common/file-heif.c:259 plug-ins/common/file-heif.c:369
 msgid "Quality factor (0 = worst, 100 = best)"
 msgstr "Faktor kakovosti (0 = najslabše, 100 = najboljše)"
 
-#: plug-ins/common/file-heif.c:262 plug-ins/common/file-heif.c:372
+#: plug-ins/common/file-heif.c:264 plug-ins/common/file-heif.c:374
 #: plug-ins/common/file-jpegxl.c:188 plug-ins/file-webp/file-webp.c:178
 msgid "L_ossless"
 msgstr "_Brez izgub"
 
-#: plug-ins/common/file-heif.c:263 plug-ins/common/file-heif.c:373
+#: plug-ins/common/file-heif.c:265 plug-ins/common/file-heif.c:375
 #: plug-ins/common/file-jpegxl.c:189
 msgid "Use lossless compression"
 msgstr "Uporabi stiskanje brez izgub"
 
-#: plug-ins/common/file-heif.c:268 plug-ins/common/file-heif.c:378
+#: plug-ins/common/file-heif.c:270 plug-ins/common/file-heif.c:380
 msgid "Save color prof_ile"
 msgstr "Shrani barvni prof_il"
 
-#: plug-ins/common/file-heif.c:269 plug-ins/common/file-heif.c:379
+#: plug-ins/common/file-heif.c:271 plug-ins/common/file-heif.c:381
 msgid "Save the image's color profile"
 msgstr "Shrani barvni profil slike"
 
-#: plug-ins/common/file-heif.c:274 plug-ins/common/file-heif.c:384
+#: plug-ins/common/file-heif.c:276 plug-ins/common/file-heif.c:386
 #: plug-ins/common/file-jpegxl.c:200
 msgid "_Bit depth"
 msgstr "_Bitna globina"
 
-#: plug-ins/common/file-heif.c:275 plug-ins/common/file-heif.c:385
+#: plug-ins/common/file-heif.c:277 plug-ins/common/file-heif.c:387
 #: plug-ins/common/file-jpegxl.c:201
 msgid "Bit depth of exported image"
 msgstr "Bitna globina izvožene slike"
 
-#: plug-ins/common/file-heif.c:280 plug-ins/common/file-heif.c:390
+#: plug-ins/common/file-heif.c:282 plug-ins/common/file-heif.c:392
 #: plug-ins/common/file-png.c:286
 msgid "_Pixel format"
 msgstr "Oblika sli_kovnih točk"
 
-#: plug-ins/common/file-heif.c:281 plug-ins/common/file-heif.c:391
+#: plug-ins/common/file-heif.c:283 plug-ins/common/file-heif.c:393
 msgid "Format of color sub-sampling"
 msgstr "Oblika barvnega pod-vzorčenja"
 
-#: plug-ins/common/file-heif.c:287 plug-ins/common/file-heif.c:397
+#: plug-ins/common/file-heif.c:289 plug-ins/common/file-heif.c:399
 msgid "Enco_der speed"
 msgstr "Hitrost ho_dirnika"
 
-#: plug-ins/common/file-heif.c:288 plug-ins/common/file-heif.c:398
+#: plug-ins/common/file-heif.c:290 plug-ins/common/file-heif.c:400
 msgid "Tradeoff between speed and compression"
 msgstr "Kompromis med hitrostjo in stiskanjem"
 
-#: plug-ins/common/file-heif.c:294 plug-ins/common/file-heif.c:404
+#: plug-ins/common/file-heif.c:296 plug-ins/common/file-heif.c:406
 #: plug-ins/common/file-jpegxl.c:225
 msgid "Save Exi_f"
 msgstr "Shrani podatke Exi_f"
 
-#: plug-ins/common/file-heif.c:295 plug-ins/common/file-heif.c:405
+#: plug-ins/common/file-heif.c:297 plug-ins/common/file-heif.c:407
 #: plug-ins/common/file-jpegxl.c:226
 msgid "Toggle saving Exif data"
 msgstr "Preklopi shranjevanje podatkov Exif"
 
-#: plug-ins/common/file-heif.c:300 plug-ins/common/file-heif.c:410
+#: plug-ins/common/file-heif.c:302 plug-ins/common/file-heif.c:412
 #: plug-ins/common/file-jpegxl.c:231
 msgid "Save _XMP"
 msgstr "Shrani podatke _XMP"
 
-#: plug-ins/common/file-heif.c:301 plug-ins/common/file-heif.c:411
+#: plug-ins/common/file-heif.c:303 plug-ins/common/file-heif.c:413
 #: plug-ins/common/file-jpegxl.c:232
 msgid "Toggle saving XMP data"
 msgstr "Preklopi shranjevanje podatkov XMP"
 
-#: plug-ins/common/file-heif.c:315
+#: plug-ins/common/file-heif.c:317
 msgid "Loads AVIF images"
 msgstr "Naloži slike AVIF"
 
-#: plug-ins/common/file-heif.c:316
+#: plug-ins/common/file-heif.c:318
 msgid "Load image stored in AV1 Image File Format (AVIF)"
 msgstr "Naloži sliko v zapisu AVIF (AV1 Image File Format)."
 
-#: plug-ins/common/file-heif.c:348
+#: plug-ins/common/file-heif.c:350
 msgid "Exports AVIF images"
 msgstr "Izvozi slike AVIF"
 
-#: plug-ins/common/file-heif.c:349
+#: plug-ins/common/file-heif.c:351
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Shrani sliko v zapisu AVIF (AV1 Image File Format)."
 
-#: plug-ins/common/file-heif.c:504 plug-ins/common/file-heif.c:594
+#: plug-ins/common/file-heif.c:506 plug-ins/common/file-heif.c:596
 msgid "HEIF format does not support multiple layers."
 msgstr "Zapis HEIF ne podpira več plasti."
 
-#: plug-ins/common/file-heif.c:911 plug-ins/common/file-heif.c:944
-#: plug-ins/common/file-heif.c:985 plug-ins/common/file-heif.c:1051
+#: plug-ins/common/file-heif.c:915 plug-ins/common/file-heif.c:948
+#: plug-ins/common/file-heif.c:989 plug-ins/common/file-heif.c:1055
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Nalaganje slike HEIF slike ni uspelo: %s"
 
-#: plug-ins/common/file-heif.c:933
+#: plug-ins/common/file-heif.c:937
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Nalaganje slike HEIF ni uspelo: vhodna datoteka ne vsebuje berljivih slik."
 
-#: plug-ins/common/file-heif.c:1177
+#: plug-ins/common/file-heif.c:1181
 msgid "image content"
 msgstr "Vsebina slike"
 
-#: plug-ins/common/file-heif.c:1529
+#: plug-ins/common/file-heif.c:1527
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Izvažanje »%s« z uporabo kodirnika %s ..."
 
-#: plug-ins/common/file-heif.c:1579 plug-ins/common/file-heif.c:1986
+#: plug-ins/common/file-heif.c:1577 plug-ins/common/file-heif.c:1984
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Kodiranje slike HEIF je spodletelo: %s"
 
-#: plug-ins/common/file-heif.c:2107
+#: plug-ins/common/file-heif.c:2105
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Zapisovanje slike HEIF ni uspelo: %s"
 
-#: plug-ins/common/file-heif.c:2196
+#: plug-ins/common/file-heif.c:2194
 msgid "primary"
 msgstr "Primarno"
 
-#: plug-ins/common/file-heif.c:2341
+#: plug-ins/common/file-heif.c:2339
 msgid "Load HEIF Image"
 msgstr "Naloži sliko HEIF"
 
-#: plug-ins/common/file-heif.c:2355
+#: plug-ins/common/file-heif.c:2353
 msgid "Select Image"
 msgstr "Izberi sliko"
 
-#: plug-ins/common/file-heif.c:2512
+#: plug-ins/common/file-heif.c:2510
 msgid "YUV444"
 msgstr "YUV444"
 
-#: plug-ins/common/file-heif.c:2513
+#: plug-ins/common/file-heif.c:2511
 msgid "YUV420"
 msgstr "YUV420"
 
-#: plug-ins/common/file-heif.c:2521 plug-ins/common/file-jpegxl.c:2022
+#: plug-ins/common/file-heif.c:2519 plug-ins/common/file-jpegxl.c:2028
 msgid "8 bit/channel"
 msgstr "8 bitov/kanal"
 
-#: plug-ins/common/file-heif.c:2522
+#: plug-ins/common/file-heif.c:2520
 msgid "10 bit/channel"
 msgstr "10 bitov/kanal"
 
-#: plug-ins/common/file-heif.c:2523
+#: plug-ins/common/file-heif.c:2521
 msgid "12 bit/channel"
 msgstr "12 bitov/kanal"
 
-#: plug-ins/common/file-heif.c:2529
+#: plug-ins/common/file-heif.c:2527
 msgid "Slow"
 msgstr "Počasi"
 
-#: plug-ins/common/file-heif.c:2530
+#: plug-ins/common/file-heif.c:2528
 msgid "Balanced"
 msgstr "Uravnoteženo"
 
-#: plug-ins/common/file-heif.c:2531
+#: plug-ins/common/file-heif.c:2529
 msgid "Fast"
 msgstr "Hitro"
 
@@ -3648,11 +3644,11 @@ msgstr "Amiga IFF"
 msgid "Load file in the IFF file format"
 msgstr "Naloži datoteko v zapisu IFF"
 
-#: plug-ins/common/file-iff.c:252
+#: plug-ins/common/file-iff.c:254
 msgid "Invalid or missing ILBM image"
 msgstr "Neveljavna ali manjkajoča slika ILBM"
 
-#: plug-ins/common/file-iff.c:257
+#: plug-ins/common/file-iff.c:268
 msgid "ILBM contains no image data - likely a palette file"
 msgstr ""
 "ILBM ne vsebuje slikovnih podatkov - najverjetneje je to datoteka palete"
@@ -3825,56 +3821,56 @@ msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
 msgstr ""
 "Izvozite sliko JPEG XL CMYK z uporabo barvnega profila preverjanja videza"
 
-#: plug-ins/common/file-jpegxl.c:2008
+#: plug-ins/common/file-jpegxl.c:2014
 msgid "lightning (fastest)"
 msgstr "strela (najhitrejše)"
 
-#: plug-ins/common/file-jpegxl.c:2009
+#: plug-ins/common/file-jpegxl.c:2015
 msgid "thunder"
 msgstr "grom"
 
-#: plug-ins/common/file-jpegxl.c:2010
+#: plug-ins/common/file-jpegxl.c:2016
 msgid "falcon (faster)"
 msgstr "sokol (hitreje)"
 
-#: plug-ins/common/file-jpegxl.c:2011
+#: plug-ins/common/file-jpegxl.c:2017
 msgid "cheetah"
 msgstr "gepard"
 
-#: plug-ins/common/file-jpegxl.c:2012
+#: plug-ins/common/file-jpegxl.c:2018
 msgid "hare"
 msgstr "zajec"
 
-#: plug-ins/common/file-jpegxl.c:2013
+#: plug-ins/common/file-jpegxl.c:2019
 msgid "wombat"
 msgstr "vombat"
 
-#: plug-ins/common/file-jpegxl.c:2014
+#: plug-ins/common/file-jpegxl.c:2020
 msgid "squirrel"
 msgstr "veverica"
 
-#: plug-ins/common/file-jpegxl.c:2015
+#: plug-ins/common/file-jpegxl.c:2021
 msgid "kitten"
 msgstr "mucka"
 
-#: plug-ins/common/file-jpegxl.c:2016
+#: plug-ins/common/file-jpegxl.c:2022
 msgid "tortoise (slower)"
 msgstr "želva (počasneje)"
 
-#: plug-ins/common/file-jpegxl.c:2023
+#: plug-ins/common/file-jpegxl.c:2029
 msgid "16 bit/channel"
 msgstr "16 bitov/kanal"
 
-#: plug-ins/common/file-jpegxl.c:2031
+#: plug-ins/common/file-jpegxl.c:2037
 msgid "CMYK profile required for export"
 msgstr "Profil CMYK, potreben za izvoz"
 
-#: plug-ins/common/file-jpegxl.c:2039 plug-ins/file-jpeg/jpeg-save.c:900
+#: plug-ins/common/file-jpegxl.c:2045 plug-ins/file-jpeg/jpeg-save.c:900
 #: plug-ins/file-psd/psd-save.c:2459 plug-ins/file-tiff/file-tiff-save.c:1315
 msgid "Name of the color profile used for CMYK export."
 msgstr "Ime barvnega profila, uporabljenega za izvoz CMYK."
 
-#: plug-ins/common/file-jpegxl.c:2058 plug-ins/file-jpeg/jpeg-save.c:911
+#: plug-ins/common/file-jpegxl.c:2064 plug-ins/file-jpeg/jpeg-save.c:911
 #: plug-ins/file-psd/psd-save.c:2470 plug-ins/file-tiff/file-tiff-save.c:1327
 #, c-format
 msgid "Profile: %s"
@@ -4339,7 +4335,7 @@ msgid "PDF"
 msgstr "PDF"
 
 #: plug-ins/common/file-pdf-save.c:381 plug-ins/common/file-pdf-save.c:453
-#: plug-ins/common/file-pdf-save.c:1098
+#: plug-ins/common/file-pdf-save.c:1105
 msgid "_Fill transparent areas with background color"
 msgstr "_Zapolni prosojna področja z barvo ozadja"
 
@@ -4365,7 +4361,7 @@ msgstr ""
 "Prepričajte se, da ste vnesli veljavno ime datoteke in da na izbranem mestu "
 "ni dovoljeno le branje!"
 
-#: plug-ins/common/file-pdf-save.c:939
+#: plug-ins/common/file-pdf-save.c:946
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -4376,54 +4372,54 @@ msgstr ""
 "Priporočamo, da svoje plasti besedila pretvorite v sliko ali da namestite "
 "manjkajoče pisave pred izvozom, sicer vaše oblikovanje ne bo videti pravilno."
 
-#: plug-ins/common/file-pdf-save.c:1037
+#: plug-ins/common/file-pdf-save.c:1044
 msgid "Save to:"
 msgstr "Shrani v:"
 
-#: plug-ins/common/file-pdf-save.c:1041
+#: plug-ins/common/file-pdf-save.c:1048
 msgid "Browse..."
 msgstr "Prebrskaj ..."
 
-#: plug-ins/common/file-pdf-save.c:1042
+#: plug-ins/common/file-pdf-save.c:1049
 msgid "Multipage PDF export"
 msgstr "Izvoz večstranskega PDF"
 
-#: plug-ins/common/file-pdf-save.c:1078
+#: plug-ins/common/file-pdf-save.c:1085
 msgid "Remove the selected pages"
 msgstr "Izbrišite izbrane strani"
 
-#: plug-ins/common/file-pdf-save.c:1088
+#: plug-ins/common/file-pdf-save.c:1095
 msgid "Add this image"
 msgstr "Dodaj to sliko"
 
-#: plug-ins/common/file-pdf-save.c:1093
+#: plug-ins/common/file-pdf-save.c:1100
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr "Izp_usti skrite plasti in plasti z ničelno prekrivnostjo"
 
-#: plug-ins/common/file-pdf-save.c:1103
+#: plug-ins/common/file-pdf-save.c:1110
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "Pretvori _bitne slike v vektorsko grafiko, kjer je to mogoče"
 
-#: plug-ins/common/file-pdf-save.c:1108
+#: plug-ins/common/file-pdf-save.c:1115
 msgid "_Apply layer masks before saving"
 msgstr "Pre_d shranjevanjem uveljavi maske plasti"
 
-#: plug-ins/common/file-pdf-save.c:1112
+#: plug-ins/common/file-pdf-save.c:1119
 msgid "Keeping the masks will not change the output"
 msgstr "Ohranjanje mask ne bo spremenilo izhoda"
 
-#: plug-ins/common/file-pdf-save.c:1201 plug-ins/common/file-pdf-save.c:1274
-#: plug-ins/common/file-pdf-save.c:1372 plug-ins/common/file-ps.c:2098
+#: plug-ins/common/file-pdf-save.c:1208 plug-ins/common/file-pdf-save.c:1281
+#: plug-ins/common/file-pdf-save.c:1379 plug-ins/common/file-ps.c:2098
 #: plug-ins/file-tiff/file-tiff-load.c:1530
 #, c-format
 msgid "Page %d"
 msgstr "Stran %d"
 
-#: plug-ins/common/file-pdf-save.c:1241
+#: plug-ins/common/file-pdf-save.c:1248
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Napaka! Če želite shraniti datoteko, morate dodati vsaj eno sliko!"
 
-#: plug-ins/common/file-pdf-save.c:1419 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-save.c:1426 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Velikosti slike ni mogoče obvladati (širina ali višina)."
 
@@ -4795,7 +4791,7 @@ msgid "Unsupported maximum value."
 msgstr "Nepodprta največja vrednost."
 
 #: plug-ins/common/file-pnm.c:943
-msgid "PAM: Unsupported inofficial PNM variant."
+msgid "PAM: Unsupported unofficial PNM variant."
 msgstr "PAM: Nepodprta neuradna inačica PNM."
 
 #: plug-ins/common/file-pnm.c:947
@@ -5233,33 +5229,28 @@ msgstr "Napaka pri branju konca kosa izbora"
 
 #: plug-ins/common/file-psp.c:2442
 #, fuzzy
-#| msgid "Error reading block header"
 msgid "Error reading extended block chunk header"
-msgstr "Napaka pri branju glave bloka"
+msgstr "Napaka pri branju glave kosa razširjenega bloka"
 
 #: plug-ins/common/file-psp.c:2450
 #, fuzzy
-#| msgid "Invalid keyword chunk header"
 msgid "Invalid extended block chunk header"
-msgstr "Neveljaven kos podatkov ključnih besed ustvarjalca"
+msgstr "Neveljavna glava kosa razširjenega bloka"
 
 #: plug-ins/common/file-psp.c:2461
 #, fuzzy
-#| msgid "Invalid selection chunk size"
 msgid "Invalid extended block chunk size"
-msgstr "Neveljavna velikost kosa izbora"
+msgstr "Neveljavna velikost kosa razširjenega bloka"
 
 #: plug-ins/common/file-psp.c:2482
 #, fuzzy
-#| msgid "Error reading creator keyword data"
 msgid "Error reading extended chunk grid data"
-msgstr "Napaka pri branju podatkov ključnih besed ustvarjalca"
+msgstr "Napaka pri branju podatkov mreže razširjenih kosov"
 
 #: plug-ins/common/file-psp.c:2508
 #, fuzzy
-#| msgid "Error reading tube data chunk"
 msgid "Error reading extended chunk guide data"
-msgstr "Napaka pri branju kosa podatkov o cevi"
+msgstr "Napaka pri branju podatkov vodila razširjenega kosa"
 
 #: plug-ins/common/file-psp.c:2526
 msgid "Invalid guide orientation"
@@ -5267,9 +5258,8 @@ msgstr "Neveljavna usmerjenost vodila"
 
 #: plug-ins/common/file-psp.c:2540
 #, fuzzy
-#| msgid "Error reading end of selection chunk"
 msgid "Error reading extended block chunk"
-msgstr "Napaka pri branju konca kosa izbora"
+msgstr "Napaka pri branju kosa razširjenega bloka"
 
 #: plug-ins/common/file-psp.c:2566 plug-ins/common/file-psp.c:2578
 #: plug-ins/common/file-psp.c:2589
@@ -7896,20 +7886,16 @@ msgid "Brightness"
 msgstr "Svetlost"
 
 #: plug-ins/common/van-gogh-lic.c:168
-#, fuzzy
-#| msgid "Effect Operator"
 msgid "Effect O_perator"
-msgstr "Operator učinka"
+msgstr "Ope_rator učinka"
 
 #: plug-ins/common/van-gogh-lic.c:169
 msgid "Effect Operator"
 msgstr "Operator učinka"
 
 #: plug-ins/common/van-gogh-lic.c:170
-#, fuzzy
-#| msgid "_Derivative"
 msgid "Derivative"
-msgstr "_Izpeljanka"
+msgstr "Izpeljanka"
 
 #: plug-ins/common/van-gogh-lic.c:171
 msgid "Gradient"
@@ -7932,16 +7918,12 @@ msgid "With source image"
 msgstr "s slikovnim virom"
 
 #: plug-ins/common/van-gogh-lic.c:186
-#, fuzzy
-#| msgid "_Effect image:"
 msgid "Effect i_mage"
-msgstr "Učin_ek na sliki:"
+msgstr "Učin_ek na sliki"
 
 #: plug-ins/common/van-gogh-lic.c:187
-#, fuzzy
-#| msgid "_Effect image:"
 msgid "Effect image"
-msgstr "Učin_ek na sliki:"
+msgstr "Učinek na sliki"
 
 #: plug-ins/common/van-gogh-lic.c:192
 msgid "Fil_ter length"
@@ -7952,28 +7934,20 @@ msgid "Filter length"
 msgstr "Dolžina filtra"
 
 #: plug-ins/common/van-gogh-lic.c:198
-#, fuzzy
-#| msgid "_Noise magnitude:"
 msgid "_Noise Magnitude"
-msgstr "Obseg _šuma:"
+msgstr "Obseg _šuma"
 
 #: plug-ins/common/van-gogh-lic.c:199
-#, fuzzy
-#| msgid "_Noise magnitude:"
 msgid "Noise Magnitude"
-msgstr "Obseg _šuma:"
+msgstr "Obseg šuma"
 
 #: plug-ins/common/van-gogh-lic.c:204
-#, fuzzy
-#| msgid "In_tegration steps:"
 msgid "Inte_gration steps"
-msgstr "Korakov in_tegriranja:"
+msgstr "Korakov integriranja"
 
 #: plug-ins/common/van-gogh-lic.c:205
-#, fuzzy
-#| msgid "In_tegration steps:"
 msgid "Integration steps"
-msgstr "Korakov in_tegriranja:"
+msgstr "Korakov integriranja"
 
 #: plug-ins/common/van-gogh-lic.c:210
 msgid "Minimum v_alue"
@@ -8431,7 +8405,7 @@ msgstr ""
 msgid "BMP format does not support multiple layers."
 msgstr "Zapis BMP ne podpira več plasti."
 
-#: plug-ins/file-dds/dds.c:149 plug-ins/file-dds/dds.c:187
+#: plug-ins/file-dds/dds.c:149 plug-ins/file-dds/dds.c:201
 msgid "DDS image"
 msgstr "Slika DDS"
 
@@ -8448,279 +8422,291 @@ msgid "Load mipmaps if present"
 msgstr "Naloži mipmapse, če so prisotni"
 
 #: plug-ins/file-dds/dds.c:174
+msgid "Flip image _vertically"
+msgstr "Prezrcali sliko _navpično"
+
+#: plug-ins/file-dds/dds.c:175
+msgid "Flip the image vertically on import"
+msgstr "Prezrcali sliko navpično ob uvozu"
+
+#: plug-ins/file-dds/dds.c:180
+msgid "Always use _transparency for BC1/DXT1"
+msgstr "Vedno uporabi _prosojnost za BC1/DXT1"
+
+#: plug-ins/file-dds/dds.c:181
+msgid ""
+"Interprets transparency for BC1/DXT1 images even when DDPF_ALPHAPIXELS is "
+"not set; if disabled, sets it to opaque black"
+msgstr ""
+"Interpretira prosojnost za slike BC1/DXT1, tudi če DDPF_ALPHAPIXELS ni "
+"nastavljen; če je onemogočen, se nastavi na prekrivno črno"
+
+#: plug-ins/file-dds/dds.c:188
 msgid "Automatically decode YCoCg/AE_xp images when detected"
 msgstr "Samodejno odkodiraj zaznane slike YCoCg/AE_xp"
 
-#: plug-ins/file-dds/dds.c:175
+#: plug-ins/file-dds/dds.c:189
 msgid "Decode YCoCg/AExp images when detected"
 msgstr "Odkodiraj zaznane slike YCoCg/AExp"
 
-#: plug-ins/file-dds/dds.c:189
+#: plug-ins/file-dds/dds.c:203
 msgid "DDS"
 msgstr "DDS"
 
-#: plug-ins/file-dds/dds.c:193 plug-ins/file-dds/dds.c:194
+#: plug-ins/file-dds/dds.c:207 plug-ins/file-dds/dds.c:208
 msgid "Saves files in DDS image format"
 msgstr "Shrani datoteke v zapisu DDS"
 
-#: plug-ins/file-dds/dds.c:207
+#: plug-ins/file-dds/dds.c:221
 msgid "Compressio_n"
 msgstr "_Stiskanje"
 
-#: plug-ins/file-dds/dds.c:208
-#, fuzzy
+#: plug-ins/file-dds/dds.c:222
 msgid "Compression format"
 msgstr "Vrsta stiskanja"
 
-#: plug-ins/file-dds/dds.c:210
+#: plug-ins/file-dds/dds.c:224
 msgid "BC1 / DXT1"
 msgstr "BC1 / DXT1"
 
-#: plug-ins/file-dds/dds.c:211
+#: plug-ins/file-dds/dds.c:225
 msgid "BC2 / DXT3"
 msgstr "BC2 / DXT3"
 
-#: plug-ins/file-dds/dds.c:212
+#: plug-ins/file-dds/dds.c:226
 msgid "BC3 / DXT5"
 msgstr "BC3 / DXT5"
 
-#: plug-ins/file-dds/dds.c:213
+#: plug-ins/file-dds/dds.c:227
 msgid "BC3nm / DXT5nm"
 msgstr "BC3nm / DXT5nm"
 
-#: plug-ins/file-dds/dds.c:214
+#: plug-ins/file-dds/dds.c:228
 msgid "BC4 / ATI1 (3Dc+)"
 msgstr "BC4 / ATI1 (3Dc+)"
 
-#: plug-ins/file-dds/dds.c:215
+#: plug-ins/file-dds/dds.c:229
 msgid "BC5 / ATI2 (3Dc)"
 msgstr "BC5 / ATI2 (3Dc)"
 
-#: plug-ins/file-dds/dds.c:216
+#: plug-ins/file-dds/dds.c:230
 msgid "RXGB (DXT5)"
 msgstr "RXGB (DXT5)"
 
-#: plug-ins/file-dds/dds.c:217
+#: plug-ins/file-dds/dds.c:231
 msgid "Alpha Exponent (DXT5)"
 msgstr "Eksponent alfe (DXT5)"
 
-#: plug-ins/file-dds/dds.c:218
+#: plug-ins/file-dds/dds.c:232
 msgid "YCoCg (DXT5)"
 msgstr "YCoCg (DXT5)"
 
-#: plug-ins/file-dds/dds.c:219
+#: plug-ins/file-dds/dds.c:233
 #, fuzzy
-#| msgid "Decode YCoCg (scaled)"
 msgid "YCoCg scaled (DXT5)"
-msgstr "Dekodiraj YCoCg (prilagojeno)"
+msgstr "YCoCg, umerjeno/skalirano (DXT5)"
 
-#: plug-ins/file-dds/dds.c:225
+#: plug-ins/file-dds/dds.c:239
 msgid "Use percept_ual error metric"
 msgstr "Uporabi _metriko zaznavne napake"
 
-#: plug-ins/file-dds/dds.c:226
+#: plug-ins/file-dds/dds.c:240
 msgid "Use a perceptual error metric during compression"
 msgstr "Uporabi metriko zaznavne napake med stiskanjem"
 
-#: plug-ins/file-dds/dds.c:232
+#: plug-ins/file-dds/dds.c:246
 msgid "Pixel format"
 msgstr "Oblika slikovnih točk"
 
 #. Create the combobox containing the presets
-#: plug-ins/file-dds/dds.c:233 plug-ins/file-dds/dds.c:290
-#: plug-ins/file-dds/dds.c:306 plug-ins/file-webp/file-webp-dialog.c:80
+#: plug-ins/file-dds/dds.c:247 plug-ins/file-dds/dds.c:304
+#: plug-ins/file-dds/dds.c:320 plug-ins/file-webp/file-webp-dialog.c:80
 #: plug-ins/gradient-flare/gradient-flare.c:2599
 msgid "Default"
 msgstr "privzeta"
 
-#: plug-ins/file-dds/dds.c:234
+#: plug-ins/file-dds/dds.c:248
 msgid "RGB8"
 msgstr "RGB8"
 
-#: plug-ins/file-dds/dds.c:235
+#: plug-ins/file-dds/dds.c:249
 msgid "RGBA8"
 msgstr "RGBA8"
 
-#: plug-ins/file-dds/dds.c:236
+#: plug-ins/file-dds/dds.c:250
 msgid "BGR8"
 msgstr "BGR8"
 
-#: plug-ins/file-dds/dds.c:237
+#: plug-ins/file-dds/dds.c:251
 msgid "ABGR8"
 msgstr "ABGR8"
 
-#: plug-ins/file-dds/dds.c:238
+#: plug-ins/file-dds/dds.c:252
 msgid "R5G6B5"
 msgstr "R5G6B5"
 
-#: plug-ins/file-dds/dds.c:239
+#: plug-ins/file-dds/dds.c:253
 msgid "RGBA4"
 msgstr "RGBA4"
 
-#: plug-ins/file-dds/dds.c:240
+#: plug-ins/file-dds/dds.c:254
 msgid "RGB5A1"
 msgstr "RGB5A1"
 
-#: plug-ins/file-dds/dds.c:241
+#: plug-ins/file-dds/dds.c:255
 msgid "RGB10A2"
 msgstr "RGB10A2"
 
-#: plug-ins/file-dds/dds.c:242
+#: plug-ins/file-dds/dds.c:256
 msgid "R3G3B2"
 msgstr "R3G3B2"
 
-#: plug-ins/file-dds/dds.c:243
+#: plug-ins/file-dds/dds.c:257
 msgid "A8"
 msgstr "A8"
 
-#: plug-ins/file-dds/dds.c:244
+#: plug-ins/file-dds/dds.c:258
 msgid "L8"
 msgstr "L8"
 
-#: plug-ins/file-dds/dds.c:245
+#: plug-ins/file-dds/dds.c:259
 msgid "L8A8"
 msgstr "L8A8"
 
-#: plug-ins/file-dds/dds.c:246
+#: plug-ins/file-dds/dds.c:260
 msgid "AEXP"
 msgstr "AEXP"
 
-#: plug-ins/file-dds/dds.c:247
+#: plug-ins/file-dds/dds.c:261
 msgid "YCOCG"
 msgstr "YCOCG"
 
-#: plug-ins/file-dds/dds.c:261
+#: plug-ins/file-dds/dds.c:275
 msgid "Flip image _vertically on export"
 msgstr "Prezrcali sliko _navpično ob izvozu"
 
-#: plug-ins/file-dds/dds.c:262
+#: plug-ins/file-dds/dds.c:276
 msgid "Flip the image vertically on export"
 msgstr "Prezrcali sliko navpično ob izvozu"
 
-#: plug-ins/file-dds/dds.c:267
-#, fuzzy
-#| msgid "_Transparent"
+#: plug-ins/file-dds/dds.c:281
 msgid "Set _transparent color"
-msgstr "_Prosojne"
+msgstr "Določi _prosojno barvo"
 
-#: plug-ins/file-dds/dds.c:268
-#, fuzzy
-#| msgid "Make background transparent"
+#: plug-ins/file-dds/dds.c:282
 msgid "Make an indexed color transparent"
-msgstr "Naj bo ozadje prosojno"
+msgstr "Naredi indeksirano barvo prosojno"
 
-#: plug-ins/file-dds/dds.c:273
+#: plug-ins/file-dds/dds.c:287
 msgid "Transparent inde_x"
 msgstr "Inde_ks prosojnosti"
 
-#: plug-ins/file-dds/dds.c:274
+#: plug-ins/file-dds/dds.c:288
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
 msgstr ""
 "Indeks prosojne barve ali -1 za onemogočanje (samo za indeksirane slike)."
 
-#: plug-ins/file-dds/dds.c:288
+#: plug-ins/file-dds/dds.c:302
 msgid "F_ilter"
 msgstr "F_ilter"
 
-#: plug-ins/file-dds/dds.c:289
+#: plug-ins/file-dds/dds.c:303
 #, fuzzy
 msgid "Filtering to use when generating mipmaps"
 msgstr "Filtriranje, ki se uporablja pri ustvarjanju mipmap"
 
-#: plug-ins/file-dds/dds.c:291
+#: plug-ins/file-dds/dds.c:305
 msgid "Nearest"
 msgstr "Najbližje"
 
-#: plug-ins/file-dds/dds.c:292 plug-ins/map-object/map-object-main.c:139
+#: plug-ins/file-dds/dds.c:306 plug-ins/map-object/map-object-main.c:139
 msgid "Box"
 msgstr "kocko"
 
-#: plug-ins/file-dds/dds.c:293
+#: plug-ins/file-dds/dds.c:307
 msgid "Triangle"
 msgstr "Trikotnik"
 
-#: plug-ins/file-dds/dds.c:294
+#: plug-ins/file-dds/dds.c:308
 msgid "Quadratic"
 msgstr "Kvadratno"
 
-#: plug-ins/file-dds/dds.c:295
+#: plug-ins/file-dds/dds.c:309
 msgid "B-Spline"
 msgstr "B-zlepek"
 
-#: plug-ins/file-dds/dds.c:296
+#: plug-ins/file-dds/dds.c:310
 msgid "Mitchell"
 msgstr "Mitchell"
 
-#: plug-ins/file-dds/dds.c:297
+#: plug-ins/file-dds/dds.c:311
 msgid "Lanczos"
 msgstr "Lanczos"
 
-#: plug-ins/file-dds/dds.c:298
+#: plug-ins/file-dds/dds.c:312
 msgid "Kaiser"
 msgstr "Kaiser"
 
-#: plug-ins/file-dds/dds.c:304
+#: plug-ins/file-dds/dds.c:318
 msgid "_Wrap mode"
 msgstr "Način ob_livanja"
 
-#: plug-ins/file-dds/dds.c:305
+#: plug-ins/file-dds/dds.c:319
 #, fuzzy
 msgid "Wrap mode to use when generating mipmaps"
 msgstr "Način ovijanja za uporabo pri ustvarjanju mipmap"
 
-#: plug-ins/file-dds/dds.c:307
+#: plug-ins/file-dds/dds.c:321
 msgid "Mirror"
 msgstr "Zrcali"
 
-#: plug-ins/file-dds/dds.c:308
+#: plug-ins/file-dds/dds.c:322
 msgid "Repeat"
 msgstr "Ponovi"
 
-#: plug-ins/file-dds/dds.c:309
+#: plug-ins/file-dds/dds.c:323
 msgid "Clamp"
 msgstr "Spni"
 
-#: plug-ins/file-dds/dds.c:315
+#: plug-ins/file-dds/dds.c:329
 msgid "Appl_y gamma correction"
 msgstr "Uporabi poprave_k game"
 
-#: plug-ins/file-dds/dds.c:316
+#: plug-ins/file-dds/dds.c:330
 #, fuzzy
 msgid "Use gamma correct mipmap filtering"
 msgstr "Uporaba filtriranja pravilne game mipmap"
 
-#: plug-ins/file-dds/dds.c:321
+#: plug-ins/file-dds/dds.c:335
 msgid "Use sRG_B colorspace"
 msgstr "Uporabi barvni prostor sRG_B"
 
-#: plug-ins/file-dds/dds.c:322
+#: plug-ins/file-dds/dds.c:336
 msgid "Use sRGB colorspace for gamma correction"
 msgstr "Uporabi barvni prostor sRGB za korekcijo game"
 
-#: plug-ins/file-dds/dds.c:327 plug-ins/flame/flame.c:205
+#: plug-ins/file-dds/dds.c:341 plug-ins/flame/flame.c:205
 msgid "_Gamma"
 msgstr "_Gama"
 
-#: plug-ins/file-dds/dds.c:328
+#: plug-ins/file-dds/dds.c:342
 msgid "Gamma value to use for gamma correction (e.g. 2.2)"
 msgstr "Vrednost gama za korekcijo game (npr. 2,2)"
 
-#: plug-ins/file-dds/dds.c:333
+#: plug-ins/file-dds/dds.c:347
 msgid "Preserve al_pha test coverage"
 msgstr "Ohrani pokritje preizkusa al_fe"
 
-#: plug-ins/file-dds/dds.c:334
-#, fuzzy
-#| msgid "Preserve alpha test converage for alpha channel maps"
+#: plug-ins/file-dds/dds.c:348
 msgid "Preserve alpha test coverage for alpha channel maps"
 msgstr ""
-"Ohrani pokritje preizkusa alfe za preslikave oz. zemljevide alfa kanala"
+"Ohrani pokritje preizkusa alfe za preslikave oz. zemljevide kanala alfa"
 
-#: plug-ins/file-dds/dds.c:340
+#: plug-ins/file-dds/dds.c:354
 msgid "Alp_ha test threshold"
 msgstr "Prag preizkusa _alfe"
 
-#: plug-ins/file-dds/dds.c:341
+#: plug-ins/file-dds/dds.c:355
 #, fuzzy
 msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
@@ -8728,74 +8714,85 @@ msgstr ""
 "Vrednost praga preizkusa alfe, za katero je treba ohraniti povprečje "
 "preizkusa alfe"
 
-#: plug-ins/file-dds/dds.c:357
+#: plug-ins/file-dds/dds.c:371
 msgid "Decode YCoCg"
 msgstr "Dekodiraj YCoCg"
 
-#: plug-ins/file-dds/dds.c:361 plug-ins/file-dds/dds.c:362
+#: plug-ins/file-dds/dds.c:375 plug-ins/file-dds/dds.c:376
 msgid "Converts YCoCg encoded pixels to RGB"
 msgstr "Pretvori kodirane slikovne točke YCoCg v RGB"
 
-#: plug-ins/file-dds/dds.c:379
+#: plug-ins/file-dds/dds.c:393
 msgid "Decode YCoCg (scaled)"
 msgstr "Dekodiraj YCoCg (prilagojeno)"
 
-#: plug-ins/file-dds/dds.c:383 plug-ins/file-dds/dds.c:385
+#: plug-ins/file-dds/dds.c:397 plug-ins/file-dds/dds.c:399
 msgid "Converts YCoCg (scaled) encoded pixels to RGB"
 msgstr "Pretvori kodirane slikovne točke YCoCg (v merilu) v RGB."
 
-#: plug-ins/file-dds/dds.c:403
+#: plug-ins/file-dds/dds.c:417
 msgid "Decode Alpha exponent"
 msgstr "Dekodiraj eksponent alfa"
 
-#: plug-ins/file-dds/dds.c:409 plug-ins/file-dds/dds.c:407
+#: plug-ins/file-dds/dds.c:423 plug-ins/file-dds/dds.c:421
 msgid "Converts alpha exponent encoded pixels to RGB"
 msgstr "Pretvori kodirane slikovne točke z eksponentom alfe v RGB."
 
-#: plug-ins/file-dds/ddsread.c:372
+#: plug-ins/file-dds/ddsread.c:273
+#, c-format
+msgid "Unsupported uncompressed FOURCC type %u"
+msgstr "Nepodprti način nestisnjenega FOURCC %u"
+
+#: plug-ins/file-dds/ddsread.c:518
 msgid "Invalid or corrupted DDS header"
 msgstr "Neveljavna ali okvarjena glava DDS"
 
-#: plug-ins/file-dds/ddsread.c:381
+#: plug-ins/file-dds/ddsread.c:527
 msgid "Could not allocate a new image."
 msgstr "Nove slike ni mogoče alocirati."
 
-#: plug-ins/file-dds/ddsread.c:392
+#: plug-ins/file-dds/ddsread.c:538
 msgid "Error reading palette."
 msgstr "Napaka pri branju palete."
 
-#: plug-ins/file-dds/ddsread.c:675
+#: plug-ins/file-dds/ddsread.c:824
 msgid "Invalid DDS format magic number."
 msgstr "Neveljavno magično število zapisa DDS."
 
-#: plug-ins/file-dds/ddsread.c:754
+#: plug-ins/file-dds/ddsread.c:912
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Neveljavna vrednost bpp za podatke RGB: %d"
 
-#: plug-ins/file-dds/ddsread.c:765
+#: plug-ins/file-dds/ddsread.c:923
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Neveljavna vrednost bpp za podatke svetlosti: %d"
 
-#: plug-ins/file-dds/ddsread.c:816
+#: plug-ins/file-dds/ddsread.c:974
 msgid "Invalid pixel format."
 msgstr "Neveljavna oblika slikovnih točk."
 
-#: plug-ins/file-dds/ddsread.c:985
+#: plug-ins/file-dds/ddsread.c:1234
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "Nepodprta zapis DXGI (%d)"
 
-#: plug-ins/file-dds/ddsread.c:1156 plug-ins/file-dds/ddsread.c:1203
+#: plug-ins/file-dds/ddsread.c:1389
+#, c-format
+msgid "Unsupported value for bytes per pixel: %d"
+msgstr "Nepodprta vrednost za bajte na slikovno točko: %d"
+
+#: plug-ins/file-dds/ddsread.c:1444 plug-ins/file-dds/ddsread.c:1504
+#: plug-ins/file-dds/ddsread.c:1525
 msgid "Requested data exceeds size of file.\n"
 msgstr "Zahtevani podatki presegajo velikost datoteke.\n"
 
-#: plug-ins/file-dds/ddsread.c:1164 plug-ins/file-dds/ddsread.c:1211
+#: plug-ins/file-dds/ddsread.c:1452 plug-ins/file-dds/ddsread.c:1531
 msgid "Unexpected EOF.\n"
 msgstr "Nepričakovan konec datoteke (EOF).\n"
 
-#: plug-ins/file-dds/ddsread.c:1551
+#: plug-ins/file-dds/ddsread.c:2019
 msgid "Open DDS"
 msgstr "Odpri DDS"
 
@@ -13082,92 +13079,92 @@ msgstr "Prekliči izbor"
 msgid "Unselect All"
 msgstr "Prekliči izbor vseh"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:219
+#: plug-ins/imagemap/imap_edit_area_info.c:252
 msgid "Link Type"
 msgstr "Vrsta povezave"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:228
+#: plug-ins/imagemap/imap_edit_area_info.c:261
 msgid "_Web Site"
 msgstr "_Spletna stran"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:234
+#: plug-ins/imagemap/imap_edit_area_info.c:267
 msgid "_FTP Site"
 msgstr "_FTP-strežnik"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:240
+#: plug-ins/imagemap/imap_edit_area_info.c:273
 msgid "_Gopher"
 msgstr "_Gopher"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:246
+#: plug-ins/imagemap/imap_edit_area_info.c:279
 msgid "Ot_her"
 msgstr "_Drugo"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:252
+#: plug-ins/imagemap/imap_edit_area_info.c:285
 msgid "F_ile"
 msgstr "_Datoteka"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:258
+#: plug-ins/imagemap/imap_edit_area_info.c:291
 msgid "WAI_S"
 msgstr "WAI_S"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:264
+#: plug-ins/imagemap/imap_edit_area_info.c:297
 msgid "Tel_net"
 msgstr "Tel_net"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:270
+#: plug-ins/imagemap/imap_edit_area_info.c:303
 msgid "e-_mail"
 msgstr "e-_pošta"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:276
+#: plug-ins/imagemap/imap_edit_area_info.c:309
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr "_URL preusmeritve ob kliku na to področje: (obvezno)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:278
+#: plug-ins/imagemap/imap_edit_area_info.c:311
 msgid "Select HTML file"
 msgstr "Izberite datoteko HTML"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:287
+#: plug-ins/imagemap/imap_edit_area_info.c:320
 msgid "Relati_ve link"
 msgstr "Relati_vna povezava"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:293
+#: plug-ins/imagemap/imap_edit_area_info.c:326
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr ""
 "_Ime/ID ciljnega okvira: (dodatno - uporablja se le za okvirje - FRAMES)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:296
+#: plug-ins/imagemap/imap_edit_area_info.c:329
 msgid "ALT te_xt: (optional)"
 msgstr "_Besedilo ALT: (neobvezno)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:299
+#: plug-ins/imagemap/imap_edit_area_info.c:332
 msgid "Access _Key: (optional)"
 msgstr "_Tipka za dostop: (neobvezno)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:302
+#: plug-ins/imagemap/imap_edit_area_info.c:335
 msgid "Ta_b Index: (optional)"
 msgstr "_Zaporedje ta_bulatork: (neobvezno)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:305
+#: plug-ins/imagemap/imap_edit_area_info.c:338
 msgid "_Link"
 msgstr "_Povezava"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:339
+#: plug-ins/imagemap/imap_edit_area_info.c:372
 msgid "Dimensions"
 msgstr "Mere"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:343
+#: plug-ins/imagemap/imap_edit_area_info.c:376
 msgid "Pre_view"
 msgstr "Pre_dogled"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:385
+#: plug-ins/imagemap/imap_edit_area_info.c:418
 msgid "_JavaScript"
 msgstr "_JavaScript"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:490
+#: plug-ins/imagemap/imap_edit_area_info.c:523
 msgid "Area Settings"
 msgstr "Nastavitve področja"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:536
+#: plug-ins/imagemap/imap_edit_area_info.c:569
 #, c-format
 msgid "Area #%d Settings"
 msgstr "Nastavitve področja #%d"
