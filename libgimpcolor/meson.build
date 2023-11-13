@@ -4,6 +4,7 @@ libgimpcolor_sources = files(
   'gimpbilinear.c',
   'gimpcairo.c',
   'gimpcmyk.c',
+  'gimpcolor.c',
   'gimpcolormanaged.c',
   'gimpcolorprofile.c',
   'gimpcolorspace.c',

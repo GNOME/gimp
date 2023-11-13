@@ -38,4 +38,22 @@
 
 #undef __GIMP_COLOR_H_INSIDE__
 
+G_BEGIN_DECLS
+
+/*
+ * GEGL_TYPE_COLOR
+ */
+
+#define GIMP_VALUE_HOLDS_COLOR(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GEGL_TYPE_COLOR))
+
+
+void      gimp_color_set_alpha                 (GeglColor *color,
+                                                gdouble    alpha);
+
+gboolean  gimp_color_is_perceptually_identical (GeglColor *color1,
+                                                GeglColor *color2);
+
+
+G_END_DECLS
+
 #endif  /* __GIMP_COLOR_H__ */
