@@ -157,6 +157,9 @@ cp -fr ${MSYS_PREFIX}/share/xml/iso-codes/iso_639.xml ${GIMP_DISTRIB}/share/xml/
 # Adwaita can be used as the base icon set.
 cp -fr ${MSYS_PREFIX}/share/icons/Adwaita ${GIMP_DISTRIB}/share/icons/
 
+# Gdbus is needed to avoid warnings in CMD.
+cp -fr ${MSYS_PREFIX}/bin/gdbus.exe ${GIMP_DISTRIB}/bin
+
 # XXX Why are these for exactly?
 cp -fr ${MSYS_PREFIX}/bin/gspawn*.exe ${GIMP_DISTRIB}/bin/
 
