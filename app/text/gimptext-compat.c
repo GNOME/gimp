@@ -60,7 +60,8 @@ text_render (GimpImage    *image,
 {
   GimpText  *gtext;
   GimpLayer *layer;
-  GimpRGB    color;
+  GeglColor *color;
+  GimpRGB    rgb;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
@@ -76,7 +77,8 @@ text_render (GimpImage    *image,
   if (border < 0)
     border = 0;
 
-  gimp_context_get_foreground (context, &color);
+  color = gimp_context_get_foreground (context);
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
   gtext = g_object_new (GIMP_TYPE_TEXT,
                         "text",      text,
@@ -84,7 +86,7 @@ text_render (GimpImage    *image,
                         "font-size", font_size,
                         "antialias", antialias,
                         "border",    border,
-                        "color",     &color,
+                        "color",     &rgb,
                         NULL);
 
   layer = gimp_text_layer_new (image, gtext);

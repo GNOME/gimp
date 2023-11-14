@@ -2517,6 +2517,7 @@ gimp_layer_remove_alpha (GimpLayer   *layer,
                          GimpContext *context)
 {
   GeglBuffer *new_buffer;
+  GeglColor  *color;
   GimpRGB     background;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
@@ -2531,7 +2532,8 @@ gimp_layer_remove_alpha (GimpLayer   *layer,
                                      gimp_item_get_height (GIMP_ITEM (layer))),
                      gimp_drawable_get_format_without_alpha (GIMP_DRAWABLE (layer)));
 
-  gimp_context_get_background (context, &background);
+  color = gimp_context_get_background (context);
+  gegl_color_get_rgba_with_space (color, &background.r, &background.g, &background.b, &background.a, NULL);
   gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (layer),
                                      &background, &background);
 

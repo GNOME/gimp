@@ -481,6 +481,7 @@ static void
 init_calculation (GimpDrawable        *drawable,
                   GimpProcedureConfig *config)
 {
+  GeglColor       *color;
   gdouble          k;
   gdouble          alpha, beta;
   gdouble          angle;
@@ -547,8 +548,12 @@ init_calculation (GimpDrawable        *drawable,
 
   /* Colors */
 
-  gimp_context_get_foreground (&fg_color);
-  gimp_context_get_background (&bg_color);
+  color = gimp_context_get_foreground ();
+  gegl_color_get_rgba_with_space (color, &fg_color.r, &fg_color.g, &fg_color.b, &fg_color.a, NULL);
+  g_object_unref (color);
+  color = gimp_context_get_background ();
+  gegl_color_get_rgba_with_space (color, &bg_color.r, &bg_color.g, &bg_color.b, &bg_color.a, NULL);
+  g_object_unref (color);
 }
 
 static GimpLayer *

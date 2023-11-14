@@ -160,10 +160,12 @@ gimp_smudge_paint (GimpPaintCore    *paint_core,
             ! gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_COLOR) &&
             ! (brush_core->brush && gimp_brush_get_pixmap (brush_core->brush)))
           {
-            GimpRGB foreground;
+            GeglColor *foreground;
+            GimpRGB    rgb;
 
-            gimp_context_get_foreground (context, &foreground);
-            gimp_palettes_add_color_history (context->gimp, &foreground);
+            foreground = gimp_context_get_foreground (context);
+            gegl_color_get_rgba_with_space (foreground, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
+            gimp_palettes_add_color_history (context->gimp, &rgb);
           }
       }
       break;
@@ -453,7 +455,10 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
     }
   else
     {
-      gimp_context_get_foreground (context, &brush_color);
+      GeglColor *color;
+
+      color = gimp_context_get_foreground (context);
+      gegl_color_get_rgba_with_space (color, &brush_color.r, &brush_color.g, &brush_color.b, &brush_color.a, NULL);
     }
 
   /* Convert to linear RGBA */

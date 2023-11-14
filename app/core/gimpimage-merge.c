@@ -673,7 +673,8 @@ gimp_image_merge_layers (GimpImage     *image,
       (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)) &&
        ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer))))
     {
-      GimpRGB bg;
+      GeglColor *color;
+      GimpRGB    bg;
 
       merge_layer = gimp_layer_new (image, (x2 - x1), (y2 - y1),
                                     gimp_image_get_layer_format (image, FALSE),
@@ -689,7 +690,8 @@ gimp_image_merge_layers (GimpImage     *image,
         }
 
       /*  get the background for compositing  */
-      gimp_context_get_background (context, &bg);
+      color = gimp_context_get_background (context);
+      gegl_color_get_rgba_with_space (color, &bg.r, &bg.g, &bg.b, &bg.a, NULL);
       gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (layer),
                                          &bg, &bg);
 

@@ -50,10 +50,10 @@
 /*  local function prototypes  */
 
 static void   edit_actions_foreground_changed (GimpContext     *context,
-                                               const GimpRGB   *color,
+                                               GeglColor       *color,
                                                GimpActionGroup *group);
 static void   edit_actions_background_changed (GimpContext     *context,
-                                               const GimpRGB   *color,
+                                               GeglColor       *color,
                                                GimpActionGroup *group);
 static void   edit_actions_pattern_changed    (GimpContext     *context,
                                                GimpPattern     *pattern,
@@ -233,7 +233,7 @@ void
 edit_actions_setup (GimpActionGroup *group)
 {
   GimpContext *context = gimp_get_user_context (group->gimp);
-  GimpRGB      color;
+  GeglColor   *color;
   GimpPattern *pattern;
 
   gimp_action_group_add_actions (group, "edit-action",
@@ -260,11 +260,11 @@ edit_actions_setup (GimpActionGroup *group)
                            G_CALLBACK (edit_actions_pattern_changed),
                            group, 0);
 
-  gimp_context_get_foreground (context, &color);
-  edit_actions_foreground_changed (context, &color, group);
+  color = gimp_context_get_foreground (context);
+  edit_actions_foreground_changed (context, color, group);
 
-  gimp_context_get_background (context, &color);
-  edit_actions_background_changed (context, &color, group);
+  color = gimp_context_get_background (context);
+  edit_actions_background_changed (context, color, group);
 
   pattern = gimp_context_get_pattern (context);
   edit_actions_pattern_changed (context, pattern, group);
@@ -380,18 +380,24 @@ edit_actions_update (GimpActionGroup *group,
 
 static void
 edit_actions_foreground_changed (GimpContext     *context,
-                                 const GimpRGB   *color,
+                                 GeglColor       *color,
                                  GimpActionGroup *group)
 {
-  gimp_action_group_set_action_color (group, "edit-fill-fg", color, FALSE);
+  GimpRGB rgb;
+
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  gimp_action_group_set_action_color (group, "edit-fill-fg", &rgb, FALSE);
 }
 
 static void
 edit_actions_background_changed (GimpContext     *context,
-                                 const GimpRGB   *color,
+                                 GeglColor       *color,
                                  GimpActionGroup *group)
 {
-  gimp_action_group_set_action_color (group, "edit-fill-bg", color, FALSE);
+  GimpRGB rgb;
+
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  gimp_action_group_set_action_color (group, "edit-fill-bg", &rgb, FALSE);
 }
 
 static void

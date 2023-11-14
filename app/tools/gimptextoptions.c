@@ -683,15 +683,17 @@ gimp_text_options_notify_color (GimpContext *context,
                                 GParamSpec  *pspec,
                                 GimpText    *text)
 {
-  GimpRGB  color;
+  GeglColor *color;
+  GimpRGB    rgb;
 
-  gimp_context_get_foreground (context, &color);
+  color = gimp_context_get_foreground (context);
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
   g_signal_handlers_block_by_func (text,
                                    gimp_text_options_notify_text_color,
                                    context);
 
-  g_object_set (text, "color", &color, NULL);
+  g_object_set (text, "color", &rgb, NULL);
 
   g_signal_handlers_unblock_by_func (text,
                                      gimp_text_options_notify_text_color,
@@ -725,19 +727,21 @@ gimp_text_options_connect_text (GimpTextOptions *options,
                                 GimpText        *text)
 {
   GimpContext *context;
-  GimpRGB      color;
+  GeglColor   *color;
+  GimpRGB      rgb;
 
   g_return_if_fail (GIMP_IS_TEXT_OPTIONS (options));
   g_return_if_fail (GIMP_IS_TEXT (text));
 
   context = GIMP_CONTEXT (options);
 
-  gimp_context_get_foreground (context, &color);
+  color = gimp_context_get_foreground (context);
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
   gimp_config_sync (G_OBJECT (options), G_OBJECT (text), 0);
 
   g_object_set (text,
-                "color", &color,
+                "color", &rgb,
                 "font",  gimp_context_get_font (context),
                 NULL);
 
@@ -851,8 +855,8 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                             button, 1);
   gtk_size_group_add_widget (size_group, button);
 
-  button = gimp_prop_color_button_new (config, "foreground", _("Text Color"),
-                                       40, 24, GIMP_COLOR_AREA_FLAT);
+  button = gimp_prop_gegl_color_button_new (config, "foreground", _("Text Color"),
+                                            40, 24, GIMP_COLOR_AREA_FLAT);
   gimp_color_button_set_update (GIMP_COLOR_BUTTON (button), TRUE);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 GIMP_CONTEXT (options));

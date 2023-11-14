@@ -328,7 +328,6 @@ gimp_context_set_stroke_method (GimpStrokeMethod stroke_method)
 
 /**
  * gimp_context_get_foreground:
- * @foreground: (out caller-allocates): The foreground color.
  *
  * Get the current GIMP foreground color.
  *
@@ -336,16 +335,16 @@ gimp_context_set_stroke_method (GimpStrokeMethod stroke_method)
  * used in a variety of tools such as paint tools, blending, and bucket
  * fill.
  *
- * Returns: TRUE on success.
+ * Returns: (transfer full): The foreground color.
  *
  * Since: 2.2
  **/
-gboolean
-gimp_context_get_foreground (GimpRGB *foreground)
+GeglColor *
+gimp_context_get_foreground (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gboolean success = TRUE;
+  GeglColor *foreground = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
@@ -355,14 +354,12 @@ gimp_context_get_foreground (GimpRGB *foreground)
                                                args);
   gimp_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*foreground);
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    foreground = g_value_dup_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
-  return success;
+  return foreground;
 }
 
 /**
@@ -404,7 +401,6 @@ gimp_context_set_foreground (GeglColor *foreground)
 
 /**
  * gimp_context_get_background:
- * @background: (out caller-allocates): The background color.
  *
  * Get the current GIMP background color.
  *
@@ -412,16 +408,16 @@ gimp_context_set_foreground (GeglColor *foreground)
  * used in a variety of tools such as blending, erasing (with non-alpha
  * images), and image filling.
  *
- * Returns: TRUE on success.
+ * Returns: (transfer full): The background color.
  *
  * Since: 2.2
  **/
-gboolean
-gimp_context_get_background (GimpRGB *background)
+GeglColor *
+gimp_context_get_background (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gboolean success = TRUE;
+  GeglColor *background = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
@@ -431,14 +427,12 @@ gimp_context_get_background (GimpRGB *background)
                                                args);
   gimp_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*background);
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    background = g_value_dup_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
-  return success;
+  return background;
 }
 
 /**

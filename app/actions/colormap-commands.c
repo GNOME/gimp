@@ -71,14 +71,17 @@ colormap_add_color_cmd_callback (GimpAction *action,
 
   if (gimp_image_get_colormap_size (image) < 256)
     {
-      GimpRGB color;
+      GimpRGB    rgb;
+      GeglColor *color;
 
       if (background)
-        gimp_context_get_background (context, &color);
+        color = gimp_context_get_background (context);
       else
-        gimp_context_get_foreground (context, &color);
+        color = gimp_context_get_foreground (context);
 
-      gimp_image_add_colormap_entry (image, &color);
+      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
+
+      gimp_image_add_colormap_entry (image, &rgb);
       gimp_image_flush (image);
     }
 }

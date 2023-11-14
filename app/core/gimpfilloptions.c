@@ -375,8 +375,7 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
                                     GError          **error)
 {
   GimpFillOptionsPrivate *private;
-  GeglColor              *color;
-  GimpRGB                 rgb;
+  GeglColor              *color = NULL;
   const gchar            *undo_desc;
 
   g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
@@ -390,46 +389,33 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
   switch (fill_type)
     {
     case GIMP_FILL_FOREGROUND:
-      gimp_context_get_foreground (context, &rgb);
+      color = gegl_color_duplicate (gimp_context_get_foreground (context));
       undo_desc = C_("undo-type", "Fill with Foreground Color");
       break;
 
     case GIMP_FILL_BACKGROUND:
-      gimp_context_get_background (context, &rgb);
+      color = gegl_color_duplicate (gimp_context_get_background (context));
       undo_desc = C_("undo-type", "Fill with Background Color");
       break;
 
     case GIMP_FILL_CIELAB_MIDDLE_GRAY:
       {
-        const float        cielab_pixel[3] = {50, 0, 0};
-        float              pixel[3]        = {0, 0, 0};
-        GimpImage         *image           = gimp_context_get_image (context);
-        GimpImageBaseType  base_type;
-        const Babl        *format;
+        const float cielab_pixel[3] = {50, 0, 0};
 
-        base_type = gimp_image_get_base_type (image);
-        if (base_type == GIMP_INDEXED)
-          base_type = GIMP_RGB;
+        color = gegl_color_new (NULL);
+        gegl_color_set_pixel (color, babl_format ("CIE Lab float"), cielab_pixel);
 
-        format = gimp_image_get_format (image, base_type,
-                                        GIMP_PRECISION_FLOAT_NON_LINEAR, FALSE,
-                                        gimp_image_get_layer_space (image));
-
-        babl_process (babl_fish (babl_format ("CIE Lab float"), format),
-                      cielab_pixel, pixel, 1);
-
-        gimp_rgba_set (&rgb, pixel[0], pixel[1], pixel[2], GIMP_OPACITY_OPAQUE);
         undo_desc = C_("undo-type", "Fill with Middle Gray (CIELAB) Color");
       }
       break;
 
     case GIMP_FILL_WHITE:
-      gimp_rgba_set (&rgb, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+      color = gegl_color_new ("white");
       undo_desc = C_("undo-type", "Fill with White");
       break;
 
     case GIMP_FILL_TRANSPARENT:
-      gimp_context_get_background (context, &rgb);
+      color = gegl_color_duplicate (gimp_context_get_background (context));
       gimp_context_set_paint_mode (GIMP_CONTEXT (options),
                                    GIMP_LAYER_MODE_ERASE);
       undo_desc = C_("undo-type", "Fill with Transparency");
@@ -459,9 +445,9 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
       return FALSE;
     }
 
+  g_return_val_if_fail (color != NULL, FALSE);
+
   gimp_fill_options_set_style (options, GIMP_FILL_STYLE_FG_COLOR);
-  color = gegl_color_new ("black");
-  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
   gimp_context_set_foreground (GIMP_CONTEXT (options), color);
   private->undo_desc = undo_desc;
 
@@ -592,25 +578,27 @@ gimp_fill_options_fill_buffer (GimpFillOptions *options,
     {
     case GIMP_FILL_STYLE_FG_COLOR:
       {
-        GimpRGB color;
+        GeglColor *color;
+        GimpRGB    rgb;
 
-        gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
-        gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, &color);
+        color = gimp_context_get_foreground (GIMP_CONTEXT (options));
+        gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
+        gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, &rgb);
 
-        gimp_drawable_fill_buffer (drawable, buffer,
-                                   &color, NULL, 0, 0);
+        gimp_drawable_fill_buffer (drawable, buffer, &rgb, NULL, 0, 0);
       }
       break;
 
     case GIMP_FILL_STYLE_BG_COLOR:
       {
-        GimpRGB color;
+        GeglColor *color;
+        GimpRGB    rgb;
 
-        gimp_context_get_background (GIMP_CONTEXT (options), &color);
-        gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, &color);
+        color = gimp_context_get_background (GIMP_CONTEXT (options));
+        gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
+        gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, &rgb);
 
-        gimp_drawable_fill_buffer (drawable, buffer,
-                                   &color, NULL, 0, 0);
+        gimp_drawable_fill_buffer (drawable, buffer, &rgb, NULL, 0, 0);
       }
       break;
 

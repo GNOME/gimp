@@ -1317,8 +1317,8 @@ ifs_compose (GimpDrawable *drawable)
   guchar     *data;
   guchar     *mask = NULL;
   guchar     *nhits;
-  guchar      rc, gc, bc;
-  GimpRGB     color;
+  guchar      c[3];
+  GeglColor  *color;
 
   if (alpha)
     format = babl_format ("R'G'B'A u8");
@@ -1336,8 +1336,9 @@ ifs_compose (GimpDrawable *drawable)
   data  = g_new (guchar, width * band_height * SQR (ifsvals.subdivide) * 3);
   nhits = g_new (guchar, width * band_height * SQR (ifsvals.subdivide));
 
-  gimp_context_get_background (&color);
-  gimp_rgb_get_uchar (&color, &rc, &gc, &bc);
+  color = gimp_context_get_background ();
+  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' u8", NULL), c);
+  g_object_unref (color);
 
   for (band_no = 0, band_y = 0; band_no < num_bands; band_no++)
     {
@@ -1429,9 +1430,9 @@ ifs_compose (GimpDrawable *drawable)
                     }
                   else
                     {
-                      *dest++ = (mtot * rtot + (255 - mtot) * rc) / 255;
-                      *dest++ = (mtot * gtot + (255 - mtot) * gc) / 255;
-                      *dest++ = (mtot * btot + (255 - mtot) * bc) / 255;
+                      *dest++ = (mtot * rtot + (255 - mtot) * c[0]) / 255;
+                      *dest++ = (mtot * gtot + (255 - mtot) * c[1]) / 255;
+                      *dest++ = (mtot * btot + (255 - mtot) * c[2]) / 255;
                     }
                 }
 
@@ -2324,10 +2325,13 @@ flip_check_button_callback (GtkWidget *widget,
 static void
 ifs_compose_set_defaults (void)
 {
-  gint     i;
-  GimpRGB  color;
+  GeglColor *color;
+  GimpRGB    rgb;
+  gint       i;
 
-  gimp_context_get_foreground (&color);
+  color = gimp_context_get_foreground ();
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  g_object_unref (color);
 
   ifsvals.aspect_ratio =
     (gdouble)ifsD->drawable_height / ifsD->drawable_width;
@@ -2341,13 +2345,13 @@ ifs_compose_set_defaults (void)
   element_selected = g_realloc (element_selected,
                                 ifsvals.num_elements * sizeof(gboolean));
 
-  elements[0] = aff_element_new (0.3, 0.37 * ifsvals.aspect_ratio, &color,
+  elements[0] = aff_element_new (0.3, 0.37 * ifsvals.aspect_ratio, &rgb,
                                  ++count_for_naming);
   element_selected[0] = FALSE;
-  elements[1] = aff_element_new (0.7, 0.37 * ifsvals.aspect_ratio, &color,
+  elements[1] = aff_element_new (0.7, 0.37 * ifsvals.aspect_ratio, &rgb,
                                  ++count_for_naming);
   element_selected[1] = FALSE;
-  elements[2] = aff_element_new (0.5, 0.7 * ifsvals.aspect_ratio, &color,
+  elements[2] = aff_element_new (0.5, 0.7 * ifsvals.aspect_ratio, &rgb,
                                  ++count_for_naming);
   element_selected[2] = FALSE;
 
@@ -2622,19 +2626,22 @@ ifs_compose_new_action (GSimpleAction *action,
                         GVariant      *parameter,
                         gpointer       user_data)
 {
-  GtkAllocation  allocation;
-  GimpRGB        color;
-  gint           i;
-  AffElement    *elem;
+  GtkAllocation   allocation;
+  GeglColor      *color;
+  GimpRGB         rgb;
+  gint            i;
+  AffElement     *elem;
 
   gtk_widget_get_allocation (ifsDesign->area, &allocation);
 
   undo_begin ();
 
-  gimp_context_get_foreground (&color);
+  color = gimp_context_get_foreground ();
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  g_object_unref (color);
 
   elem = aff_element_new (0.5, 0.5 * allocation.height / allocation.width,
-                          &color,
+                          &rgb,
                           ++count_for_naming);
 
   ifsvals.num_elements++;
@@ -2777,25 +2784,26 @@ static void
 ifs_compose_preview (void)
 {
   /* Expansion isn't really supported for previews */
-  gint     i;
-  gint     width  = ifsD->preview_width;
-  gint     height = ifsD->preview_height;
-  guchar   rc, gc, bc;
-  guchar  *ptr;
-  GimpRGB  color;
+  gint       i;
+  gint       width  = ifsD->preview_width;
+  gint       height = ifsD->preview_height;
+  guchar    *ptr;
+  GeglColor *color;
+  guchar     c[3];
 
   if (!ifsD->preview_data)
     ifsD->preview_data = g_new (guchar, 3 * width * height);
 
-  gimp_context_get_background (&color);
-  gimp_rgb_get_uchar (&color, &rc, &gc, &bc);
+  color = gimp_context_get_background ();
+  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' u8", NULL), c);
+  g_object_unref (color);
 
   ptr = ifsD->preview_data;
   for (i = 0; i < width * height; i++)
     {
-      *ptr++ = rc;
-      *ptr++ = gc;
-      *ptr++ = bc;
+      *ptr++ = c[0];
+      *ptr++ = c[1];
+      *ptr++ = c[2];
     }
 
   if (ifsD->preview_iterations == 0)

@@ -551,18 +551,19 @@ gimp_device_status_notify_info (GimpDeviceInfo        *device_info,
 
   if (! strcmp (pspec->name, "tool-options"))
     {
-      GimpRGB color;
-      guchar  r, g, b;
-      gchar   buf[64];
+      GeglColor *color;
+      guchar     rgb[3];
+      gchar      buf[64];
 
-      gimp_context_get_foreground (entry->context, &color);
-      gimp_rgb_get_uchar (&color, &r, &g, &b);
-      g_snprintf (buf, sizeof (buf), _("Foreground: %d, %d, %d"), r, g, b);
+      color = gimp_context_get_foreground (entry->context);
+      /* TODO: which space to use exactly to provide more useful info? */
+      gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' u8", NULL), rgb);
+      g_snprintf (buf, sizeof (buf), _("Foreground: %d, %d, %d"), rgb[0], rgb[1], rgb[2]);
       gimp_help_set_help_data (entry->foreground, buf, NULL);
 
-      gimp_context_get_background (entry->context, &color);
-      gimp_rgb_get_uchar (&color, &r, &g, &b);
-      g_snprintf (buf, sizeof (buf), _("Background: %d, %d, %d"), r, g, b);
+      color = gimp_context_get_background (entry->context);
+      gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' u8", NULL), rgb);
+      g_snprintf (buf, sizeof (buf), _("Background: %d, %d, %d"), rgb[0], rgb[1], rgb[2]);
       gimp_help_set_help_data (entry->background, buf, NULL);
     }
 }

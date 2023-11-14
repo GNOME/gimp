@@ -598,25 +598,27 @@ plug_in_applylens_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GimpRGB    color;
-          GeglColor *gegl_color;
+          GeglColor *color;
           GeglNode  *node;
 
           if (set_background)
-            gimp_context_get_background (context, &color);
+            {
+              color = gegl_color_duplicate (gimp_context_get_background (context));
+            }
           else
-            gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
-
-          gegl_color = gimp_gegl_color_new (&color, NULL);
+            {
+              color = gegl_color_new ("black");
+              gegl_color_set_rgba_with_space (color, 0.0, 0.0, 0.0, 0.0, NULL);
+            }
 
           node = gegl_node_new_child (NULL,
                                      "operation",         "gegl:apply-lens",
                                      "refraction-index",  refraction,
                                      "keep-surroundings", keep_surroundings,
-                                     "background-color",  gegl_color,
+                                     "background-color",  color,
                                      NULL);
 
-          g_object_unref (gegl_color);
+          g_object_unref (color);
 
           node = wrap_in_selection_bounds (node, drawable);
 
@@ -1265,29 +1267,27 @@ plug_in_cubism_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GimpRGB    color;
-          GeglColor *gegl_color;
+          GeglColor *color;
           GeglNode  *node;
 
           if (bg_color)
             {
-              gimp_context_get_background (context, &color);
-              gimp_rgb_set_alpha (&color, 0.0);
+              color = gegl_color_duplicate (gimp_context_get_background (context));
+              gimp_color_set_alpha (color, 0.0);
             }
           else
             {
-              gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+              color = gegl_color_new ("black");
+              gegl_color_set_rgba_with_space (color, 0.0, 0.0, 0.0, 0.0, NULL);
             }
-
-          gegl_color = gimp_gegl_color_new (&color, NULL);
 
           node = gegl_node_new_child (NULL,
                                       "operation",       "gegl:cubism",
                                       "tile-size",       tile_size,
                                       "tile-saturation", tile_saturation,
-                                      "bg-color",        gegl_color,
+                                      "bg-color",        color,
                                       NULL);
-          g_object_unref (gegl_color);
+          g_object_unref (color);
 
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Cubism"),
@@ -2294,21 +2294,14 @@ plug_in_lens_distortion_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GeglNode  *node = NULL;
-          GimpRGB    color;
-          GeglColor *gegl_color;
+          GeglColor *color;
 
-          gimp_context_get_background (context, &color);
+          color = gegl_color_duplicate (gimp_context_get_background (context));
 
           if (gimp_drawable_has_alpha (drawable))
-            {
-              gimp_rgb_set_alpha (&color, 0.0);
-            }
+            gimp_color_set_alpha (color, 0.0);
           else
-            {
-              gimp_rgb_set_alpha (&color, 1.0);
-            }
-
-          gegl_color = gimp_gegl_color_new (&color, NULL);
+            gimp_color_set_alpha (color, 1.0);
 
           node =  gegl_node_new_child (NULL,
                                        "operation", "gegl:lens-distortion",
@@ -2318,10 +2311,10 @@ plug_in_lens_distortion_invoker (GimpProcedure         *procedure,
                                        "x-shift",    (gdouble) offset_x,
                                        "y-shift",    (gdouble) offset_y,
                                        "brighten",   (gdouble) brighten,
-                                       "background", gegl_color,
+                                       "background", color,
                                        NULL);
 
-          g_object_unref (gegl_color);
+          g_object_unref (color);
 
           node = wrap_in_selection_bounds (node, drawable);
 
@@ -2410,13 +2403,9 @@ plug_in_maze_invoker (GimpProcedure         *procedure,
           GeglNode  *node;
           GeglColor *fg_color;
           GeglColor *bg_color;
-          GimpRGB    color;
 
-          gimp_context_get_foreground (context, &color);
-          fg_color = gimp_gegl_color_new (&color, NULL);
-
-          gimp_context_get_background (context, &color);
-          bg_color = gimp_gegl_color_new (&color, NULL);
+          fg_color = gimp_context_get_foreground (context);
+          bg_color = gimp_context_get_background (context);
 
           node =  gegl_node_new_child (NULL,
                                        "operation",      "gegl:maze",
@@ -2428,9 +2417,6 @@ plug_in_maze_invoker (GimpProcedure         *procedure,
                                        "fg-color",       fg_color,
                                        "bg-color",       bg_color,
                                        NULL);
-
-          g_object_unref (fg_color);
-          g_object_unref (bg_color);
 
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Maze"),
@@ -2708,13 +2694,8 @@ plug_in_mosaic_invoker (GimpProcedure         *procedure,
 
           if (grout_color)
             {
-              GimpRGB fgcolor, bgcolor;
-
-              gimp_context_get_background (context, &bgcolor);
-              bg_color = gimp_gegl_color_new (&bgcolor, NULL);
-
-              gimp_context_get_foreground (context, &fgcolor);
-              fg_color = gimp_gegl_color_new (&fgcolor, NULL);
+              bg_color = gegl_color_duplicate (gimp_context_get_background (context));
+              fg_color = gegl_color_duplicate (gimp_context_get_foreground (context));
             }
           else
             {
@@ -3118,7 +3099,7 @@ plug_in_papertile_invoker (GimpProcedure         *procedure,
   gboolean wrap_around;
   gboolean centering;
   gint background_type;
-  GimpRGB background_color;
+  GeglColor *background_color;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 2));
   tile_size = g_value_get_int (gimp_value_array_index (args, 3));
@@ -3127,7 +3108,7 @@ plug_in_papertile_invoker (GimpProcedure         *procedure,
   wrap_around = g_value_get_boolean (gimp_value_array_index (args, 6));
   centering = g_value_get_boolean (gimp_value_array_index (args, 7));
   background_type = g_value_get_int (gimp_value_array_index (args, 8));
-  gimp_value_get_rgb (gimp_value_array_index (args, 9), &background_color);
+  background_color = g_value_get_object (gimp_value_array_index (args, 9));
 
   if (success)
     {
@@ -3136,48 +3117,49 @@ plug_in_papertile_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GeglNode  *node;
-          GimpRGB    color;
-          GeglColor *gegl_color;
+          GeglColor *color;
           gint       bg_type;
 
           switch (background_type)
             {
             default:
               bg_type = background_type;
-              gimp_rgba_set (&color, 0.0, 0.0, 1.0, 1.0);
+              color = gegl_color_new (NULL);
+              /* XXX: I guess what we want is to set this color (why blue?) in the
+               * drawable's space, though I haven't looked too much into it.
+               */
+              gegl_color_set_rgba_with_space (color, 0.0, 0.0, 1.0, 1.0, gimp_drawable_get_space (drawable));
               break;
 
             case 3:
               bg_type = 3;
-              gimp_context_get_foreground (context, &color);
+              color = gegl_color_duplicate (gimp_context_get_foreground (context));
               break;
 
             case 4:
               bg_type = 3;
-              gimp_context_get_background (context, &color);
+              color = gegl_color_duplicate (gimp_context_get_background (context));
               break;
 
             case 5:
               bg_type = 3;
-              color = background_color;
+              color = gegl_color_duplicate (background_color);
               break;
             }
-
-          gegl_color = gimp_gegl_color_new (&color, NULL);
 
           node = gegl_node_new_child (NULL,
                                       "operation",       "gegl:tile-paper",
                                       "tile-width",      tile_size,
                                       "tile-height",     tile_size,
                                       "move-rate",       move_max,
-                                      "bg-color",        gegl_color,
+                                      "bg-color",        color,
                                       "centering",       centering,
                                       "wrap-around",     wrap_around,
                                       "background-type", bg_type,
                                       "fractional-type", fractional_type,
                                       NULL);
 
-          g_object_unref (gegl_color);
+          g_object_unref (color);
 
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Paper Tile"),
@@ -3963,15 +3945,17 @@ plug_in_semiflatten_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
           gimp_drawable_has_alpha (drawable))
         {
-          GeglNode *node;
-          GimpRGB   color;
+          GeglNode  *node;
+          GeglColor *color;
+          GimpRGB    rgb;
 
-          gimp_context_get_background (context, &color);
+          color = gimp_context_get_background (context);
+          gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
 
           node =
             gegl_node_new_child (NULL,
                                  "operation", "gimp:semi-flatten",
-                                 "color",     &color,
+                                 "color",     &rgb,
                                  NULL);
 
           gimp_drawable_apply_operation (drawable, progress,
@@ -4047,8 +4031,8 @@ plug_in_sinus_invoker (GimpProcedure         *procedure,
   gboolean tiling;
   gboolean perturb;
   gint colors;
-  GimpRGB col1;
-  GimpRGB col2;
+  GeglColor *col1;
+  GeglColor *col2;
   gdouble alpha1;
   gdouble alpha2;
   gint blend;
@@ -4062,8 +4046,8 @@ plug_in_sinus_invoker (GimpProcedure         *procedure,
   tiling = g_value_get_boolean (gimp_value_array_index (args, 7));
   perturb = g_value_get_boolean (gimp_value_array_index (args, 8));
   colors = g_value_get_int (gimp_value_array_index (args, 9));
-  gimp_value_get_rgb (gimp_value_array_index (args, 10), &col1);
-  gimp_value_get_rgb (gimp_value_array_index (args, 11), &col2);
+  col1 = g_value_get_object (gimp_value_array_index (args, 10));
+  col2 = g_value_get_object (gimp_value_array_index (args, 11));
   alpha1 = g_value_get_double (gimp_value_array_index (args, 12));
   alpha2 = g_value_get_double (gimp_value_array_index (args, 13));
   blend = g_value_get_int (gimp_value_array_index (args, 14));
@@ -4076,28 +4060,30 @@ plug_in_sinus_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GeglNode  *node;
-          GeglColor *gegl_color1;
-          GeglColor *gegl_color2;
-          gint      x, y, width, height;
+          GeglColor *gegl_color1 = NULL;
+          GeglColor *gegl_color2 = NULL;
+          gint       x, y, width, height;
 
           switch (colors)
             {
             case 0:
-              gimp_rgb_set (&col1, 0.0, 0.0, 0.0);
-              gimp_rgb_set (&col2, 1.0, 1.0, 1.0);
+              gegl_color1 = gegl_color_new ("black");
+              gegl_color2 = gegl_color_new ("white");
               break;
 
             case 1:
-              gimp_context_get_foreground (context, &col1);
-              gimp_context_get_background (context, &col2);
+              gegl_color1 = gegl_color_duplicate (gimp_context_get_foreground (context));
+              gegl_color2 = gegl_color_duplicate (gimp_context_get_background (context));
               break;
             }
 
-          gimp_rgb_set_alpha (&col1, alpha1);
-          gimp_rgb_set_alpha (&col2, alpha2);
-
-          gegl_color1 = gimp_gegl_color_new (&col1, NULL);
-          gegl_color2 = gimp_gegl_color_new (&col2, NULL);
+          if (gegl_color1 == NULL)
+            {
+              gegl_color1 = gegl_color_duplicate (col1);
+              gegl_color2 = gegl_color_duplicate (col2);
+            }
+          gimp_color_set_alpha (gegl_color1, alpha1);
+          gimp_color_set_alpha (gegl_color2, alpha2);
 
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
 
@@ -4536,8 +4522,7 @@ plug_in_vpropagate_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GeglNode  *node;
-          GimpRGB    color;
-          GeglColor *gegl_color = NULL;
+          GeglColor *color      = NULL;
           gint       gegl_mode  = 0;
           gboolean   to_left    = (direction_mask & (0x1 << 0)) != 0;
           gboolean   to_top     = (direction_mask & (0x1 << 1)) != 0;
@@ -4561,16 +4546,14 @@ plug_in_vpropagate_invoker (GimpProcedure         *procedure,
                 {
                   gegl_mode = propagate_mode;
 
-                  gimp_context_get_foreground (context, &color);
+                  color = gimp_context_get_foreground (context);
                 }
               else
                 {
                   gegl_mode = 4;
 
-                  gimp_context_get_background (context, &color);
+                  color = gimp_context_get_background (context);
                 }
-
-              gegl_color = gimp_gegl_color_new (&color, NULL);
               break;
 
             case 6:
@@ -4586,7 +4569,7 @@ plug_in_vpropagate_invoker (GimpProcedure         *procedure,
                                  "lower-threshold",  (gdouble) lower_limit / 255.0,
                                  "upper-threshold",  (gdouble) upper_limit / 255.0,
                                  "rate",             propagating_rate,
-                                 "color",            gegl_color,
+                                 "color",            color,
                                  "top",              to_top,
                                  "left",             to_left,
                                  "right",            to_right,
@@ -4594,9 +4577,6 @@ plug_in_vpropagate_invoker (GimpProcedure         *procedure,
                                  "value",            value,
                                  "alpha",            alpha,
                                  NULL);
-
-          if (gegl_color)
-            g_object_unref (gegl_color);
 
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Value Propagate"),
@@ -7896,12 +7876,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                  0, 5, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("background-color",
-                                                    "background color",
-                                                    "Background color (for background-type == 5)",
-                                                    FALSE,
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
+                               gegl_param_spec_color ("background-color",
+                                                      "background color",
+                                                      "Background color (for background-type == 5)",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("background-alpha",
                                                  "background alpha",
@@ -8870,19 +8849,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                  0, 2, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("col1",
-                                                    "col1",
-                                                    "fist color (sometimes unused)",
-                                                    FALSE,
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
+                               gegl_param_spec_color ("col1",
+                                                      "col1",
+                                                      "fist color (sometimes unused)",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("col2",
-                                                    "col2",
-                                                    "second color (sometimes unused)",
-                                                    FALSE,
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
+                               gegl_param_spec_color ("col2",
+                                                      "col2",
+                                                      "second color (sometimes unused)",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("alpha1",
                                                     "alpha1",

@@ -249,15 +249,15 @@ HELP
     &pdb_misc;
 
     @outargs = (
-        { name => 'foreground', type => 'color', void_ret => 1,
+        { name => 'foreground', type => 'geglcolor',
           desc => 'The foreground color' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_context_get_foreground (context, &foreground);
-  gimp_rgb_set_alpha (&foreground, 1.0);
+  foreground = gegl_color_duplicate (gimp_context_get_foreground (context));
+  gimp_color_set_alpha (foreground, 1.0);
 }
 CODE
     );
@@ -301,15 +301,15 @@ HELP
     &pdb_misc;
 
     @outargs = (
-        { name => 'background', type => 'color', void_ret => 1,
+        { name => 'background', type => 'geglcolor',
           desc => 'The background color' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_context_get_background (context, &background);
-  gimp_rgb_set_alpha (&background, 1.0);
+  background = gegl_color_duplicate (gimp_context_get_background (context));
+  gimp_color_set_alpha (background, 1.0);
 }
 CODE
     );
@@ -3409,7 +3409,8 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h"
+@headers = qw(<cairo.h>
+              "core/gimp.h"
               "core/gimp-gradients.h"
               "core/gimpcontainer.h"
               "core/gimpdashpattern.h"
@@ -3419,6 +3420,7 @@ CODE
               "core/gimpmybrush.h"
               "core/gimpstrokeoptions.h"
               "paint/gimppaintoptions.h"
+              "libgimpcolor/gimpcolor.h"
               "libgimpconfig/gimpconfig.h"
               "plug-in/gimpplugin.h"
               "plug-in/gimpplugin-context.h"

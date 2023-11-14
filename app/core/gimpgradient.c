@@ -2195,32 +2195,39 @@ gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
 
 static void
 gimp_gradient_get_flat_color (GimpContext       *context,
-                              const GimpRGB     *color,
+                              const GimpRGB     *rgb,
                               GimpGradientColor  color_type,
                               GimpRGB           *flat_color)
 {
+  GeglColor *color = NULL;
+
   switch (color_type)
     {
     case GIMP_GRADIENT_COLOR_FIXED:
-      *flat_color = *color;
+      *flat_color = *rgb;
       break;
 
     case GIMP_GRADIENT_COLOR_FOREGROUND:
     case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
-      gimp_context_get_foreground (context, flat_color);
+      color = gegl_color_duplicate (gimp_context_get_foreground (context));
 
       if (color_type == GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
-        gimp_rgb_set_alpha (flat_color, 0.0);
+        gimp_color_set_alpha (color, 0.0);
       break;
 
     case GIMP_GRADIENT_COLOR_BACKGROUND:
     case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
-      gimp_context_get_background (context, flat_color);
+      color = gegl_color_duplicate (gimp_context_get_background (context));
 
       if (color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
-        gimp_rgb_set_alpha (flat_color, 0.0);
+        gimp_color_set_alpha (color, 0.0);
       break;
     }
+
+  if (color != NULL)
+    gegl_color_get_rgba_with_space (color, &flat_color->r, &flat_color->g, &flat_color->b, &flat_color->a, NULL);
+
+  g_clear_object (&color);
 }
 
 static inline gdouble

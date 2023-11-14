@@ -660,7 +660,7 @@ transfer_registration_color (GeglBuffer  *src,
                              GeglBuffer **dst,
                              gint         count)
 {
-  GimpRGB             color, test;
+  GeglColor          *color;
   GeglBufferIterator *gi;
   const Babl         *src_format;
   const Babl         *dst_format;
@@ -669,7 +669,7 @@ transfer_registration_color (GeglBuffer  *src,
   gint                i;
   gdouble             white;
 
-  gimp_context_get_foreground (&color);
+  color = gimp_context_get_foreground ();
   white = 1.0;
 
   src_format = gegl_buffer_get_format (src);
@@ -699,11 +699,13 @@ transfer_registration_color (GeglBuffer  *src,
 
       for (k = 0; k < gi->length; k++)
         {
-          gulong pos = k * src_bpp;
+          GeglColor *test;
+          gulong     pos = k * src_bpp;
 
-          gimp_rgba_set_pixel (&test, src_format, ((guchar *)src_data) + pos);
+          test = gegl_color_new (NULL);
+          gegl_color_set_pixel (test, src_format, ((guchar *)src_data) + pos);
 
-          if (gimp_rgb_distance (&test, &color) < 1e-6)
+          if (gimp_color_is_perceptually_identical (test, color))
             {
               for (j = 0; j < count; j++)
                 {
@@ -713,8 +715,12 @@ transfer_registration_color (GeglBuffer  *src,
                                 &white, (guchar *)data + (k * dst_bpp), 1);
                 }
             }
+
+          g_object_unref (test);
         }
     }
+
+  g_object_unref (color);
 }
 
 static void

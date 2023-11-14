@@ -669,14 +669,14 @@ save_image (GFile      *file,
   gint          colors, i;
   guchar       *cmap;
   guchar        bg;
-  guchar        red, green, blue;
+  guchar        rgb[3];
   gint          diff, sum, max;
   gint          offset_x, offset_y, xc, yc, xx, yy;
   guint         rows, cols, bytes;
   guchar       *src_row;
   guchar       *fb, *ofb;
   guchar        cm[768];
-  GimpRGB       background;
+  GeglColor    *background;
   s_fli_header  fli_header;
   gint          cnt;
   gint          from_frame;
@@ -721,8 +721,9 @@ save_image (GFile      *file,
       to_frame = n_frames;
     }
 
-  gimp_context_get_background (&background);
-  gimp_rgb_get_uchar (&background, &red, &green, &blue);
+  background = gimp_context_get_background ();
+  gegl_color_get_pixel (background, babl_format_with_space ("R'G'B' u8", NULL), rgb);
+  g_object_unref (background);
 
   switch (gimp_image_get_base_type (image))
     {
@@ -732,7 +733,7 @@ save_image (GFile      *file,
         {
           cm[i*3+0] = cm[i*3+1] = cm[i*3+2] = i;
         }
-      bg = GIMP_RGB_LUMINANCE (red, green, blue) + 0.5;
+      bg = GIMP_RGB_LUMINANCE (rgb[0], rgb[1], rgb[2]) + 0.5;
       break;
 
     case GIMP_INDEXED:
@@ -745,11 +746,11 @@ save_image (GFile      *file,
           cm[i*3+1] = cmap[i*3+1];
           cm[i*3+2] = cmap[i*3+2];
 
-          diff = red - cm[i*3+0];
+          diff = rgb[0] - cm[i*3+0];
           sum = SQR (diff);
-          diff = green - cm[i*3+1];
+          diff = rgb[1] - cm[i*3+1];
           sum +=  SQR (diff);
-          diff = blue - cm[i*3+2];
+          diff = rgb[1] - cm[i*3+2];
           sum += SQR (diff);
 
           if (sum < max)

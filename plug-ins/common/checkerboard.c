@@ -257,6 +257,7 @@ do_checkerboard_pattern (GObject      *config,
                          GimpPreview  *preview)
 {
   CheckerboardParam_t  param;
+  GeglColor           *color;
   GimpRGB              fg, bg;
   const Babl          *format;
   gint                 bpp;
@@ -269,8 +270,12 @@ do_checkerboard_pattern (GObject      *config,
                   "psychobily", &mode,
                   NULL);
 
-  gimp_context_get_background (&bg);
-  gimp_context_get_foreground (&fg);
+  color = gimp_context_get_background ();
+  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), &bg);
+  g_object_unref (color);
+  color = gimp_context_get_foreground ();
+  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), &fg);
+  g_object_unref (color);
 
   if (gimp_drawable_is_gray (drawable))
     {

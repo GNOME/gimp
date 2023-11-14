@@ -26,8 +26,8 @@
 #define GIMP_RGBA_EPSILON 1e-6
 
 
-typedef gboolean (* GimpGetColorFunc)      (GimpRGB *color);
-typedef void     (* GimpEnsureModulesFunc) (void);
+typedef GeglColor * (* GimpGetColorFunc)      (void);
+typedef void        (* GimpEnsureModulesFunc) (void);
 
 
 extern GimpHelpFunc          _gimp_standard_help_func;

@@ -452,6 +452,7 @@ dialog_update_preview (GtkWidget *widget,
   guchar             *buffer;
   GBytes             *cache;
   const guchar       *cache_start;
+  GeglColor          *color;
   GimpRGB             background;
   guchar              bg[4];
   gint                width;
@@ -471,10 +472,13 @@ dialog_update_preview (GtkWidget *widget,
                                             &width, &height, &bpp);
   p = cache_start = g_bytes_get_data (cache, NULL);
 
-  gimp_context_get_background (&background);
+  color = gimp_context_get_background ();
 
   if (bg_trans)
-    gimp_rgb_set_alpha (&background, 0.0);
+    gimp_color_set_alpha (color, 0.0);
+
+  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), &background);
+  g_object_unref (color);
 
   if (gimp_drawable_is_gray (drawable))
     {
@@ -580,7 +584,7 @@ apply_blinds (GObject      *config,
   guchar              *src_rows, *des_rows;
   gint                 bytes;
   gint                 x, y;
-  GimpRGB              background;
+  GeglColor           *background;
   guchar               bg[4];
   gint                 sel_x1, sel_y1;
   gint                 sel_width, sel_height;
@@ -592,12 +596,13 @@ apply_blinds (GObject      *config,
                 "orientation",    &orientation,
                 NULL);
 
-  gimp_context_get_background (&background);
+  background = gimp_context_get_background ();
 
   if (bg_trans)
-    gimp_rgb_set_alpha (&background, 0.0);
+    gimp_color_set_alpha (background, 0.0);
 
-  gimp_rgba_get_uchar (&background, bg, bg + 1, bg + 2, bg + 3);
+  gegl_color_get_pixel (background, babl_format_with_space ("R'G'B'A u8", NULL), bg);
+  g_object_unref (background);
 
   if (! gimp_drawable_mask_intersect (drawable,
                                       &sel_x1, &sel_y1,

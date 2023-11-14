@@ -78,10 +78,10 @@ static void   gimp_color_editor_set_context     (GimpDocked        *docked,
                                                  GimpContext       *context);
 
 static void   gimp_color_editor_fg_changed      (GimpContext       *context,
-                                                 const GimpRGB     *rgb,
+                                                 GeglColor         *color,
                                                  GimpColorEditor   *editor);
 static void   gimp_color_editor_bg_changed      (GimpContext       *context,
-                                                 const GimpRGB     *rgb,
+                                                 GeglColor         *color,
                                                  GimpColorEditor   *editor);
 static void   gimp_color_editor_color_changed   (GimpColorSelector *selector,
                                                  const GimpRGB     *rgb,
@@ -455,7 +455,7 @@ gimp_color_editor_set_context (GimpDocked  *docked,
 
   if (editor->context)
     {
-      GimpRGB rgb;
+      GeglColor *color;
 
       g_object_ref (editor->context);
 
@@ -481,13 +481,13 @@ gimp_color_editor_set_context (GimpDocked  *docked,
 
       if (editor->edit_bg)
         {
-          gimp_context_get_background (editor->context, &rgb);
-          gimp_color_editor_bg_changed (editor->context, &rgb, editor);
+          color = gimp_context_get_background (editor->context);
+          gimp_color_editor_bg_changed (editor->context, color, editor);
         }
       else
         {
-          gimp_context_get_foreground (editor->context, &rgb);
-          gimp_color_editor_fg_changed (editor->context, &rgb, editor);
+          color = gimp_context_get_foreground (editor->context);
+          gimp_color_editor_fg_changed (editor->context, color, editor);
         }
 
       g_object_set_data (G_OBJECT (context->gimp->config->color_management),
@@ -536,18 +536,20 @@ gimp_color_editor_style_updated (GtkWidget *widget)
 
 static void
 gimp_color_editor_set_color (GimpColorEditor *editor,
-                             const GimpRGB   *rgb)
+                             GeglColor       *color)
 {
+  GimpRGB rgb;
   GimpHSV hsv;
 
-  gimp_rgb_to_hsv (rgb, &hsv);
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  gimp_rgb_to_hsv (&rgb, &hsv);
 
   g_signal_handlers_block_by_func (editor->notebook,
                                    gimp_color_editor_color_changed,
                                    editor);
 
   gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (editor->notebook),
-                                 rgb, &hsv);
+                                 &rgb, &hsv);
 
   g_signal_handlers_unblock_by_func (editor->notebook,
                                      gimp_color_editor_color_changed,
@@ -558,7 +560,7 @@ gimp_color_editor_set_color (GimpColorEditor *editor,
                                    editor);
 
   gimp_color_hex_entry_set_color (GIMP_COLOR_HEX_ENTRY (editor->hex_entry),
-                                  rgb);
+                                  &rgb);
 
   g_signal_handlers_unblock_by_func (editor->hex_entry,
                                      gimp_color_editor_entry_changed,
@@ -567,20 +569,20 @@ gimp_color_editor_set_color (GimpColorEditor *editor,
 
 static void
 gimp_color_editor_fg_changed (GimpContext     *context,
-                              const GimpRGB   *rgb,
+                              GeglColor       *color,
                               GimpColorEditor *editor)
 {
   if (! editor->edit_bg)
-    gimp_color_editor_set_color (editor, rgb);
+    gimp_color_editor_set_color (editor, color);
 }
 
 static void
 gimp_color_editor_bg_changed (GimpContext     *context,
-                              const GimpRGB   *rgb,
+                              GeglColor       *color,
                               GimpColorEditor *editor)
 {
   if (editor->edit_bg)
-    gimp_color_editor_set_color (editor, rgb);
+    gimp_color_editor_set_color (editor, color);
 }
 
 static void
@@ -675,17 +677,17 @@ gimp_color_editor_fg_bg_notify (GtkWidget       *widget,
 
       if (editor->context)
         {
-          GimpRGB rgb;
+          GeglColor *color;
 
           if (edit_bg)
             {
-              gimp_context_get_background (editor->context, &rgb);
-              gimp_color_editor_bg_changed (editor->context, &rgb, editor);
+              color = gimp_context_get_background (editor->context);
+              gimp_color_editor_bg_changed (editor->context, color, editor);
             }
           else
             {
-              gimp_context_get_foreground (editor->context, &rgb);
-              gimp_color_editor_fg_changed (editor->context, &rgb, editor);
+              color = gimp_context_get_foreground (editor->context);
+              gimp_color_editor_fg_changed (editor->context, color, editor);
             }
         }
     }

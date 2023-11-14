@@ -1743,17 +1743,20 @@ save_image (GFile        *file,
 
   if (save_bkgd)
     {
-      GimpRGB color;
-      guchar  red, green, blue;
+      GeglColor *color;
+      GimpRGB    rgb;
+      guchar     c[3];
 
-      gimp_context_get_background (&color);
-      gimp_rgb_get_uchar (&color, &red, &green, &blue);
+      color = gimp_context_get_background ();
+      gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' u8", NULL), c);
+      gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), &rgb);
+      g_object_unref (color);
 
       background.index = 0;
-      background.red = red;
-      background.green = green;
-      background.blue = blue;
-      background.gray = gimp_rgb_luminance_uchar (&color);
+      background.red   = c[0];
+      background.green = c[1];
+      background.blue  = c[2];
+      background.gray  = gimp_rgb_luminance_uchar (&rgb);
       png_set_bKGD (pp, info, &background);
     }
 

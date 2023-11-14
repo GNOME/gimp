@@ -54,20 +54,23 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpText *gimp_text;
-  GimpRGB   color;
+  GimpText  *gimp_text;
+  GeglColor *color;
+  GimpRGB    rgb;
 
-  gimp_context_get_foreground (context, &color);
+  color = gimp_context_get_foreground (context);
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
   
   gimp_text = g_object_new (GIMP_TYPE_TEXT,
                             "text",           text,
                             "font",           font,
                             "font-size",      size,
                             "font-size-unit", unit,
-                            "color",          &color,
+                            "color",          &rgb,
                             NULL);
   
   layer = GIMP_TEXT_LAYER (gimp_text_layer_new (image, gimp_text));
+  g_object_unref (color);
   g_object_unref (gimp_text);
 
   if (! layer)

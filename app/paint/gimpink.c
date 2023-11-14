@@ -169,12 +169,13 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
     case GIMP_PAINT_STATE_INIT:
         {
           GimpContext *context = GIMP_CONTEXT (paint_options);
-          GimpRGB      foreground;
+          GeglColor   *foreground;
+          GimpRGB      rgb;
 
           gimp_symmetry_set_stateful (sym, TRUE);
-          gimp_context_get_foreground (context, &foreground);
-          gimp_palettes_add_color_history (context->gimp,
-                                           &foreground);
+          foreground = gimp_context_get_foreground (context);
+          gegl_color_get_pixel (foreground, babl_format_with_space ("R'G'B'A double", NULL), &rgb);
+          gimp_palettes_add_color_history (context->gimp, &rgb);
 
           if (cur_coords->x == last_coords.x &&
               cur_coords->y == last_coords.y)
@@ -352,7 +353,6 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   gint            paint_buffer_x;
   gint            paint_buffer_y;
   GimpLayerMode   paint_mode;
-  GimpRGB         foreground;
   GeglColor      *color;
   GimpBlob       *last_blob;
   GimpCoords      coords;
@@ -445,11 +445,8 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
     }
 
   paint_mode = gimp_context_get_paint_mode (context);
+  color      = gimp_context_get_foreground (context);
 
-  gimp_context_get_foreground (context, &foreground);
-  gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                     &foreground, &foreground);
-  color = gimp_gegl_color_new (&foreground, gimp_drawable_get_space (drawable));
   ink->blobs_to_render = blobs_to_render;
 
   for (i = 0; i < n_strokes; i++)
@@ -493,8 +490,6 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
                              GIMP_PAINT_CONSTANT);
 
     }
-
-  g_object_unref (color);
 
   g_list_free_full (blobs_to_render, g_free);
 }

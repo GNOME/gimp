@@ -129,7 +129,7 @@ gimp_color_panel_button_press (GtkWidget      *widget,
       GimpColorPanel     *color_panel;
       GSimpleActionGroup *group;
       GimpAction         *action;
-      GimpRGB             color;
+      GimpRGB             rgb;
 
       color_button = GIMP_COLOR_BUTTON (widget);
       color_panel  = GIMP_COLOR_PANEL (widget);
@@ -144,22 +144,26 @@ gimp_color_panel_button_press (GtkWidget      *widget,
 
       if (color_panel->context)
         {
+          GeglColor *color;
+
           action = GIMP_ACTION (g_action_map_lookup_action (G_ACTION_MAP (group), "use-foreground"));
-          gimp_context_get_foreground (color_panel->context, &color);
-          g_object_set (action, "color", &color, NULL);
+          color = gimp_context_get_foreground (color_panel->context);
+          gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
+          g_object_set (action, "color", &rgb, NULL);
 
           action = GIMP_ACTION (g_action_map_lookup_action (G_ACTION_MAP (group), "use-background"));
-          gimp_context_get_background (color_panel->context, &color);
-          g_object_set (action, "color", &color, NULL);
+          color = gegl_color_duplicate (gimp_context_get_background (color_panel->context));
+          gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
+          g_object_set (action, "color", &rgb, NULL);
         }
 
       action = GIMP_ACTION (g_action_map_lookup_action (G_ACTION_MAP (group), "use-black"));
-      gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-      g_object_set (action, "color", &color, NULL);
+      gimp_rgba_set (&rgb, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+      g_object_set (action, "color", &rgb, NULL);
 
       action = GIMP_ACTION (g_action_map_lookup_action (G_ACTION_MAP (group), "use-white"));
-      gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
-      g_object_set (action, "color", &color, NULL);
+      gimp_rgba_set (&rgb, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+      g_object_set (action, "color", &rgb, NULL);
     }
 
   if (GTK_WIDGET_CLASS (parent_class)->button_press_event)

@@ -40,9 +40,9 @@ gchar*                        gimp_context_get_paint_method               (void)
 gboolean                      gimp_context_set_paint_method               (const gchar                   *name);
 GimpStrokeMethod              gimp_context_get_stroke_method              (void);
 gboolean                      gimp_context_set_stroke_method              (GimpStrokeMethod               stroke_method);
-gboolean                      gimp_context_get_foreground                 (GimpRGB                       *foreground);
+GeglColor*                    gimp_context_get_foreground                 (void);
 gboolean                      gimp_context_set_foreground                 (GeglColor                     *foreground);
-gboolean                      gimp_context_get_background                 (GimpRGB                       *background);
+GeglColor*                    gimp_context_get_background                 (void);
 gboolean                      gimp_context_set_background                 (GeglColor                     *background);
 gboolean                      gimp_context_set_default_colors             (void);
 gboolean                      gimp_context_swap_colors                    (void);

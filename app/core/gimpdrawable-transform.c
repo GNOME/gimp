@@ -198,7 +198,7 @@ gimp_drawable_transform_buffer_flip (GimpDrawable         *drawable,
   if (clip_result && (new_x != orig_x || new_y != orig_y))
     {
       GimpRGB    bg;
-      GeglColor *color;
+      GeglColor *color = NULL;
       gint       clip_x, clip_y;
       gint       clip_width, clip_height;
 
@@ -209,17 +209,12 @@ gimp_drawable_transform_buffer_flip (GimpDrawable         *drawable,
        *  channels, and drawables with an alpha channel.
        */
       if (GIMP_IS_CHANNEL (drawable) || babl_format_has_alpha (format))
-        {
-          gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
-        }
+        gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
       else
-        {
-          gimp_context_get_background (context, &bg);
-          gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                             &bg, &bg);
-        }
+        color = gegl_color_duplicate (gimp_context_get_background (context));
 
-      color = gimp_gegl_color_new (&bg, gimp_drawable_get_space (drawable));
+      if (color == NULL)
+        color = gimp_gegl_color_new (&bg, gimp_drawable_get_space (drawable));
       gegl_buffer_set_color (new_buffer, NULL, color);
       g_object_unref (color);
 
@@ -459,7 +454,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
 
     {
       GimpRGB    bg;
-      GeglColor *color;
+      GeglColor *color = NULL;
       gint       clip_x, clip_y;
       gint       clip_width, clip_height;
 
@@ -474,17 +469,12 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
        *  channels, and drawables with an alpha channel.
        */
       if (GIMP_IS_CHANNEL (drawable) || babl_format_has_alpha (format))
-        {
-          gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
-        }
+        gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
       else
-        {
-          gimp_context_get_background (context, &bg);
-          gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                             &bg, &bg);
-        }
+        color = gegl_color_duplicate (gimp_context_get_background (context));
 
-      color = gimp_gegl_color_new (&bg, gimp_drawable_get_space (drawable));
+      if (color == NULL)
+        color = gimp_gegl_color_new (&bg, gimp_drawable_get_space (drawable));
       gegl_buffer_set_color (new_buffer, NULL, color);
       g_object_unref (color);
 

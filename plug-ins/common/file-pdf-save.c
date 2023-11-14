@@ -768,17 +768,18 @@ pdf_save_image (GimpProcedure        *procedure,
       if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layers[n_layers - 1])) &&
           fill_background_color)
         {
-          GimpRGB color;
+          GeglColor *color;
+          double     rgb[3];
 
           cairo_rectangle (cr, 0.0, 0.0,
                            gimp_image_get_width  (image),
                            gimp_image_get_height (image));
-          gimp_context_get_background (&color);
-          cairo_set_source_rgb (cr,
-                                color.r,
-                                color.g,
-                                color.b);
+          color = gimp_context_get_background ();
+          gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), rgb);
+          cairo_set_source_rgb (cr, rgb[0], rgb[1], rgb[2]);
           cairo_fill (cr);
+
+          g_object_unref (color);
         }
 
       /* Now, we should loop over the layers of each image */

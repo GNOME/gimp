@@ -4069,7 +4069,7 @@ static void   gimp_prop_color_area_notify   (GObject    *config,
 /**
  * gimp_prop_color_area_new:
  * @config:        Object to which property is attached.
- * @property_name: Name of RGB property.
+ * @property_name: Name of %GeglColor property.
  * @width:         Width of color area.
  * @height:        Height of color area.
  * @type:          How transparency is represented.
@@ -4090,10 +4090,11 @@ gimp_prop_color_area_new (GObject           *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *area;
-  GimpRGB    *value;
+  GeglColor  *value = NULL;
+  GimpRGB     rgb   = { 0 };
 
   param_spec = check_param_spec_w (config, property_name,
-                                   GIMP_TYPE_PARAM_RGB, G_STRFUNC);
+                                   GEGL_TYPE_PARAM_COLOR, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -4101,11 +4102,13 @@ gimp_prop_color_area_new (GObject           *config,
                 property_name, &value,
                 NULL);
 
-  area = gimp_color_area_new (value, type,
+  if (value != NULL)
+    gegl_color_get_pixel (value, babl_format ("R'G'B'A double"), &rgb);
+  area = gimp_color_area_new (&rgb, type,
                               GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
   gtk_widget_set_size_request (area, width, height);
 
-  g_free (value);
+  g_clear_object (&value);
 
   set_param_spec (G_OBJECT (area), area, param_spec);
 
@@ -4129,25 +4132,29 @@ gimp_prop_color_area_callback (GtkWidget *area,
                                GObject   *config)
 {
   GParamSpec *param_spec;
+  GeglColor  *color;
   GimpRGB     value;
 
   param_spec = get_param_spec (G_OBJECT (area));
   if (! param_spec)
     return;
 
+  color = gegl_color_new (NULL);
   gimp_color_area_get_color (GIMP_COLOR_AREA (area), &value);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &value);
 
   g_signal_handlers_block_by_func (config,
                                    gimp_prop_color_area_notify,
                                    area);
 
   g_object_set (config,
-                param_spec->name, &value,
+                param_spec->name, color,
                 NULL);
 
   g_signal_handlers_unblock_by_func (config,
                                      gimp_prop_color_area_notify,
                                      area);
+  g_object_unref (color);
 }
 
 static void
@@ -4155,19 +4162,21 @@ gimp_prop_color_area_notify (GObject    *config,
                              GParamSpec *param_spec,
                              GtkWidget  *area)
 {
-  GimpRGB *value;
+  GeglColor *color = NULL;
+  GimpRGB    value;
 
   g_object_get (config,
-                param_spec->name, &value,
+                param_spec->name, &color,
                 NULL);
 
   g_signal_handlers_block_by_func (area,
                                    gimp_prop_color_area_callback,
                                    config);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (area), value);
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &value);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (area), &value);
 
-  g_free (value);
+  g_clear_object (&color);
 
   g_signal_handlers_unblock_by_func (area,
                                      gimp_prop_color_area_callback,

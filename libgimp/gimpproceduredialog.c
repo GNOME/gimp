@@ -606,6 +606,7 @@ gimp_procedure_dialog_set_ok_label (GimpProcedureDialog *dialog,
  *         Please use gimp_procedure_dialog_get_color_widget() for a
  *         non-editable color area with a label.
  *     * %GIMP_TYPE_COLOR_BUTTON: a color button with no label.
+ * - %GEGL_TYPE_COLOR:
  *     * %GIMP_TYPE_COLOR_AREA: a color area with no label.
  * - %G_TYPE_PARAM_FILE:
  *     * %GTK_FILE_CHOOSER_BUTTON (default): generic file chooser button
@@ -755,7 +756,10 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
           gtk_widget_set_vexpand (widget, FALSE);
           gtk_widget_set_hexpand (widget, FALSE);
         }
-      else if (widget_type == GIMP_TYPE_COLOR_AREA)
+    }
+  else if (G_PARAM_SPEC_TYPE (pspec) == GEGL_TYPE_PARAM_COLOR)
+    {
+      if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_COLOR_AREA)
         {
           widget = gimp_prop_color_area_new (G_OBJECT (dialog->priv->config),
                                              property, 20, 20,

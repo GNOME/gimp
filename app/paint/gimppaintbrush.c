@@ -151,11 +151,12 @@ static gboolean
 gimp_paintbrush_real_get_color_history_color (GimpPaintbrush   *paintbrush,
                                               GimpDrawable     *drawable,
                                               GimpPaintOptions *paint_options,
-                                              GimpRGB          *color)
+                                              GimpRGB          *rgb)
 {
   GimpContext   *context    = GIMP_CONTEXT (paint_options);
   GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paintbrush);
   GimpDynamics  *dynamics   = gimp_context_get_dynamics (context);
+  GeglColor     *color;
 
   /* We don't save gradient color history and pixmap brushes
    * have no color to save.
@@ -166,7 +167,8 @@ gimp_paintbrush_real_get_color_history_color (GimpPaintbrush   *paintbrush,
       return FALSE;
     }
 
-  gimp_context_get_foreground (context, color);
+  color = gimp_context_get_foreground (context);
+  gegl_color_get_rgba_with_space (color, &rgb->r, &rgb->g, &rgb->b, &rgb->a, NULL);
 
   return TRUE;
 }
@@ -213,7 +215,10 @@ gimp_paintbrush_real_get_paint_params (GimpPaintbrush            *paintbrush,
   else
     {
       /* otherwise fill the area with the foreground color */
-      gimp_context_get_foreground (context, paint_color);
+      GeglColor *color;
+
+      color = gimp_context_get_foreground (context);
+      gegl_color_get_rgba_with_space (color, &paint_color->r, &paint_color->g, &paint_color->b, &paint_color->a, NULL);
 
       gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
                                          paint_color, paint_color);

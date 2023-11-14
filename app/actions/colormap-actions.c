@@ -147,8 +147,12 @@ colormap_actions_update (GimpActionGroup *group,
 
   if (context)
     {
-      gimp_context_get_foreground (context, &fg);
-      gimp_context_get_background (context, &bg);
+      GeglColor *color;
+
+      color = gimp_context_get_foreground (context);
+      gegl_color_get_rgba_with_space (color, &fg.r, &fg.g, &fg.b, &fg.a, NULL);
+      color = gimp_context_get_background (context);
+      gegl_color_get_rgba_with_space (color, &bg.r, &bg.g, &bg.b, &bg.a, NULL);
     }
 
 #define SET_SENSITIVE(action,condition) \

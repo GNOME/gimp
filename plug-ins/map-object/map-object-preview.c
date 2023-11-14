@@ -123,8 +123,13 @@ compute_preview (gint x,
     }
   else
     {
-      gimp_context_get_background (&background);
-      gimp_rgb_set_alpha (&background, 1.0);
+      GeglColor *gegl_color;
+
+      gegl_color = gimp_context_get_background ();
+      gimp_color_set_alpha (gegl_color, 1.0);
+      gegl_color_get_rgba_with_space (gegl_color, &background.r, &background.g, &background.b, &background.a, NULL);
+
+      g_object_unref (gegl_color);
     }
 
   gimp_rgba_set (&lightcheck,

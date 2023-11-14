@@ -54,6 +54,15 @@ GtkWidget * gimp_prop_color_button_new      (GObject       *config,
                                              gint           height,
                                              GimpColorAreaType  type);
 
+/*  GeglParamColor  */
+
+GtkWidget * gimp_prop_gegl_color_button_new (GObject       *config,
+                                             const gchar   *property_name,
+                                             const gchar   *title,
+                                             gint           width,
+                                             gint           height,
+                                             GimpColorAreaType  type);
+
 
 /*  GParamDouble  */
 

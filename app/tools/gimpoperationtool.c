@@ -494,19 +494,18 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
         }
       else if (sync_colors)
         {
+          GeglColor *color = NULL;
+          GimpRGB    rgb;
+
           if (HAS_KEY (pspec, "role", "color-primary"))
-            {
-              GimpRGB color;
-
-              gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
-              g_object_set (filter_tool->config, pspec->name, &color, NULL);
-            }
+            color = gimp_context_get_foreground (GIMP_CONTEXT (options));
           else if (sync_colors && HAS_KEY (pspec, "role", "color-secondary"))
-            {
-              GimpRGB color;
+            color = gimp_context_get_background (GIMP_CONTEXT (options));
 
-              gimp_context_get_background (GIMP_CONTEXT (options), &color);
-              g_object_set (filter_tool->config, pspec->name, &color, NULL);
+          if (color != NULL)
+            {
+              gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
+              g_object_set (filter_tool->config, pspec->name, &rgb, NULL);
             }
         }
     }

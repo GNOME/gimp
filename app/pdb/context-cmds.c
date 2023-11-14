@@ -249,13 +249,13 @@ context_get_foreground_invoker (GimpProcedure         *procedure,
                                 GError               **error)
 {
   GimpValueArray *return_vals;
-  GimpRGB foreground = { 0.0, 0.0, 0.0, 1.0 };
+  GeglColor *foreground = NULL;
 
-  gimp_context_get_foreground (context, &foreground);
-  gimp_rgb_set_alpha (&foreground, 1.0);
+  foreground = gegl_color_duplicate (gimp_context_get_foreground (context));
+  gimp_color_set_alpha (foreground, 1.0);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &foreground);
+  g_value_take_object (gimp_value_array_index (return_vals, 1), foreground);
 
   return return_vals;
 }
@@ -292,13 +292,13 @@ context_get_background_invoker (GimpProcedure         *procedure,
                                 GError               **error)
 {
   GimpValueArray *return_vals;
-  GimpRGB background = { 0.0, 0.0, 0.0, 1.0 };
+  GeglColor *background = NULL;
 
-  gimp_context_get_background (context, &background);
-  gimp_rgb_set_alpha (&background, 1.0);
+  background = gegl_color_duplicate (gimp_context_get_background (context));
+  gimp_color_set_alpha (background, 1.0);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &background);
+  g_value_take_object (gimp_value_array_index (return_vals, 1), background);
 
   return return_vals;
 }
@@ -3258,12 +3258,11 @@ register_context_procs (GimpPDB *pdb)
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("foreground",
-                                                        "foreground",
-                                                        "The foreground color",
-                                                        FALSE,
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                   gegl_param_spec_color ("foreground",
+                                                          "foreground",
+                                                          "The foreground color",
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3305,12 +3304,11 @@ register_context_procs (GimpPDB *pdb)
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("background",
-                                                        "background",
-                                                        "The background color",
-                                                        FALSE,
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                   gegl_param_spec_color ("background",
+                                                          "background",
+                                                          "The background color",
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

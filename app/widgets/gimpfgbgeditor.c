@@ -347,7 +347,6 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   gint             width, height;
   gint             default_w, default_h;
   gint             swap_w, swap_h;
-  GimpRGB          color;
 
   gtk_style_context_save (style);
 
@@ -435,20 +434,25 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
 
   if (editor->context)
     {
+      GeglColor *color;
+      GimpRGB    rgb;
+
       /*  draw the background frame  */
-      gimp_context_get_background (editor->context, &color);
+      color = gimp_context_get_background (editor->context);
+      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
       rect.x = width  - rect.width  - border.right;
       rect.y = height - rect.height - border.bottom;
-      gimp_fg_bg_editor_draw_color_frame (editor, cr, &color,
+      gimp_fg_bg_editor_draw_color_frame (editor, cr, &rgb,
                                           rect.x,     rect.y,
                                           rect.width, rect.height,
                                           -1,         -1);
 
       /*  draw the foreground frame  */
-      gimp_context_get_foreground (editor->context, &color);
+      color = gimp_context_get_foreground (editor->context);
+      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
       rect.x = border.left;
       rect.y = border.top;
-      gimp_fg_bg_editor_draw_color_frame (editor, cr, &color,
+      gimp_fg_bg_editor_draw_color_frame (editor, cr, &rgb,
                                           rect.x,     rect.y,
                                           rect.width, rect.height,
                                           +1,         +1);
@@ -742,24 +746,28 @@ gimp_fg_bg_editor_set_active (GimpFgBgEditor  *editor,
 
 static void
 gimp_fg_bg_editor_drag_color (GtkWidget *widget,
-                              GimpRGB   *color,
+                              GimpRGB   *rgb,
                               gpointer   data)
 {
   GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
+  GeglColor      *color  = NULL;
 
   if (editor->context)
     {
       switch (editor->active_color)
         {
         case GIMP_ACTIVE_COLOR_FOREGROUND:
-          gimp_context_get_foreground (editor->context, color);
+          color = gimp_context_get_foreground (editor->context);
           break;
 
         case GIMP_ACTIVE_COLOR_BACKGROUND:
-          gimp_context_get_background (editor->context, color);
+          color = gimp_context_get_background (editor->context);
           break;
         }
     }
+
+  if (color != NULL)
+    gegl_color_get_rgba_with_space (color, &rgb->r, &rgb->g, &rgb->b, &rgb->a, NULL);
 }
 
 static void

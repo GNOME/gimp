@@ -527,13 +527,15 @@ gimp_enum_get_value_name (GType enum_type,
 gboolean
 gimp_get_fill_params (GimpContext   *context,
                       GimpFillType   fill_type,
-                      GimpRGB       *color,
+                      GimpRGB       *rgb,
                       GimpPattern  **pattern,
                       GError       **error)
 
 {
+  GeglColor *color;
+
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
-  g_return_val_if_fail (color != NULL, FALSE);
+  g_return_val_if_fail (rgb != NULL, FALSE);
   g_return_val_if_fail (pattern != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -542,11 +544,13 @@ gimp_get_fill_params (GimpContext   *context,
   switch (fill_type)
     {
     case GIMP_FILL_FOREGROUND:
-      gimp_context_get_foreground (context, color);
+      color = gimp_context_get_foreground (context);
+      gegl_color_get_rgba_with_space (color, &rgb->r, &rgb->g, &rgb->b, &rgb->a, NULL);
       break;
 
     case GIMP_FILL_BACKGROUND:
-      gimp_context_get_background (context, color);
+      color = gimp_context_get_background (context);
+      gegl_color_get_rgba_with_space (color, &rgb->r, &rgb->g, &rgb->b, &rgb->a, NULL);
       break;
 
     case GIMP_FILL_CIELAB_MIDDLE_GRAY:
@@ -568,16 +572,16 @@ gimp_get_fill_params (GimpContext   *context,
         babl_process (babl_fish (babl_format ("CIE Lab float"), format),
                       cielab_pixel, pixel, 1);
 
-        gimp_rgba_set (color, pixel[0], pixel[1], pixel[2], GIMP_OPACITY_OPAQUE);
+        gimp_rgba_set (rgb, pixel[0], pixel[1], pixel[2], GIMP_OPACITY_OPAQUE);
       }
       break;
 
     case GIMP_FILL_WHITE:
-      gimp_rgba_set (color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+      gimp_rgba_set (rgb, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
       break;
 
     case GIMP_FILL_TRANSPARENT:
-      gimp_rgba_set (color, 0.0, 0.0, 0.0, GIMP_OPACITY_TRANSPARENT);
+      gimp_rgba_set (rgb, 0.0, 0.0, 0.0, GIMP_OPACITY_TRANSPARENT);
       break;
 
     case GIMP_FILL_PATTERN:
@@ -589,7 +593,8 @@ gimp_get_fill_params (GimpContext   *context,
                                _("No patterns available for this operation."));
 
           /*  fall back to BG fill  */
-          gimp_context_get_background (context, color);
+          color = gimp_context_get_background (context);
+          gegl_color_get_rgba_with_space (color, &rgb->r, &rgb->g, &rgb->b, &rgb->a, NULL);
 
           return FALSE;
         }

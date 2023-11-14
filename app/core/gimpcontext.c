@@ -58,8 +58,6 @@
 #include "gimp-intl.h"
 
 
-#define RGBA_EPSILON 1e-10
-
 typedef void (* GimpContextCopyPropFunc) (GimpContext *src,
                                           GimpContext *dest);
 
@@ -405,11 +403,8 @@ gimp_context_class_init (GimpContextClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpRGB          black;
-  GimpRGB          white;
-
-  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-  gimp_rgba_set (&white, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+  GeglColor       *black             = gegl_color_new ("black");
+  GeglColor       *white             = gegl_color_new ("white");
 
   gimp_context_signals[IMAGE_CHANGED] =
     g_signal_new ("image-changed",
@@ -454,7 +449,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   G_STRUCT_OFFSET (GimpContextClass, foreground_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_RGB | G_SIGNAL_TYPE_STATIC_SCOPE);
+                  GEGL_TYPE_COLOR);
 
   gimp_context_signals[BACKGROUND_CHANGED] =
     g_signal_new ("background-changed",
@@ -463,7 +458,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   G_STRUCT_OFFSET (GimpContextClass, background_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_RGB | G_SIGNAL_TYPE_STATIC_SCOPE);
+                  GEGL_TYPE_COLOR);
 
   gimp_context_signals[OPACITY_CHANGED] =
     g_signal_new ("opacity-changed",
@@ -666,19 +661,19 @@ gimp_context_class_init (GimpContextClass *klass)
                            GIMP_TYPE_PAINT_INFO,
                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, GIMP_CONTEXT_PROP_FOREGROUND,
-                        gimp_context_prop_names[GIMP_CONTEXT_PROP_FOREGROUND],
-                        _("Foreground"),
-                        _("Foreground color"),
-                         FALSE, &black,
-                        GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_COLOR (object_class, GIMP_CONTEXT_PROP_FOREGROUND,
+                          gimp_context_prop_names[GIMP_CONTEXT_PROP_FOREGROUND],
+                          _("Foreground"),
+                          _("Foreground color"),
+                          black,
+                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, GIMP_CONTEXT_PROP_BACKGROUND,
-                        gimp_context_prop_names[GIMP_CONTEXT_PROP_BACKGROUND],
-                        _("Background"),
-                        _("Background color"),
-                        FALSE, &white,
-                        GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_COLOR (object_class, GIMP_CONTEXT_PROP_BACKGROUND,
+                          gimp_context_prop_names[GIMP_CONTEXT_PROP_BACKGROUND],
+                          _("Background"),
+                          _("Background color"),
+                          white,
+                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, GIMP_CONTEXT_PROP_OPACITY,
                            gimp_context_prop_names[GIMP_CONTEXT_PROP_OPACITY],
@@ -770,6 +765,9 @@ gimp_context_class_init (GimpContextClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_TEMPLATE,
                                                         GIMP_PARAM_READWRITE));
+
+  g_object_unref (black);
+  g_object_unref (white);
 }
 
 static void
@@ -827,8 +825,8 @@ gimp_context_init (GimpContext *context)
   context->line_art            = NULL;
   context->line_art_timeout_id = 0;
 
-  context->foreground      = NULL;
-  context->background      = NULL;
+  context->foreground      = gegl_color_new ("black");
+  context->background      = gegl_color_new ("white");
 }
 
 static void
@@ -1058,24 +1056,10 @@ gimp_context_set_property (GObject      *object,
       gimp_context_set_paint_info (context, g_value_get_object (value));
       break;
     case GIMP_CONTEXT_PROP_FOREGROUND:
-        {
-          GeglColor *color = gegl_color_new ("black");
-          GimpRGB   *rgb   = g_value_get_boxed (value);
-
-          gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
-          gimp_context_set_foreground (context, color);
-          g_object_unref (color);
-        }
+      gimp_context_set_foreground (context, g_value_get_object (value));
       break;
     case GIMP_CONTEXT_PROP_BACKGROUND:
-        {
-          GeglColor *color = gegl_color_new ("black");
-          GimpRGB   *rgb   = g_value_get_boxed (value);
-
-          gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
-          gimp_context_set_background (context, color);
-          g_object_unref (color);
-        }
+      gimp_context_set_background (context, g_value_get_object (value));
       break;
     case GIMP_CONTEXT_PROP_OPACITY:
       gimp_context_set_opacity (context, g_value_get_double (value));
@@ -1148,20 +1132,10 @@ gimp_context_get_property (GObject    *object,
       g_value_set_object (value, gimp_context_get_paint_info (context));
       break;
     case GIMP_CONTEXT_PROP_FOREGROUND:
-      {
-        GimpRGB color;
-
-        gimp_context_get_foreground (context, &color);
-        g_value_set_boxed (value, &color);
-      }
+      g_value_take_object (value, gegl_color_duplicate (gimp_context_get_foreground (context)));
       break;
     case GIMP_CONTEXT_PROP_BACKGROUND:
-      {
-        GimpRGB color;
-
-        gimp_context_get_background (context, &color);
-        g_value_set_boxed (value, &color);
-      }
+      g_value_take_object (value, gegl_color_duplicate (gimp_context_get_background (context)));
       break;
     case GIMP_CONTEXT_PROP_OPACITY:
       g_value_set_double (value, gimp_context_get_opacity (context));
@@ -2307,14 +2281,12 @@ gimp_context_real_set_paint_info (GimpContext   *context,
 /*****************************************************************************/
 /*  foreground color  ********************************************************/
 
-void
-gimp_context_get_foreground (GimpContext *context,
-                             GimpRGB     *rgb)
+GeglColor *
+gimp_context_get_foreground (GimpContext *context)
 {
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (rgb != NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  gegl_color_get_rgba_with_space (context->foreground, &rgb->r, &rgb->g, &rgb->b, &rgb->a, NULL);
+  return context->foreground;
 }
 
 void
@@ -2322,7 +2294,7 @@ gimp_context_set_foreground (GimpContext *context,
                              GeglColor   *color)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (color != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
   context_find_defined (context, GIMP_CONTEXT_PROP_FOREGROUND);
 
@@ -2336,7 +2308,7 @@ gimp_context_foreground_changed (GimpContext *context)
 
   g_signal_emit (context,
                  gimp_context_signals[FOREGROUND_CHANGED], 0,
-                 &context->foreground);
+                 context->foreground);
 }
 
 static void
@@ -2359,15 +2331,12 @@ gimp_context_real_set_foreground (GimpContext *context,
 /*****************************************************************************/
 /*  background color  ********************************************************/
 
-void
-gimp_context_get_background (GimpContext *context,
-                             GimpRGB     *rgb)
+GeglColor *
+gimp_context_get_background (GimpContext *context)
 {
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  g_return_if_fail (rgb != NULL);
-
-  gegl_color_get_rgba_with_space (context->background, &rgb->r, &rgb->g, &rgb->b, &rgb->a, NULL);
+  return context->background;
 }
 
 void
@@ -2375,7 +2344,7 @@ gimp_context_set_background (GimpContext *context,
                              GeglColor   *color)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (color != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
   context_find_defined (context, GIMP_CONTEXT_PROP_BACKGROUND);
 
@@ -2389,7 +2358,7 @@ gimp_context_background_changed (GimpContext *context)
 
   g_signal_emit (context,
                  gimp_context_signals[BACKGROUND_CHANGED], 0,
-                 &context->background);
+                 context->background);
 }
 
 static void

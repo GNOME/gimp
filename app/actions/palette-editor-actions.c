@@ -145,8 +145,12 @@ palette_editor_actions_update (GimpActionGroup *group,
 
   if (data_editor->context)
     {
-      gimp_context_get_foreground (data_editor->context, &fg);
-      gimp_context_get_background (data_editor->context, &bg);
+      GeglColor *color;
+
+      color = gimp_context_get_foreground (data_editor->context);
+      gegl_color_get_rgba_with_space (color, &fg.r, &fg.g, &fg.b, &fg.a, NULL);
+      color = gimp_context_get_background (data_editor->context);
+      gegl_color_get_rgba_with_space (color, &bg.r, &bg.g, &bg.b, &bg.a, NULL);
     }
 
   edit_active = gimp_data_editor_get_edit_active (data_editor);

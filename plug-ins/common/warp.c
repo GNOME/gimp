@@ -332,7 +332,7 @@ warp_run (GimpProcedure        *procedure,
           gpointer              run_data)
 {
   GimpDrawable *drawable;
-  GimpRGB       color;
+  GeglColor    *color;
 
   gegl_init (NULL, NULL);
 
@@ -354,11 +354,9 @@ warp_run (GimpProcedure        *procedure,
     }
 
   /* get currently selected foreground pixel color */
-  gimp_context_get_foreground (&color);
-  gimp_rgb_get_uchar (&color,
-                      &color_pixel[0],
-                      &color_pixel[1],
-                      &color_pixel[2]);
+  color = gimp_context_get_foreground ();
+  gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), color_pixel);
+  g_object_unref (color);
 
   run_mode = _run_mode;
 

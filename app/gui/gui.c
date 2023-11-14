@@ -112,48 +112,48 @@
 
 /*  local function prototypes  */
 
-static gchar    * gui_sanity_check              (void);
-static void       gui_help_func                 (const gchar        *help_id,
-                                                 gpointer            help_data);
-static gboolean   gui_get_background_func       (GimpRGB            *color);
-static gboolean   gui_get_foreground_func       (GimpRGB            *color);
+static gchar     * gui_sanity_check              (void);
+static void        gui_help_func                 (const gchar        *help_id,
+                                                  gpointer            help_data);
+static GeglColor * gui_get_background_func       (void);
+static GeglColor * gui_get_foreground_func       (void);
 
-static void       gui_initialize_after_callback (Gimp               *gimp,
-                                                 GimpInitStatusFunc  callback);
+static void        gui_initialize_after_callback (Gimp               *gimp,
+                                                  GimpInitStatusFunc  callback);
 
-static void       gui_restore_callback          (Gimp               *gimp,
-                                                 GimpInitStatusFunc  callback);
-static void       gui_restore_after_callback    (Gimp               *gimp,
-                                                 GimpInitStatusFunc  callback);
+static void        gui_restore_callback          (Gimp               *gimp,
+                                                  GimpInitStatusFunc  callback);
+static void        gui_restore_after_callback    (Gimp               *gimp,
+                                                  GimpInitStatusFunc  callback);
 
-static gboolean   gui_exit_callback             (Gimp               *gimp,
-                                                 gboolean            force);
-static gboolean   gui_exit_after_callback       (Gimp               *gimp,
-                                                 gboolean            force);
+static gboolean    gui_exit_callback             (Gimp               *gimp,
+                                                  gboolean            force);
+static gboolean    gui_exit_after_callback       (Gimp               *gimp,
+                                                  gboolean            force);
 
-static void       gui_show_help_button_notify   (GimpGuiConfig      *gui_config,
-                                                 GParamSpec         *pspec,
-                                                 Gimp               *gimp);
-static void       gui_user_manual_notify        (GimpGuiConfig      *gui_config,
-                                                 GParamSpec         *pspec,
-                                                 Gimp               *gimp);
-static void       gui_single_window_mode_notify (GimpGuiConfig      *gui_config,
-                                                 GParamSpec         *pspec,
-                                                 GimpUIConfigurer   *ui_configurer);
+static void        gui_show_help_button_notify   (GimpGuiConfig      *gui_config,
+                                                  GParamSpec         *pspec,
+                                                  Gimp               *gimp);
+static void        gui_user_manual_notify        (GimpGuiConfig      *gui_config,
+                                                  GParamSpec         *pspec,
+                                                  Gimp               *gimp);
+static void        gui_single_window_mode_notify (GimpGuiConfig      *gui_config,
+                                                  GParamSpec         *pspec,
+                                                  GimpUIConfigurer   *ui_configurer);
 
-static void       gui_clipboard_changed         (Gimp               *gimp);
+static void        gui_clipboard_changed         (Gimp               *gimp);
 
-static void       gui_menu_show_tooltip         (GimpUIManager      *manager,
-                                                 const gchar        *tooltip,
-                                                 Gimp               *gimp);
-static void       gui_menu_hide_tooltip         (GimpUIManager      *manager,
-                                                 Gimp               *gimp);
+static void        gui_menu_show_tooltip         (GimpUIManager      *manager,
+                                                  const gchar        *tooltip,
+                                                  Gimp               *gimp);
+static void        gui_menu_hide_tooltip         (GimpUIManager      *manager,
+                                                  Gimp               *gimp);
 
-static void       gui_display_changed           (GimpContext        *context,
-                                                 GimpDisplay        *display,
-                                                 Gimp               *gimp);
+static void        gui_display_changed           (GimpContext        *context,
+                                                  GimpDisplay        *display,
+                                                  Gimp               *gimp);
 
-static void       gui_check_unique_accelerators (Gimp               *gimp);
+static void        gui_check_unique_accelerators (Gimp               *gimp);
 
 
 /*  private variables  */
@@ -411,26 +411,28 @@ gui_help_func (const gchar *help_id,
   gimp_help (the_gui_gimp, NULL, NULL, help_id);
 }
 
-static gboolean
-gui_get_foreground_func (GimpRGB *color)
+static GeglColor *
+gui_get_foreground_func (void)
 {
-  g_return_val_if_fail (color != NULL, FALSE);
+  GeglColor *color;
+
   g_return_val_if_fail (GIMP_IS_GIMP (the_gui_gimp), FALSE);
 
-  gimp_context_get_foreground (gimp_get_user_context (the_gui_gimp), color);
+  color = gimp_context_get_foreground (gimp_get_user_context (the_gui_gimp));
 
-  return TRUE;
+  return gegl_color_duplicate (color);
 }
 
-static gboolean
-gui_get_background_func (GimpRGB *color)
+static GeglColor *
+gui_get_background_func (void)
 {
-  g_return_val_if_fail (color != NULL, FALSE);
+  GeglColor *color;
+
   g_return_val_if_fail (GIMP_IS_GIMP (the_gui_gimp), FALSE);
 
-  gimp_context_get_background (gimp_get_user_context (the_gui_gimp), color);
+  color = gimp_context_get_background (gimp_get_user_context (the_gui_gimp));
 
-  return TRUE;
+  return gegl_color_duplicate (color);
 }
 
 static void

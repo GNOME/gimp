@@ -198,6 +198,14 @@ G_BEGIN_DECLS
                                    G_PARAM_READWRITE |\
                                    GIMP_CONFIG_PARAM_SERIALIZE))
 
+#define GIMP_CONFIG_PROP_COLOR(class, id, name, nick, blurb, default, flags) \
+  g_object_class_install_property (class, id,\
+                                   gegl_param_spec_color (name, nick, blurb,\
+                                   default,\
+                                   flags |\
+                                   G_PARAM_READWRITE |\
+                                   GIMP_CONFIG_PARAM_SERIALIZE))
+
 #define GIMP_CONFIG_PROP_BOXED(class, id, name, nick, blurb, boxed_type, flags) \
   g_object_class_install_property (class, id,\
                                    g_param_spec_boxed (name, nick, blurb,\

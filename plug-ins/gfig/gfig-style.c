@@ -648,7 +648,8 @@ void
 gfig_read_gimp_style (Style       *style,
                       const gchar *name)
 {
-  gint dummy;
+  GeglColor *color;
+  gint       dummy;
 
   if (!name)
     g_message ("Error: name is NULL in gfig_read_gimp_style.");
@@ -657,8 +658,12 @@ gfig_read_gimp_style (Style       *style,
     g_printerr ("Reading Gimp settings as style %s\n", name);
   style->name = g_strdup (name);
 
-  gimp_context_get_foreground (&style->foreground);
-  gimp_context_get_background (&style->background);
+  color = gimp_context_get_foreground ();
+  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), &style->foreground);
+  g_object_unref (color);
+  color = gimp_context_get_background ();
+  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), &style->background);
+  g_object_unref (color);
 
   style->brush    = gimp_context_get_brush ();
   style->gradient = gimp_context_get_gradient ();

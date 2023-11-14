@@ -785,8 +785,9 @@ save_image (GFile         *file,
   gint           Disposal;
   gchar         *layer_name;
 
-  GimpRGB        background;
-  guchar         bgred, bggreen, bgblue;
+  guchar         bgred   = 255;
+  guchar         bggreen = 255;
+  guchar         bgblue  = 255;
   guchar         bgindex = 0;
   guint          best_error = 0xFFFFFFFF;
 
@@ -882,22 +883,31 @@ save_image (GFile         *file,
     case GIMP_INDEXEDA_IMAGE:
       is_gif89 = TRUE;
     case GIMP_INDEXED_IMAGE:
-      cmap = gimp_image_get_colormap (image, NULL, &colors);
-
-      gimp_context_get_background (&background);
-      gimp_rgb_get_uchar (&background, &bgred, &bggreen, &bgblue);
-
-      for (i = 0; i < colors; i++)
         {
-          Red[i]   = *cmap++;
-          Green[i] = *cmap++;
-          Blue[i]  = *cmap++;
-        }
-      for ( ; i < 256; i++)
-        {
-          Red[i]   = bgred;
-          Green[i] = bggreen;
-          Blue[i]  = bgblue;
+          GeglColor *background;
+          guchar     bg[3];
+
+          cmap = gimp_image_get_colormap (image, NULL, &colors);
+
+          background = gimp_context_get_background ();
+          gegl_color_get_pixel (background, babl_format_with_space ("R'G'B' u8", NULL), bg);
+          g_object_unref (background);
+          bgred   = bg[0];
+          bggreen = bg[1];
+          bgblue  = bg[2];
+
+          for (i = 0; i < colors; i++)
+            {
+              Red[i]   = *cmap++;
+              Green[i] = *cmap++;
+              Blue[i]  = *cmap++;
+            }
+          for ( ; i < 256; i++)
+            {
+              Red[i]   = bgred;
+              Green[i] = bggreen;
+              Blue[i]  = bgblue;
+            }
         }
       break;
     case GIMP_GRAYA_IMAGE:

@@ -357,13 +357,7 @@ gimp_operation_offset_process (GeglOperation       *operation,
   gimp_operation_offset_get_offset (offset, FALSE, &x, &y);
 
   if (offset->type == GIMP_OFFSET_BACKGROUND && offset->context)
-    {
-      GimpRGB bg;
-
-      gimp_context_get_background (offset->context, &bg);
-
-      color = gimp_gegl_color_new (&bg, NULL);
-    }
+    color = gimp_context_get_background (offset->context);
 
   for (i = 0; i < 4; i++)
     {
@@ -397,8 +391,6 @@ gimp_operation_offset_process (GeglOperation       *operation,
             }
         }
     }
-
-  g_clear_object (&color);
 
   return TRUE;
 }

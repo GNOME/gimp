@@ -122,9 +122,9 @@ struct _GimpContextClass
                                GimpPaintInfo        *paint_info);
 
   void (* foreground_changed) (GimpContext          *context,
-                               GimpRGB              *color);
+                               GeglColor            *color);
   void (* background_changed) (GimpContext          *context,
-                               GimpRGB              *color);
+                               GeglColor            *color);
   void (* opacity_changed)    (GimpContext          *context,
                                gdouble               opacity);
   void (* paint_mode_changed) (GimpContext          *context,
@@ -246,16 +246,14 @@ void             gimp_context_paint_info_changed  (GimpContext     *context);
 
 
 /*  foreground color  */
-void             gimp_context_get_foreground       (GimpContext     *context,
-                                                    GimpRGB         *color);
+GeglColor      * gimp_context_get_foreground       (GimpContext     *context);
 void             gimp_context_set_foreground       (GimpContext     *context,
                                                     GeglColor       *color);
 void             gimp_context_foreground_changed   (GimpContext     *context);
 
 
 /*  background color  */
-void             gimp_context_get_background       (GimpContext     *context,
-                                                    GimpRGB         *color);
+GeglColor      * gimp_context_get_background       (GimpContext     *context);
 void             gimp_context_set_background       (GimpContext     *context,
                                                     GeglColor       *color);
 void             gimp_context_background_changed   (GimpContext     *context);

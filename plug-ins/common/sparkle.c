@@ -992,7 +992,7 @@ fspike (GObject      *config,
   gdouble        sfac;
   gint           i;
   gboolean       ok;
-  GimpRGB        gimp_color;
+  GeglColor     *gegl_color;
   guchar         pixel[MAX_CHANNELS];
   guchar         chosen_color[MAX_CHANNELS];
   guchar         color[MAX_CHANNELS];
@@ -1018,15 +1018,15 @@ fspike (GObject      *config,
       break;
 
     case FOREGROUND:
-      gimp_context_get_foreground (&gimp_color);
-      gimp_rgb_get_uchar (&gimp_color, &chosen_color[0], &chosen_color[1],
-                          &chosen_color[2]);
+      gegl_color = gimp_context_get_foreground ();
+      gegl_color_get_pixel (gegl_color, babl_format_with_space ("R'G'B' u8", NULL), chosen_color);
+      g_clear_object (&gegl_color);
       break;
 
     case BACKGROUND:
-      gimp_context_get_background (&gimp_color);
-      gimp_rgb_get_uchar (&gimp_color, &chosen_color[0], &chosen_color[1],
-                          &chosen_color[2]);
+      gegl_color = gimp_context_get_background ();
+      gegl_color_get_pixel (gegl_color, babl_format_with_space ("R'G'B' u8", NULL), chosen_color);
+      g_clear_object (&gegl_color);
       break;
     }
 

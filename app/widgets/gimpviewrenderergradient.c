@@ -69,7 +69,7 @@ gimp_view_renderer_gradient_init (GimpViewRendererGradient *renderer)
 
 static void
 gimp_view_renderer_gradient_fg_bg_changed (GimpContext      *context,
-                                           const GimpRGB    *color,
+                                           GeglColor        *color,
                                            GimpViewRenderer *renderer)
 {
 #if 0

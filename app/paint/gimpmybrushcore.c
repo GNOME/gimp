@@ -204,6 +204,7 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
   GimpContext     *context = GIMP_CONTEXT (paint_options);
   gint             offset_x;
   gint             offset_y;
+  GeglColor       *color;
   GimpRGB          fg;
 
   g_return_if_fail (g_list_length (drawables) == 1);
@@ -211,7 +212,8 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_INIT:
-      gimp_context_get_foreground (context, &fg);
+      color = gimp_context_get_foreground (context);
+      gegl_color_get_rgba_with_space (color, &fg.r, &fg.g, &fg.b, &fg.a, NULL);
       gimp_palettes_add_color_history (context->gimp, &fg);
       gimp_symmetry_set_stateful (sym, TRUE);
 
@@ -392,6 +394,7 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
 {
   GimpMybrushOptions *options = GIMP_MYBRUSH_OPTIONS (paint_options);
   GimpContext        *context = GIMP_CONTEXT (paint_options);
+  GeglColor          *color;
   GimpRGB             fg;
   GimpHSV             hsv;
   gint                n_strokes;
@@ -405,9 +408,11 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
     }
 
   if (options->eraser)
-    gimp_context_get_background (context, &fg);
+    color = gimp_context_get_background (context);
   else
-    gimp_context_get_foreground (context, &fg);
+    color = gimp_context_get_foreground (context);
+
+  gegl_color_get_rgba_with_space (color, &fg.r, &fg.g, &fg.b, &fg.a, NULL);
 
   gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
                                      &fg, &fg);

@@ -955,35 +955,48 @@ gimp_color_button_use_color (GAction         *action,
                              GimpColorButton *button)
 {
   const gchar *name;
-  GimpRGB      color;
+  GeglColor   *color = NULL;
+  GimpRGB      rgb;
 
   name = g_action_get_name (action);
-  gimp_color_button_get_color (button, &color);
+  gimp_color_button_get_color (button, &rgb);
 
   if (! strcmp (name, GIMP_COLOR_BUTTON_COLOR_FG))
     {
       if (_gimp_get_foreground_func)
-        _gimp_get_foreground_func (&color);
+        {
+          color = _gimp_get_foreground_func ();
+          gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), &rgb);
+        }
       else
-        gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
+        {
+          gimp_rgba_set (&rgb, 0.0, 0.0, 0.0, 1.0);
+        }
     }
   else if (! strcmp (name, GIMP_COLOR_BUTTON_COLOR_BG))
     {
       if (_gimp_get_background_func)
-        _gimp_get_background_func (&color);
+        {
+          color = _gimp_get_background_func ();
+          gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), &rgb);
+        }
       else
-        gimp_rgba_set (&color, 1.0, 1.0, 1.0, 1.0);
+        {
+          gimp_rgba_set (&rgb, 1.0, 1.0, 1.0, 1.0);
+        }
     }
   else if (! strcmp (name, GIMP_COLOR_BUTTON_COLOR_BLACK))
     {
-      gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
+      gimp_rgba_set (&rgb, 0.0, 0.0, 0.0, 1.0);
     }
   else if (! strcmp (name, GIMP_COLOR_BUTTON_COLOR_WHITE))
     {
-      gimp_rgba_set (&color, 1.0, 1.0, 1.0, 1.0);
+      gimp_rgba_set (&rgb, 1.0, 1.0, 1.0, 1.0);
     }
 
-  gimp_color_button_set_color (button, &color);
+  gimp_color_button_set_color (button, &rgb);
+
+  g_clear_object (&color);
 }
 
 static void

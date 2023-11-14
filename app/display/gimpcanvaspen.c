@@ -193,11 +193,12 @@ gimp_canvas_pen_new (GimpDisplayShell  *shell,
                      const GimpVector2 *points,
                      gint               n_points,
                      GimpContext       *context,
-                     GimpActiveColor    color,
+                     GimpActiveColor    active_color,
                      gint               width)
 {
   GimpCanvasItem *item;
   GimpArray      *array;
+  GeglColor      *color = NULL;
   GimpRGB         rgb;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
@@ -207,16 +208,21 @@ gimp_canvas_pen_new (GimpDisplayShell  *shell,
   array = gimp_array_new ((const guint8 *) points,
                           n_points * sizeof (GimpVector2), TRUE);
 
-  switch (color)
+  switch (active_color)
     {
     case GIMP_ACTIVE_COLOR_FOREGROUND:
-      gimp_context_get_foreground (context, &rgb);
+      color = gimp_context_get_foreground (context);
       break;
 
     case GIMP_ACTIVE_COLOR_BACKGROUND:
-      gimp_context_get_background (context, &rgb);
+      color = gimp_context_get_background (context);
       break;
+
+    default:
+      g_return_val_if_reached (NULL);
     }
+
+  gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
 
   item = g_object_new (GIMP_TYPE_CANVAS_PEN,
                        "shell",  shell,

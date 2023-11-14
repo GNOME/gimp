@@ -161,7 +161,8 @@ gimp_fg_bg_view_draw (GtkWidget *widget,
   GtkBorder        border;
   GtkBorder        padding;
   GdkRectangle     rect;
-  GimpRGB          color;
+  GeglColor       *color;
+  GimpRGB          rgb;
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -190,17 +191,18 @@ gimp_fg_bg_view_draw (GtkWidget *widget,
 
   if (view->context)
     {
-      gimp_context_get_background (view->context, &color);
+      color = gimp_context_get_background (view->context);
+      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
 
       if (view->transform)
         gimp_color_transform_process_pixels (view->transform,
                                              babl_format ("R'G'B'A double"),
-                                             &color,
+                                             &rgb,
                                              babl_format ("R'G'B'A double"),
-                                             &color,
+                                             &rgb,
                                              1);
 
-      gimp_cairo_set_source_rgb (cr, &color);
+      gimp_cairo_set_source_rgb (cr, &rgb);
 
       cairo_rectangle (cr, rect.x, rect.y, rect.width, rect.height);
       cairo_fill (cr);
@@ -217,17 +219,18 @@ gimp_fg_bg_view_draw (GtkWidget *widget,
 
   if (view->context)
     {
-      gimp_context_get_foreground (view->context, &color);
+      color = gimp_context_get_foreground (view->context);
+      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
 
       if (view->transform)
         gimp_color_transform_process_pixels (view->transform,
                                              babl_format ("R'G'B'A double"),
-                                             &color,
+                                             &rgb,
                                              babl_format ("R'G'B'A double"),
-                                             &color,
+                                             &rgb,
                                              1);
 
-      gimp_cairo_set_source_rgb (cr, &color);
+      gimp_cairo_set_source_rgb (cr, &rgb);
 
       cairo_rectangle (cr, rect.x, rect.y, rect.width, rect.height);
       cairo_fill (cr);

@@ -46,10 +46,10 @@
 /*  local function prototypes  */
 
 static void   color_area_foreground_changed (GimpContext          *context,
-                                             const GimpRGB        *color,
+                                             GeglColor            *color,
                                              GimpColorDialog      *dialog);
 static void   color_area_background_changed (GimpContext          *context,
-                                             const GimpRGB        *color,
+                                             GeglColor            *color,
                                              GimpColorDialog      *dialog);
 
 static void   color_area_dialog_update      (GimpColorDialog      *dialog,
@@ -122,18 +122,21 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
 
 static void
 color_area_foreground_changed (GimpContext     *context,
-                               const GimpRGB   *color,
+                               GeglColor       *color,
                                GimpColorDialog *dialog)
 {
   if (edit_color == GIMP_ACTIVE_COLOR_FOREGROUND)
     {
+      GimpRGB rgb;
+
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
       g_signal_handlers_block_by_func (dialog,
                                        color_area_dialog_update,
                                        context);
 
       /* FIXME this should use GimpColorDialog API */
       gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
-                                      color);
+                                      &rgb);
 
       g_signal_handlers_unblock_by_func (dialog,
                                          color_area_dialog_update,
@@ -143,18 +146,21 @@ color_area_foreground_changed (GimpContext     *context,
 
 static void
 color_area_background_changed (GimpContext     *context,
-                               const GimpRGB   *color,
+                               GeglColor       *color,
                                GimpColorDialog *dialog)
 {
   if (edit_color == GIMP_ACTIVE_COLOR_BACKGROUND)
     {
+      GimpRGB rgb;
+
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
       g_signal_handlers_block_by_func (dialog,
                                        color_area_dialog_update,
                                        context);
 
       /* FIXME this should use GimpColorDialog API */
       gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
-                                      color);
+                                      &rgb);
 
       g_signal_handlers_unblock_by_func (dialog,
                                          color_area_dialog_update,
@@ -227,23 +233,28 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
                           GimpActiveColor  active_color,
                           GimpContext     *context)
 {
-  GimpRGB      color;
+  GeglColor   *color;
+  GimpRGB      rgb;
   const gchar *title;
 
   if (! color_dialog_active)
     {
-      gimp_context_get_foreground (context, &revert_fg);
-      gimp_context_get_background (context, &revert_bg);
+      color = gimp_context_get_foreground (context);
+      gegl_color_get_rgba_with_space (color, &revert_fg.r, &revert_fg.g, &revert_fg.b, &revert_fg.a, NULL);
+      color = gimp_context_get_background (context);
+      gegl_color_get_rgba_with_space (color, &revert_bg.r, &revert_bg.g, &revert_bg.b, &revert_bg.a, NULL);
     }
 
   if (active_color == GIMP_ACTIVE_COLOR_FOREGROUND)
     {
-      gimp_context_get_foreground (context, &color);
+      color = gimp_context_get_foreground (context);
+      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
       title = _("Change Foreground Color");
     }
   else
     {
-      gimp_context_get_background (context, &color);
+      color = gimp_context_get_background (context);
+      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
       title = _("Change Background Color");
     }
 
@@ -256,7 +267,7 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
                                             GTK_WIDGET (editor),
                                             gimp_dialog_factory_get_singleton (),
                                             "gimp-toolbox-color-dialog",
-                                            &color,
+                                            &rgb,
                                             TRUE, FALSE);
 
       g_signal_connect_object (color_dialog, "update",
@@ -279,7 +290,7 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
     }
 
   gtk_window_set_title (GTK_WINDOW (color_dialog), title);
-  gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (color_dialog), &color);
+  gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (color_dialog), &rgb);
 
   gtk_window_present (GTK_WINDOW (color_dialog));
   color_dialog_active = TRUE;
