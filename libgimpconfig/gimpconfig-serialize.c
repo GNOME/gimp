@@ -299,6 +299,44 @@ gimp_config_serialize_property (GimpConfig       *config,
           success = TRUE;
           gimp_config_writer_close (writer);
         }
+      else if (GIMP_VALUE_HOLDS_COLOR (&value))
+        {
+          GeglColor *color = g_value_get_object (&value);
+
+          gimp_config_writer_open (writer, param_spec->name);
+
+          if (color)
+            {
+              const gchar   *encoding;
+              const Babl    *format = gegl_color_get_format (color);
+              GBytes        *bytes  = gegl_color_get_bytes (color, format);
+              gconstpointer  data;
+              gsize          data_length;
+              guint8        *profile_data;
+              int            profile_length = 0;
+
+              encoding = babl_format_get_encoding (format);
+              gimp_config_writer_string (writer, encoding);
+
+              data = g_bytes_get_data (bytes, &data_length);
+
+              gimp_config_writer_printf (writer, "%lu", data_length);
+              gimp_config_writer_data (writer, data_length, data);
+
+              profile_data = (guint8 *) babl_space_get_icc (babl_format_get_space (format),
+                                                            &profile_length);
+              gimp_config_writer_printf (writer, "%u", profile_length);
+              if (profile_data)
+                gimp_config_writer_data (writer, profile_length, profile_data);
+            }
+          else
+            {
+              gimp_config_writer_printf (writer, "%s", "NULL");
+            }
+
+          success = TRUE;
+          gimp_config_writer_close (writer);
+        }
       else if (G_VALUE_HOLDS_OBJECT (&value) &&
                G_VALUE_TYPE (&value) != G_TYPE_FILE)
         {

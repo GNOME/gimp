@@ -101,6 +101,9 @@ static GTokenType  gimp_config_deserialize_parasite_value (GValue     *value,
 static GTokenType  gimp_config_deserialize_bytes          (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_color          (GValue     *value,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_any            (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
@@ -302,8 +305,9 @@ gimp_config_deserialize_property (GimpConfig *config,
     }
   else
     {
-      if (G_VALUE_HOLDS_OBJECT (&value) &&
-          G_VALUE_TYPE (&value) != G_TYPE_FILE)
+      if (G_VALUE_HOLDS_OBJECT (&value)        &&
+          G_VALUE_TYPE (&value) != G_TYPE_FILE &&
+          G_VALUE_TYPE (&value) != GEGL_TYPE_COLOR)
         {
           token = gimp_config_deserialize_object (&value,
                                                   config, prop_spec,
@@ -395,6 +399,10 @@ gimp_config_deserialize_value (GValue     *value,
   else if (prop_spec->value_type == G_TYPE_BYTES)
     {
       return gimp_config_deserialize_bytes (value, prop_spec, scanner);
+    }
+  else if (prop_spec->value_type == GEGL_TYPE_COLOR)
+    {
+      return gimp_config_deserialize_color (value, prop_spec, scanner);
     }
 
   /*  This fallback will only work for value_types that
@@ -1075,6 +1083,131 @@ gimp_config_deserialize_bytes (GValue     *value,
       bytes = g_bytes_new_take (data, data_length);
 
       g_value_take_boxed (value, bytes);
+    }
+  else
+    {
+      return G_TOKEN_INT;
+    }
+
+  return G_TOKEN_RIGHT_PAREN;
+}
+
+static GTokenType
+gimp_config_deserialize_color (GValue     *value,
+                               GParamSpec *prop_spec,
+                               GScanner   *scanner)
+{
+  GTokenType  token;
+
+  token = g_scanner_peek_next_token (scanner);
+
+  if (token == G_TOKEN_IDENTIFIER)
+    {
+      g_scanner_get_next_token (scanner);
+
+      if (g_ascii_strcasecmp (scanner->value.v_identifier, "null") != 0)
+        /* Do not fail the whole color parsing. Just output to stderr and assume
+         * a NULL color property.
+         */
+        g_printerr ("%s: expected NULL identifier for color property '%s', got '%s'. "
+                    "Assuming NULL instead.\n",
+                    G_STRFUNC, prop_spec->name, scanner->value.v_identifier);
+
+      g_value_set_object (value, NULL);
+    }
+  else if (token == G_TOKEN_STRING)
+    {
+      const Babl *format;
+      const Babl *space = NULL;
+      GeglColor  *color;
+      gchar      *encoding;
+      guint8     *data;
+      gint        data_length;
+      gint        profile_data_length;
+
+      if (! gimp_scanner_parse_string (scanner, &encoding))
+        return G_TOKEN_STRING;
+
+      if (! babl_format_exists (encoding))
+        {
+          g_scanner_error (scanner,
+                           "%s: format \"%s\" for color property '%s' is not a valid babl format.",
+                           G_STRFUNC, encoding, prop_spec->name);
+          g_free (encoding);
+          return G_TOKEN_NONE;
+        }
+
+      format = babl_format (encoding);
+      g_free (encoding);
+
+      if (! gimp_scanner_parse_int (scanner, &data_length))
+        return G_TOKEN_INT;
+
+      if (data_length != babl_format_get_bytes_per_pixel (format))
+        {
+          g_scanner_error (scanner,
+                           "%s: format \"%s\" expects %d bpp but color property '%s' was stored with %d bpp.",
+                           G_STRFUNC, babl_get_name (format),
+                           babl_format_get_bytes_per_pixel (format),
+                           prop_spec->name, data_length);
+          return G_TOKEN_NONE;
+        }
+
+      if (! gimp_scanner_parse_data (scanner, data_length, &data))
+        return G_TOKEN_STRING;
+
+      if (! gimp_scanner_parse_int (scanner, &profile_data_length))
+        {
+          g_free (data);
+          return G_TOKEN_INT;
+        }
+
+      if (profile_data_length > 0)
+        {
+          GimpColorProfile *profile;
+          guint8           *profile_data;
+          GError           *error = NULL;
+
+          if (! gimp_scanner_parse_data (scanner, profile_data_length, &profile_data))
+            {
+              g_free (data);
+              return G_TOKEN_STRING;
+            }
+
+          profile = gimp_color_profile_new_from_icc_profile (profile_data, profile_data_length, &error);
+
+          if (profile)
+            {
+              space = gimp_color_profile_get_space (profile,
+                                                    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                    &error);
+
+              if (! space)
+                {
+                  g_scanner_error (scanner,
+                                   "%s: failed to create Babl space for color property '%s' from profile: %s\n",
+                                   G_STRFUNC, prop_spec->name, error->message);
+                  g_clear_error (&error);
+                }
+              g_object_unref (profile);
+            }
+          else
+            {
+              g_scanner_error (scanner,
+                               "%s: invalid profile data for color property '%s': %s",
+                               G_STRFUNC, prop_spec->name, error->message);
+              g_error_free (error);
+            }
+          format = babl_format_with_space (babl_format_get_encoding (format), space);
+
+          g_free (profile_data);
+        }
+
+      color = gegl_color_new (NULL);
+      gegl_color_set_pixel (color, format, data);
+      g_value_take_object (value, color);
+
+      g_free (data);
     }
   else
     {
