@@ -4682,11 +4682,12 @@ check_param_spec (GObject     *object,
 
   if (param_spec && ! g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), type))
     {
-      g_warning ("%s: property '%s' of %s is not a %s",
+      g_warning ("%s: property '%s' of %s is not a %s but a %s",
                  strloc,
                  param_spec->name,
                  g_type_name (param_spec->owner_type),
-                 g_type_name (type));
+                 g_type_name (type),
+                 g_type_name (G_TYPE_FROM_INSTANCE (param_spec)));
       return NULL;
     }
 
