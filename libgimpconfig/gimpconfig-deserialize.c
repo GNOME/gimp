@@ -1101,7 +1101,23 @@ gimp_config_deserialize_color (GValue     *value,
 
   token = g_scanner_peek_next_token (scanner);
 
-  if (token == G_TOKEN_IDENTIFIER)
+  if (token == G_TOKEN_LEFT_PAREN)
+    {
+      GeglColor *color;
+      GimpRGB    rgb;
+
+      /* Support historical GimpRGB format which may be stored in various config
+       * files, but even some data (such as GTP tool presets which contains
+       * tool-options which are GimpContext).
+       */
+      if (! gimp_scanner_parse_color (scanner, &rgb))
+        return G_TOKEN_NONE;
+
+      color = gegl_color_new (NULL);
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+      g_value_take_object (value, color);
+    }
+  else if (token == G_TOKEN_IDENTIFIER)
     {
       g_scanner_get_next_token (scanner);
 
