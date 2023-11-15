@@ -1031,6 +1031,7 @@ gimp_config_deserialize_parasite_value (GValue     *value,
     return G_TOKEN_STRING;
 
   parasite = gimp_parasite_new (name, flags, data_length, data);
+  g_free (data);
 
   g_value_take_boxed (value, parasite);
 
@@ -1071,7 +1072,7 @@ gimp_config_deserialize_bytes (GValue     *value,
       if (! gimp_scanner_parse_data (scanner, data_length, &data))
         return G_TOKEN_STRING;
 
-      bytes = g_bytes_new (data, data_length);
+      bytes = g_bytes_new_take (data, data_length);
 
       g_value_take_boxed (value, bytes);
     }
