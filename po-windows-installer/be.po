@@ -1,0 +1,413 @@
+# Belarusian translation for gimp.
+# Copyright (C) 2023 gimp's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gimp package.
+# Yuras Shumovich <shumovichy@gmail.com>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2023-11-16 01:43+0000\n"
+"PO-Revision-Date: 2023-11-16 05:40+0300\n"
+"Last-Translator: Yuras Shumovich <shumovichy@gmail.com>\n"
+"Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
+"Language: be\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.4.1\n"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:1
+msgid "License Agreement"
+msgstr "Ліцэнзійнае пагадненне"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:2
+msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
+msgstr ""
+"Праграму ўсталявання сабраў Ерней Сімончыч (Jernej Simončič), jernej-"
+"gimp@ena.si"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:3
+msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgstr ""
+"Гэтай версіі GIMP патрабуецца Windows 7 або любая пазнейшая версія Windows."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:4
+msgid "Development version"
+msgstr "Версія для распрацоўкі"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:6
+#, no-c-format
+msgid ""
+"This is a development version of GIMP where some features may not be "
+"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"day-to-day work as it may be unstable, and you could lose your work.%nIf you "
+"encounter any problems, first verify that they haven't already been fixed in "
+"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"installation anyway?"
+msgstr ""
+"Гэта версія для распрацоўкі GIMP, некаторыя функцыі могуць быць "
+"незавершанымі або нестабільнымі.%nГэтая версія GIMP не прызначана для "
+"штодзённай працы, бо з-за нестабільнасці, вынікі працы могуць быць страчаны."
+"%nКалі вы сутыкнуліся з нейкімі праблемамі, спачатку трэба ўпэўніцца, што іх "
+"не выправілі на GIT і толькі пасля паведамляць аб праблемах распрацоўшчыкам "
+"GIMP на gitlab:%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nУсё роўна "
+"працягваць усталяванне?"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:7
+msgid "&Continue"
+msgstr "&Працягнуць"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:8
+msgid "Exit"
+msgstr "Выйсці"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:9
+msgid ""
+"This version of GIMP requires a processor that supports SSE instructions."
+msgstr "Гэтай версіі GIMP патрабуецца працэсар з падтрымкай інструкцый SSE."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:10
+msgid "Display settings problem"
+msgstr "Праблема з наладамі дысплэя"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:11
+msgid ""
+"Setup has detected that your Windows is not running in 32 bits-per-pixel "
+"display mode. This has been known to cause stability problems with GIMP, so "
+"it's recommended to change the display colour depth to 32BPP before "
+"continuing."
+msgstr ""
+"Праграма ўсталявання выявіла, што ваша сістэма Windows запушчана не ў рэжыме "
+"адлюстравання 32bpp. вядома, што гэта можа выклікаць нестабільную працу "
+"GIMP, таму, перш чым працягваць, рэкамендуецца змяніць глыбіню колеру на "
+"32bpp."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:12
+msgid "E&xit"
+msgstr "&Выхад"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:13
+msgid ""
+"GIMP is now ready to be installed. Click the Install now button to install "
+"using the default settings, or click the Customize button if you'd like to "
+"have more control over what gets installed."
+msgstr ""
+"Цяпер GIMP гатовы да ўсталявання. Каб усталяваць праграму з прадвызначанымі "
+"наладамі, націсніце кнопку «Усталяваць», або націсніце «Наладзіць», каб "
+"выбраць пэўныя кампаненты."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:14
+msgid "&Install"
+msgstr "&Усталяваць"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:15
+msgid "&Customize"
+msgstr "&Наладзіць"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:16
+msgid "Compact installation"
+msgstr "Кампактнае ўсталяванне"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:17
+msgid "Custom installation"
+msgstr "Выбарачнае ўсталяванне"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:18
+msgid "Full installation"
+msgstr "Поўнае ўсталяванне"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:19
+msgid "Description"
+msgstr "Апісанне"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:20
+msgid "GIMP"
+msgstr "GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:21
+msgid "GIMP and all default plug-ins"
+msgstr "GIMP і ўсе прадвызначаныя ўбудовы"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:22
+msgid "Run-time libraries"
+msgstr "Бібліятэкі праграмы"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:23
+msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
+msgstr ""
+"Бібліятэкі, якія выкарыстоўвае GIMP, у тым ліку асяроддзе выканання GTK+"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:24
+msgid "Debug symbols"
+msgstr "Адладачныя сімвалы"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:25
+msgid "Include information to help with debugging GIMP"
+msgstr "Уключыць інфармацыю, якая дапамагае з адладкай GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:26
+msgid "MS-Windows engine for GTK+"
+msgstr "Рухавік MS Windows для GTK+"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:27
+msgid "Native Windows look for GIMP"
+msgstr "Уласнасістэмны выгляд Windows для GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:28
+msgid "Support for old plug-ins"
+msgstr "Падтрымка старых убудоў"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:29
+msgid "Install libraries needed by old third-party plug-ins"
+msgstr "Усталяваць бібліятэкі, патрэбныя старым убудовам з пабочных крыніц"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:30
+msgid "Translations"
+msgstr "Пераклады"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:31
+msgid "Python scripting"
+msgstr "Скрыпты Python"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:32
+msgid "Allows you to use GIMP plugins written in Python scripting language."
+msgstr "Дазваляе выкарыстоўваць убудовы напісаныя на мове скрыптоў Python."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:33
+msgid "Lua scripting"
+msgstr "Скрыпты Lua"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:34
+msgid "Allows you to use GIMP plugins written in Lua scripting language."
+msgstr "Дазваляе выкарыстоўваць убудовы напісаныя на мове скрыптоў Lua."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:35
+msgid "MyPaint brushes"
+msgstr "Пэндзлі MyPaint"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:36
+msgid "Install the default set of MyPaint brushes"
+msgstr "Усталяваць прадвызначаны набор пэндзляў MyPaint"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:37
+msgid "PostScript support"
+msgstr "Падтрымка PostScript"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:38
+msgid "Allow GIMP to load PostScript files"
+msgstr "Дазваляе GIMP загружаць файлы PostScript"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:39
+msgid "Support for 32-bit plug-ins"
+msgstr "Падтрымка 32-бітных убудоў"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:41
+#, no-c-format
+msgid ""
+"Include files necessary for using 32-bit plug-ins.%nRequired for Python "
+"support."
+msgstr ""
+"Уключыць файлы, неабходныя для выкарыстання 32-бітных плагінаў.%nПатрабуюцца "
+"для падтрымкі Python."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:42
+msgid "Additional icons:"
+msgstr "Дадатковыя значкі:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:43
+msgid "Create a &desktop icon"
+msgstr "Стварыць значок на працоўным &стале"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:44
+msgid "Create a &Quick Launch icon"
+msgstr "Стварыць значок на &панэлі хуткага запуску"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:45
+msgid "Remove previous GIMP version"
+msgstr "Выдаліць папярэднюю версію GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:47
+#, no-c-format
+msgid ""
+"There was a problem updating GIMP's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing GIMP."
+msgstr ""
+"Узнікла праблема падчас абнаўлення асяроддзя GIMP у %1. Калі вы атрымаеце "
+"памылкі падчас загрузкі ўбудоў, паспрабуйце выдаліць GIMP і потым зноў "
+"ўсталяваць."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:48
+msgid "Error extracting temporary data."
+msgstr "Памылка вымання часовых даных."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:49
+msgid "Error updating Python interpreter info."
+msgstr "Памылка абнаўлення інфармацыі пра інтэрпрэтатар Python."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:50
+msgid "Error updating MyPaint brushes info."
+msgstr "Памылка абнаўлення інфармацыі пра пэндзлі MyPaint."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:52
+#, no-c-format
+msgid "There was an error updating %1."
+msgstr "Узнікла памылка падчас абнаўлення %1."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:54
+#, no-c-format
+msgid "There was an error updating GIMP's configuration file %1."
+msgstr "Узнікла памылка падчас абнаўлення файла канфігурацыі GIMP %1."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:55
+msgid "Edit with GIMP"
+msgstr "Змяніць праз GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:56
+msgid "Select file associations"
+msgstr "Суаднясенне з файламі"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:57
+msgid "Extensions:"
+msgstr "Пашырэнні:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:58
+msgid "Select the file types you wish to associate with GIMP"
+msgstr "Выберыце тыпы файлаў, якія вы хочаце суаднесці з GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:59
+msgid ""
+"This will make selected files open in GIMP when you double-click them in "
+"Explorer."
+msgstr ""
+"Такім чынам выбраныя файлы, пры падвойным націсканні ў Правадніку, будуць "
+"адкрывацца праз GIMP."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:60
+msgid "Select &All"
+msgstr "Вылучыць &усе"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:61
+msgid "Unselect &All"
+msgstr "Зняць вылучэнне з &усіх"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:62
+msgid "Select &Unused"
+msgstr "Вылучыць &нявыкарыстаныя"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:63
+msgid "File types to associate with GIMP:"
+msgstr "Тыпы файлаў, суаднесеныя GIMP:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:64
+msgid "Removing previous version of GIMP:"
+msgstr "Выдаленне папярэдняй версіі GIMP:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:66
+#, no-c-format
+msgid ""
+"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"the automatic uninstall of old version has failed.%n%nPlease remove the "
+"previous version of GIMP yourself before installing this version in %2, or "
+"choose a Custom install, and select a different installation folder.%n%nThe "
+"Setup will now exit."
+msgstr ""
+"Немагчыма ўсталяваць GIMP %1 на ўсталяваную ў цяперашні час версію, і не "
+"ўдалося выдаліць старую версію аўтаматычна.%n%nПерш чым усталяваць у %2 "
+"гэтую версію GIMP, выдаліце ўручную папярэднюю, або націсніце кнопку "
+"«Наладзіць» і выберыце іншую папку ўсталявання.%n%nЗараз праграма "
+"ўсталявання завершыць працу."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:68
+#, no-c-format
+msgid ""
+"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"Setup couldn't determine how to remove the old version automatically."
+"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+"before installing this version in %2, or choose a Custom install, and select "
+"a different installation folder.%n%nThe Setup will now exit."
+msgstr ""
+"Немагчыма ўсталяваць GIMP %1 на ўсталяваную ў цяперашні час версію, і "
+"праграма ўсталявання не можа вызначыць як выдаліць старую версію аўтаматычна."
+"%n%nПерш чым усталяваць у %2 гэтую версію GIMP, выдаліце ўручную папярэднюю "
+"версію і ўсе ўбудовы,, або націсніце кнопку «Наладзіць» і выберыце іншую "
+"папку ўсталявання.%n%nЗараз праграма ўсталявання завершыць працу."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:70
+#, no-c-format
+msgid ""
+"Previous GIMP version was removed successfully, but Windows has to be "
+"restarted before the Setup can continue.%n%nAfter restarting your computer, "
+"Setup will continue next time an administrator logs in."
+msgstr ""
+"Папярэдняя версія GIMP паспяхова выдалена, але патрабуецца перазапусціць "
+"Windows, каб працягнуць ўсталяванне.%n%nПасля перазапуску камп'ютара, "
+"ўсталяванне працягнецца, калі адміністратар увойдзе ў сістэму."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:72
+#, no-c-format
+msgid "There was an error restarting the Setup. (%1)"
+msgstr "Узнікла памылка падчас паўторнага запуску праграмы ўсталявання (%1)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:73
+msgid "Cleaning up old files..."
+msgstr "Ачыстка старых файлаў..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:75
+#, no-c-format
+msgid "Remember: GIMP is Free Software.%n%nPlease visit"
+msgstr "Помніце, GIMP – свабоднае праграмнае забеспячэнне.%n%nНаведайце сайт"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:76
+msgid "for free updates."
+msgstr "дзеля бясплатных абнаўленняў."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:77
+msgid "Setting up file associations..."
+msgstr "Наладжваецца суаднясенне з тыпамі файлаў..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:78
+msgid "Setting up environment for GIMP Python extension..."
+msgstr "Наладжваецца асяроддзе для ўбудоў GIMP, напісаных на Python..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:79
+msgid "Setting up MyPaint brushes..."
+msgstr "Наладжваюцца пэндзлі MyPaint."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:80
+msgid "Setting up GIMP environment..."
+msgstr "Наладжваецца асяроддзе GIMP..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:81
+msgid "Setting up GIMP configuration for 32-bit plug-in support..."
+msgstr "Наладжваецца канфігурацыя GIMP для падтрымкі 32-бітных убудоў..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:82
+msgid "Launch GIMP"
+msgstr "Запусціць GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:83
+msgid "Removing add-on"
+msgstr "Выдаленне дадатковых кампанентаў"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:85
+#, no-c-format
+msgid "Internal error (%1)."
+msgstr "Унутраная памылка (%1)."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:86
+msgid ""
+"GIMP does not appear to be installed in the selected directory. Continue "
+"anyway?"
+msgstr ""
+"Падобна, што GIMP не ўсталяваны ў выбраным каталогу. Усё роўна працягнуць?"
+
+#~ msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
+#~ msgstr ""
+#~ "Бібліятэкі, якія выкарыстоўвае GIMP, у тым ліку асяроддзе выканання GTK"
+
+#~ msgid "MS-Windows engine for GTK"
+#~ msgstr "Рухавік MS Windows для GTK"
