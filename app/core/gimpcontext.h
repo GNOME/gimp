@@ -224,6 +224,12 @@ void             gimp_context_set_image           (GimpContext     *context,
 void             gimp_context_image_changed       (GimpContext     *context);
 
 
+const Babl *     gimp_context_get_rgba_format     (GimpContext     *context,
+                                                   GeglColor       *color,
+                                                   const gchar     *babl_type,
+                                                   GimpImage      **space_image);
+
+
 /*  display  */
 GimpDisplay    * gimp_context_get_display         (GimpContext     *context);
 void             gimp_context_set_display         (GimpContext     *context,

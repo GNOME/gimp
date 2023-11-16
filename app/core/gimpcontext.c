@@ -32,6 +32,8 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "gimp.h"
 #include "gimp-memsize.h"
 #include "gimpbrush.h"
@@ -1911,6 +1913,111 @@ gimp_context_image_changed (GimpContext *context)
   g_signal_emit (context,
                  gimp_context_signals[IMAGE_CHANGED], 0,
                  context->image);
+}
+
+/* This is a utility function to share, across the program, some common logic of
+ * "which format to use when you are not sure and you need to give generic color
+ * information" in RGBA.
+ * @babl_type must be a valid babl type name such as "u8", "double", "float".
+ * If @space_image is not NULL, it will be used to return the GimpImage
+ * associated to the returned format (if the returned format is indeed using the
+ * image's space).
+ *
+ * The logic for the format to use in RGB color actions is as follows:
+ * - The space we navigate through is the active image's space.
+ * - Increasing/decreasing follows the image TRC (in particular, if the image is
+ *   linear or perceptual, we care about chromaticities yet don't follow the
+ *   space TRC).
+ * - If there is no active image or if its space is non-sRGB, we use the context
+ *   color's space (if set).
+ * - We discard non-RGB spaces and fallback to sRGB.
+ */
+const Babl *
+gimp_context_get_rgba_format (GimpContext  *context,
+                              GeglColor    *color,
+                              const gchar  *babl_type,
+                              GimpImage   **space_image)
+{
+  GimpImage            *image  = NULL;
+  const Babl           *format = NULL;
+  const Babl           *space  = NULL;
+  gchar                *format_name;
+  GimpTRCType           trc = GIMP_TRC_NON_LINEAR;
+
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (babl_type != NULL , NULL);
+  g_return_val_if_fail (space_image == NULL || *space_image == NULL, NULL);
+
+  image = gimp_context_get_image (context);
+  if (image)
+    {
+      format = gimp_image_get_layer_format (image, FALSE);
+      space  = babl_format_get_space (format);
+      if (space_image)
+        *space_image = image;
+    }
+
+  if (color != NULL &&
+      (space == NULL               ||
+#if BABL_MINOR_VERSION > 1 || (BABL_MINOR_VERSION == 1 && BABL_MICRO_VERSION >= 107)
+       ! babl_space_is_rgb (space) ||
+#else
+       babl_space_is_cmyk (space)  ||
+       babl_space_is_gray (space)  ||
+#endif
+       FALSE))
+    {
+      format = gegl_color_get_format (color);
+      space  = babl_format_get_space (format);
+      if (space_image)
+        *space_image = NULL;
+    }
+
+#if BABL_MINOR_VERSION > 1 || (BABL_MINOR_VERSION == 1 && BABL_MICRO_VERSION >= 107)
+  if (! babl_space_is_rgb (space))
+#else
+  if (babl_space_is_cmyk (space) || babl_space_is_gray (space))
+#endif
+    {
+      format = NULL;
+      space  = NULL;
+      if (space_image)
+        *space_image = NULL;
+    }
+
+  if (format != NULL)
+    {
+      if (image != NULL)
+        {
+          GimpPrecision precision;
+
+          precision = gimp_image_get_precision (image);
+          trc       = gimp_babl_trc (precision);
+        }
+      else
+        {
+          trc = gimp_babl_format_get_trc (format);
+        }
+    }
+
+  switch (trc)
+    {
+    case GIMP_TRC_LINEAR:
+      format_name = g_strdup_printf ("RGBA %s", babl_type);
+      break;
+    case GIMP_TRC_NON_LINEAR:
+      format_name = g_strdup_printf ("R'G'B'A %s", babl_type);
+      break;
+    case GIMP_TRC_PERCEPTUAL:
+      format_name = g_strdup_printf ("R~G~B~A %s", babl_type);
+      break;
+    default:
+      g_return_val_if_reached (NULL);
+    }
+  format = babl_format_with_space (format_name, space);
+  g_free (format_name);
+
+  return format;
 }
 
 static void
