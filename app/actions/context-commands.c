@@ -30,10 +30,13 @@
 
 #include "operations/layer-modes/gimp-layer-modes.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "core/gimp.h"
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimpimage.h"
 #include "core/gimplist.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimptoolinfo.h"
@@ -77,6 +80,9 @@ static gboolean context_set_color_index  (gint                  index,
 
 static GimpPaletteEditor  * context_get_palette_editor  (void);
 static GimpColormapEditor * context_get_colormap_editor (void);
+
+static const Babl         * context_get_rgb_format      (GimpContext *context,
+                                                         GeglColor   *color);
 
 
 /*  public functions  */
@@ -137,22 +143,27 @@ context_foreground_red_cmd_callback (GimpAction *action,
 {
   GimpContext          *context;
   GeglColor            *color;
-  gdouble               red;
-  gdouble               green;
-  gdouble               blue;
-  gdouble               alpha;
+  const Babl           *format;
+  gdouble               pixel[4];
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  color = gegl_color_duplicate (gimp_context_get_foreground (context));
-  gegl_color_get_rgba_with_space (color, &red, &green, &blue, &alpha, NULL);
-  red = action_select_value (select_type,
-                             red,
-                             0.0, 1.0, 1.0,
-                             1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gegl_color_set_rgba_with_space (color, red, green, blue, alpha, NULL);
+  color  = gegl_color_duplicate (gimp_context_get_foreground (context));
+  format = context_get_rgb_format (context, color);
+
+  gegl_color_get_pixel (color, format, pixel);
+  /* TODO: if value was already out-of-gamut, say we want to decrease it
+   * progressively. Should the algorithm allow it to be decreased while still
+   * staying out-of-gamut? Currently the function always clamps the result to
+   * min/max.
+   */
+  pixel[0] = action_select_value (select_type,
+                                  pixel[0],
+                                  0.0, 1.0, 1.0,
+                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_pixel (color, format, pixel);
   gimp_context_set_foreground (context, color);
   g_object_unref (color);
 }
@@ -164,22 +175,22 @@ context_foreground_green_cmd_callback (GimpAction *action,
 {
   GimpContext          *context;
   GeglColor            *color;
-  gdouble               red;
-  gdouble               green;
-  gdouble               blue;
-  gdouble               alpha;
+  const Babl           *format;
+  gdouble               pixel[4];
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  color = gegl_color_duplicate (gimp_context_get_foreground (context));
-  gegl_color_get_rgba_with_space (color, &red, &green, &blue, &alpha, NULL);
-  green = action_select_value (select_type,
-                               green,
-                               0.0, 1.0, 1.0,
-                               1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gegl_color_set_rgba_with_space (color, red, green, blue, alpha, NULL);
+  color  = gegl_color_duplicate (gimp_context_get_foreground (context));
+  format = context_get_rgb_format (context, color);
+
+  gegl_color_get_pixel (color, format, pixel);
+  pixel[1] = action_select_value (select_type,
+                                  pixel[1],
+                                  0.0, 1.0, 1.0,
+                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_pixel (color, format, pixel);
   gimp_context_set_foreground (context, color);
   g_object_unref (color);
 }
@@ -191,22 +202,22 @@ context_foreground_blue_cmd_callback (GimpAction *action,
 {
   GimpContext          *context;
   GeglColor            *color;
-  gdouble               red;
-  gdouble               green;
-  gdouble               blue;
-  gdouble               alpha;
+  const Babl           *format;
+  gdouble               pixel[4];
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  color = gegl_color_duplicate (gimp_context_get_foreground (context));
-  gegl_color_get_rgba_with_space (color, &red, &green, &blue, &alpha, NULL);
-  blue = action_select_value (select_type,
-                              blue,
-                              0.0, 1.0, 1.0,
-                              1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gegl_color_set_rgba_with_space (color, red, green, blue, alpha, NULL);
+  color  = gegl_color_duplicate (gimp_context_get_foreground (context));
+  format = context_get_rgb_format (context, color);
+
+  gegl_color_get_pixel (color, format, pixel);
+  pixel[2] = action_select_value (select_type,
+                                  pixel[2],
+                                  0.0, 1.0, 1.0,
+                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_pixel (color, format, pixel);
   gimp_context_set_foreground (context, color);
   g_object_unref (color);
 }
@@ -218,23 +229,22 @@ context_background_red_cmd_callback (GimpAction *action,
 {
   GimpContext          *context;
   GeglColor            *color;
-  gdouble               red;
-  gdouble               green;
-  gdouble               blue;
-  gdouble               alpha;
+  const Babl           *format;
+  gdouble               pixel[4];
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  color = gegl_color_duplicate (gimp_context_get_background (context));
-  /* TODO: what space to use for this action to work as expected? */
-  gegl_color_get_rgba_with_space (color, &red, &green, &blue, &alpha, NULL);
-  red = action_select_value (select_type,
-                             red,
-                             0.0, 1.0, 1.0,
-                             1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gegl_color_set_rgba_with_space (color, red, green, blue, alpha, NULL);
+  color  = gegl_color_duplicate (gimp_context_get_background (context));
+  format = context_get_rgb_format (context, color);
+
+  gegl_color_get_pixel (color, format, pixel);
+  pixel[0] = action_select_value (select_type,
+                                  pixel[0],
+                                  0.0, 1.0, 1.0,
+                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_pixel (color, format, pixel);
   gimp_context_set_background (context, color);
   g_object_unref (color);
 }
@@ -246,22 +256,22 @@ context_background_green_cmd_callback (GimpAction *action,
 {
   GimpContext          *context;
   GeglColor            *color;
-  gdouble               red;
-  gdouble               green;
-  gdouble               blue;
-  gdouble               alpha;
+  const Babl           *format;
+  gdouble               pixel[4];
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  color = gegl_color_duplicate (gimp_context_get_background (context));
-  gegl_color_get_rgba_with_space (color, &red, &green, &blue, &alpha, NULL);
-  green = action_select_value (select_type,
-                               green,
-                               0.0, 1.0, 1.0,
-                               1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gegl_color_set_rgba_with_space (color, red, green, blue, alpha, NULL);
+  color  = gegl_color_duplicate (gimp_context_get_background (context));
+  format = context_get_rgb_format (context, color);
+
+  gegl_color_get_pixel (color, format, pixel);
+  pixel[1] = action_select_value (select_type,
+                                  pixel[1],
+                                  0.0, 1.0, 1.0,
+                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_pixel (color, format, pixel);
   gimp_context_set_background (context, color);
   g_object_unref (color);
 }
@@ -273,22 +283,22 @@ context_background_blue_cmd_callback (GimpAction *action,
 {
   GimpContext          *context;
   GeglColor            *color;
-  gdouble               red;
-  gdouble               green;
-  gdouble               blue;
-  gdouble               alpha;
+  const Babl           *format;
+  gdouble               pixel[4];
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  color = gegl_color_duplicate (gimp_context_get_background (context));
-  gegl_color_get_rgba_with_space (color, &red, &green, &blue, &alpha, NULL);
-  blue = action_select_value (select_type,
-                              blue,
+  color  = gegl_color_duplicate (gimp_context_get_background (context));
+  format = context_get_rgb_format (context, color);
+
+  gegl_color_get_pixel (color, format, pixel);
+  pixel[2] = action_select_value (select_type,
+                              pixel[2],
                               0.0, 1.0, 1.0,
                               1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gegl_color_set_rgba_with_space (color, red, green, blue, alpha, NULL);
+  gegl_color_set_pixel (color, format, pixel);
   gimp_context_set_background (context, color);
   g_object_unref (color);
 }
@@ -1085,4 +1095,87 @@ context_get_colormap_editor (void)
     return GIMP_COLORMAP_EDITOR (gtk_bin_get_child (GTK_BIN (widget)));
 
   return NULL;
+}
+
+/* The logic for the format to use in RGB color actions is as following:
+ * - The space we navigate through is the active image's space.
+ * - Increasing/decreasing follows the image TRC (in particular, if the image is
+ *   linear or perceptual, we care about chromaticities yet don't follow the
+ *   space TRC).
+ * - If there is no active image or if its space is non-sRGB, we use the context
+ *   color's space.
+ * - We discard non-RGB spaces and fallback to sRGB.
+ */
+static const Babl *
+context_get_rgb_format (GimpContext *context,
+                        GeglColor   *color)
+{
+  GimpImage            *image  = NULL;
+  const Babl           *format = NULL;
+  const Babl           *space  = NULL;
+  GimpTRCType           trc = GIMP_TRC_NON_LINEAR;
+
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  image = gimp_context_get_image (context);
+  if (image)
+    {
+      format = gimp_image_get_layer_format (image, FALSE);
+      space  = babl_format_get_space (format);
+    }
+
+  if (space == NULL               ||
+#if BABL_MINOR_VERSION > 1 || (BABL_MINOR_VERSION == 1 && BABL_MICRO_VERSION >= 107)
+      ! babl_space_is_rgb (space) ||
+#else
+      babl_space_is_cmyk (space)  ||
+      babl_space_is_gray (space)  ||
+#endif
+      FALSE)
+    {
+      format = gegl_color_get_format (color);
+      space  = babl_format_get_space (format);
+    }
+
+#if BABL_MINOR_VERSION > 1 || (BABL_MINOR_VERSION == 1 && BABL_MICRO_VERSION >= 107)
+  if (! babl_space_is_rgb (space))
+#else
+  if (babl_space_is_cmyk (space) || babl_space_is_gray (space))
+#endif
+    {
+      format = NULL;
+      space  = NULL;
+    }
+
+  if (format != NULL)
+    {
+      if (image != NULL)
+        {
+          GimpPrecision precision;
+
+          precision = gimp_image_get_precision (image);
+          trc       = gimp_babl_trc (precision);
+        }
+      else
+        {
+          trc = gimp_babl_format_get_trc (format);
+        }
+    }
+
+  switch (trc)
+    {
+    case GIMP_TRC_LINEAR:
+      format = babl_format_with_space ("RGBA double", space);
+      break;
+    case GIMP_TRC_NON_LINEAR:
+      format = babl_format_with_space ("R'G'B'A double", space);
+      break;
+    case GIMP_TRC_PERCEPTUAL:
+      format = babl_format_with_space ("R~G~B~A double", space);
+      break;
+    default:
+      g_return_val_if_reached (NULL);
+    }
+
+  return format;
 }
