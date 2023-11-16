@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.10\n"
+"Project-Id-Version: GIMP 2.10 Beta2\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-22 23:35+0000\n"
-"PO-Revision-Date: 2023-10-24 11:55+0300\n"
+"POT-Creation-Date: 2023-11-13 14:30+0000\n"
+"PO-Revision-Date: 2023-11-16 04:38+0300\n"
 "Last-Translator: Yuras Shumovich <shumovichy@gmail.com>\n"
 "Language-Team: Belarusian\n"
 "Language: be\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -30,9 +30,9 @@ msgid ""
 "distributed program for such tasks as photo retouching, image composition "
 "and image authoring."
 msgstr ""
-"GIMP - гэта абрэвіятура ад GNU Image Manipulation Program. Дадзеная праграма "
-"распаўсюджваецца бясплатна для выканання такіх задач, як рэтушаванне "
-"фотаздымкаў, а таксама прымяняецца для стварэння сваіх уласных відарысаў."
+"GIMP - гэта абрэвіятура ад GNU Image Manipulation Program. Гэта свабоднае "
+"праграмнае забеспячэнне для рэтушавання фотаздымкаў і сумяшчэння відарысаў, "
+"а таксама для стварэння ўласных відарысаў."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:4
 msgid ""
@@ -66,118 +66,147 @@ msgstr "Маляванне ў GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:7
 msgid "Photo editing in GIMP"
-msgstr "Рэдагаванне фота ў GIMP"
+msgstr "Рэдагаванне фотаздымкаў ў GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
-msgid "A new stable releases with a lot of bug fixes and a few enhancements:"
+msgid ""
+"This new version of GIMP comes with many fixes, including vulnerability "
+"corrections. It is highly recommended to update. It also provides a few "
+"interesting changes, such as:"
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
-msgid "New template selector in \"Canvas Size\" dialog"
-msgstr ""
+msgid "Adobe ACB and ASE palette support"
+msgstr "Падтрымка палітраў Adobe ACB і ASE"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+msgid "New gradient: FG to Transparent (Hardedge)"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+msgid "Some text tool algorithm enhancement when replacing formatted text"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+msgid ""
+"Better theming of item locks (when hovering them or setting them active)"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+msgid "Improvements in handling a few specific metadata"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+msgid "A new stable releases with a lot of bug fixes and a few enhancements:"
+msgstr ""
+"Новы стабільны выпуск з вялікай колькасцю выпраўленняў і новых магчымасцей:"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+msgid "New template selector in \"Canvas Size\" dialog"
+msgstr "Новы сродак выбару шаблона ў акне «Памер палатна»"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid ""
 "\"Change Color\" dialogs: color scale (0..255/0..100) and models (LCh/HSV) "
 "settings remembered across sessions"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "New header with \"visible\" and \"link\" icons in item dockables"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "Clipping layers better supported when importing PSD files"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "Paths are now exported to PSD"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "JPEG XL export added"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid "Metadata in JPEG XL import"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "New option \"Show reduced images\" when loading TIFF images"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "16-bit per channel export for raw image data"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
 "More plug-ins got bug-fixes: DDS, WebP, Flame, Animation Playback, HEIF, "
 "Dicom and Help"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
 "Color picking on X11 will ignore the Wayland portal; new implementation for "
 "color picking on Windows"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "Check for updates fixed on macOS"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "GIMP continues strengthening its bases with this new version 2.10.32 fixing "
 "many bugs and improving format support. Notable changes:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "8 and 16-bit CMYK(A) TIFF files import is now supported"
-msgstr ""
+msgstr "Цяпер падтрымліваецца імпартаванне 8 і 16-бітных файлаў CMYK(A) TIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "BIGTIFF import and export are now supported"
-msgstr ""
+msgstr "Цяпер падтрымліваецца імпартаванне і экспартаванне файлаў BIGTIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "JPEG XL files import is now supported"
-msgstr ""
+msgstr "Цяпер падтрымліваецца імпартаванне файлаў JPEG XL"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid ""
 "DDS export has new \"Flip\" (useful for some game engine) and \"Visible "
 "layers\" options"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "Other improved format supports: BMP, DICOM, EPS, RAW, TGA, WebP"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
 "The screenshot plug-in on Windows has now an option to capture the cursor"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Several usability improvements in official themes and icons"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid ""
 "New support for localized glyphs ('locl') in Text tool depending on the "
 "value of the \"Language\" tool option"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "More robust XCF import"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "Several metadata handling improvements"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "GIMP 2.10.30 fixes many bugs, updates backend implementations to follow OS "
 "evolutions, improves metadata support as well as support of several formats, "
@@ -187,7 +216,7 @@ msgstr ""
 "адпаведна з развіццём аперацыйнай сістэмы, паляпшае падтрымку метаданых і "
 "некалькіх фарматаў, такіх як PSD і AVIF."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
@@ -195,7 +224,7 @@ msgstr ""
 "GIMP 2.10.28 выпраўляе памылку версіі 2.10.26, якая была звязана з "
 "няправільным усталяваннем некаторых даных тэмы."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
@@ -203,17 +232,17 @@ msgstr ""
 "GIMP 2.10.26 - гэта выпуск, які змяшчае дзясяткі выпраўленых памылак у такіх "
 "частках, як код ядра праграмы, сцэнарыі і ўбудовы."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr ""
 "Як і папярэднія выпускі, версія GIMP 2.10.24 у асноўным выпраўлены памылкі. "
 "Найбольш заўважныя змены:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "GeoTIFF metadata support added"
 msgstr "Дададзена падтрымка метаданых GeoTIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
 "PDF import now proposes an option to load layers in reverse orders and "
 "allows fractional pixel density"
@@ -221,42 +250,42 @@ msgstr ""
 "Імпартаванне ў PDF цяпер прапануе параметр загрузкі слаёў у адваротным "
 "парадку і дазваляе дробавую шчыльнасць пікселяў"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid ""
 "Raw image import updated to handle API changes in darktable 3.6 and over"
 msgstr ""
 "Абноўлены спосаб імпартавання зыходных відарысаў з мэтай апрацоўкі змен у "
 "праграмным інтэрфейсе darktable 3.6 і больш новых версіях"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
 "Палепшана падтрымка файлаў у такіх фарматах, як HEIF, PSP, TIFF, JPEG, PNG, "
 "PDF, DDS, BMP, PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Many fixes and improvements to the metadata viewer and editor"
 msgstr ""
 "Шмат выпраўленняў і ўдасканаленняў у сродку прагляду метаданых і рэдактары"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "New Kabyle translation"
 msgstr "Новы пераклад на кабільскую мову"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
 msgstr ""
 "Стала магчымай прывязка пунктаў па-за палатном (да сеткі, накіроўваючых, "
 "контураў)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
 msgstr ""
 "GIMP 2.10.22 - гэта пераважна выпуск з выпраўленымі памылкамі. Найбольш "
 "заўважныя змены:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
@@ -264,23 +293,23 @@ msgstr ""
 "Удасканаленні падтрымкі HEIF: магчымае экспартаванне з высокай бітавай "
 "глыбінёй колераў, імпартаванне і экспартаванне AVIF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Multiple improvements in Corel PaintShop Pro support"
 msgstr "Некалькі паляпшэнняў у падтрымцы Corel PaintShop Pro"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
 "У новай версіі цяпер даступна функцыя «Аб'яднаныя па ўзоры» ў параметрах "
 "аперацыі інструментаў GEGL"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "\"Sample merged\" is now enabled by default for color picking"
 msgstr ""
 "У новай версіі прадвызначана ўключана функцыя «Аб'яднаныя па ўзоры» для "
 "выбару колераў"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
@@ -288,7 +317,7 @@ msgstr ""
 "Уключэнне падтрымкі OpenCL перамешчаны ва ўкладку «Пляцоўка для "
 "тэсціравання» ў параметрах праграмы"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
@@ -296,21 +325,21 @@ msgstr ""
 "Маціраванне Левіна цяпер з'яўляецца прадвызначаным інструментам для "
 "вылучэння абласцей пярэдняга плана, паколькі дадзенае вылучэнне працуе хутчэй"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid "New progressive performance logs and dashboard updates"
 msgstr "Новы прагрэсіўны журнал прадукцыйнасці і абнаўленні панэлі кіравання"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr ""
 "У падрабязных адладачных даных цяпер могуць быць паказаны звесткі Flatpak, "
 "калі гэта неабходна"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid "Various bug fixes"
 msgstr "Розныя выпраўленні памылак"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
@@ -318,13 +347,13 @@ msgstr ""
 "GIMP 2.10.20 пастаўляецца з новымі функцыямі, а таксама з важнымі "
 "выпраўленнямі памылак. Найбольш заўважныя змены:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
-"Цяпер групы інструментаў прадвызначана разгортваюцца пры навядзенні мышы, "
-"а не пры націсканні"
+"Цяпер групы інструментаў прадвызначана разгортваюцца пры навядзенні мышы, а "
+"не пры націсканні"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
@@ -332,7 +361,7 @@ msgstr ""
 "У новай версіі рэалізавана неразбуральнае абразанне (цяпер можна абрэзаць "
 "палатно, а не самі пікселі)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing "
 "channels in the right order"
@@ -340,21 +369,21 @@ msgstr ""
 "Палепшана падтрымка PSD: даступна экспартаванне 16-бітавых файлаў, чытанне і "
 "запіс каналаў у правільным парадку"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid "On-canvas controls for the Vignette filter"
 msgstr "Фільтрам \"Віньетка\" цяпер можна кіраваць непасрэдна на палатне"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr ""
 "Новыя фільтры: арэол, фокусная размытасць, размытасць аб'ектывам, пераменная "
 "размытасць"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "Over 30 bugfixes"
 msgstr "Больш за 30 выпраўленых памылак"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
@@ -363,7 +392,7 @@ msgstr ""
 "падтрымку файлаў CMYK PSD і дадае больш кантрасную варыяцыю тэмы сімвалічных "
 "значкоў."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid ""
 "GIMP 2.10.16 delivers several major usability improvements, a new tool for "
 "transformations in 3D space, new release checker, and the usual amount of "
@@ -374,47 +403,47 @@ msgstr ""
 "новы спосаб праверкі абнаўленняў і стандартная колькасць выпраўленых "
 "памылак. Найбольш заўважнымі паляпшэннямі з'яўляюцца:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid "Tools are now grouped in the toolbox by default"
 msgstr "Цяпер прадвызначана інструменты згрупаваны ў панэль інструментаў"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid "Sliders now use a compact style with improved user interaction"
 msgstr ""
 "Паўзункі цяпер выкарыстоўваюць кампактны стыль з палепшаным узаемадзеяннем з "
 "карыстальнікам"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 msgid "Vastly improved user experience for the transformation preview"
 msgstr "Значна палепшаны карыстальніцкі досвед для перадпрагляду пераўтварэння"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr ""
 "Стыкуемые вобласці зараз падсвечваюцца пры перацягванні стыкуемага "
 "дыялогавага акна"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid "New 3D Transform tool to rotate and pan items"
 msgstr ""
 "Дадзены інструмент трохмернага пераўтварэння для паварочвання і "
 "панараміравання элементаў"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid "Much smoother brush outline motion on the canvas"
 msgstr "Больш плаўны рух абрысу пэндзля на палатне"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr "Зводны інтэрфейс карыстальніка для зліцця і прывязкі слаёў"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid "Update check to notify users that a new release/installer is available"
 msgstr ""
 "Праверка абнаўленняў дапамагае карыстальнікам даведвацца пра выпуск новай "
 "версіі праграмы або абнаўленні інсталятара"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid ""
 "GIMP 2.10.14 is again mostly a bug fix release, making GIMP rock-solid. "
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
@@ -425,7 +454,7 @@ msgstr ""
 "нарэшце партаваныя на GEGL. Вядома, што акрамя гэтага, ёсць іншыя вартыя "
 "ўвагі ўдасканаленні:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
@@ -433,54 +462,54 @@ msgstr ""
 "Меню «Выгляд»: новы параметр «Паказваць усе» для выяўлення пікселяў па-за "
 "межамі палатна"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
 msgstr ""
 "Фільтры: новы параметр \"Абрэзка\", які дазваляе змяніць памер слоя пры "
 "неабходнасці"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
 msgstr ""
 "Інструмент выбару пярэдняга плана: новы рэжым перадпрагляду «Градацыі шэрага»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr ""
 "Інструмент выбару пярэдняга плана: магчымасць выбару колеру або ўзроўню "
 "непразрыстасці для перадпрагляду «Колер»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid "Free Select tool: improved copy-paste interaction"
 msgstr ""
 "Інструмент свабоднага выбару: паляпшае ўзаемадзеянне пры капіяванні і ўстаўцы"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid "Transform tools: new Image transform type to transform the whole image"
 msgstr ""
 "Інструмент пераўтварэння: новы тып пераўтварэння відарыса, які дае "
 "магчымасць пераўтварыць увесь відарыс"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
 msgstr "Параметры: новая налада «Дазволіць рэдагаванне нябачных слаёў»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid "HEIF import/export: color profile support"
 msgstr "Імпартаванне або экспартаванне HEIF: падтрымка колеравага профілю"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "PDF export: text layers in layer groups now exported as texts"
 msgstr ""
 "Экспартаванне ў PDF: тэкставыя слаі ў групы слаёў цяпер экспартуюцца як тэкст"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "TIFF import: now asks how to process unspecified TIFF channels"
 msgstr ""
 "Імпартаванне TIFF: праграма не можа зразумець, як апрацоўваць нявызначаныя "
 "каналы TIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid ""
 "GIMP 2.10.12 is a significant bug fix release, which is to be expected after "
 "a 2.10.10 with so many changes! Still, very cool improvements are also "
@@ -490,31 +519,31 @@ msgstr ""
 "пасля версіі 2.10.10 з вялікай колькасцю змяненняў! Заўважце, што і ў гэтай "
 "версіі даступны паляпшэнні, якія датычацца рэдагавання крывых:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
 msgid "Improved curves interaction overall"
 msgstr "Палепшана ўзаемадзеянне з крывымі ў цэлым"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
 msgid "A few enhancements specific to the Curves tool"
 msgstr "Некаторыя паляпшэнні малявання ў інструментах крывых"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
 msgid "Layer support in TIFF"
 msgstr "Падтрымка слаёў у TIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
 msgid "Discovery of user-installed fonts in Windows"
 msgstr "Выяўленне шрыфтоў, якія ўсталяваны карыстальнікам у Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
 msgid "Incremental mode in the Dodge/Burn tool"
 msgstr "Інкрэментны рэжым інструмента «Асвятлення/Зацямнення»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
 msgid "Free Select tool creates preliminary selection"
 msgstr "Інструмент свабоднага выбару стварае папярэдняе вылучэнне"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
 msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
@@ -523,7 +552,7 @@ msgstr ""
 "выпраўленымі памылкамі ў кодзе праграмы. Найбольш заўважнымі паляпшэннямі "
 "з'яўляюцца:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
@@ -531,13 +560,13 @@ msgstr ""
 "Інструмент «Плоскае запаўненне»: «Вызначэнне запаўнення штрыхавой графікай» "
 "для не цалкам закрытых зон са штрыхавой графікай"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr ""
 "Інструмент «Плоскае запаўненне» цяпер дазваляе хутка выбіраць колер з "
 "дапамогай спалучэння клавіш «Ctrl+націсканне мышы»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
@@ -545,13 +574,13 @@ msgstr ""
 "Інструмент «Плоскае запаўненне» цяпер дазваляе ўтрымліваць мышку падчас "
 "запаўнення «падобныя колеры» і «выяўленне штрыхавой графікі»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid "Scale tool scales around center even when using numeric input"
 msgstr ""
 "Інструмент маштабавання: выконвае маштабаванне вакол цэнтра нават пры "
 "выкарыстанні лічбавага ўводу"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
@@ -559,7 +588,7 @@ msgstr ""
 "Цяпер інструмент «Адзінае пераўтварэнне» прадвызначана захоўвае суадносіны "
 "бакоў пры павелічэнні або памяншэнні маштабу"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
@@ -567,24 +596,24 @@ msgstr ""
 "Дадаць параметры «Абмяжоўваць апорныя пункты» і «Вакол цэнтра» ў графічны "
 "інтэрфейс інструментаў перспектыўнага пераўтварэння"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr ""
-"Новы агульны мадыфікатар палатна «Alt + націсканне сярэдняй кнопкай» для выбару "
-"слаёў"
+"Новы агульны мадыфікатар палатна «Alt + націсканне сярэдняй кнопкай» для "
+"выбару слаёў"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid "Parametric brushes now 32-bit float to avoid posterization"
 msgstr ""
 "Параметрычныя пэндзлі цяпер маюць дакладнасць у 32 біты з плаваючай коскай, "
 "каб пазбегнуць пастэрызацыі"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid "Clipboard brushes and pattern can now be duplicated"
 msgstr ""
 "Пэндзлі і ўзоры, якія знаходзяцца ў буферы абмену цяпер можна дубліраваць"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
@@ -592,25 +621,25 @@ msgstr ""
 "Збой рэдагавання заблакіраваных слаёў выклікае мірганне ў інтэрфейсе для "
 "прыцягвання ўвагі да прычыны памылкі"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
 msgstr ""
 "Новы графічны інтэрфейс на палатне (простыя лініі) для кругавой, лінейнай і "
 "маштабаванай размытасці рухам"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
 msgid "Several optimizations including faster layer group rendering"
 msgstr ""
 "Дабаўлены некаторыя аптымізацыі, якія ўключаюць у сябе павышэнне хуткасці "
 "адмалёўкі групы слаёў"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr "Своп і кэш больш не захоўваюцца ў каталозе канфігурацыі"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
@@ -618,15 +647,15 @@ msgstr ""
 "Разнастайныя аперацыі захавання/экспартавання файлаў сталі больш устойлівымі "
 "да памылак дзякуючы таму, што было выключана захаванне няпоўных файлаў"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
 msgid "HiDPI support improvements"
 msgstr "Палепшана падтрымка HiDPI"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid "New preference to choose the default export file type"
 msgstr "Новы параметр выбару тыпу прадвызначанага экспартавання файла"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
@@ -634,11 +663,11 @@ msgstr ""
 "Новы параметр экспартавання фарматаў PNG, JPEG і TIFF з колеравым профілем; "
 "PSD заўсёды экспартуецца з колеравым профілем"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
 msgid "New DDS format loading/exporting plug-in"
 msgstr "Новая ўбудова для загрузкі/экспартавання фармату DDS"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
@@ -646,7 +675,7 @@ msgstr ""
 "Цалкам перапісана ўбудова Spyrogimp, якая цяпер змяшчае больш параметраў і "
 "паляпшае ўзаемадзеянне"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
@@ -654,7 +683,7 @@ msgstr ""
 "GIMP 2.10.8 - гэта ў асноўным выпуск з выпраўленымі памылкамі і "
 "аптымізацыямі. У прыватнасці, яны ўключаюць:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
@@ -662,13 +691,13 @@ msgstr ""
 "Адаптыўны памер порцыі даных пры адмалёўцы праекцый з дынамічным паляпшэннем "
 "спагадлівасці"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr ""
 "У АС Windows палепшаны алгарытм выяўлення RawTherapee (пачынаючы з версіі "
 "5.5)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
@@ -676,7 +705,7 @@ msgstr ""
 "Больш зразумелыя і даступныя для выяўлення звесткі аб сумяшчальнасці фармату "
 "XCF у дыялогавым акне захавання"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
@@ -684,7 +713,7 @@ msgstr ""
 "Дададзены разнастайныя інструменты журналявання прадукцыйнасці. Доступ да "
 "запісаў з журналамі можна атрымаць з дапамогай панэлі кіравання"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
@@ -693,7 +722,7 @@ msgstr ""
 "выкананы разнастайныя аптымізацыі і дададзены новыя функцыі. Найбольш "
 "заўважнымі зменамі з'яўляюцца:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
@@ -701,15 +730,15 @@ msgstr ""
 "Тэкставыя слаі цяпер могуць размяшчацца вертыкальна (з рознымі арыентацыямі "
 "сімвалаў і напрамкамі радкоў)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr "Новы фільтр «Маленькая планета» (gegl:stereographic-projection)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
 msgid "New \"Long Shadow\" filter"
 msgstr "Новы фільтр «Доўгі цень»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
@@ -717,7 +746,7 @@ msgstr ""
 "Параметр «Выраўнаваць» інструмента «Вымяральнік» цяпер дазваляе рабіць "
 "вертыкальныя выраўноўванні"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
@@ -725,7 +754,7 @@ msgstr ""
 "Перадпрагляд прамалёўвання цяпер адмалёўваецца асінхронна, а перадпрагляд "
 "груп слаёў можа быць адключаны ў параметрах праграмы"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
@@ -733,19 +762,19 @@ msgstr ""
 "Новае поле \"async\" у групе \"misc\" панэлі кіравання паказвае колькасць "
 "асінхронных аперацый, якія выконваюцца ў дадзены час"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 "Фільтрацыя па фармату файла ў дыялогавых вокнах адкрыцця/захавання/"
 "экспартавання стала больш зразумелай"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr ""
 "Новая мова інтэрфейсу: маратхі (у цяперашні час GIMP перакладзены на 81 мову "
 "свету)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
@@ -753,7 +782,7 @@ msgstr ""
 "GIMP 2.10.4 уключае не толькі выпраўленне вялікай колькасці памылак, але і "
 "разнастайныя аптымізацыі. Найбольш заўважнымі зменамі з'яўляюцца:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
@@ -761,11 +790,11 @@ msgstr ""
 "Інструмент выраўноўвання і вымярэння: слаі можна павярнуць выкарыстоўваючы "
 "лінію вымярэння як гарызонт"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr "Хуткі запуск: загрузка шрыфтоў больш не блакіруе запуск праграмы"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
@@ -773,13 +802,13 @@ msgstr ""
 "Маркіроўка шрыфтоў з аналагічным інтэрфейсам карыстальніка, які падобны да "
 "інтэрфейсу пэндзляў, узораў і градыентаў"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
 "Падтрымка PSD: магчымасць імпартавання папярэдне скампанаванай версіі "
 "відарыса PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
@@ -787,7 +816,7 @@ msgstr ""
 "Абнаўленне панэлі кіравання: новая група «Памяць» і палепшаная група «Своп» "
 "з разнастайнымі паказчыкамі"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
@@ -797,7 +826,7 @@ msgstr ""
 "2.10.0 і гэта версія нацэлена на выпраўленне памылак асноўнага выпуску. У ёй "
 "было выпраўлена некалькі дзясяткаў разнастайных памылак."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -809,7 +838,7 @@ msgstr ""
 "«Рэкурсіўнае пераўтварэнне». Гэта цудоўныя прыклады нашай нязмушанай "
 "палітыкі ў стабільных мікравыпусках."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
@@ -817,13 +846,13 @@ msgstr ""
 "Галоўнай асаблівасцю першай версіі ў серыі 2.10 стала партацыя на новы "
 "рухавік апрацоўкі відарысаў (GEGL). Самымі значнымі змяненнямі з'яўляюцца:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr ""
 "Апрацоўка відарысаў з высокай бітавай разраднасцю колераў (16/32 бітаў на "
 "колеравы канал)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
@@ -831,37 +860,37 @@ msgstr ""
 "Цяпер кіраванне колерам з'яўляецца ключавой функцыяй праграмы, большасць "
 "віджэтаў і абласцей прадпрагляду падтрымліваюць кіраванне колерам"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 "Перадпрагляд эфектаў на палатне з раздзяленнем экрана на зоны да і пасля "
 "апрацоўкі пікселяў"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr ""
 "Шматпатокавая і з апаратным паскарэннем адмалёўка, апрацоўка і маляванне"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
 msgid "Most tools improved, several new transformation tools"
 msgstr ""
 "Палепшана большасць інструментаў і дададзена некалькі новых інструментаў "
 "пераўтварэння"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
 "Палепшана падтрымка многіх фарматаў відарысаў (у прыватнасці імпартаванне "
 "даных у PSD)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "Рэалізавана падтрымка фарматаў: OpenEXR, RGBE, WebP, HGT…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
@@ -869,27 +898,27 @@ msgstr ""
 "Палепшана магчымасць лічбавага малявання: паварот і адлюстравання палатна, "
 "сіметрычнае маляванне, пэндзлі MyPaint…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr ""
 "З'явілася магчымасць прагляду і рэдагавання метаданых для Exif, XMP, IPTC і "
 "DICOM"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 "Базавая падтрымка HiDPI: вызначэнне размераў значка ў аўтаматычным рэжыме "
 "або ўручную карыстальнікам"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "Новыя тэмы інтэрфейсу GIMP: светлая, шэрая, цёмная і сістэмная"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
 msgid "And much, much more…"
 msgstr "А таксама, шмат чаго іншага…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
@@ -900,7 +929,7 @@ msgstr ""
 "аптымізацыі для забеспячэння яшчэ большага камфорту пры маляванні. Найбольш "
 "істотнымі змяненнямі ў гэтым выпуску з'яўляюцца:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
@@ -908,19 +937,19 @@ msgstr ""
 "Істотная аптымізацыя ядра праграмы для малявання і паказу відарыса дзякуючы "
 "разпаралельванню кода малявання"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr ""
 "Зберажэнне сіметрыі цяпер захоўваецца ў файлах XCF (у паразітах відарыса)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
 msgstr ""
 "Светлая і цёмная тэмы перапісаны з нуля і не змяшчаюць папярэдніх праблем."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -931,7 +960,7 @@ msgstr ""
 "ўзаемадзейнічаць на палатне для трохмернага павароту (адхіленне, нахіл, "
 "паварот)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -942,7 +971,7 @@ msgstr ""
 "атрымліваць не толькі сігналы, але і папярэджанні разам з крытычнымі "
 "памылкамі, калі зададзены адладачны ключ \"fatal-warnings\""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -953,13 +982,13 @@ msgstr ""
 "праграмы. Акрамя шматлікіх выпраўленняў памылак найбольш заўважнымі "
 "паляпшэннямі з'яўляюцца:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
 "Новая панэль кіравання, якую можна прыстыкаваць на экране манітора, каб "
 "адсочваць рэсурсы выкарыстання GIMP"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -967,36 +996,36 @@ msgstr ""
 "Новае дыялогавае акно адладкі для атрымання даных зваротнай трасіроўкі і "
 "іншых адладачных даных для паляпшэння справаздач аб памылках"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
 msgid "Unsaved images can now be recovered after a crash"
 msgstr "Незахаваныя відарысы цяпер могуць быць адноўлены пасля збою"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
 msgid "Layer masks on layer groups"
 msgstr "Маскі слоя на групы слаёў"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "Палепшана падтрымка JPEG 2000 для высокіх значэнняў бітавай глыбіні і "
 "разнастайных прастор колераў"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 "Палепшана функцыя стварэння здымка экрана і выбар колеру на разнастайных "
 "платформах"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
 msgid "Metadata defaults preferences now available"
 msgstr ""
 "Цяпер можна прадвызначана выбіраць захоўваць або не захоўваць метаданыя"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
 msgid "Various GUI polishing"
 msgstr "Розныя паляпшэнні ў карыстальніцкім інтэрфейсе"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -1005,47 +1034,47 @@ msgstr ""
 "рэалізаваны разнастайныя паляпшэнні. Аднак у гэтым выпуску распрацоўшчыкі "
 "пераважна сканцэнтраваліся на выпраўленні памылак і стабільнасці."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
 msgid "On-canvas gradient editing"
 msgstr "Рэдагаванне градыентаў на палатне"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
 msgid "Notification when an image is over/underexposed"
 msgstr "Апавяшчаць пры пераэкспанаванасці або недаэкспанаванасці відарыса"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
 msgid "Better and faster color management"
 msgstr "Палепшанае і паскоранае кіраванне колерам"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr "Падтрымка для піпеткі і здымкаў экрана ў Wayland на KDE Plasma"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
 msgid "Paste in place feature"
 msgstr "Функцыя ўстаўкі на месца"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:170
 msgid "Many usability improvements"
 msgstr "Шмат выпраўленняў для зручнасці выкарыстання"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:171
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "Дапаможнік можа быць паказаны на мове, якую выбраў карыстальнік"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:172
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Паляпшэнні ў фільтры Wavelet Decompose"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:173
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Палепшана сумяшчальнасць з файламі Photoshop (фармат *.psd)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:174
 msgid "New support for password-protected PDF"
 msgstr "Рэалізавана падтрымка файлаў PDF, якія абаронены паролем"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:175
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Рэалізавана падтрымка фармату HGT (даныя Digital Elevation Model)"
 
@@ -1064,7 +1093,9 @@ msgstr "Рэдактар відарысаў"
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: ../desktop/gimp.desktop.in.in.h:5
 msgid "GIMP;graphic;design;illustration;painting;"
-msgstr "GIMP;графіка;распрацоўка;ілюстрацыя;маляванне;дызайн;"
+msgstr ""
+"GIMP;graphic;design;illustration;painting;графіка;распрацоўка;дызайн;"
+"ілюстрацыя;маляванне;"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -1100,20 +1131,18 @@ msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
-"Праграма GIMP з'яўляецца свабодным праграмным забеспячэннем, якое вы можаце "
-"распаўсюджваць і/або змяняць згодна з умовамі ліцэнзіі GNU General Public "
-"License апублікаванымі\n"
-"Free Software Foundation, версіі 3 або больш позняй версіяй\n"
-"(на ваш выбар).\n"
+"GIMP з'яўляецца свабодным праграмным забеспячэннем, якое вы можаце "
+"распаўсюджваць і/або змяняць згодна з умовамі ліцэнзіі Агульнай Грамадскай "
+"Ліцэнзіі GNU (апублікаванай Free Software Foundation) версіі 3 або любой "
+"пазнейшай\n"
 "\n"
-"Гэта праграма распаўсюджваецца з надзеяй, што яна будзе карыснай,\n"
-"але БЕЗ ГАРАНТЫІ; не гарантуецца нават КАМЕРЦЫЙНАЯ ЯКАСЦЬ\n"
-"або МАГЧЫМАСЦЬ РАШЭННЯ ВЫЗНАЧАНЫХ ЗАДАЧ. Дэталі глядзіце на\n"
-"GNU General Public License.\n"
+"Праграма распаўсюджваецца з надзеяй, што яна будзе карыснай, але без ніякіх "
+"гарантый, у тым ліку камерцыйнай вартасці праграмы і наогул яе карысці.  "
+"Падрабязней глядзіце ў тэксце Агульнай Грамадскай Ліцэнзіі GNU.\n"
 "\n"
-"Вы можаце атрымаць копію тэксту ліцэнзіі GNU General Public License\n"
-"разам з гэтай праграмай. Калі гэта не так, азнаёмцеся http://www.gnu.org/"
-"licenses/"
+"Вы павінны былі атрымаць копію Агульнай Грамадскай Ліцэнзіі GNU разам з "
+"гэтай праграмай. Калі гэта не так, умовы можна паглядзець на http://www.gnu."
+"org/licenses/"
 
 #: ../app/gimp-update.c:415
 #, c-format
@@ -1136,7 +1165,7 @@ msgstr "%s версіі %s"
 
 #: ../app/main.c:163
 msgid "Show version information and exit"
-msgstr "Паказаць нумар версіі і выйсці"
+msgstr "Паказаць звесткі пра версію і выйсці"
 
 #: ../app/main.c:168
 msgid "Show license information and exit"
@@ -1164,11 +1193,11 @@ msgstr "Не загружаць пэндзлі, градыенты, узоры, 
 
 #: ../app/main.c:198
 msgid "Do not load any fonts"
-msgstr "Не загружаць ніякія шрыфты"
+msgstr "Не загружаць шрыфты"
 
 #: ../app/main.c:203
 msgid "Do not show a splash screen"
-msgstr "Не паказваць застаўку пры запуску"
+msgstr "Не паказваць застаўку падчас запуску"
 
 #: ../app/main.c:208
 msgid "Do not use shared memory between GIMP and plug-ins"
@@ -1200,7 +1229,7 @@ msgstr "Працэдура для выканання каманд пакетна
 
 #: ../app/main.c:243
 msgid "Send messages to console instead of using a dialog"
-msgstr "Паказваць паведамленні ў кансолі замест дыялогавых акон"
+msgstr "Адпраўляць паведамленні ў кансоль замест выкарыстання дыялогавых акон"
 
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:249
@@ -1246,7 +1275,7 @@ msgid ""
 "Make sure a proper setup for your display environment exists."
 msgstr ""
 "Не ўдалося ініцыялізаваць графічны інтэрфейс карыстальніка.\n"
-"Пераканайцеся ў правільнасці наладаў вашага графічнага асяроддзя."
+"Пераканайцеся ў правільнасці налад вашага графічнага асяроддзя."
 
 #: ../app/main.c:635
 msgid "Another GIMP instance is already running."
@@ -1272,7 +1301,7 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
-"Немагчыма пераўтварыць кадзіроўку ў UTF-8: %s\n"
+"Пазначаную для назвы файла кадзіроўку немагчыма пераўтварыць ў UTF-8: %s\n"
 "\n"
 "Праверце значэнне пераменнай асяроддзя G_FILENAME_ENCODING."
 
@@ -1286,17 +1315,17 @@ msgid ""
 "you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
-"Немагчыма пераўтварыць у кадзіроўку UTF-8 назву каталога, які змяшчае "
-"канфігурацыю карыстальніка GIMP: %s\n"
+"Назву каталога, які змяшчае канфігурацыю карыстальніка GIMP, немагчыма "
+"пераўтварыць у кадзіроўку UTF-8: %s\n"
 "\n"
-"Хутчэй за ўсё ваша файлавая сістэма захоўвае файлы ў кадзіроўцы, якая "
+"Хутчэй за ўсё, ваша файлавая сістэма захоўвае файлы ў кадзіроўцы, якая "
 "адрозніваецца ад UTF-8, і вы не паведамілі пра гэта GLib. Задайце правільнае "
 "значэнне пераменнай асяроддзя G_FILENAME_ENCODING."
 
 #: ../app/actions/actions.c:111 ../app/dialogs/dialogs.c:422
 #: ../app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
-msgstr "Рэдактар пэндзля"
+msgstr "Рэдактар пэндзляў"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:114 ../app/core/gimp-data-factories.c:349
@@ -1351,8 +1380,9 @@ msgstr "Стыкуемы"
 #: ../app/actions/actions.c:147 ../app/dialogs/dialogs.c:364
 #: ../app/dialogs/preferences-dialog.c:1233
 msgid "Document History"
-msgstr "Гісторыя дакумента"
+msgstr "Гісторыя дакументаў"
 
+# удакладніць
 #: ../app/actions/actions.c:150
 msgid "Drawable"
 msgstr "Прамалёўванне"
@@ -1519,7 +1549,7 @@ msgstr "%s: %d"
 #: ../app/actions/brush-editor-actions.c:43
 msgctxt "brush-editor-action"
 msgid "Brush Editor Menu"
-msgstr "Меню рэдактара пэндзля"
+msgstr "Меню рэдактара пэндзляў"
 
 #: ../app/actions/brush-editor-actions.c:50
 msgctxt "brush-editor-action"
@@ -2169,7 +2199,7 @@ msgstr "_Промні"
 #: ../app/actions/context-actions.c:74
 msgctxt "context-action"
 msgid "_Hardness"
-msgstr "_Цвёрдасць"
+msgstr "_Жорсткасць"
 
 #: ../app/actions/context-actions.c:76
 msgctxt "context-action"
@@ -2194,12 +2224,12 @@ msgstr "Задаць колер пярэдняга плана чорным, а �
 #: ../app/actions/context-actions.c:88
 msgctxt "context-action"
 msgid "S_wap Colors"
-msgstr "_Замяніць колеры месцамі"
+msgstr "_Памяняць колеры месцамі"
 
 #: ../app/actions/context-actions.c:89
 msgctxt "context-action"
 msgid "Exchange foreground and background colors"
-msgstr "Замяніць колеры пярэдняга плана і фону"
+msgstr "Памяняць месцамі колеры пярэдняга плана і фону"
 
 #: ../app/actions/context-actions.c:97
 msgctxt "context-action"
@@ -2414,422 +2444,422 @@ msgstr "Фон: уперад на адзін колер з узору"
 #: ../app/actions/context-actions.c:289
 msgctxt "context-action"
 msgid "Foreground Red: Set"
-msgstr "Пярэдні план чырвонага канала: задаць значэнне"
+msgstr "Пярэдні план, чырвоны канал: задаць значэнне"
 
 #: ../app/actions/context-actions.c:293
 msgctxt "context-action"
 msgid "Foreground Red: Set to Minimum"
-msgstr "Пярэдні план чырвонага канала: задаць мінімальнае значэнне"
+msgstr "Пярэдні план, чырвоны канал: задаць мінімальнае значэнне"
 
 #: ../app/actions/context-actions.c:297
 msgctxt "context-action"
 msgid "Foreground Red: Set to Maximum"
-msgstr "Пярэдні план чырвонага канала: задаць максімальнае значэнне"
+msgstr "Пярэдні план, чырвоны канал: задаць максімальнае значэнне"
 
 #: ../app/actions/context-actions.c:301
 msgctxt "context-action"
 msgid "Foreground Red: Decrease by 1%"
-msgstr "Пярэдні план чырвонага канала: паменшыць на 1%"
+msgstr "Пярэдні план, чырвоны канал: паменшыць на 1%"
 
 #: ../app/actions/context-actions.c:305
 msgctxt "context-action"
 msgid "Foreground Red: Increase by 1%"
-msgstr "Пярэдні план чырвонага канала: павялічыць на 1%"
+msgstr "Пярэдні план, чырвоны канал: павялічыць на 1%"
 
 #: ../app/actions/context-actions.c:309
 msgctxt "context-action"
 msgid "Foreground Red: Decrease by 10%"
-msgstr "Пярэдні план чырвонага канала: паменшыць на 10%"
+msgstr "Пярэдні план, чырвоны канал: паменшыць на 10%"
 
 #: ../app/actions/context-actions.c:313
 msgctxt "context-action"
 msgid "Foreground Red: Increase by 10%"
-msgstr "Пярэдні план чырвонага канала: павялічыць на 10%"
+msgstr "Пярэдні план, чырвоны канал: павялічыць на 10%"
 
 #: ../app/actions/context-actions.c:321
 msgctxt "context-action"
 msgid "Foreground Green: Set"
-msgstr "Пярэдні план зялёнага канала: задаць значэнне"
+msgstr "Пярэдні план, зялёны канал: задаць значэнне"
 
 #: ../app/actions/context-actions.c:325
 msgctxt "context-action"
 msgid "Foreground Green: Set to Minimum"
-msgstr "Пярэдні план зялёнага канала: задаць мінімальнае значэнне"
+msgstr "Пярэдні план, зялёны канал: задаць мінімальнае значэнне"
 
 #: ../app/actions/context-actions.c:329
 msgctxt "context-action"
 msgid "Foreground Green: Set to Maximum"
-msgstr "Пярэдні план зялёнага канала: задаць максімальнае значэнне"
+msgstr "Пярэдні план, зялёны канал: задаць максімальнае значэнне"
 
 #: ../app/actions/context-actions.c:333
 msgctxt "context-action"
 msgid "Foreground Green: Decrease by 1%"
-msgstr "Пярэдні план зялёнага канала: паменшыць на 1%"
+msgstr "Пярэдні план, зялёны канал: паменшыць на 1%"
 
 #: ../app/actions/context-actions.c:337
 msgctxt "context-action"
 msgid "Foreground Green: Increase by 1%"
-msgstr "Пярэдні план зялёнага канала: павялічыць на 1%"
+msgstr "Пярэдні план, зялёны канал: павялічыць на 1%"
 
 #: ../app/actions/context-actions.c:341
 msgctxt "context-action"
 msgid "Foreground Green: Decrease by 10%"
-msgstr "Пярэдні план зялёнага канала: паменшыць на 10%"
+msgstr "Пярэдні план, зялёны канал: паменшыць на 10%"
 
 #: ../app/actions/context-actions.c:345
 msgctxt "context-action"
 msgid "Foreground Green: Increase by 10%"
-msgstr "Пярэдні план зялёнага канала: павялічыць на 10%"
+msgstr "Пярэдні план, зялёны канал: павялічыць на 10%"
 
 #: ../app/actions/context-actions.c:353
 msgctxt "context-action"
 msgid "Foreground Blue: Set"
-msgstr "Пярэдні план сіняга канала: задаць значэнне"
+msgstr "Пярэдні план, сіні канал: задаць значэнне"
 
 #: ../app/actions/context-actions.c:357
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Minimum"
-msgstr "Пярэдні план сіняга канала: задаць мінімальнае значэнне"
+msgstr "Пярэдні план, сіні канал: задаць мінімальнае значэнне"
 
 #: ../app/actions/context-actions.c:361
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Maximum"
-msgstr "Пярэдні план сіняга канала: задаць максімальнае значэнне"
+msgstr "Пярэдні план, сіні канал: задаць максімальнае значэнне"
 
 #: ../app/actions/context-actions.c:365
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 1%"
-msgstr "Пярэдні план сіняга канала: паменшыць на 1%"
+msgstr "Пярэдні план, сіні канал: паменшыць на 1%"
 
 #: ../app/actions/context-actions.c:369
 msgctxt "context-action"
 msgid "Foreground Blue: Increase by 1%"
-msgstr "Пярэдні план сіняга канала: павялічыць на 1%"
+msgstr "Пярэдні план, сіні канал: павялічыць на 1%"
 
 #: ../app/actions/context-actions.c:373
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 10%"
-msgstr "Пярэдні план сіняга канала: паменшыць на 10%"
+msgstr "Пярэдні план, сіні канал: паменшыць на 10%"
 
 #: ../app/actions/context-actions.c:377
 msgctxt "context-action"
 msgid "Foreground Blue: Increase by 10%"
-msgstr "Пярэдні план сіняга канала: павялічыць на 10%"
+msgstr "Пярэдні план, сіні канал: павялічыць на 10%"
 
 #: ../app/actions/context-actions.c:385
 msgctxt "context-action"
 msgid "Background Red: Set"
-msgstr "Фон чырвонага канала: задаць значэнне"
+msgstr "Фон, чырвоны канал: задаць значэнне"
 
 #: ../app/actions/context-actions.c:389
 msgctxt "context-action"
 msgid "Background Red: Set to Minimum"
-msgstr "Фон чырвонага канала: задаць мінімальнае значэнне"
+msgstr "Фон, чырвоны канал: задаць мінімальнае значэнне"
 
 #: ../app/actions/context-actions.c:393
 msgctxt "context-action"
 msgid "Background Red: Set to Maximum"
-msgstr "Фон чырвонага канала: задаць максімальнае значэнне"
+msgstr "Фон, чырвоны канал: задаць максімальнае значэнне"
 
 #: ../app/actions/context-actions.c:397
 msgctxt "context-action"
 msgid "Background Red: Decrease by 1%"
-msgstr "Фон чырвонага канала: паменшыць на 1%"
+msgstr "Фон, чырвоны канал: паменшыць на 1%"
 
 #: ../app/actions/context-actions.c:401
 msgctxt "context-action"
 msgid "Background Red: Increase by 1%"
-msgstr "Фон чырвонага канала: павялічыць на 1%"
+msgstr "Фон, чырвоны канал: павялічыць на 1%"
 
 #: ../app/actions/context-actions.c:405
 msgctxt "context-action"
 msgid "Background Red: Decrease by 10%"
-msgstr "Фон чырвонага канала: паменшыць на 10%"
+msgstr "Фон, чырвоны канал: паменшыць на 10%"
 
 #: ../app/actions/context-actions.c:409
 msgctxt "context-action"
 msgid "Background Red: Increase by 10%"
-msgstr "Фон чырвонага канала: павялічыць на 10%"
+msgstr "Фон, чырвоны канал: павялічыць на 10%"
 
 #: ../app/actions/context-actions.c:417
 msgctxt "context-action"
 msgid "Background Green: Set"
-msgstr "Фон зялёнага канала: задаць значэнне"
+msgstr "Фон, зялёны канал: задаць значэнне"
 
 #: ../app/actions/context-actions.c:421
 msgctxt "context-action"
 msgid "Background Green: Set to Minimum"
-msgstr "Фон зялёнага канала: задаць мінімальнае значэнне"
+msgstr "Фон, зялёны канал: задаць мінімальнае значэнне"
 
 #: ../app/actions/context-actions.c:425
 msgctxt "context-action"
 msgid "Background Green: Set to Maximum"
-msgstr "Фон зялёнага канала: задаць максімальнае значэнне"
+msgstr "Фон, зялёны канал: задаць максімальнае значэнне"
 
 #: ../app/actions/context-actions.c:429
 msgctxt "context-action"
 msgid "Background Green: Decrease by 1%"
-msgstr "Фон зялёнага канала: паменшыць на 1%"
+msgstr "Фон, зялёны канал: паменшыць на 1%"
 
 #: ../app/actions/context-actions.c:433
 msgctxt "context-action"
 msgid "Background Green: Increase by 1%"
-msgstr "Фон зялёнага канала: павялічыць на 1%"
+msgstr "Фон, зялёны канал: павялічыць на 1%"
 
 #: ../app/actions/context-actions.c:437
 msgctxt "context-action"
 msgid "Background Green: Decrease by 10%"
-msgstr "Фон зялёнага канала: паменшыць на 10%"
+msgstr "Фон, зялёны канал: паменшыць на 10%"
 
 #: ../app/actions/context-actions.c:441
 msgctxt "context-action"
 msgid "Background Green: Increase by 10%"
-msgstr "Фон зялёнага канала: павялічыць на 10%"
+msgstr "Фон, зялёны канал: павялічыць на 10%"
 
 #: ../app/actions/context-actions.c:449
 msgctxt "context-action"
 msgid "Background Blue: Set"
-msgstr "Фон сіняга канала: задаць значэнне"
+msgstr "Фон, сіні канал: задаць значэнне"
 
 #: ../app/actions/context-actions.c:453
 msgctxt "context-action"
 msgid "Background Blue: Set to Minimum"
-msgstr "Фон сіняга канала: задаць мінімальнае значэнне"
+msgstr "Фон, сіні канал: задаць мінімальнае значэнне"
 
 #: ../app/actions/context-actions.c:457
 msgctxt "context-action"
 msgid "Background Blue: Set to Maximum"
-msgstr "Фон сіняга канала: задаць максімальнае значэнне"
+msgstr "Фон, сіні канал: задаць максімальнае значэнне"
 
 #: ../app/actions/context-actions.c:461
 msgctxt "context-action"
 msgid "Background Blue: Decrease by 1%"
-msgstr "Фон сіняга канала: паменшыць на 1%"
+msgstr "Фон, сіні канал: паменшыць на 1%"
 
 #: ../app/actions/context-actions.c:465
 msgctxt "context-action"
 msgid "Background Blue: Increase by 1%"
-msgstr "Фон сіняга канала: павялічыць на 1%"
+msgstr "Фон, сіні канал: павялічыць на 1%"
 
 #: ../app/actions/context-actions.c:469
 msgctxt "context-action"
 msgid "Background Blue: Decrease by 10%"
-msgstr "Фон сіняга канала: паменшыць на 10%"
+msgstr "Фон, сіні канал: паменшыць на 10%"
 
 #: ../app/actions/context-actions.c:473
 msgctxt "context-action"
 msgid "Background Blue: Increase by 10%"
-msgstr "Фон сіняга канала: павялічыць на 10%"
+msgstr "Фон, сіні канал: павялічыць на 10%"
 
 #: ../app/actions/context-actions.c:481
 msgctxt "context-action"
 msgid "Foreground Hue: Set"
-msgstr "Адценне пярэдняга плана: задаць значэнне"
+msgstr "Пярэдні план, тон: задаць значэнне"
 
 #: ../app/actions/context-actions.c:485
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Minimum"
-msgstr "Адценне пярэдняга плана: задаць мінімальнае значэнне"
+msgstr "Пярэдні план, тон: задаць мінімальнае значэнне"
 
 #: ../app/actions/context-actions.c:489
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Maximum"
-msgstr "Адценне пярэдняга плана: задаць максімальнае значэнне"
+msgstr "Пярэдні план, тон: задаць максімальнае значэнне"
 
 #: ../app/actions/context-actions.c:493
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 1%"
-msgstr "Адценне пярэдняга плана: паменшыць на 1%"
+msgstr "Пярэдні план, тон: паменшыць на 1%"
 
 #: ../app/actions/context-actions.c:497
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 1%"
-msgstr "Адценне пярэдняга плана: павялічыць на 1%"
+msgstr "Пярэдні план, тон: павялічыць на 1%"
 
 #: ../app/actions/context-actions.c:501
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 10%"
-msgstr "Адценне пярэдняга плана: паменшыць на 10%"
+msgstr "Пярэдні план, тон: паменшыць на 10%"
 
 #: ../app/actions/context-actions.c:505
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 10%"
-msgstr "Адценне пярэдняга плана: павялічыць на 10%"
+msgstr "Пярэдні план, тон: павялічыць на 10%"
 
 #: ../app/actions/context-actions.c:513
 msgctxt "context-action"
 msgid "Foreground Saturation: Set"
-msgstr "Пярэдні план насычанасці: задаць значэнне"
+msgstr "Пярэдні план, насычанасць: задаць значэнне"
 
 #: ../app/actions/context-actions.c:517
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Minimum"
-msgstr "Пярэдні план насычанасці: задаць мінімальнае значэнне"
+msgstr "Пярэдні план, насычанасць: задаць мінімальнае значэнне"
 
 #: ../app/actions/context-actions.c:521
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Maximum"
-msgstr "Пярэдні план насычанасці: задаць максімальнае значэнне"
+msgstr "Пярэдні план, насычанасць: задаць максімальнае значэнне"
 
 #: ../app/actions/context-actions.c:525
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 1%"
-msgstr "Пярэдні план насычанасці: паменшыць на 1%"
+msgstr "Пярэдні план, насычанасць: паменшыць на 1%"
 
 #: ../app/actions/context-actions.c:529
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 1%"
-msgstr "Пярэдні план насычанасці: павялічыць на 1%"
+msgstr "Пярэдні план, насычанасць: павялічыць на 1%"
 
 #: ../app/actions/context-actions.c:533
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 10%"
-msgstr "Пярэдні план насычанасці: паменшыць на 10%"
+msgstr "Пярэдні план, насычанасць: паменшыць на 10%"
 
 #: ../app/actions/context-actions.c:537
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 10%"
-msgstr "Пярэдні план насычанасці: павялічыць на 10%"
+msgstr "Пярэдні план, насычанасць: павялічыць на 10%"
 
 #: ../app/actions/context-actions.c:545
 msgctxt "context-action"
 msgid "Foreground Value: Set"
-msgstr "Значэнне пярэдняга плана: задаць значэнне"
+msgstr "Пярэдні план, яркасць: задаць значэнне"
 
 #: ../app/actions/context-actions.c:549
 msgctxt "context-action"
 msgid "Foreground Value: Set to Minimum"
-msgstr "Значэнне пярэдняга плана: задаць мінімальнае значэнне"
+msgstr "Пярэдні план, яркасць: задаць мінімальнае значэнне"
 
 #: ../app/actions/context-actions.c:553
 msgctxt "context-action"
 msgid "Foreground Value: Set to Maximum"
-msgstr "Значэнне пярэдняга плана: задаць максімальнае значэнне"
+msgstr "Пярэдні план, яркасць: задаць максімальнае значэнне"
 
 #: ../app/actions/context-actions.c:557
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 1%"
-msgstr "Значэнне пярэдняга плана: паменшыць на 1%"
+msgstr "Пярэдні план, яркасць: паменшыць на 1%"
 
 #: ../app/actions/context-actions.c:561
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 1%"
-msgstr "Значэнне пярэдняга плана: павялічыць на 1%"
+msgstr "Пярэдні план, яркасць: павялічыць на 1%"
 
 #: ../app/actions/context-actions.c:565
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 10%"
-msgstr "Значэнне пярэдняга плана: паменшыць на 10%"
+msgstr "Пярэдні план, яркасць: паменшыць на 10%"
 
 #: ../app/actions/context-actions.c:569
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 10%"
-msgstr "Значэнне пярэдняга плана: павялічыць на 10%"
+msgstr "Пярэдні план, яркасць: павялічыць на 10%"
 
 #: ../app/actions/context-actions.c:577
 msgctxt "context-action"
 msgid "Background Hue: Set"
-msgstr "Адценне фону: задаць значэнне"
+msgstr "Фон, тон: задаць значэнне"
 
 #: ../app/actions/context-actions.c:581
 msgctxt "context-action"
 msgid "Background Hue: Set to Minimum"
-msgstr "Адценне фону: задаць мінімальнае значэнне"
+msgstr "Фон, тон: задаць мінімальнае значэнне"
 
 #: ../app/actions/context-actions.c:585
 msgctxt "context-action"
 msgid "Background Hue: Set to Maximum"
-msgstr "Адценне фону: задаць максімальнае значэнне"
+msgstr "Фон, тон: задаць максімальнае значэнне"
 
 #: ../app/actions/context-actions.c:589
 msgctxt "context-action"
 msgid "Background Hue: Decrease by 1%"
-msgstr "Адценне фону: паменшыць на 1%"
+msgstr "Фон, тон: паменшыць на 1%"
 
 #: ../app/actions/context-actions.c:593
 msgctxt "context-action"
 msgid "Background Hue: Increase by 1%"
-msgstr "Адценне фону: павялічыць на 1%"
+msgstr "Фон, тон: павялічыць на 1%"
 
 #: ../app/actions/context-actions.c:597
 msgctxt "context-action"
 msgid "Background Hue: Decrease by 10%"
-msgstr "Адценне фону: паменшыць на 10%"
+msgstr "Фон, тон: паменшыць на 10%"
 
 #: ../app/actions/context-actions.c:601
 msgctxt "context-action"
 msgid "Background Hue: Increase by 10%"
-msgstr "Адценне фону: павялічыць на 10%"
+msgstr "Фон, тон: павялічыць на 10%"
 
 #: ../app/actions/context-actions.c:609
 msgctxt "context-action"
 msgid "Background Saturation: Set"
-msgstr "Фон насычанасці: задаць значэнне"
+msgstr "Фон, насычанасць: задаць значэнне"
 
 #: ../app/actions/context-actions.c:613
 msgctxt "context-action"
 msgid "Background Saturation: Set to Minimum"
-msgstr "Фон насычанасці: задаць мінімальнае значэнне"
+msgstr "Фон, насычанасць: задаць мінімальнае значэнне"
 
 #: ../app/actions/context-actions.c:617
 msgctxt "context-action"
 msgid "Background Saturation: Set to Maximum"
-msgstr "Фон насычанасці: задаць максімальнае значэнне"
+msgstr "Фон, насычанасць: задаць максімальнае значэнне"
 
 #: ../app/actions/context-actions.c:621
 msgctxt "context-action"
 msgid "Background Saturation: Decrease by 1%"
-msgstr "Фон насычанасці: паменшыць на 1%"
+msgstr "Фон, насычанасць: паменшыць на 1%"
 
 #: ../app/actions/context-actions.c:625
 msgctxt "context-action"
 msgid "Background Saturation: Increase by 1%"
-msgstr "Фон насычанасці: павялічыць на 1%"
+msgstr "Фон, насычанасць: павялічыць на 1%"
 
 #: ../app/actions/context-actions.c:629
 msgctxt "context-action"
 msgid "Background Saturation: Decrease by 10%"
-msgstr "Фон насычанасці: паменшыць на 10%"
+msgstr "Фон, насычанасць: паменшыць на 10%"
 
 #: ../app/actions/context-actions.c:633
 msgctxt "context-action"
 msgid "Background Saturation: Increase by 10%"
-msgstr "Фон насычанасці: павялічыць на 10%"
+msgstr "Фон, насычанасць: павялічыць на 10%"
 
 #: ../app/actions/context-actions.c:641
 msgctxt "context-action"
 msgid "Background Value: Set"
-msgstr "Значэнне фону: задаць значэнне"
+msgstr "Фон, яркасць: задаць значэнне"
 
 #: ../app/actions/context-actions.c:645
 msgctxt "context-action"
 msgid "Background Value: Set to Minimum"
-msgstr "Значэнне фону: задаць мінімальнае значэнне"
+msgstr "Фон, яркасць: задаць мінімальнае значэнне"
 
 #: ../app/actions/context-actions.c:649
 msgctxt "context-action"
 msgid "Background Value: Set to Maximum"
-msgstr "Значэнне фону: задаць максімальнае значэнне"
+msgstr "Фон, яркасць: задаць максімальнае значэнне"
 
 #: ../app/actions/context-actions.c:653
 msgctxt "context-action"
 msgid "Background Value: Decrease by 1%"
-msgstr "Значэнне фону: паменшыць на 1%"
+msgstr "Фон, яркасць: паменшыць на 1%"
 
 #: ../app/actions/context-actions.c:657
 msgctxt "context-action"
 msgid "Background Value: Increase by 1%"
-msgstr "Значэнне фону: павялічыць на 1%"
+msgstr "Фон, яркасць: павялічыць на 1%"
 
 #: ../app/actions/context-actions.c:661
 msgctxt "context-action"
 msgid "Background Value: Decrease by 10%"
-msgstr "Значэнне фону: паменшыць на 10%"
+msgstr "Фон, яркасць: паменшыць на 10%"
 
 #: ../app/actions/context-actions.c:665
 msgctxt "context-action"
 msgid "Background Value: Increase by 10%"
-msgstr "Значэнне фону: павялічыць на 10%"
+msgstr "Фон, яркасць: павялічыць на 10%"
 
 #: ../app/actions/context-actions.c:673
 msgctxt "context-action"
@@ -3179,37 +3209,37 @@ msgstr "Промні пэндзля (рэдактар): павялічыць н�
 #: ../app/actions/context-actions.c:997
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set"
-msgstr "Цвёрдасць пэндзля (рэдактар): задаць значэнне"
+msgstr "Жорсткасць пэндзля (рэдактар): задаць значэнне"
 
 #: ../app/actions/context-actions.c:1001
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set to Minimum"
-msgstr "Цвёрдасць пэндзля (рэдактар): задаць мінімальнае значэнне"
+msgstr "Жорсткасць пэндзля (рэдактар): задаць мінімальнае значэнне"
 
 #: ../app/actions/context-actions.c:1005
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set to Maximum"
-msgstr "Цвёрдасць пэндзля (рэдактар): задаць максімальнае значэнне"
+msgstr "Жорсткасць пэндзля (рэдактар): задаць максімальнае значэнне"
 
 #: ../app/actions/context-actions.c:1009
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Decrease by 0.01"
-msgstr "Цвёрдасць пэндзля (рэдактар): паменшыць на 0,01"
+msgstr "Жорсткасць пэндзля (рэдактар): паменшыць на 0,01"
 
 #: ../app/actions/context-actions.c:1013
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Increase by 0.01"
-msgstr "Цвёрдасць пэндзля (рэдактар): павялічыць на 0,01"
+msgstr "Жорсткасць пэндзля (рэдактар): павялічыць на 0,01"
 
 #: ../app/actions/context-actions.c:1017
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Decrease by 0.1"
-msgstr "Цвёрдасць пэндзля (рэдактар): паменшыць на 0,1"
+msgstr "Жорсткасць пэндзля (рэдактар): паменшыць на 0,1"
 
 #: ../app/actions/context-actions.c:1021
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Increase by 0.1"
-msgstr "Цвёрдасць пэндзля (рэдактар): павялічыць на 0,1"
+msgstr "Жорсткасць пэндзля (рэдактар): павялічыць на 0,1"
 
 #: ../app/actions/context-actions.c:1029
 msgctxt "context-action"
@@ -3559,17 +3589,17 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Збой адкрыцця файла «%s»:\n"
+"Не ўдалося адкрыць «%s»:\n"
 "\n"
 "%s"
 
 #: ../app/actions/data-commands.c:116 ../app/actions/tool-options-commands.c:75
 #: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2195
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
-#: ../app/core/gimppalette-load.c:194
+#: ../app/core/gimppalette-load.c:202
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
 msgid "Untitled"
-msgstr "Без назвы"
+msgstr "Неназваны"
 
 #: ../app/actions/data-commands.c:217 ../app/actions/documents-commands.c:194
 #: ../app/actions/file-commands.c:530
@@ -3600,7 +3630,7 @@ msgstr "_Статус прылады"
 #: ../app/actions/dialogs-actions.c:60
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
-msgstr "Адкрыць статус дыялогавага акна прылады"
+msgstr "Адкрыць акно статусу прылады"
 
 #: ../app/actions/dialogs-actions.c:65
 msgctxt "dialogs-action"
@@ -3720,7 +3750,7 @@ msgstr "_Колеры"
 #: ../app/actions/dialogs-actions.c:132
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
-msgstr "Адкрыць дыялогавае акно колераў ПП/ФОНУ"
+msgstr "Адкрыць дыялогавае акно колераў фону або пярэдняга плана"
 
 #: ../app/actions/dialogs-actions.c:137
 msgctxt "dialogs-action"
@@ -3865,7 +3895,7 @@ msgstr "Адкрыць дыялогавае акно відарысаў"
 #: ../app/actions/dialogs-actions.c:221
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
-msgstr "_Гісторыя дакумента"
+msgstr "_Гісторыя дакументаў"
 
 #: ../app/actions/dialogs-actions.c:222
 msgctxt "dialogs-action"
@@ -4056,12 +4086,12 @@ msgstr "_Адлучыць укладку"
 #: ../app/actions/dockable-actions.c:85
 msgctxt "preview-size"
 msgid "_Tiny"
-msgstr "_Малюсенькі"
+msgstr "Ма_ленечкі"
 
 #: ../app/actions/dockable-actions.c:87
 msgctxt "preview-size"
 msgid "E_xtra Small"
-msgstr "_Вельмі маленькі"
+msgstr "Вельмі м_аленькі"
 
 #: ../app/actions/dockable-actions.c:89
 msgctxt "preview-size"
@@ -4081,17 +4111,17 @@ msgstr "_Вялікі"
 #: ../app/actions/dockable-actions.c:95
 msgctxt "preview-size"
 msgid "Ex_tra Large"
-msgstr "_Вельмі вялікі"
+msgstr "Вельмі в_ялікі"
 
 #: ../app/actions/dockable-actions.c:97
 msgctxt "preview-size"
 msgid "_Huge"
-msgstr "_Вялізны"
+msgstr "Вял_ізны"
 
 #: ../app/actions/dockable-actions.c:99
 msgctxt "preview-size"
 msgid "_Enormous"
-msgstr "_Гіганцкі"
+msgstr "Вялі_зарны"
 
 #: ../app/actions/dockable-actions.c:101
 msgctxt "preview-size"
@@ -4106,7 +4136,7 @@ msgstr "_Значок"
 #: ../app/actions/dockable-actions.c:109
 msgctxt "tab-style"
 msgid "Current _Status"
-msgstr "Бягучы _статус"
+msgstr "_Бягучы статус"
 
 #: ../app/actions/dockable-actions.c:111
 msgctxt "tab-style"
@@ -4116,7 +4146,7 @@ msgstr "_Тэкст"
 #: ../app/actions/dockable-actions.c:113
 msgctxt "tab-style"
 msgid "I_con & Text"
-msgstr "_Значок і тэкст"
+msgstr "З_начок і тэкст"
 
 #: ../app/actions/dockable-actions.c:115
 msgctxt "tab-style"
@@ -4231,12 +4261,12 @@ msgstr "Ачысціць усю гісторыю дакумента"
 #: ../app/actions/documents-actions.c:88
 msgctxt "documents-action"
 msgid "Recreate _Preview"
-msgstr "_Узнавіць перадпрагляд"
+msgstr "_Абнавіць перадпрагляд"
 
 #: ../app/actions/documents-actions.c:89
 msgctxt "documents-action"
 msgid "Recreate preview"
-msgstr "Узнавіць перадпрагляд"
+msgstr "Абнавіць перадпрагляд"
 
 #: ../app/actions/documents-actions.c:94
 msgctxt "documents-action"
@@ -4707,7 +4737,7 @@ msgstr ""
 #: ../app/actions/edit-actions.c:214
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
-msgstr "Запоўніць колерам _ПП"
+msgstr "Запоўніць колерам _пярэдняга плана"
 
 #: ../app/actions/edit-actions.c:215
 msgctxt "edit-action"
@@ -4717,7 +4747,7 @@ msgstr "Запоўніць вылучэнне з выкарыстаннем ко
 #: ../app/actions/edit-actions.c:220
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
-msgstr "Запоўніць колерам _ФОНУ"
+msgstr "Запоўніць колерам _фону"
 
 #: ../app/actions/edit-actions.c:221
 msgctxt "edit-action"
@@ -4758,7 +4788,7 @@ msgstr "Ачысціць гісторыю адрабленняў"
 
 #: ../app/actions/edit-commands.c:186
 msgid "Really clear image's undo history?"
-msgstr "Вы сапраўды хочаце ачысціць гісторыю адрабленняў?"
+msgstr "Сапраўды хочаце ачысціць гісторыю адрабленняў?"
 
 #: ../app/actions/edit-commands.c:199
 #, c-format
@@ -4784,7 +4814,7 @@ msgstr "Пікселі скапіяваны ў буфер абмену."
 #: ../app/actions/edit-commands.c:386 ../app/actions/edit-commands.c:629
 #: ../app/tools/gimpseamlessclonetool.c:297
 msgid "There is no image data in the clipboard to paste."
-msgstr "Адсутнічаюць даныя відарыса ў буферы абмену для ўстаўкі."
+msgstr "Буфер абмену не ўтрымлівае даных відарыса."
 
 #: ../app/actions/edit-commands.c:402
 msgid "Cut Named"
@@ -4968,7 +4998,7 @@ msgstr "_Адкрыць як слаі..."
 #: ../app/actions/file-actions.c:84
 msgctxt "file-action"
 msgid "Open an image file as layers"
-msgstr "Адкрыць файл з відарысам як слаі"
+msgstr "Адкрыць файл відарыса як слаі"
 
 #: ../app/actions/file-actions.c:89
 msgctxt "file-action"
@@ -4978,7 +5008,7 @@ msgstr "Адкрыць _размяшчэнне..."
 #: ../app/actions/file-actions.c:90
 msgctxt "file-action"
 msgid "Open an image file from a specified location"
-msgstr "Адкрыць файл відарыса з пазначанага размяшчэння"
+msgstr "Адкрыць файл відарыса з указанага размяшчэння"
 
 #: ../app/actions/file-actions.c:95
 msgctxt "file-action"
@@ -5003,7 +5033,7 @@ msgstr "Перазагрузіць файл відарыса з дыска"
 #: ../app/actions/file-actions.c:107
 msgctxt "file-action"
 msgid "C_lose All"
-msgstr "_Закрыць усё"
+msgstr "_Закрыць усе"
 
 #: ../app/actions/file-actions.c:108
 msgctxt "file-action"
@@ -5013,12 +5043,12 @@ msgstr "Закрыць усе адкрытыя відарысы"
 #: ../app/actions/file-actions.c:113
 msgctxt "file-action"
 msgid "Copy _Image Location"
-msgstr "Размяшчэнне копіі _відарыса"
+msgstr "Скапіяваць размяшчэнне _відарыса"
 
 #: ../app/actions/file-actions.c:114
 msgctxt "file-action"
 msgid "Copy image file location to clipboard"
-msgstr "Капіяваць размяшчэнне файла відарыса ў буфер абмену"
+msgstr "Скапіяваць размяшчэнне файла відарыса ў буфер абмену"
 
 #: ../app/actions/file-actions.c:119
 msgctxt "file-action"
@@ -5028,7 +5058,7 @@ msgstr "Паказаць у _менеджары файлаў"
 #: ../app/actions/file-actions.c:120
 msgctxt "file-action"
 msgid "Show image file location in the file manager"
-msgstr "Паказваць размяшчэнне файла відарыса ў файлавым менеджары"
+msgstr "Паказваць размяшчэнне відарыса ў файлавым менеджары"
 
 #: ../app/actions/file-actions.c:125
 msgctxt "file-action"
@@ -5102,7 +5132,7 @@ msgstr "_Перазапісаць"
 #: ../app/actions/file-actions.c:167
 msgctxt "file-action"
 msgid "Export the image back to the imported file in the import format"
-msgstr "Экспартаваць відарыс назад у зыходны імпартаваны файл"
+msgstr "Экспартаваць відарыс ў месца, адкуль ён імпартаваны ў зыходным фармаце"
 
 #: ../app/actions/file-actions.c:172
 msgctxt "file-action"
@@ -5112,8 +5142,7 @@ msgstr "_Экспартаваць як..."
 #: ../app/actions/file-actions.c:173
 msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
-msgstr ""
-"Экспартаваць відарыс у разнастайныя фарматы файлаў, такія як PNG або JPEG"
+msgstr "Экспартаваць відарыс у фармат на выбар, напрыклад PNG або JPEG"
 
 #: ../app/actions/file-actions.c:315
 msgctxt "file-action"
@@ -5182,8 +5211,8 @@ msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
-"Аднаўляючы відарыс да стану, які захаваны на дыску, вы страціце ўсе "
-"змяненні, у тым ліку звесткі пра адрабленні дзеянняў."
+"Калі вярнуць стан відарысу да захаванага на дыску, вы страціце ўсе змяненні, "
+"у тым ліку звесткі пра адрабленні дзеянняў."
 
 #: ../app/actions/file-commands.c:785
 msgid "(Unnamed Template)"
@@ -5443,7 +5472,7 @@ msgstr "_Тэмпература колеру..."
 #: ../app/actions/filters-actions.c:258
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
-msgstr "Колер у _альфа..."
+msgstr "Колер у _альфа-канал..."
 
 #: ../app/actions/filters-actions.c:263
 msgctxt "filters-action"
@@ -5578,12 +5607,12 @@ msgstr "_Высокачастотны фільтр..."
 #: ../app/actions/filters-actions.c:393
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
-msgstr "Адценне-_колернасць..."
+msgstr "Тон-_колернасць..."
 
 #: ../app/actions/filters-actions.c:398
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
-msgstr "Адценне-_насычанасць..."
+msgstr "Тон-_насычанасць..."
 
 #: ../app/actions/filters-actions.c:403
 msgctxt "filters-action"
@@ -5603,17 +5632,17 @@ msgstr "_Калейдаскоп..."
 #: ../app/actions/filters-actions.c:418
 msgctxt "filters-action"
 msgid "Le_ns Blur..."
-msgstr "_Размытасць аб'ектыва..."
+msgstr "_Размытасць ад аб'ектыва..."
 
 #: ../app/actions/filters-actions.c:423
 msgctxt "filters-action"
 msgid "Le_ns Distortion..."
-msgstr "_Скажэнне аб'ектыва..."
+msgstr "_Скажэнне ад аб'ектыва..."
 
 #: ../app/actions/filters-actions.c:428
 msgctxt "filters-action"
 msgid "Lens _Flare..."
-msgstr "_Блік аб'ектыва..."
+msgstr "_Блік ад аб'ектыва..."
 
 #: ../app/actions/filters-actions.c:433
 msgctxt "filters-action"
@@ -5833,7 +5862,7 @@ msgstr "_Сепія..."
 #: ../app/actions/filters-actions.c:648
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
-msgstr "Цені-падсвятлення..."
+msgstr "Цені-светлавыя плямы..."
 
 #: ../app/actions/filters-actions.c:653
 msgctxt "filters-action"
@@ -5893,7 +5922,7 @@ msgstr "_Парог..."
 #: ../app/actions/filters-actions.c:708
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
-msgstr "Парог альфа..."
+msgstr "Парог альфа-канала..."
 
 #: ../app/actions/filters-actions.c:713
 msgctxt "filters-action"
@@ -5933,7 +5962,7 @@ msgstr "Пагаршэнне _відэа..."
 #: ../app/actions/filters-actions.c:748
 msgctxt "filters-action"
 msgid "_Vignette..."
-msgstr "_Віньетаванне..."
+msgstr "_Віньетка..."
 
 #: ../app/actions/filters-actions.c:753
 msgctxt "filters-action"
@@ -6180,12 +6209,12 @@ msgstr "_RGB"
 #: ../app/actions/gradient-editor-actions.c:361
 msgctxt "gradient-editor-coloring"
 msgid "HSV (_counter-clockwise hue)"
-msgstr "HSV (адценне супраць гадзіннікавай стрэлкі)"
+msgstr "HSV (тон _супраць гадзіннікавай стрэлкі)"
 
 #: ../app/actions/gradient-editor-actions.c:366
 msgctxt "gradient-editor-coloring"
 msgid "HSV (clockwise _hue)"
-msgstr "HSV (_адценне па гадзіннікавай стрэлцы)"
+msgstr "HSV (тон _па гадзіннікавай стрэлцы)"
 
 #: ../app/actions/gradient-editor-actions.c:371
 msgctxt "gradient-editor-coloring"
@@ -6194,7 +6223,7 @@ msgstr "(Змяняецца)"
 
 #: ../app/actions/gradient-editor-actions.c:379
 msgid "Zoom In"
-msgstr "_Павялічыць"
+msgstr "Павялічыць"
 
 #: ../app/actions/gradient-editor-actions.c:380
 #: ../app/actions/palette-editor-actions.c:90
@@ -6212,12 +6241,12 @@ msgstr "Паменшыць"
 
 #: ../app/actions/gradient-editor-actions.c:391
 msgid "Zoom All"
-msgstr "_Павялічыць усе"
+msgstr "Павялічыць усе"
 
 #: ../app/actions/gradient-editor-actions.c:392
 #: ../app/actions/palette-editor-actions.c:102
 msgid "Zoom all"
-msgstr "_Павялічыць усе"
+msgstr "Павялічыць усе"
 
 #: ../app/actions/gradient-editor-actions.c:784
 msgid "_Blending Function for Segment"
@@ -6556,7 +6585,7 @@ msgstr "_Абясколерванне"
 #: ../app/actions/image-actions.c:79
 msgctxt "image-action"
 msgid "_New..."
-msgstr "_Новае..."
+msgstr "_Новы..."
 
 #: ../app/actions/image-actions.c:80
 msgctxt "image-action"
@@ -6576,7 +6605,7 @@ msgstr "Стварыць дублікат гэтага відарыса"
 #: ../app/actions/image-actions.c:91
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
-msgstr "_Прызначыць колер профілю..."
+msgstr "_Прызначыць колеравы профіль..."
 
 #: ../app/actions/image-actions.c:92
 msgctxt "image-action"
@@ -6596,7 +6625,7 @@ msgstr "Ужыць колеравы профіль да відарыса"
 #: ../app/actions/image-actions.c:103
 msgctxt "image-action"
 msgid "_Discard Color Profile"
-msgstr "_Адхіліць колер профілю"
+msgstr "_Адхіліць колеравы профіль"
 
 #: ../app/actions/image-actions.c:104
 msgctxt "image-action"
@@ -6606,7 +6635,7 @@ msgstr "Выдаліць колеравы профіль відарыса"
 #: ../app/actions/image-actions.c:109
 msgctxt "image-action"
 msgid "_Save Color Profile to File..."
-msgstr "_Захаваць колер профілю ў файл..."
+msgstr "_Захаваць колеравы профіль у файл..."
 
 #: ../app/actions/image-actions.c:110
 msgctxt "image-action"
@@ -6621,7 +6650,7 @@ msgstr "_Памер палатна…"
 #: ../app/actions/image-actions.c:116
 msgctxt "image-action"
 msgid "Adjust the image dimensions"
-msgstr "Рэгуляваць вымярэнні відарыса"
+msgstr "Рэгуляваць памеры відарыса"
 
 #: ../app/actions/image-actions.c:121
 msgctxt "image-action"
@@ -6708,12 +6737,12 @@ msgstr "Аб'яднаць усе слаі ў адзін і выдаліць пр
 #: ../app/actions/image-actions.c:169
 msgctxt "image-action"
 msgid "Configure G_rid..."
-msgstr "Канфігурацыя _сеткі..."
+msgstr "Наладзіць _сетку..."
 
 #: ../app/actions/image-actions.c:170
 msgctxt "image-action"
 msgid "Configure the grid for this image"
-msgstr "Сканфігураваць сетку для гэтага відарыса"
+msgstr "Наладзіць сетку для гэтага відарыса"
 
 #: ../app/actions/image-actions.c:175
 msgctxt "image-action"
@@ -6979,7 +7008,7 @@ msgstr "Пераўтварэнне відарыса ў %s"
 
 #: ../app/actions/image-commands.c:1303
 msgid "Assign color profile"
-msgstr "Прызначыць колер профілю"
+msgstr "Прызначыць колеравы профіль"
 
 #: ../app/actions/image-commands.c:1349
 #, c-format
@@ -6988,7 +7017,7 @@ msgstr "Пераўтварэнне ў «%s»"
 
 #: ../app/actions/image-commands.c:1433
 msgid "Change Canvas Size"
-msgstr ""
+msgstr "Змяніць памер палатна"
 
 #: ../app/actions/image-commands.c:1481
 msgid "Change Print Size"
@@ -7171,7 +7200,7 @@ msgstr "Стварыць новы слой з апошнімі выкарыст�
 #: ../app/actions/layers-actions.c:119
 msgctxt "layers-action"
 msgid "New from _Visible"
-msgstr "Новае з _бачнага"
+msgstr "Новы слой з _бачнага"
 
 #: ../app/actions/layers-actions.c:121
 msgctxt "layers-action"
@@ -8025,7 +8054,7 @@ msgstr "Рэдагаваць актыўную палітру"
 #: ../app/actions/palette-editor-actions.c:72
 msgctxt "palette-editor-action"
 msgid "New Color from _FG"
-msgstr "Новы колер з _ПП"
+msgstr "Новы колер з _пярэдняга плана"
 
 #: ../app/actions/palette-editor-actions.c:74
 msgctxt "palette-editor-action"
@@ -8035,7 +8064,7 @@ msgstr "Стварыць новы запіс з колеру пярэдняга 
 #: ../app/actions/palette-editor-actions.c:79
 msgctxt "palette-editor-action"
 msgid "New Color from _BG"
-msgstr "_Новы колер з ФОНУ"
+msgstr "_Новы колер з фону"
 
 #: ../app/actions/palette-editor-actions.c:81
 msgctxt "palette-editor-action"
@@ -8117,7 +8146,7 @@ msgstr "Паказаць у _менеджары файлаў"
 #: ../app/actions/palettes-actions.c:79
 msgctxt "palettes-action"
 msgid "Show palette file location in the file manager"
-msgstr "Паказваць размяшчэнне файла палітры ў файлавым менеджары"
+msgstr "Паказаць размяшчэнне файла палітры ў файлавым менеджары"
 
 #: ../app/actions/palettes-actions.c:84
 msgctxt "palettes-action"
@@ -8276,7 +8305,7 @@ msgstr "_Скінуць"
 
 #: ../app/actions/plug-in-commands.c:200
 msgid "Do you really want to reset all filters to default values?"
-msgstr "Вы сапраўды хочаце скінуць усе фільтры да прадвызначаных значэнняў?"
+msgstr "Сапраўды хочаце скінуць усе фільтры да прадвызначаных значэнняў?"
 
 #: ../app/actions/quick-mask-actions.c:43
 msgctxt "quick-mask-action"
@@ -8286,7 +8315,7 @@ msgstr "Меню хуткай маскі"
 #: ../app/actions/quick-mask-actions.c:47
 msgctxt "quick-mask-action"
 msgid "_Configure Color and Opacity..."
-msgstr "_Сканфігураваць колер і непразрыстасць…"
+msgstr "_Наладзіць колер і непразрыстасць…"
 
 #: ../app/actions/quick-mask-actions.c:55
 msgctxt "quick-mask-action"
@@ -8347,27 +8376,27 @@ msgstr "Меню рэдактара вылучэння"
 #: ../app/actions/select-actions.c:47
 msgctxt "select-action"
 msgid "_Select"
-msgstr "В_ыбраць"
+msgstr "В_ылучэнне"
 
 #: ../app/actions/select-actions.c:50
 msgctxt "select-action"
 msgid "_All"
-msgstr "_Усе"
+msgstr "Вылучыць _усё"
 
 #: ../app/actions/select-actions.c:51
 msgctxt "select-action"
 msgid "Select everything"
-msgstr "Выбраць усе"
+msgstr "Вылучыць усё"
 
 #: ../app/actions/select-actions.c:56
 msgctxt "select-action"
 msgid "_None"
-msgstr "_Адсутнічае"
+msgstr "_Зняць вылучэнне"
 
 #: ../app/actions/select-actions.c:57
 msgctxt "select-action"
 msgid "Dismiss the selection"
-msgstr "Адхіліць вылучэнне"
+msgstr "Зняць вылучэнне"
 
 #: ../app/actions/select-actions.c:62
 msgctxt "select-action"
@@ -8650,7 +8679,7 @@ msgstr "_Выдаліць"
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr "Вы сапраўды хочаце выдаліць шаблон «%s» са спіса і з дыска?"
+msgstr "Сапраўды хочаце выдаліць шаблон «%s» са спіса і з дыска?"
 
 #: ../app/actions/text-editor-actions.c:44
 msgctxt "text-editor-action"
@@ -8695,7 +8724,7 @@ msgstr "Справа налева"
 #: ../app/actions/text-editor-actions.c:71
 msgctxt "text-editor-action"
 msgid "TTB-RTL"
-msgstr ""
+msgstr "TTB-RTL"
 
 #: ../app/actions/text-editor-actions.c:72
 msgctxt "text-editor-action"
@@ -8715,7 +8744,7 @@ msgstr "Па вертыкалі, справа налева (вертыкальн
 #: ../app/actions/text-editor-actions.c:83
 msgctxt "text-editor-action"
 msgid "TTB-LTR"
-msgstr ""
+msgstr "TTB-LTR"
 
 #: ../app/actions/text-editor-actions.c:84
 msgctxt "text-editor-action"
@@ -8754,7 +8783,7 @@ msgstr "_Адкрыць"
 #: ../app/widgets/gimptextbuffer.c:1674
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Не атрымалася адкрыць «%s» для чытання: %s"
+msgstr "Не ўдалося адкрыць «%s» для чытання: %s"
 
 #: ../app/actions/text-tool-actions.c:50
 msgctxt "text-tool-action"
@@ -8908,7 +8937,7 @@ msgstr "Скінуць усе параметры інструмента"
 #: ../app/actions/tool-options-commands.c:227
 msgid "Do you really want to reset all tool options to default values?"
 msgstr ""
-"Вы сапраўды хочаце скінуць усе параметры інструмента да прадвызначаных "
+"Сапраўды хочаце скінуць усе параметры інструмента да прадвызначаных "
 "значэнняў?"
 
 #: ../app/actions/tool-preset-editor-actions.c:44
@@ -9418,52 +9447,52 @@ msgstr "Інтэрвал інструмента: павялічыць аднос
 #: ../app/actions/tools-actions.c:491
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set"
-msgstr "Цвёрдасць інструмента: задаць значэнне"
+msgstr "Жорсткасць інструмента: задаць значэнне"
 
 #: ../app/actions/tools-actions.c:495
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set to Default Value"
-msgstr "Цвёрдасць інструмента: задаць прадвызначанае значэнне"
+msgstr "Жорсткасць інструмента: задаць прадвызначанае значэнне"
 
 #: ../app/actions/tools-actions.c:499
 msgctxt "tools-action"
 msgid "Tool's Hardness: Minimize"
-msgstr "Цвёрдасць інструмента: зрабіць мінімальным"
+msgstr "Жорсткасць інструмента: зрабіць мінімальным"
 
 #: ../app/actions/tools-actions.c:503
 msgctxt "tools-action"
 msgid "Tool's Hardness: Maximize"
-msgstr "Цвёрдасць інструмента: зрабіць максімальным"
+msgstr "Жорсткасць інструмента: зрабіць максімальным"
 
 #: ../app/actions/tools-actions.c:507
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease by 1"
-msgstr "Цвёрдасць інструмента: паменшыць на 1"
+msgstr "Жорсткасць інструмента: паменшыць на 1"
 
 #: ../app/actions/tools-actions.c:511
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase by 1"
-msgstr "Цвёрдасць інструмента: павялічыць на 1"
+msgstr "Жорсткасць інструмента: павялічыць на 1"
 
 #: ../app/actions/tools-actions.c:515
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease by 10"
-msgstr "Цвёрдасць інструмента: паменшыць на 10"
+msgstr "Жорсткасць інструмента: паменшыць на 10"
 
 #: ../app/actions/tools-actions.c:519
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase by 10"
-msgstr "Цвёрдасць інструмента: павялічыць на 10"
+msgstr "Жорсткасць інструмента: павялічыць на 10"
 
 #: ../app/actions/tools-actions.c:523
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease Relative"
-msgstr "Цвёрдасць інструмента: паменшыць адносна"
+msgstr "Жорсткасць інструмента: паменшыць адносна"
 
 #: ../app/actions/tools-actions.c:527
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase Relative"
-msgstr "Цвёрдасць інструмента: павялічыць адносна"
+msgstr "Жорсткасць інструмента: павялічыць адносна"
 
 #: ../app/actions/tools-actions.c:535
 msgctxt "tools-action"
@@ -9955,12 +9984,12 @@ msgstr "_Маштаб"
 #: ../app/actions/view-actions.c:72
 msgctxt "view-action"
 msgid "_Flip & Rotate"
-msgstr "_Адлюстраваць і павярнуць"
+msgstr "_Адлюстраванне і паварот"
 
 #: ../app/actions/view-actions.c:73
 msgctxt "view-action"
 msgid "_Padding Color"
-msgstr "_Падкладка колеру"
+msgstr "Колер _падкладкі"
 
 #: ../app/actions/view-actions.c:76
 msgctxt "view-action"
@@ -10085,7 +10114,7 @@ msgstr "Фільтры _дысплэя..."
 #: ../app/actions/view-actions.c:144
 msgctxt "view-action"
 msgid "Configure filters applied to this view"
-msgstr "Сканфігураваць фільтры ўжытыя да гэтага выгляду"
+msgstr "Наладзіць фільтры ўжытыя да гэтага акна"
 
 #: ../app/actions/view-actions.c:149
 msgctxt "view-action"
@@ -10130,12 +10159,12 @@ msgstr "Падключыцца да іншага дысплэя"
 #: ../app/actions/view-actions.c:178
 msgctxt "view-action"
 msgid "Show _All"
-msgstr "Паказаць _усе"
+msgstr "Паказваць _усё"
 
 #: ../app/actions/view-actions.c:179
 msgctxt "view-action"
 msgid "Show full image content"
-msgstr "Паказваць поўнае змесціва відарыса"
+msgstr "Паказваць змесціва відарыса цалкам"
 
 #: ../app/actions/view-actions.c:185
 msgctxt "view-action"
@@ -10150,12 +10179,12 @@ msgstr "Піксель на экране адпавядае пікселю ві�
 #: ../app/actions/view-actions.c:192
 msgctxt "view-action"
 msgid "_Color-Manage this View"
-msgstr "_Кіраваць колерамі гэтага выгляду"
+msgstr "_Кіраваць колерамі гэтага акна"
 
 #: ../app/actions/view-actions.c:193
 msgctxt "view-action"
 msgid "Use color management for this view"
-msgstr "Выкарыстоўваць кіраванне колерам для гэтага выгляду"
+msgstr "Выкарыстоўваць кіраванне колерам для гэтага акна"
 
 #: ../app/actions/view-actions.c:199
 msgctxt "view-action"
@@ -10165,7 +10194,7 @@ msgstr "_Проба колераў"
 #: ../app/actions/view-actions.c:200
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
-msgstr "Выкарыстоўваць гэты выгляд для пробы колераў"
+msgstr "Выкарыстоўваць у гэтым акне пробу колераў"
 
 #: ../app/actions/view-actions.c:206 ../app/actions/view-actions.c:213
 msgctxt "view-action"
@@ -10375,12 +10404,12 @@ msgstr "Паменшыць"
 #: ../app/actions/view-actions.c:357
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
-msgstr "_Павялічыць"
+msgstr "Па_вялічыць"
 
 #: ../app/actions/view-actions.c:358 ../app/actions/view-actions.c:370
 msgctxt "view-zoom-action"
 msgid "Zoom in"
-msgstr "_Павялічыць"
+msgstr "Павялічыць"
 
 #: ../app/actions/view-actions.c:363
 msgctxt "view-zoom-action"
@@ -10390,7 +10419,7 @@ msgstr "Паменшыць"
 #: ../app/actions/view-actions.c:369
 msgctxt "view-zoom-action"
 msgid "Zoom In"
-msgstr "_Павялічыць"
+msgstr "Павялічыць"
 
 #: ../app/actions/view-actions.c:375
 msgctxt "view-zoom-action"
@@ -10695,12 +10724,12 @@ msgstr "Скінуць колер падкладкі да прадвызнача
 #: ../app/actions/view-actions.c:634
 msgctxt "view-padding-color"
 msgid "Keep Padding in \"Show _All\" Mode"
-msgstr "Захоўваць падкладку ў рэжыме «Паказаць усе»"
+msgstr "Захоўваць падкладку ў рэжыме «Паказваць усё»"
 
 #: ../app/actions/view-actions.c:636
 msgctxt "view-padding-color"
 msgid "Keep canvas padding when \"View -> Show All\" is enabled"
-msgstr "Захоўваць падкладку палатна, калі ўключана «Выгляд -> Паказаць усе»"
+msgstr "Захоўваць падкладку палатна, калі ўключана «Выгляд -> Паказваць усё»"
 
 #: ../app/actions/view-actions.c:645
 msgctxt "view-action"
@@ -10807,7 +10836,7 @@ msgstr "(H) "
 #. V: Vertical
 #: ../app/actions/view-actions.c:1187
 msgid "(V) "
-msgstr "(В) "
+msgstr "(V) "
 
 #: ../app/actions/view-actions.c:1194
 #, c-format
@@ -10887,41 +10916,40 @@ msgstr "Пераключыцца на папярэдні відарыс"
 #: ../app/actions/windows-actions.c:121
 msgctxt "windows-action"
 msgid "_Tabs Position"
-msgstr "_Пазіцыя ўкладкі"
+msgstr "_Пазіцыя ўкладак"
 
 #: ../app/actions/windows-actions.c:127
 msgctxt "windows-action"
 msgid "_Hide Docks"
-msgstr "_Схаваць док-панэль"
+msgstr "_Схаваць док-панэлі"
 
 #: ../app/actions/windows-actions.c:128
 msgctxt "windows-action"
 msgid ""
 "When enabled, docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
-"Пры актыўным параметры док-панэлі і іншыя дыялогавыя вокны будуць схаваны, а "
-"бачнымі застануцца толькі вокны з відарысамі."
+"Калі ўключана, док-панэлі і іншыя дыялогавыя вокны будуць схаваны, а бачнымі "
+"застануцца толькі вокны з відарысамі."
 
 #: ../app/actions/windows-actions.c:134
 msgctxt "windows-action"
 msgid "_Show Tabs"
-msgstr "_Паказаць укладкі"
+msgstr "_Паказваць укладкі"
 
 #: ../app/actions/windows-actions.c:135
 msgctxt "windows-action"
 msgid "When enabled, the image tabs bar is shown."
-msgstr "Пры актыўным параметры будзе бачная панэль укладак відарыса."
+msgstr "Калі ўключана, будзе бачнай панэль укладак для адкрытых відарысаў."
 
 #: ../app/actions/windows-actions.c:141
 msgctxt "windows-action"
 msgid "Single-Window _Mode"
-msgstr "Рэжым адно _акно"
+msgstr "_Аднааконны рэжым"
 
 #: ../app/actions/windows-actions.c:142
 msgctxt "windows-action"
 msgid "When enabled, GIMP is in a single-window mode."
-msgstr ""
-"Пры актыўным параметры GIMP будзе выкарыстоўвацца ў рэжыме аднаго акна."
+msgstr "Калі ўключана, GIMP будзе выкарыстоўвацца ў рэжыме аднаго акна."
 
 #: ../app/actions/windows-actions.c:151
 msgctxt "windows-tabs-position-action"
@@ -10931,22 +10959,22 @@ msgstr "З_верху"
 #: ../app/actions/windows-actions.c:152
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the top"
-msgstr "Пазіцыя ўкладак уверсе"
+msgstr "Пазіцыя ўкладак зверху"
 
 #: ../app/actions/windows-actions.c:156
 msgctxt "windows-tabs-position-action"
 msgid "_Bottom"
-msgstr "_Знізу"
+msgstr "З_нізу"
 
 #: ../app/actions/windows-actions.c:157
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the bottom"
-msgstr "Пазіцыя ўкладак унізе"
+msgstr "Пазіцыя ўкладак знізу"
 
 #: ../app/actions/windows-actions.c:161
 msgctxt "windows-tabs-position-action"
 msgid "_Left"
-msgstr "_Злева"
+msgstr "З_лева"
 
 #: ../app/actions/windows-actions.c:162
 msgctxt "windows-tabs-position-action"
@@ -10956,7 +10984,7 @@ msgstr "Пазіцыя ўкладак злева"
 #: ../app/actions/windows-actions.c:166
 msgctxt "windows-tabs-position-action"
 msgid "_Right"
-msgstr "_Справа"
+msgstr "С_права"
 
 #: ../app/actions/windows-actions.c:167
 msgctxt "windows-tabs-position-action"
@@ -11134,7 +11162,7 @@ msgstr "Нічога не рабіць"
 #: ../app/config/config-enums.c:287
 msgctxt "space-bar-action"
 msgid "Pan view"
-msgstr "Зрушваць па відарысе"
+msgstr "Перамяшчэнне па відарысе"
 
 #: ../app/config/config-enums.c:288
 msgctxt "space-bar-action"
@@ -11184,7 +11212,7 @@ msgstr "Высокая"
 #: ../app/config/gimpconfig-file.c:82
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Не атрымалася адкрыць «%s» для запісу: %s"
+msgstr "Не ўдалося адкрыць «%s» для запісу: %s"
 
 #: ../app/config/gimpconfig-file.c:116
 #, c-format
@@ -11241,9 +11269,9 @@ msgid ""
 "receives the focus. This is useful for window managers using \"click to "
 "focus\"."
 msgstr ""
-"Пры актыўным параметры відарыс становіцца актыўным, калі яго акно атрымлівае "
-"фокус. Гэта карысна падчас працы з аконнымі менеджарамі, у якіх для "
-"актывацыі фокуса трэба націснуць на акно."
+"Калі ўключана, відарыс становіцца актыўным, калі яго акно атрымлівае фокус. "
+"Гэта карысна падчас працы з аконнымі менеджарамі, у якіх для актывацыі "
+"фокуса трэба націснуць на акно."
 
 #: ../app/config/gimprc-blurbs.h:23 ../app/config/gimprc-blurbs.h:28
 msgid "Sets the dynamics search path."
@@ -11262,8 +11290,8 @@ msgid ""
 "Specifies whether to keep the canvas padding when \"View -> Show All\" is "
 "enabled."
 msgstr ""
-"Вызначае, ці захоўваць падкладку палатна, калі ўключаны «Выгляд -> Паказаць "
-"усе»."
+"Вызначае, ці захоўваць падкладку палатна, калі ўключаны «Выгляд -> Паказваць "
+"усё»."
 
 #: ../app/config/gimprc-blurbs.h:41
 msgid "Specifies how the area around the image should be drawn."
@@ -11311,15 +11339,15 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:84
 msgid "Show full image content by default."
-msgstr "Прадвызначана паказваць поўнае змесціва відарыса."
+msgstr "Прадвызначана паказваць змесціва відарыса цалкам."
 
 #: ../app/config/gimprc-blurbs.h:87
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
 msgstr ""
-"Пры актыўным параметры кожны піксель відарыса будзе супастаўляцца з пікселем "
-"на экране."
+"Калі ўключана, кожны піксель відарыса будзе супастаўляцца з пікселем на "
+"экране."
 
 #: ../app/config/gimprc-blurbs.h:112
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
@@ -11370,26 +11398,22 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:161
 msgid "When enabled, the selected brush will be used for all tools."
 msgstr ""
-"Пры актыўным параметры выбраны пэндзаль будзе выкарыстоўвацца для ўсіх "
-"інструментаў."
+"Калі ўключана, выбраны пэндзаль будзе выкарыстоўвацца для ўсіх інструментаў."
 
 #: ../app/config/gimprc-blurbs.h:164
 msgid "When enabled, the selected dynamics will be used for all tools."
 msgstr ""
-"Пры актыўным параметры выбраная дынаміка будзе выкарыстоўвацца для ўсіх "
-"інструментаў."
+"Калі ўключана, выбраная дынаміка будзе выкарыстоўвацца для ўсіх інструментаў."
 
 #: ../app/config/gimprc-blurbs.h:170
 msgid "When enabled, the selected gradient will be used for all tools."
 msgstr ""
-"Пры актыўным параметры выбраны градыент будзе выкарыстоўвацца для ўсіх "
-"інструментаў."
+"Калі ўключана, выбраны градыент будзе выкарыстоўвацца для ўсіх інструментаў."
 
 #: ../app/config/gimprc-blurbs.h:173
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr ""
-"Пры актыўным параметры выбраны ўзор будзе выкарыстоўвацца для ўсіх "
-"інструментаў."
+"Калі ўключана, выбраны ўзор будзе выкарыстоўвацца для ўсіх інструментаў."
 
 #: ../app/config/gimprc-blurbs.h:187
 msgid "Sets the browser used by the help system."
@@ -11482,8 +11506,8 @@ msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
-"Пры актыўным параметры маштаб відарыса, які адкрываецца маштабуецца да "
-"памераў акна. У іншых выпадках маштаб выбіраецца 1:1."
+"Калі ўключана, маштаб відарыса, які адкрываецца маштабуецца да памераў акна. "
+"У іншых выпадках маштаб выбіраецца 1:1."
 
 #: ../app/config/gimprc-blurbs.h:255
 msgid ""
@@ -11556,8 +11580,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:301
 msgid "When enabled, non-visible layers can be edited as normal."
-msgstr ""
-"Пры актыўным параметры нябачныя слаі можна будзе рэдагаваць як звычайныя."
+msgstr "Калі ўключана, нябачныя слаі можна будзе рэдагаваць як звычайныя."
 
 #: ../app/config/gimprc-blurbs.h:304
 msgid ""
@@ -11619,8 +11642,8 @@ msgid ""
 "physical image size changes. This setting only takes effect in multi-window "
 "mode."
 msgstr ""
-"Пры актыўным параметры акно відарыса будзе аўтаматычна змяняць свой памер "
-"пры змяненні фізічнага памеру відарыса. Гэта налада дзейнічае толькі ў "
+"Калі ўключана, акно відарыса будзе аўтаматычна змяняць свой памер пры "
+"змяненні фізічнага памеру відарыса. Гэта налада дзейнічае толькі ў "
 "шматаконным рэжыме."
 
 #: ../app/config/gimprc-blurbs.h:360
@@ -11628,9 +11651,9 @@ msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
 msgstr ""
-"Пры актыўным параметры акно відарыса будзе аўтаматычна змяняць свой памер "
-"пры маштабаванні выгляду відарыса. Гэта налада дзейнічае толькі ў "
-"шматаконным рэжыме."
+"Калі ўключана, акно відарыса будзе аўтаматычна змяняць свой памер пры "
+"маштабаванні выгляду відарыса. Гэта налада дзейнічае толькі ў шматаконным "
+"рэжыме."
 
 #: ../app/config/gimprc-blurbs.h:365
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -11641,9 +11664,9 @@ msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
 msgstr ""
-"Пры актыўным параметры GIMP паспрабуе аднавіць вокны на тым маніторы, дзе "
-"яны былі адкрыты да гэтага. Калі параметр не актыўны, вокны будуць адкрыты "
-"на бягучым маніторы."
+"Калі ўключана, GIMP паспрабуе аднавіць вокны на тым маніторы, дзе яны былі "
+"адкрыты да гэтага. Калі параметр не актыўны, вокны будуць адкрыты на бягучым "
+"маніторы."
 
 #: ../app/config/gimprc-blurbs.h:373
 msgid ""
@@ -11657,7 +11680,7 @@ msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
 msgstr ""
-"Пры актыўным параметры той самы інструмент і тыя ж самыя параметры будуць "
+"Калі ўключана, той самы інструмент і тыя ж самыя параметры будуць "
 "выкарыстоўвацца для ўсіх прылад уводу. Пры змене ўводу інструменты "
 "пераключацца не будуць."
 
@@ -11680,15 +11703,14 @@ msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
-"Пры актыўным параметры ўсе інструменты для малявання паказваюць абрыс "
-"бягучага пэндзля."
+"Калі ўключана, ўсе інструменты для малявання паказваюць абрыс бягучага "
+"пэндзля."
 
 #: ../app/config/gimprc-blurbs.h:399
 msgid ""
 "When enabled, the brush outline will snap to individual dabs while painting."
 msgstr ""
-"Пры актыўным параметры абрыс пэндзля будзе прывязаны да асобных мазкоў пры "
-"маляванні."
+"Калі ўключана, абрыс пэндзля будзе прывязаны да асобных мазкоў пры маляванні."
 
 #: ../app/config/gimprc-blurbs.h:403
 msgid ""
@@ -11696,42 +11718,41 @@ msgid ""
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
 msgstr ""
-"Пры актыўным параметры ў дыялогавых вокнах будзе адлюстроўвацца кнопка "
-"\"Даведка\", якая дазволіць атрымаць доступ да старонак з даведкай. Без "
-"гэтай кнопкі даведку можна выклікаць націсканнем кнопкі F1."
+"Калі ўключана, ў дыялогавых вокнах будзе адлюстроўвацца кнопка \"Даведка\", "
+"якая дазволіць атрымаць доступ да старонак з даведкай. Без гэтай кнопкі "
+"даведку можна выклікаць націсканнем кнопкі F1."
 
 #: ../app/config/gimprc-blurbs.h:408
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
 msgstr ""
-"Пры актыўным параметры ўказальнік мышы будзе бачны падчас выкарыстання "
-"інструмента малявання."
+"Калі ўключана, ўказальнік мышы будзе бачны падчас выкарыстання інструмента "
+"малявання."
 
 #: ../app/config/gimprc-blurbs.h:412
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
-"Пры актыўным параметры панэль меню будзе бачна прадвызначана. Гэты параметр "
-"можна таксама актываваць праз каманду \"Выгляд\" -> \"Паказваць панэль "
-"меню\"."
+"Калі ўключана, панэль меню будзе бачна прадвызначана. Гэты параметр можна "
+"таксама актываваць праз каманду \"Выгляд\" -> \"Паказваць панэль меню\"."
 
 #: ../app/config/gimprc-blurbs.h:416
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-"Пры актыўным параметры лінейкі будуць бачныя прадвызначана. Гэты параметр "
-"можна таксама актываваць праз каманду «Выгляд» → «Паказваць лінейкі»."
+"Калі ўключана, лінейкі будуць бачныя прадвызначана. Гэты параметр можна "
+"таксама актываваць праз каманду «Выгляд» → «Паказваць лінейкі»."
 
 #: ../app/config/gimprc-blurbs.h:420
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"Пры актыўным параметры паласа прагорткі будзе бачна прадвызначана. Гэты "
-"параметр можна таксама актываваць праз каманду «Выгляд» → «Паказваць паласу "
+"Калі ўключана, паласа прагорткі будзе бачна прадвызначана. Гэты параметр "
+"можна таксама актываваць праз каманду «Выгляд» → «Паказваць паласу "
 "прагорткі»."
 
 #: ../app/config/gimprc-blurbs.h:424
@@ -11739,60 +11760,56 @@ msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr ""
-"Пры актыўным параметры радок стану будзе бачна прадвызначана. Гэты параметр "
-"можна таксама актываваць праз каманду \"Выгляд\" -> \"Паказваць радок "
-"стану\"."
+"Калі ўключана, радок стану будзе бачна прадвызначана. Гэты параметр можна "
+"таксама актываваць праз каманду \"Выгляд\" -> \"Паказваць радок стану\"."
 
 #: ../app/config/gimprc-blurbs.h:428
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
-"Пры актыўным параметры вылучэнне будзе бачна прадвызначана. Гэты параметр "
-"можна таксама актываваць праз каманду \"Выгляд\" -> \"Паказваць вылучэнне\"."
+"Калі ўключана, вылучэнне будзе бачна прадвызначана. Гэты параметр можна "
+"таксама актываваць праз каманду \"Выгляд\" -> \"Паказваць вылучэнне\"."
 
 #: ../app/config/gimprc-blurbs.h:432
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
-"Пры актыўным параметры межы слоя будуць бачныя прадвызначана. Гэты параметр "
-"можна таксама актываваць праз каманду \"Выгляд\" -> \"Паказваць межы слоя\"."
+"Калі ўключана, межы слоя будуць бачныя прадвызначана. Гэты параметр можна "
+"таксама актываваць праз каманду \"Выгляд\" -> \"Паказваць межы слоя\"."
 
 #: ../app/config/gimprc-blurbs.h:436
 msgid ""
 "When enabled, the canvas boundary is visible by default. This can also be "
 "toggled with the \"View->Show Canvas Boundary\" command."
 msgstr ""
-"Пры актыўным параметры межы палатна будуць бачныя прадвызначана. Гэты "
-"параметр можна таксама актываваць праз каманду \"Выгляд\" -> \"Паказваць "
-"межы палатна\"."
+"Калі ўключана, межы палатна будуць бачныя прадвызначана. Гэты параметр можна "
+"таксама актываваць праз каманду \"Выгляд\" -> \"Паказваць межы палатна\"."
 
 #: ../app/config/gimprc-blurbs.h:440
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
-"Пры актыўным параметры накіроўваючыя будуць бачныя прадвызначана. Гэты "
-"параметр можна таксама актываваць праз каманду «Выгляд» → «Паказваць "
-"накіроўваючыя»."
+"Калі ўключана, накіроўваючыя будуць бачныя прадвызначана. Гэты параметр "
+"можна таксама актываваць праз каманду «Выгляд» → «Паказваць накіроўваючыя»."
 
 #: ../app/config/gimprc-blurbs.h:444
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
-"Пры актыўным параметры сетка будуць бачныя прадвызначана. Гэты параметр "
-"можна таксама актываваць праз каманду «Выгляд» → «Паказваць сетку»."
+"Калі ўключана, сетка будуць бачныя прадвызначана. Гэты параметр можна "
+"таксама актываваць праз каманду «Выгляд» → «Паказваць сетку»."
 
 #: ../app/config/gimprc-blurbs.h:448
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
-"Пры актыўным параметры ўзорныя пункты будуць бачныя прадвызначана. Гэты "
-"параметр можна таксама актываваць праз каманду «Выгляд» → «Паказваць узорныя "
-"пункты»."
+"Калі ўключана, ўзорныя пункты будуць бачныя прадвызначана. Гэты параметр "
+"можна таксама актываваць праз каманду «Выгляд» → «Паказваць узорныя пункты»."
 
 #: ../app/config/gimprc-blurbs.h:452
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -11859,14 +11876,14 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:494
 msgid "When enabled, menus can be torn off."
-msgstr "Пры актыўным параметры меню можна адмацоўваць."
+msgstr "Калі ўключана, меню можна адмацоўваць."
 
 #: ../app/config/gimprc-blurbs.h:497
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 msgstr ""
-"Пры актыўным параметры спалучэнне клавіш клавіятуры для хуткага доступу да "
+"Калі ўключана, спалучэнне клавіш клавіятуры для хуткага доступу да "
 "падсвечанага пункта меню можна змяняць непасрэдна ў меню."
 
 #: ../app/config/gimprc-blurbs.h:501
@@ -11962,8 +11979,8 @@ msgstr ""
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
-"Задае прадвызначаны стан «Размыць альфа» для дыялогавага акна «Пераўтварыць "
-"у індэксаванае»."
+"Задае прадвызначаны стан «Размыць альфа-канал» для дыялогавага акна "
+"«Пераўтварыць у індэксаванае»."
 
 #: ../app/config/gimprc-blurbs.h:559
 msgid ""
@@ -12222,8 +12239,8 @@ msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
 msgstr ""
-"Пры актыўным параметры файлы, якія не змяняліся падчас адкрыцця праграмы, "
-"захоўвацца не будуць."
+"Калі ўключана, файлы, якія не змяняліся падчас адкрыцця праграмы, захоўвацца "
+"не будуць."
 
 #: ../app/config/gimprc-blurbs.h:708
 msgid ""
@@ -12251,18 +12268,17 @@ msgstr "Задае памер перадпраглядаў у акне гіст�
 
 #: ../app/config/gimprc-blurbs.h:720
 msgid "When enabled, pressing F1 will open the help browser."
-msgstr ""
-"Пры актыўным параметры, націсканне кнопкі F1 будзе адкрываць даведку"
+msgstr "Калі ўключана,, націсканне кнопкі F1 будзе адкрываць даведку."
 
 #: ../app/config/gimprc-blurbs.h:723
 msgid "When enabled, uses OpenCL for some operations."
-msgstr "Пры актыўным параметры выкарыстоўваецца OpenCL для некаторых аперацый."
+msgstr "Калі ўключана, выкарыстоўваецца OpenCL для некаторых аперацый."
 
 #: ../app/config/gimprc-blurbs.h:741
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr ""
-"Пры актыўным параметры пошук даступных дзеянняў будзе таксама вяртаць "
-"неактыўныя дзеянні."
+"Калі ўключана, пошук даступных дзеянняў будзе таксама вяртаць неактыўныя "
+"дзеянні."
 
 #: ../app/config/gimprc-blurbs.h:744
 msgid "The maximum number of actions saved in history."
@@ -12522,7 +12538,7 @@ msgstr "Колер"
 #: ../app/core/core-enums.c:546
 msgctxt "dynamics-output-type"
 msgid "Hardness"
-msgstr "Цвёрдасць"
+msgstr "Жорсткасць"
 
 #: ../app/core/core-enums.c:547
 msgctxt "dynamics-output-type"
@@ -12650,7 +12666,7 @@ msgstr "Сіні"
 #: ../app/core/core-enums.c:774
 msgctxt "histogram-channel"
 msgid "Alpha"
-msgstr "Альфа"
+msgstr "Альфа-канал"
 
 #: ../app/core/core-enums.c:775
 msgctxt "histogram-channel"
@@ -12725,12 +12741,12 @@ msgstr "КРЫТЫЧНАЯ ПАМЫЛКА"
 #: ../app/core/core-enums.c:941
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
-msgstr "Адсутнічаюць мініяцюры"
+msgstr "Без мініяцюр"
 
 #: ../app/core/core-enums.c:942
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
-msgstr "Звычайнае (128×128)"
+msgstr "Звычайны (128×128)"
 
 #: ../app/core/core-enums.c:943
 msgctxt "thumbnail-size"
@@ -13131,7 +13147,7 @@ msgstr "Немагчыма адрабіць"
 #: ../app/core/core-enums.c:1261
 msgctxt "view-size"
 msgid "Tiny"
-msgstr "Малюсенькі"
+msgstr "Маленечкі"
 
 #: ../app/core/core-enums.c:1262
 msgctxt "view-size"
@@ -13166,7 +13182,7 @@ msgstr "Вялізны"
 #: ../app/core/core-enums.c:1268
 msgctxt "view-size"
 msgid "Enormous"
-msgstr "Гіганцкі"
+msgstr "Вялізарны"
 
 #: ../app/core/core-enums.c:1269
 msgctxt "view-size"
@@ -13176,12 +13192,12 @@ msgstr "Гіганцкі"
 #: ../app/core/core-enums.c:1297
 msgctxt "view-type"
 msgid "View as list"
-msgstr "Прагляд у выглядзе сп_іса"
+msgstr "Прагляд у выглядзе спіса"
 
 #: ../app/core/core-enums.c:1298
 msgctxt "view-type"
 msgid "View as grid"
-msgstr "Прагляд у выглядзе _сеткі"
+msgstr "Прагляд у выглядзе сеткі"
 
 #. initialize babl fishes
 #: ../app/core/gimp.c:521 ../app/core/gimp.c:551
@@ -13520,7 +13536,7 @@ msgstr "Памылковая колькасць пікаў пэндзля."
 #: ../app/core/gimpbrushgenerated-load.c:226
 #, c-format
 msgid "Invalid brush hardness."
-msgstr "Памылковыя цвёрдасць пэндзля."
+msgstr "Памылковыя жорсткасць пэндзля."
 
 #: ../app/core/gimpbrushgenerated-load.c:242
 #, c-format
@@ -13551,7 +13567,7 @@ msgstr "Промні пэндзля"
 
 #: ../app/core/gimpbrushgenerated.c:157 ../app/paint/gimppaintoptions.c:232
 msgid "Brush Hardness"
-msgstr "Цвёрдасць пэндзля"
+msgstr "Жорсткасць пэндзля"
 
 #: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:211
 msgid "Brush Aspect Ratio"
@@ -13590,7 +13606,7 @@ msgstr "Закругленае прамавугольнае вылучэнне"
 #: ../app/core/gimpchannel-select.c:421 ../app/core/gimplayer.c:452
 msgctxt "undo-type"
 msgid "Alpha to Selection"
-msgstr "Альфа ў вылучэнне"
+msgstr "Альфа-канал у вылучэнне"
 
 #: ../app/core/gimpchannel-select.c:460
 #, c-format
@@ -13894,7 +13910,7 @@ msgstr "Памылка загрузкі «%s»"
 #: ../app/xcf/xcf.c:452
 #, c-format
 msgid "Could not open '%s' for reading: "
-msgstr "Не атрымалася адкрыць «%s» для чытання: "
+msgstr "Не ўдалося адкрыць «%s» для чытання: "
 
 #: ../app/core/gimpdataloaderfactory.c:534
 #, c-format
@@ -13933,7 +13949,7 @@ msgstr "Плаваючае вылучэнне"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:66
 msgid "Computing alpha of unknown pixels"
-msgstr "Вылічэнне значэнняў альфа невядомых пікселяў"
+msgstr "Вылічэнне значэнняў альфа-канала невядомых пікселяў"
 
 #: ../app/core/gimpdrawable-fill.c:212 ../app/vectors/gimpvectors.c:679
 msgid "Not enough points to fill"
@@ -14664,7 +14680,7 @@ msgstr[2] "%d слаёў"
 #: ../app/core/gimpimagefile.c:894
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
-msgstr "Не атрымалася адкрыць мініяцюру «%s»: %s"
+msgstr "Не ўдалося адкрыць мініяцюру «%s»: %s"
 
 #: ../app/core/gimpitem.c:2148
 msgctxt "undo-type"
@@ -14760,7 +14776,7 @@ msgstr "Апусціць слой"
 #: ../app/core/gimplayer.c:457
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
-msgstr "Апусціць слой _уніз"
+msgstr "Апусціць слой уніз"
 
 #: ../app/core/gimplayer.c:458
 msgid "Layer cannot be raised higher."
@@ -14803,7 +14819,7 @@ msgstr "Дадаць маску слоя"
 #: ../app/core/gimplayer.c:2007
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
-msgstr "Перавесці альфа ў маску"
+msgstr "Пераўтварыць альфа-канал ў маску"
 
 #: ../app/core/gimplayer.c:2169
 msgctxt "undo-type"
@@ -14843,7 +14859,7 @@ msgstr "Выдаліць альфа-канал"
 #: ../app/core/gimplayer.c:2494
 msgctxt "undo-type"
 msgid "Layer to Image Size"
-msgstr "Слой да памераў _відарыса"
+msgstr "Слой да памераў відарыса"
 
 #: ../app/core/gimplayermask.c:83
 msgctxt "undo-type"
@@ -14924,27 +14940,27 @@ msgstr "%s (сустрэўся раз: %u)"
 msgid "Index %d"
 msgstr "Індэкс %d"
 
-#: ../app/core/gimppalette-import.c:547
+#: ../app/core/gimppalette-import.c:555
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Невядомы тып файла палітры: %s"
 
-#: ../app/core/gimppalette-load.c:71
+#: ../app/core/gimppalette-load.c:79
 #, c-format
 msgid "Missing magic header."
 msgstr "Адсутнічае магічны загаловак."
 
-#: ../app/core/gimppalette-load.c:94
+#: ../app/core/gimppalette-load.c:102
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Памылковы радок UTF-8 у файле з палітрай «%s»"
 
-#: ../app/core/gimppalette-load.c:114
+#: ../app/core/gimppalette-load.c:122
 #, c-format
 msgid "Invalid column count."
 msgstr "Памылковая колькасць слупкоў."
 
-#: ../app/core/gimppalette-load.c:121
+#: ../app/core/gimppalette-load.c:129
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -14953,48 +14969,133 @@ msgstr ""
 "Чытанне файла з палітрай «%s»: памылковая колькасць слупкоў у радку %d. "
 "Выкарыстоўваецца прадвызначанае значэнне."
 
-#: ../app/core/gimppalette-load.c:155
+#: ../app/core/gimppalette-load.c:163
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr ""
 "Чытанне файла з палітрай «%s»: у радку %d адсутнічае ЧЫРВОНЫ кампанент."
 
-#: ../app/core/gimppalette-load.c:163
+#: ../app/core/gimppalette-load.c:171
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "Чытанне файла з палітрай «%s»: у радку %d адсутнічае ЗЯЛЁНЫ кампанент."
 
-#: ../app/core/gimppalette-load.c:171
+#: ../app/core/gimppalette-load.c:179
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Чытанне файла з палітрай «%s»: у радку %d адсутнічае СІНІ кампанент."
 
-#: ../app/core/gimppalette-load.c:181
+#: ../app/core/gimppalette-load.c:189
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
 "Чытанне файла з палітрай «%s»: значэнне RGB па-за дапушчальным дыяпазонам у "
 "радку %d."
 
-#: ../app/core/gimppalette-load.c:209 ../app/core/gimppalette-load.c:454
+#: ../app/core/gimppalette-load.c:217 ../app/core/gimppalette-load.c:462
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr ""
 "Чытанне файла з палітрай «%s»: чытанне %d колераў з абрэзанага файла: %s"
 
-#: ../app/core/gimppalette-load.c:231
+#: ../app/core/gimppalette-load.c:239
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "У радку %d файла палітры: "
 
-#: ../app/core/gimppalette-load.c:427
+#: ../app/core/gimppalette-load.c:435 ../app/core/gimppalette-load.c:619
+#: ../app/core/gimppalette-load.c:962
 #, c-format
 msgid "Could not read header from palette file '%s': "
-msgstr "Не атрымалася прачытаць загаловак з файла палітры «%s»: "
+msgstr "Не ўдалося прачытаць загаловак з файла палітры «%s»: "
 
-#: ../app/core/gimppalette-load.c:459
+#: ../app/core/gimppalette-load.c:467
 msgid "Premature end of file."
 msgstr "Заўчасны канец файла."
+
+#: ../app/core/gimppalette-load.c:628
+msgid "Invalid ACB palette version."
+msgstr "Няправільная версія палітры ACB."
+
+#: ../app/core/gimppalette-load.c:634
+msgid "GIMP only supports version 1 ACB palettes"
+msgstr "GIMP падтрымлівае толькі палітры ACB версіі 1"
+
+#: ../app/core/gimppalette-load.c:641
+msgid "Invalid ACB palette identifier."
+msgstr "Няправільны ідэнтыфікатар палітры ACB."
+
+#: ../app/core/gimppalette-load.c:656 ../app/core/gimppalette-load.c:895
+#: ../app/core/gimppalette-load.c:916
+#, c-format
+msgid "Invalid ACB palette name."
+msgstr "Няправільная назва палітры ACB."
+
+#: ../app/core/gimppalette-load.c:674
+msgid "Invalid ACB palette prefix."
+msgstr "Няправільны прэфікс палітры ACB."
+
+#: ../app/core/gimppalette-load.c:689
+msgid "Invalid ACB palette suffix."
+msgstr "Няправільны суфікс палітры ACB."
+
+#: ../app/core/gimppalette-load.c:707 ../app/core/gimppalette-load.c:981
+msgid "Invalid number of colors in palette."
+msgstr "Няправільная колькасць колераў у палітры."
+
+#: ../app/core/gimppalette-load.c:713 ../app/core/gimppalette-load.c:987
+#, c-format
+msgid "Invalid number of colors: %s."
+msgstr "Няправільная колькасць колераў: %s."
+
+#: ../app/core/gimppalette-load.c:725 ../app/core/gimppalette-load.c:734
+msgid "Invalid ACB palette page info."
+msgstr "Няправільная старонка даных палітры ACB."
+
+#: ../app/core/gimppalette-load.c:745 ../app/core/gimppalette-load.c:767
+msgid "Invalid ACB palette color space."
+msgstr "Няправільная колеравая прастора палітры ACB."
+
+#: ../app/core/gimppalette-load.c:905
+#, c-format
+msgid "Invalid ACB name size."
+msgstr "Няправільная назва палітры ASE."
+
+#: ../app/core/gimppalette-load.c:972
+#, c-format
+msgid "Invalid ASE header: %s"
+msgstr "Няправільны загаловак ASE: %s"
+
+#: ../app/core/gimppalette-load.c:997
+#, c-format
+msgid "Invalid ASE file: %s."
+msgstr "Няпрвільны файл: %s."
+
+#: ../app/core/gimppalette-load.c:1075
+#, c-format
+msgid "Invalid color components: %s."
+msgstr "Няправільныя кампаненты колеру: %s."
+
+#: ../app/core/gimppalette-load.c:1089 ../app/core/gimppalette-load.c:1116
+#, c-format
+msgid "Invalid ASE color entry: %s."
+msgstr "Няправільны запіс колеру ASE: %s."
+
+#: ../app/core/gimppalette-load.c:1144 ../app/core/gimppalette-load.c:1160
+#: ../app/core/gimppalette-load.c:1179
+#, c-format
+msgid "Invalid ASE palette name."
+msgstr "Няправільная назва палітры ASE."
+
+#: ../app/core/gimppalette-load.c:1153
+#, c-format
+msgid "Invalid ASE block size."
+msgstr "Няправільны памер блока ASE."
+
+#: ../app/core/gimppalette-load.c:1169
+#, c-format
+msgid "Invalid ASE name size."
+msgstr "Няправільны памер назвы ASE."
 
 #: ../app/core/gimppalettemru.c:123 ../app/core/gimppalettemru.c:229
 msgid "History Color"
@@ -15002,7 +15103,7 @@ msgstr "Гісторыя колераў"
 
 #: ../app/core/gimppattern-load.c:60
 msgid "File appears truncated: "
-msgstr "Відавочна, што файл абрэзаны: "
+msgstr "Падобна, што файл абрэзаны: "
 
 #: ../app/core/gimppattern-load.c:78
 #, c-format
@@ -15016,7 +15117,7 @@ msgid ""
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
 "Глыбіня ўзору %d не падтрымліваецца.\n"
-"Узоры GIMP павінны мець адценні шэрага або RGB."
+"Узоры GIMP павінны быць ў адценнях шэрага або RGB."
 
 #: ../app/core/gimppattern-load.c:99
 #, c-format
@@ -15596,7 +15697,7 @@ msgid ""
 "commit %s"
 msgstr ""
 "Гэта нестабільная версія праграмы.\n"
-"Выпуск: %s"
+"код зборкі: %s"
 
 #: ../app/dialogs/action-search-dialog.c:68
 msgid "Search Actions"
@@ -15843,7 +15944,7 @@ msgstr "Выдаліць «%s»?"
 #, c-format
 msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
-msgstr "Вы сапраўды хочаце выдаліць «%s» са спіса і з дыска?"
+msgstr "Сапраўды хочаце выдаліць «%s» са спіса і з дыска?"
 
 #: ../app/dialogs/dialogs-constructors.c:216 ../app/gui/gui.c:195
 #: ../app/gui/gui-message.c:271
@@ -15997,7 +16098,7 @@ msgstr "Дадзенае пашырэнне файла не адпавядае �
 
 #: ../app/dialogs/file-save-dialog.c:729
 msgid "Do you want to save the image using this name anyway?"
-msgstr "Вы сапраўды хочаце захаваць відарыс з такой назвай?"
+msgstr "Сапраўды хочаце захаваць відарыс з такой назвай?"
 
 #: ../app/dialogs/file-save-dialog.c:794
 msgid "Saving canceled"
@@ -16028,11 +16129,11 @@ msgstr "_Запоўніць"
 
 #: ../app/dialogs/grid-dialog.c:95
 msgid "Configure Grid"
-msgstr "Канфігурацыя сеткі"
+msgstr "Наладзіць сетку"
 
 #: ../app/dialogs/grid-dialog.c:96
 msgid "Configure Image Grid"
-msgstr "Сканфігураваць сетку відарыса"
+msgstr "Наладзіць сетку відарыса"
 
 #: ../app/dialogs/grid-dialog.c:161
 msgid "Grid"
@@ -16141,8 +16242,9 @@ msgid ""
 "is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
 "%s)."
 msgstr ""
-"Пры маштабаванні відарыса з такімі параметрамі, яно зойме больш месца, чым "
-"гэта азначана ў параметрах «Максімальны памер відарыса» (%s)."
+"Пры маштабаванні відарыса да выбранага памеру, ён будзе выкарыстоўваць больш "
+"памяці, чым гэта пазначана ў параметры «Максімальны памер відарыса» (бягучы "
+"%s)."
 
 #: ../app/dialogs/image-scale-dialog.c:258
 msgid ""
@@ -16152,11 +16254,11 @@ msgstr ""
 
 #: ../app/dialogs/image-scale-dialog.c:262
 msgid "Is this what you want to do?"
-msgstr "Вы сапраўды хочаце гэта зрабіць?"
+msgstr "Сапраўды хочаце гэта зрабіць?"
 
 #: ../app/dialogs/input-devices-dialog.c:59
 msgid "Configure Input Devices"
-msgstr "Сканфігураваць прыладу ўводу"
+msgstr "Наладзіць прыладу ўводу"
 
 #: ../app/dialogs/item-options-dialog.c:198
 msgid "Color tag:"
@@ -16177,7 +16279,7 @@ msgstr "_Звязаны"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:63
 msgid "Configure Keyboard Shortcuts"
-msgstr "Сканфігураваць спалучэнні клавіш клавіятуры"
+msgstr "Наладзіць спалучэнні клавіш клавіятуры"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:89
 msgid ""
@@ -16272,7 +16374,7 @@ msgstr "Актыўныя фільтры"
 
 #: ../app/dialogs/layer-options-dialog.c:438
 msgid "Lock _alpha"
-msgstr "Блакіраваць _альфа"
+msgstr "Блакіраваць _альфа-канал"
 
 #: ../app/dialogs/layer-options-dialog.c:450
 msgid "Set name from _text"
@@ -16454,7 +16556,7 @@ msgstr "Скінуць усе параметры"
 
 #: ../app/dialogs/preferences-dialog.c:304
 msgid "Do you really want to reset all preferences to default values?"
-msgstr "Вы сапраўды хочаце скінуць усе параметры да прадвызначаных значэнняў?"
+msgstr "Сапраўды хочаце скінуць усе параметры да прадвызначаных значэнняў?"
 
 #: ../app/dialogs/preferences-dialog.c:383
 msgid "You will have to restart GIMP for the following changes to take effect:"
@@ -16474,7 +16576,7 @@ msgstr "Выдаліць усе спалучэнні клавіш"
 
 #: ../app/dialogs/preferences-dialog.c:682
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
-msgstr "Вы сапраўды хочаце выдаліць усе спалучэнні клавіш клавіятуры з меню?"
+msgstr "Сапраўды хочаце выдаліць усе спалучэнні клавіш клавіятуры з меню?"
 
 #: ../app/dialogs/preferences-dialog.c:723
 msgid ""
@@ -16564,7 +16666,7 @@ msgstr "Выбраць карыстальніцкі колер падкладк�
 
 #: ../app/dialogs/preferences-dialog.c:1018
 msgid "_Keep canvas padding in \"Show All\" mode"
-msgstr "_Захоўваць падкладку палатна ў рэжыме \"Паказаць усе\""
+msgstr "_Захоўваць падкладку палатна ў рэжыме «Паказваць усё»"
 
 #: ../app/dialogs/preferences-dialog.c:1043
 msgid "Snap to _Guides"
@@ -17083,7 +17185,7 @@ msgstr "_Выкарыстоўваць дынамічныя спалучэнні 
 
 #: ../app/dialogs/preferences-dialog.c:1878
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "Сканфігураваць спалучэнні клавіш _клавіятуры..."
+msgstr "Наладзіць спалучэнні клавіш _клавіятуры..."
 
 #: ../app/dialogs/preferences-dialog.c:1885
 msgid "_Save keyboard shortcuts on exit"
@@ -17626,7 +17728,7 @@ msgstr "Вокны відарысаў"
 
 #: ../app/dialogs/preferences-dialog.c:2882
 msgid "Use \"Show _all\" by default"
-msgstr "Прадвызначана выкарыстоўваць «Паказваць _усе»"
+msgstr "Прадвызначана выкарыстоўваць «Паказваць _усё»"
 
 #: ../app/dialogs/preferences-dialog.c:2886
 msgid "Use \"_Dot for dot\" by default"
@@ -17779,7 +17881,7 @@ msgstr "_Абагуліць інструмент і яго параметры п
 
 #: ../app/dialogs/preferences-dialog.c:3154
 msgid "Configure E_xtended Input Devices..."
-msgstr "Сканфігураваць _пашыраныя прылады ўводу..."
+msgstr "Наладзіць _дадатковыя прылады ўводу..."
 
 #: ../app/dialogs/preferences-dialog.c:3161
 msgid "_Save input device settings on exit"
@@ -18114,7 +18216,7 @@ msgstr "Націсніце %s, каб скасаваць усе змены і з
 
 #: ../app/dialogs/quit-dialog.c:399 ../app/display/gimpdisplayshell-close.c:180
 msgid "_Discard Changes"
-msgstr "_Адхіліць змены"
+msgstr "_Не захоўваць змены"
 
 #: ../app/dialogs/quit-dialog.c:486
 #, c-format
@@ -18216,7 +18318,7 @@ msgstr "Каліброўка раздзяляльнасці манітора"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:129
 msgid "Measure the rulers and enter their lengths:"
-msgstr "Памерайце лінейкай і ўвядзіце значэнні іх даўжыні:"
+msgstr "Памерайце лінейкі і ўвядзіце значэнні іх даўжыні:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:154
 msgid "_Horizontal:"
@@ -18491,7 +18593,7 @@ msgstr "Y"
 #. Units
 #: ../app/display/gimpcursorview.c:237
 msgid "Units"
-msgstr "Адзінкі"
+msgstr "Адзінкі вымярэння"
 
 #: ../app/display/gimpcursorview.c:266
 msgid "The selection's bounding box"
@@ -18542,12 +18644,12 @@ msgid ""
 "<small>Please test bugs against latest git master branch\n"
 "before reporting them.</small>"
 msgstr ""
-"<big>Нестабільная версія праграмы</big>\n"
+"<big>Гэта нестабільная версія праграмы.</big>\n"
 "\n"
-"<small>мадыфікацыя <tt>%s</tt></small>\n"
+"<small>код зборкі <tt>%s</tt></small>\n"
 "\n"
-"<small>Скарыстайцеся апошняй зборкай з Git master перад тым,\n"
-"як паведаміць аб памылках.</small>"
+"<small>Перш чым паведамляць аб памылках, праверце іх наяўнасць \n"
+"у апошняй зборцы з Git master"
 
 #: ../app/display/gimpdisplayshell-close.c:168
 #: ../app/display/gimpdisplayshell-close.c:266
@@ -18630,7 +18732,7 @@ msgstr "Перацягніце новы слой"
 
 #: ../app/display/gimpdisplayshell-dnd.c:293
 msgid "Drop New Path"
-msgstr "Перацягніце новы контуры"
+msgstr "Перацягніце новы контур"
 
 #: ../app/display/gimpdisplayshell-dnd.c:364
 #: ../app/tools/gimpbucketfilltool.c:554 ../app/tools/gimpcagetool.c:227
@@ -18682,7 +18784,7 @@ msgstr "Фільтры адлюстравання колераў"
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:82
 msgid "Configure Color Display Filters"
-msgstr "Сканфігураваць фільтры адлюстравання колераў"
+msgstr "Наладзіць фільтры адлюстравання колераў"
 
 #: ../app/display/gimpdisplayshell-handlers.c:944
 #, c-format
@@ -19258,7 +19360,7 @@ msgstr "RGB"
 #: ../app/gegl/gimp-babl.c:338 ../app/gegl/gimp-babl.c:339
 #: ../app/gegl/gimp-babl.c:340 ../app/gegl/gimp-babl.c:341
 msgid "RGB-alpha"
-msgstr "Альфа RGB"
+msgstr "RGB-альфа"
 
 #: ../app/gegl/gimp-babl.c:343 ../app/gegl/gimp-babl.c:344
 #: ../app/gegl/gimp-babl.c:345 ../app/gegl/gimp-babl.c:346
@@ -19277,7 +19379,7 @@ msgstr "Градацыі шэрага"
 #: ../app/gegl/gimp-babl.c:364 ../app/gegl/gimp-babl.c:365
 #: ../app/gegl/gimp-babl.c:366 ../app/gegl/gimp-babl.c:367
 msgid "Grayscale-alpha"
-msgstr "Градацыі шэрага альфа"
+msgstr "Градацыі шэрага, альфа-канал"
 
 #: ../app/gegl/gimp-babl.c:369 ../app/gegl/gimp-babl.c:370
 #: ../app/gegl/gimp-babl.c:371 ../app/gegl/gimp-babl.c:372
@@ -19310,15 +19412,15 @@ msgstr "Сіні кампанент"
 #: ../app/gegl/gimp-babl.c:410 ../app/gegl/gimp-babl.c:411
 #: ../app/gegl/gimp-babl.c:412 ../app/gegl/gimp-babl.c:413
 msgid "Alpha component"
-msgstr "Кампанент альфа"
+msgstr "Кампанент альфа-канала"
 
 #: ../app/gegl/gimp-babl.c:441
 msgid "Indexed-alpha"
-msgstr "Індэксавана альфа"
+msgstr "Індэксаваны, альфа-канал"
 
 #: ../app/gegl/gimp-babl.c:443 ../app/plug-in/gimppluginprocedure.c:1049
 msgid "Indexed"
-msgstr "Індэксаванае"
+msgstr "Індэксаваны"
 
 #: ../app/gegl/gimp-gegl-enums.c:24
 msgctxt "cage-mode"
@@ -19380,14 +19482,14 @@ msgstr "Перасячэнне"
 #: ../app/operations/operations-enums.c:153
 msgctxt "layer-mode"
 msgid "Normal (legacy)"
-msgstr "Звычайнае (састарэлае)"
+msgstr "Звычайны (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Normal (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:156
 msgctxt "layer-mode"
 msgid "Normal (l)"
-msgstr "Звычайнае (c)"
+msgstr "Звычайны (c)"
 
 #: ../app/operations/operations-enums.c:157
 msgctxt "layer-mode"
@@ -19397,7 +19499,7 @@ msgstr "Растварэнне"
 #: ../app/operations/operations-enums.c:158
 msgctxt "layer-mode"
 msgid "Behind (legacy)"
-msgstr "Падложка (састарэлая)"
+msgstr "Падложка (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Behind (legacy)".
 #. Keep it short.
@@ -19409,7 +19511,7 @@ msgstr "Падложка (c)"
 #: ../app/operations/operations-enums.c:162
 msgctxt "layer-mode"
 msgid "Multiply (legacy)"
-msgstr "Множанне (састарэлае)"
+msgstr "Множанне (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Multiply (legacy)".
 #. Keep it short.
@@ -19445,7 +19547,7 @@ msgstr "Старое накладанне"
 #: ../app/operations/operations-enums.c:174
 msgctxt "layer-mode"
 msgid "Difference (legacy)"
-msgstr "Розніца (састарэлае)"
+msgstr "Розніца (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Difference (legacy)".
 #. Keep it short.
@@ -19457,7 +19559,7 @@ msgstr "Розніца (c)"
 #: ../app/operations/operations-enums.c:178
 msgctxt "layer-mode"
 msgid "Addition (legacy)"
-msgstr "Дадаванне (састарэлае)"
+msgstr "Дадаванне (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Addition (legacy)".
 #. Keep it short.
@@ -19469,7 +19571,7 @@ msgstr "Дадаванне (c)"
 #: ../app/operations/operations-enums.c:182
 msgctxt "layer-mode"
 msgid "Subtract (legacy)"
-msgstr "Адніманне (састарэлае)"
+msgstr "Адніманне (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Subtract (legacy)".
 #. Keep it short.
@@ -19481,7 +19583,7 @@ msgstr "Адніманне (c)"
 #: ../app/operations/operations-enums.c:186
 msgctxt "layer-mode"
 msgid "Darken only (legacy)"
-msgstr "Толькі цёмнае (састарэлае)"
+msgstr "Толькі цёмнае (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Darken only (legacy)".
 #. Keep it short.
@@ -19493,7 +19595,7 @@ msgstr "Толькі цёмнае (c)"
 #: ../app/operations/operations-enums.c:190
 msgctxt "layer-mode"
 msgid "Lighten only (legacy)"
-msgstr "Толькі светлае (састарэлае)"
+msgstr "Толькі светлае (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Lighten only (legacy)".
 #. Keep it short.
@@ -19505,19 +19607,19 @@ msgstr "Толькі светлае (c)"
 #: ../app/operations/operations-enums.c:194
 msgctxt "layer-mode"
 msgid "HSV Hue (legacy)"
-msgstr "Адценне HSV (састарэлае)"
+msgstr "Тон HSV (састарэлы)"
 
 #. Translators: this is an abbreviated version of "HSV Hue (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:197
 msgctxt "layer-mode"
 msgid "HSV Hue (l)"
-msgstr "Адценне HSV (c)"
+msgstr "Тон HSV (c)"
 
 #: ../app/operations/operations-enums.c:198
 msgctxt "layer-mode"
 msgid "HSV Saturation (legacy)"
-msgstr "Насычанасць HSV (састарэлая)"
+msgstr "Насычанасць HSV (састарэлы)"
 
 #. Translators: this is an abbreviated version of "HSV Saturation (legacy)".
 #. Keep it short.
@@ -19529,7 +19631,7 @@ msgstr "Насычанасць HSV (c)"
 #: ../app/operations/operations-enums.c:202
 msgctxt "layer-mode"
 msgid "HSL Color (legacy)"
-msgstr "Колер HSL (састарэлае)"
+msgstr "Колер HSL (састарэлы)"
 
 #. Translators: this is an abbreviated version of "HSL Color (legacy)".
 #. Keep it short.
@@ -19541,7 +19643,7 @@ msgstr "Колер HSL (c)"
 #: ../app/operations/operations-enums.c:206
 msgctxt "layer-mode"
 msgid "HSV Value (legacy)"
-msgstr "Значэнне HSV (састарэлае)"
+msgstr "Значэнне HSV (састарэлы)"
 
 #. Translators: this is an abbreviated version of "HSV Value (legacy)".
 #. Keep it short.
@@ -19553,7 +19655,7 @@ msgstr "Значэнне HSV (c)"
 #: ../app/operations/operations-enums.c:210
 msgctxt "layer-mode"
 msgid "Divide (legacy)"
-msgstr "Дзяленне (састарэлае)"
+msgstr "Дзяленне (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Divide (legacy)".
 #. Keep it short.
@@ -19577,7 +19679,7 @@ msgstr "Асвятленне (c)"
 #: ../app/operations/operations-enums.c:218
 msgctxt "layer-mode"
 msgid "Burn (legacy)"
-msgstr "Зацямненне (састарэлае)"
+msgstr "Зацямненне (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Burn (legacy)".
 #. Keep it short.
@@ -19589,7 +19691,7 @@ msgstr "Зацямненне (c)"
 #: ../app/operations/operations-enums.c:222
 msgctxt "layer-mode"
 msgid "Hard light (legacy)"
-msgstr "Накіраванае святло (састарэлае)"
+msgstr "Накіраванае святло (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Hard light (legacy)".
 #. Keep it short.
@@ -19601,7 +19703,7 @@ msgstr "Накіраванае святло (c)"
 #: ../app/operations/operations-enums.c:226
 msgctxt "layer-mode"
 msgid "Soft light (legacy)"
-msgstr "Мяккае святло (састарэлае)"
+msgstr "Мяккае святло (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Soft light (legacy)".
 #. Keep it short.
@@ -19613,7 +19715,7 @@ msgstr "Мяккае святло (c)"
 #: ../app/operations/operations-enums.c:230
 msgctxt "layer-mode"
 msgid "Grain extract (legacy)"
-msgstr "Выманне зерня (састарэлае)"
+msgstr "Выманне зерня (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Grain extract (legacy)".
 #. Keep it short.
@@ -19625,7 +19727,7 @@ msgstr "Выманне зерня (c)"
 #: ../app/operations/operations-enums.c:234
 msgctxt "layer-mode"
 msgid "Grain merge (legacy)"
-msgstr "Аб’яднанне зерня (састарэлае)"
+msgstr "Аб’яднанне зерня (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Grain merge (legacy)".
 #. Keep it short.
@@ -19637,7 +19739,7 @@ msgstr "Аб’яднанне зерня (c)"
 #: ../app/operations/operations-enums.c:238
 msgctxt "layer-mode"
 msgid "Color erase (legacy)"
-msgstr "Сціранне колеру (састарэлае)"
+msgstr "Сціранне колеру (састарэлы)"
 
 #. Translators: this is an abbreviated version of "Color erase (legacy)".
 #. Keep it short.
@@ -19654,7 +19756,7 @@ msgstr "Накладанне"
 #: ../app/operations/operations-enums.c:243
 msgctxt "layer-mode"
 msgid "LCh Hue"
-msgstr "Адценне LCh"
+msgstr "Тон LCh"
 
 #: ../app/operations/operations-enums.c:244
 msgctxt "layer-mode"
@@ -19719,7 +19821,7 @@ msgstr "Толькі светлае"
 #: ../app/operations/operations-enums.c:256
 msgctxt "layer-mode"
 msgid "HSV Hue"
-msgstr "Адценне HSV"
+msgstr "Тон HSV"
 
 #: ../app/operations/operations-enums.c:257
 msgctxt "layer-mode"
@@ -19858,7 +19960,7 @@ msgstr "Прапусканне"
 #: ../app/operations/operations-enums.c:287
 msgctxt "layer-mode"
 msgid "Replace"
-msgstr "Замяніць"
+msgstr "Замена"
 
 #: ../app/operations/operations-enums.c:288
 msgctxt "layer-mode"
@@ -19899,17 +20001,17 @@ msgstr "Закрануты дыяпазон"
 #: ../app/operations/gimpcolorbalanceconfig.c:103
 #: ../app/operations/gimpcolorbalanceconfig.c:104
 msgid "Cyan-Red"
-msgstr "Блакітна-чырвоны"
+msgstr "Блакітны-Чырвоны"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:109
 #: ../app/operations/gimpcolorbalanceconfig.c:110
 msgid "Magenta-Green"
-msgstr "Пурпурна-зялёны"
+msgstr "Пурпурны-Зялёны"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:115
 #: ../app/operations/gimpcolorbalanceconfig.c:116
 msgid "Yellow-Blue"
-msgstr "Жоўта-блакітны"
+msgstr "Жоўты-Сіні"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:121
 #: ../app/operations/gimpcolorbalanceconfig.c:122
@@ -19954,7 +20056,7 @@ msgstr "Збой запісу ў файл крывых: "
 #: ../app/operations/gimpoperationcolorize.c:92
 #: ../app/operations/gimpoperationcolorize.c:93
 msgid "Hue"
-msgstr "Адценне"
+msgstr "Тон"
 
 #: ../app/operations/gimphuesaturationconfig.c:107
 #: ../app/operations/gimphuesaturationconfig.c:108
@@ -19978,38 +20080,38 @@ msgstr "Накладанне"
 #: ../app/operations/gimplevelsconfig.c:122
 #: ../app/operations/gimplevelsconfig.c:123
 msgid "Low Input"
-msgstr "Ніжні ўваходны"
+msgstr "Ніжні дыяпазон ўводу"
 
 #: ../app/operations/gimplevelsconfig.c:128
 #: ../app/operations/gimplevelsconfig.c:129
 msgid "High Input"
-msgstr "Высокае ўваходнае"
+msgstr "Верхні дыяпазон ўводу"
 
 #: ../app/operations/gimplevelsconfig.c:134
 msgid "Clamp Input"
-msgstr "Заціснуць _увод"
+msgstr "Фікс. дыяпазон уводу"
 
 #: ../app/operations/gimplevelsconfig.c:135
 msgid "Clamp input values before applying output mapping."
-msgstr "Заціснуць уводныя значэнні перад тым, як ужыць вывад супастаўлення."
+msgstr "Зафіксаваць значэнні ўводу, перш чым ўжыць пераўтварэнне для вываду."
 
 #: ../app/operations/gimplevelsconfig.c:146
 #: ../app/operations/gimplevelsconfig.c:147
 msgid "Low Output"
-msgstr "Ніжні выходны"
+msgstr "Ніжні дыяпазон вываду"
 
 #: ../app/operations/gimplevelsconfig.c:152
 #: ../app/operations/gimplevelsconfig.c:153
 msgid "High Output"
-msgstr "Высокае выходнае"
+msgstr "Верхні дыяпазон вываду"
 
 #: ../app/operations/gimplevelsconfig.c:158
 msgid "Clamp Output"
-msgstr "Заціснуць вывад"
+msgstr "Фікс. дыяпазон вываду"
 
 #: ../app/operations/gimplevelsconfig.c:159
 msgid "Clamp final output values."
-msgstr "Заціснуць канчатковыя ўводныя значэнні."
+msgstr "Зафіксаваць значэнне выніковага дыяпазону вываду."
 
 #: ../app/operations/gimplevelsconfig.c:846
 msgid "not a GIMP Levels file"
@@ -20068,7 +20170,7 @@ msgstr "Рэгуляваць крывыя колераў"
 
 #: ../app/operations/gimpoperationdesaturate.c:85
 msgid "Turn colors into shades of gray"
-msgstr "Перавод колераў у адценні шэрага"
+msgstr "Пераўтварыць колеры ў градацыі шэрага"
 
 #: ../app/operations/gimpoperationdesaturate.c:90
 #: ../app/operations/gimpoperationsettings.c:95
@@ -20084,7 +20186,7 @@ msgstr "Выберыце аснову адценняў шэрага"
 
 #: ../app/operations/gimpoperationhuesaturation.c:65
 msgid "Adjust hue, saturation, and lightness"
-msgstr "Рэгуляваць адценне, насычанасць і асвятленне"
+msgstr "Рэгуляваць тон, насычанасць і асвятленне"
 
 #: ../app/operations/gimpoperationlevels.c:64 ../app/tools/gimplevelstool.c:139
 msgid "Adjust color levels"
@@ -20138,7 +20240,7 @@ msgstr "Ніжні парог"
 
 #: ../app/operations/gimpoperationthreshold.c:104
 msgid "High threshold"
-msgstr "Высокі парог"
+msgstr "Верхні парог"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:80
 msgid ""
@@ -20154,7 +20256,7 @@ msgstr "Значэнне"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:91
 msgid "The alpha value"
-msgstr "Значэнне альфы"
+msgstr "Значэнне альфа-канала"
 
 #. TRANSLATORS: there is no need to translate this in GIMP. This uses
 #. * "gtk20" domain as a special trick to determine language direction,
@@ -20179,7 +20281,7 @@ msgstr "_Аднавіць"
 
 #: ../app/gui/gui.c:357
 msgid "Eeek! It looks like GIMP recovered from a crash!"
-msgstr "Халера! Здаецца, што GIMP адноўлены пасля збою!"
+msgstr "Авой! Падобна, што GIMP адноўлены пасля збою!"
 
 #. TRANSLATORS: even if English singular form does
 #. * not use %d, you can use %d for translation in
@@ -20193,12 +20295,9 @@ msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
 msgid_plural ""
 "%d images were salvaged from the crash. Do you want to try and recover them?"
-msgstr[0] ""
-"%d відарыс быў адноўлены пасля збою. Вы сапраўды хочаце аднавіць яго?"
-msgstr[1] ""
-"%d відарысы былі адноўлены пасля збою. Вы сапраўды хочаце аднавіць іх?"
-msgstr[2] ""
-"%d відарысаў былі адноўлены пасля збою. Вы сапраўды хочаце аднавіць іх?"
+msgstr[0] "Пасля збою захаваўся %d відарыс. Паспрабаваць аднавіць яго?"
+msgstr[1] "Пасля збою захаваліся %d відарысы. Паспрабаваць аднавіць іх?"
+msgstr[2] "Пасля збою захавалася %d відарысаў. Паспрабаваць аднавіць іх?"
 
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
@@ -20351,7 +20450,7 @@ msgstr "Базавая непразрыстасць"
 #: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:231
 #: ../app/tools/gimpwarpoptions.c:99 ../app/widgets/gimpbrusheditor.c:178
 msgid "Hardness"
-msgstr "Цвёрдасць"
+msgstr "Жорсткасць"
 
 #: ../app/paint/gimpmybrushoptions.c:107
 msgid "Erase with this brush"
@@ -20429,11 +20528,11 @@ msgstr "Звязаць інтэрвал пэндзля з яго першапа�
 
 #: ../app/paint/gimppaintoptions.c:273
 msgid "Link Hardness"
-msgstr "Звязаць цвёрдасць"
+msgstr "Звязаць жорсткасць"
 
 #: ../app/paint/gimppaintoptions.c:274
 msgid "Link brush hardness to brush native"
-msgstr "Звязаць цвёрдасць пэндзля з яго першапачатковым значэннем"
+msgstr "Звязаць жорсткасць пэндзля з яго першапачатковым значэннем"
 
 #: ../app/paint/gimppaintoptions.c:280
 msgid "Lock brush to view"
@@ -20665,7 +20764,7 @@ msgstr "Афарбоўванне"
 
 #: ../app/pdb/color-cmds.c:738
 msgid "Hue-Saturation"
-msgstr "Адценне-насычанасць"
+msgstr "Тон-насычанасць"
 
 #: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:831
 msgctxt "undo-type"
@@ -20689,7 +20788,7 @@ msgstr ""
 #: ../app/pdb/drawable-color-cmds.c:554
 msgctxt "undo-type"
 msgid "Hue-Saturation"
-msgstr "Адценне-насычанасць"
+msgstr "Тон-насычанасць"
 
 #: ../app/pdb/drawable-color-cmds.c:589
 msgctxt "undo-type"
@@ -20699,7 +20798,7 @@ msgstr "Інвертаваць"
 #: ../app/pdb/drawable-color-cmds.c:745
 msgctxt "undo-type"
 msgid "Shadows-Highlights"
-msgstr ""
+msgstr "Цені-светлавыя плямы"
 
 #: ../app/pdb/drawable-transform-cmds.c:373
 #: ../app/pdb/drawable-transform-cmds.c:478
@@ -21891,7 +21990,7 @@ msgstr "Рэгуляваць выбраны колер"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:251
 msgid "_Hue"
-msgstr "_Адценне"
+msgstr "_Тон"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:258
 msgid "_Lightness"
@@ -21928,11 +22027,11 @@ msgstr "Чорны"
 
 #: ../app/propgui/gimppropgui-newsprint.c:236
 msgid "_Lock patterns"
-msgstr "_Заблакіраваць узоры"
+msgstr "Блакіраваць _узоры"
 
 #: ../app/propgui/gimppropgui-newsprint.c:245
 msgid "Loc_k periods"
-msgstr "Б_лакіраваць перыяды"
+msgstr "Блакіраваць _перыяды"
 
 #: ../app/propgui/gimppropgui-newsprint.c:254
 msgid "Lock a_ngles"
@@ -21968,7 +22067,7 @@ msgstr "Цені"
 
 #: ../app/propgui/gimppropgui-shadows-highlights.c:80
 msgid "Highlights"
-msgstr "Падсвечванне"
+msgstr "Светлавыя плямы"
 
 #: ../app/propgui/gimppropgui-shadows-highlights.c:98
 msgid "Common"
@@ -22036,7 +22135,7 @@ msgstr "5000 K — D55"
 
 #: ../app/propgui/gimppropgui-utils.c:84
 msgid "5,500 K – Vertical daylight, electronic flash"
-msgstr "5500 K – вертыкальнае дзённае асвятленне, электрычны выбліск"
+msgstr "5500 K – вертыкальнае дзённае асвятленне, электронная ўспышка"
 
 #: ../app/propgui/gimppropgui-utils.c:85
 msgid "6,200 K – Xenon short-arc lamp"
@@ -22060,7 +22159,7 @@ msgstr "9300 K"
 
 #: ../app/propgui/gimppropgui-utils.c:104
 msgid "Choose from a list of common color temperatures"
-msgstr "Выберыце са спіса тэмператур колераў, якія часта выкарыстоўваюцца"
+msgstr "Выберыце са спіса тэмпературу колераў"
 
 #: ../app/propgui/gimppropgui-utils.c:155
 msgid "New Seed"
@@ -22818,7 +22917,7 @@ msgstr "_Тып крывой:"
 
 #: ../app/tools/gimpcurvestool.c:751 ../app/tools/gimplevelstool.c:746
 msgid "Could not read header: "
-msgstr "Не атрымалася прачытаць загаловак: "
+msgstr "Не ўдалося прачытаць загаловак: "
 
 #: ../app/tools/gimpcurvestool.c:825
 msgid "Use _old curves file format"
@@ -23239,7 +23338,7 @@ msgstr "_Аперацыя GEGL..."
 #. The options vbox
 #: ../app/tools/gimpgegltool.c:497
 msgid "Select an operation from the list above"
-msgstr "Выберыце дзеянне са спіса ўверсе"
+msgstr "Выберыце аперацыю са спіса вышэй"
 
 #: ../app/tools/gimpgenerictransformtool.c:99
 msgid "Transform Matrix"
@@ -23961,7 +24060,7 @@ msgstr "Рэдагаваць гэты пэндзаль"
 
 #: ../app/tools/gimppaintoptions-gui.c:169
 msgid "Reset size to brush's native size"
-msgstr "Скінуць памер пэндзля да яго першапачатковага значэння"
+msgstr "Скінуць памер пэндзля да першапачатковага значэння"
 
 #: ../app/tools/gimppaintoptions-gui.c:177
 msgid "Reset aspect ratio to brush's native aspect ratio"
@@ -23973,11 +24072,11 @@ msgstr "Скінуць зыходны вугал пэндзля"
 
 #: ../app/tools/gimppaintoptions-gui.c:193
 msgid "Reset spacing to brush's native spacing"
-msgstr "Скінуць інтэрвал пэндзля да яго першапачатковага значэння"
+msgstr "Скінуць інтэрвал пэндзля да першапачатковага значэння"
 
 #: ../app/tools/gimppaintoptions-gui.c:201
 msgid "Reset hardness to brush's native hardness"
-msgstr "Скінуць цвёрдасць пэндзля да яго першапачатковых значэнняў"
+msgstr "Скінуць жорсткасць пэндзля да першапачатковага значэння"
 
 #: ../app/tools/gimppaintoptions-gui.c:209
 msgid "Reset force to default"
@@ -25032,7 +25131,7 @@ msgstr "Памер эфекту"
 
 #: ../app/tools/gimpwarpoptions.c:100
 msgid "Effect Hardness"
-msgstr "Цвёрдасць эфекту"
+msgstr "Жорсткасць эфекту"
 
 #: ../app/tools/gimpwarpoptions.c:106
 msgid "Strength"
@@ -25937,7 +26036,7 @@ msgstr "Актыўныя кантролеры"
 
 #: ../app/widgets/gimpcontrollerlist.c:296
 msgid "Configure the selected controller"
-msgstr "Сканфігураваць выбраны кантролер"
+msgstr "Наладзіць выбраны кантролер"
 
 #: ../app/widgets/gimpcontrollerlist.c:304
 msgid "Move the selected controller up"
@@ -26013,14 +26112,13 @@ msgid ""
 "removing it."
 msgstr ""
 "Пры выдаленні гэтага кантролера са спіса актыўных кантролераў будуць "
-"незваротна выдалены ўсе параметры падзей супастаўлення, якія вы "
-"канфігуравалі.\n"
+"незваротна выдалены ўсе параметры падзей супастаўлення, якія вы наладзілі.\n"
 "\n"
 "Функцыя «Адключыць кантролер» адключыць выбраны кантролер, без яго выдалення."
 
 #: ../app/widgets/gimpcontrollerlist.c:633
 msgid "Configure Input Controller"
-msgstr "Сканфігураваць кантролер уводу"
+msgstr "Наладзіць кантролер уводу"
 
 #: ../app/widgets/gimpcontrollermouse.c:70
 #: ../app/widgets/gimpcontrollermouse.c:73
@@ -26771,7 +26869,7 @@ msgstr "Файл з назвай %s ужо існуе."
 
 #: ../app/widgets/gimpdnd-xds.c:243
 msgid "Do you want to replace it with the image you are saving?"
-msgstr "Вы сапраўды хочаце замяніць гэты відарыс тым, які вы зараз захоўваеце?"
+msgstr "Сапраўды хочаце замяніць гэты відарыс тым, які вы зараз захоўваеце?"
 
 #. String used to separate dockables, e.g. "Tool Options, Layers"
 #: ../app/widgets/gimpdock.h:34
@@ -26797,7 +26895,7 @@ msgstr " | "
 
 #: ../app/widgets/gimpdockbook.c:313
 msgid "Configure this tab"
-msgstr "Сканфігураваць гэту ўкладку"
+msgstr "Наладзіць гэту ўкладку"
 
 #. Auto button
 #: ../app/widgets/gimpdockwindow.c:383
@@ -26808,8 +26906,8 @@ msgstr "Аўтаматычна"
 msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr ""
-"Пры актыўным параметры дыялогавае акно аўтаматычна змяняецца ў адпаведнасці "
-"з тым, якое актыўна ў дадзены момант."
+"Калі ўключана, дыялогавае акно аўтаматычна змяняецца ў адпаведнасці з тым, "
+"якое актыўна ў дадзены момант."
 
 #: ../app/widgets/gimpdrawabletreeview.c:122
 msgid "Lock pixels"
@@ -27057,7 +27155,7 @@ msgstr "Браўзер даведкі не запускаецца"
 
 #: ../app/widgets/gimphelp.c:420
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "Не атрымалася запусціць убудову браўзера для даведкі GIMP."
+msgstr "Не ўдалося запусціць убудову для браўзера даведкі GIMP."
 
 #: ../app/widgets/gimphelp.c:422
 msgid "You may instead use the web browser for reading the help pages."
@@ -27806,7 +27904,7 @@ msgstr "[ Асноўны відарыс ]"
 
 #: ../app/widgets/gimpvectorstreeview.c:111
 msgid "Lock path"
-msgstr ""
+msgstr "Блакіраваць контур"
 
 #: ../app/widgets/gimpvectorstreeview.c:114
 msgid "Lock path position"
@@ -28078,7 +28176,7 @@ msgstr "Памылковы радок UTF-8 у файле XCF"
 
 #: ../app/xcf/xcf-seek.c:45
 msgid "Could not seek in XCF file: "
-msgstr "Не атрымалася перайсці ў файл XCF: "
+msgstr "Не ўдалося перайсці ў файл XCF: "
 
 #: ../app/xcf/xcf-write.c:50
 msgid "Error writing XCF: "
@@ -28106,9 +28204,3 @@ msgstr "круглы"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "невыразны"
-
-#~ msgid "Lock path strokes"
-#~ msgstr "Блакіраваць штрыхі контуру"
-
-#~ msgid "Copy Visible Named "
-#~ msgstr "Капіяваць бачны названы "
