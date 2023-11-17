@@ -897,6 +897,41 @@ clang-format:
 
 ## Ready-to-distribute ##
 
+ms-store-nightly:
+  rules:
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_WIN_INSTALLER != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
+  variables:
+    CHERE_INVOKING: "yes"
+  tags:
+    - win32-ps
+  stage: distribution
+  dependencies:
+    - packaging-win-aarch64-native
+    - packaging-win64-native
+    - packaging-win32-native
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
+    when: always
+    expire_in: 1 week
+    paths:
+    - build/windows/store/_Output
+  script:
+    # Prepare .msixbundle
+    - build\windows\gitlab-ci\store-gimp-winsdk.ps1
+    - $version = Get-Content -Path 'GIMP_version2-manifest.txt' -Raw
+    # Make .msixupload to submission (without .pdb debug symbols)
+    - Compress-Archive -Path "_Output\*.msixbundle" "_Output\gimp-${version}-store.zip"
+    - Get-ChildItem "_Output\*.zip" | Rename-Item -NewName { $_.Name -replace '.zip','.msixupload' }
+    # Sign .msixbundle to testing (needs proper install of pseudo-gimp.pfx)
+    - Set-Alias -Name 'SignTool' -Value 'C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\x64\signtool.exe'
+    - SignTool sign /fd sha256 /a /f _Output\pseudo-gimp.pfx /p eek "_Output\gimp-${version}-local.msixbundle"
+  needs: ["packaging-win32-native", "packaging-win64-native", "packaging-win-aarch64-native"]
+
 win-installer-nightly:
   rules:
     # On releases.
