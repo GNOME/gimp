@@ -72,6 +72,7 @@ if [ ! -f "_build${ARTIFACTS_SUFFIX}/build.ninja" ]; then
                  -Djavascript=disabled               \
                  -Ddirectx-sdk-dir="${MSYS2_PREFIX}" \
                  -Dwindows-installer=true            \
+                 -Dms-store=true                     \
                  -Dbuild-id=org.gimp.GIMP_official $MESON_OPTIONS
   ninja
   ninja install

@@ -5,12 +5,12 @@
 # - Linux GCC build (rare usefulness)
 # - Linux build without vector icons (rare usefulness)
 # - Linux Flatpak build (base but slow)
-# - Win builds: Inno Windows installer (base but slow)
+# - Win builds: Inno Windows installer and .msixbundle (base but slow)
 # - cppcheck (static code analysis)
 # Releases ($CI_COMMIT_TAG != null) should run only:
 # - Source tarball (base & fast)
 # - Developer documentation (base & fast)
-# - Win builds: Inno Windows installer (base but slow)
+# - Win builds: Inno Windows installer and .msixupload (base but slow)
 #
 # To force step-specific pipelines without waiting for commits and/or
 # pipelines, these are the variable you should set:
@@ -25,6 +25,7 @@
 # - GIMP_CI_SOURCES: trigger the Debian Clang build and the source tarball job.
 # - GIMP_CI_FLATPAK: trigger the flatpak build and publishing.
 # - GIMP_CI_WIN_INSTALLER: trigger all native MSYS2 builds then creates Inno Windows installer.
+# - GIMP_CI_MS_STORE: trigger arm64 and x64 native MSYS2 builds then creates a .msixbundle.
 
 stages:
   - prepare
@@ -462,6 +463,9 @@ gimp-win-x64-cross:
     - !reference [.win, rules]
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_MSYS2_WIN_AARCH64 != null'
+    # We can't set these on '.win' because MS Store don't support x86
+    - if: '$GIMP_CI_MS_STORE != null'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
   tags:
     - windows-aarch64
   variables:
@@ -503,9 +507,10 @@ gimp-win-a64:
     paths:
       - gimp-a64/
       - done-dll.list
-      # Needed by dist-installer-weekly
+      # Needed by dist-installer-weekly and dist-store-weekly
       - _build-a64/config.h
       - _build-a64/build/windows/installer/
+      - _build-a64/build/windows/store/
     expire_in: 1 day
 
 ## WINDOWS x86_64 CI (native MSYS2) ##
@@ -516,6 +521,9 @@ gimp-win-a64:
     - !reference [.win, rules]
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_MSYS2_WIN64 != null'
+    # We can't set these on '.win' because MS Store don't support x86
+    - if: '$GIMP_CI_MS_STORE != null'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
   tags:
     - win32-ps
   variables:
@@ -756,4 +764,28 @@ dist-installer-weekly:
     paths:
       - build/windows/installer/_Output/
       - installer.log
+    expire_in: 1 week
+
+dist-store-weekly:
+  extends: .win
+  rules:
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+      interruptible: false
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_MS_STORE != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
+  needs: ["gimp-win-a64", "gimp-win-x64"]
+  stage: distribution
+  tags:
+    - win32-ps
+  cache: []
+  script:
+    - build\windows\gitlab-ci\4_dist-gimp-winsdk.ps1 | Out-File -FilePath store.log
+  artifacts:
+    expose_as: 'Windows msix'
+    paths:
+    - build/windows/store/_Output/
+    - store.log
     expire_in: 1 week
