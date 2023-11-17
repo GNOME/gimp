@@ -1,0 +1,5 @@
+lua=luajit.exe
+luajit=luajit.exe
+/usr/bin/luajit=luajit.exe
+/usr/bin/lua=luajit.exe
+:Lua:E::lua::luajit.exe:

@@ -1,0 +1,5 @@
+python=python.exe
+python3=python.exe
+/usr/bin/python=python.exe
+/usr/bin/python3=python.exe
+:Python:E::py::python:

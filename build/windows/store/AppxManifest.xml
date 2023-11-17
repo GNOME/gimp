@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4"
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
+  xmlns:uap6="http://schemas.microsoft.com/appx/manifest/uap/windows10/6"
+  xmlns:uap7="http://schemas.microsoft.com/appx/manifest/uap/windows10/7"
+  xmlns:uap8="http://schemas.microsoft.com/appx/manifest/uap/windows10/8"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10">
+  <Identity Name="GIMP" Publisher="CN=8705A20E-F3A1-463E-86D3-B71D4DE2E37D" Version="@GIMP_VERSION@.0" ProcessorArchitecture="neutral" />
+  <Properties>
+    <DisplayName>GIMP</DisplayName>
+    <PublisherDisplayName>GIMP</PublisherDisplayName>
+    <Description>GNU Image Manipulation Program</Description>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.18362.0" MaxVersionTested="10.0.22621.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="en-US" />
+    <Resource uap:Scale="100" />
+    <Resource uap:Scale="125" />
+    <Resource uap:Scale="150" />
+    <Resource uap:Scale="200" />
+    <Resource uap:Scale="400" />
+  </Resources>
+  <Applications>
+    <Application Id="GIMP" Executable="VFS\ProgramFiles@ARCH@\GIMP @MAJORMINOR@\bin\gimp-@MAJORMINOR@.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements DisplayName="GIMP @GIMP_VERSION@" Description="GNU Image Manipulation Program" BackgroundColor="transparent" Square150x150Logo="Assets\MedTile.png" Square44x44Logo="Assets\AppList.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\WideTile.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png"/>
+      </uap:VisualElements>
+      <Extensions>
+        <uap3:Extension Category="windows.fileTypeAssociation">
+          <uap3:FileTypeAssociation Name="xcf">
+            <uap:DisplayName>eXperimental Computing Facility file</uap:DisplayName>
+            <uap:Logo>Assets\fileicon.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType uap4:ShellNewFileName="Assets\New_GIMP_Project.xcf" uap4:ShellNewDisplayName="GIMP project file">.xcf</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap3:FileTypeAssociation>
+        </uap3:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="imagetypes">
+            <uap:SupportedFileTypes>
+              @FILE_TYPES@
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap5:Extension Category="windows.appExecutionAlias" EntryPoint="Windows.FullTrustApplication">
+            <uap5:AppExecutionAlias>
+              <uap5:ExecutionAlias Alias="gimp-@MAJORMINOR@.exe"/>
+            </uap5:AppExecutionAlias>
+        </uap5:Extension>
+      </Extensions>
+      <uap7:Properties>
+        <uap8:ActiveCodePage>UTF-8</uap8:ActiveCodePage>
+      </uap7:Properties>
+    </Application>
+  </Applications>
+  <Extensions>
+    <uap6:Extension Category="windows.loaderSearchPathOverride">
+      <uap6:LoaderSearchPathOverride>
+        <uap6:LoaderSearchPathEntry FolderPath="VFS\ProgramFiles@ARCH@\GIMP @MAJORMINOR@\bin"/>
+        %TWAIN%
+      </uap6:LoaderSearchPathOverride>
+    </uap6:Extension>
+  </Extensions>
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+</Package>
