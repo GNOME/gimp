@@ -381,6 +381,7 @@ load_image (GFile  *file,
                        _("Unsupported compression (%u) in BMP file from '%s'"),
                        bitmap_head.biCompr,
                        gimp_file_get_utf8_name (file));
+          goto out;
         }
 
 #ifdef DEBUG
