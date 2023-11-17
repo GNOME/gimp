@@ -51,7 +51,7 @@ struct _GimpTextOptions
 
   GimpTextOutline        outline;
   GimpCustomStyle        outline_style;
-  GimpRGB                outline_foreground;
+  GeglColor             *outline_foreground;
   GimpPattern           *outline_pattern;
   gdouble                outline_width;
   GimpUnit               outline_unit;

@@ -2031,7 +2031,7 @@ gimp_text_tool_ensure_layout (GimpTextTool *text_tool)
       gimp_image_get_resolution (image, &xres, &yres);
 
       text_tool->layout = gimp_text_layout_new (text_tool->layer->text,
-                                                xres, yres, &error);
+                                                image, xres, yres, &error);
       if (error)
         {
           gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR, error->message);

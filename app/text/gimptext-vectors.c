@@ -82,7 +82,7 @@ gimp_text_vectors_new (GimpImage *image,
 
       gimp_image_get_resolution (image, &xres, &yres);
 
-      layout = gimp_text_layout_new (text, xres, yres, &error);
+      layout = gimp_text_layout_new (text, image, xres, yres, &error);
       if (error)
         {
           gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR, error->message);

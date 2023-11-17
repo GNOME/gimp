@@ -1209,7 +1209,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
                                                   width, height);
 
       src_buffer  = gimp_temp_buf_create_buffer (temp_buf);
-      dest_buffer = gimp_cairo_surface_create_buffer (alpha_surface);
+      dest_buffer = gimp_cairo_surface_create_buffer (alpha_surface, NULL);
 
       transform =
         gimp_view_renderer_get_color_transform (renderer, widget,
@@ -1258,7 +1258,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       cairo_surface_flush (surface);
 
       src_buffer  = gimp_temp_buf_create_buffer (temp_buf);
-      dest_buffer = gimp_cairo_surface_create_buffer (surface);
+      dest_buffer = gimp_cairo_surface_create_buffer (surface, NULL);
 
       transform =
         gimp_view_renderer_get_color_transform (renderer, widget,

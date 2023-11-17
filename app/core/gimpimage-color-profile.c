@@ -816,20 +816,6 @@ gimp_image_get_color_transform_to_srgb_u8 (GimpImage *image)
 }
 
 GimpColorTransform *
-gimp_image_get_color_transform_from_srgb_u8 (GimpImage *image)
-{
-  GimpImagePrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  gimp_image_create_color_transforms (image);
-
-  return private->transform_from_srgb_u8;
-}
-
-GimpColorTransform *
 gimp_image_get_color_transform_to_srgb_double (GimpImage *image)
 {
   GimpImagePrivate *private;
@@ -938,7 +924,6 @@ _gimp_image_free_color_transforms (GimpImage *image)
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
   g_clear_object (&private->transform_to_srgb_u8);
-  g_clear_object (&private->transform_from_srgb_u8);
   g_clear_object (&private->transform_to_srgb_double);
   g_clear_object (&private->transform_from_srgb_double);
 
@@ -1159,14 +1144,6 @@ gimp_image_create_color_transforms (GimpImage *image)
                                   gimp_image_get_layer_format (image, TRUE),
                                   srgb_profile,
                                   babl_format ("R'G'B'A u8"),
-                                  GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                  flags);
-
-      private->transform_from_srgb_u8 =
-        gimp_color_transform_new (srgb_profile,
-                                  babl_format ("R'G'B'A u8"),
-                                  private->color_profile,
-                                  gimp_image_get_layer_format (image, TRUE),
                                   GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                   flags);
 

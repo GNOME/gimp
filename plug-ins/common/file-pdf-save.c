@@ -1438,7 +1438,7 @@ get_cairo_surface (GimpDrawable  *drawable,
       return NULL;
     }
 
-  dest_buffer = gimp_cairo_surface_create_buffer (surface);
+  dest_buffer = gimp_cairo_surface_create_buffer (surface, NULL);
   if (as_mask)
     {
       /* src_buffer represents a mask in "Y u8", "Y u16", etc. formats.
@@ -1555,7 +1555,8 @@ drawText (GimpLayer *layer,
   cairo_font_options_t *options;
   gint                  x;
   gint                  y;
-  GimpRGB               rgb;
+  GeglColor            *color;
+  gdouble               rgb[3];
   GimpUnit              unit;
   gdouble               size;
   GimpTextHintStyle     hinting;
@@ -1588,20 +1589,18 @@ drawText (GimpLayer *layer,
   /* When dealing with a gray/indexed image, the viewed color of the text layer
    * can be different than the one kept in the memory */
   if (type == GIMP_RGBA_IMAGE)
-    {
-      gimp_text_layer_get_color (GIMP_TEXT_LAYER (layer), &rgb);
-    }
+    color = gimp_text_layer_get_color (GIMP_TEXT_LAYER (layer));
   else
-    {
-      GeglColor *color;
+    gimp_image_pick_color (gimp_item_get_image (GIMP_ITEM (layer)), 1,
+                           (const GimpItem**) &layer, x, y, FALSE, FALSE, 0,
+                           &color);
 
-      gimp_image_pick_color (gimp_item_get_image (GIMP_ITEM (layer)), 1,
-                             (const GimpItem**) &layer, x, y, FALSE, FALSE, 0,
-                             &color);
-      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
-    }
-
-  cairo_set_source_rgba (cr, rgb.r, rgb.g, rgb.b, opacity);
+  /* TODO: this export plug-in is not space-aware yet, so we draw everything as
+   * sRGB for the time being.
+   */
+  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' double", NULL), rgb);
+  cairo_set_source_rgba (cr, rgb[0], rgb[1], rgb[2], opacity);
+  g_object_unref (color);
 
   /* Hinting */
   hinting = gimp_text_layer_get_hint_style (GIMP_TEXT_LAYER (layer));

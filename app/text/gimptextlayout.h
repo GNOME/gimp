@@ -38,9 +38,16 @@ struct _GimpTextLayoutClass
 GType            gimp_text_layout_get_type             (void) G_GNUC_CONST;
 
 GimpTextLayout * gimp_text_layout_new                  (GimpText       *text,
+                                                        GimpImage      *target_image,
                                                         gdouble         xres,
                                                         gdouble         yres,
                                                         GError        **error);
+
+const Babl     * gimp_text_layout_get_space            (GimpTextLayout *layout);
+const GimpTRCType gimp_text_layout_get_trc             (GimpTextLayout *layout);
+const Babl *     gimp_text_layout_get_format           (GimpTextLayout *layout,
+                                                        const gchar    *babl_type);
+
 gboolean         gimp_text_layout_get_size             (GimpTextLayout *layout,
                                                         gint           *width,
                                                         gint           *height);

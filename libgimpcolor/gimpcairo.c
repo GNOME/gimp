@@ -162,9 +162,14 @@ gimp_cairo_surface_get_format (cairo_surface_t *surface)
 
   switch (cairo_image_surface_get_format (surface))
     {
-    case CAIRO_FORMAT_RGB24:  return babl_format ("cairo-RGB24");
-    case CAIRO_FORMAT_ARGB32: return babl_format ("cairo-ARGB32");
-    case CAIRO_FORMAT_A8:     return babl_format ("cairo-A8");
+    case CAIRO_FORMAT_RGB24:    return babl_format ("cairo-RGB24");
+    case CAIRO_FORMAT_ARGB32:   return babl_format ("cairo-ARGB32");
+    case CAIRO_FORMAT_A8:       return babl_format ("cairo-A8");
+#if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 17, 2)
+    /* Since Cairo 1.17.2 */
+    case CAIRO_FORMAT_RGB96F:   return babl_format ("R'B'B' float");
+    case CAIRO_FORMAT_RGBA128F: return babl_format ("R'G'B'A float");
+#endif
 
     default:
       break;
@@ -176,27 +181,37 @@ gimp_cairo_surface_get_format (cairo_surface_t *surface)
 /**
  * gimp_cairo_surface_create_buffer:
  * @surface: a Cairo surface
+ * @format:  a Babl format.
  *
  * This function returns a #GeglBuffer which wraps @surface's pixels.
  * It must only be called on image surfaces, calling it on other surface
  * types is an error.
+ *
+ * If @format is set, the returned [class@Gegl.Buffer] will use it. It has to
+ * map with @surface Cairo format. If unset, the buffer format will be
+ * determined from @surface. The main difference is that automatically
+ * determined format has sRGB space and TRC by default.
  *
  * Returns: (transfer full): a #GeglBuffer
  *
  * Since: 2.10
  **/
 GeglBuffer *
-gimp_cairo_surface_create_buffer (cairo_surface_t *surface)
+gimp_cairo_surface_create_buffer (cairo_surface_t *surface,
+                                  const Babl      *format)
 {
-  const Babl *format;
-  gint        width;
-  gint        height;
+  gint width;
+  gint height;
 
   g_return_val_if_fail (surface != NULL, NULL);
   g_return_val_if_fail (cairo_surface_get_type (surface) ==
                         CAIRO_SURFACE_TYPE_IMAGE, NULL);
+  g_return_val_if_fail (format == NULL ||
+                        babl_format_get_bytes_per_pixel (format) == babl_format_get_bytes_per_pixel (gimp_cairo_surface_get_format (surface)),
+                        NULL);
 
-  format = gimp_cairo_surface_get_format  (surface);
+  if (format == NULL)
+    format = gimp_cairo_surface_get_format (surface);
   width  = cairo_image_surface_get_width  (surface);
   height = cairo_image_surface_get_height (surface);
 

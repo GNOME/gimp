@@ -869,23 +869,21 @@ gimp_text_layer_set_justification (GimpTextLayer         *layer,
 /**
  * gimp_text_layer_get_color:
  * @layer: The text layer.
- * @color: (out caller-allocates): The color of the text.
  *
  * Get the color of the text in a text layer.
  *
  * This procedure returns the color of the text in a text layer.
  *
- * Returns: TRUE on success.
+ * Returns: (transfer full): The color of the text.
  *
  * Since: 2.6
  **/
-gboolean
-gimp_text_layer_get_color (GimpTextLayer *layer,
-                           GimpRGB       *color)
+GeglColor *
+gimp_text_layer_get_color (GimpTextLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gboolean success = TRUE;
+  GeglColor *color = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_TEXT_LAYER, layer,
@@ -896,14 +894,12 @@ gimp_text_layer_get_color (GimpTextLayer *layer,
                                                args);
   gimp_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    color = g_value_dup_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
-  return success;
+  return color;
 }
 
 /**

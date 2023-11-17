@@ -734,20 +734,20 @@ text_layer_get_color_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpTextLayer *layer;
-  GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
+  GeglColor *color = NULL;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      color = gimp_text_layer_get_text (layer)->color;
+      color = gegl_color_duplicate (gimp_text_layer_get_text (layer)->color);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &color);
+    g_value_take_object (gimp_value_array_index (return_vals, 1), color);
 
   return return_vals;
 }
@@ -1685,12 +1685,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                                            FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("color",
-                                                        "color",
-                                                        "The color of the text.",
-                                                        FALSE,
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                   gegl_param_spec_color ("color",
+                                                          "color",
+                                                          "The color of the text.",
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -110,8 +110,6 @@ void                 gimp_image_import_color_profile   (GimpImage           *ima
 
 GimpColorTransform * gimp_image_get_color_transform_to_srgb_u8
                                                        (GimpImage           *image);
-GimpColorTransform * gimp_image_get_color_transform_from_srgb_u8
-                                                       (GimpImage           *image);
 
 GimpColorTransform * gimp_image_get_color_transform_to_srgb_double
                                                        (GimpImage           *image);

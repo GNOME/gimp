@@ -389,17 +389,14 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
            gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_BG_COLOR))
         {
           GeglColor *color;
-          GimpRGB    rgb;
 
           if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_FG_COLOR)
             color = gimp_context_get_foreground (GIMP_CONTEXT (options));
           else
             color = gimp_context_get_background (GIMP_CONTEXT (options));
 
-          gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
-
           gimp_text_layer_set (iter->data, NULL,
-                               "color", &rgb,
+                               "color", color,
                                NULL);
         }
       else

@@ -732,14 +732,14 @@ HELP
     );
 
     @outargs = (
-        { name => 'color', type => 'color', void_ret => 1,
+        { name => 'color', type => 'geglcolor',
           desc => 'The color of the text.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  color = gimp_text_layer_get_text (layer)->color;
+  color = gegl_color_duplicate (gimp_text_layer_get_text (layer)->color);
 }
 CODE
     );

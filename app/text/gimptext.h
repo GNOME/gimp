@@ -49,10 +49,10 @@ struct _GimpText
   gboolean               kerning;
   gchar                 *language;
   GimpTextDirection      base_dir;
-  GimpRGB                color;
+  GeglColor             *color;
   GimpCustomStyle        outline_style;
   GimpPattern           *outline_pattern;
-  GimpRGB                outline_foreground;
+  GeglColor             *outline_foreground;
   gdouble                outline_width;
   GimpCapStyle           outline_cap_style;
   GimpJoinStyle          outline_join_style;

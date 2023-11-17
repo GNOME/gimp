@@ -141,8 +141,8 @@ gimp_text_class_init (GimpTextClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpRGB          black;
-  GimpRGB          gray;
+  GeglColor       *black             = gegl_color_new ("black");
+  GeglColor       *gray              = gegl_color_new ("gray");
   GimpMatrix2      identity;
   gchar           *language;
   GParamSpec      *array_spec;
@@ -162,8 +162,6 @@ gimp_text_class_init (GimpTextClass *klass)
 
   gimp_object_class->get_memsize            = gimp_text_get_memsize;
 
-  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-  gimp_rgba_set (&gray, 0.75, 0.75, 0.75, GIMP_OPACITY_OPAQUE);
   gimp_matrix2_identity (&identity);
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_TEXT,
@@ -235,11 +233,11 @@ gimp_text_class_init (GimpTextClass *klass)
                          GIMP_TEXT_DIRECTION_LTR,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_COLOR,
-                        "color",
-                        NULL, NULL,
-                        FALSE, &black,
-                        GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_COLOR (object_class, PROP_COLOR,
+                          "color",
+                          NULL, NULL,
+                          black,
+                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE,
                          "outline",
@@ -341,10 +339,10 @@ gimp_text_class_init (GimpTextClass *klass)
                             "outline-pattern", NULL, NULL,
                             GIMP_TYPE_PATTERN,
                             GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_PROP_RGB (object_class, PROP_OUTLINE_FOREGROUND,
-                         "outline-foreground", NULL, NULL,
-                         FALSE, &gray,
-                         GIMP_PARAM_STATIC_STRINGS);
+   GIMP_CONFIG_PROP_COLOR (object_class, PROP_OUTLINE_FOREGROUND,
+                           "outline-foreground", NULL, NULL,
+                           gray,
+                           GIMP_PARAM_STATIC_STRINGS);
    GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OUTLINE_WIDTH,
                             "outline-width", NULL, NULL,
                             0.0, 8192.0, 4.0,
@@ -394,6 +392,8 @@ gimp_text_class_init (GimpTextClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_unref (black);
+  g_object_unref (gray);
 }
 
 static void
@@ -417,6 +417,8 @@ gimp_text_finalize (GObject *object)
   g_clear_pointer (&text->markup,   g_free);
   g_clear_pointer (&text->language, g_free);
   g_clear_object (&text->font);
+  g_clear_object (&text->color);
+  g_clear_object (&text->outline_foreground);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -462,7 +464,7 @@ gimp_text_get_property (GObject      *object,
       g_value_set_string (value, text->language);
       break;
     case PROP_COLOR:
-      g_value_set_boxed (value, &text->color);
+      g_value_set_object (value, text->color);
       break;
     case PROP_OUTLINE:
       g_value_set_enum (value, text->outline);
@@ -504,7 +506,7 @@ gimp_text_get_property (GObject      *object,
       g_value_set_enum (value, text->outline_style);
       break;
     case PROP_OUTLINE_FOREGROUND:
-      g_value_set_boxed (value, &text->outline_foreground);
+      g_value_set_object (value, text->outline_foreground);
       break;
     case PROP_OUTLINE_PATTERN:
       g_value_set_object (value, text->outline_pattern);
@@ -555,7 +557,6 @@ gimp_text_set_property (GObject      *object,
                         GParamSpec   *pspec)
 {
   GimpText    *text = GIMP_TEXT (object);
-  GimpRGB     *color;
   GimpMatrix2 *matrix;
 
   switch (property_id)
@@ -609,8 +610,7 @@ gimp_text_set_property (GObject      *object,
       text->base_dir = g_value_get_enum (value);
       break;
     case PROP_COLOR:
-      color = g_value_get_boxed (value);
-      text->color = *color;
+      g_set_object (&text->color, g_value_get_object (value));;
       break;
     case PROP_OUTLINE:
       text->outline = g_value_get_enum (value);
@@ -653,8 +653,7 @@ gimp_text_set_property (GObject      *object,
       text->outline_style = g_value_get_enum (value);
       break;
     case PROP_OUTLINE_FOREGROUND:
-      color                    = g_value_get_boxed (value);
-      text->outline_foreground = *color;
+      g_set_object (&text->outline_foreground, g_value_get_object (value));;
       break;
     case PROP_OUTLINE_PATTERN:
       {

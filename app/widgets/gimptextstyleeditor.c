@@ -781,12 +781,14 @@ gimp_text_style_editor_set_color (GimpTextStyleEditor *editor,
 static void
 gimp_text_style_editor_set_default_color (GimpTextStyleEditor *editor)
 {
+  GimpRGB rgb;
+
   g_signal_handlers_block_by_func (editor->color_button,
                                    gimp_text_style_editor_color_changed,
                                    editor);
 
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (editor->color_button),
-                               &editor->text->color);
+  gegl_color_get_pixel (editor->text->color, babl_format ("R'G'B'A double"), &rgb);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (editor->color_button), &rgb);
 
   g_signal_handlers_unblock_by_func (editor->color_button,
                                      gimp_text_style_editor_color_changed,

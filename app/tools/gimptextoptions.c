@@ -152,10 +152,9 @@ static void
 gimp_text_options_class_init (GimpTextOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB       gray;
+  GeglColor    *gray         = gegl_color_new ("gray");
   GParamSpec   *array_spec;
 
-  gimp_rgba_set (&gray, 0.75, 0.75, 0.75, GIMP_OPACITY_OPAQUE);
   object_class->finalize     = gimp_text_options_finalize;
   object_class->set_property = gimp_text_options_set_property;
   object_class->get_property = gimp_text_options_get_property;
@@ -286,11 +285,11 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                           GIMP_TYPE_CUSTOM_STYLE,
                           GIMP_CUSTOM_STYLE_SOLID_COLOR,
                           GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_PROP_RGB (object_class, PROP_OUTLINE_FOREGROUND,
-                         "outline-foreground",
-                         NULL, NULL,
-                         FALSE, &gray,
-                         GIMP_PARAM_STATIC_STRINGS);
+   GIMP_CONFIG_PROP_COLOR (object_class, PROP_OUTLINE_FOREGROUND,
+                           "outline-foreground",
+                           NULL, NULL,
+                           gray,
+                           GIMP_PARAM_STATIC_STRINGS);
    GIMP_CONFIG_PROP_OBJECT (object_class, PROP_OUTLINE_PATTERN,
                             "outline-pattern",
                             NULL, NULL,
@@ -349,6 +348,8 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                                                  array_spec,
                                                                  GIMP_PARAM_STATIC_STRINGS |
                                                                  GIMP_CONFIG_PARAM_FLAGS));
+
+  g_object_unref (gray);
 }
 
 static void
@@ -365,7 +366,10 @@ gimp_text_options_config_iface_init (GimpConfigInterface *config_iface)
 static void
 gimp_text_options_init (GimpTextOptions *options)
 {
-  options->size_entry = NULL;
+  GeglColor *gray = gegl_color_new ("gray");
+
+  options->size_entry         = NULL;
+  options->outline_foreground = gray;
 }
 
 static void
@@ -374,6 +378,7 @@ gimp_text_options_finalize (GObject *object)
   GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
 
   g_clear_pointer (&options->language, g_free);
+  g_clear_object (&options->outline_foreground);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -429,7 +434,7 @@ gimp_text_options_get_property (GObject    *object,
       g_value_set_enum (value, options->outline_style);
       break;
     case PROP_OUTLINE_FOREGROUND:
-      g_value_set_boxed (value, &options->outline_foreground);
+      g_value_set_object (value, options->outline_foreground);
       break;
     case PROP_OUTLINE_PATTERN:
       g_value_set_object (value, options->outline_pattern);
@@ -491,7 +496,6 @@ gimp_text_options_set_property (GObject      *object,
                                 GParamSpec   *pspec)
 {
   GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
-  GimpRGB         *color;
 
   switch (property_id)
     {
@@ -537,8 +541,7 @@ gimp_text_options_set_property (GObject      *object,
       options->outline_style = g_value_get_enum (value);
       break;
     case PROP_OUTLINE_FOREGROUND:
-      color                       = g_value_get_boxed (value);
-      options->outline_foreground = *color;
+      g_set_object (&options->outline_foreground, g_value_get_object (value));;
       break;
     case PROP_OUTLINE_PATTERN:
       {
@@ -683,17 +686,11 @@ gimp_text_options_notify_color (GimpContext *context,
                                 GParamSpec  *pspec,
                                 GimpText    *text)
 {
-  GeglColor *color;
-  GimpRGB    rgb;
-
-  color = gimp_context_get_foreground (context);
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-
   g_signal_handlers_block_by_func (text,
                                    gimp_text_options_notify_text_color,
                                    context);
 
-  g_object_set (text, "color", &rgb, NULL);
+  g_object_set (text, "color", gimp_context_get_foreground (context), NULL);
 
   g_signal_handlers_unblock_by_func (text,
                                      gimp_text_options_notify_text_color,
@@ -705,18 +702,13 @@ gimp_text_options_notify_text_color (GimpText    *text,
                                      GParamSpec  *pspec,
                                      GimpContext *context)
 {
-  GeglColor *color = gegl_color_new ("black");
-
   g_signal_handlers_block_by_func (context,
                                    gimp_text_options_notify_color, text);
 
-  gegl_color_set_rgba_with_space (color, text->color.r, text->color.g, text->color.b, text->color.a, NULL);
-  gimp_context_set_foreground (context, color);
+  gimp_context_set_foreground (context, text->color);
 
   g_signal_handlers_unblock_by_func (context,
                                      gimp_text_options_notify_color, text);
-
-  g_object_unref (color);
 }
 
 /*  This function could live in gimptexttool.c also.
@@ -727,21 +719,16 @@ gimp_text_options_connect_text (GimpTextOptions *options,
                                 GimpText        *text)
 {
   GimpContext *context;
-  GeglColor   *color;
-  GimpRGB      rgb;
 
   g_return_if_fail (GIMP_IS_TEXT_OPTIONS (options));
   g_return_if_fail (GIMP_IS_TEXT (text));
 
   context = GIMP_CONTEXT (options);
 
-  color = gimp_context_get_foreground (context);
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-
   gimp_config_sync (G_OBJECT (options), G_OBJECT (text), 0);
 
   g_object_set (text,
-                "color", &rgb,
+                "color", gimp_context_get_foreground (context),
                 "font",  gimp_context_get_font (context),
                 NULL);
 

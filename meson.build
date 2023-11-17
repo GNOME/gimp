@@ -351,6 +351,9 @@ if not babl.found()
   # because it would be a newer version.
   babl            = dependency('babl',               version: '>='+babl_minver)
 endif
+# TODO: we want to bump to Cairo 1.17.2 when possible in order to use
+# CAIRO_FORMAT_RGBA128F unconditionally. At time of writing, it's not possible
+# because of our bookworm availability requirement.
 cairo_minver      = '1.14.0'
 cairo             = dependency('cairo',              version: '>='+cairo_minver)
 

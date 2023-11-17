@@ -69,8 +69,7 @@ gboolean                       gimp_text_layer_set_base_direction (GimpTextLayer
 GimpTextJustification          gimp_text_layer_get_justification  (GimpTextLayer         *layer);
 gboolean                       gimp_text_layer_set_justification  (GimpTextLayer         *layer,
                                                                    GimpTextJustification  justify);
-gboolean                       gimp_text_layer_get_color          (GimpTextLayer         *layer,
-                                                                   GimpRGB               *color);
+GeglColor*                     gimp_text_layer_get_color          (GimpTextLayer         *layer);
 gboolean                       gimp_text_layer_set_color          (GimpTextLayer         *layer,
                                                                    const GimpRGB         *color);
 gdouble                        gimp_text_layer_get_indent         (GimpTextLayer         *layer);

@@ -53,7 +53,6 @@
 
 #include "gimptext.h"
 #include "gimptextlayer.h"
-#include "gimptextlayer-transform.h"
 #include "gimptextlayout.h"
 #include "gimptextlayout-render.h"
 
@@ -725,7 +724,7 @@ gimp_text_layer_render (GimpTextLayer *layer)
 
   gimp_image_get_resolution (image, &xres, &yres);
 
-  layout = gimp_text_layout_new (layer->text, xres, yres, &error);
+  layout = gimp_text_layout_new (layer->text, image, xres, yres, &error);
   if (error)
     {
       gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
@@ -927,9 +926,8 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 {
   GimpDrawable       *drawable = GIMP_DRAWABLE (layer);
   GimpItem           *item     = GIMP_ITEM (layer);
-  GimpImage          *image    = gimp_item_get_image (item);
+  const Babl         *format;
   GeglBuffer         *buffer;
-  GimpColorTransform *transform;
   cairo_t            *cr;
   cairo_surface_t    *surface;
   gint                width;
@@ -941,7 +939,11 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   width  = gimp_item_get_width  (item);
   height = gimp_item_get_height (item);
 
+#if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 17, 2)
+  surface = cairo_image_surface_create (CAIRO_FORMAT_RGBA128F, width, height);
+#else
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
+#endif
   status = cairo_surface_status (surface);
 
   if (status != CAIRO_STATUS_SUCCESS)
@@ -968,7 +970,6 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   if (layer->text->outline != GIMP_TEXT_OUTLINE_NONE)
     {
       GimpText *text = layer->text;
-      GimpRGB   col  = text->outline_foreground;
 
       cairo_save (cr);
 
@@ -998,7 +999,16 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
         }
       else
         {
-          cairo_set_source_rgba (cr, col.r, col.g, col.b, col.a);
+          GeglColor  *col = text->outline_foreground;
+          gdouble     color[3];
+
+          format = gimp_text_layout_get_format (layout, "double");
+          gegl_color_get_pixel (col, format, color);
+          /* Text layout can be either grayscale or RGB without alpha. */
+          if (! babl_space_is_gray (babl_format_get_space (format)))
+            cairo_set_source_rgba (cr, color[0], color[1], color[2], 1.0);
+          else
+            cairo_set_source_rgba (cr, color[0], color[0], color[0], 1.0);
         }
 
       cairo_set_line_width (cr, text->outline_width * 2);
@@ -1014,23 +1024,29 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 
   cairo_surface_flush (surface);
 
-  buffer = gimp_cairo_surface_create_buffer (surface);
-
-  transform = gimp_image_get_color_transform_from_srgb_u8 (image);
-
-  if (transform)
+#if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 17, 2)
+  /* The CAIRO_FORMAT_RGBA128F surface maps to the layout TRC and space. */
+  switch (gimp_text_layout_get_trc (layout))
     {
-      gimp_color_transform_process_buffer (transform,
-                                           buffer,
-                                           NULL,
-                                           gimp_drawable_get_buffer (drawable),
-                                           NULL);
+    case GIMP_TRC_LINEAR:
+      format = babl_format_with_space ("RGBA float", gimp_text_layout_get_space (layout));
+      break;
+    case GIMP_TRC_NON_LINEAR:
+      format = babl_format_with_space ("R'G'B'A float", gimp_text_layout_get_space (layout));
+      break;
+    case GIMP_TRC_PERCEPTUAL:
+      format = babl_format_with_space ("R~G~B~A float", gimp_text_layout_get_space (layout));
+      break;
+    default:
+      g_return_if_reached ();
     }
-  else
-    {
-      gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
-                             gimp_drawable_get_buffer (drawable), NULL);
-    }
+#else
+  format = babl_format_with_space ("cairo-ARGB32", gimp_text_layout_get_space (layout));
+#endif
+  buffer = gimp_cairo_surface_create_buffer (surface, format);
+
+  gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
+                         gimp_drawable_get_buffer (drawable), NULL);
 
   g_object_unref (buffer);
   cairo_surface_destroy (surface);
