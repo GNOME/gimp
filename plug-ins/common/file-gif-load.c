@@ -600,6 +600,7 @@ load_image (GFile     *file,
           GimpParasite *parasite;
           gchar        *str;
 
+          str = g_strdup_printf ("%d", Gif89.num_loops);
           parasite = gimp_parasite_new ("gif/animated",
                                         GIMP_PARASITE_PERSISTENT,
                                         strlen (str) + 1,
