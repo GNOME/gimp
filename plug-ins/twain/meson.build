@@ -1,4 +1,4 @@
-if not platform_windows
+if not platform_windows or host_cpu_family != 'x86'
   subdir_done()
 endif
 
