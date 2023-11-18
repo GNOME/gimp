@@ -120,7 +120,7 @@ static void     gimp_fg_bg_editor_image_changed     (GimpFgBgEditor   *editor,
 
 static void     gimp_fg_bg_editor_draw_color_frame  (GimpFgBgEditor   *editor,
                                                      cairo_t          *cr,
-                                                     const GimpRGB    *color,
+                                                     GeglColor        *color,
                                                      gint              x,
                                                      gint              y,
                                                      gint              width,
@@ -435,24 +435,21 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   if (editor->context)
     {
       GeglColor *color;
-      GimpRGB    rgb;
 
       /*  draw the background frame  */
       color = gimp_context_get_background (editor->context);
-      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
       rect.x = width  - rect.width  - border.right;
       rect.y = height - rect.height - border.bottom;
-      gimp_fg_bg_editor_draw_color_frame (editor, cr, &rgb,
+      gimp_fg_bg_editor_draw_color_frame (editor, cr, color,
                                           rect.x,     rect.y,
                                           rect.width, rect.height,
                                           -1,         -1);
 
       /*  draw the foreground frame  */
       color = gimp_context_get_foreground (editor->context);
-      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
       rect.x = border.left;
       rect.y = border.top;
-      gimp_fg_bg_editor_draw_color_frame (editor, cr, &rgb,
+      gimp_fg_bg_editor_draw_color_frame (editor, cr, color,
                                           rect.x,     rect.y,
                                           rect.width, rect.height,
                                           +1,         +1);
@@ -882,7 +879,7 @@ gimp_fg_bg_editor_image_changed (GimpFgBgEditor *editor,
 static void
 gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
                                     cairo_t        *cr,
-                                    const GimpRGB  *rgb,
+                                    GeglColor      *color,
                                     gint            x,
                                     gint            y,
                                     gint            width,
@@ -890,10 +887,12 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
                                     gint            corner_dx,
                                     gint            corner_dy)
 {
-  GeglColor         *color;
   GimpPalette       *colormap_palette = NULL;
   GimpImageBaseType  base_type        = GIMP_RGB;
-  GimpRGB            transformed_color;
+  gdouble            srgb_color[4];
+  gdouble            transformed_color[4];
+  gboolean           is_out_of_gamut;
+  const Babl        *target_space = NULL;
 
   if (editor->active_image)
     {
@@ -906,43 +905,87 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
         }
     }
 
+  /* The transform function is meant to convert from unbounded sRGB to the
+   * monitor space, ready for display.
+   */
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), srgb_color);
   if (editor->transform)
     {
       gimp_color_transform_process_pixels (editor->transform,
                                            babl_format ("R'G'B'A double"),
-                                           rgb,
+                                           srgb_color,
                                            babl_format ("R'G'B'A double"),
                                            &transformed_color,
                                            1);
     }
   else
     {
-      transformed_color = *rgb;
+      memcpy ((void *) transformed_color, (const void *) srgb_color, 4 * sizeof (gdouble));
     }
 
   cairo_save (cr);
 
-  gimp_cairo_set_source_rgb (cr, &transformed_color);
+  gimp_cairo_set_source_rgb (cr, (GimpRGB *) &transformed_color);
 
   cairo_rectangle (cr, x, y, width, height);
   cairo_fill (cr);
 
-  color = gegl_color_new ("black");
-  gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
+  if (editor->active_image)
+    target_space = gimp_image_get_layer_space (editor->active_image);
+  else
+    target_space = babl_space ("sRGB");
+
+  if (base_type == GIMP_GRAY)
+    {
+      gfloat gray[1];
+
+      gegl_color_get_pixel (color,
+                            babl_format_with_space ("Y' float", target_space),
+                            gray);
+      is_out_of_gamut = ((gray[0] < 0.0 && -gray[0] > CHANNEL_EPSILON)       ||
+                         (gray[0] > 1.0 && gray[0] - 1.0 > CHANNEL_EPSILON));
+
+      if (! is_out_of_gamut)
+        {
+          gdouble rgb[3];
+
+          /* Grayscale colors can be out of gamut if the color is out of the [0;
+           * 1] range in the target space and also if they can be converted to
+           * RGB with non-equal components.
+           */
+          gegl_color_get_pixel (color,
+                                babl_format_with_space ("R'G'B' float", target_space),
+                                rgb);
+          is_out_of_gamut = (ABS (rgb[0] - rgb[0]) > CHANNEL_EPSILON ||
+                             ABS (rgb[1] - rgb[1]) > CHANNEL_EPSILON ||
+                             ABS (rgb[2] - rgb[2]) > CHANNEL_EPSILON);
+        }
+    }
+  else
+    {
+      gdouble rgb[3];
+
+      gegl_color_get_pixel (color,
+                            babl_format_with_space ("R'G'B' float", target_space),
+                            rgb);
+      /* We make sure that each component is within [0; 1], but accept a small
+       * error of margin (we don't want to show small precision errors as
+       * out-of-gamut colors).
+       */
+      is_out_of_gamut = ((rgb[0] < 0.0 && -rgb[0] > CHANNEL_EPSILON)       ||
+                         (rgb[0] > 1.0 && rgb[0] - 1.0 > CHANNEL_EPSILON) ||
+                         (rgb[1] < 0.0 && -rgb[1] > CHANNEL_EPSILON)       ||
+                         (rgb[1] > 1.0 && rgb[1] - 1.0 > CHANNEL_EPSILON) ||
+                         (rgb[2] < 0.0 && -rgb[2] > CHANNEL_EPSILON)       ||
+                         (rgb[2] > 1.0 && rgb[2] - 1.0 > CHANNEL_EPSILON));
+    }
 
   if (editor->color_config &&
       /* Common out-of-gamut case */
-      ((rgb->r < 0.0 || rgb->r > 1.0 ||
-        rgb->g < 0.0 || rgb->g > 1.0 ||
-        rgb->b < 0.0 || rgb->b > 1.0) ||
+      (is_out_of_gamut ||
        /* Indexed images */
        (colormap_palette &&
-        ! gimp_palette_find_entry (colormap_palette, color, NULL)) ||
-       /* Grayscale images */
-       (base_type == GIMP_GRAY &&
-        (ABS (rgb->r - rgb->g) > CHANNEL_EPSILON ||
-         ABS (rgb->r - rgb->b) > CHANNEL_EPSILON ||
-         ABS (rgb->g - rgb->b) > CHANNEL_EPSILON))))
+        ! gimp_palette_find_entry (colormap_palette, color, NULL))))
     {
       gint    corner_x = x + 0.5 * (1.0 - corner_dx) * width;
       gint    corner_y = y + 0.5 * (1.0 - corner_dy) * height;
@@ -971,6 +1014,4 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
   cairo_stroke (cr);
 
   cairo_restore (cr);
-
-  g_object_unref (color);
 }
