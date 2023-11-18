@@ -116,10 +116,6 @@ static void        gimp_projection_get_pixel_average     (GimpPickable    *picka
                                                           const GeglRectangle *rect,
                                                           const Babl      *format,
                                                           gpointer         pixel);
-static void        gimp_projection_pixel_to_rgb          (GimpPickable    *pickable,
-                                                          const Babl      *format,
-                                                          gpointer         pixel,
-                                                          GimpRGB         *color);
 static void        gimp_projection_rgb_to_pixel          (GimpPickable    *pickable,
                                                           const GimpRGB   *color,
                                                           const Babl      *format,
@@ -222,7 +218,6 @@ gimp_projection_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_pixel_at          = gimp_projection_get_pixel_at;
   iface->get_opacity_at        = gimp_projection_get_opacity_at;
   iface->get_pixel_average     = gimp_projection_get_pixel_average;
-  iface->pixel_to_rgb          = gimp_projection_pixel_to_rgb;
   iface->rgb_to_pixel          = gimp_projection_rgb_to_pixel;
 }
 
@@ -432,18 +427,6 @@ gimp_projection_get_pixel_average (GimpPickable        *pickable,
 
   return gimp_gegl_average_color (buffer, rect, TRUE, GEGL_ABYSS_NONE, format,
                                   pixel);
-}
-
-static void
-gimp_projection_pixel_to_rgb (GimpPickable *pickable,
-                              const Babl   *format,
-                              gpointer      pixel,
-                              GimpRGB      *color)
-{
-  GimpProjection *proj  = GIMP_PROJECTION (pickable);
-  GimpImage      *image = gimp_projectable_get_image (proj->priv->projectable);
-
-  gimp_pickable_pixel_to_rgb (GIMP_PICKABLE (image), format, pixel, color);
 }
 
 static void

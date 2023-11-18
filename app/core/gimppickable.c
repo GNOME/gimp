@@ -287,36 +287,6 @@ gimp_pickable_get_opacity_at (GimpPickable *pickable,
   return GIMP_OPACITY_TRANSPARENT;
 }
 
-/* TODO: this will have to be removed eventually and replaced with
- * gegl_color_set_pixel(). We should not need GimpRGB anymore!
- */
-void
-gimp_pickable_pixel_to_rgb (GimpPickable *pickable,
-                            const Babl   *format,
-                            gpointer      pixel,
-                            GimpRGB      *color)
-{
-  GimpPickableInterface *pickable_iface;
-
-  g_return_if_fail (GIMP_IS_PICKABLE (pickable));
-  g_return_if_fail (pixel != NULL);
-  g_return_if_fail (color != NULL);
-
-  if (! format)
-    format = gimp_pickable_get_format (pickable);
-
-  pickable_iface = GIMP_PICKABLE_GET_IFACE (pickable);
-
-  if (pickable_iface->pixel_to_rgb)
-    {
-      pickable_iface->pixel_to_rgb (pickable, format, pixel, color);
-    }
-  else
-    {
-      gimp_rgba_set_pixel (color, format, pixel);
-    }
-}
-
 void
 gimp_pickable_rgb_to_pixel (GimpPickable  *pickable,
                             const GimpRGB *color,

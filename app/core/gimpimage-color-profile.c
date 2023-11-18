@@ -844,35 +844,6 @@ gimp_image_get_color_transform_from_srgb_double (GimpImage *image)
 }
 
 void
-gimp_image_color_profile_pixel_to_rgb (GimpImage  *image,
-                                       const Babl *pixel_format,
-                                       gpointer    pixel,
-                                       GimpRGB    *color)
-{
-  GimpColorProfile   *profile = NULL;
-  const Babl         *space   = NULL;
-
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  profile = gimp_image_get_color_profile (image);
-
-  if (profile)
-    space = gimp_color_profile_get_space (profile,
-                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                          NULL);
-  if (profile)
-    {
-      babl_process (babl_fish (pixel_format,
-                               babl_format_with_space ("R'G'B'A double", space)),
-                    pixel, color, 1);
-    }
-  else
-    {
-      gimp_rgba_set_pixel (color, pixel_format, pixel);
-    }
-}
-
-void
 gimp_image_color_profile_rgb_to_pixel (GimpImage     *image,
                                        const GimpRGB *color,
                                        const Babl    *pixel_format,

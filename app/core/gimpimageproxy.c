@@ -117,10 +117,6 @@ static void               gimp_image_proxy_get_pixel_average        (GimpPickabl
                                                                      const GeglRectangle        *rect,
                                                                      const Babl                 *format,
                                                                      gpointer                    pixel);
-static void               gimp_image_proxy_pixel_to_rgb            (GimpPickable               *pickable,
-                                                                    const Babl                 *format,
-                                                                    gpointer                    pixel,
-                                                                    GimpRGB                    *color);
 static void               gimp_image_proxy_rgb_to_pixel            (GimpPickable               *pickable,
                                                                     const GimpRGB              *color,
                                                                     const Babl                 *format,
@@ -211,7 +207,6 @@ gimp_image_proxy_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_pixel_at          = gimp_image_proxy_get_pixel_at;
   iface->get_opacity_at        = gimp_image_proxy_get_opacity_at;
   iface->get_pixel_average     = gimp_image_proxy_get_pixel_average;
-  iface->pixel_to_rgb          = gimp_image_proxy_pixel_to_rgb;
   iface->rgb_to_pixel          = gimp_image_proxy_rgb_to_pixel;
 }
 
@@ -599,20 +594,6 @@ gimp_image_proxy_get_pixel_average (GimpPickable        *pickable,
   proxy_pickable = gimp_image_proxy_get_pickable (image_proxy);
 
   gimp_pickable_get_pixel_average (proxy_pickable, rect, format, pixel);
-}
-
-static void
-gimp_image_proxy_pixel_to_rgb (GimpPickable *pickable,
-                               const Babl   *format,
-                               gpointer      pixel,
-                               GimpRGB      *color)
-{
-  GimpImageProxy *image_proxy = GIMP_IMAGE_PROXY (pickable);
-  GimpPickable   *proxy_pickable;
-
-  proxy_pickable = gimp_image_proxy_get_pickable (image_proxy);
-
-  gimp_pickable_pixel_to_rgb (proxy_pickable, format, pixel, color);
 }
 
 static void
