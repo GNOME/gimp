@@ -85,13 +85,13 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
                                    GimpDisplayShell *shell)
 {
   GimpCanvasPaddingMode  padding_mode;
-  GimpRGB                padding_color;
+  GeglColor             *padding_color;
   GtkAllocation          allocation;
 
   gtk_widget_grab_focus (canvas);
 
   gimp_display_shell_get_padding (shell, &padding_mode, &padding_color);
-  gimp_display_shell_set_padding (shell, padding_mode, &padding_color);
+  gimp_display_shell_set_padding (shell, padding_mode, padding_color);
 
   gtk_widget_get_allocation (canvas, &allocation);
 

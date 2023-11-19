@@ -2577,7 +2577,7 @@ add_merged_image (GimpImage     *image,
   gboolean              original_mode_CMYK = FALSE;
   GeglBuffer           *buffer;
   GimpImageType         image_type;
-  GimpRGB               alpha_rgb;
+  GeglColor            *alpha_rgb;
 
   total_channels = img_a->channels;
   extra_channels = 0;
@@ -2930,12 +2930,12 @@ add_merged_image (GimpImage     *image,
           if (offset < img_a->alpha_display_count &&
               i + offset <= img_a->alpha_display_count)
             {
-              alpha_rgb = img_a->alpha_display_info[i + offset]->gimp_color;
+              alpha_rgb = gegl_color_duplicate (img_a->alpha_display_info[i + offset]->gimp_color);
               alpha_opacity = img_a->alpha_display_info[i + offset]->opacity;
             }
           else
             {
-              gimp_rgba_set (&alpha_rgb, 1.0, 0.0, 0.0, 1.0);
+              alpha_rgb = gegl_color_new ("red");
               alpha_opacity = 50;
             }
 
@@ -2944,8 +2944,9 @@ add_merged_image (GimpImage     *image,
           memcpy (pixels, chn_a[cidx].data, chn_a[cidx].columns * chn_a[cidx].rows * bps);
           channel = gimp_channel_new (image, alpha_name,
                                       chn_a[cidx].columns, chn_a[cidx].rows,
-                                      alpha_opacity, &alpha_rgb);
+                                      alpha_opacity, alpha_rgb);
           gimp_image_insert_channel (image, channel, NULL, i);
+          g_object_unref (alpha_rgb);
           g_free (alpha_name);
           buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
           if (alpha_id)
@@ -2971,7 +2972,10 @@ add_merged_image (GimpImage     *image,
       if (img_a->alpha_display_info)
         {
           for (cidx = 0; cidx < img_a->alpha_display_count; ++cidx)
-            g_free (img_a->alpha_display_info[cidx]);
+            {
+              g_clear_object (&img_a->alpha_display_info[cidx]->gimp_color);
+              g_free (img_a->alpha_display_info[cidx]);
+            }
           g_free (img_a->alpha_display_info);
         }
     }

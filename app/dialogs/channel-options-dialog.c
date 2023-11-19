@@ -86,7 +86,7 @@ channel_options_dialog_new (GimpImage                  *image,
                             const gchar                *opacity_label,
                             gboolean                    show_from_sel,
                             const gchar                *channel_name,
-                            const GimpRGB              *channel_color,
+                            GeglColor                  *channel_color,
                             gboolean                    channel_visible,
                             GimpColorTag                channel_color_tag,
                             gboolean                    channel_lock_content,
@@ -99,6 +99,7 @@ channel_options_dialog_new (GimpImage                  *image,
   GtkWidget            *dialog;
   GtkAdjustment        *opacity_adj;
   GtkWidget            *scale;
+  GimpRGB               rgb;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel), NULL);
@@ -109,7 +110,7 @@ channel_options_dialog_new (GimpImage                  *image,
   g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (desc != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
-  g_return_val_if_fail (channel_color != NULL, NULL);
+  g_return_val_if_fail (GEGL_IS_COLOR (channel_color), NULL);
   g_return_val_if_fail (color_label != NULL, NULL);
   g_return_val_if_fail (opacity_label != NULL, NULL);
   g_return_val_if_fail (callback != NULL, NULL);
@@ -139,7 +140,8 @@ channel_options_dialog_new (GimpImage                  *image,
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) channel_options_dialog_free, private);
 
-  opacity_adj = gtk_adjustment_new (channel_color->a * 100.0,
+  gegl_color_get_pixel (channel_color, babl_format ("R'G'B'A double"), &rgb);
+  opacity_adj = gtk_adjustment_new (rgb.a * 100.0,
                                     0.0, 100.0, 1.0, 10.0, 0);
   scale = gimp_spin_scale_new (opacity_adj, NULL, 1);
   gtk_widget_set_size_request (scale, 200, -1);
@@ -147,7 +149,7 @@ channel_options_dialog_new (GimpImage                  *image,
                                   opacity_label, scale);
 
   private->color_panel = gimp_color_panel_new (color_label,
-                                               channel_color,
+                                               &rgb,
                                                GIMP_COLOR_AREA_LARGE_CHECKS,
                                                24, 24);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (private->color_panel),
@@ -199,11 +201,12 @@ channel_options_dialog_callback (GtkWidget    *dialog,
                                  gpointer      user_data)
 {
   ChannelOptionsDialog *private = user_data;
-  GimpRGB               color;
+  GeglColor            *color   = gegl_color_new (NULL);
+  GimpRGB               rgb;
   gboolean              save_selection = FALSE;
 
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (private->color_panel),
-                               &color);
+  gimp_color_button_get_color (GIMP_COLOR_BUTTON (private->color_panel), &rgb);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
   if (private->save_sel_toggle)
     save_selection =
@@ -214,7 +217,7 @@ channel_options_dialog_callback (GtkWidget    *dialog,
                      GIMP_CHANNEL (item),
                      context,
                      item_name,
-                     &color,
+                     color,
                      save_selection,
                      item_visible,
                      item_color_tag,

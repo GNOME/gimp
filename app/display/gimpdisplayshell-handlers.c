@@ -1051,8 +1051,8 @@ gimp_display_shell_check_notify_handler (GObject          *config,
                                          GParamSpec       *param_spec,
                                          GimpDisplayShell *shell)
 {
-  GimpCanvasPaddingMode padding_mode;
-  GimpRGB               padding_color;
+  GimpCanvasPaddingMode  padding_mode;
+  GeglColor             *padding_color;
 
   g_clear_pointer (&shell->checkerboard, cairo_pattern_destroy);
 
@@ -1062,7 +1062,7 @@ gimp_display_shell_check_notify_handler (GObject          *config,
     {
     case GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK:
     case GIMP_CANVAS_PADDING_MODE_DARK_CHECK:
-      gimp_display_shell_set_padding (shell, padding_mode, &padding_color);
+      gimp_display_shell_set_padding (shell, padding_mode, padding_color);
       break;
 
     default:
@@ -1127,7 +1127,7 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
   GimpImageWindow       *window;
   gboolean               fullscreen;
   GimpCanvasPaddingMode  padding_mode;
-  GimpRGB                padding_color;
+  GeglColor             *padding_color;
 
   display_config = shell->display->config;
 
@@ -1146,7 +1146,7 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
 
       if (fullscreen)
         {
-          gimp_display_shell_set_padding (shell, padding_mode, &padding_color);
+          gimp_display_shell_set_padding (shell, padding_mode, padding_color);
         }
       else
         {
@@ -1168,7 +1168,7 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
         }
       else
         {
-          gimp_display_shell_set_padding (shell, padding_mode, &padding_color);
+          gimp_display_shell_set_padding (shell, padding_mode, padding_color);
         }
     }
 }

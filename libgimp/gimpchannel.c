@@ -87,12 +87,12 @@ gimp_channel_get_by_id (gint32 channel_id)
  *          The object belongs to libgimp and you should not free it.
  */
 GimpChannel *
-gimp_channel_new (GimpImage     *image,
-                  const gchar   *name,
-                  guint          width,
-                  guint          height,
-                  gdouble        opacity,
-                  const GimpRGB *color)
+gimp_channel_new (GimpImage   *image,
+                  const gchar *name,
+                  guint        width,
+                  guint        height,
+                  gdouble      opacity,
+                  GeglColor   *color)
 {
   return _gimp_channel_new (image,
                             width,

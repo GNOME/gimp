@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gio/gio.h>
 
 #include "libgimpbase/gimpbase.h"

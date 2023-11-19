@@ -88,10 +88,10 @@ gboolean   gimp_display_shell_get_snap_to_equidistance (GimpDisplayShell       *
 
 void       gimp_display_shell_set_padding              (GimpDisplayShell       *shell,
                                                         GimpCanvasPaddingMode   mode,
-                                                        const GimpRGB          *color);
+                                                        GeglColor              *color);
 void       gimp_display_shell_get_padding              (GimpDisplayShell       *shell,
                                                         GimpCanvasPaddingMode  *mode,
-                                                        GimpRGB                *color);
+                                                        GeglColor             **color);
 void       gimp_display_shell_set_padding_in_show_all  (GimpDisplayShell       *shell,
                                                         gboolean                keep);
 gboolean   gimp_display_shell_get_padding_in_show_all  (GimpDisplayShell       *shell);

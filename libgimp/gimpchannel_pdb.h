@@ -37,7 +37,7 @@ G_GNUC_INTERNAL GimpChannel* _gimp_channel_new               (GimpImage       *i
                                                               gint             height,
                                                               const gchar     *name,
                                                               gdouble          opacity,
-                                                              const GimpRGB   *color);
+                                                              GeglColor       *color);
 GimpChannel*                 gimp_channel_new_from_component (GimpImage       *image,
                                                               GimpChannelType  component,
                                                               const gchar     *name);
@@ -53,10 +53,9 @@ gboolean                     gimp_channel_set_show_masked    (GimpChannel     *c
 gdouble                      gimp_channel_get_opacity        (GimpChannel     *channel);
 gboolean                     gimp_channel_set_opacity        (GimpChannel     *channel,
                                                               gdouble          opacity);
-gboolean                     gimp_channel_get_color          (GimpChannel     *channel,
-                                                              GimpRGB         *color);
+GeglColor*                   gimp_channel_get_color          (GimpChannel     *channel);
 gboolean                     gimp_channel_set_color          (GimpChannel     *channel,
-                                                              const GimpRGB   *color);
+                                                              GeglColor       *color);
 
 
 G_END_DECLS

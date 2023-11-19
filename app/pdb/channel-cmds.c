@@ -61,7 +61,7 @@ channel_new_invoker (GimpProcedure         *procedure,
   gint height;
   const gchar *name;
   gdouble opacity;
-  GimpRGB color;
+  GeglColor *color;
   GimpChannel *channel = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
@@ -69,14 +69,12 @@ channel_new_invoker (GimpProcedure         *procedure,
   height = g_value_get_int (gimp_value_array_index (args, 2));
   name = g_value_get_string (gimp_value_array_index (args, 3));
   opacity = g_value_get_double (gimp_value_array_index (args, 4));
-  gimp_value_get_rgb (gimp_value_array_index (args, 5), &color);
+  color = g_value_get_object (gimp_value_array_index (args, 5));
 
   if (success)
     {
-      GimpRGB rgb_color = color;
-
-      rgb_color.a = opacity / 100.0;
-      channel = gimp_channel_new (image, width, height, name, &rgb_color);
+      gimp_color_set_alpha (color, opacity / 100.0);
+      channel = gimp_channel_new (image, width, height, name, color);
 
       if (! channel)
         success = FALSE;
@@ -324,21 +322,21 @@ channel_get_color_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpChannel *channel;
-  GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
+  GeglColor *color = NULL;
 
   channel = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      gimp_channel_get_color (channel, &color);
-      gimp_rgb_set_alpha (&color, 1.0);
+      color = gimp_channel_get_color (channel);
+      gimp_color_set_alpha (color, 1.0);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &color);
+    g_value_take_object (gimp_value_array_index (return_vals, 1), color);
 
   return return_vals;
 }
@@ -353,17 +351,18 @@ channel_set_color_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpChannel *channel;
-  GimpRGB color;
+  GeglColor *color;
 
   channel = g_value_get_object (gimp_value_array_index (args, 0));
-  gimp_value_get_rgb (gimp_value_array_index (args, 1), &color);
+  color = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      GimpRGB rgb_color = color;
+      gdouble alpha;
 
-      rgb_color.a = channel->color.a;
-      gimp_channel_set_color (channel, &rgb_color, TRUE);
+      gegl_color_get_rgba (channel->color, NULL, NULL, NULL, &alpha);
+      gimp_color_set_alpha (color, alpha);
+      gimp_channel_set_color (channel, color, TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -423,12 +422,11 @@ register_channel_procs (GimpPDB *pdb)
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("color",
-                                                    "color",
-                                                    "The channel compositing color",
-                                                    FALSE,
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
+                               gegl_param_spec_color ("color",
+                                                      "color",
+                                                      "The channel compositing color",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_channel ("channel",
                                                             "channel",
@@ -697,12 +695,11 @@ register_channel_procs (GimpPDB *pdb)
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("color",
-                                                        "color",
-                                                        "The channel compositing color",
-                                                        FALSE,
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                   gegl_param_spec_color ("color",
+                                                          "color",
+                                                          "The channel compositing color",
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -727,12 +724,11 @@ register_channel_procs (GimpPDB *pdb)
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("color",
-                                                    "color",
-                                                    "The new channel compositing color",
-                                                    FALSE,
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
+                               gegl_param_spec_color ("color",
+                                                      "color",
+                                                      "The new channel compositing color",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

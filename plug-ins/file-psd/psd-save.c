@@ -802,19 +802,24 @@ save_resources (GOutputStream        *output,
           for (iter = PSDImageData.lChannels; iter; iter = g_list_next (iter))
             {
               GimpChannel *channel = iter->data;
-              GimpRGB      color;
+              GeglColor   *color;
+              gdouble      rgb[3];
               gdouble      opacity;
 
-              gimp_channel_get_color (channel, &color);
+              color = gimp_channel_get_color (channel);
               opacity = gimp_channel_get_opacity (channel);
 
-              write_gint16 (output, PSD_CS_RGB,                "channel color space");
-              write_gint16 (output, DOUBLE_TO_INT16 (color.r), "channel color r");
-              write_gint16 (output, DOUBLE_TO_INT16 (color.g), "channel color g");
-              write_gint16 (output, DOUBLE_TO_INT16 (color.b), "channel color b");
-              write_gint16 (output, 0,                         "channel color padding");
-              write_gint16 (output, ROUND (opacity),           "channel opacity");
-              write_gchar  (output, 1,                         "channel mode");
+              gegl_color_get_pixel (color, babl_format ("R'G'B' double"), rgb);
+
+              write_gint16 (output, PSD_CS_RGB,               "channel color space");
+              write_gint16 (output, DOUBLE_TO_INT16 (rgb[0]), "channel color r");
+              write_gint16 (output, DOUBLE_TO_INT16 (rgb[1]), "channel color g");
+              write_gint16 (output, DOUBLE_TO_INT16 (rgb[2]), "channel color b");
+              write_gint16 (output, 0,                        "channel color padding");
+              write_gint16 (output, ROUND (opacity),          "channel opacity");
+              write_gchar  (output, 1,                        "channel mode");
+
+              g_object_unref (color);
             }
 
           #undef DOUBLE_TO_INT16

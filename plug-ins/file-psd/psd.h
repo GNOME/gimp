@@ -642,7 +642,7 @@ typedef struct
 /* PSD Channel data structure */
 typedef struct
 {
-  GimpRGB       gimp_color;             /* Gimp RGB color */
+  GeglColor    *gimp_color;             /* Gimp RGB color */
   gint16        opacity;                /* Opacity */
   guchar        ps_mode;                /* PS mode flag */
   guchar        ps_kind;                /* PS type flag */

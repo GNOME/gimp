@@ -1560,13 +1560,11 @@ load_image (GFile                *file,
           /* Add extra channels as appropriate */
           for (i = 1; i <= extra; i++)
             {
-              GimpRGB color;
-
-              gimp_rgb_set (&color, 0.0, 0.0, 0.0);
+              GeglColor *color = gegl_color_new ("black");
 
               channel[i].drawable = GIMP_DRAWABLE (gimp_channel_new (*image, _("TIFF Channel"),
-                                                                     cols, rows,
-                                                                     100.0, &color));
+                                                                     cols, rows, 100.0, color));
+              g_object_unref (color);
               gimp_image_insert_channel (*image, GIMP_CHANNEL (channel[i].drawable), NULL, 0);
               channel[i].buffer = gimp_drawable_get_buffer (channel[i].drawable);
 

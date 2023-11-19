@@ -47,8 +47,7 @@ void       gimp_gegl_mode_node_set_opacity     (GeglNode               *node,
 void       gimp_gegl_node_set_matrix           (GeglNode               *node,
                                                 const GimpMatrix3      *matrix);
 void       gimp_gegl_node_set_color            (GeglNode               *node,
-                                                const GimpRGB          *color,
-                                                const Babl             *space);
+                                                GeglColor              *color);
 
 
 #endif /* __GIMP_GEGL_NODES_H__ */

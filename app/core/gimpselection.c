@@ -617,22 +617,25 @@ gimp_selection_new (GimpImage *image,
                     gint       width,
                     gint       height)
 {
-  GimpRGB      black = { 0.0, 0.0, 0.0, 0.5 };
+  GeglColor   *black = gegl_color_new ("black");
   GimpChannel *channel;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (width > 0 && height > 0, NULL);
 
+  gimp_color_set_alpha (black, 0.5);
   channel = GIMP_CHANNEL (gimp_drawable_new (GIMP_TYPE_SELECTION,
                                              image, NULL,
                                              0, 0, width, height,
                                              gimp_image_get_mask_format (image)));
 
-  gimp_channel_set_color (channel, &black, FALSE);
+  gimp_channel_set_color (channel, black, FALSE);
   gimp_channel_set_show_masked (channel, TRUE);
 
   channel->x2 = width;
   channel->y2 = height;
+
+  g_object_unref (black);
 
   return channel;
 }

@@ -680,9 +680,6 @@ load_resource_1007 (const PSDimageres  *res_a,
 
   DisplayInfo       dsp_info;
   CMColor           ps_color;
-  GimpRGB           gimp_rgb;
-  GimpHSV           gimp_hsv;
-  GimpCMYK          gimp_cmyk;
   gint16            tot_rec;
   gint              cidx;
 
@@ -695,6 +692,8 @@ load_resource_1007 (const PSDimageres  *res_a,
   img_a->alpha_display_count = tot_rec;
   for (cidx = 0; cidx < tot_rec; ++cidx)
     {
+      GeglColor *color;
+
       if (psd_read (input, &dsp_info.colorSpace, 2, error) < 2 ||
           psd_read (input, &dsp_info.color,      8, error) < 8 ||
           psd_read (input, &dsp_info.opacity,    2, error) < 2 ||
@@ -711,33 +710,49 @@ load_resource_1007 (const PSDimageres  *res_a,
       ps_color.cmyk.black = GUINT16_FROM_BE (dsp_info.color[3]);
       dsp_info.opacity = GINT16_FROM_BE (dsp_info.opacity);
 
+      color = gegl_color_new ("red");
+
       switch (dsp_info.colorSpace)
         {
           case PSD_CS_RGB:
-            gimp_rgb_set (&gimp_rgb, ps_color.rgb.red / 65535.0,
-                          ps_color.rgb.green / 65535.0,
-                          ps_color.rgb.blue / 65535.0);
+            /* TODO: which space should we use? */
+            gegl_color_set_rgba_with_space (color,
+                                            ps_color.rgb.red / 65535.0,
+                                            ps_color.rgb.green / 65535.0,
+                                            ps_color.rgb.blue / 65535.0,
+                                            1.0, NULL);
             break;
 
           case PSD_CS_HSB:
-            gimp_hsv_set (&gimp_hsv, ps_color.hsv.hue / 65535.0,
-                          ps_color.hsv.saturation / 65535.0,
-                          ps_color.hsv.value / 65535.0);
-            gimp_hsv_to_rgb (&gimp_hsv, &gimp_rgb);
-            break;
+            {
+              gdouble hsv[3] =
+                {
+                  ps_color.hsv.hue / 65535.0,
+                  ps_color.hsv.saturation / 65535.0,
+                  ps_color.hsv.value / 65535.0
+                };
+
+              gegl_color_set_pixel (color, babl_format ("HSV double"), hsv);
+            }
+          break;
 
           case PSD_CS_CMYK:
-            gimp_cmyk_set (&gimp_cmyk, 1.0 - ps_color.cmyk.cyan / 65535.0,
-                           1.0 - ps_color.cmyk.magenta / 65535.0,
-                           1.0 - ps_color.cmyk.yellow / 65535.0,
-                           1.0 - ps_color.cmyk.black / 65535.0);
-            gimp_cmyk_to_rgb (&gimp_cmyk, &gimp_rgb);
+            /* TODO: again, which space? */
+            gegl_color_set_cmyk (color,
+                                 1.0 - ps_color.cmyk.cyan / 65535.0,
+                                 1.0 - ps_color.cmyk.magenta / 65535.0,
+                                 1.0 - ps_color.cmyk.yellow / 65535.0,
+                                 1.0 - ps_color.cmyk.black / 65535.0,
+                                 1.0, NULL);
             break;
 
           case PSD_CS_GRAYSCALE:
-            gimp_rgb_set (&gimp_rgb, ps_color.gray.gray / 10000.0,
-                          ps_color.gray.gray / 10000.0,
-                          ps_color.gray.gray / 10000.0);
+            {
+              gdouble gray = ps_color.gray.gray / 10000.0;
+
+              /* TODO: which space? */
+              gegl_color_set_pixel (color, babl_format_with_space ("Y' double", NULL), &gray);
+            }
             break;
 
           case PSD_CS_FOCOLTONE:
@@ -752,22 +767,18 @@ load_resource_1007 (const PSDimageres  *res_a,
             if (CONVERSION_WARNINGS)
               g_message ("Unsupported color space: %d",
                          dsp_info.colorSpace);
-            gimp_rgb_set (&gimp_rgb, 1.0, 0.0, 0.0);
         }
-
-      gimp_rgb_set_alpha (&gimp_rgb, 1.0);
 
       IFDBG(2) g_debug ("PS cSpace: %d, col: %d %d %d %d, opacity: %d, kind: %d",
                         dsp_info.colorSpace, ps_color.cmyk.cyan, ps_color.cmyk.magenta,
                         ps_color.cmyk.yellow, ps_color.cmyk.black, dsp_info.opacity,
                         dsp_info.kind);
 
-      IFDBG(2) g_debug ("cSpace: %d, col: %g %g %g, opacity: %d, kind: %d",
-                        dsp_info.colorSpace, gimp_rgb.r * 255 , gimp_rgb.g * 255,
-                        gimp_rgb.b * 255, dsp_info.opacity, dsp_info.kind);
+      IFDBG(2) g_debug ("cSpace: %d, opacity: %d, kind: %d",
+                        dsp_info.colorSpace, dsp_info.opacity, dsp_info.kind);
 
       img_a->alpha_display_info[cidx] = g_malloc0 (sizeof (PSDchanneldata));
-      img_a->alpha_display_info[cidx]->gimp_color = gimp_rgb;
+      img_a->alpha_display_info[cidx]->gimp_color = color;
       img_a->alpha_display_info[cidx]->opacity = dsp_info.opacity;
       img_a->alpha_display_info[cidx]->ps_kind = dsp_info.kind;
       img_a->alpha_display_info[cidx]->ps_cspace = dsp_info.colorSpace;
@@ -1400,9 +1411,6 @@ load_resource_1077 (const PSDimageres  *res_a,
 
   DisplayInfoNew    dsp_info;
   CMColor           ps_color;
-  GimpRGB           gimp_rgb;
-  GimpHSV           gimp_hsv;
-  GimpCMYK          gimp_cmyk;
   gint16            tot_rec;
   gint              cidx;
 
@@ -1421,6 +1429,8 @@ load_resource_1077 (const PSDimageres  *res_a,
   img_a->alpha_display_count = tot_rec;
   for (cidx = 0; cidx < tot_rec; ++cidx)
     {
+      GeglColor *color;
+
       if (psd_read (input, &dsp_info.colorSpace, 2, error) < 2 ||
           psd_read (input, &dsp_info.color,      8, error) < 8 ||
           psd_read (input, &dsp_info.opacity,    2, error) < 2 ||
@@ -1436,33 +1446,49 @@ load_resource_1077 (const PSDimageres  *res_a,
       ps_color.cmyk.black = GUINT16_FROM_BE (dsp_info.color[3]);
       dsp_info.opacity = GINT16_FROM_BE (dsp_info.opacity);
 
+      color = gegl_color_new ("red");
+
       switch (dsp_info.colorSpace)
         {
           case PSD_CS_RGB:
-            gimp_rgb_set (&gimp_rgb, ps_color.rgb.red / 65535.0,
-                          ps_color.rgb.green / 65535.0,
-                          ps_color.rgb.blue / 65535.0);
+            /* TODO: which space? */
+            gegl_color_set_rgba_with_space (color,
+                                            ps_color.rgb.red / 65535.0,
+                                            ps_color.rgb.green / 65535.0,
+                                            ps_color.rgb.blue / 65535.0,
+                                            1.0, NULL);
             break;
 
           case PSD_CS_HSB:
-            gimp_hsv_set (&gimp_hsv, ps_color.hsv.hue / 65535.0,
-                          ps_color.hsv.saturation / 65535.0,
-                          ps_color.hsv.value / 65535.0);
-            gimp_hsv_to_rgb (&gimp_hsv, &gimp_rgb);
+            {
+              gdouble hsv[3] =
+                {
+                  ps_color.hsv.hue / 65535.0,
+                  ps_color.hsv.saturation / 65535.0,
+                  ps_color.hsv.value / 65535.0
+                };
+
+              gegl_color_set_pixel (color, babl_format ("HSV double"), hsv);
+            }
             break;
 
           case PSD_CS_CMYK:
-            gimp_cmyk_set (&gimp_cmyk, 1.0 - ps_color.cmyk.cyan / 65535.0,
-                           1.0 - ps_color.cmyk.magenta / 65535.0,
-                           1.0 - ps_color.cmyk.yellow / 65535.0,
-                           1.0 - ps_color.cmyk.black / 65535.0);
-            gimp_cmyk_to_rgb (&gimp_cmyk, &gimp_rgb);
+            /* TODO: which space? */
+            gegl_color_set_cmyk (color,
+                                 1.0 - ps_color.cmyk.cyan / 65535.0,
+                                 1.0 - ps_color.cmyk.magenta / 65535.0,
+                                 1.0 - ps_color.cmyk.yellow / 65535.0,
+                                 1.0 - ps_color.cmyk.black / 65535.0,
+                                 1.0, NULL);
             break;
 
           case PSD_CS_GRAYSCALE:
-            gimp_rgb_set (&gimp_rgb, ps_color.gray.gray / 10000.0,
-                          ps_color.gray.gray / 10000.0,
-                          ps_color.gray.gray / 10000.0);
+            {
+              gdouble gray = ps_color.gray.gray / 10000.0;
+
+              /* TODO: which space? */
+              gegl_color_set_pixel (color, babl_format_with_space ("Y' double", NULL), &gray);
+            }
             break;
 
           case PSD_CS_FOCOLTONE:
@@ -1477,22 +1503,18 @@ load_resource_1077 (const PSDimageres  *res_a,
             if (CONVERSION_WARNINGS)
               g_message ("Unsupported color space: %d",
                           dsp_info.colorSpace);
-            gimp_rgb_set (&gimp_rgb, 1.0, 0.0, 0.0);
         }
-
-      gimp_rgb_set_alpha (&gimp_rgb, 1.0);
 
       IFDBG(2) g_debug ("PS cSpace: %d, col: %d %d %d %d, opacity: %d, mode: %d",
                         dsp_info.colorSpace, ps_color.cmyk.cyan, ps_color.cmyk.magenta,
                         ps_color.cmyk.yellow, ps_color.cmyk.black, dsp_info.opacity,
                         dsp_info.mode);
 
-      IFDBG(2) g_debug ("cSpace: %d, col: %g %g %g, opacity: %d, mode: %d",
-                        dsp_info.colorSpace, gimp_rgb.r * 255 , gimp_rgb.g * 255,
-                        gimp_rgb.b * 255, dsp_info.opacity, dsp_info.mode);
+      IFDBG(2) g_debug ("cSpace: %d, opacity: %d, mode: %d",
+                        dsp_info.colorSpace, dsp_info.opacity, dsp_info.mode);
 
       img_a->alpha_display_info[cidx] = g_malloc0 (sizeof (PSDchanneldata));
-      img_a->alpha_display_info[cidx]->gimp_color = gimp_rgb;
+      img_a->alpha_display_info[cidx]->gimp_color = color;
       img_a->alpha_display_info[cidx]->opacity = dsp_info.opacity;
       img_a->alpha_display_info[cidx]->ps_mode = dsp_info.mode;
       img_a->alpha_display_info[cidx]->ps_cspace = dsp_info.colorSpace;

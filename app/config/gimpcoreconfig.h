@@ -93,7 +93,7 @@ struct _GimpCoreConfig
   guint64                 thumbnail_filesize_limit;
   GimpColorConfig        *color_management;
   gboolean                save_document_history;
-  GimpRGB                 quick_mask_color;
+  GeglColor              *quick_mask_color;
   gboolean                import_promote_float;
   gboolean                import_promote_dither;
   gboolean                import_add_alpha;

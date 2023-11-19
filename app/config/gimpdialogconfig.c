@@ -155,7 +155,9 @@ static void
 gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
 {
   GObjectClass *object_class     = G_OBJECT_CLASS (klass);
-  GimpRGB       half_transparent = { 0.0, 0.0, 0.0, 0.5 };
+  GeglColor    *half_transparent = gegl_color_new ("black");
+
+  gimp_color_set_alpha (half_transparent, 0.5);
 
   object_class->constructed  = gimp_dialog_config_constructed;
   object_class->finalize     = gimp_dialog_config_finalize;
@@ -416,13 +418,12 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                            _("Channel"),
                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_CHANNEL_NEW_COLOR,
-                        "channel-new-color",
-                        "Default new channel color and opacity",
-                        CHANNEL_NEW_COLOR_BLURB,
-                        TRUE,
-                        &half_transparent,
-                        GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_COLOR (object_class, PROP_CHANNEL_NEW_COLOR,
+                          "channel-new-color",
+                          "Default new channel color and opacity",
+                          CHANNEL_NEW_COLOR_BLURB,
+                          half_transparent,
+                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_VECTORS_NEW_NAME,
                            "path-new-name",
@@ -540,11 +541,17 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                            GIMP_TYPE_STROKE_OPTIONS,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_CONFIG_PARAM_AGGREGATE);
+
+  g_object_unref (half_transparent);
 }
 
 static void
 gimp_dialog_config_init (GimpDialogConfig *config)
 {
+  GeglColor *half_transparent = gegl_color_new ("black");
+
+  gimp_color_set_alpha (half_transparent, 0.5);
+  config->channel_new_color = half_transparent;
 }
 
 static void
@@ -591,6 +598,7 @@ gimp_dialog_config_finalize (GObject *object)
 
   g_clear_object (&config->fill_options);
   g_clear_object (&config->stroke_options);
+  g_clear_object (&config->channel_new_color);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -723,7 +731,8 @@ gimp_dialog_config_set_property (GObject      *object,
       config->channel_new_name = g_value_dup_string (value);
       break;
     case PROP_CHANNEL_NEW_COLOR:
-      gimp_value_get_rgb (value, &config->channel_new_color);
+      g_clear_object (&config->channel_new_color);
+      config->channel_new_color = gegl_color_duplicate (g_value_get_object (value));
       break;
 
     case PROP_VECTORS_NEW_NAME:
@@ -920,7 +929,7 @@ gimp_dialog_config_get_property (GObject    *object,
       g_value_set_string (value, config->channel_new_name);
       break;
     case PROP_CHANNEL_NEW_COLOR:
-      gimp_value_set_rgb (value, &config->channel_new_color);
+      g_value_set_object (value, config->channel_new_color);
       break;
 
     case PROP_VECTORS_NEW_NAME:

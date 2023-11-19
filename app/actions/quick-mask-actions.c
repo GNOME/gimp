@@ -95,14 +95,14 @@ quick_mask_actions_update (GimpActionGroup *group,
   GimpImage *image               = action_data_get_image (data);
   gboolean   quick_mask_state    = FALSE;
   gboolean   quick_mask_inverted = FALSE;
-  GimpRGB    quick_mask_color;
+  GeglColor *quick_mask_color    = NULL;
 
   if (image)
     {
       quick_mask_state    = gimp_image_get_quick_mask_state (image);
       quick_mask_inverted = gimp_image_get_quick_mask_inverted (image);
 
-      gimp_image_get_quick_mask_color (image, &quick_mask_color);
+      quick_mask_color = gimp_image_get_quick_mask_color (image);
     }
 
 #define SET_SENSITIVE(action,sensitive) \
@@ -126,7 +126,12 @@ quick_mask_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("quick-mask-configure", image);
 
   if (image)
-    SET_COLOR ("quick-mask-configure", &quick_mask_color);
+    {
+      GimpRGB rgb;
+
+      gegl_color_get_pixel (quick_mask_color, babl_format ("R'G'B'A double"), &rgb);
+      SET_COLOR ("quick-mask-configure", &rgb);
+    }
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE

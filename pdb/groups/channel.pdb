@@ -46,7 +46,7 @@ HELP
 	  desc => 'The channel name' },
 	{ name => 'opacity', type => '0 <= float <= 100',
 	  desc => 'The channel opacity' },
-	{ name => 'color', type => 'color',
+	{ name => 'color', type => 'geglcolor',
 	  desc => 'The channel compositing color'
 	}
     );
@@ -59,10 +59,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpRGB rgb_color = color;
-
-  rgb_color.a = opacity / 100.0;
-  channel = gimp_channel_new (image, width, height, name, &rgb_color);
+  gimp_color_set_alpha (color, opacity / 100.0);
+  channel = gimp_channel_new (image, width, height, name, color);
 
   if (! channel)
     success = FALSE;
@@ -323,15 +321,15 @@ HELP
     );
 
     @outargs = (
-	{ name => 'color', type => 'color', void_ret => 1,
+	{ name => 'color', type => 'geglcolor',
 	  desc => 'The channel compositing color' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_get_color (channel, &color);
-  gimp_rgb_set_alpha (&color, 1.0);
+  color = gimp_channel_get_color (channel);
+  gimp_color_set_alpha (color, 1.0);
 }
 CODE
     );
@@ -349,24 +347,27 @@ HELP
     @inargs = (
 	{ name => 'channel', type => 'channel',
 	  desc => 'The channel' },
-	{ name => 'color', type => 'color',
+	{ name => 'color', type => 'geglcolor',
 	  desc => 'The new channel compositing color' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpRGB rgb_color = color;
+  gdouble alpha;
 
-  rgb_color.a = channel->color.a;
-  gimp_channel_set_color (channel, &rgb_color, TRUE);
+  gegl_color_get_rgba (channel->color, NULL, NULL, NULL, &alpha);
+  gimp_color_set_alpha (color, alpha);
+  gimp_channel_set_color (channel, color, TRUE);
 }
 CODE
     );
 }
 
 
-@headers = qw("libgimpbase/gimpbase.h");
+@headers = qw(<cairo.h>
+              "libgimpbase/gimpbase.h"
+              "libgimpcolor/gimpcolor.h");
 
 @procs = qw(channel_new
             channel_new_from_component

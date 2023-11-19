@@ -1051,13 +1051,13 @@ view_padding_color_cmd_callback (GimpAction *action,
       options->padding_mode_set = TRUE;
 
       gimp_display_shell_set_padding (shell, padding_mode,
-                                      &options->padding_color);
+                                      options->padding_color);
       break;
 
     case GIMP_CANVAS_PADDING_MODE_CUSTOM:
       {
         GtkWidget             *dialog;
-        GimpRGB               *old_color = g_new (GimpRGB, 1);
+        GeglColor             *old_color;
         GimpCanvasPaddingMode  old_padding_mode;
 
         dialog = dialogs_get_dialog (G_OBJECT (shell), PADDING_COLOR_DIALOG_KEY);
@@ -1066,7 +1066,9 @@ view_padding_color_cmd_callback (GimpAction *action,
           {
             GimpImage        *image = gimp_display_get_image (display);
             GimpDisplayShell *shell = gimp_display_get_shell (display);
+            GimpRGB           rgb;
 
+            gegl_color_get_pixel (options->padding_color, babl_format ("R'G'B'A double"), &rgb);
             dialog =
               gimp_color_dialog_new (GIMP_VIEWABLE (image),
                                      action_data_get_context (data),
@@ -1076,7 +1078,7 @@ view_padding_color_cmd_callback (GimpAction *action,
                                      _("Set Custom Canvas Padding Color"),
                                      GTK_WIDGET (shell),
                                      NULL, NULL,
-                                     &options->padding_color,
+                                     &rgb,
                                      TRUE, FALSE);
 
             g_signal_connect (dialog, "update",
@@ -1086,10 +1088,10 @@ view_padding_color_cmd_callback (GimpAction *action,
             dialogs_attach_dialog (G_OBJECT (shell),
                                    PADDING_COLOR_DIALOG_KEY, dialog);
           }
-        *old_color       = options->padding_color;
+        old_color        = gegl_color_duplicate (options->padding_color);
         old_padding_mode = options->padding_mode;
         g_object_set_data_full (G_OBJECT (dialog), "old-color",
-                                old_color, g_free);
+                                old_color, g_object_unref);
         g_object_set_data (G_OBJECT (dialog), "old-padding-mode",
                            GINT_TO_POINTER (old_padding_mode));
 
@@ -1112,7 +1114,7 @@ view_padding_color_cmd_callback (GimpAction *action,
 
         gimp_display_shell_set_padding (shell,
                                         default_options->padding_mode,
-                                        &default_options->padding_color);
+                                        default_options->padding_color);
         gimp_display_shell_set_padding_in_show_all (shell,
                                                     default_options->padding_in_show_all);
       }
@@ -1174,15 +1176,19 @@ view_fullscreen_cmd_callback (GimpAction *action,
 
 static void
 view_padding_color_dialog_update (GimpColorDialog      *dialog,
-                                  const GimpRGB        *color,
+                                  const GimpRGB        *rgb,
                                   GimpColorDialogState  state,
                                   GimpDisplayShell     *shell)
 {
   GimpImageWindow       *window;
   GimpDisplayOptions    *options;
-  GimpRGB               *old_color;
+  GeglColor             *color;
+  GeglColor             *old_color;
   GimpCanvasPaddingMode  old_padding_mode;
   gboolean               fullscreen;
+
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
 
   window           = gimp_display_shell_get_window (shell);
   old_color        = g_object_get_data (G_OBJECT (dialog), "old-color");
@@ -1225,4 +1231,6 @@ view_padding_color_dialog_update (GimpColorDialog      *dialog,
     default:
       break;
     }
+
+  g_object_unref (color);
 }

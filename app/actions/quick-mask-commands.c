@@ -52,7 +52,7 @@ static void   quick_mask_configure_callback (GtkWidget     *dialog,
                                              GimpChannel   *channel,
                                              GimpContext   *context,
                                              const gchar   *channel_name,
-                                             const GimpRGB *channel_color,
+                                             GeglColor     *channel_color,
                                              gboolean       save_selection,
                                              gboolean       channel_visible,
                                              GimpColorTag   channel_color_tag,
@@ -117,9 +117,9 @@ quick_mask_configure_cmd_callback (GimpAction *action,
 
   if (! dialog)
     {
-      GimpRGB color;
+      GeglColor *color;
 
-      gimp_image_get_quick_mask_color (image, &color);
+      color = gimp_image_get_quick_mask_color (image);
 
       dialog = channel_options_dialog_new (image, NULL,
                                            action_data_get_context (data),
@@ -133,7 +133,7 @@ quick_mask_configure_cmd_callback (GimpAction *action,
                                            _("_Mask opacity:"),
                                            FALSE,
                                            NULL,
-                                           &color,
+                                           color,
                                            FALSE,
                                            GIMP_COLOR_TAG_NONE,
                                            FALSE,
@@ -159,7 +159,7 @@ quick_mask_configure_callback (GtkWidget     *dialog,
                                GimpChannel   *channel,
                                GimpContext   *context,
                                const gchar   *channel_name,
-                               const GimpRGB *channel_color,
+                               GeglColor     *channel_color,
                                gboolean       save_selection,
                                gboolean       channel_visible,
                                GimpColorTag   channel_color_tag,
@@ -168,11 +168,11 @@ quick_mask_configure_callback (GtkWidget     *dialog,
                                gboolean       channel_lock_visibility,
                                gpointer       user_data)
 {
-  GimpRGB old_color;
+  GeglColor *old_color;
 
-  gimp_image_get_quick_mask_color (image, &old_color);
+  old_color = gimp_image_get_quick_mask_color (image);
 
-  if (gimp_rgba_distance (&old_color, channel_color) > RGBA_EPSILON)
+  if (! gimp_color_is_perceptually_identical (old_color, channel_color))
     {
       gimp_image_set_quick_mask_color (image, channel_color);
       gimp_image_flush (image);

@@ -37,7 +37,7 @@ struct _GimpChannelPropUndo
 {
   GimpItemUndo  parent_instance;
 
-  GimpRGB       color;
+  GeglColor    *color;
 };
 
 struct _GimpChannelPropUndoClass

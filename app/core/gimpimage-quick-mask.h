@@ -30,9 +30,8 @@ void          gimp_image_set_quick_mask_state    (GimpImage     *image,
 gboolean      gimp_image_get_quick_mask_state    (GimpImage     *image);
 
 void          gimp_image_set_quick_mask_color    (GimpImage     *image,
-                                                  const GimpRGB *color);
-void          gimp_image_get_quick_mask_color    (GimpImage     *image,
-                                                  GimpRGB       *color);
+                                                  GeglColor     *color);
+GeglColor   * gimp_image_get_quick_mask_color    (GimpImage     *image);
 
 GimpChannel * gimp_image_get_quick_mask          (GimpImage     *image);
 

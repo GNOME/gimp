@@ -2278,7 +2278,7 @@ xcf_load_channel_props (XcfInfo      *info,
 
             xcf_read_int8 (info, (guint8 *) col, 3);
 
-            gimp_rgb_set_uchar (&(*channel)->color, col[0], col[1], col[2]);
+            gegl_color_set_pixel ((*channel)->color, babl_format ("R'G'B' u8"), col);
           }
           break;
 
@@ -2288,7 +2288,8 @@ xcf_load_channel_props (XcfInfo      *info,
 
             xcf_read_float (info, col, 3);
 
-            gimp_rgb_set (&(*channel)->color, col[0], col[1], col[2]);
+            /* TODO: is the channel color in sRGB or in the image's color space? */
+            gegl_color_set_pixel ((*channel)->color, babl_format ("R'G'B' float"), col);
           }
           break;
 
@@ -3119,7 +3120,6 @@ xcf_load_channel (XcfInfo   *info,
   gint         height;
   gboolean     is_fs_drawable;
   gchar       *name;
-  GimpRGB      color = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
   goffset      cur_offset;
 
   /* check and see if this is the drawable the floating selection
@@ -3142,7 +3142,7 @@ xcf_load_channel (XcfInfo   *info,
             width, height, name);
 
   /* create a new channel */
-  channel = gimp_channel_new (image, width, height, name, &color);
+  channel = gimp_channel_new (image, width, height, name, NULL);
   g_free (name);
   if (!channel)
     return NULL;

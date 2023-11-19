@@ -58,12 +58,12 @@
  * Returns: (transfer none): The newly created channel.
  **/
 GimpChannel *
-_gimp_channel_new (GimpImage     *image,
-                   gint           width,
-                   gint           height,
-                   const gchar   *name,
-                   gdouble        opacity,
-                   const GimpRGB *color)
+_gimp_channel_new (GimpImage   *image,
+                   gint         width,
+                   gint         height,
+                   const gchar *name,
+                   gdouble      opacity,
+                   GeglColor   *color)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -75,7 +75,7 @@ _gimp_channel_new (GimpImage     *image,
                                           G_TYPE_INT, height,
                                           G_TYPE_STRING, name,
                                           G_TYPE_DOUBLE, opacity,
-                                          GIMP_TYPE_RGB, color,
+                                          GEGL_TYPE_COLOR, color,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -366,21 +366,19 @@ gimp_channel_set_opacity (GimpChannel *channel,
 /**
  * gimp_channel_get_color:
  * @channel: The channel.
- * @color: (out caller-allocates): The channel compositing color.
  *
  * Get the compositing color of the specified channel.
  *
  * This procedure returns the specified channel's compositing color.
  *
- * Returns: TRUE on success.
+ * Returns: (transfer full): The channel compositing color.
  **/
-gboolean
-gimp_channel_get_color (GimpChannel *channel,
-                        GimpRGB     *color)
+GeglColor *
+gimp_channel_get_color (GimpChannel *channel)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gboolean success = TRUE;
+  GeglColor *color = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_CHANNEL, channel,
@@ -391,14 +389,12 @@ gimp_channel_get_color (GimpChannel *channel,
                                                args);
   gimp_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    color = g_value_dup_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
-  return success;
+  return color;
 }
 
 /**
@@ -413,8 +409,8 @@ gimp_channel_get_color (GimpChannel *channel,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_channel_set_color (GimpChannel   *channel,
-                        const GimpRGB *color)
+gimp_channel_set_color (GimpChannel *channel,
+                        GeglColor   *color)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -422,7 +418,7 @@ gimp_channel_set_color (GimpChannel   *channel,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_CHANNEL, channel,
-                                          GIMP_TYPE_RGB, color,
+                                          GEGL_TYPE_COLOR, color,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),

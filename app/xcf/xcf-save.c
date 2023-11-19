@@ -794,9 +794,9 @@ xcf_save_channel_props (XcfInfo      *info,
   xcf_check_error (xcf_save_prop (info, image, PROP_SHOW_MASKED, error,
                                   gimp_channel_get_show_masked (channel)), ;);
   xcf_check_error (xcf_save_prop (info, image, PROP_COLOR, error,
-                                  &channel->color), ;);
+                                  channel->color), ;);
   xcf_check_error (xcf_save_prop (info, image, PROP_FLOAT_COLOR, error,
-                                  &channel->color), ;);
+                                  channel->color), ;);
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
                                   gimp_item_get_tattoo (GIMP_ITEM (channel))), ;);
 
@@ -1321,10 +1321,10 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_COLOR:
       {
-        GimpRGB *color = va_arg (args, GimpRGB *);
-        guchar   col[3];
+        GeglColor *color = va_arg (args, GeglColor *);
+        guchar     col[3];
 
-        gimp_rgb_get_uchar (color, &col[0], &col[1], &col[2]);
+        gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), col);
 
         size = 3;
 
@@ -1337,12 +1337,10 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_FLOAT_COLOR:
       {
-        GimpRGB *color = va_arg (args, GimpRGB *);
-        gfloat   col[3];
+        GeglColor *color = va_arg (args, GeglColor *);
+        gfloat     col[3];
 
-        col[0] = color->r;
-        col[1] = color->g;
-        col[2] = color->b;
+        gegl_color_get_pixel (color, babl_format ("R'G'B' float"), col);
 
         size = 3 * 4;
 

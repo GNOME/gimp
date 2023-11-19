@@ -170,8 +170,10 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   gchar        *path;
   gchar        *mypaint_brushes;
-  GimpRGB       red          = { 1.0, 0, 0, 0.5 };
+  GeglColor    *red          = gegl_color_new ("red");
   guint64       undo_size;
+
+  gimp_color_set_alpha (red, 0.5);
 
   object_class->finalize     = gimp_core_config_finalize;
   object_class->set_property = gimp_core_config_set_property;
@@ -704,12 +706,12 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_QUICK_MASK_COLOR,
-                        "quick-mask-color",
-                        "Quick mask color",
-                        QUICK_MASK_COLOR_BLURB,
-                        TRUE, &red,
-                        GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_COLOR (object_class, PROP_QUICK_MASK_COLOR,
+                          "quick-mask-color",
+                          "Quick mask color",
+                          QUICK_MASK_COLOR_BLURB,
+                          red,
+                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_IMPORT_PROMOTE_FLOAT,
                             "import-promote-float",
@@ -836,11 +838,18 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                         27, 256, 144,
                         GIMP_PARAM_STATIC_STRINGS |
                         GIMP_CONFIG_PARAM_IGNORE);
+
+  g_object_unref (red);
 }
 
 static void
 gimp_core_config_init (GimpCoreConfig *config)
 {
+  GeglColor *red = gegl_color_new ("red");
+
+  gimp_color_set_alpha (red, 0.5);
+  config->quick_mask_color = red;
+
   config->default_image = g_object_new (GIMP_TYPE_TEMPLATE,
                                         "name",    "Default Image",
                                         "comment", GIMP_DEFAULT_COMMENT,
@@ -907,6 +916,7 @@ gimp_core_config_finalize (GObject *object)
   g_clear_object (&core_config->default_image);
   g_clear_object (&core_config->default_grid);
   g_clear_object (&core_config->color_management);
+  g_clear_object (&core_config->quick_mask_color);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -1142,7 +1152,8 @@ gimp_core_config_set_property (GObject      *object,
       core_config->save_document_history = g_value_get_boolean (value);
       break;
     case PROP_QUICK_MASK_COLOR:
-      gimp_value_get_rgb (value, &core_config->quick_mask_color);
+      g_clear_object (&core_config->quick_mask_color);
+      core_config->quick_mask_color = gegl_color_duplicate (g_value_get_object (value));
       break;
     case PROP_IMPORT_PROMOTE_FLOAT:
       core_config->import_promote_float = g_value_get_boolean (value);
@@ -1411,7 +1422,7 @@ gimp_core_config_get_property (GObject    *object,
       g_value_set_boolean (value, core_config->save_document_history);
       break;
     case PROP_QUICK_MASK_COLOR:
-      gimp_value_set_rgb (value, &core_config->quick_mask_color);
+      g_value_set_object (value, core_config->quick_mask_color);
       break;
     case PROP_IMPORT_PROMOTE_FLOAT:
       g_value_set_boolean (value, core_config->import_promote_float);

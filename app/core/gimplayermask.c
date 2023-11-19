@@ -247,14 +247,15 @@ gimp_layer_mask_new (GimpImage     *image,
                      gint           width,
                      gint           height,
                      const gchar   *name,
-                     const GimpRGB *color)
+                     const GimpRGB *rgb)
 {
   GimpLayerMask *layer_mask;
+  GeglColor     *color;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (width > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
-  g_return_val_if_fail (color != NULL, NULL);
+  g_return_val_if_fail (rgb != NULL, NULL);
 
   layer_mask =
     GIMP_LAYER_MASK (gimp_drawable_new (GIMP_TYPE_LAYER_MASK,
@@ -263,6 +264,8 @@ gimp_layer_mask_new (GimpImage     *image,
                                         gimp_image_get_mask_format (image)));
 
   /*  set the layer_mask color and opacity  */
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
   gimp_channel_set_color (GIMP_CHANNEL (layer_mask), color, FALSE);
   gimp_channel_set_show_masked (GIMP_CHANNEL (layer_mask), TRUE);
 

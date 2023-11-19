@@ -236,20 +236,13 @@ gimp_gegl_node_set_matrix (GeglNode          *node,
 }
 
 void
-gimp_gegl_node_set_color (GeglNode      *node,
-                          const GimpRGB *color,
-                          const Babl    *space)
+gimp_gegl_node_set_color (GeglNode  *node,
+                          GeglColor *color)
 {
-  GeglColor *gegl_color;
-
   g_return_if_fail (GEGL_IS_NODE (node));
-  g_return_if_fail (color != NULL);
-
-  gegl_color = gimp_gegl_color_new (color, space);
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
   gegl_node_set (node,
-                 "value", gegl_color,
+                 "value", color,
                  NULL);
-
-  g_object_unref (gegl_color);
 }

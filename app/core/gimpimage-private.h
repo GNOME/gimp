@@ -138,7 +138,7 @@ struct _GimpImagePrivate
 
   gboolean           quick_mask_state;      /*  TRUE if quick mask is on       */
   gboolean           quick_mask_inverted;   /*  TRUE if quick mask is inverted */
-  GimpRGB            quick_mask_color;      /*  rgba triplet of the color      */
+  GeglColor         *quick_mask_color;      /*  rgba triplet of the color      */
 
   /*  Undo apparatus  */
   GimpUndoStack     *undo_stack;            /*  stack for undo operations    */

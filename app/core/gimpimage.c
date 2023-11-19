@@ -885,7 +885,9 @@ gimp_image_init (GimpImage *image)
 
   private->quick_mask_state    = FALSE;
   private->quick_mask_inverted = FALSE;
-  gimp_rgba_set (&private->quick_mask_color, 1.0, 0.0, 0.0, 0.5);
+  /* Quick mask color set to sRGB red with half opacity by default. */
+  private->quick_mask_color    = gegl_color_new ("red");
+  gimp_color_set_alpha (private->quick_mask_color, 0.5);
 
   private->undo_stack          = gimp_undo_stack_new (image);
   private->redo_stack          = gimp_undo_stack_new (image);
@@ -923,7 +925,8 @@ gimp_image_constructed (GObject *object)
 
   private->grid = gimp_config_duplicate (GIMP_CONFIG (config->default_grid));
 
-  private->quick_mask_color = config->quick_mask_color;
+  g_clear_object (&private->quick_mask_color);
+  private->quick_mask_color = gegl_color_duplicate (config->quick_mask_color);
 
   gimp_image_update_bounding_box (image);
 
@@ -1170,6 +1173,7 @@ gimp_image_finalize (GObject *object)
   g_clear_object (&private->layers);
   g_clear_object (&private->channels);
   g_clear_object (&private->vectors);
+  g_clear_object (&private->quick_mask_color);
 
   if (private->layer_stack)
     {
@@ -1829,7 +1833,8 @@ gimp_image_channel_color_changed (GimpChannel *channel,
   if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
                 gimp_object_get_name (channel)))
     {
-      GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_color = channel->color;
+      g_clear_object (&(GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_color));
+      GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_color = gegl_color_duplicate (channel->color);
     }
 }
 

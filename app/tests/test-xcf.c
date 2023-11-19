@@ -378,14 +378,16 @@ gimp_create_mainimage (Gimp     *gimp,
   GimpParasite  *parasite          = NULL;
   GimpGrid      *grid              = NULL;
   GimpChannel   *channel           = NULL;
-  GimpRGB        channel_color     = GIMP_MAINIMAGE_CHANNEL1_COLOR;
+  GeglColor     *channel_color     = gegl_color_new (NULL);
   GimpChannel   *selection         = NULL;
   GimpVectors   *vectors           = NULL;
   GimpCoords     vectors1_coords[] = GIMP_MAINIMAGE_VECTORS1_COORDS;
   GimpCoords     vectors2_coords[] = GIMP_MAINIMAGE_VECTORS2_COORDS;
   GimpStroke    *stroke            = NULL;
   GimpLayerMask *layer_mask        = NULL;
+  gdouble        rgb[4]            = GIMP_MAINIMAGE_CHANNEL1_COLOR;
 
+  gegl_color_set_pixel (channel_color, babl_format ("R'G'B'A double"), &rgb);
   /* Image size and type */
   image = gimp_image_new (gimp,
                           GIMP_MAINIMAGE_WIDTH,
@@ -504,7 +506,8 @@ gimp_create_mainimage (Gimp     *gimp,
                               GIMP_MAINIMAGE_CHANNEL1_WIDTH,
                               GIMP_MAINIMAGE_CHANNEL1_HEIGHT,
                               GIMP_MAINIMAGE_CHANNEL1_NAME,
-                              &channel_color);
+                              channel_color);
+  g_object_unref (channel_color);
   gimp_image_add_channel (image,
                           channel,
                           NULL,
@@ -744,8 +747,9 @@ gimp_assert_mainimage (GimpImage *image,
   gdouble             xspacing               = 0.0;
   gdouble             yspacing               = 0.0;
   GimpChannel        *channel                = NULL;
-  GimpRGB             expected_channel_color = GIMP_MAINIMAGE_CHANNEL1_COLOR;
-  GimpRGB             actual_channel_color   = { 0, };
+  GeglColor          *actual_channel_color;
+  gdouble             expected_rgb_color[4]  = GIMP_MAINIMAGE_CHANNEL1_COLOR;
+  gdouble             rgb[4];
   GimpChannel        *selection              = NULL;
   gint                x                      = -1;
   gint                y                      = -1;
@@ -919,16 +923,15 @@ gimp_assert_mainimage (GimpImage *image,
   /* Channel */
   channel = gimp_image_get_channel_by_name (image,
                                             GIMP_MAINIMAGE_CHANNEL1_NAME);
-  gimp_channel_get_color (channel, &actual_channel_color);
+  actual_channel_color = gimp_channel_get_color (channel);
   g_assert_cmpint (gimp_item_get_width (GIMP_ITEM (channel)),
                    ==,
                    GIMP_MAINIMAGE_CHANNEL1_WIDTH);
   g_assert_cmpint (gimp_item_get_height (GIMP_ITEM (channel)),
                    ==,
                    GIMP_MAINIMAGE_CHANNEL1_HEIGHT);
-  g_assert_true (memcmp (&expected_channel_color,
-                         &actual_channel_color,
-                         sizeof (GimpRGB)) == 0);
+  gegl_color_get_pixel (actual_channel_color, babl_format ("R'G'B'A double"), &rgb);
+  g_assert_true (memcmp (&expected_rgb_color, &rgb, sizeof (expected_rgb_color)) == 0);
 
   /* Selection, if the image contains unusual stuff it contains a
    * floating select, and when floating a selection, the selection

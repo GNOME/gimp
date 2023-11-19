@@ -320,17 +320,17 @@ static GimpItem *
 gimp_channel_tree_view_item_new (GimpImage *image)
 {
   GimpChannel *new_channel;
-  GimpRGB      color;
-
-  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.5);
+  GeglColor   *color = gegl_color_new ("black");
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                _("New Channel"));
 
+  gimp_color_set_alpha (color, 0.5);
   new_channel = gimp_channel_new (image,
                                   gimp_image_get_width (image),
                                   gimp_image_get_height (image),
-                                  _("Channel"), &color);
+                                  _("Channel"), color);
+  g_object_unref (color);
 
   gimp_image_add_channel (image, new_channel,
                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);

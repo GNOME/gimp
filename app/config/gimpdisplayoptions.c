@@ -63,6 +63,7 @@ enum
 };
 
 
+static void   gimp_display_options_finalize     (GObject      *object);
 static void   gimp_display_options_set_property (GObject      *object,
                                                  guint         property_id,
                                                  const GValue *value,
@@ -103,10 +104,9 @@ static void
 gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB       white;
+  GeglColor    *white        = gegl_color_new ("white");
 
-  gimp_rgba_set (&white, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
-
+  object_class->finalize     = gimp_display_options_finalize;
   object_class->set_property = gimp_display_options_set_property;
   object_class->get_property = gimp_display_options_get_property;
 
@@ -230,12 +230,12 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
                          GIMP_CANVAS_PADDING_MODE_DEFAULT,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_PADDING_COLOR,
-                        "padding-color",
-                        "Padding color",
-                        CANVAS_PADDING_COLOR_BLURB,
-                        FALSE, &white,
-                        GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_COLOR (object_class, PROP_PADDING_COLOR,
+                          "padding-color",
+                          "Padding color",
+                          CANVAS_PADDING_COLOR_BLURB,
+                          white,
+                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PADDING_IN_SHOW_ALL,
                             "padding-in-show-all",
@@ -243,16 +243,17 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
                             CANVAS_PADDING_IN_SHOW_ALL_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  g_object_unref (white);
 }
 
 static void
 gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB       black;
+  GeglColor    *black        = gegl_color_new ("black");
 
-  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-
+  object_class->finalize     = gimp_display_options_finalize;
   object_class->set_property = gimp_display_options_set_property;
   object_class->get_property = gimp_display_options_get_property;
 
@@ -376,12 +377,12 @@ gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *k
                          GIMP_CANVAS_PADDING_MODE_CUSTOM,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_PADDING_COLOR,
-                        "padding-color",
-                        "Padding color",
-                        CANVAS_PADDING_COLOR_BLURB,
-                        FALSE, &black,
-                        GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_COLOR (object_class, PROP_PADDING_COLOR,
+                          "padding-color",
+                          "Padding color",
+                          CANVAS_PADDING_COLOR_BLURB,
+                          black,
+                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PADDING_IN_SHOW_ALL,
                             "padding-in-show-all",
@@ -389,6 +390,8 @@ gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *k
                             CANVAS_PADDING_IN_SHOW_ALL_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  g_object_unref (black);
 }
 
 static void
@@ -501,7 +504,31 @@ gimp_display_options_no_image_class_init (GimpDisplayOptionsNoImageClass *klass)
 static void
 gimp_display_options_init (GimpDisplayOptions *options)
 {
+  GeglColor *color;
+
+  if (G_TYPE_CHECK_INSTANCE_TYPE ((options), GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN))
+    color = gegl_color_new ("black");
+  else
+    color = gegl_color_new ("white");
+
+  gimp_color_set_alpha (color, GIMP_OPACITY_OPAQUE);
+  options->padding_color    = color;
   options->padding_mode_set = FALSE;
+}
+
+static void
+gimp_display_options_finalize (GObject *object)
+{
+  GimpDisplayOptions *options = GIMP_DISPLAY_OPTIONS (object);
+
+  g_clear_object (&options->padding_color);
+
+  /* Since we share the finalize for both GimpDisplayOptions and its child
+   * GimpDisplayOptionsFullscreen, we run the (grand-)parent finalize() function
+   * directly. We don't want to end up in some infinite loop by recognizing the
+   * exact type of object.
+   */
+  G_OBJECT_CLASS (gimp_display_options_parent_class)->finalize (object);
 }
 
 static void
@@ -566,7 +593,8 @@ gimp_display_options_set_property (GObject      *object,
       options->padding_mode = g_value_get_enum (value);
       break;
     case PROP_PADDING_COLOR:
-      options->padding_color = *(GimpRGB *) g_value_get_boxed (value);
+      g_clear_object (&options->padding_color);
+      options->padding_color = gegl_color_duplicate (g_value_get_object (value));
       break;
     case PROP_PADDING_IN_SHOW_ALL:
       options->padding_in_show_all = g_value_get_boolean (value);
@@ -640,7 +668,7 @@ gimp_display_options_get_property (GObject    *object,
       g_value_set_enum (value, options->padding_mode);
       break;
     case PROP_PADDING_COLOR:
-      g_value_set_boxed (value, &options->padding_color);
+      g_value_set_object (value, options->padding_color);
       break;
     case PROP_PADDING_IN_SHOW_ALL:
       g_value_set_boolean (value, options->padding_in_show_all);

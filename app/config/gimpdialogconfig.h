@@ -85,7 +85,7 @@ struct _GimpDialogConfig
   gboolean                  layer_merge_discard_invisible;
 
   gchar                    *channel_new_name;
-  GimpRGB                   channel_new_color;
+  GeglColor                *channel_new_color;
 
   gchar                    *vectors_new_name;
 

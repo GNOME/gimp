@@ -30,6 +30,7 @@
 
 
 static void   gimp_channel_prop_undo_constructed (GObject             *object);
+static void   gimp_channel_prop_undo_finalize    (GObject             *object);
 
 static void   gimp_channel_prop_undo_pop         (GimpUndo            *undo,
                                                   GimpUndoMode         undo_mode,
@@ -48,6 +49,7 @@ gimp_channel_prop_undo_class_init (GimpChannelPropUndoClass *klass)
   GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
 
   object_class->constructed = gimp_channel_prop_undo_constructed;
+  object_class->finalize    = gimp_channel_prop_undo_finalize;
 
   undo_class->pop           = gimp_channel_prop_undo_pop;
 }
@@ -72,12 +74,22 @@ gimp_channel_prop_undo_constructed (GObject *object)
   switch (GIMP_UNDO (object)->undo_type)
     {
     case GIMP_UNDO_CHANNEL_COLOR:
-      gimp_channel_get_color (channel, &channel_prop_undo->color);
+      channel_prop_undo->color = gegl_color_duplicate (gimp_channel_get_color (channel));
       break;
 
     default:
       g_return_if_reached ();
     }
+}
+
+static void
+gimp_channel_prop_undo_finalize (GObject *object)
+{
+  GimpChannelPropUndo *channel_prop_undo = GIMP_CHANNEL_PROP_UNDO (object);
+
+  g_clear_object (&channel_prop_undo->color);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -94,10 +106,11 @@ gimp_channel_prop_undo_pop (GimpUndo            *undo,
     {
     case GIMP_UNDO_CHANNEL_COLOR:
       {
-        GimpRGB color;
+        GeglColor *color;
 
-        gimp_channel_get_color (channel, &color);
-        gimp_channel_set_color (channel, &channel_prop_undo->color, FALSE);
+        color = gegl_color_duplicate (gimp_channel_get_color (channel));
+        gimp_channel_set_color (channel, channel_prop_undo->color, FALSE);
+        g_clear_object (&channel_prop_undo->color);
         channel_prop_undo->color = color;
       }
       break;
