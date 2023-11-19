@@ -1158,7 +1158,7 @@ gimp_palette_load_ase (GimpContext   *context,
 
           /* Convert 4 bytes to a 32bit float value */
           tmp = GINT32_FROM_BE (tmp);
-          pixels[j] = *(gfloat *) &tmp;
+          memcpy (&pixels[j], &tmp, 4);
         }
 
       if (! valid_color)
