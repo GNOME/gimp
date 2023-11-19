@@ -59,6 +59,10 @@ typedef struct _DicomInfo
   gboolean   is_signed;
   gboolean   planar;
   gboolean   bw_inverted;
+  gint       lut_window_center;
+  gint       lut_window_width;
+  gboolean   pixel_padding;
+  gint       pixel_padding_value;
 } DicomInfo;
 
 
@@ -371,6 +375,7 @@ load_image (GFile   *file,
   guint8      in_sequence       = 0;
   gboolean    implicit_encoding = FALSE;
   gboolean    big_endian        = FALSE;
+  ////////gboolean    bw_inverted       = FALSE;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
@@ -542,14 +547,23 @@ load_image (GFile   *file,
           g_free (value);
           continue;
         }
-      /* Some special casts that are used below */
-      ctx_us = *(guint16 *) value;
-      if (big_endian && group_word != 0x0002)
-        ctx_us = GUINT16_SWAP_LE_BE (ctx_us);
 
-      g_debug ("group: %04x, element: %04x, length: %d",
-               group_word, element_word, element_length);
-      g_debug ("Value: %s", (char*)value);
+      /* Some special casts that are used below */
+      if (strncmp (value_rep, "DS", 2) == 0)
+        {
+          ctx_us = (guint16) g_ascii_strtoll ((gchar *) value, NULL, 10);
+        }
+      else
+        {
+          ctx_us = *(guint16 *) value;
+          if (big_endian && group_word != 0x0002)
+            ctx_us = GUINT16_SWAP_LE_BE (ctx_us);
+        }
+
+      g_debug ("group: %04x, element: %04x, length: %d, VR: %s",
+               group_word, element_word, element_length, value_rep);
+      if (group_word <= 0x1000 && element_length < 100)
+        g_debug ("Value: %s", (char*)value);
       /* Recognize some critical tags */
       if (group_word == 0x0002)
         {
@@ -673,6 +687,48 @@ load_image (GFile   *file,
             case 0x0103:  /* is pixel representation signed? */
               is_signed = (ctx_us == 0) ? FALSE : TRUE;
               g_debug ("is signed: %d", ctx_us);
+              break;
+            case 0x0106: /* Smallest Image Pixel Value */
+              g_debug ("Smallest Image Pixel Value: %u", ctx_us);
+              break;
+            case 0x0107: /* Largest Image Pixel Value */
+              g_debug ("Largest Image Pixel Value: %u", ctx_us);
+              break;
+            case 0x0120: /* Pixel Padding Value */
+              dicominfo->pixel_padding = TRUE;
+              dicominfo->pixel_padding_value = ctx_us;
+              g_debug ("Pixel Padding Value: %u", ctx_us);
+              break;
+            case 0x1050: /* window center for LUT function */
+              if (strncmp (value_rep, "DS", 2) == 0)
+                {
+                  ctx_us = (guint16) g_ascii_strtoll ((gchar *) value, NULL, 10);
+                }
+              dicominfo->lut_window_center = ctx_us;
+              g_debug ("LUT window center: %u", ctx_us);
+              break;
+            case 0x1051: /* window width for LUT function */
+              if (strncmp (value_rep, "DS", 2) == 0)
+                {
+                  ctx_us = (guint16) g_ascii_strtoll ((gchar *) value, NULL, 10);
+                }
+              g_debug ("LUT window width: %u", ctx_us);
+              dicominfo->lut_window_width = ctx_us;
+              break;
+            case 0x1052:
+              g_debug ("Rescale Intercept: %u", ctx_us);
+              break;
+            case 0x1053:
+              g_debug ("Rescale Slope: %u", ctx_us);
+              break;
+            case 0x1054:
+              g_debug ("Rescale Type (see value, US = unspecified");
+              break;
+            case 0x2000: /* ICC profile*/
+              g_debug ("FIXME: ICC profile available but not added");
+              break;
+            case 0x2110:
+              g_debug ("Lossy image compression: %u", ctx_us);
               break;
             }
         }
@@ -838,6 +894,21 @@ dicom_loader (guint8     *pix_buffer,
 
               for (col_idx = 0; col_idx < width * samples_per_pixel; col_idx++)
                 {
+                  /*if (info->lut_window_width > 0)
+                    {
+                      //gint MAXINPUT = (2 ^ 12) - 1;
+                      if (row_start[col_idx] <= (info->lut_window_center - 0.5 - ((info->lut_window_width -1 ) / 2)))
+                        row_start[col_idx] = 0;
+                      else if (row_start[col_idx] > (info->lut_window_center - 0.5 + ((info->lut_window_width -1 ) / 2)))
+                        row_start[col_idx] = 65535;
+                      else
+                        {
+                          row_start[col_idx] = ((row_start[col_idx] - (info->lut_window_center - 0.5)) /
+                           (info->lut_window_width - 1) + 0.5) *
+                           (65535 - 0) + 0;
+                        }
+                    }*/
+
                   /* Shift it by 8 bits, or less in case bits_stored
                    * is less than bpp.
                    */
@@ -845,9 +916,9 @@ dicom_loader (guint8     *pix_buffer,
                                          (info->bits_stored - 8));
                   if (info->bw_inverted)
                     {
-                      d[col_idx] = ~d[col_idx];
+                      if (! info->pixel_padding || info->pixel_padding_value != row_start[col_idx])
+                        d[col_idx] = ~d[col_idx];
                     }
-
                   if (info->is_signed)
                     {
                       /* If the data is negative, make it 0. Otherwise,
@@ -882,6 +953,11 @@ dicom_loader (guint8     *pix_buffer,
                           d[col_idx] = ~d[col_idx];
                         }
 
+                      if (info->bw_inverted)
+                        {
+                          if (! info->pixel_padding || info->pixel_padding_value != row_start[col_idx])
+                            d[col_idx] = ~d[col_idx];
+                        }
                       if (info->is_signed)
                         {
                           /* If the data is negative, make it 0. Otherwise,
