@@ -31,6 +31,7 @@
 
 #define LOAD_PROC      "file-heif-load"
 #define LOAD_PROC_AV1  "file-heif-av1-load"
+#define LOAD_PROC_HEJ2 "file-heif-hej2-load"
 #define SAVE_PROC      "file-heif-save"
 #define SAVE_PROC_AV1  "file-heif-av1-save"
 #define PLUG_IN_BINARY "file-heif"
@@ -171,6 +172,13 @@ heif_init_procedures (GimpPlugIn *plug_in)
   if (heif_have_encoder_for_format (heif_compression_AV1))
     {
       list = g_list_append (list, g_strdup (SAVE_PROC_AV1));
+    }
+#endif
+
+#if LIBHEIF_HAVE_VERSION(1,17,0)
+  if (heif_have_decoder_for_format (heif_compression_JPEG2000))
+    {
+      list = g_list_append (list, g_strdup (LOAD_PROC_HEJ2));
     }
 #endif
 
@@ -413,6 +421,33 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                              _("Toggle saving XMP data"),
                              gimp_export_xmp (),
                              G_PARAM_READWRITE);
+    }
+#endif
+#if LIBHEIF_HAVE_VERSION(1,17,0)
+  else if (! strcmp (name, LOAD_PROC_HEJ2))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           heif_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, _("JPEG 2000 encapsulated in HEIF"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        _("Loads HEJ2 images"),
+                                        _("Load JPEG 2000 image encapsulated in HEIF (HEJ2)"),
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Daniel Novomesky <dnovomesky@gmail.com>",
+                                      "Daniel Novomesky <dnovomesky@gmail.com>",
+                                      "2023");
+
+      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure), TRUE);
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/hej2k");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "hej2");
+
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "4,string,ftypj2ki");
     }
 #endif
   return procedure;
