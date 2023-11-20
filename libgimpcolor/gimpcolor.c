@@ -92,6 +92,20 @@ gimp_color_set_alpha (GeglColor *color,
  * human eyes, by computing the distance in a color space as perceptually
  * uniform as possible.
  *
+ * This function will also consider any transparency channel, so that if you
+ * only want to compare the pure color, you could for instance set both color's
+ * alpha channel to 1.0 first (possibly on duplicates of the colors if originals
+ * should not be modified), such as:
+ *
+ * ```C
+ * gimp_color_set_alpha (color1, 1.0);
+ * gimp_color_set_alpha (color2, 1.0);
+ * if (gimp_color_is_perceptually_identical (color1, color2))
+ *   {
+ *     printf ("Both colors are identical, ignoring their alpha component");
+ *   }
+ * ```
+ *
  * Returns: whether the 2 colors can be considered the same for the human eyes.
  *
  * Since: 3.0
@@ -100,8 +114,8 @@ gboolean
 gimp_color_is_perceptually_identical (GeglColor *color1,
                                       GeglColor *color2)
 {
-  gfloat  pixel1[3];
-  gfloat  pixel2[3];
+  gfloat pixel1[4];
+  gfloat pixel2[4];
 
   g_return_val_if_fail (GEGL_IS_COLOR (color1), FALSE);
   g_return_val_if_fail (GEGL_IS_COLOR (color2), FALSE);
@@ -109,8 +123,8 @@ gimp_color_is_perceptually_identical (GeglColor *color1,
   /* CIE LCh space is considered quite perceptually uniform, a bit better than
    * Lab on this aspect, AFAIU.
    */
-  gegl_color_get_pixel (color1, babl_format ("CIE LCH(ab) float"), pixel1);
-  gegl_color_get_pixel (color2, babl_format ("CIE LCH(ab) float"), pixel2);
+  gegl_color_get_pixel (color1, babl_format ("CIE LCH(ab) alpha float"), pixel1);
+  gegl_color_get_pixel (color2, babl_format ("CIE LCH(ab) alpha float"), pixel2);
 
   /* This is not a proper distance computation, but is acceptable for our use
    * case while being simpler. While we used to use 1e-6 as threshold with float
@@ -118,8 +132,9 @@ gimp_color_is_perceptually_identical (GeglColor *color1,
    * wide gamut spaces. This is why use the threshold is 1e-4 right now.
    */
 #define SQR(x) ((x) * (x))
-  return (SQR (pixel1[0] - pixel2[0]) +
-          SQR (pixel1[1] - pixel2[1]) +
-          SQR (pixel1[2] - pixel2[2]) <= 1e-4);
+  return (ABS (pixel1[3] - pixel2[3]) <= 1e-4 &&
+          (SQR (pixel1[0] - pixel2[0]) +
+           SQR (pixel1[1] - pixel2[1]) +
+           SQR (pixel1[2] - pixel2[2]) <= 1e-4));
 #undef SQR
 }
