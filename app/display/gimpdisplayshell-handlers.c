@@ -1070,6 +1070,8 @@ gimp_display_shell_check_notify_handler (GObject          *config,
     }
 
   gimp_display_shell_expose_full (shell);
+
+  g_object_unref (padding_color);
 }
 
 static void
@@ -1151,7 +1153,8 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
       else
         {
           shell->fullscreen_options->padding_mode  = padding_mode;
-          shell->fullscreen_options->padding_color = padding_color;
+          g_clear_object (&shell->fullscreen_options->padding_color);
+          shell->fullscreen_options->padding_color = gegl_color_duplicate (padding_color);
         }
     }
 
@@ -1164,7 +1167,8 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
       if (fullscreen)
         {
           shell->options->padding_mode  = padding_mode;
-          shell->options->padding_color = padding_color;
+          g_clear_object (&shell->options->padding_color);
+          shell->options->padding_color = gegl_color_duplicate (padding_color);
         }
       else
         {

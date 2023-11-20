@@ -37,14 +37,19 @@ static void   gimp_render_setup_notify (gpointer    config,
                                         Gimp       *gimp);
 
 
-static GimpRGB color1;
-static GimpRGB color2;
+static GeglColor *color1 = NULL;
+static GeglColor *color2 = NULL;
 
 
 void
 gimp_render_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  color1 = gegl_color_new (NULL);
+  gegl_color_set_pixel (color1, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR1);
+  color2 = gegl_color_new (NULL);
+  gegl_color_set_pixel (color2, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR2);
 
   g_signal_connect (gimp->config, "notify::transparency-type",
                     G_CALLBACK (gimp_render_setup_notify),
@@ -69,18 +74,21 @@ gimp_render_exit (Gimp *gimp)
   g_signal_handlers_disconnect_by_func (gimp->config,
                                         gimp_render_setup_notify,
                                         gimp);
+
+  g_clear_object (&color1);
+  g_clear_object (&color2);
 }
 
-const GimpRGB *
+const GeglColor *
 gimp_render_check_color1 (void)
 {
-  return &color1;
+  return color1;
 }
 
-const GimpRGB *
+const GeglColor *
 gimp_render_check_color2 (void)
 {
-  return &color2;
+  return color2;
 }
 
 static void
@@ -88,8 +96,8 @@ gimp_render_setup_notify (gpointer    config,
                           GParamSpec *param_spec,
                           Gimp       *gimp)
 {
-  GimpRGB       *color1_custom;
-  GimpRGB       *color2_custom;
+  GeglColor     *color1_custom = NULL;
+  GeglColor     *color2_custom = NULL;
   GimpCheckType  check_type;
 
   g_object_get (config,
@@ -98,9 +106,11 @@ gimp_render_setup_notify (gpointer    config,
                 "transparency-custom-color2", &color2_custom,
                 NULL);
 
-  color1 = *color1_custom;
-  color2 = *color2_custom;
+  g_clear_object (&color1);
+  g_clear_object (&color2);
+  color1 = color1_custom;
+  color2 = color2_custom;
   gimp_checks_get_colors (check_type, &color1, &color2);
-  g_free (color1_custom);
-  g_free (color2_custom);
+  g_clear_object (&color1_custom);
+  g_clear_object (&color2_custom);
 }

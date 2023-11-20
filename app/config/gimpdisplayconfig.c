@@ -115,7 +115,8 @@ static void
 gimp_display_config_class_init (GimpDisplayConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB       color        = { 0, 0, 0, 0 };
+  GimpRGB       xor_rgb      = { 0, 0, 0, 0 };
+  GeglColor    *color        = gegl_color_new (NULL);
 
   object_class->finalize     = gimp_display_config_finalize;
   object_class->set_property = gimp_display_config_set_property;
@@ -137,19 +138,21 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                          GIMP_CHECK_TYPE_GRAY_CHECKS,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR1,
-                        "transparency-custom-color1",
-                        _("Transparency custom color 1"),
-                        TRANSPARENCY_CUSTOM_COLOR1_BLURB,
-                        FALSE, &GIMP_CHECKS_CUSTOM_COLOR1,
-                        GIMP_PARAM_STATIC_STRINGS);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR1);
+  GIMP_CONFIG_PROP_COLOR (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR1,
+                          "transparency-custom-color1",
+                          _("Transparency custom color 1"),
+                          TRANSPARENCY_CUSTOM_COLOR1_BLURB,
+                          color,
+                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR2,
-                        "transparency-custom-color2",
-                        _("Transparency custom color 2"),
-                        TRANSPARENCY_CUSTOM_COLOR2_BLURB,
-                        FALSE, &GIMP_CHECKS_CUSTOM_COLOR2,
-                        GIMP_PARAM_STATIC_STRINGS);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR2);
+  GIMP_CONFIG_PROP_COLOR (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR2,
+                          "transparency-custom-color2",
+                          _("Transparency custom color 2"),
+                          TRANSPARENCY_CUSTOM_COLOR2_BLURB,
+                          color,
+                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_SNAP_DISTANCE,
                         "snap-distance",
@@ -379,7 +382,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   GIMP_CONFIG_PROP_RGB (object_class, PROP_XOR_COLOR,
                         "xor-color",
                         NULL, NULL,
-                        FALSE, &color,
+                        FALSE, &xor_rgb,
                         GIMP_PARAM_STATIC_STRINGS |
                         GIMP_CONFIG_PARAM_IGNORE);
 
@@ -400,11 +403,23 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                                         NULL, NULL,
                                                         G_TYPE_OBJECT,
                                                         GIMP_PARAM_READWRITE));
+
+  g_object_unref (color);
 }
 
 static void
 gimp_display_config_init (GimpDisplayConfig *config)
 {
+  GeglColor *color;
+
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR1);
+  config->transparency_custom_color1 = color;
+
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR2);
+  config->transparency_custom_color2 = color;
+
   config->default_view =
     g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
 
@@ -431,6 +446,8 @@ gimp_display_config_finalize (GObject *object)
   g_clear_object (&display_config->default_view);
   g_clear_object (&display_config->default_fullscreen_view);
   g_clear_object (&display_config->modifiers_manager);
+  g_clear_object (&display_config->transparency_custom_color1);
+  g_clear_object (&display_config->transparency_custom_color2);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -452,10 +469,12 @@ gimp_display_config_set_property (GObject      *object,
       display_config->transparency_type = g_value_get_enum (value);
       break;
     case PROP_TRANSPARENCY_CUSTOM_COLOR1:
-      display_config->transparency_custom_color1 = *(GimpRGB *) g_value_get_boxed (value);
+      g_clear_object (&display_config->transparency_custom_color1);
+      display_config->transparency_custom_color1 = gegl_color_duplicate (g_value_get_object (value));
       break;
     case PROP_TRANSPARENCY_CUSTOM_COLOR2:
-      display_config->transparency_custom_color2 = *(GimpRGB *) g_value_get_boxed (value);
+      g_clear_object (&display_config->transparency_custom_color2);
+      display_config->transparency_custom_color2 = gegl_color_duplicate (g_value_get_object (value));
       break;
     case PROP_SNAP_DISTANCE:
       display_config->snap_distance = g_value_get_int (value);
@@ -579,10 +598,10 @@ gimp_display_config_get_property (GObject    *object,
       g_value_set_enum (value, display_config->transparency_type);
       break;
     case PROP_TRANSPARENCY_CUSTOM_COLOR1:
-      g_value_set_boxed (value, &display_config->transparency_custom_color1);
+      g_value_set_object (value, display_config->transparency_custom_color1);
       break;
     case PROP_TRANSPARENCY_CUSTOM_COLOR2:
-      g_value_set_boxed (value, &display_config->transparency_custom_color2);
+      g_value_set_object (value, display_config->transparency_custom_color2);
       break;
     case PROP_SNAP_DISTANCE:
       g_value_set_int (value, display_config->snap_distance);

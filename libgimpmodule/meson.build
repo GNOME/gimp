@@ -19,7 +19,7 @@ libgimpmodule = library('gimpmodule-' + gimp_api_version,
   libgimpmodule_sources,
   include_directories: rootInclude,
   dependencies: [
-    gio, glib, gmodule,
+    gegl, gio, glib, gmodule,
   ],
   c_args: [ '-DG_LOG_DOMAIN="LibGimpModule"', '-DGIMP_MODULE_COMPILATION', ],
   link_with: [

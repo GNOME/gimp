@@ -268,7 +268,7 @@ gimp_canvas_get_layout (GimpCanvas  *canvas,
 /**
  * gimp_canvas_set_padding:
  * @canvas:   a #GimpCanvas widget
- * @color:    a color in #GimpRGB format
+ * @color:    a color in #GeglColor format
  *
  * Sets the background color of the canvas's window.  This
  * is the color the canvas is set to if it is cleared.
@@ -276,13 +276,14 @@ gimp_canvas_get_layout (GimpCanvas  *canvas,
 void
 gimp_canvas_set_padding (GimpCanvas            *canvas,
                          GimpCanvasPaddingMode  padding_mode,
-                         const GimpRGB         *padding_color)
+                         GeglColor             *padding_color)
 {
   g_return_if_fail (GIMP_IS_CANVAS (canvas));
-  g_return_if_fail (padding_color != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (padding_color));
 
   canvas->padding_mode  = padding_mode;
-  canvas->padding_color = *padding_color;
+  g_clear_object (&canvas->padding_color);
+  canvas->padding_color = gegl_color_duplicate (padding_color);
 
   gtk_widget_queue_draw (GTK_WIDGET (canvas));
 }

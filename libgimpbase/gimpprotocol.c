@@ -494,11 +494,17 @@ _gp_config_read (GIOChannel      *channel,
   if (! _gimp_wire_read_int8 (channel,
                               (guint8 *) &config->check_type, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_color (channel, &config->check_custom_color1,
-                               1, user_data))
+  if (! _gimp_wire_read_gegl_color (channel,
+                                    &config->check_custom_color1,
+                                    &config->check_custom_icc1,
+                                    &config->check_custom_encoding1,
+                                    1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_color (channel, &config->check_custom_color2,
-                               1, user_data))
+  if (! _gimp_wire_read_gegl_color (channel,
+                                    &config->check_custom_color2,
+                                    &config->check_custom_icc2,
+                                    &config->check_custom_encoding2,
+                                    1, user_data))
     goto cleanup;
   if (! _gimp_wire_read_int8 (channel,
                               (guint8 *) &config->show_help_button, 1,
@@ -574,6 +580,13 @@ _gp_config_read (GIOChannel      *channel,
   return;
 
  cleanup:
+  g_bytes_unref (config->check_custom_color1);
+  g_bytes_unref (config->check_custom_icc1);
+  g_free (config->check_custom_encoding1);
+  g_bytes_unref (config->check_custom_color2);
+  g_bytes_unref (config->check_custom_icc2);
+  g_free (config->check_custom_encoding2);
+
   g_free (config->app_name);
   g_free (config->wm_class);
   g_free (config->display_name);
@@ -608,11 +621,17 @@ _gp_config_write (GIOChannel      *channel,
                                (const guint8 *) &config->check_type, 1,
                                user_data))
     return;
-  if (! _gimp_wire_write_color (channel, &config->check_custom_color1,
-                                1, user_data))
+  if (! _gimp_wire_write_gegl_color (channel,
+                                     &config->check_custom_color1,
+                                     &config->check_custom_icc1,
+                                     &config->check_custom_encoding1,
+                                     1, user_data))
     return;
-  if (! _gimp_wire_write_color (channel, &config->check_custom_color2,
-                                1, user_data))
+  if (! _gimp_wire_write_gegl_color (channel,
+                                     &config->check_custom_color2,
+                                     &config->check_custom_icc2,
+                                     &config->check_custom_encoding2,
+                                     1, user_data))
     return;
   if (! _gimp_wire_write_int8 (channel,
                                (const guint8 *) &config->show_help_button, 1,
@@ -692,6 +711,13 @@ _gp_config_destroy (GimpWireMessage *msg)
 
   if (config)
     {
+      g_bytes_unref (config->check_custom_color1);
+      g_bytes_unref (config->check_custom_icc1);
+      g_free (config->check_custom_encoding1);
+      g_bytes_unref (config->check_custom_color2);
+      g_bytes_unref (config->check_custom_icc2);
+      g_free (config->check_custom_encoding2);
+
       g_free (config->app_name);
       g_free (config->wm_class);
       g_free (config->display_name);

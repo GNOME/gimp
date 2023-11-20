@@ -178,6 +178,9 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       gint               display_id;
       GObject           *monitor;
       GFile             *icon_theme_dir;
+      const Babl        *format;
+      const guint8      *icc;
+      gint               icc_length;
 
       if (! gimp_plug_in_open (plug_in, GIMP_PLUG_IN_CALL_RUN, FALSE))
         {
@@ -210,8 +213,19 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
                                      -1);
       config.check_size           = display_config->transparency_size;
       config.check_type           = display_config->transparency_type;
-      config.check_custom_color1  = display_config->transparency_custom_color1;
-      config.check_custom_color2  = display_config->transparency_custom_color2;
+
+      format = gegl_color_get_format (display_config->transparency_custom_color1);
+      config.check_custom_encoding1 = (gchar *) babl_format_get_encoding (format);
+      config.check_custom_color1  = gegl_color_get_bytes (display_config->transparency_custom_color1, format);
+      icc = (const guint8 *) babl_space_get_icc (babl_format_get_space (format), &icc_length);
+      config.check_custom_icc1    = g_bytes_new (icc, (gsize) icc_length);
+
+      format = gegl_color_get_format (display_config->transparency_custom_color2);
+      config.check_custom_encoding2 = (gchar *) babl_format_get_encoding (format);
+      config.check_custom_color2  = gegl_color_get_bytes (display_config->transparency_custom_color2, format);
+      icc = (const guint8 *) babl_space_get_icc (babl_format_get_space (format), &icc_length);
+      config.check_custom_icc2    = g_bytes_new (icc, (gsize) icc_length);
+
       config.show_help_button     = (gui_config->use_help &&
                                      gui_config->show_help_button);
       config.use_cpu_accel        = manager->gimp->use_cpu_accel;
@@ -267,6 +281,10 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
 
       g_free (config.display_name);
       g_free (config.icon_theme_dir);
+      g_bytes_unref (config.check_custom_color1);
+      g_bytes_unref (config.check_custom_icc1);
+      g_bytes_unref (config.check_custom_color2);
+      g_bytes_unref (config.check_custom_icc2);
 
       _gimp_gp_params_free (proc_run.params, proc_run.n_params, FALSE);
 

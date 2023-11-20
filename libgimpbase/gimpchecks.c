@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <glib-object.h>
 
 #include "gimpbasetypes.h"
@@ -60,64 +61,66 @@
  * Since: 3.0
  **/
 void
-gimp_checks_get_colors (GimpCheckType  type,
-                        GimpRGB       *color1,
-                        GimpRGB       *color2)
+gimp_checks_get_colors (GimpCheckType   type,
+                        GeglColor     **color1,
+                        GeglColor     **color2)
 {
-  g_return_if_fail (color1 != NULL || color2 != NULL);
+  g_return_if_fail ((color1 != NULL && GEGL_IS_COLOR (*color1)) || (color2 != NULL && GEGL_IS_COLOR (*color2)));
 
   if (color1)
     {
+      *color1 = gegl_color_duplicate (*color1);
       switch (type)
         {
         case GIMP_CHECK_TYPE_LIGHT_CHECKS:
-          *color1 = GIMP_CHECKS_LIGHT_COLOR_LIGHT;
+          gegl_color_set_pixel (*color1, babl_format ("R'G'B'A double"), &GIMP_CHECKS_LIGHT_COLOR_LIGHT);
           break;
         case GIMP_CHECK_TYPE_DARK_CHECKS:
-          *color1 = GIMP_CHECKS_DARK_COLOR_LIGHT;
+          gegl_color_set_pixel (*color1, babl_format ("R'G'B'A double"), &GIMP_CHECKS_DARK_COLOR_LIGHT);
           break;
         case GIMP_CHECK_TYPE_WHITE_ONLY:
-          *color1 = GIMP_CHECKS_WHITE_COLOR;
+          gegl_color_set_pixel (*color1, babl_format ("R'G'B'A double"), &GIMP_CHECKS_WHITE_COLOR);
           break;
         case GIMP_CHECK_TYPE_GRAY_ONLY:
-          *color1 = GIMP_CHECKS_GRAY_COLOR;
+          gegl_color_set_pixel (*color1, babl_format ("R'G'B'A double"), &GIMP_CHECKS_GRAY_COLOR);
           break;
         case GIMP_CHECK_TYPE_BLACK_ONLY:
-          *color1 = GIMP_CHECKS_BLACK_COLOR;
+          gegl_color_set_pixel (*color1, babl_format ("R'G'B'A double"), &GIMP_CHECKS_BLACK_COLOR);
           break;
         case GIMP_CHECK_TYPE_CUSTOM_CHECKS:
           /* Keep the current value. */
           break;
         default:
-          *color1 = GIMP_CHECKS_GRAY_COLOR_LIGHT;
+          gegl_color_set_pixel (*color1, babl_format ("R'G'B'A double"), &GIMP_CHECKS_GRAY_COLOR_LIGHT);
           break;
         }
     }
 
   if (color2)
     {
+      *color2 = gegl_color_duplicate (*color2);
       switch (type)
         {
         case GIMP_CHECK_TYPE_LIGHT_CHECKS:
-          *color2 = GIMP_CHECKS_LIGHT_COLOR_DARK;
+          gegl_color_set_pixel (*color2, babl_format ("R'G'B'A double"), &GIMP_CHECKS_LIGHT_COLOR_DARK);
           break;
         case GIMP_CHECK_TYPE_DARK_CHECKS:
-          *color2 = GIMP_CHECKS_DARK_COLOR_DARK;
+          gegl_color_set_pixel (*color2, babl_format ("R'G'B'A double"), &GIMP_CHECKS_DARK_COLOR_DARK);
           break;
         case GIMP_CHECK_TYPE_WHITE_ONLY:
-          *color2 = GIMP_CHECKS_WHITE_COLOR;
+          gegl_color_set_pixel (*color2, babl_format ("R'G'B'A double"), &GIMP_CHECKS_WHITE_COLOR);
           break;
         case GIMP_CHECK_TYPE_GRAY_ONLY:
-          *color2 = GIMP_CHECKS_GRAY_COLOR;
+          gegl_color_set_pixel (*color2, babl_format ("R'G'B'A double"), &GIMP_CHECKS_GRAY_COLOR);
           break;
         case GIMP_CHECK_TYPE_BLACK_ONLY:
-          *color2 = GIMP_CHECKS_BLACK_COLOR;
+          gegl_color_set_pixel (*color2, babl_format ("R'G'B'A double"), &GIMP_CHECKS_BLACK_COLOR);
           break;
         case GIMP_CHECK_TYPE_CUSTOM_CHECKS:
           /* Keep the current value. */
           break;
         default:
-          *color2 = GIMP_CHECKS_GRAY_COLOR_DARK;
+          gegl_color_set_pixel (*color2, babl_format ("R'G'B'A double"), &GIMP_CHECKS_GRAY_COLOR_DARK);
           break;
         }
     }

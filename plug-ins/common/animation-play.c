@@ -639,12 +639,16 @@ repaint_da (GtkWidget *darea,
             gpointer   data)
 {
   cairo_pattern_t *check;
-  GimpRGB          light = *(gimp_check_custom_color1 ());
-  GimpRGB          dark  = *(gimp_check_custom_color2 ());
+  GeglColor       *color1 = (GeglColor *) gimp_check_custom_color1 ();
+  GeglColor       *color2 = (GeglColor *) gimp_check_custom_color2 ();
+  GimpRGB          rgb1;
+  GimpRGB          rgb2;
 
-  gimp_checks_get_colors (gimp_check_type (), &light, &dark);
+  gimp_checks_get_colors (gimp_check_type (), &color1, &color2);
 
-  check = gimp_cairo_checkerboard_create (cr, 32, &light, &dark);
+  gegl_color_get_pixel (color1, babl_format ("R'G'B'A double"), &rgb1);
+  gegl_color_get_pixel (color2, babl_format ("R'G'B'A double"), &rgb2);
+  check = gimp_cairo_checkerboard_create (cr, 32, &rgb1, &rgb2);
 
   cairo_set_source (cr, check);
   cairo_paint (cr);
@@ -652,6 +656,9 @@ repaint_da (GtkWidget *darea,
 
   cairo_set_source_surface (cr, drawing_area_surface, 0, 0);
   cairo_paint (cr);
+
+  g_object_unref (color1);
+  g_object_unref (color2);
 
   return FALSE;
 }

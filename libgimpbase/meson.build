@@ -116,7 +116,7 @@ libgimpbase = library('gimpbase-' + gimp_api_version,
   libgimpbase_sources,
   include_directories: rootInclude,
   dependencies: [
-    gexiv2, gio, math,
+    gegl, gexiv2, gio, math,
     # optionally depend on libexecinfo on platforms where it is not
     # internal to the libc.
     opt_execinfo,

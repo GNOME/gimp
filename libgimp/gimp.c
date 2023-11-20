@@ -133,8 +133,8 @@ static gboolean            _export_thumbnail     = TRUE;
 static gint32              _num_processors       = 1;
 static GimpCheckSize       _check_size           = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
 static GimpCheckType       _check_type           = GIMP_CHECK_TYPE_GRAY_CHECKS;
-static GimpRGB             _check_custom_color1  = GIMP_CHECKS_CUSTOM_COLOR1;
-static GimpRGB             _check_custom_color2  = GIMP_CHECKS_CUSTOM_COLOR2;
+static GeglColor          *_check_custom_color1  = NULL;
+static GeglColor          *_check_custom_color2  = NULL;
 static gint                _default_display_id   = -1;
 static gchar              *_wm_class             = NULL;
 static gchar              *_display_name         = NULL;
@@ -533,6 +533,8 @@ gimp_main (GType  plug_in_type,
   gimp_close ();
   g_io_channel_unref (read_channel);
   g_io_channel_unref (write_channel);
+  g_clear_object (&_check_custom_color1);
+  g_clear_object (&_check_custom_color2);
 
   return EXIT_SUCCESS;
 }
@@ -801,10 +803,10 @@ gimp_check_type (void)
  *
  * Since: 3.0
  **/
-const GimpRGB *
+const GeglColor *
 gimp_check_custom_color1 (void)
 {
-  return &_check_custom_color1;
+  return (const GeglColor *) _check_custom_color1;
 }
 
 /**
@@ -819,10 +821,10 @@ gimp_check_custom_color1 (void)
  *
  * Since: 3.0
  **/
-const GimpRGB *
+const GeglColor *
 gimp_check_custom_color2 (void)
 {
-  return &_check_custom_color2;
+  return (const GeglColor *) _check_custom_color2;
 }
 
 /**
@@ -1060,15 +1062,20 @@ gimp_plugin_sigfatal_handler (gint sig_num)
 void
 _gimp_config (GPConfig *config)
 {
-  GFile *file;
-  gchar *path;
+  GFile        *file;
+  gchar        *path;
+  gsize         bpp;
+  const guint8 *pixel;
+  const guint8 *icc;
+  gsize         icc_length;
+  const Babl   *format = NULL;
+  const Babl   *space  = NULL;
 
   _tile_width           = config->tile_width;
   _tile_height          = config->tile_height;
   _check_size           = config->check_size;
   _check_type           = config->check_type;
-  _check_custom_color1  = config->check_custom_color1;
-  _check_custom_color2  = config->check_custom_color2;
+
   _show_help_button     = config->show_help_button ? TRUE : FALSE;
   _export_color_profile = config->export_color_profile   ? TRUE : FALSE;
   _export_exif          = config->export_exif      ? TRUE : FALSE;
@@ -1099,6 +1106,49 @@ _gimp_config (GPConfig *config)
                 "use-opencl",          config->use_opencl,
                 "application-license", "GPL3",
                 NULL);
+
+  /* XXX Running gegl_init() before gegl_config() is not appreciated by
+   * GEGL and generates a bunch of CRITICALs.
+   */
+  babl_init ();
+
+  g_clear_object (&_check_custom_color1);
+  _check_custom_color1 = gegl_color_new (NULL);
+  pixel = g_bytes_get_data (config->check_custom_color1, &bpp);
+  icc   = g_bytes_get_data (config->check_custom_icc1, &icc_length);
+  space = babl_space_from_icc ((const char *) icc, (int) icc_length,
+                               BABL_ICC_INTENT_RELATIVE_COLORIMETRIC,
+                               NULL);
+  format = babl_format_with_space (config->check_custom_encoding1, space);
+  if (bpp != babl_format_get_bytes_per_pixel (format))
+    {
+      g_warning ("%s: checker board color 1's format expects %d bpp but %ld bytes were passed.",
+                 G_STRFUNC, babl_format_get_bytes_per_pixel (format), bpp);
+      gegl_color_set_pixel (_check_custom_color1, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR1);
+    }
+  else
+    {
+      gegl_color_set_pixel (_check_custom_color1, format, pixel);
+    }
+
+  g_clear_object (&_check_custom_color2);
+  _check_custom_color2 = gegl_color_new (NULL);
+  pixel = g_bytes_get_data (config->check_custom_color2, &bpp);
+  icc   = g_bytes_get_data (config->check_custom_icc2, &icc_length);
+  space = babl_space_from_icc ((const char *) icc, (int) icc_length,
+                               BABL_ICC_INTENT_RELATIVE_COLORIMETRIC,
+                               NULL);
+  format = babl_format_with_space (config->check_custom_encoding2, space);
+  if (bpp != babl_format_get_bytes_per_pixel (format))
+    {
+      g_warning ("%s: checker board color 2's format expects %d bpp but %ld bytes were passed.",
+                 G_STRFUNC, babl_format_get_bytes_per_pixel (format), bpp);
+      gegl_color_set_pixel (_check_custom_color2, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR2);
+    }
+  else
+    {
+      gegl_color_set_pixel (_check_custom_color2, format, pixel);
+    }
 
   g_free (path);
   g_object_unref (file);

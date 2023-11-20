@@ -136,8 +136,8 @@ G_BEGIN_DECLS
 
 
 void  gimp_checks_get_colors (GimpCheckType  type,
-                              GimpRGB       *color1,
-                              GimpRGB       *color2);
+                              GeglColor     **color1,
+                              GeglColor     **color2);
 
 
 G_END_DECLS

@@ -60,23 +60,23 @@ enum
 
 #define CHECK_R(priv, row, col)        \
   (((((priv)->offset_y + (row)) & size) ^  \
-    (((priv)->offset_x + (col)) & size)) ? r1 : r2)
+    (((priv)->offset_x + (col)) & size)) ? rgb1[0] : rgb2[0])
 
 #define CHECK_G(priv, row, col)        \
   (((((priv)->offset_y + (row)) & size) ^  \
-    (((priv)->offset_x + (col)) & size)) ? g1 : g2)
+    (((priv)->offset_x + (col)) & size)) ? rgb1[1] : rgb2[1])
 
 #define CHECK_B(priv, row, col)        \
   (((((priv)->offset_y + (row)) & size) ^  \
-    (((priv)->offset_x + (col)) & size)) ? b1 : b2)
+    (((priv)->offset_x + (col)) & size)) ? rgb1[2] : rgb2[2])
 
 
 struct _GimpPreviewAreaPrivate
 {
   GimpCheckSize       check_size;
   GimpCheckType       check_type;
-  GimpRGB             check_custom_color1;
-  GimpRGB             check_custom_color2;
+  GeglColor          *check_custom_color1;
+  GeglColor          *check_custom_color2;
   gint                width;
   gint                height;
   gint                rowstride;
@@ -132,6 +132,15 @@ gimp_preview_area_class_init (GimpPreviewAreaClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GeglColor      *color1_default;
+  GeglColor      *color2_default;
+
+  gegl_init (NULL, NULL);
+
+  color1_default = gegl_color_new (NULL);
+  gegl_color_set_pixel (color1_default, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR1);
+  color2_default = gegl_color_new (NULL);
+  gegl_color_set_pixel (color2_default, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR2);
 
   object_class->dispose       = gimp_preview_area_dispose;
   object_class->finalize      = gimp_preview_area_finalize;
@@ -158,18 +167,21 @@ gimp_preview_area_class_init (GimpPreviewAreaClass *klass)
                                                       GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CHECK_CUSTOM_COLOR1,
-                                   g_param_spec_boxed ("check-custom-color1",
-                                                       _("Custom Checks Color 1"),
-                                                       "The first color of the checkerboard pattern indicating transparency",
-                                                       GIMP_TYPE_RGB,
-                                                       GIMP_PARAM_READWRITE));
+                                   gegl_param_spec_color ("check-custom-color1",
+                                                          _("Custom Checks Color 1"),
+                                                          "The first color of the checkerboard pattern indicating transparency",
+                                                          color1_default,
+                                                          GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CHECK_CUSTOM_COLOR2,
-                                   g_param_spec_boxed ("check-custom-color2",
-                                                       _("Custom Checks Color 2"),
-                                                       "The second color of the checkerboard pattern indicating transparency",
-                                                       GIMP_TYPE_RGB,
-                                                       GIMP_PARAM_READWRITE));
+                                   gegl_param_spec_color ("check-custom-color2",
+                                                          _("Custom Checks Color 2"),
+                                                          "The second color of the checkerboard pattern indicating transparency",
+                                                          color2_default,
+                                                          GIMP_PARAM_READWRITE));
+
+  g_object_unref (color1_default);
+  g_object_unref (color2_default);
 }
 
 static void
@@ -183,8 +195,10 @@ gimp_preview_area_init (GimpPreviewArea *area)
 
   priv->check_size          = DEFAULT_CHECK_SIZE;
   priv->check_type          = DEFAULT_CHECK_TYPE;
-  priv->check_custom_color1 = GIMP_CHECKS_CUSTOM_COLOR1;
-  priv->check_custom_color2 = GIMP_CHECKS_CUSTOM_COLOR2;
+  priv->check_custom_color1 = gegl_color_new (NULL);
+  gegl_color_set_pixel (priv->check_custom_color1, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR1);
+  priv->check_custom_color2 = gegl_color_new (NULL);
+  gegl_color_set_pixel (priv->check_custom_color2, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR2);
   priv->max_width           = -1;
   priv->max_height          = -1;
 
@@ -210,6 +224,8 @@ gimp_preview_area_finalize (GObject *object)
 
   g_clear_pointer (&priv->buf,      g_free);
   g_clear_pointer (&priv->colormap, g_free);
+  g_clear_object (&priv->check_custom_color1);
+  g_clear_object (&priv->check_custom_color2);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -231,10 +247,12 @@ gimp_preview_area_set_property (GObject      *object,
       priv->check_type = g_value_get_enum (value);
       break;
     case PROP_CHECK_CUSTOM_COLOR1:
-      priv->check_custom_color1 = *(GimpRGB *) g_value_get_boxed (value);
+      g_clear_object (&priv->check_custom_color1);
+      priv->check_custom_color1 = gegl_color_duplicate (g_value_get_object (value));
       break;
     case PROP_CHECK_CUSTOM_COLOR2:
-      priv->check_custom_color2 = *(GimpRGB *) g_value_get_boxed (value);
+      g_clear_object (&priv->check_custom_color2);
+      priv->check_custom_color2 = gegl_color_duplicate (g_value_get_object (value));
       break;
 
     default:
@@ -260,10 +278,10 @@ gimp_preview_area_get_property (GObject    *object,
       g_value_set_enum (value, priv->check_type);
       break;
     case PROP_CHECK_CUSTOM_COLOR1:
-      g_value_set_boxed (value, &priv->check_custom_color1);
+      g_value_set_object (value, priv->check_custom_color1);
       break;
     case PROP_CHECK_CUSTOM_COLOR2:
-      g_value_set_boxed (value, &priv->check_custom_color2);
+      g_value_set_object (value, priv->check_custom_color2);
       break;
 
     default:
@@ -517,14 +535,10 @@ gimp_preview_area_draw (GimpPreviewArea *area,
   const guchar           *src;
   guchar                 *dest;
   guint                   size;
-  GimpRGB                 color1;
-  GimpRGB                 color2;
-  guchar                  r1;
-  guchar                  g1;
-  guchar                  b1;
-  guchar                  r2;
-  guchar                  g2;
-  guchar                  b2;
+  GeglColor              *color1;
+  GeglColor              *color2;
+  guchar                  rgb1[3];
+  guchar                  rgb2[3];
   gint                    row;
   gint                    col;
 
@@ -579,8 +593,10 @@ gimp_preview_area_draw (GimpPreviewArea *area,
   color1 = priv->check_custom_color1;
   color2 = priv->check_custom_color2;
   gimp_checks_get_colors (priv->check_type, &color1, &color2);
-  gimp_rgb_get_uchar (&color1, &r1, &g1, &b1);
-  gimp_rgb_get_uchar (&color2, &r2, &g2, &b2);
+  gegl_color_get_pixel (color1, babl_format ("R'G'B' u8"), rgb1);
+  gegl_color_get_pixel (color2, babl_format ("R'G'B' u8"), rgb2);
+  g_object_unref (color1);
+  g_object_unref (color2);
 
   src  = buf;
   dest = priv->buf + x * 3 + y * priv->rowstride;
@@ -804,14 +820,10 @@ gimp_preview_area_blend (GimpPreviewArea *area,
   const guchar           *src2;
   guchar                 *dest;
   guint                   size;
-  GimpRGB                 color1;
-  GimpRGB                 color2;
-  guchar                  r1;
-  guchar                  g1;
-  guchar                  b1;
-  guchar                  r2;
-  guchar                  g2;
-  guchar                  b2;
+  GeglColor              *color1;
+  GeglColor              *color2;
+  guchar                  rgb1[3];
+  guchar                  rgb2[3];
   gint                    row;
   gint                    col;
   gint                    i;
@@ -887,8 +899,10 @@ gimp_preview_area_blend (GimpPreviewArea *area,
   color1 = priv->check_custom_color1;
   color2 = priv->check_custom_color2;
   gimp_checks_get_colors (priv->check_type, &color1, &color2);
-  gimp_rgb_get_uchar (&color1, &r1, &g1, &b1);
-  gimp_rgb_get_uchar (&color2, &r2, &g2, &b2);
+  gegl_color_get_pixel (color1, babl_format ("R'G'B' u8"), rgb1);
+  gegl_color_get_pixel (color2, babl_format ("R'G'B' u8"), rgb2);
+  g_object_unref (color1);
+  g_object_unref (color2);
 
   src1 = buf1;
   src2 = buf2;
@@ -1215,14 +1229,10 @@ gimp_preview_area_mask (GimpPreviewArea *area,
   const guchar           *src_mask;
   guchar                 *dest;
   guint                   size;
-  GimpRGB                 color1;
-  GimpRGB                 color2;
-  guchar                  r1;
-  guchar                  g1;
-  guchar                  b1;
-  guchar                  r2;
-  guchar                  g2;
-  guchar                  b2;
+  GeglColor              *color1;
+  GeglColor              *color2;
+  guchar                  rgb1[3];
+  guchar                  rgb2[3];
   gint                    row;
   gint                    col;
   gint                    i;
@@ -1286,8 +1296,10 @@ gimp_preview_area_mask (GimpPreviewArea *area,
   color1 = priv->check_custom_color1;
   color2 = priv->check_custom_color2;
   gimp_checks_get_colors (priv->check_type, &color1, &color2);
-  gimp_rgb_get_uchar (&color1, &r1, &g1, &b1);
-  gimp_rgb_get_uchar (&color2, &r2, &g2, &b2);
+  gegl_color_get_pixel (color1, babl_format ("R'G'B' u8"), rgb1);
+  gegl_color_get_pixel (color2, babl_format ("R'G'B' u8"), rgb2);
+  g_object_unref (color1);
+  g_object_unref (color2);
 
   src1     = buf1;
   src2     = buf2;

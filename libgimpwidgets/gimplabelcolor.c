@@ -78,6 +78,16 @@ static GtkWidget * gimp_label_color_populate          (GimpLabeled   *color,
                                                        gint          *width,
                                                        gint          *height);
 
+static gboolean    gimp_label_color_from_color_area   (GBinding      *binding,
+                                                       const GValue  *from_value,
+                                                       GValue*        to_value,
+                                                       gpointer       user_data);
+static gboolean    gimp_label_color_to_color_area     (GBinding      *binding,
+                                                       const GValue  *from_value,
+                                                       GValue*        to_value,
+                                                       gpointer       user_data);
+
+
 G_DEFINE_TYPE_WITH_PRIVATE (GimpLabelColor, gimp_label_color, GIMP_TYPE_LABELED)
 
 #define parent_class gimp_label_color_parent_class
@@ -89,7 +99,6 @@ gimp_label_color_class_init (GimpLabelColorClass *klass)
 {
   GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
   GimpLabeledClass *labeled_class = GIMP_LABELED_CLASS (klass);
-  GimpRGB           black;
 
   gimp_label_color_signals[VALUE_CHANGED] =
     g_signal_new ("value-changed",
@@ -105,6 +114,7 @@ gimp_label_color_class_init (GimpLabelColorClass *klass)
 
   labeled_class->populate    = gimp_label_color_populate;
 
+  babl_init ();
   /**
    * GimpLabelColor:value:
    *
@@ -112,13 +122,12 @@ gimp_label_color_class_init (GimpLabelColorClass *klass)
    *
    * Since: 3.0
    **/
-  gimp_rgba_set (&black, 0.0, 0.0, 0.0, 1.0);
-  object_props[PROP_VALUE] = gimp_param_spec_rgb ("value",
-                                                  "Color",
-                                                  "The displayed color",
-                                                  TRUE, &black,
-                                                  GIMP_PARAM_READWRITE    |
-                                                  G_PARAM_CONSTRUCT);
+  object_props[PROP_VALUE] = gegl_param_spec_color_from_string ("value",
+                                                                "Color",
+                                                                "The displayed color",
+                                                                "black",
+                                                                GIMP_PARAM_READWRITE    |
+                                                                G_PARAM_CONSTRUCT);
 
   /**
    * GimpLabelColor:editable:
@@ -165,9 +174,12 @@ gimp_label_color_constructed (GObject *object)
    * will allow config object to bind the "value" property of this
    * widget, and therefore be updated automatically.
    */
-  g_object_bind_property (G_OBJECT (priv->area), "color",
-                          G_OBJECT (color),      "value",
-                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+  g_object_bind_property_full (G_OBJECT (priv->area), "color",
+                               G_OBJECT (color),      "value",
+                               G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE,
+                               gimp_label_color_from_color_area,
+                               gimp_label_color_to_color_area,
+                               NULL, NULL);
 }
 
 static void
@@ -183,24 +195,28 @@ gimp_label_color_set_property (GObject      *object,
     {
     case PROP_VALUE:
         {
-          GimpRGB *new_color;
-          GimpRGB *color;
+          GeglColor *new_color;
+          GeglColor *color;
+          GimpRGB   *rgb;
 
-          new_color = g_value_get_boxed (value);
+          new_color = g_value_get_object (value);
 
           g_object_get (priv->area,
-                        "color", &color,
+                        "color", &rgb,
                         NULL);
 
+          color = gegl_color_new (NULL);
+          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
           /* Avoid looping forever since we have bound this widget's
            * "value" property with the color button "value" property.
            */
-          if (gimp_rgba_distance (color, new_color) >= GIMP_RGBA_EPSILON)
+          if (! gimp_color_is_perceptually_identical (color, new_color))
             {
-              g_object_set (priv->area, "color", new_color, NULL);
+              gegl_color_get_pixel (new_color, babl_format ("R'G'B'A double"), rgb);
+              g_object_set (priv->area, "color", rgb, NULL);
               g_signal_emit (object, gimp_label_color_signals[VALUE_CHANGED], 0);
             }
-          g_boxed_free (GIMP_TYPE_RGB, color);
+          g_object_unref (color);
         }
       break;
     case PROP_EDITABLE:
@@ -208,7 +224,7 @@ gimp_label_color_set_property (GObject      *object,
         {
           const gchar       *dialog_title;
           GimpLabeled       *labeled;
-          GimpRGB           *color;
+          GimpRGB           *rgb;
           GimpColorAreaType  type;
           gboolean           attached;
 
@@ -222,7 +238,7 @@ gimp_label_color_set_property (GObject      *object,
           attached = (gtk_widget_get_parent (priv->area) != NULL);
           g_object_get (priv->area,
                         "type",  &type,
-                        "color", &color,
+                        "color", &rgb,
                         NULL);
 
           gtk_widget_destroy (priv->area);
@@ -230,17 +246,18 @@ gimp_label_color_set_property (GObject      *object,
           priv->editable = g_value_get_boolean (value);
           if (priv->editable)
             priv->area = gimp_color_button_new (dialog_title,
-                                                20, 20, color, type);
+                                                20, 20, rgb, type);
           else
-            priv->area = gimp_color_area_new (color, type,
+            priv->area = gimp_color_area_new (rgb, type,
                                               GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
 
-          g_boxed_free (GIMP_TYPE_RGB, color);
-
           gtk_widget_set_size_request (priv->area, 20, 20);
-          g_object_bind_property (G_OBJECT (priv->area), "color",
-                                  G_OBJECT (lcolor),     "value",
-                                  G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+          g_object_bind_property_full (G_OBJECT (priv->area), "color",
+                                       G_OBJECT (lcolor),     "value",
+                                       G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE,
+                                       gimp_label_color_from_color_area,
+                                       gimp_label_color_to_color_area,
+                                       NULL, NULL);
 
           if (attached)
             {
@@ -269,7 +286,16 @@ gimp_label_color_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_VALUE:
-      g_object_get_property (G_OBJECT (priv->area), "color", value);
+      {
+        GimpRGB   *rgb;
+        GeglColor *color = gegl_color_new (NULL);
+
+        g_object_get (priv->area,
+                      "color", &rgb,
+                      NULL);
+        gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
+        g_value_take_object (value, color);
+      }
       break;
     case PROP_EDITABLE:
       g_value_set_boolean (value, priv->editable);
@@ -301,6 +327,37 @@ gimp_label_color_populate (GimpLabeled *labeled,
   return priv->area;
 }
 
+static gboolean
+gimp_label_color_from_color_area (GBinding     *binding,
+                                  const GValue *from_value,
+                                  GValue*       to_value,
+                                  gpointer      user_data)
+{
+  GimpRGB   *rgb   = g_value_get_boxed (from_value);
+  GeglColor *color = gegl_color_new (NULL);
+
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
+  g_value_take_object (to_value, color);
+
+  return TRUE;
+}
+
+
+static gboolean
+gimp_label_color_to_color_area (GBinding     *binding,
+                                const GValue *from_value,
+                                GValue*       to_value,
+                                gpointer      user_data)
+{
+  GeglColor *color = g_value_get_object (from_value);
+  GimpRGB    rgb;
+
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  g_value_set_boxed (to_value, &rgb);
+
+  return TRUE;
+}
+
 
 /* Public Functions */
 
@@ -326,9 +383,9 @@ gimp_label_color_populate (GimpLabeled *labeled,
  * Returns: (transfer full): The new #GimpLabelColor widget.
  **/
 GtkWidget *
-gimp_label_color_new (const gchar   *label,
-                      const GimpRGB *color,
-                      gboolean       editable)
+gimp_label_color_new (const gchar *label,
+                      GeglColor   *color,
+                      gboolean     editable)
 {
   GtkWidget *labeled;
 
@@ -350,9 +407,10 @@ gimp_label_color_new (const gchar   *label,
  **/
 void
 gimp_label_color_set_value (GimpLabelColor *color,
-                            const GimpRGB  *value)
+                            GeglColor      *value)
 {
   g_return_if_fail (GIMP_IS_LABEL_COLOR (color));
+  g_return_if_fail (GEGL_IS_COLOR (value));
 
   g_object_set (color,
                 "value", value,
@@ -362,21 +420,27 @@ gimp_label_color_set_value (GimpLabelColor *color,
 /**
  * gimp_label_color_get_value:
  * @color: The #GtkLabelColor.
- * @value: (out callee-allocates): The color to assign to the color area.
  *
  * This function returns the value shown by @color.
+ *
+ * Returns: (transfer full): a copy of the [class@Gegl.Color] used by the widget.
  **/
-void
-gimp_label_color_get_value (GimpLabelColor *color,
-                            GimpRGB        *value)
+GeglColor *
+gimp_label_color_get_value (GimpLabelColor *color)
 {
-  GimpLabelColorPrivate *priv = gimp_label_color_get_instance_private (color);
+  GimpLabelColorPrivate *priv  = gimp_label_color_get_instance_private (color);
+  GeglColor             *value = NULL;
+  GeglColor             *retval;
 
-  g_return_if_fail (GIMP_IS_LABEL_COLOR (color));
+  g_return_val_if_fail (GIMP_IS_LABEL_COLOR (color), NULL);
 
   g_object_get (priv->area,
                 "color", &value,
                 NULL);
+  retval = gegl_color_duplicate (value);
+  g_clear_object (&value);
+
+  return retval;
 }
 
 /**

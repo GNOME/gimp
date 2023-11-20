@@ -4255,10 +4255,10 @@ gimp_prop_label_color_new (GObject     *config,
   GParamSpec  *param_spec;
   GtkWidget   *prop_widget;
   const gchar *label;
-  GimpRGB     *value;
+  GeglColor   *value;
 
   param_spec = check_param_spec_w (config, property_name,
-                                   GIMP_TYPE_PARAM_RGB, G_STRFUNC);
+                                   GEGL_TYPE_PARAM_COLOR, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -4269,7 +4269,7 @@ gimp_prop_label_color_new (GObject     *config,
   label = g_param_spec_get_nick (param_spec);
 
   prop_widget = gimp_label_color_new (label, value, editable);
-  g_free (value);
+  g_clear_object (&value);
 
   g_object_bind_property (config,      property_name,
                           prop_widget, "value",

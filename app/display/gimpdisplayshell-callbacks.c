@@ -92,6 +92,7 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 
   gimp_display_shell_get_padding (shell, &padding_mode, &padding_color);
   gimp_display_shell_set_padding (shell, padding_mode, padding_color);
+  g_clear_object (&padding_color);
 
   gtk_widget_get_allocation (canvas, &allocation);
 

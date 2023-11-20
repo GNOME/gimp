@@ -56,7 +56,7 @@ struct _GimpCanvas
   PangoLayout           *layout;
 
   GimpCanvasPaddingMode  padding_mode;
-  GimpRGB                padding_color;
+  GeglColor             *padding_color;
 };
 
 struct _GimpCanvasClass
@@ -75,7 +75,7 @@ PangoLayout * gimp_canvas_get_layout   (GimpCanvas            *canvas,
 
 void          gimp_canvas_set_padding  (GimpCanvas            *canvas,
                                         GimpCanvasPaddingMode  padding_mode,
-                                        const GimpRGB         *padding_color);
+                                        GeglColor             *padding_color);
 
 
 #endif /*  __GIMP_CANVAS_H__  */

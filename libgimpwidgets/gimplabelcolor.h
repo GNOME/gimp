@@ -52,7 +52,7 @@ struct _GimpLabelColorClass
 };
 
 GtkWidget * gimp_label_color_new              (const gchar       *label,
-                                               const GimpRGB     *color,
+                                               GeglColor         *color,
                                                gboolean           editable);
 
 /* TODO: it would be interesting for such a widget to have an API to
@@ -61,9 +61,8 @@ GtkWidget * gimp_label_color_new              (const gchar       *label,
  */
 
 void        gimp_label_color_set_value        (GimpLabelColor     *color,
-                                               const GimpRGB      *value);
-void        gimp_label_color_get_value        (GimpLabelColor     *color,
-                                               GimpRGB            *value);
+                                               GeglColor          *value);
+GeglColor * gimp_label_color_get_value        (GimpLabelColor     *color);
 
 void        gimp_label_color_set_editable     (GimpLabelColor     *color,
                                                gboolean            editable);

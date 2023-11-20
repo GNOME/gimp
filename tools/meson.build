@@ -10,7 +10,7 @@ gimptool = executable('gimptool' + exec_ver,
   'gimptool.c',
   include_directories: rootInclude,
   dependencies: [
-    gtk3,
+    gegl, gtk3,
   ],
   link_with: [
     libgimpbase,
@@ -25,7 +25,7 @@ gimp_test_clipboard = executable('gimp-test-clipboard' + exec_ver,
   'gimp-test-clipboard.c',
   include_directories: rootInclude,
   dependencies: [
-    gtk3,
+    gegl, gtk3,
   ],
   install: true,
 )

@@ -21,6 +21,8 @@
 
 #define __GIMP_BASE_H_INSIDE__
 
+#include <gegl.h>
+
 #include <libgimpbase/gimpbasetypes.h>
 
 #include <libgimpbase/gimpchecks.h>

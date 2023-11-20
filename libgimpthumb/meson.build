@@ -65,7 +65,7 @@ libgimpthumb = library('gimpthumb-'+ gimp_api_version,
   libgimpthumb_sources,
   include_directories: rootInclude,
   dependencies: [
-    glib, gobject, gdk_pixbuf, gio,
+    gegl, glib, gobject, gdk_pixbuf, gio,
   ],
   c_args: [ '-DG_LOG_DOMAIN="LibGimpThumb"', '-DGIMP_THUMB_COMPILATION', ],
   link_with:  [

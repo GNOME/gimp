@@ -131,9 +131,18 @@ struct _GPConfig
   gchar   *swap_compression;
   gint32   num_processors;
 
-  /* since protocol version 0x010F: */
-  GimpRGB  check_custom_color1;
-  GimpRGB  check_custom_color2;
+  /* Since protocol version 0x0111:
+   * These values are used to represent 2 GeglColor objects but we avoid
+   * initializing GEGL in the wire protocol. This leads to extremely
+   * slow startup when initializing every plug-in. So we store them as
+   * bytes and encoding string and reconstruct the GeglColor in libgimp.
+   */
+  GBytes    *check_custom_color1;
+  GBytes    *check_custom_icc1;
+  gchar     *check_custom_encoding1;
+  GBytes    *check_custom_color2;
+  GBytes    *check_custom_icc2;
+  gchar     *check_custom_encoding2;
 };
 
 struct _GPTileReq
