@@ -607,6 +607,47 @@ gimp-win-x86:
 
 ## Analysis ##
 
+file-plug-in-tests:
+  # FIXME: Do we need another job testing this under Windows? MSYS2 usually has
+  #        the latest deps. It might be a good idea to test that too, maybe weekly?
+  extends: .default
+  rules:
+    # Don't run on release since the plug-in doesn't get installed in releases
+    - <<: *CI_MERGE
+    - <<: *CI_COMMIT
+  needs: ["deps-debian-x64", "gimp-debian-x64"]
+  stage: analysis
+  variables:
+    GIMP_TESTS_DATA_FOLDER: "$CI_PROJECT_DIR/_data/gimp-test-images/"
+    GIMP_TESTS_LOG_FILE: "$CI_PROJECT_DIR/_log/import-tests.log"
+    REGRESSION_STRING: "Total number of regressions: 0"
+  cache:
+    - key: "$CI_JOB_NAME"
+      paths:
+        - _data
+  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  artifacts:
+    paths:
+      - _log/
+    expire_in: 2 days
+  script:
+    - API_VER=$(grep GIMP_PKGCONFIG_VERSION _build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+    - APP_VER=$(grep GIMP_USER_VERSION _build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+    - pkg-config --variable=gimplibdir gimp-${API_VER} 2>/dev/null | grep . && PLUG_IN_DIR=$(echo $(pkg-config --variable=gimplibdir gimp-${API_VER})'/plug-ins/')
+    - export PYTHONPATH="${PLUG_IN_DIR}test-file-plug-ins"
+    - export GIMP_TESTS_CONFIG_FILE="${PLUG_IN_DIR}test-file-plug-ins/tests/batch-config.ini"
+    - mkdir _log
+    - mkdir _data && cd _data
+    - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/Infrastructure/gimp-test-images.git gimp-test-images
+    - cd ..
+    - cat ${PLUG_IN_DIR}test-file-plug-ins/batch-import-tests.py | gimp-console-${APP_VER} -idf --batch-interpreter python-fu-eval -b - --quit
+    - if [ $(grep -c "${REGRESSION_STRING}" "${GIMP_TESTS_LOG_FILE}") -ne 1 ]; then
+        echo "There are file import regressions. Check the log at ${GIMP_TESTS_LOG_FILE}!";
+        exit 1;
+      fi
+    # FIXME No export testing for now until it's more developed. A limited test
+    #       can be done from the plug-in for bmp export.
+
 clang-format:
   extends: .default
   rules:
