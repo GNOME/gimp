@@ -1527,11 +1527,11 @@ prefs_dialog_new (Gimp       *gimp,
                                          _("Mar_k out of gamut colors"));
     gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
-    button = gimp_prop_color_button_new (color_config, "out-of-gamut-color",
-                                         _("Select Warning Color"),
-                                         PREFS_COLOR_BUTTON_WIDTH,
-                                         PREFS_COLOR_BUTTON_HEIGHT,
-                                         GIMP_COLOR_AREA_FLAT);
+    button = gimp_prop_gegl_color_button_new (color_config, "out-of-gamut-color",
+                                              _("Select Warning Color"),
+                                              PREFS_COLOR_BUTTON_WIDTH,
+                                              PREFS_COLOR_BUTTON_HEIGHT,
+                                              GIMP_COLOR_AREA_FLAT);
     gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
     gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),

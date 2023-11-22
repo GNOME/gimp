@@ -892,7 +892,6 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
   gdouble            srgb_color[4];
   gdouble            transformed_color[4];
   gboolean           is_out_of_gamut;
-  const Babl        *target_space = NULL;
 
   if (editor->active_image)
     {
@@ -931,53 +930,58 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
   cairo_fill (cr);
 
   if (editor->active_image)
-    target_space = gimp_image_get_layer_space (editor->active_image);
-  else
-    target_space = babl_space ("sRGB");
-
-  if (base_type == GIMP_GRAY)
     {
-      gfloat gray[1];
+      const Babl *target_space = gimp_image_get_layer_space (editor->active_image);
 
-      gegl_color_get_pixel (color,
-                            babl_format_with_space ("Y' float", target_space),
-                            gray);
-      is_out_of_gamut = ((gray[0] < 0.0 && -gray[0] > CHANNEL_EPSILON)       ||
-                         (gray[0] > 1.0 && gray[0] - 1.0 > CHANNEL_EPSILON));
+      if (base_type == GIMP_GRAY)
+        {
+          gfloat gray[1];
 
-      if (! is_out_of_gamut)
+          gegl_color_get_pixel (color,
+                                babl_format_with_space ("Y' float", target_space),
+                                gray);
+          is_out_of_gamut = ((gray[0] < 0.0 && -gray[0] > CHANNEL_EPSILON)       ||
+                             (gray[0] > 1.0 && gray[0] - 1.0 > CHANNEL_EPSILON));
+
+          if (! is_out_of_gamut)
+            {
+              gdouble rgb[3];
+
+              /* Grayscale colors can be out of gamut if the color is out of the [0;
+               * 1] range in the target space and also if they can be converted to
+               * RGB with non-equal components.
+               */
+              gegl_color_get_pixel (color,
+                                    babl_format_with_space ("R'G'B' double", target_space),
+                                    rgb);
+              is_out_of_gamut = (ABS (rgb[0] - rgb[0]) > CHANNEL_EPSILON ||
+                                 ABS (rgb[1] - rgb[1]) > CHANNEL_EPSILON ||
+                                 ABS (rgb[2] - rgb[2]) > CHANNEL_EPSILON);
+            }
+        }
+      else
         {
           gdouble rgb[3];
 
-          /* Grayscale colors can be out of gamut if the color is out of the [0;
-           * 1] range in the target space and also if they can be converted to
-           * RGB with non-equal components.
-           */
           gegl_color_get_pixel (color,
-                                babl_format_with_space ("R'G'B' float", target_space),
+                                babl_format_with_space ("R'G'B' double", target_space),
                                 rgb);
-          is_out_of_gamut = (ABS (rgb[0] - rgb[0]) > CHANNEL_EPSILON ||
-                             ABS (rgb[1] - rgb[1]) > CHANNEL_EPSILON ||
-                             ABS (rgb[2] - rgb[2]) > CHANNEL_EPSILON);
+          /* We make sure that each component is within [0; 1], but accept a small
+           * error of margin (we don't want to show small precision errors as
+           * out-of-gamut colors).
+           */
+          is_out_of_gamut = ((rgb[0] < 0.0 && -rgb[0] > CHANNEL_EPSILON)       ||
+                             (rgb[0] > 1.0 && rgb[0] - 1.0 > CHANNEL_EPSILON) ||
+                             (rgb[1] < 0.0 && -rgb[1] > CHANNEL_EPSILON)       ||
+                             (rgb[1] > 1.0 && rgb[1] - 1.0 > CHANNEL_EPSILON) ||
+                             (rgb[2] < 0.0 && -rgb[2] > CHANNEL_EPSILON)       ||
+                             (rgb[2] > 1.0 && rgb[2] - 1.0 > CHANNEL_EPSILON));
         }
     }
   else
     {
-      gdouble rgb[3];
-
-      gegl_color_get_pixel (color,
-                            babl_format_with_space ("R'G'B' float", target_space),
-                            rgb);
-      /* We make sure that each component is within [0; 1], but accept a small
-       * error of margin (we don't want to show small precision errors as
-       * out-of-gamut colors).
-       */
-      is_out_of_gamut = ((rgb[0] < 0.0 && -rgb[0] > CHANNEL_EPSILON)       ||
-                         (rgb[0] > 1.0 && rgb[0] - 1.0 > CHANNEL_EPSILON) ||
-                         (rgb[1] < 0.0 && -rgb[1] > CHANNEL_EPSILON)       ||
-                         (rgb[1] > 1.0 && rgb[1] - 1.0 > CHANNEL_EPSILON) ||
-                         (rgb[2] < 0.0 && -rgb[2] > CHANNEL_EPSILON)       ||
-                         (rgb[2] > 1.0 && rgb[2] - 1.0 > CHANNEL_EPSILON));
+      /* Without active image, we are never out of gamut. */
+      is_out_of_gamut = FALSE;
     }
 
   if (editor->color_config &&
@@ -987,20 +991,24 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
        (colormap_palette &&
         ! gimp_palette_find_entry (colormap_palette, color, NULL))))
     {
-      gint    corner_x = x + 0.5 * (1.0 - corner_dx) * width;
-      gint    corner_y = y + 0.5 * (1.0 - corner_dy) * height;
-      gint    side     = MIN (width, height) * 2 / 3;
-      GimpRGB out_of_gamut_color;
+      GeglColor *out_of_gamut_color;
+      gint       corner_x = x + 0.5 * (1.0 - corner_dx) * width;
+      gint       corner_y = y + 0.5 * (1.0 - corner_dy) * height;
+      gint       side     = MIN (width, height) * 2 / 3;
 
       cairo_move_to (cr, corner_x, corner_y);
       cairo_line_to (cr, corner_x + side * corner_dx, corner_y);
       cairo_line_to (cr, corner_x, corner_y + side * corner_dy);
       cairo_close_path (cr);
 
-      gimp_color_config_get_out_of_gamut_color (editor->color_config,
-                                                &out_of_gamut_color);
-      gimp_cairo_set_source_rgb (cr, &out_of_gamut_color);
+      out_of_gamut_color = gimp_color_config_get_out_of_gamut_color (editor->color_config);
+      /* Out-of-gamut color is color-managed to FG/BG editor's monitor profile
+       * but not soft-proofed.
+       */
+      gimp_cairo_set_source_color (cr, out_of_gamut_color, editor->color_config, FALSE, GTK_WIDGET (editor));
       cairo_fill (cr);
+
+      g_object_unref (out_of_gamut_color);
     }
 
   cairo_set_line_width (cr, 1.0);

@@ -89,10 +89,13 @@ gimp_display_shell_draw_background (GimpDisplayShell *shell,
 
   if (canvas->padding_mode != GIMP_CANVAS_PADDING_MODE_DEFAULT)
     {
-      GimpRGB rgb;
+      GimpColorConfig *config = gimp_display_shell_get_color_config (shell);
 
-      gegl_color_get_pixel (canvas->padding_color, babl_format ("R'G'B'A double"), &rgb);
-      gimp_cairo_set_source_rgb (cr, &rgb);
+      /* Padding color is color-managed to shell's monitor profile but not
+       * soft-proofed.
+       */
+      gimp_cairo_set_source_color (cr, canvas->padding_color, config, FALSE,
+                                   GTK_WIDGET (shell));
       cairo_paint (cr);
     }
 }

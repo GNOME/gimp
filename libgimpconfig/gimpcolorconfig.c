@@ -160,7 +160,7 @@ struct _GimpColorConfigPrivate
   gboolean                  simulation_use_black_point_compensation;
   gboolean                  simulation_optimize;
   gboolean                  simulation_gamut_check;
-  GimpRGB                   out_of_gamut_color;
+  GeglColor                *out_of_gamut_color;
 
   gboolean                  show_rgb_u8;
   gboolean                  show_hsv;
@@ -209,9 +209,13 @@ static void
 gimp_color_config_class_init (GimpColorConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB       color;
+  GeglColor    *magenta;
 
-  gimp_rgba_set (&color, 1.0, 0.0, 1.0, 1.0); /* magenta */
+  babl_init ();
+
+  /* Magenta (sRGB space). */
+  magenta = gegl_color_new (NULL);
+  gegl_color_set_rgba (magenta, 1.0, 0.0, 1.0, 1.0);
 
   object_class->finalize     = gimp_color_config_finalize;
   object_class->set_property = gimp_color_config_set_property;
@@ -318,12 +322,12 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_OUT_OF_GAMUT_COLOR,
-                        "out-of-gamut-color",
-                        _("Out of gamut warning color"),
-                        OUT_OF_GAMUT_COLOR_BLURB,
-                        FALSE, &color,
-                        GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_COLOR (object_class, PROP_OUT_OF_GAMUT_COLOR,
+                          "out-of-gamut-color",
+                          _("Out of gamut warning color"),
+                          OUT_OF_GAMUT_COLOR_BLURB,
+                          magenta,
+                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_RGB_U8,
                             "show-rgb-u8",
@@ -338,12 +342,20 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                             _("Show HSV instead of LCH"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  g_object_unref (magenta);
 }
 
 static void
 gimp_color_config_init (GimpColorConfig *config)
 {
+  GeglColor *magenta = gegl_color_new (NULL);
+
   config->priv = gimp_color_config_get_instance_private (config);
+
+  /* Magenta (sRGB space). */
+  gegl_color_set_rgba (magenta, 1.0, 0.0, 1.0, 1.0);
+  config->priv->out_of_gamut_color = magenta;
 }
 
 static void
@@ -425,7 +437,8 @@ gimp_color_config_set_property (GObject      *object,
       priv->simulation_gamut_check = g_value_get_boolean (value);
       break;
     case PROP_OUT_OF_GAMUT_COLOR:
-      priv->out_of_gamut_color = *(GimpRGB *) g_value_get_boxed (value);
+      g_clear_object (&priv->out_of_gamut_color);
+      priv->out_of_gamut_color = gegl_color_duplicate (g_value_get_object (value));
       break;
     case PROP_SHOW_RGB_U8:
       priv->show_rgb_u8 = g_value_get_boolean (value);
@@ -499,7 +512,7 @@ gimp_color_config_get_property (GObject    *object,
       g_value_set_boolean (value, priv->simulation_gamut_check);
       break;
     case PROP_OUT_OF_GAMUT_COLOR:
-      g_value_set_boxed (value, &priv->out_of_gamut_color);
+      g_value_set_object (value, priv->out_of_gamut_color);
       break;
     case PROP_SHOW_RGB_U8:
       g_value_set_boolean (value, priv->show_rgb_u8);
@@ -649,18 +662,17 @@ gimp_color_config_get_simulation_gamut_check (GimpColorConfig *config)
 /**
  * gimp_color_config_get_out_of_gamut_color:
  * @config: a #GimpColorConfig
- * @color:  return location for a #GimpRGB
  *
+ * Returns: (transfer full): the [class@Gegl.Color] to use to represent
+ *                           out-of-gamut pixels.
  * Since: 3.0
  **/
-void
-gimp_color_config_get_out_of_gamut_color (GimpColorConfig *config,
-                                          GimpRGB         *color)
+GeglColor *
+gimp_color_config_get_out_of_gamut_color (GimpColorConfig *config)
 {
-  g_return_if_fail (GIMP_IS_COLOR_CONFIG (config));
-  g_return_if_fail (color != NULL);
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
 
-  *color = GET_PRIVATE (config)->out_of_gamut_color;
+  return gegl_color_duplicate (GET_PRIVATE (config)->out_of_gamut_color);
 }
 
 /**

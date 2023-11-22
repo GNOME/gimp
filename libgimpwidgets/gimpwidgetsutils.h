@@ -68,6 +68,15 @@ GimpColorTransform * gimp_widget_get_color_transform (GtkWidget         *widget,
 void                 gimp_widget_set_native_handle    (GtkWidget        *widget,
                                                        GBytes          **handle);
 
+
+/* Internal use */
+
+G_GNUC_INTERNAL void _gimp_widget_get_profiles        (GtkWidget         *widget,
+                                                       GimpColorConfig   *config,
+                                                       GimpColorProfile **proof_profile,
+                                                       GimpColorProfile **dest_profile);
+
+
 G_END_DECLS
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

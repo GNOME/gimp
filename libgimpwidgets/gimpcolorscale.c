@@ -969,14 +969,16 @@ gimp_color_scale_notify_config (GimpColorConfig  *config,
                                 GimpColorScale   *scale)
 {
   GimpColorScalePrivate *priv = GET_PRIVATE (scale);
-  GimpRGB                color;
+  GeglColor             *color;
 
   gimp_color_scale_destroy_transform (scale);
 
-  gimp_color_config_get_out_of_gamut_color (config, &color);
-  gimp_rgb_get_uchar (&color,
-                      priv->oog_color,
-                      priv->oog_color + 1,
-                      priv->oog_color + 2);
+  color = gimp_color_config_get_out_of_gamut_color (config);
+  /* TODO: shouldn't this be color-managed too, using the target space into
+   * consideration?
+   */
+  gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), priv->oog_color);
   priv->needs_render = TRUE;
+
+  g_object_unref (color);
 }

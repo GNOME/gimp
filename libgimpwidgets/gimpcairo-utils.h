@@ -32,5 +32,11 @@ gboolean          gimp_cairo_set_focus_line_pattern     (cairo_t       *cr,
 
 cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf     *pixbuf);
 
+void              gimp_cairo_set_source_color           (cairo_t         *cr,
+                                                         GeglColor       *color,
+                                                         GimpColorConfig *config,
+                                                         gboolean         softproof,
+                                                         GtkWidget       *widget);
+
 
 #endif /* __GIMP_CAIRO_UTILS_H__ */

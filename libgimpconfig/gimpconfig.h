@@ -19,6 +19,8 @@
 #ifndef __GIMP_CONFIG_H__
 #define __GIMP_CONFIG_H__
 
+#include <gegl.h>
+
 #define __GIMP_CONFIG_H_INSIDE__
 
 #include <libgimpconfig/gimpconfigtypes.h>

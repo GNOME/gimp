@@ -75,8 +75,7 @@ GimpColorRenderingIntent
 gboolean           gimp_color_config_get_simulation_bpc           (GimpColorConfig  *config);
 gboolean           gimp_color_config_get_simulation_optimize      (GimpColorConfig  *config);
 gboolean           gimp_color_config_get_simulation_gamut_check   (GimpColorConfig  *config);
-void               gimp_color_config_get_out_of_gamut_color       (GimpColorConfig  *config,
-                                                                   GimpRGB          *color);
+GeglColor        * gimp_color_config_get_out_of_gamut_color       (GimpColorConfig  *config);
 
 GimpColorProfile * gimp_color_config_get_rgb_color_profile        (GimpColorConfig  *config,
                                                                    GError          **error);

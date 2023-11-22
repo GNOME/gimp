@@ -1005,20 +1005,19 @@ gimp_widget_get_color_transform (GtkWidget               *widget,
 
       if (gimp_color_config_get_simulation_gamut_check (config))
         {
-          GimpRGB         color;
-          cmsUInt16Number alarmCodes[cmsMAXCHANNELS] = { 0, };
-          guchar          r, g, b;
+          GeglColor       *color;
+          cmsUInt16Number  alarmCodes[cmsMAXCHANNELS] = { 0, };
 
           flags |= GIMP_COLOR_TRANSFORM_FLAGS_GAMUT_CHECK;
 
-          gimp_color_config_get_out_of_gamut_color (config, &color);
-          gimp_rgb_get_uchar (&color, &r, &g, &b);
-
-          alarmCodes[0] = (cmsUInt16Number) r * 256;
-          alarmCodes[1] = (cmsUInt16Number) g * 256;
-          alarmCodes[2] = (cmsUInt16Number) b * 256;
-
+          color = gimp_color_config_get_out_of_gamut_color (config);
+          /* Little-CMS documentation doesn't say which space should the
+           * out-of-gamut color be. Let's just give sRGB data.
+           */
+          gegl_color_get_pixel (color, babl_format ("R'G'B' u16"), alarmCodes);
           cmsSetAlarmCodes (alarmCodes);
+
+          g_object_unref (color);
         }
 
       cache->transform =
@@ -1104,6 +1103,35 @@ gimp_widget_set_native_handle (GtkWidget  *widget,
 
   if (gtk_widget_get_realized (widget))
     gimp_widget_set_handle_on_mapped (widget, NULL, handle);
+}
+
+
+/* Internal functions */
+
+void
+_gimp_widget_get_profiles (GtkWidget         *widget,
+                           GimpColorConfig   *config,
+                           GimpColorProfile **proof_profile,
+                           GimpColorProfile **dest_profile)
+{
+  g_return_if_fail (dest_profile != NULL && *dest_profile == NULL);
+  g_return_if_fail (proof_profile == NULL || *proof_profile == NULL);
+
+  switch (gimp_color_config_get_mode (config))
+    {
+    case GIMP_COLOR_MANAGEMENT_OFF:
+      return;
+
+    case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
+      if (proof_profile)
+        *proof_profile = gimp_color_config_get_simulation_color_profile (config, NULL);
+
+      /*  fallthru  */
+
+    case GIMP_COLOR_MANAGEMENT_DISPLAY:
+      *dest_profile = get_display_profile (widget, config);
+      break;
+    }
 }
 
 

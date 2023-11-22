@@ -1981,15 +1981,17 @@ gimp_color_select_notify_config (GimpColorConfig  *config,
                                  const GParamSpec *pspec,
                                  GimpColorSelect  *select)
 {
-  GimpRGB color;
+  GeglColor *color;
 
   gimp_color_select_destroy_transform (select);
 
-  gimp_color_config_get_out_of_gamut_color (config, &color);
-  gimp_rgb_get_uchar (&color,
-                      select->oog_color,
-                      select->oog_color + 1,
-                      select->oog_color + 2);
+  color = gimp_color_config_get_out_of_gamut_color (config);
+  /* TODO: shouldn't this be color-managed too, using the target space into
+   * consideration?
+   */
+  gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), select->oog_color);
   select->xy_needs_render = TRUE;
   select->z_needs_render  = TRUE;
+
+  g_object_unref (color);
 }
