@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-26 19:07+0000\n"
-"PO-Revision-Date: 2023-09-27 21:27+0200\n"
+"POT-Creation-Date: 2023-10-02 00:02+0000\n"
+"PO-Revision-Date: 2023-10-02 02:16+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22,9 +22,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.3.2\n"
 
-#: libgimp/gimpbrushselectbutton.c:130 libgimp/gimppatternselectbutton.c:142
+#: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
 msgstr "_Bläddra…"
+
+#: libgimp/gimpdrawablechooser.c:238
+msgid "Browse..."
+msgstr "Bläddra…"
 
 #: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
 #, c-format
@@ -167,7 +171,7 @@ msgid "Confirm Save"
 msgstr "Bekräfta sparande"
 
 #: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:557
+#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -189,7 +193,7 @@ msgid "_Ignore"
 msgstr "_Ignorera"
 
 #: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
-#: libgimp/gimpproceduredialog.c:277
+#: libgimp/gimpproceduredialog.c:296 libgimp/gimpproceduredialog.c:569
 msgid "_Export"
 msgstr "_Exportera"
 
@@ -227,18 +231,31 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:397
+#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:396
 #, c-format
 msgid "Export Image as %s"
 msgstr "Exportera bild som %s"
 
-#: libgimp/gimpimagemetadata.c:284
+#: libgimp/gimpimagemetadata.c:283
 msgid "Background"
 msgstr "Bakgrund"
 
 #: libgimp/gimpimagemetadata-save.c:760 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
+
+#: libgimp/gimploadprocedure.c:260
+msgid ""
+"This file loading plug-in returned SUCCESS as a status without an image. "
+"This is a bug in the plug-in code. Contact the plug-in developer."
+msgstr ""
+"Denna insticksmodul för filinläsning returnerade SUCCESS som status utan en "
+"bild. Detta är ett fel i insticksmodulens kod. Kontakta utvecklaren av "
+"insticksmodulen."
+
+#: libgimp/gimpparamspecs-desc.c:54
+msgid "Allowed values:"
+msgstr "Tillåtna värden:"
 
 #. procedure executed successfully
 #: libgimp/gimppdb.c:552
@@ -348,12 +365,12 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedur matchar din sökning"
 msgstr[1] "%d procedurer matchar din sökning"
 
-#: libgimp/gimpprocedure.c:1924
+#: libgimp/gimpprocedure.c:1959
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Proceduren ”%s” returnerade inga svarsvärden"
 
-#: libgimp/gimpprocedure.c:2015
+#: libgimp/gimpprocedure.c:2050
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -362,7 +379,7 @@ msgstr ""
 "Proceduren ”%s” returnerade en felaktig värdetyp för svarsvärdet ”%s” (nr. "
 "%d). Förväntade %s, fick %s."
 
-#: libgimp/gimpprocedure.c:2027
+#: libgimp/gimpprocedure.c:2062
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
@@ -371,7 +388,7 @@ msgstr ""
 "Proceduren ”%s” har anropats med en felaktig värdetyp för argumentet "
 "”%s” (nr. %d). Förväntade %s, fick %s."
 
-#: libgimp/gimpprocedure.c:2062
+#: libgimp/gimpprocedure.c:2097
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -380,7 +397,7 @@ msgstr ""
 "Proceduren ”%s” returnerade ”%s” som svarsvärde ”%s” (nr. %d, typ %s). Det "
 "här värdet är utanför intervallet."
 
-#: libgimp/gimpprocedure.c:2076
+#: libgimp/gimpprocedure.c:2111
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -389,13 +406,13 @@ msgstr ""
 "Proceduren ”%s” har anropats med värdet ”%s” för argumentet ”%s” (nr. %d, "
 "typ %s). Det här värdet är utanför intervallet."
 
-#: libgimp/gimpprocedure.c:2120
+#: libgimp/gimpprocedure.c:2155
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "Proceduren ”%s” returnerade en ogiltig UTF-8-sträng för argumentet ”%s”."
 
-#: libgimp/gimpprocedure.c:2130
+#: libgimp/gimpprocedure.c:2165
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -403,63 +420,63 @@ msgid ""
 msgstr ""
 "Proceduren ”%s” har anropats med en ogiltig UTF-8-sträng för argumentet ”%s”."
 
-#: libgimp/gimpproceduredialog.c:275
+#: libgimp/gimpproceduredialog.c:294 libgimp/gimpproceduredialog.c:567
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Öppna"
 
-#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:558
-#: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libgimp/gimpproceduredialog.c:298 libgimp/gimpproceduredialog.c:571
+#: libgimpwidgets/gimpcolorbutton.c:558 libgimpwidgets/gimpfileentry.c:467
+#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
+#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_OK"
 
-#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:556
+#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:556
 msgid "_Reset"
 msgstr "_Återställ"
 
-#: libgimp/gimpproceduredialog.c:339
+#: libgimp/gimpproceduredialog.c:359
 msgid "_Load Saved Settings"
 msgstr "_Läs in sparade inställningar"
 
-#: libgimp/gimpproceduredialog.c:340
+#: libgimp/gimpproceduredialog.c:360
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Läs in inställningar som sparats med knappen ”Spara inställningar”"
 
-#: libgimp/gimpproceduredialog.c:352
+#: libgimp/gimpproceduredialog.c:372
 msgid "_Save Settings"
 msgstr "_Spara inställningar"
 
-#: libgimp/gimpproceduredialog.c:353
+#: libgimp/gimpproceduredialog.c:373
 msgid "Store current settings for later reuse"
 msgstr "Lagra aktuella inställningar för att använda dem igen senare"
 
-#: libgimp/gimpproceduredialog.c:734
+#: libgimp/gimpproceduredialog.c:784
 msgid "Brush Chooser"
 msgstr "Penselväljare"
 
-#: libgimp/gimpproceduredialog.c:738
+#: libgimp/gimpproceduredialog.c:788
 msgid "Font Chooser"
 msgstr "Typsnittsväljare"
 
-#: libgimp/gimpproceduredialog.c:742
+#: libgimp/gimpproceduredialog.c:792
 msgid "Gradient Chooser"
 msgstr "Gradientväljare"
 
-#: libgimp/gimpproceduredialog.c:746
+#: libgimp/gimpproceduredialog.c:796
 msgid "Palette Chooser"
 msgstr "Palettväljare"
 
-#: libgimp/gimpproceduredialog.c:750
+#: libgimp/gimpproceduredialog.c:800
 msgid "Pattern Chooser"
 msgstr "Mönsterväljare"
 
-#: libgimp/gimpproceduredialog.c:2128
+#: libgimp/gimpproceduredialog.c:2492
 msgid "Reset to _Initial Values"
 msgstr "Återställ till _ursprungsvärden"
 
-#: libgimp/gimpproceduredialog.c:2137
+#: libgimp/gimpproceduredialog.c:2501
 msgid "Reset to _Factory Defaults"
 msgstr "Återställ till _fabriksinställningar"
 
@@ -499,59 +516,74 @@ msgstr "Datum:"
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: libgimp/gimpsaveprocedure.c:408
+#: libgimp/gimppropwidgets.c:191
+#, c-format
+msgid "Choose layer: %s"
+msgstr "Välj lager: %s"
+
+#: libgimp/gimppropwidgets.c:193
+#, c-format
+msgid "Choose channel: %s"
+msgstr "Välj kanal: %s"
+
+#: libgimp/gimppropwidgets.c:195
+#, c-format
+msgid "Choose drawable: %s"
+msgstr "Välj rityta: %s"
+
+#: libgimp/gimpsaveprocedure.c:460
 msgid "Save _Exif"
 msgstr "Spara _Exif"
 
-#: libgimp/gimpsaveprocedure.c:409
+#: libgimp/gimpsaveprocedure.c:461
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Spara Exif-metadata (Exchangeable image file format)"
 
-#: libgimp/gimpsaveprocedure.c:414
+#: libgimp/gimpsaveprocedure.c:466
 msgid "Save _IPTC"
 msgstr "Spara _IPTC"
 
-#: libgimp/gimpsaveprocedure.c:415
+#: libgimp/gimpsaveprocedure.c:467
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr "Spara IPTC-metadata (International Press Telecommunications Council)"
 
-#: libgimp/gimpsaveprocedure.c:420
+#: libgimp/gimpsaveprocedure.c:472
 msgid "Save _XMP"
 msgstr "Spara _XMP"
 
-#: libgimp/gimpsaveprocedure.c:421
+#: libgimp/gimpsaveprocedure.c:473
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "Spara XMP-metadata (Extensible Metadata Platform)"
 
-#: libgimp/gimpsaveprocedure.c:426
+#: libgimp/gimpsaveprocedure.c:478
 msgid "Save color _profile"
 msgstr "Spara färg_profil"
 
-#: libgimp/gimpsaveprocedure.c:427
+#: libgimp/gimpsaveprocedure.c:479
 msgid "Save the ICC color profile as metadata"
 msgstr "Spara ICC-färgprofilen som metadata"
 
-#: libgimp/gimpsaveprocedure.c:432
+#: libgimp/gimpsaveprocedure.c:484
 msgid "Save _thumbnail"
 msgstr "Spara _miniatyrbild"
 
-#: libgimp/gimpsaveprocedure.c:433
+#: libgimp/gimpsaveprocedure.c:485
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Spara en mindre representation av bilden som metadata"
 
-#: libgimp/gimpsaveprocedure.c:439
+#: libgimp/gimpsaveprocedure.c:491
 msgid "Save c_omment"
 msgstr "Spara k_ommentar"
 
-#: libgimp/gimpsaveprocedure.c:440
+#: libgimp/gimpsaveprocedure.c:492
 msgid "Save a comment as metadata"
 msgstr "Spara en kommentar som metadata"
 
-#: libgimp/gimpsaveprocedure.c:444
+#: libgimp/gimpsaveprocedure.c:496
 msgid "Comment"
 msgstr "Kommentar"
 
-#: libgimp/gimpsaveprocedure.c:445
+#: libgimp/gimpsaveprocedure.c:497
 msgid "Image comment"
 msgstr "Bildkommentar"
 
@@ -1940,28 +1972,28 @@ msgstr "Färgprofil ”%s” passar inte med GRÅ-färgrymd."
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Färgprofil ”%s” passar inte med CMYK-färgrymd."
 
-#: libgimpconfig/gimpconfig-deserialize.c:117
+#: libgimpconfig/gimpconfig-deserialize.c:120
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "värde för elementet %s är inte en giltig UTF-8-sträng"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:485
+#: libgimpconfig/gimpconfig-deserialize.c:492
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "”yes” eller ”no” för booleskt element %s förväntades, fick ”%s”"
 
-#: libgimpconfig/gimpconfig-deserialize.c:600
+#: libgimpconfig/gimpconfig-deserialize.c:607
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ogiltigt värde ”%s” för element %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:615
+#: libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ogiltigt värde ”%ld” för element %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:684
+#: libgimpconfig/gimpconfig-deserialize.c:691
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "vid tolkning av elementet ”%s”: %s"
@@ -2160,7 +2192,7 @@ msgstr "Gammal:"
 msgid "HTML _notation:"
 msgstr "HTML-_notation:"
 
-#: libgimpwidgets/gimpdialog.c:177
+#: libgimpwidgets/gimpdialog.c:181
 msgid "_Help"
 msgstr "_Hjälp"
 
@@ -2319,7 +2351,7 @@ msgstr "Anpassad schackrutefärg 1"
 msgid "Custom Checks Color 2"
 msgstr "Anpassad schackrutefärg 2"
 
-#: libgimpwidgets/gimppropwidgets.c:2475
+#: libgimpwidgets/gimppropwidgets.c:2474
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
