@@ -820,7 +820,7 @@ gimp_babl_is_valid (GimpImageBaseType base_type,
   g_return_val_if_reached (FALSE);
 }
 
-GimpComponentType
+gboolean
 gimp_babl_is_bounded (GimpPrecision precision)
 {
   switch (gimp_babl_component_type (precision))
