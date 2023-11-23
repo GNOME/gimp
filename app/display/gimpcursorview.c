@@ -799,16 +799,10 @@ gimp_cursor_view_cursor_idle (GimpCursorView *view)
                                  FALSE, 0.0,
                                  &sample_format, pixel, &color))
         {
-          GimpRGB rgb;
-
-          /* TODO: get rid of GimpRGB. */
-          gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
           gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_1),
-                                      FALSE, sample_format, pixel, &rgb,
-                                      int_x, int_y);
+                                      FALSE, color, int_x, int_y);
           gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_2),
-                                      FALSE, sample_format, pixel, &rgb,
-                                      int_x, int_y);
+                                      FALSE, color, int_x, int_y);
         }
       else
         {

@@ -445,15 +445,12 @@ gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
   g_list_free (drawables);
 
   gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
-  gimp_color_area_set_color (GIMP_COLOR_AREA (picker_tool->color_area),
-                             &rgb);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (picker_tool->color_area), &rgb);
 
   gimp_color_frame_set_color (GIMP_COLOR_FRAME (picker_tool->color_frame1),
-                              sample_average, sample_format, pixel, &rgb,
-                              x, y);
+                              sample_average, color, x, y);
   gimp_color_frame_set_color (GIMP_COLOR_FRAME (picker_tool->color_frame2),
-                              sample_average, sample_format, pixel, &rgb,
-                              x, y);
+                              sample_average, color, x, y);
 
   gimp_tool_gui_show (picker_tool->gui);
 }

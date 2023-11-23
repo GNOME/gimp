@@ -573,13 +573,7 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
                                      pixel,
                                      &color))
             {
-              GimpRGB rgb;
-
-              /* TODO: use GeglColor. */
-              gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
-              gimp_color_frame_set_color (color_frame, FALSE,
-                                          format, pixel, &rgb,
-                                          x, y);
+              gimp_color_frame_set_color (color_frame, FALSE, color, x, y);
             }
           else
             {

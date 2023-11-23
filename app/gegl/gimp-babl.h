@@ -58,8 +58,7 @@ const Babl        * gimp_babl_format_change_component_type (const Babl          
 const Babl        * gimp_babl_format_change_trc            (const Babl          *format,
                                                             GimpTRCType          trc);
 
-gchar            ** gimp_babl_print_pixel                  (const Babl          *format,
-                                                            gpointer             pixel);
+gchar            ** gimp_babl_print_color                  (GeglColor           *color);
 
 
 #endif /* __GIMP_BABL_H__ */

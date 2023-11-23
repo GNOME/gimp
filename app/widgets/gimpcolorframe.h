@@ -40,9 +40,7 @@ struct _GimpColorFrame
 
   gboolean            sample_valid;
   gboolean            sample_average;
-  const Babl         *sample_format;
-  gdouble             pixel[4];
-  GimpRGB             color;
+  GeglColor          *color;
   gint                x;
   gint                y;
 
@@ -103,9 +101,7 @@ void        gimp_color_frame_set_has_coords     (GimpColorFrame     *frame,
 
 void        gimp_color_frame_set_color          (GimpColorFrame     *frame,
                                                  gboolean            sample_average,
-                                                 const Babl         *format,
-                                                 gpointer            pixel,
-                                                 const GimpRGB      *color,
+                                                 GeglColor          *color,
                                                  gint                x,
                                                  gint                y);
 void        gimp_color_frame_set_invalid        (GimpColorFrame     *frame);

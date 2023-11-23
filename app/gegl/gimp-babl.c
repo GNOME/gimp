@@ -1559,30 +1559,26 @@ gimp_babl_format_change_trc (const Babl  *format,
 }
 
 gchar **
-gimp_babl_print_pixel (const Babl *format,
-                       gpointer    pixel)
+gimp_babl_print_color (GeglColor *color)
 {
   GimpPrecision   precision;
   gint            n_components;
-  guchar          tmp_pixel[32];
+  guint8          pixel[40];
   gchar         **strings;
+  const Babl     *format;
 
-  g_return_val_if_fail (format != NULL, NULL);
-  g_return_val_if_fail (pixel != NULL, NULL);
+  g_return_val_if_fail (GEGL_IS_COLOR (color), NULL);
 
+  color     = gegl_color_duplicate (color);
+  format    = gegl_color_get_format (color);
   precision = gimp_babl_format_get_precision (format);
 
   if (babl_format_is_palette (format))
-    {
-      const Babl *f = gimp_babl_format (GIMP_RGB, precision,
-                                        babl_format_has_alpha (format),
-                                        babl_format_get_space (format));
+    format = gimp_babl_format (GIMP_RGB, precision,
+                               babl_format_has_alpha (format),
+                               babl_format_get_space (format));
 
-      babl_process (babl_fish (format, f), pixel, tmp_pixel, 1);
-
-      format = f;
-      pixel  = tmp_pixel;
-    }
+  gegl_color_get_pixel (color, format, pixel);
 
   n_components = babl_format_get_n_components (format);
 
@@ -1592,31 +1588,31 @@ gimp_babl_print_pixel (const Babl *format,
     {
     case GIMP_COMPONENT_TYPE_U8:
       {
-        guchar *color = pixel;
+        guchar *u8 = (guchar *) pixel;
         gint    i;
 
         for (i = 0; i < n_components; i++)
-          strings[i] = g_strdup_printf ("%d", color[i]);
+          strings[i] = g_strdup_printf ("%d", u8[i]);
       }
       break;
 
     case GIMP_COMPONENT_TYPE_U16:
       {
-        guint16 *color = pixel;
+        guint16 *u16 = (guint16 *) pixel;
         gint     i;
 
         for (i = 0; i < n_components; i++)
-          strings[i] = g_strdup_printf ("%u", color[i]);
+          strings[i] = g_strdup_printf ("%u", u16[i]);
       }
       break;
 
     case GIMP_COMPONENT_TYPE_U32:
       {
-        guint32 *color = pixel;
+        guint32 *u32 = (guint32 *) pixel;
         gint     i;
 
         for (i = 0; i < n_components; i++)
-          strings[i] = g_strdup_printf ("%u", color[i]);
+          strings[i] = g_strdup_printf ("%u", u32[i]);
       }
       break;
 
@@ -1624,6 +1620,7 @@ gimp_babl_print_pixel (const Babl *format,
       {
         GimpPrecision p;
         const Babl   *f;
+        guint8        tmp_pixel[40];
 
         p = gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
                                  gimp_babl_format_get_trc (format));
@@ -1635,30 +1632,32 @@ gimp_babl_print_pixel (const Babl *format,
 
         babl_process (babl_fish (format, f), pixel, tmp_pixel, 1);
 
-        pixel = tmp_pixel;
+        memcpy (pixel, tmp_pixel, babl_format_get_bytes_per_pixel (f));
       }
       /* fall through */
 
     case GIMP_COMPONENT_TYPE_FLOAT:
       {
-        gfloat *color = pixel;
+        gfloat *f = (gfloat *) pixel;
         gint    i;
 
         for (i = 0; i < n_components; i++)
-          strings[i] = g_strdup_printf ("%0.6f", color[i]);
+          strings[i] = g_strdup_printf ("%0.6f", f[i]);
       }
       break;
 
     case GIMP_COMPONENT_TYPE_DOUBLE:
       {
-        gdouble *color = pixel;
+        gdouble *d = (gdouble *) pixel;
         gint     i;
 
         for (i = 0; i < n_components; i++)
-          strings[i] = g_strdup_printf ("%0.6f", color[i]);
+          strings[i] = g_strdup_printf ("%0.6f", d[i]);
       }
       break;
     }
+
+  g_object_unref (color);
 
   return strings;
 }
