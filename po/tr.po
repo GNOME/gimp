@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-22 19:18+0000\n"
-"PO-Revision-Date: 2023-10-24 02:26+0300\n"
+"POT-Creation-Date: 2023-11-19 14:25+0000\n"
+"PO-Revision-Date: 2023-11-20 18:17+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnometurk@gnome.org>\n"
 "Language: tr\n"
@@ -52,7 +52,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.1\n"
 "X-POOTLE-MTIME: 1437505389.000000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -3815,8 +3815,8 @@ msgstr "Pano içeriğini özgün konumuna tek katman olarak yapıştır"
 
 #: app/actions/edit-actions.c:183
 msgctxt "edit-action"
-msgid "Paste _Into Selection"
-msgstr "Seçimin _İçine Yapıştır"
+msgid "Paste as Floating Data _Into Selection"
+msgstr "Yüzen Veri Olarak Seçimin _İçine Yapıştır"
 
 #: app/actions/edit-actions.c:185
 msgctxt "edit-action"
@@ -3825,8 +3825,8 @@ msgstr "Pano içeriğini geçerli seçimin içine yapıştır"
 
 #: app/actions/edit-actions.c:190
 msgctxt "edit-action"
-msgid "Paste Int_o Selection In Place"
-msgstr "Seçimin İçine _Konumunda Yapıştır"
+msgid "Paste as Floating Data Int_o Selection In Place"
+msgstr "Yüzen Veri Olarak Seçimin İçine _Konumunda Yapıştır"
 
 #: app/actions/edit-actions.c:192
 msgctxt "edit-action"
@@ -3835,51 +3835,72 @@ msgid ""
 "original position"
 msgstr "Pano içeriğini geçerli seçimin içine özgün konumunda yapıştır"
 
-#: app/actions/edit-actions.c:201
+#: app/actions/edit-actions.c:198
+msgctxt "edit-action"
+msgid "Paste as _Floating Data"
+msgstr "Yüzen Veri Olarak _Yapıştır"
+
+#: app/actions/edit-actions.c:199
+msgctxt "edit-action"
+msgid "Paste the content of the clipboard as Floating Data"
+msgstr "Pano içeriğini Yüzen Veri olarak yapıştır"
+
+#: app/actions/edit-actions.c:204
+msgctxt "edit-action"
+msgid "Paste as Floa_ting Data In Place"
+msgstr "Yüzen Veri Olarak K_onumuna Yapıştır"
+
+#: app/actions/edit-actions.c:205
+msgctxt "edit-action"
+msgid ""
+"Paste the content of the clipboard as Floating Data at its original position"
+msgstr "Pano içeriğini özgün konumuna Yüzen Veri olarak yapıştır"
+
+#: app/actions/edit-actions.c:213
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "_ÖA Rengi İle Doldur"
 
-#: app/actions/edit-actions.c:202
+#: app/actions/edit-actions.c:214
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "Seçimi, önalan rengini kullanarak doldur"
 
-#: app/actions/edit-actions.c:207
+#: app/actions/edit-actions.c:219
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "_AA Rengi İle Doldur"
 
-#: app/actions/edit-actions.c:208
+#: app/actions/edit-actions.c:220
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "Seçimi, artalan rengini kullanarak doldur"
 
-#: app/actions/edit-actions.c:213
+#: app/actions/edit-actions.c:225
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "Desen _İle Doldur"
 
-#: app/actions/edit-actions.c:214
+#: app/actions/edit-actions.c:226
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Seçimi, etkin deseni kullanarak doldur"
 
-#: app/actions/edit-actions.c:311 app/actions/edit-actions.c:313
+#: app/actions/edit-actions.c:323 app/actions/edit-actions.c:325
 #, c-format
 msgid "_Undo %s"
 msgstr "_Geri Al: %s"
 
-#: app/actions/edit-actions.c:317 app/actions/edit-actions.c:319
+#: app/actions/edit-actions.c:329 app/actions/edit-actions.c:331
 #, c-format
 msgid "_Redo %s"
 msgstr "_Yinele: %s"
 
-#: app/actions/edit-actions.c:330
+#: app/actions/edit-actions.c:342
 msgid "_Undo"
 msgstr "_Geri Al"
 
-#: app/actions/edit-actions.c:331
+#: app/actions/edit-actions.c:343
 msgid "_Redo"
 msgstr "_Yinele"
 
@@ -5516,7 +5537,7 @@ msgstr "Bu renk geçişini düzenle"
 msgid "Save '%s' as POV-Ray"
 msgstr "'%s' dosyasını POV-Ray olarak kaydet"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:881
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:891
 msgctxt "help-action"
 msgid "_Help"
 msgstr "_Yardım"
@@ -6246,7 +6267,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "Yüzen Katmanı veya Maskeyi _Çıpala"
 
-#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1875
+#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1877
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "Yüzen katmanı veya maskeyi çıpala"
@@ -7054,7 +7075,7 @@ msgid "Empty Selection"
 msgstr "Boş Seçim"
 
 #: app/actions/layers-commands.c:1824 app/actions/layers-commands.c:1868
-#: app/widgets/gimplayertreeview.c:1678
+#: app/widgets/gimplayertreeview.c:1680
 msgid "Set layers opacity"
 msgstr "Katmanların matlığını ayarla"
 
@@ -7500,190 +7521,200 @@ msgstr "Seçimi tersine çevir"
 
 #: app/actions/select-actions.c:62
 msgctxt "select-action"
-msgid "_Float"
-msgstr "_Yüzdür"
+msgid "Cu_t and Float"
+msgstr "K_es ve Yüzdür"
 
 #: app/actions/select-actions.c:63
 msgctxt "select-action"
-msgid "Create a floating selection"
-msgstr "Yüzen seçim oluştur"
+msgid "Cut the selection directly into a floating selection"
+msgstr "Seçimi doğrudan yüzen seçime kes"
+
+#: app/actions/select-actions.c:68
+msgctxt "select-action"
+msgid "_Copy and Float"
+msgstr "_Kopyala ve Yüzdür"
+
+#: app/actions/select-actions.c:69
+msgctxt "select-action"
+msgid "Copy the selection directly into a floating selection"
+msgstr "Seçimi doğrudan yüzen seçime kopyala"
 
 # İşlem adı olarak çevirildi
-#: app/actions/select-actions.c:68
+#: app/actions/select-actions.c:74
 msgctxt "select-action"
 msgid "Fea_ther..."
 msgstr "_Tüyle..."
 
-#: app/actions/select-actions.c:70
+#: app/actions/select-actions.c:76
 msgctxt "select-action"
 msgid "Blur the selection border so that it fades out smoothly"
 msgstr "Seçim kenarlığını pürüzsüzce solacak şekilde bulanıklaştır"
 
-#: app/actions/select-actions.c:75
+#: app/actions/select-actions.c:81
 msgctxt "select-action"
 msgid "_Sharpen"
 msgstr "_Keskinleştir"
 
-#: app/actions/select-actions.c:76
+#: app/actions/select-actions.c:82
 msgctxt "select-action"
 msgid "Remove fuzziness from the selection"
 msgstr "Seçimin bulanıklığını kaldır"
 
-#: app/actions/select-actions.c:81
+#: app/actions/select-actions.c:87
 msgctxt "select-action"
 msgid "S_hrink..."
 msgstr "K_üçült..."
 
-#: app/actions/select-actions.c:82
+#: app/actions/select-actions.c:88
 msgctxt "select-action"
 msgid "Contract the selection"
 msgstr "Seçimi daralt"
 
-#: app/actions/select-actions.c:87
+#: app/actions/select-actions.c:93
 msgctxt "select-action"
 msgid "_Grow..."
 msgstr "_Büyüt..."
 
-#: app/actions/select-actions.c:88
+#: app/actions/select-actions.c:94
 msgctxt "select-action"
 msgid "Enlarge the selection"
 msgstr "Seçimi genişlet"
 
-#: app/actions/select-actions.c:93
+#: app/actions/select-actions.c:99
 msgctxt "select-action"
 msgid "Bo_rder..."
 msgstr "_Kenarlık..."
 
-#: app/actions/select-actions.c:94
+#: app/actions/select-actions.c:100
 msgctxt "select-action"
 msgid "Replace the selection by its border"
 msgstr "Seçimi kenarlığı ile değiştir"
 
-#: app/actions/select-actions.c:99
+#: app/actions/select-actions.c:105
 msgctxt "select-action"
 msgid "Re_move Holes"
 msgstr "De_likleri Kaldır"
 
-#: app/actions/select-actions.c:100
+#: app/actions/select-actions.c:106
 msgctxt "select-action"
 msgid "Remove holes from the selection"
 msgstr "Seçimden delikleri kaldır"
 
-#: app/actions/select-actions.c:105
+#: app/actions/select-actions.c:111
 msgctxt "select-action"
 msgid "Save to _Channel"
 msgstr "_Kanala Kaydet"
 
-#: app/actions/select-actions.c:106
+#: app/actions/select-actions.c:112
 msgctxt "select-action"
 msgid "Save the selection to a channel"
 msgstr "Seçimi bir kanala kaydet"
 
-#: app/actions/select-actions.c:111
+#: app/actions/select-actions.c:117
 msgctxt "select-action"
 msgid "_Fill Selection Outline..."
 msgstr "Seçim Çerçevesini _Doldur..."
 
-#: app/actions/select-actions.c:112
+#: app/actions/select-actions.c:118
 msgctxt "select-action"
 msgid "Fill the selection outline"
 msgstr "Seçimin çerçevesini doldur"
 
-#: app/actions/select-actions.c:117
+#: app/actions/select-actions.c:123
 msgctxt "select-action"
 msgid "_Fill Selection Outline with last values"
 msgstr "Seçimin Çerçevesini son değerlerle _doldur"
 
-#: app/actions/select-actions.c:118
+#: app/actions/select-actions.c:124
 msgctxt "select-action"
 msgid "Fill the selection outline with last used values"
 msgstr "Seçimi çerçevesini son kullanılan değerlerle doldur"
 
-#: app/actions/select-actions.c:123
+#: app/actions/select-actions.c:129
 msgctxt "select-action"
 msgid "_Stroke Selection..."
 msgstr "S_eçimi Darbele..."
 
-#: app/actions/select-actions.c:124
+#: app/actions/select-actions.c:130
 msgctxt "select-action"
 msgid "Paint along the selection outline"
 msgstr "Seçim çerçevesi boyunca boya"
 
-#: app/actions/select-actions.c:129
+#: app/actions/select-actions.c:135
 msgctxt "select-action"
 msgid "_Stroke Selection with last values"
 msgstr "_Son değerlerle Seçimi Darbele"
 
-#: app/actions/select-actions.c:130
+#: app/actions/select-actions.c:136
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
 msgstr "Son kullanılan değerlerle seçimi darbele"
 
-#: app/actions/select-commands.c:165
+#: app/actions/select-commands.c:155
 msgid "Feather Selection"
 msgstr "Tüylü Seçim"
 
-#: app/actions/select-commands.c:169
+#: app/actions/select-commands.c:159
 msgid "Feather selection by"
 msgstr "Tüylü seçim ölçütü"
 
 #. Edge lock button
-#: app/actions/select-commands.c:179 app/actions/select-commands.c:256
-#: app/actions/select-commands.c:386
+#: app/actions/select-commands.c:169 app/actions/select-commands.c:246
+#: app/actions/select-commands.c:376
 msgid "_Selected areas continue outside the image"
 msgstr "_Seçilen alanlar görüntünün dışında devam ediyor"
 
-#: app/actions/select-commands.c:182
+#: app/actions/select-commands.c:172
 msgid "When feathering, act as if selected areas continued outside the image."
 msgstr ""
 "Tüyleme yapılırken, seçilen alanlar görüntünün dışında devam ediyormuş gibi "
 "davran."
 
-#: app/actions/select-commands.c:241
+#: app/actions/select-commands.c:231
 msgid "Shrink Selection"
 msgstr "Seçimi Küçült"
 
-#: app/actions/select-commands.c:245
+#: app/actions/select-commands.c:235
 msgid "Shrink selection by"
 msgstr "Seçim küçültme ölçütü"
 
-#: app/actions/select-commands.c:259
+#: app/actions/select-commands.c:249
 msgid "When shrinking, act as if selected areas continued outside the image."
 msgstr ""
 "Küçültülürken, seçilen alanlar görüntünün dışında devam ediyormuş gibi "
 "davranır."
 
-#: app/actions/select-commands.c:305
+#: app/actions/select-commands.c:295
 msgid "Grow Selection"
 msgstr "Seçimi Büyüt"
 
-#: app/actions/select-commands.c:309
+#: app/actions/select-commands.c:299
 msgid "Grow selection by"
 msgstr "Seçim büyütme ölçütü"
 
-#: app/actions/select-commands.c:358
+#: app/actions/select-commands.c:348
 msgid "Border Selection"
 msgstr "Kenarlık Seçimi"
 
-#: app/actions/select-commands.c:362
+#: app/actions/select-commands.c:352
 msgid "Border selection by"
 msgstr "Kenarlık seçim ölçütü"
 
-#: app/actions/select-commands.c:375
+#: app/actions/select-commands.c:365
 msgid "Border style"
 msgstr "Kenarlık biçemi"
 
-#: app/actions/select-commands.c:389
+#: app/actions/select-commands.c:379
 msgid "When bordering, act as if selected areas continued outside the image."
 msgstr ""
 "Kenarlık çizerken, seçilen alanlar görüntünün dışında devam ediyormuş gibi "
 "davran."
 
-#: app/actions/select-commands.c:456
+#: app/actions/select-commands.c:446
 msgid "Fill Selection Outline"
 msgstr "Seçim Çerçevesini Doldur"
 
-#: app/actions/select-commands.c:488
+#: app/actions/select-commands.c:478
 msgid "Stroke Selection"
 msgstr "Seçimi Darbele"
 
@@ -9959,7 +9990,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Önceki görüntüye geç"
 
-#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:870
+#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:880
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "_Sekme Konumu"
@@ -18983,7 +19014,7 @@ msgstr ""
 msgid "Rectangle: "
 msgstr "Dikdörtgen: "
 
-#: app/display/gimptoolrectangle.c:2168
+#: app/display/gimptoolrectangle.c:2173
 msgid "Position: "
 msgstr "Konum: "
 
@@ -21054,7 +21085,7 @@ msgstr "2B Dönüşüm"
 msgid "2D Transforming"
 msgstr "2B Dönüştürülüyor"
 
-#: app/pdb/pdb-cmds.c:1151 app/pdb/pdb-cmds.c:1192 app/pdb/pdb-cmds.c:1234
+#: app/pdb/pdb-cmds.c:1151 app/pdb/pdb-cmds.c:1193
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Veri etiketi '%s' kalıcı tanımlayıcı değil"
@@ -27493,66 +27524,66 @@ msgstr "Alfa kanalının kilidini aç"
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Ögeye Özel Alfa Kanalı Kilidi Ayarla"
 
-#: app/widgets/gimplayertreeview.c:1262
+#: app/widgets/gimplayertreeview.c:1264
 msgid "search"
 msgstr "ara"
 
 # Glob burada program adı: https://man7.org/linux/man-pages/man7/glob.7.html
-#: app/widgets/gimplayertreeview.c:1263
+#: app/widgets/gimplayertreeview.c:1265
 msgid "glob"
 msgstr "glob"
 
 # Kurallı ifade programının adı, çevirmeyin!
-#: app/widgets/gimplayertreeview.c:1263
+#: app/widgets/gimplayertreeview.c:1265
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimplayertreeview.c:1367 app/widgets/gimplayertreeview.c:1380
+#: app/widgets/gimplayertreeview.c:1369 app/widgets/gimplayertreeview.c:1382
 msgid "Select layers by text search"
 msgstr "Metin aramasıyla katmanları seç"
 
-#: app/widgets/gimplayertreeview.c:1369 app/widgets/gimplayertreeview.c:1382
+#: app/widgets/gimplayertreeview.c:1371 app/widgets/gimplayertreeview.c:1384
 msgid "Text search"
 msgstr "Metin ara"
 
-#: app/widgets/gimplayertreeview.c:1386
+#: app/widgets/gimplayertreeview.c:1388
 msgid "Select layers by glob patterns"
 msgstr "Glob desenleriyle katmanları seç"
 
-#: app/widgets/gimplayertreeview.c:1388
+#: app/widgets/gimplayertreeview.c:1390
 msgid "Glob pattern search"
 msgstr "Glob desen arama"
 
-#: app/widgets/gimplayertreeview.c:1392
+#: app/widgets/gimplayertreeview.c:1394
 msgid "Select layers by regular expressions"
 msgstr "Düzenli ifadelerle katmanları seç"
 
-#: app/widgets/gimplayertreeview.c:1394
+#: app/widgets/gimplayertreeview.c:1396
 msgid "Regular Expression search"
 msgstr "Düzenli İfade ara"
 
-#: app/widgets/gimplayertreeview.c:1458
+#: app/widgets/gimplayertreeview.c:1460
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Geçersiz düzenli ifade: %s\n"
 
-#: app/widgets/gimplayertreeview.c:1621
+#: app/widgets/gimplayertreeview.c:1623
 msgid "Set layers mode"
 msgstr "Katman kipini ayarla"
 
-#: app/widgets/gimplayertreeview.c:1867
+#: app/widgets/gimplayertreeview.c:1869
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "Yüzen maskeyi çıpala"
 
-#: app/widgets/gimplayertreeview.c:1870
+#: app/widgets/gimplayertreeview.c:1872
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Yüzen katmanı çıpala"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:2131
+#: app/widgets/gimplayertreeview.c:2133
 msgid "No channels to create a layer mask from."
 msgstr "Katman maskesi oluşturulacak kanal yok."
 
@@ -28576,307 +28607,312 @@ msgctxt "edit-action"
 msgid "Paste _as"
 msgstr "Farklı Y_apıştır"
 
-#: menus/image-menu.ui.in.in:100
+#: menus/image-menu.ui.in.in:106
 msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_Tampon"
 
-#: menus/image-menu.ui.in.in:141
+#: menus/image-menu.ui.in.in:147
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_Seçim"
 
-#: menus/image-menu.ui.in.in:170
+#: menus/image-menu.ui.in.in:153
+msgctxt "view-action"
+msgid "_Float"
+msgstr "_Yüzdür"
+
+#: menus/image-menu.ui.in.in:180
 msgctxt "view-action"
 msgid "_View"
 msgstr "_Görünüm"
 
-#: menus/image-menu.ui.in.in:175
+#: menus/image-menu.ui.in.in:185
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "_Yakınlaştır"
 
-#: menus/image-menu.ui.in.in:200
+#: menus/image-menu.ui.in.in:210
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "_Çevir ve Döndür"
 
-#: menus/image-menu.ui.in.in:224
+#: menus/image-menu.ui.in.in:234
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Ekrana Taşı"
 
-#: menus/image-menu.ui.in.in:233
+#: menus/image-menu.ui.in.in:243
 msgctxt "view-action"
 msgid "_Color Management"
 msgstr "_Renk Yönetimi"
 
-#: menus/image-menu.ui.in.in:240
+#: menus/image-menu.ui.in.in:250
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
 msgstr "_Ekran Görselleştirme Amacı"
 
-#: menus/image-menu.ui.in.in:272
+#: menus/image-menu.ui.in.in:282
 msgctxt "view-action"
 msgid "_Padding Color"
 msgstr "_Doldurma Rengi"
 
-#: menus/image-menu.ui.in.in:296
+#: menus/image-menu.ui.in.in:306
 msgctxt "image-action"
 msgid "_Image"
 msgstr "G_örüntü"
 
-#: menus/image-menu.ui.in.in:303
+#: menus/image-menu.ui.in.in:313
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_Kip"
 
-#: menus/image-menu.ui.in.in:309
+#: menus/image-menu.ui.in.in:319
 msgctxt "image-action"
 msgid "_Encoding"
 msgstr "_Kodlama"
 
-#: menus/image-menu.ui.in.in:325
+#: menus/image-menu.ui.in.in:335
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "Renk Yö_netimi"
 
-#: menus/image-menu.ui.in.in:342
+#: menus/image-menu.ui.in.in:352
 msgctxt "image-action"
 msgid "Soft-Proofing Re_ndering Intent"
 msgstr "Ekran Provası Görselleştirme A_macı"
 
-#: menus/image-menu.ui.in.in:356
+#: menus/image-menu.ui.in.in:366
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "_Dönüştür"
 
-#: menus/image-menu.ui.in.in:389
+#: menus/image-menu.ui.in.in:399
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_Kılavuzlar"
 
-#: menus/image-menu.ui.in.in:397
+#: menus/image-menu.ui.in.in:407
 msgctxt "image-action"
 msgid "Meta_data"
 msgstr "Üs_t Veri"
 
-#: menus/image-menu.ui.in.in:405
+#: menus/image-menu.ui.in.in:415
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "_Katman"
 
-#: menus/image-menu.ui.in.in:426
+#: menus/image-menu.ui.in.in:436
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "Yığ_ın"
 
-#: menus/image-menu.ui.in.in:443
+#: menus/image-menu.ui.in.in:453
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Maske"
 
-#: menus/image-menu.ui.in.in:465
+#: menus/image-menu.ui.in.in:475
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "S_aydamlık"
 
-#: menus/image-menu.ui.in.in:483
+#: menus/image-menu.ui.in.in:493
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "_Dönüştür"
 
-#: menus/image-menu.ui.in.in:513
+#: menus/image-menu.ui.in.in:523
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Renkler"
 
-#: menus/image-menu.ui.in.in:534
+#: menus/image-menu.ui.in.in:544
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Kendiliğinden"
 
-#: menus/image-menu.ui.in.in:542
+#: menus/image-menu.ui.in.in:552
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "Bil_eşenler"
 
-#: menus/image-menu.ui.in.in:548
+#: menus/image-menu.ui.in.in:558
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "S_olgunlaştır"
 
-#: menus/image-menu.ui.in.in:555
+#: menus/image-menu.ui.in.in:565
 msgctxt "image-action"
 msgid "_Map"
 msgstr "_Eşlem"
 
-#: menus/image-menu.ui.in.in:566
+#: menus/image-menu.ui.in.in:576
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "_Ton Eşlem"
 
-#: menus/image-menu.ui.in.in:573
+#: menus/image-menu.ui.in.in:583
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "B_ilgi"
 
-#: menus/image-menu.ui.in.in:591
+#: menus/image-menu.ui.in.in:601
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "_Araçlar"
 
-#: menus/image-menu.ui.in.in:594
+#: menus/image-menu.ui.in.in:604
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "Seçim Araçla_rı"
 
-#: menus/image-menu.ui.in.in:607
+#: menus/image-menu.ui.in.in:617
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "_Boyama Araçları"
 
-#: menus/image-menu.ui.in.in:624
+#: menus/image-menu.ui.in.in:634
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "_Dönüşüm Araçları"
 
-#: menus/image-menu.ui.in.in:663
+#: menus/image-menu.ui.in.in:673
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "Süzgeç_ler"
 
-#: menus/image-menu.ui.in.in:668
+#: menus/image-menu.ui.in.in:678
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "Son Kullanılan"
 
-#: menus/image-menu.ui.in.in:677
+#: menus/image-menu.ui.in.in:687
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "B_ulanıklık"
 
-#: menus/image-menu.ui.in.in:692
+#: menus/image-menu.ui.in.in:702
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "İ_yileştir"
 
-#: menus/image-menu.ui.in.in:702
+#: menus/image-menu.ui.in.in:712
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "_Bozulma"
 
-#: menus/image-menu.ui.in.in:721
+#: menus/image-menu.ui.in.in:731
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_Işık ve Gölge"
 
-#: menus/image-menu.ui.in.in:736
+#: menus/image-menu.ui.in.in:746
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "_Gürültü"
 
-#: menus/image-menu.ui.in.in:746
+#: menus/image-menu.ui.in.in:756
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "Kenar Tanı_ma"
 
-#: menus/image-menu.ui.in.in:755
+#: menus/image-menu.ui.in.in:765
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "_Genel"
 
-#: menus/image-menu.ui.in.in:766
+#: menus/image-menu.ui.in.in:776
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "B_irleştir"
 
-#: menus/image-menu.ui.in.in:769
+#: menus/image-menu.ui.in.in:779
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "_Sanatsal"
 
-#: menus/image-menu.ui.in.in:781
+#: menus/image-menu.ui.in.in:791
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "_Süsleme"
 
-#: menus/image-menu.ui.in.in:784
+#: menus/image-menu.ui.in.in:794
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "_Eşlem"
 
-#: menus/image-menu.ui.in.in:796
+#: menus/image-menu.ui.in.in:806
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "_Görselleştir"
 
-#: menus/image-menu.ui.in.in:799
+#: menus/image-menu.ui.in.in:809
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "_Fraktallar"
 
-#: menus/image-menu.ui.in.in:802
+#: menus/image-menu.ui.in.in:812
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "G_ürültü"
 
-#: menus/image-menu.ui.in.in:810
+#: menus/image-menu.ui.in.in:820
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_Desen"
 
-#: menus/image-menu.ui.in.in:823
+#: menus/image-menu.ui.in.in:833
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "_Web"
 
-#: menus/image-menu.ui.in.in:829
+#: menus/image-menu.ui.in.in:839
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "_Canlandırma"
 
-#: menus/image-menu.ui.in.in:832
+#: menus/image-menu.ui.in.in:842
 msgctxt "filters-action"
 msgid "De_velopment"
 msgstr "_Geliştirme"
 
-#: menus/image-menu.ui.in.in:834
+#: menus/image-menu.ui.in.in:844
 msgctxt "filters-action"
 msgid "_Goat exercises"
 msgstr "_Keçi çalışması"
 
-#: menus/image-menu.ui.in.in:837
+#: menus/image-menu.ui.in.in:847
 msgctxt "filters-action"
 msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
-#: menus/image-menu.ui.in.in:840
+#: menus/image-menu.ui.in.in:850
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: menus/image-menu.ui.in.in:847
+#: menus/image-menu.ui.in.in:857
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Pencereler"
 
-#: menus/image-menu.ui.in.in:850
+#: menus/image-menu.ui.in.in:860
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "_Son Kapatılan Rıhtımlar"
 
-#: menus/image-menu.ui.in.in:854
+#: menus/image-menu.ui.in.in:864
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_Rıhtımlanabilir İletişim Kutuları"
 
-#: menus/image-menu.ui.in.in:886
+#: menus/image-menu.ui.in.in:896
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "_Kullanıcı Kılavuzu"
 
-#: menus/image-menu.ui.in.in:899
+#: menus/image-menu.ui.in.in:909
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "Çevrim İçi _GIMP"
@@ -28975,6 +29011,10 @@ msgstr "Geri Alma Geçmişi Menüsü"
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Yollar Menüsü"
+
+#~ msgctxt "select-action"
+#~ msgid "Create a floating selection"
+#~ msgstr "Yüzen seçim oluştur"
 
 #~ msgid "How to handle embedded color profiles when opening a file."
 #~ msgstr ""
