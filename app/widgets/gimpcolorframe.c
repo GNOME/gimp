@@ -780,8 +780,10 @@ gimp_color_frame_update (GimpColorFrame *frame)
     case GIMP_COLOR_PICK_MODE_PIXEL:
       {
         GimpImageBaseType  base_type;
+        gint               values_len = 0;
 
-        base_type = gimp_babl_format_get_base_type (format);
+        base_type     = gimp_babl_format_get_base_type (format);
+        color_profile = gimp_babl_format_get_color_profile (format);
 
         if (frame->sample_valid)
           values = gimp_babl_print_color (frame->color);
@@ -789,39 +791,37 @@ gimp_color_frame_update (GimpColorFrame *frame)
         if (base_type == GIMP_GRAY)
           {
             /* TRANSLATORS: V for Value (grayscale) */
-            names[0] = C_("Grayscale", "V:");
+            names[values_len++] = C_("Grayscale", "V:");
 
             if (has_alpha)
               /* TRANSLATORS: A for Alpha (color transparency) */
-              names[1] = C_("Alpha channel", "A:");
+              names[values_len++] = C_("Alpha channel", "A:");
           }
-        else if (base_type == GIMP_RGB)
+        else if (base_type == GIMP_RGB || base_type == GIMP_INDEXED)
           {
             /* TRANSLATORS: R for Red (RGB) */
-            names[0] = C_("RGB", "R:");
+            names[values_len++] = C_("RGB", "R:");
             /* TRANSLATORS: G for Green (RGB) */
-            names[1] = C_("RGB", "G:");
+            names[values_len++] = C_("RGB", "G:");
             /* TRANSLATORS: B for Blue (RGB) */
-            names[2] = C_("RGB", "B:");
+            names[values_len++] = C_("RGB", "B:");
 
             if (has_alpha)
               /* TRANSLATORS: A for Alpha (color transparency) */
-              names[3] = C_("Alpha channel", "A:");
+              names[values_len++] = C_("Alpha channel", "A:");
 
             if (babl_format_is_palette (format))
               {
                 /* TRANSLATORS: Index of the color in the palette. */
-                names[4] = C_("Indexed color", "Index:");
+                names[values_len] = C_("Indexed color", "Index:");
 
                 if (frame->sample_valid)
                   {
-                    gchar **v   = g_new0 (gchar *, 6);
-                    gchar **tmp = values;
+                    gchar **v = g_new0 (gchar *, values_len + 2);
 
-                    memcpy (v, values, 4 * sizeof (gchar *));
+                    memcpy (v, values, values_len * sizeof (gchar *));
+                    g_free (values);
                     values = v;
-
-                    g_free (tmp);
 
                     if (! frame->sample_average)
                       {
@@ -829,10 +829,31 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
                         gegl_color_get_pixel (frame->color, format, &index);
 
-                        values[4] = g_strdup_printf ("%d", index);
+                        values[values_len++] = g_strdup_printf ("%d", index);
                       }
                   }
               }
+          }
+
+        if (frame->sample_valid && color_profile)
+          {
+            const gchar  *profile_label;
+            gchar       **v;
+
+            v = g_new0 (gchar *, values_len + 2);
+            memcpy (v, values, values_len * sizeof (gchar *));
+            g_free (values);
+            values = v;
+
+            names[values_len] = C_("Color", "Profile:");
+
+            if (space == babl_space ("sRGB"))
+              profile_label = "sRGB";
+            else
+              profile_label = gimp_color_profile_get_label (color_profile);
+
+            values[values_len]  = g_strdup_printf (_("%s"), profile_label);
+            tooltip[values_len] = g_strdup_printf (_("%s"), profile_label);
           }
       }
       break;
