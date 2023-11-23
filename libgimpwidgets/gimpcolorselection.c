@@ -181,6 +181,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   GtkWidget                 *button;
   GtkSizeGroup              *new_group;
   GtkSizeGroup              *old_group;
+  GeglColor                 *color;
 
   selection->priv = gimp_color_selection_get_instance_private (selection);
 
@@ -272,7 +273,9 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  priv->new_color = gimp_color_area_new (&priv->rgb,
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &priv->rgb);
+  priv->new_color = gimp_color_area_new (color,
                                          priv->show_alpha ?
                                          GIMP_COLOR_AREA_SMALL_CHECKS :
                                          GIMP_COLOR_AREA_FLAT,
@@ -286,7 +289,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
                     G_CALLBACK (gimp_color_selection_new_color_changed),
                     selection);
 
-  priv->old_color = gimp_color_area_new (&priv->rgb,
+  priv->old_color = gimp_color_area_new (color,
                                          priv->show_alpha ?
                                          GIMP_COLOR_AREA_SMALL_CHECKS :
                                          GIMP_COLOR_AREA_FLAT,
@@ -350,6 +353,8 @@ gimp_color_selection_init (GimpColorSelection *selection)
   g_signal_connect (entry, "color-changed",
                     G_CALLBACK (gimp_color_selection_entry_changed),
                     selection);
+
+  g_object_unref (color);
 }
 
 static void
@@ -492,16 +497,20 @@ gimp_color_selection_get_color (GimpColorSelection *selection,
  **/
 void
 gimp_color_selection_set_old_color (GimpColorSelection *selection,
-                                    const GimpRGB      *color)
+                                    const GimpRGB      *rgb)
 {
   GimpColorSelectionPrivate *priv;
+  GeglColor                 *color;
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
-  g_return_if_fail (color != NULL);
+  g_return_if_fail (rgb != NULL);
 
   priv = GET_PRIVATE (selection);
 
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
   gimp_color_area_set_color (GIMP_COLOR_AREA (priv->old_color), color);
+  g_object_unref (color);
 }
 
 /**
@@ -514,16 +523,19 @@ gimp_color_selection_set_old_color (GimpColorSelection *selection,
  **/
 void
 gimp_color_selection_get_old_color (GimpColorSelection *selection,
-                                    GimpRGB            *color)
+                                    GimpRGB            *rgb)
 {
   GimpColorSelectionPrivate *priv;
+  GeglColor                 *color;
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
-  g_return_if_fail (color != NULL);
+  g_return_if_fail (rgb != NULL);
 
   priv = GET_PRIVATE (selection);
 
-  gimp_color_area_get_color (GIMP_COLOR_AREA (priv->old_color), color);
+  color = gimp_color_area_get_color (GIMP_COLOR_AREA (priv->old_color));
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgb);
+  g_object_unref (color);
 }
 
 /**
@@ -536,14 +548,18 @@ void
 gimp_color_selection_reset (GimpColorSelection *selection)
 {
   GimpColorSelectionPrivate *priv;
-  GimpRGB                    color;
+  GeglColor                 *color;
+  GimpRGB                    rgb;
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
 
   priv = GET_PRIVATE (selection);
 
-  gimp_color_area_get_color (GIMP_COLOR_AREA (priv->old_color), &color);
-  gimp_color_selection_set_color (selection, &color);
+  color = gimp_color_area_get_color (GIMP_COLOR_AREA (priv->old_color));
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  gimp_color_selection_set_color (selection, &rgb);
+
+  g_object_unref (color);
 }
 
 /**
@@ -745,13 +761,17 @@ gimp_color_selection_new_color_changed (GtkWidget          *widget,
                                         GimpColorSelection *selection)
 {
   GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  GeglColor                 *color;
 
-  gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &priv->rgb);
-  gimp_rgb_to_hsv (&priv->rgb, &priv->hsv);
+  color = gimp_color_area_get_color (GIMP_COLOR_AREA (widget));
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &priv->rgb);
+  gegl_color_get_pixel (color, babl_format ("HSVA double"), &priv->hsv);
 
   gimp_color_selection_update (selection,
                                UPDATE_NOTEBOOK | UPDATE_SCALES | UPDATE_ENTRY);
   gimp_color_selection_color_changed (selection);
+
+  g_object_unref (color);
 }
 
 static void
@@ -809,15 +829,20 @@ gimp_color_selection_update (GimpColorSelection *selection,
 
   if (update & UPDATE_COLOR)
     {
+      GeglColor *color;
+
       g_signal_handlers_block_by_func (priv->new_color,
                                        gimp_color_selection_new_color_changed,
                                        selection);
 
-      gimp_color_area_set_color (GIMP_COLOR_AREA (priv->new_color),
-                                 &priv->rgb);
+      color = gegl_color_new (NULL);
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &priv->rgb);
+      gimp_color_area_set_color (GIMP_COLOR_AREA (priv->new_color), color);
 
       g_signal_handlers_unblock_by_func (priv->new_color,
                                          gimp_color_selection_new_color_changed,
                                          selection);
+
+      g_object_unref (color);
     }
 }

@@ -64,17 +64,19 @@ GimpColorTransform * gimp_widget_get_color_transform (GtkWidget         *widget,
                                                       GimpColorProfile  *softproof_profile,
                                                       GimpColorRenderingIntent proof_intent,
                                                       gboolean           proof_bpc);
+const Babl         * gimp_widget_get_render_space    (GtkWidget       *widget,
+                                                      GimpColorConfig *config);
 
-void                 gimp_widget_set_native_handle    (GtkWidget        *widget,
-                                                       GBytes          **handle);
+void                 gimp_widget_set_native_handle   (GtkWidget        *widget,
+                                                      GBytes          **handle);
 
 
 /* Internal use */
 
-G_GNUC_INTERNAL void _gimp_widget_get_profiles        (GtkWidget         *widget,
-                                                       GimpColorConfig   *config,
-                                                       GimpColorProfile **proof_profile,
-                                                       GimpColorProfile **dest_profile);
+G_GNUC_INTERNAL void _gimp_widget_get_profiles       (GtkWidget         *widget,
+                                                      GimpColorConfig   *config,
+                                                      GimpColorProfile **proof_profile,
+                                                      GimpColorProfile **dest_profile);
 
 
 G_END_DECLS

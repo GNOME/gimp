@@ -2905,8 +2905,10 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
 
           if (group_info->has_meter && field_info->meter_value)
             {
-              color_area = gimp_color_area_new (&variable_info->color,
-                                                GIMP_COLOR_AREA_FLAT, 0);
+              GeglColor *color = gegl_color_new (NULL);
+
+              gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &variable_info->color);
+              color_area = gimp_color_area_new (color, GIMP_COLOR_AREA_FLAT, 0);
               gimp_help_set_help_data (color_area, description,
                                        NULL);
               gtk_widget_set_size_request (color_area, 5, 5);
@@ -2914,6 +2916,8 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
               gtk_grid_attach (group_data->grid, color_area,
                                0, n_rows, 1, 1);
               gtk_widget_show (color_area);
+
+              g_object_unref (color);
             }
 
           str = g_strdup_printf ("%s:",

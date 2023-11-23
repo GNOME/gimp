@@ -314,9 +314,9 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   GtkWidget      *vbox;
   GtkWidget      *hbox;
   GtkWidget      *hint_vbox;
-  GimpRGB         transp;
+  GeglColor      *transp;
 
-  gimp_rgba_set (&transp, 0.0, 0.0, 0.0, 0.0);
+  transp = gegl_color_new ("transparent");
 
   /* Frame for gradient view and gradient control */
   frame = gtk_frame_new (NULL);
@@ -415,7 +415,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  editor->current_color = gimp_color_area_new (&transp,
+  editor->current_color = gimp_color_area_new (transp,
                                                GIMP_COLOR_AREA_SMALL_CHECKS,
                                                GDK_BUTTON1_MASK |
                                                GDK_BUTTON2_MASK);
@@ -447,6 +447,8 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gimp_rgba_set (&editor->saved_colors[7], 0.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&editor->saved_colors[8], 0.0, 0.0, 1.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&editor->saved_colors[9], 1.0, 0.0, 1.0, GIMP_OPACITY_OPAQUE);
+
+  g_object_unref (transp);
 }
 
 static void
@@ -1283,6 +1285,7 @@ view_set_hint (GimpGradientEditor *editor,
                gint                x)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+  GeglColor      *color       = gegl_color_new ("black");
   GimpRGB         rgb;
   GimpHSV         hsv;
   gdouble         xpos;
@@ -1297,7 +1300,8 @@ view_set_hint (GimpGradientEditor *editor,
                               data_editor->context, NULL,
                               xpos, FALSE, FALSE, &rgb);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (editor->current_color), &rgb);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (editor->current_color), color);
 
   gimp_rgb_to_hsv (&rgb, &hsv);
 
@@ -1312,6 +1316,7 @@ view_set_hint (GimpGradientEditor *editor,
 
   gradient_editor_set_hint (editor, str1, str2, str3, str4);
 
+  g_object_unref (color);
   g_free (str1);
   g_free (str2);
   g_free (str3);
@@ -1325,11 +1330,11 @@ view_pick_color (GimpGradientEditor  *editor,
                  gint                 x)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+  GeglColor      *color       = gegl_color_new ("black");
   GimpRGB         rgb;
   gdouble         xpos;
   gchar          *str2;
   gchar          *str3;
-  GeglColor      *color  = gegl_color_new ("black");
 
   xpos = control_calc_g_pos (editor, x);
 
@@ -1337,7 +1342,8 @@ view_pick_color (GimpGradientEditor  *editor,
                               data_editor->context, NULL,
                               xpos, FALSE, FALSE, &rgb);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (editor->current_color), &rgb);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (editor->current_color), color);
 
   str2 = g_strdup_printf (_("RGB (%d, %d, %d)"),
                           (gint) (rgb.r * 255.0),
@@ -1346,7 +1352,6 @@ view_pick_color (GimpGradientEditor  *editor,
 
   str3 = g_strdup_printf ("(%0.3f, %0.3f, %0.3f)", rgb.r, rgb.g, rgb.b);
 
-  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
   if (pick_target == GIMP_COLOR_PICK_TARGET_FOREGROUND)
     {
       gimp_context_set_foreground (data_editor->context, color);

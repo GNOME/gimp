@@ -148,18 +148,19 @@ gimp_label_color_class_init (GimpLabelColorClass *klass)
 static void
 gimp_label_color_init (GimpLabelColor *color)
 {
-  GimpLabelColorPrivate *priv = gimp_label_color_get_instance_private (color);
-  GimpRGB                black;
+  GimpLabelColorPrivate *priv  = gimp_label_color_get_instance_private (color);
+  GeglColor             *black = gegl_color_new ("black");
 
-  gimp_rgba_set (&black, 0.0, 0.0, 0.0, 1.0);
   priv->editable = FALSE;
-  priv->area = gimp_color_area_new (&black, GIMP_COLOR_AREA_SMALL_CHECKS,
+  priv->area = gimp_color_area_new (black, GIMP_COLOR_AREA_SMALL_CHECKS,
                                     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
 
   /* Typically for a labelled color area, a small square next to your
    * label is probably what you want to display.
    */
   gtk_widget_set_size_request (priv->area, 20, 20);
+
+  g_object_unref (black);
 }
 
 static void
@@ -224,7 +225,7 @@ gimp_label_color_set_property (GObject      *object,
         {
           const gchar       *dialog_title;
           GimpLabeled       *labeled;
-          GimpRGB           *rgb;
+          GeglColor         *color;
           GimpColorAreaType  type;
           gboolean           attached;
 
@@ -238,18 +239,20 @@ gimp_label_color_set_property (GObject      *object,
           attached = (gtk_widget_get_parent (priv->area) != NULL);
           g_object_get (priv->area,
                         "type",  &type,
-                        "color", &rgb,
+                        "color", &color,
                         NULL);
 
           gtk_widget_destroy (priv->area);
 
           priv->editable = g_value_get_boolean (value);
+
           if (priv->editable)
             priv->area = gimp_color_button_new (dialog_title,
-                                                20, 20, rgb, type);
+                                                20, 20, color, type);
           else
-            priv->area = gimp_color_area_new (rgb, type,
+            priv->area = gimp_color_area_new (color, type,
                                               GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
+          g_object_unref (color);
 
           gtk_widget_set_size_request (priv->area, 20, 20);
           g_object_bind_property_full (G_OBJECT (priv->area), "color",

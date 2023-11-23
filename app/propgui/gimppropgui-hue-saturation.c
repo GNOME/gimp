@@ -50,7 +50,8 @@ hue_saturation_config_notify (GObject          *object,
 {
   GimpHueSaturationConfig *config = GIMP_HUE_SATURATION_CONFIG (object);
   GimpHueRange             range;
-  GimpRGB                  color;
+  GeglColor               *color;
+  GimpRGB                  rgb;
 
   static const GimpRGB default_colors[7] =
   {
@@ -65,11 +66,14 @@ hue_saturation_config_notify (GObject          *object,
 
   range = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (color_area),
                                               "hue-range"));
-  color = default_colors[range];
+  rgb = default_colors[range];
 
-  gimp_operation_hue_saturation_map (config, &color, range, &color);
+  gimp_operation_hue_saturation_map (config, &rgb, range, &rgb);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (color_area), &color);
+  color = gegl_color_new (NULL);
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (color_area), color);
+  g_object_unref (color);
 }
 
 static void
@@ -189,7 +193,7 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
       if (i > 0)
         {
           GtkWidget *color_area;
-          GimpRGB    color = { 0, };
+          GeglColor *color = gegl_color_new ("transparent");
 
           frame = gtk_frame_new (NULL);
           gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -199,7 +203,7 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
                            1, 1);
           gtk_widget_show (frame);
 
-          color_area = gimp_color_area_new (&color, GIMP_COLOR_AREA_FLAT, 0);
+          color_area = gimp_color_area_new (color, GIMP_COLOR_AREA_FLAT, 0);
           gtk_widget_set_size_request (color_area, COLOR_WIDTH, COLOR_HEIGHT);
           gtk_container_add (GTK_CONTAINER (frame), color_area);
           gtk_widget_show (color_area);
@@ -210,6 +214,8 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
                                    G_CALLBACK (hue_saturation_config_notify),
                                    color_area, 0);
           hue_saturation_config_notify (config, NULL, color_area);
+
+          g_object_unref (color);
         }
 
       g_signal_connect (button, "toggled",

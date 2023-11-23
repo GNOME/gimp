@@ -263,8 +263,8 @@ gimp_color_history_set_property (GObject      *object,
 
         for (i = 0; i < history->history_size; i++)
           {
-            GimpRGB black = { 0.0, 0.0, 0.0, 1.0 };
-            gint    row, column;
+            GeglColor *black = gegl_color_new ("black");
+            gint       row, column;
 
             column = i % (history->history_size / history->n_rows);
             row    = i / (history->history_size / history->n_rows);
@@ -274,7 +274,7 @@ gimp_color_history_set_property (GObject      *object,
             gtk_grid_attach (GTK_GRID (history), button, column, row, 1, 1);
             gtk_widget_show (button);
 
-            color_area = gimp_color_area_new (&black, GIMP_COLOR_AREA_SMALL_CHECKS,
+            color_area = gimp_color_area_new (black, GIMP_COLOR_AREA_SMALL_CHECKS,
                                               GDK_BUTTON2_MASK);
             gimp_color_area_set_color_config (GIMP_COLOR_AREA (color_area),
                                               history->context->gimp->config->color_management);
@@ -291,6 +291,8 @@ gimp_color_history_set_property (GObject      *object,
 
             history->buttons[i]     = button;
             history->color_areas[i] = color_area;
+
+            g_object_unref (black);
           }
 
         gimp_color_history_palette_dirty (history);
@@ -456,14 +458,16 @@ gimp_color_history_color_clicked (GtkWidget        *widget,
                                   GimpColorHistory *history)
 {
   GimpColorArea *color_area;
-  GimpRGB        color;
+  GeglColor     *color;
+  GimpRGB        rgb;
 
   color_area = GIMP_COLOR_AREA (gtk_bin_get_child (GTK_BIN (widget)));
 
-  gimp_color_area_get_color (color_area, &color);
+  color = gimp_color_area_get_color (color_area);
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  g_object_unref (color);
 
-  g_signal_emit (history, history_signals[COLOR_SELECTED], 0,
-                 &color);
+  g_signal_emit (history, history_signals[COLOR_SELECTED], 0, &rgb);
 }
 
 /* Color history palette callback. */
@@ -496,10 +500,9 @@ gimp_color_history_palette_dirty (GimpColorHistory *history)
                                        gimp_color_history_color_changed,
                                        GINT_TO_POINTER (i));
 
-      gimp_color_area_set_color (GIMP_COLOR_AREA (history->color_areas[i]),
-                                 &rgb);
-
       gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+      gimp_color_area_set_color (GIMP_COLOR_AREA (history->color_areas[i]), color);
+
       if (/* Common out-of-gamut case */
           (rgb.r < 0.0 || rgb.r > 1.0 ||
            rgb.g < 0.0 || rgb.g > 1.0 ||
@@ -530,16 +533,19 @@ gimp_color_history_color_changed (GtkWidget *widget,
 {
   GimpColorHistory *history;
   GimpPalette      *palette;
-  GimpRGB           color;
+  GeglColor        *color;
+  GimpRGB           rgb;
 
   history = GIMP_COLOR_HISTORY (gtk_widget_get_ancestor (widget,
                                                          GIMP_TYPE_COLOR_HISTORY));
 
   palette = gimp_palettes_get_color_history (history->context->gimp);
 
-  gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &color);
+  color = gimp_color_area_get_color (GIMP_COLOR_AREA (widget));
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  g_object_unref (color);
 
-  gimp_palette_set_entry_color (palette, GPOINTER_TO_INT (data), &color, FALSE);
+  gimp_palette_set_entry_color (palette, GPOINTER_TO_INT (data), &rgb, FALSE);
 }
 
 static void

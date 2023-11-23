@@ -190,7 +190,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
 
   frame->color_area =
     g_object_new (GIMP_TYPE_COLOR_AREA,
-                  "color",          &frame->color,
+                  "color",          frame->color,
                   "type",           GIMP_COLOR_AREA_SMALL_CHECKS,
                   "drag-mask",      GDK_BUTTON1_MASK,
                   "draw-border",    TRUE,
@@ -755,11 +755,9 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
   if (frame->sample_valid)
     {
-      GimpRGB rgb;
-      gchar   str[16];
+      gchar str[16];
 
-      gegl_color_get_pixel (frame->color, babl_format ("R'G'B'A double"), &rgb);
-      gimp_color_area_set_color (GIMP_COLOR_AREA (frame->color_area), &rgb);
+      gimp_color_area_set_color (GIMP_COLOR_AREA (frame->color_area), frame->color);
 
       g_snprintf (str, sizeof (str), "%d", frame->x);
       gtk_label_set_text (GTK_LABEL (frame->coords_label_x), str);
@@ -960,7 +958,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
         {
           const Babl *print_format;
           gfloat      grayscale[2];
-          GimpRGB     grayscale_color;
+          GeglColor  *grayscale_color;
 
           print_format = gimp_babl_format (GIMP_GRAY,
                                            gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT, trc),
@@ -969,10 +967,11 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
           /* Change color area color to grayscale if image is not
            * in Grayscale Mode */
-          gimp_rgba_set (&grayscale_color, grayscale[0], grayscale[0],
-                         grayscale[0], GIMP_OPACITY_OPAQUE);
-          gimp_color_area_set_color (GIMP_COLOR_AREA (frame->color_area),
-                                     &grayscale_color);
+          grayscale_color = gegl_color_duplicate (frame->color);
+          gegl_color_set_pixel (grayscale_color, print_format, grayscale);
+          gimp_color_set_alpha (grayscale_color, GIMP_OPACITY_OPAQUE);
+          gimp_color_area_set_color (GIMP_COLOR_AREA (frame->color_area), grayscale_color);
+          g_object_unref (grayscale_color);
 
           values = g_new0 (gchar *, 5);
 

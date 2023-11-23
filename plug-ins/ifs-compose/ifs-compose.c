@@ -2020,6 +2020,7 @@ color_map_create (const gchar *name,
   GtkWidget *frame;
   GtkWidget *arrow;
   ColorMap  *color_map = g_new (ColorMap, 1);
+  GeglColor *color;
 
   gimp_rgb_set_alpha (data, 1.0);
   color_map->color       = data;
@@ -2031,9 +2032,10 @@ color_map_create (const gchar *name,
   gtk_box_pack_start (GTK_BOX (color_map->hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  color_map->orig_preview =
-    gimp_color_area_new (fixed_point ? data : orig_color,
-                         GIMP_COLOR_AREA_FLAT, 0);
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), fixed_point ? data : orig_color);
+  color_map->orig_preview = gimp_color_area_new (color, GIMP_COLOR_AREA_FLAT, 0);
+  g_object_unref (color);
   gtk_drag_dest_unset (color_map->orig_preview);
   gtk_widget_set_size_request (color_map->orig_preview,
                                COLOR_SAMPLE_SIZE, COLOR_SAMPLE_SIZE);
@@ -2091,8 +2093,14 @@ color_map_update (ColorMap *color_map)
                                color_map->color);
 
   if (color_map->fixed_point)
-    gimp_color_area_set_color (GIMP_COLOR_AREA (color_map->orig_preview),
-                               color_map->color);
+    {
+      GeglColor *color;
+
+      color = gegl_color_new (NULL);
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), color_map->color);
+      gimp_color_area_set_color (GIMP_COLOR_AREA (color_map->orig_preview), color);
+      g_object_unref (color);
+    }
 }
 
 static void

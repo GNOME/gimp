@@ -339,7 +339,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool,
   GList            *drawables = gimp_image_get_selected_drawables (image);
   GtkWidget        *hbox;
   GtkWidget        *frame;
-  GimpRGB           color;
+  GeglColor        *color;
 
   picker_tool->gui = gimp_tool_gui_new (tool->tool_info,
                                         NULL,
@@ -395,9 +395,9 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool,
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+  color = gegl_color_new ("transparent");
   picker_tool->color_area =
-    gimp_color_area_new (&color,
+    gimp_color_area_new (color,
                          drawables && gimp_drawable_has_alpha (drawables->data) ?
                          GIMP_COLOR_AREA_LARGE_CHECKS :
                          GIMP_COLOR_AREA_FLAT,
@@ -410,6 +410,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool,
   gtk_widget_show (picker_tool->color_area);
 
   g_list_free (drawables);
+  g_object_unref (color);
 }
 
 static void
@@ -435,7 +436,6 @@ gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
   GimpTool  *tool      = GIMP_TOOL (picker_tool);
   GimpImage *image     = gimp_display_get_image (display);
   GList     *drawables = gimp_image_get_selected_drawables (image);
-  GimpRGB    rgb;
 
   tool->display = display;
 
@@ -444,9 +444,7 @@ gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
   gimp_tool_gui_set_viewables (picker_tool->gui, drawables);
   g_list_free (drawables);
 
-  gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
-  gimp_color_area_set_color (GIMP_COLOR_AREA (picker_tool->color_area), &rgb);
-
+  gimp_color_area_set_color (GIMP_COLOR_AREA (picker_tool->color_area), color);
   gimp_color_frame_set_color (GIMP_COLOR_FRAME (picker_tool->color_frame1),
                               sample_average, color, x, y);
   gimp_color_frame_set_color (GIMP_COLOR_FRAME (picker_tool->color_frame2),

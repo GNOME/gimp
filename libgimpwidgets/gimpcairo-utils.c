@@ -234,23 +234,13 @@ gimp_cairo_set_source_color (cairo_t         *cr,
                              gboolean         softproof,
                              GtkWidget       *widget)
 {
-  GimpColorProfile *proof_profile = NULL;
-  GimpColorProfile *dest_profile  = NULL;
-  const Babl       *space         = NULL;
-  gdouble           rgba[4];
+  const Babl *space;
+  gdouble     rgba[4];
 
   g_return_if_fail (GEGL_IS_COLOR (color));
   g_return_if_fail (widget == NULL || GTK_IS_WIDGET (widget));
 
-  _gimp_widget_get_profiles (widget, config,
-                             softproof ? &proof_profile : NULL,
-                             &dest_profile);
-
-  if (dest_profile)
-    space = gimp_color_profile_get_space (dest_profile,
-                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                          NULL);
+  space = gimp_widget_get_render_space (widget, config);
   gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", space), rgba);
-
   cairo_set_source_rgba (cr, rgba[0], rgba[1], rgba[2], rgba[3]);
 }

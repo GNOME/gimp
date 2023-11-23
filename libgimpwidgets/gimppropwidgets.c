@@ -4090,8 +4090,7 @@ gimp_prop_color_area_new (GObject           *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *area;
-  GeglColor  *value = NULL;
-  GimpRGB     rgb   = { 0 };
+  GeglColor  *color = NULL;
 
   param_spec = check_param_spec_w (config, property_name,
                                    GEGL_TYPE_PARAM_COLOR, G_STRFUNC);
@@ -4099,16 +4098,13 @@ gimp_prop_color_area_new (GObject           *config,
     return NULL;
 
   g_object_get (config,
-                property_name, &value,
+                property_name, &color,
                 NULL);
 
-  if (value != NULL)
-    gegl_color_get_pixel (value, babl_format ("R'G'B'A double"), &rgb);
-  area = gimp_color_area_new (&rgb, type,
-                              GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
+  area = gimp_color_area_new (color, type, GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
   gtk_widget_set_size_request (area, width, height);
 
-  g_clear_object (&value);
+  g_clear_object (&color);
 
   set_param_spec (G_OBJECT (area), area, param_spec);
 
@@ -4133,15 +4129,12 @@ gimp_prop_color_area_callback (GtkWidget *area,
 {
   GParamSpec *param_spec;
   GeglColor  *color;
-  GimpRGB     value;
 
   param_spec = get_param_spec (G_OBJECT (area));
   if (! param_spec)
     return;
 
-  color = gegl_color_new (NULL);
-  gimp_color_area_get_color (GIMP_COLOR_AREA (area), &value);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &value);
+  color = gimp_color_area_get_color (GIMP_COLOR_AREA (area));
 
   g_signal_handlers_block_by_func (config,
                                    gimp_prop_color_area_notify,
@@ -4163,7 +4156,6 @@ gimp_prop_color_area_notify (GObject    *config,
                              GtkWidget  *area)
 {
   GeglColor *color = NULL;
-  GimpRGB    value;
 
   g_object_get (config,
                 param_spec->name, &color,
@@ -4173,8 +4165,7 @@ gimp_prop_color_area_notify (GObject    *config,
                                    gimp_prop_color_area_callback,
                                    config);
 
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &value);
-  gimp_color_area_set_color (GIMP_COLOR_AREA (area), &value);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (area), color);
 
   g_clear_object (&color);
 

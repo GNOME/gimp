@@ -1009,22 +1009,26 @@ gimp_action_set_proxy (GimpAction *action,
     {
       if (priv->color)
         {
+          GeglColor *color;
+
           if (GTK_IS_MENU_ITEM (proxy))
             proxy_image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
           else
             proxy_image = gtk_tool_button_get_label_widget (GTK_TOOL_BUTTON (proxy));
 
+          color = gegl_color_new (NULL);
+          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), priv->color);
+
           if (GIMP_IS_COLOR_AREA (proxy_image))
             {
-              gimp_color_area_set_color (GIMP_COLOR_AREA (proxy_image), priv->color);
+              gimp_color_area_set_color (GIMP_COLOR_AREA (proxy_image), color);
               proxy_image = NULL;
             }
           else
             {
               gint width, height;
 
-              proxy_image = gimp_color_area_new (priv->color,
-                                                 GIMP_COLOR_AREA_SMALL_CHECKS, 0);
+              proxy_image = gimp_color_area_new (color, GIMP_COLOR_AREA_SMALL_CHECKS, 0);
               gimp_color_area_set_draw_border (GIMP_COLOR_AREA (proxy_image), TRUE);
 
               if (priv->context)
@@ -1035,6 +1039,8 @@ gimp_action_set_proxy (GimpAction *action,
               gtk_widget_set_size_request (proxy_image, width, height);
               gtk_widget_show (proxy_image);
             }
+
+          g_object_unref (color);
         }
       else if (priv->viewable)
         {

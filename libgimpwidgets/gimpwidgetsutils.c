@@ -1056,6 +1056,47 @@ gimp_widget_get_color_transform (GtkWidget               *widget,
 }
 
 /**
+ * gimp_widget_get_render_format:
+ * @widget: (nullable): [class@Gtk.Widget] to draw the focus indicator on.
+ * @config: the color management settings.
+ * @softproof: whether the color must also be soft-proofed.
+ *
+ * Gets the Babl format to use as target format when rendering raw data on
+ * @widget. The format model with be "R'G'B'A" and the component types will be
+ * double.
+ *
+ * If @config is set, the color configuration as set by the user will be used,
+ * in particular using any custom monitor profile set in preferences (overriding
+ * system-set profile). If no such custom profile is set, it will use the
+ * profile of the monitor @widget is displayed on and will default to sRGB if
+ * @widget is %NULL.
+ *
+ * Use [func@Gimp.get_color_configuration] to retrieve the user
+ * [class@Gimp.ColorConfig].
+ *
+ * TODO: @softproof is currently unused.
+ *
+ * Since: 3.0
+ **/
+const Babl *
+gimp_widget_get_render_space (GtkWidget       *widget,
+                              GimpColorConfig *config)
+{
+  GimpColorProfile *dest_profile  = NULL;
+  const Babl       *space         = NULL;
+
+  g_return_val_if_fail (widget == NULL || GTK_IS_WIDGET (widget), NULL);
+
+  _gimp_widget_get_profiles (widget, config, NULL, &dest_profile);
+
+  if (dest_profile)
+    space = gimp_color_profile_get_space (dest_profile,
+                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                          NULL);
+  return space;
+}
+
+/**
  * gimp_widget_set_native_handle:
  * @widget: a #GtkWindow
  * @handle: (out): pointer to store the native handle as a #GBytes.

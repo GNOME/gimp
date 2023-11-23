@@ -498,6 +498,7 @@ EXPORTS
 	gimp_widget_get_color_profile
 	gimp_widget_get_color_transform
 	gimp_widget_get_monitor
+	gimp_widget_get_render_space
 	gimp_widget_set_bound_property
 	gimp_widget_set_identifier
 	gimp_widget_set_native_handle
