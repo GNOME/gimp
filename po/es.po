@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-28 19:49+0000\n"
-"PO-Revision-Date: 2023-10-29 00:28+0200\n"
+"POT-Creation-Date: 2023-11-23 08:07+0000\n"
+"PO-Revision-Date: 2023-11-24 10:17+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -3811,8 +3811,8 @@ msgstr ""
 
 #: app/actions/edit-actions.c:183
 msgctxt "edit-action"
-msgid "Paste _Into Selection"
-msgstr "Pegar _en la selección"
+msgid "Paste as Floating Data _Into Selection"
+msgstr "Pegar como datos flotantes _en la selección"
 
 #: app/actions/edit-actions.c:185
 msgctxt "edit-action"
@@ -3821,8 +3821,8 @@ msgstr "Pegar el contenido del portapapeles dentro de la selección actual"
 
 #: app/actions/edit-actions.c:190
 msgctxt "edit-action"
-msgid "Paste Int_o Selection In Place"
-msgstr "Pegar _en la selección en su lugar"
+msgid "Paste as Floating Data Int_o Selection In Place"
+msgstr "Pegar como datos flotantes e_n la selección en su lugar"
 
 #: app/actions/edit-actions.c:192
 msgctxt "edit-action"
@@ -3833,51 +3833,74 @@ msgstr ""
 "Pegar el contenido del portapapeles en la selección actual en su posición "
 "original"
 
-#: app/actions/edit-actions.c:201
+#: app/actions/edit-actions.c:198
+msgctxt "edit-action"
+msgid "Paste as _Floating Data"
+msgstr "Pegar como datos _flotantes"
+
+#: app/actions/edit-actions.c:199
+msgctxt "edit-action"
+msgid "Paste the content of the clipboard as Floating Data"
+msgstr "Pegar el contenido del portapapeles como datos flotantes"
+
+#: app/actions/edit-actions.c:204
+msgctxt "edit-action"
+msgid "Paste as Floa_ting Data In Place"
+msgstr "Pegar como datos flo_tantes en su lugar"
+
+#: app/actions/edit-actions.c:205
+msgctxt "edit-action"
+msgid ""
+"Paste the content of the clipboard as Floating Data at its original position"
+msgstr ""
+"Pegar el contenido del portapapeles como datos flotantes en su posición "
+"original"
+
+#: app/actions/edit-actions.c:213
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "Rellenar con el color de _PP"
 
-#: app/actions/edit-actions.c:202
+#: app/actions/edit-actions.c:214
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "Rellenar la selección utilizando el color de primer plano"
 
-#: app/actions/edit-actions.c:207
+#: app/actions/edit-actions.c:219
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "Rellenar con el color de _FD"
 
-#: app/actions/edit-actions.c:208
+#: app/actions/edit-actions.c:220
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "Rellenar la selección con el color del fondo"
 
-#: app/actions/edit-actions.c:213
+#: app/actions/edit-actions.c:225
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "Rellenar con un pa_trón"
 
-#: app/actions/edit-actions.c:214
+#: app/actions/edit-actions.c:226
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Rellenar la selección utilizando el patrón activo"
 
-#: app/actions/edit-actions.c:311 app/actions/edit-actions.c:313
+#: app/actions/edit-actions.c:323 app/actions/edit-actions.c:325
 #, c-format
 msgid "_Undo %s"
 msgstr "De_shacer %s"
 
-#: app/actions/edit-actions.c:317 app/actions/edit-actions.c:319
+#: app/actions/edit-actions.c:329 app/actions/edit-actions.c:331
 #, c-format
 msgid "_Redo %s"
 msgstr "_Rehacer %s"
 
-#: app/actions/edit-actions.c:330
+#: app/actions/edit-actions.c:342
 msgid "_Undo"
 msgstr "Des_hacer"
 
-#: app/actions/edit-actions.c:331
+#: app/actions/edit-actions.c:343
 msgid "_Redo"
 msgstr "_Rehacer"
 
@@ -5519,7 +5542,7 @@ msgstr "Editar este degradado"
 msgid "Save '%s' as POV-Ray"
 msgstr "Guardar «%s» como POV-Ray"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:881
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:891
 msgctxt "help-action"
 msgid "_Help"
 msgstr "Ay_uda"
@@ -6251,7 +6274,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "_Anclar capa flotante o máscara"
 
-#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1875
+#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1877
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "Anclar la capa flotante o máscara"
@@ -7079,7 +7102,7 @@ msgid "Empty Selection"
 msgstr "Vaciar selección"
 
 #: app/actions/layers-commands.c:1824 app/actions/layers-commands.c:1868
-#: app/widgets/gimplayertreeview.c:1678
+#: app/widgets/gimplayertreeview.c:1680
 msgid "Set layers opacity"
 msgstr "Definir la opacidad de las capas"
 
@@ -7526,190 +7549,200 @@ msgstr "Invertir la selección"
 
 #: app/actions/select-actions.c:62
 msgctxt "select-action"
-msgid "_Float"
-msgstr "_Flotante"
+msgid "Cu_t and Float"
+msgstr "Cor_tar y flotar"
 
 #: app/actions/select-actions.c:63
 msgctxt "select-action"
-msgid "Create a floating selection"
-msgstr "Crear una selección flotante"
+msgid "Cut the selection directly into a floating selection"
+msgstr "Cortar la selección directamente en una selección flotante"
 
 #: app/actions/select-actions.c:68
+msgctxt "select-action"
+msgid "_Copy and Float"
+msgstr "_Copiar y flotar"
+
+#: app/actions/select-actions.c:69
+msgctxt "select-action"
+msgid "Copy the selection directly into a floating selection"
+msgstr "Copiar la selección directamente en una selección flotante"
+
+#: app/actions/select-actions.c:74
 msgctxt "select-action"
 msgid "Fea_ther..."
 msgstr "Di_fuminar [Feather]…"
 
-#: app/actions/select-actions.c:70
+#: app/actions/select-actions.c:76
 msgctxt "select-action"
 msgid "Blur the selection border so that it fades out smoothly"
 msgstr "Difuminar el borde de selección para que se desvanezca suavemente"
 
-#: app/actions/select-actions.c:75
+#: app/actions/select-actions.c:81
 msgctxt "select-action"
 msgid "_Sharpen"
 msgstr "_Enfocar [Sharpen]"
 
-#: app/actions/select-actions.c:76
+#: app/actions/select-actions.c:82
 msgctxt "select-action"
 msgid "Remove fuzziness from the selection"
 msgstr "Eliminar la borrosidad de la selección"
 
-#: app/actions/select-actions.c:81
+#: app/actions/select-actions.c:87
 msgctxt "select-action"
 msgid "S_hrink..."
 msgstr "_Encoger [Shrink]…"
 
-#: app/actions/select-actions.c:82
+#: app/actions/select-actions.c:88
 msgctxt "select-action"
 msgid "Contract the selection"
 msgstr "Contraer la selección"
 
-#: app/actions/select-actions.c:87
+#: app/actions/select-actions.c:93
 msgctxt "select-action"
 msgid "_Grow..."
 msgstr "Agran_dar [Grow]…"
 
-#: app/actions/select-actions.c:88
+#: app/actions/select-actions.c:94
 msgctxt "select-action"
 msgid "Enlarge the selection"
 msgstr "Aumentar el tamaño de la selección"
 
-#: app/actions/select-actions.c:93
+#: app/actions/select-actions.c:99
 msgctxt "select-action"
 msgid "Bo_rder..."
 msgstr "Bor_de…"
 
-#: app/actions/select-actions.c:94
+#: app/actions/select-actions.c:100
 msgctxt "select-action"
 msgid "Replace the selection by its border"
 msgstr "Reemplazar la selección por su borde"
 
-#: app/actions/select-actions.c:99
+#: app/actions/select-actions.c:105
 msgctxt "select-action"
 msgid "Re_move Holes"
 msgstr "_Eliminar huecos"
 
-#: app/actions/select-actions.c:100
+#: app/actions/select-actions.c:106
 msgctxt "select-action"
 msgid "Remove holes from the selection"
 msgstr "Eliminar los huecos de la selección"
 
-#: app/actions/select-actions.c:105
+#: app/actions/select-actions.c:111
 msgctxt "select-action"
 msgid "Save to _Channel"
 msgstr "Guardar en _canal"
 
-#: app/actions/select-actions.c:106
+#: app/actions/select-actions.c:112
 msgctxt "select-action"
 msgid "Save the selection to a channel"
 msgstr "Guarda la selección en un canal"
 
-#: app/actions/select-actions.c:111
+#: app/actions/select-actions.c:117
 msgctxt "select-action"
 msgid "_Fill Selection Outline..."
 msgstr "_Rellenar contorno de la selección…"
 
-#: app/actions/select-actions.c:112
+#: app/actions/select-actions.c:118
 msgctxt "select-action"
 msgid "Fill the selection outline"
 msgstr "Rellenar el contorno de la selección"
 
-#: app/actions/select-actions.c:117
+#: app/actions/select-actions.c:123
 msgctxt "select-action"
 msgid "_Fill Selection Outline with last values"
 msgstr "_Rellenar el contorno de la selección con los últimos valores"
 
-#: app/actions/select-actions.c:118
+#: app/actions/select-actions.c:124
 msgctxt "select-action"
 msgid "Fill the selection outline with last used values"
 msgstr "Rellenar el contorno de la selección con los últimos valores usados"
 
-#: app/actions/select-actions.c:123
+#: app/actions/select-actions.c:129
 msgctxt "select-action"
 msgid "_Stroke Selection..."
 msgstr "_Trazar selección [Stroke]…"
 
-#: app/actions/select-actions.c:124
+#: app/actions/select-actions.c:130
 msgctxt "select-action"
 msgid "Paint along the selection outline"
 msgstr "Pintar a lo largo del contorno de la selección"
 
-#: app/actions/select-actions.c:129
+#: app/actions/select-actions.c:135
 msgctxt "select-action"
 msgid "_Stroke Selection with last values"
 msgstr "_Trazar la selección con los últimos valores usados"
 
-#: app/actions/select-actions.c:130
+#: app/actions/select-actions.c:136
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
 msgstr "Trazar la selección con los últimos valores usados"
 
-#: app/actions/select-commands.c:165
+#: app/actions/select-commands.c:155
 msgid "Feather Selection"
 msgstr "Difuminar selección [Feather]"
 
-#: app/actions/select-commands.c:169
+#: app/actions/select-commands.c:159
 msgid "Feather selection by"
 msgstr "Difuminar selección en"
 
 #. Edge lock button
-#: app/actions/select-commands.c:179 app/actions/select-commands.c:256
-#: app/actions/select-commands.c:386
+#: app/actions/select-commands.c:169 app/actions/select-commands.c:246
+#: app/actions/select-commands.c:376
 msgid "_Selected areas continue outside the image"
 msgstr "Las á_reas seleccionadas continúan fuera de la imagen"
 
-#: app/actions/select-commands.c:182
+#: app/actions/select-commands.c:172
 msgid "When feathering, act as if selected areas continued outside the image."
 msgstr ""
 "Al difuminar, actúa como si las áreas seleccionadas continuaran fuera de la "
 "imagen."
 
-#: app/actions/select-commands.c:241
+#: app/actions/select-commands.c:231
 msgid "Shrink Selection"
 msgstr "Encoger selección"
 
-#: app/actions/select-commands.c:245
+#: app/actions/select-commands.c:235
 msgid "Shrink selection by"
 msgstr "Encoger selección en"
 
-#: app/actions/select-commands.c:259
+#: app/actions/select-commands.c:249
 msgid "When shrinking, act as if selected areas continued outside the image."
 msgstr ""
 "Al encoger, actúa como si las áreas seleccionadas continuaran fuera de la "
 "imagen."
 
-#: app/actions/select-commands.c:305
+#: app/actions/select-commands.c:295
 msgid "Grow Selection"
 msgstr "Agrandar selección"
 
-#: app/actions/select-commands.c:309
+#: app/actions/select-commands.c:299
 msgid "Grow selection by"
 msgstr "Agrandar selección en"
 
-#: app/actions/select-commands.c:358
+#: app/actions/select-commands.c:348
 msgid "Border Selection"
 msgstr "Borde de selección"
 
 # ¿Bordear selección por (serrador)
-#: app/actions/select-commands.c:362
+#: app/actions/select-commands.c:352
 msgid "Border selection by"
 msgstr "Borde de selección en"
 
-#: app/actions/select-commands.c:375
+#: app/actions/select-commands.c:365
 msgid "Border style"
 msgstr "Estilo de borde"
 
-#: app/actions/select-commands.c:389
+#: app/actions/select-commands.c:379
 msgid "When bordering, act as if selected areas continued outside the image."
 msgstr ""
 "Al añadir bordes, actúa como si las áreas seleccionadas continuaran fuera de "
 "la imagen."
 
-#: app/actions/select-commands.c:456
+#: app/actions/select-commands.c:446
 msgid "Fill Selection Outline"
 msgstr "Rellenar contorno de la selección"
 
-#: app/actions/select-commands.c:488
+#: app/actions/select-commands.c:478
 msgid "Stroke Selection"
 msgstr "Trazar selección"
 
@@ -9506,8 +9539,6 @@ msgid "Zoom in a lot"
 msgstr "Ampliar mucho"
 
 #: app/actions/view-actions.c:373
-#| msgctxt "view-zoom-action"
-#| msgid "1_6:1  (1600%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1 (1600%)"
 msgstr "Ampliar 16:1 (1600%)"
@@ -9523,8 +9554,6 @@ msgid "Zoom 16:1"
 msgstr "Ampliación 16:1"
 
 #: app/actions/view-actions.c:381
-#| msgctxt "view-zoom-action"
-#| msgid "_8:1  (800%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1 (800%)"
 msgstr "Ampliar 8:1 (800%)"
@@ -9540,8 +9569,6 @@ msgid "Zoom 8:1"
 msgstr "Ampliación 8:1"
 
 #: app/actions/view-actions.c:389
-#| msgctxt "view-zoom-action"
-#| msgid "_4:1  (400%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1 (400%)"
 msgstr "Ampliar 4:1 (400%)"
@@ -9557,8 +9584,6 @@ msgid "Zoom 4:1"
 msgstr "Ampliación 4:1"
 
 #: app/actions/view-actions.c:397
-#| msgctxt "view-zoom-action"
-#| msgid "_2:1  (200%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1 (200%)"
 msgstr "Ampliar 2:1 (200%)"
@@ -9574,8 +9599,6 @@ msgid "Zoom 2:1"
 msgstr "Ampliación 2:1"
 
 #: app/actions/view-actions.c:405
-#| msgctxt "view-zoom-action"
-#| msgid "_1:1  (100%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1 (100%)"
 msgstr "Ampliar 1:1 (100%)"
@@ -9591,8 +9614,6 @@ msgid "Zoom 1:1"
 msgstr "Ampliación 1:1"
 
 #: app/actions/view-actions.c:413
-#| msgctxt "view-zoom-action"
-#| msgid "Zoom 1:2"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2 (50%)"
 msgstr "Reducir 1:2 (50%)"
@@ -9608,8 +9629,6 @@ msgid "Zoom 1:2"
 msgstr "Ampliación 1:2"
 
 #: app/actions/view-actions.c:421
-#| msgctxt "view-zoom-action"
-#| msgid "Zoom 1:4"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4 (25%)"
 msgstr "Reducir 1:4 (25%)"
@@ -9640,8 +9659,6 @@ msgid "Zoom 1:8"
 msgstr "Ampliación 1:8"
 
 #: app/actions/view-actions.c:437
-#| msgctxt "view-zoom-action"
-#| msgid "1:1_6  (6.25%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16 (6.25%)"
 msgstr "Reducir 1:16 (6.25%)"
@@ -10015,7 +10032,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Cambiar a la imagen anterior"
 
-#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:870
+#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:880
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "_Posición de las pestañas"
@@ -18707,8 +18724,6 @@ msgstr "Ot_ro (%s)…"
 
 #: app/display/gimpdisplayshell-scale-dialog.c:250
 #, c-format
-#| msgctxt "view-padding-color"
-#| msgid "_Custom Color..."
 msgid "Custom Zoom (%s)..."
 msgstr "Ampliación personalizada (%s)…"
 
@@ -27684,64 +27699,64 @@ msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Establecer el bloqueo del canal alfa exclusivo del elemento"
 
 # Viendo el programa, parece más bien "cizalla". FVD
-#: app/widgets/gimplayertreeview.c:1262
+#: app/widgets/gimplayertreeview.c:1264
 msgid "search"
 msgstr "buscar"
 
-#: app/widgets/gimplayertreeview.c:1263
+#: app/widgets/gimplayertreeview.c:1265
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimplayertreeview.c:1263
+#: app/widgets/gimplayertreeview.c:1265
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimplayertreeview.c:1367 app/widgets/gimplayertreeview.c:1380
+#: app/widgets/gimplayertreeview.c:1369 app/widgets/gimplayertreeview.c:1382
 msgid "Select layers by text search"
 msgstr "Seleccionar capas por búsqueda de texto"
 
-#: app/widgets/gimplayertreeview.c:1369 app/widgets/gimplayertreeview.c:1382
+#: app/widgets/gimplayertreeview.c:1371 app/widgets/gimplayertreeview.c:1384
 msgid "Text search"
 msgstr "Búsqueda de texto"
 
-#: app/widgets/gimplayertreeview.c:1386
+#: app/widgets/gimplayertreeview.c:1388
 msgid "Select layers by glob patterns"
 msgstr "Seleccionar capas por patrones glob"
 
-#: app/widgets/gimplayertreeview.c:1388
+#: app/widgets/gimplayertreeview.c:1390
 msgid "Glob pattern search"
 msgstr "Búsqueda de patrón glob"
 
-#: app/widgets/gimplayertreeview.c:1392
+#: app/widgets/gimplayertreeview.c:1394
 msgid "Select layers by regular expressions"
 msgstr "Seleccionar capas por expresiones regulares"
 
-#: app/widgets/gimplayertreeview.c:1394
+#: app/widgets/gimplayertreeview.c:1396
 msgid "Regular Expression search"
 msgstr "Búsqueda por expresiones regulares"
 
-#: app/widgets/gimplayertreeview.c:1458
+#: app/widgets/gimplayertreeview.c:1460
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Expresión regular no válida: %s\n"
 
-#: app/widgets/gimplayertreeview.c:1621
+#: app/widgets/gimplayertreeview.c:1623
 msgid "Set layers mode"
 msgstr "Definir el modo de las capas"
 
-#: app/widgets/gimplayertreeview.c:1867
+#: app/widgets/gimplayertreeview.c:1869
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "Anclar la máscara flotante"
 
-#: app/widgets/gimplayertreeview.c:1870
+#: app/widgets/gimplayertreeview.c:1872
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Anclar la capa flotante"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:2131
+#: app/widgets/gimplayertreeview.c:2133
 msgid "No channels to create a layer mask from."
 msgstr "No hay canales con los que crear una máscara de capa."
 
@@ -28765,307 +28780,312 @@ msgctxt "edit-action"
 msgid "Paste _as"
 msgstr "Peg_ar como"
 
-#: menus/image-menu.ui.in.in:100
+#: menus/image-menu.ui.in.in:106
 msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_Búfer"
 
-#: menus/image-menu.ui.in.in:141
+#: menus/image-menu.ui.in.in:147
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_Seleccionar"
 
-#: menus/image-menu.ui.in.in:170
+#: menus/image-menu.ui.in.in:153
+msgctxt "view-action"
+msgid "_Float"
+msgstr "_Flotar"
+
+#: menus/image-menu.ui.in.in:180
 msgctxt "view-action"
 msgid "_View"
 msgstr "_Vista"
 
-#: menus/image-menu.ui.in.in:175
+#: menus/image-menu.ui.in.in:185
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "_Ampliación"
 
-#: menus/image-menu.ui.in.in:200
+#: menus/image-menu.ui.in.in:210
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "_Voltear y rotar"
 
-#: menus/image-menu.ui.in.in:224
+#: menus/image-menu.ui.in.in:234
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Mover a la pantalla"
 
-#: menus/image-menu.ui.in.in:233
+#: menus/image-menu.ui.in.in:243
 msgctxt "view-action"
 msgid "_Color Management"
 msgstr "_Gestión del color"
 
-#: menus/image-menu.ui.in.in:240
+#: menus/image-menu.ui.in.in:250
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
 msgstr "Prueba de _renderizado en pantalla"
 
-#: menus/image-menu.ui.in.in:272
+#: menus/image-menu.ui.in.in:282
 msgctxt "view-action"
 msgid "_Padding Color"
 msgstr "Color de _relleno"
 
-#: menus/image-menu.ui.in.in:296
+#: menus/image-menu.ui.in.in:306
 msgctxt "image-action"
 msgid "_Image"
 msgstr "_Imagen"
 
-#: menus/image-menu.ui.in.in:303
+#: menus/image-menu.ui.in.in:313
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_Modo"
 
-#: menus/image-menu.ui.in.in:309
+#: menus/image-menu.ui.in.in:319
 msgctxt "image-action"
 msgid "_Encoding"
 msgstr "_Codificación"
 
-#: menus/image-menu.ui.in.in:325
+#: menus/image-menu.ui.in.in:335
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "_Gestión del color"
 
-#: menus/image-menu.ui.in.in:342
+#: menus/image-menu.ui.in.in:352
 msgctxt "image-action"
 msgid "Soft-Proofing Re_ndering Intent"
 msgstr "Intención del renderizado de la prueba"
 
-#: menus/image-menu.ui.in.in:356
+#: menus/image-menu.ui.in.in:366
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: menus/image-menu.ui.in.in:389
+#: menus/image-menu.ui.in.in:399
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "Líneas g_uía"
 
-#: menus/image-menu.ui.in.in:397
+#: menus/image-menu.ui.in.in:407
 msgctxt "image-action"
 msgid "Meta_data"
 msgstr "Meta_datos"
 
-#: menus/image-menu.ui.in.in:405
+#: menus/image-menu.ui.in.in:415
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "_Capa"
 
-#: menus/image-menu.ui.in.in:426
+#: menus/image-menu.ui.in.in:436
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "_Pila"
 
-#: menus/image-menu.ui.in.in:443
+#: menus/image-menu.ui.in.in:453
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Máscara"
 
-#: menus/image-menu.ui.in.in:465
+#: menus/image-menu.ui.in.in:475
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "Tr_ansparencia"
 
-#: menus/image-menu.ui.in.in:483
+#: menus/image-menu.ui.in.in:493
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: menus/image-menu.ui.in.in:513
+#: menus/image-menu.ui.in.in:523
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Colores"
 
-#: menus/image-menu.ui.in.in:534
+#: menus/image-menu.ui.in.in:544
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Auto"
 
-#: menus/image-menu.ui.in.in:542
+#: menus/image-menu.ui.in.in:552
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "_Componentes"
 
-#: menus/image-menu.ui.in.in:548
+#: menus/image-menu.ui.in.in:558
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "D_esaturar"
 
-#: menus/image-menu.ui.in.in:555
+#: menus/image-menu.ui.in.in:565
 msgctxt "image-action"
 msgid "_Map"
 msgstr "_Mapa"
 
-#: menus/image-menu.ui.in.in:566
+#: menus/image-menu.ui.in.in:576
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "_Mapeo de tonos"
 
-#: menus/image-menu.ui.in.in:573
+#: menus/image-menu.ui.in.in:583
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "In_fo"
 
-#: menus/image-menu.ui.in.in:591
+#: menus/image-menu.ui.in.in:601
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "_Herramientas"
 
-#: menus/image-menu.ui.in.in:594
+#: menus/image-menu.ui.in.in:604
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "Herramientas de _selección"
 
-#: menus/image-menu.ui.in.in:607
+#: menus/image-menu.ui.in.in:617
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "Herramienta de _pintura"
 
-#: menus/image-menu.ui.in.in:624
+#: menus/image-menu.ui.in.in:634
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "Herramientas de _transformación"
 
-#: menus/image-menu.ui.in.in:663
+#: menus/image-menu.ui.in.in:673
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "_Filtros"
 
-#: menus/image-menu.ui.in.in:668
+#: menus/image-menu.ui.in.in:678
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "Usado recientemente"
 
-#: menus/image-menu.ui.in.in:677
+#: menus/image-menu.ui.in.in:687
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "_Difuminar"
 
-#: menus/image-menu.ui.in.in:692
+#: menus/image-menu.ui.in.in:702
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "Real_zar"
 
-#: menus/image-menu.ui.in.in:702
+#: menus/image-menu.ui.in.in:712
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "Dis_torsiones"
 
-#: menus/image-menu.ui.in.in:721
+#: menus/image-menu.ui.in.in:731
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_Luz y sombra"
 
-#: menus/image-menu.ui.in.in:736
+#: menus/image-menu.ui.in.in:746
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "_Ruido"
 
-#: menus/image-menu.ui.in.in:746
+#: menus/image-menu.ui.in.in:756
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "Detectar _bordes"
 
-#: menus/image-menu.ui.in.in:755
+#: menus/image-menu.ui.in.in:765
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "_Genérico"
 
-#: menus/image-menu.ui.in.in:766
+#: menus/image-menu.ui.in.in:776
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "C_ombinar"
 
-#: menus/image-menu.ui.in.in:769
+#: menus/image-menu.ui.in.in:779
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "_Artísticos"
 
-#: menus/image-menu.ui.in.in:781
+#: menus/image-menu.ui.in.in:791
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "_Decorativos"
 
-#: menus/image-menu.ui.in.in:784
+#: menus/image-menu.ui.in.in:794
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "_Mapa"
 
-#: menus/image-menu.ui.in.in:796
+#: menus/image-menu.ui.in.in:806
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "_Generar"
 
-#: menus/image-menu.ui.in.in:799
+#: menus/image-menu.ui.in.in:809
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "_Fractales"
 
-#: menus/image-menu.ui.in.in:802
+#: menus/image-menu.ui.in.in:812
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "_Ruido"
 
-#: menus/image-menu.ui.in.in:810
+#: menus/image-menu.ui.in.in:820
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_Patrón"
 
-#: menus/image-menu.ui.in.in:823
+#: menus/image-menu.ui.in.in:833
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "_Web"
 
-#: menus/image-menu.ui.in.in:829
+#: menus/image-menu.ui.in.in:839
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "Anima_ción"
 
-#: menus/image-menu.ui.in.in:832
+#: menus/image-menu.ui.in.in:842
 msgctxt "filters-action"
 msgid "De_velopment"
 msgstr "De_sarrollo"
 
-#: menus/image-menu.ui.in.in:834
+#: menus/image-menu.ui.in.in:844
 msgctxt "filters-action"
 msgid "_Goat exercises"
 msgstr "Ejercicios de _cabra"
 
-#: menus/image-menu.ui.in.in:837
+#: menus/image-menu.ui.in.in:847
 msgctxt "filters-action"
 msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
-#: menus/image-menu.ui.in.in:840
+#: menus/image-menu.ui.in.in:850
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: menus/image-menu.ui.in.in:847
+#: menus/image-menu.ui.in.in:857
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "Ve_ntanas"
 
-#: menus/image-menu.ui.in.in:850
+#: menus/image-menu.ui.in.in:860
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "Empotrables cerrados _recientemente"
 
-#: menus/image-menu.ui.in.in:854
+#: menus/image-menu.ui.in.in:864
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_Diálogos empotrables"
 
-#: menus/image-menu.ui.in.in:886
+#: menus/image-menu.ui.in.in:896
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "Manual del _usuario"
 
-#: menus/image-menu.ui.in.in:899
+#: menus/image-menu.ui.in.in:909
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "_GIMP Online"
@@ -29164,6 +29184,10 @@ msgstr "Menú del histórico de deshacer"
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Menú de rutas"
+
+#~ msgctxt "select-action"
+#~ msgid "Create a floating selection"
+#~ msgstr "Crear una selección flotante"
 
 #~ msgid "How to handle embedded color profiles when opening a file."
 #~ msgstr "Cómo tratar los perfiles de color incrustados al abrir un archivo."
