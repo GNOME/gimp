@@ -616,7 +616,8 @@ static void
 update_values (Grid *grid)
 {
   GtkWidget *entry;
-  GimpRGB    color;
+  GeglColor *color;
+  GimpRGB    rgb;
 
   entry = g_object_get_data (G_OBJECT (main_dialog), "width");
   g_object_set (grid->config,
@@ -648,12 +649,20 @@ update_values (Grid *grid)
                 (gint) RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2)),
                 NULL);
 
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (grid->hcolor_button), &color);
-  g_object_set (grid->config, "hcolor", &color, NULL);
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (grid->vcolor_button), &color);
-  g_object_set (grid->config, "vcolor", &color, NULL);
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (grid->icolor_button), &color);
-  g_object_set (grid->config, "icolor", &color, NULL);
+  color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (grid->hcolor_button));
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  g_object_set (grid->config, "hcolor", &rgb, NULL);
+  g_object_unref (color);
+
+  color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (grid->vcolor_button));
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  g_object_set (grid->config, "vcolor", &rgb, NULL);
+  g_object_unref (color);
+
+  color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (grid->icolor_button));
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  g_object_set (grid->config, "icolor", &rgb, NULL);
+  g_object_unref (color);
 }
 
 static void
@@ -704,18 +713,29 @@ color_callback (GtkWidget *widget,
 {
   Grid      *grid         = GRID (data);
   GtkWidget *chain_button = grid->color_chain;
+  GeglColor *color;
+  GimpRGB    rgb;
+
+  color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget));
 
   if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chain_button)))
     {
-      GimpRGB color;
-
-      gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget), &color);
-
       if (widget == grid->vcolor_button)
-        gimp_color_button_set_color (GIMP_COLOR_BUTTON (grid->hcolor_button), &color);
+        gimp_color_button_set_color (GIMP_COLOR_BUTTON (grid->hcolor_button), color);
       else if (widget == grid->hcolor_button)
-        gimp_color_button_set_color (GIMP_COLOR_BUTTON (grid->vcolor_button), &color);
+        gimp_color_button_set_color (GIMP_COLOR_BUTTON (grid->vcolor_button), color);
     }
+
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+
+  if (widget == grid->hcolor_button)
+    g_object_set (grid->config, "hcolor", &rgb, NULL);
+  else if (widget == grid->vcolor_button)
+    g_object_set (grid->config, "vcolor", &rgb, NULL);
+  else if (widget == grid->icolor_button)
+    g_object_set (grid->config, "icolor", &rgb, NULL);
+
+  g_object_unref (color);
 }
 
 
@@ -756,6 +776,7 @@ dialog (GimpImage           *image,
   gint             ispace;
   gint             ioffset;
   GimpRGB         *icolor;
+  GeglColor       *color;
 
   g_return_val_if_fail (main_dialog == NULL, FALSE);
 
@@ -1030,9 +1051,11 @@ dialog (GimpImage           *image,
   gtk_widget_show (grid->color_chain);
 
   /*  attach color selectors  */
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), hcolor);
   grid->hcolor_button = gimp_color_button_new (_("Horizontal Color"),
                                                COLOR_BUTTON_WIDTH, 16,
-                                               hcolor,
+                                               color,
                                                GIMP_COLOR_AREA_SMALL_CHECKS);
   gimp_color_button_set_update (GIMP_COLOR_BUTTON (grid->hcolor_button), TRUE);
   gtk_grid_attach (GTK_GRID (offset), grid->hcolor_button, 1, 3, 1, 1);
@@ -1043,18 +1066,16 @@ dialog (GimpImage           *image,
                                       color_config);
 
   g_signal_connect (grid->hcolor_button, "color-changed",
-                    G_CALLBACK (gimp_color_button_get_color),
-                    hcolor);
-  g_signal_connect (grid->hcolor_button, "color-changed",
                     G_CALLBACK (color_callback),
                     grid);
   g_signal_connect_swapped (grid->hcolor_button, "color-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), vcolor);
   grid->vcolor_button = gimp_color_button_new (_("Vertical Color"),
                                                COLOR_BUTTON_WIDTH, 16,
-                                               vcolor,
+                                               color,
                                                GIMP_COLOR_AREA_SMALL_CHECKS);
   gimp_color_button_set_update (GIMP_COLOR_BUTTON (grid->vcolor_button), TRUE);
   gtk_grid_attach (GTK_GRID (offset), grid->vcolor_button, 2, 3, 1, 1);
@@ -1064,18 +1085,16 @@ dialog (GimpImage           *image,
                                       color_config);
 
   g_signal_connect (grid->vcolor_button, "color-changed",
-                    G_CALLBACK (gimp_color_button_get_color),
-                    vcolor);
-  g_signal_connect (grid->vcolor_button, "color-changed",
                     G_CALLBACK (color_callback),
                     grid);
   g_signal_connect_swapped (grid->vcolor_button, "color-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), icolor);
   grid->icolor_button = gimp_color_button_new (_("Intersection Color"),
                                                COLOR_BUTTON_WIDTH, 16,
-                                               icolor,
+                                               color,
                                                GIMP_COLOR_AREA_SMALL_CHECKS);
   gimp_color_button_set_update (GIMP_COLOR_BUTTON (grid->icolor_button), TRUE);
   gtk_grid_attach (GTK_GRID (offset), grid->icolor_button, 3, 3, 1, 1);
@@ -1084,10 +1103,11 @@ dialog (GimpImage           *image,
   gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (grid->icolor_button),
                                       color_config);
   g_object_unref (color_config);
+  g_object_unref (color);
 
   g_signal_connect (grid->icolor_button, "color-changed",
-                    G_CALLBACK (gimp_color_button_get_color),
-                    icolor);
+                    G_CALLBACK (color_callback),
+                    grid);
   g_signal_connect_swapped (grid->icolor_button, "color-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);

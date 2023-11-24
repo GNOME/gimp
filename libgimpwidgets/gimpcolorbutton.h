@@ -82,7 +82,7 @@ GType          gimp_color_button_get_type         (void) G_GNUC_CONST;
 GtkWidget    * gimp_color_button_new              (const gchar       *title,
                                                    gint               width,
                                                    gint               height,
-                                                   const GimpRGB     *color,
+                                                   GeglColor         *color,
                                                    GimpColorAreaType  type);
 
 void           gimp_color_button_set_title        (GimpColorButton   *button,
@@ -90,9 +90,8 @@ void           gimp_color_button_set_title        (GimpColorButton   *button,
 const gchar  * gimp_color_button_get_title        (GimpColorButton   *button);
 
 void           gimp_color_button_set_color        (GimpColorButton   *button,
-                                                   const GimpRGB     *color);
-void           gimp_color_button_get_color        (GimpColorButton   *button,
-                                                   GimpRGB           *color);
+                                                   GeglColor         *color);
+GeglColor    * gimp_color_button_get_color        (GimpColorButton   *button);
 
 gboolean       gimp_color_button_has_alpha        (GimpColorButton   *button);
 void           gimp_color_button_set_type         (GimpColorButton   *button,

@@ -125,8 +125,6 @@ colormap_actions_update (GimpActionGroup *group,
   gboolean            indexed          = FALSE;
   gboolean            drawable_indexed = FALSE;
   gint                num_colors       = 0;
-  GimpRGB             fg;
-  GimpRGB             bg;
 
   if (image)
     {
@@ -145,16 +143,6 @@ colormap_actions_update (GimpActionGroup *group,
         }
     }
 
-  if (context)
-    {
-      GeglColor *color;
-
-      color = gimp_context_get_foreground (context);
-      gegl_color_get_rgba_with_space (color, &fg.r, &fg.g, &fg.b, &fg.a, NULL);
-      color = gimp_context_get_background (context);
-      gegl_color_get_rgba_with_space (color, &bg.r, &bg.g, &bg.b, &bg.a, NULL);
-    }
-
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 #define SET_COLOR(action,color) \
@@ -171,8 +159,8 @@ colormap_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("colormap-add-color-from-bg",
                  indexed && num_colors < 256);
 
-  SET_COLOR ("colormap-add-color-from-fg", context ? &fg : NULL);
-  SET_COLOR ("colormap-add-color-from-bg", context ? &bg : NULL);
+  SET_COLOR ("colormap-add-color-from-fg", context ? gimp_context_get_foreground (context) : NULL);
+  SET_COLOR ("colormap-add-color-from-bg", context ? gimp_context_get_background (context) : NULL);
 
   SET_SENSITIVE ("colormap-selection-replace",
                  drawable_indexed && num_colors > 0);

@@ -125,13 +125,8 @@ quick_mask_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("quick-mask-configure", image);
 
-  if (image)
-    {
-      GimpRGB rgb;
-
-      gegl_color_get_pixel (quick_mask_color, babl_format ("R'G'B'A double"), &rgb);
-      SET_COLOR ("quick-mask-configure", &rgb);
-    }
+  if (quick_mask_color)
+    SET_COLOR ("quick-mask-configure", quick_mask_color);
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE

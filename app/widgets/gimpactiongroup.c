@@ -1161,7 +1161,7 @@ gimp_action_group_get_action_tooltip (GimpActionGroup     *group,
 void
 gimp_action_group_set_action_color (GimpActionGroup *group,
                                     const gchar     *action_name,
-                                    const GimpRGB   *color,
+                                    GeglColor       *color,
                                     gboolean         set_label)
 {
   GimpAction *action;
@@ -1192,10 +1192,18 @@ gimp_action_group_set_action_color (GimpActionGroup *group,
       gchar *label;
 
       if (color)
-        label = g_strdup_printf (_("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"),
-                                 color->r, color->g, color->b, color->a);
+        {
+          gfloat rgba[4];
+
+          gegl_color_get_pixel (color, babl_format ("R'G'B'A float"), rgba);
+
+          label = g_strdup_printf (_("sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"),
+                                   rgba[0], rgba[1], rgba[2], rgba[3]);
+        }
       else
-        label = g_strdup (_("(none)"));
+        {
+          label = g_strdup (_("(none)"));
+        }
 
       g_object_set (action,
                     "color", color,

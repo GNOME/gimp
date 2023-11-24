@@ -27,7 +27,7 @@ void   gimp_display_shell_set_action_active    (GimpDisplayShell *shell,
                                                 gboolean          active);
 void   gimp_display_shell_set_action_color     (GimpDisplayShell *shell,
                                                 const gchar      *action,
-                                                const GimpRGB    *color);
+                                                GeglColor        *color);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_ACTIONS_H__ */

@@ -46,8 +46,8 @@ struct _Style
   gdouble    fill_opacity;
 
   PaintType  paint_type;
-  GimpRGB    foreground;
-  GimpRGB    background;
+  GeglColor *foreground;
+  GeglColor *background;
   gboolean   reverselines;
   gint       ref_count;
 };
@@ -87,9 +87,6 @@ void     gfig_pattern_changed_callback     (gpointer              user_data,
 void     gfig_gradient_changed_callback    (gpointer              user_data,
                                             GimpGradient         *gradient,
                                             gboolean              dialog_closing);
-
-void     gfig_rgba_copy                    (GimpRGB              *color1,
-                                            GimpRGB              *color2);
 
 void     gfig_style_copy                   (Style                *style1,
                                             Style                *style0,

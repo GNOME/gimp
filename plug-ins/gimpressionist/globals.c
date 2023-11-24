@@ -47,7 +47,7 @@ static const gimpressionist_vals_t defaultpcvals = {
   0,
   "defaultbrush.pgm",
   "defaultpaper.pgm",
-  {0,0,0,1.0},
+  NULL,
   1,
   0,
   { { 0.5, 0.5, 0.0, 0.0, 1.0, 1.0, 0 } },

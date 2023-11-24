@@ -70,7 +70,7 @@ typedef struct
   int        run;
   char       selected_brush[200];
   char       selected_paper[200];
-  GimpRGB    color;
+  GeglColor *color;
   int        general_paint_edges;
   int        place_type;
   vector_t   orient_vectors[MAXORIENTVECT];

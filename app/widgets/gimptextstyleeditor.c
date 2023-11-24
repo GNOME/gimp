@@ -189,7 +189,7 @@ static void
 gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 {
   GtkWidget *image;
-  GimpRGB    color;
+  GeglColor *color;
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_VERTICAL);
@@ -247,11 +247,12 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   gtk_container_add (GTK_CONTAINER (editor->clear_button), image);
   gtk_widget_show (image);
 
-  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
+  color = gegl_color_new ("black");
   editor->color_button = gimp_color_panel_new (_("Change color of selected text"),
-                                               &color,
+                                               color,
                                                GIMP_COLOR_AREA_FLAT, 20, 20);
   gimp_widget_set_fully_opaque (editor->color_button, TRUE);
+  g_object_unref (color);
 
   gtk_box_pack_end (GTK_BOX (editor->lower_hbox), editor->color_button,
                     FALSE, FALSE, 0);
@@ -595,22 +596,25 @@ gimp_text_style_editor_list_tags (GimpTextStyleEditor  *editor,
   }
 
   {
-    GList   *list;
-    GimpRGB  color;
+    GList     *list;
+    GeglColor *color;
 
     for (list = editor->buffer->color_tags; list; list = g_list_next (list))
       *remove_tags = g_list_prepend (*remove_tags, list->data);
 
-    gimp_color_button_get_color (GIMP_COLOR_BUTTON (editor->color_button),
-                                 &color);
+    color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (editor->color_button));
 
     if (TRUE) /* FIXME should have "inconsistent" state as for font and size */
       {
         GtkTextTag *tag;
+        GimpRGB     rgb;
 
-        tag = gimp_text_buffer_get_color_tag (editor->buffer, &color);
+        gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+        tag = gimp_text_buffer_get_color_tag (editor->buffer, &rgb);
         tags = g_list_prepend (tags, tag);
       }
+
+    g_object_unref (color);
   }
 
   *remove_tags = g_list_reverse (*remove_tags);
@@ -740,13 +744,18 @@ gimp_text_style_editor_color_changed (GimpColorButton     *button,
 
   if (gtk_text_buffer_get_has_selection (buffer))
     {
-      GtkTextIter start, end;
-      GimpRGB     color;
+      GeglColor   *color;
+      GimpRGB      rgb;
+      GtkTextIter  start, end;
 
       gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
 
-      gimp_color_button_get_color (button, &color);
-      gimp_text_buffer_set_color (editor->buffer, &start, &end, &color);
+      color = gimp_color_button_get_color (button);
+
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+      gimp_text_buffer_set_color (editor->buffer, &start, &end, &rgb);
+
+      g_object_unref (color);
     }
 
   insert_tags = gimp_text_style_editor_list_tags (editor, &remove_tags);
@@ -757,19 +766,22 @@ static void
 gimp_text_style_editor_set_color (GimpTextStyleEditor *editor,
                                   GtkTextTag          *color_tag)
 {
-  GimpRGB color;
+  GeglColor *color;
+  GimpRGB    rgb;
 
-  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
+  gimp_rgba_set (&rgb, 0.0, 0.0, 0.0, 1.0);
 
   if (color_tag)
-    gimp_text_tag_get_fg_color (color_tag, &color);
+    gimp_text_tag_get_fg_color (color_tag, &rgb);
 
   g_signal_handlers_block_by_func (editor->color_button,
                                    gimp_text_style_editor_color_changed,
                                    editor);
 
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (editor->color_button),
-                               &color);
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (editor->color_button), color);
+  g_object_unref (color);
 
   /* FIXME should have "inconsistent" state as for font and size */
 
@@ -781,14 +793,11 @@ gimp_text_style_editor_set_color (GimpTextStyleEditor *editor,
 static void
 gimp_text_style_editor_set_default_color (GimpTextStyleEditor *editor)
 {
-  GimpRGB rgb;
-
   g_signal_handlers_block_by_func (editor->color_button,
                                    gimp_text_style_editor_color_changed,
                                    editor);
 
-  gegl_color_get_pixel (editor->text->color, babl_format ("R'G'B'A double"), &rgb);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (editor->color_button), &rgb);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (editor->color_button), editor->text->color);
 
   g_signal_handlers_unblock_by_func (editor->color_button,
                                      gimp_text_style_editor_color_changed,

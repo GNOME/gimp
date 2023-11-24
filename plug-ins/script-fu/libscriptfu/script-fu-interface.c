@@ -82,6 +82,8 @@ static void   script_fu_file_callback       (GtkWidget     *widget,
                                              SFFilename    *file);
 static void   script_fu_combo_callback      (GtkWidget     *widget,
                                              SFOption      *option);
+static void   script_fu_color_button_update (GimpColorButton *button,
+                                             GimpRGB         *rgb);
 
 static void   script_fu_resource_set_handler (gpointer       data,
                                               gpointer       resource,
@@ -321,13 +323,14 @@ script_fu_interface (SFScript  *script,
         case SF_COLOR:
           {
             GimpColorConfig *config;
+            GeglColor       *color = gegl_color_new (NULL);
+
+            gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &arg->value.sfa_color);
 
             left_align = TRUE;
             widget = gimp_color_button_new (_("Script-Fu Color Selection"),
-                                            COLOR_SAMPLE_WIDTH,
-                                            COLOR_SAMPLE_HEIGHT,
-                                            &arg->value.sfa_color,
-                                            GIMP_COLOR_AREA_FLAT);
+                                            COLOR_SAMPLE_WIDTH, COLOR_SAMPLE_HEIGHT,
+                                            color, GIMP_COLOR_AREA_FLAT);
 
             gimp_color_button_set_update (GIMP_COLOR_BUTTON (widget), TRUE);
 
@@ -335,9 +338,10 @@ script_fu_interface (SFScript  *script,
             gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (widget),
                                                 config);
             g_object_unref (config);
+            g_object_unref (color);
 
             g_signal_connect (widget, "color-changed",
-                              G_CALLBACK (gimp_color_button_get_color),
+                              G_CALLBACK (script_fu_color_button_update),
                               &arg->value.sfa_color);
           }
           break;
@@ -694,6 +698,17 @@ script_fu_combo_callback (GtkWidget *widget,
   option->history = gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
 }
 
+static void
+script_fu_color_button_update (GimpColorButton *button,
+                               GimpRGB         *rgb)
+{
+  GeglColor *color = gimp_color_button_get_color (button);
+
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgb);
+
+  g_object_unref (color);
+}
+
 /* Handle resource-set signal.
  * Store id of newly chosen resource in SF local cache of args,
  * at the integer location passed by pointer in "data"
@@ -887,8 +902,13 @@ script_fu_reset (SFScript *script)
           break;
 
         case SF_COLOR:
-          gimp_color_button_set_color (GIMP_COLOR_BUTTON (widget),
-                                       &value->sfa_color);
+          {
+            GeglColor *color = gegl_color_new (NULL);
+
+            gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &value->sfa_color);
+            gimp_color_button_set_color (GIMP_COLOR_BUTTON (widget), color);
+            g_object_unref (color);
+          }
           break;
 
         case SF_TOGGLE:

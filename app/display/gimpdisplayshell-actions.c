@@ -115,7 +115,7 @@ gimp_display_shell_set_action_active (GimpDisplayShell *shell,
 void
 gimp_display_shell_set_action_color (GimpDisplayShell *shell,
                                      const gchar      *action,
-                                     const GimpRGB    *color)
+                                     GeglColor        *color)
 {
   GimpImageWindow *window;
   GimpContext     *context;

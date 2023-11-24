@@ -163,8 +163,8 @@ typedef struct
   GtkWidget   *gradient_select;
   GtkWidget   *fillstyle_combo;
   GtkWidget   *paint_type_toggle;
-  GimpRGB     *fg_color;
-  GimpRGB     *bg_color;
+  GeglColor   *fg_color;
+  GeglColor   *bg_color;
   gboolean     enable_repaint;
   gboolean     using_new_layer;
 } GFigContext;

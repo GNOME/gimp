@@ -601,12 +601,11 @@ gimp_procedure_dialog_set_ok_label (GimpProcedureDialog *dialog,
  *     * %GIMP_TYPE_LABEL_ENTRY (default): an entry with a label.
  *     * %GTK_TYPE_ENTRY: an entry with no label.
  *     * %GTK_TYPE_TEXT_VIEW: a text view with no label.
- * - %GIMP_TYPE_PARAM_RGB:
+ * - %GEGL_TYPE_COLOR:
  *     * %GIMP_TYPE_LABEL_COLOR (default): a color button with a label.
  *         Please use gimp_procedure_dialog_get_color_widget() for a
  *         non-editable color area with a label.
  *     * %GIMP_TYPE_COLOR_BUTTON: a color button with no label.
- * - %GEGL_TYPE_COLOR:
  *     * %GIMP_TYPE_COLOR_AREA: a color area with no label.
  * - %G_TYPE_PARAM_FILE:
  *     * %GTK_FILE_CHOOSER_BUTTON (default): generic file chooser button
@@ -741,17 +740,6 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                                         property, -1);
         }
     }
-  else if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_RGB)
-    {
-      if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_COLOR_BUTTON)
-        {
-          widget = gimp_prop_color_select_new (G_OBJECT (dialog->priv->config),
-                                               property, 20, 20,
-                                               GIMP_COLOR_AREA_SMALL_CHECKS);
-          gtk_widget_set_vexpand (widget, FALSE);
-          gtk_widget_set_hexpand (widget, FALSE);
-        }
-    }
   else if (G_PARAM_SPEC_TYPE (pspec) == GEGL_TYPE_PARAM_COLOR)
     {
       if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_LABEL_COLOR)
@@ -764,6 +752,14 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
           widget = gimp_prop_color_area_new (G_OBJECT (dialog->priv->config),
                                              property, 20, 20,
                                              GIMP_COLOR_AREA_SMALL_CHECKS);
+          gtk_widget_set_vexpand (widget, FALSE);
+          gtk_widget_set_hexpand (widget, FALSE);
+        }
+      else if (widget_type == GIMP_TYPE_COLOR_BUTTON)
+        {
+          widget = gimp_prop_color_select_new (G_OBJECT (dialog->priv->config),
+                                               property, 20, 20,
+                                               GIMP_COLOR_AREA_SMALL_CHECKS);
           gtk_widget_set_vexpand (widget, FALSE);
           gtk_widget_set_hexpand (widget, FALSE);
         }

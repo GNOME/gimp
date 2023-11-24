@@ -2485,16 +2485,20 @@ color1_changed (GimpColorButton *button)
 
   if (t)
     {
-      GimpRGB color;
+      GeglColor *color;
+      GimpRGB    rgb;
 
-      gimp_color_button_get_color (button, &color);
+      color = gimp_color_button_get_color (button);
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
-      t->color1.x = color.r;
-      t->color1.y = color.g;
-      t->color1.z = color.b;
-      t->color1.w = color.a;
+      t->color1.x = rgb.r;
+      t->color1.y = rgb.g;
+      t->color1.z = rgb.b;
+      t->color1.w = rgb.a;
 
       restartrender ();
+
+      g_object_unref (color);
     }
 }
 
@@ -2505,16 +2509,20 @@ color2_changed (GimpColorButton *button)
 
   if (t)
     {
-      GimpRGB color;
+      GeglColor *color;
+      GimpRGB    rgb;
 
-      gimp_color_button_get_color (button, &color);
+      color = gimp_color_button_get_color (button);
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
-      t->color2.x = color.r;
-      t->color2.y = color.g;
-      t->color2.z = color.b;
-      t->color2.w = color.a;
+      t->color2.x = rgb.r;
+      t->color2.y = rgb.g;
+      t->color2.z = rgb.b;
+      t->color2.w = rgb.a;
 
       restartrender ();
+
+      g_object_unref (color);
     }
 }
 
@@ -2522,9 +2530,9 @@ static void
 drawcolor1 (GtkWidget *w)
 {
   static GtkWidget *lastw = NULL;
-
-  GimpRGB  color;
-  texture *t = currenttexture ();
+  GeglColor        *color;
+  GimpRGB           rgb;
+  texture          *t = currenttexture ();
 
   if (w)
     lastw = w;
@@ -2536,19 +2544,22 @@ drawcolor1 (GtkWidget *w)
   if (!t)
     return;
 
-  gimp_rgba_set (&color,
+  color = gegl_color_new (NULL);
+  gimp_rgba_set (&rgb,
                  t->color1.x, t->color1.y, t->color1.z, t->color1.w);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (w), &color);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (w), color);
+  g_object_unref (color);
 }
 
 static void
 drawcolor2 (GtkWidget *w)
 {
   static GtkWidget *lastw = NULL;
-
-  GimpRGB  color;
-  texture *t = currenttexture ();
+  GeglColor        *color;
+  GimpRGB           rgb;
+  texture          *t = currenttexture ();
 
   if (w)
     lastw = w;
@@ -2560,10 +2571,13 @@ drawcolor2 (GtkWidget *w)
   if (!t)
     return;
 
-  gimp_rgba_set (&color,
+  color = gegl_color_new (NULL);
+  gimp_rgba_set (&rgb,
                  t->color2.x, t->color2.y, t->color2.z, t->color2.w);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (w), &color);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (w), color);
+  g_object_unref (color);
 }
 
 static gboolean do_run = FALSE;
@@ -2627,7 +2641,7 @@ makewindow (void)
   GtkWidget  *vbox;
   GtkWidget  *button;
   GtkWidget  *list;
-  GimpRGB     rgb = { 0, 0, 0, 0 };
+  GeglColor  *color = gegl_color_new ("transparent");
 
   window = gimp_dialog_new (_("Sphere Designer"), PLUG_IN_ROLE,
                             NULL, 0,
@@ -2814,8 +2828,8 @@ makewindow (void)
                             hbox, 2);
 
   button = gimp_color_button_new (_("Color Selection Dialog"),
-                                  COLORBUTTONWIDTH, COLORBUTTONHEIGHT, &rgb,
-                                  GIMP_COLOR_AREA_FLAT);
+                                  COLORBUTTONWIDTH, COLORBUTTONHEIGHT,
+                                  color, GIMP_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
   drawcolor1 (button);
@@ -2825,8 +2839,8 @@ makewindow (void)
                     NULL);
 
   button = gimp_color_button_new (_("Color Selection Dialog"),
-                                  COLORBUTTONWIDTH, COLORBUTTONHEIGHT, &rgb,
-                                  GIMP_COLOR_AREA_FLAT);
+                                  COLORBUTTONWIDTH, COLORBUTTONHEIGHT,
+                                  color, GIMP_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
   drawcolor2 (button);
@@ -2955,6 +2969,8 @@ makewindow (void)
   gtk_widget_show (poszscale);
 
   gtk_widget_show (window);
+
+  g_object_unref (color);
 
   return window;
 }

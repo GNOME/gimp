@@ -56,7 +56,7 @@ static void gfig_read_parameter_double   (gchar        **text,
 static void gfig_read_parameter_gimp_rgb (gchar        **text,
                                           gint           nitems,
                                           const gchar   *name,
-                                          GimpRGB       *style_entry);
+                                          GeglColor    **style_entry);
 
 /* From a style string, read a resource name,
  * create a resource object, and put it in
@@ -168,7 +168,7 @@ static void
 gfig_read_parameter_gimp_rgb (gchar        **text,
                               gint           nitems,
                               const gchar   *name,
-                              GimpRGB       *style_entry)
+                              GeglColor    **style_entry)
 {
   gint   n = 0;
   gchar *ptr;
@@ -180,7 +180,10 @@ gfig_read_parameter_gimp_rgb (gchar        **text,
   gchar  colorstr_b[G_ASCII_DTOSTR_BUF_SIZE];
   gchar  colorstr_a[G_ASCII_DTOSTR_BUF_SIZE];
 
-  style_entry->r = style_entry->g = style_entry->b = style_entry->a = 0.;
+  if (*style_entry == NULL)
+    *style_entry = gegl_color_new (NULL);
+
+  gegl_color_set_rgba_with_space (*style_entry, 0.0, 0.0, 0.0, 0.0, NULL);
 
   snprintf (fmt_str, sizeof (fmt_str),
             "%%%" G_GSIZE_FORMAT "s"
@@ -201,10 +204,12 @@ gfig_read_parameter_gimp_rgb (gchar        **text,
             {
               sscanf (ptr, fmt_str,
                       colorstr_r, colorstr_g, colorstr_b, colorstr_a);
-              style_entry->r = g_ascii_strtod (colorstr_r, &endptr);
-              style_entry->g = g_ascii_strtod (colorstr_g, &endptr);
-              style_entry->b = g_ascii_strtod (colorstr_b, &endptr);
-              style_entry->a = g_ascii_strtod (colorstr_a, &endptr);
+              gegl_color_set_rgba_with_space (*style_entry,
+                                              g_ascii_strtod (colorstr_r, &endptr),
+                                              g_ascii_strtod (colorstr_g, &endptr),
+                                              g_ascii_strtod (colorstr_b, &endptr),
+                                              g_ascii_strtod (colorstr_a, &endptr),
+                                              NULL);
               g_free (tmpstr);
               return;
             }
@@ -357,12 +362,13 @@ void
 gfig_save_style (Style   *style,
                  GString *string)
 {
-  gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];
-  gchar buffer_r[G_ASCII_DTOSTR_BUF_SIZE];
-  gchar buffer_g[G_ASCII_DTOSTR_BUF_SIZE];
-  gchar buffer_b[G_ASCII_DTOSTR_BUF_SIZE];
-  gchar buffer_a[G_ASCII_DTOSTR_BUF_SIZE];
-  gint  blen = G_ASCII_DTOSTR_BUF_SIZE;
+  gchar   buffer[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar   buffer_r[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar   buffer_g[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar   buffer_b[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar   buffer_a[G_ASCII_DTOSTR_BUF_SIZE];
+  gint    blen = G_ASCII_DTOSTR_BUF_SIZE;
+  gdouble rgba[4];
 
   if (gfig_context->debug_styles)
     g_printerr ("Saving style %s, brush name '%s'\n", style->name,
@@ -386,17 +392,19 @@ gfig_save_style (Style   *style,
   g_string_append_printf (string, "Gradient:       %s\n",
                           gimp_resource_get_name (GIMP_RESOURCE (style->gradient)));
 
+  gegl_color_get_pixel (style->foreground, babl_format ("R'G'B'A double"), rgba);
   g_string_append_printf (string, "Foreground: %s %s %s %s\n",
-                          g_ascii_dtostr (buffer_r, blen, style->foreground.r),
-                          g_ascii_dtostr (buffer_g, blen, style->foreground.g),
-                          g_ascii_dtostr (buffer_b, blen, style->foreground.b),
-                          g_ascii_dtostr (buffer_a, blen, style->foreground.a));
+                          g_ascii_dtostr (buffer_r, blen, rgba[0]),
+                          g_ascii_dtostr (buffer_g, blen, rgba[1]),
+                          g_ascii_dtostr (buffer_b, blen, rgba[2]),
+                          g_ascii_dtostr (buffer_a, blen, rgba[3]));
 
+  gegl_color_get_pixel (style->background, babl_format ("R'G'B'A double"), rgba);
   g_string_append_printf (string, "Background: %s %s %s %s\n",
-                          g_ascii_dtostr (buffer_r, blen, style->background.r),
-                          g_ascii_dtostr (buffer_g, blen, style->background.g),
-                          g_ascii_dtostr (buffer_b, blen, style->background.b),
-                          g_ascii_dtostr (buffer_a, blen, style->background.a));
+                          g_ascii_dtostr (buffer_r, blen, rgba[0]),
+                          g_ascii_dtostr (buffer_g, blen, rgba[1]),
+                          g_ascii_dtostr (buffer_b, blen, rgba[2]),
+                          g_ascii_dtostr (buffer_a, blen, rgba[3]));
 
   g_string_append_printf (string, "</Style>\n");
 }
@@ -405,12 +413,13 @@ void
 gfig_style_save_as_attributes (Style   *style,
                                GString *string)
 {
-  gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];
-  gchar buffer_r[G_ASCII_DTOSTR_BUF_SIZE];
-  gchar buffer_g[G_ASCII_DTOSTR_BUF_SIZE];
-  gchar buffer_b[G_ASCII_DTOSTR_BUF_SIZE];
-  gchar buffer_a[G_ASCII_DTOSTR_BUF_SIZE];
-  gint  blen = G_ASCII_DTOSTR_BUF_SIZE;
+  gchar   buffer[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar   buffer_r[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar   buffer_g[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar   buffer_b[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar   buffer_a[G_ASCII_DTOSTR_BUF_SIZE];
+  gint    blen = G_ASCII_DTOSTR_BUF_SIZE;
+  gdouble rgba[4];
 
   if (gfig_context->debug_styles)
     g_printerr ("Saving style %s as attributes\n", style->name);
@@ -420,17 +429,19 @@ gfig_style_save_as_attributes (Style   *style,
                           gimp_resource_get_name (GIMP_RESOURCE (style->brush)));
   /* Why only brush and not pattern and gradient? */
 
+  gegl_color_get_pixel (style->foreground, babl_format ("R'G'B'A double"), rgba);
   g_string_append_printf (string, "Foreground=\"%s %s %s %s\" ",
-                          g_ascii_dtostr (buffer_r, blen, style->foreground.r),
-                          g_ascii_dtostr (buffer_g, blen, style->foreground.g),
-                          g_ascii_dtostr (buffer_b, blen, style->foreground.b),
-                          g_ascii_dtostr (buffer_a, blen, style->foreground.a));
+                          g_ascii_dtostr (buffer_r, blen, rgba[0]),
+                          g_ascii_dtostr (buffer_g, blen, rgba[1]),
+                          g_ascii_dtostr (buffer_b, blen, rgba[2]),
+                          g_ascii_dtostr (buffer_a, blen, rgba[3]));
 
+  gegl_color_get_pixel (style->background, babl_format ("R'G'B'A double"), rgba);
   g_string_append_printf (string, "Background=\"%s %s %s %s\" ",
-                          g_ascii_dtostr (buffer_r, blen, style->background.r),
-                          g_ascii_dtostr (buffer_g, blen, style->background.g),
-                          g_ascii_dtostr (buffer_b, blen, style->background.b),
-                          g_ascii_dtostr (buffer_a, blen, style->background.a));
+                          g_ascii_dtostr (buffer_r, blen, rgba[0]),
+                          g_ascii_dtostr (buffer_g, blen, rgba[1]),
+                          g_ascii_dtostr (buffer_b, blen, rgba[2]),
+                          g_ascii_dtostr (buffer_a, blen, rgba[3]));
 
   g_string_append_printf (string, "FillType=%d ", style->fill_type);
 
@@ -438,8 +449,6 @@ gfig_style_save_as_attributes (Style   *style,
 
   g_string_append_printf (string, "FillOpacity=%s ",
                           g_ascii_dtostr (buffer, blen, style->fill_opacity));
-
-
 }
 
 void
@@ -461,18 +470,15 @@ void
 set_foreground_callback (GimpColorButton *button,
                          gpointer         data)
 {
-  GimpRGB  color2;
-  Style   *current_style;
+  Style *current_style;
 
   if (gfig_context->debug_styles)
     g_printerr ("Setting foreground color from color selector\n");
 
   current_style = gfig_context_get_current_style ();
 
-  gimp_color_button_get_color (button, &color2);
-
-  gimp_rgba_set (&current_style->foreground,
-                 color2.r, color2.g, color2.b, color2.a);
+  g_clear_object (&current_style->foreground);
+  current_style->foreground = gimp_color_button_get_color (button);
 
   gfig_paint_callback ();
 }
@@ -481,17 +487,15 @@ void
 set_background_callback (GimpColorButton *button,
                          gpointer         data)
 {
-  GimpRGB  color2;
-  Style   *current_style;
+  Style *current_style;
 
   if (gfig_context->debug_styles)
     g_printerr ("Setting background color from color selector\n");
 
   current_style = gfig_context_get_current_style ();
 
-  gimp_color_button_get_color (button, &color2);
-  gimp_rgba_set (&current_style->background,
-                 color2.r, color2.g, color2.b, color2.a);
+  g_clear_object (&current_style->background);
+  current_style->background = gimp_color_button_get_color (button);
 
   gfig_paint_callback ();
 }
@@ -564,16 +568,6 @@ gfig_gradient_changed_callback (gpointer                  user_data,
 }
 
 void
-gfig_rgba_copy (GimpRGB *color1,
-                GimpRGB *color2)
-{
-  color1->r = color2->r;
-  color1->g = color2->g;
-  color1->b = color2->b;
-  color1->a = color2->a;
-}
-
-void
 gfig_style_copy (Style       *style1,
                  Style       *style0,
                  const gchar *name)
@@ -586,8 +580,10 @@ gfig_style_copy (Style       *style1,
   if (gfig_context->debug_styles)
     g_printerr ("Copying style %s as style %s\n", style0->name, name);
 
-  gfig_rgba_copy (&style1->foreground, &style0->foreground);
-  gfig_rgba_copy (&style1->background, &style0->background);
+  g_clear_object (&style1->foreground);
+  style1->foreground = gegl_color_duplicate (style0->foreground);
+  g_clear_object (&style1->background);
+  style1->background = gegl_color_duplicate (style0->background);
 
   if (!style0->brush)
     g_message ("Error copying style %s: brush name is NULL.", style0->name);
@@ -610,17 +606,11 @@ gfig_style_copy (Style       *style1,
 void
 gfig_style_apply (Style *style)
 {
-  GeglColor *color = gegl_color_new ("black");
-
   if (gfig_context->debug_styles)
     g_printerr ("Applying style '%s' -- ", style->name);
 
-  gegl_color_set_rgba_with_space (color, style->foreground.r, style->foreground.g, style->foreground.b, style->foreground.a, NULL);
-  gimp_context_set_foreground (color);
-
-  gegl_color_set_rgba_with_space (color, style->background.r, style->background.g, style->background.b, style->background.a, NULL);
-  gimp_context_set_background (color);
-  g_object_unref (color);
+  gimp_context_set_foreground (style->foreground);
+  gimp_context_set_background (style->background);
 
   if (! gimp_context_set_brush (style->brush))
     g_message ("Style apply: Failed to set brush to '%s' in style '%s'",
@@ -648,8 +638,7 @@ void
 gfig_read_gimp_style (Style       *style,
                       const gchar *name)
 {
-  GeglColor *color;
-  gint       dummy;
+  gint dummy;
 
   if (!name)
     g_message ("Error: name is NULL in gfig_read_gimp_style.");
@@ -658,12 +647,11 @@ gfig_read_gimp_style (Style       *style,
     g_printerr ("Reading Gimp settings as style %s\n", name);
   style->name = g_strdup (name);
 
-  color = gimp_context_get_foreground ();
-  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), &style->foreground);
-  g_object_unref (color);
-  color = gimp_context_get_background ();
-  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), &style->background);
-  g_object_unref (color);
+  g_clear_object (&style->foreground);
+  style->foreground = gimp_context_get_foreground ();
+
+  g_clear_object (&style->background);
+  style->background = gimp_context_get_background ();
 
   style->brush    = gimp_context_get_brush ();
   style->gradient = gimp_context_get_gradient ();
@@ -699,9 +687,9 @@ gfig_style_set_context_from_style (Style *style)
   gfig_context->enable_repaint = FALSE;
 
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->fg_color_button),
-                               &style->foreground);
+                               style->foreground);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button),
-                               &style->background);
+                               style->background);
   if (! gimp_context_set_brush (style->brush))
     g_message ("Style from context: Failed to set brush");
 
@@ -736,23 +724,25 @@ gfig_style_set_context_from_style (Style *style)
 void
 gfig_style_set_style_from_context (Style *style)
 {
-  Style   *current_style;
-  GimpRGB  color;
-  gint     value;
+  Style *current_style;
+  gint   value;
 
   style->name = "object";
   current_style = gfig_context_get_current_style ();
 
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (gfig_context->fg_color_button),
-                               &color);
+  g_clear_object (&style->foreground);
+  style->foreground = gimp_color_button_get_color (GIMP_COLOR_BUTTON (gfig_context->fg_color_button));
   if (gfig_context->debug_styles)
-    g_printerr ("Setting foreground color to %lg %lg %lg\n",
-                color.r, color.g, color.b);
+    {
+      gdouble rgb[3];
 
-  gfig_rgba_copy (&style->foreground, &color);
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button),
-                               &color);
-  gfig_rgba_copy (&style->background, &color);
+      gegl_color_get_pixel (style->foreground, babl_format ("R'G'B' double"), rgb);
+      g_printerr ("Setting foreground color to %lg %lg %lg\n",
+                  rgb[0], rgb[1], rgb[2]);
+    }
+
+  g_clear_object (&style->background);
+  style->background = gimp_color_button_get_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button));
 
   /* FIXME: issues of ownership.
    * A resource is a pointer to an object.

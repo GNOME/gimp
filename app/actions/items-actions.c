@@ -55,10 +55,14 @@ items_actions_setup (GimpActionGroup *group,
         }
       else
         {
-          GimpRGB color;
+          GeglColor *color;
+          GimpRGB    rgb;
 
-          gimp_get_color_tag_color (value->value, &color, FALSE);
-          gimp_action_group_set_action_color (group, action, &color, FALSE);
+          gimp_get_color_tag_color (value->value, &rgb, FALSE);
+          color = gegl_color_new (NULL);
+          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+          gimp_action_group_set_action_color (group, action, color, FALSE);
+          g_object_unref (color);
         }
     }
 

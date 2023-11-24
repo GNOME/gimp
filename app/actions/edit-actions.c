@@ -383,10 +383,7 @@ edit_actions_foreground_changed (GimpContext     *context,
                                  GeglColor       *color,
                                  GimpActionGroup *group)
 {
-  GimpRGB rgb;
-
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-  gimp_action_group_set_action_color (group, "edit-fill-fg", &rgb, FALSE);
+  gimp_action_group_set_action_color (group, "edit-fill-fg", color, FALSE);
 }
 
 static void
@@ -394,10 +391,7 @@ edit_actions_background_changed (GimpContext     *context,
                                  GeglColor       *color,
                                  GimpActionGroup *group)
 {
-  GimpRGB rgb;
-
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-  gimp_action_group_set_action_color (group, "edit-fill-bg", &rgb, FALSE);
+  gimp_action_group_set_action_color (group, "edit-fill-bg", color, FALSE);
 }
 
 static void

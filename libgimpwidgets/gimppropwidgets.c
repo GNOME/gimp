@@ -4177,12 +4177,12 @@ gimp_prop_color_area_notify (GObject    *config,
 /**
  * gimp_prop_color_select_new:
  * @config:        Object to which property is attached.
- * @property_name: Name of RGB property.
+ * @property_name: Name of [class@Gegl.Color] property.
  * @width:         Width of the colorpreview in pixels.
  * @height:        Height of the colorpreview in pixels.
  * @type:          How transparency is represented.
  *
- * Creates a #GimpColorButton to set and display the value of an RGB
+ * Creates a #GimpColorButton to set and display the value of a color
  * property.
  *
  * Returns: (transfer full): A new #GimpColorButton widget.
@@ -4198,10 +4198,10 @@ gimp_prop_color_select_new (GObject           *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *button;
-  GimpRGB    *value;
+  GeglColor  *value = NULL;
 
   param_spec = check_param_spec_w (config, property_name,
-                                   GIMP_TYPE_PARAM_RGB, G_STRFUNC);
+                                   GEGL_TYPE_PARAM_COLOR, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -4212,7 +4212,7 @@ gimp_prop_color_select_new (GObject           *config,
   button = gimp_color_button_new (g_param_spec_get_nick (param_spec),
                                   width, height, value, type);
 
-  g_free (value);
+  g_clear_object (&value);
 
   g_object_bind_property (config, property_name,
                           button, "color",

@@ -429,7 +429,11 @@ set_values (const gchar *key, const gchar *val)
   else if (!strcmp (key, "color"))
     {
       char *c = parse_rgb_string (val);
-      gimp_rgba_set_uchar (&pcvals.color, c[0], c[1], c[2], 255);
+
+      if (pcvals.color == NULL)
+        pcvals.color = gegl_color_new (NULL);
+
+      gegl_color_set_pixel (pcvals.color, babl_format ("R'G'B' u8"), c);
     }
 
   else if (!strcmp (key, "numorientvector"))
@@ -820,7 +824,7 @@ save_preset (void)
   fprintf (f, "selectedbrush=%s\n", pcvals.selected_brush);
   fprintf (f, "selectedpaper=%s\n", pcvals.selected_paper);
 
-  gimp_rgb_get_uchar (&pcvals.color, &color[0], &color[1], &color[2]);
+  gegl_color_get_pixel (pcvals.color, babl_format ("R'G'B' u8"), color);
   fprintf (f, "color=%02x%02x%02x\n", color[0], color[1], color[2]);
 
   fprintf (f, "placetype=%d\n", pcvals.place_type);

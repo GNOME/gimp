@@ -242,7 +242,7 @@ const gchar * gimp_action_group_get_action_tooltip    (GimpActionGroup *group,
                                                        const gchar     *action_name);
 void          gimp_action_group_set_action_color      (GimpActionGroup *group,
                                                        const gchar     *action_name,
-                                                       const GimpRGB   *color,
+                                                       GeglColor       *color,
                                                        gboolean         set_label);
 void          gimp_action_group_set_action_viewable   (GimpActionGroup *group,
                                                        const gchar     *action_name,

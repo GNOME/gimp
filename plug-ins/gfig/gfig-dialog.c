@@ -490,17 +490,15 @@ gfig_dialog (GimpGfig *gfig)
                     vbox);
 
   /* foreground color button in Stroke frame*/
-  gfig_context->fg_color = g_new0 (GimpRGB, 1);
+  gfig_context->fg_color = gegl_color_duplicate (gfig_context->default_style.foreground);
   gfig_context->fg_color_button = gimp_color_button_new (_("Foreground"),
-                                                    SEL_BUTTON_WIDTH,
-                                                    SEL_BUTTON_HEIGHT,
-                                                    gfig_context->fg_color,
-                                                    GIMP_COLOR_AREA_SMALL_CHECKS);
+                                                         SEL_BUTTON_WIDTH,
+                                                         SEL_BUTTON_HEIGHT,
+                                                         gfig_context->fg_color,
+                                                         GIMP_COLOR_AREA_SMALL_CHECKS);
   g_signal_connect (gfig_context->fg_color_button, "color-changed",
                     G_CALLBACK (set_foreground_callback),
                     gfig_context->fg_color);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->fg_color_button),
-                               &gfig_context->default_style.foreground);
   gtk_box_pack_start (GTK_BOX (vbox), gfig_context->fg_color_button,
                       FALSE, FALSE, 0);
   gtk_widget_show (gfig_context->fg_color_button);
@@ -557,16 +555,14 @@ gfig_dialog (GimpGfig *gfig)
                             empty_label, NULL);
 
   /* A page for the fill color button */
-  gfig_context->bg_color = g_new0 (GimpRGB, 1);
+  gfig_context->bg_color = gegl_color_duplicate (gfig_context->default_style.background);
   gfig_context->bg_color_button = gimp_color_button_new (_("Background"),
-                                           SEL_BUTTON_WIDTH, SEL_BUTTON_HEIGHT,
-                                           gfig_context->bg_color,
-                                           GIMP_COLOR_AREA_SMALL_CHECKS);
+                                                         SEL_BUTTON_WIDTH, SEL_BUTTON_HEIGHT,
+                                                         gfig_context->bg_color,
+                                                         GIMP_COLOR_AREA_SMALL_CHECKS);
   g_signal_connect (gfig_context->bg_color_button, "color-changed",
                     G_CALLBACK (set_background_callback),
                     gfig_context->bg_color);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button),
-                               &gfig_context->default_style.background);
   gtk_widget_show (gfig_context->bg_color_button);
   gtk_notebook_append_page (GTK_NOTEBOOK (fill_type_notebook),
                             gfig_context->bg_color_button, NULL);

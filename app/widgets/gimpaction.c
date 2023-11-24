@@ -76,7 +76,7 @@ struct _GimpActionPrivate
 
   gchar                 *menu_path;
 
-  GimpRGB               *color;
+  GeglColor             *color;
   GimpViewable          *viewable;
   PangoEllipsizeMode     ellipsize;
   gint                   max_width_chars;
@@ -114,8 +114,6 @@ static guint action_signals[LAST_SIGNAL];
 static void
 gimp_action_default_init (GimpActionInterface *iface)
 {
-  GimpRGB black;
-
   action_signals[ACTIVATE] =
     g_signal_new ("activate",
                   G_TYPE_FROM_INTERFACE (iface),
@@ -182,12 +180,11 @@ gimp_action_default_init (GimpActionInterface *iface)
                                                             GIMP_PARAM_READWRITE |
                                                             G_PARAM_EXPLICIT_NOTIFY));
 
-  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   g_object_interface_install_property (iface,
-                                       gimp_param_spec_rgb ("color",
-                                                            NULL, NULL,
-                                                            TRUE, &black,
-                                                            GIMP_PARAM_READWRITE));
+                                       gegl_param_spec_color_from_string ("color",
+                                                                          NULL, NULL,
+                                                                          "black",
+                                                                          GIMP_PARAM_READWRITE));
   g_object_interface_install_property (iface,
                                        g_param_spec_object ("viewable",
                                                             NULL, NULL,
@@ -899,7 +896,7 @@ gimp_action_get_property (GObject    *object,
       break;
 
     case GIMP_ACTION_PROP_COLOR:
-      g_value_set_boxed (value, priv->color);
+      g_value_set_object (value, priv->color);
       break;
     case GIMP_ACTION_PROP_VIEWABLE:
       g_value_set_object (value, priv->viewable);
@@ -959,8 +956,10 @@ gimp_action_set_property (GObject      *object,
       break;
 
     case GIMP_ACTION_PROP_COLOR:
-      g_clear_pointer (&priv->color, g_free);
-      priv->color = g_value_dup_boxed (value);
+      g_clear_object (&priv->color);
+      if (g_value_get_object (value))
+        priv->color = gegl_color_duplicate (g_value_get_object (value));
+
       set_proxy = TRUE;
       break;
     case GIMP_ACTION_PROP_VIEWABLE:
@@ -1009,26 +1008,21 @@ gimp_action_set_proxy (GimpAction *action,
     {
       if (priv->color)
         {
-          GeglColor *color;
-
           if (GTK_IS_MENU_ITEM (proxy))
             proxy_image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
           else
             proxy_image = gtk_tool_button_get_label_widget (GTK_TOOL_BUTTON (proxy));
 
-          color = gegl_color_new (NULL);
-          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), priv->color);
-
           if (GIMP_IS_COLOR_AREA (proxy_image))
             {
-              gimp_color_area_set_color (GIMP_COLOR_AREA (proxy_image), color);
+              gimp_color_area_set_color (GIMP_COLOR_AREA (proxy_image), priv->color);
               proxy_image = NULL;
             }
           else
             {
               gint width, height;
 
-              proxy_image = gimp_color_area_new (color, GIMP_COLOR_AREA_SMALL_CHECKS, 0);
+              proxy_image = gimp_color_area_new (priv->color, GIMP_COLOR_AREA_SMALL_CHECKS, 0);
               gimp_color_area_set_draw_border (GIMP_COLOR_AREA (proxy_image), TRUE);
 
               if (priv->context)
@@ -1039,8 +1033,6 @@ gimp_action_set_proxy (GimpAction *action,
               gtk_widget_set_size_request (proxy_image, width, height);
               gtk_widget_show (proxy_image);
             }
-
-          g_object_unref (color);
         }
       else if (priv->viewable)
         {
@@ -1296,7 +1288,7 @@ gimp_action_private_finalize (GimpActionPrivate *priv)
 {
   g_clear_pointer (&priv->disable_reason, g_free);
   g_clear_object  (&priv->context);
-  g_clear_pointer (&priv->color, g_free);
+  g_clear_object  (&priv->color);
   g_clear_object  (&priv->viewable);
 
   g_free (priv->label);

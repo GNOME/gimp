@@ -96,7 +96,7 @@ typedef struct
 
 typedef struct
 {
-  GimpRGB   *color;
+  GeglColor *color;
   GtkWidget *hbox;
   GtkWidget *orig_preview;
   GtkWidget *button;
@@ -2023,7 +2023,8 @@ color_map_create (const gchar *name,
   GeglColor *color;
 
   gimp_rgb_set_alpha (data, 1.0);
-  color_map->color       = data;
+  color_map->color       = gegl_color_new (NULL);
+  gegl_color_set_pixel (color_map->color, babl_format ("R'G'B'A double"), data);
   color_map->fixed_point = fixed_point;
   color_map->hbox        = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
 
@@ -2050,15 +2051,11 @@ color_map_create (const gchar *name,
   color_map->button = gimp_color_button_new (name,
                                              COLOR_SAMPLE_SIZE,
                                              COLOR_SAMPLE_SIZE,
-                                             data,
+                                             color_map->color,
                                              GIMP_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (color_map->hbox), color_map->button,
                       FALSE, FALSE, 0);
   gtk_widget_show (color_map->button);
-
-  g_signal_connect (color_map->button, "color-changed",
-                    G_CALLBACK (gimp_color_button_get_color),
-                    data);
 
   g_signal_connect (color_map->button, "color-changed",
                     G_CALLBACK (color_map_color_changed_cb),
@@ -2084,6 +2081,9 @@ color_map_color_changed_cb (GtkWidget *widget,
   update_values ();
 
   ifs_compose_preview ();
+
+  g_clear_object (&color_map->color);
+  color_map->color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget));
 }
 
 static void
@@ -2093,14 +2093,7 @@ color_map_update (ColorMap *color_map)
                                color_map->color);
 
   if (color_map->fixed_point)
-    {
-      GeglColor *color;
-
-      color = gegl_color_new (NULL);
-      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), color_map->color);
-      gimp_color_area_set_color (GIMP_COLOR_AREA (color_map->orig_preview), color);
-      g_object_unref (color);
-    }
+    gimp_color_area_set_color (GIMP_COLOR_AREA (color_map->orig_preview), color_map->color);
 }
 
 static void

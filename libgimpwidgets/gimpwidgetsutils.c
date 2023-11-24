@@ -1087,7 +1087,13 @@ gimp_widget_get_render_space (GtkWidget       *widget,
 
   g_return_val_if_fail (widget == NULL || GTK_IS_WIDGET (widget), NULL);
 
-  _gimp_widget_get_profiles (widget, config, NULL, &dest_profile);
+  if (config)
+    _gimp_widget_get_profiles (widget, config, NULL, &dest_profile);
+  else
+    /* When no GimpColorConfig is given, we just return the monitor's color
+     * profile, disregarding any user preferences.
+     */
+    dest_profile = gimp_widget_get_color_profile (gtk_widget_get_toplevel (widget));
 
   if (dest_profile)
     space = gimp_color_profile_get_space (dest_profile,

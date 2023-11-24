@@ -465,12 +465,11 @@ gradient_editor_actions_update (GimpActionGroup *group,
   GimpDataEditor      *data_editor    = GIMP_DATA_EDITOR (data);
   GimpGradient        *gradient;
   gboolean             editable       = FALSE;
+  GeglColor           *color;
   GimpRGB              left_color;
   GimpRGB              right_color;
   GimpRGB              left_seg_color;
   GimpRGB              right_seg_color;
-  GimpRGB              fg;
-  GimpRGB              bg;
   gboolean             blending_equal = TRUE;
   gboolean             coloring_equal = TRUE;
   gboolean             left_editable  = TRUE;
@@ -546,16 +545,6 @@ gradient_editor_actions_update (GimpActionGroup *group,
       delete    = (editor->control_sel_l->prev || editor->control_sel_r->next);
     }
 
-  if (data_editor->context)
-    {
-      GeglColor *color;
-
-      color = gimp_context_get_foreground (data_editor->context);
-      gegl_color_get_rgba_with_space (color, &fg.r, &fg.g, &fg.b, &fg.a, NULL);
-      color = gimp_context_get_background (data_editor->context);
-      gegl_color_get_rgba_with_space (color, &bg.r, &bg.g, &bg.b, &bg.a, NULL);
-    }
-
   /*  pretend the gradient not being editable while the dialog is
    *  insensitive. prevents the gradient from being modified while a
    *  dialog is running. bug #161411 --mitch
@@ -617,23 +606,25 @@ gradient_editor_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("gradient-editor-load-left-left-neighbor",  editable);
   SET_SENSITIVE ("gradient-editor-load-left-right-endpoint", editable);
 
+  color = gegl_color_new (NULL);
+
   if (gradient)
     {
-      SET_COLOR ("gradient-editor-left-color",
-                 &left_color, FALSE);
-      SET_COLOR ("gradient-editor-load-left-left-neighbor",
-                 &left_seg_color, FALSE);
-      SET_COLOR ("gradient-editor-load-left-right-endpoint",
-                 &right_color, FALSE);
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &left_color);
+      SET_COLOR ("gradient-editor-left-color", color, FALSE);
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &left_seg_color);
+      SET_COLOR ("gradient-editor-load-left-left-neighbor", color, FALSE);
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &right_color);
+      SET_COLOR ("gradient-editor-load-left-right-endpoint", color, FALSE);
     }
 
   SET_SENSITIVE ("gradient-editor-load-left-fg", left_editable);
   SET_SENSITIVE ("gradient-editor-load-left-bg", left_editable);
 
   SET_COLOR ("gradient-editor-load-left-fg",
-             data_editor->context ? &fg : NULL, FALSE);
+             data_editor->context ? gimp_context_get_foreground (data_editor->context) : NULL, FALSE);
   SET_COLOR ("gradient-editor-load-left-bg",
-             data_editor->context ? &bg : NULL, FALSE);
+             data_editor->context ? gimp_context_get_background (data_editor->context) : NULL, FALSE);
 
   SET_SENSITIVE ("gradient-editor-load-left-01", left_editable);
   SET_SENSITIVE ("gradient-editor-load-left-02", left_editable);
@@ -646,16 +637,26 @@ gradient_editor_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("gradient-editor-load-left-09", left_editable);
   SET_SENSITIVE ("gradient-editor-load-left-10", left_editable);
 
-  SET_COLOR ("gradient-editor-load-left-01", &editor->saved_colors[0], TRUE);
-  SET_COLOR ("gradient-editor-load-left-02", &editor->saved_colors[1], TRUE);
-  SET_COLOR ("gradient-editor-load-left-03", &editor->saved_colors[2], TRUE);
-  SET_COLOR ("gradient-editor-load-left-04", &editor->saved_colors[3], TRUE);
-  SET_COLOR ("gradient-editor-load-left-05", &editor->saved_colors[4], TRUE);
-  SET_COLOR ("gradient-editor-load-left-06", &editor->saved_colors[5], TRUE);
-  SET_COLOR ("gradient-editor-load-left-07", &editor->saved_colors[6], TRUE);
-  SET_COLOR ("gradient-editor-load-left-08", &editor->saved_colors[7], TRUE);
-  SET_COLOR ("gradient-editor-load-left-09", &editor->saved_colors[8], TRUE);
-  SET_COLOR ("gradient-editor-load-left-10", &editor->saved_colors[9], TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[0]);
+  SET_COLOR ("gradient-editor-load-left-01", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[1]);
+  SET_COLOR ("gradient-editor-load-left-02", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[2]);
+  SET_COLOR ("gradient-editor-load-left-03", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[3]);
+  SET_COLOR ("gradient-editor-load-left-04", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[4]);
+  SET_COLOR ("gradient-editor-load-left-05", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[5]);
+  SET_COLOR ("gradient-editor-load-left-06", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[6]);
+  SET_COLOR ("gradient-editor-load-left-07", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[7]);
+  SET_COLOR ("gradient-editor-load-left-08", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[8]);
+  SET_COLOR ("gradient-editor-load-left-09", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[9]);
+  SET_COLOR ("gradient-editor-load-left-10", color, TRUE);
 
   SET_SENSITIVE ("gradient-editor-save-left-01", gradient);
   SET_SENSITIVE ("gradient-editor-save-left-02", gradient);
@@ -668,16 +669,26 @@ gradient_editor_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("gradient-editor-save-left-09", gradient);
   SET_SENSITIVE ("gradient-editor-save-left-10", gradient);
 
-  SET_COLOR ("gradient-editor-save-left-01", &editor->saved_colors[0], TRUE);
-  SET_COLOR ("gradient-editor-save-left-02", &editor->saved_colors[1], TRUE);
-  SET_COLOR ("gradient-editor-save-left-03", &editor->saved_colors[2], TRUE);
-  SET_COLOR ("gradient-editor-save-left-04", &editor->saved_colors[3], TRUE);
-  SET_COLOR ("gradient-editor-save-left-05", &editor->saved_colors[4], TRUE);
-  SET_COLOR ("gradient-editor-save-left-06", &editor->saved_colors[5], TRUE);
-  SET_COLOR ("gradient-editor-save-left-07", &editor->saved_colors[6], TRUE);
-  SET_COLOR ("gradient-editor-save-left-08", &editor->saved_colors[7], TRUE);
-  SET_COLOR ("gradient-editor-save-left-09", &editor->saved_colors[8], TRUE);
-  SET_COLOR ("gradient-editor-save-left-10", &editor->saved_colors[9], TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[0]);
+  SET_COLOR ("gradient-editor-save-left-01", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[1]);
+  SET_COLOR ("gradient-editor-save-left-02", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[2]);
+  SET_COLOR ("gradient-editor-save-left-03", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[3]);
+  SET_COLOR ("gradient-editor-save-left-04", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[4]);
+  SET_COLOR ("gradient-editor-save-left-05", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[5]);
+  SET_COLOR ("gradient-editor-save-left-06", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[6]);
+  SET_COLOR ("gradient-editor-save-left-07", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[7]);
+  SET_COLOR ("gradient-editor-save-left-08", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[8]);
+  SET_COLOR ("gradient-editor-save-left-09", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[9]);
+  SET_COLOR ("gradient-editor-save-left-10", color, TRUE);
 
   SET_SENSITIVE ("gradient-editor-right-color-fixed",                  editable);
   SET_SENSITIVE ("gradient-editor-right-color-foreground",             editable);
@@ -713,21 +724,21 @@ gradient_editor_actions_update (GimpActionGroup *group,
 
   if (gradient)
     {
-      SET_COLOR ("gradient-editor-right-color",
-                 &right_color, FALSE);
-      SET_COLOR ("gradient-editor-load-right-right-neighbor",
-                 &right_seg_color, FALSE);
-      SET_COLOR ("gradient-editor-load-right-left-endpoint",
-                 &left_color, FALSE);
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &right_color);
+      SET_COLOR ("gradient-editor-right-color", color, FALSE);
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &right_seg_color);
+      SET_COLOR ("gradient-editor-load-right-right-neighbor", color, FALSE);
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &left_color);
+      SET_COLOR ("gradient-editor-load-right-left-endpoint", color, FALSE);
     }
 
   SET_SENSITIVE ("gradient-editor-load-right-fg", right_editable);
   SET_SENSITIVE ("gradient-editor-load-right-bg", right_editable);
 
   SET_COLOR ("gradient-editor-load-right-fg",
-             data_editor->context ? &fg : NULL, FALSE);
+             data_editor->context ? gimp_context_get_foreground (data_editor->context) : NULL, FALSE);
   SET_COLOR ("gradient-editor-load-right-bg",
-             data_editor->context ? &bg : NULL, FALSE);
+             data_editor->context ? gimp_context_get_background (data_editor->context) : NULL, FALSE);
 
   SET_SENSITIVE ("gradient-editor-load-right-01", right_editable);
   SET_SENSITIVE ("gradient-editor-load-right-02", right_editable);
@@ -740,16 +751,26 @@ gradient_editor_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("gradient-editor-load-right-09", right_editable);
   SET_SENSITIVE ("gradient-editor-load-right-10", right_editable);
 
-  SET_COLOR ("gradient-editor-load-right-01", &editor->saved_colors[0], TRUE);
-  SET_COLOR ("gradient-editor-load-right-02", &editor->saved_colors[1], TRUE);
-  SET_COLOR ("gradient-editor-load-right-03", &editor->saved_colors[2], TRUE);
-  SET_COLOR ("gradient-editor-load-right-04", &editor->saved_colors[3], TRUE);
-  SET_COLOR ("gradient-editor-load-right-05", &editor->saved_colors[4], TRUE);
-  SET_COLOR ("gradient-editor-load-right-06", &editor->saved_colors[5], TRUE);
-  SET_COLOR ("gradient-editor-load-right-07", &editor->saved_colors[6], TRUE);
-  SET_COLOR ("gradient-editor-load-right-08", &editor->saved_colors[7], TRUE);
-  SET_COLOR ("gradient-editor-load-right-09", &editor->saved_colors[8], TRUE);
-  SET_COLOR ("gradient-editor-load-right-10", &editor->saved_colors[9], TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[0]);
+  SET_COLOR ("gradient-editor-load-right-01", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[1]);
+  SET_COLOR ("gradient-editor-load-right-02", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[2]);
+  SET_COLOR ("gradient-editor-load-right-03", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[3]);
+  SET_COLOR ("gradient-editor-load-right-04", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[4]);
+  SET_COLOR ("gradient-editor-load-right-05", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[5]);
+  SET_COLOR ("gradient-editor-load-right-06", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[6]);
+  SET_COLOR ("gradient-editor-load-right-07", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[7]);
+  SET_COLOR ("gradient-editor-load-right-08", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[8]);
+  SET_COLOR ("gradient-editor-load-right-09", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[9]);
+  SET_COLOR ("gradient-editor-load-right-10", color, TRUE);
 
   SET_SENSITIVE ("gradient-editor-save-right-01", gradient);
   SET_SENSITIVE ("gradient-editor-save-right-02", gradient);
@@ -762,16 +783,26 @@ gradient_editor_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("gradient-editor-save-right-09", gradient);
   SET_SENSITIVE ("gradient-editor-save-right-10", gradient);
 
-  SET_COLOR ("gradient-editor-save-right-01", &editor->saved_colors[0], TRUE);
-  SET_COLOR ("gradient-editor-save-right-02", &editor->saved_colors[1], TRUE);
-  SET_COLOR ("gradient-editor-save-right-03", &editor->saved_colors[2], TRUE);
-  SET_COLOR ("gradient-editor-save-right-04", &editor->saved_colors[3], TRUE);
-  SET_COLOR ("gradient-editor-save-right-05", &editor->saved_colors[4], TRUE);
-  SET_COLOR ("gradient-editor-save-right-06", &editor->saved_colors[5], TRUE);
-  SET_COLOR ("gradient-editor-save-right-07", &editor->saved_colors[6], TRUE);
-  SET_COLOR ("gradient-editor-save-right-08", &editor->saved_colors[7], TRUE);
-  SET_COLOR ("gradient-editor-save-right-09", &editor->saved_colors[8], TRUE);
-  SET_COLOR ("gradient-editor-save-right-10", &editor->saved_colors[9], TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[0]);
+  SET_COLOR ("gradient-editor-save-right-01", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[1]);
+  SET_COLOR ("gradient-editor-save-right-02", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[2]);
+  SET_COLOR ("gradient-editor-save-right-03", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[3]);
+  SET_COLOR ("gradient-editor-save-right-04", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[4]);
+  SET_COLOR ("gradient-editor-save-right-05", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[5]);
+  SET_COLOR ("gradient-editor-save-right-06", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[6]);
+  SET_COLOR ("gradient-editor-save-right-07", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[7]);
+  SET_COLOR ("gradient-editor-save-right-08", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[8]);
+  SET_COLOR ("gradient-editor-save-right-09", color, TRUE);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &editor->saved_colors[9]);
+  SET_COLOR ("gradient-editor-save-right-10", color, TRUE);
 
   SET_SENSITIVE ("gradient-editor-flip",           editable);
   SET_SENSITIVE ("gradient-editor-replicate",      editable);
@@ -906,4 +937,6 @@ gradient_editor_actions_update (GimpActionGroup *group,
 #undef SET_LABEL
 #undef SET_SENSITIVE
 #undef SET_VISIBLE
+
+  g_object_unref (color);
 }

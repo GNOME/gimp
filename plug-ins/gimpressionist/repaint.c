@@ -543,8 +543,7 @@ repaint (ppm_t *p, ppm_t *a)
       guchar tmpcol[3];
 
       ppm_new (&tmp, p->width, p->height);
-      gimp_rgb_get_uchar (&runningvals.color,
-                          &tmpcol[0], &tmpcol[1], &tmpcol[2]);
+      gegl_color_get_pixel (runningvals.color, babl_format ("R'G'B' u8"), tmpcol);
       fill (&tmp, tmpcol);
     }
   else if (runningvals.general_background_type == BG_TYPE_KEEP_ORIGINAL)

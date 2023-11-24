@@ -50,7 +50,7 @@ struct _GimpColorPanelClass
 GType       gimp_color_panel_get_type        (void) G_GNUC_CONST;
 
 GtkWidget * gimp_color_panel_new             (const gchar          *title,
-                                              const GimpRGB        *color,
+                                              GeglColor            *color,
                                               GimpColorAreaType     type,
                                               gint                  width,
                                               gint                  height);

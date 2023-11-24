@@ -313,14 +313,19 @@ preferences_ok_cb (gpointer data)
 
 static void
 get_button_color (GtkWidget *button,
-                  GdkRGBA   *color)
+                  GdkRGBA   *rgba)
 {
-  GimpRGB rgb;
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (button), &rgb);
-  color->red   = rgb.r;
-  color->green = rgb.g;
-  color->blue  = rgb.b;
-  color->alpha = 1.0;
+  GeglColor *color;
+  gdouble    rgb[3];
+
+  color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (button));
+  gegl_color_get_pixel (color, babl_format ("R'G'B' double"), rgb);
+  rgba->red   = rgb[0];
+  rgba->green = rgb[1];
+  rgba->blue  = rgb[2];
+  rgba->alpha = 1.0;
+
+  g_object_unref (color);
 }
 
 static void
@@ -336,10 +341,13 @@ get_button_colors(PreferencesDialog_t *dialog, ColorSelData_t *colors)
 
 static void
 set_button_color (GtkWidget *button,
-                  GdkRGBA   *color)
+                  GdkRGBA   *rgba)
 {
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (button),
-                               (GimpRGB *) color);
+  GeglColor *color = gegl_color_new (NULL);
+
+  gegl_color_set_rgba_with_space (color, rgba->red, rgba->green, rgba->blue, rgba->alpha, NULL);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (button), color);
+  g_object_unref (color);
 }
 
 static void
@@ -437,12 +445,14 @@ static GtkWidget*
 create_color_field (PreferencesDialog_t *data, GtkWidget *grid, gint row,
                     gint col)
 {
-   GimpRGB color = {0.0, 0.0, 0.0, 1.0};
-   GtkWidget *area = gimp_color_button_new (_("Select Color"), 16, 8, &color,
-                                            GIMP_COLOR_AREA_FLAT);
+   GeglColor *color = gegl_color_new ("black");
+   GtkWidget *area  = gimp_color_button_new (_("Select Color"), 16, 8, color,
+                                             GIMP_COLOR_AREA_FLAT);
    gimp_color_button_set_update (GIMP_COLOR_BUTTON (area), TRUE);
    gtk_grid_attach (GTK_GRID (grid), area, col, row, 1, 1);
    gtk_widget_show (area);
+
+   g_object_unref (color);
 
    return area;
 }

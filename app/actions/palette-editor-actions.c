@@ -131,8 +131,6 @@ palette_editor_actions_update (GimpActionGroup *group,
   GimpDataEditor    *data_editor = GIMP_DATA_EDITOR (user_data);
   GimpData          *data;
   gboolean           editable    = FALSE;
-  GimpRGB            fg;
-  GimpRGB            bg;
   gboolean           edit_active = FALSE;
 
   data = data_editor->data;
@@ -141,16 +139,6 @@ palette_editor_actions_update (GimpActionGroup *group,
     {
       if (data_editor->data_editable)
         editable = TRUE;
-    }
-
-  if (data_editor->context)
-    {
-      GeglColor *color;
-
-      color = gimp_context_get_foreground (data_editor->context);
-      gegl_color_get_rgba_with_space (color, &fg.r, &fg.g, &fg.b, &fg.a, NULL);
-      color = gimp_context_get_background (data_editor->context);
-      gegl_color_get_rgba_with_space (color, &bg.r, &bg.g, &bg.b, &bg.a, NULL);
     }
 
   edit_active = gimp_data_editor_get_edit_active (data_editor);
@@ -168,8 +156,8 @@ palette_editor_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("palette-editor-new-color-fg", editable);
   SET_SENSITIVE ("palette-editor-new-color-bg", editable);
 
-  SET_COLOR ("palette-editor-new-color-fg", data_editor->context ? &fg : NULL);
-  SET_COLOR ("palette-editor-new-color-bg", data_editor->context ? &bg : NULL);
+  SET_COLOR ("palette-editor-new-color-fg", data_editor->context ? gimp_context_get_foreground (data_editor->context) : NULL);
+  SET_COLOR ("palette-editor-new-color-bg", data_editor->context ? gimp_context_get_background (data_editor->context) : NULL);
 
   SET_SENSITIVE ("palette-editor-zoom-out", data);
   SET_SENSITIVE ("palette-editor-zoom-in",  data);

@@ -148,8 +148,7 @@ channel_options_dialog_new (GimpImage                  *image,
   item_options_dialog_add_widget (dialog,
                                   opacity_label, scale);
 
-  private->color_panel = gimp_color_panel_new (color_label,
-                                               &rgb,
+  private->color_panel = gimp_color_panel_new (color_label, channel_color,
                                                GIMP_COLOR_AREA_LARGE_CHECKS,
                                                24, 24);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (private->color_panel),
@@ -201,12 +200,10 @@ channel_options_dialog_callback (GtkWidget    *dialog,
                                  gpointer      user_data)
 {
   ChannelOptionsDialog *private = user_data;
-  GeglColor            *color   = gegl_color_new (NULL);
-  GimpRGB               rgb;
+  GeglColor            *color;
   gboolean              save_selection = FALSE;
 
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (private->color_panel), &rgb);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (private->color_panel));
 
   if (private->save_sel_toggle)
     save_selection =
@@ -225,25 +222,31 @@ channel_options_dialog_callback (GtkWidget    *dialog,
                      item_lock_position,
                      item_lock_visibility,
                      private->user_data);
+
+  g_object_unref (color);
 }
 
 static void
 channel_options_opacity_changed (GtkAdjustment   *adjustment,
                                  GimpColorButton *color_button)
 {
-  GimpRGB color;
+  GeglColor *color;
 
-  gimp_color_button_get_color (color_button, &color);
-  gimp_rgb_set_alpha (&color, gtk_adjustment_get_value (adjustment) / 100.0);
-  gimp_color_button_set_color (color_button, &color);
+  color = gimp_color_button_get_color (color_button);
+  gimp_color_set_alpha (color, gtk_adjustment_get_value (adjustment) / 100.0);
+  gimp_color_button_set_color (color_button, color);
+  g_object_unref (color);
 }
 
 static void
 channel_options_color_changed (GimpColorButton *button,
                                GtkAdjustment   *adjustment)
 {
-  GimpRGB color;
+  GeglColor *color;
+  gdouble    rgba[4];
 
-  gimp_color_button_get_color (button, &color);
-  gtk_adjustment_set_value (adjustment, color.a * 100.0);
+  color = gimp_color_button_get_color (button);
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgba);
+  gtk_adjustment_set_value (adjustment, rgba[3] * 100.0);
+  g_object_unref (color);
 }

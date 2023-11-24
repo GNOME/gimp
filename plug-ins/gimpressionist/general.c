@@ -99,7 +99,7 @@ general_restore (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_tileable),
                                 pcvals.general_tileable);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (general_color_button),
-                               &pcvals.color);
+                               pcvals.color);
   gimp_label_spin_set_value (GIMP_LABEL_SPIN (dev_thresh_scale),
                              pcvals.devthresh);
 }
@@ -110,6 +110,14 @@ select_color (GtkWidget *widget, gpointer data)
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (general_bg_radio[BG_TYPE_SOLID]),
      TRUE);
+}
+
+static void
+color_changed (GimpColorButton *button,
+               gpointer         data)
+{
+  g_clear_object (&pcvals.color);
+  pcvals.color = gimp_color_button_get_color (button);
 }
 
 static GtkWidget *
@@ -166,15 +174,17 @@ create_generalpage (GtkNotebook *notebook)
                          _("Solid colored background"),
                          &radio_group);
 
+  pcvals.color = gegl_color_new ("black");
+
   general_color_button = gimp_color_button_new (_("Color"),
                                                 COLORBUTTONWIDTH,
                                                 COLORBUTTONHEIGHT,
-                                                &pcvals.color,
+                                                pcvals.color,
                                                 GIMP_COLOR_AREA_FLAT);
   g_signal_connect (general_color_button, "clicked",
                     G_CALLBACK (select_color), NULL);
   g_signal_connect (general_color_button, "color-changed",
-                    G_CALLBACK (gimp_color_button_get_color),
+                    G_CALLBACK (color_changed),
                     &pcvals.color);
   gtk_box_pack_start (GTK_BOX (box4), general_color_button, FALSE, FALSE, 0);
   gtk_widget_show (general_color_button);
