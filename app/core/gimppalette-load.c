@@ -1079,9 +1079,6 @@ gimp_palette_load_ase (GimpContext   *context,
     }
   g_free (palette_name);
 
-  /* Header blocks are considered a "color" so we offset the count here */
-  num_cols -= 1;
-
   for (i = 0; i < num_cols; i++)
     {
       gchar    color_space[4];
@@ -1103,6 +1100,23 @@ gimp_palette_load_ase (GimpContext   *context,
             }
         }
       skip_first = FALSE;
+
+      /* Skip group marker padding */
+      group = GINT16_FROM_BE (group);
+      if (group < 0)
+        {
+          gchar marker[4];
+
+          if (! g_input_stream_read_all (input, &marker, sizeof (marker),
+                                         &bytes_read, NULL, error))
+            {
+              g_printerr ("Invalid ASE group marker: %s.",
+                          gimp_file_get_utf8_name (file));
+              break;
+            }
+          num_cols--;
+          continue;
+        }
 
       color_name = gimp_palette_load_ase_block_name (input, file_size, error);
       if (! color_name)
@@ -1144,7 +1158,7 @@ gimp_palette_load_ase (GimpContext   *context,
 
       for (gint j = 0; j < components; j++)
         {
-          gint tmp;
+          gint32 tmp;
 
           if (! g_input_stream_read_all (input, &tmp, sizeof (tmp),
                                          &bytes_read, NULL, error))
