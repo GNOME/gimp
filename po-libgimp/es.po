@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-24 11:00+0000\n"
-"PO-Revision-Date: 2023-04-24 16:26+0200\n"
+"POT-Creation-Date: 2023-11-23 08:08+0000\n"
+"PO-Revision-Date: 2023-11-24 11:24+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -27,11 +27,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4.1\n"
 
-#: libgimp/gimpbrushselectbutton.c:325 libgimp/gimppatternselectbutton.c:335
+#: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
 msgstr "E_xaminar…"
+
+#: libgimp/gimpdrawablechooser.c:238
+msgid "Browse..."
+msgstr "Examinar…"
 
 #: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
 #, c-format
@@ -174,7 +178,7 @@ msgid "Confirm Save"
 msgstr "Confirmar guardar"
 
 #: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:571
+#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -196,7 +200,7 @@ msgid "_Ignore"
 msgstr "_Ignorar"
 
 #: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
-#: libgimp/gimpproceduredialog.c:277
+#: libgimp/gimpproceduredialog.c:296 libgimp/gimpproceduredialog.c:569
 msgid "_Export"
 msgstr "_Exportar"
 
@@ -235,133 +239,146 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:397
+#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:398
 #, c-format
 msgid "Export Image as %s"
 msgstr "Exportar imagen como %s"
 
-#: libgimp/gimpimagemetadata.c:306
+#: libgimp/gimpimagemetadata.c:283
 msgid "Background"
 msgstr "Fondo"
 
-#: libgimp/gimpimagemetadata-save.c:654 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:760 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
+#: libgimp/gimploadprocedure.c:267
+msgid ""
+"This file loading plug-in returned SUCCESS as a status without an image. "
+"This is a bug in the plug-in code. Contact the plug-in developer."
+msgstr ""
+"Este complemento de carga de archivos devolvió ÉXITO como estado sin una "
+"imagen. Esto es un error en el código del complemento. Póngase en contacto "
+"con el desarrollador del complemento."
+
+#: libgimp/gimpparamspecs-desc.c:54
+msgid "Allowed values:"
+msgstr "Valores permitidos:"
+
 #. procedure executed successfully
-#: libgimp/gimppdb.c:552
+#: libgimp/gimppdb.c:336
 msgid "success"
 msgstr "éxito"
 
 #. procedure execution failed
-#: libgimp/gimppdb.c:556
+#: libgimp/gimppdb.c:340
 msgid "execution error"
 msgstr "error de ejecución"
 
 #. procedure called incorrectly
-#: libgimp/gimppdb.c:560
+#: libgimp/gimppdb.c:344
 msgid "calling error"
 msgstr "error en la llamada"
 
 #. procedure execution cancelled
-#: libgimp/gimppdb.c:564
+#: libgimp/gimppdb.c:348
 msgid "cancelled"
 msgstr "cancelado"
 
-#: libgimp/gimpprocbrowserdialog.c:162
+#: libgimp/gimpprocbrowserdialog.c:164
 msgid "by name"
 msgstr "por nombre"
 
-#: libgimp/gimpprocbrowserdialog.c:163
+#: libgimp/gimpprocbrowserdialog.c:165
 msgid "by description"
 msgstr "por descripción"
 
-#: libgimp/gimpprocbrowserdialog.c:164
+#: libgimp/gimpprocbrowserdialog.c:166
 msgid "by help"
 msgstr "por ayuda"
 
-#: libgimp/gimpprocbrowserdialog.c:165
+#: libgimp/gimpprocbrowserdialog.c:167
 msgid "by authors"
 msgstr "por autores"
 
-#: libgimp/gimpprocbrowserdialog.c:166
+#: libgimp/gimpprocbrowserdialog.c:168
 msgid "by copyright"
 msgstr "por copyright"
 
-#: libgimp/gimpprocbrowserdialog.c:167
+#: libgimp/gimpprocbrowserdialog.c:169
 msgid "by date"
 msgstr "por fecha"
 
-#: libgimp/gimpprocbrowserdialog.c:168
+#: libgimp/gimpprocbrowserdialog.c:170
 msgid "by type"
 msgstr "por tipo"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:369 libgimp/gimpprocbrowserdialog.c:527
+#: libgimp/gimpprocbrowserdialog.c:371 libgimp/gimpprocbrowserdialog.c:529
 #: libgimpwidgets/gimpbrowser.c:168
 msgid "No matches"
 msgstr "Sin coincidencias"
 
-#: libgimp/gimpprocbrowserdialog.c:372
+#: libgimp/gimpprocbrowserdialog.c:374
 msgid "Search term invalid or incomplete"
 msgstr "Término de búsqueda incompleto o no válido"
 
-#: libgimp/gimpprocbrowserdialog.c:381
+#: libgimp/gimpprocbrowserdialog.c:383
 msgid "Searching"
 msgstr "Buscando"
 
-#: libgimp/gimpprocbrowserdialog.c:393
+#: libgimp/gimpprocbrowserdialog.c:395
 msgid "Searching by name"
 msgstr "Buscando por nombre"
 
-#: libgimp/gimpprocbrowserdialog.c:414
+#: libgimp/gimpprocbrowserdialog.c:416
 msgid "Searching by description"
 msgstr "Buscando por descripción"
 
-#: libgimp/gimpprocbrowserdialog.c:422
+#: libgimp/gimpprocbrowserdialog.c:424
 msgid "Searching by help"
 msgstr "Buscando por ayuda"
 
-#: libgimp/gimpprocbrowserdialog.c:430
+#: libgimp/gimpprocbrowserdialog.c:432
 msgid "Searching by authors"
 msgstr "Buscando por autores"
 
-#: libgimp/gimpprocbrowserdialog.c:438
+#: libgimp/gimpprocbrowserdialog.c:440
 msgid "Searching by copyright"
 msgstr "Buscando por copyright"
 
-#: libgimp/gimpprocbrowserdialog.c:446
+#: libgimp/gimpprocbrowserdialog.c:448
 msgid "Searching by date"
 msgstr "Buscando por fecha"
 
-#: libgimp/gimpprocbrowserdialog.c:454
+#: libgimp/gimpprocbrowserdialog.c:456
 msgid "Searching by type"
 msgstr "Buscando por tipo"
 
-#: libgimp/gimpprocbrowserdialog.c:467
+#: libgimp/gimpprocbrowserdialog.c:469
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d procedimiento"
 msgstr[1] "%d procedimientos"
 
-#: libgimp/gimpprocbrowserdialog.c:476
+#: libgimp/gimpprocbrowserdialog.c:478
 msgid "No matches for your query"
 msgstr "No hay coincidencias para su consulta"
 
-#: libgimp/gimpprocbrowserdialog.c:480
+#: libgimp/gimpprocbrowserdialog.c:482
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedimiento coincide con su consulta"
 msgstr[1] "%d procedimientos coinciden con su consulta"
 
-#: libgimp/gimpprocedure.c:1917
+#: libgimp/gimpprocedure.c:2050
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "El procedimiento «%s» no ha devuelto ningún valor de retorno"
 
-#: libgimp/gimpprocedure.c:2008
+#: libgimp/gimpprocedure.c:2177
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -370,7 +387,7 @@ msgstr ""
 "El procedimiento «%s» ha devuelto un valor con tipo erróneo para el valor "
 "devuelto «%s» (#%d). Se esperaba %s pero se obtuvo %s."
 
-#: libgimp/gimpprocedure.c:2020
+#: libgimp/gimpprocedure.c:2189
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -379,7 +396,7 @@ msgstr ""
 "Se ha llamado al procedimiento «%s» con un valor con un tipo erróneo para el "
 "argumento «%s» (#%d). Se esperaba %s pero se obtuvo %s."
 
-#: libgimp/gimpprocedure.c:2055
+#: libgimp/gimpprocedure.c:2224
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -388,7 +405,7 @@ msgstr ""
 "El procedimiento «%s» ha devuelto «%s» como valor de retorno «%s» (#%d, tipo "
 "%s). Este valor está fuera de los límites."
 
-#: libgimp/gimpprocedure.c:2069
+#: libgimp/gimpprocedure.c:2238
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -397,14 +414,14 @@ msgstr ""
 "El procedimiento «%s» se ha llamado con un valor «%s» para el argumento "
 "«%s» (#%d, tipo %s). Este valor está fuera de los límites."
 
-#: libgimp/gimpprocedure.c:2113
+#: libgimp/gimpprocedure.c:2282
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "El procedimiento «%s» devolvió una cadena UTF-8 no válida para el argumento "
 "«%s»."
 
-#: libgimp/gimpprocedure.c:2123
+#: libgimp/gimpprocedure.c:2292
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -413,63 +430,63 @@ msgstr ""
 "Se ha llamado al procedimiento «%s» con una cadena UTF-8 no válida para el "
 "argumento «%s»."
 
-#: libgimp/gimpproceduredialog.c:275
+#: libgimp/gimpproceduredialog.c:294 libgimp/gimpproceduredialog.c:567
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Abrir"
 
-#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:572
-#: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libgimp/gimpproceduredialog.c:298 libgimp/gimpproceduredialog.c:571
+#: libgimpwidgets/gimpcolorbutton.c:558 libgimpwidgets/gimpfileentry.c:467
+#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
+#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Aceptar"
 
-#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:570
+#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:556
 msgid "_Reset"
 msgstr "_Reiniciar"
 
-#: libgimp/gimpproceduredialog.c:339
+#: libgimp/gimpproceduredialog.c:359
 msgid "_Load Saved Settings"
 msgstr "_Cargar preferencias guardadas"
 
-#: libgimp/gimpproceduredialog.c:340
+#: libgimp/gimpproceduredialog.c:360
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Carga las preferencias guardadas con el botón «Guardar preferencias»"
 
-#: libgimp/gimpproceduredialog.c:352
+#: libgimp/gimpproceduredialog.c:372
 msgid "_Save Settings"
 msgstr "_Guardar preferencias"
 
-#: libgimp/gimpproceduredialog.c:353
+#: libgimp/gimpproceduredialog.c:373
 msgid "Store current settings for later reuse"
 msgstr "Almacenar las preferencias actuales para uso posterior"
 
-#: libgimp/gimpproceduredialog.c:734
+#: libgimp/gimpproceduredialog.c:784
 msgid "Brush Chooser"
 msgstr "Selector de pincel"
 
-#: libgimp/gimpproceduredialog.c:738
+#: libgimp/gimpproceduredialog.c:788
 msgid "Font Chooser"
 msgstr "Selector de tipografía"
 
-#: libgimp/gimpproceduredialog.c:742
+#: libgimp/gimpproceduredialog.c:792
 msgid "Gradient Chooser"
 msgstr "Selector de degradado"
 
-#: libgimp/gimpproceduredialog.c:746
+#: libgimp/gimpproceduredialog.c:796
 msgid "Palette Chooser"
 msgstr "Selector de paleta"
 
-#: libgimp/gimpproceduredialog.c:750
+#: libgimp/gimpproceduredialog.c:800
 msgid "Pattern Chooser"
 msgstr "Selector de patrón"
 
-#: libgimp/gimpproceduredialog.c:2036
+#: libgimp/gimpproceduredialog.c:2492
 msgid "Reset to _Initial Values"
 msgstr "Restablecer a valores _iniciales"
 
-#: libgimp/gimpproceduredialog.c:2045
+#: libgimp/gimpproceduredialog.c:2501
 msgid "Reset to _Factory Defaults"
 msgstr "Restablecer a predeterminados de _fábrica"
 
@@ -508,6 +525,79 @@ msgstr "Fecha:"
 #: libgimp/gimpprocview.c:269
 msgid "Copyright:"
 msgstr "Copyright:"
+
+#: libgimp/gimppropwidgets.c:191
+#, c-format
+msgid "Choose layer: %s"
+msgstr "Elija capa: %s"
+
+#: libgimp/gimppropwidgets.c:193
+#, c-format
+msgid "Choose channel: %s"
+msgstr "Elija canal: %s"
+
+#: libgimp/gimppropwidgets.c:195
+#, c-format
+msgid "Choose drawable: %s"
+msgstr "Elija dibujable: %s"
+
+#: libgimp/gimpsaveprocedure.c:467
+msgid "Save _Exif"
+msgstr "Guardar _Exif"
+
+#: libgimp/gimpsaveprocedure.c:468
+msgid "Save Exif (Exchangeable image file format) metadata"
+msgstr "Guardar metadatos Exif (formato de archivo de imagen intercambiable)"
+
+#: libgimp/gimpsaveprocedure.c:473
+msgid "Save _IPTC"
+msgstr "Guardar _IPTC"
+
+#: libgimp/gimpsaveprocedure.c:474
+msgid "Save IPTC (International Press Telecommunications Council) metadata"
+msgstr ""
+"Guardar metadatos IPTC (Consejo Internacional de Telecomunicaciones de "
+"Prensa)"
+
+#: libgimp/gimpsaveprocedure.c:479
+msgid "Save _XMP"
+msgstr "Guardar _XMP"
+
+#: libgimp/gimpsaveprocedure.c:480
+msgid "Save XMP (Extensible Metadata Platform) metadata"
+msgstr "Guardar metadatos XMP (Plataforma de Metadatos Extensible)"
+
+#: libgimp/gimpsaveprocedure.c:485
+msgid "Save color _profile"
+msgstr "Guardar _perfil de color"
+
+#: libgimp/gimpsaveprocedure.c:486
+msgid "Save the ICC color profile as metadata"
+msgstr "Guardar el perfil de color ICC como metadatos"
+
+#: libgimp/gimpsaveprocedure.c:491
+msgid "Save _thumbnail"
+msgstr "Guardar minia_tura"
+
+#: libgimp/gimpsaveprocedure.c:492
+msgid "Save a smaller representation of the image as metadata"
+msgstr "Guardar una representación más pequeña de la imagen como metadatos"
+
+#: libgimp/gimpsaveprocedure.c:498
+msgid "Save c_omment"
+msgstr "Guardar c_omentario"
+
+#: libgimp/gimpsaveprocedure.c:499
+msgid "Save a comment as metadata"
+msgstr "Guardar un comentario como metadatos"
+
+#: libgimp/gimpsaveprocedure.c:503
+msgid "Comment"
+msgstr "Comentario"
+
+#: libgimp/gimpsaveprocedure.c:504
+msgid "Image comment"
+msgstr "Comentario de la imagen"
 
 #: libgimp/gimpsaveproceduredialog.c:166
 msgid "Metadata"
@@ -1563,63 +1653,63 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Recortar con aspecto"
 
-#: libgimpbase/gimpmetadata.c:1072
+#: libgimpbase/gimpmetadata.c:1215
 msgid "Can load metadata only from local files"
 msgstr "Sólo se pueden cargar metadatos de archivos locales"
 
-#: libgimpbase/gimpmetadata.c:1128
+#: libgimpbase/gimpmetadata.c:1271
 msgid "Can save metadata only to local files"
 msgstr "Sólo se pueden guardar metadatos de archivos locales"
 
-#: libgimpbase/gimpmetadata.c:1176
+#: libgimpbase/gimpmetadata.c:1319
 msgid "Invalid Exif data size."
 msgstr "Tamaño de los datos Exif no válido."
 
-#: libgimpbase/gimpmetadata.c:1205
+#: libgimpbase/gimpmetadata.c:1348
 msgid "Parsing Exif data failed."
 msgstr "Falló al analizar los datos Exif."
 
-#: libgimpbase/gimpmetadata.c:1255
+#: libgimpbase/gimpmetadata.c:1398
 msgid "Parsing IPTC data failed."
 msgstr "Falló al analizar los datos IPTC."
 
-#: libgimpbase/gimpmetadata.c:1303
+#: libgimpbase/gimpmetadata.c:1446
 msgid "Parsing XMP data failed."
 msgstr "Falló al analizar los datos XMP."
 
-#: libgimpbase/gimputils.c:219 libgimpbase/gimputils.c:224
+#: libgimpbase/gimputils.c:220 libgimpbase/gimputils.c:225
 msgid "(invalid UTF-8 string)"
 msgstr "(cadena UTF-8 no válida)"
 
-#: libgimpbase/gimputils.c:394
+#: libgimpbase/gimputils.c:395
 msgid "File path is NULL"
 msgstr "La ruta del archivo es NULL"
 
-#: libgimpbase/gimputils.c:402
+#: libgimpbase/gimputils.c:403
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Error al convertir el nombre de archivo UTF-8 a caracteres anchos"
 
-#: libgimpbase/gimputils.c:410
+#: libgimpbase/gimputils.c:411
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() falló"
 
-#: libgimpbase/gimputils.c:449
+#: libgimpbase/gimputils.c:450
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "No se puede convertir «%s» en un NSURL válido."
 
-#: libgimpbase/gimputils.c:477
+#: libgimpbase/gimputils.c:478
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Falló al conectar a org.freedesktop.FileManager1: "
 
-#: libgimpbase/gimputils.c:501
+#: libgimpbase/gimputils.c:502
 msgid "Calling ShowItems failed: "
 msgstr "Falló al llamar a ShowItems: "
 
 #: libgimpcolor/gimpcolorprofile.c:258
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
-msgstr "«%s» no es un perfil de color ICC"
+msgstr "Parece que «%s» no es un perfil de color ICC"
 
 #: libgimpcolor/gimpcolorprofile.c:304
 msgid "Data does not appear to be an ICC color profile"
@@ -1898,28 +1988,28 @@ msgstr "El perfil de color «%s» no es para el espacio de color gris."
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "El perfil de color «%s» no es para el espacio de color CMYK."
 
-#: libgimpconfig/gimpconfig-deserialize.c:116
+#: libgimpconfig/gimpconfig-deserialize.c:120
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "el valor del elemento %s no es una cadena UTF-8 válida"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:480
+#: libgimpconfig/gimpconfig-deserialize.c:492
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "se esperaba «yes» o «no» para la señal booleana %s, se obtuvo «%s»"
 
-#: libgimpconfig/gimpconfig-deserialize.c:595
+#: libgimpconfig/gimpconfig-deserialize.c:607
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "valor no válido «%s» para la señal %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:610
+#: libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "valor no válido «%ld» para la señal %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:679
+#: libgimpconfig/gimpconfig-deserialize.c:691
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "mientras se analizaba la señal «%s»: %s"
@@ -1974,26 +2064,26 @@ msgstr "se esperaba «yes» o «no» para la señal booleana, se obtuvo «%s»"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Ha ocurrido un error al analizar «%s» en la línea %d: %s"
 
-#: libgimpmodule/gimpmodule.c:172 libgimpmodule/gimpmodule.c:190
-#: libgimpmodule/gimpmodule.c:451 libgimpmodule/gimpmodule.c:474
-#: libgimpmodule/gimpmodule.c:524
+#: libgimpmodule/gimpmodule.c:221 libgimpmodule/gimpmodule.c:239
+#: libgimpmodule/gimpmodule.c:500 libgimpmodule/gimpmodule.c:523
+#: libgimpmodule/gimpmodule.c:573
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Error en la carga del módulo «%s»: %s"
 
-#: libgimpmodule/gimpmoduledb.c:500
+#: libgimpmodule/gimpmoduledb.c:450
 msgid "Module error"
 msgstr "Error del módulo"
 
-#: libgimpmodule/gimpmoduledb.c:501
+#: libgimpmodule/gimpmoduledb.c:451
 msgid "Loaded"
 msgstr "Cargado"
 
-#: libgimpmodule/gimpmoduledb.c:502
+#: libgimpmodule/gimpmoduledb.c:452
 msgid "Load failed"
 msgstr "La carga falló"
 
-#: libgimpmodule/gimpmoduledb.c:503
+#: libgimpmodule/gimpmoduledb.c:453
 msgid "Not loaded"
 msgstr "No cargado"
 
@@ -2024,6 +2114,22 @@ msgstr "No se ha podido crear la miniatura para %s: %s"
 #: libgimpwidgets/gimpbrowser.c:141
 msgid "_Search:"
 msgstr "Bu_scar:"
+
+#: libgimpwidgets/gimpcolorbutton.c:380
+msgid "_Foreground Color"
+msgstr "Color de _frente"
+
+#: libgimpwidgets/gimpcolorbutton.c:381
+msgid "_Background Color"
+msgstr "Color de f_ondo"
+
+#: libgimpwidgets/gimpcolorbutton.c:386
+msgid "Blac_k"
+msgstr "Ne_gro"
+
+#: libgimpwidgets/gimpcolorbutton.c:387
+msgid "_White"
+msgstr "_Blanco"
 
 #: libgimpwidgets/gimpcolorhexentry.c:134
 msgid ""
@@ -2103,6 +2209,10 @@ msgstr "Anterior:"
 msgid "HTML _notation:"
 msgstr "_Notación HTML:"
 
+#: libgimpwidgets/gimpdialog.c:198
+msgid "_Help"
+msgstr "A_yuda"
+
 #: libgimpwidgets/gimpfileentry.c:167
 msgid "Show file location in the file manager"
 msgstr "Mostrar la ubicación del archivo en el gestor de archivos: %s"
@@ -2158,6 +2268,22 @@ msgstr "Mebibyte"
 #: libgimpwidgets/gimpmemsizeentry.c:254
 msgid "Gibibyte"
 msgstr "Gibibyte"
+
+#: libgimpwidgets/gimppageselector.c:185
+msgid "N Pages"
+msgstr "N páginas"
+
+#: libgimpwidgets/gimppageselector.c:186
+msgid "The number of pages to open"
+msgstr "El número de páginas que abrir"
+
+#: libgimpwidgets/gimppageselector.c:199
+msgid "Target"
+msgstr "Destino"
+
+#: libgimpwidgets/gimppageselector.c:200
+msgid "the target to open to"
+msgstr "el destino al que abrir"
 
 #. Count label
 #: libgimpwidgets/gimppageselector.c:283 libgimpwidgets/gimppageselector.c:1079
@@ -2243,7 +2369,7 @@ msgstr "Color de damero personalizado 1"
 msgid "Custom Checks Color 2"
 msgstr "Color de damero personalizado 2"
 
-#: libgimpwidgets/gimppropwidgets.c:2475
+#: libgimpwidgets/gimppropwidgets.c:2474
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2500,7 +2626,7 @@ msgstr "Selector de color tipo acuarela"
 msgid "Watercolor"
 msgstr "Acuarela"
 
-#: modules/color-selector-water.c:198
+#: modules/color-selector-water.c:196
 msgid "Pressure"
 msgstr "Presión"
 
@@ -2866,75 +2992,78 @@ msgstr "Cambio de pretransformación en paradas"
 msgid "Aces RRT"
 msgstr "Aces RRT"
 
-#: modules/display-filter-clip-warning.c:121
+#. Translators: "Clip Warning" is the name of a (color) display filter
+#. * that highlights pixels outside of the color space range.
+#. * Shown as a label description.
+#: modules/display-filter-clip-warning.c:124
 msgid "Clip warning color display filter"
 msgstr "Filtro de visualización de color de advertencia de recorte"
 
-#: modules/display-filter-clip-warning.c:158
+#: modules/display-filter-clip-warning.c:161
 msgid "Show shadows"
 msgstr "Mostrar sombras"
 
-#: modules/display-filter-clip-warning.c:159
+#: modules/display-filter-clip-warning.c:162
 msgid "Show warning for pixels with a negative component"
 msgstr "Mostrar advertencia para píxeles con un componente negativo"
 
-#: modules/display-filter-clip-warning.c:165
+#: modules/display-filter-clip-warning.c:168
 msgid "Shadows color"
 msgstr "Color de las sombras"
 
-#: modules/display-filter-clip-warning.c:166
+#: modules/display-filter-clip-warning.c:169
 msgid "Shadows warning color"
 msgstr "Color de advertencia de sombras"
 
-#: modules/display-filter-clip-warning.c:178
+#: modules/display-filter-clip-warning.c:181
 msgid "Show highlights"
 msgstr "Mostrar puntos de luz"
 
-#: modules/display-filter-clip-warning.c:179
+#: modules/display-filter-clip-warning.c:182
 msgid "Show warning for pixels with a component greater than one"
 msgstr "Mostrar advertencia para píxeles con un componente superior a 1"
 
-#: modules/display-filter-clip-warning.c:185
+#: modules/display-filter-clip-warning.c:188
 msgid "Highlights color"
 msgstr "Color de los puntos de luz"
 
-#: modules/display-filter-clip-warning.c:186
+#: modules/display-filter-clip-warning.c:189
 msgid "Highlights warning color"
 msgstr "Color de advertencia de puntos de luz"
 
-#: modules/display-filter-clip-warning.c:198
+#: modules/display-filter-clip-warning.c:201
 msgid "Show bogus"
 msgstr "Mostrar falsos"
 
-#: modules/display-filter-clip-warning.c:199
+#: modules/display-filter-clip-warning.c:202
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr "Mostrar advertencia para píxeles con un componente infinito o NaN"
 
-#: modules/display-filter-clip-warning.c:205
+#: modules/display-filter-clip-warning.c:208
 msgid "Bogus color"
 msgstr "Color falso"
 
-#: modules/display-filter-clip-warning.c:206
+#: modules/display-filter-clip-warning.c:209
 msgid "Bogus warning color"
 msgstr "Color de falsa advertencia"
 
-#: modules/display-filter-clip-warning.c:218
+#: modules/display-filter-clip-warning.c:221
 msgid "Include alpha component"
 msgstr "Incluir componente alfa"
 
-#: modules/display-filter-clip-warning.c:219
+#: modules/display-filter-clip-warning.c:222
 msgid "Include alpha component in the warning"
 msgstr "Incluir componente alfa en la advertencia"
 
-#: modules/display-filter-clip-warning.c:225
+#: modules/display-filter-clip-warning.c:228
 msgid "Include transparent pixels"
 msgstr "Incluir píxeles transparentes"
 
-#: modules/display-filter-clip-warning.c:226
+#: modules/display-filter-clip-warning.c:229
 msgid "Include fully transparent pixels in the warning"
 msgstr "Incluir los píxeles totalmente transparentes en la advertencia"
 
-#: modules/display-filter-clip-warning.c:230
+#: modules/display-filter-clip-warning.c:233
 msgid "Clip Warning"
 msgstr "Advertencia al recortar"
 
@@ -2987,18 +3116,6 @@ msgstr "Ciclos de contraste"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Contraste"
-
-#~ msgid "_Foreground Color"
-#~ msgstr "Color de _frente"
-
-#~ msgid "_Background Color"
-#~ msgstr "Color de f_ondo"
-
-#~ msgid "Blac_k"
-#~ msgstr "Ne_gro"
-
-#~ msgid "_White"
-#~ msgstr "_Blanco"
 
 #~ msgid "Brush Selection"
 #~ msgstr "Selección de pincel"
@@ -3140,9 +3257,6 @@ msgstr "Contraste"
 
 #~ msgid "Filmic"
 #~ msgstr "Filmic"
-
-#~ msgid "_Help"
-#~ msgstr "A_yuda"
 
 # Esto NO es anchura (serrador)
 #~ msgid "Anchor"
