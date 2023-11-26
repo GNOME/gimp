@@ -27,6 +27,8 @@
 
 #include <gtk/gtk.h>
 
+#include <libgimp/gimp.h>
+
 #ifdef _OPENMP
 #include <omp.h>
 #endif
@@ -36,22 +38,26 @@
 #include "imath.h"
 #include "color.h"
 
-typedef float (*filterfunc_t)(float);
-typedef int   (*wrapfunc_t)(int, int);
-typedef void  (*mipmapfunc_t)(unsigned char *, int, int, unsigned char *, int, int, int, filterfunc_t, float, wrapfunc_t, int, float);
-typedef void  (*volmipmapfunc_t)(unsigned char *, int, int, int, unsigned char *, int, int, int, int, filterfunc_t, float, wrapfunc_t, int, float);
 
-/******************************************************************************
- * size functions                                                             *
- ******************************************************************************/
+typedef gfloat (*filterfunc_t)    (gfloat);
+typedef gint   (*wrapfunc_t)      (gint, gint);
+typedef void   (*mipmapfunc_t)    (guchar*, gint, gint, guchar*, gint, gint, gint,
+                                   filterfunc_t, gfloat, wrapfunc_t, gint, gfloat);
+typedef void   (*volmipmapfunc_t) (guchar*, gint, gint, gint, guchar*, gint, gint, gint,
+                                   gint, filterfunc_t, gfloat, wrapfunc_t, gint, gfloat);
 
-int
-get_num_mipmaps (int width,
-                 int height)
+
+/**
+ * Size Functions
+ */
+
+gint
+get_num_mipmaps (gint  width,
+                 gint  height)
 {
-  int w = width << 1;
-  int h = height << 1;
-  int n = 0;
+  gint w = width  << 1;
+  gint h = height << 1;
+  gint n = 0;
 
   while (w != 1 || h != 1)
     {
@@ -63,21 +69,21 @@ get_num_mipmaps (int width,
   return n;
 }
 
-unsigned int
-get_mipmapped_size (int width,
-                    int height,
-                    int bpp,
-                    int level,
-                    int num,
-                    int format)
+guint
+get_mipmapped_size (gint  width,
+                    gint  height,
+                    gint  bpp,
+                    gint  level,
+                    gint  num,
+                    gint  format)
 {
-  int w, h, n = 0;
-  unsigned int size = 0;
+  gint  w, h, n = 0;
+  guint size    = 0;
 
-  w = width >> level;
+  w = width  >> level;
   h = height >> level;
-  w = MAX(1, w);
-  h = MAX(1, h);
+  w = MAX (1, w);
+  h = MAX (1, h);
   w <<= 1;
   h <<= 1;
 
@@ -107,24 +113,24 @@ get_mipmapped_size (int width,
   return size;
 }
 
-unsigned int
-get_volume_mipmapped_size (int width,
-                           int height,
-                           int depth,
-                           int bpp,
-                           int level,
-                           int num,
-                           int format)
+guint
+get_volume_mipmapped_size (gint  width,
+                           gint  height,
+                           gint  depth,
+                           gint  bpp,
+                           gint  level,
+                           gint  num,
+                           gint  format)
 {
-  int w, h, d, n = 0;
-  unsigned int size = 0;
+  gint  w, h, d, n = 0;
+  guint size       = 0;
 
   w = width >> level;
   h = height >> level;
   d = depth >> level;
-  w = MAX(1, w);
-  h = MAX(1, h);
-  d = MAX(1, d);
+  w = MAX (1, w);
+  h = MAX (1, h);
+  d = MAX (1, d);
   w <<= 1;
   h <<= 1;
   d <<= 1;
@@ -156,11 +162,11 @@ get_volume_mipmapped_size (int width,
   return size;
 }
 
-int
-get_next_mipmap_dimensions (int *next_w,
-                            int *next_h,
-                            int  curr_w,
-                            int  curr_h)
+gint
+get_next_mipmap_dimensions (gint *next_w,
+                            gint *next_h,
+                            gint  curr_w,
+                            gint  curr_h)
 {
   if (curr_w == 1 || curr_h == 1)
     return 0;
@@ -171,85 +177,91 @@ get_next_mipmap_dimensions (int *next_w,
   return 1;
 }
 
-/******************************************************************************
- * wrap modes                                                                 *
- ******************************************************************************/
 
-static int
-wrap_mirror (int x,
-             int max)
+/**
+ * Wrap Modes
+ */
+
+static gint
+wrap_mirror (gint  x,
+             gint  max)
 {
-  if (max == 1) x = 0;
-  x = abs(x);
+  if (max == 1)
+    x = 0;
+
+  x = abs (x);
   while (x >= max)
-    x = abs(max + max - x - 2);
+    x = abs (max + max - x - 2);
 
   return x;
 }
 
-static int
-wrap_repeat (int x,
-             int max)
+static gint
+wrap_repeat (gint  x,
+             gint  max)
 {
-  if (x >= 0)
-    return x % max;
-
-  return (x + 1) % max + max - 1;
+  gfloat t;
+  t = (gfloat) x / (gfloat) max;
+  return (gint) ((t - floorf (t)) * (gfloat) max);
 }
 
-static int
-wrap_clamp (int x,
-            int max)
+static gint
+wrap_clamp (gint  x,
+            gint  max)
 {
-  return MAX(0, MIN(max - 1, x));
+  return MAX (0, MIN (max - 1, x));
 }
 
-/******************************************************************************
- * gamma-correction                                                           *
- ******************************************************************************/
 
-static int
-linear_to_gamma (int   gc,
-                 int   v,
-                 float gamma)
+/**
+ * Gamma-correction
+ */
+
+static gfloat
+linear_to_gamma (gint    gc,
+                 gfloat  v,
+                 gfloat  gamma)
 {
   if (gc == 1)
     {
-      v = (int)(powf((float)v / 255.0f, gamma) * 255);
-      if (v > 255) v = 255;
+      v = powf (v, 1.0f / gamma);
+      if (v > 1.0f)
+        v = 1.0f;
     }
   else if (gc == 2)
     {
-      v = linear_to_sRGB(v);
+      v = linear_to_sRGB (v);
     }
 
   return v;
 }
 
-static int
-gamma_to_linear (int   gc,
-                 int   v,
-                 float gamma)
+static gfloat
+gamma_to_linear (gint    gc,
+                 gfloat  v,
+                 gfloat  gamma)
 {
   if (gc == 1)
     {
-      v = (int)(powf((float)v / 255.0f, 1.0f / gamma) * 255);
-      if(v > 255) v = 255;
+      v = powf (v, gamma);
+      if (v > 1.0f)
+        v = 1.0f;
     }
   else if (gc == 2)
     {
-      v = sRGB_to_linear(v);
+      v = sRGB_to_linear (v);
     }
 
   return v;
 }
 
-/******************************************************************************
- * filters                                                                    *
- ******************************************************************************/
 
-static float
-box_filter (float t)
+/**
+ * Filters
+ */
+
+static gfloat
+box_filter (gfloat  t)
 {
   if ((t >= -0.5f) && (t < 0.5f))
     return 1.0f;
@@ -257,8 +269,8 @@ box_filter (float t)
   return 0.0f;
 }
 
-static float
-triangle_filter (float t)
+static gfloat
+triangle_filter (gfloat  t)
 {
   if (t < 0.0f) t = -t;
   if (t < 1.0f) return 1.0f - t;
@@ -266,8 +278,8 @@ triangle_filter (float t)
   return 0.0f;
 }
 
-static float
-quadratic_filter (float t)
+static gfloat
+quadratic_filter (gfloat  t)
 {
   if (t < 0.0f) t = -t;
   if (t < 0.5f) return 0.75f - t * t;
@@ -280,35 +292,13 @@ quadratic_filter (float t)
   return 0.0f;
 }
 
-static float
-bspline_filter (float t)
+static gfloat
+mitchell (gfloat        t,
+          const gfloat  B)
 {
-  float tt;
+  gfloat C, tt;
 
-  if (t < 0.0f)
-    t = -t;
-
-  if (t < 1.0f)
-    {
-      tt = t * t;
-      return ((0.5f * tt * t) - tt + (2.0f / 3.0f));
-    }
-  else if (t < 2.0f)
-    {
-      t = 2.0f - t;
-      return (1.0f / 6.0f) * (t * t * t);
-    }
-
-  return 0.0f;
-}
-
-static float
-mitchell (float       t,
-          const float B,
-          const float C)
-{
-  float tt;
-
+  C  = 0.5f * (1.0f - B);
   tt = t * t;
   if (t < 0.0f)
     t = -t;
@@ -334,43 +324,55 @@ mitchell (float       t,
   return 0.0f;
 }
 
-static float
-mitchell_filter (float t)
+static gfloat
+bspline_filter (gfloat  t)
 {
-  return mitchell(t, 1.0f / 3.0f, 1.0f / 3.0f);
+  return mitchell (t, 1.0f);
 }
 
-static float
-sinc (float x)
+static gfloat
+mitchell_filter (gfloat  t)
+{
+  return mitchell (t, 1.0f / 3.0f);
+}
+
+static gfloat
+catrom_filter (gfloat  t)
+{
+  return mitchell (t, 0.0f);
+}
+
+static gfloat
+sinc (gfloat  x)
 {
   x = (x * M_PI);
-  if (fabsf(x) < 1e-04f)
+  if (fabsf (x) < 1e-04f)
     return 1.0f + x * x * (-1.0f / 6.0f + x * x * 1.0f / 120.0f);
 
-  return sinf(x) / x;
+  return sinf (x) / x;
 }
 
-static float
-lanczos_filter (float t)
+static gfloat
+lanczos_filter (gfloat  t)
 {
   if (t < 0.0f) t = -t;
-  if (t < 3.0f) return sinc(t) * sinc(t / 3.0f);
+  if (t < 3.0f) return sinc (t) * sinc (t / 3.0f);
 
   return 0.0f;
 }
 
-static float
-bessel0 (float x)
+static gfloat
+bessel0 (gfloat  x)
 {
-  const float EPSILON = 1e-6f;
-  float xh, sum, pow, ds;
-  int k;
+  const gfloat EPSILON = 1e-6f;
+  gfloat xh, sum, pow, ds;
+  gint   k;
 
-  xh = 0.5f * x;
+  xh  = 0.5f * x;
   sum = 1.0f;
   pow = 1.0f;
-  k = 0;
-  ds = 1.0f;
+  k   = 0;
+  ds  = 1.0f;
 
   while (ds > sum * EPSILON)
     {
@@ -383,45 +385,46 @@ bessel0 (float x)
   return sum;
 }
 
-static float
-kaiser_filter (float t)
+static gfloat
+kaiser_filter (gfloat  t)
 {
   if (t < 0.0f) t = -t;
 
   if (t < 3.0f)
     {
-      const float alpha = 4.0f;
-      const float rb04 = 0.0884805322f; // 1.0f / bessel0(4.0f);
-      const float ratio = t / 3.0f;
+      const gfloat alpha = 4.0f;
+      const gfloat rb04  = 0.0884805322f; // 1.0f / bessel0(4.0f);
+      const gfloat ratio = t / 3.0f;
       if ((1.0f - ratio * ratio) >= 0)
-        return sinc(t) * bessel0(alpha * sqrtf(1.0f - ratio * ratio)) * rb04;
+        return sinc (t) * bessel0 (alpha * sqrtf (1.0f - ratio * ratio)) * rb04;
     }
 
   return 0.0f;
 }
 
-/******************************************************************************
- * 2D image scaling                                                           *
- ******************************************************************************/
+
+/**
+ * 2D Scaling
+ */
 
 static void
-scale_image_nearest (unsigned char *dst,
-                     int            dw,
-                     int            dh,
-                     unsigned char *src,
-                     int            sw,
-                     int            sh,
-                     int            bpp,
-                     filterfunc_t   filter,
-                     float          support,
-                     wrapfunc_t     wrap,
-                     int            gc,
-                     float          gamma)
+scale_image_nearest (guchar       *dst,
+                     gint          dw,
+                     gint          dh,
+                     guchar       *src,
+                     gint          sw,
+                     gint          sh,
+                     gint          bpp,
+                     filterfunc_t  filter,
+                     gfloat        support,
+                     wrapfunc_t    wrap,
+                     gint          gc,
+                     gfloat        gamma)
 {
-  int n, x, y;
-  int ix, iy;
-  int srowbytes = sw * bpp;
-  int drowbytes = dw * bpp;
+  gint n, x, y;
+  gint ix, iy;
+  gint srowbytes = sw * bpp;
+  gint drowbytes = dw * bpp;
 
   for (y = 0; y < dh; ++y)
     {
@@ -439,34 +442,31 @@ scale_image_nearest (unsigned char *dst,
 }
 
 static void
-scale_image (unsigned char *dst,
-             int            dw,
-             int            dh,
-             unsigned char *src,
-             int            sw,
-             int            sh,
-             int            bpp,
-             filterfunc_t   filter,
-             float          support,
-             wrapfunc_t     wrap,
-             int            gc,
-             float          gamma)
+scale_image (guchar       *dst,
+             gint          dw,
+             gint          dh,
+             guchar       *src,
+             gint          sw,
+             gint          sh,
+             gint          bpp,
+             filterfunc_t  filter,
+             gfloat        support,
+             wrapfunc_t    wrap,
+             gint          gc,
+             gfloat        gamma)
 {
-  const float blur = 1.0f;
-  const float xfactor = (float)dw / (float)sw;
-  const float yfactor = (float)dh / (float)sh;
+  const gfloat xfactor = (gfloat) dw / (gfloat) sw;
+  const gfloat yfactor = (gfloat) dh / (gfloat) sh;
 
-  int x, y, start, stop, nmax, n, i;
-  int sstride = sw * bpp;
-  float center, contrib, density, s, r, t;
-
-  unsigned char *d, *row, *col;
-
-  float xscale = MIN(xfactor, 1.0f) / blur;
-  float yscale = MIN(yfactor, 1.0f) / blur;
-  float xsupport = support / xscale;
-  float ysupport = support / yscale;
-  unsigned char *tmp;
+  gint   x, y, start, stop, nmax, n, i;
+  gfloat center, contrib, density, s, r, t;
+  gint   sstride  = sw * bpp;
+  gfloat xscale   = MIN (xfactor, 1.0f);
+  gfloat yscale   = MIN (yfactor, 1.0f);
+  gfloat xsupport = support / xscale;
+  gfloat ysupport = support / yscale;
+  guchar *d, *row, *col;
+  guchar *tmp;
 
   if (xsupport <= 0.5f)
     {
@@ -481,9 +481,9 @@ scale_image (unsigned char *dst,
     }
 
 #ifdef _OPENMP
-  tmp = g_malloc(sw * bpp * omp_get_max_threads());
+  tmp = g_malloc (sw * bpp * omp_get_max_threads ());
 #else
-  tmp = g_malloc(sw * bpp);
+  tmp = g_malloc (sw * bpp);
 #endif
 
 #ifdef _OPENMP
@@ -495,14 +495,14 @@ scale_image (unsigned char *dst,
       /* resample in Y direction to temp buffer */
       d = tmp;
 #ifdef _OPENMP
-      d += (sw * bpp * omp_get_thread_num());
+      d += (sw * bpp * omp_get_thread_num ());
 #endif
 
-      center = ((float)y + 0.5f) / yfactor;
-      start = (int)(center - ysupport + 0.5f);
-      stop  = (int)(center + ysupport + 0.5f);
+      center = ((gfloat) y + 0.5f) / yfactor;
+      start = (gint) roundf ((center - ysupport) + 0.5f);
+      stop  = (gint) roundf ((center + ysupport) + 0.5f);
       nmax = stop - start;
-      s = (float)start - center + 0.5f;
+      s = (gfloat) start - center + 0.5f;
 
       for (x = 0; x < sw; ++x)
         {
@@ -518,21 +518,21 @@ scale_image (unsigned char *dst,
                   contrib = filter((s + n) * yscale);
                   density += contrib;
                   if (i == 3)
-                    t = col[(wrap(start + n, sh) * sstride) + i];
+                    t = (gfloat) col[(wrap (start + n, sh) * sstride) + i] / 255.0f;
                   else
-                    t = linear_to_gamma(gc, col[(wrap(start + n, sh) * sstride) + i], gamma);
+                    t = gamma_to_linear (gc, (gfloat) col[(wrap (start + n, sh) * sstride) + i] / 255.0f, gamma);
                   r += t * contrib;
                 }
 
               if (density != 0.0f && density != 1.0f)
                 r /= density;
 
-              r = MIN(255, MAX(0, r));
+              r = MIN (1.0f, MAX (0.0f, r));
 
               if (i != 3)
-                r = gamma_to_linear(gc, r, gamma);
+                r = linear_to_gamma (gc, r, gamma);
 
-              d[(x * bpp) + i] = (unsigned char)r;
+              d[(x * bpp) + i] = (guchar) floorf (r * 255.0f + 0.5f);
             }
         }
 
@@ -542,11 +542,11 @@ scale_image (unsigned char *dst,
 
       for (x = 0; x < dw; ++x)
         {
-          center = ((float)x + 0.5f) / xfactor;
-          start = (int)(center - xsupport + 0.5f);
-          stop  = (int)(center + xsupport + 0.5f);
+          center = ((gfloat) x + 0.5f) / xfactor;
+          start = (gint) roundf ((center - xsupport) + 0.5f);
+          stop  = (gint) roundf ((center + xsupport) + 0.5f);
           nmax = stop - start;
-          s = (float)start - center + 0.5f;
+          s = (gfloat) start - center + 0.5f;
 
           for (i = 0; i < bpp; ++i)
             {
@@ -558,21 +558,21 @@ scale_image (unsigned char *dst,
                   contrib = filter((s + n) * xscale);
                   density += contrib;
                   if (i == 3)
-                    t = row[(wrap(start + n, sw) * bpp) + i];
+                    t = (gfloat) row[(wrap (start + n, sw) * bpp) + i] / 255.0f;
                   else
-                    t = linear_to_gamma(gc, row[(wrap(start + n, sw) * bpp) + i], gamma);
+                    t = gamma_to_linear (gc, (gfloat) row[(wrap (start + n, sw) * bpp) + i] / 255.0f, gamma);
                   r += t * contrib;
                 }
 
               if (density != 0.0f && density != 1.0f)
                 r /= density;
 
-              r = MIN(255, MAX(0, r));
+              r = MIN (1.0f, MAX (0.0f, r));
 
               if (i != 3)
-                r = gamma_to_linear(gc, r, gamma);
+                r = linear_to_gamma (gc, r, gamma);
 
-              d[(y * (dw * bpp)) + (x * bpp) + i] = (unsigned char)r;
+              d[(y * (dw * bpp)) + (x * bpp) + i] = (guchar) floorf (r * 255.0f + 0.5f);
             }
         }
     }
@@ -580,28 +580,29 @@ scale_image (unsigned char *dst,
   g_free (tmp);
 }
 
-/******************************************************************************
- * 3D image scaling                                                           *
- ******************************************************************************/
+
+/**
+ * 3D Scaling
+ */
 
 static void
-scale_volume_image_nearest (unsigned char *dst,
-                            int            dw,
-                            int            dh,
-                            int            dd,
-                            unsigned char *src,
-                            int            sw,
-                            int            sh,
-                            int            sd,
-                            int            bpp,
-                            filterfunc_t   filter,
-                            float          support,
-                            wrapfunc_t     wrap,
-                            int            gc,
-                            float          gamma)
+scale_volume_image_nearest (guchar       *dst,
+                            gint          dw,
+                            gint          dh,
+                            gint          dd,
+                            guchar       *src,
+                            gint          sw,
+                            gint          sh,
+                            gint          sd,
+                            gint          bpp,
+                            filterfunc_t  filter,
+                            gfloat        support,
+                            wrapfunc_t    wrap,
+                            gint          gc,
+                            gfloat        gamma)
 {
-  int n, x, y, z;
-  int ix, iy, iz;
+  gint n, x, y, z;
+  gint ix, iy, iz;
 
   for (z = 0; z < dd; ++z)
     {
@@ -623,45 +624,42 @@ scale_volume_image_nearest (unsigned char *dst,
 }
 
 static void
-scale_volume_image (unsigned char *dst,
-                    int            dw,
-                    int            dh,
-                    int            dd,
-                    unsigned char *src,
-                    int            sw,
-                    int            sh,
-                    int            sd,
-                    int            bpp,
-                    filterfunc_t   filter,
-                    float          support,
-                    wrapfunc_t     wrap,
-                    int            gc,
-                    float          gamma)
+scale_volume_image (guchar       *dst,
+                    gint          dw,
+                    gint          dh,
+                    gint          dd,
+                    guchar       *src,
+                    gint          sw,
+                    gint          sh,
+                    gint          sd,
+                    gint          bpp,
+                    filterfunc_t  filter,
+                    gfloat        support,
+                    wrapfunc_t    wrap,
+                    gint          gc,
+                    gfloat        gamma)
 {
-  const float blur = 1.0f;
-  const float xfactor = (float)dw / (float)sw;
-  const float yfactor = (float)dh / (float)sh;
-  const float zfactor = (float)dd / (float)sd;
+  const gfloat xfactor = (gfloat) dw / (gfloat) sw;
+  const gfloat yfactor = (gfloat) dh / (gfloat) sh;
+  const gfloat zfactor = (gfloat) dd / (gfloat) sd;
 
-  int x, y, z, start, stop, nmax, n, i;
-  int sstride = sw * bpp;
-  int zstride = sh * sw * bpp;
-  float center, contrib, density, s, r, t;
-
-  unsigned char *d, *row, *col, *slice;
-
-  float xscale = MIN(xfactor, 1.0f) / blur;
-  float yscale = MIN(yfactor, 1.0f) / blur;
-  float zscale = MIN(zfactor, 1.0f) / blur;
-  float xsupport = support / xscale;
-  float ysupport = support / yscale;
-  float zsupport = support / zscale;
-  unsigned char *tmp1, *tmp2;
+  gint   x, y, z, start, stop, nmax, n, i;
+  gfloat center, contrib, density, s, r, t;
+  gint   sstride  = sw * bpp;
+  gint   zstride  = sh * sw * bpp;
+  gfloat xscale   = MIN (xfactor, 1.0f);
+  gfloat yscale   = MIN (yfactor, 1.0f);
+  gfloat zscale   = MIN (zfactor, 1.0f);
+  gfloat xsupport = support / xscale;
+  gfloat ysupport = support / yscale;
+  gfloat zsupport = support / zscale;
+  guchar *d, *row, *col, *slice;
+  guchar *tmp1, *tmp2;
 
   /* down to a 2D image, use the faster 2D image resampler */
   if (dd == 1 && sd == 1)
     {
-      scale_image(dst, dw, dh, src, sw, sh, bpp, filter, support, wrap, gc, gamma);
+      scale_image (dst, dw, dh, src, sw, sh, bpp, filter, support, wrap, gc, gamma);
       return;
     }
 
@@ -683,19 +681,19 @@ scale_volume_image (unsigned char *dst,
       zscale = 1.0f;
     }
 
-  tmp1 = g_malloc(sh * sw * bpp);
-  tmp2 = g_malloc(dh * sw * bpp);
+  tmp1 = g_malloc (sh * sw * bpp);
+  tmp2 = g_malloc (dh * sw * bpp);
 
   for (z = 0; z < dd; ++z)
     {
       /* resample in Z direction */
       d = tmp1;
 
-      center = ((float)z + 0.5f) / zfactor;
-      start = (int)(center - zsupport + 0.5f);
-      stop =  (int)(center + zsupport + 0.5f);
+      center = ((gfloat) z + 0.5f) / zfactor;
+      start = (gint) roundf ((center - zsupport) + 0.5f);
+      stop =  (gint) roundf ((center + zsupport) + 0.5f);
       nmax = stop - start;
-      s = (float)start - center + 0.5f;
+      s = (gfloat) start - center + 0.5f;
 
 #ifdef _OPENMP
 #pragma omp parallel for schedule(dynamic)                      \
@@ -717,21 +715,21 @@ scale_volume_image (unsigned char *dst,
                       contrib = filter((s + n) * zscale);
                       density += contrib;
                       if (i == 3)
-                        t = slice[(wrap(start + n, sd) * zstride) + i];
+                        t = (gfloat) slice[(wrap (start + n, sd) * zstride) + i] / 255.0f;
                       else
-                        t = linear_to_gamma(gc, slice[(wrap(start + n, sd) * zstride) + i], gamma);
+                        t = gamma_to_linear (gc, (gfloat) slice[(wrap (start + n, sd) * zstride) + i] / 255.0f, gamma);
                       r += t * contrib;
                     }
 
                   if (density != 0.0f && density != 1.0f)
                     r /= density;
 
-                  r = MIN(255, MAX(0, r));
+                  r = MIN (1.0f, MAX (0.0f, r));
 
                   if (i != 3)
-                    r = gamma_to_linear(gc, r, gamma);
+                    r = linear_to_gamma (gc, r, gamma);
 
-                  d[((y * sw) + x) * bpp + i] = (unsigned char)r;
+                  d[((y * sw) + x) * bpp + i] = (guchar) floorf (r * 255.0f + 0.5f);
                 }
             }
         }
@@ -744,11 +742,11 @@ scale_volume_image (unsigned char *dst,
 #endif
       for (y = 0; y < dh; ++y)
         {
-          center = ((float)y + 0.5f) / yfactor;
-          start = (int)(center - ysupport + 0.5f);
-          stop =  (int)(center + ysupport + 0.5f);
+          center = ((gfloat) y + 0.5f) / yfactor;
+          start = (gint) roundf ((center - ysupport) + 0.5f);
+          stop =  (gint) roundf ((center + ysupport) + 0.5f);
           nmax = stop - start;
-          s = (float)start - center + 0.5f;
+          s = (gfloat) start - center + 0.5f;
 
           for (x = 0; x < sw; ++x)
             {
@@ -764,21 +762,21 @@ scale_volume_image (unsigned char *dst,
                       contrib = filter((s + n) * yscale);
                       density += contrib;
                       if (i == 3)
-                        t = col[(wrap(start + n, sh) * sstride) + i];
+                        t = (gfloat) col[(wrap (start + n, sh) * sstride) + i] / 255.0f;
                       else
-                        t = linear_to_gamma(gc, col[(wrap(start + n, sh) * sstride) + i], gamma);
+                        t = gamma_to_linear (gc, (gfloat) col[(wrap (start + n, sh) * sstride) + i] / 255.0f, gamma);
                       r += t * contrib;
                     }
 
                   if (density != 0.0f && density != 1.0f)
                     r /= density;
 
-                  r = MIN(255, MAX(0, r));
+                  r = MIN (1.0f, MAX (0.0f, r));
 
                   if (i != 3)
-                    r = gamma_to_linear(gc, r, gamma);
+                    r = linear_to_gamma (gc, r, gamma);
 
-                  d[((y * sw) + x) * bpp + i] = (unsigned char)r;
+                  d[((y * sw) + x) * bpp + i] = (guchar) floorf (r * 255.0f + 0.5f);
                 }
             }
         }
@@ -795,11 +793,11 @@ scale_volume_image (unsigned char *dst,
 
           for (x = 0; x < dw; ++x)
             {
-              center = ((float)x + 0.5f) / xfactor;
-              start = (int)(center - xsupport + 0.5f);
-              stop =  (int)(center + xsupport + 0.5f);
+              center = ((gfloat) x + 0.5f) / xfactor;
+              start = (gint) roundf ((center - xsupport) + 0.5f);
+              stop =  (gint) roundf ((center + xsupport) + 0.5f);
               nmax = stop - start;
-              s = (float)start - center + 0.5f;
+              s = (gfloat) start - center + 0.5f;
 
               for (i = 0; i < bpp; ++i)
                 {
@@ -811,21 +809,21 @@ scale_volume_image (unsigned char *dst,
                       contrib = filter((s + n) * xscale);
                       density += contrib;
                       if (i == 3)
-                        t = row[(wrap(start + n, sw) * bpp) + i];
+                        t = (gfloat) row[(wrap (start + n, sw) * bpp) + i] / 255.0f;
                       else
-                        t = linear_to_gamma(gc, row[(wrap(start + n, sw) * bpp) + i], gamma);
+                        t = gamma_to_linear (gc, (gfloat) row[(wrap (start + n, sw) * bpp) + i] / 255.0f, gamma);
                       r += t * contrib;
                     }
 
                   if (density != 0.0f && density != 1.0f)
                     r /= density;
 
-                  r = MIN(255, MAX(0, r));
+                  r = MIN (1.0f, MAX (0.0f, r));
 
                   if (i != 3)
-                    r = gamma_to_linear(gc, r, gamma);
+                    r = linear_to_gamma (gc, r, gamma);
 
-                  d[((z * dh * dw) + (y * dw) + x) * bpp + i] = (unsigned char)r;
+                  d[((z * dh * dw) + (y * dw) + x) * bpp + i] = (guchar) floorf (r * 255.0f + 0.5f);
                 }
             }
         }
@@ -835,15 +833,16 @@ scale_volume_image (unsigned char *dst,
   g_free (tmp2);
 }
 
-/******************************************************************************
- * filter lookup table                                                        *
- ******************************************************************************/
+
+/**
+ * Filter Lookup-table
+ */
 
 static struct
 {
-  int filter;
+  gint         filter;
   filterfunc_t func;
-  float support;
+  gfloat       support;
 } filters[] =
 {
   { DDS_MIPMAP_FILTER_BOX,       box_filter,       0.5f },
@@ -851,40 +850,42 @@ static struct
   { DDS_MIPMAP_FILTER_QUADRATIC, quadratic_filter, 1.5f },
   { DDS_MIPMAP_FILTER_BSPLINE,   bspline_filter,   2.0f },
   { DDS_MIPMAP_FILTER_MITCHELL,  mitchell_filter,  2.0f },
+  { DDS_MIPMAP_FILTER_CATROM,    catrom_filter,    2.0f },
   { DDS_MIPMAP_FILTER_LANCZOS,   lanczos_filter,   3.0f },
   { DDS_MIPMAP_FILTER_KAISER,    kaiser_filter,    3.0f },
   { DDS_MIPMAP_FILTER_MAX,       NULL,             0.0f }
 };
 
-/*
- * Alpha test coverage - portion of visible texels after alpha test:
- *   if (texel_alpha < alpha_test_threshold)
- *      discard;
+
+/**
+ * Alpha-test Coverage - portion of visible texels after alpha test:
+ * if (texel_alpha < alpha_test_threshold) discard;
  */
-static float
-calc_alpha_test_coverage (unsigned char *src,
-                          unsigned int   width,
-                          unsigned int   height,
-                          int            bpp,
-                          float          alpha_test_threshold,
-                          float          alpha_scale)
+
+static gfloat
+calc_alpha_test_coverage (guchar *src,
+                          guint   width,
+                          guint   height,
+                          gint    bpp,
+                          gfloat  alpha_test_threshold,
+                          gfloat  alpha_scale)
 {
-  unsigned int x, y;
-  int rowbytes = width * bpp;
-  int coverage = 0;
-  const int alpha_channel_idx = 3;
+  const gint alpha_channel_idx = 3;
+  gint  rowbytes = width * bpp;
+  gint  coverage = 0;
+  guint x, y;
 
   if (bpp <= alpha_channel_idx)
     {
       /* No alpha channel */
-      return 1.f;
+      return 1.0f;
     }
 
   for (y = 0; y < height; ++y)
     {
       for (x = 0; x < width; ++x)
         {
-          const float alpha = src[y * rowbytes + (x * bpp) + alpha_channel_idx];
+          const gfloat alpha = src[y * rowbytes + (x * bpp) + alpha_channel_idx];
           if ((alpha * alpha_scale) >= (alpha_test_threshold * 255))
             {
               ++coverage;
@@ -892,24 +893,24 @@ calc_alpha_test_coverage (unsigned char *src,
         }
     }
 
-  return (float)coverage / (width * height);
+  return (gfloat) coverage / (width * height);
 }
 
 static void
-scale_alpha_to_coverage (unsigned char *img,
-                         unsigned int   width,
-                         unsigned int   height,
-                         int            bpp,
-                         float          desired_coverage,
-                         float          alpha_test_threshold)
+scale_alpha_to_coverage (guchar *img,
+                         guint   width,
+                         guint   height,
+                         gint    bpp,
+                         gfloat  desired_coverage,
+                         gfloat  alpha_test_threshold)
 {
-  int i;
-  unsigned int x, y;
-  const int rowbytes = width * bpp;
-  const int alpha_channel_idx = 3;
-  float min_alpha_scale = 0.0f;
-  float max_alpha_scale = 4.0f;
-  float alpha_scale = 1.0f;
+  const gint rowbytes          = width * bpp;
+  const gint alpha_channel_idx = 3;
+  gfloat     min_alpha_scale   = 0.0f;
+  gfloat     max_alpha_scale   = 4.0f;
+  gfloat     alpha_scale       = 1.0f;
+  guint      x, y;
+  gint       i;
 
   if (bpp <= alpha_channel_idx)
     {
@@ -920,7 +921,7 @@ scale_alpha_to_coverage (unsigned char *img,
   /* Binary search */
   for (i = 0; i < 10; i++)
     {
-      float cur_coverage = calc_alpha_test_coverage(img, width, height, bpp, alpha_test_threshold, alpha_scale);
+      gfloat cur_coverage = calc_alpha_test_coverage (img, width, height, bpp, alpha_test_threshold, alpha_scale);
 
       if (cur_coverage < desired_coverage)
         {
@@ -943,45 +944,46 @@ scale_alpha_to_coverage (unsigned char *img,
     {
       for (x = 0; x < width; ++x)
         {
-          float new_alpha = img[y * rowbytes + (x * bpp) + alpha_channel_idx] * alpha_scale;
+          gfloat new_alpha = img[y * rowbytes + (x * bpp) + alpha_channel_idx] * alpha_scale;
           if (new_alpha > 255.0f)
             {
               new_alpha = 255.0f;
             }
 
-          img[y * rowbytes + (x * bpp) + alpha_channel_idx] = (unsigned char)new_alpha;
+          img[y * rowbytes + (x * bpp) + alpha_channel_idx] = (guchar) new_alpha;
         }
     }
 }
 
-/******************************************************************************
- * mipmap generation                                                          *
- ******************************************************************************/
 
-int
-generate_mipmaps (unsigned char *dst,
-                  unsigned char *src,
-                  unsigned int   width,
-                  unsigned int   height,
-                  int            bpp,
-                  int            indexed,
-                  int            mipmaps,
-                  int            filter,
-                  int            wrap,
-                  int            gc,
-                  float          gamma,
-                  int            preserve_alpha_coverage,
-                  float          alpha_test_threshold)
+/**
+ * Mipmap Generation
+ */
+
+gint
+generate_mipmaps (guchar *dst,
+                  guchar *src,
+                  guint   width,
+                  guint   height,
+                  gint    bpp,
+                  gint    indexed,
+                  gint    mipmaps,
+                  gint    filter,
+                  gint    wrap,
+                  gint    gc,
+                  gfloat  gamma,
+                  gint    preserve_alpha_coverage,
+                  gfloat  alpha_test_threshold)
 {
-  int i;
-  unsigned int sw, sh, dw, dh;
-  unsigned char *s, *d;
+  const gint   has_alpha   = (bpp >= 3);
   mipmapfunc_t mipmap_func = NULL;
   filterfunc_t filter_func = NULL;
-  wrapfunc_t wrap_func = NULL;
-  float support = 0.0f;
-  const int has_alpha = (bpp >= 3);
-  float alpha_test_coverage = 1;
+  wrapfunc_t   wrap_func   = NULL;
+  gfloat       coverage    = 1.0f;
+  gfloat       support     = 0.0f;
+  guint        sw, sh, dw, dh;
+  guchar      *s, *d;
+  gint         i;
 
   if (indexed || filter == DDS_MIPMAP_FILTER_NEAREST)
     {
@@ -989,7 +991,7 @@ generate_mipmaps (unsigned char *dst,
     }
   else
     {
-      if ((filter <= DDS_MIPMAP_FILTER_DEFAULT) ||
+      if ((filter < DDS_MIPMAP_FILTER_NEAREST) ||
           (filter >= DDS_MIPMAP_FILTER_MAX))
         filter = DDS_MIPMAP_FILTER_BOX;
 
@@ -1016,9 +1018,9 @@ generate_mipmaps (unsigned char *dst,
 
   if (has_alpha && preserve_alpha_coverage)
     {
-      alpha_test_coverage = calc_alpha_test_coverage(src, width, height, bpp,
-                                                     alpha_test_threshold,
-                                                     1.0f);
+      coverage = calc_alpha_test_coverage (src, width, height, bpp,
+                                           alpha_test_threshold,
+                                           1.0f);
     }
 
   memcpy (dst, src, width * height * bpp);
@@ -1026,19 +1028,19 @@ generate_mipmaps (unsigned char *dst,
   s = dst;
   d = dst + (width * height * bpp);
 
-  sw = width;
-  sh = height;
+  dw = sw = width;
+  dh = sh = height;
 
   for (i = 1; i < mipmaps; ++i)
     {
-      dw = MAX(1, sw >> 1);
-      dh = MAX(1, sh >> 1);
+      dw = MAX (1, dw >> 1);
+      dh = MAX (1, dh >> 1);
 
-      mipmap_func(d, dw, dh, s, sw, sh, bpp, filter_func, support, wrap_func, gc, gamma);
+      mipmap_func (d, dw, dh, s, sw, sh, bpp, filter_func, support, wrap_func, gc, gamma);
 
       if (has_alpha && preserve_alpha_coverage)
         {
-          scale_alpha_to_coverage(d, dw, dh, bpp, alpha_test_coverage, alpha_test_threshold);
+          scale_alpha_to_coverage (d, dw, dh, bpp, coverage, alpha_test_threshold);
         }
 
       s = d;
@@ -1050,28 +1052,28 @@ generate_mipmaps (unsigned char *dst,
   return 1;
 }
 
-int
-generate_volume_mipmaps (unsigned char *dst,
-                         unsigned char *src,
-                         unsigned int   width,
-                         unsigned int   height,
-                         unsigned int   depth,
-                         int            bpp,
-                         int            indexed,
-                         int            mipmaps,
-                         int            filter,
-                         int            wrap,
-                         int            gc,
-                         float          gamma)
+gint
+generate_volume_mipmaps (guchar *dst,
+                         guchar *src,
+                         guint   width,
+                         guint   height,
+                         guint   depth,
+                         gint    bpp,
+                         gint    indexed,
+                         gint    mipmaps,
+                         gint    filter,
+                         gint    wrap,
+                         gint    gc,
+                         gfloat  gamma)
 {
-  int i;
-  unsigned int sw, sh, sd;
-  unsigned int dw, dh, dd;
-  unsigned char *s, *d;
   volmipmapfunc_t mipmap_func = NULL;
-  filterfunc_t filter_func = NULL;
-  wrapfunc_t wrap_func = NULL;
-  float support = 0.0f;
+  filterfunc_t    filter_func = NULL;
+  wrapfunc_t      wrap_func   = NULL;
+  gfloat          support     = 0.0f;
+  guint           sw, sh, sd;
+  guint           dw, dh, dd;
+  guchar         *s, *d;
+  gint            i;
 
   if (indexed || filter == DDS_MIPMAP_FILTER_NEAREST)
     {
@@ -1079,7 +1081,7 @@ generate_volume_mipmaps (unsigned char *dst,
     }
   else
     {
-      if ((filter <= DDS_MIPMAP_FILTER_DEFAULT) ||
+      if ((filter < DDS_MIPMAP_FILTER_NEAREST) ||
           (filter >= DDS_MIPMAP_FILTER_MAX))
         filter = DDS_MIPMAP_FILTER_BOX;
 
@@ -1115,9 +1117,9 @@ generate_volume_mipmaps (unsigned char *dst,
 
   for (i = 1; i < mipmaps; ++i)
     {
-      dw = MAX(1, sw >> 1);
-      dh = MAX(1, sh >> 1);
-      dd = MAX(1, sd >> 1);
+      dw = MAX (1, sw >> 1);
+      dh = MAX (1, sh >> 1);
+      dd = MAX (1, sd >> 1);
 
       mipmap_func (d, dw, dh, dd, s, sw, sh, sd, bpp, filter_func, support, wrap_func, gc, gamma);
 

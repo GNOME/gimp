@@ -21,19 +21,22 @@
 #ifndef __COLOR_H__
 #define __COLOR_H__
 
+
 #include "imath.h"
 
-/* sRGB encoding/decoding */
-int linear_to_sRGB(int c);
-int sRGB_to_linear(int c);
+
+/* sRGB encoding & decoding */
+gfloat linear_to_sRGB (gfloat c);
+gfloat sRGB_to_linear (gfloat c);
+
 
 /* YCoCg encoding */
 static inline void
-RGB_to_YCoCg (unsigned char *dst, int r, int g, int b)
+RGB_to_YCoCg (guchar *dst, gint r, gint g, gint b)
 {
-  int y  = ((r +     (g << 1) + b) + 2) >> 2;
-  int co = ((((r << 1) - (b << 1)) + 2) >> 2) + 128;
-  int cg = (((-r +   (g << 1) - b) + 2) >> 2) + 128;
+  gint y  = ((r +     (g << 1) + b) + 2) >> 2;
+  gint co = ((((r << 1) - (b << 1)) + 2) >> 2) + 128;
+  gint cg = (((-r +   (g << 1) - b) + 2) >> 2) + 128;
 
   dst[0] = 255;
   dst[1] = (cg > 255 ? 255 : (cg < 0 ? 0 : cg));
@@ -41,56 +44,69 @@ RGB_to_YCoCg (unsigned char *dst, int r, int g, int b)
   dst[3] = (y  > 255 ? 255 : (y  < 0 ? 0 :  y));
 }
 
-/* other color conversions */
 
-static inline int
-rgb_to_luminance (int r, int g, int b)
+/* Other color conversions */
+static inline gint
+rgb_to_luminance (gint r,
+                  gint g,
+                  gint b)
 {
   /* ITU-R BT.709 luma coefficients, scaled by 256 */
   return ((r * 54 + g * 182 + b * 20) + 128) >> 8;
 }
 
-static inline unsigned short
-pack_r5g6b5 (int r, int g, int b)
+static inline gushort
+pack_r5g6b5 (gint r,
+             gint g,
+             gint b)
 {
-  return (mul8bit(r, 31) << 11) |
-         (mul8bit(g, 63) <<  5) |
-         (mul8bit(b, 31)      );
+  return (mul8bit (r, 31) << 11) |
+         (mul8bit (g, 63) <<  5) |
+         (mul8bit (b, 31)      );
 }
 
-static inline unsigned short
-pack_rgba4 (int r, int g, int b, int a)
+static inline gushort
+pack_rgba4 (gint r,
+            gint g,
+            gint b,
+            gint a)
 {
-  return (mul8bit(a, 15) << 12) |
-         (mul8bit(r, 15) <<  8) |
-         (mul8bit(g, 15) <<  4) |
-         (mul8bit(b, 15)      );
+  return (mul8bit (a, 15) << 12) |
+         (mul8bit (r, 15) <<  8) |
+         (mul8bit (g, 15) <<  4) |
+         (mul8bit (b, 15)      );
 }
 
-static inline unsigned short
-pack_rgb5a1 (int r, int g, int b, int a)
+static inline gushort
+pack_rgb5a1 (gint r,
+             gint g,
+             gint b,
+             gint a)
 {
   return (((a >> 7) & 0x01) << 15) |
-         (mul8bit(r, 31)    << 10) |
-         (mul8bit(g, 31)    <<  5) |
-         (mul8bit(b, 31)         );
+         (mul8bit (r, 31)   << 10) |
+         (mul8bit (g, 31)   <<  5) |
+         (mul8bit (b, 31)        );
 }
 
-static inline unsigned char
-pack_r3g3b2(int r, int g, int b)
+static inline guchar
+pack_r3g3b2 (gint r,
+             gint g,
+             gint b)
 {
-  return (mul8bit(r, 7) << 5) |
-         (mul8bit(g, 7) << 2) |
-         (mul8bit(b, 3)     );
+  return (mul8bit (r, 7) << 5) |
+         (mul8bit (g, 7) << 2) |
+         (mul8bit (b, 3)     );
 }
 
-static inline unsigned int
-pack_rgb10a2 (int r, int g, int b, int a)
+static inline guint
+pack_rgb10a2 (gint r, gint g, gint b, gint a)
 {
-  return ((unsigned int)((a >> 6) & 0x003) << 30) |
-         ((unsigned int)((b << 2) & 0x3ff) << 20) |
-         ((unsigned int)((g << 2) & 0x3ff) << 10) |
-         ((unsigned int)((r << 2) & 0x3ff)      );
+  return ((guint) ((a >> 6) & 0x003) << 30) |
+         ((guint) ((b << 2) & 0x3ff) << 20) |
+         ((guint) ((g << 2) & 0x3ff) << 10) |
+         ((guint) ((r << 2) & 0x3ff)      );
 }
+
 
 #endif /* __COLOR_H__ */
