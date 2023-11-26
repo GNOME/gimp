@@ -451,7 +451,7 @@ dds_load (GimpProcedure         *procedure,
   gegl_init (NULL, NULL);
 
   status = read_dds (file, &image, run_mode == GIMP_RUN_INTERACTIVE,
-                     procedure, G_OBJECT (config), &error);
+                     procedure, config, &error);
 
   if (status != GIMP_PDB_SUCCESS)
     return gimp_procedure_new_return_values (procedure, status, error);

@@ -21,6 +21,7 @@
 #ifndef __DDS_H__
 #define __DDS_H__
 
+
 #define DDS_PLUGIN_VERSION_MAJOR     3
 #define DDS_PLUGIN_VERSION_MINOR     9
 #define DDS_PLUGIN_VERSION_REVISION  92
@@ -117,6 +118,7 @@ typedef enum
   DDS_MIPMAP_WRAP_MAX
 } DDS_MIPMAP_WRAP;
 
+
 #define DDS_HEADERSIZE             128
 #define DDS_HEADERSIZE_DX10        20
 
@@ -160,7 +162,7 @@ typedef enum
 #define DDPF_LUMINANCE             0x00020000
 #define DDPF_BUMPLUMINANCE         0x00040000
 #define DDPF_BUMPDUDV              0x00080000
-#define DDPF_NORMAL                0x80000000  // nvidia specific
+#define DDPF_NORMAL                0x80000000  /* NVidia specific */
 
 #define DDSCAPS_COMPLEX            0x00000008
 #define DDSCAPS_TEXTURE            0x00001000
@@ -185,6 +187,7 @@ typedef enum
 #define D3D10_RESOURCE_DIMENSION_TEXTURE1D 2
 #define D3D10_RESOURCE_DIMENSION_TEXTURE2D 3
 #define D3D10_RESOURCE_DIMENSION_TEXTURE3D 4
+
 
 typedef struct
 {
@@ -219,8 +222,8 @@ typedef struct
   {
     struct
     {
-      unsigned int magic1;   // FOURCC "GIMP"
-      unsigned int magic2;   // FOURCC "-DDS"
+      unsigned int magic1;  /* FOURCC "GIMP" */
+      unsigned int magic2;  /* FOURCC "-DDS" */
       unsigned int version;
       unsigned int extra_fourcc;
     } gimp_dds_special;
@@ -230,6 +233,7 @@ typedef struct
   dds_caps_t caps;
   unsigned int reserved2;
 } dds_header_t;
+
 
 typedef enum
 {
@@ -425,5 +429,6 @@ typedef enum _D3DFORMAT {
     D3DFMT_A2B10G10R10_XR_BIAS  = 119,
     D3DFMT_BINARYBUFFER         = 199,
 } D3DFORMAT;
+
 
 #endif /* __DDS_H__ */

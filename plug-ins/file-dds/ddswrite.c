@@ -35,13 +35,13 @@
 
 #include <libgimp/stdplugins-intl.h>
 
-#include "ddswrite.h"
+#include "color.h"
 #include "dds.h"
+#include "ddswrite.h"
 #include "dxt.h"
-#include "mipmap.h"
 #include "endian_rw.h"
 #include "imath.h"
-#include "color.h"
+#include "mipmap.h"
 
 
 static gboolean   write_image (FILE                *fp,
@@ -54,7 +54,7 @@ static gboolean   save_dialog (GimpImage           *image,
                                GimpProcedureConfig *config);
 
 
-static const char *cubemap_face_names[4][6] =
+static const gchar *cubemap_face_names[4][6] =
 {
   {
     "positive x", "negative x",
@@ -85,34 +85,32 @@ static gboolean   is_volume             = FALSE;
 static gboolean   is_array              = FALSE;
 static gboolean   is_mipmap_chain_valid = FALSE;
 
-static GtkWidget *transparent_check;
-
 static struct
 {
   gint         format;
   DXGI_FORMAT  dxgi_format;
   gint         bpp;
-  gint         alpha;
+  gboolean     alpha;
   guint        rmask;
   guint        gmask;
   guint        bmask;
   guint        amask;
 } format_info[] =
 {
-  { DDS_FORMAT_RGB8,    DXGI_FORMAT_UNKNOWN,           3, 0, 0x00ff0000, 0x0000ff00, 0x000000ff, 0x00000000},
-  { DDS_FORMAT_RGBA8,   DXGI_FORMAT_B8G8R8A8_UNORM,    4, 1, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000},
-  { DDS_FORMAT_BGR8,    DXGI_FORMAT_UNKNOWN,           3, 0, 0x000000ff, 0x0000ff00, 0x00ff0000, 0x00000000},
-  { DDS_FORMAT_ABGR8,   DXGI_FORMAT_R8G8B8A8_UNORM,    4, 1, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000},
-  { DDS_FORMAT_R5G6B5,  DXGI_FORMAT_B5G6R5_UNORM,      2, 0, 0x0000f800, 0x000007e0, 0x0000001f, 0x00000000},
-  { DDS_FORMAT_RGBA4,   DXGI_FORMAT_B4G4R4A4_UNORM,    2, 1, 0x00000f00, 0x000000f0, 0x0000000f, 0x0000f000},
-  { DDS_FORMAT_RGB5A1,  DXGI_FORMAT_B5G5R5A1_UNORM,    2, 1, 0x00007c00, 0x000003e0, 0x0000001f, 0x00008000},
-  { DDS_FORMAT_RGB10A2, DXGI_FORMAT_R10G10B10A2_UNORM, 4, 1, 0x000003ff, 0x000ffc00, 0x3ff00000, 0xc0000000},
-  { DDS_FORMAT_R3G3B2,  DXGI_FORMAT_UNKNOWN,           1, 0, 0x000000e0, 0x0000001c, 0x00000003, 0x00000000},
-  { DDS_FORMAT_A8,      DXGI_FORMAT_A8_UNORM,          1, 0, 0x00000000, 0x00000000, 0x00000000, 0x000000ff},
-  { DDS_FORMAT_L8,      DXGI_FORMAT_R8_UNORM,          1, 0, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000},
-  { DDS_FORMAT_L8A8,    DXGI_FORMAT_UNKNOWN,           2, 1, 0x000000ff, 0x000000ff, 0x000000ff, 0x0000ff00},
-  { DDS_FORMAT_AEXP,    DXGI_FORMAT_B8G8R8A8_UNORM,    4, 1, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000},
-  { DDS_FORMAT_YCOCG,   DXGI_FORMAT_B8G8R8A8_UNORM,    4, 1, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000}
+  { DDS_FORMAT_RGB8,    DXGI_FORMAT_UNKNOWN,           3, FALSE, 0x00ff0000, 0x0000ff00, 0x000000ff, 0x00000000},
+  { DDS_FORMAT_RGBA8,   DXGI_FORMAT_B8G8R8A8_UNORM,    4, TRUE,  0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000},
+  { DDS_FORMAT_BGR8,    DXGI_FORMAT_UNKNOWN,           3, FALSE, 0x000000ff, 0x0000ff00, 0x00ff0000, 0x00000000},
+  { DDS_FORMAT_ABGR8,   DXGI_FORMAT_R8G8B8A8_UNORM,    4, TRUE,  0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000},
+  { DDS_FORMAT_R5G6B5,  DXGI_FORMAT_B5G6R5_UNORM,      2, FALSE, 0x0000f800, 0x000007e0, 0x0000001f, 0x00000000},
+  { DDS_FORMAT_RGBA4,   DXGI_FORMAT_B4G4R4A4_UNORM,    2, TRUE,  0x00000f00, 0x000000f0, 0x0000000f, 0x0000f000},
+  { DDS_FORMAT_RGB5A1,  DXGI_FORMAT_B5G5R5A1_UNORM,    2, TRUE,  0x00007c00, 0x000003e0, 0x0000001f, 0x00008000},
+  { DDS_FORMAT_RGB10A2, DXGI_FORMAT_R10G10B10A2_UNORM, 4, TRUE,  0x000003ff, 0x000ffc00, 0x3ff00000, 0xc0000000},
+  { DDS_FORMAT_R3G3B2,  DXGI_FORMAT_UNKNOWN,           1, FALSE, 0x000000e0, 0x0000001c, 0x00000003, 0x00000000},
+  { DDS_FORMAT_A8,      DXGI_FORMAT_A8_UNORM,          1, FALSE, 0x00000000, 0x00000000, 0x00000000, 0x000000ff},
+  { DDS_FORMAT_L8,      DXGI_FORMAT_R8_UNORM,          1, FALSE, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000},
+  { DDS_FORMAT_L8A8,    DXGI_FORMAT_UNKNOWN,           2, TRUE,  0x000000ff, 0x000000ff, 0x000000ff, 0x0000ff00},
+  { DDS_FORMAT_AEXP,    DXGI_FORMAT_B8G8R8A8_UNORM,    4, TRUE,  0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000},
+  { DDS_FORMAT_YCOCG,   DXGI_FORMAT_B8G8R8A8_UNORM,    4, TRUE,  0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000}
 };
 
 
@@ -144,7 +142,7 @@ check_mipmaps (gint savetype)
   else if (savetype == DDS_SAVE_ARRAY)
     {
       min_surfaces = 2;
-      max_surfaces = INT_MAX;
+      max_surfaces = G_MAXINT;
     }
 
   layers = gimp_image_list_layers (global_image);
@@ -221,18 +219,18 @@ check_cubemap (GimpImage *image)
   if (num_layers < 6)
     return FALSE;
 
-  /* check for a valid cubemap with mipmap layers */
+  /* Check for a valid cubemap with mipmap layers */
   if (num_layers > 6)
     {
-      /* check that mipmap layers are in order for a cubemap */
+      /* Check that mipmap layers are in order for a cubemap */
       if (! check_mipmaps (DDS_SAVE_CUBEMAP))
         return FALSE;
 
-      /* invalidate cubemap faces */
+      /* Invalidate cubemap faces */
       for (i = 0; i < 6; ++i)
         cubemap_faces[i] = NULL;
 
-      /* find the mipmap level 0 layers */
+      /* Find the mipmap level 0 layers */
       w = gimp_image_get_width (image);
       h = gimp_image_get_height (image);
 
@@ -263,7 +261,7 @@ check_cubemap (GimpImage *image)
             }
         }
 
-      /* check for 6 valid faces */
+      /* Check for 6 valid faces */
       for (i = 0; i < 6; ++i)
         {
           if (cubemap_faces[i] == NULL)
@@ -273,7 +271,7 @@ check_cubemap (GimpImage *image)
             }
         }
 
-      /* make sure they are all the same type */
+      /* Make sure all faces are of the same type */
       if (cubemap)
         {
           type = gimp_drawable_type (GIMP_DRAWABLE (cubemap_faces[0]));
@@ -287,7 +285,7 @@ check_cubemap (GimpImage *image)
 
   if (num_layers == 6)
     {
-      /* invalidate cubemap faces */
+      /* Invalidate cubemap faces */
       for (i = 0; i < 6; ++i)
         cubemap_faces[i] = NULL;
 
@@ -315,7 +313,7 @@ check_cubemap (GimpImage *image)
             }
         }
 
-      /* check for 6 valid faces */
+      /* Check for 6 valid faces */
       for (i = 0; i < 6; ++i)
         {
           if (cubemap_faces[i] == NULL)
@@ -325,7 +323,7 @@ check_cubemap (GimpImage *image)
             }
         }
 
-      /* make sure they are all the same size */
+      /* Make sure all faces are of the same size */
       if (cubemap)
         {
           w = gimp_drawable_get_width (GIMP_DRAWABLE (cubemap_faces[0]));
@@ -339,7 +337,7 @@ check_cubemap (GimpImage *image)
             }
         }
 
-      /* make sure they are all the same type */
+      /* Make sure all faces are of the same type */
       if (cubemap)
         {
           type = gimp_drawable_type (GIMP_DRAWABLE (cubemap_faces[0]));
@@ -372,7 +370,7 @@ check_volume (GimpImage *image)
     {
       volume = TRUE;
 
-      /* make sure all layers are the same size */
+      /* Make sure all layers are of the same size */
       w = gimp_drawable_get_width  (layers->data);
       h = gimp_drawable_get_height (layers->data);
 
@@ -387,7 +385,7 @@ check_volume (GimpImage *image)
 
       if (volume)
         {
-          /* make sure all layers are the same type */
+          /* Make sure all layers are of the same type */
           type = gimp_drawable_type (layers->data);
 
           for (i = 1, list = layers->next;
@@ -425,7 +423,7 @@ check_array (GimpImage *image)
 
       array = TRUE;
 
-      /* make sure all layers are the same size */
+      /* Make sure all layers are of the same size */
       w = gimp_drawable_get_width  (layers->data);
       h = gimp_drawable_get_height (layers->data);
 
@@ -440,7 +438,7 @@ check_array (GimpImage *image)
 
       if (array)
         {
-          /* make sure all layers are the same type */
+          /* Make sure all layers are of the same type */
           type = gimp_drawable_type (layers->data);
 
           for (i = 1, list = g_list_next (layers);
@@ -474,7 +472,7 @@ get_array_size (GimpImage *image)
   layers = gimp_image_list_layers (image);
   num_layers = g_list_length (layers);
 
-  w = gimp_image_get_width (image);
+  w = gimp_image_get_width  (image);
   h = gimp_image_get_height (image);
 
   for (i = 0, list = layers;
@@ -520,8 +518,8 @@ write_dds (GFile               *file,
   is_mipmap_chain_valid = check_mipmaps (savetype);
 
   is_cubemap = check_cubemap (image);
-  is_volume  = check_volume (image);
-  is_array   = check_array (image);
+  is_volume  = check_volume  (image);
+  is_array   = check_array   (image);
 
   if (interactive)
     {
@@ -534,33 +532,32 @@ write_dds (GFile               *file,
     }
   else
     {
-      if (savetype == DDS_SAVE_CUBEMAP && ! is_cubemap)
+      if ((savetype == DDS_SAVE_CUBEMAP) && (! is_cubemap))
         {
           g_message ("DDS: Cannot save image as cube map");
           return GIMP_PDB_EXECUTION_ERROR;
         }
 
-      if (savetype == DDS_SAVE_VOLUMEMAP && ! is_volume)
+      if ((savetype == DDS_SAVE_VOLUMEMAP) && (! is_volume))
         {
           g_message ("DDS: Cannot save image as volume map");
           return GIMP_PDB_EXECUTION_ERROR;
         }
 
-      if (savetype == DDS_SAVE_VOLUMEMAP &&
-          compression != DDS_COMPRESS_NONE)
+      if ((savetype == DDS_SAVE_VOLUMEMAP) && (compression != DDS_COMPRESS_NONE))
         {
           g_message ("DDS: Cannot save volume map with compression");
           return GIMP_PDB_EXECUTION_ERROR;
         }
 
-      if (mipmaps == DDS_MIPMAP_EXISTING &&
-          ! is_mipmap_chain_valid)
+      if ((mipmaps == DDS_MIPMAP_EXISTING) && (! is_mipmap_chain_valid))
         {
           g_message ("DDS: Cannot save with existing mipmaps as the mipmap chain is incomplete");
           return GIMP_PDB_EXECUTION_ERROR;
         }
     }
 
+  /* Open up the file to write */
   fp = g_fopen (g_file_peek_path (file), "wb");
 
   if (! fp)
@@ -569,7 +566,7 @@ write_dds (GFile               *file,
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  gimp_progress_init_printf ("Saving %s:", gimp_file_get_utf8_name (file));
+  gimp_progress_init_printf (_("Saving: %s"), gimp_file_get_utf8_name (file));
 
   /* If destructive changes are going to happen to the image,
    * make sure we send a duplicate of it to write_image()
@@ -596,12 +593,12 @@ write_dds (GFile               *file,
 }
 
 static void
-swap_rb (unsigned char *pixels,
-         unsigned int   n,
-         int            bpp)
+swap_rb (guchar *pixels,
+         guint   n,
+         gint    bpp)
 {
-  unsigned int  i;
-  unsigned char t;
+  guint  i;
+  guchar t;
 
   for (i = 0; i < n; ++i)
     {
@@ -612,17 +609,17 @@ swap_rb (unsigned char *pixels,
 }
 
 static void
-alpha_exp (unsigned char *dst,
-           int            r,
-           int            g,
-           int            b,
-           int            a)
+alpha_exp (guchar *dst,
+           gint    r,
+           gint    g,
+           gint    b,
+           gint    a)
 {
-  float ar, ag, ab, aa;
+  gfloat ar, ag, ab, aa;
 
-  ar = (float)r / 255.0f;
-  ag = (float)g / 255.0f;
-  ab = (float)b / 255.0f;
+  ar = (gfloat) r / 255.0f;
+  ag = (gfloat) g / 255.0f;
+  ab = (gfloat) b / 255.0f;
 
   aa = MAX (ar, MAX (ag, ab));
 
@@ -639,10 +636,10 @@ alpha_exp (unsigned char *dst,
   ag /= aa;
   ab /= aa;
 
-  r = (int)floorf (255.0f * ar + 0.5f);
-  g = (int)floorf (255.0f * ag + 0.5f);
-  b = (int)floorf (255.0f * ab + 0.5f);
-  a = (int)floorf (255.0f * aa + 0.5f);
+  r = (gint) floorf (255.0f * ar + 0.5f);
+  g = (gint) floorf (255.0f * ag + 0.5f);
+  b = (gint) floorf (255.0f * ab + 0.5f);
+  a = (gint) floorf (255.0f * aa + 0.5f);
 
   dst[0] = MAX (0, MIN (255, b));
   dst[1] = MAX (0, MIN (255, g));
@@ -651,18 +648,18 @@ alpha_exp (unsigned char *dst,
 }
 
 static void
-convert_pixels (unsigned char *dst,
-                unsigned char *src,
-                int            format,
-                int            w,
-                int            h,
-                int            d,
-                int            bpp,
-                unsigned char *palette,
-                int            mipmaps)
+convert_pixels (guchar *dst,
+                guchar *src,
+                gint    format,
+                gint    w,
+                gint    h,
+                gint    d,
+                gint    bpp,
+                guchar *palette,
+                gint    mipmaps)
 {
-  unsigned int  i, num_pixels;
-  unsigned char r, g, b, a;
+  guint  i, num_pixels;
+  guchar r, g, b, a;
 
   if (d > 0)
     num_pixels = get_volume_mipmapped_size (w, h, d, 1, 0, mipmaps, DDS_COMPRESS_NONE);
@@ -732,19 +729,19 @@ convert_pixels (unsigned char *dst,
           dst[4 * i + 3] = a;
           break;
         case DDS_FORMAT_R5G6B5:
-          PUTL16(&dst[2 * i], pack_r5g6b5(r, g, b));
+          PUTL16 (&dst[2 * i], pack_r5g6b5 (r, g, b));
           break;
         case DDS_FORMAT_RGBA4:
-          PUTL16(&dst[2 * i], pack_rgba4(r, g, b, a));
+          PUTL16 (&dst[2 * i], pack_rgba4 (r, g, b, a));
           break;
         case DDS_FORMAT_RGB5A1:
-          PUTL16(&dst[2 * i], pack_rgb5a1(r, g, b, a));
+          PUTL16 (&dst[2 * i], pack_rgb5a1 (r, g, b, a));
           break;
         case DDS_FORMAT_RGB10A2:
-          PUTL32(&dst[4 * i], pack_rgb10a2(r, g, b, a));
+          PUTL32 (&dst[4 * i], pack_rgb10a2 (r, g, b, a));
           break;
         case DDS_FORMAT_R3G3B2:
-          dst[i] = pack_r3g3b2(r, g, b);
+          dst[i] = pack_r3g3b2 (r, g, b);
           break;
         case DDS_FORMAT_A8:
           dst[i] = a;
@@ -770,12 +767,12 @@ convert_pixels (unsigned char *dst,
 }
 
 static void
-get_mipmap_chain (unsigned char *dst,
-                  int            w,
-                  int            h,
-                  int            bpp,
-                  GimpImage     *image,
-                  GimpDrawable  *drawable)
+get_mipmap_chain (guchar       *dst,
+                  gint          w,
+                  gint          h,
+                  gint          bpp,
+                  GimpImage    *image,
+                  GimpDrawable *drawable)
 {
   GList      *layers;
   GList      *list;
@@ -830,7 +827,7 @@ get_mipmap_chain (unsigned char *dst,
                        dst + offset, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
       g_object_unref (buffer);
 
-      /* we need BGRX or BGRA */
+      /* BGRX or BGRA needed */
       if (bpp >= 3)
         swap_rb (dst + offset, mipw * miph, bpp);
 
@@ -845,11 +842,11 @@ write_layer (FILE                *fp,
              GimpImage           *image,
              GimpDrawable        *drawable,
              GimpProcedureConfig *config,
-             int                  w,
-             int                  h,
-             int                  bpp,
-             int                  fmtbpp,
-             int                  num_mipmaps)
+             gint                 w,
+             gint                 h,
+             gint                 bpp,
+             gint                 fmtbpp,
+             gint                 num_mipmaps)
 {
   GeglBuffer        *buffer;
   const Babl        *format;
@@ -864,13 +861,13 @@ write_layer (FILE                *fp,
   gint               x, y;
   gint               size;
   gint               fmtsize;
-  gint               offset;
+  gint               offset  = 0;
   gint               colors;
   gint               compression;
   gint               mipmaps;
   gint               pixel_format;
   gboolean           perceptual_metric;
-  gint               flags = 0;
+  gint               flags   = 0;
 
   g_object_get (config,
                 "perceptual-metric",  &perceptual_metric,
@@ -916,8 +913,7 @@ write_layer (FILE                *fp,
         }
     }
 
-  /* we want and assume BGRA ordered pixels for bpp >= 3 from here and
-     onwards */
+  /* We want and assume BGRA ordered pixels for bpp >= 3 from here on */
   if (bpp >= 3)
     swap_rb (src, w * h, bpp);
 
@@ -1001,8 +997,7 @@ write_layer (FILE                *fp,
     {
       if (num_mipmaps > 1)
         {
-          /* pre-convert indexed images to RGB for better quality mipmaps
-             if a pixel format conversion is requested */
+          /* Pre-convert indexed images to RGB if not exporting as indexed */
           if (pixel_format > DDS_FORMAT_DEFAULT && basetype == GIMP_INDEXED)
             {
               fmtsize = get_mipmapped_size (w, h, 3, 0, num_mipmaps, DDS_COMPRESS_NONE);
@@ -1068,8 +1063,6 @@ write_layer (FILE                *fp,
               dst = fmtdst;
               bpp = fmtbpp;
             }
-
-          offset = 0;
 
           for (i = 0; i < num_mipmaps; ++i)
             {
@@ -1179,12 +1172,12 @@ write_volume_mipmaps (FILE                *fp,
                       GimpImage           *image,
                       GimpProcedureConfig *config,
                       GList               *layers,
-                      int                  w,
-                      int                  h,
-                      int                  d,
-                      int                  bpp,
-                      int                  fmtbpp,
-                      int                  num_mipmaps)
+                      gint                 w,
+                      gint                 h,
+                      gint                 d,
+                      gint                 bpp,
+                      gint                 fmtbpp,
+                      gint                 num_mipmaps)
 {
   GList             *list;
   gint               i;
@@ -1260,13 +1253,11 @@ write_volume_mipmaps (FILE                *fp,
       bpp = 1;
     }
 
-  /* we want and assume BGRA ordered pixels for bpp >= 3 from here and
-     onwards */
+  /* We want and assume BGRA ordered pixels for bpp >= 3 from here on */
   if (bpp >= 3)
     swap_rb (src, w * h * d, bpp);
 
-  /* pre-convert indexed images to RGB for better mipmaps if a
-     pixel format conversion is requested */
+  /* Pre-convert indexed images to RGB if not exporting as indexed */
   if (pixel_format > DDS_FORMAT_DEFAULT && type == GIMP_INDEXED)
     {
       size = get_volume_mipmapped_size (w, h, d, 3, 0, num_mipmaps,
@@ -1323,28 +1314,24 @@ write_image (FILE                *fp,
   GimpImageType      drawable_type;
   GimpImageBaseType  basetype;
   gint               i, w, h;
-  gint               bpp = 0;
-  gint               fmtbpp = 0;
-  gint               has_alpha = 0;
+  gint               bpp        = 0;
+  gint               fmtbpp     = 0;
+  gboolean           has_alpha  = FALSE;
+  gboolean           is_dx10    = FALSE;
+  guint              fourcc     = 0;
+  gint               array_size = 1;
   gint               num_mipmaps;
   guchar             hdr[DDS_HEADERSIZE];
   guchar             hdr10[DDS_HEADERSIZE_DX10];
   guint              flags = 0, pflags = 0, caps = 0, caps2 = 0, size = 0;
   guint              rmask = 0, gmask = 0, bmask = 0, amask = 0;
-  guint              fourcc = 0;
   DXGI_FORMAT        dxgi_format = DXGI_FORMAT_UNKNOWN;
   gint32             num_layers;
-  GList             *layers;
-  GList             *list;
+  GList             *layers, *list;
   guchar            *cmap;
   gint               colors;
-  guchar             zero[4] = {0, 0, 0, 0};
-  gint               is_dx10 = 0;
-  gint               array_size = 1;
-  gint               compression;
-  gint               mipmaps;
-  gint               savetype;
-  gint               pixel_format;
+  gint               compression, mipmaps;
+  gint               savetype, pixel_format;
   gint               transindex;
   gboolean           flip_export;
 
@@ -1369,12 +1356,12 @@ write_image (FILE                *fp,
 
   if (savetype == DDS_SAVE_SELECTED_LAYER)
     {
-      w = gimp_drawable_get_width (drawable);
+      w = gimp_drawable_get_width  (drawable);
       h = gimp_drawable_get_height (drawable);
     }
   else
     {
-      w = gimp_image_get_width (image);
+      w = gimp_image_get_width  (image);
       h = gimp_image_get_height (image);
     }
 
@@ -1389,10 +1376,10 @@ write_image (FILE                *fp,
     case GIMP_GRAYA_IMAGE:    bpp = 2; break;
     case GIMP_INDEXED_IMAGE:  bpp = 1; break;
     case GIMP_INDEXEDA_IMAGE: bpp = 2; break;
-    default:
-                              break;
+    default:                  break;
     }
 
+  /* Get uncompressed format data */
   if (pixel_format > DDS_FORMAT_DEFAULT)
     {
       for (i = 0; ; ++i)
@@ -1415,13 +1402,13 @@ write_image (FILE                *fp,
       if (basetype == GIMP_INDEXED)
         {
           fmtbpp = 1;
-          has_alpha = 0;
+          has_alpha = FALSE;
           rmask = bmask = gmask = amask = 0;
         }
       else
         {
           fmtbpp = 1;
-          has_alpha = 0;
+          has_alpha = FALSE;
           rmask = 0x000000ff;
           gmask = bmask = amask = 0;
           dxgi_format = DXGI_FORMAT_R8_UNORM;
@@ -1432,13 +1419,13 @@ write_image (FILE                *fp,
       if (basetype == GIMP_INDEXED)
         {
           fmtbpp = 1;
-          has_alpha = 0;
+          has_alpha = FALSE;
           rmask = gmask = bmask = amask = 0;
         }
       else
         {
           fmtbpp = 2;
-          has_alpha = 1;
+          has_alpha = TRUE;
           rmask = 0x000000ff;
           gmask = 0x000000ff;
           bmask = 0x000000ff;
@@ -1456,7 +1443,7 @@ write_image (FILE                *fp,
   else
     {
       fmtbpp = 4;
-      has_alpha = 1;
+      has_alpha = TRUE;
       rmask = 0x00ff0000;
       gmask = 0x0000ff00;
       bmask = 0x000000ff;
@@ -1464,30 +1451,28 @@ write_image (FILE                *fp,
       dxgi_format = DXGI_FORMAT_B8G8R8A8_UNORM;
     }
 
+  /* Write header */
   memset (hdr, 0, DDS_HEADERSIZE);
 
-  PUTL32(hdr,       FOURCC ('D','D','S',' '));
-  PUTL32(hdr + 4,   124);
-  PUTL32(hdr + 12,  h);
-  PUTL32(hdr + 16,  w);
-  PUTL32(hdr + 76,  32);
+  PUTL32 (hdr,       FOURCC ('D','D','S',' '));
+  PUTL32 (hdr + 4,   124);  /* Header size */
+  PUTL32 (hdr + 12,  h);
+  PUTL32 (hdr + 16,  w);
+  PUTL32 (hdr + 76,  32);  /* Pixel Format size */
 
   if (compression == DDS_COMPRESS_NONE)
     {
-      PUTL32(hdr + 88,  fmtbpp << 3);
-      PUTL32(hdr + 92,  rmask);
-      PUTL32(hdr + 96,  gmask);
-      PUTL32(hdr + 100, bmask);
-      PUTL32(hdr + 104, amask);
+      PUTL32 (hdr + 88,  fmtbpp << 3);
+      PUTL32 (hdr + 92,  rmask);
+      PUTL32 (hdr + 96,  gmask);
+      PUTL32 (hdr + 100, bmask);
+      PUTL32 (hdr + 104, amask);
     }
 
-  /*
-     put some information in the reserved area to identify the origin
-     of the image
-     */
-  PUTL32(hdr + 32, FOURCC ('G','I','M','P'));
-  PUTL32(hdr + 36, FOURCC ('-','D','D','S'));
-  PUTL32(hdr + 40, DDS_PLUGIN_VERSION);
+  /* Put some custom info in the reserved area to identify the origin of the image */
+  PUTL32 (hdr + 32, FOURCC ('G','I','M','P'));
+  PUTL32 (hdr + 36, FOURCC ('-','D','D','S'));
+  PUTL32 (hdr + 40, DDS_PLUGIN_VERSION);
 
   flags = DDSD_CAPS | DDSD_PIXELFORMAT | DDSD_WIDTH | DDSD_HEIGHT;
 
@@ -1495,7 +1480,7 @@ write_image (FILE                *fp,
   if (mipmaps)
     {
       flags |= DDSD_MIPMAPCOUNT;
-      caps |= (DDSCAPS_COMPLEX | DDSCAPS_MIPMAP);
+      caps  |= (DDSCAPS_COMPLEX | DDSCAPS_MIPMAP);
       num_mipmaps = get_num_mipmaps (w, h);
     }
   else
@@ -1505,22 +1490,22 @@ write_image (FILE                *fp,
 
   if ((savetype == DDS_SAVE_CUBEMAP) && is_cubemap)
     {
-      caps |= DDSCAPS_COMPLEX;
+      caps  |= DDSCAPS_COMPLEX;
       caps2 |= (DDSCAPS2_CUBEMAP | DDSCAPS2_CUBEMAP_ALL_FACES);
     }
   else if ((savetype == DDS_SAVE_VOLUMEMAP) && is_volume)
     {
-      PUTL32(hdr + 24, num_layers); /* depth */
+      PUTL32 (hdr + 24, num_layers);  /* Depth */
       flags |= DDSD_DEPTH;
-      caps |= DDSCAPS_COMPLEX;
+      caps  |= DDSCAPS_COMPLEX;
       caps2 |= DDSCAPS2_VOLUME;
     }
 
-  PUTL32(hdr + 28,  num_mipmaps);
-  PUTL32(hdr + 108, caps);
-  PUTL32(hdr + 112, caps2);
+  PUTL32 (hdr + 28,  num_mipmaps);
+  PUTL32 (hdr + 108, caps);
+  PUTL32 (hdr + 112, caps2);
 
-  if (compression == DDS_COMPRESS_NONE)
+  if (compression == DDS_COMPRESS_NONE)  /* Write uncompressed data */
     {
       flags |= DDSD_PITCH;
 
@@ -1560,13 +1545,11 @@ write_image (FILE                *fp,
         pflags |= DDPF_ALPHAPIXELS;
 
       PUTL32 (hdr + 8,  flags);
-      PUTL32 (hdr + 20, w * fmtbpp); /* pitch */
+      PUTL32 (hdr + 20, w * fmtbpp);  /* Pitch */
       PUTL32 (hdr + 80, pflags);
 
-      /*
-       * write extra fourcc info - this is special to GIMP DDS. When the image
-       * is read by the plugin, we can detect the added information to decode
-       * the pixels
+      /* Write extra FourCC info specific to GIMP DDS. When the image
+       * is read again we use this information to decode the pixels.
        */
       if (pixel_format == DDS_FORMAT_AEXP)
         {
@@ -1577,7 +1560,7 @@ write_image (FILE                *fp,
           PUTL32 (hdr + 44, FOURCC ('Y','C','G','1'));
         }
     }
-  else
+  else  /* Write compressed data */
     {
       flags |= DDSD_LINEARSIZE;
       pflags = DDPF_FOURCC;
@@ -1611,13 +1594,13 @@ write_image (FILE                *fp,
         case DDS_COMPRESS_BC4:
           fourcc = FOURCC ('A','T','I','1');
           dxgi_format = DXGI_FORMAT_BC4_UNORM;
-          //is_dx10 = 1;
+          /*is_dx10 = TRUE;*/
           break;
 
         case DDS_COMPRESS_BC5:
           fourcc = FOURCC ('A','T','I','2');
           dxgi_format = DXGI_FORMAT_BC5_UNORM;
-          //is_dx10 = 1;
+          /*is_dx10 = TRUE;*/
           break;
         }
 
@@ -1631,6 +1614,7 @@ write_image (FILE                *fp,
       PUTL32 (hdr + 80, pflags);
       PUTL32 (hdr + 84, fourcc);
 
+      /* Linear size */
       size = ((w + 3) >> 2) * ((h + 3) >> 2);
       if ((compression == DDS_COMPRESS_BC1) ||
           (compression == DDS_COMPRESS_BC4))
@@ -1638,7 +1622,7 @@ write_image (FILE                *fp,
       else
         size *= 16;
 
-      PUTL32 (hdr + 20, size); /* linear size */
+      PUTL32 (hdr + 20, size);
 
       /*
        * write extra fourcc info - this is special to GIMP DDS. When the image
@@ -1659,14 +1643,15 @@ write_image (FILE                *fp,
         }
     }
 
-  /* texture arrays require a DX10 header */
+  /* Texture arrays always require a DX10 header */
   if (savetype == DDS_SAVE_ARRAY)
-    is_dx10 = 1;
+    is_dx10 = TRUE;
 
+  /* Upgrade to DX10 header when desired */
   if (is_dx10)
     {
       array_size = ((savetype == DDS_SAVE_SELECTED_LAYER ||
-                    savetype == DDS_SAVE_VISIBLE_LAYERS) ?
+                     savetype == DDS_SAVE_VISIBLE_LAYERS) ?
                     1 : get_array_size (image));
 
       PUTL32 (hdr10 +  0, dxgi_format);
@@ -1675,7 +1660,7 @@ write_image (FILE                *fp,
       PUTL32 (hdr10 + 12, array_size);
       PUTL32 (hdr10 + 16, 0);
 
-      /* update main header accordingly */
+      /* Update main header accordingly */
       PUTL32 (hdr + 80, pflags | DDPF_FOURCC);
       PUTL32 (hdr + 84, FOURCC ('D','X','1','0'));
     }
@@ -1685,11 +1670,12 @@ write_image (FILE                *fp,
   if (is_dx10)
     fwrite (hdr10, DDS_HEADERSIZE_DX10, 1, fp);
 
-  /* write palette for indexed images */
+  /* Write palette for indexed images */
   if ((basetype == GIMP_INDEXED) &&
       (pixel_format == DDS_FORMAT_DEFAULT) &&
       (compression == DDS_COMPRESS_NONE))
     {
+      const guchar zero[4] = {0, 0, 0, 0};
       cmap = gimp_image_get_colormap (image, NULL, &colors);
 
       for (i = 0; i < colors; ++i)
@@ -1701,11 +1687,12 @@ write_image (FILE                *fp,
             fputc (255, fp);
         }
 
+      /* Pad unused palette space with zeroes */
       for (; i < 256; ++i)
         fwrite (zero, 1, 4, fp);
     }
 
-  if (savetype == DDS_SAVE_CUBEMAP)
+  if (savetype == DDS_SAVE_CUBEMAP)  /* Write cubemap layers */
     {
       for (i = 0; i < 6; ++i)
         {
@@ -1715,7 +1702,7 @@ write_image (FILE                *fp,
           gimp_progress_update ((float)(i + 1) / 6.0);
         }
     }
-  else if (savetype == DDS_SAVE_VOLUMEMAP)
+  else if (savetype == DDS_SAVE_VOLUMEMAP)  /* Write volume slices */
     {
       for (i = 0, list = layers;
            i < num_layers;
@@ -1730,7 +1717,7 @@ write_image (FILE                *fp,
         write_volume_mipmaps (fp, image, config, layers, w, h, num_layers,
                               bpp, fmtbpp, num_mipmaps);
     }
-  else if (savetype == DDS_SAVE_ARRAY)
+  else if (savetype == DDS_SAVE_ARRAY)  /* Write array entries */
     {
       for (i = 0, list = layers;
            i < num_layers;
@@ -1915,13 +1902,18 @@ config_notify (GimpProcedureConfig *config,
     }
   else if (! strcmp (pspec->name, "transparent-color"))
     {
-      gboolean transparent_color;
+      GtkWidget *transparent_check;
+      gboolean   transparent_color;
 
       g_object_get (config,
                     "transparent-color", &transparent_color,
                     NULL);
 
-      if (transparent_check &&
+      transparent_check = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                            "transparent-color",
+                                                            G_TYPE_NONE);
+
+      if ((transparent_check != NULL) &&
           gtk_widget_get_sensitive (transparent_check))
         gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
                                              "transparent-index",
@@ -1977,6 +1969,7 @@ config_notify (GimpProcedureConfig *config,
     }
 }
 
+
 static gboolean
 save_dialog (GimpImage           *image,
              GimpDrawable        *drawable,
@@ -2003,10 +1996,9 @@ save_dialog (GimpImage           *image,
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  transparent_check =
-    gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                      "transparent-color",
-                                      G_TYPE_NONE);
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "transparent-color",
+                                    G_TYPE_NONE);
   gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
                                        "transparent-color",
                                        base_type == GIMP_INDEXED,
