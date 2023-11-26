@@ -52,7 +52,6 @@ typedef enum
   DDS_COMPRESS_AEXP,       /* DXT5  */
   DDS_COMPRESS_YCOCG,      /* DXT5  */
   DDS_COMPRESS_YCOCGS,     /* DXT5  */
-  _DDS_COMPRESS_BC1_NO_ALPHA,  /* For internal use only. */
   DDS_COMPRESS_MAX
 } DDS_COMPRESSION_TYPE;
 

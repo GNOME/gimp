@@ -157,14 +157,6 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                              _("Flip the image vertically on import"),
                              FALSE,
                              G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_BOOLEAN (procedure, "bc1-use-transparency",
-                             _("Always use _transparency for BC1/DXT1"),
-                             _("Interprets transparency for BC1/DXT1 images even when "
-                               "DDPF_ALPHAPIXELS is not set; if disabled, sets it "
-                               "to opaque black"),
-                             TRUE,
-                             G_PARAM_READWRITE);
     }
   else if (! strcmp (name, SAVE_PROC))
     {

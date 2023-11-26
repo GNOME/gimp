@@ -1116,33 +1116,35 @@ dxt_compress (unsigned char *dst,
 }
 
 static void
-decode_color_block (unsigned char *block,
-                    unsigned char *src,
-                    int            format)
+decode_color_block (guchar *block,
+                    guchar *src,
+                    gint    format)
 {
-  int i, x, y;
-  unsigned char *d = block;
-  unsigned int indices, idx;
-  unsigned char colors[4][3];
-  unsigned short c0, c1;
+  guchar  *d = block;
+  guint    indices, idx;
+  guchar   colors[4][3];
+  gushort  c0, c1;
+  gint     i, x, y;
 
-  c0 = GETL16(&src[0]);
-  c1 = GETL16(&src[2]);
+  c0 = GETL16 (&src[0]);
+  c1 = GETL16 (&src[2]);
 
-  unpack_rgb565(colors[0], c0);
-  unpack_rgb565(colors[1], c1);
+  unpack_rgb565 (colors[0], c0);
+  unpack_rgb565 (colors[1], c1);
 
   if ((c0 > c1) || (format == DDS_COMPRESS_BC3))
     {
-      lerp_rgb13(colors[2], colors[0], colors[1]);
-      lerp_rgb13(colors[3], colors[1], colors[0]);
+      /* Four-color mode */
+      lerp_rgb13 (colors[2], colors[0], colors[1]);
+      lerp_rgb13 (colors[3], colors[1], colors[0]);
     }
   else
     {
+      /* Three-color mode */
       for (i = 0; i < 3; ++i)
         {
           colors[2][i] = (colors[0][i] + colors[1][i] + 1) >> 1;
-          colors[3][i] = 255;
+          colors[3][i] = 0;  /* Three-color mode index 11 is always black */
         }
     }
 
@@ -1157,18 +1159,7 @@ decode_color_block (unsigned char *block,
           d[1] = colors[idx][1];
           d[2] = colors[idx][0];
           if (format == DDS_COMPRESS_BC1)
-            {
-              d[3] = ((c0 <= c1) && idx == 3) ? 0 : 255;
-            }
-          else if (format == _DDS_COMPRESS_BC1_NO_ALPHA)
-            {
-              /* BC1, but interpret transparent as black */
-              if ((c0 <= c1) && idx == 3)
-                {
-                  d[0] = d[1] = d[2] = 0;
-                }
-              d[3] = 255;
-            }
+            d[3] = ((c0 <= c1) && idx == 3) ? 0 : 255;
           indices >>= 2;
           d += 4;
         }
@@ -1325,7 +1316,7 @@ dxt_decompress (unsigned char *dst,
         {
           memset(block, 0, 16 * 4);
 
-          if (format == DDS_COMPRESS_BC1 || format == _DDS_COMPRESS_BC1_NO_ALPHA)
+          if (format == DDS_COMPRESS_BC1)
             {
               decode_color_block(block, s, format);
               s += 8;

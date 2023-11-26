@@ -138,7 +138,6 @@ read_dds (GFile                *file,
   gint               i, j;
   guint              computed_pitch_or_linsize;
   gboolean           flip_import;
-  gboolean           bc1_use_transparency;
 
   if (interactive)
     {
@@ -151,7 +150,6 @@ read_dds (GFile                *file,
   g_object_get (config,
                 "load-mipmaps",         &read_mipmaps,
                 "flip-image",           &flip_import,
-                "bc1-use-transparency", &bc1_use_transparency,
                 NULL);
 
   fp = g_fopen (g_file_peek_path (file), "rb");
@@ -328,8 +326,7 @@ read_dds (GFile                *file,
   if (hdr.pixelfmt.flags & DDPF_FOURCC)
     {
       /* fourcc is dXt* or rXgb */
-      if (hdr.pixelfmt.fourcc[1] == 'X' &&
-          (hdr.pixelfmt.fourcc[3] != '1' || bc1_use_transparency))
+      if (hdr.pixelfmt.fourcc[1] == 'X')
         hdr.pixelfmt.flags |= DDPF_ALPHAPIXELS;
     }
 
@@ -1960,12 +1957,6 @@ load_layer (FILE                     *fp,
             }
         }
 
-      if (format == DDS_COMPRESS_BC1 &&
-          ! (hdr->pixelfmt.flags & DDPF_ALPHAPIXELS))
-        {
-          format = _DDS_COMPRESS_BC1_NO_ALPHA;
-        }
-
       dxt_decompress (dst, buf, format, size, width, height, load_info->gimp_bpp,
                       hdr->pixelfmt.flags & DDPF_NORMAL);
 
@@ -2137,7 +2128,6 @@ load_dialog (GimpProcedure       *procedure,
                                          "dds-read-box",
                                          "load-mipmaps",
                                          "flip-image",
-                                         "bc1-use-transparency",
                                          NULL);
   gtk_box_set_spacing (GTK_BOX (vbox), 8);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
