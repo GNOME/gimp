@@ -35,13 +35,13 @@
 
 #include <libgimp/stdplugins-intl.h>
 
-#include "color.h"
 #include "dds.h"
 #include "ddswrite.h"
 #include "dxt.h"
 #include "endian_rw.h"
 #include "imath.h"
 #include "mipmap.h"
+#include "misc.h"
 
 
 static gboolean   write_image (FILE                *fp,
@@ -244,7 +244,7 @@ check_cubemap (GimpImage *image)
               (gimp_drawable_get_height (drawable) != h))
             continue;
 
-          layer_name = (char *) gimp_item_get_name (GIMP_ITEM (drawable));
+          layer_name = (gchar *) gimp_item_get_name (GIMP_ITEM (drawable));
           for (j = 0; j < 6; ++j)
             {
               for (k = 0; k < 4; ++k)
@@ -609,45 +609,6 @@ swap_rb (guchar *pixels,
 }
 
 static void
-alpha_exp (guchar *dst,
-           gint    r,
-           gint    g,
-           gint    b,
-           gint    a)
-{
-  gfloat ar, ag, ab, aa;
-
-  ar = (gfloat) r / 255.0f;
-  ag = (gfloat) g / 255.0f;
-  ab = (gfloat) b / 255.0f;
-
-  aa = MAX (ar, MAX (ag, ab));
-
-  if (aa < 1e-04f)
-    {
-      dst[0] = b;
-      dst[1] = g;
-      dst[2] = r;
-      dst[3] = 255;
-      return;
-    }
-
-  ar /= aa;
-  ag /= aa;
-  ab /= aa;
-
-  r = (gint) floorf (255.0f * ar + 0.5f);
-  g = (gint) floorf (255.0f * ag + 0.5f);
-  b = (gint) floorf (255.0f * ab + 0.5f);
-  a = (gint) floorf (255.0f * aa + 0.5f);
-
-  dst[0] = MAX (0, MIN (255, b));
-  dst[1] = MAX (0, MIN (255, g));
-  dst[2] = MAX (0, MIN (255, r));
-  dst[3] = MAX (0, MIN (255, a));
-}
-
-static void
 convert_pixels (guchar *dst,
                 guchar *src,
                 gint    format,
@@ -729,36 +690,56 @@ convert_pixels (guchar *dst,
           dst[4 * i + 3] = a;
           break;
         case DDS_FORMAT_R5G6B5:
-          PUTL16 (&dst[2 * i], pack_r5g6b5 (r, g, b));
+          PUTL16 (&dst[2 * i],
+            (mul8bit (r, 31) << 11) |
+            (mul8bit (g, 63) <<  5) |
+            (mul8bit (b, 31)      ));
           break;
         case DDS_FORMAT_RGBA4:
-          PUTL16 (&dst[2 * i], pack_rgba4 (r, g, b, a));
+          PUTL16 (&dst[2 * i],
+            (mul8bit (a, 15) << 12) |
+            (mul8bit (r, 15) <<  8) |
+            (mul8bit (g, 15) <<  4) |
+            (mul8bit (b, 15)      ));
           break;
         case DDS_FORMAT_RGB5A1:
-          PUTL16 (&dst[2 * i], pack_rgb5a1 (r, g, b, a));
+          PUTL16 (&dst[2 * i],
+            (((a >> 7) & 0x01) << 15) |
+            (mul8bit (r, 31)   << 10) |
+            (mul8bit (g, 31)   <<  5) |
+            (mul8bit (b, 31)        ));
           break;
         case DDS_FORMAT_RGB10A2:
-          PUTL32 (&dst[4 * i], pack_rgb10a2 (r, g, b, a));
+          PUTL32 (&dst[4 * i],
+            ((guint) ((a >> 6) & 0x003) << 30) |
+            ((guint) ((b << 2) & 0x3ff) << 20) |
+            ((guint) ((g << 2) & 0x3ff) << 10) |
+            ((guint) ((r << 2) & 0x3ff)      ));
           break;
         case DDS_FORMAT_R3G3B2:
-          dst[i] = pack_r3g3b2 (r, g, b);
+          dst[i] =
+            (mul8bit (r, 7) << 5) |
+            (mul8bit (g, 7) << 2) |
+            (mul8bit (b, 3)     );
           break;
         case DDS_FORMAT_A8:
           dst[i] = a;
           break;
         case DDS_FORMAT_L8:
-          dst[i] = rgb_to_luminance (r, g, b);
+          dst[i] =
+            ((r * 54 + g * 182 + b * 20) + 128) >> 8;
           break;
         case DDS_FORMAT_L8A8:
-          dst[2 * i + 0] = rgb_to_luminance (r, g, b);
+          dst[2 * i + 0] =
+            ((r * 54 + g * 182 + b * 20) + 128) >> 8;
           dst[2 * i + 1] = a;
           break;
         case DDS_FORMAT_YCOCG:
           dst[4 * i] = a;
-          RGB_to_YCoCg (&dst[4 * i], r, g, b);
+          encode_ycocg (&dst[4 * i], r, g, b);
           break;
         case DDS_FORMAT_AEXP:
-          alpha_exp (&dst[4 * i], r, g, b, a);
+          encode_alpha_exponent (&dst[4 * i], r, g, b, a);
           break;
         default:
           break;

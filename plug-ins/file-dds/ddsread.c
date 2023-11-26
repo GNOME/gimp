@@ -65,19 +65,19 @@ typedef struct
 } dds_load_info_t;
 
 
-static gboolean      read_header       (dds_header_t              *hdr,
-                                        FILE                      *fp);
-static gboolean      read_header_dx10  (dds_header_dx10_t         *hdr,
-                                        FILE                      *fp);
-static gboolean      validate_header   (dds_header_t              *hdr,
-                                        GError                   **error);
-static gboolean      setup_dxgi_format (dds_header_t              *hdr,
-                                        const dds_header_dx10_t   *dx10hdr,
-                                        dds_load_info_t           *load_info,
-                                        GError                   **error);
-static gboolean      load_layer        (FILE                      *fp,
-                                        const dds_header_t        *hdr,
-                                        const dds_header_dx10_t   *dx10hdr,
+static gboolean      read_header       (dds_header_t             *hdr,
+                                        FILE                     *fp);
+static gboolean      read_header_dx10  (dds_header_dx10_t        *hdr,
+                                        FILE                     *fp);
+static gboolean      validate_header   (dds_header_t             *hdr,
+                                        GError                  **error);
+static gboolean      setup_dxgi_format (dds_header_t             *hdr,
+                                        const dds_header_dx10_t  *dx10hdr,
+                                        dds_load_info_t          *load_info,
+                                        GError                  **error);
+static gboolean      load_layer        (FILE                     *fp,
+                                        const dds_header_t       *hdr,
+                                        const dds_header_dx10_t  *dx10hdr,
                                         dds_load_info_t          *load_info,
                                         GimpImage                *image,
                                         guint                     level,
@@ -85,7 +85,6 @@ static gboolean      load_layer        (FILE                      *fp,
                                         guint                    *layer_index,
                                         guchar                   *pixels,
                                         guchar                   *buf,
-                                        gboolean                  decode_images,
                                         GError                  **error);
 static gboolean      load_mipmaps      (FILE                     *fp,
                                         const dds_header_t       *hdr,
@@ -97,24 +96,22 @@ static gboolean      load_mipmaps      (FILE                     *fp,
                                         guchar                   *pixels,
                                         guchar                   *buf,
                                         gboolean                  read_mipmaps,
-                                        gboolean                  decode_images,
                                         GError                  **error);
 static gboolean      load_face         (FILE                     *fp,
-                                        const dds_header_t        *hdr,
-                                        const dds_header_dx10_t   *dx10hdr,
-                                        dds_load_info_t           *load_info,
-                                        GimpImage                 *image,
-                                        gchar                     *prefix,
-                                        guint                     *layer_index,
-                                        guchar                    *pixels,
-                                        guchar                    *buf,
-                                        gboolean                   read_mipmaps,
-                                        gboolean                   decode_images,
-                                        GError                   **error);
-static guchar        color_bits        (guint                      mask);
-static guchar        color_shift       (guint                      mask);
-static gboolean      load_dialog       (GimpProcedure             *procedure,
-                                        GimpProcedureConfig       *config);
+                                        const dds_header_t       *hdr,
+                                        const dds_header_dx10_t  *dx10hdr,
+                                        dds_load_info_t          *load_info,
+                                        GimpImage                *image,
+                                        gchar                    *prefix,
+                                        guint                    *layer_index,
+                                        guchar                   *pixels,
+                                        guchar                   *buf,
+                                        gboolean                  read_mipmaps,
+                                        GError                  **error);
+static guchar        color_bits        (guint                     mask);
+static guchar        color_shift       (guint                     mask);
+static gboolean      load_dialog       (GimpProcedure            *procedure,
+                                        GimpProcedureConfig      *config);
 
 
 /* Read DDS file */
@@ -138,7 +135,6 @@ read_dds (GFile                *file,
   GimpImageBaseType  type;
   GimpPrecision      precision;
   gboolean           read_mipmaps;
-  gboolean           decode_images;
   gint               i, j;
   guint              computed_pitch_or_linsize;
   gboolean           flip_import;
@@ -156,7 +152,6 @@ read_dds (GFile                *file,
                 "load-mipmaps",         &read_mipmaps,
                 "flip-image",           &flip_import,
                 "bc1-use-transparency", &bc1_use_transparency,
-                "decode-images",        &decode_images,
                 NULL);
 
   fp = g_fopen (g_file_peek_path (file), "rb");
@@ -629,7 +624,7 @@ read_dds (GFile                *file,
       dx10hdr.arraySize <= 1)  /* Standard image texture with mipmaps */
     {
       if (! load_layer (fp, &hdr, &dx10hdr, &load_info, image, 0, "", &layer_index,
-                        pixels, buf, decode_images, error))
+                        pixels, buf, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -637,7 +632,7 @@ read_dds (GFile                *file,
         }
 
       if (! load_mipmaps (fp, &hdr, &dx10hdr, &load_info, image, "", &layer_index,
-                          pixels, buf, read_mipmaps, decode_images, error))
+                          pixels, buf, read_mipmaps, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -648,7 +643,7 @@ read_dds (GFile                *file,
     {
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEX) &&
           ! load_face (fp, &hdr, &dx10hdr, &load_info, image, "(positive x)",
-                       &layer_index, pixels, buf, read_mipmaps, decode_images, error))
+                       &layer_index, pixels, buf, read_mipmaps, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -657,7 +652,7 @@ read_dds (GFile                *file,
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEX) &&
           ! load_face (fp, &hdr, &dx10hdr, &load_info, image, "(negative x)",
-                       &layer_index, pixels, buf, read_mipmaps, decode_images, error))
+                       &layer_index, pixels, buf, read_mipmaps, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -666,7 +661,7 @@ read_dds (GFile                *file,
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEY) &&
           ! load_face (fp, &hdr, &dx10hdr, &load_info, image, "(positive y)",
-                       &layer_index, pixels, buf, read_mipmaps, decode_images, error))
+                       &layer_index, pixels, buf, read_mipmaps, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -675,7 +670,7 @@ read_dds (GFile                *file,
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEY) &&
           ! load_face (fp, &hdr, &dx10hdr, &load_info, image, "(negative y)",
-                       &layer_index, pixels, buf, read_mipmaps, decode_images, error))
+                       &layer_index, pixels, buf, read_mipmaps, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -684,7 +679,7 @@ read_dds (GFile                *file,
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEZ) &&
           ! load_face (fp, &hdr, &dx10hdr, &load_info, image, "(positive z)",
-                       &layer_index, pixels, buf, read_mipmaps, decode_images, error))
+                       &layer_index, pixels, buf, read_mipmaps, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -693,7 +688,7 @@ read_dds (GFile                *file,
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEZ) &&
           ! load_face (fp, &hdr, &dx10hdr, &load_info, image, "(negative z)",
-                       &layer_index, pixels, buf, read_mipmaps, decode_images, error))
+                       &layer_index, pixels, buf, read_mipmaps, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -711,7 +706,7 @@ read_dds (GFile                *file,
           plane = g_strdup_printf ("(z = %d)", i);
 
           if (! load_layer (fp, &hdr, &dx10hdr, &load_info, image, 0, plane,
-                            &layer_index, pixels, buf, decode_images, error))
+                            &layer_index, pixels, buf, error))
             {
               g_free (plane);
               fclose (fp);
@@ -738,7 +733,7 @@ read_dds (GFile                *file,
                   plane = g_strdup_printf ("(z = %d)", i);
 
                   if (! load_layer (fp, &hdr, &dx10hdr, &load_info, image, level, plane,
-                                    &layer_index, pixels, buf, decode_images, error))
+                                    &layer_index, pixels, buf, error))
                     {
                       g_free (plane);
                       fclose (fp);
@@ -761,7 +756,7 @@ read_dds (GFile                *file,
           elem = g_strdup_printf ("(array element %d)", i);
 
           if (! load_layer (fp, &hdr, &dx10hdr, &load_info, image, 0, elem, &layer_index,
-                            pixels, buf, decode_images, error))
+                            pixels, buf, error))
             {
               fclose (fp);
               gimp_image_delete (image);
@@ -769,7 +764,7 @@ read_dds (GFile                *file,
             }
 
           if (! load_mipmaps (fp, &hdr, &dx10hdr, &load_info, image, elem, &layer_index,
-                              pixels, buf, read_mipmaps, decode_images, error))
+                              pixels, buf, read_mipmaps, error))
             {
               fclose (fp);
               gimp_image_delete (image);
@@ -1309,7 +1304,6 @@ load_layer (FILE                     *fp,
             guint                    *layer_index,
             guchar                   *pixels,
             guchar                   *buf,
-            gboolean                  decode_images,
             GError                  **error)
 {
   GeglBuffer    *buffer;
@@ -2025,21 +2019,20 @@ load_layer (FILE                     *fp,
 
   g_object_unref (buffer);
 
-  /* gimp dds specific.  decode encoded images */
-  if (decode_images &&
-      hdr->reserved.gimp_dds_special.magic1 == FOURCC ('G','I','M','P') &&
+  /* Decode files with GIMP-specific encodings */
+  if (hdr->reserved.gimp_dds_special.magic1 == FOURCC ('G','I','M','P') &&
       hdr->reserved.gimp_dds_special.magic2 == FOURCC ('-','D','D','S'))
     {
       switch (hdr->reserved.gimp_dds_special.extra_fourcc)
         {
         case FOURCC ('A','E','X','P'):
-          decode_alpha_exp_image (GIMP_DRAWABLE (layer), FALSE);
+          decode_alpha_exponent (GIMP_DRAWABLE (layer));
           break;
         case FOURCC ('Y','C','G','1'):
-          decode_ycocg_image (GIMP_DRAWABLE (layer), FALSE);
+          decode_ycocg (GIMP_DRAWABLE (layer));
           break;
         case FOURCC ('Y','C','G','2'):
-          decode_ycocg_scaled_image (GIMP_DRAWABLE (layer), FALSE);
+          decode_ycocg_scaled (GIMP_DRAWABLE (layer));
           break;
         default:
           break;
@@ -2060,7 +2053,6 @@ load_mipmaps (FILE                     *fp,
               guchar                   *pixels,
               guchar                   *buf,
               gboolean                  read_mipmaps,
-              gboolean                  decode_images,
               GError                  **error)
 {
   guint level;
@@ -2072,7 +2064,7 @@ load_mipmaps (FILE                     *fp,
       for (level = 1; level < hdr->num_mipmaps; ++level)
         {
           if (! load_layer (fp, hdr, dx10hdr, load_info, image, level, prefix, layer_index,
-                            pixels, buf, decode_images, error))
+                            pixels, buf, error))
             return FALSE;
         }
     }
@@ -2091,15 +2083,14 @@ load_face (FILE                     *fp,
            guchar                   *pixels,
            guchar                   *buf,
            gboolean                  read_mipmaps,
-           gboolean                  decode_images,
            GError                  **error)
 {
   if (! load_layer (fp, hdr, dx10hdr, load_info, image, 0, prefix,
-                    layer_index, pixels, buf, decode_images, error))
+                    layer_index, pixels, buf, error))
     return FALSE;
 
   return load_mipmaps (fp, hdr, dx10hdr, load_info, image, prefix, layer_index,
-                       pixels, buf, read_mipmaps, decode_images, error);
+                       pixels, buf, read_mipmaps, error);
 }
 
 static guchar
@@ -2124,7 +2115,7 @@ color_shift (guint mask)
   if (! mask)
     return 0;
 
-  while (!((mask >> i) & 1))
+  while (! ((mask >> i) & 1))
     ++i;
 
   return i;
@@ -2147,7 +2138,6 @@ load_dialog (GimpProcedure       *procedure,
                                          "load-mipmaps",
                                          "flip-image",
                                          "bc1-use-transparency",
-                                         "decode-images",
                                          NULL);
   gtk_box_set_spacing (GTK_BOX (vbox), 8);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);

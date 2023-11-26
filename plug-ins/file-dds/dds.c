@@ -42,10 +42,6 @@
 #define LOAD_PROC                "file-dds-load"
 #define SAVE_PROC                "file-dds-save"
 
-#define DECODE_YCOCG_PROC        "color-decode-ycocg"
-#define DECODE_YCOCG_SCALED_PROC "color-decode-ycocg-scaled"
-#define DECODE_ALPHA_EXP_PROC    "color-decode-alpha-exp"
-
 
 typedef struct _Dds      Dds;
 typedef struct _DdsClass DdsClass;
@@ -86,15 +82,6 @@ static GimpValueArray * dds_save             (GimpProcedure         *procedure,
                                               GimpMetadata          *metadata,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
-#if 0
-static GimpValueArray * dds_decode           (GimpProcedure         *procedure,
-                                              GimpRunMode            run_mode,
-                                              GimpImage             *image,
-                                              gint                   n_drawables,
-                                              GimpDrawable         **drawables,
-                                              GimpProcedureConfig   *config,
-                                              gpointer               run_data);
-#endif
 
 
 G_DEFINE_TYPE (Dds, dds, GIMP_TYPE_PLUG_IN)
@@ -125,11 +112,6 @@ dds_query_procedures (GimpPlugIn *plug_in)
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
   list = g_list_append (list, g_strdup (SAVE_PROC));
-#if 0
-  list = g_list_append (list, g_strdup (DECODE_YCOCG_PROC));
-  list = g_list_append (list, g_strdup (DECODE_YCOCG_SCALED_PROC));
-  list = g_list_append (list, g_strdup (DECODE_ALPHA_EXP_PROC));
-#endif
 
   return list;
 }
@@ -181,12 +163,6 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                              _("Interprets transparency for BC1/DXT1 images even when "
                                "DDPF_ALPHAPIXELS is not set; if disabled, sets it "
                                "to opaque black"),
-                             TRUE,
-                             G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_BOOLEAN (procedure, "decode-images",
-                             _("Automatically decode YCoCg/AE_xp images when detected"),
-                             _("Decode YCoCg/AExp images when detected"),
                              TRUE,
                              G_PARAM_READWRITE);
     }
@@ -358,78 +334,6 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                             0.0, 1.0, 0.5,
                             G_PARAM_READWRITE);
     }
-#if 0
-  else if (! strcmp (name, DECODE_YCOCG_PROC))
-    {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            dds_decode, NULL, NULL);
-
-      gimp_procedure_set_image_types (procedure, "RGBA");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
-
-      gimp_procedure_set_menu_label (procedure, _("Decode YCoCg"));
-      /* gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Colors"); */
-
-      gimp_procedure_set_documentation (procedure,
-                                        _("Converts YCoCg encoded pixels to RGB"),
-                                        _("Converts YCoCg encoded pixels to RGB"),
-                                        name);
-      gimp_procedure_set_attribution (procedure,
-                                      "Shawn Kirst",
-                                      "Shawn Kirst",
-                                      "2008");
-    }
-  else if (! strcmp (name, DECODE_YCOCG_SCALED_PROC))
-    {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            dds_decode, NULL, NULL);
-
-      gimp_procedure_set_image_types (procedure, "RGBA");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
-
-      gimp_procedure_set_menu_label (procedure, _("Decode YCoCg (scaled)"));
-      /* gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Colors"); */
-
-      gimp_procedure_set_documentation (procedure,
-                                        _("Converts YCoCg (scaled) encoded "
-                                          "pixels to RGB"),
-                                        _("Converts YCoCg (scaled) encoded "
-                                          "pixels to RGB"),
-                                        name);
-      gimp_procedure_set_attribution (procedure,
-                                      "Shawn Kirst",
-                                      "Shawn Kirst",
-                                      "2008");
-    }
-  else if (! strcmp (name, DECODE_ALPHA_EXP_PROC))
-    {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            dds_decode, NULL, NULL);
-
-      gimp_procedure_set_image_types (procedure, "RGBA");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
-
-      gimp_procedure_set_menu_label (procedure, _("Decode Alpha exponent"));
-      /* gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Colors"); */
-
-      gimp_procedure_set_documentation (procedure,
-                                        _("Converts alpha exponent encoded "
-                                          "pixels to RGB",
-                                        _("Converts alpha exponent encoded "
-                                          "pixels to RGB"),
-                                        name);
-      gimp_procedure_set_attribution (procedure,
-                                      "Shawn Kirst",
-                                      "Shawn Kirst",
-                                      "2008");
-    }
-#endif
 
   return procedure;
 }
@@ -535,53 +439,3 @@ dds_save (GimpProcedure        *procedure,
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
-
-#if 0
-static GimpValueArray *
-dds_decode (GimpProcedure        *procedure,
-            GimpRunMode           run_mode,
-            GimpImage            *image,
-            gint                  n_drawables,
-            GimpDrawable        **drawables,
-            GimpProcedureConfig  *config,
-            gpointer              run_data)
-{
-  const gchar  *name = gimp_procedure_get_name (procedure);
-  GimpDrawable *drawable,
-
-  if (n_drawables != 1)
-    {
-      GError *error = NULL;
-
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
-                   _("Procedure '%s' only works with one drawable."),
-                   name);
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
-                                               error);
-    }
-  else
-    {
-      drawable = drawables[0];
-    }
-
-  if (! strcmp (name, DECODE_YCOCG_PROC))
-    {
-      decode_ycocg_image (drawable, TRUE);
-    }
-  else if (! strcmp (name, DECODE_YCOCG_SCALED_PROC))
-    {
-      decode_ycocg_scaled_image (drawable, TRUE);
-    }
-  else if (! strcmp (name, DECODE_ALPHA_EXP_PROC))
-    {
-      decode_alpha_exp_image (drawable, TRUE);
-    }
-
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_displays_flush ();
-
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
-}
-#endif

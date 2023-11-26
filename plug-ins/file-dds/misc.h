@@ -21,11 +21,26 @@
 #ifndef __MISC_H__
 #define __MISC_H__
 
-void decode_ycocg_image        (GimpDrawable *drawable,
-                                gboolean      shadow);
-void decode_ycocg_scaled_image (GimpDrawable *drawable,
-                                gboolean      shadow);
-void decode_alpha_exp_image    (GimpDrawable *drawable,
-                                gboolean      shadow);
+
+void  decode_ycocg          (GimpDrawable *drawable);
+
+void  decode_ycocg_scaled   (GimpDrawable *drawable);
+
+void  decode_alpha_exponent (GimpDrawable *drawable);
+
+void  encode_ycocg          (guchar *dst,
+                             gint    r,
+                             gint    g,
+                             gint    b);
+
+void  encode_alpha_exponent (guchar *dst,
+                             gint    r,
+                             gint    g,
+                             gint    b,
+                             gint    a);
+
+void  encode_YCoCg_block    (guchar *dst,
+                             guchar *block);
+
 
 #endif /* __MISC_H__ */

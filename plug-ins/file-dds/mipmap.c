@@ -36,7 +36,6 @@
 #include "dds.h"
 #include "mipmap.h"
 #include "imath.h"
-#include "color.h"
 
 
 typedef gfloat (*filterfunc_t)    (gfloat);
@@ -218,6 +217,23 @@ wrap_clamp (gint  x,
  */
 
 static gfloat
+linear_to_sRGB (gfloat c)
+{
+  gfloat v = (gfloat) c;
+
+  if (v < 0.0f)
+    v = 0.0f;
+  else if (v > 1.0f)
+    v = 1.0f;
+  else if (v <= 0.0031308f)
+    v = 12.92f * v;
+  else
+    v = 1.055f * powf (v, 0.41666f) - 0.055f;
+
+  return v;
+}
+
+static gfloat
 linear_to_gamma (gint    gc,
                  gfloat  v,
                  gfloat  gamma)
@@ -232,6 +248,24 @@ linear_to_gamma (gint    gc,
     {
       v = linear_to_sRGB (v);
     }
+
+  return v;
+}
+
+
+static gfloat
+sRGB_to_linear (gfloat c)
+{
+  gfloat v = (gfloat) c;
+
+  if (v < 0.0f)
+    v = 0.0f;
+  else if (v > 1.0f)
+    v = 1.0f;
+  else if (v <= 0.04045f)
+    v /= 12.92f;
+  else
+    v = powf ((v + 0.055f) / 1.055f, 2.4f);
 
   return v;
 }
