@@ -59,6 +59,10 @@
 {
   GimpPickButton *button;
   NSMutableArray *windows;
+#ifndef __LP64__
+  BOOL firstBecameKey;
+  NSCursor *cursor;
+#endif
 }
 
 @property (nonatomic, assign) BOOL firstBecameKey;
@@ -73,6 +77,9 @@
 {
   GimpPickButton *button;
   GimpPickWindowController *controller;
+#ifndef __LP64__
+  NSTrackingArea *area;
+#endif
 }
 
 @property (readonly,assign) NSTrackingArea *area;
@@ -197,7 +204,7 @@
   rect = [self.window convertRectToScreen:rect];
   rect.origin.y = [[[NSScreen screens] objectAtIndex:0] frame].size.height - rect.origin.y;
 
-  root_image_ref = CGWindowListCreateImage (rect,
+  root_image_ref = CGWindowListCreateImage (NSRectToCGRect(rect),
                                             kCGWindowListOptionOnScreenOnly,
                                             kCGNullWindowID,
                                             kCGWindowImageDefault);

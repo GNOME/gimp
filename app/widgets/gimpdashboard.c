@@ -2420,6 +2420,13 @@ gimp_dashboard_sample_cpu_active_time (GimpDashboard *dashboard,
 
 #ifdef HAVE_MEMORY_GROUP
 #ifdef PLATFORM_OSX
+  #if MAC_OS_X_VERSION_MAX_ALLOWED < 1080
+    #define MACH_TASK_BASIC_INFO_COUNT TASK_BASIC_INFO_COUNT
+    #define mach_task_basic_info_data_t task_basic_info_data_t
+
+    #define MACH_TASK_BASIC_INFO TASK_BASIC_INFO
+    #define mach_task_basic_info task_basic_info
+  #endif
 static void
 gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
                                    Variable       variable)

@@ -325,6 +325,7 @@ gimp_macos_setenv (const char * progname)
        * instead of system one
        */
       static gboolean            show_playground   = TRUE;
+      gboolean                   need_pythonpath   = FALSE;
 
       gchar *path;
       gchar *tmp;
@@ -332,6 +333,7 @@ gimp_macos_setenv (const char * progname)
       gchar *res_dir;
       size_t path_len;
       struct stat sb;
+      gchar *pythonpath_format;
 
       app_dir = g_path_get_dirname (resolved_path);
       tmp = g_strdup_printf ("%s/../Resources", app_dir);
@@ -346,6 +348,15 @@ gimp_macos_setenv (const char * progname)
           g_free (res_dir);
           return;
         }
+
+      /* Detect we were built in MacPorts for MacOS and setup PYTHONPATH */
+      tmp = g_strdup_printf ("%s/Library/Frameworks/Python.framework", res_dir);
+      if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
+        {
+          g_print ("GIMP was built with MacPorts\n");
+          need_pythonpath = TRUE;
+        }
+      g_free (tmp);
 
       path_len = strlen (g_getenv ("PATH") ? g_getenv ("PATH") : "") + strlen (app_dir) + 2;
       path = g_try_malloc (path_len);
@@ -379,12 +390,23 @@ gimp_macos_setenv (const char * progname)
       tmp = g_strdup_printf ("%s/etc/fonts", res_dir);
       g_setenv ("FONTCONFIG_PATH", tmp, TRUE);
       g_free (tmp);
-      tmp = g_strdup_printf ("%s", res_dir);
-      g_setenv ("PYTHONHOME", tmp, TRUE);
-      g_free (tmp);
-      tmp = g_strdup_printf ("%s/lib/python2.7:%s/lib/gimp/2.0/python", res_dir, res_dir);
-      g_setenv ("PYTHONPATH", tmp, TRUE);
-      g_free (tmp);
+      if (need_pythonpath)
+        {
+          g_unsetenv ("PYTHONHOME");
+          pythonpath_format = "%s/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages:%s/lib/gimp/2.0/python";
+          tmp = g_strdup_printf (pythonpath_format, res_dir, res_dir);
+          g_setenv ("PYTHONPATH", tmp, TRUE);
+          g_free (tmp);
+        }
+      else
+        {
+          tmp = g_strdup_printf ("%s", res_dir);
+          g_setenv ("PYTHONHOME", tmp, TRUE);
+          g_free (tmp);
+          tmp = g_strdup_printf ("%s/lib/python2.7:%s/lib/gimp/2.0/python", res_dir, res_dir);
+          g_setenv ("PYTHONPATH", tmp, TRUE);
+          g_free (tmp);
+        }
       tmp = g_strdup_printf ("%s/lib/gio/modules", res_dir);
       g_setenv ("GIO_MODULE_DIR", tmp, TRUE);
       g_free (tmp);
