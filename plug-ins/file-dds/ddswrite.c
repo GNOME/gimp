@@ -506,12 +506,9 @@ write_dds (GFile               *file,
   gint  mipmaps;
   gint  savetype;
 
-  compression = gimp_procedure_config_get_choice_id (config,
-                                                     "compression-format");
-  g_object_get (config,
-                "save-type", &savetype,
-                "mipmaps",   &mipmaps,
-                NULL);
+  savetype    = gimp_procedure_config_get_choice_id (config, "save-type");
+  compression = gimp_procedure_config_get_choice_id (config, "compression-format");
+  mipmaps     = gimp_procedure_config_get_choice_id (config, "mipmaps");
 
   global_image = image;
 
@@ -852,11 +849,10 @@ write_layer (FILE                *fp,
 
   g_object_get (config,
                 "perceptual-metric",  &perceptual_metric,
-                "mipmaps",            &mipmaps,
                 NULL);
-  compression  = gimp_procedure_config_get_choice_id (config,
-                                                      "compression-format");
+  compression  = gimp_procedure_config_get_choice_id (config, "compression-format");
   pixel_format = gimp_procedure_config_get_choice_id (config, "format");
+  mipmaps      = gimp_procedure_config_get_choice_id (config, "mipmaps");
 
   basetype = gimp_image_get_base_type (image);
   type = gimp_drawable_type (drawable);
@@ -1319,12 +1315,11 @@ write_image (FILE                *fp,
   g_object_get (config,
                 "transparent-index",  &transindex,
                 "flip-image",         &flip_export,
-                "mipmaps",            &mipmaps,
-                "save-type",          &savetype,
                 NULL);
-  compression = gimp_procedure_config_get_choice_id (config,
-                                                     "compression-format");
+  savetype     = gimp_procedure_config_get_choice_id (config, "save-type");
+  compression  = gimp_procedure_config_get_choice_id (config, "compression-format");
   pixel_format = gimp_procedure_config_get_choice_id (config, "format");
+  mipmaps      = gimp_procedure_config_get_choice_id (config, "mipmaps");
 
   if (flip_export)
     gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
@@ -1728,47 +1723,6 @@ write_image (FILE                *fp,
   return TRUE;
 }
 
-static gboolean
-combo_sensitivity_func (gint     value,
-                        gpointer data)
-{
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (data));
-
-  if (gimp_int_store_lookup_by_value (model, value, &iter))
-    {
-      gpointer insensitive;
-
-      gtk_tree_model_get (model, &iter,
-                          GIMP_INT_STORE_USER_DATA, &insensitive,
-                          -1);
-
-      return ! GPOINTER_TO_INT (insensitive);
-    }
-
-  return TRUE;
-}
-
-static void
-combo_set_item_sensitive (GtkWidget *widget,
-                          gint       value,
-                          gboolean   sensitive)
-{
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (widget));
-
-  if (gimp_int_store_lookup_by_value (model, value, &iter))
-    {
-      gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                          GIMP_INT_STORE_USER_DATA,
-                          ! GINT_TO_POINTER (sensitive),
-                          -1);
-    }
-}
 
 static void
 config_notify (GimpProcedureConfig *config,
@@ -1794,13 +1748,10 @@ config_notify (GimpProcedureConfig *config,
     }
   else if (! strcmp (pspec->name, "save-type"))
     {
-      gint       savetype;
-      GtkWidget *widget;
-      GtkWidget *combo;
+      gint                 savetype;
+      GimpParamSpecChoice *pspec;
 
-      g_object_get (config,
-                    "save-type", &savetype,
-                    NULL);
+      savetype = gimp_procedure_config_get_choice_id (config, "save-type");
 
       switch (savetype)
         {
@@ -1823,11 +1774,9 @@ config_notify (GimpProcedureConfig *config,
           break;
         }
 
-      widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                                 "mipmaps", G_TYPE_NONE);
-      combo = gimp_label_int_widget_get_widget (GIMP_LABEL_INT_WIDGET (widget));
-      combo_set_item_sensitive (combo, DDS_MIPMAP_EXISTING,
-                                check_mipmaps (savetype));
+      pspec = GIMP_PARAM_SPEC_CHOICE (g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                                                    "mipmaps"));
+      gimp_choice_set_sensitive (pspec->choice, "existing", check_mipmaps (savetype));
     }
   else if (! strcmp (pspec->name, "mipmaps"))
     {
@@ -1840,15 +1789,15 @@ config_notify (GimpProcedureConfig *config,
                     "gamma-correct",           &gamma_correct,
                     "srgb",                    &srgb,
                     "preserve-alpha-coverage", &preserve_alpha_coverage,
-                    "mipmaps",                 &mipmaps,
                     NULL);
+      mipmaps = gimp_procedure_config_get_choice_id (config, "mipmaps");
 
-     gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
                                            "mipmap-filter",
                                            mipmaps == DDS_MIPMAP_GENERATE,
                                            NULL, NULL, FALSE);
 
-     gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
                                            "mipmap-wrap",
                                            mipmaps == DDS_MIPMAP_GENERATE,
                                            NULL, NULL, FALSE);
@@ -1957,18 +1906,16 @@ save_dialog (GimpImage           *image,
              GimpProcedure       *procedure,
              GimpProcedureConfig *config)
 {
-  GtkWidget         *dialog;
-  GtkWidget         *widget;
-  GtkWidget         *combo;
-  GtkListStore      *store;
-  GimpImageBaseType  base_type;
-  gboolean           run;
+  GtkWidget           *dialog;
+  GimpParamSpecChoice *cspec;
+  GimpImageBaseType    base_type;
+  gboolean             run;
 
   base_type = gimp_image_get_base_type (image);
 
   if (is_cubemap || is_volume || is_array)
     g_object_set (config,
-                  "save-type", DDS_SAVE_SELECTED_LAYER,
+                  "save-type", "layer",
                   NULL);
 
   dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
@@ -2007,35 +1954,20 @@ save_dialog (GimpImage           *image,
                                     "mipmap-options-label", FALSE,
                                     "mipmap-options-box");
 
-  store = gimp_int_store_new (_("Selected layer"),     DDS_SAVE_SELECTED_LAYER,
-                              _("All visible layers"), DDS_SAVE_VISIBLE_LAYERS,
-                              _("As cube map"),        DDS_SAVE_CUBEMAP,
-                              _("As volume map"),      DDS_SAVE_VOLUMEMAP,
-                              _("As texture array"),   DDS_SAVE_ARRAY,
-                              NULL);
-  widget = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                                "save-type",
-                                                GIMP_INT_STORE (store));
-  combo = gimp_label_int_widget_get_widget (GIMP_LABEL_INT_WIDGET (widget));
-  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (combo),
-                                      combo_sensitivity_func, combo, NULL);
-  combo_set_item_sensitive (combo, DDS_SAVE_CUBEMAP, is_cubemap);
-  combo_set_item_sensitive (combo, DDS_SAVE_VOLUMEMAP, is_volume);
-  combo_set_item_sensitive (combo, DDS_SAVE_ARRAY, is_array);
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "save-type", G_TYPE_NONE);
+  cspec = GIMP_PARAM_SPEC_CHOICE (g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                                                "save-type"));
+  gimp_choice_set_sensitive (cspec->choice, "cube",   is_cubemap);
+  gimp_choice_set_sensitive (cspec->choice, "volume", is_volume);
+  gimp_choice_set_sensitive (cspec->choice, "array",  is_array);
 
-  store = gimp_int_store_new (_("No mipmaps"),           DDS_MIPMAP_NONE,
-                              _("Generate mipmaps"),     DDS_MIPMAP_GENERATE,
-                              _("Use existing mipmaps"), DDS_MIPMAP_EXISTING,
-                              NULL);
-  widget = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "mipmaps",
-                                               GIMP_INT_STORE (store));
-  combo = gimp_label_int_widget_get_widget (GIMP_LABEL_INT_WIDGET (widget));
-  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (combo),
-                                      combo_sensitivity_func, combo, NULL);
-  combo_set_item_sensitive (combo, DDS_MIPMAP_EXISTING,
-                            ! (is_volume || is_cubemap) &&
-                            is_mipmap_chain_valid);
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "mipmaps", G_TYPE_NONE);
+  cspec = GIMP_PARAM_SPEC_CHOICE (g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                                                "mipmaps"));
+  gimp_choice_set_sensitive (cspec->choice, "existing",
+                             ! (is_volume || is_cubemap) && is_mipmap_chain_valid);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "compression-format", "perceptual-metric",

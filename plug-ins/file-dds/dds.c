@@ -239,13 +239,17 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                             "default",
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "save-type",
-                         "Save type",
-                         "How to save the image (0 = selected layer, "
-                         "1 = cube map, 2 = volume map, 3 = texture array, "
-                         "4 = all visible layers)",
-                         0, 4, DDS_SAVE_SELECTED_LAYER,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "save-type",
+                            _("Sav_e type"),
+                            _("How to save the image"),
+                            gimp_choice_new_with_values ("layer",  DDS_SAVE_SELECTED_LAYER, _("Selected layer"),     NULL,
+                                                         "canvas", DDS_SAVE_VISIBLE_LAYERS, _("All visible layers"), NULL,
+                                                         "cube",   DDS_SAVE_CUBEMAP,        _("As cube map"),        NULL,
+                                                         "volume", DDS_SAVE_VOLUMEMAP,      _("As volume map"),      NULL,
+                                                         "array",  DDS_SAVE_ARRAY,          _("As texture array"),   NULL,
+                                                         NULL),
+                            "layer",
+                            G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "flip-image",
                              _("Flip image _vertically on export"),
@@ -266,13 +270,15 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                          0, 255, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "mipmaps",
-                         "Mipmaps",
-                         "How to handle mipmaps (0 = No mipmaps, "
-                         "1 = Generate mipmaps, "
-                         "2 = Use existing mipmaps (layers)",
-                         0, 2, DDS_MIPMAP_NONE,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "mipmaps",
+                            _("_Mipmaps"),
+                            _("How to handle mipmaps"),
+                            gimp_choice_new_with_values ("none",     DDS_MIPMAP_NONE,     _("No mipmaps"),           NULL,
+                                                         "generate", DDS_MIPMAP_GENERATE, _("Generate mipmaps"),     NULL,
+                                                         "existing", DDS_MIPMAP_EXISTING, _("Use existing mipmaps"), NULL,
+                                                         NULL),
+                            "none",
+                            G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_CHOICE (procedure, "mipmap-filter",
                             _("F_ilter"),
