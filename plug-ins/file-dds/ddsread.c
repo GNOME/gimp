@@ -65,53 +65,56 @@ typedef struct
 } dds_load_info_t;
 
 
-static gboolean      read_header       (dds_header_t        *hdr,
-                                        FILE                *fp);
-static gboolean      read_header_dx10  (dds_header_dx10_t   *hdr,
-                                        FILE                *fp);
-static gboolean      validate_header   (dds_header_t        *hdr,
-                                        GError             **error);
-static gboolean      setup_dxgi_format (dds_header_t        *hdr,
-                                        dds_header_dx10_t   *dx10hdr,
-                                        dds_load_info_t     *load_info,
-                                        GError             **error);
-static gboolean      load_layer        (FILE                *fp,
-                                        dds_header_t        *hdr,
-                                        dds_load_info_t     *load_info,
-                                        GimpImage           *image,
-                                        guint                level,
-                                        gchar               *prefix,
-                                        guint               *layer_index,
-                                        guchar              *pixels,
-                                        guchar              *buf,
-                                        gboolean             decode_images,
-                                        GError             **error);
-static gboolean      load_mipmaps      (FILE                *fp,
-                                        dds_header_t        *hdr,
-                                        dds_load_info_t     *load_info,
-                                        GimpImage           *image,
-                                        gchar               *prefix,
-                                        guint               *layer_index,
-                                        guchar              *pixels,
-                                        guchar              *buf,
-                                        gboolean             read_mipmaps,
-                                        gboolean             decode_images,
-                                        GError             **error);
-static gboolean      load_face         (FILE                *fp,
-                                        dds_header_t        *hdr,
-                                        dds_load_info_t     *load_info,
-                                        GimpImage           *image,
-                                        gchar               *prefix,
-                                        guint               *layer_index,
-                                        guchar              *pixels,
-                                        guchar              *buf,
-                                        gboolean             read_mipmaps,
-                                        gboolean             decode_images,
-                                        GError             **error);
-static guchar        color_bits        (guint                mask);
-static guchar        color_shift       (guint                mask);
-static gboolean      load_dialog       (GimpProcedure       *procedure,
-                                        GimpProcedureConfig *config);
+static gboolean      read_header       (dds_header_t              *hdr,
+                                        FILE                      *fp);
+static gboolean      read_header_dx10  (dds_header_dx10_t         *hdr,
+                                        FILE                      *fp);
+static gboolean      validate_header   (dds_header_t              *hdr,
+                                        GError                   **error);
+static gboolean      setup_dxgi_format (dds_header_t              *hdr,
+                                        const dds_header_dx10_t   *dx10hdr,
+                                        dds_load_info_t           *load_info,
+                                        GError                   **error);
+static gboolean      load_layer        (FILE                      *fp,
+                                        const dds_header_t        *hdr,
+                                        const dds_header_dx10_t   *dx10hdr,
+                                        dds_load_info_t          *load_info,
+                                        GimpImage                *image,
+                                        guint                     level,
+                                        gchar                    *prefix,
+                                        guint                    *layer_index,
+                                        guchar                   *pixels,
+                                        guchar                   *buf,
+                                        gboolean                  decode_images,
+                                        GError                  **error);
+static gboolean      load_mipmaps      (FILE                     *fp,
+                                        const dds_header_t       *hdr,
+                                        const dds_header_dx10_t  *dx10hdr,
+                                        dds_load_info_t          *load_info,
+                                        GimpImage                *image,
+                                        gchar                    *prefix,
+                                        guint                    *layer_index,
+                                        guchar                   *pixels,
+                                        guchar                   *buf,
+                                        gboolean                  read_mipmaps,
+                                        gboolean                  decode_images,
+                                        GError                  **error);
+static gboolean      load_face         (FILE                     *fp,
+                                        const dds_header_t        *hdr,
+                                        const dds_header_dx10_t   *dx10hdr,
+                                        dds_load_info_t           *load_info,
+                                        GimpImage                 *image,
+                                        gchar                     *prefix,
+                                        guint                     *layer_index,
+                                        guchar                    *pixels,
+                                        guchar                    *buf,
+                                        gboolean                   read_mipmaps,
+                                        gboolean                   decode_images,
+                                        GError                   **error);
+static guchar        color_bits        (guint                      mask);
+static guchar        color_shift       (guint                      mask);
+static gboolean      load_dialog       (GimpProcedure             *procedure,
+                                        GimpProcedureConfig       *config);
 
 
 /* Read DDS file */
@@ -276,17 +279,39 @@ read_dds (GFile                *file,
     {
        /* Assume linear size */
       computed_pitch_or_linsize = ((hdr.width + 3) >> 2) * ((hdr.height + 3) >> 2);
-      switch (GETL32 (hdr.pixelfmt.fourcc))
+      if (GETL32 (hdr.pixelfmt.fourcc) == FOURCC ('D','X','1','0'))
         {
-        case FOURCC ('D','X','T','1'):
-        case FOURCC ('A','T','I','1'):
-        case FOURCC ('B','C','4','U'):
-        case FOURCC ('B','C','4','S'):
-          computed_pitch_or_linsize *= 8;
-          break;
-        default:
-          computed_pitch_or_linsize *= 16;
-          break;
+          /* Determine scale from DXGI format */
+          switch (dx10hdr.dxgiFormat)
+            {
+            case DXGI_FORMAT_BC1_TYPELESS:
+            case DXGI_FORMAT_BC1_UNORM:
+            case DXGI_FORMAT_BC1_UNORM_SRGB:
+            case DXGI_FORMAT_BC4_TYPELESS:
+            case DXGI_FORMAT_BC4_UNORM:
+            case DXGI_FORMAT_BC4_SNORM:
+              computed_pitch_or_linsize *= 8;
+              break;
+            default:
+              computed_pitch_or_linsize *= 16;
+              break;
+            }
+        }
+      else
+        {
+          /* Determine scale from FourCC format */
+          switch (GETL32 (hdr.pixelfmt.fourcc))
+            {
+            case FOURCC ('D','X','T','1'):
+            case FOURCC ('A','T','I','1'):
+            case FOURCC ('B','C','4','U'):
+            case FOURCC ('B','C','4','S'):
+              computed_pitch_or_linsize *= 8;
+              break;
+            default:
+              computed_pitch_or_linsize *= 16;
+              break;
+            }
         }
     }
   else
@@ -355,26 +380,60 @@ read_dds (GFile                *file,
 
   /* Determine bits-per-pixel needed */
   load_info.gimp_bps = 1; /* Most formats will be converted to 1 byte per sample */
-  if (hdr.pixelfmt.flags & DDPF_FOURCC && hdr.pixelfmt.fourcc[1] != 0)
+  if ((hdr.pixelfmt.flags & DDPF_FOURCC) && (hdr.pixelfmt.fourcc[1] != 0))
     {
-      switch (GETL32 (hdr.pixelfmt.fourcc))
+      if (GETL32 (hdr.pixelfmt.fourcc) == FOURCC ('D','X','1','0'))
         {
-        case FOURCC ('A','T','I','1'):
-        case FOURCC ('B','C','4','U'):
-        case FOURCC ('B','C','4','S'):
-          load_info.bpp = load_info.gimp_bpp = 1;
-          type = GIMP_GRAY;
-          break;
-        case FOURCC ('A','T','I','2'):
-        case FOURCC ('B','C','5','U'):
-        case FOURCC ('B','C','5','S'):
-          load_info.bpp = load_info.gimp_bpp = 3;
-          type = GIMP_RGB;
-          break;
-        default:
-          load_info.bpp = load_info.gimp_bpp = 4;
-          type = GIMP_RGB;
-          break;
+          /* bpp from DX10 format */
+          switch (dx10hdr.dxgiFormat)
+            {
+            case DXGI_FORMAT_BC4_TYPELESS:
+            case DXGI_FORMAT_BC4_UNORM:
+            case DXGI_FORMAT_BC4_SNORM:
+              load_info.bpp = load_info.gimp_bpp = 1;
+              type = GIMP_GRAY;
+              break;
+            case DXGI_FORMAT_BC5_TYPELESS:
+            case DXGI_FORMAT_BC5_UNORM:
+            case DXGI_FORMAT_BC5_SNORM:
+              load_info.bpp = load_info.gimp_bpp = 3;
+              type = GIMP_RGB;
+              break;
+            case DXGI_FORMAT_BC6H_TYPELESS:
+            case DXGI_FORMAT_BC6H_UF16:
+            case DXGI_FORMAT_BC6H_SF16:
+              load_info.bpp = load_info.gimp_bpp = 6;
+              load_info.gimp_bps = 2;
+              type = GIMP_RGB;
+              break;
+            default:
+              load_info.bpp = load_info.gimp_bpp = 4;
+              type = GIMP_RGB;
+              break;
+            }
+        }
+      else
+        {
+          /* bpp from FourCC */
+          switch (GETL32 (hdr.pixelfmt.fourcc))
+            {
+            case FOURCC ('A','T','I','1'):
+            case FOURCC ('B','C','4','U'):
+            case FOURCC ('B','C','4','S'):
+              load_info.bpp = load_info.gimp_bpp = 1;
+              type = GIMP_GRAY;
+              break;
+            case FOURCC ('A','T','I','2'):
+            case FOURCC ('B','C','5','U'):
+            case FOURCC ('B','C','5','S'):
+              load_info.bpp = load_info.gimp_bpp = 3;
+              type = GIMP_RGB;
+              break;
+            default:
+              load_info.bpp = load_info.gimp_bpp = 4;
+              type = GIMP_RGB;
+              break;
+            }
         }
     }
   else
@@ -382,9 +441,7 @@ read_dds (GFile                *file,
       load_info.bpp = hdr.pixelfmt.bpp >> 3;
 
       if (hdr.pixelfmt.flags & DDPF_BUMPDUDV)
-        {
           load_info.is_signed = TRUE;
-        }
 
       if (load_info.bpp == 2)
         {
@@ -569,18 +626,18 @@ read_dds (GFile                *file,
 
   if (! (hdr.caps.caps2 & DDSCAPS2_CUBEMAP) &&
       ! (hdr.caps.caps2 & DDSCAPS2_VOLUME)  &&
-      dx10hdr.arraySize == 0)  /* Standard image texture with mipmaps */
+      dx10hdr.arraySize <= 1)  /* Standard image texture with mipmaps */
     {
-      if (! load_layer (fp, &hdr, &load_info, image, 0, "", &layer_index, pixels, buf,
-                        decode_images, error))
+      if (! load_layer (fp, &hdr, &dx10hdr, &load_info, image, 0, "", &layer_index,
+                        pixels, buf, decode_images, error))
         {
           fclose (fp);
           gimp_image_delete (image);
           return GIMP_PDB_EXECUTION_ERROR;
         }
 
-      if (! load_mipmaps (fp, &hdr, &load_info, image, "", &layer_index, pixels, buf,
-                          read_mipmaps, decode_images, error))
+      if (! load_mipmaps (fp, &hdr, &dx10hdr, &load_info, image, "", &layer_index,
+                          pixels, buf, read_mipmaps, decode_images, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -590,8 +647,8 @@ read_dds (GFile                *file,
   else if (hdr.caps.caps2 & DDSCAPS2_CUBEMAP)  /* Cubemap texture */
     {
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEX) &&
-          ! load_face (fp, &hdr, &load_info, image, "(positive x)", &layer_index, pixels, buf,
-                       read_mipmaps, decode_images, error))
+          ! load_face (fp, &hdr, &dx10hdr, &load_info, image, "(positive x)",
+                       &layer_index, pixels, buf, read_mipmaps, decode_images, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -599,8 +656,8 @@ read_dds (GFile                *file,
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEX) &&
-          ! load_face (fp, &hdr, &load_info, image, "(negative x)", &layer_index, pixels, buf,
-                       read_mipmaps, decode_images, error))
+          ! load_face (fp, &hdr, &dx10hdr, &load_info, image, "(negative x)",
+                       &layer_index, pixels, buf, read_mipmaps, decode_images, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -608,8 +665,8 @@ read_dds (GFile                *file,
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEY) &&
-          ! load_face (fp, &hdr, &load_info, image, "(positive y)", &layer_index, pixels, buf,
-                       read_mipmaps, decode_images, error))
+          ! load_face (fp, &hdr, &dx10hdr, &load_info, image, "(positive y)",
+                       &layer_index, pixels, buf, read_mipmaps, decode_images, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -617,8 +674,8 @@ read_dds (GFile                *file,
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEY) &&
-          ! load_face (fp, &hdr, &load_info, image, "(negative y)", &layer_index, pixels, buf,
-                       read_mipmaps, decode_images, error))
+          ! load_face (fp, &hdr, &dx10hdr, &load_info, image, "(negative y)",
+                       &layer_index, pixels, buf, read_mipmaps, decode_images, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -626,8 +683,8 @@ read_dds (GFile                *file,
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEZ) &&
-          ! load_face (fp, &hdr, &load_info, image, "(positive z)", &layer_index, pixels, buf,
-                       read_mipmaps, decode_images, error))
+          ! load_face (fp, &hdr, &dx10hdr, &load_info, image, "(positive z)",
+                       &layer_index, pixels, buf, read_mipmaps, decode_images, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -635,8 +692,8 @@ read_dds (GFile                *file,
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEZ) &&
-          ! load_face (fp, &hdr, &load_info, image, "(negative z)", &layer_index, pixels, buf,
-                       read_mipmaps, decode_images, error))
+          ! load_face (fp, &hdr, &dx10hdr, &load_info, image, "(negative z)",
+                       &layer_index, pixels, buf, read_mipmaps, decode_images, error))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -653,8 +710,8 @@ read_dds (GFile                *file,
         {
           plane = g_strdup_printf ("(z = %d)", i);
 
-          if (! load_layer (fp, &hdr, &load_info, image, 0, plane, &layer_index, pixels, buf,
-                            decode_images, error))
+          if (! load_layer (fp, &hdr, &dx10hdr, &load_info, image, 0, plane,
+                            &layer_index, pixels, buf, decode_images, error))
             {
               g_free (plane);
               fclose (fp);
@@ -680,8 +737,8 @@ read_dds (GFile                *file,
                 {
                   plane = g_strdup_printf ("(z = %d)", i);
 
-                  if (! load_layer (fp, &hdr, &load_info, image, level, plane, &layer_index,
-                                    pixels, buf, decode_images, error))
+                  if (! load_layer (fp, &hdr, &dx10hdr, &load_info, image, level, plane,
+                                    &layer_index, pixels, buf, decode_images, error))
                     {
                       g_free (plane);
                       fclose (fp);
@@ -703,16 +760,16 @@ read_dds (GFile                *file,
         {
           elem = g_strdup_printf ("(array element %d)", i);
 
-          if (! load_layer (fp, &hdr, &load_info, image, 0, elem, &layer_index, pixels, buf,
-                            decode_images, error))
+          if (! load_layer (fp, &hdr, &dx10hdr, &load_info, image, 0, elem, &layer_index,
+                            pixels, buf, decode_images, error))
             {
               fclose (fp);
               gimp_image_delete (image);
               return GIMP_PDB_EXECUTION_ERROR;
             }
 
-          if (! load_mipmaps (fp, &hdr, &load_info, image, elem, &layer_index, pixels, buf,
-                              read_mipmaps, decode_images, error))
+          if (! load_mipmaps (fp, &hdr, &dx10hdr, &load_info, image, elem, &layer_index,
+                              pixels, buf, read_mipmaps, decode_images, error))
             {
               fclose (fp);
               gimp_image_delete (image);
@@ -999,15 +1056,14 @@ validate_header (dds_header_t  *hdr,
   return TRUE;
 }
 
-/*
- * This function will set the necessary flags and attributes in the standard
- * dds header using the information found in the DX10 header.
+/* Set necessary flags and attributes in the standard header using information found in the DX10 header.
+ * TODO: This is a leftover from the way DX10 support was originally bolted on, should work towards removing this entirely.
  */
 static gboolean
-setup_dxgi_format (dds_header_t       *hdr,
-                   dds_header_dx10_t  *dx10hdr,
-                   dds_load_info_t    *load_info,
-                   GError            **error)
+setup_dxgi_format (dds_header_t             *hdr,
+                   const dds_header_dx10_t  *dx10hdr,
+                   dds_load_info_t          *load_info,
+                   GError                  **error)
 {
   if ((dx10hdr->resourceDimension == D3D10_RESOURCE_DIMENSION_TEXTURE2D) &&
       (dx10hdr->miscFlag & D3D10_RESOURCE_MISC_TEXTURECUBE))
@@ -1025,234 +1081,207 @@ setup_dxgi_format (dds_header_t       *hdr,
       (dx10hdr->resourceDimension != D3D10_RESOURCE_DIMENSION_TEXTURE3D))
     return FALSE;
 
-  /* check for a compressed DXGI format */
-  if ((dx10hdr->dxgiFormat >= DXGI_FORMAT_BC1_TYPELESS) &&
-      (dx10hdr->dxgiFormat <= DXGI_FORMAT_BC5_SNORM))
+  /* Unset FourCC flag by default */
+  hdr->pixelfmt.flags &= ~DDPF_FOURCC;
+
+  switch (dx10hdr->dxgiFormat)
     {
-      /* set flag and replace FOURCC */
+    case DXGI_FORMAT_BC1_TYPELESS:
+    case DXGI_FORMAT_BC1_UNORM:
+    case DXGI_FORMAT_BC1_UNORM_SRGB:
+    case DXGI_FORMAT_BC2_TYPELESS:
+    case DXGI_FORMAT_BC2_UNORM:
+    case DXGI_FORMAT_BC2_UNORM_SRGB:
+    case DXGI_FORMAT_BC3_TYPELESS:
+    case DXGI_FORMAT_BC3_UNORM:
+    case DXGI_FORMAT_BC3_UNORM_SRGB:
+    case DXGI_FORMAT_BC4_TYPELESS:
+    case DXGI_FORMAT_BC4_UNORM:
+    case DXGI_FORMAT_BC4_SNORM:
+    case DXGI_FORMAT_BC5_TYPELESS:
+    case DXGI_FORMAT_BC5_UNORM:
+    case DXGI_FORMAT_BC5_SNORM:
+      /* Re-set FourCC flag for compressed formats */
       hdr->pixelfmt.flags |= DDPF_FOURCC;
+      break;
 
-      switch (dx10hdr->dxgiFormat)
-        {
-        case DXGI_FORMAT_BC1_TYPELESS:
-        case DXGI_FORMAT_BC1_UNORM:
-        case DXGI_FORMAT_BC1_UNORM_SRGB:
-          PUTL32(hdr->pixelfmt.fourcc, FOURCC ('D','X','T','1'));
-          break;
-        case DXGI_FORMAT_BC2_TYPELESS:
-        case DXGI_FORMAT_BC2_UNORM:
-        case DXGI_FORMAT_BC2_UNORM_SRGB:
-          PUTL32(hdr->pixelfmt.fourcc, FOURCC ('D','X','T','3'));
-          break;
-        case DXGI_FORMAT_BC3_TYPELESS:
-        case DXGI_FORMAT_BC3_UNORM:
-        case DXGI_FORMAT_BC3_UNORM_SRGB:
-          PUTL32(hdr->pixelfmt.fourcc, FOURCC ('D','X','T','5'));
-          break;
-        case DXGI_FORMAT_BC4_TYPELESS:
-        case DXGI_FORMAT_BC4_UNORM:
-          PUTL32(hdr->pixelfmt.fourcc, FOURCC ('A','T','I','1'));
-          break;
-        case DXGI_FORMAT_BC4_SNORM:
-          PUTL32(hdr->pixelfmt.fourcc, FOURCC ('B','C','4','S'));
-          break;
-        case DXGI_FORMAT_BC5_TYPELESS:
-        case DXGI_FORMAT_BC5_UNORM:
-          PUTL32(hdr->pixelfmt.fourcc, FOURCC ('A','T','I','2'));
-          break;
-        case DXGI_FORMAT_BC5_SNORM:
-          PUTL32(hdr->pixelfmt.fourcc, FOURCC ('B','C','5','S'));
-          break;
-        default:
-          break;
-        }
-    }
-  else
-    {
-      /* unset the FOURCC flag */
-      hdr->pixelfmt.flags &= ~DDPF_FOURCC;
+    case DXGI_FORMAT_B8G8R8A8_TYPELESS:
+    case DXGI_FORMAT_B8G8R8A8_UNORM:
+    case DXGI_FORMAT_B8G8R8A8_UNORM_SRGB:
+      hdr->pixelfmt.bpp    = 32;
+      hdr->pixelfmt.flags |= DDPF_ALPHAPIXELS | DDPF_RGB;
+      hdr->pixelfmt.rmask  = 0x00ff0000;
+      hdr->pixelfmt.gmask  = 0x0000ff00;
+      hdr->pixelfmt.bmask  = 0x000000ff;
+      hdr->pixelfmt.amask  = 0xff000000;
+      break;
+    case DXGI_FORMAT_B8G8R8X8_TYPELESS:
+    case DXGI_FORMAT_B8G8R8X8_UNORM:
+    case DXGI_FORMAT_B8G8R8X8_UNORM_SRGB:
+      hdr->pixelfmt.bpp    = 32;
+      hdr->pixelfmt.flags |= DDPF_ALPHAPIXELS | DDPF_RGB;
+      hdr->pixelfmt.rmask  = 0x00ff0000;
+      hdr->pixelfmt.gmask  = 0x0000ff00;
+      hdr->pixelfmt.bmask  = 0x000000ff;
+      hdr->pixelfmt.amask  = 0x00000000;
+      break;
+    case DXGI_FORMAT_R8G8B8A8_TYPELESS:
+    case DXGI_FORMAT_R8G8B8A8_UNORM:
+    case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:
+    case DXGI_FORMAT_R8G8B8A8_UINT:
+    case DXGI_FORMAT_R8G8B8A8_SNORM:
+    case DXGI_FORMAT_R8G8B8A8_SINT:
+      hdr->pixelfmt.bpp    = 32;
+      hdr->pixelfmt.flags |= DDPF_ALPHAPIXELS | DDPF_RGB;
+      hdr->pixelfmt.rmask  = 0x000000ff;
+      hdr->pixelfmt.gmask  = 0x0000ff00;
+      hdr->pixelfmt.bmask  = 0x00ff0000;
+      hdr->pixelfmt.amask  = 0xff000000;
+      break;
+    case DXGI_FORMAT_B5G6R5_UNORM:
+      hdr->pixelfmt.bpp    = 16;
+      hdr->pixelfmt.rmask  = 0x0000f800;
+      hdr->pixelfmt.gmask  = 0x000007e0;
+      hdr->pixelfmt.bmask  = 0x0000001f;
+      hdr->pixelfmt.amask  = 0x00000000;
+      break;
+    case DXGI_FORMAT_B5G5R5A1_UNORM:
+      hdr->pixelfmt.bpp    = 16;
+      hdr->pixelfmt.rmask  = 0x00007c00;
+      hdr->pixelfmt.gmask  = 0x000003e0;
+      hdr->pixelfmt.bmask  = 0x0000001f;
+      hdr->pixelfmt.amask  = 0x00008000;
+      break;
+    case DXGI_FORMAT_R10G10B10A2_TYPELESS:
+    case DXGI_FORMAT_R10G10B10A2_UNORM:
+    case DXGI_FORMAT_R10G10B10A2_UINT:
+      hdr->pixelfmt.bpp    = 32;
+      hdr->pixelfmt.flags |= DDPF_ALPHAPIXELS | DDPF_RGB;
+      hdr->pixelfmt.rmask  = 0x000003ff;
+      hdr->pixelfmt.gmask  = 0x000ffc00;
+      hdr->pixelfmt.bmask  = 0x3ff00000;
+      hdr->pixelfmt.amask  = 0xc0000000;
+      break;
+    case DXGI_FORMAT_A8_UNORM:
+      hdr->pixelfmt.bpp    = 8;
+      hdr->pixelfmt.flags |= DDPF_ALPHA | DDPF_ALPHAPIXELS;
+      hdr->pixelfmt.rmask  = hdr->pixelfmt.gmask = hdr->pixelfmt.bmask = 0;
+      hdr->pixelfmt.amask  = 0x000000ff;
+      break;
+    case DXGI_FORMAT_R8_TYPELESS:
+    case DXGI_FORMAT_R8_UNORM:
+    case DXGI_FORMAT_R8_UINT:
+    case DXGI_FORMAT_R8_SNORM:
+    case DXGI_FORMAT_R8_SINT:
+      hdr->pixelfmt.bpp    = 8;
+      hdr->pixelfmt.rmask  = 0x000000ff;
+      hdr->pixelfmt.gmask  = hdr->pixelfmt.bmask = hdr->pixelfmt.amask = 0;
+      break;
+    case DXGI_FORMAT_B4G4R4A4_UNORM:
+      hdr->pixelfmt.bpp    = 16;
+      hdr->pixelfmt.flags |= DDPF_ALPHAPIXELS | DDPF_RGB;
+      hdr->pixelfmt.rmask  = 0x00000f00;
+      hdr->pixelfmt.gmask  = 0x000000f0;
+      hdr->pixelfmt.bmask  = 0x0000000f;
+      hdr->pixelfmt.amask  = 0x0000f000;
+      break;
+    case DXGI_FORMAT_R8G8_TYPELESS:
+    case DXGI_FORMAT_R8G8_UNORM:
+    case DXGI_FORMAT_R8G8_UINT:
+    case DXGI_FORMAT_R8G8_SNORM:
+    case DXGI_FORMAT_R8G8_SINT:
+      hdr->pixelfmt.flags   |= DDPF_RGB;
+      hdr->pixelfmt.bpp      = 16;
+      hdr->pixelfmt.rmask    = 0x000000ff;
+      hdr->pixelfmt.gmask    = 0x0000ff00;
+      hdr->pixelfmt.bmask    = hdr->pixelfmt.amask = 0;
+      load_info->dxgi_format = DXGI_FORMAT_R8G8_UINT;
+      if (dx10hdr->dxgiFormat >= DXGI_FORMAT_R8G8_SNORM)
+        load_info->is_signed = TRUE;
+      break;
+    case DXGI_FORMAT_R16_TYPELESS:
+    case DXGI_FORMAT_D16_UNORM:
+    case DXGI_FORMAT_R16_UNORM:
+    case DXGI_FORMAT_R16_UINT:
+    case DXGI_FORMAT_R16_SNORM:
+    case DXGI_FORMAT_R16_SINT:
+      hdr->pixelfmt.flags   |= DDPF_RGB;
+      hdr->pixelfmt.bpp      = 16;
+      hdr->pixelfmt.rmask    = 0x0000ffff;
+      hdr->pixelfmt.gmask    = hdr->pixelfmt.bmask = hdr->pixelfmt.amask = 0;
+      load_info->dxgi_format = DXGI_FORMAT_R16_UNORM;
+      if (dx10hdr->dxgiFormat >= DXGI_FORMAT_R16_SNORM)
+        load_info->is_signed = TRUE;
+      break;
+    case DXGI_FORMAT_R16G16_TYPELESS:
+    case DXGI_FORMAT_R16G16_UNORM:
+    case DXGI_FORMAT_R16G16_UINT:
+    case DXGI_FORMAT_R16G16_SNORM:
+    case DXGI_FORMAT_R16G16_SINT:
+      hdr->pixelfmt.flags   |= DDPF_RGB;
+      hdr->pixelfmt.bpp      = 32;
+      hdr->pixelfmt.rmask    = 0x0000ffff;
+      hdr->pixelfmt.gmask    = 0xffff0000;
+      hdr->pixelfmt.bmask    = hdr->pixelfmt.amask = 0;
+      load_info->dxgi_format = DXGI_FORMAT_R16G16_UINT;
+      if (dx10hdr->dxgiFormat >= DXGI_FORMAT_R16G16_SNORM)
+        load_info->is_signed = TRUE;
+      break;
+    case DXGI_FORMAT_R16G16_FLOAT:
+      hdr->pixelfmt.flags   |= DDPF_RGB;
+      hdr->pixelfmt.bpp      = 32;
+      hdr->pixelfmt.rmask    = 0x0000ffff;
+      hdr->pixelfmt.gmask    = 0xffff0000;
+      hdr->pixelfmt.bmask    = hdr->pixelfmt.amask = 0;
+      load_info->dxgi_format = DXGI_FORMAT_R16G16_FLOAT;
+      break;
+    case DXGI_FORMAT_R16G16B16A16_TYPELESS:
+    case DXGI_FORMAT_R16G16B16A16_UNORM:
+    case DXGI_FORMAT_R16G16B16A16_UINT:
+      hdr->pixelfmt.flags   |= DDPF_ALPHAPIXELS | DDPF_RGB;
+      hdr->pixelfmt.bpp      = 64;
+      load_info->dxgi_format = DXGI_FORMAT_R16G16B16A16_UINT;
+      break;
+    case DXGI_FORMAT_R16G16B16A16_SNORM:
+    case DXGI_FORMAT_R16G16B16A16_SINT:
+      hdr->pixelfmt.flags   |= DDPF_ALPHAPIXELS | DDPF_RGB;
+      hdr->pixelfmt.bpp      = 64;
+      load_info->is_signed   = TRUE;
+      load_info->dxgi_format = DXGI_FORMAT_R16G16B16A16_UINT;
+      break;
+    case DXGI_FORMAT_R16G16B16A16_FLOAT:
+      hdr->pixelfmt.flags   |= DDPF_ALPHAPIXELS | DDPF_RGB;
+      hdr->pixelfmt.bpp      = 64;
+      load_info->dxgi_format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+      break;
 
-      switch (dx10hdr->dxgiFormat)
-        {
-        case DXGI_FORMAT_B8G8R8A8_TYPELESS:
-        case DXGI_FORMAT_B8G8R8A8_UNORM:
-        case DXGI_FORMAT_B8G8R8A8_UNORM_SRGB:
-          hdr->pixelfmt.bpp    = 32;
-          hdr->pixelfmt.flags |= DDPF_ALPHAPIXELS | DDPF_RGB;
-          hdr->pixelfmt.rmask  = 0x00ff0000;
-          hdr->pixelfmt.gmask  = 0x0000ff00;
-          hdr->pixelfmt.bmask  = 0x000000ff;
-          hdr->pixelfmt.amask  = 0xff000000;
-          break;
-        case DXGI_FORMAT_B8G8R8X8_TYPELESS:
-        case DXGI_FORMAT_B8G8R8X8_UNORM:
-        case DXGI_FORMAT_B8G8R8X8_UNORM_SRGB:
-          hdr->pixelfmt.bpp    = 32;
-          hdr->pixelfmt.flags |= DDPF_ALPHAPIXELS | DDPF_RGB;
-          hdr->pixelfmt.rmask  = 0x00ff0000;
-          hdr->pixelfmt.gmask  = 0x0000ff00;
-          hdr->pixelfmt.bmask  = 0x000000ff;
-          hdr->pixelfmt.amask  = 0x00000000;
-          break;
-        case DXGI_FORMAT_R8G8B8A8_TYPELESS:
-        case DXGI_FORMAT_R8G8B8A8_UNORM:
-        case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:
-        case DXGI_FORMAT_R8G8B8A8_UINT:
-        case DXGI_FORMAT_R8G8B8A8_SNORM:
-        case DXGI_FORMAT_R8G8B8A8_SINT:
-          hdr->pixelfmt.bpp    = 32;
-          hdr->pixelfmt.flags |= DDPF_ALPHAPIXELS | DDPF_RGB;
-          hdr->pixelfmt.rmask  = 0x000000ff;
-          hdr->pixelfmt.gmask  = 0x0000ff00;
-          hdr->pixelfmt.bmask  = 0x00ff0000;
-          hdr->pixelfmt.amask  = 0xff000000;
-          break;
-        case DXGI_FORMAT_B5G6R5_UNORM:
-          hdr->pixelfmt.bpp    = 16;
-          hdr->pixelfmt.rmask  = 0x0000f800;
-          hdr->pixelfmt.gmask  = 0x000007e0;
-          hdr->pixelfmt.bmask  = 0x0000001f;
-          hdr->pixelfmt.amask  = 0x00000000;
-          break;
-        case DXGI_FORMAT_B5G5R5A1_UNORM:
-          hdr->pixelfmt.bpp    = 16;
-          hdr->pixelfmt.rmask  = 0x00007c00;
-          hdr->pixelfmt.gmask  = 0x000003e0;
-          hdr->pixelfmt.bmask  = 0x0000001f;
-          hdr->pixelfmt.amask  = 0x00008000;
-          break;
-        case DXGI_FORMAT_R10G10B10A2_TYPELESS:
-        case DXGI_FORMAT_R10G10B10A2_UNORM:
-        case DXGI_FORMAT_R10G10B10A2_UINT:
-          hdr->pixelfmt.bpp    = 32;
-          hdr->pixelfmt.flags |= DDPF_ALPHAPIXELS | DDPF_RGB;
-          hdr->pixelfmt.rmask  = 0x000003ff;
-          hdr->pixelfmt.gmask  = 0x000ffc00;
-          hdr->pixelfmt.bmask  = 0x3ff00000;
-          hdr->pixelfmt.amask  = 0xc0000000;
-          break;
-        case DXGI_FORMAT_A8_UNORM:
-          hdr->pixelfmt.bpp    = 8;
-          hdr->pixelfmt.flags |= DDPF_ALPHA | DDPF_ALPHAPIXELS;
-          hdr->pixelfmt.rmask  = hdr->pixelfmt.gmask = hdr->pixelfmt.bmask = 0;
-          hdr->pixelfmt.amask  = 0x000000ff;
-          break;
-        case DXGI_FORMAT_R8_TYPELESS:
-        case DXGI_FORMAT_R8_UNORM:
-        case DXGI_FORMAT_R8_UINT:
-        case DXGI_FORMAT_R8_SNORM:
-        case DXGI_FORMAT_R8_SINT:
-          hdr->pixelfmt.bpp    = 8;
-          hdr->pixelfmt.rmask  = 0x000000ff;
-          hdr->pixelfmt.gmask  = hdr->pixelfmt.bmask = hdr->pixelfmt.amask = 0;
-          break;
-        case DXGI_FORMAT_B4G4R4A4_UNORM:
-          hdr->pixelfmt.bpp    = 16;
-          hdr->pixelfmt.flags |= DDPF_ALPHAPIXELS | DDPF_RGB;
-          hdr->pixelfmt.rmask  = 0x00000f00;
-          hdr->pixelfmt.gmask  = 0x000000f0;
-          hdr->pixelfmt.bmask  = 0x0000000f;
-          hdr->pixelfmt.amask  = 0x0000f000;
-          break;
+    case DXGI_FORMAT_R32G32B32A32_TYPELESS:
+    case DXGI_FORMAT_R32G32B32A32_UINT:
+      hdr->pixelfmt.flags   |= DDPF_ALPHAPIXELS | DDPF_RGB;
+      hdr->pixelfmt.bpp      = 128;
+      load_info->dxgi_format = DXGI_FORMAT_R32G32B32A32_UINT;
+      break;
+    case DXGI_FORMAT_R32G32B32A32_SINT:
+      hdr->pixelfmt.flags   |= DDPF_ALPHAPIXELS | DDPF_RGB;
+      hdr->pixelfmt.bpp      = 128;
+      load_info->is_signed   = TRUE;
+      load_info->dxgi_format = DXGI_FORMAT_R32G32B32A32_UINT;
+      break;
+    case DXGI_FORMAT_R32G32B32A32_FLOAT:
+      hdr->pixelfmt.flags   |= DDPF_ALPHAPIXELS | DDPF_RGB;
+      hdr->pixelfmt.bpp      = 128;
+      load_info->dxgi_format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+      break;
 
-        case DXGI_FORMAT_R8G8_TYPELESS:
-        case DXGI_FORMAT_R8G8_UNORM:
-        case DXGI_FORMAT_R8G8_UINT:
-        case DXGI_FORMAT_R8G8_SNORM:
-        case DXGI_FORMAT_R8G8_SINT:
-          hdr->pixelfmt.flags   |= DDPF_RGB;
-          hdr->pixelfmt.bpp      = 16;
-          hdr->pixelfmt.rmask    = 0x000000ff;
-          hdr->pixelfmt.gmask    = 0x0000ff00;
-          hdr->pixelfmt.bmask    = hdr->pixelfmt.amask = 0;
-          load_info->dxgi_format = DXGI_FORMAT_R8G8_UINT;
-          if (dx10hdr->dxgiFormat >= DXGI_FORMAT_R8G8_SNORM)
-            load_info->is_signed = TRUE;
-          break;
-        case DXGI_FORMAT_R16_TYPELESS:
-        case DXGI_FORMAT_D16_UNORM:
-        case DXGI_FORMAT_R16_UNORM:
-        case DXGI_FORMAT_R16_UINT:
-        case DXGI_FORMAT_R16_SNORM:
-        case DXGI_FORMAT_R16_SINT:
-          hdr->pixelfmt.flags   |= DDPF_RGB;
-          hdr->pixelfmt.bpp      = 16;
-          hdr->pixelfmt.rmask    = 0x0000ffff;
-          hdr->pixelfmt.gmask    = hdr->pixelfmt.bmask = hdr->pixelfmt.amask = 0;
-          load_info->dxgi_format = DXGI_FORMAT_R16_UNORM;
-          if (dx10hdr->dxgiFormat >= DXGI_FORMAT_R16_SNORM)
-            load_info->is_signed = TRUE;
-          break;
-        case DXGI_FORMAT_R16G16_TYPELESS:
-        case DXGI_FORMAT_R16G16_UNORM:
-        case DXGI_FORMAT_R16G16_UINT:
-        case DXGI_FORMAT_R16G16_SNORM:
-        case DXGI_FORMAT_R16G16_SINT:
-          hdr->pixelfmt.flags   |= DDPF_RGB;
-          hdr->pixelfmt.bpp      = 32;
-          hdr->pixelfmt.rmask    = 0x0000ffff;
-          hdr->pixelfmt.gmask    = 0xffff0000;
-          hdr->pixelfmt.bmask    = hdr->pixelfmt.amask = 0;
-          load_info->dxgi_format = DXGI_FORMAT_R16G16_UINT;
-          if (dx10hdr->dxgiFormat >= DXGI_FORMAT_R16G16_SNORM)
-            load_info->is_signed = TRUE;
-          break;
-        case DXGI_FORMAT_R16G16_FLOAT:
-          hdr->pixelfmt.flags   |= DDPF_RGB;
-          hdr->pixelfmt.bpp      = 32;
-          hdr->pixelfmt.rmask    = 0x0000ffff;
-          hdr->pixelfmt.gmask    = 0xffff0000;
-          hdr->pixelfmt.bmask    = hdr->pixelfmt.amask = 0;
-          load_info->dxgi_format = DXGI_FORMAT_R16G16_FLOAT;
-          break;
+    case DXGI_FORMAT_UNKNOWN:
+      g_message ("Unknown DXGI format.  Expect problems...");
+      break;
 
-        case DXGI_FORMAT_R16G16B16A16_TYPELESS:
-        case DXGI_FORMAT_R16G16B16A16_UNORM:
-        case DXGI_FORMAT_R16G16B16A16_UINT:
-          hdr->pixelfmt.flags   |= DDPF_ALPHAPIXELS | DDPF_RGB;
-          hdr->pixelfmt.bpp      = 64;
-          load_info->dxgi_format = DXGI_FORMAT_R16G16B16A16_UINT;
-          break;
-        case DXGI_FORMAT_R16G16B16A16_SNORM:
-        case DXGI_FORMAT_R16G16B16A16_SINT:
-          hdr->pixelfmt.flags   |= DDPF_ALPHAPIXELS | DDPF_RGB;
-          hdr->pixelfmt.bpp      = 64;
-          load_info->is_signed   = TRUE;
-          load_info->dxgi_format = DXGI_FORMAT_R16G16B16A16_UINT;
-          break;
-        case DXGI_FORMAT_R16G16B16A16_FLOAT:
-          hdr->pixelfmt.flags   |= DDPF_ALPHAPIXELS | DDPF_RGB;
-          hdr->pixelfmt.bpp      = 64;
-          load_info->dxgi_format = DXGI_FORMAT_R16G16B16A16_FLOAT;
-          break;
-
-        case DXGI_FORMAT_R32G32B32A32_TYPELESS:
-        case DXGI_FORMAT_R32G32B32A32_UINT:
-          hdr->pixelfmt.flags   |= DDPF_ALPHAPIXELS | DDPF_RGB;
-          hdr->pixelfmt.bpp      = 128;
-          load_info->dxgi_format = DXGI_FORMAT_R32G32B32A32_UINT;
-          break;
-        case DXGI_FORMAT_R32G32B32A32_SINT:
-          hdr->pixelfmt.flags   |= DDPF_ALPHAPIXELS | DDPF_RGB;
-          hdr->pixelfmt.bpp      = 128;
-          load_info->is_signed   = TRUE;
-          load_info->dxgi_format = DXGI_FORMAT_R32G32B32A32_UINT;
-          break;
-        case DXGI_FORMAT_R32G32B32A32_FLOAT:
-          hdr->pixelfmt.flags   |= DDPF_ALPHAPIXELS | DDPF_RGB;
-          hdr->pixelfmt.bpp      = 128;
-          load_info->dxgi_format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-          break;
-
-        case DXGI_FORMAT_UNKNOWN:
-          g_message ("Unknown DXGI format.  Expect problems...");
-          break;
-        default:  /* Unsupported DXGI format */
-          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Unsupported DXGI format (%d)"),
-                       dx10hdr->dxgiFormat);
-          return FALSE;
-        }
+    default:  /* Unsupported DXGI format */
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                    _("Unsupported DXGI format (%d)"),
+                    dx10hdr->dxgiFormat);
+      return FALSE;
     }
 
   return TRUE;
@@ -1270,17 +1299,18 @@ premultiplied_variant (const Babl* format)
 }
 
 static gboolean
-load_layer (FILE             *fp,
-            dds_header_t     *hdr,
-            dds_load_info_t  *load_info,
-            GimpImage        *image,
-            guint             level,
-            gchar            *prefix,
-            guint            *layer_index,
-            guchar           *pixels,
-            guchar           *buf,
-            gboolean          decode_images,
-            GError          **error)
+load_layer (FILE                     *fp,
+            const dds_header_t       *hdr,
+            const dds_header_dx10_t  *dx10hdr,
+            dds_load_info_t          *load_info,
+            GimpImage                *image,
+            guint                     level,
+            gchar                    *prefix,
+            guint                    *layer_index,
+            guchar                   *pixels,
+            guchar                   *buf,
+            gboolean                  decode_images,
+            GError                  **error)
 {
   GeglBuffer    *buffer;
   const Babl    *bablfmt = NULL;
@@ -1435,20 +1465,59 @@ load_layer (FILE             *fp,
       guint w = (width  + 3) >> 2;
       guint h = (height + 3) >> 2;
 
-      switch (GETL32(hdr->pixelfmt.fourcc))
+      if (GETL32 (hdr->pixelfmt.fourcc) == FOURCC ('D','X','1','0'))
         {
-        case FOURCC ('D','X','T','1'): format = DDS_COMPRESS_BC1; break;
-        case FOURCC ('D','X','T','2'): bablfmt = premultiplied_variant (bablfmt);
-        case FOURCC ('D','X','T','3'): format = DDS_COMPRESS_BC2; break;
-        case FOURCC ('D','X','T','4'): bablfmt = premultiplied_variant (bablfmt);
-        case FOURCC ('D','X','T','5'): format = DDS_COMPRESS_BC3; break;
-        case FOURCC ('R','X','G','B'): format = DDS_COMPRESS_BC3; break;
-        case FOURCC ('A','T','I','1'):
-        case FOURCC ('B','C','4','U'):
-        case FOURCC ('B','C','4','S'): format = DDS_COMPRESS_BC4; break;
-        case FOURCC ('A','T','I','2'):
-        case FOURCC ('B','C','5','U'):
-        case FOURCC ('B','C','5','S'): format = DDS_COMPRESS_BC5; break;
+          /* Determine compression type from DXGI format */
+          switch (dx10hdr->dxgiFormat)
+            {
+            case DXGI_FORMAT_BC1_TYPELESS:
+            case DXGI_FORMAT_BC1_UNORM:
+            case DXGI_FORMAT_BC1_UNORM_SRGB:
+              format = DDS_COMPRESS_BC1;
+              break;
+            case DXGI_FORMAT_BC2_TYPELESS:
+            case DXGI_FORMAT_BC2_UNORM:
+            case DXGI_FORMAT_BC2_UNORM_SRGB:
+              format = DDS_COMPRESS_BC2;
+              break;
+            case DXGI_FORMAT_BC3_TYPELESS:
+            case DXGI_FORMAT_BC3_UNORM:
+            case DXGI_FORMAT_BC3_UNORM_SRGB:
+              format = DDS_COMPRESS_BC3;
+              break;
+            case DXGI_FORMAT_BC4_TYPELESS:
+            case DXGI_FORMAT_BC4_UNORM:
+            case DXGI_FORMAT_BC4_SNORM:
+              format = DDS_COMPRESS_BC4;
+              break;
+            case DXGI_FORMAT_BC5_TYPELESS:
+            case DXGI_FORMAT_BC5_UNORM:
+            case DXGI_FORMAT_BC5_SNORM:
+              format = DDS_COMPRESS_BC5;
+              break;
+            default:
+              format = DDS_FORMAT_MAX;
+              break;
+            }
+        }
+      else
+        {
+          /* Determine compression type from FourCC */
+          switch (GETL32 (hdr->pixelfmt.fourcc))
+            {
+            case FOURCC ('D','X','T','1'): format = DDS_COMPRESS_BC1; break;
+            case FOURCC ('D','X','T','2'): bablfmt = premultiplied_variant (bablfmt);
+            case FOURCC ('D','X','T','3'): format = DDS_COMPRESS_BC2; break;
+            case FOURCC ('D','X','T','4'): bablfmt = premultiplied_variant (bablfmt);
+            case FOURCC ('D','X','T','5'): format = DDS_COMPRESS_BC3; break;
+            case FOURCC ('R','X','G','B'): format = DDS_COMPRESS_BC3; break;
+            case FOURCC ('A','T','I','1'):
+            case FOURCC ('B','C','4','U'):
+            case FOURCC ('B','C','4','S'): format = DDS_COMPRESS_BC4; break;
+            case FOURCC ('A','T','I','2'):
+            case FOURCC ('B','C','5','U'):
+            case FOURCC ('B','C','5','S'): format = DDS_COMPRESS_BC5; break;
+            }
         }
 
       size = w * h;
@@ -1981,27 +2050,28 @@ load_layer (FILE             *fp,
 }
 
 static gboolean
-load_mipmaps (FILE             *fp,
-              dds_header_t     *hdr,
-              dds_load_info_t  *load_info,
-              GimpImage        *image,
-              gchar            *prefix,
-              guint            *layer_index,
-              guchar           *pixels,
-              guchar           *buf,
-              gboolean          read_mipmaps,
-              gboolean          decode_images,
-              GError          **error)
+load_mipmaps (FILE                     *fp,
+              const dds_header_t       *hdr,
+              const dds_header_dx10_t  *dx10hdr,
+              dds_load_info_t          *load_info,
+              GimpImage                *image,
+              gchar                    *prefix,
+              guint                    *layer_index,
+              guchar                   *pixels,
+              guchar                   *buf,
+              gboolean                  read_mipmaps,
+              gboolean                  decode_images,
+              GError                  **error)
 {
   guint level;
 
-  if ((hdr->flags & DDSD_MIPMAPCOUNT) &&
+  if ((hdr->flags & DDSD_MIPMAPCOUNT)    &&
       (hdr->caps.caps1 & DDSCAPS_MIPMAP) &&
       read_mipmaps)
     {
       for (level = 1; level < hdr->num_mipmaps; ++level)
         {
-          if (! load_layer (fp, hdr, load_info, image, level, prefix, layer_index,
+          if (! load_layer (fp, hdr, dx10hdr, load_info, image, level, prefix, layer_index,
                             pixels, buf, decode_images, error))
             return FALSE;
         }
@@ -2011,23 +2081,24 @@ load_mipmaps (FILE             *fp,
 }
 
 static gboolean
-load_face (FILE             *fp,
-           dds_header_t     *hdr,
-           dds_load_info_t  *load_info,
-           GimpImage        *image,
-           gchar            *prefix,
-           guint            *layer_index,
-           guchar           *pixels,
-           guchar           *buf,
-           gboolean          read_mipmaps,
-           gboolean          decode_images,
-           GError          **error)
+load_face (FILE                     *fp,
+           const dds_header_t       *hdr,
+           const dds_header_dx10_t  *dx10hdr,
+           dds_load_info_t          *load_info,
+           GimpImage                *image,
+           gchar                    *prefix,
+           guint                    *layer_index,
+           guchar                   *pixels,
+           guchar                   *buf,
+           gboolean                  read_mipmaps,
+           gboolean                  decode_images,
+           GError                  **error)
 {
-  if (! load_layer (fp, hdr, load_info, image, 0, prefix, layer_index,
-                    pixels, buf, decode_images, error))
+  if (! load_layer (fp, hdr, dx10hdr, load_info, image, 0, prefix,
+                    layer_index, pixels, buf, decode_images, error))
     return FALSE;
 
-  return load_mipmaps (fp, hdr, load_info, image, prefix, layer_index,
+  return load_mipmaps (fp, hdr, dx10hdr, load_info, image, prefix, layer_index,
                        pixels, buf, read_mipmaps, decode_images, error);
 }
 
