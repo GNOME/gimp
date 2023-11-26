@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-11-23 08:08+0000\n"
-"PO-Revision-Date: 2023-11-24 13:04+0100\n"
+"POT-Creation-Date: 2023-11-24 12:07+0000\n"
+"PO-Revision-Date: 2023-11-27 00:09+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -1581,11 +1581,9 @@ msgstr ""
 "Crear una imagen usando múltiples imágenes grises como canales de color"
 
 #: plug-ins/common/compose.c:409
-#, fuzzy
-#| msgid "Create an image using multiple gray images as color channels"
 msgid "This function creates a new image from multiple gray images"
 msgstr ""
-"Crear una imagen usando múltiples imágenes grises como canales de color"
+"Esta función crea una imagen nueva a partir de múltiples imágenes grises"
 
 #: plug-ins/common/compose.c:418
 msgid "Image 2"
@@ -2876,10 +2874,8 @@ msgid "Farbfeld"
 msgstr "Farbfeld"
 
 #: plug-ins/common/file-farbfeld.c:141 plug-ins/common/file-farbfeld.c:143
-#, fuzzy
-#| msgid "Load file in the IFF file format"
 msgid "Load file in the Farbfeld file format"
-msgstr "Carga un archivo en el formato de archivo IFF"
+msgstr "Cargar el archivo en el formato de archivo Farbfeld"
 
 #: plug-ins/common/file-farbfeld.c:167 plug-ins/common/file-farbfeld.c:169
 msgid "Export image in the Farbfeld file format"
@@ -3315,16 +3311,12 @@ msgid "Spacing (_percent)"
 msgstr "Espaciado (_porcentaje)"
 
 #: plug-ins/common/file-gih.c:194
-#, fuzzy
-#| msgid "Short description of the brush"
 msgid "Short description of the GIH brush pipe"
-msgstr "Breve descripción del pincel"
+msgstr "Breve descripción de la tubería de pincel GIH"
 
 #: plug-ins/common/file-gih.c:199
-#, fuzzy
-#| msgid "Pixel _width:"
 msgid "Cell _width"
-msgstr "A_nchura del píxel:"
+msgstr "An_cho de celda"
 
 #: plug-ins/common/file-gih.c:200
 msgid "Width of the brush cells in pixels"
@@ -3351,10 +3343,8 @@ msgid "_Rank"
 msgstr "_Rango"
 
 #: plug-ins/common/file-gih.c:218
-#, fuzzy
-#| msgid "bad image dimensions"
 msgid "Ranks of the dimensions"
-msgstr "dimensiones de la imagen no válidas"
+msgstr "Rangos de las dimensiones"
 
 #: plug-ins/common/file-gih.c:229
 msgid "Display as"
@@ -3520,10 +3510,8 @@ msgid "JPEG 2000 encapsulated in HEIF"
 msgstr "JPEG 2000 encapsulado en HEIF"
 
 #: plug-ins/common/file-heif.c:435
-#, fuzzy
-#| msgid "Loads HEIF images"
 msgid "Loads HEJ2 images"
-msgstr "Carga imágenes HEIF"
+msgstr "Carga imágenes HEJ2"
 
 #: plug-ins/common/file-heif.c:436
 msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
@@ -5424,10 +5412,8 @@ msgid "Error reading extended chunk guide data"
 msgstr "Error al leer la parte sobre datos del tubo"
 
 #: plug-ins/common/file-psp.c:2526
-#, fuzzy
-#| msgid "Invalid frame dimensions"
 msgid "Invalid guide orientation"
-msgstr "Dimensiones de fotograma no válidas"
+msgstr "Orientación de guía no válida"
 
 #: plug-ins/common/file-psp.c:2540
 #, fuzzy
@@ -5538,10 +5524,8 @@ msgstr ""
 "(2) }"
 
 #: plug-ins/common/file-raw-data.c:381
-#, fuzzy
-#| msgid "Big Endian"
 msgid "Endianness"
-msgstr "Big Endian"
+msgstr "Endianidad"
 
 #: plug-ins/common/file-raw-data.c:382
 msgid ""
@@ -6658,7 +6642,6 @@ msgstr "El archivo XWD-file %s corrompido."
 
 #: plug-ins/common/file-xwd.c:2083
 #, c-format
-#| msgid "Bad colormap"
 msgid ""
 "'%s':\n"
 "Invalid color map"
@@ -6728,10 +6711,8 @@ msgid "The height of the holes, as fraction of the strip height"
 msgstr "Todos los valores son fracciones de la altura de la película"
 
 #: plug-ins/common/film.c:275
-#, fuzzy
-#| msgid "Distance:"
 msgid "Hole _distance"
-msgstr "Distancia:"
+msgstr "_Distancia del agujero"
 
 #: plug-ins/common/film.c:276
 #, fuzzy
@@ -7388,10 +7369,8 @@ msgid "Lo_w"
 msgstr "In_ferior"
 
 #: plug-ins/common/sample-colorize.c:394
-#, fuzzy
-#| msgid "Adjust the flare intensity"
 msgid "Lowest sample color intensity"
-msgstr "Ajusta la intensidad de destellos"
+msgstr "Intensidad de color de muestra más baja"
 
 #: plug-ins/common/sample-colorize.c:399
 #, fuzzy
@@ -8454,10 +8433,8 @@ msgid "_Width (pixels)"
 msgstr "_Anchura (píxeles)"
 
 #: plug-ins/common/web-page.c:146
-#, fuzzy
-#| msgid "Adjust the spike length (in pixels)"
 msgid "The width of the screenshot (in pixels)"
-msgstr "Ajusta la longitud de las puntas (en píxeles)"
+msgstr "El ancho de la captura de pantalla (en píxeles)"
 
 #: plug-ins/common/web-page.c:151
 msgid "_Font size"
@@ -8707,8 +8684,6 @@ msgid "DDS"
 msgstr "DDS"
 
 #: plug-ins/file-dds/dds.c:207 plug-ins/file-dds/dds.c:208
-#, fuzzy
-#| msgid "Loads files in DDS image format"
 msgid "Saves files in DDS image format"
 msgstr "Carga archivos en el formato de imagen DDS"
 
@@ -8749,20 +8724,16 @@ msgid "RXGB (DXT5)"
 msgstr "RXGB (DXT5)"
 
 #: plug-ins/file-dds/dds.c:231
-#, fuzzy
-#| msgid "Decode Alpha exponent"
 msgid "Alpha Exponent (DXT5)"
-msgstr "Decodificar exponente Alfa"
+msgstr "Exponente alfa (DXT5)"
 
 #: plug-ins/file-dds/dds.c:232
 msgid "YCoCg (DXT5)"
 msgstr "YCoCg (DXT5)"
 
 #: plug-ins/file-dds/dds.c:233
-#, fuzzy
-#| msgid "Decode YCoCg (scaled)"
 msgid "YCoCg scaled (DXT5)"
-msgstr "Decodificar YCoCg (escalado)"
+msgstr "YCoCg escalado (DXT5)"
 
 #: plug-ins/file-dds/dds.c:239
 msgid "Use percept_ual error metric"
@@ -8788,7 +8759,6 @@ msgid "RGB8"
 msgstr "RGB8"
 
 #: plug-ins/file-dds/dds.c:249
-#| msgid "RGBA"
 msgid "RGBA8"
 msgstr "RGBA8"
 
@@ -8805,12 +8775,10 @@ msgid "R5G6B5"
 msgstr "R5G6B5"
 
 #: plug-ins/file-dds/dds.c:253
-#| msgid "RGBA"
 msgid "RGBA4"
 msgstr "RGBA4"
 
 #: plug-ins/file-dds/dds.c:254
-#| msgid "RGB565"
 msgid "RGB5A1"
 msgstr "RGB5A1"
 
@@ -8823,12 +8791,10 @@ msgid "R3G3B2"
 msgstr "R3G3B2"
 
 #: plug-ins/file-dds/dds.c:257
-#| msgid "A"
 msgid "A8"
 msgstr "A8"
 
 #: plug-ins/file-dds/dds.c:258
-#| msgid "L"
 msgid "L8"
 msgstr "L8"
 
@@ -11238,10 +11204,8 @@ msgid "Fr_actal Type"
 msgstr "Tipo de fr_actal"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:258
-#, fuzzy
-#| msgid "Load Fractal Parameters"
 msgid "Type of Fractal Pattern"
-msgstr "Cargar parámetros del fractal"
+msgstr "Tipo de patrón fractal"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:259
 msgid "Mandelbrot"
@@ -11379,10 +11343,8 @@ msgid "Blue stretch"
 msgstr "Umbral de _azul:"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:335
-#, fuzzy
-#| msgid "Auto-stretching contrast"
 msgid "Blue stretching factor"
-msgstr "Auto-estirando contraste"
+msgstr "Factor de estiramiento azul"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:340
 msgid "_Red"
@@ -14592,10 +14554,8 @@ msgid "Bo_ttom"
 msgstr "Fo_ndo"
 
 #: plug-ins/map-object/map-object-main.c:373
-#, fuzzy
-#| msgid "Bottom edge"
 msgid "Box bottom face"
-msgstr "Borde inferior"
+msgstr "Cara inferior de la caja"
 
 #: plug-ins/map-object/map-object-main.c:377
 msgid "Le_ft"
@@ -14606,10 +14566,8 @@ msgid "Box left face"
 msgstr "Cara izquierda de caja"
 
 #: plug-ins/map-object/map-object-main.c:383
-#, fuzzy
-#| msgid "To _right"
 msgid "Box right face"
-msgstr "A la de_recha"
+msgstr "Cara derecha de la caja"
 
 #: plug-ins/map-object/map-object-main.c:388
 msgid "Scale X"
@@ -15309,10 +15267,8 @@ msgid "Trained algorithmic media"
 msgstr "Medios algorítmicos entrenados"
 
 #: plug-ins/metadata/metadata-tags.c:200
-#, fuzzy
-#| msgid "Prim's algorithm"
 msgid "Pure algorithmic media"
-msgstr "Algoritmo de Prim"
+msgstr "Medios algorítmicos puros"
 
 #: plug-ins/metadata/metadata-tags.c:201
 msgid "Created by software"
