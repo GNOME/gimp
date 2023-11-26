@@ -149,7 +149,7 @@ gboolean gimp_paint_options_get_gradient_color (GimpPaintOptions    *options,
                                                 GimpImage           *image,
                                                 gdouble              grad_point,
                                                 gdouble              pixel_dist,
-                                                GimpRGB             *color);
+                                                GeglColor          **color);
 
 GimpBrushApplicationMode
          gimp_paint_options_get_brush_mode     (GimpPaintOptions    *options);

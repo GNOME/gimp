@@ -80,18 +80,21 @@ gradient_editor_left_color_type_cmd_callback (GimpAction *action,
       color_type !=
       gimp_gradient_segment_get_left_color_type (gradient, left))
     {
-      GimpRGB color;
-
-      gimp_gradient_segment_get_left_flat_color (gradient,
-                                                 GIMP_DATA_EDITOR (editor)->context,
-                                                 left, &color);
-
       gimp_data_freeze (GIMP_DATA (gradient));
 
       gimp_gradient_segment_set_left_color_type (gradient, left, color_type);
 
       if (color_type == GIMP_GRADIENT_COLOR_FIXED)
-        gimp_gradient_segment_set_left_color (gradient, left, &color);
+        {
+          GeglColor *color;
+
+          color = gimp_gradient_segment_get_left_flat_color (gradient,
+                                                             GIMP_DATA_EDITOR (editor)->context,
+                                                             left);
+
+          gimp_gradient_segment_set_left_color (gradient, left, color);
+          g_object_unref (color);
+        }
 
       gimp_data_thaw (GIMP_DATA (gradient));
     }
@@ -108,8 +111,7 @@ gradient_editor_load_left_cmd_callback (GimpAction *action,
   GimpGradientSegment *left;
   GimpGradientSegment *right;
   GimpGradientSegment *seg;
-  GeglColor           *color      = NULL;
-  GimpRGB              rgb;
+  GeglColor           *color;
   GimpGradientColor    color_type = GIMP_GRADIENT_COLOR_FIXED;
   gint                 index      = g_variant_get_int32 (value);
 
@@ -123,12 +125,12 @@ gradient_editor_load_left_cmd_callback (GimpAction *action,
       else
         seg = gimp_gradient_segment_get_last (left);
 
-      rgb        = seg->right_color;
+      color      = seg->right_color;
       color_type = seg->right_color_type;
       break;
 
     case GRADIENT_EDITOR_COLOR_OTHER_ENDPOINT:
-      rgb        = right->right_color;
+      color      = right->right_color;
       color_type = right->right_color_type;
       break;
 
@@ -141,19 +143,14 @@ gradient_editor_load_left_cmd_callback (GimpAction *action,
       break;
 
     default: /* Load a color */
-      rgb = editor->saved_colors[index - GRADIENT_EDITOR_COLOR_FIRST_CUSTOM];
+      color = editor->saved_colors[index - GRADIENT_EDITOR_COLOR_FIRST_CUSTOM];
       break;
     }
 
-  if (color != NULL)
-    gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
-
   gimp_data_freeze (GIMP_DATA (gradient));
 
-  gimp_gradient_segment_range_blend (gradient, left, right,
-                                     &rgb,
-                                     &right->right_color,
-                                     TRUE, TRUE);
+  gimp_gradient_segment_range_blend (gradient, left, right, color,
+                                     right->right_color, TRUE, TRUE);
   gimp_gradient_segment_set_left_color_type (gradient, left, color_type);
 
   gimp_data_thaw (GIMP_DATA (gradient));
@@ -171,8 +168,8 @@ gradient_editor_save_left_cmd_callback (GimpAction *action,
 
   gimp_gradient_editor_get_selection (editor, &gradient, &left, NULL);
 
-  gimp_gradient_segment_get_left_color (gradient, left,
-                                        &editor->saved_colors[index]);
+  g_clear_object (&editor->saved_colors[index]);
+  editor->saved_colors[index] = gegl_color_duplicate (gimp_gradient_segment_get_left_color (gradient, left));
 }
 
 void
@@ -204,18 +201,20 @@ gradient_editor_right_color_type_cmd_callback (GimpAction *action,
       color_type !=
       gimp_gradient_segment_get_right_color_type (gradient, right))
     {
-      GimpRGB color;
-
-      gimp_gradient_segment_get_right_flat_color (gradient,
-                                                  GIMP_DATA_EDITOR (editor)->context,
-                                                  right, &color);
-
       gimp_data_freeze (GIMP_DATA (gradient));
 
       gimp_gradient_segment_set_right_color_type (gradient, right, color_type);
 
       if (color_type == GIMP_GRADIENT_COLOR_FIXED)
-        gimp_gradient_segment_set_right_color (gradient, right, &color);
+        {
+          GeglColor *color;
+
+          color = gimp_gradient_segment_get_right_flat_color (gradient, GIMP_DATA_EDITOR (editor)->context,
+                                                              right);
+
+          gimp_gradient_segment_set_right_color (gradient, right, color);
+          g_object_unref (color);
+        }
 
       gimp_data_thaw (GIMP_DATA (gradient));
     }
@@ -232,8 +231,7 @@ gradient_editor_load_right_cmd_callback (GimpAction *action,
   GimpGradientSegment *left;
   GimpGradientSegment *right;
   GimpGradientSegment *seg;
-  GeglColor           *color      = NULL;
-  GimpRGB              rgb;
+  GeglColor           *color;
   GimpGradientColor    color_type = GIMP_GRADIENT_COLOR_FIXED;
   gint                 index      = g_variant_get_int32 (value);
 
@@ -247,12 +245,12 @@ gradient_editor_load_right_cmd_callback (GimpAction *action,
       else
         seg = gimp_gradient_segment_get_first (right);
 
-      rgb        = seg->left_color;
+      color      = seg->left_color;
       color_type = seg->left_color_type;
       break;
 
     case GRADIENT_EDITOR_COLOR_OTHER_ENDPOINT:
-      rgb        = left->left_color;
+      color      = left->left_color;
       color_type = left->left_color_type;
       break;
 
@@ -265,19 +263,14 @@ gradient_editor_load_right_cmd_callback (GimpAction *action,
       break;
 
     default: /* Load a color */
-      rgb = editor->saved_colors[index - GRADIENT_EDITOR_COLOR_FIRST_CUSTOM];
+      color = editor->saved_colors[index - GRADIENT_EDITOR_COLOR_FIRST_CUSTOM];
       break;
     }
 
-  if (color != NULL)
-    gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
-
   gimp_data_freeze (GIMP_DATA (gradient));
 
-  gimp_gradient_segment_range_blend (gradient, left, right,
-                                     &left->left_color,
-                                     &rgb,
-                                     TRUE, TRUE);
+  gimp_gradient_segment_range_blend (gradient, left, right, left->left_color,
+                                     color, TRUE, TRUE);
   gimp_gradient_segment_set_right_color_type (gradient, left, color_type);
 
   gimp_data_thaw (GIMP_DATA (gradient));
@@ -295,8 +288,8 @@ gradient_editor_save_right_cmd_callback (GimpAction *action,
 
   gimp_gradient_editor_get_selection (editor, &gradient, NULL, &right);
 
-  gimp_gradient_segment_get_right_color (gradient, right,
-                                         &editor->saved_colors[index]);
+  g_clear_object (&editor->saved_colors[index]);
+  editor->saved_colors[index] = gegl_color_duplicate (gimp_gradient_segment_get_right_color (gradient, right));
 }
 
 void
@@ -637,8 +630,8 @@ gradient_editor_blend_color_cmd_callback (GimpAction *action,
   gimp_gradient_editor_get_selection (editor, &gradient, &left, &right);
 
   gimp_gradient_segment_range_blend (gradient, left, right,
-                                     &left->left_color,
-                                     &right->right_color,
+                                     left->left_color,
+                                     right->right_color,
                                      TRUE, FALSE);
 }
 
@@ -655,8 +648,8 @@ gradient_editor_blend_opacity_cmd_callback (GimpAction *action,
   gimp_gradient_editor_get_selection (editor, &gradient, &left, &right);
 
   gimp_gradient_segment_range_blend (gradient, left, right,
-                                     &left->left_color,
-                                     &right->right_color,
+                                     left->left_color,
+                                     right->right_color,
                                      FALSE, TRUE);
 }
 

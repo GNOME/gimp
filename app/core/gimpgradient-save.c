@@ -70,19 +70,24 @@ gimp_gradient_save (GimpData       *data,
 
   for (seg = gradient->segments; seg; seg = seg->next)
     {
-      gchar buf[11][G_ASCII_DTOSTR_BUF_SIZE];
+      gchar   buf[11][G_ASCII_DTOSTR_BUF_SIZE];
+      gdouble rgba[4];
 
       g_ascii_dtostr (buf[0],  G_ASCII_DTOSTR_BUF_SIZE, seg->left);
       g_ascii_dtostr (buf[1],  G_ASCII_DTOSTR_BUF_SIZE, seg->middle);
       g_ascii_dtostr (buf[2],  G_ASCII_DTOSTR_BUF_SIZE, seg->right);
-      g_ascii_dtostr (buf[3],  G_ASCII_DTOSTR_BUF_SIZE, seg->left_color.r);
-      g_ascii_dtostr (buf[4],  G_ASCII_DTOSTR_BUF_SIZE, seg->left_color.g);
-      g_ascii_dtostr (buf[5],  G_ASCII_DTOSTR_BUF_SIZE, seg->left_color.b);
-      g_ascii_dtostr (buf[6],  G_ASCII_DTOSTR_BUF_SIZE, seg->left_color.a);
-      g_ascii_dtostr (buf[7],  G_ASCII_DTOSTR_BUF_SIZE, seg->right_color.r);
-      g_ascii_dtostr (buf[8],  G_ASCII_DTOSTR_BUF_SIZE, seg->right_color.g);
-      g_ascii_dtostr (buf[9],  G_ASCII_DTOSTR_BUF_SIZE, seg->right_color.b);
-      g_ascii_dtostr (buf[10], G_ASCII_DTOSTR_BUF_SIZE, seg->right_color.a);
+
+      gegl_color_get_pixel (seg->left_color, babl_format ("R'G'B'A double"), rgba);
+      g_ascii_dtostr (buf[3],  G_ASCII_DTOSTR_BUF_SIZE, rgba[0]);
+      g_ascii_dtostr (buf[4],  G_ASCII_DTOSTR_BUF_SIZE, rgba[1]);
+      g_ascii_dtostr (buf[5],  G_ASCII_DTOSTR_BUF_SIZE, rgba[2]);
+      g_ascii_dtostr (buf[6],  G_ASCII_DTOSTR_BUF_SIZE, rgba[3]);
+
+      gegl_color_get_pixel (seg->right_color, babl_format ("R'G'B'A double"), rgba);
+      g_ascii_dtostr (buf[7],  G_ASCII_DTOSTR_BUF_SIZE, rgba[0]);
+      g_ascii_dtostr (buf[8],  G_ASCII_DTOSTR_BUF_SIZE, rgba[1]);
+      g_ascii_dtostr (buf[9],  G_ASCII_DTOSTR_BUF_SIZE, rgba[2]);
+      g_ascii_dtostr (buf[10], G_ASCII_DTOSTR_BUF_SIZE, rgba[3]);
 
       g_string_append_printf (string,
                               "%s %s %s %s %s %s %s %s %s %s %s %d %d %d %d\n",
@@ -136,17 +141,17 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
 
   for (seg = gradient->segments; seg; seg = seg->next)
     {
+      gdouble left_rgba[4];
+      gdouble right_rgba[4];
+
       /* Left */
       g_ascii_dtostr (buf, G_ASCII_DTOSTR_BUF_SIZE,
                       seg->left);
-      g_ascii_dtostr (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE,
-                      seg->left_color.r);
-      g_ascii_dtostr (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE,
-                      seg->left_color.g);
-      g_ascii_dtostr (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE,
-                      seg->left_color.b);
-      g_ascii_dtostr (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE,
-                      1.0 - seg->left_color.a);
+      gegl_color_get_pixel (seg->left_color, babl_format ("R'G'B'A double"), left_rgba);
+      g_ascii_dtostr (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, left_rgba[0]);
+      g_ascii_dtostr (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, left_rgba[1]);
+      g_ascii_dtostr (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, left_rgba[2]);
+      g_ascii_dtostr (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, 1.0 - left_rgba[3]);
 
       g_string_append_printf (string,
                               "\t[%s color rgbt <%s, %s, %s, %s>]\n",
@@ -157,14 +162,15 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
       /* Middle */
       g_ascii_dtostr (buf, G_ASCII_DTOSTR_BUF_SIZE,
                       seg->middle);
+      gegl_color_get_pixel (seg->right_color, babl_format ("R'G'B'A double"), right_rgba);
       g_ascii_dtostr (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE,
-                      (seg->left_color.r + seg->right_color.r) / 2.0);
+                      (left_rgba[0] + right_rgba[0]) / 2.0);
       g_ascii_dtostr (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE,
-                      (seg->left_color.g + seg->right_color.g) / 2.0);
+                      (left_rgba[1] + right_rgba[1]) / 2.0);
       g_ascii_dtostr (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE,
-                      (seg->left_color.b + seg->right_color.b) / 2.0);
+                      (left_rgba[2] + right_rgba[2]) / 2.0);
       g_ascii_dtostr (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE,
-                      1.0 - (seg->left_color.a + seg->right_color.a) / 2.0);
+                      1.0 - (left_rgba[3] + right_rgba[3]) / 2.0);
 
       g_string_append_printf (string,
                               "\t[%s color rgbt <%s, %s, %s, %s>]\n",
@@ -175,14 +181,10 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
       /* Right */
       g_ascii_dtostr (buf, G_ASCII_DTOSTR_BUF_SIZE,
                       seg->right);
-      g_ascii_dtostr (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE,
-                      seg->right_color.r);
-      g_ascii_dtostr (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE,
-                      seg->right_color.g);
-      g_ascii_dtostr (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE,
-                      seg->right_color.b);
-      g_ascii_dtostr (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE,
-                      1.0 - seg->right_color.a);
+      g_ascii_dtostr (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, right_rgba[0]);
+      g_ascii_dtostr (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, right_rgba[1]);
+      g_ascii_dtostr (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, right_rgba[2]);
+      g_ascii_dtostr (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, 1.0 - right_rgba[3]);
 
       g_string_append_printf (string,
                               "\t[%s color rgbt <%s, %s, %s, %s>]\n",

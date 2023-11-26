@@ -1054,17 +1054,17 @@ gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
 }
 
 gboolean
-gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
-                                       GimpImage        *image,
-                                       gdouble           grad_point,
-                                       gdouble           pixel_dist,
-                                       GimpRGB          *color)
+gimp_paint_options_get_gradient_color (GimpPaintOptions  *paint_options,
+                                       GimpImage         *image,
+                                       gdouble            grad_point,
+                                       gdouble            pixel_dist,
+                                       GeglColor        **color)
 {
   GimpDynamics *dynamics;
 
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (color != NULL, FALSE);
+  g_return_val_if_fail (color != NULL && *color == NULL, FALSE);
 
   dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
 

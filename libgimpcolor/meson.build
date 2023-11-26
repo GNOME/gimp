@@ -5,6 +5,7 @@ libgimpcolor_sources = files(
   'gimpcairo.c',
   'gimpcmyk.c',
   'gimpcolor.c',
+  'gimpcolor-parse.c',
   'gimpcolormanaged.c',
   'gimpcolorprofile.c',
   'gimpcolorspace.c',

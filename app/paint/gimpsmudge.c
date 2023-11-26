@@ -366,8 +366,8 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   gdouble             flow;
   gdouble             grad_point;
   /* brush color */
-  GimpRGB             brush_color;
-  GimpRGB            *brush_color_ptr; /* whether use single color or pixmap */
+  GeglColor          *brush_color  = NULL;
+  GimpRGB             brush_rgb; /* whether use single color or pixmap */
   /* accum buffer */
   gint                x, y;
   GeglBuffer         *accum_buffer;
@@ -441,7 +441,6 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                                                fade_point);
 
   /* Get current gradient color, brush pixmap, or foreground color */
-  brush_color_ptr = &brush_color;
   if (gimp_paint_options_get_gradient_color (paint_options, image,
                                              grad_point,
                                              paint_core->pixel_dist,
@@ -451,22 +450,11 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
     }
   else if (brush_core->brush && gimp_brush_get_pixmap (brush_core->brush))
     {
-      brush_color_ptr = NULL;
     }
   else
     {
-      GeglColor *color;
-
-      color = gimp_context_get_foreground (context);
-      gegl_color_get_rgba_with_space (color, &brush_color.r, &brush_color.g, &brush_color.b, &brush_color.a, NULL);
+      brush_color = g_object_ref (gimp_context_get_foreground (context));
     }
-
-  /* Convert to linear RGBA */
-  if (brush_color_ptr)
-    gimp_pickable_rgb_to_pixel (dest_pickable,
-                                &brush_color,
-                                babl_format ("RGBA double"),
-                                &brush_color);
 
   n_strokes = gimp_symmetry_get_size (sym);
   for (i = 0; i < n_strokes; i++)
@@ -514,7 +502,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
        * gimp_gegl_smudge_with_paint() instead of calling
        * gegl_buffer_set_color() to reduce gegl's internal processing.
        */
-      if (! brush_color_ptr && flow > 0.0)
+      if (! brush_color && flow > 0.0)
         {
           gimp_brush_core_color_area_with_pixmap (brush_core, drawable,
                                                   &coords,
@@ -523,6 +511,10 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                                                   paint_buffer_y,
                                                   TRUE);
         }
+
+      if (brush_color)
+        /* Convert to linear RGBA */
+        gegl_color_get_pixel (brush_color, babl_format ("RGBA double"), &brush_rgb);
 
       gimp_gegl_smudge_with_paint (accum_buffer,
                                    GEGL_RECTANGLE (paint_buffer_x - x,
@@ -536,7 +528,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                                                    dest_pickable_off_y,
                                                    paint_buffer_width,
                                                    paint_buffer_height),
-                                   brush_color_ptr,
+                                   brush_color ? &brush_rgb : NULL,
                                    paint_buffer,
                                    options->no_erasing,
                                    flow,
@@ -559,6 +551,8 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                                       force,
                                       GIMP_PAINT_INCREMENTAL);
     }
+
+  g_clear_object (&brush_color);
 }
 
 static void

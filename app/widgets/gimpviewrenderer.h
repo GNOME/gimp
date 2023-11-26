@@ -125,6 +125,8 @@ void   gimp_view_renderer_set_background   (GimpViewRenderer   *renderer,
                                             const gchar        *icon_name);
 void   gimp_view_renderer_set_color_config (GimpViewRenderer   *renderer,
                                             GimpColorConfig    *color_config);
+GimpColorConfig *
+       gimp_view_renderer_get_color_config (GimpViewRenderer   *renderer);
 
 void   gimp_view_renderer_invalidate       (GimpViewRenderer   *renderer);
 void   gimp_view_renderer_update           (GimpViewRenderer   *renderer);

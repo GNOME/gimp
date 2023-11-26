@@ -133,6 +133,8 @@ gimp_gradient_load (GimpContext   *context,
       gint                 type;
       gint                 left_color_type;
       gint                 right_color_type;
+      gdouble              left_rgba[4];
+      gdouble              right_rgba[4];
 
       seg = gimp_gradient_segment_new ();
 
@@ -150,25 +152,28 @@ gimp_gradient_load (GimpContext   *context,
       if (! line)
         goto failed;
 
-      if (! gimp_ascii_strtod (line, &end, &seg->left)          ||
-          ! gimp_ascii_strtod (end,  &end, &seg->middle)        ||
-          ! gimp_ascii_strtod (end,  &end, &seg->right)         ||
+      if (! gimp_ascii_strtod (line, &end, &seg->left)     ||
+          ! gimp_ascii_strtod (end,  &end, &seg->middle)   ||
+          ! gimp_ascii_strtod (end,  &end, &seg->right)    ||
 
-          ! gimp_ascii_strtod (end,  &end, &seg->left_color.r)  ||
-          ! gimp_ascii_strtod (end,  &end, &seg->left_color.g)  ||
-          ! gimp_ascii_strtod (end,  &end, &seg->left_color.b)  ||
-          ! gimp_ascii_strtod (end,  &end, &seg->left_color.a)  ||
+          ! gimp_ascii_strtod (end,  &end, &left_rgba[0])  ||
+          ! gimp_ascii_strtod (end,  &end, &left_rgba[1])  ||
+          ! gimp_ascii_strtod (end,  &end, &left_rgba[2])  ||
+          ! gimp_ascii_strtod (end,  &end, &left_rgba[3])  ||
 
-          ! gimp_ascii_strtod (end,  &end, &seg->right_color.r) ||
-          ! gimp_ascii_strtod (end,  &end, &seg->right_color.g) ||
-          ! gimp_ascii_strtod (end,  &end, &seg->right_color.b) ||
-          ! gimp_ascii_strtod (end,  &end, &seg->right_color.a))
+          ! gimp_ascii_strtod (end,  &end, &right_rgba[0]) ||
+          ! gimp_ascii_strtod (end,  &end, &right_rgba[1]) ||
+          ! gimp_ascii_strtod (end,  &end, &right_rgba[2]) ||
+          ! gimp_ascii_strtod (end,  &end, &right_rgba[3]))
         {
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Corrupt segment %d."), i);
           g_free (line);
           goto failed;
         }
+
+      gegl_color_set_pixel (seg->left_color, babl_format ("R'G'B'A double"), left_rgba);
+      gegl_color_set_pixel (seg->right_color, babl_format ("R'G'B'A double"), right_rgba);
 
       switch (sscanf (end, "%d %d %d %d",
                       &type, &color,
@@ -276,7 +281,8 @@ typedef struct
 typedef struct
 {
   gdouble       offset;
-  GimpRGB       color;
+  GeglColor    *color;
+  gdouble       opacity;
 } SvgStop;
 
 
@@ -414,7 +420,12 @@ svg_parser_end_element (GMarkupParseContext  *context,
       parser->gradient->segments = svg_parser_gradient_segments (parser->stops);
 
       for (list = parser->stops; list; list = list->next)
-        g_slice_free (SvgStop, list->data);
+        {
+          SvgStop *stop = list->data;
+
+          g_clear_object (&stop->color);
+          g_slice_free (SvgStop, stop);
+        }
 
       g_list_free (parser->stops);
       parser->stops = NULL;
@@ -443,8 +454,10 @@ svg_parser_gradient_segments (GList *stops)
 
   segment = gimp_gradient_segment_new ();
 
-  segment->left_color  = stop->color;
-  segment->right_color = stop->color;
+  g_clear_object (&segment->left_color);
+  segment->left_color  = gegl_color_duplicate (stop->color);
+  g_clear_object (&segment->right_color);
+  segment->right_color = gegl_color_duplicate (stop->color);
 
   /*  the list of offsets is sorted from largest to smallest  */
   for (list = g_list_next (stops); list; list = g_list_next (list))
@@ -460,17 +473,22 @@ svg_parser_gradient_segments (GList *stops)
       next->prev    = segment;
 
       segment->right       = stop->offset;
-      segment->right_color = stop->color;
+      g_clear_object (&segment->right_color);
+      segment->right_color = gegl_color_duplicate (stop->color);
 
       stop = list->data;
 
-      segment->left_color  = stop->color;
+      g_clear_object (&segment->left_color);
+      segment->left_color = gegl_color_duplicate (stop->color);
     }
 
   segment->middle = (segment->left + segment->right) / 2.0;
 
   if (stop->offset > 0.0)
-    segment->right_color = stop->color;
+    {
+      g_clear_object (&segment->right_color);
+      segment->right_color = gegl_color_duplicate (stop->color);
+    }
 
   /*  FIXME: remove empty segments here or add a GimpGradient API to do that
    */
@@ -485,14 +503,15 @@ svg_parse_gradient_stop_style_prop (SvgStop     *stop,
 {
   if (strcmp (name, "stop-color") == 0)
     {
-      gimp_rgb_parse_css (&stop->color, value, -1);
+      g_clear_object (&stop->color);
+      stop->color = gimp_color_parse_css (value, -1);
     }
   else if (strcmp (name, "stop-opacity") == 0)
     {
       gdouble opacity = g_ascii_strtod (value, NULL);
 
       if (errno != ERANGE)
-        gimp_rgb_set_alpha (&stop->color, CLAMP (opacity, 0.0, 1.0));
+        stop->opacity = CLAMP (opacity, 0.0, 1.0);
     }
 }
 
@@ -522,7 +541,7 @@ svg_parse_gradient_stop_style (SvgStop     *stop,
 
           name = g_strndup (style, sep - style);
           sep++;
-          value = g_strndup (sep, end - sep - (*end == ';' ? 1 : 0));
+          value = g_strndup (sep, end - sep);
 
           svg_parse_gradient_stop_style_prop (stop, name, value);
 
@@ -543,7 +562,8 @@ svg_parse_gradient_stop (const gchar **names,
 {
   SvgStop *stop = g_slice_new0 (SvgStop);
 
-  gimp_rgb_set_alpha (&stop->color, 1.0);
+  stop->color   = NULL;
+  stop->opacity = 1.0;
 
   while (*names && *values)
     {
@@ -570,6 +590,14 @@ svg_parse_gradient_stop (const gchar **names,
       names++;
       values++;
     }
+
+  if (! stop->color)
+    /* Default stop color is black:
+     * https://svgwg.org/svg2-draft/pservers.html#GradientStops
+     */
+    stop->color = gegl_color_new ("black");
+
+  gimp_color_set_alpha (stop->color, stop->opacity);
 
   return stop;
 }

@@ -22,6 +22,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -331,10 +332,7 @@ gimp_gradient_tool_editor_line_selection_changed (GimpToolLine     *line,
           seg = gimp_gradient_tool_editor_handle_get_segment (gradient_tool,
                                                               selection);
 
-          homogeneous = seg->right_color.r    == seg->next->left_color.r &&
-                        seg->right_color.g    == seg->next->left_color.g &&
-                        seg->right_color.b    == seg->next->left_color.b &&
-                        seg->right_color.a    == seg->next->left_color.a &&
+          homogeneous = gimp_color_is_perceptually_identical (seg->right_color, seg->next->left_color) &&
                         seg->right_color_type == seg->next->left_color_type;
 
           gimp_chain_button_set_active (
@@ -401,7 +399,6 @@ gimp_gradient_tool_editor_color_entry_color_changed (GimpColorButton  *button,
   GimpPaintOptions    *paint_options = GIMP_PAINT_OPTIONS (options);
   gint                 selection;
   GeglColor           *color;
-  GimpRGB              rgb;
   Direction            direction;
   GtkWidget           *chain_button;
   GimpGradientSegment *seg;
@@ -413,8 +410,6 @@ gimp_gradient_tool_editor_color_entry_color_changed (GimpColorButton  *button,
     gimp_tool_line_get_selection (GIMP_TOOL_LINE (gradient_tool->widget));
 
   color = gimp_color_button_get_color (button);
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-  g_object_unref (color);
 
   direction =
     GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button),
@@ -445,12 +440,14 @@ gimp_gradient_tool_editor_color_entry_color_changed (GimpColorButton  *button,
   switch (selection)
     {
     case GIMP_TOOL_LINE_HANDLE_START:
-      seg->left_color      = rgb;
+      g_clear_object (&seg->left_color);
+      seg->left_color      = g_object_ref (color);
       seg->left_color_type = GIMP_GRADIENT_COLOR_FIXED;
       break;
 
     case GIMP_TOOL_LINE_HANDLE_END:
-      seg->right_color      = rgb;
+      g_clear_object (&seg->right_color);
+      seg->right_color      = g_object_ref (color);
       seg->right_color_type = GIMP_GRADIENT_COLOR_FIXED;
       break;
 
@@ -459,7 +456,8 @@ gimp_gradient_tool_editor_color_entry_color_changed (GimpColorButton  *button,
           (chain_button               &&
            gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chain_button))))
         {
-          seg->right_color      = rgb;
+          g_clear_object (&seg->right_color);
+          seg->right_color      = gegl_color_duplicate (color);
           seg->right_color_type = GIMP_GRADIENT_COLOR_FIXED;
         }
 
@@ -467,13 +465,16 @@ gimp_gradient_tool_editor_color_entry_color_changed (GimpColorButton  *button,
           (chain_button                &&
            gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chain_button))))
         {
-          seg->next->left_color      = rgb;
+          g_clear_object (&seg->next->left_color);
+          seg->next->left_color      = g_object_ref (color);
           seg->next->left_color_type = GIMP_GRADIENT_COLOR_FIXED;
         }
     }
 
   gimp_gradient_tool_editor_thaw_gradient (gradient_tool);
   gimp_gradient_tool_editor_end_edit (gradient_tool, FALSE);
+
+  g_object_unref (color);
 }
 
 static void
@@ -1574,8 +1575,7 @@ gimp_gradient_tool_editor_update_endpoint_gui (GimpGradientTool *gradient_tool,
   const gchar         *title;
   gdouble              x;
   gdouble              y;
-  GeglColor           *color;
-  GimpRGB              rgb;
+  GeglColor           *color = NULL;
   GimpGradientColor    color_type;
 
   editable = gimp_gradient_tool_editor_is_gradient_editable (gradient_tool);
@@ -1622,16 +1622,16 @@ gimp_gradient_tool_editor_update_endpoint_gui (GimpGradientTool *gradient_tool,
     case GIMP_TOOL_LINE_HANDLE_START:
       title = _("Start Endpoint");
 
-      gimp_gradient_segment_get_left_flat_color (gradient_tool->gradient, context,
-                                                 seg, &rgb);
+      color = gimp_gradient_segment_get_left_flat_color (gradient_tool->gradient, context,
+                                                         seg);
       color_type = seg->left_color_type;
       break;
 
     case GIMP_TOOL_LINE_HANDLE_END:
       title = _("End Endpoint");
 
-      gimp_gradient_segment_get_right_flat_color (gradient_tool->gradient, context,
-                                                  seg, &rgb);
+      color = gimp_gradient_segment_get_right_flat_color (gradient_tool->gradient, context,
+                                                          seg);
       color_type = seg->right_color_type;
       break;
 
@@ -1644,11 +1644,7 @@ gimp_gradient_tool_editor_update_endpoint_gui (GimpGradientTool *gradient_tool,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (gradient_tool->endpoint_se), 0, x);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (gradient_tool->endpoint_se), 1, y);
 
-  color = gegl_color_new (NULL);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-  gimp_color_button_set_color (
-    GIMP_COLOR_BUTTON (gradient_tool->endpoint_color_panel), color);
-  g_object_unref (color);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (gradient_tool->endpoint_color_panel), color);
   gimp_int_combo_box_set_active (
     GIMP_INT_COMBO_BOX (gradient_tool->endpoint_type_combo), color_type);
 
@@ -1656,6 +1652,8 @@ gimp_gradient_tool_editor_update_endpoint_gui (GimpGradientTool *gradient_tool,
   gtk_widget_set_sensitive (gradient_tool->endpoint_type_combo,  editable);
 
   gtk_widget_show (gradient_tool->endpoint_editor);
+
+  g_object_unref (color);
 }
 
 static void
@@ -1671,10 +1669,9 @@ gimp_gradient_tool_editor_update_stop_gui (GimpGradientTool *gradient_tool,
   gdouble              min;
   gdouble              max;
   gdouble              value;
-  GeglColor           *color;
-  GimpRGB              left_color;
+  GeglColor           *left_color;
   GimpGradientColor    left_color_type;
-  GimpRGB              right_color;
+  GeglColor           *right_color;
   GimpGradientColor    right_color_type;
 
   editable = gimp_gradient_tool_editor_is_gradient_editable (gradient_tool);
@@ -1691,12 +1688,11 @@ gimp_gradient_tool_editor_update_stop_gui (GimpGradientTool *gradient_tool,
   max   = seg->next->right;
   value = seg->right;
 
-  gimp_gradient_segment_get_right_flat_color (gradient_tool->gradient, context,
-                                              seg, &left_color);
+  left_color = gimp_gradient_segment_get_right_flat_color (gradient_tool->gradient, context, seg);
   left_color_type = seg->right_color_type;
 
-  gimp_gradient_segment_get_left_flat_color (gradient_tool->gradient, context,
-                                             seg->next, &right_color);
+  right_color = gimp_gradient_segment_get_left_flat_color (gradient_tool->gradient, context,
+                                                           seg->next);
   right_color_type = seg->next->left_color_type;
 
   gimp_tool_gui_set_title (gradient_tool->gui, title);
@@ -1706,17 +1702,13 @@ gimp_gradient_tool_editor_update_stop_gui (GimpGradientTool *gradient_tool,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (gradient_tool->stop_se),
                               0, 100.0 * value);
 
-  color = gegl_color_new (NULL);
-
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &left_color);
   gimp_color_button_set_color (
-    GIMP_COLOR_BUTTON (gradient_tool->stop_left_color_panel), color);
+    GIMP_COLOR_BUTTON (gradient_tool->stop_left_color_panel), left_color);
   gimp_int_combo_box_set_active (
     GIMP_INT_COMBO_BOX (gradient_tool->stop_left_type_combo), left_color_type);
 
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &right_color);
   gimp_color_button_set_color (
-    GIMP_COLOR_BUTTON (gradient_tool->stop_right_color_panel), color);
+    GIMP_COLOR_BUTTON (gradient_tool->stop_right_color_panel), right_color);
   gimp_int_combo_box_set_active (
     GIMP_INT_COMBO_BOX (gradient_tool->stop_right_type_combo), right_color_type);
 
@@ -1731,7 +1723,8 @@ gimp_gradient_tool_editor_update_stop_gui (GimpGradientTool *gradient_tool,
     editable);
 
   g_free (title);
-  g_object_unref (color);
+  g_object_unref (left_color);
+  g_object_unref (right_color);
 
   gtk_widget_show (gradient_tool->stop_editor);
 }

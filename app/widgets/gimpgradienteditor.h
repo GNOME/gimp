@@ -83,7 +83,7 @@ struct _GimpGradientEditor
   GimpGradientBlendColorSpace  blend_color_space;
 
   /*  Saved colors  */
-  GimpRGB                 saved_colors[GRAD_NUM_COLORS];
+  GeglColor              *saved_colors[GRAD_NUM_COLORS];
 
   /*  Color dialog  */
   GtkWidget              *color_dialog;

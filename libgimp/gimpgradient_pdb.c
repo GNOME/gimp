@@ -268,27 +268,23 @@ gimp_gradient_get_custom_samples (GimpGradient   *gradient,
  * gimp_gradient_segment_get_left_color:
  * @gradient: The gradient.
  * @segment: The index of a segment within the gradient.
- * @color: (out caller-allocates): The return color.
- * @opacity: (out): The opacity of the endpoint.
  *
  * Gets the left endpoint color of the segment
  *
  * Gets the left endpoint color of the indexed segment of the gradient.
  * Returns an error when the segment index is out of range.
  *
- * Returns: TRUE on success.
+ * Returns: (transfer full): The return color.
  *
  * Since: 2.2
  **/
-gboolean
+GeglColor *
 gimp_gradient_segment_get_left_color (GimpGradient *gradient,
-                                      gint          segment,
-                                      GimpRGB      *color,
-                                      gdouble      *opacity)
+                                      gint          segment)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gboolean success = TRUE;
+  GeglColor *color = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_GRADIENT, gradient,
@@ -300,19 +296,12 @@ gimp_gradient_segment_get_left_color (GimpGradient *gradient,
                                                args);
   gimp_value_array_unref (args);
 
-  *opacity = 0.0;
-
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    {
-      GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
-      *opacity = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
-    }
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    color = g_value_dup_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
-  return success;
+  return color;
 }
 
 /**
@@ -320,12 +309,12 @@ gimp_gradient_segment_get_left_color (GimpGradient *gradient,
  * @gradient: The gradient.
  * @segment: The index of a segment within the gradient.
  * @color: The color to set.
- * @opacity: The opacity to set for the endpoint.
  *
  * Sets the left endpoint color of a segment
  *
  * Sets the color of the left endpoint the indexed segment of the
- * gradient.
+ * gradient. The alpha channel of the [class@Gegl.Color] is taken into
+ * account.
  * Returns an error when gradient is not editable or index is out of
  * range.
  *
@@ -334,10 +323,9 @@ gimp_gradient_segment_get_left_color (GimpGradient *gradient,
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_set_left_color (GimpGradient  *gradient,
-                                      gint           segment,
-                                      const GimpRGB *color,
-                                      gdouble        opacity)
+gimp_gradient_segment_set_left_color (GimpGradient *gradient,
+                                      gint          segment,
+                                      GeglColor    *color)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -346,8 +334,7 @@ gimp_gradient_segment_set_left_color (GimpGradient  *gradient,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, segment,
-                                          GIMP_TYPE_RGB, color,
-                                          G_TYPE_DOUBLE, opacity,
+                                          GEGL_TYPE_COLOR, color,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -366,8 +353,6 @@ gimp_gradient_segment_set_left_color (GimpGradient  *gradient,
  * gimp_gradient_segment_get_right_color:
  * @gradient: The gradient.
  * @segment: The index of a segment within the gradient.
- * @color: (out caller-allocates): The return color.
- * @opacity: (out): The opacity of the endpoint.
  *
  * Gets the right endpoint color of the segment
  *
@@ -375,19 +360,17 @@ gimp_gradient_segment_set_left_color (GimpGradient  *gradient,
  * gradient.
  * Returns an error when the segment index is out of range.
  *
- * Returns: TRUE on success.
+ * Returns: (transfer full): The return color.
  *
  * Since: 2.2
  **/
-gboolean
+GeglColor *
 gimp_gradient_segment_get_right_color (GimpGradient *gradient,
-                                       gint          segment,
-                                       GimpRGB      *color,
-                                       gdouble      *opacity)
+                                       gint          segment)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gboolean success = TRUE;
+  GeglColor *color = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_GRADIENT, gradient,
@@ -399,19 +382,12 @@ gimp_gradient_segment_get_right_color (GimpGradient *gradient,
                                                args);
   gimp_value_array_unref (args);
 
-  *opacity = 0.0;
-
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    {
-      GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
-      *opacity = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
-    }
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    color = g_value_dup_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
-  return success;
+  return color;
 }
 
 /**
@@ -419,11 +395,11 @@ gimp_gradient_segment_get_right_color (GimpGradient *gradient,
  * @gradient: The gradient.
  * @segment: The index of a segment within the gradient.
  * @color: The color to set.
- * @opacity: The opacity to set for the endpoint.
  *
  * Sets the right endpoint color of the segment
  *
- * Sets the right endpoint color of the segment of the gradient.
+ * Sets the right endpoint color of the segment of the gradient. The
+ * alpha channel of the [class@Gegl.Color] is taken into account.
  * Returns an error when gradient is not editable or segment index is
  * out of range.
  *
@@ -432,10 +408,9 @@ gimp_gradient_segment_get_right_color (GimpGradient *gradient,
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_set_right_color (GimpGradient  *gradient,
-                                       gint           segment,
-                                       const GimpRGB *color,
-                                       gdouble        opacity)
+gimp_gradient_segment_set_right_color (GimpGradient *gradient,
+                                       gint          segment,
+                                       GeglColor    *color)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -444,8 +419,7 @@ gimp_gradient_segment_set_right_color (GimpGradient  *gradient,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, segment,
-                                          GIMP_TYPE_RGB, color,
-                                          G_TYPE_DOUBLE, opacity,
+                                          GEGL_TYPE_COLOR, color,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),

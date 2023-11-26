@@ -46,22 +46,16 @@ gboolean      gimp_gradient_get_custom_samples                  (GimpGradient   
                                                                  gboolean                   reverse,
                                                                  gint                      *num_color_samples,
                                                                  gdouble                  **color_samples);
-gboolean      gimp_gradient_segment_get_left_color              (GimpGradient              *gradient,
-                                                                 gint                       segment,
-                                                                 GimpRGB                   *color,
-                                                                 gdouble                   *opacity);
+GeglColor*    gimp_gradient_segment_get_left_color              (GimpGradient              *gradient,
+                                                                 gint                       segment);
 gboolean      gimp_gradient_segment_set_left_color              (GimpGradient              *gradient,
                                                                  gint                       segment,
-                                                                 const GimpRGB             *color,
-                                                                 gdouble                    opacity);
-gboolean      gimp_gradient_segment_get_right_color             (GimpGradient              *gradient,
-                                                                 gint                       segment,
-                                                                 GimpRGB                   *color,
-                                                                 gdouble                   *opacity);
+                                                                 GeglColor                 *color);
+GeglColor*    gimp_gradient_segment_get_right_color             (GimpGradient              *gradient,
+                                                                 gint                       segment);
 gboolean      gimp_gradient_segment_set_right_color             (GimpGradient              *gradient,
                                                                  gint                       segment,
-                                                                 const GimpRGB             *color,
-                                                                 gdouble                    opacity);
+                                                                 GeglColor                 *color);
 gboolean      gimp_gradient_segment_get_left_pos                (GimpGradient              *gradient,
                                                                  gint                       segment,
                                                                  gdouble                   *pos);

@@ -461,22 +461,22 @@ void
 gradient_editor_actions_update (GimpActionGroup *group,
                                 gpointer         data)
 {
-  GimpGradientEditor  *editor         = GIMP_GRADIENT_EDITOR (data);
-  GimpDataEditor      *data_editor    = GIMP_DATA_EDITOR (data);
+  GimpGradientEditor  *editor          = GIMP_GRADIENT_EDITOR (data);
+  GimpDataEditor      *data_editor     = GIMP_DATA_EDITOR (data);
   GimpGradient        *gradient;
-  gboolean             editable       = FALSE;
+  gboolean             editable        = FALSE;
   GeglColor           *color;
-  GimpRGB              left_color;
-  GimpRGB              right_color;
-  GimpRGB              left_seg_color;
-  GimpRGB              right_seg_color;
-  gboolean             blending_equal = TRUE;
-  gboolean             coloring_equal = TRUE;
-  gboolean             left_editable  = TRUE;
-  gboolean             right_editable = TRUE;
-  gboolean             selection      = FALSE;
-  gboolean             delete         = FALSE;
-  gboolean             edit_active    = FALSE;
+  GeglColor           *left_color      = NULL;
+  GeglColor           *right_color     = NULL;
+  GeglColor           *left_seg_color  = NULL;
+  GeglColor           *right_seg_color = NULL;
+  gboolean             blending_equal  = TRUE;
+  gboolean             coloring_equal  = TRUE;
+  gboolean             left_editable   = TRUE;
+  gboolean             right_editable  = TRUE;
+  gboolean             selection       = FALSE;
+  gboolean             delete          = FALSE;
+  gboolean             edit_active     = FALSE;
 
   gradient = GIMP_GRADIENT (data_editor->data);
 
@@ -491,35 +491,31 @@ gradient_editor_actions_update (GimpActionGroup *group,
       if (data_editor->data_editable)
         editable = TRUE;
 
-      gimp_gradient_segment_get_left_flat_color (gradient,
-                                                 data_editor->context,
-                                                 editor->control_sel_l,
-                                                 &left_color);
+      left_color = gimp_gradient_segment_get_left_flat_color (gradient,
+                                                              data_editor->context,
+                                                              editor->control_sel_l);
 
       if (editor->control_sel_l->prev)
         left_seg = editor->control_sel_l->prev;
       else
         left_seg = gimp_gradient_segment_get_last (editor->control_sel_l);
 
-      gimp_gradient_segment_get_right_flat_color (gradient,
-                                                  data_editor->context,
-                                                  left_seg,
-                                                  &left_seg_color);
+      left_seg_color = gimp_gradient_segment_get_right_flat_color (gradient,
+                                                                   data_editor->context,
+                                                                   left_seg);
 
-      gimp_gradient_segment_get_right_flat_color (gradient,
-                                                  data_editor->context,
-                                                  editor->control_sel_r,
-                                                  &right_color);
+      right_color = gimp_gradient_segment_get_right_flat_color (gradient,
+                                                                data_editor->context,
+                                                                editor->control_sel_r);
 
       if (editor->control_sel_r->next)
         right_seg = editor->control_sel_r->next;
       else
         right_seg = gimp_gradient_segment_get_first (editor->control_sel_r);
 
-      gimp_gradient_segment_get_left_flat_color (gradient,
-                                                 data_editor->context,
-                                                 right_seg,
-                                                 &right_seg_color);
+      right_seg_color = gimp_gradient_segment_get_left_flat_color (gradient,
+                                                                   data_editor->context,
+                                                                   right_seg);
 
       left_editable  = (editor->control_sel_l->left_color_type ==
                         GIMP_GRADIENT_COLOR_FIXED);
@@ -610,12 +606,9 @@ gradient_editor_actions_update (GimpActionGroup *group,
 
   if (gradient)
     {
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &left_color);
-      SET_COLOR ("gradient-editor-left-color", color, FALSE);
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &left_seg_color);
-      SET_COLOR ("gradient-editor-load-left-left-neighbor", color, FALSE);
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &right_color);
-      SET_COLOR ("gradient-editor-load-left-right-endpoint", color, FALSE);
+      SET_COLOR ("gradient-editor-left-color", left_color, FALSE);
+      SET_COLOR ("gradient-editor-load-left-left-neighbor", left_seg_color, FALSE);
+      SET_COLOR ("gradient-editor-load-left-right-endpoint", right_color, FALSE);
     }
 
   SET_SENSITIVE ("gradient-editor-load-left-fg", left_editable);
@@ -724,12 +717,9 @@ gradient_editor_actions_update (GimpActionGroup *group,
 
   if (gradient)
     {
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &right_color);
-      SET_COLOR ("gradient-editor-right-color", color, FALSE);
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &right_seg_color);
-      SET_COLOR ("gradient-editor-load-right-right-neighbor", color, FALSE);
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &left_color);
-      SET_COLOR ("gradient-editor-load-right-left-endpoint", color, FALSE);
+      SET_COLOR ("gradient-editor-right-color", right_color, FALSE);
+      SET_COLOR ("gradient-editor-load-right-right-neighbor", right_seg_color, FALSE);
+      SET_COLOR ("gradient-editor-load-right-left-endpoint", left_color, FALSE);
     }
 
   SET_SENSITIVE ("gradient-editor-load-right-fg", right_editable);
@@ -939,4 +929,8 @@ gradient_editor_actions_update (GimpActionGroup *group,
 #undef SET_VISIBLE
 
   g_object_unref (color);
+  g_clear_object (&left_color);
+  g_clear_object (&right_color);
+  g_clear_object (&left_seg_color);
+  g_clear_object (&right_seg_color);
 }

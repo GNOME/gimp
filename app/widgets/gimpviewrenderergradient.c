@@ -158,22 +158,27 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
   GimpViewRendererGradient *rendergrad = GIMP_VIEW_RENDERER_GRADIENT (renderer);
   GimpGradient             *gradient   = GIMP_GRADIENT (renderer->viewable);
   GimpGradientSegment      *seg        = NULL;
-  GimpColorTransform       *transform;
+  GimpColorConfig          *color_config;
+  const Babl               *dest_space;
   guchar                   *buf;
   guchar                   *dest;
   gint                      dest_stride;
   gint                      x;
   gint                      y;
   gdouble                   dx, cur_x;
-  GimpRGB                   color;
 
   buf   = g_alloca (4 * renderer->width);
   dx    = (rendergrad->right - rendergrad->left) / (renderer->width - 1);
   cur_x = rendergrad->left;
 
+  color_config = gimp_view_renderer_get_color_config (renderer);
+
+  g_return_if_fail (color_config != NULL);
+
+  dest_space = gimp_widget_get_render_space (widget, color_config);
   for (x = 0, dest = buf; x < renderer->width; x++, dest += 4)
     {
-      guchar r, g, b, a;
+      GeglColor *color = NULL;
 
       seg = gimp_gradient_get_color_at (gradient, renderer->context, seg,
                                         cur_x,
@@ -182,9 +187,14 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
                                         &color);
       cur_x += dx;
 
-      gimp_rgba_get_uchar (&color, &r, &g, &b, &a);
+      /* This is only for rendering the gradient on thumbnails or small
+       * previews, so cairo-ARGB32 is probably enough.
+       */
+      gegl_color_get_pixel (color,
+                            babl_format_with_space ("cairo-ARGB32", dest_space),
+                            dest);
 
-      GIMP_CAIRO_ARGB32_SET_PIXEL (dest, r, g, b, a);
+      g_object_unref (color);
     }
 
   if (! renderer->surface)
@@ -197,20 +207,8 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
   dest        = cairo_image_surface_get_data (renderer->surface);
   dest_stride = cairo_image_surface_get_stride (renderer->surface);
 
-  transform = gimp_view_renderer_get_color_transform (renderer, widget,
-                                                      babl_format ("cairo-ARGB32"),
-                                                      babl_format ("cairo-ARGB32"));
-
-  if (transform)
-    gimp_color_transform_process_pixels (transform,
-                                         babl_format ("cairo-ARGB32"), buf,
-                                         babl_format ("cairo-ARGB32"), buf,
-                                         renderer->width);
-
   for (y = 0; y < renderer->height; y++, dest += dest_stride)
-    {
-      memcpy (dest, buf, renderer->width * 4);
-    }
+    memcpy (dest, buf, renderer->width * 4);
 
   cairo_surface_mark_dirty (renderer->surface);
 }

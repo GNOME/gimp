@@ -21,14 +21,11 @@
 
 #include "stamp-pdbgen.h"
 
-#include <cairo.h>
 #include <string.h>
 
 #include <gegl.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
-
-#include "libgimpcolor/gimpcolor.h"
 
 #include "libgimpbase/gimpbase.h"
 
@@ -178,23 +175,27 @@ gradient_get_uniform_samples_invoker (GimpProcedure         *procedure,
 
           num_color_samples = num_samples * 4;
 
-          sample = color_samples = g_new (gdouble, num_color_samples);
+          sample = color_samples = g_new0 (gdouble, num_color_samples);
 
           while (num_samples--)
             {
-              GimpRGB color;
+              GeglColor *color = NULL;
 
               seg = gimp_gradient_get_color_at (gradient, context, seg,
                                                 pos, reverse,
                                                 GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                                 &color);
+              /* XXX "float" in PDB are in fact double. */
+              if (color)
+                gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), sample);
+              /* TODO: should we really return a list of floats? What about a list
+               * of GeglColor?
+               */
 
-              *sample++ = color.r;
-              *sample++ = color.g;
-              *sample++ = color.b;
-              *sample++ = color.a;
+              sample += 4;
+              pos    += delta;
 
-              pos += delta;
+              g_clear_object (&color);
             }
         }
       else
@@ -244,11 +245,11 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
 
           num_color_samples = num_samples * 4;
 
-          sample = color_samples = g_new (gdouble, num_color_samples);
+          sample = color_samples = g_new0 (gdouble, num_color_samples);
 
           while (num_samples--)
             {
-              GimpRGB color;
+              GeglColor *color = NULL;
 
               seg = gimp_gradient_get_color_at (gradient, context,
                                                 seg, *positions,
@@ -256,12 +257,13 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
                                                 GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                                 &color);
 
-              *sample++ = color.r;
-              *sample++ = color.g;
-              *sample++ = color.b;
-              *sample++ = color.a;
+              if (color)
+                gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), sample);
 
+              sample += 4;
               positions++;
+
+              g_clear_object (&color);
             }
         }
       else
@@ -292,8 +294,7 @@ gradient_segment_get_left_color_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpGradient *gradient;
   gint segment;
-  GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
-  gdouble opacity = 0.0;
+  GeglColor *color = NULL;
 
   gradient = g_value_get_object (gimp_value_array_index (args, 0));
   segment = g_value_get_int (gimp_value_array_index (args, 1));
@@ -305,10 +306,7 @@ gradient_segment_get_left_color_invoker (GimpProcedure         *procedure,
       seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
 
       if (seg)
-        {
-          gimp_gradient_segment_get_left_color (gradient, seg, &color);
-          opacity = color.a * 100.0;
-        }
+        color = g_object_ref (gimp_gradient_segment_get_left_color (gradient, seg));
       else
         success = FALSE;
     }
@@ -317,10 +315,7 @@ gradient_segment_get_left_color_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &color);
-      g_value_set_double (gimp_value_array_index (return_vals, 2), opacity);
-    }
+    g_value_take_object (gimp_value_array_index (return_vals, 1), color);
 
   return return_vals;
 }
@@ -336,30 +331,23 @@ gradient_segment_set_left_color_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpGradient *gradient;
   gint segment;
-  GimpRGB color;
-  gdouble opacity;
+  GeglColor *color;
 
   gradient = g_value_get_object (gimp_value_array_index (args, 0));
   segment = g_value_get_int (gimp_value_array_index (args, 1));
-  gimp_value_get_rgb (gimp_value_array_index (args, 2), &color);
-  opacity = g_value_get_double (gimp_value_array_index (args, 3));
+  color = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
       if (gimp_data_is_writable (GIMP_DATA (gradient)))
         {
-        GimpGradientSegment *seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
+          GimpGradientSegment *seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
 
-        if (seg)
-          {
-            color.a = opacity / 100.0;
-            gimp_gradient_segment_set_left_color (gradient, seg, &color);
-          }
-        else
-          {
+          if (seg)
+            gimp_gradient_segment_set_left_color (gradient, seg, color);
+          else
             success = FALSE;
           }
-        }
       else
         {
           success = FALSE;
@@ -382,8 +370,7 @@ gradient_segment_get_right_color_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpGradient *gradient;
   gint segment;
-  GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
-  gdouble opacity = 0.0;
+  GeglColor *color = NULL;
 
   gradient = g_value_get_object (gimp_value_array_index (args, 0));
   segment = g_value_get_int (gimp_value_array_index (args, 1));
@@ -395,10 +382,7 @@ gradient_segment_get_right_color_invoker (GimpProcedure         *procedure,
       seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
 
       if (seg)
-        {
-          gimp_gradient_segment_get_right_color (gradient, seg, &color);
-          opacity = color.a * 100.0;
-        }
+        color = g_object_ref (gimp_gradient_segment_get_right_color (gradient, seg));
       else
         success = FALSE;
     }
@@ -407,10 +391,7 @@ gradient_segment_get_right_color_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &color);
-      g_value_set_double (gimp_value_array_index (return_vals, 2), opacity);
-    }
+    g_value_take_object (gimp_value_array_index (return_vals, 1), color);
 
   return return_vals;
 }
@@ -426,13 +407,11 @@ gradient_segment_set_right_color_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpGradient *gradient;
   gint segment;
-  GimpRGB color;
-  gdouble opacity;
+  GeglColor *color;
 
   gradient = g_value_get_object (gimp_value_array_index (args, 0));
   segment = g_value_get_int (gimp_value_array_index (args, 1));
-  gimp_value_get_rgb (gimp_value_array_index (args, 2), &color);
-  opacity = g_value_get_double (gimp_value_array_index (args, 3));
+  color = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -441,10 +420,7 @@ gradient_segment_set_right_color_invoker (GimpProcedure         *procedure,
           GimpGradientSegment *seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
 
           if (seg)
-            {
-              color.a = opacity / 100.0;
-              gimp_gradient_segment_set_right_color (gradient, seg, &color);
-            }
+            gimp_gradient_segment_set_right_color (gradient, seg, color);
           else
             success = FALSE;
         }
@@ -1156,8 +1132,8 @@ gradient_segment_range_blend_colors_invoker (GimpProcedure         *procedure,
           if (start_seg && end_seg)
             gimp_gradient_segment_range_blend (gradient,
                                                start_seg, end_seg,
-                                               &start_seg->left_color,
-                                               &end_seg->right_color,
+                                               start_seg->left_color,
+                                               end_seg->right_color,
                                                TRUE, FALSE);
           else
             success = FALSE;
@@ -1202,8 +1178,8 @@ gradient_segment_range_blend_opacity_invoker (GimpProcedure         *procedure,
           if (start_seg && end_seg)
             gimp_gradient_segment_range_blend (gradient,
                                                start_seg, end_seg,
-                                               &start_seg->left_color,
-                                               &end_seg->right_color,
+                                               start_seg->left_color,
+                                               end_seg->right_color,
                                                FALSE, TRUE);
           else
             success = FALSE;
@@ -1493,18 +1469,11 @@ register_gradient_procs (GimpPDB *pdb)
                                                  0, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("color",
-                                                        "color",
-                                                        "The return color",
-                                                        FALSE,
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("opacity",
-                                                        "opacity",
-                                                        "The opacity of the endpoint",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                   gegl_param_spec_color ("color",
+                                                          "color",
+                                                          "The return color",
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1516,7 +1485,7 @@ register_gradient_procs (GimpPDB *pdb)
                                "gimp-gradient-segment-set-left-color");
   gimp_procedure_set_static_help (procedure,
                                   "Sets the left endpoint color of a segment",
-                                  "Sets the color of the left endpoint the indexed segment of the gradient.\n"
+                                  "Sets the color of the left endpoint the indexed segment of the gradient. The alpha channel of the [class@Gegl.Color] is taken into account.\n"
                                   "Returns an error when gradient is not editable or index is out of range.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
@@ -1536,18 +1505,11 @@ register_gradient_procs (GimpPDB *pdb)
                                                  0, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("color",
-                                                    "color",
-                                                    "The color to set",
-                                                    FALSE,
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("opacity",
-                                                    "opacity",
-                                                    "The opacity to set for the endpoint",
-                                                    0, 100.0, 0,
-                                                    GIMP_PARAM_READWRITE));
+                               gegl_param_spec_color ("color",
+                                                      "color",
+                                                      "The color to set",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1579,18 +1541,11 @@ register_gradient_procs (GimpPDB *pdb)
                                                  0, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("color",
-                                                        "color",
-                                                        "The return color",
-                                                        FALSE,
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("opacity",
-                                                        "opacity",
-                                                        "The opacity of the endpoint",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                   gegl_param_spec_color ("color",
+                                                          "color",
+                                                          "The return color",
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1602,7 +1557,7 @@ register_gradient_procs (GimpPDB *pdb)
                                "gimp-gradient-segment-set-right-color");
   gimp_procedure_set_static_help (procedure,
                                   "Sets the right endpoint color of the segment",
-                                  "Sets the right endpoint color of the segment of the gradient.\n"
+                                  "Sets the right endpoint color of the segment of the gradient. The alpha channel of the [class@Gegl.Color] is taken into account.\n"
                                   "Returns an error when gradient is not editable or segment index is out of range.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
@@ -1622,18 +1577,11 @@ register_gradient_procs (GimpPDB *pdb)
                                                  0, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("color",
-                                                    "color",
-                                                    "The color to set",
-                                                    FALSE,
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("opacity",
-                                                    "opacity",
-                                                    "The opacity to set for the endpoint",
-                                                    0, 100.0, 0,
-                                                    GIMP_PARAM_READWRITE));
+                               gegl_param_spec_color ("color",
+                                                      "color",
+                                                      "The color to set",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

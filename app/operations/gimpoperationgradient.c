@@ -455,6 +455,9 @@ gimp_operation_gradient_set_property (GObject      *object,
       {
         GimpGradient *gradient = g_value_get_object (value);
 
+        if (gradient)
+          g_object_ref (gradient);
+
         g_clear_object (&self->gradient);
 
         if (gradient)
@@ -466,6 +469,7 @@ gimp_operation_gradient_set_property (GObject      *object,
           }
 
         gimp_operation_gradient_invalidate_cache (self);
+        g_clear_object (&gradient);
       }
       break;
 
@@ -877,7 +881,7 @@ gradient_calc_shapeburst_dimpled_factor (GeglSampler *dist_sampler,
 static void
 gradient_render_pixel (gdouble   x,
                        gdouble   y,
-                       GimpRGB  *color,
+                       GimpRGB  *rgb,
                        gpointer  render_data)
 {
   RenderBlendData *rbd = render_data;
@@ -990,7 +994,7 @@ gradient_render_pixel (gdouble   x,
     case GIMP_REPEAT_TRUNCATE:
       if (factor < 0.0 || factor > 1.0)
         {
-          gimp_rgba_set (color, 0.0, 0.0, 0.0, 0.0);
+          gimp_rgba_set (rgb, 0.0, 0.0, 0.0, 0.0);
           return;
         }
       break;
@@ -1002,16 +1006,22 @@ gradient_render_pixel (gdouble   x,
     {
       factor = CLAMP (factor, 0.0, 1.0);
 
-      *color =
+      *rgb =
         rbd->gradient_cache[ROUND (factor * (rbd->gradient_cache_size - 1))];
     }
   else
     {
+      GeglColor *color = NULL;
+
       rbd->last_seg = gimp_gradient_get_color_at (rbd->gradient, NULL,
                                                   rbd->last_seg, factor,
                                                   rbd->reverse,
                                                   rbd->blend_color_space,
-                                                  color);
+                                                  &color);
+      if (color)
+        gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgb);
+
+      g_clear_object (&color);
     }
 }
 
@@ -1270,13 +1280,18 @@ gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
 
   for (i = 0; i < self->gradient_cache_size; i++)
     {
-      gdouble factor = (gdouble) i / (gdouble) (self->gradient_cache_size - 1);
+      GeglColor *color  = NULL;
+      gdouble    factor = (gdouble) i / (gdouble) (self->gradient_cache_size - 1);
 
       last_seg = gimp_gradient_get_color_at (self->gradient, NULL, last_seg,
                                              factor,
                                              self->gradient_reverse,
                                              self->gradient_blend_color_space,
-                                             self->gradient_cache + i);
+                                             &color);
+      if (color)
+        gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), self->gradient_cache + i);
+
+      g_clear_object (&color);
     }
 
   g_mutex_unlock (&self->gradient_cache_mutex);

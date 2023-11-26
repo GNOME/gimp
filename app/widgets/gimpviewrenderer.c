@@ -550,6 +550,14 @@ gimp_view_renderer_set_color_config (GimpViewRenderer *renderer,
     }
 }
 
+GimpColorConfig *
+gimp_view_renderer_get_color_config (GimpViewRenderer *renderer)
+{
+  g_return_val_if_fail (GIMP_IS_VIEW_RENDERER (renderer), NULL);
+
+  return renderer->priv->color_config;
+}
+
 void
 gimp_view_renderer_invalidate (GimpViewRenderer *renderer)
 {

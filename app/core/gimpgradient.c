@@ -74,10 +74,9 @@ static inline GimpGradientSegment *
               gimp_gradient_get_segment_at_internal  (GimpGradient        *gradient,
                                                       GimpGradientSegment *seg,
                                                       gdouble              pos);
-static void          gimp_gradient_get_flat_color    (GimpContext         *context,
-                                                      const GimpRGB       *color,
-                                                      GimpGradientColor    color_type,
-                                                      GimpRGB             *flat_color);
+static GeglColor   * gimp_gradient_get_flat_color    (GimpContext         *context,
+                                                      GeglColor           *color,
+                                                      GimpGradientColor    color_type);
 
 
 static inline gdouble  gimp_gradient_calc_linear_factor            (gdouble  middle,
@@ -224,7 +223,6 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
   guchar              *row;
   gint                 x, y;
   gdouble              dx, cur_x;
-  GimpRGB              color;
 
   dx    = 1.0 / (width - 1);
   cur_x = 0.0;
@@ -234,17 +232,19 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
 
   for (x = 0; x < width; x++)
     {
+      GeglColor *color = NULL;
+
       seg = gimp_gradient_get_color_at (gradient, context, seg, cur_x,
                                         FALSE,
                                         GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                         &color);
 
-      *p++ = ROUND (color.r * 255.0);
-      *p++ = ROUND (color.g * 255.0);
-      *p++ = ROUND (color.b * 255.0);
-      *p++ = ROUND (color.a * 255.0);
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A u8"), p);
 
+      p     += 4;
       cur_x += dx;
+
+      g_object_unref (color);
     }
 
   temp_buf = gimp_temp_buf_new (width, height, babl_format ("R'G'B'A u8"));
@@ -285,6 +285,8 @@ gimp_gradient_copy (GimpData *data,
 
       cur->prev = prev;
       cur->next = NULL;
+      cur->left_color  = gegl_color_duplicate (orig->left_color);
+      cur->right_color = gegl_color_duplicate (orig->right_color);
 
       if (prev)
         prev->next = cur;
@@ -341,9 +343,13 @@ gimp_gradient_get_checksum (GimpTagged *tagged)
     {
       GChecksum           *checksum = g_checksum_new (G_CHECKSUM_MD5);
       GimpGradientSegment *segment  = gradient->segments;
+      guchar               data[40];
 
       while (segment)
         {
+          const Babl *format;
+          gsize       length;
+
           g_checksum_update (checksum,
                              (const guchar *) &segment->left,
                              sizeof (segment->left));
@@ -356,15 +362,25 @@ gimp_gradient_get_checksum (GimpTagged *tagged)
           g_checksum_update (checksum,
                              (const guchar *) &segment->left_color_type,
                              sizeof (segment->left_color_type));
-          g_checksum_update (checksum,
-                             (const guchar *) &segment->left_color,
-                             sizeof (segment->left_color));
+
+          format = gegl_color_get_format (segment->left_color);
+          gegl_color_get_pixel (segment->left_color, format, data);
+          length = babl_format_get_bytes_per_pixel (format);
+          g_checksum_update (checksum, data, (gssize) length);
+          g_checksum_update (checksum, (const guchar *) babl_get_name (format),
+                             strlen (babl_get_name (format)));
+
           g_checksum_update (checksum,
                              (const guchar *) &segment->right_color_type,
                              sizeof (segment->right_color_type));
-          g_checksum_update (checksum,
-                             (const guchar *) &segment->right_color,
-                             sizeof (segment->right_color));
+
+          format = gegl_color_get_format (segment->right_color);
+          gegl_color_get_pixel (segment->right_color, format, data);
+          length = babl_format_get_bytes_per_pixel (format);
+          g_checksum_update (checksum, data, (gssize) length);
+          g_checksum_update (checksum, (const guchar *) babl_get_name (format),
+                             strlen (babl_get_name (format)));
+
           g_checksum_update (checksum,
                              (const guchar *) &segment->type,
                              sizeof (segment->type));
@@ -435,7 +451,7 @@ gimp_gradient_get_extension (GimpData *data)
  * @pos:               position in the gradient (between 0.0 and 1.0)
  * @reverse:           when %TRUE, use the reversed gradient
  * @blend_color_space: color space to use for blending RGB segments
- * @color:             returns the color
+ * @color:             returns a newly allocated color
  *
  * If you are iterating over an gradient, you should pass the the
  * return value from the last call for @seg.
@@ -443,24 +459,27 @@ gimp_gradient_get_extension (GimpData *data)
  * Returns: the gradient segment the color is from
  **/
 GimpGradientSegment *
-gimp_gradient_get_color_at (GimpGradient                *gradient,
-                            GimpContext                 *context,
-                            GimpGradientSegment         *seg,
-                            gdouble                      pos,
-                            gboolean                     reverse,
-                            GimpGradientBlendColorSpace  blend_color_space,
-                            GimpRGB                     *color)
+gimp_gradient_get_color_at (GimpGradient                 *gradient,
+                            GimpContext                  *context,
+                            GimpGradientSegment          *seg,
+                            gdouble                       pos,
+                            gboolean                      reverse,
+                            GimpGradientBlendColorSpace   blend_color_space,
+                            GeglColor                   **color)
 {
-  gdouble  factor = 0.0;
-  gdouble  seg_len;
-  gdouble  middle;
-  GimpRGB  left_color;
-  GimpRGB  right_color;
-  GimpRGB  rgb;
+  gdouble    factor = 0.0;
+  gdouble    seg_len;
+  gdouble    middle;
+  GeglColor *left_color;
+  GeglColor *right_color;
+  gdouble    left_alpha;
+  gdouble    right_alpha;
 
   /* type-check disabled to improve speed */
   /* g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL); */
-  g_return_val_if_fail (color != NULL, NULL);
+  g_return_val_if_fail (color != NULL && *color == NULL, NULL);
+
+  *color = gegl_color_new (NULL);
 
   pos = CLAMP (pos, 0.0, 1.0);
 
@@ -517,98 +536,99 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
 
   if (context)
     {
-      gimp_gradient_segment_get_left_flat_color (gradient,
-                                                 context, seg, &left_color);
-
-      gimp_gradient_segment_get_right_flat_color (gradient,
-                                                  context, seg, &right_color);
+      left_color  = gimp_gradient_segment_get_left_flat_color (gradient, context, seg);
+      right_color = gimp_gradient_segment_get_right_flat_color (gradient, context, seg);
     }
   else
     {
-      left_color  = seg->left_color;
-      right_color = seg->right_color;
+      left_color  = g_object_ref (seg->left_color);
+      right_color = g_object_ref (seg->right_color);
     }
 
   /* Calculate color components */
 
   if (seg->color == GIMP_GRADIENT_SEGMENT_RGB)
     {
+      gdouble left_components[3];
+      gdouble right_components[3];
+      gdouble ret_components[3];
+
       switch (blend_color_space)
         {
         case GIMP_GRADIENT_BLEND_CIE_LAB:
-          babl_process (fish_srgb_to_cie_lab,
-                        &left_color, &left_color, 1);
-          babl_process (fish_srgb_to_cie_lab,
-                        &right_color, &right_color, 1);
+          gegl_color_get_pixel (left_color, babl_format ("CIE Lab double"), left_components);
+          gegl_color_get_pixel (right_color, babl_format ("CIE Lab double"), right_components);
           break;
 
         case GIMP_GRADIENT_BLEND_RGB_LINEAR:
-          babl_process (fish_srgb_to_linear_rgb,
-                        &left_color, &left_color, 1);
-          babl_process (fish_srgb_to_linear_rgb,
-                        &right_color, &right_color, 1);
+          gegl_color_get_pixel (left_color, babl_format ("RGB double"), left_components);
+          gegl_color_get_pixel (right_color, babl_format ("RGB double"), right_components);
 
         case GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL:
+          /* TODO: shouldn't this format use the color space of the target
+           * image? Will it change computation? */
+          gegl_color_get_pixel (left_color, babl_format ("R'G'B' double"), left_components);
+          gegl_color_get_pixel (right_color, babl_format ("R'G'B' double"), right_components);
           break;
         }
 
-      rgb.r = left_color.r + (right_color.r - left_color.r) * factor;
-      rgb.g = left_color.g + (right_color.g - left_color.g) * factor;
-      rgb.b = left_color.b + (right_color.b - left_color.b) * factor;
+      ret_components[0] = left_components[0] + (right_components[0] - left_components[0]) * factor;
+      ret_components[1] = left_components[1] + (right_components[1] - left_components[1]) * factor;
+      ret_components[2] = left_components[2] + (right_components[2] - left_components[2]) * factor;
 
       switch (blend_color_space)
         {
         case GIMP_GRADIENT_BLEND_CIE_LAB:
-          babl_process (fish_cie_lab_to_srgb,
-                        &rgb, &rgb, 1);
+          gegl_color_set_pixel (*color, babl_format ("CIE Lab double"), ret_components);
           break;
 
         case GIMP_GRADIENT_BLEND_RGB_LINEAR:
-          babl_process (fish_linear_rgb_to_srgb,
-                        &rgb, &rgb, 1);
+          gegl_color_set_pixel (*color, babl_format ("RGB double"), ret_components);
+          break;
 
         case GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL:
+          gegl_color_set_pixel (*color, babl_format ("R'G'B' double"), ret_components);
           break;
         }
     }
   else
     {
-      GimpHSV left_hsv;
-      GimpHSV right_hsv;
+      gdouble left_hsv[3];
+      gdouble right_hsv[3];
 
-      gimp_rgb_to_hsv (&left_color,  &left_hsv);
-      gimp_rgb_to_hsv (&right_color, &right_hsv);
+      gegl_color_get_pixel (left_color, babl_format ("HSV double"), left_hsv);
+      gegl_color_get_pixel (right_color, babl_format ("HSV double"), right_hsv);
 
-      left_hsv.s = left_hsv.s + (right_hsv.s - left_hsv.s) * factor;
-      left_hsv.v = left_hsv.v + (right_hsv.v - left_hsv.v) * factor;
+      left_hsv[1] = left_hsv[1] + (right_hsv[1] - left_hsv[1]) * factor;
+      left_hsv[2] = left_hsv[2] + (right_hsv[2] - left_hsv[2]) * factor;
 
       switch (seg->color)
         {
         case GIMP_GRADIENT_SEGMENT_HSV_CCW:
-          if (left_hsv.h < right_hsv.h)
+          if (left_hsv[0] < right_hsv[0])
             {
-              left_hsv.h += (right_hsv.h - left_hsv.h) * factor;
+              left_hsv[0] += (right_hsv[0] - left_hsv[0]) * factor;
             }
           else
             {
-              left_hsv.h += (1.0 - (left_hsv.h - right_hsv.h)) * factor;
+              left_hsv[0] += (1.0 - (left_hsv[0] - right_hsv[0])) * factor;
 
-              if (left_hsv.h > 1.0)
-                left_hsv.h -= 1.0;
+              if (left_hsv[0] > 1.0)
+                left_hsv[0] -= 1.0;
             }
           break;
 
         case GIMP_GRADIENT_SEGMENT_HSV_CW:
-          if (right_hsv.h < left_hsv.h)
+          if (right_hsv[0] < left_hsv[0])
             {
-              left_hsv.h -= (left_hsv.h - right_hsv.h) * factor;
+              left_hsv[0] -= (left_hsv[0] - right_hsv[0]) * factor;
             }
           else
             {
-              left_hsv.h -= (1.0 - (right_hsv.h - left_hsv.h)) * factor;
+              left_hsv[0] -= (1.0 - (right_hsv[0] - left_hsv[0])) * factor;
 
-              if (left_hsv.h < 0.0)
-                left_hsv.h += 1.0;
+              if (left_hsv[0] < 0.0)
+                left_hsv[0] += 1.0;
             }
           break;
 
@@ -618,14 +638,17 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
           break;
         }
 
-      gimp_hsv_to_rgb (&left_hsv, &rgb);
+      gegl_color_set_pixel (*color, babl_format ("HSV double"), left_hsv);
     }
 
   /* Calculate alpha */
 
-  rgb.a = left_color.a + (right_color.a - left_color.a) * factor;
+  gegl_color_get_rgba (left_color, NULL, NULL, NULL, &left_alpha);
+  gegl_color_get_rgba (right_color, NULL, NULL, NULL, &right_alpha);
+  gimp_color_set_alpha (*color, left_alpha + (right_alpha - left_alpha) * factor);
 
-  *color = rgb;
+  g_object_unref (left_color);
+  g_object_unref (right_color);
 
   return seg;
 }
@@ -663,7 +686,7 @@ gimp_gradient_split_at (GimpGradient                 *gradient,
                         GimpGradientSegment         **newl,
                         GimpGradientSegment         **newr)
 {
-  GimpRGB              color;
+  GeglColor           *color = NULL;
   GimpGradientSegment *newseg;
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
@@ -703,11 +726,15 @@ gimp_gradient_split_at (GimpGradient                 *gradient,
 
   /* Set colors of both segments */
 
+  g_clear_object (&newseg->right_color);
+  g_clear_object (&newseg->left_color);
+
   newseg->right_color_type = seg->right_color_type;
   newseg->right_color      = seg->right_color;
 
   seg->right_color_type = newseg->left_color_type = GIMP_GRADIENT_COLOR_FIXED;
-  seg->right_color      = newseg->left_color      = color;
+  seg->right_color      = color;
+  newseg->left_color    = gegl_color_duplicate (color);
 
   /* Set parameters of new segment */
 
@@ -736,15 +763,17 @@ gimp_gradient_flatten (GimpGradient *gradient,
 
   for (seg = flat->segments; seg; seg = seg->next)
     {
-      gimp_gradient_segment_get_left_flat_color (gradient,
-                                                 context, seg,
-                                                 &seg->left_color);
+      GeglColor *color;
+
+      color = gimp_gradient_segment_get_left_flat_color (gradient, context, seg);
+      g_clear_object (&seg->left_color);
+      seg->left_color = color;
 
       seg->left_color_type = GIMP_GRADIENT_COLOR_FIXED;
 
-      gimp_gradient_segment_get_right_flat_color (gradient,
-                                                  context, seg,
-                                                  &seg->right_color);
+      color = gimp_gradient_segment_get_right_flat_color (gradient, context, seg);
+      g_clear_object (&seg->right_color);
+      seg->right_color = color;
 
       seg->right_color_type = GIMP_GRADIENT_COLOR_FIXED;
     }
@@ -767,10 +796,10 @@ gimp_gradient_segment_new (void)
   seg->right  = 1.0;
 
   seg->left_color_type = GIMP_GRADIENT_COLOR_FIXED;
-  gimp_rgba_set (&seg->left_color,  0.0, 0.0, 0.0, 1.0);
+  seg->left_color = gegl_color_new ("black");
 
   seg->right_color_type = GIMP_GRADIENT_COLOR_FIXED;
-  gimp_rgba_set (&seg->right_color, 1.0, 1.0, 1.0, 1.0);
+  seg->right_color = gegl_color_new ("white");
 
   seg->type  = GIMP_GRADIENT_SEGMENT_LINEAR;
   seg->color = GIMP_GRADIENT_SEGMENT_RGB;
@@ -786,15 +815,29 @@ gimp_gradient_segment_free (GimpGradientSegment *seg)
 {
   g_return_if_fail (seg != NULL);
 
+  g_clear_object (&seg->right_color);
+  g_clear_object (&seg->left_color);
   g_slice_free (GimpGradientSegment, seg);
 }
 
 void
 gimp_gradient_segments_free (GimpGradientSegment *seg)
 {
+  GimpGradientSegment *current = seg;
+  GimpGradientSegment *next;
+
   g_return_if_fail (seg != NULL);
 
-  g_slice_free_chain (GimpGradientSegment, seg, next);
+  if (seg->prev)
+    seg->prev->next = NULL;
+
+  do
+    {
+      next = current->next;
+      gimp_gradient_segment_free (current);
+      current = next;
+    }
+  while (next);
 }
 
 GimpGradientSegment *
@@ -891,6 +934,8 @@ gimp_gradient_segment_split_uniform (GimpGradient                 *gradient,
 
   for (i = 0; i < parts; i++)
     {
+      GeglColor *color = NULL;
+
       seg = gimp_gradient_segment_new ();
 
       if (i == 0)
@@ -905,10 +950,16 @@ gimp_gradient_segment_split_uniform (GimpGradient                 *gradient,
 
       gimp_gradient_get_color_at (gradient, context, lseg,
                                   seg->left,  FALSE, blend_color_space,
-                                  &seg->left_color);
+                                  &color);
+      g_clear_object (&seg->left_color);
+      seg->left_color = color;
+
+      color = NULL;
       gimp_gradient_get_color_at (gradient, context, lseg,
                                   seg->right, FALSE, blend_color_space,
-                                  &seg->right_color);
+                                  &color);
+      g_clear_object (&seg->right_color);
+      seg->right_color = color;
 
       seg->type  = lseg->type;
       seg->color = lseg->color;
@@ -925,10 +976,12 @@ gimp_gradient_segment_split_uniform (GimpGradient                 *gradient,
   /* Fix edges */
 
   tmp->left_color_type = lseg->left_color_type;
-  tmp->left_color      = lseg->left_color;
+  g_clear_object (&tmp->left_color);
+  tmp->left_color      = gegl_color_duplicate (lseg->left_color);
 
   seg->right_color_type = lseg->right_color_type;
-  seg->right_color      = lseg->right_color;
+  g_clear_object (&seg->right_color);
+  seg->right_color      = gegl_color_duplicate (lseg->right_color);
 
   tmp->left  = lseg->left;
   seg->right = lseg->right; /* To squish accumulative error */
@@ -956,61 +1009,57 @@ gimp_gradient_segment_split_uniform (GimpGradient                 *gradient,
   gimp_data_thaw (GIMP_DATA (gradient));
 }
 
-void
+GeglColor *
 gimp_gradient_segment_get_left_color (GimpGradient        *gradient,
-                                      GimpGradientSegment *seg,
-                                      GimpRGB             *color)
+                                      GimpGradientSegment *seg)
 {
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (seg != NULL);
-  g_return_if_fail (color != NULL);
+  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
+  g_return_val_if_fail (seg != NULL, NULL);
 
-  *color = seg->left_color;
+  return seg->left_color;
 }
 
 void
 gimp_gradient_segment_set_left_color (GimpGradient        *gradient,
                                       GimpGradientSegment *seg,
-                                      const GimpRGB       *color)
+                                      GeglColor           *color)
 {
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
   g_return_if_fail (seg != NULL);
-  g_return_if_fail (color != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
   gimp_data_freeze (GIMP_DATA (gradient));
 
   gimp_gradient_segment_range_blend (gradient, seg, seg,
-                                     color, &seg->right_color,
+                                     color, seg->right_color,
                                      TRUE, TRUE);
 
   gimp_data_thaw (GIMP_DATA (gradient));
 }
 
-void
+GeglColor *
 gimp_gradient_segment_get_right_color (GimpGradient        *gradient,
-                                       GimpGradientSegment *seg,
-                                       GimpRGB             *color)
+                                       GimpGradientSegment *seg)
 {
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (seg != NULL);
-  g_return_if_fail (color != NULL);
+  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
+  g_return_val_if_fail (seg != NULL, NULL);
 
-  *color = seg->right_color;
+  return seg->right_color;
 }
 
 void
 gimp_gradient_segment_set_right_color (GimpGradient        *gradient,
                                        GimpGradientSegment *seg,
-                                       const GimpRGB       *color)
+                                       GeglColor           *color)
 {
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
   g_return_if_fail (seg != NULL);
-  g_return_if_fail (color != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
   gimp_data_freeze (GIMP_DATA (gradient));
 
   gimp_gradient_segment_range_blend (gradient, seg, seg,
-                                     &seg->left_color, color,
+                                     seg->left_color, color,
                                      TRUE, TRUE);
 
   gimp_data_thaw (GIMP_DATA (gradient));
@@ -1066,34 +1115,28 @@ gimp_gradient_segment_set_right_color_type (GimpGradient        *gradient,
   gimp_data_thaw (GIMP_DATA (gradient));
 }
 
-void
+GeglColor *
 gimp_gradient_segment_get_left_flat_color (GimpGradient        *gradient,
                                            GimpContext         *context,
-                                           GimpGradientSegment *seg,
-                                           GimpRGB             *color)
+                                           GimpGradientSegment *seg)
 {
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (seg != NULL);
-  g_return_if_fail (color != NULL);
+  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
+  g_return_val_if_fail (seg != NULL, NULL);
 
-  gimp_gradient_get_flat_color (context,
-                                &seg->left_color, seg->left_color_type,
-                                color);
+  return gimp_gradient_get_flat_color (context,
+                                       seg->left_color, seg->left_color_type);
 }
 
-void
+GeglColor *
 gimp_gradient_segment_get_right_flat_color (GimpGradient        *gradient,
                                             GimpContext         *context,
-                                            GimpGradientSegment *seg,
-                                            GimpRGB             *color)
+                                            GimpGradientSegment *seg)
 {
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (seg != NULL);
-  g_return_if_fail (color != NULL);
+  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
+  g_return_val_if_fail (seg != NULL, NULL);
 
-  gimp_gradient_get_flat_color (context,
-                                &seg->right_color, seg->right_color_type,
-                                color);
+  return gimp_gradient_get_flat_color (context,
+                                       seg->right_color, seg->right_color_type);
 }
 
 gdouble
@@ -1320,15 +1363,26 @@ void
 gimp_gradient_segment_range_blend (GimpGradient        *gradient,
                                    GimpGradientSegment *lseg,
                                    GimpGradientSegment *rseg,
-                                   const GimpRGB       *rgb1,
-                                   const GimpRGB       *rgb2,
+                                   GeglColor           *color1,
+                                   GeglColor           *color2,
                                    gboolean             blend_colors,
                                    gboolean             blend_opacity)
 {
-  GimpRGB              d;
   gdouble              left, len;
   GimpGradientSegment *seg;
   GimpGradientSegment *aseg;
+  gdouble              red1;
+  gdouble              green1;
+  gdouble              blue1;
+  gdouble              alpha1;
+  gdouble              red2;
+  gdouble              green2;
+  gdouble              blue2;
+  gdouble              alpha2;
+  gdouble              dred;
+  gdouble              dgreen;
+  gdouble              dblue;
+  gdouble              dalpha;
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
   g_return_if_fail (lseg != NULL);
@@ -1338,10 +1392,15 @@ gimp_gradient_segment_range_blend (GimpGradient        *gradient,
   if (! rseg)
     rseg = gimp_gradient_segment_get_last (lseg);
 
-  d.r = rgb2->r - rgb1->r;
-  d.g = rgb2->g - rgb1->g;
-  d.b = rgb2->b - rgb1->b;
-  d.a = rgb2->a - rgb1->a;
+  /* TODO: currently doing this computation with sRGB value, because that's what
+   * was done historically. Is it right though?
+   */
+  gegl_color_get_rgba_with_space (color1, &red1, &green1, &blue1, &alpha1, NULL);
+  gegl_color_get_rgba_with_space (color2, &red2, &green2, &blue2, &alpha2, NULL);
+  dred   = red2 - red1;
+  dgreen = green2 - green1;
+  dblue  = blue2 - blue1;
+  dalpha = alpha2 - alpha1;
 
   left  = lseg->left;
   len   = rseg->right - left;
@@ -1350,21 +1409,50 @@ gimp_gradient_segment_range_blend (GimpGradient        *gradient,
 
   do
     {
+      gdouble seg_left_red;
+      gdouble seg_left_green;
+      gdouble seg_left_blue;
+      gdouble seg_left_alpha;
+      gdouble seg_right_red;
+      gdouble seg_right_green;
+      gdouble seg_right_blue;
+      gdouble seg_right_alpha;
+
       if (blend_colors)
         {
-          seg->left_color.r  = rgb1->r + (seg->left - left) / len * d.r;
-          seg->left_color.g  = rgb1->g + (seg->left - left) / len * d.g;
-          seg->left_color.b  = rgb1->b + (seg->left - left) / len * d.b;
+          seg_left_red    = red1 + (seg->left - left) / len * dred;
+          seg_left_green  = green1 + (seg->left - left) / len * dgreen;
+          seg_left_blue   = blue1 + (seg->left - left) / len * dblue;
 
-          seg->right_color.r = rgb1->r + (seg->right - left) / len * d.r;
-          seg->right_color.g = rgb1->g + (seg->right - left) / len * d.g;
-          seg->right_color.b = rgb1->b + (seg->right - left) / len * d.b;
+          seg_right_red   = red1 + (seg->right - left) / len * dred;
+          seg_right_green = green1 + (seg->right - left) / len * dgreen;
+          seg_right_blue  = blue1 + (seg->right - left) / len * dblue;
+        }
+      else if (blend_opacity)
+        {
+          gegl_color_get_rgba_with_space (seg->left_color, &seg_left_red, &seg_left_green,
+                                          &seg_left_blue, NULL, NULL);
+          gegl_color_get_rgba_with_space (seg->right_color, &seg_right_red, &seg_right_green,
+                                          &seg_right_blue, NULL, NULL);
         }
 
       if (blend_opacity)
         {
-          seg->left_color.a  = rgb1->a + (seg->left - left) / len * d.a;
-          seg->right_color.a = rgb1->a + (seg->right - left) / len * d.a;
+          seg_left_alpha  = alpha1 + (seg->left - left) / len * dalpha;
+          seg_right_alpha = alpha1 + (seg->right - left) / len * dalpha;
+        }
+      else if (blend_colors)
+        {
+          gegl_color_get_rgba_with_space (seg->left_color, NULL, NULL, NULL, &seg_left_alpha, NULL);
+          gegl_color_get_rgba_with_space (seg->right_color, NULL, NULL, NULL, &seg_right_alpha, NULL);
+        }
+
+      if (blend_colors || blend_opacity)
+        {
+          gegl_color_set_rgba_with_space (seg->left_color, seg_left_red, seg_left_green,
+                                          seg_left_blue, seg_left_alpha, NULL);
+          gegl_color_set_rgba_with_space (seg->right_color, seg_right_red, seg_right_green,
+                                          seg_right_blue, seg_right_alpha, NULL);
         }
 
       aseg = seg;
@@ -1465,16 +1553,21 @@ gimp_gradient_segment_range_flip (GimpGradient         *gradient,
           tmp = seg; /* Remember first segment */
         }
       else
-        seg->left = left + right - oseg->right;
+        {
+          seg->left = left + right - oseg->right;
+        }
 
       seg->middle = left + right - oseg->middle;
       seg->right  = left + right - oseg->left;
 
+      g_clear_object (&seg->left_color);
+      g_clear_object (&seg->right_color);
+
       seg->left_color_type = oseg->right_color_type;
-      seg->left_color      = oseg->right_color;
+      seg->left_color      = gegl_color_duplicate (oseg->right_color);
 
       seg->right_color_type = oseg->left_color_type;
-      seg->right_color      = oseg->left_color;
+      seg->right_color      = gegl_color_duplicate (oseg->left_color);
 
       switch (oseg->type)
         {
@@ -1629,11 +1722,14 @@ gimp_gradient_segment_range_replicate (GimpGradient         *gradient,
           seg->middle = new_left + factor * (oseg->middle - sel_left);
           seg->right  = new_left + factor * (oseg->right - sel_left);
 
+          g_clear_object (&seg->left_color);
+          g_clear_object (&seg->right_color);
+
           seg->left_color_type = oseg->left_color_type;
-          seg->left_color      = oseg->left_color;
+          seg->left_color      = gegl_color_duplicate (oseg->left_color);
 
           seg->right_color_type = oseg->right_color_type;
-          seg->right_color      = oseg->right_color;
+          seg->right_color      = gegl_color_duplicate (oseg->right_color);
 
           seg->type  = oseg->type;
           seg->color = oseg->color;
@@ -1908,11 +2004,15 @@ gimp_gradient_segment_range_merge (GimpGradient         *gradient,
 
   gimp_data_freeze (GIMP_DATA (gradient));
 
+  if (start_seg == end_seg)
+    goto out;
+
   /* Copy the end segment's right position and color to the start segment */
 
   start_seg->right            = end_seg->right;
   start_seg->right_color_type = end_seg->right_color_type;
-  start_seg->right_color      = end_seg->right_color;
+  g_clear_object (&start_seg->right_color);
+  start_seg->right_color      = gegl_color_duplicate (end_seg->right_color);
 
   /* Center the start segment's midpoint */
 
@@ -1947,6 +2047,8 @@ gimp_gradient_segment_range_merge (GimpGradient         *gradient,
 
       seg = prev;
     }
+
+out:
 
   if (final_start_seg)
     *final_start_seg = start_seg;
@@ -2193,41 +2295,37 @@ gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
   return seg;
 }
 
-static void
+static GeglColor *
 gimp_gradient_get_flat_color (GimpContext       *context,
-                              const GimpRGB     *rgb,
-                              GimpGradientColor  color_type,
-                              GimpRGB           *flat_color)
+                              GeglColor         *color,
+                              GimpGradientColor  color_type)
 {
-  GeglColor *color = NULL;
+  GeglColor *flat_color = NULL;
 
   switch (color_type)
     {
     case GIMP_GRADIENT_COLOR_FIXED:
-      *flat_color = *rgb;
+      flat_color = gegl_color_duplicate (color);
       break;
 
     case GIMP_GRADIENT_COLOR_FOREGROUND:
     case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
-      color = gegl_color_duplicate (gimp_context_get_foreground (context));
+      flat_color = gegl_color_duplicate (gimp_context_get_foreground (context));
 
       if (color_type == GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
-        gimp_color_set_alpha (color, 0.0);
+        gimp_color_set_alpha (flat_color, 0.0);
       break;
 
     case GIMP_GRADIENT_COLOR_BACKGROUND:
     case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
-      color = gegl_color_duplicate (gimp_context_get_background (context));
+      flat_color = gegl_color_duplicate (gimp_context_get_background (context));
 
       if (color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
-        gimp_color_set_alpha (color, 0.0);
+        gimp_color_set_alpha (flat_color, 0.0);
       break;
     }
 
-  if (color != NULL)
-    gegl_color_get_rgba_with_space (color, &flat_color->r, &flat_color->g, &flat_color->b, &flat_color->a, NULL);
-
-  g_clear_object (&color);
+  return flat_color;
 }
 
 static inline gdouble

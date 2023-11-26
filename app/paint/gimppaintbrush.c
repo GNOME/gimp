@@ -188,6 +188,7 @@ gimp_paintbrush_real_get_paint_params (GimpPaintbrush            *paintbrush,
   GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paintbrush);
   GimpContext   *context    = GIMP_CONTEXT (paint_options);
   GimpImage     *image      = gimp_item_get_image (GIMP_ITEM (drawable));
+  GeglColor     *color      = NULL;
 
   *paint_mode = gimp_context_get_paint_mode (context);
 
@@ -195,13 +196,16 @@ gimp_paintbrush_real_get_paint_params (GimpPaintbrush            *paintbrush,
       gimp_paint_options_get_gradient_color (paint_options, image,
                                              grad_point,
                                              paint_core->pixel_dist,
-                                             paint_color))
+                                             &color))
     {
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), paint_color);
       /* optionally take the color from the current gradient */
       gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
                                          paint_color, paint_color);
 
       *paint_appl_mode = GIMP_PAINT_INCREMENTAL;
+
+      g_clear_object (&color);
     }
   else if (brush_core->brush && gimp_brush_get_pixmap (brush_core->brush))
     {
@@ -215,7 +219,6 @@ gimp_paintbrush_real_get_paint_params (GimpPaintbrush            *paintbrush,
   else
     {
       /* otherwise fill the area with the foreground color */
-      GeglColor *color;
 
       color = gimp_context_get_foreground (context);
       gegl_color_get_rgba_with_space (color, &paint_color->r, &paint_color->g, &paint_color->b, &paint_color->a, NULL);

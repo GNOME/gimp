@@ -56,7 +56,6 @@ gimp_palette_import_from_gradient (GimpGradient                *gradient,
   GimpPalette         *palette;
   GimpGradientSegment *seg = NULL;
   gdouble              dx, cur_x;
-  GimpRGB              color;
   gint                 i;
 
   g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
@@ -70,10 +69,19 @@ gimp_palette_import_from_gradient (GimpGradient                *gradient,
 
   for (i = 0, cur_x = 0; i < n_colors; i++, cur_x += dx)
     {
+      GeglColor *color = NULL;
+      GimpRGB    rgb;
+
       seg = gimp_gradient_get_color_at (gradient, context,
                                         seg, cur_x, reverse, blend_color_space,
                                         &color);
-      gimp_palette_add_entry (palette, -1, NULL, &color);
+
+      g_return_val_if_fail (color != NULL, palette);
+
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+      gimp_palette_add_entry (palette, -1, NULL, &rgb);
+
+      g_clear_object (&color);
     }
 
   return palette;

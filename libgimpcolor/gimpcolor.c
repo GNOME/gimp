@@ -39,6 +39,10 @@
  * objects more easily.
  **/
 
+
+static const Babl * gimp_babl_format_get_with_alpha (const Babl *format);
+
+
 /**
  * gimp_color_set_alpha:
  * @color: a [class@Gegl.Color]
@@ -79,6 +83,7 @@ gimp_color_set_alpha (GeglColor *color,
    * Let's assume that since we use an unbounded 32-bit intermediate value
    * (float), the loss would be acceptable.
    */
+  format = gimp_babl_format_get_with_alpha (format);
   gegl_color_get_pixel (color, format, pixel);
   gegl_color_set_pixel (color, format, pixel);
 }
@@ -137,4 +142,63 @@ gimp_color_is_perceptually_identical (GeglColor *color1,
            SQR (pixel1[1] - pixel2[1]) +
            SQR (pixel1[2] - pixel2[2]) <= 1e-4));
 #undef SQR
+}
+
+
+/* Private functions. */
+
+static const Babl *
+gimp_babl_format_get_with_alpha (const Babl *format)
+{
+  const Babl  *new_format = NULL;
+  const gchar *new_model  = NULL;
+  const gchar *model;
+  const gchar *type;
+  gchar       *name;
+
+  if (babl_format_has_alpha (format))
+    return format;
+
+  model = babl_get_name (babl_format_get_model (format));
+  /* Assuming we use Babl formats with same type for all components. */
+  type  = babl_get_name (babl_format_get_type (format, 0));
+
+  if (g_strcmp0 (model, "Y") == 0)
+    new_model = "YA";
+  else if (g_strcmp0 (model, "RGB") == 0)
+    new_model = "RGBA";
+  else if (g_strcmp0 (model, "Y'") == 0)
+    new_model = "Y'A";
+  else if (g_strcmp0 (model, "R'G'B'") == 0)
+    new_model = "R'G'B'A";
+  else if (g_strcmp0 (model, "Y~") == 0)
+    new_model = "Y~A";
+  else if (g_strcmp0 (model, "R~G~B~") == 0)
+    new_model = "R~G~B~A";
+  else if (g_strcmp0 (model, "CIE Lab") == 0)
+    new_model = "CIE Lab alpha";
+  else if (g_strcmp0 (model, "CIE xyY") == 0)
+    new_model = "CIE xyY alpha";
+  else if (g_strcmp0 (model, "CIE XYZ") == 0)
+    new_model = "CIE XYZ alpha";
+  else if (g_strcmp0 (model, "CIE Yuv") == 0)
+    new_model = "CIE Yuv alpha";
+  else if (g_strcmp0 (model, "CMYK") == 0)
+    new_model = "CMYKA";
+  else if (g_strcmp0 (model, "cmyk") == 0)
+    new_model = "cmykA";
+  else if (g_strcmp0 (model, "HSL") == 0)
+    new_model = "HSLA";
+  else if (g_strcmp0 (model, "HSV") == 0)
+    new_model = "HSVA";
+  else if (g_strcmp0 (model, "cairo-RGB24") == 0)
+    new_model = "cairo-ARGB32";
+
+  g_return_val_if_fail (new_model != NULL, format);
+
+  name = g_strdup_printf ("%s %s", new_model, type);
+  new_format = babl_format_with_space (name, format);
+  g_free (name);
+
+  return new_format;
 }

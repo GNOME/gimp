@@ -30,9 +30,9 @@ struct _GimpGradientSegment
   gdouble                  left, middle, right;
 
   GimpGradientColor        left_color_type;
-  GimpRGB                  left_color;
+  GeglColor               *left_color;
   GimpGradientColor        right_color_type;
-  GimpRGB                  right_color;
+  GeglColor               *right_color;
 
   GimpGradientSegmentType  type;          /*  Segment's blending function  */
   GimpGradientSegmentColor color;         /*  Segment's coloring type      */
@@ -71,22 +71,22 @@ GimpData            * gimp_gradient_new            (GimpContext   *context,
                                                     const gchar   *name);
 GimpData            * gimp_gradient_get_standard   (GimpContext   *context);
 
-GimpGradientSegment * gimp_gradient_get_color_at   (GimpGradient        *gradient,
-                                                    GimpContext         *context,
-                                                    GimpGradientSegment *seg,
-                                                    gdouble              pos,
-                                                    gboolean             reverse,
-                                                    GimpGradientBlendColorSpace blend_color_space,
-                                                    GimpRGB             *color);
-GimpGradientSegment * gimp_gradient_get_segment_at (GimpGradient  *grad,
-                                                    gdouble        pos);
-void                  gimp_gradient_split_at       (GimpGradient         *gradient,
-                                                    GimpContext          *context,
-                                                    GimpGradientSegment  *seg,
-                                                    gdouble               pos,
-                                                    GimpGradientBlendColorSpace blend_color_space,
-                                                    GimpGradientSegment **newl,
-                                                    GimpGradientSegment **newr);
+GimpGradientSegment * gimp_gradient_get_color_at   (GimpGradient                 *gradient,
+                                                    GimpContext                  *context,
+                                                    GimpGradientSegment          *seg,
+                                                    gdouble                       pos,
+                                                    gboolean                      reverse,
+                                                    GimpGradientBlendColorSpace   blend_color_space,
+                                                    GeglColor                   **color);
+GimpGradientSegment * gimp_gradient_get_segment_at (GimpGradient                 *grad,
+                                                    gdouble                       pos);
+void                  gimp_gradient_split_at       (GimpGradient                 *gradient,
+                                                    GimpContext                  *context,
+                                                    GimpGradientSegment          *seg,
+                                                    gdouble                       pos,
+                                                    GimpGradientBlendColorSpace   blend_color_space,
+                                                    GimpGradientSegment         **newl,
+                                                    GimpGradientSegment         **newr);
 
 gboolean          gimp_gradient_has_fg_bg_segments (GimpGradient  *gradient);
 GimpGradient    * gimp_gradient_flatten            (GimpGradient  *gradient,
@@ -104,37 +104,35 @@ GimpGradientSegment * gimp_gradient_segment_get_nth   (GimpGradientSegment *seg,
 void                  gimp_gradient_segment_free      (GimpGradientSegment *seg);
 void                  gimp_gradient_segments_free     (GimpGradientSegment *seg);
 
-void    gimp_gradient_segment_split_midpoint  (GimpGradient         *gradient,
-                                               GimpContext          *context,
-                                               GimpGradientSegment  *lseg,
-                                               GimpGradientBlendColorSpace blend_color_space,
-                                               GimpGradientSegment **newl,
-                                               GimpGradientSegment **newr);
-void    gimp_gradient_segment_split_uniform   (GimpGradient         *gradient,
-                                               GimpContext          *context,
-                                               GimpGradientSegment  *lseg,
-                                               gint                  parts,
-                                               GimpGradientBlendColorSpace blend_color_space,
-                                               GimpGradientSegment **newl,
-                                               GimpGradientSegment **newr);
+void                  gimp_gradient_segment_split_midpoint  (GimpGradient         *gradient,
+                                                             GimpContext          *context,
+                                                             GimpGradientSegment  *lseg,
+                                                             GimpGradientBlendColorSpace blend_color_space,
+                                                             GimpGradientSegment **newl,
+                                                             GimpGradientSegment **newr);
+void                  gimp_gradient_segment_split_uniform   (GimpGradient         *gradient,
+                                                             GimpContext          *context,
+                                                             GimpGradientSegment  *lseg,
+                                                             gint                  parts,
+                                                             GimpGradientBlendColorSpace blend_color_space,
+                                                             GimpGradientSegment **newl,
+                                                             GimpGradientSegment **newr);
 
 /* Colors Setting/Getting Routines */
-void    gimp_gradient_segment_get_left_color  (GimpGradient         *gradient,
-                                               GimpGradientSegment  *seg,
-                                               GimpRGB              *color);
+GeglColor           * gimp_gradient_segment_get_left_color  (GimpGradient         *gradient,
+                                                             GimpGradientSegment  *seg);
 
-void    gimp_gradient_segment_set_left_color  (GimpGradient         *gradient,
-                                               GimpGradientSegment  *seg,
-                                               const GimpRGB        *color);
+void                  gimp_gradient_segment_set_left_color  (GimpGradient         *gradient,
+                                                             GimpGradientSegment  *seg,
+                                                             GeglColor            *color);
 
 
-void    gimp_gradient_segment_get_right_color (GimpGradient         *gradient,
-                                               GimpGradientSegment  *seg,
-                                               GimpRGB              *color);
+GeglColor           * gimp_gradient_segment_get_right_color (GimpGradient         *gradient,
+                                                             GimpGradientSegment  *seg);
 
-void    gimp_gradient_segment_set_right_color (GimpGradient         *gradient,
-                                               GimpGradientSegment  *seg,
-                                               const GimpRGB        *color);
+void                  gimp_gradient_segment_set_right_color (GimpGradient         *gradient,
+                                                             GimpGradientSegment  *seg,
+                                                             GeglColor            *color);
 
 
 GimpGradientColor
@@ -157,18 +155,16 @@ gimp_gradient_segment_set_right_color_type    (GimpGradient         *gradient,
                                                GimpGradientColor     color_type);
 
 
-void
+GeglColor *
 gimp_gradient_segment_get_left_flat_color     (GimpGradient         *gradient,
                                                GimpContext          *context,
-                                               GimpGradientSegment  *seg,
-                                               GimpRGB              *color);
+                                               GimpGradientSegment  *seg);
 
 
-void
+GeglColor *
 gimp_gradient_segment_get_right_flat_color    (GimpGradient         *gradient,
                                                GimpContext          *context,
-                                               GimpGradientSegment  *seg,
-                                               GimpRGB              *color);
+                                               GimpGradientSegment  *seg);
 
 
 /* Position Setting/Getting Routines */
@@ -216,8 +212,8 @@ void    gimp_gradient_segment_range_compress  (GimpGradient         *gradient,
 void    gimp_gradient_segment_range_blend     (GimpGradient         *gradient,
                                                GimpGradientSegment  *lseg,
                                                GimpGradientSegment  *rseg,
-                                               const GimpRGB        *rgb1,
-                                               const GimpRGB        *rgb2,
+                                               GeglColor            *color1,
+                                               GeglColor            *color2,
                                                gboolean              blend_colors,
                                                gboolean              blend_opacity);
 

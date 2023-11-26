@@ -47,11 +47,14 @@ G_BEGIN_DECLS
 #define GIMP_VALUE_HOLDS_COLOR(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GEGL_TYPE_COLOR))
 
 
-void      gimp_color_set_alpha                 (GeglColor *color,
-                                                gdouble    alpha);
+void        gimp_color_set_alpha                 (GeglColor   *color,
+                                                  gdouble      alpha);
 
-gboolean  gimp_color_is_perceptually_identical (GeglColor *color1,
-                                                GeglColor *color2);
+gboolean    gimp_color_is_perceptually_identical (GeglColor   *color1,
+                                                  GeglColor   *color2);
+
+GeglColor * gimp_color_parse_css                 (const gchar *css,
+                                                  gint         len);
 
 
 G_END_DECLS
