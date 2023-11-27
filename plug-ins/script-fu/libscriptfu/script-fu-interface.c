@@ -611,7 +611,7 @@ script_fu_resource_widget (const gchar   *title,
 {
   GtkWidget    *result_widget = NULL;
 
-  g_debug ("%s type: %ld", G_STRFUNC, resource_type);
+  g_debug ("%s type: %" G_GSIZE_FORMAT, G_STRFUNC, resource_type);
 
   /* Passing NULL resource sets initial choice to resource from context.
    * Passing empty string for outer widget label, since we provide our own.
@@ -819,6 +819,10 @@ script_fu_update_models (SFScript *script)
                                                              &start, &end,
                                                              FALSE);
           }
+          break;
+
+        default:
+          /* Silence warnings about unhandled enumeration values */
           break;
         }
     }
