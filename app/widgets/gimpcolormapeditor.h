@@ -58,7 +58,7 @@ gint        gimp_colormap_editor_get_index          (GimpColormapEditor *editor,
                                                      GeglColor          *search);
 gboolean    gimp_colormap_editor_set_index          (GimpColormapEditor *editor,
                                                      gint                index,
-                                                     GimpRGB            *color);
+                                                     GeglColor          *color);
 
 gint        gimp_colormap_editor_max_index          (GimpColormapEditor *editor);
 

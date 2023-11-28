@@ -60,7 +60,7 @@ typedef struct
 /*  local function prototype  */
 
 static void   gimp_image_colormap_set_palette_entry    (GimpImage        *image,
-                                                        const GimpRGB    *color,
+                                                        GeglColor        *color,
                                                         gint              index);
 static void   gimp_image_colormap_thread_is_index_used (IndexUsedJobData *data,
                                                         gint              index);
@@ -241,7 +241,8 @@ gimp_image_set_colormap_palette (GimpImage   *image,
   for (i = 0; i < n_colors; i++)
     {
       GimpPaletteEntry *entry = gimp_palette_get_entry (palette, i);
-      gimp_image_colormap_set_palette_entry (image, &entry->color, i);
+
+      gimp_image_colormap_set_palette_entry (image, entry->color, i);
     }
 
   gimp_data_thaw (GIMP_DATA (private->palette));
@@ -271,10 +272,9 @@ gimp_image_get_colormap (GimpImage *image)
       for (i = 0; i < n_colors; i++)
         {
           GimpPaletteEntry *entry = gimp_palette_get_entry (private->palette, i);
-          gimp_rgb_get_uchar (&entry->color,
-                              &colormap[i * 3],
-                              &colormap[i * 3 + 1],
-                              &colormap[i * 3 + 2]);
+
+          /* TODO: what should be the format of the colormap? */
+          gegl_color_get_pixel (entry->color, babl_format ("R'G'B' u8"), &colormap[i * 3]);
         }
     }
 
@@ -324,13 +324,11 @@ gimp_image_set_colormap (GimpImage    *image,
 
   for (i = 0; i < n_colors; i++)
     {
-      GimpRGB color;
-      gimp_rgba_set_uchar (&color,
-                           colormap[3 * i + 0],
-                           colormap[3 * i + 1],
-                           colormap[3 * i + 2],
-                           255);
-      gimp_image_colormap_set_palette_entry (image, &color, i);
+      GeglColor *color = gegl_color_new (NULL);
+
+      gegl_color_set_pixel (color, babl_format ("R'G'B' u8"), &colormap[i * 3]);
+      gimp_image_colormap_set_palette_entry (image, color, i);
+      g_object_unref (color);
     }
 
   gimp_image_colormap_changed (image, -1);
@@ -399,35 +397,34 @@ gimp_image_colormap_is_index_used (GimpImage *image,
   return found;
 }
 
-void
+GeglColor *
 gimp_image_get_colormap_entry (GimpImage *image,
-                               gint       color_index,
-                               GimpRGB   *color)
+                               gint       color_index)
 {
   GimpImagePrivate *private;
   GimpPaletteEntry *entry;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  g_return_if_fail (private->palette != NULL);
-  g_return_if_fail (color_index >= 0 &&
-                    color_index < gimp_palette_get_n_colors (private->palette));
-  g_return_if_fail (color != NULL);
+  g_return_val_if_fail (private->palette != NULL, NULL);
+  g_return_val_if_fail (color_index >= 0 &&
+                        color_index < gimp_palette_get_n_colors (private->palette),
+                        NULL);
 
   entry = gimp_palette_get_entry (private->palette, color_index);
 
-  g_return_if_fail (entry != NULL);
+  g_return_val_if_fail (entry != NULL, NULL);
 
-  *color = entry->color;
+  return entry->color;
 }
 
 void
-gimp_image_set_colormap_entry (GimpImage     *image,
-                               gint           color_index,
-                               const GimpRGB *color,
-                               gboolean       push_undo)
+gimp_image_set_colormap_entry (GimpImage *image,
+                               gint       color_index,
+                               GeglColor *color,
+                               gboolean   push_undo)
 {
   GimpImagePrivate *private;
 
@@ -438,7 +435,7 @@ gimp_image_set_colormap_entry (GimpImage     *image,
   g_return_if_fail (private->palette != NULL);
   g_return_if_fail (color_index >= 0 &&
                     color_index < gimp_palette_get_n_colors (private->palette));
-  g_return_if_fail (color != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
   if (push_undo)
     gimp_image_undo_push_image_colormap (image,
@@ -450,8 +447,8 @@ gimp_image_set_colormap_entry (GimpImage     *image,
 }
 
 void
-gimp_image_add_colormap_entry (GimpImage     *image,
-                               const GimpRGB *color)
+gimp_image_add_colormap_entry (GimpImage *image,
+                               GeglColor *color)
 {
   GimpImagePrivate *private;
 
@@ -461,7 +458,7 @@ gimp_image_add_colormap_entry (GimpImage     *image,
 
   g_return_if_fail (private->palette != NULL);
   g_return_if_fail (gimp_palette_get_n_colors (private->palette) < 256);
-  g_return_if_fail (color != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
   gimp_image_undo_push_image_colormap (image,
                                        C_("undo-type", "Add Color to Colormap"));
@@ -527,23 +524,23 @@ gimp_image_delete_colormap_entry (GimpImage *image,
 /*  private functions  */
 
 static void
-gimp_image_colormap_set_palette_entry (GimpImage     *image,
-                                       const GimpRGB *color,
-                                       gint           index)
+gimp_image_colormap_set_palette_entry (GimpImage *image,
+                                       GeglColor *color,
+                                       gint       index)
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
-  GimpRGB           black;
+  GeglColor        *black   = gegl_color_new ("black");
   gchar             name[64];
 
-  g_return_if_fail (color != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
-  gimp_rgb_set (&black, 0, 0, 0);
   while (gimp_palette_get_n_colors (private->palette) <= index)
-    gimp_palette_add_entry (private->palette, index, name, &black);
+    gimp_palette_add_entry (private->palette, index, name, black);
 
   g_snprintf (name, sizeof (name), "#%d", index);
 
   gimp_palette_set_entry (private->palette, index, name, color);
+  g_object_unref (black);
 }
 
 static void

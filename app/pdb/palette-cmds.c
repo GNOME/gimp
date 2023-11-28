@@ -21,14 +21,11 @@
 
 #include "stamp-pdbgen.h"
 
-#include <cairo.h>
 #include <string.h>
 
 #include <gegl.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
-
-#include "libgimpcolor/gimpcolor.h"
 
 #include "libgimpbase/gimpbase.h"
 
@@ -166,8 +163,11 @@ palette_get_colors_invoker (GimpProcedure         *procedure,
       for (i = 0; i < num_colors; i++, list = g_list_next (list))
         {
           GimpPaletteEntry *entry = list->data;
+          GimpRGB           rgb;
 
-          colors[i] = entry->color;
+          /* TODO: we need a geglcolorarray type! */
+          gegl_color_get_pixel (entry->color, babl_format ("R'G'B'A double"), &rgb);
+          colors[i] = rgb;
         }
     }
 
@@ -251,12 +251,12 @@ palette_add_entry_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpPalette *palette;
   const gchar *entry_name;
-  GimpRGB color;
+  GeglColor *color;
   gint entry_num = 0;
 
   palette = g_value_get_object (gimp_value_array_index (args, 0));
   entry_name = g_value_get_string (gimp_value_array_index (args, 1));
-  gimp_value_get_rgb (gimp_value_array_index (args, 2), &color);
+  color = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -264,7 +264,7 @@ palette_add_entry_invoker (GimpProcedure         *procedure,
       if (gimp_data_is_writable (GIMP_DATA (palette)))
         {
           /* -1 for the index means append. */
-          GimpPaletteEntry *entry = gimp_palette_add_entry (palette, -1, entry_name, &color);
+          GimpPaletteEntry *entry = gimp_palette_add_entry (palette, -1, entry_name, color);
 
           entry_num = gimp_palette_get_entry_position (palette, entry);
         }
@@ -338,7 +338,7 @@ palette_entry_get_color_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpPalette *palette;
   gint entry_num;
-  GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
+  GeglColor *color = NULL;
 
   palette = g_value_get_object (gimp_value_array_index (args, 0));
   entry_num = g_value_get_int (gimp_value_array_index (args, 1));
@@ -348,7 +348,7 @@ palette_entry_get_color_invoker (GimpProcedure         *procedure,
       GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
 
       if (entry)
-        color = entry->color;
+        color = gegl_color_duplicate (entry->color);
       else
         success = FALSE;
     }
@@ -357,7 +357,7 @@ palette_entry_get_color_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &color);
+    g_value_take_object (gimp_value_array_index (return_vals, 1), color);
 
   return return_vals;
 }
@@ -373,16 +373,16 @@ palette_entry_set_color_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpPalette *palette;
   gint entry_num;
-  GimpRGB color;
+  GeglColor *color;
 
   palette = g_value_get_object (gimp_value_array_index (args, 0));
   entry_num = g_value_get_int (gimp_value_array_index (args, 1));
-  gimp_value_get_rgb (gimp_value_array_index (args, 2), &color);
+  color = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
       if (gimp_data_is_writable (GIMP_DATA (palette)))
-        success = gimp_palette_set_entry_color (palette, entry_num, &color, TRUE);
+        success = gimp_palette_set_entry_color (palette, entry_num, color, TRUE);
       else
         success = FALSE;
     }
@@ -670,12 +670,11 @@ register_palette_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("color",
-                                                    "color",
-                                                    "The color for the added entry.",
-                                                    FALSE,
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
+                               gegl_param_spec_color ("color",
+                                                      "color",
+                                                      "The color for the added entry.",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("entry-num",
                                                      "entry num",
@@ -723,7 +722,7 @@ register_palette_procs (GimpPDB *pdb)
                                "gimp-palette-entry-get-color");
   gimp_procedure_set_static_help (procedure,
                                   "Gets the color of an entry in the palette.",
-                                  "Returns the color of the entry at the given zero-based index into the palette. Returns an error when the index is out of range.",
+                                  "Returns the color of the entry at the given zero-based index into the palette. Returns %NULL when the index is out of range.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -742,12 +741,11 @@ register_palette_procs (GimpPDB *pdb)
                                                  G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("color",
-                                                        "color",
-                                                        "The color at the index.",
-                                                        FALSE,
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                   gegl_param_spec_color ("color",
+                                                          "color",
+                                                          "The color at the index.",
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -778,12 +776,11 @@ register_palette_procs (GimpPDB *pdb)
                                                  G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("color",
-                                                    "color",
-                                                    "The new color",
-                                                    FALSE,
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
+                               gegl_param_spec_color ("color",
+                                                      "color",
+                                                      "The new color",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -2892,13 +2892,14 @@ custompal_pass1 (QuantizeObj *quantobj)
        i++, list = g_list_next (list))
     {
       GimpPaletteEntry *entry = list->data;
-      guchar            r, g, b;
+      guchar            rgb[3];
 
-      gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
+      /* TODO: which format is really needed here? */
+      gegl_color_get_pixel (entry->color, babl_format ("R'G'B' u8"), rgb);
 
-      quantobj->cmap[i].red   = (gint) r;
-      quantobj->cmap[i].green = (gint) g;
-      quantobj->cmap[i].blue  = (gint) b;
+      quantobj->cmap[i].red   = (gint) rgb[0];
+      quantobj->cmap[i].green = (gint) rgb[1];
+      quantobj->cmap[i].blue  = (gint) rgb[2];
     }
 
   quantobj -> actual_number_of_colors = i;

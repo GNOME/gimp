@@ -32,8 +32,8 @@
 
 struct _GimpPaletteEntry
 {
-  GimpRGB  color;
-  gchar   *name;
+  GeglColor *color;
+  gchar     *name;
 };
 
 
@@ -74,17 +74,17 @@ void               gimp_palette_move_entry      (GimpPalette      *palette,
 GimpPaletteEntry * gimp_palette_add_entry       (GimpPalette      *palette,
                                                  gint              position,
                                                  const gchar      *name,
-                                                 const GimpRGB    *color);
+                                                 GeglColor        *color);
 void               gimp_palette_delete_entry    (GimpPalette      *palette,
                                                  GimpPaletteEntry *entry);
 
 gboolean           gimp_palette_set_entry       (GimpPalette      *palette,
                                                  gint              position,
                                                  const gchar      *name,
-                                                 const GimpRGB    *color);
+                                                 GeglColor        *color);
 gboolean           gimp_palette_set_entry_color (GimpPalette      *palette,
                                                  gint              position,
-                                                 const GimpRGB    *color,
+                                                 GeglColor        *color,
                                                  gboolean          push_undo_if_image);
 gboolean           gimp_palette_set_entry_name  (GimpPalette      *palette,
                                                  gint              position,

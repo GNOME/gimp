@@ -287,10 +287,10 @@ gimp_palette_set_columns (GimpPalette *palette,
  * Since: 2.2
  **/
 gboolean
-gimp_palette_add_entry (GimpPalette   *palette,
-                        const gchar   *entry_name,
-                        const GimpRGB *color,
-                        gint          *entry_num)
+gimp_palette_add_entry (GimpPalette *palette,
+                        const gchar *entry_name,
+                        GeglColor   *color,
+                        gint        *entry_num)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -299,7 +299,7 @@ gimp_palette_add_entry (GimpPalette   *palette,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_STRING, entry_name,
-                                          GIMP_TYPE_RGB, color,
+                                          GEGL_TYPE_COLOR, color,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -364,25 +364,23 @@ gimp_palette_delete_entry (GimpPalette *palette,
  * gimp_palette_entry_get_color:
  * @palette: The palette.
  * @entry_num: The index of the entry to get the color of.
- * @color: (out caller-allocates): The color at the index.
  *
  * Gets the color of an entry in the palette.
  *
  * Returns the color of the entry at the given zero-based index into
- * the palette. Returns an error when the index is out of range.
+ * the palette. Returns %NULL when the index is out of range.
  *
- * Returns: TRUE on success.
+ * Returns: (transfer full): The color at the index.
  *
  * Since: 2.2
  **/
-gboolean
+GeglColor *
 gimp_palette_entry_get_color (GimpPalette *palette,
-                              gint         entry_num,
-                              GimpRGB     *color)
+                              gint         entry_num)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gboolean success = TRUE;
+  GeglColor *color = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_PALETTE, palette,
@@ -394,14 +392,12 @@ gimp_palette_entry_get_color (GimpPalette *palette,
                                                args);
   gimp_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    color = g_value_dup_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
-  return success;
+  return color;
 }
 
 /**
@@ -421,9 +417,9 @@ gimp_palette_entry_get_color (GimpPalette *palette,
  * Since: 2.2
  **/
 gboolean
-gimp_palette_entry_set_color (GimpPalette   *palette,
-                              gint           entry_num,
-                              const GimpRGB *color)
+gimp_palette_entry_set_color (GimpPalette *palette,
+                              gint         entry_num,
+                              GeglColor   *color)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -432,7 +428,7 @@ gimp_palette_entry_set_color (GimpPalette   *palette,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_INT, entry_num,
-                                          GIMP_TYPE_RGB, color,
+                                          GEGL_TYPE_COLOR, color,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),

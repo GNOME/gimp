@@ -491,18 +491,24 @@ gimp_color_history_palette_dirty (GimpColorHistory *history)
   for (i = 0; i < history->history_size; i++)
     {
       GimpPaletteEntry *entry = gimp_palette_get_entry (palette, i);
-      GeglColor        *color = gegl_color_new ("black");
-      GimpRGB           black = { 0.0, 0.0, 0.0, 1.0 };
-      GimpRGB           rgb   = entry ? entry->color : black;
+      GeglColor        *black = gegl_color_new ("black");
+      GeglColor        *color = entry ? entry->color : black;
       gboolean          oog   = FALSE;
 
       g_signal_handlers_block_by_func (history->color_areas[i],
                                        gimp_color_history_color_changed,
                                        GINT_TO_POINTER (i));
 
-      gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
       gimp_color_area_set_color (GIMP_COLOR_AREA (history->color_areas[i]), color);
 
+      /* Now that palette colors can be any model and any space, just looking at
+       * whether they are out of [0; 1] range is not enough (a same color could
+       * be in or out range depending on the color space it is stored as).
+       * I guess that what we are really looking for is whether a color is
+       * out-of-gamut for the specifically active image.
+       * TODO
+       */
+#if 0
       if (/* Common out-of-gamut case */
           (rgb.r < 0.0 || rgb.r > 1.0 ||
            rgb.g < 0.0 || rgb.g > 1.0 ||
@@ -515,13 +521,14 @@ gimp_color_history_palette_dirty (GimpColorHistory *history)
             ABS (rgb.r - rgb.b) > CHANNEL_EPSILON ||
             ABS (rgb.g - rgb.b) > CHANNEL_EPSILON)))
         oog = TRUE;
+#endif
       gimp_color_area_set_out_of_gamut (GIMP_COLOR_AREA (history->color_areas[i]), oog);
 
       g_signal_handlers_unblock_by_func (history->color_areas[i],
                                          gimp_color_history_color_changed,
                                          GINT_TO_POINTER (i));
 
-      g_object_unref (color);
+      g_object_unref (black);
     }
 }
 
@@ -534,7 +541,6 @@ gimp_color_history_color_changed (GtkWidget *widget,
   GimpColorHistory *history;
   GimpPalette      *palette;
   GeglColor        *color;
-  GimpRGB           rgb;
 
   history = GIMP_COLOR_HISTORY (gtk_widget_get_ancestor (widget,
                                                          GIMP_TYPE_COLOR_HISTORY));
@@ -542,10 +548,8 @@ gimp_color_history_color_changed (GtkWidget *widget,
   palette = gimp_palettes_get_color_history (history->context->gimp);
 
   color = gimp_color_area_get_color (GIMP_COLOR_AREA (widget));
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-  g_object_unref (color);
 
-  gimp_palette_set_entry_color (palette, GPOINTER_TO_INT (data), &rgb, FALSE);
+  gimp_palette_set_entry_color (palette, GPOINTER_TO_INT (data), color, FALSE);
 }
 
 static void

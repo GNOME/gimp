@@ -217,8 +217,8 @@ static const ColorEntry named_colors[] =
  *
  * Additionally the `rgba()`, `hsl()` and `hsla()` functions are supported too.
  *
- * Returns: a newly allocated [class@Gegl.Color] if @css was parsed successfully
- *          %NULL otherwise
+ * Returns: (transfer full): a newly allocated [class@Gegl.Color] if @css was
+ *                           parsed successfully, %NULL otherwise
  *
  * Since: 2.2
  **/

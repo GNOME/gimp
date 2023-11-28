@@ -159,14 +159,14 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
     {
       if ((y % renderpal->cell_height) == 0)
         {
-          guchar  r, g, b;
+          guchar  rgb[3];
           gint    x;
           gint    n = 0;
           guchar *d = row;
 
           memset (row, renderpal->draw_grid ? 0 : 255, renderer->width * 4);
 
-          r = g = b = (renderpal->draw_grid ? 0 : 255);
+          rgb[0] = rgb[1] = rgb[2] = (renderpal->draw_grid ? 0 : 255);
 
           for (x = 0; x < renderer->width; x++, d += 4)
             {
@@ -180,11 +180,12 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
                       list = g_list_next (list);
                       n++;
 
-                      gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
+                      /* TODO: render directly to widget color space! */
+                      gegl_color_get_pixel (entry->color, babl_format ("R'G'B' u8"), rgb);
                     }
                   else
                     {
-                      r = g = b = (renderpal->draw_grid ? 0 : 255);
+                      rgb[0] = rgb[1] = rgb[2] = (renderpal->draw_grid ? 0 : 255);
                     }
                 }
 
@@ -194,7 +195,7 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
                 }
               else
                 {
-                  GIMP_CAIRO_RGB24_SET_PIXEL (d, r, g, b);
+                  GIMP_CAIRO_RGB24_SET_PIXEL (d, rgb[0], rgb[1], rgb[2]);
                 }
             }
         }

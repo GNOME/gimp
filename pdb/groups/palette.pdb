@@ -138,8 +138,11 @@ sub palette_get_colors {
   for (i = 0; i < num_colors; i++, list = g_list_next (list))
     {
       GimpPaletteEntry *entry = list->data;
+      GimpRGB           rgb;
 
-      colors[i] = entry->color;
+      /* TODO: we need a geglcolorarray type! */
+      gegl_color_get_pixel (entry->color, babl_format ("R'G'B'A double"), &rgb);
+      colors[i] = rgb;
     }
 }
 CODE
@@ -218,7 +221,7 @@ HELP
         ${palette_arg_spec},
         { name => 'entry_name', type => 'string', null_ok => 1,
           desc => 'A name for the entry' },
-        { name => 'color', type => 'color',
+        { name => 'color', type => 'geglcolor',
           desc => 'The color for the added entry.' }
     );
 
@@ -234,7 +237,7 @@ HELP
   if (gimp_data_is_writable (GIMP_DATA (palette)))
     {
       /* -1 for the index means append. */
-      GimpPaletteEntry *entry = gimp_palette_add_entry (palette, -1, entry_name, &color);
+      GimpPaletteEntry *entry = gimp_palette_add_entry (palette, -1, entry_name, color);
 
       entry_num = gimp_palette_get_entry_position (palette, entry);
     }
@@ -299,7 +302,7 @@ sub palette_entry_get_color {
 
     $help = <<'HELP';
 Returns the color of the entry at the given zero-based index into the palette.
-Returns an error when the index is out of range.
+Returns %NULL when the index is out of range.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
@@ -311,7 +314,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'color', type => 'color', void_ret => 1,
+        { name => 'color', type => 'geglcolor',
           desc => 'The color at the index.' }
     );
 
@@ -321,7 +324,7 @@ HELP
   GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
 
   if (entry)
-    color = entry->color;
+    color = gegl_color_duplicate (entry->color);
   else
     success = FALSE;
 }
@@ -344,7 +347,7 @@ HELP
         ${palette_arg_spec},
         { name => 'entry_num', type => 'int32',
           desc => 'The entry to get' },
-        { name => 'color', type => 'color',
+        { name => 'color', type => 'geglcolor',
           desc => 'The new color' }
     );
 
@@ -352,7 +355,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_data_is_writable (GIMP_DATA (palette)))
-    success = gimp_palette_set_entry_color (palette, entry_num, &color, TRUE);
+    success = gimp_palette_set_entry_color (palette, entry_num, color, TRUE);
   else
     success = FALSE;
 }

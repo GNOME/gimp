@@ -145,7 +145,7 @@ palettes_merge_callback (GtkWidget   *widget,
 
           gimp_palette_add_entry (new_palette, -1,
                                   entry->name,
-                                  &entry->color);
+                                  entry->color);
         }
     }
 

@@ -48,16 +48,15 @@ void           gimp_image_unset_colormap           (GimpImage     *image,
 gboolean       gimp_image_colormap_is_index_used   (GimpImage     *image,
                                                     gint           color_index);
 
-void           gimp_image_get_colormap_entry       (GimpImage     *image,
-                                                    gint           color_index,
-                                                    GimpRGB       *color);
+GeglColor    * gimp_image_get_colormap_entry       (GimpImage     *image,
+                                                    gint           color_index);
 void           gimp_image_set_colormap_entry       (GimpImage     *image,
                                                     gint           color_index,
-                                                    const GimpRGB *color,
+                                                    GeglColor     *color,
                                                     gboolean       push_undo);
 
 void           gimp_image_add_colormap_entry       (GimpImage     *image,
-                                                    const GimpRGB *color);
+                                                    GeglColor     *color);
 gboolean       gimp_image_delete_colormap_entry    (GimpImage     *image,
                                                     gint           color_index,
                                                     gboolean       push_undo);

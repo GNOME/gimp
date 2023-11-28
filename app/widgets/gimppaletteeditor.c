@@ -471,6 +471,7 @@ gimp_palette_editor_edit_color (GimpPaletteEditor *editor)
 {
   GimpDataEditor *data_editor;
   GimpPalette    *palette;
+  GimpRGB         rgb;
 
   g_return_if_fail (GIMP_IS_PALETTE_EDITOR (editor));
 
@@ -481,6 +482,7 @@ gimp_palette_editor_edit_color (GimpPaletteEditor *editor)
 
   palette = GIMP_PALETTE (gimp_data_editor_get_data (data_editor));
 
+  gegl_color_get_pixel (editor->color->color, babl_format ("R'G'B'A double"), &rgb);
   if (! editor->color_dialog)
     {
       editor->color_dialog =
@@ -493,7 +495,7 @@ gimp_palette_editor_edit_color (GimpPaletteEditor *editor)
                                GTK_WIDGET (editor),
                                gimp_dialog_factory_get_singleton (),
                                "gimp-palette-editor-color-dialog",
-                               &editor->color->color,
+                               &rgb,
                                FALSE, FALSE);
 
       g_signal_connect (editor->color_dialog, "destroy",
@@ -509,8 +511,7 @@ gimp_palette_editor_edit_color (GimpPaletteEditor *editor)
       gimp_viewable_dialog_set_viewables (GIMP_VIEWABLE_DIALOG (editor->color_dialog),
                                           g_list_prepend (NULL, palette),
                                           data_editor->context);
-      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
-                                   &editor->color->color);
+      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog), &rgb);
 
       if (! gtk_widget_get_visible (editor->color_dialog))
         gimp_dialog_factory_position_dialog (gimp_dialog_factory_get_singleton (),
@@ -534,7 +535,6 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
     {
       GimpPaletteEntry *entry;
       GimpData         *data;
-      GimpRGB           rgb;
       gint              index = -1;
 
       data = gimp_data_editor_get_data (GIMP_DATA_EDITOR (editor));
@@ -542,7 +542,6 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
         index = gimp_palette_get_entry_position (GIMP_PALETTE (data),
                                                  editor->color);
 
-      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
       switch (pick_state)
         {
         case GIMP_COLOR_PICK_STATE_START:
@@ -550,7 +549,7 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
             index += 1;
 
           entry = gimp_palette_add_entry (GIMP_PALETTE (data), index,
-                                          NULL, &rgb);
+                                          NULL, color);
           gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view),
                                           entry);
           break;
@@ -558,7 +557,7 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
         case GIMP_COLOR_PICK_STATE_UPDATE:
         case GIMP_COLOR_PICK_STATE_END:
           gimp_palette_set_entry_color (GIMP_PALETTE (data),
-                                        index, &rgb, FALSE);
+                                        index, color, FALSE);
           break;
         }
     }
@@ -662,7 +661,7 @@ gimp_palette_editor_get_index (GimpPaletteEditor *editor,
 gboolean
 gimp_palette_editor_set_index (GimpPaletteEditor *editor,
                                gint               index,
-                               GimpRGB           *color)
+                               GeglColor         *color)
 {
   GimpPalette *palette;
 
@@ -682,7 +681,14 @@ gimp_palette_editor_set_index (GimpPaletteEditor *editor,
                                       entry);
 
       if (color)
-        *color = editor->color->color;
+        {
+          const Babl *format;
+          guchar      pixel[40];
+
+          format = gegl_color_get_format (editor->color->color);
+          gegl_color_get_pixel (editor->color->color, format, pixel);
+          gegl_color_set_pixel (color, format, pixel);
+        }
 
       return TRUE;
     }
@@ -747,7 +753,7 @@ static void
 palette_editor_drop_color (GtkWidget     *widget,
                            gint           x,
                            gint           y,
-                           const GimpRGB *color,
+                           const GimpRGB *rgb,
                            gpointer       data)
 {
   GimpPaletteEditor *editor = data;
@@ -756,9 +762,12 @@ palette_editor_drop_color (GtkWidget     *widget,
     {
       GimpPalette      *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
       GimpPaletteEntry *entry;
+      GeglColor        *color   = gegl_color_new (NULL);
 
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
       entry = gimp_palette_add_entry (palette, -1, NULL, color);
       gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view), entry);
+      g_object_unref (color);
     }
 }
 
@@ -774,15 +783,11 @@ palette_editor_entry_clicked (GimpPaletteView   *view,
   if (entry)
     {
       GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-      GeglColor      *color       = gegl_color_new ("black");
 
-      gegl_color_set_rgba_with_space (color, entry->color.r, entry->color.g, entry->color.b, entry->color.a, NULL);
       if (state & gimp_get_toggle_behavior_mask ())
-        gimp_context_set_background (data_editor->context, color);
+        gimp_context_set_background (data_editor->context, entry->color);
       else
-        gimp_context_set_foreground (data_editor->context, color);
-
-      g_object_unref (color);
+        gimp_context_set_foreground (data_editor->context, entry->color);
     }
 }
 
@@ -884,19 +889,22 @@ palette_editor_popup_menu (GtkWidget *widget,
 static void
 palette_editor_color_dropped (GimpPaletteView   *view,
                               GimpPaletteEntry  *entry,
-                              const GimpRGB     *color,
+                              const GimpRGB     *rgb,
                               GimpPaletteEditor *editor)
 {
   if (GIMP_DATA_EDITOR (editor)->data_editable)
     {
       GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+      GeglColor   *color   = gegl_color_new (NULL);
       gint         pos     = -1;
 
       if (entry)
         pos = gimp_palette_get_entry_position (palette, entry);
 
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
       entry = gimp_palette_add_entry (palette, pos, NULL, color);
       gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view), entry);
+      g_object_unref (color);
     }
 }
 
@@ -1011,7 +1019,7 @@ palette_editor_edit_color_update (GimpColorDialog      *dialog,
     case GIMP_COLOR_DIALOG_OK:
       if (editor->color)
         {
-          editor->color->color = *color;
+          gegl_color_set_pixel (editor->color->color, babl_format ("R'G'B'A double"), color);
           gimp_data_dirty (GIMP_DATA (palette));
         }
       /* Fallthrough */

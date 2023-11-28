@@ -513,15 +513,15 @@ gimp_palette_view_invalidate (GimpPalette     *palette,
 
 static void
 gimp_palette_view_drag_color (GtkWidget *widget,
-                              GimpRGB   *color,
+                              GimpRGB   *rgb,
                               gpointer   data)
 {
   GimpPaletteView *view = GIMP_PALETTE_VIEW (data);
 
   if (view->dnd_entry)
-    *color = view->dnd_entry->color;
+    gegl_color_get_pixel (view->dnd_entry->color, babl_format ("R'G'B'A double"), rgb);
   else
-    gimp_rgba_set (color, 0.0, 0.0, 0.0, 1.0);
+    gimp_rgba_set (rgb, 0.0, 0.0, 0.0, 1.0);
 }
 
 static void

@@ -384,26 +384,20 @@ gimp_colormap_selection_get_index (GimpColormapSelection *selection,
 
   if (search)
     {
-      GimpRGB temp;
-      GimpRGB search_rgb;
+      GeglColor *temp;
 
-      /* TODO: this is likely very wrong as we don't seem to care about the
-       * color space of neither search nor temp. They should be fit into a same
-       * space before comparing.
-       */
-      gegl_color_get_rgba_with_space (search, &search_rgb.r, &search_rgb.g, &search_rgb.b, &search_rgb.a, NULL);
-      gimp_image_get_colormap_entry (image, index, &temp);
+      temp = gimp_image_get_colormap_entry (image, index);
 
-      if (gimp_rgb_distance (&temp, &search_rgb) > RGB_EPSILON)
+      if (! gimp_color_is_perceptually_identical (temp, search))
         {
           gint n_colors = gimp_image_get_colormap_size (image);
           gint i;
 
           for (i = 0; i < n_colors; i++)
             {
-              gimp_image_get_colormap_entry (image, i, &temp);
+              temp = gimp_image_get_colormap_entry (image, i);
 
-              if (gimp_rgb_distance (&temp, &search_rgb) < RGB_EPSILON)
+              if (gimp_color_is_perceptually_identical (temp, search))
                 {
                   index = i;
                   break;
@@ -418,12 +412,13 @@ gimp_colormap_selection_get_index (GimpColormapSelection *selection,
 gboolean
 gimp_colormap_selection_set_index (GimpColormapSelection *selection,
                                    gint                   index,
-                                   GimpRGB               *color)
+                                   GeglColor             *color)
 {
   GimpImage *image;
   gint       size;
 
   g_return_val_if_fail (GIMP_IS_COLORMAP_SELECTION (selection), FALSE);
+  g_return_val_if_fail (color == NULL || GEGL_IS_COLOR (color), FALSE);
 
   image = gimp_context_get_image (selection->context);
 
@@ -451,7 +446,15 @@ gimp_colormap_selection_set_index (GimpColormapSelection *selection,
     }
 
   if (color)
-    gimp_image_get_colormap_entry (image, index, color);
+    {
+      GeglColor  *c = gimp_image_get_colormap_entry (image, index);
+      const Babl *format;
+      guchar      pixel[40];
+
+      format = gegl_color_get_format (c);
+      gegl_color_get_pixel (c, format, pixel);
+      gegl_color_set_pixel (color, format, pixel);
+    }
 
   return TRUE;
 }
@@ -581,16 +584,19 @@ gimp_colormap_selection_update_entries (GimpColormapSelection *selection)
     }
   else
     {
-      GimpRGB  color;
-      guchar   r, g, b;
-      gchar   *string;
+      GeglColor *color;
+      guchar     rgb[3];
+      gchar     *string;
 
       gtk_adjustment_set_value (selection->index_adjustment,
                                 selection->col_index);
-      gimp_image_get_colormap_entry (image, selection->col_index, &color);
-      gimp_rgb_get_uchar (&color, &r, &g, &b);
+      color = gimp_image_get_colormap_entry (image, selection->col_index);
+      /* The color entry shows an HTML notation, which we assumes mean
+       * sRGB for most people. But is it really what we want? TODO
+       */
+      gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
 
-      string = g_strdup_printf ("%02x%02x%02x", r, g, b);
+      string = g_strdup_printf ("%02x%02x%02x", rgb[0], rgb[1], rgb[2]);
       gtk_entry_set_text (GTK_ENTRY (selection->color_entry), string);
       g_free (string);
 
@@ -677,11 +683,13 @@ gimp_colormap_hex_entry_changed (GimpColorHexEntry     *entry,
 
   if (image)
     {
-      GimpRGB color;
+      GeglColor *color = gegl_color_new (NULL);
+      GimpRGB    rgb;
 
-      gimp_color_hex_entry_get_color (entry, &color);
+      gimp_color_hex_entry_get_color (entry, &rgb);
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
-      gimp_image_set_colormap_entry (image, selection->col_index, &color, TRUE);
+      gimp_image_set_colormap_entry (image, selection->col_index, color, TRUE);
       gimp_image_flush (image);
     }
 }

@@ -55,12 +55,13 @@ gimp_palette_save (GimpData       *data,
        list = g_list_next (list))
     {
       GimpPaletteEntry *entry = list->data;
-      guchar            r, g, b;
+      guchar            rgb[3];
 
-      gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
+      /* TODO: we should create a GIMP Palette v2 to store any format/space. */
+      gegl_color_get_pixel (entry->color, babl_format ("R'G'B' u8"), rgb);
 
       g_string_append_printf (string, "%3d %3d %3d\t%s\n",
-                              r, g, b, entry->name);
+                              rgb[0], rgb[1], rgb[2], entry->name);
     }
 
   if (! g_output_stream_write_all (output, string->str, string->len,

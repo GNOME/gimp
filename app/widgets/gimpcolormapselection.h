@@ -66,11 +66,11 @@ GType       gimp_colormap_selection_get_type   (void) G_GNUC_CONST;
 
 GtkWidget * gimp_colormap_selection_new        (GimpContext *context);
 
-gint        gimp_colormap_selection_get_index  (GimpColormapSelection *selection,
-                                                GeglColor             *search);
-gboolean    gimp_colormap_selection_set_index  (GimpColormapSelection *selection,
-                                                gint                   index,
-                                                GimpRGB               *color);
+gint        gimp_colormap_selection_get_index  (GimpColormapSelection  *selection,
+                                                GeglColor              *search);
+gboolean    gimp_colormap_selection_set_index  (GimpColormapSelection  *selection,
+                                                gint                    index,
+                                                GeglColor              *color);
 
 gint        gimp_colormap_selection_max_index  (GimpColormapSelection *selection);
 

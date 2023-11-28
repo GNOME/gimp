@@ -74,7 +74,7 @@ gint        gimp_palette_editor_get_index  (GimpPaletteEditor *editor,
                                             GeglColor         *search);
 gboolean    gimp_palette_editor_set_index  (GimpPaletteEditor *editor,
                                             gint               index,
-                                            GimpRGB           *color);
+                                            GeglColor         *color);
 
 gint        gimp_palette_editor_max_index  (GimpPaletteEditor *editor);
 

@@ -56,7 +56,6 @@ palette_editor_new_color_cmd_callback (GimpAction *action,
     {
       GimpPalette      *palette = GIMP_PALETTE (data_editor->data);
       GimpPaletteEntry *entry;
-      GimpRGB           rgb;
       GeglColor        *color;
 
       if (background)
@@ -64,8 +63,7 @@ palette_editor_new_color_cmd_callback (GimpAction *action,
       else
         color = gimp_context_get_foreground (data_editor->context);
 
-      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
-      entry = gimp_palette_add_entry (palette, -1, NULL, &rgb);
+      entry = gimp_palette_add_entry (palette, -1, NULL, color);
       gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view), entry);
     }
 }

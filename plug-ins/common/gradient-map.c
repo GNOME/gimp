@@ -448,7 +448,6 @@ get_samples_palette (GimpDrawable *drawable)
 {
   GimpPalette *palette;
 
-  GimpRGB     color_sample;
   gdouble    *d_samples, *d_samp;
   gboolean    is_rgb;
   gdouble     factor;
@@ -470,13 +469,13 @@ get_samples_palette (GimpDrawable *drawable)
 
   for (i = 0; i < NSAMPLES; i++)
     {
+      GeglColor *color_sample;
+
       d_samp = &d_samples[i * nb_chan];
       pal_entry = CLAMP ((int)(i * factor), 0, num_colors - 1);
 
-      gimp_palette_entry_get_color (palette, pal_entry, &color_sample);
-      gimp_rgb_get_pixel (&color_sample,
-                          format,
-                          d_samp);
+      color_sample = gimp_palette_entry_get_color (palette, pal_entry);
+      gegl_color_get_pixel (color_sample, format, d_samp);
     }
 
   return d_samples;

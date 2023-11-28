@@ -225,7 +225,8 @@ void
 gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
 {
   GimpImage *image;
-  GimpRGB    color;
+  GeglColor *color;
+  GimpRGB    rgb;
   gchar     *desc;
   gint       index;
 
@@ -239,7 +240,8 @@ gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
     /* No colormap. */
     return;
 
-  gimp_image_get_colormap_entry (image, index, &color);
+  color = gimp_image_get_colormap_entry (image, index);
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
   desc = g_strdup_printf (_("Edit colormap entry #%d"), index);
 
@@ -255,7 +257,7 @@ gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
                                GTK_WIDGET (editor),
                                gimp_dialog_factory_get_singleton (),
                                "gimp-colormap-editor-color-dialog",
-                               (const GimpRGB *) &color,
+                               (const GimpRGB *) &rgb,
                                TRUE, FALSE);
 
       g_signal_connect (editor->color_dialog, "destroy",
@@ -273,7 +275,7 @@ gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
                                           GIMP_IMAGE_EDITOR (editor)->context);
       g_object_set (editor->color_dialog, "description", desc, NULL);
       gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
-                                   &color);
+                                   &rgb);
 
       if (! gtk_widget_get_visible (editor->color_dialog))
         gimp_dialog_factory_position_dialog (gimp_dialog_factory_get_singleton (),
@@ -336,7 +338,7 @@ gimp_colormap_editor_get_index (GimpColormapEditor *editor,
 gboolean
 gimp_colormap_editor_set_index (GimpColormapEditor *editor,
                                 gint                index,
-                                GimpRGB            *color)
+                                GeglColor          *color)
 {
   g_return_val_if_fail (GIMP_IS_COLORMAP_EDITOR (editor), FALSE);
 
@@ -390,7 +392,8 @@ gimp_colormap_editor_color_update (GimpColorDialog      *dialog,
 
   if (image)
     {
-      gint col_index;
+      GeglColor *color = gegl_color_new (NULL);
+      gint       col_index;
 
       col_index = gimp_colormap_selection_get_index (GIMP_COLORMAP_SELECTION (editor->selection),
                                                      NULL);
@@ -401,17 +404,21 @@ gimp_colormap_editor_color_update (GimpColorDialog      *dialog,
           gimp_color_selection_get_old_color (
             GIMP_COLOR_SELECTION (dialog->selection), &old_color);
 
+          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &old_color);
           /* Restore old color for undo */
-          gimp_image_set_colormap_entry (image, col_index, &old_color,
-                                         FALSE);
+          gimp_image_set_colormap_entry (image, col_index, color, FALSE);
+
         }
 
-      gimp_image_set_colormap_entry (image, col_index, rgb, push_undo);
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
+      gimp_image_set_colormap_entry (image, col_index, color, push_undo);
 
       if (push_undo)
         gimp_image_flush (image);
       else
         gimp_projection_flush (gimp_image_get_projection (image));
+
+      g_object_unref (color);
     }
 }
 
@@ -455,16 +462,12 @@ gimp_colormap_editor_color_clicked (GimpColormapEditor *editor,
                                     GdkModifierType     state)
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
-  GeglColor       *color        = gegl_color_new ("black");
-
-  gegl_color_set_rgba_with_space (color, entry->color.r, entry->color.g, entry->color.b, entry->color.a, NULL);
 
   if (state & gimp_get_toggle_behavior_mask ())
-    gimp_context_set_background (image_editor->context, color);
+    gimp_context_set_background (image_editor->context, entry->color);
   else
-    gimp_context_set_foreground (image_editor->context, color);
+    gimp_context_set_foreground (image_editor->context, entry->color);
 
-  g_object_unref (color);
 }
 
 static void

@@ -70,7 +70,6 @@ gimp_palette_import_from_gradient (GimpGradient                *gradient,
   for (i = 0, cur_x = 0; i < n_colors; i++, cur_x += dx)
     {
       GeglColor *color = NULL;
-      GimpRGB    rgb;
 
       seg = gimp_gradient_get_color_at (gradient, context,
                                         seg, cur_x, reverse, blend_color_space,
@@ -78,8 +77,7 @@ gimp_palette_import_from_gradient (GimpGradient                *gradient,
 
       g_return_val_if_fail (color != NULL, palette);
 
-      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-      gimp_palette_add_entry (palette, -1, NULL, &rgb);
+      gimp_palette_add_entry (palette, -1, NULL, color);
 
       g_clear_object (&color);
     }
@@ -207,7 +205,8 @@ gimp_palette_import_create_image_palette (gpointer data,
   ImgColors   *color_tab = data;
   gint         n_colors;
   gchar       *lab;
-  GimpRGB      color;
+  GeglColor   *color;
+  guint8       rgb[3];
 
   n_colors = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (palette),
                                                  "import-n-colors"));
@@ -222,15 +221,17 @@ gimp_palette_import_create_image_palette (gpointer data,
                          color_tab->count);
 
   /* Adjust the colors to the mean of the the sample */
-  gimp_rgba_set_uchar
-    (&color,
-     (guchar) color_tab->r + (color_tab->r_adj / color_tab->count),
-     (guchar) color_tab->g + (color_tab->g_adj / color_tab->count),
-     (guchar) color_tab->b + (color_tab->b_adj / color_tab->count),
-     255);
+  color = gegl_color_new (NULL);
+  rgb[0] = (guchar) color_tab->r + (color_tab->r_adj / color_tab->count);
+  rgb[1] = (guchar) color_tab->g + (color_tab->g_adj / color_tab->count);
+  rgb[2] = (guchar) color_tab->b + (color_tab->b_adj / color_tab->count);
 
-  gimp_palette_add_entry (palette, -1, lab, &color);
+  /* TODO: what format should I use? */
+  gegl_color_set_pixel (color, babl_format ("R'G'B' u8"), rgb);
 
+  gimp_palette_add_entry (palette, -1, lab, color);
+
+  g_object_unref (color);
   g_free (lab);
 }
 

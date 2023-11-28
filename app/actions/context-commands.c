@@ -1016,29 +1016,20 @@ context_set_color_index (gint       index,
                          gboolean   use_palette,
                          GeglColor *color)
 {
-  GimpRGB rgb;
-
-  gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
   if (use_colormap)
     {
       GimpColormapEditor *editor = context_get_colormap_editor ();
 
-      if (editor && gimp_colormap_editor_set_index (editor, index, &rgb))
-        {
-          gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
-          return TRUE;
-        }
+      if (editor && gimp_colormap_editor_set_index (editor, index, color))
+        return TRUE;
     }
 
   if (use_palette)
     {
       GimpPaletteEditor *editor = context_get_palette_editor ();
 
-      if (editor && gimp_palette_editor_set_index (editor, index, &rgb))
-        {
-          gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
-          return TRUE;
-        }
+      if (editor && gimp_palette_editor_set_index (editor, index, color))
+        return TRUE;
     }
 
   return FALSE;

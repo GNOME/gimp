@@ -32,32 +32,31 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpPalette* gimp_palette_new             (const gchar    *name);
-GimpPalette* gimp_palette_get_by_name     (const gchar    *name);
-gint         gimp_palette_get_color_count (GimpPalette    *palette);
-GimpRGB*     gimp_palette_get_colors      (GimpPalette    *palette,
-                                           gint           *num_colors);
-gint         gimp_palette_get_columns     (GimpPalette    *palette);
-gboolean     gimp_palette_set_columns     (GimpPalette    *palette,
-                                           gint            columns);
-gboolean     gimp_palette_add_entry       (GimpPalette    *palette,
-                                           const gchar    *entry_name,
-                                           const GimpRGB  *color,
-                                           gint           *entry_num);
-gboolean     gimp_palette_delete_entry    (GimpPalette    *palette,
-                                           gint            entry_num);
-gboolean     gimp_palette_entry_get_color (GimpPalette    *palette,
-                                           gint            entry_num,
-                                           GimpRGB        *color);
-gboolean     gimp_palette_entry_set_color (GimpPalette    *palette,
-                                           gint            entry_num,
-                                           const GimpRGB  *color);
-gboolean     gimp_palette_entry_get_name  (GimpPalette    *palette,
-                                           gint            entry_num,
-                                           gchar         **entry_name);
-gboolean     gimp_palette_entry_set_name  (GimpPalette    *palette,
-                                           gint            entry_num,
-                                           const gchar    *entry_name);
+GimpPalette* gimp_palette_new             (const gchar  *name);
+GimpPalette* gimp_palette_get_by_name     (const gchar  *name);
+gint         gimp_palette_get_color_count (GimpPalette  *palette);
+GimpRGB*     gimp_palette_get_colors      (GimpPalette  *palette,
+                                           gint         *num_colors);
+gint         gimp_palette_get_columns     (GimpPalette  *palette);
+gboolean     gimp_palette_set_columns     (GimpPalette  *palette,
+                                           gint          columns);
+gboolean     gimp_palette_add_entry       (GimpPalette  *palette,
+                                           const gchar  *entry_name,
+                                           GeglColor    *color,
+                                           gint         *entry_num);
+gboolean     gimp_palette_delete_entry    (GimpPalette  *palette,
+                                           gint          entry_num);
+GeglColor*   gimp_palette_entry_get_color (GimpPalette  *palette,
+                                           gint          entry_num);
+gboolean     gimp_palette_entry_set_color (GimpPalette  *palette,
+                                           gint          entry_num,
+                                           GeglColor    *color);
+gboolean     gimp_palette_entry_get_name  (GimpPalette  *palette,
+                                           gint          entry_num,
+                                           gchar       **entry_name);
+gboolean     gimp_palette_entry_set_name  (GimpPalette  *palette,
+                                           gint          entry_num,
+                                           const gchar  *entry_name);
 
 
 G_END_DECLS

@@ -263,10 +263,7 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
 
           list = g_list_next (list);
 
-          gimp_rgb_get_uchar (&entry->color,
-                              &b[x * cell_size * 3 + 0],
-                              &b[x * cell_size * 3 + 1],
-                              &b[x * cell_size * 3 + 2]);
+          gegl_color_get_pixel (entry->color, babl_format ("R'G'B' u8"), &b[x * cell_size * 3]);
 
           for (i = 1; i < cell_size; i++)
             {
@@ -355,7 +352,7 @@ gimp_palette_copy (GimpData *data,
     {
       GimpPaletteEntry *entry = list->data;
 
-      gimp_palette_add_entry (palette, -1, entry->name, &entry->color);
+      gimp_palette_add_entry (palette, -1, entry->name, entry->color);
     }
 
   gimp_data_thaw (data);
@@ -452,16 +449,16 @@ GimpPaletteEntry *
 gimp_palette_add_entry (GimpPalette   *palette,
                         gint           position,
                         const gchar   *name,
-                        const GimpRGB *color)
+                        GeglColor     *color)
 {
   GimpPaletteEntry *entry;
 
   g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
-  g_return_val_if_fail (color != NULL, NULL);
+  g_return_val_if_fail (GEGL_IS_COLOR (color), NULL);
 
   entry = g_slice_new0 (GimpPaletteEntry);
 
-  entry->color = *color;
+  entry->color = gegl_color_duplicate (color);
   entry->name  = g_strdup (name ? name : _("Untitled"));
 
   if (position < 0 || position >= palette->n_colors)
@@ -513,19 +510,19 @@ gboolean
 gimp_palette_set_entry (GimpPalette   *palette,
                         gint           position,
                         const gchar   *name,
-                        const GimpRGB *color)
+                        GeglColor     *color)
 {
   GimpPaletteEntry *entry;
 
   g_return_val_if_fail (GIMP_IS_PALETTE (palette), FALSE);
-  g_return_val_if_fail (color != NULL, FALSE);
+  g_return_val_if_fail (GEGL_IS_COLOR (color), FALSE);
 
   entry = gimp_palette_get_entry (palette, position);
 
   if (! entry)
     return FALSE;
 
-  entry->color = *color;
+  entry->color = gegl_color_duplicate (color);
 
   if (entry->name)
     g_free (entry->name);
@@ -543,13 +540,13 @@ gimp_palette_set_entry (GimpPalette   *palette,
 gboolean
 gimp_palette_set_entry_color (GimpPalette   *palette,
                               gint           position,
-                              const GimpRGB *color,
+                              GeglColor     *color,
                               gboolean       push_undo_if_image)
 {
   GimpPaletteEntry *entry;
 
   g_return_val_if_fail (GIMP_IS_PALETTE (palette), FALSE);
-  g_return_val_if_fail (color != NULL, FALSE);
+  g_return_val_if_fail (GEGL_IS_COLOR (color), FALSE);
 
   entry = gimp_palette_get_entry (palette, position);
 
@@ -560,7 +557,7 @@ gimp_palette_set_entry_color (GimpPalette   *palette,
     gimp_image_undo_push_image_colormap (gimp_data_get_image (GIMP_DATA (palette)),
                                          C_("undo-type", "Change Colormap entry"));
 
-  entry->color = *color;
+  entry->color = gegl_color_duplicate (color);
 
   if (! gimp_data_is_frozen (GIMP_DATA (palette)))
     g_signal_emit (palette, signals[ENTRY_CHANGED], 0, position);
@@ -646,15 +643,10 @@ gimp_palette_find_entry (GimpPalette      *palette,
                          GimpPaletteEntry *start_from)
 {
   GimpPaletteEntry *entry;
-  GimpRGB           rgb;
 
   g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
   g_return_val_if_fail (GEGL_IS_COLOR (color), NULL);
 
-  /* TODO: we should have a gimp_color_distance() function to compare 2
-   * GeglColor.
-   */
-  gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
   if (! start_from)
     {
       GList *list;
@@ -664,11 +656,11 @@ gimp_palette_find_entry (GimpPalette      *palette,
       for (list = palette->colors; list; list = g_list_next (list))
         {
           entry = (GimpPaletteEntry *) list->data;
-          if (gimp_rgb_distance (&entry->color, &rgb) < RGB_EPSILON)
+          if (gimp_color_is_perceptually_identical (entry->color, color))
             return entry;
         }
     }
-  else if (gimp_rgb_distance (&start_from->color, &rgb) < RGB_EPSILON)
+  else if (gimp_color_is_perceptually_identical (start_from->color, color))
     {
       return start_from;
     }
@@ -690,7 +682,7 @@ gimp_palette_find_entry (GimpPalette      *palette,
           if (next)
             {
               entry = (GimpPaletteEntry *) next->data;
-              if (gimp_rgb_distance (&entry->color, &rgb) < RGB_EPSILON)
+              if (gimp_color_is_perceptually_identical (entry->color, color))
                 return entry;
 
               next = next->next;
@@ -699,7 +691,7 @@ gimp_palette_find_entry (GimpPalette      *palette,
           if (prev)
             {
               entry = (GimpPaletteEntry *) prev->data;
-              if (gimp_rgb_distance (&entry->color, &rgb) < RGB_EPSILON)
+              if (gimp_color_is_perceptually_identical (entry->color, color))
                 return entry;
 
               prev = prev->prev;
