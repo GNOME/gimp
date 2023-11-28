@@ -753,6 +753,7 @@ language_init (const gchar *language)
   else
     {
       g_setenv ("LANGUAGE", language, TRUE);
+      g_setenv ("LANG", language, TRUE);
       setlocale (LC_ALL, "");
 
       actual_language = g_strdup (language);
