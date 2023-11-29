@@ -404,6 +404,44 @@ gimp_palette_get_checksum (GimpTagged *tagged)
 
 /*  public functions  */
 
+void
+gimp_palette_restrict_format (GimpPalette *palette,
+                              const Babl  *format)
+{
+  gint n_colors;
+
+  g_return_if_fail (GIMP_IS_PALETTE (palette));
+
+  if (palette->format == format)
+    return;
+
+  palette->format = format;
+
+  if (palette->format == NULL)
+    /* No more restriction. */
+    return;
+
+  /* Convert all colors to the new format. */
+  n_colors = gimp_palette_get_n_colors (palette);
+  for (gint i = 0; i < n_colors; i++)
+    {
+      GimpPaletteEntry *entry;
+      guint8            pixel[40];
+
+      entry = gimp_palette_get_entry (palette, i);
+      gegl_color_get_pixel (entry->color, format, pixel);
+      gegl_color_set_pixel (entry->color, format, pixel);
+    }
+}
+
+const Babl *
+gimp_palette_get_restriction (GimpPalette *palette)
+{
+  g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
+
+  return palette->format;
+}
+
 GList *
 gimp_palette_get_colors (GimpPalette *palette)
 {
@@ -460,6 +498,14 @@ gimp_palette_add_entry (GimpPalette   *palette,
 
   entry->color = gegl_color_duplicate (color);
   entry->name  = g_strdup (name ? name : _("Untitled"));
+
+  if (palette->format != NULL)
+    {
+      guint8 pixel[40];
+
+      gegl_color_get_pixel (entry->color, palette->format, pixel);
+      gegl_color_set_pixel (entry->color, palette->format, pixel);
+    }
 
   if (position < 0 || position >= palette->n_colors)
     {
@@ -523,6 +569,13 @@ gimp_palette_set_entry (GimpPalette   *palette,
     return FALSE;
 
   entry->color = gegl_color_duplicate (color);
+  if (palette->format != NULL)
+    {
+      guint8 pixel[40];
+
+      gegl_color_get_pixel (entry->color, palette->format, pixel);
+      gegl_color_set_pixel (entry->color, palette->format, pixel);
+    }
 
   if (entry->name)
     g_free (entry->name);
@@ -558,6 +611,13 @@ gimp_palette_set_entry_color (GimpPalette   *palette,
                                          C_("undo-type", "Change Colormap entry"));
 
   entry->color = gegl_color_duplicate (color);
+  if (palette->format != NULL)
+    {
+      guint8 pixel[40];
+
+      gegl_color_get_pixel (entry->color, palette->format, pixel);
+      gegl_color_set_pixel (entry->color, palette->format, pixel);
+    }
 
   if (! gimp_data_is_frozen (GIMP_DATA (palette)))
     g_signal_emit (palette, signals[ENTRY_CHANGED], 0, position);

@@ -48,6 +48,7 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpobjectqueue.h"
+#include "gimppalette.h"
 #include "gimpprogress.h"
 
 #include "gimp-intl.h"
@@ -1021,48 +1022,25 @@ gimp_image_convert_profile_colormap (GimpImage                *image,
                                      gboolean                  bpc,
                                      GimpProgress             *progress)
 {
-  GimpColorTransform      *transform;
-  const Babl              *src_format;
-  const Babl              *dest_format;
+  GimpImagePrivate        *private = GIMP_IMAGE_GET_PRIVATE (image);
   GimpColorTransformFlags  flags = 0;
-  guchar                  *cmap;
-  gint                     n_colors;
-
-  n_colors = gimp_image_get_colormap_size (image);
-  cmap     = gimp_image_get_colormap (image);
+  GimpPalette             *palette;
+  const Babl              *space;
+  const Babl              *format;
 
   if (bpc)
+    /* TODO: current implementation ignores the black point compensation
+     * choice because babl doesn't have BCP support yet.
+     * Previous code was using gimp_color_transform_new() which used
+     * LittleCMS directly instead.
+     * This should be fixed.
+     */
     flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
-  src_format  = gimp_color_profile_get_format (src_profile,
-                                               babl_format ("R'G'B' u8"),
-                                               GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                               NULL);
-  dest_format = gimp_color_profile_get_format (dest_profile,
-                                               babl_format ("R'G'B' u8"),
-                                               GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                               NULL);
-
-  transform = gimp_color_transform_new (src_profile,  src_format,
-                                        dest_profile, dest_format,
-                                        intent, flags);
-
-  if (transform)
-    {
-      gimp_color_transform_process_pixels (transform,
-                                           babl_format ("R'G'B' u8"), cmap,
-                                           babl_format ("R'G'B' u8"), cmap,
-                                           n_colors);
-      g_object_unref (transform);
-
-      gimp_image_set_colormap (image, cmap, n_colors, TRUE);
-    }
-  else
-    {
-      g_warning ("gimp_color_transform_new() failed!");
-    }
-
-  g_free (cmap);
+  palette  = gimp_image_get_colormap_palette (image);
+  space    = gimp_image_get_layer_space (image);
+  format   = gimp_babl_format (GIMP_RGB, private->precision, FALSE, space);
+  gimp_palette_restrict_format (palette, format);
 }
 
 static void

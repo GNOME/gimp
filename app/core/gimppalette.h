@@ -43,10 +43,15 @@ struct _GimpPalette
 {
   GimpData  parent_instance;
 
-  GList    *colors;
-  gint      n_colors;
+  /* Palette colors can be restricted to a given format. If NULL, then the
+   * palette can be a mix of color models and color spaces.
+   */
+  const Babl *format;
 
-  gint      n_columns;
+  GList      *colors;
+  gint        n_colors;
+
+  gint        n_columns;
 };
 
 struct _GimpPaletteClass
@@ -63,6 +68,10 @@ GType              gimp_palette_get_type        (void) G_GNUC_CONST;
 GimpData         * gimp_palette_new             (GimpContext      *context,
                                                  const gchar      *name);
 GimpData         * gimp_palette_get_standard    (GimpContext      *context);
+
+void               gimp_palette_restrict_format (GimpPalette      *palette,
+                                                 const Babl       *format);
+const Babl       * gimp_palette_get_restriction (GimpPalette      *palette);
 
 GList            * gimp_palette_get_colors      (GimpPalette      *palette);
 gint               gimp_palette_get_n_colors    (GimpPalette      *palette);
