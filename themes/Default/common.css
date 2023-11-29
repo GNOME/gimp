@@ -392,6 +392,7 @@ radio {
   background-image: none;
   background-color: @extreme-bg-color;
   border: 1px solid @stronger-border-color;
+  border-radius: 100%;
   color: @fg-color;
 }
 
