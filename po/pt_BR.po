@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-11 21:05+0000\n"
-"PO-Revision-Date: 2023-09-11 23:20-0300\n"
+"POT-Creation-Date: 2023-09-24 17:41+0000\n"
+"PO-Revision-Date: 2023-09-24 15:04-0300\n"
 "Last-Translator: Víttor Paulo Vieira da Costa <vittorpaulovc@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
 "Language: pt_BR\n"
@@ -2520,9 +2520,9 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2428
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2430
 #: app/core/gimppalette.c:428 app/core/gimppalette-import.c:213
-#: app/core/gimppalette-load.c:241 app/dialogs/palette-import-dialog.c:762
+#: app/core/gimppalette-load.c:243 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Sem título"
@@ -6945,7 +6945,7 @@ msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "Remover %d camadas"
 
-#: app/actions/layers-commands.c:994 app/text/gimptextlayer.c:581
+#: app/actions/layers-commands.c:994 app/text/gimptextlayer.c:585
 msgid "Discard Text Information"
 msgstr "Descartar informação de texto"
 
@@ -13224,7 +13224,7 @@ msgid "Palette"
 msgstr "Paleta"
 
 #: app/core/gimpcontext.c:742 app/core/gimpcontext.c:743
-#: app/tools/gimptextoptions.c:795
+#: app/tools/gimptextoptions.c:800
 msgid "Font"
 msgstr "Fonte"
 
@@ -13254,7 +13254,7 @@ msgstr "copiar"
 msgid "%s copy"
 msgstr "cópia de %s"
 
-#: app/core/gimpdatafactory.c:630 app/tools/gimptextoptions.c:776
+#: app/core/gimpdatafactory.c:630 app/tools/gimptextoptions.c:781
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Carregando fontes (isso pode demorar um pouco...)"
@@ -13298,7 +13298,7 @@ msgstr "Erro ao carregar '%s'"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:95
 #: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:443
+#: app/xcf/xcf.c:444
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Impossível abrir '%s' para leitura: "
@@ -13404,7 +13404,7 @@ msgstr "Estilo personalizado"
 
 #: app/core/gimpfilloptions.c:128 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:81
-#: app/tools/gimptextoptions.c:176
+#: app/tools/gimptextoptions.c:178
 msgid "Antialiasing"
 msgstr "Antisserrilhamento"
 
@@ -13600,168 +13600,173 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transformar grupo de camadas"
 
-#: app/core/gimpimage.c:707 app/widgets/gimpsymmetryeditor.c:182
+#: app/core/gimpimage.c:709 app/widgets/gimpsymmetryeditor.c:182
 msgid "Symmetry"
 msgstr "Simetria"
 
-#: app/core/gimpimage.c:2673
+#: app/core/gimpimage.c:2675
 msgid " (exported)"
 msgstr " (exportada)"
 
-#: app/core/gimpimage.c:2677
+#: app/core/gimpimage.c:2679
 msgid " (overwritten)"
 msgstr " (sobrescrita)"
 
-#: app/core/gimpimage.c:2686
+#: app/core/gimpimage.c:2688
 msgid " (imported)"
 msgstr " (importada)"
 
-#: app/core/gimpimage.c:2859 app/core/gimpimage.c:2873
-#: app/core/gimpimage.c:2916
+#: app/core/gimpimage.c:2861 app/core/gimpimage.c:2875
+#: app/core/gimpimage.c:2918
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Modo de camada '%s' foi adicionado em %s"
 
-#: app/core/gimpimage.c:2931
+#: app/core/gimpimage.c:2933
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Grupos de camadas foram adicionados em %s"
 
-#: app/core/gimpimage.c:2938
+#: app/core/gimpimage.c:2940
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Máscaras em grupos de camadas foram adicionadas em %s"
 
-#: app/core/gimpimage.c:2945
+#: app/core/gimpimage.c:2947
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Travamentos de posição em grupos de camadas foram adicionados em %s"
 
-#: app/core/gimpimage.c:2952
+#: app/core/gimpimage.c:2954
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Travamentos de canal alfa em grupos de camadas foram adicionados em %s"
 
-#: app/core/gimpimage.c:2960 app/core/gimpimage.c:2974
+#: app/core/gimpimage.c:2962 app/core/gimpimage.c:2987
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Travamentos de visibilidade foram adicionados em %s"
 
-#: app/core/gimpimage.c:2983
+#: app/core/gimpimage.c:2973
+#, c-format
+msgid "Format of font information in text layer was changed in %s"
+msgstr "Formato da informação da fonte na camada de texto foi alterada em %s"
+
+#: app/core/gimpimage.c:2996
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Seleção múltipla de vetores foi adicionada em %s"
 
-#: app/core/gimpimage.c:2995
+#: app/core/gimpimage.c:3008
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Armazenamento de etiquetas de cor em vetor foi adicionado em %s"
 
-#: app/core/gimpimage.c:3002
+#: app/core/gimpimage.c:3015
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Armazenamento de travamentos em vetor foi adicionado em %s"
 
-#: app/core/gimpimage.c:3016
+#: app/core/gimpimage.c:3029
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Imagens de alta profundidade de bits foram adicionadas em %s"
 
-#: app/core/gimpimage.c:3024
+#: app/core/gimpimage.c:3037
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr ""
 "Codificação de imagens de alta profundidade de bits foi corrigida em %s"
 
-#: app/core/gimpimage.c:3032
+#: app/core/gimpimage.c:3045
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Compressão interna de zlib foi adicionada em %s"
 
-#: app/core/gimpimage.c:3049
+#: app/core/gimpimage.c:3062
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 "Suporte para arquivos de imagem maiores do que 4GB foi adicionado em %s"
 
-#: app/core/gimpimage.c:3056
+#: app/core/gimpimage.c:3069
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Seleção de camadas múltiplas foi adicionada em %s"
 
-#: app/core/gimpimage.c:3073
+#: app/core/gimpimage.c:3086
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Guias fora da imagem adicionadas em %s"
 
-#: app/core/gimpimage.c:3084
+#: app/core/gimpimage.c:3097
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 "Busca por conjunto do item e textura no nome do item foi adicionada em %s"
 
-#: app/core/gimpimage.c:3090
+#: app/core/gimpimage.c:3103
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Seleção múltipla de canais foi adicionada em %s"
 
-#: app/core/gimpimage.c:3195
+#: app/core/gimpimage.c:3209
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Alterar resolução da imagem"
 
-#: app/core/gimpimage.c:3247
+#: app/core/gimpimage.c:3261
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Alterar unidade da imagem"
 
-#: app/core/gimpimage.c:4300
+#: app/core/gimpimage.c:4314
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 "Validação de parasita 'gimp-comment' falhou: comentário contém UTF-8 inválido"
 
-#: app/core/gimpimage.c:4362
+#: app/core/gimpimage.c:4376
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Anexar parasita à imagem"
 
-#: app/core/gimpimage.c:4407
+#: app/core/gimpimage.c:4421
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Remover parasita da imagem"
 
-#: app/core/gimpimage.c:5242
+#: app/core/gimpimage.c:5256
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Adicionar camada"
 
-#: app/core/gimpimage.c:5286 app/core/gimpimage.c:5317
+#: app/core/gimpimage.c:5300 app/core/gimpimage.c:5331
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Remover camada"
 
-#: app/core/gimpimage.c:5311
+#: app/core/gimpimage.c:5325
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Remover seleção flutuante"
 
-#: app/core/gimpimage.c:5835
+#: app/core/gimpimage.c:5849
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Adicionar canal"
 
-#: app/core/gimpimage.c:5865 app/core/gimpimage.c:5890
+#: app/core/gimpimage.c:5879 app/core/gimpimage.c:5904
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Remover canal"
 
-#: app/core/gimpimage.c:5950
+#: app/core/gimpimage.c:5964
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Adicionar vetor"
 
-#: app/core/gimpimage.c:5985 app/core/gimpimage.c:5993
+#: app/core/gimpimage.c:5999 app/core/gimpimage.c:6007
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Remover vetor"
@@ -14373,25 +14378,25 @@ msgstr "Falha ao desserializar o pincel MyPaint."
 msgid "%s (occurs %u)"
 msgstr "%s (%u ocorre)"
 
-#: app/core/gimppalette-import.c:544
+#: app/core/gimppalette-import.c:548
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Tipo de arquivo de paleta desconhecido: %s"
 
-#: app/core/gimppalette-load.c:118
+#: app/core/gimppalette-load.c:120
 msgid "Missing magic header."
 msgstr "Cabeçalho mágico ausente."
 
-#: app/core/gimppalette-load.c:141
+#: app/core/gimppalette-load.c:143
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "String UTF-8 inválida no arquivo de paleta '%s'"
 
-#: app/core/gimppalette-load.c:161
+#: app/core/gimppalette-load.c:163
 msgid "Invalid column count."
 msgstr "Contagem de colunas inválida."
 
-#: app/core/gimppalette-load.c:168
+#: app/core/gimppalette-load.c:170
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -14400,95 +14405,133 @@ msgstr ""
 "Lendo arquivo de paleta '%s': Número inválido de colunas na linha %d. Usando "
 "valor padrão."
 
-#: app/core/gimppalette-load.c:202
+#: app/core/gimppalette-load.c:204
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr ""
 "Lendo arquivo de paleta '%s': Falta o componente VERMELHO (R) na linha %d."
 
-#: app/core/gimppalette-load.c:210
+#: app/core/gimppalette-load.c:212
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr ""
 "Lendo arquivo de paleta '%s': Falta o componente VERDE (G) na linha %d."
 
-#: app/core/gimppalette-load.c:218
+#: app/core/gimppalette-load.c:220
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Lendo arquivo de paleta '%s': Falta o componente AZUL (B) na linha %d."
 
-#: app/core/gimppalette-load.c:228
+#: app/core/gimppalette-load.c:230
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
 "Lendo arquivo de paleta '%s': Valor RGB fora da faixa aceitável na linha %d."
 
-#: app/core/gimppalette-load.c:255 app/core/gimppalette-load.c:505
+#: app/core/gimppalette-load.c:257 app/core/gimppalette-load.c:507
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr "Lendo arquivo de paleta '%s': Ler %d cores do arquivo truncado: %s"
 
-#: app/core/gimppalette-load.c:277
+#: app/core/gimppalette-load.c:279
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "Na linha %d do arquivo de paleta: "
 
-#: app/core/gimppalette-load.c:473 app/core/gimppalette-load.c:675
+#: app/core/gimppalette-load.c:475 app/core/gimppalette-load.c:682
+#: app/core/gimppalette-load.c:1025
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Impossível ler cabeçalho do arquivo de paleta '%s': "
 
-#: app/core/gimppalette-load.c:510
+#: app/core/gimppalette-load.c:512
 msgid "Premature end of file."
 msgstr "Fim prematuro do arquivo."
 
-#: app/core/gimppalette-load.c:685
-#, c-format
-msgid "Invalid ASE header: %s"
-msgstr "Cabeçalho ASE inválido: %s"
+#: app/core/gimppalette-load.c:691
+msgid "Invalid ACB palette version."
+msgstr "Versão de paleta ACB inválida."
 
-#: app/core/gimppalette-load.c:694
+#: app/core/gimppalette-load.c:697
+msgid "GIMP only supports version 1 ACB palettes"
+msgstr "GIMP suporta somente paletas ACB versão 1"
+
+#: app/core/gimppalette-load.c:704
+msgid "Invalid ACB palette identifier."
+msgstr "Identificador de paleta ACB inválido."
+
+#: app/core/gimppalette-load.c:719 app/core/gimppalette-load.c:958
+#: app/core/gimppalette-load.c:979
+msgid "Invalid ACB palette name."
+msgstr "Nome de paleta ACB inválida."
+
+#: app/core/gimppalette-load.c:737
+msgid "Invalid ACB palette prefix."
+msgstr "Prefixo de paleta ACB inválido."
+
+#: app/core/gimppalette-load.c:752
+msgid "Invalid ACB palette suffix."
+msgstr "Sufixo de paleta ACB inválido."
+
+#: app/core/gimppalette-load.c:770 app/core/gimppalette-load.c:1044
 msgid "Invalid number of colors in palette."
 msgstr "Número de cores na paleta inválido."
 
-#: app/core/gimppalette-load.c:700
+#: app/core/gimppalette-load.c:776 app/core/gimppalette-load.c:1050
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "Número de cores inválido: %s."
 
-#: app/core/gimppalette-load.c:710
+#: app/core/gimppalette-load.c:788 app/core/gimppalette-load.c:797
+msgid "Invalid ACB palette page info."
+msgstr "Informação de página de paleta ACB inválida."
+
+#: app/core/gimppalette-load.c:808 app/core/gimppalette-load.c:830
+msgid "Invalid ACB palette color space."
+msgstr "Espaço de cor de paleta ACB inválido."
+
+#: app/core/gimppalette-load.c:968
+msgid "Invalid ACB name size."
+msgstr "Tamanho de nome ACB inválido."
+
+#: app/core/gimppalette-load.c:1035
+#, c-format
+msgid "Invalid ASE header: %s"
+msgstr "Cabeçalho ASE inválido: %s"
+
+#: app/core/gimppalette-load.c:1060
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "Arquivo ASE inválido: %s."
 
-#: app/core/gimppalette-load.c:788
+#: app/core/gimppalette-load.c:1138
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "Componentes de cor inválidos: %s."
 
-#: app/core/gimppalette-load.c:802 app/core/gimppalette-load.c:829
+#: app/core/gimppalette-load.c:1152 app/core/gimppalette-load.c:1179
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "Entrada de cor ASE inválida: %s."
 
-#: app/core/gimppalette-load.c:857 app/core/gimppalette-load.c:873
-#: app/core/gimppalette-load.c:892
+#: app/core/gimppalette-load.c:1207 app/core/gimppalette-load.c:1223
+#: app/core/gimppalette-load.c:1242
 msgid "Invalid ASE palette name."
 msgstr "Nome de paleta ASE inválida."
 
-#: app/core/gimppalette-load.c:866
+#: app/core/gimppalette-load.c:1216
 msgid "Invalid ASE block size."
 msgstr "Tamanho de bloco ASE inválido."
 
-#: app/core/gimppalette-load.c:882
+#: app/core/gimppalette-load.c:1232
 msgid "Invalid ASE name size."
 msgstr "Tamanho de nome ASE inválido."
 
-#: app/core/gimppalette-load.c:1010
+#: app/core/gimppalette-load.c:1360
 msgid "Unable to read SBZ file"
 msgstr "Não foi possível ler o arquivo SBZ"
 
-#: app/core/gimppalette-load.c:1074
+#: app/core/gimppalette-load.c:1424
 msgid "Unable to open SBZ file"
 msgstr "Não foi possível abrir o arquivo SBZ"
 
@@ -14658,7 +14701,7 @@ msgid "Line width"
 msgstr "Espessura da linha"
 
 #: app/core/gimpstrokeoptions.c:168 app/core/gimptemplate.c:158
-#: app/tools/gimptextoptions.c:163 app/tools/gimptextoptions.c:306
+#: app/tools/gimptextoptions.c:165 app/tools/gimptextoptions.c:308
 msgid "Unit"
 msgstr "Unidade"
 
@@ -14674,7 +14717,7 @@ msgstr "Estilo das junções"
 msgid "Miter limit"
 msgstr "Limite da junção das linhas"
 
-#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:323
+#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:325
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -16627,7 +16670,7 @@ msgstr "Interface de usuário"
 msgid "Interface"
 msgstr "Interface"
 
-#: app/dialogs/preferences-dialog.c:1917 app/tools/gimptextoptions.c:193
+#: app/dialogs/preferences-dialog.c:1917 app/tools/gimptextoptions.c:195
 msgid "Language"
 msgstr "Idioma"
 
@@ -21356,21 +21399,21 @@ msgstr "Vento"
 msgid "Resource '%s' is not renamable"
 msgstr "Recurso '%s' não é renomeável"
 
-#: app/pdb/text-layer-cmds.c:97
+#: app/pdb/text-layer-cmds.c:98
 msgid "Failed to create text layer"
 msgstr "Falha ao criar camada de texto"
 
-#: app/pdb/text-layer-cmds.c:161 app/pdb/text-layer-cmds.c:295
-#: app/pdb/text-layer-cmds.c:360 app/pdb/text-layer-cmds.c:419
-#: app/pdb/text-layer-cmds.c:477 app/pdb/text-layer-cmds.c:535
-#: app/pdb/text-layer-cmds.c:593 app/pdb/text-layer-cmds.c:651
-#: app/pdb/text-layer-cmds.c:709 app/pdb/text-layer-cmds.c:765
-#: app/pdb/text-layer-cmds.c:823 app/pdb/text-layer-cmds.c:881
-#: app/pdb/text-layer-cmds.c:939 app/pdb/text-layer-cmds.c:974
+#: app/pdb/text-layer-cmds.c:162 app/pdb/text-layer-cmds.c:300
+#: app/pdb/text-layer-cmds.c:365 app/pdb/text-layer-cmds.c:424
+#: app/pdb/text-layer-cmds.c:482 app/pdb/text-layer-cmds.c:540
+#: app/pdb/text-layer-cmds.c:598 app/pdb/text-layer-cmds.c:656
+#: app/pdb/text-layer-cmds.c:714 app/pdb/text-layer-cmds.c:770
+#: app/pdb/text-layer-cmds.c:828 app/pdb/text-layer-cmds.c:886
+#: app/pdb/text-layer-cmds.c:944 app/pdb/text-layer-cmds.c:979
 msgid "Set text layer attribute"
 msgstr "Editar atributos da camada de texto"
 
-#: app/pdb/text-layer-cmds.c:230
+#: app/pdb/text-layer-cmds.c:231
 msgid "Set text layer markup"
 msgstr "Editar marcação de texto"
 
@@ -21964,7 +22007,7 @@ msgstr "Esta operação não possui propriedades editáveis"
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
-#: app/text/gimpfont.c:52
+#: app/text/gimpfont.c:56
 msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
@@ -21985,7 +22028,11 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Adicionar camada de texto"
 
-#: app/text/gimptext-parasite.c:95
+#: app/text/gimptext-parasite.c:168
+msgid "Invalid markup format in text parasite"
+msgstr "Formato de marcação inválido em parasita de texto"
+
+#: app/text/gimptext-parasite.c:192
 msgid "Empty text parasite"
 msgstr "Parasita de texto vazio"
 
@@ -22021,16 +22068,16 @@ msgstr "Rotacionar camada de texto"
 msgid "Transform Text Layer"
 msgstr "Transformar camada de texto"
 
-#: app/text/gimptextlayer.c:716
+#: app/text/gimptextlayer.c:721
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
 "Devido à ausência de fontes, a funcionalidade de texto não está disponível."
 
-#: app/text/gimptextlayer.c:779
+#: app/text/gimptextlayer.c:784
 msgid "Empty Text Layer"
 msgstr "Camada de texto vazia"
 
-#: app/text/gimptextlayer.c:947
+#: app/text/gimptextlayer.c:952
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -22038,7 +22085,7 @@ msgstr ""
 "Seu texto não pode ser renderizado. Provavelmente é muito grande. Por favor "
 "torne-o menor ou utilize uma fonte menor."
 
-#: app/text/gimptextlayer-xcf.c:80
+#: app/text/gimptextlayer-xcf.c:82
 #, c-format
 msgid ""
 "Problems parsing the text parasite for layer '%s':\n"
@@ -22053,7 +22100,7 @@ msgstr ""
 "Algumas propriedades de texto podem estar erradas. A não ser que você queira "
 "editar o texto da camada você não tem que se preocupar com isso."
 
-#: app/text/gimptextlayout.c:594
+#: app/text/gimptextlayout.c:596
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -23441,7 +23488,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:851
+#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:856
 msgid "Color:"
 msgstr "Cor:"
 
@@ -24301,7 +24348,7 @@ msgstr "Formato atual"
 msgid "Fixed"
 msgstr "Fixo"
 
-#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:809
+#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:814
 msgid "Size:"
 msgstr "Tamanho:"
 
@@ -24578,66 +24625,66 @@ msgstr "Clique para borrar"
 msgid "Click to smudge the line"
 msgstr "Clique para borrar a linha"
 
-#: app/tools/gimptextoptions.c:164
+#: app/tools/gimptextoptions.c:166
 msgid "Font size unit"
 msgstr "Unidade do tamanho da fonte"
 
-#: app/tools/gimptextoptions.c:169 app/tools/gimptextoptions.c:170
+#: app/tools/gimptextoptions.c:171 app/tools/gimptextoptions.c:172
 msgid "Font size"
 msgstr "Tamanho da fonte"
 
-#: app/tools/gimptextoptions.c:183
+#: app/tools/gimptextoptions.c:185
 msgid "Hinting"
 msgstr "Hinting"
 
-#: app/tools/gimptextoptions.c:184
+#: app/tools/gimptextoptions.c:186
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "\"Hinting\" altera o contorno das fontes de forma a produzir um bitmap "
 "nítido em tamanhos pequenos"
 
-#: app/tools/gimptextoptions.c:194
+#: app/tools/gimptextoptions.c:196
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "O idioma do texto pode afetar a forma como ele é renderizado."
 
-#: app/tools/gimptextoptions.c:208
+#: app/tools/gimptextoptions.c:210
 msgid "Justify"
 msgstr "Justificar"
 
-#: app/tools/gimptextoptions.c:209
+#: app/tools/gimptextoptions.c:211
 msgid "Text alignment"
 msgstr "Alinhamento do texto"
 
-#: app/tools/gimptextoptions.c:216
+#: app/tools/gimptextoptions.c:218
 msgid "Indentation"
 msgstr "Indentação"
 
-#: app/tools/gimptextoptions.c:217
+#: app/tools/gimptextoptions.c:219
 msgid "Indentation of the first line"
 msgstr "Indentação da primeira linha"
 
-#: app/tools/gimptextoptions.c:224
+#: app/tools/gimptextoptions.c:226
 msgid "Line spacing"
 msgstr "Espaçamento entre linhas"
 
-#: app/tools/gimptextoptions.c:225
+#: app/tools/gimptextoptions.c:227
 msgid "Adjust line spacing"
 msgstr "Ajusta o espaçamento entre as linhas"
 
-#: app/tools/gimptextoptions.c:232
+#: app/tools/gimptextoptions.c:234
 msgid "Letter spacing"
 msgstr "Espaçamento entre letras"
 
-#: app/tools/gimptextoptions.c:233
+#: app/tools/gimptextoptions.c:235
 msgid "Adjust letter spacing"
 msgstr "Ajusta o espaçamento entre as letras"
 
-#: app/tools/gimptextoptions.c:240
+#: app/tools/gimptextoptions.c:242
 msgid "Box"
 msgstr "Caixa"
 
-#: app/tools/gimptextoptions.c:241
+#: app/tools/gimptextoptions.c:243
 msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
@@ -24645,63 +24692,63 @@ msgstr ""
 "Escolhe se o texto flui de forma retangular ou se move para uma nova linha "
 "quando você pressiona Enter"
 
-#: app/tools/gimptextoptions.c:249
+#: app/tools/gimptextoptions.c:251
 msgid "Use editor window"
 msgstr "Usar janela do editor"
 
-#: app/tools/gimptextoptions.c:250
+#: app/tools/gimptextoptions.c:252
 msgid "Use an external editor window for text entry"
 msgstr "Usa uma janela externa para editar o texto"
 
-#: app/tools/gimptextoptions.c:256
+#: app/tools/gimptextoptions.c:258
 msgid "Show on-canvas editor"
 msgstr "Mostra editor diretamente na tela"
 
-#: app/tools/gimptextoptions.c:257
+#: app/tools/gimptextoptions.c:259
 msgid "Show on-canvas text editor"
 msgstr "Mostra editor de texto diretamente na tela de imagem"
 
-#: app/tools/gimptextoptions.c:299
+#: app/tools/gimptextoptions.c:301
 msgid "Outline width"
 msgstr "Espessura do contorno"
 
-#: app/tools/gimptextoptions.c:300
+#: app/tools/gimptextoptions.c:302
 msgid "Adjust outline width"
 msgstr "Ajusta a espessura do contorno"
 
-#: app/tools/gimptextoptions.c:307
+#: app/tools/gimptextoptions.c:309
 msgid "Outline width unit"
 msgstr "Unidade da espessura do contorno"
 
-#: app/tools/gimptextoptions.c:322
+#: app/tools/gimptextoptions.c:324
 msgid "Outline miter limit"
 msgstr "Limite das junções do contorno"
 
-#: app/tools/gimptextoptions.c:840
+#: app/tools/gimptextoptions.c:845
 msgid "Hinting:"
 msgstr "Hinting:"
 
-#: app/tools/gimptextoptions.c:844
+#: app/tools/gimptextoptions.c:849
 msgid "Text Color"
 msgstr "Cor do texto"
 
-#: app/tools/gimptextoptions.c:857
+#: app/tools/gimptextoptions.c:862
 msgid "Style:"
 msgstr "Estilo:"
 
-#: app/tools/gimptextoptions.c:861
+#: app/tools/gimptextoptions.c:866
 msgid "Outline Options"
 msgstr "Opções de contorno"
 
-#: app/tools/gimptextoptions.c:882
+#: app/tools/gimptextoptions.c:887
 msgid "Justify:"
 msgstr "Justificar:"
 
-#: app/tools/gimptextoptions.c:912
+#: app/tools/gimptextoptions.c:917
 msgid "Box:"
 msgstr "Caixa:"
 
-#: app/tools/gimptextoptions.c:952
+#: app/tools/gimptextoptions.c:957
 msgid "Language:"
 msgstr "Idioma:"
 
@@ -28280,40 +28327,40 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Estado & descrição"
 
-#: app/xcf/xcf.c:120 app/xcf/xcf.c:188
+#: app/xcf/xcf.c:121 app/xcf/xcf.c:189
 msgid "GIMP XCF image"
 msgstr "Imagem XCF do GIMP"
 
-#: app/xcf/xcf.c:265 app/xcf/xcf.c:354
+#: app/xcf/xcf.c:266 app/xcf/xcf.c:355
 msgid "Memory Stream"
 msgstr "Fluxo de memória"
 
-#: app/xcf/xcf.c:276
+#: app/xcf/xcf.c:277
 #, c-format
 msgid "Opening '%s'"
 msgstr "Abrindo '%s'"
 
-#: app/xcf/xcf.c:318
+#: app/xcf/xcf.c:319
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Erro de XCF: encontrada versão de arquivo XCF %d não suportada"
 
-#: app/xcf/xcf.c:377
+#: app/xcf/xcf.c:378
 #, c-format
 msgid "Saving '%s'"
 msgstr "Salvando '%s'"
 
-#: app/xcf/xcf.c:385
+#: app/xcf/xcf.c:386
 #, c-format
 msgid "Closing '%s'"
 msgstr "Fechando '%s'"
 
-#: app/xcf/xcf.c:403
+#: app/xcf/xcf.c:404
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Erro ao escrever '%s': "
 
-#: app/xcf/xcf.c:491
+#: app/xcf/xcf.c:492
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Erro ao criar '%s': "
