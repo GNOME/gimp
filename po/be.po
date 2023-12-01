@@ -18455,7 +18455,7 @@ msgstr ""
 "<small>код зборкі <tt>%s</tt></small>\n"
 "\n"
 "<small>Перш чым паведамляць аб памылках, праверце іх наяўнасць \n"
-"у апошняй зборцы з Git master"
+"у апошняй зборцы з Git master.</small>"
 
 #: app/display/gimpdisplayshell-close.c:170
 #: app/display/gimpdisplayshell-close.c:268
