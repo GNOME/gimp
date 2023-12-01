@@ -73,6 +73,7 @@ marshal_vector_to_drawable_array (scheme   *sc,
   GimpDrawable **drawable_array;
   gint           id;
   pointer        error;
+  GType          actual_type = GIMP_TYPE_DRAWABLE;
 
   guint num_elements = sc->vptr->vector_length (vector);
   g_debug ("vector has %d elements", num_elements);
@@ -100,10 +101,15 @@ marshal_vector_to_drawable_array (scheme   *sc,
           g_free (drawable_array);
           return error;
         }
+
+      /* Parameters are validated based on the actual type inside the object
+         array. So we set that type here instead of a generic drawable. */
+      if (j == 0)
+        actual_type = G_OBJECT_TYPE (drawable_array[j]);
     }
 
   /* Shallow copy. */
-  gimp_value_set_object_array (value, GIMP_TYPE_DRAWABLE, (GObject**)drawable_array, num_elements);
+  gimp_value_set_object_array (value, actual_type, (GObject**)drawable_array, num_elements);
 
   g_free (drawable_array);
 
