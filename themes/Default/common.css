@@ -238,8 +238,16 @@ GimpDock frame:first-child label {
   color: @fg-color;
 }
 
+/* Defining slider scale border and trough */
+scale contents trough
+{
+  border-color: @strong-border-color;
+  background-color: @ruler-color;
+}
+
 scrollbar {
   background-color: @bg-color;
+  border-color: @border-color;
 }
 
 /*
@@ -254,6 +262,11 @@ scrollbar trough {
 scrollbar slider {
   background: @scrollbar-slider-color;
   border: 2px solid @border-color;
+}
+
+scrolledwindow
+{
+  border-color: @stronger-border-color;
 }
 
 /* Removes black border around scrolled windows */
@@ -362,6 +375,11 @@ GimpSpinScale entry progress {
   border-radius:    3px;
 }
 
+GimpSpinScale button
+{
+  border-color: @border-color;
+}
+
 /* Checkboxes */
 checkbutton, checkbutton.text-button, radiobutton, checkbutton label {
   color: @fg-color;
@@ -451,6 +469,11 @@ menuitem *:hover {
 
 menuitem check {
   border-color: @fg-color;
+}
+
+menuitem decoration
+{
+  box-shadow: 0 1px 2px @stronger-border-color;
 }
 
 /* "Add Tab" menu in dockable dialog */
