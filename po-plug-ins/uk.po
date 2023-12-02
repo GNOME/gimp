@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-11-20 20:30+0000\n"
-"PO-Revision-Date: 2023-11-21 09:10+0200\n"
+"POT-Creation-Date: 2023-12-01 20:47+0000\n"
+"PO-Revision-Date: 2023-12-02 17:31+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -43,9 +43,8 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/common/sphere-designer.c:3185 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:243
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:181
-#: plug-ins/file-dds/dds.c:556 plug-ins/flame/flame.c:299
-#: plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:215
-#: plug-ins/gimpressionist/gimp.c:184
+#: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:427
+#: plug-ins/gfig/gfig.c:215 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
 #: plug-ins/ifs-compose/ifs-compose.c:492 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:756
@@ -89,10 +88,10 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/ifs-compose/ifs-compose.c:2597 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:738
-#: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1185
-#: plug-ins/metadata/metadata-editor.c:1681
-#: plug-ins/metadata/metadata-editor.c:5532
-#: plug-ins/metadata/metadata-editor.c:5567
+#: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1177
+#: plug-ins/metadata/metadata-editor.c:1673
+#: plug-ins/metadata/metadata-editor.c:5524
+#: plug-ins/metadata/metadata-editor.c:5559
 msgid "_Cancel"
 msgstr "_Скасувати"
 
@@ -329,7 +328,7 @@ msgstr "Вирівнювання видимих шарів"
 #. file save type
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
 #: plug-ins/common/file-ps.c:3729 plug-ins/common/file-ps.c:3737
-#: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:223
+#: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:191
 #: plug-ins/file-tiff/file-tiff.c:240
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
 #: plug-ins/fractal-explorer/fractal-explorer.c:354
@@ -951,9 +950,9 @@ msgstr "Насиченість"
 
 #: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
-#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:317
-#: plug-ins/metadata/metadata-viewer.c:355
-#: plug-ins/metadata/metadata-viewer.c:393
+#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:309
+#: plug-ins/metadata/metadata-viewer.c:347
+#: plug-ins/metadata/metadata-viewer.c:385
 msgid "Value"
 msgstr "Яскравість"
 
@@ -1205,7 +1204,7 @@ msgstr "Графік поточних параметрів"
 #: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
 #: plug-ins/ifs-compose/ifs-compose.c:1214
-#: plug-ins/metadata/metadata-viewer.c:272
+#: plug-ins/metadata/metadata-viewer.c:264
 msgid "_Close"
 msgstr "З_акрити"
 
@@ -1991,7 +1990,7 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:164
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:160
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
 #: plug-ins/file-icns/file-icns-load.c:516
@@ -2481,7 +2480,7 @@ msgstr ""
 "Цей додаток використовує aalib для збереження зображення у відтінках сірого "
 "у формі ascii-арту у спектрі текстових форматів"
 
-#: plug-ins/common/file-aa.c:156 plug-ins/file-dds/dds.c:245
+#: plug-ins/common/file-aa.c:156 plug-ins/file-dds/dds.c:213
 msgid "_Format"
 msgstr "_Формат"
 
@@ -3432,7 +3431,6 @@ msgid "JPEG 2000 encapsulated in HEIF"
 msgstr "JPEG 2000 вбудований до HEIF"
 
 #: plug-ins/common/file-heif.c:435
-#| msgid "Loads HEIF images"
 msgid "Loads HEJ2 images"
 msgstr "Завантажує зображення HEJ2"
 
@@ -7054,10 +7052,10 @@ msgstr "Немає відповідностей"
 msgid "Plug-in Browser"
 msgstr "Огляд доповнень"
 
-#: plug-ins/common/plugin-browser.c:603 plug-ins/metadata/metadata-editor.c:605
-#: plug-ins/metadata/metadata-editor.c:641
-#: plug-ins/metadata/metadata-editor.c:648
-#: plug-ins/metadata/metadata-editor.c:655
+#: plug-ins/common/plugin-browser.c:603 plug-ins/metadata/metadata-editor.c:609
+#: plug-ins/metadata/metadata-editor.c:645
+#: plug-ins/metadata/metadata-editor.c:652
+#: plug-ins/metadata/metadata-editor.c:659
 msgid "Name"
 msgstr "Назва"
 
@@ -8470,427 +8468,418 @@ msgstr ""
 msgid "BMP format does not support multiple layers."
 msgstr "Для формату BMP не передбачено підтримку декількох шарів."
 
-#: plug-ins/file-dds/dds.c:149 plug-ins/file-dds/dds.c:201
+#: plug-ins/file-dds/dds.c:131 plug-ins/file-dds/dds.c:169
 msgid "DDS image"
 msgstr "Зображення DDS"
 
-#: plug-ins/file-dds/dds.c:152 plug-ins/file-dds/dds.c:153
+#: plug-ins/file-dds/dds.c:134 plug-ins/file-dds/dds.c:135
 msgid "Loads files in DDS image format"
 msgstr "Завантажує файли у форматі зображень DDS"
 
-#: plug-ins/file-dds/dds.c:168
+#: plug-ins/file-dds/dds.c:150
 msgid "Load _mipmaps"
 msgstr "З_авантажити MIP-текстури"
 
-#: plug-ins/file-dds/dds.c:169
+#: plug-ins/file-dds/dds.c:151
 msgid "Load mipmaps if present"
 msgstr "Завантажити MIP-текстури, якщо такі є"
 
-#: plug-ins/file-dds/dds.c:174
+#: plug-ins/file-dds/dds.c:156
 msgid "Flip image _vertically"
 msgstr "Віддзеркалити зображення _вертикально"
 
-#: plug-ins/file-dds/dds.c:175
+#: plug-ins/file-dds/dds.c:157
 msgid "Flip the image vertically on import"
 msgstr "Віддзеркалити зображення вертикально при імпортуванні"
 
-#: plug-ins/file-dds/dds.c:180
-msgid "Always use _transparency for BC1/DXT1"
-msgstr "Завжди використовувати _прозорість для BC1/DXT1"
-
-#: plug-ins/file-dds/dds.c:181
-msgid ""
-"Interprets transparency for BC1/DXT1 images even when DDPF_ALPHAPIXELS is "
-"not set; if disabled, sets it to opaque black"
-msgstr ""
-"Обробляє прозорість для зображень BC1/DXT1, навіть якщо не встановлено "
-"DDPF_ALPHAPIXELS; якщо вимкнено, встановлює для відповідних пікселів "
-"непрозорий чорний колір"
-
-#: plug-ins/file-dds/dds.c:188
-msgid "Automatically decode YCoCg/AE_xp images when detected"
-msgstr "Автоматично декодувати виявлені зображення YCoCg/AE_xp"
-
-#: plug-ins/file-dds/dds.c:189
-msgid "Decode YCoCg/AExp images when detected"
-msgstr "Декодувати виявлені зображення YCoCg/AExp"
-
-#: plug-ins/file-dds/dds.c:203
+#: plug-ins/file-dds/dds.c:171
 msgid "DDS"
 msgstr "DDS"
 
-#: plug-ins/file-dds/dds.c:207 plug-ins/file-dds/dds.c:208
+#: plug-ins/file-dds/dds.c:175 plug-ins/file-dds/dds.c:176
 msgid "Saves files in DDS image format"
 msgstr "Зберігає файли у форматі зображень DDS"
 
-#: plug-ins/file-dds/dds.c:221
+#: plug-ins/file-dds/dds.c:189
 msgid "Compressio_n"
 msgstr "С_тиснення"
 
-#: plug-ins/file-dds/dds.c:222
+#: plug-ins/file-dds/dds.c:190
 msgid "Compression format"
 msgstr "Формат стиснення"
 
-#: plug-ins/file-dds/dds.c:224
+#: plug-ins/file-dds/dds.c:192
 msgid "BC1 / DXT1"
 msgstr "BC1 / DXT1"
 
-#: plug-ins/file-dds/dds.c:225
+#: plug-ins/file-dds/dds.c:193
 msgid "BC2 / DXT3"
 msgstr "BC2 / DXT3"
 
-#: plug-ins/file-dds/dds.c:226
+#: plug-ins/file-dds/dds.c:194
 msgid "BC3 / DXT5"
 msgstr "BC3 / DXT5"
 
-#: plug-ins/file-dds/dds.c:227
+#: plug-ins/file-dds/dds.c:195
 msgid "BC3nm / DXT5nm"
 msgstr "BC3nm / DXT5nm"
 
-#: plug-ins/file-dds/dds.c:228
+#: plug-ins/file-dds/dds.c:196
 msgid "BC4 / ATI1 (3Dc+)"
 msgstr "BC4 / ATI1 (3Dc+)"
 
-#: plug-ins/file-dds/dds.c:229
+#: plug-ins/file-dds/dds.c:197
 msgid "BC5 / ATI2 (3Dc)"
 msgstr "BC5 / ATI2 (3Dc)"
 
-#: plug-ins/file-dds/dds.c:230
+#: plug-ins/file-dds/dds.c:198
 msgid "RXGB (DXT5)"
 msgstr "RXGB (DXT5)"
 
-#: plug-ins/file-dds/dds.c:231
+#: plug-ins/file-dds/dds.c:199
 msgid "Alpha Exponent (DXT5)"
 msgstr "Альфа-експоненційний (DXT5)"
 
-#: plug-ins/file-dds/dds.c:232
+#: plug-ins/file-dds/dds.c:200
 msgid "YCoCg (DXT5)"
 msgstr "YCoCg (DXT5)"
 
-#: plug-ins/file-dds/dds.c:233
+#: plug-ins/file-dds/dds.c:201
 msgid "YCoCg scaled (DXT5)"
 msgstr "Масштабований YCoCg (DXT5)"
 
-#: plug-ins/file-dds/dds.c:239
+#: plug-ins/file-dds/dds.c:207
 msgid "Use percept_ual error metric"
 msgstr "_Використати нелінійну метрику помилок"
 
-#: plug-ins/file-dds/dds.c:240
+#: plug-ins/file-dds/dds.c:208
 msgid "Use a perceptual error metric during compression"
 msgstr "Використати нелінійну метрику помилок під час стискання"
 
-#: plug-ins/file-dds/dds.c:246
+#: plug-ins/file-dds/dds.c:214
 msgid "Pixel format"
 msgstr "Формат у пікселях"
 
 #. Create the combobox containing the presets
-#: plug-ins/file-dds/dds.c:247 plug-ins/file-dds/dds.c:304
-#: plug-ins/file-dds/dds.c:320 plug-ins/file-webp/file-webp-dialog.c:80
+#: plug-ins/file-dds/dds.c:215 plug-ins/file-dds/dds.c:278
+#: plug-ins/file-dds/dds.c:295 plug-ins/file-webp/file-webp-dialog.c:80
 #: plug-ins/gradient-flare/gradient-flare.c:2599
 msgid "Default"
 msgstr "Типовий"
 
-#: plug-ins/file-dds/dds.c:248
+#: plug-ins/file-dds/dds.c:216
 msgid "RGB8"
 msgstr "RGB8"
 
-#: plug-ins/file-dds/dds.c:249
+#: plug-ins/file-dds/dds.c:217
 msgid "RGBA8"
 msgstr "RGBA8"
 
-#: plug-ins/file-dds/dds.c:250
+#: plug-ins/file-dds/dds.c:218
 msgid "BGR8"
 msgstr "BGR8"
 
-#: plug-ins/file-dds/dds.c:251
+#: plug-ins/file-dds/dds.c:219
 msgid "ABGR8"
 msgstr "ABGR8"
 
-#: plug-ins/file-dds/dds.c:252
+#: plug-ins/file-dds/dds.c:220
 msgid "R5G6B5"
 msgstr "R5G6B5"
 
-#: plug-ins/file-dds/dds.c:253
+#: plug-ins/file-dds/dds.c:221
 msgid "RGBA4"
 msgstr "RGBA4"
 
-#: plug-ins/file-dds/dds.c:254
+#: plug-ins/file-dds/dds.c:222
 msgid "RGB5A1"
 msgstr "RGB5A1"
 
-#: plug-ins/file-dds/dds.c:255
+#: plug-ins/file-dds/dds.c:223
 msgid "RGB10A2"
 msgstr "RGB10A2"
 
-#: plug-ins/file-dds/dds.c:256
+#: plug-ins/file-dds/dds.c:224
 msgid "R3G3B2"
 msgstr "R3G3B2"
 
-#: plug-ins/file-dds/dds.c:257
+#: plug-ins/file-dds/dds.c:225
 msgid "A8"
 msgstr "A8"
 
-#: plug-ins/file-dds/dds.c:258
+#: plug-ins/file-dds/dds.c:226
 msgid "L8"
 msgstr "L8"
 
-#: plug-ins/file-dds/dds.c:259
+#: plug-ins/file-dds/dds.c:227
 msgid "L8A8"
 msgstr "L8A8"
 
-#: plug-ins/file-dds/dds.c:260
+#: plug-ins/file-dds/dds.c:228
 msgid "AEXP"
 msgstr "AEXP"
 
-#: plug-ins/file-dds/dds.c:261
+#: plug-ins/file-dds/dds.c:229
 msgid "YCOCG"
 msgstr "YCOCG"
 
-#: plug-ins/file-dds/dds.c:275
+#: plug-ins/file-dds/dds.c:235
+#| msgid "Source _type"
+msgid "Sav_e type"
+msgstr "_Тип збереження"
+
+#: plug-ins/file-dds/dds.c:236
+#| msgid "Reload the image"
+msgid "How to save the image"
+msgstr "Спосіб збереження зображення"
+
+#: plug-ins/file-dds/dds.c:237
+msgid "Selected layer"
+msgstr "Позначений шар"
+
+#: plug-ins/file-dds/dds.c:238
+msgid "All visible layers"
+msgstr "Всі видимі шари"
+
+#: plug-ins/file-dds/dds.c:239
+msgid "As cube map"
+msgstr "Як кубічні текстури"
+
+#: plug-ins/file-dds/dds.c:240
+msgid "As volume map"
+msgstr "Як об'ємні текстури"
+
+#: plug-ins/file-dds/dds.c:241
+msgid "As texture array"
+msgstr "Як масив текстур"
+
+#: plug-ins/file-dds/dds.c:247
 msgid "Flip image _vertically on export"
 msgstr "Віддзеркалити зображення _вертикально при експортуванні"
 
-#: plug-ins/file-dds/dds.c:276
+#: plug-ins/file-dds/dds.c:248
 msgid "Flip the image vertically on export"
 msgstr "Віддзеркалити зображення вертикально при експортуванні"
 
-#: plug-ins/file-dds/dds.c:281
+#: plug-ins/file-dds/dds.c:253
 msgid "Set _transparent color"
 msgstr "Встановити колір п_розорого"
 
-#: plug-ins/file-dds/dds.c:282
+#: plug-ins/file-dds/dds.c:254
 msgid "Make an indexed color transparent"
 msgstr "Зробити індексований колір прозорим"
 
-#: plug-ins/file-dds/dds.c:287
+#: plug-ins/file-dds/dds.c:259
 msgid "Transparent inde_x"
 msgstr "І_ндекс прозорого"
 
-#: plug-ins/file-dds/dds.c:288
+#: plug-ins/file-dds/dds.c:260
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
 msgstr ""
 "Індекс прозорого кольору або -1 для вимикання (лише для індексованих "
 "зображень)."
 
-#: plug-ins/file-dds/dds.c:302
+#: plug-ins/file-dds/dds.c:266
+#| msgid "_Mipmaps:"
+msgid "_Mipmaps"
+msgstr "MIP-_текстури"
+
+#: plug-ins/file-dds/dds.c:267
+#| msgid "Load _mipmaps"
+msgid "How to handle mipmaps"
+msgstr "Спосіб обробки MIP-текстур"
+
+#: plug-ins/file-dds/dds.c:268
+msgid "No mipmaps"
+msgstr "Без MIP-текстур"
+
+#: plug-ins/file-dds/dds.c:269
+msgid "Generate mipmaps"
+msgstr "Створити MIP-текстури"
+
+#: plug-ins/file-dds/dds.c:270
+msgid "Use existing mipmaps"
+msgstr "Використати наявні MIP-текстури"
+
+#: plug-ins/file-dds/dds.c:276
 msgid "F_ilter"
 msgstr "_Фільтрувати"
 
-#: plug-ins/file-dds/dds.c:303
+#: plug-ins/file-dds/dds.c:277
 msgid "Filtering to use when generating mipmaps"
 msgstr "Фільтрування при створенні множинних зображень"
 
-#: plug-ins/file-dds/dds.c:305
+#: plug-ins/file-dds/dds.c:279
 msgid "Nearest"
 msgstr "Найближче"
 
-#: plug-ins/file-dds/dds.c:306 plug-ins/map-object/map-object-main.c:139
+#: plug-ins/file-dds/dds.c:280 plug-ins/map-object/map-object-main.c:139
 msgid "Box"
 msgstr "Паралелепіпед"
 
-#: plug-ins/file-dds/dds.c:307
+#: plug-ins/file-dds/dds.c:281
 msgid "Triangle"
 msgstr "Трикутник"
 
-#: plug-ins/file-dds/dds.c:308
+#: plug-ins/file-dds/dds.c:282
 msgid "Quadratic"
 msgstr "Квадратичний"
 
-#: plug-ins/file-dds/dds.c:309
+#: plug-ins/file-dds/dds.c:283
 msgid "B-Spline"
 msgstr "B-сплайн"
 
-#: plug-ins/file-dds/dds.c:310
+#: plug-ins/file-dds/dds.c:284
 msgid "Mitchell"
 msgstr "Мітчелл"
 
-#: plug-ins/file-dds/dds.c:311
+#: plug-ins/file-dds/dds.c:285
+msgid "Catmull-Rom"
+msgstr "Кетмула-Рома"
+
+#: plug-ins/file-dds/dds.c:286
 msgid "Lanczos"
 msgstr "Ланцоша"
 
-#: plug-ins/file-dds/dds.c:312
+#: plug-ins/file-dds/dds.c:287
 msgid "Kaiser"
 msgstr "Кайзер"
 
-#: plug-ins/file-dds/dds.c:318
+#: plug-ins/file-dds/dds.c:293
 msgid "_Wrap mode"
 msgstr "Режим за_гортання"
 
-#: plug-ins/file-dds/dds.c:319
+#: plug-ins/file-dds/dds.c:294
 msgid "Wrap mode to use when generating mipmaps"
 msgstr "Режим загортання при створенні множинних зображень"
 
-#: plug-ins/file-dds/dds.c:321
+#: plug-ins/file-dds/dds.c:296
 msgid "Mirror"
 msgstr "Віддзеркалення"
 
-#: plug-ins/file-dds/dds.c:322
+#: plug-ins/file-dds/dds.c:297
 msgid "Repeat"
 msgstr "Повторення"
 
-#: plug-ins/file-dds/dds.c:323
+#: plug-ins/file-dds/dds.c:298
 msgid "Clamp"
 msgstr "Затискання"
 
-#: plug-ins/file-dds/dds.c:329
+#: plug-ins/file-dds/dds.c:304
 msgid "Appl_y gamma correction"
 msgstr "Зас_тосувати корекцію гами"
 
-#: plug-ins/file-dds/dds.c:330
+#: plug-ins/file-dds/dds.c:305
 msgid "Use gamma correct mipmap filtering"
 msgstr "Гамма-корекція при фільтрування множинного зображення"
 
-#: plug-ins/file-dds/dds.c:335
+#: plug-ins/file-dds/dds.c:310
 msgid "Use sRG_B colorspace"
 msgstr "В_икористати колірний простір sRGB"
 
-#: plug-ins/file-dds/dds.c:336
+#: plug-ins/file-dds/dds.c:311
 msgid "Use sRGB colorspace for gamma correction"
 msgstr "Використати колірний простір sRGB для гамма-корекції"
 
-#: plug-ins/file-dds/dds.c:341 plug-ins/flame/flame.c:205
+#: plug-ins/file-dds/dds.c:316 plug-ins/flame/flame.c:205
 msgid "_Gamma"
 msgstr "Г_ама"
 
-#: plug-ins/file-dds/dds.c:342
+#: plug-ins/file-dds/dds.c:317
 msgid "Gamma value to use for gamma correction (e.g. 2.2)"
 msgstr "Значення гамми при гамма-корекції (наприклад 2.2)"
 
-#: plug-ins/file-dds/dds.c:347
+#: plug-ins/file-dds/dds.c:322
 msgid "Preserve al_pha test coverage"
 msgstr "Зберег_ти покриття альфа-тесту"
 
-#: plug-ins/file-dds/dds.c:348
+#: plug-ins/file-dds/dds.c:323
 msgid "Preserve alpha test coverage for alpha channel maps"
 msgstr "Зберегти покриття альфа-тесту для відображень альфа-каналів"
 
-#: plug-ins/file-dds/dds.c:354
+#: plug-ins/file-dds/dds.c:329
 msgid "Alp_ha test threshold"
 msgstr "Поріг _альфа-тесту"
 
-#: plug-ins/file-dds/dds.c:355
+#: plug-ins/file-dds/dds.c:330
 msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr ""
 "Порогове значення альфа-тесту, для якого слід зберігати покриття альфа-тестом"
 
-#: plug-ins/file-dds/dds.c:371
-msgid "Decode YCoCg"
-msgstr "Декодувати YCoCg"
-
-#: plug-ins/file-dds/dds.c:375 plug-ins/file-dds/dds.c:376
-msgid "Converts YCoCg encoded pixels to RGB"
-msgstr "Перетворює кодовані у YCoCg пікселі до RGB"
-
-#: plug-ins/file-dds/dds.c:393
-msgid "Decode YCoCg (scaled)"
-msgstr "Декодувати YCoCg (масштабоване)"
-
-#: plug-ins/file-dds/dds.c:397 plug-ins/file-dds/dds.c:399
-msgid "Converts YCoCg (scaled) encoded pixels to RGB"
-msgstr "Перетворює кодовані у YCoCg (масштабованому) пікселі до RGB"
-
-#: plug-ins/file-dds/dds.c:417
-msgid "Decode Alpha exponent"
-msgstr "Декодувати Alpha exponent"
-
-#: plug-ins/file-dds/dds.c:423 plug-ins/file-dds/dds.c:421
-msgid "Converts alpha exponent encoded pixels to RGB"
-msgstr "Перетворює кодовані у альфа-степеневі пікселі до RGB"
-
-#: plug-ins/file-dds/ddsread.c:273
+#: plug-ins/file-dds/ddsread.c:170
 #, c-format
-msgid "Unsupported uncompressed FOURCC type %u"
-msgstr "Непідтримуваний розпакований тип FOURCC %u"
+msgid "Loading: %s"
+msgstr "Завантаження: %s"
 
-#: plug-ins/file-dds/ddsread.c:518
+#: plug-ins/file-dds/ddsread.c:263
+#, c-format
+#| msgid "Unsupported uncompressed FOURCC type %u"
+msgid "Unsupported uncompressed FourCC type %u"
+msgstr "Непідтримуваний розпакований тип FourCC %u"
+
+#: plug-ins/file-dds/ddsread.c:578
 msgid "Invalid or corrupted DDS header"
 msgstr "Некоректний або пошкоджений заголовок DDS"
 
-#: plug-ins/file-dds/ddsread.c:527
+#: plug-ins/file-dds/ddsread.c:588
 msgid "Could not allocate a new image."
 msgstr "Не вдалося розмістити нове зображення."
 
-#: plug-ins/file-dds/ddsread.c:538
+#: plug-ins/file-dds/ddsread.c:600
 msgid "Error reading palette."
 msgstr "Помилка під час спроби читання палітри."
 
-#: plug-ins/file-dds/ddsread.c:824
+#: plug-ins/file-dds/ddsread.c:887
 msgid "Invalid DDS format magic number."
 msgstr "Некоректна контрольна сума у форматі DOS."
 
-#: plug-ins/file-dds/ddsread.c:912
+#: plug-ins/file-dds/ddsread.c:978
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Некоректне значення бітів на піксель для даних RGB: %d"
 
-#: plug-ins/file-dds/ddsread.c:923
+#: plug-ins/file-dds/ddsread.c:989
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Некоректне значення бітів на піксель для даних освітленості: %d"
 
-#: plug-ins/file-dds/ddsread.c:974
+#: plug-ins/file-dds/ddsread.c:1041
 msgid "Invalid pixel format."
 msgstr "Некоректний піксельний формат."
 
-#: plug-ins/file-dds/ddsread.c:1234
+#: plug-ins/file-dds/ddsread.c:1274
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "Непідтримуваний формат DXGI (%d)"
 
-#: plug-ins/file-dds/ddsread.c:1389
+#: plug-ins/file-dds/ddsread.c:1430
 #, c-format
 msgid "Unsupported value for bytes per pixel: %d"
 msgstr "Непідтримуване значення байтів на піксель: %d"
 
-#: plug-ins/file-dds/ddsread.c:1444 plug-ins/file-dds/ddsread.c:1504
-#: plug-ins/file-dds/ddsread.c:1525
+#: plug-ins/file-dds/ddsread.c:1525 plug-ins/file-dds/ddsread.c:1583
+#: plug-ins/file-dds/ddsread.c:1604
 msgid "Requested data exceeds size of file.\n"
 msgstr "Розмір даних, на які надійшов запит, перевищує розмір файла.\n"
 
-#: plug-ins/file-dds/ddsread.c:1452 plug-ins/file-dds/ddsread.c:1531
+#: plug-ins/file-dds/ddsread.c:1533 plug-ins/file-dds/ddsread.c:1610
 msgid "Unexpected EOF.\n"
 msgstr "Неочікуваний кінець файла.\n"
 
-#: plug-ins/file-dds/ddsread.c:2019
+#: plug-ins/file-dds/ddsread.c:2125
 msgid "Open DDS"
 msgstr "Відкрити DDS"
 
-#: plug-ins/file-dds/ddswrite.c:2022
+#: plug-ins/file-dds/ddswrite.c:566
+#, c-format
+#| msgid "Saving '%s'"
+msgid "Saving: %s"
+msgstr "Збереження: %s"
+
+#: plug-ins/file-dds/ddswrite.c:1942
 msgid "Mipmap Options"
 msgstr "Параметри MIP-текстур"
-
-#: plug-ins/file-dds/ddswrite.c:2037
-msgid "Selected layer"
-msgstr "Позначений шар"
-
-#: plug-ins/file-dds/ddswrite.c:2038
-msgid "All visible layers"
-msgstr "Всі видимі шари"
-
-#: plug-ins/file-dds/ddswrite.c:2039
-msgid "As cube map"
-msgstr "Як кубічні текстури"
-
-#: plug-ins/file-dds/ddswrite.c:2040
-msgid "As volume map"
-msgstr "Як об'ємні текстури"
-
-#: plug-ins/file-dds/ddswrite.c:2041
-msgid "As texture array"
-msgstr "Як масив текстур"
-
-#: plug-ins/file-dds/ddswrite.c:2053
-msgid "No mipmaps"
-msgstr "Без MIP-текстур"
-
-#: plug-ins/file-dds/ddswrite.c:2054
-msgid "Generate mipmaps"
-msgstr "Створити MIP-текстури"
-
-#: plug-ins/file-dds/ddswrite.c:2055
-msgid "Use existing mipmaps"
-msgstr "Використати наявні MIP-текстури"
 
 #: plug-ins/file-exr/file-exr.c:112
 msgid "Loads files in the OpenEXR file format"
@@ -10372,7 +10361,7 @@ msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2550
-#: plug-ins/metadata/metadata-editor.c:5533
+#: plug-ins/metadata/metadata-editor.c:5525
 msgid "_Import"
 msgstr "_Імпортувати"
 
@@ -11732,7 +11721,7 @@ msgstr "Гама:"
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Змінити гаму (яскравість) вибраного пензля"
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1371
+#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1363
 msgid "Select:"
 msgstr "Вибір:"
 
@@ -14430,458 +14419,458 @@ msgstr "Спроектувати на площину паралелепіпед�
 msgid "Images for the Cap Faces"
 msgstr "Зображення для основного циліндра"
 
-#: plug-ins/metadata/metadata-editor.c:484
+#: plug-ins/metadata/metadata-editor.c:488
 msgid "Document Title"
 msgstr "Назва документа"
 
-#: plug-ins/metadata/metadata-editor.c:485
+#: plug-ins/metadata/metadata-editor.c:489
 msgid "Author"
 msgstr "Автор"
 
-#: plug-ins/metadata/metadata-editor.c:486
+#: plug-ins/metadata/metadata-editor.c:490
 msgid "Author Title"
 msgstr "Авторська назва"
 
 #. Description tab
-#: plug-ins/metadata/metadata-editor.c:487
-#: plug-ins/metadata/metadata-editor.c:1216
+#: plug-ins/metadata/metadata-editor.c:491
+#: plug-ins/metadata/metadata-editor.c:1208
 msgid "Description"
 msgstr "Опис"
 
-#: plug-ins/metadata/metadata-editor.c:488
+#: plug-ins/metadata/metadata-editor.c:492
 msgid "Description Writer"
 msgstr "Автор опису"
 
-#: plug-ins/metadata/metadata-editor.c:489
+#: plug-ins/metadata/metadata-editor.c:493
 msgid "Rating"
 msgstr "Рейтинг"
 
-#: plug-ins/metadata/metadata-editor.c:490
+#: plug-ins/metadata/metadata-editor.c:494
 msgid "Keywords"
 msgstr "Ключові слова"
 
-#: plug-ins/metadata/metadata-editor.c:492
+#: plug-ins/metadata/metadata-editor.c:496
 msgid "Copyright Status"
 msgstr "Авторські права"
 
-#: plug-ins/metadata/metadata-editor.c:493
-#: plug-ins/metadata/metadata-editor.c:622
+#: plug-ins/metadata/metadata-editor.c:497
+#: plug-ins/metadata/metadata-editor.c:626
 msgid "Copyright Notice"
 msgstr "Зауваження щодо авторських прав"
 
-#: plug-ins/metadata/metadata-editor.c:494
+#: plug-ins/metadata/metadata-editor.c:498
 msgid "Copyright URL"
 msgstr "URL авторських прав"
 
-#: plug-ins/metadata/metadata-editor.c:500
+#: plug-ins/metadata/metadata-editor.c:504
 msgid "Address"
 msgstr "Адреса"
 
-#: plug-ins/metadata/metadata-editor.c:501
-#: plug-ins/metadata/metadata-editor.c:516
-#: plug-ins/metadata/metadata-editor.c:537
-#: plug-ins/metadata/metadata-editor.c:595
+#: plug-ins/metadata/metadata-editor.c:505
+#: plug-ins/metadata/metadata-editor.c:520
+#: plug-ins/metadata/metadata-editor.c:541
+#: plug-ins/metadata/metadata-editor.c:599
 msgid "City"
 msgstr "Місто"
 
-#: plug-ins/metadata/metadata-editor.c:502
-#: plug-ins/metadata/metadata-editor.c:517
-#: plug-ins/metadata/metadata-editor.c:538
+#: plug-ins/metadata/metadata-editor.c:506
+#: plug-ins/metadata/metadata-editor.c:521
+#: plug-ins/metadata/metadata-editor.c:542
 msgid "State / Province"
 msgstr "Штат / провінція"
 
-#: plug-ins/metadata/metadata-editor.c:503
+#: plug-ins/metadata/metadata-editor.c:507
 msgid "Postal Code"
 msgstr "Поштовий індекс"
 
-#: plug-ins/metadata/metadata-editor.c:504
-#: plug-ins/metadata/metadata-editor.c:518
-#: plug-ins/metadata/metadata-editor.c:539
-#: plug-ins/metadata/metadata-editor.c:597
+#: plug-ins/metadata/metadata-editor.c:508
+#: plug-ins/metadata/metadata-editor.c:522
+#: plug-ins/metadata/metadata-editor.c:543
+#: plug-ins/metadata/metadata-editor.c:601
 msgid "Country"
 msgstr "Країна"
 
-#: plug-ins/metadata/metadata-editor.c:506
+#: plug-ins/metadata/metadata-editor.c:510
 msgid "Phone(s)"
 msgstr "Телефон(и)"
 
-#: plug-ins/metadata/metadata-editor.c:507
+#: plug-ins/metadata/metadata-editor.c:511
 msgid "E-mail(s)"
 msgstr "Ел. адреса(и)"
 
-#: plug-ins/metadata/metadata-editor.c:508
+#: plug-ins/metadata/metadata-editor.c:512
 msgid "Website(s)"
 msgstr "Сайт(и)"
 
-#: plug-ins/metadata/metadata-editor.c:510
+#: plug-ins/metadata/metadata-editor.c:514
 msgid "Creation Date"
 msgstr "Дата створення"
 
-#: plug-ins/metadata/metadata-editor.c:512
+#: plug-ins/metadata/metadata-editor.c:516
 msgid "Intellectual Genre"
 msgstr "Інтелектуальний жанр"
 
-#: plug-ins/metadata/metadata-editor.c:513
+#: plug-ins/metadata/metadata-editor.c:517
 msgid "IPTC Scene Code"
 msgstr "Код сцени IPTC"
 
-#: plug-ins/metadata/metadata-editor.c:515
-#: plug-ins/metadata/metadata-editor.c:536
-#: plug-ins/metadata/metadata-editor.c:594
+#: plug-ins/metadata/metadata-editor.c:519
+#: plug-ins/metadata/metadata-editor.c:540
+#: plug-ins/metadata/metadata-editor.c:598
 msgid "Sublocation"
 msgstr "Підрозділ"
 
-#: plug-ins/metadata/metadata-editor.c:519
-#: plug-ins/metadata/metadata-editor.c:540
+#: plug-ins/metadata/metadata-editor.c:523
+#: plug-ins/metadata/metadata-editor.c:544
 msgid "Country ISO-Code"
 msgstr "ISO-код країни"
 
-#: plug-ins/metadata/metadata-editor.c:521
+#: plug-ins/metadata/metadata-editor.c:525
 msgid "Urgency"
 msgstr "Терміновість"
 
-#: plug-ins/metadata/metadata-editor.c:522
+#: plug-ins/metadata/metadata-editor.c:526
 msgid "Headline"
 msgstr "Заголовок"
 
-#: plug-ins/metadata/metadata-editor.c:523
+#: plug-ins/metadata/metadata-editor.c:527
 msgid "IPTC Subject Code"
 msgstr "IPTC-код теми"
 
-#: plug-ins/metadata/metadata-editor.c:525
+#: plug-ins/metadata/metadata-editor.c:529
 msgid "Job Identifier"
 msgstr "Ідентифікатор роботи"
 
-#: plug-ins/metadata/metadata-editor.c:526
+#: plug-ins/metadata/metadata-editor.c:530
 msgid "Instructions"
 msgstr "Інструкції"
 
-#: plug-ins/metadata/metadata-editor.c:527
+#: plug-ins/metadata/metadata-editor.c:531
 msgid "Credit Line"
 msgstr "Рядок подяк"
 
-#: plug-ins/metadata/metadata-editor.c:528
-#: plug-ins/metadata/metadata-editor.c:620
+#: plug-ins/metadata/metadata-editor.c:532
+#: plug-ins/metadata/metadata-editor.c:624
 msgid "Source"
 msgstr "Джерело"
 
-#: plug-ins/metadata/metadata-editor.c:529
+#: plug-ins/metadata/metadata-editor.c:533
 msgid "Usage Terms"
 msgstr "Умови використання"
 
-#: plug-ins/metadata/metadata-editor.c:535
+#: plug-ins/metadata/metadata-editor.c:539
 msgid "Person Shown"
 msgstr "Хто зображений"
 
-#: plug-ins/metadata/metadata-editor.c:541
-#: plug-ins/metadata/metadata-editor.c:599
+#: plug-ins/metadata/metadata-editor.c:545
+#: plug-ins/metadata/metadata-editor.c:603
 msgid "World Region"
 msgstr "Частина світу"
 
-#: plug-ins/metadata/metadata-editor.c:542
+#: plug-ins/metadata/metadata-editor.c:546
 msgid "Location Shown"
 msgstr "Зображене місце"
 
-#: plug-ins/metadata/metadata-editor.c:544
+#: plug-ins/metadata/metadata-editor.c:548
 msgid "Featured Organization"
 msgstr "Рекомендована організація"
 
-#: plug-ins/metadata/metadata-editor.c:546
+#: plug-ins/metadata/metadata-editor.c:550
 msgid "Organization Code"
 msgstr "Код організації"
 
-#: plug-ins/metadata/metadata-editor.c:548
+#: plug-ins/metadata/metadata-editor.c:552
 msgid "Event"
 msgstr "Подія"
 
-#: plug-ins/metadata/metadata-editor.c:549
+#: plug-ins/metadata/metadata-editor.c:553
 msgid "Artwork or Object"
 msgstr "Твір мистецтва або об'єкт"
 
-#: plug-ins/metadata/metadata-editor.c:552
+#: plug-ins/metadata/metadata-editor.c:556
 msgid "Additional Model Info"
 msgstr "Додаткові дані про модель"
 
-#: plug-ins/metadata/metadata-editor.c:553
+#: plug-ins/metadata/metadata-editor.c:557
 msgid "Model Age"
 msgstr "Вік моделі"
 
-#: plug-ins/metadata/metadata-editor.c:554
+#: plug-ins/metadata/metadata-editor.c:558
 msgid "Minor Model Age Disclosure"
 msgstr "Найменший вік моделі"
 
-#: plug-ins/metadata/metadata-editor.c:555
+#: plug-ins/metadata/metadata-editor.c:559
 msgid "Model Release Status"
 msgstr "Статус релізу моделі"
 
-#: plug-ins/metadata/metadata-editor.c:556
-#: plug-ins/metadata/metadata-editor.c:628
+#: plug-ins/metadata/metadata-editor.c:560
+#: plug-ins/metadata/metadata-editor.c:632
 msgid "Model Release Identifier"
 msgstr "Ідентифікатор релізу моделі"
 
-#: plug-ins/metadata/metadata-editor.c:559
+#: plug-ins/metadata/metadata-editor.c:563
 msgid "Image Supplier Name"
 msgstr "Ім'я постачальника зображення"
 
-#: plug-ins/metadata/metadata-editor.c:560
+#: plug-ins/metadata/metadata-editor.c:564
 msgid "Image Supplier ID"
 msgstr "Ідентифікатор постачальника зображення"
 
-#: plug-ins/metadata/metadata-editor.c:561
+#: plug-ins/metadata/metadata-editor.c:565
 msgid "Supplier's Image ID"
 msgstr "Ідентифікатор зображення від постачальника"
 
-#: plug-ins/metadata/metadata-editor.c:562
+#: plug-ins/metadata/metadata-editor.c:566
 msgid "Registry Entry"
 msgstr "Запис в реєстрі"
 
-#: plug-ins/metadata/metadata-editor.c:564
+#: plug-ins/metadata/metadata-editor.c:568
 msgid "Max. Available Width"
 msgstr "Найбільша доступна ширина"
 
-#: plug-ins/metadata/metadata-editor.c:565
+#: plug-ins/metadata/metadata-editor.c:569
 msgid "Max. Available Height"
 msgstr "Найбільша доступна висота"
 
-#: plug-ins/metadata/metadata-editor.c:566
+#: plug-ins/metadata/metadata-editor.c:570
 msgid "Digital Source Type"
 msgstr "Тип цифрового джерела"
 
-#: plug-ins/metadata/metadata-editor.c:568
+#: plug-ins/metadata/metadata-editor.c:572
 msgid "Image Creator"
 msgstr "Розробник зображення"
 
-#: plug-ins/metadata/metadata-editor.c:570
+#: plug-ins/metadata/metadata-editor.c:574
 msgid "Copyright Owner"
 msgstr "Правовласник"
 
-#: plug-ins/metadata/metadata-editor.c:572
+#: plug-ins/metadata/metadata-editor.c:576
 msgid "Licensor"
 msgstr "Ліцензіар"
 
-#: plug-ins/metadata/metadata-editor.c:574
+#: plug-ins/metadata/metadata-editor.c:578
 msgid "Property Release Status"
 msgstr "Статус релізу власника"
 
-#: plug-ins/metadata/metadata-editor.c:575
+#: plug-ins/metadata/metadata-editor.c:579
 msgid "Property Release Identifier"
 msgstr "Ідентифікатор релізу власника"
 
-#: plug-ins/metadata/metadata-editor.c:596
+#: plug-ins/metadata/metadata-editor.c:600
 msgid "Province / State"
 msgstr "Провінція / штат"
 
-#: plug-ins/metadata/metadata-editor.c:598
+#: plug-ins/metadata/metadata-editor.c:602
 msgid "Country ISO Code"
 msgstr "ISO-код країни"
 
-#: plug-ins/metadata/metadata-editor.c:611
+#: plug-ins/metadata/metadata-editor.c:615
 msgid "Code"
 msgstr "Код"
 
-#: plug-ins/metadata/metadata-editor.c:617
+#: plug-ins/metadata/metadata-editor.c:621
 msgid "Title"
 msgstr "Назва"
 
-#: plug-ins/metadata/metadata-editor.c:618
+#: plug-ins/metadata/metadata-editor.c:622
 msgid "Date Created"
 msgstr "Дата створення"
 
-#: plug-ins/metadata/metadata-editor.c:619
+#: plug-ins/metadata/metadata-editor.c:623
 msgid "Creator"
 msgstr "Розробник"
 
-#: plug-ins/metadata/metadata-editor.c:621
+#: plug-ins/metadata/metadata-editor.c:625
 msgid "Source Inventory ID"
 msgstr "Ідентифікатор опису джерела"
 
-#: plug-ins/metadata/metadata-editor.c:634
+#: plug-ins/metadata/metadata-editor.c:638
 msgid "Organization Identifier"
 msgstr "Ідентифікатор організації"
 
-#: plug-ins/metadata/metadata-editor.c:635
+#: plug-ins/metadata/metadata-editor.c:639
 msgid "Item Identifier"
 msgstr "Ідентифікатор елемента"
 
-#: plug-ins/metadata/metadata-editor.c:642
-#: plug-ins/metadata/metadata-editor.c:649
-#: plug-ins/metadata/metadata-editor.c:656
-#: plug-ins/metadata/metadata-editor.c:668
+#: plug-ins/metadata/metadata-editor.c:646
+#: plug-ins/metadata/metadata-editor.c:653
+#: plug-ins/metadata/metadata-editor.c:660
+#: plug-ins/metadata/metadata-editor.c:672
 msgid "Identifier"
 msgstr "Ідентифікатор"
 
-#: plug-ins/metadata/metadata-editor.c:657
+#: plug-ins/metadata/metadata-editor.c:661
 msgid "Phone Number 1"
 msgstr "Номер телефону 1"
 
-#: plug-ins/metadata/metadata-editor.c:658
+#: plug-ins/metadata/metadata-editor.c:662
 msgid "Phone Type 1"
 msgstr "Тип телефону 1"
 
-#: plug-ins/metadata/metadata-editor.c:659
+#: plug-ins/metadata/metadata-editor.c:663
 msgid "Phone Number 2"
 msgstr "Номер телефону 2"
 
-#: plug-ins/metadata/metadata-editor.c:660
+#: plug-ins/metadata/metadata-editor.c:664
 msgid "Phone Type 2"
 msgstr "Тип телефону 2"
 
-#: plug-ins/metadata/metadata-editor.c:661
+#: plug-ins/metadata/metadata-editor.c:665
 msgid "Email Address"
 msgstr "Електронна адреса"
 
-#: plug-ins/metadata/metadata-editor.c:662
+#: plug-ins/metadata/metadata-editor.c:666
 msgid "Web Address"
 msgstr "Адреса сайту"
 
-#: plug-ins/metadata/metadata-editor.c:675
+#: plug-ins/metadata/metadata-editor.c:679
 msgid "Category"
 msgstr "Категорія"
 
-#: plug-ins/metadata/metadata-editor.c:676
+#: plug-ins/metadata/metadata-editor.c:680
 msgid "Supplemental Category"
 msgstr "Додаткова категорія"
 
-#: plug-ins/metadata/metadata-editor.c:682
+#: plug-ins/metadata/metadata-editor.c:686
 msgid "Longitude"
 msgstr "Довгота"
 
-#: plug-ins/metadata/metadata-editor.c:683
+#: plug-ins/metadata/metadata-editor.c:687
 msgid "Longitude Reference"
 msgstr "Відлік довготи"
 
-#: plug-ins/metadata/metadata-editor.c:684
+#: plug-ins/metadata/metadata-editor.c:688
 msgid "Latitude"
 msgstr "Широта"
 
-#: plug-ins/metadata/metadata-editor.c:685
+#: plug-ins/metadata/metadata-editor.c:689
 msgid "Latitude Reference"
 msgstr "Відлік широти"
 
-#: plug-ins/metadata/metadata-editor.c:686
+#: plug-ins/metadata/metadata-editor.c:690
 msgid "Altitude"
 msgstr "Висота"
 
-#: plug-ins/metadata/metadata-editor.c:688
+#: plug-ins/metadata/metadata-editor.c:692
 msgid "Altitude Reference"
 msgstr "Відлік висоти"
 
-#: plug-ins/metadata/metadata-editor.c:694
+#: plug-ins/metadata/metadata-editor.c:698
 msgid "Patient"
 msgstr "Пацієнт"
 
-#: plug-ins/metadata/metadata-editor.c:695
+#: plug-ins/metadata/metadata-editor.c:699
 msgid "Patient ID"
 msgstr "Ідентифікатор пацієнта"
 
-#: plug-ins/metadata/metadata-editor.c:696
+#: plug-ins/metadata/metadata-editor.c:700
 msgid "Date of Birth"
 msgstr "Дата народження"
 
-#: plug-ins/metadata/metadata-editor.c:698
+#: plug-ins/metadata/metadata-editor.c:702
 msgid "Patient Sex"
 msgstr "Стать пацієнта"
 
-#: plug-ins/metadata/metadata-editor.c:700
+#: plug-ins/metadata/metadata-editor.c:704
 msgid "Study ID"
 msgstr "Ідентифікатор дослідження"
 
-#: plug-ins/metadata/metadata-editor.c:701
+#: plug-ins/metadata/metadata-editor.c:705
 msgid "Referring Physician"
 msgstr "Звернення до лікаря"
 
-#: plug-ins/metadata/metadata-editor.c:702
+#: plug-ins/metadata/metadata-editor.c:706
 msgid "Study Date"
 msgstr "Дата дослідження"
 
-#: plug-ins/metadata/metadata-editor.c:704
+#: plug-ins/metadata/metadata-editor.c:708
 msgid "Study Description"
 msgstr "Опис дослідження"
 
-#: plug-ins/metadata/metadata-editor.c:705
+#: plug-ins/metadata/metadata-editor.c:709
 msgid "Series Number"
 msgstr "Число в серії"
 
-#: plug-ins/metadata/metadata-editor.c:706
+#: plug-ins/metadata/metadata-editor.c:710
 msgid "Modality"
 msgstr "Модальність"
 
-#: plug-ins/metadata/metadata-editor.c:707
+#: plug-ins/metadata/metadata-editor.c:711
 msgid "Series Date"
 msgstr "Дата серії"
 
-#: plug-ins/metadata/metadata-editor.c:709
+#: plug-ins/metadata/metadata-editor.c:713
 msgid "Series Description"
 msgstr "Опис серії"
 
-#: plug-ins/metadata/metadata-editor.c:711
+#: plug-ins/metadata/metadata-editor.c:715
 msgid "Equipment Institution"
 msgstr "Розташування обладнання"
 
-#: plug-ins/metadata/metadata-editor.c:712
+#: plug-ins/metadata/metadata-editor.c:716
 msgid "Equipment Manufacturer"
 msgstr "Виробник обладнання"
 
-#: plug-ins/metadata/metadata-editor.c:752
+#: plug-ins/metadata/metadata-editor.c:756
 msgid "_Edit Metadata"
 msgstr "З_мінити метадані"
 
-#: plug-ins/metadata/metadata-editor.c:756
+#: plug-ins/metadata/metadata-editor.c:760
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Редагування метаданих (IPTC, EXIF, XMP)"
 
-#: plug-ins/metadata/metadata-editor.c:1178
+#: plug-ins/metadata/metadata-editor.c:1170
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Редактор метаданих: %s"
 
-#: plug-ins/metadata/metadata-editor.c:1186
+#: plug-ins/metadata/metadata-editor.c:1178
 msgid "_Write Metadata"
 msgstr "За_писати метадані"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1222
-#: plug-ins/metadata/metadata-viewer.c:401
+#: plug-ins/metadata/metadata-editor.c:1214
+#: plug-ins/metadata/metadata-viewer.c:393
 msgid "IPTC"
 msgstr "IPTC"
 
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1228
+#: plug-ins/metadata/metadata-editor.c:1220
 msgid "IPTC Extension"
 msgstr "Розширення IPTC"
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1334
+#: plug-ins/metadata/metadata-editor.c:1326
 msgid "Categories"
 msgstr "Категорії"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1340
+#: plug-ins/metadata/metadata-editor.c:1332
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1351
+#: plug-ins/metadata/metadata-editor.c:1343
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1373
+#: plug-ins/metadata/metadata-editor.c:1365
 msgid "Import metadata"
 msgstr "Імпорт метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:1375
+#: plug-ins/metadata/metadata-editor.c:1367
 msgid "Export metadata"
 msgstr "Експортувати метадані"
 
-#: plug-ins/metadata/metadata-editor.c:1678
+#: plug-ins/metadata/metadata-editor.c:1670
 msgid "Choose Date"
 msgstr "Виберіть дату"
 
-#: plug-ins/metadata/metadata-editor.c:1682
+#: plug-ins/metadata/metadata-editor.c:1674
 msgid "Set Date"
 msgstr "Задайте дату"
 
-#: plug-ins/metadata/metadata-editor.c:2416
+#: plug-ins/metadata/metadata-editor.c:2408
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -14897,7 +14886,7 @@ msgstr ""
 "15.30, або 10.45\n"
 "Вилучіть увесь текст, щоб вилучити поточне значення."
 
-#: plug-ins/metadata/metadata-editor.c:2422
+#: plug-ins/metadata/metadata-editor.c:2414
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -14913,24 +14902,24 @@ msgstr ""
 "або футах (фут)\n"
 "Щоб вилучити поточне значення, витріть увесь текст."
 
-#: plug-ins/metadata/metadata-editor.c:2556
+#: plug-ins/metadata/metadata-editor.c:2548
 msgid "Unrated"
 msgstr "Без рейтингу"
 
-#: plug-ins/metadata/metadata-editor.c:4666
+#: plug-ins/metadata/metadata-editor.c:4658
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Не вдалося встановити мітку метаданих %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5529
+#: plug-ins/metadata/metadata-editor.c:5521
 msgid "Import Metadata File"
 msgstr "Імпорт файлу метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:5564
+#: plug-ins/metadata/metadata-editor.c:5556
 msgid "Export Metadata File"
 msgstr "Експорт файлу метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:5568
+#: plug-ins/metadata/metadata-editor.c:5560
 msgid "_Export"
 msgstr "_Експорт"
 
@@ -15158,53 +15147,53 @@ msgstr "Схід"
 msgid "West"
 msgstr "Захід"
 
-#: plug-ins/metadata/metadata-viewer.c:177
+#: plug-ins/metadata/metadata-viewer.c:181
 msgid "_View Metadata"
 msgstr "По_казати метадані"
 
-#: plug-ins/metadata/metadata-viewer.c:181
+#: plug-ins/metadata/metadata-viewer.c:185
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Показати метадані (Exif, IPTC, XMP)"
 
-#: plug-ins/metadata/metadata-viewer.c:265
+#: plug-ins/metadata/metadata-viewer.c:257
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Оглядач метаданих: %s"
 
-#: plug-ins/metadata/metadata-viewer.c:308
+#: plug-ins/metadata/metadata-viewer.c:300
 msgid "Exif Tag"
 msgstr "Мітка Exif"
 
-#: plug-ins/metadata/metadata-viewer.c:325
+#: plug-ins/metadata/metadata-viewer.c:317
 msgid "Exif"
 msgstr "Exif"
 
-#: plug-ins/metadata/metadata-viewer.c:346
+#: plug-ins/metadata/metadata-viewer.c:338
 msgid "XMP Tag"
 msgstr "Мітка XMP"
 
-#: plug-ins/metadata/metadata-viewer.c:363
+#: plug-ins/metadata/metadata-viewer.c:355
 msgid "XMP"
 msgstr "XMP"
 
-#: plug-ins/metadata/metadata-viewer.c:384
+#: plug-ins/metadata/metadata-viewer.c:376
 msgid "IPTC Tag"
 msgstr "Мітка IPTC"
 
-#: plug-ins/metadata/metadata-viewer.c:481
+#: plug-ins/metadata/metadata-viewer.c:473
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(%lu більше символів)"
 
-#: plug-ins/metadata/metadata-viewer.c:728
+#: plug-ins/metadata/metadata-viewer.c:720
 msgid " meter"
 msgstr " метр"
 
-#: plug-ins/metadata/metadata-viewer.c:729
+#: plug-ins/metadata/metadata-viewer.c:721
 msgid " feet"
 msgstr " футів"
 
-#: plug-ins/metadata/metadata-viewer.c:897
+#: plug-ins/metadata/metadata-viewer.c:889
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu більше байт)"
@@ -15712,6 +15701,41 @@ msgstr "_Сканер/Камера..."
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
 
+#~ msgid "Always use _transparency for BC1/DXT1"
+#~ msgstr "Завжди використовувати _прозорість для BC1/DXT1"
+
+#~ msgid ""
+#~ "Interprets transparency for BC1/DXT1 images even when DDPF_ALPHAPIXELS is "
+#~ "not set; if disabled, sets it to opaque black"
+#~ msgstr ""
+#~ "Обробляє прозорість для зображень BC1/DXT1, навіть якщо не встановлено "
+#~ "DDPF_ALPHAPIXELS; якщо вимкнено, встановлює для відповідних пікселів "
+#~ "непрозорий чорний колір"
+
+#~ msgid "Automatically decode YCoCg/AE_xp images when detected"
+#~ msgstr "Автоматично декодувати виявлені зображення YCoCg/AE_xp"
+
+#~ msgid "Decode YCoCg/AExp images when detected"
+#~ msgstr "Декодувати виявлені зображення YCoCg/AExp"
+
+#~ msgid "Decode YCoCg"
+#~ msgstr "Декодувати YCoCg"
+
+#~ msgid "Converts YCoCg encoded pixels to RGB"
+#~ msgstr "Перетворює кодовані у YCoCg пікселі до RGB"
+
+#~ msgid "Decode YCoCg (scaled)"
+#~ msgstr "Декодувати YCoCg (масштабоване)"
+
+#~ msgid "Converts YCoCg (scaled) encoded pixels to RGB"
+#~ msgstr "Перетворює кодовані у YCoCg (масштабованому) пікселі до RGB"
+
+#~ msgid "Decode Alpha exponent"
+#~ msgstr "Декодувати Alpha exponent"
+
+#~ msgid "Converts alpha exponent encoded pixels to RGB"
+#~ msgstr "Перетворює кодовані у альфа-степеневі пікселі до RGB"
+
 #~ msgid "_Saturation"
 #~ msgstr "_Насиченість"
 
@@ -15726,9 +15750,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "_Save:"
 #~ msgstr "_Зберегти:"
-
-#~ msgid "_Mipmaps:"
-#~ msgstr "MIP-_текстури:"
 
 #~ msgid "_Gamma:"
 #~ msgstr "Г_ама:"
