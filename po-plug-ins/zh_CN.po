@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-11-20 20:30+0000\n"
-"PO-Revision-Date: 2023-11-21 20:47+0800\n"
+"POT-Creation-Date: 2023-12-01 20:47+0000\n"
+"PO-Revision-Date: 2023-12-02 13:40+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -44,9 +44,8 @@ msgstr "在 C 语言中锻炼一只山羊"
 #: plug-ins/common/sphere-designer.c:3185 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:243
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:181
-#: plug-ins/file-dds/dds.c:556 plug-ins/flame/flame.c:299
-#: plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:215
-#: plug-ins/gimpressionist/gimp.c:184
+#: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:427
+#: plug-ins/gfig/gfig.c:215 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
 #: plug-ins/ifs-compose/ifs-compose.c:492 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:756
@@ -90,10 +89,10 @@ msgstr "锻炼一只山羊（C）"
 #: plug-ins/ifs-compose/ifs-compose.c:2597 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:738
-#: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1185
-#: plug-ins/metadata/metadata-editor.c:1681
-#: plug-ins/metadata/metadata-editor.c:5532
-#: plug-ins/metadata/metadata-editor.c:5567
+#: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1177
+#: plug-ins/metadata/metadata-editor.c:1673
+#: plug-ins/metadata/metadata-editor.c:5524
+#: plug-ins/metadata/metadata-editor.c:5559
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -326,7 +325,7 @@ msgstr "对齐可见图层"
 #. file save type
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
 #: plug-ins/common/file-ps.c:3729 plug-ins/common/file-ps.c:3737
-#: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:223
+#: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:191
 #: plug-ins/file-tiff/file-tiff.c:240
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
 #: plug-ins/fractal-explorer/fractal-explorer.c:354
@@ -944,9 +943,9 @@ msgstr "饱和度"
 
 #: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
-#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:317
-#: plug-ins/metadata/metadata-viewer.c:355
-#: plug-ins/metadata/metadata-viewer.c:393
+#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:309
+#: plug-ins/metadata/metadata-viewer.c:347
+#: plug-ins/metadata/metadata-viewer.c:385
 msgid "Value"
 msgstr "明度"
 
@@ -1194,7 +1193,7 @@ msgstr "当前设置的曲线图"
 #: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
 #: plug-ins/ifs-compose/ifs-compose.c:1214
-#: plug-ins/metadata/metadata-viewer.c:272
+#: plug-ins/metadata/metadata-viewer.c:264
 msgid "_Close"
 msgstr "关闭(_C)"
 
@@ -1951,7 +1950,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:164
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:160
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
 #: plug-ins/file-icns/file-icns-load.c:516
@@ -2434,7 +2433,7 @@ msgid ""
 "of text formats"
 msgstr "该插件使用 aalib 将灰阶图像作为 ascii 艺术保存为多种文本格式"
 
-#: plug-ins/common/file-aa.c:156 plug-ins/file-dds/dds.c:245
+#: plug-ins/common/file-aa.c:156 plug-ins/file-dds/dds.c:213
 msgid "_Format"
 msgstr "格式(_F)"
 
@@ -6862,10 +6861,10 @@ msgstr "无匹配"
 msgid "Plug-in Browser"
 msgstr "插件浏览器"
 
-#: plug-ins/common/plugin-browser.c:603 plug-ins/metadata/metadata-editor.c:605
-#: plug-ins/metadata/metadata-editor.c:641
-#: plug-ins/metadata/metadata-editor.c:648
-#: plug-ins/metadata/metadata-editor.c:655
+#: plug-ins/common/plugin-browser.c:603 plug-ins/metadata/metadata-editor.c:609
+#: plug-ins/metadata/metadata-editor.c:645
+#: plug-ins/metadata/metadata-editor.c:652
+#: plug-ins/metadata/metadata-editor.c:659
 msgid "Name"
 msgstr "名称"
 
@@ -8259,423 +8258,409 @@ msgstr ""
 msgid "BMP format does not support multiple layers."
 msgstr "BMP 格式不支持多图层。"
 
-#: plug-ins/file-dds/dds.c:149 plug-ins/file-dds/dds.c:201
+#: plug-ins/file-dds/dds.c:131 plug-ins/file-dds/dds.c:169
 msgid "DDS image"
 msgstr "DDS 图像"
 
-#: plug-ins/file-dds/dds.c:152 plug-ins/file-dds/dds.c:153
+#: plug-ins/file-dds/dds.c:134 plug-ins/file-dds/dds.c:135
 msgid "Loads files in DDS image format"
 msgstr "加载 DDS 格式的文件"
 
-#: plug-ins/file-dds/dds.c:168
+#: plug-ins/file-dds/dds.c:150
 msgid "Load _mipmaps"
 msgstr "载入多级纹理(_M)"
 
-#: plug-ins/file-dds/dds.c:169
+#: plug-ins/file-dds/dds.c:151
 msgid "Load mipmaps if present"
 msgstr "如果可用则载入多级纹理"
 
-#: plug-ins/file-dds/dds.c:174
+#: plug-ins/file-dds/dds.c:156
 msgid "Flip image _vertically"
 msgstr "竖直翻转图像(_V)"
 
-#: plug-ins/file-dds/dds.c:175
+#: plug-ins/file-dds/dds.c:157
 msgid "Flip the image vertically on import"
 msgstr "导入时竖直翻转图像"
 
-#: plug-ins/file-dds/dds.c:180
-msgid "Always use _transparency for BC1/DXT1"
-msgstr "总是为 BC1/DXT1 使用透明(_T)"
-
-#: plug-ins/file-dds/dds.c:181
-msgid ""
-"Interprets transparency for BC1/DXT1 images even when DDPF_ALPHAPIXELS is "
-"not set; if disabled, sets it to opaque black"
-msgstr ""
-"即使 DDPF_ALPHAPIXELS 未设置仍为 BC1/DXT1 图像使用透明；如果禁用，则将其设为"
-"不透明的黑色"
-
-#: plug-ins/file-dds/dds.c:188
-msgid "Automatically decode YCoCg/AE_xp images when detected"
-msgstr "当检测到时自动解码 YCoCg/AExp 图像(_X)"
-
-#: plug-ins/file-dds/dds.c:189
-msgid "Decode YCoCg/AExp images when detected"
-msgstr "当检测到时自动解码 YCoCg/AExp 图像"
-
-#: plug-ins/file-dds/dds.c:203
+#: plug-ins/file-dds/dds.c:171
 msgid "DDS"
 msgstr "DDS"
 
-#: plug-ins/file-dds/dds.c:207 plug-ins/file-dds/dds.c:208
+#: plug-ins/file-dds/dds.c:175 plug-ins/file-dds/dds.c:176
 msgid "Saves files in DDS image format"
 msgstr "以 DDS 图像格式保存文件"
 
-#: plug-ins/file-dds/dds.c:221
+#: plug-ins/file-dds/dds.c:189
 msgid "Compressio_n"
 msgstr "压缩(_N)"
 
-#: plug-ins/file-dds/dds.c:222
+#: plug-ins/file-dds/dds.c:190
 msgid "Compression format"
 msgstr "压缩格式"
 
-#: plug-ins/file-dds/dds.c:224
+#: plug-ins/file-dds/dds.c:192
 msgid "BC1 / DXT1"
 msgstr "BC1 / DXT1"
 
-#: plug-ins/file-dds/dds.c:225
+#: plug-ins/file-dds/dds.c:193
 msgid "BC2 / DXT3"
 msgstr "BC2 / DXT3"
 
-#: plug-ins/file-dds/dds.c:226
+#: plug-ins/file-dds/dds.c:194
 msgid "BC3 / DXT5"
 msgstr "BC3 / DXT5"
 
-#: plug-ins/file-dds/dds.c:227
+#: plug-ins/file-dds/dds.c:195
 msgid "BC3nm / DXT5nm"
 msgstr "BC3nm / DXT5nm"
 
-#: plug-ins/file-dds/dds.c:228
+#: plug-ins/file-dds/dds.c:196
 msgid "BC4 / ATI1 (3Dc+)"
 msgstr "BC4 / ATI1 (3Dc+)"
 
-#: plug-ins/file-dds/dds.c:229
+#: plug-ins/file-dds/dds.c:197
 msgid "BC5 / ATI2 (3Dc)"
 msgstr "BC5 / ATI2 (3Dc)"
 
-#: plug-ins/file-dds/dds.c:230
+#: plug-ins/file-dds/dds.c:198
 msgid "RXGB (DXT5)"
 msgstr "RXGB (DXT5)"
 
-#: plug-ins/file-dds/dds.c:231
+#: plug-ins/file-dds/dds.c:199
 msgid "Alpha Exponent (DXT5)"
 msgstr "透明指数（DXT5）"
 
-#: plug-ins/file-dds/dds.c:232
+#: plug-ins/file-dds/dds.c:200
 msgid "YCoCg (DXT5)"
 msgstr "YCoCg (DXT5)"
 
-#: plug-ins/file-dds/dds.c:233
+#: plug-ins/file-dds/dds.c:201
 msgid "YCoCg scaled (DXT5)"
 msgstr "YCoCg 已缩放（DXT5）"
 
-#: plug-ins/file-dds/dds.c:239
+#: plug-ins/file-dds/dds.c:207
 msgid "Use percept_ual error metric"
 msgstr "使用感官错误度量(_U)"
 
-#: plug-ins/file-dds/dds.c:240
+#: plug-ins/file-dds/dds.c:208
 msgid "Use a perceptual error metric during compression"
 msgstr "在压缩过程中使用感官错误度量"
 
-#: plug-ins/file-dds/dds.c:246
+#: plug-ins/file-dds/dds.c:214
 msgid "Pixel format"
 msgstr "像素格式"
 
 #. Create the combobox containing the presets
-#: plug-ins/file-dds/dds.c:247 plug-ins/file-dds/dds.c:304
-#: plug-ins/file-dds/dds.c:320 plug-ins/file-webp/file-webp-dialog.c:80
+#: plug-ins/file-dds/dds.c:215 plug-ins/file-dds/dds.c:278
+#: plug-ins/file-dds/dds.c:295 plug-ins/file-webp/file-webp-dialog.c:80
 #: plug-ins/gradient-flare/gradient-flare.c:2599
 msgid "Default"
 msgstr "默认"
 
-#: plug-ins/file-dds/dds.c:248
+#: plug-ins/file-dds/dds.c:216
 msgid "RGB8"
 msgstr "RGB8"
 
-#: plug-ins/file-dds/dds.c:249
+#: plug-ins/file-dds/dds.c:217
 msgid "RGBA8"
 msgstr "RGBA8"
 
-#: plug-ins/file-dds/dds.c:250
+#: plug-ins/file-dds/dds.c:218
 msgid "BGR8"
 msgstr "BGR8"
 
-#: plug-ins/file-dds/dds.c:251
+#: plug-ins/file-dds/dds.c:219
 msgid "ABGR8"
 msgstr "ABGR8"
 
-#: plug-ins/file-dds/dds.c:252
+#: plug-ins/file-dds/dds.c:220
 msgid "R5G6B5"
 msgstr "R5G6B5"
 
-#: plug-ins/file-dds/dds.c:253
+#: plug-ins/file-dds/dds.c:221
 msgid "RGBA4"
 msgstr "RGBA4"
 
-#: plug-ins/file-dds/dds.c:254
+#: plug-ins/file-dds/dds.c:222
 msgid "RGB5A1"
 msgstr "RGB5A1"
 
-#: plug-ins/file-dds/dds.c:255
+#: plug-ins/file-dds/dds.c:223
 msgid "RGB10A2"
 msgstr "RGB10A2"
 
-#: plug-ins/file-dds/dds.c:256
+#: plug-ins/file-dds/dds.c:224
 msgid "R3G3B2"
 msgstr "R3G3B2"
 
-#: plug-ins/file-dds/dds.c:257
+#: plug-ins/file-dds/dds.c:225
 msgid "A8"
 msgstr "A8"
 
-#: plug-ins/file-dds/dds.c:258
+#: plug-ins/file-dds/dds.c:226
 msgid "L8"
 msgstr "L8"
 
-#: plug-ins/file-dds/dds.c:259
+#: plug-ins/file-dds/dds.c:227
 msgid "L8A8"
 msgstr "L8A8"
 
-#: plug-ins/file-dds/dds.c:260
+#: plug-ins/file-dds/dds.c:228
 msgid "AEXP"
 msgstr "AEXP"
 
-#: plug-ins/file-dds/dds.c:261
+#: plug-ins/file-dds/dds.c:229
 msgid "YCOCG"
 msgstr "YCOCG"
 
-#: plug-ins/file-dds/dds.c:275
+#: plug-ins/file-dds/dds.c:235
+msgid "Sav_e type"
+msgstr "保存类型(_E)"
+
+#: plug-ins/file-dds/dds.c:236
+msgid "How to save the image"
+msgstr "如何保存该图像"
+
+#: plug-ins/file-dds/dds.c:237
+msgid "Selected layer"
+msgstr "选中图层"
+
+#: plug-ins/file-dds/dds.c:238
+msgid "All visible layers"
+msgstr "全部可见图层"
+
+#: plug-ins/file-dds/dds.c:239
+msgid "As cube map"
+msgstr "立方体映射"
+
+#: plug-ins/file-dds/dds.c:240
+msgid "As volume map"
+msgstr "体积映射"
+
+#: plug-ins/file-dds/dds.c:241
+msgid "As texture array"
+msgstr "纹理阵列"
+
+#: plug-ins/file-dds/dds.c:247
 msgid "Flip image _vertically on export"
 msgstr "导出时竖直翻转图像(_V)"
 
-#: plug-ins/file-dds/dds.c:276
+#: plug-ins/file-dds/dds.c:248
 msgid "Flip the image vertically on export"
 msgstr "导出时竖直翻转图像"
 
-#: plug-ins/file-dds/dds.c:281
+#: plug-ins/file-dds/dds.c:253
 msgid "Set _transparent color"
 msgstr "设置透明颜色(_T)"
 
-#: plug-ins/file-dds/dds.c:282
+#: plug-ins/file-dds/dds.c:254
 msgid "Make an indexed color transparent"
 msgstr "使索引颜色透明"
 
-#: plug-ins/file-dds/dds.c:287
+#: plug-ins/file-dds/dds.c:259
 msgid "Transparent inde_x"
 msgstr "透明索引(_X)"
 
-#: plug-ins/file-dds/dds.c:288
+#: plug-ins/file-dds/dds.c:260
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
 msgstr "透明颜色的索引或 -1 以禁用（仅适用于索引图像）。"
 
-#: plug-ins/file-dds/dds.c:302
+#: plug-ins/file-dds/dds.c:266
+msgid "_Mipmaps"
+msgstr "多级纹理(_M)"
+
+#: plug-ins/file-dds/dds.c:267
+msgid "How to handle mipmaps"
+msgstr "如何处理多级纹理"
+
+#: plug-ins/file-dds/dds.c:268
+msgid "No mipmaps"
+msgstr "无多级纹理"
+
+#: plug-ins/file-dds/dds.c:269
+msgid "Generate mipmaps"
+msgstr "生成多级纹理"
+
+#: plug-ins/file-dds/dds.c:270
+msgid "Use existing mipmaps"
+msgstr "使用现有多级纹理"
+
+#: plug-ins/file-dds/dds.c:276
 msgid "F_ilter"
 msgstr "滤波器(_I)"
 
-#: plug-ins/file-dds/dds.c:303
+#: plug-ins/file-dds/dds.c:277
 msgid "Filtering to use when generating mipmaps"
 msgstr "生成多级纹理时使用的滤波器"
 
-#: plug-ins/file-dds/dds.c:305
+#: plug-ins/file-dds/dds.c:279
 msgid "Nearest"
 msgstr "最邻近"
 
-#: plug-ins/file-dds/dds.c:306 plug-ins/map-object/map-object-main.c:139
+#: plug-ins/file-dds/dds.c:280 plug-ins/map-object/map-object-main.c:139
 msgid "Box"
 msgstr "方盒"
 
-#: plug-ins/file-dds/dds.c:307
+#: plug-ins/file-dds/dds.c:281
 msgid "Triangle"
 msgstr "三角形"
 
-#: plug-ins/file-dds/dds.c:308
+#: plug-ins/file-dds/dds.c:282
 msgid "Quadratic"
 msgstr "平方"
 
-#: plug-ins/file-dds/dds.c:309
+#: plug-ins/file-dds/dds.c:283
 msgid "B-Spline"
 msgstr "B 样条"
 
-#: plug-ins/file-dds/dds.c:310
+#: plug-ins/file-dds/dds.c:284
 msgid "Mitchell"
 msgstr "米切尔"
 
-#: plug-ins/file-dds/dds.c:311
+#: plug-ins/file-dds/dds.c:285
+msgid "Catmull-Rom"
+msgstr "Catmull-Rom"
+
+#: plug-ins/file-dds/dds.c:286
 msgid "Lanczos"
 msgstr "兰索斯法"
 
-#: plug-ins/file-dds/dds.c:312
+#: plug-ins/file-dds/dds.c:287
 msgid "Kaiser"
 msgstr "凯撒"
 
-#: plug-ins/file-dds/dds.c:318
+#: plug-ins/file-dds/dds.c:293
 msgid "_Wrap mode"
 msgstr "包裹模式(_W)"
 
-#: plug-ins/file-dds/dds.c:319
+#: plug-ins/file-dds/dds.c:294
 msgid "Wrap mode to use when generating mipmaps"
 msgstr "生成多级纹理时使用的包裹模式"
 
-#: plug-ins/file-dds/dds.c:321
+#: plug-ins/file-dds/dds.c:296
 msgid "Mirror"
 msgstr "镜像"
 
-#: plug-ins/file-dds/dds.c:322
+#: plug-ins/file-dds/dds.c:297
 msgid "Repeat"
 msgstr "重复"
 
-#: plug-ins/file-dds/dds.c:323
+#: plug-ins/file-dds/dds.c:298
 msgid "Clamp"
 msgstr "固定"
 
-#: plug-ins/file-dds/dds.c:329
+#: plug-ins/file-dds/dds.c:304
 msgid "Appl_y gamma correction"
 msgstr "应用伽马校正(_Y)"
 
-#: plug-ins/file-dds/dds.c:330
+#: plug-ins/file-dds/dds.c:305
 msgid "Use gamma correct mipmap filtering"
 msgstr "使用伽马校正多级纹理滤波器"
 
-#: plug-ins/file-dds/dds.c:335
+#: plug-ins/file-dds/dds.c:310
 msgid "Use sRG_B colorspace"
 msgstr "使用 sRGB 色彩空间(_B)"
 
-#: plug-ins/file-dds/dds.c:336
+#: plug-ins/file-dds/dds.c:311
 msgid "Use sRGB colorspace for gamma correction"
 msgstr "为伽马校正使用 sRGB 色彩空间"
 
-#: plug-ins/file-dds/dds.c:341 plug-ins/flame/flame.c:205
+#: plug-ins/file-dds/dds.c:316 plug-ins/flame/flame.c:205
 msgid "_Gamma"
 msgstr "伽马(_G)"
 
-#: plug-ins/file-dds/dds.c:342
+#: plug-ins/file-dds/dds.c:317
 msgid "Gamma value to use for gamma correction (e.g. 2.2)"
 msgstr "用于伽马校正的伽马值（如 2.2）"
 
-#: plug-ins/file-dds/dds.c:347
+#: plug-ins/file-dds/dds.c:322
 msgid "Preserve al_pha test coverage"
 msgstr "保持透明测试覆盖(_P)"
 
-#: plug-ins/file-dds/dds.c:348
+#: plug-ins/file-dds/dds.c:323
 msgid "Preserve alpha test coverage for alpha channel maps"
 msgstr "为透明通道映射保持透明测试覆盖"
 
-#: plug-ins/file-dds/dds.c:354
+#: plug-ins/file-dds/dds.c:329
 msgid "Alp_ha test threshold"
 msgstr "透明测试阈值(_H)"
 
-#: plug-ins/file-dds/dds.c:355
+#: plug-ins/file-dds/dds.c:330
 msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr "用于应保持透明测试覆盖的透明测试阈值"
 
-#: plug-ins/file-dds/dds.c:371
-msgid "Decode YCoCg"
-msgstr "解码 YCoCg"
-
-#: plug-ins/file-dds/dds.c:375 plug-ins/file-dds/dds.c:376
-msgid "Converts YCoCg encoded pixels to RGB"
-msgstr "将 YCoCg 编码的像素转换为 RGB"
-
-#: plug-ins/file-dds/dds.c:393
-msgid "Decode YCoCg (scaled)"
-msgstr "解码 YCoCg（已缩放）"
-
-#: plug-ins/file-dds/dds.c:397 plug-ins/file-dds/dds.c:399
-msgid "Converts YCoCg (scaled) encoded pixels to RGB"
-msgstr "将 YCoCg（已缩放）编码的像素转换为 RGB"
-
-#: plug-ins/file-dds/dds.c:417
-msgid "Decode Alpha exponent"
-msgstr "解码透明指数"
-
-#: plug-ins/file-dds/dds.c:423 plug-ins/file-dds/dds.c:421
-msgid "Converts alpha exponent encoded pixels to RGB"
-msgstr "将透明指数编码的像素转换为 RGB"
-
-#: plug-ins/file-dds/ddsread.c:273
+#: plug-ins/file-dds/ddsread.c:170
 #, c-format
-msgid "Unsupported uncompressed FOURCC type %u"
-msgstr "不支持的解压缩四字符代码类型 %u"
+msgid "Loading: %s"
+msgstr "正在加载：%s"
 
-#: plug-ins/file-dds/ddsread.c:518
+#: plug-ins/file-dds/ddsread.c:263
+#, c-format
+msgid "Unsupported uncompressed FourCC type %u"
+msgstr "不支持的未压缩四字符代码类型 %u"
+
+#: plug-ins/file-dds/ddsread.c:578
 msgid "Invalid or corrupted DDS header"
 msgstr "无效或损坏的 DDS 头部信息"
 
-#: plug-ins/file-dds/ddsread.c:527
+#: plug-ins/file-dds/ddsread.c:588
 msgid "Could not allocate a new image."
 msgstr "无法分配新图像。"
 
-#: plug-ins/file-dds/ddsread.c:538
+#: plug-ins/file-dds/ddsread.c:600
 msgid "Error reading palette."
 msgstr "读取色板出错。"
 
-#: plug-ins/file-dds/ddsread.c:824
+#: plug-ins/file-dds/ddsread.c:887
 msgid "Invalid DDS format magic number."
 msgstr "无效的 DDS 格式魔法数字。"
 
-#: plug-ins/file-dds/ddsread.c:912
+#: plug-ins/file-dds/ddsread.c:978
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "用于 RGB 数据的无效 bpp 值：%d"
 
-#: plug-ins/file-dds/ddsread.c:923
+#: plug-ins/file-dds/ddsread.c:989
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "用于亮度数据的无效 bpp 值：%d"
 
-#: plug-ins/file-dds/ddsread.c:974
+#: plug-ins/file-dds/ddsread.c:1041
 msgid "Invalid pixel format."
 msgstr "无效的像素格式。"
 
-#: plug-ins/file-dds/ddsread.c:1234
+#: plug-ins/file-dds/ddsread.c:1274
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "不支持的 DXGI 格式（%d）"
 
-#: plug-ins/file-dds/ddsread.c:1389
+#: plug-ins/file-dds/ddsread.c:1430
 #, c-format
 msgid "Unsupported value for bytes per pixel: %d"
 msgstr "不支持的每像素字节值：%d"
 
-#: plug-ins/file-dds/ddsread.c:1444 plug-ins/file-dds/ddsread.c:1504
-#: plug-ins/file-dds/ddsread.c:1525
+#: plug-ins/file-dds/ddsread.c:1525 plug-ins/file-dds/ddsread.c:1583
+#: plug-ins/file-dds/ddsread.c:1604
 msgid "Requested data exceeds size of file.\n"
 msgstr "请求的数据超出文件大小。\n"
 
-#: plug-ins/file-dds/ddsread.c:1452 plug-ins/file-dds/ddsread.c:1531
+#: plug-ins/file-dds/ddsread.c:1533 plug-ins/file-dds/ddsread.c:1610
 msgid "Unexpected EOF.\n"
 msgstr "意料之外的文件尾。\n"
 
-#: plug-ins/file-dds/ddsread.c:2019
+#: plug-ins/file-dds/ddsread.c:2125
 msgid "Open DDS"
 msgstr "打开 DDS"
 
-#: plug-ins/file-dds/ddswrite.c:2022
+#: plug-ins/file-dds/ddswrite.c:566
+#, c-format
+msgid "Saving: %s"
+msgstr "正在保存：%s"
+
+#: plug-ins/file-dds/ddswrite.c:1942
 msgid "Mipmap Options"
 msgstr "多级纹理选项"
-
-#: plug-ins/file-dds/ddswrite.c:2037
-msgid "Selected layer"
-msgstr "选中图层"
-
-#: plug-ins/file-dds/ddswrite.c:2038
-msgid "All visible layers"
-msgstr "全部可见图层"
-
-#: plug-ins/file-dds/ddswrite.c:2039
-msgid "As cube map"
-msgstr "立方体映射"
-
-#: plug-ins/file-dds/ddswrite.c:2040
-msgid "As volume map"
-msgstr "体积映射"
-
-#: plug-ins/file-dds/ddswrite.c:2041
-msgid "As texture array"
-msgstr "纹理阵列"
-
-#: plug-ins/file-dds/ddswrite.c:2053
-msgid "No mipmaps"
-msgstr "无多级纹理"
-
-#: plug-ins/file-dds/ddswrite.c:2054
-msgid "Generate mipmaps"
-msgstr "生成多级纹理"
-
-#: plug-ins/file-dds/ddswrite.c:2055
-msgid "Use existing mipmaps"
-msgstr "使用现有多级纹理"
 
 #: plug-ins/file-exr/file-exr.c:112
 msgid "Loads files in the OpenEXR file format"
@@ -10080,7 +10065,7 @@ msgid "Import from TIFF"
 msgstr "从 TIFF 导入"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2550
-#: plug-ins/metadata/metadata-editor.c:5533
+#: plug-ins/metadata/metadata-editor.c:5525
 msgid "_Import"
 msgstr "导入(_I)"
 
@@ -11424,7 +11409,7 @@ msgstr "伽马："
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "改变所选笔刷的伽马（明亮度）"
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1371
+#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1363
 msgid "Select:"
 msgstr "选择："
 
@@ -14111,458 +14096,458 @@ msgstr "将图像映射到方盒表面"
 msgid "Images for the Cap Faces"
 msgstr "上下底面的图像"
 
-#: plug-ins/metadata/metadata-editor.c:484
+#: plug-ins/metadata/metadata-editor.c:488
 msgid "Document Title"
 msgstr "文档标题"
 
-#: plug-ins/metadata/metadata-editor.c:485
+#: plug-ins/metadata/metadata-editor.c:489
 msgid "Author"
 msgstr "作者"
 
-#: plug-ins/metadata/metadata-editor.c:486
+#: plug-ins/metadata/metadata-editor.c:490
 msgid "Author Title"
 msgstr "作者头衔"
 
 #. Description tab
-#: plug-ins/metadata/metadata-editor.c:487
-#: plug-ins/metadata/metadata-editor.c:1216
+#: plug-ins/metadata/metadata-editor.c:491
+#: plug-ins/metadata/metadata-editor.c:1208
 msgid "Description"
 msgstr "描述"
 
-#: plug-ins/metadata/metadata-editor.c:488
+#: plug-ins/metadata/metadata-editor.c:492
 msgid "Description Writer"
 msgstr "描述的作者"
 
-#: plug-ins/metadata/metadata-editor.c:489
+#: plug-ins/metadata/metadata-editor.c:493
 msgid "Rating"
 msgstr "评级"
 
-#: plug-ins/metadata/metadata-editor.c:490
+#: plug-ins/metadata/metadata-editor.c:494
 msgid "Keywords"
 msgstr "关键词"
 
-#: plug-ins/metadata/metadata-editor.c:492
+#: plug-ins/metadata/metadata-editor.c:496
 msgid "Copyright Status"
 msgstr "版权状态"
 
-#: plug-ins/metadata/metadata-editor.c:493
-#: plug-ins/metadata/metadata-editor.c:622
+#: plug-ins/metadata/metadata-editor.c:497
+#: plug-ins/metadata/metadata-editor.c:626
 msgid "Copyright Notice"
 msgstr "版权公告"
 
-#: plug-ins/metadata/metadata-editor.c:494
+#: plug-ins/metadata/metadata-editor.c:498
 msgid "Copyright URL"
 msgstr "版权网址"
 
-#: plug-ins/metadata/metadata-editor.c:500
+#: plug-ins/metadata/metadata-editor.c:504
 msgid "Address"
 msgstr "地址"
 
-#: plug-ins/metadata/metadata-editor.c:501
-#: plug-ins/metadata/metadata-editor.c:516
-#: plug-ins/metadata/metadata-editor.c:537
-#: plug-ins/metadata/metadata-editor.c:595
+#: plug-ins/metadata/metadata-editor.c:505
+#: plug-ins/metadata/metadata-editor.c:520
+#: plug-ins/metadata/metadata-editor.c:541
+#: plug-ins/metadata/metadata-editor.c:599
 msgid "City"
 msgstr "城市"
 
-#: plug-ins/metadata/metadata-editor.c:502
-#: plug-ins/metadata/metadata-editor.c:517
-#: plug-ins/metadata/metadata-editor.c:538
+#: plug-ins/metadata/metadata-editor.c:506
+#: plug-ins/metadata/metadata-editor.c:521
+#: plug-ins/metadata/metadata-editor.c:542
 msgid "State / Province"
 msgstr "州/省"
 
-#: plug-ins/metadata/metadata-editor.c:503
+#: plug-ins/metadata/metadata-editor.c:507
 msgid "Postal Code"
 msgstr "邮政编码"
 
-#: plug-ins/metadata/metadata-editor.c:504
-#: plug-ins/metadata/metadata-editor.c:518
-#: plug-ins/metadata/metadata-editor.c:539
-#: plug-ins/metadata/metadata-editor.c:597
+#: plug-ins/metadata/metadata-editor.c:508
+#: plug-ins/metadata/metadata-editor.c:522
+#: plug-ins/metadata/metadata-editor.c:543
+#: plug-ins/metadata/metadata-editor.c:601
 msgid "Country"
 msgstr "国家"
 
-#: plug-ins/metadata/metadata-editor.c:506
+#: plug-ins/metadata/metadata-editor.c:510
 msgid "Phone(s)"
 msgstr "电话"
 
-#: plug-ins/metadata/metadata-editor.c:507
+#: plug-ins/metadata/metadata-editor.c:511
 msgid "E-mail(s)"
 msgstr "电子邮箱"
 
-#: plug-ins/metadata/metadata-editor.c:508
+#: plug-ins/metadata/metadata-editor.c:512
 msgid "Website(s)"
 msgstr "网站"
 
-#: plug-ins/metadata/metadata-editor.c:510
+#: plug-ins/metadata/metadata-editor.c:514
 msgid "Creation Date"
 msgstr "创建日期"
 
-#: plug-ins/metadata/metadata-editor.c:512
+#: plug-ins/metadata/metadata-editor.c:516
 msgid "Intellectual Genre"
 msgstr "新闻类别"
 
-#: plug-ins/metadata/metadata-editor.c:513
+#: plug-ins/metadata/metadata-editor.c:517
 msgid "IPTC Scene Code"
 msgstr "IPTC 场景代码"
 
-#: plug-ins/metadata/metadata-editor.c:515
-#: plug-ins/metadata/metadata-editor.c:536
-#: plug-ins/metadata/metadata-editor.c:594
+#: plug-ins/metadata/metadata-editor.c:519
+#: plug-ins/metadata/metadata-editor.c:540
+#: plug-ins/metadata/metadata-editor.c:598
 msgid "Sublocation"
 msgstr "子位置"
 
-#: plug-ins/metadata/metadata-editor.c:519
-#: plug-ins/metadata/metadata-editor.c:540
+#: plug-ins/metadata/metadata-editor.c:523
+#: plug-ins/metadata/metadata-editor.c:544
 msgid "Country ISO-Code"
 msgstr "国家 ISO 代码"
 
-#: plug-ins/metadata/metadata-editor.c:521
+#: plug-ins/metadata/metadata-editor.c:525
 msgid "Urgency"
 msgstr "紧急"
 
-#: plug-ins/metadata/metadata-editor.c:522
+#: plug-ins/metadata/metadata-editor.c:526
 msgid "Headline"
 msgstr "标题"
 
-#: plug-ins/metadata/metadata-editor.c:523
+#: plug-ins/metadata/metadata-editor.c:527
 msgid "IPTC Subject Code"
 msgstr "IPTC 主题代码"
 
-#: plug-ins/metadata/metadata-editor.c:525
+#: plug-ins/metadata/metadata-editor.c:529
 msgid "Job Identifier"
 msgstr "工作标识"
 
-#: plug-ins/metadata/metadata-editor.c:526
+#: plug-ins/metadata/metadata-editor.c:530
 msgid "Instructions"
 msgstr "说明"
 
-#: plug-ins/metadata/metadata-editor.c:527
+#: plug-ins/metadata/metadata-editor.c:531
 msgid "Credit Line"
 msgstr "新闻来源"
 
-#: plug-ins/metadata/metadata-editor.c:528
-#: plug-ins/metadata/metadata-editor.c:620
+#: plug-ins/metadata/metadata-editor.c:532
+#: plug-ins/metadata/metadata-editor.c:624
 msgid "Source"
 msgstr "来源"
 
-#: plug-ins/metadata/metadata-editor.c:529
+#: plug-ins/metadata/metadata-editor.c:533
 msgid "Usage Terms"
 msgstr "使用条款"
 
-#: plug-ins/metadata/metadata-editor.c:535
+#: plug-ins/metadata/metadata-editor.c:539
 msgid "Person Shown"
 msgstr "人物显示"
 
-#: plug-ins/metadata/metadata-editor.c:541
-#: plug-ins/metadata/metadata-editor.c:599
+#: plug-ins/metadata/metadata-editor.c:545
+#: plug-ins/metadata/metadata-editor.c:603
 msgid "World Region"
 msgstr "世界区域"
 
-#: plug-ins/metadata/metadata-editor.c:542
+#: plug-ins/metadata/metadata-editor.c:546
 msgid "Location Shown"
 msgstr "位置显示"
 
-#: plug-ins/metadata/metadata-editor.c:544
+#: plug-ins/metadata/metadata-editor.c:548
 msgid "Featured Organization"
 msgstr "专题机构"
 
-#: plug-ins/metadata/metadata-editor.c:546
+#: plug-ins/metadata/metadata-editor.c:550
 msgid "Organization Code"
 msgstr "机构代码"
 
-#: plug-ins/metadata/metadata-editor.c:548
+#: plug-ins/metadata/metadata-editor.c:552
 msgid "Event"
 msgstr "事件"
 
-#: plug-ins/metadata/metadata-editor.c:549
+#: plug-ins/metadata/metadata-editor.c:553
 msgid "Artwork or Object"
 msgstr "艺术作品或对象"
 
-#: plug-ins/metadata/metadata-editor.c:552
+#: plug-ins/metadata/metadata-editor.c:556
 msgid "Additional Model Info"
 msgstr "附加模特信息"
 
-#: plug-ins/metadata/metadata-editor.c:553
+#: plug-ins/metadata/metadata-editor.c:557
 msgid "Model Age"
 msgstr "模特年龄"
 
-#: plug-ins/metadata/metadata-editor.c:554
+#: plug-ins/metadata/metadata-editor.c:558
 msgid "Minor Model Age Disclosure"
 msgstr "未成年模特公开年龄"
 
-#: plug-ins/metadata/metadata-editor.c:555
+#: plug-ins/metadata/metadata-editor.c:559
 msgid "Model Release Status"
 msgstr "模特发布状态"
 
-#: plug-ins/metadata/metadata-editor.c:556
-#: plug-ins/metadata/metadata-editor.c:628
+#: plug-ins/metadata/metadata-editor.c:560
+#: plug-ins/metadata/metadata-editor.c:632
 msgid "Model Release Identifier"
 msgstr "模特发布标识"
 
-#: plug-ins/metadata/metadata-editor.c:559
+#: plug-ins/metadata/metadata-editor.c:563
 msgid "Image Supplier Name"
 msgstr "图像供应商名称"
 
-#: plug-ins/metadata/metadata-editor.c:560
+#: plug-ins/metadata/metadata-editor.c:564
 msgid "Image Supplier ID"
 msgstr "图像供应商标识"
 
-#: plug-ins/metadata/metadata-editor.c:561
+#: plug-ins/metadata/metadata-editor.c:565
 msgid "Supplier's Image ID"
 msgstr "供应商的图像标识"
 
-#: plug-ins/metadata/metadata-editor.c:562
+#: plug-ins/metadata/metadata-editor.c:566
 msgid "Registry Entry"
 msgstr "注册登记"
 
-#: plug-ins/metadata/metadata-editor.c:564
+#: plug-ins/metadata/metadata-editor.c:568
 msgid "Max. Available Width"
 msgstr "最大可用宽度"
 
-#: plug-ins/metadata/metadata-editor.c:565
+#: plug-ins/metadata/metadata-editor.c:569
 msgid "Max. Available Height"
 msgstr "最大可用高度"
 
-#: plug-ins/metadata/metadata-editor.c:566
+#: plug-ins/metadata/metadata-editor.c:570
 msgid "Digital Source Type"
 msgstr "数码源类型"
 
-#: plug-ins/metadata/metadata-editor.c:568
+#: plug-ins/metadata/metadata-editor.c:572
 msgid "Image Creator"
 msgstr "图像创建者"
 
-#: plug-ins/metadata/metadata-editor.c:570
+#: plug-ins/metadata/metadata-editor.c:574
 msgid "Copyright Owner"
 msgstr "版权所有者"
 
-#: plug-ins/metadata/metadata-editor.c:572
+#: plug-ins/metadata/metadata-editor.c:576
 msgid "Licensor"
 msgstr "许可证颁发者"
 
-#: plug-ins/metadata/metadata-editor.c:574
+#: plug-ins/metadata/metadata-editor.c:578
 msgid "Property Release Status"
 msgstr "所有权发布状态"
 
-#: plug-ins/metadata/metadata-editor.c:575
+#: plug-ins/metadata/metadata-editor.c:579
 msgid "Property Release Identifier"
 msgstr "所有权发布标识"
 
-#: plug-ins/metadata/metadata-editor.c:596
+#: plug-ins/metadata/metadata-editor.c:600
 msgid "Province / State"
 msgstr "省/州"
 
-#: plug-ins/metadata/metadata-editor.c:598
+#: plug-ins/metadata/metadata-editor.c:602
 msgid "Country ISO Code"
 msgstr "国家 ISO 代码"
 
-#: plug-ins/metadata/metadata-editor.c:611
+#: plug-ins/metadata/metadata-editor.c:615
 msgid "Code"
 msgstr "代码"
 
-#: plug-ins/metadata/metadata-editor.c:617
+#: plug-ins/metadata/metadata-editor.c:621
 msgid "Title"
 msgstr "标题"
 
-#: plug-ins/metadata/metadata-editor.c:618
+#: plug-ins/metadata/metadata-editor.c:622
 msgid "Date Created"
 msgstr "创建日期"
 
-#: plug-ins/metadata/metadata-editor.c:619
+#: plug-ins/metadata/metadata-editor.c:623
 msgid "Creator"
 msgstr "创建者"
 
-#: plug-ins/metadata/metadata-editor.c:621
+#: plug-ins/metadata/metadata-editor.c:625
 msgid "Source Inventory ID"
 msgstr "源库存标识"
 
-#: plug-ins/metadata/metadata-editor.c:634
+#: plug-ins/metadata/metadata-editor.c:638
 msgid "Organization Identifier"
 msgstr "机构标识"
 
-#: plug-ins/metadata/metadata-editor.c:635
+#: plug-ins/metadata/metadata-editor.c:639
 msgid "Item Identifier"
 msgstr "项目标识"
 
-#: plug-ins/metadata/metadata-editor.c:642
-#: plug-ins/metadata/metadata-editor.c:649
-#: plug-ins/metadata/metadata-editor.c:656
-#: plug-ins/metadata/metadata-editor.c:668
+#: plug-ins/metadata/metadata-editor.c:646
+#: plug-ins/metadata/metadata-editor.c:653
+#: plug-ins/metadata/metadata-editor.c:660
+#: plug-ins/metadata/metadata-editor.c:672
 msgid "Identifier"
 msgstr "标识"
 
-#: plug-ins/metadata/metadata-editor.c:657
+#: plug-ins/metadata/metadata-editor.c:661
 msgid "Phone Number 1"
 msgstr "电话号码 1"
 
-#: plug-ins/metadata/metadata-editor.c:658
+#: plug-ins/metadata/metadata-editor.c:662
 msgid "Phone Type 1"
 msgstr "电话类型 1"
 
-#: plug-ins/metadata/metadata-editor.c:659
+#: plug-ins/metadata/metadata-editor.c:663
 msgid "Phone Number 2"
 msgstr "电话号码 2"
 
-#: plug-ins/metadata/metadata-editor.c:660
+#: plug-ins/metadata/metadata-editor.c:664
 msgid "Phone Type 2"
 msgstr "电话类型 2"
 
-#: plug-ins/metadata/metadata-editor.c:661
+#: plug-ins/metadata/metadata-editor.c:665
 msgid "Email Address"
 msgstr "电子邮箱地址"
 
-#: plug-ins/metadata/metadata-editor.c:662
+#: plug-ins/metadata/metadata-editor.c:666
 msgid "Web Address"
 msgstr "网址"
 
-#: plug-ins/metadata/metadata-editor.c:675
+#: plug-ins/metadata/metadata-editor.c:679
 msgid "Category"
 msgstr "类别"
 
-#: plug-ins/metadata/metadata-editor.c:676
+#: plug-ins/metadata/metadata-editor.c:680
 msgid "Supplemental Category"
 msgstr "补充类别"
 
-#: plug-ins/metadata/metadata-editor.c:682
+#: plug-ins/metadata/metadata-editor.c:686
 msgid "Longitude"
 msgstr "经度"
 
-#: plug-ins/metadata/metadata-editor.c:683
+#: plug-ins/metadata/metadata-editor.c:687
 msgid "Longitude Reference"
 msgstr "经度参考"
 
-#: plug-ins/metadata/metadata-editor.c:684
+#: plug-ins/metadata/metadata-editor.c:688
 msgid "Latitude"
 msgstr "纬度"
 
-#: plug-ins/metadata/metadata-editor.c:685
+#: plug-ins/metadata/metadata-editor.c:689
 msgid "Latitude Reference"
 msgstr "纬度参考"
 
-#: plug-ins/metadata/metadata-editor.c:686
+#: plug-ins/metadata/metadata-editor.c:690
 msgid "Altitude"
 msgstr "海拔"
 
-#: plug-ins/metadata/metadata-editor.c:688
+#: plug-ins/metadata/metadata-editor.c:692
 msgid "Altitude Reference"
 msgstr "海拔参考"
 
-#: plug-ins/metadata/metadata-editor.c:694
+#: plug-ins/metadata/metadata-editor.c:698
 msgid "Patient"
 msgstr "患者"
 
-#: plug-ins/metadata/metadata-editor.c:695
+#: plug-ins/metadata/metadata-editor.c:699
 msgid "Patient ID"
 msgstr "患者标识"
 
-#: plug-ins/metadata/metadata-editor.c:696
+#: plug-ins/metadata/metadata-editor.c:700
 msgid "Date of Birth"
 msgstr "出生日期"
 
-#: plug-ins/metadata/metadata-editor.c:698
+#: plug-ins/metadata/metadata-editor.c:702
 msgid "Patient Sex"
 msgstr "患者性别"
 
-#: plug-ins/metadata/metadata-editor.c:700
+#: plug-ins/metadata/metadata-editor.c:704
 msgid "Study ID"
 msgstr "研究标识"
 
-#: plug-ins/metadata/metadata-editor.c:701
+#: plug-ins/metadata/metadata-editor.c:705
 msgid "Referring Physician"
 msgstr "参考医师"
 
-#: plug-ins/metadata/metadata-editor.c:702
+#: plug-ins/metadata/metadata-editor.c:706
 msgid "Study Date"
 msgstr "研究日期"
 
-#: plug-ins/metadata/metadata-editor.c:704
+#: plug-ins/metadata/metadata-editor.c:708
 msgid "Study Description"
 msgstr "研究描述"
 
-#: plug-ins/metadata/metadata-editor.c:705
+#: plug-ins/metadata/metadata-editor.c:709
 msgid "Series Number"
 msgstr "序列号"
 
-#: plug-ins/metadata/metadata-editor.c:706
+#: plug-ins/metadata/metadata-editor.c:710
 msgid "Modality"
 msgstr "特征"
 
-#: plug-ins/metadata/metadata-editor.c:707
+#: plug-ins/metadata/metadata-editor.c:711
 msgid "Series Date"
 msgstr "序列日期"
 
-#: plug-ins/metadata/metadata-editor.c:709
+#: plug-ins/metadata/metadata-editor.c:713
 msgid "Series Description"
 msgstr "系列描述"
 
-#: plug-ins/metadata/metadata-editor.c:711
+#: plug-ins/metadata/metadata-editor.c:715
 msgid "Equipment Institution"
 msgstr "设备机构"
 
-#: plug-ins/metadata/metadata-editor.c:712
+#: plug-ins/metadata/metadata-editor.c:716
 msgid "Equipment Manufacturer"
 msgstr "设备制造商"
 
-#: plug-ins/metadata/metadata-editor.c:752
+#: plug-ins/metadata/metadata-editor.c:756
 msgid "_Edit Metadata"
 msgstr "编辑元数据(_E)"
 
-#: plug-ins/metadata/metadata-editor.c:756
+#: plug-ins/metadata/metadata-editor.c:760
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "编辑元数据（IPTC，EXIF，XMP）"
 
-#: plug-ins/metadata/metadata-editor.c:1178
+#: plug-ins/metadata/metadata-editor.c:1170
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "元数据编辑器：%s"
 
-#: plug-ins/metadata/metadata-editor.c:1186
+#: plug-ins/metadata/metadata-editor.c:1178
 msgid "_Write Metadata"
 msgstr "写入元数据(_W)"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1222
-#: plug-ins/metadata/metadata-viewer.c:401
+#: plug-ins/metadata/metadata-editor.c:1214
+#: plug-ins/metadata/metadata-viewer.c:393
 msgid "IPTC"
 msgstr "IPTC"
 
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1228
+#: plug-ins/metadata/metadata-editor.c:1220
 msgid "IPTC Extension"
 msgstr "IPTC 扩展"
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1334
+#: plug-ins/metadata/metadata-editor.c:1326
 msgid "Categories"
 msgstr "类别"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1340
+#: plug-ins/metadata/metadata-editor.c:1332
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1351
+#: plug-ins/metadata/metadata-editor.c:1343
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1373
+#: plug-ins/metadata/metadata-editor.c:1365
 msgid "Import metadata"
 msgstr "导入元数据"
 
-#: plug-ins/metadata/metadata-editor.c:1375
+#: plug-ins/metadata/metadata-editor.c:1367
 msgid "Export metadata"
 msgstr "导出元数据"
 
-#: plug-ins/metadata/metadata-editor.c:1678
+#: plug-ins/metadata/metadata-editor.c:1670
 msgid "Choose Date"
 msgstr "选择日期"
 
-#: plug-ins/metadata/metadata-editor.c:1682
+#: plug-ins/metadata/metadata-editor.c:1674
 msgid "Set Date"
 msgstr "设置日期"
 
-#: plug-ins/metadata/metadata-editor.c:2416
+#: plug-ins/metadata/metadata-editor.c:2408
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -14577,7 +14562,7 @@ msgstr ""
 "或 10.45\n"
 "删除所有文字可删除当前值。"
 
-#: plug-ins/metadata/metadata-editor.c:2422
+#: plug-ins/metadata/metadata-editor.c:2414
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -14592,24 +14577,24 @@ msgstr ""
 "根据选中的度量类型该值应为米（m）或英尺（ft）\n"
 "删除所有文字可删除当前值。"
 
-#: plug-ins/metadata/metadata-editor.c:2556
+#: plug-ins/metadata/metadata-editor.c:2548
 msgid "Unrated"
 msgstr "未评级"
 
-#: plug-ins/metadata/metadata-editor.c:4666
+#: plug-ins/metadata/metadata-editor.c:4658
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "设置元数据标签“%s”失败：%s"
 
-#: plug-ins/metadata/metadata-editor.c:5529
+#: plug-ins/metadata/metadata-editor.c:5521
 msgid "Import Metadata File"
 msgstr "导入元数据文件"
 
-#: plug-ins/metadata/metadata-editor.c:5564
+#: plug-ins/metadata/metadata-editor.c:5556
 msgid "Export Metadata File"
 msgstr "导出元数据文件"
 
-#: plug-ins/metadata/metadata-editor.c:5568
+#: plug-ins/metadata/metadata-editor.c:5560
 msgid "_Export"
 msgstr "导出(_E)"
 
@@ -14837,53 +14822,53 @@ msgstr "东"
 msgid "West"
 msgstr "西"
 
-#: plug-ins/metadata/metadata-viewer.c:177
+#: plug-ins/metadata/metadata-viewer.c:181
 msgid "_View Metadata"
 msgstr "查看元数据(_V)"
 
-#: plug-ins/metadata/metadata-viewer.c:181
+#: plug-ins/metadata/metadata-viewer.c:185
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "查看元数据（Exif，IPTC，XMP）"
 
-#: plug-ins/metadata/metadata-viewer.c:265
+#: plug-ins/metadata/metadata-viewer.c:257
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "元数据查看器：%s"
 
-#: plug-ins/metadata/metadata-viewer.c:308
+#: plug-ins/metadata/metadata-viewer.c:300
 msgid "Exif Tag"
 msgstr "Exif 标签"
 
-#: plug-ins/metadata/metadata-viewer.c:325
+#: plug-ins/metadata/metadata-viewer.c:317
 msgid "Exif"
 msgstr "Exif"
 
-#: plug-ins/metadata/metadata-viewer.c:346
+#: plug-ins/metadata/metadata-viewer.c:338
 msgid "XMP Tag"
 msgstr "XMP 标签"
 
-#: plug-ins/metadata/metadata-viewer.c:363
+#: plug-ins/metadata/metadata-viewer.c:355
 msgid "XMP"
 msgstr "XBM"
 
-#: plug-ins/metadata/metadata-viewer.c:384
+#: plug-ins/metadata/metadata-viewer.c:376
 msgid "IPTC Tag"
 msgstr "IPTC 标签"
 
-#: plug-ins/metadata/metadata-viewer.c:481
+#: plug-ins/metadata/metadata-viewer.c:473
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "（%lu 个更多字符）"
 
-#: plug-ins/metadata/metadata-viewer.c:728
+#: plug-ins/metadata/metadata-viewer.c:720
 msgid " meter"
 msgstr " 米"
 
-#: plug-ins/metadata/metadata-viewer.c:729
+#: plug-ins/metadata/metadata-viewer.c:721
 msgid " feet"
 msgstr " 英尺"
 
-#: plug-ins/metadata/metadata-viewer.c:897
+#: plug-ins/metadata/metadata-viewer.c:889
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "（%llu 个更多字节）"
@@ -15365,6 +15350,40 @@ msgstr "扫描仪/相机(_S)…"
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
 
+#~ msgid "Always use _transparency for BC1/DXT1"
+#~ msgstr "总是为 BC1/DXT1 使用透明(_T)"
+
+#~ msgid ""
+#~ "Interprets transparency for BC1/DXT1 images even when DDPF_ALPHAPIXELS is "
+#~ "not set; if disabled, sets it to opaque black"
+#~ msgstr ""
+#~ "即使 DDPF_ALPHAPIXELS 未设置仍为 BC1/DXT1 图像使用透明；如果禁用，则将其设"
+#~ "为不透明的黑色"
+
+#~ msgid "Automatically decode YCoCg/AE_xp images when detected"
+#~ msgstr "当检测到时自动解码 YCoCg/AExp 图像(_X)"
+
+#~ msgid "Decode YCoCg/AExp images when detected"
+#~ msgstr "当检测到时自动解码 YCoCg/AExp 图像"
+
+#~ msgid "Decode YCoCg"
+#~ msgstr "解码 YCoCg"
+
+#~ msgid "Converts YCoCg encoded pixels to RGB"
+#~ msgstr "将 YCoCg 编码的像素转换为 RGB"
+
+#~ msgid "Decode YCoCg (scaled)"
+#~ msgstr "解码 YCoCg（已缩放）"
+
+#~ msgid "Converts YCoCg (scaled) encoded pixels to RGB"
+#~ msgstr "将 YCoCg（已缩放）编码的像素转换为 RGB"
+
+#~ msgid "Decode Alpha exponent"
+#~ msgstr "解码透明指数"
+
+#~ msgid "Converts alpha exponent encoded pixels to RGB"
+#~ msgstr "将透明指数编码的像素转换为 RGB"
+
 #~ msgid "_Saturation"
 #~ msgstr "饱和度(_S)"
 
@@ -15379,9 +15398,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "_Save:"
 #~ msgstr "保存(_S)："
-
-#~ msgid "_Mipmaps:"
-#~ msgstr "多级纹理(_M)："
 
 #~ msgid "_Gamma:"
 #~ msgstr "伽马(_G)："
@@ -18531,9 +18547,6 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "E_rode"
 #~ msgstr "腐蚀(_R)"
 
-#~ msgid "Grow lighter areas of the image"
-#~ msgstr "扩张图像中较亮的区域"
-
 #~ msgid "_Dilate"
 #~ msgstr "膨胀(_D)"
 
@@ -18675,9 +18688,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "Edge Affected"
 #~ msgstr "边缘效果"
-
-#~ msgid "L_eading"
-#~ msgstr "头部(_E)"
 
 #~ msgid "Tr_ailing"
 #~ msgstr "尾部(_A)"
