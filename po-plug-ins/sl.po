@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-11-20 20:30+0000\n"
-"PO-Revision-Date: 2023-11-23 09:06+0100\n"
+"POT-Creation-Date: 2023-12-01 20:47+0000\n"
+"PO-Revision-Date: 2023-12-02 08:58+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -46,9 +46,8 @@ msgstr "Povadi kozo v jeziku C"
 #: plug-ins/common/sphere-designer.c:3185 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:243
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:181
-#: plug-ins/file-dds/dds.c:556 plug-ins/flame/flame.c:299
-#: plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:215
-#: plug-ins/gimpressionist/gimp.c:184
+#: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:427
+#: plug-ins/gfig/gfig.c:215 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
 #: plug-ins/ifs-compose/ifs-compose.c:492 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:756
@@ -92,10 +91,10 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/ifs-compose/ifs-compose.c:2597 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:738
-#: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1185
-#: plug-ins/metadata/metadata-editor.c:1681
-#: plug-ins/metadata/metadata-editor.c:5532
-#: plug-ins/metadata/metadata-editor.c:5567
+#: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1177
+#: plug-ins/metadata/metadata-editor.c:1673
+#: plug-ins/metadata/metadata-editor.c:5524
+#: plug-ins/metadata/metadata-editor.c:5559
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
@@ -332,7 +331,7 @@ msgstr "Poravnaj vidne plasti"
 #. file save type
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
 #: plug-ins/common/file-ps.c:3729 plug-ins/common/file-ps.c:3737
-#: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:223
+#: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:191
 #: plug-ins/file-tiff/file-tiff.c:240
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
 #: plug-ins/fractal-explorer/fractal-explorer.c:354
@@ -951,9 +950,9 @@ msgstr "Nasičenost"
 
 #: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
-#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:317
-#: plug-ins/metadata/metadata-viewer.c:355
-#: plug-ins/metadata/metadata-viewer.c:393
+#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:309
+#: plug-ins/metadata/metadata-viewer.c:347
+#: plug-ins/metadata/metadata-viewer.c:385
 msgid "Value"
 msgstr "Vrednost"
 
@@ -1205,7 +1204,7 @@ msgstr "Graf trenutnih nastavitev"
 #: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
 #: plug-ins/ifs-compose/ifs-compose.c:1214
-#: plug-ins/metadata/metadata-viewer.c:272
+#: plug-ins/metadata/metadata-viewer.c:264
 msgid "_Close"
 msgstr "Z_apri"
 
@@ -1985,7 +1984,7 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:164
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:160
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
 #: plug-ins/file-icns/file-icns-load.c:516
@@ -2474,7 +2473,7 @@ msgstr ""
 "Ta vstavek uporablja aalib za shranjevanje sivinske slike kot slike ascii v "
 "različnih oblikah besedila"
 
-#: plug-ins/common/file-aa.c:156 plug-ins/file-dds/dds.c:245
+#: plug-ins/common/file-aa.c:156 plug-ins/file-dds/dds.c:213
 msgid "_Format"
 msgstr "_Oblika"
 
@@ -7001,10 +7000,10 @@ msgstr "Ni zadetkov"
 msgid "Plug-in Browser"
 msgstr "Brskalnik vstavkov"
 
-#: plug-ins/common/plugin-browser.c:603 plug-ins/metadata/metadata-editor.c:605
-#: plug-ins/metadata/metadata-editor.c:641
-#: plug-ins/metadata/metadata-editor.c:648
-#: plug-ins/metadata/metadata-editor.c:655
+#: plug-ins/common/plugin-browser.c:603 plug-ins/metadata/metadata-editor.c:609
+#: plug-ins/metadata/metadata-editor.c:645
+#: plug-ins/metadata/metadata-editor.c:652
+#: plug-ins/metadata/metadata-editor.c:659
 msgid "Name"
 msgstr "Ime"
 
@@ -8414,431 +8413,421 @@ msgstr ""
 msgid "BMP format does not support multiple layers."
 msgstr "Zapis BMP ne podpira več plasti."
 
-#: plug-ins/file-dds/dds.c:149 plug-ins/file-dds/dds.c:201
+#: plug-ins/file-dds/dds.c:131 plug-ins/file-dds/dds.c:169
 msgid "DDS image"
 msgstr "Slika DDS"
 
-#: plug-ins/file-dds/dds.c:152 plug-ins/file-dds/dds.c:153
+#: plug-ins/file-dds/dds.c:134 plug-ins/file-dds/dds.c:135
 msgid "Loads files in DDS image format"
 msgstr "Naloži datoteke v zapisu DDS"
 
-#: plug-ins/file-dds/dds.c:168
+#: plug-ins/file-dds/dds.c:150
 msgid "Load _mipmaps"
 msgstr "Naloži _mipmapse"
 
-#: plug-ins/file-dds/dds.c:169
+#: plug-ins/file-dds/dds.c:151
 msgid "Load mipmaps if present"
 msgstr "Naloži mipmapse, če so prisotni"
 
-#: plug-ins/file-dds/dds.c:174
+#: plug-ins/file-dds/dds.c:156
 msgid "Flip image _vertically"
 msgstr "Prezrcali sliko _navpično"
 
-#: plug-ins/file-dds/dds.c:175
+#: plug-ins/file-dds/dds.c:157
 msgid "Flip the image vertically on import"
 msgstr "Prezrcali sliko navpično ob uvozu"
 
-#: plug-ins/file-dds/dds.c:180
-msgid "Always use _transparency for BC1/DXT1"
-msgstr "Vedno uporabi _prosojnost za BC1/DXT1"
-
-#: plug-ins/file-dds/dds.c:181
-msgid ""
-"Interprets transparency for BC1/DXT1 images even when DDPF_ALPHAPIXELS is "
-"not set; if disabled, sets it to opaque black"
-msgstr ""
-"Interpretira prosojnost za slike BC1/DXT1, tudi če DDPF_ALPHAPIXELS ni "
-"nastavljen; če je onemogočen, se nastavi na prekrivno črno"
-
-#: plug-ins/file-dds/dds.c:188
-msgid "Automatically decode YCoCg/AE_xp images when detected"
-msgstr "Samodejno odkodiraj zaznane slike YCoCg/AE_xp"
-
-#: plug-ins/file-dds/dds.c:189
-msgid "Decode YCoCg/AExp images when detected"
-msgstr "Odkodiraj zaznane slike YCoCg/AExp"
-
-#: plug-ins/file-dds/dds.c:203
+#: plug-ins/file-dds/dds.c:171
 msgid "DDS"
 msgstr "DDS"
 
-#: plug-ins/file-dds/dds.c:207 plug-ins/file-dds/dds.c:208
+#: plug-ins/file-dds/dds.c:175 plug-ins/file-dds/dds.c:176
 msgid "Saves files in DDS image format"
 msgstr "Shrani datoteke v zapisu DDS"
 
-#: plug-ins/file-dds/dds.c:221
+#: plug-ins/file-dds/dds.c:189
 msgid "Compressio_n"
 msgstr "_Stiskanje"
 
-#: plug-ins/file-dds/dds.c:222
+#: plug-ins/file-dds/dds.c:190
 msgid "Compression format"
 msgstr "Vrsta stiskanja"
 
-#: plug-ins/file-dds/dds.c:224
+#: plug-ins/file-dds/dds.c:192
 msgid "BC1 / DXT1"
 msgstr "BC1 / DXT1"
 
-#: plug-ins/file-dds/dds.c:225
+#: plug-ins/file-dds/dds.c:193
 msgid "BC2 / DXT3"
 msgstr "BC2 / DXT3"
 
-#: plug-ins/file-dds/dds.c:226
+#: plug-ins/file-dds/dds.c:194
 msgid "BC3 / DXT5"
 msgstr "BC3 / DXT5"
 
-#: plug-ins/file-dds/dds.c:227
+#: plug-ins/file-dds/dds.c:195
 msgid "BC3nm / DXT5nm"
 msgstr "BC3nm / DXT5nm"
 
-#: plug-ins/file-dds/dds.c:228
+#: plug-ins/file-dds/dds.c:196
 msgid "BC4 / ATI1 (3Dc+)"
 msgstr "BC4 / ATI1 (3Dc+)"
 
-#: plug-ins/file-dds/dds.c:229
+#: plug-ins/file-dds/dds.c:197
 msgid "BC5 / ATI2 (3Dc)"
 msgstr "BC5 / ATI2 (3Dc)"
 
-#: plug-ins/file-dds/dds.c:230
+#: plug-ins/file-dds/dds.c:198
 msgid "RXGB (DXT5)"
 msgstr "RXGB (DXT5)"
 
-#: plug-ins/file-dds/dds.c:231
+#: plug-ins/file-dds/dds.c:199
 msgid "Alpha Exponent (DXT5)"
 msgstr "Eksponent alfe (DXT5)"
 
-#: plug-ins/file-dds/dds.c:232
+#: plug-ins/file-dds/dds.c:200
 msgid "YCoCg (DXT5)"
 msgstr "YCoCg (DXT5)"
 
-#: plug-ins/file-dds/dds.c:233
+#: plug-ins/file-dds/dds.c:201
 #, fuzzy
 msgid "YCoCg scaled (DXT5)"
 msgstr "YCoCg, umerjeno/skalirano (DXT5)"
 
-#: plug-ins/file-dds/dds.c:239
+#: plug-ins/file-dds/dds.c:207
 msgid "Use percept_ual error metric"
 msgstr "Uporabi _metriko zaznavne napake"
 
-#: plug-ins/file-dds/dds.c:240
+#: plug-ins/file-dds/dds.c:208
 msgid "Use a perceptual error metric during compression"
 msgstr "Uporabi metriko zaznavne napake med stiskanjem"
 
-#: plug-ins/file-dds/dds.c:246
+#: plug-ins/file-dds/dds.c:214
 msgid "Pixel format"
 msgstr "Oblika slikovnih točk"
 
 #. Create the combobox containing the presets
-#: plug-ins/file-dds/dds.c:247 plug-ins/file-dds/dds.c:304
-#: plug-ins/file-dds/dds.c:320 plug-ins/file-webp/file-webp-dialog.c:80
+#: plug-ins/file-dds/dds.c:215 plug-ins/file-dds/dds.c:278
+#: plug-ins/file-dds/dds.c:295 plug-ins/file-webp/file-webp-dialog.c:80
 #: plug-ins/gradient-flare/gradient-flare.c:2599
 msgid "Default"
 msgstr "privzeta"
 
-#: plug-ins/file-dds/dds.c:248
+#: plug-ins/file-dds/dds.c:216
 msgid "RGB8"
 msgstr "RGB8"
 
-#: plug-ins/file-dds/dds.c:249
+#: plug-ins/file-dds/dds.c:217
 msgid "RGBA8"
 msgstr "RGBA8"
 
-#: plug-ins/file-dds/dds.c:250
+#: plug-ins/file-dds/dds.c:218
 msgid "BGR8"
 msgstr "BGR8"
 
-#: plug-ins/file-dds/dds.c:251
+#: plug-ins/file-dds/dds.c:219
 msgid "ABGR8"
 msgstr "ABGR8"
 
-#: plug-ins/file-dds/dds.c:252
+#: plug-ins/file-dds/dds.c:220
 msgid "R5G6B5"
 msgstr "R5G6B5"
 
-#: plug-ins/file-dds/dds.c:253
+#: plug-ins/file-dds/dds.c:221
 msgid "RGBA4"
 msgstr "RGBA4"
 
-#: plug-ins/file-dds/dds.c:254
+#: plug-ins/file-dds/dds.c:222
 msgid "RGB5A1"
 msgstr "RGB5A1"
 
-#: plug-ins/file-dds/dds.c:255
+#: plug-ins/file-dds/dds.c:223
 msgid "RGB10A2"
 msgstr "RGB10A2"
 
-#: plug-ins/file-dds/dds.c:256
+#: plug-ins/file-dds/dds.c:224
 msgid "R3G3B2"
 msgstr "R3G3B2"
 
-#: plug-ins/file-dds/dds.c:257
+#: plug-ins/file-dds/dds.c:225
 msgid "A8"
 msgstr "A8"
 
-#: plug-ins/file-dds/dds.c:258
+#: plug-ins/file-dds/dds.c:226
 msgid "L8"
 msgstr "L8"
 
-#: plug-ins/file-dds/dds.c:259
+#: plug-ins/file-dds/dds.c:227
 msgid "L8A8"
 msgstr "L8A8"
 
-#: plug-ins/file-dds/dds.c:260
+#: plug-ins/file-dds/dds.c:228
 msgid "AEXP"
 msgstr "AEXP"
 
-#: plug-ins/file-dds/dds.c:261
+#: plug-ins/file-dds/dds.c:229
 msgid "YCOCG"
 msgstr "YCOCG"
 
-#: plug-ins/file-dds/dds.c:275
+#: plug-ins/file-dds/dds.c:235
+msgid "Sav_e type"
+msgstr "Shrani v_rsto"
+
+#: plug-ins/file-dds/dds.c:236
+msgid "How to save the image"
+msgstr "Kako shraniti sliko"
+
+#: plug-ins/file-dds/dds.c:237
+msgid "Selected layer"
+msgstr "Izbrana plast"
+
+#: plug-ins/file-dds/dds.c:238
+msgid "All visible layers"
+msgstr "Vse vidne plasti"
+
+#: plug-ins/file-dds/dds.c:239
+msgid "As cube map"
+msgstr "Kot preslikavo kocke"
+
+#: plug-ins/file-dds/dds.c:240
+msgid "As volume map"
+msgstr "Kot preslikavo prostornine"
+
+#: plug-ins/file-dds/dds.c:241
+msgid "As texture array"
+msgstr "Kot polje tekstur"
+
+#: plug-ins/file-dds/dds.c:247
 msgid "Flip image _vertically on export"
 msgstr "Prezrcali sliko _navpično ob izvozu"
 
-#: plug-ins/file-dds/dds.c:276
+#: plug-ins/file-dds/dds.c:248
 msgid "Flip the image vertically on export"
 msgstr "Prezrcali sliko navpično ob izvozu"
 
-#: plug-ins/file-dds/dds.c:281
+#: plug-ins/file-dds/dds.c:253
 msgid "Set _transparent color"
 msgstr "Določi _prosojno barvo"
 
-#: plug-ins/file-dds/dds.c:282
+#: plug-ins/file-dds/dds.c:254
 msgid "Make an indexed color transparent"
 msgstr "Naredi indeksirano barvo prosojno"
 
-#: plug-ins/file-dds/dds.c:287
+#: plug-ins/file-dds/dds.c:259
 msgid "Transparent inde_x"
 msgstr "Inde_ks prosojnosti"
 
-#: plug-ins/file-dds/dds.c:288
+#: plug-ins/file-dds/dds.c:260
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
 msgstr ""
 "Indeks prosojne barve ali -1 za onemogočanje (samo za indeksirane slike)."
 
-#: plug-ins/file-dds/dds.c:302
+#: plug-ins/file-dds/dds.c:266
+#, fuzzy
+#| msgid "Load _mipmaps"
+msgid "_Mipmaps"
+msgstr "Naloži _mipmapse"
+
+#: plug-ins/file-dds/dds.c:267
+#, fuzzy
+#| msgid "Load _mipmaps"
+msgid "How to handle mipmaps"
+msgstr "Naloži _mipmapse"
+
+#: plug-ins/file-dds/dds.c:268
+msgid "No mipmaps"
+msgstr "Brez mipmapsov"
+
+#: plug-ins/file-dds/dds.c:269
+msgid "Generate mipmaps"
+msgstr "Tvori mipmapse"
+
+#: plug-ins/file-dds/dds.c:270
+msgid "Use existing mipmaps"
+msgstr "Uporabi obstoječe mipmapse"
+
+#: plug-ins/file-dds/dds.c:276
 msgid "F_ilter"
 msgstr "F_ilter"
 
-#: plug-ins/file-dds/dds.c:303
+#: plug-ins/file-dds/dds.c:277
 #, fuzzy
 msgid "Filtering to use when generating mipmaps"
 msgstr "Filtriranje, ki se uporablja pri ustvarjanju mipmap"
 
-#: plug-ins/file-dds/dds.c:305
+#: plug-ins/file-dds/dds.c:279
 msgid "Nearest"
 msgstr "Najbližje"
 
-#: plug-ins/file-dds/dds.c:306 plug-ins/map-object/map-object-main.c:139
+#: plug-ins/file-dds/dds.c:280 plug-ins/map-object/map-object-main.c:139
 msgid "Box"
 msgstr "kocko"
 
-#: plug-ins/file-dds/dds.c:307
+#: plug-ins/file-dds/dds.c:281
 msgid "Triangle"
 msgstr "Trikotnik"
 
-#: plug-ins/file-dds/dds.c:308
+#: plug-ins/file-dds/dds.c:282
 msgid "Quadratic"
 msgstr "Kvadratno"
 
-#: plug-ins/file-dds/dds.c:309
+#: plug-ins/file-dds/dds.c:283
 msgid "B-Spline"
 msgstr "B-zlepek"
 
-#: plug-ins/file-dds/dds.c:310
+#: plug-ins/file-dds/dds.c:284
 msgid "Mitchell"
 msgstr "Mitchell"
 
-#: plug-ins/file-dds/dds.c:311
+#: plug-ins/file-dds/dds.c:285
+msgid "Catmull-Rom"
+msgstr "Catmull-Rom"
+
+#: plug-ins/file-dds/dds.c:286
 msgid "Lanczos"
 msgstr "Lanczos"
 
-#: plug-ins/file-dds/dds.c:312
+#: plug-ins/file-dds/dds.c:287
 msgid "Kaiser"
 msgstr "Kaiser"
 
-#: plug-ins/file-dds/dds.c:318
+#: plug-ins/file-dds/dds.c:293
 msgid "_Wrap mode"
 msgstr "Način ob_livanja"
 
-#: plug-ins/file-dds/dds.c:319
+#: plug-ins/file-dds/dds.c:294
 #, fuzzy
 msgid "Wrap mode to use when generating mipmaps"
 msgstr "Način ovijanja za uporabo pri ustvarjanju mipmap"
 
-#: plug-ins/file-dds/dds.c:321
+#: plug-ins/file-dds/dds.c:296
 msgid "Mirror"
 msgstr "Zrcali"
 
-#: plug-ins/file-dds/dds.c:322
+#: plug-ins/file-dds/dds.c:297
 msgid "Repeat"
 msgstr "Ponovi"
 
-#: plug-ins/file-dds/dds.c:323
+#: plug-ins/file-dds/dds.c:298
 msgid "Clamp"
 msgstr "Spni"
 
-#: plug-ins/file-dds/dds.c:329
+#: plug-ins/file-dds/dds.c:304
 msgid "Appl_y gamma correction"
 msgstr "Uporabi poprave_k game"
 
-#: plug-ins/file-dds/dds.c:330
+#: plug-ins/file-dds/dds.c:305
 #, fuzzy
 msgid "Use gamma correct mipmap filtering"
 msgstr "Uporaba filtriranja pravilne game mipmap"
 
-#: plug-ins/file-dds/dds.c:335
+#: plug-ins/file-dds/dds.c:310
 msgid "Use sRG_B colorspace"
 msgstr "Uporabi barvni prostor sRG_B"
 
-#: plug-ins/file-dds/dds.c:336
+#: plug-ins/file-dds/dds.c:311
 msgid "Use sRGB colorspace for gamma correction"
 msgstr "Uporabi barvni prostor sRGB za korekcijo game"
 
-#: plug-ins/file-dds/dds.c:341 plug-ins/flame/flame.c:205
+#: plug-ins/file-dds/dds.c:316 plug-ins/flame/flame.c:205
 msgid "_Gamma"
 msgstr "_Gama"
 
-#: plug-ins/file-dds/dds.c:342
+#: plug-ins/file-dds/dds.c:317
 msgid "Gamma value to use for gamma correction (e.g. 2.2)"
 msgstr "Vrednost gama za korekcijo game (npr. 2,2)"
 
-#: plug-ins/file-dds/dds.c:347
+#: plug-ins/file-dds/dds.c:322
 msgid "Preserve al_pha test coverage"
 msgstr "Ohrani pokritje preizkusa al_fe"
 
-#: plug-ins/file-dds/dds.c:348
+#: plug-ins/file-dds/dds.c:323
 msgid "Preserve alpha test coverage for alpha channel maps"
 msgstr ""
 "Ohrani pokritje preizkusa alfe za preslikave oz. zemljevide kanala alfa"
 
-#: plug-ins/file-dds/dds.c:354
+#: plug-ins/file-dds/dds.c:329
 msgid "Alp_ha test threshold"
 msgstr "Prag preizkusa _alfe"
 
-#: plug-ins/file-dds/dds.c:355
+#: plug-ins/file-dds/dds.c:330
 msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr ""
 "Vrednost praga preizkusa alfe, za katero je treba ohraniti povprečje "
 "preizkusa alfe"
 
-#: plug-ins/file-dds/dds.c:371
-msgid "Decode YCoCg"
-msgstr "Dekodiraj YCoCg"
-
-#: plug-ins/file-dds/dds.c:375 plug-ins/file-dds/dds.c:376
-msgid "Converts YCoCg encoded pixels to RGB"
-msgstr "Pretvori kodirane slikovne točke YCoCg v RGB"
-
-#: plug-ins/file-dds/dds.c:393
-msgid "Decode YCoCg (scaled)"
-msgstr "Dekodiraj YCoCg (prilagojeno)"
-
-#: plug-ins/file-dds/dds.c:397 plug-ins/file-dds/dds.c:399
-msgid "Converts YCoCg (scaled) encoded pixels to RGB"
-msgstr "Pretvori kodirane slikovne točke YCoCg (v merilu) v RGB."
-
-#: plug-ins/file-dds/dds.c:417
-msgid "Decode Alpha exponent"
-msgstr "Dekodiraj eksponent alfa"
-
-#: plug-ins/file-dds/dds.c:423 plug-ins/file-dds/dds.c:421
-msgid "Converts alpha exponent encoded pixels to RGB"
-msgstr "Pretvori kodirane slikovne točke z eksponentom alfe v RGB."
-
-#: plug-ins/file-dds/ddsread.c:273
+#: plug-ins/file-dds/ddsread.c:170
 #, c-format
-msgid "Unsupported uncompressed FOURCC type %u"
-msgstr "Nepodprti način nestisnjenega FOURCC %u"
+msgid "Loading: %s"
+msgstr "Nalaganje: %s"
 
-#: plug-ins/file-dds/ddsread.c:518
+#: plug-ins/file-dds/ddsread.c:263
+#, c-format
+msgid "Unsupported uncompressed FourCC type %u"
+msgstr "Nepodprti način nestisnjenega FourCC %u"
+
+#: plug-ins/file-dds/ddsread.c:578
 msgid "Invalid or corrupted DDS header"
 msgstr "Neveljavna ali okvarjena glava DDS"
 
-#: plug-ins/file-dds/ddsread.c:527
+#: plug-ins/file-dds/ddsread.c:588
 msgid "Could not allocate a new image."
 msgstr "Nove slike ni mogoče alocirati."
 
-#: plug-ins/file-dds/ddsread.c:538
+#: plug-ins/file-dds/ddsread.c:600
 msgid "Error reading palette."
 msgstr "Napaka pri branju palete."
 
-#: plug-ins/file-dds/ddsread.c:824
+#: plug-ins/file-dds/ddsread.c:887
 msgid "Invalid DDS format magic number."
 msgstr "Neveljavno magično število zapisa DDS."
 
-#: plug-ins/file-dds/ddsread.c:912
+#: plug-ins/file-dds/ddsread.c:978
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Neveljavna vrednost bpp za podatke RGB: %d"
 
-#: plug-ins/file-dds/ddsread.c:923
+#: plug-ins/file-dds/ddsread.c:989
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Neveljavna vrednost bpp za podatke svetlosti: %d"
 
-#: plug-ins/file-dds/ddsread.c:974
+#: plug-ins/file-dds/ddsread.c:1041
 msgid "Invalid pixel format."
 msgstr "Neveljavna oblika slikovnih točk."
 
-#: plug-ins/file-dds/ddsread.c:1234
+#: plug-ins/file-dds/ddsread.c:1274
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "Nepodprta zapis DXGI (%d)"
 
-#: plug-ins/file-dds/ddsread.c:1389
+#: plug-ins/file-dds/ddsread.c:1430
 #, c-format
 msgid "Unsupported value for bytes per pixel: %d"
 msgstr "Nepodprta vrednost za bajte na slikovno točko: %d"
 
-#: plug-ins/file-dds/ddsread.c:1444 plug-ins/file-dds/ddsread.c:1504
-#: plug-ins/file-dds/ddsread.c:1525
+#: plug-ins/file-dds/ddsread.c:1525 plug-ins/file-dds/ddsread.c:1583
+#: plug-ins/file-dds/ddsread.c:1604
 msgid "Requested data exceeds size of file.\n"
 msgstr "Zahtevani podatki presegajo velikost datoteke.\n"
 
-#: plug-ins/file-dds/ddsread.c:1452 plug-ins/file-dds/ddsread.c:1531
+#: plug-ins/file-dds/ddsread.c:1533 plug-ins/file-dds/ddsread.c:1610
 msgid "Unexpected EOF.\n"
 msgstr "Nepričakovan konec datoteke (EOF).\n"
 
-#: plug-ins/file-dds/ddsread.c:2019
+#: plug-ins/file-dds/ddsread.c:2125
 msgid "Open DDS"
 msgstr "Odpri DDS"
 
-#: plug-ins/file-dds/ddswrite.c:2022
+#: plug-ins/file-dds/ddswrite.c:566
+#, c-format
+msgid "Saving: %s"
+msgstr "Shranjevanje: %s"
+
+#: plug-ins/file-dds/ddswrite.c:1942
 msgid "Mipmap Options"
 msgstr "Možnosti mipmapov"
-
-#: plug-ins/file-dds/ddswrite.c:2037
-msgid "Selected layer"
-msgstr "Izbrana plast"
-
-#: plug-ins/file-dds/ddswrite.c:2038
-msgid "All visible layers"
-msgstr "Vse vidne plasti"
-
-#: plug-ins/file-dds/ddswrite.c:2039
-msgid "As cube map"
-msgstr "Kot preslikavo kocke"
-
-#: plug-ins/file-dds/ddswrite.c:2040
-msgid "As volume map"
-msgstr "Kot preslikavo prostornine"
-
-#: plug-ins/file-dds/ddswrite.c:2041
-msgid "As texture array"
-msgstr "Kot polje tekstur"
-
-#: plug-ins/file-dds/ddswrite.c:2053
-msgid "No mipmaps"
-msgstr "Brez mipmapsov"
-
-#: plug-ins/file-dds/ddswrite.c:2054
-msgid "Generate mipmaps"
-msgstr "Tvori mipmapse"
-
-#: plug-ins/file-dds/ddswrite.c:2055
-msgid "Use existing mipmaps"
-msgstr "Uporabi obstoječe mipmapse"
 
 #: plug-ins/file-exr/file-exr.c:112
 msgid "Loads files in the OpenEXR file format"
@@ -10295,7 +10284,7 @@ msgid "Import from TIFF"
 msgstr "Uvozi iz TIFF"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2550
-#: plug-ins/metadata/metadata-editor.c:5533
+#: plug-ins/metadata/metadata-editor.c:5525
 msgid "_Import"
 msgstr "_Uvozi"
 
@@ -11653,7 +11642,7 @@ msgstr "Gama:"
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Spremeni gamo (svetlost) izbranega čopiča"
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1371
+#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1363
 msgid "Select:"
 msgstr "Izberite:"
 
@@ -14363,460 +14352,460 @@ msgstr "Poslikaj s slikami na površini škatle"
 msgid "Images for the Cap Faces"
 msgstr "Slike za površino valja"
 
-#: plug-ins/metadata/metadata-editor.c:484
+#: plug-ins/metadata/metadata-editor.c:488
 msgid "Document Title"
 msgstr "Naslov dokumenta"
 
-#: plug-ins/metadata/metadata-editor.c:485
+#: plug-ins/metadata/metadata-editor.c:489
 msgid "Author"
 msgstr "Avtor"
 
-#: plug-ins/metadata/metadata-editor.c:486
+#: plug-ins/metadata/metadata-editor.c:490
 msgid "Author Title"
 msgstr "Naziv avtorja"
 
 #. Description tab
-#: plug-ins/metadata/metadata-editor.c:487
-#: plug-ins/metadata/metadata-editor.c:1216
+#: plug-ins/metadata/metadata-editor.c:491
+#: plug-ins/metadata/metadata-editor.c:1208
 msgid "Description"
 msgstr "Opis"
 
-#: plug-ins/metadata/metadata-editor.c:488
+#: plug-ins/metadata/metadata-editor.c:492
 msgid "Description Writer"
 msgstr "Pisec opisa"
 
-#: plug-ins/metadata/metadata-editor.c:489
+#: plug-ins/metadata/metadata-editor.c:493
 msgid "Rating"
 msgstr "Ocena"
 
-#: plug-ins/metadata/metadata-editor.c:490
+#: plug-ins/metadata/metadata-editor.c:494
 msgid "Keywords"
 msgstr "Ključne besede"
 
-#: plug-ins/metadata/metadata-editor.c:492
+#: plug-ins/metadata/metadata-editor.c:496
 msgid "Copyright Status"
 msgstr "Stanje avtorske pravice"
 
-#: plug-ins/metadata/metadata-editor.c:493
-#: plug-ins/metadata/metadata-editor.c:622
+#: plug-ins/metadata/metadata-editor.c:497
+#: plug-ins/metadata/metadata-editor.c:626
 msgid "Copyright Notice"
 msgstr "Opozorilo avtorske pravice"
 
-#: plug-ins/metadata/metadata-editor.c:494
+#: plug-ins/metadata/metadata-editor.c:498
 msgid "Copyright URL"
 msgstr "URL avtorske pravice"
 
-#: plug-ins/metadata/metadata-editor.c:500
+#: plug-ins/metadata/metadata-editor.c:504
 msgid "Address"
 msgstr "Naslov"
 
-#: plug-ins/metadata/metadata-editor.c:501
-#: plug-ins/metadata/metadata-editor.c:516
-#: plug-ins/metadata/metadata-editor.c:537
-#: plug-ins/metadata/metadata-editor.c:595
+#: plug-ins/metadata/metadata-editor.c:505
+#: plug-ins/metadata/metadata-editor.c:520
+#: plug-ins/metadata/metadata-editor.c:541
+#: plug-ins/metadata/metadata-editor.c:599
 msgid "City"
 msgstr "Mesto"
 
-#: plug-ins/metadata/metadata-editor.c:502
-#: plug-ins/metadata/metadata-editor.c:517
-#: plug-ins/metadata/metadata-editor.c:538
+#: plug-ins/metadata/metadata-editor.c:506
+#: plug-ins/metadata/metadata-editor.c:521
+#: plug-ins/metadata/metadata-editor.c:542
 msgid "State / Province"
 msgstr "Država  / regija"
 
-#: plug-ins/metadata/metadata-editor.c:503
+#: plug-ins/metadata/metadata-editor.c:507
 msgid "Postal Code"
 msgstr "Poštna številka"
 
-#: plug-ins/metadata/metadata-editor.c:504
-#: plug-ins/metadata/metadata-editor.c:518
-#: plug-ins/metadata/metadata-editor.c:539
-#: plug-ins/metadata/metadata-editor.c:597
+#: plug-ins/metadata/metadata-editor.c:508
+#: plug-ins/metadata/metadata-editor.c:522
+#: plug-ins/metadata/metadata-editor.c:543
+#: plug-ins/metadata/metadata-editor.c:601
 msgid "Country"
 msgstr "Država"
 
-#: plug-ins/metadata/metadata-editor.c:506
+#: plug-ins/metadata/metadata-editor.c:510
 msgid "Phone(s)"
 msgstr "Telefon"
 
-#: plug-ins/metadata/metadata-editor.c:507
+#: plug-ins/metadata/metadata-editor.c:511
 msgid "E-mail(s)"
 msgstr "E-naslov(i)"
 
-#: plug-ins/metadata/metadata-editor.c:508
+#: plug-ins/metadata/metadata-editor.c:512
 msgid "Website(s)"
 msgstr "Spletišče"
 
-#: plug-ins/metadata/metadata-editor.c:510
+#: plug-ins/metadata/metadata-editor.c:514
 msgid "Creation Date"
 msgstr "Dan kreiranja"
 
-#: plug-ins/metadata/metadata-editor.c:512
+#: plug-ins/metadata/metadata-editor.c:516
 msgid "Intellectual Genre"
 msgstr "Intelektualni žanr"
 
-#: plug-ins/metadata/metadata-editor.c:513
+#: plug-ins/metadata/metadata-editor.c:517
 msgid "IPTC Scene Code"
 msgstr "Koda prizora IPTC"
 
-#: plug-ins/metadata/metadata-editor.c:515
-#: plug-ins/metadata/metadata-editor.c:536
-#: plug-ins/metadata/metadata-editor.c:594
+#: plug-ins/metadata/metadata-editor.c:519
+#: plug-ins/metadata/metadata-editor.c:540
+#: plug-ins/metadata/metadata-editor.c:598
 msgid "Sublocation"
 msgstr "Podpoložaj"
 
-#: plug-ins/metadata/metadata-editor.c:519
-#: plug-ins/metadata/metadata-editor.c:540
+#: plug-ins/metadata/metadata-editor.c:523
+#: plug-ins/metadata/metadata-editor.c:544
 msgid "Country ISO-Code"
 msgstr "ISO-koda države"
 
-#: plug-ins/metadata/metadata-editor.c:521
+#: plug-ins/metadata/metadata-editor.c:525
 msgid "Urgency"
 msgstr "Nujnost"
 
-#: plug-ins/metadata/metadata-editor.c:522
+#: plug-ins/metadata/metadata-editor.c:526
 msgid "Headline"
 msgstr "Napis"
 
-#: plug-ins/metadata/metadata-editor.c:523
+#: plug-ins/metadata/metadata-editor.c:527
 msgid "IPTC Subject Code"
 msgstr "Koda zadeve IPTC"
 
-#: plug-ins/metadata/metadata-editor.c:525
+#: plug-ins/metadata/metadata-editor.c:529
 msgid "Job Identifier"
 msgstr "Identifikator posla"
 
-#: plug-ins/metadata/metadata-editor.c:526
+#: plug-ins/metadata/metadata-editor.c:530
 msgid "Instructions"
 msgstr "Navodila"
 
-#: plug-ins/metadata/metadata-editor.c:527
+#: plug-ins/metadata/metadata-editor.c:531
 msgid "Credit Line"
 msgstr "Vrstica z zaslugami"
 
-#: plug-ins/metadata/metadata-editor.c:528
-#: plug-ins/metadata/metadata-editor.c:620
+#: plug-ins/metadata/metadata-editor.c:532
+#: plug-ins/metadata/metadata-editor.c:624
 msgid "Source"
 msgstr "Vir"
 
-#: plug-ins/metadata/metadata-editor.c:529
+#: plug-ins/metadata/metadata-editor.c:533
 msgid "Usage Terms"
 msgstr "Pogoji uporabe"
 
-#: plug-ins/metadata/metadata-editor.c:535
+#: plug-ins/metadata/metadata-editor.c:539
 msgid "Person Shown"
 msgstr "Oseba na sliki"
 
-#: plug-ins/metadata/metadata-editor.c:541
-#: plug-ins/metadata/metadata-editor.c:599
+#: plug-ins/metadata/metadata-editor.c:545
+#: plug-ins/metadata/metadata-editor.c:603
 msgid "World Region"
 msgstr "Svetovna regija"
 
-#: plug-ins/metadata/metadata-editor.c:542
+#: plug-ins/metadata/metadata-editor.c:546
 msgid "Location Shown"
 msgstr "Lokacija na sliki"
 
-#: plug-ins/metadata/metadata-editor.c:544
+#: plug-ins/metadata/metadata-editor.c:548
 msgid "Featured Organization"
 msgstr "Izpostavljena organizacija"
 
-#: plug-ins/metadata/metadata-editor.c:546
+#: plug-ins/metadata/metadata-editor.c:550
 msgid "Organization Code"
 msgstr "Identifikator organizacije"
 
-#: plug-ins/metadata/metadata-editor.c:548
+#: plug-ins/metadata/metadata-editor.c:552
 msgid "Event"
 msgstr "Dogodek"
 
-#: plug-ins/metadata/metadata-editor.c:549
+#: plug-ins/metadata/metadata-editor.c:553
 msgid "Artwork or Object"
 msgstr "Likovno delo ali predmet"
 
-#: plug-ins/metadata/metadata-editor.c:552
+#: plug-ins/metadata/metadata-editor.c:556
 msgid "Additional Model Info"
 msgstr "Dodatne informacije modela"
 
-#: plug-ins/metadata/metadata-editor.c:553
+#: plug-ins/metadata/metadata-editor.c:557
 msgid "Model Age"
 msgstr "Starost osebe/modela"
 
-#: plug-ins/metadata/metadata-editor.c:554
+#: plug-ins/metadata/metadata-editor.c:558
 msgid "Minor Model Age Disclosure"
 msgstr "Razkritje starosti mladoletnega modela"
 
-#: plug-ins/metadata/metadata-editor.c:555
+#: plug-ins/metadata/metadata-editor.c:559
 msgid "Model Release Status"
 msgstr "Stanje izdaje modela"
 
-#: plug-ins/metadata/metadata-editor.c:556
-#: plug-ins/metadata/metadata-editor.c:628
+#: plug-ins/metadata/metadata-editor.c:560
+#: plug-ins/metadata/metadata-editor.c:632
 msgid "Model Release Identifier"
 msgstr "Identifikator izdaje modela"
 
-#: plug-ins/metadata/metadata-editor.c:559
+#: plug-ins/metadata/metadata-editor.c:563
 msgid "Image Supplier Name"
 msgstr "Ime dobavitelja slike"
 
-#: plug-ins/metadata/metadata-editor.c:560
+#: plug-ins/metadata/metadata-editor.c:564
 msgid "Image Supplier ID"
 msgstr "ID dobavitelja slike"
 
-#: plug-ins/metadata/metadata-editor.c:561
+#: plug-ins/metadata/metadata-editor.c:565
 msgid "Supplier's Image ID"
 msgstr "ID fotografije dobavitelja"
 
-#: plug-ins/metadata/metadata-editor.c:562
+#: plug-ins/metadata/metadata-editor.c:566
 msgid "Registry Entry"
 msgstr "Vnos registra"
 
-#: plug-ins/metadata/metadata-editor.c:564
+#: plug-ins/metadata/metadata-editor.c:568
 msgid "Max. Available Width"
 msgstr "Največja dovoljena širina"
 
-#: plug-ins/metadata/metadata-editor.c:565
+#: plug-ins/metadata/metadata-editor.c:569
 msgid "Max. Available Height"
 msgstr "Največja dovoljena višina"
 
-#: plug-ins/metadata/metadata-editor.c:566
+#: plug-ins/metadata/metadata-editor.c:570
 msgid "Digital Source Type"
 msgstr "Vrsta digitalnega vira"
 
-#: plug-ins/metadata/metadata-editor.c:568
+#: plug-ins/metadata/metadata-editor.c:572
 msgid "Image Creator"
 msgstr "Ustvarjalec slike"
 
-#: plug-ins/metadata/metadata-editor.c:570
+#: plug-ins/metadata/metadata-editor.c:574
 msgid "Copyright Owner"
 msgstr "Imetnik avtorskih pravic"
 
-#: plug-ins/metadata/metadata-editor.c:572
+#: plug-ins/metadata/metadata-editor.c:576
 msgid "Licensor"
 msgstr "Podeljevalec licence"
 
-#: plug-ins/metadata/metadata-editor.c:574
+#: plug-ins/metadata/metadata-editor.c:578
 msgid "Property Release Status"
 msgstr "Stanje izdaje lastnosti"
 
-#: plug-ins/metadata/metadata-editor.c:575
+#: plug-ins/metadata/metadata-editor.c:579
 msgid "Property Release Identifier"
 msgstr "Identifikator izdaje lastnosti"
 
-#: plug-ins/metadata/metadata-editor.c:596
+#: plug-ins/metadata/metadata-editor.c:600
 msgid "Province / State"
 msgstr "Pokrajina/zv. država"
 
-#: plug-ins/metadata/metadata-editor.c:598
+#: plug-ins/metadata/metadata-editor.c:602
 msgid "Country ISO Code"
 msgstr "Koda ISO države"
 
-#: plug-ins/metadata/metadata-editor.c:611
+#: plug-ins/metadata/metadata-editor.c:615
 msgid "Code"
 msgstr "Koda"
 
-#: plug-ins/metadata/metadata-editor.c:617
+#: plug-ins/metadata/metadata-editor.c:621
 msgid "Title"
 msgstr "Naslov"
 
-#: plug-ins/metadata/metadata-editor.c:618
+#: plug-ins/metadata/metadata-editor.c:622
 msgid "Date Created"
 msgstr "Datum nastanka"
 
-#: plug-ins/metadata/metadata-editor.c:619
+#: plug-ins/metadata/metadata-editor.c:623
 msgid "Creator"
 msgstr "Avtor"
 
-#: plug-ins/metadata/metadata-editor.c:621
+#: plug-ins/metadata/metadata-editor.c:625
 msgid "Source Inventory ID"
 msgstr "Inventarna koda vira"
 
-#: plug-ins/metadata/metadata-editor.c:634
+#: plug-ins/metadata/metadata-editor.c:638
 msgid "Organization Identifier"
 msgstr "Identifikator organizacije"
 
-#: plug-ins/metadata/metadata-editor.c:635
+#: plug-ins/metadata/metadata-editor.c:639
 msgid "Item Identifier"
 msgstr "Identifikator artikla"
 
-#: plug-ins/metadata/metadata-editor.c:642
-#: plug-ins/metadata/metadata-editor.c:649
-#: plug-ins/metadata/metadata-editor.c:656
-#: plug-ins/metadata/metadata-editor.c:668
+#: plug-ins/metadata/metadata-editor.c:646
+#: plug-ins/metadata/metadata-editor.c:653
+#: plug-ins/metadata/metadata-editor.c:660
+#: plug-ins/metadata/metadata-editor.c:672
 msgid "Identifier"
 msgstr "Identifikator"
 
-#: plug-ins/metadata/metadata-editor.c:657
+#: plug-ins/metadata/metadata-editor.c:661
 msgid "Phone Number 1"
 msgstr "Telefonska številka 1"
 
-#: plug-ins/metadata/metadata-editor.c:658
+#: plug-ins/metadata/metadata-editor.c:662
 msgid "Phone Type 1"
 msgstr "Vrsta tel. številke 1"
 
-#: plug-ins/metadata/metadata-editor.c:659
+#: plug-ins/metadata/metadata-editor.c:663
 msgid "Phone Number 2"
 msgstr "Telefonska številka 2"
 
-#: plug-ins/metadata/metadata-editor.c:660
+#: plug-ins/metadata/metadata-editor.c:664
 msgid "Phone Type 2"
 msgstr "Vrsta tel. številke 2"
 
-#: plug-ins/metadata/metadata-editor.c:661
+#: plug-ins/metadata/metadata-editor.c:665
 msgid "Email Address"
 msgstr "E-poštni naslov"
 
-#: plug-ins/metadata/metadata-editor.c:662
+#: plug-ins/metadata/metadata-editor.c:666
 msgid "Web Address"
 msgstr "Spletni naslov"
 
-#: plug-ins/metadata/metadata-editor.c:675
+#: plug-ins/metadata/metadata-editor.c:679
 msgid "Category"
 msgstr "Kategorija"
 
-#: plug-ins/metadata/metadata-editor.c:676
+#: plug-ins/metadata/metadata-editor.c:680
 msgid "Supplemental Category"
 msgstr ""
 "Dopolnilna\n"
 "kategorija"
 
-#: plug-ins/metadata/metadata-editor.c:682
+#: plug-ins/metadata/metadata-editor.c:686
 msgid "Longitude"
 msgstr "Zemljepisna dolžina"
 
-#: plug-ins/metadata/metadata-editor.c:683
+#: plug-ins/metadata/metadata-editor.c:687
 msgid "Longitude Reference"
 msgstr "Referenčna zemljepisna dolžina"
 
-#: plug-ins/metadata/metadata-editor.c:684
+#: plug-ins/metadata/metadata-editor.c:688
 msgid "Latitude"
 msgstr "Zemljepisna širina"
 
-#: plug-ins/metadata/metadata-editor.c:685
+#: plug-ins/metadata/metadata-editor.c:689
 msgid "Latitude Reference"
 msgstr "Referenca zemljepisne širine"
 
-#: plug-ins/metadata/metadata-editor.c:686
+#: plug-ins/metadata/metadata-editor.c:690
 msgid "Altitude"
 msgstr "Višina"
 
-#: plug-ins/metadata/metadata-editor.c:688
+#: plug-ins/metadata/metadata-editor.c:692
 msgid "Altitude Reference"
 msgstr "Referenca zemljepisne višine"
 
-#: plug-ins/metadata/metadata-editor.c:694
+#: plug-ins/metadata/metadata-editor.c:698
 msgid "Patient"
 msgstr "Pacient"
 
-#: plug-ins/metadata/metadata-editor.c:695
+#: plug-ins/metadata/metadata-editor.c:699
 msgid "Patient ID"
 msgstr "ID pacienta"
 
-#: plug-ins/metadata/metadata-editor.c:696
+#: plug-ins/metadata/metadata-editor.c:700
 msgid "Date of Birth"
 msgstr "Datum rojstva"
 
-#: plug-ins/metadata/metadata-editor.c:698
+#: plug-ins/metadata/metadata-editor.c:702
 msgid "Patient Sex"
 msgstr "Spol pacient"
 
-#: plug-ins/metadata/metadata-editor.c:700
+#: plug-ins/metadata/metadata-editor.c:704
 msgid "Study ID"
 msgstr "ID študije"
 
-#: plug-ins/metadata/metadata-editor.c:701
+#: plug-ins/metadata/metadata-editor.c:705
 msgid "Referring Physician"
 msgstr "Napotni zdravnik"
 
-#: plug-ins/metadata/metadata-editor.c:702
+#: plug-ins/metadata/metadata-editor.c:706
 msgid "Study Date"
 msgstr "Datum študije"
 
-#: plug-ins/metadata/metadata-editor.c:704
+#: plug-ins/metadata/metadata-editor.c:708
 msgid "Study Description"
 msgstr "Opis študije"
 
-#: plug-ins/metadata/metadata-editor.c:705
+#: plug-ins/metadata/metadata-editor.c:709
 msgid "Series Number"
 msgstr "Serijska številka"
 
-#: plug-ins/metadata/metadata-editor.c:706
+#: plug-ins/metadata/metadata-editor.c:710
 msgid "Modality"
 msgstr "Modaliteta"
 
-#: plug-ins/metadata/metadata-editor.c:707
+#: plug-ins/metadata/metadata-editor.c:711
 msgid "Series Date"
 msgstr "Datum serije"
 
-#: plug-ins/metadata/metadata-editor.c:709
+#: plug-ins/metadata/metadata-editor.c:713
 msgid "Series Description"
 msgstr "Opis serije"
 
-#: plug-ins/metadata/metadata-editor.c:711
+#: plug-ins/metadata/metadata-editor.c:715
 msgid "Equipment Institution"
 msgstr "Oprema ustanove"
 
-#: plug-ins/metadata/metadata-editor.c:712
+#: plug-ins/metadata/metadata-editor.c:716
 msgid "Equipment Manufacturer"
 msgstr "Izdelovalec opreme"
 
-#: plug-ins/metadata/metadata-editor.c:752
+#: plug-ins/metadata/metadata-editor.c:756
 msgid "_Edit Metadata"
 msgstr "Ur_edi metapodatke"
 
-#: plug-ins/metadata/metadata-editor.c:756
+#: plug-ins/metadata/metadata-editor.c:760
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Urejajte metapodatke (IPTC, EXIF, XMP)"
 
-#: plug-ins/metadata/metadata-editor.c:1178
+#: plug-ins/metadata/metadata-editor.c:1170
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Urejevalnik metapodatkov: %s"
 
-#: plug-ins/metadata/metadata-editor.c:1186
+#: plug-ins/metadata/metadata-editor.c:1178
 msgid "_Write Metadata"
 msgstr "Zapi_ši metapodatke"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1222
-#: plug-ins/metadata/metadata-viewer.c:401
+#: plug-ins/metadata/metadata-editor.c:1214
+#: plug-ins/metadata/metadata-viewer.c:393
 msgid "IPTC"
 msgstr "IPTC"
 
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1228
+#: plug-ins/metadata/metadata-editor.c:1220
 msgid "IPTC Extension"
 msgstr "Razširjeni IPTC"
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1334
+#: plug-ins/metadata/metadata-editor.c:1326
 msgid "Categories"
 msgstr "Kategorije"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1340
+#: plug-ins/metadata/metadata-editor.c:1332
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1351
+#: plug-ins/metadata/metadata-editor.c:1343
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1373
+#: plug-ins/metadata/metadata-editor.c:1365
 msgid "Import metadata"
 msgstr "Uvozi metapodatke"
 
-#: plug-ins/metadata/metadata-editor.c:1375
+#: plug-ins/metadata/metadata-editor.c:1367
 msgid "Export metadata"
 msgstr "Izvozi metapodatke"
 
-#: plug-ins/metadata/metadata-editor.c:1678
+#: plug-ins/metadata/metadata-editor.c:1670
 msgid "Choose Date"
 msgstr "Izberite datum"
 
-#: plug-ins/metadata/metadata-editor.c:1682
+#: plug-ins/metadata/metadata-editor.c:1674
 msgid "Set Date"
 msgstr "Določi datum"
 
-#: plug-ins/metadata/metadata-editor.c:2416
+#: plug-ins/metadata/metadata-editor.c:2408
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -14832,7 +14821,7 @@ msgstr ""
 "ali 10.45\n"
 "Izbrišite celotno besedilo, da odstranite trenutno vrednost."
 
-#: plug-ins/metadata/metadata-editor.c:2422
+#: plug-ins/metadata/metadata-editor.c:2414
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -14848,24 +14837,24 @@ msgstr ""
 "(ft).\n"
 "Izbrišite celotno besedilo, da odstranite trenutno vrednost."
 
-#: plug-ins/metadata/metadata-editor.c:2556
+#: plug-ins/metadata/metadata-editor.c:2548
 msgid "Unrated"
 msgstr "Neocenjeno"
 
-#: plug-ins/metadata/metadata-editor.c:4666
+#: plug-ins/metadata/metadata-editor.c:4658
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Značke metapodatkov %s ni mogoče določiti: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5529
+#: plug-ins/metadata/metadata-editor.c:5521
 msgid "Import Metadata File"
 msgstr "Uvoz datoteko metapodatkov"
 
-#: plug-ins/metadata/metadata-editor.c:5564
+#: plug-ins/metadata/metadata-editor.c:5556
 msgid "Export Metadata File"
 msgstr "Izvozi datoteko metapodatkov"
 
-#: plug-ins/metadata/metadata-editor.c:5568
+#: plug-ins/metadata/metadata-editor.c:5560
 msgid "_Export"
 msgstr "I_zvozi"
 
@@ -15093,53 +15082,53 @@ msgstr "Vzhod"
 msgid "West"
 msgstr "Zahod"
 
-#: plug-ins/metadata/metadata-viewer.c:177
+#: plug-ins/metadata/metadata-viewer.c:181
 msgid "_View Metadata"
 msgstr "Po_kaži metapodatke"
 
-#: plug-ins/metadata/metadata-viewer.c:181
+#: plug-ins/metadata/metadata-viewer.c:185
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Preglejte metapodatke (Exif, IPTC, XMP)"
 
-#: plug-ins/metadata/metadata-viewer.c:265
+#: plug-ins/metadata/metadata-viewer.c:257
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Pregledovalnik metapodatkov: %s"
 
-#: plug-ins/metadata/metadata-viewer.c:308
+#: plug-ins/metadata/metadata-viewer.c:300
 msgid "Exif Tag"
 msgstr "Značka Exif"
 
-#: plug-ins/metadata/metadata-viewer.c:325
+#: plug-ins/metadata/metadata-viewer.c:317
 msgid "Exif"
 msgstr "Exif"
 
-#: plug-ins/metadata/metadata-viewer.c:346
+#: plug-ins/metadata/metadata-viewer.c:338
 msgid "XMP Tag"
 msgstr "Značka XMP"
 
-#: plug-ins/metadata/metadata-viewer.c:363
+#: plug-ins/metadata/metadata-viewer.c:355
 msgid "XMP"
 msgstr "XMP"
 
-#: plug-ins/metadata/metadata-viewer.c:384
+#: plug-ins/metadata/metadata-viewer.c:376
 msgid "IPTC Tag"
 msgstr "Značka IPTC"
 
-#: plug-ins/metadata/metadata-viewer.c:481
+#: plug-ins/metadata/metadata-viewer.c:473
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(%lu več znakov)"
 
-#: plug-ins/metadata/metadata-viewer.c:728
+#: plug-ins/metadata/metadata-viewer.c:720
 msgid " meter"
 msgstr "m"
 
-#: plug-ins/metadata/metadata-viewer.c:729
+#: plug-ins/metadata/metadata-viewer.c:721
 msgid " feet"
 msgstr "čevlji"
 
-#: plug-ins/metadata/metadata-viewer.c:897
+#: plug-ins/metadata/metadata-viewer.c:889
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu več bajtov)"
