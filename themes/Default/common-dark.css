@@ -28,3 +28,7 @@ paned.vertical > separator {
   background-color: @bg-color;
 }
 
+/* Top highlight for buttons */
+button:not(.flat) {
+  box-shadow: 0 1px @extreme-selected-color inset;
+}

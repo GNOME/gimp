@@ -25,3 +25,8 @@ paned.horizontal > separator {
 paned.vertical > separator {
   background-image: url("ui/separator-handle-h.svg");
 }
+
+/* Top highlight for buttons */
+button:not(.flat) {
+  box-shadow: 0 1px @extreme-bg-color inset;
+}

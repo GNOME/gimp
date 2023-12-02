@@ -136,7 +136,11 @@ notebook stack {
 
 notebook header {
   background-color: @bg-color;
-  border-color: @strong-border-color;
+  border-color: @edge-border-color;
+}
+
+notebook header button {
+  box-shadow: none;
 }
 
 /* Use this to make a border or padding around each tab */
@@ -220,7 +224,7 @@ toolbutton button.flat:checked:hover {
 }
 
 /* Visual indication of clicking an already
- * selected button 
+ * selected button
  */
 toolbutton button.flat:checked:active:hover {
   background-color: @hover-color;
@@ -266,7 +270,7 @@ scrollbar slider {
 
 scrolledwindow
 {
-  border-color: @stronger-border-color;
+  border-color: @edge-border-color;
 }
 
 /* Removes black border around scrolled windows */
@@ -336,8 +340,21 @@ button.suggested-action {
   border: 1px dotted shade(@fg-color, 0.5);
 }
 
-button:checked {
+button:not(.flat)
+{
+  border-color: @edge-border-color;
+}
+
+/* Styling for dockable dialog footer buttons */
+button.titlebutton
+{
+  border-color: transparent;
+  box-shadow: none;
+}
+
+button:checked, button.titlebutton:hover {
   background: @selected-color;
+  border-color: @edge-border-color;
 }
 
 /* Spinbuttons: there are two kinds:
@@ -416,6 +433,7 @@ radio {
 
 /* Removes "blurred" effect from tooltip label */
 tooltip {
+  background-image: none;
   text-shadow: 0 0;
 }
 
@@ -448,6 +466,7 @@ border {
 /* give the menu bar a color, fix for the default color being too dark */
 menubar {
   background-color: @bg-color;
+  box-shadow: 0 -1px @edge-border-color inset;
 }
 
 /* The top menu item itself: File, Edit ... */
@@ -473,7 +492,7 @@ menuitem check {
 
 menuitem decoration
 {
-  box-shadow: 0 1px 2px @stronger-border-color;
+  box-shadow: 0 1px 2px @edge-border-color;
 }
 
 /* "Add Tab" menu in dockable dialog */
@@ -520,17 +539,6 @@ actionbar revealer box {
   background-color: @bg-color;
 }
 
-/* Header bar */
-
-headerbar {
-  background-color: @bg-color;
-  background-image: none;
-}
-
-headerbar:backdrop * {
-  color: @disabled-fg-color;
-}
-
 /* GtkListBox widgets */
 
 list {
@@ -556,10 +564,24 @@ switch image {
   color: transparent;
 }
 
-/* XXX: should this actually go in the Compact theme instead?
+/* XXX: should the min-height actually go in the Compact theme instead?
  * I find the headerbar on GNOME default theme (Adwaita) to be kinda huge. But
  * maybe the default theme should not try and override this?
  */
 headerbar {
-  min-height: 0px
+  min-height: 0px;
+  background-color: @bg-color;
+  background-image: none;
+  border-color: @edge-border-color;
+  outline-color: @edge-border-color;
+  box-shadow: none;
+}
+
+headerbar:backdrop * {
+  color: @disabled-fg-color;
+}
+
+/* Prevent overlapping menu/header borderlines for CSD */
+headerbar button.titlebutton, headerbar > menubar {
+  box-shadow: none;
 }

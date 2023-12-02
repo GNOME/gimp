@@ -57,6 +57,7 @@
 
 @define-color strong-border-color    rgb(80,80,80);
 @define-color stronger-border-color  rgb(60,60,60);
+@define-color edge-border-color      rgb(60,60,60);
 
 /********* Colors for special cases *********/
 

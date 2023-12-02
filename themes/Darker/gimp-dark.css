@@ -50,6 +50,9 @@
 
 @define-color strong-border-color    rgb(50,50,50);
 @define-color stronger-border-color  rgb(75,75,75);
+/* Border color for the edge of certain widgets. This needs
+ * to be dark on light theme and very dark on dark themes */
+@define-color edge-border-color      rgb(26,26,26);
 
 /********* Colors for special cases *********/
 
