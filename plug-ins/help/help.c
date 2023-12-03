@@ -332,7 +332,7 @@ help_load_idle (gpointer data)
 
           procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
                                                    idle_help->procedure);
-          return_vals = gimp_procedure_run (procedure, "domain-names", uri, NULL);
+          return_vals = gimp_procedure_run (procedure, "url", uri, NULL);
           gimp_value_array_unref (return_vals);
 
           g_free (uri);
