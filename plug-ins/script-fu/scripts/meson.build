@@ -53,6 +53,7 @@ if not stable
   scripts += [
     'contactsheet.scm',
     'test-sphere.scm',
+    'test-v3.scm',
   ]
 endif
 

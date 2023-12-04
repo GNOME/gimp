@@ -43,6 +43,7 @@
 #include "script-fu-scripts.h"
 #include "script-fu-errors.h"
 #include "script-fu-compat.h"
+#include "script-fu-version.h"
 
 #include "scheme-wrapper.h"
 #include "scheme-marshal.h"
@@ -77,6 +78,10 @@ static pointer  script_fu_register_call                     (scheme    *sc,
 static pointer  script_fu_register_call_filter              (scheme    *sc,
                                                              pointer    a);
 static pointer  script_fu_menu_register_call                (scheme    *sc,
+                                                             pointer    a);
+static pointer  script_fu_use_v3_call                       (scheme    *sc,
+                                                             pointer    a);
+static pointer  script_fu_use_v2_call                       (scheme    *sc,
                                                              pointer    a);
 static pointer  script_fu_quit_call                         (scheme    *sc,
                                                              pointer    a);
@@ -553,6 +558,7 @@ ts_init_procedures (scheme   *sc,
 ts_define_procedure (sc, "load-extension", scm_load_ext);
 #endif
 
+  /* Define special functions used in scripts. */
   if (register_scripts)
     {
       ts_define_procedure (sc, "script-fu-register",        script_fu_register_call);
@@ -566,18 +572,25 @@ ts_define_procedure (sc, "load-extension", scm_load_ext);
       ts_define_procedure (sc, "script-fu-menu-register",   script_fu_nil_call);
     }
 
+  ts_define_procedure (sc, "script-fu-use-v3",    script_fu_use_v3_call);
+  ts_define_procedure (sc, "script-fu-use-v2",    script_fu_use_v2_call);
   ts_define_procedure (sc, "script-fu-quit",      script_fu_quit_call);
 
+  /* Define wrapper functions, not used in scripts.
+   * FUTURE: eliminate all but one, deprecated and permissive is obsolete.
+   */
   ts_define_procedure (sc, "gimp-proc-db-call",   script_fu_marshal_procedure_call_strict);
   ts_define_procedure (sc, "-gimp-proc-db-call",  script_fu_marshal_procedure_call_permissive);
   ts_define_procedure (sc, "--gimp-proc-db-call", script_fu_marshal_procedure_call_deprecated);
 
+  /* Define each PDB procedure as a scheme func.
+   * Each call passes through one of the wrapper funcs.
+   */
   proc_list = gimp_pdb_query_procedures (gimp_get_pdb (),
                                          ".*", ".*", ".*", ".*",
                                          ".*", ".*", ".*", ".*");
   num_procs = proc_list ? g_strv_length (proc_list) : 0;
 
-  /*  Register each procedure as a scheme func  */
   for (i = 0; i < num_procs; i++)
     {
       gchar *buff;
@@ -854,11 +867,34 @@ script_fu_marshal_procedure_call (scheme   *sc,
         }
       else if (G_VALUE_HOLDS_BOOLEAN (&value))
         {
-          if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
-            return script_type_error (sc, "numeric", i, proc_name);
+          if (sc->vptr->is_number (sc->vptr->pair_car (a)))
+            {
+              /* Bind according to C idiom: 0 is false, other numeric values true.
+               * This is not strict Scheme: 0 is truthy in Scheme.
+               * This lets FALSE still work, where FALSE is a deprecated symbol for 0.
+               */
+              g_value_set_boolean (&value,
+                                   sc->vptr->ivalue (sc->vptr->pair_car (a)));
+            }
           else
-            g_value_set_boolean (&value,
-                                 sc->vptr->ivalue (sc->vptr->pair_car (a)));
+            {
+              if (is_interpret_v3_dialect ())
+                {
+                  /* Use Scheme semantics: anything but #f is true.
+                   * This allows Scheme expressions yielding any Scheme type.
+                   */
+                  /* is_false is not exported from scheme.c (but should be.)
+                   * This is the same code: compare Scheme pointers.
+                   */
+                  gboolean truth_value = ! (sc->vptr->pair_car (a) == sc->F);
+                  g_value_set_boolean (&value, truth_value);
+                }
+              else
+                {
+                  /* v2 */
+                  return script_type_error (sc, "numeric", i, proc_name);
+                }
+            }
         }
       else if (G_VALUE_HOLDS_STRING (&value))
         {
@@ -1507,6 +1543,22 @@ script_fu_menu_register_call (scheme  *sc,
                               pointer  a)
 {
   return script_fu_add_menu (sc, a);
+}
+
+static pointer
+script_fu_use_v3_call (scheme  *sc,
+                       pointer  a)
+{
+  begin_interpret_v3_dialect ();
+  return sc->NIL;
+}
+
+static pointer
+script_fu_use_v2_call (scheme  *sc,
+                       pointer  a)
+{
+  begin_interpret_v2_dialect ();
+  return sc->NIL;
 }
 
 static pointer

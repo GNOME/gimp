@@ -24,6 +24,7 @@
 #include "script-fu-types.h"
 #include "script-fu-arg.h"
 #include "script-fu-utils.h"
+#include "script-fu-version.h"
 
 
 /*
@@ -497,8 +498,12 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
       break;
 
     case SF_TOGGLE:
-      g_string_append_printf (result_string, (g_value_get_boolean (gvalue) ?
-                                  "TRUE" : "FALSE"));
+      if (is_interpret_v3_dialect ())
+        {
+          g_string_append (result_string, (g_value_get_boolean (gvalue) ? "#t" : "#f"));
+        }
+      else
+        g_string_append (result_string, (g_value_get_boolean (gvalue) ? "TRUE" : "FALSE"));
       break;
 
     case SF_VALUE:
@@ -634,7 +639,10 @@ script_fu_arg_append_repr_from_self (SFArg       *arg,
       break;
 
     case SF_TOGGLE:
-      g_string_append (result_string, arg_value->sfa_toggle ? "TRUE" : "FALSE");
+      if (is_interpret_v3_dialect ())
+        g_string_append (result_string, arg_value->sfa_toggle ? "#t" : "#f");
+      else
+        g_string_append (result_string, arg_value->sfa_toggle ? "TRUE" : "FALSE");
       break;
 
     case SF_VALUE:

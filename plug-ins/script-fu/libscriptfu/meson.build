@@ -21,6 +21,7 @@ libscriptfu_sources = [
   'script-fu-dialog.c',
   'script-fu-run-func.c',
   'script-fu-command.c',
+  'script-fu-version.c',
   'script-fu-widgets-custom.c',
   'script-fu-color.c',
   'script-fu-resource.c',

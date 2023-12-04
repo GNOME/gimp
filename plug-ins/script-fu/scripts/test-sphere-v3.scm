@@ -9,6 +9,11 @@
 ; See also test-sphere.scm, for GIMP 2, from which this is derived
 ; Diffs marked with ; v3 >>>
 
+; Also modified to use script-fu-use-v3
+; I.E. binding of boolean and binding of PDB returns is changed.
+; TRUE => #t in many places
+; (car (...)) => (...) in many places
+
 
 ; v3 >>> signature of GimpImageProcedure
 ; drawables is a vector
@@ -37,12 +42,13 @@
                                unused-layer
                                unused-channel
                                unused-drawable)
+  (script-fu-use-v3)
   (let* (
         (width (* radius 3.75))
         (height (* radius 2.5))
-        (img (car (gimp-image-new width height RGB)))
-        (drawable (car (gimp-layer-new img width height RGB-IMAGE
-                                       "Sphere Layer" 100 LAYER-MODE-NORMAL)))
+        (img (gimp-image-new width height RGB)) ; v3 >>> elide car
+        (drawable (gimp-layer-new img width height RGB-IMAGE
+                                  "Sphere Layer" 100 LAYER-MODE-NORMAL))
         (radians (/ (* light *pi*) 180))
         (cx (/ width 2))
         (cy (/ height 2))
@@ -73,7 +79,8 @@
     (if (and
          (or (and (>= light 45) (<= light 75))
              (and (<= light 135) (>= light 105)))
-         (= shadow TRUE))
+         ; v3 >>> conditional doesn't need (= shadow TRUE)
+         shadow )
         (let ((shadow-w (* (* radius 2.5) (cos (+ *pi* radians))))
               (shadow-h (* radius 0.5))
               (shadow-x cx)
@@ -82,21 +89,21 @@
               (begin (set! shadow-x (+ cx shadow-w))
                      (set! shadow-w (- shadow-w))))
 
-          (gimp-context-set-feather TRUE)
+          (gimp-context-set-feather #t)
           (gimp-context-set-feather-radius 7.5 7.5)
           (gimp-image-select-ellipse img CHANNEL-OP-REPLACE shadow-x shadow-y shadow-w shadow-h)
           (gimp-context-set-pattern pattern)
           (gimp-drawable-edit-fill drawable FILL-PATTERN)))
 
-    (gimp-context-set-feather FALSE)
+    (gimp-context-set-feather #f) ; v3 >>> FALSE => #f
     (gimp-image-select-ellipse img CHANNEL-OP-REPLACE (- cx radius) (- cy radius)
                                (* 2 radius) (* 2 radius))
 
     (gimp-context-set-gradient-fg-bg-rgb)
     (gimp-drawable-edit-gradient-fill drawable
 				      GRADIENT-RADIAL offset
-				      FALSE 1 1
-				      TRUE
+				      #f 1 1 ; v3 >>> and also supersampling enum starts at 1 now
+				      #t
 				      light-x light-y
 				      light-end-x light-end-y)
 
@@ -108,20 +115,21 @@
     (gimp-context-set-gradient-reverse gradient-reverse)
     (gimp-drawable-edit-gradient-fill drawable
 				      GRADIENT-LINEAR offset
-				      FALSE 1 1
-				      TRUE
+				      #f 1 1
+				      #t
 				      10 10
 				      30 60)
 
     (gimp-selection-none img)
 
     (gimp-context-set-foreground '(0 0 0))
-    (gimp-floating-sel-anchor (car (gimp-text-font     img drawable
-                                                       x-position y-position
-                                                       multi-text
-                                                       0 TRUE
-                                                       size
-                                                       font)))
+    (gimp-floating-sel-anchor (gimp-text-font
+                                img drawable
+                                x-position y-position
+                                multi-text
+                                0 #t
+                                size
+                                font))
 
     (if (= orientation 1)
       (gimp-image-rotate img ROTATE-DEGREES90))
@@ -147,7 +155,7 @@
   SF-ONE-OR-MORE-DRAWABLE  ; v3 >>> additional argument
   SF-ADJUSTMENT "Radius (in pixels)" (list 100 1 5000 1 10 0 SF-SPINNER)
   SF-ADJUSTMENT "Lighting (degrees)" (list 45 0 360 1 10 1 SF-SLIDER)
-  SF-TOGGLE     "Shadow"             TRUE
+  SF-TOGGLE     "Shadow"             #t    ; v3 >>>
   SF-COLOR      "Background color"   "white"
   SF-COLOR      "Sphere color"       "red"
   ; v3 >>> only declare name of default brush
@@ -156,7 +164,7 @@
   SF-TEXT       "Multi-line text"    "Hello,\nWorld!"
   SF-PATTERN    "Pattern"            "Maple Leaves"
   SF-GRADIENT   "Gradient"           "Deep Sea"
-  SF-TOGGLE     "Gradient reverse"   FALSE
+  SF-TOGGLE     "Gradient reverse"   #f    ; v3 >>>
   SF-FONT       "Font"               "Agate"
   SF-ADJUSTMENT "Font size (pixels)" '(50 1 1000 1 10 0 1)
   SF-PALETTE    "Palette"            "Default"

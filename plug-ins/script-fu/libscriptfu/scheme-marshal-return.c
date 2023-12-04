@@ -19,6 +19,7 @@
 #include "libgimp/gimp.h"
 #include "tinyscheme/scheme-private.h"
 #include "script-fu-errors.h"
+#include "script-fu-version.h"
 #include "scheme-marshal.h"
 #include "scheme-marshal-return.h"
 
@@ -164,8 +165,11 @@ marshal_PDB_return (scheme         *sc,
  *
  * Returns a scheme "pointer" type referencing the scheme return value.
  *
- * The return value is a list.
- * FUTURE: value is either a single value or a list.
+ * The return value depends on the SF dialect in use (script-fu-use-v3)
+ * v2: return value is a list.
+ * v3: value is either a single value for PDB procs returning solitary value,
+ *   or an empty list for void PDB procs,
+ *   or a list for PDB procs returning many values.
  *
  * Same error return as marshal_returned_PDB_values.
  */
@@ -193,22 +197,36 @@ marshal_PDB_return_by_arity (scheme         *sc,
   if (return_arity == 0)
     {
       /* PDB procedure returns void.
-       * Every scheme function must return a value.
-       * Return (#t)
-       * FUTURE: return just sc->T, no reason to wrap it.
-       * result = sc->T;
+       * But every scheme function must return a value.
+       * What we return is moot: a caller should not use result of a void PDB procedure.
+       * This result is NOT an error status.
        */
-      g_debug ("void PDB proc returns (#t)");
-      result = sc->vptr->cons (sc, sc->T, sc->NIL);
+      if (is_interpret_v3_dialect ())
+        {
+          /* Marshal to `() satisfying (null? ) predicate.
+           * Note is truthy in Scheme, satisfies (if )
+           */
+          result = sc->NIL;
+        }
+      else
+        {
+          /* v2 void PDB proc return marshals to (#t) */
+          result = sc->vptr->cons (sc, sc->T, sc->NIL);
+        }
     }
   else if (return_arity == 1)
     {
-      /* Unary result.
-       * Return a list wrapping the result.
-       * FUTURE: return just unwrapped result (which can itself be a list.)
-       * i.e. just call marshal_returned_PDB_value (singular)
-       */
-      result = marshal_returned_PDB_values (sc, values, &marshalling_error);
+      if (is_interpret_v3_dialect ())
+        {
+          /* Marshal to single value not wrapped in list. */
+          /* The value is second in the GVA, beyond the PDB status value. */
+          result = marshal_returned_PDB_value (sc, gimp_value_array_index (values, 1), 2, &marshalling_error);
+        }
+      else
+        {
+          /* v2 marshal to list of many values. */
+          result = marshal_returned_PDB_values (sc, values, &marshalling_error);
+        }
       if (marshalling_error != NULL)
         {
           /* Propagate error. */
@@ -217,9 +235,7 @@ marshal_PDB_return_by_arity (scheme         *sc,
     }
   else /* >1 */
     {
-      /* Many result values.
-       * Return a list wrapping the results. Similar to Python tuple return.
-       */
+      /* Marshal to a list wrapping the results. Similar to Python tuple return.*/
       result = marshal_returned_PDB_values (sc, values, &marshalling_error);
       if (marshalling_error != NULL)
         {
@@ -229,11 +245,8 @@ marshal_PDB_return_by_arity (scheme         *sc,
     }
   g_assert (   (result == NULL && *error != NULL)
             || (result != NULL && *error == NULL));
-  /* result is: (#t) or sc->NIL i.e. empty list or a non-empty list. */
-  /* FUTURE result is: #t or an atom or a vector
-   * or empty list or a non-empty list.
-   * A non-empty list is either a single result that itself is a list
-   * or a list wrapping a multiple result.
+  /* result is Scheme pointer to a Scheme data structure
+   * that depends on the dialect being interpreted (script-fu-use-v3)
    */
   return result;
 }
@@ -252,12 +265,8 @@ marshal_PDB_return_by_arity (scheme         *sc,
  * The list can be non-homogenous (elements of different scheme types.)
  *
  * The returned list may be empty or have only a single element.
- * FUTURE:
- * When a PDB procedure returns a single value (which can be a container)
- * do not wrap it in a list.
- * It will be an error to call this function
- * for PDB procedures that return a single value or return void.
- * IOW, for PDB procedures of return arity < 2.
+ * In particular, when v2 dialect is in use, and the called PDB procedure
+ * returns a solitary value.
  */
 static pointer
 marshal_returned_PDB_values (scheme         *sc,
@@ -343,8 +352,9 @@ marshal_returned_PDB_values (scheme         *sc,
  * Currently, does not return atoms of scheme type byte or char
  * (no PDB procedure returns those types.)
  *
- * !!! Returns a scheme number (0 or 1) for C type boolean.
- * FUTURE: return atoms #f and #t.
+ * !!! For C type boolean, returned scheme type depends on dialect version:
+ *   - v2 returns a scheme integer (0 or 1)
+ *   - v3 returns atom #f or #t.
  */
 static pointer
 marshal_returned_PDB_value    (scheme        *sc,
@@ -438,7 +448,16 @@ marshal_returned_PDB_value    (scheme        *sc,
   else if (G_VALUE_HOLDS_BOOLEAN (value))
     {
       gboolean v = g_value_get_boolean (value);
-      result = sc->vptr->mk_integer (sc, v);
+      if (is_interpret_v3_dialect ())
+        {
+          /* Marshal to Scheme #t and #f */
+          result = v ? sc->T : sc->F;
+        }
+      else
+        {
+          /* v2 marshal to integer 0 or 1, same as TRUE FALSE symbols. C idiom */
+          result = sc->vptr->mk_integer (sc, v);
+        }
     }
   else if (G_VALUE_HOLDS_STRING (value))
     {

@@ -30,6 +30,7 @@
 #include "script-fu-script.h"
 #include "script-fu-scripts.h"    /* script_fu_find_script */
 #include "script-fu-command.h"
+#include "script-fu-version.h"
 
 #include "script-fu-run-func.h"
 
@@ -42,6 +43,11 @@
  * These return the result of interpretation,
  * in a GimpValueArray whose only element is a status.
  * !!! ScriptFu does not let authors define procedures that return values.
+ *
+ * A prior script may have called (script-fu-use-v3) to opt in to interpret v3 dialect.
+ * When this is long-running extension-script-fu process,
+ * ensure initial dialect is v2, the default.
+ * FUTURE: default is v3 and script must opt in to v2 dialect.
  */
 
 /* run_func for a GimpImageProcedure
@@ -72,6 +78,8 @@ script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProc
     return gimp_procedure_new_return_values (procedure, GIMP_PDB_CALLING_ERROR, NULL);
 
   ts_set_run_mode (run_mode);
+
+  begin_interpret_default_dialect ();
 
   switch (run_mode)
     {
@@ -153,6 +161,8 @@ script_fu_run_procedure (GimpProcedure       *procedure,
   g_object_get (config, "run-mode", &run_mode, NULL);
 
   ts_set_run_mode (run_mode);
+
+  begin_interpret_default_dialect ();
 
   switch (run_mode)
     {

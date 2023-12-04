@@ -194,11 +194,26 @@ script_fu_parse_default_spec (scheme   *sc,
       break;
 
     case SF_TOGGLE:
-      if (!sc->vptr->is_integer (default_spec))
-        return registration_error (sc, "toggle default must be an integer value");
-
-      arg->default_value.sfa_toggle =
-        (sc->vptr->ivalue (default_spec)) ? TRUE : FALSE;
+      /* Accept scheme boolean or int.
+       * This does not vary by language version, and makes language v2 more lenient.
+       */
+      /* Note storing internally as a C int, which the widget wants.
+       * Elsewhere we marshal back to a Scheme data.
+       *
+       * Note that is_false is not exported from scheme.c, we compare Scheme pointers.
+       *
+       * The default value is from evaluating a Scheme expression.
+       * More in keeping with Scheme, should convert any value other than #f to C truth.
+       * Instead, convert only literal #t to C truth.
+       */
+      if (sc->vptr->is_integer (default_spec))
+        arg->default_value.sfa_toggle = (sc->vptr->ivalue (default_spec)) ? TRUE : FALSE;
+      else if (default_spec == sc->T)
+        arg->default_value.sfa_toggle = 1;
+      else if (default_spec == sc->F)
+        arg->default_value.sfa_toggle = 0;
+      else
+        return registration_error (sc, "toggle default must yield an integer, #t, or #f");
       break;
 
     case SF_VALUE:
