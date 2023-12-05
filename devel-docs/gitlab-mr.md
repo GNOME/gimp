@@ -5,8 +5,8 @@ autotools, meson and for Windows 64-bit (similarly to normal commits).
 
 You might want to actually generate easy-to-install builds, in
 particular if you want it to be testable for non-developers, or various
-other reasons. Making a full flatpak or Windows installer can actually
-be quite time-consuming on a personal computer.
+other reasons. Making a full flatpak, Windows installer or .msixbundle
+can actually be quite time-consuming on a personal computer.
 
 ☣️  We remind that these packages are built on-top of development code
 (i.e. work-in-progress and potentially unstable codebase likely
@@ -16,6 +16,21 @@ requests not only known team members).
 Therefore you should always check the merge request changes before
 running the code and never blindly trust that it is harmless. In any
 case, run these builds at your own risk. ☢️
+
+## Generating an .msixbundle for merge request code
+
+If you add the label `5. Microsoft Store` in a MR, then trigger a
+pipeline (for instance by rebasing), it will add a .msixbundle
+creation to the pipeline. Once the pipeline ends, the file can be
+found by:
+
+- clicking the pipeline ID.
+- In the "Distribution" stage, click the "ms-store-nightly" job.
+- Then click the "Browse" button.
+- Navigate to `build/store/_Output/`.
+- Then click the `gimp-<version>-store.msixbundle` file to download it.
+
+You will find a .msixupload file too, but it is useful only for releases.
 
 ## Generating a Windows installer for merge request code
 
