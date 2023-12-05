@@ -354,9 +354,9 @@ jobs, if you have the "*Developer*" Gitlab role:
 Special pipelines happen for merge request code. For instance, these
 also include a (non-perfect) code style check.
 
-Additionally you can trigger Windows installer or flatpack standalone
-packages to be generated with the MR code as explained in
-[gitlab-mr.md](gitlab-mr.md).
+Additionally you can trigger flatpak standalone packages, Windows
+installer or Microsoft Store/.msixbundle to be generated
+with the MR code as explained in [gitlab-mr.md](gitlab-mr.md).
 
 ### Release pipeline
 

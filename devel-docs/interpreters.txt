@@ -66,7 +66,8 @@ only one of the GIMP apps should launch interpreted GIMP plugin files.
 On Linux and MacOS, you simply need a shebang in a plugin text file.
 
 On Windows, you must also define an .interp file.
-The .interp files are part of GIMP's installation on Windows.
+The .interp files are part of GIMP's installation on Windows
+(in both installer and Microsoft Store versions).
 The .interp files are built when the Windows installer is built.
 See the source file: /build/windows/installer/base_gimp3264.iss .
 

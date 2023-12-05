@@ -628,8 +628,8 @@ gimp_update_auto_check (GimpCoreConfig *config,
 #ifdef CHECK_UPDATE
   /* Allows to disable updates at package level with a build having the
    * version check code built-in.
-   * For instance, it would allow to use the same Windows installer for
-   * the Windows Store (with update check disabled because it comes with
+   * For instance, it allows to use the same bundling artifact for the
+   * Microsoft Store (with update check disabled because it comes with
    * its own update channel).
    */
   if (! gimp_version_check_update () ||
