@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-11-24 12:07+0000\n"
-"PO-Revision-Date: 2023-11-27 00:09+0100\n"
+"POT-Creation-Date: 2023-12-03 14:29+0000\n"
+"PO-Revision-Date: 2023-12-05 16:29+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -51,9 +51,8 @@ msgstr "Ejercitar una cabra en el lenguaje C"
 #: plug-ins/common/sphere-designer.c:3185 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:243
 #: plug-ins/common/warp.c:344 plug-ins/common/wavelet-decompose.c:181
-#: plug-ins/file-dds/dds.c:556 plug-ins/flame/flame.c:299
-#: plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:215
-#: plug-ins/gimpressionist/gimp.c:184
+#: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:427
+#: plug-ins/gfig/gfig.c:215 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
 #: plug-ins/ifs-compose/ifs-compose.c:492 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:756
@@ -97,10 +96,10 @@ msgstr "Ejercitar una cabra (C)"
 #: plug-ins/ifs-compose/ifs-compose.c:2597 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:738
-#: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1185
-#: plug-ins/metadata/metadata-editor.c:1681
-#: plug-ins/metadata/metadata-editor.c:5532
-#: plug-ins/metadata/metadata-editor.c:5567
+#: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1177
+#: plug-ins/metadata/metadata-editor.c:1673
+#: plug-ins/metadata/metadata-editor.c:5524
+#: plug-ins/metadata/metadata-editor.c:5559
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -127,8 +126,8 @@ msgstr "_Ejecutar"
 #, c-format, python-format, lua-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
-"Check out the last version of the source code online by clicking the \"Source"
-"\" button."
+"Check out the last version of the source code online by clicking the "
+"\"Source\" button."
 msgstr ""
 "Este complemento es un ejercicio en «%s» para demostrar la creación de "
 "complementos.\n"
@@ -339,7 +338,7 @@ msgstr "Alinear capas visibles"
 #. file save type
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
 #: plug-ins/common/file-ps.c:3729 plug-ins/common/file-ps.c:3737
-#: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:223
+#: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:191
 #: plug-ins/file-tiff/file-tiff.c:240
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
 #: plug-ins/fractal-explorer/fractal-explorer.c:354
@@ -455,10 +454,9 @@ msgid "Preview a GIMP layer-based animation"
 msgstr "Vista previa de una animación GIMP basada en capas"
 
 #: plug-ins/common/animation-play.c:371
-#, fuzzy, c-format
-#| msgid "Procedure '%s' only works with one drawable."
+#, c-format
 msgid "Procedure '%s' only works in interactive mode."
-msgstr "El procedimiento «%s» sólo funciona con un dibujable."
+msgstr "El procedimiento «%s» sólo funciona en modo interactivo."
 
 #: plug-ins/common/animation-play.c:389 plug-ins/common/animation-play.c:765
 #: plug-ins/common/animation-play.c:1381
@@ -695,10 +693,8 @@ msgid "Bits for bucket size (default=4: 16 Levels)"
 msgstr "Bits para el tamaño del cubo (predeterminado=4: 16 Niveles)"
 
 #: plug-ins/common/border-average.c:153 plug-ins/common/border-average.c:154
-#, fuzzy
-#| msgid "Set foreground to the average color of the image border"
 msgid "The average color of the specified border."
-msgstr "Establecer el primer plano al color promedio del borde de la imagen"
+msgstr "El color promedio del borde especificado."
 
 #: plug-ins/common/border-average.c:208 plug-ins/common/border-average.c:386
 msgid "Border Average"
@@ -966,9 +962,9 @@ msgstr "Saturación"
 
 #: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
-#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:317
-#: plug-ins/metadata/metadata-viewer.c:355
-#: plug-ins/metadata/metadata-viewer.c:393
+#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:309
+#: plug-ins/metadata/metadata-viewer.c:347
+#: plug-ins/metadata/metadata-viewer.c:385
 msgid "Value"
 msgstr "Valor"
 
@@ -998,22 +994,16 @@ msgstr ""
 "CML_explorer a través del archivo de parámetros."
 
 #: plug-ins/common/cml-explorer.c:536
-#, fuzzy
-#| msgid "Parameter k:"
 msgid "Parameter File"
-msgstr "Parámetro k:"
+msgstr "Archivo de parámetros"
 
 #: plug-ins/common/cml-explorer.c:537
-#, fuzzy
-#| msgid ""
-#| "The local file:// URI of parameter file. CML_explorer makes an image with "
-#| "its settings."
 msgid ""
 "The parameter file from which CML_explorer makes an image. This argument is "
 "only used in non-interactive runs."
 msgstr ""
-"El archivo local file:// URI del archivo de parámetros. CML_explorer hace "
-"una imagen con su configuración."
+"El archivo de parámetros del que CML_explorer hace una imagen. Este "
+"argumento sólo se utiliza en ejecuciones no interactivas."
 
 #: plug-ins/common/cml-explorer.c:908
 msgid "CML Explorer: evoluting"
@@ -1231,7 +1221,7 @@ msgstr "Gráfica de los ajustes actuales"
 #: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
 #: plug-ins/ifs-compose/ifs-compose.c:1214
-#: plug-ins/metadata/metadata-viewer.c:272
+#: plug-ins/metadata/metadata-viewer.c:264
 msgid "_Close"
 msgstr "_Cerrar"
 
@@ -1279,10 +1269,9 @@ msgid "Load CML Explorer Parameters"
 msgstr "Cargar los parámetros del Examinador CML"
 
 #: plug-ins/common/cml-explorer.c:2486
-#, fuzzy, c-format
-#| msgid "Error: it's not CML parameter file."
+#, c-format
 msgid "Error: \"%s\" is not a CML parameter file."
-msgstr "Error: no es un archivo de parámetros CML."
+msgstr "Error: «%s» no es un archivo de parámetros CML."
 
 #: plug-ins/common/cml-explorer.c:2493
 #, c-format
@@ -1322,10 +1311,8 @@ msgid "Map"
 msgstr "Asignar"
 
 #: plug-ins/common/colormap-remap.c:205
-#, fuzzy
-#| msgid "Rearrange the colormap"
 msgid "Remap array for the colormap"
-msgstr "Reordenar el mapa de colores"
+msgstr "Reasignar matriz para el mapa de colores"
 
 #: plug-ins/common/colormap-remap.c:220
 msgid "_Swap Colors"
@@ -1349,20 +1336,16 @@ msgid "Index 1"
 msgstr "Índice 1"
 
 #: plug-ins/common/colormap-remap.c:238
-#, fuzzy
-#| msgid "Rearranging the colormap"
 msgid "First index in the colormap"
-msgstr "Reordenando el mapa de colores"
+msgstr "Primer índice en el mapa de colores"
 
 #: plug-ins/common/colormap-remap.c:243
 msgid "Index 2"
 msgstr "Índice 2"
 
 #: plug-ins/common/colormap-remap.c:244
-#, fuzzy
-#| msgid "Swap two colors in the colormap"
 msgid "Second (other) index in the colormap"
-msgstr "Intercambiar dos colores en el mapa de colores"
+msgstr "Segundo (otro) índice en el mapa de colores"
 
 #: plug-ins/common/colormap-remap.c:277
 msgid "Sort on Hue"
@@ -1600,20 +1583,16 @@ msgid "Image 3"
 msgstr "Imagen 3"
 
 #: plug-ins/common/compose.c:425
-#, fuzzy
-#| msgid "Print the image"
 msgid "Third input image"
-msgstr "Imprimir la imagen"
+msgstr "Tercera imagen de entrada"
 
 #: plug-ins/common/compose.c:430
 msgid "Image 4"
 msgstr "Imagen 4"
 
 #: plug-ins/common/compose.c:431
-#, fuzzy
-#| msgid "Photoshop image"
 msgid "Fourth input image"
-msgstr "Imagen de Photoshop"
+msgstr "Cuarta imagen de entrada"
 
 #: plug-ins/common/compose.c:436 plug-ins/common/compose.c:499
 msgid "Color _model"
@@ -1952,10 +1931,8 @@ msgid "Argc upper point X"
 msgstr "Argc punto superior X"
 
 #: plug-ins/common/curve-bend.c:470
-#, fuzzy
-#| msgid "Upper right"
 msgid "Upper point X"
-msgstr "Superior derecha"
+msgstr "Punto superior X"
 
 #: plug-ins/common/curve-bend.c:471 plug-ins/common/curve-bend.c:495
 msgid "Array of 17 x point coords { 0.0 <= x <= 1.0 or -1 for unused point }"
@@ -1968,10 +1945,8 @@ msgid "Argc upper point Y"
 msgstr "Argc punto superior Y"
 
 #: plug-ins/common/curve-bend.c:482
-#, fuzzy
-#| msgid "Upper right"
 msgid "Upper point Y"
-msgstr "Superior derecha"
+msgstr "Punto superior Y"
 
 #: plug-ins/common/curve-bend.c:483 plug-ins/common/curve-bend.c:507
 msgid "Array of 17 y point coords { 0.0 <= y <= 1.0 or -1 for unused point }"
@@ -1984,36 +1959,28 @@ msgid "Argc lower point X"
 msgstr "Argc punto inferior X"
 
 #: plug-ins/common/curve-bend.c:494
-#, fuzzy
-#| msgid "Lower right"
 msgid "Lower point X"
-msgstr "Inferior derecha"
+msgstr "Punto inferior X"
 
 #: plug-ins/common/curve-bend.c:500 plug-ins/common/curve-bend.c:501
 msgid "Argc lower point Y"
 msgstr "Argc punto inferior Y"
 
 #: plug-ins/common/curve-bend.c:506
-#, fuzzy
-#| msgid "Lower right"
 msgid "Lower point Y"
-msgstr "Inferior derecha"
+msgstr "Punto inferior Y"
 
 #: plug-ins/common/curve-bend.c:512
-#, fuzzy
-#| msgid "Upper left"
 msgid "Upper val Y"
-msgstr "Superior izquierda"
+msgstr "Valor superior Y"
 
 #: plug-ins/common/curve-bend.c:513 plug-ins/common/curve-bend.c:519
 msgid "Array of 256 y freehand coords { 0 <= y <= 255 }"
 msgstr "Matriz de 256 coordenadas a mano alzada de y { 0 <= y <= 255 }"
 
 #: plug-ins/common/curve-bend.c:518
-#, fuzzy
-#| msgid "Lower left"
 msgid "Lower val Y"
-msgstr "Inferior izquierda"
+msgstr "Valor inferior Y"
 
 #: plug-ins/common/curve-bend.c:524
 msgid "Bent layer"
@@ -2050,7 +2017,7 @@ msgstr "No puede operar sobre selecciones vacías."
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:164
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:160
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
 #: plug-ins/file-icns/file-icns-load.c:516
@@ -2545,7 +2512,7 @@ msgstr ""
 "Este complemento utiliza aalib para guardar imágenes en escala de grises "
 "como arte ascii en una variedad de formatos de texto"
 
-#: plug-ins/common/file-aa.c:156 plug-ins/file-dds/dds.c:245
+#: plug-ins/common/file-aa.c:156 plug-ins/file-dds/dds.c:213
 msgid "_Format"
 msgstr "_Formato"
 
@@ -2566,10 +2533,8 @@ msgid "_Palette file"
 msgstr "Archivo de _paleta"
 
 #: plug-ins/common/file-cel.c:160
-#, fuzzy
-#| msgid "Error: failed to load parameters"
 msgid "KCF file to load palette from"
-msgstr "Error: falló al cargar los parámetros"
+msgstr "Archivo KCF desde el que cargar la paleta"
 
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/file-cel.c:227
@@ -2882,22 +2847,16 @@ msgid "Export image in the Farbfeld file format"
 msgstr "Exportar imagen en el formato de archivo Farbfeld"
 
 #: plug-ins/common/file-farbfeld.c:257
-#, fuzzy
-#| msgid "GIF format does not support multiple layers."
 msgid "Farbfeld format does not support multiple layers."
-msgstr "El formato GIF no soporta múltiples capas."
+msgstr "El formato Farbfeld no admite tener varias capas."
 
 #: plug-ins/common/file-farbfeld.c:309
-#, fuzzy
-#| msgid "Failed to read QOI file"
 msgid "Failed to read Farbfeld header"
-msgstr "No se pudo leer el archivo QOI"
+msgstr "No se pudo leer el encabezado de Farbfeld"
 
 #: plug-ins/common/file-farbfeld.c:335
-#, fuzzy
-#| msgid "Premature end of file."
 msgid "Premature end of Farbfeld pixel data"
-msgstr "Final prematuro del archivo."
+msgstr "Final prematuro de los datos de píxeles de Farbfeld"
 
 #: plug-ins/common/file-gbr.c:126
 msgid "GIMP brush"
@@ -3114,13 +3073,7 @@ msgid "exports files in GIF file format"
 msgstr "Exportar archivos en el formato de archivo GIF"
 
 #: plug-ins/common/file-gif-save.c:158
-#, fuzzy, no-c-format
-#| msgid ""
-#| "Export a file in Compuserve GIF format, with possible animation, "
-#| "transparency, and comment. To export an animation, operate on a multi-"
-#| "layer file and give the 'as-animation' parameter as TRUE. The plug-in "
-#| "will interpret <50% alpha as transparent. When run non-interactively, the "
-#| "value for the comment is taken from the 'gimp-comment' parasite.  "
+#, no-c-format
 msgid ""
 "Export a file in GIF format, with possible animation, transparency, and "
 "comment. To export an animation, operate on a multi-layer file and give the "
@@ -3128,12 +3081,12 @@ msgid ""
 "transparent. When run non-interactively, the value for the comment is taken "
 "from the 'gimp-comment' parasite."
 msgstr ""
-"Exportar un archivo en formato GIF de Compuserve, con posibles animaciones, "
-"transparencias y comentarios. Para exportar una animación, opere en un "
-"archivo de varias capas y proporcione el parámetro «como animación» como "
-"VERDADERO. El complemento interpretará <50% alfa como transparente. Cuando "
-"se ejecuta de forma no interactiva, el valor del comentario se toma del "
-"parásito «gimp-comment».  "
+"Exportar un archivo en formato GIF, con posibles animaciones, transparencias "
+"y comentarios. Para exportar una animación, opere en un archivo de varias "
+"capas y proporcione el parámetro «como animación» como VERDADERO. El "
+"complemento interpretará <50% alfa como transparente. Cuando se ejecuta de "
+"forma no interactiva, el valor del comentario se toma del parásito «gimp-"
+"comment»."
 
 #: plug-ins/common/file-gif-save.c:184 plug-ins/common/file-mng.c:278
 msgid "_Interlace"
@@ -3928,10 +3881,10 @@ msgid "Export as CMY_K"
 msgstr "Exportar como CMY_K"
 
 #: plug-ins/common/file-jpegxl.c:220
-#, fuzzy
-#| msgid "Export a CMYK PSD image using the soft-proofing color profile"
 msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
-msgstr "Exportar una imagen PSD CMYK utilizando el perfil de color de prueba"
+msgstr ""
+"Crear una imagen CMYK JPEG XL utilizando el perfil de color de la prueba de "
+"impresión"
 
 #: plug-ins/common/file-jpegxl.c:2014
 msgid "lightning (fastest)"
@@ -4367,10 +4320,8 @@ msgid "Pages"
 msgstr "Páginas"
 
 #: plug-ins/common/file-pdf-load.c:390
-#, fuzzy
-#| msgid "The number of pixels in the table border."
 msgid "The pages to load in the expected order"
-msgstr "El número de píxeles en el borde de la tabla."
+msgstr "Las páginas que cargar en el orden esperado"
 
 #: plug-ins/common/file-pdf-load.c:394
 msgid "Use _Anti-aliasing"
@@ -4563,14 +4514,13 @@ msgid "PIX format does not support multiple layers."
 msgstr "El formato PIX no soporta múltiples capas."
 
 #: plug-ins/common/file-pix.c:589
-#, fuzzy, c-format
-#| msgid "Error trying to open temporary file '%s' for parasite loading: %s"
+#, c-format
 msgid ""
 "Error trying to open temporary JPEG file '%s' for Esm Software pix loading: "
 "%s"
 msgstr ""
-"Erro al intentar abrir el archivo temporal «%s» para la carga de parásitos: "
-"«%s»"
+"Error al intentar abrir el archivo JPEG temporal «%s» para la carga de "
+"píxeles del Software Esm: %s"
 
 #: plug-ins/common/file-pix.c:607
 msgid "Invalid Esm Software PIX file"
@@ -5305,10 +5255,8 @@ msgid "Error reading color block"
 msgstr "Error al leer el bloque de color"
 
 #: plug-ins/common/file-psp.c:1286
-#, fuzzy
-#| msgid "Error reading palette. "
 msgid "Error: Unsupported palette size"
-msgstr "Error al leer la paleta. "
+msgstr "Error: tamaño de paleta no admitido"
 
 #: plug-ins/common/file-psp.c:1297
 msgid "Error reading color palette"
@@ -5364,10 +5312,8 @@ msgid "Error reading tube data chunk"
 msgstr "Error al leer la parte sobre datos del tubo"
 
 #: plug-ins/common/file-psp.c:2384 plug-ins/common/file-psp.c:2400
-#, fuzzy
-#| msgid "Error reading layer information chunk"
 msgid "Error reading selection chunk"
-msgstr "Error al leer la parte sobre la información de la capa"
+msgstr "Error al leer el fragmento de selección"
 
 #: plug-ins/common/file-psp.c:2393
 #, fuzzy
@@ -5376,16 +5322,12 @@ msgid "Invalid selection chunk size"
 msgstr "tamaño de bloque no válido"
 
 #: plug-ins/common/file-psp.c:2417
-#, fuzzy
-#| msgid "Error reading layer information chunk"
 msgid "Error reading end of selection chunk"
-msgstr "Error al leer la parte sobre la información de la capa"
+msgstr "Error al leer el final del fragmento de selección"
 
 #: plug-ins/common/file-psp.c:2442
-#, fuzzy
-#| msgid "Error reading block header"
 msgid "Error reading extended block chunk header"
-msgstr "Error al leer la cabecera del bloque"
+msgstr "Error al leer el encabezado del fragmento de bloque extendido"
 
 #: plug-ins/common/file-psp.c:2450
 #, fuzzy
@@ -5400,33 +5342,25 @@ msgid "Invalid extended block chunk size"
 msgstr "tamaño de bloque no válido"
 
 #: plug-ins/common/file-psp.c:2482
-#, fuzzy
-#| msgid "Error reading creator keyword data"
 msgid "Error reading extended chunk grid data"
-msgstr "Error al leer el origen de las palabras clave"
+msgstr "Error al leer datos de cuadrícula de fragmentos extendidos"
 
 #: plug-ins/common/file-psp.c:2508
-#, fuzzy
-#| msgid "Error reading tube data chunk"
 msgid "Error reading extended chunk guide data"
-msgstr "Error al leer la parte sobre datos del tubo"
+msgstr "Error al leer los datos de guía de fragmentos extendidos"
 
 #: plug-ins/common/file-psp.c:2526
 msgid "Invalid guide orientation"
 msgstr "Orientación de guía no válida"
 
 #: plug-ins/common/file-psp.c:2540
-#, fuzzy
-#| msgid "Error reading layer information chunk"
 msgid "Error reading extended block chunk"
-msgstr "Error al leer la parte sobre la información de la capa"
+msgstr "Error al leer el fragmento de bloque extendido"
 
 #: plug-ins/common/file-psp.c:2566 plug-ins/common/file-psp.c:2578
 #: plug-ins/common/file-psp.c:2589
-#, fuzzy
-#| msgid "Error reading color block"
 msgid "Error reading colorprofile chunk"
-msgstr "Error al leer el bloque de color"
+msgstr "Error al leer un fragmento del perfil de color"
 
 #: plug-ins/common/file-psp.c:2642
 msgid "Error reading file header."
@@ -5570,10 +5504,8 @@ msgid "_Palette File"
 msgstr "Archivo de _paleta"
 
 #: plug-ins/common/file-raw-data.c:407
-#, fuzzy
-#| msgid "XJT file contains unknown pathtype %d"
 msgid "The file containing palette data"
-msgstr "El archivo XJT contiene un tipo de camino desconocido %d"
+msgstr "El archivo que contiene los datos de la paleta"
 
 #: plug-ins/common/file-raw-data.c:417 plug-ins/common/file-raw-data.c:2804
 msgid "Digital Elevation Model data"
@@ -5945,16 +5877,12 @@ msgstr ""
 "la herramienta de ruta de GIMP"
 
 #: plug-ins/common/file-svg.c:207
-#, fuzzy
-#| msgid "Import _paths"
 msgid "Don't import paths"
-msgstr "Importar _rutas"
+msgstr "No importar rutas"
 
 #: plug-ins/common/file-svg.c:208
-#, fuzzy
-#| msgid "Import _paths"
 msgid "Import paths individually"
-msgstr "Importar _rutas"
+msgstr "Importar rutas individualmente"
 
 #: plug-ins/common/file-svg.c:209
 msgid "Merge imported paths"
@@ -6682,13 +6610,10 @@ msgid "Hole offse_t"
 msgstr "Desplazamien_to del agujero"
 
 #: plug-ins/common/film.c:258
-#, fuzzy
-#| msgid ""
-#| "The distance from the center of the image determines the direction of the "
-#| "stroke"
 msgid "The offset from the edge of film, as fraction of the strip height"
 msgstr ""
-"La distancia al centro de la imagen determina la dirección de la pincelada"
+"El desplazamiento desde el borde de la película, como fracción de la altura "
+"de la tira"
 
 #: plug-ins/common/film.c:263
 msgid "Hole _width"
@@ -7037,10 +6962,8 @@ msgid "File_name"
 msgstr "_Nombre del archivo"
 
 #: plug-ins/common/mail.c:212
-#, fuzzy
-#| msgid "The amount of the filter to apply"
 msgid "The name of the file to save the image in"
-msgstr "La cantidad del filtro que aplicar"
+msgstr "El nombre del archivo en el que guardar la imagen"
 
 #: plug-ins/common/mail.c:217
 msgid "_To"
@@ -7202,10 +7125,10 @@ msgstr "Sin correspondencias"
 msgid "Plug-in Browser"
 msgstr "Visor de complementos"
 
-#: plug-ins/common/plugin-browser.c:603 plug-ins/metadata/metadata-editor.c:605
-#: plug-ins/metadata/metadata-editor.c:641
-#: plug-ins/metadata/metadata-editor.c:648
-#: plug-ins/metadata/metadata-editor.c:655
+#: plug-ins/common/plugin-browser.c:603 plug-ins/metadata/metadata-editor.c:609
+#: plug-ins/metadata/metadata-editor.c:645
+#: plug-ins/metadata/metadata-editor.c:652
+#: plug-ins/metadata/metadata-editor.c:659
 msgid "Name"
 msgstr "Nombre"
 
@@ -7379,10 +7302,8 @@ msgid "Hi_gh"
 msgstr "Re_flejo"
 
 #: plug-ins/common/sample-colorize.c:400
-#, fuzzy
-#| msgid "Light intensity"
 msgid "Highest sample color intensity"
-msgstr "Intensidad de la luz"
+msgstr "Máxima intensidad del color de muestra"
 
 #: plug-ins/common/sample-colorize.c:1406
 msgid "Sample Colorize"
@@ -8441,10 +8362,8 @@ msgid "_Font size"
 msgstr "Tamaño de la tipogra_fía"
 
 #: plug-ins/common/web-page.c:152
-#, fuzzy
-#| msgid "The amount of the filter to apply"
 msgid "The font size to use in the page (in pt)"
-msgstr "La cantidad del filtro que aplicar"
+msgstr "El tamaño de tipografía que utilizar en la página (en pt)"
 
 #: plug-ins/common/web-page.c:214
 msgid "Create from webpage"
@@ -8634,443 +8553,424 @@ msgstr ""
 msgid "BMP format does not support multiple layers."
 msgstr "El formato BMP no soporta múltiples capas."
 
-#: plug-ins/file-dds/dds.c:149 plug-ins/file-dds/dds.c:201
+#: plug-ins/file-dds/dds.c:131 plug-ins/file-dds/dds.c:169
 msgid "DDS image"
 msgstr "Imagen DDS"
 
-#: plug-ins/file-dds/dds.c:152 plug-ins/file-dds/dds.c:153
+#: plug-ins/file-dds/dds.c:134 plug-ins/file-dds/dds.c:135
 msgid "Loads files in DDS image format"
 msgstr "Carga archivos en el formato de imagen DDS"
 
-#: plug-ins/file-dds/dds.c:168
+#: plug-ins/file-dds/dds.c:150
 msgid "Load _mipmaps"
 msgstr "Cargar _mipmaps"
 
-#: plug-ins/file-dds/dds.c:169
+#: plug-ins/file-dds/dds.c:151
 msgid "Load mipmaps if present"
 msgstr "Cargar mipmaps si los hubiera"
 
-#: plug-ins/file-dds/dds.c:174
+#: plug-ins/file-dds/dds.c:156
 msgid "Flip image _vertically"
 msgstr "Voltear la imagen _verticalmente"
 
-#: plug-ins/file-dds/dds.c:175
+#: plug-ins/file-dds/dds.c:157
 msgid "Flip the image vertically on import"
 msgstr "Voltear la imagen verticalmente al importar"
 
-#: plug-ins/file-dds/dds.c:180
-msgid "Always use _transparency for BC1/DXT1"
-msgstr "Usar siempre _transparencia para BC1/DXT1"
-
-#: plug-ins/file-dds/dds.c:181
-msgid ""
-"Interprets transparency for BC1/DXT1 images even when DDPF_ALPHAPIXELS is "
-"not set; if disabled, sets it to opaque black"
-msgstr ""
-"Interpreta la transparencia de las imágenes BC1/DXT1 incluso cuando "
-"DDPF_ALPHAPIXELS no está establecido; si está desactivado, lo establece en "
-"negro opaco"
-
-#: plug-ins/file-dds/dds.c:188
-msgid "Automatically decode YCoCg/AE_xp images when detected"
-msgstr "Decodificar automáticamente imágenes YCoCg/AExp al detectarlas"
-
-#: plug-ins/file-dds/dds.c:189
-msgid "Decode YCoCg/AExp images when detected"
-msgstr "Decodificar imágenes YCoCg/AExp al detectarlas"
-
-#: plug-ins/file-dds/dds.c:203
+#: plug-ins/file-dds/dds.c:171
 msgid "DDS"
 msgstr "DDS"
 
-#: plug-ins/file-dds/dds.c:207 plug-ins/file-dds/dds.c:208
+#: plug-ins/file-dds/dds.c:175 plug-ins/file-dds/dds.c:176
 msgid "Saves files in DDS image format"
 msgstr "Carga archivos en el formato de imagen DDS"
 
-#: plug-ins/file-dds/dds.c:221
+#: plug-ins/file-dds/dds.c:189
 msgid "Compressio_n"
 msgstr "Compresió_n"
 
-#: plug-ins/file-dds/dds.c:222
+#: plug-ins/file-dds/dds.c:190
 msgid "Compression format"
 msgstr "Formato de compresión"
 
-#: plug-ins/file-dds/dds.c:224
+#: plug-ins/file-dds/dds.c:192
 msgid "BC1 / DXT1"
 msgstr "BC1 / DXT1"
 
-#: plug-ins/file-dds/dds.c:225
+#: plug-ins/file-dds/dds.c:193
 msgid "BC2 / DXT3"
 msgstr "BC2 / DXT3"
 
-#: plug-ins/file-dds/dds.c:226
+#: plug-ins/file-dds/dds.c:194
 msgid "BC3 / DXT5"
 msgstr "BC3 / DXT5"
 
-#: plug-ins/file-dds/dds.c:227
+#: plug-ins/file-dds/dds.c:195
 msgid "BC3nm / DXT5nm"
 msgstr "BC3nm / DXT5nm"
 
-#: plug-ins/file-dds/dds.c:228
+#: plug-ins/file-dds/dds.c:196
 msgid "BC4 / ATI1 (3Dc+)"
 msgstr "BC4 / ATI1 (3Dc+)"
 
-#: plug-ins/file-dds/dds.c:229
+#: plug-ins/file-dds/dds.c:197
 msgid "BC5 / ATI2 (3Dc)"
 msgstr "BC5 / ATI2 (3Dc)"
 
-#: plug-ins/file-dds/dds.c:230
+#: plug-ins/file-dds/dds.c:198
 msgid "RXGB (DXT5)"
 msgstr "RXGB (DXT5)"
 
-#: plug-ins/file-dds/dds.c:231
+#: plug-ins/file-dds/dds.c:199
 msgid "Alpha Exponent (DXT5)"
 msgstr "Exponente alfa (DXT5)"
 
-#: plug-ins/file-dds/dds.c:232
+#: plug-ins/file-dds/dds.c:200
 msgid "YCoCg (DXT5)"
 msgstr "YCoCg (DXT5)"
 
-#: plug-ins/file-dds/dds.c:233
+#: plug-ins/file-dds/dds.c:201
 msgid "YCoCg scaled (DXT5)"
 msgstr "YCoCg escalado (DXT5)"
 
-#: plug-ins/file-dds/dds.c:239
+#: plug-ins/file-dds/dds.c:207
 msgid "Use percept_ual error metric"
 msgstr "Usar métrica de error precept_iva"
 
-#: plug-ins/file-dds/dds.c:240
+#: plug-ins/file-dds/dds.c:208
 msgid "Use a perceptual error metric during compression"
 msgstr "Usar una métrica de error preceptiva durante la compresión"
 
-#: plug-ins/file-dds/dds.c:246
+#: plug-ins/file-dds/dds.c:214
 msgid "Pixel format"
 msgstr "Formato de píxel"
 
 #. Create the combobox containing the presets
-#: plug-ins/file-dds/dds.c:247 plug-ins/file-dds/dds.c:304
-#: plug-ins/file-dds/dds.c:320 plug-ins/file-webp/file-webp-dialog.c:80
+#: plug-ins/file-dds/dds.c:215 plug-ins/file-dds/dds.c:278
+#: plug-ins/file-dds/dds.c:295 plug-ins/file-webp/file-webp-dialog.c:80
 #: plug-ins/gradient-flare/gradient-flare.c:2599
 msgid "Default"
 msgstr "Predeterminada"
 
-#: plug-ins/file-dds/dds.c:248
+#: plug-ins/file-dds/dds.c:216
 msgid "RGB8"
 msgstr "RGB8"
 
-#: plug-ins/file-dds/dds.c:249
+#: plug-ins/file-dds/dds.c:217
 msgid "RGBA8"
 msgstr "RGBA8"
 
-#: plug-ins/file-dds/dds.c:250
+#: plug-ins/file-dds/dds.c:218
 msgid "BGR8"
 msgstr "BGR8"
 
-#: plug-ins/file-dds/dds.c:251
+#: plug-ins/file-dds/dds.c:219
 msgid "ABGR8"
 msgstr "ABGR8"
 
-#: plug-ins/file-dds/dds.c:252
+#: plug-ins/file-dds/dds.c:220
 msgid "R5G6B5"
 msgstr "R5G6B5"
 
-#: plug-ins/file-dds/dds.c:253
+#: plug-ins/file-dds/dds.c:221
 msgid "RGBA4"
 msgstr "RGBA4"
 
-#: plug-ins/file-dds/dds.c:254
+#: plug-ins/file-dds/dds.c:222
 msgid "RGB5A1"
 msgstr "RGB5A1"
 
-#: plug-ins/file-dds/dds.c:255
+#: plug-ins/file-dds/dds.c:223
 msgid "RGB10A2"
 msgstr "RGB10A2"
 
-#: plug-ins/file-dds/dds.c:256
+#: plug-ins/file-dds/dds.c:224
 msgid "R3G3B2"
 msgstr "R3G3B2"
 
-#: plug-ins/file-dds/dds.c:257
+#: plug-ins/file-dds/dds.c:225
 msgid "A8"
 msgstr "A8"
 
-#: plug-ins/file-dds/dds.c:258
+#: plug-ins/file-dds/dds.c:226
 msgid "L8"
 msgstr "L8"
 
-#: plug-ins/file-dds/dds.c:259
+#: plug-ins/file-dds/dds.c:227
 msgid "L8A8"
 msgstr "L8A8"
 
-#: plug-ins/file-dds/dds.c:260
+#: plug-ins/file-dds/dds.c:228
 msgid "AEXP"
 msgstr "AEXP"
 
-#: plug-ins/file-dds/dds.c:261
+#: plug-ins/file-dds/dds.c:229
 msgid "YCOCG"
 msgstr "YCOCG"
 
-#: plug-ins/file-dds/dds.c:275
+#: plug-ins/file-dds/dds.c:235
+#, fuzzy
+#| msgid "Source _type"
+msgid "Sav_e type"
+msgstr "_Tipo de la fuente"
+
+#: plug-ins/file-dds/dds.c:236
+msgid "How to save the image"
+msgstr "Cómo guardar la imagen"
+
+#: plug-ins/file-dds/dds.c:237
+msgid "Selected layer"
+msgstr "Capa seleccionada"
+
+#: plug-ins/file-dds/dds.c:238
+msgid "All visible layers"
+msgstr "Todas las capas visibles"
+
+#: plug-ins/file-dds/dds.c:239
+msgid "As cube map"
+msgstr "Como mapa de cubo"
+
+#: plug-ins/file-dds/dds.c:240
+msgid "As volume map"
+msgstr "Como mapa de volumen"
+
+#: plug-ins/file-dds/dds.c:241
+msgid "As texture array"
+msgstr "Como matriz de texturas"
+
+#: plug-ins/file-dds/dds.c:247
 msgid "Flip image _vertically on export"
 msgstr "Voltear la imagen _verticalmente al exportar"
 
-#: plug-ins/file-dds/dds.c:276
+#: plug-ins/file-dds/dds.c:248
 msgid "Flip the image vertically on export"
 msgstr "Voltear la imagen verticalmente al exportar"
 
-#: plug-ins/file-dds/dds.c:281
-#, fuzzy
-#| msgid "Clear transparent"
+#: plug-ins/file-dds/dds.c:253
 msgid "Set _transparent color"
-msgstr "Limpiar transparencia"
+msgstr "Establecer color _transparente"
 
-#: plug-ins/file-dds/dds.c:282
-#, fuzzy
-#| msgid "Background transparent"
+#: plug-ins/file-dds/dds.c:254
 msgid "Make an indexed color transparent"
-msgstr "Fondo transparente"
+msgstr "Hacer transparente un color indexado"
 
-#: plug-ins/file-dds/dds.c:287
+#: plug-ins/file-dds/dds.c:259
 msgid "Transparent inde_x"
 msgstr "Índi_ce transparente"
 
-#: plug-ins/file-dds/dds.c:288
+#: plug-ins/file-dds/dds.c:260
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
 msgstr ""
 "Índice del color transparente o -1 para desactivar (solo para imágenes "
 "indexadas)."
 
-#: plug-ins/file-dds/dds.c:302
+#: plug-ins/file-dds/dds.c:266
+#| msgid "_Mipmaps:"
+msgid "_Mipmaps"
+msgstr "_Mipmaps"
+
+#: plug-ins/file-dds/dds.c:267
+msgid "How to handle mipmaps"
+msgstr "Cómo gestionar los mipmaps"
+
+#: plug-ins/file-dds/dds.c:268
+msgid "No mipmaps"
+msgstr "Sin mapas MIP"
+
+#: plug-ins/file-dds/dds.c:269
+msgid "Generate mipmaps"
+msgstr "Generar mapas MIP"
+
+#: plug-ins/file-dds/dds.c:270
+msgid "Use existing mipmaps"
+msgstr "Usar los mapas MIP existentes"
+
+#: plug-ins/file-dds/dds.c:276
 msgid "F_ilter"
 msgstr "F_iltro"
 
-#: plug-ins/file-dds/dds.c:303
+#: plug-ins/file-dds/dds.c:277
 msgid "Filtering to use when generating mipmaps"
 msgstr "Filtrado que utilizar al generar mipmaps"
 
-#: plug-ins/file-dds/dds.c:305
+#: plug-ins/file-dds/dds.c:279
 msgid "Nearest"
 msgstr "Más cercano"
 
-#: plug-ins/file-dds/dds.c:306 plug-ins/map-object/map-object-main.c:139
+#: plug-ins/file-dds/dds.c:280 plug-ins/map-object/map-object-main.c:139
 msgid "Box"
 msgstr "Caja"
 
-#: plug-ins/file-dds/dds.c:307
+#: plug-ins/file-dds/dds.c:281
 msgid "Triangle"
 msgstr "Triángulo"
 
-#: plug-ins/file-dds/dds.c:308
+#: plug-ins/file-dds/dds.c:282
 msgid "Quadratic"
 msgstr "Cuadrático"
 
-#: plug-ins/file-dds/dds.c:309
-#, fuzzy
+#: plug-ins/file-dds/dds.c:283
 #| msgid "Baseline"
 msgid "B-Spline"
-msgstr "Línea base"
+msgstr "B-Spline"
 
-#: plug-ins/file-dds/dds.c:310
+#: plug-ins/file-dds/dds.c:284
 msgid "Mitchell"
 msgstr "Mitchell"
 
-#: plug-ins/file-dds/dds.c:311
+# Curva nombrada por Edwin Catmull y Raphael Rom
+#: plug-ins/file-dds/dds.c:285
+msgid "Catmull-Rom"
+msgstr "Catmull-Rom"
+
+#: plug-ins/file-dds/dds.c:286
 msgid "Lanczos"
 msgstr "Lanczos"
 
-#: plug-ins/file-dds/dds.c:312
-#, fuzzy
+#: plug-ins/file-dds/dds.c:287
 #| msgid "Raise"
 msgid "Kaiser"
-msgstr "Elevar"
+msgstr "Kaiser"
 
-#: plug-ins/file-dds/dds.c:318
+#: plug-ins/file-dds/dds.c:293
 msgid "_Wrap mode"
 msgstr "Modo en_volver"
 
-#: plug-ins/file-dds/dds.c:319
+#: plug-ins/file-dds/dds.c:294
 msgid "Wrap mode to use when generating mipmaps"
 msgstr "Modo de ajuste que utilizar al generar mipmaps"
 
-#: plug-ins/file-dds/dds.c:321
+#: plug-ins/file-dds/dds.c:296
 msgid "Mirror"
 msgstr "Reflejar"
 
-#: plug-ins/file-dds/dds.c:322
+#: plug-ins/file-dds/dds.c:297
 msgid "Repeat"
 msgstr "Repetir"
 
-#: plug-ins/file-dds/dds.c:323
+#: plug-ins/file-dds/dds.c:298
 msgid "Clamp"
 msgstr "Abrazadera"
 
-#: plug-ins/file-dds/dds.c:329
+#: plug-ins/file-dds/dds.c:304
 msgid "Appl_y gamma correction"
 msgstr "Apl_icar corrección de gamma"
 
-#: plug-ins/file-dds/dds.c:330
+#: plug-ins/file-dds/dds.c:305
 msgid "Use gamma correct mipmap filtering"
 msgstr "Utilizar filtrado de mipmap con corrección de gamma"
 
-#: plug-ins/file-dds/dds.c:335
+#: plug-ins/file-dds/dds.c:310
 msgid "Use sRG_B colorspace"
 msgstr "Usar espacio de colores sRG_B"
 
-#: plug-ins/file-dds/dds.c:336
+#: plug-ins/file-dds/dds.c:311
 #, fuzzy
 #| msgid "Use s_RGB colorspace"
 msgid "Use sRGB colorspace for gamma correction"
 msgstr "Usar espacio de colores s_RGB"
 
-#: plug-ins/file-dds/dds.c:341 plug-ins/flame/flame.c:205
+#: plug-ins/file-dds/dds.c:316 plug-ins/flame/flame.c:205
 msgid "_Gamma"
 msgstr "_Gamma"
 
-#: plug-ins/file-dds/dds.c:342
+#: plug-ins/file-dds/dds.c:317
 msgid "Gamma value to use for gamma correction (e.g. 2.2)"
 msgstr ""
 "Valor gamma que utilizar para la corrección de gamma (por ejemplo, 2.2)"
 
-#: plug-ins/file-dds/dds.c:347
+#: plug-ins/file-dds/dds.c:322
 msgid "Preserve al_pha test coverage"
 msgstr "Preservar la cobertura de la _prueba alfa"
 
-#: plug-ins/file-dds/dds.c:348
+#: plug-ins/file-dds/dds.c:323
 msgid "Preserve alpha test coverage for alpha channel maps"
 msgstr "Preservar la cobertura de la prueba alfa para los mapas de canal alfa"
 
-#: plug-ins/file-dds/dds.c:354
+#: plug-ins/file-dds/dds.c:329
 msgid "Alp_ha test threshold"
 msgstr "Umbral de prueba al_fa"
 
-#: plug-ins/file-dds/dds.c:355
+#: plug-ins/file-dds/dds.c:330
 msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr ""
 "Valor umbral de la prueba alfa para el cual la cobertura de la prueba alfa "
 "debe ser preservada"
 
-#: plug-ins/file-dds/dds.c:371
-msgid "Decode YCoCg"
-msgstr "Decodificar YCoCg"
+#: plug-ins/file-dds/ddsread.c:170
+#, c-format
+msgid "Loading: %s"
+msgstr "Cargando: %s"
 
-#: plug-ins/file-dds/dds.c:375 plug-ins/file-dds/dds.c:376
-msgid "Converts YCoCg encoded pixels to RGB"
-msgstr "Convierte píxeles codificados YCoCg a RGB"
-
-#: plug-ins/file-dds/dds.c:393
-msgid "Decode YCoCg (scaled)"
-msgstr "Decodificar YCoCg (escalado)"
-
-#: plug-ins/file-dds/dds.c:397 plug-ins/file-dds/dds.c:399
-msgid "Converts YCoCg (scaled) encoded pixels to RGB"
-msgstr "Convierte píxeles codificados YCoCg (escalados) a RGB"
-
-#: plug-ins/file-dds/dds.c:417
-msgid "Decode Alpha exponent"
-msgstr "Decodificar exponente Alfa"
-
-#: plug-ins/file-dds/dds.c:423 plug-ins/file-dds/dds.c:421
-msgid "Converts alpha exponent encoded pixels to RGB"
-msgstr "Convierte píxeles codificados con exponente alfa a RGB"
-
-#: plug-ins/file-dds/ddsread.c:273
+#: plug-ins/file-dds/ddsread.c:263
 #, fuzzy, c-format
 #| msgid "Unsupported compression mode: %d"
-msgid "Unsupported uncompressed FOURCC type %u"
+msgid "Unsupported uncompressed FourCC type %u"
 msgstr "Modo de compresión no soportado: %d"
 
-#: plug-ins/file-dds/ddsread.c:518
-#, fuzzy
-#| msgid "Invalid keyword chunk header"
+#: plug-ins/file-dds/ddsread.c:578
 msgid "Invalid or corrupted DDS header"
-msgstr "La parte del encabezado sobre la palabra clave no es válida"
+msgstr "Encabezado de DDS no válido o dañado"
 
-#: plug-ins/file-dds/ddsread.c:527
+#: plug-ins/file-dds/ddsread.c:588
 msgid "Could not allocate a new image."
 msgstr "No se puede reservar una imagen nueva."
 
-#: plug-ins/file-dds/ddsread.c:538
+#: plug-ins/file-dds/ddsread.c:600
 msgid "Error reading palette."
 msgstr "Error al leer la paleta."
 
-#: plug-ins/file-dds/ddsread.c:824
+#: plug-ins/file-dds/ddsread.c:887
 msgid "Invalid DDS format magic number."
 msgstr "Formato de número mágico DDS no válido."
 
-#: plug-ins/file-dds/ddsread.c:912
+#: plug-ins/file-dds/ddsread.c:978
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Valor bpp para datos de RGB no válido: %d"
 
-#: plug-ins/file-dds/ddsread.c:923
+#: plug-ins/file-dds/ddsread.c:989
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Valor bpp para datos de luminosidad no válido: %d"
 
-#: plug-ins/file-dds/ddsread.c:974
+#: plug-ins/file-dds/ddsread.c:1041
 msgid "Invalid pixel format."
 msgstr "Formato de píxel no válido."
 
-#: plug-ins/file-dds/ddsread.c:1234
+#: plug-ins/file-dds/ddsread.c:1274
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "Formato DXGI (%d) no soportado"
 
-#: plug-ins/file-dds/ddsread.c:1389
+#: plug-ins/file-dds/ddsread.c:1430
 #, fuzzy, c-format
 #| msgid "Unsupported file format version: %d"
 msgid "Unsupported value for bytes per pixel: %d"
 msgstr "Versión del formato de archivo no soportada: %d"
 
-#: plug-ins/file-dds/ddsread.c:1444 plug-ins/file-dds/ddsread.c:1504
-#: plug-ins/file-dds/ddsread.c:1525
+#: plug-ins/file-dds/ddsread.c:1525 plug-ins/file-dds/ddsread.c:1583
+#: plug-ins/file-dds/ddsread.c:1604
 msgid "Requested data exceeds size of file.\n"
 msgstr "Los datos solicitados superan el tamaño del archivo.\n"
 
-#: plug-ins/file-dds/ddsread.c:1452 plug-ins/file-dds/ddsread.c:1531
+#: plug-ins/file-dds/ddsread.c:1533 plug-ins/file-dds/ddsread.c:1610
 msgid "Unexpected EOF.\n"
 msgstr "EOF no esperado.\n"
 
-#: plug-ins/file-dds/ddsread.c:2019
+#: plug-ins/file-dds/ddsread.c:2125
 msgid "Open DDS"
 msgstr "Abrir DDS"
 
-#: plug-ins/file-dds/ddswrite.c:2022
+#: plug-ins/file-dds/ddswrite.c:566
+#, c-format
+msgid "Saving: %s"
+msgstr "Guardando: %s"
+
+#: plug-ins/file-dds/ddswrite.c:1942
 msgid "Mipmap Options"
 msgstr "Opciones del mipmap"
-
-#: plug-ins/file-dds/ddswrite.c:2037
-msgid "Selected layer"
-msgstr "Capa seleccionada"
-
-#: plug-ins/file-dds/ddswrite.c:2038
-msgid "All visible layers"
-msgstr "Todas las capas visibles"
-
-#: plug-ins/file-dds/ddswrite.c:2039
-msgid "As cube map"
-msgstr "Como mapa de cubo"
-
-#: plug-ins/file-dds/ddswrite.c:2040
-msgid "As volume map"
-msgstr "Como mapa de volumen"
-
-#: plug-ins/file-dds/ddswrite.c:2041
-msgid "As texture array"
-msgstr "Como matriz de texturas"
-
-#: plug-ins/file-dds/ddswrite.c:2053
-msgid "No mipmaps"
-msgstr "Sin mapas MIP"
-
-#: plug-ins/file-dds/ddswrite.c:2054
-msgid "Generate mipmaps"
-msgstr "Generar mapas MIP"
-
-#: plug-ins/file-dds/ddswrite.c:2055
-msgid "Use existing mipmaps"
-msgstr "Usar los mapas MIP existentes"
 
 #: plug-ins/file-exr/file-exr.c:112
 msgid "Loads files in the OpenEXR file format"
@@ -9690,10 +9590,10 @@ msgid "Export as CM_YK"
 msgstr "Exportar como CM_YK"
 
 #: plug-ins/file-jpeg/jpeg.c:231
-#, fuzzy
-#| msgid "Export a CMYK PSD image using the soft-proofing color profile"
 msgid "Create a CMYK JPEG image using the soft-proofing color profile"
-msgstr "Exportar una imagen PSD CMYK utilizando el perfil de color de prueba"
+msgstr ""
+"Crear una imagen CMYK JPEG utilizando el perfil de color de la prueba de "
+"impresión"
 
 #: plug-ins/file-jpeg/jpeg.c:236
 msgid "Su_bsampling"
@@ -10292,10 +10192,10 @@ msgstr ""
 "almacenar componentes premultiplicados)"
 
 #: plug-ins/file-tiff/file-tiff.c:259
-#, fuzzy
-#| msgid "Export a CMYK PSD image using the soft-proofing color profile"
 msgid "Create a CMYK TIFF image using the soft-proofing color profile"
-msgstr "Exportar una imagen PSD CMYK utilizando el perfil de color de prueba"
+msgstr ""
+"Crear una imagen CMYK TIFF utilizando el perfil de color de la prueba de "
+"impresión"
 
 #: plug-ins/file-tiff/file-tiff.c:264
 msgid "Save La_yers"
@@ -10557,7 +10457,7 @@ msgid "Import from TIFF"
 msgstr "Importar desde TIFF"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2550
-#: plug-ins/metadata/metadata-editor.c:5533
+#: plug-ins/metadata/metadata-editor.c:5525
 msgid "_Import"
 msgstr "_Importar"
 
@@ -11313,16 +11213,12 @@ msgstr ""
 "siguientes; 1: aplicar degradado activo a la imagen final"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:322
-#, fuzzy
-#| msgid "Stretch"
 msgid "Red stretch"
-msgstr "Estirar"
+msgstr "Estiramiento rojo"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:323
-#, fuzzy
-#| msgid "JPEG smoothing factor"
 msgid "Red stretching factor"
-msgstr "Factor de suavizado de JPEG"
+msgstr "Factor de estiramiento rojo"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:328
 #, fuzzy
@@ -11331,10 +11227,8 @@ msgid "Green stretch"
 msgstr "Umbral de _verde:"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:329
-#, fuzzy
-#| msgid "JPEG smoothing factor"
 msgid "Green stretching factor"
-msgstr "Factor de suavizado de JPEG"
+msgstr "Factor de estiramiento verde"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:334
 #, fuzzy
@@ -11870,7 +11764,7 @@ msgstr ""
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
-"Erro al intentar abrir el archivo temporal «%s» para la carga de parásitos: "
+"Error al intentar abrir el archivo temporal «%s» para la carga de parásitos: "
 "«%s»"
 
 #: plug-ins/gfig/gfig-menu.ui:6 plug-ins/imagemap/imap-menu.ui:5
@@ -11941,7 +11835,7 @@ msgstr "Gamma:"
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Cambia el gamma (brillo) del pincel seleccionado"
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1371
+#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1363
 msgid "Select:"
 msgstr "Seleccionar:"
 
@@ -14079,10 +13973,8 @@ msgstr "Intensidad"
 #: plug-ins/lighting/lighting-main.c:216 plug-ins/lighting/lighting-main.c:339
 #: plug-ins/lighting/lighting-main.c:398 plug-ins/lighting/lighting-main.c:457
 #: plug-ins/lighting/lighting-main.c:516 plug-ins/lighting/lighting-main.c:575
-#, fuzzy
-#| msgid "Light intensity"
 msgid "Light source intensity"
-msgstr "Intensidad de la luz"
+msgstr "Intensidad de la fuente de luz"
 
 #: plug-ins/lighting/lighting-main.c:221 plug-ins/lighting/lighting-main.c:344
 #: plug-ins/lighting/lighting-main.c:403 plug-ins/lighting/lighting-main.c:462
@@ -14159,20 +14051,16 @@ msgid "Light direction Z"
 msgstr "Dirección Z de la luz"
 
 #: plug-ins/lighting/lighting-main.c:257
-#, fuzzy
-#| msgid "Light intensity"
 msgid "Ambient intensity"
-msgstr "Intensidad de la luz"
+msgstr "Intensidad ambiente"
 
 #: plug-ins/lighting/lighting-main.c:258
 msgid "Material ambient intensity (Glowing)"
 msgstr "Intensidad ambiental del material (Brillo)"
 
 #: plug-ins/lighting/lighting-main.c:264
-#, fuzzy
-#| msgid "Light intensity"
 msgid "Diffuse intensity"
-msgstr "Intensidad de la luz"
+msgstr "Intensidad difusa"
 
 #: plug-ins/lighting/lighting-main.c:265
 msgid "Material diffuse intensity (Bright)"
@@ -14202,10 +14090,8 @@ msgstr "Fondo trans_parente"
 
 #: plug-ins/lighting/lighting-main.c:309
 #: plug-ins/map-object/map-object-main.c:343
-#, fuzzy
-#| msgid "Background transparent"
 msgid "Make background transparent"
-msgstr "Fondo transparente"
+msgstr "Hacer el fondo transparente"
 
 #: plug-ins/lighting/lighting-main.c:314
 msgid "_Distance"
@@ -14447,10 +14333,8 @@ msgid "D_iffuse"
 msgstr "D_ifusa"
 
 #: plug-ins/map-object/map-object-main.c:281
-#, fuzzy
-#| msgid "Original i_ntensity"
 msgid "Material diffuse intensity"
-msgstr "I_ntensidad original"
+msgstr "Intensidad difusa del material"
 
 #: plug-ins/map-object/map-object-main.c:287
 msgid "Di_ffuse"
@@ -14540,10 +14424,8 @@ msgid "B_ack"
 msgstr "P_osterior"
 
 #: plug-ins/map-object/map-object-main.c:363
-#, fuzzy
-#| msgid "Go back one page"
 msgid "Box back face"
-msgstr "Retroceder una página"
+msgstr "Cara posterior de la caja"
 
 #: plug-ins/map-object/map-object-main.c:368
 msgid "Box top face"
@@ -14574,30 +14456,24 @@ msgid "Scale X"
 msgstr "Escala X"
 
 #: plug-ins/map-object/map-object-main.c:389
-#, fuzzy
-#| msgid "_X size:"
 msgid "Box X size"
-msgstr "Tamaño _X:"
+msgstr "Tamaño X de caja"
 
 #: plug-ins/map-object/map-object-main.c:393
 msgid "Scale Y"
 msgstr "Escala Y"
 
 #: plug-ins/map-object/map-object-main.c:394
-#, fuzzy
-#| msgid "_Y size:"
 msgid "Box Y size"
-msgstr "Tamaño _Y:"
+msgstr "Tamaño Y de caja"
 
 #: plug-ins/map-object/map-object-main.c:398
 msgid "Scale Z"
 msgstr "Escala Z"
 
 #: plug-ins/map-object/map-object-main.c:399
-#, fuzzy
-#| msgid "Font size:"
 msgid "Box Z size"
-msgstr "Tamaño de la tipografía:"
+msgstr "Tamaño Z de caja"
 
 #: plug-ins/map-object/map-object-main.c:405
 msgid "_Top"
@@ -14709,459 +14585,459 @@ msgstr "Mapear imágenes a las caras de la caja"
 msgid "Images for the Cap Faces"
 msgstr "Imágenes para las tapas"
 
-#: plug-ins/metadata/metadata-editor.c:484
+#: plug-ins/metadata/metadata-editor.c:488
 msgid "Document Title"
 msgstr "Título del documento"
 
-#: plug-ins/metadata/metadata-editor.c:485
+#: plug-ins/metadata/metadata-editor.c:489
 msgid "Author"
 msgstr "Autor"
 
-#: plug-ins/metadata/metadata-editor.c:486
+#: plug-ins/metadata/metadata-editor.c:490
 msgid "Author Title"
 msgstr "Título del autor"
 
 #. Description tab
-#: plug-ins/metadata/metadata-editor.c:487
-#: plug-ins/metadata/metadata-editor.c:1216
+#: plug-ins/metadata/metadata-editor.c:491
+#: plug-ins/metadata/metadata-editor.c:1208
 msgid "Description"
 msgstr "Descripción"
 
-#: plug-ins/metadata/metadata-editor.c:488
+#: plug-ins/metadata/metadata-editor.c:492
 msgid "Description Writer"
 msgstr "Descripción del escritor"
 
-#: plug-ins/metadata/metadata-editor.c:489
+#: plug-ins/metadata/metadata-editor.c:493
 msgid "Rating"
 msgstr "Puntuación"
 
-#: plug-ins/metadata/metadata-editor.c:490
+#: plug-ins/metadata/metadata-editor.c:494
 msgid "Keywords"
 msgstr "Palabras clave"
 
-#: plug-ins/metadata/metadata-editor.c:492
+#: plug-ins/metadata/metadata-editor.c:496
 msgid "Copyright Status"
 msgstr "Estado del copyright"
 
-#: plug-ins/metadata/metadata-editor.c:493
-#: plug-ins/metadata/metadata-editor.c:622
+#: plug-ins/metadata/metadata-editor.c:497
+#: plug-ins/metadata/metadata-editor.c:626
 msgid "Copyright Notice"
 msgstr "Aviso de copyright"
 
-#: plug-ins/metadata/metadata-editor.c:494
+#: plug-ins/metadata/metadata-editor.c:498
 msgid "Copyright URL"
 msgstr "URL del copyright"
 
-#: plug-ins/metadata/metadata-editor.c:500
+#: plug-ins/metadata/metadata-editor.c:504
 msgid "Address"
 msgstr "Dirección"
 
-#: plug-ins/metadata/metadata-editor.c:501
-#: plug-ins/metadata/metadata-editor.c:516
-#: plug-ins/metadata/metadata-editor.c:537
-#: plug-ins/metadata/metadata-editor.c:595
+#: plug-ins/metadata/metadata-editor.c:505
+#: plug-ins/metadata/metadata-editor.c:520
+#: plug-ins/metadata/metadata-editor.c:541
+#: plug-ins/metadata/metadata-editor.c:599
 msgid "City"
 msgstr "Ciudad"
 
-#: plug-ins/metadata/metadata-editor.c:502
-#: plug-ins/metadata/metadata-editor.c:517
-#: plug-ins/metadata/metadata-editor.c:538
+#: plug-ins/metadata/metadata-editor.c:506
+#: plug-ins/metadata/metadata-editor.c:521
+#: plug-ins/metadata/metadata-editor.c:542
 msgid "State / Province"
 msgstr "Estado/Provincia"
 
-#: plug-ins/metadata/metadata-editor.c:503
+#: plug-ins/metadata/metadata-editor.c:507
 msgid "Postal Code"
 msgstr "Código postal"
 
-#: plug-ins/metadata/metadata-editor.c:504
-#: plug-ins/metadata/metadata-editor.c:518
-#: plug-ins/metadata/metadata-editor.c:539
-#: plug-ins/metadata/metadata-editor.c:597
+#: plug-ins/metadata/metadata-editor.c:508
+#: plug-ins/metadata/metadata-editor.c:522
+#: plug-ins/metadata/metadata-editor.c:543
+#: plug-ins/metadata/metadata-editor.c:601
 msgid "Country"
 msgstr "País"
 
-#: plug-ins/metadata/metadata-editor.c:506
+#: plug-ins/metadata/metadata-editor.c:510
 msgid "Phone(s)"
 msgstr "Teléfonos"
 
-#: plug-ins/metadata/metadata-editor.c:507
+#: plug-ins/metadata/metadata-editor.c:511
 msgid "E-mail(s)"
 msgstr "Correo(s)-e"
 
-#: plug-ins/metadata/metadata-editor.c:508
+#: plug-ins/metadata/metadata-editor.c:512
 msgid "Website(s)"
 msgstr "Sitios web"
 
-#: plug-ins/metadata/metadata-editor.c:510
+#: plug-ins/metadata/metadata-editor.c:514
 msgid "Creation Date"
 msgstr "Fecha de creación"
 
-#: plug-ins/metadata/metadata-editor.c:512
+#: plug-ins/metadata/metadata-editor.c:516
 msgid "Intellectual Genre"
 msgstr "Género intelectual"
 
 # https://www.controlledvocabulary.com/help/iptc-codes.html
-#: plug-ins/metadata/metadata-editor.c:513
+#: plug-ins/metadata/metadata-editor.c:517
 msgid "IPTC Scene Code"
 msgstr "Código de la escena IPTC"
 
-#: plug-ins/metadata/metadata-editor.c:515
-#: plug-ins/metadata/metadata-editor.c:536
-#: plug-ins/metadata/metadata-editor.c:594
+#: plug-ins/metadata/metadata-editor.c:519
+#: plug-ins/metadata/metadata-editor.c:540
+#: plug-ins/metadata/metadata-editor.c:598
 msgid "Sublocation"
 msgstr "Sublocalización"
 
-#: plug-ins/metadata/metadata-editor.c:519
-#: plug-ins/metadata/metadata-editor.c:540
+#: plug-ins/metadata/metadata-editor.c:523
+#: plug-ins/metadata/metadata-editor.c:544
 msgid "Country ISO-Code"
 msgstr "Código ISO de país"
 
-#: plug-ins/metadata/metadata-editor.c:521
+#: plug-ins/metadata/metadata-editor.c:525
 msgid "Urgency"
 msgstr "Urgencia"
 
-#: plug-ins/metadata/metadata-editor.c:522
+#: plug-ins/metadata/metadata-editor.c:526
 msgid "Headline"
 msgstr "Titular"
 
-#: plug-ins/metadata/metadata-editor.c:523
+#: plug-ins/metadata/metadata-editor.c:527
 msgid "IPTC Subject Code"
 msgstr "Código del tema IPTC"
 
-#: plug-ins/metadata/metadata-editor.c:525
+#: plug-ins/metadata/metadata-editor.c:529
 msgid "Job Identifier"
 msgstr "Identificador del trabajo"
 
-#: plug-ins/metadata/metadata-editor.c:526
+#: plug-ins/metadata/metadata-editor.c:530
 msgid "Instructions"
 msgstr "Instrucciones"
 
-#: plug-ins/metadata/metadata-editor.c:527
+#: plug-ins/metadata/metadata-editor.c:531
 msgid "Credit Line"
 msgstr "Línea de crédito"
 
-#: plug-ins/metadata/metadata-editor.c:528
-#: plug-ins/metadata/metadata-editor.c:620
+#: plug-ins/metadata/metadata-editor.c:532
+#: plug-ins/metadata/metadata-editor.c:624
 msgid "Source"
 msgstr "Fuente"
 
-#: plug-ins/metadata/metadata-editor.c:529
+#: plug-ins/metadata/metadata-editor.c:533
 msgid "Usage Terms"
 msgstr "Términos de uso"
 
-#: plug-ins/metadata/metadata-editor.c:535
+#: plug-ins/metadata/metadata-editor.c:539
 msgid "Person Shown"
 msgstr "Persona mostrada"
 
-#: plug-ins/metadata/metadata-editor.c:541
-#: plug-ins/metadata/metadata-editor.c:599
+#: plug-ins/metadata/metadata-editor.c:545
+#: plug-ins/metadata/metadata-editor.c:603
 msgid "World Region"
 msgstr "Región"
 
-#: plug-ins/metadata/metadata-editor.c:542
+#: plug-ins/metadata/metadata-editor.c:546
 msgid "Location Shown"
 msgstr "Ubicación mostrada"
 
-#: plug-ins/metadata/metadata-editor.c:544
+#: plug-ins/metadata/metadata-editor.c:548
 msgid "Featured Organization"
 msgstr "Organización destacada"
 
-#: plug-ins/metadata/metadata-editor.c:546
+#: plug-ins/metadata/metadata-editor.c:550
 msgid "Organization Code"
 msgstr "Código de organización"
 
-#: plug-ins/metadata/metadata-editor.c:548
+#: plug-ins/metadata/metadata-editor.c:552
 msgid "Event"
 msgstr "Acontecimiento"
 
-#: plug-ins/metadata/metadata-editor.c:549
+#: plug-ins/metadata/metadata-editor.c:553
 msgid "Artwork or Object"
 msgstr "Obra o objeto"
 
-#: plug-ins/metadata/metadata-editor.c:552
+#: plug-ins/metadata/metadata-editor.c:556
 msgid "Additional Model Info"
 msgstr "Información adicional del modeo"
 
-#: plug-ins/metadata/metadata-editor.c:553
+#: plug-ins/metadata/metadata-editor.c:557
 msgid "Model Age"
 msgstr "Edad del modelo"
 
-#: plug-ins/metadata/metadata-editor.c:554
+#: plug-ins/metadata/metadata-editor.c:558
 msgid "Minor Model Age Disclosure"
 msgstr "Revelación de edad del modelo menor"
 
-#: plug-ins/metadata/metadata-editor.c:555
+#: plug-ins/metadata/metadata-editor.c:559
 msgid "Model Release Status"
 msgstr "Estado del lanzamiento del modelo"
 
-#: plug-ins/metadata/metadata-editor.c:556
-#: plug-ins/metadata/metadata-editor.c:628
+#: plug-ins/metadata/metadata-editor.c:560
+#: plug-ins/metadata/metadata-editor.c:632
 msgid "Model Release Identifier"
 msgstr "Identificador de lanzamiento del modelo"
 
-#: plug-ins/metadata/metadata-editor.c:559
+#: plug-ins/metadata/metadata-editor.c:563
 msgid "Image Supplier Name"
 msgstr "Nombre del proveedor de la imagen"
 
-#: plug-ins/metadata/metadata-editor.c:560
+#: plug-ins/metadata/metadata-editor.c:564
 msgid "Image Supplier ID"
 msgstr "ID del proveedor de la imagen"
 
-#: plug-ins/metadata/metadata-editor.c:561
+#: plug-ins/metadata/metadata-editor.c:565
 msgid "Supplier's Image ID"
 msgstr "ID de la imagen del proveedor"
 
-#: plug-ins/metadata/metadata-editor.c:562
+#: plug-ins/metadata/metadata-editor.c:566
 msgid "Registry Entry"
 msgstr "Entrada de registro"
 
-#: plug-ins/metadata/metadata-editor.c:564
+#: plug-ins/metadata/metadata-editor.c:568
 msgid "Max. Available Width"
 msgstr "Anchura máxima disponible"
 
-#: plug-ins/metadata/metadata-editor.c:565
+#: plug-ins/metadata/metadata-editor.c:569
 msgid "Max. Available Height"
 msgstr "Altura máxima disponible"
 
-#: plug-ins/metadata/metadata-editor.c:566
+#: plug-ins/metadata/metadata-editor.c:570
 msgid "Digital Source Type"
 msgstr "Tipo de fuente digital"
 
-#: plug-ins/metadata/metadata-editor.c:568
+#: plug-ins/metadata/metadata-editor.c:572
 msgid "Image Creator"
 msgstr "Creador de la imagen"
 
-#: plug-ins/metadata/metadata-editor.c:570
+#: plug-ins/metadata/metadata-editor.c:574
 msgid "Copyright Owner"
 msgstr "Propietario del copyright"
 
-#: plug-ins/metadata/metadata-editor.c:572
+#: plug-ins/metadata/metadata-editor.c:576
 msgid "Licensor"
 msgstr "Licenciante"
 
-#: plug-ins/metadata/metadata-editor.c:574
+#: plug-ins/metadata/metadata-editor.c:578
 msgid "Property Release Status"
 msgstr "Estado del lanzamiento de las propiedades"
 
-#: plug-ins/metadata/metadata-editor.c:575
+#: plug-ins/metadata/metadata-editor.c:579
 msgid "Property Release Identifier"
 msgstr "Identificador del lanzamiento de las propiedades"
 
-#: plug-ins/metadata/metadata-editor.c:596
+#: plug-ins/metadata/metadata-editor.c:600
 msgid "Province / State"
 msgstr "Provincia / estado"
 
-#: plug-ins/metadata/metadata-editor.c:598
+#: plug-ins/metadata/metadata-editor.c:602
 msgid "Country ISO Code"
 msgstr "Código ISO de país"
 
-#: plug-ins/metadata/metadata-editor.c:611
+#: plug-ins/metadata/metadata-editor.c:615
 msgid "Code"
 msgstr "Código"
 
-#: plug-ins/metadata/metadata-editor.c:617
+#: plug-ins/metadata/metadata-editor.c:621
 msgid "Title"
 msgstr "Título"
 
-#: plug-ins/metadata/metadata-editor.c:618
+#: plug-ins/metadata/metadata-editor.c:622
 msgid "Date Created"
 msgstr "Fecha de creación"
 
-#: plug-ins/metadata/metadata-editor.c:619
+#: plug-ins/metadata/metadata-editor.c:623
 msgid "Creator"
 msgstr "Creador"
 
-#: plug-ins/metadata/metadata-editor.c:621
+#: plug-ins/metadata/metadata-editor.c:625
 msgid "Source Inventory ID"
 msgstr "ID del inventario de origen"
 
-#: plug-ins/metadata/metadata-editor.c:634
+#: plug-ins/metadata/metadata-editor.c:638
 msgid "Organization Identifier"
 msgstr "Identificador de organización"
 
-#: plug-ins/metadata/metadata-editor.c:635
+#: plug-ins/metadata/metadata-editor.c:639
 msgid "Item Identifier"
 msgstr "Identificador del elemento"
 
-#: plug-ins/metadata/metadata-editor.c:642
-#: plug-ins/metadata/metadata-editor.c:649
-#: plug-ins/metadata/metadata-editor.c:656
-#: plug-ins/metadata/metadata-editor.c:668
+#: plug-ins/metadata/metadata-editor.c:646
+#: plug-ins/metadata/metadata-editor.c:653
+#: plug-ins/metadata/metadata-editor.c:660
+#: plug-ins/metadata/metadata-editor.c:672
 msgid "Identifier"
 msgstr "Identificador"
 
-#: plug-ins/metadata/metadata-editor.c:657
+#: plug-ins/metadata/metadata-editor.c:661
 msgid "Phone Number 1"
 msgstr "Número de teléfono 1"
 
-#: plug-ins/metadata/metadata-editor.c:658
+#: plug-ins/metadata/metadata-editor.c:662
 msgid "Phone Type 1"
 msgstr "Tipo de teléfono 1"
 
-#: plug-ins/metadata/metadata-editor.c:659
+#: plug-ins/metadata/metadata-editor.c:663
 msgid "Phone Number 2"
 msgstr "Número de teléfono 2"
 
-#: plug-ins/metadata/metadata-editor.c:660
+#: plug-ins/metadata/metadata-editor.c:664
 msgid "Phone Type 2"
 msgstr "Tipo de teléfono 2"
 
-#: plug-ins/metadata/metadata-editor.c:661
+#: plug-ins/metadata/metadata-editor.c:665
 msgid "Email Address"
 msgstr "Dirección de correo electrónico"
 
-#: plug-ins/metadata/metadata-editor.c:662
+#: plug-ins/metadata/metadata-editor.c:666
 msgid "Web Address"
 msgstr "Dirección web"
 
-#: plug-ins/metadata/metadata-editor.c:675
+#: plug-ins/metadata/metadata-editor.c:679
 msgid "Category"
 msgstr "Categoría"
 
-#: plug-ins/metadata/metadata-editor.c:676
+#: plug-ins/metadata/metadata-editor.c:680
 msgid "Supplemental Category"
 msgstr "Categoría suplementaria"
 
-#: plug-ins/metadata/metadata-editor.c:682
+#: plug-ins/metadata/metadata-editor.c:686
 msgid "Longitude"
 msgstr "Longitud"
 
-#: plug-ins/metadata/metadata-editor.c:683
+#: plug-ins/metadata/metadata-editor.c:687
 msgid "Longitude Reference"
 msgstr "Referencia de longitud"
 
-#: plug-ins/metadata/metadata-editor.c:684
+#: plug-ins/metadata/metadata-editor.c:688
 msgid "Latitude"
 msgstr "Latitud"
 
-#: plug-ins/metadata/metadata-editor.c:685
+#: plug-ins/metadata/metadata-editor.c:689
 msgid "Latitude Reference"
 msgstr "Referencia de latitud"
 
-#: plug-ins/metadata/metadata-editor.c:686
+#: plug-ins/metadata/metadata-editor.c:690
 msgid "Altitude"
 msgstr "Altitud"
 
-#: plug-ins/metadata/metadata-editor.c:688
+#: plug-ins/metadata/metadata-editor.c:692
 msgid "Altitude Reference"
 msgstr "Referencia de altitud"
 
-#: plug-ins/metadata/metadata-editor.c:694
+#: plug-ins/metadata/metadata-editor.c:698
 msgid "Patient"
 msgstr "Paciente"
 
-#: plug-ins/metadata/metadata-editor.c:695
+#: plug-ins/metadata/metadata-editor.c:699
 msgid "Patient ID"
 msgstr "ID de paciente"
 
-#: plug-ins/metadata/metadata-editor.c:696
+#: plug-ins/metadata/metadata-editor.c:700
 msgid "Date of Birth"
 msgstr "Fecha de nacimiento"
 
-#: plug-ins/metadata/metadata-editor.c:698
+#: plug-ins/metadata/metadata-editor.c:702
 msgid "Patient Sex"
 msgstr "Sexo del paciente"
 
-#: plug-ins/metadata/metadata-editor.c:700
+#: plug-ins/metadata/metadata-editor.c:704
 msgid "Study ID"
 msgstr "ID del estudio"
 
-#: plug-ins/metadata/metadata-editor.c:701
+#: plug-ins/metadata/metadata-editor.c:705
 msgid "Referring Physician"
 msgstr "Médico de referencia"
 
-#: plug-ins/metadata/metadata-editor.c:702
+#: plug-ins/metadata/metadata-editor.c:706
 msgid "Study Date"
 msgstr "Fecha del estudio"
 
-#: plug-ins/metadata/metadata-editor.c:704
+#: plug-ins/metadata/metadata-editor.c:708
 msgid "Study Description"
 msgstr "Descripción del estudio"
 
-#: plug-ins/metadata/metadata-editor.c:705
+#: plug-ins/metadata/metadata-editor.c:709
 msgid "Series Number"
 msgstr "Número de serie"
 
-#: plug-ins/metadata/metadata-editor.c:706
+#: plug-ins/metadata/metadata-editor.c:710
 msgid "Modality"
 msgstr "Modalidad"
 
-#: plug-ins/metadata/metadata-editor.c:707
+#: plug-ins/metadata/metadata-editor.c:711
 msgid "Series Date"
 msgstr "Fecha de la serie"
 
-#: plug-ins/metadata/metadata-editor.c:709
+#: plug-ins/metadata/metadata-editor.c:713
 msgid "Series Description"
 msgstr "Descripción de la serie"
 
-#: plug-ins/metadata/metadata-editor.c:711
+#: plug-ins/metadata/metadata-editor.c:715
 msgid "Equipment Institution"
 msgstr "Institución del equipo"
 
-#: plug-ins/metadata/metadata-editor.c:712
+#: plug-ins/metadata/metadata-editor.c:716
 msgid "Equipment Manufacturer"
 msgstr "Fabricante del equipo"
 
-#: plug-ins/metadata/metadata-editor.c:752
+#: plug-ins/metadata/metadata-editor.c:756
 msgid "_Edit Metadata"
 msgstr "_Editar metadatos"
 
-#: plug-ins/metadata/metadata-editor.c:756
+#: plug-ins/metadata/metadata-editor.c:760
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Editar los metadatos (Exif, IPTC, XMP)"
 
-#: plug-ins/metadata/metadata-editor.c:1178
+#: plug-ins/metadata/metadata-editor.c:1170
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Editor de metadatos: %s"
 
-#: plug-ins/metadata/metadata-editor.c:1186
+#: plug-ins/metadata/metadata-editor.c:1178
 msgid "_Write Metadata"
 msgstr "Esc_ribir metadatos"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1222
-#: plug-ins/metadata/metadata-viewer.c:401
+#: plug-ins/metadata/metadata-editor.c:1214
+#: plug-ins/metadata/metadata-viewer.c:393
 msgid "IPTC"
 msgstr "IPTC"
 
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1228
+#: plug-ins/metadata/metadata-editor.c:1220
 msgid "IPTC Extension"
 msgstr "Extensión IPTC"
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1334
+#: plug-ins/metadata/metadata-editor.c:1326
 msgid "Categories"
 msgstr "Categorías"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1340
+#: plug-ins/metadata/metadata-editor.c:1332
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1351
+#: plug-ins/metadata/metadata-editor.c:1343
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1373
+#: plug-ins/metadata/metadata-editor.c:1365
 msgid "Import metadata"
 msgstr "Importar metadatos"
 
-#: plug-ins/metadata/metadata-editor.c:1375
+#: plug-ins/metadata/metadata-editor.c:1367
 msgid "Export metadata"
 msgstr "Exportar metadatos"
 
-#: plug-ins/metadata/metadata-editor.c:1678
+#: plug-ins/metadata/metadata-editor.c:1670
 msgid "Choose Date"
 msgstr "Elegir fecha"
 
-#: plug-ins/metadata/metadata-editor.c:1682
+#: plug-ins/metadata/metadata-editor.c:1674
 msgid "Set Date"
 msgstr "Establecer fecha"
 
-#: plug-ins/metadata/metadata-editor.c:2416
+#: plug-ins/metadata/metadata-editor.c:2408
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -15176,7 +15052,7 @@ msgstr ""
 "10deg 15' 20\" o 10° 15' 20\" o 10:15:20.45 o 10 15 20 o 10 15.30 o 10.45\n"
 "Borre todo el texto para quitar el valor actual."
 
-#: plug-ins/metadata/metadata-editor.c:2422
+#: plug-ins/metadata/metadata-editor.c:2414
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -15192,24 +15068,24 @@ msgstr ""
 "metros (m) o pies (ft)\n"
 "Borre todo el texto para quitar el valor actual."
 
-#: plug-ins/metadata/metadata-editor.c:2556
+#: plug-ins/metadata/metadata-editor.c:2548
 msgid "Unrated"
 msgstr "Sin puntuar"
 
-#: plug-ins/metadata/metadata-editor.c:4666
+#: plug-ins/metadata/metadata-editor.c:4658
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "No se pudo establecer la etiqueta de metadatos %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5529
+#: plug-ins/metadata/metadata-editor.c:5521
 msgid "Import Metadata File"
 msgstr "Importar archivo de metadatos"
 
-#: plug-ins/metadata/metadata-editor.c:5564
+#: plug-ins/metadata/metadata-editor.c:5556
 msgid "Export Metadata File"
 msgstr "Exportar archivo de metadatos"
 
-#: plug-ins/metadata/metadata-editor.c:5568
+#: plug-ins/metadata/metadata-editor.c:5560
 msgid "_Export"
 msgstr "_Exportar"
 
@@ -15437,53 +15313,53 @@ msgstr "Este"
 msgid "West"
 msgstr "Oeste"
 
-#: plug-ins/metadata/metadata-viewer.c:177
+#: plug-ins/metadata/metadata-viewer.c:181
 msgid "_View Metadata"
 msgstr "_Ver los metadatos"
 
-#: plug-ins/metadata/metadata-viewer.c:181
+#: plug-ins/metadata/metadata-viewer.c:185
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Ver los metadatos (Exif, IPTC, XMP)"
 
-#: plug-ins/metadata/metadata-viewer.c:265
+#: plug-ins/metadata/metadata-viewer.c:257
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Visor de metadatos: %s"
 
-#: plug-ins/metadata/metadata-viewer.c:308
+#: plug-ins/metadata/metadata-viewer.c:300
 msgid "Exif Tag"
 msgstr "Etiqueta Exif"
 
-#: plug-ins/metadata/metadata-viewer.c:325
+#: plug-ins/metadata/metadata-viewer.c:317
 msgid "Exif"
 msgstr "Exif"
 
-#: plug-ins/metadata/metadata-viewer.c:346
+#: plug-ins/metadata/metadata-viewer.c:338
 msgid "XMP Tag"
 msgstr "Etiqueta XMP"
 
-#: plug-ins/metadata/metadata-viewer.c:363
+#: plug-ins/metadata/metadata-viewer.c:355
 msgid "XMP"
 msgstr "XMP"
 
-#: plug-ins/metadata/metadata-viewer.c:384
+#: plug-ins/metadata/metadata-viewer.c:376
 msgid "IPTC Tag"
 msgstr "Etiqueta IPTC"
 
-#: plug-ins/metadata/metadata-viewer.c:481
+#: plug-ins/metadata/metadata-viewer.c:473
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(%lu caracteres más)"
 
-#: plug-ins/metadata/metadata-viewer.c:728
+#: plug-ins/metadata/metadata-viewer.c:720
 msgid " meter"
 msgstr " medidor"
 
-#: plug-ins/metadata/metadata-viewer.c:729
+#: plug-ins/metadata/metadata-viewer.c:721
 msgid " feet"
 msgstr " pies"
 
-#: plug-ins/metadata/metadata-viewer.c:897
+#: plug-ins/metadata/metadata-viewer.c:889
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu bytes más)"
@@ -15537,10 +15413,8 @@ msgid "Sh_ade"
 msgstr "S_ombra"
 
 #: plug-ins/pagecurl/pagecurl.c:258
-#, fuzzy
-#| msgid "_Shade under curl"
 msgid "Shade the region under the curl"
-msgstr "_Sombra bajo el doblez"
+msgstr "Sombrear la región debajo del rizo"
 
 #: plug-ins/pagecurl/pagecurl.c:456
 msgid "Pagecurl Effect"
@@ -15658,10 +15532,8 @@ msgid "Color _Profile"
 msgstr "_Perfil de color"
 
 #: plug-ins/screenshot/screenshot.c:264
-#, fuzzy
-#| msgid "The DDE transaction failed."
 msgid "GDK initialization failed."
-msgstr "La transacción DDE ha fallado."
+msgstr "La inicialización del GDK falló."
 
 #: plug-ins/screenshot/screenshot.c:302
 msgid "No screenshot backends available."
@@ -15697,10 +15569,8 @@ msgid "Delay"
 msgstr "Retardo"
 
 #: plug-ins/screenshot/screenshot.c:603
-#, fuzzy
-#| msgid "Tag image with _monitor profile"
 msgid "Tag image with monitor profile"
-msgstr "Etiquetar la imagen con el perfil del _monitor"
+msgstr "Etiquetar la imagen con el perfil del monitor"
 
 #: plug-ins/screenshot/screenshot.c:604
 msgid "Convert image with sRGB"
@@ -16004,6 +15874,41 @@ msgstr "_Escáner/Cámara…"
 msgid "Transferring data from scanner/camera"
 msgstr "Transfiriendo datos desde el escáner/cámara"
 
+#~ msgid "Always use _transparency for BC1/DXT1"
+#~ msgstr "Usar siempre _transparencia para BC1/DXT1"
+
+#~ msgid ""
+#~ "Interprets transparency for BC1/DXT1 images even when DDPF_ALPHAPIXELS is "
+#~ "not set; if disabled, sets it to opaque black"
+#~ msgstr ""
+#~ "Interpreta la transparencia de las imágenes BC1/DXT1 incluso cuando "
+#~ "DDPF_ALPHAPIXELS no está establecido; si está desactivado, lo establece "
+#~ "en negro opaco"
+
+#~ msgid "Automatically decode YCoCg/AE_xp images when detected"
+#~ msgstr "Decodificar automáticamente imágenes YCoCg/AExp al detectarlas"
+
+#~ msgid "Decode YCoCg/AExp images when detected"
+#~ msgstr "Decodificar imágenes YCoCg/AExp al detectarlas"
+
+#~ msgid "Decode YCoCg"
+#~ msgstr "Decodificar YCoCg"
+
+#~ msgid "Converts YCoCg encoded pixels to RGB"
+#~ msgstr "Convierte píxeles codificados YCoCg a RGB"
+
+#~ msgid "Decode YCoCg (scaled)"
+#~ msgstr "Decodificar YCoCg (escalado)"
+
+#~ msgid "Converts YCoCg (scaled) encoded pixels to RGB"
+#~ msgstr "Convierte píxeles codificados YCoCg (escalados) a RGB"
+
+#~ msgid "Decode Alpha exponent"
+#~ msgstr "Decodificar exponente Alfa"
+
+#~ msgid "Converts alpha exponent encoded pixels to RGB"
+#~ msgstr "Convierte píxeles codificados con exponente alfa a RGB"
+
 #, fuzzy
 #~| msgid "Parameter k:"
 #~ msgid "Parameter URI"
@@ -16023,9 +15928,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 
 #~ msgid "_Save:"
 #~ msgstr "_Guardar:"
-
-#~ msgid "_Mipmaps:"
-#~ msgstr "_Mipmaps:"
 
 #~ msgid "_Rendering"
 #~ msgstr "_Renderizado"
@@ -17983,9 +17885,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 #~ msgid "Edge Affected"
 #~ msgstr "Borde afectado"
 
-#~ msgid "L_eading"
-#~ msgstr "D_elantero"
-
 #~ msgid "Tr_ailing"
 #~ msgstr "Tra_sero"
 
@@ -19046,9 +18945,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 
 #~ msgid "E_rode"
 #~ msgstr "E_rosionar"
-
-#~ msgid "Grow lighter areas of the image"
-#~ msgstr "Agrandar las áreas más claras de la imagen"
 
 #~ msgid "_Dilate"
 #~ msgstr "_Dilatar"
