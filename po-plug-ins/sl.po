@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-01 20:47+0000\n"
-"PO-Revision-Date: 2023-12-02 08:58+0100\n"
+"POT-Creation-Date: 2023-12-03 14:29+0000\n"
+"PO-Revision-Date: 2023-12-07 23:16+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -5251,15 +5251,12 @@ msgid "Invalid extended block chunk size"
 msgstr "Neveljavna velikost kosa razširjenega bloka"
 
 #: plug-ins/common/file-psp.c:2482
-#, fuzzy
 msgid "Error reading extended chunk grid data"
-msgstr "Napaka pri branju podatkov mreže kosov razširjenega bloka?"
+msgstr "Napaka pri branju podatkov mreže kosov razširjenega bloka"
 
 #: plug-ins/common/file-psp.c:2508
-#, fuzzy
 msgid "Error reading extended chunk guide data"
-msgstr ""
-"Napaka pri branju podatkov vodila razširjenega kosa/kosov razširjenega bloka?"
+msgstr "Napaka pri branju podatkov vodila razširjenega kosa"
 
 #: plug-ins/common/file-psp.c:2526
 msgid "Invalid guide orientation"
@@ -13834,7 +13831,7 @@ msgstr "Intenzivnost okoljske"
 #: plug-ins/lighting/lighting-main.c:258
 #, fuzzy
 msgid "Material ambient intensity (Glowing)"
-msgstr "Intenzivnost okolice materiala (žareče)"
+msgstr "Intenzivnost okoljske svetobe materiala (žareče)"
 
 #: plug-ins/lighting/lighting-main.c:264
 #, fuzzy
@@ -14102,15 +14099,12 @@ msgid "Material ambient intensity"
 msgstr "Intenzivnost okoljske materiala"
 
 #: plug-ins/map-object/map-object-main.c:280
-#, fuzzy
-#| msgid "_D_iffuse"
 msgid "D_iffuse"
-msgstr "_Razpršena"
+msgstr "_Razprši"
 
 #: plug-ins/map-object/map-object-main.c:281
-#, fuzzy
 msgid "Material diffuse intensity"
-msgstr "I_ntenziteta razpršenosti materiala"
+msgstr "I_ntenziteta razpršenja materiala"
 
 #: plug-ins/map-object/map-object-main.c:287
 msgid "Di_ffuse"
