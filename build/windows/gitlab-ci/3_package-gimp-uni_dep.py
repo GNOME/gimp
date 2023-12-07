@@ -7,7 +7,7 @@
 ################################################################################
 # Usage example
 #
-# python3 dll_link.py /path/to/run.exe /winenv/ /path/install
+# python3 3_package-gimp-uni_dep.py /path/to/run.exe /winenv/ /path/install
 #
 # In this case, the DLL dependencies for executable run.exe will be extracted
 # and copied into /path/install/bin folder. To copy the DLL, the root path to
