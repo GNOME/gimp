@@ -245,7 +245,7 @@ sub generate_fun {
         $argdesc .= ":";
 
         if (exists $arg->{array}) {
-            $argdesc .= " (array length=@inargs[$argc - 1]->{name})";
+            $argdesc .= " (array length=$inargs[$argc - 1]->{name})";
         }
 
         if (exists $arg->{in_annotate}) {
@@ -384,7 +384,7 @@ CODE
                 }
 
                 if (exists $arg->{array}) {
-                    $argdesc .= " (array length=@outargs[$argc - 2]->{name})";
+                    $argdesc .= " (array length=$outargs[$argc - 2]->{name})";
                 }
 
                 if (exists $arg->{out_annotate}) {
