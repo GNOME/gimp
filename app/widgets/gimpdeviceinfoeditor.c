@@ -23,6 +23,10 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -537,6 +541,7 @@ gimp_device_info_editor_constructed (GObject *object)
       GtkWidget      *vbox;
       GtkWidget      *hbox;
       GtkWidget      *sw;
+      gboolean        sensitive_pad_actions = TRUE;
 
       frame = gimp_frame_new (_("Pad Actions"));
       gtk_box_pack_start (GTK_BOX (private->vbox), frame, TRUE, TRUE, 0);
@@ -651,6 +656,25 @@ gimp_device_info_editor_constructed (GObject *object)
 
       gtk_widget_set_sensitive (private->pad_edit_button,   FALSE);
       gtk_widget_set_sensitive (private->pad_delete_button, FALSE);
+
+#ifdef GDK_WINDOWING_X11
+      /* We only deactivate the Pad Actions frame on X11 because on
+       * macOS/Windows, there is likely no GDK_SOURCE_TABLET_PAD device
+       * at all, to start with. Also there might be an implementation
+       * eventually (whereas seeing this come to X11 seems improbable
+       * and we don't have a generic way to see if pad actions would
+       * work).
+       * See: https://gitlab.gnome.org/GNOME/gimp/-/merge_requests/946#note_1768869
+       * See also the message, 2 comments below, explaining how this
+       * could be implemented on Windows with WM_POINTER API.
+       */
+      if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+        sensitive_pad_actions = FALSE;
+#endif
+
+      gtk_widget_set_sensitive (frame, sensitive_pad_actions);
+      if (! sensitive_pad_actions)
+        gtk_widget_set_tooltip_text (frame, _("Pad Actions are not supported on your platform yet"));
     }
 }
 
