@@ -71,7 +71,6 @@ Core:
     * add a "Float" submenu in "Select" root menu, containing the 2 variant
       actions "select-cut-float" and "select-copy-float".
 
-
 Graphical User Interface:
 
   - "Merge menu and title bar" option is not shown on macOS as it is not usable
@@ -135,6 +134,13 @@ Tools:
       features.
     * Alignment for RTL languages is now more consistent with how it works in
       other software (such as LibreOffice or Scribus).
+  - Paint tools: all painting tools now have an "Expand Layers" option
+    allowing to auto-expand layers when painting across layer
+    boundaries. A few additional sub-options customize how this
+    expansion happens (by how many pixels, filling with transparency,
+    color, pattern).
+    Expansion does not grow over canvas boundaries, unless "Show All" is
+    checked too.
 
 Plug-ins:
 
@@ -203,8 +209,12 @@ Plug-ins:
       We also set signed when the pixelformat flag DDPF_BUMPDUDV is set.
     * New option to vertically flip dds image on import. This is needed by some
       game engines.
-    * New import option for DDS DXT1/BC1 images to always use transparency. If
-      unchecked, fully transparent values are interpreted as black pixels.
+    * All mipmap generation is done at 32-bit floating-point precision.
+    * A new cubic filter has also been added (Catmull-Rom) which
+      rounds-out the existing lineup of cubic filters.
+    * Better handling of DX10+ files in ddsread.
+    * Always interpret BC1 cutout pixels as black pixels with 0 alpha,
+      per the official format specification.
   - GIF:
     * Remember when a file was stored as a GIF animation to be reused when
       overwriting.
