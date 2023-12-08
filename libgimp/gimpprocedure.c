@@ -1826,10 +1826,11 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
 
 /**
  * gimp_procedure_run: (skip)
- * @pdb:            the #GimpPDB object.
- * @procedure_name: the procedure registered name.
- * @first_arg_name: the name of an argument of @procedure_name.
- * @...:            the call arguments.
+ * @procedure:      the [class@gimp.Procedure] to run.
+ * @first_arg_name: the name of an argument of @procedure or %NULL to
+ *                  run @procedure with default arguments.
+ * @...:            the value of @first_arg_name and any more argument
+ *                  names and values as needed.
  *
  * Runs the procedure named @procedure_name with arguments given as
  * list of `(name, value)` pairs, terminated by %NULL.
@@ -1863,10 +1864,11 @@ gimp_procedure_run (GimpProcedure *procedure,
 
 /**
  * gimp_procedure_run_valist: (skip)
- * @pdb:            the #GimpPDB object.
- * @procedure_name: the procedure registered name.
- * @first_arg_name: the name of an argument of @procedure_name.
- * @args:           the call arguments.
+ * @procedure:      the [class@gimp.Procedure] to run.
+ * @first_arg_name: the name of an argument of @procedure or %NULL to
+ *                  run @procedure with default arguments.
+ * @args            the value of @first_arg_name and any more argument
+ *                  names and values as needed.
  *
  * Runs @procedure with arguments names and values, given in the order as passed
  * to [method@Procedure.run].
@@ -1932,10 +1934,14 @@ gimp_procedure_run_valist (GimpProcedure *procedure,
 
 /**
  * gimp_procedure_run_config: (rename-to gimp_procedure_run)
- * @procedure: a @GimpProcedure.
- * @args:      the @procedure's arguments.
+ * @procedure: the [class@gimp.Procedure] to run.
+ * @config:    the @procedure's arguments.
  *
  * Runs @procedure, calling the run_func given in [ctor@Procedure.new].
+ *
+ * Create @config at default values with
+ * [method@Gimp.Procedure.create_config] then set any argument you wish
+ * to change from defaults with [method@GObject.Object.set].
  *
  * Returns: (transfer full): The @procedure's return values.
  *
