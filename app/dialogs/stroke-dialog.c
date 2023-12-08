@@ -59,6 +59,7 @@ struct _StrokeDialog
   gpointer            user_data;
 
   GtkWidget          *tool_combo;
+  GtkWidget          *stack;
 };
 
 
@@ -222,6 +223,17 @@ stroke_dialog_new (GList              *items,
     gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
     gtk_widget_show (combo);
 
+    switch (gimp_stroke_options_get_method (private->options))
+      {
+      case GIMP_STROKE_LINE:
+        gtk_stack_set_visible_child_name (GTK_STACK (stack), "stroke-tool");
+        break;
+      case GIMP_STROKE_PAINT_METHOD:
+        gtk_stack_set_visible_child_name (GTK_STACK (stack), "paint-tool");
+        break;
+      }
+
+    private->stack      = stack;
     private->tool_combo = combo;
 
     button = gimp_prop_check_button_new (G_OBJECT (private->options),
@@ -271,12 +283,37 @@ stroke_dialog_response (GtkWidget    *dialog,
       break;
 
     case GTK_RESPONSE_OK:
-      private->callback (dialog,
-                         private->items,
-                         private->drawables,
-                         private->context,
-                         private->options,
-                         private->user_data);
+      {
+        gint        stroke_type;
+        GValue      value = G_VALUE_INIT;
+        GParamSpec *pspec;
+
+        if (g_strcmp0 (gtk_stack_get_visible_child_name (GTK_STACK (private->stack)),
+                       "stroke-tool") == 0)
+          stroke_type = GIMP_STROKE_LINE;
+        else
+          stroke_type = GIMP_STROKE_PAINT_METHOD;
+
+        pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (G_OBJECT (private->options)),
+                                              "method");
+        if (pspec == NULL)
+          {
+            gtk_widget_destroy (dialog);
+            return;
+          }
+
+        g_value_init (&value, pspec->value_type);
+        g_value_set_enum (&value, stroke_type);
+
+        g_object_set_property (G_OBJECT (private->options), "method", &value);
+
+        private->callback (dialog,
+                           private->items,
+                           private->drawables,
+                           private->context,
+                           private->options,
+                           private->user_data);
+      }
       break;
 
     default:
