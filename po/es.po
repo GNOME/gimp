@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-11-25 21:08+0000\n"
-"PO-Revision-Date: 2023-11-26 23:55+0100\n"
+"POT-Creation-Date: 2023-12-08 13:50+0000\n"
+"PO-Revision-Date: 2023-12-08 18:54+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -327,28 +327,28 @@ msgstr ""
 "codificación diferente a UTF-8 y no ha dicho esto a Glib. Por favor, "
 "establezca la variable de entorno G_FILENAME_ENCODING."
 
-#: app/actions/actions.c:112 app/dialogs/dialogs.c:425
+#: app/actions/actions.c:112 app/dialogs/dialogs.c:426
 #: app/widgets/gimpbrusheditor.c:88
 msgid "Brush Editor"
 msgstr "Editor de pinceles"
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:115 app/core/gimp-data-factories.c:356
-#: app/dialogs/dialogs.c:340 app/dialogs/preferences-dialog.c:3578
+#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3578
 msgid "Brushes"
 msgstr "Pinceles"
 
-#: app/actions/actions.c:118 app/dialogs/dialogs.c:361
+#: app/actions/actions.c:118 app/dialogs/dialogs.c:362
 msgid "Buffers"
 msgstr "Búferes"
 
-#: app/actions/actions.c:121 app/dialogs/dialogs.c:379
+#: app/actions/actions.c:121 app/dialogs/dialogs.c:380
 #: app/propgui/gimppropgui-newsprint.c:160 app/widgets/gimppickablechooser.c:295
 msgid "Channels"
 msgstr "Canales"
 
 #: app/actions/actions.c:124 app/dialogs/convert-indexed-dialog.c:178
-#: app/dialogs/dialogs.c:387
+#: app/dialogs/dialogs.c:388
 msgid "Colormap"
 msgstr "Mapa de colores"
 
@@ -356,11 +356,11 @@ msgstr "Mapa de colores"
 msgid "Context"
 msgstr "Contexto"
 
-#: app/actions/actions.c:130 app/dialogs/dialogs.c:327
+#: app/actions/actions.c:130 app/dialogs/dialogs.c:328
 msgid "Pointer Information"
 msgstr "Información del puntero"
 
-#: app/actions/actions.c:133 app/dialogs/dialogs.c:331
+#: app/actions/actions.c:133 app/dialogs/dialogs.c:332
 msgid "Dashboard"
 msgstr "Panel"
 
@@ -381,7 +381,7 @@ msgid "Dockable"
 msgstr "Empotrable"
 
 #. Document History
-#: app/actions/actions.c:148 app/dialogs/dialogs.c:367
+#: app/actions/actions.c:148 app/dialogs/dialogs.c:368
 #: app/dialogs/preferences-dialog.c:1357
 msgid "Document History"
 msgstr "Histórico del documento"
@@ -390,11 +390,11 @@ msgstr "Histórico del documento"
 msgid "Drawable"
 msgstr "Dibujable"
 
-#: app/actions/actions.c:154 app/dialogs/dialogs.c:343
+#: app/actions/actions.c:154 app/dialogs/dialogs.c:344
 msgid "Paint Dynamics"
 msgstr "Dinámicas de pintura"
 
-#: app/actions/actions.c:157 app/dialogs/dialogs.c:429
+#: app/actions/actions.c:157 app/dialogs/dialogs.c:430
 #: app/widgets/gimpdynamicseditor.c:97
 msgid "Paint Dynamics Editor"
 msgstr "Editor de dinámicas de pintura"
@@ -403,7 +403,7 @@ msgstr "Editor de dinámicas de pintura"
 msgid "Edit"
 msgstr "Editar"
 
-#: app/actions/actions.c:163 app/dialogs/dialogs.c:323
+#: app/actions/actions.c:163 app/dialogs/dialogs.c:324
 msgid "Error Console"
 msgstr "Consola de errores"
 
@@ -417,27 +417,27 @@ msgstr "Filtros"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:172 app/core/gimp-data-factories.c:390
-#: app/dialogs/dialogs.c:358 app/dialogs/preferences-dialog.c:3608
+#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3608
 msgid "Fonts"
 msgstr "Tipografías"
 
-#: app/actions/actions.c:175 app/dialogs/dialogs.c:433
+#: app/actions/actions.c:175 app/dialogs/dialogs.c:434
 #: app/widgets/gimpgradienteditor.c:295
 msgid "Gradient Editor"
 msgstr "Editor de degradados"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:178 app/core/gimp-data-factories.c:381
-#: app/dialogs/dialogs.c:352 app/dialogs/preferences-dialog.c:3602
+#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3602
 msgid "Gradients"
 msgstr "Degradados"
 
 #: app/actions/actions.c:181 app/core/gimp-data-factories.c:397
-#: app/dialogs/dialogs.c:364 app/dialogs/preferences-dialog.c:3614
+#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3614
 msgid "Tool Presets"
 msgstr "Preajustes de herramientas"
 
-#: app/actions/actions.c:184 app/dialogs/dialogs.c:441
+#: app/actions/actions.c:184 app/dialogs/dialogs.c:442
 #: app/widgets/gimptoolpreseteditor.c:96
 msgid "Tool Preset Editor"
 msgstr "Editor de preajustes de herramientas"
@@ -450,36 +450,36 @@ msgstr "Ayuda"
 msgid "Image"
 msgstr "Imagen"
 
-#: app/actions/actions.c:193 app/dialogs/dialogs.c:337
+#: app/actions/actions.c:193 app/dialogs/dialogs.c:338
 #: app/widgets/gimppickablechooser.c:214
 msgid "Images"
 msgstr "Imágenes"
 
-#: app/actions/actions.c:196 app/dialogs/dialogs.c:375
+#: app/actions/actions.c:196 app/dialogs/dialogs.c:376
 #: app/dialogs/resize-dialog.c:171 app/widgets/gimppickablechooser.c:270
 msgid "Layers"
 msgstr "Capas"
 
 #. initialize the list of mypaint brushes
 #: app/actions/actions.c:199 app/core/gimp-data-factories.c:366
-#: app/dialogs/dialogs.c:346 app/dialogs/preferences-dialog.c:3620
+#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3620
 msgid "MyPaint Brushes"
 msgstr "Pinceles MyPaint"
 
-#: app/actions/actions.c:202 app/dialogs/dialogs.c:437
+#: app/actions/actions.c:202 app/dialogs/dialogs.c:438
 #: app/widgets/gimppaletteeditor.c:157
 msgid "Palette Editor"
 msgstr "Editor de paleta"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:205 app/core/gimp-data-factories.c:376
-#: app/dialogs/dialogs.c:355 app/dialogs/preferences-dialog.c:3596
+#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3596
 msgid "Palettes"
 msgstr "Paletas"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:208 app/core/gimp-data-factories.c:371
-#: app/dialogs/dialogs.c:349 app/dialogs/preferences-dialog.c:3590
+#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3590
 msgid "Patterns"
 msgstr "Patrones"
 
@@ -493,7 +493,7 @@ msgstr "Complementos"
 msgid "Quick Mask"
 msgstr "Máscara rápida"
 
-#: app/actions/actions.c:217 app/dialogs/dialogs.c:407
+#: app/actions/actions.c:217 app/dialogs/dialogs.c:408
 msgid "Sample Points"
 msgstr "Puntos de muestra"
 
@@ -502,7 +502,7 @@ msgid "Select"
 msgstr "Seleccionar"
 
 #. initialize the template list
-#: app/actions/actions.c:223 app/core/gimp.c:852 app/dialogs/dialogs.c:370
+#: app/actions/actions.c:223 app/core/gimp.c:852 app/dialogs/dialogs.c:371
 msgid "Templates"
 msgstr "Plantillas"
 
@@ -514,7 +514,7 @@ msgstr "Herramienta de texto"
 msgid "Text Editor"
 msgstr "Editor de textos"
 
-#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:537
+#: app/actions/actions.c:232 app/dialogs/dialogs.c:316 app/gui/gui.c:537
 msgid "Tool Options"
 msgstr "Opciones de herramienta"
 
@@ -526,7 +526,7 @@ msgstr "Herramientas"
 msgid "Path Toolpath"
 msgstr "Ruta de herramienta"
 
-#: app/actions/actions.c:241 app/dialogs/dialogs.c:383
+#: app/actions/actions.c:241 app/dialogs/dialogs.c:384
 #: app/tools/gimpvectortool.c:167
 msgid "Paths"
 msgstr "Rutas"
@@ -2453,11 +2453,11 @@ msgstr "240 segundos"
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:463 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
-#: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:334
-#: app/widgets/gimphelp.c:439 app/widgets/gimphelp.c:774
-#: app/widgets/gimpiconpicker.c:484 app/widgets/gimpmodifierseditor.c:684
-#: app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91
-#: app/widgets/gimpsettingsbox.c:711
+#: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
+#: app/widgets/gimpfiledialog.c:334 app/widgets/gimphelp.c:439
+#: app/widgets/gimphelp.c:774 app/widgets/gimpiconpicker.c:484
+#: app/widgets/gimpmodifierseditor.c:684 app/widgets/gimppdbdialog.c:148
+#: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:711
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -10006,7 +10006,8 @@ msgstr "Mover esta ventana a la pantalla %s"
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:190
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
-#: app/widgets/gimpcontrollereditor.c:663 app/widgets/gimperrordialog.c:76
+#: app/widgets/gimpcontrollereditor.c:663
+#: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:178 app/widgets/gimpmodifierseditor.c:685
 #: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
@@ -10395,8 +10396,8 @@ msgstr "Ruta"
 #: app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "Cuando está activado, una imagen se convertirá en activa al recibir el foco "
 "la ventana de su imagen. Esto es muy útil para los gestores de ventanas que "
@@ -12042,7 +12043,7 @@ msgstr "Matizado global"
 #: app/core/core-enums.c:891
 msgctxt "matting-engine"
 msgid "Matting Levin"
-msgstr "Matizado levin"
+msgstr "Matizado Levin"
 
 #: app/core/core-enums.c:922
 msgctxt "message-severity"
@@ -12700,7 +12701,7 @@ msgstr ""
 
 #: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338
 #: app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449
-#: app/menus/menus.c:480 app/widgets/gimpdevices.c:225
+#: app/menus/menus.c:480 app/widgets/gimpdevices.c:226
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "El borrado de «%s» ha fallado: %s"
@@ -15568,68 +15569,68 @@ msgstr "Mensaje de GIMP"
 msgid "GIMP Debug"
 msgstr "Depurado de GIMP"
 
-#: app/dialogs/dialogs.c:319
+#: app/dialogs/dialogs.c:320
 msgid "Devices"
 msgstr "Dispositivos"
 
-#: app/dialogs/dialogs.c:319
+#: app/dialogs/dialogs.c:320
 msgid "Device Status"
 msgstr "Estado del dispositivo"
 
-#: app/dialogs/dialogs.c:323
+#: app/dialogs/dialogs.c:324
 msgid "Errors"
 msgstr "Errores"
 
-#: app/dialogs/dialogs.c:327
+#: app/dialogs/dialogs.c:328
 msgid "Pointer"
 msgstr "Puntero"
 
-#: app/dialogs/dialogs.c:367
+#: app/dialogs/dialogs.c:368
 msgid "History"
 msgstr "Histórico"
 
-#: app/dialogs/dialogs.c:370
+#: app/dialogs/dialogs.c:371
 msgid "Image Templates"
 msgstr "Plantillas de imágenes"
 
-#: app/dialogs/dialogs.c:391
+#: app/dialogs/dialogs.c:392
 msgid "Histogram"
 msgstr "Histograma"
 
 #. Selection Bounding Box
-#: app/dialogs/dialogs.c:395 app/display/gimpcursorview.c:273
+#: app/dialogs/dialogs.c:396 app/display/gimpcursorview.c:273
 msgid "Selection"
 msgstr "Selección"
 
-#: app/dialogs/dialogs.c:395
+#: app/dialogs/dialogs.c:396
 msgid "Selection Editor"
 msgstr "Editor de selección"
 
-#: app/dialogs/dialogs.c:399
+#: app/dialogs/dialogs.c:400
 msgid "Symmetry Painting"
 msgstr "Pintado simétrico"
 
-#: app/dialogs/dialogs.c:403
+#: app/dialogs/dialogs.c:404
 msgid "Undo"
 msgstr "Deshacer"
 
-#: app/dialogs/dialogs.c:403
+#: app/dialogs/dialogs.c:404
 msgid "Undo History"
 msgstr "Histórico de deshacer"
 
-#: app/dialogs/dialogs.c:413
+#: app/dialogs/dialogs.c:414
 msgid "Navigation"
 msgstr "Navegación"
 
-#: app/dialogs/dialogs.c:413
+#: app/dialogs/dialogs.c:414
 msgid "Display Navigation"
 msgstr "Navegación de la vista"
 
-#: app/dialogs/dialogs.c:419
+#: app/dialogs/dialogs.c:420
 msgid "FG/BG"
 msgstr "PP/FD"
 
-#: app/dialogs/dialogs.c:419
+#: app/dialogs/dialogs.c:420
 msgid "FG/BG Color"
 msgstr "Color PP/FD"
 
@@ -15969,7 +15970,7 @@ msgstr "Seleccione un canal primero"
 msgid "Layer _name:"
 msgstr "_Nombre de la capa:"
 
-#: app/dialogs/layer-options-dialog.c:188 app/widgets/gimpdeviceinfoeditor.c:312
+#: app/dialogs/layer-options-dialog.c:188 app/widgets/gimpdeviceinfoeditor.c:376
 msgid "_Mode:"
 msgstr "_Modo:"
 
@@ -16736,7 +16737,7 @@ msgstr "Opciones de herramienta"
 #. general device information
 #: app/dialogs/preferences-dialog.c:1800 app/dialogs/preferences-dialog.c:2712
 #: app/dialogs/preferences-dialog.c:3150 app/dialogs/preferences-dialog.c:3174
-#: app/widgets/gimpcontrollereditor.c:188 app/widgets/gimpdeviceinfoeditor.c:298
+#: app/widgets/gimpcontrollereditor.c:188 app/widgets/gimpdeviceinfoeditor.c:362
 msgid "General"
 msgstr "General"
 
@@ -18486,13 +18487,13 @@ msgstr "n/d"
 
 #: app/display/gimpcursorview.c:236 app/display/gimpcursorview.c:261
 #: app/display/gimpcursorview.c:288 app/tools/gimptransform3dtool.c:434
-#: app/widgets/gimpdeviceinfo.c:53
+#: app/widgets/gimpdeviceinfo.c:56
 msgid "X"
 msgstr "X"
 
 #: app/display/gimpcursorview.c:242 app/display/gimpcursorview.c:267
 #: app/display/gimpcursorview.c:294 app/tools/gimptransform3dtool.c:434
-#: app/widgets/gimpdeviceinfo.c:54
+#: app/widgets/gimpdeviceinfo.c:57
 msgid "Y"
 msgstr "Y"
 
@@ -18742,7 +18743,7 @@ msgstr "(limpia)"
 #: app/display/gimpdisplayshell-title.c:374
 #: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1198
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
-#: app/widgets/gimpdeviceinfo.c:1078 app/widgets/gimpdeviceinfo.c:1103
+#: app/widgets/gimpdeviceinfo.c:1148 app/widgets/gimpdeviceinfo.c:1173
 msgid "(none)"
 msgstr "(ninguna)"
 
@@ -20167,8 +20168,8 @@ msgstr "Convertir colores en tonos de gris"
 #: app/operations/gimpoperationdesaturate.c:91
 #: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1137
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
-#: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:173
-#: app/widgets/gimplayertreeview.c:309
+#: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
+#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:309
 msgid "Mode"
 msgstr "Modo"
 
@@ -21132,8 +21133,8 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
 "El procedimiento «%s» se ha llamado con un valor con un tipo erróneo para el "
 "argumento «%s» (#%d). Se esperaba %s pero se obtuvo %s."
@@ -22231,7 +22232,7 @@ msgstr ""
 "El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el "
 "saxofón detrás del palenque de paja."
 
-#: app/text/gimpfontfactory.c:393
+#: app/text/gimpfontfactory.c:447
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -23185,7 +23186,7 @@ msgstr "_Salida:"
 msgid "T_ype:"
 msgstr "T_ipo:"
 
-#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:428
+#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:492
 msgid "Curve _type:"
 msgstr "_Tipo de curva:"
 
@@ -25907,7 +25908,7 @@ msgstr "Rotar la ruta"
 msgid "Transform Path"
 msgstr "Transformar la ruta"
 
-#: app/vectors/gimpvectors-export.c:88
+#: app/vectors/gimpvectors-export.c:95
 #, c-format
 msgid "Writing SVG file '%s' failed: %s"
 msgstr "Falló al escribir el archivo SVG «%s»: %s"
@@ -25945,6 +25946,7 @@ msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpactionview.c:259 app/widgets/gimpcontrollereditor.c:343
+#: app/widgets/gimpdeviceinfoeditor.c:579
 msgid "Action"
 msgstr "Acción"
 
@@ -26313,11 +26315,11 @@ msgstr "Nombre:"
 msgid "State:"
 msgstr "Estado:"
 
-#: app/widgets/gimpcontrollereditor.c:337
+#: app/widgets/gimpcontrollereditor.c:337 app/widgets/gimpdeviceinfoeditor.c:567
 msgid "Event"
 msgstr "Evento"
 
-#: app/widgets/gimpcontrollereditor.c:362
+#: app/widgets/gimpcontrollereditor.c:362 app/widgets/gimpdeviceinfoeditor.c:624
 msgid "_Grab event"
 msgstr "_Capturar un evento"
 
@@ -26325,25 +26327,26 @@ msgstr "_Capturar un evento"
 msgid "Select the next event arriving from the controller"
 msgstr "Seleccionar el siguiente evento que llega desde el controlador"
 
-#: app/widgets/gimpcontrollereditor.c:375
+#: app/widgets/gimpcontrollereditor.c:375 app/widgets/gimpdeviceinfoeditor.c:638
 msgid "_Edit event"
 msgstr "_Editar evento"
 
-#: app/widgets/gimpcontrollereditor.c:383
+#: app/widgets/gimpcontrollereditor.c:383 app/widgets/gimpdeviceinfoeditor.c:648
 msgid "_Clear event"
 msgstr "_Limpiar evento"
 
-#: app/widgets/gimpcontrollereditor.c:522
+#: app/widgets/gimpcontrollereditor.c:522 app/widgets/gimpdeviceinfoeditor.c:971
 #, c-format
 msgid "Remove the action assigned to '%s'"
 msgstr "Eliminar la acción asignada a «%s»"
 
-#: app/widgets/gimpcontrollereditor.c:527
+#: app/widgets/gimpcontrollereditor.c:527 app/widgets/gimpdeviceinfoeditor.c:975
 #, c-format
 msgid "Assign an action to '%s'"
 msgstr "Asignar una acción «%s»"
 
 #: app/widgets/gimpcontrollereditor.c:648
+#: app/widgets/gimpdeviceinfoeditor.c:1142
 #, c-format
 msgid "Select Action for Event '%s'"
 msgstr "Seleccionar la acción para el evento «%s»"
@@ -27080,16 +27083,16 @@ msgstr ""
 "La próxima vez que se conecte este dispositivo, se utilizarán los ajustes "
 "predeterminados."
 
-#: app/widgets/gimpdeviceinfo.c:55 app/widgets/gimpdynamicseditor.c:161
+#: app/widgets/gimpdeviceinfo.c:58 app/widgets/gimpdynamicseditor.c:161
 #: app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Pressure"
 msgstr "Presión"
 
-#: app/widgets/gimpdeviceinfo.c:56
+#: app/widgets/gimpdeviceinfo.c:59
 msgid "X tilt"
 msgstr "Inclinación X"
 
-#: app/widgets/gimpdeviceinfo.c:57
+#: app/widgets/gimpdeviceinfo.c:60
 msgid "Y tilt"
 msgstr "Inclinación Y"
 
@@ -27100,83 +27103,118 @@ msgstr "Inclinación Y"
 #. * TODO: this should be actually tested with a device having such
 #. * feature.
 #.
-#: app/widgets/gimpdeviceinfo.c:65
+#: app/widgets/gimpdeviceinfo.c:68
 msgid "Wheel"
 msgstr "Rueda"
 
-#: app/widgets/gimpdeviceinfo.c:66
+#: app/widgets/gimpdeviceinfo.c:69
 msgid "Distance"
 msgstr "Distancia"
 
-#: app/widgets/gimpdeviceinfo.c:67
+#: app/widgets/gimpdeviceinfo.c:70
 msgid "Rotation"
 msgstr "Rotación"
 
-#: app/widgets/gimpdeviceinfo.c:68
+#: app/widgets/gimpdeviceinfo.c:71
 msgid "Slider"
 msgstr "Deslizador"
 
-#: app/widgets/gimpdeviceinfo.c:248
+#: app/widgets/gimpdeviceinfo.c:254
 msgid "Pressure curve"
 msgstr "Curva de presión"
 
-#: app/widgets/gimpdeviceinfo.c:1063 app/widgets/gimpdeviceinfo.c:1088
+#: app/widgets/gimpdeviceinfo.c:261
+msgid "Pad actions"
+msgstr "Acciones de mando"
+
+#: app/widgets/gimpdeviceinfo.c:1133 app/widgets/gimpdeviceinfo.c:1158
 msgid "(Device not present)"
 msgstr "(Dispositivo ausente)"
 
-#: app/widgets/gimpdeviceinfo.c:1071 app/widgets/gimpdeviceinfo.c:1096
+#: app/widgets/gimpdeviceinfo.c:1141 app/widgets/gimpdeviceinfo.c:1166
 msgid "(Virtual device)"
 msgstr "(Dispositivo virtual)"
 
 # Debe ir en minúsculas por las reglas de estilo
 #. The list of axes of an input device
-#: app/widgets/gimpdeviceinfoeditor.c:238
+#: app/widgets/gimpdeviceinfoeditor.c:302
 msgid "Axes"
 msgstr "Ejes"
 
-#: app/widgets/gimpdeviceinfoeditor.c:317
+#: app/widgets/gimpdeviceinfoeditor.c:381
 msgid "Source:"
 msgstr "Origen:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:322
+#: app/widgets/gimpdeviceinfoeditor.c:386
 msgid "Vendor ID:"
 msgstr "ID de proveedor:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:327
+#: app/widgets/gimpdeviceinfoeditor.c:391
 msgid "Product ID:"
 msgstr "ID de producto:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:332
+#: app/widgets/gimpdeviceinfoeditor.c:396
 msgid "Tool type:"
 msgstr "Tipo de herramienta:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:337
+#: app/widgets/gimpdeviceinfoeditor.c:401
 msgid "Tool serial:"
 msgstr "Serie de herramienta:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:342
+#: app/widgets/gimpdeviceinfoeditor.c:406
 msgid "Tool hardware ID:"
 msgstr "ID de hardware de herramienta:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:354 app/widgets/gimpdeviceinfoeditor.c:672
+#: app/widgets/gimpdeviceinfoeditor.c:418 app/widgets/gimpdeviceinfoeditor.c:878
 msgid "none"
 msgstr "ninguna"
 
 #. e.g. "Pressure Curve" for mapping input device axes
-#: app/widgets/gimpdeviceinfoeditor.c:380
+#: app/widgets/gimpdeviceinfoeditor.c:444
 #, c-format
 msgid "%s Curve"
 msgstr "Curva %s"
 
-#: app/widgets/gimpdeviceinfoeditor.c:440
+#: app/widgets/gimpdeviceinfoeditor.c:504
 #: app/widgets/gimpdynamicsoutputeditor.c:206
 msgid "_Reset Curve"
 msgstr "R_establecer la curva"
 
-#: app/widgets/gimpdeviceinfoeditor.c:453
+#: app/widgets/gimpdeviceinfoeditor.c:517
 #, c-format
 msgid "The axis '%s' has no curve"
 msgstr "El eje «%s» no tiene ninguna curva"
+
+#: app/widgets/gimpdeviceinfoeditor.c:546
+msgid "Pad Actions"
+msgstr "Acciones de mando"
+
+#: app/widgets/gimpdeviceinfoeditor.c:633
+msgid "Select the next event arriving from the pad"
+msgstr "Seleccionar el siguiente evento que llega desde el mando"
+
+#: app/widgets/gimpdeviceinfoeditor.c:677
+msgid "Pad Actions are not supported on your platform yet"
+msgstr "Las acciones de mando aún no son compatibles con su plataforma"
+
+#: app/widgets/gimpdeviceinfoeditor.c:900
+#, c-format
+msgid "Button %d"
+msgstr "Botón %d"
+
+#: app/widgets/gimpdeviceinfoeditor.c:903
+#, c-format
+msgid "Ring %d"
+msgstr "Anillo %d"
+
+#: app/widgets/gimpdeviceinfoeditor.c:906
+#, c-format
+msgid "Strip %d"
+msgstr "Tira %d"
+
+#: app/widgets/gimpdeviceinfoeditor.c:1152
+msgid "Select Pad Event Action"
+msgstr "Seleccionar un mando de acción de evento"
 
 #: app/widgets/gimpdevicestatus.c:153
 msgid "Save device status"
@@ -29643,9 +29681,6 @@ msgstr "Menú de rutas"
 #~ "Sólo puede haber un controlador activo de ratón.\n"
 #~ "\n"
 #~ "Ya tiene un controlador de ratón en su lista de controladores activos."
-
-#~ msgid "Button 8"
-#~ msgstr "Botón 8"
 
 #~ msgid "Button 9"
 #~ msgstr "Botón 9"
