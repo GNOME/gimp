@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-11-16 01:42+0000\n"
-"PO-Revision-Date: 2023-11-18 12:16+0100\n"
+"POT-Creation-Date: 2023-12-03 13:53+0000\n"
+"PO-Revision-Date: 2023-12-08 18:48+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -1293,11 +1293,11 @@ msgstr "Mostrar una página de preferencias con características experimentales"
 msgid "Show an image submenu with debug actions"
 msgstr "Mostrar un submenú de imagen con acciones de depurado"
 
-#: ../app/main.c:598
+#: ../app/main.c:620
 msgid "[FILE|URI...]"
 msgstr "[ARCHIVO|URI…]"
 
-#: ../app/main.c:616
+#: ../app/main.c:638
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1305,20 +1305,20 @@ msgstr ""
 "GIMP no ha podido inicializar la interfaz gráfica de usuario.\n"
 "Asegúrese de que exista una instalación apropiada para su pantalla."
 
-#: ../app/main.c:635
+#: ../app/main.c:657
 msgid "Another GIMP instance is already running."
 msgstr "Ya se está ejecutando otra instancia de GIMP."
 
-#: ../app/main.c:726
+#: ../app/main.c:748
 msgid "GIMP output. Type any character to close this window."
 msgstr "Salida de GIMP. Teclee un carácter cualquiera para cerrar esta ventana."
 
-#: ../app/main.c:727
+#: ../app/main.c:749
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Teclee un carácter cualquiera para cerrar esta ventana)\n"
 
-#: ../app/main.c:744
+#: ../app/main.c:766
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Salida de GIMP. Puede minimizar esta ventana, pero no la cierre."
 
@@ -12800,7 +12800,7 @@ msgstr "Matizado global"
 #: ../app/core/core-enums.c:840
 msgctxt "matting-engine"
 msgid "Matting Levin"
-msgstr "Matizado levin"
+msgstr "Matizado Levin"
 
 #: ../app/core/core-enums.c:871
 msgctxt "message-severity"
@@ -26802,17 +26802,17 @@ msgid "Select fields"
 msgstr "Seleccionar campos"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3335
+#: ../app/widgets/gimpdashboard.c:3342
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "N/D"
 
-#: ../app/widgets/gimpdashboard.c:3344 ../app/widgets/gimpdashboard.c:4347
+#: ../app/widgets/gimpdashboard.c:3351 ../app/widgets/gimpdashboard.c:4354
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Sí"
 
-#: ../app/widgets/gimpdashboard.c:3345 ../app/widgets/gimpdashboard.c:4348
+#: ../app/widgets/gimpdashboard.c:3352 ../app/widgets/gimpdashboard.c:4355
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "No"
@@ -26821,7 +26821,7 @@ msgstr "No"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3429
+#: ../app/widgets/gimpdashboard.c:3436
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -26832,16 +26832,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4337
+#: ../app/widgets/gimpdashboard.c:4344
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:4415
+#: ../app/widgets/gimpdashboard.c:4422
 msgid "N/A"
 msgstr "N/D"
 
-#: ../app/widgets/gimpdashboard.c:4793
+#: ../app/widgets/gimpdashboard.c:4800
 msgid "Resolving symbol information..."
 msgstr "Resolviendo información de símbolos…"
 
