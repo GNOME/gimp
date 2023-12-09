@@ -487,10 +487,10 @@ xcf_save_image_props (XcfInfo    *info,
   /* check and see if we should save the colormap property */
   if (gimp_image_get_colormap_palette (image))
     {
-      guint8 *colormap = gimp_image_get_colormap (image);
+      gint    n_colors;
+      guint8 *colormap = _gimp_image_get_colormap (image, &n_colors);
       xcf_check_error (xcf_save_prop (info, image, PROP_COLORMAP, error,
-                                      gimp_image_get_colormap_size (image),
-                                      colormap), ;);
+                                      n_colors, colormap), ;);
       g_free (colormap);
     }
 

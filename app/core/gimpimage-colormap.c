@@ -167,8 +167,7 @@ gimp_image_colormap_update_formats (GimpImage *image)
       guchar *colormap;
       gint    n_colors;
 
-      colormap = gimp_image_get_colormap (image);
-      n_colors = gimp_image_get_colormap_size (image);
+      colormap = _gimp_image_get_colormap (image, &n_colors);
 
       babl_palette_set_palette (private->babl_palette_rgb,
                                 gimp_babl_format (GIMP_RGB,
@@ -251,11 +250,14 @@ gimp_image_set_colormap_palette (GimpImage   *image,
 }
 
 guchar *
-gimp_image_get_colormap (GimpImage *image)
+_gimp_image_get_colormap (GimpImage *image,
+                          gint      *n_colors)
 {
   GimpImagePrivate *private;
   guchar           *colormap = NULL;
-  gint              n_colors, i;
+  const Babl       *space;
+  const Babl       *format;
+  gint              bpp;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   private = GIMP_IMAGE_GET_PRIVATE (image);
@@ -263,46 +265,39 @@ gimp_image_get_colormap (GimpImage *image)
   if (private->palette == NULL)
     return NULL;
 
-  n_colors = gimp_palette_get_n_colors (private->palette);
+  space  = gimp_image_get_layer_space (image);
+  format = gimp_babl_format (GIMP_RGB, private->precision, FALSE, space);
+  bpp    = babl_format_get_bytes_per_pixel (format);
 
-  if (n_colors > 0)
+  *n_colors = gimp_palette_get_n_colors (private->palette);
+
+  if (*n_colors > 0)
     {
       colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
 
-      for (i = 0; i < n_colors; i++)
+      for (gint i = 0; i < *n_colors; i++)
         {
           GimpPaletteEntry *entry = gimp_palette_get_entry (private->palette, i);
 
-          /* TODO: what should be the format of the colormap? */
-          gegl_color_get_pixel (entry->color, babl_format ("R'G'B' u8"), &colormap[i * 3]);
+          gegl_color_get_pixel (entry->color, format, &colormap[i * bpp]);
         }
     }
 
   return colormap;
 }
 
-gint
-gimp_image_get_colormap_size (GimpImage *image)
-{
-  GimpImagePrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  if (private->palette == NULL)
-    return 0;
-
-  return gimp_palette_get_n_colors (private->palette);
-}
-
 void
-gimp_image_set_colormap (GimpImage    *image,
-                         const guchar *colormap,
-                         gint          n_colors,
-                         gboolean      push_undo)
+_gimp_image_set_colormap (GimpImage    *image,
+                          const guchar *colormap,
+                          gint          n_colors,
+                          gboolean      push_undo)
 {
   GimpImagePrivate *private;
   GimpPaletteEntry *entry;
+  const Babl       *space;
+  const Babl       *format;
+  GeglColor        *color;
+  gint              bpp;
   gint              i;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -322,14 +317,17 @@ gimp_image_set_colormap (GimpImage    *image,
   while ((entry = gimp_palette_get_entry (private->palette, 0)))
     gimp_palette_delete_entry (private->palette, entry);
 
+  space  = gimp_image_get_layer_space (image);
+  format = gimp_babl_format (GIMP_RGB, private->precision, FALSE, space);
+  bpp    = babl_format_get_bytes_per_pixel (format);
+
+  color = gegl_color_new (NULL);
   for (i = 0; i < n_colors; i++)
     {
-      GeglColor *color = gegl_color_new (NULL);
-
-      gegl_color_set_pixel (color, babl_format ("R'G'B' u8"), &colormap[i * 3]);
+      gegl_color_set_pixel (color, format, &colormap[i * bpp]);
       gimp_image_colormap_set_palette_entry (image, color, i);
-      g_object_unref (color);
     }
+  g_object_unref (color);
 
   gimp_image_colormap_changed (image, -1);
   gimp_data_thaw (GIMP_DATA (private->palette));
@@ -528,19 +526,31 @@ gimp_image_colormap_set_palette_entry (GimpImage *image,
                                        GeglColor *color,
                                        gint       index)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
-  GeglColor        *black   = gegl_color_new ("black");
+  GimpImagePrivate *private   = GIMP_IMAGE_GET_PRIVATE (image);
+  GeglColor        *new_color = gegl_color_new ("black");
+  const Babl       *space;
+  const Babl       *format;
+  guint8            rgb[3];
   gchar             name[64];
 
   g_return_if_fail (GEGL_IS_COLOR (color));
 
+  /* Adding black entries if needed. */
   while (gimp_palette_get_n_colors (private->palette) <= index)
-    gimp_palette_add_entry (private->palette, index, name, black);
+    gimp_palette_add_entry (private->palette, index, name, new_color);
 
   g_snprintf (name, sizeof (name), "#%d", index);
 
-  gimp_palette_set_entry (private->palette, index, name, color);
-  g_object_unref (black);
+  space  = gimp_image_get_layer_space (image);
+  format = gimp_babl_format (GIMP_RGB, private->precision, FALSE, space);
+
+  /* For image colormap, we force the color to be in the target format (which at
+   * time of writing is only "R'G'B' u8" for the target space).
+   */
+  gegl_color_get_pixel (color, format, rgb);
+  gegl_color_set_pixel (new_color, format, rgb);
+  gimp_palette_set_entry (private->palette, index, name, new_color);
+  g_object_unref (new_color);
 }
 
 static void

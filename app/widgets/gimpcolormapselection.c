@@ -390,10 +390,10 @@ gimp_colormap_selection_get_index (GimpColormapSelection *selection,
 
       if (! gimp_color_is_perceptually_identical (temp, search))
         {
-          gint n_colors = gimp_image_get_colormap_size (image);
-          gint i;
+          gint n_colors;
 
-          for (i = 0; i < n_colors; i++)
+          n_colors = gimp_palette_get_n_colors (gimp_image_get_colormap_palette (image));
+          for (gint i = 0; i < n_colors; i++)
             {
               temp = gimp_image_get_colormap_entry (image, i);
 
@@ -425,7 +425,7 @@ gimp_colormap_selection_set_index (GimpColormapSelection *selection,
   if (! HAVE_COLORMAP (image))
     return FALSE;
 
-  size = gimp_image_get_colormap_size (image);
+  size = gimp_palette_get_n_colors (gimp_image_get_colormap_palette (image));
 
   if (size < 1)
     return FALSE;
@@ -463,6 +463,7 @@ gint
 gimp_colormap_selection_max_index (GimpColormapSelection *selection)
 {
   GimpImage *image;
+  gint       n_colors;
 
   g_return_val_if_fail (GIMP_IS_COLORMAP_SELECTION (selection), -1);
 
@@ -471,7 +472,9 @@ gimp_colormap_selection_max_index (GimpColormapSelection *selection)
   if (! HAVE_COLORMAP (image))
     return -1;
 
-  return MAX (0, gimp_image_get_colormap_size (image) - 1);
+  n_colors = gimp_palette_get_n_colors (gimp_image_get_colormap_palette (image));
+
+  return MAX (0, n_colors - 1);
 }
 
 GimpPaletteEntry *
@@ -571,10 +574,13 @@ gimp_colormap_selection_preview_draw (GtkWidget             *widget,
 static void
 gimp_colormap_selection_update_entries (GimpColormapSelection *selection)
 {
-  GimpImage *image = gimp_context_get_image (selection->context);
+  GimpImage *image    = gimp_context_get_image (selection->context);
+  gint       n_colors = 0;
 
-  if (! HAVE_COLORMAP (image) ||
-      ! gimp_image_get_colormap_size (image))
+  if (gimp_image_get_colormap_palette (image))
+    n_colors = gimp_palette_get_n_colors (gimp_image_get_colormap_palette (image));
+
+  if (! HAVE_COLORMAP (image) || ! n_colors)
     {
       gtk_widget_set_sensitive (selection->index_spinbutton, FALSE);
       gtk_widget_set_sensitive (selection->color_entry, FALSE);
@@ -821,13 +827,15 @@ gimp_colormap_selection_set_palette (GimpColormapSelection *selection)
 
       if (palette)
         {
+          gint n_colors;
+
+          n_colors = gimp_palette_get_n_colors (palette);
           g_signal_connect_swapped (palette, "dirty",
                                     G_CALLBACK (gtk_widget_queue_draw),
                                     selection);
           gimp_view_set_viewable (GIMP_VIEW (selection->view),
                                   GIMP_VIEWABLE (palette));
-          gtk_adjustment_set_upper (selection->index_adjustment,
-                                    gimp_image_get_colormap_size (selection->active_image) - 1);
+          gtk_adjustment_set_upper (selection->index_adjustment, n_colors - 1);
         }
     }
 }

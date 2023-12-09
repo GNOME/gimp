@@ -1528,10 +1528,10 @@ image_get_colormap_invoker (GimpProcedure         *procedure,
   if (success)
     {
       guchar *colormap_data;
+      gint    n_colors;
 
-      colormap_data = gimp_image_get_colormap (image);
-      colormap = g_bytes_new_take (colormap_data,
-                                   3 * gimp_image_get_colormap_size (image));
+      colormap_data = _gimp_image_get_colormap (image, &n_colors);
+      colormap = g_bytes_new_take (colormap_data, 3 * n_colors);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -1560,10 +1560,10 @@ image_set_colormap_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gimp_image_set_colormap (image,
-                               g_bytes_get_data (colormap, NULL),
-                               g_bytes_get_size (colormap) / 3,
-                               TRUE);
+      _gimp_image_set_colormap (image,
+                                g_bytes_get_data (colormap, NULL),
+                                g_bytes_get_size (colormap) / 3,
+                                TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,

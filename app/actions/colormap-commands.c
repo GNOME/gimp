@@ -26,6 +26,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
+#include "core/gimppalette.h"
 
 #include "widgets/gimpcolormapeditor.h"
 #include "widgets/gimpcolormapselection.h"
@@ -69,7 +70,7 @@ colormap_add_color_cmd_callback (GimpAction *action,
 
   background = (gboolean) g_variant_get_int32 (value);
 
-  if (gimp_image_get_colormap_size (image) < 256)
+  if (gimp_palette_get_n_colors (gimp_image_get_colormap_palette ((image))) < 256)
     {
       GeglColor *color;
 

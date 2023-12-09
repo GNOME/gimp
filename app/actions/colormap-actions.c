@@ -28,6 +28,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
+#include "core/gimppalette.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpcolormapeditor.h"
@@ -134,7 +135,7 @@ colormap_actions_update (GimpActionGroup *group,
         {
           GList *drawables = gimp_image_get_selected_drawables (image);
 
-          num_colors = gimp_image_get_colormap_size (image);
+          num_colors = gimp_palette_get_n_colors (gimp_image_get_colormap_palette ((image)));
 
           if (g_list_length (drawables) == 1)
             drawable_indexed = gimp_drawable_is_indexed (drawables->data);

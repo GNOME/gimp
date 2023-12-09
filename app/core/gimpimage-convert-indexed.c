@@ -973,8 +973,8 @@ gimp_image_convert_indexed (GimpImage               *image,
         colormap[j++] = quantobj->cmap[i].blue;
       }
 
-    gimp_image_set_colormap (image, colormap,
-                             quantobj->actual_number_of_colors, TRUE);
+    _gimp_image_set_colormap (image, colormap,
+                              quantobj->actual_number_of_colors, TRUE);
   }
 
   /* when converting from GRAY, always convert to the new type's
@@ -1071,7 +1071,7 @@ gimp_image_convert_indexed (GimpImage               *image,
           colormap[j] = new_palette[j]; j++;
         }
 
-      gimp_image_set_colormap (image, colormap, num_entries, TRUE);
+      _gimp_image_set_colormap (image, colormap, num_entries, TRUE);
     }
 
   /*  When converting from GRAY, set the new profile.

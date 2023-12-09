@@ -182,8 +182,7 @@ gimp_image_undo_constructed (GObject *object)
       break;
 
     case GIMP_UNDO_IMAGE_COLORMAP:
-      image_undo->num_colors = gimp_image_get_colormap_size (image);
-      image_undo->colormap   = gimp_image_get_colormap (image);
+      image_undo->colormap = _gimp_image_get_colormap (image, &image_undo->num_colors);
       break;
 
     case GIMP_UNDO_IMAGE_HIDDEN_PROFILE:
@@ -452,13 +451,11 @@ gimp_image_undo_pop (GimpUndo            *undo,
         guchar *colormap;
         gint    num_colors;
 
-        num_colors = gimp_image_get_colormap_size (image);
-        colormap   = gimp_image_get_colormap (image);
+        colormap = _gimp_image_get_colormap (image, &num_colors);
 
         if (image_undo->colormap)
-          gimp_image_set_colormap (image,
-                                   image_undo->colormap, image_undo->num_colors,
-                                   FALSE);
+          _gimp_image_set_colormap (image, image_undo->colormap,
+                                    image_undo->num_colors, FALSE);
         else
           gimp_image_unset_colormap (image, FALSE);
 

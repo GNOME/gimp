@@ -35,6 +35,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimppalette.h"
 #include "core/gimpundostack.h"
 #include "core/gimp-utils.h"
 
@@ -479,11 +480,15 @@ gimp_image_prop_view_update (GimpImagePropView *view)
                   gimp_color_profile_get_label (profile));
       break;
     case GIMP_INDEXED:
-      g_snprintf (buf, sizeof (buf),
-                  ngettext ("Indexed color (monochrome)",
-                            "Indexed color (%d colors)",
-                            gimp_image_get_colormap_size (image)),
-                  gimp_image_get_colormap_size (image));
+        {
+          gint n_colors;
+
+          n_colors = gimp_palette_get_n_colors (gimp_image_get_colormap_palette (image));
+          g_snprintf (buf, sizeof (buf),
+                      ngettext ("Indexed color (monochrome)",
+                                "Indexed color (%d colors)",
+                                n_colors), n_colors);
+        }
       break;
     }
 

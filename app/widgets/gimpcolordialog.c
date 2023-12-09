@@ -620,7 +620,7 @@ gimp_color_dialog_colormap_add_activate (GimpColorDialog *dialog)
   GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
 
   if (dialog->active_image &&
-      gimp_image_get_colormap_size (dialog->active_image) < 256 &&
+      gimp_palette_get_n_colors (gimp_image_get_colormap_palette (dialog->active_image)) < 256 &&
       viewable_dialog->context)
     {
       GimpContext *user_context = viewable_dialog->context->gimp->user_context;

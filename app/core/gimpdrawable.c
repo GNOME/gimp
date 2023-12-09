@@ -1997,18 +1997,6 @@ gimp_drawable_get_component_index (GimpDrawable    *drawable,
   return -1;
 }
 
-guchar *
-gimp_drawable_get_colormap (GimpDrawable *drawable)
-{
-  GimpImage *image;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  return image ? gimp_image_get_colormap (image) : NULL;
-}
-
 void
 gimp_drawable_start_paint (GimpDrawable *drawable)
 {

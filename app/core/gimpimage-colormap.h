@@ -36,9 +36,10 @@ void           gimp_image_set_colormap_palette     (GimpImage     *image,
                                                     GimpPalette   *palette,
                                                     gboolean       push_undo);
 
-guchar *       gimp_image_get_colormap             (GimpImage     *image);
-gint           gimp_image_get_colormap_size        (GimpImage     *image);
-void           gimp_image_set_colormap             (GimpImage     *image,
+/* Only internally */
+guchar *       _gimp_image_get_colormap            (GimpImage     *image,
+                                                    gint          *n_colors);
+void           _gimp_image_set_colormap             (GimpImage     *image,
                                                     const guchar  *colormap,
                                                     gint           n_colors,
                                                     gboolean       push_undo);

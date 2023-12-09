@@ -1178,7 +1178,7 @@ xcf_load_image_props (XcfInfo   *info,
              * an image state that is impossible.
              */
             if (gimp_image_get_base_type (image) == GIMP_INDEXED)
-              gimp_image_set_colormap (image, cmap, n_colors, FALSE);
+              _gimp_image_set_colormap (image, cmap, n_colors, FALSE);
 
             GIMP_LOG (XCF, "prop colormap n_colors=%d", n_colors);
           }
