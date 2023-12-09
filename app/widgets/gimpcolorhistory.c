@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -504,24 +505,18 @@ gimp_color_history_palette_dirty (GimpColorHistory *history)
       /* Now that palette colors can be any model and any space, just looking at
        * whether they are out of [0; 1] range is not enough (a same color could
        * be in or out range depending on the color space it is stored as).
-       * I guess that what we are really looking for is whether a color is
-       * out-of-gamut for the specifically active image.
-       * TODO
+       * What we are really looking for is:
+       * 1. Whether they are out of the palette (indexed image case);
+       * 2. Whether they are out of the active image's space
+       *    (independently of their own space).
        */
-#if 0
-      if (/* Common out-of-gamut case */
-          (rgb.r < 0.0 || rgb.r > 1.0 ||
-           rgb.g < 0.0 || rgb.g > 1.0 ||
-           rgb.b < 0.0 || rgb.b > 1.0) ||
-          /* Indexed images */
-          (colormap_palette && ! gimp_palette_find_entry (colormap_palette, color, NULL)) ||
-          /* Grayscale images */
-          (base_type == GIMP_GRAY &&
-           (ABS (rgb.r - rgb.g) > CHANNEL_EPSILON ||
-            ABS (rgb.r - rgb.b) > CHANNEL_EPSILON ||
-            ABS (rgb.g - rgb.b) > CHANNEL_EPSILON)))
-        oog = TRUE;
-#endif
+      if (colormap_palette)
+        oog = (! gimp_palette_find_entry (colormap_palette, color, NULL));
+      else if (history->active_image)
+        oog = gimp_color_is_out_of_gamut (color, gimp_image_get_layer_space (history->active_image));
+      else
+        oog = gimp_color_is_out_of_self_gamut (color);
+
       gimp_color_area_set_out_of_gamut (GIMP_COLOR_AREA (history->color_areas[i]), oog);
 
       g_signal_handlers_unblock_by_func (history->color_areas[i],

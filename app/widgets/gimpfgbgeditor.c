@@ -933,50 +933,7 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
     {
       const Babl *target_space = gimp_image_get_layer_space (editor->active_image);
 
-      if (base_type == GIMP_GRAY)
-        {
-          gfloat gray[1];
-
-          gegl_color_get_pixel (color,
-                                babl_format_with_space ("Y' float", target_space),
-                                gray);
-          is_out_of_gamut = ((gray[0] < 0.0 && -gray[0] > CHANNEL_EPSILON)       ||
-                             (gray[0] > 1.0 && gray[0] - 1.0 > CHANNEL_EPSILON));
-
-          if (! is_out_of_gamut)
-            {
-              gdouble rgb[3];
-
-              /* Grayscale colors can be out of gamut if the color is out of the [0;
-               * 1] range in the target space and also if they can be converted to
-               * RGB with non-equal components.
-               */
-              gegl_color_get_pixel (color,
-                                    babl_format_with_space ("R'G'B' double", target_space),
-                                    rgb);
-              is_out_of_gamut = (ABS (rgb[0] - rgb[0]) > CHANNEL_EPSILON ||
-                                 ABS (rgb[1] - rgb[1]) > CHANNEL_EPSILON ||
-                                 ABS (rgb[2] - rgb[2]) > CHANNEL_EPSILON);
-            }
-        }
-      else
-        {
-          gdouble rgb[3];
-
-          gegl_color_get_pixel (color,
-                                babl_format_with_space ("R'G'B' double", target_space),
-                                rgb);
-          /* We make sure that each component is within [0; 1], but accept a small
-           * error of margin (we don't want to show small precision errors as
-           * out-of-gamut colors).
-           */
-          is_out_of_gamut = ((rgb[0] < 0.0 && -rgb[0] > CHANNEL_EPSILON)       ||
-                             (rgb[0] > 1.0 && rgb[0] - 1.0 > CHANNEL_EPSILON) ||
-                             (rgb[1] < 0.0 && -rgb[1] > CHANNEL_EPSILON)       ||
-                             (rgb[1] > 1.0 && rgb[1] - 1.0 > CHANNEL_EPSILON) ||
-                             (rgb[2] < 0.0 && -rgb[2] > CHANNEL_EPSILON)       ||
-                             (rgb[2] > 1.0 && rgb[2] - 1.0 > CHANNEL_EPSILON));
-        }
+      is_out_of_gamut = gimp_color_is_out_of_gamut (color, target_space);
     }
   else
     {

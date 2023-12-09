@@ -19,6 +19,8 @@ EXPORTS
 	gimp_cmyka_get_uchar
 	gimp_cmyka_set
 	gimp_cmyka_set_uchar
+	gimp_color_is_out_of_gamut
+	gimp_color_is_out_of_self_gamut
 	gimp_color_is_perceptually_identical
 	gimp_color_managed_get_color_profile
 	gimp_color_managed_get_icc_profile

@@ -144,6 +144,184 @@ gimp_color_is_perceptually_identical (GeglColor *color1,
 #undef SQR
 }
 
+/**
+ * gimp_color_is_out_of_self_gamut:
+ * @color: a [class@Gegl.Color]
+ *
+ * Determine whether @color is out of its own space gamut. This can only
+ * happen if the color space is unbounded and any of the color component
+ * is out of the `[0; 1]` range.
+ * A small error of margin is accepted, so that for instance a component
+ * at -0.0000001 is not making the whole color to be considered as
+ * out-of-gamut while it may just be computation imprecision.
+ *
+ * Returns: whether the color is out of its own color space gamut.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_color_is_out_of_self_gamut (GeglColor *color)
+{
+  const Babl *format;
+  const Babl *space;
+  const Babl *ctype;
+  gboolean    oog = FALSE;
+
+  format = gegl_color_get_format (color);
+  space  = babl_format_get_space (format);
+  /* XXX assuming that all components have the same type. */
+  ctype  = babl_format_get_type (format, 0);
+
+  if (ctype == babl_type ("half")  ||
+      ctype == babl_type ("float") ||
+      ctype == babl_type ("double"))
+  {
+      /* Only unbounded colors can be out-of-gamut. */
+      const Babl *model;
+
+      model = babl_format_get_model (format);
+
+#define CHANNEL_EPSILON 1e-3
+        if (model == babl_model ("R'G'B'")  ||
+            model == babl_model ("R~G~B~")  ||
+            model == babl_model ("RGB")     ||
+            model == babl_model ("R'G'B'A") ||
+            model == babl_model ("R~G~B~A") ||
+            model == babl_model ("RGBA"))
+        {
+            gdouble rgb[3];
+
+            gegl_color_get_pixel (color, babl_format_with_space ("RGB double", space), rgb);
+
+            oog = ((rgb[0] < 0.0 && -rgb[0] > CHANNEL_EPSILON)      ||
+                   (rgb[0] > 1.0 && rgb[0] - 1.0 > CHANNEL_EPSILON) ||
+                   (rgb[1] < 0.0 && -rgb[1] > CHANNEL_EPSILON)      ||
+                   (rgb[1] > 1.0 && rgb[1] - 1.0 > CHANNEL_EPSILON) ||
+                   (rgb[2] < 0.0 && -rgb[2] > CHANNEL_EPSILON)      ||
+                   (rgb[2] > 1.0 && rgb[2] - 1.0 > CHANNEL_EPSILON));
+        }
+        else if (model == babl_model ("Y'")  ||
+                 model == babl_model ("Y~")  ||
+                 model == babl_model ("Y")   ||
+                 model == babl_model ("Y'A") ||
+                 model == babl_model ("Y~A") ||
+                 model == babl_model ("YA"))
+        {
+            gdouble gray[1];
+
+            gegl_color_get_pixel (color, babl_format_with_space ("Y double", space), gray);
+            oog = ((gray[0] < 0.0 && -gray[0] > CHANNEL_EPSILON)      ||
+                   (gray[0] > 1.0 && gray[0] - 1.0 > CHANNEL_EPSILON));
+        }
+        else if (model == babl_model ("CMYK")  ||
+                 model == babl_model ("CMYKA") ||
+                 model == babl_model ("cmyk")  ||
+                 model == babl_model ("cmykA"))
+        {
+            gdouble cmyk[4];
+
+            gegl_color_get_pixel (color, babl_format_with_space ("CMYK double", space), cmyk);
+            oog = ((cmyk[0] < 0.0 && -cmyk[0] > CHANNEL_EPSILON)      ||
+                   (cmyk[0] > 1.0 && cmyk[0] - 1.0 > CHANNEL_EPSILON) ||
+                   (cmyk[1] < 0.0 && -cmyk[1] > CHANNEL_EPSILON)      ||
+                   (cmyk[1] > 1.0 && cmyk[1] - 1.0 > CHANNEL_EPSILON) ||
+                   (cmyk[2] < 0.0 && -cmyk[2] > CHANNEL_EPSILON)      ||
+                   (cmyk[2] > 1.0 && cmyk[2] - 1.0 > CHANNEL_EPSILON) ||
+                   (cmyk[3] < 0.0 && -cmyk[3] > CHANNEL_EPSILON)      ||
+                   (cmyk[3] > 1.0 && cmyk[3] - 1.0 > CHANNEL_EPSILON));
+        }
+#undef CHANNEL_EPSILON
+    }
+
+  return oog;
+}
+
+/**
+ * gimp_color_is_out_of_gamut:
+ * @color: a [class@Gegl.Color]
+ * @space: a color space to convert @color to.
+ *
+ * Determine whether @color is out of its @space gamut.
+ * A small error of margin is accepted, so that for instance a component
+ * at -0.0000001 is not making the whole color to be considered as
+ * out-of-gamut while it may just be computation imprecision.
+ *
+ * Returns: whether the color is out of @space gamut.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_color_is_out_of_gamut (GeglColor  *color,
+                            const Babl *space)
+{
+  gboolean is_out_of_gamut = FALSE;
+
+#define CHANNEL_EPSILON 1e-3
+  if (babl_space_is_gray (space))
+    {
+      gfloat gray[1];
+
+      gegl_color_get_pixel (color,
+                            babl_format_with_space ("Y' float", space),
+                            gray);
+      is_out_of_gamut = ((gray[0] < 0.0 && -gray[0] > CHANNEL_EPSILON)       ||
+                         (gray[0] > 1.0 && gray[0] - 1.0 > CHANNEL_EPSILON));
+
+      if (! is_out_of_gamut)
+        {
+          gdouble rgb[3];
+
+          /* Grayscale colors can be out of gamut if the color is out of the [0;
+           * 1] range in the target space and also if they can be converted to
+           * RGB with non-equal components.
+           */
+          gegl_color_get_pixel (color,
+                                babl_format_with_space ("R'G'B' double", space),
+                                rgb);
+          is_out_of_gamut = (ABS (rgb[0] - rgb[0]) > CHANNEL_EPSILON ||
+                             ABS (rgb[1] - rgb[1]) > CHANNEL_EPSILON ||
+                             ABS (rgb[2] - rgb[2]) > CHANNEL_EPSILON);
+        }
+    }
+  else if (babl_space_is_cmyk (space))
+    {
+      gdouble cmyk[4];
+
+      gegl_color_get_pixel (color,
+                            babl_format_with_space ("CMYK double", space),
+                            cmyk);
+      /* We make sure that each component is within [0; 1], but accept a small
+       * error of margin (we don't want to show small precision errors as
+       * out-of-gamut colors).
+       */
+      is_out_of_gamut = ((cmyk[0] < 0.0 && -cmyk[0] > CHANNEL_EPSILON)      ||
+                         (cmyk[0] > 1.0 && cmyk[0] - 1.0 > CHANNEL_EPSILON) ||
+                         (cmyk[1] < 0.0 && -cmyk[1] > CHANNEL_EPSILON)      ||
+                         (cmyk[1] > 1.0 && cmyk[1] - 1.0 > CHANNEL_EPSILON) ||
+                         (cmyk[2] < 0.0 && -cmyk[2] > CHANNEL_EPSILON)      ||
+                         (cmyk[2] > 1.0 && cmyk[2] - 1.0 > CHANNEL_EPSILON) ||
+                         (cmyk[3] < 0.0 && -cmyk[3] > CHANNEL_EPSILON)      ||
+                         (cmyk[3] > 1.0 && cmyk[3] - 1.0 > CHANNEL_EPSILON));
+    }
+  else
+    {
+      gdouble rgb[3];
+
+      gegl_color_get_pixel (color,
+                            babl_format_with_space ("R'G'B' double", space),
+                            rgb);
+      is_out_of_gamut = ((rgb[0] < 0.0 && -rgb[0] > CHANNEL_EPSILON)       ||
+                         (rgb[0] > 1.0 && rgb[0] - 1.0 > CHANNEL_EPSILON) ||
+                         (rgb[1] < 0.0 && -rgb[1] > CHANNEL_EPSILON)       ||
+                         (rgb[1] > 1.0 && rgb[1] - 1.0 > CHANNEL_EPSILON) ||
+                         (rgb[2] < 0.0 && -rgb[2] > CHANNEL_EPSILON)       ||
+                         (rgb[2] > 1.0 && rgb[2] - 1.0 > CHANNEL_EPSILON));
+    }
+#undef CHANNEL_EPSILON
+
+  return is_out_of_gamut;
+}
+
 
 /* Private functions. */
 

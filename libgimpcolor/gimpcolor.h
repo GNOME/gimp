@@ -56,6 +56,9 @@ gboolean    gimp_color_is_perceptually_identical (GeglColor   *color1,
 GeglColor * gimp_color_parse_css                 (const gchar *css,
                                                   gint         len);
 
+gboolean    gimp_color_is_out_of_self_gamut      (GeglColor   *color);
+gboolean    gimp_color_is_out_of_gamut           (GeglColor   *color,
+                                                  const Babl  *space);
 
 G_END_DECLS
 

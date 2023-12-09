@@ -461,77 +461,7 @@ gimp_color_area_draw (GtkWidget *widget,
     }
 
   if (priv->config && ! oog)
-    {
-      const Babl *format;
-      const Babl *space;
-      const Babl *ctype;
-
-      format = gegl_color_get_format (priv->color);
-      space  = babl_format_get_space (format);
-      /* XXX assuming that all components have the same type. */
-      ctype  = babl_format_get_type (format, 0);
-
-      if (ctype == babl_type ("half")  ||
-          ctype == babl_type ("float") ||
-          ctype == babl_type ("double"))
-        {
-          /* Only unbounded colors can be out-of-gamut. */
-          const Babl *model;
-
-          model = babl_format_get_model (format);
-
-#define CHANNEL_EPSILON 1e-3
-          if (model == babl_model ("R'G'B'")  ||
-              model == babl_model ("R~G~B~")  ||
-              model == babl_model ("RGB")     ||
-              model == babl_model ("R'G'B'A") ||
-              model == babl_model ("R~G~B~A") ||
-              model == babl_model ("RGBA"))
-            {
-              gdouble rgb[3];
-
-              gegl_color_get_pixel (priv->color, babl_format_with_space ("RGB double", space), rgb);
-
-              oog = ((rgb[0] < 0.0 && -rgb[0] > CHANNEL_EPSILON)      ||
-                     (rgb[0] > 1.0 && rgb[0] - 1.0 > CHANNEL_EPSILON) ||
-                     (rgb[1] < 0.0 && -rgb[1] > CHANNEL_EPSILON)      ||
-                     (rgb[1] > 1.0 && rgb[1] - 1.0 > CHANNEL_EPSILON) ||
-                     (rgb[2] < 0.0 && -rgb[2] > CHANNEL_EPSILON)      ||
-                     (rgb[2] > 1.0 && rgb[2] - 1.0 > CHANNEL_EPSILON));
-            }
-          else if (model == babl_model ("Y'")  ||
-                   model == babl_model ("Y~")  ||
-                   model == babl_model ("Y")     ||
-                   model == babl_model ("Y'A") ||
-                   model == babl_model ("Y~A") ||
-                   model == babl_model ("YA"))
-            {
-              gdouble gray[1];
-
-              gegl_color_get_pixel (priv->color, babl_format_with_space ("Y double", space), gray);
-              oog = ((gray[0] < 0.0 && -gray[0] > CHANNEL_EPSILON)      ||
-                     (gray[0] > 1.0 && gray[0] - 1.0 > CHANNEL_EPSILON));
-            }
-          else if (model == babl_model ("CMYK")  ||
-                   model == babl_model ("CMYKA") ||
-                   model == babl_model ("cmyk")  ||
-                   model == babl_model ("cmykA"))
-            {
-              gdouble cmyk[4];
-
-              gegl_color_get_pixel (priv->color, babl_format_with_space ("CMYK double", space), cmyk);
-              oog = ((cmyk[0] < 0.0 && -cmyk[0] > CHANNEL_EPSILON)      ||
-                     (cmyk[0] > 1.0 && cmyk[0] - 1.0 > CHANNEL_EPSILON) ||
-                     (cmyk[1] < 0.0 && -cmyk[1] > CHANNEL_EPSILON)      ||
-                     (cmyk[1] > 1.0 && cmyk[1] - 1.0 > CHANNEL_EPSILON) ||
-                     (cmyk[2] < 0.0 && -cmyk[2] > CHANNEL_EPSILON)      ||
-                     (cmyk[2] > 1.0 && cmyk[2] - 1.0 > CHANNEL_EPSILON) ||
-                     (cmyk[3] < 0.0 && -cmyk[3] > CHANNEL_EPSILON)      ||
-                     (cmyk[3] > 1.0 && cmyk[3] - 1.0 > CHANNEL_EPSILON));
-            }
-#undef CHANNEL_EPSILON
-        }
-    }
+    oog = gimp_color_is_out_of_self_gamut (priv->color);
 
   if (priv->config && oog)
     {
