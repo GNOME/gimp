@@ -134,9 +134,10 @@
     (gimp-context-set-pattern  pattern)
 
     (gimp-message "Expect delete methods work without error")
-    (gimp-brush-delete brushnew)
-    (gimp-gradient-delete gradientnew)
-    (gimp-palette-delete palettenew)
+    ; call superclass method
+    (gimp-resource-delete brushnew)
+    (gimp-resource-delete gradientnew)
+    (gimp-resource-delete palettenew)
 
     (gimp-message "Expect var holding deleted resource is still defined, but is invalid reference")
     ;  Returns (0), not #f

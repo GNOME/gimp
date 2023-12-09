@@ -90,7 +90,7 @@
         (offy2 (sota-scale size (- 0.25) chrome-factor))
         (feather (sota-scale size 0.5 chrome-factor))
         (brush-size (sota-scale size 0.5 chrome-factor))
-        (brush-name (car (gimp-brush-new "Chrome It")))
+        (brush (car (gimp-brush-new "Chrome It")))
         (mask (car (gimp-channel-new img width height "Chrome Stencil" 50 '(0 0 0))))
         (bg-layer (car (gimp-layer-new img width height GRAY-IMAGE _"Background" 100 LAYER-MODE-NORMAL)))
         (layer1 (car (gimp-layer-new img banding-width banding-height banding-type _"Layer 1" 100 LAYER-MODE-NORMAL)))
@@ -98,6 +98,7 @@
         (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 3" 100 LAYER-MODE-NORMAL)))
         (shadow (car (gimp-layer-new img width height GRAYA-IMAGE _"Drop Shadow" 100 LAYER-MODE-NORMAL)))
         (layer-mask 0)
+        (marble-pattern (car (gimp-pattern-get-by-name "Marble #1")))
         )
 
     (gimp-context-push)
@@ -164,15 +165,15 @@
     (set! layer2 (car (gimp-layer-copy layer1 TRUE)))
     (gimp-image-insert-layer img layer2 0 0)
 
-    (gimp-brush-set-shape brush-name BRUSH-GENERATED-CIRCLE)
-    (gimp-brush-set-spikes brush-name 2)
-    (gimp-brush-set-hardness brush-name 1.0)
-    (gimp-brush-set-spacing brush-name 25)
-    (gimp-brush-set-aspect-ratio brush-name 1)
-    (gimp-brush-set-angle brush-name 0)
-    (cond (<= brush-size 17) (gimp-brush-set-radius brush-name (\ brush-size 2))
-	  (else gimp-brush-set-radius brush-name (\ 19 2)))
-    (gimp-context-set-brush brush-name)
+    (gimp-brush-set-shape brush BRUSH-GENERATED-CIRCLE)
+    (gimp-brush-set-spikes brush 2)
+    (gimp-brush-set-hardness brush 1.0)
+    (gimp-brush-set-spacing brush 25)
+    (gimp-brush-set-aspect-ratio brush 1)
+    (gimp-brush-set-angle brush 0)
+    (cond (<= brush-size 17) (gimp-brush-set-radius brush (\ brush-size 2))
+	  (else gimp-brush-set-radius brush (\ 19 2)))
+    (gimp-context-set-brush brush)
 
     (gimp-context-set-foreground '(255 255 255))
     (gimp-drawable-edit-stroke-selection layer-mask)
@@ -183,7 +184,7 @@
     (gimp-drawable-edit-fill shadow FILL-BACKGROUND)
 
     (gimp-selection-all img)
-    (gimp-context-set-pattern "Marble #1")
+    (gimp-context-set-pattern marble-pattern)
     (gimp-drawable-edit-fill bg-layer FILL-PATTERN)
     (gimp-selection-none img)
 
@@ -228,7 +229,7 @@
 
     (gimp-image-remove-channel img mask)
 
-    (gimp-brush-delete brush-name)
+    (gimp-resource-delete brush)
 
     (gimp-display-new img)
     (gimp-image-undo-enable img)
