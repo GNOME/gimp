@@ -33,6 +33,8 @@ EXPORTS
 	gimp_color_managed_simulation_intent_changed
 	gimp_color_managed_simulation_profile_changed
 	gimp_color_parse_css
+	gimp_color_parse_hex
+	gimp_color_parse_name
 	gimp_color_profile_get_copyright
 	gimp_color_profile_get_description
 	gimp_color_profile_get_format

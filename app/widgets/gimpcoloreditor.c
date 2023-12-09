@@ -559,8 +559,7 @@ gimp_color_editor_set_color (GimpColorEditor *editor,
                                    gimp_color_editor_entry_changed,
                                    editor);
 
-  gimp_color_hex_entry_set_color (GIMP_COLOR_HEX_ENTRY (editor->hex_entry),
-                                  &rgb);
+  gimp_color_hex_entry_set_color (GIMP_COLOR_HEX_ENTRY (editor->hex_entry), color);
 
   g_signal_handlers_unblock_by_func (editor->hex_entry,
                                      gimp_color_editor_entry_changed,
@@ -591,11 +590,12 @@ gimp_color_editor_color_changed (GimpColorSelector *selector,
                                  const GimpHSV     *hsv,
                                  GimpColorEditor   *editor)
 {
+  GeglColor *color = gegl_color_new ("black");
+
+  gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
+
   if (editor->context)
     {
-      GeglColor *color = gegl_color_new ("black");
-
-      gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
       if (editor->edit_bg)
         {
           g_signal_handlers_block_by_func (editor->context,
@@ -620,20 +620,19 @@ gimp_color_editor_color_changed (GimpColorSelector *selector,
                                              gimp_color_editor_fg_changed,
                                              editor);
         }
-
-      g_object_unref (color);
     }
 
   g_signal_handlers_block_by_func (editor->hex_entry,
                                    gimp_color_editor_entry_changed,
                                    editor);
 
-  gimp_color_hex_entry_set_color (GIMP_COLOR_HEX_ENTRY (editor->hex_entry),
-                                  rgb);
+  gimp_color_hex_entry_set_color (GIMP_COLOR_HEX_ENTRY (editor->hex_entry), color);
 
   g_signal_handlers_unblock_by_func (editor->hex_entry,
                                      gimp_color_editor_entry_changed,
                                      editor);
+
+  g_object_unref (color);
 }
 
 static void
@@ -717,11 +716,9 @@ static void
 gimp_color_editor_entry_changed (GimpColorHexEntry *entry,
                                  GimpColorEditor   *editor)
 {
-  GeglColor *color = gegl_color_new ("black");
-  GimpRGB    rgb;
+  GeglColor *color;
 
-  gimp_color_hex_entry_get_color (entry, &rgb);
-  gegl_color_set_rgba_with_space (color, rgb.r, rgb.g, rgb.b, rgb.a, NULL);
+  color = gimp_color_hex_entry_get_color (entry);
 
   if (editor->context)
     {

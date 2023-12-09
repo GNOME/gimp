@@ -127,16 +127,12 @@ color_area_foreground_changed (GimpContext     *context,
 {
   if (edit_color == GIMP_ACTIVE_COLOR_FOREGROUND)
     {
-      GimpRGB rgb;
-
-      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
       g_signal_handlers_block_by_func (dialog,
                                        color_area_dialog_update,
                                        context);
 
       /* FIXME this should use GimpColorDialog API */
-      gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
-                                      &rgb);
+      gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection), color);
 
       g_signal_handlers_unblock_by_func (dialog,
                                          color_area_dialog_update,
@@ -151,16 +147,12 @@ color_area_background_changed (GimpContext     *context,
 {
   if (edit_color == GIMP_ACTIVE_COLOR_BACKGROUND)
     {
-      GimpRGB rgb;
-
-      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
       g_signal_handlers_block_by_func (dialog,
                                        color_area_dialog_update,
                                        context);
 
       /* FIXME this should use GimpColorDialog API */
-      gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
-                                      &rgb);
+      gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection), color);
 
       g_signal_handlers_unblock_by_func (dialog,
                                          color_area_dialog_update,

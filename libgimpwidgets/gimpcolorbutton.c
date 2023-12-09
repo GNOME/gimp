@@ -540,7 +540,6 @@ gimp_color_button_clicked (GtkButton *button)
   GimpColorButton        *color_button = GIMP_COLOR_BUTTON (button);
   GimpColorButtonPrivate *priv         = GET_PRIVATE (button);
   GeglColor              *color;
-  GimpRGB                 rgb;
 
   if (! priv->dialog)
     {
@@ -593,10 +592,8 @@ gimp_color_button_clicked (GtkButton *button)
                                    gimp_color_button_selection_changed,
                                    button);
 
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-  gimp_color_selection_set_color (GIMP_COLOR_SELECTION (priv->selection), &rgb);
-  gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (priv->selection),
-                                      &rgb);
+  gimp_color_selection_set_color (GIMP_COLOR_SELECTION (priv->selection), color);
+  gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (priv->selection), color);
 
   g_signal_handlers_unblock_by_func (priv->selection,
                                      gimp_color_button_selection_changed,
@@ -835,16 +832,12 @@ gimp_color_button_set_update (GimpColorButton *button,
       if (priv->selection)
         {
           GeglColor *color;
-          GimpRGB    rgb;
-
-          color = gegl_color_new (NULL);
 
           if (priv->continuous_update)
-            gimp_color_selection_get_color (GIMP_COLOR_SELECTION (priv->selection), &rgb);
+            color = gimp_color_selection_get_color (GIMP_COLOR_SELECTION (priv->selection));
           else
-            gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (priv->selection), &rgb);
+            color = gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (priv->selection));
 
-          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
           gimp_color_button_set_color (button, color);
           g_object_unref (color);
         }
@@ -914,11 +907,8 @@ gimp_color_button_dialog_response (GtkWidget       *dialog,
                                    gint             response_id,
                                    GimpColorButton *button)
 {
-  GimpColorButtonPrivate *priv = GET_PRIVATE (button);
-  GeglColor              *color;
-  GimpRGB                 rgb;
-
-  color = gegl_color_new (NULL);
+  GimpColorButtonPrivate *priv  = GET_PRIVATE (button);
+  GeglColor              *color = NULL;
 
   switch (response_id)
     {
@@ -929,9 +919,7 @@ gimp_color_button_dialog_response (GtkWidget       *dialog,
     case GTK_RESPONSE_OK:
       if (! priv->continuous_update)
         {
-          gimp_color_selection_get_color (GIMP_COLOR_SELECTION (priv->selection),
-                                          &rgb);
-          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+          color = gimp_color_selection_get_color (GIMP_COLOR_SELECTION (priv->selection));
           gimp_color_button_set_color (button, color);
         }
 
@@ -941,9 +929,7 @@ gimp_color_button_dialog_response (GtkWidget       *dialog,
     default:
       if (priv->continuous_update)
         {
-          gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (priv->selection),
-                                              &rgb);
-          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+          color = gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (priv->selection)),
           gimp_color_button_set_color (button, color);
         }
 
@@ -951,7 +937,7 @@ gimp_color_button_dialog_response (GtkWidget       *dialog,
       break;
     }
 
-  g_object_unref (color);
+  g_clear_object (&color);
 }
 
 static void
@@ -1005,7 +991,6 @@ gimp_color_button_area_changed (GtkWidget       *color_area,
   if (priv->selection)
     {
       GeglColor *color;
-      GimpRGB    rgb;
 
       color = gimp_color_button_get_color (button);
 
@@ -1013,9 +998,7 @@ gimp_color_button_area_changed (GtkWidget       *color_area,
                                        gimp_color_button_selection_changed,
                                        button);
 
-      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-      gimp_color_selection_set_color (GIMP_COLOR_SELECTION (priv->selection),
-                                      &rgb);
+      gimp_color_selection_set_color (GIMP_COLOR_SELECTION (priv->selection), color);
 
       g_signal_handlers_unblock_by_func (priv->selection,
                                          gimp_color_button_selection_changed,
@@ -1036,24 +1019,22 @@ gimp_color_button_selection_changed (GtkWidget       *selection,
   if (priv->continuous_update)
     {
       GeglColor *color;
-      GimpRGB    rgb;
 
-      gimp_color_selection_get_color (GIMP_COLOR_SELECTION (selection), &rgb);
+      color = gimp_color_selection_get_color (GIMP_COLOR_SELECTION (selection));
 
       g_signal_handlers_block_by_func (priv->color_area,
                                        gimp_color_button_area_changed,
                                        button);
 
-      color = gegl_color_new (NULL);
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
       gimp_color_area_set_color (GIMP_COLOR_AREA (priv->color_area), color);
-      g_object_unref (color);
 
       g_signal_handlers_unblock_by_func (priv->color_area,
                                          gimp_color_button_area_changed,
                                          button);
 
       g_signal_emit (button, gimp_color_button_signals[COLOR_CHANGED], 0);
+
+      g_object_unref (color);
     }
 }
 

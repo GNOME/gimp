@@ -70,9 +70,8 @@ GType       gimp_color_hex_entry_get_type  (void) G_GNUC_CONST;
 GtkWidget * gimp_color_hex_entry_new       (void);
 
 void        gimp_color_hex_entry_set_color (GimpColorHexEntry *entry,
-                                            const GimpRGB     *color);
-void        gimp_color_hex_entry_get_color (GimpColorHexEntry *entry,
-                                            GimpRGB           *color);
+                                            GeglColor         *color);
+GeglColor * gimp_color_hex_entry_get_color (GimpColorHexEntry *entry);
 
 
 G_END_DECLS

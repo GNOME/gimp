@@ -43,7 +43,8 @@
  * @title: GimpColorHexEntry
  * @short_description: Widget for entering a color's hex triplet.
  *
- * Widget for entering a color's hex triplet.
+ * Widget for entering a color's hex triplet. The syntax follows CSS and
+ * SVG specifications, which means that only sRGB colors are supported.
  **/
 
 
@@ -63,16 +64,14 @@ enum
 
 struct _GimpColorHexEntryPrivate
 {
-  GimpRGB  color;
+  GeglColor *color;
 };
 
 #define GET_PRIVATE(obj) (((GimpColorHexEntry *) (obj))->priv)
 
 
 static void      gimp_color_hex_entry_constructed (GObject            *object);
-
-static gboolean  gimp_color_hex_entry_events      (GtkWidget          *widget,
-                                                   GdkEvent           *event);
+static void      gimp_color_hex_entry_finalize    (GObject            *object);
 
 static gboolean  gimp_color_hex_entry_events      (GtkWidget          *widget,
                                                    GdkEvent           *event);
@@ -105,6 +104,7 @@ gimp_color_hex_entry_class_init (GimpColorHexEntryClass *klass)
                   G_TYPE_NONE, 0);
 
   object_class->constructed = gimp_color_hex_entry_constructed;
+  object_class->finalize    = gimp_color_hex_entry_finalize;
 
   klass->color_changed      = NULL;
 }
@@ -135,7 +135,7 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
                              "CSS.  This entry also accepts CSS color names."),
                            NULL);
 
-  gimp_rgba_set (&private->color, 0.0, 0.0, 0.0, 1.0);
+  private->color = gegl_color_new ("black");
 
   store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, GIMP_TYPE_RGB);
 
@@ -191,6 +191,16 @@ gimp_color_hex_entry_constructed (GObject *object)
   gtk_entry_set_text (GTK_ENTRY (object), "000000");
 }
 
+static void
+gimp_color_hex_entry_finalize (GObject *object)
+{
+  GimpColorHexEntryPrivate *private = GET_PRIVATE (object);
+
+  g_object_unref (private->color);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
 /**
  * gimp_color_hex_entry_new:
  *
@@ -217,25 +227,25 @@ gimp_color_hex_entry_new (void)
  **/
 void
 gimp_color_hex_entry_set_color (GimpColorHexEntry *entry,
-                                const GimpRGB     *color)
+                                GeglColor         *color)
 {
   GimpColorHexEntryPrivate *private;
 
   g_return_if_fail (GIMP_IS_COLOR_HEX_ENTRY (entry));
-  g_return_if_fail (color != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
   private = GET_PRIVATE (entry);
 
-  if (gimp_rgb_distance (&private->color, color) > 0.0)
+  if (! gimp_color_is_perceptually_identical (private->color, color))
     {
-      gchar   buffer[8];
-      guchar  r, g, b;
+      gchar  buffer[8];
+      guchar rgb[3];
 
-      gimp_rgb_set (&private->color, color->r, color->g, color->b);
-      gimp_rgb_clamp (&private->color);
+      g_object_unref (private->color);
+      private->color = gegl_color_duplicate (color);
 
-      gimp_rgb_get_uchar (&private->color, &r, &g, &b);
-      g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", r, g, b);
+      gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
+      g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", rgb[0], rgb[1], rgb[2]);
 
       gtk_entry_set_text (GTK_ENTRY (entry), buffer);
 
@@ -249,24 +259,23 @@ gimp_color_hex_entry_set_color (GimpColorHexEntry *entry,
 /**
  * gimp_color_hex_entry_get_color:
  * @entry: a #GimpColorHexEntry widget
- * @color: (out caller-allocates): pointer to a #GimpRGB
  *
  * Retrieves the color value displayed by a #GimpColorHexEntry.
  *
+ * Returns: (transfer full): the color stored in @entry.
+ *
  * Since: 2.2
  **/
-void
-gimp_color_hex_entry_get_color (GimpColorHexEntry *entry,
-                                GimpRGB           *color)
+GeglColor *
+gimp_color_hex_entry_get_color (GimpColorHexEntry *entry)
 {
   GimpColorHexEntryPrivate *private;
 
-  g_return_if_fail (GIMP_IS_COLOR_HEX_ENTRY (entry));
-  g_return_if_fail (color != NULL);
+  g_return_val_if_fail (GIMP_IS_COLOR_HEX_ENTRY (entry), NULL);
 
   private = GET_PRIVATE (entry);
 
-  *color = private->color;
+  return gegl_color_duplicate (private->color);
 }
 
 static gboolean
@@ -293,23 +302,24 @@ gimp_color_hex_entry_events (GtkWidget *widget,
       {
         const gchar *text;
         gchar        buffer[8];
-        guchar       r, g, b;
+        guchar       rgb[3];
 
         text = gtk_entry_get_text (GTK_ENTRY (widget));
 
-        gimp_rgb_get_uchar (&private->color, &r, &g, &b);
-        g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", r, g, b);
+        gegl_color_get_pixel (private->color, babl_format ("R'G'B' u8"), rgb);
+        g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", rgb[0], rgb[1], rgb[2]);
 
         if (g_ascii_strcasecmp (buffer, text) != 0)
           {
-            GimpRGB  color;
-            gsize    len = strlen (text);
+            GeglColor *color = NULL;
+            gsize      len   = strlen (text);
 
             if (len > 0 &&
-                (gimp_rgb_parse_hex (&color, text, len) ||
-                 gimp_rgb_parse_name (&color, text, -1)))
+                ((color = gimp_color_parse_hex (text, len)) ||
+                 (color = gimp_color_parse_name (text, -1))))
               {
-                gimp_color_hex_entry_set_color (entry, &color);
+                gimp_color_hex_entry_set_color (entry, color);
+                g_object_unref (color);
               }
             else
               {
@@ -333,17 +343,18 @@ gimp_color_hex_entry_matched (GtkEntryCompletion *completion,
                               GtkTreeIter        *iter,
                               GimpColorHexEntry  *entry)
 {
-  gchar   *name;
-  GimpRGB  color;
+  gchar     *name  = NULL;
+  GeglColor *color = NULL;
 
   gtk_tree_model_get (model, iter,
                       COLUMN_NAME, &name,
                       -1);
 
-  if (gimp_rgb_parse_name (&color, name, -1))
-    gimp_color_hex_entry_set_color (entry, &color);
+  if ((color = gimp_color_parse_name (name, -1)))
+    gimp_color_hex_entry_set_color (entry, color);
 
   g_free (name);
+  g_clear_object (&color);
 
   return TRUE;
 }

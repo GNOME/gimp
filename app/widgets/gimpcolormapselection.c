@@ -245,7 +245,7 @@ gimp_colormap_selection_init (GimpColormapSelection *selection)
   selection->color_entry = gimp_color_hex_entry_new ();
   gtk_widget_set_halign (selection->color_entry, GTK_ALIGN_START);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("HTML notation:"), 0.0, 0.5,
+                            _("HTML notation (sRGB):"), 0.0, 0.5,
                             selection->color_entry, 1);
 
   g_signal_connect (selection->color_entry, "color-changed",
@@ -590,15 +590,16 @@ gimp_colormap_selection_update_entries (GimpColormapSelection *selection)
     }
   else
     {
-      GeglColor *color;
-      guchar     rgb[3];
-      gchar     *string;
+      GeglColor  *color;
+      guchar      rgb[3];
+      gchar      *string;
 
       gtk_adjustment_set_value (selection->index_adjustment,
                                 selection->col_index);
       color = gimp_image_get_colormap_entry (image, selection->col_index);
-      /* The color entry shows an HTML notation, which we assumes mean
-       * sRGB for most people. But is it really what we want? TODO
+      /* The color entry shows a CSS/SVG notation, which so far means
+       * sRGB. But is it really what we want? Don't we want to edit
+       * colors in the image's specific RGB color space? TODO
        */
       gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
 
@@ -689,14 +690,13 @@ gimp_colormap_hex_entry_changed (GimpColorHexEntry     *entry,
 
   if (image)
     {
-      GeglColor *color = gegl_color_new (NULL);
-      GimpRGB    rgb;
+      GeglColor *color;
 
-      gimp_color_hex_entry_get_color (entry, &rgb);
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+      color = gimp_color_hex_entry_get_color (entry);
 
       gimp_image_set_colormap_entry (image, selection->col_index, color, TRUE);
       gimp_image_flush (image);
+      g_object_unref (color);
     }
 }
 

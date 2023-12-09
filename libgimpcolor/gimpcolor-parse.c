@@ -240,6 +240,70 @@ gimp_color_parse_css (const gchar *css,
   return color;
 }
 
+/**
+ * gimp_color_parse_hex:
+ * @hex: (array length=len): a string describing a color in hexadecimal notation
+ * @len: the length of @hex, in bytes. or -1 if @hex is nul-terminated
+ *
+ * Attempts to parse a string describing an RGB color in hexadecimal
+ * notation (optionally prefixed with a '#').
+ *
+ * This function does not touch the alpha component of @rgb.
+ *
+ * Returns: (transfer full): a newly allocated color representing @hex.
+ *
+ * Since: 2.2
+ **/
+GeglColor *
+gimp_color_parse_hex (const gchar *hex,
+                      gint         len)
+{
+  GeglColor *result;
+  gchar     *tmp;
+
+  g_return_val_if_fail (hex != NULL, FALSE);
+
+  tmp = gimp_color_parse_strip (hex, len);
+
+  result = gimp_color_parse_hex_internal (tmp);
+
+  g_free (tmp);
+
+  return result;
+}
+
+/**
+ * gimp_color_parse_name:
+ * @name: (array length=len): a color name (in UTF-8 encoding)
+ * @len:  the length of @name, in bytes. or -1 if @name is nul-terminated
+ *
+ * Attempts to parse a color name. This function accepts [SVG 1.1 color
+ * keywords](https://www.w3.org/TR/SVG11/types.html#ColorKeywords).
+ *
+ * Returns: (transfer full): a sRGB color as defined in "4.4. Recognized color
+ *          keyword names" list of SVG 1.1 specification, if @name was parsed
+ *          successfully, %NULL otherwise
+ *
+ * Since: 2.2
+ **/
+GeglColor *
+gimp_color_parse_name (const gchar *name,
+                       gint         len)
+{
+  gchar     *tmp;
+  GeglColor *result;
+
+  g_return_val_if_fail (name != NULL, FALSE);
+
+  tmp = gimp_color_parse_strip (name, len);
+
+  result = gimp_color_parse_name_internal (tmp);
+
+  g_free (tmp);
+
+  return result;
+}
+
 
 /* Private functions. */
 

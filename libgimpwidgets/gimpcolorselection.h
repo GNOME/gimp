@@ -76,14 +76,12 @@ void        gimp_color_selection_set_show_alpha (GimpColorSelection *selection,
 gboolean    gimp_color_selection_get_show_alpha (GimpColorSelection *selection);
 
 void        gimp_color_selection_set_color      (GimpColorSelection *selection,
-                                                 const GimpRGB      *color);
-void        gimp_color_selection_get_color      (GimpColorSelection *selection,
-                                                 GimpRGB            *color);
+                                                 GeglColor          *color);
+GeglColor * gimp_color_selection_get_color      (GimpColorSelection *selection);
 
 void        gimp_color_selection_set_old_color  (GimpColorSelection *selection,
-                                                 const GimpRGB      *color);
-void        gimp_color_selection_get_old_color  (GimpColorSelection *selection,
-                                                 GimpRGB            *color);
+                                                 GeglColor          *color);
+GeglColor * gimp_color_selection_get_old_color  (GimpColorSelection *selection);
 
 void        gimp_color_selection_reset          (GimpColorSelection *selection);
 

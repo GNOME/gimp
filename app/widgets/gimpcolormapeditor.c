@@ -399,15 +399,14 @@ gimp_colormap_editor_color_update (GimpColorDialog      *dialog,
                                                      NULL);
       if (push_undo)
         {
-          GimpRGB old_color;
+          GeglColor *old_color;
 
-          gimp_color_selection_get_old_color (
-            GIMP_COLOR_SELECTION (dialog->selection), &old_color);
+          old_color = gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (dialog->selection));
 
-          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &old_color);
           /* Restore old color for undo */
-          gimp_image_set_colormap_entry (image, col_index, color, FALSE);
+          gimp_image_set_colormap_entry (image, col_index, old_color, FALSE);
 
+          g_object_unref (old_color);
         }
 
       gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);

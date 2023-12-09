@@ -339,6 +339,7 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
   GimpImage             *image           = NULL;
   GimpColormapSelection *colormap_selection;
   gint                   col_index;
+  GeglColor             *color           = NULL;
   GimpRGB                rgb;
 
   colormap_selection = GIMP_COLORMAP_SELECTION (dialog->colormap_selection);
@@ -358,21 +359,18 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
       break;
 
     case GTK_RESPONSE_OK:
-      gimp_color_selection_get_color (GIMP_COLOR_SELECTION (dialog->selection),
-                                      &rgb);
+      color = gimp_color_selection_get_color (GIMP_COLOR_SELECTION (dialog->selection));
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
       if (dialog->colormap_editing && image)
         {
-          GeglColor *color = gegl_color_new (NULL);
-          GimpRGB    old_color;
+          GeglColor *old_color;
 
           dialog->colormap_editing = FALSE;
 
           /* Restore old color for undo */
-          gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (dialog->selection), &old_color);
-          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &old_color);
-          gimp_image_set_colormap_entry (image, col_index, color, FALSE);
-          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+          old_color = gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (dialog->selection));
+          gimp_image_set_colormap_entry (image, col_index, old_color, FALSE);
           gimp_image_set_colormap_entry (image, col_index, color, TRUE);
           gimp_image_flush (image);
 
@@ -380,40 +378,39 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
           g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
                          &rgb, GIMP_COLOR_DIALOG_UPDATE);
 
-          g_object_unref (color);
+          g_object_unref (old_color);
         }
       else
         {
           g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
                          &rgb, GIMP_COLOR_DIALOG_OK);
         }
+
+      g_object_unref (color);
       break;
 
     default:
-      gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (dialog->selection),
-                                          &rgb);
+      color = gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (dialog->selection));
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
       if (dialog->colormap_editing && image)
         {
-          GeglColor *color = gegl_color_new (NULL);
-
           dialog->colormap_editing = FALSE;
 
-          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
           gimp_image_set_colormap_entry (image, col_index, color, FALSE);
           gimp_projection_flush (gimp_image_get_projection (image));
 
           gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "colormap");
           g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
                          &rgb, GIMP_COLOR_DIALOG_UPDATE);
-
-          g_object_unref (color);
         }
       else
         {
           g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
                          &rgb, GIMP_COLOR_DIALOG_CANCEL);
         }
+
+      g_object_unref (color);
       break;
     }
 }
@@ -431,12 +428,13 @@ gimp_color_dialog_new (GimpViewable      *viewable,
                        GtkWidget         *parent,
                        GimpDialogFactory *dialog_factory,
                        const gchar       *dialog_identifier,
-                       const GimpRGB     *color,
+                       const GimpRGB     *rgb,
                        gboolean           wants_updates,
                        gboolean           show_alpha)
 {
   GimpColorDialog *dialog;
   const gchar     *role;
+  GeglColor       *color;
   gboolean         use_header_bar;
 
   g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
@@ -446,7 +444,7 @@ gimp_color_dialog_new (GimpViewable      *viewable,
                         GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
   g_return_val_if_fail (dialog_factory == NULL || dialog_identifier != NULL,
                         NULL);
-  g_return_val_if_fail (color != NULL, NULL);
+  g_return_val_if_fail (rgb != NULL, NULL);
 
   role = dialog_identifier ? dialog_identifier : "gimp-color-selector";
 
@@ -517,29 +515,37 @@ gimp_color_dialog_new (GimpViewable      *viewable,
   g_object_set_data (G_OBJECT (context->gimp->config->color_management),
                      "gimp-context", NULL);
 
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
   gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
                                   color);
   gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (dialog->selection),
                                       color);
+  g_object_unref (color);
 
   return GTK_WIDGET (dialog);
 }
 
 void
 gimp_color_dialog_set_color (GimpColorDialog *dialog,
-                             const GimpRGB   *color)
+                             const GimpRGB   *rgb)
 {
+  GeglColor *color;
+
   g_return_if_fail (GIMP_IS_COLOR_DIALOG (dialog));
-  g_return_if_fail (color != NULL);
+  g_return_if_fail (rgb != NULL);
 
   g_signal_handlers_block_by_func (dialog->selection,
                                    gimp_color_dialog_color_changed,
                                    dialog);
 
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
   gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
                                   color);
   gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (dialog->selection),
                                       color);
+  g_object_unref (color);
 
   g_signal_handlers_unblock_by_func (dialog->selection,
                                      gimp_color_dialog_color_changed,
@@ -548,13 +554,16 @@ gimp_color_dialog_set_color (GimpColorDialog *dialog,
 
 void
 gimp_color_dialog_get_color (GimpColorDialog *dialog,
-                             GimpRGB         *color)
+                             GimpRGB         *rgb)
 {
-  g_return_if_fail (GIMP_IS_COLOR_DIALOG (dialog));
-  g_return_if_fail (color != NULL);
+  GeglColor *color;
 
-  gimp_color_selection_get_color (GIMP_COLOR_SELECTION (dialog->selection),
-                                  color);
+  g_return_if_fail (GIMP_IS_COLOR_DIALOG (dialog));
+  g_return_if_fail (rgb != NULL);
+
+  color = gimp_color_selection_get_color (GIMP_COLOR_SELECTION (dialog->selection));
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgb);
+  g_object_unref (color);
 }
 
 
@@ -636,9 +645,9 @@ gimp_color_dialog_color_changed (GimpColorSelection *selection,
                                  GimpColorDialog    *dialog)
 {
   GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
-  GimpRGB             rgb;
+  GeglColor          *color;
 
-  gimp_color_selection_get_color (selection, &rgb);
+  color = gimp_color_selection_get_color (selection);
 
   if (dialog->colormap_editing && viewable_dialog->context)
     {
@@ -649,7 +658,6 @@ gimp_color_dialog_color_changed (GimpColorSelection *selection,
       if (image)
         {
           GimpColormapSelection *colormap_selection;
-          GeglColor             *color     = gegl_color_new (NULL);
           gboolean               push_undo = FALSE;
           gint                   col_index;
 
@@ -657,32 +665,35 @@ gimp_color_dialog_color_changed (GimpColorSelection *selection,
           col_index = gimp_colormap_selection_get_index (colormap_selection, NULL);
           if (push_undo)
             {
-              GimpRGB old_color;
+              GeglColor *old_color;
 
-              gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (dialog->selection), &old_color);
+              old_color = gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (dialog->selection));
 
               /* Restore old color for undo */
-              gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &old_color);
-              gimp_image_set_colormap_entry (image, col_index, color, FALSE);
+              gimp_image_set_colormap_entry (image, col_index, old_color, FALSE);
+
+              g_object_unref (old_color);
             }
 
-          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
           gimp_image_set_colormap_entry (image, col_index, color, push_undo);
 
           if (push_undo)
             gimp_image_flush (image);
           else
             gimp_projection_flush (gimp_image_get_projection (image));
-
-          g_object_unref (color);
         }
     }
 
   if (dialog->wants_updates)
     {
+      GimpRGB rgb;
+
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
       g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
                      &rgb, GIMP_COLOR_DIALOG_UPDATE);
     }
+
+  g_object_unref (color);
 }
 
 
@@ -694,14 +705,15 @@ gimp_color_history_add_clicked (GtkWidget       *widget,
 {
   GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
   GimpPalette        *history;
-  GimpRGB             color;
+  GeglColor          *color;
+  GimpRGB             rgb;
 
   history = gimp_palettes_get_color_history (viewable_dialog->context->gimp);
 
-  gimp_color_selection_get_color (GIMP_COLOR_SELECTION (dialog->selection),
-                                  &color);
+  color = gimp_color_selection_get_color (GIMP_COLOR_SELECTION (dialog->selection));
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
-  gimp_palette_mru_add (GIMP_PALETTE_MRU (history), &color);
+  gimp_palette_mru_add (GIMP_PALETTE_MRU (history), &rgb);
 }
 
 /* Color history callback  */
@@ -711,8 +723,11 @@ gimp_color_dialog_history_selected (GimpColorHistory *history,
                                     const GimpRGB    *rgb,
                                     GimpColorDialog  *dialog)
 {
-  gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
-                                  rgb);
+  GeglColor *color = gegl_color_new (NULL);
+
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
+  gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection), color);
+  g_object_unref (color);
 }
 
 /* Context-related callbacks */
