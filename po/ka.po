@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-11-25 21:08+0000\n"
-"PO-Revision-Date: 2023-11-26 09:30+0100\n"
+"POT-Creation-Date: 2023-12-08 17:55+0000\n"
+"PO-Revision-Date: 2023-12-09 21:02+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -284,29 +284,29 @@ msgid ""
 "G_FILENAME_ENCODING."
 msgstr ""
 
-#: app/actions/actions.c:112 app/dialogs/dialogs.c:425
+#: app/actions/actions.c:112 app/dialogs/dialogs.c:426
 #: app/widgets/gimpbrusheditor.c:88
 msgid "Brush Editor"
 msgstr "ფუნჯის რედაქტორი"
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:115 app/core/gimp-data-factories.c:356
-#: app/dialogs/dialogs.c:340 app/dialogs/preferences-dialog.c:3578
+#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3578
 msgid "Brushes"
 msgstr "ფუნჯები"
 
-#: app/actions/actions.c:118 app/dialogs/dialogs.c:361
+#: app/actions/actions.c:118 app/dialogs/dialogs.c:362
 msgid "Buffers"
 msgstr "ბაფერები"
 
-#: app/actions/actions.c:121 app/dialogs/dialogs.c:379
+#: app/actions/actions.c:121 app/dialogs/dialogs.c:380
 #: app/propgui/gimppropgui-newsprint.c:160
 #: app/widgets/gimppickablechooser.c:295
 msgid "Channels"
 msgstr "არხები"
 
 #: app/actions/actions.c:124 app/dialogs/convert-indexed-dialog.c:178
-#: app/dialogs/dialogs.c:387
+#: app/dialogs/dialogs.c:388
 msgid "Colormap"
 msgstr "ფერთა რუქა"
 
@@ -314,11 +314,11 @@ msgstr "ფერთა რუქა"
 msgid "Context"
 msgstr "კონტექსტი"
 
-#: app/actions/actions.c:130 app/dialogs/dialogs.c:327
+#: app/actions/actions.c:130 app/dialogs/dialogs.c:328
 msgid "Pointer Information"
 msgstr "მაჩვენებლის ინფორმაცია"
 
-#: app/actions/actions.c:133 app/dialogs/dialogs.c:331
+#: app/actions/actions.c:133 app/dialogs/dialogs.c:332
 msgid "Dashboard"
 msgstr "სამუშაო დაფა"
 
@@ -339,7 +339,7 @@ msgid "Dockable"
 msgstr "მიმაგრებადი"
 
 #. Document History
-#: app/actions/actions.c:148 app/dialogs/dialogs.c:367
+#: app/actions/actions.c:148 app/dialogs/dialogs.c:368
 #: app/dialogs/preferences-dialog.c:1357
 msgid "Document History"
 msgstr "დოკუმენტის ისტორია"
@@ -348,11 +348,11 @@ msgstr "დოკუმენტის ისტორია"
 msgid "Drawable"
 msgstr "ხატვადი"
 
-#: app/actions/actions.c:154 app/dialogs/dialogs.c:343
+#: app/actions/actions.c:154 app/dialogs/dialogs.c:344
 msgid "Paint Dynamics"
 msgstr "ხატვის დინამიკა"
 
-#: app/actions/actions.c:157 app/dialogs/dialogs.c:429
+#: app/actions/actions.c:157 app/dialogs/dialogs.c:430
 #: app/widgets/gimpdynamicseditor.c:97
 msgid "Paint Dynamics Editor"
 msgstr "ხატვის დინამიკის ჩასწორება"
@@ -361,7 +361,7 @@ msgstr "ხატვის დინამიკის ჩასწორებ�
 msgid "Edit"
 msgstr "ჩასწორება"
 
-#: app/actions/actions.c:163 app/dialogs/dialogs.c:323
+#: app/actions/actions.c:163 app/dialogs/dialogs.c:324
 msgid "Error Console"
 msgstr "შეცდომათა კონსოლი"
 
@@ -375,27 +375,27 @@ msgstr "ფილტრები"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:172 app/core/gimp-data-factories.c:390
-#: app/dialogs/dialogs.c:358 app/dialogs/preferences-dialog.c:3608
+#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3608
 msgid "Fonts"
 msgstr "ფონტები"
 
-#: app/actions/actions.c:175 app/dialogs/dialogs.c:433
+#: app/actions/actions.c:175 app/dialogs/dialogs.c:434
 #: app/widgets/gimpgradienteditor.c:295
 msgid "Gradient Editor"
 msgstr "გრადაციების რედაქტორი"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:178 app/core/gimp-data-factories.c:381
-#: app/dialogs/dialogs.c:352 app/dialogs/preferences-dialog.c:3602
+#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3602
 msgid "Gradients"
 msgstr "გრადაციები"
 
 #: app/actions/actions.c:181 app/core/gimp-data-factories.c:397
-#: app/dialogs/dialogs.c:364 app/dialogs/preferences-dialog.c:3614
+#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3614
 msgid "Tool Presets"
 msgstr "ხელსაწყოების პრესეტები"
 
-#: app/actions/actions.c:184 app/dialogs/dialogs.c:441
+#: app/actions/actions.c:184 app/dialogs/dialogs.c:442
 #: app/widgets/gimptoolpreseteditor.c:96
 msgid "Tool Preset Editor"
 msgstr "ხელსაწყოების პრესეტების ჩასწორება"
@@ -408,36 +408,36 @@ msgstr "დახმარება"
 msgid "Image"
 msgstr "გამოსახულება"
 
-#: app/actions/actions.c:193 app/dialogs/dialogs.c:337
+#: app/actions/actions.c:193 app/dialogs/dialogs.c:338
 #: app/widgets/gimppickablechooser.c:214
 msgid "Images"
 msgstr "გამოსახულებები"
 
-#: app/actions/actions.c:196 app/dialogs/dialogs.c:375
+#: app/actions/actions.c:196 app/dialogs/dialogs.c:376
 #: app/dialogs/resize-dialog.c:171 app/widgets/gimppickablechooser.c:270
 msgid "Layers"
 msgstr "ფენები"
 
 #. initialize the list of mypaint brushes
 #: app/actions/actions.c:199 app/core/gimp-data-factories.c:366
-#: app/dialogs/dialogs.c:346 app/dialogs/preferences-dialog.c:3620
+#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3620
 msgid "MyPaint Brushes"
 msgstr "MyPaint-ის ფუნჯები"
 
-#: app/actions/actions.c:202 app/dialogs/dialogs.c:437
+#: app/actions/actions.c:202 app/dialogs/dialogs.c:438
 #: app/widgets/gimppaletteeditor.c:157
 msgid "Palette Editor"
 msgstr "პალიტრის რედაქტორი"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:205 app/core/gimp-data-factories.c:376
-#: app/dialogs/dialogs.c:355 app/dialogs/preferences-dialog.c:3596
+#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3596
 msgid "Palettes"
 msgstr "პალიტრები"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:208 app/core/gimp-data-factories.c:371
-#: app/dialogs/dialogs.c:349 app/dialogs/preferences-dialog.c:3590
+#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3590
 msgid "Patterns"
 msgstr "შაბლონები"
 
@@ -451,7 +451,7 @@ msgstr "დამატებები"
 msgid "Quick Mask"
 msgstr "სწრაფი ნიღაბი"
 
-#: app/actions/actions.c:217 app/dialogs/dialogs.c:407
+#: app/actions/actions.c:217 app/dialogs/dialogs.c:408
 msgid "Sample Points"
 msgstr "სემპლის წერტილები"
 
@@ -460,7 +460,7 @@ msgid "Select"
 msgstr "მონიშვნა"
 
 #. initialize the template list
-#: app/actions/actions.c:223 app/core/gimp.c:852 app/dialogs/dialogs.c:370
+#: app/actions/actions.c:223 app/core/gimp.c:852 app/dialogs/dialogs.c:371
 msgid "Templates"
 msgstr "ნიმუშები"
 
@@ -472,7 +472,7 @@ msgstr "ტექსტის ხელსაწყო"
 msgid "Text Editor"
 msgstr "ტექსტური რედაქტორი"
 
-#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:537
+#: app/actions/actions.c:232 app/dialogs/dialogs.c:316 app/gui/gui.c:537
 msgid "Tool Options"
 msgstr "ხელსაწყოების გამართვა"
 
@@ -484,7 +484,7 @@ msgstr "ხელსაწყოები"
 msgid "Path Toolpath"
 msgstr "კონტურების ხელსაწყო"
 
-#: app/actions/actions.c:241 app/dialogs/dialogs.c:383
+#: app/actions/actions.c:241 app/dialogs/dialogs.c:384
 #: app/tools/gimpvectortool.c:167
 msgid "Paths"
 msgstr "კონტურები"
@@ -2407,11 +2407,11 @@ msgstr "240 წამი"
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:463 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
-#: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:334
-#: app/widgets/gimphelp.c:439 app/widgets/gimphelp.c:774
-#: app/widgets/gimpiconpicker.c:484 app/widgets/gimpmodifierseditor.c:684
-#: app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91
-#: app/widgets/gimpsettingsbox.c:711
+#: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
+#: app/widgets/gimpfiledialog.c:334 app/widgets/gimphelp.c:439
+#: app/widgets/gimphelp.c:774 app/widgets/gimpiconpicker.c:484
+#: app/widgets/gimpmodifierseditor.c:684 app/widgets/gimppdbdialog.c:148
+#: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:711
 msgid "_Cancel"
 msgstr "_გაუქმება"
 
@@ -9876,7 +9876,8 @@ msgstr "ამ ფანჯრის %s-ე ეკრანზე წაღე�
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:190
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
-#: app/widgets/gimpcontrollereditor.c:663 app/widgets/gimperrordialog.c:76
+#: app/widgets/gimpcontrollereditor.c:663
+#: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:178 app/widgets/gimpmodifierseditor.c:685
 #: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
@@ -12361,7 +12362,7 @@ msgstr ""
 
 #: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338
 #: app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449
-#: app/menus/menus.c:480 app/widgets/gimpdevices.c:225
+#: app/menus/menus.c:480 app/widgets/gimpdevices.c:226
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "\"%s\"-ის წაშლა ჩაიშალა: %s"
@@ -14207,7 +14208,7 @@ msgstr "არასწორი ACB პალიტრის ვერსია
 
 #: app/core/gimppalette-load.c:697
 msgid "GIMP only supports version 1 ACB palettes"
-msgstr ""
+msgstr "GIMP-ს ACB პალიტრების მხოლოდ v1-ის მხარდაჭერა აქვს"
 
 #: app/core/gimppalette-load.c:704
 msgid "Invalid ACB palette identifier."
@@ -14282,11 +14283,11 @@ msgstr "არასწორი ASE სახელის ზომა."
 
 #: app/core/gimppalette-load.c:1374
 msgid "Unable to read SBZ file"
-msgstr ""
+msgstr "SBZ ფაილის წაკითხვის შეცდომა"
 
 #: app/core/gimppalette-load.c:1438
 msgid "Unable to open SBZ file"
-msgstr ""
+msgstr "SBZ ფაილის გახსნის შეცდომა"
 
 #: app/core/gimppalettemru.c:123 app/core/gimppalettemru.c:229
 msgid "History Color"
@@ -15149,68 +15150,68 @@ msgstr "GIMP-ის შეტყობინება"
 msgid "GIMP Debug"
 msgstr "GIMP-ის შეცდომების პოვნა"
 
-#: app/dialogs/dialogs.c:319
+#: app/dialogs/dialogs.c:320
 msgid "Devices"
 msgstr "მოწყობილობები"
 
-#: app/dialogs/dialogs.c:319
+#: app/dialogs/dialogs.c:320
 msgid "Device Status"
 msgstr "მოწყობილობის სტატუსი"
 
-#: app/dialogs/dialogs.c:323
+#: app/dialogs/dialogs.c:324
 msgid "Errors"
 msgstr "შედომები"
 
-#: app/dialogs/dialogs.c:327
+#: app/dialogs/dialogs.c:328
 msgid "Pointer"
 msgstr "კურსორი"
 
-#: app/dialogs/dialogs.c:367
+#: app/dialogs/dialogs.c:368
 msgid "History"
 msgstr "ისტორია"
 
-#: app/dialogs/dialogs.c:370
+#: app/dialogs/dialogs.c:371
 msgid "Image Templates"
 msgstr "გამოსახულების ნიმუშები"
 
-#: app/dialogs/dialogs.c:391
+#: app/dialogs/dialogs.c:392
 msgid "Histogram"
 msgstr "ჰისტოგრამა"
 
 #. Selection Bounding Box
-#: app/dialogs/dialogs.c:395 app/display/gimpcursorview.c:273
+#: app/dialogs/dialogs.c:396 app/display/gimpcursorview.c:273
 msgid "Selection"
 msgstr "მონიშნული"
 
-#: app/dialogs/dialogs.c:395
+#: app/dialogs/dialogs.c:396
 msgid "Selection Editor"
 msgstr "მონიშნულის ჩასწორება"
 
-#: app/dialogs/dialogs.c:399
+#: app/dialogs/dialogs.c:400
 msgid "Symmetry Painting"
 msgstr "სიმეტრიული ხატვა"
 
-#: app/dialogs/dialogs.c:403
+#: app/dialogs/dialogs.c:404
 msgid "Undo"
 msgstr "დაბრუნება"
 
-#: app/dialogs/dialogs.c:403
+#: app/dialogs/dialogs.c:404
 msgid "Undo History"
 msgstr "დაბრუნების ისტორია"
 
-#: app/dialogs/dialogs.c:413
+#: app/dialogs/dialogs.c:414
 msgid "Navigation"
 msgstr "ნავიგაცია"
 
-#: app/dialogs/dialogs.c:413
+#: app/dialogs/dialogs.c:414
 msgid "Display Navigation"
 msgstr "ნავიგაციის ჩვენება"
 
-#: app/dialogs/dialogs.c:419
+#: app/dialogs/dialogs.c:420
 msgid "FG/BG"
 msgstr "FG/BG"
 
-#: app/dialogs/dialogs.c:419
+#: app/dialogs/dialogs.c:420
 msgid "FG/BG Color"
 msgstr "FG/BG ფერები"
 
@@ -15524,7 +15525,7 @@ msgid "Layer _name:"
 msgstr "ფე_ნის სახელი:"
 
 #: app/dialogs/layer-options-dialog.c:188
-#: app/widgets/gimpdeviceinfoeditor.c:312
+#: app/widgets/gimpdeviceinfoeditor.c:376
 msgid "_Mode:"
 msgstr "რეჟიმი:"
 
@@ -16274,7 +16275,7 @@ msgstr "ხელსაწყოების გამართვა"
 #: app/dialogs/preferences-dialog.c:1800 app/dialogs/preferences-dialog.c:2712
 #: app/dialogs/preferences-dialog.c:3150 app/dialogs/preferences-dialog.c:3174
 #: app/widgets/gimpcontrollereditor.c:188
-#: app/widgets/gimpdeviceinfoeditor.c:298
+#: app/widgets/gimpdeviceinfoeditor.c:362
 msgid "General"
 msgstr "მთავარი"
 
@@ -18004,13 +18005,13 @@ msgstr "n/a"
 
 #: app/display/gimpcursorview.c:236 app/display/gimpcursorview.c:261
 #: app/display/gimpcursorview.c:288 app/tools/gimptransform3dtool.c:434
-#: app/widgets/gimpdeviceinfo.c:53
+#: app/widgets/gimpdeviceinfo.c:56
 msgid "X"
 msgstr "X"
 
 #: app/display/gimpcursorview.c:242 app/display/gimpcursorview.c:267
 #: app/display/gimpcursorview.c:294 app/tools/gimptransform3dtool.c:434
-#: app/widgets/gimpdeviceinfo.c:54
+#: app/widgets/gimpdeviceinfo.c:57
 msgid "Y"
 msgstr "Y"
 
@@ -18247,7 +18248,7 @@ msgstr "(სუფთა)"
 #: app/display/gimpdisplayshell-title.c:374
 #: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1198
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
-#: app/widgets/gimpdeviceinfo.c:1078 app/widgets/gimpdeviceinfo.c:1103
+#: app/widgets/gimpdeviceinfo.c:1148 app/widgets/gimpdeviceinfo.c:1173
 msgid "(none)"
 msgstr "(არცერთი)"
 
@@ -19654,8 +19655,8 @@ msgstr ""
 #: app/operations/gimpoperationdesaturate.c:91
 #: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1137
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
-#: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:173
-#: app/widgets/gimplayertreeview.c:309
+#: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
+#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:309
 msgid "Mode"
 msgstr "რეჟიმი"
 
@@ -21673,7 +21674,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr ""
 
-#: app/text/gimpfontfactory.c:393
+#: app/text/gimpfontfactory.c:447
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -22565,7 +22566,7 @@ msgstr "_გამოტანა:"
 msgid "T_ype:"
 msgstr "ტი_პი:"
 
-#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:428
+#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:492
 msgid "Curve _type:"
 msgstr "მრუდის _ტიპი:"
 
@@ -25233,7 +25234,7 @@ msgstr "კონტურის შემობრუნება"
 msgid "Transform Path"
 msgstr "კონტურის გარდაქმნა"
 
-#: app/vectors/gimpvectors-export.c:88
+#: app/vectors/gimpvectors-export.c:95
 #, c-format
 msgid "Writing SVG file '%s' failed: %s"
 msgstr "SVG ფაილის %s ჩაწერა შეუძლებელია. შეცდომა: %s"
@@ -25270,6 +25271,7 @@ msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpactionview.c:259 app/widgets/gimpcontrollereditor.c:343
+#: app/widgets/gimpdeviceinfoeditor.c:579
 msgid "Action"
 msgstr "მოქმედება"
 
@@ -25639,10 +25641,12 @@ msgid "State:"
 msgstr "მდგომარეობა:"
 
 #: app/widgets/gimpcontrollereditor.c:337
+#: app/widgets/gimpdeviceinfoeditor.c:567
 msgid "Event"
 msgstr "მოვლენა"
 
 #: app/widgets/gimpcontrollereditor.c:362
+#: app/widgets/gimpdeviceinfoeditor.c:624
 msgid "_Grab event"
 msgstr "მოვლენის _დათრევა"
 
@@ -25651,31 +25655,36 @@ msgid "Select the next event arriving from the controller"
 msgstr "კონტროლერიდან შემდეგი მოსული მოვლენის მონიშვნა"
 
 #: app/widgets/gimpcontrollereditor.c:375
+#: app/widgets/gimpdeviceinfoeditor.c:638
 msgid "_Edit event"
 msgstr "_მოვლენის ჩასწორება"
 
 #: app/widgets/gimpcontrollereditor.c:383
+#: app/widgets/gimpdeviceinfoeditor.c:648
 msgid "_Clear event"
 msgstr "მოვ_ლენის გასუფთავება"
 
 #: app/widgets/gimpcontrollereditor.c:522
+#: app/widgets/gimpdeviceinfoeditor.c:971
 #, c-format
 msgid "Remove the action assigned to '%s'"
 msgstr "\"%s\"-ზე დაკისრებული ქმედების წაშლა"
 
 #: app/widgets/gimpcontrollereditor.c:527
+#: app/widgets/gimpdeviceinfoeditor.c:975
 #, c-format
 msgid "Assign an action to '%s'"
 msgstr "%s-ზე ქმედების მინიჭება"
 
 #: app/widgets/gimpcontrollereditor.c:648
+#: app/widgets/gimpdeviceinfoeditor.c:1142
 #, c-format
 msgid "Select Action for Event '%s'"
 msgstr "აირჩიეთ მოქმედება მოვლენისათვის: %s"
 
 #: app/widgets/gimpcontrollereditor.c:654
 msgid "Select Controller Event Action"
-msgstr "აირჩიეთ კონტროლერის მოვლენის მოქმედებები"
+msgstr "აირჩიეთ კონტროლერის მოვლენის ქმედებები"
 
 #: app/widgets/gimpcontrollerinfo.c:113
 msgid "Enabled"
@@ -26376,16 +26385,16 @@ msgid ""
 "The next time this device is plugged, default settings will be used."
 msgstr ""
 
-#: app/widgets/gimpdeviceinfo.c:55 app/widgets/gimpdynamicseditor.c:161
+#: app/widgets/gimpdeviceinfo.c:58 app/widgets/gimpdynamicseditor.c:161
 #: app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Pressure"
 msgstr "წნევა"
 
-#: app/widgets/gimpdeviceinfo.c:56
+#: app/widgets/gimpdeviceinfo.c:59
 msgid "X tilt"
 msgstr "X მოხრა"
 
-#: app/widgets/gimpdeviceinfo.c:57
+#: app/widgets/gimpdeviceinfo.c:60
 msgid "Y tilt"
 msgstr "Y მოხრა"
 
@@ -26396,83 +26405,119 @@ msgstr "Y მოხრა"
 #. * TODO: this should be actually tested with a device having such
 #. * feature.
 #.
-#: app/widgets/gimpdeviceinfo.c:65
+#: app/widgets/gimpdeviceinfo.c:68
 msgid "Wheel"
 msgstr "ბორბალი"
 
-#: app/widgets/gimpdeviceinfo.c:66
+#: app/widgets/gimpdeviceinfo.c:69
 msgid "Distance"
 msgstr "მანძილი"
 
-#: app/widgets/gimpdeviceinfo.c:67
+#: app/widgets/gimpdeviceinfo.c:70
 msgid "Rotation"
 msgstr "შემობრუნება"
 
-#: app/widgets/gimpdeviceinfo.c:68
+#: app/widgets/gimpdeviceinfo.c:71
 msgid "Slider"
 msgstr "ცოცია"
 
-#: app/widgets/gimpdeviceinfo.c:248
+#: app/widgets/gimpdeviceinfo.c:254
 msgid "Pressure curve"
 msgstr "წნევის მრუდი"
 
-#: app/widgets/gimpdeviceinfo.c:1063 app/widgets/gimpdeviceinfo.c:1088
+#: app/widgets/gimpdeviceinfo.c:261
+msgid "Pad actions"
+msgstr "შევსების ქმედებები"
+
+#: app/widgets/gimpdeviceinfo.c:1133 app/widgets/gimpdeviceinfo.c:1158
 msgid "(Device not present)"
 msgstr "(მოწყობილობა არაა შეერთებული)"
 
-#: app/widgets/gimpdeviceinfo.c:1071 app/widgets/gimpdeviceinfo.c:1096
+#: app/widgets/gimpdeviceinfo.c:1141 app/widgets/gimpdeviceinfo.c:1166
 msgid "(Virtual device)"
 msgstr "(ვირტუალური მოწყობილობა)"
 
 #. The list of axes of an input device
-#: app/widgets/gimpdeviceinfoeditor.c:238
+#: app/widgets/gimpdeviceinfoeditor.c:302
 msgid "Axes"
 msgstr "ღერძები"
 
-#: app/widgets/gimpdeviceinfoeditor.c:317
+#: app/widgets/gimpdeviceinfoeditor.c:381
 msgid "Source:"
 msgstr "წყარო:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:322
+#: app/widgets/gimpdeviceinfoeditor.c:386
 msgid "Vendor ID:"
 msgstr "მომწოდებლის ID:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:327
+#: app/widgets/gimpdeviceinfoeditor.c:391
 msgid "Product ID:"
 msgstr "პროდუქტის ID:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:332
+#: app/widgets/gimpdeviceinfoeditor.c:396
 msgid "Tool type:"
 msgstr "ხელსაწყოს ტიპი:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:337
+#: app/widgets/gimpdeviceinfoeditor.c:401
 msgid "Tool serial:"
 msgstr "ხელსაწყოს სერიული ნომერი:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:342
+#: app/widgets/gimpdeviceinfoeditor.c:406
 msgid "Tool hardware ID:"
 msgstr "ხელსაწყოს რკინის :"
 
-#: app/widgets/gimpdeviceinfoeditor.c:354
-#: app/widgets/gimpdeviceinfoeditor.c:672
+#: app/widgets/gimpdeviceinfoeditor.c:418
+#: app/widgets/gimpdeviceinfoeditor.c:878
 msgid "none"
 msgstr "არცერთი"
 
 #. e.g. "Pressure Curve" for mapping input device axes
-#: app/widgets/gimpdeviceinfoeditor.c:380
+#: app/widgets/gimpdeviceinfoeditor.c:444
 #, c-format
 msgid "%s Curve"
 msgstr "%s მრუდი"
 
-#: app/widgets/gimpdeviceinfoeditor.c:440
+#: app/widgets/gimpdeviceinfoeditor.c:504
 #: app/widgets/gimpdynamicsoutputeditor.c:206
 msgid "_Reset Curve"
 msgstr "მრუდის საწყის მნიშვნელობაზე დაბრუნება"
 
-#: app/widgets/gimpdeviceinfoeditor.c:453
+#: app/widgets/gimpdeviceinfoeditor.c:517
 #, c-format
 msgid "The axis '%s' has no curve"
 msgstr "ღერძ %s-ს მრუდი არ გააჩნია"
+
+#: app/widgets/gimpdeviceinfoeditor.c:546
+msgid "Pad Actions"
+msgstr "შევსების ქმედებები"
+
+#: app/widgets/gimpdeviceinfoeditor.c:633
+msgid "Select the next event arriving from the pad"
+msgstr "შევსებიდან შემდეგი მოსული მოვლენის მონიშვნა"
+
+#: app/widgets/gimpdeviceinfoeditor.c:677
+msgid "Pad Actions are not supported on your platform yet"
+msgstr ""
+
+#: app/widgets/gimpdeviceinfoeditor.c:900
+#, c-format
+msgid "Button %d"
+msgstr "ღილაკი %d"
+
+#: app/widgets/gimpdeviceinfoeditor.c:903
+#, c-format
+msgid "Ring %d"
+msgstr ""
+
+#: app/widgets/gimpdeviceinfoeditor.c:906
+#, c-format
+#| msgid "Stop %d"
+msgid "Strip %d"
+msgstr ""
+
+#: app/widgets/gimpdeviceinfoeditor.c:1152
+msgid "Select Pad Event Action"
+msgstr "აირჩიეთ შევსების მოვლენის ქმედებები"
 
 #: app/widgets/gimpdevicestatus.c:153
 msgid "Save device status"
@@ -28898,9 +28943,6 @@ msgstr "კონტურების მენიუ"
 
 #~ msgid "All selected layers' positions are locked."
 #~ msgstr "ყველა მონიშნული არხის პოზიციები ჩაკეტილია."
-
-#~ msgid "Button 8"
-#~ msgstr "ღილაკი 8"
 
 #~ msgid "Button 9"
 #~ msgstr "ღილაკი 9"
