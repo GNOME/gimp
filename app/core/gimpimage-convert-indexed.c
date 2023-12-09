@@ -488,6 +488,8 @@ struct _QuantizeObj
   gint          error_freedom;            /* 0=much bleed, 1=controlled bleed */
 
   GimpProgress *progress;
+
+  const Babl   *space;
 };
 
 typedef struct
@@ -770,6 +772,8 @@ gimp_image_convert_indexed (GimpImage               *image,
   GList             *list;
   GimpColorProfile  *src_profile  = NULL;
   GimpColorProfile  *dest_profile = NULL;
+  const Babl        *space;
+  const Babl        *format;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (gimp_image_get_base_type (image) != GIMP_INDEXED, FALSE);
@@ -814,11 +818,12 @@ gimp_image_convert_indexed (GimpImage               *image,
   /*  Set the new base type  */
   old_type = gimp_image_get_base_type (image);
 
+  space  = gimp_image_get_layer_space (image);
+  format = babl_format_with_space ("R'G'B' float", space);
+
   /*  Build histogram if necessary.  */
-  rgb_to_lab_fish = babl_fish (babl_format ("R'G'B' float"),
-                               babl_format ("CIE Lab float"));
-  lab_to_rgb_fish = babl_fish (babl_format ("CIE Lab float"),
-                               babl_format ("R'G'B' float"));
+  rgb_to_lab_fish = babl_fish (format, babl_format ("CIE Lab float"));
+  lab_to_rgb_fish = babl_fish (babl_format ("CIE Lab float"), format);
 
   /* don't dither if the input is grayscale and we are simply mapping
    * every color
@@ -842,6 +847,7 @@ gimp_image_convert_indexed (GimpImage               *image,
                                     palette_type, custom_palette,
                                     dither_alpha,
                                     sub_progress);
+  quantobj->space = space;
 
   if (palette_type == GIMP_CONVERT_PALETTE_GENERATE)
     {
@@ -2894,8 +2900,7 @@ custompal_pass1 (QuantizeObj *quantobj)
       GimpPaletteEntry *entry = list->data;
       guchar            rgb[3];
 
-      /* TODO: which format is really needed here? */
-      gegl_color_get_pixel (entry->color, babl_format ("R'G'B' u8"), rgb);
+      gegl_color_get_pixel (entry->color, babl_format_with_space ("R'G'B' u8", quantobj->space), rgb);
 
       quantobj->cmap[i].red   = (gint) rgb[0];
       quantobj->cmap[i].green = (gint) rgb[1];
