@@ -325,7 +325,7 @@ lighting_create_procedure (GimpPlugIn  *plug_in,
                                                          "light-point",       POINT_LIGHT,       _("Point"),       NULL,
                                                          "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
                                                          NULL),
-                            "light-point",
+                            "light-none",
                             G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_RGB (procedure, "light-color-2",
@@ -384,7 +384,7 @@ lighting_create_procedure (GimpPlugIn  *plug_in,
                                                          "light-point",       POINT_LIGHT,       _("Point"),       NULL,
                                                          "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
                                                          NULL),
-                            "light-point",
+                            "light-none",
                             G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_RGB (procedure, "light-color-3",
@@ -443,7 +443,7 @@ lighting_create_procedure (GimpPlugIn  *plug_in,
                                                          "light-point",       POINT_LIGHT,       _("Point"),       NULL,
                                                          "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
                                                          NULL),
-                            "light-point",
+                            "light-none",
                             G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_RGB (procedure, "light-color-4",
@@ -502,7 +502,7 @@ lighting_create_procedure (GimpPlugIn  *plug_in,
                                                          "light-point",       POINT_LIGHT,       _("Point"),       NULL,
                                                          "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
                                                          NULL),
-                            "light-point",
+                            "light-none",
                             G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_RGB (procedure, "light-color-5",
@@ -561,7 +561,7 @@ lighting_create_procedure (GimpPlugIn  *plug_in,
                                                          "light-point",       POINT_LIGHT,       _("Point"),       NULL,
                                                          "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
                                                          NULL),
-                            "light-point",
+                            "light-none",
                             G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_RGB (procedure, "light-color-6",
