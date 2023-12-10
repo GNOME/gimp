@@ -1,71 +1,84 @@
 #!/bin/bash
+# $MSYSTEM_CARCH, $MINGW_PACKAGE_PREFIX and $MSYSTEM_PREFIX are defined by MSYS2.
+# https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
 
 set -e
 
-if [[ "$MSYSTEM" == "MINGW32" ]]; then
-    export ARTIFACTS_SUFFIX="-w32"
-    export MSYS2_ARCH="i686"
-    export MSYS2_ARCH_FOLDER="mingw32"
-elif [[ "$MSYSTEM" == "MINGW64" ]]; then
-    export ARTIFACTS_SUFFIX="-w64"
-    export MSYS2_ARCH="x86_64"
-    export MSYS2_ARCH_FOLDER="mingw64"
-else # [[ "$MSYSTEM" == "CLANGARM64" ]];
-    export ARTIFACTS_SUFFIX="-arm64"
-    export MSYS2_ARCH="clang-aarch64"
-    export MSYS2_ARCH_FOLDER="clangarm64"
+if [[ "$MSYSTEM_CARCH" == "aarch64" ]]; then
+    export ARTIFACTS_SUFFIX="-a64"
+elif [[ "$MSYSTEM_CARCH" == "x86_64" ]]; then
+    export ARTIFACTS_SUFFIX="-x64"
+else # [[ "$MSYSTEM_CARCH" == "i686" ]];
+    export ARTIFACTS_SUFFIX="-x86"
 fi
 
-# Update everything
+if [[ "$BUILD_TYPE" != "CI_NATIVE" ]]; then
+    # Make the script callable from every directory
+    cd ~
+fi
+
+
+# Install the required (pre-built) packages for babl and GEGL
 pacman --noconfirm -Suy
 
-# Install the required packages
 pacman --noconfirm -S --needed \
     base-devel \
-    mingw-w64-$MSYS2_ARCH-toolchain \
-    mingw-w64-$MSYS2_ARCH-autotools \
-    mingw-w64-$MSYS2_ARCH-meson \
+    ${MINGW_PACKAGE_PREFIX}-toolchain \
+    ${MINGW_PACKAGE_PREFIX}-meson \
     \
-    mingw-w64-$MSYS2_ARCH-cairo \
-    mingw-w64-$MSYS2_ARCH-crt-git \
-    mingw-w64-$MSYS2_ARCH-glib-networking \
-    mingw-w64-$MSYS2_ARCH-gobject-introspection \
-    mingw-w64-$MSYS2_ARCH-json-glib \
-    mingw-w64-$MSYS2_ARCH-lcms2 \
-    mingw-w64-$MSYS2_ARCH-lensfun \
-    mingw-w64-$MSYS2_ARCH-libspiro \
-    mingw-w64-$MSYS2_ARCH-maxflow \
-    mingw-w64-$MSYS2_ARCH-openexr \
-    mingw-w64-$MSYS2_ARCH-pango \
-    mingw-w64-$MSYS2_ARCH-suitesparse \
-    mingw-w64-$MSYS2_ARCH-vala
+    ${MINGW_PACKAGE_PREFIX}-cairo \
+    ${MINGW_PACKAGE_PREFIX}-crt-git \
+    ${MINGW_PACKAGE_PREFIX}-glib-networking \
+    ${MINGW_PACKAGE_PREFIX}-gobject-introspection \
+    ${MINGW_PACKAGE_PREFIX}-json-glib \
+    ${MINGW_PACKAGE_PREFIX}-lcms2 \
+    ${MINGW_PACKAGE_PREFIX}-lensfun \
+    ${MINGW_PACKAGE_PREFIX}-libspiro \
+    ${MINGW_PACKAGE_PREFIX}-maxflow \
+    ${MINGW_PACKAGE_PREFIX}-openexr \
+    ${MINGW_PACKAGE_PREFIX}-pango \
+    ${MINGW_PACKAGE_PREFIX}-suitesparse \
+    ${MINGW_PACKAGE_PREFIX}-vala
 
+
+# Clone babl and GEGL (follow master branch)
 export GIT_DEPTH=1
 export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
 export PATH="$GIMP_PREFIX/bin:$PATH"
 export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PKG_CONFIG_PATH="${GIMP_PREFIX}/share/pkgconfig:$PKG_CONFIG_PATH"
 export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}"
-export ACLOCAL_FLAGS="-I/c/msys64/${MSYS2_ARCH_FOLDER}/share/aclocal"
-export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/${MSYS2_ARCH_FOLDER}/share/"
+export XDG_DATA_DIRS="${GIMP_PREFIX}/share:${MSYSTEM_PREFIX}/share/"
 
-## babl and GEGL (follow master branch) ##
+clone_or_pull() {
+    if [ ! -d "_${1}" ]; then
+        git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/${1}.git _${1}
+    else
+        cd _${1} && git pull && cd ..
+    fi
+}
 
-git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
-git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
+clone_or_pull babl
+clone_or_pull gegl
 
-mkdir _babl/_build
-cd _babl/_build
-meson setup -Dprefix="${GIMP_PREFIX}" -Dwith-docs=false \
-      ${BABL_OPTIONS} ..
-ninja
-ninja install
 
-mkdir ../../_gegl/_build
-cd ../../_gegl/_build
-meson setup -Dprefix="${GIMP_PREFIX}" -Ddocs=false \
-      -Dcairo=enabled -Dumfpack=enabled \
-      -Dopenexr=enabled -Dworkshop=true ..
-ninja
-ninja install
-cd ../..
+# Build babl and GEGL
+configure_or_build() {
+    if [ ! -f "_${1}/_build/build.ninja" ]; then
+        mkdir -p _${1}/_build${ARTIFACTS_SUFFIX} && cd _${1}/_build${ARTIFACTS_SUFFIX}
+        meson setup .. -Dprefix="${GIMP_PREFIX}" \
+                       $2
+        ninja && ninja install
+        cd ../..
+    else
+        cd _${1}/_build${ARTIFACTS_SUFFIX}
+        ninja && ninja install
+        cd ../..
+    fi
+}
+
+configure_or_build babl "-Dwith-docs=false"
+
+configure_or_build gegl "-Ddocs=false \
+                         -Dcairo=enabled -Dumfpack=enabled \
+                         -Dopenexr=enabled -Dworkshop=true"
