@@ -268,27 +268,27 @@ lighting_create_procedure (GimpPlugIn  *plug_in,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "diffuse-reflectivity",
-                            "Diffuse reflectivity",
-                            "Material diffuse reflectivity",
+                            _("Diffuse reflectivity"),
+                            _("Material diffuse reflectivity"),
                             0, 1, 0.4,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "specular-reflectivity",
-                            "Specular reflectivity",
-                            "Material specular reflectivity",
+                            _("Specular reflectivity"),
+                            _("Material specular reflectivity"),
                             0, 1, 0.5,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "highlight",
-                            "Highlight",
-                            "Material highlight (note, it's exponential) "
-                            "(Polished)",
+                            _("Highlight"),
+                            _("Material highlight (note, it's exponential) "
+                              "(Polished)"),
                             0, G_MAXDOUBLE, 27.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "metallic",
                              _("Metallic"),
-                             _("Enable envmapping"),
+                             _("Make surfaces look metallic"),
                              FALSE,
                              G_PARAM_READWRITE);
 
