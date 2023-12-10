@@ -7,6 +7,7 @@ plugin_sources = [
   'dxt.c',
   'mipmap.c',
   'misc.c',
+  'formats.c',
 ]
 
 if platform_windows
