@@ -161,7 +161,10 @@ typedef enum
 #define DDPF_LUMINANCE             0x00020000
 #define DDPF_BUMPLUMINANCE         0x00040000
 #define DDPF_BUMPDUDV              0x00080000
-#define DDPF_NORMAL                0x80000000  /* NVidia specific */
+
+/* NVTT-specific */
+#define DDPF_SRGB                  0x40000000
+#define DDPF_NORMAL                0x80000000
 
 #define DDSCAPS_COMPLEX            0x00000008
 #define DDSCAPS_TEXTURE            0x00001000
@@ -190,53 +193,55 @@ typedef enum
 
 typedef struct
 {
-  unsigned int size;
-  unsigned int flags;
-  char fourcc[4];
-  unsigned int bpp;
-  unsigned int rmask;
-  unsigned int gmask;
-  unsigned int bmask;
-  unsigned int amask;
+  guint size;
+  guint flags;
+  gchar fourcc[4];
+  guint bpp;
+  guint rmask;
+  guint gmask;
+  guint bmask;
+  guint amask;
 } dds_pixel_format_t;
 
 typedef struct
 {
-  unsigned int caps1;
-  unsigned int caps2;
-  unsigned int reserved[2];
+  guint caps1;
+  guint caps2;
+  guint reserved[2];
 } dds_caps_t;
 
 typedef struct
 {
-  unsigned int magic;
-  unsigned int size;
-  unsigned int flags;
-  unsigned int height;
-  unsigned int width;
-  unsigned int pitch_or_linsize;
-  unsigned int depth;
-  unsigned int num_mipmaps;
+  guint magic;
+  guint size;
+  guint flags;
+  guint height;
+  guint width;
+  guint pitch_or_linsize;
+  guint depth;
+  guint num_mipmaps;
   union
   {
     struct
     {
-      unsigned int magic1;  /* FOURCC "GIMP" */
-      unsigned int magic2;  /* FOURCC "-DDS" */
-      unsigned int version;
-      unsigned int extra_fourcc;
+      guint magic1;  /* FOURCC "GIMP" */
+      guint magic2;  /* FOURCC "-DDS" */
+      guint version;
+      guint extra_fourcc;
     } gimp_dds_special;
-    unsigned char pad[4 * 11];
+    guchar pad[4 * 11];
   } reserved;
   dds_pixel_format_t pixelfmt;
   dds_caps_t caps;
-  unsigned int reserved2;
+  guint reserved2;
 } dds_header_t;
 
 
+/* DX10+ format codes */
 typedef enum
 {
   DXGI_FORMAT_UNKNOWN                      = 0,
+
   DXGI_FORMAT_R32G32B32A32_TYPELESS        = 1,
   DXGI_FORMAT_R32G32B32A32_FLOAT           = 2,
   DXGI_FORMAT_R32G32B32A32_UINT            = 3,
@@ -245,36 +250,43 @@ typedef enum
   DXGI_FORMAT_R32G32B32_FLOAT              = 6,
   DXGI_FORMAT_R32G32B32_UINT               = 7,
   DXGI_FORMAT_R32G32B32_SINT               = 8,
+
   DXGI_FORMAT_R16G16B16A16_TYPELESS        = 9,
   DXGI_FORMAT_R16G16B16A16_FLOAT           = 10,
   DXGI_FORMAT_R16G16B16A16_UNORM           = 11,
   DXGI_FORMAT_R16G16B16A16_UINT            = 12,
   DXGI_FORMAT_R16G16B16A16_SNORM           = 13,
   DXGI_FORMAT_R16G16B16A16_SINT            = 14,
+
   DXGI_FORMAT_R32G32_TYPELESS              = 15,
   DXGI_FORMAT_R32G32_FLOAT                 = 16,
   DXGI_FORMAT_R32G32_UINT                  = 17,
   DXGI_FORMAT_R32G32_SINT                  = 18,
   DXGI_FORMAT_R32G8X24_TYPELESS            = 19,
+
   DXGI_FORMAT_D32_FLOAT_S8X24_UINT         = 20,
   DXGI_FORMAT_R32_FLOAT_X8X24_TYPELESS     = 21,
   DXGI_FORMAT_X32_TYPELESS_G8X24_UINT      = 22,
+
   DXGI_FORMAT_R10G10B10A2_TYPELESS         = 23,
   DXGI_FORMAT_R10G10B10A2_UNORM            = 24,
   DXGI_FORMAT_R10G10B10A2_UINT             = 25,
   DXGI_FORMAT_R11G11B10_FLOAT              = 26,
+
   DXGI_FORMAT_R8G8B8A8_TYPELESS            = 27,
   DXGI_FORMAT_R8G8B8A8_UNORM               = 28,
   DXGI_FORMAT_R8G8B8A8_UNORM_SRGB          = 29,
   DXGI_FORMAT_R8G8B8A8_UINT                = 30,
   DXGI_FORMAT_R8G8B8A8_SNORM               = 31,
   DXGI_FORMAT_R8G8B8A8_SINT                = 32,
+
   DXGI_FORMAT_R16G16_TYPELESS              = 33,
   DXGI_FORMAT_R16G16_FLOAT                 = 34,
   DXGI_FORMAT_R16G16_UNORM                 = 35,
   DXGI_FORMAT_R16G16_UINT                  = 36,
   DXGI_FORMAT_R16G16_SNORM                 = 37,
   DXGI_FORMAT_R16G16_SINT                  = 38,
+
   DXGI_FORMAT_R32_TYPELESS                 = 39,
   DXGI_FORMAT_D32_FLOAT                    = 40,
   DXGI_FORMAT_R32_FLOAT                    = 41,
@@ -284,11 +296,13 @@ typedef enum
   DXGI_FORMAT_D24_UNORM_S8_UINT            = 45,
   DXGI_FORMAT_R24_UNORM_X8_TYPELESS        = 46,
   DXGI_FORMAT_X24_TYPELESS_G8_UINT         = 47,
+
   DXGI_FORMAT_R8G8_TYPELESS                = 48,
   DXGI_FORMAT_R8G8_UNORM                   = 49,
   DXGI_FORMAT_R8G8_UINT                    = 50,
   DXGI_FORMAT_R8G8_SNORM                   = 51,
   DXGI_FORMAT_R8G8_SINT                    = 52,
+
   DXGI_FORMAT_R16_TYPELESS                 = 53,
   DXGI_FORMAT_R16_FLOAT                    = 54,
   DXGI_FORMAT_D16_UNORM                    = 55,
@@ -296,16 +310,21 @@ typedef enum
   DXGI_FORMAT_R16_UINT                     = 57,
   DXGI_FORMAT_R16_SNORM                    = 58,
   DXGI_FORMAT_R16_SINT                     = 59,
+
   DXGI_FORMAT_R8_TYPELESS                  = 60,
   DXGI_FORMAT_R8_UNORM                     = 61,
   DXGI_FORMAT_R8_UINT                      = 62,
   DXGI_FORMAT_R8_SNORM                     = 63,
   DXGI_FORMAT_R8_SINT                      = 64,
   DXGI_FORMAT_A8_UNORM                     = 65,
+
   DXGI_FORMAT_R1_UNORM                     = 66,
+
   DXGI_FORMAT_R9G9B9E5_SHAREDEXP           = 67,
+
   DXGI_FORMAT_R8G8_B8G8_UNORM              = 68,
   DXGI_FORMAT_G8R8_G8B8_UNORM              = 69,
+
   DXGI_FORMAT_BC1_TYPELESS                 = 70,
   DXGI_FORMAT_BC1_UNORM                    = 71,
   DXGI_FORMAT_BC1_UNORM_SRGB               = 72,
@@ -321,6 +340,7 @@ typedef enum
   DXGI_FORMAT_BC5_TYPELESS                 = 82,
   DXGI_FORMAT_BC5_UNORM                    = 83,
   DXGI_FORMAT_BC5_SNORM                    = 84,
+
   DXGI_FORMAT_B5G6R5_UNORM                 = 85,
   DXGI_FORMAT_B5G5R5A1_UNORM               = 86,
   DXGI_FORMAT_B8G8R8A8_UNORM               = 87,
@@ -330,12 +350,14 @@ typedef enum
   DXGI_FORMAT_B8G8R8A8_UNORM_SRGB          = 91,
   DXGI_FORMAT_B8G8R8X8_TYPELESS            = 92,
   DXGI_FORMAT_B8G8R8X8_UNORM_SRGB          = 93,
+
   DXGI_FORMAT_BC6H_TYPELESS                = 94,
   DXGI_FORMAT_BC6H_UF16                    = 95,
   DXGI_FORMAT_BC6H_SF16                    = 96,
   DXGI_FORMAT_BC7_TYPELESS                 = 97,
   DXGI_FORMAT_BC7_UNORM                    = 98,
   DXGI_FORMAT_BC7_UNORM_SRGB               = 99,
+
   DXGI_FORMAT_AYUV                         = 100,
   DXGI_FORMAT_Y410                         = 101,
   DXGI_FORMAT_Y416                         = 102,
@@ -351,82 +373,103 @@ typedef enum
   DXGI_FORMAT_IA44                         = 112,
   DXGI_FORMAT_P8                           = 113,
   DXGI_FORMAT_A8P8                         = 114,
+
   DXGI_FORMAT_B4G4R4A4_UNORM               = 115,
+
+  DXGI_FORMAT_R10G10B10_7E3_A2_FLOAT       = 116,
+  DXGI_FORMAT_R10G10B10_6E4_A2_FLOAT       = 117,
+  DXGI_FORMAT_D16_UNORM_S8_UINT            = 118,
+  DXGI_FORMAT_R16_UNORM_X8_TYPELESS        = 119,
+  DXGI_FORMAT_X16_TYPELESS_G8_UINT         = 120,
+
+  DXGI_FORMAT_P208                         = 130,
+  DXGI_FORMAT_V208                         = 131,
+  DXGI_FORMAT_V408                         = 132,
+
+  DXGI_FORMAT_R10G10B10_SNORM_A2_UNORM     = 189,
+  DXGI_FORMAT_R4G4_UNORM                   = 190,
+
+  DXGI_FORMAT_A4B4G4R4_UNORM               = 191,
+
   DXGI_FORMAT_FORCE_UINT                   = 0xffffffffUL
 } DXGI_FORMAT;
 
 typedef struct
 {
   DXGI_FORMAT dxgiFormat;
-  unsigned int resourceDimension;
-  unsigned int miscFlag;
-  unsigned int arraySize;
-  unsigned int reserved;
+  guint resourceDimension;
+  guint miscFlag;
+  guint arraySize;
+  guint reserved;
 } dds_header_dx10_t;
 
-/* Format values that can be found in the FOURCC field */
-typedef enum _D3DFORMAT {
-    D3DFMT_R8G8B8               =  20,
-    D3DFMT_A8R8G8B8             =  21,
-    D3DFMT_X8R8G8B8             =  22,
-    D3DFMT_R5G6B5               =  23,
-    D3DFMT_X1R5G5B5             =  24,
-    D3DFMT_A1R5G5B5             =  25,
-    D3DFMT_A4R4G4B4             =  26,
-    D3DFMT_R3G3B2               =  27,
-    D3DFMT_A8                   =  28,
-    D3DFMT_A8R3G3B2             =  29,
-    D3DFMT_X4R4G4B4             =  30,
-    D3DFMT_A2B10G10R10          =  31,
-    D3DFMT_A8B8G8R8             =  32,
-    D3DFMT_X8B8G8R8             =  33,
-    D3DFMT_G16R16               =  34,
-    D3DFMT_A2R10G10B10          =  35,
-    D3DFMT_A16B16G16R16         =  36,
 
-    D3DFMT_A8P8                 =  40,
-    D3DFMT_P8                   =  41,
+/* D3D9 format codes */
+typedef enum _D3DFORMAT
+{
+  D3DFMT_UNKNOWN              =   0,
 
-    D3DFMT_L8                   =  50,
-    D3DFMT_A8L8                 =  51,
-    D3DFMT_A4L4                 =  52,
+  D3DFMT_R8G8B8               =  20,
+  D3DFMT_A8R8G8B8             =  21,
+  D3DFMT_X8R8G8B8             =  22,
+  D3DFMT_R5G6B5               =  23,
+  D3DFMT_X1R5G5B5             =  24,
+  D3DFMT_A1R5G5B5             =  25,
+  D3DFMT_A4R4G4B4             =  26,
+  D3DFMT_R3G3B2               =  27,
+  D3DFMT_A8                   =  28,
+  D3DFMT_A8R3G3B2             =  29,
+  D3DFMT_X4R4G4B4             =  30,
+  D3DFMT_A2B10G10R10          =  31,
+  D3DFMT_A8B8G8R8             =  32,
+  D3DFMT_X8B8G8R8             =  33,
+  D3DFMT_G16R16               =  34,
+  D3DFMT_A2R10G10B10          =  35,
+  D3DFMT_A16B16G16R16         =  36,
 
-    D3DFMT_V8U8                 =  60,
-    D3DFMT_L6V5U5               =  61,
-    D3DFMT_X8L8V8U8             =  62,
-    D3DFMT_Q8W8V8U8             =  63,
-    D3DFMT_V16U16               =  64,
-    D3DFMT_A2W10V10U10          =  67,
+  D3DFMT_A8P8                 =  40,
+  D3DFMT_P8                   =  41,
 
-    D3DFMT_D16_LOCKABLE         =  70,
-    D3DFMT_D32                  =  71,
-    D3DFMT_D15S1                =  73,
-    D3DFMT_D24S8                =  75,
-    D3DFMT_D24X8                =  77,
-    D3DFMT_D24X4S4              =  79,
-    D3DFMT_D16                  =  80,
-    D3DFMT_L16                  =  81,
-    D3DFMT_D32F_LOCKABLE        =  82,
-    D3DFMT_D24FS8               =  83,
-    D3DFMT_D32_LOCKABLE         =  84,
-    D3DFMT_S8_LOCKABLE          =  85,
+  D3DFMT_L8                   =  50,
+  D3DFMT_A8L8                 =  51,
+  D3DFMT_A4L4                 =  52,
 
-    D3DFMT_VERTEXDATA           = 100,
-    D3DFMT_INDEX16              = 101,
-    D3DFMT_INDEX32              = 102,
+  D3DFMT_V8U8                 =  60,
+  D3DFMT_L6V5U5               =  61,
+  D3DFMT_X8L8V8U8             =  62,
+  D3DFMT_Q8W8V8U8             =  63,
+  D3DFMT_V16U16               =  64,
+  D3DFMT_A2W10V10U10          =  67,
 
-    D3DFMT_Q16W16V16U16         = 110,
-    D3DFMT_R16F                 = 111,
-    D3DFMT_G16R16F              = 112,
-    D3DFMT_A16B16G16R16F        = 113,
-    D3DFMT_R32F                 = 114,
-    D3DFMT_G32R32F              = 115,
-    D3DFMT_A32B32G32R32F        = 116,
-    D3DFMT_CxV8U8               = 117,
+  D3DFMT_D16_LOCKABLE         =  70,
+  D3DFMT_D32                  =  71,
+  D3DFMT_D15S1                =  73,
+  D3DFMT_D24S8                =  75,
+  D3DFMT_D24X8                =  77,
+  D3DFMT_D24X4S4              =  79,
+  D3DFMT_D16                  =  80,
+  D3DFMT_L16                  =  81,
+  D3DFMT_D32F_LOCKABLE        =  82,
+  D3DFMT_D24FS8               =  83,
+  D3DFMT_D32_LOCKABLE         =  84,
+  D3DFMT_S8_LOCKABLE          =  85,
 
-    D3DFMT_A1                   = 118,
-    D3DFMT_A2B10G10R10_XR_BIAS  = 119,
-    D3DFMT_BINARYBUFFER         = 199,
+  D3DFMT_VERTEXDATA           = 100,
+  D3DFMT_INDEX16              = 101,
+  D3DFMT_INDEX32              = 102,
+
+  D3DFMT_Q16W16V16U16         = 110,
+  D3DFMT_R16F                 = 111,
+  D3DFMT_G16R16F              = 112,
+  D3DFMT_A16B16G16R16F        = 113,
+  D3DFMT_R32F                 = 114,
+  D3DFMT_G32R32F              = 115,
+  D3DFMT_A32B32G32R32F        = 116,
+  D3DFMT_CxV8U8               = 117,
+
+  D3DFMT_A1                   = 118,
+  D3DFMT_A2B10G10R10_XR_BIAS  = 119,
+  D3DFMT_BINARYBUFFER         = 199,
 } D3DFORMAT;
 
 
