@@ -95,7 +95,7 @@
     (gimp-context-set-gradient-fg-bg-rgb)
     (gimp-drawable-edit-gradient-fill drawable
 				      GRADIENT-RADIAL offset
-				      FALSE 0 0
+				      FALSE 1 1
 				      TRUE
 				      light-x light-y
 				      light-end-x light-end-y)
@@ -108,7 +108,7 @@
     (gimp-context-set-gradient-reverse gradient-reverse)
     (gimp-drawable-edit-gradient-fill drawable
 				      GRADIENT-LINEAR offset
-				      FALSE 0 0
+				      FALSE 1 1
 				      TRUE
 				      10 10
 				      30 60)
@@ -141,7 +141,7 @@
   "Spencer Kimball"
   "1996, 1998"
   "*"  ; image types any
-  SF-TWO-OR-MORE-DRAWABLE  ; v3 >>> additional argument
+  SF-ONE-OR-MORE-DRAWABLE  ; v3 >>> additional argument
   SF-ADJUSTMENT "Radius (in pixels)" (list 100 1 5000 1 10 0 SF-SPINNER)
   SF-ADJUSTMENT "Lighting (degrees)" (list 45 0 360 1 10 1 SF-SLIDER)
   SF-TOGGLE     "Shadow"             TRUE
