@@ -1,30 +1,21 @@
 #!/bin/bash
+# $MINGW_PACKAGE_PREFIX is defined by MSYS2.
+# https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
 
 set -e
 
 if [[ "$MSYSTEM" == "MINGW32" ]]; then
     export ARTIFACTS_SUFFIX="-w32"
-    export MSYS2_ARCH="i686"
     export MSYS2_ARCH_FOLDER="mingw32"
     export MSYS2_PREFIX="/c/msys64/mingw32"
 elif [[ "$MSYSTEM" == "MINGW64" ]]; then
     export ARTIFACTS_SUFFIX="-w64"
-    export MSYS2_ARCH="x86_64"
     export MSYS2_ARCH_FOLDER="mingw64"
     export MSYS2_PREFIX="/c/msys64/mingw64/"
 else # [[ "$MSYSTEM" == "CLANGARM64" ]];
     export ARTIFACTS_SUFFIX="-arm64"
-    export MSYS2_ARCH="clang-aarch64"
     export MSYS2_ARCH_FOLDER="clangarm64"
     export MSYS2_PREFIX="/c/msys64/clangarm64/"
-fi
-
-export OPTIONAL_PACKAGES=""
-if [[ "$MSYSTEM" == "CLANGARM64" ]]; then
-  # No luajit package on clangarm64 for the time being.
-  export OPTIONAL_PACKAGES="mingw-w64-$MSYS2_ARCH-lua51"
-else
-  export OPTIONAL_PACKAGES="mingw-w64-$MSYS2_ARCH-luajit"
 fi
 
 export PATH="${MSYS2_PREFIX}/bin:$PATH"
@@ -32,60 +23,11 @@ export PATH="${MSYS2_PREFIX}/bin:$PATH"
 # Update everything
 pacman --noconfirm -Suy
 
-# Install the required packages
-pacman --noconfirm -S --needed \
-    base-devel \
-    mingw-w64-$MSYS2_ARCH-toolchain \
-    mingw-w64-$MSYS2_ARCH-autotools \
-    mingw-w64-$MSYS2_ARCH-ccache \
-    mingw-w64-$MSYS2_ARCH-meson \
-    \
-    $OPTIONAL_PACKAGES \
-    mingw-w64-$MSYS2_ARCH-lua51-lgi \
-    \
-    mingw-w64-$MSYS2_ARCH-aalib \
-    mingw-w64-$MSYS2_ARCH-appstream-glib \
-    mingw-w64-$MSYS2_ARCH-atk \
-    mingw-w64-$MSYS2_ARCH-brotli \
-    mingw-w64-$MSYS2_ARCH-cairo \
-    mingw-w64-$MSYS2_ARCH-cfitsio \
-    mingw-w64-$MSYS2_ARCH-drmingw \
-    mingw-w64-$MSYS2_ARCH-gexiv2 \
-    mingw-w64-$MSYS2_ARCH-ghostscript \
-    mingw-w64-$MSYS2_ARCH-gi-docgen \
-    mingw-w64-$MSYS2_ARCH-glib-networking \
-    mingw-w64-$MSYS2_ARCH-gobject-introspection \
-    mingw-w64-$MSYS2_ARCH-gobject-introspection-runtime \
-    mingw-w64-$MSYS2_ARCH-graphviz \
-    mingw-w64-$MSYS2_ARCH-gtk3 \
-    mingw-w64-$MSYS2_ARCH-headers-git \
-    mingw-w64-$MSYS2_ARCH-iso-codes \
-    mingw-w64-$MSYS2_ARCH-json-c \
-    mingw-w64-$MSYS2_ARCH-json-glib \
-    mingw-w64-$MSYS2_ARCH-lcms2 \
-    mingw-w64-$MSYS2_ARCH-lensfun \
-    mingw-w64-$MSYS2_ARCH-libarchive \
-    mingw-w64-$MSYS2_ARCH-libheif \
-    mingw-w64-$MSYS2_ARCH-libiff \
-    mingw-w64-$MSYS2_ARCH-libilbm \
-    mingw-w64-$MSYS2_ARCH-libjxl \
-    mingw-w64-$MSYS2_ARCH-libmypaint \
-    mingw-w64-$MSYS2_ARCH-libspiro \
-    mingw-w64-$MSYS2_ARCH-libwebp \
-    mingw-w64-$MSYS2_ARCH-libwmf \
-    mingw-w64-$MSYS2_ARCH-maxflow \
-    mingw-w64-$MSYS2_ARCH-mypaint-brushes \
-    mingw-w64-$MSYS2_ARCH-openexr \
-    mingw-w64-$MSYS2_ARCH-pango \
-    mingw-w64-$MSYS2_ARCH-poppler \
-    mingw-w64-$MSYS2_ARCH-poppler-data \
-    mingw-w64-$MSYS2_ARCH-python \
-    mingw-w64-$MSYS2_ARCH-python-gobject \
-    mingw-w64-$MSYS2_ARCH-qoi \
-    mingw-w64-$MSYS2_ARCH-shared-mime-info \
-    mingw-w64-$MSYS2_ARCH-suitesparse \
-    mingw-w64-$MSYS2_ARCH-vala \
-    mingw-w64-$MSYS2_ARCH-xpm-nox
+# Install the required (pre-built) packages for GIMP
+export DEPS_PATH="build/windows/gitlab-ci/all-deps-uni.txt"
+sed -i "s/DEPS_ARCH_/${MINGW_PACKAGE_PREFIX}-/g" $DEPS_PATH
+export GIMP_DEPS=`cat $DEPS_PATH`
+pacman --noconfirm -S --needed base-devel $GIMP_DEPS
 
 # XXX We've got a weird error when the prefix is in the current dir.
 # Until we figure it out, this trick seems to work, even though it's

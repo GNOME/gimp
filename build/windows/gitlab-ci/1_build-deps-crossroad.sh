@@ -17,40 +17,11 @@ crossroad meson setup _build/ -Dintrospection=false -Dsdl2=disabled -Dlibdir=lib
 ninja -C _build install || exit 1
 cd ..
 
-# preparing GIMP
-
-LIBMNG=
-if [ "x$CROSSROAD_PLATFORM" = "xw64" ]; then
-  # For some reason, file-mng plug-in fails to link in its i686 build.
-  # Just disable it for now on i686 only.
-  LIBMNG="libmng"
-fi
-
-crossroad install appstream-glib              \
-                  aalib                       \
-                  atk                         \
-                  cfitsio                     \
-                  drmingw                     \
-                  gexiv2                      \
-                  glib2                       \
-                  glib-networking             \
-                  json-c                      \
-                  ghostscript                 \
-                  gobject-introspection       \
-                  gobject-introspection-runtime \
-                  iso-codes                   \
-                  libheif                     \
-                  libiff                      \
-                  libilbm                     \
-                  libjxl                      \
-                  $LIBMNG                     \
-                  libmypaint mypaint-brushes  \
-                  libwebp                     \
-                  libwmf                      \
-                  openexr                     \
-                  poppler poppler-data        \
-                  qoi                         \
-                  xpm-nox
+# Install the required (pre-built) packages for GIMP
+export DEPS_PATH="../build/windows/gitlab-ci/all-deps-uni.txt"
+sed -i "s/DEPS_ARCH_//g" $DEPS_PATH
+export GIMP_DEPS=`cat $DEPS_PATH`
+crossroad install libmng $GIMP_DEPS
 
 if [ $? -ne 0 ]; then
   echo "Installation of pre-built dependencies failed.";
