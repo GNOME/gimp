@@ -70,17 +70,24 @@
 (assert `(= (car (gimp-image-get-vectors ,testImage))
             1))
 
-; FIXME: crashes in gimpvectors-export.c line 234
-; possibly because path has no strokes?
-; export to string succeeds
-;(assert `(gimp-vectors-export-to-string
-;            ,testImage
-;            ,testPath))
 
-; export-to-string all
-; FAIL: crashes
-; PDB doc says 0 should work, and ScriptFu is marshalling to a null GimpVectors*
-; so the PDB function in C is at fault?
-;(assert `(gimp-vectors-export-to-string
-;            ,testImage
-;            0))
+; export methods
+
+; export string succeeds
+(assert `(gimp-vectors-export-to-string
+            ,testImage
+            ,testPath))
+
+; export string all succeeds
+; passing 0 for path means "all"
+(assert `(gimp-vectors-export-to-string
+            ,testImage
+            0))
+
+; export file all succeeds
+(assert `(gimp-vectors-export-to-file
+            ,testImage
+            "tmp.svg"
+            0))
+
+

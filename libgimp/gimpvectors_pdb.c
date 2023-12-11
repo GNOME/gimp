@@ -1191,7 +1191,7 @@ gimp_vectors_import_from_string (GimpImage     *image,
  * gimp_vectors_export_to_file:
  * @image: The image.
  * @file: The SVG file to create.
- * @vectors: The vectors object to export, or %NULL for all in the image.
+ * @vectors: (nullable): The vectors object to export, or %NULL for all in the image.
  *
  * save a path as an SVG file.
  *
@@ -1234,7 +1234,7 @@ gimp_vectors_export_to_file (GimpImage   *image,
 /**
  * gimp_vectors_export_to_string:
  * @image: The image.
- * @vectors: The vectors object to export, or %NULL for all in the image.
+ * @vectors: (nullable): The vectors object to export, or %NULL for all in the image.
  *
  * Save a path as an SVG string.
  *

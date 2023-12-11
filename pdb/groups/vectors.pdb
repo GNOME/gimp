@@ -1266,7 +1266,8 @@ HELP
           desc => 'The image' },
         { name => 'file', type => 'file',
           desc => 'The SVG file to create.' },
-        { name => 'vectors', type => 'vectors', no_validate => 1,
+        { name => 'vectors', type => 'vectors',
+          no_validate => 1, none_ok => 1,
           desc => 'The vectors object to export, or %NULL for all in the image' }
     );
 
@@ -1302,7 +1303,8 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'vectors', type => 'vectors', no_validate => 1,
+        { name => 'vectors', type => 'vectors',
+          no_validate => 1, none_ok => 1,
           desc => 'The vectors object to export, or %NULL for all in the image' }
     );
 

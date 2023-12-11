@@ -2464,7 +2464,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
                                                         "The vectors object to export, or %NULL for all in the image",
-                                                        FALSE,
+                                                        TRUE,
                                                         GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2493,7 +2493,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
                                                         "The vectors object to export, or %NULL for all in the image",
-                                                        FALSE,
+                                                        TRUE,
                                                         GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("string",
