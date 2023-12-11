@@ -13,6 +13,7 @@ if not stable
     'tests' / 'PDB' / 'image' / 'image-grayscale.scm',
     'tests' / 'PDB' / 'image' / 'image-ops.scm',
     'tests' / 'PDB' / 'image' / 'image-layers.scm',
+    'tests' / 'PDB' / 'image' / 'image-set-selected.scm',
 
     'tests' / 'PDB' / 'layer' / 'layer-new.scm',
     'tests' / 'PDB' / 'layer' / 'layer-ops.scm',

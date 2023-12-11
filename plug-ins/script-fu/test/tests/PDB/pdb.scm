@@ -15,6 +15,8 @@
 (testing:load-test "image-grayscale.scm")
 (testing:load-test "image-ops.scm")
 (testing:load-test "image-layers.scm")
+(testing:load-test "image-set-selected.scm")
+
 
 (testing:load-test "layer-new.scm")
 (testing:load-test "layer-ops.scm")
