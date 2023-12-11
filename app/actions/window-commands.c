@@ -70,7 +70,7 @@ window_open_display_cmd_callback (GimpAction *action,
   GtkWidget *entry;
   return_if_no_widget (widget, data);
 
-  dialog = gimp_message_dialog_new ("Open Display", GIMP_ICON_WILBER_EEK,
+  dialog = gimp_message_dialog_new (_("Open Display"), GIMP_ICON_WILBER_EEK,
                                     widget, GTK_DIALOG_MODAL,
                                     NULL, NULL,
 
@@ -85,11 +85,11 @@ window_open_display_cmd_callback (GimpAction *action,
                                            -1);
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                     "Experimental multi-display stuff!\n"
-                                     "Click OK and have fun crashing GIMP...");
+                                     _("Experimental multi-display stuff!\n"
+                                     "Click OK and have fun crashing GIMP..."));
 
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                             "Please enter the name of the new display:");
+                             _("Please enter the name of the new display:"));
 
   entry = gtk_entry_new ();
   gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
@@ -115,8 +115,8 @@ window_open_display_cmd_callback (GimpAction *action,
 
           if (! display)
             gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                       "Can't open display '%s'. "
-                                       "Please try another one:",
+                                       _("Can't open display '%s'. "
+                                       "Please try another one:"),
                                        screen_name);
 
           g_free (screen_name);

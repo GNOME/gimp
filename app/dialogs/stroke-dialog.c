@@ -171,7 +171,7 @@ stroke_dialog_new (GList              *items,
   gtk_stack_add_titled (GTK_STACK (stack),
                         frame,
                         "stroke-tool",
-                        "Line");
+                        _("Line"));
   gtk_widget_show (frame);
 
   {
@@ -195,7 +195,7 @@ stroke_dialog_new (GList              *items,
   gtk_stack_add_titled (GTK_STACK (stack),
                         frame,
                         "paint-tool",
-                        "Paint tool");
+                        _("Paint tool"));
   gtk_widget_show (frame);
 
   {

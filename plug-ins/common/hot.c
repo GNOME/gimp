@@ -268,20 +268,20 @@ hot_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_INT (procedure, "mode",
                          _("Mode"),
-                         "Mode { NTSC (0), PAL (1) }",
+                         _("Mode { NTSC (0), PAL (1) }"),
                          0, 1, MODE_NTSC,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "action",
                          _("Action"),
-                         "Action { (0) reduce luminance, "
-                         "(1) reduce saturation, or (2) Blacken }",
+                         _("Action { (0) reduce luminance, "
+                         "(1) reduce saturation, or (2) Blacken }"),
                          0, 2, ACT_LREDUX,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "new-layer",
                              _("Create _new layer"),
-                             "Create a new layer",
+                             _("Create a new layer"),
                              TRUE,
                              G_PARAM_READWRITE);
     }

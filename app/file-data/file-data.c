@@ -58,7 +58,7 @@ file_data_init (Gimp *gimp)
   procedure->marshal_func = file_gbr_load_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-  proc->menu_label = g_strdup (N_("GIMP brush"));
+  proc->menu_label = g_strdup (_("GIMP brush"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-brush",
                                    strlen ("gimp-brush") + 1,
@@ -115,7 +115,7 @@ file_data_init (Gimp *gimp)
   procedure->marshal_func = file_gbr_save_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-  proc->menu_label = g_strdup (N_("GIMP brush"));
+  proc->menu_label = g_strdup (_("GIMP brush"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-brush",
                                    strlen ("gimp-brush") + 1,
@@ -198,7 +198,7 @@ file_data_init (Gimp *gimp)
   procedure->marshal_func = file_gih_load_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-  proc->menu_label = g_strdup (N_("GIMP brush (animated)"));
+  proc->menu_label = g_strdup (_("GIMP brush (animated)"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-brush",
                                    strlen ("gimp-brush") + 1,
@@ -252,7 +252,7 @@ file_data_init (Gimp *gimp)
   procedure->marshal_func = file_gih_save_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-  proc->menu_label = g_strdup (N_("GIMP brush (animated)"));
+  proc->menu_label = g_strdup (_("GIMP brush (animated)"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-brush",
                                    strlen ("gimp-brush") + 1,
@@ -342,7 +342,7 @@ file_data_init (Gimp *gimp)
   procedure->marshal_func = file_pat_load_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-  proc->menu_label = g_strdup (N_("GIMP pattern"));
+  proc->menu_label = g_strdup (_("GIMP pattern"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-pattern",
                                    strlen ("gimp-pattern") + 1,
@@ -395,7 +395,7 @@ file_data_init (Gimp *gimp)
   procedure->marshal_func = file_pat_save_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-  proc->menu_label = g_strdup (N_("GIMP pattern"));
+  proc->menu_label = g_strdup (_("GIMP pattern"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-pattern",
                                    strlen ("gimp-pattern") + 1,
@@ -472,7 +472,7 @@ file_data_init (Gimp *gimp)
   procedure->marshal_func = file_gex_load_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-  proc->menu_label = g_strdup (N_("GIMP extension"));
+  proc->menu_label = g_strdup (_("GIMP extension"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-plugin",
                                    strlen ("gimp-plugin") + 1,

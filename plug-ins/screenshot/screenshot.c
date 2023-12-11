@@ -162,8 +162,8 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_INT (procedure, "shoot-type",
                          _("Shoot _area"),
-                         "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), "
-                         "SHOOT-REGION (2) }",
+                         _("The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), "
+                         "SHOOT-REGION (2) }"),
                          0, 2, SHOOT_WINDOW,
                          G_PARAM_READWRITE);
 
@@ -192,8 +192,8 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "include-pointer",
-                             "Include _mouse pointer",
-                             "Your pointing device's cursor will be part of the image",
+                             _("Include _mouse pointer"),
+                             _("Your pointing device's cursor will be part of the image"),
                              FALSE,
                              G_PARAM_READWRITE);
 
@@ -201,8 +201,8 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
        * need to expose this argument to the API.
        */
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "include-decoration",
-                                 "Include window _decoration",
-                                 "Title bar, window borders and shadow will be part of the image",
+                                 _("Include window _decoration"),
+                                 _("Title bar, window borders and shadow will be part of the image"),
 #ifdef PLATFORM_OSX
                                  /* on OS X, this just means shoot the shadow, default to nope */
                                  FALSE,
@@ -211,13 +211,13 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
 #endif
                                  G_PARAM_READWRITE);
       GIMP_PROC_AUX_ARG_INT     (procedure, "selection-delay",
-                                 "Selection d_elay",
-                                 "Delay before selection of the window or the region",
+                                 _("Selection d_elay"),
+                                 _("Delay before selection of the window or the region"),
                                  0, 20, 0,
                                  G_PARAM_READWRITE);
       GIMP_PROC_AUX_ARG_INT     (procedure, "screenshot-delay",
-                                 "Screenshot dela_y",
-                                 "Delay before snapping the screenshot",
+                                 _("Screenshot dela_y"),
+                                 _("Delay before snapping the screenshot"),
                                  0, 20, 0,
                                  G_PARAM_READWRITE);
       GIMP_PROC_AUX_ARG_INT     (procedure, "color-profile",

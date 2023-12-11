@@ -1338,10 +1338,10 @@ flame_dialog (Flame                *flame,
                                   "camera-box", "zoom", "x", "y", NULL);
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "rendering-label", "_Rendering",
+                                   "rendering-label", _("_Rendering"),
                                    FALSE, TRUE);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "camera-label", "C_amera",
+                                   "camera-label", _("C_amera"),
                                    FALSE, TRUE);
   notebook = gimp_procedure_dialog_fill_notebook (GIMP_PROCEDURE_DIALOG (dialog),
                                                   "settings-notebook",

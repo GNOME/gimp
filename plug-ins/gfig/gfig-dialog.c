@@ -491,7 +491,7 @@ gfig_dialog (GimpGfig *gfig)
 
   /* foreground color button in Stroke frame*/
   gfig_context->fg_color = g_new0 (GimpRGB, 1);
-  gfig_context->fg_color_button = gimp_color_button_new ("Foreground",
+  gfig_context->fg_color_button = gimp_color_button_new (_("Foreground"),
                                                     SEL_BUTTON_WIDTH,
                                                     SEL_BUTTON_HEIGHT,
                                                     gfig_context->fg_color,
@@ -507,7 +507,7 @@ gfig_dialog (GimpGfig *gfig)
 
   /* brush selector in Stroke frame */
   gfig_context->brush_select
-    = gimp_brush_chooser_new ("Brush", "Brush",
+    = gimp_brush_chooser_new (_("Brush"), _("Brush"),
                               GIMP_RESOURCE (gfig_context->default_style.brush));
   g_signal_connect (gfig_context->brush_select, "resource-set",
                     G_CALLBACK (gfig_brush_changed_callback), NULL);
@@ -558,7 +558,7 @@ gfig_dialog (GimpGfig *gfig)
 
   /* A page for the fill color button */
   gfig_context->bg_color = g_new0 (GimpRGB, 1);
-  gfig_context->bg_color_button = gimp_color_button_new ("Background",
+  gfig_context->bg_color_button = gimp_color_button_new (_("Background"),
                                            SEL_BUTTON_WIDTH, SEL_BUTTON_HEIGHT,
                                            gfig_context->bg_color,
                                            GIMP_COLOR_AREA_SMALL_CHECKS);
@@ -573,7 +573,7 @@ gfig_dialog (GimpGfig *gfig)
 
   /* A page for the pattern selector */
   gfig_context->pattern_select
-    = gimp_pattern_chooser_new ("Pattern", "Pattern",
+    = gimp_pattern_chooser_new (_("Pattern"), _("Pattern"),
                                 GIMP_RESOURCE (gfig_context->default_style.pattern));
   g_signal_connect (gfig_context->pattern_select, "resource-set",
                     G_CALLBACK (gfig_pattern_changed_callback), NULL);
@@ -583,7 +583,7 @@ gfig_dialog (GimpGfig *gfig)
 
   /* A page for the gradient selector */
   gfig_context->gradient_select
-    = gimp_gradient_chooser_new ("Gradient", "Gradient",
+    = gimp_gradient_chooser_new (_("Gradient"), _("Gradient"),
                                  GIMP_RESOURCE (gfig_context->default_style.gradient));
   g_signal_connect (gfig_context->gradient_select, "resource-set",
                     G_CALLBACK (gfig_gradient_changed_callback), NULL);

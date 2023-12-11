@@ -191,43 +191,43 @@ film_create_procedure (GimpPlugIn  *plug_in,
                                       "1997");
 
       GIMP_PROC_ARG_INT (procedure, "film-height",
-                         "Film _height",
-                         "Height of film (0: fit to images)",
+                         _("Film _height"),
+                         _("Height of film (0: fit to images)"),
                          0, GIMP_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_RGB (procedure, "film-color",
-                         "_Film color",
-                         "Color of the film",
+                         _("_Film color"),
+                         _("Color of the film"),
                          TRUE, &default_film_color,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "number-start",
-                         "Start _index",
-                         "Start index for numbering",
+                         _("Start _index"),
+                         _("Start index for numbering"),
                          0, G_MAXINT, 1,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_FONT (procedure, "number-font",
-                          "Number _font",
-                          "Font for drawing numbers",
+                          _("Number _font"),
+                          _("Font for drawing numbers"),
                           G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_RGB (procedure, "number-color",
-                         "_Number color",
-                         "Color for numbers",
+                         _("_Number color"),
+                         _("Color for numbers"),
                          TRUE, &default_number_color,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "at-top",
-                             "At _top",
-                             "Draw numbers at top",
+                             _("At _top"),
+                             _("Draw numbers at top"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "at-bottom",
-                             "At _bottom",
-                             "Draw numbers at bottom",
+                             _("At _bottom"),
+                             _("Draw numbers at bottom"),
                              TRUE,
                              G_PARAM_READWRITE);
 
@@ -287,7 +287,7 @@ film_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "keep-height",
                                  _("F_it height to images"),
-                                 "Keep maximum image height",
+                                 _("Keep maximum image height"),
                                  TRUE,
                                  G_PARAM_READWRITE);
 

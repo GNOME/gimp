@@ -368,19 +368,19 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "red-invert",
                              _("In_version"),
-                             "Red inversion mode",
+                             _("Red inversion mode"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "green-invert",
-                             "I_nversion",
-                             "Green inversion mode",
+                             _("I_nversion"),
+                             _("Green inversion mode"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "blue-invert",
-                             "_Inversion",
-                             "Blue inversion mode",
+                             _("_Inversion"),
+                             _("Blue inversion mode"),
                              FALSE,
                              G_PARAM_READWRITE);
 
@@ -390,9 +390,9 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
                          2, 8192, 512,
                          G_PARAM_READWRITE);
       GIMP_PROC_ARG_BOOLEAN (procedure, "use-loglog-smoothing",
-                             "_Use log log smoothing",
-                             "Use log log smoothing to eliminate "
-                             "\"banding\" in the result",
+                             _("_Use log log smoothing"),
+                             _("Use log log smoothing to eliminate "
+                             "\"banding\" in the result"),
                              FALSE,
                              G_PARAM_READWRITE);
 

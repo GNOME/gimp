@@ -158,20 +158,20 @@ tile_create_procedure (GimpPlugIn  *plug_in,
        * image.
        */
       GIMP_PROC_ARG_INT (procedure, "new-width",
-                         "New _width",
-                         "New (tiled) image width",
+                         _("New _width"),
+                         _("New (tiled) image width"),
                          1, GIMP_MAX_IMAGE_SIZE, 1,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "new-height",
-                         "New _height",
-                         "New (tiled) image height",
+                         _("New _height"),
+                         _("New (tiled) image height"),
                          1, GIMP_MAX_IMAGE_SIZE, 1,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "new-image",
-                             "New _image",
-                             "Create a new image",
+                             _("New _image"),
+                             _("Create a new image"),
                              TRUE,
                              G_PARAM_READWRITE);
 

@@ -118,7 +118,7 @@ xcf_init (Gimp *gimp)
   procedure->marshal_func = xcf_save_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-  proc->menu_label = g_strdup (N_("GIMP XCF image"));
+  proc->menu_label = g_strdup (_("GIMP XCF image"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-wilber",
                                    strlen ("gimp-wilber") + 1,
@@ -186,7 +186,7 @@ xcf_init (Gimp *gimp)
   procedure->marshal_func = xcf_load_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-  proc->menu_label = g_strdup (N_("GIMP XCF image"));
+  proc->menu_label = g_strdup (_("GIMP XCF image"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-wilber",
                                    strlen ("gimp-wilber") + 1,
