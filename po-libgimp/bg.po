@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-05-15 07:54+0000\n"
-"PO-Revision-Date: 2023-05-14 08:03+0300\n"
+"POT-Creation-Date: 2023-12-10 09:55+0000\n"
+"PO-Revision-Date: 2023-12-11 10:50+0100\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -20,9 +20,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: libgimp/gimpbrushselectbutton.c:325 libgimp/gimppatternselectbutton.c:335
+#: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
 msgstr "_Разглеждане…"
+
+#: libgimp/gimpdrawablechooser.c:238
+msgid "Browse..."
+msgstr "Разглеждане…"
 
 #: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
 #, c-format
@@ -169,7 +173,7 @@ msgid "Confirm Save"
 msgstr "Потвърждение на запазването"
 
 #: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:571
+#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -191,7 +195,7 @@ msgid "_Ignore"
 msgstr "_Прескачане"
 
 #: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
-#: libgimp/gimpproceduredialog.c:277
+#: libgimp/gimpproceduredialog.c:296 libgimp/gimpproceduredialog.c:569
 msgid "_Export"
 msgstr "_Изнасяне"
 
@@ -230,133 +234,146 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:397
+#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:398
 #, c-format
 msgid "Export Image as %s"
 msgstr "Изнасяне на изображението като %s"
 
-#: libgimp/gimpimagemetadata.c:306
+#: libgimp/gimpimagemetadata.c:283
 msgid "Background"
 msgstr "Цвят на фона"
 
-#: libgimp/gimpimagemetadata-save.c:654 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:760 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
+#: libgimp/gimploadprocedure.c:267
+msgid ""
+"This file loading plug-in returned SUCCESS as a status without an image. "
+"This is a bug in the plug-in code. Contact the plug-in developer."
+msgstr ""
+"Този файл за зареждане на изображение завърши успешно, но не върна "
+"изображение. Това е грешка в програмния код на приставката. Молим, "
+"докладвайте я на разработчика на приставката."
+
+#: libgimp/gimpparamspecs-desc.c:54
+msgid "Allowed values:"
+msgstr "Позволени стойности:"
+
 #. procedure executed successfully
-#: libgimp/gimppdb.c:552
+#: libgimp/gimppdb.c:336
 msgid "success"
 msgstr "успех"
 
 #. procedure execution failed
-#: libgimp/gimppdb.c:556
+#: libgimp/gimppdb.c:340
 msgid "execution error"
 msgstr "грешка при изпълнение"
 
 #. procedure called incorrectly
-#: libgimp/gimppdb.c:560
+#: libgimp/gimppdb.c:344
 msgid "calling error"
 msgstr "грешка при извикване"
 
 #. procedure execution cancelled
-#: libgimp/gimppdb.c:564
+#: libgimp/gimppdb.c:348
 msgid "cancelled"
 msgstr "отменено"
 
-#: libgimp/gimpprocbrowserdialog.c:162
+#: libgimp/gimpprocbrowserdialog.c:164
 msgid "by name"
 msgstr "по име"
 
-#: libgimp/gimpprocbrowserdialog.c:163
+#: libgimp/gimpprocbrowserdialog.c:165
 msgid "by description"
 msgstr "по описание"
 
-#: libgimp/gimpprocbrowserdialog.c:164
+#: libgimp/gimpprocbrowserdialog.c:166
 msgid "by help"
 msgstr "по помощ"
 
-#: libgimp/gimpprocbrowserdialog.c:165
+#: libgimp/gimpprocbrowserdialog.c:167
 msgid "by authors"
 msgstr "по автори"
 
-#: libgimp/gimpprocbrowserdialog.c:166
+#: libgimp/gimpprocbrowserdialog.c:168
 msgid "by copyright"
 msgstr "по авторски права"
 
-#: libgimp/gimpprocbrowserdialog.c:167
+#: libgimp/gimpprocbrowserdialog.c:169
 msgid "by date"
 msgstr "по дата"
 
-#: libgimp/gimpprocbrowserdialog.c:168
+#: libgimp/gimpprocbrowserdialog.c:170
 msgid "by type"
 msgstr "по вид"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:369 libgimp/gimpprocbrowserdialog.c:527
+#: libgimp/gimpprocbrowserdialog.c:371 libgimp/gimpprocbrowserdialog.c:529
 #: libgimpwidgets/gimpbrowser.c:168
 msgid "No matches"
 msgstr "Няма съвпадения"
 
-#: libgimp/gimpprocbrowserdialog.c:372
+#: libgimp/gimpprocbrowserdialog.c:374
 msgid "Search term invalid or incomplete"
 msgstr "Търсената дума е неправилна или непълна"
 
-#: libgimp/gimpprocbrowserdialog.c:381
+#: libgimp/gimpprocbrowserdialog.c:383
 msgid "Searching"
 msgstr "Търсене"
 
-#: libgimp/gimpprocbrowserdialog.c:393
+#: libgimp/gimpprocbrowserdialog.c:395
 msgid "Searching by name"
 msgstr "Търсене по име"
 
-#: libgimp/gimpprocbrowserdialog.c:414
+#: libgimp/gimpprocbrowserdialog.c:416
 msgid "Searching by description"
 msgstr "Търсене по описание"
 
-#: libgimp/gimpprocbrowserdialog.c:422
+#: libgimp/gimpprocbrowserdialog.c:424
 msgid "Searching by help"
 msgstr "Търсене по помощ"
 
-#: libgimp/gimpprocbrowserdialog.c:430
+#: libgimp/gimpprocbrowserdialog.c:432
 msgid "Searching by authors"
 msgstr "Търсене по автори"
 
-#: libgimp/gimpprocbrowserdialog.c:438
+#: libgimp/gimpprocbrowserdialog.c:440
 msgid "Searching by copyright"
 msgstr "Търсене по авторски права"
 
-#: libgimp/gimpprocbrowserdialog.c:446
+#: libgimp/gimpprocbrowserdialog.c:448
 msgid "Searching by date"
 msgstr "Търсене по дата"
 
-#: libgimp/gimpprocbrowserdialog.c:454
+#: libgimp/gimpprocbrowserdialog.c:456
 msgid "Searching by type"
 msgstr "Търсене по вид"
 
-#: libgimp/gimpprocbrowserdialog.c:467
+#: libgimp/gimpprocbrowserdialog.c:469
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d процедури"
 msgstr[1] "%d процедури"
 
-#: libgimp/gimpprocbrowserdialog.c:476
+#: libgimp/gimpprocbrowserdialog.c:478
 msgid "No matches for your query"
 msgstr "Няма отговарящи на търсенето"
 
-#: libgimp/gimpprocbrowserdialog.c:480
+#: libgimp/gimpprocbrowserdialog.c:482
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d процедура съвпада с критериите"
 msgstr[1] "%d процедури съвпадат с критериите"
 
-#: libgimp/gimpprocedure.c:1917
+#: libgimp/gimpprocedure.c:2056
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Процедурата „%s“ не върна никакви стойности"
 
-#: libgimp/gimpprocedure.c:2008
+#: libgimp/gimpprocedure.c:2183
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -365,7 +382,7 @@ msgstr ""
 "Процедурата „%s“ върна неправилен вид стойност за „%s“ (#%d). Очаква се "
 "„%s“, а полученото е „%s“."
 
-#: libgimp/gimpprocedure.c:2020
+#: libgimp/gimpprocedure.c:2195
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
@@ -374,7 +391,7 @@ msgstr ""
 "Процедурата „%s“ е извикана с неправилен вид стойност за аргумента "
 "„%s“ (#%d). Очаква се „%s“, а полученото е „%s“."
 
-#: libgimp/gimpprocedure.c:2055
+#: libgimp/gimpprocedure.c:2230
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -383,7 +400,7 @@ msgstr ""
 "Процедурата „%s“ върна „%s“ за „%s“ (#%d, вид „%s“). Стойността е извън "
 "допустимия диапазон."
 
-#: libgimp/gimpprocedure.c:2069
+#: libgimp/gimpprocedure.c:2244
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -392,12 +409,12 @@ msgstr ""
 "Процедурата „%s“ е извикана със стойност „%s“ за аргумента „%s“ (#%d, вид "
 "„%s“). Стойността е извън допустимия диапазон."
 
-#: libgimp/gimpprocedure.c:2113
+#: libgimp/gimpprocedure.c:2288
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Процедурата „%s“ върна неправилен низ в UTF-8 за аргумента „%s“."
 
-#: libgimp/gimpprocedure.c:2123
+#: libgimp/gimpprocedure.c:2298
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -405,63 +422,63 @@ msgid ""
 msgstr ""
 "Процедурата „%s“ бе извикана с неправилен низ в UTF-8 за аргумента „%s“."
 
-#: libgimp/gimpproceduredialog.c:275
+#: libgimp/gimpproceduredialog.c:294 libgimp/gimpproceduredialog.c:567
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Отваряне"
 
-#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:572
-#: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libgimp/gimpproceduredialog.c:298 libgimp/gimpproceduredialog.c:571
+#: libgimpwidgets/gimpcolorbutton.c:558 libgimpwidgets/gimpfileentry.c:467
+#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
+#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Добре"
 
-#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:570
+#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:556
 msgid "_Reset"
 msgstr "_Зануляване"
 
-#: libgimp/gimpproceduredialog.c:339
+#: libgimp/gimpproceduredialog.c:359
 msgid "_Load Saved Settings"
 msgstr "_Зареждане на запазени настройки"
 
-#: libgimp/gimpproceduredialog.c:340
+#: libgimp/gimpproceduredialog.c:360
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Зареждане на настройки, съхранени с бутона „Запазване на настройки“"
 
-#: libgimp/gimpproceduredialog.c:352
+#: libgimp/gimpproceduredialog.c:372
 msgid "_Save Settings"
 msgstr "_Запазване на настройки"
 
-#: libgimp/gimpproceduredialog.c:353
+#: libgimp/gimpproceduredialog.c:373
 msgid "Store current settings for later reuse"
 msgstr "Запазване на текущите настройки за ползване по-късно"
 
-#: libgimp/gimpproceduredialog.c:734
+#: libgimp/gimpproceduredialog.c:784
 msgid "Brush Chooser"
 msgstr "Избор на четка"
 
-#: libgimp/gimpproceduredialog.c:738
+#: libgimp/gimpproceduredialog.c:788
 msgid "Font Chooser"
 msgstr "Избор на шрифт"
 
-#: libgimp/gimpproceduredialog.c:742
+#: libgimp/gimpproceduredialog.c:792
 msgid "Gradient Chooser"
 msgstr "Избор на преливка"
 
-#: libgimp/gimpproceduredialog.c:746
+#: libgimp/gimpproceduredialog.c:796
 msgid "Palette Chooser"
 msgstr "Избор на палитра"
 
-#: libgimp/gimpproceduredialog.c:750
+#: libgimp/gimpproceduredialog.c:800
 msgid "Pattern Chooser"
 msgstr "Избор на шарка"
 
-#: libgimp/gimpproceduredialog.c:2036
+#: libgimp/gimpproceduredialog.c:2492
 msgid "Reset to _Initial Values"
 msgstr "Зануляване към _първоначалните стойности"
 
-#: libgimp/gimpproceduredialog.c:2045
+#: libgimp/gimpproceduredialog.c:2501
 msgid "Reset to _Factory Defaults"
 msgstr "Зануляване към _заводските стойности"
 
@@ -500,6 +517,80 @@ msgstr "Дата:"
 #: libgimp/gimpprocview.c:269
 msgid "Copyright:"
 msgstr "Авторски права:"
+
+#: libgimp/gimppropwidgets.c:191
+#, c-format
+msgid "Choose layer: %s"
+msgstr "Избор на слой: %s"
+
+#: libgimp/gimppropwidgets.c:193
+#, c-format
+msgid "Choose channel: %s"
+msgstr "Избор на канал: %s"
+
+#: libgimp/gimppropwidgets.c:195
+#, c-format
+msgid "Choose drawable: %s"
+msgstr "Избор на нарисувано: %s"
+
+#: libgimp/gimpsaveprocedure.c:467
+msgid "Save _Exif"
+msgstr "_Запазване на данни по Exif"
+
+#: libgimp/gimpsaveprocedure.c:468
+msgid "Save Exif (Exchangeable image file format) metadata"
+msgstr ""
+"Запазване на мета-данните по Exif (формат за обмен на файлове за изображения)"
+
+#: libgimp/gimpsaveprocedure.c:473
+msgid "Save _IPTC"
+msgstr "З_апазване на данни по IPTC"
+
+#: libgimp/gimpsaveprocedure.c:474
+msgid "Save IPTC (International Press Telecommunications Council) metadata"
+msgstr ""
+"Запазване на мета-данните по IPTC (Международен съвет за преса и "
+"телекомуникации)"
+
+#: libgimp/gimpsaveprocedure.c:479
+msgid "Save _XMP"
+msgstr "За_пазване на данни по XMP"
+
+#: libgimp/gimpsaveprocedure.c:480
+msgid "Save XMP (Extensible Metadata Platform) metadata"
+msgstr "Запазване на мета-данните по XMP (Разширима платформа за мета-данни)"
+
+#: libgimp/gimpsaveprocedure.c:485
+msgid "Save color _profile"
+msgstr "Запазване на _цветови профил"
+
+#: libgimp/gimpsaveprocedure.c:486
+msgid "Save the ICC color profile as metadata"
+msgstr "Запазване на цветовия профил по ICC като мета-данни"
+
+#: libgimp/gimpsaveprocedure.c:491
+msgid "Save _thumbnail"
+msgstr "Запазване на _миниатюра"
+
+#: libgimp/gimpsaveprocedure.c:492
+msgid "Save a smaller representation of the image as metadata"
+msgstr "Запазване на малък вариант на изображението като мета-данни"
+
+#: libgimp/gimpsaveprocedure.c:498
+msgid "Save c_omment"
+msgstr "Запазване на _коментар"
+
+#: libgimp/gimpsaveprocedure.c:499
+msgid "Save a comment as metadata"
+msgstr "Запазване на коментар като мета-данни"
+
+#: libgimp/gimpsaveprocedure.c:503
+msgid "Comment"
+msgstr "Коментар"
+
+#: libgimp/gimpsaveprocedure.c:504
+msgid "Image comment"
+msgstr "Комантар за изображение"
 
 #: libgimp/gimpsaveproceduredialog.c:166
 msgid "Metadata"
@@ -1553,56 +1644,56 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Отрязване със запазване на пропорциите"
 
-#: libgimpbase/gimpmetadata.c:1076
+#: libgimpbase/gimpmetadata.c:1215
 msgid "Can load metadata only from local files"
 msgstr "Метаданните може да се заредят само от локални файлове"
 
-#: libgimpbase/gimpmetadata.c:1132
+#: libgimpbase/gimpmetadata.c:1271
 msgid "Can save metadata only to local files"
 msgstr "Метаданните може да се запазват само в локални файлове"
 
-#: libgimpbase/gimpmetadata.c:1180
+#: libgimpbase/gimpmetadata.c:1319
 msgid "Invalid Exif data size."
 msgstr "Неправилен размер на данни по Exif."
 
-#: libgimpbase/gimpmetadata.c:1209
+#: libgimpbase/gimpmetadata.c:1348
 msgid "Parsing Exif data failed."
 msgstr "Неуспешен анализ на данни по Exif."
 
-#: libgimpbase/gimpmetadata.c:1259
+#: libgimpbase/gimpmetadata.c:1398
 msgid "Parsing IPTC data failed."
 msgstr "Неуспешен анализ на данни по IPTC."
 
-#: libgimpbase/gimpmetadata.c:1307
+#: libgimpbase/gimpmetadata.c:1446
 msgid "Parsing XMP data failed."
 msgstr "Неуспешен анализ на данни по XMP."
 
-#: libgimpbase/gimputils.c:219 libgimpbase/gimputils.c:224
+#: libgimpbase/gimputils.c:220 libgimpbase/gimputils.c:225
 msgid "(invalid UTF-8 string)"
 msgstr "(неправилна последователност в UTF-8)"
 
-#: libgimpbase/gimputils.c:394
+#: libgimpbase/gimputils.c:395
 msgid "File path is NULL"
 msgstr "Неправилен път към файл (NULL)"
 
-#: libgimpbase/gimputils.c:402
+#: libgimpbase/gimputils.c:403
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Неуспешно преобразуване на име на файл в UTF-8 към широки знаци"
 
-#: libgimpbase/gimputils.c:410
+#: libgimpbase/gimputils.c:411
 msgid "ILCreateFromPath() failed"
 msgstr "Неуспешно изпълнение на „ILCreateFromPath()“"
 
-#: libgimpbase/gimputils.c:449
+#: libgimpbase/gimputils.c:450
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "„%s“ не може да се преобразува в правилен „NSURL“."
 
-#: libgimpbase/gimputils.c:477
+#: libgimpbase/gimputils.c:478
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Неуспешно свързване към „org.freedesktop.FileManager1“: "
 
-#: libgimpbase/gimputils.c:501
+#: libgimpbase/gimputils.c:502
 msgid "Calling ShowItems failed: "
 msgstr "Неуспешно извикване на „ShowItems“: "
 
@@ -1887,28 +1978,28 @@ msgstr "Цветовият профил „%s“ не е за за степен�
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Цветовият профил „%s“ не е за за CMYK."
 
-#: libgimpconfig/gimpconfig-deserialize.c:116
+#: libgimpconfig/gimpconfig-deserialize.c:120
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "стойността за лексемата %s не е низ в UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:480
+#: libgimpconfig/gimpconfig-deserialize.c:492
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "при очаквано „yes“ или „no“ за %s, е получено „%s“"
 
-#: libgimpconfig/gimpconfig-deserialize.c:595
+#: libgimpconfig/gimpconfig-deserialize.c:607
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "неправилна стойност за „%s“ в „%s“"
 
-#: libgimpconfig/gimpconfig-deserialize.c:610
+#: libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "неправилна стойност за „%ld“ в „%s“"
 
-#: libgimpconfig/gimpconfig-deserialize.c:679
+#: libgimpconfig/gimpconfig-deserialize.c:691
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "при анализа на лексемата „%s“: %s"
@@ -1963,26 +2054,26 @@ msgstr "при очаквано „да“ или „не“ за булева �
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Грешка при четене на „%s“ в ред %d: %s"
 
-#: libgimpmodule/gimpmodule.c:172 libgimpmodule/gimpmodule.c:190
-#: libgimpmodule/gimpmodule.c:451 libgimpmodule/gimpmodule.c:474
-#: libgimpmodule/gimpmodule.c:524
+#: libgimpmodule/gimpmodule.c:221 libgimpmodule/gimpmodule.c:239
+#: libgimpmodule/gimpmodule.c:500 libgimpmodule/gimpmodule.c:523
+#: libgimpmodule/gimpmodule.c:573
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Грешка при зареждане на модул „%s“: %s"
 
-#: libgimpmodule/gimpmoduledb.c:500
+#: libgimpmodule/gimpmoduledb.c:450
 msgid "Module error"
 msgstr "Грешка в модула"
 
-#: libgimpmodule/gimpmoduledb.c:501
+#: libgimpmodule/gimpmoduledb.c:451
 msgid "Loaded"
 msgstr "Зареден"
 
-#: libgimpmodule/gimpmoduledb.c:502
+#: libgimpmodule/gimpmoduledb.c:452
 msgid "Load failed"
 msgstr "Зареждането е невъзможно"
 
-#: libgimpmodule/gimpmoduledb.c:503
+#: libgimpmodule/gimpmoduledb.c:453
 msgid "Not loaded"
 msgstr "Незареден"
 
@@ -2012,6 +2103,22 @@ msgstr "Не може да бъде създаден предварителен 
 #: libgimpwidgets/gimpbrowser.c:141
 msgid "_Search:"
 msgstr "_Търсене:"
+
+#: libgimpwidgets/gimpcolorbutton.c:380
+msgid "_Foreground Color"
+msgstr "Цвят за _рисуване"
+
+#: libgimpwidgets/gimpcolorbutton.c:381
+msgid "_Background Color"
+msgstr "Цвят за _фон"
+
+#: libgimpwidgets/gimpcolorbutton.c:386
+msgid "Blac_k"
+msgstr "_Черно"
+
+#: libgimpwidgets/gimpcolorbutton.c:387
+msgid "_White"
+msgstr "_Бяло"
 
 #: libgimpwidgets/gimpcolorhexentry.c:134
 msgid ""
@@ -2091,6 +2198,10 @@ msgstr "Стар:"
 msgid "HTML _notation:"
 msgstr "_Запис по HTML:"
 
+#: libgimpwidgets/gimpdialog.c:198
+msgid "_Help"
+msgstr "Помо_щ"
+
 #: libgimpwidgets/gimpfileentry.c:167
 msgid "Show file location in the file manager"
 msgstr "Показване на местоположението на файла в мениджъра на файлове"
@@ -2146,6 +2257,22 @@ msgstr "Мегабайт"
 #: libgimpwidgets/gimpmemsizeentry.c:254
 msgid "Gibibyte"
 msgstr "Гигабайт"
+
+#: libgimpwidgets/gimppageselector.c:185
+msgid "N Pages"
+msgstr "Брой изображения"
+
+#: libgimpwidgets/gimppageselector.c:186
+msgid "The number of pages to open"
+msgstr "Брой страници за отваряне"
+
+#: libgimpwidgets/gimppageselector.c:199
+msgid "Target"
+msgstr "Цел"
+
+#: libgimpwidgets/gimppageselector.c:200
+msgid "the target to open to"
+msgstr "Цел, в която да се отворят"
 
 #. Count label
 #: libgimpwidgets/gimppageselector.c:283 libgimpwidgets/gimppageselector.c:1079
@@ -2230,7 +2357,7 @@ msgstr "Друг цвят за квадратчетата 1"
 msgid "Custom Checks Color 2"
 msgstr "Друг цвят за квадратчетата 2"
 
-#: libgimpwidgets/gimppropwidgets.c:2475
+#: libgimpwidgets/gimppropwidgets.c:2474
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2485,7 +2612,7 @@ msgstr "Цветови селектор в стил акварел"
 msgid "Watercolor"
 msgstr "Акварел"
 
-#: modules/color-selector-water.c:198
+#: modules/color-selector-water.c:196
 msgid "Pressure"
 msgstr "Натиск"
 
@@ -2848,75 +2975,78 @@ msgstr "Предварително преобразуване по стъпки"
 msgid "Aces RRT"
 msgstr "Aces RRT"
 
-#: modules/display-filter-clip-warning.c:121
+#. Translators: "Clip Warning" is the name of a (color) display filter
+#. * that highlights pixels outside of the color space range.
+#. * Shown as a label description.
+#: modules/display-filter-clip-warning.c:124
 msgid "Clip warning color display filter"
 msgstr "Филтър за предупреждаване за отсечени цветове"
 
-#: modules/display-filter-clip-warning.c:158
+#: modules/display-filter-clip-warning.c:161
 msgid "Show shadows"
 msgstr "Показване на сенките"
 
-#: modules/display-filter-clip-warning.c:159
+#: modules/display-filter-clip-warning.c:162
 msgid "Show warning for pixels with a negative component"
 msgstr "Предупреждение за пиксели с отрицателен компонент"
 
-#: modules/display-filter-clip-warning.c:165
+#: modules/display-filter-clip-warning.c:168
 msgid "Shadows color"
 msgstr "Цвят на сенките"
 
-#: modules/display-filter-clip-warning.c:166
+#: modules/display-filter-clip-warning.c:169
 msgid "Shadows warning color"
 msgstr "Цвят за предупреждение за сенките"
 
-#: modules/display-filter-clip-warning.c:178
+#: modules/display-filter-clip-warning.c:181
 msgid "Show highlights"
 msgstr "Показване на светлите тонове"
 
-#: modules/display-filter-clip-warning.c:179
+#: modules/display-filter-clip-warning.c:182
 msgid "Show warning for pixels with a component greater than one"
 msgstr "Показване на предупреждение за пикселите с компонент над 1"
 
-#: modules/display-filter-clip-warning.c:185
+#: modules/display-filter-clip-warning.c:188
 msgid "Highlights color"
 msgstr "Цвят за светлите тонове"
 
-#: modules/display-filter-clip-warning.c:186
+#: modules/display-filter-clip-warning.c:189
 msgid "Highlights warning color"
 msgstr "Цвят за предупреждение за светлите тонове"
 
-#: modules/display-filter-clip-warning.c:198
+#: modules/display-filter-clip-warning.c:201
 msgid "Show bogus"
 msgstr "Обозначаване на неправилните"
 
-#: modules/display-filter-clip-warning.c:199
+#: modules/display-filter-clip-warning.c:202
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr "Предупреждение за пикселите с безкраен или нечислов (NaN) компонент"
 
-#: modules/display-filter-clip-warning.c:205
+#: modules/display-filter-clip-warning.c:208
 msgid "Bogus color"
 msgstr "Неправилен цвят"
 
-#: modules/display-filter-clip-warning.c:206
+#: modules/display-filter-clip-warning.c:209
 msgid "Bogus warning color"
 msgstr "Предупредителен неправилен цвят"
 
-#: modules/display-filter-clip-warning.c:218
+#: modules/display-filter-clip-warning.c:221
 msgid "Include alpha component"
 msgstr "Включване на прозрачността"
 
-#: modules/display-filter-clip-warning.c:219
+#: modules/display-filter-clip-warning.c:222
 msgid "Include alpha component in the warning"
 msgstr "Включване на компонента за прозрачност в предупреждението"
 
-#: modules/display-filter-clip-warning.c:225
+#: modules/display-filter-clip-warning.c:228
 msgid "Include transparent pixels"
 msgstr "Включване на прозрачните пиксели"
 
-#: modules/display-filter-clip-warning.c:226
+#: modules/display-filter-clip-warning.c:229
 msgid "Include fully transparent pixels in the warning"
 msgstr "Включване на прозрачните пиксели в предупреждението"
 
-#: modules/display-filter-clip-warning.c:230
+#: modules/display-filter-clip-warning.c:233
 msgid "Clip Warning"
 msgstr "Предупреждаване за срязването"
 
