@@ -341,6 +341,18 @@ gimp_babl_format_get_with_alpha (const Babl *format)
   /* Assuming we use Babl formats with same type for all components. */
   type  = babl_get_name (babl_format_get_type (format, 0));
 
+  if (babl_format_is_palette (format))
+    {
+      gchar *alpha_palette = g_strdup (model);
+
+      alpha_palette[0] = '\\';
+      babl_new_palette_with_space (alpha_palette, babl_format_get_space (format),
+                                   NULL, &new_format);
+      g_free (alpha_palette);
+
+      return new_format;
+    }
+
   if (g_strcmp0 (model, "Y") == 0)
     new_model = "YA";
   else if (g_strcmp0 (model, "RGB") == 0)
