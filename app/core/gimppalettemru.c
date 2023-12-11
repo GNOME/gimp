@@ -39,7 +39,8 @@
 
 enum
 {
-  COLOR_HISTORY = 1
+  COLOR_HISTORY = 1,
+  COLOR         = 2
 };
 
 
@@ -96,6 +97,8 @@ gimp_palette_mru_load (GimpPaletteMru *mru,
 
   g_scanner_scope_add_symbol (scanner, 0, "color-history",
                               GINT_TO_POINTER (COLOR_HISTORY));
+  g_scanner_scope_add_symbol (scanner, 0, "color",
+                              GINT_TO_POINTER (COLOR_HISTORY));
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -114,16 +117,12 @@ gimp_palette_mru_load (GimpPaletteMru *mru,
             {
               while (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
                 {
-                  GeglColor *color;
-                  GimpRGB    rgb;
+                  GeglColor *color = NULL;
 
-                  if (! gimp_scanner_parse_color (scanner, &rgb))
+                  if (! gimp_scanner_parse_color (scanner, &color))
                     goto end;
 
-                  color = gegl_color_new (NULL);
-                  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-                  gimp_palette_add_entry (palette, -1,
-                                          _("History Color"), color);
+                  gimp_palette_add_entry (palette, -1, _("History Color"), color);
                   g_object_unref (color);
 
                   if (gimp_palette_get_n_colors (palette) == MAX_N_COLORS)
@@ -173,22 +172,57 @@ gimp_palette_mru_save (GimpPaletteMru *mru,
   for (list = palette->colors; list; list = g_list_next (list))
     {
       GimpPaletteEntry *entry = list->data;
-      gchar             buf[4][G_ASCII_DTOSTR_BUF_SIZE];
-      GimpRGB           rgb;
+      GeglColor        *color = gegl_color_duplicate (entry->color);
+      const gchar      *encoding;
+      const Babl       *format = gegl_color_get_format (color);
+      const Babl       *space;
+      GBytes           *bytes;
+      gconstpointer     data;
+      gsize             data_length;
+      guint8           *profile_data;
+      int               profile_length = 0;
 
-      gegl_color_get_pixel (entry->color, babl_format ("R'G'B'A double"), &rgb);
-      g_ascii_dtostr (buf[0], G_ASCII_DTOSTR_BUF_SIZE, rgb.r);
-      g_ascii_dtostr (buf[1], G_ASCII_DTOSTR_BUF_SIZE, rgb.g);
-      g_ascii_dtostr (buf[2], G_ASCII_DTOSTR_BUF_SIZE, rgb.b);
-      g_ascii_dtostr (buf[3], G_ASCII_DTOSTR_BUF_SIZE, rgb.a);
+      gimp_config_writer_open (writer, "color");
 
-      /* TODO: this should be stored as properly GeglColor data with space and
-       * all!
-       */
-      gimp_config_writer_open (writer, "color-rgba");
-      gimp_config_writer_printf (writer, "%s %s %s %s",
-                                 buf[0], buf[1], buf[2], buf[3]);
+      if (babl_format_is_palette (format))
+        {
+          guint8 pixel[40];
+
+          /* As a special case, we don't want to serialize
+           * palette colors, because they are just too much
+           * dependent on external data and cannot be
+           * deserialized back safely. So we convert them first.
+           */
+           format = babl_format_with_space ("R'G'B'A u8", format);
+           gegl_color_get_pixel (color, format, pixel);
+           gegl_color_set_pixel (color, format, pixel);
+        }
+
+      encoding = babl_format_get_encoding (format);
+      gimp_config_writer_string (writer, encoding);
+
+      bytes = gegl_color_get_bytes (color, format);
+      data  = g_bytes_get_data (bytes, &data_length);
+
+      gimp_config_writer_printf (writer, "%lu", data_length);
+      gimp_config_writer_data (writer, data_length, data);
+
+      space = babl_format_get_space (format);
+      if (space != babl_space ("sRGB"))
+        {
+          profile_data = (guint8 *) babl_space_get_icc (space, &profile_length);
+          gimp_config_writer_printf (writer, "%u", profile_length);
+          if (profile_data)
+            gimp_config_writer_data (writer, profile_length, profile_data);
+        }
+      else
+        {
+          gimp_config_writer_printf (writer, "%u", profile_length);
+        }
+
       gimp_config_writer_close (writer);
+      g_bytes_unref (bytes);
+      g_object_unref (color);
     }
 
   gimp_config_writer_close (writer);
@@ -198,14 +232,13 @@ gimp_palette_mru_save (GimpPaletteMru *mru,
 
 void
 gimp_palette_mru_add (GimpPaletteMru *mru,
-                      const GimpRGB  *rgb)
+                      GeglColor      *color)
 {
   GimpPalette *palette;
   GList       *list;
-  GeglColor   *color;
 
   g_return_if_fail (GIMP_IS_PALETTE_MRU (mru));
-  g_return_if_fail (rgb != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
   palette = GIMP_PALETTE (mru);
 
@@ -215,22 +248,15 @@ gimp_palette_mru_add (GimpPaletteMru *mru,
        list = g_list_next (list))
     {
       GimpPaletteEntry *entry = list->data;
-      GimpRGB           entry_rgb;
 
-      gegl_color_get_pixel (entry->color, babl_format ("R'G'B'A double"), &entry_rgb);
-      if (gimp_rgba_distance (&entry_rgb, rgb) < RGBA_EPSILON)
+      if (gimp_color_is_perceptually_identical (entry->color, color))
         {
           gimp_palette_move_entry (palette, entry, 0);
-
-          color = gegl_color_new (NULL);
-          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
 
           /*  Even though they are nearly the same color, let's make them
            *  exactly equal.
            */
           gimp_palette_set_entry_color (palette, 0, color, FALSE);
-          g_object_unref (color);
-
           return;
         }
     }
@@ -242,8 +268,5 @@ gimp_palette_mru_add (GimpPaletteMru *mru,
                                                          MAX_N_COLORS - 1));
     }
 
-  color = gegl_color_new (NULL);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
   gimp_palette_add_entry (palette, 0, _("History Color"), color);
-  g_object_unref (color);
 }

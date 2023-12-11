@@ -51,7 +51,7 @@ struct _GimpColorHistoryClass
 
   /*  signals  */
   void   (* color_selected) (GimpColorHistory *history,
-                             const GimpRGB    *rgb);
+                             GeglColor        *color);
 };
 
 
@@ -60,5 +60,5 @@ GType       gimp_color_history_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_color_history_new      (GimpContext     *context,
                                          gint             history_size);
 
-#endif /* __GIMP_COLOR_HISTORY_H__ */
 
+#endif /* __GIMP_COLOR_HISTORY_H__ */

@@ -56,7 +56,7 @@ void       gimp_palette_mru_save     (GimpPaletteMru *mru,
                                       GFile          *file);
 
 void       gimp_palette_mru_add      (GimpPaletteMru *mru,
-                                      const GimpRGB  *color);
+                                      GeglColor      *color);
 
 
 #endif  /*  __GIMP_PALETTE_MRU_H__  */

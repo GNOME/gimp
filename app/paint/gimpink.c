@@ -169,13 +169,9 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
     case GIMP_PAINT_STATE_INIT:
         {
           GimpContext *context = GIMP_CONTEXT (paint_options);
-          GeglColor   *foreground;
-          GimpRGB      rgb;
 
           gimp_symmetry_set_stateful (sym, TRUE);
-          foreground = gimp_context_get_foreground (context);
-          gegl_color_get_pixel (foreground, babl_format_with_space ("R'G'B'A double", NULL), &rgb);
-          gimp_palettes_add_color_history (context->gimp, &rgb);
+          gimp_palettes_add_color_history (context->gimp, gimp_context_get_foreground (context));
 
           if (cur_coords->x == last_coords.x &&
               cur_coords->y == last_coords.y)

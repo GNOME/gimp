@@ -65,13 +65,15 @@ G_DEFINE_BOXED_TYPE (GimpScanner, gimp_scanner,
 
 /*  local function prototypes  */
 
-static GimpScanner * gimp_scanner_new     (const gchar  *name,
-                                           GMappedFile  *mapped,
-                                           gchar        *text,
-                                           GError      **error);
-static void          gimp_scanner_message (GimpScanner  *scanner,
-                                           gchar        *message,
-                                           gboolean      is_error);
+static GimpScanner * gimp_scanner_new                    (const gchar  *name,
+                                                          GMappedFile  *mapped,
+                                                          gchar        *text,
+                                                          GError      **error);
+static void          gimp_scanner_message                (GimpScanner  *scanner,
+                                                          gchar        *message,
+                                                          gboolean      is_error);
+static GTokenType    gimp_scanner_parse_deprecated_color (GimpScanner  *scanner,
+                                                          GeglColor   **color);
 
 
 /*  public functions  */
@@ -660,33 +662,37 @@ enum
   COLOR_RGB  = 1,
   COLOR_RGBA,
   COLOR_HSV,
-  COLOR_HSVA
+  COLOR_HSVA,
+  COLOR
 };
 
 /**
  * gimp_scanner_parse_color:
  * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
- * @dest: (out caller-allocates): Pointer to a color to store the result
+ * @color: (out callee-allocates): Pointer to a color to store the result
  *
  * Returns: %TRUE on success
  *
  * Since: 2.4
  **/
 gboolean
-gimp_scanner_parse_color (GimpScanner *scanner,
-                          GimpRGB     *dest)
+gimp_scanner_parse_color (GimpScanner  *scanner,
+                          GeglColor   **color)
 {
   guint      scope_id;
   guint      old_scope_id;
   GTokenType token;
-  GimpRGB    color = { 0.0, 0.0, 0.0, 1.0 };
+  gboolean   success = TRUE;
 
   scope_id = g_quark_from_static_string ("gimp_scanner_parse_color");
   old_scope_id = g_scanner_set_scope (scanner, scope_id);
 
-  if (! g_scanner_scope_lookup_symbol (scanner, scope_id, "color-rgb"))
+  if (! g_scanner_scope_lookup_symbol (scanner, scope_id, "color"))
     {
+      g_scanner_scope_add_symbol (scanner, scope_id,
+                                  "color", GINT_TO_POINTER (COLOR));
+      /* Deprecated. Kept for backward compatibility. */
       g_scanner_scope_add_symbol (scanner, scope_id,
                                   "color-rgb", GINT_TO_POINTER (COLOR_RGB));
       g_scanner_scope_add_symbol (scanner, scope_id,
@@ -697,90 +703,192 @@ gimp_scanner_parse_color (GimpScanner *scanner,
                                   "color-hsva", GINT_TO_POINTER (COLOR_HSVA));
     }
 
-  token = G_TOKEN_LEFT_PAREN;
+  token = g_scanner_peek_next_token (scanner);
 
-  while (g_scanner_peek_next_token (scanner) == token)
+  if (token == G_TOKEN_IDENTIFIER)
     {
-      token = g_scanner_get_next_token (scanner);
+      g_scanner_get_next_token (scanner);
 
-      switch (token)
+      if (g_ascii_strcasecmp (scanner->value.v_identifier, "null") != 0)
+        /* Do not fail the whole color parsing. Just output to stderr and assume
+         * a NULL color property.
+         */
+        g_printerr ("%s: expected NULL identifier for serialized color, got '%s'. "
+                    "Assuming NULL instead.\n",
+                    G_STRFUNC, scanner->value.v_identifier);
+
+      *color = NULL;
+
+      token = g_scanner_peek_next_token (scanner);
+      if (token == G_TOKEN_RIGHT_PAREN)
+        token = G_TOKEN_NONE;
+      else
+        token = G_TOKEN_RIGHT_PAREN;
+    }
+  else if (token == G_TOKEN_LEFT_PAREN)
+    {
+      g_scanner_get_next_token (scanner);
+      token = g_scanner_peek_next_token (scanner);
+
+      if (token == G_TOKEN_SYMBOL)
         {
-        case G_TOKEN_LEFT_PAREN:
+          if (GPOINTER_TO_INT (scanner->next_value.v_symbol) != COLOR)
+            {
+              /* Support historical GimpRGB format which may be stored in various config
+               * files, but even some data (such as GTP tool presets which contains
+               * tool-options which are GimpContext).
+               */
+              if (gimp_scanner_parse_deprecated_color (scanner, color))
+                token = G_TOKEN_RIGHT_PAREN;
+              else
+                success = FALSE;
+            }
+          else
+            {
+              const Babl *format;
+              gchar      *encoding;
+              guint8     *data;
+              gint        data_length;
+              gint        profile_data_length;
+
+              g_scanner_get_next_token (scanner);
+
+              if (! gimp_scanner_parse_string (scanner, &encoding))
+                {
+                  token = G_TOKEN_STRING;
+                  goto color_parsed;
+                }
+
+              if (! babl_format_exists (encoding))
+                {
+                  g_scanner_error (scanner,
+                                   "%s: format \"%s\" for serialized color is not a valid babl format.",
+                                   G_STRFUNC, encoding);
+                  g_free (encoding);
+                  success = FALSE;
+                  goto color_parsed;
+                }
+
+              format = babl_format (encoding);
+              g_free (encoding);
+
+              if (! gimp_scanner_parse_int (scanner, &data_length))
+                {
+                  token = G_TOKEN_INT;
+                  goto color_parsed;
+                }
+
+              if (data_length != babl_format_get_bytes_per_pixel (format))
+                {
+                  g_scanner_error (scanner,
+                                   "%s: format \"%s\" expects %d bpp but color was serialized with %d bpp.",
+                                   G_STRFUNC, babl_get_name (format),
+                                   babl_format_get_bytes_per_pixel (format),
+                                   data_length);
+                  success = FALSE;
+                  goto color_parsed;
+                }
+
+              if (! gimp_scanner_parse_data (scanner, data_length, &data))
+                {
+                  token = G_TOKEN_STRING;
+                  goto color_parsed;
+                }
+
+              if (! gimp_scanner_parse_int (scanner, &profile_data_length))
+                {
+                  g_free (data);
+                  token = G_TOKEN_INT;
+                  goto color_parsed;
+                }
+
+              if (profile_data_length > 0)
+                {
+                  const Babl       *space = NULL;
+                  GimpColorProfile *profile;
+                  guint8           *profile_data;
+                  GError           *error = NULL;
+
+                  if (! gimp_scanner_parse_data (scanner, profile_data_length, &profile_data))
+                    {
+                      g_free (data);
+                      token = G_TOKEN_STRING;
+                      goto color_parsed;
+                    }
+
+                  profile = gimp_color_profile_new_from_icc_profile (profile_data, profile_data_length, &error);
+
+                  if (profile)
+                    {
+                      space = gimp_color_profile_get_space (profile,
+                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                            &error);
+
+                      if (! space)
+                        {
+                          g_scanner_error (scanner,
+                                           "%s: failed to create Babl space for serialized color from profile: %s\n",
+                                           G_STRFUNC, error->message);
+                          g_clear_error (&error);
+                        }
+                      g_object_unref (profile);
+                    }
+                  else
+                    {
+                      g_scanner_error (scanner,
+                                       "%s: invalid profile data for serialized color: %s",
+                                       G_STRFUNC, error->message);
+                      g_error_free (error);
+                    }
+                  format = babl_format_with_space (babl_format_get_encoding (format), space);
+
+                  g_free (profile_data);
+                }
+
+              *color = gegl_color_new (NULL);
+              gegl_color_set_pixel (*color, format, data);
+
+              token = G_TOKEN_RIGHT_PAREN;
+              g_free (data);
+            }
+        }
+      else
+        {
           token = G_TOKEN_SYMBOL;
-          break;
+        }
 
-        case G_TOKEN_SYMBOL:
-          {
-            gdouble  col[4]     = { 0.0, 0.0, 0.0, 1.0 };
-            gint     n_channels = 4;
-            gboolean is_hsv     = FALSE;
-            gint     i;
-
-            switch (GPOINTER_TO_INT (scanner->value.v_symbol))
-              {
-              case COLOR_RGB:
-                n_channels = 3;
-                /* fallthrough */
-              case COLOR_RGBA:
-                break;
-
-              case COLOR_HSV:
-                n_channels = 3;
-                /* fallthrough */
-              case COLOR_HSVA:
-                is_hsv = TRUE;
-                break;
-              }
-
-            token = G_TOKEN_FLOAT;
-
-            for (i = 0; i < n_channels; i++)
-              {
-                if (! gimp_scanner_parse_float (scanner, &col[i]))
-                  goto finish;
-              }
-
-            if (is_hsv)
-              {
-                GimpHSV hsv;
-
-                gimp_hsva_set (&hsv, col[0], col[1], col[2], col[3]);
-                gimp_hsv_to_rgb (&hsv, &color);
-              }
-            else
-              {
-                gimp_rgba_set (&color, col[0], col[1], col[2], col[3]);
-              }
-
-            token = G_TOKEN_RIGHT_PAREN;
-          }
-          break;
-
-        case G_TOKEN_RIGHT_PAREN:
-          token = G_TOKEN_NONE; /* indicates success */
-          goto finish;
-
-        default: /* do nothing */
-          break;
+      if (success && token == G_TOKEN_RIGHT_PAREN)
+        {
+          token = g_scanner_peek_next_token (scanner);
+          if (token == G_TOKEN_RIGHT_PAREN)
+            {
+              g_scanner_get_next_token (scanner);
+              token = G_TOKEN_NONE;
+            }
+          else
+            {
+               g_clear_object (color);
+               token = G_TOKEN_RIGHT_PAREN;
+            }
         }
     }
+  else
+    {
+      token = G_TOKEN_LEFT_PAREN;
+    }
 
- finish:
+color_parsed:
 
-  if (token != G_TOKEN_NONE)
+  if (success && token != G_TOKEN_NONE)
     {
       g_scanner_get_next_token (scanner);
       g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
                              _("fatal parse error"), TRUE);
     }
-  else
-    {
-      *dest = color;
-    }
 
   g_scanner_set_scope (scanner, old_scope_id);
 
-  return (token == G_TOKEN_NONE);
+  return (success && token == G_TOKEN_NONE);
 }
 
 /**
@@ -886,4 +994,89 @@ gimp_scanner_message (GimpScanner *scanner,
     /*  should never happen, thus not marked for translation  */
     g_set_error (data->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
                  "Error parsing internal buffer: %s", message);
+}
+
+static GTokenType
+gimp_scanner_parse_deprecated_color (GimpScanner  *scanner,
+                                     GeglColor   **color)
+{
+  guint      scope_id;
+  guint      old_scope_id;
+  GTokenType token;
+
+  scope_id = g_quark_from_static_string ("gimp_scanner_parse_deprecated_color");
+  old_scope_id = g_scanner_set_scope (scanner, scope_id);
+
+  if (! g_scanner_scope_lookup_symbol (scanner, scope_id, "color-rgb"))
+    {
+      g_scanner_scope_add_symbol (scanner, scope_id,
+                                  "color-rgb", GINT_TO_POINTER (COLOR_RGB));
+      g_scanner_scope_add_symbol (scanner, scope_id,
+                                  "color-rgba", GINT_TO_POINTER (COLOR_RGBA));
+      g_scanner_scope_add_symbol (scanner, scope_id,
+                                  "color-hsv", GINT_TO_POINTER (COLOR_HSV));
+      g_scanner_scope_add_symbol (scanner, scope_id,
+                                  "color-hsva", GINT_TO_POINTER (COLOR_HSVA));
+    }
+
+  token = G_TOKEN_SYMBOL;
+
+  while (g_scanner_peek_next_token (scanner) == token)
+    {
+      token = g_scanner_get_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_SYMBOL:
+          {
+            gdouble  col[4]     = { 0.0, 0.0, 0.0, 1.0 };
+            gint     n_channels = 4;
+            gboolean is_hsv     = FALSE;
+            gint     i;
+
+            switch (GPOINTER_TO_INT (scanner->value.v_symbol))
+              {
+              case COLOR_RGB:
+                n_channels = 3;
+                /* fallthrough */
+              case COLOR_RGBA:
+                break;
+
+              case COLOR_HSV:
+                n_channels = 3;
+                /* fallthrough */
+              case COLOR_HSVA:
+                is_hsv = TRUE;
+                break;
+              }
+
+            token = G_TOKEN_FLOAT;
+
+            for (i = 0; i < n_channels; i++)
+              {
+                if (! gimp_scanner_parse_float (scanner, &col[i]))
+                  goto finish;
+              }
+
+            *color = gegl_color_new (NULL);
+            if (is_hsv)
+              gegl_color_set_pixel (*color, babl_format ("HSVA double"), col);
+            else
+              gegl_color_set_pixel (*color, babl_format ("R'G'B'A double"), col);
+
+            /* Indicates success. */
+            token = G_TOKEN_NONE;
+          }
+          break;
+
+        default: /* do nothing */
+          break;
+        }
+    }
+
+finish:
+
+  g_scanner_set_scope (scanner, old_scope_id);
+
+  return token;
 }

@@ -49,7 +49,7 @@ struct _GimpPaintbrushClass
   gboolean   (* get_color_history_color) (GimpPaintbrush            *paintbrush,
                                           GimpDrawable              *drawable,
                                           GimpPaintOptions          *paint_options,
-                                          GimpRGB                   *color);
+                                          GeglColor                **color);
   void       (* get_paint_params)        (GimpPaintbrush            *paintbrush,
                                           GimpDrawable              *drawable,
                                           GimpPaintOptions          *paint_options,

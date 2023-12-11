@@ -56,7 +56,7 @@ static void       gimp_paintbrush_paint                        (GimpPaintCore   
 static gboolean   gimp_paintbrush_real_get_color_history_color (GimpPaintbrush            *paintbrush,
                                                                 GimpDrawable              *drawable,
                                                                 GimpPaintOptions          *paint_options,
-                                                                GimpRGB                   *color);
+                                                                GeglColor                **color);
 static void       gimp_paintbrush_real_get_paint_params        (GimpPaintbrush            *paintbrush,
                                                                 GimpDrawable              *drawable,
                                                                 GimpPaintOptions          *paint_options,
@@ -118,7 +118,7 @@ gimp_paintbrush_paint (GimpPaintCore    *paint_core,
     {
     case GIMP_PAINT_STATE_INIT:
       {
-        GimpRGB color;
+        GeglColor *color = NULL;
 
         for (GList *iter = drawables; iter; iter = iter->next)
           if (GIMP_PAINTBRUSH_GET_CLASS (paintbrush)->get_color_history_color &&
@@ -129,7 +129,7 @@ gimp_paintbrush_paint (GimpPaintCore    *paint_core,
             {
               GimpContext *context = GIMP_CONTEXT (paint_options);
 
-              gimp_palettes_add_color_history (context->gimp, &color);
+              gimp_palettes_add_color_history (context->gimp, color);
             }
       }
       break;
@@ -148,15 +148,14 @@ gimp_paintbrush_paint (GimpPaintCore    *paint_core,
 }
 
 static gboolean
-gimp_paintbrush_real_get_color_history_color (GimpPaintbrush   *paintbrush,
-                                              GimpDrawable     *drawable,
-                                              GimpPaintOptions *paint_options,
-                                              GimpRGB          *rgb)
+gimp_paintbrush_real_get_color_history_color (GimpPaintbrush    *paintbrush,
+                                              GimpDrawable      *drawable,
+                                              GimpPaintOptions  *paint_options,
+                                              GeglColor        **color)
 {
   GimpContext   *context    = GIMP_CONTEXT (paint_options);
   GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paintbrush);
   GimpDynamics  *dynamics   = gimp_context_get_dynamics (context);
-  GeglColor     *color;
 
   /* We don't save gradient color history and pixmap brushes
    * have no color to save.
@@ -167,8 +166,7 @@ gimp_paintbrush_real_get_color_history_color (GimpPaintbrush   *paintbrush,
       return FALSE;
     }
 
-  color = gimp_context_get_foreground (context);
-  gegl_color_get_rgba_with_space (color, &rgb->r, &rgb->g, &rgb->b, &rgb->a, NULL);
+  *color = gimp_context_get_foreground (context);
 
   return TRUE;
 }

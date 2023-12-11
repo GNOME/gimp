@@ -159,14 +159,7 @@ gimp_smudge_paint (GimpPaintCore    *paint_core,
         if (options->flow > 0.0 &&
             ! gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_COLOR) &&
             ! (brush_core->brush && gimp_brush_get_pixmap (brush_core->brush)))
-          {
-            GeglColor *foreground;
-            GimpRGB    rgb;
-
-            foreground = gimp_context_get_foreground (context);
-            gegl_color_get_rgba_with_space (foreground, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
-            gimp_palettes_add_color_history (context->gimp, &rgb);
-          }
+          gimp_palettes_add_color_history (context->gimp, gimp_context_get_foreground (context));
       }
       break;
 

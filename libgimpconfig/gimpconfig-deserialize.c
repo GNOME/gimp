@@ -716,11 +716,13 @@ gimp_config_deserialize_rgb (GValue     *value,
                              GParamSpec *prop_spec,
                              GScanner   *scanner)
 {
-  GimpRGB rgb;
+  GeglColor *color = NULL;
+  GimpRGB    rgb;
 
-  if (! gimp_scanner_parse_color (scanner, &rgb))
+  if (! gimp_scanner_parse_color (scanner, &color))
     return G_TOKEN_NONE;
 
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
   g_value_set_boxed (value, &rgb);
 
   return G_TOKEN_RIGHT_PAREN;
@@ -1097,138 +1099,12 @@ gimp_config_deserialize_color (GValue     *value,
                                GParamSpec *prop_spec,
                                GScanner   *scanner)
 {
-  GTokenType  token;
+  GeglColor *color = NULL;
 
-  token = g_scanner_peek_next_token (scanner);
+  if (! gimp_scanner_parse_color (scanner, &color))
+    return G_TOKEN_NONE;
 
-  if (token == G_TOKEN_LEFT_PAREN)
-    {
-      GeglColor *color;
-      GimpRGB    rgb;
-
-      /* Support historical GimpRGB format which may be stored in various config
-       * files, but even some data (such as GTP tool presets which contains
-       * tool-options which are GimpContext).
-       */
-      if (! gimp_scanner_parse_color (scanner, &rgb))
-        return G_TOKEN_NONE;
-
-      color = gegl_color_new (NULL);
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-      g_value_take_object (value, color);
-    }
-  else if (token == G_TOKEN_IDENTIFIER)
-    {
-      g_scanner_get_next_token (scanner);
-
-      if (g_ascii_strcasecmp (scanner->value.v_identifier, "null") != 0)
-        /* Do not fail the whole color parsing. Just output to stderr and assume
-         * a NULL color property.
-         */
-        g_printerr ("%s: expected NULL identifier for color property '%s', got '%s'. "
-                    "Assuming NULL instead.\n",
-                    G_STRFUNC, prop_spec->name, scanner->value.v_identifier);
-
-      g_value_set_object (value, NULL);
-    }
-  else if (token == G_TOKEN_STRING)
-    {
-      const Babl *format;
-      const Babl *space = NULL;
-      GeglColor  *color;
-      gchar      *encoding;
-      guint8     *data;
-      gint        data_length;
-      gint        profile_data_length;
-
-      if (! gimp_scanner_parse_string (scanner, &encoding))
-        return G_TOKEN_STRING;
-
-      if (! babl_format_exists (encoding))
-        {
-          g_scanner_error (scanner,
-                           "%s: format \"%s\" for color property '%s' is not a valid babl format.",
-                           G_STRFUNC, encoding, prop_spec->name);
-          g_free (encoding);
-          return G_TOKEN_NONE;
-        }
-
-      format = babl_format (encoding);
-      g_free (encoding);
-
-      if (! gimp_scanner_parse_int (scanner, &data_length))
-        return G_TOKEN_INT;
-
-      if (data_length != babl_format_get_bytes_per_pixel (format))
-        {
-          g_scanner_error (scanner,
-                           "%s: format \"%s\" expects %d bpp but color property '%s' was stored with %d bpp.",
-                           G_STRFUNC, babl_get_name (format),
-                           babl_format_get_bytes_per_pixel (format),
-                           prop_spec->name, data_length);
-          return G_TOKEN_NONE;
-        }
-
-      if (! gimp_scanner_parse_data (scanner, data_length, &data))
-        return G_TOKEN_STRING;
-
-      if (! gimp_scanner_parse_int (scanner, &profile_data_length))
-        {
-          g_free (data);
-          return G_TOKEN_INT;
-        }
-
-      if (profile_data_length > 0)
-        {
-          GimpColorProfile *profile;
-          guint8           *profile_data;
-          GError           *error = NULL;
-
-          if (! gimp_scanner_parse_data (scanner, profile_data_length, &profile_data))
-            {
-              g_free (data);
-              return G_TOKEN_STRING;
-            }
-
-          profile = gimp_color_profile_new_from_icc_profile (profile_data, profile_data_length, &error);
-
-          if (profile)
-            {
-              space = gimp_color_profile_get_space (profile,
-                                                    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                                    &error);
-
-              if (! space)
-                {
-                  g_scanner_error (scanner,
-                                   "%s: failed to create Babl space for color property '%s' from profile: %s\n",
-                                   G_STRFUNC, prop_spec->name, error->message);
-                  g_clear_error (&error);
-                }
-              g_object_unref (profile);
-            }
-          else
-            {
-              g_scanner_error (scanner,
-                               "%s: invalid profile data for color property '%s': %s",
-                               G_STRFUNC, prop_spec->name, error->message);
-              g_error_free (error);
-            }
-          format = babl_format_with_space (babl_format_get_encoding (format), space);
-
-          g_free (profile_data);
-        }
-
-      color = gegl_color_new (NULL);
-      gegl_color_set_pixel (color, format, data);
-      g_value_take_object (value, color);
-
-      g_free (data);
-    }
-  else
-    {
-      return G_TOKEN_INT;
-    }
+  g_value_take_object (value, color);
 
   return G_TOKEN_RIGHT_PAREN;
 }

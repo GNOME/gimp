@@ -72,7 +72,7 @@ gboolean      gimp_scanner_parse_float              (GimpScanner   *scanner,
 gboolean      gimp_scanner_parse_boolean            (GimpScanner   *scanner,
                                                      gboolean      *dest);
 gboolean      gimp_scanner_parse_color              (GimpScanner   *scanner,
-                                                     GimpRGB       *dest);
+                                                     GeglColor    **color);
 gboolean      gimp_scanner_parse_matrix2            (GimpScanner   *scanner,
                                                      GimpMatrix2   *dest);
 

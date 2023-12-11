@@ -99,10 +99,6 @@ static void   gimp_color_dialog_color_changed    (GimpColorSelection *selection,
 static void   gimp_color_history_add_clicked     (GtkWidget          *widget,
                                                   GimpColorDialog    *dialog);
 
-static void   gimp_color_dialog_history_selected (GimpColorHistory   *history,
-                                                  const GimpRGB      *rgb,
-                                                  GimpColorDialog    *dialog);
-
 static void   gimp_color_dialog_image_changed    (GimpContext        *context,
                                                   GimpImage          *image,
                                                   GimpColorDialog    *dialog);
@@ -259,9 +255,9 @@ gimp_color_dialog_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (history), TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (history));
 
-  g_signal_connect (history, "color-selected",
-                    G_CALLBACK (gimp_color_dialog_history_selected),
-                    dialog);
+  g_signal_connect_swapped (history, "color-selected",
+                            G_CALLBACK (gimp_color_selection_set_color),
+                            dialog->selection);
 
   g_signal_connect (dialog, "show",
                     G_CALLBACK (gimp_color_dialog_show),
@@ -706,28 +702,10 @@ gimp_color_history_add_clicked (GtkWidget       *widget,
   GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
   GimpPalette        *history;
   GeglColor          *color;
-  GimpRGB             rgb;
 
   history = gimp_palettes_get_color_history (viewable_dialog->context->gimp);
-
-  color = gimp_color_selection_get_color (GIMP_COLOR_SELECTION (dialog->selection));
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-
-  gimp_palette_mru_add (GIMP_PALETTE_MRU (history), &rgb);
-}
-
-/* Color history callback  */
-
-static void
-gimp_color_dialog_history_selected (GimpColorHistory *history,
-                                    const GimpRGB    *rgb,
-                                    GimpColorDialog  *dialog)
-{
-  GeglColor *color = gegl_color_new (NULL);
-
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
-  gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection), color);
-  g_object_unref (color);
+  color   = gimp_color_selection_get_color (GIMP_COLOR_SELECTION (dialog->selection));
+  gimp_palette_mru_add (GIMP_PALETTE_MRU (history), color);
 }
 
 /* Context-related callbacks */

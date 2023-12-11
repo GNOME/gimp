@@ -131,7 +131,7 @@ gimp_color_history_class_init (GimpColorHistoryClass *klass)
                   G_STRUCT_OFFSET (GimpColorHistoryClass, color_selected),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  G_TYPE_POINTER);
+                  GEGL_TYPE_COLOR);
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
@@ -460,15 +460,12 @@ gimp_color_history_color_clicked (GtkWidget        *widget,
 {
   GimpColorArea *color_area;
   GeglColor     *color;
-  GimpRGB        rgb;
 
   color_area = GIMP_COLOR_AREA (gtk_bin_get_child (GTK_BIN (widget)));
 
   color = gimp_color_area_get_color (color_area);
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  g_signal_emit (history, history_signals[COLOR_SELECTED], 0, color);
   g_object_unref (color);
-
-  g_signal_emit (history, history_signals[COLOR_SELECTED], 0, &rgb);
 }
 
 /* Color history palette callback. */
