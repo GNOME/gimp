@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-03 14:29+0000\n"
-"PO-Revision-Date: 2023-12-07 23:16+0100\n"
+"POT-Creation-Date: 2023-12-11 00:11+0000\n"
+"PO-Revision-Date: 2023-12-11 20:16+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -13643,7 +13643,7 @@ msgstr "Omogoči poslikavo odtisa "
 msgid "Enable en_vironment mapping"
 msgstr "Omo_goči preslikavo odtisa okolja"
 
-#: plug-ins/lighting/lighting-main.c:156 plug-ins/lighting/lighting-main.c:291
+#: plug-ins/lighting/lighting-main.c:156
 msgid "Enable envmapping"
 msgstr "Omogoči preslikavo odtisa okolja"
 
@@ -13843,9 +13843,46 @@ msgstr "Intenzivnost razpršenosti"
 msgid "Material diffuse intensity (Bright)"
 msgstr "Intenzivnost razpršene svetlobe materiala (svetlo)"
 
+#: plug-ins/lighting/lighting-main.c:271
+#, fuzzy
+#| msgid "Material diffuse reflectivity"
+msgid "Diffuse reflectivity"
+msgstr "Razpršena odbojnost materiala"
+
+#: plug-ins/lighting/lighting-main.c:272
+#: plug-ins/map-object/map-object-main.c:288
+msgid "Material diffuse reflectivity"
+msgstr "Razpršena odbojnost materiala"
+
+#: plug-ins/lighting/lighting-main.c:277
+#, fuzzy
+#| msgid "Material specular reflectivity"
+msgid "Specular reflectivity"
+msgstr "Zrcalna odbojnost materiala"
+
+#: plug-ins/lighting/lighting-main.c:278
+#: plug-ins/map-object/map-object-main.c:294
+msgid "Material specular reflectivity"
+msgstr "Zrcalna odbojnost materiala"
+
+#: plug-ins/lighting/lighting-main.c:283
+#, fuzzy
+msgid "Highlight"
+msgstr "Svetla podro_čja"
+
+#: plug-ins/lighting/lighting-main.c:284
+#, fuzzy
+#| msgid "Material highlight (note, it's exponential)"
+msgid "Material highlight (note, it's exponential) (Polished)"
+msgstr "Svetlobno poudarjanje materiala (upoštevajte, da je eksponentno)"
+
 #: plug-ins/lighting/lighting-main.c:290
 msgid "Metallic"
 msgstr "Kovinsko"
+
+#: plug-ins/lighting/lighting-main.c:291
+msgid "Make surfaces look metallic"
+msgstr "Površine naj imajo kovinski videz"
 
 #: plug-ins/lighting/lighting-main.c:297
 #: plug-ins/map-object/map-object-main.c:307
@@ -14110,17 +14147,9 @@ msgstr "I_ntenziteta razpršenja materiala"
 msgid "Di_ffuse"
 msgstr "Ra_zpršena"
 
-#: plug-ins/map-object/map-object-main.c:288
-msgid "Material diffuse reflectivity"
-msgstr "Razpršena odbojnost materiala"
-
 #: plug-ins/map-object/map-object-main.c:293
 msgid "Spec_ular"
 msgstr "Zrca_lna"
-
-#: plug-ins/map-object/map-object-main.c:294
-msgid "Material specular reflectivity"
-msgstr "Zrcalna odbojnost materiala"
 
 #: plug-ins/map-object/map-object-main.c:299
 #, fuzzy
