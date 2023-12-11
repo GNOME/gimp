@@ -301,7 +301,8 @@ gimp_config_serialize_property (GimpConfig       *config,
         }
       else if (GIMP_VALUE_HOLDS_COLOR (&value))
         {
-          GeglColor *color = g_value_get_object (&value);
+          GeglColor *color      = g_value_get_object (&value);
+          gboolean   free_color = FALSE;
 
           gimp_config_writer_open (writer, param_spec->name);
 
@@ -309,16 +310,34 @@ gimp_config_serialize_property (GimpConfig       *config,
             {
               const gchar   *encoding;
               const Babl    *format = gegl_color_get_format (color);
-              GBytes        *bytes  = gegl_color_get_bytes (color, format);
+              GBytes        *bytes;
               gconstpointer  data;
               gsize          data_length;
               guint8        *profile_data;
               int            profile_length = 0;
 
+              if (babl_format_is_palette (format))
+                {
+                  guint8 pixel[40];
+
+                  /* As a special case, we don't want to serialize
+                   * palette colors, because they are just too much
+                   * dependent on external data and cannot be
+                   * deserialized back safely. So we convert them first.
+                   */
+                   free_color = TRUE;
+                   color = gegl_color_duplicate (color);
+
+                   format = babl_format_with_space ("R'G'B'A u8", format);
+                   gegl_color_get_pixel (color, format, pixel);
+                   gegl_color_set_pixel (color, format, pixel);
+                }
+
               encoding = babl_format_get_encoding (format);
               gimp_config_writer_string (writer, encoding);
 
-              data = g_bytes_get_data (bytes, &data_length);
+              bytes = gegl_color_get_bytes (color, format);
+              data  = g_bytes_get_data (bytes, &data_length);
 
               gimp_config_writer_printf (writer, "%lu", data_length);
               gimp_config_writer_data (writer, data_length, data);
@@ -336,6 +355,9 @@ gimp_config_serialize_property (GimpConfig       *config,
 
           success = TRUE;
           gimp_config_writer_close (writer);
+
+          if (free_color)
+            g_object_unref (color);
         }
       else if (G_VALUE_HOLDS_OBJECT (&value) &&
                G_VALUE_TYPE (&value) != G_TYPE_FILE)
