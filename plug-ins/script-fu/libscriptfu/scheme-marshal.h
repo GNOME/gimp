@@ -18,17 +18,12 @@
 #ifndef __SCHEME_MARSHAL_H__
 #define __SCHEME_MARSHAL_H__
 
-pointer       get_drawable_from_script         (scheme        *sc,
-                                                pointer        a,
-                                                gint           id,
-                                                GimpDrawable **drawable_handle);
-
-pointer       marshal_ID_to_drawable           (scheme   *sc,
+pointer       marshal_ID_to_item               (scheme   *sc,
                                                 pointer   a,
                                                 gint      id,
                                                 GValue   *value);
 
-pointer       marshal_vector_to_drawable_array (scheme   *sc,
+pointer       marshal_vector_to_item_array     (scheme   *sc,
                                                 pointer   a,
                                                 GValue   *value);
 

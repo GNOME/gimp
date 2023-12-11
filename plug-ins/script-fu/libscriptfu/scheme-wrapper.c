@@ -983,7 +983,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               gint id = sc->vptr->ivalue (sc->vptr->pair_car (a));
 
-              pointer error = marshal_ID_to_drawable(sc, a, id, &value);
+              pointer error = marshal_ID_to_item (sc, a, id, &value);
               if (error)
                 return error;
             }
@@ -1307,11 +1307,15 @@ script_fu_marshal_procedure_call (scheme   *sc,
         }
       else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (&value))
         {
+          /* Now PDB procedures take arrays of Item (Drawable, Vectors, etc.).
+           * When future PDB procedures take arrays of Image, Display, Resource, etc.
+           * this will need changes.
+           */
           vector = sc->vptr->pair_car (a);
 
           if (sc->vptr->is_vector (vector))
             {
-              pointer error = marshal_vector_to_drawable_array (sc, vector, &value);
+              pointer error = marshal_vector_to_item_array (sc, vector, &value);
               if (error)
                 return error;
             }

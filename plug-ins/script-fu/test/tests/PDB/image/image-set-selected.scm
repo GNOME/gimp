@@ -77,12 +77,16 @@
 
 
 ; vectors
-; FIXME: Fails: see #10188
-;;(assert `(gimp-image-set-selected-vectors
-;;            ,testImage
-;;            1 ,testVectors ))
-; TODO test effective
-; TODO selecting a vectors does not deselect previously selected channel
+; Failed before #10188 fixed
+(assert `(gimp-image-set-selected-vectors
+            ,testImage
+            1 ,testVectors ))
+; Selecting a path means it is selected
+(assert `(= (vector-ref (cadr (gimp-image-get-selected-vectors ,testImage)) 0)
+            ,testPath))
+; Selecting a path does not unselect a drawable i.e. previously selected channel
+(assert `(= (vector-ref (cadr (gimp-image-get-selected-channels ,testImage)) 0)
+            ,testChannel))
 
 
 ; The generic getter get-selected-drawables
@@ -95,7 +99,7 @@
 ; The docs mention failing, test what the docs say.
 
 
-; illegal to pass empty vector to getter
+; iError to pass empty vector to setter
 (assert-error `(gimp-image-set-selected-layers
                   ,testImage
                   0 #() )

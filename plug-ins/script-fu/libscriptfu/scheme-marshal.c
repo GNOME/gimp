@@ -22,6 +22,12 @@
 #include "script-fu-errors.h"
 
 
+static pointer get_item_from_ID_in_script (scheme    *sc,
+                                           pointer   a,
+                                           gint      id,
+                                           GObject **object_handle);
+
+
 /*
  * Marshal arguments to, and return values from, calls to PDB.
  * Convert Scheme constructs to/from a GValue.
@@ -32,54 +38,59 @@
  *     usually a GIMP type but also GLib types, e.g. GFile.
  *     The GValue's held type is already set, but value is uninitialized.
  *
- * When marshalling into a GimpObjectArray, arbitrarily say the contained type is GIMP_TYPE_DRAWABLE.
- * The actual contained type is opaque to the PDB calling mechanism.
- * Setting the GValue's value does not check the contained type.
- * But we do call gimp_drawable_get_by_id.
- * GIMP_TYPE_DRAWABLE is a superclass of most common uses.
- * But perhaps we should call gimp_item_get_by_id
- * and arbitrarily say GIMP_TYPE_ITEM, a superclass of drawable.
+ * When marshalling into a GimpObjectArray:
+ * Setting a GValue's value does not check the contained type.
+ * But validation of a GimpObjectArray does check the contained type.
+ * We call gimp_item_get_by_id
+ * GIMP_TYPE_ITEM is a superclass of most common uses.
+ * And then set the actual subclass type on the GimpObjectArray.
  */
 
 
 
 
-/* Marshal single drawable ID from script into a single GObject. */
+/* Marshal single object ID from script into a single GObject.
+ *
+ * Requires ID's of instances of GimpItem, not for image, display, etc. also having ID.
+ * The GValue may hold a more specific type, e.g. GimpDrawable.
+ */
 pointer
-marshal_ID_to_drawable (scheme   *sc,
-                        pointer   a,
-                        gint      id,
-                        GValue   *value)
+marshal_ID_to_item (scheme   *sc,
+                    pointer   a,
+                    gint      id,
+                    GValue   *value)
 {
-  GimpDrawable *drawable;
+  GObject *object;
 
-  pointer error = get_drawable_from_script (sc, a, id, &drawable);
+  pointer error = get_item_from_ID_in_script (sc, a, id, &object);
   if (error)
     return error;
 
-  /* drawable is NULL or valid */
+  /* object is NULL or valid */
 
   /* Shallow copy, adding a reference while the GValue exists. */
-  g_value_set_object (value, drawable);
+  g_value_set_object (value, object);
   return NULL;  /* no error */
 }
 
-/* Marshal a vector of ID into GimpObjectArray of same length. */
+/* Marshal a vector of ID into GimpObjectArray of same length.
+ * Requires ID's of instances of GimpItem
+ */
 pointer
-marshal_vector_to_drawable_array (scheme   *sc,
-                                  pointer   vector,
-                                  GValue   *value)
+marshal_vector_to_item_array (scheme   *sc,
+                                pointer   vector,
+                                GValue   *value)
 {
-  GimpDrawable **drawable_array;
+  GObject      **object_array;
   gint           id;
   pointer        error;
-  GType          actual_type = GIMP_TYPE_DRAWABLE;
+  GType          actual_type = GIMP_TYPE_ITEM;
 
   guint num_elements = sc->vptr->vector_length (vector);
   g_debug ("vector has %d elements", num_elements);
   /* empty vector will produce empty GimpObjectArray */
 
-  drawable_array = g_new0 (GimpDrawable*, num_elements);
+  object_array = g_new0 (GObject*, num_elements);
 
   for (int j = 0; j < num_elements; ++j)
     {
@@ -87,31 +98,38 @@ marshal_vector_to_drawable_array (scheme   *sc,
 
       if (!sc->vptr->is_number (element))
         {
-          g_free (drawable_array);
-          return script_error (sc, "Expected numeric in drawable vector", vector);
+          g_free (object_array);
+          return script_error (sc, "Expected numeric in vector of ID", vector);
           /* FUTURE more detailed error msg:
            * return script_type_error_in_container (sc, "numeric", i, j, proc_name, vector);
            */
         }
 
       id = sc->vptr->ivalue (element);
-      error = get_drawable_from_script (sc, element, id, &drawable_array[j]);
+      error = get_item_from_ID_in_script (sc, element, id, &object_array[j]);
       if (error)
         {
-          g_free (drawable_array);
+          g_free (object_array);
           return error;
         }
 
-      /* Parameters are validated based on the actual type inside the object
-         array. So we set that type here instead of a generic drawable. */
+      /* Parameters are validated based on the actual type in the object array.
+       * So remember the type here, from the first element.
+       * Expect all elements are instance of GIMP Item and same type, i.e. homogeneous.
+       */
       if (j == 0)
-        actual_type = G_OBJECT_TYPE (drawable_array[j]);
+        actual_type = G_OBJECT_TYPE (object_array[j]);
     }
 
-  /* Shallow copy. */
-  gimp_value_set_object_array (value, actual_type, (GObject**)drawable_array, num_elements);
+  /* Shallow copy.
+   * This sets the contained type on the array.
+   * If the array is empty, contained type is GIMP_TYPE_ITEM.
+   * !!! Seems like validation checks the contained type of empty arrays,
+   * and fails if we default to G_TYPE_INVALID but passes if ITEM.
+   */
+  gimp_value_set_object_array (value, actual_type, (GObject**)object_array, num_elements);
 
-  g_free (drawable_array);
+  g_free (object_array);
 
   return NULL;  /* no error */
 }
@@ -211,29 +229,31 @@ marshal_returned_object_array_to_vector (scheme   *sc,
 }
 
 
- /* From a script numeric (a drawable ID) set a handle to a drawable.
-  * When ID is -1, sets drawable to NULL and returns no error.
-  * When ID is valid, sets drawable and returns no error.
-  * Otherwise (ID is not -1 and not valid ID of a drawable) returns error.
+ /* From a script numeric (a object ID) set a handle to a object.
+  * When ID is -1, sets handle to NULL and returns no error.
+  * When ID is valid, sets handle and returns no error.
+  * Otherwise (ID is not -1 and not valid ID of a object) returns error.
+  *
+  * Require ID is of a GIMP object, some subclass of GimpItem.
   */
-pointer
-get_drawable_from_script (scheme        *sc,
-                          pointer        a,
-                          gint           id,
-                          GimpDrawable **drawable_handle)
+static pointer
+get_item_from_ID_in_script (scheme   *sc,
+                            pointer   a,
+                            gint      id,
+                            GObject **object_handle)
 {
   if (id == -1)
     {
       /* -1 is scriptfu language for NULL i.e. none for an optional */
-      *drawable_handle = NULL;
+      *object_handle = NULL;
     }
   else
     {
-      *drawable_handle = gimp_drawable_get_by_id (id);
-      if (! *drawable_handle)
-          return script_error (sc, "Invalid drawable ID", a);
+      *object_handle = (GObject *) gimp_item_get_by_id (id);
+      if (! *object_handle)
+          return script_error (sc, "Invalid ID of GIMP item", a);
     }
 
-  /* ensure *drawable_handle is NULL or a valid reference to a drawable */
+  /* ensure *object_handle is NULL or a valid reference to a object */
   return NULL;  /* no error */
 }
