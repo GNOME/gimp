@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-01 20:47+0000\n"
-"PO-Revision-Date: 2023-12-02 17:31+0200\n"
+"POT-Creation-Date: 2023-12-11 00:11+0000\n"
+"PO-Revision-Date: 2023-12-12 00:00+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -8624,12 +8624,10 @@ msgid "YCOCG"
 msgstr "YCOCG"
 
 #: plug-ins/file-dds/dds.c:235
-#| msgid "Source _type"
 msgid "Sav_e type"
 msgstr "_Тип збереження"
 
 #: plug-ins/file-dds/dds.c:236
-#| msgid "Reload the image"
 msgid "How to save the image"
 msgstr "Спосіб збереження зображення"
 
@@ -8680,12 +8678,10 @@ msgstr ""
 "зображень)."
 
 #: plug-ins/file-dds/dds.c:266
-#| msgid "_Mipmaps:"
 msgid "_Mipmaps"
 msgstr "MIP-_текстури"
 
 #: plug-ins/file-dds/dds.c:267
-#| msgid "Load _mipmaps"
 msgid "How to handle mipmaps"
 msgstr "Спосіб обробки MIP-текстур"
 
@@ -8814,7 +8810,6 @@ msgstr "Завантаження: %s"
 
 #: plug-ins/file-dds/ddsread.c:263
 #, c-format
-#| msgid "Unsupported uncompressed FOURCC type %u"
 msgid "Unsupported uncompressed FourCC type %u"
 msgstr "Непідтримуваний розпакований тип FourCC %u"
 
@@ -8873,7 +8868,6 @@ msgstr "Відкрити DDS"
 
 #: plug-ins/file-dds/ddswrite.c:566
 #, c-format
-#| msgid "Saving '%s'"
 msgid "Saving: %s"
 msgstr "Збереження: %s"
 
@@ -13721,7 +13715,7 @@ msgstr "Увімкнути мапу рельєфу"
 msgid "Enable en_vironment mapping"
 msgstr "Увімкнути картографування с_ередовища"
 
-#: plug-ins/lighting/lighting-main.c:156 plug-ins/lighting/lighting-main.c:291
+#: plug-ins/lighting/lighting-main.c:156
 msgid "Enable envmapping"
 msgstr "Увімкнути мапу середовища"
 
@@ -13917,9 +13911,43 @@ msgstr "Інтенсивність розсіювання"
 msgid "Material diffuse intensity (Bright)"
 msgstr "Інтенсивність розсіювання матеріалом (яскраве)"
 
+#: plug-ins/lighting/lighting-main.c:271
+#| msgid "Material diffuse reflectivity"
+msgid "Diffuse reflectivity"
+msgstr "Розсіювальна дзеркальність"
+
+#: plug-ins/lighting/lighting-main.c:272
+#: plug-ins/map-object/map-object-main.c:288
+msgid "Material diffuse reflectivity"
+msgstr "Розсіювальна дзеркальність матеріалу"
+
+#: plug-ins/lighting/lighting-main.c:277
+#| msgid "Material specular reflectivity"
+msgid "Specular reflectivity"
+msgstr "Відбивна дзеркальність"
+
+#: plug-ins/lighting/lighting-main.c:278
+#: plug-ins/map-object/map-object-main.c:294
+msgid "Material specular reflectivity"
+msgstr "Відбивна дзеркальність матеріалу"
+
+#: plug-ins/lighting/lighting-main.c:283
+#| msgid "Highligh_t"
+msgid "Highlight"
+msgstr "Блік"
+
+#: plug-ins/lighting/lighting-main.c:284
+#| msgid "Material highlight (note, it's exponential)"
+msgid "Material highlight (note, it's exponential) (Polished)"
+msgstr "Блік на матеріалі (зауважте, він є експоненційним) (полірування)"
+
 #: plug-ins/lighting/lighting-main.c:290
 msgid "Metallic"
 msgstr "Метал"
+
+#: plug-ins/lighting/lighting-main.c:291
+msgid "Make surfaces look metallic"
+msgstr "Зробити вигляд поверхонь металоподібним"
 
 #: plug-ins/lighting/lighting-main.c:297
 #: plug-ins/map-object/map-object-main.c:307
@@ -14184,17 +14212,9 @@ msgstr "Інтенсивність розсіювання матеріалом"
 msgid "Di_ffuse"
 msgstr "Р_озсіювання"
 
-#: plug-ins/map-object/map-object-main.c:288
-msgid "Material diffuse reflectivity"
-msgstr "Розсіювальна дзеркальність матеріалу"
-
 #: plug-ins/map-object/map-object-main.c:293
 msgid "Spec_ular"
 msgstr "Від_биття"
-
-#: plug-ins/map-object/map-object-main.c:294
-msgid "Material specular reflectivity"
-msgstr "Відбивна дзеркальність матеріалу"
 
 #: plug-ins/map-object/map-object-main.c:299
 msgid "Highligh_t"
