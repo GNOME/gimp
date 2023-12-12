@@ -384,7 +384,11 @@ gimp_babl_format_get_with_alpha (const Babl *format)
   else if (g_strcmp0 (model, "cairo-RGB24") == 0)
     new_model = "cairo-ARGB32";
 
-  g_return_val_if_fail (new_model != NULL, format);
+  if (new_model == NULL)
+    {
+      g_warning ("%s: unsupported format \"%s\".", G_STRFUNC, babl_get_name (format));
+      return format;
+    }
 
   name = g_strdup_printf ("%s %s", new_model, type);
   new_format = babl_format_with_space (name, format);
