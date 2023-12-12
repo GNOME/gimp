@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-05 15:31+0000\n"
-"PO-Revision-Date: 2023-12-07 21:42+0100\n"
+"POT-Creation-Date: 2023-12-11 00:11+0000\n"
+"PO-Revision-Date: 2023-12-12 14:40+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -126,8 +126,8 @@ msgstr "_Ejecutar"
 #, c-format, python-format, lua-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
-"Check out the last version of the source code online by clicking the \"Source"
-"\" button."
+"Check out the last version of the source code online by clicking the "
+"\"Source\" button."
 msgstr ""
 "Este complemento es un ejercicio en «%s» para demostrar la creación de "
 "complementos.\n"
@@ -13810,7 +13810,7 @@ msgstr "Activar el mapeo de relieve"
 msgid "Enable en_vironment mapping"
 msgstr "Activar mapeo de e_ntorno"
 
-#: plug-ins/lighting/lighting-main.c:156 plug-ins/lighting/lighting-main.c:291
+#: plug-ins/lighting/lighting-main.c:156
 msgid "Enable envmapping"
 msgstr "Activar mapeo de entorno"
 
@@ -14006,9 +14006,39 @@ msgstr "Intensidad difusa"
 msgid "Material diffuse intensity (Bright)"
 msgstr "Intensidad difusa del material (Brillante)"
 
+#: plug-ins/lighting/lighting-main.c:271
+msgid "Diffuse reflectivity"
+msgstr "Reflectividad difusa"
+
+#: plug-ins/lighting/lighting-main.c:272
+#: plug-ins/map-object/map-object-main.c:288
+msgid "Material diffuse reflectivity"
+msgstr "Reflectividad difusa del material"
+
+#: plug-ins/lighting/lighting-main.c:277
+msgid "Specular reflectivity"
+msgstr "Reflectividad especular"
+
+#: plug-ins/lighting/lighting-main.c:278
+#: plug-ins/map-object/map-object-main.c:294
+msgid "Material specular reflectivity"
+msgstr "Reflectividad especular del material"
+
+#: plug-ins/lighting/lighting-main.c:283
+msgid "Highlight"
+msgstr "Reflejos"
+
+#: plug-ins/lighting/lighting-main.c:284
+msgid "Material highlight (note, it's exponential) (Polished)"
+msgstr "Destacado del material (tenga en cuenta que es exponencial) (Pulido)"
+
 #: plug-ins/lighting/lighting-main.c:290
 msgid "Metallic"
 msgstr "Metálico"
+
+#: plug-ins/lighting/lighting-main.c:291
+msgid "Make surfaces look metallic"
+msgstr "Hacer que las superficies parezcan metálicas"
 
 #: plug-ins/lighting/lighting-main.c:297
 #: plug-ins/map-object/map-object-main.c:307
@@ -14272,17 +14302,9 @@ msgstr "Intensidad difusa del material"
 msgid "Di_ffuse"
 msgstr "Di_fusa"
 
-#: plug-ins/map-object/map-object-main.c:288
-msgid "Material diffuse reflectivity"
-msgstr "Reflectividad difusa del material"
-
 #: plug-ins/map-object/map-object-main.c:293
 msgid "Spec_ular"
 msgstr "Espec_ular"
-
-#: plug-ins/map-object/map-object-main.c:294
-msgid "Material specular reflectivity"
-msgstr "Reflectividad especular del material"
 
 #: plug-ins/map-object/map-object-main.c:299
 msgid "Highligh_t"
