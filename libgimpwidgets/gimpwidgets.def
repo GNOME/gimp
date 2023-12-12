@@ -128,9 +128,6 @@ EXPORTS
 	gimp_color_selection_set_show_alpha
 	gimp_color_selection_set_simulation
 	gimp_color_selector_channel_get_type
-	gimp_color_selector_emit_channel_changed
-	gimp_color_selector_emit_color_changed
-	gimp_color_selector_emit_model_visible_changed
 	gimp_color_selector_get_channel
 	gimp_color_selector_get_color
 	gimp_color_selector_get_model_visible

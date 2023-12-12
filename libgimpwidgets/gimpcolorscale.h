@@ -71,8 +71,7 @@ GtkWidget * gimp_color_scale_new              (GtkOrientation            orienta
 void        gimp_color_scale_set_channel      (GimpColorScale           *scale,
                                                GimpColorSelectorChannel  channel);
 void        gimp_color_scale_set_color        (GimpColorScale           *scale,
-                                               const GimpRGB            *rgb,
-                                               const GimpHSV            *hsv);
+                                               GeglColor                *color);
 
 void        gimp_color_scale_set_color_config (GimpColorScale           *scale,
                                                GimpColorConfig          *config);

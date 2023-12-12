@@ -60,13 +60,25 @@ enum
 
 struct _GimpColorSelectorPrivate
 {
-  gboolean model_visible[3];
+  gboolean                  toggles_visible;
+  gboolean                  toggles_sensitive;
+  gboolean                  show_alpha;
+  gboolean                  model_visible[3];
+
+  GimpColorSelectorChannel  channel;
+
+  GeglColor                *color;
 };
 
 #define GET_PRIVATE(obj) (((GimpColorSelector *) (obj))->priv)
 
 
-static void   gimp_color_selector_dispose (GObject *object);
+static void   gimp_color_selector_dispose                    (GObject           *object);
+
+static void   gimp_color_selector_emit_color_changed         (GimpColorSelector *selector);
+static void   gimp_color_selector_emit_channel_changed       (GimpColorSelector *selector);
+static void   gimp_color_selector_emit_model_visible_changed (GimpColorSelector *selector,
+                                                              GimpColorSelectorModel model);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpColorSelector, gimp_color_selector,
@@ -89,11 +101,9 @@ gimp_color_selector_class_init (GimpColorSelectorClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorSelectorClass, color_changed),
-                  NULL, NULL,
-                  _gimp_widgets_marshal_VOID__BOXED_BOXED,
-                  G_TYPE_NONE, 2,
-                  GIMP_TYPE_RGB,
-                  GIMP_TYPE_RGB);
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 1,
+                  GEGL_TYPE_COLOR);
 
   selector_signals[CHANNEL_CHANGED] =
     g_signal_new ("channel-changed",
@@ -140,18 +150,16 @@ gimp_color_selector_init (GimpColorSelector *selector)
 
   priv = GET_PRIVATE (selector);
 
-  selector->toggles_visible   = TRUE;
-  selector->toggles_sensitive = TRUE;
-  selector->show_alpha        = TRUE;
+  priv->toggles_visible   = TRUE;
+  priv->toggles_sensitive = TRUE;
+  priv->show_alpha        = TRUE;
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (selector),
                                   GTK_ORIENTATION_VERTICAL);
 
-  gimp_rgba_set (&selector->rgb, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
+  priv->channel = GIMP_COLOR_SELECTOR_RED;
 
-  selector->channel = GIMP_COLOR_SELECTOR_RED;
-
+  priv->color = gegl_color_new ("black");
   priv->model_visible[GIMP_COLOR_SELECTOR_MODEL_RGB] = TRUE;
   priv->model_visible[GIMP_COLOR_SELECTOR_MODEL_LCH] = TRUE;
   priv->model_visible[GIMP_COLOR_SELECTOR_MODEL_HSV] = FALSE;
@@ -160,7 +168,10 @@ gimp_color_selector_init (GimpColorSelector *selector)
 static void
 gimp_color_selector_dispose (GObject *object)
 {
-  gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (object), NULL);
+  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (object);
+
+  gimp_color_selector_set_config (selector, NULL);
+  g_clear_object (&selector->priv->color);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -171,8 +182,7 @@ gimp_color_selector_dispose (GObject *object)
 /**
  * gimp_color_selector_new:
  * @selector_type: The #GType of the selector to create.
- * @rgb:           The initial color to be edited.
- * @hsv:           The same color in HSV.
+ * @color:         The initial color to be edited.
  * @channel:       The selector's initial channel.
  *
  * Creates a new #GimpColorSelector widget of type @selector_type.
@@ -186,20 +196,17 @@ gimp_color_selector_dispose (GObject *object)
  **/
 GtkWidget *
 gimp_color_selector_new (GType                     selector_type,
-                         const GimpRGB            *rgb,
-                         const GimpHSV            *hsv,
+                         GeglColor                *color,
                          GimpColorSelectorChannel  channel)
 {
   GimpColorSelector *selector;
 
-  g_return_val_if_fail (g_type_is_a (selector_type, GIMP_TYPE_COLOR_SELECTOR),
-                        NULL);
-  g_return_val_if_fail (rgb != NULL, NULL);
-  g_return_val_if_fail (hsv != NULL, NULL);
+  g_return_val_if_fail (g_type_is_a (selector_type, GIMP_TYPE_COLOR_SELECTOR), NULL);
+  g_return_val_if_fail (GEGL_IS_COLOR (color), NULL);
 
   selector = g_object_new (selector_type, NULL);
 
-  gimp_color_selector_set_color (selector, rgb, hsv);
+  gimp_color_selector_set_color (selector, color);
   gimp_color_selector_set_channel (selector, channel);
 
   return GTK_WIDGET (selector);
@@ -221,11 +228,11 @@ gimp_color_selector_set_toggles_visible (GimpColorSelector *selector,
 {
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
-  if (selector->toggles_visible != visible)
+  if (selector->priv->toggles_visible != visible)
     {
       GimpColorSelectorClass *selector_class;
 
-      selector->toggles_visible = visible ? TRUE : FALSE;
+      selector->priv->toggles_visible = visible ? TRUE : FALSE;
 
       selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
 
@@ -249,7 +256,7 @@ gimp_color_selector_get_toggles_visible (GimpColorSelector *selector)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
 
-  return selector->toggles_visible;
+  return selector->priv->toggles_visible;
 }
 
 /**
@@ -268,11 +275,11 @@ gimp_color_selector_set_toggles_sensitive (GimpColorSelector *selector,
 {
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
-  if (selector->toggles_sensitive != sensitive)
+  if (selector->priv->toggles_sensitive != sensitive)
     {
       GimpColorSelectorClass *selector_class;
 
-      selector->toggles_sensitive = sensitive ? TRUE : FALSE;
+      selector->priv->toggles_sensitive = sensitive ? TRUE : FALSE;
 
       selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
 
@@ -296,7 +303,7 @@ gimp_color_selector_get_toggles_sensitive (GimpColorSelector *selector)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
 
-  return selector->toggles_sensitive;
+  return selector->priv->toggles_sensitive;
 }
 
 /**
@@ -312,11 +319,11 @@ gimp_color_selector_set_show_alpha (GimpColorSelector *selector,
 {
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
-  if (show_alpha != selector->show_alpha)
+  if (show_alpha != selector->priv->show_alpha)
     {
       GimpColorSelectorClass *selector_class;
 
-      selector->show_alpha = show_alpha ? TRUE : FALSE;
+      selector->priv->show_alpha = show_alpha ? TRUE : FALSE;
 
       selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
 
@@ -340,61 +347,64 @@ gimp_color_selector_get_show_alpha (GimpColorSelector *selector)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
 
-  return selector->show_alpha;
+  return selector->priv->show_alpha;
 }
 
 /**
  * gimp_color_selector_set_color:
  * @selector: A #GimpColorSelector widget.
- * @rgb:      The new color.
- * @hsv:      The same color in HSV.
+ * @color:    The new color.
  *
  * Sets the color shown in the @selector widget.
  **/
 void
 gimp_color_selector_set_color (GimpColorSelector *selector,
-                               const GimpRGB     *rgb,
-                               const GimpHSV     *hsv)
+                               GeglColor         *color)
 {
-  GimpColorSelectorClass *selector_class;
+  GimpColorSelectorClass   *selector_class;
+  GimpColorSelectorPrivate *priv;
+  GeglColor                *old_color;
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
-  g_return_if_fail (rgb != NULL);
-  g_return_if_fail (hsv != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
-  selector->rgb = *rgb;
-  selector->hsv = *hsv;
+  priv = GET_PRIVATE (selector);
+
+  old_color = priv->color;
+  priv->color = gegl_color_duplicate (color);
 
   selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
 
-  if (selector_class->set_color)
-    selector_class->set_color (selector, rgb, hsv);
+  if (! gimp_color_is_perceptually_identical (priv->color, old_color))
+    {
+      if (selector_class->set_color)
+        selector_class->set_color (selector, priv->color);
 
-  gimp_color_selector_emit_color_changed (selector);
+      gimp_color_selector_emit_color_changed (selector);
+    }
+
+  g_object_unref (old_color);
 }
 
 /**
  * gimp_color_selector_get_color:
  * @selector: A #GimpColorSelector widget.
- * @rgb:      (out caller-allocates): Return location for the color.
- * @hsv:      (out caller-allocates): Return location for the same same
- *            color in HSV.
  *
  * Retrieves the color shown in the @selector widget.
  *
+ * Returns: (transfer full): a copy of the selected color.
  * Since: 2.10
  **/
-void
-gimp_color_selector_get_color (GimpColorSelector *selector,
-                               GimpRGB           *rgb,
-                               GimpHSV           *hsv)
+GeglColor *
+gimp_color_selector_get_color (GimpColorSelector *selector)
 {
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
-  g_return_if_fail (rgb != NULL);
-  g_return_if_fail (hsv != NULL);
+  GimpColorSelectorPrivate *priv;
 
-  *rgb = selector->rgb;
-  *hsv = selector->hsv;
+  g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), NULL);
+
+  priv = GET_PRIVATE (selector);
+
+  return gegl_color_duplicate (priv->color);
 }
 
 /**
@@ -414,12 +424,12 @@ gimp_color_selector_set_channel (GimpColorSelector        *selector,
 {
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
-  if (channel != selector->channel)
+  if (channel != selector->priv->channel)
     {
       GimpColorSelectorClass *selector_class;
       GimpColorSelectorModel  model = -1;
 
-      selector->channel = channel;
+      selector->priv->channel = channel;
 
       switch (channel)
         {
@@ -496,7 +506,7 @@ gimp_color_selector_get_channel (GimpColorSelector *selector)
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector),
                         GIMP_COLOR_SELECTOR_RED);
 
-  return selector->channel;
+  return selector->priv->channel;
 }
 
 /**
@@ -563,59 +573,6 @@ gimp_color_selector_get_model_visible (GimpColorSelector      *selector,
 }
 
 /**
- * gimp_color_selector_emit_color_changed:
- * @selector: A #GimpColorSelector widget.
- *
- * Emits the "color-changed" signal.
- */
-void
-gimp_color_selector_emit_color_changed (GimpColorSelector *selector)
-{
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
-
-  g_signal_emit (selector, selector_signals[COLOR_CHANGED], 0,
-                 &selector->rgb, &selector->hsv);
-}
-
-/**
- * gimp_color_selector_emit_channel_changed:
- * @selector: A #GimpColorSelector widget.
- *
- * Emits the "channel-changed" signal.
- */
-void
-gimp_color_selector_emit_channel_changed (GimpColorSelector *selector)
-{
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
-
-  g_signal_emit (selector, selector_signals[CHANNEL_CHANGED], 0,
-                 selector->channel);
-}
-
-/**
- * gimp_color_selector_emit_model_visible_changed:
- * @selector: A #GimpColorSelector widget.
- * @model:    The #GimpColorSelectorModel where visibility changed.
- *
- * Emits the "model-visible-changed" signal.
- *
- * Since: 2.10
- */
-void
-gimp_color_selector_emit_model_visible_changed (GimpColorSelector      *selector,
-                                                GimpColorSelectorModel  model)
-{
-  GimpColorSelectorPrivate *priv;
-
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
-
-  priv = GET_PRIVATE (selector);
-
-  g_signal_emit (selector, selector_signals[MODEL_VISIBLE_CHANGED], 0,
-                 model, priv->model_visible[model]);
-}
-
-/**
  * gimp_color_selector_set_config:
  * @selector: a #GimpColorSelector widget.
  * @config:   a #GimpColorConfig object.
@@ -665,4 +622,63 @@ gimp_color_selector_set_simulation (GimpColorSelector *selector,
 
   if (selector_class->set_simulation)
     selector_class->set_simulation (selector, profile, intent, bpc);
+}
+
+
+/* Private functions. */
+
+/**
+ * gimp_color_selector_emit_color_changed:
+ * @selector: A #GimpColorSelector widget.
+ *
+ * Emits the "color-changed" signal.
+ */
+static void
+gimp_color_selector_emit_color_changed (GimpColorSelector *selector)
+{
+  GimpColorSelectorPrivate *priv;
+
+  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+
+  priv = GET_PRIVATE (selector);
+
+  g_signal_emit (selector, selector_signals[COLOR_CHANGED], 0, priv->color);
+}
+
+/**
+ * gimp_color_selector_emit_channel_changed:
+ * @selector: A #GimpColorSelector widget.
+ *
+ * Emits the "channel-changed" signal.
+ */
+static void
+gimp_color_selector_emit_channel_changed (GimpColorSelector *selector)
+{
+  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+
+  g_signal_emit (selector, selector_signals[CHANNEL_CHANGED], 0,
+                 selector->priv->channel);
+}
+
+/**
+ * gimp_color_selector_emit_model_visible_changed:
+ * @selector: A #GimpColorSelector widget.
+ * @model:    The #GimpColorSelectorModel where visibility changed.
+ *
+ * Emits the "model-visible-changed" signal.
+ *
+ * Since: 2.10
+ */
+static void
+gimp_color_selector_emit_model_visible_changed (GimpColorSelector      *selector,
+                                                GimpColorSelectorModel  model)
+{
+  GimpColorSelectorPrivate *priv;
+
+  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+
+  priv = GET_PRIVATE (selector);
+
+  g_signal_emit (selector, selector_signals[MODEL_VISIBLE_CHANGED], 0,
+                 model, priv->model_visible[model]);
 }

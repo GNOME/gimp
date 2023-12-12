@@ -59,8 +59,7 @@ struct _ColorselWheelClass
 GType         colorsel_wheel_get_type      (void);
 
 static void   colorsel_wheel_set_color     (GimpColorSelector *selector,
-                                            const GimpRGB     *rgb,
-                                            const GimpHSV     *hsv);
+                                            GeglColor         *color);
 static void   colorsel_wheel_set_config    (GimpColorSelector *selector,
                                             GimpColorConfig   *config);
 static void   colorsel_wheel_changed       (GimpColorWheel    *hsv,
@@ -131,13 +130,19 @@ colorsel_wheel_init (ColorselWheel *wheel)
 
 static void
 colorsel_wheel_set_color (GimpColorSelector *selector,
-                          const GimpRGB     *rgb,
-                          const GimpHSV     *hsv)
+                          GeglColor         *color)
 {
   ColorselWheel *wheel = COLORSEL_WHEEL (selector);
+  gdouble        hsv[3];
 
-  gimp_color_wheel_set_color (GIMP_COLOR_WHEEL (wheel->hsv),
-                              hsv->h, hsv->s, hsv->v);
+  gegl_color_get_pixel (color, babl_format ("HSV double"), hsv);
+  g_signal_handlers_block_by_func (wheel->hsv,
+                                   G_CALLBACK (colorsel_wheel_changed),
+                                   wheel);
+  gimp_color_wheel_set_color (GIMP_COLOR_WHEEL (wheel->hsv), hsv[0], hsv[1], hsv[2]);
+  g_signal_handlers_unblock_by_func (wheel->hsv,
+                                     G_CALLBACK (colorsel_wheel_changed),
+                                     wheel);
 }
 
 static void
@@ -151,14 +156,14 @@ colorsel_wheel_set_config (GimpColorSelector *selector,
 }
 
 static void
-colorsel_wheel_changed (GimpColorWheel    *hsv,
+colorsel_wheel_changed (GimpColorWheel    *wheel,
                         GimpColorSelector *selector)
 {
-  gimp_color_wheel_get_color (hsv,
-                              &selector->hsv.h,
-                              &selector->hsv.s,
-                              &selector->hsv.v);
-  gimp_hsv_to_rgb (&selector->hsv, &selector->rgb);
+  GeglColor *color = gegl_color_new (NULL);
+  gdouble    hsv[3];
 
-  gimp_color_selector_emit_color_changed (selector);
+  gimp_color_wheel_get_color (wheel, &hsv[0], &hsv[1], &hsv[2]);
+  gegl_color_set_pixel (color, babl_format ("HSV double"), hsv);
+  gimp_color_selector_set_color (selector, color);
+  g_object_unref (color);
 }

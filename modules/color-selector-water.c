@@ -383,14 +383,20 @@ add_pigment (ColorselWater *water,
              gdouble        much)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (water);
+  GeglColor         *color    = gimp_color_selector_get_color (selector);
+  gdouble            rgb[3];
 
   much *= (gdouble) water->pressure_adjust;
 
+  /* TODO: both render (draw() function) and selecting colors should navigate
+   * the target color space, not sRGB.
+   */
+  gegl_color_get_pixel (color, babl_format ("R'G'B' double"), rgb);
   if (erase)
     {
-      selector->rgb.r = 1.0 - (1.0 - selector->rgb.r) * (1.0 - much);
-      selector->rgb.g = 1.0 - (1.0 - selector->rgb.g) * (1.0 - much);
-      selector->rgb.b = 1.0 - (1.0 - selector->rgb.b) * (1.0 - much);
+      rgb[0] = 1.0 - (1.0 - rgb[0]) * (1.0 - much);
+      rgb[1] = 1.0 - (1.0 - rgb[1]) * (1.0 - much);
+      rgb[2] = 1.0 - (1.0 - rgb[2]) * (1.0 - much);
     }
   else
     {
@@ -398,16 +404,19 @@ add_pigment (ColorselWater *water,
       gdouble g = calc (x, y, 120) / 256.0;
       gdouble b = calc (x, y, 240) / 256.0;
 
-      selector->rgb.r *= (1.0 - (1.0 - r) * much);
-      selector->rgb.g *= (1.0 - (1.0 - g) * much);
-      selector->rgb.b *= (1.0 - (1.0 - b) * much);
+      rgb[0] *= (1.0 - (1.0 - r) * much);
+      rgb[1] *= (1.0 - (1.0 - g) * much);
+      rgb[2] *= (1.0 - (1.0 - b) * much);
     }
 
-  gimp_rgb_clamp (&selector->rgb);
+  rgb[0] = CLAMP (rgb[0], 0.0, 1.0);
+  rgb[1] = CLAMP (rgb[1], 0.0, 1.0);
+  rgb[2] = CLAMP (rgb[2], 0.0, 1.0);
+  gegl_color_set_pixel (color, babl_format ("R'G'B' double"), rgb);
 
-  gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
+  gimp_color_selector_set_color (selector, color);
 
-  gimp_color_selector_emit_color_changed (selector);
+  g_object_unref (color);
 }
 
 static void

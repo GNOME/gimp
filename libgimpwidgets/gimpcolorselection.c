@@ -111,12 +111,10 @@ static void   gimp_color_selection_switch_page       (GtkWidget          *widget
                                                       guint               page_num,
                                                       GimpColorSelection *selection);
 static void   gimp_color_selection_notebook_changed  (GimpColorSelector  *selector,
-                                                      const GimpRGB      *rgb,
-                                                      const GimpHSV      *hsv,
+                                                      GeglColor          *color,
                                                       GimpColorSelection *selection);
 static void   gimp_color_selection_scales_changed    (GimpColorSelector  *selector,
-                                                      const GimpRGB      *rgb,
-                                                      const GimpHSV      *hsv,
+                                                      GeglColor          *color,
                                                       GimpColorSelection *selection);
 static void   gimp_color_selection_color_picked      (GtkWidget          *widget,
                                                       const GimpRGB      *rgb,
@@ -182,8 +180,6 @@ gimp_color_selection_init (GimpColorSelection *selection)
   GtkWidget                 *button;
   GtkSizeGroup              *new_group;
   GtkSizeGroup              *old_group;
-  GimpRGB                    rgb;
-  GimpHSV                    hsv;
 
   selection->priv = gimp_color_selection_get_instance_private (selection);
 
@@ -194,11 +190,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (selection),
                                   GTK_ORIENTATION_VERTICAL);
 
-  priv->color = gegl_color_new ("black");
-
-  gegl_color_get_pixel (priv->color, babl_format ("R'G'B'A double"), &rgb);
-  gegl_color_get_pixel (priv->color, babl_format ("HSVA double"), &hsv);
-
+  priv->color   = gegl_color_new ("black");
   priv->channel = GIMP_COLOR_SELECTOR_RED;
 
   main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -217,8 +209,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
       _gimp_ensure_modules_func ();
     }
 
-  priv->notebook = gimp_color_selector_new (GIMP_TYPE_COLOR_NOTEBOOK,
-                                            &rgb, &hsv, priv->channel);
+  priv->notebook = gimp_color_selector_new (GIMP_TYPE_COLOR_NOTEBOOK, priv->color, priv->channel);
 
   if (_gimp_ensure_modules_func)
     g_type_class_unref (g_type_class_peek (GIMP_TYPE_COLOR_SELECT));
@@ -306,8 +297,8 @@ gimp_color_selection_init (GimpColorSelection *selection)
                       TRUE, TRUE, 0);
   gtk_widget_show (priv->right_vbox);
 
-  priv->scales = gimp_color_selector_new (GIMP_TYPE_COLOR_SCALES,
-                                          &rgb, &hsv, priv->channel);
+  priv->scales = gimp_color_selector_new (GIMP_TYPE_COLOR_SCALES, priv->color, priv->channel);
+
   gimp_color_selector_set_toggles_visible
     (GIMP_COLOR_SELECTOR (priv->scales), TRUE);
   gimp_color_selector_set_show_alpha (GIMP_COLOR_SELECTOR (priv->scales),
@@ -462,18 +453,23 @@ gimp_color_selection_set_color (GimpColorSelection *selection,
                                 GeglColor          *color)
 {
   GimpColorSelectionPrivate *priv;
+  GeglColor                 *old_color;
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
   g_return_if_fail (GEGL_IS_COLOR (color));
 
   priv = GET_PRIVATE (selection);
 
-  g_object_unref (priv->color);
+  old_color = priv->color;
   priv->color = gegl_color_duplicate (color);
 
-  gimp_color_selection_update (selection, UPDATE_ALL);
+  if (! gimp_color_is_perceptually_identical (priv->color, old_color))
+    {
+      gimp_color_selection_update (selection, UPDATE_ALL);
+      gimp_color_selection_color_changed (selection);
+    }
 
-  gimp_color_selection_color_changed (selection);
+  g_object_unref (old_color);
 }
 
 /**
@@ -681,32 +677,44 @@ gimp_color_selection_switch_page (GtkWidget          *widget,
 
 static void
 gimp_color_selection_notebook_changed (GimpColorSelector  *selector,
-                                       const GimpRGB      *rgb,
-                                       const GimpHSV      *hsv,
+                                       GeglColor          *color,
                                        GimpColorSelection *selection)
 {
   GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  GeglColor                 *old_color;
 
-  gegl_color_set_pixel (priv->color, babl_format ("HSVA double"), hsv);
+  old_color = priv->color;
+  priv->color = gegl_color_duplicate (color);
 
-  gimp_color_selection_update (selection,
-                               UPDATE_SCALES | UPDATE_ENTRY | UPDATE_COLOR);
-  gimp_color_selection_color_changed (selection);
+  if (! gimp_color_is_perceptually_identical (priv->color, old_color))
+    {
+      gimp_color_selection_update (selection,
+                                   UPDATE_SCALES | UPDATE_ENTRY | UPDATE_COLOR);
+      gimp_color_selection_color_changed (selection);
+    }
+
+  g_object_unref (old_color);
 }
 
 static void
 gimp_color_selection_scales_changed (GimpColorSelector  *selector,
-                                     const GimpRGB      *rgb,
-                                     const GimpHSV      *hsv,
+                                     GeglColor          *color,
                                      GimpColorSelection *selection)
 {
   GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  GeglColor                 *old_color;
 
-  gegl_color_set_pixel (priv->color, babl_format ("HSVA double"), hsv);
+  old_color = priv->color;
+  priv->color = gegl_color_duplicate (color);
 
-  gimp_color_selection_update (selection,
-                               UPDATE_ENTRY | UPDATE_NOTEBOOK | UPDATE_COLOR);
-  gimp_color_selection_color_changed (selection);
+  if (! gimp_color_is_perceptually_identical (priv->color, old_color))
+    {
+      gimp_color_selection_update (selection,
+                                   UPDATE_ENTRY | UPDATE_NOTEBOOK | UPDATE_COLOR);
+      gimp_color_selection_color_changed (selection);
+    }
+
+  g_object_unref (old_color);
 }
 
 static void
@@ -768,11 +776,6 @@ gimp_color_selection_update (GimpColorSelection *selection,
                              UpdateType          update)
 {
   GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
-  GimpRGB                    rgb;
-  GimpHSV                    hsv;
-
-  gegl_color_get_pixel (priv->color, babl_format ("R'G'B'A double"), &rgb);
-  gegl_color_get_pixel (priv->color, babl_format ("HSVA double"), &hsv);
 
   if (update & UPDATE_NOTEBOOK)
     {
@@ -780,8 +783,7 @@ gimp_color_selection_update (GimpColorSelection *selection,
                                        gimp_color_selection_notebook_changed,
                                        selection);
 
-      gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (priv->notebook),
-                                     &rgb, &hsv);
+      gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (priv->notebook), priv->color);
 
       g_signal_handlers_unblock_by_func (priv->notebook,
                                          gimp_color_selection_notebook_changed,
@@ -794,8 +796,7 @@ gimp_color_selection_update (GimpColorSelection *selection,
                                        gimp_color_selection_scales_changed,
                                        selection);
 
-      gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (priv->scales),
-                                     &rgb, &hsv);
+      gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (priv->scales), priv->color);
 
       g_signal_handlers_unblock_by_func (priv->scales,
                                          gimp_color_selection_scales_changed,

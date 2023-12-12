@@ -69,8 +69,7 @@ struct _GimpColorScalePrivate
   guchar                    oog_color[3];
 
   GimpColorSelectorChannel  channel;
-  GimpRGB                   rgb;
-  GimpHSV                   hsv;
+  GeglColor                *color;
 
   guchar                   *buf;
   guint                     width;
@@ -115,6 +114,7 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpColorScale, gimp_color_scale, GTK_TYPE_SCALE)
 
 static const Babl *fish_rgb_to_lch = NULL;
 static const Babl *fish_lch_to_rgb = NULL;
+static const Babl *fish_hsv_to_rgb = NULL;
 
 
 static void
@@ -153,6 +153,8 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
                                babl_format ("CIE LCH(ab) double"));
   fish_lch_to_rgb = babl_fish (babl_format ("CIE LCH(ab) double"),
                                babl_format ("R'G'B' double"));
+  fish_hsv_to_rgb = babl_fish (babl_format ("HSV double"),
+                               babl_format ("R'G'B' double"));
 }
 
 static void
@@ -178,8 +180,7 @@ gimp_color_scale_init (GimpColorScale *scale)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (range),
                                   GTK_ORIENTATION_HORIZONTAL);
 
-  gimp_rgba_set (&priv->rgb, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgb_to_hsv (&priv->rgb, &priv->hsv);
+  priv->color = gegl_color_new ("black");
 
   gimp_widget_track_monitor (GTK_WIDGET (scale),
                              G_CALLBACK (gimp_color_scale_destroy_transform),
@@ -227,6 +228,7 @@ gimp_color_scale_finalize (GObject *object)
   priv->width     = 0;
   priv->height    = 0;
   priv->rowstride = 0;
+  g_object_unref (priv->color);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -309,6 +311,7 @@ gimp_color_scale_draw (GtkWidget *widget,
   GdkRectangle           range_rect;
   GdkRectangle           area      = { 0, };
   cairo_surface_t       *buffer;
+  guchar                *buf       = NULL;
   gint                   slider_start;
   gint                   slider_end;
   gint                   slider_mid;
@@ -336,11 +339,11 @@ gimp_color_scale_draw (GtkWidget *widget,
   if (priv->transform)
     {
       const Babl *format = babl_format ("cairo-RGB24");
-      guchar     *buf    = g_new (guchar, priv->rowstride * priv->height);
       guchar     *src    = priv->buf;
       guchar     *dest   = buf;
       guint       i;
 
+      buf = g_new (guchar, priv->rowstride * priv->height);
       for (i = 0; i < priv->height; i++)
         {
           gimp_color_transform_process_pixels (priv->transform,
@@ -548,29 +551,32 @@ gimp_color_scale_set_channel (GimpColorScale           *scale,
 /**
  * gimp_color_scale_set_color:
  * @scale: a #GimpColorScale widget
- * @rgb: the new color as #GimpRGB
- * @hsv: the new color as #GimpHSV
+ * @color: the new color.
  *
  * Changes the color value of the @scale.
  **/
 void
 gimp_color_scale_set_color (GimpColorScale *scale,
-                            const GimpRGB  *rgb,
-                            const GimpHSV  *hsv)
+                            GeglColor      *color)
 {
   GimpColorScalePrivate *priv;
+  GeglColor             *old_color;
 
   g_return_if_fail (GIMP_IS_COLOR_SCALE (scale));
-  g_return_if_fail (rgb != NULL);
-  g_return_if_fail (hsv != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
   priv = GET_PRIVATE (scale);
 
-  priv->rgb = *rgb;
-  priv->hsv = *hsv;
+  old_color = priv->color;
+  priv->color = gegl_color_duplicate (color);
 
-  priv->needs_render = TRUE;
-  gtk_widget_queue_draw (GTK_WIDGET (scale));
+  if (! gimp_color_is_perceptually_identical (old_color, priv->color))
+    {
+      priv->needs_render = TRUE;
+      gtk_widget_queue_draw (GTK_WIDGET (scale));
+    }
+
+  g_object_unref (old_color);
 }
 
 /**
@@ -646,12 +652,12 @@ gimp_color_scale_render (GimpColorScale *scale)
 {
   GimpColorScalePrivate *priv  = GET_PRIVATE (scale);
   GtkRange              *range = GTK_RANGE (scale);
-  GimpRGB                rgb;
-  GimpHSV                hsv;
-  GimpLCH                lch;
+  gdouble                rgb[4];
+  gdouble                hsv[3];
+  gdouble                lch[3];
   gint                   multiplier = 1;
   guint                  x, y;
-  gdouble               *channel_value = NULL; /* shut up compiler */
+  gdouble               *channel_value = NULL;
   gboolean               from_hsv      = FALSE;
   gboolean               from_lch      = FALSE;
   gboolean               invert;
@@ -667,24 +673,24 @@ gimp_color_scale_render (GimpColorScale *scale)
       return;
     }
 
-  rgb = priv->rgb;
-  hsv = priv->hsv;
-  babl_process (fish_rgb_to_lch, &rgb, &lch, 1);
+  gegl_color_get_pixel (priv->color, babl_format ("R'G'B'A double"), rgb);
+  gegl_color_get_pixel (priv->color, babl_format ("HSV double"), hsv);
+  gegl_color_get_pixel (priv->color, babl_format ("CIE LCH(ab) double"), lch);
 
   switch (priv->channel)
     {
-    case GIMP_COLOR_SELECTOR_HUE:        channel_value = &hsv.h; break;
-    case GIMP_COLOR_SELECTOR_SATURATION: channel_value = &hsv.s; break;
-    case GIMP_COLOR_SELECTOR_VALUE:      channel_value = &hsv.v; break;
+    case GIMP_COLOR_SELECTOR_HUE:        channel_value = &hsv[0]; break;
+    case GIMP_COLOR_SELECTOR_SATURATION: channel_value = &hsv[1]; break;
+    case GIMP_COLOR_SELECTOR_VALUE:      channel_value = &hsv[2]; break;
 
-    case GIMP_COLOR_SELECTOR_RED:        channel_value = &rgb.r; break;
-    case GIMP_COLOR_SELECTOR_GREEN:      channel_value = &rgb.g; break;
-    case GIMP_COLOR_SELECTOR_BLUE:       channel_value = &rgb.b; break;
-    case GIMP_COLOR_SELECTOR_ALPHA:      channel_value = &rgb.a; break;
+    case GIMP_COLOR_SELECTOR_RED:        channel_value = &rgb[0]; break;
+    case GIMP_COLOR_SELECTOR_GREEN:      channel_value = &rgb[1]; break;
+    case GIMP_COLOR_SELECTOR_BLUE:       channel_value = &rgb[2]; break;
+    case GIMP_COLOR_SELECTOR_ALPHA:      channel_value = &rgb[3]; break;
 
-    case GIMP_COLOR_SELECTOR_LCH_LIGHTNESS: channel_value = &lch.l; break;
-    case GIMP_COLOR_SELECTOR_LCH_CHROMA:    channel_value = &lch.c; break;
-    case GIMP_COLOR_SELECTOR_LCH_HUE:       channel_value = &lch.h; break;
+    case GIMP_COLOR_SELECTOR_LCH_LIGHTNESS: channel_value = &lch[0]; break;
+    case GIMP_COLOR_SELECTOR_LCH_CHROMA:    channel_value = &lch[1]; break;
+    case GIMP_COLOR_SELECTOR_LCH_HUE:       channel_value = &lch[2]; break;
     }
 
   switch (priv->channel)
@@ -720,7 +726,7 @@ gimp_color_scale_render (GimpColorScale *scale)
       for (x = 0, d = buf; x < priv->width; x++, d += 4)
         {
           gdouble value = (gdouble) x * multiplier / (gdouble) (priv->width - 1);
-          guchar  r, g, b;
+          guchar  u8rgb[3];
 
           if (invert)
             value = multiplier - value;
@@ -728,24 +734,31 @@ gimp_color_scale_render (GimpColorScale *scale)
           *channel_value = value;
 
           if (from_hsv)
-            gimp_hsv_to_rgb (&hsv, &rgb);
+            babl_process (fish_hsv_to_rgb, &hsv, &rgb, 1);
           else if (from_lch)
             babl_process (fish_lch_to_rgb, &lch, &rgb, 1);
 
-          if (rgb.r < 0.0 || rgb.r > 1.0 ||
-              rgb.g < 0.0 || rgb.g > 1.0 ||
-              rgb.b < 0.0 || rgb.b > 1.0)
+          /* This is only checking if a color is within the sRGB gamut. I want
+           * to check compared to the image's space (anySpace) or softproof
+           * space. TODO.
+           */
+          if (rgb[0] < 0.0 || rgb[0] > 1.0 ||
+              rgb[1] < 0.0 || rgb[1] > 1.0 ||
+              rgb[2] < 0.0 || rgb[2] > 1.0)
             {
-              r = priv->oog_color[0];
-              g = priv->oog_color[1];
-              b = priv->oog_color[2];
+              u8rgb[0] = priv->oog_color[0];
+              u8rgb[1] = priv->oog_color[1];
+              u8rgb[2] = priv->oog_color[2];
             }
           else
             {
-              gimp_rgb_get_uchar (&rgb, &r, &g, &b);
+              u8rgb[0] = rgb[0] * 255;
+              u8rgb[1] = rgb[1] * 255;
+              u8rgb[2] = rgb[2] * 255;
             }
 
-          GIMP_CAIRO_RGB24_SET_PIXEL (d, r, g, b);
+          /* TODO: we should move to CAIRO_FORMAT_RGBA128F. */
+          GIMP_CAIRO_RGB24_SET_PIXEL (d, u8rgb[0], u8rgb[1], u8rgb[2]);
         }
 
       d = buf + priv->rowstride;
@@ -760,7 +773,7 @@ gimp_color_scale_render (GimpColorScale *scale)
       for (y = 0; y < priv->height; y++)
         {
           gdouble value = (gdouble) y * multiplier / (gdouble) (priv->height - 1);
-          guchar  r, g, b;
+          guchar  u8rgb[3];
 
           if (invert)
             value = multiplier - value;
@@ -768,27 +781,27 @@ gimp_color_scale_render (GimpColorScale *scale)
           *channel_value = value;
 
           if (from_hsv)
-            gimp_hsv_to_rgb (&hsv, &rgb);
+            babl_process (fish_hsv_to_rgb, &hsv, &rgb, 1);
           else if (from_lch)
             babl_process (fish_lch_to_rgb, &lch, &rgb, 1);
 
-          if (rgb.r < 0.0 || rgb.r > 1.0 ||
-              rgb.g < 0.0 || rgb.g > 1.0 ||
-              rgb.b < 0.0 || rgb.b > 1.0)
+          if (rgb[0] < 0.0 || rgb[0] > 1.0 ||
+              rgb[1] < 0.0 || rgb[1] > 1.0 ||
+              rgb[2] < 0.0 || rgb[2] > 1.0)
             {
-              r = priv->oog_color[0];
-              g = priv->oog_color[1];
-              b = priv->oog_color[2];
+              u8rgb[0] = priv->oog_color[0];
+              u8rgb[1] = priv->oog_color[1];
+              u8rgb[2] = priv->oog_color[2];
             }
           else
             {
-              gimp_rgb_get_uchar (&rgb, &r, &g, &b);
+              u8rgb[0] = rgb[0] * 255;
+              u8rgb[1] = rgb[1] * 255;
+              u8rgb[2] = rgb[2] * 255;
             }
 
           for (x = 0, d = buf; x < priv->width; x++, d += 4)
-            {
-              GIMP_CAIRO_RGB24_SET_PIXEL (d, r, g, b);
-            }
+            GIMP_CAIRO_RGB24_SET_PIXEL (d, u8rgb[0], u8rgb[1], u8rgb[2]);
 
           buf += priv->rowstride;
         }
@@ -801,7 +814,7 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
 {
   GimpColorScalePrivate *priv  = GET_PRIVATE (scale);
   GtkRange              *range = GTK_RANGE (scale);
-  GimpRGB                rgb;
+  gdouble                rgb[4];
   gboolean               invert;
   gdouble                a;
   guint                  x, y;
@@ -811,7 +824,7 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
   invert = should_invert (range);
 
   buf = priv->buf;
-  rgb = priv->rgb;
+  gegl_color_get_pixel (priv->color, babl_format ("R'G'B'A double"), rgb);
 
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
@@ -843,20 +856,20 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
 
             GIMP_CAIRO_RGB24_SET_PIXEL (l,
                                         (GIMP_CHECK_LIGHT +
-                                         (rgb.r - GIMP_CHECK_LIGHT) * a) * 255.999,
+                                         (rgb[0] - GIMP_CHECK_LIGHT) * a) * 255.999,
                                         (GIMP_CHECK_LIGHT +
-                                         (rgb.g - GIMP_CHECK_LIGHT) * a) * 255.999,
+                                         (rgb[1] - GIMP_CHECK_LIGHT) * a) * 255.999,
                                         (GIMP_CHECK_LIGHT +
-                                         (rgb.b - GIMP_CHECK_LIGHT) * a) * 255.999);
+                                         (rgb[2] - GIMP_CHECK_LIGHT) * a) * 255.999);
             l += 4;
 
             GIMP_CAIRO_RGB24_SET_PIXEL (d,
                                         (GIMP_CHECK_DARK +
-                                         (rgb.r - GIMP_CHECK_DARK) * a) * 255.999,
+                                         (rgb[0] - GIMP_CHECK_DARK) * a) * 255.999,
                                         (GIMP_CHECK_DARK +
-                                         (rgb.g - GIMP_CHECK_DARK) * a) * 255.999,
+                                         (rgb[1] - GIMP_CHECK_DARK) * a) * 255.999,
                                         (GIMP_CHECK_DARK +
-                                         (rgb.b - GIMP_CHECK_DARK) * a) * 255.999);
+                                         (rgb[2] - GIMP_CHECK_DARK) * a) * 255.999);
             d += 4;
           }
 
@@ -887,19 +900,19 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
 
             GIMP_CAIRO_RGB24_SET_PIXEL (light,
                                         (GIMP_CHECK_LIGHT +
-                                         (rgb.r - GIMP_CHECK_LIGHT) * a) * 255.999,
+                                         (rgb[0] - GIMP_CHECK_LIGHT) * a) * 255.999,
                                         (GIMP_CHECK_LIGHT +
-                                         (rgb.g - GIMP_CHECK_LIGHT) * a) * 255.999,
+                                         (rgb[1] - GIMP_CHECK_LIGHT) * a) * 255.999,
                                         (GIMP_CHECK_LIGHT +
-                                         (rgb.b - GIMP_CHECK_LIGHT) * a) * 255.999);
+                                         (rgb[2] - GIMP_CHECK_LIGHT) * a) * 255.999);
 
             GIMP_CAIRO_RGB24_SET_PIXEL (dark,
                                         (GIMP_CHECK_DARK +
-                                         (rgb.r - GIMP_CHECK_DARK) * a) * 255.999,
+                                         (rgb[0] - GIMP_CHECK_DARK) * a) * 255.999,
                                         (GIMP_CHECK_DARK +
-                                         (rgb.g - GIMP_CHECK_DARK) * a) * 255.999,
+                                         (rgb[1] - GIMP_CHECK_DARK) * a) * 255.999,
                                         (GIMP_CHECK_DARK +
-                                         (rgb.b - GIMP_CHECK_DARK) * a) * 255.999);
+                                         (rgb[2] - GIMP_CHECK_DARK) * a) * 255.999);
 
             for (x = 0, l = d; x < priv->width; x++, l += 4)
               {

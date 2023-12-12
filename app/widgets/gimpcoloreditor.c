@@ -84,8 +84,7 @@ static void   gimp_color_editor_bg_changed      (GimpContext       *context,
                                                  GeglColor         *color,
                                                  GimpColorEditor   *editor);
 static void   gimp_color_editor_color_changed   (GimpColorSelector *selector,
-                                                 const GimpRGB     *rgb,
-                                                 const GimpHSV     *hsv,
+                                                 GeglColor         *color,
                                                  GimpColorEditor   *editor);
 static void   gimp_color_editor_tab_toggled     (GtkWidget         *widget,
                                                  GimpColorEditor   *editor);
@@ -155,8 +154,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
   gint         content_spacing;
   gint         button_spacing;
   GtkIconSize  button_icon_size;
-  GimpRGB      rgb;
-  GimpHSV      hsv;
+  GeglColor   *color;
   GList       *list;
   GSList      *group;
   gint         icon_width  = 40;
@@ -164,9 +162,6 @@ gimp_color_editor_init (GimpColorEditor *editor)
 
   editor->context = NULL;
   editor->edit_bg = FALSE;
-
-  gimp_rgba_set (&rgb, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgb_to_hsv (&rgb, &hsv);
 
   gtk_widget_style_get (GTK_WIDGET (editor),
                         "content-spacing",  &content_spacing,
@@ -179,9 +174,10 @@ gimp_color_editor_init (GimpColorEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), editor->hbox, FALSE, FALSE, 0);
   gtk_widget_show (editor->hbox);
 
-  editor->notebook = gimp_color_selector_new (GIMP_TYPE_COLOR_NOTEBOOK,
-                                              &rgb, &hsv,
+  color = gegl_color_new ("black");
+  editor->notebook = gimp_color_selector_new (GIMP_TYPE_COLOR_NOTEBOOK, color,
                                               GIMP_COLOR_SELECTOR_RED);
+  g_object_unref (color);
   gimp_color_selector_set_show_alpha (GIMP_COLOR_SELECTOR (editor->notebook),
                                       FALSE);
   gtk_box_pack_start (GTK_BOX (editor), editor->notebook,
@@ -538,18 +534,11 @@ static void
 gimp_color_editor_set_color (GimpColorEditor *editor,
                              GeglColor       *color)
 {
-  GimpRGB rgb;
-  GimpHSV hsv;
-
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-  gimp_rgb_to_hsv (&rgb, &hsv);
-
   g_signal_handlers_block_by_func (editor->notebook,
                                    gimp_color_editor_color_changed,
                                    editor);
 
-  gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (editor->notebook),
-                                 &rgb, &hsv);
+  gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (editor->notebook), color);
 
   g_signal_handlers_unblock_by_func (editor->notebook,
                                      gimp_color_editor_color_changed,
@@ -586,14 +575,9 @@ gimp_color_editor_bg_changed (GimpContext     *context,
 
 static void
 gimp_color_editor_color_changed (GimpColorSelector *selector,
-                                 const GimpRGB     *rgb,
-                                 const GimpHSV     *hsv,
+                                 GeglColor         *color,
                                  GimpColorEditor   *editor)
 {
-  GeglColor *color = gegl_color_new ("black");
-
-  gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
-
   if (editor->context)
     {
       if (editor->edit_bg)
@@ -631,8 +615,6 @@ gimp_color_editor_color_changed (GimpColorSelector *selector,
   g_signal_handlers_unblock_by_func (editor->hex_entry,
                                      gimp_color_editor_entry_changed,
                                      editor);
-
-  g_object_unref (color);
 }
 
 static void

@@ -67,8 +67,7 @@ GType         colorsel_cmyk_get_type       (void);
 static void   colorsel_cmyk_dispose        (GObject           *object);
 
 static void   colorsel_cmyk_set_color      (GimpColorSelector *selector,
-                                            const GimpRGB     *rgb,
-                                            const GimpHSV     *hsv);
+                                            GeglColor         *color);
 static void   colorsel_cmyk_set_config     (GimpColorSelector *selector,
                                             GimpColorConfig   *config);
 static void   colorsel_cmyk_set_simulation (GimpColorSelector *selector,
@@ -209,16 +208,13 @@ colorsel_cmyk_dispose (GObject *object)
 
 static void
 colorsel_cmyk_set_color (GimpColorSelector *selector,
-                         const GimpRGB     *rgb,
-                         const GimpHSV     *hsv)
+                         GeglColor         *color)
 {
-  GimpColorProfile        *cmyk_profile = NULL;
-  GimpColorRenderingIntent intent       = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
-  const Babl              *fish         = NULL;
-  const Babl              *space        = NULL;
-  ColorselCmyk            *module       = COLORSEL_CMYK (selector);
-  gfloat                   values[4];
-  gint                     i;
+  GimpColorProfile         *cmyk_profile = NULL;
+  GimpColorRenderingIntent  intent       = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+  const Babl               *space        = NULL;
+  ColorselCmyk             *module       = COLORSEL_CMYK (selector);
+  gfloat                    cmyk[4];
 
   /* Try Image Soft-proofing profile first, then default CMYK profile */
   if (module->simulation_profile)
@@ -236,19 +232,16 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
                                             NULL);
     }
 
-  fish = babl_fish (babl_format ("R'G'B'A double"),
-                    babl_format_with_space ("CMYK float", space));
+  gegl_color_get_pixel (color, babl_format_with_space ("CMYK float", space), cmyk);
 
-  babl_process (fish, rgb, values, 1);
-
-  for (i = 0; i < 4; i++)
+  for (gint i = 0; i < 4; i++)
     {
       g_signal_handlers_block_by_func (module->scales[i],
                                        colorsel_cmyk_scale_update,
                                        module);
 
-      values[i] *= 100.0;
-      gimp_label_spin_set_value (GIMP_LABEL_SPIN (module->scales[i]), values[i]);
+      cmyk[i] *= 100.0;
+      gimp_label_spin_set_value (GIMP_LABEL_SPIN (module->scales[i]), cmyk[i]);
 
       g_signal_handlers_unblock_by_func (module->scales[i],
                                          colorsel_cmyk_scale_update,
@@ -320,7 +313,12 @@ colorsel_cmyk_set_simulation (GimpColorSelector *selector,
   module->simulation_bpc    = bpc;
 
   if (! module->in_destruction)
-    colorsel_cmyk_set_color (selector, &selector->rgb, &selector->hsv);
+    {
+      GeglColor *color = gimp_color_selector_get_color (selector);
+
+      colorsel_cmyk_set_color (selector, color);
+      g_object_unref (color);
+    }
 }
 
 static void
@@ -330,13 +328,11 @@ colorsel_cmyk_scale_update (GimpLabelSpin *scale,
   GimpColorProfile        *cmyk_profile = NULL;
   GimpColorSelector       *selector     = GIMP_COLOR_SELECTOR (module);
   GimpColorRenderingIntent intent       = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
-  const Babl              *fish         = NULL;
   const Babl              *space        = NULL;
+  GeglColor               *color        = gegl_color_new (NULL);
   gfloat                   cmyk_values[4];
-  gfloat                   rgb_values[3];
-  gint                     i;
 
-  for (i = 0; i < 4; i++)
+  for (gint i = 0; i < 4; i++)
     cmyk_values[i] = gimp_label_spin_get_value (GIMP_LABEL_SPIN (module->scales[i])) / 100.0;
 
   if (module->simulation_profile)
@@ -349,22 +345,12 @@ colorsel_cmyk_scale_update (GimpLabelSpin *scale,
     {
       intent = module->simulation_intent;
 
-      space = gimp_color_profile_get_space (cmyk_profile, intent,
-                                            NULL);
+      space = gimp_color_profile_get_space (cmyk_profile, intent, NULL);
     }
 
-  fish = babl_fish (babl_format_with_space ("CMYK float", space),
-                    babl_format ("R'G'B'A float"));
-
-  babl_process (fish, cmyk_values, rgb_values, 1);
-
-  selector->rgb.r = rgb_values[0];
-  selector->rgb.g = rgb_values[1];
-  selector->rgb.b = rgb_values[2];
-
-  gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
-
-  gimp_color_selector_emit_color_changed (selector);
+  gegl_color_set_pixel (color, babl_format_with_space ("CMYK float", space), cmyk_values);
+  gimp_color_selector_set_color (selector, color);
+  g_object_unref (color);
 
   if (cmyk_profile && ! module->simulation_profile)
     g_object_unref (cmyk_profile);
@@ -415,5 +401,10 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
     g_object_unref (cmyk_profile);
 
   if (! module->in_destruction)
-    colorsel_cmyk_set_color (selector, &selector->rgb, &selector->hsv);
+    {
+      GeglColor *color = gimp_color_selector_get_color (selector);
+
+      colorsel_cmyk_set_color (selector, color);
+      g_object_unref (color);
+    }
 }

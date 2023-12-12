@@ -40,8 +40,7 @@
 
 
 static void   gimp_color_selector_palette_set_color  (GimpColorSelector *selector,
-                                                      const GimpRGB     *rgb,
-                                                      const GimpHSV     *hsv);
+                                                      GeglColor         *color);
 static void   gimp_color_selector_palette_set_config (GimpColorSelector *selector,
                                                       GimpColorConfig   *config);
 
@@ -74,8 +73,7 @@ gimp_color_selector_palette_init (GimpColorSelectorPalette *select)
 
 static void
 gimp_color_selector_palette_set_color (GimpColorSelector *selector,
-                                       const GimpRGB     *rgb,
-                                       const GimpHSV     *hsv)
+                                       GeglColor         *color)
 {
   GimpColorSelectorPalette *select = GIMP_COLOR_SELECTOR_PALETTE (selector);
 
@@ -86,17 +84,13 @@ gimp_color_selector_palette_set_color (GimpColorSelector *selector,
       if (palette && gimp_palette_get_n_colors (palette) > 0)
         {
           GimpPaletteEntry *entry;
-          GeglColor        *color = gegl_color_new ("black");
 
-          gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
           entry = gimp_palette_find_entry (palette, color,
                                            GIMP_PALETTE_VIEW (select->view)->selected);
 
           if (entry)
             gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (select->view),
                                             entry);
-
-          g_object_unref (color);
         }
     }
 }
@@ -115,10 +109,7 @@ gimp_color_selector_palette_entry_clicked (GimpPaletteView   *view,
                                            GdkModifierType    state,
                                            GimpColorSelector *selector)
 {
-  gegl_color_get_pixel (entry->color, babl_format ("R'G'B'A double"), &selector->rgb);
-  gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
-
-  gimp_color_selector_emit_color_changed (selector);
+  gimp_color_selector_set_color (selector, entry->color);
 }
 
 static void

@@ -69,14 +69,6 @@ enum
 };
 
 
-typedef struct _GimpLCH  GimpLCH;
-
-struct _GimpLCH
-{
-  gdouble l, c, h, a;
-};
-
-
 typedef struct _ColorScale ColorScale;
 
 struct _ColorScale
@@ -143,8 +135,7 @@ static void   gimp_color_scales_togg_visible   (GimpColorSelector *selector,
 static void   gimp_color_scales_set_show_alpha (GimpColorSelector *selector,
                                                 gboolean           show_alpha);
 static void   gimp_color_scales_set_color      (GimpColorSelector *selector,
-                                                const GimpRGB     *rgb,
-                                                const GimpHSV     *hsv);
+                                                GeglColor         *color);
 static void   gimp_color_scales_set_channel    (GimpColorSelector *selector,
                                                 GimpColorSelectorChannel  channel);
 static void   gimp_color_scales_set_model_visible
@@ -380,7 +371,7 @@ gimp_color_scales_init (GimpColorScales *scales)
   scales->show_hsv_binding    = NULL;
 
   /*  don't need the toggles for our own operation  */
-  selector->toggles_visible = FALSE;
+  gimp_color_selector_set_toggles_visible (selector, FALSE);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (scales), hbox, 0, 0, FALSE);
@@ -600,8 +591,7 @@ gimp_color_scales_set_show_alpha (GimpColorSelector *selector,
 
 static void
 gimp_color_scales_set_color (GimpColorSelector *selector,
-                             const GimpRGB     *rgb,
-                             const GimpHSV     *hsv)
+                             GeglColor         *color)
 {
   GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
 
@@ -734,29 +724,31 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
                                  gint             skip)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
-  GimpLCH            lch;
+  GeglColor         *color    = gimp_color_selector_get_color (selector);
+  gdouble            pixel[4];
   gdouble            values[G_N_ELEMENTS (scale_defs)];
   gint               i;
 
-  babl_process (fish_rgb_to_lch, &selector->rgb, &lch, 1);
+  gegl_color_get_pixel (color, babl_format ("HSV double"), pixel);
+  values[GIMP_COLOR_SELECTOR_HUE]           = pixel[0] * 360.0;
+  values[GIMP_COLOR_SELECTOR_SATURATION]    = pixel[1] * 100.0;
+  values[GIMP_COLOR_SELECTOR_VALUE]         = pixel[2] * 100.0;
 
-  values[GIMP_COLOR_SELECTOR_HUE]           = selector->hsv.h * 360.0;
-  values[GIMP_COLOR_SELECTOR_SATURATION]    = selector->hsv.s * 100.0;
-  values[GIMP_COLOR_SELECTOR_VALUE]         = selector->hsv.v * 100.0;
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), pixel);
+  values[GIMP_COLOR_SELECTOR_RED]           = pixel[0] * 100.0;
+  values[GIMP_COLOR_SELECTOR_GREEN]         = pixel[1] * 100.0;
+  values[GIMP_COLOR_SELECTOR_BLUE]          = pixel[2] * 100.0;
+  values[GIMP_COLOR_SELECTOR_ALPHA]         = pixel[3] * 100.0;
 
-  values[GIMP_COLOR_SELECTOR_RED]           = selector->rgb.r * 100.0;
-  values[GIMP_COLOR_SELECTOR_GREEN]         = selector->rgb.g * 100.0;
-  values[GIMP_COLOR_SELECTOR_BLUE]          = selector->rgb.b * 100.0;
-  values[GIMP_COLOR_SELECTOR_ALPHA]         = selector->rgb.a * 100.0;
+  values[GIMP_COLOR_SELECTOR_RED_U8]        = pixel[0] * 255.0;
+  values[GIMP_COLOR_SELECTOR_GREEN_U8]      = pixel[1] * 255.0;
+  values[GIMP_COLOR_SELECTOR_BLUE_U8]       = pixel[2] * 255.0;
+  values[GIMP_COLOR_SELECTOR_ALPHA_U8]      = pixel[3] * 255.0;
 
-  values[GIMP_COLOR_SELECTOR_LCH_LIGHTNESS] = lch.l;
-  values[GIMP_COLOR_SELECTOR_LCH_CHROMA]    = lch.c;
-  values[GIMP_COLOR_SELECTOR_LCH_HUE]       = lch.h;
-
-  values[GIMP_COLOR_SELECTOR_RED_U8]        = selector->rgb.r * 255.0;
-  values[GIMP_COLOR_SELECTOR_GREEN_U8]      = selector->rgb.g * 255.0;
-  values[GIMP_COLOR_SELECTOR_BLUE_U8]       = selector->rgb.b * 255.0;
-  values[GIMP_COLOR_SELECTOR_ALPHA_U8]      = selector->rgb.a * 255.0;
+  gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) double"), pixel);
+  values[GIMP_COLOR_SELECTOR_LCH_LIGHTNESS] = pixel[0];
+  values[GIMP_COLOR_SELECTOR_LCH_CHROMA]    = pixel[1];
+  values[GIMP_COLOR_SELECTOR_LCH_HUE]       = pixel[2];
 
   for (i = 0; i < G_N_ELEMENTS (scale_defs); i++)
     {
@@ -773,9 +765,10 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
                                              scales);
         }
 
-      gimp_color_scale_set_color (GIMP_COLOR_SCALE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scales->scales[i]))),
-                                  &selector->rgb, &selector->hsv);
+      gimp_color_scale_set_color (GIMP_COLOR_SCALE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scales->scales[i]))), color);
     }
+
+  g_object_unref (color);
 }
 
 static void
@@ -812,101 +805,102 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
                                  GimpColorScales *scales)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
+  GeglColor         *color    = gimp_color_selector_get_color (selector);
   gdouble            value    = gimp_label_spin_get_value (GIMP_LABEL_SPIN (scale));
-  GimpLCH            lch;
+  gdouble            lch[4];
+  gdouble            hsv[4];
+  gdouble            rgb[4];
   gint               i;
 
   for (i = 0; i < G_N_ELEMENTS (scale_defs); i++)
     if (scales->scales[i] == scale)
       break;
 
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgb);
+  gegl_color_get_pixel (color, babl_format ("HSVA double"), hsv);
+  gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) alpha double"), lch);
+
   switch (i)
     {
     case GIMP_COLOR_SELECTOR_HUE:
-      selector->hsv.h = value / 360.0;
+      hsv[0] = value / 360.0;
       break;
 
     case GIMP_COLOR_SELECTOR_SATURATION:
-      selector->hsv.s = value / 100.0;
+      hsv[1] = value / 100.0;
       break;
 
     case GIMP_COLOR_SELECTOR_VALUE:
-      selector->hsv.v = value / 100.0;
+      hsv[2] = value / 100.0;
       break;
 
     case GIMP_COLOR_SELECTOR_RED:
-      selector->rgb.r = value / 100.0;
+      rgb[0] = value / 100.0;
       break;
 
     case GIMP_COLOR_SELECTOR_GREEN:
-      selector->rgb.g = value / 100.0;
+      rgb[1] = value / 100.0;
       break;
 
     case GIMP_COLOR_SELECTOR_BLUE:
-      selector->rgb.b = value / 100.0;
+      rgb[2] = value / 100.0;
       break;
 
     case GIMP_COLOR_SELECTOR_ALPHA:
-      selector->hsv.a = selector->rgb.a = value / 100.0;
+      gimp_color_set_alpha (color, value / 100.0);
       break;
 
     case GIMP_COLOR_SELECTOR_LCH_LIGHTNESS:
-      babl_process (fish_rgb_to_lch, &selector->rgb, &lch, 1);
-      lch.l = value;
+      lch[0] = value;
       break;
 
     case GIMP_COLOR_SELECTOR_LCH_CHROMA:
-      babl_process (fish_rgb_to_lch, &selector->rgb, &lch, 1);
-      lch.c = value;
+      lch[1] = value;
       break;
 
     case GIMP_COLOR_SELECTOR_LCH_HUE:
-      babl_process (fish_rgb_to_lch, &selector->rgb, &lch, 1);
-      lch.h = value;
+      lch[2] = value;
       break;
 
     case GIMP_COLOR_SELECTOR_RED_U8:
-      selector->rgb.r = value / 255.0;
+      rgb[0] = value / 255.0;
       break;
 
     case GIMP_COLOR_SELECTOR_GREEN_U8:
-      selector->rgb.g = value / 255.0;
+      rgb[1] = value / 255.0;
       break;
 
     case GIMP_COLOR_SELECTOR_BLUE_U8:
-      selector->rgb.b = value / 255.0;
+      rgb[2] = value / 255.0;
       break;
 
     case GIMP_COLOR_SELECTOR_ALPHA_U8:
-      selector->hsv.a = selector->rgb.a = value / 255.0;
+      gimp_color_set_alpha (color, value / 255.0);
       break;
     }
+
 
   if ((i >= GIMP_COLOR_SELECTOR_HUE) &&
       (i <= GIMP_COLOR_SELECTOR_VALUE))
     {
-      gimp_hsv_to_rgb (&selector->hsv, &selector->rgb);
+      gegl_color_set_pixel (color, babl_format ("HSVA double"), hsv);
     }
   else if ((i >= GIMP_COLOR_SELECTOR_LCH_LIGHTNESS) &&
            (i <= GIMP_COLOR_SELECTOR_LCH_HUE))
     {
-      babl_process (fish_lch_to_rgb, &lch, &selector->rgb, 1);
-      gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
+      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) alpha double"), lch);
     }
-  else if ((i >= GIMP_COLOR_SELECTOR_RED) &&
-           (i <= GIMP_COLOR_SELECTOR_BLUE))
+  else if (((i >= GIMP_COLOR_SELECTOR_RED) &&
+            (i <= GIMP_COLOR_SELECTOR_BLUE)) ||
+           ((i >= GIMP_COLOR_SELECTOR_RED_U8) &&
+            (i <= GIMP_COLOR_SELECTOR_BLUE_U8)))
     {
-      gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
-    }
-  else if ((i >= GIMP_COLOR_SELECTOR_RED_U8) &&
-           (i <= GIMP_COLOR_SELECTOR_BLUE_U8))
-    {
-      gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
     }
 
-  gimp_color_scales_update_scales (scales, i);
+  gimp_color_selector_set_color (selector, color);
 
-  gimp_color_selector_emit_color_changed (selector);
+  g_object_unref (color);
 }
 
 static void

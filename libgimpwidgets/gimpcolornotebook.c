@@ -72,8 +72,7 @@ static void   gimp_color_notebook_togg_sensitive  (GimpColorSelector *selector,
 static void   gimp_color_notebook_set_show_alpha  (GimpColorSelector *selector,
                                                    gboolean           show_alpha);
 static void   gimp_color_notebook_set_color       (GimpColorSelector *selector,
-                                                   const GimpRGB     *rgb,
-                                                   const GimpHSV     *hsv);
+                                                   GeglColor         *color);
 static void   gimp_color_notebook_set_channel     (GimpColorSelector *selector,
                                                    GimpColorSelectorChannel channel);
 static void   gimp_color_notebook_set_model_visible
@@ -90,8 +89,7 @@ static void   gimp_color_notebook_switch_page     (GtkNotebook       *gtk_notebo
                                                    GimpColorNotebook *notebook);
 
 static void   gimp_color_notebook_color_changed   (GimpColorSelector *page,
-                                                   const GimpRGB     *rgb,
-                                                   const GimpHSV     *hsv,
+                                                   GeglColor         *color,
                                                    GimpColorNotebook *notebook);
 static void   gimp_color_notebook_channel_changed (GimpColorSelector *page,
                                                    GimpColorSelectorChannel channel,
@@ -270,8 +268,7 @@ gimp_color_notebook_set_show_alpha (GimpColorSelector *selector,
 
 static void
 gimp_color_notebook_set_color (GimpColorSelector *selector,
-                               const GimpRGB     *rgb,
-                               const GimpHSV     *hsv)
+                               GeglColor         *color)
 {
   GimpColorNotebookPrivate *private = GET_PRIVATE (selector);
 
@@ -279,7 +276,7 @@ gimp_color_notebook_set_color (GimpColorSelector *selector,
                                    gimp_color_notebook_color_changed,
                                    selector);
 
-  gimp_color_selector_set_color (private->cur_page, rgb, hsv);
+  gimp_color_selector_set_color (private->cur_page, color);
 
   g_signal_handlers_unblock_by_func (private->cur_page,
                                      gimp_color_notebook_color_changed,
@@ -345,6 +342,7 @@ gimp_color_notebook_switch_page (GtkNotebook       *gtk_notebook,
   GimpColorNotebookPrivate *private  = GET_PRIVATE (notebook);
   GimpColorSelector        *selector = GIMP_COLOR_SELECTOR (notebook);
   GtkWidget                *page_widget;
+  GeglColor                *color;
   GimpColorSelectorModel    model;
 
   page_widget = gtk_notebook_get_nth_page (gtk_notebook, page_num);
@@ -361,9 +359,9 @@ gimp_color_notebook_switch_page (GtkNotebook       *gtk_notebook,
                                    gimp_color_notebook_model_visible_changed,
                                    notebook);
 
-  gimp_color_selector_set_color (private->cur_page,
-                                 &selector->rgb,
-                                 &selector->hsv);
+  color = gimp_color_selector_get_color (selector);
+  gimp_color_selector_set_color (private->cur_page, color);
+  g_object_unref (color);
   gimp_color_selector_set_channel (private->cur_page,
                                    gimp_color_selector_get_channel (selector));
 
@@ -390,16 +388,12 @@ gimp_color_notebook_switch_page (GtkNotebook       *gtk_notebook,
 
 static void
 gimp_color_notebook_color_changed (GimpColorSelector *page,
-                                   const GimpRGB     *rgb,
-                                   const GimpHSV     *hsv,
+                                   GeglColor         *color,
                                    GimpColorNotebook *notebook)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (notebook);
 
-  selector->rgb = *rgb;
-  selector->hsv = *hsv;
-
-  gimp_color_selector_emit_color_changed (selector);
+  gimp_color_selector_set_color (selector, color);
 }
 
 static void
@@ -434,12 +428,13 @@ gimp_color_notebook_add_page (GimpColorNotebook *notebook,
   GtkWidget                *menu_widget;
   GtkWidget                *image;
   GtkWidget                *label;
+  GeglColor                *color;
   gboolean                  show_alpha;
 
-  page = gimp_color_selector_new (page_type,
-                                  &selector->rgb,
-                                  &selector->hsv,
+  color = gimp_color_selector_get_color (selector);
+  page = gimp_color_selector_new (page_type, color,
                                   gimp_color_selector_get_channel (selector));
+  g_object_unref (color);
 
   if (! page)
     return NULL;

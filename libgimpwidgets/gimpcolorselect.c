@@ -171,9 +171,9 @@ struct _ColorSelectFill
   gint     y;
   gint     width;
   gint     height;
-  GimpRGB  rgb;
-  GimpHSV  hsv;
-  GimpLCH  lch;
+  gdouble  rgb[4];
+  gdouble  hsv[4];
+  gdouble  lch[4];
   guchar   oog_color[3];
 
   ColorSelectRenderFunc render_line;
@@ -187,8 +187,7 @@ static void   gimp_color_select_togg_visible    (GimpColorSelector  *selector,
 static void   gimp_color_select_togg_sensitive  (GimpColorSelector  *selector,
                                                  gboolean            sensitive);
 static void   gimp_color_select_set_color       (GimpColorSelector  *selector,
-                                                 const GimpRGB      *rgb,
-                                                 const GimpHSV      *hsv);
+                                                 GeglColor          *color);
 static void   gimp_color_select_set_channel     (GimpColorSelector  *selector,
                                                  GimpColorSelectorChannel  channel);
 static void   gimp_color_select_set_model_visible
@@ -239,8 +238,7 @@ static void   gimp_color_select_render          (GtkWidget          *widget,
                                                  gint                height,
                                                  gint                rowstride,
                                                  ColorSelectFillType fill_type,
-                                                 const GimpHSV      *hsv,
-                                                 const GimpRGB      *rgb,
+                                                 GeglColor          *color,
                                                  const guchar       *oog_color);
 
 static void   color_select_render_red              (ColorSelectFill *csf);
@@ -306,7 +304,6 @@ static const ColorSelectRenderFunc render_funcs[] =
   color_select_render_lch_chroma_lightness
 };
 
-static const Babl *fish_rgb_to_lch    = NULL;
 static const Babl *fish_lch_to_rgb    = NULL;
 static const Babl *fish_lch_to_rgb_u8 = NULL;
 
@@ -331,8 +328,6 @@ gimp_color_select_class_init (GimpColorSelectClass *klass)
 
   gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpColorSelect");
 
-  fish_rgb_to_lch    = babl_fish (babl_format ("R'G'B'A double"),
-                                  babl_format ("CIE LCH(ab) double"));
   fish_lch_to_rgb    = babl_fish (babl_format ("CIE LCH(ab) double"),
                                   babl_format ("R'G'B' double"));
   fish_lch_to_rgb_u8 = babl_fish (babl_format ("CIE LCH(ab) double"),
@@ -543,8 +538,7 @@ gimp_color_select_togg_sensitive (GimpColorSelector *selector,
 
 static void
 gimp_color_select_set_color (GimpColorSelector *selector,
-                             const GimpRGB     *rgb,
-                             const GimpHSV     *hsv)
+                             GeglColor         *color)
 {
   GimpColorSelect *select = GIMP_COLOR_SELECT (selector);
 
@@ -690,153 +684,144 @@ gimp_color_select_update (GimpColorSelect       *select,
       select->z_needs_render = TRUE;
       gtk_widget_queue_draw (select->z_color);
     }
-
-  if (update & UPDATE_CALLER)
-    gimp_color_selector_emit_color_changed (GIMP_COLOR_SELECTOR (select));
 }
 
 static void
 gimp_color_select_update_values (GimpColorSelect *select)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (select);
-  GimpLCH            lch;
+  GeglColor         *color    = gimp_color_selector_get_color (selector);
+  gdouble            values[3];
+  const Babl        *rgb_format;
+
+  /* TODO: we want to select colors in the image space! */
+  rgb_format = babl_format_with_space ("R'G'B' double", NULL);
 
   switch (select->z_color_fill)
     {
     case COLOR_SELECT_RED:
-      selector->rgb.g = select->pos[0];
-      selector->rgb.b = select->pos[1];
-      selector->rgb.r = select->pos[2];
+      values[0] = select->pos[2];
+      values[1] = select->pos[0];
+      values[2] = select->pos[1];
+      gegl_color_set_pixel (color, rgb_format, values);
       break;
     case COLOR_SELECT_GREEN:
-      selector->rgb.r = select->pos[0];
-      selector->rgb.b = select->pos[1];
-      selector->rgb.g = select->pos[2];
+      values[0] = select->pos[0];
+      values[1] = select->pos[2];
+      values[2] = select->pos[1];
+      gegl_color_set_pixel (color, rgb_format, values);
       break;
     case COLOR_SELECT_BLUE:
-      selector->rgb.r = select->pos[0];
-      selector->rgb.g = select->pos[1];
-      selector->rgb.b = select->pos[2];
+      gegl_color_set_pixel (color, rgb_format, select->pos);
       break;
 
     case COLOR_SELECT_HUE:
-      selector->hsv.s = select->pos[0];
-      selector->hsv.v = select->pos[1];
-      selector->hsv.h = select->pos[2];
+      values[0] = select->pos[2];
+      values[1] = select->pos[0];
+      values[2] = select->pos[1];
+      gegl_color_set_pixel (color, babl_format ("HSV double"), values);
       break;
     case COLOR_SELECT_SATURATION:
-      selector->hsv.h = select->pos[0];
-      selector->hsv.v = select->pos[1];
-      selector->hsv.s = select->pos[2];
+      values[0] = select->pos[0];
+      values[1] = select->pos[2];
+      values[2] = select->pos[1];
+      gegl_color_set_pixel (color, babl_format ("HSV double"), values);
       break;
     case COLOR_SELECT_VALUE:
-      selector->hsv.h = select->pos[0];
-      selector->hsv.s = select->pos[1];
-      selector->hsv.v = select->pos[2];
+      gegl_color_set_pixel (color, babl_format ("HSV double"), select->pos);
       break;
 
     case COLOR_SELECT_LCH_LIGHTNESS:
-      lch.h = select->pos[0] * 360;
-      lch.c = select->pos[1] * 200;
-      lch.l = select->pos[2] * 100;
+      values[0] = select->pos[2] * 100.0;
+      values[1] = select->pos[1] * 200.0;
+      values[2] = select->pos[0] * 360.0;
+      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) double"), values);
       break;
     case COLOR_SELECT_LCH_CHROMA:
-      lch.h = select->pos[0] * 360;
-      lch.l = select->pos[1] * 100;
-      lch.c = select->pos[2] * 200;
+      values[0] = select->pos[1] * 100.0;
+      values[1] = select->pos[2] * 200.0;
+      values[2] = select->pos[0] * 360.0;
+      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) double"), values);
       break;
     case COLOR_SELECT_LCH_HUE:
-      lch.c = select->pos[0] * 200;
-      lch.l = select->pos[1] * 100;
-      lch.h = select->pos[2] * 360;
+      values[0] = select->pos[1] * 100.0;
+      values[1] = select->pos[0] * 200.0;
+      values[2] = select->pos[2] * 360.0;
+      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) double"), values);
       break;
 
     default:
       break;
     }
 
-  switch (select->z_color_fill)
-    {
-    case COLOR_SELECT_RED:
-    case COLOR_SELECT_GREEN:
-    case COLOR_SELECT_BLUE:
-      gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
-      break;
+  gimp_color_selector_set_color (selector, color);
 
-    case COLOR_SELECT_HUE:
-    case COLOR_SELECT_SATURATION:
-    case COLOR_SELECT_VALUE:
-      gimp_hsv_to_rgb (&selector->hsv, &selector->rgb);
-      break;
-
-    case COLOR_SELECT_LCH_LIGHTNESS:
-    case COLOR_SELECT_LCH_CHROMA:
-    case COLOR_SELECT_LCH_HUE:
-      babl_process (fish_lch_to_rgb, &lch, &selector->rgb, 1);
-      gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
-      break;
-
-    default:
-      break;
-    }
+  g_object_unref (color);
 }
 
 static void
 gimp_color_select_update_pos (GimpColorSelect *select)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (select);
-  GimpLCH            lch;
+  GeglColor         *color    = gimp_color_selector_get_color (selector);
+  gdouble            rgb[3];
+  gdouble            lch[3];
+  gdouble            hsv[3];
 
-  babl_process (fish_rgb_to_lch, &selector->rgb, &lch, 1);
+  /* TODO select RGB and HSV within the target RGB space. */
+  gegl_color_get_pixel (color, babl_format ("R'G'B' double"), rgb);
+  gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) double"), lch);
+  gegl_color_get_pixel (color, babl_format ("HSV double"), hsv);
+  g_object_unref (color);
 
   switch (select->z_color_fill)
     {
     case COLOR_SELECT_RED:
-      select->pos[0] = CLAMP (selector->rgb.g, 0.0, 1.0);
-      select->pos[1] = CLAMP (selector->rgb.b, 0.0, 1.0);
-      select->pos[2] = CLAMP (selector->rgb.r, 0.0, 1.0);
+      select->pos[0] = CLAMP (rgb[1], 0.0, 1.0);
+      select->pos[1] = CLAMP (rgb[2], 0.0, 1.0);
+      select->pos[2] = CLAMP (rgb[0], 0.0, 1.0);
       break;
     case COLOR_SELECT_GREEN:
-      select->pos[0] = CLAMP (selector->rgb.r, 0.0, 1.0);
-      select->pos[1] = CLAMP (selector->rgb.b, 0.0, 1.0);
-      select->pos[2] = CLAMP (selector->rgb.g, 0.0, 1.0);
+      select->pos[0] = CLAMP (rgb[0], 0.0, 1.0);
+      select->pos[1] = CLAMP (rgb[2], 0.0, 1.0);
+      select->pos[2] = CLAMP (rgb[1], 0.0, 1.0);
       break;
     case COLOR_SELECT_BLUE:
-      select->pos[0] = CLAMP (selector->rgb.r, 0.0, 1.0);
-      select->pos[1] = CLAMP (selector->rgb.g, 0.0, 1.0);
-      select->pos[2] = CLAMP (selector->rgb.b, 0.0, 1.0);
+      select->pos[0] = CLAMP (rgb[0], 0.0, 1.0);
+      select->pos[1] = CLAMP (rgb[1], 0.0, 1.0);
+      select->pos[2] = CLAMP (rgb[2], 0.0, 1.0);
       break;
 
     case COLOR_SELECT_HUE:
-      select->pos[0] = CLAMP (selector->hsv.s, 0.0, 1.0);
-      select->pos[1] = CLAMP (selector->hsv.v, 0.0, 1.0);
-      select->pos[2] = CLAMP (selector->hsv.h, 0.0, 1.0);
+      select->pos[0] = CLAMP (hsv[1], 0.0, 1.0);
+      select->pos[1] = CLAMP (hsv[2], 0.0, 1.0);
+      select->pos[2] = CLAMP (hsv[0], 0.0, 1.0);
       break;
     case COLOR_SELECT_SATURATION:
-      select->pos[0] = CLAMP (selector->hsv.h, 0.0, 1.0);
-      select->pos[1] = CLAMP (selector->hsv.v, 0.0, 1.0);
-      select->pos[2] = CLAMP (selector->hsv.s, 0.0, 1.0);
+      select->pos[0] = CLAMP (hsv[0], 0.0, 1.0);
+      select->pos[1] = CLAMP (hsv[2], 0.0, 1.0);
+      select->pos[2] = CLAMP (hsv[1], 0.0, 1.0);
       break;
     case COLOR_SELECT_VALUE:
-      select->pos[0] = CLAMP (selector->hsv.h, 0.0, 1.0);
-      select->pos[1] = CLAMP (selector->hsv.s, 0.0, 1.0);
-      select->pos[2] = CLAMP (selector->hsv.v, 0.0, 1.0);
+      select->pos[0] = CLAMP (hsv[0], 0.0, 1.0);
+      select->pos[1] = CLAMP (hsv[1], 0.0, 1.0);
+      select->pos[2] = CLAMP (hsv[2], 0.0, 1.0);
       break;
 
     case COLOR_SELECT_LCH_LIGHTNESS:
-      select->pos[0] = CLAMP (lch.h / 360, 0.0, 1.0);
-      select->pos[1] = CLAMP (lch.c / 200, 0.0, 1.0);
-      select->pos[2] = CLAMP (lch.l / 100, 0.0, 1.0);
+      select->pos[0] = CLAMP (lch[2] / 360, 0.0, 1.0);
+      select->pos[1] = CLAMP (lch[1] / 200, 0.0, 1.0);
+      select->pos[2] = CLAMP (lch[0] / 100, 0.0, 1.0);
       break;
     case COLOR_SELECT_LCH_CHROMA:
-      select->pos[0] = CLAMP (lch.h / 360, 0.0, 1.0);
-      select->pos[1] = CLAMP (lch.l / 100, 0.0, 1.0);
-      select->pos[2] = CLAMP (lch.c / 200, 0.0, 1.0);
+      select->pos[0] = CLAMP (lch[2] / 360, 0.0, 1.0);
+      select->pos[1] = CLAMP (lch[0] / 100, 0.0, 1.0);
+      select->pos[2] = CLAMP (lch[1] / 200, 0.0, 1.0);
       break;
     case COLOR_SELECT_LCH_HUE:
-      select->pos[0] = CLAMP (lch.c / 200, 0.0, 1.0);
-      select->pos[1] = CLAMP (lch.l / 100, 0.0, 1.0);
-      select->pos[2] = CLAMP (lch.h / 360, 0.0, 1.0);
+      select->pos[0] = CLAMP (lch[1] / 200, 0.0, 1.0);
+      select->pos[1] = CLAMP (lch[0] / 100, 0.0, 1.0);
+      select->pos[2] = CLAMP (lch[2] / 360, 0.0, 1.0);
       break;
 
     default:
@@ -902,6 +887,7 @@ gimp_color_select_xy_draw (GtkWidget       *widget,
   if (select->xy_needs_render)
     {
       GimpColorSelector *selector = GIMP_COLOR_SELECTOR (select);
+      GeglColor         *color    = gimp_color_selector_get_color (selector);
 
       gimp_color_select_render (select->xy_color,
                                 select->xy_buf,
@@ -909,10 +895,11 @@ gimp_color_select_xy_draw (GtkWidget       *widget,
                                 select->xy_height,
                                 select->xy_rowstride,
                                 select->xy_color_fill,
-                                &selector->hsv,
-                                &selector->rgb,
+                                color,
                                 select->oog_color);
       select->xy_needs_render = FALSE;
+
+      g_object_unref (color);
     }
 
   if (! select->transform)
@@ -1099,6 +1086,7 @@ gimp_color_select_z_draw (GtkWidget       *widget,
   if (select->z_needs_render)
     {
       GimpColorSelector *selector = GIMP_COLOR_SELECTOR (select);
+      GeglColor         *color    = gimp_color_selector_get_color (selector);
 
       gimp_color_select_render (select->z_color,
                                 select->z_buf,
@@ -1106,10 +1094,11 @@ gimp_color_select_z_draw (GtkWidget       *widget,
                                 select->z_height,
                                 select->z_rowstride,
                                 select->z_color_fill,
-                                &selector->hsv,
-                                &selector->rgb,
+                                color,
                                 select->oog_color);
       select->z_needs_render = FALSE;
+
+      g_object_unref (color);
     }
 
   gtk_widget_get_allocation (widget, &allocation);
@@ -1256,23 +1245,22 @@ gimp_color_select_render (GtkWidget           *preview,
                           gint                 height,
                           gint                 rowstride,
                           ColorSelectFillType  fill_type,
-                          const GimpHSV       *hsv,
-                          const GimpRGB       *rgb,
+                          GeglColor           *color,
                           const guchar        *oog_color)
 {
   ColorSelectFill  csf;
 
   csf.width       = width;
   csf.height      = height;
-  csf.hsv         = *hsv;
-  csf.rgb         = *rgb;
   csf.render_line = render_funcs[fill_type];
+
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), csf.rgb);
+  gegl_color_get_pixel (color, babl_format ("HSVA double"), csf.hsv);
+  gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) alpha double"), csf.lch);
 
   csf.oog_color[0] = oog_color[0];
   csf.oog_color[1] = oog_color[1];
   csf.oog_color[2] = oog_color[2];
-
-  babl_process (fish_rgb_to_lch, rgb, &csf.lch, 1);
 
   for (csf.y = 0; csf.y < csf.height; csf.y++)
     {
@@ -1437,11 +1425,11 @@ static void
 color_select_render_lch_lightness (ColorSelectFill *csf)
 {
   guchar  *p   = csf->buffer;
-  GimpLCH  lch = { 0.0, 0.0, 0.0, 1.0 };
+  gdouble  lch[4] = { 0.0, 0.0, 0.0, 1.0 };
   guchar   rgb[3];
   gint     i;
 
-  lch.l = (csf->height - 1 - csf->y) * 100.0 / csf->height;
+  lch[0] = (csf->height - 1 - csf->y) * 100.0 / csf->height;
   babl_process (fish_lch_to_rgb_u8, &lch, &rgb, 1);
 
   for (i = 0; i < csf->width; i++)
@@ -1456,11 +1444,11 @@ static void
 color_select_render_lch_chroma (ColorSelectFill *csf)
 {
   guchar  *p   = csf->buffer;
-  GimpLCH  lch = { 80.0, 0.0, 0.0, 1.0 };
+  gdouble  lch[4] = { 80.0, 0.0, 0.0, 1.0 };
   guchar   rgb[3];
   gint     i;
 
-  lch.c = (csf->height - 1 - csf->y) * 200.0 / csf->height ;
+  lch[1] = (csf->height - 1 - csf->y) * 200.0 / csf->height ;
   babl_process (fish_lch_to_rgb_u8, &lch, &rgb, 1);
 
   for (i = 0; i < csf->width; i++)
@@ -1474,12 +1462,12 @@ color_select_render_lch_chroma (ColorSelectFill *csf)
 static void
 color_select_render_lch_hue (ColorSelectFill *csf)
 {
-  guchar  *p   = csf->buffer;
-  GimpLCH  lch = { 80.0, 200.0, 0.0, 1.0 };
+  guchar  *p      = csf->buffer;
+  gdouble  lch[4] = { 80.0, 200.0, 0.0, 1.0 };
   guchar   rgb[3];
   gint     i;
 
-  lch.h = (csf->height - 1 - csf->y) * 360.0 / csf->height;
+  lch[2] = (csf->height - 1 - csf->y) * 360.0 / csf->height;
   babl_process (fish_lch_to_rgb_u8, &lch, &rgb, 1);
 
   for (i = 0; i < csf->width; i++)
@@ -1500,7 +1488,7 @@ color_select_render_red_green (ColorSelectFill *csf)
   gfloat  dr = 0;
   gint    i;
 
-  b = csf->rgb.b * 255.0;
+  b = csf->rgb[2] * 255.0;
 
   if (b < 0.0 || b > 255.0)
     {
@@ -1535,7 +1523,7 @@ color_select_render_red_blue (ColorSelectFill *csf)
   gfloat  dr = 0;
   gint    i;
 
-  g = csf->rgb.g * 255.0;
+  g = csf->rgb[1] * 255.0;
 
   if (g < 0.0 || g > 255.0)
     {
@@ -1570,7 +1558,7 @@ color_select_render_green_blue (ColorSelectFill *csf)
   gfloat  dg = 0;
   gint    i;
 
-  r = csf->rgb.r * 255.0;
+  r = csf->rgb[0] * 255.0;
 
   if (r < 0.0 || r > 255.0)
     {
@@ -1603,7 +1591,7 @@ color_select_render_hue_saturation (ColorSelectFill *csf)
   gint    f;
   gint    i;
 
-  v = csf->hsv.v;
+  v = csf->hsv[2];
 
   s = (gfloat) csf->y / csf->height;
   s = CLAMP (s, 0.0, 1.0);
@@ -1680,7 +1668,7 @@ color_select_render_hue_value (ColorSelectFill *csf)
   gint    f;
   gint    i;
 
-  s = csf->hsv.s;
+  s = csf->hsv[1];
 
   v = (gfloat) csf->y / csf->height;
   v = CLAMP (v, 0.0, 1.0);
@@ -1757,7 +1745,7 @@ color_select_render_saturation_value (ColorSelectFill *csf)
   gint    f;
   gint    i;
 
-  h = (gfloat) csf->hsv.h * 360.0;
+  h = (gfloat) csf->hsv[0] * 360.0;
   if (h >= 360)
     h -= 360;
   h /= 60;
@@ -1839,23 +1827,23 @@ static void
 color_select_render_lch_chroma_lightness (ColorSelectFill *csf)
 {
   guchar  *p = csf->buffer;
-  GimpLCH  lch;
+  gdouble  lch[3];
   gint     i;
 
-  lch.l = (csf->height - 1 - csf->y) * 100.0 / csf->height;
-  lch.h = csf->lch.h;
+  lch[0] = (csf->height - 1 - csf->y) * 100.0 / csf->height;
+  lch[2] = csf->lch[2];
 
   for (i = 0; i < csf->width; i++)
     {
-      GimpRGB rgb;
+      gdouble rgb[3];
 
-      lch.c = i * 200.0 / csf->width;
+      lch[1] = i * 200.0 / csf->width;
 
       babl_process (fish_lch_to_rgb, &lch, &rgb, 1);
 
-      if (rgb.r < 0.0 || rgb.r > 1.0 ||
-          rgb.g < 0.0 || rgb.g > 1.0 ||
-          rgb.b < 0.0 || rgb.b > 1.0)
+      if (rgb[0] < 0.0 || rgb[0] > 1.0 ||
+          rgb[1] < 0.0 || rgb[1] > 1.0 ||
+          rgb[2] < 0.0 || rgb[2] > 1.0)
         {
           p[0] = csf->oog_color[0];
           p[1] = csf->oog_color[1];
@@ -1863,7 +1851,9 @@ color_select_render_lch_chroma_lightness (ColorSelectFill *csf)
         }
       else
         {
-          gimp_rgb_get_uchar (&rgb, p, p + 1, p + 2);
+          p[0] = rgb[0] * 255;
+          p[1] = rgb[1] * 255;
+          p[2] = rgb[2] * 255;
         }
 
       p += 3;
@@ -1874,23 +1864,26 @@ static void
 color_select_render_lch_hue_lightness (ColorSelectFill *csf)
 {
   guchar  *p = csf->buffer;
-  GimpLCH  lch;
+  gdouble  lch[3];
   gint     i;
 
-  lch.l = (csf->height - 1 - csf->y) * 100.0 / csf->height;
-  lch.c = csf->lch.c;
+  lch[0] = (csf->height - 1 - csf->y) * 100.0 / csf->height;
+  lch[1] = csf->lch[1];
 
   for (i = 0; i < csf->width; i++)
     {
-      GimpRGB rgb;
+      gdouble rgb[3];
 
-      lch.h = i * 360.0 / csf->width;
+      lch[2] = i * 360.0 / csf->width;
 
+      /* TODO: determine if color is out of target space gammut instead of out
+       * of sRGB gamut.
+       */
       babl_process (fish_lch_to_rgb, &lch, &rgb, 1);
 
-      if (rgb.r < 0.0 || rgb.r > 1.0 ||
-          rgb.g < 0.0 || rgb.g > 1.0 ||
-          rgb.b < 0.0 || rgb.b > 1.0)
+      if (rgb[0] < 0.0 || rgb[0] > 1.0 ||
+          rgb[1] < 0.0 || rgb[1] > 1.0 ||
+          rgb[2] < 0.0 || rgb[2] > 1.0)
         {
           p[0] = csf->oog_color[0];
           p[1] = csf->oog_color[1];
@@ -1898,7 +1891,9 @@ color_select_render_lch_hue_lightness (ColorSelectFill *csf)
         }
       else
         {
-          gimp_rgb_get_uchar (&rgb, p, p + 1, p + 2);
+          p[0] = rgb[0] * 255;
+          p[1] = rgb[1] * 255;
+          p[2] = rgb[2] * 255;
         }
 
       p += 3;
@@ -1909,23 +1904,23 @@ static void
 color_select_render_lch_hue_chroma (ColorSelectFill *csf)
 {
   guchar  *p = csf->buffer;
-  GimpLCH  lch;
+  gdouble  lch[3];
   gint     i;
 
-  lch.l = csf->lch.l;
-  lch.c = (csf->height - 1 - csf->y) * 200.0 / csf->height;
+  lch[0] = csf->lch[0];
+  lch[1] = (csf->height - 1 - csf->y) * 200.0 / csf->height;
 
   for (i = 0; i < csf->width; i++)
     {
-      GimpRGB rgb;
+      gdouble rgb[3];
 
-      lch.h = i * 360.0 / csf->width;
+      lch[2] = i * 360.0 / csf->width;
 
       babl_process (fish_lch_to_rgb, &lch, &rgb, 1);
 
-      if (rgb.r < 0.0 || rgb.r > 1.0 ||
-          rgb.g < 0.0 || rgb.g > 1.0 ||
-          rgb.b < 0.0 || rgb.b > 1.0)
+      if (rgb[0] < 0.0 || rgb[0] > 1.0 ||
+          rgb[1] < 0.0 || rgb[1] > 1.0 ||
+          rgb[2] < 0.0 || rgb[2] > 1.0)
         {
           p[0] = csf->oog_color[0];
           p[1] = csf->oog_color[1];
@@ -1933,7 +1928,9 @@ color_select_render_lch_hue_chroma (ColorSelectFill *csf)
         }
       else
         {
-          gimp_rgb_get_uchar (&rgb, p, p + 1, p + 2);
+          p[0] = rgb[0] * 255;
+          p[1] = rgb[1] * 255;
+          p[2] = rgb[2] * 255;
         }
 
       p += 3;
