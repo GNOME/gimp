@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-10-19 10:04+0000\n"
-"PO-Revision-Date: 2023-12-06 08:28+0100\n"
+"PO-Revision-Date: 2023-12-13 10:29+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -626,7 +626,7 @@ msgstr "_Sort (fuld gennemsigtighed)"
 #: libgimpbase/gimpbaseenums.c:33
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
-msgstr "Lagets _alfakanal"
+msgstr "_Lagets alfakanal"
 
 #: libgimpbase/gimpbaseenums.c:34
 msgctxt "add-mask-type"
