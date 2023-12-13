@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-08 17:55+0000\n"
-"PO-Revision-Date: 2023-12-09 22:15+0100\n"
+"POT-Creation-Date: 2023-12-13 17:45+0000\n"
+"PO-Revision-Date: 2023-12-13 23:03+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2441,7 +2441,7 @@ msgstr "240 s"
 #: app/dialogs/preferences-dialog.c:691 app/dialogs/preferences-dialog.c:1262
 #: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:178
 #: app/dialogs/resize-dialog.c:225 app/dialogs/resolution-calibrate-dialog.c:73
-#: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:128
+#: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
 #: app/dialogs/vectors-export-dialog.c:83
 #: app/dialogs/vectors-import-dialog.c:88
@@ -7438,7 +7438,7 @@ msgstr "Ponastavi vse filtre"
 #: app/dialogs/image-new-dialog.c:105 app/dialogs/input-devices-dialog.c:65
 #: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:312
 #: app/dialogs/preferences-dialog.c:1261 app/dialogs/print-size-dialog.c:122
-#: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:127
+#: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:363 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:462 app/widgets/gimpcolordisplayeditor.c:332
@@ -9969,6 +9969,10 @@ msgstr "Zaslon %s"
 msgid "Move this window to screen %s"
 msgstr "Pomakni okno na zaslon %s"
 
+#: app/actions/window-commands.c:73
+msgid "Open Display"
+msgstr "Odpri zaslon"
+
 #: app/actions/window-commands.c:78 app/dialogs/extensions-dialog.c:79
 #: app/dialogs/file-save-dialog.c:682 app/dialogs/grid-dialog.c:103
 #: app/dialogs/image-new-dialog.c:107 app/dialogs/image-new-dialog.c:327
@@ -9987,6 +9991,23 @@ msgstr "Pomakni okno na zaslon %s"
 #: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
 msgstr "V _redu"
+
+#: app/actions/window-commands.c:88
+msgid ""
+"Experimental multi-display stuff!\n"
+"Click OK and have fun crashing GIMP..."
+msgstr ""
+"Poskusna materija za več zaslonov\n"
+"Kliknite V redu in uživajte v sesuvanju GIMP-a …"
+
+#: app/actions/window-commands.c:92
+msgid "Please enter the name of the new display:"
+msgstr "Vnesite ime novega zaslona:"
+
+#: app/actions/window-commands.c:118
+#, c-format
+msgid "Can't open display '%s'. Please try another one:"
+msgstr "Zaslona »%s« ni mogoče odpreti. Poskusite drugega:"
 
 #: app/actions/windows-actions.c:102
 msgctxt "windows-action"
@@ -17942,19 +17963,28 @@ msgstr "Kakovost"
 msgid "I_nterpolation:"
 msgstr "I_nterpolacija:"
 
-#: app/dialogs/stroke-dialog.c:122
+#: app/dialogs/stroke-dialog.c:123
 msgid "Choose Stroke Style"
 msgstr "Izberite slog poteze"
 
-#: app/dialogs/stroke-dialog.c:129
+#: app/dialogs/stroke-dialog.c:130
 msgid "_Stroke"
 msgstr "_Poteza"
 
-#: app/dialogs/stroke-dialog.c:215
+#: app/dialogs/stroke-dialog.c:174
+msgid "Line"
+msgstr "Črta"
+
+#: app/dialogs/stroke-dialog.c:198
+#, fuzzy
+msgid "Paint tool"
+msgstr "Orodje za slikanje"
+
+#: app/dialogs/stroke-dialog.c:216
 msgid "P_aint tool:"
 msgstr "Orod_je za risanje:"
 
-#: app/dialogs/stroke-dialog.c:229
+#: app/dialogs/stroke-dialog.c:241
 msgid "_Emulate brush dynamics"
 msgstr "_Oponašaj dinamiko čopiča"
 
