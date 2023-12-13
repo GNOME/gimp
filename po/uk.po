@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-08 17:55+0000\n"
-"PO-Revision-Date: 2023-12-08 20:10+0200\n"
+"POT-Creation-Date: 2023-12-13 17:45+0000\n"
+"PO-Revision-Date: 2023-12-13 20:01+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2441,7 +2441,7 @@ msgstr "240 секунд"
 #: app/dialogs/preferences-dialog.c:691 app/dialogs/preferences-dialog.c:1262
 #: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:178
 #: app/dialogs/resize-dialog.c:225 app/dialogs/resolution-calibrate-dialog.c:73
-#: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:128
+#: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
 #: app/dialogs/vectors-export-dialog.c:83
 #: app/dialogs/vectors-import-dialog.c:88
@@ -7445,7 +7445,7 @@ msgstr "Перезавантажити усі фільтри"
 #: app/dialogs/image-new-dialog.c:105 app/dialogs/input-devices-dialog.c:65
 #: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:312
 #: app/dialogs/preferences-dialog.c:1261 app/dialogs/print-size-dialog.c:122
-#: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:127
+#: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:363 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:462 app/widgets/gimpcolordisplayeditor.c:332
@@ -9987,6 +9987,12 @@ msgstr "Екран %s"
 msgid "Move this window to screen %s"
 msgstr "Перемістити це вікно на екран %s"
 
+#: app/actions/window-commands.c:73
+#| msgctxt "dock-action"
+#| msgid "_Open Display..."
+msgid "Open Display"
+msgstr "Відкрити дисплей"
+
 #: app/actions/window-commands.c:78 app/dialogs/extensions-dialog.c:79
 #: app/dialogs/file-save-dialog.c:682 app/dialogs/grid-dialog.c:103
 #: app/dialogs/image-new-dialog.c:107 app/dialogs/image-new-dialog.c:327
@@ -10005,6 +10011,25 @@ msgstr "Перемістити це вікно на екран %s"
 #: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
 msgstr "_Гаразд"
+
+#: app/actions/window-commands.c:88
+msgid ""
+"Experimental multi-display stuff!\n"
+"Click OK and have fun crashing GIMP..."
+msgstr ""
+"Експериментальний код для показу на декількох дисплеях!\n"
+"Натисніть «Гаразд» і насолоджуйтеся аваріями GIMP..."
+
+#: app/actions/window-commands.c:92
+#| msgctxt "edit-action"
+#| msgid "Paste the content of the clipboard"
+msgid "Please enter the name of the new display:"
+msgstr "Будь ласка, введіть назву нового дисплея:"
+
+#: app/actions/window-commands.c:118
+#, c-format
+msgid "Can't open display '%s'. Please try another one:"
+msgstr "Не вдалося відкрити дисплей «%s». Будь ласка, спробуйте інший:"
 
 #: app/actions/windows-actions.c:102
 msgctxt "windows-action"
@@ -17993,19 +18018,30 @@ msgstr "Якість"
 msgid "I_nterpolation:"
 msgstr "_Інтерполяція:"
 
-#: app/dialogs/stroke-dialog.c:122
+#: app/dialogs/stroke-dialog.c:123
 msgid "Choose Stroke Style"
 msgstr "Стиль обведення ділянок"
 
-#: app/dialogs/stroke-dialog.c:129
+#: app/dialogs/stroke-dialog.c:130
 msgid "_Stroke"
 msgstr "_Обвести"
 
-#: app/dialogs/stroke-dialog.c:215
+#: app/dialogs/stroke-dialog.c:174
+#| msgctxt "dash-preset"
+#| msgid "Line"
+msgid "Line"
+msgstr "Пряма"
+
+#: app/dialogs/stroke-dialog.c:198
+#| msgid "P_aint tool:"
+msgid "Paint tool"
+msgstr "Інструмент малювання"
+
+#: app/dialogs/stroke-dialog.c:216
 msgid "P_aint tool:"
 msgstr "І_нструмент:"
 
-#: app/dialogs/stroke-dialog.c:229
+#: app/dialogs/stroke-dialog.c:241
 msgid "_Emulate brush dynamics"
 msgstr "_Імітувати динаміку пензля"
 
@@ -26999,8 +27035,6 @@ msgid "Pressure curve"
 msgstr "Крива натиску"
 
 #: app/widgets/gimpdeviceinfo.c:261
-#| msgctxt "space-bar-action"
-#| msgid "No action"
 msgid "Pad actions"
 msgstr "Дії панелі"
 
@@ -27063,12 +27097,10 @@ msgid "The axis '%s' has no curve"
 msgstr "У осі %s немає кривої"
 
 #: app/widgets/gimpdeviceinfoeditor.c:546
-#| msgid "Search Actions"
 msgid "Pad Actions"
 msgstr "Дії панелі"
 
 #: app/widgets/gimpdeviceinfoeditor.c:633
-#| msgid "Select the next event arriving from the controller"
 msgid "Select the next event arriving from the pad"
 msgstr "Захопити наступну подію, що отримана від панелі"
 
@@ -27078,7 +27110,6 @@ msgstr "На вашій платформі ще не передбачено пі
 
 #: app/widgets/gimpdeviceinfoeditor.c:900
 #, c-format
-#| msgid "Button 8"
 msgid "Button %d"
 msgstr "Кнопка %d"
 
@@ -27089,12 +27120,10 @@ msgstr "Кільце %d"
 
 #: app/widgets/gimpdeviceinfoeditor.c:906
 #, c-format
-#| msgid "Stop %d"
 msgid "Strip %d"
 msgstr "Стрічка %d"
 
 #: app/widgets/gimpdeviceinfoeditor.c:1152
-#| msgid "Select Controller Event Action"
 msgid "Select Pad Event Action"
 msgstr "Виберіть дію для події панелі"
 
