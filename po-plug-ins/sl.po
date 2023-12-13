@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-11 00:11+0000\n"
-"PO-Revision-Date: 2023-12-11 20:16+0100\n"
+"POT-Creation-Date: 2023-12-13 17:59+0000\n"
+"PO-Revision-Date: 2023-12-13 23:10+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -643,8 +643,8 @@ msgstr "Navpične"
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2749 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
-#: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:1290
-#: plug-ins/gimpressionist/general.c:139
+#: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:561
+#: plug-ins/gfig/gfig-dialog.c:1290 plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
 #: plug-ins/screenshot/screenshot-win32.c:317 plug-ins/twain/twain.c:636
 msgid "Background"
@@ -1984,7 +1984,7 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:160
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:169
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
 #: plug-ins/file-icns/file-icns-load.c:516
@@ -2821,7 +2821,7 @@ msgstr "Predčasen konec podatkov slikovnih točk Farbfeld."
 msgid "GIMP brush"
 msgstr "Čopič GIMP"
 
-#: plug-ins/common/file-gbr.c:128
+#: plug-ins/common/file-gbr.c:128 plug-ins/gfig/gfig-dialog.c:510
 msgid "Brush"
 msgstr "Čopič"
 
@@ -4078,6 +4078,7 @@ msgstr ""
 "tem vstavkom."
 
 #: plug-ins/common/file-pat.c:128 plug-ins/common/qbist.c:968
+#: plug-ins/gfig/gfig-dialog.c:576
 msgid "Pattern"
 msgstr "Vzorec"
 
@@ -6475,6 +6476,66 @@ msgstr "_Filmski trak ..."
 msgid "Combine several images on a film strip"
 msgstr "Sestavi več slik na fotografski trak"
 
+#: plug-ins/common/film.c:194
+#, fuzzy
+msgid "Film _height"
+msgstr "_Višina filma"
+
+#: plug-ins/common/film.c:195
+#, fuzzy
+msgid "Height of film (0: fit to images)"
+msgstr "Višina filma (0: prilagodi slikam)"
+
+#: plug-ins/common/film.c:200
+#, fuzzy
+msgid "_Film color"
+msgstr "Barva _filma"
+
+#: plug-ins/common/film.c:201
+#, fuzzy
+msgid "Color of the film"
+msgstr "Barva filma"
+
+#: plug-ins/common/film.c:206
+msgid "Start _index"
+msgstr "Začetni _indeks"
+
+#: plug-ins/common/film.c:207
+msgid "Start index for numbering"
+msgstr "Začetni indeks za oštevilčevanje"
+
+#: plug-ins/common/film.c:212
+msgid "Number _font"
+msgstr "_Pisava števil"
+
+#: plug-ins/common/film.c:213
+msgid "Font for drawing numbers"
+msgstr "Pisava za risanje številk"
+
+#: plug-ins/common/film.c:217
+msgid "_Number color"
+msgstr "Barva _številk"
+
+#: plug-ins/common/film.c:218
+msgid "Color for numbers"
+msgstr "Barva za številke"
+
+#: plug-ins/common/film.c:223
+msgid "At _top"
+msgstr "Na _vrhu"
+
+#: plug-ins/common/film.c:224
+msgid "Draw numbers at top"
+msgstr "Riši številke na vrhu"
+
+#: plug-ins/common/film.c:229
+msgid "At _bottom"
+msgstr "_Na dnu"
+
+#: plug-ins/common/film.c:230
+msgid "Draw numbers at bottom"
+msgstr "Riši številke na dnu"
+
 #: plug-ins/common/film.c:245
 msgid "Image _height"
 msgstr "_Višina slike"
@@ -6534,6 +6595,10 @@ msgstr "Višina narisanih številk, kot ulomek višine filmskega traku"
 #: plug-ins/common/film.c:289
 msgid "F_it height to images"
 msgstr "_Prilagodi višino slikam"
+
+#: plug-ins/common/film.c:290
+msgid "Keep maximum image height"
+msgstr "Ohrani največjo višino slike"
 
 #: plug-ins/common/film.c:365
 msgid "Composing images"
@@ -6697,13 +6762,25 @@ msgstr "Poišči in popravi slikovne točke, ki so morda nevarno svetle"
 msgid "Mode"
 msgstr "Način"
 
+#: plug-ins/common/hot.c:271
+msgid "Mode { NTSC (0), PAL (1) }"
+msgstr "Način { NTSC (0), PAL (1) }"
+
 #: plug-ins/common/hot.c:276
 msgid "Action"
 msgstr "Dejanje"
 
+#: plug-ins/common/hot.c:277
+msgid "Action { (0) reduce luminance, (1) reduce saturation, or (2) Blacken }"
+msgstr ""
+
 #: plug-ins/common/hot.c:283
 msgid "Create _new layer"
 msgstr "Ustvari _novo plast"
+
+#: plug-ins/common/hot.c:284
+msgid "Create a new layer"
+msgstr "Ustvari novo plast"
 
 #: plug-ins/common/hot.c:447 plug-ins/common/hot.c:654
 msgid "Hot"
@@ -7640,6 +7717,31 @@ msgstr "_Tlakuj ..."
 msgid "Create an array of copies of the image"
 msgstr "Ustvari vrsto kopij slike"
 
+#: plug-ins/common/tile.c:161
+msgid "New _width"
+msgstr "Nova širina"
+
+#: plug-ins/common/tile.c:162
+msgid "New (tiled) image width"
+msgstr "Nova širina (tlakovane) slike"
+
+#: plug-ins/common/tile.c:167
+msgid "New _height"
+msgstr "Nova _višina"
+
+#: plug-ins/common/tile.c:168
+msgid "New (tiled) image height"
+msgstr "Nova višina (tlakovane) slike"
+
+#: plug-ins/common/tile.c:173
+msgid "New _image"
+msgstr "Nova _slika"
+
+#: plug-ins/common/tile.c:174 plug-ins/lighting/lighting-main.c:303
+#: plug-ins/map-object/map-object-main.c:331
+msgid "Create a new image"
+msgstr "Ustvari novo sliko"
+
 #: plug-ins/common/tile.c:254 plug-ins/common/tile-small.c:377
 msgid "Tiling"
 msgstr "Tlakovanje ..."
@@ -7902,7 +8004,7 @@ msgstr "Operator učinka"
 msgid "Derivative"
 msgstr "Izpeljanka"
 
-#: plug-ins/common/van-gogh-lic.c:171
+#: plug-ins/common/van-gogh-lic.c:171 plug-ins/gfig/gfig-dialog.c:586
 msgid "Gradient"
 msgstr "Preliv"
 
@@ -8754,66 +8856,79 @@ msgstr ""
 "Vrednost praga preizkusa alfe, za katero je treba ohraniti povprečje "
 "preizkusa alfe"
 
-#: plug-ins/file-dds/ddsread.c:170
+#: plug-ins/file-dds/ddsread.c:179
 #, c-format
 msgid "Loading: %s"
 msgstr "Nalaganje: %s"
 
-#: plug-ins/file-dds/ddsread.c:263
+#: plug-ins/file-dds/ddsread.c:250
 #, c-format
-msgid "Unsupported uncompressed FourCC type %u"
-msgstr "Nepodprti način nestisnjenega FourCC %u"
+msgid ""
+"Unsupported DDS pixel format:\n"
+"bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
+msgstr ""
 
-#: plug-ins/file-dds/ddsread.c:578
-msgid "Invalid or corrupted DDS header"
+#: plug-ins/file-dds/ddsread.c:499
+#, fuzzy
+#| msgid "Invalid or corrupted DDS header"
+msgid "Invalid or corrupted DDS header."
 msgstr "Neveljavna ali okvarjena glava DDS"
 
-#: plug-ins/file-dds/ddsread.c:588
+#: plug-ins/file-dds/ddsread.c:511
 msgid "Could not allocate a new image."
 msgstr "Nove slike ni mogoče alocirati."
 
-#: plug-ins/file-dds/ddsread.c:600
+#: plug-ins/file-dds/ddsread.c:523
 msgid "Error reading palette."
 msgstr "Napaka pri branju palete."
 
-#: plug-ins/file-dds/ddsread.c:887
+#: plug-ins/file-dds/ddsread.c:812
 msgid "Invalid DDS format magic number."
 msgstr "Neveljavno magično število zapisa DDS."
 
-#: plug-ins/file-dds/ddsread.c:978
+#: plug-ins/file-dds/ddsread.c:828
+msgid ""
+"File lacks expected pixel format flags! Image may not be decoded correctly."
+msgstr ""
+
+#: plug-ins/file-dds/ddsread.c:863
+msgid "Invalid pixel format."
+msgstr "Neveljavna oblika slikovnih točk."
+
+#: plug-ins/file-dds/ddsread.c:888
+#, c-format
+msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
+msgstr "Nepodprta vrsta zapisa (FourCC: %c%c%c%c, šestn.: %08x)"
+
+#: plug-ins/file-dds/ddsread.c:910
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Neveljavna vrednost bpp za podatke RGB: %d"
 
-#: plug-ins/file-dds/ddsread.c:989
+#: plug-ins/file-dds/ddsread.c:921
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Neveljavna vrednost bpp za podatke svetlosti: %d"
 
-#: plug-ins/file-dds/ddsread.c:1041
-msgid "Invalid pixel format."
-msgstr "Neveljavna oblika slikovnih točk."
+#: plug-ins/file-dds/ddsread.c:943
+msgid "Invalid DX10 header"
+msgstr "Neveljavna glava DX10"
 
-#: plug-ins/file-dds/ddsread.c:1274
+#: plug-ins/file-dds/ddsread.c:975
 #, c-format
-msgid "Unsupported DXGI format (%d)"
-msgstr "Nepodprta zapis DXGI (%d)"
+msgid "Unsupported DXGI Format: %u"
+msgstr "Nepodprta zapis DXGI: %u"
 
-#: plug-ins/file-dds/ddsread.c:1430
-#, c-format
-msgid "Unsupported value for bytes per pixel: %d"
-msgstr "Nepodprta vrednost za bajte na slikovno točko: %d"
-
-#: plug-ins/file-dds/ddsread.c:1525 plug-ins/file-dds/ddsread.c:1583
-#: plug-ins/file-dds/ddsread.c:1604
+#: plug-ins/file-dds/ddsread.c:1163 plug-ins/file-dds/ddsread.c:1227
+#: plug-ins/file-dds/ddsread.c:1247
 msgid "Requested data exceeds size of file.\n"
 msgstr "Zahtevani podatki presegajo velikost datoteke.\n"
 
-#: plug-ins/file-dds/ddsread.c:1533 plug-ins/file-dds/ddsread.c:1610
+#: plug-ins/file-dds/ddsread.c:1171 plug-ins/file-dds/ddsread.c:1253
 msgid "Unexpected EOF.\n"
 msgstr "Nepričakovan konec datoteke (EOF).\n"
 
-#: plug-ins/file-dds/ddsread.c:2125
+#: plug-ins/file-dds/ddsread.c:1579
 msgid "Open DDS"
 msgstr "Odpri DDS"
 
@@ -9684,10 +9799,14 @@ msgstr ""
 "Ostalo bo zavrženo."
 
 #: plug-ins/file-psd/psd-save.c:2666
+#, fuzzy
+#| msgid ""
+#| "Legacy layer modes have been reported to have better compatibility with "
+#| "Photoshop. If you encounter display issues, consider switching to those "
+#| "layer modes."
 msgid ""
-"Legacy layer modes have been reported to have better compatibility with "
-"Photoshop. If you encounter display issues, consider switching to those "
-"layer modes."
+"Legacy layer modes have better compatibility with Photoshop. If you "
+"encounter display issues, consider switching to those layer modes."
 msgstr ""
 "Poročali so, da imajo opuščeni načini plasti boljšo združljivost s programom "
 "Photoshop. Če naletite na težave s prikazom, preklopite na te vrste oz. "
@@ -10783,6 +10902,16 @@ msgstr "_Katalog barv:"
 msgid "Custom gradient"
 msgstr "Preliv po meri ..."
 
+#: plug-ins/flame/flame.c:1341
+#, fuzzy
+#| msgid "Rendering"
+msgid "_Rendering"
+msgstr "Upodabljanje"
+
+#: plug-ins/flame/flame.c:1344
+msgid "C_amera"
+msgstr ""
+
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:617
 #: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:988
@@ -11086,6 +11215,36 @@ msgstr "Način uporabe modre"
 msgid "In_version"
 msgstr "In_verzija"
 
+#: plug-ins/fractal-explorer/fractal-explorer.c:371
+#, fuzzy
+#| msgid "Red application mode"
+msgid "Red inversion mode"
+msgstr "Način uporabe rdeče"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:376
+#, fuzzy
+#| msgid "In_version"
+msgid "I_nversion"
+msgstr "In_verzija"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:377
+#, fuzzy
+#| msgid "Green application mode"
+msgid "Green inversion mode"
+msgstr "Način uporabe zelene"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:382
+#, fuzzy
+#| msgid "In_version"
+msgid "_Inversion"
+msgstr "In_verzija"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:383
+#, fuzzy
+#| msgid "Blue application mode"
+msgid "Blue inversion mode"
+msgstr "Način uporabe modre"
+
 #: plug-ins/fractal-explorer/fractal-explorer.c:388
 msgid "_Number of colors"
 msgstr "_Število barv"
@@ -11093,6 +11252,14 @@ msgstr "_Število barv"
 #: plug-ins/fractal-explorer/fractal-explorer.c:389
 msgid "Number of Colors for mapping"
 msgstr "Število barv za preslikavo"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:393
+msgid "_Use log log smoothing"
+msgstr ""
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:394
+msgid "Use log log smoothing to eliminate \"banding\" in the result"
+msgstr ""
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:493
 msgid "Rendering fractal"
@@ -11355,6 +11522,10 @@ msgstr "Možnosti orodja"
 msgid "_Stroke"
 msgstr "_Poteza"
 
+#: plug-ins/gfig/gfig-dialog.c:494 plug-ins/gfig/gfig-dialog.c:1291
+msgid "Foreground"
+msgstr "Ospredje"
+
 #. Fill frame on right side
 #: plug-ins/gfig/gfig-dialog.c:519
 msgid "Fill"
@@ -11431,10 +11602,6 @@ msgstr "Največje število razveljavitev:"
 #: plug-ins/gfig/gfig-dialog.c:1289 plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Prosojno"
-
-#: plug-ins/gfig/gfig-dialog.c:1291
-msgid "Foreground"
-msgstr "Ospredje"
 
 #: plug-ins/gfig/gfig-dialog.c:1302
 msgid ""
@@ -13868,7 +14035,7 @@ msgstr "Zrcalna odbojnost materiala"
 #: plug-ins/lighting/lighting-main.c:283
 #, fuzzy
 msgid "Highlight"
-msgstr "Svetla podro_čja"
+msgstr "Svetla področja"
 
 #: plug-ins/lighting/lighting-main.c:284
 #, fuzzy
@@ -13892,11 +14059,6 @@ msgstr "Uveljavi glajenje robov"
 #: plug-ins/lighting/lighting-main.c:302
 msgid "Create new ima_ge"
 msgstr "Ustvari novo sli_ko"
-
-#: plug-ins/lighting/lighting-main.c:303
-#: plug-ins/map-object/map-object-main.c:331
-msgid "Create a new image"
-msgstr "Ustvari novo sliko"
 
 #: plug-ins/lighting/lighting-main.c:308
 msgid "Trans_parent background"
@@ -15318,6 +15480,48 @@ msgstr "Ustvari sliko iz področja zaslona"
 #: plug-ins/screenshot/screenshot.c:164
 msgid "Shoot _area"
 msgstr "_Območje snemanja"
+
+#: plug-ins/screenshot/screenshot.c:165
+msgid "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
+msgstr ""
+
+#: plug-ins/screenshot/screenshot.c:195
+#, fuzzy
+#| msgid "Mouse Pointer"
+msgid "Include _mouse pointer"
+msgstr "Miškin kazalec"
+
+#: plug-ins/screenshot/screenshot.c:196
+msgid "Your pointing device's cursor will be part of the image"
+msgstr ""
+
+#: plug-ins/screenshot/screenshot.c:204
+msgid "Include window _decoration"
+msgstr "Vključi _okrasitev okna"
+
+#: plug-ins/screenshot/screenshot.c:205
+msgid "Title bar, window borders and shadow will be part of the image"
+msgstr "Naslovna vrstica, obrobe in senca okna bo del slike "
+
+#: plug-ins/screenshot/screenshot.c:214
+#, fuzzy
+#| msgid "Selection"
+msgid "Selection d_elay"
+msgstr "Izbor"
+
+#: plug-ins/screenshot/screenshot.c:215
+msgid "Delay before selection of the window or the region"
+msgstr ""
+
+#: plug-ins/screenshot/screenshot.c:219
+#, fuzzy
+#| msgid "Screenshot"
+msgid "Screenshot dela_y"
+msgstr "Posnetek namizja"
+
+#: plug-ins/screenshot/screenshot.c:220
+msgid "Delay before snapping the screenshot"
+msgstr ""
 
 #: plug-ins/screenshot/screenshot.c:224
 msgid "Color _Profile"
