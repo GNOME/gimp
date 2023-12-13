@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-01 20:47+0000\n"
-"PO-Revision-Date: 2023-12-02 13:40+0800\n"
+"POT-Creation-Date: 2023-12-13 03:31+0000\n"
+"PO-Revision-Date: 2023-12-13 20:47+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1950,7 +1950,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:160
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:169
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
 #: plug-ins/file-icns/file-icns-load.c:516
@@ -8590,66 +8590,79 @@ msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr "用于应保持透明测试覆盖的透明测试阈值"
 
-#: plug-ins/file-dds/ddsread.c:170
+#: plug-ins/file-dds/ddsread.c:179
 #, c-format
 msgid "Loading: %s"
 msgstr "正在加载：%s"
 
-#: plug-ins/file-dds/ddsread.c:263
+#: plug-ins/file-dds/ddsread.c:250
 #, c-format
-msgid "Unsupported uncompressed FourCC type %u"
-msgstr "不支持的未压缩四字符代码类型 %u"
+msgid ""
+"Unsupported DDS pixel format:\n"
+"bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
+msgstr ""
+"不支持的 DDS 像素格式：\n"
+"bpp：%d，Rmask：%x，Gmask：%x，Bmask：%x，Amask：%x，flags：%u"
 
-#: plug-ins/file-dds/ddsread.c:578
-msgid "Invalid or corrupted DDS header"
-msgstr "无效或损坏的 DDS 头部信息"
+#: plug-ins/file-dds/ddsread.c:499
+msgid "Invalid or corrupted DDS header."
+msgstr "无效或损坏的 DDS 头部信息。"
 
-#: plug-ins/file-dds/ddsread.c:588
+#: plug-ins/file-dds/ddsread.c:511
 msgid "Could not allocate a new image."
 msgstr "无法分配新图像。"
 
-#: plug-ins/file-dds/ddsread.c:600
+#: plug-ins/file-dds/ddsread.c:523
 msgid "Error reading palette."
 msgstr "读取色板出错。"
 
-#: plug-ins/file-dds/ddsread.c:887
+#: plug-ins/file-dds/ddsread.c:812
 msgid "Invalid DDS format magic number."
 msgstr "无效的 DDS 格式魔法数字。"
 
-#: plug-ins/file-dds/ddsread.c:978
+#: plug-ins/file-dds/ddsread.c:828
+msgid ""
+"File lacks expected pixel format flags! Image may not be decoded correctly."
+msgstr "文件缺少预期的像素格式标签！图像可能无法正确解码。"
+
+#: plug-ins/file-dds/ddsread.c:863
+msgid "Invalid pixel format."
+msgstr "无效的像素格式。"
+
+#: plug-ins/file-dds/ddsread.c:888
+#, c-format
+msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
+msgstr "不支持的格式（四字符代码：%c%c%c%c，hex：%08x）"
+
+#: plug-ins/file-dds/ddsread.c:910
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "用于 RGB 数据的无效 bpp 值：%d"
 
-#: plug-ins/file-dds/ddsread.c:989
+#: plug-ins/file-dds/ddsread.c:921
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "用于亮度数据的无效 bpp 值：%d"
 
-#: plug-ins/file-dds/ddsread.c:1041
-msgid "Invalid pixel format."
-msgstr "无效的像素格式。"
+#: plug-ins/file-dds/ddsread.c:943
+msgid "Invalid DX10 header"
+msgstr "无效 DX10 头部信息"
 
-#: plug-ins/file-dds/ddsread.c:1274
+#: plug-ins/file-dds/ddsread.c:975
 #, c-format
-msgid "Unsupported DXGI format (%d)"
-msgstr "不支持的 DXGI 格式（%d）"
+msgid "Unsupported DXGI Format: %u"
+msgstr "不支持的 DXGI 格式：%u"
 
-#: plug-ins/file-dds/ddsread.c:1430
-#, c-format
-msgid "Unsupported value for bytes per pixel: %d"
-msgstr "不支持的每像素字节值：%d"
-
-#: plug-ins/file-dds/ddsread.c:1525 plug-ins/file-dds/ddsread.c:1583
-#: plug-ins/file-dds/ddsread.c:1604
+#: plug-ins/file-dds/ddsread.c:1163 plug-ins/file-dds/ddsread.c:1227
+#: plug-ins/file-dds/ddsread.c:1247
 msgid "Requested data exceeds size of file.\n"
 msgstr "请求的数据超出文件大小。\n"
 
-#: plug-ins/file-dds/ddsread.c:1533 plug-ins/file-dds/ddsread.c:1610
+#: plug-ins/file-dds/ddsread.c:1171 plug-ins/file-dds/ddsread.c:1253
 msgid "Unexpected EOF.\n"
 msgstr "意料之外的文件尾。\n"
 
-#: plug-ins/file-dds/ddsread.c:2125
+#: plug-ins/file-dds/ddsread.c:1579
 msgid "Open DDS"
 msgstr "打开 DDS"
 
@@ -13399,7 +13412,7 @@ msgstr "启用凹凸映射"
 msgid "Enable en_vironment mapping"
 msgstr "启用环境映射(_V)"
 
-#: plug-ins/lighting/lighting-main.c:156 plug-ins/lighting/lighting-main.c:291
+#: plug-ins/lighting/lighting-main.c:156
 msgid "Enable envmapping"
 msgstr "启用环境映射"
 
@@ -13595,9 +13608,39 @@ msgstr "漫反射强度"
 msgid "Material diffuse intensity (Bright)"
 msgstr "材质漫反射强度（明亮的）"
 
+#: plug-ins/lighting/lighting-main.c:271
+msgid "Diffuse reflectivity"
+msgstr "漫反射率"
+
+#: plug-ins/lighting/lighting-main.c:272
+#: plug-ins/map-object/map-object-main.c:288
+msgid "Material diffuse reflectivity"
+msgstr "材质漫反射反射率"
+
+#: plug-ins/lighting/lighting-main.c:277
+msgid "Specular reflectivity"
+msgstr "镜面反射率"
+
+#: plug-ins/lighting/lighting-main.c:278
+#: plug-ins/map-object/map-object-main.c:294
+msgid "Material specular reflectivity"
+msgstr "材质镜面反射反射率"
+
+#: plug-ins/lighting/lighting-main.c:283
+msgid "Highlight"
+msgstr "高光"
+
+#: plug-ins/lighting/lighting-main.c:284
+msgid "Material highlight (note, it's exponential) (Polished)"
+msgstr "材质高光（注意，它是指数的）（抛光的）"
+
 #: plug-ins/lighting/lighting-main.c:290
 msgid "Metallic"
 msgstr "金属质感"
+
+#: plug-ins/lighting/lighting-main.c:291
+msgid "Make surfaces look metallic"
+msgstr "使表面看起来像金属的"
 
 #: plug-ins/lighting/lighting-main.c:297
 #: plug-ins/map-object/map-object-main.c:307
@@ -13861,17 +13904,9 @@ msgstr "材质漫反射强度"
 msgid "Di_ffuse"
 msgstr "漫反射(_F)"
 
-#: plug-ins/map-object/map-object-main.c:288
-msgid "Material diffuse reflectivity"
-msgstr "材质漫反射反射率"
-
 #: plug-ins/map-object/map-object-main.c:293
 msgid "Spec_ular"
 msgstr "镜面反射(_U)"
-
-#: plug-ins/map-object/map-object-main.c:294
-msgid "Material specular reflectivity"
-msgstr "材质镜面反射反射率"
 
 #: plug-ins/map-object/map-object-main.c:299
 msgid "Highligh_t"
@@ -15349,6 +15384,14 @@ msgstr "扫描仪/相机(_S)…"
 #: plug-ins/twain/twain.c:496
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#, c-format
+#~ msgid "Unsupported uncompressed FourCC type %u"
+#~ msgstr "不支持的未压缩四字符代码类型 %u"
+
+#, c-format
+#~ msgid "Unsupported value for bytes per pixel: %d"
+#~ msgstr "不支持的每像素字节值：%d"
 
 #~ msgid "Always use _transparency for BC1/DXT1"
 #~ msgstr "总是为 BC1/DXT1 使用透明(_T)"
