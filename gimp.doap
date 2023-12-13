@@ -55,7 +55,7 @@
 
   <homepage rdf:resource="https://www.gimp.org" />
 
-  <mailing-list rdf:resource="https://gimp.org/mail_lists.html" />
+  <support-forum rdf:resource="https://www.gimp.org/discuss.html" />
 
   <category rdf:resource="http://api.gnome.org/doap-extensions#apps" />
 
