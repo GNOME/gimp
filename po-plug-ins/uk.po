@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-13 07:48+0000\n"
-"PO-Revision-Date: 2023-12-13 19:43+0200\n"
+"POT-Creation-Date: 2023-12-13 18:44+0000\n"
+"PO-Revision-Date: 2023-12-13 20:55+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -641,8 +641,8 @@ msgstr "Вертикально"
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2749 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
-#: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:1290
-#: plug-ins/gimpressionist/general.c:139
+#: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:561
+#: plug-ins/gfig/gfig-dialog.c:1290 plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
 #: plug-ins/screenshot/screenshot-win32.c:317 plug-ins/twain/twain.c:636
 msgid "Background"
@@ -2831,7 +2831,7 @@ msgstr "Передчасне закінчення піксельних дани�
 msgid "GIMP brush"
 msgstr "Пензель GIMP"
 
-#: plug-ins/common/file-gbr.c:128
+#: plug-ins/common/file-gbr.c:128 plug-ins/gfig/gfig-dialog.c:510
 msgid "Brush"
 msgstr "Пензель"
 
@@ -4098,6 +4098,7 @@ msgstr ""
 "місця за допомогою цього додатка."
 
 #: plug-ins/common/file-pat.c:128 plug-ins/common/qbist.c:968
+#: plug-ins/gfig/gfig-dialog.c:576
 msgid "Pattern"
 msgstr "Текстура"
 
@@ -6530,6 +6531,62 @@ msgstr "_Фотоплівка..."
 msgid "Combine several images on a film strip"
 msgstr "Об'єднати декілька зображень у одне на зразок фотоплівки"
 
+#: plug-ins/common/film.c:194
+msgid "Film _height"
+msgstr "_Висота плівки"
+
+#: plug-ins/common/film.c:195
+msgid "Height of film (0: fit to images)"
+msgstr "Висота плівки (0: підібрати за зображеннями)"
+
+#: plug-ins/common/film.c:200
+msgid "_Film color"
+msgstr "К_олір плівки"
+
+#: plug-ins/common/film.c:201
+msgid "Color of the film"
+msgstr "Колір плівки"
+
+#: plug-ins/common/film.c:206
+msgid "Start _index"
+msgstr "Початковий інд_екс"
+
+#: plug-ins/common/film.c:207
+msgid "Start index for numbering"
+msgstr "Початковий індекс для нумерування"
+
+#: plug-ins/common/film.c:212
+msgid "Number _font"
+msgstr "_Шрифт чисел"
+
+#: plug-ins/common/film.c:213
+msgid "Font for drawing numbers"
+msgstr "Шрифт для малювання чисел"
+
+#: plug-ins/common/film.c:217
+msgid "_Number color"
+msgstr "_Колір чисел"
+
+#: plug-ins/common/film.c:218
+msgid "Color for numbers"
+msgstr "Колір чисел"
+
+#: plug-ins/common/film.c:223
+msgid "At _top"
+msgstr "Зв_ерху"
+
+#: plug-ins/common/film.c:224
+msgid "Draw numbers at top"
+msgstr "Малювати числа згори"
+
+#: plug-ins/common/film.c:229
+msgid "At _bottom"
+msgstr "З_низу"
+
+#: plug-ins/common/film.c:230
+msgid "Draw numbers at bottom"
+msgstr "Малювати числа внизу"
+
 #: plug-ins/common/film.c:245
 msgid "Image _height"
 msgstr "_Висота зображення"
@@ -6589,6 +6646,10 @@ msgstr "Висота намальованих чисел, як частка ви
 #: plug-ins/common/film.c:289
 msgid "F_it height to images"
 msgstr "_Розтягувати до висоти зображень"
+
+#: plug-ins/common/film.c:290
+msgid "Keep maximum image height"
+msgstr "Зберегти максимальну висоту зображень"
 
 #: plug-ins/common/film.c:365
 msgid "Composing images"
@@ -6752,13 +6813,26 @@ msgstr "Знайти та змінити точки, які можуть бут�
 msgid "Mode"
 msgstr "Режим"
 
+#: plug-ins/common/hot.c:271
+msgid "Mode { NTSC (0), PAL (1) }"
+msgstr "Режим { NTSC (0), PAL (1) }"
+
 #: plug-ins/common/hot.c:276
 msgid "Action"
 msgstr "Дія"
 
+#: plug-ins/common/hot.c:277
+msgid "Action { (0) reduce luminance, (1) reduce saturation, or (2) Blacken }"
+msgstr ""
+"Дія { (0) зменшити освітленість, (1) зменшити насиченість або (2) затемнити }"
+
 #: plug-ins/common/hot.c:283
 msgid "Create _new layer"
 msgstr "Створити _новий шар"
+
+#: plug-ins/common/hot.c:284
+msgid "Create a new layer"
+msgstr "Створити новий шар"
 
 #: plug-ins/common/hot.c:447 plug-ins/common/hot.c:654
 msgid "Hot"
@@ -7696,6 +7770,31 @@ msgstr "_Черепиця..."
 msgid "Create an array of copies of the image"
 msgstr "Створити копію вказаної частини зображення"
 
+#: plug-ins/common/tile.c:161
+msgid "New _width"
+msgstr "Нова _ширина"
+
+#: plug-ins/common/tile.c:162
+msgid "New (tiled) image width"
+msgstr "Нова ширина (плиткового) зображення"
+
+#: plug-ins/common/tile.c:167
+msgid "New _height"
+msgstr "Нова _висота"
+
+#: plug-ins/common/tile.c:168
+msgid "New (tiled) image height"
+msgstr "Нова висота (плиткового) зображення"
+
+#: plug-ins/common/tile.c:173
+msgid "New _image"
+msgstr "Н_ове зображення"
+
+#: plug-ins/common/tile.c:174 plug-ins/lighting/lighting-main.c:303
+#: plug-ins/map-object/map-object-main.c:331
+msgid "Create a new image"
+msgstr "Створення нового зображення"
+
 #: plug-ins/common/tile.c:254 plug-ins/common/tile-small.c:377
 msgid "Tiling"
 msgstr "Укладання черепиці"
@@ -7960,7 +8059,7 @@ msgstr "Оператор ефекту"
 msgid "Derivative"
 msgstr "Похідна"
 
-#: plug-ins/common/van-gogh-lic.c:171
+#: plug-ins/common/van-gogh-lic.c:171 plug-ins/gfig/gfig-dialog.c:586
 msgid "Gradient"
 msgstr "Градієнт"
 
@@ -8818,7 +8917,6 @@ msgstr ""
 "бнп: %d, R-маска: %x, G-маска: %x, B-маска: %x, A-маска: %x, прапорці: %u"
 
 #: plug-ins/file-dds/ddsread.c:499
-#| msgid "Invalid or corrupted DDS header"
 msgid "Invalid or corrupted DDS header."
 msgstr "Некоректний або пошкоджений заголовок DDS."
 
@@ -8838,8 +8936,8 @@ msgstr "Некоректна контрольна сума у форматі DOS
 msgid ""
 "File lacks expected pixel format flags! Image may not be decoded correctly."
 msgstr ""
-"У файлі немає очікуваних прапорців формату пікселя. Можливо, зображення буде"
-" декодовано із помилками."
+"У файлі немає очікуваних прапорців формату пікселя. Можливо, зображення буде "
+"декодовано із помилками."
 
 #: plug-ins/file-dds/ddsread.c:863
 msgid "Invalid pixel format."
@@ -8861,13 +8959,11 @@ msgid "Invalid bpp value for luminance data: %d"
 msgstr "Некоректне значення бітів на піксель для даних освітленості: %d"
 
 #: plug-ins/file-dds/ddsread.c:943
-#| msgid "Invalid block header"
 msgid "Invalid DX10 header"
 msgstr "Некоректний заголовок DX10"
 
 #: plug-ins/file-dds/ddsread.c:975
 #, c-format
-#| msgid "Unsupported DXGI format (%d)"
 msgid "Unsupported DXGI Format: %u"
 msgstr "Непідтримуваний формат DXGI: %u"
 
@@ -9759,12 +9855,15 @@ msgstr ""
 "Решту контурів буде відкинуто."
 
 #: plug-ins/file-psd/psd-save.c:2666
+#| msgid ""
+#| "Legacy layer modes have been reported to have better compatibility with "
+#| "Photoshop. If you encounter display issues, consider switching to those "
+#| "layer modes."
 msgid ""
-"Legacy layer modes have been reported to have better compatibility with "
-"Photoshop. If you encounter display issues, consider switching to those "
-"layer modes."
+"Legacy layer modes have better compatibility with Photoshop. If you "
+"encounter display issues, consider switching to those layer modes."
 msgstr ""
-"Повідомлялося, що застарілі режими шарів мають кращу сумісність із "
+"Застарілі режими шарів мають кращу сумісність із "
 "Photoshop. Якщо виникають проблеми з показом, вам варто перемкнутися на ці "
 "режими шарів."
 
@@ -10877,6 +10976,14 @@ msgstr "_Мапа кольорів:"
 msgid "Custom gradient"
 msgstr "Власний градієнт"
 
+#: plug-ins/flame/flame.c:1341
+msgid "_Rendering"
+msgstr "_Візуалізація"
+
+#: plug-ins/flame/flame.c:1344
+msgid "C_amera"
+msgstr "_Камера"
+
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:617
 #: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:988
@@ -11180,6 +11287,26 @@ msgstr "Режим накладання синього"
 msgid "In_version"
 msgstr "І_нверсія"
 
+#: plug-ins/fractal-explorer/fractal-explorer.c:371
+msgid "Red inversion mode"
+msgstr "Режим інверсії червоного"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:376
+msgid "I_nversion"
+msgstr "_Інверсія"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:377
+msgid "Green inversion mode"
+msgstr "Режим інверсії зеленого"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:382
+msgid "_Inversion"
+msgstr "І_нверсія"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:383
+msgid "Blue inversion mode"
+msgstr "Режим інверсії синього"
+
 #: plug-ins/fractal-explorer/fractal-explorer.c:388
 msgid "_Number of colors"
 msgstr "_Кількість кольорів"
@@ -11187,6 +11314,16 @@ msgstr "_Кількість кольорів"
 #: plug-ins/fractal-explorer/fractal-explorer.c:389
 msgid "Number of Colors for mapping"
 msgstr "Кількість кольорів відображення"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:393
+msgid "_Use log log smoothing"
+msgstr "Ви_користовувати згладжування \"log log\""
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:394
+msgid "Use log log smoothing to eliminate \"banding\" in the result"
+msgstr ""
+"Щоб уникнути розділення зображення на смуги, використовуйте параметр "
+"«Згладжування»"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:493
 msgid "Rendering fractal"
@@ -11449,6 +11586,10 @@ msgstr "Параметри інструменту"
 msgid "_Stroke"
 msgstr "_Обвести"
 
+#: plug-ins/gfig/gfig-dialog.c:494 plug-ins/gfig/gfig-dialog.c:1291
+msgid "Foreground"
+msgstr "Передній план"
+
 #. Fill frame on right side
 #: plug-ins/gfig/gfig-dialog.c:519
 msgid "Fill"
@@ -11525,10 +11666,6 @@ msgstr "Макс. кількість скасувань:"
 #: plug-ins/gfig/gfig-dialog.c:1289 plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Прозорий"
-
-#: plug-ins/gfig/gfig-dialog.c:1291
-msgid "Foreground"
-msgstr "Передній план"
 
 #: plug-ins/gfig/gfig-dialog.c:1302
 msgid ""
@@ -13972,11 +14109,6 @@ msgstr "Застосувати з_гладжування"
 msgid "Create new ima_ge"
 msgstr "Створити нове зоб_раження"
 
-#: plug-ins/lighting/lighting-main.c:303
-#: plug-ins/map-object/map-object-main.c:331
-msgid "Create a new image"
-msgstr "Створення нового зображення"
-
 #: plug-ins/lighting/lighting-main.c:308
 msgid "Trans_parent background"
 msgstr "П_розоре тло"
@@ -15395,6 +15527,44 @@ msgstr "Створити зображення з вказаної частини
 msgid "Shoot _area"
 msgstr "_Область знімка"
 
+#: plug-ins/screenshot/screenshot.c:165
+msgid "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
+msgstr ""
+"Тип знімка { ВІКНО-ЗНІМКА (0), КОРІНЬ-ЗНІМКА (1), ДІЛЯНКА-ЗНІМКА (2) }"
+
+#: plug-ins/screenshot/screenshot.c:195
+msgid "Include _mouse pointer"
+msgstr "Включити вказівник _миші"
+
+#: plug-ins/screenshot/screenshot.c:196
+msgid "Your pointing device's cursor will be part of the image"
+msgstr "Курсор вашого координатного пристрою буде частиною зображення"
+
+#: plug-ins/screenshot/screenshot.c:204
+msgid "Include window _decoration"
+msgstr "Включаючи _рамку вікна"
+
+#: plug-ins/screenshot/screenshot.c:205
+msgid "Title bar, window borders and shadow will be part of the image"
+msgstr ""
+"Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
+
+#: plug-ins/screenshot/screenshot.c:214
+msgid "Selection d_elay"
+msgstr "За_тримка вибору"
+
+#: plug-ins/screenshot/screenshot.c:215
+msgid "Delay before selection of the window or the region"
+msgstr "Затримка до вибору вікна або ділянки"
+
+#: plug-ins/screenshot/screenshot.c:219
+msgid "Screenshot dela_y"
+msgstr "Затримка з_німка"
+
+#: plug-ins/screenshot/screenshot.c:220
+msgid "Delay before snapping the screenshot"
+msgstr "Затримка до прилипання знімка"
+
 #: plug-ins/screenshot/screenshot.c:224
 msgid "Color _Profile"
 msgstr "Колірний про_філь"
@@ -15799,9 +15969,6 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "Parameter URI"
 #~ msgstr "Адреса параметрів"
 
-#~ msgid "_Rendering"
-#~ msgstr "_Візуалізація"
-
 #~ msgid "_Brightness:"
 #~ msgstr "_Яскравість:"
 
@@ -15810,9 +15977,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Spatial _filter radius:"
 #~ msgstr "Радіус просторового _фільтра:"
-
-#~ msgid "C_amera"
-#~ msgstr "_Камера"
 
 #~ msgid "_Zoom:"
 #~ msgstr "Мас_штаб:"
@@ -15890,26 +16054,14 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "Resolution:"
 #~ msgstr "Роздільна здатність:"
 
-#~ msgid "Select Film Color"
-#~ msgstr "Вибір кольору плівки"
-
 #~ msgid "Co_lor:"
 #~ msgstr "_Колір:"
-
-#~ msgid "Start _index:"
-#~ msgstr "Рахувати _від:"
 
 #~ msgid "_Font:"
 #~ msgstr "_Шрифт:"
 
 #~ msgid "Select Number Color"
 #~ msgstr "Вибір кольору номерів"
-
-#~ msgid "At _bottom"
-#~ msgstr "З_низу"
-
-#~ msgid "At _top"
-#~ msgstr "Зв_ерху"
 
 #~ msgid "Hole sp_acing:"
 #~ msgstr "І_нтервал між отворами:"
@@ -15966,14 +16118,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Change the number of colors in the mapping"
 #~ msgstr "Змінити кількість кольорів у відбитті"
-
-#~ msgid "Use loglog smoothing"
-#~ msgstr "Використовувати згладжування \"log log\""
-
-#~ msgid "Use log log smoothing to eliminate \"banding\" in the result"
-#~ msgstr ""
-#~ "Щоб уникнути розділення зображення на смуги, використовуйте параметр "
-#~ "«Згладжування»"
 
 #~ msgid "Red:"
 #~ msgstr "Червоний:"
@@ -16171,15 +16315,6 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "Area"
 #~ msgstr "Область"
 
-#~ msgid "Include window _decoration"
-#~ msgstr "Включаючи _рамку вікна"
-
-#~ msgid "Include _mouse pointer"
-#~ msgstr "Включити вказівник _миші"
-
-#~ msgid "Selection delay: "
-#~ msgstr "Затримка вибору: "
-
 #~ msgid ""
 #~ "After the delay, drag your mouse to select the region for the screenshot."
 #~ msgstr "Після затримки, пересуньте мишу на ділянку для знімку."
@@ -16189,9 +16324,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "At the end of the delay, click in a window to snap it."
 #~ msgstr "Після затримки клацніть на вікні для отримання його знімку"
-
-#~ msgid "Screenshot dela_y: "
-#~ msgstr "Затримка з_німка екрана: "
 
 #~ msgid "After the delay, the screenshot is taken."
 #~ msgstr "Після затримки робиться знімок"
@@ -16536,9 +16668,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Raise to _top"
 #~ msgstr "_Підняти вгору"
-
-#~ msgid "Lower to _bottom"
-#~ msgstr "_Опустити вниз"
 
 #~ msgid "_Next"
 #~ msgstr "_Наступне"
