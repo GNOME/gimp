@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-11 00:11+0000\n"
-"PO-Revision-Date: 2023-12-12 00:00+0200\n"
+"POT-Creation-Date: 2023-12-13 07:48+0000\n"
+"PO-Revision-Date: 2023-12-13 19:43+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -1990,7 +1990,7 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:160
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:169
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
 #: plug-ins/file-icns/file-icns-load.c:516
@@ -8803,66 +8803,84 @@ msgid ""
 msgstr ""
 "Порогове значення альфа-тесту, для якого слід зберігати покриття альфа-тестом"
 
-#: plug-ins/file-dds/ddsread.c:170
+#: plug-ins/file-dds/ddsread.c:179
 #, c-format
 msgid "Loading: %s"
 msgstr "Завантаження: %s"
 
-#: plug-ins/file-dds/ddsread.c:263
+#: plug-ins/file-dds/ddsread.c:250
 #, c-format
-msgid "Unsupported uncompressed FourCC type %u"
-msgstr "Непідтримуваний розпакований тип FourCC %u"
+msgid ""
+"Unsupported DDS pixel format:\n"
+"bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
+msgstr ""
+"Непідтримуваний формат пікселів DDS:\n"
+"бнп: %d, R-маска: %x, G-маска: %x, B-маска: %x, A-маска: %x, прапорці: %u"
 
-#: plug-ins/file-dds/ddsread.c:578
-msgid "Invalid or corrupted DDS header"
-msgstr "Некоректний або пошкоджений заголовок DDS"
+#: plug-ins/file-dds/ddsread.c:499
+#| msgid "Invalid or corrupted DDS header"
+msgid "Invalid or corrupted DDS header."
+msgstr "Некоректний або пошкоджений заголовок DDS."
 
-#: plug-ins/file-dds/ddsread.c:588
+#: plug-ins/file-dds/ddsread.c:511
 msgid "Could not allocate a new image."
 msgstr "Не вдалося розмістити нове зображення."
 
-#: plug-ins/file-dds/ddsread.c:600
+#: plug-ins/file-dds/ddsread.c:523
 msgid "Error reading palette."
 msgstr "Помилка під час спроби читання палітри."
 
-#: plug-ins/file-dds/ddsread.c:887
+#: plug-ins/file-dds/ddsread.c:812
 msgid "Invalid DDS format magic number."
 msgstr "Некоректна контрольна сума у форматі DOS."
 
-#: plug-ins/file-dds/ddsread.c:978
+#: plug-ins/file-dds/ddsread.c:828
+msgid ""
+"File lacks expected pixel format flags! Image may not be decoded correctly."
+msgstr ""
+"У файлі немає очікуваних прапорців формату пікселя. Можливо, зображення буде"
+" декодовано із помилками."
+
+#: plug-ins/file-dds/ddsread.c:863
+msgid "Invalid pixel format."
+msgstr "Некоректний піксельний формат."
+
+#: plug-ins/file-dds/ddsread.c:888
+#, c-format
+msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
+msgstr "Непідтримуваний формат (FourCC: %c%c%c%c, шіст.: %08x)"
+
+#: plug-ins/file-dds/ddsread.c:910
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Некоректне значення бітів на піксель для даних RGB: %d"
 
-#: plug-ins/file-dds/ddsread.c:989
+#: plug-ins/file-dds/ddsread.c:921
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Некоректне значення бітів на піксель для даних освітленості: %d"
 
-#: plug-ins/file-dds/ddsread.c:1041
-msgid "Invalid pixel format."
-msgstr "Некоректний піксельний формат."
+#: plug-ins/file-dds/ddsread.c:943
+#| msgid "Invalid block header"
+msgid "Invalid DX10 header"
+msgstr "Некоректний заголовок DX10"
 
-#: plug-ins/file-dds/ddsread.c:1274
+#: plug-ins/file-dds/ddsread.c:975
 #, c-format
-msgid "Unsupported DXGI format (%d)"
-msgstr "Непідтримуваний формат DXGI (%d)"
+#| msgid "Unsupported DXGI format (%d)"
+msgid "Unsupported DXGI Format: %u"
+msgstr "Непідтримуваний формат DXGI: %u"
 
-#: plug-ins/file-dds/ddsread.c:1430
-#, c-format
-msgid "Unsupported value for bytes per pixel: %d"
-msgstr "Непідтримуване значення байтів на піксель: %d"
-
-#: plug-ins/file-dds/ddsread.c:1525 plug-ins/file-dds/ddsread.c:1583
-#: plug-ins/file-dds/ddsread.c:1604
+#: plug-ins/file-dds/ddsread.c:1163 plug-ins/file-dds/ddsread.c:1227
+#: plug-ins/file-dds/ddsread.c:1247
 msgid "Requested data exceeds size of file.\n"
 msgstr "Розмір даних, на які надійшов запит, перевищує розмір файла.\n"
 
-#: plug-ins/file-dds/ddsread.c:1533 plug-ins/file-dds/ddsread.c:1610
+#: plug-ins/file-dds/ddsread.c:1171 plug-ins/file-dds/ddsread.c:1253
 msgid "Unexpected EOF.\n"
 msgstr "Неочікуваний кінець файла.\n"
 
-#: plug-ins/file-dds/ddsread.c:2125
+#: plug-ins/file-dds/ddsread.c:1579
 msgid "Open DDS"
 msgstr "Відкрити DDS"
 
@@ -13912,7 +13930,6 @@ msgid "Material diffuse intensity (Bright)"
 msgstr "Інтенсивність розсіювання матеріалом (яскраве)"
 
 #: plug-ins/lighting/lighting-main.c:271
-#| msgid "Material diffuse reflectivity"
 msgid "Diffuse reflectivity"
 msgstr "Розсіювальна дзеркальність"
 
@@ -13922,7 +13939,6 @@ msgid "Material diffuse reflectivity"
 msgstr "Розсіювальна дзеркальність матеріалу"
 
 #: plug-ins/lighting/lighting-main.c:277
-#| msgid "Material specular reflectivity"
 msgid "Specular reflectivity"
 msgstr "Відбивна дзеркальність"
 
@@ -13932,12 +13948,10 @@ msgid "Material specular reflectivity"
 msgstr "Відбивна дзеркальність матеріалу"
 
 #: plug-ins/lighting/lighting-main.c:283
-#| msgid "Highligh_t"
 msgid "Highlight"
 msgstr "Блік"
 
 #: plug-ins/lighting/lighting-main.c:284
-#| msgid "Material highlight (note, it's exponential)"
 msgid "Material highlight (note, it's exponential) (Polished)"
 msgstr "Блік на матеріалі (зауважте, він є експоненційним) (полірування)"
 
@@ -15720,6 +15734,14 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:496
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#, c-format
+#~ msgid "Unsupported uncompressed FourCC type %u"
+#~ msgstr "Непідтримуваний розпакований тип FourCC %u"
+
+#, c-format
+#~ msgid "Unsupported value for bytes per pixel: %d"
+#~ msgstr "Непідтримуване значення байтів на піксель: %d"
 
 #~ msgid "Always use _transparency for BC1/DXT1"
 #~ msgstr "Завжди використовувати _прозорість для BC1/DXT1"
