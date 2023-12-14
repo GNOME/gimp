@@ -32,3 +32,6 @@ paned.vertical > separator {
 button:not(.flat) {
   box-shadow: 0 1px @extreme-selected-color inset;
 }
+button:not(.flat):hover {
+  box-shadow: none;
+}
