@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-10-19 10:04+0000\n"
-"PO-Revision-Date: 2023-12-14 09:27+0100\n"
+"PO-Revision-Date: 2023-12-14 13:05+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -67,7 +67,7 @@ msgstr "Gem som animation"
 #: libgimp/gimpexport.c:360 libgimp/gimpexport.c:369 libgimp/gimpexport.c:378
 #: libgimp/gimpexport.c:387
 msgid "Flatten Image"
-msgstr "Forén billedets lag (bevar gennemsigtighed)"
+msgstr "Sammenlæg billedets lag (fjern gennemsigtighed)"
 
 #: libgimp/gimpexport.c:377
 #, c-format
@@ -1299,7 +1299,7 @@ msgstr "Beskåret til det nederste lag"
 #: libgimpbase/gimpbaseenums.c:1069
 msgctxt "merge-type"
 msgid "Flatten"
-msgstr "Forén billedets lag (fjern gennemsigtighed)"
+msgstr "Sammenlæg billedets lag (fjern gennemsigtighed)"
 
 #: libgimpbase/gimpbaseenums.c:1163
 msgctxt "orientation-type"
