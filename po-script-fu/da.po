@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-19 16:55+0000\n"
-"PO-Revision-Date: 2023-10-31 14:15+0100\n"
+"POT-Creation-Date: 2023-10-31 13:19+0000\n"
+"PO-Revision-Date: 2023-12-14 13:03+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -744,7 +744,7 @@ msgstr "Skyggevægt (%)"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:164
 msgid "Flatten image"
-msgstr "Forén billedets lag (fjern gennemsigtighed)"
+msgstr "Sammenlæg billedets lag (fjern gennemsigtighed)"
 
 # "Brugsmønstre" - jeg forestiller mig at dette er henvisninger til et
 # afsnit i en manual eller lignende.
