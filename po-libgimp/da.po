@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-10-19 10:04+0000\n"
-"PO-Revision-Date: 2023-12-14 09:08+0100\n"
+"PO-Revision-Date: 2023-12-14 09:27+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -46,7 +46,7 @@ msgstr "Udvidelsesmodulet %s kan ikke håndtere lag"
 #: libgimp/gimpexport.c:333 libgimp/gimpexport.c:342 libgimp/gimpexport.c:351
 #: libgimp/gimpexport.c:369
 msgid "Merge Visible Layers"
-msgstr "Forén synlige lag"
+msgstr "Sammenlæg synlige lag"
 
 #: libgimp/gimpexport.c:341
 #, c-format
