@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-01 20:47+0000\n"
-"PO-Revision-Date: 2023-12-01 23:43+0100\n"
+"POT-Creation-Date: 2023-12-13 17:59+0000\n"
+"PO-Revision-Date: 2023-12-15 05:28+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -626,8 +626,8 @@ msgstr "ვერტიკალური"
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2749 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
-#: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:1290
-#: plug-ins/gimpressionist/general.c:139
+#: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:561
+#: plug-ins/gfig/gfig-dialog.c:1290 plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
 #: plug-ins/screenshot/screenshot-win32.c:317 plug-ins/twain/twain.c:636
 msgid "Background"
@@ -1920,7 +1920,7 @@ msgstr ""
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:160
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:169
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
 #: plug-ins/file-icns/file-icns-load.c:516
@@ -2746,7 +2746,7 @@ msgstr "Farbfeld პიქსელის მონაცემების ფ�
 msgid "GIMP brush"
 msgstr "GIMP-ის ფუნჯი"
 
-#: plug-ins/common/file-gbr.c:128
+#: plug-ins/common/file-gbr.c:128 plug-ins/gfig/gfig-dialog.c:510
 msgid "Brush"
 msgstr "ფუნჯი"
 
@@ -3946,6 +3946,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/file-pat.c:128 plug-ins/common/qbist.c:968
+#: plug-ins/gfig/gfig-dialog.c:576
 msgid "Pattern"
 msgstr "ნიმუში"
 
@@ -6223,6 +6224,62 @@ msgstr ""
 msgid "Combine several images on a film strip"
 msgstr ""
 
+#: plug-ins/common/film.c:194
+msgid "Film _height"
+msgstr "ლენტის _სიმაღლე"
+
+#: plug-ins/common/film.c:195
+msgid "Height of film (0: fit to images)"
+msgstr ""
+
+#: plug-ins/common/film.c:200
+msgid "_Film color"
+msgstr "_ლენტის ფერი"
+
+#: plug-ins/common/film.c:201
+msgid "Color of the film"
+msgstr "ლენტის ფერი"
+
+#: plug-ins/common/film.c:206
+msgid "Start _index"
+msgstr "ინდექსის _დასაწყისი"
+
+#: plug-ins/common/film.c:207
+msgid "Start index for numbering"
+msgstr ""
+
+#: plug-ins/common/film.c:212
+msgid "Number _font"
+msgstr "ფონტის _დანომრვა"
+
+#: plug-ins/common/film.c:213
+msgid "Font for drawing numbers"
+msgstr ""
+
+#: plug-ins/common/film.c:217
+msgid "_Number color"
+msgstr "_ფერების რაოდენობა"
+
+#: plug-ins/common/film.c:218
+msgid "Color for numbers"
+msgstr ""
+
+#: plug-ins/common/film.c:223
+msgid "At _top"
+msgstr ""
+
+#: plug-ins/common/film.c:224
+msgid "Draw numbers at top"
+msgstr ""
+
+#: plug-ins/common/film.c:229
+msgid "At _bottom"
+msgstr "_ბოლოში"
+
+#: plug-ins/common/film.c:230
+msgid "Draw numbers at bottom"
+msgstr ""
+
 #: plug-ins/common/film.c:245
 msgid "Image _height"
 msgstr "გამოსახულების _სიმაღლე"
@@ -6282,6 +6339,10 @@ msgstr ""
 #: plug-ins/common/film.c:289
 msgid "F_it height to images"
 msgstr "სიმაღლის გამოსახულებებში ჩ_ატევა"
+
+#: plug-ins/common/film.c:290
+msgid "Keep maximum image height"
+msgstr "გამოსახულების მაქსიმალური სიმაღლის შენარჩუნება"
 
 #: plug-ins/common/film.c:365
 msgid "Composing images"
@@ -6441,13 +6502,25 @@ msgstr ""
 msgid "Mode"
 msgstr "რეჟიმი"
 
+#: plug-ins/common/hot.c:271
+msgid "Mode { NTSC (0), PAL (1) }"
+msgstr ""
+
 #: plug-ins/common/hot.c:276
 msgid "Action"
 msgstr "ქმედება"
 
+#: plug-ins/common/hot.c:277
+msgid "Action { (0) reduce luminance, (1) reduce saturation, or (2) Blacken }"
+msgstr ""
+
 #: plug-ins/common/hot.c:283
 msgid "Create _new layer"
 msgstr "_ახალი ფენის შექმნა"
+
+#: plug-ins/common/hot.c:284
+msgid "Create a new layer"
+msgstr "ახალი ფენის შექმნა"
 
 #: plug-ins/common/hot.c:447 plug-ins/common/hot.c:654
 msgid "Hot"
@@ -7362,6 +7435,31 @@ msgstr ""
 msgid "Create an array of copies of the image"
 msgstr ""
 
+#: plug-ins/common/tile.c:161
+msgid "New _width"
+msgstr "ახალი _სიგანე"
+
+#: plug-ins/common/tile.c:162
+msgid "New (tiled) image width"
+msgstr ""
+
+#: plug-ins/common/tile.c:167
+msgid "New _height"
+msgstr "ახალი _სიმაღლე"
+
+#: plug-ins/common/tile.c:168
+msgid "New (tiled) image height"
+msgstr ""
+
+#: plug-ins/common/tile.c:173
+msgid "New _image"
+msgstr "_ახალი გამოსახულება"
+
+#: plug-ins/common/tile.c:174 plug-ins/lighting/lighting-main.c:303
+#: plug-ins/map-object/map-object-main.c:331
+msgid "Create a new image"
+msgstr "ახალი გამოსახულების შექმნა"
+
 #: plug-ins/common/tile.c:254 plug-ins/common/tile-small.c:377
 msgid "Tiling"
 msgstr "მოზაიკური"
@@ -7617,7 +7715,7 @@ msgstr ""
 msgid "Derivative"
 msgstr "წარმოებული"
 
-#: plug-ins/common/van-gogh-lic.c:171
+#: plug-ins/common/van-gogh-lic.c:171 plug-ins/gfig/gfig-dialog.c:586
 msgid "Gradient"
 msgstr "გრადაცია"
 
@@ -8450,72 +8548,82 @@ msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr ""
 
-#: plug-ins/file-dds/ddsread.c:170
+#: plug-ins/file-dds/ddsread.c:179
 #, c-format
 msgid "Loading: %s"
 msgstr ""
 
-#: plug-ins/file-dds/ddsread.c:263
+#: plug-ins/file-dds/ddsread.c:250
 #, c-format
-msgid "Unsupported uncompressed FourCC type %u"
+msgid ""
+"Unsupported DDS pixel format:\n"
+"bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
 msgstr ""
 
-#: plug-ins/file-dds/ddsread.c:578
-msgid "Invalid or corrupted DDS header"
-msgstr "არასწორი ან დაზიანებული DDS თავსართი"
+#: plug-ins/file-dds/ddsread.c:499
+msgid "Invalid or corrupted DDS header."
+msgstr "არასწორი ან დაზიანებული DDS თავსართი."
 
-#: plug-ins/file-dds/ddsread.c:588
+#: plug-ins/file-dds/ddsread.c:511
 msgid "Could not allocate a new image."
 msgstr "ახალი გამოსახულების გამოყოფის შეცდომა."
 
-#: plug-ins/file-dds/ddsread.c:600
+#: plug-ins/file-dds/ddsread.c:523
 msgid "Error reading palette."
 msgstr "პალიტრის კითხვის შეცდომა."
 
-#: plug-ins/file-dds/ddsread.c:887
+#: plug-ins/file-dds/ddsread.c:812
 msgid "Invalid DDS format magic number."
 msgstr ""
 
-#: plug-ins/file-dds/ddsread.c:978
+#: plug-ins/file-dds/ddsread.c:828
+msgid ""
+"File lacks expected pixel format flags! Image may not be decoded correctly."
+msgstr ""
+
+#: plug-ins/file-dds/ddsread.c:863
+msgid "Invalid pixel format."
+msgstr "არასწორი პიქსელის ფორმატი."
+
+#: plug-ins/file-dds/ddsread.c:888
+#, c-format
+msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
+msgstr ""
+
+#: plug-ins/file-dds/ddsread.c:910
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr ""
 
-#: plug-ins/file-dds/ddsread.c:989
+#: plug-ins/file-dds/ddsread.c:921
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr ""
 
-#: plug-ins/file-dds/ddsread.c:1041
-msgid "Invalid pixel format."
-msgstr "არასწორი პიქსელის ფორმატი."
+#: plug-ins/file-dds/ddsread.c:943
+msgid "Invalid DX10 header"
+msgstr "არასწორი DX10 თავსართი"
 
-#: plug-ins/file-dds/ddsread.c:1274
+#: plug-ins/file-dds/ddsread.c:975
 #, c-format
-msgid "Unsupported DXGI format (%d)"
+msgid "Unsupported DXGI Format: %u"
 msgstr ""
 
-#: plug-ins/file-dds/ddsread.c:1430
-#, c-format
-msgid "Unsupported value for bytes per pixel: %d"
-msgstr ""
-
-#: plug-ins/file-dds/ddsread.c:1525 plug-ins/file-dds/ddsread.c:1583
-#: plug-ins/file-dds/ddsread.c:1604
+#: plug-ins/file-dds/ddsread.c:1163 plug-ins/file-dds/ddsread.c:1227
+#: plug-ins/file-dds/ddsread.c:1247
 msgid "Requested data exceeds size of file.\n"
 msgstr ""
 
-#: plug-ins/file-dds/ddsread.c:1533 plug-ins/file-dds/ddsread.c:1610
+#: plug-ins/file-dds/ddsread.c:1171 plug-ins/file-dds/ddsread.c:1253
 msgid "Unexpected EOF.\n"
 msgstr "მოულოდნელი EOF.\n"
 
-#: plug-ins/file-dds/ddsread.c:2125
+#: plug-ins/file-dds/ddsread.c:1579
 msgid "Open DDS"
 msgstr "DDS-ის გახსნა"
 
 #: plug-ins/file-dds/ddswrite.c:566
 #, c-format
-#| msgid "Saving '%s'"
 msgid "Saving: %s"
 msgstr "შენახვა: %s"
 
@@ -9334,9 +9442,8 @@ msgstr ""
 
 #: plug-ins/file-psd/psd-save.c:2666
 msgid ""
-"Legacy layer modes have been reported to have better compatibility with "
-"Photoshop. If you encounter display issues, consider switching to those "
-"layer modes."
+"Legacy layer modes have better compatibility with Photoshop. If you "
+"encounter display issues, consider switching to those layer modes."
 msgstr ""
 
 #: plug-ins/file-psd/psd-util.c:176
@@ -10368,6 +10475,14 @@ msgstr "ფერების _რუკა:"
 msgid "Custom gradient"
 msgstr ""
 
+#: plug-ins/flame/flame.c:1341
+msgid "_Rendering"
+msgstr "_რენდერი"
+
+#: plug-ins/flame/flame.c:1344
+msgid "C_amera"
+msgstr "_კამერა"
+
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:617
 #: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:988
@@ -10665,6 +10780,26 @@ msgstr ""
 msgid "In_version"
 msgstr "_ინვერსია"
 
+#: plug-ins/fractal-explorer/fractal-explorer.c:371
+msgid "Red inversion mode"
+msgstr "წითლის ინვერსიის რეჟიმი"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:376
+msgid "I_nversion"
+msgstr "_ინვერსია"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:377
+msgid "Green inversion mode"
+msgstr ""
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:382
+msgid "_Inversion"
+msgstr "_ინვერსია"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:383
+msgid "Blue inversion mode"
+msgstr "ლურჯის ინვერსიის რეჟიმი"
+
 #: plug-ins/fractal-explorer/fractal-explorer.c:388
 msgid "_Number of colors"
 msgstr "_ფერების რაოდენობა"
@@ -10672,6 +10807,14 @@ msgstr "_ფერების რაოდენობა"
 #: plug-ins/fractal-explorer/fractal-explorer.c:389
 msgid "Number of Colors for mapping"
 msgstr "ფერების რაოდენობა ასახვისთვის"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:393
+msgid "_Use log log smoothing"
+msgstr ""
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:394
+msgid "Use log log smoothing to eliminate \"banding\" in the result"
+msgstr ""
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:493
 msgid "Rendering fractal"
@@ -10932,6 +11075,10 @@ msgstr "ხელსაწყოების გამართვა"
 msgid "_Stroke"
 msgstr "_განძრევა"
 
+#: plug-ins/gfig/gfig-dialog.c:494 plug-ins/gfig/gfig-dialog.c:1291
+msgid "Foreground"
+msgstr "წინა პლანი"
+
 #. Fill frame on right side
 #: plug-ins/gfig/gfig-dialog.c:519
 msgid "Fill"
@@ -11008,10 +11155,6 @@ msgstr "მაქს დაბრუნება:"
 #: plug-ins/gfig/gfig-dialog.c:1289 plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "გამჭვირვალე"
-
-#: plug-ins/gfig/gfig-dialog.c:1291
-msgid "Foreground"
-msgstr "წინა პლანი"
 
 #: plug-ins/gfig/gfig-dialog.c:1302
 msgid ""
@@ -13192,7 +13335,7 @@ msgstr ""
 msgid "Enable en_vironment mapping"
 msgstr ""
 
-#: plug-ins/lighting/lighting-main.c:156 plug-ins/lighting/lighting-main.c:291
+#: plug-ins/lighting/lighting-main.c:156
 msgid "Enable envmapping"
 msgstr ""
 
@@ -13388,9 +13531,39 @@ msgstr "დიფუზიური ინტენსივობა"
 msgid "Material diffuse intensity (Bright)"
 msgstr ""
 
+#: plug-ins/lighting/lighting-main.c:271
+msgid "Diffuse reflectivity"
+msgstr "არეკვლადობის დიფუზია"
+
+#: plug-ins/lighting/lighting-main.c:272
+#: plug-ins/map-object/map-object-main.c:288
+msgid "Material diffuse reflectivity"
+msgstr ""
+
+#: plug-ins/lighting/lighting-main.c:277
+msgid "Specular reflectivity"
+msgstr ""
+
+#: plug-ins/lighting/lighting-main.c:278
+#: plug-ins/map-object/map-object-main.c:294
+msgid "Material specular reflectivity"
+msgstr ""
+
+#: plug-ins/lighting/lighting-main.c:283
+msgid "Highlight"
+msgstr "გამოკვეთა"
+
+#: plug-ins/lighting/lighting-main.c:284
+msgid "Material highlight (note, it's exponential) (Polished)"
+msgstr ""
+
 #: plug-ins/lighting/lighting-main.c:290
 msgid "Metallic"
 msgstr "ლითონური"
+
+#: plug-ins/lighting/lighting-main.c:291
+msgid "Make surfaces look metallic"
+msgstr ""
 
 #: plug-ins/lighting/lighting-main.c:297
 #: plug-ins/map-object/map-object-main.c:307
@@ -13400,11 +13573,6 @@ msgstr "მომრგვალების გადატარება"
 #: plug-ins/lighting/lighting-main.c:302
 msgid "Create new ima_ge"
 msgstr "_ახალი გამოსახულების შექმნა"
-
-#: plug-ins/lighting/lighting-main.c:303
-#: plug-ins/map-object/map-object-main.c:331
-msgid "Create a new image"
-msgstr "ახალი გამოსახულების შექმნა"
 
 #: plug-ins/lighting/lighting-main.c:308
 msgid "Trans_parent background"
@@ -13654,17 +13822,9 @@ msgstr "მასალის დიფუზიური ინტენსი�
 msgid "Di_ffuse"
 msgstr ""
 
-#: plug-ins/map-object/map-object-main.c:288
-msgid "Material diffuse reflectivity"
-msgstr ""
-
 #: plug-ins/map-object/map-object-main.c:293
 msgid "Spec_ular"
 msgstr "_სარკისებრი"
-
-#: plug-ins/map-object/map-object-main.c:294
-msgid "Material specular reflectivity"
-msgstr ""
 
 #: plug-ins/map-object/map-object-main.c:299
 msgid "Highligh_t"
@@ -14819,6 +14979,42 @@ msgstr ""
 msgid "Shoot _area"
 msgstr ""
 
+#: plug-ins/screenshot/screenshot.c:165
+msgid "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
+msgstr ""
+
+#: plug-ins/screenshot/screenshot.c:195
+msgid "Include _mouse pointer"
+msgstr "თაგუნას _კურსორის ჩათვლით"
+
+#: plug-ins/screenshot/screenshot.c:196
+msgid "Your pointing device's cursor will be part of the image"
+msgstr ""
+
+#: plug-ins/screenshot/screenshot.c:204
+msgid "Include window _decoration"
+msgstr ""
+
+#: plug-ins/screenshot/screenshot.c:205
+msgid "Title bar, window borders and shadow will be part of the image"
+msgstr ""
+
+#: plug-ins/screenshot/screenshot.c:214
+msgid "Selection d_elay"
+msgstr "მონიშვნის _დაყოვნება"
+
+#: plug-ins/screenshot/screenshot.c:215
+msgid "Delay before selection of the window or the region"
+msgstr ""
+
+#: plug-ins/screenshot/screenshot.c:219
+msgid "Screenshot dela_y"
+msgstr "ეკრანის ანაბეჭდის _დაყოვნება"
+
+#: plug-ins/screenshot/screenshot.c:220
+msgid "Delay before snapping the screenshot"
+msgstr ""
+
 #: plug-ins/screenshot/screenshot.c:224
 msgid "Color _Profile"
 msgstr "ფერის _პროფილი"
@@ -15133,9 +15329,6 @@ msgstr ""
 #~ msgid "_Brightness:"
 #~ msgstr "სიკა_შკაშე:"
 
-#~ msgid "C_amera"
-#~ msgstr "_კამერა"
-
 #~ msgid "Calculator"
 #~ msgstr "კალკულატორი"
 
@@ -15226,9 +15419,6 @@ msgstr ""
 #~ msgstr ""
 #~ "რამდენად ხშირად უნდა განახლდეს გაცვლის კურსი. 0 ნიშნავს, რომ გაცვლის "
 #~ "კურსებს ქსელიდან არ გამოვითხოვთ."
-
-#~ msgid "Button mode"
-#~ msgstr "ღილაკის რეჟიმი"
 
 #~ msgid "The button mode"
 #~ msgstr "ღილაკის რეჟიმი"
