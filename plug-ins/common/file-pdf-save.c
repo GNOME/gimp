@@ -335,45 +335,45 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                           "pdf");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "vectorize",
-                             "Convert bitmaps to vector graphics where possible",
-                             "Convert bitmaps to vector graphics where possible",
+                             _("Convert bitmaps to vector graphics where possible"),
+                             _("Convert bitmaps to vector graphics where possible"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "ignore-hidden",
-                             "Omit hidden layers and layers with zero opacity",
-                             "Non-visible layers will not be exported",
+                             _("Omit hidden layers and layers with zero opacity"),
+                             _("Non-visible layers will not be exported"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "apply-masks",
-                             "Apply layer masks",
-                             "Apply layer masks before saving (Keeping the mask "
-                             "will not change the output, only the PDF structure),",
+                             _("Apply layer masks"),
+                             _("Apply layer masks before saving (Keeping the mask "
+                             "will not change the output, only the PDF structure)"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "layers-as-pages",
-                             "Layers as pages",
-                             "Layers as pages (bottom layers first).",
+                             _("Layers as pages"),
+                             _("Layers as pages (bottom layers first)."),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "reverse-order",
-                             "Reverse order",
-                             "Reverse the pages order (top layers first).",
+                             _("Reverse order"),
+                             _("Reverse the pages order (top layers first)."),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "root-layers-only",
-                             "Root layers only",
-                             "Only the root layers are considered pages",
+                             _("Root layers only"),
+                             _("Only the root layers are considered pages"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "convert-text-layers",
-                             "Convert text layers to image",
-                             "Convert text layers to raster graphics",
+                             _("Convert text layers to image"),
+                             _("Convert text layers to raster graphics"),
                              FALSE,
                              G_PARAM_READWRITE);
 
