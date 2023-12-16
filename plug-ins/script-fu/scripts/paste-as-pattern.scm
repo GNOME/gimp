@@ -55,8 +55,8 @@
   "Michael Natterer"
   "2005-09-25"
   ""
-  SF-STRING _"_Pattern name" "My Pattern"
-  SF-STRING _"_File name"    "mypattern"
+  SF-STRING _"_Pattern name" _"My Pattern"
+  SF-STRING _"_File name"    _"mypattern"
 )
 
 (script-fu-menu-register "script-fu-paste-as-pattern"

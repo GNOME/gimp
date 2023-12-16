@@ -67,8 +67,8 @@
   "Michael Natterer"
   "2005-09-25"
   ""
-  SF-STRING     _"_Brush name" "My Brush"
-  SF-STRING     _"_File name"  "mybrush"
+  SF-STRING     _"_Brush name" _"My Brush"
+  SF-STRING     _"_File name"  _"mybrush"
   SF-ADJUSTMENT _"_Spacing"    '(25 0 1000 1 2 1 0)
 )
 
