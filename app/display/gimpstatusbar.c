@@ -127,6 +127,10 @@ static gboolean gimp_statusbar_soft_proof_popover_shown
                                                  (GtkWidget          *button,
                                                   GdkEventButton     *bevent,
                                                   GimpStatusbar      *statusbar);
+static void     gimp_statusbar_soft_proof_size_allocate
+                                                 (GtkWidget          *widget,
+                                                  GtkAllocation      *allocation,
+                                                  GimpStatusbar      *statusbar);
 
 static gboolean gimp_statusbar_label_draw         (GtkWidget         *widget,
                                                    cairo_t           *cr,
@@ -450,6 +454,9 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
    * and access the soft-proofing menu
    */
   statusbar->soft_proof_container = gtk_event_box_new ();
+  g_signal_connect_after (statusbar->soft_proof_container, "size-allocate",
+                          G_CALLBACK (gimp_statusbar_soft_proof_size_allocate),
+                          statusbar);
   gtk_container_add (GTK_CONTAINER (statusbar->soft_proof_container),
                      statusbar->soft_proof_button);
   gtk_box_pack_end (GTK_BOX (hbox), statusbar->soft_proof_container,
@@ -458,16 +465,15 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_widget_show (statusbar->soft_proof_container);
   gimp_help_set_help_data (statusbar->soft_proof_container,
                            _("Toggle soft-proofing view when "
-                           "a soft-proofing profile is set\n"
-                           "Right-click to show the soft-proofing "
-                           "options"),
+                             "a soft-proofing profile is set\n"
+                             "Right-click to show the soft-proofing "
+                             "options"),
                            NULL);
   gtk_widget_set_events (statusbar->soft_proof_container, GDK_BUTTON_PRESS_MASK);
   g_signal_connect (statusbar->soft_proof_container, "button-press-event",
                     G_CALLBACK (gimp_statusbar_soft_proof_popover_shown),
                     statusbar);
-  gtk_event_box_set_above_child (GTK_EVENT_BOX (statusbar->soft_proof_container),
-                                 FALSE);
+  gtk_event_box_set_above_child (GTK_EVENT_BOX (statusbar->soft_proof_container), FALSE);
 
   /* soft proofing popover */
   row = 0;
@@ -1135,6 +1141,24 @@ gimp_statusbar_soft_proof_popover_shown (GtkWidget      *button,
     }
 
   return TRUE;
+}
+
+static void
+gimp_statusbar_soft_proof_size_allocate (GtkWidget     *widget,
+                                         GtkAllocation *allocation,
+                                         GimpStatusbar *statusbar)
+{
+  /* This is an ugly hack for what looks a bug in GtkEventBox. In some cases,
+   * button events were not reaching the box at all, even though the event box
+   * was above the inactive child. Yet when setting it back down and up, it
+   * works. I have not figured out the exact bug cause yet, so we settle with
+   * this workaround for the time being. I'm setting it on the size-allocate
+   * signal, because when trying on "show" or "map-event", it was not working
+   * either. I guess it doesn't work when done before the widget is actually
+   * drawn. FIXME.
+   */
+  gtk_event_box_set_above_child (GTK_EVENT_BOX (statusbar->soft_proof_container), FALSE);
+  gtk_event_box_set_above_child (GTK_EVENT_BOX (statusbar->soft_proof_container), TRUE);
 }
 
 static void
@@ -2131,8 +2155,7 @@ gimp_statusbar_shell_image_simulation_changed (GimpImage     *image,
       gtk_widget_set_sensitive (statusbar->soft_proof_button, FALSE);
       gtk_widget_set_sensitive (statusbar->proof_colors_toggle, FALSE);
     }
-  gtk_event_box_set_above_child (GTK_EVENT_BOX (statusbar->soft_proof_container),
-                                 TRUE);
+  gtk_event_box_set_above_child (GTK_EVENT_BOX (statusbar->soft_proof_container), TRUE);
 
   text = g_strdup_printf ("<b>%s</b>: %s",
                           _("Current Soft-Proofing Profile"),
