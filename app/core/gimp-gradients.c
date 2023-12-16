@@ -78,25 +78,25 @@ gimp_gradients_init (Gimp *gimp)
   gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_BACKGROUND;
   gimp_context_set_gradient (gimp->user_context, gradient);
 
-  /* FG to BG (Hardedge) */
+  /* FG to BG (Hard Edge) */
   gradient = gimp_gradients_add_gradient (gimp,
-                                          _("FG to BG (Hardedge)"),
+                                          _("FG to BG (Hard Edge)"),
                                           FG_BG_HARDEDGE_KEY);
   gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
   gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_BACKGROUND;
   gradient->segments->type             = GIMP_GRADIENT_SEGMENT_STEP;
 
-  /* FG to BG (HSV counter-clockwise) */
+  /* FG to BG (HSV Counter-Clockwise) */
   gradient = gimp_gradients_add_gradient (gimp,
-                                          _("FG to BG (HSV counter-clockwise)"),
+                                          _("FG to BG (HSV Counter-Clockwise)"),
                                           FG_BG_HSV_CCW_KEY);
   gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
   gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_BACKGROUND;
   gradient->segments->color            = GIMP_GRADIENT_SEGMENT_HSV_CCW;
 
-  /* FG to BG (HSV clockwise hue) */
+  /* FG to BG (HSV Clockwise Hue) */
   gradient = gimp_gradients_add_gradient (gimp,
-                                          _("FG to BG (HSV clockwise hue)"),
+                                          _("FG to BG (HSV Clockwise Hue)"),
                                           FG_BG_HSV_CW_KEY);
   gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
   gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_BACKGROUND;
@@ -109,9 +109,9 @@ gimp_gradients_init (Gimp *gimp)
   gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
   gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT;
 
-  /* FG to Transparent (Hardedge) */
+  /* FG to Transparent (Hard Edge) */
   gradient = gimp_gradients_add_gradient (gimp,
-                                          _("FG to Transparent (Hardedge)"),
+                                          _("FG to Transparent (Hard Edge)"),
                                           FG_TRANSPARENT_HARDEDGE_KEY);
   gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
   gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT;
