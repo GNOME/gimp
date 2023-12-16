@@ -143,13 +143,14 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
                               gint          width,
                               gint          height)
 {
-  GimpPattern *pattern = GIMP_PATTERN (viewable);
+  GimpPattern *pattern     = GIMP_PATTERN (viewable);
   GimpTempBuf *temp_buf;
   GeglBuffer  *src_buffer;
   gint         true_width;
   gint         true_height;
   gint         copy_width;
   gint         copy_height;
+  gboolean     has_temp_buf = FALSE;
 
   true_width  = gimp_temp_buf_get_width (pattern->mask);
   true_height = gimp_temp_buf_get_height (pattern->mask);
@@ -174,13 +175,21 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
       temp_buf = gimp_temp_buf_new (copy_width, copy_height,
                                     gimp_temp_buf_get_format (pattern->mask));
 
-      gegl_buffer_get (src_buffer,
-                       GEGL_RECTANGLE (0, 0, copy_width, copy_height),
-                       scale, gimp_temp_buf_get_format (temp_buf),
-                       gimp_temp_buf_get_data (temp_buf),
-                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
+      if (temp_buf)
+        {
+          gegl_buffer_get (src_buffer,
+                           GEGL_RECTANGLE (0, 0, copy_width, copy_height),
+                           scale, gimp_temp_buf_get_format (temp_buf),
+                           gimp_temp_buf_get_data (temp_buf),
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
+
+          has_temp_buf = TRUE;
+        }
     }
-  else
+
+  /* If scaled image pattern could not be loaded,
+   * use the default pattern */
+  if (! has_temp_buf)
     {
       GeglBuffer *dest_buffer;
 
