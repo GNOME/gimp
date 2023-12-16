@@ -125,6 +125,10 @@ Graphical User Interface:
     clicked element unless it is not selected (e.g. removed with Ctrl-click),
     then a closest selected element is chosen to avoid unecessarily scroll of
     the item list.
+  - Pad buttons can now be configured in the "Input Devices" configuration dialog
+    to run any actions directly (without mapping shortcut key combinations as
+    intermediate). This only works on Wayland for the time being (yet may work on
+    more platforms in the future, depending on GTK evolution).
 
 Tools:
 
@@ -215,6 +219,9 @@ Plug-ins:
     * Better handling of DX10+ files in ddsread.
     * Always interpret BC1 cutout pixels as black pixels with 0 alpha,
       per the official format specification.
+    * Import code was rewritten and improved for maintainability and
+      readability. Importer now supports nearly all non-video
+      uncompressed formats.
   - GIF:
     * Remember when a file was stored as a GIF animation to be reused when
       overwriting.
@@ -222,6 +229,14 @@ Plug-ins:
     * Import/export safe-to-copy PNG chunks.
    - HEJ2: new import support. HEJ2 is JPEG 2000 image coded images in HEIF
      containers.
+   - PSD: layer blending mode mapping improved and better wording of the
+     export warning for the path of less surprise.
+
+Data:
+
+  - Clarified our capitalization rule for data titles: part of titles
+    inside parentheses also follow title casing.
+  - "(Hardedge)" generated gradients got renamed "(Hard Edge)".
 
 Translations:
 
