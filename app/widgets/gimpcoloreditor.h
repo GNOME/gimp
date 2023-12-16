@@ -40,6 +40,7 @@ struct _GimpColorEditor
   GimpEditor   parent_instance;
 
   GimpContext *context;
+  GimpImage   *active_image;
   gboolean     edit_bg;
 
   GtkWidget   *hbox;

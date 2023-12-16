@@ -35,6 +35,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpimage-color-profile.h"
 
 #include "gimpcoloreditor.h"
 #include "gimpcolorhistory.h"
@@ -55,51 +56,58 @@ enum
 
 static void   gimp_color_editor_docked_iface_init (GimpDockedInterface  *iface);
 
-static void   gimp_color_editor_constructed     (GObject           *object);
-static void   gimp_color_editor_dispose         (GObject           *object);
-static void   gimp_color_editor_set_property    (GObject           *object,
-                                                 guint              property_id,
-                                                 const GValue      *value,
-                                                 GParamSpec        *pspec);
-static void   gimp_color_editor_get_property    (GObject           *object,
-                                                 guint              property_id,
-                                                 GValue            *value,
-                                                 GParamSpec        *pspec);
+static void   gimp_color_editor_constructed       (GObject           *object);
+static void   gimp_color_editor_dispose           (GObject           *object);
+static void   gimp_color_editor_set_property      (GObject           *object,
+                                                   guint              property_id,
+                                                   const GValue      *value,
+                                                   GParamSpec        *pspec);
+static void   gimp_color_editor_get_property      (GObject           *object,
+                                                   guint              property_id,
+                                                   GValue            *value,
+                                                   GParamSpec        *pspec);
 
-static void   gimp_color_editor_style_updated   (GtkWidget         *widget);
+static void   gimp_color_editor_style_updated     (GtkWidget         *widget);
 
-static void   gimp_color_editor_set_aux_info    (GimpDocked        *docked,
-                                                 GList             *aux_info);
-static GList *gimp_color_editor_get_aux_info     (GimpDocked       *docked);
-static GtkWidget *gimp_color_editor_get_preview (GimpDocked        *docked,
-                                                 GimpContext       *context,
-                                                 GtkIconSize        size);
-static void   gimp_color_editor_set_context     (GimpDocked        *docked,
-                                                 GimpContext       *context);
+static void   gimp_color_editor_set_aux_info      (GimpDocked        *docked,
+                                                   GList             *aux_info);
+static GList *gimp_color_editor_get_aux_info       (GimpDocked       *docked);
+static GtkWidget *gimp_color_editor_get_preview   (GimpDocked        *docked,
+                                                   GimpContext       *context,
+                                                   GtkIconSize        size);
+static void   gimp_color_editor_set_context       (GimpDocked        *docked,
+                                                   GimpContext       *context);
 
-static void   gimp_color_editor_fg_changed      (GimpContext       *context,
-                                                 GeglColor         *color,
-                                                 GimpColorEditor   *editor);
-static void   gimp_color_editor_bg_changed      (GimpContext       *context,
-                                                 GeglColor         *color,
-                                                 GimpColorEditor   *editor);
-static void   gimp_color_editor_color_changed   (GimpColorSelector *selector,
-                                                 GeglColor         *color,
-                                                 GimpColorEditor   *editor);
-static void   gimp_color_editor_tab_toggled     (GtkWidget         *widget,
-                                                 GimpColorEditor   *editor);
-static void   gimp_color_editor_fg_bg_notify    (GtkWidget         *widget,
-                                                 GParamSpec        *pspec,
-                                                 GimpColorEditor   *editor);
-static void   gimp_color_editor_color_picked    (GtkWidget         *widget,
-                                                 const GimpRGB     *rgb,
-                                                 GimpColorEditor   *editor);
-static void   gimp_color_editor_entry_changed   (GimpColorHexEntry *entry,
-                                                 GimpColorEditor   *editor);
+static void   gimp_color_editor_fg_changed        (GimpContext       *context,
+                                                   GeglColor         *color,
+                                                   GimpColorEditor   *editor);
+static void   gimp_color_editor_bg_changed        (GimpContext       *context,
+                                                   GeglColor         *color,
+                                                   GimpColorEditor   *editor);
+static void   gimp_color_editor_color_changed     (GimpColorSelector *selector,
+                                                   GeglColor         *color,
+                                                   GimpColorEditor   *editor);
+static void   gimp_color_editor_tab_toggled       (GtkWidget         *widget,
+                                                   GimpColorEditor   *editor);
+static void   gimp_color_editor_fg_bg_notify      (GtkWidget         *widget,
+                                                   GParamSpec        *pspec,
+                                                   GimpColorEditor   *editor);
+static void   gimp_color_editor_color_picked      (GtkWidget         *widget,
+                                                   const GimpRGB     *rgb,
+                                                   GimpColorEditor   *editor);
+static void   gimp_color_editor_entry_changed     (GimpColorHexEntry *entry,
+                                                   GimpColorEditor   *editor);
 
-static void  gimp_color_editor_history_selected (GimpColorHistory *history,
-                                                 GeglColor        *color,
-                                                 GimpColorEditor  *editor);
+static void  gimp_color_editor_history_selected   (GimpColorHistory *history,
+                                                   GeglColor        *color,
+                                                   GimpColorEditor  *editor);
+
+static void  gimp_color_editor_image_changed      (GimpContext     *context,
+                                                   GimpImage       *image,
+                                                   GimpColorEditor *editor);
+static void  gimp_color_editor_update_simulation  (GimpImage       *image,
+                                                   GimpColorEditor *editor);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorEditor, gimp_color_editor, GIMP_TYPE_EDITOR,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
@@ -272,7 +280,9 @@ gimp_color_editor_init (GimpColorEditor *editor)
 static void
 gimp_color_editor_constructed (GObject *object)
 {
-  GimpColorEditor *editor = GIMP_COLOR_EDITOR (object);
+  GimpColorEditor *editor       = GIMP_COLOR_EDITOR (object);
+  GimpContext     *user_context = editor->context->gimp->user_context;
+  GimpImage       *image        = gimp_context_get_image (user_context);
   GtkWidget       *history;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -285,6 +295,12 @@ gimp_color_editor_constructed (GObject *object)
   g_signal_connect (history, "color-selected",
                     G_CALLBACK (gimp_color_editor_history_selected),
                     editor);
+
+  g_signal_connect (user_context, "image-changed",
+                    G_CALLBACK (gimp_color_editor_image_changed),
+                    editor);
+
+  gimp_color_editor_image_changed (user_context, image, editor);
 }
 
 static void
@@ -725,4 +741,55 @@ gimp_color_editor_history_selected (GimpColorHistory *history,
       else
         gimp_context_set_foreground (editor->context, color);
     }
+}
+
+static void
+gimp_color_editor_image_changed (GimpContext     *context,
+                                 GimpImage       *image,
+                                 GimpColorEditor *editor)
+{
+  if (editor->active_image != image)
+    {
+      if (editor->active_image)
+        {
+          g_signal_handlers_disconnect_by_func (editor->active_image,
+                                                gimp_color_editor_update_simulation,
+                                                editor);
+        }
+
+      g_set_weak_pointer (&editor->active_image, image);
+
+      if (image)
+        {
+          g_signal_connect (image, "simulation-profile-changed",
+                            G_CALLBACK (gimp_color_editor_update_simulation),
+                            editor);
+          g_signal_connect (image, "simulation-intent-changed",
+                            G_CALLBACK (gimp_color_editor_update_simulation),
+                            editor);
+          g_signal_connect (image, "simulation-bpc-changed",
+                            G_CALLBACK (gimp_color_editor_update_simulation),
+                            editor);
+        }
+
+      gimp_color_editor_update_simulation (image, editor);
+    }
+}
+
+static void
+gimp_color_editor_update_simulation (GimpImage       *image,
+                                     GimpColorEditor *editor)
+{
+  g_return_if_fail (GIMP_IS_COLOR_EDITOR (editor));
+
+  if (image)
+    gimp_color_notebook_set_simulation (GIMP_COLOR_NOTEBOOK (editor->notebook),
+                                        gimp_image_get_simulation_profile (image),
+                                        gimp_image_get_simulation_intent (image),
+                                        gimp_image_get_simulation_bpc (image));
+  else
+    gimp_color_notebook_set_simulation (GIMP_COLOR_NOTEBOOK (editor->notebook),
+                                        NULL,
+                                        GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                        FALSE);
 }

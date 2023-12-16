@@ -256,7 +256,7 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
   TickClosure *tick;
 
   /*  are we in destruction?  */
-  if (! shell->display || ! gimp_display_get_shell (shell->display))
+  if (! shell->display || ! gimp_display_get_shell (shell->display) || ! gimp_display_get_image (shell->display))
     return;
 
   tick = g_new0 (TickClosure, 1);
