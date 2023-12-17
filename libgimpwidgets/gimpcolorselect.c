@@ -151,7 +151,7 @@ struct _GimpColorSelect
   ColorSelectDragMode  drag_mode;
 
   GimpColorConfig     *config;
-  GimpColorTransform  *transform;
+  const Babl          *format;
   guchar               oog_color[3];
 };
 
@@ -194,6 +194,8 @@ static void   gimp_color_select_set_model_visible
                                                 (GimpColorSelector  *selector,
                                                  GimpColorSelectorModel  model,
                                                  gboolean            visible);
+static void   gimp_color_select_set_format      (GimpColorSelector  *selector,
+                                                 const Babl         *format);
 static void   gimp_color_select_set_config      (GimpColorSelector  *selector,
                                                  GimpColorConfig    *config);
 
@@ -265,8 +267,6 @@ static void   color_select_render_lch_chroma_lightness (ColorSelectFill *csf);
 static void   color_select_render_lch_hue_lightness    (ColorSelectFill *csf);
 static void   color_select_render_lch_hue_chroma       (ColorSelectFill *csf);
 
-static void   gimp_color_select_create_transform   (GimpColorSelect  *select);
-static void   gimp_color_select_destroy_transform  (GimpColorSelect  *select);
 static void   gimp_color_select_notify_config      (GimpColorConfig  *config,
                                                     const GParamSpec *pspec,
                                                     GimpColorSelect  *select);
@@ -324,6 +324,7 @@ gimp_color_select_class_init (GimpColorSelectClass *klass)
   selector_class->set_color             = gimp_color_select_set_color;
   selector_class->set_channel           = gimp_color_select_set_channel;
   selector_class->set_model_visible     = gimp_color_select_set_model_visible;
+  selector_class->set_format            = gimp_color_select_set_format;
   selector_class->set_config            = gimp_color_select_set_config;
 
   gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpColorSelect");
@@ -618,6 +619,29 @@ gimp_color_select_set_model_visible (GimpColorSelector      *selector,
 }
 
 static void
+gimp_color_select_set_format (GimpColorSelector *selector,
+                              const Babl        *format)
+{
+  GimpColorSelect *select = GIMP_COLOR_SELECT (selector);
+
+  if (select->format != format)
+    {
+      select->format = format;
+
+      fish_lch_to_rgb    = babl_fish (babl_format ("CIE LCH(ab) double"),
+                                      babl_format_with_space ("R'G'B' double", format));
+      fish_lch_to_rgb_u8 = babl_fish (babl_format ("CIE LCH(ab) double"),
+                                      babl_format_with_space ("R'G'B' u8", format));
+
+      select->xy_needs_render = TRUE;
+      select->z_needs_render  = TRUE;
+
+      gtk_widget_queue_draw (select->xy_color);
+      gtk_widget_queue_draw (select->z_color);
+    }
+}
+
+static void
 gimp_color_select_set_config (GimpColorSelector *selector,
                               GimpColorConfig   *config)
 {
@@ -630,8 +654,6 @@ gimp_color_select_set_config (GimpColorSelector *selector,
           g_signal_handlers_disconnect_by_func (select->config,
                                                 gimp_color_select_notify_config,
                                                 select);
-
-          gimp_color_select_destroy_transform (select);
         }
 
       g_set_object (&select->config, config);
@@ -693,9 +715,10 @@ gimp_color_select_update_values (GimpColorSelect *select)
   GeglColor         *color    = gimp_color_selector_get_color (selector);
   gdouble            values[3];
   const Babl        *rgb_format;
+  const Babl        *hsv_format;
 
-  /* TODO: we want to select colors in the image space! */
-  rgb_format = babl_format_with_space ("R'G'B' double", NULL);
+  rgb_format = babl_format_with_space ("R'G'B' double", select->format);
+  hsv_format = babl_format_with_space ("HSV double", select->format);
 
   switch (select->z_color_fill)
     {
@@ -719,16 +742,16 @@ gimp_color_select_update_values (GimpColorSelect *select)
       values[0] = select->pos[2];
       values[1] = select->pos[0];
       values[2] = select->pos[1];
-      gegl_color_set_pixel (color, babl_format ("HSV double"), values);
+      gegl_color_set_pixel (color, hsv_format, values);
       break;
     case COLOR_SELECT_SATURATION:
       values[0] = select->pos[0];
       values[1] = select->pos[2];
       values[2] = select->pos[1];
-      gegl_color_set_pixel (color, babl_format ("HSV double"), values);
+      gegl_color_set_pixel (color, hsv_format, values);
       break;
     case COLOR_SELECT_VALUE:
-      gegl_color_set_pixel (color, babl_format ("HSV double"), select->pos);
+      gegl_color_set_pixel (color, hsv_format, select->pos);
       break;
 
     case COLOR_SELECT_LCH_LIGHTNESS:
@@ -768,10 +791,9 @@ gimp_color_select_update_pos (GimpColorSelect *select)
   gdouble            lch[3];
   gdouble            hsv[3];
 
-  /* TODO select RGB and HSV within the target RGB space. */
-  gegl_color_get_pixel (color, babl_format ("R'G'B' double"), rgb);
+  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' double", select->format), rgb);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSV double", select->format), hsv);
   gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) double"), lch);
-  gegl_color_get_pixel (color, babl_format ("HSV double"), hsv);
   g_object_unref (color);
 
   switch (select->z_color_fill)
@@ -879,6 +901,11 @@ gimp_color_select_xy_draw (GtkWidget       *widget,
 {
   GtkAllocation  allocation;
   GdkPixbuf     *pixbuf;
+  const Babl    *render_space;
+  const Babl    *render_fish;
+  guchar        *buf;
+  guchar        *src;
+  guchar        *dest;
   gint           x, y;
 
   if (! select->xy_buf)
@@ -902,49 +929,29 @@ gimp_color_select_xy_draw (GtkWidget       *widget,
       g_object_unref (color);
     }
 
-  if (! select->transform)
-    gimp_color_select_create_transform (select);
+  render_space = gimp_widget_get_render_space (widget, select->config);
+  render_fish  = babl_fish (babl_format_with_space ("R'G'B' u8", select->format),
+                            babl_format_with_space ("R'G'B' u8", render_space));
 
-  if (select->transform)
+  buf  = g_new (guchar, select->xy_rowstride * select->xy_height);
+  src  = select->xy_buf;
+  dest = buf;
+  for (gint i = 0; i < select->xy_height; i++)
     {
-      const Babl *format = babl_format ("R'G'B' u8");
-      guchar     *buf    = g_new (guchar,
-                                  select->xy_rowstride * select->xy_height);
-      guchar     *src    = select->xy_buf;
-      guchar     *dest   = buf;
-      gint        i;
+      babl_process (render_fish, src, dest, select->xy_width);
 
-      for (i = 0; i < select->xy_height; i++)
-        {
-          gimp_color_transform_process_pixels (select->transform,
-                                               format, src,
-                                               format, dest,
-                                               select->xy_width);
-
-          src  += select->xy_rowstride;
-          dest += select->xy_rowstride;
-        }
-
-      pixbuf = gdk_pixbuf_new_from_data (buf,
-                                         GDK_COLORSPACE_RGB,
-                                         FALSE,
-                                         8,
-                                         select->xy_width,
-                                         select->xy_height,
-                                         select->xy_rowstride,
-                                         (GdkPixbufDestroyNotify) g_free, NULL);
+      src  += select->xy_rowstride;
+      dest += select->xy_rowstride;
     }
-  else
-    {
-      pixbuf = gdk_pixbuf_new_from_data (select->xy_buf,
-                                         GDK_COLORSPACE_RGB,
-                                         FALSE,
-                                         8,
-                                         select->xy_width,
-                                         select->xy_height,
-                                         select->xy_rowstride,
-                                         NULL, NULL);
-    }
+
+  pixbuf = gdk_pixbuf_new_from_data (buf,
+                                     GDK_COLORSPACE_RGB,
+                                     FALSE,
+                                     8,
+                                     select->xy_width,
+                                     select->xy_height,
+                                     select->xy_rowstride,
+                                     (GdkPixbufDestroyNotify) g_free, NULL);
 
   gtk_widget_get_allocation (select->xy_color, &allocation);
 
@@ -1078,6 +1085,11 @@ gimp_color_select_z_draw (GtkWidget       *widget,
 {
   GtkAllocation  allocation;
   GdkPixbuf     *pixbuf;
+  const Babl    *render_space;
+  const Babl    *render_fish;
+  guchar        *buf;
+  guchar        *src;
+  guchar        *dest;
   gint           y;
 
   if (! select->z_buf)
@@ -1103,49 +1115,29 @@ gimp_color_select_z_draw (GtkWidget       *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  if (! select->transform)
-    gimp_color_select_create_transform (select);
+  render_space = gimp_widget_get_render_space (widget, select->config);
+  render_fish  = babl_fish (babl_format_with_space ("R'G'B' u8", select->format),
+                            babl_format_with_space ("R'G'B' u8", render_space));
 
-  if (select->transform)
+  buf  = g_new (guchar, select->z_rowstride * select->z_height);
+  src  = select->z_buf;
+  dest = buf;
+  for (gint i = 0; i < select->z_height; i++)
     {
-      const Babl *format = babl_format ("R'G'B' u8");
-      guchar     *buf    = g_new (guchar,
-                                  select->z_rowstride * select->z_height);
-      guchar     *src    = select->z_buf;
-      guchar     *dest   = buf;
-      gint        i;
+      babl_process (render_fish, src, dest, select->z_width);
 
-      for (i = 0; i < select->z_height; i++)
-        {
-          gimp_color_transform_process_pixels (select->transform,
-                                               format, src,
-                                               format, dest,
-                                               select->z_width);
-
-          src  += select->z_rowstride;
-          dest += select->z_rowstride;
-        }
-
-      pixbuf = gdk_pixbuf_new_from_data (buf,
-                                         GDK_COLORSPACE_RGB,
-                                         FALSE,
-                                         8,
-                                         select->z_width,
-                                         select->z_height,
-                                         select->z_rowstride,
-                                         (GdkPixbufDestroyNotify) g_free, NULL);
+      src  += select->z_rowstride;
+      dest += select->z_rowstride;
     }
-  else
-    {
-      pixbuf = gdk_pixbuf_new_from_data (select->z_buf,
-                                         GDK_COLORSPACE_RGB,
-                                         FALSE,
-                                         8,
-                                         select->z_width,
-                                         select->z_height,
-                                         select->z_rowstride,
-                                         NULL, NULL);
-    }
+
+  pixbuf = gdk_pixbuf_new_from_data (buf,
+                                     GDK_COLORSPACE_RGB,
+                                     FALSE,
+                                     8,
+                                     select->z_width,
+                                     select->z_height,
+                                     select->z_rowstride,
+                                     (GdkPixbufDestroyNotify) g_free, NULL);
 
   gdk_cairo_set_source_pixbuf (cr, pixbuf, 0, 0);
   g_object_unref (pixbuf);
@@ -1876,9 +1868,6 @@ color_select_render_lch_hue_lightness (ColorSelectFill *csf)
 
       lch[2] = i * 360.0 / csf->width;
 
-      /* TODO: determine if color is out of target space gammut instead of out
-       * of sRGB gamut.
-       */
       babl_process (fish_lch_to_rgb, &lch, &rgb, 1);
 
       if (rgb[0] < 0.0 || rgb[0] > 1.0 ||
@@ -1938,49 +1927,11 @@ color_select_render_lch_hue_chroma (ColorSelectFill *csf)
 }
 
 static void
-gimp_color_select_create_transform (GimpColorSelect *select)
-{
-  if (select->config)
-    {
-      static GimpColorProfile *profile = NULL;
-
-      const Babl *format = babl_format ("cairo-RGB24");
-
-      if (G_UNLIKELY (! profile))
-        profile = gimp_color_profile_new_rgb_srgb ();
-
-      select->transform = gimp_widget_get_color_transform (GTK_WIDGET (select),
-                                                           select->config,
-                                                           profile,
-                                                           format,
-                                                           format,
-                                                           NULL,
-                                                           GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                                           FALSE);
-    }
-}
-
-static void
-gimp_color_select_destroy_transform (GimpColorSelect *select)
-{
-  if (select->transform)
-    {
-      g_object_unref (select->transform);
-      select->transform = NULL;
-    }
-
-  gtk_widget_queue_draw (select->xy_color);
-  gtk_widget_queue_draw (select->z_color);
-}
-
-static void
 gimp_color_select_notify_config (GimpColorConfig  *config,
                                  const GParamSpec *pspec,
                                  GimpColorSelect  *select)
 {
   GeglColor *color;
-
-  gimp_color_select_destroy_transform (select);
 
   color = gimp_color_config_get_out_of_gamut_color (config);
   /* TODO: shouldn't this be color-managed too, using the target space into
