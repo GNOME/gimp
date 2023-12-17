@@ -48,6 +48,7 @@ struct _ColorselWheel
   GimpColorSelector  parent_instance;
 
   GtkWidget         *hsv;
+  const Babl        *format;
 };
 
 struct _ColorselWheelClass
@@ -60,6 +61,8 @@ GType         colorsel_wheel_get_type      (void);
 
 static void   colorsel_wheel_set_color     (GimpColorSelector *selector,
                                             GeglColor         *color);
+static void   colorsel_wheel_set_format    (GimpColorSelector *selector,
+                                            const Babl        *format);
 static void   colorsel_wheel_set_config    (GimpColorSelector *selector,
                                             GimpColorConfig   *config);
 static void   colorsel_wheel_changed       (GimpColorWheel    *hsv,
@@ -105,6 +108,7 @@ colorsel_wheel_class_init (ColorselWheelClass *klass)
   selector_class->icon_name  = GIMP_ICON_COLOR_SELECTOR_TRIANGLE;
   selector_class->set_color  = colorsel_wheel_set_color;
   selector_class->set_config = colorsel_wheel_set_config;
+  selector_class->set_format = colorsel_wheel_set_format;
 
   gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "ColorselWheel");
 }
@@ -135,7 +139,7 @@ colorsel_wheel_set_color (GimpColorSelector *selector,
   ColorselWheel *wheel = COLORSEL_WHEEL (selector);
   gdouble        hsv[3];
 
-  gegl_color_get_pixel (color, babl_format ("HSV double"), hsv);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSV double", wheel->format), hsv);
   g_signal_handlers_block_by_func (wheel->hsv,
                                    G_CALLBACK (colorsel_wheel_changed),
                                    wheel);
@@ -143,6 +147,19 @@ colorsel_wheel_set_color (GimpColorSelector *selector,
   g_signal_handlers_unblock_by_func (wheel->hsv,
                                      G_CALLBACK (colorsel_wheel_changed),
                                      wheel);
+}
+
+static void
+colorsel_wheel_set_format (GimpColorSelector *selector,
+                           const Babl        *format)
+{
+  ColorselWheel *wheel = COLORSEL_WHEEL (selector);
+
+  if (wheel->format != format)
+    {
+      wheel->format = format;
+      gimp_color_wheel_set_format (GIMP_COLOR_WHEEL (wheel->hsv), format);
+    }
 }
 
 static void
@@ -163,7 +180,9 @@ colorsel_wheel_changed (GimpColorWheel    *wheel,
   gdouble    hsv[3];
 
   gimp_color_wheel_get_color (wheel, &hsv[0], &hsv[1], &hsv[2]);
-  gegl_color_set_pixel (color, babl_format ("HSV double"), hsv);
+  gegl_color_set_pixel (color, babl_format_with_space ("HSV double",
+                                                       COLORSEL_WHEEL (selector)->format),
+                        hsv);
   gimp_color_selector_set_color (selector, color);
   g_object_unref (color);
 }

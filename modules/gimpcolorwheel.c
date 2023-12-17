@@ -85,7 +85,8 @@ typedef struct
   guint focus_on_ring : 1;
 
   GimpColorConfig    *config;
-  GimpColorTransform *transform;
+  const Babl         *format;
+  const Babl         *render_fish;
 } GimpColorWheelPrivate;
 
 enum
@@ -131,9 +132,6 @@ static void     gimp_color_wheel_drag_end             (GtkGestureDrag     *gestu
 static void     gimp_color_wheel_drag_cancel          (GtkGesture         *gesture,
                                                        GdkEventSequence   *sequence,
                                                        gpointer            user_data);
-
-static void     gimp_color_wheel_create_transform     (GimpColorWheel     *wheel);
-static void     gimp_color_wheel_destroy_transform    (GimpColorWheel     *wheel);
 
 
 static guint wheel_signals[LAST_SIGNAL];
@@ -236,13 +234,10 @@ gimp_color_wheel_init (GimpColorWheel *wheel)
   gtk_widget_set_has_window (GTK_WIDGET (wheel), FALSE);
   gtk_widget_set_can_focus (GTK_WIDGET (wheel), TRUE);
 
+  priv->format        = NULL;
   priv->ring_fraction = DEFAULT_FRACTION;
   priv->size          = DEFAULT_SIZE;
   priv->ring_width    = DEFAULT_RING_WIDTH;
-
-  gimp_widget_track_monitor (GTK_WIDGET (wheel),
-                             G_CALLBACK (gimp_color_wheel_destroy_transform),
-                             NULL, NULL);
 
   /* Allow the user to drag the rectangle on the preview */
   gesture = gtk_gesture_drag_new (GTK_WIDGET (wheel));
@@ -875,21 +870,11 @@ paint_ring (GimpColorWheel *wheel,
         }
     }
 
-  if (priv->transform)
+  p = buf;
+  for (gint i = 0; i < height; i++)
     {
-      const Babl *format = babl_format ("cairo-RGB24");
-      guchar     *b      = (guchar *) buf;
-      gint        i;
-
-      for (i = 0; i < height; i++)
-        {
-          gimp_color_transform_process_pixels (priv->transform,
-                                               format, b,
-                                               format, b,
-                                               width);
-
-          b  += stride;
-        }
+      babl_process (priv->render_fish, p, p, width);
+      p += stride / 4;
     }
 
   source = cairo_image_surface_create_for_data ((guchar *) buf,
@@ -1104,21 +1089,11 @@ paint_triangle (GimpColorWheel *wheel,
         }
     }
 
-  if (priv->transform)
+  p = buf;
+  for (gint i = 0; i < height; i++)
     {
-      const Babl *format = babl_format ("cairo-RGB24");
-      guchar     *b      = (guchar *) buf;
-      gint        i;
-
-      for (i = 0; i < height; i++)
-        {
-          gimp_color_transform_process_pixels (priv->transform,
-                                               format, b,
-                                               format, b,
-                                               width);
-
-          b  += stride;
-        }
+      babl_process (priv->render_fish, p, p, width);
+      p += stride / 4;
     }
 
   source = cairo_image_surface_create_for_data ((guchar *) buf,
@@ -1199,11 +1174,13 @@ gimp_color_wheel_draw (GtkWidget *widget,
   GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (widget);
   GimpColorWheelPrivate *priv  = gimp_color_wheel_get_instance_private (wheel);
   gboolean               draw_focus;
+  const Babl            *render_space;
 
   draw_focus = gtk_widget_has_visible_focus (widget);
 
-  if (! priv->transform)
-    gimp_color_wheel_create_transform (wheel);
+  render_space = gimp_widget_get_render_space (widget, priv->config);
+  priv->render_fish = babl_fish (babl_format_with_space ("cairo-RGB24", priv->format),
+                                 babl_format_with_space ("cairo-RGB24", render_space)),
 
   paint_ring (wheel, cr);
   paint_triangle (wheel, cr, draw_focus);
@@ -1299,7 +1276,9 @@ gimp_color_wheel_new (void)
  * @v: Value
  *
  * Sets the current color in an HSV color selector.
- * Color component values must be in the [0.0, 1.0] range.
+ * Color component values must be in the [0.0, 1.0] range and the color space
+ * of the HSV values will be the one of the Babl format specified in
+ * `gimp_color_wheel_set_format()`.
  *
  * Since: 2.10
  */
@@ -1312,15 +1291,20 @@ gimp_color_wheel_set_color (GimpColorWheel *wheel,
   GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
 
   g_return_if_fail (GIMP_IS_COLOR_WHEEL (wheel));
-  g_return_if_fail (h >= 0.0 && h <= 1.0);
-  g_return_if_fail (s >= 0.0 && s <= 1.0);
-  g_return_if_fail (v >= 0.0 && v <= 1.0);
 
-  priv->h = h;
-  priv->s = s;
-  priv->v = v;
+  priv->h = CLAMP (h, 0.0, 1.0);
+  priv->s = CLAMP (s, 0.0, 1.0);
+  priv->v = CLAMP (v, 0.0, 1.0);
 
-  g_signal_emit (wheel, wheel_signals[CHANGED], 0);
+  /* If the set color is out of gamut, select the clamped color, but do not
+   * emit any CHANGED state. The color might have been selected through another
+   * method and the color selector simply updated. We don't want to trigger any
+   * chain change because of the clamping.
+   */
+  if (h >= 0.0 && h <= 1.0 &&
+      s >= 0.0 && s <= 1.0 &&
+      v >= 0.0 && v <= 1.0)
+    g_signal_emit (wheel, wheel_signals[CHANGED], 0);
 
   gtk_widget_queue_draw (GTK_WIDGET (wheel));
 }
@@ -1333,7 +1317,9 @@ gimp_color_wheel_set_color (GimpColorWheel *wheel,
  * @v: (out): Return value for the value
  *
  * Queries the current color in an HSV color selector.
- * Returned values will be in the [0.0, 1.0] range.
+ * Returned values will be in the [0.0, 1.0] range and the color space of the
+ * HSV values will be the one of the Babl format specified in
+ * `gimp_color_wheel_set_format()`.
  *
  * Since: 2.10
  */
@@ -1411,24 +1397,28 @@ gimp_color_wheel_set_color_config (GimpColorWheel  *wheel,
   g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
 
   if (config != priv->config)
+    g_set_object (&priv->config, config);
+}
+
+/**
+ * gimp_color_wheel_set_format:
+ * @wheel:  a #GimpColorWheel widget.
+ * @format: a Babl format.
+ *
+ * Sets the format which you want to select colors in.
+ *
+ * Since: 3.0
+ */
+void
+gimp_color_wheel_set_format (GimpColorWheel  *wheel,
+                             const Babl      *format)
+{
+  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
+
+  if (priv->format != format)
     {
-      if (priv->config)
-        {
-          g_signal_handlers_disconnect_by_func (priv->config,
-                                                gimp_color_wheel_destroy_transform,
-                                                wheel);
-
-          gimp_color_wheel_destroy_transform (wheel);
-        }
-
-      g_set_object (&priv->config, config);
-
-      if (priv->config)
-        {
-          g_signal_connect_swapped (priv->config, "notify",
-                                    G_CALLBACK (gimp_color_wheel_destroy_transform),
-                                    wheel);
-        }
+      priv->format = format;
+      gtk_widget_queue_draw (GTK_WIDGET (wheel));
     }
 }
 
@@ -1531,43 +1521,4 @@ gimp_color_wheel_move (GimpColorWheel   *wheel,
     hue = 0.0;
 
   gimp_color_wheel_set_color (wheel, hue, sat, val);
-}
-
-static void
-gimp_color_wheel_create_transform (GimpColorWheel *wheel)
-{
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
-
-  if (priv->config)
-    {
-      static GimpColorProfile *profile = NULL;
-
-      const Babl *format = babl_format ("cairo-RGB24");
-
-      if (G_UNLIKELY (! profile))
-        profile = gimp_color_profile_new_rgb_srgb ();
-
-      priv->transform = gimp_widget_get_color_transform (GTK_WIDGET (wheel),
-                                                         priv->config,
-                                                         profile,
-                                                         format,
-                                                         format,
-                                                         NULL,
-                                                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                                         FALSE);
-    }
-}
-
-static void
-gimp_color_wheel_destroy_transform (GimpColorWheel *wheel)
-{
-  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
-
-  if (priv->transform)
-    {
-      g_object_unref (priv->transform);
-      priv->transform = NULL;
-    }
-
-  gtk_widget_queue_draw (GTK_WIDGET (wheel));
 }
