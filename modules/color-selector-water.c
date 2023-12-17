@@ -55,7 +55,7 @@ struct _ColorselWater
   guint32             motion_time;
 
   GimpColorConfig    *config;
-  GimpColorTransform *transform;
+  const Babl         *format;
 };
 
 struct _ColorselWaterClass
@@ -68,11 +68,10 @@ GType             colorsel_water_get_type          (void);
 
 static void       colorsel_water_dispose           (GObject           *object);
 
+static void       colorsel_water_set_format        (GimpColorSelector *selector,
+                                                    const Babl        *format);
 static void       colorsel_water_set_config        (GimpColorSelector *selector,
                                                     GimpColorConfig   *config);
-
-static void       colorsel_water_create_transform  (ColorselWater     *water);
-static void       colorsel_water_destroy_transform (ColorselWater     *water);
 
 static gboolean   select_area_draw                 (GtkWidget         *widget,
                                                     cairo_t           *cr,
@@ -130,6 +129,7 @@ colorsel_water_class_init (ColorselWaterClass *klass)
   selector_class->name       = _("Watercolor");
   selector_class->help_id    = "gimp-colorselector-watercolor";
   selector_class->icon_name  = GIMP_ICON_COLOR_SELECTOR_WATER;
+  selector_class->set_format = colorsel_water_set_format;
   selector_class->set_config = colorsel_water_set_config;
 
   gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "ColorselWater");
@@ -197,10 +197,6 @@ colorsel_water_init (ColorselWater *water)
   gtk_box_pack_start (GTK_BOX (hbox), scale, FALSE, FALSE, 0);
 
   gtk_widget_show_all (hbox);
-
-  gimp_widget_track_monitor (GTK_WIDGET (water),
-                             G_CALLBACK (colorsel_water_destroy_transform),
-                             NULL, NULL);
 }
 
 static gdouble
@@ -223,66 +219,26 @@ colorsel_water_dispose (GObject *object)
 }
 
 static void
+colorsel_water_set_format (GimpColorSelector *selector,
+                           const Babl        *format)
+{
+  ColorselWater *water = COLORSEL_WATER (selector);
+
+  if (water->format != format)
+    {
+      water->format = format;
+      gtk_widget_queue_draw (GTK_WIDGET (water));
+    }
+}
+
+static void
 colorsel_water_set_config (GimpColorSelector *selector,
                            GimpColorConfig   *config)
 {
   ColorselWater *water = COLORSEL_WATER (selector);
 
   if (config != water->config)
-    {
-      if (water->config)
-        {
-          g_signal_handlers_disconnect_by_func (water->config,
-                                                colorsel_water_destroy_transform,
-                                                water);
-
-          colorsel_water_destroy_transform (water);
-        }
-
-      g_set_object (&water->config, config);
-
-      if (water->config)
-        {
-          g_signal_connect_swapped (water->config, "notify",
-                                    G_CALLBACK (colorsel_water_destroy_transform),
-                                    water);
-        }
-    }
-}
-
-static void
-colorsel_water_create_transform (ColorselWater *water)
-{
-  if (water->config)
-    {
-      static GimpColorProfile *profile = NULL;
-
-      const Babl *format = babl_format ("cairo-RGB24");
-
-      if (G_UNLIKELY (! profile))
-        profile = gimp_color_profile_new_rgb_srgb ();
-
-      water->transform = gimp_widget_get_color_transform (water->area,
-                                                          water->config,
-                                                          profile,
-                                                          format,
-                                                          format,
-                                                          NULL,
-                                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                                          FALSE);
-    }
-}
-
-static void
-colorsel_water_destroy_transform (ColorselWater *water)
-{
-  if (water->transform)
-    {
-      g_object_unref (water->transform);
-      water->transform = NULL;
-    }
-
-  gtk_widget_queue_draw (GTK_WIDGET (water->area));
+    g_set_object (&water->config, config);
 }
 
 static gboolean
@@ -290,6 +246,8 @@ select_area_draw (GtkWidget     *widget,
                   cairo_t       *cr,
                   ColorselWater *water)
 {
+  const Babl      *render_space;
+  const Babl      *render_fish;
   GdkRectangle     area;
   GtkAllocation    allocation;
   gdouble          x1, y1, x2, y2;
@@ -312,14 +270,15 @@ select_area_draw (GtkWidget     *widget,
   dx = 1.0 / allocation.width;
   dy = 1.0 / allocation.height;
 
+  render_space = gimp_widget_get_render_space (widget, water->config);
+  render_fish = babl_fish (babl_format_with_space ("cairo-RGB24", water->format),
+                           babl_format_with_space ("cairo-RGB24", render_space)),
+
   surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
                                         area.width,
                                         area.height);
 
   dest = cairo_image_surface_get_data (surface);
-
-  if (! water->transform)
-    colorsel_water_create_transform (water);
 
   for (j = 0, y = area.y / allocation.height;
        j < area.height;
@@ -355,14 +314,7 @@ select_area_draw (GtkWidget     *widget,
           d += 4;
         }
 
-      if (water->transform)
-        gimp_color_transform_process_pixels (water->transform,
-                                             babl_format ("cairo-RGB24"),
-                                             dest,
-                                             babl_format ("cairo-RGB24"),
-                                             dest,
-                                             area.width);
-
+      babl_process (render_fish, dest, dest, area.width);
       dest += cairo_image_surface_get_stride (surface);
     }
 
