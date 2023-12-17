@@ -47,6 +47,7 @@ struct _ColorselWater
   GimpColorSelector   parent_instance;
 
   GtkWidget          *area;
+  GtkWidget          *label;
 
   gdouble             last_x;
   gdouble             last_y;
@@ -197,6 +198,14 @@ colorsel_water_init (ColorselWater *water)
   gtk_box_pack_start (GTK_BOX (hbox), scale, FALSE, FALSE, 0);
 
   gtk_widget_show_all (hbox);
+
+  water->label = gtk_label_new (NULL);
+  gtk_widget_set_halign (water->label, GTK_ALIGN_START);
+  gtk_widget_set_vexpand (water->label, FALSE);
+  gtk_label_set_justify (GTK_LABEL (water->label), GTK_JUSTIFY_LEFT);
+  gtk_label_set_text (GTK_LABEL (water->label), _("Profile: sRGB"));
+  gtk_box_pack_start (GTK_BOX (water), water->label, FALSE, FALSE, 0);
+  gtk_widget_show (water->label);
 }
 
 static gdouble
@@ -227,6 +236,40 @@ colorsel_water_set_format (GimpColorSelector *selector,
   if (water->format != format)
     {
       water->format = format;
+
+      if (format == NULL || babl_format_get_space (format) == babl_space ("sRGB"))
+        {
+          gtk_label_set_text (GTK_LABEL (water->label), _("Profile: sRGB"));
+          gimp_help_set_help_data (water->label, NULL, NULL);
+        }
+      else
+        {
+          GimpColorProfile *profile = NULL;
+          const gchar      *icc;
+          gint              icc_len;
+
+          icc = babl_space_get_icc (babl_format_get_space (format), &icc_len);
+          profile = gimp_color_profile_new_from_icc_profile ((const guint8 *) icc, icc_len, NULL);
+
+          if (profile != NULL)
+            {
+              gchar *text;
+
+              text = g_strdup_printf (_("Profile: %s"), gimp_color_profile_get_label (profile));
+              gtk_label_set_text (GTK_LABEL (water->label), text);
+              gimp_help_set_help_data (water->label,
+                                       gimp_color_profile_get_summary (profile),
+                                       NULL);
+              g_free (text);
+            }
+          else
+            {
+              gtk_label_set_markup (GTK_LABEL (water->label), _("Profile: <i>unknown</i>"));
+              gimp_help_set_help_data (water->label, NULL, NULL);
+            }
+
+          g_clear_object (&profile);
+        }
       gtk_widget_queue_draw (GTK_WIDGET (water));
     }
 }

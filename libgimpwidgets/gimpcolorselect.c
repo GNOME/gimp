@@ -129,6 +129,7 @@ struct _GimpColorSelect
   GimpColorSelector    parent_instance;
 
   GtkWidget           *toggle_box[3];
+  GtkWidget           *label;
 
   GtkWidget           *xy_color;
   ColorSelectFillType  xy_color_fill;
@@ -489,6 +490,14 @@ gimp_color_select_init (GimpColorSelect *select)
       }
     }
 
+  select->label = gtk_label_new (NULL);
+  gtk_widget_set_halign (select->label, GTK_ALIGN_START);
+  gtk_widget_set_vexpand (select->label, FALSE);
+  gtk_label_set_justify (GTK_LABEL (select->label), GTK_JUSTIFY_LEFT);
+  gtk_label_set_text (GTK_LABEL (select->label), _("Profile: sRGB"));
+  gtk_box_pack_start (GTK_BOX (select), select->label, FALSE, FALSE, 0);
+  gtk_widget_show (select->label);
+
   g_type_class_unref (model_class);
   g_type_class_unref (channel_class);
 }
@@ -632,6 +641,40 @@ gimp_color_select_set_format (GimpColorSelector *selector,
                                       babl_format_with_space ("R'G'B' double", format));
       fish_lch_to_rgb_u8 = babl_fish (babl_format ("CIE LCH(ab) double"),
                                       babl_format_with_space ("R'G'B' u8", format));
+
+      if (format == NULL || babl_format_get_space (format) == babl_space ("sRGB"))
+        {
+          gtk_label_set_text (GTK_LABEL (select->label), _("Profile: sRGB"));
+          gimp_help_set_help_data (select->label, NULL, NULL);
+        }
+      else
+        {
+          GimpColorProfile *profile = NULL;
+          const gchar      *icc;
+          gint              icc_len;
+
+          icc = babl_space_get_icc (babl_format_get_space (format), &icc_len);
+          profile = gimp_color_profile_new_from_icc_profile ((const guint8 *) icc, icc_len, NULL);
+
+          if (profile != NULL)
+            {
+              gchar *text;
+
+              text = g_strdup_printf (_("Profile: %s"), gimp_color_profile_get_label (profile));
+              gtk_label_set_text (GTK_LABEL (select->label), text);
+              gimp_help_set_help_data (select->label,
+                                       gimp_color_profile_get_summary (profile),
+                                       NULL);
+              g_free (text);
+            }
+          else
+            {
+              gtk_label_set_markup (GTK_LABEL (select->label), _("Profile: <i>unknown</i>"));
+              gimp_help_set_help_data (select->label, NULL, NULL);
+            }
+
+          g_clear_object (&profile);
+        }
 
       select->xy_needs_render = TRUE;
       select->z_needs_render  = TRUE;

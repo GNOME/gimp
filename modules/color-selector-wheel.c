@@ -48,6 +48,8 @@ struct _ColorselWheel
   GimpColorSelector  parent_instance;
 
   GtkWidget         *hsv;
+  GtkWidget         *label;
+
   const Babl        *format;
 };
 
@@ -127,6 +129,14 @@ colorsel_wheel_init (ColorselWheel *wheel)
   gtk_box_pack_start (GTK_BOX (wheel), wheel->hsv, TRUE, TRUE, 0);
   gtk_widget_show (wheel->hsv);
 
+  wheel->label = gtk_label_new (NULL);
+  gtk_widget_set_halign (wheel->label, GTK_ALIGN_START);
+  gtk_widget_set_vexpand (wheel->label, FALSE);
+  gtk_label_set_justify (GTK_LABEL (wheel->label), GTK_JUSTIFY_LEFT);
+  gtk_label_set_text (GTK_LABEL (wheel->label), _("Profile: sRGB"));
+  gtk_box_pack_start (GTK_BOX (wheel), wheel->label, FALSE, FALSE, 0);
+  gtk_widget_show (wheel->label);
+
   g_signal_connect (wheel->hsv, "changed",
                     G_CALLBACK (colorsel_wheel_changed),
                     wheel);
@@ -159,6 +169,40 @@ colorsel_wheel_set_format (GimpColorSelector *selector,
     {
       wheel->format = format;
       gimp_color_wheel_set_format (GIMP_COLOR_WHEEL (wheel->hsv), format);
+
+      if (format == NULL || babl_format_get_space (format) == babl_space ("sRGB"))
+        {
+          gtk_label_set_text (GTK_LABEL (wheel->label), _("Profile: sRGB"));
+          gimp_help_set_help_data (wheel->label, NULL, NULL);
+        }
+      else
+        {
+          GimpColorProfile *profile = NULL;
+          const gchar      *icc;
+          gint              icc_len;
+
+          icc = babl_space_get_icc (babl_format_get_space (format), &icc_len);
+          profile = gimp_color_profile_new_from_icc_profile ((const guint8 *) icc, icc_len, NULL);
+
+          if (profile != NULL)
+            {
+              gchar *text;
+
+              text = g_strdup_printf (_("Profile: %s"), gimp_color_profile_get_label (profile));
+              gtk_label_set_text (GTK_LABEL (wheel->label), text);
+              gimp_help_set_help_data (wheel->label,
+                                       gimp_color_profile_get_summary (profile),
+                                       NULL);
+              g_free (text);
+            }
+          else
+            {
+              gtk_label_set_markup (GTK_LABEL (wheel->label), _("Profile: <i>unknown</i>"));
+              gimp_help_set_help_data (wheel->label, NULL, NULL);
+            }
+
+          g_clear_object (&profile);
+        }
     }
 }
 

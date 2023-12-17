@@ -111,6 +111,8 @@ struct _GimpColorScales
   GtkWidget         *dummy_u8_toggle;
   GtkWidget         *toggles[14];
   GtkWidget         *scales[14];
+
+  GList             *profile_labels;
 };
 
 struct _GimpColorScalesClass
@@ -244,6 +246,8 @@ create_group (GimpColorScales           *scales,
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
   GtkWidget         *grid;
   GEnumClass        *enum_class;
+  GtkWidget         *label     = NULL;
+  gboolean           add_label = FALSE;
   gint               row;
   gint               i;
 
@@ -258,6 +262,12 @@ create_group (GimpColorScales           *scales,
       const GimpEnumDesc *enum_desc;
       gint                enum_value = i;
       gboolean            is_u8      = FALSE;
+
+      if ((enum_value >= GIMP_COLOR_SELECTOR_RED_U8 &&
+           enum_value <= GIMP_COLOR_SELECTOR_BLUE_U8) ||
+          (enum_value >= GIMP_COLOR_SELECTOR_HUE &&
+           enum_value <= GIMP_COLOR_SELECTOR_BLUE))
+        add_label = TRUE;
 
       if (enum_value >= GIMP_COLOR_SELECTOR_RED_U8 &&
           enum_value <= GIMP_COLOR_SELECTOR_ALPHA_U8)
@@ -344,6 +354,18 @@ create_group (GimpColorScales           *scales,
                         scales);
     }
 
+  if (add_label)
+    {
+      label = gtk_label_new (NULL);
+      gtk_widget_set_halign (label, GTK_ALIGN_START);
+      gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+      gtk_label_set_text (GTK_LABEL (label), _("Profile: sRGB"));
+      gtk_grid_attach (GTK_GRID (grid), label, 1, row, 3, 1);
+      gtk_widget_show (label);
+
+      scales->profile_labels = g_list_prepend (scales->profile_labels, label);
+    }
+
   g_type_class_unref (enum_class);
 
   return grid;
@@ -377,6 +399,8 @@ gimp_color_scales_init (GimpColorScales *scales)
 
   main_group = NULL;
   u8_group   = NULL;
+
+  scales->profile_labels = NULL;
 
   scales->dummy_u8_toggle = gtk_radio_button_new (NULL);
   g_object_ref_sink (scales->dummy_u8_toggle);
@@ -495,6 +519,7 @@ gimp_color_scales_dispose (GObject *object)
 
   g_clear_pointer (&scales->show_rgb_u8_binding, g_binding_unbind);
   g_clear_pointer (&scales->show_hsv_binding, g_binding_unbind);
+  g_clear_pointer (&scales->profile_labels, g_list_free);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -661,6 +686,49 @@ gimp_color_scales_set_format (GimpColorSelector *selector,
   GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
 
   scales->format = format;
+
+  if (format == NULL || babl_format_get_space (format) == babl_space ("sRGB"))
+    {
+      for (GList *iter = scales->profile_labels; iter; iter = iter->next)
+        {
+          gtk_label_set_text (GTK_LABEL (iter->data), _("Profile: sRGB"));
+          gimp_help_set_help_data (iter->data, NULL, NULL);
+        }
+    }
+  else
+    {
+      GimpColorProfile *profile = NULL;
+      const gchar      *icc;
+      gint              icc_len;
+
+      icc = babl_space_get_icc (babl_format_get_space (format), &icc_len);
+      profile = gimp_color_profile_new_from_icc_profile ((const guint8 *) icc, icc_len, NULL);
+
+      if (profile != NULL)
+        {
+          gchar *text;
+
+          text = g_strdup_printf (_("Profile: %s"), gimp_color_profile_get_label (profile));
+          for (GList *iter = scales->profile_labels; iter; iter = iter->next)
+            {
+              gtk_label_set_text (GTK_LABEL (iter->data), text);
+              gimp_help_set_help_data (iter->data,
+                                       gimp_color_profile_get_summary (profile),
+                                       NULL);
+            }
+          g_free (text);
+        }
+      else
+        {
+          for (GList *iter = scales->profile_labels; iter; iter = iter->next)
+            {
+              gtk_label_set_markup (GTK_LABEL (iter->data), _("Profile: <i>unknown</i>"));
+              gimp_help_set_help_data (iter->data, NULL, NULL);
+            }
+        }
+
+      g_clear_object (&profile);
+    }
 
   gimp_color_scales_update_scales (scales, -1);
 }
