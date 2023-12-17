@@ -373,6 +373,8 @@ gimp_babl_format_get_with_alpha (const Babl *format)
     new_model = "CIE XYZ alpha";
   else if (g_strcmp0 (model, "CIE Yuv") == 0)
     new_model = "CIE Yuv alpha";
+  else if (g_strcmp0 (model, "CIE LCH(ab)") == 0)
+    new_model = "CIE LCH(ab) alpha";
   else if (g_strcmp0 (model, "CMYK") == 0)
     new_model = "CMYKA";
   else if (g_strcmp0 (model, "cmyk") == 0)
