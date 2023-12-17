@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-13 18:44+0000\n"
-"PO-Revision-Date: 2023-12-13 20:55+0200\n"
+"POT-Creation-Date: 2023-12-17 03:03+0000\n"
+"PO-Revision-Date: 2023-12-17 12:18+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -4368,6 +4368,74 @@ msgstr "точок/%a"
 #: plug-ins/common/file-pdf-save.c:331
 msgid "PDF"
 msgstr "PDF"
+
+#: plug-ins/common/file-pdf-save.c:338 plug-ins/common/file-pdf-save.c:339
+#| msgid "Convert _bitmaps to vector graphics where possible"
+msgid "Convert bitmaps to vector graphics where possible"
+msgstr "Перетворити растрові зображення на векторну графіку, де це можливо "
+
+#: plug-ins/common/file-pdf-save.c:344
+#| msgid "_Omit hidden layers and layers with zero opacity"
+msgid "Omit hidden layers and layers with zero opacity"
+msgstr "Пропустити приховані шари і шари без прозорості"
+
+#: plug-ins/common/file-pdf-save.c:345
+#| msgid ""
+#| "Duplicate layer size. \n"
+#| "It will not be exported"
+msgid "Non-visible layers will not be exported"
+msgstr "Невидимі шари не буде експортовано"
+
+#: plug-ins/common/file-pdf-save.c:350
+#| msgid "_Apply layer masks before saving"
+msgid "Apply layer masks"
+msgstr "Застосувати маски шарів"
+
+#: plug-ins/common/file-pdf-save.c:351
+msgid ""
+"Apply layer masks before saving (Keeping the mask will not change the "
+"output, only the PDF structure)"
+msgstr ""
+"Застосувати маски шарів перед збереженням (збереження маски не змінить"
+" результату, лише змінить структуру PDF)"
+
+#: plug-ins/common/file-pdf-save.c:357
+#| msgid "Layers as pages (%s)"
+msgid "Layers as pages"
+msgstr "Шари як сторінки"
+
+#: plug-ins/common/file-pdf-save.c:358
+#| msgid "bottom layers first"
+msgid "Layers as pages (bottom layers first)."
+msgstr "Шари як сторінки (спочатку нижні шари)."
+
+#: plug-ins/common/file-pdf-save.c:363
+#| msgid "Reverse Order"
+msgid "Reverse order"
+msgstr "Зворотний порядок"
+
+#: plug-ins/common/file-pdf-save.c:364
+#| msgid "_Reverse the pages order"
+msgid "Reverse the pages order (top layers first)."
+msgstr "Зворотний порядок сторінок (верхні шари першими)."
+
+#: plug-ins/common/file-pdf-save.c:369
+msgid "Root layers only"
+msgstr "Лише кореневі шари"
+
+#: plug-ins/common/file-pdf-save.c:370
+msgid "Only the root layers are considered pages"
+msgstr "Сторінками вважатимуться лише кореневі шари"
+
+#: plug-ins/common/file-pdf-save.c:375
+#| msgid "_Convert text layers to image"
+msgid "Convert text layers to image"
+msgstr "Перетворити текстові шари на зображення"
+
+#: plug-ins/common/file-pdf-save.c:376
+#| msgid "_Convert text layers to image"
+msgid "Convert text layers to raster graphics"
+msgstr "Перетворити текстові шари на растрову графіку"
 
 #: plug-ins/common/file-pdf-save.c:381 plug-ins/common/file-pdf-save.c:453
 #: plug-ins/common/file-pdf-save.c:1105
@@ -9855,17 +9923,12 @@ msgstr ""
 "Решту контурів буде відкинуто."
 
 #: plug-ins/file-psd/psd-save.c:2666
-#| msgid ""
-#| "Legacy layer modes have been reported to have better compatibility with "
-#| "Photoshop. If you encounter display issues, consider switching to those "
-#| "layer modes."
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop. If you "
 "encounter display issues, consider switching to those layer modes."
 msgstr ""
-"Застарілі режими шарів мають кращу сумісність із "
-"Photoshop. Якщо виникають проблеми з показом, вам варто перемкнутися на ці "
-"режими шарів."
+"Застарілі режими шарів мають кращу сумісність із Photoshop. Якщо виникають "
+"проблеми з показом, вам варто перемкнутися на ці режими шарів."
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -16678,25 +16741,12 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "Rotate / Scale"
 #~ msgstr "Обертання / масштаб"
 
-#~ msgid "_Convert text layers to image"
-#~ msgstr "П_еретворити текстові шари на зображення"
-
 #, c-format
 #~ msgid "_Layers as pages (%s)"
 #~ msgstr "_Шари як сторінки (%s)"
 
 #~ msgid "top layers first"
 #~ msgstr "спочатку верхній шар"
-
-#~ msgid "bottom layers first"
-#~ msgstr "спочатку нижній шар"
-
-#~ msgid "_Reverse the pages order"
-#~ msgstr "З_воротний порядок сторінок"
-
-#, c-format
-#~ msgid "Layers as pages (%s)"
-#~ msgstr "Шари як сторінки (%s)"
 
 #~ msgid "Planar RGB"
 #~ msgstr "Планарний RGB"
