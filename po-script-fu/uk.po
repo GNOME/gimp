@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-21 14:32+0000\n"
-"PO-Revision-Date: 2023-08-21 22:59+0300\n"
+"POT-Creation-Date: 2023-12-17 03:03+0000\n"
+"PO-Revision-Date: 2023-12-17 12:09+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -95,48 +95,48 @@ msgstr ""
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Режим оцінки скриптфу дозволяє лише неінтерактивну роботу"
 
-#: plug-ins/script-fu/console/script-fu-console.c:125
+#: plug-ins/script-fu/console/script-fu-console.c:119
 msgid "Script Console"
 msgstr "Консоль скриптів"
 
-#: plug-ins/script-fu/console/script-fu-console.c:130
-#: plug-ins/script-fu/console/script-fu-console.c:259
+#: plug-ins/script-fu/console/script-fu-console.c:124
+#: plug-ins/script-fu/console/script-fu-console.c:251
 msgid "_Save"
 msgstr "_Зберегти"
 
-#: plug-ins/script-fu/console/script-fu-console.c:131
+#: plug-ins/script-fu/console/script-fu-console.c:125
 msgid "C_lear"
 msgstr "_Очистити"
 
-#: plug-ins/script-fu/console/script-fu-console.c:132
-#: plug-ins/script-fu/console/script-fu-console.c:332
+#: plug-ins/script-fu/console/script-fu-console.c:126
+#: plug-ins/script-fu/console/script-fu-console.c:324
 msgid "_Close"
 msgstr "З_акрити"
 
-#: plug-ins/script-fu/console/script-fu-console.c:193
+#: plug-ins/script-fu/console/script-fu-console.c:187
 msgid "_Browse..."
 msgstr "О_гляд…"
 
-#: plug-ins/script-fu/console/script-fu-console.c:254
+#: plug-ins/script-fu/console/script-fu-console.c:246
 msgid "Save Script-Fu Console Output"
 msgstr "Зберегти вивід консолі скриптфу"
 
-#: plug-ins/script-fu/console/script-fu-console.c:258
-#: plug-ins/script-fu/server/script-fu-server.c:884
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:218
+#: plug-ins/script-fu/console/script-fu-console.c:250
+#: plug-ins/script-fu/server/script-fu-server.c:888
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: plug-ins/script-fu/console/script-fu-console.c:301
+#: plug-ins/script-fu/console/script-fu-console.c:293
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не вдається відкрити '%s' для запису: %s"
 
-#: plug-ins/script-fu/console/script-fu-console.c:327
+#: plug-ins/script-fu/console/script-fu-console.c:319
 msgid "Script-Fu Procedure Browser"
 msgstr "Переглядач процедур скриптфу"
 
-#: plug-ins/script-fu/console/script-fu-console.c:331
+#: plug-ins/script-fu/console/script-fu-console.c:323
 msgid "_Apply"
 msgstr "За_стосувати"
 
@@ -148,27 +148,27 @@ msgstr "Ласкаво просимо до TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Керування GIMP за допомогою скриптів мовою Scheme"
 
-#: plug-ins/script-fu/server/script-fu-server.c:880
+#: plug-ins/script-fu/server/script-fu-server.c:884
 msgid "Script-Fu Server Options"
 msgstr "Скриптфу: Параметри сервера"
 
-#: plug-ins/script-fu/server/script-fu-server.c:885
+#: plug-ins/script-fu/server/script-fu-server.c:889
 msgid "_Start Server"
 msgstr "_Запустити сервер"
 
-#: plug-ins/script-fu/server/script-fu-server.c:918
+#: plug-ins/script-fu/server/script-fu-server.c:922
 msgid "Listen on IP:"
 msgstr "Прослуховувати IP:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:925
+#: plug-ins/script-fu/server/script-fu-server.c:929
 msgid "Server port:"
 msgstr "Порт сервера:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:931
+#: plug-ins/script-fu/server/script-fu-server.c:935
 msgid "Server logfile:"
 msgstr "Журнал сервера:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:944
+#: plug-ins/script-fu/server/script-fu-server.c:948
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -184,64 +184,44 @@ msgstr "_Запустити сервер…"
 msgid "Server for remote Script-Fu operation"
 msgstr "Сервер для віддаленого виконання скриптфу"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:184
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:187
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "скриптфуне може обробляти два сценарії одночасно."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:186
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Ви вже запустили сценарій \"%s\"."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:217
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:220
 msgid "_Reset"
 msgstr "С_кинути"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:219
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 msgid "_OK"
 msgstr "_Гаразд"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:276
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:323
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:326
 msgid "Script-Fu Color Selection"
 msgstr "Скриптфу: Вибір кольору"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:450
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
 msgid "Script-Fu File Selection"
 msgstr "Скриптфу: Вибір файлу"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:456
 msgid "Script-Fu Folder Selection"
 msgstr "Скриптфу: Вибір теки"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:466
-msgid "Script-Fu Font Selection"
-msgstr "Скриптфу: Вибір шрифту"
-
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:472
-msgid "Script-Fu Palette Selection"
-msgstr "Скриптфу: Вибір палітри"
-
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:479
-msgid "Script-Fu Pattern Selection"
-msgstr "Скриптфу: Вибір текстури"
-
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:486
-msgid "Script-Fu Gradient Selection"
-msgstr "Скриптфу: Вибір градієнту"
-
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:493
-msgid "Script-Fu Brush Selection"
-msgstr "Скриптфу: Вибір пензля"
-
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:868
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:852
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Помилка під час виконання: %s"
@@ -271,7 +251,7 @@ msgstr "Товщина"
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:163
 #: plug-ins/script-fu/scripts/old-photo.scm:104
 #: plug-ins/script-fu/scripts/round-corners.scm:145
-#: plug-ins/script-fu/scripts/slide.scm:257
+#: plug-ins/script-fu/scripts/slide.scm:262
 #: plug-ins/script-fu/scripts/spinning-globe.scm:107
 msgid "Work on copy"
 msgstr "Працювати з копією"
@@ -280,33 +260,39 @@ msgstr "Працювати з копією"
 msgid "Keep bump layer"
 msgstr "Окремий шар для рельєфу"
 
-#: plug-ins/script-fu/scripts/addborder.scm:108
+#: plug-ins/script-fu/scripts/addborder.scm:123
 msgid "Border Layer"
 msgstr "Шар рамки"
 
-#: plug-ins/script-fu/scripts/addborder.scm:162
+#: plug-ins/script-fu/scripts/addborder.scm:177
 msgid "Add _Border..."
 msgstr "Додати _рамку…"
 
-#: plug-ins/script-fu/scripts/addborder.scm:163
+#: plug-ins/script-fu/scripts/addborder.scm:178
 msgid "Add a border around an image"
 msgstr "Додати рамку навколо зображення"
 
-#: plug-ins/script-fu/scripts/addborder.scm:170
+#: plug-ins/script-fu/scripts/addborder.scm:185
 msgid "Border X size"
 msgstr "Розмір гориз. планки"
 
-#: plug-ins/script-fu/scripts/addborder.scm:171
+#: plug-ins/script-fu/scripts/addborder.scm:186
 msgid "Border Y size"
 msgstr "Розмір верт. планки"
 
-#: plug-ins/script-fu/scripts/addborder.scm:172
+#: plug-ins/script-fu/scripts/addborder.scm:187
 msgid "Border color"
 msgstr "Колір рамки"
 
-#: plug-ins/script-fu/scripts/addborder.scm:173
+#: plug-ins/script-fu/scripts/addborder.scm:188
 msgid "Delta value on color"
 msgstr "Рельєфність рамки"
+
+#: plug-ins/script-fu/scripts/addborder.scm:189
+#: plug-ins/script-fu/scripts/drop-shadow.scm:183
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:212
+msgid "Allow resizing"
+msgstr "Дозволити зміну розміру"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:206
 msgid "Frame"
@@ -451,20 +437,20 @@ msgstr "Шар 3"
 msgid "Drop Shadow"
 msgstr "Кинути тінь"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:226
+#: plug-ins/script-fu/scripts/chrome-it.scm:227
 msgid "Chrome"
 msgstr "Хром"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:227
+#: plug-ins/script-fu/scripts/chrome-it.scm:228
 #: plug-ins/script-fu/scripts/xach-effect.scm:68
 msgid "Highlight"
 msgstr "Підсвічування"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:241
+#: plug-ins/script-fu/scripts/chrome-it.scm:242
 msgid "Stencil C_hrome..."
 msgstr "_Хромувати за трафаретом…"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:242
+#: plug-ins/script-fu/scripts/chrome-it.scm:243
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
@@ -472,31 +458,31 @@ msgstr ""
 "Додати до виділення (чи альфа-каналу) ефект хромування за допомогою "
 "вказаного зразка"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:249
+#: plug-ins/script-fu/scripts/chrome-it.scm:250
 msgid "Chrome saturation"
 msgstr "Насиченість хрому"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:250
+#: plug-ins/script-fu/scripts/chrome-it.scm:251
 msgid "Chrome lightness"
 msgstr "Світлість хрому"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:251
+#: plug-ins/script-fu/scripts/chrome-it.scm:252
 msgid "Chrome factor"
 msgstr "Коефіцієнт хрому"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:252
+#: plug-ins/script-fu/scripts/chrome-it.scm:253
 msgid "Environment map"
 msgstr "Карта оточення"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:255
+#: plug-ins/script-fu/scripts/chrome-it.scm:256
 msgid "Highlight balance"
 msgstr "Баланс відблисків"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:256
+#: plug-ins/script-fu/scripts/chrome-it.scm:257
 msgid "Chrome balance"
 msgstr "Баланс хрому"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:257
+#: plug-ins/script-fu/scripts/chrome-it.scm:258
 msgid "Chrome white areas"
 msgstr "Білі ділянки хрому"
 
@@ -565,23 +551,23 @@ msgstr "Підвищення"
 msgid "Depth"
 msgstr "Глибина"
 
-#: plug-ins/script-fu/scripts/coffee.scm:36
+#: plug-ins/script-fu/scripts/coffee.scm:37
 msgid "Stain"
 msgstr "Пляма"
 
-#: plug-ins/script-fu/scripts/coffee.scm:82
+#: plug-ins/script-fu/scripts/coffee.scm:91
 msgid "_Coffee Stain..."
 msgstr "_Кавові плями…"
 
-#: plug-ins/script-fu/scripts/coffee.scm:83
+#: plug-ins/script-fu/scripts/coffee.scm:92
 msgid "Add realistic looking coffee stains to the image"
 msgstr "Заплямувати зображення реалістичними кавовими плямами"
 
-#: plug-ins/script-fu/scripts/coffee.scm:90
+#: plug-ins/script-fu/scripts/coffee.scm:99
 msgid "Stains"
 msgstr "Кількість плям"
 
-#: plug-ins/script-fu/scripts/coffee.scm:91
+#: plug-ins/script-fu/scripts/coffee.scm:100
 msgid "Darken only"
 msgstr "Накласти плями у режимі «Лише темне»"
 
@@ -657,11 +643,6 @@ msgstr "Колір"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:210
 msgid "Opacity"
 msgstr "Непрозорість"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:183
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:212
-msgid "Allow resizing"
-msgstr "Дозволити зміну розміру"
 
 #: plug-ins/script-fu/scripts/font-map.scm:161
 msgid "Render _Font Map..."
@@ -1134,10 +1115,20 @@ msgstr "Вставити зміст буферу у новий пензель"
 msgid "_Brush name"
 msgstr "_Назва пензля"
 
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#| msgid "Brush"
+msgid "My Brush"
+msgstr "Мій пензель"
+
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
 msgid "_File name"
 msgstr "Назва _файла"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+#| msgid "Airbrush"
+msgid "mybrush"
+msgstr "мійпензель"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:72
 msgid "_Spacing"
@@ -1154,6 +1145,16 @@ msgstr "Вставити зміст буферу обміну у нову тек
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
 msgid "_Pattern name"
 msgstr "Назва _текстури"
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#| msgid "_Patterns"
+msgid "My Pattern"
+msgstr "Моя текстура"
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#| msgid "_Patterns"
+msgid "mypattern"
+msgstr "моятекстура"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:197
 msgid "_Perspective..."
@@ -1279,27 +1280,27 @@ msgstr "Р_адіус (%)"
 msgid "Co_ncave"
 msgstr "_Угнуте"
 
-#: plug-ins/script-fu/scripts/slide.scm:245
+#: plug-ins/script-fu/scripts/slide.scm:250
 msgid "_Slide..."
 msgstr "_Слайд…"
 
-#: plug-ins/script-fu/scripts/slide.scm:246
+#: plug-ins/script-fu/scripts/slide.scm:251
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
 msgstr "Додати до зображення рамку, що імітує вигляд фотоплівки"
 
-#: plug-ins/script-fu/scripts/slide.scm:253
+#: plug-ins/script-fu/scripts/slide.scm:258
 msgid "Text"
 msgstr "Текст"
 
-#: plug-ins/script-fu/scripts/slide.scm:254
+#: plug-ins/script-fu/scripts/slide.scm:259
 msgid "Number"
 msgstr "Номер"
 
-#: plug-ins/script-fu/scripts/slide.scm:255
+#: plug-ins/script-fu/scripts/slide.scm:260
 msgid "Font"
 msgstr "Шрифт"
 
-#: plug-ins/script-fu/scripts/slide.scm:256
+#: plug-ins/script-fu/scripts/slide.scm:261
 msgid "Font color"
 msgstr "Колір шрифту"
 
@@ -1329,7 +1330,7 @@ msgstr "Прозоре тло"
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Індексувати до N кольорів (0 - залишити RGB)"
 
-#: plug-ins/script-fu/scripts/test-sphere.scm:272
+#: plug-ins/script-fu/scripts/test-sphere.scm:247
 msgid "_Sphere..."
 msgstr "_Сфера..."
 
@@ -1485,6 +1486,21 @@ msgstr "Зсув тіні вздовж X"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Зсув тіні вздовж Y"
+
+#~ msgid "Script-Fu Font Selection"
+#~ msgstr "Скриптфу: Вибір шрифту"
+
+#~ msgid "Script-Fu Palette Selection"
+#~ msgstr "Скриптфу: Вибір палітри"
+
+#~ msgid "Script-Fu Pattern Selection"
+#~ msgstr "Скриптфу: Вибір текстури"
+
+#~ msgid "Script-Fu Gradient Selection"
+#~ msgstr "Скриптфу: Вибір градієнту"
+
+#~ msgid "Script-Fu Brush Selection"
+#~ msgstr "Скриптфу: Вибір пензля"
 
 #, c-format
 #~ msgid "Script-Fu: %s"
@@ -1666,12 +1682,6 @@ msgstr "Зсув тіні вздовж Y"
 
 #~ msgid "Pencil"
 #~ msgstr "Олівець"
-
-#~ msgid "Brush"
-#~ msgstr "Пензель"
-
-#~ msgid "Airbrush"
-#~ msgstr "Аерограф"
 
 #~ msgid "Color method"
 #~ msgstr "Метод фарбування"
