@@ -35,6 +35,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpimage.h"
 #include "core/gimpimage-color-profile.h"
 
 #include "gimpcoloreditor.h"
@@ -107,6 +108,7 @@ static void  gimp_color_editor_image_changed      (GimpContext     *context,
                                                    GimpColorEditor *editor);
 static void  gimp_color_editor_update_simulation  (GimpImage       *image,
                                                    GimpColorEditor *editor);
+static void  gimp_color_editor_update_format      (GimpColorEditor *editor);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorEditor, gimp_color_editor, GIMP_TYPE_EDITOR,
@@ -755,6 +757,9 @@ gimp_color_editor_image_changed (GimpContext     *context,
           g_signal_handlers_disconnect_by_func (editor->active_image,
                                                 gimp_color_editor_update_simulation,
                                                 editor);
+          g_signal_handlers_disconnect_by_func (editor->active_image,
+                                                gimp_color_editor_update_format,
+                                                editor);
         }
 
       g_set_weak_pointer (&editor->active_image, image);
@@ -770,9 +775,20 @@ gimp_color_editor_image_changed (GimpContext     *context,
           g_signal_connect (image, "simulation-bpc-changed",
                             G_CALLBACK (gimp_color_editor_update_simulation),
                             editor);
+
+          g_signal_connect_swapped (image, "profile-changed",
+                                    G_CALLBACK (gimp_color_editor_update_format),
+                                    editor);
+          g_signal_connect_swapped (image, "precision-changed",
+                                    G_CALLBACK (gimp_color_editor_update_format),
+                                    editor);
+          g_signal_connect_swapped (image, "notify::base-type",
+                                    G_CALLBACK (gimp_color_editor_update_format),
+                                    editor);
         }
 
       gimp_color_editor_update_simulation (image, editor);
+      gimp_color_editor_update_format (editor);
     }
 }
 
@@ -792,4 +808,16 @@ gimp_color_editor_update_simulation (GimpImage       *image,
                                         NULL,
                                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                         FALSE);
+}
+
+static void
+gimp_color_editor_update_format (GimpColorEditor *editor)
+{
+  g_return_if_fail (GIMP_IS_COLOR_EDITOR (editor));
+
+  if (editor->active_image)
+    gimp_color_notebook_set_format (GIMP_COLOR_NOTEBOOK (editor->notebook),
+                                    gimp_image_get_layer_format (editor->active_image, FALSE));
+  else
+    gimp_color_notebook_set_format (GIMP_COLOR_NOTEBOOK (editor->notebook), NULL);
 }

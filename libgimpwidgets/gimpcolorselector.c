@@ -597,6 +597,31 @@ gimp_color_selector_set_config (GimpColorSelector *selector,
 }
 
 /**
+ * gimp_color_selector_set_format
+ * @selector: a #GimpColorSelector widget.
+ * @format:   a Babl format, with space.
+ *
+ * Sets the babl format representing the color model and the space this
+ * @selector is supposed to display values for. Depending on the type of color
+ * selector, it may trigger various UX changes, or none at all.
+ *
+ * Since: 3.0
+ */
+void
+gimp_color_selector_set_format (GimpColorSelector *selector,
+                                const Babl        *format)
+{
+  GimpColorSelectorClass *selector_class;
+
+  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+
+  selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
+
+  if (selector_class->set_format)
+    selector_class->set_format (selector, format);
+}
+
+/**
  * gimp_color_selector_set_simulation
  * @selector: a #GimpColorSelector widget.
  * @profile:  a #GimpColorProfile object.
@@ -608,10 +633,10 @@ gimp_color_selector_set_config (GimpColorSelector *selector,
  * Since: 3.0
  */
 void
-gimp_color_selector_set_simulation (GimpColorSelector *selector,
-                                    GimpColorProfile  *profile,
-                                    GimpColorRenderingIntent intent,
-                                    gboolean           bpc)
+gimp_color_selector_set_simulation (GimpColorSelector        *selector,
+                                    GimpColorProfile         *profile,
+                                    GimpColorRenderingIntent  intent,
+                                    gboolean                  bpc)
 {
   GimpColorSelectorClass *selector_class;
 

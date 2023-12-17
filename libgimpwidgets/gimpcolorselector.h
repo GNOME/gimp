@@ -94,6 +94,8 @@ struct _GimpColorSelectorClass
   void (* set_config)            (GimpColorSelector        *selector,
                                   GimpColorConfig          *config);
 
+  void (* set_format)            (GimpColorSelector        *selector,
+                                  const Babl               *format);
   void (* set_simulation)        (GimpColorSelector        *selector,
                                   GimpColorProfile         *profile,
                                   GimpColorRenderingIntent  intent,
@@ -155,6 +157,8 @@ gboolean    gimp_color_selector_get_model_visible     (GimpColorSelector *select
 void        gimp_color_selector_set_config            (GimpColorSelector *selector,
                                                        GimpColorConfig   *config);
 
+void        gimp_color_selector_set_format            (GimpColorSelector *selector,
+                                                       const Babl        *format);
 void        gimp_color_selector_set_simulation        (GimpColorSelector *selector,
                                                        GimpColorProfile  *profile,
                                                        GimpColorRenderingIntent intent,

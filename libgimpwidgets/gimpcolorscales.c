@@ -95,6 +95,8 @@ struct _GimpColorScales
 {
   GimpColorSelector  parent_instance;
 
+  const Babl        *format;
+
   gboolean           show_rgb_u8;
   GBinding          *show_rgb_u8_binding;
   GBinding          *show_hsv_binding;
@@ -144,6 +146,8 @@ static void   gimp_color_scales_set_model_visible
                                                 gboolean           visible);
 static void   gimp_color_scales_set_config     (GimpColorSelector *selector,
                                                 GimpColorConfig   *config);
+static void   gimp_color_scales_set_format     (GimpColorSelector *selector,
+                                                const Babl        *format);
 
 static void   gimp_color_scales_update_visible (GimpColorScales   *scales);
 static void   gimp_color_scales_update_scales  (GimpColorScales   *scales,
@@ -160,8 +164,6 @@ G_DEFINE_TYPE (GimpColorScales, gimp_color_scales, GIMP_TYPE_COLOR_SELECTOR)
 
 #define parent_class gimp_color_scales_parent_class
 
-static const Babl *fish_rgb_to_lch = NULL;
-static const Babl *fish_lch_to_rgb = NULL;
 
 static const ColorScale scale_defs[] =
 {
@@ -210,6 +212,7 @@ gimp_color_scales_class_init (GimpColorScalesClass *klass)
   selector_class->set_channel           = gimp_color_scales_set_channel;
   selector_class->set_model_visible     = gimp_color_scales_set_model_visible;
   selector_class->set_config            = gimp_color_scales_set_config;
+  selector_class->set_format            = gimp_color_scales_set_format;
 
   g_object_class_install_property (object_class, PROP_SHOW_RGB_U8,
                                    g_param_spec_boolean ("show-rgb-u8",
@@ -227,11 +230,6 @@ gimp_color_scales_class_init (GimpColorScalesClass *klass)
                                                          G_PARAM_CONSTRUCT));
 
   gtk_widget_class_set_css_name (widget_class, "GimpColorScales");
-
-  fish_rgb_to_lch = babl_fish (babl_format ("R'G'B'A double"),
-                               babl_format ("CIE LCH(ab) alpha double"));
-  fish_lch_to_rgb = babl_fish (babl_format ("CIE LCH(ab) alpha double"),
-                               babl_format ("R'G'B'A double"));
 }
 
 static GtkWidget *
@@ -656,6 +654,17 @@ gimp_color_scales_set_config (GimpColorSelector *selector,
     }
 }
 
+static void
+gimp_color_scales_set_format (GimpColorSelector *selector,
+                              const Babl        *format)
+{
+  GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
+
+  scales->format = format;
+
+  gimp_color_scales_update_scales (scales, -1);
+}
+
 
 /*  public functions  */
 
@@ -729,12 +738,12 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
   gdouble            values[G_N_ELEMENTS (scale_defs)];
   gint               i;
 
-  gegl_color_get_pixel (color, babl_format ("HSV double"), pixel);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSV double", scales->format), pixel);
   values[GIMP_COLOR_SELECTOR_HUE]           = pixel[0] * 360.0;
   values[GIMP_COLOR_SELECTOR_SATURATION]    = pixel[1] * 100.0;
   values[GIMP_COLOR_SELECTOR_VALUE]         = pixel[2] * 100.0;
 
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), pixel);
+  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", scales->format), pixel);
   values[GIMP_COLOR_SELECTOR_RED]           = pixel[0] * 100.0;
   values[GIMP_COLOR_SELECTOR_GREEN]         = pixel[1] * 100.0;
   values[GIMP_COLOR_SELECTOR_BLUE]          = pixel[2] * 100.0;
@@ -765,6 +774,8 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
                                              scales);
         }
 
+      gimp_color_scale_set_format (GIMP_COLOR_SCALE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scales->scales[i]))),
+                                   scales->format);
       gimp_color_scale_set_color (GIMP_COLOR_SCALE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scales->scales[i]))), color);
     }
 
@@ -816,8 +827,8 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
     if (scales->scales[i] == scale)
       break;
 
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgb);
-  gegl_color_get_pixel (color, babl_format ("HSVA double"), hsv);
+  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", scales->format), rgb);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSVA double", scales->format), hsv);
   gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) alpha double"), lch);
 
   switch (i)
@@ -883,7 +894,7 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
   if ((i >= GIMP_COLOR_SELECTOR_HUE) &&
       (i <= GIMP_COLOR_SELECTOR_VALUE))
     {
-      gegl_color_set_pixel (color, babl_format ("HSVA double"), hsv);
+      gegl_color_set_pixel (color, babl_format_with_space ("HSVA double", scales->format), hsv);
     }
   else if ((i >= GIMP_COLOR_SELECTOR_LCH_LIGHTNESS) &&
            (i <= GIMP_COLOR_SELECTOR_LCH_HUE))
@@ -895,7 +906,7 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
            ((i >= GIMP_COLOR_SELECTOR_RED_U8) &&
             (i <= GIMP_COLOR_SELECTOR_BLUE_U8)))
     {
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
+      gegl_color_set_pixel (color, babl_format_with_space ("R'G'B'A double", scales->format), rgb);
     }
 
   gimp_color_selector_set_color (selector, color);

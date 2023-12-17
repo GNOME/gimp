@@ -592,6 +592,32 @@ gimp_color_notebook_get_current_selector (GimpColorNotebook *notebook)
 }
 
 /**
+ * gimp_color_notebook_set_format:
+ * @notebook:  A #GimpColorNotebook widget.
+ * @format:    A Babl format, with space.
+ *
+ * Updates all selectors with the current format.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_color_notebook_set_format (GimpColorNotebook *notebook,
+                                const Babl        *format)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_COLOR_NOTEBOOK (notebook));
+
+  for (list = notebook->priv->selectors; list; list = g_list_next (list))
+    {
+      GimpColorSelector *selector = list->data;
+
+      if (selector)
+        gimp_color_selector_set_format (selector, format);
+    }
+}
+
+/**
  * gimp_color_notebook_set_simulation:
  * @notebook:  A #GimpColorNotebook widget.
  * @profile:   A #GimpColorProfile object.
