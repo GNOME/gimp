@@ -28,38 +28,51 @@ plugin_sources = [
   'script-fu.c',
 ]
 
-if platform_windows
-  plugin_sources += windows.compile_resources(
-    plugin_rc,
-    args: [
-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(executable_name+'.exe'),
-      '--define', 'INTERNALNAME_STR="@0@"'    .format(executable_name),
-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
+if not meson.is_cross_build()
+  if platform_windows
+    plugin_sources += windows.compile_resources(
+      plugin_rc,
+      args: [
+        '--define', 'ORIGINALFILENAME_STR="@0@"'.format(executable_name+'.exe'),
+        '--define', 'INTERNALNAME_STR="@0@"'    .format(executable_name),
+        '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
+      ],
+      include_directories: [
+        rootInclude, appInclude,
+      ],
+    )
+
+    # Fallback fix to the problem of non-configured interpreters
+    scriptfu_config = configuration_data()
+    scriptfu_config.set('SCRIPTFU_PATH', '')
+    configure_file(
+      input : 'gimp-script-fu-interpreter.interp.in',
+      output: 'gimp-script-fu-interpreter.interp',
+      configuration: scriptfu_config,
+      install: true,
+      install_dir: gimpplugindir / 'interpreters',
+    )
+  endif
+
+  # Several components use Gtk
+
+  # libscriptfu is installed to standard place; no rpath necessary
+
+  executable(executable_name,
+    plugin_sources,
+    dependencies: [
+      libgimpui_dep,
+      math,
+      gi,
+    ],
+    c_args: [
+      '-DG_LOG_DOMAIN="scriptfu"',
     ],
     include_directories: [
-      rootInclude, appInclude,
+      libscriptfuInclude,
     ],
+    link_with : [libscriptfuconsole, libscriptfu ],
+    install: true,
+    install_dir: gimpplugindir / 'plug-ins' / executable_name,
   )
 endif
-
-# Several components use Gtk
-
-# libscriptfu is installed to standard place; no rpath necessary
-
-executable(executable_name,
-  plugin_sources,
-  dependencies: [
-    libgimpui_dep,
-    math,
-    gi,
-  ],
-  c_args: [
-    '-DG_LOG_DOMAIN="scriptfu"',
-  ],
-  include_directories: [
-    libscriptfuInclude,
-  ],
-  link_with : [libscriptfuconsole, libscriptfu ],
-  install: true,
-  install_dir: gimpplugindir / 'plug-ins' / executable_name,
-)

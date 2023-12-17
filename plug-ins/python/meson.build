@@ -38,10 +38,10 @@ foreach plugin : plugins
   endforeach
 endforeach
 
-
-if python.found()
+# Fallback fix to the problem of non-configured interpreters
+if platform_windows and not meson.is_cross_build() and python.found()
   python_config = configuration_data()
-  python_config.set('PYTHON_PATH', python.full_path())
+  python_config.set('PYTHON_PATH', '')
 
   configure_file(
     input : 'pygimp.interp.in',

@@ -1,0 +1,4 @@
+gimp-script-fu-interpreter=@SCRIPTFU_PATH@gimp-script-fu-interpreter-3.0.exe
+gimp-script-fu-interpreter-3.0=@SCRIPTFU_PATH@gimp-script-fu-interpreter-3.0.exe
+/usr/bin/gimp-script-fu-interpreter=@SCRIPTFU_PATH@gimp-script-fu-interpreter-3.0.exe
+,ScriptFu,E,,scm,,@SCRIPTFU_PATH@gimp-script-fu-interpreter-3.0.exe,
