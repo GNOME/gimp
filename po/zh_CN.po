@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-11-25 21:08+0000\n"
-"PO-Revision-Date: 2023-11-27 08:52+0800\n"
+"POT-Creation-Date: 2023-12-16 12:00+0000\n"
+"PO-Revision-Date: 2023-12-17 08:31+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -317,29 +317,29 @@ msgstr ""
 "多数可能是您的文件系统储存文件所用的编码不是 UTF-8 但 GLib 对此不知情。请设置"
 "环境变量 G_FILENAME_ENCODING。"
 
-#: app/actions/actions.c:112 app/dialogs/dialogs.c:425
+#: app/actions/actions.c:112 app/dialogs/dialogs.c:426
 #: app/widgets/gimpbrusheditor.c:88
 msgid "Brush Editor"
 msgstr "笔刷编辑器"
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:115 app/core/gimp-data-factories.c:356
-#: app/dialogs/dialogs.c:340 app/dialogs/preferences-dialog.c:3578
+#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3578
 msgid "Brushes"
 msgstr "笔刷"
 
-#: app/actions/actions.c:118 app/dialogs/dialogs.c:361
+#: app/actions/actions.c:118 app/dialogs/dialogs.c:362
 msgid "Buffers"
 msgstr "缓冲区"
 
-#: app/actions/actions.c:121 app/dialogs/dialogs.c:379
+#: app/actions/actions.c:121 app/dialogs/dialogs.c:380
 #: app/propgui/gimppropgui-newsprint.c:160
 #: app/widgets/gimppickablechooser.c:295
 msgid "Channels"
 msgstr "通道"
 
 #: app/actions/actions.c:124 app/dialogs/convert-indexed-dialog.c:178
-#: app/dialogs/dialogs.c:387
+#: app/dialogs/dialogs.c:388
 msgid "Colormap"
 msgstr "颜色表"
 
@@ -347,11 +347,11 @@ msgstr "颜色表"
 msgid "Context"
 msgstr "环境"
 
-#: app/actions/actions.c:130 app/dialogs/dialogs.c:327
+#: app/actions/actions.c:130 app/dialogs/dialogs.c:328
 msgid "Pointer Information"
 msgstr "指针信息"
 
-#: app/actions/actions.c:133 app/dialogs/dialogs.c:331
+#: app/actions/actions.c:133 app/dialogs/dialogs.c:332
 msgid "Dashboard"
 msgstr "仪表盘"
 
@@ -372,7 +372,7 @@ msgid "Dockable"
 msgstr "可停靠"
 
 #. Document History
-#: app/actions/actions.c:148 app/dialogs/dialogs.c:367
+#: app/actions/actions.c:148 app/dialogs/dialogs.c:368
 #: app/dialogs/preferences-dialog.c:1357
 msgid "Document History"
 msgstr "文档历史"
@@ -381,11 +381,11 @@ msgstr "文档历史"
 msgid "Drawable"
 msgstr "可绘区"
 
-#: app/actions/actions.c:154 app/dialogs/dialogs.c:343
+#: app/actions/actions.c:154 app/dialogs/dialogs.c:344
 msgid "Paint Dynamics"
 msgstr "动态绘图"
 
-#: app/actions/actions.c:157 app/dialogs/dialogs.c:429
+#: app/actions/actions.c:157 app/dialogs/dialogs.c:430
 #: app/widgets/gimpdynamicseditor.c:97
 msgid "Paint Dynamics Editor"
 msgstr "动态绘图编辑器"
@@ -394,7 +394,7 @@ msgstr "动态绘图编辑器"
 msgid "Edit"
 msgstr "编辑"
 
-#: app/actions/actions.c:163 app/dialogs/dialogs.c:323
+#: app/actions/actions.c:163 app/dialogs/dialogs.c:324
 msgid "Error Console"
 msgstr "错误控制台"
 
@@ -408,27 +408,27 @@ msgstr "滤镜"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:172 app/core/gimp-data-factories.c:390
-#: app/dialogs/dialogs.c:358 app/dialogs/preferences-dialog.c:3608
+#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3608
 msgid "Fonts"
 msgstr "字体"
 
-#: app/actions/actions.c:175 app/dialogs/dialogs.c:433
+#: app/actions/actions.c:175 app/dialogs/dialogs.c:434
 #: app/widgets/gimpgradienteditor.c:295
 msgid "Gradient Editor"
 msgstr "渐变编辑器"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:178 app/core/gimp-data-factories.c:381
-#: app/dialogs/dialogs.c:352 app/dialogs/preferences-dialog.c:3602
+#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3602
 msgid "Gradients"
 msgstr "渐变"
 
 #: app/actions/actions.c:181 app/core/gimp-data-factories.c:397
-#: app/dialogs/dialogs.c:364 app/dialogs/preferences-dialog.c:3614
+#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3614
 msgid "Tool Presets"
 msgstr "工具预设"
 
-#: app/actions/actions.c:184 app/dialogs/dialogs.c:441
+#: app/actions/actions.c:184 app/dialogs/dialogs.c:442
 #: app/widgets/gimptoolpreseteditor.c:96
 msgid "Tool Preset Editor"
 msgstr "工具预设编辑器"
@@ -441,36 +441,36 @@ msgstr "帮助"
 msgid "Image"
 msgstr "图像"
 
-#: app/actions/actions.c:193 app/dialogs/dialogs.c:337
+#: app/actions/actions.c:193 app/dialogs/dialogs.c:338
 #: app/widgets/gimppickablechooser.c:214
 msgid "Images"
 msgstr "图像"
 
-#: app/actions/actions.c:196 app/dialogs/dialogs.c:375
+#: app/actions/actions.c:196 app/dialogs/dialogs.c:376
 #: app/dialogs/resize-dialog.c:171 app/widgets/gimppickablechooser.c:270
 msgid "Layers"
 msgstr "图层"
 
 #. initialize the list of mypaint brushes
 #: app/actions/actions.c:199 app/core/gimp-data-factories.c:366
-#: app/dialogs/dialogs.c:346 app/dialogs/preferences-dialog.c:3620
+#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3620
 msgid "MyPaint Brushes"
 msgstr "MyPaint 笔刷"
 
-#: app/actions/actions.c:202 app/dialogs/dialogs.c:437
+#: app/actions/actions.c:202 app/dialogs/dialogs.c:438
 #: app/widgets/gimppaletteeditor.c:157
 msgid "Palette Editor"
 msgstr "色板编辑器"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:205 app/core/gimp-data-factories.c:376
-#: app/dialogs/dialogs.c:355 app/dialogs/preferences-dialog.c:3596
+#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3596
 msgid "Palettes"
 msgstr "色板"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:208 app/core/gimp-data-factories.c:371
-#: app/dialogs/dialogs.c:349 app/dialogs/preferences-dialog.c:3590
+#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3590
 msgid "Patterns"
 msgstr "图案"
 
@@ -484,7 +484,7 @@ msgstr "插件"
 msgid "Quick Mask"
 msgstr "快速蒙版"
 
-#: app/actions/actions.c:217 app/dialogs/dialogs.c:407
+#: app/actions/actions.c:217 app/dialogs/dialogs.c:408
 msgid "Sample Points"
 msgstr "采样点"
 
@@ -493,7 +493,7 @@ msgid "Select"
 msgstr "选择"
 
 #. initialize the template list
-#: app/actions/actions.c:223 app/core/gimp.c:852 app/dialogs/dialogs.c:370
+#: app/actions/actions.c:223 app/core/gimp.c:852 app/dialogs/dialogs.c:371
 msgid "Templates"
 msgstr "模板"
 
@@ -505,7 +505,7 @@ msgstr "文字工具"
 msgid "Text Editor"
 msgstr "文字编辑器"
 
-#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:537
+#: app/actions/actions.c:232 app/dialogs/dialogs.c:316 app/gui/gui.c:537
 msgid "Tool Options"
 msgstr "工具选项"
 
@@ -517,7 +517,7 @@ msgstr "工具"
 msgid "Path Toolpath"
 msgstr "路径工具路径"
 
-#: app/actions/actions.c:241 app/dialogs/dialogs.c:383
+#: app/actions/actions.c:241 app/dialogs/dialogs.c:384
 #: app/tools/gimpvectortool.c:167
 msgid "Paths"
 msgstr "路径"
@@ -2427,7 +2427,7 @@ msgstr "240 秒"
 #: app/dialogs/preferences-dialog.c:691 app/dialogs/preferences-dialog.c:1262
 #: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:178
 #: app/dialogs/resize-dialog.c:225 app/dialogs/resolution-calibrate-dialog.c:73
-#: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:128
+#: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
 #: app/dialogs/vectors-export-dialog.c:83
 #: app/dialogs/vectors-import-dialog.c:88
@@ -2440,11 +2440,11 @@ msgstr "240 秒"
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:463 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
-#: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:334
-#: app/widgets/gimphelp.c:439 app/widgets/gimphelp.c:774
-#: app/widgets/gimpiconpicker.c:484 app/widgets/gimpmodifierseditor.c:684
-#: app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91
-#: app/widgets/gimpsettingsbox.c:711
+#: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
+#: app/widgets/gimpfiledialog.c:334 app/widgets/gimphelp.c:439
+#: app/widgets/gimphelp.c:774 app/widgets/gimpiconpicker.c:484
+#: app/widgets/gimpmodifierseditor.c:684 app/widgets/gimppdbdialog.c:148
+#: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:711
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -7369,7 +7369,7 @@ msgstr "重置所有滤镜"
 #: app/dialogs/image-new-dialog.c:105 app/dialogs/input-devices-dialog.c:65
 #: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:312
 #: app/dialogs/preferences-dialog.c:1261 app/dialogs/print-size-dialog.c:122
-#: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:127
+#: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:363 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:462 app/widgets/gimpcolordisplayeditor.c:332
@@ -9878,6 +9878,10 @@ msgstr "屏幕 %s"
 msgid "Move this window to screen %s"
 msgstr "移动此窗口至屏幕 %s"
 
+#: app/actions/window-commands.c:73
+msgid "Open Display"
+msgstr "打开显示器"
+
 #: app/actions/window-commands.c:78 app/dialogs/extensions-dialog.c:79
 #: app/dialogs/file-save-dialog.c:682 app/dialogs/grid-dialog.c:103
 #: app/dialogs/image-new-dialog.c:107 app/dialogs/image-new-dialog.c:327
@@ -9890,11 +9894,29 @@ msgstr "移动此窗口至屏幕 %s"
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:190
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
-#: app/widgets/gimpcontrollereditor.c:663 app/widgets/gimperrordialog.c:76
+#: app/widgets/gimpcontrollereditor.c:663
+#: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:178 app/widgets/gimpmodifierseditor.c:685
 #: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
 msgstr "确定(_O)"
+
+#: app/actions/window-commands.c:88
+msgid ""
+"Experimental multi-display stuff!\n"
+"Click OK and have fun crashing GIMP..."
+msgstr ""
+"试验性的多显示器功能！点击确定\n"
+"并使 GIMP 崩溃过程中尽情玩乐……"
+
+#: app/actions/window-commands.c:92
+msgid "Please enter the name of the new display:"
+msgstr "请输入新显示器的名称："
+
+#: app/actions/window-commands.c:118
+#, c-format
+msgid "Can't open display '%s'. Please try another one:"
+msgstr "无法打开显示器“%s”。请尝试另一个："
 
 #: app/actions/windows-actions.c:102
 msgctxt "windows-action"
@@ -12341,7 +12363,7 @@ msgstr "批处理解释程序“%s”不可用。批处理模式已禁用。"
 
 #: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338
 #: app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449
-#: app/menus/menus.c:480 app/widgets/gimpdevices.c:225
+#: app/menus/menus.c:480 app/widgets/gimpdevices.c:226
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "删除“%s”失败：%s"
@@ -12448,15 +12470,15 @@ msgid "FG to BG (RGB)"
 msgstr "前景到背景（RGB）"
 
 #: app/core/gimp-gradients.c:83
-msgid "FG to BG (Hardedge)"
+msgid "FG to BG (Hard Edge)"
 msgstr "前景到背景（硬边）"
 
 #: app/core/gimp-gradients.c:91
-msgid "FG to BG (HSV counter-clockwise)"
+msgid "FG to BG (HSV Counter-Clockwise)"
 msgstr "前景到背景（HSV 逆时针色相）"
 
 #: app/core/gimp-gradients.c:99
-msgid "FG to BG (HSV clockwise hue)"
+msgid "FG to BG (HSV Clockwise Hue)"
 msgstr "前景到背景（HSV 顺时针色相）"
 
 #: app/core/gimp-gradients.c:107
@@ -12464,7 +12486,7 @@ msgid "FG to Transparent"
 msgstr "前景到透明"
 
 #: app/core/gimp-gradients.c:114
-msgid "FG to Transparent (Hardedge)"
+msgid "FG to Transparent (Hard Edge)"
 msgstr "前景到透明（硬边）"
 
 #. Translator:  This message is displayed while GIMP is waiting for
@@ -15136,68 +15158,68 @@ msgstr "GIMP 消息"
 msgid "GIMP Debug"
 msgstr "GIMP 调试"
 
-#: app/dialogs/dialogs.c:319
+#: app/dialogs/dialogs.c:320
 msgid "Devices"
 msgstr "设备"
 
-#: app/dialogs/dialogs.c:319
+#: app/dialogs/dialogs.c:320
 msgid "Device Status"
 msgstr "设备状态"
 
-#: app/dialogs/dialogs.c:323
+#: app/dialogs/dialogs.c:324
 msgid "Errors"
 msgstr "错误"
 
-#: app/dialogs/dialogs.c:327
+#: app/dialogs/dialogs.c:328
 msgid "Pointer"
 msgstr "指针"
 
-#: app/dialogs/dialogs.c:367
+#: app/dialogs/dialogs.c:368
 msgid "History"
 msgstr "历史"
 
-#: app/dialogs/dialogs.c:370
+#: app/dialogs/dialogs.c:371
 msgid "Image Templates"
 msgstr "图像模板"
 
-#: app/dialogs/dialogs.c:391
+#: app/dialogs/dialogs.c:392
 msgid "Histogram"
 msgstr "直方图"
 
 #. Selection Bounding Box
-#: app/dialogs/dialogs.c:395 app/display/gimpcursorview.c:273
+#: app/dialogs/dialogs.c:396 app/display/gimpcursorview.c:273
 msgid "Selection"
 msgstr "选区"
 
-#: app/dialogs/dialogs.c:395
+#: app/dialogs/dialogs.c:396
 msgid "Selection Editor"
 msgstr "选区编辑器"
 
-#: app/dialogs/dialogs.c:399
+#: app/dialogs/dialogs.c:400
 msgid "Symmetry Painting"
 msgstr "对称绘画"
 
-#: app/dialogs/dialogs.c:403
+#: app/dialogs/dialogs.c:404
 msgid "Undo"
 msgstr "撤消"
 
-#: app/dialogs/dialogs.c:403
+#: app/dialogs/dialogs.c:404
 msgid "Undo History"
 msgstr "撤消历史"
 
-#: app/dialogs/dialogs.c:413
+#: app/dialogs/dialogs.c:414
 msgid "Navigation"
 msgstr "导览"
 
-#: app/dialogs/dialogs.c:413
+#: app/dialogs/dialogs.c:414
 msgid "Display Navigation"
 msgstr "显示导览"
 
-#: app/dialogs/dialogs.c:419
+#: app/dialogs/dialogs.c:420
 msgid "FG/BG"
 msgstr "前景/背景"
 
-#: app/dialogs/dialogs.c:419
+#: app/dialogs/dialogs.c:420
 msgid "FG/BG Color"
 msgstr "前景/背景颜色"
 
@@ -15522,7 +15544,7 @@ msgid "Layer _name:"
 msgstr "图层名字(_N)："
 
 #: app/dialogs/layer-options-dialog.c:188
-#: app/widgets/gimpdeviceinfoeditor.c:312
+#: app/widgets/gimpdeviceinfoeditor.c:376
 msgid "_Mode:"
 msgstr "模式(_M)："
 
@@ -16267,7 +16289,7 @@ msgstr "工具选项"
 #: app/dialogs/preferences-dialog.c:1800 app/dialogs/preferences-dialog.c:2712
 #: app/dialogs/preferences-dialog.c:3150 app/dialogs/preferences-dialog.c:3174
 #: app/widgets/gimpcontrollereditor.c:188
-#: app/widgets/gimpdeviceinfoeditor.c:298
+#: app/widgets/gimpdeviceinfoeditor.c:362
 msgid "General"
 msgstr "常规"
 
@@ -17580,12 +17602,12 @@ msgstr "改变文字图层大小(_T)"
 msgid "Resizing text layers will make them uneditable"
 msgstr "改变文字图层大小将使它们不可编辑"
 
-#: app/dialogs/resize-dialog.c:753
+#: app/dialogs/resize-dialog.c:760
 #, c-format
 msgid "Scale template to %.2f ppi"
 msgstr "缩放模版为 %.2f ppi"
 
-#: app/dialogs/resize-dialog.c:758
+#: app/dialogs/resize-dialog.c:765
 #, c-format
 msgid "Set image to %.2f ppi"
 msgstr "设置图像为 %.2f ppi"
@@ -17620,19 +17642,27 @@ msgstr "质量"
 msgid "I_nterpolation:"
 msgstr "插值(_N)："
 
-#: app/dialogs/stroke-dialog.c:122
+#: app/dialogs/stroke-dialog.c:123
 msgid "Choose Stroke Style"
 msgstr "选择笔触样式"
 
-#: app/dialogs/stroke-dialog.c:129
+#: app/dialogs/stroke-dialog.c:130
 msgid "_Stroke"
 msgstr "笔触(_S)"
 
-#: app/dialogs/stroke-dialog.c:215
+#: app/dialogs/stroke-dialog.c:174
+msgid "Line"
+msgstr "直线"
+
+#: app/dialogs/stroke-dialog.c:198
+msgid "Paint tool"
+msgstr "绘画工具"
+
+#: app/dialogs/stroke-dialog.c:216
 msgid "P_aint tool:"
 msgstr "绘画工具(_A)："
 
-#: app/dialogs/stroke-dialog.c:229
+#: app/dialogs/stroke-dialog.c:241
 msgid "_Emulate brush dynamics"
 msgstr "模拟动态笔刷(_E)"
 
@@ -17994,13 +18024,13 @@ msgstr "n/a"
 
 #: app/display/gimpcursorview.c:236 app/display/gimpcursorview.c:261
 #: app/display/gimpcursorview.c:288 app/tools/gimptransform3dtool.c:434
-#: app/widgets/gimpdeviceinfo.c:53
+#: app/widgets/gimpdeviceinfo.c:56
 msgid "X"
 msgstr "X"
 
 #: app/display/gimpcursorview.c:242 app/display/gimpcursorview.c:267
 #: app/display/gimpcursorview.c:294 app/tools/gimptransform3dtool.c:434
-#: app/widgets/gimpdeviceinfo.c:54
+#: app/widgets/gimpdeviceinfo.c:57
 msgid "Y"
 msgstr "Y"
 
@@ -18242,7 +18272,7 @@ msgstr "（干净）"
 #: app/display/gimpdisplayshell-title.c:374
 #: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1198
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
-#: app/widgets/gimpdeviceinfo.c:1078 app/widgets/gimpdeviceinfo.c:1103
+#: app/widgets/gimpdeviceinfo.c:1148 app/widgets/gimpdeviceinfo.c:1173
 msgid "(none)"
 msgstr "（无）"
 
@@ -19649,8 +19679,8 @@ msgstr "将颜色转换为灰度色调"
 #: app/operations/gimpoperationdesaturate.c:91
 #: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1137
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
-#: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:173
-#: app/widgets/gimplayertreeview.c:309
+#: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
+#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:309
 msgid "Mode"
 msgstr "模式"
 
@@ -21671,7 +21701,7 @@ msgstr ""
 "Pack my box with\n"
 "five dozen liquor jugs."
 
-#: app/text/gimpfontfactory.c:393
+#: app/text/gimpfontfactory.c:447
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -22572,7 +22602,7 @@ msgstr "输出(_U)："
 msgid "T_ype:"
 msgstr "类型(_Y)："
 
-#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:428
+#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:492
 msgid "Curve _type:"
 msgstr "曲线类型(_T)"
 
@@ -25234,7 +25264,7 @@ msgstr "旋转路径"
 msgid "Transform Path"
 msgstr "变换路径"
 
-#: app/vectors/gimpvectors-export.c:88
+#: app/vectors/gimpvectors-export.c:95
 #, c-format
 msgid "Writing SVG file '%s' failed: %s"
 msgstr "写入 SVG 文件“%s” 失败：%s"
@@ -25271,6 +25301,7 @@ msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpactionview.c:259 app/widgets/gimpcontrollereditor.c:343
+#: app/widgets/gimpdeviceinfoeditor.c:579
 msgid "Action"
 msgstr "动作"
 
@@ -25640,10 +25671,12 @@ msgid "State:"
 msgstr "状态："
 
 #: app/widgets/gimpcontrollereditor.c:337
+#: app/widgets/gimpdeviceinfoeditor.c:567
 msgid "Event"
 msgstr "事件"
 
 #: app/widgets/gimpcontrollereditor.c:362
+#: app/widgets/gimpdeviceinfoeditor.c:624
 msgid "_Grab event"
 msgstr "抓取事件(_G)"
 
@@ -25652,24 +25685,29 @@ msgid "Select the next event arriving from the controller"
 msgstr "选择控制器带来的下个事件"
 
 #: app/widgets/gimpcontrollereditor.c:375
+#: app/widgets/gimpdeviceinfoeditor.c:638
 msgid "_Edit event"
 msgstr "编辑事件(_E)"
 
 #: app/widgets/gimpcontrollereditor.c:383
+#: app/widgets/gimpdeviceinfoeditor.c:648
 msgid "_Clear event"
 msgstr "清空事件(_C)"
 
 #: app/widgets/gimpcontrollereditor.c:522
+#: app/widgets/gimpdeviceinfoeditor.c:971
 #, c-format
 msgid "Remove the action assigned to '%s'"
 msgstr "删除指派给“%s”的动作"
 
 #: app/widgets/gimpcontrollereditor.c:527
+#: app/widgets/gimpdeviceinfoeditor.c:975
 #, c-format
 msgid "Assign an action to '%s'"
 msgstr "为“%s”指派动作"
 
 #: app/widgets/gimpcontrollereditor.c:648
+#: app/widgets/gimpdeviceinfoeditor.c:1142
 #, c-format
 msgid "Select Action for Event '%s'"
 msgstr "选择事件“%s”的动作"
@@ -26385,16 +26423,16 @@ msgstr ""
 "您正试图删除此设备已存储的设置。\n"
 "下次此设备被插入时，将应用默认设置。"
 
-#: app/widgets/gimpdeviceinfo.c:55 app/widgets/gimpdynamicseditor.c:161
+#: app/widgets/gimpdeviceinfo.c:58 app/widgets/gimpdynamicseditor.c:161
 #: app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Pressure"
 msgstr "压力"
 
-#: app/widgets/gimpdeviceinfo.c:56
+#: app/widgets/gimpdeviceinfo.c:59
 msgid "X tilt"
 msgstr "X 倾斜"
 
-#: app/widgets/gimpdeviceinfo.c:57
+#: app/widgets/gimpdeviceinfo.c:60
 msgid "Y tilt"
 msgstr "X 倾斜"
 
@@ -26405,83 +26443,118 @@ msgstr "X 倾斜"
 #. * TODO: this should be actually tested with a device having such
 #. * feature.
 #.
-#: app/widgets/gimpdeviceinfo.c:65
+#: app/widgets/gimpdeviceinfo.c:68
 msgid "Wheel"
 msgstr "滚轮"
 
-#: app/widgets/gimpdeviceinfo.c:66
+#: app/widgets/gimpdeviceinfo.c:69
 msgid "Distance"
 msgstr "距离"
 
-#: app/widgets/gimpdeviceinfo.c:67
+#: app/widgets/gimpdeviceinfo.c:70
 msgid "Rotation"
 msgstr "旋转"
 
-#: app/widgets/gimpdeviceinfo.c:68
+#: app/widgets/gimpdeviceinfo.c:71
 msgid "Slider"
 msgstr "滑块"
 
-#: app/widgets/gimpdeviceinfo.c:248
+#: app/widgets/gimpdeviceinfo.c:254
 msgid "Pressure curve"
 msgstr "压力曲线"
 
-#: app/widgets/gimpdeviceinfo.c:1063 app/widgets/gimpdeviceinfo.c:1088
+#: app/widgets/gimpdeviceinfo.c:261
+msgid "Pad actions"
+msgstr "绘图板动作"
+
+#: app/widgets/gimpdeviceinfo.c:1133 app/widgets/gimpdeviceinfo.c:1158
 msgid "(Device not present)"
 msgstr "（设备不存在）"
 
-#: app/widgets/gimpdeviceinfo.c:1071 app/widgets/gimpdeviceinfo.c:1096
+#: app/widgets/gimpdeviceinfo.c:1141 app/widgets/gimpdeviceinfo.c:1166
 msgid "(Virtual device)"
 msgstr "（虚拟设备）"
 
 #. The list of axes of an input device
-#: app/widgets/gimpdeviceinfoeditor.c:238
+#: app/widgets/gimpdeviceinfoeditor.c:302
 msgid "Axes"
 msgstr "轴线"
 
-#: app/widgets/gimpdeviceinfoeditor.c:317
+#: app/widgets/gimpdeviceinfoeditor.c:381
 msgid "Source:"
 msgstr "源："
 
-#: app/widgets/gimpdeviceinfoeditor.c:322
+#: app/widgets/gimpdeviceinfoeditor.c:386
 msgid "Vendor ID:"
 msgstr "供应商 ID："
 
-#: app/widgets/gimpdeviceinfoeditor.c:327
+#: app/widgets/gimpdeviceinfoeditor.c:391
 msgid "Product ID:"
 msgstr "产品 ID："
 
-#: app/widgets/gimpdeviceinfoeditor.c:332
+#: app/widgets/gimpdeviceinfoeditor.c:396
 msgid "Tool type:"
 msgstr "工具类型："
 
-#: app/widgets/gimpdeviceinfoeditor.c:337
+#: app/widgets/gimpdeviceinfoeditor.c:401
 msgid "Tool serial:"
 msgstr "工具序列号："
 
-#: app/widgets/gimpdeviceinfoeditor.c:342
+#: app/widgets/gimpdeviceinfoeditor.c:406
 msgid "Tool hardware ID:"
 msgstr "工具硬件 ID："
 
-#: app/widgets/gimpdeviceinfoeditor.c:354
-#: app/widgets/gimpdeviceinfoeditor.c:672
+#: app/widgets/gimpdeviceinfoeditor.c:418
+#: app/widgets/gimpdeviceinfoeditor.c:878
 msgid "none"
 msgstr "无"
 
 #. e.g. "Pressure Curve" for mapping input device axes
-#: app/widgets/gimpdeviceinfoeditor.c:380
+#: app/widgets/gimpdeviceinfoeditor.c:444
 #, c-format
 msgid "%s Curve"
 msgstr "%s 曲线"
 
-#: app/widgets/gimpdeviceinfoeditor.c:440
+#: app/widgets/gimpdeviceinfoeditor.c:504
 #: app/widgets/gimpdynamicsoutputeditor.c:206
 msgid "_Reset Curve"
 msgstr "重置曲线(_R)"
 
-#: app/widgets/gimpdeviceinfoeditor.c:453
+#: app/widgets/gimpdeviceinfoeditor.c:517
 #, c-format
 msgid "The axis '%s' has no curve"
 msgstr "轴“%s”上没有曲线"
+
+#: app/widgets/gimpdeviceinfoeditor.c:546
+msgid "Pad Actions"
+msgstr "绘图板动作"
+
+#: app/widgets/gimpdeviceinfoeditor.c:633
+msgid "Select the next event arriving from the pad"
+msgstr "选择下一个从绘图板到达的事件"
+
+#: app/widgets/gimpdeviceinfoeditor.c:677
+msgid "Pad Actions are not supported on your platform yet"
+msgstr "您的平台尚未支持绘图板动作"
+
+#: app/widgets/gimpdeviceinfoeditor.c:900
+#, c-format
+msgid "Button %d"
+msgstr "按键 %d"
+
+#: app/widgets/gimpdeviceinfoeditor.c:903
+#, c-format
+msgid "Ring %d"
+msgstr "滚环 %d"
+
+#: app/widgets/gimpdeviceinfoeditor.c:906
+#, c-format
+msgid "Strip %d"
+msgstr "条带 %d"
+
+#: app/widgets/gimpdeviceinfoeditor.c:1152
+msgid "Select Pad Event Action"
+msgstr "选择绘图板事件动作"
 
 #: app/widgets/gimpdevicestatus.c:153
 msgid "Save device status"
@@ -28938,9 +29011,6 @@ msgstr "路径菜单"
 #~ "只能有一个活动的鼠标控制器。\n"
 #~ "\n"
 #~ "在您的活动控制器列表中已经有一个鼠标控制器。"
-
-#~ msgid "Button 8"
-#~ msgstr "按钮 8"
 
 #~ msgid "Button 9"
 #~ msgstr "按钮 9"
