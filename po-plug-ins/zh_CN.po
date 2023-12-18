@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-13 03:31+0000\n"
-"PO-Revision-Date: 2023-12-13 20:47+0800\n"
+"POT-Creation-Date: 2023-12-17 03:03+0000\n"
+"PO-Revision-Date: 2023-12-18 21:33+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -636,8 +636,8 @@ msgstr "竖直"
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2749 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
-#: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:1290
-#: plug-ins/gimpressionist/general.c:139
+#: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:561
+#: plug-ins/gfig/gfig-dialog.c:1290 plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
 #: plug-ins/screenshot/screenshot-win32.c:317 plug-ins/twain/twain.c:636
 msgid "Background"
@@ -2778,7 +2778,7 @@ msgstr "过早的 Farbfeld 像素数据结尾"
 msgid "GIMP brush"
 msgstr "GIMP 画笔"
 
-#: plug-ins/common/file-gbr.c:128
+#: plug-ins/common/file-gbr.c:128 plug-ins/gfig/gfig-dialog.c:510
 msgid "Brush"
 msgstr "画笔"
 
@@ -3999,6 +3999,7 @@ msgid ""
 msgstr "新的 GIMP 图案可通过该插件将它们导出到合适位置来创建。"
 
 #: plug-ins/common/file-pat.c:128 plug-ins/common/qbist.c:968
+#: plug-ins/gfig/gfig-dialog.c:576
 msgid "Pattern"
 msgstr "图案"
 
@@ -4262,6 +4263,60 @@ msgstr "像素/%a"
 #: plug-ins/common/file-pdf-save.c:331
 msgid "PDF"
 msgstr "PDF"
+
+#: plug-ins/common/file-pdf-save.c:338 plug-ins/common/file-pdf-save.c:339
+msgid "Convert bitmaps to vector graphics where possible"
+msgstr "可能的话将位图转换为矢量图形"
+
+#: plug-ins/common/file-pdf-save.c:344
+msgid "Omit hidden layers and layers with zero opacity"
+msgstr "忽略隐藏图层和完全透明图层"
+
+#: plug-ins/common/file-pdf-save.c:345
+msgid "Non-visible layers will not be exported"
+msgstr "不可见的图层不会导出"
+
+#: plug-ins/common/file-pdf-save.c:350
+msgid "Apply layer masks"
+msgstr "应用图层蒙板"
+
+#: plug-ins/common/file-pdf-save.c:351
+msgid ""
+"Apply layer masks before saving (Keeping the mask will not change the "
+"output, only the PDF structure)"
+msgstr "保存前应用图层蒙板（保留蒙板不会改变输出，仅影响 PDF 结构）"
+
+#: plug-ins/common/file-pdf-save.c:357
+msgid "Layers as pages"
+msgstr "图层作为页面"
+
+#: plug-ins/common/file-pdf-save.c:358
+msgid "Layers as pages (bottom layers first)."
+msgstr "图层作为页面（底端图层为第一）。"
+
+#: plug-ins/common/file-pdf-save.c:363
+msgid "Reverse order"
+msgstr "反转顺序"
+
+#: plug-ins/common/file-pdf-save.c:364
+msgid "Reverse the pages order (top layers first)."
+msgstr "反转页面顺序（顶端图层为第一）。"
+
+#: plug-ins/common/file-pdf-save.c:369
+msgid "Root layers only"
+msgstr "仅根图层"
+
+#: plug-ins/common/file-pdf-save.c:370
+msgid "Only the root layers are considered pages"
+msgstr "仅根图层作为页面"
+
+#: plug-ins/common/file-pdf-save.c:375
+msgid "Convert text layers to image"
+msgstr "转换文字图层为图像"
+
+#: plug-ins/common/file-pdf-save.c:376
+msgid "Convert text layers to raster graphics"
+msgstr "转换文字图层为光栅位图图形"
 
 #: plug-ins/common/file-pdf-save.c:381 plug-ins/common/file-pdf-save.c:453
 #: plug-ins/common/file-pdf-save.c:1105
@@ -6351,6 +6406,62 @@ msgstr "胶卷(_F)..."
 msgid "Combine several images on a film strip"
 msgstr "组合多幅图像到一个电影胶卷上"
 
+#: plug-ins/common/film.c:194
+msgid "Film _height"
+msgstr "胶片高度(_H)"
+
+#: plug-ins/common/film.c:195
+msgid "Height of film (0: fit to images)"
+msgstr "胶片的高度（0：适合图像）"
+
+#: plug-ins/common/film.c:200
+msgid "_Film color"
+msgstr "胶片颜色(_F)"
+
+#: plug-ins/common/film.c:201
+msgid "Color of the film"
+msgstr "胶片的颜色"
+
+#: plug-ins/common/film.c:206
+msgid "Start _index"
+msgstr "起始索引(_I)"
+
+#: plug-ins/common/film.c:207
+msgid "Start index for numbering"
+msgstr "编号的起始索引"
+
+#: plug-ins/common/film.c:212
+msgid "Number _font"
+msgstr "编号字体(_F)"
+
+#: plug-ins/common/film.c:213
+msgid "Font for drawing numbers"
+msgstr "绘制编号使用的字体"
+
+#: plug-ins/common/film.c:217
+msgid "_Number color"
+msgstr "编号颜色(_N)"
+
+#: plug-ins/common/film.c:218
+msgid "Color for numbers"
+msgstr "编号的颜色"
+
+#: plug-ins/common/film.c:223
+msgid "At _top"
+msgstr "在顶部(_T)"
+
+#: plug-ins/common/film.c:224
+msgid "Draw numbers at top"
+msgstr "在顶部绘制编号"
+
+#: plug-ins/common/film.c:229
+msgid "At _bottom"
+msgstr "在底部(_B)"
+
+#: plug-ins/common/film.c:230
+msgid "Draw numbers at bottom"
+msgstr "在底部绘制编号"
+
 #: plug-ins/common/film.c:245
 msgid "Image _height"
 msgstr "图像高度(_H)"
@@ -6410,6 +6521,10 @@ msgstr "绘制数字的高度，数值为胶卷高度的分数"
 #: plug-ins/common/film.c:289
 msgid "F_it height to images"
 msgstr "高度适合图像(_I)"
+
+#: plug-ins/common/film.c:290
+msgid "Keep maximum image height"
+msgstr "保持最大图像高度"
 
 #: plug-ins/common/film.c:365
 msgid "Composing images"
@@ -6573,13 +6688,25 @@ msgstr "查找并修复可能具有不安全亮度的像素"
 msgid "Mode"
 msgstr "模式"
 
+#: plug-ins/common/hot.c:271
+msgid "Mode { NTSC (0), PAL (1) }"
+msgstr "模式 { NTSC (0)，PAL (1) }"
+
 #: plug-ins/common/hot.c:276
 msgid "Action"
 msgstr "动作"
 
+#: plug-ins/common/hot.c:277
+msgid "Action { (0) reduce luminance, (1) reduce saturation, or (2) Blacken }"
+msgstr "动作 { (0) 降低亮度，(1) 降低饱和度，(2) 变黑 }"
+
 #: plug-ins/common/hot.c:283
 msgid "Create _new layer"
 msgstr "创建新图层(_N)"
+
+#: plug-ins/common/hot.c:284
+msgid "Create a new layer"
+msgstr "创建一个新的图层"
 
 #: plug-ins/common/hot.c:447 plug-ins/common/hot.c:654
 msgid "Hot"
@@ -7496,6 +7623,31 @@ msgstr "平铺(_T)…"
 msgid "Create an array of copies of the image"
 msgstr "创建图像的副本阵列"
 
+#: plug-ins/common/tile.c:161
+msgid "New _width"
+msgstr "新建宽度(_W)"
+
+#: plug-ins/common/tile.c:162
+msgid "New (tiled) image width"
+msgstr "新建（平铺）图像的宽度"
+
+#: plug-ins/common/tile.c:167
+msgid "New _height"
+msgstr "新建高度(_H)"
+
+#: plug-ins/common/tile.c:168
+msgid "New (tiled) image height"
+msgstr "新建（平铺）图像的高度"
+
+#: plug-ins/common/tile.c:173
+msgid "New _image"
+msgstr "新建图像(_I)"
+
+#: plug-ins/common/tile.c:174 plug-ins/lighting/lighting-main.c:303
+#: plug-ins/map-object/map-object-main.c:331
+msgid "Create a new image"
+msgstr "创建新图像"
+
 #: plug-ins/common/tile.c:254 plug-ins/common/tile-small.c:377
 msgid "Tiling"
 msgstr "平铺"
@@ -7755,7 +7907,7 @@ msgstr "效果操作"
 msgid "Derivative"
 msgstr "衍生"
 
-#: plug-ins/common/van-gogh-lic.c:171
+#: plug-ins/common/van-gogh-lic.c:171 plug-ins/gfig/gfig-dialog.c:586
 msgid "Gradient"
 msgstr "渐变"
 
@@ -9514,12 +9666,11 @@ msgstr ""
 
 #: plug-ins/file-psd/psd-save.c:2666
 msgid ""
-"Legacy layer modes have been reported to have better compatibility with "
-"Photoshop. If you encounter display issues, consider switching to those "
-"layer modes."
+"Legacy layer modes have better compatibility with Photoshop. If you "
+"encounter display issues, consider switching to those layer modes."
 msgstr ""
-"过时的图层模式已有报告具有与 Photoshop 更好的兼容性。如果您遇到显示问题，可以"
-"考虑切换为那些图层模式。"
+"过时的图层模式具有与 Photoshop 更好的兼容性。如果您遇到显示问题，可以考虑切换"
+"为那些图层模式。"
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -10573,6 +10724,14 @@ msgstr "颜色表(_M)："
 msgid "Custom gradient"
 msgstr "自定义渐变"
 
+#: plug-ins/flame/flame.c:1341
+msgid "_Rendering"
+msgstr "渲染(_R)"
+
+#: plug-ins/flame/flame.c:1344
+msgid "C_amera"
+msgstr "相机(_A)"
+
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:617
 #: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:988
@@ -10874,6 +11033,26 @@ msgstr "蓝色应用模式"
 msgid "In_version"
 msgstr "反转(_V)"
 
+#: plug-ins/fractal-explorer/fractal-explorer.c:371
+msgid "Red inversion mode"
+msgstr "红色反转模式"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:376
+msgid "I_nversion"
+msgstr "反转(_N)"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:377
+msgid "Green inversion mode"
+msgstr "绿色反转模式"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:382
+msgid "_Inversion"
+msgstr "反转(_I)"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:383
+msgid "Blue inversion mode"
+msgstr "蓝色反转模式"
+
 #: plug-ins/fractal-explorer/fractal-explorer.c:388
 msgid "_Number of colors"
 msgstr "颜色数量(_N)"
@@ -10881,6 +11060,14 @@ msgstr "颜色数量(_N)"
 #: plug-ins/fractal-explorer/fractal-explorer.c:389
 msgid "Number of Colors for mapping"
 msgstr "用于映射的颜色数量"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:393
+msgid "_Use log log smoothing"
+msgstr "使用双对数平滑(_U)"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:394
+msgid "Use log log smoothing to eliminate \"banding\" in the result"
+msgstr "使用双对数平滑以消除结果中的“色带”"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:493
 msgid "Rendering fractal"
@@ -11143,6 +11330,10 @@ msgstr "工具选项"
 msgid "_Stroke"
 msgstr "笔触(_S)"
 
+#: plug-ins/gfig/gfig-dialog.c:494 plug-ins/gfig/gfig-dialog.c:1291
+msgid "Foreground"
+msgstr "前景"
+
 #. Fill frame on right side
 #: plug-ins/gfig/gfig-dialog.c:519
 msgid "Fill"
@@ -11219,10 +11410,6 @@ msgstr "最大撤消次数："
 #: plug-ins/gfig/gfig-dialog.c:1289 plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "透明"
-
-#: plug-ins/gfig/gfig-dialog.c:1291
-msgid "Foreground"
-msgstr "前景"
 
 #: plug-ins/gfig/gfig-dialog.c:1302
 msgid ""
@@ -13651,11 +13838,6 @@ msgstr "应用抗锯齿"
 msgid "Create new ima_ge"
 msgstr "创建新图像(_G)"
 
-#: plug-ins/lighting/lighting-main.c:303
-#: plug-ins/map-object/map-object-main.c:331
-msgid "Create a new image"
-msgstr "创建新图像"
-
 #: plug-ins/lighting/lighting-main.c:308
 msgid "Trans_parent background"
 msgstr "透明背景(_P)"
@@ -15071,6 +15253,42 @@ msgstr "从一个屏幕区域创建图像"
 msgid "Shoot _area"
 msgstr "截图区域(_A)"
 
+#: plug-ins/screenshot/screenshot.c:165
+msgid "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
+msgstr "截图类型 { 窗口截图 (0)，全屏截图 (1)，区域截图 (2) }"
+
+#: plug-ins/screenshot/screenshot.c:195
+msgid "Include _mouse pointer"
+msgstr "包括鼠标指针(_M)"
+
+#: plug-ins/screenshot/screenshot.c:196
+msgid "Your pointing device's cursor will be part of the image"
+msgstr "您指针设备的光标将会是图像的一部分"
+
+#: plug-ins/screenshot/screenshot.c:204
+msgid "Include window _decoration"
+msgstr "包含窗口装饰(_D)"
+
+#: plug-ins/screenshot/screenshot.c:205
+msgid "Title bar, window borders and shadow will be part of the image"
+msgstr "标题栏、窗口边框和阴影将会是图像的一部分"
+
+#: plug-ins/screenshot/screenshot.c:214
+msgid "Selection d_elay"
+msgstr "选择延迟(_E)"
+
+#: plug-ins/screenshot/screenshot.c:215
+msgid "Delay before selection of the window or the region"
+msgstr "在选取窗口或区域前的延迟"
+
+#: plug-ins/screenshot/screenshot.c:219
+msgid "Screenshot dela_y"
+msgstr "截屏延迟(_Y)"
+
+#: plug-ins/screenshot/screenshot.c:220
+msgid "Delay before snapping the screenshot"
+msgstr "捕获屏幕截图前的延迟"
+
 #: plug-ins/screenshot/screenshot.c:224
 msgid "Color _Profile"
 msgstr "色彩配置文件(_P)"
@@ -15448,9 +15666,6 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "Parameter URI"
 #~ msgstr "参数 URI"
 
-#~ msgid "_Rendering"
-#~ msgstr "渲染(_R)"
-
 #~ msgid "_Brightness:"
 #~ msgstr "亮度(_B)："
 
@@ -15459,9 +15674,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "Spatial _filter radius:"
 #~ msgstr "空间滤镜半径(_F)："
-
-#~ msgid "C_amera"
-#~ msgstr "相机(_A)"
 
 #~ msgid "_Zoom:"
 #~ msgstr "缩放(_Z)："
@@ -15519,20 +15731,11 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "Co_lor:"
 #~ msgstr "颜色(_L)："
 
-#~ msgid "Start _index:"
-#~ msgstr "起始编号(_I)："
-
 #~ msgid "_Font:"
 #~ msgstr "字体(_F)："
 
 #~ msgid "Select Number Color"
 #~ msgstr "选择数字的颜色"
-
-#~ msgid "At _bottom"
-#~ msgstr "在底部(_B)"
-
-#~ msgid "At _top"
-#~ msgstr "在顶部(_T)"
 
 #~ msgid "Hole sp_acing:"
 #~ msgstr "小孔间距(_A)："
@@ -15589,12 +15792,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "Change the number of colors in the mapping"
 #~ msgstr "改变映射中的颜色数量"
-
-#~ msgid "Use loglog smoothing"
-#~ msgstr "使用 loglog 平滑"
-
-#~ msgid "Use log log smoothing to eliminate \"banding\" in the result"
-#~ msgstr "使用 log log 平滑以消除结果中的“色带”"
 
 #~ msgid "Red:"
 #~ msgstr "红色："
@@ -15788,15 +15985,6 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "Area"
 #~ msgstr "区域"
 
-#~ msgid "Include window _decoration"
-#~ msgstr "包含窗口装饰(_D)"
-
-#~ msgid "Include _mouse pointer"
-#~ msgstr "包括鼠标指针(_M)"
-
-#~ msgid "Selection delay: "
-#~ msgstr "选区延迟："
-
 #~ msgid ""
 #~ "After the delay, drag your mouse to select the region for the screenshot."
 #~ msgstr "在延迟之后，拖动您的鼠标以选择屏幕截图范围。"
@@ -15806,9 +15994,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "At the end of the delay, click in a window to snap it."
 #~ msgstr "延迟结束时，在一个窗口中点击以捕捉它。"
-
-#~ msgid "Screenshot dela_y: "
-#~ msgstr "截屏延迟(_Y)："
 
 #~ msgid "After the delay, the screenshot is taken."
 #~ msgstr "在延迟之后，得到屏幕截图。"
@@ -16077,9 +16262,6 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "Raise to _top"
 #~ msgstr "升高至顶端(_T)"
 
-#~ msgid "Lower to _bottom"
-#~ msgstr "降低至底端(_B)"
-
 #~ msgid "_Next"
 #~ msgstr "下一个(_N)"
 
@@ -16111,25 +16293,12 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "Error loading metadata-viewer dialog."
 #~ msgstr "加载元数据查看器对话框出错。"
 
-#~ msgid "_Convert text layers to image"
-#~ msgstr "转换文字图层为图像(_C)"
-
 #, c-format
 #~ msgid "_Layers as pages (%s)"
 #~ msgstr "图层作为页面（%s）(_L)"
 
 #~ msgid "top layers first"
 #~ msgstr "顶端图层为第一"
-
-#~ msgid "bottom layers first"
-#~ msgstr "底端图层为第一"
-
-#~ msgid "_Reverse the pages order"
-#~ msgstr "反转页面顺序(_R)"
-
-#, c-format
-#~ msgid "Layers as pages (%s)"
-#~ msgstr "图层作为页面（%s）"
 
 #~ msgid "RGB 16-bit Big Endian"
 #~ msgstr "RGB 16 位大端"
@@ -18329,9 +18498,6 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "Sorry, channels and masks can not be rotated."
 #~ msgstr "对不起，无法旋转通道和蒙板。"
 
-#~ msgid "There was an error taking the screenshot."
-#~ msgstr "对屏幕截图时出错。"
-
 #~ msgid "_Semi-Flatten"
 #~ msgstr "半平整(_S)"
 
@@ -18406,9 +18572,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "_Foreground & background"
 #~ msgstr "前景和背景(_F)"
-
-#~ msgid "First color"
-#~ msgstr "第一种颜色"
 
 #~ msgid "Second color"
 #~ msgstr "第二种颜色"
