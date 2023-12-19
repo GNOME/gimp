@@ -1156,13 +1156,13 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
           if (sc->vptr->is_string (sc->vptr->pair_car (a)))
             {
-              if (! gimp_rgb_parse_css (&color,
-                                        sc->vptr->string_value (sc->vptr->pair_car (a)),
-                                        -1))
+              gchar *color_string = sc->vptr->string_value (sc->vptr->pair_car (a));
+
+              if (! gimp_rgb_parse_css (&color, color_string, -1))
                 return script_type_error (sc, "color string", i, proc_name);
 
               gimp_rgb_set_alpha (&color, 1.0);
-              g_debug ("(%s)", sc->vptr->string_value (sc->vptr->pair_car (a)));
+              gimp_value_set_rgb (&value, &color);
             }
           else if (sc->vptr->is_list (sc, sc->vptr->pair_car (a)) &&
                    sc->vptr->list_length (sc, sc->vptr->pair_car (a)) == 3)

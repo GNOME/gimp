@@ -26,11 +26,10 @@
 
 ; color
 (assert `(gimp-channel-set-color ,testChannel "red"))
-; effective
-; FIXME, SF is broken, should be red
+; effective, getter returns same color: red
 (assert `(equal?
             (car (gimp-channel-get-color ,testChannel))
-            '(0 0 0)))
+            '(255 0 0)))
 
 ; opacity
 (assert `(gimp-channel-set-opacity ,testChannel 0.7))
