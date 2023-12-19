@@ -95,6 +95,7 @@ app/config/gimpconfig-file.c
 app/config/gimpcoreconfig.c
 app/config/gimpdialogconfig.c
 app/config/gimpdisplayoptions.c
+app/config/gimpdisplayconfig.c
 app/config/gimprc.c
 app/config/gimprc-blurbs.h
 app/config/gimprc-deserialize.c

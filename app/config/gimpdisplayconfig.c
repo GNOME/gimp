@@ -139,14 +139,14 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
 
   GIMP_CONFIG_PROP_RGB (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR1,
                         "transparency-custom-color1",
-                        "Transparency custom color 1",
+                        _("Transparency custom color 1"),
                         TRANSPARENCY_CUSTOM_COLOR1_BLURB,
                         FALSE, &GIMP_CHECKS_CUSTOM_COLOR1,
                         GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_RGB (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR2,
                         "transparency-custom-color2",
-                        "Transparency custom color 2",
+                        _("Transparency custom color 2"),
                         TRANSPARENCY_CUSTOM_COLOR2_BLURB,
                         FALSE, &GIMP_CHECKS_CUSTOM_COLOR2,
                         GIMP_PARAM_STATIC_STRINGS);
