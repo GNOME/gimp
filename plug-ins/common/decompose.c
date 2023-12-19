@@ -258,7 +258,7 @@ decompose_create_procedure (GimpPlugIn  *plug_in,
       GString *type_desc;
       gint     i;
 
-      type_desc = g_string_new ("What to decompose: ");
+      type_desc = g_string_new (_("What to decompose: "));
       g_string_append_c (type_desc, '"');
       g_string_append (type_desc, extract[0].type);
       g_string_append_c (type_desc, '"');
@@ -302,7 +302,7 @@ decompose_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "layers-mode",
                              "Layers mode",
-                             "Create channels as layers in a single image",
+                             _("Create channels as layers in a single image"),
                              TRUE,
                              G_PARAM_READWRITE);
 

@@ -221,31 +221,31 @@ merge_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_DRAWABLE (procedure, "source-1",
                               _("Source _1"),
-                              "Source 1",
+                              _("Source 1"),
                               TRUE,
                               G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DRAWABLE (procedure, "depth-map-1",
                               _("_Depth map 1"),
-                              "Depth map 1",
+                              _("Depth map 1"),
                               TRUE,
                               G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DRAWABLE (procedure, "source-2",
                               _("Source _2"),
-                              "Source 2",
+                              _("Source 2"),
                               TRUE,
                               G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DRAWABLE (procedure, "depth-map-2",
                               _("Depth _map 2"),
-                              "Depth map 2",
+                              _("Depth map 2"),
                               TRUE,
                               G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "overlap",
                             _("O_verlap"),
-                            "Overlap",
+                            _("Overlap"),
                             0, 2, 0,
                             G_PARAM_READWRITE);
 
@@ -257,13 +257,13 @@ merge_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_DOUBLE (procedure, "scale-1",
                             _("Sc_ale 1"),
-                            "Depth relative scale 1",
+                            _("Depth relative scale 1"),
                             -1, 1, 1,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "scale-2",
                             _("Scal_e 2"),
-                            "Depth relative scale 2",
+                            _("Depth relative scale 2"),
                             -1, 1, 1,
                             G_PARAM_READWRITE);
     }

@@ -851,50 +851,50 @@ gflare_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_DOUBLE (procedure, "radius",
                             _("Radi_us"),
-                            "Radius of GFlare (pixel)",
+                            _("Radius of GFlare (pixel)"),
                             1, GIMP_MAX_IMAGE_SIZE, 100,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "rotation",
                             _("Ro_tation"),
-                            "Rotation of GFlare (degree)",
+                            _("Rotation of GFlare (degree)"),
                             0, 360, 0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "hue",
                             _("_Hue rotation"),
-                            "_Hue rotation of GFlare (degree)",
+                            _("Hue rotation of GFlare (degree)"),
                             0, 360, 0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "vector-angle",
                             _("Vector _angle"),
-                            "Vector angle for second flares (degree)",
+                            _("Vector angle for second flares (degree)"),
                             0, 360, 60,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "vector-length",
                             _("Vector len_gth"),
-                            "Vector length for second flares "
-                            "(percentage of Radius)",
+                            _("Vector length for second flares "
+                            "(percentage of Radius)"),
                             0, 10000, 400,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "use-asupsample",
                              _("Ada_ptive supersampling"),
-                             "Use adaptive supersampling while rendering",
+                             _("Use adaptive supersampling while rendering"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "asupsample-max-depth",
                          _("_Max depth"),
-                         "Max depth for adaptive supersampling",
+                         _("Max depth for adaptive supersampling"),
                          0, 10, 3,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "asupsample-threshold",
                             _("Threshol_d"),
-                            "Threshold for adaptive supersampling",
+                            _("Threshold for adaptive supersampling"),
                             0.0, 1.0, 0.2,
                             G_PARAM_READWRITE);
     }

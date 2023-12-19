@@ -375,7 +375,7 @@ compose_create_procedure (GimpPlugIn  *plug_in,
   GString       *type_desc;
   gint           i;
 
-  type_desc = g_string_new ("What to compose: ");
+  type_desc = g_string_new (_("What to compose: "));
   g_string_append_c (type_desc, '"');
   g_string_append (type_desc, compose_dsc[0].compose_type);
   g_string_append_c (type_desc, '"');

@@ -136,14 +136,14 @@ wavelet_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_BOOLEAN (procedure, "create-group",
                              _("Create a layer group to store the "
                                "_decomposition"),
-                             "Create a layer group to store the "
-                             "decomposition",
+                             _("Create a layer group to store the "
+                             "decomposition"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "create-masks",
                              _("_Add a layer mask to each scales layer"),
-                             "Add a layer mask to each scales layer",
+                             _("Add a layer mask to each scales layer"),
                              FALSE,
                              G_PARAM_READWRITE);
     }

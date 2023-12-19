@@ -182,7 +182,7 @@ _("When enabled, the selected pattern will be used for all tools.")
 "When enabled, the selected palette will be used for all tools."
 
 #define GLOBAL_EXPAND_BLURB \
-"When enabled, the selected auto expand layer settings will be used for all tools."
+_("When enabled, the selected auto expand layer settings will be used for all tools.")
 
 #define GRADIENT_PATH_BLURB \
 "Sets the gradient search path."
@@ -782,7 +782,7 @@ _("When enabled, uses OpenCL for some operations.")
 "'user-manual-online' is enabled."
 
 #define ZOOM_QUALITY_BLURB \
-"There's a tradeoff between speed and quality of the zoomed-out display."
+_("There's a tradeoff between speed and quality of the zoomed-out display.")
 
 #define DEFAULT_USE_EVENT_HISTORY_BLURB \
 "Bugs in event history buffer are frequent so in case of cursor " \
