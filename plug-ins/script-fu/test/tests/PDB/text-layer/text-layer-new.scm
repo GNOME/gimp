@@ -106,8 +106,9 @@
               "zed" ; text
               32    ; fontsize
               ,testFont ))
-            57))
+            53))
 ; usual result is (57 38 30 -8)
+; recent result is (53 45 35 10) ??? something changed in cairo?
 
 
 

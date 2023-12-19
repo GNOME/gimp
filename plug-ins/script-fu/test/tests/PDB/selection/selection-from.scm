@@ -2,8 +2,7 @@
 
 
 ; setup
-; Reusing image 10
-(define testImage 10)
+(define testImage (car (gimp-image-new 21 22 RGB)))
 
 
 ; Test a selection-changing function
@@ -23,8 +22,7 @@
             ,testImage
             4 )) ; radius or step
   ; expect selection is still empty
-  (assert `(= (car (gimp-selection-is-empty ,testImage))
-            1))
+  (assert-PDB-true `(gimp-selection-is-empty ,testImage))
   ; expect since there is no selection, the bounds are the entire image
   (assert `(equal? (cdr (gimp-selection-bounds ,testImage))
                   '(0 0 21 22)))
@@ -41,8 +39,7 @@
   (if isIdempotent
     (begin
       ; expect selection is still not empty
-      (assert `(= (car (gimp-selection-is-empty ,testImage))
-                  0))
+      (assert-PDB-false `(gimp-selection-is-empty ,testImage))
       ; expect selection bounds are still entire image
       (assert `(equal? (cdr (gimp-selection-bounds ,testImage))
                         '(0 0 21 22)))))
@@ -68,8 +65,7 @@
                  '(4 4 17 18)))
 (test-selection-change-from-all gimp-selection-border  testImage #f)
 ; border from all empties the selection
-(assert `(= (car (gimp-selection-is-empty ,testImage))
-                  1))
+(assert-PDB-true `(gimp-selection-is-empty ,testImage))
 
 
 

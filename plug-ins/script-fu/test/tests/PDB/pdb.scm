@@ -16,6 +16,8 @@
 (testing:load-test "image-ops.scm")
 (testing:load-test "image-layers.scm")
 (testing:load-test "image-set-selected.scm")
+(testing:load-test "image-mode.scm")
+(testing:load-test "image-color-profile.scm")
 
 
 (testing:load-test "layer-new.scm")
@@ -26,11 +28,14 @@
 (testing:load-test "text-layer-new.scm")
 
 (testing:load-test "vectors-new.scm")
-(testing:load-test "channel-new.scm")
-; TODO channel-ops.scm
 
 (testing:load-test "selection.scm")
 (testing:load-test "selection-from.scm")
+
+(testing:load-test "channel-new.scm")
+(testing:load-test "channel-attributes.scm")
+(testing:load-test "channel-ops.scm")
+; TODO channels to selection
 
 ; Test superclass methods.
 ; Drawable and Item are superclasses
@@ -43,10 +48,7 @@
 
 ; context
 (testing:load-test "context-get-set.scm")
-
-; Temporarily commented out until gimpgpparam-body.c is fixed for GimpParamResource
-; If you uncomment it, see warnings in stderr
-;(testing:load-test "context-resource.scm")
+(testing:load-test "context-resource.scm")
 
 (testing:load-test "resource.scm")
 (testing:load-test "brush.scm")
@@ -54,9 +56,12 @@
 ; TODO other resources gradient, etc
 (testing:load-test "resource-ops.scm")
 
+; clipboards
+; Order important: edit.scm requires empty clipboard
+(testing:load-test "edit.scm")
 (testing:load-test "buffer.scm")
 
-; TODO edit ops
+
 ; TODO undo
 ; TODO progress
 

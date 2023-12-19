@@ -10,7 +10,6 @@
 ; flip
 (assert `(gimp-image-flip ,testImage ORIENTATION-HORIZONTAL))
 (assert `(gimp-image-flip ,testImage ORIENTATION-VERTICAL))
-; TODO rotate scale resize policy
 
 (assert-error `(gimp-image-flip ,testImage ORIENTATION-UNKNOWN)
     (string-append
@@ -42,14 +41,41 @@
 ; but docs say 524288 is the max
 ; (assert `(gimp-image-scale ,testImage 524288 524288))
 
-; down to min
+; down to min does not throw
 (assert `(gimp-image-scale ,testImage 1 1))
+; effective
+(assert `(= (car (gimp-image-get-height ,testImage))
+            1))
+; Note there is no get-size, only get-height and width, the origin is always (0,0)
 
+
+; resize does not throw
+(assert `(gimp-image-resize ,testImage
+            30 30 ; width height
+            0 0)) ; offset
+; effective
+(assert `(= (car (gimp-image-get-height ,testImage))
+            30))
+
+; resize to layers when image is empty of layers does not throw
+(assert `(gimp-image-resize-to-layers ,testImage))
+; not effective: height remains the same
+; effective
+(assert `(= (car (gimp-image-get-height ,testImage))
+            30))
+
+; TODO resize to layers when there is a layer smaller than canvas
+
+; TODO crop
+
+; TODO  policy
 
 ;          policy ops
+; These perform operations (convert or rotate) using a policy in preferences
 
-; 0 means non-interactive
+; 0 means non-interactive, else shows dialog in some cases
 (assert `(gimp-image-policy-color-profile ,testImage 0))
+
 (assert `(gimp-image-policy-rotate ,testImage 0))
 
 
@@ -65,12 +91,11 @@
 
 ; clean-all makes image not dirty
 (assert `(gimp-image-clean-all ,testImage))
-(assert `(=
-            (car (gimp-image-is-dirty ,testImage))
-            0))
+(assert-PDB-false `(gimp-image-is-dirty ,testImage))
+
 
 ; TODO test flatten is effective
-; crop
+
 
 
 ;                painting ops

@@ -13,8 +13,7 @@
   (assert `(string? (car (gimp-resource-get-name ,resource))))
 
   ; id-is-valid returns truth
-  ; (1) FUTURE #t
-  (assert `(car (gimp-resource-id-is-valid ,resource)))
+  (assert-PDB-true `(gimp-resource-id-is-valid ,resource))
 
   ; gimp-resource-get-identifiers succeeds
   ; it returns a triplet
@@ -31,12 +30,12 @@
 
   ; gimp-resource-is-editable succeeds
   ; Returns a wrapped boolean
+  ; !!! Not checking the result, only that it succeeds.
   (assert `(gimp-resource-is-editable ,resource))
 
   ; The fresh gimp active resources are all system resources i.e. not editable
   ; returns 0 for #f
-  (assert `(= (car(gimp-resource-is-editable ,resource))
-              0))
+  (assert-PDB-false `(gimp-resource-is-editable ,resource))
 )
 
 ;                  "Test Parasite") ; name
@@ -84,16 +83,11 @@
 
 ; the resource IDs from setup work with the specific id-is-foo methods
 
-(assert `(= (car(gimp-resource-id-is-brush ,testBrush))
-            1))
-(assert `(= (car(gimp-resource-id-is-font ,testFont))
-            1))
-(assert `(= (car(gimp-resource-id-is-gradient ,testGradient))
-            1))
-(assert `(= (car(gimp-resource-id-is-palette ,testPalette))
-            1))
-(assert `(= (car(gimp-resource-id-is-pattern ,testPattern))
-            1))
+(assert-PDB-true `(gimp-resource-id-is-brush ,testBrush))
+(assert-PDB-true `(gimp-resource-id-is-font ,testFont))
+(assert-PDB-true `(gimp-resource-id-is-gradient ,testGradient))
+(assert-PDB-true `(gimp-resource-id-is-palette ,testPalette))
+(assert-PDB-true `(gimp-resource-id-is-pattern ,testPattern))
 
 
 ;             test errors
@@ -106,8 +100,8 @@
 ; invalid numeric ID
 ; -1 is out of range
 (assert-error `(gimp-resource-get-name -1)
-              "Procedure execution of gimp-resource-get-name failed on invalid input arguments:")
+              "Invalid value for argument 0")
 ; 12345678 is in range but invalid
 (assert-error `(gimp-resource-get-name 12345678)
-              "Procedure execution of gimp-resource-get-name failed on invalid input arguments:")
+              "Invalid value for argument 0")
 

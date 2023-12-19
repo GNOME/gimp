@@ -14,6 +14,8 @@ if not stable
     'tests' / 'PDB' / 'image' / 'image-ops.scm',
     'tests' / 'PDB' / 'image' / 'image-layers.scm',
     'tests' / 'PDB' / 'image' / 'image-set-selected.scm',
+    'tests' / 'PDB' / 'image' / 'image-mode.scm',
+    'tests' / 'PDB' / 'image' / 'image-color-profile.scm',
 
     'tests' / 'PDB' / 'layer' / 'layer-new.scm',
     'tests' / 'PDB' / 'layer' / 'layer-ops.scm',
@@ -21,6 +23,8 @@ if not stable
     'tests' / 'PDB' / 'text-layer' / 'text-layer-new.scm',
     'tests' / 'PDB' / 'item' / 'item.scm',
     'tests' / 'PDB' / 'channel' / 'channel-new.scm',
+    'tests' / 'PDB' / 'channel' / 'channel-attributes.scm',
+    'tests' / 'PDB' / 'channel' / 'channel-ops.scm',
     'tests' / 'PDB' / 'vectors-new.scm',
     'tests' / 'PDB' / 'selection' / 'selection.scm',
     'tests' / 'PDB' / 'selection' / 'selection-from.scm',
@@ -31,7 +35,8 @@ if not stable
     'tests' / 'PDB' / 'context' / 'context-get-set.scm',
     'tests' / 'PDB' / 'context' / 'context-resource.scm',
     # TODO context push pop list-paint-methods
-    'tests' / 'PDB' / 'buffer.scm',
+    'tests' / 'PDB' / 'edit' / 'buffer.scm',
+    'tests' / 'PDB' / 'edit' / 'edit.scm',
     'tests' / 'PDB' / 'misc.scm',
     'tests' / 'PDB' / 'enums.scm',
     'tests' / 'PDB' / 'refresh.scm',

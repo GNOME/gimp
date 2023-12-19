@@ -26,17 +26,19 @@
             0))
 
 ; channel ID is valid
-(assert `(= (car (gimp-item-id-is-channel ,testChannel))
-            1))  ; #t
+(assert-PDB-true `(gimp-item-id-is-channel ,testChannel))
 
 
 ;               attributes
 
-; get-color
+; color
 ; FIXME: this passes but should test return red ???
 (assert `(equal?
             (car (gimp-channel-get-color ,testChannel))
             '(0 0 0)))
+(assert `(string=?
+            (car (gimp-channel-get-name ,testChannel))
+            "Test Channel"))
 
 
 
@@ -50,8 +52,54 @@
             0            ; parent, moot since channel groups not supported
             0))          ; position in stack
 
-; insert was effective
-; testImage now has one channel
+; insert was effective: testImage now has one channel
 (assert `(= (car (gimp-image-get-channels ,testImage))
             1))
+
+; insert was effective: image now knows by name
+; capture the ID of channel we just newed
+(assert `(=
+           (car (gimp-image-get-channel-by-name
+                ,testImage
+                "Test Channel"))
+           ,testChannel))
+
+
+;              remove
+
+; Note the difference between remove and delete:
+; Docs say that delete is only useful for a channel not added to the image.
+
+; remove does not throw
+(assert `(gimp-image-remove-channel ,testImage ,testChannel))
+
+; Effective: image now has zero channels
+(assert `(= (car (gimp-image-get-channels ,testImage))
+            0))
+
+; After remove, channel ID is NOT valid
+(assert-PDB-false `(gimp-item-id-is-channel ,testChannel))
+
+; Delete throws error when channel already removed
+(assert-error `(gimp-channel-delete ,testChannel)
+              "runtime: invalid item ID"  )
+
+
+;               delete
+
+; Can delete a new channel not yet added to image
+
+(define testChannel2 (car (gimp-channel-new
+            testImage    ; image
+            23 24          ; width, height
+            "Test Channel" ; name
+            50.0           ; opacity
+            "red" )))      ; compositing color
+
+; Does not throw
+(assert `(gimp-channel-delete ,testChannel2))
+
+; Effective: ID is not valid
+(assert-PDB-false `(gimp-item-id-is-channel ,testChannel))
+
 

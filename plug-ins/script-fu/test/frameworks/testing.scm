@@ -8,18 +8,20 @@
 
 ; AssertStmt      ~ (assert '(<code>))
 ; AssertErrorStmt ~ (assert-error '(<code>)  <prefix of expected error string>)
+; AssertPDBTrueStmt ~ (assert-PDB-true '(<code>)) !!! Where code is only a call to a PDB returning bool
+;                   !!! (assert-PDB-true (not `(code)) is invalid
+; AssertPDBFalseStmt ~ (assert-PDB-false '(<code>)) !!! Where code is only a call to a PDB returning bool
+
 ; ReportStmt      ~ (testing:report)
 ; LoadStmt        ~ (testing:load-test <filename>)
 ; AllPassedPredicate ~ (testing:all-passed?)
 ;
-; AssertStmt and AssertErrorStmt have side effects on the testing state,
-; and the other statements yield or display the state.
-;
-; AssertStmt and AssertErrorStmt also have side effects on the display,
-; displaying failures.
-;
-; AssertStmt and AssertErrorStmt also yield #t or #f
-; meaning pass or fail.
+; AssertStmt and AssertErrorStmt and AssertPDBTrue
+;   - have side effects on the testing state,
+;   - have side effects on the display, displaying failures.
+;   - yield #t or #f meaning pass or fail.
+
+; The other statements yield or display the state.
 
 
 ; Syntax errors
@@ -218,6 +220,22 @@
           expected-error)
         #f)))
 
+
+(define (testing:record-assert-PDB-truth-result eval-result code ctruth)
+  ; ctruth is 0,1
+  ; passed when has no error and result is (ctruth)
+
+  ; convert ([0,1]) result to Scheme truth
+  (let* ((truth (= (car (evalresult-get-result eval-result))
+                  ctruth)))
+    (if (and (evalresult-has-no-error? eval-result)
+             truth)
+        (testing:log-passed!)
+        ; fail
+        (testing:log-fail-assert!
+          code
+          eval-result))))
+
 ; Strict equality of error strings:
 ;(if (equal?
 ;        (evalresult-get-error eval-result)
@@ -252,6 +270,40 @@
       expected-error)
     ; Returns whether error matches expected error prefix.
     ))
+
+
+; The next two functions go away when
+; ScriptFu binds more naturally to PDB boolean
+
+; Special test for calls to PDB returning boolean.
+; <code> is a call to the PDB expected to yield ([0,1])
+; The PDB yields unnatural notion of truth: 0 or 1 wrapped in a list
+(define (assert-PDB-true code)
+  (let* ((eval-result (harnessed-eval code)))
+    ; eval-result is tuple
+
+    ; record normal result i.e. thrown error not expected
+    (testing:record-assert-PDB-truth-result
+      eval-result
+      code
+      1)
+    ; Statements have side-effect on testing state,
+    ; but also return boolean result of predicate.
+    (evalresult-get-result eval-result )))
+
+(define (assert-PDB-false code)
+  (let* ((eval-result (harnessed-eval code)))
+    ; eval-result is tuple
+
+    ; record normal result i.e. thrown error not expected
+    (testing:record-assert-PDB-truth-result
+      eval-result
+      code
+      0)
+    ; Statements have side-effect on testing state,
+    ; but also return boolean result of predicate.
+    (evalresult-get-result eval-result )))
+
 
 
 ; eval code, returning tuple of result and errors
@@ -396,3 +448,10 @@
   (gimp-message (path-to-test-images filename))
   ; unpack ID via car
   (car (gimp-file-load RUN-NONINTERACTIVE (path-to-test-images filename))))
+
+; Returns path to file containing named color profile
+; Currently, assumes color profiles downloaded to /work dir.
+; FUTURE: platform indpendent path
+; FUTURE: color profile test files in the repo
+(define (testing:path-to-color-profile name)
+  (string-append "/work/" name))
