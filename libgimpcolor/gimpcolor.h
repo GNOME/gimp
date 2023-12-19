@@ -64,6 +64,7 @@ gboolean    gimp_color_is_out_of_self_gamut      (GeglColor   *color);
 gboolean    gimp_color_is_out_of_gamut           (GeglColor   *color,
                                                   const Babl  *space);
 
+
 G_END_DECLS
 
 #endif  /* __GIMP_COLOR_H__ */

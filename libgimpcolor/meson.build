@@ -31,11 +31,12 @@ libgimpcolor_headers_introspectable = files(
   'gimphsv.h',
   'gimppixbuf.h',
   'gimprgb.h',
+
+  'gimpcolor.h',
 )
 
 libgimpcolor_headers = [
   libgimpcolor_headers_introspectable,
-  'gimpcolor.h',
 ]
 
 libgimpcolor_introspectable = [

@@ -23,6 +23,7 @@
 
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <math.h>
 
 #include <babl/babl.h>
 #include <gegl.h>
@@ -41,6 +42,8 @@
 
 
 static const Babl * gimp_babl_format_get_with_alpha (const Babl *format);
+static gfloat       gimp_color_get_CIE2000_distance (GeglColor  *color1,
+                                                     GeglColor  *color2);
 
 
 /**
@@ -119,29 +122,16 @@ gboolean
 gimp_color_is_perceptually_identical (GeglColor *color1,
                                       GeglColor *color2)
 {
-  gfloat pixel1[4];
-  gfloat pixel2[4];
-
   g_return_val_if_fail (GEGL_IS_COLOR (color1), FALSE);
   g_return_val_if_fail (GEGL_IS_COLOR (color2), FALSE);
 
-  /* CIE LCh space is considered quite perceptually uniform, a bit better than
-   * Lab on this aspect, AFAIU.
+  /* All CIE deltaE distances were designed with a 1.0 JND (Just Noticeable
+   * Difference), though there was some revision to 2.3 for the CIE76 version.
+   * I could not find a reliable source about whether such a revision happened
+   * for the CIE2000 algorithm. My own tests though seemed to lean towards
+   * using ~0.6 for the JND. That's what I'm using for the time being.
    */
-  gegl_color_get_pixel (color1, babl_format ("CIE LCH(ab) alpha float"), pixel1);
-  gegl_color_get_pixel (color2, babl_format ("CIE LCH(ab) alpha float"), pixel2);
-
-  /* This is not a proper distance computation, but is acceptable for our use
-   * case while being simpler. While we used to use 1e-6 as threshold with float
-   * RGB, LCh is not in [0, 1] range, and some channels can reach over 300 with
-   * wide gamut spaces. This is why use the threshold is 1e-4 right now.
-   */
-#define SQR(x) ((x) * (x))
-  return (ABS (pixel1[3] - pixel2[3]) <= 1e-4 &&
-          (SQR (pixel1[0] - pixel2[0]) +
-           SQR (pixel1[1] - pixel2[1]) +
-           SQR (pixel1[2] - pixel2[2]) <= 1e-4));
-#undef SQR
+  return (gimp_color_get_CIE2000_distance (color1, color2) < 0.6);
 }
 
 /**
@@ -397,4 +387,90 @@ gimp_babl_format_get_with_alpha (const Babl *format)
   g_free (name);
 
   return new_format;
+}
+
+/**
+ * gimp_color_get_CIE2000_distance:
+ * @color1: a [class@Gegl.Color]
+ * @color2: a [class@Gegl.Color]
+ *
+ * Compute the CIEDE2000 distance between @color1 and @color2 which tries to
+ * measure visual difference in the CIELAB color space while correcting the
+ * computation to take into account the space being not perfectly perceptual
+ * uniform.
+ *
+ * This function does not take into account any transparency channel.
+ *
+ * Returns: the distance computed using the CIEDE2000 algorithm.
+ *
+ * Since: 3.0
+ **/
+static gfloat
+gimp_color_get_CIE2000_distance (GeglColor *color1,
+                                 GeglColor *color2)
+{
+  gfloat lab1[3];
+  gfloat lab2[3];
+  gfloat dL;
+  gfloat C_prime;
+  gfloat dC;
+  gfloat dh;
+  gfloat dH;
+  gfloat h_prime;
+  gfloat T;
+  gfloat L_50_2;
+  gfloat SL;
+  gfloat SC;
+  gfloat SH;
+  gfloat C_prime7;
+  gfloat RT;
+  gfloat dE00;
+  gfloat RC;
+  gfloat d0;
+
+  g_return_val_if_fail (GEGL_IS_COLOR (color1), FALSE);
+  g_return_val_if_fail (GEGL_IS_COLOR (color2), FALSE);
+
+  gegl_color_get_pixel (color1, babl_format ("CIE LCH(ab) float"), lab1);
+  gegl_color_get_pixel (color2, babl_format ("CIE LCH(ab) float"), lab2);
+
+  dL = lab2[0] - lab1[0];
+  dC = lab2[1] - lab1[1];
+  dh = lab2[2] - lab1[2];
+  dH = 2.f * sqrtf (lab1[1] * lab2[1]) * sinf (dh / 2.0f * M_PI / 180.f);
+
+  h_prime = lab1[2] + lab2[2] ;
+  if (lab1[1] * lab2[1] != 0.f)
+    {
+      if (fabsf (dh) <= 180.0f)
+        {
+          h_prime /= 2.0f;
+        }
+      else
+        {
+          if (h_prime < 360.f)
+            h_prime = (h_prime + 360.f) / 2.f;
+          else
+            h_prime = (h_prime - 360.f) / 2.f;
+        }
+    }
+  T = 1.f - 0.17f * cosf ((h_prime - 30.f) * M_PI / 180.f) + 0.24f * cosf (2.f * h_prime * M_PI / 180.f) +
+      0.32f * cosf ((3.f * h_prime + 6.f) * M_PI / 180.f) - 0.2f * cosf ((4.f * h_prime - 63.f) * M_PI / 180.f);
+  C_prime = (lab1[1] + lab2[1]) / 2.f;
+  L_50_2 = (((lab1[0] + lab2[0]) / 2.f) - 50.f);
+  L_50_2 *= L_50_2;
+  SL = 1.f + 0.015f * L_50_2 / sqrtf (20.f + L_50_2);
+  SC = 1.f + 0.045f * C_prime;
+  SH = 1.f + 0.015f * C_prime * T;
+
+  C_prime7 = powf (C_prime, 7.f);
+  d0 = 30.f * expf (- powf ((h_prime - 275.f) / 25.f, 2.f));
+#define CONST_25_POWER_7 6103515625.0f
+  RC = 2.f * sqrtf (C_prime7  / (C_prime7 + CONST_25_POWER_7));
+#undef CONST_25_POWER_7
+  RT = - sinf (2.f * d0 * M_PI / 180.f) * RC;
+  dE00 = sqrtf (powf (dL / SL, 2.f) + powf (dC / SC, 2.f) + powf (dH / SH, 2.f) +
+                RT * dC * dH / SC / SH);
+
+  return dE00;
 }
