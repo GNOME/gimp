@@ -878,13 +878,15 @@ gimp_paint_select_tool_toggle_scribbles_visibility (GimpPaintSelectTool  *ps_too
 
   if (options->show_scribbles)
     {
-      const GimpRGB black = {0.0, 0.0, 0.0, 1.0};
+      GeglColor *black = gegl_color_new ("black");
+
       gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
                                    ps_tool->trimap,
                                    ps_tool->drawable_off_x,
                                    ps_tool->drawable_off_y,
-                                   &black,
+                                   black,
                                    TRUE);
+      g_object_unref (black);
     }
   else
     {

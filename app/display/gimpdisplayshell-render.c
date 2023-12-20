@@ -523,7 +523,9 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
       cairo_surface_mark_dirty (shell->mask_surface);
 
-      gimp_cairo_set_source_rgba (my_cr, &shell->mask_color);
+      gimp_cairo_set_source_color (my_cr, shell->mask_color,
+                                   GIMP_CORE_CONFIG (display_config)->color_management,
+                                   FALSE, GTK_WIDGET (shell));
       cairo_mask_surface (my_cr, shell->mask_surface, x, y);
     }
 

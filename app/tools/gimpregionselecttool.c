@@ -367,9 +367,9 @@ gimp_region_select_tool_get_mask (GimpRegionSelectTool *region_sel,
     {
       if (region_sel->region_mask)
         {
-          GimpRGB color = { 1.0, 0.0, 1.0, 1.0 };
-          gint    off_x = 0;
-          gint    off_y = 0;
+          GeglColor *color = gegl_color_new ("fuchsia");
+          gint       off_x = 0;
+          gint       off_y = 0;
 
           if (! options->sample_merged)
             {
@@ -383,7 +383,8 @@ gimp_region_select_tool_get_mask (GimpRegionSelectTool *region_sel,
             }
 
           gimp_display_shell_set_mask (shell, region_sel->region_mask,
-                                       off_x, off_y, &color, FALSE);
+                                       off_x, off_y, color, FALSE);
+          g_object_unref (color);
         }
       else
         {

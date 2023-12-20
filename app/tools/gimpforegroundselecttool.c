@@ -1068,7 +1068,7 @@ gimp_foreground_select_tool_set_trimap (GimpForegroundSelectTool *fg_select)
 
       gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
                                    fg_select->trimap, 0, 0,
-                                   &options->mask_color, TRUE);
+                                   options->mask_color, TRUE);
     }
   else
     {
@@ -1121,7 +1121,7 @@ gimp_foreground_select_tool_set_preview (GimpForegroundSelectTool *fg_select)
 
       gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
                                    fg_select->mask, 0, 0,
-                                   &options->mask_color, TRUE);
+                                   options->mask_color, TRUE);
     }
   else
     {

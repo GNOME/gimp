@@ -57,6 +57,7 @@ enum
 };
 
 
+static void   gimp_foreground_select_options_finalize     (GObject      *object);
 static void   gimp_foreground_select_options_set_property (GObject      *object,
                                                            guint         property_id,
                                                            const GValue *value,
@@ -71,12 +72,15 @@ G_DEFINE_TYPE (GimpForegroundSelectOptions, gimp_foreground_select_options,
                GIMP_TYPE_SELECTION_OPTIONS)
 
 
+#define parent_class gimp_foreground_select_options_parent_class
+
 static void
 gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB blue = {0.0, 0.0, 1.0, 0.5};
+  GeglColor    *blue         = gegl_color_new ("blue");
 
+  object_class->finalize     = gimp_foreground_select_options_finalize;
   object_class->set_property = gimp_foreground_select_options_set_property;
   object_class->get_property = gimp_foreground_select_options_get_property;
 
@@ -106,13 +110,14 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                          1, 6000, 10,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB  (object_class, PROP_MASK_COLOR,
-                         "mask-color",
-                         _("Preview color"),
-                         _("Color of selection preview mask"),
-                         GIMP_TYPE_RGB,
-                         &blue,
-                         GIMP_PARAM_STATIC_STRINGS);
+  gimp_color_set_alpha (blue, 0.5);
+  GIMP_CONFIG_PROP_COLOR  (object_class, PROP_MASK_COLOR,
+                           "mask-color",
+                           _("Preview color"),
+                           _("Color of selection preview mask"),
+                           blue,
+                           GIMP_PARAM_STATIC_STRINGS);
+  g_object_unref (blue);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_ENGINE,
                          "engine",
@@ -147,6 +152,15 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
 static void
 gimp_foreground_select_options_init (GimpForegroundSelectOptions *options)
 {
+  options->mask_color = gegl_color_new ("blue");
+}
+
+static void
+gimp_foreground_select_options_finalize (GObject *object)
+{
+  g_clear_object (&(GIMP_FOREGROUND_SELECT_OPTIONS (object)->mask_color));
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -156,7 +170,6 @@ gimp_foreground_select_options_set_property (GObject      *object,
                                              GParamSpec   *pspec)
 {
   GimpForegroundSelectOptions *options = GIMP_FOREGROUND_SELECT_OPTIONS (object);
-  GimpRGB *color;
 
   switch (property_id)
     {
@@ -173,8 +186,8 @@ gimp_foreground_select_options_set_property (GObject      *object,
       break;
 
     case PROP_MASK_COLOR:
-      color = g_value_get_boxed (value);
-      options->mask_color = *color;
+      g_clear_object (&options->mask_color);
+      options->mask_color = gegl_color_duplicate (g_value_get_object (value));
       break;
 
     case PROP_ENGINE:
@@ -227,7 +240,7 @@ gimp_foreground_select_options_get_property (GObject    *object,
       break;
 
     case PROP_MASK_COLOR:
-      g_value_set_boxed (value, &options->mask_color);
+      g_value_set_object (value, options->mask_color);
       break;
 
     case PROP_ENGINE:

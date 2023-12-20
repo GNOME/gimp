@@ -2177,12 +2177,12 @@ gimp_display_shell_set_mask (GimpDisplayShell *shell,
                              GeglBuffer       *mask,
                              gint              offset_x,
                              gint              offset_y,
-                             const GimpRGB    *color,
+                             GeglColor        *color,
                              gboolean          inverted)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (mask == NULL || GEGL_IS_BUFFER (mask));
-  g_return_if_fail (mask == NULL || color != NULL);
+  g_return_if_fail (mask == NULL || GEGL_IS_COLOR (color));
 
   if (mask)
     g_object_ref (mask);
@@ -2195,8 +2195,9 @@ gimp_display_shell_set_mask (GimpDisplayShell *shell,
   shell->mask_offset_x = offset_x;
   shell->mask_offset_y = offset_y;
 
+  g_clear_object (&shell->mask_color);
   if (mask)
-    shell->mask_color = *color;
+    shell->mask_color = gegl_color_duplicate (color);
 
   shell->mask_inverted = inverted;
 

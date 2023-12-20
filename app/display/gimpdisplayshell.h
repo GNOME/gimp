@@ -230,7 +230,7 @@ struct _GimpDisplayShell
   GeglBuffer        *mask;
   gint               mask_offset_x;
   gint               mask_offset_y;
-  GimpRGB            mask_color;
+  GeglColor         *mask_color;
   gboolean           mask_inverted;
 
   GimpMotionBuffer  *motion_buffer;
@@ -356,7 +356,7 @@ void              gimp_display_shell_set_mask      (GimpDisplayShell   *shell,
                                                     GeglBuffer         *mask,
                                                     gint                offset_x,
                                                     gint                offset_y,
-                                                    const GimpRGB      *color,
+                                                    GeglColor          *color,
                                                     gboolean            inverted);
 
 
