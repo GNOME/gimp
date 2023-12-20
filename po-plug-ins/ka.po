@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-13 17:59+0000\n"
-"PO-Revision-Date: 2023-12-15 05:28+0100\n"
+"POT-Creation-Date: 2023-12-19 18:18+0000\n"
+"PO-Revision-Date: 2023-12-20 04:40+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -1497,6 +1497,10 @@ msgstr "YCbCr_ITU_R470_256"
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
+#: plug-ins/common/compose.c:378
+msgid "What to compose: "
+msgstr ""
+
 #: plug-ins/common/compose.c:403
 msgid "C_ompose..."
 msgstr ""
@@ -2181,12 +2185,20 @@ msgstr "ყვითელი"
 msgid "Black"
 msgstr "შავი"
 
+#: plug-ins/common/decompose.c:261
+msgid "What to decompose: "
+msgstr ""
+
 #: plug-ins/common/decompose.c:282
 msgid "_Decompose..."
 msgstr "_დაშლა..."
 
 #: plug-ins/common/decompose.c:286
 msgid "Decompose an image into separate colorspace components"
+msgstr ""
+
+#: plug-ins/common/decompose.c:305
+msgid "Create channels as layers in a single image"
 msgstr ""
 
 #: plug-ins/common/decompose.c:403
@@ -2235,21 +2247,41 @@ msgstr ""
 msgid "Source _1"
 msgstr "წყარო _1"
 
+#: plug-ins/common/depth-merge.c:224
+msgid "Source 1"
+msgstr "წყარო 1"
+
 #: plug-ins/common/depth-merge.c:229
 msgid "_Depth map 1"
 msgstr "_სიღრმის რუკა 1"
+
+#: plug-ins/common/depth-merge.c:230
+msgid "Depth map 1"
+msgstr "სიღრმის რუკა 1"
 
 #: plug-ins/common/depth-merge.c:235
 msgid "Source _2"
 msgstr "წყარო _2"
 
+#: plug-ins/common/depth-merge.c:236
+msgid "Source 2"
+msgstr "წყარო 2"
+
 #: plug-ins/common/depth-merge.c:241
 msgid "Depth _map 2"
 msgstr ""
 
+#: plug-ins/common/depth-merge.c:242
+msgid "Depth map 2"
+msgstr "სიღრმის რუკა 1"
+
 #: plug-ins/common/depth-merge.c:247
 msgid "O_verlap"
 msgstr "_გადაფარვა"
+
+#: plug-ins/common/depth-merge.c:248
+msgid "Overlap"
+msgstr "გადაფარვა"
 
 #: plug-ins/common/depth-merge.c:253 plug-ins/common/file-raw-data.c:365
 msgid "O_ffset"
@@ -2263,9 +2295,17 @@ msgstr ""
 msgid "Sc_ale 1"
 msgstr ""
 
+#: plug-ins/common/depth-merge.c:260
+msgid "Depth relative scale 1"
+msgstr ""
+
 #: plug-ins/common/depth-merge.c:265
 msgid "Scal_e 2"
 msgstr "_მასშტაბი 2"
+
+#: plug-ins/common/depth-merge.c:266
+msgid "Depth relative scale 2"
+msgstr ""
 
 #: plug-ins/common/depth-merge.c:313
 msgid "The selection does not intersect with the input drawable."
@@ -4211,6 +4251,60 @@ msgstr "პიქსელი/%a"
 #: plug-ins/common/file-pdf-save.c:331
 msgid "PDF"
 msgstr "PDF"
+
+#: plug-ins/common/file-pdf-save.c:338 plug-ins/common/file-pdf-save.c:339
+msgid "Convert bitmaps to vector graphics where possible"
+msgstr ""
+
+#: plug-ins/common/file-pdf-save.c:344
+msgid "Omit hidden layers and layers with zero opacity"
+msgstr ""
+
+#: plug-ins/common/file-pdf-save.c:345
+msgid "Non-visible layers will not be exported"
+msgstr ""
+
+#: plug-ins/common/file-pdf-save.c:350
+msgid "Apply layer masks"
+msgstr ""
+
+#: plug-ins/common/file-pdf-save.c:351
+msgid ""
+"Apply layer masks before saving (Keeping the mask will not change the "
+"output, only the PDF structure)"
+msgstr ""
+
+#: plug-ins/common/file-pdf-save.c:357
+msgid "Layers as pages"
+msgstr ""
+
+#: plug-ins/common/file-pdf-save.c:358
+msgid "Layers as pages (bottom layers first)."
+msgstr ""
+
+#: plug-ins/common/file-pdf-save.c:363
+msgid "Reverse order"
+msgstr "შებრუნებული მიმდევრობით"
+
+#: plug-ins/common/file-pdf-save.c:364
+msgid "Reverse the pages order (top layers first)."
+msgstr ""
+
+#: plug-ins/common/file-pdf-save.c:369
+msgid "Root layers only"
+msgstr ""
+
+#: plug-ins/common/file-pdf-save.c:370
+msgid "Only the root layers are considered pages"
+msgstr ""
+
+#: plug-ins/common/file-pdf-save.c:375
+msgid "Convert text layers to image"
+msgstr ""
+
+#: plug-ins/common/file-pdf-save.c:376
+msgid "Convert text layers to raster graphics"
+msgstr ""
 
 #: plug-ins/common/file-pdf-save.c:381 plug-ins/common/file-pdf-save.c:453
 #: plug-ins/common/file-pdf-save.c:1105
@@ -7921,8 +8015,16 @@ msgstr "გაფართოება"
 msgid "Create a layer group to store the _decomposition"
 msgstr ""
 
+#: plug-ins/common/wavelet-decompose.c:139
+msgid "Create a layer group to store the decomposition"
+msgstr ""
+
 #: plug-ins/common/wavelet-decompose.c:145
 msgid "_Add a layer mask to each scales layer"
+msgstr ""
+
+#: plug-ins/common/wavelet-decompose.c:146
+msgid "Add a layer mask to each scales layer"
 msgstr ""
 
 #: plug-ins/common/wavelet-decompose.c:204
@@ -11990,33 +12092,65 @@ msgstr ""
 msgid "Radi_us"
 msgstr "_რადიუსი"
 
+#: plug-ins/gradient-flare/gradient-flare.c:854
+msgid "Radius of GFlare (pixel)"
+msgstr ""
+
 #: plug-ins/gradient-flare/gradient-flare.c:859
 msgid "Ro_tation"
 msgstr "_ბრუნვა"
+
+#: plug-ins/gradient-flare/gradient-flare.c:860
+msgid "Rotation of GFlare (degree)"
+msgstr ""
 
 #: plug-ins/gradient-flare/gradient-flare.c:865
 msgid "_Hue rotation"
 msgstr "_ტონის შემობრუნება"
 
+#: plug-ins/gradient-flare/gradient-flare.c:866
+msgid "Hue rotation of GFlare (degree)"
+msgstr ""
+
 #: plug-ins/gradient-flare/gradient-flare.c:871
 msgid "Vector _angle"
 msgstr "ვექტორის _კუთხე"
+
+#: plug-ins/gradient-flare/gradient-flare.c:872
+msgid "Vector angle for second flares (degree)"
+msgstr ""
 
 #: plug-ins/gradient-flare/gradient-flare.c:877
 msgid "Vector len_gth"
 msgstr "_ვექტორის სიგრძე"
 
+#: plug-ins/gradient-flare/gradient-flare.c:878
+msgid "Vector length for second flares (percentage of Radius)"
+msgstr ""
+
 #: plug-ins/gradient-flare/gradient-flare.c:884
 msgid "Ada_ptive supersampling"
+msgstr ""
+
+#: plug-ins/gradient-flare/gradient-flare.c:885
+msgid "Use adaptive supersampling while rendering"
 msgstr ""
 
 #: plug-ins/gradient-flare/gradient-flare.c:890
 msgid "_Max depth"
 msgstr "_მაქს. სიღრმე"
 
+#: plug-ins/gradient-flare/gradient-flare.c:891
+msgid "Max depth for adaptive supersampling"
+msgstr ""
+
 #: plug-ins/gradient-flare/gradient-flare.c:896
 msgid "Threshol_d"
 msgstr "_ზღვარი"
+
+#: plug-ins/gradient-flare/gradient-flare.c:897
+msgid "Threshold for adaptive supersampling"
+msgstr ""
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
 #: plug-ins/gradient-flare/gradient-flare.c:2499
