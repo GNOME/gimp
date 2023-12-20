@@ -239,8 +239,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-08 21:04+0000\n"
-"PO-Revision-Date: 2023-12-20 11:57+0100\n"
+"POT-Creation-Date: 2023-12-20 11:21+0000\n"
+"PO-Revision-Date: 2023-12-20 12:33+0100\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -9448,7 +9448,7 @@ msgstr "Намаляване на прозореца на изображение
 #: app/actions/view-actions.c:158
 msgctxt "view-action"
 msgid "_Open Display..."
-msgstr "Отваряне на _дисплей…"
+msgstr "Отваряне на _монитор…"
 
 #: app/actions/view-actions.c:159
 msgctxt "view-action"
@@ -10193,6 +10193,10 @@ msgstr "Екран %s"
 msgid "Move this window to screen %s"
 msgstr "Преместване на прозореца към екран %s"
 
+#: app/actions/window-commands.c:73
+msgid "Open Display"
+msgstr "Отваряне на монитор"
+
 #: app/actions/window-commands.c:78 app/dialogs/extensions-dialog.c:79
 #: app/dialogs/file-save-dialog.c:682 app/dialogs/grid-dialog.c:103
 #: app/dialogs/image-new-dialog.c:107 app/dialogs/image-new-dialog.c:327
@@ -10211,6 +10215,23 @@ msgstr "Преместване на прозореца към екран %s"
 #: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
 msgstr "_Добре"
+
+#: app/actions/window-commands.c:88
+msgid ""
+"Experimental multi-display stuff!\n"
+"Click OK and have fun crashing GIMP..."
+msgstr ""
+"Експериментална поддръжка на множество монитори!\n"
+"Натиснете „Добре“ и се забавлявайте със забиванията на GIMP…"
+
+#: app/actions/window-commands.c:92
+msgid "Please enter the name of the new display:"
+msgstr "Въведете името на новия монитор:"
+
+#: app/actions/window-commands.c:118
+#, c-format
+msgid "Can't open display '%s'. Please try another one:"
+msgstr "Монитор „%s“ не може да се отвори. Пробвайте с друг:"
 
 #: app/actions/windows-actions.c:102
 msgctxt "windows-action"
@@ -10588,6 +10609,14 @@ msgstr "Канал"
 msgid "Path"
 msgstr "Пътека"
 
+#: app/config/gimpdisplayconfig.c:142
+msgid "Transparency custom color 1"
+msgstr "Прозрачност за цвят 1"
+
+#: app/config/gimpdisplayconfig.c:149
+msgid "Transparency custom color 2"
+msgstr "Прозрачност за цвят 2"
+
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
 #. *  be marked for translation.
@@ -10754,6 +10783,14 @@ msgstr "Когато е включено, избраната преливка с
 #: app/config/gimprc-blurbs.h:179
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr "Когато е включено, избраната шарка ще се ползва с всички инструменти"
+
+#: app/config/gimprc-blurbs.h:185
+msgid ""
+"When enabled, the selected auto expand layer settings will be used for all "
+"tools."
+msgstr ""
+"Когато е включено, избраната стойност за автоматично увеличаване на активния "
+"слой при рисуване ще се ползва с всички инструменти."
 
 #: app/config/gimprc-blurbs.h:196
 msgid "Sets the browser used by the help system."
@@ -11673,6 +11710,12 @@ msgstr "Когато е включено, при натискане на F1 ще
 #: app/config/gimprc-blurbs.h:774
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "Когато е включено, някои действия ще ползват OpenCL."
+
+#: app/config/gimprc-blurbs.h:785
+msgid "There's a tradeoff between speed and quality of the zoomed-out display."
+msgstr ""
+"Трябва да има компромис между качеството и скоростта на изобразяването на "
+"мащабирано изображение."
 
 #: app/config/gimprc-blurbs.h:792
 msgid "When enabled, a search of actions will also return inactive actions."
@@ -12955,17 +12998,17 @@ msgid "FG to BG (RGB)"
 msgstr "От цвета за рисуване към цвета за фона (RGB)"
 
 #: app/core/gimp-gradients.c:83
-msgid "FG to BG (Hardedge)"
+msgid "FG to BG (Hard Edge)"
 msgstr "От цвета за рисуване към цвета за фона (рязка граница)"
 
 #: app/core/gimp-gradients.c:91
-msgid "FG to BG (HSV counter-clockwise)"
+msgid "FG to BG (HSV Counter-Clockwise)"
 msgstr ""
 "От цвета за рисуване към цвета за фона (HSV, тон обратно на часовниковата "
 "стрелка)"
 
 #: app/core/gimp-gradients.c:99
-msgid "FG to BG (HSV clockwise hue)"
+msgid "FG to BG (HSV Clockwise Hue)"
 msgstr ""
 "От цвета за рисуване към цвета за фона (HSV, тон по часовниковата стрелка)"
 
@@ -12974,7 +13017,7 @@ msgid "FG to Transparent"
 msgstr "От цвета за рисуване към прозрачно"
 
 #: app/core/gimp-gradients.c:114
-msgid "FG to Transparent (Hardedge)"
+msgid "FG to Transparent (Hard Edge)"
 msgstr "От цвета за рисуване към прозрачно (рязка граница)"
 
 #. Translator:  This message is displayed while GIMP is waiting for
@@ -18185,12 +18228,12 @@ msgstr ""
 "Преоразмеряването на текстовите слоеве спира възможността за последващото им "
 "редактиране"
 
-#: app/dialogs/resize-dialog.c:753
+#: app/dialogs/resize-dialog.c:760
 #, c-format
 msgid "Scale template to %.2f ppi"
 msgstr "_Преоразмеряване на шаблона към %.2f тчк./инч"
 
-#: app/dialogs/resize-dialog.c:758
+#: app/dialogs/resize-dialog.c:765
 #, c-format
 msgid "Set image to %.2f ppi"
 msgstr "Задаване на %.2f тчк./инч"
@@ -18232,6 +18275,14 @@ msgstr "Избор на вида на щриха"
 #: app/dialogs/stroke-dialog.c:130
 msgid "_Stroke"
 msgstr "_Щрихи"
+
+#: app/dialogs/stroke-dialog.c:174
+msgid "Line"
+msgstr "Линия"
+
+#: app/dialogs/stroke-dialog.c:198
+msgid "Paint tool"
+msgstr "Четка"
 
 #: app/dialogs/stroke-dialog.c:216
 msgid "P_aint tool:"
@@ -29337,101 +29388,3 @@ msgstr "Меню за историята на действията"
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Меню за пътеки"
-
-#~ msgctxt "select-action"
-#~ msgid "Create a floating selection"
-#~ msgstr "Създаване на плаваща селекция"
-
-#~ msgid "How to handle embedded color profiles when opening a file."
-#~ msgstr "Как да се обработват цветовите профили при отварянето на файл."
-
-#~ msgctxt "undo-type"
-#~ msgid "Fill with Solid Color"
-#~ msgstr "Запълване с плътен цвят"
-
-#, c-format
-#~ msgid "Skipping '%s': wrong shortcutsrc file format version."
-#~ msgstr ""
-#~ "Пропускане на „%s“: несъответствие на версията на файла „shortcutsrc“ на "
-#~ "GIMP."
-
-#~ msgid "Invalid empty brush name"
-#~ msgstr "Името на четка не може да е празно"
-
-#~ msgid "Invalid empty paint dynamics name"
-#~ msgstr "Името на динамика за рисуване не може да е празно"
-
-#, c-format
-#~ msgid "Paint dynamics '%s' not found"
-#~ msgstr "Динамиката за рисуване „%s“ липсва"
-
-#, c-format
-#~ msgid "Paint dynamics '%s' is not editable"
-#~ msgstr "Динамиката за рисуване „%s“ не може да се редактира"
-
-#, c-format
-#~ msgid "Paint dynamics '%s' is not renamable"
-#~ msgstr "Името на динамиката за рисуване „%s“ не може да се промени"
-
-#~ msgid "Invalid empty MyPaint brush name"
-#~ msgstr "Името на четка от MyPaint не може да е празно"
-
-#, c-format
-#~ msgid "MyPaint brush '%s' not found"
-#~ msgstr "Четката от MyPaint „%s“ липсва"
-
-#, c-format
-#~ msgid "MyPaint brush '%s' is not editable"
-#~ msgstr "Четката от MyPaint „%s“ не може да се редактира"
-
-#, c-format
-#~ msgid "MyPaint brush '%s' is not renamable"
-#~ msgstr "Името на четката от MyPaint „%s“ не може да се промени"
-
-#~ msgid "Invalid empty pattern name"
-#~ msgstr "Името на шарката не може да е празно"
-
-#, c-format
-#~ msgid "Pattern '%s' not found"
-#~ msgstr "Шарката „%s“ липсва"
-
-#~ msgid "Invalid empty gradient name"
-#~ msgstr "Името на преливка не може да е празно"
-
-#, c-format
-#~ msgid "Gradient '%s' not found"
-#~ msgstr "Преливката „%s“ липсва"
-
-#, c-format
-#~ msgid "Gradient '%s' is not editable"
-#~ msgstr "Преливката „%s“ не може да се редактира"
-
-#, c-format
-#~ msgid "Gradient '%s' is not renamable"
-#~ msgstr "Името на преливката „%s“ не може да се промени"
-
-#, c-format
-#~ msgid "Palette '%s' not found"
-#~ msgstr "Палитрата „%s“ липсва"
-
-#, c-format
-#~ msgid "Palette '%s' is not editable"
-#~ msgstr "Палитрата „%s“ не може да се редактира"
-
-#~ msgid "Invalid empty font name"
-#~ msgstr "Името на шрифт не може да е празно"
-
-#, c-format
-#~ msgid "Font '%s' not found"
-#~ msgstr "Шрифтът „%s“ липсва"
-
-#~ msgid "Use editor"
-#~ msgstr "Външен редактор"
-
-#~ msgctxt "dialogs-action"
-#~ msgid "_Preferences Dialog"
-#~ msgstr "Прозорче за _настройки"
-
-#, c-format
-#~ msgid "Rotate %s?"
-#~ msgstr "Да се завърти ли „%s“?"
