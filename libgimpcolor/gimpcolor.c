@@ -275,23 +275,19 @@ gimp_color_is_out_of_gamut (GeglColor  *color,
     }
   else if (babl_space_is_cmyk (space))
     {
-      gdouble cmyk[4];
+      GeglColor *c = gegl_color_new (NULL);
+      gdouble    cmyk[4];
 
+      /* CMYK conversion always produces colors in [0; 1] range. What we want
+       * to check is whether the source and converted colors are the same in
+       * Lab space.
+       */
       gegl_color_get_pixel (color,
                             babl_format_with_space ("CMYK double", space),
                             cmyk);
-      /* We make sure that each component is within [0; 1], but accept a small
-       * error of margin (we don't want to show small precision errors as
-       * out-of-gamut colors).
-       */
-      is_out_of_gamut = ((cmyk[0] < 0.0 && -cmyk[0] > CHANNEL_EPSILON)      ||
-                         (cmyk[0] > 1.0 && cmyk[0] - 1.0 > CHANNEL_EPSILON) ||
-                         (cmyk[1] < 0.0 && -cmyk[1] > CHANNEL_EPSILON)      ||
-                         (cmyk[1] > 1.0 && cmyk[1] - 1.0 > CHANNEL_EPSILON) ||
-                         (cmyk[2] < 0.0 && -cmyk[2] > CHANNEL_EPSILON)      ||
-                         (cmyk[2] > 1.0 && cmyk[2] - 1.0 > CHANNEL_EPSILON) ||
-                         (cmyk[3] < 0.0 && -cmyk[3] > CHANNEL_EPSILON)      ||
-                         (cmyk[3] > 1.0 && cmyk[3] - 1.0 > CHANNEL_EPSILON));
+      gegl_color_set_pixel (c, babl_format_with_space ("CMYK double", space), cmyk);
+      is_out_of_gamut = (! gimp_color_is_perceptually_identical (color, c));
+      g_object_unref (c);
     }
   else
     {

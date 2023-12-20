@@ -315,6 +315,8 @@ static const ColorSelectRenderFunc render_funcs[] =
 static const Babl *fish_lch_to_rgb       = NULL;
 static const Babl *fish_lch_to_rgb_u8    = NULL;
 static const Babl *fish_lch_to_softproof = NULL;
+static const Babl *rgbf_format           = NULL;
+static const Babl *hsvf_format           = NULL;
 static const Babl *softproof_format      = NULL;
 
 
@@ -655,6 +657,8 @@ gimp_color_select_set_format (GimpColorSelector *selector,
     {
       select->format = format;
 
+      rgbf_format        = babl_format_with_space ("R'G'B' float", format);
+      hsvf_format        = babl_format_with_space ("HSV float", format);
       fish_lch_to_rgb    = babl_fish (babl_format ("CIE LCH(ab) double"),
                                       babl_format_with_space ("R'G'B' double", format));
       fish_lch_to_rgb_u8 = babl_fish (babl_format ("CIE LCH(ab) double"),
@@ -749,7 +753,7 @@ gimp_color_select_simulation (GimpColorSelector *selector,
   const Babl       *format  = NULL;
   GimpColorProfile *profile = NULL;
 
-  if (enabled && gimp_color_selector_get_simulation (selector, &profile, NULL, NULL))
+  if (enabled && gimp_color_selector_get_simulation (selector, &profile, NULL, NULL) && profile)
     {
       GError *error = NULL;
 
@@ -1624,281 +1628,370 @@ color_select_render_lch_hue (ColorSelectFill *csf)
 static void
 color_select_render_red_green (ColorSelectFill *csf)
 {
-  guchar *p  = csf->buffer;
-  gfloat  r  = 0;
-  gfloat  g  = 0;
-  gfloat  b  = 0;
-  gfloat  dr = 0;
-  gint    i;
+  GeglColor *c = NULL;
+  guchar    *p = csf->buffer;
+  gfloat     dr;
+  gfloat     rgb[3];
+  gint       i;
 
-  b = csf->rgb[2] * 255.0;
+  if (softproof_format)
+    c = gegl_color_new (NULL);
 
-  if (b < 0.0 || b > 255.0)
-    {
-      r = csf->oog_color[0];
-      g = csf->oog_color[1];
-      b = csf->oog_color[2];
-    }
-  else
-    {
-      g = (csf->height - csf->y + 1) * 255.0 / csf->height;
+  rgb[0] = 0.f;
+  rgb[1] = ((gfloat) (csf->height - csf->y + 1)) / csf->height;
+  rgb[2] = csf->rgb[2];
 
-      dr = 255.0 / csf->width;
-    }
+  dr = 1.f / csf->width;
 
   for (i = 0; i < csf->width; i++)
     {
-      *p++ = r;
-      *p++ = g;
-      *p++ = b;
+      gboolean in_gamut = TRUE;
 
-      r += dr;
+      if (softproof_format)
+        {
+          gegl_color_set_pixel (c, rgbf_format, rgb);
+          if (gimp_color_is_out_of_gamut (c, babl_format_get_space (softproof_format)))
+            {
+              *p++ = csf->oog_color[0];
+              *p++ = csf->oog_color[1];
+              *p++ = csf->oog_color[2];
+              in_gamut = FALSE;
+            }
+        }
+
+      if (in_gamut)
+        {
+          *p++ = rgb[0] * 255.0;
+          *p++ = rgb[1] * 255.0;
+          *p++ = rgb[2] * 255.0;
+        }
+
+      rgb[0] += dr;
     }
+
+  g_clear_object (&c);
 }
 
 static void
 color_select_render_red_blue (ColorSelectFill *csf)
 {
-  guchar *p  = csf->buffer;
-  gfloat  r  = 0;
-  gfloat  g  = 0;
-  gfloat  b  = 0;
-  gfloat  dr = 0;
-  gint    i;
+  GeglColor *c = NULL;
+  guchar    *p = csf->buffer;
+  gfloat     rgb[3];
+  gfloat     dr;
+  gint       i;
 
-  g = csf->rgb[1] * 255.0;
+  if (softproof_format)
+    c = gegl_color_new (NULL);
 
-  if (g < 0.0 || g > 255.0)
-    {
-      r = csf->oog_color[0];
-      g = csf->oog_color[1];
-      b = csf->oog_color[2];
-    }
-  else
-    {
-      b = (csf->height - csf->y + 1) * 255.0 / csf->height;
+  rgb[0] = 0.f;
+  rgb[1] = csf->rgb[1];
+  rgb[2] = ((gfloat) (csf->height - csf->y + 1)) / csf->height;
 
-      dr = 255.0 / csf->width;
-    }
+  dr = 1.f / csf->width;
 
   for (i = 0; i < csf->width; i++)
     {
-      *p++ = r;
-      *p++ = g;
-      *p++ = b;
+      gboolean in_gamut = TRUE;
 
-      r += dr;
+      if (softproof_format)
+        {
+          gegl_color_set_pixel (c, rgbf_format, rgb);
+          if (gimp_color_is_out_of_gamut (c, babl_format_get_space (softproof_format)))
+            {
+              *p++ = csf->oog_color[0];
+              *p++ = csf->oog_color[1];
+              *p++ = csf->oog_color[2];
+              in_gamut = FALSE;
+            }
+        }
+
+      if (in_gamut)
+        {
+          *p++ = rgb[0] * 255.0;
+          *p++ = rgb[1] * 255.0;
+          *p++ = rgb[2] * 255.0;
+        }
+
+      rgb[0] += dr;
     }
+
+  g_clear_object (&c);
 }
 
 static void
 color_select_render_green_blue (ColorSelectFill *csf)
 {
-  guchar *p  = csf->buffer;
-  gfloat  r  = 0;
-  gfloat  g  = 0;
-  gfloat  b  = 0;
-  gfloat  dg = 0;
-  gint    i;
+  GeglColor *c = NULL;
+  guchar    *p = csf->buffer;
+  gfloat     rgb[3];
+  gfloat     dg;
+  gint       i;
 
-  r = csf->rgb[0] * 255.0;
+  if (softproof_format)
+    c = gegl_color_new (NULL);
 
-  if (r < 0.0 || r > 255.0)
-    {
-      r = csf->oog_color[0];
-      g = csf->oog_color[1];
-      b = csf->oog_color[2];
-    }
-  else
-    {
-      b = (csf->height - csf->y + 1) * 255.0 / csf->height;
+  rgb[0] = csf->rgb[0];
+  rgb[1] = 0.f;
+  rgb[2] = ((gfloat) (csf->height - csf->y + 1)) / csf->height;
 
-      dg = 255.0 / csf->width;
-    }
+  dg = 1.f / csf->width;
 
   for (i = 0; i < csf->width; i++)
     {
-      *p++ = r;
-      *p++ = g;
-      *p++ = b;
+      gboolean in_gamut = TRUE;
 
-      g += dg;
+      if (softproof_format)
+        {
+          gegl_color_set_pixel (c, rgbf_format, rgb);
+          if (gimp_color_is_out_of_gamut (c, babl_format_get_space (softproof_format)))
+            {
+              *p++ = csf->oog_color[0];
+              *p++ = csf->oog_color[1];
+              *p++ = csf->oog_color[2];
+              in_gamut = FALSE;
+            }
+        }
+
+      if (in_gamut)
+        {
+          *p++ = rgb[0] * 255.0;
+          *p++ = rgb[1] * 255.0;
+          *p++ = rgb[2] * 255.0;
+        }
+
+      rgb[1] += dg;
     }
+
+  g_clear_object (&c);
 }
 
 static void
 color_select_render_hue_saturation (ColorSelectFill *csf)
 {
-  guchar *p = csf->buffer;
-  gfloat  h, dh, s, v;
-  gint    f;
-  gint    i;
+  GeglColor *c = NULL;
+  guchar    *p = csf->buffer;
+  gfloat     hsv[3];
+  gfloat     dh;
+  gint       f;
+  gint       i;
 
-  v = csf->hsv[2];
+  if (softproof_format)
+    c = gegl_color_new (NULL);
 
-  s = (gfloat) csf->y / csf->height;
-  s = CLAMP (s, 0.0, 1.0);
-  s = 1.0 - s;
+  hsv[0] = 0.f;
+  hsv[1] = (gfloat) csf->y / csf->height;
+  hsv[1] = CLAMP (hsv[1], 0.f, 1.f);
+  hsv[1] = 1.f - hsv[1];
+  hsv[2] = csf->hsv[2];
 
-  h = 0;
   dh = 360.0 / csf->width;
 
   for (i = 0; i < csf->width; i++)
     {
-      gfloat r, g, b;
+      gboolean in_gamut = TRUE;
 
-      f = ((h / 60) - (int) (h / 60)) * 255;
-
-      switch ((int) (h / 60))
+      if (softproof_format)
         {
-        default:
-        case 0:
-          r = v * 255;
-          g = v * (255 - (s * (255 - f)));
-          b = v * 255 * (1 - s);
-          break;
-        case 1:
-          r = v * (255 - s * f);
-          g = v * 255;
-          b = v * 255 * (1 - s);
-          break;
-        case 2:
-          r = v * 255 * (1 - s);
-          g = v *255;
-          b = v * (255 - (s * (255 - f)));
-          break;
-        case 3:
-          r = v * 255 * (1 - s);
-          g = v * (255 - s * f);
-          b = v * 255;
-          break;
-        case 4:
-          r = v * (255 - (s * (255 - f)));
-          g = v * (255 * (1 - s));
-          b = v * 255;
-          break;
-        case 5:
-          r = v * 255;
-          g = v * 255 * (1 - s);
-          b = v * (255 - s * f);
-          break;
+          gegl_color_set_pixel (c, hsvf_format, hsv);
+          if (gimp_color_is_out_of_gamut (c, babl_format_get_space (softproof_format)))
+            {
+              *p++ = csf->oog_color[0];
+              *p++ = csf->oog_color[1];
+              *p++ = csf->oog_color[2];
+              in_gamut = FALSE;
+            }
         }
 
-      if (r < 0.0 || r > 255.0 ||
-          g < 0.0 || g > 255.0 ||
-          b < 0.0 || b > 255.0)
+      if (in_gamut)
         {
-          *p++ = csf->oog_color[0];
-          *p++ = csf->oog_color[1];
-          *p++ = csf->oog_color[2];
-        }
-      else
-        {
+          gfloat r, g, b;
+          gfloat h, s, v;
+
+          h = hsv[0];
+          s = hsv[1];
+          v = hsv[2];
+
+          f = ((h / 60) - (int) (h / 60)) * 255;
+
+          switch ((int) (h / 60))
+            {
+            default:
+            case 0:
+              r = v * 255;
+              g = v * (255 - (s * (255 - f)));
+              b = v * 255 * (1 - s);
+              break;
+            case 1:
+              r = v * (255 - s * f);
+              g = v * 255;
+              b = v * 255 * (1 - s);
+              break;
+            case 2:
+              r = v * 255 * (1 - s);
+              g = v *255;
+              b = v * (255 - (s * (255 - f)));
+              break;
+            case 3:
+              r = v * 255 * (1 - s);
+              g = v * (255 - s * f);
+              b = v * 255;
+              break;
+            case 4:
+              r = v * (255 - (s * (255 - f)));
+              g = v * (255 * (1 - s));
+              b = v * 255;
+              break;
+            case 5:
+              r = v * 255;
+              g = v * 255 * (1 - s);
+              b = v * (255 - s * f);
+              break;
+            }
+
           *p++ = r;
           *p++ = g;
           *p++ = b;
         }
 
-      h += dh;
+      hsv[0] += dh;
     }
+
+  g_clear_object (&c);
 }
 
 static void
 color_select_render_hue_value (ColorSelectFill *csf)
 {
-  guchar *p = csf->buffer;
-  gfloat  h, dh, s, v;
-  gint    f;
-  gint    i;
+  GeglColor *c = NULL;
+  guchar    *p = csf->buffer;
+  gfloat     hsv[3];
+  gfloat     dh;
+  gint       f;
+  gint       i;
 
-  s = csf->hsv[1];
+  if (softproof_format)
+    c = gegl_color_new (NULL);
 
-  v = (gfloat) csf->y / csf->height;
-  v = CLAMP (v, 0.0, 1.0);
-  v = 1.0 - v;
+  hsv[0] = 0.f;
+  hsv[1] = csf->hsv[1];
+  hsv[2] = (gfloat) csf->y / csf->height;
+  hsv[2] = CLAMP (hsv[2], 0.f, 1.f);
+  hsv[2] = 1.f - hsv[2];
 
-  h = 0;
   dh = 360.0 / csf->width;
 
   for (i = 0; i < csf->width; i++)
     {
-      gfloat r, g, b;
+      gboolean in_gamut = TRUE;
 
-      f = ((h / 60) - (int) (h / 60)) * 255;
-
-      switch ((int) (h / 60))
+      if (softproof_format)
         {
-        default:
-        case 0:
-          r = v * 255;
-          g = v * (255 - (s * (255 - f)));
-          b = v * 255 * (1 - s);
-          break;
-        case 1:
-          r = v * (255 - s * f);
-          g = v * 255;
-          b = v * 255 * (1 - s);
-          break;
-        case 2:
-          r = v * 255 * (1 - s);
-          g = v *255;
-          b = v * (255 - (s * (255 - f)));
-          break;
-        case 3:
-          r = v * 255 * (1 - s);
-          g = v * (255 - s * f);
-          b = v * 255;
-          break;
-        case 4:
-          r = v * (255 - (s * (255 - f)));
-          g = v * (255 * (1 - s));
-          b = v * 255;
-          break;
-        case 5:
-          r = v * 255;
-          g = v * 255 * (1 - s);
-          b = v * (255 - s * f);
-          break;
+          gegl_color_set_pixel (c, hsvf_format, hsv);
+          if (gimp_color_is_out_of_gamut (c, babl_format_get_space (softproof_format)))
+            {
+              *p++ = csf->oog_color[0];
+              *p++ = csf->oog_color[1];
+              *p++ = csf->oog_color[2];
+              in_gamut = FALSE;
+            }
         }
 
-      if (r < 0.0 || r > 255.0 ||
-          g < 0.0 || g > 255.0 ||
-          b < 0.0 || b > 255.0)
+      if (in_gamut)
         {
-          *p++ = csf->oog_color[0];
-          *p++ = csf->oog_color[1];
-          *p++ = csf->oog_color[2];
-        }
-      else
-        {
-          *p++ = r;
-          *p++ = g;
-          *p++ = b;
+          gfloat r, g, b;
+          gfloat h, s, v;
+
+          h = hsv[0];
+          s = hsv[1];
+          v = hsv[2];
+
+          f = ((h / 60) - (int) (h / 60)) * 255;
+
+          switch ((int) (h / 60))
+            {
+            default:
+            case 0:
+              r = v * 255;
+              g = v * (255 - (s * (255 - f)));
+              b = v * 255 * (1 - s);
+              break;
+            case 1:
+              r = v * (255 - s * f);
+              g = v * 255;
+              b = v * 255 * (1 - s);
+              break;
+            case 2:
+              r = v * 255 * (1 - s);
+              g = v *255;
+              b = v * (255 - (s * (255 - f)));
+              break;
+            case 3:
+              r = v * 255 * (1 - s);
+              g = v * (255 - s * f);
+              b = v * 255;
+              break;
+            case 4:
+              r = v * (255 - (s * (255 - f)));
+              g = v * (255 * (1 - s));
+              b = v * 255;
+              break;
+            case 5:
+              r = v * 255;
+              g = v * 255 * (1 - s);
+              b = v * (255 - s * f);
+              break;
+            }
+
+          if (r < 0.0 || r > 255.0 ||
+              g < 0.0 || g > 255.0 ||
+              b < 0.0 || b > 255.0)
+            {
+              *p++ = csf->oog_color[0];
+              *p++ = csf->oog_color[1];
+              *p++ = csf->oog_color[2];
+            }
+          else
+            {
+              *p++ = r;
+              *p++ = g;
+              *p++ = b;
+            }
         }
 
-      h += dh;
+      hsv[0] += dh;
     }
+
+  g_clear_object (&c);
 }
 
 static void
 color_select_render_saturation_value (ColorSelectFill *csf)
 {
-  guchar *p = csf->buffer;
-  gfloat  h, s, ds, v;
-  gint    f;
-  gint    i;
+  GeglColor *c = NULL;
+  guchar    *p = csf->buffer;
+  gfloat     hsv[3];
+  gfloat     h, s, ds, v;
+  gint       f;
+  gint       i;
 
-  h = (gfloat) csf->hsv[0] * 360.0;
-  if (h >= 360)
-    h -= 360;
-  h /= 60;
+  if (softproof_format)
+    c = gegl_color_new (NULL);
+
+  hsv[0] = (gfloat) csf->hsv[0] * 360.0;
+  if (hsv[0] >= 360)
+    hsv[0] -= 360;
+  h = hsv[0] / 60;
   f = (h - (gint) h) * 255;
 
   v = (gfloat) csf->y / csf->height;
-  v = CLAMP (v, 0.0, 1.0);
-  v = 1.0 - v;
+  v = CLAMP (v, 0.f, 1.f);
+  v = 1.f - v;
 
-  s = 0;
+  s = 0.f;
+
+  hsv[1] = s;
+  hsv[2] = v;
   ds = 1.0 / csf->width;
 
   switch ((gint) h)
@@ -1906,64 +1999,174 @@ color_select_render_saturation_value (ColorSelectFill *csf)
     case 0:
       for (i = 0; i < csf->width; i++)
         {
-          *p++ = v * 255;
-          *p++ = v * (255 - (s * (255 - f)));
-          *p++ = v * 255 * (1 - s);
+          gboolean in_gamut = TRUE;
 
-          s += ds;
+          if (softproof_format)
+            {
+              gegl_color_set_pixel (c, hsvf_format, hsv);
+
+              if (gimp_color_is_out_of_gamut (c, babl_format_get_space (softproof_format)))
+                {
+                  *p++ = csf->oog_color[0];
+                  *p++ = csf->oog_color[1];
+                  *p++ = csf->oog_color[2];
+                  in_gamut = FALSE;
+                }
+            }
+
+          if (in_gamut)
+            {
+              *p++ = v * 255;
+              *p++ = v * (255 - (s * (255 - f)));
+              *p++ = v * 255 * (1 - s);
+            }
+
+          hsv[1] = s += ds;
         }
       break;
     case 1:
       for (i = 0; i < csf->width; i++)
         {
-          *p++ = v * (255 - s * f);
-          *p++ = v * 255;
-          *p++ = v * 255 * (1 - s);
+          gboolean in_gamut = TRUE;
 
-          s += ds;
+          if (softproof_format)
+            {
+              gegl_color_set_pixel (c, hsvf_format, hsv);
+
+              if (gimp_color_is_out_of_gamut (c, babl_format_get_space (softproof_format)))
+                {
+                  *p++ = csf->oog_color[0];
+                  *p++ = csf->oog_color[1];
+                  *p++ = csf->oog_color[2];
+                  in_gamut = FALSE;
+                }
+            }
+
+          if (in_gamut)
+            {
+              *p++ = v * (255 - s * f);
+              *p++ = v * 255;
+              *p++ = v * 255 * (1 - s);
+            }
+
+          hsv[1] = s += ds;
         }
       break;
     case 2:
       for (i = 0; i < csf->width; i++)
         {
-          *p++ = v * 255 * (1 - s);
-          *p++ = v *255;
-          *p++ = v * (255 - (s * (255 - f)));
+          gboolean in_gamut = TRUE;
 
-          s += ds;
+          if (softproof_format)
+            {
+              gegl_color_set_pixel (c, hsvf_format, hsv);
+
+              if (gimp_color_is_out_of_gamut (c, babl_format_get_space (softproof_format)))
+                {
+                  *p++ = csf->oog_color[0];
+                  *p++ = csf->oog_color[1];
+                  *p++ = csf->oog_color[2];
+                  in_gamut = FALSE;
+                }
+            }
+
+          if (in_gamut)
+            {
+              *p++ = v * 255 * (1 - s);
+              *p++ = v *255;
+              *p++ = v * (255 - (s * (255 - f)));
+            }
+
+          hsv[1] = s += ds;
         }
       break;
     case 3:
       for (i = 0; i < csf->width; i++)
         {
-          *p++ = v * 255 * (1 - s);
-          *p++ = v * (255 - s * f);
-          *p++ = v * 255;
+          gboolean in_gamut = TRUE;
 
-          s += ds;
+          if (softproof_format)
+            {
+              gegl_color_set_pixel (c, hsvf_format, hsv);
+
+              if (gimp_color_is_out_of_gamut (c, babl_format_get_space (softproof_format)))
+                {
+                  *p++ = csf->oog_color[0];
+                  *p++ = csf->oog_color[1];
+                  *p++ = csf->oog_color[2];
+                  in_gamut = FALSE;
+                }
+            }
+
+          if (in_gamut)
+            {
+              *p++ = v * 255 * (1 - s);
+              *p++ = v * (255 - s * f);
+              *p++ = v * 255;
+            }
+
+          hsv[1] = s += ds;
         }
       break;
     case 4:
       for (i = 0; i < csf->width; i++)
         {
-          *p++ = v * (255 - (s * (255 - f)));
-          *p++ = v * (255 * (1 - s));
-          *p++ = v * 255;
+          gboolean in_gamut = TRUE;
 
-          s += ds;
+          if (softproof_format)
+            {
+              gegl_color_set_pixel (c, hsvf_format, hsv);
+
+              if (gimp_color_is_out_of_gamut (c, babl_format_get_space (softproof_format)))
+                {
+                  *p++ = csf->oog_color[0];
+                  *p++ = csf->oog_color[1];
+                  *p++ = csf->oog_color[2];
+                  in_gamut = FALSE;
+                }
+            }
+
+          if (in_gamut)
+            {
+              *p++ = v * (255 - (s * (255 - f)));
+              *p++ = v * (255 * (1 - s));
+              *p++ = v * 255;
+            }
+
+          hsv[1] = s += ds;
         }
       break;
     case 5:
       for (i = 0; i < csf->width; i++)
         {
-          *p++ = v * 255;
-          *p++ = v * 255 * (1 - s);
-          *p++ = v * (255 - s * f);
+          gboolean in_gamut = TRUE;
 
-          s += ds;
+          if (softproof_format)
+            {
+              gegl_color_set_pixel (c, hsvf_format, hsv);
+
+              if (gimp_color_is_out_of_gamut (c, babl_format_get_space (softproof_format)))
+                {
+                  *p++ = csf->oog_color[0];
+                  *p++ = csf->oog_color[1];
+                  *p++ = csf->oog_color[2];
+                  in_gamut = FALSE;
+                }
+            }
+
+          if (in_gamut)
+            {
+              *p++ = v * 255;
+              *p++ = v * 255 * (1 - s);
+              *p++ = v * (255 - s * f);
+            }
+
+          hsv[1] = s += ds;
         }
       break;
     }
+
+  g_clear_object (&c);
 }
 
 static void
