@@ -57,7 +57,7 @@ struct _GimpColorDialogClass
   GimpViewableDialogClass  parent_class;
 
   void (* update) (GimpColorDialog      *dialog,
-                   const GimpRGB        *color,
+                   GeglColor            *color,
                    GimpColorDialogState  state);
 };
 
@@ -73,14 +73,13 @@ GtkWidget * gimp_color_dialog_new       (GimpViewable      *viewable,
                                          GtkWidget         *parent,
                                          GimpDialogFactory *dialog_factory,
                                          const gchar       *dialog_identifier,
-                                         const GimpRGB     *color,
+                                         GeglColor         *color,
                                          gboolean           wants_update,
                                          gboolean           show_alpha);
 
 void        gimp_color_dialog_set_color (GimpColorDialog   *dialog,
-                                         const GimpRGB     *color);
-void        gimp_color_dialog_get_color (GimpColorDialog   *dialog,
-                                         GimpRGB           *color);
+                                         GeglColor         *color);
+GeglColor * gimp_color_dialog_get_color (GimpColorDialog   *dialog);
 
 
 #endif /* __GIMP_COLOR_DIALOG_H__ */

@@ -80,7 +80,7 @@
 /*  local function prototypes  */
 
 static void   view_padding_color_dialog_update (GimpColorDialog          *dialog,
-                                                const GimpRGB            *color,
+                                                GeglColor                *color,
                                                 GimpColorDialogState      state,
                                                 GimpDisplayShell         *shell);
 
@@ -1066,9 +1066,7 @@ view_padding_color_cmd_callback (GimpAction *action,
           {
             GimpImage        *image = gimp_display_get_image (display);
             GimpDisplayShell *shell = gimp_display_get_shell (display);
-            GimpRGB           rgb;
 
-            gegl_color_get_pixel (options->padding_color, babl_format ("R'G'B'A double"), &rgb);
             dialog =
               gimp_color_dialog_new (GIMP_VIEWABLE (image),
                                      action_data_get_context (data),
@@ -1078,7 +1076,7 @@ view_padding_color_cmd_callback (GimpAction *action,
                                      _("Set Custom Canvas Padding Color"),
                                      GTK_WIDGET (shell),
                                      NULL, NULL,
-                                     &rgb,
+                                     options->padding_color,
                                      TRUE, FALSE);
 
             g_signal_connect (dialog, "update",
@@ -1176,19 +1174,15 @@ view_fullscreen_cmd_callback (GimpAction *action,
 
 static void
 view_padding_color_dialog_update (GimpColorDialog      *dialog,
-                                  const GimpRGB        *rgb,
+                                  GeglColor            *color,
                                   GimpColorDialogState  state,
                                   GimpDisplayShell     *shell)
 {
   GimpImageWindow       *window;
   GimpDisplayOptions    *options;
-  GeglColor             *color;
   GeglColor             *old_color;
   GimpCanvasPaddingMode  old_padding_mode;
   gboolean               fullscreen;
-
-  color = gegl_color_new (NULL);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
 
   window           = gimp_display_shell_get_window (shell);
   old_color        = g_object_get_data (G_OBJECT (dialog), "old-color");
@@ -1231,6 +1225,4 @@ view_padding_color_dialog_update (GimpColorDialog      *dialog,
     default:
       break;
     }
-
-  g_object_unref (color);
 }

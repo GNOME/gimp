@@ -59,7 +59,7 @@ static void       gimp_color_panel_color_changed   (GimpColorButton    *button);
 static GType      gimp_color_panel_get_action_type (GimpColorButton    *button);
 
 static void       gimp_color_panel_dialog_update   (GimpColorDialog    *dialog,
-                                                    const GimpRGB      *color,
+                                                    GeglColor          *color,
                                                     GimpColorDialogState state,
                                                     GimpColorPanel     *panel);
 
@@ -177,10 +177,8 @@ gimp_color_panel_clicked (GtkButton *button)
 {
   GimpColorPanel *panel = GIMP_COLOR_PANEL (button);
   GeglColor      *color;
-  GimpRGB         rgb;
 
   color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (button));
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
   if (! panel->color_dialog)
     {
@@ -191,8 +189,7 @@ gimp_color_panel_clicked (GtkButton *button)
                                gimp_color_button_get_title (color_button),
                                NULL, NULL,
                                GTK_WIDGET (button),
-                               NULL, NULL,
-                               &rgb,
+                               NULL, NULL, color,
                                gimp_color_button_get_update (color_button),
                                gimp_color_button_has_alpha (color_button));
 
@@ -206,8 +203,7 @@ gimp_color_panel_clicked (GtkButton *button)
     }
   else
     {
-      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (panel->color_dialog),
-                                   &rgb);
+      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (panel->color_dialog), color);
     }
 
   gtk_window_present (GTK_WINDOW (panel->color_dialog));
@@ -253,23 +249,17 @@ gimp_color_panel_color_changed (GimpColorButton *button)
   if (panel->color_dialog)
     {
       GeglColor *color;
-      GimpRGB    dialog_color;
-      GimpRGB    rgb;
+      GeglColor *dialog_color;
 
       color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (button));
-      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
 
-      gimp_color_dialog_get_color (GIMP_COLOR_DIALOG (panel->color_dialog),
-                                   &dialog_color);
+      dialog_color = gimp_color_dialog_get_color (GIMP_COLOR_DIALOG (panel->color_dialog));
 
-      if (gimp_rgba_distance (&rgb, &dialog_color) > RGBA_EPSILON ||
-          rgb.a != dialog_color.a)
-        {
-          gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (panel->color_dialog),
-                                       &rgb);
-        }
+      if (! gimp_color_is_perceptually_identical (color, dialog_color))
+        gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (panel->color_dialog), color);
 
       g_object_unref (color);
+      g_object_unref (dialog_color);
     }
 }
 
@@ -304,18 +294,14 @@ gimp_color_panel_dialog_response (GimpColorPanel       *panel,
 
 static void
 gimp_color_panel_dialog_update (GimpColorDialog      *dialog,
-                                const GimpRGB        *rgb,
+                                GeglColor            *color,
                                 GimpColorDialogState  state,
                                 GimpColorPanel       *panel)
 {
-  GeglColor *color = gegl_color_new (NULL);
-
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
-
   switch (state)
     {
     case GIMP_COLOR_DIALOG_UPDATE:
-      if (gimp_color_button_get_update (GIMP_COLOR_BUTTON (panel)))
+      if (gimp_color_button_get_update (GIMP_COLOR_BUTTON (panel)) && color)
         gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
       break;
 
@@ -324,13 +310,12 @@ gimp_color_panel_dialog_update (GimpColorDialog      *dialog,
       /* GimpColorDialog returns the appropriate color (new one or
        * original one if process cancelled.
        */
-      gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
+      if (color)
+        gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
       gtk_widget_hide (panel->color_dialog);
 
       g_signal_emit (panel, color_panel_signals[RESPONSE], 0,
                      state);
       break;
     }
-
-  g_object_unref (color);
 }

@@ -157,11 +157,11 @@ static void   gradient_editor_replace_selection     (GimpGradientEditor *editor,
                                                      GimpGradientSegment *replace_seg);
 
 static void   gradient_editor_left_color_update     (GimpColorDialog    *dialog,
-                                                     const GimpRGB      *color,
+                                                     GeglColor          *color,
                                                      GimpColorDialogState state,
                                                      GimpGradientEditor *editor);
 static void   gradient_editor_right_color_update    (GimpColorDialog    *dialog,
-                                                     const GimpRGB      *color,
+                                                     GeglColor          *color,
                                                      GimpColorDialogState state,
                                                      GimpGradientEditor *editor);
 
@@ -602,7 +602,6 @@ void
 gimp_gradient_editor_edit_left_color (GimpGradientEditor *editor)
 {
   GimpGradient *gradient;
-  GimpRGB       rgb;
 
   g_return_if_fail (GIMP_IS_GRADIENT_EDITOR (editor));
 
@@ -616,8 +615,6 @@ gimp_gradient_editor_edit_left_color (GimpGradientEditor *editor)
   editor->saved_dirty    = gimp_data_is_dirty (GIMP_DATA (gradient));
   editor->saved_segments = gradient_editor_save_selection (editor);
 
-  gegl_color_get_pixel (editor->control_sel_l->left_color, babl_format ("R'G'B'A double"),
-                        &rgb);
   editor->color_dialog =
     gimp_color_dialog_new (GIMP_VIEWABLE (gradient),
                            GIMP_DATA_EDITOR (editor)->context,
@@ -628,7 +625,7 @@ gimp_gradient_editor_edit_left_color (GimpGradientEditor *editor)
                            GTK_WIDGET (editor),
                            gimp_dialog_factory_get_singleton (),
                            "gimp-gradient-editor-color-dialog",
-                           &rgb,
+                           editor->control_sel_l->left_color,
                            TRUE, TRUE);
 
   g_signal_connect (editor->color_dialog, "destroy",
@@ -650,7 +647,6 @@ void
 gimp_gradient_editor_edit_right_color (GimpGradientEditor *editor)
 {
   GimpGradient *gradient;
-  GimpRGB       rgb;
 
   g_return_if_fail (GIMP_IS_GRADIENT_EDITOR (editor));
 
@@ -664,8 +660,6 @@ gimp_gradient_editor_edit_right_color (GimpGradientEditor *editor)
   editor->saved_dirty    = gimp_data_is_dirty (GIMP_DATA (gradient));
   editor->saved_segments = gradient_editor_save_selection (editor);
 
-  gegl_color_get_pixel (editor->control_sel_l->right_color, babl_format ("R'G'B'A double"),
-                        &rgb);
   editor->color_dialog =
     gimp_color_dialog_new (GIMP_VIEWABLE (gradient),
                            GIMP_DATA_EDITOR (editor)->context,
@@ -676,7 +670,8 @@ gimp_gradient_editor_edit_right_color (GimpGradientEditor *editor)
                            GTK_WIDGET (editor),
                            gimp_dialog_factory_get_singleton (),
                            "gimp-gradient-editor-color-dialog",
-                           &rgb, TRUE, TRUE);
+                           editor->control_sel_l->right_color,
+                           TRUE, TRUE);
 
   g_signal_connect (editor->color_dialog, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
@@ -1061,14 +1056,11 @@ gradient_editor_replace_selection (GimpGradientEditor  *editor,
 
 static void
 gradient_editor_left_color_update (GimpColorDialog      *dialog,
-                                   const GimpRGB        *rgb,
+                                   GeglColor            *color,
                                    GimpColorDialogState  state,
                                    GimpGradientEditor   *editor)
 {
   GimpGradient *gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
-  GeglColor    *color    = gegl_color_new (NULL);
-
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
 
   switch (state)
     {
@@ -1108,20 +1100,15 @@ gradient_editor_left_color_update (GimpColorDialog      *dialog,
                               gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
       break;
     }
-
-  g_object_unref (color);
 }
 
 static void
 gradient_editor_right_color_update (GimpColorDialog      *dialog,
-                                    const GimpRGB        *rgb,
+                                    GeglColor            *color,
                                     GimpColorDialogState  state,
                                     GimpGradientEditor   *editor)
 {
   GimpGradient *gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
-  GeglColor    *color    = gegl_color_new (NULL);
-
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
 
   switch (state)
     {
@@ -1161,8 +1148,6 @@ gradient_editor_right_color_update (GimpColorDialog      *dialog,
                               gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
       break;
     }
-
-  g_object_unref (color);
 }
 
 

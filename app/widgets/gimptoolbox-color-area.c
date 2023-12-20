@@ -53,7 +53,7 @@ static void   color_area_background_changed (GimpContext          *context,
                                              GimpColorDialog      *dialog);
 
 static void   color_area_dialog_update      (GimpColorDialog      *dialog,
-                                             const GimpRGB        *color,
+                                             GeglColor            *color,
                                              GimpColorDialogState  state,
                                              GimpContext          *context);
 
@@ -131,8 +131,7 @@ color_area_foreground_changed (GimpContext     *context,
                                        color_area_dialog_update,
                                        context);
 
-      /* FIXME this should use GimpColorDialog API */
-      gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection), color);
+      gimp_color_dialog_set_color (dialog, color);
 
       g_signal_handlers_unblock_by_func (dialog,
                                          color_area_dialog_update,
@@ -151,8 +150,7 @@ color_area_background_changed (GimpContext     *context,
                                        color_area_dialog_update,
                                        context);
 
-      /* FIXME this should use GimpColorDialog API */
-      gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection), color);
+      gimp_color_dialog_set_color (dialog, color);
 
       g_signal_handlers_unblock_by_func (dialog,
                                          color_area_dialog_update,
@@ -162,14 +160,10 @@ color_area_background_changed (GimpContext     *context,
 
 static void
 color_area_dialog_update (GimpColorDialog      *dialog,
-                          const GimpRGB        *rgb,
+                          GeglColor            *color,
                           GimpColorDialogState  state,
                           GimpContext          *context)
 {
-  GeglColor *color  = gegl_color_new ("black");
-
-  gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
-
   switch (state)
     {
     case GIMP_COLOR_DIALOG_OK:
@@ -216,8 +210,6 @@ color_area_dialog_update (GimpColorDialog      *dialog,
 
   if (gimp_context_get_display (context))
     gimp_display_grab_focus (gimp_context_get_display (context));
-
-  g_object_unref (color);
 }
 
 static void
@@ -226,7 +218,6 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
                           GimpContext     *context)
 {
   GeglColor   *color;
-  GimpRGB      rgb;
   const gchar *title;
 
   if (! color_dialog_active)
@@ -240,13 +231,11 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
   if (active_color == GIMP_ACTIVE_COLOR_FOREGROUND)
     {
       color = gimp_context_get_foreground (context);
-      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
       title = _("Change Foreground Color");
     }
   else
     {
       color = gimp_context_get_background (context);
-      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
       title = _("Change Background Color");
     }
 
@@ -259,8 +248,7 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
                                             GTK_WIDGET (editor),
                                             gimp_dialog_factory_get_singleton (),
                                             "gimp-toolbox-color-dialog",
-                                            &rgb,
-                                            TRUE, FALSE);
+                                            color, TRUE, FALSE);
 
       g_signal_connect_object (color_dialog, "update",
                                G_CALLBACK (color_area_dialog_update),
@@ -282,7 +270,7 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
     }
 
   gtk_window_set_title (GTK_WINDOW (color_dialog), title);
-  gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (color_dialog), &rgb);
+  gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (color_dialog), color);
 
   gtk_window_present (GTK_WINDOW (color_dialog));
   color_dialog_active = TRUE;
