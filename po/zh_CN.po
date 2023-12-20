@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-16 12:00+0000\n"
-"PO-Revision-Date: 2023-12-17 08:31+0800\n"
+"POT-Creation-Date: 2023-12-19 18:16+0000\n"
+"PO-Revision-Date: 2023-12-20 18:14+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -10287,6 +10287,14 @@ msgstr "通道"
 msgid "Path"
 msgstr "路径"
 
+#: app/config/gimpdisplayconfig.c:142
+msgid "Transparency custom color 1"
+msgstr "透明自定义颜色 1"
+
+#: app/config/gimpdisplayconfig.c:149
+msgid "Transparency custom color 2"
+msgstr "透明自定义颜色 2"
+
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
 #. *  be marked for translation.
@@ -10433,6 +10441,12 @@ msgstr "当启用时，所有的工具都将使用选中的渐变。"
 #: app/config/gimprc-blurbs.h:179
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr "当启用时，所有的工具都将使用选中的图案。"
+
+#: app/config/gimprc-blurbs.h:185
+msgid ""
+"When enabled, the selected auto expand layer settings will be used for all "
+"tools."
+msgstr "当启用时，所有的工具都将使用选中的自动扩展图层设置。"
 
 #: app/config/gimprc-blurbs.h:196
 msgid "Sets the browser used by the help system."
@@ -11206,6 +11220,10 @@ msgstr "当启用时，按 F1 将打开帮助浏览器。"
 #: app/config/gimprc-blurbs.h:774
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "当启用时，将在某些操作时使用 OpenCL。"
+
+#: app/config/gimprc-blurbs.h:785
+msgid "There's a tradeoff between speed and quality of the zoomed-out display."
+msgstr "在缩放显示的速度和质量间存在取舍。"
 
 #: app/config/gimprc-blurbs.h:792
 msgid "When enabled, a search of actions will also return inactive actions."
