@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-16 12:00+0000\n"
-"PO-Revision-Date: 2023-12-17 09:50+0100\n"
+"POT-Creation-Date: 2023-12-19 18:16+0000\n"
+"PO-Revision-Date: 2023-12-20 04:37+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -10273,6 +10273,14 @@ msgstr "არხი"
 msgid "Path"
 msgstr "კონტური"
 
+#: app/config/gimpdisplayconfig.c:142
+msgid "Transparency custom color 1"
+msgstr "გამჭვირვალობა მომხმარებლის ფერი 1"
+
+#: app/config/gimpdisplayconfig.c:149
+msgid "Transparency custom color 2"
+msgstr "გამჭვირვალობა მომხმარებლის ფერი 1"
+
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
 #. *  be marked for translation.
@@ -10420,6 +10428,14 @@ msgstr ""
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr ""
 "როდესაც ჩართულია, მონიშნული შაბლონი ყველა ხელსაწყოსთვის იქნება გამოყენებული."
+
+#: app/config/gimprc-blurbs.h:185
+msgid ""
+"When enabled, the selected auto expand layer settings will be used for all "
+"tools."
+msgstr ""
+"როდესაც ჩართულია, მონიშნული ავტომატური ფენის ჩამოშლის პარამეტრები ყველა "
+"ხელსაწყოსთვის იქნება გამოყენებული."
 
 #: app/config/gimprc-blurbs.h:196
 msgid "Sets the browser used by the help system."
@@ -11224,6 +11240,10 @@ msgstr "როდესაც ჩართულია, F1-ის დაჭე�
 #: app/config/gimprc-blurbs.h:774
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "როდესაც ჩართულია, იყენებს OpenCL- ს გარკვეული ოპერაციებისთვის."
+
+#: app/config/gimprc-blurbs.h:785
+msgid "There's a tradeoff between speed and quality of the zoomed-out display."
+msgstr ""
 
 #: app/config/gimprc-blurbs.h:792
 msgid "When enabled, a search of actions will also return inactive actions."
