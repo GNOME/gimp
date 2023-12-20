@@ -1345,15 +1345,22 @@ script_fu_marshal_procedure_call (scheme   *sc,
               GimpResource *resource;
 
               gint resource_id = sc->vptr->ivalue (sc->vptr->pair_car (a));
-              /* Superclass is Resource, subclass is e.g. Brush.
-               * Superclass is abstract, can't instantiate it.
-               * This returns an instance of the appropriate subclass for the ID.
+              /* Resource is abstract superclass. Concrete subclass is e.g. Brush.
+               * The gvalue holds i.e. requires an instance of concrete subclass.
                * ID's are unique across all instances of Resource.
                */
-             resource = gimp_resource_get_by_id (resource_id);
-              if (resource == NULL)
-                g_warning ("%s: passing null Resource, invalid ID.", G_STRFUNC);
 
+              if (! gimp_resource_id_is_valid (resource_id))
+               {
+                  /* Not the ID of any instance of Resource. */
+                  return script_error (sc, "runtime: invalid resource ID", a);
+                }
+              resource = gimp_resource_get_by_id (resource_id);
+              if (! g_value_type_compatible (G_OBJECT_TYPE (resource), G_VALUE_TYPE (&value)))
+                {
+                  /* not the required subclass held by the gvalue */
+                  return script_error (sc, "runtime: resource ID of improper subclass.", a);
+                }
               g_value_set_object (&value, resource);
             }
         }
