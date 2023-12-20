@@ -28,6 +28,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "widgets-types.h"
 
@@ -37,6 +38,10 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-color-profile.h"
+
+#include "display/display-types.h"
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpcoloreditor.h"
 #include "gimpcolorhistory.h"
@@ -103,11 +108,18 @@ static void  gimp_color_editor_history_selected   (GimpColorHistory *history,
                                                    GeglColor        *color,
                                                    GimpColorEditor  *editor);
 
-static void  gimp_color_editor_image_changed      (GimpContext     *context,
-                                                   GimpImage       *image,
+static void  gimp_color_editor_display_changed    (GimpContext     *context,
+                                                   GimpDisplay     *display,
+                                                   GimpColorEditor *editor);
+static void  gimp_color_editor_image_changed      (GimpDisplay     *display,
+                                                   GParamSpec      *pspec,
+                                                   GimpColorEditor *editor);
+static void  gimp_color_editor_shell_changed      (GimpDisplay     *display,
+                                                   GParamSpec      *pspec,
                                                    GimpColorEditor *editor);
 static void  gimp_color_editor_update_simulation  (GimpImage       *image,
                                                    GimpColorEditor *editor);
+static void  gimp_color_editor_enable_simulation  (GimpColorEditor *editor);
 static void  gimp_color_editor_update_format      (GimpColorEditor *editor);
 
 
@@ -284,7 +296,7 @@ gimp_color_editor_constructed (GObject *object)
 {
   GimpColorEditor *editor       = GIMP_COLOR_EDITOR (object);
   GimpContext     *user_context = editor->context->gimp->user_context;
-  GimpImage       *image        = gimp_context_get_image (user_context);
+  GimpDisplay     *display      = gimp_context_get_display (user_context);
   GtkWidget       *history;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -298,11 +310,11 @@ gimp_color_editor_constructed (GObject *object)
                     G_CALLBACK (gimp_color_editor_history_selected),
                     editor);
 
-  g_signal_connect (user_context, "image-changed",
-                    G_CALLBACK (gimp_color_editor_image_changed),
+  g_signal_connect (user_context, "display-changed",
+                    G_CALLBACK (gimp_color_editor_display_changed),
                     editor);
 
-  gimp_color_editor_image_changed (user_context, image, editor);
+  gimp_color_editor_display_changed (user_context, display, editor);
 }
 
 static void
@@ -746,10 +758,46 @@ gimp_color_editor_history_selected (GimpColorHistory *history,
 }
 
 static void
-gimp_color_editor_image_changed (GimpContext     *context,
-                                 GimpImage       *image,
+gimp_color_editor_display_changed (GimpContext     *context,
+                                   GimpDisplay     *display,
+                                   GimpColorEditor *editor)
+{
+  if (editor->active_display != display)
+    {
+      if (editor->active_display)
+        {
+          g_signal_handlers_disconnect_by_func (editor->active_display,
+                                                gimp_color_editor_image_changed,
+                                                editor);
+          g_signal_handlers_disconnect_by_func (editor->active_display,
+                                                gimp_color_editor_shell_changed,
+                                                editor);
+        }
+
+      g_set_weak_pointer (&editor->active_display, display);
+
+      if (display)
+        {
+          g_signal_connect (display, "notify::image",
+                            G_CALLBACK (gimp_color_editor_image_changed),
+                            editor);
+          g_signal_connect (display, "notify::shell",
+                            G_CALLBACK (gimp_color_editor_shell_changed),
+                            editor);
+        }
+
+      gimp_color_editor_image_changed (display, NULL, editor);
+      gimp_color_editor_shell_changed (display, NULL, editor);
+    }
+}
+
+static void
+gimp_color_editor_image_changed (GimpDisplay     *display,
+                                 GParamSpec      *pspec,
                                  GimpColorEditor *editor)
 {
+  GimpImage *image = display ? gimp_display_get_image (display) : NULL;
+
   if (editor->active_image != image)
     {
       if (editor->active_image)
@@ -793,6 +841,41 @@ gimp_color_editor_image_changed (GimpContext     *context,
 }
 
 static void
+gimp_color_editor_shell_changed (GimpDisplay     *display,
+                                 GParamSpec      *pspec,
+                                 GimpColorEditor *editor)
+{
+  GimpDisplayShell *shell = display ? gimp_display_get_shell (display) : NULL;
+
+  if (editor->active_shell != shell)
+    {
+      GimpColorConfig *config;
+
+      if (editor->active_shell)
+        {
+          config = gimp_display_shell_get_color_config (editor->active_shell);
+
+          g_signal_handlers_disconnect_by_func (config,
+                                                gimp_color_editor_enable_simulation,
+                                                editor);
+        }
+
+      g_set_weak_pointer (&editor->active_shell, shell);
+
+      if (shell)
+        {
+          config = gimp_display_shell_get_color_config (shell);
+
+          g_signal_connect_swapped (config, "notify::mode",
+                                    G_CALLBACK (gimp_color_editor_enable_simulation),
+                                    editor);
+        }
+
+      gimp_color_editor_enable_simulation (editor);
+    }
+}
+
+static void
 gimp_color_editor_update_simulation (GimpImage       *image,
                                      GimpColorEditor *editor)
 {
@@ -808,6 +891,27 @@ gimp_color_editor_update_simulation (GimpImage       *image,
                                         NULL,
                                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                         FALSE);
+}
+
+static void
+gimp_color_editor_enable_simulation (GimpColorEditor *editor)
+{
+  g_return_if_fail (GIMP_IS_COLOR_EDITOR (editor));
+
+  if (editor->active_shell && editor->active_image)
+    {
+      GimpColorConfig         *config;
+      GimpColorManagementMode  mode;
+
+      config = gimp_display_shell_get_color_config (editor->active_shell);
+      mode   = gimp_color_config_get_mode (config);
+      gimp_color_notebook_enable_simulation (GIMP_COLOR_NOTEBOOK (editor->notebook),
+                                             (mode == GIMP_COLOR_MANAGEMENT_SOFTPROOF));
+    }
+  else
+    {
+      gimp_color_notebook_enable_simulation (GIMP_COLOR_NOTEBOOK (editor->notebook), FALSE);
+    }
 }
 
 static void

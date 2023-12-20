@@ -80,6 +80,7 @@ EXPORTS
 	gimp_color_hex_entry_get_type
 	gimp_color_hex_entry_new
 	gimp_color_hex_entry_set_color
+	gimp_color_notebook_enable_simulation
 	gimp_color_notebook_get_current_selector
 	gimp_color_notebook_get_notebook
 	gimp_color_notebook_get_selectors
@@ -130,10 +131,12 @@ EXPORTS
 	gimp_color_selection_set_show_alpha
 	gimp_color_selection_set_simulation
 	gimp_color_selector_channel_get_type
+	gimp_color_selector_enable_simulation
 	gimp_color_selector_get_channel
 	gimp_color_selector_get_color
 	gimp_color_selector_get_model_visible
 	gimp_color_selector_get_show_alpha
+	gimp_color_selector_get_simulation
 	gimp_color_selector_get_toggles_sensitive
 	gimp_color_selector_get_toggles_visible
 	gimp_color_selector_get_type

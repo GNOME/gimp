@@ -83,6 +83,8 @@ void                gimp_color_notebook_set_simulation       (GimpColorNotebook 
                                                               GimpColorProfile  *profile,
                                                               GimpColorRenderingIntent intent,
                                                               gboolean           bpc);
+void                gimp_color_notebook_enable_simulation    (GimpColorNotebook *notebook,
+                                                              gboolean           enabled);
 
 
 G_END_DECLS

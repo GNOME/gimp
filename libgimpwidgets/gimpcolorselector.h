@@ -109,6 +109,8 @@ struct _GimpColorSelectorClass
   void (* model_visible_changed) (GimpColorSelector        *selector,
                                   GimpColorSelectorModel    model,
                                   gboolean                  visible);
+  void (* simulation)            (GimpColorSelector        *selector,
+                                  gboolean                  enabled);
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);
@@ -157,12 +159,18 @@ gboolean    gimp_color_selector_get_model_visible     (GimpColorSelector *select
 void        gimp_color_selector_set_config            (GimpColorSelector *selector,
                                                        GimpColorConfig   *config);
 
-void        gimp_color_selector_set_format            (GimpColorSelector *selector,
-                                                       const Babl        *format);
-void        gimp_color_selector_set_simulation        (GimpColorSelector *selector,
-                                                       GimpColorProfile  *profile,
-                                                       GimpColorRenderingIntent intent,
-                                                       gboolean           bpc);
+void        gimp_color_selector_set_format            (GimpColorSelector         *selector,
+                                                       const Babl                *format);
+void        gimp_color_selector_set_simulation        (GimpColorSelector         *selector,
+                                                       GimpColorProfile          *profile,
+                                                       GimpColorRenderingIntent  intent,
+                                                       gboolean                   bpc);
+gboolean    gimp_color_selector_get_simulation        (GimpColorSelector         *selector,
+                                                       GimpColorProfile         **profile,
+                                                       GimpColorRenderingIntent *intent,
+                                                       gboolean                  *bpc);
+gboolean    gimp_color_selector_enable_simulation     (GimpColorSelector         *selector,
+                                                       gboolean                   enabled);
 
 
 G_END_DECLS

@@ -647,3 +647,20 @@ gimp_color_notebook_set_simulation (GimpColorNotebook *notebook,
         gimp_color_selector_set_simulation (selector, profile, intent, bpc);
     }
 }
+
+void
+gimp_color_notebook_enable_simulation (GimpColorNotebook *notebook,
+                                       gboolean           enabled)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_COLOR_NOTEBOOK (notebook));
+
+  for (list = notebook->priv->selectors; list; list = g_list_next (list))
+    {
+      GimpColorSelector *selector = list->data;
+
+      if (selector)
+        gimp_color_selector_enable_simulation (selector, enabled);
+    }
+}

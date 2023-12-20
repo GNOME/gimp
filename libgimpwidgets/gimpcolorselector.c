@@ -54,6 +54,7 @@ enum
   COLOR_CHANGED,
   CHANNEL_CHANGED,
   MODEL_VISIBLE_CHANGED,
+  SIMULATION,
   LAST_SIGNAL
 };
 
@@ -68,6 +69,11 @@ struct _GimpColorSelectorPrivate
   GimpColorSelectorChannel  channel;
 
   GeglColor                *color;
+
+  gboolean                  simulation;
+  GimpColorProfile         *simulation_profile;
+  GimpColorRenderingIntent  simulation_intent;
+  gboolean                  simulation_bpc;
 };
 
 #define GET_PRIVATE(obj) (((GimpColorSelector *) (obj))->priv)
@@ -125,6 +131,15 @@ gimp_color_selector_class_init (GimpColorSelectorClass *klass)
                   GIMP_TYPE_COLOR_SELECTOR_MODEL,
                   G_TYPE_BOOLEAN);
 
+  selector_signals[SIMULATION] =
+    g_signal_new ("simulation",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpColorSelectorClass, simulation),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_BOOLEAN);
+
   klass->name                  = "Unnamed";
   klass->help_id               = NULL;
   klass->icon_name             = GIMP_ICON_PALETTE;
@@ -163,6 +178,11 @@ gimp_color_selector_init (GimpColorSelector *selector)
   priv->model_visible[GIMP_COLOR_SELECTOR_MODEL_RGB] = TRUE;
   priv->model_visible[GIMP_COLOR_SELECTOR_MODEL_LCH] = TRUE;
   priv->model_visible[GIMP_COLOR_SELECTOR_MODEL_HSV] = FALSE;
+
+  priv->simulation         = FALSE;
+  priv->simulation_profile = NULL;
+  priv->simulation_intent  = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+  priv->simulation_bpc     = FALSE;
 }
 
 static void
@@ -172,6 +192,7 @@ gimp_color_selector_dispose (GObject *object)
 
   gimp_color_selector_set_config (selector, NULL);
   g_clear_object (&selector->priv->color);
+  g_clear_object (&selector->priv->simulation_profile);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -638,15 +659,71 @@ gimp_color_selector_set_simulation (GimpColorSelector        *selector,
                                     GimpColorRenderingIntent  intent,
                                     gboolean                  bpc)
 {
-  GimpColorSelectorClass *selector_class;
+  GimpColorSelectorClass   *selector_class;
+  GimpColorSelectorPrivate *priv;
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
   g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
 
   selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
+  priv           = GET_PRIVATE (selector);
 
-  if (selector_class->set_simulation)
-    selector_class->set_simulation (selector, profile, intent, bpc);
+  if ((profile && ! priv->simulation_profile)                                        ||
+      (! profile && priv->simulation_profile)                                        ||
+      (profile && ! gimp_color_profile_is_equal (profile, priv->simulation_profile)) ||
+       intent != priv->simulation_intent                                             ||
+       bpc    != priv->simulation_bpc)
+    {
+      g_set_object (&priv->simulation_profile, profile);
+      priv->simulation_intent = intent;
+      priv->simulation_bpc    = bpc;
+
+      if (selector_class->set_simulation)
+        selector_class->set_simulation (selector, profile, intent, bpc);
+    }
+}
+
+gboolean
+gimp_color_selector_get_simulation (GimpColorSelector         *selector,
+                                    GimpColorProfile         **profile,
+                                    GimpColorRenderingIntent *intent,
+                                    gboolean                 *bpc)
+{
+  GimpColorSelectorPrivate *priv;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
+
+  priv = GET_PRIVATE (selector);
+
+  if (profile)
+    *profile = priv->simulation_profile;
+  if (intent)
+    *intent = priv->simulation_intent;
+  if (bpc)
+    *bpc = priv->simulation_bpc;
+
+  return priv->simulation;
+}
+
+gboolean
+gimp_color_selector_enable_simulation (GimpColorSelector *selector,
+                                       gboolean           enabled)
+{
+  GimpColorSelectorPrivate *priv;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
+
+  priv = GET_PRIVATE (selector);
+  if (priv->simulation != enabled)
+    {
+      if (! enabled || priv->simulation_profile)
+        {
+          priv->simulation = enabled;
+          g_signal_emit (selector, selector_signals[SIMULATION], 0, enabled);
+        }
+    }
+
+  return priv->simulation;
 }
 
 

@@ -130,6 +130,7 @@ struct _GimpColorSelect
 
   GtkWidget           *toggle_box[3];
   GtkWidget           *label;
+  GtkWidget           *simulation_label;
 
   GtkWidget           *xy_color;
   ColorSelectFillType  xy_color_fill;
@@ -181,32 +182,38 @@ struct _ColorSelectFill
 };
 
 
-static void   gimp_color_select_finalize        (GObject            *object);
+static void   gimp_color_select_finalize        (GObject                  *object);
 
-static void   gimp_color_select_togg_visible    (GimpColorSelector  *selector,
-                                                 gboolean            visible);
-static void   gimp_color_select_togg_sensitive  (GimpColorSelector  *selector,
-                                                 gboolean            sensitive);
-static void   gimp_color_select_set_color       (GimpColorSelector  *selector,
-                                                 GeglColor          *color);
-static void   gimp_color_select_set_channel     (GimpColorSelector  *selector,
+static void   gimp_color_select_togg_visible    (GimpColorSelector        *selector,
+                                                 gboolean                  visible);
+static void   gimp_color_select_togg_sensitive  (GimpColorSelector        *selector,
+                                                 gboolean                  sensitive);
+static void   gimp_color_select_set_color       (GimpColorSelector        *selector,
+                                                 GeglColor                *color);
+static void   gimp_color_select_set_channel     (GimpColorSelector        *selector,
                                                  GimpColorSelectorChannel  channel);
 static void   gimp_color_select_set_model_visible
-                                                (GimpColorSelector  *selector,
-                                                 GimpColorSelectorModel  model,
-                                                 gboolean            visible);
-static void   gimp_color_select_set_format      (GimpColorSelector  *selector,
-                                                 const Babl         *format);
-static void   gimp_color_select_set_config      (GimpColorSelector  *selector,
-                                                 GimpColorConfig    *config);
+                                                (GimpColorSelector        *selector,
+                                                 GimpColorSelectorModel    model,
+                                                 gboolean                  visible);
+static void   gimp_color_select_set_format      (GimpColorSelector        *selector,
+                                                 const Babl               *format);
+static void   gimp_color_select_set_simulation  (GimpColorSelector        *selector,
+                                                 GimpColorProfile         *profile,
+                                                 GimpColorRenderingIntent  intent,
+                                                 gboolean                  bpc);
+static void   gimp_color_select_set_config      (GimpColorSelector        *selector,
+                                                 GimpColorConfig          *config);
+static void   gimp_color_select_simulation      (GimpColorSelector        *selector,
+                                                 gboolean                  enabled);
 
-static void   gimp_color_select_channel_toggled (GtkWidget          *widget,
-                                                 GimpColorSelect    *select);
+static void   gimp_color_select_channel_toggled (GtkWidget                *widget,
+                                                 GimpColorSelect          *select);
 
-static void   gimp_color_select_update          (GimpColorSelect    *select,
-                                                 ColorSelectUpdateType  type);
-static void   gimp_color_select_update_values   (GimpColorSelect    *select);
-static void   gimp_color_select_update_pos      (GimpColorSelect    *select);
+static void   gimp_color_select_update          (GimpColorSelect          *select,
+                                                 ColorSelectUpdateType     type);
+static void   gimp_color_select_update_values   (GimpColorSelect          *select);
+static void   gimp_color_select_update_pos      (GimpColorSelect          *select);
 
 #if 0
 static void   gimp_color_select_drop_color      (GtkWidget          *widget,
@@ -305,8 +312,10 @@ static const ColorSelectRenderFunc render_funcs[] =
   color_select_render_lch_chroma_lightness
 };
 
-static const Babl *fish_lch_to_rgb    = NULL;
-static const Babl *fish_lch_to_rgb_u8 = NULL;
+static const Babl *fish_lch_to_rgb       = NULL;
+static const Babl *fish_lch_to_rgb_u8    = NULL;
+static const Babl *fish_lch_to_softproof = NULL;
+static const Babl *softproof_format      = NULL;
 
 
 static void
@@ -325,8 +334,10 @@ gimp_color_select_class_init (GimpColorSelectClass *klass)
   selector_class->set_color             = gimp_color_select_set_color;
   selector_class->set_channel           = gimp_color_select_set_channel;
   selector_class->set_model_visible     = gimp_color_select_set_model_visible;
+  selector_class->set_simulation        = gimp_color_select_set_simulation;
   selector_class->set_format            = gimp_color_select_set_format;
   selector_class->set_config            = gimp_color_select_set_config;
+  selector_class->simulation            = gimp_color_select_simulation;
 
   gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpColorSelect");
 
@@ -497,6 +508,13 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_label_set_text (GTK_LABEL (select->label), _("Profile: sRGB"));
   gtk_box_pack_start (GTK_BOX (select), select->label, FALSE, FALSE, 0);
   gtk_widget_show (select->label);
+
+  select->simulation_label = gtk_label_new (NULL);
+  gtk_widget_set_halign (select->simulation_label, GTK_ALIGN_START);
+  gtk_widget_set_vexpand (select->simulation_label, FALSE);
+  gtk_label_set_justify (GTK_LABEL (select->simulation_label), GTK_JUSTIFY_LEFT);
+  gtk_label_set_markup (GTK_LABEL (select->simulation_label), _("Soft-Proof Profile: <i>unknown</i>"));
+  gtk_box_pack_start (GTK_BOX (select), select->simulation_label, FALSE, FALSE, 0);
 
   g_type_class_unref (model_class);
   g_type_class_unref (channel_class);
@@ -685,6 +703,17 @@ gimp_color_select_set_format (GimpColorSelector *selector,
 }
 
 static void
+gimp_color_select_set_simulation (GimpColorSelector        *selector,
+                                  GimpColorProfile         *profile,
+                                  GimpColorRenderingIntent  intent,
+                                  gboolean                  bpc)
+{
+  gimp_color_select_simulation (selector,
+                                gimp_color_selector_get_simulation (selector,
+                                                                    NULL, NULL, NULL));
+}
+
+static void
 gimp_color_select_set_config (GimpColorSelector *selector,
                               GimpColorConfig   *config)
 {
@@ -709,6 +738,85 @@ gimp_color_select_set_config (GimpColorSelector *selector,
 
           gimp_color_select_notify_config (select->config, NULL, select);
         }
+    }
+}
+
+static void
+gimp_color_select_simulation (GimpColorSelector *selector,
+                              gboolean           enabled)
+{
+  GimpColorSelect  *select  = GIMP_COLOR_SELECT (selector);
+  const Babl       *format  = NULL;
+  GimpColorProfile *profile = NULL;
+
+  if (enabled && gimp_color_selector_get_simulation (selector, &profile, NULL, NULL))
+    {
+      GError *error = NULL;
+
+      if (gimp_color_profile_is_rgb (profile))
+        format = gimp_color_profile_get_format (profile, babl_format ("R'G'B' float"),
+                                                GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                &error);
+      else if (gimp_color_profile_is_cmyk (profile))
+        format = gimp_color_profile_get_format (profile, babl_format ("CMYK float"),
+                                                GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                &error);
+      else if (gimp_color_profile_is_gray (profile))
+        format = gimp_color_profile_get_format (profile, babl_format ("Y' float"),
+                                                GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                &error);
+
+      if (error)
+        {
+          g_printerr ("Color Selector: invalid color profile: %s\n", error->message);
+          format = NULL;
+          g_clear_error (&error);
+        }
+    }
+
+  if (format)
+    {
+      softproof_format      = format;
+      fish_lch_to_softproof = babl_fish (babl_format ("CIE LCH(ab) double"), format);
+
+      if (babl_format_get_space (format) == babl_space ("sRGB"))
+        {
+          gtk_label_set_text (GTK_LABEL (select->simulation_label), _("Soft-Proof Profile: sRGB"));
+          gimp_help_set_help_data (select->simulation_label, NULL, NULL);
+        }
+      else if (profile != NULL)
+        {
+          gchar *text;
+
+          text = g_strdup_printf (_("Soft-Proof Profile: %s"), gimp_color_profile_get_label (profile));
+          gtk_label_set_text (GTK_LABEL (select->simulation_label), text);
+          gimp_help_set_help_data (select->simulation_label,
+                                   gimp_color_profile_get_summary (profile),
+                                   NULL);
+          g_free (text);
+        }
+      else
+        {
+          gtk_label_set_markup (GTK_LABEL (select->simulation_label), _("Soft-Proof Profile: <i>unknown</i>"));
+          gimp_help_set_help_data (select->simulation_label, NULL, NULL);
+        }
+
+      select->xy_needs_render = TRUE;
+      select->z_needs_render  = TRUE;
+
+      gtk_widget_queue_draw (select->xy_color);
+      gtk_widget_queue_draw (select->z_color);
+
+      gtk_widget_show (select->simulation_label);
+    }
+  else
+    {
+      softproof_format      = NULL;
+      fish_lch_to_softproof = NULL;
+
+      gtk_label_set_markup (GTK_LABEL (select->simulation_label), _("Soft-Proof Profile: <i>unknown</i>"));
+      gimp_help_set_help_data (select->simulation_label, NULL, NULL);
+      gtk_widget_hide (select->simulation_label);
     }
 }
 
@@ -1884,6 +1992,35 @@ color_select_render_lch_chroma_lightness (ColorSelectFill *csf)
           p[1] = csf->oog_color[1];
           p[2] = csf->oog_color[2];
         }
+      else if (fish_lch_to_softproof)
+        {
+          GeglColor *softcolor;
+          GeglColor *lchcolor;
+          gfloat     softdata[4];
+
+          babl_process (fish_lch_to_softproof, &lch, &softdata, 1);
+          softcolor = gegl_color_new (NULL);
+          gegl_color_set_pixel (softcolor, softproof_format, softdata);
+
+          lchcolor = gegl_color_new (NULL);
+          gegl_color_set_pixel (lchcolor, babl_format ("CIE LCH(ab) double"), lch);
+
+          if (gimp_color_is_perceptually_identical (softcolor, lchcolor))
+            {
+              p[0] = rgb[0] * 255;
+              p[1] = rgb[1] * 255;
+              p[2] = rgb[2] * 255;
+            }
+          else
+            {
+              p[0] = csf->oog_color[0];
+              p[1] = csf->oog_color[1];
+              p[2] = csf->oog_color[2];
+            }
+
+          g_object_unref (softcolor);
+          g_object_unref (lchcolor);
+        }
       else
         {
           p[0] = rgb[0] * 255;
@@ -1921,6 +2058,35 @@ color_select_render_lch_hue_lightness (ColorSelectFill *csf)
           p[1] = csf->oog_color[1];
           p[2] = csf->oog_color[2];
         }
+      else if (fish_lch_to_softproof)
+        {
+          GeglColor *softcolor;
+          GeglColor *lchcolor;
+          gfloat     softdata[4];
+
+          babl_process (fish_lch_to_softproof, &lch, &softdata, 1);
+          softcolor = gegl_color_new (NULL);
+          gegl_color_set_pixel (softcolor, softproof_format, softdata);
+
+          lchcolor = gegl_color_new (NULL);
+          gegl_color_set_pixel (lchcolor, babl_format ("CIE LCH(ab) double"), lch);
+
+          if (gimp_color_is_perceptually_identical (softcolor, lchcolor))
+            {
+              p[0] = rgb[0] * 255;
+              p[1] = rgb[1] * 255;
+              p[2] = rgb[2] * 255;
+            }
+          else
+            {
+              p[0] = csf->oog_color[0];
+              p[1] = csf->oog_color[1];
+              p[2] = csf->oog_color[2];
+            }
+
+          g_object_unref (softcolor);
+          g_object_unref (lchcolor);
+        }
       else
         {
           p[0] = rgb[0] * 255;
@@ -1957,6 +2123,35 @@ color_select_render_lch_hue_chroma (ColorSelectFill *csf)
           p[0] = csf->oog_color[0];
           p[1] = csf->oog_color[1];
           p[2] = csf->oog_color[2];
+        }
+      else if (fish_lch_to_softproof)
+        {
+          GeglColor *softcolor;
+          GeglColor *lchcolor;
+          gfloat     softdata[4];
+
+          babl_process (fish_lch_to_softproof, &lch, &softdata, 1);
+          softcolor = gegl_color_new (NULL);
+          gegl_color_set_pixel (softcolor, softproof_format, softdata);
+
+          lchcolor = gegl_color_new (NULL);
+          gegl_color_set_pixel (lchcolor, babl_format ("CIE LCH(ab) double"), lch);
+
+          if (gimp_color_is_perceptually_identical (softcolor, lchcolor))
+            {
+              p[0] = rgb[0] * 255;
+              p[1] = rgb[1] * 255;
+              p[2] = rgb[2] * 255;
+            }
+          else
+            {
+              p[0] = csf->oog_color[0];
+              p[1] = csf->oog_color[1];
+              p[2] = csf->oog_color[2];
+            }
+
+          g_object_unref (softcolor);
+          g_object_unref (lchcolor);
         }
       else
         {
