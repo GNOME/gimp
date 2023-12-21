@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-16 12:00+0000\n"
-"PO-Revision-Date: 2023-12-16 23:23+0200\n"
+"POT-Creation-Date: 2023-12-20 20:26+0000\n"
+"PO-Revision-Date: 2023-12-21 17:54+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -10405,6 +10405,16 @@ msgstr "Канал"
 msgid "Path"
 msgstr "Контур"
 
+#: app/config/gimpdisplayconfig.c:142
+#| msgid "Transparency"
+msgid "Transparency custom color 1"
+msgstr "Нетиповий колір прозорості 1"
+
+#: app/config/gimpdisplayconfig.c:149
+#| msgid "Transparency"
+msgid "Transparency custom color 2"
+msgstr "Нетиповий колір прозорості 2"
+
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
 #. *  be marked for translation.
@@ -10577,6 +10587,15 @@ msgstr ""
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr ""
 "Якщо ввімкнено, позначений текстура використовується для всіх інструментів."
+
+#: app/config/gimprc-blurbs.h:185
+#| msgid "When enabled, the selected pattern will be used for all tools."
+msgid ""
+"When enabled, the selected auto expand layer settings will be used for all "
+"tools."
+msgstr ""
+"Якщо ввімкнено, вибрані параметри автоматичного розгортання шару буде"
+" використано для всіх інструментів."
 
 #: app/config/gimprc-blurbs.h:196
 msgid "Sets the browser used by the help system."
@@ -11477,6 +11496,11 @@ msgstr "Якщо ввімкнено, при натисканні на F1 від�
 #: app/config/gimprc-blurbs.h:774
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "При увімкненні меню використовується OpenCL для деяких операцій."
+
+#: app/config/gimprc-blurbs.h:785
+msgid ""
+"There's a tradeoff between speed and quality of the zoomed-out display."
+msgstr "Це компроміс між швидкістю і якістю зменшеного перегляду."
 
 #: app/config/gimprc-blurbs.h:792
 msgid "When enabled, a search of actions will also return inactive actions."
@@ -12755,17 +12779,14 @@ msgid "FG to BG (RGB)"
 msgstr "Передній план до тла (RGB)"
 
 #: app/core/gimp-gradients.c:83
-#| msgid "FG to BG (Hardedge)"
 msgid "FG to BG (Hard Edge)"
 msgstr "Передній план до тла (різкий перехід)"
 
 #: app/core/gimp-gradients.c:91
-#| msgid "FG to BG (HSV counter-clockwise)"
 msgid "FG to BG (HSV Counter-Clockwise)"
 msgstr "Основний у фоновий (HSV проти годинникової)"
 
 #: app/core/gimp-gradients.c:99
-#| msgid "FG to BG (HSV clockwise hue)"
 msgid "FG to BG (HSV Clockwise Hue)"
 msgstr "Основний у фоновий (HSV за годинниковою)"
 
@@ -12774,7 +12795,6 @@ msgid "FG to Transparent"
 msgstr "Передній план до прозорого"
 
 #: app/core/gimp-gradients.c:114
-#| msgid "FG to Transparent (Hardedge)"
 msgid "FG to Transparent (Hard Edge)"
 msgstr "Передній план до прозорого (різкий перехід)"
 
