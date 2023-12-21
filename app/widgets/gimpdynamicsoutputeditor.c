@@ -63,7 +63,7 @@ struct
   const gchar   *use_property;
   const gchar   *curve_property;
   const gchar   *label;
-  const GimpRGB  color;
+  const gdouble  color[4];
 }
 inputs[] =
 {
@@ -76,7 +76,7 @@ inputs[] =
   { "use-fade",      "fade-curve",      N_("Fade"),             { 0.5, 0.5, 0.5, 0.0 } }
 };
 
-#define INPUT_COLOR(i) (inputs[(i)].color.a ? &inputs[(i)].color : NULL)
+#define INPUT_COLOR(i) (inputs[(i)].color[3] ? &inputs[(i)].color : NULL)
 
 
 typedef struct _GimpDynamicsOutputEditorPrivate GimpDynamicsOutputEditorPrivate;
@@ -408,16 +408,18 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
     {
       gboolean   use_input;
       GimpCurve *input_curve;
+      GeglColor *color = gegl_color_new (NULL);
 
       g_object_get (private->output,
                     inputs[i].use_property,   &use_input,
                     inputs[i].curve_property, &input_curve,
                     NULL);
 
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), INPUT_COLOR (i));
       if (input == i)
         {
           gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
-                                     input_curve, INPUT_COLOR (i));
+                                     input_curve, color);
           private->active_curve = input_curve;
 
           gimp_curve_view_set_x_axis_label (GIMP_CURVE_VIEW (private->curve_view),
@@ -426,10 +428,11 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
       else if (use_input)
         {
           gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                          input_curve, INPUT_COLOR (i));
+                                          input_curve, color);
         }
 
       g_object_unref (input_curve);
+      g_object_unref (color);
     }
 }
 
@@ -465,8 +468,12 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput       *output,
             {
               if (use_input)
                 {
+                  GeglColor *color = gegl_color_new (NULL);
+
+                  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), INPUT_COLOR (i));
                   gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                                  input_curve, INPUT_COLOR (i));
+                                                  input_curve, color);
+                  g_object_unref (color);
                 }
               else
                 {

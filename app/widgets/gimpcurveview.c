@@ -31,6 +31,8 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcurve.h"
 #include "core/gimpcurve-map.h"
@@ -67,7 +69,7 @@ enum
 typedef struct
 {
   GimpCurve *curve;
-  GimpRGB    color;
+  GeglColor *color;
   gboolean   color_set;
 } BGCurve;
 
@@ -609,11 +611,11 @@ gimp_curve_view_draw (GtkWidget *widget,
 
       if (bg->color_set)
         {
-          cairo_set_source_rgba (cr,
-                                 bg->color.r,
-                                 bg->color.g,
-                                 bg->color.b,
-                                 0.5);
+          GeglColor *color = gegl_color_duplicate (bg->color);
+
+          gimp_color_set_alpha (color, 0.5);
+          gimp_cairo_set_source_color (cr, color, view->gimp->config->color_management, FALSE, widget);
+          g_object_unref (color);
         }
       else
         {
@@ -630,7 +632,7 @@ gimp_curve_view_draw (GtkWidget *widget,
 
   /*  Draw the curve  */
   if (view->curve_color)
-    gimp_cairo_set_source_rgb (cr, view->curve_color);
+    gimp_cairo_set_source_color (cr, view->curve_color, view->gimp->config->color_management, FALSE, widget);
   else
     gdk_cairo_set_source_rgba (cr, &fg_color);
 
@@ -1278,7 +1280,7 @@ gimp_curve_view_new (void)
 void
 gimp_curve_view_set_curve (GimpCurveView *view,
                            GimpCurve     *curve,
-                           const GimpRGB *color)
+                           GeglColor     *color)
 {
   g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
   g_return_if_fail (curve == NULL || GIMP_IS_CURVE (curve));
@@ -1310,11 +1312,9 @@ gimp_curve_view_set_curve (GimpCurveView *view,
                         view);
     }
 
-  if (view->curve_color)
-    g_free (view->curve_color);
-
+  g_clear_object (&view->curve_color);
   if (color)
-    view->curve_color = g_memdup2 (color, sizeof (GimpRGB));
+    view->curve_color = gegl_color_duplicate (color);
   else
     view->curve_color = NULL;
 
@@ -1334,7 +1334,7 @@ gimp_curve_view_get_curve (GimpCurveView *view)
 void
 gimp_curve_view_add_background (GimpCurveView *view,
                                 GimpCurve     *curve,
-                                const GimpRGB *color)
+                                GeglColor     *color)
 {
   GList   *list;
   BGCurve *bg;
@@ -1355,7 +1355,7 @@ gimp_curve_view_add_background (GimpCurveView *view,
 
   if (color)
     {
-      bg->color     = *color;
+      bg->color     = gegl_color_duplicate (color);
       bg->color_set = TRUE;
     }
 
@@ -1386,6 +1386,7 @@ gimp_curve_view_remove_background (GimpCurveView *view,
           g_signal_handlers_disconnect_by_func (bg->curve,
                                                 gimp_curve_view_curve_dirty,
                                                 view);
+          g_clear_object (&bg->color);
           g_object_unref (bg->curve);
 
           view->bg_curves = g_list_remove (view->bg_curves, bg);
@@ -1414,6 +1415,7 @@ gimp_curve_view_remove_all_backgrounds (GimpCurveView *view)
       g_signal_handlers_disconnect_by_func (bg->curve,
                                             gimp_curve_view_curve_dirty,
                                             view);
+      g_clear_object (&bg->color);
       g_object_unref (bg->curve);
 
       view->bg_curves = g_list_remove (view->bg_curves, bg);

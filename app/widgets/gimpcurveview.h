@@ -39,7 +39,7 @@ struct _GimpCurveView
   Gimp              *gimp; /* only needed for copy & paste */
 
   GimpCurve         *curve;
-  GimpRGB           *curve_color;
+  GeglColor         *curve_color;
 
   GList             *bg_curves;
 
@@ -97,12 +97,12 @@ GtkWidget * gimp_curve_view_new               (void);
 
 void        gimp_curve_view_set_curve         (GimpCurveView *view,
                                                GimpCurve     *curve,
-                                               const GimpRGB *color);
+                                               GeglColor     *color);
 GimpCurve * gimp_curve_view_get_curve         (GimpCurveView *view);
 
 void        gimp_curve_view_add_background    (GimpCurveView *view,
                                                GimpCurve     *curve,
-                                               const GimpRGB *color);
+                                               GeglColor     *color);
 void        gimp_curve_view_remove_background (GimpCurveView *view,
                                                GimpCurve     *curve);
 
