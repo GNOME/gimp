@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-13 17:59+0000\n"
-"PO-Revision-Date: 2023-12-13 23:10+0100\n"
+"POT-Creation-Date: 2023-12-20 20:27+0000\n"
+"PO-Revision-Date: 2023-12-21 23:26+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1534,6 +1534,12 @@ msgstr "YCbCr_ITU_R470_256"
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
+#: plug-ins/common/compose.c:378
+#, fuzzy
+#| msgid "Wavelet decompose"
+msgid "What to compose: "
+msgstr "Razstavi valček"
+
 #: plug-ins/common/compose.c:403
 msgid "C_ompose..."
 msgstr "_Sestavi ..."
@@ -2245,6 +2251,12 @@ msgstr "Rumena"
 msgid "Black"
 msgstr "Črna"
 
+#: plug-ins/common/decompose.c:261
+#, fuzzy
+#| msgid "Wavelet decompose"
+msgid "What to decompose: "
+msgstr "Razstavi valček"
+
 #: plug-ins/common/decompose.c:282
 msgid "_Decompose..."
 msgstr "_Razstavi ..."
@@ -2252,6 +2264,10 @@ msgstr "_Razstavi ..."
 #: plug-ins/common/decompose.c:286
 msgid "Decompose an image into separate colorspace components"
 msgstr "Razstavi sliko na ločene komponente barvnega prostora"
+
+#: plug-ins/common/decompose.c:305
+msgid "Create channels as layers in a single image"
+msgstr "Ustvari kanale kot plasti v eni sami sliki"
 
 #: plug-ins/common/decompose.c:403
 msgid "Decomposing"
@@ -2301,21 +2317,41 @@ msgstr "Združi dve sliki z uporabo globinskih zemljevidov (z-medpomnilnikov)"
 msgid "Source _1"
 msgstr "Vir _1"
 
+#: plug-ins/common/depth-merge.c:224
+msgid "Source 1"
+msgstr "Vir 1"
+
 #: plug-ins/common/depth-merge.c:229
 msgid "_Depth map 1"
 msgstr "_Globinski zemljevid 1"
+
+#: plug-ins/common/depth-merge.c:230
+msgid "Depth map 1"
+msgstr "Globinski zemljevid 1"
 
 #: plug-ins/common/depth-merge.c:235
 msgid "Source _2"
 msgstr "Vir _2"
 
+#: plug-ins/common/depth-merge.c:236
+msgid "Source 2"
+msgstr "Vir 2"
+
 #: plug-ins/common/depth-merge.c:241
 msgid "Depth _map 2"
 msgstr "Globinski _zemljevid 2"
 
+#: plug-ins/common/depth-merge.c:242
+msgid "Depth map 2"
+msgstr "Globinski zemljevid 2"
+
 #: plug-ins/common/depth-merge.c:247
 msgid "O_verlap"
 msgstr "Pre_krivanje"
+
+#: plug-ins/common/depth-merge.c:248
+msgid "Overlap"
+msgstr "Prekrivanje"
 
 #: plug-ins/common/depth-merge.c:253 plug-ins/common/file-raw-data.c:365
 msgid "O_ffset"
@@ -2329,9 +2365,21 @@ msgstr "Relativni zamik globine"
 msgid "Sc_ale 1"
 msgstr "Spremem_ba merila 1"
 
+#: plug-ins/common/depth-merge.c:260
+#, fuzzy
+#| msgid "Depth relative offset"
+msgid "Depth relative scale 1"
+msgstr "Relativni zamik globine"
+
 #: plug-ins/common/depth-merge.c:265
 msgid "Scal_e 2"
 msgstr "Spre_memba merila 2"
+
+#: plug-ins/common/depth-merge.c:266
+#, fuzzy
+#| msgid "Depth relative offset"
+msgid "Depth relative scale 2"
+msgstr "Relativni zamik globine"
 
 #: plug-ins/common/depth-merge.c:313
 msgid "The selection does not intersect with the input drawable."
@@ -4345,6 +4393,68 @@ msgstr "slik. točk/%a"
 #: plug-ins/common/file-pdf-save.c:331
 msgid "PDF"
 msgstr "PDF"
+
+#: plug-ins/common/file-pdf-save.c:338 plug-ins/common/file-pdf-save.c:339
+msgid "Convert bitmaps to vector graphics where possible"
+msgstr "Pretvori bitne slike v vektorsko grafiko, kjer je to mogoče"
+
+#: plug-ins/common/file-pdf-save.c:344
+msgid "Omit hidden layers and layers with zero opacity"
+msgstr "Izpusti skrite plasti in plasti z ničelno prekrivnostjo"
+
+#: plug-ins/common/file-pdf-save.c:345
+#, fuzzy
+#| msgid ""
+#| "Duplicate layer size. \n"
+#| "It will not be exported"
+msgid "Non-visible layers will not be exported"
+msgstr ""
+"Podvojena velikost plasti. \n"
+"Ne bo izvožena"
+
+#: plug-ins/common/file-pdf-save.c:350
+msgid "Apply layer masks"
+msgstr "Uveljavi maske plasti"
+
+#: plug-ins/common/file-pdf-save.c:351
+msgid ""
+"Apply layer masks before saving (Keeping the mask will not change the "
+"output, only the PDF structure)"
+msgstr ""
+
+#: plug-ins/common/file-pdf-save.c:357
+msgid "Layers as pages"
+msgstr "Plasti kot strani"
+
+#: plug-ins/common/file-pdf-save.c:358
+msgid "Layers as pages (bottom layers first)."
+msgstr "Plasti kot strani (najprej spodnje plasti)."
+
+#: plug-ins/common/file-pdf-save.c:363
+#, fuzzy
+#| msgid "Reverse Order"
+msgid "Reverse order"
+msgstr "Preobrni zaporedje"
+
+#: plug-ins/common/file-pdf-save.c:364
+msgid "Reverse the pages order (top layers first)."
+msgstr "Obratno zaporedje strani (najprej vrhnje plasti)."
+
+#: plug-ins/common/file-pdf-save.c:369
+msgid "Root layers only"
+msgstr "Samo korenske plasti"
+
+#: plug-ins/common/file-pdf-save.c:370
+msgid "Only the root layers are considered pages"
+msgstr "Samo korenske plasti veljajo za strani"
+
+#: plug-ins/common/file-pdf-save.c:375
+msgid "Convert text layers to image"
+msgstr "Pretvori besedilne plasti v sliko"
+
+#: plug-ins/common/file-pdf-save.c:376
+msgid "Convert text layers to raster graphics"
+msgstr "Pretvori besedilne plasti v rastrsko grafiko"
 
 #: plug-ins/common/file-pdf-save.c:381 plug-ins/common/file-pdf-save.c:453
 #: plug-ins/common/file-pdf-save.c:1105
@@ -6477,22 +6587,18 @@ msgid "Combine several images on a film strip"
 msgstr "Sestavi več slik na fotografski trak"
 
 #: plug-ins/common/film.c:194
-#, fuzzy
 msgid "Film _height"
 msgstr "_Višina filma"
 
 #: plug-ins/common/film.c:195
-#, fuzzy
 msgid "Height of film (0: fit to images)"
 msgstr "Višina filma (0: prilagodi slikam)"
 
 #: plug-ins/common/film.c:200
-#, fuzzy
 msgid "_Film color"
 msgstr "Barva _filma"
 
 #: plug-ins/common/film.c:201
-#, fuzzy
 msgid "Color of the film"
 msgstr "Barva filma"
 
@@ -8210,9 +8316,17 @@ msgstr "L_estvice"
 msgid "Create a layer group to store the _decomposition"
 msgstr "Ustvari skupino plasti za shranjevanje _razstavljanja"
 
+#: plug-ins/common/wavelet-decompose.c:139
+msgid "Create a layer group to store the decomposition"
+msgstr "Ustvari skupino plasti za shranjevanje razstavljanja"
+
 #: plug-ins/common/wavelet-decompose.c:145
 msgid "_Add a layer mask to each scales layer"
 msgstr "_Dodaj masko plasti vsaki plasti lestvice"
+
+#: plug-ins/common/wavelet-decompose.c:146
+msgid "Add a layer mask to each scales layer"
+msgstr "Dodaj masko plasti vsaki plasti lestvice"
 
 #: plug-ins/common/wavelet-decompose.c:204
 msgid "Wavelet-Decompose"
@@ -8869,10 +8983,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/file-dds/ddsread.c:499
-#, fuzzy
-#| msgid "Invalid or corrupted DDS header"
 msgid "Invalid or corrupted DDS header."
-msgstr "Neveljavna ali okvarjena glava DDS"
+msgstr "Neveljavna ali okvarjena glava DDS."
 
 #: plug-ins/file-dds/ddsread.c:511
 msgid "Could not allocate a new image."
@@ -10903,14 +11015,13 @@ msgid "Custom gradient"
 msgstr "Preliv po meri ..."
 
 #: plug-ins/flame/flame.c:1341
-#, fuzzy
-#| msgid "Rendering"
 msgid "_Rendering"
-msgstr "Upodabljanje"
+msgstr "_Izrisovanje"
 
 #: plug-ins/flame/flame.c:1344
+#, fuzzy
 msgid "C_amera"
-msgstr ""
+msgstr "K_amera"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:617
 #: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
@@ -11222,10 +11333,8 @@ msgid "Red inversion mode"
 msgstr "Način uporabe rdeče"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:376
-#, fuzzy
-#| msgid "In_version"
 msgid "I_nversion"
-msgstr "In_verzija"
+msgstr "I_nverzija"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:377
 #, fuzzy
@@ -11234,10 +11343,8 @@ msgid "Green inversion mode"
 msgstr "Način uporabe zelene"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:382
-#, fuzzy
-#| msgid "In_version"
 msgid "_Inversion"
-msgstr "In_verzija"
+msgstr "_Inverzija"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:383
 #, fuzzy
@@ -12451,33 +12558,67 @@ msgstr "Ustvari učinek odbleska na leči z uporabo prelivov"
 msgid "Radi_us"
 msgstr "Ra_dij"
 
+#: plug-ins/gradient-flare/gradient-flare.c:854
+msgid "Radius of GFlare (pixel)"
+msgstr ""
+
 #: plug-ins/gradient-flare/gradient-flare.c:859
 msgid "Ro_tation"
 msgstr "Su_kanje"
+
+#: plug-ins/gradient-flare/gradient-flare.c:860
+#, fuzzy
+#| msgid "Rotation about X axis in degrees"
+msgid "Rotation of GFlare (degree)"
+msgstr "Kot sukanja okoli osi X v stopinjah"
 
 #: plug-ins/gradient-flare/gradient-flare.c:865
 msgid "_Hue rotation"
 msgstr "Sukanje _obarvanosti"
 
+#: plug-ins/gradient-flare/gradient-flare.c:866
+msgid "Hue rotation of GFlare (degree)"
+msgstr ""
+
 #: plug-ins/gradient-flare/gradient-flare.c:871
 msgid "Vector _angle"
 msgstr "Kot vektorj_a"
+
+#: plug-ins/gradient-flare/gradient-flare.c:872
+msgid "Vector angle for second flares (degree)"
+msgstr ""
 
 #: plug-ins/gradient-flare/gradient-flare.c:877
 msgid "Vector len_gth"
 msgstr "_Dolžina vektorja"
 
+#: plug-ins/gradient-flare/gradient-flare.c:878
+msgid "Vector length for second flares (percentage of Radius)"
+msgstr ""
+
 #: plug-ins/gradient-flare/gradient-flare.c:884
 msgid "Ada_ptive supersampling"
 msgstr "Prile_gajoče nadvzorčenje"
+
+#: plug-ins/gradient-flare/gradient-flare.c:885
+msgid "Use adaptive supersampling while rendering"
+msgstr "Uporabi prilegajoče nadvzorčenje pri izrisovanju"
 
 #: plug-ins/gradient-flare/gradient-flare.c:890
 msgid "_Max depth"
 msgstr "_Največja globina"
 
+#: plug-ins/gradient-flare/gradient-flare.c:891
+msgid "Max depth for adaptive supersampling"
+msgstr "Največja globina za prilegajoče nadvzorčenje"
+
 #: plug-ins/gradient-flare/gradient-flare.c:896
 msgid "Threshol_d"
 msgstr "Pra_g"
+
+#: plug-ins/gradient-flare/gradient-flare.c:897
+msgid "Threshold for adaptive supersampling"
+msgstr "Prag za prilegajoče nadvzorčenje"
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
 #: plug-ins/gradient-flare/gradient-flare.c:2499
@@ -15486,14 +15627,13 @@ msgid "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
 msgstr ""
 
 #: plug-ins/screenshot/screenshot.c:195
-#, fuzzy
-#| msgid "Mouse Pointer"
 msgid "Include _mouse pointer"
-msgstr "Miškin kazalec"
+msgstr "Vključi kazalec _miške"
 
 #: plug-ins/screenshot/screenshot.c:196
+#, fuzzy
 msgid "Your pointing device's cursor will be part of the image"
-msgstr ""
+msgstr "Kazalec vaše usmerjevalne naprave bo del slike"
 
 #: plug-ins/screenshot/screenshot.c:204
 msgid "Include window _decoration"
