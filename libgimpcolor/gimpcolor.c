@@ -122,8 +122,18 @@ gboolean
 gimp_color_is_perceptually_identical (GeglColor *color1,
                                       GeglColor *color2)
 {
+  gdouble a1;
+  gdouble a2;
+
   g_return_val_if_fail (GEGL_IS_COLOR (color1), FALSE);
   g_return_val_if_fail (GEGL_IS_COLOR (color2), FALSE);
+
+  gegl_color_get_rgba (color1, NULL, NULL, NULL, &a1);
+  gegl_color_get_rgba (color2, NULL, NULL, NULL, &a2);
+
+  /* With different transparency, don't look further. */
+  if (ABS (a1 - a2) > 1e-4)
+    return FALSE;
 
   /* All CIE deltaE distances were designed with a 1.0 JND (Just Noticeable
    * Difference), though there was some revision to 2.3 for the CIE76 version.
