@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-17 03:03+0000\n"
-"PO-Revision-Date: 2023-12-17 12:18+0200\n"
+"POT-Creation-Date: 2023-12-20 20:27+0000\n"
+"PO-Revision-Date: 2023-12-21 18:23+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -1534,6 +1534,11 @@ msgstr "YCbCr_ITU_R470_256"
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
+#: plug-ins/common/compose.c:378
+#| msgid "Wavelet decompose"
+msgid "What to compose: "
+msgstr "Що компонувати: "
+
 #: plug-ins/common/compose.c:403
 msgid "C_ompose..."
 msgstr "_Зібрати..."
@@ -2251,6 +2256,11 @@ msgstr "Жовтий"
 msgid "Black"
 msgstr "Чорний"
 
+#: plug-ins/common/decompose.c:261
+#| msgid "Wavelet decompose"
+msgid "What to decompose: "
+msgstr "Що декомпонувати: "
+
 #: plug-ins/common/decompose.c:282
 msgid "_Decompose..."
 msgstr "_Розібрати..."
@@ -2258,6 +2268,11 @@ msgstr "_Розібрати..."
 #: plug-ins/common/decompose.c:286
 msgid "Decompose an image into separate colorspace components"
 msgstr "Розібрати зображення на окремі кольорові складові"
+
+#: plug-ins/common/decompose.c:305
+#| msgid "Create a new layer when applying filter"
+msgid "Create channels as layers in a single image"
+msgstr "Створити канали як шари у єдиному зображенні"
 
 #: plug-ins/common/decompose.c:403
 msgid "Decomposing"
@@ -2308,21 +2323,46 @@ msgstr "Об'єднати два зображення, використовую�
 msgid "Source _1"
 msgstr "Джерело _1"
 
+#: plug-ins/common/depth-merge.c:224
+#| msgid "Source _1"
+msgid "Source 1"
+msgstr "Джерело 1"
+
 #: plug-ins/common/depth-merge.c:229
 msgid "_Depth map 1"
 msgstr "Мапа _глибин 1"
+
+#: plug-ins/common/depth-merge.c:230
+#| msgid "_Depth map 1"
+msgid "Depth map 1"
+msgstr "Мапа глибин 1"
 
 #: plug-ins/common/depth-merge.c:235
 msgid "Source _2"
 msgstr "Джерело _2"
 
+#: plug-ins/common/depth-merge.c:236
+#| msgid "Source _2"
+msgid "Source 2"
+msgstr "Джерело 2"
+
 #: plug-ins/common/depth-merge.c:241
 msgid "Depth _map 2"
 msgstr "_Мапа глибин 2"
 
+#: plug-ins/common/depth-merge.c:242
+#| msgid "Depth _map 2"
+msgid "Depth map 2"
+msgstr "Мапа глибин 2"
+
 #: plug-ins/common/depth-merge.c:247
 msgid "O_verlap"
 msgstr "_Перекриття"
+
+#: plug-ins/common/depth-merge.c:248
+#| msgid "O_verlap"
+msgid "Overlap"
+msgstr "Перекриття"
 
 #: plug-ins/common/depth-merge.c:253 plug-ins/common/file-raw-data.c:365
 msgid "O_ffset"
@@ -2336,9 +2376,19 @@ msgstr "Відносний зсув глибин"
 msgid "Sc_ale 1"
 msgstr "_Масштаб 1"
 
+#: plug-ins/common/depth-merge.c:260
+#| msgid "Depth relative offset"
+msgid "Depth relative scale 1"
+msgstr "Відносна щодо глибини масштаб 1"
+
 #: plug-ins/common/depth-merge.c:265
 msgid "Scal_e 2"
 msgstr "М_асштаб 2"
+
+#: plug-ins/common/depth-merge.c:266
+#| msgid "Depth relative offset"
+msgid "Depth relative scale 2"
+msgstr "Відносна щодо глибини масштаб 2"
 
 #: plug-ins/common/depth-merge.c:313
 msgid "The selection does not intersect with the input drawable."
@@ -4370,24 +4420,18 @@ msgid "PDF"
 msgstr "PDF"
 
 #: plug-ins/common/file-pdf-save.c:338 plug-ins/common/file-pdf-save.c:339
-#| msgid "Convert _bitmaps to vector graphics where possible"
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Перетворити растрові зображення на векторну графіку, де це можливо "
 
 #: plug-ins/common/file-pdf-save.c:344
-#| msgid "_Omit hidden layers and layers with zero opacity"
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Пропустити приховані шари і шари без прозорості"
 
 #: plug-ins/common/file-pdf-save.c:345
-#| msgid ""
-#| "Duplicate layer size. \n"
-#| "It will not be exported"
 msgid "Non-visible layers will not be exported"
 msgstr "Невидимі шари не буде експортовано"
 
 #: plug-ins/common/file-pdf-save.c:350
-#| msgid "_Apply layer masks before saving"
 msgid "Apply layer masks"
 msgstr "Застосувати маски шарів"
 
@@ -4396,26 +4440,22 @@ msgid ""
 "Apply layer masks before saving (Keeping the mask will not change the "
 "output, only the PDF structure)"
 msgstr ""
-"Застосувати маски шарів перед збереженням (збереження маски не змінить"
-" результату, лише змінить структуру PDF)"
+"Застосувати маски шарів перед збереженням (збереження маски не змінить "
+"результату, лише змінить структуру PDF)"
 
 #: plug-ins/common/file-pdf-save.c:357
-#| msgid "Layers as pages (%s)"
 msgid "Layers as pages"
 msgstr "Шари як сторінки"
 
 #: plug-ins/common/file-pdf-save.c:358
-#| msgid "bottom layers first"
 msgid "Layers as pages (bottom layers first)."
 msgstr "Шари як сторінки (спочатку нижні шари)."
 
 #: plug-ins/common/file-pdf-save.c:363
-#| msgid "Reverse Order"
 msgid "Reverse order"
 msgstr "Зворотний порядок"
 
 #: plug-ins/common/file-pdf-save.c:364
-#| msgid "_Reverse the pages order"
 msgid "Reverse the pages order (top layers first)."
 msgstr "Зворотний порядок сторінок (верхні шари першими)."
 
@@ -4428,12 +4468,10 @@ msgid "Only the root layers are considered pages"
 msgstr "Сторінками вважатимуться лише кореневі шари"
 
 #: plug-ins/common/file-pdf-save.c:375
-#| msgid "_Convert text layers to image"
 msgid "Convert text layers to image"
 msgstr "Перетворити текстові шари на зображення"
 
 #: plug-ins/common/file-pdf-save.c:376
-#| msgid "_Convert text layers to image"
 msgid "Convert text layers to raster graphics"
 msgstr "Перетворити текстові шари на растрову графіку"
 
@@ -8333,9 +8371,19 @@ msgstr "_Рівні деталізації"
 msgid "Create a layer group to store the _decomposition"
 msgstr "Створити групу шарів для зберігання _розбиття"
 
+#: plug-ins/common/wavelet-decompose.c:139
+#| msgid "Create a layer group to store the _decomposition"
+msgid "Create a layer group to store the decomposition"
+msgstr "Створити групу шарів для зберігання розбиття"
+
 #: plug-ins/common/wavelet-decompose.c:145
 msgid "_Add a layer mask to each scales layer"
 msgstr "_Додати маску шару до кожного з шарів деталізації"
+
+#: plug-ins/common/wavelet-decompose.c:146
+#| msgid "_Add a layer mask to each scales layer"
+msgid "Add a layer mask to each scales layer"
+msgstr "Додати маску шару до кожного з шарів деталізації"
 
 #: plug-ins/common/wavelet-decompose.c:204
 msgid "Wavelet-Decompose"
@@ -12578,33 +12626,69 @@ msgstr "Додати до зображення відблиск, викорис�
 msgid "Radi_us"
 msgstr "Раді_ус"
 
+#: plug-ins/gradient-flare/gradient-flare.c:854
+msgid "Radius of GFlare (pixel)"
+msgstr "Радіус GFlare (у пікселях)"
+
 #: plug-ins/gradient-flare/gradient-flare.c:859
 msgid "Ro_tation"
 msgstr "_Обертання"
+
+#: plug-ins/gradient-flare/gradient-flare.c:860
+#| msgid "Rotation about X axis in degrees"
+msgid "Rotation of GFlare (degree)"
+msgstr "Обертання GFlare (у градусах)"
 
 #: plug-ins/gradient-flare/gradient-flare.c:865
 msgid "_Hue rotation"
 msgstr "Обертання _відтінку"
 
+#: plug-ins/gradient-flare/gradient-flare.c:866
+msgid "Hue rotation of GFlare (degree)"
+msgstr "Обертання відтінку GFlare (у градусах)"
+
 #: plug-ins/gradient-flare/gradient-flare.c:871
 msgid "Vector _angle"
 msgstr "_Кут вектора"
+
+#: plug-ins/gradient-flare/gradient-flare.c:872
+msgid "Vector angle for second flares (degree)"
+msgstr "Кут вектора для других спалахів (у градусах)"
 
 #: plug-ins/gradient-flare/gradient-flare.c:877
 msgid "Vector len_gth"
 msgstr "Дов_жина вектора"
 
+#: plug-ins/gradient-flare/gradient-flare.c:878
+msgid "Vector length for second flares (percentage of Radius)"
+msgstr "Довжина вектора для других спалахів (у відсотках до радіуса)"
+
 #: plug-ins/gradient-flare/gradient-flare.c:884
 msgid "Ada_ptive supersampling"
 msgstr "Адап_тивна наддискретизація"
+
+#: plug-ins/gradient-flare/gradient-flare.c:885
+#| msgid "Ada_ptive supersampling"
+msgid "Use adaptive supersampling while rendering"
+msgstr "Адаптивна наддискретизація під час обробки"
 
 #: plug-ins/gradient-flare/gradient-flare.c:890
 msgid "_Max depth"
 msgstr "Максимальна г_либина"
 
+#: plug-ins/gradient-flare/gradient-flare.c:891
+#| msgid "Ada_ptive supersampling"
+msgid "Max depth for adaptive supersampling"
+msgstr "Максимальна глибина адаптивної наддискретизації"
+
 #: plug-ins/gradient-flare/gradient-flare.c:896
 msgid "Threshol_d"
 msgstr "П_оріг"
+
+#: plug-ins/gradient-flare/gradient-flare.c:897
+#| msgid "Ada_ptive supersampling"
+msgid "Threshold for adaptive supersampling"
+msgstr "Поріг для адаптивної наддискретизації"
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
 #: plug-ins/gradient-flare/gradient-flare.c:2499
