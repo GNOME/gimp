@@ -2466,11 +2466,11 @@ read_extended_block (FILE      *f,
         {
         case PSP_XDATA_GRID:
           {
-            GimpRGB color;
-            guchar  rgb[4];
-            guint32 h_spacing;
-            guint32 v_spacing;
-            guint16 unit; /* Unused */
+            GeglColor *color;
+            guchar     rgb[4];
+            guint32    h_spacing;
+            guint32    v_spacing;
+            guint16    unit; /* Unused */
 
             if (field_length != 14              ||
                 fread (rgb, 4, 1, f) < 1        ||
@@ -2487,9 +2487,11 @@ read_extended_block (FILE      *f,
             v_spacing = GUINT32_FROM_LE (v_spacing);
             gimp_image_grid_set_spacing (image, h_spacing, v_spacing);
 
-            gimp_rgba_set_uchar (&color, rgb[0], rgb[1], rgb[2], 255);
-            gimp_image_grid_set_foreground_color (image, &color);
-            gimp_image_grid_set_background_color (image, &color);
+            color = gegl_color_new (NULL);
+            gegl_color_set_pixel (color, babl_format ("R'G'B' u8"), rgb);
+            gimp_image_grid_set_foreground_color (image, color);
+            gimp_image_grid_set_background_color (image, color);
+            g_object_unref (color);
           }
           break;
 

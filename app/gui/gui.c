@@ -40,6 +40,7 @@
 #include "plug-in/gimpenvirontable.h"
 #include "plug-in/gimppluginmanager.h"
 
+#include "display/gimpcanvas-style.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
@@ -277,6 +278,7 @@ gui_init (Gimp         *gimp,
   gimp_dnd_init (gimp);
 
   themes_init (gimp);
+  gimp_canvas_styles_init ();
 
   initial_monitor = gimp_get_monitor_at_pointer ();
 
@@ -755,6 +757,7 @@ gui_exit_after_callback (Gimp     *gimp,
   gimp_devices_exit (gimp);
   dialogs_exit (gimp);
   themes_exit (gimp);
+  gimp_canvas_styles_exit ();
 
   g_type_class_unref (g_type_class_peek (GIMP_TYPE_COLOR_SELECT));
 

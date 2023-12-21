@@ -44,14 +44,12 @@ gboolean      gimp_image_grid_get_offset           (GimpImage     *image,
 gboolean      gimp_image_grid_set_offset           (GimpImage     *image,
                                                     gdouble        xoffset,
                                                     gdouble        yoffset);
-gboolean      gimp_image_grid_get_foreground_color (GimpImage     *image,
-                                                    GimpRGB       *fgcolor);
+GeglColor*    gimp_image_grid_get_foreground_color (GimpImage     *image);
 gboolean      gimp_image_grid_set_foreground_color (GimpImage     *image,
-                                                    const GimpRGB *fgcolor);
-gboolean      gimp_image_grid_get_background_color (GimpImage     *image,
-                                                    GimpRGB       *bgcolor);
+                                                    GeglColor     *fgcolor);
+GeglColor*    gimp_image_grid_get_background_color (GimpImage     *image);
 gboolean      gimp_image_grid_set_background_color (GimpImage     *image,
-                                                    const GimpRGB *bgcolor);
+                                                    GeglColor     *bgcolor);
 GimpGridStyle gimp_image_grid_get_style            (GimpImage     *image);
 gboolean      gimp_image_grid_set_style            (GimpImage     *image,
                                                     GimpGridStyle  style);

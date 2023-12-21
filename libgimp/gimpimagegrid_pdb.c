@@ -221,23 +221,21 @@ gimp_image_grid_set_offset (GimpImage *image,
 /**
  * gimp_image_grid_get_foreground_color:
  * @image: The image.
- * @fgcolor: (out caller-allocates): The image's grid foreground color.
  *
  * Sets the foreground color of an image's grid.
  *
  * This procedure gets the foreground color of an image's grid.
  *
- * Returns: TRUE on success.
+ * Returns: (transfer full): The image's grid foreground color.
  *
  * Since: 2.4
  **/
-gboolean
-gimp_image_grid_get_foreground_color (GimpImage *image,
-                                      GimpRGB   *fgcolor)
+GeglColor *
+gimp_image_grid_get_foreground_color (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gboolean success = TRUE;
+  GeglColor *fgcolor = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -248,14 +246,12 @@ gimp_image_grid_get_foreground_color (GimpImage *image,
                                                args);
   gimp_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*fgcolor);
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    fgcolor = g_value_dup_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
-  return success;
+  return fgcolor;
 }
 
 /**
@@ -272,8 +268,8 @@ gimp_image_grid_get_foreground_color (GimpImage *image,
  * Since: 2.4
  **/
 gboolean
-gimp_image_grid_set_foreground_color (GimpImage     *image,
-                                      const GimpRGB *fgcolor)
+gimp_image_grid_set_foreground_color (GimpImage *image,
+                                      GeglColor *fgcolor)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -281,7 +277,7 @@ gimp_image_grid_set_foreground_color (GimpImage     *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_RGB, fgcolor,
+                                          GEGL_TYPE_COLOR, fgcolor,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -299,23 +295,21 @@ gimp_image_grid_set_foreground_color (GimpImage     *image,
 /**
  * gimp_image_grid_get_background_color:
  * @image: The image.
- * @bgcolor: (out caller-allocates): The image's grid background color.
  *
  * Sets the background color of an image's grid.
  *
  * This procedure gets the background color of an image's grid.
  *
- * Returns: TRUE on success.
+ * Returns: (transfer full): The image's grid background color.
  *
  * Since: 2.4
  **/
-gboolean
-gimp_image_grid_get_background_color (GimpImage *image,
-                                      GimpRGB   *bgcolor)
+GeglColor *
+gimp_image_grid_get_background_color (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gboolean success = TRUE;
+  GeglColor *bgcolor = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -326,14 +320,12 @@ gimp_image_grid_get_background_color (GimpImage *image,
                                                args);
   gimp_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*bgcolor);
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    bgcolor = g_value_dup_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
-  return success;
+  return bgcolor;
 }
 
 /**
@@ -350,8 +342,8 @@ gimp_image_grid_get_background_color (GimpImage *image,
  * Since: 2.4
  **/
 gboolean
-gimp_image_grid_set_background_color (GimpImage     *image,
-                                      const GimpRGB *bgcolor)
+gimp_image_grid_set_background_color (GimpImage *image,
+                                      GeglColor *bgcolor)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -359,7 +351,7 @@ gimp_image_grid_set_background_color (GimpImage     *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_RGB, bgcolor,
+                                          GEGL_TYPE_COLOR, bgcolor,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),

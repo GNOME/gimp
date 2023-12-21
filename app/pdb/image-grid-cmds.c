@@ -21,14 +21,11 @@
 
 #include "stamp-pdbgen.h"
 
-#include <cairo.h>
-
 #include <gegl.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbaseenums.h"
-#include "libgimpcolor/gimpcolor.h"
 
 #include "libgimpbase/gimpbase.h"
 
@@ -205,7 +202,7 @@ image_grid_get_foreground_color_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  GimpRGB fgcolor = { 0.0, 0.0, 0.0, 1.0 };
+  GeglColor *fgcolor = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -214,7 +211,7 @@ image_grid_get_foreground_color_invoker (GimpProcedure         *procedure,
       GimpGrid *grid = gimp_image_get_grid (image);
 
       if (grid)
-        fgcolor = grid->fgcolor;
+        fgcolor = gegl_color_duplicate (grid->fgcolor);
       else
         success = FALSE;
     }
@@ -223,7 +220,7 @@ image_grid_get_foreground_color_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &fgcolor);
+    g_value_take_object (gimp_value_array_index (return_vals, 1), fgcolor);
 
   return return_vals;
 }
@@ -238,17 +235,17 @@ image_grid_set_foreground_color_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  GimpRGB fgcolor;
+  GeglColor *fgcolor;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  gimp_value_get_rgb (gimp_value_array_index (args, 1), &fgcolor);
+  fgcolor = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
       GimpGrid *grid = gimp_image_get_grid (image);
 
       if (grid)
-        g_object_set (grid, "fgcolor", &fgcolor, NULL);
+        g_object_set (grid, "fgcolor", fgcolor, NULL);
       else
         success = FALSE;
     }
@@ -268,7 +265,7 @@ image_grid_get_background_color_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  GimpRGB bgcolor = { 0.0, 0.0, 0.0, 1.0 };
+  GeglColor *bgcolor = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -277,7 +274,7 @@ image_grid_get_background_color_invoker (GimpProcedure         *procedure,
       GimpGrid *grid = gimp_image_get_grid (image);
 
       if (grid)
-        bgcolor = grid->bgcolor;
+        bgcolor = gegl_color_duplicate (grid->bgcolor);
       else
         success = FALSE;
     }
@@ -286,7 +283,7 @@ image_grid_get_background_color_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &bgcolor);
+    g_value_take_object (gimp_value_array_index (return_vals, 1), bgcolor);
 
   return return_vals;
 }
@@ -301,17 +298,17 @@ image_grid_set_background_color_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  GimpRGB bgcolor;
+  GeglColor *bgcolor;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  gimp_value_get_rgb (gimp_value_array_index (args, 1), &bgcolor);
+  bgcolor = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
       GimpGrid *grid = gimp_image_get_grid (image);
 
       if (grid)
-        g_object_set (grid, "bgcolor", &bgcolor, NULL);
+        g_object_set (grid, "bgcolor", bgcolor, NULL);
       else
         success = FALSE;
     }
@@ -549,12 +546,11 @@ register_image_grid_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("fgcolor",
-                                                        "fgcolor",
-                                                        "The image's grid foreground color",
-                                                        TRUE,
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                   gegl_param_spec_color ("fgcolor",
+                                                          "fgcolor",
+                                                          "The image's grid foreground color",
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -579,12 +575,11 @@ register_image_grid_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("fgcolor",
-                                                    "fgcolor",
-                                                    "The new foreground color",
-                                                    TRUE,
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
+                               gegl_param_spec_color ("fgcolor",
+                                                      "fgcolor",
+                                                      "The new foreground color",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -609,12 +604,11 @@ register_image_grid_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("bgcolor",
-                                                        "bgcolor",
-                                                        "The image's grid background color",
-                                                        TRUE,
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                   gegl_param_spec_color ("bgcolor",
+                                                          "bgcolor",
+                                                          "The image's grid background color",
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -639,12 +633,11 @@ register_image_grid_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("bgcolor",
-                                                    "bgcolor",
-                                                    "The new background color",
-                                                    TRUE,
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
+                               gegl_param_spec_color ("bgcolor",
+                                                      "bgcolor",
+                                                      "The new background color",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

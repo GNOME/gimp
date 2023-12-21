@@ -42,27 +42,28 @@ static cairo_user_data_key_t surface_data_key = { 0, };
 
 
 cairo_pattern_t *
-gimp_cairo_pattern_create_stipple (const GimpRGB *fg,
-                                   const GimpRGB *bg,
-                                   gint           index,
-                                   gdouble        offset_x,
-                                   gdouble        offset_y)
+gimp_cairo_pattern_create_stipple (GeglColor  *fg,
+                                   GeglColor  *bg,
+                                   gint        index,
+                                   gdouble     offset_x,
+                                   gdouble     offset_y,
+                                   const Babl *render_space)
 {
   cairo_surface_t *surface;
   cairo_pattern_t *pattern;
   guchar          *data;
   guchar          *d;
-  guchar           fg_r, fg_g, fg_b, fg_a;
-  guchar           bg_r, bg_g, bg_b, bg_a;
+  guchar           fg_rgba[4];
+  guchar           bg_rgba[4];
   gint             x, y;
 
-  g_return_val_if_fail (fg != NULL, NULL);
-  g_return_val_if_fail (bg != NULL, NULL);
+  g_return_val_if_fail (GEGL_IS_COLOR (fg), NULL);
+  g_return_val_if_fail (GEGL_IS_COLOR (bg), NULL);
 
   data = g_malloc (8 * 8 * 4);
 
-  gimp_rgba_get_uchar (fg, &fg_r, &fg_g, &fg_b, &fg_a);
-  gimp_rgba_get_uchar (bg, &bg_r, &bg_g, &bg_b, &bg_a);
+  gegl_color_get_pixel (fg, babl_format_with_space ("R'G'B'A u8", render_space), fg_rgba);
+  gegl_color_get_pixel (bg, babl_format_with_space ("R'G'B'A u8", render_space), bg_rgba);
 
   d = data;
 
@@ -71,9 +72,9 @@ gimp_cairo_pattern_create_stipple (const GimpRGB *fg,
       for (x = 0; x < 8; x++)
         {
           if ((x + y + index) % 8 >= 4)
-            GIMP_CAIRO_ARGB32_SET_PIXEL (d, fg_r, fg_g, fg_b, fg_a);
+            GIMP_CAIRO_ARGB32_SET_PIXEL (d, fg_rgba[0], fg_rgba[1], fg_rgba[2], fg_rgba[3]);
           else
-            GIMP_CAIRO_ARGB32_SET_PIXEL (d, bg_r, bg_g, bg_b, bg_a);
+            GIMP_CAIRO_ARGB32_SET_PIXEL (d, bg_rgba[0], bg_rgba[1], bg_rgba[2], bg_rgba[3]);
 
           d += 4;
         }

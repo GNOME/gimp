@@ -49,8 +49,8 @@ typedef struct _GimpCanvasPenPrivate GimpCanvasPenPrivate;
 
 struct _GimpCanvasPenPrivate
 {
-  GimpRGB color;
-  gint    width;
+  GeglColor *color;
+  gint       width;
 };
 
 #define GET_PRIVATE(pen) \
@@ -59,6 +59,7 @@ struct _GimpCanvasPenPrivate
 
 /*  local function prototypes  */
 
+static void             gimp_canvas_pen_finalize     (GObject        *object);
 static void             gimp_canvas_pen_set_property (GObject        *object,
                                                       guint           property_id,
                                                       const GValue   *value,
@@ -84,6 +85,7 @@ gimp_canvas_pen_class_init (GimpCanvasPenClass *klass)
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
   GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
 
+  object_class->finalize     = gimp_canvas_pen_finalize;
   object_class->set_property = gimp_canvas_pen_set_property;
   object_class->get_property = gimp_canvas_pen_get_property;
 
@@ -91,9 +93,9 @@ gimp_canvas_pen_class_init (GimpCanvasPenClass *klass)
   item_class->stroke         = gimp_canvas_pen_stroke;
 
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gimp_param_spec_rgb ("color", NULL, NULL,
-                                                        FALSE, NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                   gegl_param_spec_color_from_string ("color", NULL, NULL,
+                                                                      /*FALSE,*/ "black",
+                                                                      GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_WIDTH,
                                    g_param_spec_int ("width", NULL, NULL,
@@ -104,6 +106,20 @@ gimp_canvas_pen_class_init (GimpCanvasPenClass *klass)
 static void
 gimp_canvas_pen_init (GimpCanvasPen *pen)
 {
+  GimpCanvasPenPrivate *private = GET_PRIVATE (pen);
+
+  private->color = gegl_color_new ("black");
+}
+
+
+static void
+gimp_canvas_pen_finalize (GObject *object)
+{
+  GimpCanvasPenPrivate *private = GET_PRIVATE (object);
+
+  g_clear_object (&private->color);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -117,7 +133,8 @@ gimp_canvas_pen_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_COLOR:
-      gimp_value_get_rgb (value, &private->color);
+      g_clear_object (&private->color);
+      private->color = gegl_color_duplicate (g_value_get_object (value));
       break;
     case PROP_WIDTH:
       private->width = g_value_get_int (value);
@@ -140,7 +157,7 @@ gimp_canvas_pen_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_COLOR:
-      gimp_value_set_rgb (value, &private->color);
+      g_value_set_object (value, private->color);
       break;
     case PROP_WIDTH:
       g_value_set_int (value, private->width);
@@ -184,7 +201,7 @@ gimp_canvas_pen_stroke (GimpCanvasItem *item,
   GimpCanvasPenPrivate *private = GET_PRIVATE (item);
 
   gimp_canvas_set_pen_style (gimp_canvas_item_get_canvas (item), cr,
-                             &private->color, private->width);
+                             private->color, private->width);
   cairo_stroke (cr);
 }
 
@@ -199,7 +216,6 @@ gimp_canvas_pen_new (GimpDisplayShell  *shell,
   GimpCanvasItem *item;
   GimpArray      *array;
   GeglColor      *color = NULL;
-  GimpRGB         rgb;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
   g_return_val_if_fail (points != NULL && n_points > 1, NULL);
@@ -222,12 +238,10 @@ gimp_canvas_pen_new (GimpDisplayShell  *shell,
       g_return_val_if_reached (NULL);
     }
 
-  gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
-
   item = g_object_new (GIMP_TYPE_CANVAS_PEN,
                        "shell",  shell,
                        "points", array,
-                       "color",  &rgb,
+                       "color",  color,
                        "width",  width,
                        NULL);
 

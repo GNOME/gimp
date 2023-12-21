@@ -177,7 +177,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'fgcolor', type => 'color', has_alpha => 1, void_ret => 1,
+        { name => 'fgcolor', type => 'geglcolor', has_alpha => 1,
           desc => "The image's grid foreground color" }
     );
 
@@ -187,7 +187,7 @@ HELP
   GimpGrid *grid = gimp_image_get_grid (image);
 
   if (grid)
-    fgcolor = grid->fgcolor;
+    fgcolor = gegl_color_duplicate (grid->fgcolor);
   else
     success = FALSE;
 }
@@ -207,7 +207,7 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-        { name => 'fgcolor', type => 'color', has_alpha => 1,
+        { name => 'fgcolor', type => 'geglcolor', has_alpha => 1,
           desc => "The new foreground color" }
     );
 
@@ -217,7 +217,7 @@ HELP
   GimpGrid *grid = gimp_image_get_grid (image);
 
   if (grid)
-    g_object_set (grid, "fgcolor", &fgcolor, NULL);
+    g_object_set (grid, "fgcolor", fgcolor, NULL);
   else
     success = FALSE;
 }
@@ -240,7 +240,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'bgcolor', type => 'color', has_alpha => 1, void_ret => 1,
+        { name => 'bgcolor', type => 'geglcolor', has_alpha => 1,
           desc => "The image's grid background color" }
     );
 
@@ -250,7 +250,7 @@ HELP
   GimpGrid *grid = gimp_image_get_grid (image);
 
   if (grid)
-    bgcolor = grid->bgcolor;
+    bgcolor = gegl_color_duplicate (grid->bgcolor);
   else
     success = FALSE;
 }
@@ -270,7 +270,7 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-        { name => 'bgcolor', type => 'color', has_alpha => 1,
+        { name => 'bgcolor', type => 'geglcolor', has_alpha => 1,
           desc => "The new background color" }
     );
 
@@ -280,7 +280,7 @@ HELP
   GimpGrid *grid = gimp_image_get_grid (image);
 
   if (grid)
-    g_object_set (grid, "bgcolor", &bgcolor, NULL);
+    g_object_set (grid, "bgcolor", bgcolor, NULL);
   else
     success = FALSE;
 }

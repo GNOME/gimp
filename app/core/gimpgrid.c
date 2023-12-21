@@ -54,6 +54,7 @@ enum
 };
 
 
+static void   gimp_grid_finalize     (GObject      *object);
 static void   gimp_grid_get_property (GObject      *object,
                                       guint         property_id,
                                       GValue       *value,
@@ -67,19 +68,19 @@ static void   gimp_grid_set_property (GObject      *object,
 G_DEFINE_TYPE_WITH_CODE (GimpGrid, gimp_grid, GIMP_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
+#define parent_class gimp_grid_parent_class
+
 
 static void
 gimp_grid_class_init (GimpGridClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB       black;
-  GimpRGB       white;
+  GeglColor    *black        = gegl_color_new ("black");
+  GeglColor    *white        = gegl_color_new ("white");
 
+  object_class->finalize     = gimp_grid_finalize;
   object_class->get_property = gimp_grid_get_property;
   object_class->set_property = gimp_grid_set_property;
-
-  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-  gimp_rgba_set (&white, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_STYLE,
                          "style",
@@ -89,20 +90,20 @@ gimp_grid_class_init (GimpGridClass *klass)
                          GIMP_GRID_SOLID,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_FGCOLOR,
-                        "fgcolor",
-                        _("Foreground color"),
-                        _("The foreground color of the grid."),
-                        TRUE, &black,
-                        GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_COLOR (object_class, PROP_FGCOLOR,
+                          "fgcolor",
+                          _("Foreground color"),
+                          _("The foreground color of the grid."),
+                          /*TRUE,*/ black,
+                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_BGCOLOR,
-                        "bgcolor",
-                        _("Background color"),
-                        _("The background color of the grid; "
-                          "only used in double dashed line style."),
-                        TRUE, &white,
-                        GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_COLOR (object_class, PROP_BGCOLOR,
+                          "bgcolor",
+                          _("Background color"),
+                          _("The background color of the grid; "
+                            "only used in double dashed line style."),
+                          /*TRUE,*/ white,
+                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_XSPACING,
                            "xspacing",
@@ -149,11 +150,27 @@ gimp_grid_class_init (GimpGridClass *klass)
                          NULL,
                          FALSE, FALSE, GIMP_UNIT_INCH,
                          GIMP_PARAM_STATIC_STRINGS);
+
+  g_object_unref (black);
+  g_object_unref (white);
 }
 
 static void
 gimp_grid_init (GimpGrid *grid)
 {
+  grid->fgcolor = gegl_color_new ("black");
+  grid->bgcolor = gegl_color_new ("white");
+}
+
+static void
+gimp_grid_finalize (GObject *object)
+{
+  GimpGrid *grid = GIMP_GRID (object);
+
+  g_object_unref (grid->fgcolor);
+  g_object_unref (grid->bgcolor);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -170,10 +187,10 @@ gimp_grid_get_property (GObject      *object,
       g_value_set_enum (value, grid->style);
       break;
     case PROP_FGCOLOR:
-      g_value_set_boxed (value, &grid->fgcolor);
+      g_value_set_object (value, grid->fgcolor);
       break;
     case PROP_BGCOLOR:
-      g_value_set_boxed (value, &grid->bgcolor);
+      g_value_set_object (value, grid->bgcolor);
       break;
     case PROP_XSPACING:
       g_value_set_double (value, grid->xspacing);
@@ -206,7 +223,6 @@ gimp_grid_set_property (GObject      *object,
                         GParamSpec   *pspec)
 {
   GimpGrid *grid = GIMP_GRID (object);
-  GimpRGB  *color;
 
   switch (property_id)
     {
@@ -214,12 +230,12 @@ gimp_grid_set_property (GObject      *object,
       grid->style = g_value_get_enum (value);
       break;
     case PROP_FGCOLOR:
-      color = g_value_get_boxed (value);
-      grid->fgcolor = *color;
+      g_clear_object (&grid->fgcolor);
+      grid->fgcolor = gegl_color_duplicate (g_value_get_object (value));
       break;
     case PROP_BGCOLOR:
-      color = g_value_get_boxed (value);
-      grid->bgcolor = *color;
+      g_clear_object (&grid->bgcolor);
+      grid->bgcolor = gegl_color_duplicate (g_value_get_object (value));
       break;
     case PROP_XSPACING:
       grid->xspacing = g_value_get_double (value);
@@ -256,24 +272,20 @@ gimp_grid_get_style (GimpGrid *grid)
   return grid->style;
 }
 
-void
-gimp_grid_get_fgcolor (GimpGrid *grid,
-                       GimpRGB  *fgcolor)
+GeglColor *
+gimp_grid_get_fgcolor (GimpGrid *grid)
 {
-  g_return_if_fail (GIMP_IS_GRID (grid));
-  g_return_if_fail (fgcolor != NULL);
+  g_return_val_if_fail (GIMP_IS_GRID (grid), NULL);
 
-  *fgcolor = grid->fgcolor;
+  return grid->fgcolor;
 }
 
-void
-gimp_grid_get_bgcolor (GimpGrid *grid,
-                       GimpRGB  *bgcolor)
+GeglColor *
+gimp_grid_get_bgcolor (GimpGrid *grid)
 {
-  g_return_if_fail (GIMP_IS_GRID (grid));
-  g_return_if_fail (bgcolor != NULL);
+  g_return_val_if_fail (GIMP_IS_GRID (grid), NULL);
 
-  *bgcolor = grid->bgcolor;
+  return grid->bgcolor;
 }
 
 void

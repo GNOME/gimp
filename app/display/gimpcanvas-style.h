@@ -22,6 +22,9 @@
 #define __GIMP_CANVAS_STYLE_H__
 
 
+void   gimp_canvas_styles_init             (void);
+void   gimp_canvas_styles_exit             (void);
+
 void   gimp_canvas_set_guide_style         (GtkWidget     *canvas,
                                             cairo_t       *cr,
                                             GimpGuideStyle style,
@@ -38,7 +41,7 @@ void   gimp_canvas_set_grid_style          (GtkWidget     *canvas,
                                             gdouble        offset_y);
 void   gimp_canvas_set_pen_style           (GtkWidget     *canvas,
                                             cairo_t       *cr,
-                                            const GimpRGB *color,
+                                            GeglColor     *color,
                                             gint           width);
 void   gimp_canvas_set_layer_style         (GtkWidget     *canvas,
                                             cairo_t       *cr,
