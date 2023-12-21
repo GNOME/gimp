@@ -48,7 +48,7 @@ GType       gimp_color_bar_get_type    (void) G_GNUC_CONST;
 GtkWidget * gimp_color_bar_new         (GtkOrientation        orientation);
 
 void        gimp_color_bar_set_color   (GimpColorBar         *bar,
-                                        const GimpRGB        *color);
+                                        GeglColor            *color);
 void        gimp_color_bar_set_channel (GimpColorBar         *bar,
                                         GimpHistogramChannel  channel);
 void        gimp_color_bar_set_buffers (GimpColorBar         *bar,
