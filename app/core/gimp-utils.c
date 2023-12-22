@@ -527,61 +527,44 @@ gimp_enum_get_value_name (GType enum_type,
 gboolean
 gimp_get_fill_params (GimpContext   *context,
                       GimpFillType   fill_type,
-                      GimpRGB       *rgb,
+                      GeglColor    **color,
                       GimpPattern  **pattern,
                       GError       **error)
 
 {
-  GeglColor *color;
-
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
-  g_return_val_if_fail (rgb != NULL, FALSE);
+  g_return_val_if_fail (color != NULL, FALSE);
   g_return_val_if_fail (pattern != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
+  *color   = NULL;
   *pattern = NULL;
 
   switch (fill_type)
     {
     case GIMP_FILL_FOREGROUND:
-      color = gimp_context_get_foreground (context);
-      gegl_color_get_rgba_with_space (color, &rgb->r, &rgb->g, &rgb->b, &rgb->a, NULL);
+      *color = gegl_color_duplicate (gimp_context_get_foreground (context));
       break;
 
     case GIMP_FILL_BACKGROUND:
-      color = gimp_context_get_background (context);
-      gegl_color_get_rgba_with_space (color, &rgb->r, &rgb->g, &rgb->b, &rgb->a, NULL);
+      *color = gegl_color_duplicate (gimp_context_get_background (context));
       break;
 
     case GIMP_FILL_CIELAB_MIDDLE_GRAY:
       {
-        const float        cielab_pixel[3] = {50, 0, 0};
-        float              pixel[3]        = {0, 0, 0};
-        GimpImage         *image           = gimp_context_get_image (context);
-        GimpImageBaseType  base_type;
-        const Babl        *format;
+        const float cielab_pixel[3] = {50.f, 0.f, 0.f};
 
-        base_type = gimp_image_get_base_type (image);
-        if (base_type == GIMP_INDEXED)
-          base_type = GIMP_RGB;
-
-        format = gimp_image_get_format (image, base_type,
-                                        GIMP_PRECISION_FLOAT_NON_LINEAR, FALSE,
-                                        gimp_image_get_layer_space (image));
-
-        babl_process (babl_fish (babl_format ("CIE Lab float"), format),
-                      cielab_pixel, pixel, 1);
-
-        gimp_rgba_set (rgb, pixel[0], pixel[1], pixel[2], GIMP_OPACITY_OPAQUE);
+        *color = gegl_color_new (NULL);
+        gegl_color_set_pixel (*color, babl_format ("CIE Lab float"), cielab_pixel);
       }
       break;
 
     case GIMP_FILL_WHITE:
-      gimp_rgba_set (rgb, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+      *color = gegl_color_new ("white");
       break;
 
     case GIMP_FILL_TRANSPARENT:
-      gimp_rgba_set (rgb, 0.0, 0.0, 0.0, GIMP_OPACITY_TRANSPARENT);
+      *color = gegl_color_new ("transparent");
       break;
 
     case GIMP_FILL_PATTERN:
@@ -593,10 +576,9 @@ gimp_get_fill_params (GimpContext   *context,
                                _("No patterns available for this operation."));
 
           /*  fall back to BG fill  */
-          color = gimp_context_get_background (context);
-          gegl_color_get_rgba_with_space (color, &rgb->r, &rgb->g, &rgb->b, &rgb->a, NULL);
+          *color = gegl_color_duplicate (gimp_context_get_background (context));
 
-          return FALSE;
+          return TRUE;
         }
       break;
 

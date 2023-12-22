@@ -1006,7 +1006,7 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
   if (new_width != drawable_width   || *new_off_x ||
       new_height != drawable_height || *new_off_y)
     {
-      GimpRGB       color;
+      GeglColor    *color;
       GimpPattern  *pattern;
       GimpContext  *context   = GIMP_CONTEXT (options);
       GimpFillType  fill_type = options->expand_fill_type;
@@ -1084,19 +1084,18 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
       core->canvas_buffer = new_buffer;
 
       gimp_get_fill_params (context, fill_type, &color, &pattern, NULL);
-      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                         &color, &color);
       if (! gimp_drawable_has_alpha (drawable))
-        gimp_rgb_set_alpha (&color, 1.0);
+        gimp_color_set_alpha (color, 1.0);
 
       undo_buffer = g_hash_table_lookup (core->undo_buffers, drawable);
       g_object_ref (undo_buffer);
 
       new_buffer = gimp_gegl_buffer_resize (undo_buffer, new_width, new_height,
-                                            -(*new_off_x), -(*new_off_y), &color,
+                                            -(*new_off_x), -(*new_off_y), color,
                                             pattern, 0, 0);
       g_hash_table_insert (core->undo_buffers, drawable, new_buffer);
       g_object_unref (undo_buffer);
+      g_clear_object (&color);
 
       /* Restore context to its original state */
       if (!context_has_image)

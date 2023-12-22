@@ -645,12 +645,14 @@ gimp_drawable_resize (GimpItem     *item,
     {
       /*  Clear the new buffer if needed  */
 
-      GimpRGB      color;
+      GeglColor   *color;
       GimpPattern *pattern;
 
-      gimp_get_fill_params (context, fill_type, &color, &pattern, NULL);
-      gimp_drawable_fill_buffer (drawable, new_buffer,
-                                 &color, pattern, 0, 0);
+      if (gimp_get_fill_params (context, fill_type, &color, &pattern, NULL))
+        gimp_drawable_fill_buffer (drawable, new_buffer,
+                                   color, pattern, 0, 0);
+
+      g_clear_object (&color);
     }
 
   if (intersect && copy_width && copy_height)

@@ -357,7 +357,7 @@ gimp_gegl_buffer_resize (GeglBuffer   *buffer,
                          gint          new_height,
                          gint          offset_x,
                          gint          offset_y,
-                         GimpRGB      *color,
+                         GeglColor    *color,
                          GimpPattern  *pattern,
                          gint          pattern_offset_x,
                          gint          pattern_offset_y)
@@ -426,11 +426,7 @@ gimp_gegl_buffer_resize (GeglBuffer   *buffer,
         }
       else if (color)
         {
-          GeglColor *gegl_color;
-
-          gegl_color = gimp_gegl_color_new (color, gegl_buffer_get_format (buffer));
-          gegl_buffer_set_color (new_buffer, NULL, gegl_color);
-          g_object_unref (gegl_color);
+          gegl_buffer_set_color (new_buffer, NULL, color);
         }
     }
 

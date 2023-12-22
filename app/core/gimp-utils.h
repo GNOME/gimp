@@ -63,7 +63,7 @@ const gchar* gimp_enum_get_value_name              (GType            enum_type,
 
 gboolean     gimp_get_fill_params                  (GimpContext      *context,
                                                     GimpFillType      fill_type,
-                                                    GimpRGB          *color,
+                                                    GeglColor       **color,
                                                     GimpPattern     **pattern,
                                                     GError          **error);
 

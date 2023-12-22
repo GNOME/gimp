@@ -28,7 +28,7 @@ void       gimp_drawable_fill              (GimpDrawable        *drawable,
                                             GimpFillType         fill_type);
 void       gimp_drawable_fill_buffer       (GimpDrawable        *drawable,
                                             GeglBuffer          *buffer,
-                                            const GimpRGB       *color,
+                                            GeglColor           *color,
                                             GimpPattern         *pattern,
                                             gint                 pattern_offset_x,
                                             gint                 pattern_offset_y);

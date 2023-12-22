@@ -579,26 +579,22 @@ gimp_fill_options_fill_buffer (GimpFillOptions *options,
     case GIMP_FILL_STYLE_FG_COLOR:
       {
         GeglColor *color;
-        GimpRGB    rgb;
 
         color = gimp_context_get_foreground (GIMP_CONTEXT (options));
-        gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
         gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, color);
 
-        gimp_drawable_fill_buffer (drawable, buffer, &rgb, NULL, 0, 0);
+        gimp_drawable_fill_buffer (drawable, buffer, color, NULL, 0, 0);
       }
       break;
 
     case GIMP_FILL_STYLE_BG_COLOR:
       {
         GeglColor *color;
-        GimpRGB    rgb;
 
         color = gimp_context_get_background (GIMP_CONTEXT (options));
-        gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
         gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, color);
 
-        gimp_drawable_fill_buffer (drawable, buffer, &rgb, NULL, 0, 0);
+        gimp_drawable_fill_buffer (drawable, buffer, color, NULL, 0, 0);
       }
       break;
 

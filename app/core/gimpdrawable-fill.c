@@ -55,7 +55,7 @@ gimp_drawable_fill (GimpDrawable *drawable,
                     GimpContext  *context,
                     GimpFillType  fill_type)
 {
-  GimpRGB      color;
+  GeglColor   *color;
   GimpPattern *pattern;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -72,22 +72,24 @@ gimp_drawable_fill (GimpDrawable *drawable,
 
   gimp_drawable_fill_buffer (drawable,
                              gimp_drawable_get_buffer (drawable),
-                             &color, pattern, 0, 0);
+                             color, pattern, 0, 0);
 
   gimp_drawable_update (drawable, 0, 0, -1, -1);
+
+  g_clear_object (&color);
 }
 
 void
 gimp_drawable_fill_buffer (GimpDrawable  *drawable,
                            GeglBuffer    *buffer,
-                           const GimpRGB *color,
+                           GeglColor     *color,
                            GimpPattern   *pattern,
                            gint           pattern_offset_x,
                            gint           pattern_offset_y)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
-  g_return_if_fail (color != NULL || pattern != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (color) || pattern != NULL);
   g_return_if_fail (pattern == NULL || GIMP_IS_PATTERN (pattern));
 
   if (pattern)
@@ -131,19 +133,16 @@ gimp_drawable_fill_buffer (GimpDrawable  *drawable,
     }
   else
     {
-      GimpRGB    image_color;
-      GeglColor *gegl_color;
+      if (! gimp_drawable_has_alpha (drawable))
+        {
+          color = gegl_color_duplicate (color);
+          gimp_color_set_alpha (color, 1.0);
+        }
 
-      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                         color, &image_color);
+      gegl_buffer_set_color (buffer, NULL, color);
 
       if (! gimp_drawable_has_alpha (drawable))
-        gimp_rgb_set_alpha (&image_color, 1.0);
-
-      gegl_color = gimp_gegl_color_new (&image_color,
-                                        gimp_drawable_get_space (drawable));
-      gegl_buffer_set_color (buffer, NULL, gegl_color);
-      g_object_unref (gegl_color);
+        g_object_unref (color);
     }
 }
 
