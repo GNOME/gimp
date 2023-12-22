@@ -211,10 +211,6 @@ static GimpColorProfile *
 static gdouble gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
                                                  gint                y);
-static void    gimp_layer_rgb_to_pixel          (GimpPickable       *pickable,
-                                                 const GimpRGB      *color,
-                                                 const Babl         *format,
-                                                 gpointer            pixel);
 
 static gboolean gimp_layer_real_is_alpha_locked (GimpLayer          *layer,
                                                  GimpLayer         **locked_layer);
@@ -574,7 +570,6 @@ static void
 gimp_pickable_iface_init (GimpPickableInterface *iface)
 {
   iface->get_opacity_at = gimp_layer_get_opacity_at;
-  iface->rgb_to_pixel   = gimp_layer_rgb_to_pixel;
 }
 
 static void
@@ -1616,17 +1611,6 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
   return value;
 }
 
-static void
-gimp_layer_rgb_to_pixel (GimpPickable  *pickable,
-                         const GimpRGB *color,
-                         const Babl    *format,
-                         gpointer       pixel)
-{
-  GimpImage *image = gimp_item_get_image (GIMP_ITEM (pickable));
-
-  gimp_pickable_rgb_to_pixel (GIMP_PICKABLE (image), color, format, pixel);
-}
-
 static gboolean
 gimp_layer_real_is_alpha_locked (GimpLayer  *layer,
                                  GimpLayer **locked_layer)
@@ -2163,13 +2147,13 @@ gimp_layer_create_mask (GimpLayer       *layer,
 
         if (gimp_drawable_has_alpha (drawable))
           {
-            GimpRGB background;
-
-            gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
+            GeglColor *background = gegl_color_new ("transparent");
 
             gimp_gegl_apply_flatten (src_buffer, NULL, NULL,
-                                     dest_buffer, &background, NULL,
+                                     dest_buffer, background,
                                      GIMP_LAYER_COLOR_SPACE_RGB_LINEAR);
+
+            g_object_unref (background);
           }
         else
           {
@@ -2501,8 +2485,6 @@ gimp_layer_remove_alpha (GimpLayer   *layer,
                          GimpContext *context)
 {
   GeglBuffer *new_buffer;
-  GeglColor  *color;
-  GimpRGB     background;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
@@ -2516,15 +2498,9 @@ gimp_layer_remove_alpha (GimpLayer   *layer,
                                      gimp_item_get_height (GIMP_ITEM (layer))),
                      gimp_drawable_get_format_without_alpha (GIMP_DRAWABLE (layer)));
 
-  color = gimp_context_get_background (context);
-  gegl_color_get_rgba_with_space (color, &background.r, &background.g, &background.b, &background.a, NULL);
-  gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (layer),
-                                     &background, &background);
-
   gimp_gegl_apply_flatten (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
-                           NULL, NULL,
-                           new_buffer, &background,
-                           gimp_drawable_get_space (GIMP_DRAWABLE (layer)),
+                           NULL, NULL, new_buffer,
+                           gimp_context_get_background (context),
                            gimp_layer_get_real_composite_space (layer));
 
   gimp_drawable_set_buffer (GIMP_DRAWABLE (layer),

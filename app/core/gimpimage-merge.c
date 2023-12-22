@@ -673,9 +673,6 @@ gimp_image_merge_layers (GimpImage     *image,
       (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)) &&
        ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer))))
     {
-      GeglColor *color;
-      GimpRGB    bg;
-
       merge_layer = gimp_layer_new (image, (x2 - x1), (y2 - y1),
                                     gimp_image_get_layer_format (image, FALSE),
                                     gimp_object_get_name (bottom_layer),
@@ -690,14 +687,8 @@ gimp_image_merge_layers (GimpImage     *image,
         }
 
       /*  get the background for compositing  */
-      color = gimp_context_get_background (context);
-      gegl_color_get_rgba_with_space (color, &bg.r, &bg.g, &bg.b, &bg.a, NULL);
-      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (layer),
-                                         &bg, &bg);
-
       flatten_node = gimp_gegl_create_flatten_node
-        (&bg,
-         gimp_drawable_get_space (GIMP_DRAWABLE (layer)),
+        (gimp_context_get_background (context),
          gimp_layer_get_real_composite_space (bottom_layer));
     }
   else

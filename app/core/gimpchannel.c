@@ -567,7 +567,7 @@ gimp_channel_convert (GimpItem  *item,
     {
       GeglBuffer *new_buffer;
       const Babl *format;
-      GimpRGB     background;
+      GeglColor  *background = gegl_color_new ("transparent");
 
       format = gimp_drawable_get_format_without_alpha (drawable);
 
@@ -577,11 +577,9 @@ gimp_channel_convert (GimpItem  *item,
                                          gimp_item_get_height (item)),
                          format);
 
-      gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
-
       gimp_gegl_apply_flatten (gimp_drawable_get_buffer (drawable),
                                NULL, NULL,
-                               new_buffer, &background, NULL,
+                               new_buffer, background,
                                GIMP_LAYER_COLOR_SPACE_RGB_LINEAR);
 
       gimp_drawable_set_buffer_full (drawable, FALSE, NULL,
@@ -592,6 +590,7 @@ gimp_channel_convert (GimpItem  *item,
                                        0, 0),
                                      TRUE);
       g_object_unref (new_buffer);
+      g_object_unref (background);
     }
 
   if (G_TYPE_FROM_INSTANCE (channel) == GIMP_TYPE_CHANNEL)

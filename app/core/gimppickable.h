@@ -48,10 +48,6 @@ struct _GimpPickableInterface
                                                const GeglRectangle *rect,
                                                const Babl          *format,
                                                gpointer             pixel);
-  void            (* rgb_to_pixel)            (GimpPickable        *pickable,
-                                               const GimpRGB       *color,
-                                               const Babl          *format,
-                                               gpointer             pixel);
 };
 
 
@@ -76,13 +72,6 @@ void            gimp_pickable_get_pixel_average       (GimpPickable        *pick
                                                        const GeglRectangle *rect,
                                                        const Babl          *format,
                                                        gpointer             pixel);
-void            gimp_pickable_rgb_to_pixel            (GimpPickable        *pickable,
-                                                       const GimpRGB       *color,
-                                                       const Babl          *format,
-                                                       gpointer             pixel);
-void            gimp_pickable_srgb_to_image_color     (GimpPickable        *pickable,
-                                                       const GimpRGB       *color,
-                                                       GimpRGB             *image_color);
 
 gboolean        gimp_pickable_pick_color              (GimpPickable        *pickable,
                                                        gint                 x,
