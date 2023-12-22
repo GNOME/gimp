@@ -1992,7 +1992,7 @@ gimp_layer_create_mask (GimpLayer       *layer,
   GimpLayerMask *mask;
   GimpImage     *image;
   gchar         *mask_name;
-  GimpRGB        black = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
+  GeglColor     *black = gegl_color_new ("black");
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (add_mask_type != GIMP_ADD_MASK_CHANNEL ||
@@ -2008,9 +2008,10 @@ gimp_layer_create_mask (GimpLayer       *layer,
   mask = gimp_layer_mask_new (image,
                               gimp_item_get_width  (item),
                               gimp_item_get_height (item),
-                              mask_name, &black);
+                              mask_name, black);
 
   g_free (mask_name);
+  g_object_unref (black);
 
   switch (add_mask_type)
     {

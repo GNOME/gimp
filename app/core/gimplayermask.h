@@ -51,7 +51,7 @@ GimpLayerMask * gimp_layer_mask_new       (GimpImage     *image,
                                            gint           width,
                                            gint           height,
                                            const gchar   *name,
-                                           const GimpRGB *color);
+                                           GeglColor     *color);
 
 void            gimp_layer_mask_set_layer (GimpLayerMask *layer_mask,
                                            GimpLayer     *layer);

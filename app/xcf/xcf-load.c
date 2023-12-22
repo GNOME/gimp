@@ -3458,7 +3458,7 @@ xcf_load_layer_mask (XcfInfo   *info,
   gint           height;
   gboolean       is_fs_drawable;
   gchar         *name;
-  GimpRGB        color = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
+  GeglColor     *color = gegl_color_new ("black");
   goffset        cur_offset;
 
   /* check and see if this is the drawable the floating selection
@@ -3481,7 +3481,8 @@ xcf_load_layer_mask (XcfInfo   *info,
             width, height, name);
 
   /* create a new layer mask */
-  layer_mask = gimp_layer_mask_new (image, width, height, name, &color);
+  layer_mask = gimp_layer_mask_new (image, width, height, name, color);
+  g_object_unref (color);
   g_free (name);
   if (! layer_mask)
     return NULL;
