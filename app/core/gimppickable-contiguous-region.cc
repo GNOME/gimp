@@ -291,7 +291,7 @@ GeglBuffer *
 gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
                                              GimpLineArt   *line_art,
                                              GeglBuffer    *fill_buffer,
-                                             const GimpRGB *fill_color,
+                                             GeglColor     *fill_color,
                                              gfloat         fill_threshold,
                                              gint           fill_offset_x,
                                              gint           fill_offset_y,
@@ -337,7 +337,9 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
       fill_format = choose_format (fill_buffer,
                                    GIMP_SELECT_CRITERION_COMPOSITE,
                                    &n_components, &has_alpha);
-      gimp_rgba_get_pixel (fill_color, fill_format, fill_col);
+      fill_format = babl_format_with_space (babl_format_get_encoding (fill_format),
+                                            gegl_buffer_get_format (fill_buffer));
+      gegl_color_get_pixel (fill_color, fill_format, fill_col);
 
       src_buffer = gimp_gegl_buffer_dup (src_buffer);
       gi = gegl_buffer_iterator_new (src_buffer, NULL, 0, NULL,

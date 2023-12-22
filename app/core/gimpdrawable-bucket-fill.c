@@ -370,7 +370,7 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable      *drawable,
   GeglBuffer *new_mask;
   GeglBuffer *rendered_mask;
   GeglBuffer *fill_buffer   = NULL;
-  GimpRGB     fill_color;
+  GeglColor  *fill_color    = NULL;
   gint        fill_offset_x = 0;
   gint        fill_offset_y = 0;
   gint        x, y, width, height;
@@ -410,7 +410,6 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable      *drawable,
   if (fill_color_as_line_art)
     {
       GimpPickable *pickable = gimp_line_art_get_input (line_art);
-      GeglColor    *color    = NULL;
 
       /* This cannot be a pattern fill. */
       g_return_val_if_fail (gimp_fill_options_get_style (options) != GIMP_FILL_STYLE_PATTERN,
@@ -419,12 +418,11 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable      *drawable,
       g_return_val_if_fail (GIMP_IS_DRAWABLE (pickable), NULL);
 
       if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_FG_COLOR)
-        color = gimp_context_get_foreground (GIMP_CONTEXT (options));
+        fill_color = gimp_context_get_foreground (GIMP_CONTEXT (options));
       else if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_BG_COLOR)
-        color = gimp_context_get_background (GIMP_CONTEXT (options));
+        fill_color = gimp_context_get_background (GIMP_CONTEXT (options));
 
-      g_return_val_if_fail (color != NULL, NULL);
-      gegl_color_get_rgba_with_space (color, &fill_color.r, &fill_color.g, &fill_color.b, &fill_color.a, NULL);
+      g_return_val_if_fail (fill_color != NULL, NULL);
 
       fill_buffer   = gimp_drawable_get_buffer (drawable);
       fill_offset_x = gimp_item_get_offset_x (GIMP_ITEM (drawable)) -
@@ -434,7 +432,7 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable      *drawable,
     }
   new_mask = gimp_pickable_contiguous_region_by_line_art (NULL, line_art,
                                                           fill_buffer,
-                                                          &fill_color,
+                                                          fill_color,
                                                           fill_color_threshold,
                                                           fill_offset_x,
                                                           fill_offset_y,

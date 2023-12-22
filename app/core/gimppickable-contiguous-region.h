@@ -38,7 +38,7 @@ GeglBuffer * gimp_pickable_contiguous_region_by_color               (GimpPickabl
 GeglBuffer * gimp_pickable_contiguous_region_by_line_art            (GimpPickable        *pickable,
                                                                      GimpLineArt         *line_art,
                                                                      GeglBuffer          *fill_buffer,
-                                                                     const GimpRGB       *fill_color,
+                                                                     GeglColor           *fill_color,
                                                                      gfloat               fill_threshold,
                                                                      gint                 fill_offset_x,
                                                                      gint                 fill_offset_y,
