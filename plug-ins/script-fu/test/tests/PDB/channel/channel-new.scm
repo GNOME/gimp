@@ -31,11 +31,10 @@
 
 ;               attributes
 
-; color
-; FIXME: this passes but should test return red ???
+; color attribute is as given during creation
 (assert `(equal?
             (car (gimp-channel-get-color ,testChannel))
-            '(0 0 0)))
+            '(255 0 0)))  ; red
 (assert `(string=?
             (car (gimp-channel-get-name ,testChannel))
             "Test Channel"))

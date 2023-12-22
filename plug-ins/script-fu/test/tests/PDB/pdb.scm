@@ -28,9 +28,11 @@
 (testing:load-test "text-layer-new.scm")
 
 (testing:load-test "vectors-new.scm")
+(testing:load-test "vectors-stroke.scm")
 
 (testing:load-test "selection.scm")
 (testing:load-test "selection-from.scm")
+(testing:load-test "selection-by.scm")
 
 (testing:load-test "channel-new.scm")
 (testing:load-test "channel-attributes.scm")
@@ -42,7 +44,8 @@
 ; Testing Drawable and Item uses extant instances;
 ; must be after instances of subclasses are created.
 (testing:load-test "item.scm")
-; todo item ordering operations
+(testing:load-test "item-position.scm")
+(testing:load-test "item-layer-group.scm")
 
 ; TODO drawable
 
@@ -58,9 +61,13 @@
 
 ; clipboards
 ; Order important: edit.scm requires empty clipboard
+
 (testing:load-test "edit.scm")
+(testing:load-test "edit-multi-layer.scm")
 (testing:load-test "buffer.scm")
 
+; gimp module, gimp-get methods
+(testing:load-test "gimp.scm")
 
 ; TODO undo
 ; TODO progress
@@ -70,7 +77,7 @@
 ;   parasite
 
 ; pdb the object
-; gimp the class, gimp-get, gimp-parasite
+; gimp-parasite
 
 
 (testing:load-test "misc.scm")

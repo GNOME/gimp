@@ -143,5 +143,4 @@
 
 
 ; for debugging: display
-(assert `(= (car (gimp-display-new ,testImage))
-            1))
+;(gimp-display-new ,testImage)

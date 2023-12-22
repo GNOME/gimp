@@ -1,7 +1,7 @@
 ; test getters and setters of GimpContext
 ; (sic its not an object or class)
 
-
+; TODO context push pop list-paint-methods
 
 ;                        set-line-dash-pattern
 

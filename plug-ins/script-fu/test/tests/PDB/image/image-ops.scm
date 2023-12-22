@@ -18,9 +18,10 @@
       " for argument 'flip-type' (#2, type GimpOrientationType). This value is out of range."))
 
 ; rotate
-(assert `(gimp-image-rotate ,testImage ROTATE-90))
-(assert `(gimp-image-rotate ,testImage ROTATE-180))
-(assert `(gimp-image-rotate ,testImage ROTATE-270))
+; v2 ROTATE-90 => v3 ROTATE-DEGREES90
+(assert `(gimp-image-rotate ,testImage ROTATE-DEGREES90))
+(assert `(gimp-image-rotate ,testImage ROTATE-DEGREES180))
+(assert `(gimp-image-rotate ,testImage ROTATE-DEGREES270))
 
 ; scale
 ; up

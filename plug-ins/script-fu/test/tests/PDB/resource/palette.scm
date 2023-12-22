@@ -123,10 +123,9 @@
 (assert `(= (car (gimp-palette-add-entry ,testNewPalette "fooEntryName" "red"))
             0))
 
-; was effective on color
-; FIXME returns ((0 0 0)) which is not "red"
+; was effective: color is as given when entry created
 (assert `(equal? (car (gimp-palette-entry-get-color ,testNewPalette 0))
-                  (list 0 0 0)))
+                  (list 255 0 0)))  ; red
 
 ; was effective on name
 (assert `(equal? (car (gimp-palette-entry-get-name ,testNewPalette 0))

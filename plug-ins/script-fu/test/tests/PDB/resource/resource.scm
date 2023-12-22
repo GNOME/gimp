@@ -14,6 +14,23 @@
 
 
 
+
+; invalid numeric ID
+; ScriptFu detects these errors, before GIMP can check for out of range.
+
+; A negative ID is invalid.
+; If ScriptFu did not detect, GIMP would yield: "Invalid value for argument 0"
+(assert-error `(gimp-resource-get-name -1)
+              "runtime: invalid resource ID")
+
+; 12345678 is in range but invalid (presume not exist resource with such a large ID)
+(assert-error `(gimp-resource-get-name 12345678)
+              "runtime: invalid resource ID")
+
+
+
+
+
 ; an ID of wrong subclass of resource throws an error.
 ; !!! Also check stderr for CRITICAL
 ; 1 is not a valid font ID but it IS the ID of say a brush

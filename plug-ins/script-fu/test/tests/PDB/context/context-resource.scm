@@ -2,8 +2,8 @@
 
 
 
-; function to test methods on Resource
-; for a valid Resource ID
+; function to test methods on Resource for a valid Resource ID.
+; Tests methods: get-name, id-is-valid, get-identifiers, is-editable.
 (define (test-resource-methods resource)
 
   ; a resource is an int ID in ScriptFu
@@ -44,7 +44,7 @@
 
 
 ; test context-get-resource returns active resource of given className
-; Setup. Not assert.
+; This is setup, not asserted.
 
 (define testBrush    (car (gimp-context-get-resource "GimpBrush")))
 (define testFont     (car (gimp-context-get-resource "GimpFont")))
@@ -66,6 +66,7 @@
 ;             test more specific context methods return same result
 ;             as the general context-get-resource
 
+; ID's are numeric
 ; test equality of numeric IDs
 (assert `(= (car(gimp-context-get-brush))
             ,testBrush))
@@ -93,15 +94,8 @@
 ;             test errors
 
 
-; invalid type name
+; context-get-resource requires a valid type name
 (assert-error `(gimp-context-get-resource "InvalidTypeName")
               "Procedure execution of gimp-context-get-resource failed")
 
-; invalid numeric ID
-; -1 is out of range
-(assert-error `(gimp-resource-get-name -1)
-              "Invalid value for argument 0")
-; 12345678 is in range but invalid
-(assert-error `(gimp-resource-get-name 12345678)
-              "Invalid value for argument 0")
 

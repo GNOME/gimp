@@ -13,18 +13,15 @@
 
 
 
-; FUTURE method is_valid on new image yields #t
+
 ; method is_valid on new image yields 1 i.e. true
-(assert `(=
-           (car (gimp-image-id-is-valid ,testImage))
-           1))
+(assert-PDB-true `(gimp-image-id-is-valid ,testImage))
+
 
 ; Ensure attributes of new image are correct
 
 ; method is_dirty on new image is true
-(assert `(=
-            (car (gimp-image-is-dirty ,testImage))
-            1))
+(assert-PDB-true `(gimp-image-is-dirty ,testImage))
 
 ; method get_width on new image yields same width given when created
 (assert `(=
@@ -47,7 +44,19 @@
             ,testImage))
 
 
-;        new image has no components
+;        new image has few components
+
+; !!!!
+; New image has one drawable, the selection mask.
+; Note there is no gimp-image-get-drawables
+; FIXME: this is susceptible to test order:
+; subsequent images will have different ID for selection mask.
+(assert-PDB-true `(gimp-item-id-is-valid 1))
+; Item 1 is the Selection Mask.
+(assert `(string=? (car (gimp-item-get-name 1))
+                   "Selection Mask"))
+
+
 
 ; new image has zero layers
 (assert `(= (car (gimp-image-get-layers ,testImage))
