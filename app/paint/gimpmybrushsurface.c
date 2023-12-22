@@ -356,7 +356,10 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
   GimpMybrushSurface *surface = (GimpMybrushSurface *)base_surface;
   GeglBufferIterator *iter;
   GeglRectangle       dabRect;
-  GimpComponentMask   component_mask = surface->component_mask;
+  GimpComponentMask   component_mask  = surface->component_mask;
+  /* XXX What spaces should we be working from and to? */
+  const Babl         *rgb_to_hsl_fish = babl_fish (babl_format ("R'G'B' float"), babl_format ("HSL float"));
+  const Babl         *hsl_to_rgb_fish = babl_fish (babl_format ("HSL float"), babl_format ("R'G'B' float"));
 
   const float one_over_radius2 = 1.0f / (radius * radius);
   const double angle_rad = angle / 360 * 2 * M_PI;
@@ -454,22 +457,27 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
                   a = alpha + dst_alpha - alpha * dst_alpha;
                   if (a > 0.0f)
                     {
-                      GimpHSL pixel_hsl, out_hsl;
-                      GimpRGB pixel_rgb = {color_r, color_g, color_b};
-                      GimpRGB out_rgb   = {r, g, b};
-                      float src_term = alpha / a;
-                      float dst_term = 1.0f - src_term;
+                      float pixel_hsl[3], out_hsl[3];
+                      float pixel_rgb[3] = {color_r, color_g, color_b};
+                      float out_rgb[3]   = {r, g, b};
+                      float src_term     = alpha / a;
+                      float dst_term     = 1.0f - src_term;
 
-                      gimp_rgb_to_hsl (&pixel_rgb, &pixel_hsl);
-                      gimp_rgb_to_hsl (&out_rgb, &out_hsl);
+                      /* Here I am completely unsure if the conversion are
+                       * right, regarding color spaces. What is the color space
+                       * of color_r/g/b arguments?
+                       * TODO: this code should be double-checked.
+                       */
+                      babl_process (rgb_to_hsl_fish, pixel_rgb, pixel_hsl, 1);
+                      babl_process (rgb_to_hsl_fish, out_rgb, out_hsl, 1);
 
-                      out_hsl.h = pixel_hsl.h;
-                      out_hsl.s = pixel_hsl.s;
-                      gimp_hsl_to_rgb (&out_hsl, &out_rgb);
+                      out_hsl[0] = pixel_hsl[0];
+                      out_hsl[1] = pixel_hsl[1];
+                      babl_process (hsl_to_rgb_fish, out_hsl, out_rgb, 1);
 
-                      r = (float)out_rgb.r * src_term + r * dst_term;
-                      g = (float)out_rgb.g * src_term + g * dst_term;
-                      b = (float)out_rgb.b * src_term + b * dst_term;
+                      r = (float)out_rgb[0] * src_term + r * dst_term;
+                      g = (float)out_rgb[1] * src_term + g * dst_term;
+                      b = (float)out_rgb[2] * src_term + b * dst_term;
                     }
                 }
 

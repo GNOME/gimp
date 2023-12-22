@@ -391,8 +391,7 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
   GimpMybrushOptions *options = GIMP_MYBRUSH_OPTIONS (paint_options);
   GimpContext        *context = GIMP_CONTEXT (paint_options);
   GeglColor          *color;
-  GimpRGB             fg;
-  GimpHSV             hsv;
+  gfloat              hsv[3];
   gint                n_strokes;
   gint                i;
 
@@ -408,11 +407,7 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
   else
     color = gimp_context_get_foreground (context);
 
-  gegl_color_get_rgba_with_space (color, &fg.r, &fg.g, &fg.b, &fg.a, NULL);
-
-  gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                     &fg, &fg);
-  gimp_rgb_to_hsv (&fg, &hsv);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSV float", gimp_drawable_get_space (drawable)), hsv);
 
   n_strokes = gimp_symmetry_get_size (sym);
 
@@ -431,13 +426,13 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
         {
           mypaint_brush_set_base_value (brush,
                                         MYPAINT_BRUSH_SETTING_COLOR_H,
-                                        hsv.h);
+                                        hsv[0]);
           mypaint_brush_set_base_value (brush,
                                         MYPAINT_BRUSH_SETTING_COLOR_S,
-                                        hsv.s);
+                                        hsv[1]);
           mypaint_brush_set_base_value (brush,
                                         MYPAINT_BRUSH_SETTING_COLOR_V,
-                                        hsv.v);
+                                        hsv[2]);
         }
 
       mypaint_brush_set_base_value (brush,

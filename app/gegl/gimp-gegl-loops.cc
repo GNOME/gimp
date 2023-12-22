@@ -621,7 +621,7 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
                              const GeglRectangle *accum_rect,
                              GeglBuffer          *canvas_buffer,
                              const GeglRectangle *canvas_rect,
-                             const GimpRGB       *brush_color,
+                             GeglColor           *brush_color,
                              GeglBuffer          *paint_buffer,
                              gboolean             no_erasing,
                              gdouble              flow,
@@ -643,16 +643,11 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
   if (! canvas_rect)
     canvas_rect = gegl_buffer_get_extent (canvas_buffer);
 
-  /* convert brush color from double to float */
+  /* convert brush color to linear RGBA float */
   if (brush_color)
     {
-      const gdouble *brush_color_ptr = &brush_color->r;
-      gint           b;
-
-      for (b = 0; b < 4; b++)
-        brush_color_float[b] = brush_color_ptr[b];
-
-      brush_a *= brush_color_ptr[3];
+      gegl_color_get_pixel (brush_color, babl_format ("RGBA float"), brush_color_float);
+      brush_a *= brush_color_float[3];
     }
 
   gegl_parallel_distribute_area (

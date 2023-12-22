@@ -359,8 +359,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   gdouble             flow;
   gdouble             grad_point;
   /* brush color */
-  GeglColor          *brush_color  = NULL;
-  GimpRGB             brush_rgb; /* whether use single color or pixmap */
+  GeglColor          *brush_color  = NULL; /* whether use single color or pixmap */
   /* accum buffer */
   gint                x, y;
   GeglBuffer         *accum_buffer;
@@ -505,10 +504,6 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                                                   TRUE);
         }
 
-      if (brush_color)
-        /* Convert to linear RGBA */
-        gegl_color_get_pixel (brush_color, babl_format ("RGBA double"), &brush_rgb);
-
       gimp_gegl_smudge_with_paint (accum_buffer,
                                    GEGL_RECTANGLE (paint_buffer_x - x,
                                                    paint_buffer_y - y,
@@ -521,7 +516,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                                                    dest_pickable_off_y,
                                                    paint_buffer_width,
                                                    paint_buffer_height),
-                                   brush_color ? &brush_rgb : NULL,
+                                   brush_color,
                                    paint_buffer,
                                    options->no_erasing,
                                    flow,
