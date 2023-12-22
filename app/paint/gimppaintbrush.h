@@ -38,7 +38,7 @@ struct _GimpPaintbrush
 
   GeglBuffer        *paint_buffer;
   const GimpTempBuf *paint_pixmap;
-  GimpRGB            paint_color;
+  GeglColor         *paint_color;
 };
 
 struct _GimpPaintbrushClass
@@ -58,7 +58,7 @@ struct _GimpPaintbrushClass
                                           GimpLayerMode             *paint_mode,
                                           GimpPaintApplicationMode  *paint_appl_mode,
                                           const GimpTempBuf        **paint_pixmap,
-                                          GimpRGB                   *paint_color);
+                                          GeglColor                **paint_color);
 };
 
 
