@@ -94,6 +94,14 @@ typedef struct
   GType           proc_class; /* GimpProcedure or GimpImageProcedure. */
 } SFScript;
 
+/* ScriptFu keeps array of SFArg, it's private arg specs.
+ * Scripts declare args except run_mode (SF hides it.)
+ * A GimpConfig has two extra leading properties, for procedure and run_mode.
+ * A set of GParamSpecs is derived from a config and also has two extra.
+ * This defines the difference in length between SF's arg spec array and a config.
+ */
+#define SF_ARG_TO_CONFIG_OFFSET 2
+
 typedef struct
 {
   SFScript *script;   /* script which defined this menu path and label */

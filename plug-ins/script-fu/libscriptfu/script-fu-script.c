@@ -357,7 +357,7 @@ script_fu_script_get_command_from_params (SFScript             *script,
   for (i = 0; i < script->n_args; i++)
     {
       GValue      value = G_VALUE_INIT;
-      GParamSpec *pspec = pspecs[i + 1];
+      GParamSpec *pspec = pspecs[i + SF_ARG_TO_CONFIG_OFFSET];
 
       g_value_init (&value, pspec->value_type);
       g_object_get_property (G_OBJECT (config), pspec->name, &value);
@@ -495,10 +495,10 @@ script_fu_script_param_init (SFScript             *script,
   if (script->n_args > n &&
       arg->type == type  &&
       /* The first pspec is "procedure", the second is "run-mode". */
-      n_pspecs > n + 2)
+      n_pspecs > n + SF_ARG_TO_CONFIG_OFFSET)
     {
       GValue      value = G_VALUE_INIT;
-      GParamSpec *pspec = pspecs[n + 2];
+      GParamSpec *pspec = pspecs[n + SF_ARG_TO_CONFIG_OFFSET];
 
       g_value_init (&value, pspec->value_type);
       g_object_get_property (G_OBJECT (config), pspec->name, &value);
