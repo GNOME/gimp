@@ -238,24 +238,28 @@ static void
 white_graypoint_in_red_levels (GimpTestFixture *fixture,
                                gconstpointer    data)
 {
-  GimpRGB              black   = { 0, 0, 0, 0 };
-  GimpRGB              gray    = { 1, 1, 1, 1 };
-  GimpRGB              white   = { 1, 1, 1, 1 };
-  GimpHistogramChannel channel = GIMP_HISTOGRAM_RED;
-  GimpLevelsConfig    *config;
+  GeglColor            *black   = gegl_color_new ("transparent");
+  GeglColor            *gray    = gegl_color_new ("white");
+  GeglColor            *white   = gegl_color_new ("white");
+  GimpHistogramChannel  channel = GIMP_HISTOGRAM_RED;
+  GimpLevelsConfig     *config;
 
   config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
 
   gimp_levels_config_adjust_by_colors (config,
                                        channel,
-                                       &black,
-                                       &gray,
-                                       &white);
+                                       black,
+                                       gray,
+                                       white);
 
   /* Make sure we didn't end up with an invalid gamma value */
   g_object_set (config,
                 "gamma", config->gamma[channel],
                 NULL);
+
+  g_clear_object (&black);
+  g_clear_object (&gray);
+  g_clear_object (&white);
 }
 
 int
