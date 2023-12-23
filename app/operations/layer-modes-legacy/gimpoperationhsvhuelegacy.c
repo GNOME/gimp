@@ -84,10 +84,9 @@ gimp_operation_hsv_hue_legacy_process (GeglOperation       *op,
 
   while (samples--)
     {
-      GimpHSV layer_hsv, out_hsv;
-      GimpRGB layer_rgb = {layer[0], layer[1], layer[2]};
-      GimpRGB out_rgb   = {in[0], in[1], in[2]};
-      gfloat  comp_alpha, new_alpha;
+      gfloat layer_hsv[3], out_hsv[3];
+      gfloat out_rgb[3];
+      gfloat comp_alpha, new_alpha;
 
       comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
       if (mask)
@@ -98,29 +97,23 @@ gimp_operation_hsv_hue_legacy_process (GeglOperation       *op,
       if (comp_alpha && new_alpha)
         {
           gint   b;
-          gfloat out_tmp[3];
           gfloat ratio = comp_alpha / new_alpha;
 
-          gimp_rgb_to_hsv (&layer_rgb, &layer_hsv);
-          gimp_rgb_to_hsv (&out_rgb, &out_hsv);
+          babl_process (babl_fish (babl_format ("R'G'B' float"), babl_format ("HSV float")),
+                        layer, layer_hsv, 1);
+          babl_process (babl_fish (babl_format ("R'G'B' float"), babl_format ("HSV float")),
+                        in, out_hsv, 1);
 
           /*  Composition should have no effect if saturation is zero.
            *  otherwise, black would be painted red (see bug #123296).
            */
-          if (layer_hsv.s)
-            {
-              out_hsv.h = layer_hsv.h;
-            }
-          gimp_hsv_to_rgb (&out_hsv, &out_rgb);
-
-          out_tmp[0] = out_rgb.r;
-          out_tmp[1] = out_rgb.g;
-          out_tmp[2] = out_rgb.b;
+          if (layer_hsv[1])
+            out_hsv[0] = layer_hsv[0];
+          babl_process (babl_fish (babl_format ("HSV float"), babl_format ("R'G'B' float")),
+                        out_hsv, out_rgb, 1);
 
           for (b = RED; b < ALPHA; b++)
-            {
-              out[b] = out_tmp[b] * ratio + in[b] * (1.0f - ratio);
-            }
+            out[b] = out_rgb[b] * ratio + in[b] * (1.0f - ratio);
         }
       else
         {
