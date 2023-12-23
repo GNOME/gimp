@@ -552,17 +552,11 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
 
   window = gimp_display_shell_get_window (shell);
   model  = gimp_image_window_get_menubar_model (window);
-  if (padding_mode != GIMP_CANVAS_PADDING_MODE_DEFAULT)
-    {
-      GimpRGB rgb;
 
-      gegl_color_get_pixel (options->padding_color, babl_format ("R'G'B'A double"), &rgb);
-      gimp_menu_model_set_color (model, "/View/Padding color", &rgb);
-    }
+  if (padding_mode != GIMP_CANVAS_PADDING_MODE_DEFAULT)
+    gimp_menu_model_set_color (model, "/View/Padding color", options->padding_color);
   else
-    {
-      gimp_menu_model_set_color (model, "/View/Padding color", NULL);
-    }
+    gimp_menu_model_set_color (model, "/View/Padding color", NULL);
 
   g_object_unref (color);
 }

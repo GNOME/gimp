@@ -77,7 +77,7 @@ struct _GimpMenuModelPrivate
    * will not be NULL.
    */
   GMenuItem     *submenu_item;
-  GimpRGB       *submenu_color;
+  GeglColor     *submenu_color;
 
   GList         *items;
 
@@ -201,11 +201,11 @@ gimp_menu_model_class_init (GimpMenuModelClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_EXPLICIT_NOTIFY));
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gimp_param_spec_rgb ("color",
-                                                        NULL, NULL,
-                                                        TRUE, &(GimpRGB) {},
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_EXPLICIT_NOTIFY));
+                                   gegl_param_spec_color ("color",
+                                                          NULL, NULL,
+                                                          /*TRUE,*/ NULL,
+                                                          GIMP_PARAM_READWRITE |
+                                                          G_PARAM_EXPLICIT_NOTIFY));
 }
 
 static void
@@ -232,7 +232,7 @@ gimp_menu_model_finalize (GObject *object)
   g_clear_object (&model->priv->model);
   g_list_free_full (model->priv->items, g_object_unref);
   g_free (model->priv->path);
-  g_free (model->priv->submenu_color);
+  g_clear_object (&model->priv->submenu_color);
   g_hash_table_destroy (model->priv->named_sections);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -264,7 +264,7 @@ gimp_menu_model_get_property (GObject    *object,
         }
       break;
     case PROP_COLOR:
-      g_value_set_boxed (value, model->priv->submenu_color);
+      g_value_set_object (value, model->priv->submenu_color);
       break;
 
     default:
@@ -302,7 +302,7 @@ gimp_menu_model_set_property (GObject      *object,
       break;
     case PROP_COLOR:
       gimp_menu_model_set_color (model, model->priv->path,
-                                 g_value_get_boxed (value));
+                                 g_value_get_object (value));
       break;
 
     default:
@@ -608,7 +608,7 @@ gimp_menu_model_set_title (GimpMenuModel *model,
 void
 gimp_menu_model_set_color (GimpMenuModel *model,
                            const gchar   *path,
-                           const GimpRGB *color)
+                           GeglColor     *color)
 {
   GMenuItem     *item;
   GimpMenuModel *submenu = NULL;
@@ -617,13 +617,8 @@ gimp_menu_model_set_color (GimpMenuModel *model,
 
   if (item != NULL)
     {
-      if (color == NULL)
-        g_clear_pointer (&submenu->priv->submenu_color, g_free);
-      else if (submenu->priv->submenu_color == NULL)
-        submenu->priv->submenu_color = g_new (GimpRGB, 1);
-
-      if (color != NULL)
-        *submenu->priv->submenu_color = *color;
+      g_clear_object (&submenu->priv->submenu_color);
+      submenu->priv->submenu_color = color ? gegl_color_duplicate (color) : NULL;
 
       g_object_notify (G_OBJECT (submenu), "color");
     }

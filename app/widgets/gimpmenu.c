@@ -671,20 +671,16 @@ gimp_menu_submenu_notify_color (GimpMenuModel    *model,
                                 const GParamSpec *pspec,
                                 GtkMenuItem      *item)
 {
-  GimpRGB   *rgb   = NULL;
+  GeglColor *color   = NULL;
   GtkWidget *image = NULL;
   gint       width, height;
 
   g_object_get (model,
-                "color", &rgb,
+                "color", &color,
                 NULL);
 
-  if (rgb)
+  if (color)
     {
-      GeglColor *color;
-
-      color = gegl_color_new (NULL);
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
       image = gimp_color_area_new (color, GIMP_COLOR_AREA_SMALL_CHECKS, 0);
       gimp_color_area_set_draw_border (GIMP_COLOR_AREA (image), TRUE);
 
@@ -700,7 +696,6 @@ gimp_menu_submenu_notify_color (GimpMenuModel    *model,
     }
 
   gimp_menu_item_set_image (item, image, NULL);
-  g_free (rgb);
 }
 
 static void

@@ -61,7 +61,7 @@ void             gimp_menu_model_set_title    (GimpMenuModel *model,
                                                const gchar   *title);
 void             gimp_menu_model_set_color    (GimpMenuModel *model,
                                                const gchar   *path,
-                                               const GimpRGB *color);
+                                               GeglColor     *color);
 
 
 #endif /* __GIMP_MENU_MODEL_H__ */
