@@ -73,8 +73,8 @@ static GtkWidget       *color_area          = NULL;
 static GtkWidget       *color_dialog        = NULL;
 static gboolean         color_dialog_active = FALSE;
 static GimpActiveColor  edit_color          = GIMP_ACTIVE_COLOR_FOREGROUND;
-static GimpRGB          revert_fg;
-static GimpRGB          revert_bg;
+static GeglColor       *revert_fg           = NULL;
+static GeglColor       *revert_bg           = NULL;
 
 
 /*  public functions  */
@@ -201,10 +201,8 @@ color_area_dialog_update (GimpColorDialog      *dialog,
     case GIMP_COLOR_DIALOG_CANCEL:
       gtk_widget_hide (color_dialog);
       color_dialog_active = FALSE;
-      gegl_color_set_rgba_with_space (color, revert_fg.r, revert_fg.g, revert_fg.b, revert_fg.a, NULL);
-      gimp_context_set_foreground (context, color);
-      gegl_color_set_rgba_with_space (color, revert_bg.r, revert_bg.g, revert_bg.b, revert_bg.a, NULL);
-      gimp_context_set_background (context, color);
+      gimp_context_set_foreground (context, revert_fg);
+      gimp_context_set_background (context, revert_bg);
       break;
     }
 
@@ -222,10 +220,11 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
 
   if (! color_dialog_active)
     {
-      color = gimp_context_get_foreground (context);
-      gegl_color_get_rgba_with_space (color, &revert_fg.r, &revert_fg.g, &revert_fg.b, &revert_fg.a, NULL);
-      color = gimp_context_get_background (context);
-      gegl_color_get_rgba_with_space (color, &revert_bg.r, &revert_bg.g, &revert_bg.b, &revert_bg.a, NULL);
+      g_clear_object (&revert_fg);
+      revert_fg = gegl_color_duplicate (gimp_context_get_foreground (context));
+
+      g_clear_object (&revert_bg);
+      revert_bg = gegl_color_duplicate (gimp_context_get_background (context));
     }
 
   if (active_color == GIMP_ACTIVE_COLOR_FOREGROUND)
