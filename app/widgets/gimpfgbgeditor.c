@@ -112,9 +112,6 @@ static void     gimp_fg_bg_editor_drop_color        (GtkWidget        *widget,
                                                      const GimpRGB    *color,
                                                      gpointer          data);
 
-static void     gimp_fg_bg_editor_create_transform  (GimpFgBgEditor   *editor);
-static void     gimp_fg_bg_editor_destroy_transform (GimpFgBgEditor   *editor);
-
 static void     gimp_fg_bg_editor_image_changed     (GimpFgBgEditor   *editor,
                                                      GimpImage        *image);
 
@@ -232,10 +229,6 @@ gimp_fg_bg_editor_init (GimpFgBgEditor *editor)
                              gimp_fg_bg_editor_drag_color, NULL);
   gimp_dnd_color_dest_add (GTK_WIDGET (editor),
                            gimp_fg_bg_editor_drop_color, NULL);
-
-  gimp_widget_track_monitor (GTK_WIDGET (editor),
-                             G_CALLBACK (gimp_fg_bg_editor_destroy_transform),
-                             NULL, NULL);
 
   gtk_widget_set_size_request (GTK_WIDGET (editor), 24, 24);
 }
@@ -428,9 +421,6 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
 
   editor->rect_width  = rect.width;
   editor->rect_height = rect.height;
-
-  if (! editor->transform)
-    gimp_fg_bg_editor_create_transform (editor);
 
   if (editor->context)
     {
@@ -691,10 +681,6 @@ gimp_fg_bg_editor_set_context (GimpFgBgEditor *editor,
                                                 G_CALLBACK (gimp_fg_bg_editor_image_changed),
                                                 editor);
           g_object_unref (editor->context);
-
-          g_signal_handlers_disconnect_by_func (editor->color_config,
-                                                gimp_fg_bg_editor_destroy_transform,
-                                                editor);
           g_clear_object (&editor->color_config);
         }
 
@@ -715,13 +701,7 @@ gimp_fg_bg_editor_set_context (GimpFgBgEditor *editor,
                                     editor);
 
           editor->color_config = g_object_ref (context->gimp->config->color_management);
-
-          g_signal_connect_swapped (editor->color_config, "notify",
-                                    G_CALLBACK (gimp_fg_bg_editor_destroy_transform),
-                                    editor);
         }
-
-      gimp_fg_bg_editor_destroy_transform (editor);
 
       g_object_notify (G_OBJECT (editor), "context");
     }
@@ -804,36 +784,6 @@ gimp_fg_bg_editor_drop_color (GtkWidget     *widget,
 }
 
 static void
-gimp_fg_bg_editor_create_transform (GimpFgBgEditor *editor)
-{
-  if (editor->color_config)
-    {
-      static GimpColorProfile *profile = NULL;
-
-      if (G_UNLIKELY (! profile))
-        profile = gimp_color_profile_new_rgb_srgb ();
-
-      editor->transform =
-        gimp_widget_get_color_transform (GTK_WIDGET (editor),
-                                         editor->color_config,
-                                         profile,
-                                         babl_format ("R'G'B'A double"),
-                                         babl_format ("R'G'B'A double"),
-                                         NULL,
-                                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                         FALSE);
-    }
-}
-
-static void
-gimp_fg_bg_editor_destroy_transform (GimpFgBgEditor *editor)
-{
-  g_clear_object (&editor->transform);
-
-  gtk_widget_queue_draw (GTK_WIDGET (editor));
-}
-
-static void
 gimp_fg_bg_editor_image_changed (GimpFgBgEditor *editor,
                                  GimpImage      *image)
 {
@@ -889,8 +839,6 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
 {
   GimpPalette       *colormap_palette = NULL;
   GimpImageBaseType  base_type        = GIMP_RGB;
-  gdouble            srgb_color[4];
-  gdouble            transformed_color[4];
   gboolean           is_out_of_gamut;
 
   if (editor->active_image)
@@ -904,27 +852,8 @@ gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
         }
     }
 
-  /* The transform function is meant to convert from unbounded sRGB to the
-   * monitor space, ready for display.
-   */
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), srgb_color);
-  if (editor->transform)
-    {
-      gimp_color_transform_process_pixels (editor->transform,
-                                           babl_format ("R'G'B'A double"),
-                                           srgb_color,
-                                           babl_format ("R'G'B'A double"),
-                                           &transformed_color,
-                                           1);
-    }
-  else
-    {
-      memcpy ((void *) transformed_color, (const void *) srgb_color, 4 * sizeof (gdouble));
-    }
-
   cairo_save (cr);
-
-  gimp_cairo_set_source_rgb (cr, (GimpRGB *) &transformed_color);
+  gimp_cairo_set_source_color (cr, color, editor->color_config, FALSE, GTK_WIDGET (editor));
 
   cairo_rectangle (cr, x, y, width, height);
   cairo_fill (cr);
