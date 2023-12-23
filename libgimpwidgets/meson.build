@@ -145,6 +145,7 @@ libgimpwidgets_headers_introspectable = files(
   'gimplabelintwidget.h',
   'gimplabelspin.h',
   'gimplabelentry.h',
+  'gimplabelstringwidget.h',
   'gimpintstore.h',
   'gimpmemsizeentry.h',
   'gimpnumberpairentry.h',
