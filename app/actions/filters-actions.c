@@ -278,7 +278,7 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     GIMP_HELP_FILTER_EDGE },
 
   { "filters-edge-laplace", GIMP_ICON_GEGL,
-    NC_("filters-action", "_Laplace"), NULL, { NULL }, NULL,
+    NC_("filters-action", "_Laplace..."), NULL, { NULL }, NULL,
     "gegl:edge-laplace",
     GIMP_HELP_FILTER_EDGE_LAPLACE },
 
