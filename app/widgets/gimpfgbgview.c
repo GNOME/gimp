@@ -60,9 +60,6 @@ static void     gimp_fg_bg_view_get_property      (GObject        *object,
 static gboolean gimp_fg_bg_view_draw              (GtkWidget      *widget,
                                                    cairo_t        *cr);
 
-static void     gimp_fg_bg_view_create_transform  (GimpFgBgView   *view);
-static void     gimp_fg_bg_view_destroy_transform (GimpFgBgView   *view);
-
 
 G_DEFINE_TYPE (GimpFgBgView, gimp_fg_bg_view, GTK_TYPE_WIDGET)
 
@@ -94,10 +91,6 @@ static void
 gimp_fg_bg_view_init (GimpFgBgView *view)
 {
   gtk_widget_set_has_window (GTK_WIDGET (view), FALSE);
-
-  gimp_widget_track_monitor (GTK_WIDGET (view),
-                             G_CALLBACK (gimp_fg_bg_view_destroy_transform),
-                             NULL, NULL);
 }
 
 static void
@@ -162,7 +155,6 @@ gimp_fg_bg_view_draw (GtkWidget *widget,
   GtkBorder        padding;
   GdkRectangle     rect;
   GeglColor       *color;
-  GimpRGB          rgb;
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -181,9 +173,6 @@ gimp_fg_bg_view_draw (GtkWidget *widget,
   rect.width  = (allocation.width  - border.left - border.right)  * 3 / 4;
   rect.height = (allocation.height - border.top  - border.bottom) * 3 / 4;
 
-  if (! view->transform)
-    gimp_fg_bg_view_create_transform (view);
-
   /*  draw the background area  */
 
   rect.x = allocation.width  - rect.width  - border.right;
@@ -192,17 +181,8 @@ gimp_fg_bg_view_draw (GtkWidget *widget,
   if (view->context)
     {
       color = gimp_context_get_background (view->context);
-      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
 
-      if (view->transform)
-        gimp_color_transform_process_pixels (view->transform,
-                                             babl_format ("R'G'B'A double"),
-                                             &rgb,
-                                             babl_format ("R'G'B'A double"),
-                                             &rgb,
-                                             1);
-
-      gimp_cairo_set_source_rgb (cr, &rgb);
+      gimp_cairo_set_source_color (cr, color, view->color_config, FALSE, widget);
 
       cairo_rectangle (cr, rect.x, rect.y, rect.width, rect.height);
       cairo_fill (cr);
@@ -220,17 +200,8 @@ gimp_fg_bg_view_draw (GtkWidget *widget,
   if (view->context)
     {
       color = gimp_context_get_foreground (view->context);
-      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
 
-      if (view->transform)
-        gimp_color_transform_process_pixels (view->transform,
-                                             babl_format ("R'G'B'A double"),
-                                             &rgb,
-                                             babl_format ("R'G'B'A double"),
-                                             &rgb,
-                                             1);
-
-      gimp_cairo_set_source_rgb (cr, &rgb);
+      gimp_cairo_set_source_color (cr, color, view->color_config, FALSE, widget);
 
       cairo_rectangle (cr, rect.x, rect.y, rect.width, rect.height);
       cairo_fill (cr);
@@ -241,36 +212,6 @@ gimp_fg_bg_view_draw (GtkWidget *widget,
   gtk_style_context_restore (style);
 
   return TRUE;
-}
-
-static void
-gimp_fg_bg_view_create_transform (GimpFgBgView *view)
-{
-  if (view->color_config)
-    {
-      static GimpColorProfile *profile = NULL;
-
-      if (G_UNLIKELY (! profile))
-        profile = gimp_color_profile_new_rgb_srgb ();
-
-      view->transform =
-        gimp_widget_get_color_transform (GTK_WIDGET (view),
-                                         view->color_config,
-                                         profile,
-                                         babl_format ("R'G'B'A double"),
-                                         babl_format ("R'G'B'A double"),
-                                         NULL,
-                                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                         FALSE);
-    }
-}
-
-static void
-gimp_fg_bg_view_destroy_transform (GimpFgBgView *view)
-{
-  g_clear_object (&view->transform);
-
-  gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
 
@@ -301,10 +242,6 @@ gimp_fg_bg_view_set_context (GimpFgBgView *view,
                                                 gtk_widget_queue_draw,
                                                 view);
           g_clear_object (&view->context);
-
-          g_signal_handlers_disconnect_by_func (view->color_config,
-                                                gimp_fg_bg_view_destroy_transform,
-                                                view);
           g_clear_object (&view->color_config);
         }
 
@@ -322,13 +259,7 @@ gimp_fg_bg_view_set_context (GimpFgBgView *view,
                                     view);
 
           view->color_config = g_object_ref (context->gimp->config->color_management);
-
-          g_signal_connect_swapped (view->color_config, "notify",
-                                    G_CALLBACK (gimp_fg_bg_view_destroy_transform),
-                                    view);
         }
-
-      gimp_fg_bg_view_destroy_transform (view);
 
       g_object_notify (G_OBJECT (view), "context");
     }
