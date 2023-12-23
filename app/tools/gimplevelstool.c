@@ -95,7 +95,7 @@ static void       gimp_levels_tool_color_picked   (GimpFilterTool   *filter_tool
                                                    gdouble           x,
                                                    gdouble           y,
                                                    const Babl       *sample_format,
-                                                   const GimpRGB    *color);
+                                                   GeglColor        *color);
 
 static void       gimp_levels_tool_export_setup   (GimpSettingsBox  *settings_box,
                                                    GtkFileChooserDialog *dialog,
@@ -776,7 +776,7 @@ static void
 levels_input_adjust_by_color (GimpLevelsConfig     *config,
                               guint                 value,
                               GimpHistogramChannel  channel,
-                              const GimpRGB        *color)
+                              GeglColor            *color)
 {
   switch (value & 0xF)
     {
@@ -800,17 +800,11 @@ gimp_levels_tool_color_picked (GimpFilterTool *color_tool,
                                gdouble         x,
                                gdouble         y,
                                const Babl     *sample_format,
-                               const GimpRGB  *color)
+                               GeglColor      *color)
 {
   GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (color_tool);
   GimpLevelsConfig *config      = GIMP_LEVELS_CONFIG (filter_tool->config);
-  GimpRGB           rgb         = *color;
   guint             value       = GPOINTER_TO_UINT (identifier);
-
-  if (config->trc == GIMP_TRC_LINEAR)
-    babl_process (babl_fish (babl_format ("R'G'B'A double"),
-                             babl_format ("RGBA double")),
-                  &rgb, &rgb, 1);
 
   if (value & PICK_ALL_CHANNELS &&
       gimp_babl_format_get_base_type (sample_format) == GIMP_RGB)
@@ -838,12 +832,12 @@ gimp_levels_tool_color_picked (GimpFilterTool *color_tool,
            channel <= GIMP_HISTOGRAM_BLUE;
            channel++)
         {
-          levels_input_adjust_by_color (config, value, channel, &rgb);
+          levels_input_adjust_by_color (config, value, channel, color);
         }
     }
   else
     {
-      levels_input_adjust_by_color (config, value, config->channel, &rgb);
+      levels_input_adjust_by_color (config, value, config->channel, color);
     }
 }
 

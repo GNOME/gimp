@@ -24,7 +24,6 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "operations-types.h"
@@ -370,20 +369,6 @@ gimp_operation_config_sync_node (GObject  *config,
           g_object_get_property (G_OBJECT (config), gimp_pspec->name,
                                  &value);
 
-          if (GEGL_IS_PARAM_SPEC_COLOR (gegl_pspec))
-            {
-              GimpRGB    gimp_color;
-              GeglColor *gegl_color;
-
-              gimp_value_get_rgb (&value, &gimp_color);
-              g_value_unset (&value);
-
-              gegl_color = gimp_gegl_color_new (&gimp_color, NULL);
-
-              g_value_init (&value, gegl_pspec->value_type);
-              g_value_take_object (&value, gegl_color);
-            }
-
           gegl_node_set_property (node, gegl_pspec->name,
                                   &value);
 
@@ -529,20 +514,6 @@ gimp_operation_config_config_notify (GObject          *config,
       g_value_init (&value, gimp_pspec->value_type);
       g_object_get_property (config, gimp_pspec->name, &value);
 
-      if (GEGL_IS_PARAM_SPEC_COLOR (gegl_pspec))
-        {
-          GimpRGB    gimp_color;
-          GeglColor *gegl_color;
-
-          gimp_value_get_rgb (&value, &gimp_color);
-          g_value_unset (&value);
-
-          gegl_color = gimp_gegl_color_new (&gimp_color, NULL);
-
-          g_value_init (&value, gegl_pspec->value_type);
-          g_value_take_object (&value, gegl_color);
-        }
-
       handler = g_signal_handler_find (node,
                                        G_SIGNAL_MATCH_DETAIL |
                                        G_SIGNAL_MATCH_FUNC   |
@@ -580,32 +551,6 @@ gimp_operation_config_node_notify (GeglNode         *node,
 
       g_value_init (&value, gegl_pspec->value_type);
       gegl_node_get_property (node, gegl_pspec->name, &value);
-
-      if (GEGL_IS_PARAM_SPEC_COLOR (gegl_pspec))
-        {
-          GeglColor *gegl_color;
-          GimpRGB    gimp_color;
-
-          gegl_color = g_value_dup_object (&value);
-          g_value_unset (&value);
-
-          if (gegl_color)
-            {
-              gegl_color_get_rgba (gegl_color,
-                                   &gimp_color.r,
-                                   &gimp_color.g,
-                                   &gimp_color.b,
-                                   &gimp_color.a);
-              g_object_unref (gegl_color);
-            }
-          else
-            {
-              gimp_rgba_set (&gimp_color, 0.0, 0.0, 0.0, 1.0);
-            }
-
-          g_value_init (&value, gimp_pspec->value_type);
-          gimp_value_set_rgb (&value, &gimp_color);
-        }
 
       handler = g_signal_handler_find (config,
                                        G_SIGNAL_MATCH_DETAIL |

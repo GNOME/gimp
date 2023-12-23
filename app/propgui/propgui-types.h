@@ -84,7 +84,7 @@ typedef void (* GimpPickerCallback)                   (gpointer                 
                                                        gdouble                     x,
                                                        gdouble                     y,
                                                        const Babl                 *sample_format,
-                                                       const GimpRGB              *color);
+                                                       GeglColor                  *color);
 
 typedef void (* GimpControllerLineCallback)           (gpointer                    data,
                                                        GeglRectangle              *area,

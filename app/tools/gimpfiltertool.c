@@ -862,9 +862,6 @@ gimp_filter_tool_color_picked (GimpColorTool      *color_tool,
                                GeglColor          *color)
 {
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
-  GimpRGB         rgb;
-
-  gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
 
   if (filter_tool->active_picker)
     {
@@ -882,7 +879,7 @@ gimp_filter_tool_color_picked (GimpColorTool      *color_tool,
                     filter_tool->pick_identifier,
                     coords->x,
                     coords->y,
-                    sample_format, &rgb);
+                    sample_format, color);
 
           return;
         }
@@ -892,7 +889,7 @@ gimp_filter_tool_color_picked (GimpColorTool      *color_tool,
                                                           filter_tool->pick_identifier,
                                                           coords->x,
                                                           coords->y,
-                                                          sample_format, &rgb);
+                                                          sample_format, color);
 }
 
 static void

@@ -98,7 +98,7 @@ struct _GimpFilterToolClass
                                    gdouble            x,
                                    gdouble            y,
                                    const Babl        *sample_format,
-                                   const GimpRGB     *color);
+                                   GeglColor         *color);
 };
 
 

@@ -90,7 +90,7 @@ static void        gimp_operation_tool_color_picked    (GimpFilterTool    *filte
                                                         gdouble            x,
                                                         gdouble            y,
                                                         const Babl        *sample_format,
-                                                        const GimpRGB     *color);
+                                                        GeglColor         *color);
 
 static void        gimp_operation_tool_halt            (GimpOperationTool *op_tool);
 static void        gimp_operation_tool_commit          (GimpOperationTool *op_tool);
@@ -339,7 +339,7 @@ gimp_operation_tool_color_picked (GimpFilterTool  *filter_tool,
                                   gdouble          x,
                                   gdouble          y,
                                   const Babl      *sample_format,
-                                  const GimpRGB   *color)
+                                  GeglColor       *color)
 {
   gchar **pspecs = g_strsplit (identifier, ":", 2);
 
@@ -495,7 +495,6 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
       else if (sync_colors)
         {
           GeglColor *color = NULL;
-          GimpRGB    rgb;
 
           if (HAS_KEY (pspec, "role", "color-primary"))
             color = gimp_context_get_foreground (GIMP_CONTEXT (options));
@@ -503,10 +502,7 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
             color = gimp_context_get_background (GIMP_CONTEXT (options));
 
           if (color != NULL)
-            {
-              gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
-              g_object_set (filter_tool->config, pspec->name, &rgb, NULL);
-            }
+            g_object_set (filter_tool->config, pspec->name, color, NULL);
         }
     }
 

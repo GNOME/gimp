@@ -99,7 +99,7 @@ static void        gimp_curves_tool_color_picked    (GimpFilterTool       *filte
                                                      gdouble               x,
                                                      gdouble               y,
                                                      const Babl           *sample_format,
-                                                     const GimpRGB        *color);
+                                                     GeglColor            *color);
 
 static void        gimp_curves_tool_export_setup    (GimpSettingsBox      *settings_box,
                                                      GtkFileChooserDialog *dialog,
@@ -787,28 +787,31 @@ gimp_curves_tool_color_picked (GimpFilterTool *filter_tool,
                                gdouble         x,
                                gdouble         y,
                                const Babl     *sample_format,
-                               const GimpRGB  *color)
+                               GeglColor      *color)
 {
   GimpCurvesTool   *tool     = GIMP_CURVES_TOOL (filter_tool);
   GimpCurvesConfig *config   = GIMP_CURVES_CONFIG (filter_tool->config);
   GimpDrawable     *drawable = GIMP_TOOL (tool)->drawables->data;
-  GimpRGB           rgb      = *color;
+  gdouble           rgb[4];
 
+  /* TODO: double-check this code. What RGB values do we want exactly? Right
+   * now, we use sRGB space values.
+   */
   if (config->trc == GIMP_TRC_LINEAR)
-    babl_process (babl_fish (babl_format ("R'G'B'A double"),
-                             babl_format ("RGBA double")),
-                  &rgb, &rgb, 1);
+    gegl_color_get_pixel (color, babl_format ("RGBA double"), rgb);
+  else
+    gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgb);
 
-  tool->picked_color[GIMP_HISTOGRAM_RED]   = rgb.r;
-  tool->picked_color[GIMP_HISTOGRAM_GREEN] = rgb.g;
-  tool->picked_color[GIMP_HISTOGRAM_BLUE]  = rgb.b;
+  tool->picked_color[GIMP_HISTOGRAM_RED]   = rgb[0];
+  tool->picked_color[GIMP_HISTOGRAM_GREEN] = rgb[1];
+  tool->picked_color[GIMP_HISTOGRAM_BLUE]  = rgb[2];
 
   if (gimp_drawable_has_alpha (drawable))
-    tool->picked_color[GIMP_HISTOGRAM_ALPHA] = rgb.a;
+    tool->picked_color[GIMP_HISTOGRAM_ALPHA] = rgb[3];
   else
     tool->picked_color[GIMP_HISTOGRAM_ALPHA] = -1;
 
-  tool->picked_color[GIMP_HISTOGRAM_VALUE] = MAX (MAX (rgb.r, rgb.g), rgb.b);
+  tool->picked_color[GIMP_HISTOGRAM_VALUE] = MAX (MAX (rgb[0], rgb[1]), rgb[2]);
 
   gimp_curve_view_set_xpos (GIMP_CURVE_VIEW (tool->graph),
                             tool->picked_color[config->channel]);

@@ -601,31 +601,40 @@ gimp_levels_config_stretch_channel (GimpLevelsConfig     *config,
 }
 
 static gdouble
-gimp_levels_config_input_from_color (GimpHistogramChannel  channel,
-                                     const GimpRGB        *color)
+gimp_levels_config_input_from_color (GimpLevelsConfig     *config,
+                                     GimpHistogramChannel  channel,
+                                     GeglColor            *color)
 {
+  gdouble rgba[4];
+
+  /* TODO: should I get colors within a specific space? */
+  if (config->trc == GIMP_TRC_LINEAR)
+    gegl_color_get_pixel (color, babl_format ("RGBA double"), rgba);
+  else
+    gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgba);
+
   switch (channel)
     {
     case GIMP_HISTOGRAM_VALUE:
-      return MAX (MAX (color->r, color->g), color->b);
+      return MAX (MAX (rgba[0], rgba[1]), rgba[2]);
 
     case GIMP_HISTOGRAM_RED:
-      return color->r;
+      return rgba[0];
 
     case GIMP_HISTOGRAM_GREEN:
-      return color->g;
+      return rgba[1];
 
     case GIMP_HISTOGRAM_BLUE:
-      return color->b;
+      return rgba[2];
 
     case GIMP_HISTOGRAM_ALPHA:
-      return color->a;
+      return rgba[3];
 
     case GIMP_HISTOGRAM_RGB:
-      return MIN (MIN (color->r, color->g), color->b);
+      return MIN (MIN (rgba[0], rgba[1]), rgba[2]);
 
     case GIMP_HISTOGRAM_LUMINANCE:
-      return GIMP_RGB_LUMINANCE (color->r, color->g, color->b);
+      return GIMP_RGB_LUMINANCE (rgba[0], rgba[1], rgba[2]);
     }
 
   return 0.0;
@@ -634,9 +643,9 @@ gimp_levels_config_input_from_color (GimpHistogramChannel  channel,
 void
 gimp_levels_config_adjust_by_colors (GimpLevelsConfig     *config,
                                      GimpHistogramChannel  channel,
-                                     const GimpRGB        *black,
-                                     const GimpRGB        *gray,
-                                     const GimpRGB        *white)
+                                     GeglColor            *black,
+                                     GeglColor            *gray,
+                                     GeglColor            *white)
 {
   g_return_if_fail (GIMP_IS_LEVELS_CONFIG (config));
 
@@ -644,16 +653,14 @@ gimp_levels_config_adjust_by_colors (GimpLevelsConfig     *config,
 
   if (black)
     {
-      config->low_input[channel] = gimp_levels_config_input_from_color (channel,
-                                                                        black);
+      config->low_input[channel] = gimp_levels_config_input_from_color (config, channel, black);
       g_object_notify (G_OBJECT (config), "low-input");
     }
 
 
   if (white)
     {
-      config->high_input[channel] = gimp_levels_config_input_from_color (channel,
-                                                                         white);
+      config->high_input[channel] = gimp_levels_config_input_from_color (config, channel, white);
       g_object_notify (G_OBJECT (config), "high-input");
     }
 
@@ -664,11 +671,13 @@ gimp_levels_config_adjust_by_colors (GimpLevelsConfig     *config,
       gdouble inten;
       gdouble out_light;
       gdouble lightness;
+      gdouble rgba[4];
 
       /* Calculate lightness value */
-      lightness = GIMP_RGB_LUMINANCE (gray->r, gray->g, gray->b);
+      gegl_color_get_pixel (gray, babl_format ("RGBA double"), rgba);
+      lightness = GIMP_RGB_LUMINANCE (rgba[0], rgba[1], rgba[2]);
 
-      input = gimp_levels_config_input_from_color (channel, gray);
+      input = gimp_levels_config_input_from_color (config, channel, gray);
 
       range = config->high_input[channel] - config->low_input[channel];
       if (range <= 0)

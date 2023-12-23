@@ -280,29 +280,18 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
     }
   else if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
     {
-      GeglColor *gegl_color;
-      GimpRGB    gimp_color;
-      gdouble    r = 0.0;
-      gdouble    g = 0.0;
-      gdouble    b = 0.0;
-      gdouble    a = 1.0;
+      GeglColor *color;
       GValue     value = G_VALUE_INIT;
 
       g_value_init (&value, GEGL_TYPE_COLOR);
       g_param_value_set_default (pspec, &value);
-
-      gegl_color = g_value_get_object (&value);
-      if (gegl_color)
-        gegl_color_get_rgba (gegl_color, &r, &g, &b, &a);
-
-      gimp_rgba_set (&gimp_color, r, g, b, a);
-
+      color = g_value_dup_object (&value);
       g_value_unset (&value);
 
-      copy = gimp_param_spec_rgb (name, nick, blurb,
-                                  TRUE,
-                                  &gimp_color,
-                                  flags);
+      copy = gegl_param_spec_color (name, nick, blurb,
+                                    /*TRUE,*/
+                                    color, flags);
+      g_object_unref (color);
     }
   else if (G_IS_PARAM_SPEC_PARAM (pspec))
     {
