@@ -2065,7 +2065,7 @@ save_image (GFile        *file,
 
           /* If we're dealing with a paletted image with
            * transparency set, write out the remapped palette */
-          if (png_get_valid (pp, info, PNG_INFO_tRNS))
+          if (pngg.has_trns)
             {
               guchar inverse_remap[256];
 
