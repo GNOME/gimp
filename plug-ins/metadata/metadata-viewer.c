@@ -306,7 +306,7 @@ metadata_viewer_dialog (GimpImage     *image,
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
 
   rend = gtk_cell_renderer_text_new ();
-  col = gtk_tree_view_column_new_with_attributes (_("Value"),
+  col = gtk_tree_view_column_new_with_attributes (C_("A tag value", "Value"),
                                                   rend,
                                                   "text", C_EXIF_VALUE,
                                                   NULL);
@@ -344,7 +344,7 @@ metadata_viewer_dialog (GimpImage     *image,
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
 
   rend = gtk_cell_renderer_text_new ();
-  col = gtk_tree_view_column_new_with_attributes (_("Value"),
+  col = gtk_tree_view_column_new_with_attributes (C_("A tag value", "Value"),
                                                   rend,
                                                   "text", C_XMP_VALUE,
                                                   NULL);
@@ -382,7 +382,7 @@ metadata_viewer_dialog (GimpImage     *image,
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
 
   rend = gtk_cell_renderer_text_new ();
-  col = gtk_tree_view_column_new_with_attributes (_("Value"),
+  col = gtk_tree_view_column_new_with_attributes (C_("A tag value", "Value"),
                                                   rend,
                                                   "text", C_IPTC_VALUE,
                                                   NULL);
