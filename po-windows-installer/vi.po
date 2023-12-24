@@ -1,14 +1,14 @@
 # Vietnamese translation for gimp-windows-installer.
 # Copyright (C) 2021 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
-# Trần Ngọc Quân <vnwildman@gmail.com>, 2021.
+# Trần Ngọc Quân <vnwildman@gmail.com>, 2021-2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-22 21:28+0200\n"
-"PO-Revision-Date: 2021-09-01 13:41+0700\n"
+"POT-Creation-Date: 2023-12-23 21:41+0000\n"
+"PO-Revision-Date: 2023-12-24 14:06+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
 "Language: vi\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Gtranslator 42.0\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -135,9 +136,8 @@ msgid "Run-time libraries"
 msgstr "Các thư viện thực thi"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-#, fuzzy
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
-msgstr "Thư viện thực thi được GIMP sử dụng, bao gồm GTK+ Run-time Environment"
+msgstr "Thư viện thực thi được GIMP sử dụng, bao gồm GTK Run-time Environment"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -148,9 +148,8 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Bao gồm thông tin để giúp gỡ lỗi GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-#, fuzzy
 msgid "MS-Windows engine for GTK"
-msgstr "Bộ máy MS-Windows cho GTK+"
+msgstr "Bộ máy MS-Windows cho GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
@@ -322,14 +321,14 @@ msgstr ""
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
-"installing this version in %2, or choose a Custom install, and select a "
-"different installation folder.%n%nThe Setup will now exit."
+"Setup couldn't determine how to remove the old version automatically."
+"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+"before installing this version in %2, or choose a Custom install, and select "
+"a different installation folder.%n%nThe Setup will now exit."
 msgstr ""
 "GIMP %1 không thể được cài đặt đè lên phiên bản GIMP hiện được cài đặt của "
-"bạn và Bộ cài đặt không thể xác định cách tự động xóa bỏ phiên bản cũ.%n"
-"%nVui lòng gỡ bỏ phiên bản GIMP trước đó và mọi phần bổ trợ nào trước khi "
+"bạn và Bộ cài đặt không thể xác định cách tự động xóa bỏ phiên bản cũ."
+"%n%nVui lòng gỡ bỏ phiên bản GIMP trước đó và mọi phần bổ trợ nào trước khi "
 "cài đặt phiên bản này trong %2 hoặc chọn cài đặt Tùy chỉnh và chọn một thư "
 "mục cài đặt khác.%n%nBộ cài đặt sẽ thoát ra."
 
