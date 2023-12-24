@@ -3,22 +3,24 @@
 # Clytie Siddall <clytie@riverland.net.au>, 2005.
 # Nguyễn Thái Ngọc Duy <pclouds@gmail.com>, 2011.
 # Trần Ngọc Quân <vnwildman@gmail.com>, 2021.
+# Trần Ngọc Quan <vnwildman@gmail.com>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-05-02 17:17+0000\n"
-"PO-Revision-Date: 2021-05-04 14:09+0700\n"
-"Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
+"POT-Creation-Date: 2023-12-20 20:46+0000\n"
+"PO-Revision-Date: 2023-12-24 14:32+0700\n"
+"Last-Translator: Trần Ngọc Quan <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Gtranslator 42.0\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: data/tips/gimp-tips.xml.in:18
 msgid ""
 "You can get context-sensitive help for most of GIMP's features by pressing "
 "the F1 key at any time. This also works inside the menus."
@@ -27,7 +29,7 @@ msgstr ""
 "họa GIMP bằng cách bấm phím F1 tại bất cứ thời điểm nào. Nó cũng hoạt động "
 "khi dùng trình đơn."
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: data/tips/gimp-tips.xml.in:24
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
@@ -37,7 +39,7 @@ msgstr ""
 "đây là một chồng các lớp hay bộ lọc, và nhìn xuyên qua chúng bạn thấy được "
 "nội dung tổng hợp lại của chúng."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: data/tips/gimp-tips.xml.in:31
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -45,7 +47,7 @@ msgstr ""
 "Bạn có thể thực hiện nhiều thao tác trên lớp bằng cách nhấn chuột phải vào "
 "phần nhãn của một lớp trong hộp thoại Lớp."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: data/tips/gimp-tips.xml.in:37
 msgid ""
 "Saving an image uses XCF, GIMP's native file format (file extension <tt>."
 "xcf</tt>). This preserves the layers and many aspects of your work-in-"
@@ -57,7 +59,7 @@ msgstr ""
 "hành của bạn. Một khi dự án đó hoàn thành, bạn có thể xuất nó ra với định "
 "dạng JPEG, PNG, GIF v.v."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: data/tips/gimp-tips.xml.in:45
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -67,7 +69,7 @@ msgstr ""
 "Trong một số trường hợp, bạn sẽ cần phải hòa trộn mọi lớp (Ảnh→Làm phẳng "
 "ảnh) nếu bạn muốn phần bổ sung hoạt động trên toàn ảnh."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: data/tips/gimp-tips.xml.in:52
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -77,7 +79,7 @@ msgstr ""
 "kênh anfa (α). Bạn có thể thêm một kênh anfa bằng cách dùng Lớp→Trong "
 "suốt→Thêm kênh anfa."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: data/tips/gimp-tips.xml.in:59
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -89,7 +91,7 @@ msgstr ""
 "độ ảnh thành RGB (Ảnh→Chế độ→RGB), thêm một kênh anfa (lớp→Trong suốt→Thêm "
 "kênh anfa) hoặc làm phẳng nó (Ảnh→Làm phẳng ảnh)."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: data/tips/gimp-tips.xml.in:68
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -102,7 +104,7 @@ msgstr ""
 "phép cấu hình bỏ qua <tt>Alt</tt> hoặc dùng phím <tt>Super</tt> (hoặc phím "
 "“Logo Windows”) thay thế."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: data/tips/gimp-tips.xml.in:82
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -112,45 +114,45 @@ msgstr ""
 "màu từ hộp công cụ hoặc từ một bảng chọn màu, rồi thả nó vào một ảnh sẽ tô "
 "vùng chọn hiện tại bằng màu đó."
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: data/tips/gimp-tips.xml.in:89
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr ""
 "Bạn có thể sử dụng nút giữa trên con chuột để di chuyển ảnh (hoặc tùy chọn "
-"giữ phím <tt>Khoảng trắng</tt> khi di chuyển chuột)."
+"giữ phím <tt>Khoảng trắng</tt> và di chuyển chuột)."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: data/tips/gimp-tips.xml.in:95
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
 "Hãy nhấn và kéo chuột vào một thuớc đo để tạo một đường dẫn hướng trên một "
-"ảnh. Mọi vùng chọn được kéo thì sẽ dính nét dẫn này. Bạn có thể loại bỏ nét "
-"dẫn bằng cách kéo nó ra khỏi ảnh bằng công cụ Di chuyển."
+"ảnh. Mọi vùng chọn được kéo thì sẽ dính đường dẫn hướng này. Bạn có thể loại "
+"bỏ đường  dẫn hướng bằng cách kéo nó ra khỏi ảnh bằng công cụ Di chuyển."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: data/tips/gimp-tips.xml.in:102
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
 msgstr ""
-"Bạn có thể kéo một lớp từ hộp thoại Lớp rồi thả nó trên hộp công cụ. Làm như "
+"Bạn có thể kéo một lớp từ hộp thoại lớp rồi thả nó trên hộp công cụ. Làm như "
 "thế sẽ tạo một ảnh mới chỉ có chứa lớp đó thôi."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: data/tips/gimp-tips.xml.in:108
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
-"layer before doing other operations on the image. Click on the &quot;New "
-"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
-"use the menus to do the same."
+"layer before doing other operations on the image. Click on the \"New Layer\" "
+"or the \"Anchor Layer\" button in the Layers dialog, or use the menus to do "
+"the same."
 msgstr ""
 "Một vùng chọn đang trôi nổi phải được neo vào một lớp mới, hoặc vào lớp hoạt "
 "động cuối cùng, trước khi bạn thực hiện thao tác khác nào với ảnh đó. Hãy "
-"nhấn vào nút “Lớp Mới” hoặc “Neo Lớp” trong hộp thoại Lớp, hoặc dùng những "
+"nhấn vào nút “Lớp mới” hoặc “Neo lớp” trong hộp thoại Lớp, hoặc dùng những "
 "lệnh trong trình đơn để làm như thế."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: data/tips/gimp-tips.xml.in:116
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
@@ -161,7 +163,7 @@ msgstr ""
 "vào tên tập tin, rồi ảnh đó sẽ được lưu dạng nén. Tất nhiên, bạn cũng có thể "
 "tải ảnh đã nén."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: data/tips/gimp-tips.xml.in:124
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -171,27 +173,27 @@ msgstr ""
 "vùng chọn hiện thời, thay vì thay thế nó. Dùng phím <tt>Ctrl</tt> trước khi "
 "chọn thì loại trừ ra vùng chọn hiện thời."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: data/tips/gimp-tips.xml.in:132
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
 "using the Path tool or with Filters→Render→Gfig."
 msgstr ""
-"Bạn có thể vẽ hình vuông hoặc hình tròn đơn giản, dùng “Sửa→Nét vùng chọn”. "
-"Nó tạo nét vẽ theo cạnh của vùng chọn hiện có. Có thể vẽ hình phức tạp hơn, "
-"dùng công cụ “Đường dẫn”, hoặc với “Bộ lọc→Tô vẽ→Gfig”."
+"Bạn có thể vẽ hình vuông hoặc hình tròn đơn giản, dùng “Sửa→Tạo nét vẽ vùng "
+"chọn”. Nó tạo nét vẽ theo cạnh của vùng chọn hiện có. Có thể vẽ hình phức "
+"tạp hơn, dùng công cụ “Đường dẫn”, hoặc với “Bộ lọc→Tô vẽ→Gfig”."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: data/tips/gimp-tips.xml.in:139
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
 "the Eraser or the Smudge tool."
 msgstr ""
-"Nếu bạn vẽ một đường dẫn (Sửa→Nét theo đường dẫn) thì các công cụ sơn có thể "
-"được dùng với thiết lập hiện tại. Bạn có thể sử dụng Chổi Sơn trong chế độ "
-"Dốc màu, thậm chí cả công cụ Tẩy xóa hoặc công cụ làm Nhòe."
+"Nếu bạn vẽ một đường dẫn (Sửa→Tạo nét vẽ theo đường dẫn) thì các công cụ sơn "
+"có thể được dùng với thiết lập hiện tại. Bạn có thể sử dụng Chổi Sơn trong "
+"chế độ Dốc màu, thậm chí cả công cụ Tẩy xóa hoặc công cụ làm Nhòe."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: data/tips/gimp-tips.xml.in:146
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -201,19 +203,19 @@ msgstr ""
 "“Đường dẫn”. Hộp thoại “Đường dẫn” cho phép bạn làm việc với nhiều đường dẫn "
 "và chuyển đổi chúng thành vùng chọn."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: data/tips/gimp-tips.xml.in:153
 msgid ""
-"You can use the paint tools to change the selection. Click on the &quot;"
-"Quick Mask&quot; button at the bottom left of an image window. Change your "
-"selection by painting in the image and click on the button again to convert "
-"it back to a normal selection."
+"You can use the paint tools to change the selection. Click on the \"Quick "
+"Mask\" button at the bottom left of an image window. Change your selection "
+"by painting in the image and click on the button again to convert it back to "
+"a normal selection."
 msgstr ""
 "Bạn có thể sử dụng những công cụ sơn để thay đổi vùng chọn. Hãy nhắp vào nút "
 "“Mặt nạ nhanh” ở dưới trái của cửa sổ ảnh. Thay đổi vùng chọn bằng cách sơn "
-"vào ảnh đó, rồi nhắp lại vào cái nút để chuyển đổi nó về một vùng chọn thông "
+"vào ảnh đó, rồi nhắp lại vào nút đó để chuyển đổi nó về một vùng chọn thông "
 "thường."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: data/tips/gimp-tips.xml.in:161
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -225,24 +227,23 @@ msgstr ""
 "Kênh, bạn có thể bật/tắt khả năng hiển thị của kênh mới này, hoặc chuyển đổi "
 "nó thành một vùng chọn."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: data/tips/gimp-tips.xml.in:175
 msgid ""
-"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
-"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
-"selecting a menu item, and pressing the desired key combination. If &quot;"
-"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
-"Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
-"shortcuts."
+"After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
+"you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
+"menu item, and pressing the desired key combination. If \"Save Keyboard "
+"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP. You "
+"should probably disable \"Dynamic Keyboard Shortcuts\" afterwards, to "
+"prevent accidentally assigning/reassigning shortcuts."
 msgstr ""
-"Sau khi bạn bật “Phím tắt Bàn phím Động” trong hộp thoại “Tùy thích” thì bạn "
+"Sau khi bạn bật “Phím tắt bàn phím động” trong hộp thoại “Tùy thích” thì bạn "
 "có thể gán lại phím tắt. Thực hiện bằng cách mở trình đơn, chọn một mục "
-"trình đơn nào đó, rồi bấm tổ hợp phím đã muốn. Nếu “Lưu Phím tắt Bàn phím” "
+"trình đơn nào đó, rồi bấm tổ hợp phím đã muốn. Nếu “Lưu phím tắt bàn phím” "
 "được bật thì các tổ hợp phím được lưu lại khi bạn thoát khỏi chương trình "
-"GIMP. Bạn nên tắt “Phím tắt Bàn phím Động” ngay sau đó để tránh gán nhầm "
+"GIMP. Bạn nên tắt “Phím tắt bàn phím động” ngay sau đó để tránh gán nhầm "
 "phím."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: data/tips/gimp-tips.xml.in:186
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -250,7 +251,7 @@ msgstr ""
 "Nếu màn hình bạn bừa bộn thì có thể bấm phím <tt>Tab</tt> trong cửa sổ ảnh, "
 "để ẩn hoặc hiển thị hộp công cụ và hộp thoại khác."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: data/tips/gimp-tips.xml.in:193
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -259,7 +260,7 @@ msgstr ""
 "trong hộp thoại Lớp để ẩn tất cả các lớp khác trừ lớp đó. Nhấn chuột khi giữ "
 "phím <tt>Shift</tt> lần nữa để hiển thị mọi lớp."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: data/tips/gimp-tips.xml.in:199
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -269,7 +270,7 @@ msgstr ""
 "thoại Lớp thì bật/tắt hiệu ứng của mặt nạ lớp. Nhấn chuột khi giữ phím "
 "<tt>Alt</tt> trên khung xem thử mặt nạ lớp sẽ bật/tắt xem mặt nạ trực tiếp."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: data/tips/gimp-tips.xml.in:206
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -277,7 +278,7 @@ msgstr ""
 "Bạn có thể sử dụng phím <tt>Ctrl</tt>-<tt>Tab</tt> để quay vòng qua các lớp "
 "trong một ảnh (nếu bộ quản lý cửa sổ của bạn không đang dùng những phím này)."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: data/tips/gimp-tips.xml.in:212
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -289,24 +290,23 @@ msgstr ""
 "<tt>Ctrl</tt> với công cụ bút hút màu eyedropper để đặt màu nền thay vì màu "
 "tiền cảnh."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: data/tips/gimp-tips.xml.in:220
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr ""
-"Kéo giữ <tt>Ctrl</tt> với công cụ Xoay sẽ ràng buộc xoay với các bước góc "
-"15º."
+"Kéo giữ <tt>Ctrl</tt> với công cụ Xoay sẽ ràng buộc xoay từng bước 15º."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: data/tips/gimp-tips.xml.in:226
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
-"improve their tonal range with the &quot;Auto&quot; button in the Levels "
-"tool (Colors→Levels). If there are any color casts, you can correct them "
-"with the Curves tool (Colors→Curves)."
+"improve their tonal range with the \"Auto\" button in the Levels tool "
+"(Colors→Levels). If there are any color casts, you can correct them with the "
+"Curves tool (Colors→Curves)."
 msgstr ""
-"Nếu một số ảnh chụp đã quét của bạn trông thiếu màu sắc, bạn dễ dàng có thể "
-"tăng cường tông màu bằng nút “Tự động” trong công cụ Mức (Màu→Mức). Nếu có "
-"lỗi màu nào, có thể sửa nó dùng công cụ Đường cong (Màu→Đường cong)."
+"Nếu một số ảnh chụp bạn đã quét trông thiếu màu sắc, bạn dễ dàng có thể tăng "
+"cường tông màu bằng nút “Tự động” trong công cụ Mức (Màu→Mức). Nếu có lỗi "
+"màu nào, có thể sửa nó dùng công cụ Đường cong (Màu→Đường cong)."
 
 #~ msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
 #~ msgstr "<big>Chúc mừng bạn dùng Chương trình Thao tác Ảnh GNU!</big>"
