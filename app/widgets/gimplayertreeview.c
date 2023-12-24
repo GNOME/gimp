@@ -118,7 +118,7 @@ static gboolean   gimp_layer_tree_view_drop_possible              (GimpContainer
                                                                    GtkTreeViewDropPosition    *return_drop_pos,
                                                                    GdkDragAction              *return_drag_action);
 static void       gimp_layer_tree_view_drop_color                 (GimpContainerTreeView      *view,
-                                                                   const GimpRGB              *color,
+                                                                   GeglColor                  *color,
                                                                    GimpViewable               *dest_viewable,
                                                                    GtkTreeViewDropPosition     drop_pos);
 static void       gimp_layer_tree_view_drop_uri_list              (GimpContainerTreeView      *view,
@@ -743,7 +743,7 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
 
 static void
 gimp_layer_tree_view_drop_color (GimpContainerTreeView   *view,
-                                 const GimpRGB           *color,
+                                 GeglColor               *color,
                                  GimpViewable            *dest_viewable,
                                  GtkTreeViewDropPosition  drop_pos)
 {

@@ -77,7 +77,7 @@ struct _GimpContainerTreeViewClass
                                GimpViewable            *dest_viewable,
                                GtkTreeViewDropPosition  drop_pos);
   void     (* drop_color)     (GimpContainerTreeView   *tree_view,
-                               const GimpRGB           *src_color,
+                               GeglColor               *src_color,
                                GimpViewable            *dest_viewable,
                                GtkTreeViewDropPosition  drop_pos);
   void     (* drop_uri_list)  (GimpContainerTreeView   *tree_view,

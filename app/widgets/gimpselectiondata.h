@@ -29,9 +29,8 @@ GList         * gimp_selection_data_get_uri_list  (GtkSelectionData *selection);
 /*  color  */
 
 void            gimp_selection_data_set_color     (GtkSelectionData *selection,
-                                                   const GimpRGB    *color);
-gboolean        gimp_selection_data_get_color     (GtkSelectionData *selection,
-                                                   GimpRGB          *color);
+                                                   GeglColor        *color);
+GeglColor     * gimp_selection_data_get_color     (GtkSelectionData *selection);
 
 
 /*  image (xcf)  */

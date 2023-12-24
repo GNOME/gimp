@@ -67,7 +67,7 @@ static gboolean gimp_selection_view_button_press   (GtkWidget           *widget,
 static void   gimp_selection_editor_drop_color     (GtkWidget           *widget,
                                                     gint                 x,
                                                     gint                 y,
-                                                    const GimpRGB       *color,
+                                                    GeglColor           *color,
                                                     gpointer             data);
 
 static void   gimp_selection_editor_mask_changed   (GimpImage           *image,
@@ -303,19 +303,17 @@ gimp_selection_view_button_press (GtkWidget           *widget,
 }
 
 static void
-gimp_selection_editor_drop_color (GtkWidget     *widget,
-                                  gint           x,
-                                  gint           y,
-                                  /* TODO: should drop a GeglColor */
-                                  const GimpRGB *rgb,
-                                  gpointer       data)
+gimp_selection_editor_drop_color (GtkWidget *widget,
+                                  gint       x,
+                                  gint       y,
+                                  GeglColor *color,
+                                  gpointer   data)
 {
   GimpImageEditor         *editor = GIMP_IMAGE_EDITOR (data);
   GimpToolInfo            *tool_info;
   GimpSelectionOptions    *sel_options;
   GimpRegionSelectOptions *options;
   GList                   *drawables;
-  GeglColor               *color;
 
   if (! editor->image)
     return;
@@ -333,8 +331,6 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
   if (! drawables)
     return;
 
-  color = gegl_color_new ("black");
-  gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
   gimp_channel_select_by_color (gimp_image_get_mask (editor->image),
                                 drawables,
                                 options->sample_merged,
@@ -349,7 +345,6 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
                                 sel_options->feather_radius);
   gimp_image_flush (editor->image);
   g_list_free (drawables);
-  g_object_unref (color);
 }
 
 static void

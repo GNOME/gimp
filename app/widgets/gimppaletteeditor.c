@@ -93,7 +93,7 @@ static void   palette_editor_drop_palette          (GtkWidget         *widget,
 static void   palette_editor_drop_color            (GtkWidget         *widget,
                                                     gint               x,
                                                     gint               y,
-                                                    const GimpRGB     *color,
+                                                    GeglColor         *color,
                                                     gpointer           data);
 
 static void   palette_editor_entry_clicked         (GimpPaletteView   *view,
@@ -113,7 +113,7 @@ static gboolean palette_editor_popup_menu          (GtkWidget *widget,
                                                     gpointer   user_data);
 static void   palette_editor_color_dropped         (GimpPaletteView   *view,
                                                     GimpPaletteEntry  *entry,
-                                                    const GimpRGB     *color,
+                                                    GeglColor         *color,
                                                     GimpPaletteEditor *editor);
 
 static void   palette_editor_color_name_changed    (GtkWidget         *widget,
@@ -749,11 +749,11 @@ palette_editor_drop_palette (GtkWidget    *widget,
 }
 
 static void
-palette_editor_drop_color (GtkWidget     *widget,
-                           gint           x,
-                           gint           y,
-                           const GimpRGB *rgb,
-                           gpointer       data)
+palette_editor_drop_color (GtkWidget *widget,
+                           gint       x,
+                           gint       y,
+                           GeglColor *color,
+                           gpointer   data)
 {
   GimpPaletteEditor *editor = data;
 
@@ -761,12 +761,9 @@ palette_editor_drop_color (GtkWidget     *widget,
     {
       GimpPalette      *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
       GimpPaletteEntry *entry;
-      GeglColor        *color   = gegl_color_new (NULL);
 
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
       entry = gimp_palette_add_entry (palette, -1, NULL, color);
       gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view), entry);
-      g_object_unref (color);
     }
 }
 
@@ -888,22 +885,19 @@ palette_editor_popup_menu (GtkWidget *widget,
 static void
 palette_editor_color_dropped (GimpPaletteView   *view,
                               GimpPaletteEntry  *entry,
-                              const GimpRGB     *rgb,
+                              GeglColor         *color,
                               GimpPaletteEditor *editor)
 {
   if (GIMP_DATA_EDITOR (editor)->data_editable)
     {
       GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
-      GeglColor   *color   = gegl_color_new (NULL);
       gint         pos     = -1;
 
       if (entry)
         pos = gimp_palette_get_entry_position (palette, entry);
 
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
       entry = gimp_palette_add_entry (palette, pos, NULL, color);
       gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view), entry);
-      g_object_unref (color);
     }
 }
 

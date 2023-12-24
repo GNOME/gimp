@@ -132,12 +132,12 @@ void  gimp_dnd_uri_list_dest_remove   (GtkWidget              *widget);
 /*  color dnd functions  */
 
 typedef void (* GimpDndDragColorFunc) (GtkWidget     *widget,
-                                       GimpRGB       *color,
+                                       GeglColor    **color,
                                        gpointer       data);
 typedef void (* GimpDndDropColorFunc) (GtkWidget     *widget,
                                        gint           x,
                                        gint           y,
-                                       const GimpRGB *color,
+                                       GeglColor     *color,
                                        gpointer       data);
 
 void  gimp_dnd_color_source_add    (GtkWidget            *widget,

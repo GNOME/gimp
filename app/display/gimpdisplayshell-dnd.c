@@ -86,7 +86,7 @@ static void   gimp_display_shell_drop_pattern   (GtkWidget       *widget,
 static void   gimp_display_shell_drop_color     (GtkWidget       *widget,
                                                  gint             x,
                                                  gint             y,
-                                                 const GimpRGB   *color,
+                                                 GeglColor       *color,
                                                  gpointer         data);
 static void   gimp_display_shell_drop_buffer    (GtkWidget       *widget,
                                                  gint             x,
@@ -436,25 +436,22 @@ static void
 gimp_display_shell_drop_color (GtkWidget     *widget,
                                gint           x,
                                gint           y,
-                               const GimpRGB *rgb,
+                               GeglColor     *color,
                                gpointer       data)
 {
   GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (data);
   GimpFillOptions  *options = gimp_fill_options_new (shell->display->gimp,
                                                      NULL, FALSE);
-  GeglColor        *color   = gegl_color_new ("black");
 
   GIMP_LOG (DND, NULL);
 
   gimp_fill_options_set_style (options, GIMP_FILL_STYLE_FG_COLOR);
-  gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
   gimp_context_set_foreground (GIMP_CONTEXT (options), color);
 
   gimp_display_shell_dnd_fill (shell, options,
                                C_("undo-type", "Drop color to layer"));
 
   g_object_unref (options);
-  g_object_unref (color);
 }
 
 static void

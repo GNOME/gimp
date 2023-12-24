@@ -1387,26 +1387,21 @@ gimp_dnd_get_color_icon (GtkWidget      *widget,
                          gpointer        get_color_data)
 {
   GtkWidget *color_area;
-  GeglColor *color;
-  GimpRGB    rgb;
+  GeglColor *color = NULL;
 
-  (* (GimpDndDragColorFunc) get_color_func) (widget, &rgb, get_color_data);
+  (* (GimpDndDragColorFunc) get_color_func) (widget, &color, get_color_data);
 
   GIMP_LOG (DND, "called");
 
   g_object_set_data_full (G_OBJECT (context),
-                          "gimp-dnd-color", g_memdup2 (&rgb, sizeof (GimpRGB)),
-                          (GDestroyNotify) g_free);
+                          "gimp-dnd-color", color,
+                          (GDestroyNotify) g_object_unref);
 
-  color = gegl_color_new (NULL);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
   color_area = gimp_color_area_new (color, GIMP_COLOR_AREA_SMALL_CHECKS, 0);
   gimp_color_area_set_color_config (GIMP_COLOR_AREA (color_area),
                                     the_dnd_gimp->config->color_management);
   gtk_widget_set_size_request (color_area,
                                DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
-
-  g_object_unref (color);
 
   return color_area;
 }
@@ -1418,19 +1413,19 @@ gimp_dnd_get_color_data (GtkWidget        *widget,
                          gpointer          get_color_data,
                          GtkSelectionData *selection)
 {
-  GimpRGB *c;
-  GimpRGB  color;
+  GeglColor *color = NULL;
 
-  c = g_object_get_data (G_OBJECT (context), "gimp-dnd-color");
+  color = g_object_get_data (G_OBJECT (context), "gimp-dnd-color");
 
-  if (c)
-    color = *c;
+  if (color)
+    color = g_object_ref (color);
   else
     (* (GimpDndDragColorFunc) get_color_func) (widget, &color, get_color_data);
 
   GIMP_LOG (DND, "called");
 
-  gimp_selection_data_set_color (selection, &color);
+  gimp_selection_data_set_color (selection, color);
+  g_object_unref (color);
 }
 
 static gboolean
@@ -1441,14 +1436,14 @@ gimp_dnd_set_color_data (GtkWidget        *widget,
                          gpointer          set_color_data,
                          GtkSelectionData *selection)
 {
-  GimpRGB color;
+  GeglColor *color;
 
   GIMP_LOG (DND, "called");
 
-  if (! gimp_selection_data_get_color (selection, &color))
+  if (! (color = gimp_selection_data_get_color (selection)))
     return FALSE;
 
-  (* (GimpDndDropColorFunc) set_color_func) (widget, x, y, &color,
+  (* (GimpDndDropColorFunc) set_color_func) (widget, x, y, color,
                                              set_color_data);
 
   return TRUE;

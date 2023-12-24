@@ -135,12 +135,12 @@ static void   gradient_editor_drop_gradient         (GtkWidget          *widget,
 static void   gradient_editor_drop_color            (GtkWidget          *widget,
                                                      gint                x,
                                                      gint                y,
-                                                     const GimpRGB      *color,
+                                                     GeglColor          *color,
                                                      gpointer            data);
 static void   gradient_editor_control_drop_color    (GtkWidget          *widget,
                                                      gint                x,
                                                      gint                y,
-                                                     const GimpRGB      *color,
+                                                     GeglColor          *color,
                                                      gpointer            data);
 static void   gradient_editor_scrollbar_update      (GtkAdjustment      *adj,
                                                      GimpGradientEditor *editor);
@@ -848,7 +848,7 @@ static void
 gradient_editor_drop_color (GtkWidget     *widget,
                             gint           x,
                             gint           y,
-                            const GimpRGB *rgb,
+                            GeglColor     *color,
                             gpointer       data)
 {
   GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
@@ -873,25 +873,27 @@ gradient_editor_drop_color (GtkWidget     *widget,
     {
       lseg->right = xpos;
       lseg->middle = (lseg->left + lseg->right) / 2.0;
-      gegl_color_set_pixel (lseg->right_color, babl_format ("R'G'B'A double"), rgb);
+      g_clear_object (&lseg->right_color);
+      lseg->right_color = gegl_color_duplicate (color);
     }
 
   if (rseg)
     {
       rseg->left = xpos;
       rseg->middle = (rseg->left + rseg->right) / 2.0;
-      gegl_color_set_pixel (rseg->left_color, babl_format ("R'G'B'A double"), rgb);
+      g_clear_object (&rseg->left_color);
+      rseg->left_color = gegl_color_duplicate (color);
     }
 
   gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 static void
-gradient_editor_control_drop_color (GtkWidget     *widget,
-                                    gint           x,
-                                    gint           y,
-                                    const GimpRGB *rgb,
-                                    gpointer       data)
+gradient_editor_control_drop_color (GtkWidget *widget,
+                                    gint       x,
+                                    gint       y,
+                                    GeglColor *color,
+                                    gpointer   data)
 {
   GimpGradientEditor    *editor = GIMP_GRADIENT_EDITOR (data);
   GimpGradient          *gradient;
@@ -923,10 +925,16 @@ gradient_editor_control_drop_color (GtkWidget     *widget,
   gimp_data_freeze (GIMP_DATA (gradient));
 
   if (lseg)
-    gegl_color_set_pixel (lseg->right_color, babl_format ("R'G'B'A double"), rgb);
+    {
+      g_clear_object (&lseg->right_color);
+      lseg->right_color = gegl_color_duplicate (color);
+    }
 
   if (rseg)
-    gegl_color_set_pixel (rseg->left_color, babl_format ("R'G'B'A double"), rgb);
+    {
+      g_clear_object (&rseg->left_color);
+      rseg->left_color = gegl_color_duplicate (color);
+    }
 
   gimp_data_thaw (GIMP_DATA (gradient));
 }

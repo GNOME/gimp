@@ -104,12 +104,12 @@ static gboolean gimp_fg_bg_editor_query_tooltip     (GtkWidget        *widget,
                                                      GtkTooltip       *tooltip);
 
 static void     gimp_fg_bg_editor_drag_color        (GtkWidget        *widget,
-                                                     GimpRGB          *color,
+                                                     GeglColor       **color,
                                                      gpointer          data);
 static void     gimp_fg_bg_editor_drop_color        (GtkWidget        *widget,
                                                      gint              x,
                                                      gint              y,
-                                                     const GimpRGB    *color,
+                                                     GeglColor       *color,
                                                      gpointer          data);
 
 static void     gimp_fg_bg_editor_image_changed     (GimpFgBgEditor   *editor,
@@ -722,42 +722,35 @@ gimp_fg_bg_editor_set_active (GimpFgBgEditor  *editor,
 /*  private functions  */
 
 static void
-gimp_fg_bg_editor_drag_color (GtkWidget *widget,
-                              GimpRGB   *rgb,
+gimp_fg_bg_editor_drag_color (GtkWidget  *widget,
+                              GeglColor **color,
                               gpointer   data)
 {
   GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
-  GeglColor      *color  = NULL;
 
   if (editor->context)
     {
       switch (editor->active_color)
         {
         case GIMP_ACTIVE_COLOR_FOREGROUND:
-          color = gimp_context_get_foreground (editor->context);
+          *color = gegl_color_duplicate (gimp_context_get_foreground (editor->context));
           break;
 
         case GIMP_ACTIVE_COLOR_BACKGROUND:
-          color = gimp_context_get_background (editor->context);
+          *color = gegl_color_duplicate (gimp_context_get_background (editor->context));
           break;
         }
     }
-
-  if (color != NULL)
-    gegl_color_get_rgba_with_space (color, &rgb->r, &rgb->g, &rgb->b, &rgb->a, NULL);
 }
 
 static void
-gimp_fg_bg_editor_drop_color (GtkWidget     *widget,
-                              gint           x,
-                              gint           y,
-                              const GimpRGB *rgb,
-                              gpointer       data)
+gimp_fg_bg_editor_drop_color (GtkWidget *widget,
+                              gint       x,
+                              gint       y,
+                              GeglColor *color,
+                              gpointer   data)
 {
   GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
-  GeglColor      *color  = gegl_color_new ("black");
-
-  gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
 
   if (editor->context)
     {
@@ -779,8 +772,6 @@ gimp_fg_bg_editor_drop_color (GtkWidget     *widget,
           break;
         }
     }
-
-  g_object_unref (color);
 }
 
 static void

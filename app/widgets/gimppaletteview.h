@@ -57,7 +57,7 @@ struct _GimpPaletteViewClass
                             GimpPaletteEntry *entry);
   void (* color_dropped)   (GimpPaletteView  *view,
                             GimpPaletteEntry *entry,
-                            const GimpRGB    *color);
+                            GeglColor        *color);
 };
 
 

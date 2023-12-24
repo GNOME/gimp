@@ -67,12 +67,12 @@ static void     gimp_palette_view_expose_entry   (GimpPaletteView  *view,
 static void     gimp_palette_view_invalidate     (GimpPalette      *palette,
                                                   GimpPaletteView  *view);
 static void     gimp_palette_view_drag_color     (GtkWidget        *widget,
-                                                  GimpRGB          *color,
+                                                  GeglColor       **color,
                                                   gpointer          data);
 static void     gimp_palette_view_drop_color     (GtkWidget        *widget,
                                                   gint              x,
                                                   gint              y,
-                                                  const GimpRGB    *color,
+                                                  GeglColor        *color,
                                                   gpointer          data);
 
 
@@ -127,7 +127,7 @@ gimp_palette_view_class_init (GimpPaletteViewClass *klass)
                   gimp_marshal_VOID__POINTER_BOXED,
                   G_TYPE_NONE, 2,
                   G_TYPE_POINTER,
-                  GIMP_TYPE_RGB);
+                  GEGL_TYPE_COLOR);
 
   widget_class->draw               = gimp_palette_view_draw;
   widget_class->button_press_event = gimp_palette_view_button_press;
@@ -512,24 +512,24 @@ gimp_palette_view_invalidate (GimpPalette     *palette,
 }
 
 static void
-gimp_palette_view_drag_color (GtkWidget *widget,
-                              GimpRGB   *rgb,
-                              gpointer   data)
+gimp_palette_view_drag_color (GtkWidget  *widget,
+                              GeglColor **color,
+                              gpointer    data)
 {
   GimpPaletteView *view = GIMP_PALETTE_VIEW (data);
 
   if (view->dnd_entry)
-    gegl_color_get_pixel (view->dnd_entry->color, babl_format ("R'G'B'A double"), rgb);
+    *color = gegl_color_duplicate (view->dnd_entry->color);
   else
-    gimp_rgba_set (rgb, 0.0, 0.0, 0.0, 1.0);
+    *color = gegl_color_new ("black");
 }
 
 static void
-gimp_palette_view_drop_color (GtkWidget     *widget,
-                              gint           x,
-                              gint           y,
-                              const GimpRGB *color,
-                              gpointer       data)
+gimp_palette_view_drop_color (GtkWidget *widget,
+                              gint       x,
+                              gint       y,
+                              GeglColor *color,
+                              gpointer   data)
 {
   GimpPaletteView  *view = GIMP_PALETTE_VIEW (data);
   GimpPaletteEntry *entry;

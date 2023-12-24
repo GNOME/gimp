@@ -603,14 +603,14 @@ gimp_container_tree_view_drag_data_received (GtkWidget             *widget,
         case GIMP_DND_TYPE_COLOR:
           if (tree_view_class->drop_color)
             {
-              GimpRGB color;
+              GeglColor *color;
 
-              if (gimp_selection_data_get_color (selection_data, &color))
+              if ((color = gimp_selection_data_get_color (selection_data)))
                 {
-                  tree_view_class->drop_color (tree_view, &color,
-                                               dest_viewable, drop_pos);
+                  tree_view_class->drop_color (tree_view, color, dest_viewable, drop_pos);
 
                   success = TRUE;
+                  g_object_unref (color);
                 }
             }
           break;

@@ -45,48 +45,48 @@
 
 static void   gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *iface);
 
-static void     gimp_drawable_tree_view_constructed   (GObject           *object);
+static void     gimp_drawable_tree_view_constructed   (GObject                    *object);
 
-static gboolean gimp_drawable_tree_view_select_items  (GimpContainerView *view,
-                                                       GList             *items,
-                                                       GList             *paths);
+static gboolean gimp_drawable_tree_view_select_items  (GimpContainerView          *view,
+                                                       GList                      *items,
+                                                       GList                      *paths);
 
-static gboolean gimp_drawable_tree_view_drop_possible(GimpContainerTreeView *view,
-                                                      GimpDndType          src_type,
-                                                      GList               *src_viewables,
-                                                      GimpViewable        *dest_viewable,
-                                                      GtkTreePath         *drop_path,
-                                                      GtkTreeViewDropPosition  drop_pos,
-                                                      GtkTreeViewDropPosition *return_drop_pos,
-                                                      GdkDragAction       *return_drag_action);
-static void   gimp_drawable_tree_view_drop_viewables (GimpContainerTreeView   *view,
-                                                      GList                   *src_viewables,
-                                                      GimpViewable            *dest_viewable,
-                                                      GtkTreeViewDropPosition  drop_pos);
-static void   gimp_drawable_tree_view_drop_color (GimpContainerTreeView *view,
-                                                  const GimpRGB       *color,
-                                                  GimpViewable        *dest_viewable,
-                                                  GtkTreeViewDropPosition  drop_pos);
+static gboolean gimp_drawable_tree_view_drop_possible (GimpContainerTreeView      *view,
+                                                       GimpDndType                 src_type,
+                                                       GList                      *src_viewables,
+                                                       GimpViewable               *dest_viewable,
+                                                       GtkTreePath                *drop_path,
+                                                       GtkTreeViewDropPosition     drop_pos,
+                                                       GtkTreeViewDropPosition    *return_drop_pos,
+                                                       GdkDragAction              *return_drag_action);
+static void   gimp_drawable_tree_view_drop_viewables  (GimpContainerTreeView      *view,
+                                                       GList                      *src_viewables,
+                                                       GimpViewable               *dest_viewable,
+                                                       GtkTreeViewDropPosition     drop_pos);
+static void   gimp_drawable_tree_view_drop_color      (GimpContainerTreeView      *view,
+                                                       GeglColor                  *color,
+                                                       GimpViewable               *dest_viewable,
+                                                       GtkTreeViewDropPosition     drop_pos);
 
-static void   gimp_drawable_tree_view_set_image  (GimpItemTreeView     *view,
-                                                  GimpImage            *image);
+static void   gimp_drawable_tree_view_set_image       (GimpItemTreeView            *view,
+                                                       GimpImage                   *image);
 
 static void   gimp_drawable_tree_view_floating_selection_changed
-                                                 (GimpImage            *image,
-                                                  GimpDrawableTreeView *view);
+                                                      (GimpImage                   *image,
+                                                       GimpDrawableTreeView        *view);
 
 static void   gimp_drawable_tree_view_new_pattern_dropped
-                                                 (GtkWidget            *widget,
-                                                  gint                  x,
-                                                  gint                  y,
-                                                  GimpViewable         *viewable,
-                                                  gpointer              data);
+                                                      (GtkWidget                   *widget,
+                                                       gint                         x,
+                                                       gint                         y,
+                                                       GimpViewable                *viewable,
+                                                       gpointer                     data);
 static void   gimp_drawable_tree_view_new_color_dropped
-                                                 (GtkWidget            *widget,
-                                                  gint                  x,
-                                                  gint                  y,
-                                                  const GimpRGB        *color,
-                                                  gpointer              data);
+                                                      (GtkWidget                   *widget,
+                                                       gint                         x,
+                                                       gint                         y,
+                                                       GeglColor                   *color,
+                                                       gpointer                     data);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDrawableTreeView, gimp_drawable_tree_view,
@@ -281,7 +281,7 @@ gimp_drawable_tree_view_drop_viewables (GimpContainerTreeView   *view,
 
 static void
 gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
-                                    const GimpRGB           *rgb,
+                                    GeglColor               *color,
                                     GimpViewable            *dest_viewable,
                                     GtkTreeViewDropPosition  drop_pos)
 {
@@ -289,9 +289,6 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
     {
       GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (dest_viewable));
       GimpFillOptions *options = gimp_fill_options_new (image->gimp, NULL, FALSE);
-      GeglColor       *color   = gegl_color_new ("black");
-
-      gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
 
       gimp_fill_options_set_style (options, GIMP_FILL_STYLE_FG_COLOR);
       gimp_context_set_foreground (GIMP_CONTEXT (options), color);
@@ -301,7 +298,6 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
                                C_("undo-type", "Drop color to layer"));
 
       g_object_unref (options);
-      g_object_unref (color);
 
       gimp_image_flush (image);
     }
@@ -388,18 +384,15 @@ gimp_drawable_tree_view_new_pattern_dropped (GtkWidget    *widget,
 }
 
 static void
-gimp_drawable_tree_view_new_color_dropped (GtkWidget     *widget,
-                                           gint           x,
-                                           gint           y,
-                                           const GimpRGB *rgb,
-                                           gpointer       data)
+gimp_drawable_tree_view_new_color_dropped (GtkWidget *widget,
+                                           gint       x,
+                                           gint       y,
+                                           GeglColor *color,
+                                           gpointer   data)
 {
   GimpItemTreeView *view    = GIMP_ITEM_TREE_VIEW (data);
   GimpImage        *image   = gimp_item_tree_view_get_image (view);
   GimpFillOptions  *options = gimp_fill_options_new (image->gimp, NULL, FALSE);
-  GeglColor        *color   = gegl_color_new ("black");
-
-  gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
 
   gimp_fill_options_set_style (options, GIMP_FILL_STYLE_FG_COLOR);
   gimp_context_set_foreground (GIMP_CONTEXT (options), color);
@@ -408,5 +401,4 @@ gimp_drawable_tree_view_new_color_dropped (GtkWidget     *widget,
                                        C_("undo-type", "Drop color to layer"));
 
   g_object_unref (options);
-  g_object_unref (color);
 }

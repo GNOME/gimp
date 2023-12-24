@@ -280,51 +280,123 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
 
 void
 gimp_selection_data_set_color (GtkSelectionData *selection,
-                               const GimpRGB    *color)
+                               GeglColor        *color)
 {
-  guint16  vals[4];
-  guchar   r, g, b, a;
+  const Babl  *format;
+  const gchar *encoding;
+  gint         encoding_length;
+  guchar       pixel[40];
+  gint         pixel_length;
+  guint8      *profile_data   = NULL;
+  int          profile_length = 0;
+  guchar      *data;
+  gint         data_length;
 
   g_return_if_fail (selection != NULL);
   g_return_if_fail (color != NULL);
 
-  gimp_rgba_get_uchar (color, &r, &g, &b, &a);
+  format          = gegl_color_get_format (color);
+  encoding        = babl_format_get_encoding (format);
+  encoding_length = strlen (encoding) + 1;
+  pixel_length    = babl_format_get_bytes_per_pixel (format);
+  gegl_color_get_pixel (color, format, pixel);
 
-  vals[0] = r + (r << 8);
-  vals[1] = g + (g << 8);
-  vals[2] = b + (b << 8);
-  vals[3] = a + (a << 8);
+  if (babl_format_get_space (format) != babl_space ("sRGB"))
+    profile_data = (guint8 *) babl_space_get_icc (babl_format_get_space (format),
+                                                  &profile_length);
+
+  data_length = encoding_length + pixel_length + profile_length;
+  data = g_malloc0 (data_length);
+  memcpy (data, encoding, encoding_length);
+  memcpy (data + encoding_length, pixel, pixel_length);
+  if (profile_length > 0)
+    memcpy (data + encoding_length + pixel_length, profile_data, profile_length);
 
   gtk_selection_data_set (selection,
                           gtk_selection_data_get_target (selection),
-                          16, (const guchar *) vals, 8);
+                          8, (const guchar *) data, data_length);
 }
 
-gboolean
-gimp_selection_data_get_color (GtkSelectionData *selection,
-                               GimpRGB          *color)
+GeglColor *
+gimp_selection_data_get_color (GtkSelectionData *selection)
 {
-  const guint16 *color_vals;
+  GeglColor    *color;
+  const guchar *data;
+  gint          data_length;
+  const Babl   *format;
+  const gchar  *encoding;
+  gint          encoding_length;
+  const guchar *pixel;
+  gint          pixel_length;
+  const guint8 *profile_data   = NULL;
+  int           profile_length = 0;
 
   g_return_val_if_fail (selection != NULL, FALSE);
-  g_return_val_if_fail (color != NULL, FALSE);
 
-  if (gtk_selection_data_get_format (selection) != 16 ||
-      gtk_selection_data_get_length (selection) != 8)
+  data            = gtk_selection_data_get_data (selection);
+  data_length     = gtk_selection_data_get_length (selection);
+  encoding        = (const gchar *) data;
+  /* gtk_selection_data_set() ensured the data is NUL-terminated so in the
+   * worst case, strlen() would not read out of bounds.
+   */
+  encoding_length = strlen (encoding) + 1;
+  if (! babl_format_exists ((const char *) data))
     {
-      g_warning ("Received invalid color data!");
-      return FALSE;
+      g_critical ("%s: received invalid color format: \"%s\"!", G_STRFUNC, encoding);
+      return NULL;
     }
 
-  color_vals = (const guint16 *) gtk_selection_data_get_data (selection);
+  format       = babl_format (encoding);
+  pixel_length = babl_format_get_bytes_per_pixel (format);
+  if (data_length < encoding_length + pixel_length)
+    {
+      g_critical ("%s: received invalid color data of %d bytes "
+                  "(expected: %d bytes or more)!",
+                  G_STRFUNC, data_length, encoding_length + pixel_length);
+      return NULL;
+    }
+  pixel          = data + encoding_length;
+  profile_length = data_length - encoding_length - pixel_length;
+  if (profile_length > 0)
+    {
+      GimpColorProfile *profile;
+      GError           *error = NULL;
 
-  gimp_rgba_set_uchar (color,
-                       (guchar) (color_vals[0] >> 8),
-                       (guchar) (color_vals[1] >> 8),
-                       (guchar) (color_vals[2] >> 8),
-                       (guchar) (color_vals[3] >> 8));
+      profile_data = pixel + pixel_length;
 
-  return TRUE;
+      profile = gimp_color_profile_new_from_icc_profile (profile_data, profile_length, &error);
+      if (profile)
+        {
+          const Babl *space;
+
+          space = gimp_color_profile_get_space (profile,
+                                                GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                &error);
+
+          if (space)
+            {
+              format = babl_format_with_space (encoding, space);
+            }
+          else
+            {
+              g_warning ("%s: failed to create Babl space for profile: %s",
+                         G_STRFUNC, error->message);
+              g_clear_error (&error);
+            }
+          g_object_unref (profile);
+        }
+      else
+        {
+          g_warning ("%s: received invalid profile data of %d bytes: %s",
+                     G_STRFUNC, profile_length, error->message);
+          g_clear_error (&error);
+        }
+    }
+
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, format, pixel);
+
+  return color;
 }
 
 void
