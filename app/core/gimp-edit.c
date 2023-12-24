@@ -520,8 +520,8 @@ gimp_edit_paste_get_layers (GimpImage     *image,
         }
 
       layers = gimp_edit_paste_get_tagged_layers (image, layers, NULL, floating_format,
-                                                  gimp_drawable_get_base_type (drawables->data),
-                                                  gimp_drawable_get_precision (drawables->data),
+                                                  gimp_image_get_base_type (image),
+                                                  gimp_image_get_precision (image),
                                                   *paste_type);
       layers = g_list_reverse (layers);
     }
