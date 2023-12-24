@@ -198,7 +198,7 @@ gimp_color_dialog_constructed (GObject *object)
    * dockable is opened.
    */
   gimp_help_set_help_data_with_markup (button,
-                                       NC_("colormap-action", "Edit this color"),
+                                       C_("colormap-action", "Edit this color"),
                                        GIMP_HELP_INDEXED_PALETTE_EDIT);
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (gimp_color_dialog_colormap_edit_activate),
@@ -216,7 +216,7 @@ gimp_color_dialog_constructed (GObject *object)
   gtk_widget_show (image);
 
   gimp_help_set_help_data_with_markup (button,
-                                       NC_("colormap-action", "Add current foreground color"),
+                                       C_("colormap-action", "Add current foreground color"),
                                        GIMP_HELP_INDEXED_PALETTE_ADD);
 
   g_signal_connect_swapped (button, "clicked",
