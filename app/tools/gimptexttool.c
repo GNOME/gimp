@@ -195,7 +195,7 @@ static void    gimp_text_tool_buffer_end_edit   (GimpTextBuffer    *buffer,
 
 static void    gimp_text_tool_buffer_color_applied
                                                 (GimpTextBuffer    *buffer,
-                                                 const GimpRGB     *color,
+                                                 GeglColor         *color,
                                                  GimpTextTool      *text_tool);
 
 
@@ -2002,14 +2002,10 @@ gimp_text_tool_buffer_end_edit (GimpTextBuffer *buffer,
 
 static void
 gimp_text_tool_buffer_color_applied (GimpTextBuffer *buffer,
-                                     const GimpRGB  *rgb,
+                                     GeglColor      *color,
                                      GimpTextTool   *text_tool)
 {
-  GeglColor *color = gegl_color_new (NULL);
-
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
   gimp_palettes_add_color_history (GIMP_TOOL (text_tool)->tool_info->gimp, color);
-  g_object_unref (color);
 }
 
 

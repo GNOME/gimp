@@ -1597,24 +1597,21 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
                         case PANGO_ATTR_FOREGROUND:
                             {
                               PangoAttrColor *color_attr = (PangoAttrColor *) attr;
-                              GimpRGB         color;
+                              GeglColor      *color;
 
-                              color.r = (gdouble) color_attr->color.red / 65535.0;
-                              color.g = (gdouble) color_attr->color.green / 65535.0;
-                              color.b = (gdouble) color_attr->color.blue / 65535.0;
+                              color = gegl_color_new (NULL);
+                              gegl_color_set_pixel (color, babl_format ("R'G'B' u16"), &color_attr->color);
 
                               if (attr->klass->type == PANGO_ATTR_BACKGROUND)
-                                {
-                                  gimp_text_buffer_set_preedit_bg_color (text_tool->buffer,
-                                                                         &start, &end,
-                                                                         &color);
-                                }
+                                gimp_text_buffer_set_preedit_bg_color (text_tool->buffer,
+                                                                       &start, &end,
+                                                                       color);
                               else
-                                {
-                                  gimp_text_buffer_set_preedit_color (text_tool->buffer,
-                                                                      &start, &end,
-                                                                      &color);
-                                }
+                                gimp_text_buffer_set_preedit_color (text_tool->buffer,
+                                                                    &start, &end,
+                                                                    color);
+
+                              g_object_unref (color);
                             }
                           break;
                         default:

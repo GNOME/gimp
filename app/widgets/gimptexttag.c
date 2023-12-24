@@ -81,10 +81,10 @@ gimp_text_tag_get_font (GtkTextTag *tag)
 }
 
 gboolean
-gimp_text_tag_get_fg_color (GtkTextTag *tag,
-                            GimpRGB    *color)
+gimp_text_tag_get_fg_color (GtkTextTag  *tag,
+                            GeglColor  **color)
 {
-  GdkRGBA  *rgba;
+  GdkRGBA  *rgba = NULL;
   gboolean  set;
 
   g_object_get (tag,
@@ -92,16 +92,16 @@ gimp_text_tag_get_fg_color (GtkTextTag *tag,
                 GIMP_TEXT_PROP_NAME_FG_COLOR, &rgba,
                 NULL);
 
-  gimp_rgb_set (color, rgba->red, rgba->green, rgba->blue);
-
+  *color = gegl_color_new (NULL);
+  gegl_color_set_pixel (*color, babl_format ("R'G'B'A double"), rgba);
   gdk_rgba_free (rgba);
 
   return set;
 }
 
 gboolean
-gimp_text_tag_get_bg_color (GtkTextTag *tag,
-                            GimpRGB    *color)
+gimp_text_tag_get_bg_color (GtkTextTag  *tag,
+                            GeglColor  **color)
 {
   GdkRGBA  *rgba;
   gboolean  set;
@@ -111,8 +111,8 @@ gimp_text_tag_get_bg_color (GtkTextTag *tag,
                 GIMP_TEXT_PROP_NAME_BG_COLOR, &rgba,
                 NULL);
 
-  gimp_rgb_set (color, rgba->red, rgba->green, rgba->blue);
-
+  *color = gegl_color_new (NULL);
+  gegl_color_set_pixel (*color, babl_format ("R'G'B'A double"), rgba);
   gdk_rgba_free (rgba);
 
   return set;
