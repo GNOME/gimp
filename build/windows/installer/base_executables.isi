@@ -1,0 +1,54 @@
+//files arch-specific
+#if 0
+[Files]
+#endif
+
+#if PLATFORM==X86
+	#define DIR DIR32
+	#define DDIR DDIR32
+	#define COMPONENT "32"
+#elif PLATFORM==X64
+	#define DIR DIR64
+	#define DDIR DDIR64
+	#define COMPONENT "64"
+#elif PLATFORM==ARM64
+	#define DIR DIRA64
+	#define DDIR DDIRA64
+	#define COMPONENT "ARM64"
+#else
+	#error "Unknown PLATFORM:" + PLATFORM
+#endif
+
+
+;Required arch-specific components (minimal install)
+Source: "{#GIMP_DIR}\{#DIR}\*.dll"; DestDir: "{app}"; Excludes: "bin\libgs*.dll,bin\lua*.dll,bin\libpython*.dll"; Components: gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#GIMP_DIR}\{#DIR}\*.exe"; DestDir: "{app}"; Excludes: "\lib\gimp\{#DIR_VER}\plug-ins\file-ps\file-ps.exe,\bin\lua*.exe,\bin\python*.exe,\lib\gimp\{#DIR_VER}\plug-ins\twain\twain.exe"; Components: gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\{#DIR_VER}\extensions\*.*"; DestDir: "{app}\lib\gimp\{#DIR_VER}\extensions"; Excludes: "*.debug"; Components: gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#GIMP_DIR}\{#DIR}\lib\girepository-1.0\*.*"; DestDir: "{app}\lib\girepository-1.0"; Components: gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+
+Source: "{#DEPS_DIR}\{#DDIR}\bin\*.dll"; DestDir: "{app}\bin"; Excludes: "libgimp*.dll,libgs*.dll,lua*.dll,libpython*.dll"; Components: deps{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\bin\*.exe"; DestDir: "{app}\bin"; Excludes: "gimp*.exe,lua*.exe,python*.exe"; Components: deps{#COMPONENT}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\lib\*"; DestDir: "{app}\lib"; Excludes: "*.debug,\gimp\*,\lua\*,\python3.11\*"; Components: deps{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+
+;Optional arch-specific components (complete install)
+#ifdef DEBUG_SYMBOLS
+Source: "{#GIMP_DIR}\{#DIR}\*.debug"; DestDir: "{app}"; Components: gimp{#COMPONENT} and debug; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\bin\.debug\*.dll.debug"; DestDir: "{app}\bin\.debug"; Components: deps{#COMPONENT} and debug; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete skipifsourcedoesntexist
+Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\{#DIR_VER}\extensions\*.debug"; DestDir: "{app}\lib\gimp\{#DIR_VER}\extensions"; Components: gimp{#COMPONENT} and debug; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\lib\*.debug"; DestDir: "{app}\lib"; Components: deps{#COMPONENT} and debug; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete skipifsourcedoesntexist
+#endif
+
+Source: "{#DEPS_DIR}\{#DDIR}\bin\libgs*.dll"; DestDir: "{app}\bin"; Components: gs and deps{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\{#DIR_VER}\plug-ins\file-ps\file-ps.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins\file-ps"; Components: gs and gimp{#COMPONENT}; Flags: restartreplace ignoreversion uninsrestartdelete
+
+#ifdef LUA
+Source: "{#DEPS_DIR}\{#DDIR}\bin\lua*.dll"; DestDir: "{app}\bin"; Components: lua and gimp{#COMPONENT}; Flags: restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\bin\lua*.exe"; DestDir: "{app}\bin"; Components: lua and gimp{#COMPONENT}; Flags: restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\lib\lua\*"; DestDir: "{app}\lib\lua"; Excludes: "*.debug"; Components: lua and gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+#endif
+
+#ifdef PYTHON
+Source: "{#DEPS_DIR}\{#DDIR}\bin\libpython*.dll"; DestDir: "{app}\bin"; Components: py and gimp{#COMPONENT}; Flags: restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\bin\python*.exe"; DestDir: "{app}\bin"; Components: py and gimp{#COMPONENT}; Flags: restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\lib\python3.11\*"; DestDir: "{app}\lib\python3.11"; Excludes: "*.debug"; Components: py and gimp{#COMPONENT}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+#endif

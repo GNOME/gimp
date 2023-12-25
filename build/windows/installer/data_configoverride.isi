@@ -1,0 +1,36 @@
+﻿;allow specific configuration files to be overridden by files in a specific directory
+#if 0
+[Files]
+#endif
+
+#define FindHandle
+#define FindResult
+
+#sub ProcessConfigFile
+  #define FileName FindGetFileName(FindHandle)
+Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\{#ConfigDir}"; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
+  #if BaseDir != GIMP_DIR32
+Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}"; Components: gimp32on64; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
+  #endif
+#endsub
+
+#sub ProcessConfigDir
+  #emit ';; ' + ConfigDir
+  #emit ';; ' + BaseDir
+  #for {FindHandle = FindResult = FindFirst(AddBackslash(BaseDir) + AddBackSlash(ConfigDir) + "*", 0); \
+      FindResult; FindResult = FindNext(FindHandle)} ProcessConfigFile
+  #if FindHandle
+    #expr FindClose(FindHandle)
+  #endif
+#endsub
+
+#define public BaseDir GIMP_DIR32
+#define public ConfigDir "etc\gimp\2.0"
+#expr ProcessConfigDir
+
+#define public BaseDir DEPS_DIR32
+#define public ConfigDir "etc\gtk-2.0"
+#expr ProcessConfigDir
+
+#define public ConfigDir "etc\fonts"
+#expr ProcessConfigDir

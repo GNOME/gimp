@@ -4,7 +4,7 @@
 # translations present. This check step is necessary to not forget new
 # installer translations because we have a manual step.
 
-INSTALLER_LANGS=`grep -rI '^Name:.*MessagesFile' ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/installer/gimp3264.iss | \
+INSTALLER_LANGS=`grep -rI '^Name:.*MessagesFile' ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/installer/base_gimp3264.iss | \
                  sed 's/^Name: *"\([a-zA-Z_]*\)".*$/\1/' | sort`
 # 'en' doesn't have a gettext file because it is the default.
 INSTALLER_LANGS=`echo "$INSTALLER_LANGS" | tr '\n\r' ' ' | sed 's/\<en\> //'`
@@ -17,7 +17,7 @@ if [ "$PO_LANGS" != "$INSTALLER_LANGS" ]; then
   echo "Error: languages listed in the Windows installer script do not match the .po files in po-windows-installer/."
   echo "- PO languages:        $PO_LANGS"
   echo "- Installer languages: $INSTALLER_LANGS"
-  echo "Please verify: build/windows/installer/gimp3264.iss"
+  echo "Please verify: build/windows/installer/base_gimp3264.iss"
   echo "Base language files can be found in: https://github.com/jrsoftware/issrc/tree/main/Files/Languages"
   echo "If a new language is in Unofficial/, also edit/download it from:"
   echo "build/windows/gitlab-ci/4_installer-gimp-msys2.sh"
@@ -36,7 +36,7 @@ if [ "$PO_LANGS" != "$MESON_LANGS" ]; then
   exit 1
 fi
 
-INSTALLER_LANGS=`grep -rI '^Name:.*MessagesFile.*Unofficial' ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/installer/gimp3264.iss | \
+INSTALLER_LANGS=`grep -rI '^Name:.*MessagesFile.*Unofficial' ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/installer/base_gimp3264.iss | \
                  sed 's/^.*Unofficial\\\\\([a-zA-Z_.]*\),.*$/\1/' | sort`
 INSTALLER_LANGS=`echo "$INSTALLER_LANGS" | tr '\n\r' ' '`
 

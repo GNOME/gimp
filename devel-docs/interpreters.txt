@@ -68,7 +68,7 @@ On Linux and MacOS, you simply need a shebang in a plugin text file.
 On Windows, you must also define an .interp file.
 The .interp files are part of GIMP's installation on Windows.
 The .interp files are built when the Windows installer is built.
-See the source file: /build/windows/installer/gimp3264.iss .
+See the source file: /build/windows/installer/base_gimp3264.iss .
 
 A user can optionally create .interp files on Linux and MacOS.
 But they are not usually part of a Linux installation.
@@ -196,7 +196,7 @@ If a GIMP developer adds an interpreter to the GIMP package,
 they must modify GIMP's build for Windows
 to ensure proper .interp files are installed.
 
-See the repo file: /build/windows/installer/gimp3264.iss .
+See the repo file: /build/windows/installer/base_gimp3264.iss .
 
 For the convenience of users, we usually install an .interp file having many lines.
 Only one "program" line is needed if users only install canonical plugin text files
