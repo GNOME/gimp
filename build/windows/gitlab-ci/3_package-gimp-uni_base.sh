@@ -1,89 +1,100 @@
 #!/bin/bash
-# $MINGW_PACKAGE_PREFIX is defined by MSYS2.
+# $MSYSTEM_CARCH and $MINGW_PACKAGE_PREFIX are defined by MSYS2.
 # https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
 
 set -e
 
-if [[ "$MSYSTEM" == "MINGW32" ]]; then
-    export ARTIFACTS_SUFFIX="-w32"
-    export MSYS_PREFIX="/c/msys64/mingw32/"
-    export PATH="/mingw32/bin:$PATH"
-    export GIMP_DISTRIB=`realpath ./gimp-w32`
-elif [[ "$MSYSTEM" == "MINGW64" ]]; then
-    export ARTIFACTS_SUFFIX="-w64"
-    export MSYS_PREFIX="/c/msys64/mingw64/"
-    export PATH="/mingw64/bin:$PATH"
-    export GIMP_DISTRIB=`realpath ./gimp-w64`
-else # [[ "$MSYSTEM" == "CLANGARM64" ]];
-    export ARTIFACTS_SUFFIX="-arm64"
-    export MSYS_PREFIX="/c/msys64/clangarm64/"
-    export PATH="/clangarm64/bin:$PATH"
-    export GIMP_DISTRIB=`realpath ./gimp-arm64`
+if [[ "$MSYSTEM_CARCH" == "aarch64" ]]; then
+    export ARTIFACTS_SUFFIX="-a64"
+    export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
+    export GIMP_DISTRIB=`realpath ./gimp-a64`
+elif [[ "$CROSSROAD_PLATFORM" == "w64" ]] || [[ "$MSYSTEM_CARCH" == "x86_64" ]]; then
+    export ARTIFACTS_SUFFIX="-x64"
+    export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
+    export GIMP_DISTRIB=`realpath ./gimp-x64`
+else # [[ "$CROSSROAD_PLATFORM" == "w32" ]] || [[ "$MSYSTEM_CARCH" == "i686" ]];
+    export ARTIFACTS_SUFFIX="-x86"
+    export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
+    export GIMP_DISTRIB=`realpath ./gimp-x86`
 fi
 
-# Update everything
+
+if [[ "$BUILD_TYPE" != "CI_CROSS" ]]; then
+# Install the required (pre-built) packages again
 pacman --noconfirm -Suy
 
-# Install the required (pre-built) packages again
 export DEPS_PATH="build/windows/gitlab-ci/all-deps-uni.txt"
 sed -i "s/DEPS_ARCH_/${MINGW_PACKAGE_PREFIX}-/g" $DEPS_PATH
 export GIMP_DEPS=`cat $DEPS_PATH`
 pacman --noconfirm -S --needed base-devel $GIMP_DEPS
+fi
 
+
+# Package deps and GIMP files
 export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
 export PATH="$GIMP_PREFIX/bin:$PATH"
+if [[ "$BUILD_TYPE" == "CI_CROSS" ]]; then
+  export MSYS_PREFIX="$GIMP_PREFIX"
+fi
 
-# Package ressources.
+## Copy a previously built wrapper at tree root, less messy than
+## having to look inside bin/, in the middle of all the DLLs.
+## This utility also configure the interpreters.
+## Then, copy a built README that make clear the utility of .cmd.
 mkdir -p ${GIMP_DISTRIB}
-cp -fr ${GIMP_PREFIX}/etc ${GIMP_DISTRIB}
-cp -fr ${GIMP_PREFIX}/include ${GIMP_DISTRIB}
-#cp -fr ${GIMP_PREFIX}/ssl ${GIMP_DISTRIB}
-cp -fr ${GIMP_PREFIX}/share ${GIMP_DISTRIB}
+cp -fr ${GIMP_PREFIX}/*.cmd ${GIMP_DISTRIB}/
+cp -fr ${GIMP_PREFIX}/*.txt ${GIMP_DISTRIB}/
 
-# Package executables.
-mkdir ${GIMP_DISTRIB}/bin
-cp -fr ${GIMP_PREFIX}/bin/gimp*.exe ${GIMP_DISTRIB}/bin/
 
-# With the native Windows build, it's directly in bin/
-#mkdir ${GIMP_DISTRIB}/libexec
-#cp -fr ${GIMP_PREFIX}/libexec/gimp*.exe ${GIMP_DISTRIB}/libexec/
+## Modules.
+mkdir ${GIMP_DISTRIB}/etc
+cp -fr ${MSYS_PREFIX}/etc/fonts/ ${GIMP_DISTRIB}/etc/
+cp -fr ${GIMP_PREFIX}/etc/gimp/ ${GIMP_DISTRIB}/etc/
+cp -fr ${MSYS_PREFIX}/etc/gtk-*/ ${GIMP_DISTRIB}/etc/
 
-# Add a wrapper at tree root, less messy than having to look for the
-# binary inside bin/, in the middle of all the DLLs.
-echo "bin\gimp-2.99.exe" > ${GIMP_DISTRIB}/gimp.cmd
 
-# Package library data and modules.
-cp -fr ${MSYS_PREFIX}/etc/fonts ${GIMP_DISTRIB}/etc/
-cp -fr ${MSYS_PREFIX}/etc/gtk-3.0 ${GIMP_DISTRIB}/etc/
+## Headers.
+mkdir ${GIMP_DISTRIB}/include
+cp -fr ${GIMP_PREFIX}/include/babl-*/ ${GIMP_DISTRIB}/include/
+cp -fr ${GIMP_PREFIX}/include/gegl-*/ ${GIMP_DISTRIB}/include/
+cp -fr ${GIMP_PREFIX}/include/gimp-*/ ${GIMP_DISTRIB}/include/
 
-mkdir ${GIMP_DISTRIB}/lib/
-cp -fr ${GIMP_PREFIX}/lib/gimp ${GIMP_DISTRIB}/lib/
-cp -fr ${GIMP_PREFIX}/lib/gegl-0.4 ${GIMP_DISTRIB}/lib/
-cp -fr ${GIMP_PREFIX}/lib/babl-0.1 ${GIMP_DISTRIB}/lib/
 
-cp -fr ${MSYS_PREFIX}/lib/girepository-1.0 ${GIMP_DISTRIB}/lib/
-cp -fr ${GIMP_PREFIX}/lib/girepository-1.0/* ${GIMP_DISTRIB}/lib/girepository-1.0/
+## Library data.
+mkdir ${GIMP_DISTRIB}/lib
+cp -fr ${GIMP_PREFIX}/lib/babl-*/ ${GIMP_DISTRIB}/lib/
+cp -fr ${MSYS_PREFIX}/lib/gdk-pixbuf-*/ ${GIMP_DISTRIB}/lib/
+cp -fr ${GIMP_PREFIX}/lib/gegl-*/ ${GIMP_DISTRIB}/lib/
+cp -fr ${GIMP_PREFIX}/lib/gimp/ ${GIMP_DISTRIB}/lib/
+cp -fr ${MSYS_PREFIX}/lib/gio/ ${GIMP_DISTRIB}/lib/
 
-cp -fr ${MSYS_PREFIX}/lib/gio ${GIMP_DISTRIB}/lib/
-cp -fr ${MSYS_PREFIX}/lib/gdk-pixbuf-2.0 ${GIMP_DISTRIB}/lib/
-cp -fr ${MSYS_PREFIX}/lib/gtk-3.0 ${GIMP_DISTRIB}/lib/
+aList=$(find ${GIMP_DISTRIB}/lib/ -iname '*.a') && aArray=($aList)
+for a in "${aArray[@]}"; do
+  rm $a
+done
+rm ${GIMP_DISTRIB}/lib/gegl-*/*.json
 
-cp -fr ${MSYS_PREFIX}/lib/python3.11 ${GIMP_DISTRIB}/lib/
 
-cp -fr ${MSYS_PREFIX}/share/ghostscript ${GIMP_DISTRIB}/share/
-cp -fr ${MSYS_PREFIX}/share/glib-2.0 ${GIMP_DISTRIB}/share/
-cp -fr ${MSYS_PREFIX}/share/libthai ${GIMP_DISTRIB}/share/
-cp -fr ${MSYS_PREFIX}/share/libwmf ${GIMP_DISTRIB}/share/
-cp -fr ${MSYS_PREFIX}/share/mypaint-data ${GIMP_DISTRIB}/share/
-cp -fr ${MSYS_PREFIX}/share/poppler ${GIMP_DISTRIB}/share/
+## Resources.
+mkdir ${GIMP_DISTRIB}/share
+cp -fr ${MSYS_PREFIX}/share/ghostscript/ ${GIMP_DISTRIB}/share/
+rm -r ${GIMP_DISTRIB}/share/ghostscript/*/doc
+cp -fr ${GIMP_PREFIX}/share/gimp/ ${GIMP_DISTRIB}/share/
+export GLIB_PATH=`echo ${MSYS_PREFIX}/share/glib-*/schemas`
+GLIB_PATH=$(sed "s|${MSYS_PREFIX}/||g" <<< $GLIB_PATH)
+mkdir -p ${GIMP_DISTRIB}/${GLIB_PATH}
+cp -fr ${MSYS_PREFIX}/share/glib-*/schemas/ ${GIMP_DISTRIB}/share/glib-*/
 
-cp -fr ${MSYS_PREFIX}/share/lua/ ${GIMP_DISTRIB}/share/
-cp -fr ${MSYS_PREFIX}/lib/lua/ ${GIMP_DISTRIB}/lib/
+### Adwaita can be used as the base icon set.
+mkdir -p ${GIMP_DISTRIB}/share/icons
+cp -fr ${MSYS_PREFIX}/share/icons/Adwaita/ ${GIMP_DISTRIB}/share/icons/
+cp -fr ${GIMP_PREFIX}/share/icons/hicolor/ ${GIMP_DISTRIB}/share/icons/
 
-# XXX Are these themes really needed?
-cp -fr ${MSYS_PREFIX}/share/themes ${GIMP_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/libthai/ ${GIMP_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/libwmf/ ${GIMP_DISTRIB}/share/
 
-# Only copy from langs supported in GIMP.
+### Only copy from langs supported in GIMP.
+cp -fr ${GIMP_PREFIX}/share/locale/ ${GIMP_DISTRIB}/share/
 for dir in ${GIMP_DISTRIB}/share/locale/*/; do
   lang=`basename "$dir"`;
   # TODO: ideally we could be a bit more accurate and copy only the
@@ -95,93 +106,70 @@ for dir in ${GIMP_DISTRIB}/share/locale/*/; do
   fi
 done;
 
-# Only one iso-codes file is useful.
+mkdir -p ${GIMP_DISTRIB}/share/man/man1
+mkdir -p ${GIMP_DISTRIB}/share/man/man5
+cp -fr ${GIMP_PREFIX}/share/man/man1/gimp* ${GIMP_DISTRIB}/share/man/man1/
+cp -fr ${GIMP_PREFIX}/share/man/man5/gimp* ${GIMP_DISTRIB}/share/man/man5/
+mkdir ${GIMP_DISTRIB}/share/metainfo
+cp -fr ${GIMP_PREFIX}/share/metainfo/org.gimp*.xml ${GIMP_DISTRIB}/share/metainfo/
+cp -fr ${MSYS_PREFIX}/share/mypaint-data/ ${GIMP_DISTRIB}/share/
+cp -fr ${MSYS_PREFIX}/share/poppler/ ${GIMP_DISTRIB}/share/
+
+### Only one iso-codes file is useful.
 mkdir -p ${GIMP_DISTRIB}/share/xml/iso-codes
 cp -fr ${MSYS_PREFIX}/share/xml/iso-codes/iso_639.xml ${GIMP_DISTRIB}/share/xml/iso-codes/
 
-# Adwaita can be used as the base icon set.
-cp -fr ${MSYS_PREFIX}/share/icons/Adwaita ${GIMP_DISTRIB}/share/icons/
 
-# Gdbus is needed to avoid warnings in CMD.
-cp -fr ${MSYS_PREFIX}/bin/gdbus.exe ${GIMP_DISTRIB}/bin
+## Executables and DLLs.
 
-# XXX Why are these for exactly?
-cp -fr ${MSYS_PREFIX}/bin/gspawn*.exe ${GIMP_DISTRIB}/bin/
-
-# We save the list of already copied DLLs to keep a state between dll_link runs.
+### We save the list of already copied DLLs to keep a state between 3_package-gimp-uni_dep runs.
 rm -f done-dll.list
 
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gspawn-win*-helper.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX} ${GIMP_DISTRIB} --output-dll-list done-dll.list
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gspawn-win*-helper-console.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+### Minimal executables for the 'bin' folder
+mkdir ${GIMP_DISTRIB}/bin
+binArray=("${MSYS_PREFIX}/bin/bzip2.exe"
+          "${MSYS_PREFIX}/bin/dot.exe"
+          "${MSYS_PREFIX}/bin/gdbus.exe"
+          "${MSYS_PREFIX}/bin/gdk-pixbuf-query-loaders.exe"
+          "${GIMP_PREFIX}/bin/gimp*.exe"
+          "${MSYS_PREFIX}/bin/gspawn*.exe")
+for exe in "${binArray[@]}"; do
+  cp -fr $exe ${GIMP_DISTRIB}/bin/
+done
 
-# XXX Does not look like it's needed anymore. Check?
-cp -fr ${MSYS_PREFIX}/bin/gdk-pixbuf-query-loaders.exe ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gdk-pixbuf-query-loaders.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+## Optional executables, .DLLs and resources for GObject Introspection support
+if [[ "$BUILD_TYPE" != "CI_CROSS" ]]; then
+  cp -fr ${MSYS_PREFIX}/bin/libgirepository-*.dll ${GIMP_DISTRIB}/bin/
+  python3 build/windows/gitlab-ci/3_package-gimp-uni_dep.py ${GIMP_DISTRIB}/bin/libgirepository-*.dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+  cp -fr ${MSYS_PREFIX}/lib/girepository-*/ ${GIMP_DISTRIB}/lib/
+  cp -fr ${GIMP_PREFIX}/lib/girepository-*/* ${GIMP_DISTRIB}/lib/girepository-*/
+  cp -fr ${GIMP_PREFIX}/share/gir-*/ ${GIMP_DISTRIB}/share/
 
-# XXX Why is bzip2.exe needed?
-cp -fr ${MSYS_PREFIX}/bin/bzip2.exe ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/bzip2.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-
-# Executables for supported interpreters.
-cp -fr ${MSYS_PREFIX}/bin/pythonw.exe ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/pythonw.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-cp -fr ${MSYS_PREFIX}/bin/python3w.exe ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/python3w.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-cp -fr ${MSYS_PREFIX}/bin/python3.exe ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/python3.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-
-if [[ "$MSYSTEM" == "CLANGARM64" ]]; then
-  cp -fr ${MSYS_PREFIX}/bin/lua5.1.exe ${GIMP_DISTRIB}/bin/
-  python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/lua5.1.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-else
   cp -fr ${MSYS_PREFIX}/bin/luajit.exe ${GIMP_DISTRIB}/bin/
-  python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/luajit.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+  cp -fr ${MSYS_PREFIX}/lib/lua/ ${GIMP_DISTRIB}/lib/
+  cp -fr ${MSYS_PREFIX}/share/lua/ ${GIMP_DISTRIB}/share/
+
+  cp -fr ${MSYS_PREFIX}/bin/python*.exe ${GIMP_DISTRIB}/bin/
+  cp -fr ${MSYS_PREFIX}/lib/python*/ ${GIMP_DISTRIB}/lib/
+
+  cp -fr ${GIMP_PREFIX}/share/vala/ ${GIMP_DISTRIB}/share/
+else
+  # Just to ensure there is no introspected files that will output annoying warnings
+  # This is needed because meson.build files can have flaws
+  goiList=$(find ${GIMP_DISTRIB} \( -iname '*.lua' -or -iname '*.py' -or -iname '*.scm' -or -iname '*.vala' \)) && goiArray=($goiList)
+  for goi in "${goiArray[@]}"; do
+    rm $goi
+  done
 fi
 
-# Executable for "gegl:introspect" from graphviz package.
-cp -fr ${MSYS_PREFIX}/bin/dot.exe ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/dot.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-
-# Generate share/glib-2.0/schemas/gschemas.compiled
-glib-compile-schemas --targetdir=${GIMP_DISTRIB}/share/glib-2.0/schemas ${GIMP_DISTRIB}/share/glib-2.0/schemas
-
-# Package needed DLLs only
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-2.99.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-console-2.99.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-debug-resume.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-debug-tool-2.99.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-test-clipboard-2.99.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimptool-2.99.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-
-for dll in ${GIMP_DISTRIB}/lib/babl-0.1/*.dll; do
-  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
-done
-for dll in ${GIMP_DISTRIB}/lib/gegl-0.4/*.dll; do
-  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
-done
-for dll in ${GIMP_DISTRIB}/lib/gio/modules/*.dll; do
-  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
-done
-for dll in ${GIMP_DISTRIB}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll; do
-  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
-done
-for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/modules/*.dll; do
-  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
-done
-for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/plug-ins/*/*.exe; do
-  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
+### Needed DLLs for the executables in the 'bin' folder
+binList=$(find ${GIMP_DISTRIB}/bin/ -iname '*.exe') && binArray=($binList)
+for bin in "${binArray[@]}"; do
+  python3 build/windows/gitlab-ci/3_package-gimp-uni_dep.py $bin ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
 done
 
-# Libraries for GObject Introspection.
-
-cp -fr ${MSYS_PREFIX}/bin/libgirepository-1.0-1.dll ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/libgirepository-1.0-1.dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
-
-for dll in ${GIMP_DISTRIB}/lib/python3.11/site-packages/*/*.dll; do
-  python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
+### Needed DLLs for the executables and DLLs in the 'lib' sub-folders
+libList=$(find ${GIMP_DISTRIB}/lib/ \( -iname '*.dll' -or -iname '*.exe' \)) && libArray=($libList)
+for lib in "${libArray[@]}"; do
+  python3 build/windows/gitlab-ci/3_package-gimp-uni_dep.py $lib ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
 done

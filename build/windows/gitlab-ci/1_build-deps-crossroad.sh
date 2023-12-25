@@ -1,21 +1,35 @@
+if [[ "x$CROSSROAD_PLATFORM" = "xw64" ]]; then
+    export ARTIFACTS_SUFFIX="-x64"
+else # [[ "x$CROSSROAD_PLATFORM" = "xw32" ]];
+    export ARTIFACTS_SUFFIX="-x86"
+fi
+
+
+# Install the required (pre-built) packages for babl and GEGL
 crossroad source msys2
+crossroad install cairo     \
+                  graphviz  \
+                  json-glib \
+                  lcms2
+
+# Clone babl and GEGL (follow master branch)
 mkdir _deps && cd _deps
+git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git _babl 
+git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git _gegl
 
-# babl
+# Build babl and GEGL
+mkdir _babl/_build${ARTIFACTS_SUFFIX}/ && cd _babl/_build${ARTIFACTS_SUFFIX}/
+crossroad meson setup .. -Denable-gir=false \
+                         -Dlibdir=lib
+ninja && ninja install
 
-crossroad install lcms2 && \
-git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git && cd babl && \
-crossroad meson setup _build/ -Denable-gir=false -Dlibdir=lib && \
-ninja -C _build install || exit 1
-cd ..
+mkdir ../../_gegl/_build${ARTIFACTS_SUFFIX}/ && cd ../../_gegl/_build${ARTIFACTS_SUFFIX}/
+crossroad meson setup .. -Dintrospection=false \
+                         -Dlibdir=lib          \
+                         -Dsdl2=disabled  
+ninja && ninja install
+cd ../../
 
-# GEGL
-
-crossroad install cairo graphviz json-glib && \
-git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git && cd gegl && \
-crossroad meson setup _build/ -Dintrospection=false -Dsdl2=disabled -Dlibdir=lib && \
-ninja -C _build install || exit 1
-cd ..
 
 # Install the required (pre-built) packages for GIMP
 export DEPS_PATH="../build/windows/gitlab-ci/all-deps-uni.txt"
