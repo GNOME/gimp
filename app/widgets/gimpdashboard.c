@@ -210,7 +210,7 @@ struct _VariableInfo
   const gchar   *description;
   VariableType   type;
   gboolean       exclude_from_log;
-  GimpRGB        color;
+  gdouble        rgb[4];
   VariableFunc   sample_func;
   VariableFunc   reset_func;
   gconstpointer  data;
@@ -473,7 +473,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Occupied"),
     .description      = N_("Tile cache occupied size"),
     .type             = VARIABLE_TYPE_SIZE,
-    .color            = {0.3, 0.6, 0.3, 1.0},
+    .rgb              = {0.3, 0.6, 0.3, 1.0},
     .sample_func      = gimp_dashboard_sample_gegl_stats,
     .data             = "tile-cache-total"
   },
@@ -483,7 +483,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Maximum"),
     .description      = N_("Maximal tile cache occupied size"),
     .type             = VARIABLE_TYPE_SIZE,
-    .color            = {0.3, 0.7, 0.8, 1.0},
+    .rgb              = {0.3, 0.7, 0.8, 1.0},
     .sample_func      = gimp_dashboard_sample_gegl_stats,
     .data             = "tile-cache-total-max"
   },
@@ -525,7 +525,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Occupied"),
     .description      = N_("Swap file occupied size"),
     .type             = VARIABLE_TYPE_SIZE,
-    .color            = {0.8, 0.2, 0.2, 1.0},
+    .rgb              = {0.8, 0.2, 0.2, 1.0},
     .sample_func      = gimp_dashboard_sample_gegl_stats,
     .data             = "swap-total"
   },
@@ -535,7 +535,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Size"),
     .description      = N_("Swap file size"),
     .type             = VARIABLE_TYPE_SIZE,
-    .color            = {0.8, 0.6, 0.4, 1.0},
+    .rgb              = {0.8, 0.6, 0.4, 1.0},
     .sample_func      = gimp_dashboard_sample_gegl_stats,
     .data             = "swap-file-size"
   },
@@ -553,7 +553,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Queued"),
     .description      = N_("Size of data queued for writing to the swap"),
     .type             = VARIABLE_TYPE_SIZE,
-    .color            = {0.8, 0.8, 0.2, 0.5},
+    .rgb              = {0.8, 0.8, 0.2, 0.5},
     .sample_func      = gimp_dashboard_sample_gegl_stats,
     .data             = "swap-queued-total"
   },
@@ -585,7 +585,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Read"),
     .description      = N_("Total amount of data read from the swap"),
     .type             = VARIABLE_TYPE_SIZE,
-    .color            = {0.2, 0.4, 1.0, 0.4},
+    .rgb              = {0.2, 0.4, 1.0, 0.4},
     .sample_func      = gimp_dashboard_sample_gegl_stats,
     .data             = "swap-read-total"
   },
@@ -595,7 +595,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Read throughput"),
     .description      = N_("The rate at which data is read from the swap"),
     .type             = VARIABLE_TYPE_RATE_OF_CHANGE,
-    .color            = {0.2, 0.4, 1.0, 1.0},
+    .rgb              = {0.2, 0.4, 1.0, 1.0},
     .sample_func      = gimp_dashboard_sample_variable_rate_of_change,
     .data             = GINT_TO_POINTER (VARIABLE_SWAP_READ)
   },
@@ -608,7 +608,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Written"),
     .description      = N_("Total amount of data written to the swap"),
     .type             = VARIABLE_TYPE_SIZE,
-    .color            = {0.8, 0.3, 0.2, 0.4},
+    .rgb              = {0.8, 0.3, 0.2, 0.4},
     .sample_func      = gimp_dashboard_sample_gegl_stats,
     .data             = "swap-write-total"
   },
@@ -618,7 +618,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Write throughput"),
     .description      = N_("The rate at which data is written to the swap"),
     .type             = VARIABLE_TYPE_RATE_OF_CHANGE,
-    .color            = {0.8, 0.3, 0.2, 1.0},
+    .rgb              = {0.8, 0.3, 0.2, 1.0},
     .sample_func      = gimp_dashboard_sample_variable_rate_of_change,
     .data             = GINT_TO_POINTER (VARIABLE_SWAP_WRITTEN)
   },
@@ -642,7 +642,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Usage"),
     .description      = N_("Total CPU usage"),
     .type             = VARIABLE_TYPE_PERCENTAGE,
-    .color            = {0.8, 0.7, 0.2, 1.0},
+    .rgb              = {0.8, 0.7, 0.2, 1.0},
     .sample_func      = gimp_dashboard_sample_cpu_usage
   },
 
@@ -651,7 +651,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Active"),
     .description      = N_("Whether the CPU is active"),
     .type             = VARIABLE_TYPE_BOOLEAN,
-    .color            = {0.9, 0.8, 0.3, 1.0},
+    .rgb              = {0.9, 0.8, 0.3, 1.0},
     .sample_func      = gimp_dashboard_sample_cpu_active
   },
 
@@ -660,7 +660,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Active"),
     .description      = N_("Total amount of time the CPU has been active"),
     .type             = VARIABLE_TYPE_DURATION,
-    .color            = {0.8, 0.7, 0.2, 0.4},
+    .rgb              = {0.8, 0.7, 0.2, 0.4},
     .sample_func      = gimp_dashboard_sample_cpu_active_time
   },
 #endif /* HAVE_CPU_GROUP */
@@ -674,7 +674,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Used"),
     .description      = N_("Amount of memory used by the process"),
     .type             = VARIABLE_TYPE_SIZE,
-    .color            = {0.8, 0.5, 0.2, 1.0},
+    .rgb              = {0.8, 0.5, 0.2, 1.0},
     .sample_func      = gimp_dashboard_sample_memory_used
   },
 
@@ -683,7 +683,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Available"),
     .description      = N_("Amount of available physical memory"),
     .type             = VARIABLE_TYPE_SIZE,
-    .color            = {0.8, 0.5, 0.2, 0.4},
+    .rgb              = {0.8, 0.5, 0.2, 0.4},
     .sample_func      = gimp_dashboard_sample_memory_available
   },
 
@@ -740,7 +740,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Tile"),
     .description      = N_("Total size of tile memory"),
     .type             = VARIABLE_TYPE_SIZE,
-    .color            = {0.3, 0.3, 1.0, 1.0},
+    .rgb              = {0.3, 0.3, 1.0, 1.0},
     .sample_func      = gimp_dashboard_sample_gegl_stats,
     .data             = "tile-alloc-total"
   },
@@ -1218,7 +1218,9 @@ gimp_dashboard_init (GimpDashboard *dashboard)
       /* group meter */
       if (group_info->has_meter)
         {
-          meter = gimp_meter_new (group_data->n_meter_values);
+          GeglColor *color = gegl_color_new (NULL);
+
+          meter = gimp_meter_new (priv->gimp, group_data->n_meter_values);
           group_data->meter = GIMP_METER (meter);
           gimp_help_set_help_data (meter,
                                    g_dgettext (NULL, group_info->description),
@@ -1238,9 +1240,11 @@ gimp_dashboard_init (GimpDashboard *dashboard)
                 {
                   const VariableInfo *variable_info = &variables[field_info->variable];
 
+                  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), variable_info->rgb);
+
                   gimp_meter_set_value_color (GIMP_METER (meter),
                                               field_info->meter_value - 1,
-                                              &variable_info->color);
+                                              color);
 
                   if (gimp_dashboard_field_use_meter_underlay (group, field))
                     {
@@ -1253,6 +1257,8 @@ gimp_dashboard_init (GimpDashboard *dashboard)
                     }
                 }
             }
+
+          g_object_unref (color);
         }
 
       /* group grid */
@@ -2907,7 +2913,7 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
             {
               GeglColor *color = gegl_color_new (NULL);
 
-              gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &variable_info->color);
+              gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), variable_info->rgb);
               color_area = gimp_color_area_new (color, GIMP_COLOR_AREA_FLAT, 0);
               gimp_help_set_help_data (color_area, description,
                                        NULL);
@@ -3011,7 +3017,7 @@ gimp_dashboard_update_group_values (GimpDashboard *dashboard,
 
       if (group_info->meter_led)
         {
-          GimpRGB         color  = {0.0, 0.0, 0.0, 1.0};
+          gdouble         rgb[3] = {0.0, 0.0, 0.0};
           gboolean        active = FALSE;
           const Variable *var;
 
@@ -3021,16 +3027,22 @@ gimp_dashboard_update_group_values (GimpDashboard *dashboard,
                 {
                   const VariableInfo *variable_info = &variables[*var];
 
-                  color.r = MAX (color.r, variable_info->color.r);
-                  color.g = MAX (color.g, variable_info->color.g);
-                  color.b = MAX (color.b, variable_info->color.b);
+                  rgb[0] = MAX (rgb[0], variable_info->rgb[0]);
+                  rgb[1] = MAX (rgb[1], variable_info->rgb[1]);
+                  rgb[2] = MAX (rgb[2], variable_info->rgb[2]);
 
                   active = TRUE;
                 }
             }
 
           if (active)
-            gimp_meter_set_led_color (group_data->meter, &color);
+            {
+              GeglColor *color = gegl_color_new (NULL);
+
+              gegl_color_set_pixel (color, babl_format ("R'G'B' double"), rgb);
+              gimp_meter_set_led_color (group_data->meter, color);
+              g_object_unref (color);
+            }
 
           gimp_meter_set_led_active (group_data->meter, active);
         }

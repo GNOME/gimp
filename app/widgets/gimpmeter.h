@@ -48,7 +48,8 @@ struct _GimpMeterClass
 
 GType                   gimp_meter_get_type                  (void) G_GNUC_CONST;
 
-GtkWidget             * gimp_meter_new                       (gint                   n_values);
+GtkWidget             * gimp_meter_new                       (Gimp                  *gimp,
+                                                              gint                   n_values);
 
 void                    gimp_meter_set_size                  (GimpMeter             *meter,
                                                               gint                   size);
@@ -88,8 +89,8 @@ gboolean                gimp_meter_get_value_show_in_history (GimpMeter         
 
 void                    gimp_meter_set_value_color           (GimpMeter             *meter,
                                                               gint                   value,
-                                                              const GimpRGB         *color);
-const GimpRGB         * gimp_meter_get_value_color           (GimpMeter             *meter,
+                                                              GeglColor             *color);
+GeglColor             * gimp_meter_get_value_color           (GimpMeter             *meter,
                                                               gint                   value);
 
 void                    gimp_meter_set_value_interpolation   (GimpMeter             *meter,
@@ -120,8 +121,8 @@ void                    gimp_meter_set_led_active            (GimpMeter         
 gboolean                gimp_meter_get_led_active            (GimpMeter             *meter);
 
 void                    gimp_meter_set_led_color             (GimpMeter             *meter,
-                                                              const GimpRGB         *color);
-const GimpRGB         * gimp_meter_get_led_color             (GimpMeter             *meter);
+                                                              GeglColor             *color);
+GeglColor             * gimp_meter_get_led_color             (GimpMeter             *meter);
 
 
 #endif /* __GIMP_METER_H__ */
