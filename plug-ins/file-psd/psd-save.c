@@ -2664,9 +2664,11 @@ save_dialog (GimpImage     *image,
   text = g_strdup_printf ("\n<b>%s</b>: %s",
                           _("Compatibility Notice"),
                           _("Legacy layer modes have better compatibility "
-                            "with Photoshop. If you encounter display "
-                            "issues, consider switching to those layer "
-                            "modes."));
+                            "with Photoshop, but do not support Clip to "
+                            "Backdrop, which is needed for using Photoshop's "
+                            "'Blend Clipped Layers as Group'. "
+                            "If you encounter display issues, consider "
+                            "switching to those layer modes."));
 
   label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                            "compat-notice", "Compatibility Notice",
