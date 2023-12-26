@@ -689,6 +689,58 @@ gimp_gp_param_to_value (gpointer        gimp,
                                 param->data.d_array.size /
                                 sizeof (GimpRGB));
     }
+  else if (GIMP_VALUE_HOLDS_COLOR_ARRAY (value))
+    {
+      GeglColor **colors;
+
+      colors = g_new0 (GeglColor *, param->data.d_color_array.size + 1);
+
+      for (gint i = 0; i < param->data.d_color_array.size; i++)
+        {
+          GeglColor        *color;
+          const Babl       *format  = NULL;
+          const Babl       *space   = NULL;
+          GimpColorProfile *profile = NULL;
+          const gchar      *encoding;
+          gint              bpp;
+
+          encoding = param->data.d_color_array.colors[i].encoding;
+          if (param->data.d_color_array.colors[i].profile_size > 0)
+            profile = gimp_color_profile_new_from_icc_profile (param->data.d_color_array.colors[i].profile_data,
+                                                               param->data.d_color_array.colors[i].profile_size,
+                                                               NULL);
+
+          if (profile)
+            {
+              GError *error = NULL;
+
+              space = gimp_color_profile_get_space (profile,
+                                                    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                    &error);
+
+              if (! space)
+                {
+                  g_printerr ("%s: failed to create Babl space from profile: %s\n",
+                              G_STRFUNC, error->message);
+                  g_clear_error (&error);
+                }
+              g_object_unref (profile);
+            }
+          format = babl_format_with_space (encoding, space);
+          color  = gegl_color_new ("black");
+
+          bpp = babl_format_get_bytes_per_pixel (format);
+          if (bpp != param->data.d_color_array.colors[i].size)
+            g_printerr ("%s: encoding \"%s\" expects %d bpp but data size is %d bpp.\n",
+                        G_STRFUNC, encoding, bpp, param->data.d_color_array.colors[i].size);
+          else
+            gegl_color_set_pixel (color, format, param->data.d_color_array.colors[i].data);
+
+          colors[i] = color;
+        }
+
+      g_value_take_boxed (value, colors);
+    }
   else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
     {
       GType     object_type;
@@ -1004,6 +1056,41 @@ gimp_value_to_gp_param (const GValue *value,
           param->data.d_array.data = NULL;
         }
     }
+  else if (GIMP_VALUE_HOLDS_COLOR_ARRAY (value))
+    {
+      GeglColor **colors = g_value_get_boxed (value);
+
+      param->param_type = GP_PARAM_TYPE_COLOR_ARRAY;
+
+      if (colors != NULL)
+        {
+          param->data.d_color_array.size = gimp_color_array_get_length (colors);
+          param->data.d_color_array.colors = g_new0 (GPParamColor,
+                                                     param->data.d_color_array.size);
+          for (gint i = 0; i < param->data.d_color_array.size; i++)
+            {
+              const Babl *format;
+              int         icc_length = 0;
+
+              format = gegl_color_get_format (colors[i]);
+
+              param->data.d_color_array.colors[i].size = babl_format_get_bytes_per_pixel (format);
+              gegl_color_get_pixel (colors[i], format, &param->data.d_color_array.colors[i].data);
+
+              param->data.d_color_array.colors[i].encoding = (gchar *) babl_format_get_encoding (format);
+
+              if (babl_format_get_space (format) != babl_space ("sRGB"))
+                param->data.d_color_array.colors[i].profile_data = (guint8 *) babl_space_get_icc (babl_format_get_space (format),
+                                                                                                  &icc_length);
+              param->data.d_gegl_color.profile_size = icc_length;
+            }
+        }
+      else
+        {
+          param->data.d_color_array.size = 0;
+          param->data.d_color_array.colors = NULL;
+        }
+    }
   else if (G_VALUE_HOLDS (value, G_TYPE_BYTES))
     {
       GBytes *bytes = g_value_get_boxed (value);
@@ -1186,6 +1273,10 @@ _gimp_gp_params_free (GPParam  *params,
           break;
 
         case GP_PARAM_TYPE_GEGL_COLOR:
+          break;
+
+        case GP_PARAM_TYPE_COLOR_ARRAY:
+          g_free (params[i].data.d_color_array.colors);
           break;
 
         case GP_PARAM_TYPE_ARRAY:

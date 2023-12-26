@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <glib-object.h>
 
 #include "gimpbasetypes.h"
@@ -1778,6 +1779,97 @@ _gp_params_read (GIOChannel  *channel,
 
           break;
 
+        case GP_PARAM_TYPE_COLOR_ARRAY:
+          if (! _gimp_wire_read_int32 (channel,
+                                       &(*params)[i].data.d_color_array.size, 1,
+                                       user_data))
+            goto cleanup;
+
+          (*params)[i].data.d_color_array.colors = g_new0 (GPParamColor,
+                                                           (*params)[i].data.d_color_array.size);
+
+          for (gint j = 0; j < (*params)[i].data.d_color_array.size; j++)
+            {
+              /* Read the color data. */
+              if (! _gimp_wire_read_int32 (channel,
+                                           &(*params)[i].data.d_color_array.colors[j].size, 1,
+                                           user_data))
+                {
+                  for (gint k = 0; k < j; j++)
+                    {
+                      g_free ((*params)[i].data.d_color_array.colors[k].encoding);
+                      g_free ((*params)[i].data.d_color_array.colors[k].profile_data);
+                    }
+                  g_clear_pointer (&(*params)[i].data.d_color_array.colors, g_free);
+                  goto cleanup;
+                }
+
+              if ((*params)[i].data.d_color_array.colors[j].size > 40 ||
+                  ! _gimp_wire_read_int8 (channel,
+                                          (*params)[i].data.d_color_array.colors[j].data,
+                                          (*params)[i].data.d_color_array.colors[j].size,
+                                          user_data))
+                {
+                  for (gint k = 0; k < j; j++)
+                    {
+                      g_free ((*params)[i].data.d_color_array.colors[k].encoding);
+                      g_free ((*params)[i].data.d_color_array.colors[k].profile_data);
+                    }
+                  g_clear_pointer (&(*params)[i].data.d_color_array.colors, g_free);
+                  goto cleanup;
+                }
+
+              /* Read encoding. */
+              if (! _gimp_wire_read_string (channel,
+                                            &(*params)[i].data.d_color_array.colors[j].encoding, 1,
+                                            user_data))
+                {
+                  for (gint k = 0; k < j; j++)
+                    {
+                      g_free ((*params)[i].data.d_color_array.colors[k].encoding);
+                      g_free ((*params)[i].data.d_color_array.colors[k].profile_data);
+                    }
+                  g_clear_pointer (&(*params)[i].data.d_color_array.colors, g_free);
+                  goto cleanup;
+                }
+
+              /* Read space (profile data). */
+              if (! _gimp_wire_read_int32 (channel,
+                                           &(*params)[i].data.d_color_array.colors[j].profile_size, 1,
+                                           user_data))
+                {
+                  for (gint k = 0; k < j; j++)
+                    {
+                      g_free ((*params)[i].data.d_color_array.colors[k].encoding);
+                      g_free ((*params)[i].data.d_color_array.colors[k].profile_data);
+                    }
+                  g_clear_pointer (&(*params)[i].data.d_color_array.colors[j].encoding, g_free);
+                  g_clear_pointer (&(*params)[i].data.d_color_array.colors, g_free);
+                  goto cleanup;
+                }
+
+              if ((*params)[i].data.d_color_array.colors[j].profile_size > 0)
+                {
+                  (*params)[i].data.d_color_array.colors[j].profile_data = g_new0 (guint8, (*params)[i].data.d_color_array.colors[j].profile_size);
+                  if (! _gimp_wire_read_int8 (channel,
+                                              (*params)[i].data.d_color_array.colors[j].profile_data,
+                                              (*params)[i].data.d_color_array.colors[j].profile_size,
+                                              user_data))
+                    {
+                      for (gint k = 0; k < j; j++)
+                        {
+                          g_free ((*params)[i].data.d_color_array.colors[k].encoding);
+                          g_free ((*params)[i].data.d_color_array.colors[k].profile_data);
+                        }
+                      g_clear_pointer (&(*params)[i].data.d_color_array.colors[j].encoding, g_free);
+                      g_clear_pointer (&(*params)[i].data.d_color_array.colors[j].profile_data, g_free);
+                      g_clear_pointer (&(*params)[i].data.d_color_array.colors, g_free);
+                      goto cleanup;
+                    }
+                }
+            }
+          break;
+
         case GP_PARAM_TYPE_ARRAY:
           if (! _gimp_wire_read_int32 (channel,
                                        &(*params)[i].data.d_array.size, 1,
@@ -1993,6 +2085,35 @@ _gp_params_write (GIOChannel *channel,
             return;
           break;
 
+        case GP_PARAM_TYPE_COLOR_ARRAY:
+          if (! _gimp_wire_write_int32 (channel,
+                                        (const guint32 *) &params[i].data.d_color_array.size, 1,
+                                        user_data))
+            return;
+
+          for (gint j = 0; j < params[i].data.d_color_array.size; j++)
+            {
+              if (! _gimp_wire_write_int32 (channel,
+                                            (const guint32 *) &params[i].data.d_color_array.colors[j].size, 1,
+                                            user_data)  ||
+                  ! _gimp_wire_write_int8 (channel,
+                                           (const guint8 *) params[i].data.d_color_array.colors[j].data,
+                                           params[i].data.d_color_array.colors[j].size,
+                                           user_data)   ||
+                  ! _gimp_wire_write_string (channel,
+                                             &params[i].data.d_color_array.colors[j].encoding, 1,
+                                             user_data) ||
+                  ! _gimp_wire_write_int32 (channel,
+                                            (const guint32 *) &params[i].data.d_color_array.colors[j].profile_size, 1,
+                                            user_data)  ||
+                  ! _gimp_wire_write_int8 (channel,
+                                           (const guint8 *) params[i].data.d_color_array.colors[j].profile_data,
+                                           params[i].data.d_color_array.colors[j].profile_size,
+                                           user_data))
+                return;
+            }
+          break;
+
         case GP_PARAM_TYPE_ARRAY:
           if (! _gimp_wire_write_int32 (channel,
                                         (const guint32 *) &params[i].data.d_array.size, 1,
@@ -2118,6 +2239,15 @@ _gp_params_destroy (GPParam *params,
         case GP_PARAM_TYPE_GEGL_COLOR:
           g_free (params[i].data.d_gegl_color.encoding);
           g_free (params[i].data.d_gegl_color.profile_data);
+          break;
+
+        case GP_PARAM_TYPE_COLOR_ARRAY:
+         for (gint j = 0; j < params[i].data.d_color_array.size; j++)
+           {
+             g_free (params[i].data.d_color_array.colors[j].encoding);
+             g_free (params[i].data.d_color_array.colors[j].profile_data);
+           }
+          g_free (params[i].data.d_color_array.colors);
           break;
 
         case GP_PARAM_TYPE_ARRAY:

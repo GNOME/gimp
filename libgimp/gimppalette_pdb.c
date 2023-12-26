@@ -150,25 +150,23 @@ gimp_palette_get_color_count (GimpPalette *palette)
 /**
  * gimp_palette_get_colors:
  * @palette: The palette.
- * @num_colors: (out): Length of the colors array.
  *
  * Gets colors in the palette.
  *
- * Returns an array of colors in the palette.
+ * Returns an array of colors in the palette. Free the returned array
+ * with gimp_color_array_free().
  *
- * Returns: (array length=num_colors) (element-type GimpRGB) (transfer full):
+ * Returns: (array zero-terminated=1) (transfer full):
  *          The colors in the palette.
- *          The returned value must be freed with g_free().
  *
  * Since: 2.6
  **/
-GimpRGB *
-gimp_palette_get_colors (GimpPalette *palette,
-                         gint        *num_colors)
+GeglColor **
+gimp_palette_get_colors (GimpPalette *palette)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpRGB *colors = NULL;
+  GeglColor **colors = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_PALETTE, palette,
@@ -179,13 +177,8 @@ gimp_palette_get_colors (GimpPalette *palette,
                                                args);
   gimp_value_array_unref (args);
 
-  *num_colors = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_colors = GIMP_VALUES_GET_INT (return_vals, 1);
-      colors = GIMP_VALUES_DUP_RGB_ARRAY (return_vals, 2);
-    }
+    colors = gimp_color_array_copy (g_value_get_boxed (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 

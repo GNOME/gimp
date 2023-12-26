@@ -756,6 +756,87 @@ gimp_value_take_float_array (GValue  *value,
                          length * sizeof (gdouble));
 }
 
+
+/*
+ * GIMP_TYPE_COLOR_ARRAY
+ */
+
+GType
+gimp_color_array_get_type (void)
+{
+  static gsize static_g_define_type_id = 0;
+
+  if (g_once_init_enter (&static_g_define_type_id))
+    {
+      GType g_define_type_id =
+        g_boxed_type_register_static (g_intern_static_string ("GimpColorArray"),
+                                      (GBoxedCopyFunc) gimp_color_array_copy,
+                                      (GBoxedFreeFunc) gimp_color_array_free);
+
+      g_once_init_leave (&static_g_define_type_id, g_define_type_id);
+    }
+
+  return static_g_define_type_id;
+}
+
+/**
+ * gimp_color_array_copy:
+ * @array: an array of colors.
+ *
+ * Creates a new #GimpColorArray containing a deep copy of a %NULL-terminated
+ * array of [class@Gegl.Color].
+ *
+ * Returns: (transfer full): a new #GimpColorArray.
+ **/
+GimpColorArray
+gimp_color_array_copy (GimpColorArray array)
+{
+  GeglColor **copy;
+  gint        length = gimp_color_array_get_length (array);
+
+  copy = g_malloc0 (sizeof (GeglColor *) * (length + 1));
+
+  for (gint i = 0; i < length; i++)
+    copy[i] = gegl_color_duplicate (array[i]);
+
+  return copy;
+}
+
+/**
+ * gimp_color_array_free:
+ * @array: an array of colors.
+ *
+ * Frees a %NULL-terminated array of [class@Gegl.Color].
+ **/
+void
+gimp_color_array_free (GimpColorArray array)
+{
+  gint i = 0;
+
+  while (array[i] != NULL)
+    g_object_unref (array[i++]);
+
+  g_free (array);
+}
+
+/**
+ * gimp_color_array_get_length:
+ * @array: an array of colors.
+ *
+ * Returns: the number of [class@Gegl.Color] in @array.
+ **/
+gint
+gimp_color_array_get_length (GimpColorArray array)
+{
+  gint length = 0;
+
+  while (array[length] != NULL)
+    length++;
+
+  return length;
+}
+
+
 /*
  * GIMP_TYPE_RGB_ARRAY
  */

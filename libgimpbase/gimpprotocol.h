@@ -71,6 +71,7 @@ typedef enum
   GP_PARAM_TYPE_FILE,
   GP_PARAM_TYPE_COLOR,
   GP_PARAM_TYPE_GEGL_COLOR,
+  GP_PARAM_TYPE_COLOR_ARRAY,
   GP_PARAM_TYPE_PARASITE,
   GP_PARAM_TYPE_ARRAY,
   GP_PARAM_TYPE_ID_ARRAY,
@@ -98,6 +99,7 @@ typedef struct _GPParam            GPParam;
 typedef struct _GPParamArray       GPParamArray;
 typedef struct _GPParamIDArray     GPParamIDArray;
 typedef struct _GPParamColor       GPParamColor;
+typedef struct _GPParamColorArray  GPParamColorArray;
 typedef struct _GPProcRun          GPProcRun;
 typedef struct _GPProcReturn       GPProcReturn;
 typedef struct _GPProcInstall      GPProcInstall;
@@ -271,6 +273,12 @@ struct _GPParamColor
   guint8  *profile_data;
 };
 
+struct _GPParamColorArray
+{
+  guint32       size;
+  GPParamColor *colors;
+};
+
 struct _GPParam
 {
   GPParamType  param_type;
@@ -284,6 +292,7 @@ struct _GPParam
     gchar             **d_strv;
     GBytes             *d_bytes;
     GPParamColor        d_gegl_color;
+    GPParamColorArray   d_color_array;
     GimpRGB             d_color;
     GimpParasite        d_parasite;
     GPParamArray        d_array;

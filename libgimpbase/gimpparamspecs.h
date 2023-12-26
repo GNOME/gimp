@@ -246,6 +246,50 @@ void            gimp_value_take_float_array       (GValue        *value,
                                                    gsize         length);
 
 
+/**
+ * GIMP_TYPE_COLOR_ARRAY:
+ *
+ * The #GType for a boxed type holding a %NULL-terminated array of GeglColor.
+ *
+ * The code fragments in the following example show the use of a property of
+ * type %GIMP_TYPE_COLORV with g_object_class_install_property(), g_object_set()
+ * and g_object_get().
+ *
+ * ```C
+ * g_object_class_install_property (object_class,
+ *                                  PROP_COLORS,
+ *                                  g_param_spec_boxed ("colors",
+ *                                                      _("Colors"),
+ *                                                      _("List of colors"),
+ *                                                      GIMP_TYPE_COLOR_ARRAY,
+ *                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+ *
+ * GeglColor *colors[] = { gegl_color_new ("red"), gegl_color_new ("blue"), NULL };
+ *
+ * g_object_set (obj, "colors", colors, NULL);
+ *
+ * GeglColors **colors;
+ *
+ * g_object_get (obj, "colors", &colors, NULL);
+ * gimp_color_array_free (colors);
+ * ```
+ *
+ * Since: 3.0
+ */
+typedef GeglColor**                          GimpColorArray;
+
+#define GIMP_TYPE_COLOR_ARRAY               (gimp_color_array_get_type ())
+#define GIMP_VALUE_HOLDS_COLOR_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_COLOR_ARRAY))
+
+
+GType            gimp_color_array_get_type            (void) G_GNUC_CONST;
+
+GimpColorArray   gimp_color_array_copy                (GimpColorArray  array);
+void             gimp_color_array_free                (GimpColorArray  array);
+gint             gimp_color_array_get_length          (GimpColorArray  array);
+
+
+
 /*
  * GIMP_TYPE_RGB_ARRAY
  */

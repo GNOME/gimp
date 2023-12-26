@@ -35,8 +35,7 @@ G_BEGIN_DECLS
 GimpPalette* gimp_palette_new             (const gchar  *name);
 GimpPalette* gimp_palette_get_by_name     (const gchar  *name);
 gint         gimp_palette_get_color_count (GimpPalette  *palette);
-GimpRGB*     gimp_palette_get_colors      (GimpPalette  *palette,
-                                           gint         *num_colors);
+GeglColor**  gimp_palette_get_colors      (GimpPalette  *palette);
 gint         gimp_palette_get_columns     (GimpPalette  *palette);
 gboolean     gimp_palette_set_columns     (GimpPalette  *palette,
                                            gint          columns);

@@ -147,27 +147,24 @@ palette_get_colors_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpPalette *palette;
-  gint num_colors = 0;
-  GimpRGB *colors = NULL;
+  GeglColor **colors = NULL;
 
   palette = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
       GList *list = gimp_palette_get_colors (palette);
+      gint   num_colors;
       gint   i;
 
       num_colors = gimp_palette_get_n_colors (palette);
-      colors     = g_new (GimpRGB, num_colors);
+      colors     = g_new0 (GeglColor *, num_colors + 1);
 
       for (i = 0; i < num_colors; i++, list = g_list_next (list))
         {
           GimpPaletteEntry *entry = list->data;
-          GimpRGB           rgb;
 
-          /* TODO: we need a geglcolorarray type! */
-          gegl_color_get_pixel (entry->color, babl_format ("R'G'B'A double"), &rgb);
-          colors[i] = rgb;
+          colors[i] = gegl_color_duplicate (entry->color);
         }
     }
 
@@ -175,10 +172,7 @@ palette_get_colors_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_colors);
-      gimp_value_take_rgb_array (gimp_value_array_index (return_vals, 2), colors, num_colors);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), colors);
 
   return return_vals;
 }
@@ -558,7 +552,7 @@ register_palette_procs (GimpPDB *pdb)
                                "gimp-palette-get-colors");
   gimp_procedure_set_static_help (procedure,
                                   "Gets colors in the palette.",
-                                  "Returns an array of colors in the palette.",
+                                  "Returns an array of colors in the palette. Free the returned array with 'gimp-color-array-free'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Sven Neumann <sven@gimp.org>",
@@ -571,16 +565,11 @@ register_palette_procs (GimpPDB *pdb)
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-colors",
-                                                     "num colors",
-                                                     "Length of the colors array",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb_array ("colors",
-                                                              "colors",
-                                                              "The colors in the palette",
-                                                              GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("colors",
+                                                       "colors",
+                                                       "The colors in the palette",
+                                                       GIMP_TYPE_COLOR_ARRAY,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

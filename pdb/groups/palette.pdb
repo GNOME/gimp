@@ -111,7 +111,7 @@ CODE
 sub palette_get_colors {
     $blurb = 'Gets colors in the palette.';
 
-    $help = "Returns an array of colors in the palette.";
+    $help = "Returns an array of colors in the palette. Free the returned array with gimp_color_array_free().";
 
     &neo_pdb_misc('2006', '2.6');
 
@@ -121,28 +121,24 @@ sub palette_get_colors {
 
     @outargs = (
     	{ name => 'colors', type => 'colorarray',
-        desc => 'The colors in the palette',
-        array => { name => 'num_colors',
-                   desc => 'Length of the colors array' } }
+        desc => 'The colors in the palette' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
   GList *list = gimp_palette_get_colors (palette);
+  gint   num_colors;
   gint   i;
 
   num_colors = gimp_palette_get_n_colors (palette);
-  colors     = g_new (GimpRGB, num_colors);
+  colors     = g_new0 (GeglColor *, num_colors + 1);
 
   for (i = 0; i < num_colors; i++, list = g_list_next (list))
     {
       GimpPaletteEntry *entry = list->data;
-      GimpRGB           rgb;
 
-      /* TODO: we need a geglcolorarray type! */
-      gegl_color_get_pixel (entry->color, babl_format ("R'G'B'A double"), &rgb);
-      colors[i] = rgb;
+      colors[i] = gegl_color_duplicate (entry->color);
     }
 }
 CODE

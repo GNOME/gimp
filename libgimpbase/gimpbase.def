@@ -29,6 +29,10 @@ EXPORTS
 	gimp_choice_new_with_values
 	gimp_choice_set_sensitive
 	gimp_clone_type_get_type
+	gimp_color_array_copy
+	gimp_color_array_free
+	gimp_color_array_get_length
+	gimp_color_array_get_type
 	gimp_color_tag_get_type
 	gimp_component_type_get_type
 	gimp_convert_palette_type_get_type

@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <glib-object.h>
 
 #include "gimpbasetypes.h"
