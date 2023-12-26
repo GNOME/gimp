@@ -1330,7 +1330,15 @@ add_layers (gint32     image_id,
            */
           if (lidx > 0)
             {
-              if (gidx == -1)
+              if (lyr_a[lidx]->group_type != 0)
+                {
+                  /* Ignoring group layers with clipping set for now. */
+                  IFDBG(3) g_debug ("Group Layer with clipping: [%d] %s",
+                                    lidx, lyr_a[lidx]->name);
+                  use_clipping_group = FALSE;
+                  gidx = -1;
+                }
+              else if (gidx == -1)
                 {
                   use_clipping_group = TRUE;
 
