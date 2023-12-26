@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-20 20:27+0000\n"
-"PO-Revision-Date: 2023-12-21 23:26+0100\n"
+"POT-Creation-Date: 2023-12-24 08:26+0000\n"
+"PO-Revision-Date: 2023-12-26 18:12+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1535,10 +1535,8 @@ msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
 #: plug-ins/common/compose.c:378
-#, fuzzy
-#| msgid "Wavelet decompose"
 msgid "What to compose: "
-msgstr "Razstavi valček"
+msgstr "Kaj sestaviti: "
 
 #: plug-ins/common/compose.c:403
 msgid "C_ompose..."
@@ -2252,10 +2250,8 @@ msgid "Black"
 msgstr "Črna"
 
 #: plug-ins/common/decompose.c:261
-#, fuzzy
-#| msgid "Wavelet decompose"
 msgid "What to decompose: "
-msgstr "Razstavi valček"
+msgstr "Kaj razstaviti: "
 
 #: plug-ins/common/decompose.c:282
 msgid "_Decompose..."
@@ -2367,9 +2363,8 @@ msgstr "Spremem_ba merila 1"
 
 #: plug-ins/common/depth-merge.c:260
 #, fuzzy
-#| msgid "Depth relative offset"
 msgid "Depth relative scale 1"
-msgstr "Relativni zamik globine"
+msgstr "Od globine relativna sprememba velikosti 1"
 
 #: plug-ins/common/depth-merge.c:265
 msgid "Scal_e 2"
@@ -2377,9 +2372,8 @@ msgstr "Spre_memba merila 2"
 
 #: plug-ins/common/depth-merge.c:266
 #, fuzzy
-#| msgid "Depth relative offset"
 msgid "Depth relative scale 2"
-msgstr "Relativni zamik globine"
+msgstr "Od globine relativna sprememba velikosti 2"
 
 #: plug-ins/common/depth-merge.c:313
 msgid "The selection does not intersect with the input drawable."
@@ -4403,14 +4397,8 @@ msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Izpusti skrite plasti in plasti z ničelno prekrivnostjo"
 
 #: plug-ins/common/file-pdf-save.c:345
-#, fuzzy
-#| msgid ""
-#| "Duplicate layer size. \n"
-#| "It will not be exported"
 msgid "Non-visible layers will not be exported"
-msgstr ""
-"Podvojena velikost plasti. \n"
-"Ne bo izvožena"
+msgstr "Nevidne plasti ne bodo izvožene"
 
 #: plug-ins/common/file-pdf-save.c:350
 msgid "Apply layer masks"
@@ -4421,6 +4409,8 @@ msgid ""
 "Apply layer masks before saving (Keeping the mask will not change the "
 "output, only the PDF structure)"
 msgstr ""
+"Pred shranjevanjem uveljavi maske plasti (ohranjanje maske ne bo spremenilo "
+"izhoda, samo strukturo PDF)"
 
 #: plug-ins/common/file-pdf-save.c:357
 msgid "Layers as pages"
@@ -6879,6 +6869,7 @@ msgstr "Dejanje"
 #: plug-ins/common/hot.c:277
 msgid "Action { (0) reduce luminance, (1) reduce saturation, or (2) Blacken }"
 msgstr ""
+"Dejanje { (0) zmanjšaj svetilnost, (1) zmanjšaj nasičenost ali (2) počrni }"
 
 #: plug-ins/common/hot.c:283
 msgid "Create _new layer"
@@ -8837,15 +8828,13 @@ msgstr ""
 
 #: plug-ins/file-dds/dds.c:266
 #, fuzzy
-#| msgid "Load _mipmaps"
 msgid "_Mipmaps"
-msgstr "Naloži _mipmapse"
+msgstr "_Mipmapsi"
 
 #: plug-ins/file-dds/dds.c:267
 #, fuzzy
-#| msgid "Load _mipmaps"
 msgid "How to handle mipmaps"
-msgstr "Naloži _mipmapse"
+msgstr "Kako ravnati z mipmaps"
 
 #: plug-ins/file-dds/dds.c:268
 msgid "No mipmaps"
@@ -8911,7 +8900,7 @@ msgstr "Način ob_livanja"
 #: plug-ins/file-dds/dds.c:294
 #, fuzzy
 msgid "Wrap mode to use when generating mipmaps"
-msgstr "Način ovijanja za uporabo pri ustvarjanju mipmap"
+msgstr "Uporabljeni način ovijanja pri ustvarjanju mipmap"
 
 #: plug-ins/file-dds/dds.c:296
 msgid "Mirror"
@@ -8932,7 +8921,7 @@ msgstr "Uporabi poprave_k game"
 #: plug-ins/file-dds/dds.c:305
 #, fuzzy
 msgid "Use gamma correct mipmap filtering"
-msgstr "Uporaba filtriranja pravilne game mipmap"
+msgstr "Uporabi filtriranja pravilne game mipmap"
 
 #: plug-ins/file-dds/dds.c:310
 msgid "Use sRG_B colorspace"
@@ -8981,6 +8970,8 @@ msgid ""
 "Unsupported DDS pixel format:\n"
 "bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
 msgstr ""
+"Nepodprta oblika slikovnih točk DDS:\n"
+"bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, zastavice: %u"
 
 #: plug-ins/file-dds/ddsread.c:499
 msgid "Invalid or corrupted DDS header."
@@ -9002,6 +8993,8 @@ msgstr "Neveljavno magično število zapisa DDS."
 msgid ""
 "File lacks expected pixel format flags! Image may not be decoded correctly."
 msgstr ""
+"Datoteka nima pričakovanih zastavic v obliki slikovnih točk! Slika morda ne "
+"bo pravilno dekodirana."
 
 #: plug-ins/file-dds/ddsread.c:863
 msgid "Invalid pixel format."
@@ -9911,18 +9904,12 @@ msgstr ""
 "Ostalo bo zavrženo."
 
 #: plug-ins/file-psd/psd-save.c:2666
-#, fuzzy
-#| msgid ""
-#| "Legacy layer modes have been reported to have better compatibility with "
-#| "Photoshop. If you encounter display issues, consider switching to those "
-#| "layer modes."
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop. If you "
 "encounter display issues, consider switching to those layer modes."
 msgstr ""
-"Poročali so, da imajo opuščeni načini plasti boljšo združljivost s programom "
-"Photoshop. Če naletite na težave s prikazom, preklopite na te vrste oz. "
-"načine plasti."
+"Opuščeni načini plasti so bolje združljivi s programom Photoshop. Če "
+"naletite na težave s prikazom, preklopite na te vrste oz. načine plasti."
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -11327,30 +11314,24 @@ msgid "In_version"
 msgstr "In_verzija"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:371
-#, fuzzy
-#| msgid "Red application mode"
 msgid "Red inversion mode"
-msgstr "Način uporabe rdeče"
+msgstr "Način inverzije rdeče"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:376
 msgid "I_nversion"
 msgstr "I_nverzija"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:377
-#, fuzzy
-#| msgid "Green application mode"
 msgid "Green inversion mode"
-msgstr "Način uporabe zelene"
+msgstr "Način inverzije zelene"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:382
 msgid "_Inversion"
 msgstr "_Inverzija"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:383
-#, fuzzy
-#| msgid "Blue application mode"
 msgid "Blue inversion mode"
-msgstr "Način uporabe modre"
+msgstr "Način inverzije modre"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:388
 msgid "_Number of colors"
@@ -11362,11 +11343,12 @@ msgstr "Število barv za preslikavo"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:393
 msgid "_Use log log smoothing"
-msgstr ""
+msgstr "_Uporabi prečno glajenje"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:394
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
+"Uporabi prečno glajenje za odstranjevanje »trakov« oz. pasov v rezultatu"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:493
 msgid "Rendering fractal"
@@ -12559,42 +12541,44 @@ msgid "Radi_us"
 msgstr "Ra_dij"
 
 #: plug-ins/gradient-flare/gradient-flare.c:854
+#, fuzzy
 msgid "Radius of GFlare (pixel)"
-msgstr ""
+msgstr "Polmer GFlare (sl. točke)"
 
 #: plug-ins/gradient-flare/gradient-flare.c:859
 msgid "Ro_tation"
 msgstr "Su_kanje"
 
 #: plug-ins/gradient-flare/gradient-flare.c:860
-#, fuzzy
-#| msgid "Rotation about X axis in degrees"
 msgid "Rotation of GFlare (degree)"
-msgstr "Kot sukanja okoli osi X v stopinjah"
+msgstr "Kot sukanja GFlare (stopinje)"
 
 #: plug-ins/gradient-flare/gradient-flare.c:865
 msgid "_Hue rotation"
 msgstr "Sukanje _obarvanosti"
 
 #: plug-ins/gradient-flare/gradient-flare.c:866
+#, fuzzy
 msgid "Hue rotation of GFlare (degree)"
-msgstr ""
+msgstr "Vrtenje odtenka GFlare (stopinje)"
 
 #: plug-ins/gradient-flare/gradient-flare.c:871
 msgid "Vector _angle"
 msgstr "Kot vektorj_a"
 
 #: plug-ins/gradient-flare/gradient-flare.c:872
+#, fuzzy
 msgid "Vector angle for second flares (degree)"
-msgstr ""
+msgstr "Vektorski kot za drugotne prežaritve (stopnja)"
 
 #: plug-ins/gradient-flare/gradient-flare.c:877
 msgid "Vector len_gth"
 msgstr "_Dolžina vektorja"
 
 #: plug-ins/gradient-flare/gradient-flare.c:878
+#, fuzzy
 msgid "Vector length for second flares (percentage of Radius)"
-msgstr ""
+msgstr "Dolžina vektorja za drugotne prežaritve (odstotek polmera)"
 
 #: plug-ins/gradient-flare/gradient-flare.c:884
 msgid "Ada_ptive supersampling"
@@ -14134,7 +14118,7 @@ msgstr "Smer svetlobe Z"
 #: plug-ins/lighting/lighting-main.c:257
 #, fuzzy
 msgid "Ambient intensity"
-msgstr "Intenzivnost okoljske"
+msgstr "Intenzivnost okoljske svetlobe"
 
 #: plug-ins/lighting/lighting-main.c:258
 #, fuzzy
@@ -14144,7 +14128,7 @@ msgstr "Intenzivnost okoljske svetobe materiala (žareče)"
 #: plug-ins/lighting/lighting-main.c:264
 #, fuzzy
 msgid "Diffuse intensity"
-msgstr "Intenzivnost razpršenosti"
+msgstr "Intenzivnost razpršene svetlobe"
 
 #: plug-ins/lighting/lighting-main.c:265
 #, fuzzy
@@ -14152,10 +14136,8 @@ msgid "Material diffuse intensity (Bright)"
 msgstr "Intenzivnost razpršene svetlobe materiala (svetlo)"
 
 #: plug-ins/lighting/lighting-main.c:271
-#, fuzzy
-#| msgid "Material diffuse reflectivity"
 msgid "Diffuse reflectivity"
-msgstr "Razpršena odbojnost materiala"
+msgstr "Razpršena odbojnost"
 
 #: plug-ins/lighting/lighting-main.c:272
 #: plug-ins/map-object/map-object-main.c:288
@@ -14163,10 +14145,8 @@ msgid "Material diffuse reflectivity"
 msgstr "Razpršena odbojnost materiala"
 
 #: plug-ins/lighting/lighting-main.c:277
-#, fuzzy
-#| msgid "Material specular reflectivity"
 msgid "Specular reflectivity"
-msgstr "Zrcalna odbojnost materiala"
+msgstr "Zrcalna odbojnost"
 
 #: plug-ins/lighting/lighting-main.c:278
 #: plug-ins/map-object/map-object-main.c:294
@@ -14180,9 +14160,8 @@ msgstr "Svetla področja"
 
 #: plug-ins/lighting/lighting-main.c:284
 #, fuzzy
-#| msgid "Material highlight (note, it's exponential)"
 msgid "Material highlight (note, it's exponential) (Polished)"
-msgstr "Svetlobno poudarjanje materiala (upoštevajte, da je eksponentno)"
+msgstr "Svetlo poudarjanje materiala (upoštevajte, da je eksponentno)"
 
 #: plug-ins/lighting/lighting-main.c:290
 msgid "Metallic"
@@ -15624,14 +15603,13 @@ msgstr "_Območje snemanja"
 
 #: plug-ins/screenshot/screenshot.c:165
 msgid "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
-msgstr ""
+msgstr "Vrsta posneka { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-AREA (2) }"
 
 #: plug-ins/screenshot/screenshot.c:195
 msgid "Include _mouse pointer"
 msgstr "Vključi kazalec _miške"
 
 #: plug-ins/screenshot/screenshot.c:196
-#, fuzzy
 msgid "Your pointing device's cursor will be part of the image"
 msgstr "Kazalec vaše usmerjevalne naprave bo del slike"
 
@@ -15644,24 +15622,20 @@ msgid "Title bar, window borders and shadow will be part of the image"
 msgstr "Naslovna vrstica, obrobe in senca okna bo del slike "
 
 #: plug-ins/screenshot/screenshot.c:214
-#, fuzzy
-#| msgid "Selection"
 msgid "Selection d_elay"
-msgstr "Izbor"
+msgstr "Zakasnitev iz_bora"
 
 #: plug-ins/screenshot/screenshot.c:215
 msgid "Delay before selection of the window or the region"
-msgstr ""
+msgstr "Zakasnitev pred izbiro okna ali področja"
 
 #: plug-ins/screenshot/screenshot.c:219
-#, fuzzy
-#| msgid "Screenshot"
 msgid "Screenshot dela_y"
-msgstr "Posnetek namizja"
+msgstr "Zakasnitev posne_tka zaslona"
 
 #: plug-ins/screenshot/screenshot.c:220
 msgid "Delay before snapping the screenshot"
-msgstr ""
+msgstr "Zakasnitev pred izdelavo posnetka zaslona"
 
 #: plug-ins/screenshot/screenshot.c:224
 msgid "Color _Profile"
