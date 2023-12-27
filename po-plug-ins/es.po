@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-11 00:11+0000\n"
-"PO-Revision-Date: 2023-12-12 14:40+0100\n"
+"POT-Creation-Date: 2023-12-27 07:36+0000\n"
+"PO-Revision-Date: 2023-12-27 20:46+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -158,7 +158,7 @@ msgstr "Ejercitar una cabra (JavaScript)"
 #: plug-ins/common/grid.c:787 plug-ins/common/qbist.c:933
 #: plug-ins/common/sphere-designer.c:2638 plug-ins/common/unit-editor.c:266
 #: plug-ins/common/warp.c:473 plug-ins/file-exr/file-exr.c:422
-#: plug-ins/file-psd/psd-load.c:3549 plug-ins/flame/flame.c:828
+#: plug-ins/file-psd/psd-load.c:3557 plug-ins/flame/flame.c:828
 #: plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
@@ -650,10 +650,10 @@ msgstr "Vertical"
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:700
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2749 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2757 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
-#: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:1290
-#: plug-ins/gimpressionist/general.c:139
+#: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:561
+#: plug-ins/gfig/gfig-dialog.c:1290 plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
 #: plug-ins/screenshot/screenshot-win32.c:317 plug-ins/twain/twain.c:636
 msgid "Background"
@@ -1554,6 +1554,10 @@ msgstr "YCbCr_ITU_R470_256"
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
+#: plug-ins/common/compose.c:378
+msgid "What to compose: "
+msgstr "Qué componer: "
+
 #: plug-ins/common/compose.c:403
 msgid "C_ompose..."
 msgstr "C_omponer…"
@@ -2015,7 +2019,7 @@ msgstr "No puede operar sobre selecciones vacías."
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:160
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:169
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
 #: plug-ins/file-icns/file-icns-load.c:516
@@ -2276,6 +2280,10 @@ msgstr "Amarillo"
 msgid "Black"
 msgstr "Negro"
 
+#: plug-ins/common/decompose.c:261
+msgid "What to decompose: "
+msgstr "Qué descomponer: "
+
 #: plug-ins/common/decompose.c:282
 msgid "_Decompose..."
 msgstr "_Descomponer…"
@@ -2283,6 +2291,10 @@ msgstr "_Descomponer…"
 #: plug-ins/common/decompose.c:286
 msgid "Decompose an image into separate colorspace components"
 msgstr "Descomponer una imagen en componentes separados del espacio de color"
+
+#: plug-ins/common/decompose.c:305
+msgid "Create channels as layers in a single image"
+msgstr "Crear canales como capas en una sola imagen"
 
 #: plug-ins/common/decompose.c:403
 msgid "Decomposing"
@@ -2333,22 +2345,43 @@ msgstr "Combinar dos imágenes usando mapas de profundidad (z-búfers)"
 msgid "Source _1"
 msgstr "Fuente _1"
 
+#: plug-ins/common/depth-merge.c:224
+msgid "Source 1"
+msgstr "Fuente 1"
+
 #: plug-ins/common/depth-merge.c:229
 msgid "_Depth map 1"
 msgstr "Mapa de _profundidad 1"
+
+#: plug-ins/common/depth-merge.c:230
+msgid "Depth map 1"
+msgstr "Mapa de profundidad 1"
 
 #: plug-ins/common/depth-merge.c:235
 msgid "Source _2"
 msgstr "Fuente _2"
 
+#: plug-ins/common/depth-merge.c:236
+msgid "Source 2"
+msgstr "Fuente 2"
+
 #: plug-ins/common/depth-merge.c:241
 msgid "Depth _map 2"
 msgstr "_Mapa de profundidad 2"
+
+#: plug-ins/common/depth-merge.c:242
+msgid "Depth map 2"
+msgstr "Mapa de profundidad 2"
 
 # //R :-?
 #: plug-ins/common/depth-merge.c:247
 msgid "O_verlap"
 msgstr "_Solapamiento"
+
+# //R :-?
+#: plug-ins/common/depth-merge.c:248
+msgid "Overlap"
+msgstr "Solapamiento"
 
 #: plug-ins/common/depth-merge.c:253 plug-ins/common/file-raw-data.c:365
 msgid "O_ffset"
@@ -2362,9 +2395,17 @@ msgstr "Desplazamiento relativo de profundidad"
 msgid "Sc_ale 1"
 msgstr "_Escala 1"
 
+#: plug-ins/common/depth-merge.c:260
+msgid "Depth relative scale 1"
+msgstr "Escala relativa de profundidad 1"
+
 #: plug-ins/common/depth-merge.c:265
 msgid "Scal_e 2"
 msgstr "Escal_a 2"
+
+#: plug-ins/common/depth-merge.c:266
+msgid "Depth relative scale 2"
+msgstr "Escala relativa de profundidad 2"
 
 #: plug-ins/common/depth-merge.c:313
 msgid "The selection does not intersect with the input drawable."
@@ -2856,7 +2897,7 @@ msgstr "Final prematuro de los datos de píxeles de Farbfeld"
 msgid "GIMP brush"
 msgstr "Pincel GIMP"
 
-#: plug-ins/common/file-gbr.c:128
+#: plug-ins/common/file-gbr.c:128 plug-ins/gfig/gfig-dialog.c:510
 msgid "Brush"
 msgstr "Pincel"
 
@@ -4130,6 +4171,7 @@ msgstr ""
 "con este complemento."
 
 #: plug-ins/common/file-pat.c:128 plug-ins/common/qbist.c:968
+#: plug-ins/gfig/gfig-dialog.c:576
 msgid "Pattern"
 msgstr "Patrón"
 
@@ -4399,6 +4441,62 @@ msgstr "píxeles/%a"
 #: plug-ins/common/file-pdf-save.c:331
 msgid "PDF"
 msgstr "PDF"
+
+#: plug-ins/common/file-pdf-save.c:338 plug-ins/common/file-pdf-save.c:339
+msgid "Convert bitmaps to vector graphics where possible"
+msgstr "Convertir los mapas de bit a gráficos vectoriales cuando sea posible"
+
+#: plug-ins/common/file-pdf-save.c:344
+msgid "Omit hidden layers and layers with zero opacity"
+msgstr "Omitir las capas ocultas y las que tienen opacidad cero"
+
+#: plug-ins/common/file-pdf-save.c:345
+msgid "Non-visible layers will not be exported"
+msgstr "Las capas no visibles no se exportarán"
+
+#: plug-ins/common/file-pdf-save.c:350
+msgid "Apply layer masks"
+msgstr "Aplicar máscaras de capa"
+
+#: plug-ins/common/file-pdf-save.c:351
+msgid ""
+"Apply layer masks before saving (Keeping the mask will not change the "
+"output, only the PDF structure)"
+msgstr ""
+"Aplicar máscaras de capa antes de guardar (Mantener la máscara no cambiará "
+"la salida, sólo la estructura del PDF)"
+
+#: plug-ins/common/file-pdf-save.c:357
+msgid "Layers as pages"
+msgstr "Capas como páginas"
+
+#: plug-ins/common/file-pdf-save.c:358
+msgid "Layers as pages (bottom layers first)."
+msgstr "Capas como páginas (capas inferiores primero)."
+
+#: plug-ins/common/file-pdf-save.c:363
+msgid "Reverse order"
+msgstr "Orden inverso"
+
+#: plug-ins/common/file-pdf-save.c:364
+msgid "Reverse the pages order (top layers first)."
+msgstr "Invertir el orden de las páginas (capas superiores primero)."
+
+#: plug-ins/common/file-pdf-save.c:369
+msgid "Root layers only"
+msgstr "Sólo capas raíz"
+
+#: plug-ins/common/file-pdf-save.c:370
+msgid "Only the root layers are considered pages"
+msgstr "Sólo se consideran páginas las capas raíz"
+
+#: plug-ins/common/file-pdf-save.c:375
+msgid "Convert text layers to image"
+msgstr "Convertir capas de texto a imagen"
+
+#: plug-ins/common/file-pdf-save.c:376
+msgid "Convert text layers to raster graphics"
+msgstr "Convertir capas de texto a gráficos rasterizados"
 
 #: plug-ins/common/file-pdf-save.c:381 plug-ins/common/file-pdf-save.c:453
 #: plug-ins/common/file-pdf-save.c:1105
@@ -6567,6 +6665,62 @@ msgstr "_Película…"
 msgid "Combine several images on a film strip"
 msgstr "Combinar varias imágenes en una cinta de película"
 
+#: plug-ins/common/film.c:194
+msgid "Film _height"
+msgstr "A_ltura de película"
+
+#: plug-ins/common/film.c:195
+msgid "Height of film (0: fit to images)"
+msgstr "Altura de la película (0: se ajusta a las imágenes)"
+
+#: plug-ins/common/film.c:200
+msgid "_Film color"
+msgstr "Color de _película"
+
+#: plug-ins/common/film.c:201
+msgid "Color of the film"
+msgstr "Color de la película"
+
+#: plug-ins/common/film.c:206
+msgid "Start _index"
+msgstr "Índice _inicial"
+
+#: plug-ins/common/film.c:207
+msgid "Start index for numbering"
+msgstr "Índice de inicio de la numeración"
+
+#: plug-ins/common/film.c:212
+msgid "Number _font"
+msgstr "_Tipografía de número"
+
+#: plug-ins/common/film.c:213
+msgid "Font for drawing numbers"
+msgstr "Tipografía para dibujar números"
+
+#: plug-ins/common/film.c:217
+msgid "_Number color"
+msgstr "Color de _número"
+
+#: plug-ins/common/film.c:218
+msgid "Color for numbers"
+msgstr "Color para los números"
+
+#: plug-ins/common/film.c:223
+msgid "At _top"
+msgstr "A la c_ima"
+
+#: plug-ins/common/film.c:224
+msgid "Draw numbers at top"
+msgstr "Dibujar números en la parte superior"
+
+#: plug-ins/common/film.c:229
+msgid "At _bottom"
+msgstr "Al _fondo"
+
+#: plug-ins/common/film.c:230
+msgid "Draw numbers at bottom"
+msgstr "Dibujar números en la parte inferior"
+
 #: plug-ins/common/film.c:245
 msgid "Image _height"
 msgstr "Altura de imagen"
@@ -6629,6 +6783,10 @@ msgstr ""
 #: plug-ins/common/film.c:289
 msgid "F_it height to images"
 msgstr "A_justar altura a las imágenes"
+
+#: plug-ins/common/film.c:290
+msgid "Keep maximum image height"
+msgstr "Mantener la altura máxima de la imagen"
 
 #: plug-ins/common/film.c:365
 msgid "Composing images"
@@ -6793,13 +6951,26 @@ msgstr ""
 msgid "Mode"
 msgstr "Modo"
 
+#: plug-ins/common/hot.c:271
+msgid "Mode { NTSC (0), PAL (1) }"
+msgstr "Modo { NTSC (0), PAL (1) }"
+
 #: plug-ins/common/hot.c:276
 msgid "Action"
 msgstr "Acción"
 
+#: plug-ins/common/hot.c:277
+msgid "Action { (0) reduce luminance, (1) reduce saturation, or (2) Blacken }"
+msgstr ""
+"Acción { (0) reducir luminancia, (1) reducir saturación, o (2) Ennegrecer }"
+
 #: plug-ins/common/hot.c:283
 msgid "Create _new layer"
 msgstr "Crear una capa _nueva"
+
+#: plug-ins/common/hot.c:284
+msgid "Create a new layer"
+msgstr "Crear una capa nueva"
 
 #: plug-ins/common/hot.c:447 plug-ins/common/hot.c:654
 msgid "Hot"
@@ -7744,6 +7915,31 @@ msgstr "_Enlosar…"
 msgid "Create an array of copies of the image"
 msgstr "Crea una formación de copias de la imagen"
 
+#: plug-ins/common/tile.c:161
+msgid "New _width"
+msgstr "An_chura nueva"
+
+#: plug-ins/common/tile.c:162
+msgid "New (tiled) image width"
+msgstr "Anchura de la imagen nueva (mosaico)"
+
+#: plug-ins/common/tile.c:167
+msgid "New _height"
+msgstr "A_ltura nueva"
+
+#: plug-ins/common/tile.c:168
+msgid "New (tiled) image height"
+msgstr "Altura de la imagen nueva (mosaico)"
+
+#: plug-ins/common/tile.c:173
+msgid "New _image"
+msgstr "_Imagen nueva"
+
+#: plug-ins/common/tile.c:174 plug-ins/lighting/lighting-main.c:303
+#: plug-ins/map-object/map-object-main.c:331
+msgid "Create a new image"
+msgstr "Crear una imagen nueva"
+
 #: plug-ins/common/tile.c:254 plug-ins/common/tile-small.c:377
 msgid "Tiling"
 msgstr "Enlosado"
@@ -8011,7 +8207,7 @@ msgstr "Operador de efecto"
 msgid "Derivative"
 msgstr "Derivada"
 
-#: plug-ins/common/van-gogh-lic.c:171
+#: plug-ins/common/van-gogh-lic.c:171 plug-ins/gfig/gfig-dialog.c:586
 msgid "Gradient"
 msgstr "Degradado"
 
@@ -8217,9 +8413,17 @@ msgstr "Escal_as"
 msgid "Create a layer group to store the _decomposition"
 msgstr "Crear un grupo de capas para almacenar la _descomposición"
 
+#: plug-ins/common/wavelet-decompose.c:139
+msgid "Create a layer group to store the decomposition"
+msgstr "Crear un grupo de capas para almacenar la descomposición"
+
 #: plug-ins/common/wavelet-decompose.c:145
 msgid "_Add a layer mask to each scales layer"
 msgstr "_Añadir una máscara de capa para cada capa de escalas"
+
+#: plug-ins/common/wavelet-decompose.c:146
+msgid "Add a layer mask to each scales layer"
+msgstr "Añadir una máscara de capa para cada capa de escalas"
 
 #: plug-ins/common/wavelet-decompose.c:204
 msgid "Wavelet-Decompose"
@@ -8860,66 +9064,81 @@ msgstr ""
 "Valor umbral de la prueba alfa para el cual la cobertura de la prueba alfa "
 "debe ser preservada"
 
-#: plug-ins/file-dds/ddsread.c:170
+#: plug-ins/file-dds/ddsread.c:179
 #, c-format
 msgid "Loading: %s"
 msgstr "Cargando: %s"
 
-#: plug-ins/file-dds/ddsread.c:263
+#: plug-ins/file-dds/ddsread.c:250
 #, c-format
-msgid "Unsupported uncompressed FourCC type %u"
-msgstr "Tipo FourCC sin comprimir %u no compatible"
+msgid ""
+"Unsupported DDS pixel format:\n"
+"bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
+msgstr ""
+"Formato de píxel DDS no admitido:\n"
+"bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
 
-#: plug-ins/file-dds/ddsread.c:578
-msgid "Invalid or corrupted DDS header"
-msgstr "Encabezado de DDS no válido o dañado"
+#: plug-ins/file-dds/ddsread.c:499
+msgid "Invalid or corrupted DDS header."
+msgstr "Encabezado de DDS no válido o dañado."
 
-#: plug-ins/file-dds/ddsread.c:588
+#: plug-ins/file-dds/ddsread.c:511
 msgid "Could not allocate a new image."
 msgstr "No se puede reservar una imagen nueva."
 
-#: plug-ins/file-dds/ddsread.c:600
+#: plug-ins/file-dds/ddsread.c:523
 msgid "Error reading palette."
 msgstr "Error al leer la paleta."
 
-#: plug-ins/file-dds/ddsread.c:887
+#: plug-ins/file-dds/ddsread.c:812
 msgid "Invalid DDS format magic number."
 msgstr "Formato de número mágico DDS no válido."
 
-#: plug-ins/file-dds/ddsread.c:978
+#: plug-ins/file-dds/ddsread.c:828
+msgid ""
+"File lacks expected pixel format flags! Image may not be decoded correctly."
+msgstr ""
+"El archivo carece de los indicadores de formato de píxel esperados. Es "
+"posible que la imagen no se haya decodificado correctamente."
+
+#: plug-ins/file-dds/ddsread.c:863
+msgid "Invalid pixel format."
+msgstr "Formato de píxel no válido."
+
+#: plug-ins/file-dds/ddsread.c:888
+#, c-format
+msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
+msgstr "Formato no admitido (FourCC: %c%c%c%c, hex: %08x)"
+
+#: plug-ins/file-dds/ddsread.c:910
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Valor bpp para datos de RGB no válido: %d"
 
-#: plug-ins/file-dds/ddsread.c:989
+#: plug-ins/file-dds/ddsread.c:921
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Valor bpp para datos de luminosidad no válido: %d"
 
-#: plug-ins/file-dds/ddsread.c:1041
-msgid "Invalid pixel format."
-msgstr "Formato de píxel no válido."
+#: plug-ins/file-dds/ddsread.c:943
+msgid "Invalid DX10 header"
+msgstr "Encabezado DX10 no válido"
 
-#: plug-ins/file-dds/ddsread.c:1274
+#: plug-ins/file-dds/ddsread.c:975
 #, c-format
-msgid "Unsupported DXGI format (%d)"
-msgstr "Formato DXGI (%d) no soportado"
+msgid "Unsupported DXGI Format: %u"
+msgstr "Formato DXGI no soportado: %u"
 
-#: plug-ins/file-dds/ddsread.c:1430
-#, c-format
-msgid "Unsupported value for bytes per pixel: %d"
-msgstr "Valor no admitido para bytes por píxel: %d"
-
-#: plug-ins/file-dds/ddsread.c:1525 plug-ins/file-dds/ddsread.c:1583
-#: plug-ins/file-dds/ddsread.c:1604
+#: plug-ins/file-dds/ddsread.c:1163 plug-ins/file-dds/ddsread.c:1227
+#: plug-ins/file-dds/ddsread.c:1247
 msgid "Requested data exceeds size of file.\n"
 msgstr "Los datos solicitados superan el tamaño del archivo.\n"
 
-#: plug-ins/file-dds/ddsread.c:1533 plug-ins/file-dds/ddsread.c:1610
+#: plug-ins/file-dds/ddsread.c:1171 plug-ins/file-dds/ddsread.c:1253
 msgid "Unexpected EOF.\n"
 msgstr "EOF no esperado.\n"
 
-#: plug-ins/file-dds/ddsread.c:2125
+#: plug-ins/file-dds/ddsread.c:1579
 msgid "Open DDS"
 msgstr "Abrir DDS"
 
@@ -9719,28 +9938,28 @@ msgstr "Anchura de la máscara de capa no soportada o no válida: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Tamaño de la máscara de capa no soportado o no válido: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2066 plug-ins/file-psd/psd-load.c:2722
+#: plug-ins/file-psd/psd-load.c:2074 plug-ins/file-psd/psd-load.c:2730
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Modo de compresión no soportado: %d"
 
-#: plug-ins/file-psd/psd-load.c:2915
+#: plug-ins/file-psd/psd-load.c:2923
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:3115
+#: plug-ins/file-psd/psd-load.c:3123
 msgid "Unsupported or invalid channel size"
 msgstr "Tamaño del canal no soportado o no válido"
 
-#: plug-ins/file-psd/psd-load.c:3184
+#: plug-ins/file-psd/psd-load.c:3192
 msgid "Failed to decompress data"
 msgstr "Error al descomprimir los datos"
 
-#: plug-ins/file-psd/psd-load.c:3565
+#: plug-ins/file-psd/psd-load.c:3573
 msgid "Duotone Import"
 msgstr "Importación Bitonal"
 
-#: plug-ins/file-psd/psd-load.c:3566
+#: plug-ins/file-psd/psd-load.c:3574
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -9750,11 +9969,11 @@ msgstr ""
 "Se han guardado los datos del espacio de color Bitonal\n"
 "y se pueden reaplicar en la exportación."
 
-#: plug-ins/file-psd/psd-load.c:3588 plug-ins/file-psd/psd-save.c:2665
+#: plug-ins/file-psd/psd-load.c:3596 plug-ins/file-psd/psd-save.c:2665
 msgid "Compatibility Notice"
 msgstr "Aviso de compatibilidad"
 
-#: plug-ins/file-psd/psd-load.c:3589
+#: plug-ins/file-psd/psd-load.c:3597
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -9807,13 +10026,15 @@ msgstr ""
 
 #: plug-ins/file-psd/psd-save.c:2666
 msgid ""
-"Legacy layer modes have been reported to have better compatibility with "
-"Photoshop. If you encounter display issues, consider switching to those "
-"layer modes."
+"Legacy layer modes have better compatibility with Photoshop, but do not "
+"support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
+"Clipped Layers as Group'. If you encounter display issues, consider "
+"switching to those layer modes."
 msgstr ""
-"Se ha informado que los modos de capa heredados tienen una mejor "
-"compatibilidad con Photoshop. Si encuentra problemas de visualización, "
-"considere cambiar a esos modos de capa."
+"Los modos de capa heredados tienen una mejor compatibilidad con Photoshop, "
+"pero no soportan Recortar al fondo, necesario para usar «Combinar capas "
+"recortadas como grupo» de Photoshop. Si encuentra problemas de "
+"visualización, considere cambiar a esos modos de capa."
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -10922,6 +11143,14 @@ msgstr "_Mapa de colores:"
 msgid "Custom gradient"
 msgstr "Degradado personalizado"
 
+#: plug-ins/flame/flame.c:1341
+msgid "_Rendering"
+msgstr "_Renderizado"
+
+#: plug-ins/flame/flame.c:1344
+msgid "C_amera"
+msgstr "Cámar_a"
+
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:617
 #: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:988
@@ -11226,6 +11455,26 @@ msgstr "Modo de aplicación azul"
 msgid "In_version"
 msgstr "In_versión"
 
+#: plug-ins/fractal-explorer/fractal-explorer.c:371
+msgid "Red inversion mode"
+msgstr "Modo de inversión rojo"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:376
+msgid "I_nversion"
+msgstr "I_nversión"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:377
+msgid "Green inversion mode"
+msgstr "Modo de inversión verde"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:382
+msgid "_Inversion"
+msgstr "_Inversión"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:383
+msgid "Blue inversion mode"
+msgstr "Modo de inversión azul"
+
 #: plug-ins/fractal-explorer/fractal-explorer.c:388
 msgid "_Number of colors"
 msgstr "_Número de colores"
@@ -11233,6 +11482,15 @@ msgstr "_Número de colores"
 #: plug-ins/fractal-explorer/fractal-explorer.c:389
 msgid "Number of Colors for mapping"
 msgstr "Número de colores que asignar"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:393
+msgid "_Use log log smoothing"
+msgstr "_Usar suavizado «log log»"
+
+# //R ¿Qué es esto de banding?
+#: plug-ins/fractal-explorer/fractal-explorer.c:394
+msgid "Use log log smoothing to eliminate \"banding\" in the result"
+msgstr "Usar suavizado «loglog» para evitar «bandas» en el resultado"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:493
 msgid "Rendering fractal"
@@ -11499,6 +11757,10 @@ msgstr "Opciones de herramienta"
 msgid "_Stroke"
 msgstr "_Trazar"
 
+#: plug-ins/gfig/gfig-dialog.c:494 plug-ins/gfig/gfig-dialog.c:1291
+msgid "Foreground"
+msgstr "Frente"
+
 #. Fill frame on right side
 #: plug-ins/gfig/gfig-dialog.c:519
 msgid "Fill"
@@ -11575,10 +11837,6 @@ msgstr "Máx. deshacer:"
 #: plug-ins/gfig/gfig-dialog.c:1289 plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Transparente"
-
-#: plug-ins/gfig/gfig-dialog.c:1291
-msgid "Foreground"
-msgstr "Frente"
 
 #: plug-ins/gfig/gfig-dialog.c:1302
 msgid ""
@@ -12451,33 +12709,65 @@ msgstr "Producir un efecto de destellos de óptica utilizando degradados"
 msgid "Radi_us"
 msgstr "Radi_o"
 
+#: plug-ins/gradient-flare/gradient-flare.c:854
+msgid "Radius of GFlare (pixel)"
+msgstr "Radio de GFlare (píxel)"
+
 #: plug-ins/gradient-flare/gradient-flare.c:859
 msgid "Ro_tation"
 msgstr "Ro_tación"
+
+#: plug-ins/gradient-flare/gradient-flare.c:860
+msgid "Rotation of GFlare (degree)"
+msgstr "Rotación de GFlare (grado)"
 
 #: plug-ins/gradient-flare/gradient-flare.c:865
 msgid "_Hue rotation"
 msgstr "R_otación de tono"
 
+#: plug-ins/gradient-flare/gradient-flare.c:866
+msgid "Hue rotation of GFlare (degree)"
+msgstr "Rotación de tono de GFlare (grado)"
+
 #: plug-ins/gradient-flare/gradient-flare.c:871
 msgid "Vector _angle"
 msgstr "Ángulo del _vector"
+
+#: plug-ins/gradient-flare/gradient-flare.c:872
+msgid "Vector angle for second flares (degree)"
+msgstr "Ángulo del vector para segundos destellos (grados)"
 
 #: plug-ins/gradient-flare/gradient-flare.c:877
 msgid "Vector len_gth"
 msgstr "Lon_gitud del vector"
 
+#: plug-ins/gradient-flare/gradient-flare.c:878
+msgid "Vector length for second flares (percentage of Radius)"
+msgstr "Longitud del vector para segundos destellos (porcentaje del radio)"
+
 #: plug-ins/gradient-flare/gradient-flare.c:884
 msgid "Ada_ptive supersampling"
 msgstr "Supermuestreo ada_ptativo"
+
+#: plug-ins/gradient-flare/gradient-flare.c:885
+msgid "Use adaptive supersampling while rendering"
+msgstr "Usar supermuestreo adaptativo al renderizar"
 
 #: plug-ins/gradient-flare/gradient-flare.c:890
 msgid "_Max depth"
 msgstr "Profundidad _máxima"
 
+#: plug-ins/gradient-flare/gradient-flare.c:891
+msgid "Max depth for adaptive supersampling"
+msgstr "Profundidad máxima del supermuestreo adaptativo"
+
 #: plug-ins/gradient-flare/gradient-flare.c:896
 msgid "Threshol_d"
 msgstr "_Umbral"
+
+#: plug-ins/gradient-flare/gradient-flare.c:897
+msgid "Threshold for adaptive supersampling"
+msgstr "Umbral del supermuestreo adaptativo"
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
 #: plug-ins/gradient-flare/gradient-flare.c:2499
@@ -14049,11 +14339,6 @@ msgstr "Aplicar alisado"
 msgid "Create new ima_ge"
 msgstr "Crear ima_gen nueva"
 
-#: plug-ins/lighting/lighting-main.c:303
-#: plug-ins/map-object/map-object-main.c:331
-msgid "Create a new image"
-msgstr "Crear una imagen nueva"
-
 #: plug-ins/lighting/lighting-main.c:308
 msgid "Trans_parent background"
 msgstr "Fondo trans_parente"
@@ -15473,6 +15758,45 @@ msgstr "Crear una imagen de un área de la pantalla"
 msgid "Shoot _area"
 msgstr "_Área de captura"
 
+#: plug-ins/screenshot/screenshot.c:165
+msgid "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
+msgstr ""
+"El tipo de disparo { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
+
+#: plug-ins/screenshot/screenshot.c:195
+msgid "Include _mouse pointer"
+msgstr "Incluir el puntero del _ratón"
+
+#: plug-ins/screenshot/screenshot.c:196
+msgid "Your pointing device's cursor will be part of the image"
+msgstr "El cursor de su dispositivo señalador será parte de la imagen."
+
+#: plug-ins/screenshot/screenshot.c:204
+msgid "Include window _decoration"
+msgstr "Incluir _decoración de la ventana"
+
+#: plug-ins/screenshot/screenshot.c:205
+msgid "Title bar, window borders and shadow will be part of the image"
+msgstr ""
+"La barra de título, los bordes de las ventanas y la sombra serán parte de la "
+"imagen"
+
+#: plug-ins/screenshot/screenshot.c:214
+msgid "Selection d_elay"
+msgstr "R_etardo de la selección"
+
+#: plug-ins/screenshot/screenshot.c:215
+msgid "Delay before selection of the window or the region"
+msgstr "Retraso antes de la selección de la ventana o la región"
+
+#: plug-ins/screenshot/screenshot.c:219
+msgid "Screenshot dela_y"
+msgstr "Retard_o de la captura"
+
+#: plug-ins/screenshot/screenshot.c:220
+msgid "Delay before snapping the screenshot"
+msgstr "Retraso antes de tomar la captura de pantalla"
+
 #: plug-ins/screenshot/screenshot.c:224
 msgid "Color _Profile"
 msgstr "_Perfil de color"
@@ -15816,6 +16140,14 @@ msgstr "_Escáner/Cámara…"
 msgid "Transferring data from scanner/camera"
 msgstr "Transfiriendo datos desde el escáner/cámara"
 
+#, c-format
+#~ msgid "Unsupported uncompressed FourCC type %u"
+#~ msgstr "Tipo FourCC sin comprimir %u no compatible"
+
+#, c-format
+#~ msgid "Unsupported value for bytes per pixel: %d"
+#~ msgstr "Valor no admitido para bytes por píxel: %d"
+
 #~ msgid "Always use _transparency for BC1/DXT1"
 #~ msgstr "Usar siempre _transparencia para BC1/DXT1"
 
@@ -15871,9 +16203,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 #~ msgid "_Save:"
 #~ msgstr "_Guardar:"
 
-#~ msgid "_Rendering"
-#~ msgstr "_Renderizado"
-
 #~ msgid "_Brightness:"
 #~ msgstr "_Brillo:"
 
@@ -15882,9 +16211,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 
 #~ msgid "Spatial _filter radius:"
 #~ msgstr "Radio del _filtro espacial:"
-
-#~ msgid "C_amera"
-#~ msgstr "Cámar_a"
 
 #~ msgid "_Zoom:"
 #~ msgstr "Amplia_ción:"
@@ -15937,20 +16263,11 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 #~ msgid "Co_lor:"
 #~ msgstr "Co_lor:"
 
-#~ msgid "Start _index:"
-#~ msgstr "Índice _inicial:"
-
 #~ msgid "_Font:"
 #~ msgstr "Tipogra_fía:"
 
 #~ msgid "Select Number Color"
 #~ msgstr "Seleccionar color de números"
-
-#~ msgid "At _bottom"
-#~ msgstr "Al _fondo"
-
-#~ msgid "At _top"
-#~ msgstr "A la c_ima"
 
 #~ msgid "Hole sp_acing:"
 #~ msgstr "Esp_aciado del agujero:"
@@ -16008,13 +16325,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 
 #~ msgid "Change the number of colors in the mapping"
 #~ msgstr "Cambia el número de colores en el mapeo"
-
-#~ msgid "Use loglog smoothing"
-#~ msgstr "Usar suavizado «loglog»"
-
-# //R ¿Qué es esto de banding?
-#~ msgid "Use log log smoothing to eliminate \"banding\" in the result"
-#~ msgstr "Usar suavizado «loglog» para evitar «bandas» en el resultado"
 
 #~ msgid "Red:"
 #~ msgstr "Rojo:"
@@ -16222,15 +16532,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 #~ msgid "Area"
 #~ msgstr "Área"
 
-#~ msgid "Include window _decoration"
-#~ msgstr "Incluir _decoración de la ventana"
-
-#~ msgid "Include _mouse pointer"
-#~ msgstr "Incluir el puntero del _ratón"
-
-#~ msgid "Selection delay: "
-#~ msgstr "Retardo de la selección: "
-
 #~ msgid ""
 #~ "After the delay, drag your mouse to select the region for the screenshot."
 #~ msgstr ""
@@ -16242,9 +16543,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 
 #~ msgid "At the end of the delay, click in a window to snap it."
 #~ msgstr "Al finalizar la pausa, pulse sobre una ventana para capturarla."
-
-#~ msgid "Screenshot dela_y: "
-#~ msgstr "Retardo de la _captura: "
 
 #~ msgid "After the delay, the screenshot is taken."
 #~ msgstr "La captura de pantalla se tomará después de un tiempo de retardo."
@@ -16566,9 +16864,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 #~ msgid "Raise to _top"
 #~ msgstr "Traer al f_rente"
 
-#~ msgid "Lower to _bottom"
-#~ msgstr "Llevar al _fondo"
-
 # //R ¿hexágonos?
 #~ msgid "_Next"
 #~ msgstr "Siguie_nte"
@@ -16594,23 +16889,11 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 #~ msgid "Rotate / Scale"
 #~ msgstr "Rotar / Redimensionar"
 
-#~ msgid "_Convert text layers to image"
-#~ msgstr "_Convertir capas de texto a imagen"
-
 #~ msgid "_Layers as pages (%s)"
 #~ msgstr "_Capas como páginas (%s)"
 
 #~ msgid "top layers first"
 #~ msgstr "capas superiores primero"
-
-#~ msgid "bottom layers first"
-#~ msgstr "capas inferiores primero"
-
-#~ msgid "_Reverse the pages order"
-#~ msgstr "Inve_rtir el orden de las páginas"
-
-#~ msgid "Layers as pages (%s)"
-#~ msgstr "Capas como páginas (%s)"
 
 #~ msgid "RGB Alpha"
 #~ msgstr "RGB con Alfa"
@@ -18743,9 +19026,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 #~ msgid "_Foreground & background"
 #~ msgstr "_Frente y fondo"
 
-#~ msgid "First color"
-#~ msgstr "Primer color"
-
 #~ msgid "Second color"
 #~ msgstr "Segundo color"
 
@@ -19061,9 +19341,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 
 #~ msgid "Some error occurred while saving"
 #~ msgstr "Ocurrió un error al guardar"
-
-#~ msgid "Could not close the file"
-#~ msgstr "No se pudo cerrar el archivo"
 
 #~ msgid "Image Properties"
 #~ msgstr "Propiedades de la imagen"
