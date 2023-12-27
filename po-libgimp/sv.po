@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-02 00:02+0000\n"
-"PO-Revision-Date: 2023-10-02 02:16+0200\n"
+"POT-Creation-Date: 2023-12-21 22:15+0000\n"
+"PO-Revision-Date: 2023-12-23 15:10+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
@@ -231,7 +231,7 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:396
+#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:398
 #, c-format
 msgid "Export Image as %s"
 msgstr "Exportera bild som %s"
@@ -244,7 +244,7 @@ msgstr "Bakgrund"
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:260
+#: libgimp/gimploadprocedure.c:267
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
 "This is a bug in the plug-in code. Contact the plug-in developer."
@@ -258,22 +258,22 @@ msgid "Allowed values:"
 msgstr "Tillåtna värden:"
 
 #. procedure executed successfully
-#: libgimp/gimppdb.c:552
+#: libgimp/gimppdb.c:336
 msgid "success"
 msgstr "lyckades"
 
 #. procedure execution failed
-#: libgimp/gimppdb.c:556
+#: libgimp/gimppdb.c:340
 msgid "execution error"
 msgstr "exekveringsfel"
 
 #. procedure called incorrectly
-#: libgimp/gimppdb.c:560
+#: libgimp/gimppdb.c:344
 msgid "calling error"
 msgstr "anropsfel"
 
 #. procedure execution cancelled
-#: libgimp/gimppdb.c:564
+#: libgimp/gimppdb.c:348
 msgid "cancelled"
 msgstr "avbruten"
 
@@ -365,12 +365,12 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedur matchar din sökning"
 msgstr[1] "%d procedurer matchar din sökning"
 
-#: libgimp/gimpprocedure.c:1959
+#: libgimp/gimpprocedure.c:2056
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Proceduren ”%s” returnerade inga svarsvärden"
 
-#: libgimp/gimpprocedure.c:2050
+#: libgimp/gimpprocedure.c:2183
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -379,7 +379,7 @@ msgstr ""
 "Proceduren ”%s” returnerade en felaktig värdetyp för svarsvärdet ”%s” (nr. "
 "%d). Förväntade %s, fick %s."
 
-#: libgimp/gimpprocedure.c:2062
+#: libgimp/gimpprocedure.c:2195
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
@@ -388,7 +388,7 @@ msgstr ""
 "Proceduren ”%s” har anropats med en felaktig värdetyp för argumentet "
 "”%s” (nr. %d). Förväntade %s, fick %s."
 
-#: libgimp/gimpprocedure.c:2097
+#: libgimp/gimpprocedure.c:2230
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -397,7 +397,7 @@ msgstr ""
 "Proceduren ”%s” returnerade ”%s” som svarsvärde ”%s” (nr. %d, typ %s). Det "
 "här värdet är utanför intervallet."
 
-#: libgimp/gimpprocedure.c:2111
+#: libgimp/gimpprocedure.c:2244
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -406,13 +406,13 @@ msgstr ""
 "Proceduren ”%s” har anropats med värdet ”%s” för argumentet ”%s” (nr. %d, "
 "typ %s). Det här värdet är utanför intervallet."
 
-#: libgimp/gimpprocedure.c:2155
+#: libgimp/gimpprocedure.c:2288
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "Proceduren ”%s” returnerade en ogiltig UTF-8-sträng för argumentet ”%s”."
 
-#: libgimp/gimpprocedure.c:2165
+#: libgimp/gimpprocedure.c:2298
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -531,59 +531,59 @@ msgstr "Välj kanal: %s"
 msgid "Choose drawable: %s"
 msgstr "Välj rityta: %s"
 
-#: libgimp/gimpsaveprocedure.c:460
+#: libgimp/gimpsaveprocedure.c:467
 msgid "Save _Exif"
 msgstr "Spara _Exif"
 
-#: libgimp/gimpsaveprocedure.c:461
+#: libgimp/gimpsaveprocedure.c:468
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Spara Exif-metadata (Exchangeable image file format)"
 
-#: libgimp/gimpsaveprocedure.c:466
+#: libgimp/gimpsaveprocedure.c:473
 msgid "Save _IPTC"
 msgstr "Spara _IPTC"
 
-#: libgimp/gimpsaveprocedure.c:467
+#: libgimp/gimpsaveprocedure.c:474
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr "Spara IPTC-metadata (International Press Telecommunications Council)"
 
-#: libgimp/gimpsaveprocedure.c:472
+#: libgimp/gimpsaveprocedure.c:479
 msgid "Save _XMP"
 msgstr "Spara _XMP"
 
-#: libgimp/gimpsaveprocedure.c:473
+#: libgimp/gimpsaveprocedure.c:480
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "Spara XMP-metadata (Extensible Metadata Platform)"
 
-#: libgimp/gimpsaveprocedure.c:478
+#: libgimp/gimpsaveprocedure.c:485
 msgid "Save color _profile"
 msgstr "Spara färg_profil"
 
-#: libgimp/gimpsaveprocedure.c:479
+#: libgimp/gimpsaveprocedure.c:486
 msgid "Save the ICC color profile as metadata"
 msgstr "Spara ICC-färgprofilen som metadata"
 
-#: libgimp/gimpsaveprocedure.c:484
+#: libgimp/gimpsaveprocedure.c:491
 msgid "Save _thumbnail"
 msgstr "Spara _miniatyrbild"
 
-#: libgimp/gimpsaveprocedure.c:485
+#: libgimp/gimpsaveprocedure.c:492
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Spara en mindre representation av bilden som metadata"
 
-#: libgimp/gimpsaveprocedure.c:491
+#: libgimp/gimpsaveprocedure.c:498
 msgid "Save c_omment"
 msgstr "Spara k_ommentar"
 
-#: libgimp/gimpsaveprocedure.c:492
+#: libgimp/gimpsaveprocedure.c:499
 msgid "Save a comment as metadata"
 msgstr "Spara en kommentar som metadata"
 
-#: libgimp/gimpsaveprocedure.c:496
+#: libgimp/gimpsaveprocedure.c:503
 msgid "Comment"
 msgstr "Kommentar"
 
-#: libgimp/gimpsaveprocedure.c:497
+#: libgimp/gimpsaveprocedure.c:504
 msgid "Image comment"
 msgstr "Bildkommentar"
 
@@ -2192,7 +2192,7 @@ msgstr "Gammal:"
 msgid "HTML _notation:"
 msgstr "HTML-_notation:"
 
-#: libgimpwidgets/gimpdialog.c:181
+#: libgimpwidgets/gimpdialog.c:198
 msgid "_Help"
 msgstr "_Hjälp"
 
@@ -2396,17 +2396,17 @@ msgstr "Fönster"
 #: libgimpwidgets/gimpwidgetsenums.c:25
 msgctxt "aspect-type"
 msgid "Square"
-msgstr "Fyrkantig"
+msgstr "Kvadratisk"
 
 #: libgimpwidgets/gimpwidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Portrait"
-msgstr "Porträtt"
+msgstr "Stående"
 
 #: libgimpwidgets/gimpwidgetsenums.c:27
 msgctxt "aspect-type"
 msgid "Landscape"
-msgstr "Landskap"
+msgstr "Liggande"
 
 #: libgimpwidgets/gimpwidgetsenums.c:130
 msgctxt "color-selector-channel"
