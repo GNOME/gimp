@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-28 22:31+0000\n"
-"PO-Revision-Date: 2023-10-29 00:53+0200\n"
+"POT-Creation-Date: 2023-12-27 07:36+0000\n"
+"PO-Revision-Date: 2023-12-27 20:48+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: plug-ins/script-fu/script-fu.c:122
 msgid "Script-Fu _Console"
@@ -232,7 +232,7 @@ msgstr "Selección de archivos de Script-Fu"
 msgid "Script-Fu Folder Selection"
 msgstr "Selección de carpetas de Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:848
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:852
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Error al ejecutar %s:"
@@ -449,21 +449,21 @@ msgstr "Capa 3"
 msgid "Drop Shadow"
 msgstr "Sombra base"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:226
+#: plug-ins/script-fu/scripts/chrome-it.scm:227
 msgid "Chrome"
 msgstr "Cromado"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:227
+#: plug-ins/script-fu/scripts/chrome-it.scm:228
 #: plug-ins/script-fu/scripts/xach-effect.scm:68
 msgid "Highlight"
 msgstr "Brillo"
 
 # Yo creo que Stencil es Estarcido. FVD
-#: plug-ins/script-fu/scripts/chrome-it.scm:241
+#: plug-ins/script-fu/scripts/chrome-it.scm:242
 msgid "Stencil C_hrome..."
 msgstr "_Cromado de plantilla…"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:242
+#: plug-ins/script-fu/scripts/chrome-it.scm:243
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
@@ -471,31 +471,31 @@ msgstr ""
 "Añadir un efecto cromado a la región o transparencia seleccionada utilizando "
 "la plantilla especificada (en escala de grises)"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:249
+#: plug-ins/script-fu/scripts/chrome-it.scm:250
 msgid "Chrome saturation"
 msgstr "Saturación del cromado"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:250
+#: plug-ins/script-fu/scripts/chrome-it.scm:251
 msgid "Chrome lightness"
 msgstr "Luminosidad del cromado"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:251
+#: plug-ins/script-fu/scripts/chrome-it.scm:252
 msgid "Chrome factor"
 msgstr "Factor de cromado"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:252
+#: plug-ins/script-fu/scripts/chrome-it.scm:253
 msgid "Environment map"
 msgstr "Mapa de entorno"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:255
+#: plug-ins/script-fu/scripts/chrome-it.scm:256
 msgid "Highlight balance"
 msgstr "Balance del brillo"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:256
+#: plug-ins/script-fu/scripts/chrome-it.scm:257
 msgid "Chrome balance"
 msgstr "Balance del cromado"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:257
+#: plug-ins/script-fu/scripts/chrome-it.scm:258
 msgid "Chrome white areas"
 msgstr "Cromar las áreas blancas"
 
@@ -1139,10 +1139,18 @@ msgstr "Pegar el contenido del portapapeles en un pincel nuevo"
 msgid "_Brush name"
 msgstr "Nom_bre del pincel"
 
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+msgid "My Brush"
+msgstr "Mi pincel"
+
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
 msgid "_File name"
 msgstr "Nombre de _archivo"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+msgid "mybrush"
+msgstr "mipincel"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:72
 msgid "_Spacing"
@@ -1159,6 +1167,14 @@ msgstr "Pegar el contenido del portapapeles en un patrón nuevo"
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
 msgid "_Pattern name"
 msgstr "Nombre del _patrón"
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+msgid "My Pattern"
+msgstr "Mi patrón"
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+msgid "mypattern"
+msgstr "mipatrón"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:197
 msgid "_Perspective..."
@@ -1695,12 +1711,6 @@ msgstr "Desplazamiento Y de la sombra base"
 #~ msgid "Pencil"
 #~ msgstr "Lápiz"
 
-#~ msgid "Brush"
-#~ msgstr "Pincel"
-
-#~ msgid "Airbrush"
-#~ msgstr "Aerógrafo"
-
 #~ msgid "Color method"
 #~ msgstr "Método de coloración"
 
@@ -1748,9 +1758,6 @@ msgstr "Desplazamiento Y de la sombra base"
 #~ msgstr ""
 #~ "Contornear la región o transparencia seleccionada con un patrón y añadir "
 #~ "una sombra arrojada"
-
-#~ msgid "Pattern"
-#~ msgstr "Patrón"
 
 #~ msgid "Shadow blur radius"
 #~ msgstr "Radio de desenfoque de la sombra"
