@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-20 20:27+0000\n"
-"PO-Revision-Date: 2023-12-21 18:23+0200\n"
+"POT-Creation-Date: 2023-12-27 07:36+0000\n"
+"PO-Revision-Date: 2023-12-27 09:44+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -149,7 +149,7 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/grid.c:787 plug-ins/common/qbist.c:933
 #: plug-ins/common/sphere-designer.c:2638 plug-ins/common/unit-editor.c:266
 #: plug-ins/common/warp.c:473 plug-ins/file-exr/file-exr.c:422
-#: plug-ins/file-psd/psd-load.c:3549 plug-ins/flame/flame.c:828
+#: plug-ins/file-psd/psd-load.c:3557 plug-ins/flame/flame.c:828
 #: plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
@@ -639,7 +639,7 @@ msgstr "Вертикально"
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:700
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2749 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2757 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:561
 #: plug-ins/gfig/gfig-dialog.c:1290 plug-ins/gimpressionist/general.c:139
@@ -1535,7 +1535,6 @@ msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
 #: plug-ins/common/compose.c:378
-#| msgid "Wavelet decompose"
 msgid "What to compose: "
 msgstr "Що компонувати: "
 
@@ -2257,7 +2256,6 @@ msgid "Black"
 msgstr "Чорний"
 
 #: plug-ins/common/decompose.c:261
-#| msgid "Wavelet decompose"
 msgid "What to decompose: "
 msgstr "Що декомпонувати: "
 
@@ -2270,7 +2268,6 @@ msgid "Decompose an image into separate colorspace components"
 msgstr "Розібрати зображення на окремі кольорові складові"
 
 #: plug-ins/common/decompose.c:305
-#| msgid "Create a new layer when applying filter"
 msgid "Create channels as layers in a single image"
 msgstr "Створити канали як шари у єдиному зображенні"
 
@@ -2324,7 +2321,6 @@ msgid "Source _1"
 msgstr "Джерело _1"
 
 #: plug-ins/common/depth-merge.c:224
-#| msgid "Source _1"
 msgid "Source 1"
 msgstr "Джерело 1"
 
@@ -2333,7 +2329,6 @@ msgid "_Depth map 1"
 msgstr "Мапа _глибин 1"
 
 #: plug-ins/common/depth-merge.c:230
-#| msgid "_Depth map 1"
 msgid "Depth map 1"
 msgstr "Мапа глибин 1"
 
@@ -2342,7 +2337,6 @@ msgid "Source _2"
 msgstr "Джерело _2"
 
 #: plug-ins/common/depth-merge.c:236
-#| msgid "Source _2"
 msgid "Source 2"
 msgstr "Джерело 2"
 
@@ -2351,7 +2345,6 @@ msgid "Depth _map 2"
 msgstr "_Мапа глибин 2"
 
 #: plug-ins/common/depth-merge.c:242
-#| msgid "Depth _map 2"
 msgid "Depth map 2"
 msgstr "Мапа глибин 2"
 
@@ -2360,7 +2353,6 @@ msgid "O_verlap"
 msgstr "_Перекриття"
 
 #: plug-ins/common/depth-merge.c:248
-#| msgid "O_verlap"
 msgid "Overlap"
 msgstr "Перекриття"
 
@@ -2377,7 +2369,6 @@ msgid "Sc_ale 1"
 msgstr "_Масштаб 1"
 
 #: plug-ins/common/depth-merge.c:260
-#| msgid "Depth relative offset"
 msgid "Depth relative scale 1"
 msgstr "Відносна щодо глибини масштаб 1"
 
@@ -2386,7 +2377,6 @@ msgid "Scal_e 2"
 msgstr "М_асштаб 2"
 
 #: plug-ins/common/depth-merge.c:266
-#| msgid "Depth relative offset"
 msgid "Depth relative scale 2"
 msgstr "Відносна щодо глибини масштаб 2"
 
@@ -8372,7 +8362,6 @@ msgid "Create a layer group to store the _decomposition"
 msgstr "Створити групу шарів для зберігання _розбиття"
 
 #: plug-ins/common/wavelet-decompose.c:139
-#| msgid "Create a layer group to store the _decomposition"
 msgid "Create a layer group to store the decomposition"
 msgstr "Створити групу шарів для зберігання розбиття"
 
@@ -8381,7 +8370,6 @@ msgid "_Add a layer mask to each scales layer"
 msgstr "_Додати маску шару до кожного з шарів деталізації"
 
 #: plug-ins/common/wavelet-decompose.c:146
-#| msgid "_Add a layer mask to each scales layer"
 msgid "Add a layer mask to each scales layer"
 msgstr "Додати маску шару до кожного з шарів деталізації"
 
@@ -9884,28 +9872,28 @@ msgstr "Непідтримувана чи хибна ширина маски: %d
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір маски: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2066 plug-ins/file-psd/psd-load.c:2722
+#: plug-ins/file-psd/psd-load.c:2074 plug-ins/file-psd/psd-load.c:2730
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Непідтримуваний метод стиснення: %d"
 
-#: plug-ins/file-psd/psd-load.c:2915
+#: plug-ins/file-psd/psd-load.c:2923
 msgid "Extra"
 msgstr "Додатково"
 
-#: plug-ins/file-psd/psd-load.c:3115
+#: plug-ins/file-psd/psd-load.c:3123
 msgid "Unsupported or invalid channel size"
 msgstr "Непідтримуваний чи некоректний розмір каналу"
 
-#: plug-ins/file-psd/psd-load.c:3184
+#: plug-ins/file-psd/psd-load.c:3192
 msgid "Failed to decompress data"
 msgstr "Не вдається розпакувати дані"
 
-#: plug-ins/file-psd/psd-load.c:3565
+#: plug-ins/file-psd/psd-load.c:3573
 msgid "Duotone Import"
 msgstr "Двотонове імпортування"
 
-#: plug-ins/file-psd/psd-load.c:3566
+#: plug-ins/file-psd/psd-load.c:3574
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -9915,11 +9903,11 @@ msgstr ""
 "Дані двотонового простору кольорів було збережено,\n"
 "їх можна повторно застосувати при експортуванні."
 
-#: plug-ins/file-psd/psd-load.c:3588 plug-ins/file-psd/psd-save.c:2665
+#: plug-ins/file-psd/psd-load.c:3596 plug-ins/file-psd/psd-save.c:2665
 msgid "Compatibility Notice"
 msgstr "Зауваження щодо сумісності"
 
-#: plug-ins/file-psd/psd-load.c:3589
+#: plug-ins/file-psd/psd-load.c:3597
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -9971,12 +9959,19 @@ msgstr ""
 "Решту контурів буде відкинуто."
 
 #: plug-ins/file-psd/psd-save.c:2666
+#| msgid ""
+#| "Legacy layer modes have better compatibility with Photoshop. If you "
+#| "encounter display issues, consider switching to those layer modes."
 msgid ""
-"Legacy layer modes have better compatibility with Photoshop. If you "
-"encounter display issues, consider switching to those layer modes."
+"Legacy layer modes have better compatibility with Photoshop, but do not "
+"support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
+"Clipped Layers as Group'. If you encounter display issues, consider "
+"switching to those layer modes."
 msgstr ""
-"Застарілі режими шарів мають кращу сумісність із Photoshop. Якщо виникають "
-"проблеми з показом, вам варто перемкнутися на ці режими шарів."
+"Застарілі режими шарів мають кращу сумісність із Photoshop, але у них не"
+" передбачено підтримки обрізання до фону, яке потрібне для використання"
+" можливості Photoshop «Злити обрізані шари до групи». Якщо виникають"
+" проблеми з показом, вам варто перемкнутися на ці режими шарів."
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -12635,7 +12630,6 @@ msgid "Ro_tation"
 msgstr "_Обертання"
 
 #: plug-ins/gradient-flare/gradient-flare.c:860
-#| msgid "Rotation about X axis in degrees"
 msgid "Rotation of GFlare (degree)"
 msgstr "Обертання GFlare (у градусах)"
 
@@ -12668,7 +12662,6 @@ msgid "Ada_ptive supersampling"
 msgstr "Адап_тивна наддискретизація"
 
 #: plug-ins/gradient-flare/gradient-flare.c:885
-#| msgid "Ada_ptive supersampling"
 msgid "Use adaptive supersampling while rendering"
 msgstr "Адаптивна наддискретизація під час обробки"
 
@@ -12677,7 +12670,6 @@ msgid "_Max depth"
 msgstr "Максимальна г_либина"
 
 #: plug-ins/gradient-flare/gradient-flare.c:891
-#| msgid "Ada_ptive supersampling"
 msgid "Max depth for adaptive supersampling"
 msgstr "Максимальна глибина адаптивної наддискретизації"
 
@@ -12686,7 +12678,6 @@ msgid "Threshol_d"
 msgstr "П_оріг"
 
 #: plug-ins/gradient-flare/gradient-flare.c:897
-#| msgid "Ada_ptive supersampling"
 msgid "Threshold for adaptive supersampling"
 msgstr "Поріг для адаптивної наддискретизації"
 
