@@ -343,9 +343,10 @@ gimp_container_icon_view_set_container (GimpContainerView *view,
                                         icon_view);
         }
 
-      g_signal_connect (icon_view->view, "button-press-event",
-                        G_CALLBACK (gimp_container_icon_view_button_press),
-                        icon_view);
+      g_signal_connect_object (icon_view->view, "button-press-event",
+                               G_CALLBACK (gimp_container_icon_view_button_press),
+                               icon_view,
+                               G_CONNECT_DEFAULT);
     }
 
   parent_view_iface->set_container (view, container);
@@ -664,8 +665,7 @@ gimp_container_icon_view_button_press (GtkWidget             *widget,
           if (! gimp_container_view_is_item_selected (container_view, renderer->viewable))
             gimp_container_view_item_selected (container_view, renderer->viewable);
           /* Show the context menu. */
-          if (gimp_container_view_get_container (container_view))
-            gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (icon_view), (GdkEvent *) bevent);
+          gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (icon_view), (GdkEvent *) bevent);
         }
 
       g_object_unref (renderer);
