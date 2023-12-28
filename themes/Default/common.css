@@ -145,10 +145,14 @@ notebook header button {
 
 /* Use this to make a border or padding around each tab */
 notebook header tabs tab {
-  padding: 1px;
+  background-color: @bg-color;
+  background-image: none;
+  border: 1px solid @strong-border-color;
   margin-left: 2px;
   margin-right: 2px;
-  border: 1px solid @strong-border-color;
+  min-width: 30px;
+  min-height: 30px;
+  padding: 1px;
 }
 
 /* The underline for selected tabs */
@@ -216,6 +220,7 @@ toolbutton button.flat {
 
 toolbutton button.flat:hover {
   background: @selected-color;
+  border: 1px solid @edge-border-color;
 }
 
 toolbutton button.flat:checked,
@@ -433,8 +438,16 @@ radio {
 
 /* Removes "blurred" effect from tooltip label */
 tooltip {
+  background-color: @bg-color;
   background-image: none;
+  border: 1px solid @edge-border-color;
   text-shadow: 0 0;
+}
+
+tooltip box
+{
+  background-color: @bg-color;
+  border: 0px solid @transparent;
 }
 
 /* The border around a tooltip */
@@ -466,7 +479,13 @@ border {
 /* give the menu bar a color, fix for the default color being too dark */
 menubar {
   background-color: @bg-color;
+  background-image: none;
   box-shadow: 0 -1px @edge-border-color inset;
+}
+
+menuitem:hover, menuitem:selected
+{
+  border: 0px solid transparent;
 }
 
 /* The top menu item itself: File, Edit ... */
