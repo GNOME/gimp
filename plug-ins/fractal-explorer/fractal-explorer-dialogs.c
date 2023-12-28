@@ -1324,7 +1324,7 @@ make_color_map (GimpProcedureConfig *config)
         if (green_invert)
           gr = 255 - gr;
 
-        if (green_invert)
+        if (blue_invert)
           bl = 255 - bl;
 
         colormap[i].r = r;
@@ -1372,9 +1372,9 @@ save_options (FILE * fp)
                 "green-stretch", &green_stretch,
                 "blue-stretch",  &blue_stretch,
                 "color-mode",    &color_mode,
-                "red_invert",    &red_invert,
-                "green_invert",  &green_invert,
-                "blue_invert",   &blue_invert,
+                "red-invert",    &red_invert,
+                "green-invert",  &green_invert,
+                "blue-invert",   &blue_invert,
                 NULL);
   fractal_type =
     gimp_procedure_config_get_choice_id (wvals.config, "fractal-type");
