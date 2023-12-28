@@ -637,6 +637,7 @@ gimp_container_icon_view_button_press (GtkWidget             *widget,
 {
   GimpContainerView *container_view = GIMP_CONTAINER_VIEW (icon_view);
   GtkTreePath       *path;
+  gboolean           handled        = GDK_EVENT_PROPAGATE;
 
   icon_view->priv->dnd_renderer = NULL;
 
@@ -664,9 +665,11 @@ gimp_container_icon_view_button_press (GtkWidget             *widget,
            */
           if (! gimp_container_view_is_item_selected (container_view, renderer->viewable))
             gimp_container_view_item_selected (container_view, renderer->viewable);
+
           /* Show the context menu. */
-          gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (icon_view), (GdkEvent *) bevent);
+          handled = gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (icon_view), (GdkEvent *) bevent);
         }
+      /* Else LMB down or similar.  Propagate. */
 
       g_object_unref (renderer);
 
@@ -674,15 +677,21 @@ gimp_container_icon_view_button_press (GtkWidget             *widget,
     }
   else
     {
+      /* Button down outside any item. */
       if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
         {
-          gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (icon_view), (GdkEvent *) bevent);
+          (void) gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (icon_view), (GdkEvent *) bevent);
+          /* Discard result.  Does not actually popup menu except for managed views, e.g. dockable. */
         }
 
-      return TRUE;
+      /* Else LMB down or similar.
+       * Say we handled event even though we did nothing.
+       * Otherwise, selection is set to None.
+       */
+      handled = GDK_EVENT_STOP;
     }
 
-  return FALSE;
+  return handled;
 }
 
 static gboolean
