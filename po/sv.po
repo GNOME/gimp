@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-11-25 21:08+0000\n"
-"PO-Revision-Date: 2023-12-07 21:41+0100\n"
+"POT-Creation-Date: 2023-12-19 18:16+0000\n"
+"PO-Revision-Date: 2023-12-30 00:45+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -319,29 +319,29 @@ msgstr ""
 "Antagligen använder ditt filsystem en annan kodning än UTF-8, men du har "
 "inte talat om det för GLib. Ställ in miljövariabeln G_FILENAME_ENCODING."
 
-#: app/actions/actions.c:112 app/dialogs/dialogs.c:425
+#: app/actions/actions.c:112 app/dialogs/dialogs.c:426
 #: app/widgets/gimpbrusheditor.c:88
 msgid "Brush Editor"
 msgstr "Penselredigerare"
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:115 app/core/gimp-data-factories.c:356
-#: app/dialogs/dialogs.c:340 app/dialogs/preferences-dialog.c:3578
+#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3578
 msgid "Brushes"
 msgstr "Penslar"
 
-#: app/actions/actions.c:118 app/dialogs/dialogs.c:361
+#: app/actions/actions.c:118 app/dialogs/dialogs.c:362
 msgid "Buffers"
 msgstr "Buffertar"
 
-#: app/actions/actions.c:121 app/dialogs/dialogs.c:379
+#: app/actions/actions.c:121 app/dialogs/dialogs.c:380
 #: app/propgui/gimppropgui-newsprint.c:160
 #: app/widgets/gimppickablechooser.c:295
 msgid "Channels"
 msgstr "Kanaler"
 
 #: app/actions/actions.c:124 app/dialogs/convert-indexed-dialog.c:178
-#: app/dialogs/dialogs.c:387
+#: app/dialogs/dialogs.c:388
 msgid "Colormap"
 msgstr "Färgkarta"
 
@@ -349,11 +349,11 @@ msgstr "Färgkarta"
 msgid "Context"
 msgstr "Sammanhang"
 
-#: app/actions/actions.c:130 app/dialogs/dialogs.c:327
+#: app/actions/actions.c:130 app/dialogs/dialogs.c:328
 msgid "Pointer Information"
 msgstr "Pekarinformation"
 
-#: app/actions/actions.c:133 app/dialogs/dialogs.c:331
+#: app/actions/actions.c:133 app/dialogs/dialogs.c:332
 msgid "Dashboard"
 msgstr "Panel"
 
@@ -374,7 +374,7 @@ msgid "Dockable"
 msgstr "Dockningsbar"
 
 #. Document History
-#: app/actions/actions.c:148 app/dialogs/dialogs.c:367
+#: app/actions/actions.c:148 app/dialogs/dialogs.c:368
 #: app/dialogs/preferences-dialog.c:1357
 msgid "Document History"
 msgstr "Dokumenthistorik"
@@ -383,11 +383,11 @@ msgstr "Dokumenthistorik"
 msgid "Drawable"
 msgstr "Rityta"
 
-#: app/actions/actions.c:154 app/dialogs/dialogs.c:343
+#: app/actions/actions.c:154 app/dialogs/dialogs.c:344
 msgid "Paint Dynamics"
 msgstr "Målningsdynamik"
 
-#: app/actions/actions.c:157 app/dialogs/dialogs.c:429
+#: app/actions/actions.c:157 app/dialogs/dialogs.c:430
 #: app/widgets/gimpdynamicseditor.c:97
 msgid "Paint Dynamics Editor"
 msgstr "Målningsdynamikredigerare"
@@ -396,7 +396,7 @@ msgstr "Målningsdynamikredigerare"
 msgid "Edit"
 msgstr "Redigera"
 
-#: app/actions/actions.c:163 app/dialogs/dialogs.c:323
+#: app/actions/actions.c:163 app/dialogs/dialogs.c:324
 msgid "Error Console"
 msgstr "Felkonsol"
 
@@ -410,27 +410,27 @@ msgstr "Filter"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:172 app/core/gimp-data-factories.c:390
-#: app/dialogs/dialogs.c:358 app/dialogs/preferences-dialog.c:3608
+#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3608
 msgid "Fonts"
 msgstr "Typsnitt"
 
-#: app/actions/actions.c:175 app/dialogs/dialogs.c:433
+#: app/actions/actions.c:175 app/dialogs/dialogs.c:434
 #: app/widgets/gimpgradienteditor.c:295
 msgid "Gradient Editor"
 msgstr "Gradientredigerare"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:178 app/core/gimp-data-factories.c:381
-#: app/dialogs/dialogs.c:352 app/dialogs/preferences-dialog.c:3602
+#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3602
 msgid "Gradients"
 msgstr "Gradienter"
 
 #: app/actions/actions.c:181 app/core/gimp-data-factories.c:397
-#: app/dialogs/dialogs.c:364 app/dialogs/preferences-dialog.c:3614
+#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3614
 msgid "Tool Presets"
 msgstr "Verktygsförinställning"
 
-#: app/actions/actions.c:184 app/dialogs/dialogs.c:441
+#: app/actions/actions.c:184 app/dialogs/dialogs.c:442
 #: app/widgets/gimptoolpreseteditor.c:96
 msgid "Tool Preset Editor"
 msgstr "Verktygsförinställningsredigare"
@@ -443,36 +443,36 @@ msgstr "Hjälp"
 msgid "Image"
 msgstr "Bild"
 
-#: app/actions/actions.c:193 app/dialogs/dialogs.c:337
+#: app/actions/actions.c:193 app/dialogs/dialogs.c:338
 #: app/widgets/gimppickablechooser.c:214
 msgid "Images"
 msgstr "Bilder"
 
-#: app/actions/actions.c:196 app/dialogs/dialogs.c:375
+#: app/actions/actions.c:196 app/dialogs/dialogs.c:376
 #: app/dialogs/resize-dialog.c:171 app/widgets/gimppickablechooser.c:270
 msgid "Layers"
 msgstr "Lager"
 
 #. initialize the list of mypaint brushes
 #: app/actions/actions.c:199 app/core/gimp-data-factories.c:366
-#: app/dialogs/dialogs.c:346 app/dialogs/preferences-dialog.c:3620
+#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3620
 msgid "MyPaint Brushes"
 msgstr "MyPaint-penslar"
 
-#: app/actions/actions.c:202 app/dialogs/dialogs.c:437
+#: app/actions/actions.c:202 app/dialogs/dialogs.c:438
 #: app/widgets/gimppaletteeditor.c:157
 msgid "Palette Editor"
 msgstr "Palettredigerare"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:205 app/core/gimp-data-factories.c:376
-#: app/dialogs/dialogs.c:355 app/dialogs/preferences-dialog.c:3596
+#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3596
 msgid "Palettes"
 msgstr "Paletter"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:208 app/core/gimp-data-factories.c:371
-#: app/dialogs/dialogs.c:349 app/dialogs/preferences-dialog.c:3590
+#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3590
 msgid "Patterns"
 msgstr "Mönster"
 
@@ -486,7 +486,7 @@ msgstr "Insticksmoduler"
 msgid "Quick Mask"
 msgstr "Snabbmask"
 
-#: app/actions/actions.c:217 app/dialogs/dialogs.c:407
+#: app/actions/actions.c:217 app/dialogs/dialogs.c:408
 msgid "Sample Points"
 msgstr "Samplingspunkter"
 
@@ -495,7 +495,7 @@ msgid "Select"
 msgstr "Välj"
 
 #. initialize the template list
-#: app/actions/actions.c:223 app/core/gimp.c:852 app/dialogs/dialogs.c:370
+#: app/actions/actions.c:223 app/core/gimp.c:852 app/dialogs/dialogs.c:371
 msgid "Templates"
 msgstr "Mallar"
 
@@ -507,7 +507,7 @@ msgstr "Textverktyg"
 msgid "Text Editor"
 msgstr "Textredigerare"
 
-#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:537
+#: app/actions/actions.c:232 app/dialogs/dialogs.c:316 app/gui/gui.c:537
 msgid "Tool Options"
 msgstr "Verktygsalternativ"
 
@@ -519,7 +519,7 @@ msgstr "Verktyg"
 msgid "Path Toolpath"
 msgstr "Banverktyg"
 
-#: app/actions/actions.c:241 app/dialogs/dialogs.c:383
+#: app/actions/actions.c:241 app/dialogs/dialogs.c:384
 #: app/tools/gimpvectortool.c:167
 msgid "Paths"
 msgstr "Banor"
@@ -2439,7 +2439,7 @@ msgstr "240 sekunder"
 #: app/dialogs/preferences-dialog.c:691 app/dialogs/preferences-dialog.c:1262
 #: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:178
 #: app/dialogs/resize-dialog.c:225 app/dialogs/resolution-calibrate-dialog.c:73
-#: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:128
+#: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
 #: app/dialogs/vectors-export-dialog.c:83
 #: app/dialogs/vectors-import-dialog.c:88
@@ -2452,11 +2452,11 @@ msgstr "240 sekunder"
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:463 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
-#: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:334
-#: app/widgets/gimphelp.c:439 app/widgets/gimphelp.c:774
-#: app/widgets/gimpiconpicker.c:484 app/widgets/gimpmodifierseditor.c:684
-#: app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91
-#: app/widgets/gimpsettingsbox.c:711
+#: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
+#: app/widgets/gimpfiledialog.c:334 app/widgets/gimphelp.c:439
+#: app/widgets/gimphelp.c:774 app/widgets/gimpiconpicker.c:484
+#: app/widgets/gimpmodifierseditor.c:684 app/widgets/gimppdbdialog.c:148
+#: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:711
 msgid "_Cancel"
 msgstr "_Avbryt"
 
@@ -3931,7 +3931,7 @@ msgstr "Kopierade bildpunkter till urklipp."
 #: app/actions/edit-commands.c:443 app/actions/edit-commands.c:732
 #: app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
-msgstr "Det finns ingen bilddata i urklipp att klistra in."
+msgstr "Det finns inga bilddata i urklipp att klistra in."
 
 #: app/actions/edit-commands.c:459
 msgid "Cut Named"
@@ -7429,7 +7429,7 @@ msgstr "Återställ alla filter"
 #: app/dialogs/image-new-dialog.c:105 app/dialogs/input-devices-dialog.c:65
 #: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:312
 #: app/dialogs/preferences-dialog.c:1261 app/dialogs/print-size-dialog.c:122
-#: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:127
+#: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:363 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:462 app/widgets/gimpcolordisplayeditor.c:332
@@ -9958,6 +9958,10 @@ msgstr "Skärm %s"
 msgid "Move this window to screen %s"
 msgstr "Flytta det här fönstret till skärmen %s"
 
+#: app/actions/window-commands.c:73
+msgid "Open Display"
+msgstr "Öppna display"
+
 #: app/actions/window-commands.c:78 app/dialogs/extensions-dialog.c:79
 #: app/dialogs/file-save-dialog.c:682 app/dialogs/grid-dialog.c:103
 #: app/dialogs/image-new-dialog.c:107 app/dialogs/image-new-dialog.c:327
@@ -9970,11 +9974,29 @@ msgstr "Flytta det här fönstret till skärmen %s"
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:190
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
-#: app/widgets/gimpcontrollereditor.c:663 app/widgets/gimperrordialog.c:76
+#: app/widgets/gimpcontrollereditor.c:663
+#: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:178 app/widgets/gimpmodifierseditor.c:685
 #: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
 msgstr "_OK"
+
+#: app/actions/window-commands.c:88
+msgid ""
+"Experimental multi-display stuff!\n"
+"Click OK and have fun crashing GIMP..."
+msgstr ""
+"Experimentella prylar med flera displayer!\n"
+"Klicka OK och ha så skoj när GIMP kraschar…"
+
+#: app/actions/window-commands.c:92
+msgid "Please enter the name of the new display:"
+msgstr "Ange namnet på den nya displayen:"
+
+#: app/actions/window-commands.c:118
+#, c-format
+msgid "Can't open display '%s'. Please try another one:"
+msgstr "Kan inte öppna displayen ”%s”. Försök med en annan:"
 
 #: app/actions/windows-actions.c:102
 msgctxt "windows-action"
@@ -10351,6 +10373,14 @@ msgstr "Kanal"
 msgid "Path"
 msgstr "Bana"
 
+#: app/config/gimpdisplayconfig.c:142
+msgid "Transparency custom color 1"
+msgstr "Anpassad transparensfärg 1"
+
+#: app/config/gimpdisplayconfig.c:149
+msgid "Transparency custom color 2"
+msgstr "Anpassad transparensfärg 2"
+
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
 #. *  be marked for translation.
@@ -10517,6 +10547,14 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:179
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr "När aktiverad kommer det valda mönstret att användas för alla verktyg."
+
+#: app/config/gimprc-blurbs.h:185
+msgid ""
+"When enabled, the selected auto expand layer settings will be used for all "
+"tools."
+msgstr ""
+"När aktiverad kommer de valda inställningarna för lagerexpansion att "
+"användas för alla verktyg."
 
 #: app/config/gimprc-blurbs.h:196
 msgid "Sets the browser used by the help system."
@@ -11405,6 +11443,11 @@ msgstr "När aktiverad öppnar F1 hjälpläsaren."
 #: app/config/gimprc-blurbs.h:774
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "När aktiverad används OpenCL för vissa åtgärder."
+
+#: app/config/gimprc-blurbs.h:785
+msgid "There's a tradeoff between speed and quality of the zoomed-out display."
+msgstr ""
+"Det är en avvägning mellan hastighet och kvalitet på den utzoomade visningen."
 
 #: app/config/gimprc-blurbs.h:792
 msgid "When enabled, a search of actions will also return inactive actions."
@@ -12570,7 +12613,7 @@ msgstr "Satstolken ”%s” är inte tillgänglig. Satsläge inaktiverat."
 
 #: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338
 #: app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449
-#: app/menus/menus.c:480 app/widgets/gimpdevices.c:225
+#: app/menus/menus.c:480 app/widgets/gimpdevices.c:226
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Ta bort ”%s” misslyckades: %s"
@@ -12681,24 +12724,24 @@ msgid "FG to BG (RGB)"
 msgstr "FG till BG (RGB)"
 
 #: app/core/gimp-gradients.c:83
-msgid "FG to BG (Hardedge)"
+msgid "FG to BG (Hard Edge)"
 msgstr "FG till BG (Hård kant)"
 
 #: app/core/gimp-gradients.c:91
-msgid "FG to BG (HSV counter-clockwise)"
+msgid "FG to BG (HSV Counter-Clockwise)"
 msgstr "FG till BG (NMI moturs)"
 
 # NMI = Nyans Mättnad Intensitet
 #: app/core/gimp-gradients.c:99
-msgid "FG to BG (HSV clockwise hue)"
+msgid "FG to BG (HSV Clockwise Hue)"
 msgstr "FG till BG (NMI medurs-nyans)"
 
 #: app/core/gimp-gradients.c:107
 msgid "FG to Transparent"
-msgstr "FG till Transparent"
+msgstr "FG till transparent"
 
 #: app/core/gimp-gradients.c:114
-msgid "FG to Transparent (Hardedge)"
+msgid "FG to Transparent (Hard Edge)"
 msgstr "FG till transparent (Hård kant)"
 
 #. Translator:  This message is displayed while GIMP is waiting for
@@ -15410,68 +15453,68 @@ msgstr "GIMP-meddelande"
 msgid "GIMP Debug"
 msgstr "GIMP-felsökning"
 
-#: app/dialogs/dialogs.c:319
+#: app/dialogs/dialogs.c:320
 msgid "Devices"
 msgstr "Enheter"
 
-#: app/dialogs/dialogs.c:319
+#: app/dialogs/dialogs.c:320
 msgid "Device Status"
 msgstr "Enhetsstatus"
 
-#: app/dialogs/dialogs.c:323
+#: app/dialogs/dialogs.c:324
 msgid "Errors"
 msgstr "Fel"
 
-#: app/dialogs/dialogs.c:327
+#: app/dialogs/dialogs.c:328
 msgid "Pointer"
 msgstr "Pekare"
 
-#: app/dialogs/dialogs.c:367
+#: app/dialogs/dialogs.c:368
 msgid "History"
 msgstr "Historik"
 
-#: app/dialogs/dialogs.c:370
+#: app/dialogs/dialogs.c:371
 msgid "Image Templates"
 msgstr "Bildmallar"
 
-#: app/dialogs/dialogs.c:391
+#: app/dialogs/dialogs.c:392
 msgid "Histogram"
 msgstr "Histogram"
 
 #. Selection Bounding Box
-#: app/dialogs/dialogs.c:395 app/display/gimpcursorview.c:273
+#: app/dialogs/dialogs.c:396 app/display/gimpcursorview.c:273
 msgid "Selection"
 msgstr "Markering"
 
-#: app/dialogs/dialogs.c:395
+#: app/dialogs/dialogs.c:396
 msgid "Selection Editor"
 msgstr "Markeringsredigerare"
 
-#: app/dialogs/dialogs.c:399
+#: app/dialogs/dialogs.c:400
 msgid "Symmetry Painting"
 msgstr "Symmetrimålning"
 
-#: app/dialogs/dialogs.c:403
+#: app/dialogs/dialogs.c:404
 msgid "Undo"
 msgstr "Ångra"
 
-#: app/dialogs/dialogs.c:403
+#: app/dialogs/dialogs.c:404
 msgid "Undo History"
 msgstr "Ångringshistorik"
 
-#: app/dialogs/dialogs.c:413
+#: app/dialogs/dialogs.c:414
 msgid "Navigation"
 msgstr "Navigering"
 
-#: app/dialogs/dialogs.c:413
+#: app/dialogs/dialogs.c:414
 msgid "Display Navigation"
 msgstr "Visningsnavigering"
 
-#: app/dialogs/dialogs.c:419
+#: app/dialogs/dialogs.c:420
 msgid "FG/BG"
 msgstr "FG/BG"
 
-#: app/dialogs/dialogs.c:419
+#: app/dialogs/dialogs.c:420
 msgid "FG/BG Color"
 msgstr "FG/BG-färg"
 
@@ -15806,7 +15849,7 @@ msgid "Layer _name:"
 msgstr "Lager_namn:"
 
 #: app/dialogs/layer-options-dialog.c:188
-#: app/widgets/gimpdeviceinfoeditor.c:312
+#: app/widgets/gimpdeviceinfoeditor.c:376
 msgid "_Mode:"
 msgstr "_Läge:"
 
@@ -16569,7 +16612,7 @@ msgstr "Verktygsalternativ"
 #: app/dialogs/preferences-dialog.c:1800 app/dialogs/preferences-dialog.c:2712
 #: app/dialogs/preferences-dialog.c:3150 app/dialogs/preferences-dialog.c:3174
 #: app/widgets/gimpcontrollereditor.c:188
-#: app/widgets/gimpdeviceinfoeditor.c:298
+#: app/widgets/gimpdeviceinfoeditor.c:362
 msgid "General"
 msgstr "Generellt"
 
@@ -17889,12 +17932,12 @@ msgstr "Ändra storlek på _textlager"
 msgid "Resizing text layers will make them uneditable"
 msgstr "Att skala om textlager kommer att göra dem oredigerbara"
 
-#: app/dialogs/resize-dialog.c:753
+#: app/dialogs/resize-dialog.c:760
 #, c-format
 msgid "Scale template to %.2f ppi"
 msgstr "Skala mall till %.2f punkter/tum"
 
-#: app/dialogs/resize-dialog.c:758
+#: app/dialogs/resize-dialog.c:765
 #, c-format
 msgid "Set image to %.2f ppi"
 msgstr "Ställ in bilden till %.2f punkter/tum"
@@ -17929,19 +17972,27 @@ msgstr "Kvalitet"
 msgid "I_nterpolation:"
 msgstr "I_nterpolation:"
 
-#: app/dialogs/stroke-dialog.c:122
+#: app/dialogs/stroke-dialog.c:123
 msgid "Choose Stroke Style"
 msgstr "Välj streckstil"
 
-#: app/dialogs/stroke-dialog.c:129
+#: app/dialogs/stroke-dialog.c:130
 msgid "_Stroke"
 msgstr "_Stryk"
 
-#: app/dialogs/stroke-dialog.c:215
+#: app/dialogs/stroke-dialog.c:174
+msgid "Line"
+msgstr "Linje"
+
+#: app/dialogs/stroke-dialog.c:198
+msgid "Paint tool"
+msgstr "Målarverktyg"
+
+#: app/dialogs/stroke-dialog.c:216
 msgid "P_aint tool:"
 msgstr "Mål_arverktyg:"
 
-#: app/dialogs/stroke-dialog.c:229
+#: app/dialogs/stroke-dialog.c:241
 msgid "_Emulate brush dynamics"
 msgstr "_Emulera penseldynamik"
 
@@ -18307,13 +18358,13 @@ msgstr "-"
 
 #: app/display/gimpcursorview.c:236 app/display/gimpcursorview.c:261
 #: app/display/gimpcursorview.c:288 app/tools/gimptransform3dtool.c:434
-#: app/widgets/gimpdeviceinfo.c:53
+#: app/widgets/gimpdeviceinfo.c:56
 msgid "X"
 msgstr "X"
 
 #: app/display/gimpcursorview.c:242 app/display/gimpcursorview.c:267
 #: app/display/gimpcursorview.c:294 app/tools/gimptransform3dtool.c:434
-#: app/widgets/gimpdeviceinfo.c:54
+#: app/widgets/gimpdeviceinfo.c:57
 msgid "Y"
 msgstr "Y"
 
@@ -18571,7 +18622,7 @@ msgstr "(ren)"
 #: app/display/gimpdisplayshell-title.c:374
 #: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1198
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
-#: app/widgets/gimpdeviceinfo.c:1078 app/widgets/gimpdeviceinfo.c:1103
+#: app/widgets/gimpdeviceinfo.c:1148 app/widgets/gimpdeviceinfo.c:1173
 msgid "(none)"
 msgstr "(ingen)"
 
@@ -19986,8 +20037,8 @@ msgstr "Gör om färger till gråskalor"
 #: app/operations/gimpoperationdesaturate.c:91
 #: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1137
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
-#: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:173
-#: app/widgets/gimplayertreeview.c:309
+#: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
+#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:309
 msgid "Mode"
 msgstr "Läge"
 
@@ -22048,7 +22099,7 @@ msgstr ""
 "Yxmördaren Julia Blomqvist\n"
 "på fäktning i Schweiz."
 
-#: app/text/gimpfontfactory.c:393
+#: app/text/gimpfontfactory.c:447
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -22977,7 +23028,7 @@ msgstr "_Utdata:"
 msgid "T_ype:"
 msgstr "T_yp:"
 
-#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:428
+#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:492
 msgid "Curve _type:"
 msgstr "Kurv_typ:"
 
@@ -25679,7 +25730,7 @@ msgstr "Rotera bana"
 msgid "Transform Path"
 msgstr "Transformera bana"
 
-#: app/vectors/gimpvectors-export.c:88
+#: app/vectors/gimpvectors-export.c:95
 #, c-format
 msgid "Writing SVG file '%s' failed: %s"
 msgstr "Misslyckades med att skriva SVG-fil ”%s”: %s"
@@ -25716,6 +25767,7 @@ msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpactionview.c:259 app/widgets/gimpcontrollereditor.c:343
+#: app/widgets/gimpdeviceinfoeditor.c:579
 msgid "Action"
 msgstr "Åtgärd"
 
@@ -26087,10 +26139,12 @@ msgid "State:"
 msgstr "Tillstånd:"
 
 #: app/widgets/gimpcontrollereditor.c:337
+#: app/widgets/gimpdeviceinfoeditor.c:567
 msgid "Event"
 msgstr "Händelse"
 
 #: app/widgets/gimpcontrollereditor.c:362
+#: app/widgets/gimpdeviceinfoeditor.c:624
 msgid "_Grab event"
 msgstr "_Fånga händelse"
 
@@ -26099,24 +26153,29 @@ msgid "Select the next event arriving from the controller"
 msgstr "Välj nästa händelse som kommer från enheten"
 
 #: app/widgets/gimpcontrollereditor.c:375
+#: app/widgets/gimpdeviceinfoeditor.c:638
 msgid "_Edit event"
 msgstr "R_edigera händelse"
 
 #: app/widgets/gimpcontrollereditor.c:383
+#: app/widgets/gimpdeviceinfoeditor.c:648
 msgid "_Clear event"
 msgstr "_Rensa händelse"
 
 #: app/widgets/gimpcontrollereditor.c:522
+#: app/widgets/gimpdeviceinfoeditor.c:971
 #, c-format
 msgid "Remove the action assigned to '%s'"
 msgstr "Ta bort åtgärden tilldelad ”%s”"
 
 #: app/widgets/gimpcontrollereditor.c:527
+#: app/widgets/gimpdeviceinfoeditor.c:975
 #, c-format
 msgid "Assign an action to '%s'"
 msgstr "Ställ in en åtgärd för ”%s”"
 
 #: app/widgets/gimpcontrollereditor.c:648
+#: app/widgets/gimpdeviceinfoeditor.c:1142
 #, c-format
 msgid "Select Action for Event '%s'"
 msgstr "Välj åtgärd för händelsen ”%s”"
@@ -26852,16 +26911,16 @@ msgstr ""
 "Nästa gång den här enheten ansluts, kommer standardinställningarna att "
 "användas."
 
-#: app/widgets/gimpdeviceinfo.c:55 app/widgets/gimpdynamicseditor.c:161
+#: app/widgets/gimpdeviceinfo.c:58 app/widgets/gimpdynamicseditor.c:161
 #: app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Pressure"
 msgstr "Tryck"
 
-#: app/widgets/gimpdeviceinfo.c:56
+#: app/widgets/gimpdeviceinfo.c:59
 msgid "X tilt"
 msgstr "X-lutning"
 
-#: app/widgets/gimpdeviceinfo.c:57
+#: app/widgets/gimpdeviceinfo.c:60
 msgid "Y tilt"
 msgstr "Y-lutning"
 
@@ -26872,83 +26931,119 @@ msgstr "Y-lutning"
 #. * TODO: this should be actually tested with a device having such
 #. * feature.
 #.
-#: app/widgets/gimpdeviceinfo.c:65
+#: app/widgets/gimpdeviceinfo.c:68
 msgid "Wheel"
 msgstr "Mushjul"
 
-#: app/widgets/gimpdeviceinfo.c:66
+#: app/widgets/gimpdeviceinfo.c:69
 msgid "Distance"
 msgstr "Avstånd"
 
-#: app/widgets/gimpdeviceinfo.c:67
+#: app/widgets/gimpdeviceinfo.c:70
 msgid "Rotation"
 msgstr "Rotation"
 
-#: app/widgets/gimpdeviceinfo.c:68
+#: app/widgets/gimpdeviceinfo.c:71
 msgid "Slider"
 msgstr "Skjutreglage"
 
-#: app/widgets/gimpdeviceinfo.c:248
+#: app/widgets/gimpdeviceinfo.c:254
 msgid "Pressure curve"
 msgstr "Tryckkurva"
 
-#: app/widgets/gimpdeviceinfo.c:1063 app/widgets/gimpdeviceinfo.c:1088
+#: app/widgets/gimpdeviceinfo.c:261
+msgid "Pad actions"
+msgstr "Ritplatteåtgärder"
+
+#: app/widgets/gimpdeviceinfo.c:1133 app/widgets/gimpdeviceinfo.c:1158
 msgid "(Device not present)"
 msgstr "(Enhet inte tillgänglig)"
 
-#: app/widgets/gimpdeviceinfo.c:1071 app/widgets/gimpdeviceinfo.c:1096
+#: app/widgets/gimpdeviceinfo.c:1141 app/widgets/gimpdeviceinfo.c:1166
 msgid "(Virtual device)"
 msgstr "(Virtuell enhet)"
 
 #. The list of axes of an input device
-#: app/widgets/gimpdeviceinfoeditor.c:238
+#: app/widgets/gimpdeviceinfoeditor.c:302
 msgid "Axes"
 msgstr "Axlar"
 
-#: app/widgets/gimpdeviceinfoeditor.c:317
+#: app/widgets/gimpdeviceinfoeditor.c:381
 msgid "Source:"
 msgstr "Källa:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:322
+#: app/widgets/gimpdeviceinfoeditor.c:386
 msgid "Vendor ID:"
 msgstr "Producent-ID:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:327
+#: app/widgets/gimpdeviceinfoeditor.c:391
 msgid "Product ID:"
 msgstr "Produkt-ID:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:332
+#: app/widgets/gimpdeviceinfoeditor.c:396
 msgid "Tool type:"
 msgstr "Verktygstyp:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:337
+#: app/widgets/gimpdeviceinfoeditor.c:401
 msgid "Tool serial:"
 msgstr "Verktygsserienummer:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:342
+#: app/widgets/gimpdeviceinfoeditor.c:406
 msgid "Tool hardware ID:"
 msgstr "Verktygshårdvaru-ID:"
 
-#: app/widgets/gimpdeviceinfoeditor.c:354
-#: app/widgets/gimpdeviceinfoeditor.c:672
+#: app/widgets/gimpdeviceinfoeditor.c:418
+#: app/widgets/gimpdeviceinfoeditor.c:878
 msgid "none"
 msgstr "ingen"
 
 #. e.g. "Pressure Curve" for mapping input device axes
-#: app/widgets/gimpdeviceinfoeditor.c:380
+#: app/widgets/gimpdeviceinfoeditor.c:444
 #, c-format
 msgid "%s Curve"
 msgstr "%s-Kurva"
 
-#: app/widgets/gimpdeviceinfoeditor.c:440
+#: app/widgets/gimpdeviceinfoeditor.c:504
 #: app/widgets/gimpdynamicsoutputeditor.c:206
 msgid "_Reset Curve"
 msgstr "Å_terställ kurva"
 
-#: app/widgets/gimpdeviceinfoeditor.c:453
+#: app/widgets/gimpdeviceinfoeditor.c:517
 #, c-format
 msgid "The axis '%s' has no curve"
 msgstr "Axeln ”%s” har ingen kurva"
+
+# Titel för rutan som söker åtgärder
+#: app/widgets/gimpdeviceinfoeditor.c:546
+msgid "Pad Actions"
+msgstr "Ritplatteåtgärder"
+
+#: app/widgets/gimpdeviceinfoeditor.c:633
+msgid "Select the next event arriving from the pad"
+msgstr "Välj nästa händelse som kommer från ritplattan"
+
+#: app/widgets/gimpdeviceinfoeditor.c:677
+msgid "Pad Actions are not supported on your platform yet"
+msgstr "Ritplatteåtgärder stöds inte ännu på din plattform"
+
+#: app/widgets/gimpdeviceinfoeditor.c:900
+#, c-format
+msgid "Button %d"
+msgstr "Knapp %d"
+
+#: app/widgets/gimpdeviceinfoeditor.c:903
+#, c-format
+msgid "Ring %d"
+msgstr "Ring %d"
+
+#: app/widgets/gimpdeviceinfoeditor.c:906
+#, c-format
+msgid "Strip %d"
+msgstr "Remsa %d"
+
+#: app/widgets/gimpdeviceinfoeditor.c:1152
+msgid "Select Pad Event Action"
+msgstr "Välj ritplattehändelseåtgärd"
 
 #: app/widgets/gimpdevicestatus.c:153
 msgid "Save device status"
@@ -29446,9 +29541,6 @@ msgstr "Banmeny"
 #~ "Det kan endast finnas en aktiv musenhet.\n"
 #~ "\n"
 #~ "Du har redan en musenhet i din lista över aktiva styrenheter."
-
-#~ msgid "Button 8"
-#~ msgstr "Knapp 8"
 
 #~ msgid "Button 9"
 #~ msgstr "Knapp 9"
