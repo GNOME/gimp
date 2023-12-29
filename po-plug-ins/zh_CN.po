@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-17 03:03+0000\n"
-"PO-Revision-Date: 2023-12-18 21:33+0800\n"
+"POT-Creation-Date: 2023-12-26 16:41+0000\n"
+"PO-Revision-Date: 2023-12-29 19:55+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -149,7 +149,7 @@ msgstr "锻炼一只山羊（JavaScript）"
 #: plug-ins/common/grid.c:787 plug-ins/common/qbist.c:933
 #: plug-ins/common/sphere-designer.c:2638 plug-ins/common/unit-editor.c:266
 #: plug-ins/common/warp.c:473 plug-ins/file-exr/file-exr.c:422
-#: plug-ins/file-psd/psd-load.c:3549 plug-ins/flame/flame.c:828
+#: plug-ins/file-psd/psd-load.c:3557 plug-ins/flame/flame.c:828
 #: plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
@@ -634,7 +634,7 @@ msgstr "竖直"
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:700
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2749 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2757 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:561
 #: plug-ins/gfig/gfig-dialog.c:1290 plug-ins/gimpressionist/general.c:139
@@ -1517,6 +1517,10 @@ msgstr "YCbCr_ITU_R470_256"
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
+#: plug-ins/common/compose.c:378
+msgid "What to compose: "
+msgstr "合成结果："
+
 #: plug-ins/common/compose.c:403
 msgid "C_ompose..."
 msgstr "合成(_O)…"
@@ -2211,6 +2215,10 @@ msgstr "黄色"
 msgid "Black"
 msgstr "黑色"
 
+#: plug-ins/common/decompose.c:261
+msgid "What to decompose: "
+msgstr "分解结果："
+
 #: plug-ins/common/decompose.c:282
 msgid "_Decompose..."
 msgstr "分解(_D)…"
@@ -2218,6 +2226,10 @@ msgstr "分解(_D)…"
 #: plug-ins/common/decompose.c:286
 msgid "Decompose an image into separate colorspace components"
 msgstr "将一幅图像分解到各自独立的颜色空间分量"
+
+#: plug-ins/common/decompose.c:305
+msgid "Create channels as layers in a single image"
+msgstr "在单个图像中将通道创建为图层"
 
 #: plug-ins/common/decompose.c:403
 msgid "Decomposing"
@@ -2267,21 +2279,41 @@ msgstr "使用深度图（Z 缓冲区）组合两幅图像"
 msgid "Source _1"
 msgstr "来源 _1"
 
+#: plug-ins/common/depth-merge.c:224
+msgid "Source 1"
+msgstr "来源 1"
+
 #: plug-ins/common/depth-merge.c:229
 msgid "_Depth map 1"
 msgstr "深度图 1(_D)"
+
+#: plug-ins/common/depth-merge.c:230
+msgid "Depth map 1"
+msgstr "深度图 1"
 
 #: plug-ins/common/depth-merge.c:235
 msgid "Source _2"
 msgstr "来源 _2"
 
+#: plug-ins/common/depth-merge.c:236
+msgid "Source 2"
+msgstr "来源 2"
+
 #: plug-ins/common/depth-merge.c:241
 msgid "Depth _map 2"
 msgstr "深度图 2(_M)"
 
+#: plug-ins/common/depth-merge.c:242
+msgid "Depth map 2"
+msgstr "深度图 2"
+
 #: plug-ins/common/depth-merge.c:247
 msgid "O_verlap"
-msgstr "重叠(_V)"
+msgstr "叠加(_V)"
+
+#: plug-ins/common/depth-merge.c:248
+msgid "Overlap"
+msgstr "叠加"
 
 #: plug-ins/common/depth-merge.c:253 plug-ins/common/file-raw-data.c:365
 msgid "O_ffset"
@@ -2295,9 +2327,17 @@ msgstr "深度相对位移"
 msgid "Sc_ale 1"
 msgstr "缩放 1(_A)"
 
+#: plug-ins/common/depth-merge.c:260
+msgid "Depth relative scale 1"
+msgstr "深度相对缩放 1"
+
 #: plug-ins/common/depth-merge.c:265
 msgid "Scal_e 2"
 msgstr "缩放 2(_E)"
+
+#: plug-ins/common/depth-merge.c:266
+msgid "Depth relative scale 2"
+msgstr "深度相对缩放 2"
 
 #: plug-ins/common/depth-merge.c:313
 msgid "The selection does not intersect with the input drawable."
@@ -8111,11 +8151,19 @@ msgstr "级别(_E)"
 
 #: plug-ins/common/wavelet-decompose.c:137
 msgid "Create a layer group to store the _decomposition"
-msgstr "创建图层组存储分解(_D)"
+msgstr "创建图层组存储分解结果(_D)"
+
+#: plug-ins/common/wavelet-decompose.c:139
+msgid "Create a layer group to store the decomposition"
+msgstr "创建图层组存储分解结果"
 
 #: plug-ins/common/wavelet-decompose.c:145
 msgid "_Add a layer mask to each scales layer"
 msgstr "为每级别图层添加图层蒙板(_A)"
+
+#: plug-ins/common/wavelet-decompose.c:146
+msgid "Add a layer mask to each scales layer"
+msgstr "为每级别图层添加图层蒙板"
 
 #: plug-ins/common/wavelet-decompose.c:204
 msgid "Wavelet-Decompose"
@@ -9582,28 +9630,28 @@ msgstr "不支持的或无效的图层蒙板宽度：%d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "不支持的或无效的图层蒙板尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2066 plug-ins/file-psd/psd-load.c:2722
+#: plug-ins/file-psd/psd-load.c:2074 plug-ins/file-psd/psd-load.c:2730
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "不支持的压缩模式：%d"
 
-#: plug-ins/file-psd/psd-load.c:2915
+#: plug-ins/file-psd/psd-load.c:2923
 msgid "Extra"
 msgstr "附加的"
 
-#: plug-ins/file-psd/psd-load.c:3115
+#: plug-ins/file-psd/psd-load.c:3123
 msgid "Unsupported or invalid channel size"
 msgstr "不支持或无效的通道尺寸"
 
-#: plug-ins/file-psd/psd-load.c:3184
+#: plug-ins/file-psd/psd-load.c:3192
 msgid "Failed to decompress data"
 msgstr "解压缩数据失败"
 
-#: plug-ins/file-psd/psd-load.c:3565
+#: plug-ins/file-psd/psd-load.c:3573
 msgid "Duotone Import"
 msgstr "双色导入"
 
-#: plug-ins/file-psd/psd-load.c:3566
+#: plug-ins/file-psd/psd-load.c:3574
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -9613,11 +9661,11 @@ msgstr ""
 "双色调颜色空间数据已保存\n"
 "且可在导出时重新应用。"
 
-#: plug-ins/file-psd/psd-load.c:3588 plug-ins/file-psd/psd-save.c:2665
+#: plug-ins/file-psd/psd-load.c:3596 plug-ins/file-psd/psd-save.c:2665
 msgid "Compatibility Notice"
 msgstr "兼容性注意"
 
-#: plug-ins/file-psd/psd-load.c:3589
+#: plug-ins/file-psd/psd-load.c:3597
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -9666,11 +9714,14 @@ msgstr ""
 
 #: plug-ins/file-psd/psd-save.c:2666
 msgid ""
-"Legacy layer modes have better compatibility with Photoshop. If you "
-"encounter display issues, consider switching to those layer modes."
+"Legacy layer modes have better compatibility with Photoshop, but do not "
+"support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
+"Clipped Layers as Group'. If you encounter display issues, consider "
+"switching to those layer modes."
 msgstr ""
-"过时的图层模式具有与 Photoshop 更好的兼容性。如果您遇到显示问题，可以考虑切换"
-"为那些图层模式。"
+"过时的图层模式具有与 Photoshop 更好的兼容性，但不支持使用 Photoshop “将剪裁的"
+"图层混合成组”功能所需的剪裁至背景。如果您遇到显示问题，可以考虑切换为那些图层"
+"模式。"
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -12249,33 +12300,65 @@ msgstr "用渐变产生一个镜头光晕效果"
 msgid "Radi_us"
 msgstr "半径(_U)"
 
+#: plug-ins/gradient-flare/gradient-flare.c:854
+msgid "Radius of GFlare (pixel)"
+msgstr "闪光的半径（像素）"
+
 #: plug-ins/gradient-flare/gradient-flare.c:859
 msgid "Ro_tation"
 msgstr "旋转(_T)"
+
+#: plug-ins/gradient-flare/gradient-flare.c:860
+msgid "Rotation of GFlare (degree)"
+msgstr "闪光的旋转（角度）"
 
 #: plug-ins/gradient-flare/gradient-flare.c:865
 msgid "_Hue rotation"
 msgstr "色相旋转(_H)"
 
+#: plug-ins/gradient-flare/gradient-flare.c:866
+msgid "Hue rotation of GFlare (degree)"
+msgstr "闪光的色相旋转（角度）"
+
 #: plug-ins/gradient-flare/gradient-flare.c:871
 msgid "Vector _angle"
 msgstr "矢量角度(_A)"
+
+#: plug-ins/gradient-flare/gradient-flare.c:872
+msgid "Vector angle for second flares (degree)"
+msgstr "第二闪光的矢量角度（角度）"
 
 #: plug-ins/gradient-flare/gradient-flare.c:877
 msgid "Vector len_gth"
 msgstr "矢量长度(_G)"
 
+#: plug-ins/gradient-flare/gradient-flare.c:878
+msgid "Vector length for second flares (percentage of Radius)"
+msgstr "第二闪光的矢量长度（半径的百分比）"
+
 #: plug-ins/gradient-flare/gradient-flare.c:884
 msgid "Ada_ptive supersampling"
 msgstr "自适应超级采样(_P)"
+
+#: plug-ins/gradient-flare/gradient-flare.c:885
+msgid "Use adaptive supersampling while rendering"
+msgstr "渲染时使用自适应超级采样"
 
 #: plug-ins/gradient-flare/gradient-flare.c:890
 msgid "_Max depth"
 msgstr "最大深度(_M)"
 
+#: plug-ins/gradient-flare/gradient-flare.c:891
+msgid "Max depth for adaptive supersampling"
+msgstr "用于自适应超级采样的最大深度"
+
 #: plug-ins/gradient-flare/gradient-flare.c:896
 msgid "Threshol_d"
 msgstr "阈值(_D)"
+
+#: plug-ins/gradient-flare/gradient-flare.c:897
+msgid "Threshold for adaptive supersampling"
+msgstr "用于自适应超级采样的阈值"
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
 #: plug-ins/gradient-flare/gradient-flare.c:2499
