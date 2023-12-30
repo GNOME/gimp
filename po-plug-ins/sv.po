@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-01 20:47+0000\n"
-"PO-Revision-Date: 2023-12-10 01:31+0100\n"
+"POT-Creation-Date: 2023-12-26 16:41+0000\n"
+"PO-Revision-Date: 2023-12-30 15:14+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -153,7 +153,7 @@ msgstr "Rasta en get (Javascript)"
 #: plug-ins/common/grid.c:787 plug-ins/common/qbist.c:933
 #: plug-ins/common/sphere-designer.c:2638 plug-ins/common/unit-editor.c:266
 #: plug-ins/common/warp.c:473 plug-ins/file-exr/file-exr.c:422
-#: plug-ins/file-psd/psd-load.c:3549 plug-ins/flame/flame.c:828
+#: plug-ins/file-psd/psd-load.c:3557 plug-ins/flame/flame.c:828
 #: plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
@@ -643,10 +643,10 @@ msgstr "Vertikal"
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:700
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2749 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2757 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
-#: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:1290
-#: plug-ins/gimpressionist/general.c:139
+#: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:561
+#: plug-ins/gfig/gfig-dialog.c:1290 plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
 #: plug-ins/screenshot/screenshot-win32.c:317 plug-ins/twain/twain.c:636
 msgid "Background"
@@ -1126,7 +1126,7 @@ msgstr "Målkanal:"
 
 #: plug-ins/common/cml-explorer.c:1647
 msgid "Copy Parameters"
-msgstr "Kopieringsparametrar"
+msgstr "Kopiera parametrar"
 
 #: plug-ins/common/cml-explorer.c:1655
 msgid "Selective Load Settings"
@@ -1537,6 +1537,10 @@ msgstr "YCbCr_ITU_R470_256"
 #: plug-ins/common/compose.c:316 plug-ins/common/decompose.c:225
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
+
+#: plug-ins/common/compose.c:378
+msgid "What to compose: "
+msgstr "Vad som ska komponeras: "
 
 #: plug-ins/common/compose.c:403
 msgid "C_ompose..."
@@ -1985,7 +1989,7 @@ msgstr "Kan inte arbeta med tomma urklipp."
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:160
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:169
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
 #: plug-ins/file-icns/file-icns-load.c:516
@@ -2247,6 +2251,10 @@ msgstr "Gul"
 msgid "Black"
 msgstr "Svart"
 
+#: plug-ins/common/decompose.c:261
+msgid "What to decompose: "
+msgstr "Vad som ska separeras: "
+
 #: plug-ins/common/decompose.c:282
 msgid "_Decompose..."
 msgstr "_Separera…"
@@ -2254,6 +2262,10 @@ msgstr "_Separera…"
 #: plug-ins/common/decompose.c:286
 msgid "Decompose an image into separate colorspace components"
 msgstr "Separera en bild till separata färgrymdskomponenter"
+
+#: plug-ins/common/decompose.c:305
+msgid "Create channels as layers in a single image"
+msgstr "Skapa kanaler som lager i en ensam bild"
 
 #: plug-ins/common/decompose.c:403
 msgid "Decomposing"
@@ -2304,21 +2316,41 @@ msgstr "Kombinera två bilder med djupkartor (z-buffertar)"
 msgid "Source _1"
 msgstr "Källa _1"
 
+#: plug-ins/common/depth-merge.c:224
+msgid "Source 1"
+msgstr "Källa 1"
+
 #: plug-ins/common/depth-merge.c:229
 msgid "_Depth map 1"
 msgstr "_Djupkarta 1"
+
+#: plug-ins/common/depth-merge.c:230
+msgid "Depth map 1"
+msgstr "Djupkarta 1"
 
 #: plug-ins/common/depth-merge.c:235
 msgid "Source _2"
 msgstr "Källa _2"
 
+#: plug-ins/common/depth-merge.c:236
+msgid "Source 2"
+msgstr "Källa 2"
+
 #: plug-ins/common/depth-merge.c:241
 msgid "Depth _map 2"
 msgstr "Djup_karta 2"
 
+#: plug-ins/common/depth-merge.c:242
+msgid "Depth map 2"
+msgstr "Djupkarta 2"
+
 #: plug-ins/common/depth-merge.c:247
 msgid "O_verlap"
 msgstr "Ö_verlappning"
+
+#: plug-ins/common/depth-merge.c:248
+msgid "Overlap"
+msgstr "Överlappning"
 
 #: plug-ins/common/depth-merge.c:253 plug-ins/common/file-raw-data.c:365
 msgid "O_ffset"
@@ -2332,9 +2364,17 @@ msgstr "Djuprelativ förskjutning"
 msgid "Sc_ale 1"
 msgstr "Sk_ala 1"
 
+#: plug-ins/common/depth-merge.c:260
+msgid "Depth relative scale 1"
+msgstr "Djuprelativ skala 1"
+
 #: plug-ins/common/depth-merge.c:265
 msgid "Scal_e 2"
 msgstr "S_kala 2"
+
+#: plug-ins/common/depth-merge.c:266
+msgid "Depth relative scale 2"
+msgstr "Djuprelativ skala 2"
 
 #: plug-ins/common/depth-merge.c:313
 msgid "The selection does not intersect with the input drawable."
@@ -2826,7 +2866,7 @@ msgstr "Oväntat slut på Farbfeld-bildpunktsdata"
 msgid "GIMP brush"
 msgstr "GIMP-pensel"
 
-#: plug-ins/common/file-gbr.c:128
+#: plug-ins/common/file-gbr.c:128 plug-ins/gfig/gfig-dialog.c:510
 msgid "Brush"
 msgstr "Pensel"
 
@@ -3086,7 +3126,7 @@ msgstr "(animerad gif) Standardfördröjning mellan bildrutor i millisekunder"
 
 #: plug-ins/common/file-gif-save.c:210
 msgid "Frame disposal _when unspecified"
-msgstr "Bild_rutehantering där inte specificerat"
+msgstr "Bild_rutehantering när inte angivet"
 
 #: plug-ins/common/file-gif-save.c:211
 msgid ""
@@ -4082,6 +4122,7 @@ msgstr ""
 "denna insticksmodul."
 
 #: plug-ins/common/file-pat.c:128 plug-ins/common/qbist.c:968
+#: plug-ins/gfig/gfig-dialog.c:576
 msgid "Pattern"
 msgstr "Mönster"
 
@@ -4352,6 +4393,62 @@ msgstr "bildpunkter/%a"
 msgid "PDF"
 msgstr "PDF"
 
+#: plug-ins/common/file-pdf-save.c:338 plug-ins/common/file-pdf-save.c:339
+msgid "Convert bitmaps to vector graphics where possible"
+msgstr "Konvertera bitmap-bilder till vektorgrafik där det är möjligt"
+
+#: plug-ins/common/file-pdf-save.c:344
+msgid "Omit hidden layers and layers with zero opacity"
+msgstr "Utelämna dolda lager och lager med noll opacitet"
+
+#: plug-ins/common/file-pdf-save.c:345
+msgid "Non-visible layers will not be exported"
+msgstr "Ej synliga lager kommer inte exporteras"
+
+#: plug-ins/common/file-pdf-save.c:350
+msgid "Apply layer masks"
+msgstr "Tillämpa lagermasker"
+
+#: plug-ins/common/file-pdf-save.c:351
+msgid ""
+"Apply layer masks before saving (Keeping the mask will not change the "
+"output, only the PDF structure)"
+msgstr ""
+"Tillämpa lagermasker innan sparning (att behålla masken kommer inte ändra "
+"utdata, endast PDF-strukturen)"
+
+#: plug-ins/common/file-pdf-save.c:357
+msgid "Layers as pages"
+msgstr "Lager som sidor"
+
+#: plug-ins/common/file-pdf-save.c:358
+msgid "Layers as pages (bottom layers first)."
+msgstr "Lager som sidor (nedersta lagren först)."
+
+#: plug-ins/common/file-pdf-save.c:363
+msgid "Reverse order"
+msgstr "Omvänd ordning"
+
+#: plug-ins/common/file-pdf-save.c:364
+msgid "Reverse the pages order (top layers first)."
+msgstr "Vänd sidordningen (översta lagren först)."
+
+#: plug-ins/common/file-pdf-save.c:369
+msgid "Root layers only"
+msgstr "Endast rotlager"
+
+#: plug-ins/common/file-pdf-save.c:370
+msgid "Only the root layers are considered pages"
+msgstr "Endast rotlagren anses vara sidor"
+
+#: plug-ins/common/file-pdf-save.c:375
+msgid "Convert text layers to image"
+msgstr "Konvertera textlager till bild"
+
+#: plug-ins/common/file-pdf-save.c:376
+msgid "Convert text layers to raster graphics"
+msgstr "Konvertera textlager till rastergrafik"
+
 #: plug-ins/common/file-pdf-save.c:381 plug-ins/common/file-pdf-save.c:453
 #: plug-ins/common/file-pdf-save.c:1105
 msgid "_Fill transparent areas with background color"
@@ -4413,7 +4510,7 @@ msgstr "Lägg till denna bild"
 
 #: plug-ins/common/file-pdf-save.c:1100
 msgid "_Omit hidden layers and layers with zero opacity"
-msgstr "Utelä_mna gömda lager och lager med noll opacitet"
+msgstr "Utelä_mna dolda lager och lager med noll opacitet"
 
 #: plug-ins/common/file-pdf-save.c:1110
 msgid "Convert _bitmaps to vector graphics where possible"
@@ -6486,6 +6583,62 @@ msgstr "_Filmrulle…"
 msgid "Combine several images on a film strip"
 msgstr "Kombinera flera bilder på en filmrulle"
 
+#: plug-ins/common/film.c:194
+msgid "Film _height"
+msgstr "Film_höjd"
+
+#: plug-ins/common/film.c:195
+msgid "Height of film (0: fit to images)"
+msgstr "Filmens höjd (0: anpassa till bilder)"
+
+#: plug-ins/common/film.c:200
+msgid "_Film color"
+msgstr "_Filmfärg"
+
+#: plug-ins/common/film.c:201
+msgid "Color of the film"
+msgstr "Färg på filmen"
+
+#: plug-ins/common/film.c:206
+msgid "Start _index"
+msgstr "Start_index"
+
+#: plug-ins/common/film.c:207
+msgid "Start index for numbering"
+msgstr "Startindex för numrering"
+
+#: plug-ins/common/film.c:212
+msgid "Number _font"
+msgstr "Nummer_typsnitt"
+
+#: plug-ins/common/film.c:213
+msgid "Font for drawing numbers"
+msgstr "Typsnitt för att rita siffror"
+
+#: plug-ins/common/film.c:217
+msgid "_Number color"
+msgstr "_Nummerfärg"
+
+#: plug-ins/common/film.c:218
+msgid "Color for numbers"
+msgstr "Färg för siffror"
+
+#: plug-ins/common/film.c:223
+msgid "At _top"
+msgstr "På _topp"
+
+#: plug-ins/common/film.c:224
+msgid "Draw numbers at top"
+msgstr "Rita siffror högst upp"
+
+#: plug-ins/common/film.c:229
+msgid "At _bottom"
+msgstr "I _botten"
+
+#: plug-ins/common/film.c:230
+msgid "Draw numbers at bottom"
+msgstr "Rita siffror längst ner"
+
 #: plug-ins/common/film.c:245
 msgid "Image _height"
 msgstr "Bild_höjd"
@@ -6545,6 +6698,10 @@ msgstr "Höjden på skrivna siffror, som andel av filmrullens höjd"
 #: plug-ins/common/film.c:289
 msgid "F_it height to images"
 msgstr "Anpassa höjden t_ill bilderna"
+
+#: plug-ins/common/film.c:290
+msgid "Keep maximum image height"
+msgstr "Bevara största bildhöjd"
 
 #: plug-ins/common/film.c:365
 msgid "Composing images"
@@ -6708,13 +6865,25 @@ msgstr "Hitta och rätta till bildpunkter som kan vara för ljusstarka"
 msgid "Mode"
 msgstr "Läge"
 
+#: plug-ins/common/hot.c:271
+msgid "Mode { NTSC (0), PAL (1) }"
+msgstr "Läge { NTSC (0), PAL (1) }"
+
 #: plug-ins/common/hot.c:276
 msgid "Action"
 msgstr "Åtgärd"
 
+#: plug-ins/common/hot.c:277
+msgid "Action { (0) reduce luminance, (1) reduce saturation, or (2) Blacken }"
+msgstr "Åtgärd { (0) minska luminans, (1) minska mättnad, eller (2) svärta }"
+
 #: plug-ins/common/hot.c:283
 msgid "Create _new layer"
 msgstr "Skapa _nytt lager"
+
+#: plug-ins/common/hot.c:284
+msgid "Create a new layer"
+msgstr "Skapa ett nytt lager"
 
 #: plug-ins/common/hot.c:447 plug-ins/common/hot.c:654
 msgid "Hot"
@@ -7404,7 +7573,7 @@ msgstr "Om_vänd"
 
 #: plug-ins/common/sparkle.c:260
 msgid "Should the effect be inversed?"
-msgstr "Skall en omvänd effekt utföras?"
+msgstr "Ska en omvänd effekt utföras?"
 
 #: plug-ins/common/sparkle.c:265
 msgid "Add _border"
@@ -7451,6 +7620,7 @@ msgstr "Förgrundsfärg"
 msgid "Background color"
 msgstr "Bakgrundsfärg"
 
+# TODO: Both used for lager och bakgrund. TL context needed
 #: plug-ins/common/sphere-designer.c:336 plug-ins/gimpressionist/general.c:165
 msgid "Solid"
 msgstr "Enfärgad"
@@ -7531,6 +7701,7 @@ msgstr "Sfärdesigner"
 msgid "Layers"
 msgstr "Lager"
 
+# TODO: Both used for överstrålning och lager. TL context needed
 #: plug-ins/common/sphere-designer.c:2744
 #: plug-ins/gradient-flare/gradient-flare.c:3045
 msgid "_New"
@@ -7647,6 +7818,31 @@ msgstr "_Plattlägg…"
 #: plug-ins/common/tile.c:135
 msgid "Create an array of copies of the image"
 msgstr "Skapa en kedja av kopior av bilden"
+
+#: plug-ins/common/tile.c:161
+msgid "New _width"
+msgstr "Ny _bredd"
+
+#: plug-ins/common/tile.c:162
+msgid "New (tiled) image width"
+msgstr "Ny (plattlagd) bildbredd"
+
+#: plug-ins/common/tile.c:167
+msgid "New _height"
+msgstr "Ny _höjd"
+
+#: plug-ins/common/tile.c:168
+msgid "New (tiled) image height"
+msgstr "Ny (plattlagd) bildhöjd"
+
+#: plug-ins/common/tile.c:173
+msgid "New _image"
+msgstr "Ny _bild"
+
+#: plug-ins/common/tile.c:174 plug-ins/lighting/lighting-main.c:303
+#: plug-ins/map-object/map-object-main.c:331
+msgid "Create a new image"
+msgstr "Skapa en ny bild"
 
 #: plug-ins/common/tile.c:254 plug-ins/common/tile-small.c:377
 msgid "Tiling"
@@ -7913,7 +8109,7 @@ msgstr "Effektoperator"
 msgid "Derivative"
 msgstr "Härlett"
 
-#: plug-ins/common/van-gogh-lic.c:171
+#: plug-ins/common/van-gogh-lic.c:171 plug-ins/gfig/gfig-dialog.c:586
 msgid "Gradient"
 msgstr "Gradient"
 
@@ -8120,9 +8316,17 @@ msgstr "S_kalor"
 msgid "Create a layer group to store the _decomposition"
 msgstr "Skapa en lagergrupp för att lagra _separationen"
 
+#: plug-ins/common/wavelet-decompose.c:139
+msgid "Create a layer group to store the decomposition"
+msgstr "Skapa en lagergrupp för att lagra separationen"
+
 #: plug-ins/common/wavelet-decompose.c:145
 msgid "_Add a layer mask to each scales layer"
 msgstr "_Lägg till en lagermask till varje skallager"
+
+#: plug-ins/common/wavelet-decompose.c:146
+msgid "Add a layer mask to each scales layer"
+msgstr "Lägg till en lagermask till varje skallager"
 
 #: plug-ins/common/wavelet-decompose.c:204
 msgid "Wavelet-Decompose"
@@ -8757,68 +8961,83 @@ msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr "Alfatesttröskelvärde för vilket alfatesttäckning ska behållas"
 
-#: plug-ins/file-dds/ddsread.c:170
+#: plug-ins/file-dds/ddsread.c:179
 #, c-format
 msgid "Loading: %s"
 msgstr "Läser in: %s"
 
-#: plug-ins/file-dds/ddsread.c:263
+#: plug-ins/file-dds/ddsread.c:250
 #, c-format
-msgid "Unsupported uncompressed FourCC type %u"
-msgstr "Okomprimerad FourCC-typ %u stöds inte"
+msgid ""
+"Unsupported DDS pixel format:\n"
+"bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
+msgstr ""
+"DDS-bildpunktsformatet stöds inte:\n"
+"bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flaggor: %u"
 
-#: plug-ins/file-dds/ddsread.c:578
-msgid "Invalid or corrupted DDS header"
-msgstr "Ogiltigt eller trasigt DDS-huvud"
+#: plug-ins/file-dds/ddsread.c:499
+msgid "Invalid or corrupted DDS header."
+msgstr "Ogiltigt eller trasigt DDS-huvud."
 
-#: plug-ins/file-dds/ddsread.c:588
+#: plug-ins/file-dds/ddsread.c:511
 msgid "Could not allocate a new image."
 msgstr "Kunde inte allokera en ny bild."
 
-#: plug-ins/file-dds/ddsread.c:600
+#: plug-ins/file-dds/ddsread.c:523
 msgid "Error reading palette."
 msgstr "Fel vid läsning av palett."
 
-#: plug-ins/file-dds/ddsread.c:887
+#: plug-ins/file-dds/ddsread.c:812
 msgid "Invalid DDS format magic number."
 msgstr "Ogiltigt magiskt nummer för DDS-format."
 
-#: plug-ins/file-dds/ddsread.c:978
+#: plug-ins/file-dds/ddsread.c:828
+msgid ""
+"File lacks expected pixel format flags! Image may not be decoded correctly."
+msgstr ""
+"Filen saknar förväntade bildpunktsformatflaggor! Bilden kommer kanske inte "
+"avkodas korrekt."
+
+#: plug-ins/file-dds/ddsread.c:863
+msgid "Invalid pixel format."
+msgstr "Ogiltigt bildpunktsformat."
+
+#: plug-ins/file-dds/ddsread.c:888
+#, c-format
+msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
+msgstr "Formatet stöds inte (FourCC: %c%c%c%c, hex: %08x)"
+
+#: plug-ins/file-dds/ddsread.c:910
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Ogiltigt bpp-värde för RGB-data: %d"
 
-#: plug-ins/file-dds/ddsread.c:989
+#: plug-ins/file-dds/ddsread.c:921
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Ogiltigt bpp-värde för luminansdata: %d"
 
-#: plug-ins/file-dds/ddsread.c:1041
-msgid "Invalid pixel format."
-msgstr "Ogiltigt bildpunktsformat."
+#: plug-ins/file-dds/ddsread.c:943
+msgid "Invalid DX10 header"
+msgstr "Ogiltigt DX10-huvud"
 
-#: plug-ins/file-dds/ddsread.c:1274
+#: plug-ins/file-dds/ddsread.c:975
 #, c-format
-msgid "Unsupported DXGI format (%d)"
-msgstr "DXGI-formatet (%d) stöds inte"
+msgid "Unsupported DXGI Format: %u"
+msgstr "DXGI-formatet stöds inte: %u"
 
-#: plug-ins/file-dds/ddsread.c:1430
-#, c-format
-msgid "Unsupported value for bytes per pixel: %d"
-msgstr "Värdet för byte per bildpunkt stöds inte: %d"
-
-#: plug-ins/file-dds/ddsread.c:1525 plug-ins/file-dds/ddsread.c:1583
-#: plug-ins/file-dds/ddsread.c:1604
+#: plug-ins/file-dds/ddsread.c:1163 plug-ins/file-dds/ddsread.c:1227
+#: plug-ins/file-dds/ddsread.c:1247
 msgid "Requested data exceeds size of file.\n"
 msgstr "Begärda data överskrider filstorleken.\n"
 
-#: plug-ins/file-dds/ddsread.c:1533 plug-ins/file-dds/ddsread.c:1610
+#: plug-ins/file-dds/ddsread.c:1171 plug-ins/file-dds/ddsread.c:1253
 msgid "Unexpected EOF.\n"
 msgstr "Oväntat filslut.\n"
 
 # data/ui/nautilus-gtranslator-view-ui.xml.h:1 src/dialogs.c:732
 # src/menus.c:276
-#: plug-ins/file-dds/ddsread.c:2125
+#: plug-ins/file-dds/ddsread.c:1579
 msgid "Open DDS"
 msgstr "Öppna DDS"
 
@@ -9264,7 +9483,7 @@ msgstr "8 bpp, 1-bit alfa, 256-platspalett"
 
 #: plug-ins/file-ico/ico-dialog.c:270
 msgid "24 bpp, 1-bit alpha, no palette"
-msgstr "24 bpp, 1-bits alfa, ingen palett"
+msgstr "24 bpp, 1-bit alfa, ingen palett"
 
 #: plug-ins/file-ico/ico-dialog.c:271
 msgid "32 bpp, 8-bit alpha, no palette"
@@ -9600,28 +9819,28 @@ msgstr "Lagermaskens bredd är ogiltig eller stöds inte: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Lagermaskens storlek är ogiltig eller stöds inte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2066 plug-ins/file-psd/psd-load.c:2722
+#: plug-ins/file-psd/psd-load.c:2074 plug-ins/file-psd/psd-load.c:2730
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Komprimeringsläget stöds inte: %d"
 
-#: plug-ins/file-psd/psd-load.c:2915
+#: plug-ins/file-psd/psd-load.c:2923
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:3115
+#: plug-ins/file-psd/psd-load.c:3123
 msgid "Unsupported or invalid channel size"
 msgstr "Kanalstorleken är ogiltig eller stöds inte"
 
-#: plug-ins/file-psd/psd-load.c:3184
+#: plug-ins/file-psd/psd-load.c:3192
 msgid "Failed to decompress data"
 msgstr "Misslyckades med att dekomprimera data"
 
-#: plug-ins/file-psd/psd-load.c:3565
+#: plug-ins/file-psd/psd-load.c:3573
 msgid "Duotone Import"
 msgstr "Import av duplexfärg"
 
-#: plug-ins/file-psd/psd-load.c:3566
+#: plug-ins/file-psd/psd-load.c:3574
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -9631,11 +9850,11 @@ msgstr ""
 "Data för duplexfärgrymd har sparats\n"
 "och kan åter tillämpas vid export."
 
-#: plug-ins/file-psd/psd-load.c:3588 plug-ins/file-psd/psd-save.c:2665
+#: plug-ins/file-psd/psd-load.c:3596 plug-ins/file-psd/psd-save.c:2665
 msgid "Compatibility Notice"
 msgstr "Kompatibilitetsanteckning"
 
-#: plug-ins/file-psd/psd-load.c:3589
+#: plug-ins/file-psd/psd-load.c:3597
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -9685,15 +9904,18 @@ msgstr ""
 "PSD-filer kan lagra upp till 998 banor. \n"
 "Resten kommer förkastas."
 
+# TODO: Find official translation of Photoshop option.
 #: plug-ins/file-psd/psd-save.c:2666
 msgid ""
-"Legacy layer modes have been reported to have better compatibility with "
-"Photoshop. If you encounter display issues, consider switching to those "
-"layer modes."
+"Legacy layer modes have better compatibility with Photoshop, but do not "
+"support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
+"Clipped Layers as Group'. If you encounter display issues, consider "
+"switching to those layer modes."
 msgstr ""
-"De föråldrade lagerlägena har rapporterats ha bättre kompatibilitet med "
-"Photoshop. Om du stöter på visningsproblem kan du överväga att växla till de "
-"lagerlägena."
+"De föråldrade lagerlägena har bättre kompatibilitet med Photoshop, men "
+"stöder inte ”Klipp mot bakgrund”, vilket behövs för Photoshops ”Blend "
+"Clipped Layers as Group”. Om du stöter på visningsproblem kan du överväga "
+"att växla till de lagerlägena."
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -10778,6 +11000,14 @@ msgstr "Färg_karta:"
 msgid "Custom gradient"
 msgstr "Anpassad toning"
 
+#: plug-ins/flame/flame.c:1341
+msgid "_Rendering"
+msgstr "_Rendering"
+
+#: plug-ins/flame/flame.c:1344
+msgid "C_amera"
+msgstr "K_amera"
+
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:617
 #: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:988
@@ -11082,6 +11312,26 @@ msgstr "Blått tillämpningsläge"
 msgid "In_version"
 msgstr "In_vertering"
 
+#: plug-ins/fractal-explorer/fractal-explorer.c:371
+msgid "Red inversion mode"
+msgstr "Rött inverteringsläge"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:376
+msgid "I_nversion"
+msgstr "I_nvertering"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:377
+msgid "Green inversion mode"
+msgstr "Grönt inverteringsläge"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:382
+msgid "_Inversion"
+msgstr "_Invertering"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:383
+msgid "Blue inversion mode"
+msgstr "Blått inverteringsläge"
+
 #: plug-ins/fractal-explorer/fractal-explorer.c:388
 msgid "_Number of colors"
 msgstr "A_ntal färger"
@@ -11089,6 +11339,14 @@ msgstr "A_ntal färger"
 #: plug-ins/fractal-explorer/fractal-explorer.c:389
 msgid "Number of Colors for mapping"
 msgstr "Antal färger för mappning"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:393
+msgid "_Use log log smoothing"
+msgstr "_Använd loglog-utjämning"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:394
+msgid "Use log log smoothing to eliminate \"banding\" in the result"
+msgstr "Använd loglog-utjämning för att eliminera ”bandning” i resultatet"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:493
 msgid "Rendering fractal"
@@ -11351,6 +11609,10 @@ msgstr "Verktygsalternativ"
 msgid "_Stroke"
 msgstr "_Stryk"
 
+#: plug-ins/gfig/gfig-dialog.c:494 plug-ins/gfig/gfig-dialog.c:1291
+msgid "Foreground"
+msgstr "Förgrund"
+
 #. Fill frame on right side
 #: plug-ins/gfig/gfig-dialog.c:519
 msgid "Fill"
@@ -11427,10 +11689,6 @@ msgstr "Max ångra:"
 #: plug-ins/gfig/gfig-dialog.c:1289 plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Transparent"
-
-#: plug-ins/gfig/gfig-dialog.c:1291
-msgid "Foreground"
-msgstr "Förgrund"
 
 #: plug-ins/gfig/gfig-dialog.c:1302
 msgid ""
@@ -12034,7 +12292,7 @@ msgstr "Tillämpar papperet som det är (utan ciselering)"
 
 #: plug-ins/gimpressionist/paper.c:193
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr "Bestämmer texturens skala (i procent av originalfilen)"
+msgstr "Anger texturens skala (i procent av originalfilen)"
 
 #: plug-ins/gimpressionist/placement.c:66
 msgid "Pl_acement"
@@ -12095,7 +12353,7 @@ msgstr "Beskrivning:"
 
 #: plug-ins/gimpressionist/presets.c:893
 msgid "Gimpressionist Defaults"
-msgstr "Gimpressionist standardvärden"
+msgstr "GIMPressionists standardvärden"
 
 #: plug-ins/gimpressionist/presets.c:1014
 msgid "_Presets"
@@ -12285,33 +12543,65 @@ msgstr "Producera en linsöverstrålning med hjälp av gradienter"
 msgid "Radi_us"
 msgstr "Radi_e"
 
+#: plug-ins/gradient-flare/gradient-flare.c:854
+msgid "Radius of GFlare (pixel)"
+msgstr "Radie för GFlare (bildpunkter)"
+
 #: plug-ins/gradient-flare/gradient-flare.c:859
 msgid "Ro_tation"
 msgstr "Ro_tation"
+
+#: plug-ins/gradient-flare/gradient-flare.c:860
+msgid "Rotation of GFlare (degree)"
+msgstr "Rotation för GFlare (grader)"
 
 #: plug-ins/gradient-flare/gradient-flare.c:865
 msgid "_Hue rotation"
 msgstr "_Nyansrotation"
 
+#: plug-ins/gradient-flare/gradient-flare.c:866
+msgid "Hue rotation of GFlare (degree)"
+msgstr "Nyansrotation för GFlare (grader)"
+
 #: plug-ins/gradient-flare/gradient-flare.c:871
 msgid "Vector _angle"
 msgstr "Vektor_vinkel"
+
+#: plug-ins/gradient-flare/gradient-flare.c:872
+msgid "Vector angle for second flares (degree)"
+msgstr "Vektorvinkel för sekundär överstrålning (grader)"
 
 #: plug-ins/gradient-flare/gradient-flare.c:877
 msgid "Vector len_gth"
 msgstr "Vektorlän_gd"
 
+#: plug-ins/gradient-flare/gradient-flare.c:878
+msgid "Vector length for second flares (percentage of Radius)"
+msgstr "Vektorlängd för sekundär överstrålning (procentandel av radie)"
+
 #: plug-ins/gradient-flare/gradient-flare.c:884
 msgid "Ada_ptive supersampling"
 msgstr "Ada_ptiv supersampling"
+
+#: plug-ins/gradient-flare/gradient-flare.c:885
+msgid "Use adaptive supersampling while rendering"
+msgstr "Använd adaptiv supersampling under rendering"
 
 #: plug-ins/gradient-flare/gradient-flare.c:890
 msgid "_Max depth"
 msgstr "_Maxdjup"
 
+#: plug-ins/gradient-flare/gradient-flare.c:891
+msgid "Max depth for adaptive supersampling"
+msgstr "Maxdjup för adaptiv supersampling"
+
 #: plug-ins/gradient-flare/gradient-flare.c:896
 msgid "Threshol_d"
 msgstr "Tröskelvär_de"
+
+#: plug-ins/gradient-flare/gradient-flare.c:897
+msgid "Threshold for adaptive supersampling"
+msgstr "Tröskelvärde för adaptiv supersampling"
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
 #: plug-ins/gradient-flare/gradient-flare.c:2499
@@ -12440,7 +12730,7 @@ msgstr "_Genomsök gradienter igen"
 #. Glow
 #: plug-ins/gradient-flare/gradient-flare.c:3566
 msgid "Glow Paint Options"
-msgstr "Glöd målarinställningar"
+msgstr "Målningsalternativ för glöd"
 
 #: plug-ins/gradient-flare/gradient-flare.c:3576
 #: plug-ins/gradient-flare/gradient-flare.c:3602
@@ -12457,12 +12747,12 @@ msgstr "Målarläge:"
 #. Rays
 #: plug-ins/gradient-flare/gradient-flare.c:3592
 msgid "Rays Paint Options"
-msgstr "Strålritningsinställningar"
+msgstr "Målningsalternativ för strålar"
 
 #. Rays
 #: plug-ins/gradient-flare/gradient-flare.c:3618
 msgid "Second Flares Paint Options"
-msgstr "Andra överstrålarna ritinställningar"
+msgstr "Målningsalternativ för sekundär överstrålning"
 
 #.
 #. *  Gradient Menus
@@ -12477,7 +12767,7 @@ msgstr "Toningar"
 #: plug-ins/gradient-flare/gradient-flare.c:3782
 #: plug-ins/gradient-flare/gradient-flare.c:3913
 msgid "Radial gradient:"
-msgstr "Radiell toning:"
+msgstr "Radiell gradient:"
 
 #: plug-ins/gradient-flare/gradient-flare.c:3684
 #: plug-ins/gradient-flare/gradient-flare.c:3786
@@ -12536,7 +12826,7 @@ msgstr "Sannolikhetsgradient:"
 #.
 #: plug-ins/gradient-flare/gradient-flare.c:3979
 msgid "Shape of Second Flares"
-msgstr "Formen på andra överstrålarna"
+msgstr "Formen på sekundär överstrålning"
 
 #: plug-ins/gradient-flare/gradient-flare.c:4038
 msgid "Random seed:"
@@ -12544,7 +12834,7 @@ msgstr "Slumpfrö:"
 
 #: plug-ins/gradient-flare/gradient-flare.c:4052
 msgid "_Second Flares"
-msgstr "_Andra överstålar"
+msgstr "_Sekundär överstrålning"
 
 #. the dialog window
 #: plug-ins/help-browser/dialog.c:263 plug-ins/help-browser/dialog.c:831
@@ -13188,7 +13478,7 @@ msgstr "Rutnätets synlighet och typ"
 
 #: plug-ins/imagemap/imap_grid.c:223
 msgid "_Hidden"
-msgstr "_Gömd"
+msgstr "_Dolt"
 
 #: plug-ins/imagemap/imap_grid.c:231
 msgid "_Lines"
@@ -13642,7 +13932,7 @@ msgstr "Aktivera bumpmappning"
 msgid "Enable en_vironment mapping"
 msgstr "Aktivera miljömapp_ning"
 
-#: plug-ins/lighting/lighting-main.c:156 plug-ins/lighting/lighting-main.c:291
+#: plug-ins/lighting/lighting-main.c:156
 msgid "Enable envmapping"
 msgstr "Aktivera miljömappning"
 
@@ -13839,9 +14129,39 @@ msgstr "Diffus intensitet"
 msgid "Material diffuse intensity (Bright)"
 msgstr "Diffus intensitet för material (ljus)"
 
+#: plug-ins/lighting/lighting-main.c:271
+msgid "Diffuse reflectivity"
+msgstr "Diffus reflexivitet"
+
+#: plug-ins/lighting/lighting-main.c:272
+#: plug-ins/map-object/map-object-main.c:288
+msgid "Material diffuse reflectivity"
+msgstr "Diffus reflexivitet för material"
+
+#: plug-ins/lighting/lighting-main.c:277
+msgid "Specular reflectivity"
+msgstr "Speglande reflexivitet"
+
+#: plug-ins/lighting/lighting-main.c:278
+#: plug-ins/map-object/map-object-main.c:294
+msgid "Material specular reflectivity"
+msgstr "Speglande reflexivitet för material"
+
+#: plug-ins/lighting/lighting-main.c:283
+msgid "Highlight"
+msgstr "Högdager"
+
+#: plug-ins/lighting/lighting-main.c:284
+msgid "Material highlight (note, it's exponential) (Polished)"
+msgstr "Högdager för material (observera, den är exponentiell) (polerad)"
+
 #: plug-ins/lighting/lighting-main.c:290
 msgid "Metallic"
 msgstr "Metallisk"
+
+#: plug-ins/lighting/lighting-main.c:291
+msgid "Make surfaces look metallic"
+msgstr "Gör så ytor ser metalliska ut"
 
 #: plug-ins/lighting/lighting-main.c:297
 #: plug-ins/map-object/map-object-main.c:307
@@ -13851,11 +14171,6 @@ msgstr "Tillämpa kantutjämning"
 #: plug-ins/lighting/lighting-main.c:302
 msgid "Create new ima_ge"
 msgstr "Skapa ny b_ild"
-
-#: plug-ins/lighting/lighting-main.c:303
-#: plug-ins/map-object/map-object-main.c:331
-msgid "Create a new image"
-msgstr "Skapa en ny bild"
 
 #: plug-ins/lighting/lighting-main.c:308
 msgid "Trans_parent background"
@@ -14106,17 +14421,9 @@ msgstr "Diffus intensitet för material"
 msgid "Di_ffuse"
 msgstr "Di_ffus"
 
-#: plug-ins/map-object/map-object-main.c:288
-msgid "Material diffuse reflectivity"
-msgstr "Diffus reflexivitet för material"
-
 #: plug-ins/map-object/map-object-main.c:293
 msgid "Spec_ular"
 msgstr "S_peglande"
-
-#: plug-ins/map-object/map-object-main.c:294
-msgid "Material specular reflectivity"
-msgstr "Speglande reflexivitet för material"
 
 #: plug-ins/map-object/map-object-main.c:299
 msgid "Highligh_t"
@@ -15284,7 +15591,43 @@ msgstr "Skapa en bild från ett område på skärmen"
 
 #: plug-ins/screenshot/screenshot.c:164
 msgid "Shoot _area"
-msgstr "Fota _område"
+msgstr "Foto_område"
+
+#: plug-ins/screenshot/screenshot.c:165
+msgid "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
+msgstr "Fototypen { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
+
+#: plug-ins/screenshot/screenshot.c:195
+msgid "Include _mouse pointer"
+msgstr "Inkludera _muspekare"
+
+#: plug-ins/screenshot/screenshot.c:196
+msgid "Your pointing device's cursor will be part of the image"
+msgstr "Markören för ditt pekdon kommer vara del av bilden"
+
+#: plug-ins/screenshot/screenshot.c:204
+msgid "Include window _decoration"
+msgstr "Inkludera fönster_dekoration"
+
+#: plug-ins/screenshot/screenshot.c:205
+msgid "Title bar, window borders and shadow will be part of the image"
+msgstr "Namnlist, fönsterkanter och skugga kommer vara del av bilden"
+
+#: plug-ins/screenshot/screenshot.c:214
+msgid "Selection d_elay"
+msgstr "Ma_rkeringsfördröjning"
+
+#: plug-ins/screenshot/screenshot.c:215
+msgid "Delay before selection of the window or the region"
+msgstr "Fördröjning innan markering av fönstret eller regionen"
+
+#: plug-ins/screenshot/screenshot.c:219
+msgid "Screenshot dela_y"
+msgstr "Skärmbildsfördrö_jning"
+
+#: plug-ins/screenshot/screenshot.c:220
+msgid "Delay before snapping the screenshot"
+msgstr "Fördröjning innan skärmbilden tas"
 
 #: plug-ins/screenshot/screenshot.c:224
 msgid "Color _Profile"
@@ -15632,6 +15975,14 @@ msgstr "_Bildläsare/Kamera…"
 msgid "Transferring data from scanner/camera"
 msgstr "Överför data från bildläsare/kamera"
 
+#, c-format
+#~ msgid "Unsupported uncompressed FourCC type %u"
+#~ msgstr "Okomprimerad FourCC-typ %u stöds inte"
+
+#, c-format
+#~ msgid "Unsupported value for bytes per pixel: %d"
+#~ msgstr "Värdet för byte per bildpunkt stöds inte: %d"
+
 #~ msgid "Always use _transparency for BC1/DXT1"
 #~ msgstr "Använd alltid _transparens för BC1/DXT1"
 
@@ -15689,9 +16040,6 @@ msgstr "Överför data från bildläsare/kamera"
 #~ msgid "Parameter URI"
 #~ msgstr "Parameter-URI"
 
-#~ msgid "_Rendering"
-#~ msgstr "_Rendering"
-
 #~ msgid "_Brightness:"
 #~ msgstr "_Ljusstyrka:"
 
@@ -15700,9 +16048,6 @@ msgstr "Överför data från bildläsare/kamera"
 
 #~ msgid "Spatial _filter radius:"
 #~ msgstr "Spatial _filterradie:"
-
-#~ msgid "C_amera"
-#~ msgstr "K_amera"
 
 #~ msgid "_Zoom:"
 #~ msgstr "_Zooma:"
@@ -15756,20 +16101,11 @@ msgstr "Överför data från bildläsare/kamera"
 #~ msgid "Co_lor:"
 #~ msgstr "F_ärg:"
 
-#~ msgid "Start _index:"
-#~ msgstr "S_tartindex:"
-
 #~ msgid "_Font:"
 #~ msgstr "_Typsnitt:"
 
 #~ msgid "Select Number Color"
 #~ msgstr "Välj färgnummer"
-
-#~ msgid "At _bottom"
-#~ msgstr "I _botten"
-
-#~ msgid "At _top"
-#~ msgstr "På _topp"
 
 #~ msgid "Hole sp_acing:"
 #~ msgstr "Hål_avstånd:"
@@ -15826,12 +16162,6 @@ msgstr "Överför data från bildläsare/kamera"
 
 #~ msgid "Change the number of colors in the mapping"
 #~ msgstr "Ändra antalet färger i mappningen"
-
-#~ msgid "Use loglog smoothing"
-#~ msgstr "Använd loglog-utjämning"
-
-#~ msgid "Use log log smoothing to eliminate \"banding\" in the result"
-#~ msgstr "Använd loglog-utjämning för att eliminera ”bandning” i resultatet"
 
 #~ msgid "Red:"
 #~ msgstr "Röd:"
@@ -16031,15 +16361,6 @@ msgstr "Överför data från bildläsare/kamera"
 #~ msgid "Area"
 #~ msgstr "Område"
 
-#~ msgid "Include window _decoration"
-#~ msgstr "Inkludera fönster_dekoration"
-
-#~ msgid "Include _mouse pointer"
-#~ msgstr "Inkludera _muspekare"
-
-#~ msgid "Selection delay: "
-#~ msgstr "Markeringsfördröjning: "
-
 #~ msgid ""
 #~ "After the delay, drag your mouse to select the region for the screenshot."
 #~ msgstr ""
@@ -16051,9 +16372,6 @@ msgstr "Överför data från bildläsare/kamera"
 #~ msgid "At the end of the delay, click in a window to snap it."
 #~ msgstr ""
 #~ "Vid slutet av fördröjningen, klicka i ett fönster för att fästa det."
-
-#~ msgid "Screenshot dela_y: "
-#~ msgstr "Skärmbildsfördrö_jning: "
 
 #~ msgid "After the delay, the screenshot is taken."
 #~ msgstr "Skärmbilden tas efter fördröjningen."
@@ -16402,9 +16720,6 @@ msgstr "Överför data från bildläsare/kamera"
 #~ msgid "Raise to _top"
 #~ msgstr "Höj till _toppen"
 
-#~ msgid "Lower to _bottom"
-#~ msgstr "_Sänk till botten"
-
 #~ msgid "_Next"
 #~ msgstr "_Nästa"
 
@@ -16414,25 +16729,12 @@ msgstr "Överför data från bildläsare/kamera"
 #~ msgid "Rotate / Scale"
 #~ msgstr "Rotera / skala"
 
-#~ msgid "_Convert text layers to image"
-#~ msgstr "_Konvertera textlager till bild"
-
 #, c-format
 #~ msgid "_Layers as pages (%s)"
 #~ msgstr "_Lager som sidor (%s)"
 
 #~ msgid "top layers first"
 #~ msgstr "översta lagren först"
-
-#~ msgid "bottom layers first"
-#~ msgstr "nedersta lagren först"
-
-#~ msgid "_Reverse the pages order"
-#~ msgstr "_Omvänd sidordning"
-
-#, c-format
-#~ msgid "Layers as pages (%s)"
-#~ msgstr "Lager som sidor (%s)"
 
 #~ msgid "Image _Type:"
 #~ msgstr "Bild_typ:"
@@ -18930,9 +19232,6 @@ msgstr "Överför data från bildläsare/kamera"
 #~ msgid "_Foreground & background"
 #~ msgstr "_Förgrund och bakgrund"
 
-#~ msgid "First color"
-#~ msgstr "Första färgen"
-
 #~ msgid "Second color"
 #~ msgstr "Andra färgen"
 
@@ -19193,9 +19492,6 @@ msgstr "Överför data från bildläsare/kamera"
 
 #~ msgid "Some error occurred while saving"
 #~ msgstr "Ett fel inträffade vid sparning"
-
-#~ msgid "Could not close the file"
-#~ msgstr "Kunde inte stänga filen"
 
 #~ msgid "Image Properties"
 #~ msgstr "Bildegenskaper"
