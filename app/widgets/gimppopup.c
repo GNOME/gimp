@@ -116,12 +116,31 @@ static void
 gimp_popup_grab_notify (GtkWidget *widget,
                         gboolean   was_grabbed)
 {
+  GtkWidget *grab_widget;
+  GtkWidget *iter;
+
   if (was_grabbed)
     return;
 
+  grab_widget = gtk_grab_get_current ();
+
   /* ignore grabs on one of our children, like a scrollbar */
-  if (gtk_widget_is_ancestor (gtk_grab_get_current (), widget))
+  if (gtk_widget_is_ancestor (grab_widget, widget))
     return;
+
+  /* ignore grabs from windows / menus shown by
+   * internal widgets */
+  iter = gtk_widget_get_toplevel (grab_widget);
+  while (iter)
+    {
+      if (iter == widget)
+        return;
+
+      if (GTK_IS_WINDOW (iter))
+        iter = (GtkWidget*) gtk_window_get_transient_for ((GtkWindow*) iter);
+      else
+        break;
+    }
 
   g_signal_emit (widget, popup_signals[CANCEL], 0);
 }
