@@ -74,6 +74,29 @@
   </provides>
 
   <releases>
+    <release version="2.99.18" date="2024-01-03" type="development">
+      <description>
+        <p>
+        GIMP 2.99.18 may be the last development version before release candidates, since we entered
+        GUI feature freeze.
+        This release contain huge core logic updates on several areas so we are really welcoming
+        feedbacks and reports to reach stability state sooner.
+        Here are some of the more visible improvements:
+        </p>
+        <ul>
+          <li>Pervasize update on color correctness</li>
+          <li>Paint tools now have an "Expand Layers" option and sub-options to auto-expand layers when painting over their boundaries</li>
+          <li>Better font handling</li>
+          <li>New snapping options</li>
+          <li>New image format supports: Farbfeld (import and export), Esm Software PIX (import only), HEJ2 (import only)</li>
+          <li>Improved image format supports: DDS, GIF, HEIF, JPEG-XL, OpenEXR, PDF, PNG, PSD, PSP.</li>
+          <li>New palette format support: Swatchbooker</li>
+          <li>On Windows, the title bar will use light or dark mode depending on the current theme</li>
+          <li>On Wayland, pad buttons can be mapped to actions</li>
+          <li>Major API updates</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.99.16" date="2023-07-05" type="development">
       <description>
         <p>
