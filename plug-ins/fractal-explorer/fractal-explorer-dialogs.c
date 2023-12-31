@@ -973,8 +973,8 @@ explorer_dialog (GimpProcedure       *procedure,
                                      &gradient_samples);
   gradient_button = gimp_gradient_chooser_new (_("FractalExplorer Gradient"),
                                                NULL, GIMP_RESOURCE (gradient));
-  g_signal_connect (gradient_button, "resource-set",
-                    G_CALLBACK (explorer_gradient_select_callback), config);
+  g_signal_connect_swapped (gradient_button, "resource-set",
+                            G_CALLBACK (explorer_gradient_select_callback), config);
   gtk_box_pack_start (GTK_BOX (hbox), gradient_button, TRUE, TRUE, 0);
   gtk_widget_set_visible (gradient_button, TRUE);
 
