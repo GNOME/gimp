@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-01-02 04:05+0000\n"
-"PO-Revision-Date: 2024-01-02 18:14+0000\n"
+"PO-Revision-Date: 2024-01-02 18:22+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -1076,20 +1076,18 @@ msgid "Edit this color"
 msgstr "Breyta þessum lit"
 
 #: app/actions/colormap-actions.c:52
-#, fuzzy
 #| msgctxt "palette-editor-action"
 #| msgid "_Delete Color"
 msgctxt "colormap-action"
 msgid "_Delete Color..."
-msgstr "_Eyða lit"
+msgstr "_Eyða lit..."
 
 #: app/actions/colormap-actions.c:53
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Delete this layer"
 msgctxt "colormap-action"
 msgid "Delete this color"
-msgstr "Eyða þessu lagi"
+msgstr "Eyða þessum lit"
 
 #: app/actions/colormap-actions.c:61
 msgctxt "colormap-action"
@@ -2650,11 +2648,10 @@ msgid "Open the symmetry dialog"
 msgstr "Opna valmynd fyrir samhverfu"
 
 #: app/actions/dialogs-actions.c:77
-#, fuzzy
 #| msgid "New Layer Dialog"
 msgctxt "dialogs-action"
 msgid "_Layers Dialog"
-msgstr "Gluggi fyrir nýtt lag"
+msgstr "Va_lmynd fyrir lög"
 
 #: app/actions/dialogs-actions.c:78
 msgctxt "dialogs-action"
@@ -2667,11 +2664,10 @@ msgid "Open the layers dialog"
 msgstr "Opna valmynd fyrir lög"
 
 #: app/actions/dialogs-actions.c:85
-#, fuzzy
 #| msgid "New Channel Dialog"
 msgctxt "dialogs-action"
 msgid "_Channels Dialog"
-msgstr "Gluggi fyrir nýja litrás"
+msgstr "Valmynd fyrir lit_rásir"
 
 #: app/actions/dialogs-actions.c:86
 msgctxt "dialogs-action"
@@ -2684,11 +2680,10 @@ msgid "Open the channels dialog"
 msgstr "Opna valmynd fyrir litrásir"
 
 #: app/actions/dialogs-actions.c:93
-#, fuzzy
 #| msgid "New Path Dialog"
 msgctxt "dialogs-action"
 msgid "_Paths Dialog"
-msgstr "Valkostir fyrir nýjan feril"
+msgstr "Valmynd fyrir ferla"
 
 #: app/actions/dialogs-actions.c:94
 msgctxt "dialogs-action"
@@ -2701,12 +2696,11 @@ msgid "Open the paths dialog"
 msgstr "Opna valmynd fyrir ferla"
 
 #: app/actions/dialogs-actions.c:101
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Color_map"
 msgctxt "dialogs-action"
 msgid "Color_map Dialog"
-msgstr "Litavör_pun"
+msgstr "Valmynd fyrir litavör_pun"
 
 #: app/actions/dialogs-actions.c:102
 msgctxt "dialogs-action"
@@ -2719,11 +2713,10 @@ msgid "Open the colormap dialog"
 msgstr "Opna valmynd fyrir litavörpun"
 
 #: app/actions/dialogs-actions.c:109
-#, fuzzy
 #| msgid "Histogram Scale"
 msgctxt "dialogs-action"
 msgid "Histogra_m Dialog"
-msgstr "Kvarði litatíðnirits"
+msgstr "Val_mynd fyrir litatíðnirit"
 
 #: app/actions/dialogs-actions.c:110
 msgctxt "dialogs-action"
@@ -2746,12 +2739,11 @@ msgid "Open the selection editor"
 msgstr "Opna myndvalsritillinn"
 
 #: app/actions/dialogs-actions.c:124
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Na_vigation Window"
 msgctxt "dialogs-action"
 msgid "Na_vigation Dialog"
-msgstr "_Yfirlitsgluggi"
+msgstr "_Valmynd fyrir yfirlitsmynd"
 
 #: app/actions/dialogs-actions.c:125
 msgctxt "dialogs-action"
@@ -12303,12 +12295,11 @@ msgid "Grid"
 msgstr "Hnitanet"
 
 #: app/core/core-enums.c:1307
-#, fuzzy
 #| msgctxt "colormap-action"
 #| msgid "Colormap Menu"
 msgctxt "undo-type"
 msgid "Colormap remapping"
-msgstr "Valmynd fyrir litavörpun"
+msgstr "Endurgerð litavörpunar"
 
 #: app/core/core-enums.c:1308 app/core/core-enums.c:1350
 msgctxt "undo-type"
