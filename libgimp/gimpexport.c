@@ -173,17 +173,33 @@ export_flatten (GimpImage  *image,
 }
 
 static void
+export_merge_layer_effects_rec (GList *layers)
+{
+  GList *iter;
+
+  for (iter = layers; iter; iter = g_list_next (iter))
+    if (gimp_item_is_group (iter->data))
+      {
+        GList *children = gimp_item_list_children (iter->data);
+
+        export_merge_layer_effects_rec (children);
+
+        g_list_free (children);
+      }
+    else
+      {
+        gimp_drawable_merge_filters (GIMP_DRAWABLE (iter->data));
+      }
+}
+
+static void
 export_merge_layer_effects (GimpImage  *image,
                             GList     **drawables)
 {
-  GList  *layers;
-  GList  *iter;
+  GList *layers;
 
   layers = gimp_image_list_layers (image);
-
-  for (iter = layers; iter; iter = g_list_next (iter))
-    gimp_drawable_merge_filters (GIMP_DRAWABLE (iter->data));
-
+  export_merge_layer_effects_rec (layers);
   g_list_free (layers);
 }
 

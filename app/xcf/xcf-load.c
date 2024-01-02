@@ -141,6 +141,7 @@ static GimpLayer     * xcf_load_layer         (XcfInfo       *info,
 static GimpChannel   * xcf_load_channel       (XcfInfo       *info,
                                                GimpImage     *image);
 static FilterData    * xcf_load_effect        (XcfInfo       *info,
+                                               GimpImage     *image,
                                                GimpDrawable  *drawable);
 static void            xcf_load_free_effect   (FilterData    *data);
 static void            xcf_load_free_effects  (GList         *effects);
@@ -2400,32 +2401,6 @@ xcf_load_effect_props (XcfInfo      *info,
         case PROP_END:
           return TRUE;
 
-        case PROP_FILTER_NAME:
-          {
-            gchar  *filter_name;
-            goffset base = info->cp;
-
-            /* Go back so we can get the size of the string */
-            xcf_seek_pos (info, base - sizeof (guint32), NULL);
-
-            xcf_read_string (info, &filter_name, 1);
-            filter->name = filter_name;
-          }
-        break;
-
-        case PROP_FILTER_ICON:
-          {
-            gchar  *filter_icon;
-            goffset base = info->cp;
-
-            /* Go back so we can get the size of the string */
-            xcf_seek_pos (info, base - sizeof (guint32), NULL);
-
-            xcf_read_string (info, &filter_icon, 1);
-            filter->icon_name = filter_icon;
-          }
-        break;
-
         case PROP_VISIBLE:
           {
             gboolean visible;
@@ -2941,82 +2916,43 @@ xcf_load_layer (XcfInfo    *info,
     }
 
   /* read in any layer effects and effect masks */
-  if (effects_offset != 0)
+  while (effects_offset != 0)
     {
-      GList *filter_data_list = NULL;
-      gint   filter_count     = 0;
+      GList      *filter_data_list = NULL;
+      gint        filter_count     = 0;
+      FilterData *filter_data;
 
-      cur_offset += info->bytes_per_offset;
-      while (TRUE)
+      if (effects_offset < cur_offset)
         {
-          FilterData  *filter_data;
-          GimpChannel *effect_mask;
-
-          /* if the offset is 0 then we are at the end
-           * of the effect list.
-           */
-          if (effects_offset == 0)
-            break;
-
-          if (effects_offset < cur_offset)
-            {
-              GIMP_LOG (XCF, "Invalid effect offset: %" G_GOFFSET_FORMAT
-                        " at offset: %" G_GOFFSET_FORMAT, effects_offset, cur_offset);
-              goto error;
-            }
-
-          /* seek to the effect offset */
-          if (! xcf_seek_pos (info, effects_offset, NULL))
-            goto error;
-
-          filter_data = xcf_load_effect (info, GIMP_DRAWABLE (layer));
-          if (! filter_data)
-            goto error;
-
-          xcf_progress_update (info);
-
-          /* restore the saved position so we'll be ready to
-           * read the next offset.
-           */
-          cur_offset += info->bytes_per_offset;
-          if (! xcf_seek_pos (info, cur_offset, NULL))
-            goto error;
-
-          /* read in the offset of the effect mask */
-          xcf_read_offset (info, &effects_offset, 1);
-
-          if (effects_offset < cur_offset)
-            {
-              GIMP_LOG (XCF, "Invalid effect mask offset: %" G_GOFFSET_FORMAT
-                        " at offset: %" G_GOFFSET_FORMAT, effects_offset, cur_offset);
-              goto error;
-            }
-
-          /* seek to the effect mask offset */
-          if (! xcf_seek_pos (info, effects_offset, NULL))
-            goto error;
-
-          effect_mask = xcf_load_channel (info, image);
-          if (! effect_mask)
-            goto error;
-
-          filter_data->mask = effect_mask;
-
-          filter_data_list = g_list_prepend (filter_data_list, filter_data);
-          filter_count++;
-
-          xcf_progress_update (info);
-
-          /* restore the saved position so we'll be ready to
-           * read the next offset.
-           */
-          cur_offset += info->bytes_per_offset;
-          if (! xcf_seek_pos (info, cur_offset, NULL))
-            goto error;
-
-          /* read in the offset of the next effect */
-          xcf_read_offset (info, &effects_offset, 1);
+          GIMP_LOG (XCF, "Invalid effect offset: %" G_GOFFSET_FORMAT
+                    " at offset: %" G_GOFFSET_FORMAT, effects_offset, cur_offset);
+          goto error;
         }
+
+      /* seek to the effect offset */
+      if (! xcf_seek_pos (info, effects_offset, NULL))
+        goto error;
+
+      filter_data = xcf_load_effect (info, image, GIMP_DRAWABLE (layer));
+      if (! filter_data)
+        goto error;
+
+      xcf_progress_update (info);
+
+      filter_data_list = g_list_prepend (filter_data_list, filter_data);
+      filter_count++;
+
+      xcf_progress_update (info);
+
+      /* restore the saved position so we'll be ready to
+       * read the next offset.
+       */
+      cur_offset += info->bytes_per_offset;
+      if (! xcf_seek_pos (info, cur_offset, NULL))
+        goto error;
+
+      /* read in the offset of the next effect */
+      xcf_read_offset (info, &effects_offset, 1);
 
       if (filter_count > 0)
         g_object_set_data_full (G_OBJECT (layer), "gimp-layer-effects", filter_data_list,
@@ -3136,18 +3072,30 @@ xcf_load_channel (XcfInfo   *info,
 
 static FilterData *
 xcf_load_effect (XcfInfo      *info,
+                 GimpImage    *image,
                  GimpDrawable *drawable)
 {
-  FilterData *filter;
-  GeglNode   *operation;
-  gchar      *xml;
+  FilterData  *filter;
+  GimpChannel *effect_mask = NULL;
+  goffset      mask_offset = 0;
+  GeglNode    *operation;
+  gchar       *string;
 
   filter = g_new0 (FilterData, 1);
 
-  xcf_read_string (info, &xml, 1);
+  /* Effect name */
+  xcf_read_string (info, &string, 1);
+  filter->name = string;
 
-  operation = gegl_node_new_from_xml (xml, NULL);
-  g_free (xml);
+  /* Effect icon */
+  xcf_read_string (info, &string, 1);
+  filter->icon_name = string;
+
+  /* Effect XML */
+  xcf_read_string (info, &string, 1);
+
+  operation = gegl_node_new_from_xml (string, NULL);
+  g_free (string);
 
   if (! operation)
     goto error;
@@ -3157,6 +3105,21 @@ xcf_load_effect (XcfInfo      *info,
   /* read in the effect properties */
   if (! xcf_load_effect_props (info, &(*filter)))
     goto error;
+
+  /* seek to the effect mask offset */
+  xcf_read_offset (info, &mask_offset, 1);
+
+  if (mask_offset != 0)
+    {
+      if (! xcf_seek_pos (info, mask_offset, NULL))
+        goto error;
+
+      effect_mask = xcf_load_channel (info, image);
+      if (! effect_mask)
+        goto error;
+    }
+
+  filter->mask = effect_mask;
 
   xcf_progress_update (info);
 

@@ -783,6 +783,7 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
     {
       const Babl *format;
 
+      g_object_add_weak_pointer (G_OBJECT (filter), (gpointer) &filter);
       format = gimp_drawable_filter_get_format (filter);
 
       gimp_drawable_filter_set_preview_split (filter, FALSE,
@@ -810,10 +811,14 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
             gimp_viewable_preview_thaw (GIMP_VIEWABLE (filter->drawable));
         }
 
-      if (! success)
-        gimp_drawable_filter_update_drawable (filter, NULL);
+      if (filter)
+        {
+          if (! success)
+            gimp_drawable_filter_update_drawable (filter, NULL);
 
-      g_signal_emit (filter, drawable_filter_signals[FLUSH], 0);
+          g_signal_emit (filter, drawable_filter_signals[FLUSH], 0);
+          g_object_remove_weak_pointer (G_OBJECT (filter), (gpointer) &filter);
+        }
     }
 
   return success;
@@ -1341,22 +1346,21 @@ gimp_drawable_filter_remove_filter (GimpDrawableFilter *filter)
 {
   if (gimp_drawable_filter_is_added (filter))
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
+      GimpImage    *image    = gimp_item_get_image (GIMP_ITEM (filter->drawable));
+      GimpDrawable *drawable = filter->drawable;
 
-      if (GIMP_IS_LAYER (filter->drawable))
-        {
-          g_signal_handlers_disconnect_by_func (filter->drawable,
-                                                gimp_drawable_filter_lock_alpha_changed,
-                                                filter);
-        }
+      if (GIMP_IS_LAYER (drawable))
+        g_signal_handlers_disconnect_by_func (drawable,
+                                              gimp_drawable_filter_lock_alpha_changed,
+                                              filter);
 
-      g_signal_handlers_disconnect_by_func (filter->drawable,
+      g_signal_handlers_disconnect_by_func (drawable,
                                             gimp_drawable_filter_drawable_removed,
                                             filter);
-      g_signal_handlers_disconnect_by_func (filter->drawable,
+      g_signal_handlers_disconnect_by_func (drawable,
                                             gimp_drawable_filter_format_changed,
                                             filter);
-      g_signal_handlers_disconnect_by_func (filter->drawable,
+      g_signal_handlers_disconnect_by_func (drawable,
                                             gimp_drawable_filter_lock_position_changed,
                                             filter);
 
@@ -1364,15 +1368,12 @@ gimp_drawable_filter_remove_filter (GimpDrawableFilter *filter)
                                             gimp_drawable_filter_affect_changed,
                                             filter);
 
-      gimp_drawable_remove_filter (filter->drawable,
-                                   GIMP_FILTER (filter));
+      gimp_drawable_remove_filter (drawable, GIMP_FILTER (filter));
 
-      if (filter->drawable &&
-          GIMP_IS_DRAWABLE (filter->drawable))
-        gimp_drawable_update_bounding_box (filter->drawable);
+      gimp_drawable_update_bounding_box (drawable);
 
-      if (gimp_viewable_preview_is_frozen (GIMP_VIEWABLE (filter->drawable)))
-        gimp_viewable_preview_thaw (GIMP_VIEWABLE (filter->drawable));
+      if (gimp_viewable_preview_is_frozen (GIMP_VIEWABLE (drawable)))
+        gimp_viewable_preview_thaw (GIMP_VIEWABLE (drawable));
 
       return TRUE;
     }
