@@ -2,13 +2,13 @@
 # Yuri Syrota <rasta@renome.rovno.ua>, 2000.
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2008.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022, 2023.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-17 03:03+0000\n"
-"PO-Revision-Date: 2023-12-17 12:09+0200\n"
+"POT-Creation-Date: 2024-01-02 04:07+0000\n"
+"PO-Revision-Date: 2024-01-02 09:27+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #: plug-ins/script-fu/script-fu.c:122
 msgid "Script-Fu _Console"
@@ -572,8 +572,9 @@ msgid "Darken only"
 msgstr "Накласти плями у режимі «Лише темне»"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:70
-msgid "_Difference Clouds..."
-msgstr "_Різні плями…"
+#| msgid "_Difference Clouds..."
+msgid "_Difference Clouds"
+msgstr "_Різні плями"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
@@ -1116,7 +1117,6 @@ msgid "_Brush name"
 msgstr "_Назва пензля"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#| msgid "Brush"
 msgid "My Brush"
 msgstr "Мій пензель"
 
@@ -1126,7 +1126,6 @@ msgid "_File name"
 msgstr "Назва _файла"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:71
-#| msgid "Airbrush"
 msgid "mybrush"
 msgstr "мійпензель"
 
@@ -1147,12 +1146,10 @@ msgid "_Pattern name"
 msgstr "Назва _текстури"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
-#| msgid "_Patterns"
 msgid "My Pattern"
 msgstr "Моя текстура"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
-#| msgid "_Patterns"
 msgid "mypattern"
 msgstr "моятекстура"
 
