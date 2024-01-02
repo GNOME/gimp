@@ -4,13 +4,13 @@
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011, 2012.
 # Andriy Bandura <andriykopanytsia@gmail.com>, 2014.
 # Olexandr Pylypchuk <pilipchukap@rambler.ru>, 2016.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022, 2023.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-20 20:26+0000\n"
-"PO-Revision-Date: 2023-12-21 17:54+0200\n"
+"POT-Creation-Date: 2024-01-02 04:05+0000\n"
+"PO-Revision-Date: 2024-01-02 09:29+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -4538,9 +4538,11 @@ msgid "_Edge..."
 msgstr "_Межа…"
 
 #: app/actions/filters-actions.c:281
+#| msgctxt "filters-action"
+#| msgid "_Laplace"
 msgctxt "filters-action"
-msgid "_Laplace"
-msgstr "_Лаплас"
+msgid "_Laplace..."
+msgstr "_Лаплас…"
 
 #: app/actions/filters-actions.c:286
 msgctxt "filters-action"
@@ -10406,12 +10408,10 @@ msgid "Path"
 msgstr "Контур"
 
 #: app/config/gimpdisplayconfig.c:142
-#| msgid "Transparency"
 msgid "Transparency custom color 1"
 msgstr "Нетиповий колір прозорості 1"
 
 #: app/config/gimpdisplayconfig.c:149
-#| msgid "Transparency"
 msgid "Transparency custom color 2"
 msgstr "Нетиповий колір прозорості 2"
 
@@ -10589,13 +10589,12 @@ msgstr ""
 "Якщо ввімкнено, позначений текстура використовується для всіх інструментів."
 
 #: app/config/gimprc-blurbs.h:185
-#| msgid "When enabled, the selected pattern will be used for all tools."
 msgid ""
 "When enabled, the selected auto expand layer settings will be used for all "
 "tools."
 msgstr ""
-"Якщо ввімкнено, вибрані параметри автоматичного розгортання шару буде"
-" використано для всіх інструментів."
+"Якщо ввімкнено, вибрані параметри автоматичного розгортання шару буде "
+"використано для всіх інструментів."
 
 #: app/config/gimprc-blurbs.h:196
 msgid "Sets the browser used by the help system."
