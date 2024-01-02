@@ -4,14 +4,14 @@
 # 神州散人 <kappa8086@gmail.com>, 2008-2009.
 # Mingye Wang (Arthur2e5) <arthur200126@gmail.com>, 2015.
 # Aron Xu <aronxu@gnome.org>, 2008, 2019.
-# lumingzh <lumingzh@qq.com>, 2020-2023.
+# lumingzh <lumingzh@qq.com>, 2020-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-17 03:03+0000\n"
-"PO-Revision-Date: 2023-12-18 21:35+0800\n"
+"POT-Creation-Date: 2024-01-02 04:07+0000\n"
+"PO-Revision-Date: 2024-01-02 16:38+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -564,8 +564,8 @@ msgid "Darken only"
 msgstr "仅变暗"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:70
-msgid "_Difference Clouds..."
-msgstr "差分云(_D)…"
+msgid "_Difference Clouds"
+msgstr "差分云(_D)"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
