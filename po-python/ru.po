@@ -10,10 +10,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP Python-Fu 2.8\n"
+"Project-Id-Version: GIMP Python-Fu 2.99\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-13 19:53+0300\n"
-"PO-Revision-Date: 2022-11-13 21:28+0300\n"
+"POT-Creation-Date: 2024-01-03 01:06+0100\n"
+"PO-Revision-Date: 2024-01-03 01:25+0100\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -21,12 +21,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
-"X-Generator: Gtranslator 41.0\n"
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.4\n"
 
 #: ../plug-ins/python/colorxhtml.py:91
 msgid "Save as colored HTML text..."
 msgstr "Сохранить как раскрашенный текст HTML…"
+
+#: ../plug-ins/python/colorxhtml.py:92 ../plug-ins/python/colorxhtml.py:98
+#: ../plug-ins/python/gradients-save-as-css.py:116
+#: ../plug-ins/python/palette-offset.py:135
+#: ../plug-ins/python/python-console/python-console.py:271
+#: ../plug-ins/python/spyro-plus.py:1719
+msgid "_Cancel"
+msgstr "О_тмена"
+
+#: ../plug-ins/python/colorxhtml.py:93 ../plug-ins/python/colorxhtml.py:99
+#: ../plug-ins/python/gradients-save-as-css.py:117
+#: ../plug-ins/python/palette-offset.py:136
+#: ../plug-ins/python/spyro-plus.py:1720
+msgid "_OK"
+msgstr "_ОК"
 
 #: ../plug-ins/python/colorxhtml.py:96
 msgid "Read characters from file..."
@@ -38,7 +53,7 @@ msgstr "Символы"
 
 #: ../plug-ins/python/colorxhtml.py:116
 msgid "Characters that will be used as colored pixels. "
-msgstr ""
+msgstr "Символы, которые будут использованы как раскрашенные пиксели. "
 
 #: ../plug-ins/python/colorxhtml.py:125
 msgid "Characters or file location"
@@ -71,106 +86,117 @@ msgstr "Записать отдельный файл CSS"
 msgid "Saving as colored XHTML"
 msgstr "Сохранение раскрашенного XHTML"
 
-#: ../plug-ins/python/colorxhtml.py:284 ../plug-ins/python/colorxhtml.py:285
+#: ../plug-ins/python/colorxhtml.py:286 ../plug-ins/python/colorxhtml.py:287
 msgid "_Read characters from file, if true, or use text entry"
 msgstr ""
 
-#: ../plug-ins/python/colorxhtml.py:289 ../plug-ins/python/colorxhtml.py:290
+#: ../plug-ins/python/colorxhtml.py:291 ../plug-ins/python/colorxhtml.py:292
 msgid "_File to read or characters to use"
 msgstr "_Читаемый файл или используемые символы"
 
-#: ../plug-ins/python/colorxhtml.py:294 ../plug-ins/python/colorxhtml.py:295
+#: ../plug-ins/python/colorxhtml.py:296 ../plug-ins/python/colorxhtml.py:297
 msgid "Fo_nt size in pixels"
 msgstr "_Кегль шрифта в пикселах"
 
-#: ../plug-ins/python/colorxhtml.py:299 ../plug-ins/python/colorxhtml.py:300
+#: ../plug-ins/python/colorxhtml.py:301 ../plug-ins/python/colorxhtml.py:302
 msgid "_Write a separate CSS file"
 msgstr "З_аписать отдельный файл CSS"
 
-#: ../plug-ins/python/colorxhtml.py:320
+#: ../plug-ins/python/colorxhtml.py:322
 msgid "Save as colored HTML text"
 msgstr "Сохранить как раскрашенный текст HTML"
 
-#: ../plug-ins/python/colorxhtml.py:323
+#: ../plug-ins/python/colorxhtml.py:325
 msgid "Colored HTML text"
 msgstr "Раскрашенный текст HTML"
 
-#: ../plug-ins/python/foggify.py:104
+#: ../plug-ins/python/foggify.py:100
 msgid "Layer _name"
 msgstr "_Имя слоя"
 
-#: ../plug-ins/python/foggify.py:105
+#: ../plug-ins/python/foggify.py:101
 msgid "Layer name"
 msgstr "Имя слоя"
 
-#: ../plug-ins/python/foggify.py:106
+#: ../plug-ins/python/foggify.py:102
 msgid "Clouds"
 msgstr "Облака"
 
-#: ../plug-ins/python/foggify.py:109
+#: ../plug-ins/python/foggify.py:105
 msgid "_Turbulence"
 msgstr "Т_урбулентность"
 
-#: ../plug-ins/python/foggify.py:110
+#: ../plug-ins/python/foggify.py:106
 msgid "Turbulence"
 msgstr "Турбулентность"
 
-#: ../plug-ins/python/foggify.py:114
+#: ../plug-ins/python/foggify.py:110
 msgid "O_pacity"
 msgstr "_Непрозрачность"
 
-#: ../plug-ins/python/foggify.py:115
+#: ../plug-ins/python/foggify.py:111
 msgid "Opacity"
 msgstr "Непрозрачность"
 
-#: ../plug-ins/python/foggify.py:124
+#: ../plug-ins/python/foggify.py:120
 msgid "_Fog color"
 msgstr "_Цвет тумана"
 
-#: ../plug-ins/python/foggify.py:125
+#: ../plug-ins/python/foggify.py:121
 msgid "Fog color"
 msgstr "Цвет тумана"
 
-#: ../plug-ins/python/foggify.py:141
+#: ../plug-ins/python/foggify.py:137
 msgid "Add a layer of fog"
 msgstr "Добавить слой тумана"
 
-#: ../plug-ins/python/foggify.py:142
+#: ../plug-ins/python/foggify.py:138
 msgid "Adds a layer of fog to the image."
-msgstr "Добавляет слой с туманом в изображение"
+msgstr "Добавляет слой с туманом в изображение."
 
-#: ../plug-ins/python/foggify.py:144
+#: ../plug-ins/python/foggify.py:140
 msgid "_Fog..."
 msgstr "_Туман..."
 
-#: ../plug-ins/python/gradients-save-as-css.py:83
-msgid "CSS file..."
-msgstr "Файл CSS…"
+#: ../plug-ins/python/gradients-save-as-css.py:97
+msgid "_File..."
+msgstr "_Файл…"
 
-#: ../plug-ins/python/gradients-save-as-css.py:141
-#: ../plug-ins/python/palette-sort.py:332
-#: ../plug-ins/python/python-console/python-console.py:336
+#: ../plug-ins/python/gradients-save-as-css.py:105
+msgid "Choose CSS file..."
+msgstr "Выберите файл CSS…"
+
+#: ../plug-ins/python/gradients-save-as-css.py:114
+msgid "Save as CSS file..."
+msgstr "Сохранить как файл CSS…"
+
+#: ../plug-ins/python/gradients-save-as-css.py:190
+#: ../plug-ins/python/palette-sort.py:345
+#: ../plug-ins/python/python-console/python-console.py:296
 msgid "Run mode"
-msgstr ""
+msgstr "Режим запуска"
 
-#: ../plug-ins/python/gradients-save-as-css.py:142
-#: ../plug-ins/python/palette-sort.py:333
-#: ../plug-ins/python/python-console/python-console.py:336
+#: ../plug-ins/python/gradients-save-as-css.py:191
+#: ../plug-ins/python/python-console/python-console.py:296
 msgid "The run mode"
-msgstr ""
+msgstr "Режим запуска"
 
-#: ../plug-ins/python/gradients-save-as-css.py:146
-msgid "Gradient to use"
-msgstr ""
+#: ../plug-ins/python/gradients-save-as-css.py:195
+msgid "_Gradient to use"
+msgstr "Используемый _градиент"
 
-#: ../plug-ins/python/gradients-save-as-css.py:149
-msgid "File"
-msgstr "Файл"
+#: ../plug-ins/python/gradients-save-as-css.py:198
+msgid "_File"
+msgstr "_Файл"
 
-#: ../plug-ins/python/gradients-save-as-css.py:167
-#: ../plug-ins/python/gradients-save-as-css.py:168
+#: ../plug-ins/python/gradients-save-as-css.py:214
+#: ../plug-ins/python/gradients-save-as-css.py:215
 msgid "Creates a new palette from a given gradient"
-msgstr ""
+msgstr "Создает новую палитру из выбранного градиента"
+
+#: ../plug-ins/python/gradients-save-as-css.py:217
+msgid "Save Gradient as CSS..."
+msgstr "Сохранить градиент как CSS…"
 
 #: ../plug-ins/python/histogram-export.py:92
 msgid "Pixel count"
@@ -184,321 +210,314 @@ msgstr "Нормированный"
 msgid "Percent"
 msgstr "Процент"
 
-#: ../plug-ins/python/histogram-export.py:166
+#: ../plug-ins/python/histogram-export.py:161
 msgid "File is either a directory or file name is empty."
-msgstr ""
+msgstr "Либо файл является каталогом, либо у него пустое имя."
 
-#: ../plug-ins/python/histogram-export.py:169
+#: ../plug-ins/python/histogram-export.py:164
 msgid "Directory not found."
-msgstr ""
+msgstr "Каталог не найден."
 
-#: ../plug-ins/python/histogram-export.py:203
+#: ../plug-ins/python/histogram-export.py:179
 msgid "Histogram Export..."
-msgstr ""
+msgstr "Экспорт градиента…"
 
-#: ../plug-ins/python/histogram-export.py:230
-msgid "_File..."
-msgstr "_Файл…"
-
-#: ../plug-ins/python/histogram-export.py:238
-msgid "Choose export file..."
-msgstr "Выберите файл экспорта…"
-
-#: ../plug-ins/python/histogram-export.py:244
-msgid "Histogram Export file..."
-msgstr "_Файл c гистограммой…"
-
-#. Bucket size parameter
-#: ../plug-ins/python/histogram-export.py:250
-#: ../plug-ins/python/histogram-export.py:320
-msgid "_Bucket Size"
-msgstr ""
-
-#. Sample average parameter
-#: ../plug-ins/python/histogram-export.py:258
-#: ../plug-ins/python/histogram-export.py:325
-msgid "Sample _Average"
-msgstr ""
-
-#: ../plug-ins/python/histogram-export.py:259
-msgid ""
-"If checked, the histogram is generated from merging all visible layers. "
-"Otherwise, the histogram is only for the current layer."
-msgstr ""
-
-#. Output format parameter
-#: ../plug-ins/python/histogram-export.py:265
-msgid "_Output Format"
-msgstr "Формат в_ывода"
-
-#: ../plug-ins/python/histogram-export.py:316
+#: ../plug-ins/python/histogram-export.py:209
 msgid "Histogram _File"
 msgstr "_Файл гистограммы"
 
-#: ../plug-ins/python/histogram-export.py:330
-msgid "Output format"
+#: ../plug-ins/python/histogram-export.py:213
+msgid "_Bucket Size"
 msgstr ""
 
-#: ../plug-ins/python/histogram-export.py:352
+#: ../plug-ins/python/histogram-export.py:218
+msgid "Sample _Average"
+msgstr ""
+
+#: ../plug-ins/python/histogram-export.py:223
+msgid "Output _format"
+msgstr "Формат в_ывода"
+
+#: ../plug-ins/python/histogram-export.py:245
 msgid "Exports the image histogram to a text file (CSV)"
-msgstr ""
+msgstr "Экспортирует гистограмму изображения в текстовый файл (CSV)"
 
-#: ../plug-ins/python/histogram-export.py:355
+#: ../plug-ins/python/histogram-export.py:248
 msgid "_Export histogram..."
 msgstr "_Экспортировать гистограмму..."
 
-#: ../plug-ins/python/palette-offset.py:46
-#: ../plug-ins/python/palette-offset.py:47
-#: ../plug-ins/python/palette-sort.py:339
-#: ../plug-ins/python/palette-sort.py:340
-#: ../plug-ins/python/palette-sort.py:398
-#: ../plug-ins/python/palette-sort.py:399
-#: ../plug-ins/python/palette-to-gradient.py:103
+#: ../plug-ins/python/palette-offset.py:50
+#: ../plug-ins/python/palette-offset.py:51
+#: ../plug-ins/python/palette-sort.py:351
+#: ../plug-ins/python/palette-sort.py:403
+#: ../plug-ins/python/palette-sort.py:404
 msgid "Palette"
 msgstr "Палитра"
 
-#: ../plug-ins/python/palette-offset.py:58
+#: ../plug-ins/python/palette-offset.py:62
 msgid "Off_set"
 msgstr "Сд_виг"
 
-#: ../plug-ins/python/palette-offset.py:59
+#: ../plug-ins/python/palette-offset.py:63
+#: ../plug-ins/python/palette-offset.py:143
 msgid "Offset"
 msgstr "Смещение"
 
-#: ../plug-ins/python/palette-offset.py:70
-msgid "Name of the edited palette"
+#: ../plug-ins/python/palette-offset.py:73
+msgid "The edited palette"
+msgstr "Измененная палитра"
+
+#: ../plug-ins/python/palette-offset.py:74
+msgid "The newly created palette when read-only, otherwise the input palette"
 msgstr ""
 
-#: ../plug-ins/python/palette-offset.py:71
-msgid ""
-"Name of the newly created palette if read-only or the input palette otherwise"
-msgstr ""
-
-#: ../plug-ins/python/palette-offset.py:91
+#: ../plug-ins/python/palette-offset.py:94
 msgid "_Offset Palette..."
 msgstr "_Сдвиг палитры..."
 
-#: ../plug-ins/python/palette-offset.py:92
+#: ../plug-ins/python/palette-offset.py:95
 msgid "Offset the colors in a palette"
 msgstr "Сместить цвета в палитре"
 
-#: ../plug-ins/python/palette-offset.py:140
+#: ../plug-ins/python/palette-offset.py:133
 #, fuzzy
 msgid "Offset Palette..."
 msgstr "_Сдвиг палитры..."
 
-#: ../plug-ins/python/palette-sort.py:40
+#: ../plug-ins/python/palette-sort.py:42
 msgid "Red"
 msgstr "Красный"
 
-#: ../plug-ins/python/palette-sort.py:40
+#: ../plug-ins/python/palette-sort.py:42
 msgid "Green"
 msgstr "Зелёный"
 
-#: ../plug-ins/python/palette-sort.py:40
+#: ../plug-ins/python/palette-sort.py:42
 msgid "Blue"
 msgstr "Синий"
 
-#: ../plug-ins/python/palette-sort.py:41
+#: ../plug-ins/python/palette-sort.py:43
 msgid "Luma (Y)"
 msgstr "Светимость (Y)"
 
-#: ../plug-ins/python/palette-sort.py:42
+#: ../plug-ins/python/palette-sort.py:44
 msgid "Hue"
 msgstr "Тон"
 
-#: ../plug-ins/python/palette-sort.py:42
+#: ../plug-ins/python/palette-sort.py:44
 msgid "Saturation"
 msgstr "Насыщенность"
 
-#: ../plug-ins/python/palette-sort.py:42
+#: ../plug-ins/python/palette-sort.py:44
 msgid "Value"
 msgstr "Значение"
 
-#: ../plug-ins/python/palette-sort.py:43
+#: ../plug-ins/python/palette-sort.py:45
 msgid "Saturation (HSL)"
 msgstr "Насыщенность (HSL)"
 
-#: ../plug-ins/python/palette-sort.py:43
+#: ../plug-ins/python/palette-sort.py:45
 msgid "Lightness (HSL)"
 msgstr "Светлота (HSL)"
 
-#: ../plug-ins/python/palette-sort.py:44
+#: ../plug-ins/python/palette-sort.py:46
 msgid "Index"
-msgstr ""
+msgstr "Индекс"
 
-#: ../plug-ins/python/palette-sort.py:45
+#: ../plug-ins/python/palette-sort.py:47
 msgid "Random"
-msgstr ""
+msgstr "Случайно"
 
-#: ../plug-ins/python/palette-sort.py:90
+#: ../plug-ins/python/palette-sort.py:92
 msgid "Lightness (LAB)"
 msgstr "Светлота (LAB)"
 
-#: ../plug-ins/python/palette-sort.py:91
+#: ../plug-ins/python/palette-sort.py:93
 msgid "A-color"
 msgstr ""
 
-#: ../plug-ins/python/palette-sort.py:91
+#: ../plug-ins/python/palette-sort.py:93
 msgid "B-color"
 msgstr ""
 
-#: ../plug-ins/python/palette-sort.py:92
+#: ../plug-ins/python/palette-sort.py:94
 msgid "Chroma (LCHab)"
 msgstr "Цветность (LCHab)"
 
-#: ../plug-ins/python/palette-sort.py:93
+#: ../plug-ins/python/palette-sort.py:95
 msgid "Hue (LCHab)"
 msgstr "Тон (LCHab)"
 
-#: ../plug-ins/python/palette-sort.py:327
+#: ../plug-ins/python/palette-sort.py:340
 msgid "All"
 msgstr "Все"
 
-#: ../plug-ins/python/palette-sort.py:327
+#: ../plug-ins/python/palette-sort.py:340
 msgid "Slice / Array"
 msgstr ""
 
-#: ../plug-ins/python/palette-sort.py:327
+#: ../plug-ins/python/palette-sort.py:340
 msgid "Autoslice (fg->bg)"
 msgstr ""
 
-#: ../plug-ins/python/palette-sort.py:327
+#: ../plug-ins/python/palette-sort.py:340
 msgid "Partitioned"
 msgstr ""
 
-#: ../plug-ins/python/palette-sort.py:344
-msgid "Se_lections"
-msgstr ""
+#: ../plug-ins/python/palette-sort.py:350
+#: ../plug-ins/python/palette-to-gradient.py:129
+msgid "_Palette"
+msgstr "_Палитра"
 
-#: ../plug-ins/python/palette-sort.py:351
+#: ../plug-ins/python/palette-sort.py:354
+msgid "Select_ions"
+msgstr "Выде_ления"
+
+#: ../plug-ins/python/palette-sort.py:361
 msgid "Slice _expression"
 msgstr ""
 
-#: ../plug-ins/python/palette-sort.py:358
-msgid "Channel to _sort"
-msgstr "Сортируемые _каналы"
+#: ../plug-ins/python/palette-sort.py:366
+msgid "Channel _to sort"
+msgstr "Сортируемый _канал"
 
-#: ../plug-ins/python/palette-sort.py:363
-#: ../plug-ins/python/palette-sort.py:375
+#: ../plug-ins/python/palette-sort.py:371
 msgid "_Ascending"
 msgstr "_Восходящий"
 
-#: ../plug-ins/python/palette-sort.py:364
-#: ../plug-ins/python/palette-sort.py:376
-#, fuzzy
+#: ../plug-ins/python/palette-sort.py:372
+#: ../plug-ins/python/palette-sort.py:382
 msgid "Ascending"
 msgstr "_Восходящий"
 
-#: ../plug-ins/python/palette-sort.py:370
-#, fuzzy
-msgid "Secondary Channel to s_ort"
-msgstr "Сортируемые _каналы"
+#: ../plug-ins/python/palette-sort.py:376
+msgid "Secondary C_hannel to sort"
+msgstr "Вторичный сортируемый _канал"
 
-#: ../plug-ins/python/palette-sort.py:380
+#: ../plug-ins/python/palette-sort.py:381
+msgid "Ascen_ding"
+msgstr "Вос_ходящий"
+
+#: ../plug-ins/python/palette-sort.py:386
 msgid "_Quantization"
 msgstr "_Квантизация"
 
-#: ../plug-ins/python/palette-sort.py:381
+#: ../plug-ins/python/palette-sort.py:387
 msgid "Quantization"
 msgstr "Квантизация"
 
-#: ../plug-ins/python/palette-sort.py:386
+#: ../plug-ins/python/palette-sort.py:391
 msgid "_Partitioning channel"
 msgstr ""
 
-#: ../plug-ins/python/palette-sort.py:391
+#: ../plug-ins/python/palette-sort.py:396
 msgid "Partition q_uantization"
 msgstr ""
 
-#: ../plug-ins/python/palette-sort.py:392
+#: ../plug-ins/python/palette-sort.py:397
 msgid "Partition quantization"
 msgstr ""
 
-#: ../plug-ins/python/palette-sort.py:417
+#: ../plug-ins/python/palette-sort.py:421
 msgid "_Sort Palette..."
 msgstr "Отсортировать _палитру..."
 
-#: ../plug-ins/python/palette-sort.py:422
+#: ../plug-ins/python/palette-sort.py:423
 msgid "Sort the colors in a palette"
 msgstr "Отсортировать цвета в палитре"
 
-#: ../plug-ins/python/palette-to-gradient.py:115
-#: ../plug-ins/python/palette-to-gradient.py:116
-msgid "Name of the newly created gradient"
-msgstr ""
+#: ../plug-ins/python/palette-to-gradient.py:141
+#: ../plug-ins/python/palette-to-gradient.py:142
+msgid "The newly created gradient"
+msgstr "Новый градиент"
 
-#: ../plug-ins/python/palette-to-gradient.py:138
+#: ../plug-ins/python/palette-to-gradient.py:164
 msgid "Palette to _Gradient"
 msgstr "Палитра в _градиент"
 
-#: ../plug-ins/python/palette-to-gradient.py:139
+#: ../plug-ins/python/palette-to-gradient.py:165
 msgid "Create a gradient using colors from the palette"
 msgstr "Создать градиент, используя цвета палитры"
 
-#: ../plug-ins/python/palette-to-gradient.py:140
-#, fuzzy
+#: ../plug-ins/python/palette-to-gradient.py:166
 msgid "Create a new gradient using colors from the palette."
-msgstr "Создать градиент, используя цвета палитры"
+msgstr "Создать градиент из цветов палитры."
 
-#: ../plug-ins/python/palette-to-gradient.py:143
+#: ../plug-ins/python/palette-to-gradient.py:169
 msgid "Palette to _Repeating Gradient"
 msgstr "П_алитра в повторяющийся градиент"
 
-#: ../plug-ins/python/palette-to-gradient.py:144
+#: ../plug-ins/python/palette-to-gradient.py:170
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Создать повторяющийся градиент из цветов палитры"
 
-#: ../plug-ins/python/palette-to-gradient.py:145
-#, fuzzy
+#: ../plug-ins/python/palette-to-gradient.py:171
 msgid "Create a new repeating gradient using colors from the palette."
-msgstr "Создать повторяющийся градиент из цветов палитры"
+msgstr "Создать повторяющийся градиент из цветов палитры."
 
-#: ../plug-ins/python/python-console/python-console.py:77
+#: ../plug-ins/python/python-console/python-console.py:78
 msgid "Python Console"
 msgstr "Консоль Python"
 
+#: ../plug-ins/python/python-console/python-console.py:80
+#: ../plug-ins/python/python-console/python-console.py:272
+msgid "_Save"
+msgstr "_Сохранить"
+
 #: ../plug-ins/python/python-console/python-console.py:81
+msgid "Cl_ear"
+msgstr "О_чистить"
+
+#: ../plug-ins/python/python-console/python-console.py:82
 msgid "_Browse..."
 msgstr "_Просмотр…"
 
-#: ../plug-ins/python/python-console/python-console.py:257
+#: ../plug-ins/python/python-console/python-console.py:83
+#: ../plug-ins/python/python-console/python-console.py:220
+msgid "_Close"
+msgstr "_Закрыть"
+
+#: ../plug-ins/python/python-console/python-console.py:217
 msgid "Python Procedure Browser"
 msgstr "Браузер процедур Python"
 
-#: ../plug-ins/python/python-console/python-console.py:285
+#: ../plug-ins/python/python-console/python-console.py:219
+msgid "_Apply"
+msgstr "_Применить"
+
+#: ../plug-ins/python/python-console/python-console.py:245
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не удалось открыть '%s' для записи: %s"
 
-#: ../plug-ins/python/python-console/python-console.py:300
+#: ../plug-ins/python/python-console/python-console.py:260
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Не удалось записать в '%s': %s"
 
-#: ../plug-ins/python/python-console/python-console.py:309
+#: ../plug-ins/python/python-console/python-console.py:269
 msgid "Save Python-Fu Console Output"
 msgstr "Сохранить вывод консоли Python-Fu"
 
-#: ../plug-ins/python/python-console/python-console.py:357
+#: ../plug-ins/python/python-console/python-console.py:317
 msgid "Python _Console"
 msgstr "_Консоль Python"
 
-#: ../plug-ins/python/python-console/python-console.py:358
+#: ../plug-ins/python/python-console/python-console.py:318
 msgid "Interactive GIMP Python interpreter"
 msgstr "Интерактивный интерпретатор Python в GIMP"
 
-#: ../plug-ins/python/python-console/python-console.py:359
+#: ../plug-ins/python/python-console/python-console.py:319
 msgid "Type in commands and see results"
-msgstr ""
+msgstr "Вводите команды и смотрите на их вывод"
 
 #: ../plug-ins/python/spyro-plus.py:49
 msgid "Spyro Layer"
-msgstr ""
+msgstr "Слой спирографа"
 
 #: ../plug-ins/python/spyro-plus.py:50
 msgid "Spyro Path"
-msgstr ""
+msgstr "Контур спирографа"
 
 #: ../plug-ins/python/spyro-plus.py:60
 msgid "As New Layer"
@@ -506,7 +525,7 @@ msgstr "Как новый слой"
 
 #: ../plug-ins/python/spyro-plus.py:61
 msgid "Redraw on last active layer"
-msgstr ""
+msgstr "Перерисовать на последнем активном слое"
 
 #: ../plug-ins/python/spyro-plus.py:62
 msgid "As Path"
@@ -532,21 +551,21 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:277
 msgid "Rack"
-msgstr ""
+msgstr "Планка"
 
 #: ../plug-ins/python/spyro-plus.py:321
 msgid "Frame"
-msgstr ""
+msgstr "Рамка"
 
-#: ../plug-ins/python/spyro-plus.py:438
+#: ../plug-ins/python/spyro-plus.py:433
 msgid "Selection"
-msgstr ""
+msgstr "Выделение"
 
-#: ../plug-ins/python/spyro-plus.py:525
+#: ../plug-ins/python/spyro-plus.py:518
 msgid "Pencil"
 msgstr "Карандаш"
 
-#: ../plug-ins/python/spyro-plus.py:541
+#: ../plug-ins/python/spyro-plus.py:534
 msgid "AirBrush"
 msgstr "Аэрограф"
 
@@ -556,7 +575,7 @@ msgstr "Предпросмотр"
 
 #: ../plug-ins/python/spyro-plus.py:606
 msgid "Stroke"
-msgstr ""
+msgstr "Обводка"
 
 #: ../plug-ins/python/spyro-plus.py:653
 msgid "PaintBrush"
@@ -591,6 +610,8 @@ msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
 msgstr ""
+"Эпитрохоида получается, когда перемещающаяся шестеренка находится снаружи "
+"фиксированной."
 
 #: ../plug-ins/python/spyro-plus.py:1462
 msgid "Tool"
@@ -602,9 +623,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1468
-#, fuzzy
 msgid "Long Gradient"
-msgstr "Палитра в _градиент"
+msgstr "Длинный градиент"
 
 #: ../plug-ins/python/spyro-plus.py:1470
 msgid ""
@@ -633,7 +653,7 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1519 ../plug-ins/python/spyro-plus.py:1547
 msgid "Fixed Gear Teeth"
-msgstr ""
+msgstr "Зубцы фиксированной шестеренки"
 
 #: ../plug-ins/python/spyro-plus.py:1527
 msgid ""
@@ -643,7 +663,7 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1530 ../plug-ins/python/spyro-plus.py:1552
 msgid "Moving Gear Teeth"
-msgstr ""
+msgstr "Зубцы перемещающейся шестеренки"
 
 #: ../plug-ins/python/spyro-plus.py:1535
 msgid "Hole percent"
@@ -656,9 +676,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1557
-#, fuzzy
 msgid "Hole Number"
-msgstr "Имя файла"
+msgstr "Номер дырки"
 
 #: ../plug-ins/python/spyro-plus.py:1558
 msgid ""
@@ -668,11 +687,11 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1569
 msgid "Flower Petals"
-msgstr ""
+msgstr "Лепестки цветка"
 
 #: ../plug-ins/python/spyro-plus.py:1570
 msgid "The number of petals in the pattern."
-msgstr ""
+msgstr "Количество лепестков в узоре."
 
 #: ../plug-ins/python/spyro-plus.py:1575
 msgid "Petal Skip"
@@ -684,7 +703,7 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1581
 msgid "Hole Radius(%)"
-msgstr ""
+msgstr "Радиус дырки (%)"
 
 #: ../plug-ins/python/spyro-plus.py:1582
 msgid ""
@@ -695,7 +714,7 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1603
 msgid "Width(%)"
-msgstr ""
+msgstr "Ширина (%)"
 
 #: ../plug-ins/python/spyro-plus.py:1604
 msgid ""
@@ -710,11 +729,11 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1621
 msgid "Toy Kit"
-msgstr ""
+msgstr "Игрушечный набор"
 
 #: ../plug-ins/python/spyro-plus.py:1627
 msgid "Gears"
-msgstr ""
+msgstr "Шестеренки"
 
 #: ../plug-ins/python/spyro-plus.py:1640 ../plug-ins/python/spyro-plus.py:1684
 msgid "Rotation"
@@ -761,7 +780,7 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1699
 msgid "Margin (px)"
-msgstr ""
+msgstr "Поле (px)"
 
 #: ../plug-ins/python/spyro-plus.py:1699
 msgid "Margin from edge of selection."
@@ -769,7 +788,7 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1704
 msgid "Make width and height equal"
-msgstr ""
+msgstr "Сделать ширину и высоту одинаковыми"
 
 #: ../plug-ins/python/spyro-plus.py:1706
 msgid ""
@@ -779,7 +798,7 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1721
 msgid "Re_draw"
-msgstr ""
+msgstr "Пере_рисовать"
 
 #: ../plug-ins/python/spyro-plus.py:1723
 msgid ""
@@ -789,7 +808,7 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1726
 msgid "_Reset"
-msgstr ""
+msgstr "С_брос"
 
 #: ../plug-ins/python/spyro-plus.py:1734
 msgid "Save"
@@ -800,6 +819,8 @@ msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
 msgstr ""
+"Выберите, сохранить как новый слой, перерисовать на последнем активном слое "
+"или сохранить как контур"
 
 #: ../plug-ins/python/spyro-plus.py:1749
 msgid "Spyrogimp"
@@ -808,6 +829,8 @@ msgstr "Spyrogimp"
 #: ../plug-ins/python/spyro-plus.py:1758 ../plug-ins/python/spyro-plus.py:2295
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
+"Нарисовать узор спирографа в активном выделении, с текущими параметрами "
+"инструмента."
 
 #: ../plug-ins/python/spyro-plus.py:1771
 msgid "Curve Pattern"
@@ -815,7 +838,7 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1774
 msgid "Fixed Gear"
-msgstr ""
+msgstr "Фиксированная шестеренка"
 
 #: ../plug-ins/python/spyro-plus.py:1777
 msgid "Size"
@@ -827,16 +850,17 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:2145
 msgid "Please wait : Rendering Pattern"
-msgstr ""
+msgstr "Подождите: узор отрисовывается"
 
 #: ../plug-ins/python/spyro-plus.py:2211 ../plug-ins/python/spyro-plus.py:2212
 msgid ""
 "The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"
 msgstr ""
+"Тип кривой { Спирограф (0), Эпитрохоида (1), Синусоида (2), Лиссажу (3) }"
 
 #: ../plug-ins/python/spyro-plus.py:2216 ../plug-ins/python/spyro-plus.py:2217
 msgid "Shape of fixed gear"
-msgstr ""
+msgstr "Фигура фиксированной шестеренки"
 
 #: ../plug-ins/python/spyro-plus.py:2221 ../plug-ins/python/spyro-plus.py:2222
 msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
@@ -866,11 +890,11 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:2253 ../plug-ins/python/spyro-plus.py:2254
 msgid "Make height and width equal"
-msgstr ""
+msgstr "Сделать высоту и ширину одинаковыми"
 
 #: ../plug-ins/python/spyro-plus.py:2258 ../plug-ins/python/spyro-plus.py:2259
 msgid "Pattern rotation, in degrees"
-msgstr ""
+msgstr "Вращение узора, в градусах"
 
 #: ../plug-ins/python/spyro-plus.py:2263 ../plug-ins/python/spyro-plus.py:2264
 msgid "Shape rotation of fixed gear, in degrees"
@@ -878,7 +902,7 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:2268 ../plug-ins/python/spyro-plus.py:2269
 msgid "Tool to use for drawing the pattern."
-msgstr ""
+msgstr "Каким инструментом рисовать узор."
 
 #: ../plug-ins/python/spyro-plus.py:2273 ../plug-ins/python/spyro-plus.py:2275
 msgid ""
@@ -894,7 +918,10 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:2299
 msgid "Spyrogimp..."
-msgstr ""
+msgstr "Спирограф…"
+
+#~ msgid "Histogram Export file..."
+#~ msgstr "_Файл c гистограммой…"
 
 #~ msgid "Missing exception information"
 #~ msgstr "Отсутствует информация о прерывании"

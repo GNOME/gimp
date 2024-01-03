@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-windows-installer\n"
+"Project-Id-Version: gimp-windows-installer 2.99\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-08-22 21:28+0200\n"
-"PO-Revision-Date: 2022-05-21 13:04+0300\n"
+"PO-Revision-Date: 2024-01-03 01:01+0100\n"
 "Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -135,9 +135,8 @@ msgid "Run-time libraries"
 msgstr "Программные библиотеки"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-#, fuzzy
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
-msgstr "Программные библиотеки для GIMP, включая окружение GTK+"
+msgstr "Программные библиотеки для GIMP, включая окружение GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -148,9 +147,8 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Включить сбор информации для помощи с отладкой GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-#, fuzzy
 msgid "MS-Windows engine for GTK"
-msgstr "Движок MS-Windows для GTK+"
+msgstr "Движок MS-Windows для GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
@@ -314,16 +312,16 @@ msgstr ""
 "GIMP %1 не может быть установлен поверх уже установленной версии GIMP, и "
 "автоматическое удаление старой версии не удалось.%n%nПожалуйста, удалите "
 "предыдущую версию GIMP вручную, прежде чем устанавливать эту версию в %2, "
-"или нажмите \"Настроить\" в начале, и выберите другую папку для установки.%n"
-"%nСейчас установка будет прервана."
+"или нажмите \"Настроить\" в начале, и выберите другую папку для установки."
+"%n%nСейчас установка будет прервана."
 
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
-"installing this version in %2, or choose a Custom install, and select a "
-"different installation folder.%n%nThe Setup will now exit."
+"Setup couldn't determine how to remove the old version automatically."
+"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+"before installing this version in %2, or choose a Custom install, and select "
+"a different installation folder.%n%nThe Setup will now exit."
 msgstr ""
 "GIMP %1 не может быть установлен поверх уже установленной версии GIMP, и "
 "программа установки не может определить, как удалить предыдущую версию "
