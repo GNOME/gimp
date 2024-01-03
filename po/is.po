@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-01-02 04:05+0000\n"
-"PO-Revision-Date: 2024-01-02 18:22+0000\n"
+"PO-Revision-Date: 2024-01-03 17:57+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -2543,19 +2543,17 @@ msgstr "Get ekki birt skrá í skráarstjóra: %s"
 
 #: app/actions/debug-actions.c:40
 msgid "Start _GtkInspector"
-msgstr ""
+msgstr "Ræsa _GtkInspector"
 
 #: app/actions/debug-actions.c:45
-#, fuzzy
 #| msgid "C_olor Profile"
 msgid "_Memory Profile"
-msgstr "Lit_asnið"
+msgstr "_Minnissnið"
 
 #: app/actions/debug-actions.c:50
-#, fuzzy
 #| msgid "Panorama Projection: "
 msgid "Benchmark _Projection"
-msgstr "Víðmyndarvörpun: "
+msgstr "Áætlun afkasta_prófunar"
 
 #: app/actions/debug-actions.c:51
 msgid ""
@@ -2565,10 +2563,9 @@ msgid ""
 msgstr ""
 
 #: app/actions/debug-actions.c:58
-#, fuzzy
 #| msgid "Show image preview"
 msgid "Show Image _Graph"
-msgstr "Sýna forskoðun myndar"
+msgstr "Sýna _graf myndar"
 
 #: app/actions/debug-actions.c:59
 #, fuzzy
@@ -2594,12 +2591,11 @@ msgid "Tool_box"
 msgstr "_Verkfærakassi"
 
 #: app/actions/dialogs-actions.c:53
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Tool _Options"
 msgctxt "dialogs-action"
 msgid "Tool _Options Dialog"
-msgstr "Verkfæravalk_ostir"
+msgstr "Valmynd fyrir verkfæravalk_osti"
 
 #: app/actions/dialogs-actions.c:54
 msgctxt "dialogs-action"
@@ -2612,12 +2608,11 @@ msgid "Open the tool options dialog"
 msgstr "Opna valmynd fyrir verkfæravalkosti"
 
 #: app/actions/dialogs-actions.c:61
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "_Device Status"
 msgctxt "dialogs-action"
 msgid "_Device Status Dialog"
-msgstr "Staða tæk_is"
+msgstr "Valmyn_d fyrir stöðu tækis"
 
 #: app/actions/dialogs-actions.c:62
 msgctxt "dialogs-action"
@@ -2809,12 +2804,11 @@ msgid "Open the sample points dialog"
 msgstr "Opna valmynd fyrir sýnatökupunkta"
 
 #: app/actions/dialogs-actions.c:156
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag"
 msgctxt "dialogs-action"
 msgid "Colo_rs Dialog"
-msgstr "Litamerki"
+msgstr "_Litavalgluggi"
 
 #: app/actions/dialogs-actions.c:157
 msgctxt "dialogs-action"
@@ -2827,12 +2821,11 @@ msgid "Open the FG/BG color dialog"
 msgstr "Opna valmynd fyrir FG/BG liti"
 
 #: app/actions/dialogs-actions.c:164
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "_Brushes"
 msgctxt "dialogs-action"
 msgid "_Brushes Dialog"
-msgstr "_Penslar"
+msgstr "Valmynd fyrir _pensla"
 
 #: app/actions/dialogs-actions.c:165
 msgctxt "dialogs-action"
@@ -2855,12 +2848,11 @@ msgid "Open the brush editor"
 msgstr "Opna penslaritilinn"
 
 #: app/actions/dialogs-actions.c:179
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Paint D_ynamics"
 msgctxt "dialogs-action"
 msgid "Paint D_ynamics Dialog"
-msgstr "Pensilhre_yfingar"
+msgstr "Valm_ynd fyrir hreyfingar pensils"
 
 #: app/actions/dialogs-actions.c:180
 msgctxt "dialogs-action"
@@ -3063,12 +3055,11 @@ msgid "Open the document history dialog"
 msgstr "Opna valmynd fyrir sögu skjals"
 
 #: app/actions/dialogs-actions.c:281
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "_Templates"
 msgctxt "dialogs-action"
 msgid "_Templates Dialog"
-msgstr "Snið_mát"
+msgstr "Valmynd fyrir sniðmá_t"
 
 #: app/actions/dialogs-actions.c:282
 msgctxt "dialogs-action"
@@ -3111,12 +3102,11 @@ msgid "Open the preferences dialog"
 msgstr "Opna stillingavalmyndina"
 
 #: app/actions/dialogs-actions.c:318
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "_Input Devices"
 msgctxt "dialogs-action"
 msgid "_Input Devices Editor"
-msgstr "_Inntakstæki"
+msgstr "R_itill fyrir inntakstæki"
 
 #: app/actions/dialogs-actions.c:319
 msgctxt "dialogs-action"
@@ -3878,12 +3868,11 @@ msgstr ""
 "lag"
 
 #: app/actions/edit-actions.c:183
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste _Into Selection"
 msgctxt "edit-action"
 msgid "Paste as Floating Data _Into Selection"
-msgstr "Líma _inn í myndval"
+msgstr "Líma sem fl_jótandi gögn inn í myndval"
 
 #: app/actions/edit-actions.c:185
 msgctxt "edit-action"
@@ -3891,12 +3880,11 @@ msgid "Paste the content of the clipboard into the current selection"
 msgstr "Líma innihald klippispjaldsins inn í núverandi myndval"
 
 #: app/actions/edit-actions.c:190
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste Int_o Selection In Place"
 msgctxt "edit-action"
 msgid "Paste as Floating Data Int_o Selection In Place"
-msgstr "Líma inn í m_yndval á staðnum"
+msgstr "Líma sem fl_jótandi gögn inn í myndval á staðnum"
 
 #: app/actions/edit-actions.c:192
 msgctxt "edit-action"
@@ -3908,37 +3896,35 @@ msgstr ""
 "staðsetningu þess"
 
 #: app/actions/edit-actions.c:198
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "_Paste as Single Layer"
 msgctxt "edit-action"
 msgid "Paste as _Floating Data"
-msgstr "Lí_ma sem stakt lag"
+msgstr "Líma sem _fljótandi gögn"
 
 #: app/actions/edit-actions.c:199
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste the content of the clipboard as a single layer"
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard as Floating Data"
-msgstr "Líma innihald klippispjaldsins sem stakt lag"
+msgstr "Líma innihald klippispjaldsins sem fljótandi gögn"
 
 #: app/actions/edit-actions.c:204
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste as Single Layer In P_lace"
 msgctxt "edit-action"
 msgid "Paste as Floa_ting Data In Place"
-msgstr "Líma sem stakt _lag á staðnum"
+msgstr "Líma sem fljó_tandi gögn á staðnum"
 
 #: app/actions/edit-actions.c:205
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste the content of the clipboard at its original position"
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard as Floating Data at its original position"
-msgstr "Líma innihald klippispjaldsins inn á upphaflegri staðsetningu þess"
+msgstr ""
+"Líma innihald klippispjaldsins inn sem fljótandi gögn á upphaflegri"
+" staðsetningu þess"
 
 #: app/actions/edit-actions.c:213
 msgctxt "edit-action"
@@ -5694,7 +5680,6 @@ msgid "Remove the image's color profile"
 msgstr "Fjarlægja litasnið myndarinnar"
 
 #: app/actions/image-actions.c:85
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "_Softproof Profile..."
 msgctxt "image-action"
@@ -5702,7 +5687,6 @@ msgid "_Soft-proof Profile..."
 msgstr "Litasnið fyrir _sýndarpróförk..."
 
 #: app/actions/image-actions.c:86
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Set the softproofing profile"
 msgctxt "image-action"
@@ -5888,100 +5872,88 @@ msgid "Convert the image to indexed colors"
 msgstr "Umbreyta myndinni í litnúmeraða liti (indexed)"
 
 #: app/actions/image-actions.c:203
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "8 bit integer"
 msgctxt "image-convert-action"
 msgid "8-bit integer"
-msgstr "8 bita heiltala"
+msgstr "8-bita heiltala"
 
 #: app/actions/image-actions.c:205
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 8 bit integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 8-bit integer"
-msgstr "Umbreyta myndinni í 8 bita heiltölu"
+msgstr "Umbreyta myndinni í 8-bita heiltölu"
 
 #: app/actions/image-actions.c:209
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "16 bit integer"
 msgctxt "image-convert-action"
 msgid "16-bit integer"
-msgstr "16 bita heiltala"
+msgstr "16-bita heiltala"
 
 #: app/actions/image-actions.c:211
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 16 bit integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16-bit integer"
-msgstr "Umbreyta myndinni í 16 bita heiltölu"
+msgstr "Umbreyta myndinni í 16-bita heiltölu"
 
 #: app/actions/image-actions.c:215
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "32 bit integer"
 msgctxt "image-convert-action"
 msgid "32-bit integer"
-msgstr "32 bita heiltala"
+msgstr "32-bita heiltala"
 
 #: app/actions/image-actions.c:217
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 32 bit integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32-bit integer"
-msgstr "Umbreyta myndinni í 32 bita heiltölu"
+msgstr "Umbreyta myndinni í 32-bita heiltölu"
 
 #: app/actions/image-actions.c:221
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "16 bit floating point"
 msgctxt "image-convert-action"
 msgid "16-bit floating point"
-msgstr "16 bita fleytitala"
+msgstr "16-bita fleytitala"
 
 #: app/actions/image-actions.c:223
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 16 bit floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16-bit floating point"
-msgstr "Umbreyta myndinni í 16 bita fleytitölu"
+msgstr "Umbreyta myndinni í 16-bita fleytitölu"
 
 #: app/actions/image-actions.c:227
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "32 bit floating point"
 msgctxt "image-convert-action"
 msgid "32-bit floating point"
-msgstr "32 bita fleytitala"
+msgstr "32-bita fleytitala"
 
 #: app/actions/image-actions.c:229
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 32 bit floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32-bit floating point"
-msgstr "Umbreyta myndinni í 32 bita fleytitölu"
+msgstr "Umbreyta myndinni í 32-bita fleytitölu"
 
 #: app/actions/image-actions.c:233
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "64 bit floating point"
 msgctxt "image-convert-action"
 msgid "64-bit floating point"
-msgstr "64 bita fleytitala"
+msgstr "64-bita fleytitala"
 
 #: app/actions/image-actions.c:235
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 64 bit floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 64-bit floating point"
-msgstr "Umbreyta myndinni í 64 bita fleytitölu"
+msgstr "Umbreyta myndinni í 64-bita fleytitölu"
 
 #: app/actions/image-actions.c:242
 msgctxt "image-convert-action"
@@ -6546,11 +6518,10 @@ msgstr ""
 "Bæta hulum (mask) sem leyfa afturkræfar breytingar á gegnsæi við valin lög"
 
 #: app/actions/layers-actions.c:242
-#, fuzzy
 #| msgid "Add Layer Mask Dialog"
 msgctxt "layers-action"
 msgid "Add La_yer Masks with Last Values"
-msgstr "Bæta inn laghulu"
+msgstr "Bæta inn lag_hulum með síðast notuðum gildum"
 
 #: app/actions/layers-actions.c:244
 msgctxt "layers-action"
@@ -10734,12 +10705,13 @@ msgid "When enabled, the selected pattern will be used for all tools."
 msgstr "Þegar þetta er virkt verður valið mynstur notað fyrir öll verkfæri."
 
 #: app/config/gimprc-blurbs.h:185
-#, fuzzy
 #| msgid "When enabled, the selected pattern will be used for all tools."
 msgid ""
 "When enabled, the selected auto expand layer settings will be used for all "
 "tools."
-msgstr "Þegar þetta er virkt verður valið mynstur notað fyrir öll verkfæri."
+msgstr ""
+"Þegar þetta er virkt verður valin stilling fyrir sjálfvirka útvíkkun lags"
+" notuð fyrir öll verkfæri."
 
 #: app/config/gimprc-blurbs.h:196
 msgid "Sets the browser used by the help system."
@@ -11758,11 +11730,10 @@ msgid "RGB (0..255)"
 msgstr "RGB (0..255)"
 
 #: app/core/core-enums.c:173
-#, fuzzy
 #| msgid "Grayscale"
 msgctxt "color-pick-mode"
 msgid "Grayscale (%)"
-msgstr "Grátóna"
+msgstr "Grátóna (%)"
 
 #: app/core/core-enums.c:174
 msgctxt "color-pick-mode"
@@ -15529,10 +15500,9 @@ msgid "The image '%s' has an embedded color profile"
 msgstr "Myndin '%s' er með ígrætt litasnið"
 
 #: app/dialogs/color-profile-import-dialog.c:151
-#, fuzzy
 #| msgid "Simulation profile"
 msgid "Built-in Profile"
-msgstr "Litasnið hermingar"
+msgstr "Innbyggt litasnið"
 
 #: app/dialogs/color-profile-import-dialog.c:161
 msgid "Convert the image to the preferred grayscale color profile?"
@@ -15543,10 +15513,9 @@ msgid "Convert the image to the preferred RGB color profile?"
 msgstr "Umbreyta myndinni yfir í RGB-forgangslitasnið?"
 
 #: app/dialogs/color-profile-import-dialog.c:167
-#, fuzzy
 #| msgid "Preferred Profiles"
 msgid "Preferred Profile"
-msgstr "Forgangs-litasnið:"
+msgstr "Forgangs-litasnið"
 
 #: app/dialogs/color-profile-import-dialog.c:222
 #: app/dialogs/metadata-rotation-import-dialog.c:227
@@ -16161,11 +16130,10 @@ msgid "Killer GEGLs from Outer Space"
 msgstr "Morðóð GEGL úr geimnum"
 
 #: app/dialogs/metadata-rotation-import-dialog.c:98
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Rotate image"
 msgid "Rotate Image?"
-msgstr "Snúa mynd"
+msgstr "Snúa mynd?"
 
 #: app/dialogs/metadata-rotation-import-dialog.c:101
 #, fuzzy
@@ -17592,7 +17560,7 @@ msgstr "Myndagluggar"
 
 #: app/dialogs/preferences-dialog.c:3182
 msgid "Merge menu and title bar"
-msgstr ""
+msgstr "Sameina valmynd og titilstiku"
 
 #: app/dialogs/preferences-dialog.c:3185
 msgid ""
@@ -20640,16 +20608,14 @@ msgid "Scatter brush as you paint"
 msgstr "Tvístra pensli um leið og þú málar"
 
 #: app/paint/gimppaintoptions.c:319
-#, fuzzy
 #| msgid "Linked Layers"
 msgid "Expand Layers"
-msgstr "Tengd lög"
+msgstr "Útvíkka lög"
 
 #: app/paint/gimppaintoptions.c:320
-#, fuzzy
 #| msgid "Scatter brush as you paint"
 msgid "Expand active layer as you paint"
-msgstr "Tvístra pensli um leið og þú málar"
+msgstr "Útvíkka virkt lag um leið og þú málar"
 
 #: app/paint/gimppaintoptions.c:326 app/paint/gimppaintoptions.c:356
 msgid "Amount"
@@ -20657,7 +20623,7 @@ msgstr "Magn"
 
 #: app/paint/gimppaintoptions.c:327
 msgid "Amount of expansion"
-msgstr ""
+msgstr "Magn útvíkkunar"
 
 #: app/paint/gimppaintoptions.c:334
 #, fuzzy
@@ -24632,7 +24598,7 @@ msgstr "Eining fyrir fasta breidd, hæð eða stærð"
 
 #: app/tools/gimprectangleoptions.c:296
 msgid "Expand from center"
-msgstr "Þenja frá miðju"
+msgstr "Útvíkka frá miðju"
 
 #: app/tools/gimprectangleoptions.c:297
 msgid "Expand selection from center outwards"
