@@ -834,6 +834,11 @@ xcf_save_effect_props (XcfInfo      *info,
                        GimpFilter   *filter,
                        GError      **error)
 {
+  GParamSpec **pspecs;
+  guint        n_pspecs;
+  GeglNode    *node;
+  const gchar *operation;
+
   xcf_check_error (xcf_save_prop (info, image, PROP_VISIBLE, error,
                                   gimp_filter_get_active (filter)), ;);
   xcf_check_error (xcf_save_prop (info, image, PROP_OPACITY, error,
@@ -848,6 +853,56 @@ xcf_save_effect_props (XcfInfo      *info,
                                   gimp_drawable_filter_get_composite_mode (GIMP_DRAWABLE_FILTER (filter))), ;);
   xcf_check_error (xcf_save_prop (info, image, PROP_FILTER_REGION, error,
                                   gimp_drawable_filter_get_region (GIMP_DRAWABLE_FILTER (filter))), ;);
+
+  /* Save each GEGL property individually */
+  node = gimp_drawable_filter_get_operation (GIMP_DRAWABLE_FILTER (filter));
+
+  gegl_node_get (node,
+                 "operation", &operation,
+                 NULL);
+
+  pspecs = gegl_operation_list_properties (operation, &n_pspecs);
+
+  for (gint i = 0; i < n_pspecs; i++)
+    {
+      GParamSpec     *pspec       = pspecs[i];
+      GValue          value       = G_VALUE_INIT;
+      FilterPropType  filter_type = FILTER_PROP_UNKNOWN;
+
+      g_value_init (&value, pspec->value_type);
+      gegl_node_get_property (node, pspec->name,
+                              &value);
+
+      switch (G_VALUE_TYPE (&value))
+        {
+          case G_TYPE_INT:
+            filter_type = FILTER_PROP_INT;
+            break;
+
+          case G_TYPE_BOOLEAN:
+            filter_type = FILTER_PROP_BOOL;
+            break;
+
+          case G_TYPE_FLOAT:
+          case G_TYPE_DOUBLE:
+            filter_type = FILTER_PROP_FLOAT;
+            break;
+
+          case G_TYPE_STRING:
+            filter_type = FILTER_PROP_STRING;
+            break;
+
+          default:
+            break;
+        }
+
+      if (filter_type != FILTER_PROP_UNKNOWN)
+        xcf_check_error (xcf_save_prop (info, image, PROP_EFFECT_ARGUMENT, error,
+                         pspec->name, filter_type, value), ;);
+
+      g_value_unset (&value);
+    }
+  g_free (pspecs);
 
   xcf_check_error (xcf_save_prop (info, image, PROP_END, error), ;);
 
@@ -1670,6 +1725,71 @@ xcf_save_prop (XcfInfo    *info,
         xcf_write_int32_check_error (info, &filter_region, 1, va_end (args));
       }
       break;
+
+    case PROP_EFFECT_ARGUMENT:
+      {
+        const gchar *string      = va_arg (args, const gchar *);
+        guint32      filter_type = va_arg (args, guint32);
+        GValue       filter_value;
+        goffset      pos;
+        goffset      base;
+
+        size = 0;
+
+        xcf_write_prop_type_check_error (info, prop_type, va_end (args));
+        pos = info->cp;
+        xcf_write_int32_check_error (info, &size, 1, va_end (args));
+        base = info->cp;
+        filter_value = va_arg (args, GValue);
+
+        xcf_write_string_check_error (info, (gchar **) &string, 1, va_end (args));
+        xcf_write_int32_check_error (info, &filter_type, 1, va_end (args));
+
+        switch (filter_type)
+          {
+            case FILTER_PROP_INT:
+              {
+                guint32 value = g_value_get_int (&filter_value);
+
+                xcf_write_int32_check_error (info, &value, 1, va_end (args));
+              }
+              break;
+
+            case FILTER_PROP_BOOL:
+              {
+                gboolean value = g_value_get_boolean (&filter_value);
+
+                xcf_write_int32_check_error (info, (guint32 *) &value, 1, va_end (args));
+              }
+              break;
+
+            case FILTER_PROP_FLOAT:
+              {
+                gfloat value = g_value_get_double (&filter_value);
+
+                xcf_write_float_check_error (info, &value, 1, va_end (args));
+              }
+              break;
+
+            case FILTER_PROP_STRING:
+              {
+                const gchar *value = g_value_get_string (&filter_value);
+
+                xcf_write_string_check_error (info, (gchar **) &value, 1, va_end (args));
+              }
+              break;
+
+            default:
+              break;
+          }
+
+        /* go back to the saved position and write the length */
+        size = info->cp - base;
+        xcf_check_error (xcf_seek_pos (info, pos, error), va_end (args));
+        xcf_write_int32_check_error (info, &size, 1, va_end (args));
+
+        xcf_check_error (xcf_seek_pos (info, base + size, error), va_end (args));
+      }
     }
 
   va_end (args);
@@ -1850,13 +1970,9 @@ xcf_save_effect (XcfInfo     *info,
 {
   gchar              *name;
   gchar              *icon;
-  gchar              *xml;
   GimpDrawableFilter *filter_drawable;
   GeglNode           *node;
-  GeglNode           *save_node = gegl_node_new ();
-  const gchar        *operation;
-  GParamSpec        **pspecs;
-  guint               n_pspecs;
+  gchar              *operation;
   GimpChannel        *effect_mask;
   goffset             offset;
   GError             *tmp_error = NULL;
@@ -1864,31 +1980,9 @@ xcf_save_effect (XcfInfo     *info,
   filter_drawable = GIMP_DRAWABLE_FILTER (filter);
   node            = gimp_drawable_filter_get_operation (filter_drawable);
 
-  /* Create operation-only node */
   gegl_node_get (node,
                  "operation", &operation,
                  NULL);
-
-  gegl_node_set (save_node,
-                 "operation", operation,
-                 NULL);
-
-  pspecs = gegl_operation_list_properties (operation, &n_pspecs);
-
-  for (gint i = 0; i < n_pspecs; i++)
-    {
-      GParamSpec *pspec = pspecs[i];
-      GValue      value = G_VALUE_INIT;
-
-      g_value_init (&value, pspec->value_type);
-      gegl_node_get_property (node, pspec->name,
-                              &value);
-
-      gegl_node_set_property (save_node, pspec->name,
-                              &value);
-      g_value_unset (&value);
-    }
-  g_free (pspecs);
 
   g_object_get (filter,
                 "name",      &name,
@@ -1903,10 +1997,9 @@ xcf_save_effect (XcfInfo     *info,
   xcf_write_string_check_error (info, (gchar **) &icon, 1, ;);
   g_free (icon);
 
-  /* Write out GEGL xml */
-  xml = gegl_node_to_xml_full (save_node, save_node, "/");
-  xcf_write_string_check_error (info, (gchar **) &xml, 1, ;);
-  g_free (xml);
+  /* Write out GEGL operation name */
+  xcf_write_string_check_error (info, (gchar **) &operation, 1, ;);
+  g_free (operation);
 
   /* write out the effect properties */
   xcf_save_effect_props (info, image, filter, error);

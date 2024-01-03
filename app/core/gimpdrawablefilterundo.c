@@ -205,6 +205,9 @@ gimp_drawable_filter_undo_pop (GimpUndo            *undo,
           gimp_drawable_filter_apply (filter, NULL);
           gimp_container_reorder (filter_stack, GIMP_OBJECT (filter),
                                   drawable_filter_undo->row_index);
+
+          if (gimp_viewable_preview_is_frozen (GIMP_VIEWABLE (drawable)))
+            gimp_viewable_preview_thaw (GIMP_VIEWABLE (drawable));
         }
     }
   else if (undo->undo_type == GIMP_UNDO_FILTER_REORDER)

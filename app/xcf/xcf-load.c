@@ -96,6 +96,7 @@ typedef struct
   GeglNode              *operation;
   gchar                 *name;
   gchar                 *icon_name;
+  gchar                 *operation_name;
   GimpChannel           *mask;
   gboolean               is_visible;
   gdouble                opacity;
@@ -104,6 +105,8 @@ typedef struct
   GimpLayerColorSpace    composite_space;
   GimpLayerCompositeMode composite_mode;
   GimpFilterRegion       region;
+
+  gboolean               unsupported_operation;
 } FilterData;
 
 static void            xcf_load_add_masks     (GimpImage     *image);
@@ -1071,22 +1074,16 @@ xcf_load_add_effects (XcfInfo   *info,
           for (iter = effects_nodes; iter; iter = iter->next)
             {
               FilterData *data = iter->data;
-              GSList     *children;
 
               if (! data->icon_name)
                 data->icon_name = g_strdup ("gimp-gegl");
 
-              children = gegl_node_get_children (data->operation);
-
-              if (g_slist_length (children) == 1)
+              if (! data->unsupported_operation)
                 {
                   GimpDrawableFilter *filter = NULL;
-                  GeglNode           *op;
 
-                  op = g_object_ref (children->data);
-                  gegl_node_remove_child (data->operation, op);
                   filter = gimp_drawable_filter_new (GIMP_DRAWABLE (layer),
-                                                     data->name, op,
+                                                     data->name, data->operation,
                                                      data->icon_name);
 
                   gimp_drawable_filter_set_opacity (filter, data->opacity);
@@ -1106,19 +1103,8 @@ xcf_load_add_effects (XcfInfo   *info,
 
                   gimp_drawable_filter_layer_mask_freeze (filter);
 
-                  g_object_unref (op);
                   g_object_unref (filter);
                 }
-              else
-                {
-                  gimp_message (info->gimp, G_OBJECT (info->progress),
-                                GIMP_MESSAGE_WARNING,
-                                "XCF Warning: failed loading filter \"%s\": "
-                                "node has %d children, 1 expected.",
-                                data->name, g_slist_length (children));
-                }
-
-              g_slist_free (children);
             }
 
           g_object_set_data (G_OBJECT (layer), "gimp-layer-effects", NULL);
@@ -2484,6 +2470,88 @@ xcf_load_effect_props (XcfInfo      *info,
           }
           break;
 
+        case PROP_EFFECT_ARGUMENT:
+          {
+            gchar    *filter_prop_name;
+            guint32   filter_type       = FILTER_PROP_UNKNOWN;
+            GValue    filter_prop_value = G_VALUE_INIT;
+            gboolean  valid_property    = FALSE;
+
+            xcf_read_string (info, &filter_prop_name, 1);
+            xcf_read_int32 (info, (guint32 *) &filter_type, 1);
+
+            /* Check if valid property first */
+            if (gegl_operation_find_property (filter->operation_name,
+                                              filter_prop_name))
+              valid_property = TRUE;
+
+            switch (filter_type)
+              {
+                case FILTER_PROP_INT:
+                  {
+                    guint32 value;
+
+                    xcf_read_int32 (info, (guint32 *) &value, 1);
+                    g_value_init (&filter_prop_value, G_TYPE_INT);
+                    g_value_set_int (&filter_prop_value, value);
+                  }
+                  break;
+
+                case FILTER_PROP_BOOL:
+                  {
+                    gboolean value;
+
+                    xcf_read_int32 (info, (guint32 *) &value, 1);
+                    g_value_init (&filter_prop_value, G_TYPE_BOOLEAN);
+                    g_value_set_boolean (&filter_prop_value, value);
+                  }
+                  break;
+
+                case FILTER_PROP_FLOAT:
+                  {
+                    gfloat value;
+
+                    xcf_read_float (info, &value, 1);
+                    g_value_init (&filter_prop_value, G_TYPE_FLOAT);
+                    g_value_set_float (&filter_prop_value, value);
+                  }
+                  break;
+
+                case FILTER_PROP_STRING:
+                  {
+                    gchar *value;
+
+                    xcf_read_string (info, &value, 1);
+                    g_value_init (&filter_prop_value, G_TYPE_STRING);
+                    g_value_set_string (&filter_prop_value, value);
+
+                    g_free (value);
+                  }
+                  break;
+
+                default:
+                  break;
+              }
+
+            if (valid_property)
+              {
+                gegl_node_set_property (filter->operation, filter_prop_name,
+                                        &filter_prop_value);
+              }
+            else
+              {
+                gimp_message (info->gimp, G_OBJECT (info->progress),
+                              GIMP_MESSAGE_WARNING,
+                              "XCF Warning: filter \"%s\" does not "
+                              "have the %s property. It was not set.",
+                              filter->operation_name, filter_prop_name);
+              }
+
+            g_value_unset (&filter_prop_value);
+            g_free (filter_prop_name);
+          }
+          break;
+
         default:
 #ifdef GIMP_UNSTABLE
           g_printerr ("unexpected/unknown effect property: %d (skipping)\n",
@@ -2687,9 +2755,11 @@ xcf_load_layer (XcfInfo    *info,
   gboolean           show_mask  = FALSE;
   GList             *selected;
   GList             *linked;
+  GList             *filter_data_list = NULL;
   gboolean           floating;
   guint32            group_layer_flags = 0;
   guint32            text_layer_flags = 0;
+  gint               filter_count = 0;
   gint               width;
   gint               height;
   gint               type;
@@ -2914,12 +2984,15 @@ xcf_load_layer (XcfInfo    *info,
       g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-show",
                          GINT_TO_POINTER (show_mask));
     }
+  else
+    {
+      /* If no layer mask, move ahead to layer effects */
+      cur_offset += info->bytes_per_offset;
+    }
 
   /* read in any layer effects and effect masks */
   while (effects_offset != 0)
     {
-      GList      *filter_data_list = NULL;
-      gint        filter_count     = 0;
       FilterData *filter_data;
 
       if (effects_offset < cur_offset)
@@ -2953,11 +3026,11 @@ xcf_load_layer (XcfInfo    *info,
 
       /* read in the offset of the next effect */
       xcf_read_offset (info, &effects_offset, 1);
-
-      if (filter_count > 0)
-        g_object_set_data_full (G_OBJECT (layer), "gimp-layer-effects", filter_data_list,
-                                (GDestroyNotify) xcf_load_free_effects);
     }
+
+  if (filter_count > 0)
+    g_object_set_data_full (G_OBJECT (layer), "gimp-layer-effects", filter_data_list,
+                            (GDestroyNotify) xcf_load_free_effects);
 
   /* attach the floating selection... */
   if (is_fs_drawable)
@@ -3078,7 +3151,6 @@ xcf_load_effect (XcfInfo      *info,
   FilterData  *filter;
   GimpChannel *effect_mask = NULL;
   goffset      mask_offset = 0;
-  GeglNode    *operation;
   gchar       *string;
 
   filter = g_new0 (FilterData, 1);
@@ -3091,16 +3163,28 @@ xcf_load_effect (XcfInfo      *info,
   xcf_read_string (info, &string, 1);
   filter->icon_name = string;
 
-  /* Effect XML */
+  /* Effect operation */
   xcf_read_string (info, &string, 1);
+  filter->operation_name = string;
 
-  operation = gegl_node_new_from_xml (string, NULL);
-  g_free (string);
+  if (! gegl_has_operation (filter->operation_name))
+    {
+      filter->unsupported_operation = TRUE;
 
-  if (! operation)
-    goto error;
+      gimp_message (info->gimp, G_OBJECT (info->progress),
+                    GIMP_MESSAGE_WARNING,
+                    "XCF Warning: the \"%s\" (%s) filter is "
+                    "not installed. It was discarded.",
+                    filter->name, filter->operation_name);
 
-  filter->operation = operation;
+      return filter;
+    }
+
+  /* We'll set valid properties individually */
+  filter->operation = gegl_node_new ();
+  gegl_node_set (filter->operation,
+                 "operation", filter->operation_name,
+                 NULL);
 
   /* read in the effect properties */
   if (! xcf_load_effect_props (info, &(*filter)))
@@ -3137,6 +3221,7 @@ xcf_load_free_effect (FilterData *data)
 {
   g_free (data->name);
   g_free (data->icon_name);
+  g_free (data->operation_name);
   g_clear_object (&data->operation);
   g_clear_object (&data->mask);
   g_free (data);

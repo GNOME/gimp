@@ -295,7 +295,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
     {
       if (g_list_length (drawables) > 1)
         g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                                   _("Cannot modify multiple drawables. Select only one."));
+                             _("Cannot modify multiple drawables. Select only one."));
       else
         g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, _("No selected drawables."));
 
@@ -469,6 +469,7 @@ gimp_filter_tool_control (GimpTool       *tool,
                           GimpDisplay    *display)
 {
   GimpFilterTool *filter_tool     = GIMP_FILTER_TOOL (tool);
+  GimpDrawable   *drawable        = NULL;
   gboolean        non_destructive = TRUE;
 
   switch (action)
@@ -482,9 +483,12 @@ gimp_filter_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
+      if (filter_tool->filter)
+        drawable = gimp_drawable_filter_get_drawable (filter_tool->filter);
+
       /* TODO: Expand non-destructive editing to other drawables
        * besides layers */
-      if (! GIMP_IS_LAYER (tool->drawables->data))
+      if (! GIMP_IS_LAYER (drawable))
         non_destructive = FALSE;
 
       gimp_filter_tool_commit (filter_tool, non_destructive);
@@ -760,10 +764,9 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
               position = (y + height / 2) - gimp_item_get_offset_y (item);
             }
 
-          g_object_set (
-            options,
-            "preview-split-position", position,
-            NULL);
+          g_object_set (options,
+                        "preview-split-position", position,
+                        NULL);
         }
 
       gimp_filter_tool_update_filter (filter_tool);
@@ -1041,7 +1044,15 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
 
   if (filter_tool->existing_filter)
     {
+      GimpDrawable *drawable =
+        gimp_drawable_filter_get_drawable (filter_tool->existing_filter);
+
       gimp_filter_set_active (GIMP_FILTER (filter_tool->existing_filter), TRUE);
+
+      gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+      gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
 
       /* Restore buttons in layer tree view */
       gimp_drawable_filters_changed (gimp_drawable_filter_get_drawable (filter_tool->existing_filter));
@@ -1050,7 +1061,6 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
   filter_tool->existing_filter = NULL;
 }
 
-/* Add code to prevent creating new filter when editing */
 static void
 gimp_filter_tool_commit (GimpFilterTool *filter_tool,
                          gboolean        non_destructive)
@@ -1167,7 +1177,17 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
     }
 
   if (filter_tool->existing_filter)
-    gimp_filter_set_active (GIMP_FILTER (filter_tool->existing_filter), TRUE);
+    {
+      GimpDrawable *drawable =
+        gimp_drawable_filter_get_drawable (filter_tool->existing_filter);
+
+      gimp_filter_set_active (GIMP_FILTER (filter_tool->existing_filter), TRUE);
+
+      gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+      gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+    }
 
   filter_tool->existing_filter = NULL;
 }
@@ -1309,8 +1329,9 @@ gimp_filter_tool_reset (GimpFilterTool *filter_tool)
 static void
 gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
 {
-  GimpTool          *tool    = GIMP_TOOL (filter_tool);
-  GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+  GimpTool          *tool     = GIMP_TOOL (filter_tool);
+  GimpFilterOptions *options  = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+  GimpDrawable      *drawable = NULL;
 
   if (filter_tool->filter)
     {
@@ -1318,10 +1339,15 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
       g_object_unref (filter_tool->filter);
     }
 
+  if (filter_tool->existing_filter)
+    drawable = gimp_drawable_filter_get_drawable (filter_tool->existing_filter);
+  else
+    drawable = tool->drawables->data;
+
   gimp_assert (filter_tool->operation);
   g_return_if_fail (g_list_length (tool->drawables) == 1);
 
-  filter_tool->filter = gimp_drawable_filter_new (tool->drawables->data,
+  filter_tool->filter = gimp_drawable_filter_new (drawable,
                                                   gimp_tool_get_undo_desc (tool),
                                                   filter_tool->operation,
                                                   gimp_tool_get_icon_name (tool));
@@ -1348,7 +1374,7 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
       gint           index;
       const gchar   *name = _("Editing filter...");
 
-      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (tool->drawables->data));
+      filters = gimp_drawable_get_filters (drawable);
 
       if (filters)
         {
