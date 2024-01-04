@@ -137,7 +137,14 @@ class _ReadLine(object):
         self.do_insert = False
         self.do_delete = False
 
-        self.stdout_tag = self.buffer.create_tag("stdout", foreground="#006000")
+        #Use the theme's color scheme for the text color
+        font_color = self.get_style_context().get_property('color', Gtk.StateFlags.NORMAL)
+        r = int (font_color.red * 255)
+        g = int (font_color.green * 255)
+        b = int (font_color.blue * 255)
+        hex_font_color = "#" + '{r:02x}{g:02x}{b:02x}'.format (r = r, g = g, b = b)
+
+        self.stdout_tag = self.buffer.create_tag("stdout", foreground=hex_font_color)
         self.stderr_tag = self.buffer.create_tag("stderr", foreground="#B00000")
         self._stdout = _ReadLine.Output(self, "stdout")
         self._stderr = _ReadLine.Output(self, "stderr")
