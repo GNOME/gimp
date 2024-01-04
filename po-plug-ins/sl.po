@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-24 08:26+0000\n"
-"PO-Revision-Date: 2023-12-26 18:12+0100\n"
+"POT-Creation-Date: 2023-12-31 13:33+0000\n"
+"PO-Revision-Date: 2024-01-04 20:56+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -152,7 +152,7 @@ msgstr "Povadi kozo (JavaScript)"
 #: plug-ins/common/grid.c:787 plug-ins/common/qbist.c:933
 #: plug-ins/common/sphere-designer.c:2638 plug-ins/common/unit-editor.c:266
 #: plug-ins/common/warp.c:473 plug-ins/file-exr/file-exr.c:422
-#: plug-ins/file-psd/psd-load.c:3549 plug-ins/flame/flame.c:828
+#: plug-ins/file-psd/psd-load.c:3557 plug-ins/flame/flame.c:828
 #: plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
@@ -641,7 +641,7 @@ msgstr "Navpične"
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:700
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2749 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2757 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:561
 #: plug-ins/gfig/gfig-dialog.c:1290 plug-ins/gimpressionist/general.c:139
@@ -950,9 +950,7 @@ msgstr "Nasičenost"
 
 #: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
-#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:309
-#: plug-ins/metadata/metadata-viewer.c:347
-#: plug-ins/metadata/metadata-viewer.c:385
+#: plug-ins/gimpressionist/size.c:155
 msgid "Value"
 msgstr "Vrednost"
 
@@ -9818,28 +9816,28 @@ msgstr "Nepodprta ali neveljavna širina plasti maske: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost plasti maske: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2066 plug-ins/file-psd/psd-load.c:2722
+#: plug-ins/file-psd/psd-load.c:2074 plug-ins/file-psd/psd-load.c:2730
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nepodprti način stiskanja: %d"
 
-#: plug-ins/file-psd/psd-load.c:2915
+#: plug-ins/file-psd/psd-load.c:2923
 msgid "Extra"
 msgstr "Dodatno"
 
-#: plug-ins/file-psd/psd-load.c:3115
+#: plug-ins/file-psd/psd-load.c:3123
 msgid "Unsupported or invalid channel size"
 msgstr "Nepodprta ali neveljavna velikost kanala"
 
-#: plug-ins/file-psd/psd-load.c:3184
+#: plug-ins/file-psd/psd-load.c:3192
 msgid "Failed to decompress data"
 msgstr "Podatkov ni mogoče razpakirati"
 
-#: plug-ins/file-psd/psd-load.c:3565
+#: plug-ins/file-psd/psd-load.c:3573
 msgid "Duotone Import"
 msgstr "Uvoz duotone"
 
-#: plug-ins/file-psd/psd-load.c:3566
+#: plug-ins/file-psd/psd-load.c:3574
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -9849,11 +9847,11 @@ msgstr ""
 "Podatki o barvnem prostoru duotone so shranjeni\n"
 "in se lahko ponovno uporabijo pri izvozu."
 
-#: plug-ins/file-psd/psd-load.c:3588 plug-ins/file-psd/psd-save.c:2665
+#: plug-ins/file-psd/psd-load.c:3596 plug-ins/file-psd/psd-save.c:2665
 msgid "Compatibility Notice"
 msgstr "Obvestilo o združljivosti"
 
-#: plug-ins/file-psd/psd-load.c:3589
+#: plug-ins/file-psd/psd-load.c:3597
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -9904,12 +9902,17 @@ msgstr ""
 "Ostalo bo zavrženo."
 
 #: plug-ins/file-psd/psd-save.c:2666
+#, fuzzy
 msgid ""
-"Legacy layer modes have better compatibility with Photoshop. If you "
-"encounter display issues, consider switching to those layer modes."
+"Legacy layer modes have better compatibility with Photoshop, but do not "
+"support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
+"Clipped Layers as Group'. If you encounter display issues, consider "
+"switching to those layer modes."
 msgstr ""
-"Opuščeni načini plasti so bolje združljivi s programom Photoshop. Če "
-"naletite na težave s prikazom, preklopite na te vrste oz. načine plasti."
+"Opuščeni načini plasti so bolje združljivi s programom Photoshop, vendar ne "
+"podpirajo Clip to Backdrop, ki je potreben za uporabo Photoshopove ‘Blend "
+"Clipped Layers as Group’.. Če naletite na težave s prikazom, preklopite na "
+"te vrste oz. načine plasti."
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -15403,6 +15406,13 @@ msgstr "Pregledovalnik metapodatkov: %s"
 #: plug-ins/metadata/metadata-viewer.c:300
 msgid "Exif Tag"
 msgstr "Značka Exif"
+
+#: plug-ins/metadata/metadata-viewer.c:309
+#: plug-ins/metadata/metadata-viewer.c:347
+#: plug-ins/metadata/metadata-viewer.c:385
+msgctxt "A tag value"
+msgid "Value"
+msgstr "Vrednost"
 
 #: plug-ins/metadata/metadata-viewer.c:317
 msgid "Exif"
