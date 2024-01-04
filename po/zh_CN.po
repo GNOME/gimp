@@ -16,14 +16,14 @@
 # Jeff Bai <jeffbai@aosc.xyz>, 2015.
 # Boyuan Yang <073plan@gmail.com>, 2018.
 # Aron Xu <aronxu@gnome.org>, 2008-2009, 2018.
-# lumingzh <lumingzh@qq.com>, 2016-2023.
+# lumingzh <lumingzh@qq.com>, 2016-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-19 18:16+0000\n"
-"PO-Revision-Date: 2023-12-20 18:14+0800\n"
+"POT-Creation-Date: 2024-01-02 04:05+0000\n"
+"PO-Revision-Date: 2024-01-02 16:39+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -4513,8 +4513,8 @@ msgstr "边缘(_E)…"
 
 #: app/actions/filters-actions.c:281
 msgctxt "filters-action"
-msgid "_Laplace"
-msgstr "拉普拉斯(_L)"
+msgid "_Laplace..."
+msgstr "拉普拉斯(_L)…"
 
 #: app/actions/filters-actions.c:286
 msgctxt "filters-action"
