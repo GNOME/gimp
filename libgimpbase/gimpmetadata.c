@@ -915,9 +915,37 @@ gimp_metadata_add_namespace (GHashTable  *namespaces,
 {
   if (! g_hash_table_lookup (namespaces, prefix))
     {
-      gchar *namespace_url;
+      gchar  *namespace_url;
+      GError *error = NULL;
 
-      namespace_url = gexiv2_metadata_try_get_xmp_namespace_for_tag (prefix, NULL);
+      namespace_url = gexiv2_metadata_try_get_xmp_namespace_for_tag (prefix, &error);
+
+      if (! namespace_url)
+        {
+          /* Weird, we didn't find the namespace url.
+             Let's add a dummy url, that way we can keep the tags. */
+          if (error)
+            {
+              g_warning ("XMP namespace url not found! %s", error->message);
+              g_clear_error (&error);
+            }
+
+          /* Fix the one namespace url we know of, and add a generic fix for
+             any others. */
+          if (g_strcmp0 (prefix, "Item") == 0)
+            /* FIXME Remove this specific check for Item after this is fixed
+               in our dependencies (exiv2?), see issue #10557. */
+            namespace_url = g_strdup ("http://ns.google.com/photos/1.0/container/item/");
+          else
+            namespace_url = g_strdup_printf ("http://missing-url.org/%s/", prefix);
+
+          if (! gexiv2_metadata_try_register_xmp_namespace (namespace_url,
+                                                            prefix, &error))
+            {
+              g_warning ("Registering XMP namespace failed! %s\n", error->message);
+              g_clear_error (&error);
+            }
+        }
 
       if (namespace_url)
         {
