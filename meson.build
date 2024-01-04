@@ -1958,10 +1958,15 @@ subdir('libgimp/tests')
 subdir('docs')
 subdir('devel-docs')
 
-# Windows installer
+# Inno Windows installer
 if get_option('windows-installer')
   subdir('po-windows-installer')
   subdir('build/windows/installer/lang')
+endif
+
+# Microsoft Store icons for .msixupload and/or .msixbundle
+if get_option('ms-store')
+  subdir('build/windows/store/Assets')
 endif
 
 pkgconfig.generate(libgimp,
