@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8 scriptfu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-19 11:34+0000\n"
-"PO-Revision-Date: 2023-12-19 18:10+0100\n"
+"POT-Creation-Date: 2024-01-02 04:07+0000\n"
+"PO-Revision-Date: 2024-01-04 20:53+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -575,8 +575,8 @@ msgid "Darken only"
 msgstr "Samo potemni"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:70
-msgid "_Difference Clouds..."
-msgstr "_Oblački razlik …"
+msgid "_Difference Clouds"
+msgstr "_Oblački razlik"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
