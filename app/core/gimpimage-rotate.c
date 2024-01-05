@@ -96,8 +96,8 @@ gimp_image_rotate (GimpImage        *image,
   /*  Resize the image (if needed)  */
   switch (rotate_type)
     {
-    case GIMP_ROTATE_90:
-    case GIMP_ROTATE_270:
+    case GIMP_ROTATE_DEGREES90:
+    case GIMP_ROTATE_DEGREES270:
       new_image_width  = gimp_image_get_height (image);
       new_image_height = gimp_image_get_width  (image);
       size_changed     = TRUE;
@@ -105,7 +105,7 @@ gimp_image_rotate (GimpImage        *image,
       offset_y         = (gimp_image_get_height (image) - new_image_height) / 2;
       break;
 
-    case GIMP_ROTATE_180:
+    case GIMP_ROTATE_DEGREES180:
       new_image_width  = gimp_image_get_width  (image);
       new_image_height = gimp_image_get_height (image);
       size_changed     = FALSE;
@@ -304,17 +304,17 @@ gimp_image_rotate_item_offset (GimpImage        *image,
 
   switch (rotate_type)
     {
-    case GIMP_ROTATE_90:
+    case GIMP_ROTATE_DEGREES90:
       x = gimp_image_get_height (image) - off_y - gimp_item_get_width (item);
       y = off_x;
       break;
 
-    case GIMP_ROTATE_270:
+    case GIMP_ROTATE_DEGREES270:
       x = off_y;
       y = gimp_image_get_width (image) - off_x - gimp_item_get_height (item);
       break;
 
-    case GIMP_ROTATE_180:
+    case GIMP_ROTATE_DEGREES180:
       return;
 
     default:
@@ -347,7 +347,7 @@ gimp_image_rotate_guides (GimpImage        *image,
 
       switch (rotate_type)
         {
-        case GIMP_ROTATE_90:
+        case GIMP_ROTATE_DEGREES90:
           switch (orientation)
             {
             case GIMP_ORIENTATION_HORIZONTAL:
@@ -367,7 +367,7 @@ gimp_image_rotate_guides (GimpImage        *image,
             }
           break;
 
-        case GIMP_ROTATE_180:
+        case GIMP_ROTATE_DEGREES180:
           switch (orientation)
             {
             case GIMP_ORIENTATION_HORIZONTAL:
@@ -387,7 +387,7 @@ gimp_image_rotate_guides (GimpImage        *image,
             }
           break;
 
-        case GIMP_ROTATE_270:
+        case GIMP_ROTATE_DEGREES270:
           switch (orientation)
             {
             case GIMP_ORIENTATION_HORIZONTAL:
@@ -432,19 +432,19 @@ gimp_image_rotate_sample_points (GimpImage        *image,
 
       switch (rotate_type)
         {
-        case GIMP_ROTATE_90:
+        case GIMP_ROTATE_DEGREES90:
           gimp_sample_point_set_position (sample_point,
                                           gimp_image_get_height (image) - old_y,
                                           old_x);
           break;
 
-        case GIMP_ROTATE_180:
+        case GIMP_ROTATE_DEGREES180:
           gimp_sample_point_set_position (sample_point,
                                           gimp_image_get_width  (image) - old_x,
                                           gimp_image_get_height (image) - old_y);
           break;
 
-        case GIMP_ROTATE_270:
+        case GIMP_ROTATE_DEGREES270:
           gimp_sample_point_set_position (sample_point,
                                           old_y,
                                           gimp_image_get_width (image) - old_x);
@@ -470,7 +470,7 @@ gimp_image_metadata_rotate (GimpImage         *image,
       break;
 
     case GEXIV2_ORIENTATION_ROT_180:
-      gimp_image_rotate (image, context, GIMP_ROTATE_180, progress);
+      gimp_image_rotate (image, context, GIMP_ROTATE_DEGREES180, progress);
       break;
 
     case GEXIV2_ORIENTATION_VFLIP:
@@ -478,21 +478,21 @@ gimp_image_metadata_rotate (GimpImage         *image,
       break;
 
     case GEXIV2_ORIENTATION_ROT_90_HFLIP:  /* flipped diagonally around '\' */
-      gimp_image_rotate (image, context, GIMP_ROTATE_90, progress);
+      gimp_image_rotate (image, context, GIMP_ROTATE_DEGREES90, progress);
       gimp_image_flip (image, context, GIMP_ORIENTATION_HORIZONTAL, progress);
       break;
 
     case GEXIV2_ORIENTATION_ROT_90:  /* 90 CW */
-      gimp_image_rotate (image, context, GIMP_ROTATE_90, progress);
+      gimp_image_rotate (image, context, GIMP_ROTATE_DEGREES90, progress);
       break;
 
     case GEXIV2_ORIENTATION_ROT_90_VFLIP:  /* flipped diagonally around '/' */
-      gimp_image_rotate (image, context, GIMP_ROTATE_90, progress);
+      gimp_image_rotate (image, context, GIMP_ROTATE_DEGREES90, progress);
       gimp_image_flip (image, context, GIMP_ORIENTATION_VERTICAL, progress);
       break;
 
     case GEXIV2_ORIENTATION_ROT_270:  /* 90 CCW */
-      gimp_image_rotate (image, context, GIMP_ROTATE_270, progress);
+      gimp_image_rotate (image, context, GIMP_ROTATE_DEGREES270, progress);
       break;
 
     default: /* shouldn't happen */

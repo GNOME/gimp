@@ -139,13 +139,13 @@ gimp_transform_matrix_rotate (GimpMatrix3         *matrix,
 
   switch (rotate_type)
     {
-    case GIMP_ROTATE_90:
+    case GIMP_ROTATE_DEGREES90:
       angle = G_PI_2;
       break;
-    case GIMP_ROTATE_180:
+    case GIMP_ROTATE_DEGREES180:
       angle = G_PI;
       break;
-    case GIMP_ROTATE_270:
+    case GIMP_ROTATE_DEGREES270:
       angle = - G_PI_2;
       break;
     }

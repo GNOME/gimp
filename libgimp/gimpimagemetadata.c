@@ -316,7 +316,7 @@ gimp_image_metadata_rotate (GimpImage         *image,
       break;
 
     case GEXIV2_ORIENTATION_ROT_180:
-      gimp_image_rotate (image, GIMP_ROTATE_180);
+      gimp_image_rotate (image, GIMP_ROTATE_DEGREES180);
       break;
 
     case GEXIV2_ORIENTATION_VFLIP:
@@ -324,21 +324,21 @@ gimp_image_metadata_rotate (GimpImage         *image,
       break;
 
     case GEXIV2_ORIENTATION_ROT_90_HFLIP:  /* flipped diagonally around '\' */
-      gimp_image_rotate (image, GIMP_ROTATE_90);
+      gimp_image_rotate (image, GIMP_ROTATE_DEGREES90);
       gimp_image_flip (image, GIMP_ORIENTATION_HORIZONTAL);
       break;
 
     case GEXIV2_ORIENTATION_ROT_90:  /* 90 CW */
-      gimp_image_rotate (image, GIMP_ROTATE_90);
+      gimp_image_rotate (image, GIMP_ROTATE_DEGREES90);
       break;
 
     case GEXIV2_ORIENTATION_ROT_90_VFLIP:  /* flipped diagonally around '/' */
-      gimp_image_rotate (image, GIMP_ROTATE_90);
+      gimp_image_rotate (image, GIMP_ROTATE_DEGREES90);
       gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
       break;
 
     case GEXIV2_ORIENTATION_ROT_270:  /* 90 CCW */
-      gimp_image_rotate (image, GIMP_ROTATE_270);
+      gimp_image_rotate (image, GIMP_ROTATE_DEGREES270);
       break;
 
     default: /* shouldn't happen */

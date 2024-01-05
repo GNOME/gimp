@@ -355,17 +355,17 @@ gimp_drawable_transform_rotate_point (gint              x,
 
   switch (rotate_type)
     {
-    case GIMP_ROTATE_90:
+    case GIMP_ROTATE_DEGREES90:
       *new_x = RINT (center_x - (gdouble) y + center_y);
       *new_y = RINT (center_y + (gdouble) x - center_x);
       break;
 
-    case GIMP_ROTATE_180:
+    case GIMP_ROTATE_DEGREES180:
       *new_x = RINT (center_x - ((gdouble) x - center_x));
       *new_y = RINT (center_y - ((gdouble) y - center_y));
       break;
 
-    case GIMP_ROTATE_270:
+    case GIMP_ROTATE_DEGREES270:
       *new_x = RINT (center_x + (gdouble) y - center_y);
       *new_y = RINT (center_y - (gdouble) x + center_x);
       break;
@@ -420,7 +420,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
 
   switch (rotate_type)
     {
-    case GIMP_ROTATE_90:
+    case GIMP_ROTATE_DEGREES90:
       gimp_drawable_transform_rotate_point (orig_x,
                                             orig_y + orig_height,
                                             rotate_type, center_x, center_y,
@@ -429,7 +429,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
       new_height = orig_width;
       break;
 
-    case GIMP_ROTATE_180:
+    case GIMP_ROTATE_DEGREES180:
       gimp_drawable_transform_rotate_point (orig_x + orig_width,
                                             orig_y + orig_height,
                                             rotate_type, center_x, center_y,
@@ -438,7 +438,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
       new_height = orig_height;
       break;
 
-    case GIMP_ROTATE_270:
+    case GIMP_ROTATE_DEGREES270:
       gimp_drawable_transform_rotate_point (orig_x + orig_width,
                                             orig_y,
                                             rotate_type, center_x, center_y,
@@ -501,10 +501,10 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
 
           switch (rotate_type)
             {
-            case GIMP_ROTATE_90:
+            case GIMP_ROTATE_DEGREES90:
               gimp_drawable_transform_rotate_point (clip_x + clip_width,
                                                     clip_y,
-                                                    GIMP_ROTATE_270,
+                                                    GIMP_ROTATE_DEGREES270,
                                                     center_x,
                                                     center_y,
                                                     &orig_x,
@@ -515,17 +515,17 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
               orig_height  = clip_width;
               break;
 
-            case GIMP_ROTATE_180:
+            case GIMP_ROTATE_DEGREES180:
               orig_x      = clip_x - orig_x;
               orig_y      = clip_y - orig_y;
               orig_width  = clip_width;
               orig_height = clip_height;
               break;
 
-            case GIMP_ROTATE_270:
+            case GIMP_ROTATE_DEGREES270:
               gimp_drawable_transform_rotate_point (clip_x,
                                                     clip_y + clip_height,
-                                                    GIMP_ROTATE_90,
+                                                    GIMP_ROTATE_DEGREES90,
                                                     center_x,
                                                     center_y,
                                                     &orig_x,
@@ -576,7 +576,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
 
   switch (rotate_type)
     {
-    case GIMP_ROTATE_90:
+    case GIMP_ROTATE_DEGREES90:
       {
         guchar *buf = g_new (guchar, new_height * orig_bpp);
         gint    i;
@@ -608,7 +608,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
       }
       break;
 
-    case GIMP_ROTATE_180:
+    case GIMP_ROTATE_DEGREES180:
       {
         guchar *buf = g_new (guchar, new_width * orig_bpp);
         gint    i, j, k;
@@ -654,7 +654,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
       }
       break;
 
-    case GIMP_ROTATE_270:
+    case GIMP_ROTATE_DEGREES270:
       {
         guchar *buf = g_new (guchar, new_width * orig_bpp);
         gint    i;

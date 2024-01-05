@@ -277,19 +277,19 @@ static const GimpEnumActionEntry image_rotate_actions[] =
   { "image-rotate-90", GIMP_ICON_OBJECT_ROTATE_90,
     NC_("image-action", "Rotate 90° _clockwise"), NULL, { NULL },
     NC_("image-action", "Rotate the image 90 degrees to the right"),
-    GIMP_ROTATE_90, FALSE,
+    GIMP_ROTATE_DEGREES90, FALSE,
     GIMP_HELP_IMAGE_ROTATE_90 },
 
   { "image-rotate-180", GIMP_ICON_OBJECT_ROTATE_180,
     NC_("image-action", "Rotate _180°"), NULL, { NULL },
     NC_("image-action", "Turn the image upside-down"),
-    GIMP_ROTATE_180, FALSE,
+    GIMP_ROTATE_DEGREES180, FALSE,
     GIMP_HELP_IMAGE_ROTATE_180 },
 
   { "image-rotate-270", GIMP_ICON_OBJECT_ROTATE_270,
     NC_("image-action", "Rotate 90° counter-clock_wise"), NULL, { NULL },
     NC_("image-action", "Rotate the image 90 degrees to the left"),
-    GIMP_ROTATE_270, FALSE,
+    GIMP_ROTATE_DEGREES270, FALSE,
     GIMP_HELP_IMAGE_ROTATE_270 }
 };
 

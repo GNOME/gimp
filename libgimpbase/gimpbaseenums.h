@@ -1015,9 +1015,9 @@ typedef enum
 
 /**
  * GimpRotationType:
- * @GIMP_ROTATE_90:  90 degrees
- * @GIMP_ROTATE_180: 180 degrees
- * @GIMP_ROTATE_270: 270 degrees
+ * @GIMP_ROTATE_DEGREES90:  90 degrees
+ * @GIMP_ROTATE_DEGREES180: 180 degrees
+ * @GIMP_ROTATE_DEGREES270: 270 degrees
  *
  * Types of simple rotations.
  **/
@@ -1025,11 +1025,14 @@ typedef enum
 
 GType gimp_rotation_type_get_type (void) G_GNUC_CONST;
 
+/* Due to GObject Introspection we can't have the last part of an identifier
+ * start with a digit, since that part will be used in Python as the
+ * identifier, and Python doesn't allow that to start with a digit. */
 typedef enum
 {
-  GIMP_ROTATE_90,
-  GIMP_ROTATE_180,
-  GIMP_ROTATE_270
+  GIMP_ROTATE_DEGREES90,
+  GIMP_ROTATE_DEGREES180,
+  GIMP_ROTATE_DEGREES270
 } GimpRotationType;
 
 

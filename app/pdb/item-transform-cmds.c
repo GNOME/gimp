@@ -1219,7 +1219,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                                   "rotate type",
                                                   "Type of rotation",
                                                   GIMP_TYPE_ROTATION_TYPE,
-                                                  GIMP_ROTATE_90,
+                                                  GIMP_ROTATE_DEGREES90,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("auto-center",

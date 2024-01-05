@@ -137,7 +137,7 @@ rotate_non_overlapping (GimpTestFixture *fixture,
                                  0,
                                  FALSE);
 
-  gimp_item_rotate (GIMP_ITEM (layer), context, GIMP_ROTATE_90, 0., -10., TRUE);
+  gimp_item_rotate (GIMP_ITEM (layer), context, GIMP_ROTATE_DEGREES90, 0., -10., TRUE);
 
   g_assert_cmpint (result, ==, TRUE);
   g_assert_cmpint (gimp_image_get_n_layers (image), ==, 1);

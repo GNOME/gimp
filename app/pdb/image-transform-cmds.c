@@ -441,7 +441,7 @@ register_image_transform_procs (GimpPDB *pdb)
                                                   "rotate type",
                                                   "Angle of rotation",
                                                   GIMP_TYPE_ROTATION_TYPE,
-                                                  GIMP_ROTATE_90,
+                                                  GIMP_ROTATE_DEGREES90,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

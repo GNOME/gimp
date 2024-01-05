@@ -99,19 +99,19 @@ static const GimpEnumActionEntry drawable_rotate_actions[] =
   { "drawable-rotate-90", GIMP_ICON_OBJECT_ROTATE_90,
     NC_("drawable-action", "Rotate 90° _clockwise"), NULL, { NULL },
     NC_("drawable-action", "Rotate drawable 90 degrees to the right"),
-    GIMP_ROTATE_90, FALSE,
+    GIMP_ROTATE_DEGREES90, FALSE,
     GIMP_HELP_LAYER_ROTATE_90 },
 
   { "drawable-rotate-180", GIMP_ICON_OBJECT_ROTATE_180,
     NC_("drawable-action", "Rotate _180°"), NULL, { NULL },
     NC_("drawable-action", "Turn drawable upside-down"),
-    GIMP_ROTATE_180, FALSE,
+    GIMP_ROTATE_DEGREES180, FALSE,
     GIMP_HELP_LAYER_ROTATE_180 },
 
   { "drawable-rotate-270", GIMP_ICON_OBJECT_ROTATE_270,
     NC_("drawable-action", "Rotate 90° counter-clock_wise"), NULL, { NULL },
     NC_("drawable-action", "Rotate drawable 90 degrees to the left"),
-    GIMP_ROTATE_270, FALSE,
+    GIMP_ROTATE_DEGREES270, FALSE,
     GIMP_HELP_LAYER_ROTATE_270 }
 };
 

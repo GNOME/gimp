@@ -489,10 +489,11 @@ package Gimp::CodeGen::enums;
     GimpRotationType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_ROTATE_90 GIMP_ROTATE_180 GIMP_ROTATE_270) ],
-	  mapping => { GIMP_ROTATE_90 => '0',
-		       GIMP_ROTATE_180 => '1',
-		       GIMP_ROTATE_270 => '2' }
+	  symbols => [ qw(GIMP_ROTATE_DEGREES90 GIMP_ROTATE_DEGREES180
+			  GIMP_ROTATE_DEGREES270) ],
+	  mapping => { GIMP_ROTATE_DEGREES90 => '0',
+		       GIMP_ROTATE_DEGREES180 => '1',
+		       GIMP_ROTATE_DEGREES270 => '2' }
 	},
     GimpRunMode =>
 	{ contig => 1,
