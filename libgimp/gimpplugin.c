@@ -193,10 +193,13 @@ static void       gimp_plug_in_loop              (GimpPlugIn      *plug_in);
 static void       gimp_plug_in_single_message    (GimpPlugIn      *plug_in);
 static void       gimp_plug_in_process_message   (GimpPlugIn      *plug_in,
                                                   GimpWireMessage *msg);
-static void       gimp_plug_in_proc_run          (GimpPlugIn      *plug_in,
+static void       gimp_plug_in_main_proc_run     (GimpPlugIn      *plug_in,
                                                   GPProcRun       *proc_run);
 static void       gimp_plug_in_temp_proc_run     (GimpPlugIn      *plug_in,
                                                   GPProcRun       *proc_run);
+static void       gimp_plug_in_proc_run          (GPProcRun       *proc_run,
+                                                  GimpProcedure   *procedure,
+                                                  GPProcReturn    *proc_return);
 static void       gimp_plug_in_proc_run_internal (GimpPlugIn      *plug_in,
                                                   GPProcRun       *proc_run,
                                                   GimpProcedure   *procedure,
@@ -209,7 +212,14 @@ static void       gimp_plug_in_push_procedure    (GimpPlugIn      *plug_in,
                                                   GimpProcedure   *procedure);
 static void       gimp_plug_in_pop_procedure     (GimpPlugIn      *plug_in,
                                                   GimpProcedure   *procedure);
+static gboolean   gimp_plug_in_is_procedure_stack_empty (
+                                                  GimpPlugIn      *plug_in);
+
+static void       gimp_plug_in_main_run_cleanup  (GimpPlugIn      *plug_in);
+static void       gimp_plug_in_temp_run_cleanup  (GimpPlugIn      *plug_in);
 static void       gimp_plug_in_destroy_hashes    (GimpPlugIn      *plug_in);
+static void       gimp_plug_in_destroy_all_proxies
+                                                 (GimpPlugIn      *plug_in);
 static void       gimp_plug_in_destroy_proxies   (GimpPlugIn      *plug_in,
                                                   GHashTable      *hash_table,
                                                   const gchar     *type,
@@ -1330,7 +1340,7 @@ gimp_plug_in_loop (GimpPlugIn *plug_in)
           break;
 
         case GP_PROC_RUN:
-          gimp_plug_in_proc_run (plug_in, msg.data);
+          gimp_plug_in_main_proc_run (plug_in, msg.data);
           gimp_wire_destroy (&msg);
           return;
 
@@ -1414,9 +1424,10 @@ gimp_plug_in_process_message (GimpPlugIn      *plug_in,
     }
 }
 
+/* Run a proc that is main, i.e. root of a plugin call stack. */
 static void
-gimp_plug_in_proc_run (GimpPlugIn *plug_in,
-                       GPProcRun  *proc_run)
+gimp_plug_in_main_proc_run (GimpPlugIn *plug_in,
+                            GPProcRun  *proc_run)
 {
   GimpPlugInPrivate *priv;
   GPProcReturn       proc_return;
@@ -1432,6 +1443,8 @@ gimp_plug_in_proc_run (GimpPlugIn *plug_in,
                                       &proc_return);
       g_object_unref (procedure);
     }
+
+  gimp_plug_in_main_run_cleanup (plug_in);
 
   if (! gp_proc_return_write (priv->write_channel,
                               &proc_return, plug_in))
@@ -1458,6 +1471,8 @@ gimp_plug_in_temp_proc_run (GimpPlugIn *plug_in,
                                       &proc_return);
     }
 
+  gimp_plug_in_temp_run_cleanup (plug_in);
+
   if (! gp_temp_proc_return_write (priv->write_channel,
                                    &proc_return, plug_in))
     gimp_quit ();
@@ -1465,31 +1480,17 @@ gimp_plug_in_temp_proc_run (GimpPlugIn *plug_in,
   _gimp_gp_params_free (proc_return.params, proc_return.n_params, TRUE);
 }
 
+/* Run the proc, passing args from proc_run
+ * and returning values in proc_return.
+ * This does not alter the state of the GimpPlugin.
+ */
 static void
-gimp_plug_in_proc_run_internal (GimpPlugIn    *plug_in,
-                                GPProcRun     *proc_run,
-                                GimpProcedure *procedure,
-                                GPProcReturn  *proc_return)
+gimp_plug_in_proc_run (GPProcRun     *proc_run,
+                       GimpProcedure *procedure,
+                       GPProcReturn  *proc_return)
 {
   GimpValueArray *arguments;
   GimpValueArray *return_values  = NULL;
-  gchar          *gettext_domain = NULL;
-  gchar          *catalog_dir    = NULL;
-
-  if (_gimp_plug_in_set_i18n (plug_in, gimp_procedure_get_name (procedure),
-                              &gettext_domain, &catalog_dir))
-    {
-      gimp_bind_text_domain (gettext_domain, catalog_dir);
-#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
-      bind_textdomain_codeset (gettext_domain, "UTF-8");
-#endif
-      textdomain (gettext_domain);
-
-      g_free (gettext_domain);
-      g_free (catalog_dir);
-    }
-
-  gimp_plug_in_push_procedure (plug_in, procedure);
 
   arguments = _gimp_gp_params_to_value_array (NULL,
                                               NULL, 0,
@@ -1506,6 +1507,38 @@ gimp_plug_in_proc_run_internal (GimpPlugIn    *plug_in,
   proc_return->params   = _gimp_value_array_to_gp_params (return_values, TRUE);
 
   gimp_value_array_unref (return_values);
+}
+
+
+/* Setup translation, maintain proc stack, and run proc.
+ * Proc is a main or temp proc.
+ * "internal" means private, not that the proc is type INTERNAL.
+ */
+static void
+gimp_plug_in_proc_run_internal (GimpPlugIn    *plug_in,
+                                GPProcRun     *proc_run,
+                                GimpProcedure *procedure,
+                                GPProcReturn  *proc_return)
+{
+  gchar *gettext_domain = NULL;
+  gchar *catalog_dir    = NULL;
+
+  if (_gimp_plug_in_set_i18n (plug_in, gimp_procedure_get_name (procedure),
+                              &gettext_domain, &catalog_dir))
+    {
+      gimp_bind_text_domain (gettext_domain, catalog_dir);
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
+      bind_textdomain_codeset (gettext_domain, "UTF-8");
+#endif
+      textdomain (gettext_domain);
+
+      g_free (gettext_domain);
+      g_free (catalog_dir);
+    }
+
+  gimp_plug_in_push_procedure (plug_in, procedure);
+
+  gimp_plug_in_proc_run (proc_run, procedure, proc_return);
 
   gimp_plug_in_pop_procedure (plug_in, procedure);
 }
@@ -1525,6 +1558,7 @@ gimp_plug_in_extension_read (GIOChannel  *channel,
 
 /*  procedure stack / display-, image-, item-cache  */
 
+
 GimpProcedure *
 _gimp_plug_in_get_procedure (GimpPlugIn *plug_in)
 {
@@ -1539,6 +1573,14 @@ _gimp_plug_in_get_procedure (GimpPlugIn *plug_in)
   return priv->procedure_stack->data;
 }
 
+static gboolean
+gimp_plug_in_is_procedure_stack_empty (GimpPlugIn *plug_in)
+{
+  GimpPlugInPrivate *priv = gimp_plug_in_get_instance_private (plug_in);
+
+  return (priv->procedure_stack == NULL);
+}
+
 static void
 gimp_plug_in_push_procedure (GimpPlugIn    *plug_in,
                              GimpProcedure *procedure)
@@ -1549,6 +1591,60 @@ gimp_plug_in_push_procedure (GimpPlugIn    *plug_in,
     g_list_prepend (priv->procedure_stack, procedure);
 }
 
+/* After a run of a main proc, cleanup.
+ * We are about to return to GIMP or another calling plugin process.
+ * This plugin process will soon terminate.
+ *
+ * Expect the proc stack is empty: don't destroy proxies
+ * when there are still calling procs that might have a reference.
+ */
+static void
+gimp_plug_in_main_run_cleanup (GimpPlugIn *plug_in)
+{
+  if (gimp_plug_in_is_procedure_stack_empty (plug_in))
+    {
+      g_debug ("%s proc stack empty, destroy proxies.", G_STRFUNC);
+      gimp_plug_in_destroy_all_proxies (plug_in);
+      gimp_plug_in_destroy_hashes (plug_in);
+    }
+  else
+    {
+      /* Unexpected. */
+      g_warning ("%s proc stack not empty when main proc returns.", G_STRFUNC);
+    }
+}
+
+/* After a run of a temp proc, cleanup.
+ * We are about to return to another calling proc.
+ *
+ * When the just-run temp proc is returning to top proc on stack and it is an extension,
+ * cleanup is destroy the plugin's proxies.
+ * The proc stack is never empty for an extension: the top is e.g. extension-script-fu,
+ * which must not reference proxies.
+ */
+static void
+gimp_plug_in_temp_run_cleanup (GimpPlugIn *plug_in)
+{
+  GimpPlugInPrivate *priv = gimp_plug_in_get_instance_private (plug_in);
+
+  /* When at top of proc stack and top is an extension, destroy proxies. */
+  if ((g_list_length (priv->procedure_stack) == 1) &&
+      (gimp_procedure_get_proc_type (priv->procedure_stack->data) == GIMP_PDB_PROC_TYPE_EXTENSION))
+    {
+      g_debug ("%s top of proc stack is extension, destroy proxies.", G_STRFUNC);
+      gimp_plug_in_destroy_all_proxies (plug_in);
+      gimp_plug_in_destroy_hashes (plug_in);
+    }
+  else
+    {
+      /* Normal.  The temp proc just run was called by a calling proc
+       * which is not a main proc of an extension plugin.
+       * We can't destroy proxies because the calling proc may retain a reference.
+       */
+      g_debug ("%s Not destroy proxies for temp proc.", G_STRFUNC);
+    }
+}
+
 static void
 gimp_plug_in_pop_procedure (GimpPlugIn    *plug_in,
                             GimpProcedure *procedure)
@@ -1557,22 +1653,17 @@ gimp_plug_in_pop_procedure (GimpPlugIn    *plug_in,
 
   priv->procedure_stack = g_list_remove (priv->procedure_stack, procedure);
 
+  /* Make procedure object unref it's proxy references.
+   * Our hashes still have references to proxies.
+   * Calling procs may also have retained references to proxies.
+   */
   _gimp_procedure_destroy_proxies (procedure);
 
-  gimp_plug_in_destroy_proxies (plug_in, priv->displays,  "display",  FALSE);
-  gimp_plug_in_destroy_proxies (plug_in, priv->images,    "image",    FALSE);
-  gimp_plug_in_destroy_proxies (plug_in, priv->items,     "item",     FALSE);
-  gimp_plug_in_destroy_proxies (plug_in, priv->resources, "resource", FALSE);
-
-  if (! priv->procedure_stack)
-    {
-      gimp_plug_in_destroy_proxies (plug_in, priv->displays,  "display",  TRUE);
-      gimp_plug_in_destroy_proxies (plug_in, priv->images,    "image",    TRUE);
-      gimp_plug_in_destroy_proxies (plug_in, priv->items,     "item",     TRUE);
-      gimp_plug_in_destroy_proxies (plug_in, priv->resources, "resource", TRUE);
-
-      gimp_plug_in_destroy_hashes (plug_in);
-    }
+  /* Don't destroy proxies now because any proc, especially temporary procs,
+   * may have passed a reference to a proc higher in the stack e.g. the main procedure.
+   * We don't have separate proxy hashes for each pushed procedure,
+   * only a hash table for the run.
+   */
 }
 
 GimpDisplay *
@@ -1832,6 +1923,22 @@ gimp_plug_in_destroy_hashes (GimpPlugIn *plug_in)
   g_clear_pointer (&priv->images,    g_hash_table_unref);
   g_clear_pointer (&priv->items,     g_hash_table_unref);
   g_clear_pointer (&priv->resources, g_hash_table_unref);
+}
+
+/* Destroy proxies of all kinds.
+ * This destroys with prejudice, i.e. destroy_all==TRUE.
+ * All procedures, main and temporary, of the plugin must not be run subsequently,
+ * especially to reference a proxy we are destroying.
+ */
+static void
+gimp_plug_in_destroy_all_proxies (GimpPlugIn *plug_in)
+{
+  GimpPlugInPrivate *priv = gimp_plug_in_get_instance_private (plug_in);
+
+  gimp_plug_in_destroy_proxies (plug_in, priv->displays,  "display",  TRUE);
+  gimp_plug_in_destroy_proxies (plug_in, priv->images,    "image",    TRUE);
+  gimp_plug_in_destroy_proxies (plug_in, priv->items,     "item",     TRUE);
+  gimp_plug_in_destroy_proxies (plug_in, priv->resources, "resource", TRUE);
 }
 
 static void
