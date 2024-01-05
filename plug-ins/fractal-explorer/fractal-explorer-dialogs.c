@@ -82,7 +82,7 @@ static explorer_vals_t standardvals =
  FORWARD DECLARATIONS
  *********************************************************************/
 
-static void update_preview             (GimpProcedureConfig *config);
+static void update_previews            (GimpProcedureConfig *config);
 static void load_file_chooser_response (GtkFileChooser      *chooser,
                                         gint                 response_id,
                                         gpointer             data);
@@ -98,12 +98,18 @@ static void cmap_preview_size_allocate (GtkWidget           *widget,
                                         GtkAllocation       *allocation,
                                         GimpProcedureConfig *config);
 
+static void set_grad_data_cache        (GimpGradient        *in_gradient,
+                                        gint                 n_colors);
+
 /**********************************************************************
  CALLBACKS
  *********************************************************************/
 
+/* Update both previews: image and colormap
+ * Handler for notify signals, and also called directly.
+ */
 static void
-update_preview (GimpProcedureConfig *config)
+update_previews (GimpProcedureConfig *config)
 {
   set_cmap_preview (config);
   dialog_update_preview (config);
@@ -117,8 +123,7 @@ dialog_redraw_callback (GtkWidget *widget,
   gint                 alwaysprev = wvals.alwayspreview;
 
   wvals.alwayspreview = TRUE;
-  set_cmap_preview (config);
-  dialog_update_preview (config);
+  update_previews (config);
   wvals.alwayspreview = alwaysprev;
 }
 
@@ -148,8 +153,7 @@ dialog_undo_zoom_callback (GtkWidget *widget,
                     "ymax", wvals.ymax,
                     NULL);
 
-      set_cmap_preview (config);
-      dialog_update_preview (config);
+      update_previews (config);
     }
 }
 
@@ -170,8 +174,7 @@ dialog_redo_zoom_callback (GtkWidget *widget,
                     "ymax", wvals.ymax,
                     NULL);
 
-      set_cmap_preview (config);
-      dialog_update_preview (config);
+      update_previews (config);
     }
 }
 
@@ -228,8 +231,7 @@ dialog_step_in_callback (GtkWidget *widget,
                 "ymax", ymax,
                 NULL);
 
-  set_cmap_preview (config);
-  dialog_update_preview (config);
+  update_previews (config);
 }
 
 static void
@@ -285,8 +287,7 @@ dialog_step_out_callback (GtkWidget *widget,
                 "ymax", ymax,
                 NULL);
 
-  set_cmap_preview (config);
-  dialog_update_preview (config);
+  update_previews (config);
 }
 
 static void
@@ -295,8 +296,7 @@ explorer_toggle_update (GtkWidget *widget,
 {
   gimp_toggle_button_update (widget, data);
 
-  set_cmap_preview (wvals.config);
-  dialog_update_preview (wvals.config);
+  update_previews (wvals.config);
 }
 
 static void
@@ -328,8 +328,7 @@ explorer_radio_update (GtkWidget *widget,
                                        "cy",
                                        c_sensitive, NULL, NULL, FALSE);
 
-  set_cmap_preview (wvals.config);
-  dialog_update_preview (wvals.config);
+  update_previews (wvals.config);
 }
 
 static void
@@ -340,20 +339,9 @@ explorer_number_of_colors_callback (GimpProcedureConfig *config)
   g_object_get (config,
                 "n-colors", &n_colors,
                 NULL);
+  set_grad_data_cache (gradient, n_colors);
 
-  g_free (gradient_samples);
-
-  if (! gradient)
-    gradient = gimp_context_get_gradient ();
-
-  gimp_gradient_get_uniform_samples (gradient,
-                                     n_colors,
-                                     FALSE,
-                                     &n_gradient_samples,
-                                     &gradient_samples);
-
-  set_cmap_preview (config);
-  dialog_update_preview (config);
+  update_previews (config);
 }
 
 /* Same signature as all GimpResourceSelectButton */
@@ -370,19 +358,11 @@ explorer_gradient_select_callback (gpointer      data,  /* config */
                 "n-colors",   &n_colors,
                 "color-mode", &color_mode,
                 NULL);
-
-  g_free (gradient_samples);
-
-  gimp_gradient_get_uniform_samples (gradient,
-                                     n_colors,
-                                     FALSE,
-                                     &n_gradient_samples,
-                                     &gradient_samples);
+  set_grad_data_cache (gradient, n_colors);
 
   if (color_mode == 1)
     {
-      set_cmap_preview (config);
-      dialog_update_preview (config);
+      update_previews (config);
     }
 }
 
@@ -594,7 +574,6 @@ explorer_dialog (GimpProcedure       *procedure,
   GtkWidget    *button;
   GtkWidget    *gradient_button;
   gchar        *path;
-  GimpGradient *gradient;
   GtkListStore *store;
   gint          n_colors;
 
@@ -831,25 +810,25 @@ explorer_dialog (GimpProcedure       *procedure,
   gimp_help_set_help_data (button, _("Save active fractal to file"), NULL);
 
   g_signal_connect (config, "notify::xmin",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::xmax",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::ymin",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::ymax",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::iter",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::cx",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::cy",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
 
   g_signal_connect (config, "notify::fractal-type",
@@ -966,11 +945,9 @@ explorer_dialog (GimpProcedure       *procedure,
   g_object_get (config,
                 "n-colors", &n_colors,
                 NULL);
-  gradient = gimp_context_get_gradient ();
-  gimp_gradient_get_uniform_samples (gradient,
-                                     n_colors, FALSE,
-                                     &n_gradient_samples,
-                                     &gradient_samples);
+  /* Pass NULL to set local gradient data from context. */
+  set_grad_data_cache (NULL, n_colors);
+
   gradient_button = gimp_gradient_chooser_new (_("FractalExplorer Gradient"),
                                                NULL, GIMP_RESOURCE (gradient));
   g_signal_connect_swapped (gradient_button, "resource-set",
@@ -999,37 +976,37 @@ explorer_dialog (GimpProcedure       *procedure,
                     G_CALLBACK (explorer_number_of_colors_callback),
                     config);
   g_signal_connect (config, "notify::use-loglog-smoothing",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::red-stretch",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::blue-stretch",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::green-stretch",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::red-mode",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::green-mode",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::blue-mode",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::red-invert",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::green-invert",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::blue-invert",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   g_signal_connect (config, "notify::color-mode",
-                    G_CALLBACK (update_preview),
+                    G_CALLBACK (update_previews),
                     config);
   /* Fractal Presets */
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
@@ -1067,8 +1044,7 @@ explorer_dialog (GimpProcedure       *procedure,
   gtk_widget_show (dialog);
   ready_now = TRUE;
 
-  set_cmap_preview (config);
-  dialog_update_preview (config);
+  update_previews (config);
 
   wint.run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
   gtk_widget_destroy (dialog);
@@ -1126,6 +1102,11 @@ dialog_update_preview (GimpProcedureConfig *config)
  FUNCTION: cmap_preview_size_allocate()
  *********************************************************************/
 
+/* Handler for size-allocate.
+ * This:
+ *    - transfers internal model colormap to the widget
+ *    - redraws.
+ */
 static void
 cmap_preview_size_allocate (GtkWidget           *widget,
                             GtkAllocation       *allocation,
@@ -1190,6 +1171,7 @@ set_cmap_preview (GimpProcedureConfig *config)
   if (NULL == cmap_preview)
     return;
 
+  /* Change the internal model.  Does not write to widget's model. */
   make_color_map (config);
 
   for (ysize = 1; ysize * ysize * ysize < n_colors; ysize++)
@@ -1198,6 +1180,7 @@ set_cmap_preview (GimpProcedureConfig *config)
   while (xsize * ysize < n_colors)
     xsize++;
 
+  /* Set minimum size.  This does not always signal an event that would redraw. */
   gtk_widget_set_size_request (cmap_preview, xsize, ysize * 4);
 }
 
@@ -1512,8 +1495,7 @@ load_file_chooser_response (GtkFileChooser *chooser,
         }
 
       gtk_widget_show (maindlg);
-      set_cmap_preview (config);
-      dialog_update_preview (config);
+      update_previews (config);
     }
 
   gtk_widget_destroy (GTK_WIDGET (chooser));
@@ -1606,6 +1588,44 @@ create_save_file_chooser (GtkWidget *widget,
     }
 
   gtk_window_present (GTK_WINDOW (window));
+}
+
+/* Set cache of gradient and samples from it.
+ *
+ * The cache is in three global variables:
+ * gradient, gradient_samples, n_gradient_samples.
+ * This keeps the three variables coherent.
+ *
+ * !!! There is one other writer of gradient_samples, see below.
+ * For NON-INTERACTIVE use, global gradient can remain NULL
+ * while gradient_samples is not.
+ *
+ * When in_gradient is NULL, uses gradient from context.
+ *
+ * In some cases, the gradient is a reference to a proxy
+ * received from a temporary procedure callback.
+ * Since we are keeping a reference, and can pass it to a gradient chooser,
+ * the plugin machinery must not destroy the proxy object until this plugin exits.
+ */
+static void
+set_grad_data_cache (GimpGradient *in_gradient,
+                     gint          n_colors)
+{
+  /* Set the global gradient. */
+  if (in_gradient == NULL)
+    gradient = gimp_context_get_gradient ();
+  else
+    gradient = in_gradient;
+
+  /* Refresh the global cache of samples. */
+  if (gradient_samples != NULL)
+    g_free (gradient_samples);
+
+  gimp_gradient_get_uniform_samples (gradient,
+                                     n_colors,
+                                     FALSE,
+                                     &n_gradient_samples,
+                                     &gradient_samples);
 }
 
 gchar*
