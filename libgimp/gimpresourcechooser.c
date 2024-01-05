@@ -237,8 +237,14 @@ gimp_resource_chooser_constructed (GObject *object)
   GimpResourceChooserPrivate *priv;
 
   priv = gimp_resource_chooser_get_instance_private (GIMP_RESOURCE_CHOOSER (object));
-  gtk_label_set_text_with_mnemonic (GTK_LABEL (priv->label_widget), priv->label);
-  gtk_widget_show (GTK_WIDGET (priv->label_widget));
+  /* Set text of label widget now since underlying property might have changed.
+   * Not when empty string:  set_text throws CRITICAL on empty string!
+   */
+  if (priv->label != NULL)
+    {
+      gtk_label_set_text_with_mnemonic (GTK_LABEL (priv->label_widget), priv->label);
+      gtk_widget_show (GTK_WIDGET (priv->label_widget));
+    }
 
   G_OBJECT_CLASS (gimp_resource_chooser_parent_class)->constructed (object);
 }
