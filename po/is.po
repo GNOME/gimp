@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-01-02 04:05+0000\n"
-"PO-Revision-Date: 2024-01-04 17:40+0000\n"
+"PO-Revision-Date: 2024-01-05 12:02+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -2568,22 +2568,20 @@ msgid "Show Image _Graph"
 msgstr "Sýna _graf myndar"
 
 #: app/actions/debug-actions.c:59
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "Create a new template from this image"
 msgid "Creates a new image showing the GEGL graph of this image"
-msgstr "Búa til nýtt sniðmát úr þessari mynd"
+msgstr "Býr til nýja mynd sem sýnir GEGL-graf þessarar myndar"
 
 #: app/actions/debug-actions.c:64
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "_Keyboard Shortcuts"
 msgid "Dump _Keyboard Shortcuts"
-msgstr "Flýtily_klar"
+msgstr "Prenta flýtily_kla"
 
 #: app/actions/debug-actions.c:69
 msgid "Dump _Attached Data"
-msgstr ""
+msgstr "Prent_a tengd gögn"
 
 #: app/actions/dialogs-actions.c:47
 msgctxt "windows-action"
@@ -2625,12 +2623,11 @@ msgid "Open the device status dialog"
 msgstr "Opna valmynd fyrir stöðu tækis"
 
 #: app/actions/dialogs-actions.c:69
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "_Symmetry Painting"
 msgctxt "dialogs-action"
 msgid "_Symmetry Painting Dialog"
-msgstr "_Samhverf málun"
+msgstr "Valmynd fyrir _samhverfa málun"
 
 #: app/actions/dialogs-actions.c:70
 msgctxt "dialogs-action"
@@ -2784,12 +2781,11 @@ msgid "Open the pointer information dialog"
 msgstr "Opna upplýsingaglugga fyrir bendil"
 
 #: app/actions/dialogs-actions.c:148
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "_Sample Points"
 msgctxt "dialogs-action"
 msgid "_Sample Points Dialog"
-msgstr "_Sýnatökupunktar"
+msgstr "Valmynd fyrir _sýnatökupunkta"
 
 #: app/actions/dialogs-actions.c:149
 msgctxt "dialogs-action"
@@ -7626,12 +7622,11 @@ msgid "Cu_t and Float"
 msgstr "Klippa og fley_ta"
 
 #: app/actions/select-actions.c:63
-#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste the selected buffer into the selection"
 msgctxt "select-action"
 msgid "Cut the selection directly into a floating selection"
-msgstr "Líma valið biðminni inn í valið svæði"
+msgstr "Líma valið beint inn í fljótandi val"
 
 #: app/actions/select-actions.c:68
 #| msgid "Color and opacity:"
@@ -7640,11 +7635,10 @@ msgid "_Copy and Float"
 msgstr "Afrita og fle_yta"
 
 #: app/actions/select-actions.c:69
-#, fuzzy
 #| msgid "Cannot select items while a floating selection is active."
 msgctxt "select-action"
 msgid "Copy the selection directly into a floating selection"
-msgstr "Get ekki valið atriði á meðan fljótandi val er virkt."
+msgstr "Afrita valið beint inn í fljótandi val"
 
 #: app/actions/select-actions.c:74
 msgctxt "select-action"
@@ -7897,11 +7891,10 @@ msgstr ""
 "Ertu viss um að þú viljir eyða sniðmátinu '%s' úr listanum og af diski?"
 
 #: app/actions/text-editor-actions.c:40
-#, fuzzy
 #| msgid "Text Editor"
 msgctxt "text-editor-action"
 msgid "Text Editor Toolbar"
-msgstr "Textaritill"
+msgstr "Verkfærastika textaritils"
 
 #: app/actions/text-editor-actions.c:45
 msgctxt "text-editor-action"
@@ -9494,27 +9487,24 @@ msgid "Snap to _Bounding Boxes"
 msgstr "Grí_pa í umgjarðir"
 
 #: app/actions/view-actions.c:282
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Tool operations snap to the canvas edges"
 msgctxt "view-action"
 msgid "Tool operations snap to the bounding boxes"
-msgstr "Verkfæraaðgerðir grípa í jaðra myndflatarins"
+msgstr "Verkfæraaðgerðir grípa í umgjarðir"
 
 #: app/actions/view-actions.c:288
-#, fuzzy
 #| msgid "Snap to _Guides"
 msgctxt "view-action"
 msgid "Snap to _Equidistance"
-msgstr "_Grípa í stoðlínur"
+msgstr "Grípa í jafnar v_egalengdir"
 
 #: app/actions/view-actions.c:289
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Tool operations snap to the canvas edges"
 msgctxt "view-action"
 msgid "Tool operations snap to the equidistance between three bounding boxes"
-msgstr "Verkfæraaðgerðir grípa í jaðra myndflatarins"
+msgstr "Verkfæraaðgerðir grípa í jafnar vegalengdir milli þriggja umgjarða"
 
 #: app/actions/view-actions.c:295
 msgctxt "view-action"
@@ -9795,12 +9785,11 @@ msgid "Flip the view vertically"
 msgstr "Spegla sýninni lóðrétt"
 
 #: app/actions/view-actions.c:473
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Display information about this image"
 msgctxt "view-action"
 msgid "Display Rotation Absolute Angle Set"
-msgstr "Birta upplýsingar um þessa mynd"
+msgstr "Algilt snúningshorn skjás er stillt"
 
 #: app/actions/view-actions.c:479
 msgctxt "view-action"
@@ -10117,18 +10106,19 @@ msgid ""
 "Experimental multi-display stuff!\n"
 "Click OK and have fun crashing GIMP..."
 msgstr ""
+"Margra-skjáa dót á tilraunastigi!\n"
+"Smelltu á 'Í lagi' og skemmtu þér við að láta GIMP hrynja..."
 
 #: app/actions/window-commands.c:92
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste the content of the clipboard"
 msgid "Please enter the name of the new display:"
-msgstr "Líma inn innihald klippispjaldsins"
+msgstr "Settu inn heiti á nýja skjáinn:"
 
 #: app/actions/window-commands.c:118
 #, c-format
 msgid "Can't open display '%s'. Please try another one:"
-msgstr ""
+msgstr "Tókst ekki að opna skjáinn '%s'. Prófaðu einhvern annan:"
 
 #: app/actions/windows-actions.c:102
 msgctxt "windows-action"
@@ -10246,13 +10236,13 @@ msgstr "Sýna \"%s-%d.%d\""
 #. * second (%2$d) is its tab order in the graphical interface.
 #.
 #: app/actions/windows-actions.c:465
-#, fuzzy, c-format
+#, c-format
 #| msgctxt "windows-action"
 #| msgid "Switch to the next image"
 msgid "Switch to the first image view: %1$s"
 msgid_plural "Switch to image view %2$d: %1$s"
-msgstr[0] "Skipa yfir í næstu mynd"
-msgstr[1] "Skipa yfir í næstu mynd"
+msgstr[0] "Skipta yfir í sýn á fyrstu mynd: %1$s"
+msgstr[1] "Skipta yfir í sýn á mynd %2$d: %1$s"
 
 #: app/actions/windows-commands.c:208
 msgid ""
@@ -10567,10 +10557,9 @@ msgid "Timestamp of the last update check."
 msgstr "Tímamerki síðustu athugun með uppfærslu."
 
 #: app/config/gimprc-blurbs.h:53
-#, fuzzy
 #| msgid "The image '%s' has an embedded color profile"
 msgid "What to do when opening a file with an embedded ICC color profile."
-msgstr "Myndin '%s' er með ígrætt litasnið"
+msgstr "Hvað á að gera þegar opnuð er skrá með ígræddu ICC-litasniði."
 
 #: app/config/gimprc-blurbs.h:56
 msgid "Sets the default folder path for all color profile file dialogs."
@@ -10596,7 +10585,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:81
 msgid "Merge menu and title bar (client-side decoration)"
-msgstr ""
+msgstr "Sameina valmynd og titilstiku (gluggaskreytingar á vegum forritsins)"
 
 #: app/config/gimprc-blurbs.h:84
 msgid "Show full image content by default."
@@ -10632,18 +10621,18 @@ msgid "Snap to the active path by default in new image windows."
 msgstr "Grípa sjálfgefið í virkan feril í nýjum myndgluggum."
 
 #: app/config/gimprc-blurbs.h:128
-#, fuzzy
 #| msgid "Snap to the canvas edges by default in new image windows."
 msgid "Snap to the layers bounding boxes by default in new image windows."
-msgstr "Grípa sjálfgefið í jaðra myndflatar í nýjum myndgluggum."
+msgstr "Grípa sjálfgefið í umgjarðir laga í nýjum myndgluggum."
 
 #: app/config/gimprc-blurbs.h:131
-#, fuzzy
 #| msgid "Snap to the canvas edges by default in new image windows."
 msgid ""
 "Snap to the equidistance between three bounding boxes by default in new "
 "image windows."
-msgstr "Grípa sjálfgefið í jaðra myndflatar í nýjum myndgluggum."
+msgstr ""
+"Grípa sjálfgefið í jafnar vegalengdir milli þriggja umgjarða í nýjum"
+" myndgluggum."
 
 #: app/config/gimprc-blurbs.h:134
 msgid ""
@@ -11236,7 +11225,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:568
 msgid "Tweak font size of the graphical interface."
-msgstr ""
+msgstr "Aðlaga stærð leturs í myndræna notandaviðmótinu."
 
 #: app/config/gimprc-blurbs.h:571
 msgid ""
@@ -11581,6 +11570,8 @@ msgstr "Ef þetta er virkjað, er OpenCL notað í nokkrum aðgerðum."
 #: app/config/gimprc-blurbs.h:785
 msgid "There's a tradeoff between speed and quality of the zoomed-out display."
 msgstr ""
+"Það er alltaf málamiðlun milli hraða og gæða á skjánum þar sem aðdráttur er"
+" lítill."
 
 #: app/config/gimprc-blurbs.h:792
 msgid "When enabled, a search of actions will also return inactive actions."
@@ -12868,16 +12859,14 @@ msgid "FG to BG (Hard Edge)"
 msgstr "FG til BG (skarpar brúnir)"
 
 #: app/core/gimp-gradients.c:91
-#, fuzzy
 #| msgid "FG to BG (HSV counter-clockwise)"
 msgid "FG to BG (HSV Counter-Clockwise)"
 msgstr "FG til BG (HSV rangsælis)"
 
 #: app/core/gimp-gradients.c:99
-#, fuzzy
 #| msgid "FG to BG (HSV clockwise hue)"
 msgid "FG to BG (HSV Clockwise Hue)"
-msgstr "FG til BG (HSV réttsælis)"
+msgstr "FG til BG (HSV litblær réttsælis)"
 
 #: app/core/gimp-gradients.c:107
 msgid "FG to Transparent"
@@ -13620,12 +13609,11 @@ msgid "Fill with Background Color"
 msgstr "Fylla með bakgrunnslit"
 
 #: app/core/gimpfilloptions.c:421
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Fill with Solid Color"
 msgctxt "undo-type"
 msgid "Fill with Middle Gray (CIELAB) Color"
-msgstr "Fylla með hreinum lit"
+msgstr "Fylla með meðalgráum (CIELAB) lit"
 
 #: app/core/gimpfilloptions.c:427
 msgctxt "undo-type"
@@ -13828,7 +13816,7 @@ msgstr "Sýnileikalæsingum var bætt við í %s"
 #: app/core/gimpimage.c:2973
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
-msgstr ""
+msgstr "Sniði leturupplýsinga í textalagi var breytt í %s"
 
 #: app/core/gimpimage.c:2996
 #, c-format
@@ -14042,12 +14030,11 @@ msgid "Add Color to Colormap"
 msgstr "Bæta lit í litavörpun"
 
 #: app/core/gimpimage-colormap.c:492
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Change Colormap entry"
 msgctxt "undo-type"
 msgid "Delete Colormap entry"
-msgstr "Breyta færslu fyrir litavörpun"
+msgstr "Eyða færslu fyrir litavörpun"
 
 #: app/core/gimpimage-convert-indexed.c:795
 msgid "Cannot convert image: palette is empty."
@@ -14625,20 +14612,18 @@ msgid "Premature end of file."
 msgstr "Óvæntur endi skráar."
 
 #: app/core/gimppalette-load.c:691
-#, fuzzy
 #| msgid "Invalid empty palette name"
 msgid "Invalid ACB palette version."
-msgstr "Ógilt heiti á auðu litaspjaldi"
+msgstr "Ógild útgáfa á ACB-litaspjaldi."
 
 #: app/core/gimppalette-load.c:697
 msgid "GIMP only supports version 1 ACB palettes"
-msgstr ""
+msgstr "GIMP styður einungis útgáfu 1 af ACB-litaspjöldum"
 
 #: app/core/gimppalette-load.c:704
-#, fuzzy
 #| msgid "Invalid empty palette name"
 msgid "Invalid ACB palette identifier."
-msgstr "Ógilt heiti á auðu litaspjaldi"
+msgstr "Ógilt auðkenni á ACB-litaspjaldi."
 
 #: app/core/gimppalette-load.c:719 app/core/gimppalette-load.c:958
 #: app/core/gimppalette-load.c:979
@@ -14647,16 +14632,14 @@ msgid "Invalid ACB palette name."
 msgstr "Ógilt heiti á ACB-litaspjaldi."
 
 #: app/core/gimppalette-load.c:737
-#, fuzzy
 #| msgid "Invalid empty palette name"
 msgid "Invalid ACB palette prefix."
-msgstr "Ógilt heiti á auðu litaspjaldi"
+msgstr "Ógilt forskeyti á ACB-litaspjaldi."
 
 #: app/core/gimppalette-load.c:752
-#, fuzzy
 #| msgid "Invalid empty palette name"
 msgid "Invalid ACB palette suffix."
-msgstr "Ógilt heiti á auðu litaspjaldi"
+msgstr "Ógilt viðskeyti á ACB-litaspjaldi."
 
 #: app/core/gimppalette-load.c:770 app/core/gimppalette-load.c:1044
 #| msgid "Maximum number of colors:"
@@ -14670,10 +14653,9 @@ msgid "Invalid number of colors: %s."
 msgstr "Ógildur fjöldi lita: %s."
 
 #: app/core/gimppalette-load.c:788 app/core/gimppalette-load.c:797
-#, fuzzy
 #| msgid "Invalid empty palette name"
 msgid "Invalid ACB palette page info."
-msgstr "Ógilt heiti á auðu litaspjaldi"
+msgstr "Ógildar upplýsingar á síðu ACB-litaspjalds."
 
 #: app/core/gimppalette-load.c:808 app/core/gimppalette-load.c:830
 #| msgid "Invalid empty palette name"
@@ -14682,7 +14664,7 @@ msgstr "Ógilt litarýmd á ACB-litaspjaldi."
 
 #: app/core/gimppalette-load.c:968
 msgid "Invalid ACB name size."
-msgstr ""
+msgstr "Ógild stærð á ACB-heiti."
 
 #: app/core/gimppalette-load.c:1035
 #, c-format
@@ -14703,10 +14685,10 @@ msgid "Invalid color components: %s."
 msgstr "Ógildur fjöldi litþátta: %s."
 
 #: app/core/gimppalette-load.c:1166 app/core/gimppalette-load.c:1193
-#, fuzzy, c-format
+#, c-format
 #| msgid "Invalid column count."
 msgid "Invalid ASE color entry: %s."
-msgstr "Ógildur dálkafjöldi."
+msgstr "Ógild ASE-litafærsla: %s."
 
 #: app/core/gimppalette-load.c:1221 app/core/gimppalette-load.c:1237
 #: app/core/gimppalette-load.c:1256
@@ -14716,11 +14698,11 @@ msgstr "Ógilt heiti á ASE-litaspjaldi."
 
 #: app/core/gimppalette-load.c:1230
 msgid "Invalid ASE block size."
-msgstr ""
+msgstr "Ógild stærð á ASE-blokk."
 
 #: app/core/gimppalette-load.c:1246
 msgid "Invalid ASE name size."
-msgstr ""
+msgstr "Ógild stærð á ASE-heiti."
 
 #: app/core/gimppalette-load.c:1374
 msgid "Unable to read SBZ file"
@@ -16404,10 +16386,9 @@ msgid "Snap to _Bounding Box"
 msgstr "Grí_pa í umgjörð"
 
 #: app/dialogs/preferences-dialog.c:1184
-#, fuzzy
 #| msgid "Snap to _Guides"
 msgid "Snap to _Equidistance"
-msgstr "_Grípa í stoðlínur"
+msgstr "Grípa í jafnar v_egalengdir"
 
 #: app/dialogs/preferences-dialog.c:1256
 msgid "Preferences"
@@ -16610,7 +16591,6 @@ msgid "Policies"
 msgstr "Aðgangskröfur"
 
 #: app/dialogs/preferences-dialog.c:1577
-#, fuzzy
 #| msgid "_File Open behaviour:"
 msgid "_File Open behavior:"
 msgstr "_Hegðun við að opna skrár:"
@@ -16817,10 +16797,9 @@ msgid "_Pattern"
 msgstr "_Mynstur"
 
 #: app/dialogs/preferences-dialog.c:1856
-#, fuzzy
 #| msgid "Linked Layers"
 msgid "E_xpand Layers"
-msgstr "Tengd lög"
+msgstr "Útví_kka lög"
 
 #. Move Tool
 #: app/dialogs/preferences-dialog.c:1860
@@ -16962,7 +16941,7 @@ msgstr "Kvörðun leturs"
 
 #: app/dialogs/preferences-dialog.c:2158
 msgid "Font scaling will not work with themes using absolute sizes."
-msgstr ""
+msgstr "Kvörðun leturs mun ekki virka í þemum sem nota algildar stærðir."
 
 #: app/dialogs/preferences-dialog.c:2164
 msgid "50%"
@@ -20327,6 +20306,8 @@ msgid ""
 "Wrong shortcutsrc (%s) file format version: %d (expected: %d). We tried to "
 "load shortcuts as well as possible.\n"
 msgstr ""
+"Rangt skráarsnið á shortcutsrc (%s) útgáfu: %d (vænti: %d). Reynt var að"
+" hlaða inn flýtilyklum eins vel og mögulegt var.\n"
 
 #: app/paint/gimpairbrush.c:80 app/tools/gimpairbrushtool.c:69
 msgid "Airbrush"
@@ -20869,11 +20850,11 @@ msgstr "Skrifun PDB-skrárinnar '%s' mistókst: %s"
 #.
 #: app/pdb/gimppdb-utils.c:127 app/pdb/gimppdb-utils.c:210
 #: app/pdb/gimppdb-utils.c:275
-#, fuzzy, c-format
+#, c-format
 #| msgid "F1 cannot be remapped."
 msgctxt "PDB-error-message"
 msgid "%s name cannot be empty"
-msgstr "Ekki er hægt að endurúthluta F1."
+msgstr "Heiti á %s má ekki vera tómt"
 
 #. TRANSLATOR: the first %s is a data label from the
 #. * PDB-error-data-label context. The second %s is a data
@@ -20881,11 +20862,11 @@ msgstr "Ekki er hægt að endurúthluta F1."
 #.
 #: app/pdb/gimppdb-utils.c:154 app/pdb/gimppdb-utils.c:224
 #: app/pdb/gimppdb-utils.c:289
-#, fuzzy, c-format
+#, c-format
 #| msgid "Brush '%s' not found"
 msgctxt "PDB-error-message"
 msgid "%s '%s' not found"
-msgstr "Pensillinn '%s' fannst ekki"
+msgstr "%s '%s' fannst ekki"
 
 #. TRANSLATOR: the first %s is a data label from the
 #. * PDB-error-data-label context. The second %s is a data
@@ -20893,11 +20874,11 @@ msgstr "Pensillinn '%s' fannst ekki"
 #.
 #: app/pdb/gimppdb-utils.c:169 app/pdb/gimppdb-utils.c:234
 #: app/pdb/gimppdb-utils.c:299
-#, fuzzy, c-format
+#, c-format
 #| msgid "Brush '%s' is not editable"
 msgctxt "PDB-error-message"
 msgid "%s '%s' is not editable"
-msgstr "Pensillinn '%s' er ekki breytanlegur"
+msgstr "%s '%s' er ekki breytanlegt"
 
 #. TRANSLATOR: the first %s is a data label from the
 #. * PDB-error-data-label context. The second %s is a data
@@ -20905,11 +20886,11 @@ msgstr "Pensillinn '%s' er ekki breytanlegur"
 #.
 #: app/pdb/gimppdb-utils.c:180 app/pdb/gimppdb-utils.c:245
 #: app/pdb/gimppdb-utils.c:310
-#, fuzzy, c-format
+#, c-format
 #| msgid "Brush '%s' is not renamable"
 msgctxt "PDB-error-message"
 msgid "%s '%s' is not renamable"
-msgstr "Ekki er hægt að breyta nafninu á '%s' penslinum"
+msgstr "Ekki er hægt að breyta nafninu á %s '%s'"
 
 #: app/pdb/gimppdb-utils.c:333
 #, c-format
@@ -24929,16 +24910,14 @@ msgid "Use an external editor window for text entry"
 msgstr "Nota ytri ritilglugga við innsetningu texta"
 
 #: app/tools/gimptextoptions.c:258
-#, fuzzy
 #| msgid "Show on-canvas filter controls"
 msgid "Show on-canvas editor"
-msgstr "Sýna stjórntæki fyrir síur á myndfleti"
+msgstr "Birta ritil á myndfleti"
 
 #: app/tools/gimptextoptions.c:259
-#, fuzzy
 #| msgid "Show on-canvas filter controls"
 msgid "Show on-canvas text editor"
-msgstr "Sýna stjórntæki fyrir síur á myndfleti"
+msgstr "Birta textaritil á myndfleti"
 
 #: app/tools/gimptextoptions.c:301
 msgid "Outline width"
@@ -26248,11 +26227,10 @@ msgid "Edit Colormap Entry"
 msgstr "Breyta litavörpunarfærslu"
 
 #: app/widgets/gimpcolormapeditor.c:468
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Set a color profile on the image"
 msgid "The color is used in this indexed image"
-msgstr "Setja litasnið fyrir myndina"
+msgstr "Liturinn er notaður í þessari litnúmeruðu mynd"
 
 #: app/widgets/gimpcolormapselection.c:238
 msgid "Color index:"
@@ -26296,7 +26274,7 @@ msgstr "Stærri forskoðun"
 
 #: app/widgets/gimpcontrollereditor.c:200
 msgid "_Dump events from this controller"
-msgstr "Sleppa at_vikum frá þessari stýringu"
+msgstr "Prenta at_vik frá þessari stýringu"
 
 #: app/widgets/gimpcontrollereditor.c:204
 msgid "_Enable this controller"
@@ -26322,7 +26300,7 @@ msgstr "_Grípa atvik"
 
 #: app/widgets/gimpcontrollereditor.c:371
 msgid "Select the next event arriving from the controller"
-msgstr "Velja næsta atvik sem kemur frá stýringunni"
+msgstr "Veldu næsta atvik sem kemur frá stýringunni"
 
 #: app/widgets/gimpcontrollereditor.c:375
 #: app/widgets/gimpdeviceinfoeditor.c:638
@@ -27119,11 +27097,10 @@ msgid "Pressure curve"
 msgstr "Þrýstingskúrfa"
 
 #: app/widgets/gimpdeviceinfo.c:261
-#, fuzzy
 #| msgctxt "space-bar-action"
 #| msgid "No action"
 msgid "Pad actions"
-msgstr "Engin aðgerð"
+msgstr "Aðgerðir teikniplatta"
 
 #: app/widgets/gimpdeviceinfo.c:1133 app/widgets/gimpdeviceinfo.c:1158
 msgid "(Device not present)"
@@ -27184,20 +27161,18 @@ msgid "The axis '%s' has no curve"
 msgstr "Ásinn '%s' hefur engann litferil"
 
 #: app/widgets/gimpdeviceinfoeditor.c:546
-#, fuzzy
 #| msgid "Search Actions"
 msgid "Pad Actions"
-msgstr "Leitaraðgerðir"
+msgstr "Aðgerðir teikniplatta"
 
 #: app/widgets/gimpdeviceinfoeditor.c:633
-#, fuzzy
 #| msgid "Select the next event arriving from the controller"
 msgid "Select the next event arriving from the pad"
-msgstr "Velja næsta atvik sem kemur frá stýringunni"
+msgstr "Veldu næsta atvik sem kemur frá teikniplattanum"
 
 #: app/widgets/gimpdeviceinfoeditor.c:677
 msgid "Pad Actions are not supported on your platform yet"
-msgstr ""
+msgstr "Aðgerðir teikniplatta eru ekki enn studdar á stýrikerfinu þínu"
 
 #: app/widgets/gimpdeviceinfoeditor.c:900
 #, c-format
@@ -27208,7 +27183,7 @@ msgstr "Hnappur %d"
 #: app/widgets/gimpdeviceinfoeditor.c:903
 #, c-format
 msgid "Ring %d"
-msgstr ""
+msgstr "Hringur %d"
 
 #: app/widgets/gimpdeviceinfoeditor.c:906
 #, c-format
@@ -27217,10 +27192,9 @@ msgid "Strip %d"
 msgstr "Strípa %d"
 
 #: app/widgets/gimpdeviceinfoeditor.c:1152
-#, fuzzy
 #| msgid "Select Controller Event Action"
 msgid "Select Pad Event Action"
-msgstr "Velja aðgerð fyrir atvik stýringar"
+msgstr "Velja aðgerð teikniplatta"
 
 #: app/widgets/gimpdevicestatus.c:153
 msgid "Save device status"
@@ -27397,10 +27371,9 @@ msgid "Fill Color"
 msgstr "Fyllilitur"
 
 #: app/widgets/gimpfilleditor.c:164
-#, fuzzy
 #| msgid "Fill Color"
 msgid "Fill BG Color"
-msgstr "Fyllilitur"
+msgstr "Fylla bakgrunnslit"
 
 #: app/widgets/gimpfilleditor.c:187
 msgid "_Antialiasing"
@@ -29144,7 +29117,7 @@ msgstr "F_orritsþróun"
 #: menus/image-menu.ui.in.in:844
 msgctxt "filters-action"
 msgid "_Goat exercises"
-msgstr ""
+msgstr "_Goat-æfingar"
 
 #: menus/image-menu.ui.in.in:847
 msgctxt "filters-action"
