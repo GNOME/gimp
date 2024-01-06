@@ -1,11 +1,11 @@
 # Swedish messages for GIMP plugins.
-# Copyright © 1999-2023 Free Software Foundation, Inc.
+# Copyright © 1999-2024 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002.
 # Jan Morén <jan.moren@lucs.lu.se>, 2002, 2003.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2011, 2012.
 # Påvel Nicklasson <pavel@frimix.se>, 2014.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2014, 2018, 2019, 2020, 2021, 2022, 2023.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2014, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 # Sebastian Rasmussen <sebras@gmail.com>, 2015, 2016, 2017.
 # Luna Jernberg <droidbittin@gmail.com>, 2021, 2022, 2023.
 #
@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-26 16:41+0000\n"
-"PO-Revision-Date: 2023-12-30 15:14+0100\n"
+"POT-Creation-Date: 2023-12-31 13:33+0000\n"
+"PO-Revision-Date: 2024-01-06 12:35+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -952,9 +952,7 @@ msgstr "Mättnad"
 
 #: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
-#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:309
-#: plug-ins/metadata/metadata-viewer.c:347
-#: plug-ins/metadata/metadata-viewer.c:385
+#: plug-ins/gimpressionist/size.c:155
 msgid "Value"
 msgstr "Intensitet"
 
@@ -6433,9 +6431,9 @@ msgid ""
 "export dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
 "Din markör har exporterats men den innehåller en eller flera bildrutor vars "
-"nominella storlek inte stöds av GNOME:s inställningar.\n"
+"nominella storlek inte stöds av GNOMEs inställningar.\n"
 "Du kan uppfylla det genom att bocka för ”Byt ut storlek för alla bildrutor…” "
-"i dialogrutan för att exportera, annars kanske markören inte visas i GNOME:s "
+"i dialogrutan för att exportera, annars kanske markören inte visas i GNOMEs "
 "inställningar."
 
 #: plug-ins/common/file-xmc.c:1969
@@ -12795,7 +12793,7 @@ msgstr "Rotation:"
 #: plug-ins/gradient-flare/gradient-flare.c:3831
 #: plug-ins/gradient-flare/gradient-flare.c:3962
 msgid "Hue rotation:"
-msgstr "Nyansrotering:"
+msgstr "Nyansrotation:"
 
 #: plug-ins/gradient-flare/gradient-flare.c:3743
 msgid "G_low"
@@ -15395,6 +15393,13 @@ msgstr "Metadatavisare: %s"
 msgid "Exif Tag"
 msgstr "Exif-tagg"
 
+#: plug-ins/metadata/metadata-viewer.c:309
+#: plug-ins/metadata/metadata-viewer.c:347
+#: plug-ins/metadata/metadata-viewer.c:385
+msgctxt "A tag value"
+msgid "Value"
+msgstr "Värde"
+
 #: plug-ins/metadata/metadata-viewer.c:317
 msgid "Exif"
 msgstr "Exif"
@@ -16521,10 +16526,6 @@ msgstr "Överför data från bildläsare/kamera"
 
 #~ msgid "Preview _size:"
 #~ msgstr "Förhandsvisnings_storlek:"
-
-#~ msgctxt "A tag value"
-#~ msgid "Value"
-#~ msgstr "Värde"
 
 #~ msgid "Error loading metadata-viewer dialog."
 #~ msgstr "Fel vid inläsning av dialogruta för visning av metadata."
@@ -18931,9 +18932,6 @@ msgstr "Överför data från bildläsare/kamera"
 
 #~ msgid "_Pitted surfaces"
 #~ msgstr "_Gropiga ytor"
-
-#~ msgid "_FG/BG lighting"
-#~ msgstr "_FGBG ljussättning"
 
 #~ msgid "Randomize hue/saturation/value independently"
 #~ msgstr "Slumpa nyans/mättnad/ljusstyrka individuellt"
