@@ -180,6 +180,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
   GList        *drawables;
   gint          num, denom;
   gint          i = 0;
+  gchar        *temp;
+  gunichar      c;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), 0);
 
@@ -203,13 +205,17 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
   gimp_zoom_model_get_fraction (shell->zoom, &num, &denom);
 
-  while (i < title_len && *format)
+  temp = g_strdup (format);
+  c    = g_utf8_get_char (format);
+  while (i < title_len && c)
     {
-      switch (*format)
+      switch (c)
         {
         case '%':
-          format++;
-          switch (*format)
+          format = g_utf8_next_char (format);
+          c      = g_utf8_get_char (format);
+
+          switch (c)
             {
             case 0:
               /* format string ends within %-sequence, print literal '%' */
@@ -271,27 +277,25 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'D': /* dirty flag */
-              if (format[1] == 0)
+              if (temp[1] == 0)
                 {
                   /* format string ends within %D-sequence, print literal '%D' */
                   i += print (title, title_len, i, "%%D");
                   break;
                 }
               if (gimp_image_is_dirty (image))
-                title[i++] = format[1];
-              format++;
+                title[i++] = temp[1];
               break;
 
             case 'C': /* clean flag */
-              if (format[1] == 0)
+              if (temp[1] == 0)
                 {
                   /* format string ends within %C-sequence, print literal '%C' */
                   i += print (title, title_len, i, "%%C");
                   break;
                 }
               if (! gimp_image_is_dirty (image))
-                title[i++] = format[1];
-              format++;
+                title[i++] = temp[1];
               break;
 
             case 'B': /* dirty flag (long) */
@@ -313,19 +317,17 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                 }
               if (gimp_image_is_export_dirty (image))
                 title[i++] = format[1];
-              format++;
               break;
 
             case 'E': /* exported flag */
-              if (format[1] == 0)
+              if (temp[1] == 0)
                 {
                   /* format string ends within %E-sequence, print literal '%E' */
                   i += print (title, title_len, i, "%%E");
                   break;
                 }
               if (! gimp_image_is_export_dirty (image))
-                title[i++] = format[1];
-              format++;
+                title[i++] = temp[1];
               break;
 
             case 'm': /* memory used by image */
@@ -547,19 +549,37 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                */
 
             default:
-              /* format string contains unknown %-sequence, print it literally */
-              i += print (title, title_len, i, "%%%c", *format);
+              {
+                /* format string contains unknown %-sequence, print it literally */
+                gchar letter[8];
+                gint  len;
+
+                len = g_unichar_to_utf8 (c, letter);
+                letter[len] = '\0';
+
+                i += print (title, title_len, i, "%%%s", letter);
+              }
               break;
             }
           break;
 
         default:
-          title[i++] = *format;
+          {
+            gchar letter[8];
+            gint  len;
+
+            len = g_unichar_to_utf8 (c, letter);
+            letter[len] = '\0';
+
+            i += print (title, title_len, i, "%s", letter);
+          }
           break;
         }
 
-      format++;
+      format = g_utf8_next_char (format);
+      c      = g_utf8_get_char (format);
     }
+  g_free (temp);
 
   title[MIN (i, title_len - 1)] = '\0';
 
