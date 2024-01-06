@@ -598,7 +598,10 @@ gimp_file_dialog_progress_get_window_id (GimpProgress *progress)
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
 
-  return dialog->window_handle;
+  if (dialog && dialog->window_handle)
+    return g_bytes_ref (dialog->window_handle);
+
+  return NULL;
 }
 
 
