@@ -87,11 +87,13 @@ grid_settings_ok_cb (gpointer data)
    if (grid_snap != new_snap)
      {
        GAction  *action;
+       GVariant *new_state;
 
        grid_snap = new_snap;
 
        action = g_action_map_lookup_action (G_ACTION_MAP (imap->app), "grid");
-       g_simple_action_set_enabled (G_SIMPLE_ACTION (action), grid_snap);
+       new_state = g_variant_new_boolean (grid_snap);
+       g_simple_action_set_state (G_SIMPLE_ACTION (action), new_state);
      }
    preview_redraw();
 }
