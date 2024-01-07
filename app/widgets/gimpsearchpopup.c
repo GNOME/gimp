@@ -37,6 +37,7 @@
 #include "gimppopup.h"
 #include "gimpsearchpopup.h"
 #include "gimptoggleaction.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -85,6 +86,8 @@ static void       gimp_search_popup_get_property        (GObject            *obj
 
 static void       gimp_search_popup_size_allocate        (GtkWidget         *widget,
                                                           GtkAllocation     *allocation);
+static void       gimp_search_popup_map                  (GimpSearchPopup   *search_popup,
+                                                          gpointer           data);
 
 static void       gimp_search_popup_confirm              (GimpPopup *popup);
 
@@ -173,6 +176,12 @@ static void
 gimp_search_popup_init (GimpSearchPopup *search_popup)
 {
   search_popup->priv = gimp_search_popup_get_instance_private (search_popup);
+
+#ifdef G_OS_WIN32
+  g_signal_connect (search_popup, "map",
+                    G_CALLBACK (gimp_search_popup_map),
+                    NULL);
+#endif
 }
 
 /************ Public Functions ****************/
@@ -209,7 +218,6 @@ gimp_search_popup_new (Gimp                    *gimp,
                          "callback-data", callback_data,
                          NULL);
   gtk_window_set_modal (GTK_WINDOW (widget), FALSE);
-
 
   return widget;
 }
@@ -530,6 +538,24 @@ gimp_search_popup_size_allocate (GtkWidget     *widget,
        */
       window_height = MAX (workarea.height / 4, allocation->height);
     }
+}
+
+static void
+gimp_search_popup_map (GimpSearchPopup *search_popup,
+                       gpointer         data)
+{
+#ifdef G_OS_WIN32
+  /* Since this popup is initially modal to the main window,
+   * toggling the visibility of the GdkWindow causes odd
+   * behavior. Instead, we change the opacity on launch to
+   * refresh the titlebar theme */
+  gimp_window_set_title_bar_theme (search_popup->priv->gimp,
+                                   GTK_WIDGET (search_popup),
+                                   TRUE);
+
+  gtk_widget_set_opacity (GTK_WIDGET (search_popup), 0);
+  gtk_widget_set_opacity (GTK_WIDGET (search_popup), 1);
+#endif
 }
 
 static void
