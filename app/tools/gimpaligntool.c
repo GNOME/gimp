@@ -632,7 +632,8 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
       x += off_x;
       y += off_y;
 
-      if (gimp_align_options_align_contents (options))
+      if (gimp_align_options_align_contents (options) &&
+          GIMP_IS_PICKABLE (reference))
         {
           gint shrunk_x;
           gint shrunk_y;
