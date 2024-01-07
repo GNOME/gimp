@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-12-30 16:29+0100\n"
-"PO-Revision-Date: 2024-01-05 00:23+0100\n"
+"PO-Revision-Date: 2024-01-07 03:48+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -5468,33 +5468,30 @@ msgid "Quite OK Image"
 msgstr ""
 
 #: ../plug-ins/common/file-qoi.c:143
-#, fuzzy
 msgid "Load file in the QOI file format"
-msgstr "Carica file in formato JPEG XL"
+msgstr "Carica file in formato QOI"
 
 #: ../plug-ins/common/file-qoi.c:144
-#, fuzzy
 msgid "Load file in the QOI file format (Quite OK Image)"
-msgstr "Carica file in formato JPEG XL"
+msgstr "Carica file in formato QOI (Quite OK Image)"
 
 #: ../plug-ins/common/file-qoi.c:170
-#, fuzzy
 msgid "Export image in the QOI file format"
-msgstr "Carica file in formato JPEG XL"
+msgstr "Esporta immagine in formato file QOI"
 
 #: ../plug-ins/common/file-qoi.c:171
 msgid "Export image in the QOI file format (Quite OK Image)"
-msgstr ""
+msgstr "Esporta immagine in formato file QOI (Quite OK Image)"
 
 #: ../plug-ins/common/file-qoi.c:261
-#, fuzzy, c-format
+#, c-format
 msgid "QOI format does not support multiple layers."
-msgstr "Il formato SGI non supporta livelli multipli."
+msgstr "Il formato QOI non supporta livelli multipli."
 
 #: ../plug-ins/common/file-qoi.c:311
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read QOI file"
-msgstr "Impossibile leggere il file:"
+msgstr "Impossibile leggere il file QOI"
 
 #: ../plug-ins/common/file-raw-data.c:336
 #: ../plug-ins/common/file-raw-data.c:455
@@ -5502,31 +5499,28 @@ msgid "Raw image data"
 msgstr "Dati immagine raw"
 
 #: ../plug-ins/common/file-raw-data.c:356
-#, fuzzy
 msgid "Image width in number of pixels"
-msgstr "Imposta il numero di punte"
+msgstr "Larghezza immagine in numero di pixel"
 
 #: ../plug-ins/common/file-raw-data.c:361
-#, fuzzy
 msgid "Image height in number of pixels"
-msgstr "Imposta il numero di punte"
+msgstr "Altezza immagine in numero di pixel"
 
 #: ../plug-ins/common/file-raw-data.c:366
 msgid "Offset to beginning of image in raw data"
-msgstr ""
+msgstr "Scostamento all'inizio immagine in dati grezzi"
 
 #: ../plug-ins/common/file-raw-data.c:371
-#, fuzzy
 msgid "Pixel _format"
-msgstr "Formato pixel:"
+msgstr "_Formato pixel"
 
 #: ../plug-ins/common/file-raw-data.c:372
 msgid "The layout of pixel data, such as components and their order"
-msgstr ""
+msgstr "La disposizione dei dati pixel, come i componenti e il loro ordine"
 
 #: ../plug-ins/common/file-raw-data.c:376
 msgid "Data t_ype"
-msgstr ""
+msgstr "T_ipo dati"
 
 #: ../plug-ins/common/file-raw-data.c:377
 msgid ""
@@ -5536,18 +5530,17 @@ msgstr ""
 
 #: ../plug-ins/common/file-raw-data.c:381
 msgid "Endianness"
-msgstr ""
+msgstr "Endianness"
 
 #: ../plug-ins/common/file-raw-data.c:382
 msgid ""
 "Order of sequences of bytes { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"
-msgstr ""
+msgstr "Ordine della sequenza di byte { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"
 
 #: ../plug-ins/common/file-raw-data.c:386
 #: ../plug-ins/common/file-raw-data.c:470
-#, fuzzy
 msgid "Planar configuration"
-msgstr "configurazione non valida"
+msgstr "configurazione planare"
 
 #: ../plug-ins/common/file-raw-data.c:387
 #: ../plug-ins/common/file-raw-data.c:471
@@ -5557,18 +5550,16 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/common/file-raw-data.c:395
-#, fuzzy
 msgid "Palette Offse_t"
-msgstr "Tipo tavolozza"
+msgstr "Scos_tamento tavolozza"
 
 #: ../plug-ins/common/file-raw-data.c:396
 msgid "Offset to beginning of data in the palette file"
-msgstr ""
+msgstr "Scostamento dall'inizio dei dati nel file tavolozza"
 
 #: ../plug-ins/common/file-raw-data.c:400
-#, fuzzy
 msgid "Palette's la_yout"
-msgstr "Mappa tavolozza"
+msgstr "D_isposizione tavolozza"
 
 #: ../plug-ins/common/file-raw-data.c:401
 #: ../plug-ins/common/file-raw-data.c:477
@@ -5578,13 +5569,12 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/common/file-raw-data.c:406
-#, fuzzy
 msgid "_Palette File"
-msgstr "Fil_e tavolozza:"
+msgstr "File ta_volozza"
 
 #: ../plug-ins/common/file-raw-data.c:407
 msgid "The file containing palette data"
-msgstr ""
+msgstr "Il file contenente i dati della tavolozza"
 
 #: ../plug-ins/common/file-raw-data.c:417
 #: ../plug-ins/common/file-raw-data.c:2804
@@ -5592,9 +5582,8 @@ msgid "Digital Elevation Model data"
 msgstr "Dati modello digitale di elevazione"
 
 #: ../plug-ins/common/file-raw-data.c:441
-#, fuzzy
 msgid "_Sample spacing"
-msgstr "_Spaziatura campione:"
+msgstr "_Spaziatura campione"
 
 #: ../plug-ins/common/file-raw-data.c:442
 msgid ""
@@ -5602,14 +5591,12 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/common/file-raw-data.c:476
-#, fuzzy
 msgid "Palette's layout"
-msgstr "Mappa tavolozza"
+msgstr "Disposizione tavolozza"
 
 #: ../plug-ins/common/file-raw-data.c:484
-#, fuzzy
 msgid "Raw Data"
-msgstr "Dati immagine raw"
+msgstr "Dati raw"
 
 #: ../plug-ins/common/file-raw-data.c:551
 #, c-format
@@ -5701,41 +5688,36 @@ msgid "B&W 1 bit"
 msgstr "B&N 1 bit"
 
 #: ../plug-ins/common/file-raw-data.c:2716
-#, fuzzy
 msgid "Grayscale 2-bit"
-msgstr "Grigio 2 bit"
+msgstr "Scala di grigi 2 bit"
 
 #: ../plug-ins/common/file-raw-data.c:2717
-#, fuzzy
 msgid "Grayscale 4-bit"
-msgstr "Grigio 4 bit"
+msgstr "Scala di grigi 4 bit"
 
 #: ../plug-ins/common/file-raw-data.c:2718
-#, fuzzy
 msgid "Grayscale 8-bit"
-msgstr "Grigio 8 bit"
+msgstr "Scala di grigi 8 bit"
 
 #: ../plug-ins/common/file-raw-data.c:2719
-#, fuzzy
 msgid "Grayscale 16-bit"
-msgstr "Grigio 2 bit"
+msgstr "Scala di grigi 16 bit"
 
 #: ../plug-ins/common/file-raw-data.c:2720
-#, fuzzy
 msgid "Grayscale 32-bit"
-msgstr "Grigio 2 bit"
+msgstr "Scala di grigi 32 bit"
 
 #: ../plug-ins/common/file-raw-data.c:2722
 msgid "Grayscale-Alpha 8-bit"
-msgstr ""
+msgstr "Scala di grigi-alfa 8 bit"
 
 #: ../plug-ins/common/file-raw-data.c:2723
 msgid "Grayscale-Alpha 16-bit"
-msgstr ""
+msgstr "Scala di grigi-alfa 16 bit"
 
 #: ../plug-ins/common/file-raw-data.c:2724
 msgid "Grayscale-Alpha 32-bit"
-msgstr ""
+msgstr "Scala di grigi-alfa 32 bit"
 
 #: ../plug-ins/common/file-raw-data.c:2726
 msgid "Indexed"
@@ -5746,39 +5728,32 @@ msgid "Indexed Alpha"
 msgstr "Alfa indicizzata"
 
 #: ../plug-ins/common/file-raw-data.c:2733
-#, fuzzy
 msgid "Unsigned Integer"
-msgstr "Interi veloci"
+msgstr "Interi senza segno"
 
 #: ../plug-ins/common/file-raw-data.c:2734
-#, fuzzy
 msgid "Signed Integer"
-msgstr "Interi"
+msgstr "Interi con segno"
 
 #: ../plug-ins/common/file-raw-data.c:2735
-#, fuzzy
 msgid "Floating Point"
 msgstr "Virgola mobile"
 
 #: ../plug-ins/common/file-raw-data.c:2741
-#, fuzzy
 msgid "Little Endian"
-msgstr "RGB565 Little Endian"
+msgstr "Little Endian"
 
 #: ../plug-ins/common/file-raw-data.c:2742
-#, fuzzy
 msgid "Big Endian"
-msgstr "RGB565 Big Endian"
+msgstr "Big Endian"
 
 #: ../plug-ins/common/file-raw-data.c:2748
-#, fuzzy
 msgid "Contiguous"
-msgstr "Regione conti_nua"
+msgstr "Contigui"
 
 #: ../plug-ins/common/file-raw-data.c:2749
-#, fuzzy
 msgid "Planar"
-msgstr "RGB planare"
+msgstr "Planare"
 
 #. Translators: Digital Elevation Model (DEM) is a technical term
 #. * used for 3D surface modeling or relief maps; so it must be
@@ -5812,27 +5787,25 @@ msgstr "Tavolozza"
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
 #: ../plug-ins/common/file-raw-data.c:2898
-#, fuzzy, c-format
+#, c-format
 msgid "_Contiguous (%s)"
-msgstr "Regione conti_nua"
+msgstr "_Contigui (%s)"
 
 #: ../plug-ins/common/file-raw-data.c:2900
-#, fuzzy
 msgid "_Contiguous"
-msgstr "Regione conti_nua"
+msgstr "_Contigui"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
 #: ../plug-ins/common/file-raw-data.c:2906
-#, fuzzy, c-format
+#, c-format
 msgid "_Planar (%s)"
-msgstr "RGB planare"
+msgstr "_Planare (%s)"
 
 #: ../plug-ins/common/file-raw-data.c:2908
-#, fuzzy
 msgid "_Planar"
-msgstr "RGB planare"
+msgstr "_Planare"
 
 #. Palette type combo
 #: ../plug-ins/common/file-raw-data.c:2930
@@ -5849,7 +5822,7 @@ msgstr "Immagine SUN raster"
 
 #: ../plug-ins/common/file-sunras.c:318
 msgid "SUNRAS"
-msgstr ""
+msgstr "SUNRAS"
 
 #: ../plug-ins/common/file-sunras.c:325
 msgid "Data Formatting"
@@ -5949,12 +5922,10 @@ msgid "Write error occurred"
 msgstr "Errore di scrittura"
 
 #: ../plug-ins/common/file-sunras.c:1794
-#, fuzzy
 msgid "S_tandard"
-msgstr "Standard"
+msgstr "S_tandard"
 
 #: ../plug-ins/common/file-sunras.c:1795
-#, fuzzy
 msgid "R_un-Length Encoded"
 msgstr "Codifica _RLE"
 
@@ -5964,7 +5935,7 @@ msgstr "Immagine SVG"
 
 #: ../plug-ins/common/file-svg.c:205
 msgid "_Paths"
-msgstr ""
+msgstr "_Tracciati"
 
 #: ../plug-ins/common/file-svg.c:206
 #, fuzzy
@@ -5975,14 +5946,12 @@ msgstr ""
 "tracciati di GIMP"
 
 #: ../plug-ins/common/file-svg.c:207
-#, fuzzy
 msgid "Don't import paths"
-msgstr "Importa _tracciati"
+msgstr "Non importare i tracciati"
 
 #: ../plug-ins/common/file-svg.c:208
-#, fuzzy
 msgid "Import paths individually"
-msgstr "Importa _tracciati"
+msgstr "Importa i tracciati singolarmente"
 
 #: ../plug-ins/common/file-svg.c:209
 msgid "Merge imported paths"
@@ -6023,13 +5992,12 @@ msgid "Disable safety size limits?"
 msgstr ""
 
 #: ../plug-ins/common/file-svg.c:741
-#, fuzzy
 msgid "_No"
-msgstr "_Nessuna"
+msgstr "_No"
 
 #: ../plug-ins/common/file-svg.c:742
 msgid "_Yes"
-msgstr ""
+msgstr "_Sì"
 
 #. Unfortunately the error returned by librsvg is unclear. While
 #. * libxml explicitly returns a "parser error : internal error:
@@ -6069,22 +6037,20 @@ msgid "TGA"
 msgstr ""
 
 #: ../plug-ins/common/file-tga.c:308
-#, fuzzy
 msgid "_Use RLE compression"
-msgstr "Compressione _RLE"
+msgstr "_Usa compressione RLE"
 
 #: ../plug-ins/common/file-tga.c:309
-#, fuzzy
 msgid "Use RLE compression"
-msgstr "Compressione RLE"
+msgstr "Usa compressione RLE"
 
 #: ../plug-ins/common/file-tga.c:314
 msgid "Ori_gin"
-msgstr ""
+msgstr "Ori_gine"
 
 #: ../plug-ins/common/file-tga.c:315
 msgid "Image origin (0 = top-left, 1 = bottom-left)"
-msgstr ""
+msgstr "Origine immagine (0 =  in cima a sinistra, 1 = in basso a sinistra)"
 
 #: ../plug-ins/common/file-tga.c:396 ../plug-ins/common/file-xwd.c:453
 #, c-format
@@ -6115,29 +6081,27 @@ msgid "Top left"
 msgstr "In alto a sinistra"
 
 #: ../plug-ins/common/file-wbmp.c:118
-#, fuzzy
 msgid "Wireless BMP image"
-msgstr "Immagine BMP Windows"
+msgstr "Immagine BMP Wireless"
 
 #: ../plug-ins/common/file-wbmp.c:121 ../plug-ins/common/file-wbmp.c:122
-#, fuzzy
 msgid "Loads files of Wireless BMP file format"
-msgstr "Carica file in formato JPEG XL"
+msgstr "Carica file in formato BMP Wireless"
 
 #: ../plug-ins/common/file-wbmp.c:197
-#, fuzzy, c-format
+#, c-format
 msgid "'%s': Invalid WBMP type value"
-msgstr "\"%s\" non è un file BMP valido"
+msgstr "'%s': Non è un file WBMP valido"
 
 #: ../plug-ins/common/file-wbmp.c:206
 #, c-format
 msgid "'%s': Unsupported WBMP fixed header value"
-msgstr ""
+msgstr "'%s': Valore intestazione WBMP non valido"
 
 #: ../plug-ins/common/file-wbmp.c:228
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a valid WBMP file"
-msgstr "\"%s\" non è un file BMP valido"
+msgstr "'%s' non è un file WBMP valido"
 
 #: ../plug-ins/common/file-wmf.c:155
 msgid "Microsoft WMF file"
@@ -6164,9 +6128,8 @@ msgid "X BitMap image"
 msgstr "Immagine BitMap X"
 
 #: ../plug-ins/common/file-xbm.c:165
-#, fuzzy
 msgid "Load a file in X10 or X11 bitmap (XBM) file format"
-msgstr "Carica file in formato JPEG XL"
+msgstr "Carica file in formato bitmap X10 o X11 (XBM)"
 
 #: ../plug-ins/common/file-xbm.c:167
 msgid ""
@@ -6185,9 +6148,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/common/file-xbm.c:206
-#, fuzzy
 msgid "XBM"
-msgstr "XMP"
+msgstr "XBM"
 
 #: ../plug-ins/common/file-xbm.c:215
 msgid "_Write comment"
@@ -6198,13 +6160,12 @@ msgid "Write a comment at the beginning of the file."
 msgstr "Scrivi un commento all'inizio del file."
 
 #: ../plug-ins/common/file-xbm.c:221 ../plug-ins/common/mail.c:235
-#, fuzzy
 msgid "Co_mment"
-msgstr "Co_mmento:"
+msgstr "Co_mmento"
 
 #: ../plug-ins/common/file-xbm.c:222
 msgid "Image description (maximum 72 bytes)"
-msgstr ""
+msgstr "Descrizione immagine (72 byte max)"
 
 #: ../plug-ins/common/file-xbm.c:230
 msgid "_X10 format bitmap"
@@ -6212,7 +6173,7 @@ msgstr "Formato bitmap _X10"
 
 #: ../plug-ins/common/file-xbm.c:231
 msgid "Export in X10 format"
-msgstr ""
+msgstr "Esporta in formato X10"
 
 #: ../plug-ins/common/file-xbm.c:236
 #, fuzzy
@@ -6243,32 +6204,28 @@ msgid "Y coordinate of hotspot"
 msgstr ""
 
 #: ../plug-ins/common/file-xbm.c:254
-#, fuzzy
 msgid "I_dentifier prefix"
-msgstr "Prefisso _identificativo: "
+msgstr "Prefisso i_dentificativo"
 
 #: ../plug-ins/common/file-xbm.c:255
 msgid "Identifier prefix [determined from filename]"
-msgstr ""
+msgstr "Prefisso identificativo [determinato dal nome del file]"
 
 #: ../plug-ins/common/file-xbm.c:260
-#, fuzzy
 msgid "Write extra mask _file"
-msgstr "Sc_rivi file maschera extra"
+msgstr "Scrivi _file maschera extra"
 
 #: ../plug-ins/common/file-xbm.c:261
-#, fuzzy
 msgid "Write extra mask file"
-msgstr "Sc_rivi file maschera extra"
+msgstr "Scrivi file maschera extra"
 
 #: ../plug-ins/common/file-xbm.c:266
-#, fuzzy
 msgid "Mas_k file extensions"
-msgstr "_Maschera estensione file:"
+msgstr "Estensioni file masc_hera"
 
 #: ../plug-ins/common/file-xbm.c:267
 msgid "Suffix of the mask file"
-msgstr ""
+msgstr "Suffisso del file maschera"
 
 #: ../plug-ins/common/file-xbm.c:378
 #, c-format
@@ -6573,18 +6530,16 @@ msgid "X PixMap image"
 msgstr "Immagine PixMap X"
 
 #: ../plug-ins/common/file-xpm.c:255
-#, fuzzy
 msgid "XPM"
-msgstr "XMP"
+msgstr "XPM"
 
 #: ../plug-ins/common/file-xpm.c:262
 msgid "_Threshold"
 msgstr "_Soglia"
 
 #: ../plug-ins/common/file-xpm.c:263
-#, fuzzy
 msgid "Alpha threshold"
-msgstr "Soglia test _alfa:"
+msgstr "Soglia alfa"
 
 #: ../plug-ins/common/file-xpm.c:344
 #, c-format
@@ -6615,11 +6570,13 @@ msgid "Could not read XWD header from '%s'"
 msgstr "Impossibile leggere intestazione XWD da '%s'"
 
 #: ../plug-ins/common/file-xwd.c:541
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "Seek error"
-msgstr "Errore posizionamento: %s"
+msgstr ""
+"'%s':\n"
+"Errore posizionamento"
 
 #: ../plug-ins/common/file-xwd.c:551
 #, fuzzy, c-format
@@ -6669,9 +6626,9 @@ msgstr "Errore esportando \"%s\": "
 
 #: ../plug-ins/common/file-xwd.c:961 ../plug-ins/common/file-xwd.c:995
 #: ../plug-ins/common/file-xwd.c:1032
-#, fuzzy, c-format
+#, c-format
 msgid "Seek error"
-msgstr "Errore posizionamento: %s"
+msgstr "Errore posizionamento"
 
 #: ../plug-ins/common/file-xwd.c:1884 ../plug-ins/common/file-xwd.c:2135
 #: ../plug-ins/common/file-xwd.c:2330
@@ -6680,11 +6637,13 @@ msgid "XWD-file %s is corrupt."
 msgstr "Il file XWD %s è danneggiato."
 
 #: ../plug-ins/common/file-xwd.c:2083
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "Invalid color map"
-msgstr "Mappa colore non valida"
+msgstr ""
+"'%s':\n"
+"Mappa colore non valida"
 
 #: ../plug-ins/common/film.c:180
 msgid "_Filmstrip..."
@@ -6695,50 +6654,44 @@ msgid "Combine several images on a film strip"
 msgstr "Combina diverse immagini in una pellicola"
 
 #: ../plug-ins/common/film.c:194
-#, fuzzy
 msgid "Film _height"
-msgstr "_Altezza immagini:"
+msgstr "_Altezza pellicola"
 
 #: ../plug-ins/common/film.c:195
 msgid "Height of film (0: fit to images)"
-msgstr ""
+msgstr "Altezza pellicola (0: giusta alle immagini)"
 
 #: ../plug-ins/common/film.c:200
-#, fuzzy
 msgid "_Film color"
-msgstr "Seleziona colore pellicola"
+msgstr "Colore _pellicola"
 
 #: ../plug-ins/common/film.c:201
-#, fuzzy
 msgid "Color of the film"
-msgstr "Riempimento colore"
+msgstr "Colore della pellicola"
 
 #: ../plug-ins/common/film.c:206
-#, fuzzy
 msgid "Start _index"
-msgstr "_Indice iniziale:"
+msgstr "_Indice inizio"
 
 #: ../plug-ins/common/film.c:207
 msgid "Start index for numbering"
-msgstr ""
+msgstr "Indice di inizio della numerazione"
 
 #: ../plug-ins/common/film.c:212
-#, fuzzy
 msgid "Number _font"
-msgstr "Numero di segmenti"
+msgstr "Numero di _caratteri"
 
 #: ../plug-ins/common/film.c:213
 msgid "Font for drawing numbers"
-msgstr ""
+msgstr "Carattere per il disegno dei numeri"
 
 #: ../plug-ins/common/film.c:217
-#, fuzzy
 msgid "_Number color"
-msgstr "Numero di colori:"
+msgstr "Colore _numero"
 
 #: ../plug-ins/common/film.c:218
 msgid "Color for numbers"
-msgstr ""
+msgstr "Colore dei numeri"
 
 #: ../plug-ins/common/film.c:223
 msgid "At _top"
@@ -6746,21 +6699,19 @@ msgstr "In _alto"
 
 #: ../plug-ins/common/film.c:224
 msgid "Draw numbers at top"
-msgstr ""
+msgstr "Disegna numeri in cima"
 
 #: ../plug-ins/common/film.c:229
 msgid "At _bottom"
 msgstr "In _basso"
 
 #: ../plug-ins/common/film.c:230
-#, fuzzy
 msgid "Draw numbers at bottom"
-msgstr "A_bbassa fino in fondo"
+msgstr "Disegna numeri in fondo"
 
 #: ../plug-ins/common/film.c:245
-#, fuzzy
 msgid "Image _height"
-msgstr "_Altezza immagini:"
+msgstr "_Altezza immagine"
 
 #: ../plug-ins/common/film.c:246
 #, fuzzy
