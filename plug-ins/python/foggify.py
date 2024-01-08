@@ -36,7 +36,6 @@ def foggify(procedure, run_mode, image, n_drawables, drawables, config, data):
         dialog.fill(None)
         if not dialog.run():
             dialog.destroy()
-            config.end_run(Gimp.PDBStatusType.CANCEL)
             return procedure.new_return_values(Gimp.PDBStatusType.CANCEL, GLib.Error())
         else:
             dialog.destroy()
