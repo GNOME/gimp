@@ -28,8 +28,19 @@ import sys
 def N_(message): return message
 def _(message): return GLib.dgettext(None, message)
 
+_color = Gimp.RGB()
+_color.set_uchar(240, 0, 0)
+_color.set_alpha(1.0)
 
 def foggify(procedure, run_mode, image, n_drawables, drawables, config, data):
+    # Work around not being able to set default color by only setting it
+    # when color in our config is None. This won't help when resetting to
+    # factory default. This also fixes a critical when running without
+    # changing the color away from None.
+    color = config.get_property('color')
+    if color is None:
+        config.set_property('color', _color)
+
     if run_mode == Gimp.RunMode.INTERACTIVE:
         GimpUi.init('python-fu-foggify')
         dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
@@ -88,9 +99,6 @@ def foggify(procedure, run_mode, image, n_drawables, drawables, config, data):
     Gimp.context_pop()
 
     return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
-
-_color = Gimp.RGB()
-_color.set(240.0, 0, 0)
 
 class Foggify (Gimp.PlugIn):
     ## Parameters ##
