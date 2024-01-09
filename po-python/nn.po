@@ -7,47 +7,47 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2016-01-14 20:03+0100\n"
-"PO-Revision-Date: 2016-01-14 20:03+0100\n"
+"POT-Creation-Date: 2023-01-02 18:47+0000\n"
+"PO-Revision-Date: 2023-12-25 14:44+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
-"Language-Team: Norwegian nynorsk <i18n-no@lister.ping.uio.no>\n"
+"Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.3\n"
+"X-Generator: Poedit 3.4.2\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pygimp/gimpfu.py:396
 msgid "Missing exception information"
 msgstr "Manglar informasjon om unntak"
 
-#: ../plug-ins/pygimp/gimpfu.py:403
+#: ../plug-ins/pygimp/gimpfu.py:405
 #, python-format
 msgid "An error occurred running %s"
 msgstr "Det oppstod ein feil under køyringa av %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:414
+#: ../plug-ins/pygimp/gimpfu.py:416
 msgid "_More Information"
 msgstr "_Meir informasjon"
 
-#: ../plug-ins/pygimp/gimpfu.py:527 ../plug-ins/pygimp/gimpfu.py:539
-#: ../plug-ins/pygimp/gimpfu.py:545
+#: ../plug-ins/pygimp/gimpfu.py:529 ../plug-ins/pygimp/gimpfu.py:541
+#: ../plug-ins/pygimp/gimpfu.py:547
 msgid "No"
 msgstr "Nei"
 
-#: ../plug-ins/pygimp/gimpfu.py:537 ../plug-ins/pygimp/gimpfu.py:545
+#: ../plug-ins/pygimp/gimpfu.py:539 ../plug-ins/pygimp/gimpfu.py:547
 msgid "Yes"
 msgstr "Ja"
 
-#: ../plug-ins/pygimp/gimpfu.py:598 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:600 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu filutval"
 
-#: ../plug-ins/pygimp/gimpfu.py:644
+#: ../plug-ins/pygimp/gimpfu.py:649
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu mappeutval"
 
-#: ../plug-ins/pygimp/gimpfu.py:733
+#: ../plug-ins/pygimp/gimpfu.py:738
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Ugyldig inndata for «%s»"
@@ -104,47 +104,47 @@ msgstr "Fargeovergang som skal brukast"
 msgid "File Name"
 msgstr "Filnamn"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:89
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Eksporter bilethistogrammet til ei tekstfil (CSV)"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:94
 msgid "_Export histogram..."
 msgstr "_Eksporter histogram …"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
 msgid "_Image"
 msgstr "_Bilete"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
 msgid "_Drawable"
 msgstr "Teikneobjekt"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
 msgid "Histogram _File"
 msgstr "Histogram_fil"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
-msgid "_Bucket Size"
-msgstr "_Bøttestorleik:"
-
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+msgid "_Bucket Size"
+msgstr "_Bøttestorleik"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
 msgid "Sample _Average"
 msgstr "_Gjennomsnitt"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
 msgid "Output format"
 msgstr "Utformat"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
 msgid "Pixel count"
 msgstr "Pikselteljing"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
 msgid "Normalized"
 msgstr "Normalisert"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:104
 msgid "Percent"
 msgstr "Prosent"
 
@@ -185,7 +185,7 @@ msgid "_Offset Palette..."
 msgstr "_Forskyv paletten …"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
@@ -259,62 +259,62 @@ msgstr "Kroma (LCHab)"
 msgid "Hue (LCHab)"
 msgstr "Kulør (LCHab)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:313
 msgid "Sort the colors in a palette"
 msgstr "Sorter fargane i paletten"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:332
 msgid "_Sort Palette..."
 msgstr "_Sorter paletten …"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
 msgid "Se_lections"
 msgstr "_Utval"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "All"
 msgstr "Alle"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "Slice / Array"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
-msgid "Autoslice (fg->bg)"
-msgstr ""
+msgstr "Oppskore / Matrise"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
-msgid "Partitioned"
-msgstr ""
+msgid "Autoslice (fg->bg)"
+msgstr "Auto-oppskjering"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
+msgid "Partitioned"
+msgstr "Partisjonert"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
 msgid "Slice _expression"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:340
 msgid "Channel to _sort"
 msgstr "Kanal som skal _sorterast"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
 msgid "_Ascending"
 msgstr "_Aukande"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:343
 msgid "Secondary Channel to s_ort"
 msgstr "Sekundærkanal som skal s_orterast"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
 msgid "_Quantization"
 msgstr "Kvantisering"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:347
 msgid "_Partitioning channel"
-msgstr ""
+msgstr "_Partisjoneringskanal"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:349
 msgid "Partition q_uantization"
-msgstr ""
+msgstr "Partisjons_kvantisering"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
@@ -337,82 +337,82 @@ msgid "Slice"
 msgstr "Del opp"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr "Del biletet langs hjelpelinjene, lag småbilete og HTML tabell"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "_Slice..."
 msgstr "_Del opp …"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Path for HTML export"
 msgstr "Sti for HTML-eksport"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Filename for export"
 msgstr "Filnamn for eksport"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image name prefix"
 msgstr "Prefiks for filnamnet"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Image format"
 msgstr "Biletformat"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Separate image folder"
 msgstr "Særskild biletmappe"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Folder for image export"
 msgstr "Mappe for bileteksport"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
 msgid "Space between table elements"
 msgstr "Avstand mellom tabellelementa"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript for «onmouseover» og «clicked»"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
 msgid "Skip animation for table caps"
 msgstr "Hopp over animasjon for tabellen"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
 msgid "Python Console"
 msgstr "Python konsoll"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
 msgid "_Browse..."
 msgstr "_Bla gjennom …"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#: ../plug-ins/pygimp/plug-ins/python-console.py:154
 msgid "Python Procedure Browser"
 msgstr "Python Procedure Browser"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kan ikkje opna «%s» for skriving: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#: ../plug-ins/pygimp/plug-ins/python-console.py:198
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Klarte ikkje skrive til «%s»: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#: ../plug-ins/pygimp/plug-ins/python-console.py:206
 msgid "Save Python-Fu Console Output"
 msgstr "Lagra utdata frå Python-Fu-konsollen"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:216
+#: ../plug-ins/pygimp/plug-ins/python-console.py:232
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interaktiv Gimp-Python tolkar"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:221
+#: ../plug-ins/pygimp/plug-ins/python-console.py:237
 msgid "_Console"
 msgstr "_Konsollen"
 
@@ -422,7 +422,7 @@ msgstr "Legg slagskugge og eventuelt fasettkant til laget"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
-msgstr "_Slagskugge og fasettkant"
+msgstr "_Slagskugge og fasettkant…"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
@@ -443,6 +443,389 @@ msgstr "_X-lengd for slagskuggen"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "_Y-lengd for slagskuggen"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:44
+msgid "Spyro Layer"
+msgstr "Spyrolag"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:45
+msgid "Spyro Path"
+msgstr "Spyrosti"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:56
+msgid ""
+"Save\n"
+"as New Layer"
+msgstr "Lagra som nytt lag"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:57
+msgid ""
+"Redraw on\n"
+"Active layer"
+msgstr "Teikna på nytt i gjeldande lag"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:58
+msgid ""
+"Save\n"
+"as Path"
+msgstr "Lagra som sti"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:104
+msgid "Circle"
+msgstr "Sirkel"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:140
+msgid "Polygon-Star"
+msgstr "Mangekant - Stjerne"
+
+#. Sine wave on a circle ring.
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:156
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:947
+msgid "Sine"
+msgstr "Sinus"
+
+#. Semi-circles, based on a polygon
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:166
+msgid "Bumps"
+msgstr "Humpar"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:271
+msgid "Rack"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:315
+msgid "Frame"
+msgstr "Ramme"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:404
+msgid "Selection"
+msgstr "Utval"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:494
+msgid "Pencil"
+msgstr "Blyant"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:510
+msgid "AirBrush"
+msgstr "Luftpensel"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:570
+msgid "Preview"
+msgstr "Førehandsvising"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:575
+msgid "Stroke"
+msgstr "Strøk"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:622
+msgid "PaintBrush"
+msgstr "Pensel"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:624
+msgid "Ink"
+msgstr "Blekk"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:625
+msgid "MyPaintBrush"
+msgstr "MyPaintBrush"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:933
+msgid "Spyrograph"
+msgstr "Spyrograf"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:940
+msgid "Epitrochoid"
+msgstr "Epitrokoide"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:967
+msgid "Lissajous"
+msgstr "Lissajousfigur"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1397
+msgid "Curve Type"
+msgstr "Kurvetype"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1398
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr ""
+"Eit epitrokoidemønster er når det roterande ghjulet er utføre det faste "
+"hjulet."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1403
+msgid "Tool"
+msgstr "Verktøy"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1404
+msgid ""
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
+msgstr ""
+"Verktøyet som vert brukt for å teikna mønsteret. Verktøyet brukt i "
+"førehandsvisinga teikna berre raskt."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
+msgid "Long Gradient"
+msgstr "Lang fargeovergang"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1411
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr ""
+"Når det ikkje er merkt av, vert gjeldande verktøyinnstillingar brukte. Når "
+"det er merkt av, vert det brukt ein lang fargeovergang for å passa lengda på "
+"mønsteret, basert på gjeldande fargeovergang og repetisjonsmodus frå "
+"innstillingane for overgangsverktøyet."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
+msgid "Specify pattern using one of the following tabs:"
+msgstr "Spesifiser mønsteret ut frå desse fanene:"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1433
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+"Mønsteret vert spesifisert berre av den aktive fana. Toy Kit liknar på "
+"Gears, men brukar tannhjul og hullnummer som finst i Toy Kit. Viss du føljer "
+"instruksjonane frå handboka for Toy Kit, bør resultata væra like."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1457
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr ""
+"Talet på tenner i fet faste tannhjulet. Storleiken på det faste hjulet er "
+"proporsjonal med talet på tenner."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1460
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1486
+msgid "Fixed Gear Teeth"
+msgstr "Tenner i fast tannhjul"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1466
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr ""
+"Talet på tenner i roterande tannhjul. Storleiken på det roterande hjulet er "
+"proporsjonal med talet på tenner."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1469
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1491
+msgid "Moving Gear Teeth"
+msgstr "Tenner i det roterande hjulet"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1474
+msgid "Hole percent"
+msgstr "Hol-prosent"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1475
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr ""
+"Kor langt holet er frå midten av det roterande hjulet. 100 % betyr at holet "
+"er på kanten av hjulet."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1496
+msgid "Hole Number"
+msgstr "Kor mange hol"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1497
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr ""
+"Holet #1 er på kanten av hjulet. Det høgste holnummeret er nær midten. Det "
+"høgste holnummeret er ulikt for kvart hjul."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
+msgid "Flower Petals"
+msgstr "Blomsterblad"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
+msgid "The number of petals in the pattern."
+msgstr "Talet på blad i mønsteret."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1513
+msgid "Petal Skip"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1514
+msgid "The number of petals to advance for drawing the next petal."
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1519
+msgid "Hole Radius(%)"
+msgstr "Holradius (%)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1520
+msgid ""
+"The radius of the hole in the center of the pattern where nothing will be "
+"drawn. Given as a percentage of the size of the pattern. A value of 0 will "
+"produce no hole. A Value of 99 will produce a thin line on the edge."
+msgstr ""
+"Radiusen til holet i midten av mønsteret der ingenting vert teikna. Gjeve "
+"som ein prosentdel av storleiken på mønsteret. Ein verdi på 0 vil ikkje "
+"teikna noko hol. Ein verdi på 99 vil teikna ei tynn linje på kanten."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1533
+msgid "Width(%)"
+msgstr "Breidd(%)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1534
+msgid ""
+"The width of the pattern as a percentage of the size of the pattern. A Value "
+"of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
+"fixed gear."
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1544
+msgid "Visual"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1549
+msgid "Toy Kit"
+msgstr "Toy Kit"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1554
+msgid "Gears"
+msgstr "Gir"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1566
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
+msgid "Rotation"
+msgstr "Rotering"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1567
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1590
+msgid "Shape"
+msgstr "Form"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1591
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
+msgid "Sides"
+msgstr "Sider"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
+msgid "Number of sides of the shape."
+msgstr "Talet på sider i forma."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
+msgid "Morph"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
+msgid "Rotation of the fixed gear, in degrees"
+msgstr "Rotering av det faste giret i grader"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
+msgid "Margin (px)"
+msgstr "Marg (px)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
+msgid "Margin from edge of selection."
+msgstr "Marg frå kanten av utvalet."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
+msgid "Make width and height equal"
+msgstr "Gjer høgd og breidd like"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1632
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr ""
+"Når denne ikkje er merkt, vil mønsteret fylla fet gjeldande biletet eller "
+"utvalet. Når denne er merkt, vil mønsteret ha same breidde og høgd og vert "
+"midtstilt."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1656
+msgid "Re_draw"
+msgstr "_Teikna på nytt"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr ""
+"Viss du endrar innstillingane for eit verktøy eller endrar utvalet, trykk "
+"denne for å førehandsvisa mønsteret."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
+msgid "_Reset"
+msgstr "_Tilbakestill"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1660
+msgid "_Cancel"
+msgstr "_Avbryt"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1661
+msgid "_OK"
+msgstr "_OK"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1667
+msgid ""
+"Choose whether to save as new layer, redraw on last active layer, or save to "
+"path"
+msgstr ""
+"Vel om du vil lagra som nytt lag, teikna på nytt på det sist brukte laget "
+"eller lagra til ein sti"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1679
+msgid "Spyrogimp"
+msgstr "Spyrogimp"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1688
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2195
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr "Teiknar spyrografar med dei gjeldande verktøyinnstillingane og utvala."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1701
+msgid "Curve Pattern"
+msgstr "Kurvemønster"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1704
+msgid "Fixed Gear"
+msgstr "Fast gir"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1707
+msgid "Size"
+msgstr "Storleik"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2047
+msgid "Rendering Pattern"
+msgstr "Teiknar mønster"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2059
+msgid "Please wait : Rendering Pattern"
+msgstr "Vent: Teiknar mønster"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2164
+msgid "Spyrogimp..."
+msgstr "Spyrogimp..."
 
 #~ msgid "Color _model"
 #~ msgstr "Farge_modell"
