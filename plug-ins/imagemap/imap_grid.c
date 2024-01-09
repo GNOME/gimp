@@ -112,13 +112,14 @@ snap_toggled_cb (GtkWidget *widget,
 }
 
 static void
-type_toggled_cb(GtkWidget *widget, gpointer data)
+type_toggled_cb (GtkWidget *widget,
+                 gpointer   data)
 {
-   if (gtk_widget_get_state_flags (widget) & GTK_STATE_FLAG_SELECTED)
-     {
-       grid_type = GPOINTER_TO_INT (data);
-       preview_redraw();
-     }
+  if (gtk_widget_get_state_flags (widget) & GTK_STATE_FLAG_ACTIVE)
+    {
+      grid_type = GPOINTER_TO_INT (data);
+      preview_redraw ();
+    }
 }
 
 static void
