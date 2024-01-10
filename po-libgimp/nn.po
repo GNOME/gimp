@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-01 16:22+0000\n"
-"PO-Revision-Date: 2023-12-15 14:12+0100\n"
+"POT-Creation-Date: 2023-12-13 07:39+0000\n"
+"PO-Revision-Date: 2023-12-20 14:18+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
-"Language-Team: Norwegian nynorsk <i18n-no@lister.ping.uio.no>\n"
+"Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -171,7 +171,7 @@ msgstr "Legg til alfakanal"
 #: ../libgimp/gimpexport.c:444
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
-msgstr "Programtillegget %s må klippa laga slik at dei passar innføre biletet"
+msgstr "Programtillegget %s må klippe laga til storleiken på biletet"
 
 #: ../libgimp/gimpexport.c:445
 msgid "Crop Layers"
@@ -179,7 +179,7 @@ msgstr "Klipp lag"
 
 #: ../libgimp/gimpexport.c:445
 msgid "Resize Image to Layers"
-msgstr "Endra biletstorleiken for å passa laga"
+msgstr "Endra biletstorleiken til laga"
 
 #: ../libgimp/gimpexport.c:504
 msgid "Confirm Save"
@@ -197,7 +197,7 @@ msgstr "_Avbryt"
 
 #: ../libgimp/gimpexport.c:510
 msgid "C_onfirm"
-msgstr "_Bekreft"
+msgstr "_Stadfest"
 
 #: ../libgimp/gimpexport.c:586
 msgid "Export File"
@@ -257,44 +257,44 @@ msgstr "Val av skrifttype"
 msgid "Gradient Selection"
 msgstr "Val av fargeovergang"
 
-#: ../libgimp/gimpimagemetadata.c:671
+#: ../libgimp/gimpimagemetadata.c:685
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:862
+#: ../libgimp/gimpimagemetadata.c:881
 msgid "Background"
 msgstr "Bakgrunn"
 
-#: ../libgimp/gimpimagemetadata.c:1051
+#: ../libgimp/gimpimagemetadata.c:1070
 #, c-format
 msgid "Rotate %s?"
 msgstr "Roter %s?"
 
-#: ../libgimp/gimpimagemetadata.c:1057
+#: ../libgimp/gimpimagemetadata.c:1076
 msgid "_Keep Original"
 msgstr "_Behald originalen"
 
-#: ../libgimp/gimpimagemetadata.c:1058 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:1077 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Roter"
 
-#: ../libgimp/gimpimagemetadata.c:1099
+#: ../libgimp/gimpimagemetadata.c:1118
 msgid "Original"
 msgstr "Original"
 
-#: ../libgimp/gimpimagemetadata.c:1115
+#: ../libgimp/gimpimagemetadata.c:1134
 msgid "Rotated"
 msgstr "Rotert"
 
-#: ../libgimp/gimpimagemetadata.c:1133
+#: ../libgimp/gimpimagemetadata.c:1152
 msgid "This image contains Exif orientation metadata."
 msgstr "Dette biletet inneheld Exif metadata om orientering."
 
-#: ../libgimp/gimpimagemetadata.c:1151
+#: ../libgimp/gimpimagemetadata.c:1170
 msgid "Would you like to rotate the image?"
 msgstr "Skal biletet roterast?"
 
-#: ../libgimp/gimpimagemetadata.c:1163
+#: ../libgimp/gimpimagemetadata.c:1182
 msgid "_Don't ask me again"
 msgstr "_Ikkje spør igjen"
 
@@ -353,35 +353,35 @@ msgstr "Søketermen er ugyldig eller ufullstendig"
 
 #: ../libgimp/gimpprocbrowserdialog.c:407
 msgid "Searching"
-msgstr "Søkjer"
+msgstr "Søker"
 
 #: ../libgimp/gimpprocbrowserdialog.c:418
 msgid "Searching by name"
-msgstr "Søkjer på namn"
+msgstr "Søker på namn"
 
 #: ../libgimp/gimpprocbrowserdialog.c:439
 msgid "Searching by description"
-msgstr "Søkjer på beskriving"
+msgstr "Søker på beskriving"
 
 #: ../libgimp/gimpprocbrowserdialog.c:446
 msgid "Searching by help"
-msgstr "Søkjer på hjelp"
+msgstr "Søker på hjelp"
 
 #: ../libgimp/gimpprocbrowserdialog.c:453
 msgid "Searching by author"
-msgstr "Søkjer på forfattar"
+msgstr "Søker på forfattar"
 
 #: ../libgimp/gimpprocbrowserdialog.c:460
 msgid "Searching by copyright"
-msgstr "Søkjer på opphavsrett"
+msgstr "Søker på opphavsrett"
 
 #: ../libgimp/gimpprocbrowserdialog.c:467
 msgid "Searching by date"
-msgstr "Søkjer på dato"
+msgstr "Søker på dato"
 
 #: ../libgimp/gimpprocbrowserdialog.c:474
 msgid "Searching by type"
-msgstr "Søkjer på type"
+msgstr "Søker på type"
 
 #: ../libgimp/gimpprocbrowserdialog.c:484
 #, c-format
@@ -392,13 +392,13 @@ msgstr[1] "%d prosedyrar"
 
 #: ../libgimp/gimpprocbrowserdialog.c:493
 msgid "No matches for your query"
-msgstr "Ingen treff for spørjinga"
+msgstr "Ingen treff for spørringa"
 
 #: ../libgimp/gimpprocbrowserdialog.c:497
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
-msgstr[0] "1 prosedyre passa til spørjinga"
+msgstr[0] "1 prosedyre passa til spørringa"
 msgstr[1] "%d prosedyrar passa til spørringa"
 
 #: ../libgimp/gimpprocview.c:173
@@ -822,30 +822,26 @@ msgstr "RGB"
 #: ../libgimpbase/gimpbaseenums.c:677
 msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
-msgstr "HSV (Kulør mot klokka)"
+msgstr "HSV (kulør mot klokka)"
 
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:680
-#| msgctxt "gradient-type"
-#| msgid "Spiral (ccw)"
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
-msgstr "HSV (ccw)"
+msgstr "HSV (mot klokka)"
 
 #: ../libgimpbase/gimpbaseenums.c:681
 msgctxt "gradient-segment-color"
 msgid "HSV (clockwise hue)"
-msgstr "HSV (Kulør med klokka)"
+msgstr "HSV (kulør med klokka)"
 
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:684
-#| msgctxt "gradient-type"
-#| msgid "Spiral (cw)"
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
-msgstr "HSV (cw)"
+msgstr "HSV (med klokka)"
 
 #: ../libgimpbase/gimpbaseenums.c:717
 msgctxt "gradient-segment-type"
@@ -860,7 +856,7 @@ msgstr "Kurva"
 #: ../libgimpbase/gimpbaseenums.c:719
 msgctxt "gradient-segment-type"
 msgid "Sinusoidal"
-msgstr "Sinusforma"
+msgstr "SInusforma"
 
 #: ../libgimpbase/gimpbaseenums.c:720
 msgctxt "gradient-segment-type"
@@ -872,7 +868,7 @@ msgstr "Sfærisk (aukande)"
 #: ../libgimpbase/gimpbaseenums.c:723
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
-msgstr "Sfærisk (auk)"
+msgstr "Sfærisk (aukande)"
 
 #: ../libgimpbase/gimpbaseenums.c:724
 msgctxt "gradient-segment-type"
@@ -884,7 +880,7 @@ msgstr "Sfærisk (minkande)"
 #: ../libgimpbase/gimpbaseenums.c:727
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
-msgstr "Sfærisk (mink)"
+msgstr "Sfærisk (minkande)"
 
 #: ../libgimpbase/gimpbaseenums.c:728
 msgctxt "gradient-segment-type"
@@ -921,7 +917,7 @@ msgstr "Konisk (symmetrisk)"
 #: ../libgimpbase/gimpbaseenums.c:773
 msgctxt "gradient-type"
 msgid "Conical (sym)"
-msgstr "Konisk (sym)"
+msgstr "Konisk (symmetrisk)"
 
 #: ../libgimpbase/gimpbaseenums.c:774
 msgctxt "gradient-type"
@@ -933,7 +929,7 @@ msgstr "Konisk (asymmetrisk)"
 #: ../libgimpbase/gimpbaseenums.c:777
 msgctxt "gradient-type"
 msgid "Conical (asym)"
-msgstr "Konisk (asym)"
+msgstr "Konisk (asymmetrisk)"
 
 #: ../libgimpbase/gimpbaseenums.c:778
 msgctxt "gradient-type"
@@ -1117,7 +1113,7 @@ msgstr "Skrå"
 #: ../libgimpbase/gimpbaseenums.c:1127
 msgctxt "merge-type"
 msgid "Expanded as necessary"
-msgstr "Ekspandert nødvendig"
+msgstr "Utvid om nødvendig"
 
 #: ../libgimpbase/gimpbaseenums.c:1128
 msgctxt "merge-type"
@@ -1132,7 +1128,7 @@ msgstr "Klipt til botnlaget"
 #: ../libgimpbase/gimpbaseenums.c:1130
 msgctxt "merge-type"
 msgid "Flatten"
-msgstr "Utflata"
+msgstr "Flat ut"
 
 #: ../libgimpbase/gimpbaseenums.c:1224
 msgctxt "orientation-type"
@@ -1257,7 +1253,7 @@ msgstr "Triangulær bølgje"
 #: ../libgimpbase/gimpbaseenums.c:1550
 msgctxt "repeat-mode"
 msgid "Truncate"
-msgstr "Avkorta"
+msgstr "Avkort"
 
 #: ../libgimpbase/gimpbaseenums.c:1612
 msgctxt "run-mode"
@@ -1302,12 +1298,12 @@ msgstr "HSV kulør"
 #: ../libgimpbase/gimpbaseenums.c:1657
 msgctxt "select-criterion"
 msgid "HSV Saturation"
-msgstr "HSV metning"
+msgstr "HSV-metning"
 
 #: ../libgimpbase/gimpbaseenums.c:1658
 msgctxt "select-criterion"
 msgid "HSV Value"
-msgstr "HSV verdi"
+msgstr "HSV-verdi"
 
 #: ../libgimpbase/gimpbaseenums.c:1659
 msgctxt "select-criterion"
@@ -1317,7 +1313,7 @@ msgstr "Alfa"
 #: ../libgimpbase/gimpbaseenums.c:1660
 msgctxt "select-criterion"
 msgid "LCh Lightness"
-msgstr "LCh lysverdi"
+msgstr "LCh-lysverdi"
 
 #: ../libgimpbase/gimpbaseenums.c:1661
 msgctxt "select-criterion"
@@ -1367,7 +1363,7 @@ msgstr "Loddrett, høgre til venstre (blanda retning)"
 #: ../libgimpbase/gimpbaseenums.c:1790
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
-msgstr "Loddrett, høgre til venstre (oppreist retning)"
+msgstr "Loddrett, venstre til høgre (ståande retning)"
 
 #: ../libgimpbase/gimpbaseenums.c:1791
 msgctxt "text-direction"
@@ -1377,7 +1373,7 @@ msgstr "Loddrett, venstre til høgre (blanda retning)"
 #: ../libgimpbase/gimpbaseenums.c:1792
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
-msgstr "Loddrett, venstre til høgre (oppreist retning)"
+msgstr "Loddrett, venstre til høgre (ståande retning)"
 
 #: ../libgimpbase/gimpbaseenums.c:1823
 msgctxt "text-hint-style"
@@ -1464,35 +1460,35 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Beskjer med sideforhold"
 
-#: ../libgimpbase/gimpmetadata.c:982
+#: ../libgimpbase/gimpmetadata.c:986
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Kan lasta inn metadata berre frå lokale filer"
 
-#: ../libgimpbase/gimpmetadata.c:1038
+#: ../libgimpbase/gimpmetadata.c:1042
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Kan lagra metadata berre i lokale filer"
 
-#: ../libgimpbase/gimpmetadata.c:1086
+#: ../libgimpbase/gimpmetadata.c:1090
 #, c-format
 msgid "Invalid Exif data size."
-msgstr "Ugyldig storleik på Exif-data."
+msgstr "Ugyldig storleik på Exif-dataa."
 
-#: ../libgimpbase/gimpmetadata.c:1115
+#: ../libgimpbase/gimpmetadata.c:1119
 #, c-format
 msgid "Parsing Exif data failed."
-msgstr "Analyseringa av Exif-data mislukka."
+msgstr "Analysen av Exif-dataa feila."
 
-#: ../libgimpbase/gimpmetadata.c:1165
+#: ../libgimpbase/gimpmetadata.c:1169
 #, c-format
 msgid "Parsing IPTC data failed."
-msgstr "Analyseringa av IPTC-data mislukka."
+msgstr "Analysen av IPTC-dataa feila."
 
-#: ../libgimpbase/gimpmetadata.c:1213
+#: ../libgimpbase/gimpmetadata.c:1217
 #, c-format
 msgid "Parsing XMP data failed."
-msgstr "Analyseringa av XMP-data mislukka."
+msgstr "Analysen av XMP-dataa feila."
 
 #: ../libgimpbase/gimputils.c:219 ../libgimpbase/gimputils.c:224
 msgid "(invalid UTF-8 string)"
@@ -1504,11 +1500,11 @@ msgstr "Filstien er NULL"
 
 #: ../libgimpbase/gimputils.c:403 ../libgimpbase/gimputils.c:414
 msgid "Error converting UTF-8 filename to wide char"
-msgstr "Feil ved konverteringa av filnamnet i UTF-8 til breie teikn"
+msgstr "Feil ved konvertering av filnamnet i UTF-8 til wide char"
 
 #: ../libgimpbase/gimputils.c:422
 msgid "ILCreateFromPath() failed"
-msgstr "ILCreateFromPath() feila"
+msgstr "ILCreateFromPath() mislukkast"
 
 #: ../libgimpbase/gimputils.c:459
 #, c-format
@@ -1521,7 +1517,7 @@ msgstr "Koplinga til org.freedesktop.FileManager1 mislukka: "
 
 #: ../libgimpbase/gimputils.c:511
 msgid "Calling ShowItems failed: "
-msgstr "Oppkallet av ShowItems feila: "
+msgstr "Oppkallet av ShowItems var mislukka "
 
 #: ../libgimpcolor/gimpcolorprofile.c:258
 #, c-format
@@ -1563,7 +1559,7 @@ msgstr "Ingen fargestyring"
 #: ../libgimpconfig/gimpconfigenums.c:25
 msgctxt "color-management-mode"
 msgid "Color-managed display"
-msgstr "Fargestyrt direkte"
+msgstr "Fargestyrt vising"
 
 #: ../libgimpconfig/gimpconfigenums.c:26
 msgctxt "color-management-mode"
@@ -1642,8 +1638,9 @@ msgid ""
 "some other color space, including soft-proofing to a printer or other output "
 "device profile. "
 msgstr ""
-"Fargeprofilen som skal brukast for førehandsvising på skjermen av andre "
-"fargeprofilar, inkludert førehandsvising for skrivar og andre uteiningar. "
+"Fargeprofilen som skal brukast for utskriftsimulering av fargeprofilen i "
+"biletet til andre fargeprofilar, inkludert utskriftsimulering for skrivar og "
+"andre uteiningar."
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1668,8 +1665,7 @@ msgstr ""
 msgid ""
 "When disabled, image display might be of better quality at the cost of speed."
 msgstr ""
-"Når denne er kopla frå, kan kvalteten på biletvisinga verta betre, men "
-"farten kan gå ned."
+"Når denne er fråkopla kan biletkvaliteten verta betre men med saktare fart."
 
 #: ../libgimpconfig/gimpcolorconfig.c:94
 msgid ""
@@ -1690,15 +1686,14 @@ msgstr "Prøv med og utan svartpunktkompensering og vel det som passar best. "
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
-"Når denne er kopla frå, kan kvalteten på fargesimuleringa verta betre, men "
-"farten kan gå ned."
+"Når denne er slått av, kan fargesimuleringa verta betre, men farte gå ned."
 
 #: ../libgimpconfig/gimpcolorconfig.c:107
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"Dersom denne er slått på, vil utskriftsimuleringa merka dei fargane som "
+"Dersom denne er slått på, vil utskriftsimuleringa merkja dei fargane som "
 "ikkje finst i fargeområdet for utskrifta."
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
@@ -1710,15 +1705,13 @@ msgstr ""
 msgid ""
 "When enabled, set the color scales to display 0...255 instead of percentages"
 msgstr ""
-"Når denne er slått på, set fargeskalaene til å visa 0…255 i staden for "
-"prosent"
+"Når denne er slått på, viser fargeskalaane 0...255 i staden for prosent"
 
 #: ../libgimpconfig/gimpcolorconfig.c:118
 msgid ""
 "When enabled, set the color scales to display HSV blend mode instead of LCh"
 msgstr ""
-"Når denne er slått på, set fargeskalaene til å visa HSV blandemodus i staden "
-"for LCh"
+"Når denne er slått på, viser fargeskalaane HSV blandemetode i staden for LCh"
 
 #: ../libgimpconfig/gimpcolorconfig.c:210
 msgid "Mode of operation"
@@ -1726,11 +1719,11 @@ msgstr "Operasjonsmodus"
 
 #: ../libgimpconfig/gimpcolorconfig.c:218
 msgid "Preferred RGB profile"
-msgstr "Referert RGB-profil"
+msgstr "Føretrekt RGB-profil"
 
 #: ../libgimpconfig/gimpcolorconfig.c:225
 msgid "Preferred grayscale profile"
-msgstr "Føretrukke gråskalaprofil"
+msgstr "Føretrekt gråskala-profil"
 
 #: ../libgimpconfig/gimpcolorconfig.c:232
 msgid "CMYK profile"
@@ -1742,47 +1735,47 @@ msgstr "Skjermprofil"
 
 #: ../libgimpconfig/gimpcolorconfig.c:246
 msgid "Use the system monitor profile"
-msgstr "Bruk skjermprofilen til systemet"
+msgstr "SBruk skjermprofilen frå systemet"
 
 #: ../libgimpconfig/gimpcolorconfig.c:254
 msgid "Simulation profile for soft-proofing"
-msgstr "Simuleringsprofil for utskridtssimulering"
+msgstr "Simuleringsprofil for simulert utskrift"
 
 #: ../libgimpconfig/gimpcolorconfig.c:261
 msgid "Display rendering intent"
-msgstr "Vis fargetilpassing"
+msgstr "Vis fargetilassing"
 
 #: ../libgimpconfig/gimpcolorconfig.c:269
 msgid "Use black point compensation for the display"
-msgstr "Bruk svartpunktkompensering for visinga"
+msgstr "Bruk vartpunktkompensering for visinga"
 
 #: ../libgimpconfig/gimpcolorconfig.c:276
 msgid "Optimize display color transformations"
-msgstr "Beste vising av fargeomforming"
+msgstr "Optimaliser visinga av fargetransformeringane"
 
 #: ../libgimpconfig/gimpcolorconfig.c:283
 msgid "Soft-proofing rendering intent"
-msgstr "Fargetilpassing for utskriftssimulering"
+msgstr "Fargetilpassing ved simulert utskriving"
 
 #: ../libgimpconfig/gimpcolorconfig.c:291
 msgid "Use black point compensation for soft-proofing"
-msgstr "Bruk svartpunktkompensering for utskriftssimulering"
+msgstr "Bruk svartpunktkompensasjon ved utskriftssimulering"
 
 #: ../libgimpconfig/gimpcolorconfig.c:298
 msgid "Optimize soft-proofing color transformations"
-msgstr "Optimaliser fargeomforminga for utskriftssimuleringa"
+msgstr "Best mogleg fargetransformering ved utskriftsimulering"
 
 #: ../libgimpconfig/gimpcolorconfig.c:305
 msgid "Mark out of gamut colors"
-msgstr "Merk ikkje meir gamut-farge"
+msgstr "Merk gamut-fargar som er utanfor"
 
 #: ../libgimpconfig/gimpcolorconfig.c:312
 msgid "Out of gamut warning color"
-msgstr "Ikkje meir gamut åtvaringsfarge"
+msgstr "Varslingsfarge for utføre gamut"
 
 #: ../libgimpconfig/gimpcolorconfig.c:320
 msgid "Show RGB 0..255 scales"
-msgstr "Vis RGB 0..255-skalaer"
+msgstr "Vis RFB 0…255-skalaane"
 
 #: ../libgimpconfig/gimpcolorconfig.c:327
 msgid "Show HSV instead of LCH"
@@ -1841,7 +1834,7 @@ msgstr "fatal tolkingsfeil"
 
 #: ../libgimpconfig/gimpconfig-path.c:483
 msgid "File has no path representation"
-msgstr "Fil manglar sti"
+msgstr "Fila har ingen stirepresentasjon"
 
 #: ../libgimpconfig/gimpconfig-path.c:570
 #, c-format
@@ -1857,7 +1850,7 @@ msgstr "Feil under skriving av «%s»: %s"
 #: ../libgimpconfig/gimpconfigwriter.c:183
 #, c-format
 msgid "Could not create directory '%s' for '%s': "
-msgstr "Klarte ikkje oppretta katalogen «%s» for «%s»: "
+msgstr "Klarte ikkje oppretta mappa «%s» for «%s»: "
 
 #: ../libgimpconfig/gimpconfigwriter.c:199
 #, c-format
@@ -1962,6 +1955,7 @@ msgstr "_Tilbakestill"
 #: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:275
 #: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
 #: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:493
+#| msgid "_K"
 msgid "_OK"
 msgstr "_OK"
 
@@ -2015,23 +2009,23 @@ msgstr "Produsent: "
 msgid "Copyright: "
 msgstr "Opphavsrett: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:206
+#: ../libgimpwidgets/gimpcolorscales.c:208
 msgid "Scales"
 msgstr "Skalaer"
 
-#: ../libgimpwidgets/gimpcolorscales.c:445
+#: ../libgimpwidgets/gimpcolorscales.c:450
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:447
+#: ../libgimpwidgets/gimpcolorscales.c:452
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:468
+#: ../libgimpwidgets/gimpcolorscales.c:473
 msgid "LCh"
 msgstr "LCh"
 
-#: ../libgimpwidgets/gimpcolorscales.c:470
+#: ../libgimpwidgets/gimpcolorscales.c:475
 msgid "HSV"
 msgstr "HSV"
 
@@ -2163,6 +2157,7 @@ msgid "Mebibyte"
 msgstr "Mebibyte"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:258
+#| msgid "Gigabytes"
 msgid "Gibibyte"
 msgstr "Gibibyte"
 
@@ -2208,15 +2203,15 @@ msgstr "Legg til ei ny mappe"
 
 #: ../libgimpwidgets/gimppatheditor.c:199
 msgid "Move the selected folder up"
-msgstr "Flytt den merkte mappa opp"
+msgstr "Flytt den valde mappa opp"
 
 #: ../libgimpwidgets/gimppatheditor.c:217
 msgid "Move the selected folder down"
-msgstr "Flytt den merkte mappa ned"
+msgstr "Flytt den valde mappa ned"
 
 #: ../libgimpwidgets/gimppatheditor.c:235
 msgid "Remove the selected folder from the list"
-msgstr "Fjern den merkte mappa frå lista"
+msgstr "Fjern den valde mappa frå lista"
 
 #: ../libgimpwidgets/gimppatheditor.c:261
 msgid "Writable"
@@ -2386,20 +2381,17 @@ msgid "_L"
 msgstr "_L"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:136
-#| msgctxt "desaturate-mode"
-#| msgid "Lightness"
 msgid "LCh Lightness"
-msgstr "LCh -lysverdi"
+msgstr "LCh-lysverdi"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
-#| msgid "_C"
 msgctxt "color-selector-channel"
 msgid "_C"
 msgstr "_C"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
 msgid "LCh Chroma"
-msgstr "LCh Kroma"
+msgstr "LCh kroma"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:138
 msgctxt "color-selector-channel"
@@ -2426,7 +2418,7 @@ msgstr "LCH"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:169
 msgid "CIE LCh color model"
-msgstr "CIE LCh-fargemodell"
+msgstr "CIE LCh fargemodell"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:170
 msgctxt "color-selector-model"
@@ -2541,7 +2533,7 @@ msgstr "_Eining:"
 
 #: ../modules/controller-dx-dinput.c:197
 msgid "The device to read DirectInput events from."
-msgstr "Einingar som det skal lesast direkteinngangshendingar frå."
+msgstr "Einingar som det skal lesast direkteinngangshendingar from."
 
 #: ../modules/controller-dx-dinput.c:206
 msgid "DirectX DirectInput"
@@ -2868,75 +2860,78 @@ msgstr "GIMP"
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI inndatakontrollar"
 
-#: ../modules/display-filter-clip-warning.c:120
+#. Translators: "Clip Warning" is the name of a (color) display filter
+#. * that highlights pixels outside of the color space range.
+#. * Shown as a label description.
+#: ../modules/display-filter-clip-warning.c:123
 msgid "Clip warning color display filter"
-msgstr "Klipp åtvaringsfarge for visingsfilter"
+msgstr "Klipp åtvaringsfargen i visingsfilteret"
 
-#: ../modules/display-filter-clip-warning.c:157
+#: ../modules/display-filter-clip-warning.c:160
 msgid "Show shadows"
 msgstr "Vis skuggar"
 
-#: ../modules/display-filter-clip-warning.c:158
+#: ../modules/display-filter-clip-warning.c:161
 msgid "Show warning for pixels with a negative component"
-msgstr "Sjå åtvaring for pikslar med ein negativ komponent"
+msgstr "Vis åtvaring for pikslar med negativ komponent"
 
-#: ../modules/display-filter-clip-warning.c:164
+#: ../modules/display-filter-clip-warning.c:167
 msgid "Shadows color"
 msgstr "Skuggefarge"
 
-#: ../modules/display-filter-clip-warning.c:165
+#: ../modules/display-filter-clip-warning.c:168
 msgid "Shadows warning color"
-msgstr "Åtvaringsfarge for skugge"
+msgstr "Åtvaringsfarge for skuggar"
 
-#: ../modules/display-filter-clip-warning.c:177
+#: ../modules/display-filter-clip-warning.c:180
 msgid "Show highlights"
-msgstr "Vis uthevingar"
+msgstr "Vis lyse toner"
 
-#: ../modules/display-filter-clip-warning.c:178
+#: ../modules/display-filter-clip-warning.c:181
 msgid "Show warning for pixels with a component greater than one"
-msgstr "Sjå åtvaring for pikslar med ein komponent større enn ein"
+msgstr "Viser åtvaring for pikslar med ein komponent større enn ein"
 
-#: ../modules/display-filter-clip-warning.c:184
+#: ../modules/display-filter-clip-warning.c:187
 msgid "Highlights color"
-msgstr "Uthevingsfarge"
+msgstr "Farge for lyse toner"
 
-#: ../modules/display-filter-clip-warning.c:185
+#: ../modules/display-filter-clip-warning.c:188
 msgid "Highlights warning color"
-msgstr "Uthev åtvaringsfarge"
+msgstr "Åtvaringsfarge for uthevingar"
 
-#: ../modules/display-filter-clip-warning.c:197
+#: ../modules/display-filter-clip-warning.c:200
 msgid "Show bogus"
 msgstr "Vis bogus"
 
-#: ../modules/display-filter-clip-warning.c:198
+#: ../modules/display-filter-clip-warning.c:201
 msgid "Show warning for pixels with an infinite or NaN component"
-msgstr "Vis åtvaring for pikslar med ein uendeleg- eller NaN-komponent"
+msgstr "Vis åtvaring for pikslar med ein uendeleg eller NaN-komponent"
 
-#: ../modules/display-filter-clip-warning.c:204
+#: ../modules/display-filter-clip-warning.c:207
 msgid "Bogus color"
 msgstr "Bogus-farge"
 
-#: ../modules/display-filter-clip-warning.c:205
+#: ../modules/display-filter-clip-warning.c:208
 msgid "Bogus warning color"
-msgstr "Bogus åtvaringsfarge"
+msgstr "Åtvaringsfarge for bogus"
 
-#: ../modules/display-filter-clip-warning.c:217
+#: ../modules/display-filter-clip-warning.c:220
 msgid "Include alpha component"
-msgstr "Inkluder alfakomponenten"
+msgstr "Inkluder alfakomponent"
 
-#: ../modules/display-filter-clip-warning.c:218
+#: ../modules/display-filter-clip-warning.c:221
 msgid "Include alpha component in the warning"
-msgstr "Inkluder alfakomponenten i åtvaringa"
+msgstr "Inkluder alfakomponent i åtyvaringa"
 
-#: ../modules/display-filter-clip-warning.c:224
+#: ../modules/display-filter-clip-warning.c:227
 msgid "Include transparent pixels"
 msgstr "Inkluder gjennomsiktige pikslar"
 
-#: ../modules/display-filter-clip-warning.c:225
+#: ../modules/display-filter-clip-warning.c:228
 msgid "Include fully transparent pixels in the warning"
-msgstr "Inkluder fullt gjennomsiktige pikslar i åtvaringa"
+msgstr "Inkluder heilt gjennomsiktige pikslar i åtvaringa"
 
-#: ../modules/display-filter-clip-warning.c:229
+#: ../modules/display-filter-clip-warning.c:232
 msgid "Clip Warning"
 msgstr "Klipp åtvaringa"
 
