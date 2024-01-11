@@ -75,11 +75,23 @@ GimpDisplayShell, GimpDock, .dialog-action-box, .dialog-vbox {
   color: @dimmed-fg-color;
 }
 
+/* Prevent system theme leak that adds a border around
+ * the toolbox Wilber */
+GimpDock frame border {
+  background-image: none;
+}
+
 /* Foreground color for the big Wilber in the empty image window.
  * Again, background-color and background here are ignored.
  */
 #gimp-canvas {
   color: @dimmed-fg-color;
+}
+
+/* Prevent system theme leak that affects the color of the
+ * main canvas and some widget containers  */
+stack {
+  background-image: none;
 }
 
 /* GtkTextView */
@@ -280,8 +292,13 @@ scrolledwindow
 
 /* Removes black border around scrolled windows */
 scrolledwindow viewport grid, scrolledwindow viewport box {
-   border-radius: 1px;
-   border: 0px solid @bg-color;
+  border-radius: 1px;
+  border: 0px solid @bg-color;
+}
+
+/* Defining background color for About Dialog credits box */
+.gimp-about-dialog box box stack scrolledwindow viewport grid {
+  background-color: @extreme-bg-color;
 }
 
 GimpRuler {

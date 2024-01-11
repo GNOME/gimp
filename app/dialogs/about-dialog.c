@@ -192,6 +192,9 @@ about_dialog_create (Gimp           *gimp,
       g_list_free (children);
     }
 
+  gtk_style_context_add_class (gtk_widget_get_style_context (dialog.dialog),
+                               "gimp-about-dialog");
+
   return dialog.dialog;
 }
 
