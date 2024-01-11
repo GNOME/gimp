@@ -4,22 +4,22 @@
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2010.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
 # Olexandr Pylypchuk <pilipchukap@rambler.ru>, 2018.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2019, 2020, 2021, 2022, 2023.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-19 03:21+0000\n"
-"PO-Revision-Date: 2023-10-20 21:37+0300\n"
+"POT-Creation-Date: 2024-01-10 15:41+0000\n"
+"PO-Revision-Date: 2024-01-11 20:58+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.12.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -70,7 +70,7 @@ msgstr "Вирівнювання видимих шарів"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1378 ../plug-ins/file-dds/ddswrite.c:1983
+#: ../plug-ins/file-dds/ddsread.c:1401 ../plug-ins/file-dds/ddswrite.c:1983
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
 #: ../plug-ins/file-tiff/file-tiff-load.c:2664 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
@@ -128,7 +128,7 @@ msgstr "_Скасувати"
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
 #: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
-#: ../plug-ins/file-dds/ddsread.c:1379 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/file-dds/ddsread.c:1402 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -441,7 +441,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1011
 #: ../plug-ins/common/decompose.c:598 ../plug-ins/common/file-cel.c:446
 #: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:715
-#: ../plug-ins/common/file-gegl.c:438 ../plug-ins/common/file-gif-load.c:992
+#: ../plug-ins/common/file-gegl.c:438 ../plug-ins/common/file-gif-load.c:1008
 #: ../plug-ins/common/file-jp2-load.c:1290 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
@@ -453,7 +453,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:2153 ../plug-ins/file-sgi/sgi.c:416
+#: ../plug-ins/file-psd/psd-load.c:2161 ../plug-ins/file-sgi/sgi.c:416
 #: ../plug-ins/file-tiff/file-tiff-load.c:1544
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -1570,8 +1570,7 @@ msgstr "_Згин за кривою..."
 
 #: ../plug-ins/common/curve-bend.c:739 ../plug-ins/common/edge-dog.c:178
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr ""
-"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: ../plug-ins/common/curve-bend.c:748
 msgid "Cannot operate on layers with masks."
@@ -2410,31 +2409,27 @@ msgstr "Зображення GIF"
 msgid "This is not a GIF file"
 msgstr "Не є файлом GIF"
 
-#: ../plug-ins/common/file-gif-load.c:419
-msgid "Non-square pixels.  Image might look squashed."
-msgstr "Неквадратні точки. Зображення, ймовірно, пошкоджене."
-
-#: ../plug-ins/common/file-gif-load.c:994
+#: ../plug-ins/common/file-gif-load.c:1010
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Тло (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:1021
+#: ../plug-ins/common/file-gif-load.c:1037
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "Відкривається «%s» (кадр %d)"
 
-#: ../plug-ins/common/file-gif-load.c:1050
+#: ../plug-ins/common/file-gif-load.c:1066
 #, c-format
 msgid "Frame %d"
 msgstr "Кадр %d"
 
-#: ../plug-ins/common/file-gif-load.c:1052
+#: ../plug-ins/common/file-gif-load.c:1068
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Кадр %d (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:1083
+#: ../plug-ins/common/file-gif-load.c:1099
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -3405,13 +3400,11 @@ msgstr ""
 #: ../plug-ins/common/file-png.c:1577
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr ""
-"Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: ../plug-ins/common/file-png.c:1586
 #, c-format
-msgid ""
-"Error while exporting '%s'. Could not create PNG header info structure."
+msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -5116,7 +5109,7 @@ msgstr "Змінити колір зображення, використовую
 
 #: ../plug-ins/common/gradient-map.c:112
 msgid "_Palette Map"
-msgstr "К_арта палітри:"
+msgstr "Відобр_азити палітру"
 
 #: ../plug-ins/common/gradient-map.c:160
 msgid "Gradient Map"
@@ -6748,15 +6741,15 @@ msgstr "Декодувати YCoCg (масштабоване)"
 msgid "Decode Alpha exponent"
 msgstr "Декодувати Alpha exponent"
 
-#: ../plug-ins/file-dds/ddsread.c:1376
+#: ../plug-ins/file-dds/ddsread.c:1399
 msgid "Load DDS"
 msgstr "Завантажити DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1395
+#: ../plug-ins/file-dds/ddsread.c:1418
 msgid "_Load mipmaps"
 msgstr "_Завантажити MIP-текстури"
 
-#: ../plug-ins/file-dds/ddsread.c:1402
+#: ../plug-ins/file-dds/ddsread.c:1425
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Автоматично декодувати виявлені зображення YCoCg/AExp"
 
@@ -7259,21 +7252,21 @@ msgstr "Непідтримувана чи хибна ширина маски: %d
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір маски: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1540 ../plug-ins/file-psd/psd-load.c:2126
+#: ../plug-ins/file-psd/psd-load.c:1548 ../plug-ins/file-psd/psd-load.c:2134
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Непідтримуваний метод стиснення: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2273
+#: ../plug-ins/file-psd/psd-load.c:2281
 msgid "Extra"
 msgstr "Додатково"
 
-#: ../plug-ins/file-psd/psd-load.c:2473
+#: ../plug-ins/file-psd/psd-load.c:2481
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Непідтримуваний чи некоректний розмір каналу"
 
-#: ../plug-ins/file-psd/psd-load.c:2539
+#: ../plug-ins/file-psd/psd-load.c:2547
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Не вдається розпакувати дані"
@@ -9227,8 +9220,7 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: ../plug-ins/gimpressionist/orientation.c:168
-msgid ""
-"Let the direction from the center determine the direction of the stroke"
+msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: ../plug-ins/gimpressionist/orientation.c:175
@@ -9343,8 +9335,7 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr ""
-"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: ../plug-ins/gimpressionist/orientmap.c:671
 msgid "A_ngle:"
@@ -10397,8 +10388,7 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3273
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr ""
-"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3283
 msgid "Delete Gradient Flare"
@@ -11070,83 +11060,83 @@ msgstr "Зняти вибір"
 msgid "Unselect All"
 msgstr "Зняти вибір з усього"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:204
+#: ../plug-ins/imagemap/imap_edit_area_info.c:249
 msgid "Link Type"
 msgstr "Тип посилання"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:213
+#: ../plug-ins/imagemap/imap_edit_area_info.c:258
 msgid "_Web Site"
 msgstr "_Вебсторінка"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:219
+#: ../plug-ins/imagemap/imap_edit_area_info.c:264
 msgid "_Ftp Site"
 msgstr "_FTP-сайт"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:225
+#: ../plug-ins/imagemap/imap_edit_area_info.c:270
 msgid "_Gopher"
 msgstr "_Gopher"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:231
+#: ../plug-ins/imagemap/imap_edit_area_info.c:276
 msgid "Ot_her"
 msgstr "_Інше"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:237
+#: ../plug-ins/imagemap/imap_edit_area_info.c:282
 msgid "F_ile"
 msgstr "_Файл"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:243
+#: ../plug-ins/imagemap/imap_edit_area_info.c:288
 msgid "WAI_S"
 msgstr "WAI_S"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:249
+#: ../plug-ins/imagemap/imap_edit_area_info.c:294
 msgid "Tel_net"
 msgstr "Tel_net"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:255
+#: ../plug-ins/imagemap/imap_edit_area_info.c:300
 msgid "e-_mail"
 msgstr "_ел.адреса"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:261
+#: ../plug-ins/imagemap/imap_edit_area_info.c:306
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr "_URL, що активізується при клацанні на цій ділянці: (обов'язково)"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:263
+#: ../plug-ins/imagemap/imap_edit_area_info.c:308
 msgid "Select HTML file"
 msgstr "Виберіть HTML-файл"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:272
+#: ../plug-ins/imagemap/imap_edit_area_info.c:317
 msgid "Relati_ve link"
 msgstr "Від_носне посилання"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:278
+#: ../plug-ins/imagemap/imap_edit_area_info.c:323
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr "Назва/Ід _цільового кадру: (необов'язково - лише для кадрів)"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:281
+#: ../plug-ins/imagemap/imap_edit_area_info.c:326
 msgid "ALT te_xt: (optional)"
 msgstr "_Текст ALT: (необов'язково)"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:284
+#: ../plug-ins/imagemap/imap_edit_area_info.c:329
 msgid "_Link"
 msgstr "По_силання"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:318
+#: ../plug-ins/imagemap/imap_edit_area_info.c:363
 msgid "Dimensions"
 msgstr "Розміри"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:322
+#: ../plug-ins/imagemap/imap_edit_area_info.c:367
 msgid "Pre_view"
 msgstr "_Перегляд"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:360
+#: ../plug-ins/imagemap/imap_edit_area_info.c:405
 msgid "_JavaScript"
 msgstr "_JavaScript"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:459
+#: ../plug-ins/imagemap/imap_edit_area_info.c:504
 msgid "Area Settings"
 msgstr "Параметри області"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:501
+#: ../plug-ins/imagemap/imap_edit_area_info.c:546
 #, c-format
 msgid "Area #%d Settings"
 msgstr "Параметри області #%d"
@@ -12304,7 +12294,6 @@ msgid "Data-driven media"
 msgstr "Мультимедійні дані на основі цифрових даних"
 
 #: ../plug-ins/metadata/metadata-tags.c:189
-#| msgid "Digital Source Type"
 msgid "Digital art"
 msgstr "Цифровий малюнок"
 
@@ -12873,8 +12862,7 @@ msgstr "Альтернативне оточення фільтра:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:191
 msgid "A second number of adjacent points to consider when filtering."
-msgstr ""
-"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:201
 msgid "Filter Epsilon:"
@@ -13059,6 +13047,9 @@ msgstr "_Сканер/Камера..."
 #: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Non-square pixels.  Image might look squashed."
+#~ msgstr "Неквадратні точки. Зображення, ймовірно, пошкоджене."
 
 #~ msgid "bad image dimensions"
 #~ msgstr "хибні розміри зображення"
