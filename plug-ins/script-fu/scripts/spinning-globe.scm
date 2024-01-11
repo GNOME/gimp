@@ -51,23 +51,27 @@
     (plug-in-map-object RUN-NONINTERACTIVE
                         theImage             ; mapping image
                         1 (vector theFrame)  ; mapping drawables
-                        1                    ; viewpoint
-                        0.5 0.5 2.0          ; object pos
-                        0.5 0.5 0.0          ; first axis
-                        1.0 0.0 0.0          ; 2nd axis
-                        0.0 1.0 0.0          ; axis rotation
-                        0.0 (* n ang) 0.0    ; light (type, color)
-                        0 '(255 255 255)     ; light position
-                        -0.5 -0.5 2.0        ; light direction
-                        -1.0 -1.0 1.0  ; material (amb, diff, refl, spec, high)
-                        0.3 1.0 0.5 0.0 27.0 ; antialias
-                        TRUE                 ; tile
+                        "map-sphere"         ; sphere
+                        0.5 0.5 2.0          ; viewpoint
+                        0.5 0.5 0.0          ; object pos
+                        1.0 0.0 0.0          ; first axis
+                        0.0 1.0 0.0          ; 2nd axis
+                        0.0 (* n ang) 0.0    ; axis rotation
+                        "point-light"        ; light type
+                        '(255 255 255)       ; light color
+                        -0.5 -0.5 2.0        ; light position
+                        -1.0 -1.0 1.0        ; light direction
+                        0.3 1.0 0.5 0.0 27.0 ; material (amb, diff, refl, spec, high)
+                        TRUE                 ; antialias
+                        3.0                  ; depth
+                        0.25                 ; threshold
+                        FALSE                ; tile
                         FALSE                ; new image
-                        FALSE                ; transparency
-                        inTransparent        ; radius
-                        0.25                 ; unused parameters
-                        1.0 1.0 1.0 1.0
-                        -1 -1 -1 -1 -1 -1 -1 -1
+                        FALSE                ; new layer
+                        inTransparent        ; transparency
+                        0.25                 ; radius
+                        1.0 1.0 1.0 1.0      ; unused parameters
+                        -1 -1 0.5 0.5 0.5 -1 -1 0.25 0.25
     )
   )
 

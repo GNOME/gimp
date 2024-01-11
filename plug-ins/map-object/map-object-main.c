@@ -209,17 +209,17 @@ map_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_DOUBLE (procedure, "rotation-angle-x",
                             _("Angle X"),
                             _("Rotation about X axis in degrees"),
-                            -180, 180, 0.0,
+                            -360, 360, 0.0,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "rotation-angle-y",
                             _("Angle Y"),
                             _("Rotation about Y axis in degrees"),
-                            -180, 180, 0.0,
+                            -360, 360, 0.0,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "rotation-angle-z",
                             _("Angle Z"),
                             _("Rotation about Z axis in degrees"),
-                            -180, 180, 0.0,
+                            -360, 360, 0.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_CHOICE (procedure, "light-type",
