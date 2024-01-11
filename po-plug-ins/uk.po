@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-01-11 18:15+0000\n"
-"PO-Revision-Date: 2024-01-11 20:49+0200\n"
+"PO-Revision-Date: 2024-01-11 20:53+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -6837,7 +6837,7 @@ msgstr "Змінити колір зображення, використовую
 
 #: plug-ins/common/gradient-map.c:168
 msgid "_Palette Map"
-msgstr "К_арта палітри:"
+msgstr "М_апа палітри"
 
 #: plug-ins/common/gradient-map.c:172
 msgid "Recolor the image using colors from the active palette"
