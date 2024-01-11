@@ -180,24 +180,24 @@ svg_create_procedure (GimpPlugIn  *plug_in,
                                                 LOAD_THUMB_PROC);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "resolution",
-                            "Resolu_tion",
-                            "Resolution to use for rendering the SVG",
+                            _("Resolu_tion"),
+                            _("Resolution to use for rendering the SVG"),
                             GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION, 300,
                             GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "width",
-                         "_Width",
-                         "Width (in pixels) to load the SVG in. "
+                         _("_Width"),
+                         _("Width (in pixels) to load the SVG in. "
                          "(0 for original width, a negative width to "
-                         "specify a maximum width)",
+                         "specify a maximum width)"),
                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
                          GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "height",
-                         "_Height",
-                         "Height (in pixels) to load the SVG in. "
+                         _("_Height"),
+                         _("Height (in pixels) to load the SVG in. "
                          "(0 for original height, a negative height to "
-                         "specify a maximum height)",
+                         "specify a maximum height)"),
                          -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
                          GIMP_PARAM_READWRITE);
 

@@ -174,23 +174,23 @@ wmf_create_procedure (GimpPlugIn  *plug_in,
                                                 LOAD_THUMB_PROC);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "resolution",
-                            "Resolution",
-                            "Resolution to use for rendering the WMF",
+                            _("Resolu_tion"),
+                            _("Resolution to use for rendering the WMF"),
                             GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
                             WMF_DEFAULT_RESOLUTION,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "width",
-                         "Width",
-                         "Width (in pixels) to load the WMF in, "
-                         "0 for original width",
+                         _("_Width"),
+                         _("Width (in pixels) to load the WMF in, "
+                         "0 for original width"),
                          0, GIMP_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "height",
-                         "Height",
-                         "Height (in pixels) to load the WMF in, "
-                         "0 for original height",
+                         _("_Height"),
+                         _("Height (in pixels) to load the WMF in, "
+                         "0 for original height"),
                          0, GIMP_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
     }
