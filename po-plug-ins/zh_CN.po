@@ -5,14 +5,14 @@
 # Aron <aronmalache@163.com>, 2008.
 # 神州散人 <kappa8086@gmail.com>, 2008-2009.
 # YunQiang Su <wzssyqa@gmail.com>, 2011.
-# lumingzh <lumingzh@qq.com>, 2019-2023.
+# lumingzh <lumingzh@qq.com>, 2019-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-26 16:41+0000\n"
-"PO-Revision-Date: 2023-12-29 19:55+0800\n"
+"POT-Creation-Date: 2024-01-11 19:02+0000\n"
+"PO-Revision-Date: 2024-01-13 07:55+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -74,8 +74,8 @@ msgstr "锻炼一只山羊（C）"
 #: plug-ins/common/sphere-designer.c:2637 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/warp.c:472 plug-ins/file-tiff/file-tiff-load.c:2549
 #: plug-ins/flame/flame.c:622 plug-ins/flame/flame.c:827
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1540
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1578
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1522
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1560
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1390
 #: plug-ins/gfig/gfig-dialog.c:354 plug-ins/gfig/gfig-dialog.c:781
@@ -511,7 +511,7 @@ msgstr "分离"
 
 #. Zoom Options
 #: plug-ins/common/animation-play.c:847
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:702
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:681
 #: plug-ins/imagemap/imap-menu.ui:276
 msgid "Zoom"
 msgstr "缩放"
@@ -688,7 +688,7 @@ msgid "Border Size"
 msgstr "边界大小"
 
 #: plug-ins/common/border-average.c:424
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:864
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:843
 msgid "Number of Colors"
 msgstr "颜色数量"
 
@@ -943,9 +943,7 @@ msgstr "饱和度"
 
 #: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
-#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:309
-#: plug-ins/metadata/metadata-viewer.c:347
-#: plug-ins/metadata/metadata-viewer.c:385
+#: plug-ins/gimpressionist/size.c:155
 msgid "Value"
 msgstr "明度"
 
@@ -1009,8 +1007,8 @@ msgstr "随机种子"
 #: plug-ins/common/qbist.c:1020 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2686 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1233
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:817
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1541
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:796
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1523
 #: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:911
 #: plug-ins/ifs-compose/ifs-compose.c:2598 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:492
@@ -1025,8 +1023,8 @@ msgstr "打开(_O)"
 #: plug-ins/common/qbist.c:1028 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2694 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1241
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:825
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1579
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:804
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1561
 #: plug-ins/gfig/gfig-dialog.c:832 plug-ins/gimpressionist/brush.c:271
 #: plug-ins/ifs-compose/ifs-compose.c:912
 #: plug-ins/ifs-compose/ifs-compose.c:2561 plug-ins/imagemap/imap_file.c:129
@@ -1218,7 +1216,7 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:590
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1441
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1424
 #: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2420
 #: plug-ins/lighting/lighting-ui.c:808
 #, c-format
@@ -1964,7 +1962,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/file-psd/psd-load.c:169 plug-ins/file-psd/psd-load.c:174
 #: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1764
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1784
 #: plug-ins/fractal-explorer/fractal-explorer.c:1159 plug-ins/gfig/gfig.c:527
 #: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
 #: plug-ins/lighting/lighting-ui.c:952
@@ -2167,17 +2165,17 @@ msgid "redness-cr709"
 msgstr "红色差-cr709"
 
 #: plug-ins/common/decompose.c:196
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:901
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:880
 msgid "Red"
 msgstr "红色"
 
 #: plug-ins/common/decompose.c:197
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:914
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:893
 msgid "Green"
 msgstr "绿色"
 
 #: plug-ins/common/decompose.c:198
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:927
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:906
 msgid "Blue"
 msgstr "蓝色"
 
@@ -2434,8 +2432,9 @@ msgstr "该插件尝试从图像中移除竖直条纹。"
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:195
 #: plug-ins/common/file-ps.c:386 plug-ins/common/file-ps.c:500
-#: plug-ins/common/file-raw-data.c:355 plug-ins/common/smooth-palette.c:135
-#: plug-ins/imagemap/imap_grid.c:255
+#: plug-ins/common/file-raw-data.c:355 plug-ins/common/file-svg.c:189
+#: plug-ins/common/file-wmf.c:184 plug-ins/common/smooth-palette.c:135
+#: plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
 msgstr "宽度(_W)"
 
@@ -3525,7 +3524,8 @@ msgstr "每个单元格的宽度。可以是一个数字或百分数。"
 
 #: plug-ins/common/file-html-table.c:202 plug-ins/common/file-ps.c:392
 #: plug-ins/common/file-ps.c:507 plug-ins/common/file-raw-data.c:360
-#: plug-ins/common/smooth-palette.c:141 plug-ins/imagemap/imap_grid.c:261
+#: plug-ins/common/file-svg.c:197 plug-ins/common/file-wmf.c:191
+#: plug-ins/common/smooth-palette.c:141 plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
 msgstr "高度(_H)"
 
@@ -4971,7 +4971,7 @@ msgstr "封装的 PostScript(_T)"
 msgid "FALSE: PostScript, TRUE: Encapsulated PostScript"
 msgstr "FALSE：PostScript；TRUE：封装的 PostScript"
 
-#: plug-ins/common/file-ps.c:557 plug-ins/imagemap/imap_grid.c:298
+#: plug-ins/common/file-ps.c:557 plug-ins/imagemap/imap_grid.c:301
 msgid "_Preview"
 msgstr "预览(_P)"
 
@@ -5757,6 +5757,26 @@ msgstr "行程长度编码(_U)"
 msgid "SVG image"
 msgstr "SVG 图像"
 
+#: plug-ins/common/file-svg.c:183 plug-ins/common/file-wmf.c:177
+msgid "Resolu_tion"
+msgstr "分辨率(_T)"
+
+#: plug-ins/common/file-svg.c:184
+msgid "Resolution to use for rendering the SVG"
+msgstr "渲染 SVG 使用的分辨率"
+
+#: plug-ins/common/file-svg.c:190
+msgid ""
+"Width (in pixels) to load the SVG in. (0 for original width, a negative "
+"width to specify a maximum width)"
+msgstr "载入 SVG 使用的宽度（像素）。（0 为原始宽度，负数宽度为指定最大宽度）"
+
+#: plug-ins/common/file-svg.c:198
+msgid ""
+"Height (in pixels) to load the SVG in. (0 for original height, a negative "
+"height to specify a maximum height)"
+msgstr "载入 SVG 使用的高度（像素）。（0 为原始高度，负数高度为指定最大高度）"
+
 #: plug-ins/common/file-svg.c:205
 msgid "_Paths"
 msgstr "路径(_P)"
@@ -5928,6 +5948,18 @@ msgstr "“%s”不是有效的 WBMP 文件"
 #: plug-ins/common/file-wmf.c:155
 msgid "Microsoft WMF file"
 msgstr "微软 WMF 文件"
+
+#: plug-ins/common/file-wmf.c:178
+msgid "Resolution to use for rendering the WMF"
+msgstr "渲染 WMF 使用的分辨率"
+
+#: plug-ins/common/file-wmf.c:185
+msgid "Width (in pixels) to load the WMF in, 0 for original width"
+msgstr "载入 WMF 使用的宽度（像素），0 为原始宽度"
+
+#: plug-ins/common/file-wmf.c:192
+msgid "Height (in pixels) to load the WMF in, 0 for original height"
+msgstr "载入 WMF 使用的高度（像素），0 为原始高度"
 
 #: plug-ins/common/file-wmf.c:392
 msgid ""
@@ -7101,7 +7133,7 @@ msgid "G-Qbist"
 msgstr "量子贝叶斯"
 
 #: plug-ins/common/qbist.c:1012
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:736
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:715
 msgid "_Undo"
 msgstr "撤消(_U)"
 
@@ -10783,7 +10815,7 @@ msgstr "渲染(_R)"
 msgid "C_amera"
 msgstr "相机(_A)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:617
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:596
 #: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:988
 #, c-format
@@ -10798,113 +10830,113 @@ msgstr ""
 "（%s \"%s\"）\n"
 "到您的 %s 文件。"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:633
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:612
 msgid "Fractal Explorer"
 msgstr "分形探索器"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:683
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:662
 msgid "Re_altime preview"
 msgstr "实时预览(_A)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:691
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:670
 msgid "If enabled the preview will be redrawn automatically"
 msgstr "如果启用预览将会自动重绘"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:694
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:673
 msgid "R_edraw preview"
 msgstr "重绘预览(_E)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:715
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:694
 msgid "Zoom _In"
 msgstr "放大(_I)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:723
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:702
 msgid "Zoom _Out"
 msgstr "缩小(_O)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:740
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:719
 msgid "Undo last zoom change"
 msgstr "撤消上次缩放变化"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:746
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:725
 msgid "_Redo"
 msgstr "重做(_R)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:750
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:729
 msgid "Redo last zoom change"
 msgstr "重做上次缩放变化"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:758
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:737
 msgid "_Parameters"
 msgstr "参数(_P)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:760
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:739
 msgid "_Colors"
 msgstr "颜色(_C)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:762
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:741
 msgid "_Fractals"
 msgstr "分形(_F)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:780
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:759
 msgid "Fractal Parameters"
 msgstr "分形参数"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:793
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:772
 msgid "Fractal Type"
 msgstr "分形类型"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:823
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 msgid "Load a fractal from file"
 msgstr "从文件加载分形"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:831
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:810
 msgid "Save active fractal to file"
 msgstr "保存活动分形到文件"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:883
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:862
 msgid "Color Density"
 msgstr "颜色密度"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:897
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:876
 msgid "Color Function"
 msgstr "颜色函数"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:953
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
 msgid "As specified above"
 msgstr "如上设定"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:954
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:933
 msgid "Apply active gradient to final image"
 msgstr "将活动渐变应用到最终图像"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:974
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:951
 msgid "FractalExplorer Gradient"
 msgstr "分形探索器渐变"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1036
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1013
 msgid "Presets"
 msgstr "预设"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1455
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1438
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "无法写入“%s”：%s"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1536
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
 msgid "Load Fractal Parameters"
 msgstr "加载分形参数"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1574
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
 msgid "Save Fractal Parameters"
 msgstr "保存分形参数"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1772
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1792
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "“%s”不是一个分形探索器文件"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1779
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1799
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "“%s”已损坏。第 %d 行选项部分错误"
@@ -12917,8 +12949,8 @@ msgid "Center _x:"
 msgstr "中心 X(_X)："
 
 #: plug-ins/imagemap/imap_circle.c:266 plug-ins/imagemap/imap_circle.c:273
-#: plug-ins/imagemap/imap_circle.c:279 plug-ins/imagemap/imap_grid.c:259
-#: plug-ins/imagemap/imap_grid.c:265 plug-ins/imagemap/imap_polygon.c:503
+#: plug-ins/imagemap/imap_circle.c:279 plug-ins/imagemap/imap_grid.c:262
+#: plug-ins/imagemap/imap_grid.c:268 plug-ins/imagemap/imap_polygon.c:503
 #: plug-ins/imagemap/imap_polygon.c:511 plug-ins/imagemap/imap_rectangle.c:389
 #: plug-ins/imagemap/imap_rectangle.c:396
 #: plug-ins/imagemap/imap_rectangle.c:403
@@ -13216,43 +13248,43 @@ msgstr "载入图像映像"
 msgid "Save Image Map"
 msgstr "保存图像映像"
 
-#: plug-ins/imagemap/imap_grid.c:204
+#: plug-ins/imagemap/imap_grid.c:207
 msgid "Grid Settings"
 msgstr "网格设置"
 
-#: plug-ins/imagemap/imap_grid.c:210
+#: plug-ins/imagemap/imap_grid.c:213
 msgid "_Snap-to grid enabled"
 msgstr "吸附到网格已启用(_S)"
 
-#: plug-ins/imagemap/imap_grid.c:216
+#: plug-ins/imagemap/imap_grid.c:219
 msgid "Grid Visibility and Type"
 msgstr "网格可见性与类型"
 
-#: plug-ins/imagemap/imap_grid.c:223
+#: plug-ins/imagemap/imap_grid.c:226
 msgid "_Hidden"
 msgstr "隐藏(_H)"
 
-#: plug-ins/imagemap/imap_grid.c:231
+#: plug-ins/imagemap/imap_grid.c:234
 msgid "_Lines"
 msgstr "虚线(_L)"
 
-#: plug-ins/imagemap/imap_grid.c:240
+#: plug-ins/imagemap/imap_grid.c:243
 msgid "C_rosses"
 msgstr "交叉(_R)"
 
-#: plug-ins/imagemap/imap_grid.c:248
+#: plug-ins/imagemap/imap_grid.c:251
 msgid "Grid Granularity"
 msgstr "网格大小"
 
-#: plug-ins/imagemap/imap_grid.c:275
+#: plug-ins/imagemap/imap_grid.c:278
 msgid "Grid Offset"
 msgstr "网格位移"
 
-#: plug-ins/imagemap/imap_grid.c:282
+#: plug-ins/imagemap/imap_grid.c:285
 msgid "pixels from l_eft"
 msgstr "左端像素(_E)"
 
-#: plug-ins/imagemap/imap_grid.c:287
+#: plug-ins/imagemap/imap_grid.c:290
 msgid "pixels from _top"
 msgstr "顶端像素(_T)"
 
@@ -15139,6 +15171,13 @@ msgstr "元数据查看器：%s"
 msgid "Exif Tag"
 msgstr "Exif 标签"
 
+#: plug-ins/metadata/metadata-viewer.c:309
+#: plug-ins/metadata/metadata-viewer.c:347
+#: plug-ins/metadata/metadata-viewer.c:385
+msgctxt "A tag value"
+msgid "Value"
+msgstr "值"
+
 #: plug-ins/metadata/metadata-viewer.c:317
 msgid "Exif"
 msgstr "Exif"
@@ -16347,10 +16386,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "_Next"
 #~ msgstr "下一个(_N)"
-
-#~ msgctxt "A tag value"
-#~ msgid "Value"
-#~ msgstr "值"
 
 #~ msgid "Select _All"
 #~ msgstr "全选(_A)"
