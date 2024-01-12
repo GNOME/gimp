@@ -1,7 +1,7 @@
 # Merge Request tricks
 
 By default, a Merge Request pipeline would only build GIMP with
-autotools, meson and for Windows 64-bit (similarly to normal commits).
+meson for Debian and for Windows 64-bit (similarly to normal commits).
 
 You might want to actually generate easy-to-install builds, in
 particular if you want it to be testable for non-developers, or various

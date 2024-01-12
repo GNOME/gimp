@@ -128,9 +128,6 @@ echo
 echo "## Build maintainers ##"
 echo
 
-echo "Core autotools build system:"
-git --no-pager shortlog -sn $PREV..$CUR -- configure.ac "*/Makefile.am" "tools/"
-
 echo "Meson build system:"
 git --no-pager shortlog -sn $PREV..$CUR -- meson_options.txt "*/meson.build"
 

@@ -69,9 +69,8 @@ without going through `libgimpui` facility; because you want to make
 your GUI with another toolkit…
 
 The whole C reference documentation for both these libraries can be
-generated in the main GIMP build with the `--enable-gi-docgen` autotools
-option or the `-Dgi-docgen=enabled` meson option (you need to have the
-`gi-docgen` tools installed).
+generated in the main GIMP build with the `-Dgi-docgen=enabled` meson
+option (you need to have the `gi-docgen` tools installed).
 
 TODO: add online links when it is up for the new APIs.
 
@@ -328,9 +327,8 @@ packagers/maintainers of these parts are aware and working on a fix.
 At each commit pushed to the repository, several pipelines are currently
 running, such as:
 
-- Debian testing autotools and meson builds (autotools is still the
-  official build system while meson is experimental).
-- Windows builds (cross or natively compiled).
+- Debian testing builds
+- Windows builds (cross compiled).
 
 Additionally, we test build with alternative tools or options (e.g. with
 `Clang` instead of `gcc` compiler) or jobs which may take much longer,
@@ -444,7 +442,6 @@ top-level directories:
 | libgimpmodule/  | Abstracts dynamic loading of modules (used to implement loadable color selectors and display filters) |
 | libgimpthumb/   | Thumbnail functions shared by core and plug-ins      |
 | libgimpwidgets/ | User interface elements (widgets) and utility functions shared by core and plug-ins                   |
-| m4macros/       | Scripts for autotools configuration                  |
 | menus/          | XML/XSL files used to generate menus                 |
 | modules/        | Color selectors and display filters loadable at run-time |
 | pdb/            | Scripts for PDB source code generation               |
