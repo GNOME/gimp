@@ -2050,36 +2050,36 @@ gimp_layer_create_mask (GimpLayer       *layer,
 
     case GIMP_ADD_MASK_ALPHA:
     case GIMP_ADD_MASK_ALPHA_TRANSFER:
-      if (gimp_drawable_has_alpha (drawable))
+      GeglBuffer *dest_buffer;
+      const Babl *component_format;
+
+      if (! gimp_drawable_has_alpha (drawable))
+        gimp_layer_add_alpha (layer);
+
+      dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+
+      component_format =
+        gimp_image_get_component_format (image, GIMP_CHANNEL_ALPHA);
+
+      gegl_buffer_set_format (dest_buffer, component_format);
+      gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                             GEGL_ABYSS_NONE,
+                             dest_buffer, NULL);
+      gegl_buffer_set_format (dest_buffer, NULL);
+
+      if (add_mask_type == GIMP_ADD_MASK_ALPHA_TRANSFER)
         {
-          GeglBuffer *dest_buffer;
-          const Babl *component_format;
+          gimp_drawable_push_undo (drawable,
+                                   C_("undo-type", "Transfer Alpha to Mask"),
+                                   NULL,
+                                   0, 0,
+                                   gimp_item_get_width  (item),
+                                   gimp_item_get_height (item));
 
-          dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
-
-          component_format =
-            gimp_image_get_component_format (image, GIMP_CHANNEL_ALPHA);
-
-          gegl_buffer_set_format (dest_buffer, component_format);
-          gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
-                                 GEGL_ABYSS_NONE,
-                                 dest_buffer, NULL);
-          gegl_buffer_set_format (dest_buffer, NULL);
-
-          if (add_mask_type == GIMP_ADD_MASK_ALPHA_TRANSFER)
-            {
-              gimp_drawable_push_undo (drawable,
-                                       C_("undo-type", "Transfer Alpha to Mask"),
-                                       NULL,
-                                       0, 0,
-                                       gimp_item_get_width  (item),
-                                       gimp_item_get_height (item));
-
-              gimp_gegl_apply_set_alpha (gimp_drawable_get_buffer (drawable),
-                                         NULL, NULL,
-                                         gimp_drawable_get_buffer (drawable),
-                                         1.0);
-            }
+          gimp_gegl_apply_set_alpha (gimp_drawable_get_buffer (drawable),
+                                     NULL, NULL,
+                                     gimp_drawable_get_buffer (drawable),
+                                     1.0);
         }
       break;
 
