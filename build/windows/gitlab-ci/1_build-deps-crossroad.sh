@@ -68,6 +68,7 @@ fi
 
 ## XXX Functional fix to the problem of non-configured interpreters
 ## XXX Also, functional generator of the pixbuf 'loaders.cache' for GUI image support
+gimp_app_version=`grep -rI '\<version *:' ../meson.build | head -1 | sed "s/^.*version *: *'\([0-9]\+\.[0-9]\+\).[0-9]*' *,.*$/\1/"`
 echo "@echo off
       echo This is a CI crossbuild of GIMP.
       :: Don't run this under PowerShell since it produces UTF-16 files.
@@ -78,5 +79,5 @@ echo "@echo off
       echo .vala (Vala) plug-ins       ^|^ NOT supported!
       bin\gdk-pixbuf-query-loaders.exe lib\gdk-pixbuf-2.0\2.10.0\loaders\*.dll > lib\gdk-pixbuf-2.0\2.10.0\loaders.cache
       echo.
-      bin\gimp-2.99.exe" > ${CROSSROAD_PREFIX}/gimp.cmd
+      bin\gimp-$gimp_app_version.exe" > ${CROSSROAD_PREFIX}/gimp.cmd
 echo "Please run the gimp.cmd file to know the actual plug-in support." > ${CROSSROAD_PREFIX}/README.txt

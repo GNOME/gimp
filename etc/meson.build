@@ -1,4 +1,5 @@
 etcconf = configuration_data()
+etcconf.set('GIMP_APP_VERSION', gimp_app_version)
 etcconf.set('mypaint_brushes_dir', mypaint_brushes_dir)
 
 

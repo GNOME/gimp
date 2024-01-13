@@ -89,6 +89,7 @@ fi
 
 # XXX Functional fix to the problem of non-configured interpreters
 make_cmd() {
+  gimp_app_version=`grep -rI '\<version *:' ../meson.build | head -1 | sed "s/^.*version *: *'\([0-9]\+\.[0-9]\+\).[0-9]*' *,.*$/\1/"`
   echo "@echo off
         echo This is a $1 native build of GIMP.
         :: Don't run this under PowerShell since it produces UTF-16 files.
@@ -99,7 +100,7 @@ make_cmd() {
         echo /usr/bin/lua=$2\bin\luajit.exe
         echo /usr/bin/luajit=$2\bin\luajit.exe
         echo :Lua:E::lua::luajit:
-        ) >%cd%\lib\gimp\2.99\interpreters\lua.interp
+        ) >%cd%\lib\gimp\GIMP_APP_VERSION\interpreters\lua.interp
         echo .lua  (Lua) plug-ins        ^|^ supported.
         (
         echo python=$2\bin\python.exe
@@ -107,14 +108,14 @@ make_cmd() {
         echo /usr/bin/python=$2\bin\python.exe
         echo /usr/bin/python3=$2\bin\python.exe
         echo :Python:E::py::python:
-        ) >%cd%\lib\gimp\2.99\interpreters\pygimp.interp
+        ) >%cd%\lib\gimp\GIMP_APP_VERSION\interpreters\pygimp.interp
         echo .py   (Python) plug-ins     ^|^ supported.
         (
         echo gimp-script-fu-interpreter=%cd%\bin\gimp-script-fu-interpreter-3.0.exe
         echo gimp-script-fu-interpreter-3.0=%cd%\bin\gimp-script-fu-interpreter-3.0.exe
         echo /usr/bin/gimp-script-fu-interpreter=%cd%\bin\gimp-script-fu-interpreter-3.0.exe
         echo :ScriptFu:E::scm::gimp-script-fu-interpreter-3.0.exe:
-        ) >%cd%\lib\gimp\2.99\interpreters\gimp-script-fu-interpreter.interp
+        ) >%cd%\lib\gimp\GIMP_APP_VERSION\interpreters\gimp-script-fu-interpreter.interp
         echo .scm  (ScriptFu) plug-ins   ^|^ supported.
         echo .vala (Vala) plug-ins       ^|^ supported.
         echo.
@@ -122,7 +123,8 @@ make_cmd() {
         @if not exist $2\lib\girepository-1.0\gegl*.typelib (copy lib\girepository-1.0\gegl*.typelib $2\lib\girepository-1.0) > nul
         @if not exist $2\lib\girepository-1.0\gimp*.typelib (copy lib\girepository-1.0\gimp*.typelib $2\lib\girepository-1.0) > nul
         set PATH=%PATH%;$2\bin
-        bin\gimp-2.99.exe" > ${GIMP_PREFIX}/gimp.cmd
+        bin\gimp-$gimp_app_version.exe" > ${GIMP_PREFIX}/gimp.cmd
+  sed -i "s/GIMP_APP_VERSION/${gimp_app_version}/g" ${GIMP_PREFIX}/gimp.cmd
   sed -i 's|c:/|c:\\|g;s|msys64/|msys64\\|g' ${GIMP_PREFIX}/gimp.cmd
   echo "Please run the gimp.cmd file to get proper plug-in support."> ${GIMP_PREFIX}/README.txt
 }
