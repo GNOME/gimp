@@ -10,10 +10,10 @@
       <value>Setup built by Jernej Simonèiè, jernej-gimp@ena.si</value>
     </config>
     <config name="WinVersionTooLowError">
-      <value>This version of GIMP requires Windows 7, or a newer version of Windows.</value>
+      <value>This version of GIMP requires Windows 10, or a newer version of Windows.</value>
     </config>
     <config name="WindowsVersionNotSupported">
-      <value>This version of GIMP requires Windows 7, or a newer version of Windows.</value>
+      <value>This version of GIMP requires Windows 10, or a newer version of Windows.</value>
     </config>
   </section>
 
