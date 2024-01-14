@@ -1569,7 +1569,7 @@ save_image (GFile         *file,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       /*convert pixel date to XcursorPixel. */
-      g_assert (save_rgn.width * save_rgn.height < SQR (MAX_SAVE_DIMENSION));
+      g_assert (save_rgn.width * save_rgn.height <= SQR (MAX_SAVE_DIMENSION));
       for (j = 0; j < save_rgn.width * save_rgn.height; j++)
         {
           imagesp->images[i]->pixels[j] = premultiply_alpha (pixelbuf[j]);
