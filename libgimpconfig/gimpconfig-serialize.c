@@ -288,7 +288,7 @@ gimp_config_serialize_property (GimpConfig       *config,
 
               data = g_bytes_get_data (bytes, &data_length);
 
-              gimp_config_writer_printf (writer, "%llu", data_length);
+              gimp_config_writer_printf (writer, "%lu", data_length);
               gimp_config_writer_data (writer, data_length, data);
             }
           else

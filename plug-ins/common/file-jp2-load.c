@@ -1235,7 +1235,7 @@ load_image (GimpProcedure     *procedure,
           goto out;
         }
     }
-  else if ((image->color_space == OPJ_CLRSPC_CMYK))
+  else if (image->color_space == OPJ_CLRSPC_CMYK)
     {
       if (! color_cmyk_to_rgb (image))
         {
