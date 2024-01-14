@@ -41,7 +41,8 @@
                        GDK_ENTER_NOTIFY_MASK   | \
                        GDK_LEAVE_NOTIFY_MASK)
 
-#define PREVIEW_SIZE 400
+#define PREVIEW_WIDTH  600
+#define PREVIEW_HEIGHT 400
 
 /*======================================================================
                 Preview Rendering Util routine
@@ -341,9 +342,9 @@ make_preview (GimpDrawable *drawable,
 
    window = gtk_scrolled_window_new (NULL, NULL);
    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (window),
-                                   GTK_POLICY_NEVER, GTK_POLICY_NEVER);
-   width = (data->width > 600) ? 600 : data->width;
-   height = (data->height > 400) ? 400 : data->height;
+                                   GTK_POLICY_EXTERNAL, GTK_POLICY_EXTERNAL);
+   width = (data->width > PREVIEW_WIDTH) ? PREVIEW_WIDTH : data->width;
+   height = (data->height > PREVIEW_HEIGHT) ? PREVIEW_HEIGHT : data->height;
    gtk_widget_set_size_request (window, width, height);
    gtk_grid_attach (GTK_GRID (grid), window, 1, 1, 1, 1);
    gtk_widget_show (window);
