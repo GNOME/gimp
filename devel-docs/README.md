@@ -72,7 +72,7 @@ The whole C reference documentation for both these libraries can be
 generated in the main GIMP build with the `-Dgi-docgen=enabled` meson
 option (you need to have the `gi-docgen` tools installed).
 
-TODO: add online links when it is up for the new APIs.
+See the [API documentation](https://developer.gimp.org/api/3.0/)
 
 ### Programming Languages
 
@@ -101,7 +101,7 @@ full-featured since they don't require manual tweaking. Therefore any
 function in the C library should have an equivalent in any of the
 bindings.
 
-TODO: binding reference documentation.
+**TODO**: binding reference documentation.
 
 **Note**: several GObject-Introspection's Scheme bindings exist though
 we haven't tested them. Nevertheless, GIMP also provides historically
@@ -112,17 +112,18 @@ development](#script-fu-development) section.
 
 ### Tutorials
 
-TODO: at least in C and in one of the officially supported binding
+**TODO**: at least in C and in one of the officially supported binding
 (ideally even in all of them).
 
 ### Porting from GIMP 2 plug-ins
+
+Take a look at our [porting guide](GIMP3-plug-in-porting-guide/README.md).
 
 ### Debugging
 
 GIMP provides an infrastructure to help debugging plug-ins.
 
-You are invited to read the [dedicated
-documentation](debug-plug-ins.txt).
+You are invited to read the [dedicated documentation](https://developer.gimp.org/resource/debug-plug-ins/).
 
 ## Script-fu development
 
@@ -132,11 +133,13 @@ Scheme mini-interpreter and therefore `Script-fu` scripts do not use
 `libgimp` or `libgimpui`. They interface with the PDB through the
 `Script-fu` plug-in.
 
-### Tutorials
+### TODO: Tutorials
 
 ### Porting from GIMP 2 scripts
 
-## GEGL operation development
+Take a look at our [ScriptFu porting guide](GIMP3-plug-in-porting-guide/script-fu-author-guide.md)
+
+## TODO: GEGL operation development
 
 ## Custom data
 
@@ -176,8 +179,8 @@ recent versions.
 
 If you are interested in brushes from a developer perspective, you are
 welcome to read specifications of GIMP formats:
-[GBR](specifications/gbr.txt), [GIH](specifications/gih.txt),
-[VBR](specifications/vbr.txt) or the obsolete [GPB](specifications/gpb.txt).
+[GBR](https://developer.gimp.org/core/standards/gbr/), [GIH](https://developer.gimp.org/core/standards/gih/),
+[VBR](https://developer.gimp.org/core/standards/vbr/) or the obsolete [GPB](https://developer.gimp.org/core/standards/gpb/).
 
 If you want to contribute brushes to the official GIMP, be aware we
 would only accept brushes in non-obsolete GIMP formats. All these
@@ -199,11 +202,11 @@ within GIMP.
 ### Patterns
 
 GIMP supports the GIMP Pattern format (PAT, whose
-[specification](specifications/pat.txt) is available for developers).
+[specification](https://developer.gimp.org/core/standards/pat/) is available for developers).
 
 This format can be exported by GIMP itself.
 
-Alternatively GIMP supports patterns from `GdkPixbuf` (TODO: get more
+Alternatively GIMP supports patterns from `GdkPixbuf` (**TODO**: get more
 information?).
 
 ### Palettes
@@ -214,7 +217,7 @@ GIMP.
 ### Gradients
 
 GIMP supports the GIMP Gradient format (GGR, whose
-[specification](specifications/ggr.txt) is available for developers)
+[specification](https://developer.gimp.org/core/standards/ggr/) is available for developers)
 which can be generated from within GIMP.
 
 Alternatively GIMP supports the SVG Gradient format.
@@ -239,14 +242,7 @@ Finally you can look at our existing themes, like the [System
 theme](https://gitlab.gnome.org/GNOME/gimp/-/blob/master/themes/System/gimp.css).
 Note though that this `System` theme is pretty bare, and that's its goal
 (try to theme as few as possible over whatever is the current real
-system theme).
-
-TODO: for any theme maker reading this, what we want for GIMP 3.0 are at
-least the following additional themes:
-
-- a full custom theme using neutral grayscale colors with a dark and
-  light variant;
-- a mid-gray neutral theme.
+GTK system theme).
 
 As a last trick for theme makers, we recommend to work with the
 GtkInspector tool, which allows you to test CSS rules live in the `CSS`
@@ -294,10 +290,10 @@ styling.
 See the dedicated [icons documentation](icons.md) for more technical
 information.
 
-### Tool presets
+### TODO: Tool presets
 
 
-## GIMP extensions (*.gex*)
+## TODO: GIMP extensions (*.gex*)
 
 ## Continuous Integration
 
@@ -385,35 +381,20 @@ When writing code, any core developer is expected to follow:
 - the [directory structure](#directory-structure-of-gimp-source-tree)
 - our [header file inclusion policy](includes.txt)
 
-[GIMP's developer wiki](https://wiki.gimp.org/index.php/Main_Page) can
-also contain various valuable resources.
+[GIMP's developer site](https://developer.gimp.org/) contain various valuable resources.
 
-Finally the [debugging-tips](debugging-tips.md) file contain many very
+Finally the [debugging-tips](https://developer.gimp.org/core/debug/debugging-tips/) file contain many very
 useful tricks to help you debugging in various common cases.
 
 ### Newcomers
 
 If this is your first time contributing to GIMP, you might be interested
-by build instructions. The previously mentioned wiki in particular has a
-[Hacking:Building](https://wiki.gimp.org/wiki/Hacking:Building) page
-with various per-platform subpages. The [HACKING](HACKING.md) docs will
-also be of interest.
+by [build instructions](https://developer.gimp.org/core/setup/).
 
-You might also like to read these [instructions on submitting
-patches](https://gimp.org/bugs/howtos/submit-patch.html).
+You might also like to read these instructions on the process of
+[submitting patches](https://developer.gimp.org/core/submit-patch/).
 
-If you are unsure what to work on, this [list of bugs for
-newcomers](https://gitlab.gnome.org/GNOME/gimp/-/issues?scope=all&state=opened&label_name[]=4.%20Newcomers)
-might be a good start. It doesn't necessarily contain only bugs for
-beginner developers. Some of them might be for experienced developers
-who just don't know yet enough the codebase.
-
-Nevertheless we often recommend to rather work on topics which you
-appreciate, or even better: fixes for bugs you encounter or features you
-want. These are the most self-rewarding contributions which will really
-make you feel like developing on GIMP means developing for yourself.
-
-### Core Contributors
+### TODO: Core Contributors
 
 ### Directory structure of GIMP source tree
 
@@ -484,6 +465,19 @@ The source code of the main GIMP application is found in the `app/` directory:
 | app/widgets/    | Collection of widgets used in the application GUI                                |
 | app/xcf/        | XCF file handling in **core**                                                    |
 
+#### Auto-generated Files
+
+Please notice that some files in the source are generated from other
+sources. All those files have a short notice about being generated
+somewhere at the top. Among them are the files ending in `pdb.[ch]` in
+the `libgimp/` directory and the files ending in `cmds.c` in the
+`app/pdb/` subdirectory. Those are generated from the respective `.pdb`
+files in `pdb/groups`.
+
+Other files are:
+
+* `AUTHORS` from `authors.xml`
+
 You should also check out [gimp-module-dependencies.svg](gimp-module-dependencies.svg).
 **TODO**: this SVG file is interesting yet very outdated. It should not
 be considered as some kind dependency rule and should be updated.
@@ -497,7 +491,7 @@ features made available in GIMP. More than an image format, you may
 consider it as a work or project format, as it is not made for finale
 presentation of an artwork but for the work-in-progress processus.
 
-Developers are welcome to read the [specifications of XCF](specifications/xcf.txt).
+Developers are welcome to read the [specifications of XCF](https://developer.gimp.org/core/standards/xcf/).
 
 #### Locks
 
@@ -510,8 +504,8 @@ This is further explained in [the specifications of locks](https://developer.gim
 
 GIMP has an evolved GUI framework, with a toolbox, dockables, menus…
 
-This [document describing how the GIMP UI framework functions and how it
-is implemented](ui-framework.txt) might be of interest.
+This document describing how the GIMP UI framework functions and how it
+is [implemented](ui-framework.txt) might be of interest.
 
 #### Contexts
 
