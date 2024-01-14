@@ -485,8 +485,8 @@ read_header_block (PSDimage      *img_a,
                    GInputStream  *input,
                    GError       **error)
 {
-  gchar    sig[4];
-  gchar    buf[6];
+  gchar sig[4] = {0};
+  gchar buf[6];
 
   if (psd_read (input, sig,                4, error) < 4 ||
       psd_read (input, &img_a->version,    2, error) < 2 ||

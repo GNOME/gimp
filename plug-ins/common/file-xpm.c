@@ -385,7 +385,8 @@ load_image (GFile   *file,
                              gimp_file_get_utf8_name (file));
 
   /* read the raw file */
-  switch (XpmReadFileToXpmImage (g_file_peek_path (file), &xpm_image, NULL))
+  switch (XpmReadFileToXpmImage ((char *) g_file_peek_path (file),
+                                 &xpm_image, NULL))
     {
     case XpmSuccess:
       break;
@@ -842,7 +843,8 @@ save_image (GFile         *file,
   xpm_image->data       = ibuff;
 
   /* do the save */
-  switch (XpmWriteFileFromXpmImage (g_file_peek_path (file), xpm_image, NULL))
+  switch (XpmWriteFileFromXpmImage ((char *) g_file_peek_path (file),
+                                    xpm_image, NULL))
     {
     case XpmSuccess:
       success = TRUE;

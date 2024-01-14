@@ -158,7 +158,7 @@ read_header_block (PSDimage      *img_a,
                    GError       **error)
 {
   guint16  version;
-  gchar    sig[4];
+  gchar    sig[4] = {0};
   gchar    buf[6];
 
   if (psd_read (input, sig,                4, error) < 4 ||
@@ -209,7 +209,7 @@ read_color_mode_block (PSDimage      *img_a,
                        GInputStream  *input,
                        GError       **error)
 {
-  guint64 block_len;
+  guint64 block_len = 0;
   guint64 block_start;
   guint64 block_end;
 
@@ -237,7 +237,7 @@ read_image_resource_block (PSDimage      *img_a,
                            GInputStream  *input,
                            GError       **error)
 {
-  guint64 block_len;
+  guint64 block_len = 0;
   guint64 block_end;
 
   if (psd_read (input, &block_len, 4, error) < 4)
