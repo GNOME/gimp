@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the gimp package.
 #
 # lxlalexlxl <pilipchukap@rambler.ru>, 2018.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-22 21:28+0200\n"
-"PO-Revision-Date: 2022-07-07 19:43+0300\n"
+"POT-Creation-Date: 2024-01-15 18:22+0000\n"
+"PO-Revision-Date: 2024-01-15 22:16+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -30,8 +30,11 @@ msgstr "Збірку підготував Jernej Simonèiè, jernej-gimp@ena.si"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
-msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
-msgstr "Ця версія GIMP вимагає Windows 7 або новішої версії Windows."
+#| msgid ""
+#| "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgid ""
+"This version of GIMP requires Windows 10, or a newer version of Windows."
+msgstr "Ця версія GIMP вимагає Windows 10 або новішої версії Windows."
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
@@ -320,10 +323,10 @@ msgstr ""
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
-"installing this version in %2, or choose a Custom install, and select a "
-"different installation folder.%n%nThe Setup will now exit."
+"Setup couldn't determine how to remove the old version automatically."
+"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+"before installing this version in %2, or choose a Custom install, and select "
+"a different installation folder.%n%nThe Setup will now exit."
 msgstr ""
 "GIMP %1 неможливо встановити поверх поточної встановленої версії GIMP, а "
 "програма встановлення не може визначити, як автоматично видалити стару "
