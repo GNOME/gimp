@@ -15,12 +15,12 @@ fi
 if [[ "$BUILD_TYPE" != "CI_NATIVE" ]]; then
     # Make the script callable from every directory
     cd ~
+    
+    pacman --noconfirm -Suy
 fi
 
 
 # Install the required (pre-built) packages for babl and GEGL
-pacman --noconfirm -Suy
-
 pacman --noconfirm -S --needed \
     base-devel \
     ${MINGW_PACKAGE_PREFIX}-toolchain \

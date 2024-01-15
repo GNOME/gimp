@@ -34,12 +34,12 @@ else
     GIMP_GITDIR=$(sed 's|build||g' <<< $GIMP_GITDIR)
     cd $GIMP_GITDIR
   fi
+  
+  pacman --noconfirm -Suy
 fi
 
 
 # Install the required (pre-built) packages for GIMP
-pacman --noconfirm -Suy
-
 export DEPS_PATH="build/windows/gitlab-ci/all-deps-uni.txt"
 sed -i "s/DEPS_ARCH_/${MINGW_PACKAGE_PREFIX}-/g" $DEPS_PATH
 export GIMP_DEPS=`cat $DEPS_PATH`

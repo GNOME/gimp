@@ -18,11 +18,13 @@ else # [[ "$CROSSROAD_PLATFORM" == "w32" ]] || [[ "$MSYSTEM_CARCH" == "i686" ]];
     export GIMP_DISTRIB=`realpath ./gimp-x86`
 fi
 
+if [[ "$BUILD_TYPE" != "CI_CROSS" ]] && [[ "$BUILD_TYPE" != "CI_NATIVE" ]]; then
+pacman --noconfirm -Suy
+fi
+
 
 if [[ "$BUILD_TYPE" != "CI_CROSS" ]]; then
 # Install the required (pre-built) packages again
-pacman --noconfirm -Suy
-
 export DEPS_PATH="build/windows/gitlab-ci/all-deps-uni.txt"
 sed -i "s/DEPS_ARCH_/${MINGW_PACKAGE_PREFIX}-/g" $DEPS_PATH
 export GIMP_DEPS=`cat $DEPS_PATH`
