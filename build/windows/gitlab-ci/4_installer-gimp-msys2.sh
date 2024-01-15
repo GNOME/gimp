@@ -1,20 +1,20 @@
-# Install Inno Setup.
+#!/bin/bash
+
+# Install Inno Setup
 wget https://jrsoftware.org/download.php/is.exe
 ./is.exe //SILENT //SUPPRESSMSGBOXES //CURRENTUSER //SP- //LOG="innosetup.log"
 
-# Install unofficial language files. These are translations of "unknown
-# translation quality or might not be maintained actively".
-# Cf. https://jrsoftware.org/files/istrans/
+# Get Inno install path
 ISCCDIR=`grep "Dest filename:.*ISCC.exe" innosetup.log | sed 's/.*Dest filename: *\|ISCC.exe//g'`
 ISCCDIR=`cygpath -u "$ISCCDIR"`
-mkdir -p "${ISCCDIR}/Languages/Unofficial"
-cd "${ISCCDIR}/Languages/Unofficial"
 
-download_lang ()
+
+# Download official translations (not present in a Inno release yet)
+download_lang_official ()
 {
   langfile="$1"
   rm -f "$langfile"
-  wget "https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/$langfile"
+  wget "https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/$langfile"
   downloaded="$?"
   if [ $downloaded -ne 0 ]; then
     echo "Download of '$langfile' failed."
@@ -22,11 +22,19 @@ download_lang ()
   fi
 }
 
-download_lang_official ()
+mkdir -p "${ISCCDIR}/Languages"
+cd "${ISCCDIR}/Languages/"
+download_lang_official Korean.isl
+cd -
+
+
+# Download unofficial translations (of unknown quality and maintenance).
+# Cf. https://jrsoftware.org/files/istrans/
+download_lang ()
 {
   langfile="$1"
   rm -f "$langfile"
-  wget "https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/$langfile"
+  wget "https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/$langfile"
   downloaded="$?"
   if [ $downloaded -ne 0 ]; then
     echo "Download of '$langfile' failed."
@@ -44,7 +52,8 @@ add_bom ()
   fi
 }
 
-
+mkdir -p "${ISCCDIR}/Languages/Unofficial"
+cd "${ISCCDIR}/Languages/Unofficial"
 download_lang Basque.isl
 download_lang Belarusian.isl
 download_lang ChineseSimplified.isl
@@ -66,29 +75,26 @@ download_lang Swedish.isl
 download_lang Vietnamese.isl
 cd -
 
-# Any language not in a release yet, but moved from Unofficial, should be added here
-cd "${ISCCDIR}/Languages/"
-download_lang_official Korean.isl
-cd -
-
 # Copy generated language files into the source directory.
 cp _build-x64/build/windows/installer/lang/*isl build/windows/installer/lang
+
 
 # Copy generated welcome images into the source directory.
 cp _build-x64/build/windows/installer/*bmp build/windows/installer/
 
+
 # Construct now the installer.
-VERSION=`grep -rI '\<version *:' meson.build | head -1 | sed "s/^.*version *: *'\([0-9]\+\.[0-9]\+\.[0-9]\+\)' *,.*$/\1/"`
-#MAJOR_VERSION=`echo $VERSION | sed "s/^\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)$/\1/"`
-#MINOR_VERSION=`echo $VERSION | sed "s/^\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)$/\2/"`
-#MICRO_VERSION=`echo $VERSION | sed "s/^\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)$/\3/"`
+GIMP_VERSION=`grep -rI '\<version *:' meson.build | head -1 | sed "s/^.*version *: *'\([0-9]\+\.[0-9]\+\.[0-9]\+\)' *,.*$/\1/"`
+#GIMP_APP_VERSION_MAJOR=`echo $VERSION | sed "s/^\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)$/\1/"`
+#GIMP_APP_VERSION_MINOR=`echo $VERSION | sed "s/^\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)$/\2/"`
+#GIMP_APP_VERSION_MICRO=`echo $VERSION | sed "s/^\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)$/\3/"`
 cd build/windows/installer
-./compile.bat ${VERSION} ../../.. gimp-x86 gimp-x64 gimp-a64 ../../.. gimp-x86 gimp-x64 gimp-a64
+./compile.bat ${GIMP_VERSION} ../../.. gimp-x86 gimp-x64 gimp-a64 ../../.. gimp-x86 gimp-x64 gimp-a64
 
 # Test if the installer was created and return success/failure.
-if [ -f "_Output/gimp-${VERSION}-setup.exe" ]; then
+if [ -f "_Output/gimp-${GIMP_VERSION}-setup.exe" ]; then
   cd _Output/
-  INSTALLER="gimp-${VERSION}-setup.exe"
+  INSTALLER="gimp-${GIMP_VERSION}-setup.exe"
   sha256sum $INSTALLER > ${INSTALLER}.SHA256SUMS
   sha512sum $INSTALLER > ${INSTALLER}.SHA512SUMS
   exit 0
