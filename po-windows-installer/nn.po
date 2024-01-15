@@ -1,0 +1,63 @@
+# Norwegian Nynorsk translations for PACKAGE package.
+# Copyright (C) 2022 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp-help/issues\n"
+"POT-Creation-Date: 2023-10-09 15:33+0000\n"
+"PO-Revision-Date: 2023-12-27 20:06+0100\n"
+"Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
+"Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
+"Language: nn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.2\n"
+"X-Poedit-Basepath: ../2-10/Ferdige\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: Opplasta\n"
+"X-Poedit-SearchPath-2: .\n"
+"X-Poedit-SearchPath-3: .\n"
+"X-Poedit-SearchPath-4: .\n"
+"X-Poedit-SearchPath-5: .\n"
+"X-Poedit-SearchPath-6: gimp.po-plug-ins-ui.gimp-2-10.nn.po\n"
+"X-Poedit-SearchPath-7: gimp.po-python-ui.gimp-2-10.nn.po\n"
+"X-Poedit-SearchPath-8: gimp.po-script-fu-ui.gimp-2-10.nn.po\n"
+"X-Poedit-SearchPath-9: gimp.po-ui.gimp-2-10.nn.po\n"
+"X-Poedit-SearchPath-10: gimp-help.po-windows-installer-ui.gimp-help-2-10."
+"nn.po\n"
+
+#: ../build/windows/installer/lang/help.isl.ini.h:1
+msgid "GIMP Help"
+msgstr "GIMP Hjelp"
+
+#: ../build/windows/installer/lang/help.isl.ini.h:2
+msgid ""
+"Parameter /INSTALL requires parameters /DIR and /ALLUSERS or /CURRENTUSER."
+msgstr ""
+"Parameter /INSTALL treng parametera /DIR og /ALLUSERS eller /"
+"CURRENTUSER."
+
+#. TRANSLATORS: %1 is the localized "GIMP Help" and %2 is the minimum version (which will be major.minor, e.g. "2.10").
+#: ../build/windows/installer/lang/help.isl.ini.h:5
+#, no-c-format
+msgid ""
+"No suitable GIMP installations were found. %1 can only be installed when "
+"GIMP %2 is already present."
+msgstr ""
+"Fann ingen høveleg installasjon av GIMP. %1 kan berre installerast når "
+"GIMP %2 er på plass."
+
+#: ../build/windows/installer/lang/help.isl.ini.h:6
+msgid "Multiple GIMP installations were found"
+msgstr "Fann fleire GIMP-installasjonar"
+
+#. TRANSLATORS: %1 is replaced by the localized "GIMP Help".
+#: ../build/windows/installer/lang/help.isl.ini.h:9
+#, no-c-format
+msgid "Select all installs for which you want to install %1"
+msgstr "Vel alle installasjonane du vil installera %1 for"
