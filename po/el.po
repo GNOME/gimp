@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master.el.po\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-06 13:39+0000\n"
-"PO-Revision-Date: 2023-04-12 15:11+0300\n"
+"POT-Creation-Date: 2024-01-11 18:59+0000\n"
+"PO-Revision-Date: 2024-01-15 20:19+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Bookmarks: 0,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Project-Style: gnome\n"
@@ -80,16 +80,51 @@ msgid "Photo editing in GIMP"
 msgstr "Επεξεργασία φωτογραφίας στο GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
+msgid ""
+"This new version of GIMP comes with many fixes, including vulnerability "
+"corrections. It is highly recommended to update. It also provides a few "
+"interesting changes, such as:"
+msgstr ""
+"Αυτή η νέα έκδοση του GIMP συνοδεύεται από πολλές διορθώσεις, "
+"συμπεριλαμβανομένων διορθώσεων ευπάθειας. Συνιστάται ιδιαίτερα η ενημέρωση. "
+"Παρέχει επίσης μερικές ενδιαφέρουσες αλλαγές, όπως:"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+msgid "Adobe ACB and ASE palette support"
+msgstr "Υποστήριξη παλέτας Adobe ACB και ASE"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+msgid "New gradient: FG to Transparent (Hardedge)"
+msgstr "Νέα διαβάθμιση: Προσκήνιο σε διαφανές (Σκληρή άκρη)"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+msgid "Some text tool algorithm enhancement when replacing formatted text"
+msgstr ""
+"Κάποια βελτίωση αλγορίθμου εργαλείου κειμένου κατά την αντικατάσταση "
+"μορφοποιημένου κειμένου"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+msgid ""
+"Better theming of item locks (when hovering them or setting them active)"
+msgstr ""
+"Καλύτερο θέμα των κλειδαριών αντικειμένων (όταν είσαστε από πάνω τους ή τα "
+"ρυθμίζετε ενεργά)"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+msgid "Improvements in handling a few specific metadata"
+msgstr "Βελτιώσεις στον χειρισμό ορισμένων συγκεκριμένων μεταδεδομένων"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "A new stable releases with a lot of bug fixes and a few enhancements:"
 msgstr ""
 "Μια νέα σταθερή έκδοση με πολλές διορθώσεις σφαλμάτων και μερικές βελτιώσεις:"
 
 #
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "New template selector in \"Canvas Size\" dialog"
-msgstr "Νέος επιλογέας προτύπου στο παράθυρο διαλόγου \"Μέγεθος καμβά\"."
+msgstr "Νέος επιλογέας προτύπου στο παράθυρο διαλόγου \"Μέγεθος καμβά\""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid ""
 "\"Change Color\" dialogs: color scale (0..255/0..100) and models (LCh/HSV) "
 "settings remembered across sessions"
@@ -97,39 +132,39 @@ msgstr ""
 "Διάλογοι \"Αλλαγή χρώματος\": οι ρυθμίσεις κλίμακας χρώματος (0..255/0..100) "
 "και προτύπων (LCh/HSV) διατηρούνται σε όλες τις συνεδρίες"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "New header with \"visible\" and \"link\" icons in item dockables"
 msgstr ""
 "Νέα κεφαλίδα με εικονίδια \"ορατό\" και \"σύνδεσμος\" σε προσαρτήσιμα "
 "στοιχεία"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "Clipping layers better supported when importing PSD files"
 msgstr ""
 "Οι στρώσεις αποκοπής υποστηρίζονται καλύτερα κατά την εισαγωγή αρχείων PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "Paths are now exported to PSD"
 msgstr "Τα μονοπάτια εξάγονται πλέον σε PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "JPEG XL export added"
 msgstr "Προστέθηκε εξαγωγή JPEG XL"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid "Metadata in JPEG XL import"
 msgstr "Μεταδεδομένα σε εισαγωγή JPEG XL"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "New option \"Show reduced images\" when loading TIFF images"
 msgstr ""
 "Νέα επιλογή \"Εμφάνιση μειωμένων εικόνων\" κατά τη φόρτωση εικόνων TIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "16-bit per channel export for raw image data"
 msgstr "Εξαγωγή 16 bit ανά κανάλι για ακατέργαστα δεδομένα εικόνας"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
 "More plug-ins got bug-fixes: DDS, WebP, Flame, Animation Playback, HEIF, "
 "Dicom and Help"
@@ -137,7 +172,7 @@ msgstr ""
 "Περισσότερα πρόσθετα έχουν διορθώσει σφάλματα: DDS, WebP, Flame, Animation "
 "Playback, HEIF, Dicom και Help"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
 "Color picking on X11 will ignore the Wayland portal; new implementation for "
 "color picking on Windows"
@@ -145,11 +180,11 @@ msgstr ""
 "Η επιλογή χρώματος στο X11 θα αγνοήσει την πύλη Wayland· νέα υλοποίηση για "
 "την επιλογή χρώματος στα Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "Check for updates fixed on macOS"
 msgstr "Ελέγξτε για ενημερώσεις που έχουν διορθωθεί στο macOS"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "GIMP continues strengthening its bases with this new version 2.10.32 fixing "
 "many bugs and improving format support. Notable changes:"
@@ -158,19 +193,19 @@ msgstr ""
 "διορθώνοντας πολλά σφάλματα και βελτιώνοντας την υποστήριξη μορφών. "
 "Αξιοσημείωτες αλλαγές:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "8 and 16-bit CMYK(A) TIFF files import is now supported"
 msgstr "Υποστηρίζεται πλέον η εισαγωγή αρχείων TIFF 8 και 16-bit CMYK(A)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "BIGTIFF import and export are now supported"
 msgstr "Υποστηρίζονται πλέον η εισαγωγή και η εξαγωγή BIGTIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "JPEG XL files import is now supported"
 msgstr "Υποστηρίζεται πλέον η εισαγωγή αρχείων JPEG XL"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid ""
 "DDS export has new \"Flip\" (useful for some game engine) and \"Visible "
 "layers\" options"
@@ -178,22 +213,22 @@ msgstr ""
 "Η εξαγωγή DDS έχει τις νέες επιλογές \"Αναστροφή\" (χρήσιμη για ορισμένες "
 "μηχανές παιχνιδιών) και \"Ορατές στρώσεις\""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "Other improved format supports: BMP, DICOM, EPS, RAW, TGA, WebP"
 msgstr "Άλλες βελτιωμένες μορφές υποστήριξης: BMP, DICOM, EPS, RAW, TGA, WebP"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
 "The screenshot plug-in on Windows has now an option to capture the cursor"
 msgstr ""
 "Το πρόσθετο στιγμιοτύπου οθόνης στα Windows έχει τώρα μια επιλογή λήψης του "
 "δρομέα"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Several usability improvements in official themes and icons"
 msgstr "Αρκετές βελτιώσεις χρηστικότητας σε επίσημα θέματα και εικονίδια"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid ""
 "New support for localized glyphs ('locl') in Text tool depending on the "
 "value of the \"Language\" tool option"
@@ -201,15 +236,15 @@ msgstr ""
 "Νέα υποστήριξη για τοπικοποιημένες γλύφες (\"locl\") στο εργαλείο κειμένου "
 "ανάλογα με την τιμή της επιλογής του εργαλείου \"Γλώσσα\""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "More robust XCF import"
 msgstr "Πιο στιβαρή εισαγωγή XCF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "Several metadata handling improvements"
 msgstr "Αρκετές βελτιώσεις χειρισμού μεταδεδομένων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "GIMP 2.10.30 fixes many bugs, updates backend implementations to follow OS "
 "evolutions, improves metadata support as well as support of several formats, "
@@ -220,7 +255,7 @@ msgstr ""
 "βελτιώνει την υποστήριξη μεταδεδομένων καθώς και την υποστήριξη πολλών "
 "μορφών, όπως PSD και AVIF."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
@@ -228,7 +263,7 @@ msgstr ""
 "Το GIMP 2.10.28 διορθώνει ένα πρόβλημα κατασκευής του GIMP 2.10.26, όπου "
 "ορισμένα δεδομένα θέματος δεν εγκαταστάθηκαν σωστά."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
@@ -237,17 +272,17 @@ msgstr ""
 "δεκάδες διορθώσεις, τόσο σε πυρήνα, δέσμες ενεργειών όσο και σε πρόσθετο "
 "κώδικα."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr ""
 "Το GIMP 2.10.24 είναι κυρίως μια έκδοση διόρθωσης σφαλμάτων. Αξιοσημείωτες "
 "αλλαγές:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "GeoTIFF metadata support added"
 msgstr "Προστέθηκε υποστήριξη μεταδεδομένων GeoTIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
 "PDF import now proposes an option to load layers in reverse orders and "
 "allows fractional pixel density"
@@ -255,43 +290,43 @@ msgstr ""
 "Η εισαγωγή PDF προτείνει τώρα μια επιλογή φόρτωσης στρώσεων με αντίστροφη "
 "σειρά και επιτρέπει κλασματική πυκνότητα εικονοστοιχείου"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid ""
 "Raw image import updated to handle API changes in darktable 3.6 and over"
 msgstr ""
 "Η εισαγωγή ακατέργαστης εικόνας ενημερώθηκε για να διαχειριστεί τις αλλαγές "
 "API στο darktable 3.6 και πάνω"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
 "Βελτιωμένη υποστήριξη μορφής αρχείου: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, "
 "BMP, PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Many fixes and improvements to the metadata viewer and editor"
 msgstr ""
 "Πολλές διορθώσεις και βελτιώσεις στην προβολή μεταδεδομένων και την "
 "επεξεργασία"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "New Kabyle translation"
 msgstr "Νέα μετάφραση καμπίλε"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
 msgstr ""
 "Η προσκόλληση σημείου εκτός καμβά (σε πλέγμα, οδηγούς, μονοπάτια) έγινε "
 "δυνατή"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
 msgstr ""
 "Το GIMP 2.10.22 είναι κυρίως μια έκδοση διόρθωσης σφαλμάτων. Αξιοσημείωτες "
 "αλλαγές:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
@@ -299,23 +334,23 @@ msgstr ""
 "Βελτιώσεις υποστήριξης HEIF: προαιρετική εξαγωγή με υψηλό βάθος δυαδικών, "
 "βελτίωση και εξαγωγή AVIF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Multiple improvements in Corel PaintShop Pro support"
 msgstr "Πολλές βελτιώσεις στην υποστήριξη του Corel PaintShop Pro"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
 "Το \"συγχωνευμένο δείγμα\" είναι τώρα διαθέσιμο σε επιλογές εργαλείου "
 "λειτουργίας GEGL"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "\"Sample merged\" is now enabled by default for color picking"
 msgstr ""
 "Το \"συγχωνευμένο δείγμα\" είναι τώρα ενεργό από προεπιλογή για επιλογή "
 "χρώματος"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
@@ -323,7 +358,7 @@ msgstr ""
 "Η υποστήριξη ενεργοποίησης της επιλογής OpenCL έχει μετακινηθεί στην καρτέλα "
 "χώρου δοκιμών στις Προτιμήσεις"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
@@ -331,21 +366,21 @@ msgstr ""
 "Η αστιλβής Λέβιν είναι τώρα η προεπιλεγμένη μηχανή του εργαλείου επιλογής "
 "προσκηνίου, επειδή λειτουργεί πολύ καλύτερα"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid "New progressive performance logs and dashboard updates"
 msgstr "Νέες προοδευτικές καταγραφές απόδοσης και ενημερώσεις πίνακα οργάνων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr ""
 "Η αναλυτική αποσφαλμάτωση εμφανίζει τώρα πληροφορίες Flatpak, όταν είναι "
 "σχετικές"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid "Various bug fixes"
 msgstr "Διάφορες διορθώσεις σφαλμάτων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
@@ -353,13 +388,13 @@ msgstr ""
 "Το GIMP 2.10.20 έρχεται με νέα γνωρίσματα καθώς και σημαντικές διορθώσεις "
 "σφαλμάτων. Αξιοσημείωτες αλλαγές:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
 "Οι ομάδες εργαλείων επεκτείνονται τώρα σε κατάδειξη αντί για πάτημα από "
 "προεπιλογή"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
@@ -367,7 +402,7 @@ msgstr ""
 "Η μη καταστροφική περικοπή είναι τώρα διαθέσιμη περικόπτοντας τον καμβά αντί "
 "για τα ενεργά εικονοστοιχεία"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing "
 "channels in the right order"
@@ -375,20 +410,20 @@ msgstr ""
 "Καλύτερη υποστήριξη PSD: η εξαγωγή αρχείων 16 δυαδικών είναι τώρα διαθέσιμη, "
 "τα κανάλια ανάγνωσης/εγγραφής στη δεξιά διάταξη"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid "On-canvas controls for the Vignette filter"
 msgstr "Τα στοιχεία ελέγχου στον καμβά για το φίλτρο βινιέτας (Vignette)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr ""
 "Νέα φίλτρα: Άνθος (Bloom), θόλωση εστίασης, θόλωση φακών, μεταβλητή θόλωση"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "Over 30 bugfixes"
 msgstr "Πάνω από 30 διορθώσεις σφαλμάτων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
@@ -397,7 +432,7 @@ msgstr ""
 "για αρχεία PSD CMYK και προσθέτει μια παραλλαγή υψηλότερης αντίθεσης του "
 "θέματος συμβολικού εικονιδίου."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid ""
 "GIMP 2.10.16 delivers several major usability improvements, a new tool for "
 "transformations in 3D space, new release checker, and the usual amount of "
@@ -407,49 +442,49 @@ msgstr ""
 "νέο εργαλείο μετασχηματισμών σε τρισδιάστατο χώρο, νέο ελεγκτή έκδοσης και "
 "τις συνηθισμένες διορθώσεις σφαλμάτων. Αξιοσημείωτες βελτιώσεις:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid "Tools are now grouped in the toolbox by default"
 msgstr "Τα εργαλεία ομαδοποιούνται τώρα στην εργαλειοθήκη από προεπιλογή"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid "Sliders now use a compact style with improved user interaction"
 msgstr ""
 "Οι ολισθητήρες χρησιμοποιούν τώρα συμπαγή τεχνοτροπία με βελτιωμένη "
 "αλληλεπίδραση χρήστη"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 msgid "Vastly improved user experience for the transformation preview"
 msgstr "Πολύ βελτιωμένη εμπειρία χρήστη για την προεπισκόπηση μετασχηματισμού"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr ""
 "Οι προσαρτήσιμες περιοχές επισημαίνονται τώρα, όταν σύρεται προσαρτήσιμος "
 "διάλογος"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid "New 3D Transform tool to rotate and pan items"
 msgstr ""
 "Νέο τρισδιάστατο εργαλείο μετασχηματισμού για περιστροφή και μετακίνηση "
 "στοιχείων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid "Much smoother brush outline motion on the canvas"
 msgstr "Πολύ πιο ομαλή κίνηση περιγράμματος πινέλου στον καμβά"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr ""
 "Σταθεροποιημένη διεπαφή χρήστη για συγχώνευση προς τα κάτω και αγκίστρωση "
 "στρώσεων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid "Update check to notify users that a new release/installer is available"
 msgstr ""
 "Έλεγχος ενημέρωσης για να ειδοποιούνται οι χρήστες ότι υπάρχει διαθέσιμη νέα "
 "έκδοση/εγκαταστάτης"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid ""
 "GIMP 2.10.14 is again mostly a bug fix release, making GIMP rock-solid. "
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
@@ -459,7 +494,7 @@ msgstr ""
 "πολύ αξιόπιστο. Επιπλέον, πολλά παλιά φίλτρα μεταφέρθηκαν τελικά στο GEGL. "
 "Υπάρχουν και μερικές αξιοσημείωτες βελτιώσεις:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
@@ -467,57 +502,57 @@ msgstr ""
 "Μενού προβολής: νέα επιλογή \"Εμφάνιση όλων\" για την αποκάλυψη των "
 "εικονοστοιχείων έξω από τα όρια του καμβά"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
 msgstr ""
 "Φίλτρα: νέα επιλογή \"Περικοπής\" που επιτρέπει την αλλαγή μεγέθους της "
 "στρώσης όταν είναι σχετική"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
 msgstr ""
-"Εργαλείο επιλογής προσκηνίου: νέα κατάσταση προεπισκόπησης \"Γκρίζας κλίμακας"
-"\""
+"Εργαλείο επιλογής προσκηνίου: νέα κατάσταση προεπισκόπησης \"Γκρίζας "
+"κλίμακας\""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr ""
 "Εργαλείο επιλογής προσκηνίου: επιλογέας χρώματος/αδιαφάνειας για "
 "προεπισκόπηση \"χρώματος\""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid "Free Select tool: improved copy-paste interaction"
 msgstr ""
 "Εργαλείο ελεύθερης επιλογής: βελτιωμένη αλληλεπίδραση αντιγραφής-επικόλλησης"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid "Transform tools: new Image transform type to transform the whole image"
 msgstr ""
 "Εργαλεία μετασχηματισμού: νέος τύπος μετασχηματισμού εικόνας για "
 "μετασχηματισμό όλης της εικόνας"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
 msgstr ""
-"Προτιμήσεις: νέα ρύθμιση \"Να επιτρέπεται η επεξεργασία σε μη ορατές στρώσεις"
-"\""
+"Προτιμήσεις: νέα ρύθμιση \"Να επιτρέπεται η επεξεργασία σε μη ορατές "
+"στρώσεις\""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid "HEIF import/export: color profile support"
 msgstr "Εισαγωγή/Εξαγωγή HEIF: υποστήριξη χρωματικής κατατομής (προφίλ)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "PDF export: text layers in layer groups now exported as texts"
 msgstr ""
 "Εξαγωγή PDF: οι στρώσεις κειμένου σε ομάδες στρώσεων εξάγονται τώρα ως "
 "κείμενα"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "TIFF import: now asks how to process unspecified TIFF channels"
 msgstr ""
 "Εισαγωγή TIFF: τώρα ζητά τον τρόπο επεξεργασίας ακαθόριστων καναλιών TIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid ""
 "GIMP 2.10.12 is a significant bug fix release, which is to be expected after "
 "a 2.10.10 with so many changes! Still, very cool improvements are also "
@@ -527,31 +562,31 @@ msgstr ""
 "αναμένεται μετά το 2.10.10 με πολλές αλλαγές! Ακόμα, υπάρχουν εξαιρετικές "
 "βελτιώσεις, ιδιαίτερα στην επεξεργασία καμπυλών:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
 msgid "Improved curves interaction overall"
 msgstr "Βελτιωμένη γενική αλληλεπίδραση καμπυλών"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
 msgid "A few enhancements specific to the Curves tool"
 msgstr "Κάποιες βελτιώσεις ειδικά για το εργαλείο καμπυλών"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
 msgid "Layer support in TIFF"
 msgstr "Υποστήριξη στρώσης στο TIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
 msgid "Discovery of user-installed fonts in Windows"
 msgstr "Εύρεση των εγκατεστημένων γραμματοσειρών από τον χρήστη στα Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
 msgid "Incremental mode in the Dodge/Burn tool"
 msgstr "Κατάσταση σταδιακής αύξησης στο εργαλείο κάλυψη/κάψιμο"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
 msgid "Free Select tool creates preliminary selection"
 msgstr "Το εργαλείο ελεύθερης επιλογής δημιουργεί προκαταρκτική επιλογή"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
 msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
@@ -559,7 +594,7 @@ msgstr ""
 "Το GIMP 2.10.10 είναι μια σημαντική ενημέρωση με πολλά νέα γνωρίσματα και "
 "διορθώσεις σφαλμάτων. Σημαντικές βελτιώσεις περιλαμβάνουν:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
@@ -567,13 +602,13 @@ msgstr ""
 "Εργαλείο κουβάς γεμίσματος: νέο \"Γέμισμα κατά ανίχνευση γραμμικού σχεδίου\" "
 "για μη τέλεια κλειστές ζώνες γραμμικού σχεδίου"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr ""
-"Το εργαλείο κουβά γεμίσματος μπορεί τώρα να επιλέξει γρήγορα χρώμα με Ctrl"
-"+πάτημα"
+"Το εργαλείο κουβά γεμίσματος μπορεί τώρα να επιλέξει γρήγορα χρώμα με "
+"Ctrl+πάτημα"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
@@ -581,13 +616,13 @@ msgstr ""
 "Το εργαλείο γεμίσματος κουβά επιτρέπει το κράτημα του ποντικιού κατά το "
 "γέμισμα \"παρόμοιων χρωμάτων\" και \"κατά την ανίχνευση γραμμικού σχεδίου\""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid "Scale tool scales around center even when using numeric input"
 msgstr ""
 "Το εργαλείο κλιμάκωσης κλιμακώνει γύρω από το κέντρο ακόμα κι όταν "
 "χρησιμοποιείται αριθμητική είσοδος"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
@@ -595,7 +630,7 @@ msgstr ""
 "Το εργαλείο ενιαίου μετασχηματισμού προεπιλέγει τώρα τη διατήρηση της "
 "αναλογίας διαστάσεων κατά την κλιμάκωση προς τα πάνω ή τα κάτω"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
@@ -603,22 +638,22 @@ msgstr ""
 "Προσθήκη των επιλογών \"Περιορισμός λαβών\" και \"Γύρω από το κέντρο\" στο "
 "εργαλείο μετασχηματισμού προοπτικής της διεπαφής χρήστη"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr ""
 "Νέος γενικός τροποποιητής καμβά 'Alt + μεσαίο πάτημα' για επιλογή στρώσεων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid "Parametric brushes now 32-bit float to avoid posterization"
 msgstr ""
 "Τα παραμετρικά πινέλα είναι τώρα 32 δυαδικών κινητής υποδιαστολής για "
 "αποφυγή μείωσης των τόνων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid "Clipboard brushes and pattern can now be duplicated"
 msgstr "Τα πινέλα προχείρου και τα μοτίβα μπορούν τώρα να διπλασιαστούν"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
@@ -626,27 +661,27 @@ msgstr ""
 "Η αποτυχία επεξεργασίας κλειδωμένων στρώσεων θα αναβοσβήνει για να τραβά την "
 "προσοχή στην αιτία του σφάλματος"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
 msgstr ""
 "Νέες διεπαφές στον καμβά (απλές γραμμές) για κυκλική, γραμμική και κινητική "
 "εστίαση θόλωσης"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
 msgid "Several optimizations including faster layer group rendering"
 msgstr ""
 "Αρκετές βελτιστοποιήσεις που συμπεριλαμβάνουν πιο γρήγορη απόδοση ομάδας "
 "στρώσεων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr ""
 "Τα αρχεία εικονικής και κρυφής μνήμης δεν αποθηκεύονται πια στον κατάλογο "
 "διαμορφώσεων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
@@ -654,15 +689,15 @@ msgstr ""
 "Διάφορα αρχεία αποθήκευσης/εξαγωγής έγιναν πιο ανθεκτικά σε σφάλματα μη "
 "αποθηκεύοντας εν μέρει αρχεία"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
 msgid "HiDPI support improvements"
 msgstr "Βελτιώσεις υποστήριξης HiDPI"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid "New preference to choose the default export file type"
 msgstr "Νέα προτίμηση για επιλογή του προεπιλεγμένου τύπου αρχείου εξαγωγής"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
@@ -670,11 +705,11 @@ msgstr ""
 "Νέα επιλογή για εξαγωγή αρχείων PNG, JPEG και TIFF με χρωματική κατατομή "
 "(προφίλ)· εξαγωγή αρχείωνν PSD πάντα με χρωματική κατατομή"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
 msgid "New DDS format loading/exporting plug-in"
 msgstr "Νέα μορφή DDS φόρτωσης/εξαγωγής προσθέτων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
@@ -682,7 +717,7 @@ msgstr ""
 "Πλήρες ξαναγράψιμο του προσθέτου Spyrogimp με περισσότερες επιλογές και "
 "καλύτερη αλληλεπίδραση"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
@@ -690,7 +725,7 @@ msgstr ""
 "Το GIMP 2.10.8 είναι κυρίως μια έκδοση διόρθωσης σφαλμάτων και "
 "βελτιστοποίησης. Ειδικότερα, περιλαμβάνει:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
@@ -698,12 +733,12 @@ msgstr ""
 "Ευπροσάρμοστο μέγεθος τμήματος κατά την απόδοση προβολών, βελτίωση της "
 "δυναμικής ανταπροκρισιμότητας"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr ""
 "Η ανίχνευση του RawTherapee (έκδοση 5.5 και πάνω) βελτιώθηκε στα Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
@@ -711,7 +746,7 @@ msgstr ""
 "Οι πληροφορίες συμβατότητας XCF στον διάλογο αποθήκευσης έγιναν πιο "
 "κατανοητές και ανακαλύψιμες"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
@@ -719,7 +754,7 @@ msgstr ""
 "Έγιναν διαθέσιμα εργαλεία καταγραφής απόδοσης και καταγραφής εγγραφών στη "
 "προσάρτηση πίνακα εργαλείων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
@@ -727,7 +762,7 @@ msgstr ""
 "Το GIMP 2.10.6 έρχεται με πολλές διορθώσεις σφαλμάτων, βελτιστοποιήσεις και "
 "γνωρίσματα. Οι πιο σημαντικές αλλαγές είναι:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
@@ -735,17 +770,17 @@ msgstr ""
 "Οι στρώσεις κειμένου μπορούν τώρα να απεικονίζουν κατακόρυφα κείμενα (με "
 "διάφορους προσανατολισμούς χαρακτήρων και κατευθύνσεις γραμμών)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr ""
 "Το νέο φίλτρο \"Μικρός πλανήτης (Little Planet)\" (gegl:stereographic-"
 "projection (στερεογραφική προβολή))"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
 msgid "New \"Long Shadow\" filter"
 msgstr "Το νέο φίλτρο \"Μεγάλη σκιά\" (Long Shadow)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
@@ -753,7 +788,7 @@ msgstr ""
 "Η επιλογή \"Ευθυγράμμιση\" του εργαλείου μέτρησης επιτρέπει τώρα την "
 "κατακόρυφη ευθυγράμμιση"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
@@ -761,7 +796,7 @@ msgstr ""
 "Οι προεπισκοπήσεις σχεδίου αποδίδονται τώρα ασύγχρονα και οι προεπισκοπήσεις "
 "ομάδας στρώσεων μπορούν να απενεργοποιηθούν στις προτιμήσεις"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
@@ -770,17 +805,17 @@ msgstr ""
 "(διάφορα)\", εμφανίζει τον αριθμό των ασύγχρονων λειτουργιών που εκτελούνται "
 "τώρα"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 "Το φιλτράρισμα μορφής αρχείου στους διαλόγους Άνοιγμα/Αποθήκευση/Εξαγωγή "
 "έγινε λιγότερο πολύπλοκο"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr "Νέα γλώσσα (με μεταφρασμένες 81 γλώσσες τώρα στο GIMP): Μαράθι"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
@@ -788,7 +823,7 @@ msgstr ""
 "Το GIMP 2.10.4 περιλαμβάνει πολλές διορθώσεις σφαλμάτων καθώς και ποικίλες "
 "βελτιστοποιήσεις. Οι πιο σημαντικές αλλαγές είναι:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
@@ -796,12 +831,12 @@ msgstr ""
 "Ίσωμα στο εργαλείο μετρήσεων: οι στρώσεις μπορούν να περιστραφούν "
 "χρησιμοποιώντας τη γραμμή μετρήσεων ως ορίζοντα"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr ""
 "Γρήγορη εκκίνηση: η φόρτωση γραμματοσειρών δεν φράσσει την εκκίνηση πια"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
@@ -809,12 +844,12 @@ msgstr ""
 "Σήμανση γραμματοσειρών με την ίδια διεπαφή χρήστη όπως τα πινέλα, τα μοτίβα "
 "και οι διαβαθμίσεις"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
 "Υποστήριξη PSD: μπορεί να εισαχθεί μια προσυντεθείσα έκδοση εικόνας PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
@@ -822,7 +857,7 @@ msgstr ""
 "Ενημέρωση πίνακα εργαλείων: νέα ομάδα \"μνήμης\" και βελτιωμένη ομάδα "
 "\"εναλλαγής (Swap)\" που εμφανίζουν διάφορα μετρικά"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
@@ -832,7 +867,7 @@ msgstr ""
 "κυρίως η συνηθισμένη έκδοση διόρθωσης σφαλμάτων μετά από μια μείζονα έκδοση, "
 "με διόρθωση μερικών δεκάδων σφαλμάτων."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -844,7 +879,7 @@ msgstr ""
 "\"Κυκλικός μετασχηματισμός\". Αυτά είναι ωραία παραδείγματα της εμφάνισης "
 "της χαλαρής πολιτικής μας σε σταθερές μικροεκδόσεις."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
@@ -852,13 +887,13 @@ msgstr ""
 "Πρώτη έκδοση της σειράς 2.10 που αναδεικνύεται βασικά ως η θύρα σε μια νέα "
 "μηχανή επεξεργασίας εικόνας, την GEGL. Οι πιο σημαντικές αλλαγές είναι:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr ""
 "Επεξεργασία χρωματικού βάθους υψηλών δυαδικών (16/32 δυαδικά ανά χρωματικό "
 "κανάλι)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
@@ -866,35 +901,35 @@ msgstr ""
 "Η χρωματική διαχείριση είναι ένα κύριο γνώρισμα τώρα, τα περισσότερα γραφικά "
 "στοιχεία και οι περιοχές προεπισκόπησης διαχειρίζονται χρωματικά"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 "Προεπισκόπηση εφέ στον καμβά, με διαίρεση προβολής για εικονοστοιχεία "
 "επεξεργασίας πριν/μετά"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr "Πολυνηματική και επιταχυνόμενου υλικού απόδοση, επεξεργασία και βαφή"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
 msgid "Most tools improved, several new transformation tools"
 msgstr ""
 "Βελτίωση των περισσότερων εργαλείων, αρκετά νέα εργαλεία μετασχηματισμών"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
 "Βελτιωμένη υποστήριξη για πολλές μορφές εικόνας, ιδιαίτερα καλύτερη εισαγωγή "
 "PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "Νεοϋποστηριζόμενες μορφές εικόνων: OpenEXR, RGBE, WebP, HGT…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
@@ -902,24 +937,24 @@ msgstr ""
 "Βελτιωμένη ψηφιακή βαφή: περιστροφή και αναστροφή του καμβά, συμμετρική "
 "βαφή, πινέλα MyPaint…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr "Προβολή μεταδεδομένων και επεξεργασία για Exif, XMP, IPTC και DICOM"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 "Βασική υποστήριξη HiDPI: αυτόματο ή επιλεγμένο από τον χρήστη μέγεθος εικόνας"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "Νέα θέματα για το GIMP: Ανοιχτό, γκρίζο, σκούρο και συστήματος"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
 msgid "And much, much more…"
 msgstr "Και πολλά περισσότερα…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
@@ -930,7 +965,7 @@ msgstr ""
 "στην ταχύτητα και βελτιστοποίηση για να δοθεί μια πιο ομαλή εμπειρία βαφής. "
 "Οι μεγαλύτερες αλλαγές είναι:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
@@ -938,13 +973,13 @@ msgstr ""
 "Μεγάλες βασικές βελτιστοποιήσεις για βαφή και εμφάνιση, περιλαμβάνοντας "
 "παράλληλο κώδικα βαφής"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr ""
 "Οι συμμετρίες διατηρούνται τώρα σε αρχεία XCF (αποθηκευόμενες ως παράσιτα "
 "εικόνας)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
@@ -953,7 +988,7 @@ msgstr ""
 "απαλλαχτούν από διάφορα προβλήματα χρηστικότητας. Τα \"πιο ανοιχτά\" και τα "
 "\"πιο σκούρα\" θέματα αφαιρέθηκαν."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -963,7 +998,7 @@ msgstr ""
 "το παρόν για το φίλτρο προβολής πανοράματος. Το γραφικό στοιχείο παρέχει "
 "αλληλεπίδραση στον καμβά για 3Δ περιστροφή (ταλάντωση)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -973,9 +1008,9 @@ msgstr ""
 "στοιβών από πρόσθετα με την επιλογή γραμμής εντολής --stack-trace-mode όχι "
 "μόνο κατά την λήψη σημάτων, αλλά επίσης σε προειδοποιήσεις και κρίσιμα "
 "σφάλματα όταν ορίζεται το κλειδί αποσφαλμάτωσης \"προειδοποιήσεις κρίσιμων "
-"σφαλμάτων\" (fatal-warnings)."
+"σφαλμάτων\" (fatal-warnings)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -985,12 +1020,12 @@ msgstr ""
 "GIMP 2.10.0, με επίκεντρο την αποσφαλμάτωση και τη σταθερότητα. Εκτός από "
 "τις πολλές διορθώσεις σφαλμάτων, οι πιο σημαντικές βελτιώσεις είναι:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
 "Νέος προσαρτήσιμος πίνακας εργαλείων για παρακολούθηση χρήσης πόρων GIMP"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -998,36 +1033,36 @@ msgstr ""
 "Νέος διάλογος αποσφαλμάτωσης για να παράγονται ίχνη προς τα πίσω και άλλα "
 "δεδομένα αποσφαλμάτωσης, ενθαρρύνοντας την αναφορά σφαλμάτων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
 msgid "Unsaved images can now be recovered after a crash"
 msgstr ""
 "Οι μη αποθηκευμένες εικόνες μπορούν τώρα να ανακτηθούν μετά από κατάρρευση"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
 msgid "Layer masks on layer groups"
 msgstr "Μάσκες στρώσης σε ομάδες στρώσεων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "Η υποστήριξη των JPEG 2000 βελτιώθηκε για βάθος υψηλών δυαδικών και "
 "διάφορους χρωματικούς χώρους"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 "Το στιγμιότυπο και η επιλογή χρώματος βελτιώθηκε σε διάφορα λειτουργικά "
 "συστήματα"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
 msgid "Metadata defaults preferences now available"
 msgstr "Τώρα είναι διαθέσιμη η προεπιλογή προτιμήσεων μεταδεδομένων"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
 msgid "Various GUI polishing"
 msgstr "Εξωραϊσμός διάφορων GUI"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -1035,48 +1070,48 @@ msgstr ""
 "Το GIMP 2.9.8 εισάγει την επεξεργασία διαβάθμισης στον καμβά και διάφορες "
 "βελτιώσεις, ενώ εστιάζει στη διόρθωση σφαλμάτων και στη σταθερότητα."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
 msgid "On-canvas gradient editing"
 msgstr "Επεξεργασία διαβάθμισης στον καμβά"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
 msgid "Notification when an image is over/underexposed"
 msgstr "Ειδοποίηση όταν μια εικόνα είναι υπερ/υποεκτεθειμένη"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
 msgid "Better and faster color management"
 msgstr "Καλύτερη και γρηγορότερη διαχείριση χρώματος"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
 "Υποστήριξη για επιλογέα χρώματος και στιγμιότυπα στο Wayland στο KDE Plasma"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
 msgid "Paste in place feature"
 msgstr "Χαρακτηριστικό επιτόπιας επικόλλησης"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:170
 msgid "Many usability improvements"
 msgstr "Πολλές βελτιώσεις χρηστικότητας"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:171
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "Το εγχειρίδιο μπορεί να εμφανιστεί στην προτιμώμενη γλώσσα του χρήστη"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:172
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Βελτιώσεις για το φίλτρο αποσύνθεσης κυματομορφής"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:173
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Βελτιωμένη συμβατότητα με αρχεία Photoshop .psd"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:174
 msgid "New support for password-protected PDF"
 msgstr "Νέα υποστήριξη για προστατευόμενα με κωδικό πρόσβασης PDF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:175
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Νέα υποστήριξη για μορφή HGT (Digital Elevation Model data)"
 
@@ -1142,7 +1177,7 @@ msgstr ""
 "λεπτομέρειες.\n"
 "\n"
 "Θα πρέπει να έχετε λάβει ένα αντίγραφο της Γενικής Δημόσιας Άδειας GNU μαζί "
-"με αυτό το πρόγραμμα. Αν όχι, δείτε στο  https://www.gnu.org/licenses/."
+"με αυτό το πρόγραμμα. Αν όχι, δείτε στο  https://www.gnu.org/licenses/"
 
 #: ../app/gimp-update.c:415
 #, c-format
@@ -1266,11 +1301,11 @@ msgstr "Να εμφανίζεται μια σελίδα προτιμήσεων �
 msgid "Show an image submenu with debug actions"
 msgstr "Εμφάνιση υπομενού εικόνας με ενέργειες αποσφαλμάτωσης"
 
-#: ../app/main.c:598
+#: ../app/main.c:620
 msgid "[FILE|URI...]"
 msgstr "[ΑΡΧΕΙΟ|URI…]"
 
-#: ../app/main.c:616
+#: ../app/main.c:638
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1278,22 +1313,22 @@ msgstr ""
 "Το GIMP δεν μπορεί να εκκινήσει το γραφικό περιβάλλον χρήστη.\n"
 "Βεβαιωθείτε ότι διαθέτετε εγκατάσταση κατάλληλη για την οθόνη σας."
 
-#: ../app/main.c:635
+#: ../app/main.c:657
 msgid "Another GIMP instance is already running."
 msgstr "Κάποιο άλλο στιγμιότυπο του GIMP εκτελείται ήδη."
 
-#: ../app/main.c:726
+#: ../app/main.c:748
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 "Έξοδος GIMP. Πληκτρολογήστε οποιοδήποτε χαρακτήρα για να κλείσετε το "
 "παράθυρο."
 
-#: ../app/main.c:727
+#: ../app/main.c:749
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Πληκτρολογήστε οποιοδήποτε χαρακτήρα για να κλείσετε το παράθυρο)\n"
 
-#: ../app/main.c:744
+#: ../app/main.c:766
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "Έξοδος GIMP. Μπορείτε να ελαχιστοποιήσετε αυτό το παράθυρο, αλλά μην το "
@@ -3620,7 +3655,7 @@ msgstr ""
 #: ../app/actions/data-commands.c:116 ../app/actions/tool-options-commands.c:75
 #: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2195
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
-#: ../app/core/gimppalette-load.c:194
+#: ../app/core/gimppalette-load.c:202
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
 msgid "Untitled"
 msgstr "Άτιτλο"
@@ -10817,8 +10852,8 @@ msgstr "Διατήρηση συμπληρώματος στην κατάστασ�
 msgctxt "view-padding-color"
 msgid "Keep canvas padding when \"View -> Show All\" is enabled"
 msgstr ""
-"Διατήρηση συμπληρώματος καμβά όταν είναι ενεργό το \"Προβολή -> Εμφάνιση όλων"
-"\""
+"Διατήρηση συμπληρώματος καμβά όταν είναι ενεργό το \"Προβολή -> Εμφάνιση "
+"όλων\""
 
 #: ../app/actions/view-actions.c:645
 msgctxt "view-action"
@@ -11359,8 +11394,8 @@ msgstr "Μονοπάτι"
 #: ../app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "Όταν ενεργοποιηθεί, μια εικόνα θα γίνει η ενεργή εικόνα όταν το παράθυρο της "
 "εικόνας της εστιαστεί. Χρήσιμο για τους διαχειριστές παραθύρων που "
@@ -11862,8 +11897,8 @@ msgid ""
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
 "Όταν ενεργοποιηθεί, οι γραμμές κύλισης θα είναι ορατές από προεπιλογή. Αυτό "
-"μπορεί επίσης να εναλλαχτεί από την εντολή \"Προβολή→Εμφάνιση γραμμών κύλισης"
-"\"."
+"μπορεί επίσης να εναλλαχτεί από την εντολή \"Προβολή→Εμφάνιση γραμμών "
+"κύλισης\"."
 
 #: ../app/config/gimprc-blurbs.h:424
 msgid ""
@@ -13391,29 +13426,33 @@ msgstr "Επικολλημένη στρώση"
 msgid "Global Buffer"
 msgstr "Καθολική μνήμη"
 
-#: ../app/core/gimp-gradients.c:64
+#: ../app/core/gimp-gradients.c:65
 msgid "Custom"
 msgstr "Προσαρμοσμένες"
 
-#: ../app/core/gimp-gradients.c:74
+#: ../app/core/gimp-gradients.c:75
 msgid "FG to BG (RGB)"
 msgstr "Προσκήνιο σε παρασκήνιο (RGB)"
 
-#: ../app/core/gimp-gradients.c:82
+#: ../app/core/gimp-gradients.c:83
 msgid "FG to BG (Hardedge)"
 msgstr "Προσκήνιο σε παρασκήνιο (σκληρές άκρες)"
 
-#: ../app/core/gimp-gradients.c:90
+#: ../app/core/gimp-gradients.c:91
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "Προσκήνιο σε παρασκήνιο (HSV αριστερόστροφα)"
 
-#: ../app/core/gimp-gradients.c:98
+#: ../app/core/gimp-gradients.c:99
 msgid "FG to BG (HSV clockwise hue)"
 msgstr "Προσκήνιο σε παρασκήνιο (HSV δεξιόστροφη απόχρωση)"
 
-#: ../app/core/gimp-gradients.c:106
+#: ../app/core/gimp-gradients.c:107
 msgid "FG to Transparent"
 msgstr "Προσκήνιο σε διαφάνεια"
+
+#: ../app/core/gimp-gradients.c:114
+msgid "FG to Transparent (Hardedge)"
+msgstr "Προσκήνιο σε διαφανές (Σκληρή άκρη)"
 
 #. Translator:  This message is displayed while GIMP is waiting for
 #. * some operation to finish.  The %s argument is a message describing
@@ -15081,27 +15120,27 @@ msgstr "%s (συμβαίνει με %u)"
 msgid "Index %d"
 msgstr "Δείκτης %d"
 
-#: ../app/core/gimppalette-import.c:547
+#: ../app/core/gimppalette-import.c:555
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Άγνωστος τύπος αρχείου παλέτας: %s"
 
-#: ../app/core/gimppalette-load.c:71
+#: ../app/core/gimppalette-load.c:79
 #, c-format
 msgid "Missing magic header."
 msgstr "Λείπει η μαγική κεφαλίδα."
 
-#: ../app/core/gimppalette-load.c:94
+#: ../app/core/gimppalette-load.c:102
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Μη έγκυρη συμβολοσειρά UTF-8 στο αρχείο παλέτας '%s'"
 
-#: ../app/core/gimppalette-load.c:114
+#: ../app/core/gimppalette-load.c:122
 #, c-format
 msgid "Invalid column count."
 msgstr "Άκυρο πλήθος στηλών."
 
-#: ../app/core/gimppalette-load.c:121
+#: ../app/core/gimppalette-load.c:129
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -15110,48 +15149,134 @@ msgstr ""
 "Ανάγνωση αρχείου παλέτας '%s': Μη έγκυρος αριθμός στηλών στη γραμμή %d. Θα "
 "χρησιμοποιηθεί η προεπιλεγμένη τιμή."
 
-#: ../app/core/gimppalette-load.c:155
+#: ../app/core/gimppalette-load.c:163
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr ""
 "Ανάγνωση αρχείου παλέτας '%s': Λείπει το συστατικό ΚΟΚΚΙΝΟ στη γραμμή %d."
 
-#: ../app/core/gimppalette-load.c:163
+#: ../app/core/gimppalette-load.c:171
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr ""
 "Ανάγνωση αρχείου παλέτας '%s': Λείπει το συστατικό ΠΡΑΣΙΝΟ στη γραμμή %d."
 
-#: ../app/core/gimppalette-load.c:171
+#: ../app/core/gimppalette-load.c:179
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr ""
 "Ανάγνωση αρχείου παλέτας '%s': Λείπει το συστατικό ΓΑΛΑΖΙΟ στη γραμμή %d."
 
-#: ../app/core/gimppalette-load.c:181
+#: ../app/core/gimppalette-load.c:189
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "Ανάγνωση αρχείου παλέτας '%s': Τιμή RGB εκτός ορίων στη γραμμή %d."
 
-#: ../app/core/gimppalette-load.c:209 ../app/core/gimppalette-load.c:454
+#: ../app/core/gimppalette-load.c:217 ../app/core/gimppalette-load.c:462
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr ""
 "Ανάγνωση αρχείου παλέτας '%s': Ανάγνωση %d χρωμάτων από κολοβό αρχείο: %s"
 
-#: ../app/core/gimppalette-load.c:231
+#: ../app/core/gimppalette-load.c:239
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "Στη γραμμή %d του αρχείου παλέτας: "
 
-#: ../app/core/gimppalette-load.c:427
+#: ../app/core/gimppalette-load.c:435 ../app/core/gimppalette-load.c:619
+#: ../app/core/gimppalette-load.c:962
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Αδύνατη η ανάγνωση της κεφαλίδας από αρχείο παλέτας '%s': "
 
-#: ../app/core/gimppalette-load.c:459
+#: ../app/core/gimppalette-load.c:467
 msgid "Premature end of file."
 msgstr "Πρόωρο τέλος αρχείου."
+
+#: ../app/core/gimppalette-load.c:628
+msgid "Invalid ACB palette version."
+msgstr "Άκυρη έκδοση παλέτας ACB."
+
+#: ../app/core/gimppalette-load.c:634
+msgid "GIMP only supports version 1 ACB palettes"
+msgstr "Το GIMP υποστηρίζει μόνο παλέτες ACB έκδοσης 1"
+
+#: ../app/core/gimppalette-load.c:641
+msgid "Invalid ACB palette identifier."
+msgstr "Άκυρο αναγνωριστικό παλέτας ACB."
+
+#: ../app/core/gimppalette-load.c:656 ../app/core/gimppalette-load.c:895
+#: ../app/core/gimppalette-load.c:916
+#, c-format
+msgid "Invalid ACB palette name."
+msgstr "Άκυρο όνομα παλέτας ACB."
+
+#: ../app/core/gimppalette-load.c:674
+msgid "Invalid ACB palette prefix."
+msgstr "Άκυρο πρόθεμα παλέτας ACB."
+
+#: ../app/core/gimppalette-load.c:689
+msgid "Invalid ACB palette suffix."
+msgstr "Άκυρο επίθημα παλέτας ACB."
+
+#: ../app/core/gimppalette-load.c:707 ../app/core/gimppalette-load.c:981
+msgid "Invalid number of colors in palette."
+msgstr "Άκυρος αριθμός χρωμάτων στην παλέτα."
+
+#: ../app/core/gimppalette-load.c:713 ../app/core/gimppalette-load.c:987
+#, c-format
+msgid "Invalid number of colors: %s."
+msgstr "Άκυρος αριθμός χρωμάτων: %s."
+
+#: ../app/core/gimppalette-load.c:725 ../app/core/gimppalette-load.c:734
+msgid "Invalid ACB palette page info."
+msgstr "Άκυρες πληροφορίες σελίδας παλέτας ACB."
+
+#: ../app/core/gimppalette-load.c:745 ../app/core/gimppalette-load.c:767
+msgid "Invalid ACB palette color space."
+msgstr "Άκυρος χρωματικός χώρος παλέτας ACB."
+
+#: ../app/core/gimppalette-load.c:905
+#, c-format
+msgid "Invalid ACB name size."
+msgstr "Άκυρο μέγεθος ονόματος ACB."
+
+#: ../app/core/gimppalette-load.c:972
+#, c-format
+msgid "Invalid ASE header: %s"
+msgstr "Άκυρη κεφαλίδα ASE: %s"
+
+#
+#: ../app/core/gimppalette-load.c:997
+#, c-format
+msgid "Invalid ASE file: %s."
+msgstr "Άκυρο αρχείο ASE: %s."
+
+#: ../app/core/gimppalette-load.c:1075
+#, c-format
+msgid "Invalid color components: %s."
+msgstr "Άκυρα στοιχεία χρώματος: %s."
+
+#: ../app/core/gimppalette-load.c:1089 ../app/core/gimppalette-load.c:1116
+#, c-format
+msgid "Invalid ASE color entry: %s."
+msgstr "Άκυρη καταχώριση χρώματος ASE: %s."
+
+#: ../app/core/gimppalette-load.c:1144 ../app/core/gimppalette-load.c:1160
+#: ../app/core/gimppalette-load.c:1179
+#, c-format
+msgid "Invalid ASE palette name."
+msgstr "Άκυρο όνομα παλέτας ASE."
+
+#: ../app/core/gimppalette-load.c:1153
+#, c-format
+msgid "Invalid ASE block size."
+msgstr "Άκυρο μέγεθος μπλοκ ASE."
+
+#: ../app/core/gimppalette-load.c:1169
+#, c-format
+msgid "Invalid ASE name size."
+msgstr "Άκυρο μέγεθος ονόματος ASE."
 
 #: ../app/core/gimppalettemru.c:123 ../app/core/gimppalettemru.c:229
 msgid "History Color"
@@ -19096,7 +19221,7 @@ msgstr "Πάτημα και μεταφορά για περιστροφή και 
 
 #: ../app/display/gimptoolhandlegrid.c:902
 msgid "Click-Drag to shear and scale"
-msgstr "Πάτημα και μεταφορά για στρέβλωση και κλιμάκωση"
+msgstr "Πάτημα και μεταφορά για διάτμηση και κλιμάκωση"
 
 #: ../app/display/gimptoolhandlegrid.c:905
 #: ../app/display/gimptooltransformgrid.c:1820
@@ -19339,13 +19464,13 @@ msgstr ""
 "Πάτημα και μεταφορά προσθέτει ένα ελεύθερο τμήμα, το πάτημα προσθέτει ένα "
 "πολυγωνικό τμήμα"
 
-#: ../app/display/gimptoolrectangle.c:569
-#: ../app/display/gimptoolrectangle.c:877
+#: ../app/display/gimptoolrectangle.c:577
+#: ../app/display/gimptoolrectangle.c:886
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Ορθογώνιο: "
 
-#: ../app/display/gimptoolrectangle.c:2141
+#: ../app/display/gimptoolrectangle.c:2167
 msgid "Position: "
 msgstr "Θέση: "
 
@@ -19364,7 +19489,7 @@ msgstr "Πάτημα και μεταφορά για μετακίνηση του 
 
 #: ../app/display/gimptooltransformgrid.c:1839
 msgid "Click-Drag to shear"
-msgstr "Πάτημα και μεταφορά για στρέβλωση"
+msgstr "Πάτημα και μεταφορά για διάτμηση"
 
 #
 #: ../app/file/file-open.c:137 ../app/file/file-save.c:127
@@ -20960,7 +21085,7 @@ msgstr "Προοπτική"
 #: ../app/pdb/item-transform-cmds.c:739 ../app/pdb/transform-tools-cmds.c:450
 #: ../app/tools/gimpsheartool.c:112
 msgid "Shearing"
-msgstr "Στρέβλωση"
+msgstr "Διάτμηση"
 
 #: ../app/pdb/drawable-transform-cmds.c:1224
 #: ../app/pdb/item-transform-cmds.c:849 ../app/pdb/transform-tools-cmds.c:545
@@ -21238,7 +21363,7 @@ msgid ""
 "expected"
 msgstr ""
 "Η εικόνα '%s' (%d) έχει ακρίβεια '%s', ενώ αναμενόταν μια εικόνα ακρίβειας "
-"'%s'."
+"'%s'"
 
 #: ../app/pdb/gimppdb-utils.c:766
 #, c-format
@@ -21331,14 +21456,14 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"Η διαδικασία '%s' επέστρεψε λάθος τύπο τιμής για την τιμή επιστροφής '%s' (#"
-"%d). Αναμενόταν %s, ελήφθη %s."
+"Η διαδικασία '%s' επέστρεψε λάθος τύπο τιμής για την τιμή επιστροφής "
+"'%s' (#%d). Αναμενόταν %s, ελήφθη %s."
 
 #: ../app/pdb/gimpprocedure.c:765
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
 "Η διαδικασία '%s' κλήθηκε με λάθος τύπο τιμής για το όρισμα '%s' (#%d). "
 "Αναμενόταν %s, ελήφθη %s."
@@ -23506,11 +23631,11 @@ msgstr "_Λειτουργία GEGL..."
 msgid "Select an operation from the list above"
 msgstr "Επιλογή λειτουργίας από την παραπάνω λίστα"
 
-#: ../app/tools/gimpgenerictransformtool.c:101
+#: ../app/tools/gimpgenerictransformtool.c:99
 msgid "Transform Matrix"
 msgstr "Πίνακας μετασχηματισμού"
 
-#: ../app/tools/gimpgenerictransformtool.c:135
+#: ../app/tools/gimpgenerictransformtool.c:119
 msgid "Invalid transform"
 msgstr "Άκυρος μετασχηματισμός"
 
@@ -24652,51 +24777,51 @@ msgstr "Αδυναμία τομής με κενή επιλογή."
 #: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:597
 #: ../app/tools/gimptransformgridoptions.c:606
 msgid "Shear"
-msgstr "Στρέβλωση"
+msgstr "Διάτμηση"
 
 #: ../app/tools/gimpsheartool.c:89
 msgid "Shear Tool: Shear the layer, selection or path"
-msgstr "Στρέβλωση: Στρεβλώστε στρώση, επιλογή ή μονοπάτι"
+msgstr "Έργαλείο διάτμησης: Διάτμηση στρώσης, επιλογής ή μονοπατιού"
 
 #: ../app/tools/gimpsheartool.c:90
 msgid "S_hear"
-msgstr "Στ_ρέβλωση"
+msgstr "Διάτμ_ηση"
 
 #: ../app/tools/gimpsheartool.c:111
 msgctxt "undo-type"
 msgid "Shear"
-msgstr "Στρέβλωση"
+msgstr "Διάτμηση"
 
 #: ../app/tools/gimpsheartool.c:113
 msgid "_Shear"
-msgstr "_Στρέβλωση"
+msgstr "_Διάτμηση"
 
 #: ../app/tools/gimpsheartool.c:163
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g"
-msgstr "Οριζόντια στρέβλωση κατά %-3.3g"
+msgstr "Οριζόντια διάτμηση κατά %-3.3g"
 
 #: ../app/tools/gimpsheartool.c:167
 #, c-format
 msgctxt "undo-type"
 msgid "Shear vertically by %-3.3g"
-msgstr "Κάθετη στρέβλωση κατά %-3.3g"
+msgstr "Κάθετη διάτμηση κατά %-3.3g"
 
 #. e.g. user entered numbers but no notification callback
 #: ../app/tools/gimpsheartool.c:172
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g, vertically by %-3.3g"
-msgstr "Οριζόντια στρέβλωση κατά %-3.3g, κάθετη κατά %-3.3g"
+msgstr "Οριζόντια διάτμηση κατά %-3.3g, κάθετη κατά %-3.3g"
 
 #: ../app/tools/gimpsheartool.c:191
 msgid "Shear magnitude _X"
-msgstr "Βαθμός στρέβλωσης _X"
+msgstr "Βαθμός διάτμησης _X"
 
 #: ../app/tools/gimpsheartool.c:202
 msgid "Shear magnitude _Y"
-msgstr "Βαθμός στρέβλωσης _Υ"
+msgstr "Βαθμός διάτμησης _Υ"
 
 #: ../app/tools/gimpsmudgetool.c:56
 msgid "Smudge Tool: Smudge selectively using a brush"
@@ -25017,7 +25142,7 @@ msgstr "Περιορισμός περιστροφής σε βήματα 15 μο�
 #: ../app/tools/gimptransformgridoptions.c:598
 #, c-format
 msgid "Shear along edge direction only (%s)"
-msgstr "Στρέβλωση μόνο κατά μήκος της κατεύθυνσης άκρης (%s)"
+msgstr "Διάτμηση μόνο κατά μήκος της κατεύθυνσης άκρης (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:600
 #, c-format
@@ -25039,7 +25164,7 @@ msgstr "Κλιμάκωση από το σημείο περιστροφής (%s)"
 #: ../app/tools/gimptransformgridoptions.c:607
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
-msgstr "Στρέβλωση αντίθετης άκρης κατά την ίδια ποσότητα (%s)"
+msgstr "Διάτμηση αντίθετης άκρης κατά την ίδια ποσότητα (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:609
 #, c-format
@@ -25305,7 +25430,7 @@ msgstr "Μ_ονοπάτια"
 
 #: ../app/tools/gimpvectortool.c:733
 msgid "There is no active layer or channel to fill"
-msgstr "Δεν υπάρχει ενεργή στρώση ή κανάλι για γέμισμα."
+msgstr "Δεν υπάρχει ενεργή στρώση ή κανάλι για γέμισμα"
 
 #: ../app/tools/gimpvectortool.c:805
 msgid "There is no active layer or channel to stroke to"
@@ -25965,7 +26090,7 @@ msgstr "Χρώμα (C*:)"
 #: ../app/widgets/gimpcolorframe.c:888
 msgctxt "LCH color space"
 msgid "h°:"
-msgstr "Απόχρωση (h°:)"
+msgstr "απόχρωση (h°:)"
 
 #. TRANSLATORS: L* for Lightness (Lab color space)
 #: ../app/widgets/gimpcolorframe.c:916
@@ -26824,7 +26949,7 @@ msgstr "Αριθμός των ενεργών νημάτων εργασίας"
 #: ../app/widgets/gimpdashboard.c:738
 msgctxt "dashboard-variable"
 msgid "Async"
-msgstr "Ασύγχρ."
+msgstr "Ασύγχρ"
 
 #: ../app/widgets/gimpdashboard.c:739
 msgid "Number of ongoing asynchronous operations"
@@ -26915,17 +27040,17 @@ msgid "Select fields"
 msgstr "Επιλογή πεδίων"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3335
+#: ../app/widgets/gimpdashboard.c:3342
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Μη διαθέσιμη"
 
-#: ../app/widgets/gimpdashboard.c:3344 ../app/widgets/gimpdashboard.c:4347
+#: ../app/widgets/gimpdashboard.c:3351 ../app/widgets/gimpdashboard.c:4354
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Ναι"
 
-#: ../app/widgets/gimpdashboard.c:3345 ../app/widgets/gimpdashboard.c:4348
+#: ../app/widgets/gimpdashboard.c:3352 ../app/widgets/gimpdashboard.c:4355
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Όχι"
@@ -26934,7 +27059,7 @@ msgstr "Όχι"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3429
+#: ../app/widgets/gimpdashboard.c:3436
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -26945,16 +27070,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4337
+#: ../app/widgets/gimpdashboard.c:4344
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:4415
+#: ../app/widgets/gimpdashboard.c:4422
 msgid "N/A"
 msgstr "Μη διαθέσιμη"
 
-#: ../app/widgets/gimpdashboard.c:4793
+#: ../app/widgets/gimpdashboard.c:4800
 msgid "Resolving symbol information..."
 msgstr "Επίλυση πληροφοριών συμβόλου..."
 
@@ -27604,7 +27729,7 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "χρώματα"
 
-#: ../app/widgets/gimpitemtreeview.c:763
+#: ../app/widgets/gimpitemtreeview.c:765
 msgid "Lock:"
 msgstr "Κλείδωμα:"
 
