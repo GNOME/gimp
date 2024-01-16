@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-12-30 16:29+0100\n"
-"PO-Revision-Date: 2024-01-07 03:48+0100\n"
+"PO-Revision-Date: 2024-01-16 13:55+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -5938,12 +5938,9 @@ msgid "_Paths"
 msgstr "_Tracciati"
 
 #: ../plug-ins/common/file-svg.c:206
-#, fuzzy
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
-msgstr ""
-"Importa i tracciati dal file SVG in modo da poterli usare con lo strumento "
-"tracciati di GIMP"
+msgstr "Se e come importare i tracciati in modo che possano essere utilizzati con lo strumento tracciati"
 
 #: ../plug-ins/common/file-svg.c:207
 msgid "Don't import paths"
@@ -6714,79 +6711,64 @@ msgid "Image _height"
 msgstr "_Altezza immagine"
 
 #: ../plug-ins/common/film.c:246
-#, fuzzy
 msgid "As fraction of the strip height"
-msgstr "Tutti i valori sono frazioni dell'altezza pellicola"
+msgstr "Come frazione dell'altezza pellicola"
 
 #: ../plug-ins/common/film.c:251
-#, fuzzy
 msgid "Image s_pacing"
-msgstr "_Spaziatura immagini:"
+msgstr "_Spaziatura immagini"
 
 #: ../plug-ins/common/film.c:252
-#, fuzzy
 msgid "The spacing between 2 images, as fraction of the strip height"
-msgstr "Tutti i valori sono frazioni dell'altezza pellicola"
+msgstr "La spaziatura tra 2 immagini, come frazione dell'altezza pellicola"
 
 #: ../plug-ins/common/film.c:257
-#, fuzzy
 msgid "Hole offse_t"
-msgstr "Spostamento b_uchi:"
+msgstr "Scos_tamento fori"
 
 #: ../plug-ins/common/film.c:258
-#, fuzzy
 msgid "The offset from the edge of film, as fraction of the strip height"
-msgstr "La distanza dal centro dell'immagine determina la direzione del tratto"
+msgstr "La distanza dal bordo, come frazione dell'altezza della pellicola"
 
 #: ../plug-ins/common/film.c:263
-#, fuzzy
 msgid "Hole _width"
-msgstr "Larg_hezza buchi:"
+msgstr "Larg_hezza fori"
 
 #: ../plug-ins/common/film.c:264
-#, fuzzy
 msgid "The width of the holes, as fraction of the strip height"
-msgstr "Tutti i valori sono frazioni dell'altezza pellicola"
+msgstr "La larghezza dei fori, come frazione dell'altezza pellicola"
 
 #: ../plug-ins/common/film.c:269
-#, fuzzy
 msgid "Hole hei_ght"
-msgstr "Alt_ezza buchi:"
+msgstr "Altezza _fori"
 
 #: ../plug-ins/common/film.c:270
-#, fuzzy
 msgid "The height of the holes, as fraction of the strip height"
-msgstr "Tutti i valori sono frazioni dell'altezza pellicola"
+msgstr "L'altezza dei fori, come frazione dell'altezza pellicola"
 
 #: ../plug-ins/common/film.c:275
-#, fuzzy
 msgid "Hole _distance"
-msgstr "Distanza:"
+msgstr "_Distanza fori"
 
 #: ../plug-ins/common/film.c:276
-#, fuzzy
 msgid "The distance between holes, as fraction of the strip height"
-msgstr "Tutti i valori sono frazioni dell'altezza pellicola"
+msgstr "La distanza tra fori, come frazione dell'altezza pellicola"
 
 #: ../plug-ins/common/film.c:281
-#, fuzzy
 msgid "_Number height"
-msgstr "Altezza _numeri:"
+msgstr "Altezza _numeri"
 
 #: ../plug-ins/common/film.c:282
-#, fuzzy
 msgid "The height of drawn numbers, as fraction of the strip height"
-msgstr "Tutti i valori sono frazioni dell'altezza pellicola"
+msgstr "L'altezza dei numeri disegnati, come frazione dell'altezza pellicola"
 
 #: ../plug-ins/common/film.c:289
-#, fuzzy
 msgid "F_it height to images"
-msgstr "_Adatta altezza alle immagini"
+msgstr "Adatta altezza alle _immagini"
 
 #: ../plug-ins/common/film.c:290
-#, fuzzy
 msgid "Keep maximum image height"
-msgstr "Altezza ma_ssima:"
+msgstr "Mantieni altezza massima immagine"
 
 #: ../plug-ins/common/film.c:365
 msgid "Composing images"
@@ -6794,7 +6776,7 @@ msgstr "Composizione immagini"
 
 #: ../plug-ins/common/film.c:700
 msgid "\"Filmstrip\" cannot be run without any input images"
-msgstr ""
+msgstr "\"Pellicola\" non può essere eseguito senza immagini in ingresso"
 
 #: ../plug-ins/common/film.c:970
 msgid "Available images:"
@@ -7031,25 +7013,23 @@ msgstr "Stile pezzi"
 
 #: ../plug-ins/common/jigsaw.c:426
 msgid "The style/shape of the jigsaw puzzle { Square (0), Curved (1) }"
-msgstr ""
+msgstr "Lo stile/forma del puzzle { quadrato (0), curvo (1) }"
 
 #: ../plug-ins/common/jigsaw.c:432
-#, fuzzy
 msgid "_Blend width"
-msgstr "Larg_hezza buchi:"
+msgstr "_Larghezza fusione"
 
 #: ../plug-ins/common/jigsaw.c:433
 msgid "Degree of slope of each piece's edge"
 msgstr "Grado di decadimento dei contorni di ogni pezzo"
 
 #: ../plug-ins/common/jigsaw.c:438
-#, fuzzy
 msgid "Hi_ghlight"
-msgstr "Intensità luce:"
+msgstr "_Alteluci"
 
 #: ../plug-ins/common/jigsaw.c:439
 msgid "The amount of highlighting on the edges of each piece"
-msgstr "Ammontare della luminosità ai contorni di ogni pezzo"
+msgstr "Ammontare delle alteluci ai contorni di ogni pezzo"
 
 #: ../plug-ins/common/jigsaw.c:483
 msgid "Assembling jigsaw"
@@ -7058,7 +7038,7 @@ msgstr "Creazione puzzle"
 #: ../plug-ins/common/jigsaw.c:707
 #, c-format
 msgid "draw_jigsaw: bad style\n"
-msgstr ""
+msgstr "draw_jigsaw: stile errato\n"
 
 #: ../plug-ins/common/jigsaw.c:2470
 msgid "Jigsaw"
@@ -8499,32 +8479,28 @@ msgid "Create an image of a webpage"
 msgstr "Crea un'immagine di una pagina Web"
 
 #: ../plug-ins/common/web-page.c:139
-#, fuzzy
 msgid "Enter location (_URI)"
-msgstr "Inserire posizione (URI):"
+msgstr "Inserire posizione (_URI)"
 
 #: ../plug-ins/common/web-page.c:140
 msgid "URL of the webpage to screenshot"
-msgstr ""
+msgstr "URL della pagina web da fotografare"
 
 #: ../plug-ins/common/web-page.c:145
-#, fuzzy
 msgid "_Width (pixels)"
-msgstr "_Larghezza (pixel):"
+msgstr "_Larghezza (pixel)"
 
 #: ../plug-ins/common/web-page.c:146
-#, fuzzy
 msgid "The width of the screenshot (in pixels)"
-msgstr "Dopo il ritardo verrà catturata la schermata."
+msgstr "La larghezza della schermata (in pixel)"
 
 #: ../plug-ins/common/web-page.c:151
-#, fuzzy
 msgid "_Font size"
-msgstr "Dimensione carattere:"
+msgstr "Dimensione _font"
 
 #: ../plug-ins/common/web-page.c:152
 msgid "The font size to use in the page (in pt)"
-msgstr ""
+msgstr "La dimensione del carattere da usare nella pagina (in pt)"
 
 #: ../plug-ins/common/web-page.c:214
 msgid "Create from webpage"
@@ -8669,24 +8645,20 @@ msgid "Windows BMP image"
 msgstr "Immagine BMP Windows"
 
 #: ../plug-ins/file-bmp/bmp.c:158 ../plug-ins/file-bmp/bmp.c:159
-#, fuzzy
 msgid "Loads files of Windows BMP file format"
-msgstr "Carica file in formato JPEG XL"
+msgstr "Carica file in formato BMP di Windows"
 
 #: ../plug-ins/file-bmp/bmp.c:183
-#, fuzzy
 msgid "BMP"
-msgstr "XMP"
+msgstr "BMP"
 
 #: ../plug-ins/file-bmp/bmp.c:186 ../plug-ins/file-bmp/bmp.c:187
-#, fuzzy
 msgid "Saves files in Windows BMP file format"
-msgstr "Salva file in formato JPEG XL"
+msgstr "Salva file in formato BMP di Windows"
 
 #: ../plug-ins/file-bmp/bmp.c:200
-#, fuzzy
 msgid "Ru_n-Length Encoded"
-msgstr "Codifica _RLE"
+msgstr "Codifica R_LE"
 
 #: ../plug-ins/file-bmp/bmp.c:201
 msgid ""
@@ -8703,9 +8675,8 @@ msgid "Whether or not to write BITMAPV5HEADER color space data"
 msgstr ""
 
 #: ../plug-ins/file-bmp/bmp.c:214
-#, fuzzy
 msgid "R_GB format"
-msgstr "_Formato:"
+msgstr "Formato R_GB"
 
 #: ../plug-ins/file-bmp/bmp.c:215
 msgid ""
@@ -8723,103 +8694,92 @@ msgid "DDS image"
 msgstr "Immagine DDS"
 
 #: ../plug-ins/file-dds/dds.c:134 ../plug-ins/file-dds/dds.c:135
-#, fuzzy
 msgid "Loads files in DDS image format"
-msgstr "Carica file in formato JPEG XL"
+msgstr "Carica file in formato immagine DDS"
 
 #: ../plug-ins/file-dds/dds.c:150
-#, fuzzy
 msgid "Load _mipmaps"
-msgstr "Carica mipmaps (_l)"
+msgstr "Carica _mipmaps"
 
 #: ../plug-ins/file-dds/dds.c:151
-#, fuzzy
 msgid "Load mipmaps if present"
-msgstr "Carica mipmaps (_l)"
+msgstr "Carica mipmaps se presenti"
 
 #: ../plug-ins/file-dds/dds.c:156
 msgid "Flip image _vertically"
-msgstr ""
+msgstr "Ribalta immagine _verticalmente"
 
 #: ../plug-ins/file-dds/dds.c:157
 msgid "Flip the image vertically on import"
-msgstr ""
+msgstr "Ribalta immagine verticalmente all'importazione"
 
 #: ../plug-ins/file-dds/dds.c:171
 msgid "DDS"
-msgstr ""
+msgstr "DDS"
 
 #: ../plug-ins/file-dds/dds.c:175 ../plug-ins/file-dds/dds.c:176
-#, fuzzy
 msgid "Saves files in DDS image format"
-msgstr "Salva file in formato JPEG XL"
+msgstr "Salva file in formato immagine DDS"
 
 #: ../plug-ins/file-dds/dds.c:189
-#, fuzzy
 msgid "Compressio_n"
-msgstr "_Compressione:"
+msgstr "Compressio_ne"
 
 #: ../plug-ins/file-dds/dds.c:190
-#, fuzzy
 msgid "Compression format"
-msgstr "_Tipo di compressione:"
+msgstr "Formato compressione"
 
 #: ../plug-ins/file-dds/dds.c:192
 msgid "BC1 / DXT1"
-msgstr ""
+msgstr "BC1 / DXT1"
 
 #: ../plug-ins/file-dds/dds.c:193
 msgid "BC2 / DXT3"
-msgstr ""
+msgstr "BC2 / DXT3"
 
 #: ../plug-ins/file-dds/dds.c:194
 msgid "BC3 / DXT5"
-msgstr ""
+msgstr "BC3 / DXT5"
 
 #: ../plug-ins/file-dds/dds.c:195
 msgid "BC3nm / DXT5nm"
-msgstr ""
+msgstr "BC3nm / DXT5nm"
 
 #: ../plug-ins/file-dds/dds.c:196
 msgid "BC4 / ATI1 (3Dc+)"
-msgstr ""
+msgstr "BC4 / ATI1 (3Dc+)"
 
 #: ../plug-ins/file-dds/dds.c:197
 msgid "BC5 / ATI2 (3Dc)"
-msgstr ""
+msgstr "BC5 / ATI2 (3Dc)"
 
 #: ../plug-ins/file-dds/dds.c:198
 msgid "RXGB (DXT5)"
-msgstr ""
+msgstr "RXGB (DXT5)"
 
 #: ../plug-ins/file-dds/dds.c:199
-#, fuzzy
 msgid "Alpha Exponent (DXT5)"
-msgstr "Decodifica esponente alfa"
+msgstr "Esponente alfa (DXT5)"
 
 #: ../plug-ins/file-dds/dds.c:200
 msgid "YCoCg (DXT5)"
-msgstr ""
+msgstr "YCoCg (DXT5)"
 
 #: ../plug-ins/file-dds/dds.c:201
-#, fuzzy
 msgid "YCoCg scaled (DXT5)"
-msgstr "Decodifica YCoCg (scalata)"
+msgstr "YCoCg scalata (DXT5)"
 
 #: ../plug-ins/file-dds/dds.c:207
-#, fuzzy
 msgid "Use percept_ual error metric"
-msgstr "Usa la metrica di errore _percettiva"
+msgstr "_Usa la metrica di errore percettiva"
 
 #: ../plug-ins/file-dds/dds.c:208
-#, fuzzy
 msgid "Use a perceptual error metric during compression"
-msgstr "Usa la metrica di errore _percettiva"
+msgstr "Usa la metrica di errore percettiva durante la compressione"
 
 #: ../plug-ins/file-dds/dds.c:214
-#, fuzzy
 msgid "Pixel format"
-msgstr "Formato pixel:"
+msgstr "Formato pixel"
 
 #. Create the combobox containing the presets
 #: ../plug-ins/file-dds/dds.c:215 ../plug-ins/file-dds/dds.c:278
@@ -8830,82 +8790,75 @@ msgstr "Predefinito"
 
 #: ../plug-ins/file-dds/dds.c:216
 msgid "RGB8"
-msgstr ""
+msgstr "RGB8"
 
 #: ../plug-ins/file-dds/dds.c:217
-#, fuzzy
 msgid "RGBA8"
-msgstr "RGBA"
+msgstr "RGBA8"
 
 #: ../plug-ins/file-dds/dds.c:218
 msgid "BGR8"
-msgstr ""
+msgstr "BGR8"
 
 #: ../plug-ins/file-dds/dds.c:219
 msgid "ABGR8"
-msgstr ""
+msgstr "ABGR8"
 
 #: ../plug-ins/file-dds/dds.c:220
 msgid "R5G6B5"
-msgstr ""
+msgstr "R5G6B5"
 
 #: ../plug-ins/file-dds/dds.c:221
-#, fuzzy
 msgid "RGBA4"
-msgstr "RGBA"
+msgstr "RGBA4"
 
 #: ../plug-ins/file-dds/dds.c:222
 msgid "RGB5A1"
-msgstr ""
+msgstr "RGB5A1"
 
 #: ../plug-ins/file-dds/dds.c:223
 msgid "RGB10A2"
-msgstr ""
+msgstr "RGB10A2"
 
 #: ../plug-ins/file-dds/dds.c:224
 msgid "R3G3B2"
-msgstr ""
+msgstr "R3G3B2"
 
 #: ../plug-ins/file-dds/dds.c:225
-#, fuzzy
 msgid "A8"
-msgstr "A"
+msgstr "A8"
 
 #: ../plug-ins/file-dds/dds.c:226
-#, fuzzy
 msgid "L8"
-msgstr "L"
+msgstr "L8"
 
 #: ../plug-ins/file-dds/dds.c:227
 msgid "L8A8"
-msgstr ""
+msgstr "L8A8"
 
 #: ../plug-ins/file-dds/dds.c:228
 msgid "AEXP"
-msgstr ""
+msgstr "AEXP"
 
 #: ../plug-ins/file-dds/dds.c:229
 msgid "YCOCG"
-msgstr ""
+msgstr "YCOCG"
 
 #: ../plug-ins/file-dds/dds.c:235
 msgid "Sav_e type"
-msgstr ""
+msgstr "Tipo salvataggio"
 
 #: ../plug-ins/file-dds/dds.c:236
-#, fuzzy
 msgid "How to save the image"
-msgstr "Vai all'indice"
+msgstr "Come salvare l'immagine"
 
 #: ../plug-ins/file-dds/dds.c:237
-#, fuzzy
 msgid "Selected layer"
-msgstr "Selezionato:"
+msgstr "Livello selezionato"
 
 #: ../plug-ins/file-dds/dds.c:238
-#, fuzzy
 msgid "All visible layers"
-msgstr "Allinea livelli visibili"
+msgstr "Tutti i livelli visibili"
 
 #: ../plug-ins/file-dds/dds.c:239
 msgid "As cube map"
@@ -8928,158 +8881,140 @@ msgid "Flip the image vertically on export"
 msgstr ""
 
 #: ../plug-ins/file-dds/dds.c:253
-#, fuzzy
 msgid "Set _transparent color"
-msgstr "_Trasparente"
+msgstr "Imposta colore _trasparente"
 
 #: ../plug-ins/file-dds/dds.c:254
 msgid "Make an indexed color transparent"
-msgstr ""
+msgstr "Rende un colore indicizzato trasparente"
 
 #: ../plug-ins/file-dds/dds.c:259
-#, fuzzy
 msgid "Transparent inde_x"
-msgstr "Indice trasparente:"
+msgstr "_Indice trasparente"
 
 #: ../plug-ins/file-dds/dds.c:260
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
-msgstr ""
+msgstr "Indice del colore trasparente o -1 per disabilitare (solo per immagini indicizzate)."
 
 #: ../plug-ins/file-dds/dds.c:266
-#, fuzzy
 msgid "_Mipmaps"
-msgstr "_Mipmaps:"
+msgstr "_Mipmaps"
 
 #: ../plug-ins/file-dds/dds.c:267
-#, fuzzy
 msgid "How to handle mipmaps"
-msgstr "Carica mipmaps (_l)"
+msgstr "Come gestire le mipmaps"
 
 #: ../plug-ins/file-dds/dds.c:268
-#, fuzzy
 msgid "No mipmaps"
-msgstr "Carica mipmaps (_l)"
+msgstr "No mipmaps"
 
 #: ../plug-ins/file-dds/dds.c:269
-#, fuzzy
 msgid "Generate mipmaps"
-msgstr "Carica mipmaps (_l)"
+msgstr "Genera mipmaps"
 
 #: ../plug-ins/file-dds/dds.c:270
-#, fuzzy
 msgid "Use existing mipmaps"
-msgstr "Seleziona area esistente"
+msgstr "Usa mipmaps esistenti"
 
 #: ../plug-ins/file-dds/dds.c:276
-#, fuzzy
 msgid "F_ilter"
-msgstr "F_iltro:"
+msgstr "F_iltro"
 
 #: ../plug-ins/file-dds/dds.c:277
 msgid "Filtering to use when generating mipmaps"
-msgstr ""
+msgstr "Filtro da usare quando si generano le mipmaps"
 
 #: ../plug-ins/file-dds/dds.c:279
 msgid "Nearest"
-msgstr ""
+msgstr "Più vicino"
 
 #: ../plug-ins/file-dds/dds.c:280 ../plug-ins/map-object/map-object-main.c:139
 msgid "Box"
-msgstr "Cubo"
+msgstr "Scatolare"
 
 #: ../plug-ins/file-dds/dds.c:281
-#, fuzzy
 msgid "Triangle"
-msgstr "Angolo di partenza:"
+msgstr "Triangolare"
 
 #: ../plug-ins/file-dds/dds.c:282
 msgid "Quadratic"
-msgstr ""
+msgstr "Quadratico"
 
 #: ../plug-ins/file-dds/dds.c:283
 msgid "B-Spline"
-msgstr ""
+msgstr "B-Spline"
 
 #: ../plug-ins/file-dds/dds.c:284
 msgid "Mitchell"
-msgstr ""
+msgstr "Mitchell"
 
 #: ../plug-ins/file-dds/dds.c:285
 msgid "Catmull-Rom"
-msgstr ""
+msgstr "Catmull-Rom"
 
 #: ../plug-ins/file-dds/dds.c:286
 msgid "Lanczos"
-msgstr ""
+msgstr "Lanczos"
 
 #: ../plug-ins/file-dds/dds.c:287
-#, fuzzy
 msgid "Kaiser"
-msgstr "Innal_za"
+msgstr "Kaiser"
 
 #: ../plug-ins/file-dds/dds.c:293
-#, fuzzy
 msgid "_Wrap mode"
-msgstr "_Modalità a capo:"
+msgstr "_Modalità a capo"
 
 #: ../plug-ins/file-dds/dds.c:294
 msgid "Wrap mode to use when generating mipmaps"
-msgstr ""
+msgstr "Modalità a capo quando si generano le mipmaps"
 
 #: ../plug-ins/file-dds/dds.c:296
-#, fuzzy
 msgid "Mirror"
-msgstr "_Rifletti"
+msgstr "Rifletti"
 
 #: ../plug-ins/file-dds/dds.c:297
 msgid "Repeat"
-msgstr ""
+msgstr "Ripeti"
 
 #: ../plug-ins/file-dds/dds.c:298
 msgid "Clamp"
-msgstr ""
+msgstr "Taglia"
 
 #: ../plug-ins/file-dds/dds.c:304
 msgid "Appl_y gamma correction"
-msgstr "Applica correzione gamma (_y)"
+msgstr "Appl_ica correzione gamma"
 
 #: ../plug-ins/file-dds/dds.c:305
 msgid "Use gamma correct mipmap filtering"
-msgstr ""
+msgstr "Usa il filtro mipmaps correzione gamma"
 
 #: ../plug-ins/file-dds/dds.c:310
-#, fuzzy
 msgid "Use sRG_B colorspace"
-msgstr "Usa spazio colori s_RGB"
+msgstr "Usa spazio colori sRG_B"
 
 #: ../plug-ins/file-dds/dds.c:311
-#, fuzzy
 msgid "Use sRGB colorspace for gamma correction"
-msgstr "Usa spazio colori s_RGB"
+msgstr "Usa spazio colori sRGB per la correzione gamma"
 
 #: ../plug-ins/file-dds/dds.c:316 ../plug-ins/flame/flame.c:205
-#, fuzzy
 msgid "_Gamma"
-msgstr "_Gamma:"
+msgstr "_Gamma"
 
 #: ../plug-ins/file-dds/dds.c:317
 msgid "Gamma value to use for gamma correction (e.g. 2.2)"
-msgstr ""
+msgstr "Valore gamma da usare per la correzione gamma (per es. 2.2)"
 
 #: ../plug-ins/file-dds/dds.c:322
-#, fuzzy
 msgid "Preserve al_pha test coverage"
-msgstr "Mantieni copertura _test alfa"
+msgstr "Mantieni copertura test al_fa"
 
 #: ../plug-ins/file-dds/dds.c:323
-#, fuzzy
 msgid "Preserve alpha test coverage for alpha channel maps"
-msgstr "Mantieni copertura _test alfa"
+msgstr "Mantieni copertura test alfa per le mappe canali alfa"
 
 #: ../plug-ins/file-dds/dds.c:329
-#, fuzzy
 msgid "Alp_ha test threshold"
-msgstr "Soglia test _alfa:"
+msgstr "Soglia test _alfa"
 
 #: ../plug-ins/file-dds/dds.c:330
 msgid ""
@@ -9089,7 +9024,7 @@ msgstr ""
 #: ../plug-ins/file-dds/ddsread.c:179
 #, c-format
 msgid "Loading: %s"
-msgstr ""
+msgstr "Caricamento: %s"
 
 #: ../plug-ins/file-dds/ddsread.c:250
 #, c-format
@@ -9131,7 +9066,7 @@ msgstr "Formato pixel non valido."
 #: ../plug-ins/file-dds/ddsread.c:888
 #, c-format
 msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
-msgstr ""
+msgstr "Formato non supportato (FourCC: %c%c%c%c, hex: %08x)"
 
 #: ../plug-ins/file-dds/ddsread.c:910
 #, c-format
@@ -9144,20 +9079,20 @@ msgid "Invalid bpp value for luminance data: %d"
 msgstr "Valore bpp non valido per il dato luminanza: %d"
 
 #: ../plug-ins/file-dds/ddsread.c:943
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid DX10 header"
-msgstr "Intestazione blocco non valida"
+msgstr "Intestazione DX10 non valida"
 
 #: ../plug-ins/file-dds/ddsread.c:975
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported DXGI Format: %u"
-msgstr "Formato DXGI non supportato (%d)"
+msgstr "Formato DXGI non supportato: %u"
 
 #: ../plug-ins/file-dds/ddsread.c:1163 ../plug-ins/file-dds/ddsread.c:1227
 #: ../plug-ins/file-dds/ddsread.c:1247
 #, c-format
 msgid "Requested data exceeds size of file.\n"
-msgstr ""
+msgstr "I dati richiesti eccedono la dimensione del file.\n"
 
 #: ../plug-ins/file-dds/ddsread.c:1171 ../plug-ins/file-dds/ddsread.c:1253
 #, c-format
@@ -9169,18 +9104,17 @@ msgid "Open DDS"
 msgstr "Apri DDS"
 
 #: ../plug-ins/file-dds/ddswrite.c:566
-#, fuzzy, c-format
+#, c-format
 msgid "Saving: %s"
-msgstr "Salvataggio di '%s'"
+msgstr "Salvataggio: %s"
 
 #: ../plug-ins/file-dds/ddswrite.c:1942
 msgid "Mipmap Options"
 msgstr "Opzioni mipmap"
 
 #: ../plug-ins/file-exr/file-exr.c:112
-#, fuzzy
 msgid "Loads files in the OpenEXR file format"
-msgstr "Carica file in formato JPEG XL"
+msgstr "Carica file in formato OPEMEXR"
 
 #: ../plug-ins/file-exr/file-exr.c:201
 #, c-format
