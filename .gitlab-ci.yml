@@ -605,9 +605,17 @@ deps-win-a64:
   tags:
     - windows-aarch64
   before_script:
-    - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
+    # C:\msys64\usr\bin\pacman --noconfirm -Syyuu
   script:
+    # Verification to prevent the job from failing because stuck pacman (ARM only),
+    # since our runner keeps the status of the MSYS2 installation between jobs
+    - $stuck = Test-Path -Path "C:\msys64\var\lib\pacman\db.lck" -PathType Leaf
+    - if ($stuck -eq "True") {
+        Remove-Item -Force -Path "C:\msys64\var\lib\pacman\db.lck"
+        Write-Output "Cleaned previous stuck pacman" }
+    - Start-Job -ScriptBlock{sleep 90; taskkill /t /F /IM "pacman.exe"}
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/1_build-deps-msys2.sh"
+  retry: 2
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     when: always
@@ -635,10 +643,16 @@ gimp-win-a64:
   before_script:
     # C:\msys64\usr\bin\pacman --noconfirm -Syyuu
   script:
+    - $stuck = Test-Path -Path "C:\msys64\var\lib\pacman\db.lck" -PathType Leaf
+    - if ($stuck -eq "True") {
+        Remove-Item -Force -Path "C:\msys64\var\lib\pacman\db.lck"
+        Write-Output "Cleaned previous stuck pacman" }
     # Temporary patch until we use the latest LLVM.
     - git apply ./build/windows/patches/0001-clang-rc-files-fix.patch
     - git apply ./build/windows/patches/0004-clang-windres.patch
+    - Start-Job -ScriptBlock{sleep 90; taskkill /t /F /IM "pacman.exe"}
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/2_build-gimp-msys2.sh"
+  retry: 2
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     when: always
@@ -669,9 +683,15 @@ packaging-win-a64:
   before_script:
     # C:\msys64\usr\bin\pacman --noconfirm -Syyuu
   script:
+    - $stuck = Test-Path -Path "C:\msys64\var\lib\pacman\db.lck" -PathType Leaf
+    - if ($stuck -eq "True") {
+        Remove-Item -Force -Path "C:\msys64\var\lib\pacman\db.lck"
+        Write-Output "Cleaned previous stuck pacman" }
+    - Start-Job -ScriptBlock{sleep 90; taskkill /t /F /IM "pacman.exe"}
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/3_package-gimp-uni_base.sh"
     - cd gimp-a64
     - C:\msys64\usr\bin\bash -lc "bash -x ../build/windows/gitlab-ci/3_package-gimp-uni_sym.sh"
+  retry: 2
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     when: always
