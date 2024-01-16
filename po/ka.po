@@ -1,14 +1,14 @@
 # Georgian translation of gimp.
 # This file is distributed under the same license as the gimp package.
 # George Machitidze  გიორგი მაჩითიძე  <giomac@gmail.com>
-# Ekaterine Papava <papava.e@gtu.ge>, 2023
+# Ekaterine Papava <papava.e@gtu.ge>, 2023-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-19 18:16+0000\n"
-"PO-Revision-Date: 2023-12-20 04:37+0100\n"
+"POT-Creation-Date: 2024-01-16 10:26+0000\n"
+"PO-Revision-Date: 2024-01-16 21:01+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -4483,8 +4483,8 @@ msgstr "_კუთხე..."
 
 #: app/actions/filters-actions.c:281
 msgctxt "filters-action"
-msgid "_Laplace"
-msgstr "_ლაპლასი"
+msgid "_Laplace..."
+msgstr "_ლაპლასი..."
 
 #: app/actions/filters-actions.c:286
 msgctxt "filters-action"
@@ -12442,6 +12442,7 @@ msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr "გაფართოების AppData-ის ტიპი უნდა იყოს \"addon\". ნაპოვნია %s."
 
 #: app/core/gimpextension.c:382
+#, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
 msgstr "გაფართოების AppData უნდა აფართოებდეს \"org.gimp.GIMP\"-ს."
 
@@ -12452,6 +12453,7 @@ msgstr ""
 "გაფართოების AppData-ის ID(%s) და საქაღალდე (%s) ერთმანეთს უნდა ემთხვეოდნენ."
 
 #: app/core/gimpextension.c:411
+#, c-format
 msgid "Extension AppData must advertise a version in a <release> tag."
 msgstr "გაფართოების AppData უნდა აცხადებდეს ვერსიას <release>ჭდით."
 
@@ -12461,6 +12463,7 @@ msgid "Unsupported <requires> \"%s\" (type %s)."
 msgstr "მხარდაუჭერელი <აუცილებელია> \"%s\" (ტიპი %s)."
 
 #: app/core/gimpextension.c:460
+#, c-format
 msgid ""
 "<requires><id>org.gimp.GIMP</id></requires> for version comparison is "
 "mandatory."
@@ -12489,6 +12492,7 @@ msgid "'%s' is not a valid file."
 msgstr "არასწორი ფაილი %s."
 
 #: app/core/gimpextensionmanager.c:841
+#, c-format
 msgid "System extensions cannot be uninstalled."
 msgstr "სისტემური გაფართოებების წაშლა შეუძლებელია."
 
@@ -12609,10 +12613,12 @@ msgid "No patterns available for this operation."
 msgstr "ამ ოპერაციებისთვის შაბლონები ხელმიუწვდომელია."
 
 #: app/core/gimp-utils.c:1467
+#, c-format
 msgid "This parser does not support imbricated lists."
 msgstr ""
 
 #: app/core/gimp-utils.c:1490
+#, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> უნდა იყოს <ol> ან <ul> ჭდის შიგნით."
 
@@ -12622,14 +12628,17 @@ msgid "Unknown tag <%s>."
 msgstr "უცნობი ჭდე <%s>."
 
 #: app/core/gimpbrush-load.c:173
+#, c-format
 msgid "Fatal parse error in brush file: Width = 0."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა: სიგანე = 0."
 
 #: app/core/gimpbrush-load.c:180
+#, c-format
 msgid "Fatal parse error in brush file: Height = 0."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა:სიმაღლე = 0."
 
 #: app/core/gimpbrush-load.c:187
+#, c-format
 msgid "Fatal parse error in brush file: Bytes = 0."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა:ბაიტები = 0."
 
@@ -12649,6 +12658,7 @@ msgid "Fatal parse error in brush file: Unknown version %d."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა:უცნობი ვერსია %d."
 
 #: app/core/gimpbrush-load.c:242
+#, c-format
 msgid "Unsupported brush format"
 msgstr "ფუნჯის მხარდაუჭერელი ფორმატი"
 
@@ -12685,14 +12695,17 @@ msgid "Unable to decode abr format version %d."
 msgstr "Abr ფორმატის %d ვერსიის დეკოდირება შეუძლებელია."
 
 #: app/core/gimpbrush-load.c:637 app/core/gimpbrush-load.c:856
+#, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა: ფუნჯის ზომის არასწორი მნიშვნელობა."
 
 #: app/core/gimpbrush-load.c:724 app/core/gimpbrush-load.c:914
+#, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა:ფუნჯის ზომები დასაშვებზე მეტია."
 
 #: app/core/gimpbrush-load.c:736
+#, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა: ფართო ფუნჯები მხარდაუჭერელია."
 
@@ -12701,6 +12714,7 @@ msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა:ფაილი დაზიანებულია: "
 
 #: app/core/gimpbrush-load.c:922
+#, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr "ფუნჯის ფაილის დამუშავების შეცდომა: შეკუმშვის უცნობი მეთოდი."
 
@@ -12713,6 +12727,7 @@ msgstr ""
 "შეცდომა."
 
 #: app/core/gimpbrush-load.c:1209
+#, c-format
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr ""
 "ფუნჯის ფაილის დამუშავების შეცდომა: ფუნჯის RLE-ით შეკუმშული მონაცემები "
@@ -12731,38 +12746,47 @@ msgid "Clipboard Image"
 msgstr "გამოსახულება გაცვლის ბუდერში"
 
 #: app/core/gimpbrushgenerated-load.c:76
+#, c-format
 msgid "Not a GIMP brush file."
 msgstr "არ წარმოადგენს GIMP-ის ფუნჯების ფაილს."
 
 #: app/core/gimpbrushgenerated-load.c:96
+#, c-format
 msgid "Unknown GIMP brush version."
 msgstr "GIMP-ის ფუნჯების უცნობი ვერსია."
 
 #: app/core/gimpbrushgenerated-load.c:153
+#, c-format
 msgid "Unknown GIMP brush shape."
 msgstr "GIMP-ის ფუნჯების უცნობი ფორმა."
 
 #: app/core/gimpbrushgenerated-load.c:173
+#, c-format
 msgid "Invalid brush spacing."
 msgstr "არასწორი დაშორება ფუნჯებს შორის."
 
 #: app/core/gimpbrushgenerated-load.c:190
+#, c-format
 msgid "Invalid brush radius."
 msgstr "ფუნჯის არასწორი რადიუსი."
 
 #: app/core/gimpbrushgenerated-load.c:209
+#, c-format
 msgid "Invalid brush spike count."
 msgstr "ფუნჯის წვერების რიცხვი."
 
 #: app/core/gimpbrushgenerated-load.c:226
+#, c-format
 msgid "Invalid brush hardness."
 msgstr "ფუნჯის არასწორი სიმაგრე."
 
 #: app/core/gimpbrushgenerated-load.c:242
+#, c-format
 msgid "Invalid brush aspect ratio."
 msgstr "ფუნჯის არასწორი თანაფარდობა."
 
 #: app/core/gimpbrushgenerated-load.c:258
+#, c-format
 msgid "Invalid brush angle."
 msgstr "ფუნჯის არასწორი კუთხე."
 
@@ -13086,6 +13110,7 @@ msgid ""
 msgstr ""
 
 #: app/core/gimpdatafactory.c:1000
+#, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
 "your data search path. You probably edited the gimprc file manually, please "
@@ -13093,6 +13118,7 @@ msgid ""
 msgstr ""
 
 #: app/core/gimpdatafactory.c:1010
+#, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "მონაცემების არცერთი საქაღალდე ჩაწერადი არაა."
 
@@ -13271,6 +13297,7 @@ msgid "Fill with Pattern"
 msgstr "შაბლონით შევსება"
 
 #: app/core/gimpgradient-load.c:73
+#, c-format
 msgid "Not a GIMP gradient file."
 msgstr "არ წარმოადგენს GIMP-ის გრადიენტის ფაილს."
 
@@ -13280,6 +13307,7 @@ msgid "Invalid UTF-8 string in gradient file '%s'."
 msgstr "არასწორი UTF-8 მონაცემები გრადიენტის ფაილში '%s'."
 
 #: app/core/gimpgradient-load.c:122
+#, c-format
 msgid "File is corrupt."
 msgstr "ფაილი დაზიანებულია."
 
@@ -13291,6 +13319,7 @@ msgid "Corrupt segment %d."
 msgstr "დაზიანებულია სეგმენტი %d."
 
 #: app/core/gimpgradient-load.c:236 app/core/gimpgradient-load.c:246
+#, c-format
 msgid "Segments do not span the range 0-1."
 msgstr "სეგმენტები არ მოიცავს დიაპაზონს 0-1."
 
@@ -13300,6 +13329,7 @@ msgid "In line %d of gradient file: "
 msgstr "გრადიენტის ფაილის %d-ე ხაზზე: "
 
 #: app/core/gimpgradient-load.c:337
+#, c-format
 msgid "No linear gradients found."
 msgstr "ხაზოვანი გრადიენტები ნაპოვნი არაა."
 
@@ -13523,6 +13553,7 @@ msgid "Change Image Unit"
 msgstr "გამოსახულების ერთეულის სეცვლა"
 
 #: app/core/gimpimage.c:4314
+#, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
@@ -13899,7 +13930,7 @@ msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d პიქსელი"
 
-#: app/core/gimpimagefile.c:870 app/display/gimpdisplayshell-title.c:358
+#: app/core/gimpimagefile.c:870 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -14116,6 +14147,7 @@ msgid "Layer Mask to Selection"
 msgstr "ფენის ნიღბიდან მონიშვნამდე"
 
 #: app/core/gimplayermask.c:203
+#, c-format
 msgid "Cannot rename layer masks."
 msgstr "ფენის ნიღბის სახელის გადარქმევის შეცდომა."
 
@@ -14160,10 +14192,12 @@ msgid "Maximum straight length (in pixels) to close the line art"
 msgstr ""
 
 #: app/core/gimpmybrush-load.c:75
+#, c-format
 msgid "MyPaint brush file is unreasonably large, skipping."
 msgstr "Mypain-ის ფუნჯის ფაილი გამოტოვებულია უაზროდ დიდი ზომის გამო."
 
 #: app/core/gimpmybrush-load.c:93
+#, c-format
 msgid "Failed to deserialize MyPaint brush."
 msgstr "MyPaint-ის ფუნჯის დესერიალიზაციის შეცდომა."
 
@@ -14180,6 +14214,7 @@ msgid "Unknown type of palette file: %s"
 msgstr "პალტრის ფაილის უცნობი ტიპი: %s"
 
 #: app/core/gimppalette-load.c:120
+#, c-format
 msgid "Missing magic header."
 msgstr "ვერ ვიპოვე magic header."
 
@@ -14189,6 +14224,7 @@ msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "არასწორი UTF-8 მონაცემები პალიტრის ფაილში '%s'."
 
 #: app/core/gimppalette-load.c:163
+#, c-format
 msgid "Invalid column count."
 msgstr "სვეტების არასწორი რიცხვი."
 
@@ -14321,10 +14357,12 @@ msgid "Invalid ASE name size."
 msgstr "არასწორი ASE სახელის ზომა."
 
 #: app/core/gimppalette-load.c:1374
+#, c-format
 msgid "Unable to read SBZ file"
 msgstr "SBZ ფაილის წაკითხვის შეცდომა"
 
 #: app/core/gimppalette-load.c:1438
+#, c-format
 msgid "Unable to open SBZ file"
 msgstr "SBZ ფაილის გახსნის შეცდომა"
 
@@ -14857,29 +14895,29 @@ msgstr "GIMP-ის ვებ-გვერდზე გადასვლა"
 msgid "translator-credits"
 msgstr "მთარგმნელის შესახებ"
 
-#: app/dialogs/about-dialog.c:349
+#: app/dialogs/about-dialog.c:352
 msgid "Update available!"
 msgstr "ხელმისაწვდომია განახლება!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:379
+#: app/dialogs/about-dialog.c:382
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "GIMP %s-ის განახლება %d-ის (გამოვიდა %s-ზე) გადმოწერა\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:389
+#: app/dialogs/about-dialog.c:392
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>რელიზის კომენტარი</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:394
+#: app/dialogs/about-dialog.c:397
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "GIMP %s-ის (გამოვიდა %s-ზე) გადმოწერა\n"
 
-#: app/dialogs/about-dialog.c:419 app/dialogs/about-dialog.c:440
+#: app/dialogs/about-dialog.c:422 app/dialogs/about-dialog.c:443
 msgid "Check for updates"
 msgstr "განახლებების შემოწმება"
 
@@ -14887,16 +14925,16 @@ msgstr "განახლებების შემოწმება"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:459
+#: app/dialogs/about-dialog.c:462
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "ბოლოს შემოწმების თარიღი %s %s"
 
-#: app/dialogs/about-dialog.c:686
+#: app/dialogs/about-dialog.c:689
 msgid "GIMP is brought to you by"
 msgstr "GIMP შექმნილია თქვენთვის"
 
-#: app/dialogs/about-dialog.c:762
+#: app/dialogs/about-dialog.c:765
 #, c-format
 msgid ""
 "This is an unstable development release\n"
@@ -18179,6 +18217,7 @@ msgstr "ახალი ბილიკის წაშლა"
 #: app/display/gimpdisplayshell-dnd.c:365 app/tools/gimpbucketfilltool.c:610
 #: app/tools/gimpcagetool.c:241 app/tools/gimpfiltertool.c:307
 #: app/tools/gimpgradienttool.c:274 app/tools/gimpselectiontool.c:567
+#, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "ფენების ჯგუფების პიქსელების შეცვლა შეუძლებელია."
 
@@ -18284,16 +18323,16 @@ msgstr "ს_ხვა (%s) ..."
 msgid "Custom Zoom (%s)..."
 msgstr "გადიდების მითითება (%s)..."
 
-#: app/display/gimpdisplayshell-title.c:299
+#: app/display/gimpdisplayshell-title.c:329
 msgid "(modified)"
 msgstr "(შეცვლილი)"
 
-#: app/display/gimpdisplayshell-title.c:304
+#: app/display/gimpdisplayshell-title.c:334
 msgid "(clean)"
 msgstr "(სუფთა)"
 
-#: app/display/gimpdisplayshell-title.c:374
-#: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1198
+#: app/display/gimpdisplayshell-title.c:410
+#: app/display/gimpdisplayshell-title.c:419 app/widgets/gimpactiongroup.c:1198
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
 #: app/widgets/gimpdeviceinfo.c:1148 app/widgets/gimpdeviceinfo.c:1173
 msgid "(none)"
@@ -21112,6 +21151,7 @@ msgid "Resource '%s' is not renamable"
 msgstr "რესურსისთვის %s სახელის გადარქმევა შეუძლებელია"
 
 #: app/pdb/text-layer-cmds.c:98
+#, c-format
 msgid "Failed to create text layer"
 msgstr "ტექსტური ფენის შექმნის შეცდომა"
 
@@ -22761,6 +22801,7 @@ msgid "Show on-canvas filter controls"
 msgstr "ტილოზე-მდებარე ფილტრის კონტროლის ჩვენება"
 
 #: app/tools/gimpfiltertool.c:316 app/tools/gimpselectiontool.c:575
+#, c-format
 msgid "A selected item's pixels are locked."
 msgstr "მონიშნული ფენის პიქსელები ჩაკეტილია."
 
@@ -24187,10 +24228,12 @@ msgid "Click to anchor the floating selection"
 msgstr "დააწკაპუნეთ მცურავი მონიშნულის დასამაგრებლად"
 
 #: app/tools/gimpselectiontool.c:536
+#, c-format
 msgid "Cannot subtract from an empty selection."
 msgstr "ცარიელ მონიშნულს ვერაფერს გამოვაკლებთ."
 
 #: app/tools/gimpselectiontool.c:547
+#, c-format
 msgid "Cannot intersect with an empty selection."
 msgstr "ცარიელ მონიშნულს ვერაფერთან გადავკვეთთ."
 
@@ -26061,6 +26104,7 @@ msgstr "GIMP-ის შეცდომა: %s"
 #. * part anyway.
 #.
 #: app/widgets/gimpcriticaldialog.c:576
+#, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "GIMP-ს რამდენიმე კრიტიკული შეცდომა შეხვდა!"
 
@@ -26716,16 +26760,16 @@ msgstr "ყველა გატანილი გამოსახულე�
 msgid "_Help"
 msgstr "_დახმარება"
 
-#: app/widgets/gimpfiledialog.c:777
+#: app/widgets/gimpfiledialog.c:780
 msgid "Show _All Files"
 msgstr "ყველა ფაილის ჩვენება"
 
-#: app/widgets/gimpfiledialog.c:809
+#: app/widgets/gimpfiledialog.c:812
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "აირჩიეთ ფაილის _ტიპი (%s)"
 
-#: app/widgets/gimpfiledialog.c:811
+#: app/widgets/gimpfiledialog.c:814
 msgid "Select File _Type"
 msgstr "აირჩიეთ ფაილის _ტიპი"
 
@@ -27304,12 +27348,12 @@ msgstr "მეტამონაცემები არ გამოჩნდ�
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "shortcut: Ctrl+Alt+O"
 #.
-#: app/widgets/gimpsearchpopup.c:284
+#: app/widgets/gimpsearchpopup.c:292
 msgid "shortcut"
 msgstr "მალსახმობი"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:288 app/widgets/gimpsearchpopup.c:310
+#: app/widgets/gimpsearchpopup.c:296 app/widgets/gimpsearchpopup.c:318
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -27318,7 +27362,7 @@ msgstr "%s: %s"
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:306
+#: app/widgets/gimpsearchpopup.c:314
 msgid "menu"
 msgstr "მენიუ"
 
