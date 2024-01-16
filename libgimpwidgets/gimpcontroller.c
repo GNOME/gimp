@@ -32,6 +32,8 @@
 
 #include "gimpwidgetsmarshal.h"
 
+#include "libgimp/libgimp-intl.h"
+
 #define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 #include "gimpcontroller.h"
 #include "gimpicons.h"
@@ -100,7 +102,7 @@ gimp_controller_class_init (GimpControllerClass *klass)
   g_object_class_install_property (object_class, PROP_NAME,
                                    g_param_spec_string ("name",
                                                         "Name",
-                                                        "The controller's name",
+                                                        _("The controller's name"),
                                                         "Unnamed Controller",
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
@@ -108,7 +110,7 @@ gimp_controller_class_init (GimpControllerClass *klass)
   g_object_class_install_property (object_class, PROP_STATE,
                                    g_param_spec_string ("state",
                                                         "State",
-                                                        "The controller's state, as human-readable string",
+                                                        _("The controller's state, as human-readable string"),
                                                         "Unknown",
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
