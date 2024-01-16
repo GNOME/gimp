@@ -322,7 +322,11 @@ gimp_modifiers_editor_clear (GimpModifiersEditor *editor)
   gtk_container_foreach (GTK_CONTAINER (editor->priv->stack),
                          (GtkCallback) gtk_widget_destroy,
                          NULL);
-  gimp_modifiers_editor_show_settings (editor, editor->priv->device, editor->priv->button);
+
+  if (editor->priv->device && GDK_IS_DEVICE (editor->priv->device))
+    gimp_modifiers_editor_show_settings (editor,
+                                         editor->priv->device,
+                                         editor->priv->button);
 }
 
 /*  private functions  */
