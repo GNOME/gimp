@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master.el.po\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-09 02:55+0000\n"
-"PO-Revision-Date: 2024-01-10 09:49+0200\n"
+"POT-Creation-Date: 2024-01-11 19:01+0000\n"
+"PO-Revision-Date: 2024-01-15 15:12+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -9661,8 +9661,6 @@ msgid "Zoom 1:1"
 msgstr "Μεγέθυνση 1:1"
 
 #: app/actions/view-actions.c:413
-#| msgctxt "view-zoom-action"
-#| msgid "Zoom 1:2"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2 (50%)"
 msgstr "Εστίαση 1:2 (50%)"
@@ -9678,8 +9676,6 @@ msgid "Zoom 1:2"
 msgstr "Σμίκρυνση 1:2"
 
 #: app/actions/view-actions.c:421
-#| msgctxt "view-zoom-action"
-#| msgid "Zoom 1:4"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4 (25%)"
 msgstr "Εστίαση 1:4 (25%)"
@@ -9695,8 +9691,6 @@ msgid "Zoom 1:4"
 msgstr "Σμίκρυνση 1:4"
 
 #: app/actions/view-actions.c:429
-#| msgctxt "view-zoom-action"
-#| msgid "1:_8  (12.5%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8 (12.5%)"
 msgstr "Εστίαση 1:8 (12.5%)"
@@ -9712,8 +9706,6 @@ msgid "Zoom 1:8"
 msgstr "Σμίκρυνση 1:8"
 
 #: app/actions/view-actions.c:437
-#| msgctxt "view-zoom-action"
-#| msgid "1:1_6  (6.25%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16 (6.25%)"
 msgstr "Εστίαση 1:16 (6.25%)"
@@ -10198,7 +10190,6 @@ msgstr "Η λειτουργία μοναδικού παραθύρου απενε
 #.
 #: app/actions/windows-actions.c:391
 #, c-format
-#| msgid "R_e-Show \"%s\""
 msgid "Show \"%s-%d.%d\""
 msgstr "Εμφάνιση \"%s-%d.%d\""
 
@@ -14348,7 +14339,7 @@ msgid_plural "%d × %d pixels"
 msgstr[0] "%d × %d εικονοστοιχείο"
 msgstr[1] "%d × %d εικονοστοιχεία"
 
-#: app/core/gimpimagefile.c:870 app/display/gimpdisplayshell-title.c:360
+#: app/core/gimpimagefile.c:870 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -18923,16 +18914,16 @@ msgstr "Ά_λλη (%s)..."
 msgid "Custom Zoom (%s)..."
 msgstr "Προσαρμοσμένο εστίαση (%s)..."
 
-#: app/display/gimpdisplayshell-title.c:303
+#: app/display/gimpdisplayshell-title.c:329
 msgid "(modified)"
 msgstr "(τροποποιημένη)"
 
-#: app/display/gimpdisplayshell-title.c:308
+#: app/display/gimpdisplayshell-title.c:334
 msgid "(clean)"
 msgstr "(καθαρή)"
 
-#: app/display/gimpdisplayshell-title.c:376
-#: app/display/gimpdisplayshell-title.c:385 app/widgets/gimpactiongroup.c:1198
+#: app/display/gimpdisplayshell-title.c:410
+#: app/display/gimpdisplayshell-title.c:419 app/widgets/gimpactiongroup.c:1198
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
 #: app/widgets/gimpdeviceinfo.c:1148 app/widgets/gimpdeviceinfo.c:1173
 msgid "(none)"
@@ -19107,7 +19098,7 @@ msgstr "Πάτημα και μεταφορά για περιστροφή και 
 
 #: app/display/gimptoolhandlegrid.c:902
 msgid "Click-Drag to shear and scale"
-msgstr "Πάτημα και μεταφορά για στρέβλωση και κλιμάκωση"
+msgstr "Πάτημα και μεταφορά για διάτμηση και κλιμάκωση"
 
 #: app/display/gimptoolhandlegrid.c:905
 #: app/display/gimptooltransformgrid.c:1820
@@ -19379,7 +19370,7 @@ msgstr "Πάτημα και μεταφορά για μετακίνηση του 
 
 #: app/display/gimptooltransformgrid.c:1839
 msgid "Click-Drag to shear"
-msgstr "Πάτημα και μεταφορά για στρέβλωση"
+msgstr "Πάτημα και μεταφορά για διάτμηση"
 
 #
 #: app/file/file-open.c:136 app/file/file-save.c:140
@@ -21451,7 +21442,7 @@ msgstr "Προοπτική"
 
 #: app/pdb/item-transform-cmds.c:686 app/tools/gimpsheartool.c:111
 msgid "Shearing"
-msgstr "Στρέβλωση"
+msgstr "Διάτμηση"
 
 #: app/pdb/item-transform-cmds.c:788
 msgid "2D Transform"
@@ -25023,51 +25014,51 @@ msgstr "Αδυναμία τομής με κενή επιλογή."
 #: app/tools/gimpsheartool.c:87 app/tools/gimptransformgridoptions.c:572
 #: app/tools/gimptransformgridoptions.c:581
 msgid "Shear"
-msgstr "Στρέβλωση"
+msgstr "Διάτμηση"
 
 #: app/tools/gimpsheartool.c:88
 msgid "Shear Tool: Shear the layer, selection or path"
-msgstr "Στρέβλωση: Στρεβλώστε στρώση, επιλογή ή μονοπάτι"
+msgstr "Έργαλείο διάτμησης: Διάτμηση στρώσης, επιλογής ή μονοπατιού"
 
 #: app/tools/gimpsheartool.c:89
 msgid "S_hear"
-msgstr "Στ_ρέβλωση"
+msgstr "Διάτμ_ηση"
 
 #: app/tools/gimpsheartool.c:110
 msgctxt "undo-type"
 msgid "Shear"
-msgstr "Στρέβλωση"
+msgstr "Διάτμηση"
 
 #: app/tools/gimpsheartool.c:112
 msgid "_Shear"
-msgstr "_Στρέβλωση"
+msgstr "_Διάτμηση"
 
 #: app/tools/gimpsheartool.c:162
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g"
-msgstr "Οριζόντια στρέβλωση κατά %-3.3g"
+msgstr "Οριζόντια διάτμηση κατά %-3.3g"
 
 #: app/tools/gimpsheartool.c:166
 #, c-format
 msgctxt "undo-type"
 msgid "Shear vertically by %-3.3g"
-msgstr "Κάθετη στρέβλωση κατά %-3.3g"
+msgstr "Κάθετη διάτμηση κατά %-3.3g"
 
 #. e.g. user entered numbers but no notification callback
 #: app/tools/gimpsheartool.c:171
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g, vertically by %-3.3g"
-msgstr "Οριζόντια στρέβλωση κατά %-3.3g, κάθετη κατά %-3.3g"
+msgstr "Οριζόντια διάτμηση κατά %-3.3g, κάθετη κατά %-3.3g"
 
 #: app/tools/gimpsheartool.c:189
 msgid "Shear magnitude _X"
-msgstr "Βαθμός στρέβλωσης _X"
+msgstr "Βαθμός διάτμησης _X"
 
 #: app/tools/gimpsheartool.c:199
 msgid "Shear magnitude _Y"
-msgstr "Βαθμός στρέβλωσης _Υ"
+msgstr "Βαθμός διάτμησης _Υ"
 
 #: app/tools/gimpsmudgetool.c:58
 msgid "Smudge Tool: Smudge selectively using a brush"
@@ -25427,7 +25418,7 @@ msgstr "Περιορισμός περιστροφής σε βήματα 15 μο�
 #: app/tools/gimptransformgridoptions.c:573
 #, c-format
 msgid "Shear along edge direction only (%s)"
-msgstr "Στρέβλωση μόνο κατά μήκος της κατεύθυνσης άκρης (%s)"
+msgstr "Διάτμηση μόνο κατά μήκος της κατεύθυνσης άκρης (%s)"
 
 #: app/tools/gimptransformgridoptions.c:575
 #, c-format
@@ -25449,7 +25440,7 @@ msgstr "Κλιμάκωση από το σημείο περιστροφής (%s)"
 #: app/tools/gimptransformgridoptions.c:582
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
-msgstr "Στρέβλωση αντίθετης άκρης κατά την ίδια ποσότητα (%s)"
+msgstr "Διάτμηση αντίθετης άκρης κατά την ίδια ποσότητα (%s)"
 
 #: app/tools/gimptransformgridoptions.c:584
 #, c-format
@@ -28236,14 +28227,13 @@ msgstr "Μεταδεδομένα δεν θα είναι ορατά σε GIMP π�
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "shortcut: Ctrl+Alt+O"
 #.
-#: app/widgets/gimpsearchpopup.c:284
+#: app/widgets/gimpsearchpopup.c:292
 msgid "shortcut"
 msgstr "συντόμευση"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:288 app/widgets/gimpsearchpopup.c:310
+#: app/widgets/gimpsearchpopup.c:296 app/widgets/gimpsearchpopup.c:318
 #, c-format
-#| msgid "%s: %d"
 msgid "%s: %s"
 msgstr "%s: %s"
 
@@ -28251,7 +28241,7 @@ msgstr "%s: %s"
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:306
+#: app/widgets/gimpsearchpopup.c:314
 msgid "menu"
 msgstr "μενού"
 
@@ -29415,7 +29405,6 @@ msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
 #: menus/image-menu.ui.in.in:850
-#| msgid "Scripts"
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
