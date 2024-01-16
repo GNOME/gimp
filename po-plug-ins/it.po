@@ -1,14 +1,14 @@
 # This is the Italian catalog for the standard GIMP Plugins.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 1999-2002
-# Marco Ciampa <ciampix@posteo.net>, 2003-2023
+# Marco Ciampa <ciampix@posteo.net>, 2003-2024
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-05 08:32+0200\n"
-"PO-Revision-Date: 2023-07-05 08:34+0200\n"
+"POT-Creation-Date: 2024-01-16 08:43+0100\n"
+"PO-Revision-Date: 2024-01-16 08:50+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -52,7 +52,7 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/common/file-pdf-load.c:1356
 #: ../plug-ins/common/file-pdf-save.c:1020 ../plug-ins/common/file-ps.c:3447
 #: ../plug-ins/common/file-raw-data.c:1816 ../plug-ins/common/file-svg.c:663
-#: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
+#: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1210
 #: ../plug-ins/common/filter-pack.c:1264 ../plug-ins/common/fractal-trace.c:711
 #: ../plug-ins/common/grid.c:677 ../plug-ins/common/hot.c:614
 #: ../plug-ins/common/jigsaw.c:2415 ../plug-ins/common/mail.c:499
@@ -66,7 +66,7 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1983
+#: ../plug-ins/file-dds/ddsread.c:1401 ../plug-ins/file-dds/ddswrite.c:1983
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
 #: ../plug-ins/file-tiff/file-tiff-load.c:2664 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
@@ -113,7 +113,7 @@ msgstr "_Annulla"
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1928
 #: ../plug-ins/common/file-pdf-load.c:709 ../plug-ins/common/file-svg.c:664
-#: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
+#: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1211
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
 #: ../plug-ins/common/grid.c:678 ../plug-ins/common/hot.c:615
 #: ../plug-ins/common/jigsaw.c:2416 ../plug-ins/common/max-rgb.c:319
@@ -124,7 +124,7 @@ msgstr "_Annulla"
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
 #: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
-#: ../plug-ins/file-dds/ddsread.c:1364 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/file-dds/ddsread.c:1402 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -437,19 +437,19 @@ msgstr "_Verticale"
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1011
 #: ../plug-ins/common/decompose.c:598 ../plug-ins/common/file-cel.c:446
 #: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:715
-#: ../plug-ins/common/file-gegl.c:438 ../plug-ins/common/file-gif-load.c:992
+#: ../plug-ins/common/file-gegl.c:438 ../plug-ins/common/file-gif-load.c:1008
 #: ../plug-ins/common/file-jp2-load.c:1290 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1375
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1116
-#: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
+#: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:693
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
 #: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:2153 ../plug-ins/file-sgi/sgi.c:416
+#: ../plug-ins/file-psd/psd-load.c:2161 ../plug-ins/file-sgi/sgi.c:416
 #: ../plug-ins/file-tiff/file-tiff-load.c:1544
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -1073,7 +1073,7 @@ msgstr "Carica parametri Esploratore CML"
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
 #: ../plug-ins/common/file-ps.c:1075 ../plug-ins/common/file-ps.c:3397
-#: ../plug-ins/common/file-psp.c:2228 ../plug-ins/common/file-psp.c:2278
+#: ../plug-ins/common/file-psp.c:2237 ../plug-ins/common/file-psp.c:2287
 #: ../plug-ins/common/file-raw-data.c:477
 #: ../plug-ins/common/file-raw-data.c:1284 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:647
@@ -1511,12 +1511,12 @@ msgid "Uniform"
 msgstr "Uniforme"
 
 #: ../plug-ins/common/contrast-retinex.c:319
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "Low"
 msgstr "Basso"
 
 #: ../plug-ins/common/contrast-retinex.c:320
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "High"
 msgstr "Alto"
 
@@ -2411,31 +2411,27 @@ msgstr "Immagine GIF"
 msgid "This is not a GIF file"
 msgstr "Questo non è un file GIF"
 
-#: ../plug-ins/common/file-gif-load.c:419
-msgid "Non-square pixels.  Image might look squashed."
-msgstr "Punti non quadrati. L'immagine potrebbe apparire schiacciata."
-
-#: ../plug-ins/common/file-gif-load.c:994
+#: ../plug-ins/common/file-gif-load.c:1010
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Sfondo (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:1021
+#: ../plug-ins/common/file-gif-load.c:1037
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "Apertura di \"%s\" (fotogramma %d)"
 
-#: ../plug-ins/common/file-gif-load.c:1050
+#: ../plug-ins/common/file-gif-load.c:1066
 #, c-format
 msgid "Frame %d"
 msgstr "Fotogramma %d"
 
-#: ../plug-ins/common/file-gif-load.c:1052
+#: ../plug-ins/common/file-gif-load.c:1068
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Fotogramma %d (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:1083
+#: ../plug-ins/common/file-gif-load.c:1099
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -2799,7 +2795,7 @@ msgstr "La larghezza di ogni cella. Può essere un numero o una percentuale."
 
 #: ../plug-ins/common/file-html-table.c:663 ../plug-ins/common/file-ps.c:3535
 #: ../plug-ins/common/file-ps.c:3739 ../plug-ins/common/file-raw-data.c:1985
-#: ../plug-ins/common/film.c:945 ../plug-ins/common/smooth-palette.c:463
+#: ../plug-ins/common/film.c:948 ../plug-ins/common/smooth-palette.c:463
 #: ../plug-ins/common/tile.c:469 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
 #: ../plug-ins/print/print-page-layout.c:286
@@ -3777,97 +3773,102 @@ msgstr "Errore durante la lettura dei dati delle parole chiave del creatore"
 msgid "Error reading color block"
 msgstr "Errore nella lettura del blocco colore"
 
-#: ../plug-ins/common/file-psp.c:1138
+#: ../plug-ins/common/file-psp.c:1136
+#, c-format
+msgid "Error: Unsupported palette size"
+msgstr "Errore: dimensione tavolozza non supportata"
+
+#: ../plug-ins/common/file-psp.c:1147
 #, c-format
 msgid "Error reading color palette"
 msgstr "Errore nella lettura della tavolozza colore"
 
-#: ../plug-ins/common/file-psp.c:1564 ../plug-ins/common/file-psp.c:1578
+#: ../plug-ins/common/file-psp.c:1573 ../plug-ins/common/file-psp.c:1587
 #, c-format
 msgid "zlib error"
 msgstr "errore zlib"
 
-#: ../plug-ins/common/file-psp.c:1641 ../plug-ins/common/file-psp.c:1675
-#: ../plug-ins/common/file-psp.c:1685
+#: ../plug-ins/common/file-psp.c:1650 ../plug-ins/common/file-psp.c:1684
+#: ../plug-ins/common/file-psp.c:1694
 #, c-format
 msgid "Error reading layer extension information"
 msgstr "Errore durante la lettura delle informazioni di estensione livello"
 
-#: ../plug-ins/common/file-psp.c:1662
+#: ../plug-ins/common/file-psp.c:1671
 #, c-format
 msgid "Error reading block information"
 msgstr "Errore durante la lettura delle informazioni del blocco"
 
-#: ../plug-ins/common/file-psp.c:1742
+#: ../plug-ins/common/file-psp.c:1751
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Sotto blocco livello %s non valido, doveva essere LAYER"
 
-#: ../plug-ins/common/file-psp.c:1773 ../plug-ins/common/file-psp.c:1830
+#: ../plug-ins/common/file-psp.c:1782 ../plug-ins/common/file-psp.c:1839
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Errore durante la lettura del blocco informazioni di livello"
 
-#: ../plug-ins/common/file-psp.c:1872
+#: ../plug-ins/common/file-psp.c:1881
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Dimensioni livello non valide: %d×%d"
 
-#: ../plug-ins/common/file-psp.c:1933
+#: ../plug-ins/common/file-psp.c:1942
 #, c-format
 msgid "Error creating layer"
 msgstr "Errore durante la creazione del livello"
 
-#: ../plug-ins/common/file-psp.c:1978
+#: ../plug-ins/common/file-psp.c:1987
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Sotto blocco livello %s non valido, doveva essere CHANNEL"
 
-#: ../plug-ins/common/file-psp.c:1994
+#: ../plug-ins/common/file-psp.c:2003
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Errore durante la lettura del blocco informazioni di canale"
 
-#: ../plug-ins/common/file-psp.c:2017
+#: ../plug-ins/common/file-psp.c:2026
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Tipo di canale %d non valido nel blocco informazioni di canale"
 
-#: ../plug-ins/common/file-psp.c:2121 ../plug-ins/common/file-psp.c:2138
+#: ../plug-ins/common/file-psp.c:2130 ../plug-ins/common/file-psp.c:2147
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Errore durante la lettura del blocco dati tube"
 
-#: ../plug-ins/common/file-psp.c:2239
+#: ../plug-ins/common/file-psp.c:2248
 #, c-format
 msgid "Error reading file header."
 msgstr "Errore durante la lettura dell'intestazione del file"
 
-#: ../plug-ins/common/file-psp.c:2246
+#: ../plug-ins/common/file-psp.c:2255
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Firma del file non corretta."
 
-#: ../plug-ins/common/file-psp.c:2260
+#: ../plug-ins/common/file-psp.c:2269
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Versione del formato del file PSP %d.%d non supportata."
 
-#: ../plug-ins/common/file-psp.c:2280
+#: ../plug-ins/common/file-psp.c:2289
 msgid "invalid block size"
 msgstr "dimensione blocco non valida"
 
-#: ../plug-ins/common/file-psp.c:2289
+#: ../plug-ins/common/file-psp.c:2298
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Blocco attributi immagine generale duplicato."
 
-#: ../plug-ins/common/file-psp.c:2319
+#: ../plug-ins/common/file-psp.c:2328
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Blocco attributi immagine generale mancante."
 
-#: ../plug-ins/common/file-psp.c:2433
+#: ../plug-ins/common/file-psp.c:2442
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Esportazione non ancora implementata."
@@ -4127,8 +4128,8 @@ msgstr "Impossibile gestire immagini di tipo sconosciuto"
 #: ../plug-ins/common/file-sunras.c:1158 ../plug-ins/common/file-sunras.c:1252
 #: ../plug-ins/common/file-sunras.c:1335 ../plug-ins/common/file-sunras.c:1434
 #: ../plug-ins/common/file-xwd.c:1429 ../plug-ins/common/file-xwd.c:1532
-#: ../plug-ins/common/file-xwd.c:1691 ../plug-ins/common/file-xwd.c:1906
-#: ../plug-ins/common/file-xwd.c:2064 ../plug-ins/common/file-xwd.c:2327
+#: ../plug-ins/common/file-xwd.c:1691 ../plug-ins/common/file-xwd.c:1914
+#: ../plug-ins/common/file-xwd.c:2072 ../plug-ins/common/file-xwd.c:2335
 #: ../plug-ins/file-fits/fits.c:804
 msgid "EOF encountered on reading"
 msgstr "EOF riscontrato in lettura"
@@ -4734,7 +4735,7 @@ msgstr "Impossibile aprire \"%s\" in scrittura: "
 msgid "Error exporting '%s': "
 msgstr "Errore esportando \"%s\": "
 
-#: ../plug-ins/common/file-xwd.c:1762 ../plug-ins/common/file-xwd.c:2160
+#: ../plug-ins/common/file-xwd.c:1770 ../plug-ins/common/file-xwd.c:2168
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "Il file XWD %s è danneggiato."
@@ -4756,115 +4757,115 @@ msgstr "Composizione immagini"
 msgid "Untitled"
 msgstr "Senza nome"
 
-#: ../plug-ins/common/film.c:817
+#: ../plug-ins/common/film.c:820
 msgid "Available images:"
 msgstr "Immagini disponibili:"
 
-#: ../plug-ins/common/film.c:818
+#: ../plug-ins/common/film.c:821
 msgid "On film:"
 msgstr "Su pellicola:"
 
-#: ../plug-ins/common/film.c:869 ../plug-ins/common/unit-editor.c:210
+#: ../plug-ins/common/film.c:872 ../plug-ins/common/unit-editor.c:210
 msgid "_Add"
 msgstr "_Aggiungi"
 
-#: ../plug-ins/common/film.c:869 ../plug-ins/imagemap/imap_polygon.c:530
+#: ../plug-ins/common/film.c:872 ../plug-ins/imagemap/imap_polygon.c:530
 msgid "_Remove"
 msgstr "_Rimuovi"
 
 #. Create selection
-#: ../plug-ins/common/film.c:905 ../plug-ins/imagemap/imap_selection.c:338
+#: ../plug-ins/common/film.c:908 ../plug-ins/imagemap/imap_selection.c:338
 #: ../plug-ins/selection-to-path/selection-to-path.c:436
 msgid "Selection"
 msgstr "Selezione"
 
 #. Film height/color
-#: ../plug-ins/common/film.c:915 ../plug-ins/common/film.c:1203
+#: ../plug-ins/common/film.c:918 ../plug-ins/common/film.c:1206
 msgid "Filmstrip"
 msgstr "Pellicola"
 
 #. Keep maximum image height
-#: ../plug-ins/common/film.c:924
+#: ../plug-ins/common/film.c:927
 msgid "_Fit height to images"
 msgstr "_Adatta altezza alle immagini"
 
 #. Film color
-#: ../plug-ins/common/film.c:966
+#: ../plug-ins/common/film.c:969
 msgid "Select Film Color"
 msgstr "Seleziona colore pellicola"
 
-#: ../plug-ins/common/film.c:971 ../plug-ins/common/film.c:1027
+#: ../plug-ins/common/film.c:974 ../plug-ins/common/film.c:1030
 msgid "Co_lor:"
 msgstr "Co_lore:"
 
 #. Film numbering: Startindex/Font/color
-#: ../plug-ins/common/film.c:983
+#: ../plug-ins/common/film.c:986
 msgid "Numbering"
 msgstr "Numerazione"
 
-#: ../plug-ins/common/film.c:1004
+#: ../plug-ins/common/film.c:1007
 msgid "Start _index:"
 msgstr "_Indice iniziale:"
 
-#: ../plug-ins/common/film.c:1017
+#: ../plug-ins/common/film.c:1020
 msgid "_Font:"
 msgstr "_Carattere:"
 
 #. Numbering color
-#: ../plug-ins/common/film.c:1022
+#: ../plug-ins/common/film.c:1025
 msgid "Select Number Color"
 msgstr "Seleziona colore numero"
 
-#: ../plug-ins/common/film.c:1040
+#: ../plug-ins/common/film.c:1043
 msgid "At _bottom"
 msgstr "In _basso"
 
-#: ../plug-ins/common/film.c:1041
+#: ../plug-ins/common/film.c:1044
 msgid "At _top"
 msgstr "In _alto"
 
 #. ** The right frame keeps the image selection **
-#: ../plug-ins/common/film.c:1054
+#: ../plug-ins/common/film.c:1057
 msgid "Image Selection"
 msgstr "Selezione immagine"
 
-#: ../plug-ins/common/film.c:1083
+#: ../plug-ins/common/film.c:1086
 msgid "All Values are Fractions of the Strip Height"
 msgstr "Tutti i valori sono frazioni dell'altezza pellicola"
 
-#: ../plug-ins/common/film.c:1086
+#: ../plug-ins/common/film.c:1089
 msgid "Ad_vanced"
 msgstr "A_vanzate"
 
-#: ../plug-ins/common/film.c:1105
+#: ../plug-ins/common/film.c:1108
 msgid "Image _height:"
 msgstr "_Altezza immagini:"
 
-#: ../plug-ins/common/film.c:1116
+#: ../plug-ins/common/film.c:1119
 msgid "Image spac_ing:"
 msgstr "_Spaziatura immagini:"
 
-#: ../plug-ins/common/film.c:1127
+#: ../plug-ins/common/film.c:1130
 msgid "_Hole offset:"
 msgstr "Spostamento b_uchi:"
 
-#: ../plug-ins/common/film.c:1138
+#: ../plug-ins/common/film.c:1141
 msgid "Ho_le width:"
 msgstr "Larg_hezza buchi:"
 
-#: ../plug-ins/common/film.c:1149
+#: ../plug-ins/common/film.c:1152
 msgid "Hol_e height:"
 msgstr "Alt_ezza buchi:"
 
-#: ../plug-ins/common/film.c:1160
+#: ../plug-ins/common/film.c:1163
 msgid "Hole sp_acing:"
 msgstr "Sp_aziatura buchi:"
 
-#: ../plug-ins/common/film.c:1171
+#: ../plug-ins/common/film.c:1174
 msgid "_Number height:"
 msgstr "Altezza _numeri:"
 
-#: ../plug-ins/common/film.c:1184
+#: ../plug-ins/common/film.c:1187
 msgid "Re_set"
 msgstr "R_eimposta"
 
@@ -6746,15 +6747,15 @@ msgstr "Decodifica YCoCg (scalata)"
 msgid "Decode Alpha exponent"
 msgstr "Decodifica esponente alfa"
 
-#: ../plug-ins/file-dds/ddsread.c:1361
+#: ../plug-ins/file-dds/ddsread.c:1399
 msgid "Load DDS"
 msgstr "Carica DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1380
+#: ../plug-ins/file-dds/ddsread.c:1418
 msgid "_Load mipmaps"
 msgstr "Carica mipmaps (_l)"
 
-#: ../plug-ins/file-dds/ddsread.c:1387
+#: ../plug-ins/file-dds/ddsread.c:1425
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "Decodifica _automaticamente le immagini YCoCg/AExp se rilevate"
 
@@ -7260,21 +7261,21 @@ msgstr "Larghezza maschera di livello non supportata o non valida: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Dimensioni maschera di livello non supportate o non valide: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1540 ../plug-ins/file-psd/psd-load.c:2126
+#: ../plug-ins/file-psd/psd-load.c:1548 ../plug-ins/file-psd/psd-load.c:2134
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Modalità di compressione non supportata: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2273
+#: ../plug-ins/file-psd/psd-load.c:2281
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2473
+#: ../plug-ins/file-psd/psd-load.c:2481
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Dimensione canale non supportata o non valida."
 
-#: ../plug-ins/file-psd/psd-load.c:2539
+#: ../plug-ins/file-psd/psd-load.c:2547
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Fallita la decompressione dati"
@@ -8878,7 +8879,7 @@ msgstr "Tipo di griglia:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "Normal"
 msgstr "Normale"
 
@@ -11077,84 +11078,84 @@ msgstr "Deseleziona"
 msgid "Unselect All"
 msgstr "Deseleziona tutto"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:204
+#: ../plug-ins/imagemap/imap_edit_area_info.c:249
 msgid "Link Type"
 msgstr "Tipo collegamento"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:213
+#: ../plug-ins/imagemap/imap_edit_area_info.c:258
 msgid "_Web Site"
 msgstr "Sito _web"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:219
+#: ../plug-ins/imagemap/imap_edit_area_info.c:264
 msgid "_Ftp Site"
 msgstr "Sito _ftp"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:225
+#: ../plug-ins/imagemap/imap_edit_area_info.c:270
 msgid "_Gopher"
 msgstr "_Gopher"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:231
+#: ../plug-ins/imagemap/imap_edit_area_info.c:276
 msgid "Ot_her"
 msgstr "_Altri"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:237
+#: ../plug-ins/imagemap/imap_edit_area_info.c:282
 msgid "F_ile"
 msgstr "F_ile"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:243
+#: ../plug-ins/imagemap/imap_edit_area_info.c:288
 msgid "WAI_S"
 msgstr "WAI_S"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:249
+#: ../plug-ins/imagemap/imap_edit_area_info.c:294
 msgid "Tel_net"
 msgstr "Tel_net"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:255
+#: ../plug-ins/imagemap/imap_edit_area_info.c:300
 msgid "e-_mail"
 msgstr "e-_mail"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:261
+#: ../plug-ins/imagemap/imap_edit_area_info.c:306
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr "_URL da attivare quando su quest'area viene fatto clic: (necessario)"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:263
+#: ../plug-ins/imagemap/imap_edit_area_info.c:308
 msgid "Select HTML file"
 msgstr "Seleziona file HTML"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:272
+#: ../plug-ins/imagemap/imap_edit_area_info.c:317
 msgid "Relati_ve link"
 msgstr "Collegamento relati_vo"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:278
+#: ../plug-ins/imagemap/imap_edit_area_info.c:323
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr ""
 "Nome fotogramma di destinazione/ID: (opzionale - usato solo per fotogrammi)"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:281
+#: ../plug-ins/imagemap/imap_edit_area_info.c:326
 msgid "ALT te_xt: (optional)"
 msgstr "Testo ALT: (opzionale)"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:284
+#: ../plug-ins/imagemap/imap_edit_area_info.c:329
 msgid "_Link"
 msgstr "Col_legamento"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:318
+#: ../plug-ins/imagemap/imap_edit_area_info.c:363
 msgid "Dimensions"
 msgstr "Dimensioni"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:322
+#: ../plug-ins/imagemap/imap_edit_area_info.c:367
 msgid "Pre_view"
 msgstr "_Anteprima"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:360
+#: ../plug-ins/imagemap/imap_edit_area_info.c:405
 msgid "_JavaScript"
 msgstr "_Javascript"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:459
+#: ../plug-ins/imagemap/imap_edit_area_info.c:504
 msgid "Area Settings"
 msgstr "Impostazioni area"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:501
+#: ../plug-ins/imagemap/imap_edit_area_info.c:546
 #, c-format
 msgid "Area #%d Settings"
 msgstr "Impostazioni area #%d"
@@ -12275,9 +12276,9 @@ msgid "Export Metadata File"
 msgstr "Esporta file metadati"
 
 #: ../plug-ins/metadata/metadata-tags.c:180
-#: ../plug-ins/metadata/metadata-tags.c:194
-#: ../plug-ins/metadata/metadata-tags.c:254
-#: ../plug-ins/metadata/metadata-tags.c:271
+#: ../plug-ins/metadata/metadata-tags.c:203
+#: ../plug-ins/metadata/metadata-tags.c:263
+#: ../plug-ins/metadata/metadata-tags.c:280
 msgid "Select a value"
 msgstr "Seleziona un valore"
 
@@ -12298,178 +12299,214 @@ msgid "Digitized from a print on non-transparent medium"
 msgstr "Digitalizzata da una stampa su supporto non trasparente"
 
 #: ../plug-ins/metadata/metadata-tags.c:185
+msgid "Original media with minor human edits"
+msgstr "Media originale con piccole modifiche umane "
+
+#: ../plug-ins/metadata/metadata-tags.c:186
+msgid "Composite of captured elements"
+msgstr "Composito di elementi catturati"
+
+#: ../plug-ins/metadata/metadata-tags.c:187
+msgid "Algorithmically-enhanced media"
+msgstr "Media migliorato algoritmicamente"
+
+#: ../plug-ins/metadata/metadata-tags.c:188
+msgid "Data-driven media"
+msgstr "Media guidato dai dati"
+
+#: ../plug-ins/metadata/metadata-tags.c:189
+msgid "Digital art"
+msgstr "Arte digitale"
+
+#: ../plug-ins/metadata/metadata-tags.c:190
+msgid "Virtual recording"
+msgstr "Registrazione virtuale"
+
+#: ../plug-ins/metadata/metadata-tags.c:191
+msgid "Composite including synthetic elements"
+msgstr "Composito comprendente elementi sintetici"
+
+#: ../plug-ins/metadata/metadata-tags.c:192
+msgid "Trained algorithmic media"
+msgstr "Media algoritmici addestrati"
+
+#: ../plug-ins/metadata/metadata-tags.c:193
+msgid "Pure algorithmic media"
+msgstr "Media algoritmici puri"
+
+#: ../plug-ins/metadata/metadata-tags.c:194
 msgid "Created by software"
 msgstr "Creato via software"
 
-#: ../plug-ins/metadata/metadata-tags.c:195
-#: ../plug-ins/metadata/metadata-tags.c:207
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:204
+#: ../plug-ins/metadata/metadata-tags.c:216
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "None"
 msgstr "No"
 
-#: ../plug-ins/metadata/metadata-tags.c:196
-#: ../plug-ins/metadata/metadata-tags.c:208
+#: ../plug-ins/metadata/metadata-tags.c:205
+#: ../plug-ins/metadata/metadata-tags.c:217
 msgid "Not Applicable"
 msgstr "Non applicabile"
 
-#: ../plug-ins/metadata/metadata-tags.c:197
+#: ../plug-ins/metadata/metadata-tags.c:206
 msgid "Unlimited Model Releases"
 msgstr "Rilasci modello illimitati"
 
-#: ../plug-ins/metadata/metadata-tags.c:198
+#: ../plug-ins/metadata/metadata-tags.c:207
 msgid "Limited or Incomplete Model Releases"
 msgstr "Rilasci modello limitati o incompleti"
 
-#: ../plug-ins/metadata/metadata-tags.c:209
+#: ../plug-ins/metadata/metadata-tags.c:218
 msgid "Unlimited Property Releases"
 msgstr "Rilasci proprietà illimitati"
 
-#: ../plug-ins/metadata/metadata-tags.c:210
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "Limited or Incomplete Property Releases"
 msgstr "Rilasci proprietà limitati o incompleti"
 
-#: ../plug-ins/metadata/metadata-tags.c:219
+#: ../plug-ins/metadata/metadata-tags.c:228
 msgid "Age Unknown"
 msgstr "Età sconosciuta"
 
-#: ../plug-ins/metadata/metadata-tags.c:220
+#: ../plug-ins/metadata/metadata-tags.c:229
 msgid "Age 25 or Over"
 msgstr "Età 25 o più anni"
 
-#: ../plug-ins/metadata/metadata-tags.c:221
+#: ../plug-ins/metadata/metadata-tags.c:230
 msgid "Age 24"
 msgstr "Età 24 anni"
 
-#: ../plug-ins/metadata/metadata-tags.c:222
+#: ../plug-ins/metadata/metadata-tags.c:231
 msgid "Age 23"
 msgstr "Età 23 anni"
 
-#: ../plug-ins/metadata/metadata-tags.c:223
+#: ../plug-ins/metadata/metadata-tags.c:232
 msgid "Age 22"
 msgstr "Età 22 anni"
 
-#: ../plug-ins/metadata/metadata-tags.c:224
+#: ../plug-ins/metadata/metadata-tags.c:233
 msgid "Age 21"
 msgstr "Età 21 anni"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:234
 msgid "Age 20"
 msgstr "Età 20 anni"
 
-#: ../plug-ins/metadata/metadata-tags.c:226
+#: ../plug-ins/metadata/metadata-tags.c:235
 msgid "Age 19"
 msgstr "Età 19 anni"
 
-#: ../plug-ins/metadata/metadata-tags.c:227
+#: ../plug-ins/metadata/metadata-tags.c:236
 msgid "Age 18"
 msgstr "Età 18 anni"
 
-#: ../plug-ins/metadata/metadata-tags.c:228
+#: ../plug-ins/metadata/metadata-tags.c:237
 msgid "Age 17"
 msgstr "Età 17 anni"
 
-#: ../plug-ins/metadata/metadata-tags.c:229
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "Age 16"
 msgstr "Età 16 anni"
 
-#: ../plug-ins/metadata/metadata-tags.c:230
+#: ../plug-ins/metadata/metadata-tags.c:239
 msgid "Age 15"
 msgstr "Età 15 anni"
 
-#: ../plug-ins/metadata/metadata-tags.c:231
+#: ../plug-ins/metadata/metadata-tags.c:240
 msgid "Age 14 or Under"
 msgstr "Età 14 o meno anni"
 
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "2"
 msgstr "2"
 
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "3"
 msgstr "3"
 
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "4"
 msgstr "4"
 
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "6"
 msgstr "6"
 
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "7"
 msgstr "7"
 
-#: ../plug-ins/metadata/metadata-tags.c:245
-#: ../plug-ins/metadata/metadata-tags.c:281
-#: ../plug-ins/metadata/metadata-tags.c:288
-#: ../plug-ins/metadata/metadata-tags.c:295
+#: ../plug-ins/metadata/metadata-tags.c:254
+#: ../plug-ins/metadata/metadata-tags.c:290
+#: ../plug-ins/metadata/metadata-tags.c:297
+#: ../plug-ins/metadata/metadata-tags.c:304
 msgid "Unknown"
 msgstr "Sconosciuto"
 
 #. DO NOT SAVE
-#: ../plug-ins/metadata/metadata-tags.c:246
+#: ../plug-ins/metadata/metadata-tags.c:255
 msgid "Copyrighted"
 msgstr "Coperto da Copyright"
 
 #. TRUE
-#: ../plug-ins/metadata/metadata-tags.c:247
+#: ../plug-ins/metadata/metadata-tags.c:256
 msgid "Public Domain"
 msgstr "Pubblico dominio"
 
-#: ../plug-ins/metadata/metadata-tags.c:255
+#: ../plug-ins/metadata/metadata-tags.c:264
 msgid "Work"
 msgstr "Lavoro"
 
-#: ../plug-ins/metadata/metadata-tags.c:256
+#: ../plug-ins/metadata/metadata-tags.c:265
 msgid "Cell"
 msgstr "Cell"
 
-#: ../plug-ins/metadata/metadata-tags.c:257
+#: ../plug-ins/metadata/metadata-tags.c:266
 msgid "Fax"
 msgstr "Fax"
 
-#: ../plug-ins/metadata/metadata-tags.c:258
+#: ../plug-ins/metadata/metadata-tags.c:267
 msgid "Home"
 msgstr "Casa"
 
-#: ../plug-ins/metadata/metadata-tags.c:259
+#: ../plug-ins/metadata/metadata-tags.c:268
 msgid "Pager"
 msgstr "Visualizzatore"
 
-#: ../plug-ins/metadata/metadata-tags.c:272
+#: ../plug-ins/metadata/metadata-tags.c:281
 msgid "Male"
 msgstr "Maschio"
 
-#: ../plug-ins/metadata/metadata-tags.c:273
+#: ../plug-ins/metadata/metadata-tags.c:282
 msgid "Female"
 msgstr "Femmina"
 
-#: ../plug-ins/metadata/metadata-tags.c:274
+#: ../plug-ins/metadata/metadata-tags.c:283
 msgid "Other"
 msgstr "Altro"
 
-#: ../plug-ins/metadata/metadata-tags.c:281
+#: ../plug-ins/metadata/metadata-tags.c:290
 msgid "Above sea level"
 msgstr "Sopra il livello del mare"
 
-#: ../plug-ins/metadata/metadata-tags.c:281
+#: ../plug-ins/metadata/metadata-tags.c:290
 msgid "Below sea level"
 msgstr "Sotto il livello del mare"
 
-#: ../plug-ins/metadata/metadata-tags.c:288
+#: ../plug-ins/metadata/metadata-tags.c:297
 msgid "North"
 msgstr "Nord"
 
-#: ../plug-ins/metadata/metadata-tags.c:288
+#: ../plug-ins/metadata/metadata-tags.c:297
 msgid "South"
 msgstr "Sud"
 
-#: ../plug-ins/metadata/metadata-tags.c:295
+#: ../plug-ins/metadata/metadata-tags.c:304
 msgid "East"
 msgstr "Est"
 
-#: ../plug-ins/metadata/metadata-tags.c:295
+#: ../plug-ins/metadata/metadata-tags.c:304
 msgid "West"
 msgstr "Ovest"
 
