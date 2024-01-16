@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-31 13:33+0000\n"
-"PO-Revision-Date: 2024-01-06 12:35+0100\n"
+"POT-Creation-Date: 2024-01-11 18:15+0000\n"
+"PO-Revision-Date: 2024-01-11 19:29+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -76,8 +76,8 @@ msgstr "Rasta en get (C)"
 #: plug-ins/common/sphere-designer.c:2637 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/warp.c:472 plug-ins/file-tiff/file-tiff-load.c:2549
 #: plug-ins/flame/flame.c:622 plug-ins/flame/flame.c:827
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1540
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1578
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1522
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1560
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1390
 #: plug-ins/gfig/gfig-dialog.c:354 plug-ins/gfig/gfig-dialog.c:781
@@ -520,7 +520,7 @@ msgstr "Koppla loss"
 
 #. Zoom Options
 #: plug-ins/common/animation-play.c:847
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:702
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:681
 #: plug-ins/imagemap/imap-menu.ui:276
 msgid "Zoom"
 msgstr "Zooma"
@@ -697,7 +697,7 @@ msgid "Border Size"
 msgstr "Kantstorlek"
 
 #: plug-ins/common/border-average.c:424
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:864
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:843
 msgid "Number of Colors"
 msgstr "Antal färger"
 
@@ -1023,8 +1023,8 @@ msgstr "Slumpfrö"
 #: plug-ins/common/qbist.c:1020 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2686 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1233
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:817
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1541
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:796
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1523
 #: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:911
 #: plug-ins/ifs-compose/ifs-compose.c:2598 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:492
@@ -1040,8 +1040,8 @@ msgstr "_Öppna"
 #: plug-ins/common/qbist.c:1028 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2694 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1241
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:825
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1579
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:804
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1561
 #: plug-ins/gfig/gfig-dialog.c:832 plug-ins/gimpressionist/brush.c:271
 #: plug-ins/ifs-compose/ifs-compose.c:912
 #: plug-ins/ifs-compose/ifs-compose.c:2561 plug-ins/imagemap/imap_file.c:129
@@ -1235,7 +1235,7 @@ msgstr "Spara parametrar för CML-utforskare"
 #: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:590
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1441
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1424
 #: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2420
 #: plug-ins/lighting/lighting-ui.c:808
 #, c-format
@@ -1997,7 +1997,7 @@ msgstr "Kan inte arbeta med tomma urklipp."
 #: plug-ins/file-psd/psd-load.c:169 plug-ins/file-psd/psd-load.c:174
 #: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1764
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1784
 #: plug-ins/fractal-explorer/fractal-explorer.c:1159 plug-ins/gfig/gfig.c:527
 #: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
 #: plug-ins/lighting/lighting-ui.c:952
@@ -2201,17 +2201,17 @@ msgid "redness-cr709"
 msgstr "rödton-cr709"
 
 #: plug-ins/common/decompose.c:196
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:901
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:880
 msgid "Red"
 msgstr "Röd"
 
 #: plug-ins/common/decompose.c:197
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:914
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:893
 msgid "Green"
 msgstr "Grön"
 
 #: plug-ins/common/decompose.c:198
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:927
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:906
 msgid "Blue"
 msgstr "Blå"
 
@@ -2473,8 +2473,9 @@ msgstr "Denna insticksmodul försöker ta bort vertikala streck från en bild."
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:195
 #: plug-ins/common/file-ps.c:386 plug-ins/common/file-ps.c:500
-#: plug-ins/common/file-raw-data.c:355 plug-ins/common/smooth-palette.c:135
-#: plug-ins/imagemap/imap_grid.c:255
+#: plug-ins/common/file-raw-data.c:355 plug-ins/common/file-svg.c:189
+#: plug-ins/common/file-wmf.c:184 plug-ins/common/smooth-palette.c:135
+#: plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
 msgstr "_Bredd"
 
@@ -3590,7 +3591,8 @@ msgstr "Bredden för varje tabellcell. Kan vara ett värde eller procent."
 
 #: plug-ins/common/file-html-table.c:202 plug-ins/common/file-ps.c:392
 #: plug-ins/common/file-ps.c:507 plug-ins/common/file-raw-data.c:360
-#: plug-ins/common/smooth-palette.c:141 plug-ins/imagemap/imap_grid.c:261
+#: plug-ins/common/file-svg.c:197 plug-ins/common/file-wmf.c:191
+#: plug-ins/common/smooth-palette.c:141 plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
 msgstr "_Höjd"
 
@@ -5073,7 +5075,7 @@ msgstr "Encapsula_ted Postscript"
 msgid "FALSE: PostScript, TRUE: Encapsulated PostScript"
 msgstr "FALSE: Postscript, TRUE: Encapsulated Postscript"
 
-#: plug-ins/common/file-ps.c:557 plug-ins/imagemap/imap_grid.c:298
+#: plug-ins/common/file-ps.c:557 plug-ins/imagemap/imap_grid.c:301
 msgid "_Preview"
 msgstr "_Förhandsvisa"
 
@@ -5875,6 +5877,30 @@ msgstr "Sk_urlängdskodad"
 msgid "SVG image"
 msgstr "SVG-bild"
 
+#: plug-ins/common/file-svg.c:183 plug-ins/common/file-wmf.c:177
+msgid "Resolu_tion"
+msgstr "U_pplösning"
+
+#: plug-ins/common/file-svg.c:184
+msgid "Resolution to use for rendering the SVG"
+msgstr "Upplösning att använda för rendering av SVG-filen"
+
+#: plug-ins/common/file-svg.c:190
+msgid ""
+"Width (in pixels) to load the SVG in. (0 for original width, a negative "
+"width to specify a maximum width)"
+msgstr ""
+"Bredd (i bildpunkter) att läsa in SVG-filen i. (0 för ursprunglig bredd, en "
+"negativ bredd för att ange en maximal bredd)"
+
+#: plug-ins/common/file-svg.c:198
+msgid ""
+"Height (in pixels) to load the SVG in. (0 for original height, a negative "
+"height to specify a maximum height)"
+msgstr ""
+"Höjd (i bildpunkter) att läsa in SVG-filen i. (0 för ursprunglig höjd, en "
+"negativ höjd för att ange en maximal höjd)"
+
 #: plug-ins/common/file-svg.c:205
 msgid "_Paths"
 msgstr "_Banor"
@@ -6050,6 +6076,18 @@ msgstr "”%s” är inte en giltig WBMP-fil"
 #: plug-ins/common/file-wmf.c:155
 msgid "Microsoft WMF file"
 msgstr "Microsoft WMF-fil"
+
+#: plug-ins/common/file-wmf.c:178
+msgid "Resolution to use for rendering the WMF"
+msgstr "Upplösning att använda för rendering av WMF-filen"
+
+#: plug-ins/common/file-wmf.c:185
+msgid "Width (in pixels) to load the WMF in, 0 for original width"
+msgstr "Bredd (i bildpunkter) att läsa in WMF-filen i, 0 för ursprunglig bredd"
+
+#: plug-ins/common/file-wmf.c:192
+msgid "Height (in pixels) to load the WMF in, 0 for original height"
+msgstr "Höjd (i bildpunkter) att läsa in WMF-filen i, 0 för ursprunglig höjd"
 
 #: plug-ins/common/file-wmf.c:392
 msgid ""
@@ -7245,7 +7283,7 @@ msgstr "G-Qbist"
 
 # src/menus.c:302
 #: plug-ins/common/qbist.c:1012
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:736
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:715
 msgid "_Undo"
 msgstr "_Ångra"
 
@@ -11006,7 +11044,7 @@ msgstr "_Rendering"
 msgid "C_amera"
 msgstr "K_amera"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:617
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:596
 #: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:988
 #, c-format
@@ -11021,114 +11059,114 @@ msgstr ""
 "(%s ”%s”)\n"
 "till din %s-fil."
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:633
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:612
 msgid "Fractal Explorer"
 msgstr "Fractal Explorer"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:683
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:662
 msgid "Re_altime preview"
 msgstr "Förh_andsvisa i realtid"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:691
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:670
 msgid "If enabled the preview will be redrawn automatically"
 msgstr "Om aktiverad kommer förhandsvisningen att ritas om automatiskt"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:694
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:673
 msgid "R_edraw preview"
 msgstr "Ri_ta om förhandsvisning"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:715
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:694
 msgid "Zoom _In"
 msgstr "Zooma _in"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:723
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:702
 msgid "Zoom _Out"
 msgstr "Zooma _ut"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:740
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:719
 msgid "Undo last zoom change"
 msgstr "Ångra senaste zoomändringen"
 
 # src/menus.c:306
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:746
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:725
 msgid "_Redo"
 msgstr "_Upprepa"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:750
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:729
 msgid "Redo last zoom change"
 msgstr "Gör om senaste zoomändringen"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:758
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:737
 msgid "_Parameters"
 msgstr "_Parametrar"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:760
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:739
 msgid "_Colors"
 msgstr "_Färger"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:762
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:741
 msgid "_Fractals"
 msgstr "_Fraktaler"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:780
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:759
 msgid "Fractal Parameters"
 msgstr "Fraktalparametrar"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:793
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:772
 msgid "Fractal Type"
 msgstr "Fraktaltyp"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:823
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 msgid "Load a fractal from file"
 msgstr "Läs in en fraktal från fil"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:831
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:810
 msgid "Save active fractal to file"
 msgstr "Spara aktiv fraktal till fil"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:883
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:862
 msgid "Color Density"
 msgstr "Färgintensitet"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:897
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:876
 msgid "Color Function"
 msgstr "Färgfunktion"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:953
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
 msgid "As specified above"
 msgstr "Enligt ovan"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:954
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:933
 msgid "Apply active gradient to final image"
 msgstr "Använd aktiv toning på slutgiltiga bilden"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:974
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:951
 msgid "FractalExplorer Gradient"
 msgstr "FractalExplorer-toning"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1036
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1013
 msgid "Presets"
 msgstr "Förinställningar"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1455
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1438
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Kunde inte skriva ”%s”: %s"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1536
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
 msgid "Load Fractal Parameters"
 msgstr "Läs in fraktalparametrar"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1574
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
 msgid "Save Fractal Parameters"
 msgstr "Spara fraktalparametrar"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1772
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1792
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "”%s” är inte en FractalExplorer-fil"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1779
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1799
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "”%s” är skadad. Alternativsektion på rad %d är felaktig"
@@ -13161,8 +13199,8 @@ msgid "Center _x:"
 msgstr "Mittpunkt _x:"
 
 #: plug-ins/imagemap/imap_circle.c:266 plug-ins/imagemap/imap_circle.c:273
-#: plug-ins/imagemap/imap_circle.c:279 plug-ins/imagemap/imap_grid.c:259
-#: plug-ins/imagemap/imap_grid.c:265 plug-ins/imagemap/imap_polygon.c:503
+#: plug-ins/imagemap/imap_circle.c:279 plug-ins/imagemap/imap_grid.c:262
+#: plug-ins/imagemap/imap_grid.c:268 plug-ins/imagemap/imap_polygon.c:503
 #: plug-ins/imagemap/imap_polygon.c:511 plug-ins/imagemap/imap_rectangle.c:389
 #: plug-ins/imagemap/imap_rectangle.c:396
 #: plug-ins/imagemap/imap_rectangle.c:403
@@ -13462,43 +13500,43 @@ msgstr "Läs in bildkarta"
 msgid "Save Image Map"
 msgstr "Spara bildkarta"
 
-#: plug-ins/imagemap/imap_grid.c:204
+#: plug-ins/imagemap/imap_grid.c:207
 msgid "Grid Settings"
 msgstr "Rutnätsinställningar"
 
-#: plug-ins/imagemap/imap_grid.c:210
+#: plug-ins/imagemap/imap_grid.c:213
 msgid "_Snap-to grid enabled"
 msgstr "_Fäst mot rutnät aktiverat"
 
-#: plug-ins/imagemap/imap_grid.c:216
+#: plug-ins/imagemap/imap_grid.c:219
 msgid "Grid Visibility and Type"
 msgstr "Rutnätets synlighet och typ"
 
-#: plug-ins/imagemap/imap_grid.c:223
+#: plug-ins/imagemap/imap_grid.c:226
 msgid "_Hidden"
 msgstr "_Dolt"
 
-#: plug-ins/imagemap/imap_grid.c:231
+#: plug-ins/imagemap/imap_grid.c:234
 msgid "_Lines"
 msgstr "_Linjer"
 
-#: plug-ins/imagemap/imap_grid.c:240
+#: plug-ins/imagemap/imap_grid.c:243
 msgid "C_rosses"
 msgstr "K_ors"
 
-#: plug-ins/imagemap/imap_grid.c:248
+#: plug-ins/imagemap/imap_grid.c:251
 msgid "Grid Granularity"
 msgstr "Rutnätstäthet"
 
-#: plug-ins/imagemap/imap_grid.c:275
+#: plug-ins/imagemap/imap_grid.c:278
 msgid "Grid Offset"
 msgstr "Rutnätsförskjutning"
 
-#: plug-ins/imagemap/imap_grid.c:282
+#: plug-ins/imagemap/imap_grid.c:285
 msgid "pixels from l_eft"
 msgstr "bildpunkter från _vänster"
 
-#: plug-ins/imagemap/imap_grid.c:287
+#: plug-ins/imagemap/imap_grid.c:290
 msgid "pixels from _top"
 msgstr "bildpunkter från _toppen"
 
