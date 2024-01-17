@@ -669,44 +669,54 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
     }
   else if (g_str_has_prefix (menu_path, "<Layers>"))
     {
-      if ((procedure->num_args < 3)                          ||
+      if ((procedure->num_args < 4)                          ||
           ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
           ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
-          ! (G_TYPE_FROM_INSTANCE (procedure->args[2])
-                               == GIMP_TYPE_PARAM_LAYER      ||
-             G_TYPE_FROM_INSTANCE (procedure->args[2])
-                               == GIMP_TYPE_PARAM_DRAWABLE))
+          ! (G_TYPE_FROM_INSTANCE       (procedure->args[3])
+                           == GIMP_TYPE_PARAM_OBJECT_ARRAY))
         {
-          required = "GimpRunMode, GimpImage, (GimpLayer | GimpDrawable)";
+          required = "GimpRunMode, GimpImage, length, array of (GimpLayer | GimpDrawable)";
           goto failure;
+        }
+      else
+        {
+          GimpParamSpecObjectArray *spec = GIMP_PARAM_SPEC_OBJECT_ARRAY (procedure->args[3]);
+          const gchar *type_name  = g_type_name (spec->object_type);
+
+          if (g_strcmp0 (type_name, "GimpDrawable") != 0 &&
+              g_strcmp0 (type_name, "GimpLayer")    != 0)
+            {
+              required = "GimpRunMode, GimpImage, length, array of (GimpLayer | GimpDrawable)";
+              goto failure;
+            }
         }
     }
   else if (g_str_has_prefix (menu_path, "<Channels>"))
     {
-      if ((procedure->num_args < 3)                          ||
+      if ((procedure->num_args < 4)                          ||
           ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
           ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
-          ! (G_TYPE_FROM_INSTANCE (procedure->args[2])
-                               == GIMP_TYPE_PARAM_CHANNEL    ||
-             G_TYPE_FROM_INSTANCE (procedure->args[2])
-                               == GIMP_TYPE_PARAM_DRAWABLE))
+          ! (G_TYPE_FROM_INSTANCE       (procedure->args[3])
+                           == GIMP_TYPE_PARAM_OBJECT_ARRAY))
         {
-          required = "GimpRunMode, GimpImage, (GimpChannel | GimpDrawable)";
+          required = "GimpRunMode, GimpImage, length, array of (GimpChannel | GimpDrawable)";
           goto failure;
         }
-    }
-  else if (g_str_has_prefix (menu_path, "<Vectors>"))
-    {
-      if ((procedure->num_args < 3)                          ||
-          ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
-          ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
-          ! GIMP_IS_PARAM_SPEC_VECTORS  (procedure->args[2]))
+      else
         {
-          required = "GimpRunMode, GimpImage, GimpVectors";
-          goto failure;
+          GimpParamSpecObjectArray *spec = GIMP_PARAM_SPEC_OBJECT_ARRAY (procedure->args[3]);
+          const gchar *type_name  = g_type_name (spec->object_type);
+
+          if (g_strcmp0 (type_name, "GimpDrawable") != 0 &&
+              g_strcmp0 (type_name, "GimpChannel")  != 0)
+            {
+              required = "GimpRunMode, GimpImage, length, array of (GimpChannel | GimpDrawable)";
+              goto failure;
+            }
         }
     }
-  else if (g_str_has_prefix (menu_path, "<Colormap>"))
+  else if (g_str_has_prefix (menu_path, "<Colormap>") ||
+           g_str_has_prefix (menu_path, "<Vectors>"))
     {
       if ((procedure->num_args < 2)                          ||
           ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
