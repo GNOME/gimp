@@ -95,7 +95,7 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox2), combo_box, FALSE, FALSE, 0);
 
   frame = gimp_prop_enum_radio_frame_new (config, "expand-mask-fill-type",
-                                          "Fill Layer Mask With", 0, 1);
+                                          _("Fill Layer Mask With"), 0, 1);
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
 
   frame = gimp_prop_expanding_frame_new (config, "expand-use", NULL,
