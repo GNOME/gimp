@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-11 19:02+0000\n"
-"PO-Revision-Date: 2024-01-14 18:19+0100\n"
+"POT-Creation-Date: 2024-01-16 10:27+0000\n"
+"PO-Revision-Date: 2024-01-18 08:22+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -319,6 +319,7 @@ msgid "Use the (invisible) bottom layer as the base"
 msgstr "Uporabi (nevidno) spodnjo plast kot osnovo"
 
 #: plug-ins/common/align-layers.c:287
+#, c-format
 msgid "There are not enough layers to align."
 msgstr "Ni dovolj plasti, da bi jih bilo mogoče poravnati."
 
@@ -2523,6 +2524,7 @@ msgid "File type to use"
 msgstr "Vrsta datoteke, ki jo želite uporabiti"
 
 #: plug-ins/common/file-aa.c:207
+#, c-format
 msgid "ASCII art does not support multiple layers."
 msgstr "Zapis ASCII slik ne podpira več plasti."
 
@@ -2544,15 +2546,18 @@ msgid "Load KISS Palette"
 msgstr "Naloži paleto KISS"
 
 #: plug-ins/common/file-cel.c:253
+#, c-format
 msgid "This KISS CEL image requires a palette file."
 msgstr "Za to sliko KISS CEL je potrebna datoteka palete."
 
 #: plug-ins/common/file-cel.c:317
+#, c-format
 msgid "CEL format does not support multiple layers."
 msgstr "Zapis CEL ne podpira več plasti."
 
 #: plug-ins/common/file-cel.c:362 plug-ins/common/file-cel.c:414
 #: plug-ins/common/file-cel.c:435
+#, c-format
 msgid "EOF or error while reading image header"
 msgstr "EOF ali napaka pri branju zaglavja slike"
 
@@ -2598,6 +2603,7 @@ msgid "Opening '%s'"
 msgstr "Odpiranje »%s« ..."
 
 #: plug-ins/common/file-cel.c:444
+#, c-format
 msgid "is not a CEL image file"
 msgstr "ni datoteka slike CEL"
 
@@ -2616,11 +2622,13 @@ msgstr ""
 "odmik: %d"
 
 #: plug-ins/common/file-cel.c:488
+#, c-format
 msgid "Can't create a new image"
 msgstr "Nove slike ni mogoče ustvariti"
 
 #: plug-ins/common/file-cel.c:525 plug-ins/common/file-cel.c:562
 #: plug-ins/common/file-cel.c:588
+#, c-format
 msgid "EOF or error while reading image data"
 msgstr "EOF ali napaka pri branju podatkov slike"
 
@@ -2661,7 +2669,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1321
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
 #: plug-ins/common/file-tga.c:1229 plug-ins/common/file-xbm.c:1050
-#: plug-ins/common/file-xpm.c:704 plug-ins/common/file-xwd.c:720
+#: plug-ins/common/file-xpm.c:705 plug-ins/common/file-xwd.c:720
 #: plug-ins/file-bmp/bmp-save.c:333 plug-ins/file-fits/fits.c:673
 #: plug-ins/file-fli/fli-gimp.c:775 plug-ins/file-icns/file-icns-save.c:612
 #: plug-ins/file-ico/ico-save.c:1334 plug-ins/file-ico/ico-save.c:1543
@@ -2760,6 +2768,7 @@ msgid "Opacity"
 msgstr "Prekrivnost"
 
 #: plug-ins/common/file-csource.c:238
+#, c-format
 msgid "C source does not support multiple layers."
 msgstr "Izvorna koda C ne podpira več plasti."
 
@@ -2807,6 +2816,7 @@ msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Slika Digital Imaging and Communications in Medicine"
 
 #: plug-ins/common/file-dicom.c:307
+#, c-format
 msgid "Dicom format does not support multiple layers."
 msgstr "Zapis Dicom ne podpira več plasti."
 
@@ -2831,6 +2841,7 @@ msgstr "Slik ni mogoče shraniti s kanalom alfa."
 
 #: plug-ins/common/file-dicom.c:1548 plug-ins/common/file-ps.c:1316
 #: plug-ins/common/file-xwd.c:715 plug-ins/file-fits/fits.c:668
+#, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "S slikami neznane vrste ni mogoče delovati."
 
@@ -2847,14 +2858,17 @@ msgid "Export image in the Farbfeld file format"
 msgstr "Izvozi sliko v zapisu datoteke Farbfeld."
 
 #: plug-ins/common/file-farbfeld.c:257
+#, c-format
 msgid "Farbfeld format does not support multiple layers."
 msgstr "Zapis Farbfeld ne podpira večjega števila plasti."
 
 #: plug-ins/common/file-farbfeld.c:309
+#, c-format
 msgid "Failed to read Farbfeld header"
 msgstr "Branje datoteke Farbfeld ni uspelo"
 
 #: plug-ins/common/file-farbfeld.c:335
+#, c-format
 msgid "Premature end of Farbfeld pixel data"
 msgstr "Predčasen konec podatkov slikovnih točk Farbfeld."
 
@@ -2900,6 +2914,7 @@ msgid "OpenEXR image"
 msgstr "Slika OpenEXR"
 
 #: plug-ins/common/file-gegl.c:317
+#, c-format
 msgid "GEGL export plug-in does not support multiple layers."
 msgstr "Vstavek izvoza GEGL ne podpira več plasti."
 
@@ -2917,10 +2932,12 @@ msgid "GIF magic code"
 msgstr "Čarobna koda GIF"
 
 #: plug-ins/common/file-gif-load.c:431
+#, c-format
 msgid "This is not a GIF file: incorrect magic code"
 msgstr "To ni datoteka GIF: napačna čarobna koda"
 
 #: plug-ins/common/file-gif-load.c:439
+#, c-format
 msgid "Incorrect GIF version: not '87a' or '89a'"
 msgstr "Napačna različica GIF: ni »87a« ali »89a«"
 
@@ -3053,6 +3070,7 @@ msgid "Unknown composite type %d. %s"
 msgstr "Neznana vrsta sestavka %d. %s"
 
 #: plug-ins/common/file-gif-load.c:1287
+#, c-format
 msgid ""
 "Can't handle non-alpha RGB frames.\n"
 "Please file a bug report at https://gitlab.gnome.org/GNOME/gimp/issues"
@@ -3172,6 +3190,7 @@ msgid "Image comment"
 msgstr "Komentar slike"
 
 #: plug-ins/common/file-gif-save.c:377
+#, c-format
 msgid "GIF format does not support multiple layers."
 msgstr "Zapis GIF ne podpira več plasti."
 
@@ -3334,6 +3353,7 @@ msgid "C source code header"
 msgstr "Glava izvorne kode programskega jezika C"
 
 #: plug-ins/common/file-header.c:181
+#, c-format
 msgid "Header plug-in does not support multiple layers."
 msgstr "Vstavek glave ne podpira več plasti."
 
@@ -3464,6 +3484,7 @@ msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "Naloži sliko JPEG2000, ovito v HEIF (HEJ2)"
 
 #: plug-ins/common/file-heif.c:541 plug-ins/common/file-heif.c:631
+#, c-format
 msgid "HEIF format does not support multiple layers."
 msgstr "Zapis HEIF ne podpira več plasti."
 
@@ -3660,6 +3681,7 @@ msgid "The amount of cell spacing."
 msgstr "Količina razmika celic."
 
 #: plug-ins/common/file-html-table.c:287
+#, c-format
 msgid "HTML table plug-in does not support multiple layers."
 msgstr "Vstavek za tabele HTML ne podpira več kot ene plasti."
 
@@ -4157,18 +4179,22 @@ msgid "Loads files in Zsoft DCX file format"
 msgstr "Naloži datoteke v zapisu Zsoft DCX."
 
 #: plug-ins/common/file-pcx.c:399
+#, c-format
 msgid "PCX format does not support multiple layers."
 msgstr "Zapis PCX ne podpira več plasti."
 
 #: plug-ins/common/file-pcx.c:521
+#, c-format
 msgid "Could not load PCX image"
 msgstr "Slike PCX ni mogoče naložiti."
 
 #: plug-ins/common/file-pcx.c:568
+#, c-format
 msgid "DCX image offset exceeds the file size"
 msgstr "Zamik slike DCX presega velikost datoteke"
 
 #: plug-ins/common/file-pcx.c:579
+#, c-format
 msgid "Could not load DCX image"
 msgstr "Slike DCX ni mogoče naložiti."
 
@@ -4540,6 +4566,7 @@ msgid "Alias Pix image"
 msgstr "Slika Alias PIX"
 
 #: plug-ins/common/file-pix.c:297
+#, c-format
 msgid "PIX format does not support multiple layers."
 msgstr "Zapis PIX ne podpira več plasti."
 
@@ -4662,6 +4689,7 @@ msgid "16 bpc GRAYA"
 msgstr "GRAYA, 16 b/kanal"
 
 #: plug-ins/common/file-png.c:415
+#, c-format
 msgid "PNG format does not support multiple layers."
 msgstr "Zapis PNG ne podpira več plasti."
 
@@ -5088,6 +5116,7 @@ msgid "0: no preview, >0: max. size of preview"
 msgstr "0: brez predogleda, >0: največja velikost predogleda"
 
 #: plug-ins/common/file-ps.c:708
+#, c-format
 msgid "PostScript plug-in does not support multiple layers."
 msgstr "Vstavek PostScript ne podpira več plasti."
 
@@ -5106,6 +5135,7 @@ msgid "%s-pages"
 msgstr "%s-strani"
 
 #: plug-ins/common/file-ps.c:1303
+#, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Izvoz v PostScript ne podpira slik s kanali alfa."
 
@@ -5122,7 +5152,7 @@ msgstr "črno belo"
 msgid "Gray"
 msgstr "sivinsko"
 
-#: plug-ins/common/file-ps.c:3722 plug-ins/common/file-xpm.c:510
+#: plug-ins/common/file-ps.c:3722 plug-ins/common/file-xpm.c:511
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:169
 #: plug-ins/imagemap/imap-menu.ui:96 plug-ins/lighting/lighting-main.c:209
 #: plug-ins/lighting/lighting-main.c:332 plug-ins/lighting/lighting-main.c:391
@@ -5218,6 +5248,7 @@ msgid "LZ77"
 msgstr "LZ77"
 
 #: plug-ins/common/file-psp.c:933
+#, c-format
 msgid "Error reading block header"
 msgstr "Napaka pri branju glave bloka"
 
@@ -5227,6 +5258,7 @@ msgid "Invalid block header at %ld"
 msgstr "Neveljavna glava bloka pri %ld"
 
 #: plug-ins/common/file-psp.c:943
+#, c-format
 msgid "Invalid block header"
 msgstr "Neveljavna glava bloka"
 
@@ -5236,10 +5268,12 @@ msgid "Seek error: %s"
 msgstr "Napaka pri pozicioniranju: %s"
 
 #: plug-ins/common/file-psp.c:998
+#, c-format
 msgid "Invalid general image attribute chunk size."
 msgstr "Neveljavna velikost bloka splošnih atributov slike."
 
 #: plug-ins/common/file-psp.c:1020
+#, c-format
 msgid "Error reading general image attribute block."
 msgstr "Napaka pri branju bloka splošnih atributov slike."
 
@@ -5254,40 +5288,49 @@ msgid "Unsupported bit depth %d"
 msgstr "Nepodprta bitna globina %d"
 
 #: plug-ins/common/file-psp.c:1125
+#, c-format
 msgid "Error reading creator keyword chunk"
 msgstr "Napaka pri branju kosa podatkov ključnih besed ustvarjalca"
 
 #: plug-ins/common/file-psp.c:1131
+#, c-format
 msgid "Invalid keyword chunk header"
 msgstr "Neveljaven kos podatkov ključnih besed ustvarjalca"
 
 #: plug-ins/common/file-psp.c:1146 plug-ins/common/file-psp.c:1173
+#, c-format
 msgid "Error reading creator keyword data"
 msgstr "Napaka pri branju podatkov ključnih besed ustvarjalca"
 
 #: plug-ins/common/file-psp.c:1257 plug-ins/common/file-psp.c:1266
 #: plug-ins/common/file-psp.c:1275
+#, c-format
 msgid "Error reading color block"
 msgstr "Napaka pri branju barvnega bloka"
 
 #: plug-ins/common/file-psp.c:1286
+#, c-format
 msgid "Error: Unsupported palette size"
 msgstr "Napaka: nepodprta velikost palete"
 
 #: plug-ins/common/file-psp.c:1297
+#, c-format
 msgid "Error reading color palette"
 msgstr "Napaka pri branju barvne palete"
 
 #: plug-ins/common/file-psp.c:1723 plug-ins/common/file-psp.c:1737
+#, c-format
 msgid "zlib error"
 msgstr "Napaka zlib"
 
 #: plug-ins/common/file-psp.c:1800 plug-ins/common/file-psp.c:1834
 #: plug-ins/common/file-psp.c:1844
+#, c-format
 msgid "Error reading layer extension information"
 msgstr "Napaka pri branju podatkov o razšrijenosti plasti."
 
 #: plug-ins/common/file-psp.c:1821
+#, c-format
 msgid "Error reading block information"
 msgstr "Napaka pri branju kosa podatkov."
 
@@ -5297,6 +5340,7 @@ msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Neveljaven podblok plasti %s, mora biti LAYER"
 
 #: plug-ins/common/file-psp.c:1932 plug-ins/common/file-psp.c:1989
+#, c-format
 msgid "Error reading layer information chunk"
 msgstr "Napaka pri branju kosa podatkov o plasti"
 
@@ -5306,6 +5350,7 @@ msgid "Invalid layer dimensions: %dx%d"
 msgstr "Neveljavne dimenzije plasti: %dx%d"
 
 #: plug-ins/common/file-psp.c:2092
+#, c-format
 msgid "Error creating layer"
 msgstr "Napaka pri ustvarjanju plasti"
 
@@ -5315,6 +5360,7 @@ msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Neveljaven podblok plasti %s, mora biti CHANNEL"
 
 #: plug-ins/common/file-psp.c:2153
+#, c-format
 msgid "Error reading channel information chunk"
 msgstr "Napaka pri branju kosa podatkov o kanalu"
 
@@ -5324,59 +5370,73 @@ msgid "Invalid channel type %d in channel information chunk"
 msgstr "Neveljavna vrsta kanala %d v informacijskem koščku kanala"
 
 #: plug-ins/common/file-psp.c:2280 plug-ins/common/file-psp.c:2297
+#, c-format
 msgid "Error reading tube data chunk"
 msgstr "Napaka pri branju kosa podatkov o cevi"
 
 #: plug-ins/common/file-psp.c:2384 plug-ins/common/file-psp.c:2400
+#, c-format
 msgid "Error reading selection chunk"
 msgstr "Napaka pri branju kosa izbora"
 
 #: plug-ins/common/file-psp.c:2393
+#, c-format
 msgid "Invalid selection chunk size"
 msgstr "Neveljavna velikost kosa izbora"
 
 #: plug-ins/common/file-psp.c:2417
+#, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Napaka pri branju konca kosa izbora"
 
 #: plug-ins/common/file-psp.c:2442
+#, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Napaka pri branju glave kosa razširjenega bloka"
 
 #: plug-ins/common/file-psp.c:2450
+#, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Neveljavna glava kosa razširjenega bloka"
 
 #: plug-ins/common/file-psp.c:2461
+#, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Neveljavna velikost kosa razširjenega bloka"
 
 #: plug-ins/common/file-psp.c:2482
+#, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Napaka pri branju podatkov mreže kosov razširjenega bloka"
 
 #: plug-ins/common/file-psp.c:2508
+#, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Napaka pri branju podatkov vodila razširjenega kosa"
 
 #: plug-ins/common/file-psp.c:2526
+#, c-format
 msgid "Invalid guide orientation"
 msgstr "Neveljavna usmerjenost vodila"
 
 #: plug-ins/common/file-psp.c:2540
+#, c-format
 msgid "Error reading extended block chunk"
 msgstr "Napaka pri branju kosa razširjenega bloka"
 
 #: plug-ins/common/file-psp.c:2566 plug-ins/common/file-psp.c:2578
 #: plug-ins/common/file-psp.c:2589
+#, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Napaka pri branju kosa podatkov o barvnem profilu"
 
 #: plug-ins/common/file-psp.c:2642
+#, c-format
 msgid "Error reading file header."
 msgstr "Napaka pri branju glave datoteke."
 
 #: plug-ins/common/file-psp.c:2649
+#, c-format
 msgid "Incorrect file signature."
 msgstr "Neveljaven podpis datoteke."
 
@@ -5390,14 +5450,17 @@ msgid "invalid block size"
 msgstr "neveljavna velikost bloka"
 
 #: plug-ins/common/file-psp.c:2692
+#, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Podvojeni blok splošnih atributov slike."
 
 #: plug-ins/common/file-psp.c:2720
+#, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Manjkajoči blok splošnih atributov slike."
 
 #: plug-ins/common/file-psp.c:2845
+#, c-format
 msgid "Exporting not implemented yet."
 msgstr "Izvoz še ni implementiran."
 
@@ -5422,10 +5485,12 @@ msgid "Export image in the QOI file format (Quite OK Image)"
 msgstr "Izvozi sliko v zapisu datotek QOI (Quite OK Image)"
 
 #: plug-ins/common/file-qoi.c:261
+#, c-format
 msgid "QOI format does not support multiple layers."
 msgstr "Zapis QOI ne podpira več plasti."
 
 #: plug-ins/common/file-qoi.c:311
+#, c-format
 msgid "Failed to read QOI file"
 msgstr "Branje datoteke QOI ni uspelo"
 
@@ -5561,6 +5626,7 @@ msgstr ""
 "SRTM-1 in SRTM-3. Če poznate različico, zaženite z argumentom 1 oz. 3."
 
 #: plug-ins/common/file-raw-data.c:649
+#, c-format
 msgid "RAW export does not support multiple layers."
 msgstr "Izvoz RAW ne podpira več plasti."
 
@@ -5774,6 +5840,7 @@ msgid "Use standard (0) or Run-Length Encoded (1) output"
 msgstr "Uporabi navadni izhod (0) ali izhod, kodiran s tekočo dolžino (1)"
 
 #: plug-ins/common/file-sunras.c:409
+#, c-format
 msgid "SUNRAS format does not support multiple layers."
 msgstr "Zapis SUNRAS ne podpira več plasti."
 
@@ -5840,6 +5907,7 @@ msgid "This image depth is not supported"
 msgstr "Ta globina slike ni podprta"
 
 #: plug-ins/common/file-sunras.c:612
+#, c-format
 msgid "SUNRAS export cannot handle images with alpha channels"
 msgstr "Izvoz SUNRAS ne zmore obdelati slik s kanali alfa"
 
@@ -5852,6 +5920,7 @@ msgstr "Operacije nad neznanimi vrstami datotek niso možne"
 #: plug-ins/common/file-xwd.c:1519 plug-ins/common/file-xwd.c:1633
 #: plug-ins/common/file-xwd.c:1804 plug-ins/common/file-xwd.c:2044
 #: plug-ins/common/file-xwd.c:2233 plug-ins/common/file-xwd.c:2509
+#, c-format
 msgid "EOF encountered on reading"
 msgstr "Pri branju je prišlo do nepredvidenega konca datoteke"
 
@@ -6017,6 +6086,7 @@ msgid "Image origin (0 = top-left, 1 = bottom-left)"
 msgstr "Izvor slike (0 = levo zgoraj, 1 = desno spodaj)"
 
 #: plug-ins/common/file-tga.c:396 plug-ins/common/file-xwd.c:453
+#, c-format
 msgid "TGA format does not support multiple layers."
 msgstr "Zapis TGA ne podpira več plasti."
 
@@ -6203,6 +6273,7 @@ msgid "Suffix of the mask file"
 msgstr "Pripona oz. končnica datoteke maske"
 
 #: plug-ins/common/file-xbm.c:378
+#, c-format
 msgid "XBM format does not support multiple layers."
 msgstr "Zapis XBM ne podpira več plasti."
 
@@ -6258,6 +6329,7 @@ msgid "X11 Mouse Cursor"
 msgstr "Miškin kazalec X11"
 
 #: plug-ins/common/file-xmc.c:541
+#, c-format
 msgid ""
 "Cannot set the hot spot!\n"
 "You must arrange layers so that all of them have an intersection."
@@ -6296,6 +6368,7 @@ msgid "'%s' is too high for an X cursor."
 msgstr "»%s« je previsoka za kazalec X."
 
 #: plug-ins/common/file-xmc.c:1069
+#, c-format
 msgid "A read error occurred."
 msgstr "Prišlo je do napake pri branju."
 
@@ -6505,19 +6578,21 @@ msgid "Alpha threshold"
 msgstr "Prag alfe"
 
 #: plug-ins/common/file-xpm.c:344
+#, c-format
 msgid "XPM format does not support multiple layers."
 msgstr "Zapis XPM ne podpira več plasti."
 
-#: plug-ins/common/file-xpm.c:395 plug-ins/common/file-xpm.c:853
+#: plug-ins/common/file-xpm.c:396 plug-ins/common/file-xpm.c:855
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Napaka pri odpiranju datoteke »%s«"
 
-#: plug-ins/common/file-xpm.c:401 plug-ins/common/file-xpm.c:859
+#: plug-ins/common/file-xpm.c:402 plug-ins/common/file-xpm.c:861
 msgid "XPM file invalid"
 msgstr "Datoteka XPM ni veljavna"
 
-#: plug-ins/common/file-xpm.c:694
+#: plug-ins/common/file-xpm.c:695
+#, c-format
 msgid "Unsupported drawable type"
 msgstr "Nepodprta vrsta risanega predmeta"
 
@@ -6558,6 +6633,7 @@ msgstr ""
 "Število vnosov kataloga barv < število barv"
 
 #: plug-ins/common/file-xwd.c:588
+#, c-format
 msgid "Can't read color entries"
 msgstr "Barvnih vnosov ni mogoče prebrati"
 
@@ -6586,6 +6662,7 @@ msgstr "Napaka pri izvažanju »%s«: "
 
 #: plug-ins/common/file-xwd.c:961 plug-ins/common/file-xwd.c:995
 #: plug-ins/common/file-xwd.c:1032
+#, c-format
 msgid "Seek error"
 msgstr "Napaka pri pozicioniranju"
 
@@ -8502,6 +8579,7 @@ msgid "Webpage"
 msgstr "Spletna stran"
 
 #: plug-ins/common/web-page.c:334
+#, c-format
 msgid "No URL was specified"
 msgstr "URL ni določen"
 
@@ -8650,6 +8728,7 @@ msgstr ""
 "4=RGBA_8888, 5=RGBX_8888)"
 
 #: plug-ins/file-bmp/bmp.c:298
+#, c-format
 msgid "BMP format does not support multiple layers."
 msgstr "Zapis BMP ne podpira več plasti."
 
@@ -9010,18 +9089,22 @@ msgstr ""
 "bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, zastavice: %u"
 
 #: plug-ins/file-dds/ddsread.c:499
+#, c-format
 msgid "Invalid or corrupted DDS header."
 msgstr "Neveljavna ali okvarjena glava DDS."
 
 #: plug-ins/file-dds/ddsread.c:511
+#, c-format
 msgid "Could not allocate a new image."
 msgstr "Nove slike ni mogoče alocirati."
 
 #: plug-ins/file-dds/ddsread.c:523
+#, c-format
 msgid "Error reading palette."
 msgstr "Napaka pri branju palete."
 
 #: plug-ins/file-dds/ddsread.c:812
+#, c-format
 msgid "Invalid DDS format magic number."
 msgstr "Neveljavno magično število zapisa DDS."
 
@@ -9033,6 +9116,7 @@ msgstr ""
 "bo pravilno dekodirana."
 
 #: plug-ins/file-dds/ddsread.c:863
+#, c-format
 msgid "Invalid pixel format."
 msgstr "Neveljavna oblika slikovnih točk."
 
@@ -9052,6 +9136,7 @@ msgid "Invalid bpp value for luminance data: %d"
 msgstr "Neveljavna vrednost bpp za podatke svetlosti: %d"
 
 #: plug-ins/file-dds/ddsread.c:943
+#, c-format
 msgid "Invalid DX10 header"
 msgstr "Neveljavna glava DX10"
 
@@ -9062,10 +9147,12 @@ msgstr "Nepodprta zapis DXGI: %u"
 
 #: plug-ins/file-dds/ddsread.c:1163 plug-ins/file-dds/ddsread.c:1227
 #: plug-ins/file-dds/ddsread.c:1247
+#, c-format
 msgid "Requested data exceeds size of file.\n"
 msgstr "Zahtevani podatki presegajo velikost datoteke.\n"
 
 #: plug-ins/file-dds/ddsread.c:1171 plug-ins/file-dds/ddsread.c:1253
+#, c-format
 msgid "Unexpected EOF.\n"
 msgstr "Nepričakovan konec datoteke (EOF).\n"
 
@@ -9132,6 +9219,7 @@ msgid "G3 fax image"
 msgstr "Slika faksa G3"
 
 #: plug-ins/file-faxg3/faxg3.c:299 plug-ins/file-faxg3/faxg3.c:597
+#, c-format
 msgid "Could not create buffer to process image data."
 msgstr "Ni mogoče ustvariti medpomnilnika za obdelavo podatkov slike."
 
@@ -9141,6 +9229,7 @@ msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
 msgstr "Neveljavne dimenzije slike (%dx%d). Slika je morda okvarjena."
 
 #: plug-ins/file-faxg3/faxg3.c:574
+#, c-format
 msgid "Could not create image."
 msgstr "Slike ni mogoče ustvariti."
 
@@ -9179,6 +9268,7 @@ msgstr ""
 "Izvažanje v FITS obravnava vse vrste slike, razen tistih s kanali alfa."
 
 #: plug-ins/file-fits/fits.c:325
+#, c-format
 msgid "FITS format does not support multiple layers."
 msgstr "Zapis FITS ne podpira več plasti."
 
@@ -9214,11 +9304,13 @@ msgstr "Za DATAMIN/DATAMAX"
 #: plug-ins/file-fli/fli.c:45 plug-ins/file-fli/fli.c:59
 #: plug-ins/file-fli/fli.c:75 plug-ins/file-fli/fli.c:924
 #: plug-ins/file-fli/fli.c:1244 plug-ins/file-fli/fli.c:1524
+#, c-format
 msgid "Error reading from file."
 msgstr "Napaka pri branju iz datoteke."
 
 #: plug-ins/file-fli/fli.c:91 plug-ins/file-fli/fli.c:110
 #: plug-ins/file-fli/fli.c:131
+#, c-format
 msgid "Error writing to file."
 msgstr "Napaka pri zapisovanju datoteke."
 
@@ -9228,6 +9320,7 @@ msgid "Error reading header. "
 msgstr "Napaka pri branju glave. "
 
 #: plug-ins/file-fli/fli.c:187
+#, c-format
 msgid "Invalid header: not a FLI/FLC animation!"
 msgstr "Neveljavna glava: ni animacija FLI/FLC!"
 
@@ -9251,6 +9344,7 @@ msgid "Error writing header. "
 msgstr "Napaka pri zapisovanju glave. "
 
 #: plug-ins/file-fli/fli.c:283
+#, c-format
 msgid "Invalid header: unrecognized magic number!"
 msgstr "Neveljavna glava: neprepoznano magično število!"
 
@@ -9259,14 +9353,17 @@ msgid "Error reading frame. "
 msgstr "Napaka pri branju sličice. "
 
 #: plug-ins/file-fli/fli.c:323
+#, c-format
 msgid "Invalid frame size points past end of file!"
 msgstr "Neveljavne točke velikosti sličice prek konca datoteke!"
 
 #: plug-ins/file-fli/fli.c:353
+#, c-format
 msgid "Invalid chunk size points past end of file!"
 msgstr "Neveljavne točke velikosti kosa prek konca datoteke!"
 
 #: plug-ins/file-fli/fli.c:476
+#, c-format
 msgid "Invalid header: magic number is wrong!"
 msgstr "Neveljavna glava: magično število je napačno!"
 
@@ -9317,6 +9414,7 @@ msgid "Error reading compressed data. "
 msgstr "Napaka pri branju stisnjenih podatkov. "
 
 #: plug-ins/file-fli/fli.c:1022
+#, c-format
 msgid "Overflow reading compressed data. Possibly corrupt file."
 msgstr "Prekoračitev pri branju stisnjenih podatkov. Morda okvarjena datoteka."
 
@@ -9393,6 +9491,7 @@ msgid "Opening thumbnail for '%s'"
 msgstr "Odpri sličico predogleda za »%s« ..."
 
 #: plug-ins/file-icns/file-icns-save.c:228
+#, c-format
 msgid ""
 "Invalid icon size. \n"
 "It will not be exported"
@@ -9401,6 +9500,7 @@ msgstr ""
 "Ne bo izvožena"
 
 #: plug-ins/file-icns/file-icns-save.c:231
+#, c-format
 msgid ""
 "Duplicate layer size. \n"
 "It will not be exported"
@@ -9435,6 +9535,7 @@ msgid "Error writing icns: %s"
 msgstr "Napaka pri zapisovanju icns: %s"
 
 #: plug-ins/file-icns/file-icns-save.c:586
+#, c-format
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
 "24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
@@ -9444,6 +9545,7 @@ msgstr ""
 "1024x1024."
 
 #: plug-ins/file-icns/file-icns-save.c:604
+#, c-format
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
 "24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
@@ -9536,6 +9638,7 @@ msgid "Icon #%d has zero width or height"
 msgstr "Ikona #%d ima ničelno širino ali višino"
 
 #: plug-ins/file-ico/ico-load.c:868 plug-ins/file-ico/ico-load.c:899
+#, c-format
 msgid "Invalid ANI metadata"
 msgstr "Neveljavni metapodatki ANI"
 
@@ -9769,6 +9872,7 @@ msgid "Use restart mar_kers"
 msgstr "Uporabi _označevalnike ponovnega začetka"
 
 #: plug-ins/file-jpeg/jpeg.c:476
+#, c-format
 msgid "JPEG format does not support multiple layers."
 msgstr "Zapis JPEG ne podpira več plasti."
 
@@ -9778,10 +9882,12 @@ msgid "Error loading PSD file: %s"
 msgstr "Napaka pri nalaganju datoteke PSD: %s"
 
 #: plug-ins/file-psd/psd-load.c:440
+#, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "Neveljavna oblika plasti metapodatkov PSD"
 
 #: plug-ins/file-psd/psd-load.c:519
+#, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Ni veljavna datoteka dokumenta Photoshop"
 
@@ -9812,6 +9918,7 @@ msgstr "Nepodprta bitna globina: %d"
 
 #: plug-ins/file-psd/psd-load.c:644 plug-ins/file-psd/psd-load.c:654
 #: plug-ins/file-psd/psd-load.c:894 plug-ins/file-psd/psd-load.c:1253
+#, c-format
 msgid "The file is corrupt!"
 msgstr "Datoteka je okvarjena!"
 
@@ -9836,6 +9943,7 @@ msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost plasti: %dx%d"
 
 #: plug-ins/file-psd/psd-load.c:974
+#, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Nepodprta ali neveljavna velikost podatkov o maski."
 
@@ -9864,10 +9972,12 @@ msgid "Extra"
 msgstr "Dodatno"
 
 #: plug-ins/file-psd/psd-load.c:3123
+#, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nepodprta ali neveljavna velikost kanala"
 
 #: plug-ins/file-psd/psd-load.c:3192
+#, c-format
 msgid "Failed to decompress data"
 msgstr "Podatkov ni mogoče razpakirati"
 
@@ -9953,10 +10063,12 @@ msgstr ""
 "te vrste oz. načine plasti."
 
 #: plug-ins/file-psd/psd-util.c:176
+#, c-format
 msgid "Error reading data. Most likely unexpected end of file."
 msgstr "Napaka pri branju podatkov. Najverjetneje nepričakovan konec datoteke."
 
 #: plug-ins/file-psd/psd-util.c:199
+#, c-format
 msgid "Unexpected end of file"
 msgstr "Nepričakovan konec datoteke"
 
@@ -10180,6 +10292,7 @@ msgid "Compression level (0 = none, 1 = RLE, 2 = ARLE)"
 msgstr "Stopnja stiskanja (0 = brez, 1 = RLE, 2 = ARLE)"
 
 #: plug-ins/file-sgi/sgi.c:276
+#, c-format
 msgid "SGI format does not support multiple layers."
 msgstr "Zapis SGI ne podpira več plasti."
 
@@ -10314,11 +10427,13 @@ msgid "Save GeoTIFF data"
 msgstr "Shrani podatke GeoTIFF"
 
 #: plug-ins/file-tiff/file-tiff.c:463
+#, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
 "Možnost »Shrani plasti« ni nastavljena, ko skušate izvoziti več plasti."
 
 #: plug-ins/file-tiff/file-tiff-load.c:299
+#, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Ni slika TIFF ali pa je slika okvarjena."
 
@@ -10590,6 +10705,7 @@ msgid "Failed a scanline write on row %d"
 msgstr "Spodletelo pisanje črte v vrstici %d"
 
 #: plug-ins/file-tiff/file-tiff-save.c:1198
+#, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Zapisovanje strani z različnimi bitnimi globinami je čudno."
 
@@ -10602,6 +10718,7 @@ msgstr ""
 "zapisu BigTIFF, z drugim algoritmom stiskanja ali prekličite dejanje."
 
 #: plug-ins/file-tiff/file-tiff-save.c:1332
+#, c-format
 msgid ""
 "The assigned soft-proofing profile is not a CMYK profile.\n"
 "This profile will not be included in the exported image."
@@ -10713,6 +10830,7 @@ msgid "Use layers for animation"
 msgstr "Uporabi plasti za animacijo"
 
 #: plug-ins/file-webp/file-webp.c:349
+#, c-format
 msgid ""
 "The WebP plug-in cannot export multiple layer, except in animation mode."
 msgstr "Vstavek WebP ne more izvoziti več plasti, razen v načinu animacije."
@@ -12582,7 +12700,6 @@ msgid "Radi_us"
 msgstr "Ra_dij"
 
 #: plug-ins/gradient-flare/gradient-flare.c:854
-#, fuzzy
 msgid "Radius of GFlare (pixel)"
 msgstr "Polmer GFlare (sl. točke)"
 
@@ -12599,7 +12716,6 @@ msgid "_Hue rotation"
 msgstr "Sukanje _obarvanosti"
 
 #: plug-ins/gradient-flare/gradient-flare.c:866
-#, fuzzy
 msgid "Hue rotation of GFlare (degree)"
 msgstr "Vrtenje odtenka GFlare (stopinje)"
 
@@ -12608,7 +12724,6 @@ msgid "Vector _angle"
 msgstr "Kot vektorj_a"
 
 #: plug-ins/gradient-flare/gradient-flare.c:872
-#, fuzzy
 msgid "Vector angle for second flares (degree)"
 msgstr "Vektorski kot za drugotne prežaritve (stopnja)"
 
@@ -12617,7 +12732,6 @@ msgid "Vector len_gth"
 msgstr "_Dolžina vektorja"
 
 #: plug-ins/gradient-flare/gradient-flare.c:878
-#, fuzzy
 msgid "Vector length for second flares (percentage of Radius)"
 msgstr "Dolžina vektorja za drugotne prežaritve (odstotek polmera)"
 
