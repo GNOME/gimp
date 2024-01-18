@@ -139,7 +139,7 @@ Note 2
   or even install it. Just run it directly from your build directory:
 
   ```sh
-  flatpak-builder --run "${INSTALLDIR}" org.gimp.GIMP-nightly.json gimp-2.99
+  flatpak-builder --run "${INSTALLDIR}" org.gimp.GIMP-nightly.json gimp-X.XX
   ```
 
 ## Maintaining the manifests

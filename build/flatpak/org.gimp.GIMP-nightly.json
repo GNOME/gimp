@@ -4,7 +4,7 @@
     "runtime": "org.gnome.Platform",
     "runtime-version": "master",
     "sdk": "org.gnome.Sdk",
-    "command": "gimp-2.99",
+    "command": "gimp-GIMP_APP_VERSION",
     "separate-locales": false,
     "rename-desktop-file": "gimp.desktop",
     "rename-icon": "gimp",
@@ -826,8 +826,8 @@
                 "-Dcheck-update=no"
             ],
             "cleanup": [
-                "/bin/gimptool-2.99",
-                "/bin/gimp-console-2.99"
+                "/bin/gimptool-GIMP_APP_VERSION",
+                "/bin/gimp-console-GIMP_APP_VERSION"
             ],
             "sources": [
                 {
