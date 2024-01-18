@@ -3,13 +3,13 @@
 # Yuri Syrota <rasta@renome.rovno.ua>, 2000.
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2007.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022, 2023.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-02 00:02+0000\n"
-"PO-Revision-Date: 2023-10-02 09:54+0300\n"
+"POT-Creation-Date: 2024-01-18 13:35+0000\n"
+"PO-Revision-Date: 2024-01-18 19:48+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -18,14 +18,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
 msgstr "Ви_брати…"
 
 #: libgimp/gimpdrawablechooser.c:238
-#| msgid "_Browse..."
 msgid "Browse..."
 msgstr "Вибрати…"
 
@@ -225,7 +224,7 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:396
+#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:398
 #, c-format
 msgid "Export Image as %s"
 msgstr "Експортувати зображення як %s"
@@ -238,36 +237,37 @@ msgstr "Тло"
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:260
+#: libgimp/gimploadprocedure.c:267
+#, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
 "This is a bug in the plug-in code. Contact the plug-in developer."
 msgstr ""
-"Цей додаток завантаження файлів повернув повідомлення SUCCESS як стан без"
-" зображення. Це вада у програмному коді додатка. Повідомте про неї"
-" розробника додатка."
+"Цей додаток завантаження файлів повернув повідомлення SUCCESS як стан без "
+"зображення. Це вада у програмному коді додатка. Повідомте про неї розробника "
+"додатка."
 
 #: libgimp/gimpparamspecs-desc.c:54
 msgid "Allowed values:"
 msgstr "Дозволені значення:"
 
 #. procedure executed successfully
-#: libgimp/gimppdb.c:552
+#: libgimp/gimppdb.c:336
 msgid "success"
 msgstr "успішно"
 
 #. procedure execution failed
-#: libgimp/gimppdb.c:556
+#: libgimp/gimppdb.c:340
 msgid "execution error"
 msgstr "помилка при виконанні"
 
 #. procedure called incorrectly
-#: libgimp/gimppdb.c:560
+#: libgimp/gimppdb.c:344
 msgid "calling error"
 msgstr "помилка виклику"
 
 #. procedure execution cancelled
-#: libgimp/gimppdb.c:564
+#: libgimp/gimppdb.c:348
 msgid "cancelled"
 msgstr "скасовано"
 
@@ -361,12 +361,12 @@ msgstr[0] "%d процедура збігається із запитом"
 msgstr[1] "%d процедури збігають із запитом"
 msgstr[2] "%d процедур збігають із запитом"
 
-#: libgimp/gimpprocedure.c:1959
+#: libgimp/gimpprocedure.c:2056
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Процедура «%s» не повернула жодного значення"
 
-#: libgimp/gimpprocedure.c:2050
+#: libgimp/gimpprocedure.c:2183
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -375,7 +375,7 @@ msgstr ""
 "Процедура «%s» повернула некоректний тип значення для значення результату "
 "«%s» (#%d). Очікувався %s, отримано %s."
 
-#: libgimp/gimpprocedure.c:2062
+#: libgimp/gimpprocedure.c:2195
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
@@ -384,7 +384,7 @@ msgstr ""
 "Процедура «%s» викликана з деяким значенням аргументу «%s» (#%d). "
 "Очікувалось %s, отримано %s."
 
-#: libgimp/gimpprocedure.c:2097
+#: libgimp/gimpprocedure.c:2230
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -393,7 +393,7 @@ msgstr ""
 "Процедура «%s» повернула «%s» як значення «%s» (#%d, тип %s). Значення "
 "знаходиться поза межами припустимого діапазону"
 
-#: libgimp/gimpprocedure.c:2111
+#: libgimp/gimpprocedure.c:2244
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -402,12 +402,12 @@ msgstr ""
 "Процедура «%s» викликана із значенням «%s» аргументу «%s» (#%d, тип %s). "
 "Значення знаходиться поза межами допустимого діапазону."
 
-#: libgimp/gimpprocedure.c:2155
+#: libgimp/gimpprocedure.c:2288
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Процедура «%s» повернула некоректний рядок UTF-8 для аргументу «%s»"
 
-#: libgimp/gimpprocedure.c:2165
+#: libgimp/gimpprocedure.c:2298
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -521,7 +521,6 @@ msgstr "Вибір шару: %s"
 
 #: libgimp/gimppropwidgets.c:193
 #, c-format
-#| msgid "Channel:"
 msgid "Choose channel: %s"
 msgstr "Вибір каналу: %s"
 
@@ -530,60 +529,60 @@ msgstr "Вибір каналу: %s"
 msgid "Choose drawable: %s"
 msgstr "Вибір малюнка: %s"
 
-#: libgimp/gimpsaveprocedure.c:460
+#: libgimp/gimpsaveprocedure.c:467
 msgid "Save _Exif"
 msgstr "Зберегти _Exif"
 
-#: libgimp/gimpsaveprocedure.c:461
+#: libgimp/gimpsaveprocedure.c:468
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Зберегти метадані Exif (Exchangeable image file format)"
 
-#: libgimp/gimpsaveprocedure.c:466
+#: libgimp/gimpsaveprocedure.c:473
 msgid "Save _IPTC"
 msgstr "Зберегти _IPTC"
 
-#: libgimp/gimpsaveprocedure.c:467
+#: libgimp/gimpsaveprocedure.c:474
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
 "Зберегти метадані IPTC (International Press Telecommunications Council)"
 
-#: libgimp/gimpsaveprocedure.c:472
+#: libgimp/gimpsaveprocedure.c:479
 msgid "Save _XMP"
 msgstr "Зберегти дані _XMP"
 
-#: libgimp/gimpsaveprocedure.c:473
+#: libgimp/gimpsaveprocedure.c:480
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "Зберегти метадані XMP (Extensible Metadata Platform)"
 
-#: libgimp/gimpsaveprocedure.c:478
+#: libgimp/gimpsaveprocedure.c:485
 msgid "Save color _profile"
 msgstr "Зберегти _профіль кольорів"
 
-#: libgimp/gimpsaveprocedure.c:479
+#: libgimp/gimpsaveprocedure.c:486
 msgid "Save the ICC color profile as metadata"
 msgstr "Зберегти профіль кольорів ICC як метадані"
 
-#: libgimp/gimpsaveprocedure.c:484
+#: libgimp/gimpsaveprocedure.c:491
 msgid "Save _thumbnail"
 msgstr "Зберегти _ескіз"
 
-#: libgimp/gimpsaveprocedure.c:485
+#: libgimp/gimpsaveprocedure.c:492
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Зберегти зменшену версію зображення як метадані"
 
-#: libgimp/gimpsaveprocedure.c:491
+#: libgimp/gimpsaveprocedure.c:498
 msgid "Save c_omment"
 msgstr "З_берегти коментар"
 
-#: libgimp/gimpsaveprocedure.c:492
+#: libgimp/gimpsaveprocedure.c:499
 msgid "Save a comment as metadata"
 msgstr "Зберегти коментар як метадані"
 
-#: libgimp/gimpsaveprocedure.c:496
+#: libgimp/gimpsaveprocedure.c:503
 msgid "Comment"
 msgstr "Коментар"
 
-#: libgimp/gimpsaveprocedure.c:497
+#: libgimp/gimpsaveprocedure.c:504
 msgid "Image comment"
 msgstr "Коментар до зображення"
 
@@ -1639,27 +1638,33 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Пропорційна"
 
-#: libgimpbase/gimpmetadata.c:1215
+#: libgimpbase/gimpmetadata.c:1243
+#, c-format
 msgid "Can load metadata only from local files"
 msgstr "Метадані можна завантажувати лише з локальних файлів"
 
-#: libgimpbase/gimpmetadata.c:1271
+#: libgimpbase/gimpmetadata.c:1299
+#, c-format
 msgid "Can save metadata only to local files"
 msgstr "Метадані можна записувати лише в локальні файли"
 
-#: libgimpbase/gimpmetadata.c:1319
+#: libgimpbase/gimpmetadata.c:1347
+#, c-format
 msgid "Invalid Exif data size."
 msgstr "Неправильний розмір даних Exif."
 
-#: libgimpbase/gimpmetadata.c:1348
+#: libgimpbase/gimpmetadata.c:1376
+#, c-format
 msgid "Parsing Exif data failed."
 msgstr "Не вдалось розібрати дані Exif."
 
-#: libgimpbase/gimpmetadata.c:1398
+#: libgimpbase/gimpmetadata.c:1426
+#, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Не вдалось розібрати дані IPTC."
 
-#: libgimpbase/gimpmetadata.c:1446
+#: libgimpbase/gimpmetadata.c:1474
+#, c-format
 msgid "Parsing XMP data failed."
 msgstr "Не вдалось розібрати дані XMP."
 
@@ -2091,6 +2096,7 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr "Не вдається створити каталог файлів попереднього перегляду '%s'."
 
 #: libgimpthumb/gimpthumbnail.c:481
+#, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "К ескізі немає тегу Thumb::URI"
 
@@ -2197,7 +2203,15 @@ msgstr "Старий:"
 msgid "HTML _notation:"
 msgstr "_Нотація HTML:"
 
-#: libgimpwidgets/gimpdialog.c:181
+#: libgimpwidgets/gimpcontroller.c:105
+msgid "The controller's name"
+msgstr "Назва контролера"
+
+#: libgimpwidgets/gimpcontroller.c:113
+msgid "The controller's state, as human-readable string"
+msgstr "Стан контролера, зручний для читання рядок"
+
+#: libgimpwidgets/gimpdialog.c:198
 msgid "_Help"
 msgstr "_Довідка"
 
