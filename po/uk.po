@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-02 04:05+0000\n"
-"PO-Revision-Date: 2024-01-02 09:29+0200\n"
+"POT-Creation-Date: 2024-01-18 13:34+0000\n"
+"PO-Revision-Date: 2024-01-18 19:50+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2457,7 +2457,7 @@ msgstr "240 секунд"
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:334 app/widgets/gimphelp.c:439
 #: app/widgets/gimphelp.c:774 app/widgets/gimpiconpicker.c:484
-#: app/widgets/gimpmodifierseditor.c:684 app/widgets/gimppdbdialog.c:148
+#: app/widgets/gimpmodifierseditor.c:688 app/widgets/gimppdbdialog.c:148
 #: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:711
 msgid "_Cancel"
 msgstr "_Скасувати"
@@ -4538,8 +4538,6 @@ msgid "_Edge..."
 msgstr "_Межа…"
 
 #: app/actions/filters-actions.c:281
-#| msgctxt "filters-action"
-#| msgid "_Laplace"
 msgctxt "filters-action"
 msgid "_Laplace..."
 msgstr "_Лаплас…"
@@ -10007,7 +10005,7 @@ msgstr "Відкрити дисплей"
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
 #: app/widgets/gimpcontrollereditor.c:663
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
-#: app/widgets/gimpfiledialog.c:178 app/widgets/gimpmodifierseditor.c:685
+#: app/widgets/gimpfiledialog.c:178 app/widgets/gimpmodifierseditor.c:689
 #: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
 msgstr "_Гаразд"
@@ -12710,6 +12708,7 @@ msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr "Додаток AppData повинен мати тип \"addon\", натомість знайдено «%s»."
 
 #: app/core/gimpextension.c:382
+#, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
 msgstr "Додаток AppData повинен розширювати \"org.gimp.GIMP\"."
 
@@ -12719,6 +12718,7 @@ msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr "У додатка AppData ідентифікатор («%s») і тека («%s») мають збігатись."
 
 #: app/core/gimpextension.c:411
+#, c-format
 msgid "Extension AppData must advertise a version in a <release> tag."
 msgstr "Додаток AppData повинен вказувати версію в тегові <release>."
 
@@ -12728,6 +12728,7 @@ msgid "Unsupported <requires> \"%s\" (type %s)."
 msgstr "Не підтримується <потрібно> «%s» (тип %s)."
 
 #: app/core/gimpextension.c:460
+#, c-format
 msgid ""
 "<requires><id>org.gimp.GIMP</id></requires> for version comparison is "
 "mandatory."
@@ -12756,6 +12757,7 @@ msgid "'%s' is not a valid file."
 msgstr "«%s» не є правильним файлом."
 
 #: app/core/gimpextensionmanager.c:841
+#, c-format
 msgid "System extensions cannot be uninstalled."
 msgstr "Загальносистемні розширення не може бути вилучено."
 
@@ -12884,11 +12886,13 @@ msgid "No patterns available for this operation."
 msgstr "Немає доступних текстур для цієї операції."
 
 #: app/core/gimp-utils.c:1467
+#, c-format
 msgid "This parser does not support imbricated lists."
 msgstr ""
 "У цьому засобі обробки не передбачено підтримки упорядкованих списків."
 
 #: app/core/gimp-utils.c:1490
+#, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> має бути вкладено до теґів <ol> або <ul>."
 
@@ -12898,14 +12902,17 @@ msgid "Unknown tag <%s>."
 msgstr "Невідомий програмі теґ <%s>."
 
 #: app/core/gimpbrush-load.c:173
+#, c-format
 msgid "Fatal parse error in brush file: Width = 0."
 msgstr "Критична помилка аналізу файла пензля: Ширина = 0."
 
 #: app/core/gimpbrush-load.c:180
+#, c-format
 msgid "Fatal parse error in brush file: Height = 0."
 msgstr "Критична помилка аналізу файла пензля: Висота = 0."
 
 #: app/core/gimpbrush-load.c:187
+#, c-format
 msgid "Fatal parse error in brush file: Bytes = 0."
 msgstr "Критична помилка аналізу файла пензля: Байтів = 0."
 
@@ -12926,6 +12933,7 @@ msgid "Fatal parse error in brush file: Unknown version %d."
 msgstr "Критична помилка аналізу файла пензля: невідома версія %d."
 
 #: app/core/gimpbrush-load.c:242
+#, c-format
 msgid "Unsupported brush format"
 msgstr "Непідтримуваний формат пензлів"
 
@@ -12962,18 +12970,21 @@ msgid "Unable to decode abr format version %d."
 msgstr "Не вдалося декодувати версія формату abr %d."
 
 #: app/core/gimpbrush-load.c:637 app/core/gimpbrush-load.c:856
+#, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr ""
 "Критична помилка під час обробки файла пензля: пошкоджено значення розміру "
 "пензля."
 
 #: app/core/gimpbrush-load.c:724 app/core/gimpbrush-load.c:914
+#, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr ""
 "Критична помилка під час обробки файла пензля: розмірності пензля поза "
 "припустимим діапазоном."
 
 #: app/core/gimpbrush-load.c:736
+#, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr ""
 "Критична помилка аналізу файла пензля: широкі пензлі не підтримуються."
@@ -12983,6 +12994,7 @@ msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr "Критична помилка аналізу файла пензля: дані у файлі обрізано: "
 
 #: app/core/gimpbrush-load.c:922
+#, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr "Критична помилка аналізу файла пензля: невідомий спосіб стискання."
 
@@ -12995,6 +13007,7 @@ msgstr ""
 "abr %d."
 
 #: app/core/gimpbrush-load.c:1209
+#, c-format
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr ""
 "Критична помилка під час обробки файла пензля: пошкоджено стиснені RLE дані "
@@ -13013,38 +13026,47 @@ msgid "Clipboard Image"
 msgstr "Зображення з буфера"
 
 #: app/core/gimpbrushgenerated-load.c:76
+#, c-format
 msgid "Not a GIMP brush file."
 msgstr "Не є файлом пензлів  GIMP."
 
 #: app/core/gimpbrushgenerated-load.c:96
+#, c-format
 msgid "Unknown GIMP brush version."
 msgstr "Невідома версія пензля GIMP."
 
 #: app/core/gimpbrushgenerated-load.c:153
+#, c-format
 msgid "Unknown GIMP brush shape."
 msgstr "Невідома форма пензля GIMP."
 
 #: app/core/gimpbrushgenerated-load.c:173
+#, c-format
 msgid "Invalid brush spacing."
 msgstr "Некоректний інтервал пензля."
 
 #: app/core/gimpbrushgenerated-load.c:190
+#, c-format
 msgid "Invalid brush radius."
 msgstr "Некоректний радіус пензля."
 
 #: app/core/gimpbrushgenerated-load.c:209
+#, c-format
 msgid "Invalid brush spike count."
 msgstr "Некоректна кількість променів пензля."
 
 #: app/core/gimpbrushgenerated-load.c:226
+#, c-format
 msgid "Invalid brush hardness."
 msgstr "Некоректна твердість пензля."
 
 #: app/core/gimpbrushgenerated-load.c:242
+#, c-format
 msgid "Invalid brush aspect ratio."
 msgstr "Некоректне відношення сторін пензля."
 
 #: app/core/gimpbrushgenerated-load.c:258
+#, c-format
 msgid "Invalid brush angle."
 msgstr "Некоректний кут пензля."
 
@@ -13372,6 +13394,7 @@ msgstr ""
 "розділу „Теки“."
 
 #: app/core/gimpdatafactory.c:1000
+#, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
 "your data search path. You probably edited the gimprc file manually, please "
@@ -13382,6 +13405,7 @@ msgstr ""
 "поправте це в налаштуваннях у вікні параметрів «Теки»."
 
 #: app/core/gimpdatafactory.c:1010
+#, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "Каталог з правами на запис даних не вказано."
 
@@ -13560,6 +13584,7 @@ msgid "Fill with Pattern"
 msgstr "Заповнити взірцем"
 
 #: app/core/gimpgradient-load.c:73
+#, c-format
 msgid "Not a GIMP gradient file."
 msgstr "Не файл градієнтів GIMP"
 
@@ -13569,6 +13594,7 @@ msgid "Invalid UTF-8 string in gradient file '%s'."
 msgstr "Неправильний рядок UTF-8 у файлі градієнта «%s»."
 
 #: app/core/gimpgradient-load.c:122
+#, c-format
 msgid "File is corrupt."
 msgstr "Файл - пошкоджений."
 
@@ -13580,6 +13606,7 @@ msgid "Corrupt segment %d."
 msgstr "Пошкоджений сегмент %d."
 
 #: app/core/gimpgradient-load.c:236 app/core/gimpgradient-load.c:246
+#, c-format
 msgid "Segments do not span the range 0-1."
 msgstr "Сегменти не охоплюють діапазон 0-1."
 
@@ -13589,6 +13616,7 @@ msgid "In line %d of gradient file: "
 msgstr "У рядка %d файла градієнта: "
 
 #: app/core/gimpgradient-load.c:337
+#, c-format
 msgid "No linear gradients found."
 msgstr "Не знайдено лінійних градієнтів."
 
@@ -13815,6 +13843,7 @@ msgid "Change Image Unit"
 msgstr "Змінити одиницю вимірювання"
 
 #: app/core/gimpimage.c:4314
+#, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
@@ -14198,7 +14227,7 @@ msgstr[1] "%d x %d точки"
 msgstr[2] "%d x %d точок"
 msgstr[3] "%d x %d точка"
 
-#: app/core/gimpimagefile.c:870 app/display/gimpdisplayshell-title.c:358
+#: app/core/gimpimagefile.c:870 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -14421,6 +14450,7 @@ msgid "Layer Mask to Selection"
 msgstr "Маска шару до вибору"
 
 #: app/core/gimplayermask.c:203
+#, c-format
 msgid "Cannot rename layer masks."
 msgstr "Не вдалось перейменувати маски шарів."
 
@@ -14466,10 +14496,12 @@ msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "Найдовший розрив прямої (у пікселях) для з'єднання"
 
 #: app/core/gimpmybrush-load.c:75
+#, c-format
 msgid "MyPaint brush file is unreasonably large, skipping."
 msgstr "Файл пензля MyPaint несподівано великий, пропускаємо."
 
 #: app/core/gimpmybrush-load.c:93
+#, c-format
 msgid "Failed to deserialize MyPaint brush."
 msgstr "Не вдалося перетворити пензель MyPaint з послідовного формату даних."
 
@@ -14486,6 +14518,7 @@ msgid "Unknown type of palette file: %s"
 msgstr "Невідомий тип файла палітри: %s"
 
 #: app/core/gimppalette-load.c:120
+#, c-format
 msgid "Missing magic header."
 msgstr "Відсутній чарівний заголовок."
 
@@ -14495,6 +14528,7 @@ msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Неправильний рядок UTF-8 у файлі палітри «%s»"
 
 #: app/core/gimppalette-load.c:163
+#, c-format
 msgid "Invalid column count."
 msgstr "Некоректна кількість стовпчиків."
 
@@ -14630,10 +14664,12 @@ msgid "Invalid ASE name size."
 msgstr "Некоректний розмір назви ASE."
 
 #: app/core/gimppalette-load.c:1374
+#, c-format
 msgid "Unable to read SBZ file"
 msgstr "Не вдалося прочитати дані з файла SBZ"
 
 #: app/core/gimppalette-load.c:1438
+#, c-format
 msgid "Unable to open SBZ file"
 msgstr "Не вдалося відкрити файл SBZ"
 
@@ -15178,29 +15214,29 @@ msgstr ""
 "Максим Дзюманенко <dziumanenko@gmail.com>\n"
 "Daniel Korostil <ted.korostiled@gmail.com>"
 
-#: app/dialogs/about-dialog.c:349
+#: app/dialogs/about-dialog.c:352
 msgid "Update available!"
 msgstr "Маємо оновлення!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:379
+#: app/dialogs/about-dialog.c:382
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "Отримати GIMP %s, модифікація %d (випущено %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:389
+#: app/dialogs/about-dialog.c:392
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Коментар до випуску</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:394
+#: app/dialogs/about-dialog.c:397
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Отримати GIMP %s (випущено %s)\n"
 
-#: app/dialogs/about-dialog.c:419 app/dialogs/about-dialog.c:440
+#: app/dialogs/about-dialog.c:422 app/dialogs/about-dialog.c:443
 msgid "Check for updates"
 msgstr "Шукати оновлення"
 
@@ -15208,16 +15244,16 @@ msgstr "Шукати оновлення"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:459
+#: app/dialogs/about-dialog.c:462
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Остання перевірка на %s, %s"
 
-#: app/dialogs/about-dialog.c:686
+#: app/dialogs/about-dialog.c:689
 msgid "GIMP is brought to you by"
 msgstr "GIMP створили для вас"
 
-#: app/dialogs/about-dialog.c:762
+#: app/dialogs/about-dialog.c:765
 #, c-format
 msgid ""
 "This is an unstable development release\n"
@@ -18587,6 +18623,7 @@ msgstr "Опускання нового контуру"
 #: app/display/gimpdisplayshell-dnd.c:365 app/tools/gimpbucketfilltool.c:610
 #: app/tools/gimpcagetool.c:241 app/tools/gimpfiltertool.c:307
 #: app/tools/gimpgradienttool.c:274 app/tools/gimpselectiontool.c:567
+#, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Неможливо змінити точки растру групи шарів"
 
@@ -18692,16 +18729,16 @@ msgstr "_Інший (%s) …"
 msgid "Custom Zoom (%s)..."
 msgstr "Нетиповий масштаб (%s)…"
 
-#: app/display/gimpdisplayshell-title.c:299
+#: app/display/gimpdisplayshell-title.c:329
 msgid "(modified)"
 msgstr "(змінено)"
 
-#: app/display/gimpdisplayshell-title.c:304
+#: app/display/gimpdisplayshell-title.c:334
 msgid "(clean)"
 msgstr "(не змінено)"
 
-#: app/display/gimpdisplayshell-title.c:374
-#: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1198
+#: app/display/gimpdisplayshell-title.c:410
+#: app/display/gimpdisplayshell-title.c:419 app/widgets/gimpactiongroup.c:1198
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
 #: app/widgets/gimpdeviceinfo.c:1148 app/widgets/gimpdeviceinfo.c:1173
 msgid "(none)"
@@ -19298,7 +19335,7 @@ msgstr "Розширення GIMP"
 #: app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195
 #: app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197 app/gegl/gimp-babl.c:198
 #: app/gegl/gimp-babl.c:199 app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201
-#: app/plug-in/gimppluginprocedure.c:1009
+#: app/plug-in/gimppluginprocedure.c:1019
 msgid "RGB"
 msgstr "RGB"
 
@@ -19317,7 +19354,7 @@ msgstr "RGB-альфа"
 #: app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233
 #: app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235 app/gegl/gimp-babl.c:236
 #: app/gegl/gimp-babl.c:237 app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239
-#: app/plug-in/gimppluginprocedure.c:1027
+#: app/plug-in/gimppluginprocedure.c:1037
 msgid "Grayscale"
 msgstr "Відтінки сірого"
 
@@ -19366,7 +19403,7 @@ msgstr "Складова альфи"
 msgid "Indexed-alpha"
 msgstr "Індексована альфа"
 
-#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1045
+#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1055
 msgid "Indexed"
 msgstr "Індексований"
 
@@ -21565,6 +21602,7 @@ msgid "Resource '%s' is not renamable"
 msgstr "Ресурс «%s» не можна перейменовувати"
 
 #: app/pdb/text-layer-cmds.c:98
+#, c-format
 msgid "Failed to create text layer"
 msgstr "Не вдалось створити текстовий шар"
 
@@ -21735,35 +21773,35 @@ msgstr "Ініціалізація доповнень"
 msgid "Starting Extensions"
 msgstr "Запуск розширень"
 
-#: app/plug-in/gimppluginprocedure.c:1013
+#: app/plug-in/gimppluginprocedure.c:1023
 msgid "RGB without alpha"
 msgstr "RGB без прозорості"
 
-#: app/plug-in/gimppluginprocedure.c:1017
+#: app/plug-in/gimppluginprocedure.c:1027
 msgid "RGB with alpha"
 msgstr "RGB із прозорістю"
 
-#: app/plug-in/gimppluginprocedure.c:1031
+#: app/plug-in/gimppluginprocedure.c:1041
 msgid "Grayscale without alpha"
 msgstr "Відтінки сірого без прозорості"
 
-#: app/plug-in/gimppluginprocedure.c:1035
+#: app/plug-in/gimppluginprocedure.c:1045
 msgid "Grayscale with alpha"
 msgstr "Відтінки сірого із прозорістю"
 
-#: app/plug-in/gimppluginprocedure.c:1049
+#: app/plug-in/gimppluginprocedure.c:1059
 msgid "Indexed without alpha"
 msgstr "Індексовані без прозорості"
 
-#: app/plug-in/gimppluginprocedure.c:1053
+#: app/plug-in/gimppluginprocedure.c:1063
 msgid "Indexed with alpha"
 msgstr "Індексовані із прозорістю"
 
-#: app/plug-in/gimppluginprocedure.c:1064
+#: app/plug-in/gimppluginprocedure.c:1074
 msgid "This plug-in only works on the following layer types:"
 msgstr "Цей додаток працює лише з такими типами шарів:"
 
-#: app/plug-in/gimppluginprocedure.c:1297
+#: app/plug-in/gimppluginprocedure.c:1307
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -21772,7 +21810,7 @@ msgstr ""
 "Помилка виклику «%s»:\n"
 "%s"
 
-#: app/plug-in/gimppluginprocedure.c:1309
+#: app/plug-in/gimppluginprocedure.c:1319
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -23277,6 +23315,7 @@ msgid "Show on-canvas filter controls"
 msgstr "Показувати засоби керування фільтром на полотні"
 
 #: app/tools/gimpfiltertool.c:316 app/tools/gimpselectiontool.c:575
+#, c-format
 msgid "A selected item's pixels are locked."
 msgstr "Точки растру позначеного запису заблоковані від змін."
 
@@ -23843,6 +23882,12 @@ msgstr "Вирівнювання"
 #: app/tools/gimpinkoptions-gui.c:75
 msgid "Sensitivity"
 msgstr "Чутливість"
+
+#: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:98
+#: app/tools/gimppaintoptions-gui.c:530
+#| msgid "Fill layer mask with"
+msgid "Fill Layer Mask With"
+msgstr "Заповнити маску шару"
 
 #: app/tools/gimpinktool.c:72
 msgid "Ink Tool: Calligraphy-style painting"
@@ -24720,10 +24765,12 @@ msgid "Click to anchor the floating selection"
 msgstr "Натисніть, щоб причепити рухоме вибирання"
 
 #: app/tools/gimpselectiontool.c:536
+#, c-format
 msgid "Cannot subtract from an empty selection."
 msgstr "Неможливо відняти щось від порожнього позначення."
 
 #: app/tools/gimpselectiontool.c:547
+#, c-format
 msgid "Cannot intersect with an empty selection."
 msgstr "Перетин із порожнім позначенням неможливий."
 
@@ -26634,6 +26681,7 @@ msgstr "Сталася помилка у GIMP: %s"
 #. * part anyway.
 #.
 #: app/widgets/gimpcriticaldialog.c:576
+#, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "Сталося декілька критичних помилок у GIMP!"
 
@@ -27296,16 +27344,16 @@ msgstr "Усі експортовані зображення"
 msgid "_Help"
 msgstr "_Довідка"
 
-#: app/widgets/gimpfiledialog.c:777
+#: app/widgets/gimpfiledialog.c:780
 msgid "Show _All Files"
 msgstr "Показати _усі файли"
 
-#: app/widgets/gimpfiledialog.c:809
+#: app/widgets/gimpfiledialog.c:812
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Вибрати _тип файла (%s)"
 
-#: app/widgets/gimpfiledialog.c:811
+#: app/widgets/gimpfiledialog.c:814
 msgid "Select File _Type"
 msgstr "Вибрати _тип файла"
 
@@ -27772,13 +27820,13 @@ msgstr "Натисніть тут, щоб встановити модифіка�
 msgid "Modifiers cannot be customized on the primary button."
 msgstr "Не можна налаштовувати модифікатори для основної кнопки."
 
-#: app/widgets/gimpmodifierseditor.c:352
+#: app/widgets/gimpmodifierseditor.c:356
 #, c-format
 msgid "Editing modifiers for button %d of %s"
 msgstr "Редагуємо модифікатори для кнопки %d %s"
 
 #. TRANSLATORS: %d is an input device button number.
-#: app/widgets/gimpmodifierseditor.c:356 app/widgets/gimpmodifierseditor.c:672
+#: app/widgets/gimpmodifierseditor.c:360 app/widgets/gimpmodifierseditor.c:676
 #, c-format
 msgid "Editing modifiers for button %d"
 msgstr "Редагуємо модифікатори для кнопки %d"
@@ -27786,19 +27834,19 @@ msgstr "Редагуємо модифікатори для кнопки %d"
 #. TRANSLATORS: first %s is modifier keys, %d is button
 #. * number, last %s is an input device (e.g. a mouse) name.
 #.
-#: app/widgets/gimpmodifierseditor.c:655
+#: app/widgets/gimpmodifierseditor.c:659
 #, c-format
 msgid "Select Action for %s button %d of %s"
 msgstr "Виберіть дію для кнопки %s %d %s"
 
 #. TRANSLATORS: %s is modifiers key, %d is a button number.
-#: app/widgets/gimpmodifierseditor.c:660
+#: app/widgets/gimpmodifierseditor.c:664
 #, c-format
 msgid "Editing modifiers for %s button %d"
 msgstr "Редагуємо модифікатори для кнопки %s %d"
 
 #. TRANSLATORS: %d is a button number, %s is the device (e.g. a mouse) name.
-#: app/widgets/gimpmodifierseditor.c:667
+#: app/widgets/gimpmodifierseditor.c:671
 #, c-format
 msgid "Select Action for button %d of %s"
 msgstr "Виберіть дію для кнопки %d %s"
@@ -27900,12 +27948,12 @@ msgstr "Метадані не будуть видимі у GIMP версій с�
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "shortcut: Ctrl+Alt+O"
 #.
-#: app/widgets/gimpsearchpopup.c:284
+#: app/widgets/gimpsearchpopup.c:292
 msgid "shortcut"
 msgstr "скорочення"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:288 app/widgets/gimpsearchpopup.c:310
+#: app/widgets/gimpsearchpopup.c:296 app/widgets/gimpsearchpopup.c:318
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -27914,7 +27962,7 @@ msgstr "%s: %s"
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:306
+#: app/widgets/gimpsearchpopup.c:314
 msgid "menu"
 msgstr "меню"
 
