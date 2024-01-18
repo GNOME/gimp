@@ -1,18 +1,18 @@
 # Swedish messages for libgimp.
-# Copyright © 1999-2023 Free Software Foundation, Inc.
+# Copyright © 1999-2024 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se> 2003.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2011, 2012.
 # Sebastian Rasmussen <sebras@gmail.com>, 2016, 2017.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2017, 2018, 2019, 2020, 2022, 2023.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2017, 2018, 2019, 2020, 2022, 2023, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-21 22:15+0000\n"
-"PO-Revision-Date: 2023-12-23 15:10+0100\n"
+"POT-Creation-Date: 2024-01-18 13:35+0000\n"
+"PO-Revision-Date: 2024-01-18 22:00+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
@@ -79,7 +79,7 @@ msgstr "Insticksmodulen %s kan inte hantera lagermasker"
 
 #: libgimp/gimpexport.c:396
 msgid "Apply Layer Masks"
-msgstr "Applicera lagermask"
+msgstr "Applicera lagermasker"
 
 #: libgimp/gimpexport.c:404
 #, c-format
@@ -245,6 +245,7 @@ msgid "GIMP"
 msgstr "GIMP"
 
 #: libgimp/gimploadprocedure.c:267
+#, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
 "This is a bug in the plug-in code. Contact the plug-in developer."
@@ -1640,27 +1641,33 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Beskär med förhållande"
 
-#: libgimpbase/gimpmetadata.c:1215
+#: libgimpbase/gimpmetadata.c:1243
+#, c-format
 msgid "Can load metadata only from local files"
 msgstr "Kan endast läsa in metadata från lokala filer"
 
-#: libgimpbase/gimpmetadata.c:1271
+#: libgimpbase/gimpmetadata.c:1299
+#, c-format
 msgid "Can save metadata only to local files"
 msgstr "Kan endast spara metadata till lokala filer"
 
-#: libgimpbase/gimpmetadata.c:1319
+#: libgimpbase/gimpmetadata.c:1347
+#, c-format
 msgid "Invalid Exif data size."
 msgstr "Ogiltig storlek på Exif-data."
 
-#: libgimpbase/gimpmetadata.c:1348
+#: libgimpbase/gimpmetadata.c:1376
+#, c-format
 msgid "Parsing Exif data failed."
 msgstr "Misslyckades med tolkning av Exif-data."
 
-#: libgimpbase/gimpmetadata.c:1398
+#: libgimpbase/gimpmetadata.c:1426
+#, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Tolkning av IPTC-data misslyckades."
 
-#: libgimpbase/gimpmetadata.c:1446
+#: libgimpbase/gimpmetadata.c:1474
+#, c-format
 msgid "Parsing XMP data failed."
 msgstr "Misslyckades med tolkning av XMP-data."
 
@@ -2086,6 +2093,7 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr "Kunde inte skapa miniatyrbildskatalog ”%s”."
 
 #: libgimpthumb/gimpthumbnail.c:481
+#, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Miniatyrbilden innehåller ingen Thumb::URI-tagg"
 
@@ -2191,6 +2199,14 @@ msgstr "Gammal:"
 #: libgimpwidgets/gimpcolorselection.c:343
 msgid "HTML _notation:"
 msgstr "HTML-_notation:"
+
+#: libgimpwidgets/gimpcontroller.c:105
+msgid "The controller's name"
+msgstr "Styrenhetens namn"
+
+#: libgimpwidgets/gimpcontroller.c:113
+msgid "The controller's state, as human-readable string"
+msgstr "Styrenhetens tillstånd, som en läsbar sträng"
 
 #: libgimpwidgets/gimpdialog.c:198
 msgid "_Help"
