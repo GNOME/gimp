@@ -1,6 +1,6 @@
 ;; -*-scheme-*-
 
-(define (script-fu-guides-from-selection image drawable)
+(define (script-fu-guides-from-selection image drawables)
   (let* (
         (boundaries (gimp-selection-bounds image))
         ;; non-empty INT32 TRUE if there is a selection
@@ -28,15 +28,14 @@
   )
 )
 
-(script-fu-register "script-fu-guides-from-selection"
+(script-fu-register-filter "script-fu-guides-from-selection"
   _"New Guides from _Selection"
   _"Create four guides around the bounding box of the current selection"
   "Alan Horkan"
   "Alan Horkan, 2004.  Public Domain."
   "2004-08-13"
   "*"
-  SF-IMAGE    "Image"    0
-  SF-DRAWABLE "Drawable" 0
+  SF-ONE-OR-MORE-DRAWABLE  ; doesn't matter how many drawables are selected
 )
 
 (script-fu-menu-register "script-fu-guides-from-selection"
