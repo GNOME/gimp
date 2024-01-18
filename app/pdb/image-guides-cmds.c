@@ -163,11 +163,11 @@ image_find_next_guide_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  guint guide;
+  gint guide;
   guint next_guide = 0;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  guide = g_value_get_uint (gimp_value_array_index (args, 1));
+  guide = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -390,11 +390,11 @@ register_image_guides_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uint ("guide",
-                                                  "guide",
-                                                  "The ID of the current guide (0 if first invocation)",
-                                                  1, G_MAXUINT32, 1,
-                                                  GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               g_param_spec_int ("guide",
+                                                 "guide",
+                                                 "The ID of the current guide (0 if first invocation)",
+                                                 0, G_MAXINT32, 1,
+                                                 GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_uint ("next-guide",
                                                       "next guide",

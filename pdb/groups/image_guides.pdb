@@ -142,7 +142,7 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-	{ name => 'guide', type => 'guide', no_validate => 1,
+	{ name => 'guide', type => '0 <= int32', default => 1, no_validate => 1,
 	  desc => 'The ID of the current guide (0 if first invocation)' }
     );
 

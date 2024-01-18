@@ -39,7 +39,7 @@ guint               gimp_image_add_vguide            (GimpImage *image,
 gboolean            gimp_image_delete_guide          (GimpImage *image,
                                                       guint      guide);
 guint               gimp_image_find_next_guide       (GimpImage *image,
-                                                      guint      guide);
+                                                      gint       guide);
 GimpOrientationType gimp_image_get_guide_orientation (GimpImage *image,
                                                       guint      guide);
 gint                gimp_image_get_guide_position    (GimpImage *image,

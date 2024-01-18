@@ -168,7 +168,7 @@ gimp_image_delete_guide (GimpImage *image,
  **/
 guint
 gimp_image_find_next_guide (GimpImage *image,
-                            guint      guide)
+                            gint       guide)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -176,7 +176,7 @@ gimp_image_find_next_guide (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_UINT, guide,
+                                          G_TYPE_INT, guide,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),

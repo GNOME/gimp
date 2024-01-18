@@ -1,6 +1,6 @@
 ;; -*-scheme-*-
 
-(define (script-fu-guides-remove image drawable)
+(define (script-fu-guides-remove image drawables)
   (let* ((guide-id 0))
     (gimp-image-undo-group-start image)
 
@@ -15,15 +15,14 @@
   )
 )
 
-(script-fu-register "script-fu-guides-remove"
+(script-fu-register-filter "script-fu-guides-remove"
   _"_Remove all Guides"
   _"Remove all horizontal and vertical guides"
   "Alan Horkan"
   "Alan Horkan, 2004. Public Domain."
   "April 2004"
   "*"
-  SF-IMAGE    "Image"    0
-  SF-DRAWABLE "Drawable" 0
+  SF-ONE-OR-MORE-DRAWABLE
 )
 
 (script-fu-menu-register "script-fu-guides-remove"
