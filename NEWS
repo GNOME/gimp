@@ -229,8 +229,9 @@ Plug-ins:
     * Import/export safe-to-copy PNG chunks.
    - HEJ2: new import support. HEJ2 is JPEG 2000 image coded images in HEIF
      containers.
-   - PSD: layer blending mode mapping improved and better wording of the
-     export warning for the path of less surprise.
+   - PSD: better wording of the export warning for the path of less surprise.
+   - Python Console uses theme colors for font colors instead of hardcoded
+     colors which don't work well on darker themes.
 
 Data:
 
@@ -455,6 +456,11 @@ API:
   - Changes in libgimpbase:
     * New classes:
       + GimpChoice: meant to represent a list of allowed strings values.
+    * GimpRotationType values were changed by prepending "DEGREES" without
+      hyphen before the numeric value (e.g.: GIMP_ROTATE_90 becomes
+      GIMP_ROTATE_DEGREES90), because the older naming breaks introspection for
+      some languages, such as Python where Gimp.RotationType.90 syntax would be
+      forbidden.
   - Changes in libgimpwidgets:
     * New functions:
       + gimp_widget_set_native_handle()
@@ -496,6 +502,10 @@ Build:
   - Meson: alternatively to luajit, we now search also lua5.1, then 5.2 and 5.3
     (5.1 first, because apart luajit, it is the only one with lua-lgi support in
     MSYS2 right now).
+  - CI: unify jobs naming and order.
+  - Windows builds: various cleanups, code factorization and more.
+  - Windows installer: the desktop shortcut option is now checked by default
+    because of the fact too many people could not find GIMP after installation.
 
 
 Overview of Changes from GIMP 2.99.14 to GIMP 2.99.16
