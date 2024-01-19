@@ -509,7 +509,23 @@ gimp_edit_paste_get_layers (GimpImage     *image,
 
   if (GIMP_IS_IMAGE (paste))
     {
+      GimpImageBaseType base_type;
+      GimpPrecision     precision;
+
       layers = gimp_image_get_layer_iter (GIMP_IMAGE (paste));
+
+      /* If pasting into an empty image, use the image information.
+       * Otherwise, get it from the selected drawables */
+      if (drawables && drawables->data)
+        {
+          base_type = gimp_drawable_get_base_type (drawables->data);
+          precision = gimp_drawable_get_precision (drawables->data);
+        }
+      else
+        {
+          base_type = gimp_image_get_base_type (image);
+          precision = gimp_image_get_precision (image);
+        }
 
       if (g_list_length (layers) > 1)
         {
@@ -520,8 +536,7 @@ gimp_edit_paste_get_layers (GimpImage     *image,
         }
 
       layers = gimp_edit_paste_get_tagged_layers (image, layers, NULL, floating_format,
-                                                  gimp_image_get_base_type (image),
-                                                  gimp_image_get_precision (image),
+                                                  base_type, precision,
                                                   *paste_type);
       layers = g_list_reverse (layers);
     }
