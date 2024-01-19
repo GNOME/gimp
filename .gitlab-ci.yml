@@ -58,6 +58,7 @@ image-debian-x64:
     - if: '$GIMP_CI_MESON_CLANG != null'
     - if: '$GIMP_CI_RASTER_ICONS != null'
     - if: '$GIMP_CI_SOURCES != null'
+    - if: '$GIMP_CI_FLATPAK != null'
     # This is needed for the BMP image generation for the installer.
     # See commit e1203e9f76f.
     - if: '$GIMP_CI_WIN_INSTALLER != null'
@@ -244,6 +245,7 @@ deps-debian-x64:
     - if: '$GIMP_CI_MESON_GCC != null'
     - if: '$GIMP_CI_MESON_CLANG != null'
     - if: '$GIMP_CI_RASTER_ICONS != null'
+    - if: '$GIMP_CI_FLATPAK != null'
     # This is needed for the BMP image generation for the installer.
     # See commit e1203e9f76f.
     - if: '$GIMP_CI_WIN_INSTALLER != null'
@@ -309,6 +311,7 @@ gimp-debian-x64:
     - if: '$CI_PIPELINE_SOURCE == "push"'
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_FLATPAK != null'
     # This is needed for the BMP image generation for the installer.
     # See commit e1203e9f76f.
     - if: '$GIMP_CI_WIN_INSTALLER != null'
@@ -343,6 +346,7 @@ gimp-debian-x64:
       - "_build-x64/meson-logs"
       - "_build-x64/meson-dist"
       - "_build-x64/devel-docs"
+      - "_build-x64/build/flatpak/"
       - "_build-x64/build/windows/installer/"
       - "${INSTALL_DIR}"
 
@@ -374,6 +378,77 @@ gimp-debian-raster-icons:
                      -Dvector-icons=false
     - ninja && ninja test
 
+packaging-flatpak-x64:
+  # See: https://gitlab.gnome.org/GNOME/Initiatives/-/wikis/DevOps-with-Flatpak
+  # XXX This job is mostly the same as .flatpak job of
+  # flatpak_ci_initiative.yml so far, except that we removed the
+  # automatic tests since rebuilding plug-ins was not working and
+  # one of the test (save-and-export) requires plug-ins to be built.
+  image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
+  stage: packaging
+  dependencies:
+    - gimp-debian-x64
+  tags:
+    - flatpak
+  needs: ["gimp-debian-x64"]
+  rules:
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_FLATPAK != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Flatpak package.*/'
+  variables:
+    GIT_SUBMODULE_STRATEGY: normal
+    # Replace with your manifest path
+    MANIFEST_PATH: "build/flatpak/org.gimp.GIMP-nightly.json"
+    RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
+    # Replace with your application name, as written in the manifest
+    FLATPAK_MODULE: "gimp"
+    APP_ID: "org.gimp.GIMP"
+    BUNDLE: "gimp-git.flatpak"
+  before_script:
+    # Report the installed versions of the runtime
+    - flatpak info org.gnome.Platform
+    - flatpak info org.gnome.Sdk
+
+    # Print the date, since appstream depends on local timezone
+    - date && date -u
+
+    # Get pre-configured manifest from Debian job
+    - cp _build-x64/build/flatpak/*json build/flatpak/
+
+    # GNOME script to customize the manifest
+    - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
+  script:
+    # Build deps and GIMP
+    # (Our script is too long for Gitlab and no complete output would be collected
+    # To make debugging actually possible, let's save logs as a file.)
+    - flatpak-builder --user --disable-rofiles-fuse flatpak_app --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH}
+        2>&1 | tee flatpak-builder.log
+
+    # Generate a Flatpak bundle
+    - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
+    - tar cf repo.tar repo/
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
+    when: always
+    paths:
+      - flatpak-builder.log
+      # These are the same as flatpak_ci_initiative.yml as according to
+      # docs, key values are not merged but replaced.
+      - "${BUNDLE}"
+      - 'repo.tar'
+      - '.flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/meson-logs/meson-log.txt'
+      - '.flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/meson-logs/testlog.txt'
+    expire_in: 1 week
+  cache:
+    - key: "$CI_JOB_NAME"
+      paths:
+        - '.flatpak-builder/downloads'
+        - '.flatpak-builder/git'
+    - key: "$CI_JOB_NAME"
+      paths:
+        - '.flatpak-builder/cache'
+        - '.flatpak-builder/ccache'
 
 ## WINDOWS 64-bit CI (cross-build crossroad) ##
 
@@ -884,84 +959,6 @@ packaging-win-x86:
     - done-dll.list
   needs: ["gimp-win-x86"]
 
-
-## Linux Flatpak weekly CI ##
-
-## To learn more about the CI, go to https://gitlab.gnome.org/GNOME/Initiatives/-/wikis/DevOps-with-Flatpak
-
-flatpak:
-  # XXX This job is mostly the same as .flatpak job of
-  # flatpak_ci_initiative.yml so far, except that we removed the
-  # automatic tests since rebuilding plug-ins was not working and
-  # one of the test (save-and-export) requires plug-ins to be built.
-  image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
-  stage: gimp
-  tags:
-    - flatpak
-  needs: []
-  rules:
-    # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_FLATPAK != null'
-    # Merge requests with appropriate label.
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Flatpak package.*/'
-  variables:
-    GIT_SUBMODULE_STRATEGY: normal
-    # Replace with your manifest path
-    MANIFEST_PATH: "build/flatpak/org.gimp.GIMP-nightly.json"
-    RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
-    # Replace with your application name, as written in the manifest
-    FLATPAK_MODULE: "gimp"
-    APP_ID: "org.gimp.GIMP"
-    BUNDLE: "gimp-git.flatpak"
-  before_script:
-    # Report the installed versions of the runtime
-    - flatpak info org.gnome.Platform
-    - flatpak info org.gnome.Sdk
-
-    # Print the date, since appstream depends on local timezone
-    - date && date -u
-
-    # Set GIMP app version (major.minor)
-    - GIMP_VERSION=$(grep version meson.build | head -1 | sed -nre 's/^[^0-9]*(([0-9]+\.)*[0-9]+).*/\1/p')
-    - echo $GIMP_VERSION
-    - GIMP_APP_VERSION=$(echo $GIMP_VERSION | sed 's/\([0-9]\+\.[0-9]\+\)\..*/\1/')
-    - echo $GIMP_APP_VERSION
-    - sed -i "s/GIMP_APP_VERSION/${GIMP_APP_VERSION}/g" ${MANIFEST_PATH}
-    
-    # GNOME script to customize the manifest
-    - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
-  script:
-    # Build deps and GIMP
-    # (Our script is too long for Gitlab and no complete output would be collected
-    # To make debugging actually possible, let's save logs as a file.)
-    - flatpak-builder --user --disable-rofiles-fuse flatpak_app --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH}
-        2>&1 | tee flatpak-builder.log
-      
-    # Generate a Flatpak bundle
-    - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
-    - tar cf repo.tar repo/
-  artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
-    paths:
-      - flatpak-builder.log
-      # These are the same as flatpak_ci_initiative.yml as according to
-      # docs, key values are not merged but replaced.
-      - "${BUNDLE}"
-      - 'repo.tar'
-      - '.flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/meson-logs/meson-log.txt'
-      - '.flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/meson-logs/testlog.txt'
-    expire_in: 1 week
-  cache:
-    - key: "$CI_JOB_NAME"
-      paths:
-        - '.flatpak-builder/downloads'
-        - '.flatpak-builder/git'
-    - key: "$CI_JOB_NAME"
-      paths:
-        - '.flatpak-builder/cache'
-        - '.flatpak-builder/ccache'
-
 clang-format:
   only:
     - merge_requests
@@ -1002,15 +999,15 @@ cppcheck:
 
 ## Ready-to-distribute ##
 
-flatpak-weekly:
+dist-flatpak-weekly:
   extends: '.publish_nightly'
   stage: distribution
   rules:
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_FLATPAK != null'
-  needs: ["flatpak"]
+  needs: ["packaging-flatpak-x64"]
   dependencies:
-    - 'flatpak'
+    - 'packaging-flatpak-x64'
 
 win-installer-weekly:
   rules:
