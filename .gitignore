@@ -1,6 +1,2 @@
 # Meson
-/_build
 /compile_commands.json
-
-# Atom editor
-/.vscode
