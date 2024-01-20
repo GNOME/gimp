@@ -2,14 +2,14 @@
 # Copyright (C) 2017 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2018.
-# Jürgen Benvenuti <gastornis@posteo.org>, 2022.
+# Jürgen Benvenuti <gastornis@posteo.org>, 2022, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-22 21:28+0200\n"
-"PO-Revision-Date: 2022-07-20 13:40+0200\n"
+"POT-Creation-Date: 2024-01-16 10:29+0000\n"
+"PO-Revision-Date: 2024-01-20 19:43+0100\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.4\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -29,9 +29,10 @@ msgstr "Einrichtung erstellt von Jernej Simonèiè, jernej-gimp@ena.si"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
-msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgid ""
+"This version of GIMP requires Windows 10, or a newer version of Windows."
 msgstr ""
-"Diese Version von GIMP benötigt Windows 7 oder eine neuere Version von "
+"Diese Version von GIMP benötigt Windows 10 oder eine neuere Version von "
 "Windows."
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
@@ -326,10 +327,10 @@ msgstr ""
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
-"installing this version in %2, or choose a Custom install, and select a "
-"different installation folder.%n%nThe Setup will now exit."
+"Setup couldn't determine how to remove the old version automatically."
+"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+"before installing this version in %2, or choose a Custom install, and select "
+"a different installation folder.%n%nThe Setup will now exit."
 msgstr ""
 "GIMP %1 kann nicht über die derzeit installierte Version von GIMP "
 "installiert werden und die Installationsroutine konnte die vorhandene "
@@ -345,8 +346,8 @@ msgid ""
 "Setup will continue next time an administrator logs in."
 msgstr ""
 "Die vorhandene GIMP-Version wurde erfolgreich entfernt, aber Windows muss "
-"neu gestartet werden, bevor die Installation fortgeführt werden kann.%n"
-"%nNach dem Neustart wird die Installation automatisch fortgesetzt, sobald "
+"neu gestartet werden, bevor die Installation fortgeführt werden kann."
+"%n%nNach dem Neustart wird die Installation automatisch fortgesetzt, sobald "
 "sich ein Administrator einloggt."
 
 #: build/windows/installer/lang/setup.isl.xml.in:275
