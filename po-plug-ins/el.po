@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-10 08:10+0000\n"
-"PO-Revision-Date: 2024-01-12 20:16+0200\n"
+"POT-Creation-Date: 2024-01-16 10:27+0000\n"
+"PO-Revision-Date: 2024-01-21 02:09+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -318,6 +318,7 @@ msgid "Use the (invisible) bottom layer as the base"
 msgstr "Χρήση της (αόρατης) κατώτατης στρώσης ως βάσης"
 
 #: plug-ins/common/align-layers.c:287
+#, c-format
 msgid "There are not enough layers to align."
 msgstr "Δεν υπάρχουν αρκετές στρώσεις για στοίχιση."
 
@@ -1620,17 +1621,14 @@ msgid "YCbCr ITU R470"
 msgstr "YCbCr ITU R470"
 
 #: plug-ins/common/compose.c:446 plug-ins/common/compose.c:509
-#| msgid "YCbCr_ITU_R709"
 msgid "YCbCr ITU R709"
 msgstr "YCbCr ITU R709"
 
 #: plug-ins/common/compose.c:447 plug-ins/common/compose.c:510
-#| msgid "YCbCr_ITU_R470_256"
 msgid "YCbCr ITU R470 256"
 msgstr "YCbCr ITU R470 256"
 
 #: plug-ins/common/compose.c:448 plug-ins/common/compose.c:511
-#| msgid "YCbCr_ITU_R709_256"
 msgid "YCbCr ITU R709 256"
 msgstr "YCbCr ITU R709 256"
 
@@ -2546,7 +2544,8 @@ msgstr "Αυτό το πρόσθετο προσπαθεί να αφαιρέσε�
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:195
 #: plug-ins/common/file-ps.c:386 plug-ins/common/file-ps.c:500
-#: plug-ins/common/file-raw-data.c:355 plug-ins/common/smooth-palette.c:135
+#: plug-ins/common/file-raw-data.c:355 plug-ins/common/file-svg.c:189
+#: plug-ins/common/file-wmf.c:184 plug-ins/common/smooth-palette.c:135
 #: plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
 msgstr "_Πλάτος"
@@ -2597,6 +2596,7 @@ msgid "File type to use"
 msgstr "Τύπος αρχείου προς χρήση"
 
 #: plug-ins/common/file-aa.c:207
+#, c-format
 msgid "ASCII art does not support multiple layers."
 msgstr "Η ASCII art (τέχνη ASCII) δεν υποστηρίζει πολλές στρώσεις."
 
@@ -2618,15 +2618,18 @@ msgid "Load KISS Palette"
 msgstr "Φόρτωση παλέτας KISS"
 
 #: plug-ins/common/file-cel.c:253
+#, c-format
 msgid "This KISS CEL image requires a palette file."
 msgstr "Αυτή η εικόνα KISS CEL απαιτεί ένα αρχείο παλέτας."
 
 #: plug-ins/common/file-cel.c:317
+#, c-format
 msgid "CEL format does not support multiple layers."
 msgstr "Η μορφή CEL δεν υποστηρίζει πολλές στρώσεις."
 
 #: plug-ins/common/file-cel.c:362 plug-ins/common/file-cel.c:414
 #: plug-ins/common/file-cel.c:435
+#, c-format
 msgid "EOF or error while reading image header"
 msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλίδας εικόνας"
 
@@ -2672,6 +2675,7 @@ msgid "Opening '%s'"
 msgstr "Άνοιγμα του '%s'"
 
 #: plug-ins/common/file-cel.c:444
+#, c-format
 msgid "is not a CEL image file"
 msgstr "δεν είναι αρχείο εικόνας CEL"
 
@@ -2690,11 +2694,13 @@ msgstr ""
 "ύψος: %d, κάθετη αντιστάθμιση: %d"
 
 #: plug-ins/common/file-cel.c:488
+#, c-format
 msgid "Can't create a new image"
 msgstr "Αδυναμία δημιουργίας νέας εικόνας"
 
 #: plug-ins/common/file-cel.c:525 plug-ins/common/file-cel.c:562
 #: plug-ins/common/file-cel.c:588
+#, c-format
 msgid "EOF or error while reading image data"
 msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης δεδομένων εικόνας"
 
@@ -2735,7 +2741,7 @@ msgstr "'%s': τέλος αρχείου ή σφάλμα ανάγνωσης δε�
 #: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1321
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
 #: plug-ins/common/file-tga.c:1229 plug-ins/common/file-xbm.c:1050
-#: plug-ins/common/file-xpm.c:704 plug-ins/common/file-xwd.c:720
+#: plug-ins/common/file-xpm.c:705 plug-ins/common/file-xwd.c:720
 #: plug-ins/file-bmp/bmp-save.c:333 plug-ins/file-fits/fits.c:673
 #: plug-ins/file-fli/fli-gimp.c:775 plug-ins/file-icns/file-icns-save.c:612
 #: plug-ins/file-ico/ico-save.c:1334 plug-ins/file-ico/ico-save.c:1543
@@ -2841,6 +2847,7 @@ msgid "Opacity"
 msgstr "Διαφάνεια"
 
 #: plug-ins/common/file-csource.c:238
+#, c-format
 msgid "C source does not support multiple layers."
 msgstr "Η πηγή C δεν υποστηρίζει πολλές στρώσεις."
 
@@ -2888,6 +2895,7 @@ msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Ψηφιακή εικόνα και επικοινωνίες σε εικόνα ιατρικής"
 
 #: plug-ins/common/file-dicom.c:307
+#, c-format
 msgid "Dicom format does not support multiple layers."
 msgstr "Η μορφή Dicom δεν υποστηρίζει πολλές στρώσεις."
 
@@ -2914,6 +2922,7 @@ msgstr "Αδυναμία αποθήκευσης εικόνων με άλφα κ�
 
 #: plug-ins/common/file-dicom.c:1548 plug-ins/common/file-ps.c:1316
 #: plug-ins/common/file-xwd.c:715 plug-ins/file-fits/fits.c:668
+#, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "Αδυναμία λειτουργίας σε άγνωστους τύπους εικόνας."
 
@@ -2930,14 +2939,17 @@ msgid "Export image in the Farbfeld file format"
 msgstr "Εξαγωγή εικόνας σε μορφή αρχείου Farbfeld"
 
 #: plug-ins/common/file-farbfeld.c:257
+#, c-format
 msgid "Farbfeld format does not support multiple layers."
 msgstr "Η μορφή Farbfeld δεν υποστηρίζει πολλαπλές στρώσεις."
 
 #: plug-ins/common/file-farbfeld.c:309
+#, c-format
 msgid "Failed to read Farbfeld header"
 msgstr "Αποτυχία ανάγνωσης κεφαλίδας Farbfeld"
 
 #: plug-ins/common/file-farbfeld.c:335
+#, c-format
 msgid "Premature end of Farbfeld pixel data"
 msgstr "Πρόωρο τέλος δεδομένων εικονοστοιχείων Farbfeld"
 
@@ -2986,6 +2998,7 @@ msgid "OpenEXR image"
 msgstr "Εικόνα OpenEXR"
 
 #: plug-ins/common/file-gegl.c:317
+#, c-format
 msgid "GEGL export plug-in does not support multiple layers."
 msgstr "Το πρόσθετο εξαγωγής GEGL δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -3005,10 +3018,12 @@ msgid "GIF magic code"
 msgstr "Μαγικός κώδικας GIF"
 
 #: plug-ins/common/file-gif-load.c:431
+#, c-format
 msgid "This is not a GIF file: incorrect magic code"
 msgstr "Αυτό δεν είναι αρχείο GIF: εσφαλμένος μαγικός κώδικας"
 
 #: plug-ins/common/file-gif-load.c:439
+#, c-format
 msgid "Incorrect GIF version: not '87a' or '89a'"
 msgstr "Λανθασμένη έκδοση GIF: ούτε '87a', ούτε '89a'"
 
@@ -3143,6 +3158,7 @@ msgid "Unknown composite type %d. %s"
 msgstr "Άγνωστος σύνθετος τύπος %d. %s"
 
 #: plug-ins/common/file-gif-load.c:1287
+#, c-format
 msgid ""
 "Can't handle non-alpha RGB frames.\n"
 "Please file a bug report at https://gitlab.gnome.org/GNOME/gimp/issues"
@@ -3270,6 +3286,7 @@ msgid "Image comment"
 msgstr "Σχόλιο εικόνας"
 
 #: plug-ins/common/file-gif-save.c:377
+#, c-format
 msgid "GIF format does not support multiple layers."
 msgstr "Η μορφή GIF δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -3437,6 +3454,7 @@ msgid "C source code header"
 msgstr "Κεφαλίδα πηγαίου κώδικα C"
 
 #: plug-ins/common/file-header.c:181
+#, c-format
 msgid "Header plug-in does not support multiple layers."
 msgstr "Το πρόσθετο Header (κεφαλίδα) δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -3574,6 +3592,7 @@ msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "Φόρτωση εικόνας JPEG 2000 ενσωματωμένης σε HEIF (HEJ2)"
 
 #: plug-ins/common/file-heif.c:541 plug-ins/common/file-heif.c:631
+#, c-format
 msgid "HEIF format does not support multiple layers."
 msgstr "Η μορφή HEIF δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -3704,6 +3723,7 @@ msgstr ""
 
 #: plug-ins/common/file-html-table.c:202 plug-ins/common/file-ps.c:392
 #: plug-ins/common/file-ps.c:507 plug-ins/common/file-raw-data.c:360
+#: plug-ins/common/file-svg.c:197 plug-ins/common/file-wmf.c:191
 #: plug-ins/common/smooth-palette.c:141 plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
 msgstr "Ύ_ψος"
@@ -3775,6 +3795,7 @@ msgid "The amount of cell spacing."
 msgstr "Η ποσότητα του διάκενου κελιού."
 
 #: plug-ins/common/file-html-table.c:287
+#, c-format
 msgid "HTML table plug-in does not support multiple layers."
 msgstr "Το πρόσθετο πίνακα HTML δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -4301,18 +4322,22 @@ msgid "Loads files in Zsoft DCX file format"
 msgstr "Φορτώνει αρχεία σε μορφή αρχείου Zsoft DCX"
 
 #: plug-ins/common/file-pcx.c:399
+#, c-format
 msgid "PCX format does not support multiple layers."
 msgstr "Η μορφή PCX δεν υποστηρίζει πολλαπλές στρώσεις."
 
 #: plug-ins/common/file-pcx.c:521
+#, c-format
 msgid "Could not load PCX image"
 msgstr "Αδυναμία φόρτωσης εικόνας PCX"
 
 #: plug-ins/common/file-pcx.c:568
+#, c-format
 msgid "DCX image offset exceeds the file size"
 msgstr "Η μετατόπιση εικόνας DCX υπερβαίνει το μέγεθος του αρχείου"
 
 #: plug-ins/common/file-pcx.c:579
+#, c-format
 msgid "Could not load DCX image"
 msgstr "Αδυναμία φόρτωσης εικόνας DCX"
 
@@ -4698,6 +4723,7 @@ msgid "Alias Pix image"
 msgstr "Εικόνα Alias Pix"
 
 #: plug-ins/common/file-pix.c:297
+#, c-format
 msgid "PIX format does not support multiple layers."
 msgstr "Η μορφή PIX δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -4822,6 +4848,7 @@ msgid "16 bpc GRAYA"
 msgstr "16bpc GRAYA"
 
 #: plug-ins/common/file-png.c:415
+#, c-format
 msgid "PNG format does not support multiple layers."
 msgstr "Η μορφή PNG δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -5176,7 +5203,6 @@ msgstr "Εξομάλυνση γραφικού"
 
 #
 #: plug-ins/common/file-ps.c:462
-#| msgid "GPS"
 msgid "PS"
 msgstr "PS"
 
@@ -5186,7 +5212,6 @@ msgstr "Ενθυλακωμένα PostScript"
 
 #
 #: plug-ins/common/file-ps.c:482
-#| msgid "GPS"
 msgid "EPS"
 msgstr "EPS"
 
@@ -5272,6 +5297,7 @@ msgid "0: no preview, >0: max. size of preview"
 msgstr "0: χωρίς προεπισκόπηση, >0: μέγ. μέγεθος προεπισκόπησης"
 
 #: plug-ins/common/file-ps.c:708
+#, c-format
 msgid "PostScript plug-in does not support multiple layers."
 msgstr "Το πρόσθετο PostScript δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -5291,6 +5317,7 @@ msgid "%s-pages"
 msgstr "%s-σελίδες"
 
 #: plug-ins/common/file-ps.c:1303
+#, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Η εξαγωγή PostScript αδυνατεί να χειριστεί εικόνες με άλφα κανάλια"
 
@@ -5308,7 +5335,7 @@ msgid "Gray"
 msgstr "Γκρι"
 
 #
-#: plug-ins/common/file-ps.c:3722 plug-ins/common/file-xpm.c:510
+#: plug-ins/common/file-ps.c:3722 plug-ins/common/file-xpm.c:511
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:169
 #: plug-ins/imagemap/imap-menu.ui:96 plug-ins/lighting/lighting-main.c:209
 #: plug-ins/lighting/lighting-main.c:332 plug-ins/lighting/lighting-main.c:391
@@ -5406,6 +5433,7 @@ msgid "LZ77"
 msgstr "LZ77"
 
 #: plug-ins/common/file-psp.c:933
+#, c-format
 msgid "Error reading block header"
 msgstr "Σφάλμα ανάγνωσης κεφαλίδας μπλοκ"
 
@@ -5415,6 +5443,7 @@ msgid "Invalid block header at %ld"
 msgstr "Άκυρη κεφαλίδα μπλοκ στο %ld"
 
 #: plug-ins/common/file-psp.c:943
+#, c-format
 msgid "Invalid block header"
 msgstr "Άκυρη κεφαλίδα μπλοκ"
 
@@ -5424,10 +5453,12 @@ msgid "Seek error: %s"
 msgstr "Αναζήτηση σφάλματος: %s"
 
 #: plug-ins/common/file-psp.c:998
+#, c-format
 msgid "Invalid general image attribute chunk size."
 msgstr "Άκυρο γενικό μέγεθος τμήματος γνωρίσματος εικόνας."
 
 #: plug-ins/common/file-psp.c:1020
+#, c-format
 msgid "Error reading general image attribute block."
 msgstr "Σφάλμα ανάγνωσης γενικού μπλοκ γνωρίσματος εικόνας."
 
@@ -5442,40 +5473,49 @@ msgid "Unsupported bit depth %d"
 msgstr "Μη υποστηριζόμενο βάθος δυαδικού ψηφίου %d"
 
 #: plug-ins/common/file-psp.c:1125
+#, c-format
 msgid "Error reading creator keyword chunk"
 msgstr "Σφάλμα ανάγνωσης δημιουργού τμήματος λέξης-κλειδιού"
 
 #: plug-ins/common/file-psp.c:1131
+#, c-format
 msgid "Invalid keyword chunk header"
 msgstr "Άκυρη κεφαλίδα τμήματος λέξης-κλειδιού"
 
 #: plug-ins/common/file-psp.c:1146 plug-ins/common/file-psp.c:1173
+#, c-format
 msgid "Error reading creator keyword data"
 msgstr "Σφάλμα ανάγνωσης δημιουργού δεδομένων λέξης-κλειδιού"
 
 #: plug-ins/common/file-psp.c:1257 plug-ins/common/file-psp.c:1266
 #: plug-ins/common/file-psp.c:1275
+#, c-format
 msgid "Error reading color block"
 msgstr "Σφάλμα ανάγνωσης μπλοκ χρώματος"
 
 #: plug-ins/common/file-psp.c:1286
+#, c-format
 msgid "Error: Unsupported palette size"
 msgstr "Σφάλμα: Μη υποστηριζόμενο μέγεθος παλέτας"
 
 #: plug-ins/common/file-psp.c:1297
+#, c-format
 msgid "Error reading color palette"
 msgstr "Σφάλμα ανάγνωσης παλέτας χρώματος"
 
 #: plug-ins/common/file-psp.c:1723 plug-ins/common/file-psp.c:1737
+#, c-format
 msgid "zlib error"
 msgstr "σφάλμα zlib"
 
 #: plug-ins/common/file-psp.c:1800 plug-ins/common/file-psp.c:1834
 #: plug-ins/common/file-psp.c:1844
+#, c-format
 msgid "Error reading layer extension information"
 msgstr "Σφάλμα ανάγνωσης πληροφοριών επέκτασης στρώσης"
 
 #: plug-ins/common/file-psp.c:1821
+#, c-format
 msgid "Error reading block information"
 msgstr "Σφάλμα ανάγνωσης πληροφοριών μπλοκ"
 
@@ -5485,6 +5525,7 @@ msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Άκυρη στρώση υπομπλόκ %s, πρέπει να είναι ΣΤΡΩΣΗ"
 
 #: plug-ins/common/file-psp.c:1932 plug-ins/common/file-psp.c:1989
+#, c-format
 msgid "Error reading layer information chunk"
 msgstr "Σφάλμα ανάγνωσης τμήματος πληροφοριών στρώσης"
 
@@ -5494,6 +5535,7 @@ msgid "Invalid layer dimensions: %dx%d"
 msgstr "Άκυρες διαστάσεις στρώσης: %dx%d"
 
 #: plug-ins/common/file-psp.c:2092
+#, c-format
 msgid "Error creating layer"
 msgstr "Σφάλμα δημιουργίας στρώσης"
 
@@ -5503,6 +5545,7 @@ msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Άκυρη στρώση υπομπλόκ %s, πρέπει να είναι ΚΑΝΑΛΙ"
 
 #: plug-ins/common/file-psp.c:2153
+#, c-format
 msgid "Error reading channel information chunk"
 msgstr "Σφάλμα ανάγνωσης τμήματος πληροφοριών καναλιού"
 
@@ -5512,59 +5555,73 @@ msgid "Invalid channel type %d in channel information chunk"
 msgstr "Άκυρος τύπος καναλιού %d σε τμήμα πληροφοριών καναλιού"
 
 #: plug-ins/common/file-psp.c:2280 plug-ins/common/file-psp.c:2297
+#, c-format
 msgid "Error reading tube data chunk"
 msgstr "Σφάλμα ανάγνωσης τμήματος δεδομένων σωλήνα"
 
 #: plug-ins/common/file-psp.c:2384 plug-ins/common/file-psp.c:2400
+#, c-format
 msgid "Error reading selection chunk"
 msgstr "Σφάλμα κατά την ανάγνωση του κομματιού επιλογής"
 
 #: plug-ins/common/file-psp.c:2393
+#, c-format
 msgid "Invalid selection chunk size"
 msgstr "Άκυρο μέγεθος τμήματος επιλογής"
 
 #: plug-ins/common/file-psp.c:2417
+#, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Σφάλμα κατά την ανάγνωση του κομματιού επιλογής"
 
 #: plug-ins/common/file-psp.c:2442
+#, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Σφάλμα κατά την ανάγνωση της κεφαλίδας εκτεταμένου τμήματος μπλοκ"
 
 #: plug-ins/common/file-psp.c:2450
+#, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Άκυρη κεφαλίδα εκτεταμένου τμήματος μπλοκ"
 
 #: plug-ins/common/file-psp.c:2461
+#, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Άκυρο μέγεθος εκτεταμένου τμήματος μπλοκ"
 
 #: plug-ins/common/file-psp.c:2482
+#, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Σφάλμα ανάγνωσης εκτεταμένου τμήματος δεδομένων πλέγματος"
 
 #: plug-ins/common/file-psp.c:2508
+#, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Σφάλμα κατά την ανάγνωση δεδομένων εκτεταμένου τμήματος οδηγού"
 
 #: plug-ins/common/file-psp.c:2526
+#, c-format
 msgid "Invalid guide orientation"
 msgstr "Άκυρος προσανατολισμός οδηγού"
 
 #: plug-ins/common/file-psp.c:2540
+#, c-format
 msgid "Error reading extended block chunk"
 msgstr "Σφάλμα κατά την ανάγνωση εκτεταμένου τμήματος μπλοκ"
 
 #: plug-ins/common/file-psp.c:2566 plug-ins/common/file-psp.c:2578
 #: plug-ins/common/file-psp.c:2589
+#, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Σφάλμα κατά την ανάγνωση τμήματος χρωματικής κατατομής"
 
 #: plug-ins/common/file-psp.c:2642
+#, c-format
 msgid "Error reading file header."
 msgstr "Σφάλμα ανάγνωσης κεφαλίδας αρχείου."
 
 #: plug-ins/common/file-psp.c:2649
+#, c-format
 msgid "Incorrect file signature."
 msgstr "Εσφαλμένη υπογραφή αρχείου."
 
@@ -5578,14 +5635,17 @@ msgid "invalid block size"
 msgstr "άκυρο μέγεθος μπλοκ"
 
 #: plug-ins/common/file-psp.c:2692
+#, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Διπλασιασμός γενικού μπλοκ γνωρισμάτων εικόνας."
 
 #: plug-ins/common/file-psp.c:2720
+#, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Έλλειψη γενικού μπλοκ γνωρισμάτων εικόνας."
 
 #: plug-ins/common/file-psp.c:2845
+#, c-format
 msgid "Exporting not implemented yet."
 msgstr "Η εξαγωγή δεν έχει υλοποιηθεί ακόμα."
 
@@ -5610,10 +5670,12 @@ msgid "Export image in the QOI file format (Quite OK Image)"
 msgstr "Εξαγωγή εικόνας σε μορφή αρχείου QOI (Quite OK Image)"
 
 #: plug-ins/common/file-qoi.c:261
+#, c-format
 msgid "QOI format does not support multiple layers."
 msgstr "Η μορφή QOI δεν υποστηρίζει πολλαπλές στρώσεις."
 
 #: plug-ins/common/file-qoi.c:311
+#, c-format
 msgid "Failed to read QOI file"
 msgstr "Αποτυχία ανάγνωσης αρχείου QOI"
 
@@ -5753,6 +5815,7 @@ msgstr ""
 "την παραλλαγή, εκτελέστε με όρισμα 1 ή 3."
 
 #: plug-ins/common/file-raw-data.c:649
+#, c-format
 msgid "RAW export does not support multiple layers."
 msgstr "Η εξαγωγή RAW δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -5967,6 +6030,7 @@ msgid "Use standard (0) or Run-Length Encoded (1) output"
 msgstr "Χρήση τυπικής (0) ή κωδικοποιημένης εξόδου με μήκος εκτέλεσης (1)"
 
 #: plug-ins/common/file-sunras.c:409
+#, c-format
 msgid "SUNRAS format does not support multiple layers."
 msgstr "Η μορφή SUNRAS δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -6034,6 +6098,7 @@ msgid "This image depth is not supported"
 msgstr "Αυτό το βάθος εικόνας δεν υποστηρίζεται"
 
 #: plug-ins/common/file-sunras.c:612
+#, c-format
 msgid "SUNRAS export cannot handle images with alpha channels"
 msgstr "Η εξαγωγή SUNRAS αδυνατεί να επεξεργαστεί εικόνες με άλφα κανάλια"
 
@@ -6046,6 +6111,7 @@ msgstr "Αδυναμία λειτουργίας σε άγνωστους τύπο
 #: plug-ins/common/file-xwd.c:1519 plug-ins/common/file-xwd.c:1633
 #: plug-ins/common/file-xwd.c:1804 plug-ins/common/file-xwd.c:2044
 #: plug-ins/common/file-xwd.c:2233 plug-ins/common/file-xwd.c:2509
+#, c-format
 msgid "EOF encountered on reading"
 msgstr "Κατά την ανάγνωση καταγράφηκε τέλος αρχείου"
 
@@ -6065,6 +6131,30 @@ msgstr "Κωδικοποίηση _μήκους εκτέλεσης"
 #: plug-ins/common/file-svg.c:160
 msgid "SVG image"
 msgstr "Εικόνα SVG"
+
+#: plug-ins/common/file-svg.c:183 plug-ins/common/file-wmf.c:177
+msgid "Resolu_tion"
+msgstr "Ανά_λυση"
+
+#: plug-ins/common/file-svg.c:184
+msgid "Resolution to use for rendering the SVG"
+msgstr "Ανάλυση που θα χρησιμοποιηθεί για την απόδοση του SVG"
+
+#: plug-ins/common/file-svg.c:190
+msgid ""
+"Width (in pixels) to load the SVG in. (0 for original width, a negative "
+"width to specify a maximum width)"
+msgstr ""
+"Πλάτος (σε εικονοστοιχεία) για τη φόρτωση του SVG. (0 για το αρχικό πλάτος, "
+"ένα αρνητικό πλάτος για τον καθορισμό ενός μέγιστου πλάτους)"
+
+#: plug-ins/common/file-svg.c:198
+msgid ""
+"Height (in pixels) to load the SVG in. (0 for original height, a negative "
+"height to specify a maximum height)"
+msgstr ""
+"Ύψος (σε εικονοστοιχεία) για φόρτωση του SVG. (0 για το αρχικό ύψος, ένα "
+"αρνητικό ύψος για τον καθορισμό ενός μέγιστου ύψους)"
 
 #: plug-ins/common/file-svg.c:205
 msgid "_Paths"
@@ -6193,6 +6283,7 @@ msgid "Image origin (0 = top-left, 1 = bottom-left)"
 msgstr "Προέλευση εικόνας (0 = πάνω-αριστερά, 1 = κάτω-αριστερά)"
 
 #: plug-ins/common/file-tga.c:396 plug-ins/common/file-xwd.c:453
+#, c-format
 msgid "TGA format does not support multiple layers."
 msgstr "Η μορφή TGA δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -6246,6 +6337,18 @@ msgstr "Το '%s' δεν είναι έγκυρο αρχείο WBMP"
 #: plug-ins/common/file-wmf.c:155
 msgid "Microsoft WMF file"
 msgstr "Αρχείο Microsoft WMF"
+
+#: plug-ins/common/file-wmf.c:178
+msgid "Resolution to use for rendering the WMF"
+msgstr "Ανάλυση που θα χρησιμοποιηθεί για την απόδοση του WMF"
+
+#: plug-ins/common/file-wmf.c:185
+msgid "Width (in pixels) to load the WMF in, 0 for original width"
+msgstr "Πλάτος (σε εικονοστοιχεία) για φόρτωση του WMF, 0 για το αρχικό πλάτος"
+
+#: plug-ins/common/file-wmf.c:192
+msgid "Height (in pixels) to load the WMF in, 0 for original height"
+msgstr "Ύψος (σε εικονοστοιχεία) για φόρτωση του WMF, 0 για το αρχικό ύψος"
 
 #: plug-ins/common/file-wmf.c:392
 msgid ""
@@ -6374,6 +6477,7 @@ msgid "Suffix of the mask file"
 msgstr "Κατάληξη του αρχείου μάσκας"
 
 #: plug-ins/common/file-xbm.c:378
+#, c-format
 msgid "XBM format does not support multiple layers."
 msgstr "Η μορφή XBM δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -6431,6 +6535,7 @@ msgid "X11 Mouse Cursor"
 msgstr "Δρομέας ποντικιού X11"
 
 #: plug-ins/common/file-xmc.c:541
+#, c-format
 msgid ""
 "Cannot set the hot spot!\n"
 "You must arrange layers so that all of them have an intersection."
@@ -6469,6 +6574,7 @@ msgid "'%s' is too high for an X cursor."
 msgstr "Το '%s' είναι πολύ υψηλό για ένα δρομέα X."
 
 #: plug-ins/common/file-xmc.c:1069
+#, c-format
 msgid "A read error occurred."
 msgstr "Συνέβη σφάλμα ανάγνωσης."
 
@@ -6691,19 +6797,21 @@ msgid "Alpha threshold"
 msgstr "Κατώφλι άλφα"
 
 #: plug-ins/common/file-xpm.c:344
+#, c-format
 msgid "XPM format does not support multiple layers."
 msgstr "Η μορφή XPM δεν υποστηρίζει πολλαπλές στρώσεις."
 
-#: plug-ins/common/file-xpm.c:395 plug-ins/common/file-xpm.c:853
+#: plug-ins/common/file-xpm.c:396 plug-ins/common/file-xpm.c:855
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Σφάλμα ανοίγματος αρχείου '%s'"
 
-#: plug-ins/common/file-xpm.c:401 plug-ins/common/file-xpm.c:859
+#: plug-ins/common/file-xpm.c:402 plug-ins/common/file-xpm.c:861
 msgid "XPM file invalid"
 msgstr "Άκυρο αρχείο XPM"
 
-#: plug-ins/common/file-xpm.c:694
+#: plug-ins/common/file-xpm.c:695
+#, c-format
 msgid "Unsupported drawable type"
 msgstr "Μη υποστηριζόμενος τύπος σχεδίου"
 
@@ -6744,6 +6852,7 @@ msgstr ""
 "Ο αριθμός καταχωρίσεων πίνακα χρωμάτων < αριθμό των χρωμάτων"
 
 #: plug-ins/common/file-xwd.c:588
+#, c-format
 msgid "Can't read color entries"
 msgstr "Αδυναμία ανάγνωσης εισόδων χρωμάτων"
 
@@ -6772,6 +6881,7 @@ msgstr "Σφάλμα κατά την εξαγωγή του '%s': "
 
 #: plug-ins/common/file-xwd.c:961 plug-ins/common/file-xwd.c:995
 #: plug-ins/common/file-xwd.c:1032
+#, c-format
 msgid "Seek error"
 msgstr "Αναζήτηση σφάλματος"
 
@@ -8426,7 +8536,6 @@ msgid "Noise Magnitude"
 msgstr "Μέγεθος θορύβου"
 
 #: plug-ins/common/van-gogh-lic.c:204
-#| msgid "In_tegration steps:"
 msgid "Inte_gration steps"
 msgstr "Βήματα ενσ_ωμάτωσης"
 
@@ -8757,6 +8866,7 @@ msgid "Webpage"
 msgstr "Ιστοσελίδα"
 
 #: plug-ins/common/web-page.c:334
+#, c-format
 msgid "No URL was specified"
 msgstr "Δεν προσδιορίστηκε URL"
 
@@ -8909,6 +9019,7 @@ msgstr ""
 "3=RGB_888, 4=RGBA_8888, 5=RGBX_8888)"
 
 #: plug-ins/file-bmp/bmp.c:298
+#, c-format
 msgid "BMP format does not support multiple layers."
 msgstr "Η μορφή BMP δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -9018,7 +9129,6 @@ msgid "RGB8"
 msgstr "RGB8"
 
 #: plug-ins/file-dds/dds.c:217
-#| msgid "RGBA"
 msgid "RGBA8"
 msgstr "RGBA8"
 
@@ -9035,12 +9145,10 @@ msgid "R5G6B5"
 msgstr "R5G6B5"
 
 #: plug-ins/file-dds/dds.c:221
-#| msgid "RGBA"
 msgid "RGBA4"
 msgstr "RGBA4"
 
 #: plug-ins/file-dds/dds.c:222
-#| msgid "RGB565"
 msgid "RGB5A1"
 msgstr "RGB5A1"
 
@@ -9053,12 +9161,10 @@ msgid "R3G3B2"
 msgstr "R3G3B2"
 
 #: plug-ins/file-dds/dds.c:225
-#| msgid "A"
 msgid "A8"
 msgstr "A8"
 
 #: plug-ins/file-dds/dds.c:226
-#| msgid "L"
 msgid "L8"
 msgstr "L8"
 
@@ -9191,7 +9297,6 @@ msgid "Lanczos"
 msgstr "Lanczos"
 
 #: plug-ins/file-dds/dds.c:287
-#| msgid "Raise"
 msgid "Kaiser"
 msgstr "Kaiser"
 
@@ -9275,18 +9380,22 @@ msgstr ""
 "bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
 
 #: plug-ins/file-dds/ddsread.c:499
+#, c-format
 msgid "Invalid or corrupted DDS header."
 msgstr "Άκυρη ή κατεστραμμένη κεφαλίδα DDS."
 
 #: plug-ins/file-dds/ddsread.c:511
+#, c-format
 msgid "Could not allocate a new image."
 msgstr "Αδυναμία εντοπισμού νέας εικόνας."
 
 #: plug-ins/file-dds/ddsread.c:523
+#, c-format
 msgid "Error reading palette."
 msgstr "Σφάλμα ανάγνωσης παλέτας."
 
 #: plug-ins/file-dds/ddsread.c:812
+#, c-format
 msgid "Invalid DDS format magic number."
 msgstr "Άκυρος μαγικός αριθμός μορφής DDS."
 
@@ -9298,6 +9407,7 @@ msgstr ""
 "ενδέχεται να μην έχει αποκωδικοποιηθεί σωστά."
 
 #: plug-ins/file-dds/ddsread.c:863
+#, c-format
 msgid "Invalid pixel format."
 msgstr "Άκυρη μορφή εικονοστοιχείου."
 
@@ -9317,6 +9427,7 @@ msgid "Invalid bpp value for luminance data: %d"
 msgstr "Άκυρη τιμή bpp για δεδομένα λαμπρότητας (luminance): %d"
 
 #: plug-ins/file-dds/ddsread.c:943
+#, c-format
 msgid "Invalid DX10 header"
 msgstr "Άκυρη κεφαλίδα DX10"
 
@@ -9327,10 +9438,12 @@ msgstr "Μη υποστηριζόμενη μορφή DXGI: %u"
 
 #: plug-ins/file-dds/ddsread.c:1163 plug-ins/file-dds/ddsread.c:1227
 #: plug-ins/file-dds/ddsread.c:1247
+#, c-format
 msgid "Requested data exceeds size of file.\n"
 msgstr "Τα ζητούμενα δεδομένα υπερβαίνουν το μέγεθος του αρχείου.\n"
 
 #: plug-ins/file-dds/ddsread.c:1171 plug-ins/file-dds/ddsread.c:1253
+#, c-format
 msgid "Unexpected EOF.\n"
 msgstr "Αναπάντεχο EOF.\n"
 
@@ -9399,6 +9512,7 @@ msgid "G3 fax image"
 msgstr "Εικόνα τηλεομοιοτυπίας G3"
 
 #: plug-ins/file-faxg3/faxg3.c:299 plug-ins/file-faxg3/faxg3.c:597
+#, c-format
 msgid "Could not create buffer to process image data."
 msgstr ""
 "Αδυναμία δημιουργίας βοηθητικής μνήμης για επεξεργασία δεδομένων εικόνας."
@@ -9410,6 +9524,7 @@ msgstr ""
 "Άκυρες διαστάσεις εικόνας (%d x %d). Η εικόνα μπορεί να είναι αλλοιωμένη."
 
 #: plug-ins/file-faxg3/faxg3.c:574
+#, c-format
 msgid "Could not create image."
 msgstr "Αδυναμία δημιουργίας εικόνας."
 
@@ -9449,6 +9564,7 @@ msgstr ""
 "κανάλια άλφα."
 
 #: plug-ins/file-fits/fits.c:325
+#, c-format
 msgid "FITS format does not support multiple layers."
 msgstr "Η μορφή FITS δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -9485,11 +9601,13 @@ msgstr "Κατά DATAMIN/DATAMAX"
 #: plug-ins/file-fli/fli.c:45 plug-ins/file-fli/fli.c:59
 #: plug-ins/file-fli/fli.c:75 plug-ins/file-fli/fli.c:924
 #: plug-ins/file-fli/fli.c:1244 plug-ins/file-fli/fli.c:1524
+#, c-format
 msgid "Error reading from file."
 msgstr "Σφάλμα ανάγνωσης από αρχείο."
 
 #: plug-ins/file-fli/fli.c:91 plug-ins/file-fli/fli.c:110
 #: plug-ins/file-fli/fli.c:131
+#, c-format
 msgid "Error writing to file."
 msgstr "Σφάλμα κατά την εγγραφή στο αρχείο."
 
@@ -9499,6 +9617,7 @@ msgid "Error reading header. "
 msgstr "Σφάλμα ανάγνωσης κεφαλίδας. "
 
 #: plug-ins/file-fli/fli.c:187
+#, c-format
 msgid "Invalid header: not a FLI/FLC animation!"
 msgstr "Μη έγκυρη κεφαλίδα: δεν είναι κινούμενη εικόνα FLI/FLC!"
 
@@ -9523,6 +9642,7 @@ msgid "Error writing header. "
 msgstr "Σφάλμα κατά την εγγραφή κεφαλίδας. "
 
 #: plug-ins/file-fli/fli.c:283
+#, c-format
 msgid "Invalid header: unrecognized magic number!"
 msgstr "Άκυρη κεφαλίδα: μη αναγνωρίσιμος μαγικός αριθμός!"
 
@@ -9531,14 +9651,17 @@ msgid "Error reading frame. "
 msgstr "Σφάλμα ανάγνωσης πλαισίου (καρέ). "
 
 #: plug-ins/file-fli/fli.c:323
+#, c-format
 msgid "Invalid frame size points past end of file!"
 msgstr "Σημεία μη έγκυρου μεγέθους πλαισίου μετά το τέλος του αρχείου!"
 
 #: plug-ins/file-fli/fli.c:353
+#, c-format
 msgid "Invalid chunk size points past end of file!"
 msgstr "Μη έγκυρο μέγεθος κομματιού μετά το τέλος του αρχείου!"
 
 #: plug-ins/file-fli/fli.c:476
+#, c-format
 msgid "Invalid header: magic number is wrong!"
 msgstr "Άκυρη κεφαλίδα: ο μαγικός αριθμός είναι εσφαλμένος!"
 
@@ -9589,6 +9712,7 @@ msgid "Error reading compressed data. "
 msgstr "Σφάλμα κατά την ανάγνωση συμπιεσμένων δεδομένων. "
 
 #: plug-ins/file-fli/fli.c:1022
+#, c-format
 msgid "Overflow reading compressed data. Possibly corrupt file."
 msgstr ""
 "Υπερχείλιση ανάγνωσης συμπιεσμένων δεδομένων. Πιθανώς κατεστραμμένο αρχείο."
@@ -9670,6 +9794,7 @@ msgid "Opening thumbnail for '%s'"
 msgstr "Άνοιγμα μικρογραφίας για '%s'"
 
 #: plug-ins/file-icns/file-icns-save.c:228
+#, c-format
 msgid ""
 "Invalid icon size. \n"
 "It will not be exported"
@@ -9678,6 +9803,7 @@ msgstr ""
 "Δεν θα εξαχθεί"
 
 #: plug-ins/file-icns/file-icns-save.c:231
+#, c-format
 msgid ""
 "Duplicate layer size. \n"
 "It will not be exported"
@@ -9712,6 +9838,7 @@ msgid "Error writing icns: %s"
 msgstr "Σφάλμα κατά την εγγραφή icns: %s"
 
 #: plug-ins/file-icns/file-icns-save.c:586
+#, c-format
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
 "24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
@@ -9721,6 +9848,7 @@ msgstr ""
 "512x512, ή 1024x1024."
 
 #: plug-ins/file-icns/file-icns-save.c:604
+#, c-format
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
 "24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
@@ -9816,6 +9944,7 @@ msgid "Icon #%d has zero width or height"
 msgstr "Το εικονίδιο #%d έχει μηδενικό πλάτος ή ύψος"
 
 #: plug-ins/file-ico/ico-load.c:868 plug-ins/file-ico/ico-load.c:899
+#, c-format
 msgid "Invalid ANI metadata"
 msgstr "Άκυρα μεταδεδομένα ANI"
 
@@ -10062,6 +10191,7 @@ msgid "Use restart mar_kers"
 msgstr "Χρήση _σημειωτών επανεκκίνησης"
 
 #: plug-ins/file-jpeg/jpeg.c:476
+#, c-format
 msgid "JPEG format does not support multiple layers."
 msgstr "Η μορφή JPEG δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -10071,10 +10201,12 @@ msgid "Error loading PSD file: %s"
 msgstr "Σφάλμα φόρτωσης αρχείου PSD: %s"
 
 #: plug-ins/file-psd/psd-load.c:440
+#, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "Άκυρη μορφή στρώσης μεταδεδομένων PSD"
 
 #: plug-ins/file-psd/psd-load.c:519
+#, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Το αρχείο εγγράφου photoshop δεν είναι ένα έγκυρο"
 
@@ -10105,6 +10237,7 @@ msgstr "Μη υποστηριζόμενη βάθος δυαδικού: %d"
 
 #: plug-ins/file-psd/psd-load.c:644 plug-ins/file-psd/psd-load.c:654
 #: plug-ins/file-psd/psd-load.c:894 plug-ins/file-psd/psd-load.c:1253
+#, c-format
 msgid "The file is corrupt!"
 msgstr "Το αρχείο είναι κατεστραμμένο!"
 
@@ -10129,6 +10262,7 @@ msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος στρώσης: %dx%d"
 
 #: plug-ins/file-psd/psd-load.c:974
+#, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Μη υποστηριζόμενο ή μη έγκυρο μέγεθος πληροφοριών μάσκας."
 
@@ -10157,10 +10291,12 @@ msgid "Extra"
 msgstr "Πρόσθετο"
 
 #: plug-ins/file-psd/psd-load.c:3123
+#, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος καναλιού"
 
 #: plug-ins/file-psd/psd-load.c:3192
+#, c-format
 msgid "Failed to decompress data"
 msgstr "Αποτυχία αποσυμπίεσης δεδομένων"
 
@@ -10248,10 +10384,12 @@ msgstr ""
 "."
 
 #: plug-ins/file-psd/psd-util.c:176
+#, c-format
 msgid "Error reading data. Most likely unexpected end of file."
 msgstr "Σφάλμα ανάγνωσης δεδομένων. Πιθανότατα απροσδόκητο τέλος του αρχείου."
 
 #: plug-ins/file-psd/psd-util.c:199
+#, c-format
 msgid "Unexpected end of file"
 msgstr "Αναπάντεχο τέλος αρχείου"
 
@@ -10478,6 +10616,7 @@ msgid "Compression level (0 = none, 1 = RLE, 2 = ARLE)"
 msgstr "Επίπεδο συμπίεσης (0 = κανένα, 1 = RLE, 2 = ARLE)"
 
 #: plug-ins/file-sgi/sgi.c:276
+#, c-format
 msgid "SGI format does not support multiple layers."
 msgstr "Η μορφή SGI δεν υποστηρίζει πολλαπλές στρώσεις."
 
@@ -10614,12 +10753,14 @@ msgid "Save GeoTIFF data"
 msgstr "Αποθήκευση δεδομένων GeoTIFF"
 
 #: plug-ins/file-tiff/file-tiff.c:463
+#, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
 "Η επιλογή \"Αποθήκευση στρώσεων\" δεν ορίστηκε κατά την προσπάθεια εξαγωγής "
 "πολλαπλών στρώσεων."
 
 #: plug-ins/file-tiff/file-tiff-load.c:299
+#, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Δεν είναι εικόνα TIFF, ή η εικόνα είναι αλλοιωμένη."
 
@@ -10900,6 +11041,7 @@ msgid "Failed a scanline write on row %d"
 msgstr "Αποτυχία εγγραφής γραμμής σάρωσης στη γραμμή %d"
 
 #: plug-ins/file-tiff/file-tiff-save.c:1198
+#, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Η συγγραφή σελίδων με διαφορετικό βάθος δυαδικών είναι παράξενη."
 
@@ -10912,6 +11054,7 @@ msgstr ""
 "BigTIFF, ή με διαφορετικό αλγόριθμο συμπίεσης, ή ακυρώστε."
 
 #: plug-ins/file-tiff/file-tiff-save.c:1332
+#, c-format
 msgid ""
 "The assigned soft-proofing profile is not a CMYK profile.\n"
 "This profile will not be included in the exported image."
@@ -11024,6 +11167,7 @@ msgid "Use layers for animation"
 msgstr "Χρήση στρώσεων για κίνηση"
 
 #: plug-ins/file-webp/file-webp.c:349
+#, c-format
 msgid ""
 "The WebP plug-in cannot export multiple layer, except in animation mode."
 msgstr ""
@@ -11595,7 +11739,6 @@ msgid "Iteration value"
 msgstr "Τιμή επανάληψης"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:303
-#| msgid "_X:"
 msgid "C_X"
 msgstr "C_X"
 
@@ -11605,7 +11748,6 @@ msgid "cx value"
 msgstr "τιμή cx"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:309
-#| msgid "C_MYK"
 msgid "C_Y"
 msgstr "C_Y"
 
@@ -14839,7 +14981,6 @@ msgstr "Y"
 #: plug-ins/map-object/map-object-main.c:156
 #: plug-ins/map-object/map-object-main.c:188
 #: plug-ins/map-object/map-object-main.c:204
-#| msgid "Z:"
 msgid "Z"
 msgstr "Z"
 
