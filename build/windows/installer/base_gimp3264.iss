@@ -130,7 +130,7 @@ AppPublisher=The GIMP Team
 AppVersion={#VERSION}
 DisableProgramGroupPage=yes
 DisableWelcomePage=no
-DisableDirPage=auto
+DisableDirPage=no
 AlwaysShowDirOnReadyPage=yes
 ChangesEnvironment=yes
 
