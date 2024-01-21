@@ -99,6 +99,7 @@ static GimpPDBStatusType sanity_check         (GFile                *file,
 static gboolean          bad_bounds_dialog    (void);
 
 static gboolean          save_dialog          (GimpImage            *image,
+                                               GimpImage            *orig_image,
                                                GimpProcedure        *procedure,
                                                GObject              *config);
 
@@ -319,7 +320,7 @@ gif_save (GimpProcedure        *procedure,
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
-          if (! save_dialog (image, procedure, G_OBJECT (config)))
+          if (! save_dialog (image, orig_image, procedure, G_OBJECT (config)))
             {
               gimp_image_delete (sanitized_image);
 
@@ -699,17 +700,40 @@ sanity_check (GFile        *file,
     {
       g_set_error (error, 0, 0,
                    _("Unable to export '%s'.  "
-                   "The GIF file format does not support images that are "
-                   "more than %d pixels wide or tall."),
+                     "The GIF file format does not support images that are "
+                     "more than %d pixels wide or tall."),
                    gimp_file_get_utf8_name (file), G_MAXUSHORT);
 
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
+  *image = gimp_image_duplicate (*image);
+
+  /* Convert image to 8 bit precision if necessary */
+  if (gimp_image_get_precision (*image) != GIMP_PRECISION_U8_NON_LINEAR &&
+      gimp_image_get_precision (*image) != GIMP_PRECISION_U8_LINEAR     &&
+      gimp_image_get_precision (*image) != GIMP_PRECISION_U8_PERCEPTUAL)
+    {
+      gboolean converted = FALSE;
+
+      converted = gimp_image_convert_precision (*image,
+                                                GIMP_PRECISION_U8_NON_LINEAR);
+
+      if (! converted)
+        {
+          g_set_error (error, 0, 0,
+                       _("Unable to export '%s'.  "
+                         "Please convert your image to 8 bit integer "
+                         "precision, as the GIF file format does not "
+                         "support higher precisions."),
+                       gimp_file_get_utf8_name (file));
+
+          return GIMP_PDB_EXECUTION_ERROR;
+        }
+    }
+
   /*** Iterate through the layers to make sure they're all ***/
   /*** within the bounds of the image                      ***/
-
-  *image = gimp_image_duplicate (*image);
   layers = gimp_image_list_layers (*image);
 
   for (list = layers; list; list = g_list_next (list))
@@ -1224,6 +1248,7 @@ bad_bounds_dialog (void)
 
 static gboolean
 save_dialog (GimpImage     *image,
+             GimpImage     *orig_image,
              GimpProcedure *procedure,
              GObject       *config)
 {
@@ -1242,6 +1267,39 @@ save_dialog (GimpImage     *image,
   dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
                                            GIMP_PROCEDURE_CONFIG (config),
                                            image);
+
+  /* Warn user that image will be converted to 8 bits if not already */
+  if (gimp_image_get_precision (orig_image) != GIMP_PRECISION_U8_NON_LINEAR &&
+      gimp_image_get_precision (orig_image) != GIMP_PRECISION_U8_LINEAR     &&
+      gimp_image_get_precision (orig_image) != GIMP_PRECISION_U8_PERCEPTUAL)
+    {
+      GtkWidget *hint;
+
+      /* Used to create vbox to store hintbox in */
+      gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "spacer-8-bit", " ",
+                                       FALSE, FALSE);
+
+      vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                             "8-bit-warning-vbox", "spacer-8-bit",
+                                             NULL);
+
+      hint = g_object_new (GIMP_TYPE_HINT_BOX,
+                           "icon-name", GIMP_ICON_DIALOG_WARNING,
+                           "hint",      _("The GIF format only supports 8 bit "
+                                          "integer precision.\n"
+                                          "Your image will be converted on "
+                                          "export, which may change the pixel "
+                                          "values."),
+                           NULL);
+      gtk_widget_set_visible (hint, TRUE);
+
+      gtk_box_pack_start (GTK_BOX (vbox), hint, FALSE, FALSE, 0);
+      gtk_box_reorder_child (GTK_BOX (vbox), hint, 0);
+
+      gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "8-bit-warning-vbox", NULL);
+    }
 
 #define MAX_COMMENT 240
 
