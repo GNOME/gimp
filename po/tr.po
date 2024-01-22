@@ -43,16 +43,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-11-02 19:18+0000\n"
-"PO-Revision-Date: 2023-11-05 08:00+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2024-01-16 09:15+0000\n"
+"PO-Revision-Date: 2024-01-18 07:32+0300\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-POOTLE-MTIME: 1437505389.000000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -114,8 +114,8 @@ msgid ""
 "corrections. It is highly recommended to update. It also provides a few "
 "interesting changes, such as:"
 msgstr ""
-"GIMP’in yeni sürümü, güvenlik açığı düzeltmelerini de içeren birçok düzeltmeyle "
-"birlikte geliyor. Güncellemenizi şiddetle öneririz. Ayrıca, "
+"GIMP’in yeni sürümü, güvenlik açığı düzeltmelerini de içeren birçok "
+"düzeltmeyle birlikte geliyor. Güncellemenizi şiddetle öneririz. Ayrıca, "
 "aşağıdakiler gibi birkaç ilgi çekici değişiklik de içeriyor:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
@@ -1295,11 +1295,11 @@ msgstr "Deneysel özellikler ile bir tercihler sayfası göster"
 msgid "Show an image submenu with debug actions"
 msgstr "Hata ayıklama işlemleriyle bir görüntü alt menüsü göster"
 
-#: ../app/main.c:598
+#: ../app/main.c:620
 msgid "[FILE|URI...]"
 msgstr "[DOSYA|ADRES...]"
 
-#: ../app/main.c:616
+#: ../app/main.c:638
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1307,20 +1307,20 @@ msgstr ""
 "GIMP, grafiksel kullanıcı arabirimini başlatamadı.\n"
 "Görüntüleme ortamınız için uygun bir kurulumun var olduğundan emin olun."
 
-#: ../app/main.c:635
+#: ../app/main.c:657
 msgid "Another GIMP instance is already running."
 msgstr "Başka bir GIMP zaten çalışıyor."
 
-#: ../app/main.c:726
+#: ../app/main.c:748
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP çıktısı. Bu pencereyi kapatmak için herhangi bir karakter girin."
 
-#: ../app/main.c:727
+#: ../app/main.c:749
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Bu pencereyi kapatmak için herhangi bir karakter girin)\n"
 
-#: ../app/main.c:744
+#: ../app/main.c:766
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP çıktısı. Bu pencereyi küçültebilirsiniz, fakat kapatmayın."
 
@@ -11294,8 +11294,8 @@ msgstr "Yol"
 #: ../app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to "
-"focus\"."
+"receives the focus. This is useful for window managers using \"click to focus"
+"\"."
 msgstr ""
 "Bu özelliği etkinleştirdiğinizde, tıkladığınız görüntünün penceresi etkin "
 "hale gelir. Bu özellik tıklayarak etkinleştirme yapan pencere yöneticilerini "
@@ -15117,8 +15117,8 @@ msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
 "%lu), bytes=%lu"
 msgstr ""
-"'%s' içinde geçersiz başlık verisi: genişlik=%lu (en fazla %lu), "
-"yükseklik=%lu (en fazla %lu), byte=%lu"
+"'%s' içinde geçersiz başlık verisi: genişlik=%lu (en fazla %lu), yükseklik="
+"%lu (en fazla %lu), byte=%lu"
 
 #: ../app/core/gimppattern-load.c:116
 #, c-format
@@ -15630,8 +15630,8 @@ msgstr "GIMP web sitesini ziyaret edin"
 msgid "translator-credits"
 msgstr ""
 "Muhammet Kara <muhammetk@gmail.com>\n"
-"Sabri Ünal <libreajans@gmail.com>, 2019-2022\n"
-"Emin Tufan Çetin <etcetin@gmail.com>, 2019-2022."
+"Sabri Ünal <libreajans@gmail.com>\n"
+"Emin Tufan Çetin <etcetin@gmail.com>"
 
 #: ../app/dialogs/about-dialog.c:355
 msgid "Update available!"
@@ -21161,8 +21161,8 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:765
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için yanlış bir değer türü ile "
 "çağrıldı (#%d). İstenen %s, olan %s."
@@ -26688,17 +26688,17 @@ msgid "Select fields"
 msgstr "Alanları seç"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3335
+#: ../app/widgets/gimpdashboard.c:3342
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "yok"
 
-#: ../app/widgets/gimpdashboard.c:3344 ../app/widgets/gimpdashboard.c:4347
+#: ../app/widgets/gimpdashboard.c:3351 ../app/widgets/gimpdashboard.c:4354
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Evet"
 
-#: ../app/widgets/gimpdashboard.c:3345 ../app/widgets/gimpdashboard.c:4348
+#: ../app/widgets/gimpdashboard.c:3352 ../app/widgets/gimpdashboard.c:4355
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Hayır"
@@ -26707,7 +26707,7 @@ msgstr "Hayır"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3429
+#: ../app/widgets/gimpdashboard.c:3436
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -26718,16 +26718,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4337
+#: ../app/widgets/gimpdashboard.c:4344
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:4415
+#: ../app/widgets/gimpdashboard.c:4422
 msgid "N/A"
 msgstr "yok"
 
-#: ../app/widgets/gimpdashboard.c:4793
+#: ../app/widgets/gimpdashboard.c:4800
 msgid "Resolving symbol information..."
 msgstr "Simge bilgileri çözümleniyor..."
 
