@@ -22,7 +22,7 @@
 ;      distribution.                                                    ;
 ;.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.;
 ;
-;Install script for GIMP and GTK+
+;Install script for GIMP and its dependencies
 ;requires Inno Setup 6
 ;
 ;See base_directories.isi
@@ -79,55 +79,35 @@
 ;
 #pragma option -e+
 
-#ifndef VERSION
-	#error VERSION must be defined
-#endif
-#ifndef GIMP_DIR
-	#error GIMP_DIR must be defined
-#endif
-#ifndef DIR32
-	#error DIR32 must be defined
-#endif
-#ifndef DIR64
-	#error DIR64 must be defined
-#endif
-#ifndef DEPS_DIR
-	#error DEPS_DIR must be defined
-#endif
-#ifndef DDIR32
-	#error DDIR32 must be defined
-#endif
-#ifndef DDIR64
-	#error DDIR64 must be defined
-#endif
-
+#include "base_directories.isi"
+#include "base_version.isi"
 ; Optional: DEBUG_SYMBOLS, LUA, PYTHON, NOCOMPRESSION, NOFILES, DEVEL
 
 #define X86 1
 #define X64 2
 #define ARM64 3
 
-#include "base_directories.isi"
-#include "util_version.isi"
-
 [Setup]
 AppName=GIMP
 #if Defined(DEVEL) && DEVEL != ""
-AppID=GIMP-{#MAJOR}.{#MINOR}
+AppID=GIMP-{#GIMP_APP_VERSION}
 #else
 AppID=GIMP-{#MAJOR}
 #endif
-VersionInfoVersion={#VERSION}
+
 #if !defined(REVISION)
-AppVerName=GIMP {#VERSION}
+AppVerName=GIMP {#GIMP_VERSION}
 #else
-AppVerName=GIMP {#VERSION}-{#REVISION}
+AppVerName=GIMP {#GIMP_VERSION}-{#REVISION}
 #endif
+AppVersion={#GIMP_VERSION}
+VersionInfoVersion={#GIMP_VERSION}
+
 AppPublisherURL=https://www.gimp.org/
 AppSupportURL=https://www.gimp.org/docs/
 AppUpdatesURL=https://www.gimp.org/
 AppPublisher=The GIMP Team
-AppVersion={#VERSION}
+
 DisableProgramGroupPage=yes
 DisableWelcomePage=no
 DisableDirPage=auto
@@ -135,7 +115,7 @@ AlwaysShowDirOnReadyPage=yes
 ChangesEnvironment=yes
 
 #if Defined(DEVEL) && DEVEL != ""
-DefaultDirName={autopf}\GIMP {#MAJOR}.{#MINOR}
+DefaultDirName={autopf}\GIMP {#GIMP_APP_VERSION}
 LZMANumBlockThreads=4
 LZMABlockSize=76800
 #else
@@ -151,7 +131,7 @@ WizardImageFile=windows-installer-intro-big.bmp
 WizardImageStretch=yes
 WizardSmallImageFile=wilber.bmp
 
-UninstallDisplayIcon={app}\bin\gimp-{#MAJOR}.{#MINOR}.exe
+UninstallDisplayIcon={app}\bin\gimp-{#GIMP_APP_VERSION}.exe
 UninstallFilesDir={app}\uninst
 
 MinVersion=10.0
@@ -182,11 +162,11 @@ LZMANumFastBytes=273
 #endif //NOCOMPRESSION
 
 #if !defined(REVISION)
-OutputBaseFileName=gimp-{#VERSION}-setup
-OutputManifestFile=gimp-{#VERSION}-setup.txt
+OutputBaseFileName=gimp-{#GIMP_VERSION}-setup
+OutputManifestFile=gimp-{#GIMP_VERSION}-setup.txt
 #else
-OutputBaseFileName=gimp-{#VERSION}-{#REVISION}-setup
-OutputManifestFile=gimp-{#VERSION}-{#REVISION}-setup.txt
+OutputBaseFileName=gimp-{#GIMP_VERSION}-{#REVISION}-setup
+OutputManifestFile=gimp-{#GIMP_VERSION}-{#REVISION}-setup.txt
 #endif
 
 PrivilegesRequiredOverridesAllowed=dialog
@@ -246,13 +226,13 @@ Name: custom; Description: "{cm:TypeCustom}"; Flags: iscustom
 
 [Components]
 ;Required components (minimal install)
-Name: gimp32; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
-Name: gimp64; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('x64')
-Name: gimpARM64; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('arm64')
+Name: gimp32; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
+Name: gimp64; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('x64')
+Name: gimpARM64; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('arm64')
 
-Name: deps32; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('32')
-Name: deps64; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('x64')
-Name: depsARM64; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('arm64')
+Name: deps32; Description: "{cm:ComponentsDeps,{#DEPS_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('32')
+Name: deps64; Description: "{cm:ComponentsDeps,{#DEPS_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('x64')
+Name: depsARM64; Description: "{cm:ComponentsDeps,{#DEPS_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('arm64')
 
 ;Optional components (complete install)
 #ifdef DEBUG_SYMBOLS
@@ -283,9 +263,8 @@ Name: gimp32on64; Description: "{cm:ComponentsGimp32}"; Types: full custom; Flag
 Name: desktopicon; Description: "{cm:AdditionalIconsDesktop}"; GroupDescription: "{cm:AdditionalIcons}"
 
 [Icons]
-#define ICON_VERSION=MAJOR + "." + MINOR + "." + MICRO
-Name: "{autoprograms}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#VERSION}"
-Name: "{autodesktop}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#VERSION}"; Tasks: desktopicon
+Name: "{autoprograms}\GIMP {#GIMP_VERSION}"; Filename: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#GIMP_VERSION}"
+Name: "{autodesktop}\GIMP {#GIMP_VERSION}"; Filename: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#GIMP_VERSION}"; Tasks: desktopicon
 
 
 [Files]
@@ -303,8 +282,8 @@ Source: "installsplash_small-devel.bmp"; Destname: "installsplash_small.bmp"; Fl
 ;Required neutral components (minimal install)
 #define GIMP_ARCHS="gimp32 or gimp64 or gimpARM64"
 Source: "{#GIMP_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\environ\*"; DestDir: "{app}\lib\gimp\{#DIR_VER}\environ"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\interpreters\*"; DestDir: "{app}\lib\gimp\{#DIR_VER}\interpreters"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_DIR_VERSION}\environ\*"; DestDir: "{app}\lib\gimp\{#GIMP_DIR_VERSION}\environ"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_DIR_VERSION}\interpreters\*"; DestDir: "{app}\lib\gimp\{#GIMP_DIR_VERSION}\interpreters"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#GIMP_DIR32}\share\metainfo\*"; DestDir: "{app}\share\metainfo"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
@@ -322,7 +301,7 @@ Source: "{#DEPS_DIR32}\share\lua\*"; DestDir: "{app}\share\lua"; Components: lua
 #endif
 Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #ifdef PYTHON
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\*.py"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_DIR_VERSION}\plug-ins\*.py"; DestDir: "{app}\lib\gimp\{#GIMP_DIR_VERSION}\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #endif
 
 
@@ -331,7 +310,7 @@ Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\*.py"; DestDir: "{app}\lib\g
 #define PLATFORM X86
 #include "base_executables.isi"
 ;special case, since 64bit version doesn't work, and is excluded in base_executables.isi
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins"; Components: gimp32; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_DIR_VERSION}\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_DIR_VERSION}\plug-ins"; Components: gimp32; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;x86_64
 #define PLATFORM X64
@@ -344,12 +323,12 @@ Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\twain.exe"; DestDir: "{app}\
 ;32-on-64bit
 #include "base_twain32on64.isi"
 ;prefer 32bit twain plugin over 64bit because 64bit twain drivers are rare
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins\twain"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR64}\lib\gimp\{#DIR_VER}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins\twain"; Components: (not gimp32on64) and gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIRA64}\lib\gimp\{#DIR_VER}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins\twain"; Components: (not gimp32on64) and gimpARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_DIR_VERSION}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_DIR_VERSION}\plug-ins\twain"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR64}\lib\gimp\{#GIMP_DIR_VERSION}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_DIR_VERSION}\plug-ins\twain"; Components: (not gimp32on64) and gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIRA64}\lib\gimp\{#GIMP_DIR_VERSION}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_DIR_VERSION}\plug-ins\twain"; Components: (not gimp32on64) and gimpARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;special case due to MS-Windows engine
-Source: "{#DEPS_DIR32}\etc\gtk-3.0\*"; DestDir: "{app}\32\etc\gtk-3.0"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\etc\gtk-{#DEPS_DIR_VERSION}\*"; DestDir: "{app}\32\etc\gtk-{#DEPS_DIR_VERSION}"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
@@ -596,13 +575,13 @@ Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\*.dll"
 Type: filesandordirs; Name: "{app}\lib\gegl-0.2"
 ;old icons
 #ifndef DEVEL
-Type: files; Name: "{autoprograms}\GIMP 2.lnk"
-Type: files; Name: "{autodesktop}\GIMP 2.lnk"
+Type: files; Name: "{autoprograms}\GIMP {#MAJOR}.lnk"
+Type: files; Name: "{autodesktop}\GIMP {#MAJOR}.lnk"
 #endif
 ;get previous GIMP icon name from uninstall name in Registry
 #if Defined(DEVEL) && DEVEL != ""
-Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1,DisplayVersion|GIMP {#MAJOR}.{#MINOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1','DisplayVersion')
-Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1,DisplayVersion|GIMP {#MAJOR}.{#MINOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1','DisplayVersion')
+Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_APP_VERSION}_is1,DisplayVersion|GIMP {#GIMP_APP_VERSION}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_APP_VERSION}_is1','DisplayVersion')
+Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_APP_VERSION}_is1,DisplayVersion|GIMP {#GIMP_APP_VERSION}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_APP_VERSION}_is1','DisplayVersion')
 #else
 Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1,DisplayVersion|GIMP {#MAJOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1','DisplayVersion')
 Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1,DisplayVersion|GIMP {#MAJOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1','DisplayVersion')
@@ -624,8 +603,8 @@ Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environmen
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
-Type: files; Name: "{app}\lib\gimp\{#DIR_VER}\interpreters\lua.interp"
-Type: files; Name: "{app}\lib\gimp\{#DIR_VER}\environ\pygimp.env"
+Type: files; Name: "{app}\lib\gimp\{#GIMP_DIR_VERSION}\interpreters\lua.interp"
+Type: files; Name: "{app}\lib\gimp\{#GIMP_DIR_VERSION}\environ\pygimp.env"
 ;need to clean out all the generated .pyc files
 Type: filesandordirs; Name: "{app}\Python\*"
 
@@ -674,7 +653,7 @@ const
 	//RTFBullet = '{\pntext\f1\''B7\tab}';
 	RTFPara	  = '\par ';
 
-	RunOnceName = 'Resume GIMP {#VERSION} install';
+	RunOnceName = 'Resume GIMP {#GIMP_VERSION} install';
 
 	CONFIG_OVERRIDE_PARAM = 'configoverride';
 
@@ -830,7 +809,7 @@ begin
 	begin
 		StatusLabel(CustomMessage('SettingUpPyGimp'),'');
 
-		InterpFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\interpreters\pygimp.interp');
+		InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_DIR_VERSION}\interpreters\pygimp.interp');
         DebugMsg('PrepareInterp','Writing interpreter file for gimp-python: ' + InterpFile);
 
 #ifdef DEVEL
@@ -857,7 +836,7 @@ begin
 #ifdef LUA
 	if IsComponentSelected('lua') then
 	begin
-		InterpFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\interpreters\lua.interp');
+		InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_DIR_VERSION}\interpreters\lua.interp');
         DebugMsg('PrepareInterp','Writing interpreter file for lua: ' + InterpFile);
 
 		LuaBin := 'luajit.exe'
@@ -880,13 +859,13 @@ begin
 // not optional
 // !!! use comma for binfmt delimiter and full Windows path in interpreter field of binfmt
 begin
-	InterpFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\interpreters\gimp-script-fu-interpreter.interp');
+	InterpFile := ExpandConstant('{app}\lib\gimp\{#GIMP_DIR_VERSION}\interpreters\gimp-script-fu-interpreter.interp');
 			DebugMsg('PrepareInterp','Writing interpreter file for gimp-script-fu-interpreter: ' + InterpFile);
 
-	InterpContent := 'gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-3.0.exe') + #10 +
-						'gimp-script-fu-interpreter-3.0=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-3.0.exe') + #10 +
-						'/usr/bin/gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-3.0.exe') + #10 +
-						',ScriptFu,E,,scm,,' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-3.0.exe') + ','#10;
+	InterpContent := 'gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_API_VERSION}.exe') + #10 +
+						'gimp-script-fu-interpreter-{#GIMP_API_VERSION}=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_API_VERSION}.exe') + #10 +
+						'/usr/bin/gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_API_VERSION}.exe') + #10 +
+						',ScriptFu,E,,scm,,' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-{#GIMP_API_VERSION}.exe') + ','#10;
 
 	if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
 	begin
@@ -905,7 +884,7 @@ begin
 	StatusLabel(CustomMessage('SettingUpEnvironment'),'');
 
 	//set PATH to be used by plug-ins
-	EnvFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\environ\default.env');
+	EnvFile := ExpandConstant('{app}\lib\gimp\{#GIMP_DIR_VERSION}\environ\default.env');
 	DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
 
 	Env := #10'PATH=${gimp_installation_dir}\bin';
@@ -933,7 +912,7 @@ begin
 	//workaround for high-DPI awareness of Python plug-ins
 	if IsComponentSelected('py') then
 	begin
-		EnvFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\environ\pygimp.env');
+		EnvFile := ExpandConstant('{app}\lib\gimp\{#GIMP_DIR_VERSION}\environ\pygimp.env');
 		DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
 
 		Env := '__COMPAT_LAYER=HIGHDPIAWARE' + #10
@@ -948,7 +927,7 @@ begin
 	// Disable check-update when run with specific option
         if ExpandConstant('{param:disablecheckupdate|false}') = 'true' then
 	begin
-		EnvFile := ExpandConstant('{app}\share\gimp\{#DIR_VER}\gimp-release');
+		EnvFile := ExpandConstant('{app}\share\gimp\{#GIMP_DIR_VERSION}\gimp-release');
 		DebugMsg('DisableCheckUpdate','Disabling check-update in ' + EnvFile);
 
                 Env := 'check-update=false'
@@ -1686,12 +1665,12 @@ begin
 	if RemoveResult = rogUninstallFailed then
 	begin
 		DebugMsg('PrepareToInstall','RemoveOldGIMPVersions failed to uninstall old GIMP version');
-		Result := FmtMessage(CustomMessage('RemovingOldVersionFailed'),['{#VERSION}',ExpandConstant('{app}')]);
+		Result := FmtMessage(CustomMessage('RemovingOldVersionFailed'),['{#GIMP_VERSION}',ExpandConstant('{app}')]);
 	end else
 	if RemoveResult = rogCantUninstall then
 	begin
 		DebugMsg('PrepareToInstall','RemoveOldGIMPVersions failed to uninstall old GIMP version [1]');
-		Result := FmtMessage(CustomMessage('RemovingOldVersionCantUninstall'),['{#VERSION}',ExpandConstant('{app}')]);
+		Result := FmtMessage(CustomMessage('RemovingOldVersionCantUninstall'),['{#GIMP_VERSION}',ExpandConstant('{app}')]);
 	end else
 	begin
 		DebugMsg('PrepareToInstall','Internal error 11');
