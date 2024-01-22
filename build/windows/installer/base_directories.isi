@@ -1,15 +1,11 @@
 //directories to source files from
-#if !defined(VERSION)
-  #error "VERSION must be defined"
-#endif
-
 #define public
 
 #if !defined(VER_DIR)
 	#if defined(REVISION)
-		#define VER_DIR VERSION + "-" + REVISION
+		#define VER_DIR GIMP_VERSION + "-" + REVISION
 	#else
-		#define VER_DIR VERSION
+		#define VER_DIR GIMP_VERSION
 	#endif
 #endif
 

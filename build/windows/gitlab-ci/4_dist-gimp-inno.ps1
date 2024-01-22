@@ -2,23 +2,35 @@
 
 # Parameters
 param ($GIMP_VERSION,
+       $GIMP_APP_VERSION,
+       $GIMP_API_VERSION,
        $GIMP_BASE = '..\..\..\',
        $GIMP32 = 'gimp-x86',
        $GIMP64 = 'gimp-x64',
        $GIMPA64 = 'gimp-a64')
 
-if (-Not $GIMP_VERSION)
+if ((-Not $GIMP_VERSION) -or (-Not $GIMP_APP_VERSION) -or (-Not $GIMP_API_VERSION))
   {
     $CONFIG_PATH = Resolve-Path -Path "_build-*\config.h" | Select-Object -ExpandProperty Path
+  }
+
+if (-Not $GIMP_VERSION)
+  {
     $GIMP_VERSION = Get-Content -Path "$CONFIG_PATH"         | Select-String 'GIMP_VERSION'        |
     Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
   }
 
-#$GIMP_APP_VERSION = Get-Content -Path "$CONFIG_PATH"         | Select-String 'GIMP_APP_VERSION "'  |
-#Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+if (-Not $GIMP_APP_VERSION)
+  {
+    $GIMP_APP_VERSION = Get-Content -Path "$CONFIG_PATH"         | Select-String 'GIMP_APP_VERSION "'  |
+    Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+  }
 
-#$GIMP_API_VERSION = Get-Content -Path "$CONFIG_PATH"               | Select-String 'GIMP_PKGCONFIG_VERSION' |
-#Foreach-Object {$_ -replace '#define GIMP_PKGCONFIG_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+if (-Not $GIMP_API_VERSION)
+  {
+    $GIMP_API_VERSION = Get-Content -Path "$CONFIG_PATH"               | Select-String 'GIMP_PKGCONFIG_VERSION' |
+    Foreach-Object {$_ -replace '#define GIMP_PKGCONFIG_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+  }
 
 
 # This is needed for some machines without TLS 1.2 enabled connecting to the internet
@@ -104,7 +116,7 @@ if ($a64_generated -eq "True")
 # Construct now the installer
 Set-Location build/windows/installer
 Set-Alias -Name 'iscc' -Value "${INNOPATH}\iscc.exe"
-iscc -DVERSION="$GIMP_VERSION" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DLUA -DPYTHON base_gimp3264.iss
+iscc -DGIMP_VERSION="$GIMP_VERSION" -DGIMP_APP_VERSION="$GIMP_APP_VERSION" -DGIMP_API_VERSION="$GIMP_API_VERSION" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DLUA -DPYTHON base_gimp3264.iss
 
 # Test if the installer was created and return success/failure.
 $builded = Test-Path -Path "_Output/gimp-${GIMP_VERSION}-setup.exe" -PathType Leaf
