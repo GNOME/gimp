@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-12-27 07:35+0000\n"
-"PO-Revision-Date: 2023-12-30 18:06+0100\n"
+"PO-Revision-Date: 2024-01-22 18:06+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -10040,7 +10040,7 @@ msgstr "Introduïu el nom de la nova pantalla:"
 #: app/actions/window-commands.c:118
 #, c-format
 msgid "Can't open display '%s'. Please try another one:"
-msgstr "No es pot obrir la pantalla '%s'. Si us plau, proveu-ne un altre:"
+msgstr "No es pot obrir la pantalla «%s». Si us plau, proveu-ne un altre:"
 
 #: app/actions/windows-actions.c:102
 msgctxt "windows-action"

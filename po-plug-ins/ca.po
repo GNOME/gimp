@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-01-18 19:05+0000\n"
-"PO-Revision-Date: 2024-01-18 20:01+0100\n"
+"PO-Revision-Date: 2024-01-22 20:01+0100\n"
 "Last-Translator: Quique Serrano <qserrano@outlook.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -2268,7 +2268,7 @@ msgstr "Negre"
 
 #: plug-ins/common/decompose.c:261
 msgid "What to decompose: "
-msgstr "Què descompondre "
+msgstr "Què descompondre: "
 
 #: plug-ins/common/decompose.c:282
 msgid "_Decompose..."
@@ -6773,7 +6773,7 @@ msgstr "Color de la pel·lícula"
 
 #: plug-ins/common/film.c:206
 msgid "Start _index"
-msgstr "Inicia _index"
+msgstr "Inicia _índex"
 
 #: plug-ins/common/film.c:207
 msgid "Start index for numbering"
@@ -8895,7 +8895,7 @@ msgstr "_Usa la mètrica perceptiva d'error"
 
 #: plug-ins/file-dds/dds.c:208
 msgid "Use a perceptual error metric during compression"
-msgstr "Usa una mètrica perceptual d'error durant la compressió"
+msgstr "Usa una mètrica perceptiva d'error durant la compressió"
 
 #: plug-ins/file-dds/dds.c:214
 msgid "Pixel format"
@@ -9128,11 +9128,11 @@ msgstr "Valor gamma a usar per a la correcció de la gamma (p. ex. 2.2)"
 
 #: plug-ins/file-dds/dds.c:322
 msgid "Preserve al_pha test coverage"
-msgstr "Preserva la cobertura de la _prova alfa"
+msgstr "Conserva la cobertura de la _prova alfa"
 
 #: plug-ins/file-dds/dds.c:323
 msgid "Preserve alpha test coverage for alpha channel maps"
-msgstr "Preserva la cobertura de la prova alfa per als mapes del canal alfa"
+msgstr "Conserva la cobertura de la prova alfa per als mapes del canal alfa"
 
 #: plug-ins/file-dds/dds.c:329
 msgid "Alp_ha test threshold"
