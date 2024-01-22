@@ -20,7 +20,7 @@ if [ "$PO_LANGS" != "$INSTALLER_LANGS" ]; then
   echo "Please verify: build/windows/installer/base_gimp3264.iss"
   echo "Base language files can be found in: https://github.com/jrsoftware/issrc/tree/main/Files/Languages"
   echo "If a new language is in Unofficial/, also edit/download it from:"
-  echo "build/windows/gitlab-ci/4_installer-gimp-msys2.sh"
+  echo "build/windows/gitlab-ci/4_dist-gimp-inno.ps1"
   exit 1
 fi
 
@@ -40,7 +40,7 @@ INSTALLER_LANGS=`grep -rI '^Name:.*MessagesFile.*Unofficial' ${GIMP_TESTING_ABS_
                  sed 's/^.*Unofficial\\\\\([a-zA-Z_.]*\),.*$/\1/' | sort`
 INSTALLER_LANGS=`echo "$INSTALLER_LANGS" | tr '\n\r' ' '`
 
-PULLED_UNOFFICIAL=`grep '^download_lang [^(]' ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/gitlab-ci/4_installer-gimp-msys2.sh | \
+PULLED_UNOFFICIAL=`grep '^download_lang [^(]' ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/gitlab-ci/4_dist-gimp-inno.ps1 | \
                    sed 's$^download_lang \([^.]*.isl.\?\)$\1$' | sort`
 PULLED_UNOFFICIAL=`echo "$PULLED_UNOFFICIAL" | tr '\n\r' ' '`
 
@@ -50,6 +50,6 @@ else
   echo "Error: unofficial languages listed in the Windows installer script do not match the pulled InnoSetup files."
   echo "- Pulled files:        $PULLED_UNOFFICIAL"
   echo "- Installer languages: $INSTALLER_LANGS"
-  echo "Please verify: build/windows/gitlab-ci/4_installer-gimp-msys2.sh"
+  echo "Please verify: build/windows/gitlab-ci/4_dist-gimp-inno.ps1"
   exit 1
 fi

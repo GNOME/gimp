@@ -79,27 +79,6 @@
 ;
 #pragma option -e+
 
-#ifndef VERSION
-	#error VERSION must be defined
-#endif
-#ifndef GIMP_DIR
-	#error GIMP_DIR must be defined
-#endif
-#ifndef DIR32
-	#error DIR32 must be defined
-#endif
-#ifndef DIR64
-	#error DIR64 must be defined
-#endif
-#ifndef DEPS_DIR
-	#error DEPS_DIR must be defined
-#endif
-#ifndef DDIR32
-	#error DDIR32 must be defined
-#endif
-#ifndef DDIR64
-	#error DDIR64 must be defined
-#endif
 
 ; Optional: DEBUG_SYMBOLS, LUA, PYTHON, NOCOMPRESSION, NOFILES, DEVEL
 
