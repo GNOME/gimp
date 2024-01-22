@@ -18,14 +18,14 @@
 # Christian Kirbach <christian.kirbach@gmail.com>, 2011-2020.
 # Tim Sabsch <tim@sabsch.com>, 2018-2023.
 # Philipp Kiemle <philipp.kiemle@gmail.com>, 2021, 2023.
-# Jürgen Benvenuti <gastornis@posteo.org>, 2023.
+# Jürgen Benvenuti <gastornis@posteo.org>, 2023, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-29 22:32+0000\n"
-"PO-Revision-Date: 2023-10-30 09:19+0100\n"
+"POT-Creation-Date: 2024-01-16 09:15+0000\n"
+"PO-Revision-Date: 2024-01-20 20:01+0100\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -1319,11 +1319,11 @@ msgstr "Eine Seite mit experimentellen Einstellungen anzeigen"
 msgid "Show an image submenu with debug actions"
 msgstr "Kontextmenü mit Aktionen zur Fehlerdiagnose anzeigen"
 
-#: ../app/main.c:598
+#: ../app/main.c:620
 msgid "[FILE|URI...]"
 msgstr "[DATEI|URI …]"
 
-#: ../app/main.c:616
+#: ../app/main.c:638
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1332,22 +1332,22 @@ msgstr ""
 "Bitte stellen Sie sicher, dass Ihre grafische Oberfläche korrekt "
 "eingerichtet ist."
 
-#: ../app/main.c:635
+#: ../app/main.c:657
 msgid "Another GIMP instance is already running."
 msgstr "Eine andere GIMP-Instanz wird bereits ausgeführt."
 
-#: ../app/main.c:726
+#: ../app/main.c:748
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 "GIMP-Ausgabe. Drücken Sie eine beliebige Taste, um dieses Fenster zu "
 "schließen."
 
-#: ../app/main.c:727
+#: ../app/main.c:749
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Drücken Sie eine beliebige Taste, um dieses Fenster zu schließen)\n"
 
-#: ../app/main.c:744
+#: ../app/main.c:766
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "GIMP-Ausgabe. Sie können dieses Fenster verkleinern, jedoch nicht schließen."
@@ -15211,29 +15211,22 @@ msgid "GIMP only supports version 1 ACB palettes"
 msgstr "GIMP unterstützt nur Version 1 der ACB-Paletten"
 
 #: ../app/core/gimppalette-load.c:641
-#, fuzzy
-#| msgid "Invalid empty palette name"
 msgid "Invalid ACB palette identifier."
-msgstr "Ungültiger, leerer Palettenname"
+msgstr "Ungültiger ACB-Palettenidentifizierer."
 
 #: ../app/core/gimppalette-load.c:656 ../app/core/gimppalette-load.c:895
 #: ../app/core/gimppalette-load.c:916
-#, fuzzy, c-format
-#| msgid "Invalid empty palette name"
+#, c-format
 msgid "Invalid ACB palette name."
-msgstr "Ungültiger, leerer Palettenname"
+msgstr "Ungültiger ACB-Palettenname."
 
 #: ../app/core/gimppalette-load.c:674
-#, fuzzy
-#| msgid "Invalid empty palette name"
 msgid "Invalid ACB palette prefix."
-msgstr "Ungültiger, leerer Palettenname"
+msgstr "Ungültiges ACB-Palettenpräfix."
 
 #: ../app/core/gimppalette-load.c:689
-#, fuzzy
-#| msgid "Invalid empty palette name"
 msgid "Invalid ACB palette suffix."
-msgstr "Ungültiger, leerer Palettenname"
+msgstr "Ungültiges ACB-Palettensuffix."
 
 #: ../app/core/gimppalette-load.c:707 ../app/core/gimppalette-load.c:981
 msgid "Invalid number of colors in palette."
@@ -15245,27 +15238,22 @@ msgid "Invalid number of colors: %s."
 msgstr "Ungültige Anzahl der Farben: %s."
 
 #: ../app/core/gimppalette-load.c:725 ../app/core/gimppalette-load.c:734
-#, fuzzy
-#| msgid "Invalid empty palette name"
 msgid "Invalid ACB palette page info."
-msgstr "Ungültiger, leerer Palettenname"
+msgstr "Ungültige ACB-Palettenseiten-Information."
 
 #: ../app/core/gimppalette-load.c:745 ../app/core/gimppalette-load.c:767
-#, fuzzy
-#| msgid "Invalid empty palette name"
 msgid "Invalid ACB palette color space."
-msgstr "Ungültiger, leerer Palettenname"
+msgstr "Ungültiger ACB-Palettenfarbraum."
 
 #: ../app/core/gimppalette-load.c:905
 #, c-format
 msgid "Invalid ACB name size."
-msgstr ""
+msgstr "Ungültige ACB-Namensgröße."
 
 #: ../app/core/gimppalette-load.c:972
-#, fuzzy, c-format
-#| msgid "Invalid brush hardness."
+#, c-format
 msgid "Invalid ASE header: %s"
-msgstr "Ungültige Pinselhärte."
+msgstr "Ungültige ASE-Kopfzeile: %s"
 
 #: ../app/core/gimppalette-load.c:997
 #, c-format
@@ -15278,10 +15266,9 @@ msgid "Invalid color components: %s."
 msgstr "Ungültige Farbkomponenten: %s."
 
 #: ../app/core/gimppalette-load.c:1089 ../app/core/gimppalette-load.c:1116
-#, fuzzy, c-format
-#| msgid "Invalid column count."
+#, c-format
 msgid "Invalid ASE color entry: %s."
-msgstr "Ungültige Spaltenanzahl."
+msgstr "Ungültiger ASE-Farbeintrag: %s."
 
 #: ../app/core/gimppalette-load.c:1144 ../app/core/gimppalette-load.c:1160
 #: ../app/core/gimppalette-load.c:1179
@@ -15292,12 +15279,12 @@ msgstr "Ungültiger ASE-Palettenname."
 #: ../app/core/gimppalette-load.c:1153
 #, c-format
 msgid "Invalid ASE block size."
-msgstr ""
+msgstr "Ungültige ASE-Blockgröße."
 
 #: ../app/core/gimppalette-load.c:1169
 #, c-format
 msgid "Invalid ASE name size."
-msgstr ""
+msgstr "Ungültige ASE-Namensgröße."
 
 #: ../app/core/gimppalettemru.c:123 ../app/core/gimppalettemru.c:229
 msgid "History Color"
@@ -26994,17 +26981,17 @@ msgid "Select fields"
 msgstr "Felder auswählen"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3335
+#: ../app/widgets/gimpdashboard.c:3342
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "N.V."
 
-#: ../app/widgets/gimpdashboard.c:3344 ../app/widgets/gimpdashboard.c:4347
+#: ../app/widgets/gimpdashboard.c:3351 ../app/widgets/gimpdashboard.c:4354
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Ja"
 
-#: ../app/widgets/gimpdashboard.c:3345 ../app/widgets/gimpdashboard.c:4348
+#: ../app/widgets/gimpdashboard.c:3352 ../app/widgets/gimpdashboard.c:4355
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Nein"
@@ -27013,7 +27000,7 @@ msgstr "Nein"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3429
+#: ../app/widgets/gimpdashboard.c:3436
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -27024,16 +27011,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4337
+#: ../app/widgets/gimpdashboard.c:4344
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:4415
+#: ../app/widgets/gimpdashboard.c:4422
 msgid "N/A"
 msgstr "N.V."
 
-#: ../app/widgets/gimpdashboard.c:4793
+#: ../app/widgets/gimpdashboard.c:4800
 msgid "Resolving symbol information..."
 msgstr "Symbolinformationen werden aufgelöst ..."
 
