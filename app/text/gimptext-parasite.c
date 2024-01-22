@@ -98,7 +98,8 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
        */
       if (*before_xcf_v19)
         {
-          new_data = g_string_new (parasite_data);
+          text->font = NULL;
+          new_data   = g_string_new (parasite_data);
           g_string_replace (new_data, "\")\n(font", "\")\n(font \"GimpFont\"", 1);
 
           if (has_markup)
