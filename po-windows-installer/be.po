@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-26 14:33+0000\n"
-"PO-Revision-Date: 2023-09-26 17:54+0300\n"
+"POT-Creation-Date: 2024-01-22 12:47+0000\n"
+"PO-Revision-Date: 2024-01-22 21:26+0300\n"
 "Last-Translator: Yuras Shumovich <shumovichy@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
 "Language: be\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -31,9 +31,10 @@ msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
-msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgid ""
+"This version of GIMP requires Windows 10, or a newer version of Windows."
 msgstr ""
-"Гэтай версіі GIMP патрабуецца Windows 7 або любая пазнейшая версія Windows."
+"Гэтай версіі GIMP патрабуецца Windows 10 або любая пазнейшая версія Windows."
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
