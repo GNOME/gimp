@@ -26,6 +26,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "config/gimpgeglconfig.h"
 
@@ -837,11 +838,11 @@ xcf_save_effect_props (XcfInfo      *info,
   GParamSpec **pspecs;
   guint        n_pspecs;
   GeglNode    *node;
-  const gchar *operation;
+  gchar       *operation;
 
   xcf_check_error (xcf_save_prop (info, image, PROP_VISIBLE, error,
                                   gimp_filter_get_active (filter)), ;);
-  xcf_check_error (xcf_save_prop (info, image, PROP_OPACITY, error,
+  xcf_check_error (xcf_save_prop (info, image, PROP_FLOAT_OPACITY, error,
                                   gimp_drawable_filter_get_opacity (GIMP_DRAWABLE_FILTER (filter))), ;);
   xcf_check_error (xcf_save_prop (info, image, PROP_MODE, error,
                                   gimp_drawable_filter_get_paint_mode (GIMP_DRAWABLE_FILTER (filter))), ;);
@@ -893,15 +894,33 @@ xcf_save_effect_props (XcfInfo      *info,
             break;
 
           default:
+            if (g_type_is_a (G_VALUE_TYPE (&value), GIMP_TYPE_CONFIG))
+              {
+                filter_type = FILTER_PROP_CONFIG;
+              }
+            else if (g_type_is_a (G_VALUE_TYPE (&value), G_TYPE_ENUM))
+              {
+                filter_type = FILTER_PROP_ENUM;
+              }
+            else
+              {
+                gimp_message (info->gimp, G_OBJECT (info->progress),
+                              GIMP_MESSAGE_WARNING,
+                              "XCF Warning: argument \"%s\" of filter %s has "
+                              "unsupported type %s. It was discarded.",
+                              pspec->name, operation,
+                              g_type_name (G_VALUE_TYPE (&value)));
+              }
             break;
         }
 
       if (filter_type != FILTER_PROP_UNKNOWN)
-        xcf_check_error (xcf_save_prop (info, image, PROP_EFFECT_ARGUMENT, error,
+        xcf_check_error (xcf_save_prop (info, image, PROP_FILTER_ARGUMENT, error,
                          pspec->name, filter_type, value), ;);
 
       g_value_unset (&value);
     }
+  g_free (operation);
   g_free (pspecs);
 
   xcf_check_error (xcf_save_prop (info, image, PROP_END, error), ;);
@@ -1726,7 +1745,7 @@ xcf_save_prop (XcfInfo    *info,
       }
       break;
 
-    case PROP_EFFECT_ARGUMENT:
+    case PROP_FILTER_ARGUMENT:
       {
         const gchar *string      = va_arg (args, const gchar *);
         guint32      filter_type = va_arg (args, guint32);
@@ -1748,8 +1767,14 @@ xcf_save_prop (XcfInfo    *info,
         switch (filter_type)
           {
             case FILTER_PROP_INT:
+            case FILTER_PROP_ENUM:
               {
-                guint32 value = g_value_get_int (&filter_value);
+                guint32 value;
+
+                if (filter_type == FILTER_PROP_INT)
+                  value = g_value_get_int (&filter_value);
+                else
+                  value = g_value_get_enum (&filter_value);
 
                 xcf_write_int32_check_error (info, &value, 1, va_end (args));
               }
@@ -1776,6 +1801,16 @@ xcf_save_prop (XcfInfo    *info,
                 const gchar *value = g_value_get_string (&filter_value);
 
                 xcf_write_string_check_error (info, (gchar **) &value, 1, va_end (args));
+              }
+              break;
+
+            case FILTER_PROP_CONFIG:
+              {
+                GimpConfig *config = g_value_get_object (&filter_value);
+                gchar      *value  = gimp_config_serialize_to_string (config, NULL);
+
+                xcf_write_string_check_error (info, (gchar **) &value, 1, va_end (args));
+                g_free (value);
               }
               break;
 

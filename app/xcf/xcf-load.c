@@ -26,6 +26,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core/core-types.h"
 
@@ -2379,9 +2380,12 @@ xcf_load_effect_props (XcfInfo      *info,
 
   while (TRUE)
     {
+      goffset next_prop;
+
       if (! xcf_load_prop (info, &prop_type, &prop_size))
         return FALSE;
 
+      next_prop = info->cp + prop_size;
       switch (prop_type)
         {
         case PROP_END:
@@ -2396,12 +2400,13 @@ xcf_load_effect_props (XcfInfo      *info,
           }
           break;
 
-        case PROP_OPACITY:
+        case PROP_FLOAT_OPACITY:
           {
-            guint32 opacity;
+            gfloat opacity;
 
-            xcf_read_int32 (info, &opacity, 1);
-            filter->opacity = (gdouble) opacity / 255.0;
+            xcf_read_float (info, &opacity, 1);
+
+            filter->opacity = (gdouble) opacity;
           }
           break;
 
@@ -2470,30 +2475,43 @@ xcf_load_effect_props (XcfInfo      *info,
           }
           break;
 
-        case PROP_EFFECT_ARGUMENT:
+        case PROP_FILTER_ARGUMENT:
           {
-            gchar    *filter_prop_name;
-            guint32   filter_type       = FILTER_PROP_UNKNOWN;
-            GValue    filter_prop_value = G_VALUE_INIT;
-            gboolean  valid_property    = FALSE;
+            GParamSpec *pspec;
+            gchar      *filter_prop_name;
+            guint32     filter_type       = FILTER_PROP_UNKNOWN;
+            GValue      filter_prop_value = G_VALUE_INIT;
+            gboolean    valid_prop_value  = TRUE;
 
             xcf_read_string (info, &filter_prop_name, 1);
             xcf_read_int32 (info, (guint32 *) &filter_type, 1);
 
             /* Check if valid property first */
-            if (gegl_operation_find_property (filter->operation_name,
-                                              filter_prop_name))
-              valid_property = TRUE;
+            if (! (pspec = gegl_operation_find_property (filter->operation_name,
+                                                         filter_prop_name)))
+              {
+                gimp_message (info->gimp, G_OBJECT (info->progress),
+                              GIMP_MESSAGE_WARNING,
+                              "XCF Warning: filter \"%s\" does not "
+                              "have the %s property. It was not set.",
+                              filter->operation_name, filter_prop_name);
+                g_free (filter_prop_name);
+                break;
+              }
 
             switch (filter_type)
               {
                 case FILTER_PROP_INT:
+                case FILTER_PROP_ENUM:
                   {
                     guint32 value;
 
                     xcf_read_int32 (info, (guint32 *) &value, 1);
-                    g_value_init (&filter_prop_value, G_TYPE_INT);
-                    g_value_set_int (&filter_prop_value, value);
+                    g_value_init (&filter_prop_value, pspec->value_type);
+                    if (filter_type == FILTER_PROP_INT)
+                      g_value_set_int (&filter_prop_value, value);
+                    else
+                      g_value_set_enum (&filter_prop_value, value);
                   }
                   break;
 
@@ -2529,23 +2547,59 @@ xcf_load_effect_props (XcfInfo      *info,
                   }
                   break;
 
+                case FILTER_PROP_CONFIG:
+                  {
+                    GObject *config;
+                    gchar   *serialized;
+                    GError  *error = NULL;
+
+                    if (! g_type_is_a (pspec->value_type, GIMP_TYPE_CONFIG))
+                      {
+                        gimp_message (info->gimp, G_OBJECT (info->progress),
+                                      GIMP_MESSAGE_WARNING,
+                                      "XCF Warning: property '%s' of filter '%s' is a %s, which does not implement GimpConfig interface.\n",
+                                      filter_prop_name, filter->operation_name, g_type_name (pspec->value_type));
+                        valid_prop_value = FALSE;
+                        break;
+                      }
+
+                    xcf_read_string (info, &serialized, 1);
+                    g_value_init (&filter_prop_value, pspec->value_type);
+                    config = g_object_new (pspec->value_type, NULL);
+                    if (gimp_config_deserialize_string (GIMP_CONFIG (config), serialized, -1, NULL, &error))
+                      {
+                        g_value_set_object (&filter_prop_value, config);
+                      }
+                    else
+                      {
+                        gimp_message (info->gimp, G_OBJECT (info->progress),
+                                      GIMP_MESSAGE_WARNING,
+                                      "XCF Warning: failure to deserialize config object for property '%s' of filter '%s': %s\n"
+                                      "Serialized config was: %s",
+                                      filter_prop_name, filter->operation_name,
+                                      error->message, serialized);
+                        valid_prop_value = FALSE;
+                      }
+
+                    g_object_unref (config);
+                    g_free (serialized);
+                  }
+                  break;
+
                 default:
+                  gimp_message (info->gimp, G_OBJECT (info->progress),
+                                GIMP_MESSAGE_WARNING,
+                                "XCF Warning: property '%s' of filter '%s' holds unsupported type %s.\n",
+                                filter_prop_name, filter->operation_name, g_type_name (pspec->value_type));
+                  valid_prop_value = FALSE;
                   break;
               }
 
-            if (valid_property)
-              {
-                gegl_node_set_property (filter->operation, filter_prop_name,
-                                        &filter_prop_value);
-              }
+            if (valid_prop_value)
+              gegl_node_set_property (filter->operation, filter_prop_name,
+                                      &filter_prop_value);
             else
-              {
-                gimp_message (info->gimp, G_OBJECT (info->progress),
-                              GIMP_MESSAGE_WARNING,
-                              "XCF Warning: filter \"%s\" does not "
-                              "have the %s property. It was not set.",
-                              filter->operation_name, filter_prop_name);
-              }
+              xcf_seek_pos (info, next_prop, NULL);
 
             g_value_unset (&filter_prop_value);
             g_free (filter_prop_name);

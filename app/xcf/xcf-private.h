@@ -71,7 +71,7 @@ typedef enum
   PROP_LOCK_VISIBILITY    = 42,
   PROP_SELECTED_PATH      = 43,
   PROP_FILTER_REGION      = 44,
-  PROP_EFFECT_ARGUMENT    = 45
+  PROP_FILTER_ARGUMENT    = 45
 } PropType;
 
 typedef enum
@@ -105,7 +105,9 @@ typedef enum
   FILTER_PROP_INT     = 1,
   FILTER_PROP_BOOL    = 2,
   FILTER_PROP_FLOAT   = 3,
-  FILTER_PROP_STRING  = 4
+  FILTER_PROP_STRING  = 4,
+  FILTER_PROP_ENUM    = 5,
+  FILTER_PROP_CONFIG  = 6,
 } FilterPropType;
 
 typedef struct _XcfInfo  XcfInfo;
