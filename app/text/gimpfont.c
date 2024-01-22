@@ -279,12 +279,12 @@ gimp_font_deserialize_create (GType     type,
 
       if (font == NULL)
         font = GIMP_FONT (gimp_font_get_standard ());
-      else
-        g_object_ref (font);
+
+      g_object_ref (font);
 
       g_free (font_name);
 
-      return GIMP_CONFIG (GIMP_FONT (font));
+      return GIMP_CONFIG (font);
     }
 
   if (g_scanner_peek_next_token (scanner) == G_TOKEN_RIGHT_PAREN)
@@ -467,14 +467,11 @@ gimp_font_deserialize_create (GType     type,
     }
 
   if (most_similar_font_index > -1)
-    {
-      font = GIMP_FONT (gimp_container_get_child_by_index (fonts_container, most_similar_font_index));
-      g_object_ref (font);
-    }
+    font = GIMP_FONT (gimp_container_get_child_by_index (fonts_container, most_similar_font_index));
   else
-    {
-      font = GIMP_FONT (gimp_font_get_standard ());
-    }
+    font = GIMP_FONT (gimp_font_get_standard ());
+
+  g_object_ref (font);
 
   g_list_free (similar_fonts);
   g_free (fonthash);
