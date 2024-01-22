@@ -42,7 +42,6 @@ DEPS_ARCH_poppler
 DEPS_ARCH_poppler-data
 DEPS_ARCH_python
 DEPS_ARCH_python-gobject
-DEPS_ARCH_qoi
 DEPS_ARCH_shared-mime-info
 DEPS_ARCH_suitesparse
 DEPS_ARCH_vala
