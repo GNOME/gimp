@@ -1828,8 +1828,6 @@ gimp_filter_tool_get_operation (GimpFilterTool     *filter_tool,
       gdouble            opacity;
       GimpLayerMode      paint_mode;
       GimpFilterRegion   region;
-      GParamSpec       **pspecs;
-      guint              n_pspecs;
       const gchar       *name;
 
       opacity    = gimp_drawable_filter_get_opacity (filter_tool->existing_filter);
@@ -1843,6 +1841,9 @@ gimp_filter_tool_get_operation (GimpFilterTool     *filter_tool,
 
       if (! strcmp (gimp_object_get_name (tool->tool_info), "gimp-operation-tool"))
         {
+          GParamSpec **pspecs;
+          guint        n_pspecs;
+
           pspecs = gegl_operation_list_properties (operation_name, &n_pspecs);
 
           for (gint i = 0; i < n_pspecs; i++)
@@ -1856,8 +1857,9 @@ gimp_filter_tool_get_operation (GimpFilterTool     *filter_tool,
               gegl_node_get_property (existing_node, pspec->name,
                                       &value);
 
-              g_object_set_property (G_OBJECT (filter_tool->config), gimp_pspec->name,
-                                      &value);
+              if (gimp_pspec)
+                g_object_set_property (G_OBJECT (filter_tool->config), gimp_pspec->name,
+                                       &value);
               g_value_unset (&value);
             }
           g_free (pspecs);

@@ -382,6 +382,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
        * config object stored in the GeglNode */
       if (gegl_procedure->filter                                            &&
           (! strcmp (gegl_procedure->operation, "gimp:brightness-contrast") ||
+           ! strcmp (gegl_procedure->operation, "gimp:color-balance")       ||
            ! strcmp (gegl_procedure->operation, "gimp:curves")              ||
            ! strcmp (gegl_procedure->operation, "gimp:levels")              ||
            ! strcmp (gegl_procedure->operation, "gimp:threshold")))
