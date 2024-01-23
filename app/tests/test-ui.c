@@ -613,7 +613,7 @@ static void
 repeatedly_switch_window_mode (gconstpointer data)
 {
 #ifdef __GNUC__
-#warning FIXME: plesase fix repeatedly_switch_window_mode test
+#warning FIXME: please fix repeatedly_switch_window_mode test
 #endif
 #if 0
   Gimp             *gimp     = GIMP (data);
