@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-18 13:35+0000\n"
-"PO-Revision-Date: 2024-01-18 19:48+0200\n"
+"POT-Creation-Date: 2024-01-23 16:24+0000\n"
+"PO-Revision-Date: 2024-01-23 21:36+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -28,78 +28,89 @@ msgstr "Ви_брати…"
 msgid "Browse..."
 msgstr "Вибрати…"
 
-#: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
+#: libgimp/gimpexport.c:363 libgimp/gimpexport.c:399
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Модуль %s не може працювати з шарами"
 
-#: libgimp/gimpexport.c:333 libgimp/gimpexport.c:342 libgimp/gimpexport.c:351
-#: libgimp/gimpexport.c:369
+#: libgimp/gimpexport.c:364 libgimp/gimpexport.c:373 libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:400
 msgid "Merge Visible Layers"
 msgstr "Об'єднати видимі шари"
 
-#: libgimp/gimpexport.c:341
+#: libgimp/gimpexport.c:372
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "Модуль %s не може обробляти зсув, розмір чи непрозорість шару"
 
-#: libgimp/gimpexport.c:350 libgimp/gimpexport.c:359
+#: libgimp/gimpexport.c:381 libgimp/gimpexport.c:390
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "Модуль %s може обробляти шари лише як кадри анімації"
 
-#: libgimp/gimpexport.c:351 libgimp/gimpexport.c:360
+#: libgimp/gimpexport.c:382 libgimp/gimpexport.c:391
 msgid "Save as Animation"
 msgstr "Зберегти як анімацію"
 
-#: libgimp/gimpexport.c:360 libgimp/gimpexport.c:369 libgimp/gimpexport.c:378
-#: libgimp/gimpexport.c:387
+#: libgimp/gimpexport.c:391 libgimp/gimpexport.c:400 libgimp/gimpexport.c:409
+#: libgimp/gimpexport.c:427
 msgid "Flatten Image"
 msgstr "Звести зображення"
 
-#: libgimp/gimpexport.c:377
+#: libgimp/gimpexport.c:408
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Модуль %s не може обробляти прозорість"
 
-#: libgimp/gimpexport.c:386
+#: libgimp/gimpexport.c:417
+#, c-format
+#| msgid "%s plug-in can't handle layers"
+msgid "%s plug-in can't handle layer effects"
+msgstr "Модуль %s не може працювати з ефектами шарів"
+
+#: libgimp/gimpexport.c:418
+#| msgid "Merge Visible Layers"
+msgid "Merge Layer Effects"
+msgstr "Об'єднати ефекти шарів"
+
+#: libgimp/gimpexport.c:426
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "Модуль %s є непридатним до обробки прозорих шарів"
 
-#: libgimp/gimpexport.c:395
+#: libgimp/gimpexport.c:435
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Модуль %s не може обробляти маски шарів"
 
-#: libgimp/gimpexport.c:396
+#: libgimp/gimpexport.c:436
 msgid "Apply Layer Masks"
 msgstr "Застосувати маски шару"
 
-#: libgimp/gimpexport.c:404
+#: libgimp/gimpexport.c:444
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "Модуль %s здатен обробляли лише зображення RGB"
 
-#: libgimp/gimpexport.c:405 libgimp/gimpexport.c:443 libgimp/gimpexport.c:452
+#: libgimp/gimpexport.c:445 libgimp/gimpexport.c:483 libgimp/gimpexport.c:492
 msgid "Convert to RGB"
 msgstr "Перетворити на RGB"
 
-#: libgimp/gimpexport.c:413
+#: libgimp/gimpexport.c:453
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Модуль %s може обробляти лише зображення у відтінках сірого"
 
-#: libgimp/gimpexport.c:414 libgimp/gimpexport.c:443 libgimp/gimpexport.c:464
+#: libgimp/gimpexport.c:454 libgimp/gimpexport.c:483 libgimp/gimpexport.c:504
 msgid "Convert to Grayscale"
 msgstr "Перетворити у відтінки сірого"
 
-#: libgimp/gimpexport.c:422
+#: libgimp/gimpexport.c:462
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Модуль %s може обробляти лише індексовані зображення"
 
-#: libgimp/gimpexport.c:423 libgimp/gimpexport.c:452 libgimp/gimpexport.c:462
+#: libgimp/gimpexport.c:463 libgimp/gimpexport.c:492 libgimp/gimpexport.c:502
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -107,12 +118,12 @@ msgstr ""
 "Перетворити в індексоване використовуючи типові параметри\n"
 "(Результат можна налаштувати вручну)"
 
-#: libgimp/gimpexport.c:432
+#: libgimp/gimpexport.c:472
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "Модуль %s може обробляти лише двокольорові або індексовані зображення"
 
-#: libgimp/gimpexport.c:433
+#: libgimp/gimpexport.c:473
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -120,49 +131,49 @@ msgstr ""
 "Перетворити на індексоване використовуючи типові параметри\n"
 "(Результат можна налаштувати вручну)"
 
-#: libgimp/gimpexport.c:442
+#: libgimp/gimpexport.c:482
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "Модуль %s може обробляти лише зображення у відтінках сірого або RGB"
 
-#: libgimp/gimpexport.c:451
+#: libgimp/gimpexport.c:491
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "Модуль %s може обробляти лише RGB або індексовані зображення"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:501
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "Модуль %s може обробляти лише зображення у відтінках сірого або індексовані"
 
-#: libgimp/gimpexport.c:472
+#: libgimp/gimpexport.c:512
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Модулю %s потрібен альфа-канал"
 
-#: libgimp/gimpexport.c:473
+#: libgimp/gimpexport.c:513
 msgid "Add Alpha Channel"
 msgstr "Додати альфа-канал"
 
-#: libgimp/gimpexport.c:481
+#: libgimp/gimpexport.c:521
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
 msgstr "Для роботи додатка %s потрібно обрізати шари до меж зображення"
 
-#: libgimp/gimpexport.c:482
+#: libgimp/gimpexport.c:522
 msgid "Crop Layers"
 msgstr "Обрізати шари"
 
-#: libgimp/gimpexport.c:482
+#: libgimp/gimpexport.c:522
 msgid "Resize Image to Layers"
 msgstr "Змінити розмір зображення за шарами"
 
-#: libgimp/gimpexport.c:541
+#: libgimp/gimpexport.c:581
 msgid "Confirm Save"
 msgstr "Підтвердження збереження"
 
-#: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
+#: libgimp/gimpexport.c:586 libgimp/gimpexport.c:668 libgimp/gimpexport.c:1242
 #: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
@@ -172,25 +183,25 @@ msgstr "Підтвердження збереження"
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: libgimp/gimpexport.c:547
+#: libgimp/gimpexport.c:587
 msgid "C_onfirm"
 msgstr "_Підтвердити"
 
-#: libgimp/gimpexport.c:623
+#: libgimp/gimpexport.c:663
 msgid "Export File"
 msgstr "Експорт файлу"
 
-#: libgimp/gimpexport.c:627
+#: libgimp/gimpexport.c:667
 msgid "_Ignore"
 msgstr "_Ігнорувати"
 
-#: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
+#: libgimp/gimpexport.c:669 libgimp/gimpexport.c:1243
 #: libgimp/gimpproceduredialog.c:296 libgimp/gimpproceduredialog.c:569
 msgid "_Export"
 msgstr "_Експорт"
 
 #. the headline
-#: libgimp/gimpexport.c:659
+#: libgimp/gimpexport.c:699
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -200,11 +211,11 @@ msgstr ""
 "таких причин:"
 
 #. the footline
-#: libgimp/gimpexport.c:733
+#: libgimp/gimpexport.c:773
 msgid "The export conversion won't modify your original image."
 msgstr "Експортне перетворення не змінить ваше початкове зображення."
 
-#: libgimp/gimpexport.c:853
+#: libgimp/gimpexport.c:893
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -213,7 +224,7 @@ msgstr ""
 "Ви намагаєтесь зберегти маску шару як %s.\n"
 "Видимі шари не будуть збережені."
 
-#: libgimp/gimpexport.c:859
+#: libgimp/gimpexport.c:899
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -224,7 +235,7 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:398
+#: libgimp/gimpexport.c:1236 libgimp/gimpsaveproceduredialog.c:398
 #, c-format
 msgid "Export Image as %s"
 msgstr "Експортувати зображення як %s"
