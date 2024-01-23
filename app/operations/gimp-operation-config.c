@@ -36,6 +36,7 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
+#include "gimpoperationsettings.h"
 #include "gimp-operation-config.h"
 
 
@@ -56,55 +57,65 @@ static void    gimp_operation_config_add_sep       (GimpContainer    *container)
 static void    gimp_operation_config_remove_sep    (GimpContainer    *container);
 
 
-/*  public functions  */
-
-static GHashTable *
-gimp_operation_config_get_type_table (Gimp *gimp)
-{
-  static GHashTable *config_types = NULL;
-
-  if (! config_types)
-    config_types = g_hash_table_new_full (g_str_hash,
-                                          g_str_equal,
-                                          (GDestroyNotify) g_free,
-                                          NULL);
-
-  return config_types;
-}
-
-static GHashTable *
-gimp_operation_config_get_container_table (Gimp *gimp)
-{
-  static GHashTable *config_containers = NULL;
-
-  if (! config_containers)
-    config_containers = g_hash_table_new_full (g_direct_hash,
-                                               g_direct_equal,
-                                               NULL,
-                                               (GDestroyNotify) g_object_unref);
-
-  return config_containers;
-}
+static GHashTable *config_types      = NULL;
+static GHashTable *config_containers = NULL;
+static GList      *custom_config_ops = NULL;
+static gboolean    custom_init_done  = FALSE;
 
 
 /*  public functions  */
+
+void
+gimp_operation_config_init_start (Gimp *gimp)
+{
+  config_types      = g_hash_table_new_full (g_str_hash,
+                                             g_str_equal,
+                                             (GDestroyNotify) g_free,
+                                             NULL);
+  config_containers = g_hash_table_new_full (g_direct_hash,
+                                             g_direct_equal,
+                                             NULL,
+                                             (GDestroyNotify) g_object_unref);
+}
+
+void
+gimp_operation_config_init_end (Gimp *gimp)
+{
+  custom_init_done = TRUE;
+}
+
+void
+gimp_operation_config_exit (Gimp *gimp)
+{
+  g_hash_table_unref (config_types);
+  g_hash_table_unref (config_containers);
+  g_list_free (custom_config_ops);
+}
+
 
 void
 gimp_operation_config_register (Gimp        *gimp,
                                 const gchar *operation,
                                 GType        config_type)
 {
-  GHashTable *config_types;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (operation != NULL);
   g_return_if_fail (g_type_is_a (config_type, GIMP_TYPE_OBJECT));
 
-  config_types = gimp_operation_config_get_type_table (gimp);
+  if (! custom_init_done)
+    /* Custom ops are registered with static string, not generated names. */
+    custom_config_ops = g_list_prepend (custom_config_ops, (gpointer) operation);
 
   g_hash_table_insert (config_types,
                        g_strdup (operation),
                        (gpointer) config_type);
+}
+
+gboolean
+gimp_operation_config_is_custom (Gimp        *gimp,
+                                 const gchar *operation)
+{
+  return (g_list_find_custom (custom_config_ops, operation, (GCompareFunc) g_strcmp0) != NULL);
 }
 
 GType
@@ -113,15 +124,12 @@ gimp_operation_config_get_type (Gimp        *gimp,
                                 const gchar *icon_name,
                                 GType        parent_type)
 {
-  GHashTable *config_types;
-  GType       config_type;
+  GType config_type;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), G_TYPE_NONE);
   g_return_val_if_fail (operation != NULL, G_TYPE_NONE);
   g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT),
                         G_TYPE_NONE);
-
-  config_types = gimp_operation_config_get_type_table (gimp);
 
   config_type = (GType) g_hash_table_lookup (config_types, operation);
 
@@ -182,13 +190,10 @@ gimp_operation_config_get_container (Gimp         *gimp,
                                      GType         config_type,
                                      GCompareFunc  sort_func)
 {
-  GHashTable    *config_containers;
   GimpContainer *container;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (g_type_is_a (config_type, GIMP_TYPE_OBJECT), NULL);
-
-  config_containers = gimp_operation_config_get_container_table (gimp);
 
   container = g_hash_table_lookup (config_containers, (gpointer) config_type);
 

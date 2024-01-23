@@ -1839,7 +1839,8 @@ gimp_filter_tool_get_operation (GimpFilterTool     *filter_tool,
                      "operation", &name,
                      NULL);
 
-      if (! strcmp (gimp_object_get_name (tool->tool_info), "gimp-operation-tool"))
+      if (! strcmp (gimp_object_get_name (tool->tool_info), "gimp-operation-tool") &&
+          ! gimp_operation_config_is_custom (tool->tool_info->gimp, operation_name))
         {
           GParamSpec **pspecs;
           guint        n_pspecs;
@@ -1860,6 +1861,10 @@ gimp_filter_tool_get_operation (GimpFilterTool     *filter_tool,
               if (gimp_pspec)
                 g_object_set_property (G_OBJECT (filter_tool->config), gimp_pspec->name,
                                        &value);
+              else
+                g_critical ("%s: property '%s' of operation '%s' doesn't exist in config %s",
+                            G_STRFUNC, pspec->name, operation_name,
+                            g_type_name (G_TYPE_FROM_INSTANCE (filter_tool->config)));
               g_value_unset (&value);
             }
           g_free (pspecs);

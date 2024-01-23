@@ -183,6 +183,8 @@ gimp_operations_init (Gimp *gimp)
   g_type_class_ref (GIMP_TYPE_OPERATION_REPLACE);
   g_type_class_ref (GIMP_TYPE_OPERATION_ANTI_ERASE);
 
+  gimp_operation_config_init_start (gimp);
+
   gimp_operation_config_register (gimp,
                                   "gimp:brightness-contrast",
                                   GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG);
@@ -222,6 +224,8 @@ gimp_operations_init (Gimp *gimp)
                    "gimp-levels-tool.settings");
   set_settings_folder (GIMP_TYPE_LEVELS_CONFIG,
                        "levels");
+
+  gimp_operation_config_init_end (gimp);
 }
 
 void
@@ -230,4 +234,5 @@ gimp_operations_exit (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp_layer_modes_exit ();
+  gimp_operation_config_exit (gimp);
 }

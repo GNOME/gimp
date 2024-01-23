@@ -380,22 +380,20 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
 
       /* For GIMP-specific GEGL operations, we need to copy over the
        * config object stored in the GeglNode */
-      if (gegl_procedure->filter                                            &&
-          (! strcmp (gegl_procedure->operation, "gimp:brightness-contrast") ||
-           ! strcmp (gegl_procedure->operation, "gimp:color-balance")       ||
-           ! strcmp (gegl_procedure->operation, "gimp:curves")              ||
-           ! strcmp (gegl_procedure->operation, "gimp:levels")              ||
-           ! strcmp (gegl_procedure->operation, "gimp:threshold")))
+      if (gegl_procedure->filter)
         {
-          GeglNode *node;
-
           GIMP_FILTER_TOOL (active_tool)->existing_filter = gegl_procedure->filter;
           gimp_filter_set_active (GIMP_FILTER (gegl_procedure->filter), FALSE);
 
-          node = gimp_drawable_filter_get_operation (gegl_procedure->filter);
-          gegl_node_get (node,
-                         "config", &settings,
-                         NULL);
+          if (gimp_operation_config_is_custom (gimp, gegl_procedure->operation))
+            {
+              GeglNode *node;
+
+              node = gimp_drawable_filter_get_operation (gegl_procedure->filter);
+              gegl_node_get (node,
+                             "config", &settings,
+                             NULL);
+            }
         }
 
       if (settings)

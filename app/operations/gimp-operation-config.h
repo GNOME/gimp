@@ -19,6 +19,13 @@
 #define __GIMP_OPERATION_CONFIG_H__
 
 
+void            gimp_operation_config_init_start    (Gimp          *gimp);
+void            gimp_operation_config_init_end      (Gimp          *gimp);
+void            gimp_operation_config_exit          (Gimp          *gimp);
+
+gboolean        gimp_operation_config_is_custom     (Gimp          *gimp,
+                                                     const gchar   *operation);
+
 void            gimp_operation_config_register      (Gimp          *gimp,
                                                      const gchar   *operation,
                                                      GType          config_type);
