@@ -1,5 +1,8 @@
 ; Test various operations on image
 
+; The operand is the total image itself.
+; For paint operations (changing a subset of the image) see paint.scm
+
 
 ;              setup
 (define testImage (car (gimp-image-new 21 22 RGB)))
@@ -96,17 +99,6 @@
 
 
 ; TODO test flatten is effective
-
-
-
-;                painting ops
-; TODO
-; heal
-; erase
-; smudge
-; pencil
-; clone
-; airbrush
 
 ; cannot flatten empty image
 (assert-error `(gimp-image-flatten ,testImage)

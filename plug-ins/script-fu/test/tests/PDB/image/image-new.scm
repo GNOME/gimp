@@ -38,10 +38,12 @@
             (car (gimp-image-get-base-type ,testImage))
             RGB))
 
-; new image is known to gimp
+; new image is known to gimp.
 ; Returns (<length> #(1))
+; Test that the length is 1.
+; !!! This is sensitive to retest, if a test leaves images.
 (assert `(= (car (gimp-get-images))
-            ,testImage))
+             1))
 
 
 ;        new image has few components

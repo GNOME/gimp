@@ -17,6 +17,9 @@ if not stable
     'tests' / 'PDB' / 'image' / 'image-mode.scm',
     'tests' / 'PDB' / 'image' / 'image-color-profile.scm',
 
+    'tests' / 'PDB' / 'paint' / 'paint.scm',
+
+
     'tests' / 'PDB' / 'layer' / 'layer-new.scm',
     'tests' / 'PDB' / 'layer' / 'layer-ops.scm',
     'tests' / 'PDB' / 'layer' / 'layer-mask.scm',

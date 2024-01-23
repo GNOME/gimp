@@ -20,6 +20,7 @@
 
 
 ; new layer is not in the image until inserted
+; returns (length, list), check length is 0
 (assert `(= (car (gimp-image-get-layers ,testImage))
             0))
 
@@ -30,9 +31,7 @@
 ;        defaulted attributes
 
 ; apply-mask default false
-(assert `(=
-            (car (gimp-layer-get-apply-mask ,testLayer))
-            0))
+(assert-PDB-false `(gimp-layer-get-apply-mask ,testLayer))
 
 ; blend-space default LAYER-COLOR-SPACE-AUTO
 (assert `(=
@@ -50,15 +49,11 @@
             LAYER-COLOR-SPACE-AUTO))
 
 ; edit-mask default false
-(assert `(=
-            (car (gimp-layer-get-edit-mask ,testLayer))
-            0))
+(assert-PDB-false `(gimp-layer-get-edit-mask ,testLayer))
 
 ; lock-alpha default false
 ; deprecated? gimp-layer-get-preserve-trans
-(assert `(=
-            (car (gimp-layer-get-lock-alpha ,testLayer))
-            0))
+(assert-PDB-false `(gimp-layer-get-lock-alpha ,testLayer))
 
 ; mask not exist, ID -1
 ; deprecated? gimp-layer-mask
@@ -72,20 +67,14 @@
             LAYER-MODE-NORMAL))
 
 ; show-mask default false
-(assert `(=
-            (car (gimp-layer-get-show-mask ,testLayer))
-            0))
+(assert-PDB-false `(gimp-layer-get-show-mask ,testLayer))
 
 ; visible default true
 ; FIXME doc says default false
-(assert `(=
-            (car (gimp-layer-get-visible ,testLayer))
-            1))
+(assert-PDB-true `(gimp-layer-get-visible ,testLayer))
 
 ; is-floating-sel default false
-(assert `(=
-            (car (gimp-layer-is-floating-sel ,testLayer))
-            0))
+(assert-PDB-false `(gimp-layer-is-floating-sel ,testLayer))
 
 ; !!! No get-offsets
 
