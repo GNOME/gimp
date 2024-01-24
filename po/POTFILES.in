@@ -141,6 +141,7 @@ app/core/gimpdrawable-equalize.c
 app/core/gimpdrawable-floating-selection.c
 app/core/gimpdrawable-foreground-extract.c
 app/core/gimpdrawable-fill.c
+app/core/gimpdrawable-filters.c
 app/core/gimpdrawable-gradient.c
 app/core/gimpdrawable-levels.c
 app/core/gimpdrawable-offset.c
@@ -552,6 +553,7 @@ app/widgets/gimpcolormapselection.c
 app/widgets/gimpcolorselectorpalette.c
 app/widgets/gimpcompressioncombobox.c
 app/widgets/gimpcontainerpopup.c
+app/widgets/gimpcontainertreeview.c
 app/widgets/gimpcontrollereditor.c
 app/widgets/gimpcontrollerinfo.c
 app/widgets/gimpcontrollerkeyboard.c
