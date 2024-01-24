@@ -346,7 +346,7 @@ gimp_container_icon_view_set_container (GimpContainerView *view,
       g_signal_connect_object (icon_view->view, "button-press-event",
                                G_CALLBACK (gimp_container_icon_view_button_press),
                                icon_view,
-                               G_CONNECT_DEFAULT);
+                               0);
     }
 
   parent_view_iface->set_container (view, container);
