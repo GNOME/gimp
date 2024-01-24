@@ -37,10 +37,6 @@
 #endif
 
 #ifdef G_OS_WIN32
-#ifdef _WIN32_WINNT
-#undef _WIN32_WINNT
-#endif
-#define _WIN32_WINNT 0x0600
 #include <windows.h>
 #include <icm.h>
 #endif

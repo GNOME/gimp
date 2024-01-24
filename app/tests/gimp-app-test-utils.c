@@ -40,16 +40,6 @@
 
 #include "gimp-app-test-utils.h"
 
-#ifdef G_OS_WIN32
-/* SendInput() requirement is Windows 2000 pro or over.
- * We may need to set WINVER to make sure the compiler does not try to
- * compile for on older version of win32, thus breaking the build.
- * See
- * http://msdn.microsoft.com/en-us/library/aa383745%28v=vs.85%29.aspx#setting_winver_or__win32_winnt
- */
-#define WINVER 0x0500
-#include <windows.h>
-#endif /* G_OS_WIN32 */
 
 #ifdef GDK_WINDOWING_QUARTZ
 // only to get keycode definitions from HIToolbox/Events.h

@@ -33,9 +33,7 @@
 #include <glib.h>
 
 #ifdef G_OS_WIN32
-#define _WIN32_WINNT 0x0500
 #include <windows.h>
-#include <process.h>
 #endif
 
 #include <cairo.h>

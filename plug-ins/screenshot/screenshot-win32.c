@@ -31,14 +31,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* Necessary in order to have SetProcessDPIAware() defined.
- * This value of _WIN32_WINNT corresponds to Windows 7, which is our
- * minimum supported platform.
- */
-#ifdef _WIN32_WINNT
-#undef _WIN32_WINNT
-#endif
-#define _WIN32_WINNT 0x0601
 #include <windows.h>
 
 #include <libgimp/gimp.h>

@@ -27,9 +27,7 @@
 #include <gtk/gtk.h>
 
 #ifdef HAVE_DX_DINPUT
-#define _WIN32_WINNT 0x0501
 #include <windows.h>
-#define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 #include <rpc.h>
 
