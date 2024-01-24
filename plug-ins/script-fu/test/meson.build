@@ -18,7 +18,8 @@ if not stable
     'tests' / 'PDB' / 'image' / 'image-color-profile.scm',
 
     'tests' / 'PDB' / 'paint' / 'paint.scm',
-
+    'tests' / 'PDB' / 'paint' / 'paint-methods.scm',
+    'tests' / 'PDB' / 'paint' / 'dynamics.scm',
 
     'tests' / 'PDB' / 'layer' / 'layer-new.scm',
     'tests' / 'PDB' / 'layer' / 'layer-ops.scm',
@@ -29,6 +30,8 @@ if not stable
     'tests' / 'PDB' / 'item' / 'item.scm',
     'tests' / 'PDB' / 'item' / 'item-position.scm',
     'tests' / 'PDB' / 'item' / 'item-layer-group.scm',
+
+    'tests' / 'PDB' / 'drawable' / 'drawable-ops.scm',
 
     'tests' / 'PDB' / 'channel' / 'channel-new.scm',
     'tests' / 'PDB' / 'channel' / 'channel-attributes.scm',
@@ -45,20 +48,30 @@ if not stable
     'tests' / 'PDB' / 'resource' / 'resource-ops.scm',
     'tests' / 'PDB' / 'resource' / 'brush.scm',
     'tests' / 'PDB' / 'resource' / 'palette.scm',
+
     'tests' / 'PDB' / 'context' / 'context-get-set.scm',
     'tests' / 'PDB' / 'context' / 'context-resource.scm',
+    'tests' / 'PDB' / 'context' / 'context-stack.scm',
+
+    'tests' / 'PDB' / 'display' / 'display.scm',
 
     'tests' / 'PDB' / 'edit' / 'buffer.scm',
     'tests' / 'PDB' / 'edit' / 'edit.scm',
     'tests' / 'PDB' / 'edit' / 'edit-multi-layer.scm',
 
     'tests' / 'PDB' / 'gimp' / 'gimp.scm',
+    'tests' / 'PDB' / 'gimp' / 'PDB.scm',
+    'tests' / 'PDB' / 'gimp' / 'refresh.scm',
+    'tests' / 'PDB' / 'gimp' / 'procedures.scm',
+
     'tests' / 'PDB' / 'misc.scm',
     'tests' / 'PDB' / 'enums.scm',
-    'tests' / 'PDB' / 'refresh.scm',
+
     'tests' / 'PDB' / 'bind-args.scm',
+
     # comprehensive, total test
     'tests' / 'PDB' / 'pdb.scm',
+
 
     'tests' / 'TS' / 'sharp-expr.scm',
     'tests' / 'TS' / 'sharp-expr-char.scm',

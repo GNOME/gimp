@@ -1,6 +1,8 @@
 ; Tests of gimp module of the PDB
 ; These are not associated with an object class
 
+; Generally speaking, prefix is "gimp-get"
+
 
 ; The serialized color configuration is a string
 (assert '(string? (car (gimp-get-color-configuration))))

@@ -13,7 +13,7 @@
 ; method get_precision on new image yields PRECISION-U8-NON-LINEAR  150
 (assert `(=
            (car (gimp-image-get-precision ,testImage))
-           PRECISION-U8-NON-LINEAR ))
+            PRECISION-U8-NON-LINEAR ))
 
 
 
@@ -53,3 +53,47 @@
 (assert `(=
            (car (gimp-image-get-precision ,testImageWithPrecision))
            PRECISION-DOUBLE-GAMMA ))
+
+
+
+; test conversions to all the precisions
+
+(define (testConvertPrecision precision)
+  (assert `(car (gimp-image-convert-precision
+                ,testImage
+                ,precision))))
+
+; First convert away from first precision in list:
+; it will fail if image already that precision
+(gimp-image-convert-precision testImage PRECISION-U8-NON-LINEAR)
+
+(define allPrecisions
+  `(PRECISION-U8-LINEAR
+    PRECISION-U8-NON-LINEAR
+    PRECISION-U8-PERCEPTUAL
+    PRECISION-U16-LINEAR
+    PRECISION-U16-NON-LINEAR
+    PRECISION-U16-PERCEPTUAL
+    PRECISION-U32-LINEAR
+    PRECISION-U32-NON-LINEAR
+    PRECISION-U32-PERCEPTUAL
+    PRECISION-HALF-LINEAR
+    PRECISION-HALF-NON-LINEAR
+    PRECISION-HALF-PERCEPTUAL
+    PRECISION-FLOAT-LINEAR
+    PRECISION-FLOAT-NON-LINEAR
+    PRECISION-FLOAT-PERCEPTUAL
+    PRECISION-DOUBLE-LINEAR
+    PRECISION-DOUBLE-NON-LINEAR
+    PRECISION-DOUBLE-PERCEPTUAL
+    PRECISION-U8-GAMMA
+    PRECISION-U16-GAMMA
+    PRECISION-U32-GAMMA
+    PRECISION-HALF-GAMMA
+    PRECISION-FLOAT-GAMMA
+    PRECISION-DOUBLE-GAMMA))
+
+; sequence through all precisions, converting testImage to them
+(for-each
+  testConvertPrecision
+  allPrecisions)

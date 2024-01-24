@@ -20,6 +20,8 @@
 (testing:load-test "image-color-profile.scm")
 
 (testing:load-test "paint.scm")
+(testing:load-test "paint-methods.scm")
+(testing:load-test "dynamics.scm")
 
 (testing:load-test "layer-new.scm")
 (testing:load-test "layer-ops.scm")
@@ -42,17 +44,20 @@
 
 ; Test superclass methods.
 ; Drawable and Item are superclasses
+
 ; Testing Drawable and Item uses extant instances;
 ; must be after instances of subclasses are created.
 (testing:load-test "item.scm")
 (testing:load-test "item-position.scm")
 (testing:load-test "item-layer-group.scm")
 
-; TODO drawable
+(testing:load-test "drawable-ops.scm")
+
 
 ; context
 (testing:load-test "context-get-set.scm")
 (testing:load-test "context-resource.scm")
+(testing:load-test "context-stack.scm")
 
 (testing:load-test "resource.scm")
 (testing:load-test "brush.scm")
@@ -69,6 +74,14 @@
 
 ; gimp module, gimp-get methods
 (testing:load-test "gimp.scm")
+; gimp PDB as a queriable store i.e. database
+(testing:load-test "PDB.scm")
+; test gimp as a refreshable set of installed resources
+(testing:load-test "refresh.scm")
+; test methods on PDBProcedure
+(testing:load-test "procedures.scm")
+
+(testing:load-test "display.scm")
 
 ; TODO undo
 ; TODO progress
@@ -77,13 +90,11 @@
 ;   unit
 ;   parasite
 
-; pdb the object
 ; gimp-parasite
 
 
 (testing:load-test "misc.scm")
 (testing:load-test "enums.scm")
-(testing:load-test "refresh.scm")
 (testing:load-test "bind-args.scm")
 
 ; report the result

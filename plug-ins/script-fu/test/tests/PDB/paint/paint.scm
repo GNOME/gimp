@@ -1,5 +1,11 @@
 ; Test painting operations on drawable
 
+; AKA PaintMethod
+; This tests the PaintMethods that have an API.
+; These PaintMethods do not have API:
+; ink, paintbrush, mybrush, perspective-clone.
+; See paintmethods.scm for tests of those.
+
 ; The operand is a subset of the drawable
 ; For operations on the total image, see image-ops.scm
 ; For operations on a total layer, see layer-ops.scm
