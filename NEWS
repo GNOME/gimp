@@ -70,6 +70,9 @@ Core:
       floating data variants;
     * add a "Float" submenu in "Select" root menu, containing the 2 variant
       actions "select-cut-float" and "select-copy-float".
+  - GEGL operation filters are now non-destructive by default: running these
+    filters create layer effects. The UI is still basic and will be improved
+    through iterations after GIMP 3 release.
 
 Graphical User Interface:
 
@@ -506,6 +509,8 @@ Build:
   - Windows builds: various cleanups, code factorization and more.
   - Windows installer: the desktop shortcut option is now checked by default
     because of the fact too many people could not find GIMP after installation.
+  - New .vscode/ config folder for Visual Studio Code settings to follow our
+    coding style.
 
 
 Overview of Changes from GIMP 2.99.14 to GIMP 2.99.16
