@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-12-30 16:29+0100\n"
-"PO-Revision-Date: 2024-01-16 13:55+0100\n"
+"PO-Revision-Date: 2024-01-25 11:16+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -6173,32 +6173,28 @@ msgid "Export in X10 format"
 msgstr "Esporta in formato X10"
 
 #: ../plug-ins/common/file-xbm.c:236
-#, fuzzy
 msgid "Write hot spot _values"
-msgstr "_Scrivi valori punti caldi"
+msgstr "Scrivi _valori punto caldo"
 
 #: ../plug-ins/common/file-xbm.c:237
-#, fuzzy
 msgid "Write hotspot information"
-msgstr "_Scrivi le informazioni sullo spazio colore"
+msgstr "Scrivi info sul punto caldo"
 
 #: ../plug-ins/common/file-xbm.c:242
-#, fuzzy
 msgid "Hot s_pot X"
-msgstr "Punto caldo _X:"
+msgstr "X _punto caldo"
 
 #: ../plug-ins/common/file-xbm.c:243
 msgid "X coordinate of hotspot"
-msgstr ""
+msgstr "Coordinate X del punto caldo"
 
 #: ../plug-ins/common/file-xbm.c:248
-#, fuzzy
 msgid "Hot spot _Y"
-msgstr "Punto caldo _Y:"
+msgstr "_Y punto caldo"
 
 #: ../plug-ins/common/file-xbm.c:249
 msgid "Y coordinate of hotspot"
-msgstr ""
+msgstr "Coordinate Y del punto caldo"
 
 #: ../plug-ins/common/file-xbm.c:254
 msgid "I_dentifier prefix"
@@ -6576,13 +6572,13 @@ msgstr ""
 "Errore posizionamento"
 
 #: ../plug-ins/common/file-xwd.c:551
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "Illegal number of colormap entries: %u"
 msgstr ""
-"\"%s\":\n"
-"Numero di voci nella mappa colori illegale: %ld"
+"'%s':\n"
+"Numero voci mappa colori illegale: %u"
 
 #: ../plug-ins/common/file-xwd.c:562
 #, c-format
@@ -6817,9 +6813,8 @@ msgid "Ad_vanced"
 msgstr "A_vanzate"
 
 #: ../plug-ins/common/film.c:1143
-#, fuzzy
 msgid "_Selection"
-msgstr "Selezione"
+msgstr "_Selezione"
 
 #: ../plug-ins/common/gradient-map.c:132
 msgid "_Gradient Map"
@@ -6935,7 +6930,7 @@ msgstr "Modalità"
 
 #: ../plug-ins/common/hot.c:271
 msgid "Mode { NTSC (0), PAL (1) }"
-msgstr ""
+msgstr "Modalità { NTSC (0), PAL (1) }"
 
 #: ../plug-ins/common/hot.c:276
 msgid "Action"
@@ -6943,14 +6938,13 @@ msgstr "Azione"
 
 #: ../plug-ins/common/hot.c:277
 msgid "Action { (0) reduce luminance, (1) reduce saturation, or (2) Blacken }"
-msgstr ""
+msgstr "Azione { (0) riduci luminanza, (1) riduci saturazione, o (2) annerisci }"
 
 #: ../plug-ins/common/hot.c:283
 msgid "Create _new layer"
 msgstr "Crea un _nuovo livello"
 
 #: ../plug-ins/common/hot.c:284
-#, fuzzy
 msgid "Create a new layer"
 msgstr "Crea nuovo livello"
 
@@ -6960,11 +6954,11 @@ msgstr "Bollenti"
 
 #: ../plug-ins/common/hot.c:663
 msgid "N_TSC"
-msgstr ""
+msgstr "N_TSC"
 
 #: ../plug-ins/common/hot.c:664
 msgid "_PAL"
-msgstr ""
+msgstr "_PAL"
 
 #: ../plug-ins/common/hot.c:669
 msgid "Reduce _Luminance"
@@ -6987,9 +6981,8 @@ msgid "Add a jigsaw-puzzle pattern to the image"
 msgstr "Aggiunge un motivo a puzzle all'immagine"
 
 #: ../plug-ins/common/jigsaw.c:405
-#, fuzzy
 msgid "Jigsaw puzzle look"
-msgstr "Stile pezzi"
+msgstr "Aspetto puzzle"
 
 #: ../plug-ins/common/jigsaw.c:413 ../plug-ins/common/tile-small.c:505
 msgid "_Horizontal"
@@ -8368,14 +8361,12 @@ msgid "Wavelet decompose"
 msgstr "Scomposizione Wavelet"
 
 #: ../plug-ins/common/wavelet-decompose.c:131
-#, fuzzy
 msgid "Scal_es"
-msgstr "Scala:"
+msgstr "Piastr_elle"
 
 #: ../plug-ins/common/wavelet-decompose.c:137
-#, fuzzy
 msgid "Create a layer group to store the _decomposition"
-msgstr "Crea un gruppo di livelli per memorizzare la scomposizione"
+msgstr "Crea un gruppo _di livelli per memorizzare la scomposizione"
 
 #: ../plug-ins/common/wavelet-decompose.c:139
 msgid "Create a layer group to store the decomposition"
@@ -9034,9 +9025,9 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/file-dds/ddsread.c:499
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid or corrupted DDS header."
-msgstr "Blocco intestazione parole chiave non valido"
+msgstr "Intestazione DDS non valida o rovinata."
 
 #: ../plug-ins/file-dds/ddsread.c:511
 #, c-format
@@ -14580,32 +14571,28 @@ msgid "Tile source image"
 msgstr "Piastrella immagine sorgente"
 
 #: ../plug-ins/map-object/map-object-main.c:330
-#, fuzzy
 msgid "Create _new image"
-msgstr "Crea nuova immagine"
+msgstr "Crea _nuova immagine"
 
 #: ../plug-ins/map-object/map-object-main.c:336
-#, fuzzy
 msgid "Create ne_w layer"
-msgstr "Crea nuovo livello"
+msgstr "Crea n_uovo livello"
 
 #: ../plug-ins/map-object/map-object-main.c:337
 msgid "Create a new layer when applying filter"
 msgstr "Quando si applica il filtro crea un nuovo livello"
 
 #: ../plug-ins/map-object/map-object-main.c:342
-#, fuzzy
 msgid "Transparent bac_kground"
-msgstr "Sfondo trasparente"
+msgstr "Sfondo _trasparente"
 
 #: ../plug-ins/map-object/map-object-main.c:350
-#, fuzzy
 msgid "Sphere radius"
-msgstr "Raggio:"
+msgstr "Raggio sfera"
 
 #: ../plug-ins/map-object/map-object-main.c:356
 msgid "Fro_nt"
-msgstr ""
+msgstr "Fro_nte"
 
 #: ../plug-ins/map-object/map-object-main.c:357
 msgid "Box front face (set this to NULL if not used)"
@@ -14613,7 +14600,7 @@ msgstr ""
 
 #: ../plug-ins/map-object/map-object-main.c:362
 msgid "B_ack"
-msgstr ""
+msgstr "R_etro"
 
 #: ../plug-ins/map-object/map-object-main.c:363
 #, fuzzy
@@ -14627,7 +14614,7 @@ msgstr ""
 #: ../plug-ins/map-object/map-object-main.c:372
 #, fuzzy
 msgid "Bo_ttom"
-msgstr "Basso:"
+msgstr "Ba_sso"
 
 #: ../plug-ins/map-object/map-object-main.c:373
 #, fuzzy
@@ -14636,7 +14623,7 @@ msgstr "Bordo inferiore"
 
 #: ../plug-ins/map-object/map-object-main.c:377
 msgid "Le_ft"
-msgstr ""
+msgstr "Si_nistra"
 
 #: ../plug-ins/map-object/map-object-main.c:378
 msgid "Box left face"
@@ -14648,56 +14635,50 @@ msgid "Box right face"
 msgstr "Avviso di Copyright"
 
 #: ../plug-ins/map-object/map-object-main.c:388
-#, fuzzy
 msgid "Scale X"
-msgstr "Scala X:"
+msgstr "Scala X"
 
 #: ../plug-ins/map-object/map-object-main.c:389
-#, fuzzy
 msgid "Box X size"
-msgstr "Dimensione carattere:"
+msgstr "Dimensione X cubo"
 
 #: ../plug-ins/map-object/map-object-main.c:393
-#, fuzzy
 msgid "Scale Y"
-msgstr "Scala Y:"
+msgstr "Scala Y"
 
 #: ../plug-ins/map-object/map-object-main.c:394
-#, fuzzy
 msgid "Box Y size"
-msgstr "Dimensione carattere:"
+msgstr "Dimensione Y cubo"
 
 #: ../plug-ins/map-object/map-object-main.c:398
-#, fuzzy
 msgid "Scale Z"
-msgstr "Scala Z:"
+msgstr "Scala Z"
 
 #: ../plug-ins/map-object/map-object-main.c:399
-#, fuzzy
 msgid "Box Z size"
-msgstr "Dimensione carattere:"
+msgstr "Dimensione Z cubo"
 
 #: ../plug-ins/map-object/map-object-main.c:405
-#, fuzzy
 msgid "_Top"
-msgstr "_Superiore:"
+msgstr "_Superiore"
 
 #: ../plug-ins/map-object/map-object-main.c:406
+#, fuzzy
 msgid "Cylinder top face (set this to NULL if not used)"
-msgstr ""
+msgstr "Faccia superiore cilindro (impostare a NULL se non usata)"
 
 #: ../plug-ins/map-object/map-object-main.c:412
+#, fuzzy
 msgid "Cylinder bottom face (set this to NULL if not used)"
-msgstr ""
+msgstr "Faccia inferiore cilindro (impostare a NULL se non usata)"
 
 #: ../plug-ins/map-object/map-object-main.c:418
 msgid "Cylinder radius"
 msgstr "Raggio cilindro"
 
 #: ../plug-ins/map-object/map-object-main.c:422
-#, fuzzy
 msgid "Cylin_der length"
-msgstr "Lunghezza cilindro"
+msgstr "Lunghezza cilin_dro"
 
 #: ../plug-ins/map-object/map-object-main.c:423
 msgid "Cylinder length"
@@ -14725,22 +14706,19 @@ msgstr "O_pzioni"
 
 #: ../plug-ins/map-object/map-object-ui.c:433
 msgid "Li_ght"
-msgstr ""
+msgstr "L_uce"
 
 #: ../plug-ins/map-object/map-object-ui.c:435
-#, fuzzy
 msgid "_Viewpoint"
-msgstr "Punte delle sc_intille:"
+msgstr "Punto di _vista"
 
 #: ../plug-ins/map-object/map-object-ui.c:439
-#, fuzzy
 msgid "Orient_ation"
-msgstr "Orientamento"
+msgstr "Orient_amento"
 
 #: ../plug-ins/map-object/map-object-ui.c:442
-#, fuzzy
 msgid "Sp_here"
-msgstr "Sfera"
+msgstr "S_fera"
 
 #: ../plug-ins/map-object/map-object-ui.c:444
 msgid "_Box"
@@ -14755,19 +14733,16 @@ msgid "Direction Vector"
 msgstr "Vettore direzione"
 
 #: ../plug-ins/map-object/map-object-ui.c:563
-#, fuzzy
 msgid "Viewpoint Position"
-msgstr "Posizione"
+msgstr "Posizione punto di vista"
 
 #: ../plug-ins/map-object/map-object-ui.c:585
-#, fuzzy
 msgid "First Axis"
-msgstr "Primo Gfig"
+msgstr "Primo asse"
 
 #: ../plug-ins/map-object/map-object-ui.c:605
-#, fuzzy
 msgid "Second Axis"
-msgstr "secondi"
+msgstr "Secondo asse"
 
 #: ../plug-ins/map-object/map-object-ui.c:661
 #: ../plug-ins/map-object/map-object-ui.c:675
@@ -14807,9 +14782,8 @@ msgid "Description"
 msgstr "Descrizione"
 
 #: ../plug-ins/metadata/metadata-editor.c:492
-#, fuzzy
 msgid "Description Writer"
-msgstr "Descrizione scrittore\t"
+msgstr "Descrizione scrittore"
 
 #: ../plug-ins/metadata/metadata-editor.c:493
 msgid "Rating"
@@ -14850,9 +14824,8 @@ msgid "State / Province"
 msgstr "Stato / Provincia"
 
 #: ../plug-ins/metadata/metadata-editor.c:507
-#, fuzzy
 msgid "Postal Code"
-msgstr "Codice postale\t"
+msgstr "Codice postale"
 
 #: ../plug-ins/metadata/metadata-editor.c:508
 #: ../plug-ins/metadata/metadata-editor.c:522
@@ -14866,7 +14839,6 @@ msgid "Phone(s)"
 msgstr "Telefono(i)"
 
 #: ../plug-ins/metadata/metadata-editor.c:511
-#, fuzzy
 msgid "E-mail(s)"
 msgstr "Email"
 
@@ -14910,9 +14882,8 @@ msgid "IPTC Subject Code"
 msgstr "Codice soggetto IPTC"
 
 #: ../plug-ins/metadata/metadata-editor.c:529
-#, fuzzy
 msgid "Job Identifier"
-msgstr "Identificatore lavoro\t"
+msgstr "Identificatore lavoro"
 
 #: ../plug-ins/metadata/metadata-editor.c:530
 msgid "Instructions"
@@ -14949,9 +14920,8 @@ msgid "Featured Organization"
 msgstr "Organizzazione mostrata"
 
 #: ../plug-ins/metadata/metadata-editor.c:550
-#, fuzzy
 msgid "Organization Code"
-msgstr "Identificatore organizzazione"
+msgstr "Codice organizzazione"
 
 #: ../plug-ins/metadata/metadata-editor.c:552
 msgid "Event"
@@ -15230,20 +15200,19 @@ msgstr "DICOM"
 
 #: ../plug-ins/metadata/metadata-editor.c:1365
 msgid "Import metadata"
-msgstr "Importa metadati"
+msgstr "Importa i metadati"
 
 #: ../plug-ins/metadata/metadata-editor.c:1367
 msgid "Export metadata"
-msgstr "Esporta metadati"
+msgstr "Esporta i metadati"
 
 #: ../plug-ins/metadata/metadata-editor.c:1670
-#, fuzzy
 msgid "Choose Date"
-msgstr "Imposta data"
+msgstr "Scegli una data"
 
 #: ../plug-ins/metadata/metadata-editor.c:1674
 msgid "Set Date"
-msgstr "Imposta data"
+msgstr "Imposta una data"
 
 #: ../plug-ins/metadata/metadata-editor.c:2408
 msgid ""
@@ -15282,9 +15251,9 @@ msgid "Unrated"
 msgstr "Non classificato"
 
 #: ../plug-ins/metadata/metadata-editor.c:4658
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to set metadata tag %s: %s"
-msgstr "Fallita impostazione tag metadati %s"
+msgstr "Fallita impostazione tag metadati %s: %s"
 
 #: ../plug-ins/metadata/metadata-editor.c:5521
 msgid "Import Metadata File"
@@ -15323,40 +15292,39 @@ msgstr "Digitalizzata da una stampa su supporto non trasparente"
 
 #: ../plug-ins/metadata/metadata-tags.c:192
 msgid "Original media with minor human edits"
-msgstr ""
+msgstr "Media originale con poche modifiche manuali"
 
 #: ../plug-ins/metadata/metadata-tags.c:193
 msgid "Composite of captured elements"
-msgstr ""
+msgstr "Composito di elementi catturati"
 
 #: ../plug-ins/metadata/metadata-tags.c:194
 msgid "Algorithmically-enhanced media"
-msgstr ""
+msgstr "Media migliorato da algoritmi"
 
 #: ../plug-ins/metadata/metadata-tags.c:195
 msgid "Data-driven media"
-msgstr ""
+msgstr "Media pilotato da dati"
 
 #: ../plug-ins/metadata/metadata-tags.c:196
-#, fuzzy
 msgid "Digital art"
-msgstr "Tipo di sorgente digitale"
+msgstr "Arte digitale"
 
 #: ../plug-ins/metadata/metadata-tags.c:197
 msgid "Virtual recording"
-msgstr ""
+msgstr "Registrazione virtuale"
 
 #: ../plug-ins/metadata/metadata-tags.c:198
 msgid "Composite including synthetic elements"
-msgstr ""
+msgstr "Composito inclusivo di elementi di sintesi"
 
 #: ../plug-ins/metadata/metadata-tags.c:199
 msgid "Trained algorithmic media"
-msgstr ""
+msgstr "Media algoritmico addestrato"
 
 #: ../plug-ins/metadata/metadata-tags.c:200
 msgid "Pure algorithmic media"
-msgstr ""
+msgstr "Media algoritmico puro"
 
 #: ../plug-ins/metadata/metadata-tags.c:201
 msgid "Created by software"
@@ -15600,13 +15568,12 @@ msgid "Current gradient (reversed)"
 msgstr "Gradiente attuale (inverso)"
 
 #: ../plug-ins/pagecurl/pagecurl.c:238
-#, fuzzy
 msgid "Locatio_n"
-msgstr "Posizione del ricciolo"
+msgstr "Posizio_ne"
 
 #: ../plug-ins/pagecurl/pagecurl.c:239
 msgid "Corner which is curled"
-msgstr ""
+msgstr "Angolo arricciato"
 
 #: ../plug-ins/pagecurl/pagecurl.c:240
 msgid "Upper left"
@@ -15626,12 +15593,11 @@ msgstr "Basso a destra"
 
 #: ../plug-ins/pagecurl/pagecurl.c:257
 msgid "Sh_ade"
-msgstr ""
+msgstr "Ombr_a"
 
 #: ../plug-ins/pagecurl/pagecurl.c:258
-#, fuzzy
 msgid "Shade the region under the curl"
-msgstr "Ombra _sotto il ricciolo"
+msgstr "Ombra della parte sotto il ricciolo"
 
 #: ../plug-ins/pagecurl/pagecurl.c:456
 msgid "Pagecurl Effect"
@@ -15765,36 +15731,32 @@ msgid "Title bar, window borders and shadow will be part of the image"
 msgstr ""
 
 #: ../plug-ins/screenshot/screenshot.c:214
-#, fuzzy
 msgid "Selection d_elay"
-msgstr "Ritardo selezione:"
+msgstr "Ritardo s_elezione"
 
 #: ../plug-ins/screenshot/screenshot.c:215
 msgid "Delay before selection of the window or the region"
-msgstr ""
+msgstr "Ritardo prima della selezione della finestra o della regione"
 
 #: ../plug-ins/screenshot/screenshot.c:219
-#, fuzzy
 msgid "Screenshot dela_y"
-msgstr "Ritardo sc_hermata:"
+msgstr "Ritardo sc_hermata"
 
 #: ../plug-ins/screenshot/screenshot.c:220
 msgid "Delay before snapping the screenshot"
-msgstr ""
+msgstr "Ritardo prima della cattura della schermata"
 
 #: ../plug-ins/screenshot/screenshot.c:224
-#, fuzzy
 msgid "Color _Profile"
-msgstr "Profilo colore"
+msgstr "_Profilo colore"
 
 #: ../plug-ins/screenshot/screenshot.c:264
-#, fuzzy
 msgid "GDK initialization failed."
-msgstr "Transazione DDE fallita."
+msgstr "Inizializzazione GDK fallita."
 
 #: ../plug-ins/screenshot/screenshot.c:302
 msgid "No screenshot backends available."
-msgstr ""
+msgstr "Backend per cattura schermo non disponibili."
 
 #: ../plug-ins/screenshot/screenshot.c:504
 #: ../plug-ins/screenshot/screenshot-x11.c:443
@@ -15806,38 +15768,32 @@ msgid "S_nap"
 msgstr "Cat_tura"
 
 #: ../plug-ins/screenshot/screenshot.c:507
-#, fuzzy
 msgid "Take a screenshot of a single window"
-msgstr "Cattura l'immagine di una _finestra singola"
+msgstr "Cattura l'immagine di una finestra singola"
 
 #: ../plug-ins/screenshot/screenshot.c:508
-#, fuzzy
 msgid "Take a screenshot of the entire screen"
-msgstr "Cattura l'immagine di tutto lo _schermo"
+msgstr "Cattura l'immagine di tutto lo schermo"
 
 #: ../plug-ins/screenshot/screenshot.c:509
-#, fuzzy
 msgid "Select a region to grab"
-msgstr "Seleziona la _regione da catturare"
+msgstr "Seleziona la regione da catturare"
 
 #: ../plug-ins/screenshot/screenshot.c:536
-#, fuzzy
 msgid "Contents"
-msgstr "_Contenuti"
+msgstr "Contenuti"
 
 #: ../plug-ins/screenshot/screenshot.c:595
 msgid "Delay"
 msgstr "Ritardo"
 
 #: ../plug-ins/screenshot/screenshot.c:603
-#, fuzzy
 msgid "Tag image with monitor profile"
-msgstr "Marca immagine con il profilo del _monitor"
+msgstr "Marca immagine con il profilo del monitor"
 
 #: ../plug-ins/screenshot/screenshot.c:604
-#, fuzzy
 msgid "Convert image with sRGB"
-msgstr "Converti immagine a sR_GB"
+msgstr "Converti immagine sRGB"
 
 #: ../plug-ins/screenshot/screenshot-win32.c:304
 msgid "No data captured"
@@ -15866,23 +15822,20 @@ msgstr "Da selezione a tracciato"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:143
 #: ../plug-ins/selection-to-path/selection-to-path.c:144
-#, fuzzy
 msgid "Converts a selection to a path"
-msgstr "Da selezione a tracciato"
+msgstr "Converte una selezione in un tracciato"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:152
-#, fuzzy
 msgid "_Align Threshold"
-msgstr "Soglia allineamento:"
+msgstr "Soglia _allineamento"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:153
 msgid "If two endpoints are closer than this, they are made to be equal."
 msgstr "Se due capi sono più vicini di questo valore, vengono resi uguali."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:159
-#, fuzzy
 msgid "Corner Al_ways Threshold"
-msgstr "Soglia sempre spigolo:"
+msgstr "Soglia se_mpre spigolo"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:160
 msgid ""
@@ -15895,9 +15848,8 @@ msgstr ""
 "pixel dell'\"intorno spigolo\" di un punto con un angolo più piccolo."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:168
-#, fuzzy
 msgid "Corner _Surround"
-msgstr "Intorno spigolo:"
+msgstr "Intorno _spigolo"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:169
 msgid ""
@@ -15907,9 +15859,8 @@ msgstr ""
 "uno spigolo oppure no."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:175
-#, fuzzy
 msgid "Cor_ner Threshold"
-msgstr "Soglia spigolo:"
+msgstr "Soglia spigo_lo"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:176
 msgid ""
@@ -15920,9 +15871,8 @@ msgstr ""
 "angolo minore di questo valore, allora è uno spigolo."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:182
-#, fuzzy
 msgid "Error Thres_hold"
-msgstr "Soglia errore:"
+msgstr "Soglia err_ore"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:183
 msgid ""
@@ -15933,9 +15883,8 @@ msgstr ""
 "pixel è più lontano di questo valore dalla curva fittata, si riprova."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:190
-#, fuzzy
 msgid "_Filter Alternative Surround"
-msgstr "Intorno filtro alternativo:"
+msgstr "Intorno _filtro alternativo"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:191
 msgid "A second number of adjacent points to consider when filtering."
@@ -15944,9 +15893,8 @@ msgstr ""
 "l'applicazione del filtro."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:197
-#, fuzzy
 msgid "Filter E_psilon"
-msgstr "Filtro epsilon:"
+msgstr "E_psilon filtro"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:198
 msgid ""
@@ -15959,9 +15907,8 @@ msgstr ""
 "di \"intorno filtro alternativo\"."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:206
-#, fuzzy
 msgid "Filter Iteration Co_unt"
-msgstr "Conteggio iterazioni filtro:"
+msgstr "Conteggio itera_zioni filtro"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:207
 msgid ""
@@ -15976,9 +15923,8 @@ msgstr ""
 "spigoli, la curva impazzisce intorno a quel punto."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:216
-#, fuzzy
 msgid "Filt_er Percent"
-msgstr "Percento filtro:"
+msgstr "Perc_ento filtro"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:217
 msgid ""
@@ -15988,9 +15934,8 @@ msgstr ""
 "moltiplicato per il circondario."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:223
-#, fuzzy
 msgid "Filter Secondar_y Surround"
-msgstr "Intorno filtro secondario:"
+msgstr "Intorno filtro secondar_io"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:224
 msgid ""
@@ -16001,9 +15946,8 @@ msgstr ""
 "definiscono una linea retta."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:230
-#, fuzzy
 msgid "Filter Surroun_d"
-msgstr "Intorno filtro:"
+msgstr "Intorno fi_ltro"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:231
 msgid "Number of adjacent points to consider when filtering."
@@ -16011,9 +15955,8 @@ msgstr ""
 "Numero di punti adiacenti da considerare durante l'applicazione del filtro."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:236
-#, fuzzy
 msgid "_Keep Knees"
-msgstr "Mantieni i ginocchi"
+msgstr "Mantieni _ginocchi"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:237
 msgid "Says whether or not to remove 'knee' points after finding the outline."
@@ -16021,9 +15964,8 @@ msgstr ""
 "Indica se rimuovere o no i punti \"ginocchio\" dopo aver trovato il contorno."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:243
-#, fuzzy
 msgid "_Line Reversion Threshold"
-msgstr "Soglia di inversione di linea:"
+msgstr "Soglia di inversione _linea"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:244
 msgid ""
@@ -16038,9 +15980,8 @@ msgstr ""
 "curve corte più suscettibili alla riconversione."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:253
-#, fuzzy
 msgid "L_ine Threshold"
-msgstr "Soglia linea:"
+msgstr "Soglia l_inea"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:254
 msgid ""
@@ -16051,9 +15992,8 @@ msgstr ""
 "determinata dai suoi capi prima che sia convertita in una linea retta."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:261
-#, fuzzy
 msgid "Reparametri_ze Improvement"
-msgstr "Miglioramento riparametrizzazione:"
+msgstr "Miglioramento riparametrizza_zione"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:262
 msgid ""
@@ -16065,9 +16005,8 @@ msgstr ""
 "riparametrizzare."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:269
-#, fuzzy
 msgid "Repara_metrize Threshold"
-msgstr "Soglia di riparametrizzazione:"
+msgstr "Soglia di ripara_metrizzazione"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:270
 msgid ""
@@ -16084,9 +16023,8 @@ msgstr ""
 "rilevare i casi in cui non si sono trovati spigoli."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:280
-#, fuzzy
 msgid "Subdi_vide Search"
-msgstr "Ricerca suddivisione:"
+msgstr "Ricerca suddi_visione"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:281
 msgid ""
@@ -16097,9 +16035,8 @@ msgstr ""
 "punto di suddivisione."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:287
-#, fuzzy
 msgid "Su_bdivide Surround"
-msgstr "Intorno suddivisione:"
+msgstr "Intorno su_ddivisione"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:288
 msgid ""
@@ -16110,9 +16047,8 @@ msgstr ""
 "migliore punto di suddivisione."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:294
-#, fuzzy
 msgid "Subdivide Th_reshold"
-msgstr "Soglia suddivisione:"
+msgstr "Soglia suddi_visione"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:295
 msgid ""
@@ -16123,9 +16059,8 @@ msgstr ""
 "considerato un miglior punto di suddivisione."
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:302
-#, fuzzy
 msgid "_Tangent Surround"
-msgstr "Intorno tangente:"
+msgstr "Intorno _tangente"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:303
 msgid ""
