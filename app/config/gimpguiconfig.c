@@ -70,7 +70,7 @@ enum
   PROP_TOOLBOX_GROUPS,
   PROP_THEME_PATH,
   PROP_THEME,
-  PROP_PREFER_DARK_THEME,
+  PROP_THEME_SCHEME,
   PROP_OVERRIDE_THEME_ICON_SIZE,
   PROP_CUSTOM_ICON_SIZE,
   PROP_ICON_THEME_PATH,
@@ -315,11 +315,12 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             THEME_BLURB,
                             GIMP_CONFIG_DEFAULT_THEME,
                             GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PREFER_DARK_THEME,
-                            "prefer-dark-theme",
-                            "Prefer Dark Theme",
-                            THEME_BLURB,
-                            TRUE,
+  GIMP_CONFIG_PROP_ENUM    (object_class, PROP_THEME_SCHEME,
+                            "theme-color-scheme",
+                            "Theme's Color Scheme",
+                            THEME_SCHEME_BLURB,
+                            GIMP_TYPE_THEME_SCHEME,
+                            GIMP_THEME_DARK,
                             GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_OVERRIDE_THEME_ICON_SIZE,
                             "override-theme-icon-size",
@@ -683,8 +684,8 @@ gimp_gui_config_set_property (GObject      *object,
       g_free (gui_config->theme);
       gui_config->theme = g_value_dup_string (value);
       break;
-    case PROP_PREFER_DARK_THEME:
-      gui_config->prefer_dark_theme = g_value_get_boolean (value);
+    case PROP_THEME_SCHEME:
+      gui_config->theme_scheme = g_value_get_enum (value);
       break;
     case PROP_OVERRIDE_THEME_ICON_SIZE:
       gui_config->override_icon_size = g_value_get_boolean (value);
@@ -865,8 +866,8 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_THEME:
       g_value_set_string (value, gui_config->theme);
       break;
-    case PROP_PREFER_DARK_THEME:
-      g_value_set_boolean (value, gui_config->prefer_dark_theme);
+    case PROP_THEME_SCHEME:
+      g_value_set_enum (value, gui_config->theme_scheme);
       break;
     case PROP_OVERRIDE_THEME_ICON_SIZE:
       g_value_set_boolean (value, gui_config->override_icon_size);

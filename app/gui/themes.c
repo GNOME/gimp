@@ -92,7 +92,7 @@ themes_init (Gimp *gimp)
   g_signal_connect (config, "notify::theme",
                     G_CALLBACK (themes_theme_change_notify),
                     gimp);
-  g_signal_connect (config, "notify::prefer-dark-theme",
+  g_signal_connect (config, "notify::theme-color-scheme",
                     G_CALLBACK (themes_theme_change_notify),
                     gimp);
   g_signal_connect (config, "notify::prefer-symbolic-icons",
@@ -237,10 +237,12 @@ themes_apply_theme (Gimp          *gimp,
   GFile         *theme_css;
   GOutputStream *output;
   GError        *error = NULL;
+  gboolean       prefer_dark_theme;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_GUI_CONFIG (config));
 
+  prefer_dark_theme = (config->theme_scheme != GIMP_THEME_LIGHT);
   theme_css = gimp_directory_file ("theme.css", NULL);
 
   if (gimp->be_verbose)
@@ -263,11 +265,79 @@ themes_apply_theme (Gimp          *gimp,
 
       if (theme_dir)
         {
-          css_files = g_slist_prepend (css_files, g_file_get_child (theme_dir,
-                                                                    "gimp.css"));
-          if (config->prefer_dark_theme)
-            css_files = g_slist_prepend (css_files, g_file_get_child (theme_dir,
-                                                                      "gimp-dark.css"));
+          GFile *file = NULL;
+          GFile *fallback;
+          GFile *light;
+          GFile *gray;
+          GFile *dark;
+
+          fallback = g_file_get_child (theme_dir, "gimp.css");
+          if (! g_file_query_exists (fallback, NULL))
+            g_clear_object (&fallback);
+
+          light = g_file_get_child (theme_dir, "gimp-light.css");
+          if (! g_file_query_exists (light, NULL))
+            g_clear_object (&light);
+
+          gray  = g_file_get_child (theme_dir, "gimp-gray.css");
+          if (! g_file_query_exists (gray, NULL))
+            g_clear_object (&gray);
+
+          dark  = g_file_get_child (theme_dir, "gimp-dark.css");
+          if (! g_file_query_exists (dark, NULL))
+            g_clear_object (&dark);
+
+          switch (config->theme_scheme)
+            {
+            case GIMP_THEME_LIGHT:
+              if (light != NULL)
+                file = g_object_ref (light);
+              else if (fallback != NULL)
+                file = g_object_ref (fallback);
+              else if (gray != NULL)
+                file = g_object_ref (gray);
+              else if (dark != NULL)
+                file = g_object_ref (dark);
+              break;
+            case GIMP_THEME_GRAY:
+              if (gray != NULL)
+                file = g_object_ref (gray);
+              else if (fallback != NULL)
+                file = g_object_ref (fallback);
+              else if (dark != NULL)
+                file = g_object_ref (dark);
+              else if (light != NULL)
+                file = g_object_ref (light);
+              break;
+            case GIMP_THEME_DARK:
+              if (dark != NULL)
+                file = g_object_ref (dark);
+              else if (fallback != NULL)
+                file = g_object_ref (fallback);
+              else if (gray != NULL)
+                file = g_object_ref (gray);
+              else if (light != NULL)
+                file = g_object_ref (light);
+              break;
+            }
+
+          if (file != NULL)
+            {
+              prefer_dark_theme = (file == dark || file == gray);
+              css_files = g_slist_prepend (css_files, file);
+            }
+          else
+            {
+              gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                            _("Invalid theme: directory '%s' contains neither "
+                              "gimp-dark.css, gimp-gray.css, gimp-light.css nor gimp.css."),
+                            gimp_file_get_utf8_name (theme_dir));
+            }
+
+          g_clear_object (&fallback);
+          g_clear_object (&light);
+          g_clear_object (&gray);
+          g_clear_object (&dark);
         }
       else
         {
@@ -276,18 +346,30 @@ themes_apply_theme (Gimp          *gimp,
           tmp = g_build_filename (gimp_data_directory (),
                                   "themes", "Default", "gimp.css",
                                   NULL);
-          css_files = g_slist_prepend (
-            css_files, g_file_new_for_path (tmp));
+          css_files = g_slist_prepend (css_files, g_file_new_for_path (tmp));
           g_free (tmp);
 
-          if (config->prefer_dark_theme)
+          switch (config->theme_scheme)
             {
+            case GIMP_THEME_LIGHT:
+              tmp = g_build_filename (gimp_data_directory (),
+                                      "themes", "Default", "gimp-light.css",
+                                      NULL);
+              break;
+            case GIMP_THEME_GRAY:
+              tmp = g_build_filename (gimp_data_directory (),
+                                      "themes", "Default", "gimp-gray.css",
+                                      NULL);
+              break;
+            case GIMP_THEME_DARK:
               tmp = g_build_filename (gimp_data_directory (),
                                       "themes", "Default", "gimp-dark.css",
                                       NULL);
-              css_files = g_slist_prepend (css_files, g_file_new_for_path (tmp));
-              g_free (tmp);
+              break;
             }
+
+          css_files = g_slist_prepend (css_files, g_file_new_for_path (tmp));
+          g_free (tmp);
         }
 
       css_files = g_slist_prepend (
@@ -338,7 +420,7 @@ themes_apply_theme (Gimp          *gimp,
             "\n"
             "%s",
             config->prefer_symbolic_icons ? "symbolic" : "regular",
-            config->prefer_dark_theme ? "/* prefer-dark-theme */\n" : "");
+            prefer_dark_theme ? "/* prefer-dark-theme */\n" : "");
         }
 
       if (! error && config->override_icon_size)
@@ -455,7 +537,7 @@ themes_theme_change_notify (GimpGuiConfig *config,
   GError *error = NULL;
 
   g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
-                "gtk-application-prefer-dark-theme", config->prefer_dark_theme,
+                "gtk-application-prefer-dark-theme", config->theme_scheme != GIMP_THEME_LIGHT,
                 NULL);
 
   themes_apply_theme (gimp, config);

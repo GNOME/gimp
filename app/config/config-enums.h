@@ -164,5 +164,19 @@ typedef enum
   GIMP_ZOOM_QUALITY_HIGH   /*< desc="High" >*/
 } GimpZoomQuality;
 
+#define GIMP_TYPE_THEME_SCHEME (gimp_theme_scheme_get_type ())
+
+GType gimp_theme_scheme_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_THEME_LIGHT,  /*< desc="Light Colors" >*/
+  GIMP_THEME_GRAY,   /*< desc="Middle Gray"  >*/
+  GIMP_THEME_DARK,   /*< desc="Dark Colors"  >*/
+  /* TODO: it might be interesting eventually to add a GIMP_THEME_SYSTEM
+   * following up the system-wide color scheme preference. See #8675.
+   */
+} GimpThemeScheme;
+
 
 #endif /* __CONFIG_ENUMS_H__ */

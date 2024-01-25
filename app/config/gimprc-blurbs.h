@@ -546,6 +546,9 @@ _("Sets the folder for temporary storage. Files will appear here " \
 #define THEME_BLURB \
 _("The name of the theme to use.")
 
+#define THEME_SCHEME_BLURB \
+_("Chooses the color scheme variant of the theme.")
+
 #define THEME_PATH_BLURB \
 "Sets the theme search path."
 

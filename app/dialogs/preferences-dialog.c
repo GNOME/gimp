@@ -2115,9 +2115,10 @@ prefs_dialog_new (Gimp       *gimp,
                       G_CALLBACK (prefs_theme_select_callback),
                       gimp);
 
-    prefs_check_button_add (object, "prefer-dark-theme",
-                            _("Use dark theme variant if available"),
-                            GTK_BOX (vbox2));
+    grid = prefs_grid_new (GTK_CONTAINER (vbox2));
+    button = prefs_enum_combo_box_add (object, "theme-color-scheme", 0, 0,
+                                       _("Color scheme variant (if available)"),
+                                       GTK_GRID (grid), 0, NULL);
 
     /* Override icon sizes. */
     button = prefs_check_button_add (object, "override-theme-icon-size",

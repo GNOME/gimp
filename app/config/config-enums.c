@@ -387,6 +387,37 @@ gimp_zoom_quality_get_type (void)
   return type;
 }
 
+GType
+gimp_theme_scheme_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_THEME_LIGHT, "GIMP_THEME_LIGHT", "light" },
+    { GIMP_THEME_GRAY, "GIMP_THEME_GRAY", "gray" },
+    { GIMP_THEME_DARK, "GIMP_THEME_DARK", "dark" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_THEME_LIGHT, NC_("theme-scheme", "Light Colors"), NULL },
+    { GIMP_THEME_GRAY, NC_("theme-scheme", "Middle Gray"), NULL },
+    { GIMP_THEME_DARK, NC_("theme-scheme", "Dark Colors"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpThemeScheme", values);
+      gimp_type_set_translation_context (type, "theme-scheme");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

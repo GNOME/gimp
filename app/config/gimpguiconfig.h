@@ -64,7 +64,7 @@ struct _GimpGuiConfig
   gboolean             toolbox_groups;
   gchar               *theme_path;
   gchar               *theme;
-  gboolean             prefer_dark_theme;
+  GimpThemeScheme      theme_scheme;
   gchar               *icon_theme_path;
   gchar               *icon_theme;
   gboolean             prefer_symbolic_icons;

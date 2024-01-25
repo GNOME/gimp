@@ -2642,7 +2642,7 @@ gimp_window_set_title_bar_theme (Gimp      *gimp,
           GimpGuiConfig *config;
 
           config = GIMP_GUI_CONFIG (gimp->config);
-          use_dark_mode = config->prefer_dark_theme;
+          use_dark_mode = (config->theme_scheme != GIMP_THEME_LIGHT);
         }
       else
         {

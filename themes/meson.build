@@ -3,7 +3,6 @@ subdir('Darker')
 subdir('Compact')
 
 themes = [
-  'Gray',
   'System',
 ]
 
