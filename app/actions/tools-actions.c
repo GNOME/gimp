@@ -83,7 +83,7 @@ static const GimpEnumActionEntry tools_color_average_radius_actions[] =
 static const GimpDoubleActionEntry tools_paintbrush_pixel_size_actions[] =
 {
   { "tools-paintbrush-pixel-size-set", GIMP_ICON_TOOL_MYPAINT_BRUSH,
-    "Set Brush Size in Pixel", NULL, { NULL }, NULL,
+    NC_("tools-action", "Set Brush Size in Pixels"), NULL, { NULL }, NULL,
     1.0, NULL }
 };
 
@@ -138,7 +138,7 @@ static const GimpEnumActionEntry tools_paintbrush_force_actions[] =
 static const GimpDoubleActionEntry tools_ink_blob_pixel_size_actions[] =
 {
   { "tools-ink-blob-pixel-size-set", GIMP_ICON_TOOL_INK,
-    "Set Ink Blob Size in Pixel", NULL, { NULL }, NULL,
+    NC_("tools-action", "Set Ink Blob Size in Pixels"), NULL, { NULL }, NULL,
     1.0, NULL }
 };
 
@@ -241,7 +241,7 @@ static const GimpEnumActionEntry tools_mybrush_radius_actions[] =
 static const GimpDoubleActionEntry tools_mybrush_pixel_size_actions[] =
 {
   { "tools-mypaint-brush-pixel-size-set", GIMP_ICON_TOOL_MYPAINT_BRUSH,
-    "Set MyPaint Brush Diameter in Pixel", NULL, { NULL }, NULL,
+    NC_("tools-action", "Set MyPaint Brush Diameter in Pixels"), NULL, { NULL }, NULL,
     1.0, NULL }
 };
 
@@ -273,7 +273,7 @@ static const GimpEnumActionEntry tools_transform_preview_opacity_actions[] =
 static const GimpDoubleActionEntry tools_warp_effect_pixel_size_actions[] =
 {
   { "tools-warp-effect-pixel-size-set", GIMP_ICON_TOOL_WARP,
-    "Set Warp Effect Size in Pixel", NULL, { NULL }, NULL,
+    NC_("tools-action", "Set Warp Effect Size in Pixels"), NULL, { NULL }, NULL,
     1.0, NULL }
 };
 
@@ -604,30 +604,30 @@ static const GimpEnumActionEntry tools_force_actions[] =
 static const GimpDoubleActionEntry tools_paint_select_pixel_size_actions[] =
 {
   { "tools-paint-select-pixel-size-set", GIMP_ICON_TOOL_PAINT_SELECT,
-    "Set Paint Select Brush Size in Pixel", NULL, { NULL }, NULL,
+    NC_("tools-action", "Set Paint Select Brush Size in Pixels"), NULL, { NULL }, NULL,
     1.0, NULL }
 };
 
 static const GimpEnumActionEntry tools_object_1_actions[] =
 {
   { "tools-object-1-set", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Select Object 1 by Index", NULL, { NULL }, NULL,
+    NC_("tools-action", "Select Object 1 by Index"), NULL, { NULL }, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
   { "tools-object-1-first", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "First Object 1", NULL, { NULL }, NULL,
+    NC_("tools-action", "First Object 1"), NULL, { NULL }, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     NULL },
   { "tools-object-1-last", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Last Object 1", NULL, { NULL }, NULL,
+    NC_("tools-action", "Last Object 1"), NULL, { NULL }, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     NULL },
   { "tools-object-1-previous", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Previous Object 1", NULL, { NULL }, NULL,
+    NC_("tools-action", "Previous Object 1"), NULL, { NULL }, NULL,
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     NULL },
   { "tools-object-1-next", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Next Object 1", NULL, { NULL }, NULL,
+    NC_("tools-action", "Next Object 1"), NULL, { NULL }, NULL,
     GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL }
 };
@@ -635,23 +635,23 @@ static const GimpEnumActionEntry tools_object_1_actions[] =
 static const GimpEnumActionEntry tools_object_2_actions[] =
 {
   { "tools-object-2-set", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Select Object 2 by Index", NULL, { NULL }, NULL,
+    NC_("tools-action", "Select Object 2 by Index"), NULL, { NULL }, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
   { "tools-object-2-first", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "First Object 2", NULL, { NULL }, NULL,
+    NC_("tools-action", "First Object 2"), NULL, { NULL }, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     NULL },
   { "tools-object-2-last", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Last Object 2", NULL, { NULL }, NULL,
+    NC_("tools-action", "Last Object 2"), NULL, { NULL }, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     NULL },
   { "tools-object-2-previous", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Previous Object 2", NULL, { NULL }, NULL,
+    NC_("tools-action", "Previous Object 2"), NULL, { NULL }, NULL,
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     NULL },
   { "tools-object-2-next", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Next Object 2", NULL, { NULL }, NULL,
+    NC_("tools-action", "Next Object 2"), NULL, { NULL }, NULL,
     GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL }
 };
@@ -676,7 +676,7 @@ tools_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (tools_color_average_radius_actions),
                                       tools_color_average_radius_cmd_callback);
 
-  gimp_action_group_add_double_actions (group, NULL,
+  gimp_action_group_add_double_actions (group, "tools-action",
                                         tools_paintbrush_pixel_size_actions,
                                         G_N_ELEMENTS (tools_paintbrush_pixel_size_actions),
                                         tools_paintbrush_pixel_size_cmd_callback);
@@ -705,7 +705,7 @@ tools_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (tools_paintbrush_force_actions),
                                       tools_paintbrush_force_cmd_callback);
 
-  gimp_action_group_add_double_actions (group, NULL,
+  gimp_action_group_add_double_actions (group, "tools-action",
                                         tools_ink_blob_pixel_size_actions,
                                         G_N_ELEMENTS (tools_ink_blob_pixel_size_actions),
                                         tools_ink_blob_pixel_size_cmd_callback);
@@ -735,7 +735,7 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_mybrush_radius_actions,
                                       G_N_ELEMENTS (tools_mybrush_radius_actions),
                                       tools_mybrush_radius_cmd_callback);
-  gimp_action_group_add_double_actions (group, NULL,
+  gimp_action_group_add_double_actions (group, "tools-action",
                                         tools_mybrush_pixel_size_actions,
                                         G_N_ELEMENTS (tools_mybrush_pixel_size_actions),
                                         tools_mybrush_pixel_size_cmd_callback);
@@ -754,7 +754,7 @@ tools_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (tools_transform_preview_opacity_actions),
                                       tools_transform_preview_opacity_cmd_callback);
 
-  gimp_action_group_add_double_actions (group, NULL,
+  gimp_action_group_add_double_actions (group, "tools-action",
                                         tools_warp_effect_pixel_size_actions,
                                         G_N_ELEMENTS (tools_warp_effect_pixel_size_actions),
                                         tools_warp_effect_pixel_size_cmd_callback);
@@ -796,16 +796,16 @@ tools_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (tools_force_actions),
                                       tools_force_cmd_callback);
 
-  gimp_action_group_add_double_actions (group, NULL,
+  gimp_action_group_add_double_actions (group, "tools-action",
                                         tools_paint_select_pixel_size_actions,
                                         G_N_ELEMENTS (tools_paint_select_pixel_size_actions),
                                         tools_paint_select_pixel_size_cmd_callback);
 
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "tools-action",
                                       tools_object_1_actions,
                                       G_N_ELEMENTS (tools_object_1_actions),
                                       tools_object_1_cmd_callback);
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "tools-action",
                                       tools_object_2_actions,
                                       G_N_ELEMENTS (tools_object_2_actions),
                                       tools_object_2_cmd_callback);
