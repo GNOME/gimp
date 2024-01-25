@@ -382,17 +382,54 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
        * config object stored in the GeglNode */
       if (gegl_procedure->filter)
         {
+          GeglNode *node;
+
           GIMP_FILTER_TOOL (active_tool)->existing_filter = gegl_procedure->filter;
           gimp_filter_set_active (GIMP_FILTER (gegl_procedure->filter), FALSE);
 
+          node = gimp_drawable_filter_get_operation (gegl_procedure->filter);
+
           if (gimp_operation_config_is_custom (gimp, gegl_procedure->operation))
             {
-              GeglNode *node;
-
-              node = gimp_drawable_filter_get_operation (gegl_procedure->filter);
               gegl_node_get (node,
                              "config", &settings,
                              NULL);
+            }
+          else
+            {
+              GParamSpec **pspecs;
+              guint        n_pspecs;
+
+              settings =
+                g_object_new (gimp_operation_config_get_type (active_tool->tool_info->gimp,
+                                                              gegl_procedure->operation,
+                                                              gimp_tool_get_icon_name (active_tool),
+                                                              GIMP_TYPE_OPERATION_SETTINGS),
+                              NULL);
+
+              pspecs = gegl_operation_list_properties (gegl_procedure->operation, &n_pspecs);
+
+              for (gint i = 0; i < n_pspecs; i++)
+                {
+                  GValue      value      = G_VALUE_INIT;
+                  GParamSpec *pspec      = pspecs[i];
+                  GParamSpec *gimp_pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (settings),
+                                                                         pspec->name);
+
+                  g_value_init (&value, pspec->value_type);
+                  gegl_node_get_property (node, pspec->name,
+                                          &value);
+
+                  if (gimp_pspec)
+                    g_object_set_property (G_OBJECT (settings), gimp_pspec->name,
+                                           &value);
+                  else
+                    g_critical ("%s: property '%s' of operation '%s' doesn't exist in config %s",
+                                G_STRFUNC, pspec->name, gegl_procedure->operation,
+                                g_type_name (G_TYPE_FROM_INSTANCE (settings)));
+                  g_value_unset (&value);
+                }
+              g_free (pspecs);
             }
         }
 
