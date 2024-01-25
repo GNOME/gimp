@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-23 16:23+0000\n"
-"PO-Revision-Date: 2024-01-23 21:40+0200\n"
+"POT-Creation-Date: 2024-01-24 11:32+0000\n"
+"PO-Revision-Date: 2024-01-25 15:55+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -12522,22 +12522,16 @@ msgid "Select foreground"
 msgstr "Обрати колір переднього плану"
 
 #: app/core/core-enums.c:1399
-#| msgctxt "paint-select-mode"
-#| msgid "Add to selection"
 msgctxt "undo-type"
 msgid "Add effect"
 msgstr "Додати ефект"
 
 #: app/core/core-enums.c:1400
-#| msgctxt "undo-type"
-#| msgid "Remove item"
 msgctxt "undo-type"
 msgid "Remove effect"
 msgstr "Вилучити ефект"
 
 #: app/core/core-enums.c:1401
-#| msgctxt "undo-type"
-#| msgid "Reorder item"
 msgctxt "undo-type"
 msgid "Reorder effect"
 msgstr "Перевпорядкувати ефект"
@@ -13496,6 +13490,16 @@ msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Відтворення мазків"
 
+#: app/core/gimpdrawable-filters.c:148
+#| msgid "Reorder filter"
+msgid "Rasterize filters"
+msgstr "Растеризувати фільтри"
+
+#: app/core/gimpdrawable-filters.c:157
+#| msgid "Reorder filter"
+msgid "Merge filter"
+msgstr "Злити фільтр"
+
 #: app/core/gimpdrawable-gradient.c:125 app/core/gimpdrawable-gradient.c:137
 #: app/tools/gimpgradienttool.c:1084
 msgctxt "undo-type"
@@ -13798,7 +13802,6 @@ msgstr "Формат даних щодо шрифту у текстовому ш
 
 #: app/core/gimpimage.c:2981
 #, c-format
-#| msgid "Layer groups were added in %s"
 msgid "Layer effects were added in %s"
 msgstr "До %s було додано ефекти шарів"
 
@@ -23374,7 +23377,6 @@ msgid "%s: switch horizontal and vertical"
 msgstr "%s: перемикання горизонталь/вертикаль"
 
 #: app/tools/gimpfiltertool.c:1158
-#| msgid "filter"
 msgid "Add filter"
 msgstr "Додати фільтр"
 
@@ -23389,8 +23391,6 @@ msgid "Advanced Color Options"
 msgstr "Додаткові параметри кольорів"
 
 #: app/tools/gimpfiltertool.c:1375
-#| msgctxt "palettes-action"
-#| msgid "_Edit Palette..."
 msgid "Editing filter..."
 msgstr "Зміна фільтра…"
 
@@ -26311,6 +26311,15 @@ msgstr "Зменшений перегляд"
 msgid "Larger Previews"
 msgstr "Збільшений перегляд"
 
+#: app/widgets/gimpcontainertreeview.c:1058
+#, c-format
+msgid "%d item selected"
+msgid_plural "%d items selected"
+msgstr[0] "Вибрано %d об'єкт"
+msgstr[1] "Вибрано %d об'єкти"
+msgstr[2] "Вибрано %d об'єктів"
+msgstr[3] "Вибрано %d об'єкт"
+
 #: app/widgets/gimpcontrollereditor.c:200
 msgid "_Dump events from this controller"
 msgstr "_Показувати дії"
@@ -27748,46 +27757,34 @@ msgid "Set Item Exclusive Visibility Lock"
 msgstr "Встановлення блокування виключної видимості запису"
 
 #: app/widgets/gimpitemtreeview.c:712
-#| msgctxt "vectors-action"
-#| msgid "Toggle Path _Visibility"
 msgid "Toggle the visibility of all filters."
 msgstr "Перемикнути видимість контура усіх фільтрів."
 
 #: app/widgets/gimpitemtreeview.c:726
-#| msgid "Move the selected filter up"
 msgid "Edit the selected filter."
 msgstr "Редагувати позначений фільтр."
 
 #: app/widgets/gimpitemtreeview.c:739
-#| msgctxt "layers-action"
-#| msgid "Raise this layer one step in the layer stack"
 msgid "Raise filter one step up in the stack."
 msgstr "Підняти фільтр на один рівень у стосі."
 
 #: app/widgets/gimpitemtreeview.c:752
-#| msgctxt "layers-action"
-#| msgid "Lower this layer one step in the layer stack"
 msgid "Lower filter one step down in the stack."
 msgstr "Опустити фільтр на один рівень у стосі."
 
 #: app/widgets/gimpitemtreeview.c:765
-#| msgid "Move the selected filter down"
 msgid "Merge all active filters down."
 msgstr "Об'єднати усі активні фільтри вниз."
 
 #: app/widgets/gimpitemtreeview.c:778
-#| msgid "Move the selected filter up"
 msgid "Remove the selected filter."
 msgstr "Вилучити позначений фільтр."
 
 #: app/widgets/gimpitemtreeview.c:789
-#| msgid "Layer Select"
 msgid "Layer Effects"
 msgstr "Ефекти шарів"
 
 #: app/widgets/gimpitemtreeview.c:2453 app/widgets/gimpitemtreeview.c:2498
-#| msgctxt "undo-type"
-#| msgid "Reorder item"
 msgid "Reorder filter"
 msgstr "Перевпорядкувати фільтр"
 
@@ -27796,8 +27793,6 @@ msgid "Effects from active tools can not be merged."
 msgstr "Ефекти з активних інструментів не може бути об'єднано."
 
 #: app/widgets/gimpitemtreeview.c:2584
-#| msgctxt "undo-type"
-#| msgid "Remove item"
 msgid "Remove filter"
 msgstr "Вилучити фільтр"
 
@@ -31022,13 +31017,6 @@ msgstr "Меню контурів"
 
 #~ msgid "Lock:"
 #~ msgstr "Замкнути:"
-
-#~ msgid "%d item selected"
-#~ msgid_plural "%d items selected"
-#~ msgstr[0] "Вибрано %d об'єкт"
-#~ msgstr[1] "Вибрано %d об'єкти"
-#~ msgstr[2] "Вибрано %d об'єктів"
-#~ msgstr[3] "Вибрано %d об'єкт"
 
 #~ msgid "Current layers only"
 #~ msgstr "Лише поточні шари"
