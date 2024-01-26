@@ -70,7 +70,7 @@ gimp_test_id_table_insert_and_lookup (GimpTestFixture *f,
   gint     ret_id   = gimp_id_table_insert (f->id_table, data1);
   gpointer ret_data = gimp_id_table_lookup (f->id_table, ret_id);
 
-  g_assert (ret_data == data1);
+  g_assert_true (ret_data == data1);
 }
 
 /**
@@ -87,9 +87,9 @@ gimp_test_id_table_insert_twice (GimpTestFixture *f,
   gint     ret_id2   = gimp_id_table_insert (f->id_table, data2);
   gpointer ret_data2 = gimp_id_table_lookup (f->id_table, ret_id2);
 
-  g_assert (ret_id    != ret_id2);
-  g_assert (ret_data  == data1);
-  g_assert (ret_data2 == data2);
+  g_assert_true (ret_id    != ret_id2);
+  g_assert_true (ret_data  == data1);
+  g_assert_true (ret_data2 == data2);
 }
 
 /**
@@ -106,8 +106,8 @@ gimp_test_id_table_insert_with_id (GimpTestFixture *f,
   int      ret_id   = gimp_id_table_insert_with_id (f->id_table, id, data1);
   gpointer ret_data = gimp_id_table_lookup (f->id_table, id);
 
-  g_assert (ret_id   == id);
-  g_assert (ret_data == data1);
+  g_assert_true (ret_id   == id);
+  g_assert_true (ret_data == data1);
 }
 
 /**
@@ -127,10 +127,10 @@ gimp_test_id_table_insert_with_id_existing (GimpTestFixture *f,
   int      ret_id2   = gimp_id_table_insert_with_id (f->id_table, id, data2);
   gpointer ret_data2 = gimp_id_table_lookup (f->id_table, ret_id2);
 
-  g_assert (id        == ret_id);
-  g_assert (ret_id2   == -1);
-  g_assert (ret_data  == data1);
-  g_assert (ret_data2 == NULL);
+  g_assert_true (id        == ret_id);
+  g_assert_true (ret_id2   == -1);
+  g_assert_true (ret_data  == data1);
+  g_assert_true (ret_data2 == NULL);
 }
 
 /**
@@ -149,7 +149,7 @@ gimp_test_id_table_replace (GimpTestFixture *f,
   gimp_id_table_replace (f->id_table, ret_id, data2);
   ret_data = gimp_id_table_lookup (f->id_table, ret_id);
 
-  g_assert (ret_data  == data2);
+  g_assert_true (ret_data  == data2);
 }
 
 /**
@@ -169,7 +169,7 @@ gimp_test_id_table_replace_as_insert (GimpTestFixture *f,
   gimp_id_table_replace (f->id_table, id, data1);
   ret_data = gimp_id_table_lookup (f->id_table, id);
 
-  g_assert (ret_data  == data1);
+  g_assert_true (ret_data  == data1);
 }
 
 /**
@@ -186,9 +186,9 @@ gimp_test_id_table_remove (GimpTestFixture *f,
   gboolean remove_successful = gimp_id_table_remove (f->id_table, ret_id);
   void    *ret_data2         = gimp_id_table_lookup (f->id_table, ret_id);
 
-  g_assert (remove_successful);
-  g_assert (ret_data == data1);
-  g_assert (ret_data2 == NULL);
+  g_assert_true (remove_successful);
+  g_assert_true (ret_data == data1);
+  g_assert_true (ret_data2 == NULL);
 }
 
 /**
@@ -206,8 +206,8 @@ gimp_test_id_table_remove_non_existing (GimpTestFixture *f,
   gboolean remove_successful = gimp_id_table_remove (f->id_table, id);
   void    *ret_data          = gimp_id_table_lookup (f->id_table, id);
 
-  g_assert (! remove_successful);
-  g_assert (ret_data == NULL);
+  g_assert_true (! remove_successful);
+  g_assert_true (ret_data == NULL);
 }
 
 int main(int argc, char **argv)

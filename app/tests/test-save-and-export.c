@@ -87,9 +87,9 @@ new_file_has_no_files (gconstpointer    data)
   Gimp      *gimp  = GIMP (data);
   GimpImage *image = gimp_test_utils_create_image_from_dialog (gimp);
 
-  g_assert (gimp_image_get_file (image) == NULL);
-  g_assert (gimp_image_get_imported_file (image) == NULL);
-  g_assert (gimp_image_get_exported_file (image) == NULL);
+  g_assert_true (gimp_image_get_file (image) == NULL);
+  g_assert_true (gimp_image_get_imported_file (image) == NULL);
+  g_assert_true (gimp_image_get_exported_file (image) == NULL);
 }
 
 /**
@@ -125,9 +125,9 @@ opened_xcf_file_files (gconstpointer data)
                            NULL /*mime_type*/,
                            NULL /*error*/);
 
-  g_assert (g_file_equal (gimp_image_get_file (image), file));
-  g_assert (gimp_image_get_imported_file (image) == NULL);
-  g_assert (gimp_image_get_exported_file (image) == NULL);
+  g_assert_true (g_file_equal (gimp_image_get_file (image), file));
+  g_assert_true (gimp_image_get_imported_file (image) == NULL);
+  g_assert_true (gimp_image_get_exported_file (image) == NULL);
 
   g_object_unref (file);
 }
@@ -150,7 +150,7 @@ imported_file_files (gconstpointer data)
   filename = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
                                "desktop/64x64/gimp.png",
                                NULL);
-  g_assert (g_file_test (filename, G_FILE_TEST_EXISTS));
+  g_assert_true (g_file_test (filename, G_FILE_TEST_EXISTS));
   file = g_file_new_for_path (filename);
   g_free (filename);
 
@@ -165,9 +165,9 @@ imported_file_files (gconstpointer data)
                            NULL /*mime_type*/,
                            NULL /*error*/);
 
-  g_assert (gimp_image_get_file (image) == NULL);
-  g_assert (g_file_equal (gimp_image_get_imported_file (image), file));
-  g_assert (gimp_image_get_exported_file (image) == NULL);
+  g_assert_true (gimp_image_get_file (image) == NULL);
+  g_assert_true (g_file_equal (gimp_image_get_imported_file (image), file));
+  g_assert_true (gimp_image_get_exported_file (image) == NULL);
 
   g_object_unref (file);
 }
@@ -232,9 +232,9 @@ saved_imported_file_files (gconstpointer data)
              NULL /*error*/);
 
   /* Assert */
-  g_assert (g_file_equal (gimp_image_get_file (image), save_file));
-  g_assert (gimp_image_get_imported_file (image) == NULL);
-  g_assert (gimp_image_get_exported_file (image) == NULL);
+  g_assert_true (g_file_equal (gimp_image_get_file (image), save_file));
+  g_assert_true (gimp_image_get_imported_file (image) == NULL);
+  g_assert_true (gimp_image_get_exported_file (image) == NULL);
 
   g_file_delete (save_file, NULL, NULL);
   g_object_unref (save_file);
@@ -275,9 +275,9 @@ exported_file_files (gconstpointer data)
              TRUE /*export_forward*/,
              NULL /*error*/);
 
-  g_assert (gimp_image_get_file (image) == NULL);
-  g_assert (gimp_image_get_imported_file (image) == NULL);
-  g_assert (g_file_equal (gimp_image_get_exported_file (image), save_file));
+  g_assert_true (gimp_image_get_file (image) == NULL);
+  g_assert_true (gimp_image_get_imported_file (image) == NULL);
+  g_assert_true (g_file_equal (gimp_image_get_exported_file (image), save_file));
 
   g_file_delete (save_file, NULL, NULL);
   g_object_unref (save_file);
@@ -320,9 +320,9 @@ clear_import_file_after_export (gconstpointer data)
                            NULL /*mime_type*/,
                            NULL /*error*/);
 
-  g_assert (gimp_image_get_file (image) == NULL);
-  g_assert (g_file_equal (gimp_image_get_imported_file (image), file));
-  g_assert (gimp_image_get_exported_file (image) == NULL);
+  g_assert_true (gimp_image_get_file (image) == NULL);
+  g_assert_true (g_file_equal (gimp_image_get_imported_file (image), file));
+  g_assert_true (gimp_image_get_exported_file (image) == NULL);
 
   g_object_unref (file);
 
@@ -345,9 +345,9 @@ clear_import_file_after_export (gconstpointer data)
              TRUE /*export_forward*/,
              NULL /*error*/);
 
-  g_assert (gimp_image_get_file (image) == NULL);
-  g_assert (gimp_image_get_imported_file (image) == NULL);
-  g_assert (g_file_equal (gimp_image_get_exported_file (image), save_file));
+  g_assert_true (gimp_image_get_file (image) == NULL);
+  g_assert_true (gimp_image_get_imported_file (image) == NULL);
+  g_assert_true (g_file_equal (gimp_image_get_exported_file (image), save_file));
 
   g_file_delete (save_file, NULL, NULL);
   g_object_unref (save_file);

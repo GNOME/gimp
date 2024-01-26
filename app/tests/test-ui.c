@@ -294,41 +294,41 @@ alt_click_is_layer_to_selection (gconstpointer data)
                                         GTK_TYPE_TREE_VIEW);
 
   /* First make sure there is no selection */
-  g_assert (gimp_channel_is_empty (selection));
+  g_assert_true (gimp_channel_is_empty (selection));
 
   /* Now simulate alt-click on the background layer */
-  g_assert (gimp_ui_synthesize_click (gtk_tree_view,
-                                      assumed_layer_x,
-                                      assumed_background_layer_y,
-                                      1 /*button*/,
-                                      GDK_MOD1_MASK));
+  g_assert_true (gimp_ui_synthesize_click (gtk_tree_view,
+                                           assumed_layer_x,
+                                           assumed_background_layer_y,
+                                           1 /*button*/,
+                                           GDK_MOD1_MASK));
   gimp_test_run_mainloop_until_idle ();
 
   /* Make sure we got a selection and that the active layer didn't
    * change
    */
-  g_assert (! gimp_channel_is_empty (selection));
-  g_assert (g_list_length (gimp_image_get_selected_layers (image)) ==
-            g_list_length (selected_layers));
+  g_assert_true (! gimp_channel_is_empty (selection));
+  g_assert_true (g_list_length (gimp_image_get_selected_layers (image)) ==
+                 g_list_length (selected_layers));
   for (iter = selected_layers; iter; iter = iter->next)
-    g_assert (g_list_find (gimp_image_get_selected_layers (image), iter->data));
+    g_assert_true (g_list_find (gimp_image_get_selected_layers (image), iter->data));
 
   /* Now simulate alt-click on the empty layer */
-  g_assert (gimp_ui_synthesize_click (gtk_tree_view,
-                                      assumed_layer_x,
-                                      assumed_empty_layer_y,
-                                      1 /*button*/,
-                                      GDK_MOD1_MASK));
+  g_assert_true (gimp_ui_synthesize_click (gtk_tree_view,
+                                           assumed_layer_x,
+                                           assumed_empty_layer_y,
+                                           1 /*button*/,
+                                           GDK_MOD1_MASK));
   gimp_test_run_mainloop_until_idle ();
 
   /* Make sure that emptied the selection and that the active layer
    * still didn't change
    */
-  g_assert (gimp_channel_is_empty (selection));
-  g_assert (g_list_length (gimp_image_get_selected_layers (image)) ==
-            g_list_length (selected_layers));
+  g_assert_true (gimp_channel_is_empty (selection));
+  g_assert_true (g_list_length (gimp_image_get_selected_layers (image)) ==
+                 g_list_length (selected_layers));
   for (iter = selected_layers; iter; iter = iter->next)
-    g_assert (g_list_find (gimp_image_get_selected_layers (image), iter->data));
+    g_assert_true (g_list_find (gimp_image_get_selected_layers (image), iter->data));
 
   g_list_free (selected_layers);
 #endif
@@ -347,7 +347,7 @@ restore_recently_closed_multi_column_dock (gconstpointer data)
   /* Find a non-toolbox dock window */
   dock_window = gimp_ui_find_window (gimp_dialog_factory_get_singleton (),
                                      gimp_ui_multicolumn_not_toolbox_window);
-  g_assert (dock_window != NULL);
+  g_assert_true (dock_window != NULL);
 
   /* Count number of docks */
   session_infos = gimp_dialog_factory_get_session_infos (gimp_dialog_factory_get_singleton ());
@@ -404,8 +404,8 @@ tab_toggle_dont_change_dock_window_position (gconstpointer data)
   /* Find a non-toolbox dock window */
   dock_window = gimp_ui_find_window (gimp_dialog_factory_get_singleton (),
                                      gimp_ui_not_toolbox_window);
-  g_assert (dock_window != NULL);
-  g_assert (gtk_widget_get_visible (dock_window));
+  g_assert_true (dock_window != NULL);
+  g_assert_true (gtk_widget_get_visible (dock_window));
 
   /* Get the position and size */
   gimp_test_run_mainloop_until_idle ();
@@ -421,14 +421,14 @@ tab_toggle_dont_change_dock_window_position (gconstpointer data)
                                    "windows",
                                    "windows-hide-docks");
   gimp_test_run_mainloop_until_idle ();
-  g_assert (! gtk_widget_get_visible (dock_window));
+  g_assert_true (! gtk_widget_get_visible (dock_window));
 
   /* Show them again */
   gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
                                    "windows",
                                    "windows-hide-docks");
   gimp_test_run_mainloop_until_idle ();
-  g_assert (gtk_widget_get_visible (dock_window));
+  g_assert_true (gtk_widget_get_visible (dock_window));
 
   /* Get the position and size again and make sure it's the same as
    * before
@@ -468,8 +468,8 @@ gimp_ui_toggle_docks_in_single_window_mode (Gimp *gimp)
   gint              y_before_hide = -1;
   gint              x_after_hide  = -1;
   gint              y_after_hide  = -1;
-  g_assert (shell);
-  g_assert (toplevel);
+  g_assert_true (shell);
+  g_assert_true (toplevel);
 
   /* Get toplevel coordinate of image origin */
   gimp_test_run_mainloop_until_idle ();
@@ -552,11 +552,11 @@ maximize_state_in_aux_data (gconstpointer data)
       gimp_test_run_mainloop_until_idle ();
 
       /* Make sure the maximize/unmaximize happened */
-      g_assert (gimp_image_window_is_maximized (window) == target_max_state);
+      g_assert_true (gimp_image_window_is_maximized (window) == target_max_state);
 
       /* Make sure we can read out the window state again */
       aux_info = gimp_session_managed_get_aux_info (GIMP_SESSION_MANAGED (window));
-      g_assert (g_list_find_custom (aux_info, target_info, gimp_ui_aux_data_eqiuvalent));
+      g_assert_true (g_list_find_custom (aux_info, target_info, gimp_ui_aux_data_eqiuvalent));
       g_list_free_full (aux_info,
                         (GDestroyNotify) gimp_session_info_aux_free);
 
@@ -736,7 +736,7 @@ gimp_ui_synthesize_delete_event (GtkWidget *widget)
   GdkEvent *event = NULL;
 
   window = gtk_widget_get_window (widget);
-  g_assert (window);
+  g_assert_true (window);
 
   event = gdk_event_new (GDK_DELETE);
   event->any.window     = g_object_ref (window);

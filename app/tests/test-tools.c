@@ -160,8 +160,8 @@ gimp_tools_set_tool (Gimp        *gimp,
 static GimpDisplay *
 gimp_test_get_only_display (Gimp *gimp)
 {
-  g_assert (g_list_length (gimp_get_image_iter (gimp)) == 1);
-  g_assert (g_list_length (gimp_get_display_iter (gimp)) == 1);
+  g_assert_true (g_list_length (gimp_get_image_iter (gimp)) == 1);
+  g_assert_true (g_list_length (gimp_get_display_iter (gimp)) == 1);
 
   return GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
 }
@@ -192,8 +192,8 @@ gimp_test_get_only_display_shell (Gimp *gimp)
 static GimpImage *
 gimp_test_get_only_image (Gimp *gimp)
 {
-  g_assert (g_list_length (gimp_get_image_iter (gimp)) == 1);
-  g_assert (g_list_length (gimp_get_display_iter (gimp)) == 1);
+  g_assert_true (g_list_length (gimp_get_image_iter (gimp)) == 1);
+  g_assert_true (g_list_length (gimp_get_display_iter (gimp)) == 1);
 
   return GIMP_IMAGE (gimp_get_image_iter (gimp)->data);
 }
@@ -211,8 +211,8 @@ gimp_test_synthesize_tool_button_event (GimpDisplayShell *shell,
   GdkDisplay *display = gdk_window_get_display (window);
   GdkSeat    *seat    = gdk_display_get_default_seat (display);
 
-  g_assert (button_event_type == GDK_BUTTON_PRESS ||
-            button_event_type == GDK_BUTTON_RELEASE);
+  g_assert_true (button_event_type == GDK_BUTTON_PRESS ||
+                 button_event_type == GDK_BUTTON_RELEASE);
 
   gdk_event_set_device (event, gdk_seat_get_pointer (seat));
 
@@ -275,8 +275,8 @@ gimp_test_synthesize_tool_crossing_event (GimpDisplayShell *shell,
   GdkDisplay *display = gdk_window_get_display (window);
   GdkSeat    *seat    = gdk_display_get_default_seat (display);
 
-  g_assert (crossing_event_type == GDK_ENTER_NOTIFY ||
-            crossing_event_type == GDK_LEAVE_NOTIFY);
+  g_assert_true (crossing_event_type == GDK_ENTER_NOTIFY ||
+                 crossing_event_type == GDK_LEAVE_NOTIFY);
 
   gdk_event_set_device (event, gdk_seat_get_pointer (seat));
 

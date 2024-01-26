@@ -194,10 +194,10 @@ gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
   dockrc_file    = gimp_directory_file (expected_dockrc, NULL);
 
   /* Remember the modtimes and MD5s */
-  g_assert (gimp_test_get_file_state_verbose (sessionrc_file,
-                                              &initial_sessionrc_state));
-  g_assert (gimp_test_get_file_state_verbose (dockrc_file,
-                                              &initial_dockrc_state));
+  g_assert_true (gimp_test_get_file_state_verbose (sessionrc_file,
+                                                   &initial_sessionrc_state));
+  g_assert_true (gimp_test_get_file_state_verbose (dockrc_file,
+                                                   &initial_dockrc_state));
 
   /* Use specific input files when restoring the session */
   g_setenv ("GIMP_TESTING_SESSIONRC_NAME", loaded_sessionrc, TRUE /*overwrite*/);
@@ -232,10 +232,10 @@ gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
   gimp_exit (gimp, TRUE);
 
   /* Now get the new modtimes and MD5s */
-  g_assert (gimp_test_get_file_state_verbose (sessionrc_file,
-                                              &final_sessionrc_state));
-  g_assert (gimp_test_get_file_state_verbose (dockrc_file,
-                                              &final_dockrc_state));
+  g_assert_true (gimp_test_get_file_state_verbose (sessionrc_file,
+                                                   &final_sessionrc_state));
+  g_assert_true (gimp_test_get_file_state_verbose (dockrc_file,
+                                                   &final_dockrc_state));
 
   /* If things have gone our way, GIMP will have deserialized
    * sessionrc and dockrc, shown the GUI, and then serialized the new
@@ -243,10 +243,10 @@ gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
    * to make sure that their content remains the same we compare their
    * MD5
    */
-  g_assert (gimp_test_file_state_changes (g_file_new_for_path ("sessionrc"),
-                                          &initial_sessionrc_state,
-                                          &final_sessionrc_state));
-  g_assert (gimp_test_file_state_changes (g_file_new_for_path ("dockrc"),
-                                          &initial_dockrc_state,
-                                          &final_dockrc_state));
+  g_assert_true (gimp_test_file_state_changes (g_file_new_for_path ("sessionrc"),
+                                               &initial_sessionrc_state,
+                                               &final_sessionrc_state));
+  g_assert_true (gimp_test_file_state_changes (g_file_new_for_path ("dockrc"),
+                                               &initial_dockrc_state,
+                                               &final_dockrc_state));
 }

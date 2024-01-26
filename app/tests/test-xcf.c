@@ -323,7 +323,7 @@ gimp_write_and_read_file (Gimp     *gimp,
 
   /* Write to file */
   file_handle = g_file_open_tmp ("gimp-test-XXXXXX.xcf", &filename, NULL);
-  g_assert (file_handle != -1);
+  g_assert_true (file_handle != -1);
   close (file_handle);
   file = g_file_new_for_path (filename);
   g_free (filename);
@@ -691,10 +691,10 @@ gimp_assert_vectors (GimpImage   *image,
 
   vectors = gimp_image_get_vectors_by_name (image, name);
   stroke = gimp_vectors_stroke_get_next (vectors, NULL);
-  g_assert (stroke != NULL);
+  g_assert_true (stroke != NULL);
   control_points = gimp_stroke_control_points_get (stroke,
                                                    &closed);
-  g_assert (closed);
+  g_assert_true (closed);
   g_assert_cmpint (control_points->len,
                    ==,
                    coords_size);
@@ -712,8 +712,8 @@ gimp_assert_vectors (GimpImage   *image,
                                       i).position.y);
     }
 
-  g_assert (gimp_item_get_visible (GIMP_ITEM (vectors)) ? TRUE : FALSE ==
-            visible ? TRUE : FALSE);
+  g_assert_true (gimp_item_get_visible (GIMP_ITEM (vectors)) ? TRUE : FALSE ==
+                 visible ? TRUE : FALSE);
 }
 
 /**
@@ -809,37 +809,37 @@ gimp_assert_mainimage (GimpImage *image,
 
   /* Guides, note that we rely on internal ordering */
   iter = gimp_image_get_guides (image);
-  g_assert (iter != NULL);
+  g_assert_true (iter != NULL);
   guide = iter->data;
   g_assert_cmpint (gimp_guide_get_position (guide),
                    ==,
                    GIMP_MAINIMAGE_VGUIDE1_POS);
   iter = g_list_next (iter);
-  g_assert (iter != NULL);
+  g_assert_true (iter != NULL);
   guide = iter->data;
   g_assert_cmpint (gimp_guide_get_position (guide),
                    ==,
                    GIMP_MAINIMAGE_VGUIDE2_POS);
   iter = g_list_next (iter);
-  g_assert (iter != NULL);
+  g_assert_true (iter != NULL);
   guide = iter->data;
   g_assert_cmpint (gimp_guide_get_position (guide),
                    ==,
                    GIMP_MAINIMAGE_HGUIDE1_POS);
   iter = g_list_next (iter);
-  g_assert (iter != NULL);
+  g_assert_true (iter != NULL);
   guide = iter->data;
   g_assert_cmpint (gimp_guide_get_position (guide),
                    ==,
                    GIMP_MAINIMAGE_HGUIDE2_POS);
   iter = g_list_next (iter);
-  g_assert (iter == NULL);
+  g_assert_true (iter == NULL);
 
   /* Sample points, we rely on the same ordering as when we added
    * them, although this ordering is not a necessity
    */
   iter = gimp_image_get_sample_points (image);
-  g_assert (iter != NULL);
+  g_assert_true (iter != NULL);
   sample_point = iter->data;
   gimp_sample_point_get_position (sample_point,
                                   &sample_point_x, &sample_point_y);
@@ -850,7 +850,7 @@ gimp_assert_mainimage (GimpImage *image,
                    ==,
                    GIMP_MAINIMAGE_SAMPLEPOINT1_Y);
   iter = g_list_next (iter);
-  g_assert (iter != NULL);
+  g_assert_true (iter != NULL);
   sample_point = iter->data;
   gimp_sample_point_get_position (sample_point,
                                   &sample_point_x, &sample_point_y);
@@ -861,7 +861,7 @@ gimp_assert_mainimage (GimpImage *image,
                    ==,
                    GIMP_MAINIMAGE_SAMPLEPOINT2_Y);
   iter = g_list_next (iter);
-  g_assert (iter == NULL);
+  g_assert_true (iter == NULL);
 
   /* Resolution */
   gimp_image_get_resolution (image, &xres, &yres);
@@ -926,9 +926,9 @@ gimp_assert_mainimage (GimpImage *image,
   g_assert_cmpint (gimp_item_get_height (GIMP_ITEM (channel)),
                    ==,
                    GIMP_MAINIMAGE_CHANNEL1_HEIGHT);
-  g_assert (memcmp (&expected_channel_color,
-                    &actual_channel_color,
-                    sizeof (GimpRGB)) == 0);
+  g_assert_true (memcmp (&expected_channel_color,
+                         &actual_channel_color,
+                         sizeof (GimpRGB)) == 0);
 
   /* Selection, if the image contains unusual stuff it contains a
    * floating select, and when floating a selection, the selection
@@ -968,9 +968,9 @@ gimp_assert_mainimage (GimpImage *image,
                        FALSE /*visible*/);
 
   if (with_unusual_stuff)
-    g_assert (gimp_image_get_floating_selection (image) != NULL);
+    g_assert_true (gimp_image_get_floating_selection (image) != NULL);
   else /* if (! with_unusual_stuff) */
-    g_assert (gimp_image_get_floating_selection (image) == NULL);
+    g_assert_true (gimp_image_get_floating_selection (image) == NULL);
 
   if (use_gimp_2_8_features)
     {
@@ -983,11 +983,11 @@ gimp_assert_mainimage (GimpImage *image,
       GimpItem *group2 = GIMP_ITEM (gimp_image_get_layer_by_name (image, GIMP_MAINIMAGE_GROUP2_NAME));
       GimpItem *layer5 = GIMP_ITEM (gimp_image_get_layer_by_name (image, GIMP_MAINIMAGE_LAYER5_NAME));
 
-      g_assert (gimp_item_get_parent (group1) == NULL);
-      g_assert (gimp_item_get_parent (layer3) == group1);
-      g_assert (gimp_item_get_parent (layer4) == group1);
-      g_assert (gimp_item_get_parent (group2) == group1);
-      g_assert (gimp_item_get_parent (layer5) == group2);
+      g_assert_true (gimp_item_get_parent (group1) == NULL);
+      g_assert_true (gimp_item_get_parent (layer3) == group1);
+      g_assert_true (gimp_item_get_parent (layer4) == group1);
+      g_assert_true (gimp_item_get_parent (group2) == group1);
+      g_assert_true (gimp_item_get_parent (layer5) == group2);
     }
 }
 
