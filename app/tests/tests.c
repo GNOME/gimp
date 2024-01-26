@@ -278,6 +278,6 @@ gimp_test_bail_if_no_display (void)
   if (! g_getenv ("DISPLAY"))
     {
       g_message ("No DISPLAY set, not running UI tests\n");
-      exit (EXIT_SUCCESS);
+      exit (GIMP_EXIT_TEST_SKIPPED);
     }
 }
