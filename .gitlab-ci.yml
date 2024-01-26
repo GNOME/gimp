@@ -263,13 +263,15 @@ deps-debian-x64:
     - _babl/_build-x64
     - _gegl/_build-x64
   before_script:
+    - LIB_DIR=$(cc -print-multi-os-directory | sed 's/\.\.\///g')
+    - cc -print-multiarch | grep . && LIB_SUBDIR=$(echo $(cc -print-multiarch)'/')
+    - export PATH="${GIMP_PREFIX}/bin:$PATH"
+    - export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+    - export LD_LIBRARY_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}"
+    - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
+    - export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0"
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
-    - export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/pkgconfig"
-    - export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
-    - export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}"
-    - export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
-    - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/local/share:/usr/share"
   script:
     - mkdir _babl/_build-x64 && cd _babl/_build-x64
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
@@ -295,14 +297,13 @@ deps-debian-x64:
     - _build-x64
     - "${INSTALL_DIR}"
   before_script:
+    - LIB_DIR=$(cc -print-multi-os-directory | sed 's/\.\.\///g')
+    - cc -print-multiarch | grep . && LIB_SUBDIR=$(echo $(cc -print-multiarch)'/')
     - export PATH="${GIMP_PREFIX}/bin:$PATH"
-    - export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/pkgconfig:${GIMP_PREFIX}/share/pkgconfig"
-    - export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
-    - export PKG_CONFIG_PATH="${GIMP_PREFIX}/share/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
-    - export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}"
-    - export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
-    - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/local/share:/usr/share"
-    - export GI_TYPELIB_PATH="${GIMP_PREFIX}/lib/`gcc -print-multiarch`/girepository-1.0/:${GI_TYPELIB_PATH}"
+    - export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+    - export LD_LIBRARY_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}"
+    - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
+    - export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0"
   needs: ["deps-debian-x64"]
 
 gimp-debian-x64:
