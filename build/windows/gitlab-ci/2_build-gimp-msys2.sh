@@ -45,6 +45,9 @@ sed -i "s/DEPS_ARCH_/${MINGW_PACKAGE_PREFIX}-/g" $DEPS_PATH
 export GIMP_DEPS=`cat $DEPS_PATH`
 pacman --noconfirm -S --needed base-devel $GIMP_DEPS
 
+# Install QOI header manually
+# mingw32 package of qoi was removed from MSYS2, we have download it by ourselves
+wget -O "${MSYS2_PREFIX}/include/qoi.h" https://raw.githubusercontent.com/phoboslab/qoi/master/qoi.h
 
 # Build GIMP
 export GIMP_PREFIX="`realpath ~/_install`${ARTIFACTS_SUFFIX}"
