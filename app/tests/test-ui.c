@@ -95,7 +95,7 @@ static GtkWidget     * gimp_ui_find_window                      (GimpDialogFacto
 static gboolean        gimp_ui_not_toolbox_window               (GObject           *object);
 static gboolean        gimp_ui_multicolumn_not_toolbox_window   (GObject           *object);
 static gboolean        gimp_ui_is_gimp_layer_list               (GObject           *object);
-static int             gimp_ui_aux_data_eqiuvalent              (gconstpointer      _a,
+static int             gimp_ui_aux_data_equivalent              (gconstpointer      _a,
                                                                  gconstpointer      _b);
 static void            gimp_ui_switch_window_mode               (Gimp              *gimp);
 
@@ -556,7 +556,7 @@ maximize_state_in_aux_data (gconstpointer data)
 
       /* Make sure we can read out the window state again */
       aux_info = gimp_session_managed_get_aux_info (GIMP_SESSION_MANAGED (window));
-      g_assert_true (g_list_find_custom (aux_info, target_info, gimp_ui_aux_data_eqiuvalent));
+      g_assert_true (g_list_find_custom (aux_info, target_info, gimp_ui_aux_data_equivalent));
       g_list_free_full (aux_info,
                         (GDestroyNotify) gimp_session_info_aux_free);
 
@@ -833,7 +833,7 @@ gimp_ui_is_gimp_layer_list (GObject *object)
 }
 
 static int
-gimp_ui_aux_data_eqiuvalent (gconstpointer _a, gconstpointer _b)
+gimp_ui_aux_data_equivalent (gconstpointer _a, gconstpointer _b)
 {
   GimpSessionInfoAux *a = (GimpSessionInfoAux*) _a;
   GimpSessionInfoAux *b = (GimpSessionInfoAux*) _b;
