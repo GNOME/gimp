@@ -1,9 +1,8 @@
 gimpiconsdir = gimpdatadir / 'icons'
 
 themes = [
-  'Color',
+  'Default',
   'Legacy',
-  'Symbolic',
   'hicolor'
 ]
 
@@ -13,23 +12,17 @@ foreach theme : themes
     {
       'outdir': '64x64',
       'indir':  '64',
-      'suffix': '.png',
+      'suffixes': [ '.png' ],
       'files':  [ 'bitmap_64-always', ],
     },
   ]
 
   if have_vector_icons
-    if theme == 'Symbolic'
-      suffix = '-symbolic.svg'
-    else
-      suffix = '.svg'
-    endif
-
     install_icons += [
       {
         'outdir': 'scalable',
         'indir':  'scalable',
-        'suffix': suffix,
+        'suffixes': [ '.svg', '-symbolic.svg' ],
         'files':  [ 'scalable',
                     'color-selectors', 'controllers', 'display-filters',
                     'locks', 'prefs', 'templates', 'tools' ],

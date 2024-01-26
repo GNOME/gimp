@@ -19,6 +19,7 @@ if have_vector_icons
   )
 else
   foreach icon : source_icons
+    # Install the color variant.
     icon_name = icon + '.png'
     input_path = '../scalable/' + icon + '.svg'
 
@@ -37,5 +38,19 @@ else
     elif icon == 'gimp-wilber-eek'
       icon_wilber_eek = icon_tgt
     endif
+
+    # Install the symbolic variant.
+    icon_name = icon + '-symbolic.symbolic.png'
+    input_path = '../scalable/' + icon + '-symbolic.svg'
+
+    custom_target(icon_name,
+      input : [ input_path ],
+      output: [ icon_name ],
+      command: [
+        gtk_encode_symbolic_svg, '-o', '@OUTDIR@', '@INPUT@', icons_dir
+      ],
+      install: true,
+      install_dir: gimpiconsdir / theme / icons_dir / 'apps',
+    )
   endforeach
 endif

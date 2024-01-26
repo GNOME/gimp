@@ -178,13 +178,14 @@ gimp_icons_sanity_check (GFile       *path,
   return exists;
 }
 
-void
+gboolean
 gimp_icons_set_icon_theme (GFile *path)
 {
-  gchar *icon_theme_name;
-  GFile *search_path;
+  gchar    *icon_theme_name;
+  GFile    *search_path;
+  gboolean  success = FALSE;
 
-  g_return_if_fail (path == NULL || G_IS_FILE (path));
+  g_return_val_if_fail (path == NULL || G_IS_FILE (path), FALSE);
 
   if (path)
     path = g_object_ref (path);
@@ -217,11 +218,15 @@ gimp_icons_set_icon_theme (GFile *path)
           /*  this is the first call upon initialization  */
           icon_theme_path = g_object_ref (path);
         }
+
+      success = TRUE;
     }
 
   g_free (icon_theme_name);
   g_object_unref (search_path);
   g_object_unref (path);
+
+  return success;
 }
 
 /**

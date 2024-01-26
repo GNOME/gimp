@@ -40,16 +40,16 @@
 #include "gimp-intl.h"
 
 
-static void   icons_apply_theme         (Gimp          *gimp,
-                                         const gchar   *icon_theme_name);
-static void   icons_list_icons_foreach  (gpointer       key,
-                                         gpointer       value,
-                                         gpointer       data);
-static gint   icons_name_compare        (const void    *p1,
-                                         const void    *p2);
-static void   icons_theme_change_notify (GimpGuiConfig *config,
-                                         GParamSpec    *pspec,
-                                         Gimp          *gimp);
+static gboolean icons_apply_theme         (Gimp          *gimp,
+                                           const gchar   *icon_theme_name);
+static void     icons_list_icons_foreach  (gpointer       key,
+                                           gpointer       value,
+                                           gpointer       data);
+static gint     icons_name_compare        (const void    *p1,
+                                           const void    *p2);
+static void     icons_theme_change_notify (GimpGuiConfig *config,
+                                           GParamSpec    *pspec,
+                                           Gimp          *gimp);
 
 
 static GHashTable *icon_themes_hash = NULL;
@@ -207,11 +207,13 @@ icon_themes_get_theme_dir (Gimp        *gimp,
   return g_hash_table_lookup (icon_themes_hash, icon_theme_name);
 }
 
-static void
+static gboolean
 icons_apply_theme (Gimp        *gimp,
                    const gchar *icon_theme_name)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  gboolean applied;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
   if (! icon_theme_name)
     icon_theme_name = GIMP_CONFIG_DEFAULT_ICON_THEME;
@@ -228,15 +230,17 @@ icons_apply_theme (Gimp        *gimp,
                                "icons", icon_theme_name, NULL);
       file = g_file_new_for_path (path);
 
-      gimp_icons_set_icon_theme (file);
+      applied = gimp_icons_set_icon_theme (file);
 
       g_object_unref (file);
       g_free (path);
     }
   else
     {
-      gimp_icons_set_icon_theme (icon_themes_get_theme_dir (gimp, icon_theme_name));
+      applied = gimp_icons_set_icon_theme (icon_themes_get_theme_dir (gimp, icon_theme_name));
     }
+
+  return applied;
 }
 
 static void
@@ -263,5 +267,10 @@ icons_theme_change_notify (GimpGuiConfig *config,
                            GParamSpec    *pspec,
                            Gimp          *gimp)
 {
-  icons_apply_theme (gimp, config->icon_theme);
+  if (! icons_apply_theme (gimp, config->icon_theme))
+    {
+      g_return_if_fail (g_strcmp0 (config->icon_theme, GIMP_CONFIG_DEFAULT_ICON_THEME) != 0);
+
+      g_object_set (config, "icon-theme", GIMP_CONFIG_DEFAULT_ICON_THEME, NULL);
+    }
 }

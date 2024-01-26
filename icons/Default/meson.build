@@ -2,7 +2,14 @@ if have_vector_icons
   # Only process the 64x64 icons for the 2 resource icons.
   subdir('64')
 else
+  gtk_encode_symbolic_svg = find_program('gtk-encode-symbolic-svg', native: true)
   foreach size, source_icons : build_icons
+    # Note: I originally wanted to implement it here in a loop but
+    # custom_target() doesn't accept an output path with a folder! So I
+    # end up creating as many empty directories as generated sizes and
+    # copying the same meson.build everywhere (which is really stupid,
+    # let's admit it). Only the 64x64 size has a slightly different
+    # meson.build as it also installs some non-symbolic images.
     subdir(size)
   endforeach
 endif
@@ -17,32 +24,39 @@ foreach install : install_icons
   inputs = install['files']
   outdir = install['outdir']
   indir  = install['indir']
-  suffix = install['suffix']
 
   py_cmd = 'print(",".join(["@0@/" + line.strip() + "@1@" for line in open("@2@") if line.strip() != "" and line.strip()[0] != "#"]))'
   dup_icons = []
-  foreach input : inputs
-    input = '../icon-lists/@0@.list'.format(input)
-    cmd = run_command(python, '-c',
-                      py_cmd.format(indir, suffix, input),
-                      check: true)
-    dup_icons += cmd.stdout().strip().split(',')
-  endforeach
-  foreach icon : dup_icons
-    if not icons.contains(icon)
-      # remove duplicates.
-      icons += [icon]
+
+  foreach suffix : install['suffixes']
+    foreach input : inputs
+      input = '../icon-lists/@0@.list'.format(input)
+      cmd = run_command(python, '-c',
+                        py_cmd.format(indir, suffix, input),
+                        check: true)
+      dup_icons += cmd.stdout().strip().split(',')
+    endforeach
+    foreach icon : dup_icons
+      if not icons.contains(icon)
+        # remove duplicates.
+        icons += [icon]
+      endif
+    endforeach
+
+    install_data(icons, install_dir: gimpiconsdir / theme / outdir / 'apps')
+
+    wilber_eek = '@0@/gimp-wilber-eek@1@'.format(indir, suffix)
+    if wilber_eek in icons
+      # Note: since this is just a copy of gimp-wilber-week, we could just do a
+      # symlink with install_symlink(), but this is only available in meson 0.61.0
+      # and looking at its code, it would apparently fail if symlinks are not
+      # available in the target OS (instead of silently and intelligently falling
+      # back to doing a copy).
+      install_data(wilber_eek,
+                   rename: 'image-missing@0@'.format(suffix),
+                   install_dir: gimpiconsdir / theme / outdir / 'apps')
     endif
   endforeach
-
-  install_data(icons, install_dir: gimpiconsdir / theme / outdir / 'apps')
-
-  wilber_eek = '@0@/gimp-wilber-eek@1@'.format(indir, suffix)
-  if wilber_eek in icons
-    install_data(wilber_eek,
-                 rename: 'image-missing@0@'.format(suffix),
-                 install_dir: gimpiconsdir / theme / outdir / 'apps')
-  endif
 endforeach
 
 icons_core = [ '64/dialog-question.png', ]
