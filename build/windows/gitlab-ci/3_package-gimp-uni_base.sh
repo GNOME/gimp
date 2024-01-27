@@ -129,12 +129,13 @@ cp -fr ${MSYS_PREFIX}/share/xml/iso-codes/iso_639.xml ${GIMP_DISTRIB}/share/xml/
 ### We save the list of already copied DLLs to keep a state between 3_package-gimp-uni_dep runs.
 rm -f done-dll.list
 
-### Minimal executables for the 'bin' folder
+### Minimal (and some additional) executables for the 'bin' folder
 mkdir ${GIMP_DISTRIB}/bin
 binArray=("${MSYS_PREFIX}/bin/bzip2.exe"
           "${MSYS_PREFIX}/bin/dot.exe"
           "${MSYS_PREFIX}/bin/gdbus.exe"
           "${MSYS_PREFIX}/bin/gdk-pixbuf-query-loaders.exe"
+          "${GIMP_PREFIX}/bin/gegl*.exe"
           "${GIMP_PREFIX}/bin/gimp*.exe"
           "${MSYS_PREFIX}/bin/gspawn*.exe")
 for exe in "${binArray[@]}"; do

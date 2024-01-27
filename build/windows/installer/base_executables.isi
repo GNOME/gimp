@@ -22,7 +22,7 @@
 
 ;Required arch-specific components (minimal install)
 Source: "{#GIMP_DIR}\{#DIR}\*.dll"; DestDir: "{app}"; Excludes: "bin\libgs*.dll,bin\lua*.dll,bin\libpython*.dll"; Components: gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
-Source: "{#GIMP_DIR}\{#DIR}\*.exe"; DestDir: "{app}"; Excludes: "\lib\gimp\{#DIR_VER}\plug-ins\file-ps\file-ps.exe,\bin\lua*.exe,\bin\python*.exe,\lib\gimp\{#DIR_VER}\plug-ins\twain\twain.exe"; Components: gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#GIMP_DIR}\{#DIR}\*.exe"; DestDir: "{app}"; Excludes: "\lib\gimp\{#DIR_VER}\plug-ins\file-ps\file-ps.exe,\bin\gegl*.exe,\bin\lua*.exe,\bin\python*.exe,\lib\gimp\{#DIR_VER}\plug-ins\twain\twain.exe"; Components: gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\{#DIR_VER}\extensions\*.*"; DestDir: "{app}\lib\gimp\{#DIR_VER}\extensions"; Excludes: "*.debug"; Components: gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 Source: "{#GIMP_DIR}\{#DIR}\lib\girepository-1.0\*.*"; DestDir: "{app}\lib\girepository-1.0"; Components: gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 
