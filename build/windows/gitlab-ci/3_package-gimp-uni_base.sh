@@ -28,7 +28,9 @@ if [[ "$BUILD_TYPE" != "CI_CROSS" ]]; then
 export DEPS_PATH="build/windows/gitlab-ci/all-deps-uni.txt"
 sed -i "s/DEPS_ARCH_/${MINGW_PACKAGE_PREFIX}-/g" $DEPS_PATH
 export GIMP_DEPS=`cat $DEPS_PATH`
-pacman --noconfirm -S --needed base-devel $GIMP_DEPS
+pacman --noconfirm -S --needed base-devel                         \
+                               ${MINGW_PACKAGE_PREFIX}-toolchain  \
+                               $GIMP_DEPS
 fi
 
 

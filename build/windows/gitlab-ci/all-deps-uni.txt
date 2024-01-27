@@ -28,6 +28,7 @@ DEPS_ARCH_libheif
 DEPS_ARCH_libiff
 DEPS_ARCH_libilbm
 DEPS_ARCH_libjxl
+DEPS_ARCH_libmng
 DEPS_ARCH_libmypaint
 DEPS_ARCH_libspiro
 DEPS_ARCH_libwebp

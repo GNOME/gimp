@@ -34,7 +34,7 @@ else
     GIMP_GITDIR=$(sed 's|build||g' <<< $GIMP_GITDIR)
     cd $GIMP_GITDIR
   fi
-  
+
   pacman --noconfirm -Suy
 fi
 
@@ -43,7 +43,9 @@ fi
 export DEPS_PATH="build/windows/gitlab-ci/all-deps-uni.txt"
 sed -i "s/DEPS_ARCH_/${MINGW_PACKAGE_PREFIX}-/g" $DEPS_PATH
 export GIMP_DEPS=`cat $DEPS_PATH`
-pacman --noconfirm -S --needed base-devel $GIMP_DEPS
+pacman --noconfirm -S --needed base-devel                         \
+                               ${MINGW_PACKAGE_PREFIX}-toolchain  \
+                               $GIMP_DEPS
 
 # Install QOI header manually
 # mingw32 package of qoi was removed from MSYS2, we have download it by ourselves
@@ -136,7 +138,7 @@ if [[ "$BUILD_TYPE" == "CI_NATIVE" ]]; then
   make_cmd CI %cd%
 
   cd ..
-  
+
   #ccache --show-stats
 
   # XXX Moving back the prefix to be used as artifacts.
