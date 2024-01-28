@@ -26,6 +26,8 @@
 
 #include "core/gimpimage.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "vectors-export-dialog.h"
 
 #include "gimp-intl.h"
@@ -44,6 +46,8 @@ struct _VectorsExportDialog
 
 /*  local function prototypes  */
 
+static void   vectors_export_dialog_map      (GtkWidget           *dialog,
+                                              VectorsExportDialog *data);
 static void   vectors_export_dialog_free     (VectorsExportDialog *private);
 static void   vectors_export_dialog_response (GtkWidget           *widget,
                                               gint                 response_id,
@@ -110,6 +114,11 @@ vectors_export_dialog_new (GimpImage                 *image,
                            G_CALLBACK (gtk_widget_destroy),
                            dialog, 0);
 
+#ifdef G_OS_WIN32
+  g_signal_connect (dialog, "map",
+                    G_CALLBACK (vectors_export_dialog_map),
+                    private);
+#endif
   g_signal_connect (dialog, "delete-event",
                     G_CALLBACK (gtk_true),
                     NULL);
@@ -134,6 +143,15 @@ vectors_export_dialog_new (GimpImage                 *image,
 
 
 /*  private functions  */
+
+static void
+vectors_export_dialog_map (GtkWidget           *dialog,
+                           VectorsExportDialog *data)
+{
+#ifdef G_OS_WIN32
+  gimp_window_set_title_bar_theme (data->image->gimp, dialog, FALSE);
+#endif
+}
 
 static void
 vectors_export_dialog_free (VectorsExportDialog *private)

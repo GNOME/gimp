@@ -31,6 +31,7 @@
 #include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "dialogs/dialogs.h"
 
@@ -85,9 +86,9 @@ gradients_save_as_pov_ray_cmd_callback (GimpAction *action,
 
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
       gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
+                                                GTK_RESPONSE_OK,
+                                                GTK_RESPONSE_CANCEL,
+                                                -1);
 
       g_object_set_data (G_OBJECT (dialog), "gimp", context->gimp);
 
@@ -119,6 +120,10 @@ gradients_save_as_pov_ray_cmd_callback (GimpAction *action,
     }
 
   gtk_window_present (GTK_WINDOW (dialog));
+
+#ifdef G_OS_WIN32
+  gimp_window_set_title_bar_theme (context->gimp, dialog, FALSE);
+#endif
 }
 
 

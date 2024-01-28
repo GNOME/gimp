@@ -40,6 +40,7 @@
 #include "gimpcontainerview.h"
 #include "gimpsettingsbox.h"
 #include "gimpsettingseditor.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -137,6 +138,8 @@ static void  gimp_settings_box_file_dialog       (GimpSettingsBox   *box,
 static void  gimp_settings_box_file_response     (GtkWidget         *dialog,
                                                   gint               response_id,
                                                   GimpSettingsBox   *box);
+static void  gimp_settings_box_dialog_map        (GtkWidget         *dialog,
+                                                  gpointer          *data);
 static void  gimp_settings_box_toplevel_unmap    (GtkWidget         *toplevel,
                                                   GtkWidget         *dialog);
 static void  gimp_settings_box_truncate_list     (GimpSettingsBox   *box,
@@ -718,9 +721,9 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   g_object_set_data (G_OBJECT (dialog), "save", GINT_TO_POINTER (save));
 
@@ -736,6 +739,11 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
     gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                     TRUE);
 
+#ifdef G_OS_WIN32
+  g_signal_connect (dialog, "map",
+                    G_CALLBACK (gimp_settings_box_dialog_map),
+                    box);
+#endif
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gimp_settings_box_file_response),
                     box);
@@ -822,6 +830,18 @@ gimp_settings_box_file_response (GtkWidget       *dialog,
     gtk_widget_set_sensitive (private->export_item, TRUE);
 
   gtk_widget_destroy (dialog);
+}
+
+static void
+gimp_settings_box_dialog_map (GtkWidget *dialog,
+                              gpointer  *data)
+{
+#ifdef G_OS_WIN32
+  GimpSettingsBox        *box     = (GimpSettingsBox *) data;
+  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
+
+  gimp_window_set_title_bar_theme (private->gimp, dialog, FALSE);
+#endif
 }
 
 static void

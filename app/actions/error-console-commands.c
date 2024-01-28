@@ -30,6 +30,7 @@
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimptextbuffer.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "error-console-commands.h"
 
@@ -104,9 +105,9 @@ error_console_save_cmd_callback (GimpAction *action,
 
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
       gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
+                                                GTK_RESPONSE_OK,
+                                                GTK_RESPONSE_CANCEL,
+                                                -1);
 
       console->save_selection = selection;
 
@@ -132,6 +133,10 @@ error_console_save_cmd_callback (GimpAction *action,
     }
 
   gtk_window_present (GTK_WINDOW (console->file_dialog));
+
+#ifdef G_OS_WIN32
+  gimp_window_set_title_bar_theme (console->gimp, console->file_dialog, FALSE);
+#endif
 }
 
 void

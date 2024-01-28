@@ -26,6 +26,8 @@
 
 #include "core/gimpimage.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "vectors-import-dialog.h"
 
 #include "gimp-intl.h"
@@ -45,6 +47,8 @@ struct _VectorsImportDialog
 
 /*  local function prototypes  */
 
+static void   vectors_import_dialog_map      (GtkWidget           *dialog,
+                                              VectorsImportDialog *data);
 static void   vectors_import_dialog_free     (VectorsImportDialog *private);
 static void   vectors_import_dialog_response (GtkWidget           *dialog,
                                               gint                 response_id,
@@ -112,6 +116,11 @@ vectors_import_dialog_new (GimpImage                 *image,
                            G_CALLBACK (gtk_widget_destroy),
                            dialog, 0);
 
+#ifdef G_OS_WIN32
+  g_signal_connect (dialog, "map",
+                    G_CALLBACK (vectors_import_dialog_map),
+                    private);
+#endif
   g_signal_connect (dialog, "delete-event",
                     G_CALLBACK (gtk_true),
                     NULL);
@@ -163,6 +172,15 @@ vectors_import_dialog_new (GimpImage                 *image,
 
 
 /*  private functions  */
+
+static void
+vectors_import_dialog_map (GtkWidget           *dialog,
+                           VectorsImportDialog *data)
+{
+#ifdef G_OS_WIN32
+  gimp_window_set_title_bar_theme (data->image->gimp, dialog, FALSE);
+#endif
+}
 
 static void
 vectors_import_dialog_free (VectorsImportDialog *private)
