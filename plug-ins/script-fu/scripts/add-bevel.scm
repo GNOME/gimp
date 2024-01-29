@@ -52,7 +52,7 @@
 ;
 
 (define (script-fu-add-bevel img
-                             drawable
+                             drawables
                              thickness
                              work-on-copy
                              keep-bump-layer)
@@ -61,7 +61,6 @@
         (index 1)
         (greyness 0)
         (thickness (abs thickness))
-        (type (car (gimp-drawable-type-with-alpha drawable)))
         (image (if (= work-on-copy TRUE) (car (gimp-image-duplicate img)) img))
         (pic-layer (aref (cadr (gimp-image-get-selected-drawables image)) 0))
         (offsets (gimp-drawable-get-offsets pic-layer))
@@ -185,18 +184,17 @@
   )
 )
 
-(script-fu-register "script-fu-add-bevel"
+(script-fu-register-filter "script-fu-add-bevel"
   _"Add B_evel..."
   _"Add a beveled border to an image"
   "Andrew Donkin <ard@cs.waikato.ac.nz>"
   "Andrew Donkin"
   "1997/11/06"
   "RGB*"
-  SF-IMAGE       "Image"           0
-  SF-DRAWABLE    "Drawable"        0
-  SF-ADJUSTMENT _"Thickness"       '(5 0 30 1 2 0 0)
-  SF-TOGGLE     _"Work on copy"    TRUE
-  SF-TOGGLE     _"Keep bump layer" FALSE
+  SF-ONE-OR-MORE-DRAWABLE  ; v3 >>> additional argument
+  SF-ADJUSTMENT _"_Thickness"       '(5 0 30 1 2 0 0)
+  SF-TOGGLE     _"_Work on copy"    TRUE
+  SF-TOGGLE     _"_Keep bump layer" FALSE
 )
 
 (script-fu-menu-register "script-fu-add-bevel" "<Image>/Filters/Decor")
