@@ -1142,22 +1142,42 @@ endif
 
 ## Lua
 
+have_lua = false
 # At time of writing, lua-lgi works Lua 5.1, Lua 5.2, Lua 5.3 and LuaJIT2. On
 # most platforms, we use luajit. On MSYS2, only lua5.1 works with lua-lgi. This
 # is why we use this order for lua detection.
-lua = find_program('luajit', 'lua5.1', 'lua5.2', 'lua5.3', required: get_option('lua'))
-have_lua = get_option('lua').enabled() or (lua.found() and get_option('lua').auto())
-if not lua.found() and have_lua
-  lua_warning = '''
-  Neither Luajit nor Lua was found.
-  Lua plug-ins will be installed anyway but you should make sure that
-  luajit or lua and that LGI are available at installation, otherwise
-  installed plug-ins won't be usable.
-  '''
-  warning(lua_warning)
-  warnings += lua_warning
-endif
+if get_option('lua').allowed()
+  have_lua_lgi = false
 
+  foreach lua_bin : [ 'luajit', 'lua5.1', 'lua5.2', 'lua5.3' ]
+    lua = find_program(lua_bin, required: false)
+
+    if lua.found()
+      have_lua_lgi = run_command(lua, '-e',
+      '''
+      local lgi = require 'lgi'
+      ''',
+      check: false
+      ).returncode() == 0
+
+      if have_lua_lgi
+        break
+      endif
+    endif
+  endforeach
+
+  have_lua = get_option('lua').enabled() or have_lua_lgi
+  if have_lua and not have_lua_lgi
+    lua_warning = '''
+      Neither Luajit nor Lua, with lua-lgi support, was found.
+      Lua plug-ins will be installed anyway but you should make sure that
+      luajit or lua and that LGI are available at installation, otherwise
+      installed plug-ins won't be usable.
+      '''
+    warning(lua_warning)
+    warnings += lua_warning
+  endif
+endif
 
 # Check for XML tools
 xmllint             = find_program('xmllint', required: false)
