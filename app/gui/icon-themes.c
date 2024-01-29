@@ -207,6 +207,34 @@ icon_themes_get_theme_dir (Gimp        *gimp,
   return g_hash_table_lookup (icon_themes_hash, icon_theme_name);
 }
 
+gboolean
+icon_themes_current_prefer_symbolic (Gimp *gimp)
+{
+  GtkIconTheme *icon_theme;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  icon_theme = gtk_icon_theme_get_default ();
+
+  /* If the current icon theme is purely symbolic or purely color, we want to
+   * override the "prefer-symbolic-icons" property, not only to avoid
+   * discrepancies, but even more to avoid weird cases where we end up using
+   * icons from the system icon theme while the chosen theme has the right icon
+   * (yet simply not in the prefered style). See Issue #9410.
+   */
+  if (gtk_icon_theme_has_icon (icon_theme, GIMP_ICON_WILBER) &&
+      ! gtk_icon_theme_has_icon (icon_theme, GIMP_ICON_WILBER "-symbolic"))
+    return FALSE;
+  else if (! gtk_icon_theme_has_icon (icon_theme, GIMP_ICON_WILBER) &&
+           gtk_icon_theme_has_icon (icon_theme, GIMP_ICON_WILBER "-symbolic"))
+    return TRUE;
+
+  return GIMP_GUI_CONFIG (gimp->config)->prefer_symbolic_icons;
+}
+
+
+/* Private functions */
+
 static gboolean
 icons_apply_theme (Gimp        *gimp,
                    const gchar *icon_theme_name)

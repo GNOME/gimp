@@ -22,13 +22,15 @@
 #define __ICONS_THEMES_H__
 
 
-void     icon_themes_init          (Gimp        *gimp);
-void     icon_themes_exit          (Gimp        *gimp);
+void        icon_themes_init                    (Gimp        *gimp);
+void        icon_themes_exit                    (Gimp        *gimp);
 
-gchar ** icon_themes_list_themes   (Gimp        *gimp,
-                                    gint        *n_themes);
-GFile  * icon_themes_get_theme_dir (Gimp        *gimp,
-                                    const gchar *theme_name);
+gchar    ** icon_themes_list_themes             (Gimp        *gimp,
+                                                 gint        *n_themes);
+GFile     * icon_themes_get_theme_dir           (Gimp        *gimp,
+                                                 const gchar *theme_name);
+
+gboolean    icon_themes_current_prefer_symbolic (Gimp        *gimp);
 
 
 #endif /* __ICONS_THEMES_H__ */

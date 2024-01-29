@@ -35,6 +35,7 @@
 
 #include "widgets/gimpwidgets-utils.h"
 
+#include "icon-themes.h"
 #include "themes.h"
 
 #include "gimp-intl.h"
@@ -92,6 +93,9 @@ themes_init (Gimp *gimp)
   g_signal_connect (config, "notify::theme",
                     G_CALLBACK (themes_theme_change_notify),
                     gimp);
+  g_signal_connect_after (config, "notify::icon-theme",
+                          G_CALLBACK (themes_theme_change_notify),
+                          gimp);
   g_signal_connect (config, "notify::theme-color-scheme",
                     G_CALLBACK (themes_theme_change_notify),
                     gimp);
@@ -419,8 +423,9 @@ themes_apply_theme (Gimp          *gimp,
             "* { -gtk-icon-style: %s; }\n"
             "\n"
             "%s",
-            config->prefer_symbolic_icons ? "symbolic" : "regular",
+            icon_themes_current_prefer_symbolic (gimp) ? "symbolic" : "regular",
             prefer_dark_theme ? "/* prefer-dark-theme */\n" : "");
+
         }
 
       if (! error && config->override_icon_size)
