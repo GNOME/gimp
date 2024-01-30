@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-02 04:07+0000\n"
-"PO-Revision-Date: 2024-01-02 09:27+0200\n"
+"POT-Creation-Date: 2024-01-29 14:25+0000\n"
+"PO-Revision-Date: 2024-01-30 22:39+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -122,7 +122,7 @@ msgid "Save Script-Fu Console Output"
 msgstr "Зберегти вивід консолі скриптфу"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:888
+#: plug-ins/script-fu/server/script-fu-server.c:878
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
 msgid "_Cancel"
 msgstr "_Скасувати"
@@ -148,27 +148,27 @@ msgstr "Ласкаво просимо до TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Керування GIMP за допомогою скриптів мовою Scheme"
 
-#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/server/script-fu-server.c:874
 msgid "Script-Fu Server Options"
 msgstr "Скриптфу: Параметри сервера"
 
-#: plug-ins/script-fu/server/script-fu-server.c:889
+#: plug-ins/script-fu/server/script-fu-server.c:879
 msgid "_Start Server"
 msgstr "_Запустити сервер"
 
-#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/server/script-fu-server.c:912
 msgid "Listen on IP:"
 msgstr "Прослуховувати IP:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:929
+#: plug-ins/script-fu/server/script-fu-server.c:919
 msgid "Server port:"
 msgstr "Порт сервера:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:935
+#: plug-ins/script-fu/server/script-fu-server.c:925
 msgid "Server logfile:"
 msgstr "Журнал сервера:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:948
+#: plug-ins/script-fu/server/script-fu-server.c:938
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -231,34 +231,33 @@ msgstr "Помилка під час виконання: %s"
 msgid "Error while loading %s:"
 msgstr "Помилка під час виконання %s:"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:76
+#: plug-ins/script-fu/scripts/add-bevel.scm:75
 msgid "Bumpmap"
 msgstr "Рельєф"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:189
+#: plug-ins/script-fu/scripts/add-bevel.scm:188
 msgid "Add B_evel..."
 msgstr "Додати _фаску…"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:190
+#: plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add a beveled border to an image"
 msgstr "Розмістити зображення у піднесеній рамці"
 
+#. v3 >>> additional argument
+#: plug-ins/script-fu/scripts/add-bevel.scm:195
+#| msgid "Thickness"
+msgid "_Thickness"
+msgstr "_Товщина"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:196
+#| msgid "Work on copy"
+msgid "_Work on copy"
+msgstr "П_рацювати з копією"
+
 #: plug-ins/script-fu/scripts/add-bevel.scm:197
-msgid "Thickness"
-msgstr "Товщина"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:198
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
-#: plug-ins/script-fu/scripts/old-photo.scm:104
-#: plug-ins/script-fu/scripts/round-corners.scm:145
-#: plug-ins/script-fu/scripts/slide.scm:262
-#: plug-ins/script-fu/scripts/spinning-globe.scm:107
-msgid "Work on copy"
-msgstr "Працювати з копією"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:199
-msgid "Keep bump layer"
-msgstr "Окремий шар для рельєфу"
+#| msgid "Keep bump layer"
+msgid "_Keep bump layer"
+msgstr "_Окремий шар для рельєфу"
 
 #: plug-ins/script-fu/scripts/addborder.scm:123
 msgid "Border Layer"
@@ -572,7 +571,6 @@ msgid "Darken only"
 msgstr "Накласти плями у режимі «Лише темне»"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:70
-#| msgid "_Difference Clouds..."
 msgid "_Difference Clouds"
 msgstr "_Різні плями"
 
@@ -720,6 +718,14 @@ msgstr "Додати тінь"
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:162
 msgid "Shadow weight (%)"
 msgstr "Розмір тіні (%)"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
+#: plug-ins/script-fu/scripts/old-photo.scm:104
+#: plug-ins/script-fu/scripts/round-corners.scm:145
+#: plug-ins/script-fu/scripts/slide.scm:262
+#: plug-ins/script-fu/scripts/spinning-globe.scm:111
+msgid "Work on copy"
+msgstr "Працювати з копією"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:164
 msgid "Flatten image"
@@ -1301,29 +1307,29 @@ msgstr "Шрифт"
 msgid "Font color"
 msgstr "Колір шрифту"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:95
+#: plug-ins/script-fu/scripts/spinning-globe.scm:99
 msgid "_Spinning Globe..."
 msgstr "_Куля, що обертається…"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:96
+#: plug-ins/script-fu/scripts/spinning-globe.scm:100
 msgid ""
 "Create an animation by mapping the current image onto a spinning sphere"
 msgstr ""
 "Створити анімацію із зображення, розмістивши його на сфері, що обертається"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:103
+#: plug-ins/script-fu/scripts/spinning-globe.scm:107
 msgid "Frames"
 msgstr "Кадри"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:104
+#: plug-ins/script-fu/scripts/spinning-globe.scm:108
 msgid "Turn from left to right"
 msgstr "Обертати зліва направо"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:105
+#: plug-ins/script-fu/scripts/spinning-globe.scm:109
 msgid "Transparent background"
 msgstr "Прозоре тло"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:106
+#: plug-ins/script-fu/scripts/spinning-globe.scm:110
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Індексувати до N кольорів (0 - залишити RGB)"
 
