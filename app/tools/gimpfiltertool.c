@@ -471,6 +471,7 @@ gimp_filter_tool_control (GimpTool       *tool,
   GimpFilterTool *filter_tool     = GIMP_FILTER_TOOL (tool);
   GimpDrawable   *drawable        = NULL;
   gboolean        non_destructive = TRUE;
+  gchar          *operation_name  = NULL;
 
   switch (action)
     {
@@ -490,6 +491,18 @@ gimp_filter_tool_control (GimpTool       *tool,
        * besides layers */
       if (! GIMP_IS_LAYER (drawable))
         non_destructive = FALSE;
+
+      if (filter_tool->operation)
+        {
+          gegl_node_get (filter_tool->operation,
+                         "operation", &operation_name,
+                         NULL);
+
+          if (! g_strcmp0 (operation_name, "gegl:nop"))
+            non_destructive = FALSE;
+
+          g_free (operation_name);
+        }
 
       gimp_filter_tool_commit (filter_tool, non_destructive);
       break;
