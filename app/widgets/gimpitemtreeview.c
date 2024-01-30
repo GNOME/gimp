@@ -89,6 +89,7 @@ struct _GimpItemTreeViewPrivate
 
   GtkWidget       *eye_header_image;
   GtkWidget       *lock_header_image;
+  GtkWidget       *effect_header_image;
 
   GimpItem        *lock_box_item;
   GtkTreePath     *lock_box_path;
@@ -555,9 +556,13 @@ gimp_item_tree_view_constructed (GObject *object)
   if (GIMP_IS_LAYER_TREE_VIEW (object))
     {
       column = gtk_tree_view_column_new ();
+      image = gtk_image_new_from_icon_name (GIMP_ICON_EFFECT, button_icon_size);
+      gtk_tree_view_column_set_widget (column, image);
+      gtk_widget_set_visible (image, TRUE);
       gtk_tree_view_insert_column (tree_view->view, column, 2);
+      item_view->priv->effect_header_image = image;
 
-      item_view->priv->effects_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_DISPLAY_FILTER);
+      item_view->priv->effects_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_EFFECT);
       g_object_set (item_view->priv->effects_cell,
                     "xpad",      0,
                     "ypad",      0,
@@ -948,6 +953,19 @@ gimp_item_tree_view_style_updated (GtkWidget *widget)
       g_free (icon_name);
     }
 
+  if (GIMP_IS_LAYER_TREE_VIEW (view))
+    {
+      gtk_image_get_icon_name (GTK_IMAGE (view->priv->effect_header_image),
+                               &old_icon_name, &old_size);
+      if (button_icon_size != old_size)
+        {
+          icon_name = g_strdup (old_icon_name);
+          gtk_image_set_from_icon_name (GTK_IMAGE (view->priv->effect_header_image),
+                                        icon_name, button_icon_size);
+          g_free (icon_name);
+        }
+    }
+
   /* force the eye and toggle cells to recreate their icon */
   gtk_icon_size_lookup (button_icon_size, &pixel_icon_size, NULL);
   g_object_set (view->priv->eye_cell,
@@ -961,7 +979,7 @@ gimp_item_tree_view_style_updated (GtkWidget *widget)
 
   if (GIMP_IS_LAYER_TREE_VIEW (view))
     g_object_set (view->priv->effects_cell,
-                  "icon-name", GIMP_ICON_DISPLAY_FILTER,
+                  "icon-name", GIMP_ICON_EFFECT,
                   "icon-size", pixel_icon_size,
                   NULL);
 

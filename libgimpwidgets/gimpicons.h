@@ -210,6 +210,9 @@ G_BEGIN_DECLS
 #define GIMP_ICON_EDIT_REDO                 "edit-redo"
 #define GIMP_ICON_EDIT_UNDO                 "edit-undo"
 
+/* TODO: Replace with final layer effect icon */
+#define GIMP_ICON_EFFECT                    "gimp-display-filter"
+
 #define GIMP_ICON_EVEN_HORIZONTAL_GAP       "gimp-even-horizontal-gap"
 #define GIMP_ICON_EVEN_VERTICAL_GAP         "gimp-even-vertical-gap"
 
@@ -425,9 +428,9 @@ G_BEGIN_DECLS
 #define GIMP_ICON_ZOOM_FOLLOW_WINDOW        "gimp-zoom-follow-window"
 
 
-void     gimp_icons_init           (void);
+void   gimp_icons_init           (void);
 
-gboolean gimp_icons_set_icon_theme (GFile *path);
+void   gimp_icons_set_icon_theme (GFile *path);
 
 
 G_END_DECLS
