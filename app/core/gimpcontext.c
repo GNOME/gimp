@@ -114,6 +114,8 @@ static gboolean     gimp_context_copy               (GimpConfig       *src,
                                                      GParamFlags       flags);
 
 /*  image  */
+static void gimp_context_image_disconnect    (GimpImage        *image,
+                                              GimpContext      *context);
 static void gimp_context_image_removed       (GimpContainer    *container,
                                               GimpImage        *image,
                                               GimpContext      *context);
@@ -1919,6 +1921,14 @@ gimp_context_image_changed (GimpContext *context)
 }
 
 static void
+gimp_context_image_disconnect (GimpImage   *image,
+                               GimpContext *context)
+{
+  if (image == context->image)
+    gimp_context_real_set_image (context, NULL);
+}
+
+static void
 gimp_context_image_removed (GimpContainer *container,
                             GimpImage     *image,
                             GimpContext   *context)
@@ -1934,7 +1944,17 @@ gimp_context_real_set_image (GimpContext *context,
   if (context->image == image)
     return;
 
+  if (context->image)
+    g_signal_handlers_disconnect_by_func (context->image,
+                                          G_CALLBACK (gimp_context_image_disconnect),
+                                          context);
+
   context->image = image;
+
+  if (image)
+    g_signal_connect_object (image, "disconnect",
+                             G_CALLBACK (gimp_context_image_disconnect),
+                             context, 0);
 
   g_object_notify (G_OBJECT (context), "image");
   gimp_context_image_changed (context);
