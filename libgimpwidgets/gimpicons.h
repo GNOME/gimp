@@ -428,9 +428,9 @@ G_BEGIN_DECLS
 #define GIMP_ICON_ZOOM_FOLLOW_WINDOW        "gimp-zoom-follow-window"
 
 
-void   gimp_icons_init           (void);
+void     gimp_icons_init           (void);
 
-void   gimp_icons_set_icon_theme (GFile *path);
+gboolean gimp_icons_set_icon_theme (GFile *path);
 
 
 G_END_DECLS
