@@ -124,7 +124,7 @@ plug_in_actions_update (GimpActionGroup *group,
           GimpProcedure *procedure = GIMP_PROCEDURE (proc);
           gboolean       sensitive;
           const gchar   *tooltip;
-          const gchar   *reason;
+          const gchar   *reason = NULL;
 
           sensitive = gimp_procedure_get_sensitive (procedure,
                                                     GIMP_OBJECT (image),
