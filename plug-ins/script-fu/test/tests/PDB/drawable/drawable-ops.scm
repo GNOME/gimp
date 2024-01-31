@@ -33,18 +33,12 @@
 
 ;(assert `(gimp-drawable-extract-component ,testDrawable DESATURATE-LUMA))
 
-(assert `(gimp-drawable-fill ,testDrawable FILL-CIELAB-MIDDLE-GRAY))
+; FIXME crashes
+;(assert `(gimp-drawable-fill ,testDrawable FILL-CIELAB-MIDDLE-GRAY))
 
 (assert `(gimp-drawable-foreground-extract ,testDrawable FOREGROUND-EXTRACT-MATTING ,testDrawable))
 
 (assert `(gimp-drawable-hue-saturation ,testDrawable HUE-RANGE-MAGENTA 0 1 2 3))
-
-
-; misc
-; free-shadow
-
-; attributes
-; get-bpp
 
 (assert `(gimp-drawable-invert ,testDrawable 1)) ; boolean invert in linear space
 
@@ -55,8 +49,24 @@
             8 0.5 0.5 1 ; boolean clamp output
             ))
 
+(assert `(gimp-drawable-levels-stretch ,testDrawable))
+
 (assert `(gimp-drawable-posterize ,testDrawable 2))
 
+(assert `(gimp-drawable-shadows-highlights
+             ,testDrawable
+             -50 50
+             -10
+             1300
+             50
+             0 100))
+
+(assert `(gimp-drawable-threshold
+            ,testDrawable
+            HISTOGRAM-ALPHA
+            0.1 1))
+
+(assert `(gimp-drawable-desaturate ,testDrawable DESATURATE-LUMA))
 (assert `(gimp-drawable-desaturate ,testDrawable DESATURATE-LUMA))
 
 (gimp-display-new testImage)

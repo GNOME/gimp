@@ -31,6 +31,8 @@ if not stable
     'tests' / 'PDB' / 'item' / 'item-position.scm',
     'tests' / 'PDB' / 'item' / 'item-layer-group.scm',
 
+    'tests' / 'PDB' / 'drawable' / 'drawable.scm',
+    'tests' / 'PDB' / 'drawable' / 'drawable-attributes.scm',
     'tests' / 'PDB' / 'drawable' / 'drawable-ops.scm',
 
     'tests' / 'PDB' / 'channel' / 'channel-new.scm',
