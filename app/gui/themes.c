@@ -433,6 +433,9 @@ themes_apply_theme (Gimp          *gimp,
           const gchar *tool_icon_size   = "large-toolbar";
           const gchar *tab_icon_size    = "small-toolbar";
           const gchar *button_icon_size = "small-toolbar";
+          gint         pal_padding      = 4;
+          gint         tab_padding      = 1;
+          gint         sep_padding      = 1;
 
           switch (config->custom_icon_size)
             {
@@ -440,21 +443,33 @@ themes_apply_theme (Gimp          *gimp,
               tool_icon_size   = "small-toolbar";
               tab_icon_size    = "small-toolbar";
               button_icon_size = "small-toolbar";
+              pal_padding      = 1;
+              tab_padding      = 0;
+              sep_padding      = 1;
               break;
             case GIMP_ICON_SIZE_MEDIUM:
               tool_icon_size   = "large-toolbar";
               tab_icon_size    = "small-toolbar";
               button_icon_size = "small-toolbar";
+              pal_padding      = 4;
+              tab_padding      = 1;
+              sep_padding      = 1;
               break;
             case GIMP_ICON_SIZE_LARGE:
               tool_icon_size   = "dnd";
               tab_icon_size    = "large-toolbar";
               button_icon_size = "large-toolbar";
+              pal_padding      = 5;
+              tab_padding      = 5;
+              sep_padding      = 2;
               break;
             case GIMP_ICON_SIZE_HUGE:
               tool_icon_size   = "dialog";
               tab_icon_size    = "dnd";
               button_icon_size = "dnd";
+              pal_padding      = 5;
+              tab_padding      = 8;
+              sep_padding      = 4;
               break;
             }
 
@@ -465,10 +480,15 @@ themes_apply_theme (Gimp          *gimp,
             "\n"
             "* { -GimpDockbook-tab-icon-size: %s; }"
             "\n"
-            "* { -GimpEditor-button-icon-size: %s; }",
-            tool_icon_size,
-            tab_icon_size,
-            button_icon_size);
+            "* { -GimpEditor-button-icon-size: %s; }"
+            "\n"
+            "toolpalette button { padding: %dpx; }"
+            "\n"
+            "button, tab { padding: %dpx; }"
+            "\n"
+            "paned separator { padding: %dpx; }",
+            tool_icon_size, tab_icon_size, button_icon_size,
+            pal_padding, tab_padding, sep_padding);
         }
 
       if (! error && config->font_relative_size != 1.0)
