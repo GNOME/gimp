@@ -132,6 +132,28 @@ Graphical User Interface:
     to run any actions directly (without mapping shortcut key combinations as
     intermediate). This only works on Wayland for the time being (yet may work on
     more platforms in the future, depending on GTK evolution).
+  - Themes can now be proposed with up to 3 variants: dark, light and middle
+    gray, through gimp-dark.css, gimp-light.css and gimp-gray.css CSS files
+    respectively.
+  - As a consequence of the previous point, our Default and Gray themes are
+    merged as one with 3 possible variants.
+  - Our Color and Symbolic icon themes are merged as a single icon theme named
+    "Default".
+  - The "prefer-symbolic-icons" property which can be set in Preferences is only
+    used when the selected icon theme has both Color and Symbolic styles.
+    Otherwise the chosen icon theme style prevails. The presence of a style is
+    determined by the presence of the "gimp-wilber" icon (which becomes
+    therefore a de-facto mandatory icon in an icon theme) and/or its symbolic
+    variant .
+  - When "Override icon sizes" is checked, a few padding values are also
+    overriden by code in the loaded CSS.
+  - As a consequence of the previous point, we removed the "Compact" theme which
+    is now simply possible by overriding sizes to "Small" in Preferences (when
+    the theme is "Default", it will display the same as the former "Compact"
+    theme, though it will also work with any other theme).
+  - "Darker" theme is removed for lack of contributors actually caring for it.
+    It could be revived in the future as a "Contrast" theme with both a dark and
+    light variants at the very least.
 
 Tools:
 
@@ -511,6 +533,7 @@ Build:
     because of the fact too many people could not find GIMP after installation.
   - New .vscode/ config folder for Visual Studio Code settings to follow our
     coding style.
+  - 'gegl.exe' binary is now installed by the Windows installer.
 
 
 Overview of Changes from GIMP 2.99.14 to GIMP 2.99.16
