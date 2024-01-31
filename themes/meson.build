@@ -1,5 +1,4 @@
 subdir('Default')
-subdir('Darker')
 
 themes = [
   'System',
