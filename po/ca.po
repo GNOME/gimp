@@ -10,14 +10,14 @@
 # Quim Perez i Noguer <noguer@gmail.com>, 2008, 2009, 2011.
 # Albert F. <lakonfrariadelavila@gmail.com>, 2012, 2013.
 # Eulàlia Pagès i Morales <eulaliapages@gmail.com>, 2015-2017
-# Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2023
+# Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2024
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-01-25 17:58+0000\n"
-"PO-Revision-Date: 2024-01-22 18:06+0100\n"
+"PO-Revision-Date: 2024-02-01 18:06+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -6133,7 +6133,7 @@ msgstr "Desbloqueja la posició"
 
 #: app/actions/items-commands.c:276
 msgid "There are no selected items to fill."
-msgstr "No hi ha elements seleccionats per omplir."
+msgstr "No hi ha elements seleccionats per a omplir."
 
 #: app/actions/items-commands.c:313 app/tools/gimpvectortool.c:748
 msgid "There are no selected layers or channels to fill."
@@ -7359,7 +7359,7 @@ msgstr "Introdueix un nom per a la paleta fusionada"
 
 #: app/actions/palettes-commands.c:126
 msgid "There must be at least two palettes selected to merge."
-msgstr "Han d'haver-hi almenys dues paletes seleccionades a fusionar."
+msgstr "Ha d'haver-hi almenys dues paletes seleccionades a fusionar."
 
 #: app/actions/patterns-actions.c:43
 msgctxt "patterns-action"
@@ -10367,26 +10367,19 @@ msgid "High"
 msgstr "Alta"
 
 #: app/config/config-enums.c:403
-#, fuzzy
-#| msgctxt "layer-mode"
-#| msgid "LCh Color"
 msgctxt "theme-scheme"
 msgid "Light Colors"
-msgstr "Color LCh"
+msgstr "Colors clars"
 
 #: app/config/config-enums.c:404
-#, fuzzy
 msgctxt "theme-scheme"
 msgid "Middle Gray"
 msgstr "Gris mitjà"
 
 #: app/config/config-enums.c:405
-#, fuzzy
-#| msgctxt "view-padding-color"
-#| msgid "_Dark Check Color"
 msgctxt "theme-scheme"
 msgid "Dark Colors"
-msgstr "Color dels quadres _foscos"
+msgstr "Colors foscos"
 
 #: app/config/gimpconfig-file.c:83
 #, c-format
@@ -11178,7 +11171,6 @@ msgid "The name of the theme to use."
 msgstr "El nom del tema per a utilitzar."
 
 #: app/config/gimprc-blurbs.h:550
-#, fuzzy
 msgid "Chooses the color scheme variant of the theme."
 msgstr "Tria la variant de l'esquema de color del tema."
 
@@ -12608,19 +12600,16 @@ msgid "Select foreground"
 msgstr "Selecciona el color de primer pla"
 
 #: app/core/core-enums.c:1399
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add effect"
 msgstr "Afegeix un efecte"
 
 #: app/core/core-enums.c:1400
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove effect"
 msgstr "Suprimeix l'efecte"
 
 #: app/core/core-enums.c:1401
-#, fuzzy
 msgctxt "undo-type"
 msgid "Reorder effect"
 msgstr "Reordena l'efecte"
@@ -13593,12 +13582,10 @@ msgid "Render Stroke"
 msgstr "Renderitza el traç"
 
 #: app/core/gimpdrawable-filters.c:148
-#, fuzzy
 msgid "Rasterize filters"
 msgstr "Rasteritza els filtres"
 
 #: app/core/gimpdrawable-filters.c:157
-#, fuzzy
 msgid "Merge filter"
 msgstr "Fusiona el filtre"
 
@@ -13912,7 +13899,7 @@ msgstr ""
 "text a %s"
 
 #: app/core/gimpimage.c:2981
-#, fuzzy, c-format
+#, c-format
 msgid "Layer effects were added in %s"
 msgstr "Els efectes de capes s'han afegit a %s"
 
@@ -16453,7 +16440,7 @@ msgstr "Mostra la quadrícu_la"
 
 #: app/dialogs/preferences-dialog.c:1099
 msgid "Show _sample points"
-msgstr "_Ensenya els punts de mostra"
+msgstr "M_ostra els punts de mostra"
 
 #: app/dialogs/preferences-dialog.c:1108
 msgid "Show _menubar"
@@ -17030,10 +17017,8 @@ msgid "Select Theme"
 msgstr "Seleccioneu un tema"
 
 #: app/dialogs/preferences-dialog.c:2120
-#, fuzzy
-#| msgid "Use dark theme variant if available"
 msgid "Color scheme variant (if available)"
-msgstr "Useu alguna variant del tema fosc si està disponible"
+msgstr "Variant de l'esquema de color (si està disponible)"
 
 #: app/dialogs/preferences-dialog.c:2125
 msgid "_Override icon sizes set by the theme"
@@ -20450,7 +20435,7 @@ msgid "GIMP Startup"
 msgstr "Inici del GIMP"
 
 #: app/gui/themes.c:332
-#, c-format, fuzzy
+#, c-format
 msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css,"
 " gimp-light.css nor gimp.css."
@@ -20464,7 +20449,7 @@ msgid ""
 "Wrong shortcutsrc (%s) file format version: %d (expected: %d). We tried to "
 "load shortcuts as well as possible.\n"
 msgstr ""
-"Versió de format de fitxer incorrecta de shortcutsrc (%s): %d (esperat: %d)."
+"Versió incorrecta de format de fitxer de shortcutsrc (%s): %d (esperat: %d)."
 " S'han intentat carregar les dreceres tan bé com s'ha pogut.\n"
 
 #: app/paint/gimpairbrush.c:80 app/tools/gimpairbrushtool.c:69
@@ -20723,13 +20708,10 @@ msgid "Scatter brush as you paint"
 msgstr "Dispersa la pinzellada mentre es pinta"
 
 #: app/paint/gimppaintoptions.c:319
-#, fuzzy
 msgid "Expand Layers"
 msgstr "Expandeix les capes"
 
 #: app/paint/gimppaintoptions.c:320
-#, fuzzy
-#| msgid "Scatter brush as you paint"
 msgid "Expand active layer as you paint"
 msgstr "Expandeix la capa activa mentre es pinta"
 
@@ -20738,22 +20720,18 @@ msgid "Amount"
 msgstr "Quantitat"
 
 #: app/paint/gimppaintoptions.c:327
-#, fuzzy
 msgid "Amount of expansion"
 msgstr "Quantitat d'expansió"
 
 #: app/paint/gimppaintoptions.c:334
-#, fuzzy
 msgid "Fill layer with"
 msgstr "Omple una capa amb"
 
 #: app/paint/gimppaintoptions.c:341
-#, fuzzy
 msgid "Fill Mask With"
 msgstr "Omple una màscara amb"
 
 #: app/paint/gimppaintoptions.c:342
-#, fuzzy
 msgid "Fill layer mask with"
 msgstr "Omple una màscara de capa amb"
 
@@ -23559,7 +23537,6 @@ msgid "%s: switch horizontal and vertical"
 msgstr "%s: commuta entre horitzontal i vertical"
 
 #: app/tools/gimpfiltertool.c:1158
-#, fuzzy
 msgid "Add filter"
 msgstr "Afegeix un filtre"
 
@@ -23574,9 +23551,8 @@ msgid "Advanced Color Options"
 msgstr "Opcions avançades del color"
 
 #: app/tools/gimpfiltertool.c:1375
-#, fuzzy
 msgid "Editing filter..."
-msgstr "S'està editant el filtre..."
+msgstr "Edició del filtre..."
 
 #: app/tools/gimpfiltertool.c:1723 app/tools/gimpfiltertool-settings.c:71
 #, c-format
@@ -23798,12 +23774,12 @@ msgstr ""
 
 #: app/tools/gimpfuzzyselecttool.c:71
 msgid "Fu_zzy Select"
-msgstr "_Selecció Difusa"
+msgstr "_Selecció difusa"
 
 #: app/tools/gimpfuzzyselecttool.c:84
 msgctxt "command"
 msgid "Fuzzy Select"
-msgstr "Selecció Difusa"
+msgstr "Selecció difusa"
 
 #: app/tools/gimpgegltool.c:83 app/tools/gimpgegltool.c:297
 #: app/tools/gimpgegltool.c:299 app/tools/gimpoperationtool.c:131
@@ -24111,7 +24087,6 @@ msgstr "Sensibilitat"
 
 #: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:98
 #: app/tools/gimppaintoptions-gui.c:530
-#, fuzzy
 msgid "Fill Layer Mask With"
 msgstr "Omple una màscara de capa amb"
 
@@ -26483,7 +26458,7 @@ msgstr "Cap"
 #: app/widgets/gimpcompressioncombobox.c:114
 msgctxt "compression"
 msgid "Best performance"
-msgstr "Millor actuació"
+msgstr "Millor rendiment"
 
 #: app/widgets/gimpcompressioncombobox.c:120
 msgctxt "compression"
@@ -26493,7 +26468,7 @@ msgstr "Balanç"
 #: app/widgets/gimpcompressioncombobox.c:126
 msgctxt "compression"
 msgid "Best compression"
-msgstr "La millor compressió"
+msgstr "Millor compressió"
 
 #: app/widgets/gimpcontainerpopup.c:316
 msgid "Smaller Previews"
@@ -26504,7 +26479,7 @@ msgid "Larger Previews"
 msgstr "Previsualitzacions més grans"
 
 #: app/widgets/gimpcontainertreeview.c:1058
-#, fuzzy, c-format
+#, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "%d element seleccionat"
@@ -27413,7 +27388,7 @@ msgstr ""
 "plataforma"
 
 #: app/widgets/gimpdeviceinfoeditor.c:900
-#, fuzzy, c-format
+#, c-format
 msgid "Button %d"
 msgstr "Botó %d"
 
@@ -27950,12 +27925,10 @@ msgstr ""
 "Defineix que l'element tingui exclusivament el bloqueig de visibilitat"
 
 #: app/widgets/gimpitemtreeview.c:712
-#, fuzzy
 msgid "Toggle the visibility of all filters."
 msgstr "Commuta la visibilitat de tots els filtres."
 
 #: app/widgets/gimpitemtreeview.c:726
-#, fuzzy
 msgid "Edit the selected filter."
 msgstr "Edita el filtre seleccionat."
 
@@ -27980,22 +27953,18 @@ msgid "Remove the selected filter."
 msgstr "Suprimeix el filtre seleccionat"
 
 #: app/widgets/gimpitemtreeview.c:789
-#, fuzzy
 msgid "Layer Effects"
 msgstr "Efectes de capa"
 
 #: app/widgets/gimpitemtreeview.c:2453 app/widgets/gimpitemtreeview.c:2498
-#, fuzzy
 msgid "Reorder filter"
 msgstr "Reordena el filtre"
 
 #: app/widgets/gimpitemtreeview.c:2543
-#, fuzzy
 msgid "Effects from active tools can not be merged."
 msgstr "Els efectes de les eines actives no es poden fusionar."
 
 #: app/widgets/gimpitemtreeview.c:2584
-#, fuzzy
 msgid "Remove filter"
 msgstr "Suprimeix el filtre"
 
