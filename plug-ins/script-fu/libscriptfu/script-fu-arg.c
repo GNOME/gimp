@@ -91,6 +91,7 @@ void
 script_fu_arg_free (SFArg *arg)
 {
   g_free (arg->label);
+  g_free (arg->property_name);
 
   switch (arg->type)
     {
@@ -385,6 +386,10 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       pspec_set_default_file (pspec, arg->default_value.sfa_file.filename);
       /* FUTURE: Default not now appear in PDB browser, but appears in widgets? */
       break;
+
+      /* Not necessary to have a more specific pspec:
+       * pspec = gimp_param_spec_config_path (...GIMP_TYPE_CONFIG_PATH...)
+       */
 
     case SF_ENUM:
       /* history is the last used value AND the default. */
@@ -695,6 +700,8 @@ script_fu_arg_reset_name_generator (void)
  * The returned string is owned by the generator, a constant.
  * The caller need not copy it,
  * but usually does by creating a GParamSpec.
+ *
+ * As a side effect, a copy of the string is kept in arg->property_name.
  */
 void
 script_fu_arg_generate_name_and_nick (SFArg        *arg,
@@ -802,6 +809,9 @@ script_fu_arg_generate_name_and_nick (SFArg        *arg,
     }
 
   arg_count[arg->type]++;
+
+  /* Side effect: remember the generated name. */
+  arg->property_name = g_strdup (numbered_name);
 
   *returned_name = numbered_name;
 

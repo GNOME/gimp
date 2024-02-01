@@ -27,6 +27,7 @@
 #include "script-fu-command.h"
 
 #include "script-fu-dialog.h"
+#include "script-fu-widgets-custom.h"
 
 
 /* An informal class that shows a dialog for a script then runs the script.
@@ -159,13 +160,11 @@ script_fu_dialog_run (GimpProcedure        *procedure,
                                       script_fu_script_get_title (script));
   /* dialog has no widgets except standard buttons. */
 
-  /* It is possible to create custom widget where the provided widget is not adequate.
-   * Then gimp_procedure_dialog_fill_list will create the rest.
-   * For now, the provided widgets should be adequate.
-   */
+  /* Create custom widget where the stock widget is not adequate. */
+  script_fu_widgets_custom_add (dialog, script);
 
   /* NULL means create widgets for all properties of the procedure
-   * that we have not already created widgets for.
+   * that we have not already created custom widgets for.
    */
   gimp_procedure_dialog_fill_list (dialog, NULL);
 

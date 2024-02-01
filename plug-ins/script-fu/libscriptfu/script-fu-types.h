@@ -73,7 +73,8 @@ typedef union
 typedef struct
 {
   SFArgType   type;
-  gchar      *label;
+  gchar      *label;         /* label on widget in dialog. Not unique. */
+  gchar      *property_name; /* name of property of Procedure. Unique. */
   SFArgValue  default_value;
   SFArgValue  value;
 } SFArg;

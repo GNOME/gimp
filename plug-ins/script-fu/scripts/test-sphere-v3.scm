@@ -30,7 +30,7 @@
                                size
                                unused-palette
                                unused-filename
-                               unused-orientation
+                               orientation
                                unused-interpolation
                                unused-dirname
                                unused-image
@@ -122,6 +122,9 @@
                                                        0 TRUE
                                                        size
                                                        font)))
+
+    (if (= orientation 1)
+      (gimp-image-rotate img ROTATE-DEGREES90))
 
     (gimp-image-undo-enable img)
     (gimp-display-new img)
