@@ -27,7 +27,7 @@ Core:
     external data. This will be used to serialize data objects hence easily
     retrieve the proper data even when some data may have duplicate names.
   - New palette import support: SwatchBooker.
-  - Artifically set PANGOCAIRO_BACKEND=fc when running on Windows to use the
+  - Artificially set PANGOCAIRO_BACKEND=fc when running on Windows to use the
     fontconfig backend, which enables anti-aliasing on Windows, unlike the
     default pangocairo backend.
   - XCF:
@@ -60,7 +60,7 @@ Core:
     * Now possible to delete colors if unused.
   - Updates for floating data's actions:
     * New actions "edit-paste-float" and "edit-paste-float-in-place" for pasting
-      the contents of the clipboard as floating data with default positionning
+      the contents of the clipboard as floating data with default positioning
       algorithm or in-place respectively;
     * renames "select-float" to "select-cut-float" which does a cut and paste as
       float in one action;
@@ -123,10 +123,10 @@ Graphical User Interface:
     current theme.
   - The quit dialog now adjusts its size relatively to monitor height.
   - The heuristic to set a cursor when single or multi-selecting items in a tree
-    view got reviewed in order to avoid unecessary scroll. As a general rule,
-    the cursor is always set to one of the selected element, ideally the last
+    view got reviewed in order to avoid unnecessary scroll. As a general rule,
+    the cursor is always set to one of the selected elements, ideally the last
     clicked element unless it is not selected (e.g. removed with Ctrl-click),
-    then a closest selected element is chosen to avoid unecessarily scroll of
+    then a closest selected element is chosen to avoid unnecessarily scroll of
     the item list.
   - Pad buttons can now be configured in the "Input Devices" configuration dialog
     to run any actions directly (without mapping shortcut key combinations as
@@ -144,9 +144,9 @@ Graphical User Interface:
     Otherwise the chosen icon theme style prevails. The presence of a style is
     determined by the presence of the "gimp-wilber" icon (which becomes
     therefore a de-facto mandatory icon in an icon theme) and/or its symbolic
-    variant .
+    variant.
   - When "Override icon sizes" is checked, a few padding values are also
-    overriden by code in the loaded CSS.
+    overridden by code in the loaded CSS.
   - As a consequence of the previous point, we removed the "Compact" theme which
     is now simply possible by overriding sizes to "Small" in Preferences (when
     the theme is "Default", it will display the same as the former "Compact"
@@ -359,7 +359,7 @@ API:
         2. `label_id` argument can be a string property to sync to, or a new
            widget ID to create, using `text` as initialization contents.
       + gimp_label_spin_set_increments(): made more generic and robust to handle
-        integer spin or modifyable min/max.
+        integer spin or modifiable min/max.
       + gimp_param_spec_get_desc():
         - Also handles new GimpChoice arguments by listing all valid string
           values for a given argument.
