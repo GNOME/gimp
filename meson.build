@@ -1152,7 +1152,7 @@ if get_option('lua').allowed()
   foreach lua_bin : [ 'luajit', 'lua5.1', 'lua5.2', 'lua5.3' ]
     lua = find_program(lua_bin, required: false)
 
-    if lua.found()
+    if lua.found() and meson.can_run_host_binaries()
       have_lua_lgi = run_command(lua, '-e',
       '''
       local lgi = require 'lgi'
@@ -1169,7 +1169,8 @@ if get_option('lua').allowed()
   have_lua = get_option('lua').enabled() or have_lua_lgi
   if have_lua and not have_lua_lgi
     lua_warning = '''
-      Neither Luajit nor Lua, with lua-lgi support, was found.
+      Neither Luajit nor Lua, with lua-lgi support, was found. Or you are
+      cross-compiling so we couldn't test lua-lgi support.
       Lua plug-ins will be installed anyway but you should make sure that
       luajit or lua and that LGI are available at installation, otherwise
       installed plug-ins won't be usable.
