@@ -46,6 +46,7 @@ struct _GimpSourceOptions
 
   GimpSourceAlignMode  align_mode;
   gboolean             sample_merged;
+  gboolean             include_filters;
 };
 
 struct _GimpSourceOptionsClass

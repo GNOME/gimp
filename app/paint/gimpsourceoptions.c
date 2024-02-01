@@ -44,7 +44,8 @@ enum
   PROP_SRC_X,
   PROP_SRC_Y,
   PROP_ALIGN_MODE,
-  PROP_SAMPLE_MERGED
+  PROP_SAMPLE_MERGED,
+  PROP_INCLUDE_FILTERS
 };
 
 
@@ -111,6 +112,14 @@ gimp_source_options_class_init (GimpSourceOptionsClass *klass)
                             NULL,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INCLUDE_FILTERS,
+                            "include-filters",
+                            _("Include filters"),
+                            _("If checked, the source will include "
+                              "any active non-destructive filters."),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -156,6 +165,9 @@ gimp_source_options_set_property (GObject      *object,
     case PROP_SAMPLE_MERGED:
       options->sample_merged = g_value_get_boolean (value);
       break;
+    case PROP_INCLUDE_FILTERS:
+      options->include_filters = g_value_get_boolean (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -186,6 +198,9 @@ gimp_source_options_get_property (GObject    *object,
       break;
     case PROP_SAMPLE_MERGED:
       g_value_set_boolean (value, options->sample_merged);
+      break;
+    case PROP_INCLUDE_FILTERS:
+      g_value_set_boolean (value, options->include_filters);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

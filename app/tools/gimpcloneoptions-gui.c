@@ -231,6 +231,7 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   GtkWidget *label;
   GtkWidget *combo;
   GtkWidget *source_vbox;
+  GtkWidget *sample_merged_vbox;
   GtkWidget *button;
   GtkWidget *hbox;
   gchar     *str;
@@ -251,9 +252,26 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), source_vbox);
   gtk_widget_show (source_vbox);
 
+  frame = gimp_frame_new (_("Sample merged"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (vbox), frame, 3);
+  gtk_widget_set_visible (frame, TRUE);
+
+  sample_merged_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_container_add (GTK_CONTAINER (frame), sample_merged_vbox);
+  gtk_widget_set_visible (sample_merged_vbox, TRUE);
+
   button = gimp_prop_check_button_new (config, "sample-merged", NULL);
   g_object_set_data (G_OBJECT (tool_options), "sample-merged-checkbox", button);
-  gtk_box_pack_start (GTK_BOX (source_vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (sample_merged_vbox), button, FALSE, FALSE, 0);
+
+  button = gimp_prop_check_button_new (config, "include-filters", NULL);
+  gtk_box_pack_start (GTK_BOX (sample_merged_vbox), button, FALSE, FALSE, 0);
+
+  g_object_bind_property (G_OBJECT (config),  "sample-merged",
+                          G_OBJECT (button), "sensitive",
+                          G_BINDING_SYNC_CREATE |
+                          G_BINDING_INVERT_BOOLEAN);
 
   g_object_bind_property_full (config, "clone-type",
                                button, "visible",
@@ -301,7 +319,7 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Alignment"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
-  gtk_box_reorder_child (GTK_BOX (vbox), combo, 3);
+  gtk_box_reorder_child (GTK_BOX (vbox), combo, 4);
 
   /* A few options which can trigger a change in the source label. */
   g_signal_connect (config, "notify::src-drawables",
