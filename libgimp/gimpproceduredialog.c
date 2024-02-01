@@ -1490,7 +1490,7 @@ gimp_procedure_dialog_get_file_chooser (GimpProcedureDialog  *dialog,
     }
 
   g_return_val_if_fail (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec) ||
-                        (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type != G_TYPE_FILE),
+                          (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == G_TYPE_FILE),
                         NULL);
 
   /* First check if it already exists. */
