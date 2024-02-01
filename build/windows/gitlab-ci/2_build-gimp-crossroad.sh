@@ -1,3 +1,5 @@
+set -e
+
 if [[ "x$CROSSROAD_PLATFORM" = "xw64" ]]; then
     export ARTIFACTS_SUFFIX="-x64"
     export MESON_OPTIONS=""
