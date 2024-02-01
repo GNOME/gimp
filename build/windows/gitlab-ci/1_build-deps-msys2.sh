@@ -52,7 +52,7 @@ export XDG_DATA_DIRS="${GIMP_PREFIX}/share:${MSYSTEM_PREFIX}/share/"
 
 clone_or_pull() {
   if [ ! -d "_${1}" ]; then
-    git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/${1}.git _${1}
+    git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/${1}.git _${1} || exit 1
   else
     cd _${1} && git pull && cd ..
   fi
@@ -67,13 +67,12 @@ configure_or_build()
   {
     if [ ! -f "_${1}/_build/build.ninja" ]; then
       mkdir -p _${1}/_build${ARTIFACTS_SUFFIX} && cd _${1}/_build${ARTIFACTS_SUFFIX}
-      meson setup .. -Dprefix="${GIMP_PREFIX}" \
-                     $2
-      ninja && ninja install
+      (meson setup .. -Dprefix="${GIMP_PREFIX}" $2 && \
+       ninja && ninja install) || exit 1
       cd ../..
     else
       cd _${1}/_build${ARTIFACTS_SUFFIX}
-      ninja && ninja install
+      (ninja && ninja install) || exit 1
       cd ../..
     fi
   }
