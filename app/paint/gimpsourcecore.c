@@ -559,11 +559,16 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
   GimpSourceOptions *options    = GIMP_SOURCE_OPTIONS (paint_options);
   GimpImage         *image      = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpImage         *src_image  = gimp_pickable_get_image (src_pickable);
-  GeglBuffer        *src_buffer = gimp_pickable_get_buffer (src_pickable);
+  GeglBuffer        *src_buffer = NULL;
   GeglBuffer        *dest_buffer;
   gboolean           sample_merged;
   gint               x, y;
   gint               width, height;
+
+  if (options->include_filters)
+    src_buffer = gimp_pickable_get_buffer_with_effects (src_pickable);
+  else
+    src_buffer = gimp_pickable_get_buffer (src_pickable);
 
   /* As a special case, we bypass sample merged value when we request
    * each drawable to be its own source.
