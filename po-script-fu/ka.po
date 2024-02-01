@@ -1,14 +1,14 @@
-# Georgian translation for gimp.
-# Copyright (C) 2023 gimp's COPYRIGHT HOLDER
+# Georgian translation for gimp-script-fu.
+# Copyright (C) 2024 gimp-script-fu's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
-# Ekaterine Papava <papava.e@gtu.ge>, 2023.
+# Ekaterine Papava <papava.e@gtu.ge>, 2023-2024.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
+"Project-Id-Version: gimp-script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-19 11:34+0000\n"
-"PO-Revision-Date: 2023-12-20 04:44+0100\n"
+"POT-Creation-Date: 2024-01-29 14:25+0000\n"
+"PO-Revision-Date: 2024-02-01 03:22+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -118,7 +118,7 @@ msgid "Save Script-Fu Console Output"
 msgstr ""
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:888
+#: plug-ins/script-fu/server/script-fu-server.c:878
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
 msgid "_Cancel"
 msgstr "გაუქმება"
@@ -144,27 +144,27 @@ msgstr ""
 msgid "Scripting GIMP in the Scheme language"
 msgstr ""
 
-#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/server/script-fu-server.c:874
 msgid "Script-Fu Server Options"
 msgstr ""
 
-#: plug-ins/script-fu/server/script-fu-server.c:889
+#: plug-ins/script-fu/server/script-fu-server.c:879
 msgid "_Start Server"
 msgstr "სერვერის _გაშვება"
 
-#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/server/script-fu-server.c:912
 msgid "Listen on IP:"
 msgstr "მოსმენა IP-ზე:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:929
+#: plug-ins/script-fu/server/script-fu-server.c:919
 msgid "Server port:"
 msgstr "სერვერის პორტი:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:935
+#: plug-ins/script-fu/server/script-fu-server.c:925
 msgid "Server logfile:"
 msgstr "სერვერის ჟურნალის ფაილი:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:948
+#: plug-ins/script-fu/server/script-fu-server.c:938
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -225,33 +225,29 @@ msgstr ""
 msgid "Error while loading %s:"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:76
+#: plug-ins/script-fu/scripts/add-bevel.scm:75
 msgid "Bumpmap"
 msgstr "რელიეფური"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:189
+#: plug-ins/script-fu/scripts/add-bevel.scm:188
 msgid "Add B_evel..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:190
+#: plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add a beveled border to an image"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:197
-msgid "Thickness"
-msgstr "სისქე"
+#. v3 >>> additional argument
+#: plug-ins/script-fu/scripts/add-bevel.scm:195
+msgid "_Thickness"
+msgstr "_სისქე"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:198
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
-#: plug-ins/script-fu/scripts/old-photo.scm:104
-#: plug-ins/script-fu/scripts/round-corners.scm:145
-#: plug-ins/script-fu/scripts/slide.scm:262
-#: plug-ins/script-fu/scripts/spinning-globe.scm:107
-msgid "Work on copy"
+#: plug-ins/script-fu/scripts/add-bevel.scm:196
+msgid "_Work on copy"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:199
-msgid "Keep bump layer"
+#: plug-ins/script-fu/scripts/add-bevel.scm:197
+msgid "_Keep bump layer"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/addborder.scm:123
@@ -556,7 +552,7 @@ msgid "Darken only"
 msgstr "მხოლოდ გამუქება"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:70
-msgid "_Difference Clouds..."
+msgid "_Difference Clouds"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:71
@@ -700,6 +696,14 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:162
 msgid "Shadow weight (%)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
+#: plug-ins/script-fu/scripts/old-photo.scm:104
+#: plug-ins/script-fu/scripts/round-corners.scm:145
+#: plug-ins/script-fu/scripts/slide.scm:262
+#: plug-ins/script-fu/scripts/spinning-globe.scm:111
+msgid "Work on copy"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:164
@@ -1269,27 +1273,27 @@ msgstr "ფონტი"
 msgid "Font color"
 msgstr "ფონტის ფერი"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:95
+#: plug-ins/script-fu/scripts/spinning-globe.scm:99
 msgid "_Spinning Globe..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:96
+#: plug-ins/script-fu/scripts/spinning-globe.scm:100
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:103
+#: plug-ins/script-fu/scripts/spinning-globe.scm:107
 msgid "Frames"
 msgstr "კადრები"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:104
+#: plug-ins/script-fu/scripts/spinning-globe.scm:108
 msgid "Turn from left to right"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:105
+#: plug-ins/script-fu/scripts/spinning-globe.scm:109
 msgid "Transparent background"
 msgstr "გამჭვირვალე ფონი"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:106
+#: plug-ins/script-fu/scripts/spinning-globe.scm:110
 msgid "Index to n colors (0 = remain RGB)"
 msgstr ""
 
