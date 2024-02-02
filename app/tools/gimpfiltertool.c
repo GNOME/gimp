@@ -392,7 +392,20 @@ gimp_filter_tool_initialize (GimpTool     *tool,
 
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
                                            "preview", NULL);
-      gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+
+      /* Only show merge filter option if we're not editing an NDE filter */
+      if (GIMP_IS_LAYER (drawable) && ! filter_tool->existing_filter)
+        {
+          gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+
+          toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
+                                               "merge-filter", NULL);
+          gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+        }
+      else
+        {
+          gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+        }
 
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
                                            "preview-split", NULL);
@@ -459,10 +472,11 @@ gimp_filter_tool_control (GimpTool       *tool,
                           GimpToolAction  action,
                           GimpDisplay    *display)
 {
-  GimpFilterTool *filter_tool     = GIMP_FILTER_TOOL (tool);
-  GimpDrawable   *drawable        = NULL;
-  gboolean        non_destructive = TRUE;
-  gchar          *operation_name  = NULL;
+  GimpFilterTool    *filter_tool     = GIMP_FILTER_TOOL (tool);
+  GimpFilterOptions *options         = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+  GimpDrawable      *drawable        = NULL;
+  gboolean           non_destructive = TRUE;
+  gchar             *operation_name  = NULL;
 
   switch (action)
     {
@@ -480,7 +494,8 @@ gimp_filter_tool_control (GimpTool       *tool,
 
       /* TODO: Expand non-destructive editing to other drawables
        * besides layers */
-      if (! GIMP_IS_LAYER (drawable))
+      if (! GIMP_IS_LAYER (drawable) ||
+          (! filter_tool->existing_filter && options->merge_filter))
         non_destructive = FALSE;
 
       if (filter_tool->operation)
@@ -787,6 +802,28 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
 
       if (filter_options->preview_split)
         gimp_filter_tool_move_guide (filter_tool);
+    }
+  else if (! strcmp (pspec->name, "merge-filter") &&
+           filter_tool->filter)
+    {
+      GimpDrawable  *drawable = tool->drawables->data;
+      GimpContainer *filters  = gimp_drawable_get_filters (drawable);
+      gint           count    = gimp_container_get_n_children (filters);
+
+      if (count > 1)
+        {
+          if (filter_options->merge_filter)
+            gimp_container_reorder (filters, GIMP_OBJECT (filter_tool->filter),
+                                    count - 1);
+          else
+            gimp_container_reorder (filters, GIMP_OBJECT (filter_tool->filter),
+                                    0);
+
+          gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
+          gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+          gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
+          gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+        }
     }
   else if (! strcmp (pspec->name, "controller") &&
            filter_tool->widget)
@@ -1127,6 +1164,7 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
 
   if (filter_tool->filter)
     {
+      GimpDrawable      *drawable;
       GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (tool);
 
       if (! options->preview)
@@ -1162,12 +1200,17 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
                                            drawable, filter_tool->filter);
         }
 
+      drawable = gimp_drawable_filter_get_drawable (filter_tool->filter);
+
       g_clear_object (&filter_tool->filter);
 
       gimp_tool_control_pop_preserve (tool->control);
 
       gimp_filter_tool_remove_guide (filter_tool);
 
+      gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
+      gimp_image_flush (gimp_display_get_image (tool->display));
+      gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
       gimp_image_flush (gimp_display_get_image (tool->display));
 
       if (filter_tool->config && filter_tool->has_settings)

@@ -2915,16 +2915,19 @@ gimp_item_tree_view_filters_changed (GimpItem         *item,
   filters = gimp_drawable_get_filters (GIMP_DRAWABLE (item));
   /* Since floating selections are also stored in the filter stack,
    * we need to verify what's in there to get the correct count */
-  for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
-       filter_list = g_list_previous (filter_list))
+  if (filters)
     {
-      if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
-        n_filters++;
-      else
-        fs_disabled = TRUE;
+      for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
+           filter_list = g_list_previous (filter_list))
+        {
+          if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+            n_filters++;
+          else
+            fs_disabled = TRUE;
+        }
     }
 
-  if (fs_disabled)
+  if (n_filters == 0 || fs_disabled)
     view->priv->effects_filter = NULL;
 
   if (iter)
