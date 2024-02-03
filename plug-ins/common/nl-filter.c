@@ -1112,12 +1112,6 @@ nlfilter_dialog (GimpProcedure *procedure,
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  preview = gimp_drawable_preview_new_from_drawable (drawable);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      preview, TRUE, TRUE, 0);
-  gtk_widget_set_margin_bottom (preview, 12);
-  gtk_widget_show (preview);
-
   store = gimp_int_store_new (_("Alpha trimmed mean"), 0,
                               _("Optimal estimation"), 1,
                               _("Edge enhancement"),   2,
@@ -1138,6 +1132,10 @@ nlfilter_dialog (GimpProcedure *procedure,
                                   "nlfilter-vbox", "filter", "alpha",
                                   "radius", NULL);
 
+  preview = gimp_procedure_dialog_get_drawable_preview (GIMP_PROCEDURE_DIALOG (dialog),
+                                                        "preview", drawable);
+  gtk_widget_set_margin_bottom (preview, 12);
+
   g_object_set_data (config, "drawable", drawable);
 
   g_signal_connect (preview, "invalidated",
@@ -1149,7 +1147,7 @@ nlfilter_dialog (GimpProcedure *procedure,
                             preview);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "nlfilter-vbox", NULL);
+                              "preview", "nlfilter-vbox", NULL);
 
   gtk_widget_show (dialog);
 

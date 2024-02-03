@@ -371,11 +371,6 @@ sparkle_dialog (GimpProcedure *procedure,
   gtk_container_set_border_width (
     GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), 12);
 
-  preview = gimp_drawable_preview_new_from_drawable (drawable);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      preview, TRUE, TRUE, 0);
-  gtk_widget_show (preview);
-
   gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
                                          "lum-threshold", 1.0);
 
@@ -437,6 +432,8 @@ sparkle_dialog (GimpProcedure *procedure,
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_widget_set_margin_bottom (hbox, 12);
 
+  preview = gimp_procedure_dialog_get_drawable_preview (GIMP_PROCEDURE_DIALOG (dialog),
+                                                        "preview", drawable);
   g_object_set_data (config, "drawable", drawable);
 
   g_signal_connect (preview, "invalidated",
@@ -448,6 +445,7 @@ sparkle_dialog (GimpProcedure *procedure,
                             preview);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "preview",
                               "lum-threshold", "flare-inten", "spike-len",
                               "spike-points", "spike-angle", "density",
                               "transparency", "random-hue",

@@ -467,10 +467,8 @@ destripe_dialog (GimpProcedure *procedure,
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  preview = gimp_drawable_preview_new_from_drawable (drawable);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      preview, TRUE, TRUE, 0);
-  gtk_widget_show (preview);
+  preview = gimp_procedure_dialog_get_drawable_preview (GIMP_PROCEDURE_DIALOG (dialog),
+                                                        "preview", drawable);
 
   scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
                                                  "avg-width", 1.0);
@@ -492,7 +490,7 @@ destripe_dialog (GimpProcedure *procedure,
                             preview);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "avg-width", "create-histogram",
+                              "preview", "avg-width", "create-histogram",
                               NULL);
 
   gtk_widget_show (dialog);

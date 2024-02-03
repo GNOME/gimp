@@ -483,11 +483,6 @@ checkerboard_dialog (GimpProcedure *procedure,
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  preview = gimp_drawable_preview_new_from_drawable (drawable);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      preview, TRUE, TRUE, 0);
-  gtk_widget_show (preview);
-
   /*  Get the image resolution and unit  */
   gimp_image_get_resolution (image, &xres, &yres);
 
@@ -515,6 +510,8 @@ checkerboard_dialog (GimpProcedure *procedure,
                                              GTK_TYPE_CHECK_BUTTON);
   gtk_widget_set_margin_bottom (toggle, 12);
 
+  preview = gimp_procedure_dialog_get_drawable_preview (GIMP_PROCEDURE_DIALOG (dialog),
+                                                        "preview", drawable);
   g_object_set_data (config, "drawable", drawable);
 
   g_signal_connect (preview, "invalidated",
@@ -526,7 +523,7 @@ checkerboard_dialog (GimpProcedure *procedure,
                             preview);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "check-size", "psychobily",
+                              "preview", "check-size", "psychobily",
                               NULL);
 
   gtk_widget_show (dialog);
