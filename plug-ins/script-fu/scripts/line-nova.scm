@@ -16,6 +16,7 @@
         (2pi (* 2 *pi*))
         (rad/deg (/ 2pi 360))
         (variation/2 (/ variation 2))
+        (drw (aref (cadr (gimp-image-get-selected-drawables img)) 0))
         (drw-width (car (gimp-drawable-get-width drw)))
         (drw-height (car (gimp-drawable-get-height drw)))
         (drw-offsets (gimp-drawable-get-offsets drw))
@@ -102,19 +103,18 @@
   )
 )
 
-(script-fu-register "script-fu-line-nova"
+(script-fu-register-filter "script-fu-line-nova"
   _"Line _Nova..."
   _"Fill a layer with rays emanating outward from its center using the foreground color"
   "Shuji Narazaki <narazaki@gimp.org>"
   "Shuji Narazaki"
   "1997,1998"
   "*"
-  SF-IMAGE       "Image"               0
-  SF-DRAWABLE    "Drawable"            0
-  SF-ADJUSTMENT _"Number of lines"     '(200 40 1000 1 1 0 1)
-  SF-ADJUSTMENT _"Sharpness (degrees)" '(1.0 0.0 10.0 0.1 1 1 1)
-  SF-ADJUSTMENT _"Offset radius"       '(100 0 2000 1 1 0 1)
-  SF-ADJUSTMENT _"Randomness"          '(30 1 2000 1 1 0 1)
+  SF-ONE-DRAWABLE
+  SF-ADJUSTMENT _"_Number of lines"     '(200 40 1000 1 1 0 1)
+  SF-ADJUSTMENT _"S_harpness (degrees)" '(1.0 0.0 10.0 0.1 1 1 1)
+  SF-ADJUSTMENT _"O_ffset radius"       '(100 0 2000 1 1 0 1)
+  SF-ADJUSTMENT _"Ran_domness"          '(30 1 2000 1 1 0 1)
 )
 
 (script-fu-menu-register "script-fu-line-nova"

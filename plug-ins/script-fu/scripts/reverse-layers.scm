@@ -14,7 +14,7 @@
 ; You should have received a copy of the GNU General Public License
 ; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-(define (script-fu-reverse-layers img drawable)
+(define (script-fu-reverse-layers img drawables)
   (let* (
         (layers (gimp-image-get-layers img))
         (num-layers (car layers))
@@ -38,15 +38,14 @@
   )
 )
 
-(script-fu-register "script-fu-reverse-layers"
+(script-fu-register-filter "script-fu-reverse-layers"
   _"Reverse Layer _Order"
   _"Reverse the order of layers in the image"
   "Akkana Peck"
   "Akkana Peck"
   "August 2006"
   "*"
-  SF-IMAGE    "Image"    0
-  SF-DRAWABLE "Drawable" 0
+  SF-ONE-OR-MORE-DRAWABLE
 )
 
 (script-fu-menu-register "script-fu-reverse-layers"

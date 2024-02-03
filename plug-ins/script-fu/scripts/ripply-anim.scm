@@ -7,8 +7,9 @@
 ; of saving animations (i.e. the GIF plugin).
 ;
 
-(define (script-fu-ripply-anim image drawable displacement num-frames edge-type)
-  (let* ((width (car (gimp-drawable-get-width drawable)))
+(define (script-fu-ripply-anim image drawables displacement num-frames edge-type)
+  (let* ((drawable (aref (cadr (gimp-image-get-selected-drawables image)) 0))
+         (width (car (gimp-drawable-get-width drawable)))
          (height (car (gimp-drawable-get-height drawable)))
          (work-image (car (gimp-image-new width
                                           height
@@ -65,18 +66,17 @@
 
     (gimp-context-pop)))
 
-(script-fu-register "script-fu-ripply-anim"
+(script-fu-register-filter "script-fu-ripply-anim"
   _"_Rippling..."
   _"Create a multi-layer image by adding a ripple effect to the current layer"
   "Adam D. Moss (adam@foxbox.org), Saul Goode"
   "Adam D. Moss, Saul Goode"
   "1997, 2015"
   "RGB* GRAY*"
-  SF-IMAGE      "Image to animage"    0
-  SF-DRAWABLE   "Drawable to animate" 0
-  SF-ADJUSTMENT _"Rippling strength"  '(3 0 256 1 10 1 0)
-  SF-ADJUSTMENT _"Number of frames"   '(15 0 256 1 10 0 1)
-  SF-OPTION     _"Edge behavior"      '(_"Wrap" _"Smear" _"Black")
+  SF-ONE-DRAWABLE
+  SF-ADJUSTMENT _"Ri_ppling strength"  '(3 0 256 1 10 1 0)
+  SF-ADJUSTMENT _"_Number of frames"   '(15 0 256 1 10 0 1)
+  SF-OPTION     _"Edge _behavior"      '(_"Wrap" _"Smear" _"Black")
   )
 
 (script-fu-menu-register "script-fu-ripply-anim"
