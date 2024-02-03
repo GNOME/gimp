@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-29 14:25+0000\n"
-"PO-Revision-Date: 2024-01-30 22:39+0200\n"
+"POT-Creation-Date: 2024-02-03 18:39+0000\n"
+"PO-Revision-Date: 2024-02-03 22:19+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -245,17 +245,14 @@ msgstr "Розмістити зображення у піднесеній рам
 
 #. v3 >>> additional argument
 #: plug-ins/script-fu/scripts/add-bevel.scm:195
-#| msgid "Thickness"
 msgid "_Thickness"
 msgstr "_Товщина"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:196
-#| msgid "Work on copy"
 msgid "_Work on copy"
 msgstr "П_рацювати з копією"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:197
-#| msgid "Keep bump layer"
 msgid "_Keep bump layer"
 msgstr "_Окремий шар для рельєфу"
 
@@ -931,11 +928,11 @@ msgstr "Градієнт"
 msgid "Use current gradient"
 msgstr "Використовувати поточний градієнт"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:106
+#: plug-ins/script-fu/scripts/line-nova.scm:107
 msgid "Line _Nova..."
 msgstr "Лінійна _наднова…"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:107
+#: plug-ins/script-fu/scripts/line-nova.scm:108
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
@@ -944,20 +941,24 @@ msgstr ""
 "переднього плану"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:114
-msgid "Number of lines"
-msgstr "Кількість ліній"
+#| msgid "Number of lines"
+msgid "_Number of lines"
+msgstr "_Кількість ліній"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:115
-msgid "Sharpness (degrees)"
-msgstr "Різкість (в градусах)"
+#| msgid "Sharpness (degrees)"
+msgid "S_harpness (degrees)"
+msgstr "_Різкість (в градусах)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:116
-msgid "Offset radius"
-msgstr "Радіус зсуву"
+#| msgid "Offset radius"
+msgid "O_ffset radius"
+msgstr "Раді_ус зсуву"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:117
-msgid "Randomness"
-msgstr "Випадковість"
+#| msgid "Randomness"
+msgid "Ran_domness"
+msgstr "Вип_адковість"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:63
 msgid "_Rectangular..."
@@ -1191,28 +1192,30 @@ msgstr "Зво_ротний порядок шарів"
 msgid "Reverse the order of layers in the image"
 msgstr "Встановити зворотний порядок шарів у зображені"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:69
+#: plug-ins/script-fu/scripts/ripply-anim.scm:70
 msgid "_Rippling..."
 msgstr "_Брижі…"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:70
+#: plug-ins/script-fu/scripts/ripply-anim.scm:71
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
 "Створити багатошарове зображення, додаючи ефект брижів до поточного шару"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:77
-msgid "Rippling strength"
-msgstr "Сила брижів"
+#| msgid "Rippling strength"
+msgid "Ri_ppling strength"
+msgstr "Сила бри_жів"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:78
-#: plug-ins/script-fu/scripts/waves-anim.scm:105
-msgid "Number of frames"
-msgstr "Кількість кадрів"
+#| msgid "Number of frames"
+msgid "_Number of frames"
+msgstr "_Кількість кадрів"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
-msgid "Edge behavior"
-msgstr "Поведінка межі"
+#| msgid "Edge behavior"
+msgid "Edge _behavior"
+msgstr "_Поведінка межі"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Wrap"
@@ -1345,27 +1348,31 @@ msgstr "Розмивання _кромки…"
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr "Розмити кути зображення, щоб мозаїка складалась без видимих швів"
 
+#: plug-ins/script-fu/scripts/tileblur.scm:79
+#| msgid "Radius"
+msgid "Ra_dius"
+msgstr "Раді_ус"
+
 #: plug-ins/script-fu/scripts/tileblur.scm:80
-msgid "Radius"
-msgstr "Радіус"
+#| msgid "Blur vertically"
+msgid "Blur _vertically"
+msgstr "Розмити _вертикально"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:81
-msgid "Blur vertically"
-msgstr "Розмити вертикально"
+#| msgid "Blur horizontally"
+msgid "Blur _horizontally"
+msgstr "Розмити _горизонтально"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:82
-msgid "Blur horizontally"
-msgstr "Розмити горизонтально"
+#| msgid "Blur type"
+msgid "Blur _type"
+msgstr "_Тип розмивання"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
-msgid "Blur type"
-msgstr "Тип розмивання"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "IIR"
 msgstr "IIR"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "RLE"
 msgstr "RLE"
 
@@ -1396,6 +1403,10 @@ msgstr "Амплітуда"
 #: plug-ins/script-fu/scripts/waves-anim.scm:104
 msgid "Wavelength"
 msgstr "Довжина хвилі"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "Кількість кадрів"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:106
 msgid "Invert direction"
