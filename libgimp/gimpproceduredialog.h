@@ -113,6 +113,11 @@ GtkWidget * gimp_procedure_dialog_get_file_chooser  (GimpProcedureDialog *dialog
                                                      const gchar         *property,
                                                      GtkFileChooserAction action);
 
+GtkWidget * gimp_procedure_dialog_get_drawable_preview
+                                                    (GimpProcedureDialog *dialog,
+                                                     const gchar         *preview_id,
+                                                     GimpDrawable        *drawable);
+
 GtkWidget * gimp_procedure_dialog_fill_box          (GimpProcedureDialog *dialog,
                                                      const gchar         *container_id,
                                                      const gchar         *first_property,

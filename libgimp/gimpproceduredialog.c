@@ -1374,6 +1374,46 @@ gimp_procedure_dialog_get_size_entry (GimpProcedureDialog       *dialog,
 }
 
 /**
+ * gimp_procedure_dialog_get_drawable_preview:
+ * @dialog:     the #GimpProcedureDialog.
+ * @preview_id: the ID of #GimpDrawablePreview.
+ * @drawable:   the #GimpDrawable.
+ *
+ * Gets or creates a new #GimpDrawablePreview for @drawable.
+ * If a widget with the @preview_id has already been created for
+ * this procedure, it will be returned instead.
+ *
+ * The @preview_id ID can later be used together with property names
+ * to be packed in other containers or inside @dialog itself.
+
+ * Returns: (transfer none): the #GtkWidget representing @preview_id. The
+ *                           object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_get_drawable_preview (GimpProcedureDialog *dialog,
+                                            const gchar         *preview_id,
+                                            GimpDrawable        *drawable)
+{
+  GtkWidget *w = g_hash_table_lookup (dialog->priv->widgets, preview_id);
+
+  if (w != NULL)
+    {
+      g_warning ("%s: preview_from_drawable identifier '%s' was already configured.",
+                 G_STRFUNC, preview_id);
+      return w;
+    }
+
+  w = gimp_drawable_preview_new_from_drawable (drawable);
+
+  g_hash_table_insert (dialog->priv->widgets, g_strdup (preview_id), w);
+  if (g_object_is_floating (w))
+    g_object_ref_sink (w);
+
+  return w;
+}
+
+/**
  * gimp_procedure_dialog_get_label:
  * @dialog:    the #GimpProcedureDialog.
  * @label_id:  the label for the #GtkLabel.
