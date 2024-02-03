@@ -98,7 +98,8 @@ static const NamedConstant script_constants[] =
   /* Useful values from libgimpbase/gimplimits.h */
   { "MIN-IMAGE-SIZE", GIMP_MIN_IMAGE_SIZE },
   { "MAX-IMAGE-SIZE", GIMP_MAX_IMAGE_SIZE },
-  { "MIN-RESOLUTION", GIMP_MIN_RESOLUTION },
+  /* Note conversion to int, loss of precision: 0.005=>0 */
+  { "MIN-RESOLUTION", (gint) GIMP_MIN_RESOLUTION },
   { "MAX-RESOLUTION", GIMP_MAX_RESOLUTION },
 
   /* Useful misc stuff */
