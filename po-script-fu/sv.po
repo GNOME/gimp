@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-02 04:07+0000\n"
-"PO-Revision-Date: 2024-01-02 08:36+0100\n"
+"POT-Creation-Date: 2024-02-03 18:39+0000\n"
+"PO-Revision-Date: 2024-02-03 20:18+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -124,7 +124,7 @@ msgid "Save Script-Fu Console Output"
 msgstr "Spara utdata från Script-Fu-konsol"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:888
+#: plug-ins/script-fu/server/script-fu-server.c:878
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
 msgid "_Cancel"
 msgstr "A_vbryt"
@@ -150,27 +150,27 @@ msgstr "Välkommen till TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Skript för GIMP i språket Scheme"
 
-#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/server/script-fu-server.c:874
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-serveralternativ"
 
-#: plug-ins/script-fu/server/script-fu-server.c:889
+#: plug-ins/script-fu/server/script-fu-server.c:879
 msgid "_Start Server"
 msgstr "_Starta servern"
 
-#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/server/script-fu-server.c:912
 msgid "Listen on IP:"
 msgstr "Lyssna på IP:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:929
+#: plug-ins/script-fu/server/script-fu-server.c:919
 msgid "Server port:"
 msgstr "Serverport:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:935
+#: plug-ins/script-fu/server/script-fu-server.c:925
 msgid "Server logfile:"
 msgstr "Serverloggfil:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:948
+#: plug-ins/script-fu/server/script-fu-server.c:938
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -233,34 +233,30 @@ msgstr "Fel vid körning av %s:"
 msgid "Error while loading %s:"
 msgstr "Fel vid inläsning av %s:"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:76
+#: plug-ins/script-fu/scripts/add-bevel.scm:75
 msgid "Bumpmap"
 msgstr "Bumpmap"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:189
+#: plug-ins/script-fu/scripts/add-bevel.scm:188
 msgid "Add B_evel..."
 msgstr "Lägg till av_fasning…"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:190
+#: plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add a beveled border to an image"
 msgstr "Lägg till en avfasad ram till en bild"
 
+#. v3 >>> additional argument
+#: plug-ins/script-fu/scripts/add-bevel.scm:195
+msgid "_Thickness"
+msgstr "_Tjocklek"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:196
+msgid "_Work on copy"
+msgstr "_Arbeta på kopia"
+
 #: plug-ins/script-fu/scripts/add-bevel.scm:197
-msgid "Thickness"
-msgstr "Tjocklek"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:198
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
-#: plug-ins/script-fu/scripts/old-photo.scm:104
-#: plug-ins/script-fu/scripts/round-corners.scm:145
-#: plug-ins/script-fu/scripts/slide.scm:262
-#: plug-ins/script-fu/scripts/spinning-globe.scm:107
-msgid "Work on copy"
-msgstr "Arbeta på kopia"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:199
-msgid "Keep bump layer"
-msgstr "Behåll bumplager"
+msgid "_Keep bump layer"
+msgstr "_Behåll bumplager"
 
 #: plug-ins/script-fu/scripts/addborder.scm:123
 msgid "Border Layer"
@@ -723,6 +719,14 @@ msgstr "Lägg till skugga"
 msgid "Shadow weight (%)"
 msgstr "Skuggvikt (%)"
 
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
+#: plug-ins/script-fu/scripts/old-photo.scm:104
+#: plug-ins/script-fu/scripts/round-corners.scm:145
+#: plug-ins/script-fu/scripts/slide.scm:262
+#: plug-ins/script-fu/scripts/spinning-globe.scm:111
+msgid "Work on copy"
+msgstr "Arbeta på kopia"
+
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:164
 msgid "Flatten image"
 msgstr "Platta till bilden"
@@ -929,11 +933,11 @@ msgstr "Gradient"
 msgid "Use current gradient"
 msgstr "Använd aktuell gradient"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:106
+#: plug-ins/script-fu/scripts/line-nova.scm:107
 msgid "Line _Nova..."
 msgstr "Linje_nova…"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:107
+#: plug-ins/script-fu/scripts/line-nova.scm:108
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
@@ -941,20 +945,20 @@ msgstr ""
 "Fyll ett lager med utåtriktade strålar från dess centrum med förgrundsfärgen"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:114
-msgid "Number of lines"
-msgstr "Antal linjer"
+msgid "_Number of lines"
+msgstr "A_ntal linjer"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:115
-msgid "Sharpness (degrees)"
-msgstr "Skärpa (grader)"
+msgid "S_harpness (degrees)"
+msgstr "S_kärpa (grader)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:116
-msgid "Offset radius"
-msgstr "Avståndsradie"
+msgid "O_ffset radius"
+msgstr "_Avståndsradie"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:117
-msgid "Randomness"
-msgstr "Slumpmässighet"
+msgid "Ran_domness"
+msgstr "Slu_mpmässighet"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:63
 msgid "_Rectangular..."
@@ -1189,11 +1193,11 @@ msgstr "_Omvänd lagerordning"
 msgid "Reverse the order of layers in the image"
 msgstr "Vänd ordning på lagren i bilden"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:69
+#: plug-ins/script-fu/scripts/ripply-anim.scm:70
 msgid "_Rippling..."
 msgstr "_Krusning…"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:70
+#: plug-ins/script-fu/scripts/ripply-anim.scm:71
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
@@ -1201,17 +1205,16 @@ msgstr ""
 "aktuellt lager"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:77
-msgid "Rippling strength"
-msgstr "Krusningsstyrka"
+msgid "Ri_ppling strength"
+msgstr "_Krusningsstyrka"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:78
-#: plug-ins/script-fu/scripts/waves-anim.scm:105
-msgid "Number of frames"
-msgstr "Antal bildrutor"
+msgid "_Number of frames"
+msgstr "A_ntal bildrutor"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
-msgid "Edge behavior"
-msgstr "Kantbeteende"
+msgid "Edge _behavior"
+msgstr "Kant_beteende"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Wrap"
@@ -1310,27 +1313,27 @@ msgstr "Typsnitt"
 msgid "Font color"
 msgstr "Typsnittsfärg"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:95
+#: plug-ins/script-fu/scripts/spinning-globe.scm:99
 msgid "_Spinning Globe..."
 msgstr "_Roterande glob…"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:96
+#: plug-ins/script-fu/scripts/spinning-globe.scm:100
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr "Skapa en animation genom att mappa aktuell bild på en roterande sfär"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:103
+#: plug-ins/script-fu/scripts/spinning-globe.scm:107
 msgid "Frames"
 msgstr "Bildrutor"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:104
+#: plug-ins/script-fu/scripts/spinning-globe.scm:108
 msgid "Turn from left to right"
 msgstr "Vänd från vänster till höger"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:105
+#: plug-ins/script-fu/scripts/spinning-globe.scm:109
 msgid "Transparent background"
 msgstr "Genomskinlig bakgrund"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:106
+#: plug-ins/script-fu/scripts/spinning-globe.scm:110
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indexera till n färger (0 = behåll RGB)"
 
@@ -1346,27 +1349,27 @@ msgstr "_Brickoskärpa…"
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr "Gör kanterna i en bild oskarpa"
 
+#: plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "Ra_dius"
+msgstr "Ra_die"
+
 #: plug-ins/script-fu/scripts/tileblur.scm:80
-msgid "Radius"
-msgstr "Radie"
+msgid "Blur _vertically"
+msgstr "_Vertikal oskärpa"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:81
-msgid "Blur vertically"
-msgstr "Vertikal oskärpa"
+msgid "Blur _horizontally"
+msgstr "_Horisontell oskärpa"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:82
-msgid "Blur horizontally"
-msgstr "Horisontell oskärpa"
+msgid "Blur _type"
+msgstr "Oskärpe_typ"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
-msgid "Blur type"
-msgstr "Oskärpetyp"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "IIR"
 msgstr "IIR"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "RLE"
 msgstr "RLE"
 
@@ -1397,6 +1400,10 @@ msgstr "Amplitud"
 #: plug-ins/script-fu/scripts/waves-anim.scm:104
 msgid "Wavelength"
 msgstr "Våglängd"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "Antal bildrutor"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:106
 msgid "Invert direction"
@@ -1588,7 +1595,7 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgstr "_Wiki"
 
 #~ msgid "Bookmark to the wiki of GIMP"
-#~ msgstr "Bokmärke till GIMP:s wiki"
+#~ msgstr "Bokmärke till GIMPs wiki"
 
 #~ msgid "Interactive Scheme Development"
 #~ msgstr "Interaktiv Scheme-utveckling"
@@ -1621,7 +1628,7 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgstr "_Spirogimp (äldre script-fu-version)…"
 
 #~ msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
-#~ msgstr "Denna procedur är föråldrad! Använd ”plug-in-spyrogimp” istället."
+#~ msgstr "Denna procedur är föråldrad! Använd ”plug-in-spyrogimp” i stället."
 
 #~ msgid "Type"
 #~ msgstr "Typ"
@@ -2202,10 +2209,10 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgstr "Reversera textgradient"
 
 #~ msgid "Use pattern for outline instead of gradient"
-#~ msgstr "Använd mönster för kontur istället för gradient"
+#~ msgstr "Använd mönster för kontur i stället för gradient"
 
 #~ msgid "Use pattern for text instead of gradient"
-#~ msgstr "Använd mönster för text istället för gradient"
+#~ msgstr "Använd mönster för text i stället för gradient"
 
 #~ msgid "Use pattern overlay"
 #~ msgstr "Använd mönsteröverlagring"
@@ -2647,7 +2654,7 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgstr "Start i Y-led"
 
 #~ msgid "Use selection bounds instead of values below"
-#~ msgstr "Använd markeringsgränser istället för nedanstående värden"
+#~ msgstr "Använd markeringsgränser i stället för nedanstående värden"
 
 #~ msgid "Darken only\\n(Better, but only for images with a lot of white)"
 #~ msgstr "Gör endast mörkare\\n(bättre, men bara för bilder med mycket vitt)"
@@ -3102,7 +3109,7 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgstr "<Toolbox>/Tillägg/Script-Fu/Logotyper/_Glansig..."
 
 #~ msgid "Use tattern for outline instead of gradient"
-#~ msgstr "Använd mönster för kontur istället för färgtoning"
+#~ msgstr "Använd mönster för kontur i stället för färgtoning"
 
 #~ msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
 #~ msgstr "<Image>/Script-Fu/Alfa till logotyp/Gl_ödande het..."
@@ -3772,6 +3779,3 @@ msgstr "Y-avstånd för skuggkastning"
 
 #~ msgid "NOT SET"
 #~ msgstr "INTE SATT"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documentation"
-#~ msgstr "<Toolbox>/Tillägg/Webbläsare/GIMP.ORG/Dokumentation"
