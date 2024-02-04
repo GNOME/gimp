@@ -5,7 +5,7 @@
 ;; feel free to use it for whatever you like.
 
 (define (script-fu-guide-new image
-                             drawable
+                             drawables
                              direction
                              position)
   (let* (
@@ -23,15 +23,14 @@
   )
 )
 
-(script-fu-register "script-fu-guide-new"
+(script-fu-register-filter "script-fu-guide-new"
   _"New _Guide..."
   _"Add a guide at the orientation and position specified (in pixels)"
   "Alan Horkan"
   "Alan Horkan, 2004.  Public Domain."
   "2004-04-02"
   "*"
-  SF-IMAGE      "Image"      0
-  SF-DRAWABLE   "Drawable"   0
+  SF-ONE-OR-MORE-DRAWABLE  ; doesn't matter how many drawables are selected
   SF-OPTION     _"_Direction" '(_"Horizontal" _"Vertical")
   SF-ADJUSTMENT _"_Position"  (list 0 0 MAX-IMAGE-SIZE 1 10 0 1)
 )

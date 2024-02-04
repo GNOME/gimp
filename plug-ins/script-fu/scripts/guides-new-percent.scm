@@ -2,7 +2,10 @@
 
 ;; Alan Horkan 2004.  No copyright.  Public Domain.
 
-(define (script-fu-guide-new-percent image drawable direction position)
+(define (script-fu-guide-new-percent image
+                                     drawables
+                                     direction
+                                     position)
   (let* (
         (width (car (gimp-image-get-width image)))
       	(height (car (gimp-image-get-height image)))
@@ -23,15 +26,14 @@
   )
 )
 
-(script-fu-register "script-fu-guide-new-percent"
+(script-fu-register-filter "script-fu-guide-new-percent"
   _"New Guide (by _Percent)..."
   _"Add a guide at the position specified as a percentage of the image size"
   "Alan Horkan"
   "Alan Horkan, 2004"
   "April 2004"
   "*"
-  SF-IMAGE      "Input Image"      0
-  SF-DRAWABLE   "Input Drawable"   0
+  SF-ONE-OR-MORE-DRAWABLE  ; doesn't matter how many drawables are selected
   SF-OPTION     _"_Direction"       '(_"Horizontal"
                                      _"Vertical")
   SF-ADJUSTMENT _"_Position (in %)" '(50 0 100 1 10 2 1)
