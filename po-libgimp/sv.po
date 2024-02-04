@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-18 13:35+0000\n"
-"PO-Revision-Date: 2024-01-18 22:00+0100\n"
+"POT-Creation-Date: 2024-01-23 16:24+0000\n"
+"PO-Revision-Date: 2024-01-23 17:34+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -30,81 +30,90 @@ msgstr "_Bläddra…"
 msgid "Browse..."
 msgstr "Bläddra…"
 
-#: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
+#: libgimp/gimpexport.c:363 libgimp/gimpexport.c:399
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Insticksmodulen %s kan inte hantera lager"
 
-#: libgimp/gimpexport.c:333 libgimp/gimpexport.c:342 libgimp/gimpexport.c:351
-#: libgimp/gimpexport.c:369
+#: libgimp/gimpexport.c:364 libgimp/gimpexport.c:373 libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:400
 msgid "Merge Visible Layers"
 msgstr "Sammanfoga synliga lager"
 
-#: libgimp/gimpexport.c:341
+#: libgimp/gimpexport.c:372
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "Insticksmodulen %s kan inte hantera lageravstånd, lagerstorlek eller "
 "lageropacitet"
 
-#: libgimp/gimpexport.c:350 libgimp/gimpexport.c:359
+#: libgimp/gimpexport.c:381 libgimp/gimpexport.c:390
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr ""
 "Insticksmodulen %s kan endast hantera lager som bildrutor i en animation"
 
-#: libgimp/gimpexport.c:351 libgimp/gimpexport.c:360
+#: libgimp/gimpexport.c:382 libgimp/gimpexport.c:391
 msgid "Save as Animation"
 msgstr "Spara som animation"
 
-#: libgimp/gimpexport.c:360 libgimp/gimpexport.c:369 libgimp/gimpexport.c:378
-#: libgimp/gimpexport.c:387
+#: libgimp/gimpexport.c:391 libgimp/gimpexport.c:400 libgimp/gimpexport.c:409
+#: libgimp/gimpexport.c:427
 msgid "Flatten Image"
 msgstr "Platta till bild"
 
-#: libgimp/gimpexport.c:377
+#: libgimp/gimpexport.c:408
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Insticksmodulen %s kan inte hantera transparens"
 
-#: libgimp/gimpexport.c:386
+#: libgimp/gimpexport.c:417
+#, c-format
+msgid "%s plug-in can't handle layer effects"
+msgstr "Insticksmodulen %s kan inte hantera lagereffekter"
+
+#: libgimp/gimpexport.c:418
+msgid "Merge Layer Effects"
+msgstr "Sammanfoga lagereffekter"
+
+#: libgimp/gimpexport.c:426
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "Insticksmodulen %s kan inte hantera transparenta lager"
 
-#: libgimp/gimpexport.c:395
+#: libgimp/gimpexport.c:435
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Insticksmodulen %s kan inte hantera lagermasker"
 
-#: libgimp/gimpexport.c:396
+#: libgimp/gimpexport.c:436
 msgid "Apply Layer Masks"
 msgstr "Applicera lagermasker"
 
-#: libgimp/gimpexport.c:404
+#: libgimp/gimpexport.c:444
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "Insticksmodulen %s kan endast hantera RGB-bilder"
 
-#: libgimp/gimpexport.c:405 libgimp/gimpexport.c:443 libgimp/gimpexport.c:452
+#: libgimp/gimpexport.c:445 libgimp/gimpexport.c:483 libgimp/gimpexport.c:492
 msgid "Convert to RGB"
 msgstr "Konvertera till RGB"
 
-#: libgimp/gimpexport.c:413
+#: libgimp/gimpexport.c:453
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Insticksmodulen %s kan endast hantera gråskalebilder"
 
-#: libgimp/gimpexport.c:414 libgimp/gimpexport.c:443 libgimp/gimpexport.c:464
+#: libgimp/gimpexport.c:454 libgimp/gimpexport.c:483 libgimp/gimpexport.c:504
 msgid "Convert to Grayscale"
 msgstr "Konvertera till gråskala"
 
-#: libgimp/gimpexport.c:422
+#: libgimp/gimpexport.c:462
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Insticksmodulen %s kan endast hantera indexerade bilder"
 
-#: libgimp/gimpexport.c:423 libgimp/gimpexport.c:452 libgimp/gimpexport.c:462
+#: libgimp/gimpexport.c:463 libgimp/gimpexport.c:492 libgimp/gimpexport.c:502
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -112,14 +121,14 @@ msgstr ""
 "Konvertera till Indexerat med standardinställningar\n"
 "(Gör det manuellt om du vill finjustera)"
 
-#: libgimp/gimpexport.c:432
+#: libgimp/gimpexport.c:472
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "Insticksmodulen %s kan endast hantera bitmappindexerade (tvåfärgsindexerade) "
 "bilder"
 
-#: libgimp/gimpexport.c:433
+#: libgimp/gimpexport.c:473
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -127,50 +136,50 @@ msgstr ""
 "Konvertera till Indexerat med bitmapp-standardinställningar\n"
 "(Gör det manuellt om du vill finjustera)"
 
-#: libgimp/gimpexport.c:442
+#: libgimp/gimpexport.c:482
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "Insticksmodulen %s kan endast hantera RGB-bilder eller gråskalebilder"
 
-#: libgimp/gimpexport.c:451
+#: libgimp/gimpexport.c:491
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr ""
 "Insticksmodulen %s kan endast hantera RGB-bilder eller indexerade bilder"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:501
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "Insticksmodulen %s kan endast hantera gråskalebilder eller indexerade bilder"
 
-#: libgimp/gimpexport.c:472
+#: libgimp/gimpexport.c:512
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Insticksmodulen %s behöver en alfakanal"
 
-#: libgimp/gimpexport.c:473
+#: libgimp/gimpexport.c:513
 msgid "Add Alpha Channel"
 msgstr "Lägg till alfakanal"
 
-#: libgimp/gimpexport.c:481
+#: libgimp/gimpexport.c:521
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
 msgstr "%s-insticksmodulen behöver beskära lagren till bildgränserna"
 
-#: libgimp/gimpexport.c:482
+#: libgimp/gimpexport.c:522
 msgid "Crop Layers"
 msgstr "Beskär lager"
 
-#: libgimp/gimpexport.c:482
+#: libgimp/gimpexport.c:522
 msgid "Resize Image to Layers"
 msgstr "Ändra storlek på bild till lager"
 
-#: libgimp/gimpexport.c:541
+#: libgimp/gimpexport.c:581
 msgid "Confirm Save"
 msgstr "Bekräfta sparande"
 
-#: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
+#: libgimp/gimpexport.c:586 libgimp/gimpexport.c:668 libgimp/gimpexport.c:1242
 #: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
@@ -180,25 +189,25 @@ msgstr "Bekräfta sparande"
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: libgimp/gimpexport.c:547
+#: libgimp/gimpexport.c:587
 msgid "C_onfirm"
 msgstr "_Bekräfta"
 
-#: libgimp/gimpexport.c:623
+#: libgimp/gimpexport.c:663
 msgid "Export File"
 msgstr "Exportera fil"
 
-#: libgimp/gimpexport.c:627
+#: libgimp/gimpexport.c:667
 msgid "_Ignore"
 msgstr "_Ignorera"
 
-#: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
+#: libgimp/gimpexport.c:669 libgimp/gimpexport.c:1243
 #: libgimp/gimpproceduredialog.c:296 libgimp/gimpproceduredialog.c:569
 msgid "_Export"
 msgstr "_Exportera"
 
 #. the headline
-#: libgimp/gimpexport.c:659
+#: libgimp/gimpexport.c:699
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -207,11 +216,11 @@ msgstr ""
 "Din bild bör exporteras innan den kan sparas som %s av följande anledningar:"
 
 #. the footline
-#: libgimp/gimpexport.c:733
+#: libgimp/gimpexport.c:773
 msgid "The export conversion won't modify your original image."
 msgstr "Konverteringen vid export modifierar inte originalbilden."
 
-#: libgimp/gimpexport.c:853
+#: libgimp/gimpexport.c:893
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -220,7 +229,7 @@ msgstr ""
 "Du kommer att spara en lagermask som %s.\n"
 "Detta kommer inte att spara de synliga lagren."
 
-#: libgimp/gimpexport.c:859
+#: libgimp/gimpexport.c:899
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -231,7 +240,7 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:398
+#: libgimp/gimpexport.c:1236 libgimp/gimpsaveproceduredialog.c:398
 #, c-format
 msgid "Export Image as %s"
 msgstr "Exportera bild som %s"
@@ -2349,7 +2358,7 @@ msgstr ""
 #. toggle button to (de)activate the instant preview
 #: libgimpwidgets/gimppreview.c:288
 msgid "_Preview"
-msgstr "_Förhandsgranska"
+msgstr "_Förhandsvisa"
 
 #: libgimpwidgets/gimppreviewarea.c:146
 msgid "Check Size"
