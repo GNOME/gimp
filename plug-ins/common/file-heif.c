@@ -91,7 +91,6 @@ static GimpValueArray * heif_save             (GimpProcedure                *pro
                                                GimpProcedureConfig          *config,
                                                gpointer                      run_data);
 
-#if LIBHEIF_HAVE_VERSION(1,8,0)
 static GimpValueArray * heif_av1_save         (GimpProcedure                *procedure,
                                                GimpRunMode                   run_mode,
                                                GimpImage                    *image,
@@ -101,7 +100,6 @@ static GimpValueArray * heif_av1_save         (GimpProcedure                *pro
                                                GimpMetadata                 *metadata,
                                                GimpProcedureConfig          *config,
                                                gpointer                      run_data);
-#endif
 
 static GimpImage      * load_image            (GFile                        *file,
                                                GimpMetadata                 *metadata,
@@ -150,9 +148,7 @@ heif_init_procedures (GimpPlugIn *plug_in)
 {
   GList *list = NULL;
 
-#if LIBHEIF_HAVE_VERSION(1,13,0)
   heif_init (NULL);
-#endif
 
   if (heif_have_decoder_for_format (heif_compression_HEVC))
     {
@@ -163,7 +159,7 @@ heif_init_procedures (GimpPlugIn *plug_in)
     {
       list = g_list_append (list, g_strdup (SAVE_PROC));
     }
-#if LIBHEIF_HAVE_VERSION(1,8,0)
+
   if (heif_have_decoder_for_format (heif_compression_AV1))
     {
       list = g_list_append (list, g_strdup (LOAD_PROC_AV1));
@@ -173,7 +169,6 @@ heif_init_procedures (GimpPlugIn *plug_in)
     {
       list = g_list_append (list, g_strdup (SAVE_PROC_AV1));
     }
-#endif
 
 #if LIBHEIF_HAVE_VERSION(1,17,0)
   if (heif_have_decoder_for_format (heif_compression_JPEG2000))
@@ -182,9 +177,7 @@ heif_init_procedures (GimpPlugIn *plug_in)
     }
 #endif
 
-#if LIBHEIF_HAVE_VERSION(1,13,0)
   heif_deinit ();
-#endif
 
   return list;
 }
@@ -312,7 +305,6 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                              gimp_export_xmp (),
                              G_PARAM_READWRITE);
     }
-#if LIBHEIF_HAVE_VERSION(1,8,0)
   else if (! strcmp (name, LOAD_PROC_AV1))
     {
       procedure = gimp_load_procedure_new (plug_in, name,
@@ -422,7 +414,6 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                              gimp_export_xmp (),
                              G_PARAM_READWRITE);
     }
-#endif
 #if LIBHEIF_HAVE_VERSION(1,17,0)
   else if (! strcmp (name, LOAD_PROC_HEJ2))
     {
@@ -475,15 +466,11 @@ heif_load (GimpProcedure         *procedure,
   if (interactive)
     gimp_ui_init (PLUG_IN_BINARY);
 
-#if LIBHEIF_HAVE_VERSION(1,13,0)
   heif_init (NULL);
-#endif
 
   image = load_image (file, metadata, flags, interactive, &status, &error);
 
-#if LIBHEIF_HAVE_VERSION(1,13,0)
   heif_deinit ();
-#endif
 
   if (! image)
     return gimp_procedure_new_return_values (procedure, status, error);
@@ -557,9 +544,7 @@ heif_save (GimpProcedure        *procedure,
 
       metadata = gimp_image_metadata_save_prepare (image, "image/heif", &metadata_flags);
 
-#if LIBHEIF_HAVE_VERSION(1,13,0)
       heif_init (NULL);
-#endif
 
       if (! save_image (file, image, drawables[0], G_OBJECT (config),
                         &error, heif_compression_HEVC, metadata))
@@ -567,9 +552,7 @@ heif_save (GimpProcedure        *procedure,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
 
-#if LIBHEIF_HAVE_VERSION(1,13,0)
       heif_deinit ();
-#endif
 
       if (metadata)
         {
@@ -586,7 +569,6 @@ heif_save (GimpProcedure        *procedure,
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
-#if LIBHEIF_HAVE_VERSION(1,8,0)
 static GimpValueArray *
 heif_av1_save (GimpProcedure        *procedure,
                GimpRunMode           run_mode,
@@ -647,9 +629,7 @@ heif_av1_save (GimpProcedure        *procedure,
 
       metadata = gimp_image_metadata_save_prepare (image, "image/avif", &metadata_flags);
 
-#if LIBHEIF_HAVE_VERSION(1,13,0)
       heif_init (NULL);
-#endif
 
       if (! save_image (file, image, drawables[0], G_OBJECT (config),
                         &error, heif_compression_AV1, metadata))
@@ -657,9 +637,7 @@ heif_av1_save (GimpProcedure        *procedure,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
 
-#if LIBHEIF_HAVE_VERSION(1,13,0)
       heif_deinit ();
-#endif
 
       if (metadata)
         {
@@ -675,7 +653,6 @@ heif_av1_save (GimpProcedure        *procedure,
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
-#endif
 
 static goffset
 get_file_size (GFile   *file,
@@ -698,7 +675,6 @@ get_file_size (GFile   *file,
   return size;
 }
 
-#if LIBHEIF_HAVE_VERSION(1,8,0)
 static void
 heifplugin_color_profile_set_tag (cmsHPROFILE      profile,
                                   cmsTagSignature  sig,
@@ -870,7 +846,6 @@ nclx_to_gimp_profile (const struct heif_color_profile_nclx *nclx)
 
   return NULL;
 }
-#endif
 
 GimpImage *
 load_image (GFile                 *file,
@@ -1030,7 +1005,6 @@ load_image (GFile                 *file,
 
   has_alpha = heif_image_handle_has_alpha_channel (handle);
 
-#if LIBHEIF_HAVE_VERSION(1,8,0)
   bit_depth = heif_image_handle_get_luma_bits_per_pixel (handle);
   if (bit_depth < 0)
     {
@@ -1041,7 +1015,6 @@ load_image (GFile                 *file,
 
       return NULL;
     }
-#endif
 
   if (bit_depth == 8)
     {
@@ -1056,7 +1029,6 @@ load_image (GFile                 *file,
     }
   else /* high bit depth */
     {
-#if LIBHEIF_HAVE_VERSION(1,8,0)
 #if ( G_BYTE_ORDER == G_LITTLE_ENDIAN )
       if (has_alpha)
         {
@@ -1076,7 +1048,6 @@ load_image (GFile                 *file,
           chroma = heif_chroma_interleaved_RRGGBB_BE;
         }
 #endif
-#endif
     }
 
   err = heif_decode_image (handle,
@@ -1095,7 +1066,6 @@ load_image (GFile                 *file,
       return NULL;
     }
 
-#if LIBHEIF_HAVE_VERSION(1,4,0)
   switch (heif_image_handle_get_color_profile_type (handle))
     {
     case heif_color_profile_type_not_present:
@@ -1123,7 +1093,6 @@ load_image (GFile                 *file,
         g_free (profile_data);
       }
       break;
-#if LIBHEIF_HAVE_VERSION(1,8,0)
     case heif_color_profile_type_nclx:
       {
         struct heif_color_profile_nclx *nclx = NULL;
@@ -1141,13 +1110,11 @@ load_image (GFile                 *file,
           }
       }
       break;
-#endif
     default:
       g_warning ("%s: unknown color profile type has been discarded.",
                  G_STRFUNC);
       break;
     }
-#endif /* LIBHEIF_HAVE_VERSION(1,4,0) */
 
   gimp_progress_update (0.75);
 
@@ -1484,14 +1451,11 @@ save_image (GFile                        *file,
   gint                                  quality;
   gboolean                              save_profile;
   gint                                  save_bit_depth = 8;
-#if LIBHEIF_HAVE_VERSION(1,10,0)
+
   HeifpluginExportFormat    pixel_format = HEIFPLUGIN_EXPORT_FORMAT_YUV420;
-#endif
-#if LIBHEIF_HAVE_VERSION(1,8,0)
   HeifpluginEncoderSpeed    encoder_speed = HEIFPLUGIN_ENCODER_SPEED_BALANCED;
   const char               *parameter_value;
   struct heif_color_profile_nclx nclx_profile;
-#endif
   gboolean                  save_exif = FALSE;
   gboolean                  save_xmp = FALSE;
 
@@ -1505,13 +1469,9 @@ save_image (GFile                        *file,
   g_object_get (config,
                 "lossless",           &lossless,
                 "quality",            &quality,
-#if LIBHEIF_HAVE_VERSION(1,10,0)
                 "pixel-format",       &pixel_format,
-#endif
-#if LIBHEIF_HAVE_VERSION(1,8,0)
                 "save-bit-depth",     &save_bit_depth,
                 "encoder-speed",      &encoder_speed,
-#endif
                 "save-color-profile", &save_profile,
                 "save-exif", &save_exif,
                 "save-xmp", &save_xmp,
@@ -1577,7 +1537,6 @@ save_image (GFile                        *file,
                                heif_chroma_interleaved_RGB,
                                &h_image);
       break;
-#if LIBHEIF_HAVE_VERSION(1,8,0)
     case 10:
     case 12:
 #if ( G_BYTE_ORDER == G_LITTLE_ENDIAN )
@@ -1596,7 +1555,6 @@ save_image (GFile                        *file,
                                &h_image);
 #endif
       break;
-#endif
     default:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "Unsupported bit depth: %d",
@@ -1615,7 +1573,6 @@ save_image (GFile                        *file,
       return FALSE;
     }
 
-#if LIBHEIF_HAVE_VERSION(1,4,0)
   if (save_profile)
     {
       GimpColorProfile *profile = NULL;
@@ -1649,7 +1606,6 @@ save_image (GFile                        *file,
             }
         }
 
-#if LIBHEIF_HAVE_VERSION(1,10,0)
       if (pixel_format == HEIFPLUGIN_EXPORT_FORMAT_RGB)
         {
           nclx_profile.version = 1;
@@ -1669,7 +1625,6 @@ save_image (GFile                        *file,
 
           heif_image_set_nclx_color_profile (h_image, &nclx_profile);
         }
-#endif
 
       icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
       heif_image_set_raw_color_profile (h_image, "prof", icc_data, icc_length);
@@ -1688,7 +1643,6 @@ save_image (GFile                        *file,
     }
   else
     {
-#if LIBHEIF_HAVE_VERSION(1,8,0)
       /* We save as sRGB */
 
       nclx_profile.version = 1;
@@ -1697,20 +1651,16 @@ save_image (GFile                        *file,
       nclx_profile.matrix_coefficients = heif_matrix_coefficients_ITU_R_BT_601_6;
       nclx_profile.full_range_flag = 1;
 
-#if LIBHEIF_HAVE_VERSION(1,10,0)
       if (pixel_format == HEIFPLUGIN_EXPORT_FORMAT_RGB)
         {
           nclx_profile.matrix_coefficients = heif_matrix_coefficients_RGB_GBR;
         }
-#endif
 
       heif_image_set_nclx_color_profile (h_image, &nclx_profile);
 
       space = babl_space ("sRGB");
       out_linear = FALSE;
-#endif
     }
-#endif /* LIBHEIF_HAVE_VERSION(1,4,0) */
 
   if (! space)
     space = gimp_drawable_get_format (drawable);
@@ -1806,14 +1756,8 @@ save_image (GFile                        *file,
     }
   else /* save_bit_depth == 8 */
     {
-#if LIBHEIF_HAVE_VERSION(1,8,0)
       heif_image_add_plane (h_image, heif_channel_interleaved,
                             width, height, 8);
-#else
-      /* old style settings */
-      heif_image_add_plane (h_image, heif_channel_interleaved,
-                            width, height, has_alpha ? 32 : 24);
-#endif
 
       data = heif_image_get_plane (h_image, heif_channel_interleaved, &stride);
 
@@ -1869,8 +1813,6 @@ save_image (GFile                        *file,
   heif_encoder_set_lossless (encoder, lossless);
   /* heif_encoder_set_logging_level (encoder, logging_level); */
 
-#if LIBHEIF_HAVE_VERSION(1,8,0)
-#if LIBHEIF_HAVE_VERSION(1,10,0)
 
   if (lossless && pixel_format != HEIFPLUGIN_EXPORT_FORMAT_RGB)
     {
@@ -1898,7 +1840,6 @@ save_image (GFile                        *file,
     {
       g_printerr ("Failed to set chroma %s for %s encoder: %s", parameter_value, encoder_name, err.message);
     }
-#endif
 
   if (compression == heif_compression_HEVC)
     {
@@ -1945,13 +1886,11 @@ save_image (GFile                        *file,
               break;
             case HEIFPLUGIN_ENCODER_SPEED_FASTER:
               parameter_number = 6;
-#if LIBHEIF_HAVE_VERSION(1,10,0)
               err = heif_encoder_set_parameter_boolean (encoder, "realtime", 1);
               if (err.code != 0)
                 {
                   g_printerr ("Failed to set realtime=1 for %s encoder: %s",  encoder_name, err.message);
                 }
-#endif
               break;
             default: /*  HEIFPLUGIN_ENCODER_SPEED_BALANCED */
               parameter_number = 5;
@@ -1992,15 +1931,12 @@ save_image (GFile                        *file,
           g_printerr ("Parameters not set, unsupported AV1 encoder: %s", encoder_name);
         }
     }
-#endif
 
-#if LIBHEIF_HAVE_VERSION(1,10,0)
   if (pixel_format == HEIFPLUGIN_EXPORT_FORMAT_RGB)
     {
       encoder_options = heif_encoding_options_alloc ();
       encoder_options->save_two_colr_boxes_when_ICC_and_nclx_available = 1;
     }
-#endif
 
   err = heif_context_encode_image (context,
                                    h_image,
@@ -2513,16 +2449,12 @@ save_dialog (GimpProcedure *procedure,
              GObject       *config,
              GimpImage     *image)
 {
-  GtkWidget *dialog;
-  GtkWidget *quality_scale;
-#if LIBHEIF_HAVE_VERSION(1, 10, 0)
+  GtkWidget    *dialog;
+  GtkWidget    *quality_scale;
   GtkListStore *store_pixelformats;
-#endif
-#if LIBHEIF_HAVE_VERSION(1, 8, 0)
   GtkListStore *store_bitdepths;
   GtkListStore *store_speeds;
-#endif
-  gboolean   run;
+  gboolean      run;
 
   dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
                                            GIMP_PROCEDURE_CONFIG (config),
@@ -2540,7 +2472,6 @@ save_dialog (GimpProcedure *procedure,
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
 
-#if LIBHEIF_HAVE_VERSION(1, 10, 0)
   store_pixelformats = gimp_int_store_new (_("RGB"), HEIFPLUGIN_EXPORT_FORMAT_RGB,
                                            _("YUV444"), HEIFPLUGIN_EXPORT_FORMAT_YUV444,
                                            _("YUV420"), HEIFPLUGIN_EXPORT_FORMAT_YUV420,
@@ -2548,9 +2479,7 @@ save_dialog (GimpProcedure *procedure,
 
   gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
                                        "pixel-format", GIMP_INT_STORE (store_pixelformats));
-#endif
 
-#if LIBHEIF_HAVE_VERSION(1, 8, 0)
   store_bitdepths = gimp_int_store_new (_("8 bit/channel"),   8,
                                         _("10 bit/channel"), 10,
                                         _("12 bit/channel"), 12,
@@ -2566,19 +2495,12 @@ save_dialog (GimpProcedure *procedure,
 
   gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
                                        "encoder-speed", GIMP_INT_STORE (store_speeds));
-#endif
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "lossless", "quality",
-#if LIBHEIF_HAVE_VERSION(1, 10, 0)
                               "pixel-format",
-#endif
-#if LIBHEIF_HAVE_VERSION(1, 8, 0)
                               "save-bit-depth", "encoder-speed",
-#endif
-#if LIBHEIF_HAVE_VERSION(1, 4, 0)
                               "save-color-profile",
-#endif
                               "save-exif", "save-xmp", NULL);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
