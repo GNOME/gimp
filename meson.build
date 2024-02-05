@@ -756,12 +756,10 @@ if webp_found
   ]
 endif
 
-libheif_minver = '1.3.2'
+libheif_minver = '1.15.1'
 libheif = dependency('libheif', version: '>='+libheif_minver,
   required: get_option('heif')
 )
-conf.set('HAVE_LIBHEIF_1_4_0', libheif.version().version_compare('>=1.4.0'))
-conf.set('HAVE_LIBHEIF_1_6_0', libheif.version().version_compare('>=1.6.0'))
 
 can_import_heic = false
 can_export_heic = false
@@ -769,7 +767,6 @@ can_import_avif = false
 can_export_avif = false
 
 have_heif = libheif.found()
-libheif_warning=''
 if have_heif
   have_heif = true
 
@@ -778,13 +775,9 @@ if have_heif
     #include <libheif/heif.h>
     int main() {
       int success;
-      #if LIBHEIF_HAVE_VERSION(1,13,0)
       heif_init (NULL);
-      #endif
       success = heif_have_decoder_for_format (heif_compression_HEVC);
-      #if LIBHEIF_HAVE_VERSION(1,13,0)
       heif_deinit ();
-      #endif
 
       if (success)
         return 0;
@@ -799,13 +792,9 @@ if have_heif
     #include <libheif/heif.h>
     int main() {
       int success;
-      #if LIBHEIF_HAVE_VERSION(1,13,0)
       heif_init (NULL);
-      #endif
       success = heif_have_encoder_for_format (heif_compression_HEVC);
-      #if LIBHEIF_HAVE_VERSION(1,13,0)
       heif_deinit ();
-      #endif
 
       if (success)
         return 0;
@@ -820,13 +809,9 @@ if have_heif
     #include <libheif/heif.h>
     int main() {
       int success;
-      #if LIBHEIF_HAVE_VERSION(1,13,0)
       heif_init (NULL);
-      #endif
       success = heif_have_decoder_for_format (heif_compression_AV1);
-      #if LIBHEIF_HAVE_VERSION(1,13,0)
       heif_deinit ();
-      #endif
 
       if (success)
         return 0;
@@ -841,13 +826,9 @@ if have_heif
     #include <libheif/heif.h>
     int main() {
       int success;
-      #if LIBHEIF_HAVE_VERSION(1,13,0)
       heif_init (NULL);
-      #endif
       success = heif_have_encoder_for_format (heif_compression_AV1);
-      #if LIBHEIF_HAVE_VERSION(1,13,0)
       heif_deinit ();
-      #endif
 
       if (success)
         return 0;
@@ -878,16 +859,6 @@ if have_heif
       'image/heic',
       'image/avif'
     ]
-  endif
-
-  if have_heif and (libheif.version().version_compare('==1.5.0') or libheif.version().version_compare('==1.5.1'))
-    libheif_warning='''
-
-          libheif version 1.5.0 and 1.5.1 are known to crash when
-          exporting (bug #4185). Please update.
-      '''
-      warning(libheif_warning)
-      warnings += libheif_warning
   endif
 endif
 
@@ -1988,11 +1959,8 @@ final_message = [
 '''  MNG:                 @0@'''.format(libmng.found()),
 '''  OpenEXR:             @0@'''.format(openexr.found()),
 '''  WebP:                @0@'''.format(webp_found),
-'''  HEIC:                import: @0@ - export: @1@ [profile support: @2@]@3@'''
-                                .format(can_import_heic, can_export_heic,
-                                        (can_import_heic or can_export_heic) and
-                                        libheif.version().version_compare('>=1.4.0'),
-                                        libheif_warning != '' ? ' (see warning below)' : ''),
+'''  HEIC:                import: @0@ - export: @1@'''
+                                .format(can_import_heic, can_export_heic),
 '''  AVIF:                import: @0@ - export: @1@'''
                                 .format(can_import_avif, can_export_avif),
 '''  PDF (export):        @0@'''.format(cairopdf.found()),
