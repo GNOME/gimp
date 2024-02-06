@@ -51,7 +51,8 @@ enum
   PROP_SUPERSAMPLE_THRESHOLD,
   PROP_DITHER,
   PROP_INSTANT,
-  PROP_MODIFY_ACTIVE
+  PROP_MODIFY_ACTIVE,
+  PROP_CREATE_AS_LIVE_FILTER
 };
 
 
@@ -144,6 +145,13 @@ gimp_gradient_options_class_init (GimpGradientOptionsClass *klass)
                             _("Modify the active gradient in-place"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CREATE_AS_LIVE_FILTER,
+                            "create-as-live-filter",
+                            _("Create as live filter"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -192,6 +200,10 @@ gimp_gradient_options_set_property (GObject      *object,
       options->modify_active = g_value_get_boolean (value);
       break;
 
+    case PROP_CREATE_AS_LIVE_FILTER:
+      options->create_as_live_filter = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -237,6 +249,10 @@ gimp_gradient_options_get_property (GObject    *object,
       break;
     case PROP_MODIFY_ACTIVE:
       g_value_set_boolean (value, options->modify_active);
+      break;
+
+    case PROP_CREATE_AS_LIVE_FILTER:
+      g_value_set_boolean (value, options->create_as_live_filter);
       break;
 
     default:
@@ -337,6 +353,11 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
   scale = gimp_prop_spin_scale_new (config, "supersample-threshold",
                                     0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+
+  /* NDE filter toggle */
+  button = gimp_prop_check_button_new (config, "create-as-live-filter", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  options->nde_filter_toggle = button;
 
   /* the instant toggle */
   str = g_strdup_printf (_("Instant mode  (%s)"),

@@ -37,6 +37,7 @@
 #include "operations/layer-modes/gimp-layer-modes.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-filters.h"
@@ -45,6 +46,7 @@
 #include "core/gimperror.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 
@@ -114,33 +116,39 @@ static void   gimp_gradient_tool_options_notify      (GimpTool              *too
                                                       GimpToolOptions       *options,
                                                       const GParamSpec      *pspec);
 
-static void   gimp_gradient_tool_start               (GimpGradientTool         *gradient_tool,
+static void   gimp_gradient_tool_start               (GimpGradientTool      *gradient_tool,
                                                       const GimpCoords      *coords,
                                                       GimpDisplay           *display);
-static void   gimp_gradient_tool_halt                (GimpGradientTool         *gradient_tool);
-static void   gimp_gradient_tool_commit              (GimpGradientTool         *gradient_tool);
+static void   gimp_gradient_tool_halt                (GimpGradientTool      *gradient_tool);
+static void   gimp_gradient_tool_commit              (GimpGradientTool      *gradient_tool);
 
 static void   gimp_gradient_tool_line_changed        (GimpToolWidget        *widget,
-                                                      GimpGradientTool         *gradient_tool);
+                                                      GimpGradientTool      *gradient_tool);
 static void   gimp_gradient_tool_line_response       (GimpToolWidget        *widget,
                                                       gint                   response_id,
-                                                      GimpGradientTool         *gradient_tool);
+                                                      GimpGradientTool      *gradient_tool);
 
-static void   gimp_gradient_tool_precalc_shapeburst  (GimpGradientTool         *gradient_tool);
+static void   gimp_gradient_tool_precalc_shapeburst  (GimpGradientTool      *gradient_tool);
 
-static void   gimp_gradient_tool_create_graph        (GimpGradientTool         *gradient_tool);
-static void   gimp_gradient_tool_update_graph        (GimpGradientTool         *gradient_tool);
+static void   gimp_gradient_tool_create_graph        (GimpGradientTool      *gradient_tool);
+static void   gimp_gradient_tool_update_graph        (GimpGradientTool      *gradient_tool);
 
-static void   gimp_gradient_tool_fg_bg_changed       (GimpGradientTool         *gradient_tool);
+static void   gimp_gradient_tool_fg_bg_changed       (GimpGradientTool      *gradient_tool);
 
-static void   gimp_gradient_tool_gradient_dirty      (GimpGradientTool         *gradient_tool);
-static void   gimp_gradient_tool_set_gradient        (GimpGradientTool         *gradient_tool,
+static void   gimp_gradient_tool_gradient_dirty      (GimpGradientTool      *gradient_tool);
+static void   gimp_gradient_tool_set_gradient        (GimpGradientTool      *gradient_tool,
                                                       GimpGradient          *gradient);
 
-static gboolean gimp_gradient_tool_is_shapeburst     (GimpGradientTool         *gradient_tool);
+static gboolean gimp_gradient_tool_is_shapeburst     (GimpGradientTool      *gradient_tool);
 
-static void   gimp_gradient_tool_create_filter       (GimpGradientTool         *gradient_tool,
+static void   gimp_gradient_tool_create_filter       (GimpGradientTool      *gradient_tool,
                                                       GimpDrawable          *drawable);
+static GimpDrawableFilter * gimp_gradient_tool_create_nde_filter
+                                                     (GimpGradientTool      *gradient_tool,
+                                                      GeglNode              *copy_node,
+                                                      GimpDrawable          *drawable);
+static void   gimp_gradient_tool_copy_node           (GeglNode              *node,
+                                                      GeglNode              *copy_to_node);
 static void   gimp_gradient_tool_filter_flush        (GimpDrawableFilter    *filter,
                                                       GimpTool              *tool);
 
@@ -221,6 +229,8 @@ gimp_gradient_tool_init (GimpGradientTool *gradient_tool)
   gimp_tool_control_set_action_object_1    (tool->control,
                                             "context-gradient-select-set");
 
+  gradient_tool->existing_filter = NULL;
+
   gimp_draw_tool_set_default_status (GIMP_DRAW_TOOL (tool),
                                      _("Click-Drag to draw a gradient"));
 }
@@ -232,6 +242,7 @@ gimp_gradient_tool_dispose (GObject *object)
 
   gimp_gradient_tool_set_gradient (gradient_tool, NULL);
 
+  gradient_tool->existing_filter = NULL;
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -388,7 +399,7 @@ gimp_gradient_tool_button_release (GimpTool              *tool,
                                        coords, time, state, release_type);
       gradient_tool->grab_widget = NULL;
 
-      if (options->instant)
+      if (options->instant && ! gradient_tool->existing_filter)
         {
           if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
             gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
@@ -619,6 +630,25 @@ gimp_gradient_tool_options_notify (GimpTool         *tool,
                                      gimp_layer_mode_get_paint_composite_mode (
                                        gimp_context_get_paint_mode (context)));
     }
+  else if (gradient_tool->filter &&
+           ! strcmp (pspec->name, "create-as-live-filter"))
+    {
+      GimpContainer *filters = NULL;
+      gint           count;
+
+      filters = gimp_drawable_get_filters (tool->drawables->data);
+      count   = gimp_container_get_n_children (filters);
+
+      if (GIMP_GRADIENT_OPTIONS (options)->create_as_live_filter)
+        gimp_container_reorder (filters, GIMP_OBJECT (gradient_tool->filter),
+                                0);
+      else
+        gimp_container_reorder (filters, GIMP_OBJECT (gradient_tool->filter),
+                                count - 1);
+
+      gimp_drawable_update (tool->drawables->data, 0, 0, -1, -1);
+      gimp_image_flush (gimp_item_get_image (tool->drawables->data));
+    }
 
   gimp_gradient_tool_editor_options_notify (gradient_tool, options, pspec);
 }
@@ -700,21 +730,24 @@ gimp_gradient_tool_start (GimpGradientTool *gradient_tool,
 
   gimp_drawable_filter_apply (gradient_tool->filter, NULL);
 
-  /* Move this operation below any non-destructive filters that
+  /* If destructive, move this operation below any non-destructive filters that
    * may be active, so that it's directly affect the raw pixels. */
-  filters =
-    gimp_drawable_get_filters (gimp_drawable_filter_get_drawable (gradient_tool->filter));
+  if (! options->create_as_live_filter)
+    {
+      filters =
+        gimp_drawable_get_filters (gimp_drawable_filter_get_drawable (gradient_tool->filter));
 
-  if (gimp_container_have (filters, GIMP_OBJECT (gradient_tool->filter)))
-  {
-    gint end_index = gimp_container_get_n_children (filters) - 1;
-    gint index     = gimp_container_get_child_index (filters,
-                                                     GIMP_OBJECT (gradient_tool->filter));
+      if (gimp_container_have (filters, GIMP_OBJECT (gradient_tool->filter)))
+        {
+          gint end_index = gimp_container_get_n_children (filters) - 1;
+          gint index     = gimp_container_get_child_index (filters,
+                                                           GIMP_OBJECT (gradient_tool->filter));
 
-    if (end_index > 0 && index != end_index)
-      gimp_container_reorder (filters, GIMP_OBJECT (gradient_tool->filter),
-                              end_index);
-  }
+          if (end_index > 0 && index != end_index)
+            gimp_container_reorder (filters, GIMP_OBJECT (gradient_tool->filter),
+                                    end_index);
+        }
+    }
 }
 
 static void
@@ -771,14 +804,15 @@ gimp_gradient_tool_halt (GimpGradientTool *gradient_tool)
   g_list_free (tool->drawables);
   tool->drawables = NULL;
 
-  if (options->instant_toggle)
+  if (options->instant_toggle && ! gradient_tool->existing_filter)
     gtk_widget_set_sensitive (options->instant_toggle, TRUE);
 }
 
 static void
 gimp_gradient_tool_commit (GimpGradientTool *gradient_tool)
 {
-  GimpTool *tool = GIMP_TOOL (gradient_tool);
+  GimpTool            *tool    = GIMP_TOOL (gradient_tool);
+  GimpGradientOptions *options = GIMP_GRADIENT_TOOL_GET_OPTIONS (gradient_tool);
 
   if (gradient_tool->filter)
     {
@@ -790,8 +824,54 @@ gimp_gradient_tool_commit (GimpGradientTool *gradient_tool)
 
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_drawable_filter_commit (gradient_tool->filter, FALSE,
-                                   GIMP_PROGRESS (tool), FALSE);
+      if (gradient_tool->existing_filter != NULL)
+        {
+          GeglNode *existing_node;
+
+          existing_node =
+            gimp_drawable_filter_get_operation (gradient_tool->existing_filter);
+
+          gimp_image_undo_push_filter_modified (gimp_display_get_image (tool->display),
+                                                _("Edit filter"),
+                                                tool->drawables->data,
+                                                gradient_tool->existing_filter);
+
+          gimp_gradient_tool_copy_node (gradient_tool->render_node,
+                                        existing_node);
+
+          gimp_filter_set_active (GIMP_FILTER (gradient_tool->existing_filter),
+                                  TRUE);
+          gimp_drawable_update (tool->drawables->data, 0, 0, -1, -1);
+
+          gradient_tool->existing_filter = NULL;
+          gtk_widget_set_sensitive (options->instant_toggle, TRUE);
+          gtk_widget_set_sensitive (options->nde_filter_toggle, TRUE);
+        }
+      else if (options->create_as_live_filter)
+        {
+          GimpDrawableFilter *filter = NULL;
+
+          filter = gimp_gradient_tool_create_nde_filter (gradient_tool,
+                                                         gradient_tool->render_node,
+                                                         tool->drawables->data);
+
+          gimp_drawable_filter_commit (filter, TRUE, GIMP_PROGRESS (tool),
+                                       FALSE);
+
+          gimp_image_undo_push_filter_add (gimp_display_get_image (tool->display),
+                                           _("Gradient"),
+                                           tool->drawables->data,
+                                           filter);
+          g_object_unref (filter);
+        }
+
+      if (! options->create_as_live_filter &&
+          gradient_tool->existing_filter == NULL)
+        gimp_drawable_filter_commit (gradient_tool->filter, FALSE,
+                                     GIMP_PROGRESS (tool), FALSE);
+      else
+        gimp_drawable_filter_abort (gradient_tool->filter);
+
       g_clear_object (&gradient_tool->filter);
 
       gimp_tool_control_pop_preserve (tool->control);
@@ -1123,6 +1203,80 @@ gimp_gradient_tool_create_filter (GimpGradientTool *gradient_tool,
                     gradient_tool);
 }
 
+static GimpDrawableFilter *
+gimp_gradient_tool_create_nde_filter (GimpGradientTool *gradient_tool,
+                                      GeglNode         *copy_node,
+                                      GimpDrawable     *drawable)
+{
+  GimpImage           *image;
+  GimpChannel         *mask;
+  GimpDrawableFilter  *filter;
+  GimpGradientOptions *options  = GIMP_GRADIENT_TOOL_GET_OPTIONS (gradient_tool);
+  GimpContext         *context  = GIMP_CONTEXT (options);
+  GeglNode            *nde_node = gegl_node_new ();
+  const gchar         *op_name  = "gimp:gradient";
+
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  mask  = gimp_image_get_mask (image);
+
+  /* Use image context rather than tool options context so this
+   * persists after tool is changed out */
+  gegl_node_set (nde_node,
+                 "operation", op_name,
+                 "context",   gimp_get_user_context (image->gimp),
+                 NULL);
+
+  gimp_gradient_tool_copy_node (copy_node, nde_node);
+
+  filter = gimp_drawable_filter_new (drawable,
+                                     C_("undo-type", "Gradient"),
+                                     nde_node,
+                                     GIMP_ICON_TOOL_GRADIENT);
+  g_clear_object (&nde_node);
+
+  gimp_drawable_filter_set_region (filter,
+                                   GIMP_FILTER_REGION_DRAWABLE);
+  gimp_drawable_filter_set_opacity (filter,
+                                    gimp_context_get_opacity (context));
+  gimp_drawable_filter_set_mode (filter,
+                                 gimp_context_get_paint_mode (context),
+                                 GIMP_LAYER_COLOR_SPACE_AUTO,
+                                 GIMP_LAYER_COLOR_SPACE_AUTO,
+                                 gimp_layer_mode_get_paint_composite_mode (
+                                   gimp_context_get_paint_mode (context)));
+
+  gimp_drawable_filter_apply_with_mask (filter, mask, NULL);
+  gimp_drawable_filter_layer_mask_freeze (filter);
+
+  return filter;
+}
+
+static void
+gimp_gradient_tool_copy_node (GeglNode *node,
+                              GeglNode *copy_to_node)
+{
+  GParamSpec **pspecs;
+  guint        n_pspecs;
+
+  pspecs = gegl_operation_list_properties ("gimp:gradient", &n_pspecs);
+  for (gint i = 0; i < n_pspecs; i++)
+    {
+      GParamSpec *pspec = pspecs[i];
+      GValue      value = G_VALUE_INIT;
+
+      if (strcmp (pspec->name, "context") != 0)
+        {
+          g_value_init (&value, pspec->value_type);
+          gegl_node_get_property (node, pspec->name, &value);
+
+          gegl_node_set_property (copy_to_node, pspec->name,
+                                  &value);
+          g_value_unset (&value);
+        }
+    }
+  g_free (pspecs);
+}
+
 static void
 gimp_gradient_tool_filter_flush (GimpDrawableFilter *filter,
                                  GimpTool           *tool)
@@ -1130,6 +1284,99 @@ gimp_gradient_tool_filter_flush (GimpDrawableFilter *filter,
   GimpImage *image = gimp_display_get_image (tool->display);
 
   gimp_projection_flush (gimp_image_get_projection (image));
+}
+
+/*  public functions     */
+
+void
+gimp_gradient_tool_set_existing_filter (GimpGradientTool   *gradient_tool,
+                                        GimpDisplay        *display,
+                                        gint                drawable_id,
+                                        gint                filter_index)
+{
+  GimpTool                *tool    = GIMP_TOOL (gradient_tool);
+  GimpGradientOptions     *options = GIMP_GRADIENT_TOOL_GET_OPTIONS (gradient_tool);
+  GimpContext             *context = GIMP_CONTEXT (options);
+  GimpContainer           *filters;
+  GimpDrawable            *drawable;
+  GimpDrawableFilterMask  *mask;
+  GimpCoords               start_coords = { 0, 0 };
+  GimpCoords               end_coords   = { 0, 0 };
+  GeglNode                *existing_node;
+  gchar                   *name;
+
+  g_return_if_fail (GIMP_IS_GRADIENT_TOOL (gradient_tool));
+  g_return_if_fail (display != NULL || GIMP_IS_DISPLAY (display));
+
+  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (gimp_display_get_gimp (display),
+                                                 drawable_id));
+
+  g_return_if_fail (drawable != NULL || GIMP_IS_DRAWABLE (drawable));
+
+  filters = gimp_drawable_get_filters (drawable);
+  gradient_tool->existing_filter =
+    GIMP_DRAWABLE_FILTER (gimp_container_get_child_by_index (filters,
+                                                             filter_index));
+
+  g_return_if_fail (gradient_tool->existing_filter != NULL ||
+                    GIMP_IS_DRAWABLE_FILTER (gradient_tool->existing_filter));
+
+  gimp_filter_set_active (GIMP_FILTER (gradient_tool->existing_filter), FALSE);
+
+  existing_node =
+    gimp_drawable_filter_get_operation (gradient_tool->existing_filter);
+  gegl_node_get (existing_node,
+                 "start-x", &start_coords.x,
+                 "start-y", &start_coords.y,
+                 "end-x",   &end_coords.x,
+                 "end-y",   &end_coords.y,
+                 NULL);
+
+  gimp_gradient_tool_button_press (tool, &start_coords, 0, GDK_BUTTON1_MASK,
+                                   GIMP_BUTTON_PRESS_NORMAL, display);
+
+  g_object_set (gradient_tool->widget,
+                "x2", end_coords.x,
+                "y2", end_coords.y,
+                NULL);
+
+  gimp_gradient_tool_copy_node (existing_node, gradient_tool->render_node);
+
+  gimp_drawable_filter_set_temporary (gradient_tool->filter, TRUE);
+  gimp_drawable_filter_set_region (gradient_tool->filter,
+                                   GIMP_FILTER_REGION_DRAWABLE);
+  gimp_drawable_filter_set_opacity (gradient_tool->filter,
+                                    gimp_context_get_opacity (context));
+  gimp_drawable_filter_set_mode (gradient_tool->filter,
+                                 gimp_context_get_paint_mode (context),
+                                 GIMP_LAYER_COLOR_SPACE_AUTO,
+                                 GIMP_LAYER_COLOR_SPACE_AUTO,
+                                 gimp_layer_mode_get_paint_composite_mode (
+                                   gimp_context_get_paint_mode (context)));
+
+  mask = gimp_drawable_filter_get_mask (gradient_tool->existing_filter);
+  gimp_drawable_filter_apply_with_mask (gradient_tool->filter,
+                                        GIMP_CHANNEL (mask), NULL);
+  gimp_drawable_filter_layer_mask_freeze (gradient_tool->filter);
+
+  name = g_strdup_printf (_("Editing '%s'..."),
+                          gimp_object_get_name (gradient_tool->filter));
+  g_object_set (gradient_tool->filter, "name", name, NULL);
+  g_free (name);
+
+  gimp_container_reorder (filters, GIMP_OBJECT (gradient_tool->filter),
+                          filter_index);
+
+  /* Update gradient display */
+  gimp_gradient_tool_line_changed (gradient_tool->widget, gradient_tool);
+
+  gimp_gradient_tool_button_release (tool, &end_coords, 0, GDK_BUTTON1_MASK,
+                                     GIMP_BUTTON_RELEASE_NORMAL, display);
+
+  /* Temporary turn off instant mode since it would defeat the purpose of
+   * editing a filter */
+  gtk_widget_set_sensitive (options->instant_toggle, FALSE);
+  gtk_widget_set_sensitive (options->nde_filter_toggle, FALSE);
 }
 
 

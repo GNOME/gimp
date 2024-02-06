@@ -50,8 +50,11 @@ struct _GimpGradientOptions
   gboolean           instant;
   gboolean           modify_active;
 
+  gboolean           create_as_live_filter;
+
   /*  options gui  */
   GtkWidget         *instant_toggle;
+  GtkWidget         *nde_filter_toggle;
   GtkWidget         *modify_active_frame;
   GtkWidget         *modify_active_hint;
 };

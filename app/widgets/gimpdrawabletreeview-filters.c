@@ -41,6 +41,7 @@
 #include "core/gimplinklayer.h"
 #include "core/gimplist.h"
 #include "core/gimprasterizable.h"
+#include "core/gimptoolinfo.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo-push.h"
 
@@ -48,6 +49,7 @@
 
 #include "text/gimptextlayer.h"
 
+#include "tools/gimpgradienttool.h"
 #include "tools/tool_manager.h" /* FIXME */
 
 #include "gimpcontainerlistview.h"
@@ -655,22 +657,62 @@ gimp_drawable_filters_editor_edit_clicked (GtkWidget            *widget,
 
       if (operation)
         {
-          procedure = gimp_gegl_procedure_new (image->gimp,
-                                               editor->filter,
-                                               GIMP_RUN_INTERACTIVE, NULL,
-                                               operation,
-                                               name,
-                                               name,
-                                               NULL, NULL, NULL);
+          if (! strcmp (operation, "gimp:gradient"))
+            {
+              GimpTool      *active_tool = tool_manager_get_active (image->gimp);
+              GimpContext   *context     = gimp_get_user_context (image->gimp);
+              GimpContainer *filters;
+              gint           drawable_id;
+              gint           filter_index;
 
-          variant = g_variant_new_uint64 (GPOINTER_TO_SIZE (procedure));
-          g_variant_take_ref (variant);
-          filters_run_procedure (image->gimp,
-                                 gimp_context_get_display (gimp_get_user_context (image->gimp)),
-                                 procedure, GIMP_RUN_INTERACTIVE);
+              /* Since switching the active tool hides the popover, we need to
+               * get and store the filter index first, then pass it to the tool
+               * so it can retrieve the filter for editing */
+              drawable_id  = gimp_item_get_id (GIMP_ITEM (editor->drawable));
+              filters      = gimp_drawable_get_filters (editor->drawable);
+              filter_index =
+                gimp_container_get_child_index (filters,
+                                                GIMP_OBJECT (editor->filter));
 
-          g_variant_unref (variant);
-          g_object_unref (procedure);
+              if (! GIMP_IS_GRADIENT_TOOL (active_tool))
+                {
+                  GimpToolInfo *tool_info =
+                    gimp_get_tool_info (image->gimp, "gimp-gradient-tool");
+
+                  if (GIMP_IS_TOOL_INFO (tool_info))
+                    {
+                      gimp_context_set_tool (context, tool_info);
+                      active_tool = tool_manager_get_active (image->gimp);
+                    }
+                }
+
+                if (filter_index >= 0)
+                  {
+                    gimp_gradient_tool_set_existing_filter (GIMP_GRADIENT_TOOL (active_tool),
+                                                            gimp_context_get_display (context),
+                                                            drawable_id, filter_index);
+                    _gimp_drawable_tree_view_filter_editor_hide (view);
+                  }
+            }
+          else
+            {
+              procedure = gimp_gegl_procedure_new (image->gimp,
+                                                   editor->filter,
+                                                   GIMP_RUN_INTERACTIVE, NULL,
+                                                   operation,
+                                                   name,
+                                                   name,
+                                                   NULL, NULL, NULL);
+
+              variant = g_variant_new_uint64 (GPOINTER_TO_SIZE (procedure));
+              g_variant_take_ref (variant);
+              filters_run_procedure (image->gimp,
+                                     gimp_context_get_display (gimp_get_user_context (image->gimp)),
+                                     procedure, GIMP_RUN_INTERACTIVE);
+
+              g_variant_unref (variant);
+              g_object_unref (procedure);
+            }
         }
 
       g_free (name);
