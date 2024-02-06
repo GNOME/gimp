@@ -155,7 +155,11 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
 
           gimp_image_undo_push_filter_remove (gimp_item_get_image (GIMP_ITEM (drawable)),
                                               _("Merge filter"), drawable, filter);
-          gimp_drawable_filter_commit (filter, FALSE, NULL, TRUE);
+
+          if (gimp_filter_get_active (GIMP_FILTER (filter)))
+            gimp_drawable_filter_commit (filter, FALSE, NULL, TRUE);
+          else
+            gimp_drawable_remove_filter (drawable, GIMP_FILTER (filter));
         }
     }
 
