@@ -77,14 +77,6 @@ struct _GimpLayerTreeViewPrivate
   GtkAdjustment   *opacity_adjustment;
   GtkWidget       *anchor_button;
 
-  GtkWidget       *link_button;
-  GtkWidget       *link_popover;
-  GtkWidget       *new_link_button;
-  GtkWidget       *link_list;
-  GtkWidget       *link_entry;
-  GtkWidget       *link_search_entry;
-  GimpItemList    *link_pattern_set;
-
   gint             model_column_mask;
   gint             model_column_mask_visible;
 
@@ -104,8 +96,6 @@ static void       gimp_layer_tree_view_view_iface_init            (GimpContainer
 
 static void       gimp_layer_tree_view_constructed                (GObject                    *object);
 static void       gimp_layer_tree_view_finalize                   (GObject                    *object);
-
-static void       gimp_layer_tree_view_style_updated              (GtkWidget                  *widget);
 
 static void       gimp_layer_tree_view_set_container              (GimpContainerView          *view,
                                                                    GimpContainer              *container);
@@ -148,26 +138,6 @@ static void       gimp_layer_tree_view_set_image                  (GimpItemTreeV
                                                                    GimpImage                  *image);
 static GimpItem * gimp_layer_tree_view_item_new                   (GimpImage                  *image);
 static void       gimp_layer_tree_view_floating_selection_changed (GimpImage                  *image,
-                                                                   GimpLayerTreeView          *view);
-
-static void       gimp_layer_tree_view_layer_links_changed        (GimpImage                  *image,
-                                                                   GimpLayerTreeView          *view);
-static gboolean   gimp_layer_tree_view_link_clicked               (GtkWidget                  *box,
-                                                                   GdkEvent                   *event,
-                                                                   GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_link_popover_shown         (GtkPopover                 *popover,
-                                                                   GimpLayerTreeView          *view);
-
-static gboolean   gimp_layer_tree_view_search_key_release         (GtkWidget                  *widget,
-                                                                   GdkEventKey                *event,
-                                                                   GimpLayerTreeView          *view);
-static gboolean   gimp_layer_tree_view_start_interactive_search   (GtkTreeView                *tree_view,
-                                                                   GimpLayerTreeView          *layer_view);
-
-static void       gimp_layer_tree_view_new_link_exit              (GimpLayerTreeView          *view);
-static gboolean   gimp_layer_tree_view_new_link_clicked           (GimpLayerTreeView          *view);
-static gboolean   gimp_layer_tree_view_unlink_clicked             (GtkWidget                  *widget,
-                                                                   GdkEvent                   *event,
                                                                    GimpLayerTreeView          *view);
 
 static void       gimp_layer_tree_view_layer_mode_box_callback    (GtkWidget                  *widget,
@@ -225,16 +195,12 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   GObjectClass               *object_class = G_OBJECT_CLASS (klass);
   GimpContainerTreeViewClass *tree_view_class;
   GimpItemTreeViewClass      *item_view_class;
-  GtkWidgetClass             *widget_class;
 
-  widget_class    = GTK_WIDGET_CLASS (klass);
   tree_view_class = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
   item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   object_class->constructed = gimp_layer_tree_view_constructed;
   object_class->finalize    = gimp_layer_tree_view_finalize;
-
-  widget_class->style_updated      = gimp_layer_tree_view_style_updated;
 
   tree_view_class->drop_possible   = gimp_layer_tree_view_drop_possible;
   tree_view_class->drop_color      = gimp_layer_tree_view_drop_color;
@@ -289,8 +255,6 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   PangoAttribute        *attr;
 
   view->priv = gimp_layer_tree_view_get_instance_private (view);
-
-  view->priv->link_pattern_set = NULL;
 
   view->priv->model_column_mask =
     gimp_container_tree_store_columns_add (tree_view->model_columns,
@@ -351,10 +315,6 @@ gimp_layer_tree_view_constructed (GObject *object)
   GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (object);
   GimpLayerTreeView     *layer_view = GIMP_LAYER_TREE_VIEW (object);
   GtkWidget             *button;
-  GtkWidget             *placeholder;
-  GtkWidget             *grid;
-  PangoAttrList         *attrs;
-  GtkIconSize            button_size;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -438,111 +398,6 @@ gimp_layer_tree_view_constructed (GObject *object)
   gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
                          button, 7);
 
-  /* Link popover menu. */
-
-  layer_view->priv->link_button = gtk_menu_button_new ();
-  gtk_widget_set_tooltip_text (layer_view->priv->link_button,
-                               _("Select layers by patterns and store layer sets"));
-  gtk_widget_style_get (GTK_WIDGET (layer_view),
-                        "button-icon-size", &button_size,
-                        NULL);
-  gtk_button_set_image (GTK_BUTTON (layer_view->priv->link_button),
-                        gtk_image_new_from_icon_name (GIMP_ICON_LINKED,
-                                                      button_size));
-  gtk_box_pack_start (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
-                      layer_view->priv->link_button, TRUE, TRUE, 0);
-  gtk_widget_show (layer_view->priv->link_button);
-  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
-                                  GTK_BUTTON (layer_view->priv->link_button),
-                                  GIMP_TYPE_LAYER);
-  gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
-                         layer_view->priv->link_button, 8);
-
-  layer_view->priv->link_popover = gtk_popover_new (layer_view->priv->link_button);
-  gtk_popover_set_modal (GTK_POPOVER (layer_view->priv->link_popover), TRUE);
-  gtk_menu_button_set_popover (GTK_MENU_BUTTON (layer_view->priv->link_button),
-                               layer_view->priv->link_popover);
-
-  g_signal_connect (layer_view->priv->link_popover,
-                    "show",
-                    G_CALLBACK (gimp_layer_tree_view_link_popover_shown),
-                    layer_view);
-
-  grid = gtk_grid_new ();
-
-  /* Link popover: regexp search. */
-  layer_view->priv->link_search_entry = gtk_entry_new ();
-  gtk_entry_set_icon_from_icon_name (GTK_ENTRY (layer_view->priv->link_search_entry),
-                                     GTK_ENTRY_ICON_SECONDARY,
-                                     "system-search");
-  gtk_grid_attach (GTK_GRID (grid),
-                   layer_view->priv->link_search_entry,
-                   0, 0, 2, 1);
-  gtk_widget_show (layer_view->priv->link_search_entry);
-  g_signal_connect (layer_view->priv->link_search_entry,
-                    "key-release-event",
-                    G_CALLBACK (gimp_layer_tree_view_search_key_release),
-                    layer_view);
-
-  g_signal_connect (GIMP_CONTAINER_TREE_VIEW (layer_view)->view,
-                    "start-interactive-search",
-                    G_CALLBACK (gimp_layer_tree_view_start_interactive_search),
-                    layer_view);
-  gtk_tree_view_set_search_entry (GIMP_CONTAINER_TREE_VIEW (layer_view)->view,
-                                  GTK_ENTRY (layer_view->priv->link_search_entry));
-
-  /* Link popover: existing links. */
-  layer_view->priv->link_list = gtk_list_box_new ();
-  placeholder = gtk_label_new (_("No layer set stored"));
-  attrs = pango_attr_list_new ();
-  gtk_label_set_attributes (GTK_LABEL (placeholder),
-                            attrs);
-  pango_attr_list_insert (attrs, pango_attr_style_new (PANGO_STYLE_ITALIC));
-  pango_attr_list_insert (attrs, pango_attr_weight_new (PANGO_WEIGHT_ULTRALIGHT));
-  pango_attr_list_unref (attrs);
-  gtk_list_box_set_placeholder (GTK_LIST_BOX (layer_view->priv->link_list),
-                                placeholder);
-  gtk_widget_show (placeholder);
-  gtk_grid_attach (GTK_GRID (grid),
-                   layer_view->priv->link_list,
-                   0, 1, 2, 1);
-  gtk_widget_show (layer_view->priv->link_list);
-
-  gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (layer_view->priv->link_list),
-                                             TRUE);
-
-  /* Link popover: new links. */
-
-  layer_view->priv->link_entry = gtk_entry_new ();
-  gtk_entry_set_placeholder_text (GTK_ENTRY (layer_view->priv->link_entry),
-                                  _("New layer set's name"));
-  gtk_grid_attach (GTK_GRID (grid),
-                   layer_view->priv->link_entry,
-                   0, 2, 1, 1);
-  gtk_widget_show (layer_view->priv->link_entry);
-
-  button = gtk_button_new_from_icon_name (GIMP_ICON_LIST_ADD, button_size);
-  gtk_grid_attach (GTK_GRID (grid),
-                   button,
-                   1, 2, 1, 1);
-  g_signal_connect_swapped (button,
-                            "clicked",
-                            G_CALLBACK (gimp_layer_tree_view_new_link_clicked),
-                            layer_view);
-  gtk_widget_show (button);
-  layer_view->priv->new_link_button = button;
-
-  /* Enter on any entry activates the link creation then exits in case
-   * of success.
-   */
-  g_signal_connect_swapped (layer_view->priv->link_entry,
-                            "activate",
-                            G_CALLBACK (gimp_layer_tree_view_new_link_exit),
-                            layer_view);
-
-  gtk_container_add (GTK_CONTAINER (layer_view->priv->link_popover), grid);
-  gtk_widget_show (grid);
-
   /*  Lock alpha toggle  */
 
   gimp_item_tree_view_add_lock (GIMP_ITEM_TREE_VIEW (tree_view),
@@ -581,50 +436,6 @@ gimp_layer_tree_view_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-
-/*  GimpWidget methods  */
-
-static void
-gimp_layer_tree_view_style_updated (GtkWidget *widget)
-{
-  GimpLayerTreeView *view = GIMP_LAYER_TREE_VIEW (widget);
-  GtkWidget         *image;
-  const gchar       *old_icon_name;
-  GtkReliefStyle     button_relief;
-  GtkIconSize        old_size;
-  GtkIconSize        button_size;
-
-  gtk_widget_style_get (widget,
-                        "button-relief",    &button_relief,
-                        "button-icon-size", &button_size,
-                        NULL);
-
-  gtk_button_set_relief (GTK_BUTTON (view->priv->link_button),
-                         button_relief);
-
-  image = gtk_button_get_image (GTK_BUTTON (view->priv->link_button));
-
-  gtk_image_get_icon_name (GTK_IMAGE (image), &old_icon_name, &old_size);
-
-  if (button_size != old_size)
-    {
-      gchar *icon_name;
-
-      /* Changing the link button in dockable button box. */
-      icon_name = g_strdup (old_icon_name);
-      gtk_image_set_from_icon_name (GTK_IMAGE (image),
-                                    icon_name, button_size);
-      g_free (icon_name);
-
-      /* Changing the new link button inside the popover. */
-      image = gtk_button_get_image (GTK_BUTTON (view->priv->new_link_button));
-      gtk_image_get_icon_name (GTK_IMAGE (image), &old_icon_name, &old_size);
-      icon_name = g_strdup (old_icon_name);
-      gtk_image_set_from_icon_name (GTK_IMAGE (image),
-                                    icon_name, button_size);
-      g_free (icon_name);
-    }
-}
 
 /*  GimpContainerView methods  */
 
@@ -713,34 +524,8 @@ gimp_layer_tree_view_set_context (GimpContainerView *view,
 {
   GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (view);
   GimpLayerTreeView     *layer_view = GIMP_LAYER_TREE_VIEW (view);
-  GimpContext           *old_context;
-
-  old_context = gimp_container_view_get_context (view);
-
-  if (old_context)
-    {
-      g_signal_handlers_disconnect_by_func (old_context->gimp->config,
-                                            G_CALLBACK (gimp_layer_tree_view_style_updated),
-                                            view);
-    }
 
   parent_view_iface->set_context (view, context);
-
-  if (context)
-    {
-      g_signal_connect_object (context->gimp->config,
-                               "notify::theme",
-                               G_CALLBACK (gimp_layer_tree_view_style_updated),
-                               view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
-      g_signal_connect_object (context->gimp->config,
-                               "notify::override-theme-icon-size",
-                               G_CALLBACK (gimp_layer_tree_view_style_updated),
-                               view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
-      g_signal_connect_object (context->gimp->config,
-                               "notify::custom-icon-size",
-                               G_CALLBACK (gimp_layer_tree_view_style_updated),
-                               view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
-    }
 
   if (tree_view->model)
     {
@@ -1116,9 +901,6 @@ gimp_layer_tree_view_set_image (GimpItemTreeView *view,
       g_signal_handlers_disconnect_by_func (gimp_item_tree_view_get_image (view),
                                             gimp_layer_tree_view_floating_selection_changed,
                                             view);
-      g_signal_handlers_disconnect_by_func (gimp_item_tree_view_get_image (view),
-                                            G_CALLBACK (gimp_layer_tree_view_layer_links_changed),
-                                            view);
     }
 
   GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (view, image);
@@ -1129,10 +911,6 @@ gimp_layer_tree_view_set_image (GimpItemTreeView *view,
                         "floating-selection-changed",
                         G_CALLBACK (gimp_layer_tree_view_floating_selection_changed),
                         view);
-      g_signal_connect (gimp_item_tree_view_get_image (view),
-                        "layer-sets-changed",
-                        G_CALLBACK (gimp_layer_tree_view_layer_links_changed),
-                        view);
 
       /* call gimp_layer_tree_view_floating_selection_changed() now, to update
        * the floating selection's row attributes.
@@ -1141,9 +919,6 @@ gimp_layer_tree_view_set_image (GimpItemTreeView *view,
         gimp_item_tree_view_get_image (view),
         layer_view);
     }
-  /* Call this even with no image, allowing to empty the link list. */
-  gimp_layer_tree_view_layer_links_changed (gimp_item_tree_view_get_image (view),
-                                            layer_view);
 
   gimp_layer_tree_view_update_highlight (layer_view);
 }
@@ -1220,354 +995,7 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
       g_list_free (all_layers);
     }
 
-  gtk_widget_set_sensitive (layer_view->priv->link_button, ! floating_sel);
-
   gimp_layer_tree_view_update_highlight (layer_view);
-}
-
-static void
-gimp_layer_tree_view_layer_links_changed (GimpImage         *image,
-                                          GimpLayerTreeView *view)
-{
-  GtkWidget    *grid;
-  GtkWidget    *label;
-  GtkWidget    *event_box;
-  GtkWidget    *icon;
-  GtkSizeGroup *label_size;
-  GList        *links;
-  GList        *iter;
-
-  gtk_container_foreach (GTK_CONTAINER (view->priv->link_list),
-                         (GtkCallback) gtk_widget_destroy, NULL);
-  gtk_widget_set_sensitive (view->priv->link_button, image != NULL);
-
-  if (! image)
-    return;
-
-  links = gimp_image_get_stored_item_sets (image, GIMP_TYPE_LAYER);
-
-  label_size = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
-  for (iter = links; iter; iter = iter->next)
-    {
-      GimpSelectMethod method;
-
-      grid = gtk_grid_new ();
-
-      label = gtk_label_new (gimp_object_get_name (iter->data));
-      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      if (gimp_item_list_is_pattern (iter->data, &method))
-        {
-          gchar         *display_name;
-          PangoAttrList *attrs;
-
-          display_name = g_strdup_printf ("<small>[%s]</small> %s",
-                                          method == GIMP_SELECT_PLAIN_TEXT ? _("search") :
-                                          (method == GIMP_SELECT_GLOB_PATTERN ? _("glob") : _("regexp")),
-                                          gimp_object_get_name (iter->data));
-          gtk_label_set_markup (GTK_LABEL (label), display_name);
-          g_free (display_name);
-
-          attrs = pango_attr_list_new ();
-          pango_attr_list_insert (attrs, pango_attr_style_new (PANGO_STYLE_OBLIQUE));
-          gtk_label_set_attributes (GTK_LABEL (label), attrs);
-          pango_attr_list_unref (attrs);
-        }
-      gtk_widget_set_hexpand (GTK_WIDGET (label), TRUE);
-      gtk_widget_set_halign (GTK_WIDGET (label), GTK_ALIGN_START);
-      gtk_size_group_add_widget (label_size, label);
-      gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
-      gtk_widget_show (label);
-
-      /* I don't use a GtkButton because the minimum size is 16 which is
-       * weird and ugly here. And somehow if I force smaller GtkImage
-       * size then add it to the GtkButton, I still get a giant button
-       * with a small image in it, which is even worse. XXX
-       */
-      event_box = gtk_event_box_new ();
-      gtk_event_box_set_above_child (GTK_EVENT_BOX (event_box), TRUE);
-      gtk_widget_add_events (event_box, GDK_BUTTON_RELEASE_MASK);
-      g_object_set_data (G_OBJECT (event_box), "link-set", iter->data);
-      g_signal_connect (event_box, "button-release-event",
-                        G_CALLBACK (gimp_layer_tree_view_unlink_clicked),
-                        view);
-      gtk_grid_attach (GTK_GRID (grid), event_box, 2, 0, 1, 1);
-      gtk_widget_show (event_box);
-
-      icon = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_DELETE, GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (GTK_IMAGE (icon), 10);
-      gtk_container_add (GTK_CONTAINER (event_box), icon);
-      gtk_widget_show (icon);
-
-      /* Now using again an event box on the whole grid, but behind its
-       * child (so that the delete button is processed first. I do it
-       * this way instead of using the "row-activated" of GtkListBox
-       * because this signal does not give us event info, and in
-       * particular modifier state. Yet I want to be able to process
-       * Shift/Ctrl state for logical operations on layer sets.
-       */
-      event_box = gtk_event_box_new ();
-      gtk_event_box_set_above_child (GTK_EVENT_BOX (event_box), FALSE);
-      gtk_widget_add_events (event_box, GDK_BUTTON_RELEASE_MASK);
-      g_object_set_data (G_OBJECT (event_box), "link-set", iter->data);
-      gtk_container_add (GTK_CONTAINER (event_box), grid);
-      gtk_list_box_prepend (GTK_LIST_BOX (view->priv->link_list), event_box);
-      gtk_widget_show (event_box);
-
-      g_signal_connect (event_box,
-                        "button-release-event",
-                        G_CALLBACK (gimp_layer_tree_view_link_clicked),
-                        view);
-
-      gtk_widget_show (grid);
-    }
-  g_object_unref (label_size);
-  gtk_list_box_unselect_all (GTK_LIST_BOX (view->priv->link_list));
-}
-
-static gboolean
-gimp_layer_tree_view_link_clicked (GtkWidget         *box,
-                                   GdkEvent          *event,
-                                   GimpLayerTreeView *view)
-{
-  GimpImage       *image;
-  GdkEventButton  *bevent = (GdkEventButton *) event;
-  GdkModifierType  modifiers;
-
-  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GTK_IS_EVENT_BOX (box), FALSE);
-
-  modifiers = bevent->state & gimp_get_all_modifiers_mask ();
-  if (modifiers == GDK_SHIFT_MASK)
-    gimp_image_add_item_set (image, g_object_get_data (G_OBJECT (box), "link-set"));
-  else if (modifiers == GDK_CONTROL_MASK)
-    gimp_image_remove_item_set (image, g_object_get_data (G_OBJECT (box), "link-set"));
-  else if (modifiers == (GDK_CONTROL_MASK | GDK_SHIFT_MASK))
-    gimp_image_intersect_item_set (image, g_object_get_data (G_OBJECT (box), "link-set"));
-  else
-    gimp_image_select_item_set (image, g_object_get_data (G_OBJECT (box), "link-set"));
-
-  gtk_entry_set_text (GTK_ENTRY (view->priv->link_search_entry), "");
-  /* TODO: if clicking on pattern link, fill in the pattern field? */
-
-  return FALSE;
-}
-
-static void
-gimp_layer_tree_view_link_popover_shown (GtkPopover    *popover,
-                                         GimpLayerTreeView *view)
-{
-  GimpImage        *image;
-  GimpSelectMethod  pattern_syntax;
-
-  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
-
-  if (! image)
-    {
-      gtk_widget_set_tooltip_text (view->priv->link_search_entry,
-                                   _("Select layers by text search"));
-      gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_search_entry),
-                                      _("Text search"));
-      return;
-    }
-
-  g_object_get (image->gimp->config,
-                "items-select-method", &pattern_syntax,
-                NULL);
-  switch (pattern_syntax)
-    {
-    case GIMP_SELECT_PLAIN_TEXT:
-      gtk_widget_set_tooltip_text (view->priv->link_search_entry,
-                                   _("Select layers by text search"));
-      gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_search_entry),
-                                      _("Text search"));
-      break;
-    case GIMP_SELECT_GLOB_PATTERN:
-      gtk_widget_set_tooltip_text (view->priv->link_search_entry,
-                                   _("Select layers by glob patterns"));
-      gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_search_entry),
-                                      _("Glob pattern search"));
-      break;
-    case GIMP_SELECT_REGEX_PATTERN:
-      gtk_widget_set_tooltip_text (view->priv->link_search_entry,
-                                   _("Select layers by regular expressions"));
-      gtk_entry_set_placeholder_text (GTK_ENTRY (view->priv->link_search_entry),
-                                      _("Regular Expression search"));
-      break;
-    }
-}
-
-static gboolean
-gimp_layer_tree_view_search_key_release (GtkWidget         *widget,
-                                         GdkEventKey       *event,
-                                         GimpLayerTreeView *view)
-{
-  GimpImage        *image;
-  const gchar      *pattern;
-  GimpSelectMethod  pattern_syntax;
-
-  if (event->keyval == GDK_KEY_Escape   ||
-      event->keyval == GDK_KEY_Return   ||
-      event->keyval == GDK_KEY_KP_Enter ||
-      event->keyval == GDK_KEY_ISO_Enter)
-    {
-      if (event->state & GDK_SHIFT_MASK)
-        {
-          if (gimp_layer_tree_view_new_link_clicked (view))
-            gtk_widget_hide (view->priv->link_popover);
-        }
-      else
-        {
-          gtk_widget_hide (view->priv->link_popover);
-        }
-      return TRUE;
-    }
-
-  gtk_entry_set_attributes (GTK_ENTRY (view->priv->link_search_entry),
-                            NULL);
-
-  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
-  g_clear_object (&view->priv->link_pattern_set);
-
-  if (! image)
-    return TRUE;
-
-  g_object_get (image->gimp->config,
-                "items-select-method", &pattern_syntax,
-                NULL);
-  pattern = gtk_entry_get_text (GTK_ENTRY (view->priv->link_search_entry));
-  if (pattern && strlen (pattern) > 0)
-    {
-      GList  *items;
-      GError *error = NULL;
-
-      gtk_entry_set_text (GTK_ENTRY (view->priv->link_entry), "");
-      gtk_widget_set_sensitive (view->priv->link_entry, FALSE);
-
-      view->priv->link_pattern_set = gimp_item_list_pattern_new (image,
-                                                                 GIMP_TYPE_LAYER,
-                                                                 pattern_syntax,
-                                                                 pattern);
-      items = gimp_item_list_get_items (view->priv->link_pattern_set, &error);
-      if (error)
-        {
-          /* Invalid regular expression. */
-          PangoAttrList *attrs = pango_attr_list_new ();
-          gchar         *tooltip;
-
-          pango_attr_list_insert (attrs, pango_attr_strikethrough_new (TRUE));
-          tooltip = g_strdup_printf (_("Invalid regular expression: %s\n"),
-                                     error->message);
-          gtk_widget_set_tooltip_text (view->priv->link_search_entry,
-                                       tooltip);
-          gimp_image_set_selected_layers (image, NULL);
-          gtk_entry_set_attributes (GTK_ENTRY (view->priv->link_search_entry),
-                                    attrs);
-          g_free (tooltip);
-          g_error_free (error);
-          pango_attr_list_unref (attrs);
-
-          g_clear_object (&view->priv->link_pattern_set);
-        }
-      else if (items == NULL)
-        {
-          /* Pattern does not match any results. */
-          gimp_image_set_selected_layers (image, NULL);
-          gimp_widget_blink (view->priv->link_search_entry);
-        }
-      else
-        {
-          gimp_image_set_selected_layers (image, items);
-          g_list_free (items);
-        }
-    }
-  else
-    {
-      gtk_widget_set_sensitive (view->priv->link_entry, TRUE);
-    }
-
-  return TRUE;
-}
-
-static gboolean
-gimp_layer_tree_view_start_interactive_search (GtkTreeView       *tree_view,
-                                               GimpLayerTreeView *layer_view)
-{
-  gtk_widget_show (layer_view->priv->link_popover);
-  gtk_widget_grab_focus (layer_view->priv->link_search_entry);
-
-  return FALSE;
-}
-
-static void
-gimp_layer_tree_view_new_link_exit (GimpLayerTreeView *view)
-{
-  if (gimp_layer_tree_view_new_link_clicked (view))
-    gtk_widget_hide (view->priv->link_popover);
-}
-
-static gboolean
-gimp_layer_tree_view_new_link_clicked (GimpLayerTreeView *view)
-{
-  GimpImage   *image;
-  const gchar *name;
-
-  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
-
-  if (! image)
-    return TRUE;
-
-  name = gtk_entry_get_text (GTK_ENTRY (view->priv->link_entry));
-  if (name && strlen (name) > 0)
-    {
-      GimpItemList *set;
-
-      set = gimp_item_list_named_new (image, GIMP_TYPE_LAYER, name, NULL);
-      if (set)
-        {
-          gimp_image_store_item_set (image, set);
-          gtk_entry_set_text (GTK_ENTRY (view->priv->link_entry), "");
-        }
-      else
-        {
-          /* No existing selection. */
-          return FALSE;
-        }
-    }
-  else if (view->priv->link_pattern_set != NULL)
-    {
-      gimp_image_store_item_set (image, view->priv->link_pattern_set);
-      view->priv->link_pattern_set = NULL;
-      gtk_entry_set_text (GTK_ENTRY (view->priv->link_search_entry), "");
-    }
-  else
-    {
-      gimp_widget_blink (view->priv->link_entry);
-      gimp_widget_blink (view->priv->link_search_entry);
-
-      return FALSE;
-    }
-
-  return TRUE;
-}
-
-static gboolean
-gimp_layer_tree_view_unlink_clicked (GtkWidget         *widget,
-                                     GdkEvent          *event,
-                                     GimpLayerTreeView *view)
-{
-  GimpImage *image;
-
-  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-
-  gimp_image_unlink_item_set (image,
-                              g_object_get_data (G_OBJECT (widget),
-                                                 "link-set"));
-
-  return TRUE;
 }
 
 

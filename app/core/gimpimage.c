@@ -130,9 +130,7 @@ enum
   PARASITE_DETACHED,
   COLORMAP_CHANGED,
   UNDO_EVENT,
-  LAYER_SETS_CHANGED,
-  CHANNEL_SETS_CHANGED,
-  VECTORS_SETS_CHANGED,
+  ITEM_SETS_CHANGED,
   LAST_SIGNAL
 };
 
@@ -587,29 +585,14 @@ gimp_image_class_init (GimpImageClass *klass)
                   GIMP_TYPE_UNDO_EVENT,
                   GIMP_TYPE_UNDO);
 
-  gimp_image_signals[LAYER_SETS_CHANGED] =
-    g_signal_new ("layer-sets-changed",
+  gimp_image_signals[ITEM_SETS_CHANGED] =
+    g_signal_new ("item-sets-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, layer_sets_changed),
+                  G_STRUCT_OFFSET (GimpImageClass, item_sets_changed),
                   NULL, NULL, NULL,
-                  G_TYPE_NONE, 0);
-
-  gimp_image_signals[CHANNEL_SETS_CHANGED] =
-    g_signal_new ("channel-sets-changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, channel_sets_changed),
-                  NULL, NULL, NULL,
-                  G_TYPE_NONE, 0);
-
-  gimp_image_signals[VECTORS_SETS_CHANGED] =
-    g_signal_new ("vectors-sets-changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, vectors_sets_changed),
-                  NULL, NULL, NULL,
-                  G_TYPE_NONE, 0);
+                  G_TYPE_NONE, 1,
+                  G_TYPE_GTYPE);
 
   object_class->constructed           = gimp_image_constructed;
   object_class->set_property          = gimp_image_set_property;
@@ -5476,31 +5459,23 @@ gimp_image_store_item_set (GimpImage    *image,
   GList            **stored_sets;
   GList             *iter;
   guint              signal;
+  GType              item_type;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_ITEM_LIST (set));
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (gimp_item_list_get_item_type (set) == GIMP_TYPE_LAYER)
-    {
-      stored_sets = &private->stored_layer_sets;
-      signal = gimp_image_signals[LAYER_SETS_CHANGED];
-    }
-  else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_CHANNEL)
-    {
-      stored_sets = &private->stored_channel_sets;
-      signal = gimp_image_signals[CHANNEL_SETS_CHANGED];
-    }
-  else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_VECTORS)
-    {
-      stored_sets = &private->stored_vectors_sets;
-      signal = gimp_image_signals[VECTORS_SETS_CHANGED];
-    }
+  signal    = gimp_image_signals[ITEM_SETS_CHANGED];
+  item_type = gimp_item_list_get_item_type (set);
+  if (item_type == GIMP_TYPE_LAYER)
+    stored_sets = &private->stored_layer_sets;
+  else if (item_type == GIMP_TYPE_CHANNEL)
+    stored_sets = &private->stored_channel_sets;
+  else if (item_type == GIMP_TYPE_VECTORS)
+    stored_sets = &private->stored_vectors_sets;
   else
-    {
-      g_return_if_reached ();
-    }
+    g_return_if_reached ();
 
   for (iter = *stored_sets; iter; iter = iter->next)
     {
@@ -5524,7 +5499,7 @@ gimp_image_store_item_set (GimpImage    *image,
     }
 
   *stored_sets = g_list_prepend (*stored_sets, set);
-  g_signal_emit (image, signal, 0);
+  g_signal_emit (image, signal, 0, item_type);
 }
 
 /*
@@ -5545,31 +5520,23 @@ gimp_image_unlink_item_set (GimpImage    *image,
   GList             *found;
   GList            **stored_sets;
   guint              signal;
+  GType              item_type;
   gboolean           success;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (gimp_item_list_get_item_type (set) == GIMP_TYPE_LAYER)
-    {
-      stored_sets = &private->stored_layer_sets;
-      signal = gimp_image_signals[LAYER_SETS_CHANGED];
-    }
-  else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_CHANNEL)
-    {
-      stored_sets = &private->stored_channel_sets;
-      signal = gimp_image_signals[CHANNEL_SETS_CHANGED];
-    }
-  else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_VECTORS)
-    {
-      stored_sets = &private->stored_vectors_sets;
-      signal = gimp_image_signals[VECTORS_SETS_CHANGED];
-    }
+  signal    = gimp_image_signals[ITEM_SETS_CHANGED];
+  item_type = gimp_item_list_get_item_type (set);
+  if (item_type == GIMP_TYPE_LAYER)
+    stored_sets = &private->stored_layer_sets;
+  else if (item_type == GIMP_TYPE_CHANNEL)
+    stored_sets = &private->stored_channel_sets;
+  else if (item_type == GIMP_TYPE_VECTORS)
+    stored_sets = &private->stored_vectors_sets;
   else
-    {
-      g_return_val_if_reached (FALSE);
-    }
+    g_return_val_if_reached (FALSE);
 
   found = g_list_find (*stored_sets, set);
   success = (found != NULL);
@@ -5577,7 +5544,7 @@ gimp_image_unlink_item_set (GimpImage    *image,
     {
       *stored_sets = g_list_delete_link (*stored_sets, found);
       g_object_unref (set);
-      g_signal_emit (image, signal, 0);
+      g_signal_emit (image, signal, 0, item_type);
     }
 
   return success;

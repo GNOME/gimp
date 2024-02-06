@@ -103,9 +103,8 @@ struct _GimpImageClass
   void (* undo_event)                   (GimpImage            *image,
                                          GimpUndoEvent         event,
                                          GimpUndo             *undo);
-  void (* layer_sets_changed)           (GimpImage            *image);
-  void (* channel_sets_changed)         (GimpImage            *image);
-  void (* vectors_sets_changed)         (GimpImage            *image);
+  void (* item_sets_changed)            (GimpImage            *image,
+                                         GType                 item_type);
 };
 
 
