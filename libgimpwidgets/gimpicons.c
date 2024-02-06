@@ -48,7 +48,7 @@
 
 #define LIBGIMP_DOMAIN          GETTEXT_PACKAGE "-libgimp"
 #define GIMP_TOILET_PAPER       "gimp-toilet-paper"
-#define GIMP_DEFAULT_ICON_THEME "Symbolic"
+#define GIMP_DEFAULT_ICON_THEME "Default"
 
 
 static GFile *icon_theme_path     = NULL;
