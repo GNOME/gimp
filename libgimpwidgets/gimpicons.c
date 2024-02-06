@@ -208,16 +208,16 @@ gimp_icons_set_icon_theme (GFile *path)
               g_object_unref (icon_theme_path);
               icon_theme_path = g_object_ref (path);
             }
-
-          g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
-                        "gtk-icon-theme-name", icon_theme_name,
-                        NULL);
         }
       else
         {
           /*  this is the first call upon initialization  */
           icon_theme_path = g_object_ref (path);
         }
+
+      g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
+                    "gtk-icon-theme-name", icon_theme_name,
+                    NULL);
 
       success = TRUE;
     }
