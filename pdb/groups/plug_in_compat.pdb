@@ -45,14 +45,14 @@ HELP
 	  desc => 'Blue/luminance component frequency factor' },
 	{ name => 'blueangle', type => '0 <= float <= 360',
 	  desc => 'Blue/luminance component angle factor (0-360)' },
-	{ name => 'colormodel', type => '0 <= uchar <= 1',
+	{ name => 'colormodel', type => '0 <= int32 <= 1',
 	  desc => 'Color model { RGB-MODEL (0), HSL-MODEL (1) }' },
-	{ name => 'redmode', type => '0 <= uchar <= 1',
-	  desc => 'Red/hue application mode { TRUE, FALSE }' },
-	{ name => 'greenmode', type => '0 <= uchar <= 1',
-	  desc => 'Green/saturation application mode { TRUE, FALSE }' },
-	{ name => 'bluemode', type => '0 <= uchar <= 1',
-	  desc => 'Blue/luminance application mode { TRUE, FALSE }' }
+	{ name => 'redmode', type => 'boolean',
+	  desc => 'Red/hue application mode' },
+	{ name => 'greenmode', type => 'boolean',
+	  desc => 'Green/saturation application mode' },
+	{ name => 'bluemode', type => 'boolean',
+	  desc => 'Blue/luminance application mode' }
     );
 
     %invoke = (
@@ -2276,9 +2276,9 @@ HELP
 	  desc => 'Width of the passages' },
 	{ name => 'height', type => '1 <= int32 <= 1024',
 	  desc => 'Height of the passages' },
-	{ name => 'tileable', type => '0 <= uchar <= 1',
-	  desc => 'Tileable maze? (TRUE or FALSE)' },
-	{ name => 'algorithm', type => '0 <= uchar <= 1',
+	{ name => 'tileable', type => 'boolean',
+	  desc => 'Tileable maze?' },
+	{ name => 'algorithm', type => '0 <= int32 <= 1',
 	  desc => 'Generation algorithm (0 = DEPTH FIRST, 1 = PRIM\'S ALGORITHM)' },
 	{ name => 'seed', type => 'int32',
 	  desc => 'Random Seed' },

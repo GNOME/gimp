@@ -442,10 +442,10 @@ plug_in_alienmap2_invoker (GimpProcedure         *procedure,
   gdouble greenangle;
   gdouble bluefrequency;
   gdouble blueangle;
-  guchar colormodel;
-  guchar redmode;
-  guchar greenmode;
-  guchar bluemode;
+  gint colormodel;
+  gboolean redmode;
+  gboolean greenmode;
+  gboolean bluemode;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 2));
   redfrequency = g_value_get_double (gimp_value_array_index (args, 3));
@@ -454,10 +454,10 @@ plug_in_alienmap2_invoker (GimpProcedure         *procedure,
   greenangle = g_value_get_double (gimp_value_array_index (args, 6));
   bluefrequency = g_value_get_double (gimp_value_array_index (args, 7));
   blueangle = g_value_get_double (gimp_value_array_index (args, 8));
-  colormodel = g_value_get_uchar (gimp_value_array_index (args, 9));
-  redmode = g_value_get_uchar (gimp_value_array_index (args, 10));
-  greenmode = g_value_get_uchar (gimp_value_array_index (args, 11));
-  bluemode = g_value_get_uchar (gimp_value_array_index (args, 12));
+  colormodel = g_value_get_int (gimp_value_array_index (args, 9));
+  redmode = g_value_get_boolean (gimp_value_array_index (args, 10));
+  greenmode = g_value_get_boolean (gimp_value_array_index (args, 11));
+  bluemode = g_value_get_boolean (gimp_value_array_index (args, 12));
 
   if (success)
     {
@@ -2383,15 +2383,15 @@ plug_in_maze_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gint width;
   gint height;
-  guchar tileable;
-  guchar algorithm;
+  gboolean tileable;
+  gint algorithm;
   gint seed;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 2));
   width = g_value_get_int (gimp_value_array_index (args, 3));
   height = g_value_get_int (gimp_value_array_index (args, 4));
-  tileable = g_value_get_uchar (gimp_value_array_index (args, 5));
-  algorithm = g_value_get_uchar (gimp_value_array_index (args, 6));
+  tileable = g_value_get_boolean (gimp_value_array_index (args, 5));
+  algorithm = g_value_get_int (gimp_value_array_index (args, 6));
   seed = g_value_get_int (gimp_value_array_index (args, 7));
 
   if (success)
@@ -4921,29 +4921,29 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0, 360, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("colormodel",
-                                                   "colormodel",
-                                                   "Color model { RGB-MODEL (0), HSL-MODEL (1) }",
-                                                   0, 1, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("colormodel",
+                                                 "colormodel",
+                                                 "Color model { RGB-MODEL (0), HSL-MODEL (1) }",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("redmode",
-                                                   "redmode",
-                                                   "Red/hue application mode { TRUE, FALSE }",
-                                                   0, 1, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_boolean ("redmode",
+                                                     "redmode",
+                                                     "Red/hue application mode",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("greenmode",
-                                                   "greenmode",
-                                                   "Green/saturation application mode { TRUE, FALSE }",
-                                                   0, 1, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_boolean ("greenmode",
+                                                     "greenmode",
+                                                     "Green/saturation application mode",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("bluemode",
-                                                   "bluemode",
-                                                   "Blue/luminance application mode { TRUE, FALSE }",
-                                                   0, 1, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_boolean ("bluemode",
+                                                     "bluemode",
+                                                     "Blue/luminance application mode",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -7105,17 +7105,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                  1, 1024, 1,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("tileable",
-                                                   "tileable",
-                                                   "Tileable maze? (TRUE or FALSE)",
-                                                   0, 1, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_boolean ("tileable",
+                                                     "tileable",
+                                                     "Tileable maze?",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("algorithm",
-                                                   "algorithm",
-                                                   "Generation algorithm (0 = DEPTH FIRST, 1 = PRIM'S ALGORITHM)",
-                                                   0, 1, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("algorithm",
+                                                 "algorithm",
+                                                 "Generation algorithm (0 = DEPTH FIRST, 1 = PRIM'S ALGORITHM)",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("seed",
                                                  "seed",
