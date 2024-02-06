@@ -49,6 +49,7 @@ struct _GimpGradientOptions
 
   gboolean           instant;
   gboolean           modify_active;
+  gboolean           apply_non_destructively;
 
   /*  options gui  */
   GtkWidget         *instant_toggle;

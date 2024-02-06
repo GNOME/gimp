@@ -51,7 +51,8 @@ enum
   PROP_SUPERSAMPLE_THRESHOLD,
   PROP_DITHER,
   PROP_INSTANT,
-  PROP_MODIFY_ACTIVE
+  PROP_MODIFY_ACTIVE,
+  PROP_APPLY_NON_DESTRUCTIVELY
 };
 
 
@@ -144,6 +145,14 @@ gimp_gradient_options_class_init (GimpGradientOptionsClass *klass)
                             _("Modify the active gradient in-place"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_APPLY_NON_DESTRUCTIVELY,
+                            "apply-non-destructively",
+                            _("Apply non-destructively"),
+                            _("If enabled, gradient will be applied as "
+                              "a non-destructive filter"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -191,6 +200,9 @@ gimp_gradient_options_set_property (GObject      *object,
     case PROP_MODIFY_ACTIVE:
       options->modify_active = g_value_get_boolean (value);
       break;
+    case PROP_APPLY_NON_DESTRUCTIVELY:
+      options->apply_non_destructively = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -237,6 +249,9 @@ gimp_gradient_options_get_property (GObject    *object,
       break;
     case PROP_MODIFY_ACTIVE:
       g_value_set_boolean (value, options->modify_active);
+      break;
+    case PROP_APPLY_NON_DESTRUCTIVELY:
+      g_value_set_boolean (value, options->apply_non_destructively);
       break;
 
     default:
@@ -348,6 +363,10 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
   g_free (str);
 
   options->instant_toggle = button;
+
+  /*  the non-destructive filter toggle  */
+  button = gimp_prop_check_button_new (config, "apply-non-destructively", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   /*  the modify active toggle  */
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);

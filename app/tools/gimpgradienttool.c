@@ -43,6 +43,7 @@
 #include "core/gimperror.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 
@@ -757,7 +758,8 @@ gimp_gradient_tool_halt (GimpGradientTool *gradient_tool)
 static void
 gimp_gradient_tool_commit (GimpGradientTool *gradient_tool)
 {
-  GimpTool *tool = GIMP_TOOL (gradient_tool);
+  GimpTool            *tool = GIMP_TOOL (gradient_tool);
+  GimpGradientOptions *options = GIMP_GRADIENT_TOOL_GET_OPTIONS (gradient_tool);
 
   if (gradient_tool->filter)
     {
@@ -769,8 +771,25 @@ gimp_gradient_tool_commit (GimpGradientTool *gradient_tool)
 
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_drawable_filter_commit (gradient_tool->filter, FALSE,
+      gimp_drawable_filter_commit (gradient_tool->filter,
+                                   options->apply_non_destructively,
                                    GIMP_PROGRESS (tool), FALSE);
+
+      if (options->apply_non_destructively)
+        {
+          GimpDrawable *drawable =
+            gimp_drawable_filter_get_drawable (gradient_tool->filter);
+
+          gimp_drawable_filter_layer_mask_freeze (gradient_tool->filter);
+
+          gimp_image_undo_push_filter_add (gimp_display_get_image (tool->display),
+                                           _("Add filter"),
+                                           drawable, gradient_tool->filter);
+        }
+
+      g_signal_handlers_disconnect_by_func (gradient_tool->filter,
+                                            gimp_gradient_tool_filter_flush,
+                                            gradient_tool);
       g_clear_object (&gradient_tool->filter);
 
       gimp_tool_control_pop_preserve (tool->control);
