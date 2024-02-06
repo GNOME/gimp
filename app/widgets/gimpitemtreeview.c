@@ -2556,8 +2556,8 @@ gimp_item_tree_view_effects_merged_clicked (GtkWidget        *widget,
       ! strcmp (gimp_object_get_name (active_tool), "gimp-warp-tool"))
     {
       view->priv->effects_filter = NULL;
-      gimp_message_literal ( view->priv->image->gimp, G_OBJECT (view),
-                             GIMP_MESSAGE_ERROR,
+      gimp_message_literal (view->priv->image->gimp, G_OBJECT (view),
+                            GIMP_MESSAGE_ERROR,
                             _("Effects from active tools can not be merged."));
 
       return;
@@ -2567,6 +2567,15 @@ gimp_item_tree_view_effects_merged_clicked (GtkWidget        *widget,
     {
       GimpImage *image = view->priv->image;
       GeglNode  *op    = gimp_drawable_filter_get_operation (view->priv->effects_filter);
+
+      /* Don't merge if the layer is currently locked */
+      if (gimp_item_get_lock_content (GIMP_ITEM (view->priv->effects_drawable)))
+        {
+          gimp_message_literal (view->priv->image->gimp, G_OBJECT (view),
+                                GIMP_MESSAGE_WARNING,
+                                _("The layer to merge down to is locked."));
+          return;
+        }
 
       if (op)
         {
