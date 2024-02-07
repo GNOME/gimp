@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-04 12:21+0000\n"
-"PO-Revision-Date: 2023-10-14 13:04+0300\n"
+"POT-Creation-Date: 2024-02-03 15:13+0000\n"
+"PO-Revision-Date: 2024-02-07 03:14+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Launchpad-Export-Date: 2010-10-09 17:28+0000\n"
 "X-POOTLE-MTIME: 1436650713.000000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -37,79 +37,88 @@ msgstr "_Gözat..."
 msgid "Browse..."
 msgstr "Göz At..."
 
-#: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
+#: libgimp/gimpexport.c:363 libgimp/gimpexport.c:399
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s eklentisi katmanları kullanamaz"
 
-#: libgimp/gimpexport.c:333 libgimp/gimpexport.c:342 libgimp/gimpexport.c:351
-#: libgimp/gimpexport.c:369
+#: libgimp/gimpexport.c:364 libgimp/gimpexport.c:373 libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:400
 msgid "Merge Visible Layers"
 msgstr "Görünen Katmanları Birleştir"
 
-#: libgimp/gimpexport.c:341
+#: libgimp/gimpexport.c:372
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "%s eklentisi katmanın konumlarını, boyutunu ya da matlığını kullanamaz"
 
-#: libgimp/gimpexport.c:350 libgimp/gimpexport.c:359
+#: libgimp/gimpexport.c:381 libgimp/gimpexport.c:390
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr ""
 "%s eklentisi katmanları yalnızca canlandırma karesi olarak kullanabilir"
 
-#: libgimp/gimpexport.c:351 libgimp/gimpexport.c:360
+#: libgimp/gimpexport.c:382 libgimp/gimpexport.c:391
 msgid "Save as Animation"
 msgstr "Canlandırma olarak kaydet"
 
-#: libgimp/gimpexport.c:360 libgimp/gimpexport.c:369 libgimp/gimpexport.c:378
-#: libgimp/gimpexport.c:387
+#: libgimp/gimpexport.c:391 libgimp/gimpexport.c:400 libgimp/gimpexport.c:409
+#: libgimp/gimpexport.c:427
 msgid "Flatten Image"
 msgstr "Görüntüyü Düzleştir"
 
-#: libgimp/gimpexport.c:377
+#: libgimp/gimpexport.c:408
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s eklentisi saydamlığı kullanamaz"
 
-#: libgimp/gimpexport.c:386
+#: libgimp/gimpexport.c:417
+#, c-format
+msgid "%s plug-in can't handle layer effects"
+msgstr "%s eklentisi katman etkilerini kullanamaz"
+
+#: libgimp/gimpexport.c:418
+msgid "Merge Layer Effects"
+msgstr "Katman Etkilerini Birleştir"
+
+#: libgimp/gimpexport.c:426
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "%s eklentisi saydam katmanları kullanamaz"
 
-#: libgimp/gimpexport.c:395
+#: libgimp/gimpexport.c:435
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s eklentisi katman maskelerini kullanamaz"
 
-#: libgimp/gimpexport.c:396
+#: libgimp/gimpexport.c:436
 msgid "Apply Layer Masks"
 msgstr "Katman Maskelerini Uygula"
 
-#: libgimp/gimpexport.c:404
+#: libgimp/gimpexport.c:444
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s eklentisi yalnızca RGB görüntülerini kullanabilir"
 
-#: libgimp/gimpexport.c:405 libgimp/gimpexport.c:443 libgimp/gimpexport.c:452
+#: libgimp/gimpexport.c:445 libgimp/gimpexport.c:483 libgimp/gimpexport.c:492
 msgid "Convert to RGB"
 msgstr "RGBʼye dönüştür"
 
-#: libgimp/gimpexport.c:413
+#: libgimp/gimpexport.c:453
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s eklentisi yalnızca gri tonlamalı görüntüleri kullanabilir"
 
-#: libgimp/gimpexport.c:414 libgimp/gimpexport.c:443 libgimp/gimpexport.c:464
+#: libgimp/gimpexport.c:454 libgimp/gimpexport.c:483 libgimp/gimpexport.c:504
 msgid "Convert to Grayscale"
 msgstr "Gri Tonlamaya dönüştür"
 
-#: libgimp/gimpexport.c:422
+#: libgimp/gimpexport.c:462
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s eklentisi yalnızca indekslenmiş görüntüleri kullanabilir"
 
-#: libgimp/gimpexport.c:423 libgimp/gimpexport.c:452 libgimp/gimpexport.c:462
+#: libgimp/gimpexport.c:463 libgimp/gimpexport.c:492 libgimp/gimpexport.c:502
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -117,13 +126,13 @@ msgstr ""
 "Öntanımlı ayarları kullanarak indeksliye dönüştür\n"
 "(Sonucu ayarlamak için bunu kendiniz yapın)"
 
-#: libgimp/gimpexport.c:432
+#: libgimp/gimpexport.c:472
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "%s eklentisi yalnızca bit eşlem (iki renk) indeksli görüntüleri kullanabilir"
 
-#: libgimp/gimpexport.c:433
+#: libgimp/gimpexport.c:473
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -131,49 +140,49 @@ msgstr ""
 "Bit eşlem öntanımlı ayarlarını kullanarak indeksliye dönüştür\n"
 "(Sonucu ayarlamak için bunu kendiniz yapın)"
 
-#: libgimp/gimpexport.c:442
+#: libgimp/gimpexport.c:482
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s eklentisi yalnızca RGB ya da gri tonlamalı görüntüleri kullanabilir"
 
-#: libgimp/gimpexport.c:451
+#: libgimp/gimpexport.c:491
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "%s eklentisi yalnızca RGB ya da indeksli görüntüleri kullanabilir"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:501
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "%s eklentisi yalnızca gri tonlamalı ya da indeksli görüntüleri kullanabilir"
 
-#: libgimp/gimpexport.c:472
+#: libgimp/gimpexport.c:512
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s eklentisi bir alfa kanalına gereksiniyor"
 
-#: libgimp/gimpexport.c:473
+#: libgimp/gimpexport.c:513
 msgid "Add Alpha Channel"
 msgstr "Alfa Kanalı Ekle"
 
-#: libgimp/gimpexport.c:481
+#: libgimp/gimpexport.c:521
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
 msgstr "%s eklentisi, katmanları görüntü sınırlarına kırpması gerekiyor"
 
-#: libgimp/gimpexport.c:482
+#: libgimp/gimpexport.c:522
 msgid "Crop Layers"
 msgstr "Katmanları Kırp"
 
-#: libgimp/gimpexport.c:482
+#: libgimp/gimpexport.c:522
 msgid "Resize Image to Layers"
 msgstr "Görüntüyü Katmanlara Yeniden Boyutlandır"
 
-#: libgimp/gimpexport.c:541
+#: libgimp/gimpexport.c:581
 msgid "Confirm Save"
 msgstr "Kaydetmeyi Onayla"
 
-#: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
+#: libgimp/gimpexport.c:586 libgimp/gimpexport.c:668 libgimp/gimpexport.c:1242
 #: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
@@ -183,25 +192,25 @@ msgstr "Kaydetmeyi Onayla"
 msgid "_Cancel"
 msgstr "İ_ptal"
 
-#: libgimp/gimpexport.c:547
+#: libgimp/gimpexport.c:587
 msgid "C_onfirm"
 msgstr "_Onayla"
 
-#: libgimp/gimpexport.c:623
+#: libgimp/gimpexport.c:663
 msgid "Export File"
 msgstr "Dosyayı Dışarı Aktar"
 
-#: libgimp/gimpexport.c:627
+#: libgimp/gimpexport.c:667
 msgid "_Ignore"
 msgstr "_Yoksay"
 
-#: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
+#: libgimp/gimpexport.c:669 libgimp/gimpexport.c:1243
 #: libgimp/gimpproceduredialog.c:296 libgimp/gimpproceduredialog.c:569
 msgid "_Export"
 msgstr "_Dışa Aktar"
 
 #. the headline
-#: libgimp/gimpexport.c:659
+#: libgimp/gimpexport.c:699
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -211,11 +220,11 @@ msgstr ""
 "aktarılmalıdır:"
 
 #. the footline
-#: libgimp/gimpexport.c:733
+#: libgimp/gimpexport.c:773
 msgid "The export conversion won't modify your original image."
 msgstr "Dışarı aktarma işlemi orjinal özgün görüntüde değişiklik yapmaz."
 
-#: libgimp/gimpexport.c:853
+#: libgimp/gimpexport.c:893
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -224,7 +233,7 @@ msgstr ""
 "Bir katman maskesini %s olarak imlemek üzeresiniz.\n"
 "Bu işlem görünebilir katmanları kaydetmeyecektir."
 
-#: libgimp/gimpexport.c:859
+#: libgimp/gimpexport.c:899
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -235,7 +244,7 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:396
+#: libgimp/gimpexport.c:1236 libgimp/gimpsaveproceduredialog.c:398
 #, c-format
 msgid "Export Image as %s"
 msgstr "Görüntüyü %s Olarak Dışa Aktar"
@@ -248,7 +257,8 @@ msgstr "Artalan"
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:260
+#: libgimp/gimploadprocedure.c:267
+#, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
 "This is a bug in the plug-in code. Contact the plug-in developer."
@@ -259,22 +269,22 @@ msgid "Allowed values:"
 msgstr "İzin verilen değerler:"
 
 #. procedure executed successfully
-#: libgimp/gimppdb.c:552
+#: libgimp/gimppdb.c:336
 msgid "success"
 msgstr "başarılı"
 
 #. procedure execution failed
-#: libgimp/gimppdb.c:556
+#: libgimp/gimppdb.c:340
 msgid "execution error"
 msgstr "uygulama hatası"
 
 #. procedure called incorrectly
-#: libgimp/gimppdb.c:560
+#: libgimp/gimppdb.c:344
 msgid "calling error"
 msgstr "çağırma hatası"
 
 #. procedure execution cancelled
-#: libgimp/gimppdb.c:564
+#: libgimp/gimppdb.c:348
 msgid "cancelled"
 msgstr "iptal edildi"
 
@@ -364,12 +374,12 @@ msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d yordam sorgulamanız ile eşleşiyor"
 
-#: libgimp/gimpprocedure.c:1959
+#: libgimp/gimpprocedure.c:2056
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "'%s' yordamı dönüş değeri döndürmedi"
 
-#: libgimp/gimpprocedure.c:2050
+#: libgimp/gimpprocedure.c:2183
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -378,16 +388,16 @@ msgstr ""
 "'%s' yordamı, '%s' dönüş değeri için yanlış bir değer türünü döndürdü (#%d). "
 "%s istendi, %s alındı."
 
-#: libgimp/gimpprocedure.c:2062
+#: libgimp/gimpprocedure.c:2195
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için yanlış bir değer türü ile "
 "çağrıldı (#%d). %s istendi, %s alındı."
 
-#: libgimp/gimpprocedure.c:2097
+#: libgimp/gimpprocedure.c:2230
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -396,7 +406,7 @@ msgstr ""
 "'%s' yordamı, '%s' e, '%s' dönüş değeri olarak dönüştü (#%d, %s türü). Bu "
 "değer, istenenin dışındadır."
 
-#: libgimp/gimpprocedure.c:2111
+#: libgimp/gimpprocedure.c:2244
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -405,13 +415,13 @@ msgstr ""
 "'%s' yordamı, '%s' ile, '%s' bağımsız değişkeni için çağrıldı (#%d,%s türü). "
 "Bu değer istenenin dışındadır."
 
-#: libgimp/gimpprocedure.c:2155
+#: libgimp/gimpprocedure.c:2288
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için geçersiz UTF-8 dizgesi döndürdü."
 
-#: libgimp/gimpprocedure.c:2165
+#: libgimp/gimpprocedure.c:2298
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -472,11 +482,11 @@ msgstr "Palet Seçici"
 msgid "Pattern Chooser"
 msgstr "Desen Seçici"
 
-#: libgimp/gimpproceduredialog.c:2492
+#: libgimp/gimpproceduredialog.c:2532
 msgid "Reset to _Initial Values"
 msgstr "_Başlangıç Değerlerine Sıfırla"
 
-#: libgimp/gimpproceduredialog.c:2501
+#: libgimp/gimpproceduredialog.c:2541
 msgid "Reset to _Factory Defaults"
 msgstr "_Fabrika Öntanımlılarına Sıfırla"
 
@@ -523,7 +533,6 @@ msgstr "Katman seç: %s"
 
 #: libgimp/gimppropwidgets.c:193
 #, c-format
-#| msgid "Channel:"
 msgid "Choose channel: %s"
 msgstr "Kanal seç: %s"
 
@@ -532,60 +541,60 @@ msgstr "Kanal seç: %s"
 msgid "Choose drawable: %s"
 msgstr "Çizilebilir seç: %s"
 
-#: libgimp/gimpsaveprocedure.c:460
+#: libgimp/gimpsaveprocedure.c:467
 msgid "Save _Exif"
 msgstr "_Exif Kaydet"
 
-#: libgimp/gimpsaveprocedure.c:461
+#: libgimp/gimpsaveprocedure.c:468
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Exif (Exchangeable image file format) üst verilerini kaydet"
 
-#: libgimp/gimpsaveprocedure.c:466
+#: libgimp/gimpsaveprocedure.c:473
 msgid "Save _IPTC"
 msgstr "_IPTC Kaydet"
 
-#: libgimp/gimpsaveprocedure.c:467
+#: libgimp/gimpsaveprocedure.c:474
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
 "IPTC (International Press Telecommunications Council) üst verilerini kaydet"
 
-#: libgimp/gimpsaveprocedure.c:472
+#: libgimp/gimpsaveprocedure.c:479
 msgid "Save _XMP"
 msgstr "_XMP Kaydet"
 
-#: libgimp/gimpsaveprocedure.c:473
+#: libgimp/gimpsaveprocedure.c:480
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "XMP (Extensible Metadata Platform) üst verilerini kaydet"
 
-#: libgimp/gimpsaveprocedure.c:478
+#: libgimp/gimpsaveprocedure.c:485
 msgid "Save color _profile"
 msgstr "Renk profilini _kaydet"
 
-#: libgimp/gimpsaveprocedure.c:479
+#: libgimp/gimpsaveprocedure.c:486
 msgid "Save the ICC color profile as metadata"
 msgstr "ICC renk profilini üst veri olarak kaydet"
 
-#: libgimp/gimpsaveprocedure.c:484
+#: libgimp/gimpsaveprocedure.c:491
 msgid "Save _thumbnail"
 msgstr "_Küçük resmi kaydet"
 
-#: libgimp/gimpsaveprocedure.c:485
+#: libgimp/gimpsaveprocedure.c:492
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Görüntünün küçük bir sunumunu üst veri olarak kaydet"
 
-#: libgimp/gimpsaveprocedure.c:491
+#: libgimp/gimpsaveprocedure.c:498
 msgid "Save c_omment"
 msgstr "_Yorumu kaydet"
 
-#: libgimp/gimpsaveprocedure.c:492
+#: libgimp/gimpsaveprocedure.c:499
 msgid "Save a comment as metadata"
 msgstr "Yorumu üst veri olarak kaydet"
 
-#: libgimp/gimpsaveprocedure.c:496
+#: libgimp/gimpsaveprocedure.c:503
 msgid "Comment"
 msgstr "Yorum"
 
-#: libgimp/gimpsaveprocedure.c:497
+#: libgimp/gimpsaveprocedure.c:504
 msgid "Image comment"
 msgstr "Görüntü yorumu"
 
@@ -1647,27 +1656,33 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "En boy oranı ile kırp"
 
-#: libgimpbase/gimpmetadata.c:1215
+#: libgimpbase/gimpmetadata.c:1243
+#, c-format
 msgid "Can load metadata only from local files"
 msgstr "Üst veriler yalnızca yerel dosyalardan yüklenebilir"
 
-#: libgimpbase/gimpmetadata.c:1271
+#: libgimpbase/gimpmetadata.c:1299
+#, c-format
 msgid "Can save metadata only to local files"
 msgstr "Üst veriler yalnızca yerel dosyalara kaydedilebilir"
 
-#: libgimpbase/gimpmetadata.c:1319
+#: libgimpbase/gimpmetadata.c:1347
+#, c-format
 msgid "Invalid Exif data size."
 msgstr "Geçersiz Exif veri boyutu."
 
-#: libgimpbase/gimpmetadata.c:1348
+#: libgimpbase/gimpmetadata.c:1376
+#, c-format
 msgid "Parsing Exif data failed."
 msgstr "Exif verisi ayrıştırılamadı."
 
-#: libgimpbase/gimpmetadata.c:1398
+#: libgimpbase/gimpmetadata.c:1426
+#, c-format
 msgid "Parsing IPTC data failed."
 msgstr "IPTC verisi ayrıştırılamadı."
 
-#: libgimpbase/gimpmetadata.c:1446
+#: libgimpbase/gimpmetadata.c:1474
+#, c-format
 msgid "Parsing XMP data failed."
 msgstr "XMP verisi ayrıştırılamadı."
 
@@ -1677,7 +1692,7 @@ msgstr "(geçersiz UTF-8 dizgesi)"
 
 #: libgimpbase/gimputils.c:395
 msgid "File path is NULL"
-msgstr "Dosya yolu BOŞ"
+msgstr "Dosya yolu NULL (boş)"
 
 #: libgimpbase/gimputils.c:403
 msgid "Error converting UTF-8 filename to wide char"
@@ -1902,7 +1917,7 @@ msgstr "İşlem kipi"
 
 #: libgimpconfig/gimpcolorconfig.c:230
 msgid "Preferred RGB profile"
-msgstr "Yeğlenen GRB profili"
+msgstr "Yeğlenen RGB profili"
 
 #: libgimpconfig/gimpcolorconfig.c:237
 msgid "Preferred grayscale profile"
@@ -1994,12 +2009,12 @@ msgstr ""
 #: libgimpconfig/gimpconfig-deserialize.c:607
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "geçersiz değer '%s' (jeton %s)"
+msgstr "%2$s jetonu için geçersiz değer '%1$s'"
 
 #: libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "geçersiz değer '%ld' (jeton %s)"
+msgstr "%2$s jetonu için geçersiz değer '%1$ld'"
 
 #: libgimpconfig/gimpconfig-deserialize.c:691
 #, c-format
@@ -2096,6 +2111,7 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr "'%s' küçük resim klasörü oluşturulamadı."
 
 #: libgimpthumb/gimpthumbnail.c:481
+#, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Küçük resim içeriğinde Thumb::URI etiketi yok"
 
@@ -2203,7 +2219,15 @@ msgstr "Eski:"
 msgid "HTML _notation:"
 msgstr "HTML _gösterimi:"
 
-#: libgimpwidgets/gimpdialog.c:181
+#: libgimpwidgets/gimpcontroller.c:105
+msgid "The controller's name"
+msgstr "Denetçi adı"
+
+#: libgimpwidgets/gimpcontroller.c:113
+msgid "The controller's state, as human-readable string"
+msgstr "Denetçi durumu, okunabilir dizge olarak"
+
+#: libgimpwidgets/gimpdialog.c:198
 msgid "_Help"
 msgstr "Ya_rdım"
 
@@ -2634,121 +2658,121 @@ msgstr "HSV renk tekeri"
 msgid "Wheel"
 msgstr "Teker"
 
-#: modules/controller-dx-dinput.c:156
+#: modules/controller-dx-dinput.c:154
 msgid "DirectX DirectInput event controller"
 msgstr "DirectX DirectInput olay denetleyicisi"
 
-#: modules/controller-dx-dinput.c:196 modules/controller-linux-input.c:218
+#: modules/controller-dx-dinput.c:194 modules/controller-linux-input.c:218
 #: modules/controller-midi.c:212
 msgid "Device:"
 msgstr "Aygıt:"
 
-#: modules/controller-dx-dinput.c:197
+#: modules/controller-dx-dinput.c:195
 msgid "The device to read DirectInput events from."
 msgstr "DirectInput olaylarının okunacağı aygıt."
 
-#: modules/controller-dx-dinput.c:206
+#: modules/controller-dx-dinput.c:204
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: modules/controller-dx-dinput.c:419
+#: modules/controller-dx-dinput.c:417
 #, c-format
 msgid "Button %d"
 msgstr "%d Düğmesi"
 
-#: modules/controller-dx-dinput.c:422
+#: modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d Press"
 msgstr "%d Düğmesine Bas"
 
-#: modules/controller-dx-dinput.c:425
+#: modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Release"
 msgstr "%d Düğmesini Bırak"
 
-#: modules/controller-dx-dinput.c:442 modules/controller-linux-input.c:90
+#: modules/controller-dx-dinput.c:440 modules/controller-linux-input.c:90
 msgid "X Move Left"
 msgstr "X Sola Taşı"
 
-#: modules/controller-dx-dinput.c:445 modules/controller-linux-input.c:91
+#: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:91
 msgid "X Move Right"
 msgstr "X Sağa Taşı"
 
-#: modules/controller-dx-dinput.c:451
+#: modules/controller-dx-dinput.c:449
 msgid "Y Move Away"
 msgstr "Y Uzağa Taşı"
 
-#: modules/controller-dx-dinput.c:454
+#: modules/controller-dx-dinput.c:452
 msgid "Y Move Near"
 msgstr "Y Yakına Taşı"
 
-#: modules/controller-dx-dinput.c:460 modules/controller-linux-input.c:94
+#: modules/controller-dx-dinput.c:458 modules/controller-linux-input.c:94
 msgid "Z Move Up"
 msgstr "Z Yukarı Taşı"
 
-#: modules/controller-dx-dinput.c:463 modules/controller-linux-input.c:95
+#: modules/controller-dx-dinput.c:461 modules/controller-linux-input.c:95
 msgid "Z Move Down"
 msgstr "Z Aşağı Taşı"
 
-#: modules/controller-dx-dinput.c:469
+#: modules/controller-dx-dinput.c:467
 msgid "X Axis Tilt Away"
 msgstr "X Ekseni Uzağa Eğ"
 
-#: modules/controller-dx-dinput.c:472
+#: modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Near"
 msgstr "X Ekseni Yakına Eğ"
 
-#: modules/controller-dx-dinput.c:478 modules/controller-linux-input.c:99
+#: modules/controller-dx-dinput.c:476 modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Y Ekseni Sağa Eğ"
 
-#: modules/controller-dx-dinput.c:481 modules/controller-linux-input.c:100
+#: modules/controller-dx-dinput.c:479 modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
 msgstr "Y Ekseni Sola Eğ"
 
-#: modules/controller-dx-dinput.c:487 modules/controller-linux-input.c:101
+#: modules/controller-dx-dinput.c:485 modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
 msgstr "Z Ekseni Sola Dön"
 
-#: modules/controller-dx-dinput.c:490 modules/controller-linux-input.c:102
+#: modules/controller-dx-dinput.c:488 modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
 msgstr "Z Ekseni Sağa Dön"
 
-#: modules/controller-dx-dinput.c:501
+#: modules/controller-dx-dinput.c:499
 #, c-format
 msgid "Slider %d Increase"
 msgstr "%d Kaydırıcısını Yükselt"
 
-#: modules/controller-dx-dinput.c:504
+#: modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "%d Kaydırıcısını Alçalt"
 
-#: modules/controller-dx-dinput.c:514
+#: modules/controller-dx-dinput.c:512
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d X Görünümü"
 
-#: modules/controller-dx-dinput.c:517
+#: modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d Y Görünümü"
 
-#: modules/controller-dx-dinput.c:520
+#: modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Return"
 msgstr "POV %d Döndü"
 
-#: modules/controller-dx-dinput.c:1081
+#: modules/controller-dx-dinput.c:1079
 msgid "DirectInput Events"
 msgstr "Doğrudan Girdi Olayları"
 
-#: modules/controller-dx-dinput.c:1092 modules/controller-linux-input.c:525
+#: modules/controller-dx-dinput.c:1090 modules/controller-linux-input.c:525
 #: modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Yapılandırılmış aygıt yok"
 
-#: modules/controller-dx-dinput.c:1117 modules/controller-linux-input.c:588
+#: modules/controller-dx-dinput.c:1115 modules/controller-linux-input.c:588
 msgid "Device not available"
 msgstr "Aygıt kullanılır değil"
 
@@ -2970,7 +2994,7 @@ msgid ""
 "display filter, using a luminance-only approximation of the ACES RRT, a pre-"
 "defined filmic look to be used before ODT (display or output space ICC "
 "profile)"
-msgstr "ACES RRT (RRT = Reference Rendering Transform)."
+msgstr ""
 
 #: modules/display-filter-aces-rrt.c:121
 msgid "Pre-transform change in stops"
