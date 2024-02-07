@@ -35,10 +35,23 @@ fi
 export DEPS_PATH="build/windows/gitlab-ci/all-deps-uni.txt"
 sed -i "s/DEPS_ARCH_/${MINGW_PACKAGE_PREFIX}-/g" $DEPS_PATH
 export GIMP_DEPS=`cat $DEPS_PATH`
-pacman --noconfirm -S --needed git                                \
-                               base-devel                         \
-                               ${MINGW_PACKAGE_PREFIX}-toolchain  \
-                               $GIMP_DEPS
+
+retry=3
+while [ $retry -gt 0 ]; do
+  timeout --signal=KILL 3m pacman --noconfirm -S --needed git                                \
+                                                          base-devel                         \
+                                                          ${MINGW_PACKAGE_PREFIX}-toolchain  \
+                                                          $GIMP_DEPS && break
+  echo "MSYS2 pacman timed out. Trying again."
+  taskkill //t //F //IM "pacman.exe"
+  rm -f c:/msys64/var/lib/pacman/db.lck
+  : $((--retry))
+done
+
+if [ $retry -eq 0 ]; then
+  echo "MSYS2 pacman repeatedly failed. See: https://github.com/msys2/MSYS2-packages/issues/4340"
+  exit 1
+fi
 
 
 # Clone babl and GEGL (follow master branch)
