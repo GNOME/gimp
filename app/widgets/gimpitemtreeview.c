@@ -2384,6 +2384,15 @@ gimp_item_tree_view_effects_edited_clicked (GtkWidget        *widget,
           g_list_free (drawables);
           return;
         }
+      else if (gimp_item_get_lock_content (GIMP_ITEM (drawables->data)))
+        {
+          gimp_message_literal (view->priv->image->gimp, G_OBJECT (view),
+                                GIMP_MESSAGE_WARNING,
+                                _("A selected layer's pixels are locked."));
+
+          g_list_free (drawables);
+          return;
+        }
     }
   g_list_free (drawables);
 
