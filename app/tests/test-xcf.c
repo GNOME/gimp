@@ -430,8 +430,9 @@ gimp_create_mainimage (Gimp     *gimp,
                                        NULL /*channel*/);
   gimp_layer_add_mask (layer,
                        layer_mask,
-                       FALSE /*push_undo*/,
-                       NULL /*error*/);
+                       TRUE  /* edit_mask */,
+                       FALSE /* push_undo */,
+                       NULL  /* error     */);
 
   /* Image compression type
    *

@@ -991,10 +991,10 @@ gimp_layer_duplicate (GimpItem *item,
 
           mask = gimp_item_duplicate (GIMP_ITEM (layer->mask),
                                       G_TYPE_FROM_INSTANCE (layer->mask));
-          gimp_layer_add_mask (new_layer, GIMP_LAYER_MASK (mask), FALSE, NULL);
+          gimp_layer_add_mask (new_layer, GIMP_LAYER_MASK (mask),
+                               layer->edit_mask, FALSE, NULL);
 
           new_layer->apply_mask = layer->apply_mask;
-          new_layer->edit_mask  = layer->edit_mask;
           new_layer->show_mask  = layer->show_mask;
         }
     }
@@ -1917,6 +1917,7 @@ gimp_layer_get_mask (GimpLayer *layer)
 GimpLayerMask *
 gimp_layer_add_mask (GimpLayer      *layer,
                      GimpLayerMask  *mask,
+                     gboolean        edit_mask,
                      gboolean        push_undo,
                      GError        **error)
 {
@@ -1958,7 +1959,7 @@ gimp_layer_add_mask (GimpLayer      *layer,
 
   layer->mask = g_object_ref_sink (mask);
   layer->apply_mask = TRUE;
-  layer->edit_mask  = TRUE;
+  layer->edit_mask  = edit_mask;
   layer->show_mask  = FALSE;
 
   gimp_layer_mask_set_layer (mask, layer);

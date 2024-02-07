@@ -960,6 +960,7 @@ gimp_image_undo_push_layer_mask_add (GimpImage     *image,
                                GIMP_DIRTY_IMAGE_STRUCTURE,
                                "item",       layer,
                                "layer-mask", mask,
+                               "edit-mask",  FALSE,
                                NULL);
 }
 
@@ -982,6 +983,7 @@ gimp_image_undo_push_layer_mask_remove (GimpImage     *image,
                                GIMP_DIRTY_IMAGE_STRUCTURE,
                                "item",       layer,
                                "layer-mask", mask,
+                               "edit-mask",  gimp_layer_get_edit_mask (layer),
                                NULL);
 }
 

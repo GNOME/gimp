@@ -33,7 +33,8 @@
 enum
 {
   PROP_0,
-  PROP_LAYER_MASK
+  PROP_LAYER_MASK,
+  PROP_EDIT_MASK
 };
 
 
@@ -83,6 +84,11 @@ gimp_layer_mask_undo_class_init (GimpLayerMaskUndoClass *klass)
                                                         GIMP_TYPE_LAYER_MASK,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_EDIT_MASK,
+                                   g_param_spec_boolean ("edit-mask", NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -114,6 +120,9 @@ gimp_layer_mask_undo_set_property (GObject      *object,
     case PROP_LAYER_MASK:
       layer_mask_undo->layer_mask = g_value_dup_object (value);
       break;
+    case PROP_EDIT_MASK:
+      layer_mask_undo->edit_mask = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -133,6 +142,9 @@ gimp_layer_mask_undo_get_property (GObject    *object,
     {
     case PROP_LAYER_MASK:
       g_value_set_object (value, layer_mask_undo->layer_mask);
+      break;
+    case PROP_EDIT_MASK:
+      g_value_set_boolean (value, layer_mask_undo->edit_mask);
       break;
 
     default:
@@ -175,13 +187,15 @@ gimp_layer_mask_undo_pop (GimpUndo            *undo,
     {
       /*  remove layer mask  */
 
+      layer_mask_undo->edit_mask = gimp_layer_get_edit_mask (layer);
       gimp_layer_apply_mask (layer, GIMP_MASK_DISCARD, FALSE);
     }
   else
     {
       /*  restore layer mask  */
 
-      gimp_layer_add_mask (layer, layer_mask_undo->layer_mask, FALSE, NULL);
+      gimp_layer_add_mask (layer, layer_mask_undo->layer_mask,
+                           layer_mask_undo->edit_mask, FALSE, NULL);
     }
 }
 

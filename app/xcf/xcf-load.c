@@ -1234,10 +1234,9 @@ xcf_load_add_masks (GimpImage *image)
           show_mask = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (layer),
                                                           "gimp-layer-mask-show"));
 
-          gimp_layer_add_mask (layer, mask, FALSE, NULL);
+          gimp_layer_add_mask (layer, mask, edit_mask, FALSE, NULL);
 
           gimp_layer_set_apply_mask (layer, apply_mask, FALSE);
-          gimp_layer_set_edit_mask  (layer, edit_mask);
           gimp_layer_set_show_mask  (layer, show_mask, FALSE);
 
           g_object_set_data (G_OBJECT (layer), "gimp-layer-mask",       NULL);

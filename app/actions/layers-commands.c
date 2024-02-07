@@ -150,6 +150,7 @@ static void   layers_add_mask_callback        (GtkWidget             *dialog,
                                                GimpAddMaskType        add_mask_type,
                                                GimpChannel           *channel,
                                                gboolean               invert,
+                                               gboolean               edit_mask,
                                                gpointer               user_data);
 static void   layers_scale_callback           (GtkWidget             *dialog,
                                                GimpViewable          *viewable,
@@ -1568,6 +1569,7 @@ layers_mask_add_cmd_callback (GimpAction *action,
                                           widget,
                                           config->layer_add_mask_type,
                                           config->layer_add_mask_invert,
+                                          config->layer_add_mask_edit_mask,
                                           layers_add_mask_callback,
                                           NULL);
 
@@ -1643,7 +1645,9 @@ layers_mask_add_last_vals_cmd_callback (GimpAction *action,
       if (config->layer_add_mask_invert)
         gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
 
-      gimp_layer_add_mask (iter->data, mask, TRUE, NULL);
+      gimp_layer_add_mask (iter->data, mask,
+                           config->layer_add_mask_edit_mask,
+                           TRUE, NULL);
     }
 
   gimp_image_undo_group_end (image);
@@ -2591,6 +2595,7 @@ layers_add_mask_callback (GtkWidget       *dialog,
                           GimpAddMaskType  add_mask_type,
                           GimpChannel     *channel,
                           gboolean         invert,
+                          gboolean         edit_mask,
                           gpointer         user_data)
 {
   GimpImage        *image  = gimp_item_get_image (GIMP_ITEM (layers->data));
@@ -2600,8 +2605,9 @@ layers_add_mask_callback (GtkWidget       *dialog,
   GError           *error = NULL;
 
   g_object_set (config,
-                "layer-add-mask-type",   add_mask_type,
-                "layer-add-mask-invert", invert,
+                "layer-add-mask-type",      add_mask_type,
+                "layer-add-mask-invert",    invert,
+                "layer-add-mask-edit-mask", edit_mask,
                 NULL);
 
   gimp_image_undo_group_start (image,
@@ -2617,7 +2623,7 @@ layers_add_mask_callback (GtkWidget       *dialog,
       if (config->layer_add_mask_invert)
         gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
 
-      if (! gimp_layer_add_mask (iter->data, mask, TRUE, &error))
+      if (! gimp_layer_add_mask (iter->data, mask, edit_mask, TRUE, &error))
         {
           gimp_message_literal (image->gimp,
                                 G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
