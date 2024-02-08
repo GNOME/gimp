@@ -98,10 +98,12 @@ if [ ! -f "_build${ARTIFACTS_SUFFIX}/build.ninja" ]; then
                  -Djavascript=disabled               \
                  -Ddirectx-sdk-dir="${MSYS2_PREFIX}" \
                  -Dbuild-id=org.gimp.GIMP_official
-  ninja && ninja install
+  ninja
+  ninja install
 else
   cd "_build${ARTIFACTS_SUFFIX}"
-  ninja && ninja install
+  ninja
+  ninja install
 fi
 
 
