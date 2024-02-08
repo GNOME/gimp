@@ -36,6 +36,7 @@
 
 #include "gimp.h"
 #include "gimpcontext.h"
+#include "gimpdrawable-filters.h"
 #include "gimperror.h"
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
@@ -600,6 +601,10 @@ gimp_image_merge_layers (GimpImage     *image,
       gint off_x, off_y;
 
       layer = layers->data;
+
+      /* Merge down filter effects so they can be restored on undo */
+      gimp_drawable_merge_filters (GIMP_DRAWABLE (layer));
+      gimp_drawable_clear_filters (GIMP_DRAWABLE (layer));
 
       gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
