@@ -316,6 +316,9 @@ static gint   gimp_item_tree_view_get_n_locks       (GimpItemTreeView *view,
                                                      GimpItem         *item,
                                                      const gchar     **icon_name);
 
+static void  gimp_item_tree_effects_set_sensitive   (GimpItemTreeView *view,
+                                                     gboolean          is_sensitive);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpItemTreeView, gimp_item_tree_view,
                          GIMP_TYPE_CONTAINER_TREE_VIEW,
@@ -2122,12 +2125,12 @@ gimp_item_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
 
       /* Set the initial value for the effect visibility toggle */
       g_signal_handlers_block_by_func (view->priv->effects_visible_button,
-                                       gimp_item_tree_view_effects_visible_toggled,
+                                       gimp_item_tree_view_effects_visible_all_toggled,
                                        view);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (view->priv->effects_visible_button),
                                     visible);
       g_signal_handlers_unblock_by_func (view->priv->effects_visible_button,
-                                         gimp_item_tree_view_effects_visible_toggled,
+                                         gimp_item_tree_view_effects_visible_all_toggled,
                                          view);
 
       /* Only show if we have at least one active filter */
@@ -2136,6 +2139,7 @@ gimp_item_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
           GtkCellRenderer       *renderer;
           GtkTreeViewColumn     *column;
           GimpContainerTreeView *filter_tree_view = NULL;
+          GtkWidget             *scrolled_window  = NULL;
 
           filter_view = gimp_container_tree_view_new (filters,
                                                       gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view)),
@@ -2185,8 +2189,7 @@ gimp_item_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
                                                            filter_tree_view);
             }
 
-          g_signal_connect (filter_tree_view,
-                            "select-items",
+          g_signal_connect (filter_tree_view, "select-items",
                             G_CALLBACK (gimp_item_tree_view_effects_filters_selected),
                             view);
           g_signal_connect_object (filter_tree_view,
@@ -2197,7 +2200,11 @@ gimp_item_tree_view_effects_clicked (GtkCellRendererToggle *toggle,
           gtk_box_pack_start (GTK_BOX (view->priv->effects_box), filter_view, TRUE, TRUE, 0);
           gtk_widget_set_visible (filter_view, TRUE);
 
-          gtk_widget_set_size_request (view->priv->effects_box, 200, 24 * (n_children + 1));
+          scrolled_window = gtk_widget_get_parent (GTK_WIDGET (filter_tree_view->view));
+          gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                          GTK_POLICY_NEVER,
+                                          GTK_POLICY_NEVER);
+          gtk_widget_set_size_request (view->priv->effects_box, -1, 24 * (n_children + 1));
 
           /* Change popover position. */
           gtk_tree_view_get_cell_area (GIMP_CONTAINER_TREE_VIEW (view)->view, path,
@@ -2402,7 +2409,8 @@ gimp_item_tree_view_effects_edited_clicked (GtkWidget        *widget,
 
   if (view->priv->effects_drawable)
     {
-      GeglNode  *op = gimp_drawable_filter_get_operation (view->priv->effects_filter);
+      GeglNode *op =
+        gimp_drawable_filter_get_operation (view->priv->effects_filter);
 
       if (op)
         {
@@ -2440,13 +2448,7 @@ gimp_item_tree_view_effects_edited_clicked (GtkWidget        *widget,
               g_object_unref (procedure);
 
               /* Disable buttons until we're done editing */
-              gtk_widget_set_sensitive (view->priv->effects_box, FALSE);
-              gtk_widget_set_sensitive (view->priv->effects_visible_button, FALSE);
-              gtk_widget_set_sensitive (view->priv->effects_edit_button, FALSE);
-              gtk_widget_set_sensitive (view->priv->effects_raise_button, FALSE);
-              gtk_widget_set_sensitive (view->priv->effects_lower_button, FALSE);
-              gtk_widget_set_sensitive (view->priv->effects_merge_button, FALSE);
-              gtk_widget_set_sensitive (view->priv->effects_remove_button, FALSE);
+              gimp_item_tree_effects_set_sensitive (view, FALSE);
             }
 
           g_free (name);
@@ -2747,16 +2749,10 @@ gimp_item_tree_view_filters_changed (GimpItem         *item,
                         -1);
 
   /* Re-enable buttons after editing */
-  gtk_widget_set_sensitive (view->priv->effects_box, ! fs_disabled);
-  gtk_widget_set_sensitive (view->priv->effects_visible_button, ! fs_disabled);
-  gtk_widget_set_sensitive (view->priv->effects_edit_button, ! fs_disabled);
-  gtk_widget_set_sensitive (view->priv->effects_raise_button, ! fs_disabled);
-  gtk_widget_set_sensitive (view->priv->effects_lower_button, ! fs_disabled);
-  gtk_widget_set_sensitive (view->priv->effects_merge_button, ! fs_disabled);
-  gtk_widget_set_sensitive (view->priv->effects_remove_button, ! fs_disabled);
+  gimp_item_tree_effects_set_sensitive (view, ! fs_disabled);
 
   if (view->priv->effects_popover &&
-      view->priv->effects_filter &&
+      view->priv->effects_filter  &&
       ! fs_disabled)
     {
       if (GIMP_IS_DRAWABLE_FILTER (view->priv->effects_filter))
@@ -3076,4 +3072,17 @@ gimp_item_tree_view_get_n_locks (GimpItemTreeView *view,
     }
 
   return n_locks;
+}
+
+static void
+gimp_item_tree_effects_set_sensitive (GimpItemTreeView *view,
+                                      gboolean          is_sensitive)
+{
+  gtk_widget_set_sensitive (view->priv->effects_box, is_sensitive);
+  gtk_widget_set_sensitive (view->priv->effects_visible_button, is_sensitive);
+  gtk_widget_set_sensitive (view->priv->effects_edit_button, is_sensitive);
+  gtk_widget_set_sensitive (view->priv->effects_raise_button, is_sensitive);
+  gtk_widget_set_sensitive (view->priv->effects_lower_button, is_sensitive);
+  gtk_widget_set_sensitive (view->priv->effects_merge_button, is_sensitive);
+  gtk_widget_set_sensitive (view->priv->effects_remove_button, is_sensitive);
 }
