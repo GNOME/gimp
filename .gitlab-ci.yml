@@ -753,6 +753,7 @@ packaging-win-a64:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
   stage: packaging
   variables:
+    BUILD_TYPE: "CI_NATIVE"
     MSYSTEM: "CLANGARM64"
     CHERE_INVOKING: "yes"
   tags:

@@ -19,7 +19,7 @@ else # [[ "$CROSSROAD_PLATFORM" == "w32" ]] || [[ "$MSYSTEM_CARCH" == "i686" ]];
 fi
 
 if [[ "$BUILD_TYPE" != "CI_CROSS" ]] && [[ "$BUILD_TYPE" != "CI_NATIVE" ]]; then
-pacman --noconfirm -Suy
+  pacman --noconfirm -Suy
 fi
 
 
