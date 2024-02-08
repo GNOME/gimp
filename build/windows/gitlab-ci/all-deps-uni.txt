@@ -8,6 +8,7 @@ DEPS_ARCH_brotli
 DEPS_ARCH_cairo
 DEPS_ARCH_cfitsio
 DEPS_ARCH_drmingw
+DEPS_ARCH_gettext-tools
 DEPS_ARCH_gexiv2
 DEPS_ARCH_ghostscript
 DEPS_ARCH_gi-docgen
