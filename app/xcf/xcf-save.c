@@ -902,6 +902,10 @@ xcf_save_effect_props (XcfInfo      *info,
               {
                 filter_type = FILTER_PROP_ENUM;
               }
+            else if (g_type_is_a (G_VALUE_TYPE (&value), G_TYPE_UINT))
+              {
+                filter_type = FILTER_PROP_UINT;
+              }
             else
               {
                 gimp_message (info->gimp, G_OBJECT (info->progress),
@@ -1767,12 +1771,15 @@ xcf_save_prop (XcfInfo    *info,
         switch (filter_type)
           {
             case FILTER_PROP_INT:
+            case FILTER_PROP_UINT:
             case FILTER_PROP_ENUM:
               {
                 guint32 value;
 
                 if (filter_type == FILTER_PROP_INT)
                   value = g_value_get_int (&filter_value);
+                else if (filter_type == FILTER_PROP_UINT)
+                  value = g_value_get_uint (&filter_value);
                 else
                   value = g_value_get_enum (&filter_value);
 

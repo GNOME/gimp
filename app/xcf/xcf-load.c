@@ -2502,6 +2502,7 @@ xcf_load_effect_props (XcfInfo      *info,
             switch (filter_type)
               {
                 case FILTER_PROP_INT:
+                case FILTER_PROP_UINT:
                 case FILTER_PROP_ENUM:
                   {
                     guint32 value;
@@ -2510,6 +2511,8 @@ xcf_load_effect_props (XcfInfo      *info,
                     g_value_init (&filter_prop_value, pspec->value_type);
                     if (filter_type == FILTER_PROP_INT)
                       g_value_set_int (&filter_prop_value, value);
+                    else if (filter_type == FILTER_PROP_UINT)
+                      g_value_set_uint (&filter_prop_value, value);
                     else
                       g_value_set_enum (&filter_prop_value, value);
                   }
