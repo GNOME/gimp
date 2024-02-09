@@ -37,6 +37,8 @@
 #include "operations/gimpcageconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
@@ -1318,5 +1320,23 @@ gimp_cage_tool_filter_flush (GimpDrawableFilter *filter,
 static void
 gimp_cage_tool_filter_update (GimpCageTool *ct)
 {
+  GimpContainer *filters;
+
+  /* Move this operation below any non-destructive filters that
+   * may be active, so that it's directly affect the raw pixels. */
+  filters =
+    gimp_drawable_get_filters (gimp_drawable_filter_get_drawable (ct->filter));
+
+  if (gimp_container_have (filters, GIMP_OBJECT (ct->filter)))
+  {
+    gint end_index = gimp_container_get_n_children (filters) - 1;
+    gint index     = gimp_container_get_child_index (filters,
+                                                     GIMP_OBJECT (ct->filter));
+
+    if (end_index > 0 && index != end_index)
+      gimp_container_reorder (filters, GIMP_OBJECT (ct->filter),
+                              end_index);
+  }
+
   gimp_drawable_filter_apply (ct->filter, NULL);
 }

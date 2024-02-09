@@ -37,7 +37,9 @@
 #include "operations/layer-modes/gimp-layer-modes.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawable-gradient.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimperror.h"
@@ -525,7 +527,7 @@ gimp_gradient_tool_options_notify (GimpTool         *tool,
                                    GimpToolOptions  *options,
                                    const GParamSpec *pspec)
 {
-  GimpContext   *context    = GIMP_CONTEXT (options);
+  GimpContext      *context       = GIMP_CONTEXT (options);
   GimpGradientTool *gradient_tool = GIMP_GRADIENT_TOOL (tool);
 
   if (! strcmp (pspec->name, "gradient"))
@@ -632,6 +634,7 @@ gimp_gradient_tool_start (GimpGradientTool *gradient_tool,
   GList               *drawables = gimp_image_get_selected_drawables (image);
   GimpGradientOptions *options   = GIMP_GRADIENT_TOOL_GET_OPTIONS (gradient_tool);
   GimpContext         *context   = GIMP_CONTEXT (options);
+  GimpContainer       *filters;
 
   g_return_if_fail (g_list_length (drawables) == 1);
 
@@ -694,6 +697,24 @@ gimp_gradient_tool_start (GimpGradientTool *gradient_tool,
   gimp_draw_tool_start (GIMP_DRAW_TOOL (gradient_tool), display);
 
   gimp_gradient_tool_editor_start (gradient_tool);
+
+  gimp_drawable_filter_apply (gradient_tool->filter, NULL);
+
+  /* Move this operation below any non-destructive filters that
+   * may be active, so that it's directly affect the raw pixels. */
+  filters =
+    gimp_drawable_get_filters (gimp_drawable_filter_get_drawable (gradient_tool->filter));
+
+  if (gimp_container_have (filters, GIMP_OBJECT (gradient_tool->filter)))
+  {
+    gint end_index = gimp_container_get_n_children (filters) - 1;
+    gint index     = gimp_container_get_child_index (filters,
+                                                     GIMP_OBJECT (gradient_tool->filter));
+
+    if (end_index > 0 && index != end_index)
+      gimp_container_reorder (filters, GIMP_OBJECT (gradient_tool->filter),
+                              end_index);
+  }
 }
 
 static void
