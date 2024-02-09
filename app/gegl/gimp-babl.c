@@ -36,6 +36,8 @@
 void
 gimp_babl_init (void)
 {
+// in newer version of babl these format names are pre-registered
+#if (BABL_MINOR_VERSION == 1 && BABL_MICRO_VERSION <= 108)
   babl_format_new ("name", "R u8",
                    babl_model ("RGBA"),
                    babl_type ("u8"),
@@ -251,6 +253,7 @@ gimp_babl_init (void)
                    babl_type ("double"),
                    babl_component ("A"),
                    NULL);
+#endif
 }
 
 void
