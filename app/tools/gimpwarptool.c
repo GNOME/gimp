@@ -36,6 +36,8 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -1247,12 +1249,29 @@ gimp_warp_tool_update_area (GimpWarpTool        *wt,
                             const GeglRectangle *area,
                             gboolean             synchronous)
 {
-  GeglRectangle rect;
+  GeglRectangle  rect;
+  GimpContainer *filters;
 
   if (! wt->filter)
     return;
 
   rect = gimp_warp_tool_get_invalidated_by_change (wt, area);
+
+  /* Move this operation below any non-destructive filters that
+   * may be active, so that it's directly affect the raw pixels. */
+  filters =
+    gimp_drawable_get_filters (gimp_drawable_filter_get_drawable (wt->filter));
+
+  if (gimp_container_have (filters, GIMP_OBJECT (wt->filter)))
+  {
+    gint end_index = gimp_container_get_n_children (filters) - 1;
+    gint index     = gimp_container_get_child_index (filters,
+                                                     GIMP_OBJECT (wt->filter));
+
+    if (end_index > 0 && index != end_index)
+      gimp_container_reorder (filters, GIMP_OBJECT (wt->filter),
+                              end_index);
+  }
 
   if (synchronous)
     {
