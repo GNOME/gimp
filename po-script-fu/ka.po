@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-29 14:25+0000\n"
-"PO-Revision-Date: 2024-02-01 03:22+0100\n"
+"POT-Creation-Date: 2024-02-06 23:40+0000\n"
+"PO-Revision-Date: 2024-02-09 18:54+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -377,7 +377,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/carve-it.scm:208
 msgid "Cast Shadow"
-msgstr ""
+msgstr "ჩრდილის დადება"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:209
 msgid "Inset"
@@ -828,30 +828,31 @@ msgstr ""
 msgid "Create four guides around the bounding box of the current selection"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:31
 msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Direction"
 msgstr "_მიმართულება"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Horizontal"
 msgstr "ჰორიზონტალური"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:36
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:38
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Vertical"
 msgstr "ვერტიკალური"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:39
 msgid "_Position (in %)"
 msgstr ""
 
@@ -863,7 +864,7 @@ msgstr ""
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/guides-new.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "_Position"
 msgstr "_მდებარეობა"
 
@@ -908,31 +909,31 @@ msgstr "გრადაცია"
 msgid "Use current gradient"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/line-nova.scm:106
+#: plug-ins/script-fu/scripts/line-nova.scm:107
 msgid "Line _Nova..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/line-nova.scm:107
+#: plug-ins/script-fu/scripts/line-nova.scm:108
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/line-nova.scm:114
-msgid "Number of lines"
-msgstr "ხაზების რაოდენობა"
+msgid "_Number of lines"
+msgstr "_ხაზების რაოდენობა"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:115
-msgid "Sharpness (degrees)"
+msgid "S_harpness (degrees)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/line-nova.scm:116
-msgid "Offset radius"
-msgstr ""
+msgid "O_ffset radius"
+msgstr "წანაცვლების _რადიუსი"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:117
-msgid "Randomness"
-msgstr "შემთხვევითობა"
+msgid "Ran_domness"
+msgstr "შ_ემთხვევითობა"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:63
 msgid "_Rectangular..."
@@ -1158,26 +1159,25 @@ msgstr ""
 msgid "Reverse the order of layers in the image"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:69
+#: plug-ins/script-fu/scripts/ripply-anim.scm:70
 msgid "_Rippling..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:70
+#: plug-ins/script-fu/scripts/ripply-anim.scm:71
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:77
-msgid "Rippling strength"
+msgid "Ri_ppling strength"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:78
-#: plug-ins/script-fu/scripts/waves-anim.scm:105
-msgid "Number of frames"
-msgstr ""
+msgid "_Number of frames"
+msgstr "_კადრების რაოდენობა"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
-msgid "Edge behavior"
+msgid "Edge _behavior"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
@@ -1309,27 +1309,27 @@ msgstr ""
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr ""
 
+#: plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "Ra_dius"
+msgstr "რა_დიუსი"
+
 #: plug-ins/script-fu/scripts/tileblur.scm:80
-msgid "Radius"
-msgstr "რადიუსი"
+msgid "Blur _vertically"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm:81
-msgid "Blur vertically"
-msgstr ""
+msgid "Blur _horizontally"
+msgstr "_ჰორიზონტალური ბუნდოვნება"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:82
-msgid "Blur horizontally"
-msgstr ""
+msgid "Blur _type"
+msgstr "ბუნდოვნების _ტიპი"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
-msgid "Blur type"
-msgstr "ბუნდოვნების ტიპი"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "IIR"
 msgstr "IIR"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "RLE"
 msgstr "RLE"
 
@@ -1358,6 +1358,10 @@ msgstr "ამპლიტუდა"
 #: plug-ins/script-fu/scripts/waves-anim.scm:104
 msgid "Wavelength"
 msgstr "ტალღის სიგრძე"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:106
 msgid "Invert direction"
