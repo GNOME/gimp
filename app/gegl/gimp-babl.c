@@ -38,6 +38,8 @@
 void
 gimp_babl_init (void)
 {
+// in newer version of babl these format names are pre-registered
+#if (BABL_MINOR_VERSION == 1 && BABL_MICRO_VERSION <= 108)
   static const gchar *babl_types[] =
   {
     "u8",
@@ -118,6 +120,7 @@ gimp_babl_init (void)
                        babl_component ("A"),
                        NULL);
     }
+#endif
 }
 
 void
