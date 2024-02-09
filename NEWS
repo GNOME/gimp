@@ -154,6 +154,10 @@ Graphical User Interface:
   - "Darker" theme is removed for lack of contributors actually caring for it.
     It could be revived in the future as a "Contrast" theme with both a dark and
     light variants at the very least.
+  - The search function in Layers dockable was moved over the Layers list (with
+    headers), the "link" icon replaced by "search" icon, and is now available
+    for both Layers, Channels and Vectors dockables (though unsaved for Vectors
+    because of lack in XCF support).
 
 Tools:
 
@@ -337,6 +341,7 @@ API:
       + gimp_image_get_palette()
       + gimp_procedure_run_config()
       + gimp_procedure_run_valist()
+      + gimp_procedure_dialog_get_drawable_preview()
     * Removed functions:
       + gimp_procedure_config_begin_run()
       + gimp_procedure_config_end_run()
@@ -534,6 +539,7 @@ Build:
   - New .vscode/ config folder for Visual Studio Code settings to follow our
     coding style.
   - 'gegl.exe' binary is now installed by the Windows installer.
+  - Minimum libheif requirement bumped: libheif >= 1.15.1.
 
 
 Overview of Changes from GIMP 2.99.14 to GIMP 2.99.16
