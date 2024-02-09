@@ -99,20 +99,24 @@ gimp_param_spec_int_desc (GParamSpec *pspec)
   gchar         *markup;
 
   if (ispec->minimum == G_MININT32 && ispec->maximum == G_MAXINT32)
-    bare_text = g_strdup_printf ("(default %d)",
-                                 ispec->default_value);
-
-  if (ispec->minimum == G_MININT32)
-    bare_text = g_strdup_printf ("(%s <= %d, default %d)",
-                                 g_param_spec_get_name (pspec),
-                                 ispec->maximum,
-                                 ispec->default_value);
-
-  if (ispec->maximum == G_MAXINT32)
-    bare_text = g_strdup_printf ("(%s >= %d, default %d)",
-                                 g_param_spec_get_name (pspec),
-                                 ispec->minimum,
-                                 ispec->default_value);
+    {
+      bare_text = g_strdup_printf ("(default %d)",
+                                   ispec->default_value);
+    }
+  else if (ispec->minimum == G_MININT32)
+    {
+      bare_text = g_strdup_printf ("(%s <= %d, default %d)",
+                                   g_param_spec_get_name (pspec),
+                                   ispec->maximum,
+                                   ispec->default_value);
+    }
+  else if (ispec->maximum == G_MAXINT32)
+    {
+      bare_text = g_strdup_printf ("(%s >= %d, default %d)",
+                                   g_param_spec_get_name (pspec),
+                                   ispec->minimum,
+                                   ispec->default_value);
+    }
 
   if (bare_text == NULL)
     bare_text = g_strdup_printf ("(%d <= %s <= %d, default %d)",
@@ -135,20 +139,24 @@ gimp_param_spec_double_desc (GParamSpec *pspec)
   gchar            *markup;
 
   if (dspec->minimum == - G_MAXDOUBLE && dspec->maximum == G_MAXDOUBLE)
-    bare_text = g_strdup_printf ("(default %g)",
-                                 dspec->default_value);
-
-  if (dspec->minimum == - G_MAXDOUBLE)
-    bare_text = g_strdup_printf ("(%s <= %g, default %g)",
-                                 g_param_spec_get_name (pspec),
-                                 dspec->maximum,
-                                 dspec->default_value);
-
-  if (dspec->maximum == G_MAXDOUBLE)
-    bare_text = g_strdup_printf ("(%s >= %g, default %g)",
-                                 g_param_spec_get_name (pspec),
-                                 dspec->minimum,
-                                 dspec->default_value);
+    {
+      bare_text = g_strdup_printf ("(default %g)",
+                                   dspec->default_value);
+    }
+  else if (dspec->minimum == - G_MAXDOUBLE)
+    {
+      bare_text = g_strdup_printf ("(%s <= %g, default %g)",
+                                   g_param_spec_get_name (pspec),
+                                   dspec->maximum,
+                                   dspec->default_value);
+    }
+  else if (dspec->maximum == G_MAXDOUBLE)
+    {
+      bare_text = g_strdup_printf ("(%s >= %g, default %g)",
+                                   g_param_spec_get_name (pspec),
+                                   dspec->minimum,
+                                   dspec->default_value);
+    }
 
   if (bare_text == NULL)
     bare_text = g_strdup_printf ("(%g <= %s <= %g, default %g)",
