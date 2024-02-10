@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-05 12:52+0000\n"
-"PO-Revision-Date: 2023-03-06 16:44+0300\n"
+"POT-Creation-Date: 2024-02-06 23:14+0000\n"
+"PO-Revision-Date: 2024-02-08 01:46+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Launchpad-Export-Date: 2010-10-09 17:28+0000\n"
 "X-POOTLE-MTIME: 1436650713.000000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -217,7 +217,7 @@ msgstr "Dosyayı Dışarı Aktar"
 
 #: ../libgimp/gimpexport.c:590
 msgid "_Ignore"
-msgstr "_Yoksay"
+msgstr "_Yok Say"
 
 #: ../libgimp/gimpexport.c:592 ../libgimp/gimpexport.c:1126
 msgid "_Export"
@@ -1477,32 +1477,32 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "En boy oranı ile kırp"
 
-#: ../libgimpbase/gimpmetadata.c:982
+#: ../libgimpbase/gimpmetadata.c:986
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Üst veriler yalnızca yerel dosyalardan yüklenebilir"
 
-#: ../libgimpbase/gimpmetadata.c:1038
+#: ../libgimpbase/gimpmetadata.c:1042
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Üst veriler yalnızca yerel dosyalara kaydedilebilir"
 
-#: ../libgimpbase/gimpmetadata.c:1086
+#: ../libgimpbase/gimpmetadata.c:1090
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Geçersiz Exif veri boyutu."
 
-#: ../libgimpbase/gimpmetadata.c:1115
+#: ../libgimpbase/gimpmetadata.c:1119
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Exif veri ayrıştırma işlemi başarısız oldu."
 
-#: ../libgimpbase/gimpmetadata.c:1165
+#: ../libgimpbase/gimpmetadata.c:1169
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "IPTC veri ayrıştırma işlemi başarısız oldu."
 
-#: ../libgimpbase/gimpmetadata.c:1213
+#: ../libgimpbase/gimpmetadata.c:1217
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "XMP veri ayrıştırma işlemi başarısız oldu."
@@ -2881,75 +2881,78 @@ msgstr "GIMP"
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI Girdi Denetleyicisi"
 
-#: ../modules/display-filter-clip-warning.c:120
+#. Translators: "Clip Warning" is the name of a (color) display filter
+#. * that highlights pixels outside of the color space range.
+#. * Shown as a label description.
+#: ../modules/display-filter-clip-warning.c:123
 msgid "Clip warning color display filter"
 msgstr "Kırpma uyarı renrgi ekran süzgeci"
 
-#: ../modules/display-filter-clip-warning.c:157
+#: ../modules/display-filter-clip-warning.c:160
 msgid "Show shadows"
 msgstr "Gölgeleri göster"
 
-#: ../modules/display-filter-clip-warning.c:158
+#: ../modules/display-filter-clip-warning.c:161
 msgid "Show warning for pixels with a negative component"
 msgstr "Negatif bileşenli pikseller için uyarı göster"
 
-#: ../modules/display-filter-clip-warning.c:164
+#: ../modules/display-filter-clip-warning.c:167
 msgid "Shadows color"
 msgstr "Gölge rengi"
 
-#: ../modules/display-filter-clip-warning.c:165
+#: ../modules/display-filter-clip-warning.c:168
 msgid "Shadows warning color"
 msgstr "Gölge uyarı rengi"
 
-#: ../modules/display-filter-clip-warning.c:177
+#: ../modules/display-filter-clip-warning.c:180
 msgid "Show highlights"
 msgstr "Vurguları göster"
 
-#: ../modules/display-filter-clip-warning.c:178
+#: ../modules/display-filter-clip-warning.c:181
 msgid "Show warning for pixels with a component greater than one"
 msgstr "Birden fazla bileşenli pikseller için uyarı göster"
 
-#: ../modules/display-filter-clip-warning.c:184
+#: ../modules/display-filter-clip-warning.c:187
 msgid "Highlights color"
 msgstr "Vurgu rengi"
 
-#: ../modules/display-filter-clip-warning.c:185
+#: ../modules/display-filter-clip-warning.c:188
 msgid "Highlights warning color"
 msgstr "Vurgu uyarı rengi"
 
-#: ../modules/display-filter-clip-warning.c:197
+#: ../modules/display-filter-clip-warning.c:200
 msgid "Show bogus"
 msgstr "Bogus göster"
 
-#: ../modules/display-filter-clip-warning.c:198
+#: ../modules/display-filter-clip-warning.c:201
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr "Sonsuz veya NaN bileşenli pikseller için uyarı göster"
 
-#: ../modules/display-filter-clip-warning.c:204
+#: ../modules/display-filter-clip-warning.c:207
 msgid "Bogus color"
 msgstr "Bogus rengi"
 
-#: ../modules/display-filter-clip-warning.c:205
+#: ../modules/display-filter-clip-warning.c:208
 msgid "Bogus warning color"
 msgstr "Bogus uyarı rengi"
 
-#: ../modules/display-filter-clip-warning.c:217
+#: ../modules/display-filter-clip-warning.c:220
 msgid "Include alpha component"
 msgstr "Alfa bileşenini dahil et"
 
-#: ../modules/display-filter-clip-warning.c:218
+#: ../modules/display-filter-clip-warning.c:221
 msgid "Include alpha component in the warning"
 msgstr "Alfa bileşenini uyarıya dahil et"
 
-#: ../modules/display-filter-clip-warning.c:224
+#: ../modules/display-filter-clip-warning.c:227
 msgid "Include transparent pixels"
 msgstr "Saydam pikselleri dahil et"
 
-#: ../modules/display-filter-clip-warning.c:225
+#: ../modules/display-filter-clip-warning.c:228
 msgid "Include fully transparent pixels in the warning"
 msgstr "Tamamen saydam pikselleri uyarıya dahil et"
 
-#: ../modules/display-filter-clip-warning.c:229
+#: ../modules/display-filter-clip-warning.c:232
 msgid "Clip Warning"
 msgstr "Kırpma Uyarısı"
 
