@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-16 09:15+0000\n"
-"PO-Revision-Date: 2024-01-18 07:32+0300\n"
+"POT-Creation-Date: 2024-02-06 23:13+0000\n"
+"PO-Revision-Date: 2024-02-08 01:45+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -20545,7 +20545,7 @@ msgstr "Sert kenar"
 
 #: ../app/paint/gimppaintoptions.c:296
 msgid "Ignore fuzziness of the current brush"
-msgstr "Geçerli fırçanın bulanıklığını yoksay"
+msgstr "Geçerli fırçanın bulanıklığını yok say"
 
 #: ../app/paint/gimppaintoptions.c:302
 msgid "Apply Jitter"
@@ -23085,8 +23085,8 @@ msgstr "Süzgeci uygulamak için pikselleri yerleşik sRGB'ye dönüştür (yava
 #: ../app/tools/gimpfiltertool.c:1159
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
-"Piksellerin yerleşik sRGB olduğunu varsay (gerçek görüntü renk uzayını "
-"yoksay)"
+"Piksellerin yerleşik sRGB olduğunu varsay (gerçek görüntü renk uzayını yok "
+"say)"
 
 #: ../app/tools/gimpfiltertool.c:1540 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
