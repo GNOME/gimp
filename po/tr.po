@@ -43,9 +43,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-31 14:28+0000\n"
-"PO-Revision-Date: 2024-02-03 08:00+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2024-02-07 14:02+0000\n"
+"PO-Revision-Date: 2024-02-08 01:44+0300\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -10364,7 +10364,7 @@ msgstr ""
 
 #: app/config/gimpcoreconfig.c:819 app/dialogs/preferences-dialog.c:1993
 msgid "Pattern syntax for searching and selecting items:"
-msgstr "Ögeleri aramak ve seçmek için dezen sözdizimi:"
+msgstr "Ögeleri aramak ve seçmek için dezen söz dizimi:"
 
 #: app/config/gimpdialogconfig.c:316 app/core/gimplayer.c:435
 msgid "Layer"
@@ -10397,8 +10397,8 @@ msgstr "Saydamlık özel renk 2"
 #: app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to "
-"focus\"."
+"receives the focus. This is useful for window managers using \"click to focus"
+"\"."
 msgstr ""
 "Etkinleştirildiğinde, görüntü penceresi odaklandığında görüntü etkin hale "
 "gelir. Bu özellik \"tıklayarak odakla\" özelliğini kullanan pencere "
@@ -14131,7 +14131,7 @@ msgstr "Görünmez katman aşağı birleştirilemez."
 msgid "Cannot merge down to a layer group."
 msgstr "Katman kümesi aşağı birleştirilemez."
 
-#: app/core/gimpimage-merge.c:341
+#: app/core/gimpimage-merge.c:341 app/widgets/gimpitemtreeview.c:2585
 msgid "The layer to merge down to is locked."
 msgstr "Birleştirilecek katman kilitli."
 
@@ -18296,8 +18296,8 @@ msgid ""
 "This welcome dialog is only shown at first launch. You can show it again "
 "from the \"Help\" menu."
 msgstr ""
-"Bu hoş geldiniz iletişim kutusu yalnızca ilk başlatmada gösterilir. "
-"\"Yardım\" menüsünden yeniden gösterebilirsiniz."
+"Bu hoş geldiniz iletişim kutusu yalnızca ilk başlatmada gösterilir. \"Yardım"
+"\" menüsünden yeniden gösterebilirsiniz."
 
 #: app/display/display-enums.c:89
 msgctxt "compass-orientation"
@@ -18620,6 +18620,7 @@ msgstr "Katman kümelerinin pikselleri değiştirilemez."
 
 # Bir burada anlamlı.
 #: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:704
+#: app/widgets/gimpitemtreeview.c:2391
 msgid "A selected layer's pixels are locked."
 msgstr "Seçili bir katmanın pikselleri kilitli."
 
@@ -20560,7 +20561,7 @@ msgstr "Sert kenar"
 
 #: app/paint/gimppaintoptions.c:306
 msgid "Ignore fuzziness of the current brush"
-msgstr "Geçerli fırçanın bulanıklığını yoksay"
+msgstr "Geçerli fırçanın bulanıklığını yok say"
 
 #: app/paint/gimppaintoptions.c:312
 msgid "Apply Jitter"
@@ -21146,8 +21147,8 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için yanlış bir değer türü ile "
 "çağrıldı (#%d). İstenen %s, olan %s."
@@ -27761,15 +27762,15 @@ msgstr "Seçilen süzgeci kaldır."
 msgid "Layer Effects"
 msgstr "Katman Etkileri"
 
-#: app/widgets/gimpitemtreeview.c:2471 app/widgets/gimpitemtreeview.c:2516
+#: app/widgets/gimpitemtreeview.c:2480 app/widgets/gimpitemtreeview.c:2525
 msgid "Reorder filter"
 msgstr "Etkiyi yeniden sırala"
 
-#: app/widgets/gimpitemtreeview.c:2561
+#: app/widgets/gimpitemtreeview.c:2570
 msgid "Effects from active tools can not be merged."
 msgstr "Etkin araçlardan gelen etkiler birleştirilemez."
 
-#: app/widgets/gimpitemtreeview.c:2602
+#: app/widgets/gimpitemtreeview.c:2620
 msgid "Remove filter"
 msgstr "Etkiyi kaldır"
 
