@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-22 23:36+0000\n"
-"PO-Revision-Date: 2023-10-24 02:20+0300\n"
+"POT-Creation-Date: 2024-02-06 23:14+0000\n"
+"PO-Revision-Date: 2024-02-08 01:47+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Launchpad-Export-Date: 2010-10-09 17:28+0000\n"
 "X-POOTLE-MTIME: 1436641384.000000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -76,7 +76,7 @@ msgstr "Görünür Katmanları Hizala"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1378 ../plug-ins/file-dds/ddswrite.c:1983
+#: ../plug-ins/file-dds/ddsread.c:1401 ../plug-ins/file-dds/ddswrite.c:1983
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
 #: ../plug-ins/file-tiff/file-tiff-load.c:2664 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
@@ -134,7 +134,7 @@ msgstr "_İptal"
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
 #: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
-#: ../plug-ins/file-dds/ddsread.c:1379 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/file-dds/ddsread.c:1402 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -225,7 +225,7 @@ msgstr "_Izgara boyutu:"
 
 #: ../plug-ins/common/align-layers.c:721
 msgid "_Ignore the bottom layer even if visible"
-msgstr "Görünür olsa bile alt katmanı _yoksay"
+msgstr "Görünür olsa bile alt katmanı _yok say"
 
 #: ../plug-ins/common/align-layers.c:731
 msgid "_Use the (invisible) bottom layer as the base"
@@ -447,7 +447,7 @@ msgstr "_Dikey"
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1011
 #: ../plug-ins/common/decompose.c:598 ../plug-ins/common/file-cel.c:446
 #: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:715
-#: ../plug-ins/common/file-gegl.c:438 ../plug-ins/common/file-gif-load.c:992
+#: ../plug-ins/common/file-gegl.c:438 ../plug-ins/common/file-gif-load.c:1008
 #: ../plug-ins/common/file-jp2-load.c:1290 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
@@ -459,7 +459,7 @@ msgstr "_Dikey"
 #: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:2153 ../plug-ins/file-sgi/sgi.c:416
+#: ../plug-ins/file-psd/psd-load.c:2161 ../plug-ins/file-sgi/sgi.c:416
 #: ../plug-ins/file-tiff/file-tiff-load.c:1544
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -2413,31 +2413,27 @@ msgstr "GIF görüntüsü"
 msgid "This is not a GIF file"
 msgstr "Bu GIF dosyası değil"
 
-#: ../plug-ins/common/file-gif-load.c:419
-msgid "Non-square pixels.  Image might look squashed."
-msgstr "Kare olmayan pikseller. Görüntü ezilmiş görünebilir."
-
-#: ../plug-ins/common/file-gif-load.c:994
+#: ../plug-ins/common/file-gif-load.c:1010
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Artalan (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:1021
+#: ../plug-ins/common/file-gif-load.c:1037
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "'%s' açılıyor (kare %d)"
 
-#: ../plug-ins/common/file-gif-load.c:1050
+#: ../plug-ins/common/file-gif-load.c:1066
 #, c-format
 msgid "Frame %d"
 msgstr "Kare %d"
 
-#: ../plug-ins/common/file-gif-load.c:1052
+#: ../plug-ins/common/file-gif-load.c:1068
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Kare %d (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:1083
+#: ../plug-ins/common/file-gif-load.c:1099
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -3382,7 +3378,7 @@ msgstr "PNG Konumunu Uygula"
 
 #: ../plug-ins/common/file-png.c:1412
 msgid "Ignore PNG offset"
-msgstr "PNG konumunu yoksay"
+msgstr "PNG konumunu yok say"
 
 #: ../plug-ins/common/file-png.c:1413
 msgid "Apply PNG offset to layer"
@@ -6658,7 +6654,7 @@ msgstr "Saydamlık indeksli görüntü BMP dosya biçiminde dışa aktarılamaz.
 
 #: ../plug-ins/file-bmp/bmp-save.c:188 ../plug-ins/file-bmp/bmp-save.c:221
 msgid "Alpha channel will be ignored."
-msgstr "Alfa kanalı yoksayılacak."
+msgstr "Alfa kanalı yok sayılacak."
 
 #. Run-Length Encoded
 #: ../plug-ins/file-bmp/bmp-save.c:952
@@ -6726,15 +6722,15 @@ msgstr "YCoCg Çözümle (ölçeklenmiş)"
 msgid "Decode Alpha exponent"
 msgstr "Alfa katsayılarını çözümle"
 
-#: ../plug-ins/file-dds/ddsread.c:1376
+#: ../plug-ins/file-dds/ddsread.c:1399
 msgid "Load DDS"
 msgstr "DDS Yükle"
 
-#: ../plug-ins/file-dds/ddsread.c:1395
+#: ../plug-ins/file-dds/ddsread.c:1418
 msgid "_Load mipmaps"
 msgstr "_Mipmapları yükle"
 
-#: ../plug-ins/file-dds/ddsread.c:1402
+#: ../plug-ins/file-dds/ddsread.c:1425
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Algılandığında, YCoCg/AExp görüntülerini kendiliğinden çözümle"
 
@@ -7238,21 +7234,21 @@ msgstr "Desteklenmeyen veya geçersiz katman maskesi genişliği: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Desteklenmeyen ya da geçersiz katman maskesi boyutu: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1540 ../plug-ins/file-psd/psd-load.c:2126
+#: ../plug-ins/file-psd/psd-load.c:1548 ../plug-ins/file-psd/psd-load.c:2134
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Desteklenmeyen sıkıştırma biçimi. %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2273
+#: ../plug-ins/file-psd/psd-load.c:2281
 msgid "Extra"
 msgstr "Ek"
 
-#: ../plug-ins/file-psd/psd-load.c:2473
+#: ../plug-ins/file-psd/psd-load.c:2481
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Desteklenmeyen veya geçersiz kanal boyutu"
 
-#: ../plug-ins/file-psd/psd-load.c:2539
+#: ../plug-ins/file-psd/psd-load.c:2547
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Veri açması başarısız"
@@ -11044,84 +11040,84 @@ msgstr "Seçme"
 msgid "Unselect All"
 msgstr "Seçimi Temizle"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:204
+#: ../plug-ins/imagemap/imap_edit_area_info.c:249
 msgid "Link Type"
 msgstr "Bağlantı Türü"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:213
+#: ../plug-ins/imagemap/imap_edit_area_info.c:258
 msgid "_Web Site"
 msgstr "_Web Sitesi"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:219
+#: ../plug-ins/imagemap/imap_edit_area_info.c:264
 msgid "_Ftp Site"
 msgstr "_Ftp Sitesi"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:225
+#: ../plug-ins/imagemap/imap_edit_area_info.c:270
 msgid "_Gopher"
 msgstr "_Gopher"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:231
+#: ../plug-ins/imagemap/imap_edit_area_info.c:276
 msgid "Ot_her"
 msgstr "D_iğer"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:237
+#: ../plug-ins/imagemap/imap_edit_area_info.c:282
 msgid "F_ile"
 msgstr "_Dosya"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:243
+#: ../plug-ins/imagemap/imap_edit_area_info.c:288
 msgid "WAI_S"
 msgstr "WAI_S"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:249
+#: ../plug-ins/imagemap/imap_edit_area_info.c:294
 msgid "Tel_net"
 msgstr "Tel_net"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:255
+#: ../plug-ins/imagemap/imap_edit_area_info.c:300
 msgid "e-_mail"
 msgstr "e-_posta"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:261
+#: ../plug-ins/imagemap/imap_edit_area_info.c:306
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr "Bu alana tıklandığında etkinleştirilecek _URL: (gerekli)"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:263
+#: ../plug-ins/imagemap/imap_edit_area_info.c:308
 msgid "Select HTML file"
 msgstr "HTML dosyası seç"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:272
+#: ../plug-ins/imagemap/imap_edit_area_info.c:317
 msgid "Relati_ve link"
 msgstr "Nis_pi bağlantı"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:278
+#: ../plug-ins/imagemap/imap_edit_area_info.c:323
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr ""
 "_Hedef çerçeve adı/ID: (isteğe bağlı - yalnızca ÇERÇEVELER için kullanılır)"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:281
+#: ../plug-ins/imagemap/imap_edit_area_info.c:326
 msgid "ALT te_xt: (optional)"
 msgstr "ALT me_tin: (isteğe bağlı)"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:284
+#: ../plug-ins/imagemap/imap_edit_area_info.c:329
 msgid "_Link"
 msgstr "_Bağlantı"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:318
+#: ../plug-ins/imagemap/imap_edit_area_info.c:363
 msgid "Dimensions"
 msgstr "Boyutlar"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:322
+#: ../plug-ins/imagemap/imap_edit_area_info.c:367
 msgid "Pre_view"
 msgstr "Ön_izleme"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:360
+#: ../plug-ins/imagemap/imap_edit_area_info.c:405
 msgid "_JavaScript"
 msgstr "_JavaScript"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:459
+#: ../plug-ins/imagemap/imap_edit_area_info.c:504
 msgid "Area Settings"
 msgstr "Alan Ayarları"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:501
+#: ../plug-ins/imagemap/imap_edit_area_info.c:546
 #, c-format
 msgid "Area #%d Settings"
 msgstr "Alan #%d Ayarları"
@@ -12578,7 +12574,7 @@ msgstr "Sayfa Kıvırma"
 
 #: ../plug-ins/print/print-page-layout.c:154
 msgid "Ignore Page _Margins"
-msgstr "Sayfa _Boşluklarını Yoksay"
+msgstr "Sayfa _Boşluklarını Yok Say"
 
 #. crop marks toggle
 #: ../plug-ins/print/print-page-layout.c:165
@@ -13043,3 +13039,6 @@ msgstr "_Tarayıcı/Kamera..."
 #: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
+
+#~ msgid "Non-square pixels.  Image might look squashed."
+#~ msgstr "Kare olmayan pikseller. Görüntü ezilmiş görünebilir."
