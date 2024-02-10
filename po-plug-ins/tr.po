@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-21 19:34+0000\n"
-"PO-Revision-Date: 2024-01-22 06:30+0300\n"
+"POT-Creation-Date: 2024-02-06 23:40+0000\n"
+"PO-Revision-Date: 2024-02-08 01:43+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -72,7 +72,7 @@ msgstr "Keçi çalıştır (C)"
 #: plug-ins/common/cml-explorer.c:2146 plug-ins/common/cml-explorer.c:2356
 #: plug-ins/common/colormap-remap.c:694 plug-ins/common/curve-bend.c:1809
 #: plug-ins/common/curve-bend.c:1844 plug-ins/common/file-gif-save.c:1188
-#: plug-ins/common/file-heif.c:2378 plug-ins/common/file-pdf-load.c:686
+#: plug-ins/common/file-heif.c:2314 plug-ins/common/file-pdf-load.c:686
 #: plug-ins/common/file-pdf-save.c:1053 plug-ins/common/grid.c:786
 #: plug-ins/common/qbist.c:836 plug-ins/common/qbist.c:878
 #: plug-ins/common/qbist.c:932 plug-ins/common/sphere-designer.c:2292
@@ -124,8 +124,8 @@ msgstr "_Çalıştır"
 #, c-format, python-format, lua-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
-"Check out the last version of the source code online by clicking the "
-"\"Source\" button."
+"Check out the last version of the source code online by clicking the \"Source"
+"\" button."
 msgstr ""
 "Bu eklenti, eklenti oluşturma işlemini göstermek amaçlı hazırlanmış bir '%s' "
 "örneğidir.\n"
@@ -152,7 +152,7 @@ msgstr "Keçi çalıştır (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1380 plug-ins/common/colormap-remap.c:695
-#: plug-ins/common/file-heif.c:2379 plug-ins/common/file-pdf-load.c:687
+#: plug-ins/common/file-heif.c:2315 plug-ins/common/file-pdf-load.c:687
 #: plug-ins/common/grid.c:787 plug-ins/common/qbist.c:933
 #: plug-ins/common/sphere-designer.c:2638 plug-ins/common/unit-editor.c:266
 #: plug-ins/common/warp.c:473 plug-ins/file-exr/file-exr.c:422
@@ -309,11 +309,11 @@ msgstr "Kılavuz"
 
 #: plug-ins/common/align-layers.c:229
 msgid "Ignore the _bottom layer even if visible"
-msgstr "Görünür olsa bile _alt katmanı yoksay"
+msgstr "Görünür olsa bile _alt katmanı yok say"
 
 #: plug-ins/common/align-layers.c:230
 msgid "Ignore the bottom layer even if visible"
-msgstr "Görünür olsa bile alt katmanı yoksay"
+msgstr "Görünür olsa bile alt katmanı yok say"
 
 #: plug-ins/common/align-layers.c:236
 msgid "_Use the (invisible) bottom layer as the base"
@@ -620,18 +620,18 @@ msgstr "Kesitler ekleniyor"
 msgid "Blinds"
 msgstr "Kesitler"
 
-#: plug-ins/common/blinds.c:271 plug-ins/pagecurl/pagecurl.c:251
+#: plug-ins/common/blinds.c:265 plug-ins/pagecurl/pagecurl.c:251
 msgid "Horizontal"
 msgstr "Yatay"
 
-#: plug-ins/common/blinds.c:272 plug-ins/pagecurl/pagecurl.c:250
+#: plug-ins/common/blinds.c:266 plug-ins/pagecurl/pagecurl.c:250
 msgid "Vertical"
 msgstr "Dikey"
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/common/blinds.c:278 plug-ins/common/compose.c:1183
+#: plug-ins/common/blinds.c:272 plug-ins/common/compose.c:1183
 #: plug-ins/common/decompose.c:645 plug-ins/common/file-cel.c:495
 #: plug-ins/common/file-cel.c:500 plug-ins/common/file-dicom.c:751
 #: plug-ins/common/file-farbfeld.c:321 plug-ins/common/file-gegl.c:471
@@ -653,7 +653,7 @@ msgstr "Dikey"
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:561
 #: plug-ins/gfig/gfig-dialog.c:1290 plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
-#: plug-ins/screenshot/screenshot-win32.c:317 plug-ins/twain/twain.c:636
+#: plug-ins/screenshot/screenshot-win32.c:309 plug-ins/twain/twain.c:636
 msgid "Background"
 msgstr "Artalan"
 
@@ -1482,7 +1482,7 @@ msgstr "_Kırmızılık cr709:"
 
 #: plug-ins/common/compose.c:244 plug-ins/common/compose.c:438
 #: plug-ins/common/compose.c:501 plug-ins/common/decompose.c:193
-#: plug-ins/common/file-heif.c:2544
+#: plug-ins/common/file-heif.c:2475
 msgid "RGB"
 msgstr "RGB"
 
@@ -2435,24 +2435,24 @@ msgstr "_Beyaz düzey"
 msgid "White level"
 msgstr "Beyaz düzey"
 
-#: plug-ins/common/despeckle.c:386 plug-ins/common/despeckle.c:762
+#: plug-ins/common/despeckle.c:386 plug-ins/common/despeckle.c:760
 msgid "Despeckle"
 msgstr "Beneksizleştir"
 
-#: plug-ins/common/despeckle.c:396
+#: plug-ins/common/despeckle.c:390
 msgid "Median"
 msgstr "Ortanca"
 
-#: plug-ins/common/despeckle.c:397 plug-ins/gimpressionist/orientation.c:176
+#: plug-ins/common/despeckle.c:391 plug-ins/gimpressionist/orientation.c:176
 #: plug-ins/gimpressionist/size.c:183
 msgid "Adaptive"
 msgstr "Uyarlamalı"
 
-#: plug-ins/common/despeckle.c:398
+#: plug-ins/common/despeckle.c:392
 msgid "Recursive-Median"
 msgstr "Özyineli Ortanca"
 
-#: plug-ins/common/despeckle.c:399
+#: plug-ins/common/despeckle.c:393
 msgid "Recursive-Adaptive"
 msgstr "Özyineli Uyarlamalı"
 
@@ -2581,7 +2581,7 @@ msgstr "EOF (dosya sonu) ya da görüntü başlığı okunurken hata"
 #.
 #: plug-ins/common/file-cel.c:393 plug-ins/common/file-dicom.c:375
 #: plug-ins/common/file-gegl.c:358 plug-ins/common/file-gif-load.c:408
-#: plug-ins/common/file-heif.c:910 plug-ins/common/file-jp2-load.c:1077
+#: plug-ins/common/file-heif.c:885 plug-ins/common/file-jp2-load.c:1077
 #: plug-ins/common/file-pcx.c:501 plug-ins/common/file-pcx.c:544
 #: plug-ins/common/file-pdf-load.c:856 plug-ins/common/file-pix.c:393
 #: plug-ins/common/file-png.c:657 plug-ins/common/file-pnm.c:713
@@ -3358,15 +3358,15 @@ msgstr "C kaynak kod başlığı"
 msgid "Header plug-in does not support multiple layers."
 msgstr "Başlık eklentisi çoklu katmanları desteklemiyor."
 
-#: plug-ins/common/file-heif.c:204 plug-ins/common/file-heif.c:244
+#: plug-ins/common/file-heif.c:197 plug-ins/common/file-heif.c:237
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: plug-ins/common/file-heif.c:207
+#: plug-ins/common/file-heif.c:200
 msgid "Loads HEIF images"
 msgstr "HEIF görüntüleri yükler"
 
-#: plug-ins/common/file-heif.c:208
+#: plug-ins/common/file-heif.c:201
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -3374,194 +3374,194 @@ msgstr ""
 "HEIF biçiminde (Yüksek Verimli Görüntü Dosyası Biçimi) depolanan görüntüyü "
 "yükle. HEIF dosyaları için tipik uzantılar: .heif, .heic."
 
-#: plug-ins/common/file-heif.c:249
+#: plug-ins/common/file-heif.c:242
 msgid "Exports HEIF images"
 msgstr "HEIF görüntülerini dışa aktarır"
 
-#: plug-ins/common/file-heif.c:250
+#: plug-ins/common/file-heif.c:243
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
 "Görüntüleri HEIF biçiminde (Yüksek Verimli Görüntü Dosyası Biçimi) kaydet."
 
-#: plug-ins/common/file-heif.c:266 plug-ins/common/file-heif.c:376
+#: plug-ins/common/file-heif.c:259 plug-ins/common/file-heif.c:368
 #: plug-ins/file-jpeg/jpeg.c:206
 msgid "_Quality"
 msgstr "Ka_lite"
 
-#: plug-ins/common/file-heif.c:267 plug-ins/common/file-heif.c:377
+#: plug-ins/common/file-heif.c:260 plug-ins/common/file-heif.c:369
 msgid "Quality factor (0 = worst, 100 = best)"
 msgstr "Nitelik faktörü (0 = en kötü, 100 = en iyi)"
 
-#: plug-ins/common/file-heif.c:272 plug-ins/common/file-heif.c:382
+#: plug-ins/common/file-heif.c:265 plug-ins/common/file-heif.c:374
 #: plug-ins/common/file-jpegxl.c:188 plug-ins/file-webp/file-webp.c:178
 msgid "L_ossless"
 msgstr "K_ayıpsız"
 
-#: plug-ins/common/file-heif.c:273 plug-ins/common/file-heif.c:383
+#: plug-ins/common/file-heif.c:266 plug-ins/common/file-heif.c:375
 #: plug-ins/common/file-jpegxl.c:189
 msgid "Use lossless compression"
 msgstr "Kayıpsız sıkıştırma kullan"
 
-#: plug-ins/common/file-heif.c:278 plug-ins/common/file-heif.c:388
+#: plug-ins/common/file-heif.c:271 plug-ins/common/file-heif.c:380
 msgid "Save color prof_ile"
 msgstr "Renk prof_ilini kaydet"
 
-#: plug-ins/common/file-heif.c:279 plug-ins/common/file-heif.c:389
+#: plug-ins/common/file-heif.c:272 plug-ins/common/file-heif.c:381
 msgid "Save the image's color profile"
 msgstr "Görüntünün renk profilini kaydet"
 
-#: plug-ins/common/file-heif.c:284 plug-ins/common/file-heif.c:394
+#: plug-ins/common/file-heif.c:277 plug-ins/common/file-heif.c:386
 #: plug-ins/common/file-jpegxl.c:200
 msgid "_Bit depth"
 msgstr "_Bit derinliği"
 
-#: plug-ins/common/file-heif.c:285 plug-ins/common/file-heif.c:395
+#: plug-ins/common/file-heif.c:278 plug-ins/common/file-heif.c:387
 #: plug-ins/common/file-jpegxl.c:201
 msgid "Bit depth of exported image"
 msgstr "Dışa aktarılan görüntünün bit derinliği"
 
-#: plug-ins/common/file-heif.c:290 plug-ins/common/file-heif.c:400
+#: plug-ins/common/file-heif.c:283 plug-ins/common/file-heif.c:392
 #: plug-ins/common/file-png.c:290
 msgid "_Pixel format"
 msgstr "_Piksel biçimi"
 
-#: plug-ins/common/file-heif.c:291 plug-ins/common/file-heif.c:401
+#: plug-ins/common/file-heif.c:284 plug-ins/common/file-heif.c:393
 msgid "Format of color sub-sampling"
 msgstr "Renk alt-örnekleme biçimi"
 
-#: plug-ins/common/file-heif.c:297 plug-ins/common/file-heif.c:407
+#: plug-ins/common/file-heif.c:290 plug-ins/common/file-heif.c:399
 msgid "Enco_der speed"
 msgstr "Ko_dlayıcı hızı"
 
-#: plug-ins/common/file-heif.c:298 plug-ins/common/file-heif.c:408
+#: plug-ins/common/file-heif.c:291 plug-ins/common/file-heif.c:400
 msgid "Tradeoff between speed and compression"
 msgstr "Hız ve sıkıştırma arasındaki denge"
 
-#: plug-ins/common/file-heif.c:304 plug-ins/common/file-heif.c:414
+#: plug-ins/common/file-heif.c:297 plug-ins/common/file-heif.c:406
 #: plug-ins/common/file-jpegxl.c:225
 msgid "Save Exi_f"
 msgstr "Exi_f Kaydet"
 
-#: plug-ins/common/file-heif.c:305 plug-ins/common/file-heif.c:415
+#: plug-ins/common/file-heif.c:298 plug-ins/common/file-heif.c:407
 #: plug-ins/common/file-jpegxl.c:226
 msgid "Toggle saving Exif data"
 msgstr "Exif verisini kaydetmeyi aç/kapat"
 
-#: plug-ins/common/file-heif.c:310 plug-ins/common/file-heif.c:420
+#: plug-ins/common/file-heif.c:303 plug-ins/common/file-heif.c:412
 #: plug-ins/common/file-jpegxl.c:231
 msgid "Save _XMP"
 msgstr "_XMP Kaydet"
 
-#: plug-ins/common/file-heif.c:311 plug-ins/common/file-heif.c:421
+#: plug-ins/common/file-heif.c:304 plug-ins/common/file-heif.c:413
 #: plug-ins/common/file-jpegxl.c:232
 msgid "Toggle saving XMP data"
 msgstr "XMP verisini kaydetmeyi aç/kapat"
 
-#: plug-ins/common/file-heif.c:325
+#: plug-ins/common/file-heif.c:317
 msgid "Loads AVIF images"
 msgstr "AVIF görüntülerini yükler"
 
-#: plug-ins/common/file-heif.c:326
+#: plug-ins/common/file-heif.c:318
 msgid "Load image stored in AV1 Image File Format (AVIF)"
 msgstr "AV1 Görüntü Dosyası Biçiminde (AVIF) saklanan görüntüyü yükle"
 
-#: plug-ins/common/file-heif.c:358
+#: plug-ins/common/file-heif.c:350
 msgid "Exports AVIF images"
 msgstr "AVIF görüntülerini dışa aktarır"
 
-#: plug-ins/common/file-heif.c:359
+#: plug-ins/common/file-heif.c:351
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Görüntüleri AV1 Resim Dosyası Biçiminde (AVIF) kaydet"
 
-#: plug-ins/common/file-heif.c:432
+#: plug-ins/common/file-heif.c:423
 msgid "JPEG 2000 encapsulated in HEIF"
 msgstr "HEIF içinde kapsüllenmiş JPEG 2000"
 
-#: plug-ins/common/file-heif.c:435
+#: plug-ins/common/file-heif.c:426
 msgid "Loads HEJ2 images"
 msgstr "HEJ2 görüntülerini yükler"
 
-#: plug-ins/common/file-heif.c:436
+#: plug-ins/common/file-heif.c:427
 msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "HEIF (HEJ2) içinde kapsüllenmiş JPEG 2000 görüntüsünü yükle"
 
-#: plug-ins/common/file-heif.c:541 plug-ins/common/file-heif.c:631
+#: plug-ins/common/file-heif.c:528 plug-ins/common/file-heif.c:613
 #, c-format
 msgid "HEIF format does not support multiple layers."
 msgstr "HEIF biçimi çoklu katmanları desteklemiyor."
 
-#: plug-ins/common/file-heif.c:950 plug-ins/common/file-heif.c:983
-#: plug-ins/common/file-heif.c:1024 plug-ins/common/file-heif.c:1090
+#: plug-ins/common/file-heif.c:925 plug-ins/common/file-heif.c:958
+#: plug-ins/common/file-heif.c:999 plug-ins/common/file-heif.c:1061
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "HEIF görüntü yükleme işlemi başarısız oldu: %s"
 
-#: plug-ins/common/file-heif.c:972
+#: plug-ins/common/file-heif.c:947
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "HEIF görüntü yükleme işlemi başarısız oldu: Girdi dosyası okunabilir görüntü "
 "içermiyor"
 
-#: plug-ins/common/file-heif.c:1216
+#: plug-ins/common/file-heif.c:1183
 msgid "image content"
 msgstr "görüntü içeriği"
 
-#: plug-ins/common/file-heif.c:1562
+#: plug-ins/common/file-heif.c:1522
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "'%s', %s kodlayıcı kullanılarak dışa aktarılıyor"
 
-#: plug-ins/common/file-heif.c:1612 plug-ins/common/file-heif.c:2019
+#: plug-ins/common/file-heif.c:1570 plug-ins/common/file-heif.c:1955
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "HEIF görüntüsü kodlama işlemi başarısız oldu: %s"
 
-#: plug-ins/common/file-heif.c:2140
+#: plug-ins/common/file-heif.c:2076
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "HEIF görüntüsü yazma işlemi başarısız oldu: %s"
 
-#: plug-ins/common/file-heif.c:2229
+#: plug-ins/common/file-heif.c:2165
 msgid "primary"
 msgstr "birincil"
 
-#: plug-ins/common/file-heif.c:2374
+#: plug-ins/common/file-heif.c:2310
 msgid "Load HEIF Image"
 msgstr "HEIF Görüntüsü Yükle"
 
-#: plug-ins/common/file-heif.c:2388
+#: plug-ins/common/file-heif.c:2324
 msgid "Select Image"
 msgstr "Görüntü Seç"
 
-#: plug-ins/common/file-heif.c:2545
+#: plug-ins/common/file-heif.c:2476
 msgid "YUV444"
 msgstr "YUV444"
 
-#: plug-ins/common/file-heif.c:2546
+#: plug-ins/common/file-heif.c:2477
 msgid "YUV420"
 msgstr "YUV420"
 
-#: plug-ins/common/file-heif.c:2554 plug-ins/common/file-jpegxl.c:2028
+#: plug-ins/common/file-heif.c:2483 plug-ins/common/file-jpegxl.c:2028
 msgid "8 bit/channel"
 msgstr "8 bit/kanal"
 
-#: plug-ins/common/file-heif.c:2555
+#: plug-ins/common/file-heif.c:2484
 msgid "10 bit/channel"
 msgstr "10 bit/kanal"
 
-#: plug-ins/common/file-heif.c:2556
+#: plug-ins/common/file-heif.c:2485
 msgid "12 bit/channel"
 msgstr "12 bit/kanal"
 
-#: plug-ins/common/file-heif.c:2562
+#: plug-ins/common/file-heif.c:2491
 msgid "Slow"
 msgstr "Yavaş"
 
-#: plug-ins/common/file-heif.c:2563
+#: plug-ins/common/file-heif.c:2492
 msgid "Balanced"
 msgstr "Dengeli"
 
-#: plug-ins/common/file-heif.c:2564
+#: plug-ins/common/file-heif.c:2493
 msgid "Fast"
 msgstr "Hızlı"
 
@@ -4742,7 +4742,7 @@ msgstr "PNG Konumunu Uygula"
 
 #: plug-ins/common/file-png.c:1235
 msgid "Ignore PNG offset"
-msgstr "PNG konumunu yoksay"
+msgstr "PNG konumunu yok say"
 
 #: plug-ins/common/file-png.c:1236
 msgid "Apply PNG offset to layer"
@@ -7089,20 +7089,20 @@ msgstr "draw_jigsaw: kötü biçem\n"
 msgid "Jigsaw"
 msgstr "Yapboz"
 
-#: plug-ins/common/jigsaw.c:2495
+#: plug-ins/common/jigsaw.c:2489
 msgid "Number of Tiles"
 msgstr "Döşemelerin Sayısı"
 
-#: plug-ins/common/jigsaw.c:2513
+#: plug-ins/common/jigsaw.c:2507
 msgid "Bevel Edges"
 msgstr "Eğim Kenarları"
 
 #. frame for primitive radio buttons
-#: plug-ins/common/jigsaw.c:2523
+#: plug-ins/common/jigsaw.c:2517
 msgid "Square"
 msgstr "Kare"
 
-#: plug-ins/common/jigsaw.c:2524
+#: plug-ins/common/jigsaw.c:2518
 msgid "Curved"
 msgstr "Eğik"
 
@@ -7229,15 +7229,15 @@ msgstr ""
 msgid "NL Filter"
 msgstr "NL Süzgeci"
 
-#: plug-ins/common/nl-filter.c:1121
+#: plug-ins/common/nl-filter.c:1115
 msgid "Alpha trimmed mean"
 msgstr "Alfa düzenlenmiş ortalama"
 
-#: plug-ins/common/nl-filter.c:1122
+#: plug-ins/common/nl-filter.c:1116
 msgid "Optimal estimation"
 msgstr "En iyi öngörü"
 
-#: plug-ins/common/nl-filter.c:1123
+#: plug-ins/common/nl-filter.c:1117
 msgid "Edge enhancement"
 msgstr "Kenar iyileştirmesi"
 
@@ -7423,8 +7423,8 @@ msgid ""
 "TRUE: guess samplecolors for the missing intensity values, FALSE: use only "
 "colors found in the sample"
 msgstr ""
-"TRUE: eksik yoğunluk değerleri için örnek renkleri öngör, FALSE: "
-"yalnızca örnekte bulunan renkleri kullan"
+"TRUE: eksik yoğunluk değerleri için örnek renkleri öngör, FALSE: yalnızca "
+"örnekte bulunan renkleri kullan"
 
 #: plug-ins/common/sample-colorize.c:375
 msgid "_Low"
@@ -7718,20 +7718,20 @@ msgstr "Parlak"
 msgid "Sparkle"
 msgstr "Parıltı"
 
-#: plug-ins/common/sparkle.c:417
+#: plug-ins/common/sparkle.c:412
 msgid "Additional Options"
 msgstr "Ek Seçenekler"
 
 #. colortype
-#: plug-ins/common/sparkle.c:424
+#: plug-ins/common/sparkle.c:419
 msgid "Natural color"
 msgstr "Doğal renk"
 
-#: plug-ins/common/sparkle.c:425 plug-ins/common/warp.c:614
+#: plug-ins/common/sparkle.c:420 plug-ins/common/warp.c:614
 msgid "Foreground color"
 msgstr "Önalan rengi"
 
-#: plug-ins/common/sparkle.c:426
+#: plug-ins/common/sparkle.c:421
 msgid "Background color"
 msgstr "Artalan rengi"
 
@@ -8645,7 +8645,7 @@ msgstr "Saydamlık indeksli görüntü BMP dosya biçiminde dışa aktarılamaz.
 
 #: plug-ins/file-bmp/bmp-save.c:201 plug-ins/file-bmp/bmp-save.c:234
 msgid "Alpha channel will be ignored."
-msgstr "Alfa kanalı yoksayılacak."
+msgstr "Alfa kanalı yok sayılacak."
 
 #: plug-ins/file-bmp/bmp-save.c:1009
 msgid "Compatibility"
@@ -10109,7 +10109,7 @@ msgid ""
 "(ignored if no clipping path)"
 msgstr ""
 "Kırpma yolu adı\n"
-"(kırpma yolu yoksa yoksayılır)"
+"(kırpma yolu yoksa yok sayılır)"
 
 #: plug-ins/file-psd/psd.c:253
 msgid "Path _Flatness"
@@ -10121,7 +10121,7 @@ msgid ""
 "(ignored if no clipping path)"
 msgstr ""
 "Aygıt piksellerinde kırpma yolu düzlüğü\n"
-"(kırpma yolu yoksa yoksayılır)"
+"(kırpma yolu yoksa yok sayılır)"
 
 #: plug-ins/file-psd/psd.c:260
 msgid "Export as _CMYK"
@@ -15673,7 +15673,7 @@ msgstr "Sayfa Kıvırma"
 
 #: plug-ins/print/print-page-layout.c:158
 msgid "Ignore Page _Margins"
-msgstr "Sayfa _Boşluklarını Yoksay"
+msgstr "Sayfa _Boşluklarını Yok Say"
 
 #. crop marks toggle
 #: plug-ins/print/print-page-layout.c:169
@@ -15853,7 +15853,7 @@ msgstr "Görüntüyü ekran profili ile etiketle"
 msgid "Convert image with sRGB"
 msgstr "Görüntüyü sRGB ile dönüştür"
 
-#: plug-ins/screenshot/screenshot-win32.c:304
+#: plug-ins/screenshot/screenshot-win32.c:296
 msgid "No data captured"
 msgstr "Hiç veri yakalanmadı"
 
