@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-29 10:17+0000\n"
-"PO-Revision-Date: 2023-07-02 22:03+0200\n"
+"POT-Creation-Date: 2024-02-06 23:40+0000\n"
+"PO-Revision-Date: 2024-02-06 23:40+0000\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: \n"
 "Language: ca\n"
@@ -28,8 +28,9 @@ msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
-msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
-msgstr "Aquesta versió del GIMP requereix Windows 7 o superior."
+msgid ""
+"This version of GIMP requires Windows 10, or a newer version of Windows."
+msgstr "Aquesta versió del GIMP requereix Windows 10 o superior."
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
