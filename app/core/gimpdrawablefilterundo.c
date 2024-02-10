@@ -24,6 +24,9 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
+#include "gimpchannel.h"
 #include "gimpcontainer.h"
 #include "gimpdrawable-filters.h"
 #include "gimpdrawablefilter.h"
@@ -177,8 +180,22 @@ gimp_drawable_filter_undo_pop (GimpUndo            *undo,
   GimpDrawableFilter     *filter               = GIMP_DRAWABLE_FILTER (drawable_filter_undo->filter);
   GimpDrawable           *drawable             = gimp_drawable_filter_get_drawable (filter);
   GimpContainer          *filter_stack         = gimp_drawable_get_filters (drawable);
+  GimpImage              *image                = NULL;
+  GimpChannel            *selection            = NULL;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+
+  if (drawable)
+    image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  if (image)
+    {
+      /* Temporarily remove selection so filters can be applied correctly */
+      selection =
+        GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (image)),
+                                           GIMP_TYPE_CHANNEL));
+      gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
+    }
 
   if ((undo_mode       == GIMP_UNDO_MODE_UNDO &&
        undo->undo_type == GIMP_UNDO_FILTER_ADD) ||
@@ -215,6 +232,18 @@ gimp_drawable_filter_undo_pop (GimpUndo            *undo,
       gimp_container_reorder (filter_stack, GIMP_OBJECT (filter),
                               drawable_filter_undo->row_index);
       gimp_drawable_filter_apply (filter, NULL);
+    }
+
+  if (image)
+    {
+      GeglBuffer *buffer = NULL;
+
+      /* Restore selection after undo or redo */
+      buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)));
+      gimp_drawable_set_buffer (GIMP_DRAWABLE (gimp_image_get_mask (image)),
+                                FALSE, NULL, buffer);
+      g_object_unref (buffer);
+      g_object_unref (selection);
     }
 }
 

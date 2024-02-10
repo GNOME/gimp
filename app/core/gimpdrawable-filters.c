@@ -28,9 +28,11 @@
 #include "gegl/gimpapplicator.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimp-utils.h"
+#include "gimpchannel.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-filters.h"
 #include "gimpdrawable-private.h"
@@ -138,13 +140,23 @@ gimp_drawable_remove_last_filter (GimpDrawable *drawable)
 void
 gimp_drawable_merge_filters (GimpDrawable *drawable)
 {
-  GList *list;
+  GList       *list;
+  GimpImage   *image;
+  GimpChannel *selection = NULL;
+  GeglBuffer  *buffer    = NULL;
 
   if (! GIMP_IS_DRAWABLE (drawable))
     return;
 
-  gimp_image_undo_group_start (gimp_item_get_image (GIMP_ITEM (drawable)),
-                               GIMP_UNDO_GROUP_DRAWABLE,
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  /* Temporarily remove selection so filters can be merged down correctly */
+  selection =
+    GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (image)),
+                                       GIMP_TYPE_CHANNEL));
+  gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE,
                                _("Rasterize filters"));
 
   while ((list = GIMP_LIST (drawable->private->filter_stack)->queue->tail))
@@ -164,6 +176,13 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
     }
 
   gimp_image_undo_group_end (gimp_item_get_image (GIMP_ITEM (drawable)));
+
+  /* Restore selection after merging down */
+  buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)));
+  gimp_drawable_set_buffer (GIMP_DRAWABLE (gimp_image_get_mask (image)),
+                            FALSE, NULL, buffer);
+  g_object_unref (buffer);
+  g_object_unref (selection);
 
   gimp_drawable_filters_changed (drawable);
 }
