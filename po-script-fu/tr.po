@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-27 07:36+0000\n"
-"PO-Revision-Date: 2023-12-31 12:24+0300\n"
+"POT-Creation-Date: 2024-02-06 23:40+0000\n"
+"PO-Revision-Date: 2024-02-09 21:09+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -131,7 +131,7 @@ msgid "Save Script-Fu Console Output"
 msgstr "Script-Fu Uçbirimi Çıktısını Kaydet"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:888
+#: plug-ins/script-fu/server/script-fu-server.c:878
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
 msgid "_Cancel"
 msgstr "İ_ptal"
@@ -158,27 +158,27 @@ msgstr "TinyScheme'ya hoşgeldiniz"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Scheme dilinde GIMP betiği oluşturma"
 
-#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/server/script-fu-server.c:874
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu Sunucu Seçenekleri"
 
-#: plug-ins/script-fu/server/script-fu-server.c:889
+#: plug-ins/script-fu/server/script-fu-server.c:879
 msgid "_Start Server"
 msgstr "_Sunucuyu Başlat"
 
-#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/server/script-fu-server.c:912
 msgid "Listen on IP:"
 msgstr "IP'yi dinle:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:929
+#: plug-ins/script-fu/server/script-fu-server.c:919
 msgid "Server port:"
 msgstr "Sunucu bağlantı noktası:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:935
+#: plug-ins/script-fu/server/script-fu-server.c:925
 msgid "Server logfile:"
 msgstr "Sunucu günlük dosyası:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:948
+#: plug-ins/script-fu/server/script-fu-server.c:938
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -243,34 +243,30 @@ msgstr "%s yürütülürken hata:"
 msgid "Error while loading %s:"
 msgstr "%s yüklenirken hata:"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:76
+#: plug-ins/script-fu/scripts/add-bevel.scm:75
 msgid "Bumpmap"
 msgstr "Derinlik etkisi"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:189
+#: plug-ins/script-fu/scripts/add-bevel.scm:188
 msgid "Add B_evel..."
 msgstr "E_ğim Ekle..."
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:190
+#: plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add a beveled border to an image"
 msgstr "Görüntüye eğimli bir kenarlık ekle"
 
+#. v3 >>> additional argument
+#: plug-ins/script-fu/scripts/add-bevel.scm:195
+msgid "_Thickness"
+msgstr "_Kalınlık"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:196
+msgid "_Work on copy"
+msgstr "Kopya üzerinde ç_alış"
+
 #: plug-ins/script-fu/scripts/add-bevel.scm:197
-msgid "Thickness"
-msgstr "Kalınlık"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:198
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
-#: plug-ins/script-fu/scripts/old-photo.scm:104
-#: plug-ins/script-fu/scripts/round-corners.scm:145
-#: plug-ins/script-fu/scripts/slide.scm:262
-#: plug-ins/script-fu/scripts/spinning-globe.scm:107
-msgid "Work on copy"
-msgstr "Kopya üzerinde çalış"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:199
-msgid "Keep bump layer"
-msgstr "Tümsek katmanı koru"
+msgid "_Keep bump layer"
+msgstr "Tümsek katmanı _koru"
 
 #: plug-ins/script-fu/scripts/addborder.scm:123
 msgid "Border Layer"
@@ -582,8 +578,8 @@ msgid "Darken only"
 msgstr "Yalnızca koyulaştır"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:70
-msgid "_Difference Clouds..."
-msgstr "_Farklı Bulutlar..."
+msgid "_Difference Clouds"
+msgstr "_Farklı Bulutlar"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
@@ -731,6 +727,14 @@ msgstr "Gölge ekle"
 msgid "Shadow weight (%)"
 msgstr "Gölge ağırlığı (%)"
 
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
+#: plug-ins/script-fu/scripts/old-photo.scm:104
+#: plug-ins/script-fu/scripts/round-corners.scm:145
+#: plug-ins/script-fu/scripts/slide.scm:262
+#: plug-ins/script-fu/scripts/spinning-globe.scm:111
+msgid "Work on copy"
+msgstr "Kopya üzerinde çalış"
+
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:164
 msgid "Flatten image"
 msgstr "Görüntüyü düzleştir"
@@ -857,30 +861,31 @@ msgstr "_Seçimden Yeni Kılavuzlar"
 msgid "Create four guides around the bounding box of the current selection"
 msgstr "Geçerli seçimin sınırlayıcı kutusu etrafında dört kılavuz oluştur"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
 msgstr "Yeni Kılavuz (_Yüzde Olarak)..."
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:31
 msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr "Görüntü boyutunun yüzdesi olarak belirlenen konuma bir kılavuz ekle"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Direction"
 msgstr "_Yön"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Horizontal"
 msgstr "Yatay"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:36
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:38
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Vertical"
 msgstr "Dikey"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:39
 msgid "_Position (in %)"
 msgstr "_Konum (% içinde)"
 
@@ -892,7 +897,7 @@ msgstr "Yeni _Kılavuz..."
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "Belirlenen yönelim ve konuma (piksel olarak) bir kılavuz ekle"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "_Position"
 msgstr "_Konum"
 
@@ -937,11 +942,11 @@ msgstr "Renk Geçişi"
 msgid "Use current gradient"
 msgstr "Geçerli renk geçişini kullan"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:106
+#: plug-ins/script-fu/scripts/line-nova.scm:107
 msgid "Line _Nova..."
 msgstr "_Nova Çizgisi..."
 
-#: plug-ins/script-fu/scripts/line-nova.scm:107
+#: plug-ins/script-fu/scripts/line-nova.scm:108
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
@@ -950,20 +955,20 @@ msgstr ""
 "doldur"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:114
-msgid "Number of lines"
-msgstr "Çizgi sayısı"
+msgid "_Number of lines"
+msgstr "Çizgi _sayısı"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:115
-msgid "Sharpness (degrees)"
-msgstr "Keskinlik (derece)"
+msgid "S_harpness (degrees)"
+msgstr "K_eskinlik (derece)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:116
-msgid "Offset radius"
-msgstr "Konum yarıçapı"
+msgid "O_ffset radius"
+msgstr "K_onum yarıçapı"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:117
-msgid "Randomness"
-msgstr "Raslantısallık"
+msgid "Ran_domness"
+msgstr "Ra_slantısallık"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:63
 msgid "_Rectangular..."
@@ -1199,28 +1204,27 @@ msgstr "Katmanların Sırasını _Tersine Çevir"
 msgid "Reverse the order of layers in the image"
 msgstr "Görüntüdeki katmanların sırasını tersine çevir"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:69
+#: plug-ins/script-fu/scripts/ripply-anim.scm:70
 msgid "_Rippling..."
 msgstr "_Dalgalanma..."
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:70
+#: plug-ins/script-fu/scripts/ripply-anim.scm:71
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
 "Geçerli katmana dalgacık etkisi uygulayarak çok katmanlı yeni görüntü oluştur"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:77
-msgid "Rippling strength"
-msgstr "Dalgalanma kuvveti"
+msgid "Ri_ppling strength"
+msgstr "Dal_galanma kuvveti"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:78
-#: plug-ins/script-fu/scripts/waves-anim.scm:105
-msgid "Number of frames"
-msgstr "Çerçeve sayısı"
+msgid "_Number of frames"
+msgstr "Kare _sayısı"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
-msgid "Edge behavior"
-msgstr "Kenar davranışı"
+msgid "Edge _behavior"
+msgstr "Kenar _davranışı"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Wrap"
@@ -1318,28 +1322,28 @@ msgstr "Yazı tipi"
 msgid "Font color"
 msgstr "Yazı tipi rengi"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:95
+#: plug-ins/script-fu/scripts/spinning-globe.scm:99
 msgid "_Spinning Globe..."
 msgstr "_Dönen Küre..."
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:96
+#: plug-ins/script-fu/scripts/spinning-globe.scm:100
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr ""
 "Geçerli görüntüyü dönen bir küreye uyarlayarak, bir canlandırma oluştur"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:103
+#: plug-ins/script-fu/scripts/spinning-globe.scm:107
 msgid "Frames"
 msgstr "Kare Sayısı"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:104
+#: plug-ins/script-fu/scripts/spinning-globe.scm:108
 msgid "Turn from left to right"
 msgstr "Soldan sağa dön"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:105
+#: plug-ins/script-fu/scripts/spinning-globe.scm:109
 msgid "Transparent background"
 msgstr "Saydam artalan"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:106
+#: plug-ins/script-fu/scripts/spinning-globe.scm:110
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "n Renklerine içerik (0 = RGB kalan)"
 
@@ -1356,27 +1360,27 @@ msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr ""
 "Görüntü kenarlarını bulanıklaştır, böylece sonuç kusursuz biçimde döşenir"
 
+#: plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "Ra_dius"
+msgstr "Y_arıçap"
+
 #: plug-ins/script-fu/scripts/tileblur.scm:80
-msgid "Radius"
-msgstr "Yarıçap"
+msgid "Blur _vertically"
+msgstr "Dikey _bulanıklık"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:81
-msgid "Blur vertically"
-msgstr "Dikey bulanıklık"
+msgid "Blur _horizontally"
+msgstr "_Yatay bulanıklık"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:82
-msgid "Blur horizontally"
-msgstr "Yatay bulanıklık"
+msgid "Blur _type"
+msgstr "Bulanıklık _türü"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
-msgid "Blur type"
-msgstr "Bulanıklık türü"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "IIR"
 msgstr "IIR"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "RLE"
 msgstr "RLE"
 
@@ -1407,6 +1411,10 @@ msgstr "Boyut"
 #: plug-ins/script-fu/scripts/waves-anim.scm:104
 msgid "Wavelength"
 msgstr "Dalgaboyu"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "Çerçeve sayısı"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:106
 msgid "Invert direction"
