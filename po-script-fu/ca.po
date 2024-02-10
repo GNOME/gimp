@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-16 10:28+0000\n"
+"POT-Creation-Date: 2024-02-06 23:40+0000\n"
 "PO-Revision-Date: 2024-01-21 19:52+0100\n"
 "Last-Translator: Quique Serrano <qserrano@outlook.com>\n"
 "Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
@@ -130,7 +130,7 @@ msgid "Save Script-Fu Console Output"
 msgstr "Desa la sortida de la consola de funcions"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:888
+#: plug-ins/script-fu/server/script-fu-server.c:878
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
 msgid "_Cancel"
 msgstr "_Cancel·la"
@@ -156,27 +156,27 @@ msgstr "Us donem la benvinguda al TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Crear scripts del GIMP en el llenguatge Scheme"
 
-#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/server/script-fu-server.c:874
 msgid "Script-Fu Server Options"
 msgstr "Opcions de servidor de funcions"
 
-#: plug-ins/script-fu/server/script-fu-server.c:889
+#: plug-ins/script-fu/server/script-fu-server.c:879
 msgid "_Start Server"
 msgstr "_Inicia el servidor"
 
-#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/server/script-fu-server.c:912
 msgid "Listen on IP:"
 msgstr "Escolta en la IP:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:929
+#: plug-ins/script-fu/server/script-fu-server.c:919
 msgid "Server port:"
 msgstr "Port del servidor:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:935
+#: plug-ins/script-fu/server/script-fu-server.c:925
 msgid "Server logfile:"
 msgstr "Fitxer de registre del servidor:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:948
+#: plug-ins/script-fu/server/script-fu-server.c:938
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -241,34 +241,30 @@ msgstr "S'ha produït un error mentre s'executava %s:"
 msgid "Error while loading %s:"
 msgstr "S'ha produït un error en carregar %s:"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:76
+#: plug-ins/script-fu/scripts/add-bevel.scm:75
 msgid "Bumpmap"
 msgstr "Mapa de relleu"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:189
+#: plug-ins/script-fu/scripts/add-bevel.scm:188
 msgid "Add B_evel..."
 msgstr "Emmarca amb _relleu..."
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:190
+#: plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add a beveled border to an image"
 msgstr "Posa un marc bisellat a la imatge"
 
+#. v3 >>> additional argument
+#: plug-ins/script-fu/scripts/add-bevel.scm:195
+msgid "_Thickness"
+msgstr "_Gruix"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:196
+msgid "_Work on copy"
+msgstr "_Treballa en una còpia"
+
 #: plug-ins/script-fu/scripts/add-bevel.scm:197
-msgid "Thickness"
-msgstr "Gruix"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:198
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
-#: plug-ins/script-fu/scripts/old-photo.scm:104
-#: plug-ins/script-fu/scripts/round-corners.scm:145
-#: plug-ins/script-fu/scripts/slide.scm:262
-#: plug-ins/script-fu/scripts/spinning-globe.scm:111
-msgid "Work on copy"
-msgstr "Treballa en una còpia"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:199
-msgid "Keep bump layer"
-msgstr "Conserva la capa del relleu"
+msgid "_Keep bump layer"
+msgstr "_Conserva la capa del relleu"
 
 #: plug-ins/script-fu/scripts/addborder.scm:123
 msgid "Border Layer"
@@ -734,6 +730,14 @@ msgstr "Afegeix una ombra"
 msgid "Shadow weight (%)"
 msgstr "Pes de l'ombra (%)"
 
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
+#: plug-ins/script-fu/scripts/old-photo.scm:104
+#: plug-ins/script-fu/scripts/round-corners.scm:145
+#: plug-ins/script-fu/scripts/slide.scm:262
+#: plug-ins/script-fu/scripts/spinning-globe.scm:111
+msgid "Work on copy"
+msgstr "Treballa en una còpia"
+
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:164
 msgid "Flatten image"
 msgstr "Aplana la imatge"
@@ -857,32 +861,33 @@ msgid "Create four guides around the bounding box of the current selection"
 msgstr ""
 "Fes quatre guies al voltant de la caixa contenidora de la selecció actual"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
 msgstr "Nova guia (per _percentatge)..."
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:31
 msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr ""
 "Afegeix una guia a la posició especificada com a percentatge de la mida de "
 "la imatge"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Direction"
 msgstr "_Direcció"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Horizontal"
 msgstr "Horitzontal"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:36
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:38
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Vertical"
 msgstr "Vertical"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:39
 msgid "_Position (in %)"
 msgstr "_Posició (en %)"
 
@@ -895,7 +900,7 @@ msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr ""
 "Afegeix una guia amb l'orientació i la posició especificades (en píxels)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "_Position"
 msgstr "_Posició"
 
@@ -940,11 +945,11 @@ msgstr "Degradat"
 msgid "Use current gradient"
 msgstr "Utilitza el degradat actual"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:106
+#: plug-ins/script-fu/scripts/line-nova.scm:107
 msgid "Line _Nova..."
 msgstr "_Ratllat radial..."
 
-#: plug-ins/script-fu/scripts/line-nova.scm:107
+#: plug-ins/script-fu/scripts/line-nova.scm:108
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
@@ -953,20 +958,20 @@ msgstr ""
 "primer pla"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:114
-msgid "Number of lines"
-msgstr "Nombre de línies"
+msgid "_Number of lines"
+msgstr "_Nombre de línies"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:115
-msgid "Sharpness (degrees)"
-msgstr "Definició (graus)"
+msgid "S_harpness (degrees)"
+msgstr "_Definició (graus)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:116
-msgid "Offset radius"
-msgstr "Radi de desplaçament"
+msgid "O_ffset radius"
+msgstr "_Radi de desplaçament"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:117
-msgid "Randomness"
-msgstr "Aleatorietat"
+msgid "Ran_domness"
+msgstr "_Aleatorietat"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:63
 msgid "_Rectangular..."
@@ -1203,27 +1208,26 @@ msgstr "Inverteix l'_ordre de les capes"
 msgid "Reverse the order of layers in the image"
 msgstr "Inverteix l'ordre de les capes de la imatge"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:69
+#: plug-ins/script-fu/scripts/ripply-anim.scm:70
 msgid "_Rippling..."
 msgstr "_Ondulació..."
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:70
+#: plug-ins/script-fu/scripts/ripply-anim.scm:71
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr "Crea una imatge multicapa afegint un efecte d'ones a la capa actual"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:77
-msgid "Rippling strength"
-msgstr "Intensitat de l'ondulació"
+msgid "Ri_ppling strength"
+msgstr "_Intensitat de l'ondulació"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:78
-#: plug-ins/script-fu/scripts/waves-anim.scm:105
-msgid "Number of frames"
-msgstr "Nombre de fotogrames"
+msgid "_Number of frames"
+msgstr "N_ombre de fotogrames"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
-msgid "Edge behavior"
-msgstr "Comportament de les vores"
+msgid "Edge _behavior"
+msgstr "C_omportament de les vores"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Wrap"
@@ -1360,27 +1364,27 @@ msgstr "_Difuminat per a rajoles..."
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr "Difumina les vores d'una imatge, de manera que no es notin les juntes"
 
+#: plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "Ra_dius"
+msgstr "_Radi"
+
 #: plug-ins/script-fu/scripts/tileblur.scm:80
-msgid "Radius"
-msgstr "Radi"
+msgid "Blur _vertically"
+msgstr "D_ifumina verticalment"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:81
-msgid "Blur vertically"
-msgstr "Difumina verticalment"
+msgid "Blur _horizontally"
+msgstr "Difumina _horitzontalment"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:82
-msgid "Blur horizontally"
-msgstr "Difumina horitzontalment"
+msgid "Blur _type"
+msgstr "_Tipus de difuminat"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
-msgid "Blur type"
-msgstr "Tipus de difuminat"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "IIR"
 msgstr "IIR"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "RLE"
 msgstr "RLE"
 
@@ -1411,6 +1415,10 @@ msgstr "Amplitud"
 #: plug-ins/script-fu/scripts/waves-anim.scm:104
 msgid "Wavelength"
 msgstr "Longitud d'ona"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "Nombre de fotogrames"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:106
 msgid "Invert direction"
