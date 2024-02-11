@@ -22,9 +22,6 @@
 #ifndef __GIMP_WIDGETS_PRIVATE_H__
 #define __GIMP_WIDGETS_PRIVATE_H__
 
-/* Used to compare similar colors across several widgets. */
-#define GIMP_RGBA_EPSILON 1e-6
-
 
 typedef GeglColor * (* GimpGetColorFunc)      (void);
 typedef void        (* GimpEnsureModulesFunc) (void);

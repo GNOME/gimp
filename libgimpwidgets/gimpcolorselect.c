@@ -149,6 +149,7 @@ struct _GimpColorSelect
   gboolean             z_needs_render;
 
   gdouble              pos[3];
+  gfloat               z_value;
 
   ColorSelectDragMode  drag_mode;
 
@@ -182,102 +183,104 @@ struct _ColorSelectFill
 };
 
 
-static void   gimp_color_select_finalize        (GObject                  *object);
+static void       gimp_color_select_finalize               (GObject                  *object);
 
-static void   gimp_color_select_togg_visible    (GimpColorSelector        *selector,
-                                                 gboolean                  visible);
-static void   gimp_color_select_togg_sensitive  (GimpColorSelector        *selector,
-                                                 gboolean                  sensitive);
-static void   gimp_color_select_set_color       (GimpColorSelector        *selector,
-                                                 GeglColor                *color);
-static void   gimp_color_select_set_channel     (GimpColorSelector        *selector,
-                                                 GimpColorSelectorChannel  channel);
-static void   gimp_color_select_set_model_visible
-                                                (GimpColorSelector        *selector,
-                                                 GimpColorSelectorModel    model,
-                                                 gboolean                  visible);
-static void   gimp_color_select_set_format      (GimpColorSelector        *selector,
-                                                 const Babl               *format);
-static void   gimp_color_select_set_simulation  (GimpColorSelector        *selector,
-                                                 GimpColorProfile         *profile,
-                                                 GimpColorRenderingIntent  intent,
-                                                 gboolean                  bpc);
-static void   gimp_color_select_set_config      (GimpColorSelector        *selector,
-                                                 GimpColorConfig          *config);
-static void   gimp_color_select_simulation      (GimpColorSelector        *selector,
-                                                 gboolean                  enabled);
+static void       gimp_color_select_togg_visible           (GimpColorSelector        *selector,
+                                                            gboolean                  visible);
+static void       gimp_color_select_togg_sensitive         (GimpColorSelector        *selector,
+                                                            gboolean                  sensitive);
+static void       gimp_color_select_set_color              (GimpColorSelector        *selector,
+                                                            GeglColor                *color);
+static void       gimp_color_select_set_channel            (GimpColorSelector        *selector,
+                                                            GimpColorSelectorChannel  channel);
+static void       gimp_color_select_set_model_visible      (GimpColorSelector        *selector,
+                                                            GimpColorSelectorModel    model,
+                                                            gboolean                  visible);
+static void       gimp_color_select_set_format             (GimpColorSelector        *selector,
+                                                            const Babl               *format);
+static void       gimp_color_select_set_simulation         (GimpColorSelector        *selector,
+                                                            GimpColorProfile         *profile,
+                                                            GimpColorRenderingIntent  intent,
+                                                            gboolean                  bpc);
+static void       gimp_color_select_set_config             (GimpColorSelector        *selector,
+                                                            GimpColorConfig          *config);
+static void       gimp_color_select_simulation             (GimpColorSelector        *selector,
+                                                            gboolean                  enabled);
 
-static void   gimp_color_select_channel_toggled (GtkWidget                *widget,
-                                                 GimpColorSelect          *select);
+static void       gimp_color_select_channel_toggled        (GtkWidget                *widget,
+                                                            GimpColorSelect          *select);
 
-static void   gimp_color_select_update          (GimpColorSelect          *select,
-                                                 ColorSelectUpdateType     type);
-static void   gimp_color_select_update_values   (GimpColorSelect          *select);
-static void   gimp_color_select_update_pos      (GimpColorSelect          *select);
+static void       gimp_color_select_update                 (GimpColorSelect          *select,
+                                                            ColorSelectUpdateType     type);
+static void       gimp_color_select_update_values          (GimpColorSelect          *select);
+static void       gimp_color_select_update_pos             (GimpColorSelect          *select);
 
 #if 0
-static void   gimp_color_select_drop_color      (GtkWidget          *widget,
-                                                 gint                x,
-                                                 gint                y,
-                                                 const GimpRGB      *color,
-                                                 gpointer            data);
+static void       gimp_color_select_drop_color             (GtkWidget          *widget,
+                                                            gint                x,
+                                                            gint                y,
+                                                            const GimpRGB      *color,
+                                                            gpointer            data);
 #endif
 
-static void  gimp_color_select_xy_size_allocate (GtkWidget          *widget,
-                                                 GtkAllocation      *allocation,
-                                                 GimpColorSelect    *select);
-static gboolean   gimp_color_select_xy_draw     (GtkWidget          *widget,
-                                                 cairo_t            *cr,
-                                                 GimpColorSelect    *select);
-static gboolean   gimp_color_select_xy_events   (GtkWidget          *widget,
-                                                 GdkEvent           *event,
-                                                 GimpColorSelect    *select);
-static void   gimp_color_select_z_size_allocate (GtkWidget          *widget,
-                                                 GtkAllocation      *allocation,
-                                                 GimpColorSelect    *select);
-static gboolean   gimp_color_select_z_draw      (GtkWidget          *widget,
-                                                 cairo_t            *cr,
-                                                 GimpColorSelect    *select);
-static gboolean   gimp_color_select_z_events    (GtkWidget          *widget,
-                                                 GdkEvent           *event,
-                                                 GimpColorSelect    *select);
+static void       gimp_color_select_xy_size_allocate       (GtkWidget          *widget,
+                                                            GtkAllocation      *allocation,
+                                                            GimpColorSelect    *select);
+static gboolean   gimp_color_select_xy_draw                (GtkWidget          *widget,
+                                                            cairo_t            *cr,
+                                                            GimpColorSelect    *select);
+static gboolean   gimp_color_select_xy_events              (GtkWidget          *widget,
+                                                            GdkEvent           *event,
+                                                            GimpColorSelect    *select);
+static void       gimp_color_select_z_size_allocate        (GtkWidget          *widget,
+                                                            GtkAllocation      *allocation,
+                                                            GimpColorSelect    *select);
+static gboolean   gimp_color_select_z_draw                 (GtkWidget          *widget,
+                                                            cairo_t            *cr,
+                                                            GimpColorSelect    *select);
+static gboolean   gimp_color_select_z_events               (GtkWidget          *widget,
+                                                            GdkEvent           *event,
+                                                            GimpColorSelect    *select);
 
-static void   gimp_color_select_render          (GtkWidget          *widget,
-                                                 guchar             *buf,
-                                                 gint                width,
-                                                 gint                height,
-                                                 gint                rowstride,
-                                                 ColorSelectFillType fill_type,
-                                                 GeglColor          *color,
-                                                 const guchar       *oog_color);
+static void       gimp_color_select_render                 (GtkWidget          *widget,
+                                                            guchar             *buf,
+                                                            gint                width,
+                                                            gint                height,
+                                                            gint                rowstride,
+                                                            ColorSelectFillType fill_type,
+                                                            GeglColor          *color,
+                                                            const guchar       *oog_color);
 
-static void   color_select_render_red              (ColorSelectFill *csf);
-static void   color_select_render_green            (ColorSelectFill *csf);
-static void   color_select_render_blue             (ColorSelectFill *csf);
+static void       color_select_render_red                  (ColorSelectFill *csf);
+static void       color_select_render_green                (ColorSelectFill *csf);
+static void       color_select_render_blue                 (ColorSelectFill *csf);
 
-static void   color_select_render_hue              (ColorSelectFill *csf);
-static void   color_select_render_saturation       (ColorSelectFill *csf);
-static void   color_select_render_value            (ColorSelectFill *csf);
+static void       color_select_render_hue                  (ColorSelectFill *csf);
+static void       color_select_render_saturation           (ColorSelectFill *csf);
+static void       color_select_render_value                (ColorSelectFill *csf);
 
-static void   color_select_render_lch_lightness    (ColorSelectFill *csf);
-static void   color_select_render_lch_chroma       (ColorSelectFill *csf);
-static void   color_select_render_lch_hue          (ColorSelectFill *csf);
+static void       color_select_render_lch_lightness        (ColorSelectFill *csf);
+static void       color_select_render_lch_chroma           (ColorSelectFill *csf);
+static void       color_select_render_lch_hue              (ColorSelectFill *csf);
 
-static void   color_select_render_red_green        (ColorSelectFill *csf);
-static void   color_select_render_red_blue         (ColorSelectFill *csf);
-static void   color_select_render_green_blue       (ColorSelectFill *csf);
+static void       color_select_render_red_green            (ColorSelectFill *csf);
+static void       color_select_render_red_blue             (ColorSelectFill *csf);
+static void       color_select_render_green_blue           (ColorSelectFill *csf);
 
-static void   color_select_render_hue_saturation   (ColorSelectFill *csf);
-static void   color_select_render_hue_value        (ColorSelectFill *csf);
-static void   color_select_render_saturation_value (ColorSelectFill *csf);
+static void       color_select_render_hue_saturation       (ColorSelectFill *csf);
+static void       color_select_render_hue_value            (ColorSelectFill *csf);
+static void       color_select_render_saturation_value     (ColorSelectFill *csf);
 
-static void   color_select_render_lch_chroma_lightness (ColorSelectFill *csf);
-static void   color_select_render_lch_hue_lightness    (ColorSelectFill *csf);
-static void   color_select_render_lch_hue_chroma       (ColorSelectFill *csf);
+static void       color_select_render_lch_chroma_lightness (ColorSelectFill *csf);
+static void       color_select_render_lch_hue_lightness    (ColorSelectFill *csf);
+static void       color_select_render_lch_hue_chroma       (ColorSelectFill *csf);
 
-static void   gimp_color_select_notify_config      (GimpColorConfig  *config,
-                                                    const GParamSpec *pspec,
-                                                    GimpColorSelect  *select);
+static void       gimp_color_select_notify_config          (GimpColorConfig  *config,
+                                                            const GParamSpec *pspec,
+                                                            GimpColorSelect  *select);
+
+static gfloat     gimp_color_select_get_z_value            (GimpColorSelect *select,
+                                                            GeglColor       *color);
 
 
 G_DEFINE_TYPE (GimpColorSelect, gimp_color_select, GIMP_TYPE_COLOR_SELECTOR)
@@ -367,6 +370,7 @@ gimp_color_select_init (GimpColorSelect *select)
   GSList                 *group = NULL;
 
   /* Default values. */
+  select->z_value       = G_MINFLOAT;
   select->z_color_fill  = COLOR_SELECT_HUE;
   select->xy_color_fill = COLOR_SELECT_SATURATION_VALUE;
   select->drag_mode     = DRAG_NONE;
@@ -574,10 +578,23 @@ static void
 gimp_color_select_set_color (GimpColorSelector *selector,
                              GeglColor         *color)
 {
-  GimpColorSelect *select = GIMP_COLOR_SELECT (selector);
+  GimpColorSelect       *select       = GIMP_COLOR_SELECT (selector);
+  ColorSelectUpdateType  update_flags = UPDATE_POS;
+  gfloat                 z_value;
 
-  gimp_color_select_update (select,
-                            UPDATE_POS | UPDATE_XY_COLOR | UPDATE_Z_COLOR);
+  z_value = gimp_color_select_get_z_value (select, color);
+
+/* Note: we are not comparing full colors, hence not using
+ * gimp_color_is_perceptually_identical(). It's more of a quick comparison on
+ * whether the Z channel is different enough that we'd want to redraw the XY
+ * preview too.
+ */
+#define GIMP_RGBA_EPSILON 1e-4
+  if (fabs (z_value - select->z_value) > GIMP_RGBA_EPSILON)
+    update_flags |= UPDATE_XY_COLOR;
+#undef GIMP_RGBA_EPSILON
+
+  gimp_color_select_update (select, update_flags);
 }
 
 static void
@@ -1084,6 +1101,7 @@ gimp_color_select_xy_draw (GtkWidget       *widget,
                                 select->xy_color_fill,
                                 color,
                                 select->oog_color);
+      select->z_value = gimp_color_select_get_z_value (select, color);
       select->xy_needs_render = FALSE;
 
       g_object_unref (color);
@@ -1990,4 +2008,44 @@ gimp_color_select_notify_config (GimpColorConfig  *config,
   select->z_needs_render  = TRUE;
 
   g_object_unref (color);
+}
+
+static gfloat
+gimp_color_select_get_z_value (GimpColorSelect *select,
+                               GeglColor       *color)
+{
+  gint   z_channel = -1;
+  gfloat channels[3];
+
+  switch (select->z_color_fill)
+    {
+    case COLOR_SELECT_RED:
+      z_channel = 0;
+    case COLOR_SELECT_GREEN:
+      z_channel = (z_channel > -1) ? z_channel : 1;
+    case COLOR_SELECT_BLUE:
+      z_channel = (z_channel > -1) ? z_channel : 2;
+      gegl_color_get_pixel (color, rgbf_format, channels);
+      break;
+    case COLOR_SELECT_HUE:
+      z_channel = 0;
+    case COLOR_SELECT_SATURATION:
+      z_channel = (z_channel > -1) ? z_channel : 1;
+    case COLOR_SELECT_VALUE:
+      z_channel = (z_channel > -1) ? z_channel : 2;
+      gegl_color_get_pixel (color, hsvf_format, channels);
+      break;
+    case COLOR_SELECT_LCH_LIGHTNESS:
+      z_channel = 0;
+    case COLOR_SELECT_LCH_CHROMA:
+      z_channel = (z_channel > -1) ? z_channel : 1;
+    case COLOR_SELECT_LCH_HUE:
+      z_channel = (z_channel > -1) ? z_channel : 2;
+      gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) float"), channels);
+      break;
+    default:
+      g_return_val_if_reached (G_MINFLOAT);
+    }
+
+  return channels[z_channel];
 }
