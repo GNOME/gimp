@@ -1,3 +1,6 @@
+gi.require_version('Gegl', '0.4')
+from gi.repository import Gegl
+
 image     = Gimp.list_images()[0]
 procedure = Gimp.get_pdb().lookup_procedure("file-bmp-save")
 config    = procedure.create_config()
@@ -19,8 +22,7 @@ def export_scaled_img(image, target_width, target_height, export_path):
   img.scale(new_width, new_height)
   img.resize(target_width, target_height, offx, offy)
   # XXX: should we rather use the average color as border?
-  black = Gimp.RGB()
-  black.set(0, 0, 0)
+  black = Gegl.Color.new("black")
   Gimp.context_set_background(black)
   drawables = img.list_selected_drawables()
   for d in drawables:
