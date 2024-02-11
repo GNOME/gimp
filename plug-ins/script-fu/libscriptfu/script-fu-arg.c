@@ -406,7 +406,7 @@ script_fu_arg_get_param_spec (SFArg       *arg,
                                 nick,
                                 arg->label,
                                 0,        /* Always zero based. */
-                                g_slist_length (arg->default_value.sfa_option.list),
+                                g_slist_length (arg->default_value.sfa_option.list) - 1,
                                 arg->default_value.sfa_option.history,
                                 G_PARAM_READWRITE);
       /* FUTURE: Model values not now appear in PDB browser NOR in widgets? */
