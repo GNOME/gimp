@@ -334,6 +334,18 @@ gimp_babl_format_get_with_alpha (const Babl *format)
     return format;
 
   model = babl_get_name (babl_format_get_model (format));
+
+  /* Special-cased because babl_format_has_alpha() doesn't see that these
+   * formats encode alpha. This has been fixed with commit a28309c.
+   * TODO: remove this test when babl 0.1.110 is released and we depend on it.
+   */
+#if BABL_MINOR_VERSION == 1 && BABL_MICRO_VERSION <= 108
+  if (g_strcmp0 (model, "HCYA") == 0 ||
+      g_strcmp0 (model, "HSLA") == 0 ||
+      g_strcmp0 (model, "HSVA") == 0)
+    return format;
+#endif
+
   /* Assuming we use Babl formats with same type for all components. */
   type  = babl_get_name (babl_format_get_type (format, 0));
 
