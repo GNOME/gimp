@@ -23,6 +23,7 @@
 #include "stdlib.h"
 #include "string.h"
 
+#include <gegl.h>
 #include <gio/gio.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -70,6 +71,7 @@ main (int   argc,
     }
 
   units_init ();
+  gegl_init (&argc, &argv);
 
   g_print ("\nTesting GimpConfig ...\n");
 
