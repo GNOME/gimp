@@ -1678,6 +1678,7 @@ color_select_render_red_green (ColorSelectFill *csf)
       else
         {
           gegl_color_get_pixel (c, rgbu_format, p);
+          p += 3;
         }
 
       rgb[0] += dr;
@@ -1716,6 +1717,7 @@ color_select_render_red_blue (ColorSelectFill *csf)
       else
         {
           gegl_color_get_pixel (c, rgbu_format, p);
+          p += 3;
         }
 
       rgb[0] += dr;
@@ -1754,6 +1756,7 @@ color_select_render_green_blue (ColorSelectFill *csf)
       else
         {
           gegl_color_get_pixel (c, rgbu_format, p);
+          p += 3;
         }
 
       rgb[1] += dg;
