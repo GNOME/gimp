@@ -73,6 +73,23 @@ Core:
   - GEGL operation filters are now non-destructive by default: running these
     filters create layer effects. The UI is still basic and will be improved
     through iterations after GIMP 3 release.
+  - FG/BG color action code (e.g. "Increase the red channel") are made
+    contextual, relatively to the active image, working relatively to the
+    correct color space and TRC.
+  - Device Status dockable shows context-sensitive colors (the color profile's
+    name is displayed as tooltip when hovering a fg/bg color status).
+  - Palettes are now GeglColor-based and are stored with a lot more precision.
+    Older low-precision palettes are still loaded fine. A single palette can
+    contain mixed formats (different models and space). A concept of format
+    restriction was added, yet is currently only used for indexed images'
+    palettes (whose colors are always and only in the image's format).
+  - Color History is now space-invaded (colors are stored in their original
+    format and space).
+  - Various color selectors (core or modules) are now space-invaded when
+    relevant. For instance, they show colors in the active image space (not just
+    sRGB) and display the profile's name when relevant. Also when simulation is
+    active, some of the color selectors will update their out-of-gamut zone, not
+    only to be within the image's gamut, but also the soft-proof gamut.
 
 Graphical User Interface:
 
@@ -167,6 +184,10 @@ Tools:
       features.
     * Alignment for RTL languages is now more consistent with how it works in
       other software (such as LibreOffice or Scribus).
+    * Text layers can now be rendered in the full image's gamut (not sRGB only
+      anymore), though colors are trimmed to the gamut and are always 8-bit.
+    * Text outline colors are now rendered in float in the full image's gamut,
+      without precision loss.
   - Paint tools: all painting tools now have an "Expand Layers" option
     allowing to auto-expand layers when painting across layer
     boundaries. A few additional sub-options customize how this
@@ -174,6 +195,13 @@ Tools:
     color, pattern).
     Expansion does not grow over canvas boundaries, unless "Show All" is
     checked too.
+  - Color Picker:
+    * Picked color is internally kept as a GeglColor, doing only last-minute
+      conversion to the output model/space, hence with better precision.
+    * RGB, Grayscale and Pixel modes display the profile name of the output
+      color space (the active image's color space if relevant).
+  - The Gradient tool now uses GeglColor internally, though GIMP's gradient
+    format (GGR) still uses old RGB format.
 
 Plug-ins:
 
@@ -283,6 +311,10 @@ API:
       between plug-in runs.
     * GBytes (de)serialization support added. It supports gracefully a NULL
       GBytes value.
+    * GeglColor (de)serialization support added. Former GimpRGB properties can
+      be gracefully converted to GeglColor properties when needed (e.g. to be
+      able to convert old property or resource files, containing GimpRGB values,
+      to newer GeglColor).
   - Changes in libgimp:
     * GimpResource can now be (de)serialized using the data name and collection
       so that we are now able to retrieve a used resource quite reliably between
@@ -491,11 +523,13 @@ API:
       GIMP_ROTATE_DEGREES90), because the older naming breaks introspection for
       some languages, such as Python where Gimp.RotationType.90 syntax would be
       forbidden.
+    * GIMP Protocol can now exchange GeglColor values across the wire.
   - Changes in libgimpwidgets:
     * New functions:
       + gimp_widget_set_native_handle()
       + gimp_dialog_get_native_handle()
       + gimp_preview_area_reset()
+      + gimp_cairo_set_source_color()
     * New classes:
       + GimpLabelStringWidget: makes any widget with a "value" string property
         into a GimpLabeled.
@@ -504,6 +538,20 @@ API:
         - add a "value" string property to GimpStringComboBox (which makes it
           usable by GimpLabelStringWidget).
         - New method gimp_string_combo_box_set_sensitivity()
+    * Several widgets are now space-invaded, using GeglColor instead of GimpRGB:
+      + GimpColorArea
+      + GimpColorScale
+      + GimpColorScales
+      + GimpColorSelect
+      + GimpLabelColor
+      + GimpPreviewArea
+      + GimpColorButton
+      + GimpColorHexEntry
+      + GimpColorSelection
+      + GimpColorNotebook
+      + GimpColorSelect
+      + GimpColorSelector
+      + GimpColorNotebook
   - Changes in libgimpui:
     * Modified functions:
       + gimp_window_set_transient_for_display() and gimp_window_set_transient()
@@ -514,6 +562,14 @@ API:
     * Removed functions:
       - gimp_ui_get_progress_window()
       - gimp_ui_get_display_window()
+  - Changes in libgimpcolor:
+    * New functions:
+      + gimp_color_set_alpha()
+      + gimp_color_is_perceptually_identical()
+      + gimp_color_is_out_of_gamut()
+      + gimp_color_is_out_of_self_gamut()
+      + gimp_color_parse_hex()
+      + gimp_color_parse_name()
 
 Build:
 
@@ -540,6 +596,7 @@ Build:
     coding style.
   - 'gegl.exe' binary is now installed by the Windows installer.
   - Minimum libheif requirement bumped: libheif >= 1.15.1.
+  - GEGL requirement bumped to GEGL 0.4.48.
 
 
 Overview of Changes from GIMP 2.99.14 to GIMP 2.99.16
