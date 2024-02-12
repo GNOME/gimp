@@ -1160,12 +1160,12 @@ curves_get_channel_color (GtkWidget            *widget,
       else
         rgb[0] = rgb[1] = rgb[2] = lum + 0.3;
 
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A"), rgb);
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
 
       return color;
     }
 
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A"), channel_colors[channel]);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), channel_colors[channel]);
 
   return color;
 }

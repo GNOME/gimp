@@ -614,7 +614,9 @@ gimp_curve_view_draw (GtkWidget *widget,
           GeglColor *color = gegl_color_duplicate (bg->color);
 
           gimp_color_set_alpha (color, 0.5);
-          gimp_cairo_set_source_color (cr, color, view->gimp->config->color_management, FALSE, widget);
+          gimp_cairo_set_source_color (cr, color,
+                                       view->gimp ? view->gimp->config->color_management : NULL,
+                                       FALSE, widget);
           g_object_unref (color);
         }
       else
@@ -632,7 +634,9 @@ gimp_curve_view_draw (GtkWidget *widget,
 
   /*  Draw the curve  */
   if (view->curve_color)
-    gimp_cairo_set_source_color (cr, view->curve_color, view->gimp->config->color_management, FALSE, widget);
+    gimp_cairo_set_source_color (cr, view->curve_color,
+                                 view->gimp ? view->gimp->config->color_management : NULL,
+                                 FALSE, widget);
   else
     gdk_cairo_set_source_rgba (cr, &fg_color);
 
