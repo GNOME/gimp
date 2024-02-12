@@ -71,7 +71,7 @@ hue_saturation_config_notify (GObject          *object,
   gimp_operation_hue_saturation_map (config, &rgb, range, &rgb);
 
   color = gegl_color_new (NULL);
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
   gimp_color_area_set_color (GIMP_COLOR_AREA (color_area), color);
   g_object_unref (color);
 }
