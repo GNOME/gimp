@@ -28,6 +28,7 @@ from gi.repository import Gio
 from gi.repository import GLib
 
 import sys
+import warnings
 import pyconsole
 #import gimpshelf, gimpui, pyconsole
 
@@ -265,15 +266,18 @@ def run(procedure, config, data):
 
         def save_dialog(self):
             if not self.save_dlg:
-                dlg = Gtk.FileChooserDialog()
+                dlg = Gtk.FileChooserDialog(action=Gtk.FileChooserAction.SAVE)
                 Gtk.Window.set_title(dlg, _("Save Python-Fu Console Output"))
                 Gtk.Window.set_transient_for(dlg, self)
                 Gtk.Dialog.add_button(dlg, _("_Cancel"), Gtk.ResponseType.CANCEL)
                 Gtk.Dialog.add_button(dlg, _("_Save"), Gtk.ResponseType.OK)
                 Gtk.Dialog.set_default_response(self, Gtk.ResponseType.OK)
-                GimpUi.Dialog.set_alternative_button_order_from_array(dlg,
-                                                                    [ Gtk.ResponseType.OK,
-                                                                      Gtk.ResponseType.CANCEL ])
+
+                with warnings.catch_warnings():
+                    warnings.filterwarnings('ignore')
+                    Gtk.FileChooserDialog.set_alternative_button_order_from_array(dlg,
+                                                                                [ Gtk.ResponseType.OK,
+                                                                                  Gtk.ResponseType.CANCEL ])
 
                 dlg.connect('response', self.save_response)
 
