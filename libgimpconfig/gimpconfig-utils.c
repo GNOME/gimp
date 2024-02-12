@@ -57,7 +57,17 @@ gimp_config_diff_property (GObject    *a,
   g_object_get_property (a, prop_spec->name, &a_value);
   g_object_get_property (b, prop_spec->name, &b_value);
 
-  if (g_param_values_cmp (prop_spec, &a_value, &b_value))
+  /* TODO: temporary hack to handle case of NULL GeglColor in a param value.
+   * This got fixed in commit c0477bcb0 which should be available for GEGL
+   * 0.4.50. In the meantime, this will do.
+   */
+  if (GEGL_IS_PARAM_SPEC_COLOR (prop_spec) &&
+      (! g_value_get_object (&a_value) ||
+       ! g_value_get_object (&b_value)))
+    {
+      retval = (g_value_get_object (&a_value) != g_value_get_object (&b_value));
+    }
+  else if (g_param_values_cmp (prop_spec, &a_value, &b_value))
     {
       if ((prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE) &&
           G_IS_PARAM_SPEC_OBJECT (prop_spec)               &&
