@@ -204,7 +204,7 @@ gimp_palette_mru_save (GimpPaletteMru *mru,
       bytes = gegl_color_get_bytes (color, format);
       data  = g_bytes_get_data (bytes, &data_length);
 
-      gimp_config_writer_printf (writer, "%lu", data_length);
+      gimp_config_writer_printf (writer, "%" G_GSIZE_FORMAT, data_length);
       gimp_config_writer_data (writer, data_length, data);
 
       space = babl_format_get_space (format);
