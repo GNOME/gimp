@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-23 16:24+0000\n"
-"PO-Revision-Date: 2024-01-23 21:36+0200\n"
+"POT-Creation-Date: 2024-02-12 08:53+0000\n"
+"PO-Revision-Date: 2024-02-12 20:23+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -64,12 +64,10 @@ msgstr "Модуль %s не може обробляти прозорість"
 
 #: libgimp/gimpexport.c:417
 #, c-format
-#| msgid "%s plug-in can't handle layers"
 msgid "%s plug-in can't handle layer effects"
 msgstr "Модуль %s не може працювати з ефектами шарів"
 
 #: libgimp/gimpexport.c:418
-#| msgid "Merge Visible Layers"
 msgid "Merge Layer Effects"
 msgstr "Об'єднати ефекти шарів"
 
@@ -174,7 +172,7 @@ msgid "Confirm Save"
 msgstr "Підтвердження збереження"
 
 #: libgimp/gimpexport.c:586 libgimp/gimpexport.c:668 libgimp/gimpexport.c:1242
-#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
+#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:554
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -432,13 +430,13 @@ msgid "_Open"
 msgstr "_Відкрити"
 
 #: libgimp/gimpproceduredialog.c:298 libgimp/gimpproceduredialog.c:571
-#: libgimpwidgets/gimpcolorbutton.c:558 libgimpwidgets/gimpfileentry.c:467
+#: libgimpwidgets/gimpcolorbutton.c:555 libgimpwidgets/gimpfileentry.c:467
 #: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
 #: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Гаразд"
 
-#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:556
+#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:553
 msgid "_Reset"
 msgstr "С_кинути"
 
@@ -481,11 +479,11 @@ msgstr "Вибір палітри"
 msgid "Pattern Chooser"
 msgstr "Вибір текстури"
 
-#: libgimp/gimpproceduredialog.c:2492
+#: libgimp/gimpproceduredialog.c:2532
 msgid "Reset to _Initial Values"
 msgstr "Повернути до по_чаткових значень"
 
-#: libgimp/gimpproceduredialog.c:2501
+#: libgimp/gimpproceduredialog.c:2541
 msgid "Reset to _Factory Defaults"
 msgstr "Повернути до стандартних _початкових значень"
 
@@ -1910,117 +1908,117 @@ msgstr ""
 "Якщо увімкнено, встановити для показу шкал кольорів режим злиття HSV замість "
 "LCh"
 
-#: libgimpconfig/gimpcolorconfig.c:222
+#: libgimpconfig/gimpcolorconfig.c:226
 msgid "Mode of operation"
 msgstr "Режим обробки"
 
-#: libgimpconfig/gimpcolorconfig.c:230
+#: libgimpconfig/gimpcolorconfig.c:234
 msgid "Preferred RGB profile"
 msgstr "Переважний профіль RGB"
 
-#: libgimpconfig/gimpcolorconfig.c:237
+#: libgimpconfig/gimpcolorconfig.c:241
 msgid "Preferred grayscale profile"
 msgstr "Переважний профіль відтінків сірого"
 
-#: libgimpconfig/gimpcolorconfig.c:244
+#: libgimpconfig/gimpcolorconfig.c:248
 msgid "CMYK profile"
 msgstr "Профіль CMYK"
 
-#: libgimpconfig/gimpcolorconfig.c:251
+#: libgimpconfig/gimpcolorconfig.c:255
 msgid "Monitor profile"
 msgstr "Профіль монітора"
 
-#: libgimpconfig/gimpcolorconfig.c:258
+#: libgimpconfig/gimpcolorconfig.c:262
 msgid "Use the system monitor profile"
 msgstr "Використати системний профіль монітора"
 
-#: libgimpconfig/gimpcolorconfig.c:265
+#: libgimpconfig/gimpcolorconfig.c:269
 msgid "Simulation profile for soft-proofing"
 msgstr "Профіль імітації для екранної кольоропроби"
 
-#: libgimpconfig/gimpcolorconfig.c:272
+#: libgimpconfig/gimpcolorconfig.c:276
 msgid "Display rendering intent"
 msgstr "Ціль відтворення кольорів на дисплеї"
 
-#: libgimpconfig/gimpcolorconfig.c:280
+#: libgimpconfig/gimpcolorconfig.c:284
 msgid "Use black point compensation for the display"
 msgstr "Використати для монітора компенсацію чорної точки"
 
-#: libgimpconfig/gimpcolorconfig.c:287
+#: libgimpconfig/gimpcolorconfig.c:291
 msgid "Optimize display color transformations"
 msgstr "Оптимізувати перетворення кольорів для дисплея"
 
-#: libgimpconfig/gimpcolorconfig.c:294
+#: libgimpconfig/gimpcolorconfig.c:298
 msgid "Soft-proofing rendering intent"
 msgstr "Відтворення кольорів для друку"
 
-#: libgimpconfig/gimpcolorconfig.c:302
+#: libgimpconfig/gimpcolorconfig.c:306
 msgid "Use black point compensation for soft-proofing"
 msgstr "Використати компенсацію чорної точки для екранної кольоропроби"
 
-#: libgimpconfig/gimpcolorconfig.c:309
+#: libgimpconfig/gimpcolorconfig.c:313
 msgid "Optimize soft-proofing color transformations"
 msgstr "Оптимізувати перетворення кольорів екранної кольоропроби"
 
-#: libgimpconfig/gimpcolorconfig.c:316
+#: libgimpconfig/gimpcolorconfig.c:320
 msgid "Mark out of gamut colors"
 msgstr "Позначати кольори поза гамою"
 
-#: libgimpconfig/gimpcolorconfig.c:323
+#: libgimpconfig/gimpcolorconfig.c:327
 msgid "Out of gamut warning color"
 msgstr "Колір для попередження про гаму"
 
-#: libgimpconfig/gimpcolorconfig.c:331
+#: libgimpconfig/gimpcolorconfig.c:335
 msgid "Show RGB 0..255 scales"
 msgstr "Показувати шкали 0..255 RGB"
 
-#: libgimpconfig/gimpcolorconfig.c:338
+#: libgimpconfig/gimpcolorconfig.c:342
 msgid "Show HSV instead of LCH"
 msgstr "Показувати HSV замість LCH"
 
-#: libgimpconfig/gimpcolorconfig.c:699 libgimpconfig/gimpcolorconfig.c:892
+#: libgimpconfig/gimpcolorconfig.c:711 libgimpconfig/gimpcolorconfig.c:904
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Колірний профіль '%s' не для колірного простору RGB."
 
-#: libgimpconfig/gimpcolorconfig.c:743 libgimpconfig/gimpcolorconfig.c:942
+#: libgimpconfig/gimpcolorconfig.c:755 libgimpconfig/gimpcolorconfig.c:954
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Колірний профіль '%s' не для колірного простору GRAY."
 
-#: libgimpconfig/gimpcolorconfig.c:787 libgimpconfig/gimpcolorconfig.c:992
+#: libgimpconfig/gimpcolorconfig.c:799 libgimpconfig/gimpcolorconfig.c:1004
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Колірний профіль '%s' не для колірного простору CMYK."
 
-#: libgimpconfig/gimpconfig-deserialize.c:120
+#: libgimpconfig/gimpconfig-deserialize.c:123
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "значення для маркера %s не є коректним рядком UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:492
+#: libgimpconfig/gimpconfig-deserialize.c:500
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "очікувалось 'yes' або 'no' для булевого маркера %s, отримано '%s'"
 
-#: libgimpconfig/gimpconfig-deserialize.c:607
+#: libgimpconfig/gimpconfig-deserialize.c:615
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "неправильне значення '%s' для маркера %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:622
+#: libgimpconfig/gimpconfig-deserialize.c:630
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "неправильне значення '%ld' для маркера %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:691
+#: libgimpconfig/gimpconfig-deserialize.c:699
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "при синтаксичному розборі маркера '%s': %s"
 
 #: libgimpconfig/gimpconfig-iface.c:664 libgimpconfig/gimpconfig-iface.c:677
-#: libgimpconfig/gimpscanner.c:774 libgimpconfig/gimpscanner.c:856
+#: libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964
 #: libgimpwidgets/gimpcolorprofilestore.c:761
 msgid "fatal parse error"
 msgstr "критична помилка при синтаксичному розборі"
@@ -2054,17 +2052,17 @@ msgstr "Не вдається створити тимчасовий файл д�
 msgid "Error writing '%s': %s"
 msgstr "Помилка запису до '%s': %s"
 
-#: libgimpconfig/gimpscanner.c:422
+#: libgimpconfig/gimpscanner.c:424
 msgid "invalid UTF-8 string"
 msgstr "неправильний рядок UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpscanner.c:649
+#: libgimpconfig/gimpscanner.c:651
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "очікувалось «yes» або «no» для булевого маркера, одержано «%s»"
 
-#: libgimpconfig/gimpscanner.c:883
+#: libgimpconfig/gimpscanner.c:991
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Помилка при синтаксичному розборі '%s' у рядку %d: %s"
@@ -2120,19 +2118,19 @@ msgstr "Не вдається створити файли попередньог
 msgid "_Search:"
 msgstr "З_найти:"
 
-#: libgimpwidgets/gimpcolorbutton.c:380
+#: libgimpwidgets/gimpcolorbutton.c:377
 msgid "_Foreground Color"
 msgstr "_Колір переднього плану"
 
-#: libgimpwidgets/gimpcolorbutton.c:381
+#: libgimpwidgets/gimpcolorbutton.c:378
 msgid "_Background Color"
 msgstr "_Колір тла"
 
-#: libgimpwidgets/gimpcolorbutton.c:386
+#: libgimpwidgets/gimpcolorbutton.c:383
 msgid "Blac_k"
 msgstr "_Чорний"
 
-#: libgimpwidgets/gimpcolorbutton.c:387
+#: libgimpwidgets/gimpcolorbutton.c:384
 msgid "_White"
 msgstr "_Білий"
 
@@ -2182,35 +2180,71 @@ msgstr "Виробник:"
 msgid "Copyright: "
 msgstr "Авторські права:"
 
-#: libgimpwidgets/gimpcolorscales.c:212
+#: libgimpwidgets/gimpcolorscales.c:207
 msgid "Scales"
 msgstr "Шкала"
 
-#: libgimpwidgets/gimpcolorscales.c:446
+#: libgimpwidgets/gimpcolorscales.c:362 libgimpwidgets/gimpcolorscales.c:694
+#: libgimpwidgets/gimpcolorselect.c:518 libgimpwidgets/gimpcolorselect.c:691
+#: modules/color-selector-water.c:206 modules/color-selector-water.c:242
+#: modules/color-selector-wheel.c:136 modules/color-selector-wheel.c:175
+#| msgid "Profile: %s"
+msgid "Profile: sRGB"
+msgstr "Профіль: sRGB"
+
+#: libgimpwidgets/gimpcolorscales.c:459
 msgid "0..100"
 msgstr "0..100"
 
-#: libgimpwidgets/gimpcolorscales.c:448
+#: libgimpwidgets/gimpcolorscales.c:461
 msgid "0..255"
 msgstr "0..255"
 
-#: libgimpwidgets/gimpcolorscales.c:469
+#: libgimpwidgets/gimpcolorscales.c:482
 msgid "LCh"
 msgstr "LCh"
 
-#: libgimpwidgets/gimpcolorscales.c:471
+#: libgimpwidgets/gimpcolorscales.c:484
 msgid "HSV"
 msgstr "HSV"
 
-#: libgimpwidgets/gimpcolorselection.c:247
+#: libgimpwidgets/gimpcolorscales.c:711 libgimpwidgets/gimpcolorselect.c:707
+#: modules/color-selector-cmyk.c:302 modules/color-selector-cmyk.c:386
+#: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
+#, c-format
+msgid "Profile: %s"
+msgstr "Профіль: %s"
+
+#: libgimpwidgets/gimpcolorscales.c:725 libgimpwidgets/gimpcolorselect.c:716
+#: modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
+#| msgid "Profile: (none)"
+msgid "Profile: <i>unknown</i>"
+msgstr "Профіль: <i>невідомий</i>"
+
+#: libgimpwidgets/gimpcolorselect.c:526 libgimpwidgets/gimpcolorselect.c:826
+#: libgimpwidgets/gimpcolorselect.c:843
+msgid "Soft-Proof Profile: <i>unknown</i>"
+msgstr "Профіль проби кольорів: <i>невідомий</i>"
+
+#: libgimpwidgets/gimpcolorselect.c:810
+msgid "Soft-Proof Profile: sRGB"
+msgstr "Профіль проби кольорів: sRGB"
+
+#: libgimpwidgets/gimpcolorselect.c:817
+#, c-format
+#| msgid "Profile: %s"
+msgid "Soft-Proof Profile: %s"
+msgstr "Профіль проби кольорів: %s"
+
+#: libgimpwidgets/gimpcolorselection.c:241
 msgid "Current:"
 msgstr "Поточний:"
 
-#: libgimpwidgets/gimpcolorselection.c:256
+#: libgimpwidgets/gimpcolorselection.c:250
 msgid "Old:"
 msgstr "Старий:"
 
-#: libgimpwidgets/gimpcolorselection.c:343
+#: libgimpwidgets/gimpcolorselection.c:335
 msgid "HTML _notation:"
 msgstr "_Нотація HTML:"
 
@@ -2366,19 +2400,19 @@ msgstr ""
 msgid "_Preview"
 msgstr "_Перегляд"
 
-#: libgimpwidgets/gimppreviewarea.c:146
+#: libgimpwidgets/gimppreviewarea.c:155
 msgid "Check Size"
 msgstr "Розмір клітинок"
 
-#: libgimpwidgets/gimppreviewarea.c:154
+#: libgimpwidgets/gimppreviewarea.c:163
 msgid "Check Style"
 msgstr "Стиль клітинок"
 
-#: libgimpwidgets/gimppreviewarea.c:162
+#: libgimpwidgets/gimppreviewarea.c:171
 msgid "Custom Checks Color 1"
 msgstr "Колір 1 нетипових клітинок"
 
-#: libgimpwidgets/gimppreviewarea.c:169
+#: libgimpwidgets/gimppreviewarea.c:178
 msgid "Custom Checks Color 2"
 msgstr "Колір 2 нетипових клітинок"
 
@@ -2411,17 +2445,17 @@ msgstr ""
 msgid "_Randomize"
 msgstr "Пере_мішати"
 
-#: libgimpwidgets/gimpwidgets-private.c:50
+#: libgimpwidgets/gimpwidgets-private.c:51
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Вимкнено"
 
-#: libgimpwidgets/gimpwidgets-private.c:51
+#: libgimpwidgets/gimpwidgets-private.c:52
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Екран"
 
-#: libgimpwidgets/gimpwidgets-private.c:52
+#: libgimpwidgets/gimpwidgets-private.c:53
 msgctxt "input-mode"
 msgid "Window"
 msgstr "Вікно"
@@ -2578,58 +2612,53 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Віддалити"
 
-#: modules/color-selector-cmyk.c:87
+#: modules/color-selector-cmyk.c:86
 msgid "CMYK color selector (using color profile)"
 msgstr "Вибір кольору у моделі CMYK (використовуючи профіль кольорів)"
 
-#: modules/color-selector-cmyk.c:121
+#: modules/color-selector-cmyk.c:120
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:145
+#: modules/color-selector-cmyk.c:144
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:147
+#: modules/color-selector-cmyk.c:146
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:149
+#: modules/color-selector-cmyk.c:148
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:151
+#: modules/color-selector-cmyk.c:150
 msgid "_K"
 msgstr "_K"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:154
 msgid "Cyan"
 msgstr "Бірюзовий"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:155
 msgid "Magenta"
 msgstr "Пурпурний"
 
-#: modules/color-selector-cmyk.c:157
+#: modules/color-selector-cmyk.c:156
 msgid "Yellow"
 msgstr "Жовтий"
 
-#: modules/color-selector-cmyk.c:158
+#: modules/color-selector-cmyk.c:157
 msgid "Black"
 msgstr "Чорний"
 
-#: modules/color-selector-cmyk.c:296 modules/color-selector-cmyk.c:382
+#: modules/color-selector-cmyk.c:289 modules/color-selector-cmyk.c:368
 msgid "Profile: (none)"
 msgstr ": (немає)"
-
-#: modules/color-selector-cmyk.c:309 modules/color-selector-cmyk.c:400
-#, c-format
-msgid "Profile: %s"
-msgstr "Профіль: %s"
 
 #: modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
@@ -2639,133 +2668,133 @@ msgstr "Тип вибору кольору - акварель"
 msgid "Watercolor"
 msgstr "Акварель"
 
-#: modules/color-selector-water.c:196
+#: modules/color-selector-water.c:197
 msgid "Pressure"
 msgstr "Тиск"
 
-#: modules/color-selector-wheel.c:72
+#: modules/color-selector-wheel.c:76
 msgid "HSV color wheel"
 msgstr "Кольорове коло HSV"
 
-#: modules/color-selector-wheel.c:104
+#: modules/color-selector-wheel.c:108
 msgid "Wheel"
 msgstr "Коло"
 
-#: modules/controller-dx-dinput.c:156
+#: modules/controller-dx-dinput.c:154
 msgid "DirectX DirectInput event controller"
 msgstr "Контролер вхідних повідомлень DirectX"
 
-#: modules/controller-dx-dinput.c:196 modules/controller-linux-input.c:218
+#: modules/controller-dx-dinput.c:194 modules/controller-linux-input.c:218
 #: modules/controller-midi.c:212
 msgid "Device:"
 msgstr "Пристрій:"
 
-#: modules/controller-dx-dinput.c:197
+#: modules/controller-dx-dinput.c:195
 msgid "The device to read DirectInput events from."
 msgstr "Назва пристрою, з якого читати події DirectInput."
 
-#: modules/controller-dx-dinput.c:206
+#: modules/controller-dx-dinput.c:204
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: modules/controller-dx-dinput.c:419
+#: modules/controller-dx-dinput.c:417
 #, c-format
 msgid "Button %d"
 msgstr "Клавіша %d"
 
-#: modules/controller-dx-dinput.c:422
+#: modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d Press"
 msgstr "Натискання клавіші %d"
 
-#: modules/controller-dx-dinput.c:425
+#: modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Release"
 msgstr "Відпускання клавіші %d"
 
-#: modules/controller-dx-dinput.c:442 modules/controller-linux-input.c:90
+#: modules/controller-dx-dinput.c:440 modules/controller-linux-input.c:90
 msgid "X Move Left"
 msgstr "X Move Left"
 
-#: modules/controller-dx-dinput.c:445 modules/controller-linux-input.c:91
+#: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:91
 msgid "X Move Right"
 msgstr "X Move Right"
 
-#: modules/controller-dx-dinput.c:451
+#: modules/controller-dx-dinput.c:449
 msgid "Y Move Away"
 msgstr "Y Move Away"
 
-#: modules/controller-dx-dinput.c:454
+#: modules/controller-dx-dinput.c:452
 msgid "Y Move Near"
 msgstr "Y Move Near"
 
-#: modules/controller-dx-dinput.c:460 modules/controller-linux-input.c:94
+#: modules/controller-dx-dinput.c:458 modules/controller-linux-input.c:94
 msgid "Z Move Up"
 msgstr "Z Move Up"
 
-#: modules/controller-dx-dinput.c:463 modules/controller-linux-input.c:95
+#: modules/controller-dx-dinput.c:461 modules/controller-linux-input.c:95
 msgid "Z Move Down"
 msgstr "Z Move Down"
 
-#: modules/controller-dx-dinput.c:469
+#: modules/controller-dx-dinput.c:467
 msgid "X Axis Tilt Away"
 msgstr "X Axis Tilt Away"
 
-#: modules/controller-dx-dinput.c:472
+#: modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Near"
 msgstr "X Axis Tilt Near"
 
-#: modules/controller-dx-dinput.c:478 modules/controller-linux-input.c:99
+#: modules/controller-dx-dinput.c:476 modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Y Axis Tilt Right"
 
-#: modules/controller-dx-dinput.c:481 modules/controller-linux-input.c:100
+#: modules/controller-dx-dinput.c:479 modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
 msgstr "Y Axis Tilt Left"
 
-#: modules/controller-dx-dinput.c:487 modules/controller-linux-input.c:101
+#: modules/controller-dx-dinput.c:485 modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
 msgstr "Z Axis Turn Left"
 
-#: modules/controller-dx-dinput.c:490 modules/controller-linux-input.c:102
+#: modules/controller-dx-dinput.c:488 modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
 msgstr "Z Axis Turn Right"
 
-#: modules/controller-dx-dinput.c:501
+#: modules/controller-dx-dinput.c:499
 #, c-format
 msgid "Slider %d Increase"
 msgstr "Повзунок %d — збільшення"
 
-#: modules/controller-dx-dinput.c:504
+#: modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "Повзунок %d — зменшення"
 
-#: modules/controller-dx-dinput.c:514
+#: modules/controller-dx-dinput.c:512
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d X View"
 
-#: modules/controller-dx-dinput.c:517
+#: modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d Y View"
 
-#: modules/controller-dx-dinput.c:520
+#: modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Return"
 msgstr "POV %d Return"
 
-#: modules/controller-dx-dinput.c:1081
+#: modules/controller-dx-dinput.c:1079
 msgid "DirectInput Events"
 msgstr "Вхідні повідомлення DirectInput"
 
-#: modules/controller-dx-dinput.c:1092 modules/controller-linux-input.c:525
+#: modules/controller-dx-dinput.c:1090 modules/controller-linux-input.c:525
 #: modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Жоден пристрій не налаштований"
 
-#: modules/controller-dx-dinput.c:1117 modules/controller-linux-input.c:588
+#: modules/controller-dx-dinput.c:1115 modules/controller-linux-input.c:588
 msgid "Device not available"
 msgstr "Пристрій недоступний"
 
