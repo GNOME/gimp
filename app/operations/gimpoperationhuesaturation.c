@@ -282,21 +282,22 @@ gimp_operation_hue_saturation_process (GeglOperation       *operation,
 
 void
 gimp_operation_hue_saturation_map (GimpHueSaturationConfig *config,
-                                   const GimpRGB           *color,
-                                   GimpHueRange             range,
-                                   GimpRGB                 *result)
+                                   GeglColor               *color,
+                                   GimpHueRange             range)
 {
-  GimpHSL hsl;
+  const Babl *format;
+  gdouble     hsl[4];
 
   g_return_if_fail (GIMP_IS_HUE_SATURATION_CONFIG (config));
-  g_return_if_fail (color != NULL);
-  g_return_if_fail (result != NULL);
+  g_return_if_fail (GEGL_IS_COLOR (color));
 
-  gimp_rgb_to_hsl (color, &hsl);
+  format = gegl_color_get_format (color);
+  format = babl_format_with_space ("HSLA double", format);
+  gegl_color_get_pixel (color, format, hsl);
 
-  hsl.h = map_hue        (config, range, hsl.h);
-  hsl.s = map_saturation (config, range, hsl.s);
-  hsl.l = map_lightness  (config, range, hsl.l);
+  hsl[0] = map_hue        (config, range, hsl[0]);
+  hsl[1] = map_saturation (config, range, hsl[1]);
+  hsl[2] = map_lightness  (config, range, hsl[2]);
 
-  gimp_hsl_to_rgb (&hsl, result);
+  gegl_color_set_pixel (color, format, hsl);
 }

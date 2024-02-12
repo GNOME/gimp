@@ -49,30 +49,26 @@ hue_saturation_config_notify (GObject          *object,
                               GtkWidget        *color_area)
 {
   GimpHueSaturationConfig *config = GIMP_HUE_SATURATION_CONFIG (object);
-  GimpHueRange             range;
   GeglColor               *color;
-  GimpRGB                  rgb;
+  GimpHueRange             range;
 
-  static const GimpRGB default_colors[7] =
+  static const gchar      *default_colors[7] =
   {
-    {   0,   0,   0, },
-    { 1.0,   0,   0, },
-    { 1.0, 1.0,   0, },
-    {   0, 1.0,   0, },
-    {   0, 1.0, 1.0, },
-    {   0,   0, 1.0, },
-    { 1.0,   0, 1.0, }
+    "black",   /* (0, 0, 0) */
+    "red",     /* (1, 0, 0) */
+    "yellow",  /* (1, 1, 0) */
+    "lime",    /* (0, 1, 0) */
+    "aqua",    /* (0, 1, 1) */
+    "blue",    /* (0, 0, 1) */
+    "fuchsia", /* (1, 0, 1) */
   };
 
-  range = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (color_area),
-                                              "hue-range"));
-  rgb = default_colors[range];
+  range = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (color_area), "hue-range"));
+  color = gegl_color_new (default_colors[range]);
 
-  gimp_operation_hue_saturation_map (config, &rgb, range, &rgb);
-
-  color = gegl_color_new (NULL);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  gimp_operation_hue_saturation_map (config, color, range);
   gimp_color_area_set_color (GIMP_COLOR_AREA (color_area), color);
+
   g_object_unref (color);
 }
 
