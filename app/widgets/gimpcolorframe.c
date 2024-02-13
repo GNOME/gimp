@@ -889,7 +889,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
           const Babl *print_format;
           guint8      rgba[4];
 
-          values = g_new0 (gchar *, 6);
+          values = g_new0 (gchar *, 7);
 
           print_format = gimp_babl_format (GIMP_RGB,
                                            gimp_babl_precision (GIMP_COMPONENT_TYPE_U8, trc),
@@ -1170,7 +1170,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
             /* User may swap CMYK color profiles at runtime */
             gegl_color_get_pixel (frame->color, babl_format_with_space ("CMYKA float", space), cmyk);
 
-            values = g_new0 (gchar *, 6);
+            values = g_new0 (gchar *, 7);
 
             values[0] = g_strdup_printf ("%.0f %%", cmyk[0] * 100.0);
             values[1] = g_strdup_printf ("%.0f %%", cmyk[1] * 100.0);
