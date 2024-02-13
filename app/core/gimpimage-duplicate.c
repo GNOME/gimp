@@ -557,7 +557,7 @@ gimp_image_duplicate_quick_mask (GimpImage *image,
 
   new_private->quick_mask_state    = private->quick_mask_state;
   new_private->quick_mask_inverted = private->quick_mask_inverted;
-  new_private->quick_mask_color    = private->quick_mask_color;
+  new_private->quick_mask_color    = gegl_color_duplicate (private->quick_mask_color);
 }
 
 static void
