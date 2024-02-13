@@ -928,6 +928,58 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
         }
       break;
 
+    case GP_PARAM_DEF_TYPE_GEGL_COLOR:
+        {
+          GPParamColor *default_val   = NULL;
+          gint          bpp           = 0;
+          guint8       *data          = NULL;
+          gchar        *encoding      = NULL;
+          gint          profile_size  = 0;
+          guint8       *profile_data  = NULL;
+
+          if (! gimp_scanner_parse_int (scanner,
+                                        &param_def.meta.m_gegl_color.has_alpha))
+            {
+              token = G_TOKEN_INT;
+              goto error;
+            }
+
+          if (! gimp_scanner_parse_int (scanner, &bpp)                         ||
+              bpp > 40                                                         ||
+              ! gimp_scanner_parse_data (scanner, bpp, &data)                  ||
+              ! gimp_scanner_parse_string (scanner, &encoding)                 ||
+              ! gimp_scanner_parse_int (scanner, &profile_size)                ||
+              ! gimp_scanner_parse_data (scanner, profile_size, &profile_data))
+            {
+              g_free (data);
+              g_free (encoding);
+              g_free (profile_data);
+
+              token = G_TOKEN_INT;
+              goto error;
+            }
+
+          if (bpp > 0)
+            {
+              default_val = g_new0 (GPParamColor, 1);
+
+              memcpy (default_val->data, data, bpp);
+              default_val->size         = bpp;
+              default_val->encoding     = encoding;
+              default_val->profile_size = profile_size;
+              default_val->profile_data = profile_data;
+            }
+          else
+            {
+              g_free (encoding);
+              g_free (profile_data);
+            }
+          g_free (data);
+
+          param_def.meta.m_gegl_color.default_val = default_val;
+        }
+      break;
+
     case GP_PARAM_DEF_TYPE_ID:
       if (! gimp_scanner_parse_int (scanner,
                                     &param_def.meta.m_id.none_ok))
@@ -984,6 +1036,15 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
 
     case GP_PARAM_DEF_TYPE_STRING:
       g_free (param_def.meta.m_string.default_val);
+      break;
+
+    case GP_PARAM_DEF_TYPE_GEGL_COLOR:
+      if (param_def.meta.m_gegl_color.default_val)
+        {
+          g_free (param_def.meta.m_gegl_color.default_val->encoding);
+          g_free (param_def.meta.m_gegl_color.default_val->profile_data);
+          g_free (param_def.meta.m_gegl_color.default_val);
+        }
       break;
 
     case GP_PARAM_DEF_TYPE_COLOR:
@@ -1147,6 +1208,41 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
       gimp_config_writer_printf (writer, "%d %s %s %s %s",
                                  param_def.meta.m_color.has_alpha,
                                  buf[0], buf[1], buf[2], buf[3]);
+      break;
+
+    case GP_PARAM_DEF_TYPE_GEGL_COLOR:
+        {
+          gint     bpp           = 0;
+          guint8  *data          = NULL;
+          gchar   *encoding      = NULL;
+          guint32  profile_size  = 0;
+          guint8  *profile_data  = NULL;
+
+          gimp_config_writer_printf (writer, "%d",
+                                     param_def.meta.m_gegl_color.has_alpha);
+
+          if (param_def.meta.m_gegl_color.default_val &&
+              param_def.meta.m_gegl_color.default_val->size > 0)
+            {
+              bpp          = param_def.meta.m_gegl_color.default_val->size;
+              data         = param_def.meta.m_gegl_color.default_val->data;
+              encoding     = param_def.meta.m_gegl_color.default_val->encoding;
+              profile_size = param_def.meta.m_gegl_color.default_val->profile_size;
+              profile_data = param_def.meta.m_gegl_color.default_val->profile_data;
+
+              gimp_config_writer_printf (writer, "%d", bpp);
+              gimp_config_writer_data (writer, bpp, data);
+              gimp_config_writer_string (writer, encoding);
+
+              gimp_config_writer_printf (writer, "%d", profile_size);
+              if (profile_size > 0)
+                gimp_config_writer_data (writer, profile_size, profile_data);
+            }
+          else
+            {
+              gimp_config_writer_printf (writer, "%s", "NULL");
+            }
+        }
       break;
 
     case GP_PARAM_DEF_TYPE_ID:

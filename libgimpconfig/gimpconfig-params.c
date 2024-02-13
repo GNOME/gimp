@@ -291,7 +291,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
       copy = gegl_param_spec_color (name, nick, blurb,
                                     /*TRUE,*/
                                     color, flags);
-      g_object_unref (color);
+      g_clear_object (&color);
     }
   else if (G_IS_PARAM_SPEC_PARAM (pspec))
     {

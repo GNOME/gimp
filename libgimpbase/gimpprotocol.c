@@ -1226,6 +1226,55 @@ _gp_param_def_read (GIOChannel *channel,
         return FALSE;
       break;
 
+    case GP_PARAM_DEF_TYPE_GEGL_COLOR:
+        {
+          GPParamColor *default_val = NULL;
+          GBytes       *pixel_data = NULL;
+          GBytes       *icc_data   = NULL;
+          gchar        *encoding   = NULL;
+
+          if (! _gimp_wire_read_int32 (channel,
+                                       (guint32 *) &param_def->meta.m_gegl_color.has_alpha, 1,
+                                       user_data) ||
+              ! _gimp_wire_read_gegl_color (channel, &pixel_data, &icc_data, &encoding,
+                                            1, user_data))
+            return FALSE;
+
+          if (pixel_data != NULL)
+            {
+              default_val = g_new0 (GPParamColor, 1);
+
+              default_val->encoding = encoding;
+              default_val->size     = g_bytes_get_size (pixel_data);
+              if (default_val->size > 40)
+                {
+                  g_free (default_val);
+                  g_free (encoding);
+                  g_bytes_unref (pixel_data);
+                  g_bytes_unref (icc_data);
+                  return FALSE;
+                }
+              memcpy (default_val->data, g_bytes_get_data (pixel_data, NULL),
+                      default_val->size);
+              g_bytes_unref (pixel_data);
+              if (icc_data)
+                {
+                  gsize profile_size;
+
+                  default_val->profile_data = g_bytes_unref_to_data (icc_data,
+                                                                     &profile_size);
+                  default_val->profile_size = (guint32) profile_size;
+                }
+              else
+                {
+                  default_val->profile_data = NULL;
+                  default_val->profile_size = 0;
+                }
+            }
+          param_def->meta.m_gegl_color.default_val = default_val;
+        }
+      break;
+
     case GP_PARAM_DEF_TYPE_ID:
       if (! _gimp_wire_read_int32 (channel,
                                    (guint32 *) &param_def->meta.m_id.none_ok, 1,
@@ -1272,6 +1321,15 @@ _gp_param_def_destroy (GPParamDef *param_def)
 
     case GP_PARAM_DEF_TYPE_STRING:
       g_free (param_def->meta.m_string.default_val);
+      break;
+
+    case GP_PARAM_DEF_TYPE_GEGL_COLOR:
+      if (param_def->meta.m_gegl_color.default_val)
+        {
+          g_free (param_def->meta.m_gegl_color.default_val->encoding);
+          g_free (param_def->meta.m_gegl_color.default_val->profile_data);
+        }
+      g_free (param_def->meta.m_gegl_color.default_val);
       break;
 
     case GP_PARAM_DEF_TYPE_COLOR:
@@ -1516,6 +1574,42 @@ _gp_param_def_write (GIOChannel *channel,
                                     &param_def->meta.m_color.default_val, 1,
                                     user_data))
         return FALSE;
+      break;
+
+    case GP_PARAM_DEF_TYPE_GEGL_COLOR:
+        {
+          GBytes *pixel_data = NULL;
+          GBytes *icc_data   = NULL;
+          gchar  *encoding   = "";
+
+          if (! _gimp_wire_write_int32 (channel,
+                                        (guint32 *) &param_def->meta.m_gegl_color.has_alpha, 1,
+                                        user_data))
+            return FALSE;
+
+          if (param_def->meta.m_gegl_color.default_val)
+            {
+              pixel_data = g_bytes_new_static (param_def->meta.m_gegl_color.default_val->data,
+                                               param_def->meta.m_gegl_color.default_val->size);
+              icc_data   = g_bytes_new_static (param_def->meta.m_gegl_color.default_val->profile_data,
+                                               param_def->meta.m_gegl_color.default_val->profile_size);
+              encoding   = param_def->meta.m_gegl_color.default_val->encoding;
+            }
+
+          if (! _gimp_wire_write_gegl_color (channel,
+                                             &pixel_data,
+                                             &icc_data,
+                                             &encoding,
+                                             1, user_data))
+            {
+              g_bytes_unref (pixel_data);
+              g_bytes_unref (icc_data);
+              return FALSE;
+            }
+
+          g_bytes_unref (pixel_data);
+          g_bytes_unref (icc_data);
+        }
       break;
 
     case GP_PARAM_DEF_TYPE_ID:

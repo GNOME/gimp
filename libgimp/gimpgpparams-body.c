@@ -163,6 +163,59 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
                                     flags);
       break;
 
+    case GP_PARAM_DEF_TYPE_GEGL_COLOR:
+      if (! strcmp (param_def->type_name, "GeglParamColor"))
+        {
+          GeglColor *default_color = NULL;
+
+          if (param_def->meta.m_gegl_color.default_val)
+            {
+              GPParamColor *default_val = param_def->meta.m_gegl_color.default_val;
+              const Babl   *format      = NULL;
+              const Babl   *space       = NULL;
+              gint          bpp;
+
+              default_color = gegl_color_new ("black");
+
+              if (default_val->profile_data)
+                {
+                  GimpColorProfile *profile;
+
+                  profile = gimp_color_profile_new_from_icc_profile (default_val->profile_data,
+                                                                     default_val->profile_size,
+                                                                     NULL);
+                  if (profile)
+                    {
+                      GError *error = NULL;
+
+                      space = gimp_color_profile_get_space (profile,
+                                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                            &error);
+
+                      if (! space)
+                        {
+                          g_printerr ("%s: failed to create Babl space from profile: %s\n",
+                                      G_STRFUNC, error->message);
+                          g_clear_error (&error);
+                        }
+                      g_object_unref (profile);
+                    }
+                }
+
+              format = babl_format_with_space (default_val->encoding, space);
+              bpp    = babl_format_get_bytes_per_pixel (format);
+
+              if (bpp != default_val->size)
+                g_printerr ("%s: encoding \"%s\" expects %d bpp but data size is %d bpp.\n",
+                            G_STRFUNC, default_val->encoding, bpp, default_val->size);
+              else
+                gegl_color_set_pixel (default_color, format, default_val->data);
+            }
+
+          return gegl_param_spec_color (name, nick, blurb, default_color, flags);
+        }
+      break;
+
     case GP_PARAM_DEF_TYPE_ID:
       if (! strcmp (param_def->type_name, "GimpParamDisplay"))
         return gimp_param_spec_display (name, nick, blurb,
@@ -364,6 +417,45 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 
       gimp_param_spec_rgb_get_default (pspec,
                                        &param_def->meta.m_color.default_val);
+    }
+  else if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
+    {
+      GPParamColor *default_val = NULL;
+      GeglColor    *default_color;
+
+      param_def->param_def_type         = GP_PARAM_DEF_TYPE_GEGL_COLOR;
+      /* TODO: no no-alpha support for the time being. */
+      param_def->meta.m_color.has_alpha = TRUE;
+
+      default_color = gegl_param_spec_color_get_default (pspec);
+      if (default_color != NULL)
+        {
+          const Babl *format;
+
+          format      = gegl_color_get_format (default_color);
+          default_val = g_new0 (GPParamColor, 1);
+
+          default_val->size     = babl_format_get_bytes_per_pixel (format);
+          default_val->encoding = (gchar *) g_strdup (babl_format_get_encoding (format));
+
+          default_val->profile_data = NULL;
+          default_val->profile_size = 0;
+          if (babl_format_get_space (format) != babl_space ("sRGB"))
+            {
+              const char *icc;
+              int         icc_length;
+
+              icc = babl_space_get_icc (babl_format_get_space (format), &icc_length);
+
+              if (icc_length > 0)
+                {
+                  default_val->profile_data = g_new0 (guint8, icc_length);
+                  memcpy (default_val->profile_data, icc, icc_length);
+                }
+              default_val->profile_size = icc_length;
+            }
+        }
+      param_def->meta.m_gegl_color.default_val = default_val;
     }
   else if (pspec_type == GIMP_TYPE_PARAM_IMAGE)
     {
