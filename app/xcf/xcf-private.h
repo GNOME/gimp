@@ -109,6 +109,7 @@ typedef enum
   FILTER_PROP_ENUM    = 5,
   FILTER_PROP_CONFIG  = 6,
   FILTER_PROP_UINT    = 7,
+  FILTER_PROP_COLOR   = 8,
 } FilterPropType;
 
 typedef struct _XcfInfo  XcfInfo;

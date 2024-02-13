@@ -2590,6 +2590,114 @@ xcf_load_effect_props (XcfInfo      *info,
                   }
                   break;
 
+                case FILTER_PROP_COLOR:
+                  {
+                    GeglColor  *color = gegl_color_new (NULL);
+                    const Babl *format;
+                    gchar      *encoding;
+                    guint8     *data  = NULL;
+                    gint        data_length;
+                    gint        profile_data_length;
+
+                    g_value_init (&filter_prop_value, GEGL_TYPE_COLOR);
+
+                    xcf_read_string (info, &encoding, 1);
+                    if (! babl_format_exists (encoding))
+                      {
+                        gimp_message (info->gimp, G_OBJECT (info->progress),
+                                      GIMP_MESSAGE_WARNING,
+                                      "XCF Warning: format \"%s\" for "
+                                      "property '%s' of filter '%s' is "
+                                      "invalid. The color was discarded.",
+                                      encoding, filter->operation_name,
+                                      filter_prop_name);
+
+                        g_free (encoding);
+                        valid_prop_value = FALSE;
+                        break;
+                      }
+
+                    format = babl_format (encoding);
+                    g_free (encoding);
+
+                    xcf_read_int32 (info, (guint32 *) &data_length, 1);
+                    if (data_length != babl_format_get_bytes_per_pixel (format))
+                      {
+                        gimp_message (info->gimp, G_OBJECT (info->progress),
+                                      GIMP_MESSAGE_WARNING,
+                                      "XCF Warning: format \"%s\" for "
+                                      "property '%s' of filter '%s' expected "
+                                      "%d bpp, but color was serialized as %d "
+                                      "bpp. The color was discarded.",
+                                      babl_get_name (format), filter->operation_name,
+                                      filter_prop_name,
+                                      babl_format_get_bytes_per_pixel (format),
+                                      data_length);
+
+                        valid_prop_value = FALSE;
+                        break;
+                      }
+
+                    data = g_new (guint8, data_length);
+                    xcf_read_int8 (info, data, data_length);
+
+                    xcf_read_int32 (info, (guint32 *) &profile_data_length, 1);
+                    if (profile_data_length > 0)
+                      {
+                        const Babl       *space = NULL;
+                        GimpColorProfile *profile;
+                        guint8           *profile_data;
+                        GError           *error = NULL;
+
+                        profile_data = g_new (guint8, profile_data_length);
+                        xcf_read_int8 (info, profile_data, profile_data_length);
+                        profile = gimp_color_profile_new_from_icc_profile (profile_data,
+                                                                           profile_data_length,
+                                                                           &error);
+
+                        if (profile)
+                          {
+                            space = gimp_color_profile_get_space (profile,
+                                                                  GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                                  &error);
+
+                            if (! space)
+                              {
+                                gimp_message (info->gimp, G_OBJECT (info->progress),
+                                              GIMP_MESSAGE_WARNING,
+                                              "XCF Warning: failed to create "
+                                              "Babl space for serialized color "
+                                              "from profile");
+
+                                g_free (data);
+                                valid_prop_value = FALSE;
+                                break;
+                              }
+                            g_object_unref (profile);
+                          }
+                        else
+                          {
+                            gimp_message (info->gimp, G_OBJECT (info->progress),
+                                          GIMP_MESSAGE_WARNING,
+                                          "XCF Warning: Invalid profile for "
+                                          "serialized color.");
+
+                            valid_prop_value = FALSE;
+                            break;
+                          }
+
+                        format = babl_format_with_space (babl_format_get_encoding (format), space);
+                        g_free (profile_data);
+                      }
+
+                      gegl_color_set_pixel (color, format, data);
+                      g_value_set_object (&filter_prop_value, color);
+
+                      g_free (data);
+                      g_object_unref (color);
+                  }
+                  break;
+
                 default:
                   gimp_message (info->gimp, G_OBJECT (info->progress),
                                 GIMP_MESSAGE_WARNING,
