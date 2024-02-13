@@ -328,7 +328,7 @@ channel_get_color_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      color = gimp_channel_get_color (channel);
+      color = gegl_color_duplicate (gimp_channel_get_color (channel));
       gimp_color_set_alpha (color, 1.0);
     }
 
