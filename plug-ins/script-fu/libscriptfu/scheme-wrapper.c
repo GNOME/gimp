@@ -1201,6 +1201,58 @@ script_fu_marshal_procedure_call (scheme   *sc,
           else
             return script_type_error (sc, "color string or list", i, proc_name);
         }
+      else if (GIMP_VALUE_HOLDS_COLOR (&value))
+        {
+          GeglColor *color = NULL;
+
+          if (sc->vptr->is_string (sc->vptr->pair_car (a)))
+            {
+              gchar *color_string = sc->vptr->string_value (sc->vptr->pair_car (a));
+
+              if (! (color = gimp_color_parse_css (color_string, -1)))
+                return script_type_error (sc, "color string", i, proc_name);
+            }
+          else if (sc->vptr->is_list (sc, sc->vptr->pair_car (a)) &&
+                   sc->vptr->list_length (sc, sc->vptr->pair_car (a)) == 3)
+            {
+              pointer color_list;
+              guchar  r = 0, g = 0, b = 0;
+
+              color_list = sc->vptr->pair_car (a);
+              if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
+                r = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                           0, 255);
+              else
+                return script_type_error_in_container (sc, "numeric", i, 0, proc_name, 0);
+
+              color_list = sc->vptr->pair_cdr (color_list);
+              if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
+                g = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                           0, 255);
+              else
+                return script_type_error_in_container (sc, "numeric", i, 1, proc_name, 0);
+
+              color_list = sc->vptr->pair_cdr (color_list);
+              if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
+                b = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                           0, 255);
+              else
+                return script_type_error_in_container (sc, "numeric", i, 2, proc_name, 0);
+
+              color = gegl_color_new ("black");
+              gegl_color_set_rgba_with_space (color,
+                                              (gdouble) r / 255.0,
+                                              (gdouble) g / 255.0,
+                                              (gdouble) b / 255.0,
+                                              1.0, NULL);
+            }
+          else
+            {
+              return script_type_error (sc, "color string or list", i, proc_name);
+            }
+
+          g_value_take_object (&value, color);
+        }
       else if (GIMP_VALUE_HOLDS_RGB_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
