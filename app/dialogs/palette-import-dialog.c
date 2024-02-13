@@ -439,9 +439,21 @@ palette_import_response (GtkWidget    *dialog,
           gimp_palette_get_n_colors (private->palette) > 0)
         {
           const gchar *name = gtk_entry_get_text (GTK_ENTRY (private->entry));
+          GError      *error = NULL;
 
           if (name && *name)
             gimp_object_set_name (GIMP_OBJECT (private->palette), name);
+
+          if (! gimp_data_factory_data_save_single (gimp->palette_factory,
+                                                    GIMP_DATA (private->palette),
+                                                    &error))
+            {
+              gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
+                            _("The palette was not imported: %s"),
+                            error->message);
+              g_clear_error (&error);
+              return;
+            }
 
           gimp_container_add (gimp_data_factory_get_container (gimp->palette_factory),
                               GIMP_OBJECT (private->palette));
