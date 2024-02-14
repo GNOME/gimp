@@ -54,6 +54,7 @@
 enum
 {
   PROP_0,
+  PROP_GIMP,
   PROP_SIZE,
   PROP_REFRESH_RATE,
   PROP_RANGE_MIN,
@@ -163,6 +164,12 @@ gimp_meter_class_init (GimpMeterClass *klass)
   widget_class->get_preferred_height = gimp_meter_get_preferred_height;
   widget_class->draw                 = gimp_meter_draw;
 
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp", NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_SIZE,
                                    g_param_spec_int ("size",
                                                      NULL, NULL,
@@ -238,12 +245,15 @@ gimp_meter_class_init (GimpMeterClass *klass)
 static void
 gimp_meter_init (GimpMeter *meter)
 {
+  GeglColor *red = gegl_color_new ("red");
+
   meter->priv = gimp_meter_get_instance_private (meter);
 
   g_mutex_init (&meter->priv->mutex);
 
   gtk_widget_set_has_window (GTK_WIDGET (meter), FALSE);
 
+  meter->priv->led_color          = red;
   meter->priv->range_min          = 0.0;
   meter->priv->range_max          = 1.0;
   meter->priv->n_values           = 0;
@@ -258,8 +268,9 @@ gimp_meter_dispose (GObject *object)
 {
   GimpMeter *meter = GIMP_METER (object);
 
-  for (gint i = 0; i < meter->priv->n_values; i++)
-    g_clear_object (&meter->priv->values[i].color);
+  if (meter->priv->values)
+    for (gint i = 0; i < meter->priv->n_values; i++)
+      g_clear_object (&meter->priv->values[i].color);
   g_clear_pointer (&meter->priv->values, g_free);
   g_clear_pointer (&meter->priv->samples, g_free);
   g_clear_pointer (&meter->priv->uniform_sample, g_free);
@@ -294,6 +305,10 @@ gimp_meter_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      meter->priv->gimp = g_value_get_object (value);
+      break;
+
     case PROP_SIZE:
       gimp_meter_set_size (meter, g_value_get_int (value));
       break;
@@ -354,6 +369,10 @@ gimp_meter_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      g_value_set_object (value, meter->priv->gimp);
+      break;
+
     case PROP_SIZE:
       g_value_set_int (value, gimp_meter_get_size (meter));
       break;
@@ -492,7 +511,8 @@ gimp_meter_draw (GtkWidget *widget,
                  0.0 * REV, 1.0 * REV);
 
       gimp_cairo_set_source_color (cr, meter->priv->led_color,
-                                   meter->priv->gimp->config->color_management,
+                                   meter->priv->gimp ?
+                                   meter->priv->gimp->config->color_management : NULL,
                                    FALSE, widget);
       cairo_fill (cr);
     }
@@ -527,7 +547,8 @@ gimp_meter_draw (GtkWidget *widget,
             }
 
           gimp_cairo_set_source_color (cr, meter->priv->values[i].color,
-                                       meter->priv->gimp->config->color_management,
+                                       meter->priv->gimp ?
+                                       meter->priv->gimp->config->color_management : NULL,
                                        FALSE, widget);
           cairo_move_to (cr, 0.0, 0.0);
           cairo_arc (cr,
@@ -633,7 +654,8 @@ gimp_meter_draw (GtkWidget *widget,
                 }
 
               gimp_cairo_set_source_color (cr, meter->priv->values[i].color,
-                                           meter->priv->gimp->config->color_management,
+                                           meter->priv->gimp ?
+                                           meter->priv->gimp->config->color_management : NULL,
                                            FALSE, widget);
               cairo_move_to (cr, 0.0, 0.0);
 
@@ -885,9 +907,9 @@ gimp_meter_new (Gimp *gimp,
   GimpMeter *meter;
 
   meter = g_object_new (GIMP_TYPE_METER,
+                        "gimp",     gimp,
                         "n-values", n_values,
                         NULL);
-  meter->priv->gimp = gimp;
 
   return GTK_WIDGET (meter);
 }
@@ -1086,7 +1108,8 @@ gimp_meter_set_value_color (GimpMeter *meter,
   g_return_if_fail (value >= 0 && value < meter->priv->n_values);
   g_return_if_fail (GEGL_IS_COLOR (color));
 
-  if (! gimp_color_is_perceptually_identical (color, meter->priv->values[value].color))
+  if (meter->priv->values[value].color == NULL ||
+      ! gimp_color_is_perceptually_identical (color, meter->priv->values[value].color))
     {
       g_clear_object (&meter->priv->values[value].color);
       meter->priv->values[value].color = gegl_color_duplicate (color);
