@@ -284,6 +284,41 @@ G_BEGIN_DECLS
   g_value_take_string (gimp_value_array_index (args, n), value)
 
 
+/*  color  */
+
+/* TODO:
+ * 1. has_alpha is currently bogus and doesn't do anything yet.
+ * 2. Also wouldn't none_ok be useful for color arguments (accepting a NULL
+ *    GeglColor)?
+ * 3. GEGL also provides a gegl_param_spec_color_from_string() allowing to
+ *    initialize the default with a list of standard colors. Wouldn't it be
+ *    interesting to also have this?
+ */
+#define GIMP_PROC_ARG_COLOR(procedure, name, nick, blurb, has_alpha, default, flags) \
+  gimp_procedure_add_argument (procedure,\
+                               gegl_param_spec_color (name, nick, blurb,\
+                               default, \
+                               flags))
+
+#define GIMP_PROC_AUX_ARG_COLOR(procedure, name, nick, blurb, has_alpha, default, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gegl_param_spec_color (name, nick, blurb,\
+                                   default, \
+                                   flags))
+
+#define GIMP_PROC_VAL_COLOR(procedure, name, nick, blurb, has_alpha, default, flags) \
+  gimp_procedure_add_return_value (procedure,\
+                                   gegl_param_spec_color (name, nick, blurb,\
+                                   default, \
+                                   flags))
+
+#define GIMP_VALUES_GET_COLOR(args, n, value) \
+  g_value_get_object (gimp_value_array_index (args, n), value)
+
+#define GIMP_VALUES_SET_COLOR(args, n, value) \
+  g_value_set_object (gimp_value_array_index (args, n), value)
+
+
 /*  rgb  */
 
 #define GIMP_PROC_ARG_RGB(procedure, name, nick, blurb, has_alpha, default, flags) \
