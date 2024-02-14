@@ -175,6 +175,22 @@ Graphical User Interface:
     headers), the "link" icon replaced by "search" icon, and is now available
     for both Layers, Channels and Vectors dockables (though unsaved for Vectors
     because of lack in XCF support).
+  - The Welcome dialog was improved and its cases extended:
+    * A new "Personalize" tab contains duplicate settings taken from the
+      Preferences, in particular the more controversial settings, such as theme
+      or icon themes, HiPPI support (icon/font sizing), merged menu and title
+      bar, tool groups or update check.
+    * A new "Contribute" tab displays a few of the main links for people to
+      contribute to GIMP.
+    * A new "Create" tab proposes buttons to create new images or open existing
+      ones, as well as displaying a list of the last 8 opened images for easy
+      re-opening.
+    * A new checkbox (checked by default) allows the welcome dialog to be shown
+      at each and every startup. Except on new installations or version updates,
+      the first shown tab will be the new "Create" tab, which is probably the
+      most useful for day-to-day first dialog shown at startup (on updates, the
+      "Welcome" tab featuring the new splash screen and a small welcome text is
+      shown).
 
 Tools:
 
