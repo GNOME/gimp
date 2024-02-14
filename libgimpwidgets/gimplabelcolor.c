@@ -198,7 +198,7 @@ gimp_label_color_set_property (GObject      *object,
            */
           if (! gimp_color_is_perceptually_identical (color, new_color))
             {
-              g_object_set (priv->area, "color", color, NULL);
+              g_object_set (priv->area, "color", new_color, NULL);
               g_signal_emit (object, gimp_label_color_signals[VALUE_CHANGED], 0);
             }
           g_object_unref (color);
