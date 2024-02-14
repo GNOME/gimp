@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-12 08:52+0000\n"
-"PO-Revision-Date: 2024-02-12 20:28+0200\n"
+"POT-Creation-Date: 2024-02-13 21:44+0000\n"
+"PO-Revision-Date: 2024-02-14 13:06+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2534,7 +2534,7 @@ msgstr ""
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2389
 #: app/core/gimppalette.c:500 app/core/gimppalette-import.c:223
-#: app/dialogs/palette-import-dialog.c:762 app/widgets/gimpdnd-xds.c:87
+#: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Без назви"
 
@@ -14589,12 +14589,10 @@ msgstr ""
 
 #: app/core/gimppalette-load.c:203
 #, c-format
-#| msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgid "Reading palette file '%s': red component out of range in line %d."
 msgstr ""
-"Читається файл палітри «%s»: значення червоного компонента поза межами"
-" допустимого діапазону "
-"у рядку %d."
+"Читається файл палітри «%s»: значення червоного компонента поза межами "
+"допустимого діапазону у рядку %d."
 
 #: app/core/gimppalette-load.c:211
 #, c-format
@@ -14603,12 +14601,10 @@ msgstr "Читається файл палітри «%s»: відсутній Ч
 
 #: app/core/gimppalette-load.c:220
 #, c-format
-#| msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgid "Reading palette file '%s': green component out of range in line %d."
 msgstr ""
-"Читається файл палітри «%s»: значення зеленого компонента поза межами"
-" допустимого діапазону "
-"у рядку %d."
+"Читається файл палітри «%s»: значення зеленого компонента поза межами "
+"допустимого діапазону у рядку %d."
 
 #: app/core/gimppalette-load.c:228
 #, c-format
@@ -14617,12 +14613,10 @@ msgstr "Читається файл палітри «%s»: відсутній З
 
 #: app/core/gimppalette-load.c:237
 #, c-format
-#| msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgid "Reading palette file '%s': blue component out of range in line %d."
 msgstr ""
-"Читається файл палітри «%s»: значення синього компонента поза межами"
-" допустимого діапазону "
-"у рядку %d."
+"Читається файл палітри «%s»: значення синього компонента поза межами "
+"допустимого діапазону у рядку %d."
 
 #: app/core/gimppalette-load.c:245
 #, c-format
@@ -16268,6 +16262,12 @@ msgid "The selected source contains no colors."
 msgstr "У обраному джерелі немає кольорів"
 
 #: app/dialogs/palette-import-dialog.c:452
+#, c-format
+#| msgid "There is no palette to import."
+msgid "The palette was not imported: %s"
+msgstr "Палітру не імпортовано: %s"
+
+#: app/dialogs/palette-import-dialog.c:464
 msgid "There is no palette to import."
 msgstr "Немає палітри для імпортування."
 
@@ -21936,37 +21936,37 @@ msgid "Adjust Color Levels"
 msgstr "Коригування рівнів кольорів"
 
 #: app/propgui/gimppropgui-color-balance.c:114
-#: app/propgui/gimppropgui-hue-saturation.c:141
+#: app/propgui/gimppropgui-hue-saturation.c:137
 #: app/propgui/gimppropgui-newsprint.c:95
 msgid "Cyan"
 msgstr "Бірюзовий"
 
 #: app/propgui/gimppropgui-color-balance.c:114
-#: app/propgui/gimppropgui-hue-saturation.c:138
+#: app/propgui/gimppropgui-hue-saturation.c:134
 #: app/propgui/gimppropgui-newsprint.c:94
 msgid "Red"
 msgstr "Червоний"
 
 #: app/propgui/gimppropgui-color-balance.c:118
-#: app/propgui/gimppropgui-hue-saturation.c:143
+#: app/propgui/gimppropgui-hue-saturation.c:139
 #: app/propgui/gimppropgui-newsprint.c:95
 msgid "Magenta"
 msgstr "Пурпурний"
 
 #: app/propgui/gimppropgui-color-balance.c:118
-#: app/propgui/gimppropgui-hue-saturation.c:140
+#: app/propgui/gimppropgui-hue-saturation.c:136
 #: app/propgui/gimppropgui-newsprint.c:94
 msgid "Green"
 msgstr "Зелений"
 
 #: app/propgui/gimppropgui-color-balance.c:122
-#: app/propgui/gimppropgui-hue-saturation.c:139
+#: app/propgui/gimppropgui-hue-saturation.c:135
 #: app/propgui/gimppropgui-newsprint.c:95
 msgid "Yellow"
 msgstr "Жовтий"
 
 #: app/propgui/gimppropgui-color-balance.c:122
-#: app/propgui/gimppropgui-hue-saturation.c:142
+#: app/propgui/gimppropgui-hue-saturation.c:138
 #: app/propgui/gimppropgui-newsprint.c:94
 msgid "Blue"
 msgstr "Синій"
@@ -22055,63 +22055,63 @@ msgstr "Фокусне розмивання: "
 msgid "Pick coordinates from the image"
 msgstr "Вибрати координати із зображення"
 
-#: app/propgui/gimppropgui-hue-saturation.c:137
+#: app/propgui/gimppropgui-hue-saturation.c:133
 msgid "M_aster"
 msgstr "Все _одразу"
 
-#: app/propgui/gimppropgui-hue-saturation.c:137
+#: app/propgui/gimppropgui-hue-saturation.c:133
 msgid "Adjust all colors"
 msgstr "Змінювати усі кольори"
 
-#: app/propgui/gimppropgui-hue-saturation.c:138
+#: app/propgui/gimppropgui-hue-saturation.c:134
 msgid "_R"
 msgstr "_R"
 
-#: app/propgui/gimppropgui-hue-saturation.c:139
+#: app/propgui/gimppropgui-hue-saturation.c:135
 msgid "_Y"
 msgstr "_Y"
 
-#: app/propgui/gimppropgui-hue-saturation.c:140
+#: app/propgui/gimppropgui-hue-saturation.c:136
 msgid "_G"
 msgstr "_G"
 
-#: app/propgui/gimppropgui-hue-saturation.c:141
+#: app/propgui/gimppropgui-hue-saturation.c:137
 msgid "_C"
 msgstr "_C"
 
-#: app/propgui/gimppropgui-hue-saturation.c:142
+#: app/propgui/gimppropgui-hue-saturation.c:138
 msgid "_B"
 msgstr "_B"
 
-#: app/propgui/gimppropgui-hue-saturation.c:143
+#: app/propgui/gimppropgui-hue-saturation.c:139
 msgid "_M"
 msgstr "_M"
 
-#: app/propgui/gimppropgui-hue-saturation.c:153
+#: app/propgui/gimppropgui-hue-saturation.c:149
 msgid "Select Primary Color to Adjust"
 msgstr "Вибір основного кольору для змін"
 
-#: app/propgui/gimppropgui-hue-saturation.c:233
+#: app/propgui/gimppropgui-hue-saturation.c:229
 msgid "_Overlap"
 msgstr "_Перекриття"
 
-#: app/propgui/gimppropgui-hue-saturation.c:236
+#: app/propgui/gimppropgui-hue-saturation.c:232
 msgid "Adjust Selected Color"
 msgstr "Зміна позначеного кольору"
 
-#: app/propgui/gimppropgui-hue-saturation.c:248
+#: app/propgui/gimppropgui-hue-saturation.c:244
 msgid "_Hue"
 msgstr "Від_тінок"
 
-#: app/propgui/gimppropgui-hue-saturation.c:254
+#: app/propgui/gimppropgui-hue-saturation.c:250
 msgid "_Lightness"
 msgstr "_Освітленість"
 
-#: app/propgui/gimppropgui-hue-saturation.c:260
+#: app/propgui/gimppropgui-hue-saturation.c:256
 msgid "_Saturation"
 msgstr "_Насиченість"
 
-#: app/propgui/gimppropgui-hue-saturation.c:267
+#: app/propgui/gimppropgui-hue-saturation.c:263
 msgid "R_eset Color"
 msgstr "_Відновити колір"
 
@@ -22307,7 +22307,7 @@ msgstr ""
 "Не вдалося завантажити деякі шрифти:\n"
 "%s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1646
+#: app/text/gimptext-compat.c:99 app/tools/gimptexttool.c:1646
 msgid "Add Text Layer"
 msgstr "Додавання текстового шару"
 
@@ -25996,7 +25996,6 @@ msgstr "З_найти:"
 
 #: app/widgets/gimpactiongroup.c:1200
 #, c-format
-#| msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgid "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 
@@ -26328,7 +26327,6 @@ msgid "Color index:"
 msgstr "Номер кольору:"
 
 #: app/widgets/gimpcolormapselection.c:248
-#| msgid "HTML notation:"
 msgid "HTML notation (sRGB):"
 msgstr "Позначення HTML (sRGB):"
 
@@ -27287,25 +27285,21 @@ msgstr "Зберегти стан пристрою"
 
 #: app/widgets/gimpdevicestatus.c:629
 #, c-format
-#| msgid "Foreground: %d, %d, %d"
 msgid "Foreground: %d, %d, %d (in color space of \"%s\")"
 msgstr "Передній план: %d, %d, %d (у просторі кольорів «%s»)"
 
 #: app/widgets/gimpdevicestatus.c:633
 #, c-format
-#| msgid "Foreground: %d, %d, %d"
 msgid "Foreground: %d, %d, %d (in sRGB)"
 msgstr "Передній план: %d, %d, %d (у sRGB)"
 
 #: app/widgets/gimpdevicestatus.c:640
 #, c-format
-#| msgid "Background: %d, %d, %d"
 msgid "Background: %d, %d, %d (in color space of \"%s\")"
 msgstr "Тло: %d, %d, %d (у просторі кольорів «%s»)"
 
 #: app/widgets/gimpdevicestatus.c:644
 #, c-format
-#| msgid "Background: %d, %d, %d"
 msgid "Background: %d, %d, %d (in sRGB)"
 msgstr "Тло: %d, %d, %d (у sRGB)"
 
@@ -27513,7 +27507,6 @@ msgstr "Позиція: %0.4f"
 #.
 #: app/widgets/gimpgradienteditor.c:1328
 #, c-format
-#| msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgid "sRGB (%0.3f, %0.3f, %0.3f)"
 msgstr "sRGB (%0.3f, %0.3f, %0.3f)"
 
@@ -27529,7 +27522,6 @@ msgstr "Яскравість: %0.1f   Непрозорість: %0.1f"
 
 #: app/widgets/gimpgradienteditor.c:1367
 #, c-format
-#| msgid "RGB (%d, %d, %d)"
 msgid "sRGB (%d, %d, %d)"
 msgstr "sRGB (%d, %d, %d)"
 
