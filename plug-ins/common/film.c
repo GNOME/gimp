@@ -94,11 +94,11 @@ static gboolean         check_filmvals        (GimpProcedureConfig  *config,
 
 static void             set_pixels            (gint                  numpix,
                                                guchar               *dst,
-                                               GimpRGB              *color);
+                                               GeglColor            *color);
 
-static guchar         * create_hole_rgb       (gint                  width,
+static guchar         * create_hole_color     (gint                  width,
                                                gint                  height,
-                                               GimpRGB              *film_color);
+                                               GeglColor            *film_color);
 
 static void             draw_number           (GimpLayer            *layer,
                                                gint                  num,
@@ -162,8 +162,14 @@ film_create_procedure (GimpPlugIn  *plug_in,
                        const gchar *name)
 {
   GimpProcedure *procedure = NULL;
-  const GimpRGB  default_film_color   = { 0.0, 0.0, 0.0, 1.0 };
-  const GimpRGB  default_number_color = { 0.93, 0.61, 0.0, 1.0 };
+  GeglColor     *default_film_color;
+  GeglColor     *default_number_color;
+  gdouble        default_number_rgb[4] = { 0.93, 0.61, 0.0, 1.0 };
+
+  gegl_init (NULL, NULL);
+  default_film_color   = gegl_color_new ("black");
+  default_number_color = gegl_color_new (NULL);
+  gegl_color_set_pixel (default_number_color, babl_format ("R'G'B'A double"), default_number_rgb);
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
@@ -196,11 +202,11 @@ film_create_procedure (GimpPlugIn  *plug_in,
                          0, GIMP_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_RGB (procedure, "film-color",
-                         _("_Film color"),
-                         _("Color of the film"),
-                         TRUE, &default_film_color,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_COLOR (procedure, "film-color",
+                           _("_Film color"),
+                           _("Color of the film"),
+                           TRUE, default_film_color,
+                           G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "number-start",
                          _("Start _index"),
@@ -213,11 +219,11 @@ film_create_procedure (GimpPlugIn  *plug_in,
                           _("Font for drawing numbers"),
                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_RGB (procedure, "number-color",
-                         _("_Number color"),
-                         _("Color for numbers"),
-                         TRUE, &default_number_color,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_COLOR (procedure, "number-color",
+                           _("_Number color"),
+                           _("Color for numbers"),
+                           TRUE, default_number_color,
+                           G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "at-top",
                              _("At _top"),
@@ -299,6 +305,9 @@ film_create_procedure (GimpPlugIn  *plug_in,
                            FALSE,
                            G_PARAM_READWRITE);
     }
+
+  g_object_unref (default_film_color);
+  g_object_unref (default_number_color);
 
   return procedure;
 }
@@ -416,9 +425,8 @@ film (GimpProcedureConfig *config)
   gboolean         at_top;
   gboolean         at_bottom;
   gint             picture_count;
-  GimpRGB         *number_color;
-  GimpRGB         *film_color;
-  GeglColor       *color;
+  GeglColor       *number_color = NULL;
+  GeglColor       *film_color   = NULL;
   gboolean         keep_height;
   gdouble          f;
   GimpImage       *image_dst;
@@ -456,13 +464,20 @@ film (GimpProcedureConfig *config)
   if (images->length <= 0)
     return NULL;
 
+  if (film_color == NULL)
+    film_color = gegl_color_new ("black");
+
+  if (number_color == NULL)
+    {
+      gdouble default_number_rgb[4] = { 0.93, 0.61, 0.0, 1.0 };
+
+      number_color = gegl_color_new (NULL);
+      gegl_color_set_pixel (number_color, babl_format ("R'G'B'A double"), default_number_rgb);
+    }
+
   gimp_context_push ();
-  color = gegl_color_new ("black");
-  gegl_color_set_rgba_with_space (color, number_color->r, number_color->g, number_color->b, number_color->a, NULL);
-  gimp_context_set_foreground (color);
-  gegl_color_set_rgba_with_space (color, film_color->r, film_color->g, film_color->b, film_color->a, NULL);
-  gimp_context_set_background (color);
-  g_object_unref (color);
+  gimp_context_set_foreground (number_color);
+  gimp_context_set_background (film_color);
 
   if (keep_height) /* Search maximum picture height */
     {
@@ -540,7 +555,10 @@ film (GimpProcedureConfig *config)
               hole_x, hole_offset, hole_width, hole_height, hole_space );
 #endif
 
-  hole = create_hole_rgb ((gint) hole_width, (gint) hole_height, film_color);
+  /* TODO: create the hole in the drawable format instead of creating a raw
+   * buffer in sRGB u8.
+   */
+  hole = create_hole_color ((gint) hole_width, (gint) hole_height, film_color);
   if (hole)
     {
       GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer_dst));
@@ -645,8 +663,8 @@ film (GimpProcedureConfig *config)
   gimp_context_pop ();
 
   gimp_object_array_free (images);
-  g_free (number_color);
-  g_free (film_color);
+  g_clear_object (&number_color);
+  g_clear_object (&film_color);
   g_clear_object (&number_font);
 
   return image_dst;
@@ -712,32 +730,31 @@ check_filmvals (GimpProcedureConfig  *config,
 
 /* Assigns numpix pixels starting at dst with color r,g,b */
 static void
-set_pixels (gint     numpix,
-            guchar  *dst,
-            GimpRGB *color)
+set_pixels (gint       numpix,
+            guchar    *dst,
+            GeglColor *color)
 {
   register gint   k;
-  register guchar ur, ug, ub, *udest;
+  register guchar *udest;
+  guchar urgb[3];
 
-  ur = color->r * 255.999;
-  ug = color->g * 255.999;
-  ub = color->b * 255.999;
+  gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), urgb);
   k = numpix;
   udest = dst;
 
   while (k-- > 0)
     {
-      *(udest++) = ur;
-      *(udest++) = ug;
-      *(udest++) = ub;
+      *(udest++) = urgb[0];
+      *(udest++) = urgb[1];
+      *(udest++) = urgb[2];
     }
 }
 
 /* Create the RGB-pixels that make up the hole */
 static guchar *
-create_hole_rgb (gint     width,
-                 gint     height,
-                 GimpRGB *film_color)
+create_hole_color (gint       width,
+                   gint       height,
+                   GeglColor *film_color)
 {
   guchar *hole, *top, *bottom;
   gint    radius, length, k;
