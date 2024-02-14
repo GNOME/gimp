@@ -2385,6 +2385,8 @@ gimp_item_tree_view_effects_filters_selected (GimpContainerView  *view,
       GimpContainer      *container;
       gint                index;
       gint                n_children;
+      gboolean            is_tool_op = FALSE;
+      GeglNode           *op_node    = NULL;
 
       item_view->priv->effects_filter = filter;
 
@@ -2396,10 +2398,17 @@ gimp_item_tree_view_effects_filters_selected (GimpContainerView  *view,
 
       n_children = gimp_container_get_n_children (container);
 
+      /* TODO: For now, prevent raising/lowering tool operations like Warp. */
+      op_node = gimp_drawable_filter_get_operation (filter);
+      if (op_node &&
+          ! strcmp (gegl_node_get_operation (op_node), "GraphNode"))
+        is_tool_op = TRUE;
+
+
       gtk_widget_set_sensitive (item_view->priv->effects_raise_button,
-                                (index != 0));
+                                (index != 0) && ! is_tool_op);
       gtk_widget_set_sensitive (item_view->priv->effects_lower_button,
-                                (index != n_children - 1));
+                                (index != n_children - 1) && ! is_tool_op);
     }
 
   return TRUE;
