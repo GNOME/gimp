@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-12 08:52+0000\n"
-"PO-Revision-Date: 2024-02-12 18:53+0100\n"
+"POT-Creation-Date: 2024-02-13 21:44+0000\n"
+"PO-Revision-Date: 2024-02-14 05:34+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -2487,7 +2487,7 @@ msgstr ""
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2389
 #: app/core/gimppalette.c:500 app/core/gimppalette-import.c:223
-#: app/dialogs/palette-import-dialog.c:762 app/widgets/gimpdnd-xds.c:87
+#: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "უსათაურო"
 
@@ -15920,6 +15920,11 @@ msgid "The selected source contains no colors."
 msgstr "არჩეულ წყაროს ფერები არ გააჩნია."
 
 #: app/dialogs/palette-import-dialog.c:452
+#, c-format
+msgid "The palette was not imported: %s"
+msgstr "პალიტრა არ შემოტანილა: %s"
+
+#: app/dialogs/palette-import-dialog.c:464
 msgid "There is no palette to import."
 msgstr "შემოსატანი პალიტრის შეცდომა."
 
@@ -21473,37 +21478,37 @@ msgid "Adjust Color Levels"
 msgstr "ფერის დონეების მორგება"
 
 #: app/propgui/gimppropgui-color-balance.c:114
-#: app/propgui/gimppropgui-hue-saturation.c:141
+#: app/propgui/gimppropgui-hue-saturation.c:137
 #: app/propgui/gimppropgui-newsprint.c:95
 msgid "Cyan"
 msgstr "ცისფერი"
 
 #: app/propgui/gimppropgui-color-balance.c:114
-#: app/propgui/gimppropgui-hue-saturation.c:138
+#: app/propgui/gimppropgui-hue-saturation.c:134
 #: app/propgui/gimppropgui-newsprint.c:94
 msgid "Red"
 msgstr "წითელი"
 
 #: app/propgui/gimppropgui-color-balance.c:118
-#: app/propgui/gimppropgui-hue-saturation.c:143
+#: app/propgui/gimppropgui-hue-saturation.c:139
 #: app/propgui/gimppropgui-newsprint.c:95
 msgid "Magenta"
 msgstr "ალისფერი"
 
 #: app/propgui/gimppropgui-color-balance.c:118
-#: app/propgui/gimppropgui-hue-saturation.c:140
+#: app/propgui/gimppropgui-hue-saturation.c:136
 #: app/propgui/gimppropgui-newsprint.c:94
 msgid "Green"
 msgstr "მწვანე"
 
 #: app/propgui/gimppropgui-color-balance.c:122
-#: app/propgui/gimppropgui-hue-saturation.c:139
+#: app/propgui/gimppropgui-hue-saturation.c:135
 #: app/propgui/gimppropgui-newsprint.c:95
 msgid "Yellow"
 msgstr "ყვითელი"
 
 #: app/propgui/gimppropgui-color-balance.c:122
-#: app/propgui/gimppropgui-hue-saturation.c:142
+#: app/propgui/gimppropgui-hue-saturation.c:138
 #: app/propgui/gimppropgui-newsprint.c:94
 msgid "Blue"
 msgstr "ლურჯი"
@@ -21592,63 +21597,63 @@ msgstr "ფოკუსის ბუნდოვნება: "
 msgid "Pick coordinates from the image"
 msgstr "კოორდინატების გამოსახულებიდან აღება"
 
-#: app/propgui/gimppropgui-hue-saturation.c:137
+#: app/propgui/gimppropgui-hue-saturation.c:133
 msgid "M_aster"
 msgstr "მთ_ავარი"
 
-#: app/propgui/gimppropgui-hue-saturation.c:137
+#: app/propgui/gimppropgui-hue-saturation.c:133
 msgid "Adjust all colors"
 msgstr "ყველა ფერის მორგება"
 
-#: app/propgui/gimppropgui-hue-saturation.c:138
+#: app/propgui/gimppropgui-hue-saturation.c:134
 msgid "_R"
 msgstr "_R"
 
-#: app/propgui/gimppropgui-hue-saturation.c:139
+#: app/propgui/gimppropgui-hue-saturation.c:135
 msgid "_Y"
 msgstr "_Y"
 
-#: app/propgui/gimppropgui-hue-saturation.c:140
+#: app/propgui/gimppropgui-hue-saturation.c:136
 msgid "_G"
 msgstr "_G"
 
-#: app/propgui/gimppropgui-hue-saturation.c:141
+#: app/propgui/gimppropgui-hue-saturation.c:137
 msgid "_C"
 msgstr "_C"
 
-#: app/propgui/gimppropgui-hue-saturation.c:142
+#: app/propgui/gimppropgui-hue-saturation.c:138
 msgid "_B"
 msgstr "_B"
 
-#: app/propgui/gimppropgui-hue-saturation.c:143
+#: app/propgui/gimppropgui-hue-saturation.c:139
 msgid "_M"
 msgstr "_M"
 
-#: app/propgui/gimppropgui-hue-saturation.c:153
+#: app/propgui/gimppropgui-hue-saturation.c:149
 msgid "Select Primary Color to Adjust"
 msgstr "აირჩიეთ მოსარგები ძირითადი ფერი"
 
-#: app/propgui/gimppropgui-hue-saturation.c:233
+#: app/propgui/gimppropgui-hue-saturation.c:229
 msgid "_Overlap"
 msgstr "_გადაფარვა"
 
-#: app/propgui/gimppropgui-hue-saturation.c:236
+#: app/propgui/gimppropgui-hue-saturation.c:232
 msgid "Adjust Selected Color"
 msgstr "მონიშნული ფერის მორგება"
 
-#: app/propgui/gimppropgui-hue-saturation.c:248
+#: app/propgui/gimppropgui-hue-saturation.c:244
 msgid "_Hue"
 msgstr "_ტონი"
 
-#: app/propgui/gimppropgui-hue-saturation.c:254
+#: app/propgui/gimppropgui-hue-saturation.c:250
 msgid "_Lightness"
 msgstr "სიკა_შკაშე"
 
-#: app/propgui/gimppropgui-hue-saturation.c:260
+#: app/propgui/gimppropgui-hue-saturation.c:256
 msgid "_Saturation"
 msgstr "_გაჯერებულობა"
 
-#: app/propgui/gimppropgui-hue-saturation.c:267
+#: app/propgui/gimppropgui-hue-saturation.c:263
 msgid "R_eset Color"
 msgstr "ფერის ნაგულისხმევ მნიშვნელობაზე დაბრუნება"
 
@@ -21842,7 +21847,7 @@ msgstr ""
 "ზოგიერთი ფონტის ჩატვირთვის შეცდომა:\n"
 "%s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1646
+#: app/text/gimptext-compat.c:99 app/tools/gimptexttool.c:1646
 msgid "Add Text Layer"
 msgstr "ტექსტური ფენის დამატება"
 
