@@ -84,9 +84,15 @@
         Here are some of the more visible improvements:
         </p>
         <ul>
-          <li>Initial UI for non-destructive layer effects</li>
+          <li demo="layer-list,
+                    layer-list:item-effect-header-icon">
+          Initial UI for non-destructive layer effects
+          </li>
           <li>Pervasize update on color correctness</li>
-          <li>Paint tools now have an "Expand Layers" option and sub-options to auto-expand layers when painting over their boundaries</li>
+          <li demo="toolbox:paintbrush,
+                    tool-options:expand-use">
+          Paint tools now have an "Expand Layers" option and sub-options to auto-expand layers when painting over their boundaries
+          </li>
           <li>Better font handling</li>
           <li>New snapping options</li>
           <li>New image format supports: Farbfeld (import and export), Esm Software PIX (import only), HEJ2 (import only)</li>

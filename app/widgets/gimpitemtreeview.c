@@ -27,6 +27,7 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "widgets-types.h"
 
@@ -602,6 +603,7 @@ gimp_item_tree_view_constructed (GObject *object)
     {
       column = gtk_tree_view_column_new ();
       image = gtk_image_new_from_icon_name (GIMP_ICON_EFFECT, button_icon_size);
+      gimp_widget_set_identifier (image, "item-effect-header-icon");
       gtk_tree_view_column_set_widget (column, image);
       gtk_widget_set_visible (image, TRUE);
       gtk_tree_view_insert_column (tree_view->view, column, 2);
