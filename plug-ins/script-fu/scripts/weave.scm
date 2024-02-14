@@ -74,7 +74,7 @@
     (gimp-context-set-gradient-fg-bg-rgb)
     (gimp-drawable-edit-gradient-fill drawable
 				      GRADIENT-BILINEAR (- 100 shadow-depth)
-				      FALSE 0 0
+				      FALSE 1 0
 				      TRUE
 				      (/ (+ (* 2 ribbon-spacing) ribbon-width -1) 2) 0
 				      0 0)
@@ -90,7 +90,7 @@
 
     (gimp-drawable-edit-gradient-fill drawable
 				      GRADIENT-BILINEAR (- 100 shadow-depth)
-				      FALSE 0 0
+				      FALSE 1 0
 				      TRUE
 				      0 (/ (+ (* 2 ribbon-spacing) ribbon-width -1) 2)
 				      0 0)

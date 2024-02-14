@@ -65,7 +65,7 @@
       (if (> (car (gimp-selection-bounds theImage)) 0)
         (gimp-drawable-edit-gradient-fill theStain
             GRADIENT-SHAPEBURST-DIMPLED 0
-            FALSE 0 0
+            FALSE 1 0
             TRUE
             0 0 0 0)
       )

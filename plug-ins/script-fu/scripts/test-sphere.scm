@@ -208,7 +208,7 @@
     (gimp-context-set-gradient-fg-bg-rgb)
     (gimp-drawable-edit-gradient-fill drawable
 				      GRADIENT-RADIAL offset
-				      FALSE 0 0
+				      FALSE 1 0
 				      TRUE
 				      light-x light-y
 				      light-end-x light-end-y)
@@ -221,7 +221,7 @@
     (gimp-context-set-gradient-reverse gradient-reverse)
     (gimp-drawable-edit-gradient-fill drawable
 				      GRADIENT-LINEAR offset
-				      FALSE 0 0
+				      FALSE 1 0
 				      TRUE
 				      10 10
 				      30 60)

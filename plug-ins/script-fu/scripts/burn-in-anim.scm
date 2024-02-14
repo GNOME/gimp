@@ -118,7 +118,7 @@
 		    (gimp-context-set-gradient-fg-bg-rgb)
                     (gimp-drawable-edit-gradient-fill bl-mask
 						      GRADIENT-LINEAR 20
-						      FALSE 0 0
+						      FALSE 1 0
 						      TRUE
 						      (+ bl-x-off bl-width) 0
 						      bl-x-off 0)
@@ -147,7 +147,7 @@
 		    (gimp-context-set-gradient-fg-transparent)
 		    (gimp-drawable-edit-gradient-fill bl-layer
 						      GRADIENT-LINEAR 0
-						      FALSE 0 0
+						      FALSE 1 0
 						      TRUE
 						      (+ bl-x-off bl-width) 0
 						      (- (+ bl-x-off bl-width) after-glow) 0)
@@ -161,7 +161,7 @@
 		    (gimp-context-set-foreground glow-color)
 		    (gimp-drawable-edit-gradient-fill bl-layer
 						      GRADIENT-LINEAR 0
-						      FALSE 0 0
+						      FALSE 1 0
 						      TRUE
 						      (- (+ bl-x-off bl-width) corona-width) 0
 						      (- (+ bl-x-off bl-width) after-glow) 0)

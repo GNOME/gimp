@@ -52,7 +52,7 @@
     (gimp-context-set-gradient-reverse gradient-reverse)
     (gimp-drawable-edit-gradient-fill drawable
 				      GRADIENT-LINEAR 0
-				      FALSE 0 0
+				      FALSE 1 0
 				      TRUE
 				      0 0 (- width 1) 0)
 
