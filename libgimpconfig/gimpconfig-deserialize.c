@@ -323,7 +323,8 @@ gimp_config_deserialize_property (GimpConfig *config,
   if (token == G_TOKEN_RIGHT_PAREN &&
       g_scanner_peek_next_token (scanner) == token)
     {
-      if (! (G_VALUE_HOLDS_OBJECT (&value) &&
+      if (GIMP_VALUE_HOLDS_COLOR (&value) ||
+          ! (G_VALUE_HOLDS_OBJECT (&value)     &&
              (prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE)))
         g_object_set_property (G_OBJECT (config), prop_spec->name, &value);
     }
