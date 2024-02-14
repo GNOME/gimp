@@ -594,34 +594,28 @@ gboolean
 gimp_update_auto_check (GimpCoreConfig *config,
                         Gimp           *gimp)
 {
-  gint64 prev_update_timestamp;
-  gint64 current_timestamp;
+  gboolean is_update;
+  gint64   prev_update_timestamp;
+  gint64   current_timestamp;
 
-  if (config->config_version == NULL                ||
-      GIMP_GUI_CONFIG (config)->show_welcome_dialog ||
-      gimp_version_cmp (GIMP_VERSION,
-                        config->config_version) > 0)
+  is_update = (config->config_version == NULL ||
+               gimp_version_cmp (GIMP_VERSION,
+                                 config->config_version) > 0);
+
+  if (is_update || GIMP_GUI_CONFIG (config)->show_welcome_dialog)
     {
 #ifndef GIMP_CONSOLE_COMPILATION
-      gboolean show_welcome_page = TRUE;
-
       /* If GIMP was just updated and this is the first time the new
        * version is run, display a welcome dialog and do not check for
        * updates right now. Otherwise, if the user has set the welcome
        * dialog to always appear on load, show the Create page on start.
        */
-      if (GIMP_GUI_CONFIG (config)->show_welcome_dialog)
-        {
-          if (! (config->config_version == NULL ||
-                 gimp_version_cmp (GIMP_VERSION,
-                                   config->config_version) > 0))
-            show_welcome_page = FALSE;
-        }
-
-      gtk_widget_set_visible (welcome_dialog_create (gimp, show_welcome_page),
+      gtk_widget_set_visible (welcome_dialog_create (gimp, is_update),
                               TRUE);
 
-      return FALSE;
+      /* Do not check for new updates when GIMP was just updated. */
+      if (is_update)
+        return FALSE;
 #else
       g_log (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE,
              "Welcome to GIMP %s!", GIMP_VERSION);
