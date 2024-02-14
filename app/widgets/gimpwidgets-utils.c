@@ -2353,6 +2353,24 @@ gimp_search_widget_rec (GtkWidget   *widget,
       gtk_container_foreach (GTK_CONTAINER (widget),
                              (GtkCallback) gimp_search_widget_rec,
                              (gpointer) data);
+
+      if (GTK_IS_TREE_VIEW (widget))
+        {
+          GList *columns;
+
+          columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (widget));
+          for (GList *iter = columns; iter; iter = iter->next)
+            {
+              GtkWidget *column_widget;
+
+              column_widget = gtk_tree_view_column_get_widget (iter->data);
+
+              if (column_widget)
+                gimp_search_widget_rec (column_widget, data);
+            }
+
+          g_list_free (columns);
+        }
     }
 }
 
