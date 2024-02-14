@@ -1574,7 +1574,7 @@ prefs_dialog_new (Gimp       *gimp,
                         NULL);
 
       /*  Very unstable tools  */
-      vbox2 = prefs_frame_new (_("Insane Options"),
+      vbox2 = prefs_frame_new (_("Experimental"),
                                GTK_CONTAINER (vbox), FALSE);
 
       button = prefs_check_button_add (object, "playground-npd-tool",
