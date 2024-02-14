@@ -948,14 +948,19 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
               bpp > 40                                                         ||
               ! gimp_scanner_parse_data (scanner, bpp, &data)                  ||
               ! gimp_scanner_parse_string (scanner, &encoding)                 ||
-              ! gimp_scanner_parse_int (scanner, &profile_size)                ||
-              ! gimp_scanner_parse_data (scanner, profile_size, &profile_data))
+              ! gimp_scanner_parse_int (scanner, &profile_size))
             {
               g_free (data);
               g_free (encoding);
-              g_free (profile_data);
 
               token = G_TOKEN_INT;
+              goto error;
+            }
+          if (profile_size > 0 && ! gimp_scanner_parse_data (scanner, profile_size, &profile_data))
+            {
+              g_free (profile_data);
+
+              token = G_TOKEN_STRING;
               goto error;
             }
 
