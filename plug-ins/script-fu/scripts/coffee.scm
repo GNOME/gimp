@@ -15,7 +15,7 @@
 ; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-(define (script-fu-coffee-stain inImage inLayer inNumber inDark inGradient)
+(define (script-fu-coffee-stain inImage inLayers inNumber inDark inGradient)
   (let* (
         (theImage inImage)
         (theHeight (car (gimp-image-get-height theImage)))
@@ -85,17 +85,20 @@
   )
 )
 
-; Register the function with GIMP:
+; Register as a filter
 
-(script-fu-register "script-fu-coffee-stain"
+; !!! Enabled for any non-zero count of layers.
+; Requires an image, to which we add layers.
+; Argument inLayers is not used.
+
+(script-fu-register-filter "script-fu-coffee-stain"
   _"_Coffee Stain..."
   _"Add realistic looking coffee stains to the image"
   "Chris Gutteridge"
   "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
   "25th April 1998"
   "RGB*"
-  SF-IMAGE       "The image"   0
-  SF-DRAWABLE    "The layer"   0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Stains"      '(3 1 10 1 2 0 0)
   SF-TOGGLE     _"Darken only" TRUE
   SF-GRADIENT   _"Gradient"    "Coffee"
