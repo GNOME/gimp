@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-03 18:39+0000\n"
-"PO-Revision-Date: 2024-02-03 20:18+0100\n"
+"POT-Creation-Date: 2024-02-15 16:03+0000\n"
+"PO-Revision-Date: 2024-02-15 21:14+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -125,7 +125,7 @@ msgstr "Spara utdata från Script-Fu-konsol"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
 #: plug-ins/script-fu/server/script-fu-server.c:878
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
 msgid "_Cancel"
 msgstr "A_vbryt"
 
@@ -186,44 +186,44 @@ msgstr "_Starta servern…"
 msgid "Server for remote Script-Fu operation"
 msgstr "Server för fjärråtgärder i Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:187
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kan inte köra två skript på samma gång."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:191
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Du kör redan skriptet ”%s”."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:220
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 msgid "_Reset"
 msgstr "Å_terställ"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:224
 msgid "_OK"
 msgstr "_OK"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:276
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:278
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:326
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:331
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-färgväljare"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:457
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filväljare"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:456
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:460
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mappväljare"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:852
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:867
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Fel vid körning av %s:"
@@ -554,21 +554,25 @@ msgstr "Djup"
 msgid "Stain"
 msgstr "Stänk"
 
-#: plug-ins/script-fu/scripts/coffee.scm:91
-msgid "_Coffee Stain..."
-msgstr "_Kaffefläck…"
+#: plug-ins/script-fu/scripts/coffee.scm:95
+msgid "_Stain..."
+msgstr "_Fläck…"
 
-#: plug-ins/script-fu/scripts/coffee.scm:92
-msgid "Add realistic looking coffee stains to the image"
-msgstr "Lägg till realistiska kaffefläckar till bilden"
+#: plug-ins/script-fu/scripts/coffee.scm:96
+msgid "Add layers of stain or blotch marks"
+msgstr "Lägg till lager med fläckar eller blaffor"
 
-#: plug-ins/script-fu/scripts/coffee.scm:99
-msgid "Stains"
-msgstr "Stänk"
+#: plug-ins/script-fu/scripts/coffee.scm:102
+msgid "Number of stains to add"
+msgstr "Antal fläckar att lägga till"
 
-#: plug-ins/script-fu/scripts/coffee.scm:100
+#: plug-ins/script-fu/scripts/coffee.scm:103
 msgid "Darken only"
 msgstr "Mörka endast"
+
+#: plug-ins/script-fu/scripts/coffee.scm:104
+msgid "Gradient to color stains"
+msgstr "Gradient att färga fläckar med"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:70
 msgid "_Difference Clouds"
@@ -850,32 +854,33 @@ msgid "Create four guides around the bounding box of the current selection"
 msgstr ""
 "Skapa fyra hjälplinjer runt begränsningsrutan för den aktuella markeringen"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
 msgstr "Ny hjälplinje (i _procent)…"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:31
 msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr ""
 "Lägg till en hjälplinje på angiven position som ett procenttal av "
 "bildstorleken"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Direction"
 msgstr "_Riktning"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Horizontal"
 msgstr "Horisontell"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:36
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:38
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Vertical"
 msgstr "Vertikal"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:39
 msgid "_Position (in %)"
 msgstr "_Position (i %)"
 
@@ -888,7 +893,7 @@ msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr ""
 "Lägg till en hjälplinje med angiven orientering och position (i bildpunkter)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "_Position"
 msgstr "_Position"
 
@@ -1498,6 +1503,12 @@ msgstr "X-avstånd för skuggkastning"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Y-avstånd för skuggkastning"
+
+#~ msgid "Add realistic looking coffee stains to the image"
+#~ msgstr "Lägg till realistiska kaffefläckar till bilden"
+
+#~ msgid "Stains"
+#~ msgstr "Stänk"
 
 #~ msgid "Script-Fu Font Selection"
 #~ msgstr "Script-Fu-typsnittsväljare"
@@ -2373,9 +2384,6 @@ msgstr "Y-avstånd för skuggkastning"
 
 #~ msgid "Create an image filled with a swirly pattern"
 #~ msgstr "Skapa en bild fylld med ett virvligt mönster"
-
-#~ msgid "Number of times to whirl"
-#~ msgstr "Antal virvelvarv"
 
 #~ msgid "Quarter size"
 #~ msgstr "Kvartsstor"
