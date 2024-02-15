@@ -108,7 +108,11 @@ map_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      GimpRGB white = { 1.0, 1.0, 1.0, 1.0 };
+      GeglColor *default_color;
+
+      gegl_init (NULL, NULL);
+
+      default_color = gegl_color_new ("white");
 
       procedure = gimp_image_procedure_new (plug_in, name,
                                              GIMP_PDB_PROC_TYPE_PLUGIN,
@@ -232,11 +236,11 @@ map_create_procedure (GimpPlugIn  *plug_in,
                             "point-light",
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_RGB (procedure, "light-color",
-                         _("Light source _color"),
-                         _("Light source color"),
-                         TRUE, &white,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_COLOR (procedure, "light-color",
+                           _("Light source _color"),
+                           _("Light source color"),
+                           TRUE, default_color,
+                           G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "light-position-x",
                             _("Light position X"),
@@ -423,6 +427,8 @@ map_create_procedure (GimpPlugIn  *plug_in,
                             _("Cylinder length"),
                             0, G_MAXDOUBLE, 0.25,
                             G_PARAM_READWRITE);
+
+      g_object_unref (default_color);
     }
 
   return procedure;

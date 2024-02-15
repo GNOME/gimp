@@ -338,6 +338,7 @@ copy_from_config (GimpProcedureConfig *config)
   GimpDrawable *box_right  = NULL;
   GimpDrawable *cyl_top    = NULL;
   GimpDrawable *cyl_bottom = NULL;
+  GeglColor    *color;
 
   mapvals.maptype = gimp_procedure_config_get_choice_id (config, "map-type");
 
@@ -360,7 +361,7 @@ copy_from_config (GimpProcedureConfig *config)
                 "rotation-angle-x",       &mapvals.alpha,
                 "rotation-angle-y",       &mapvals.beta,
                 "rotation-angle-z",       &mapvals.gamma,
-                "light-color",            &mapvals.lightsource.color,
+                "light-color",            &color,
                 "light-position-x",       &mapvals.lightsource.position.x,
                 "light-position-y",       &mapvals.lightsource.position.y,
                 "light-position-z",       &mapvals.lightsource.position.z,
@@ -412,4 +413,12 @@ copy_from_config (GimpProcedureConfig *config)
     mapvals.cylindermap_id[0] = gimp_item_get_id (GIMP_ITEM (cyl_top));
   if (cyl_bottom)
     mapvals.cylindermap_id[0] = gimp_item_get_id (GIMP_ITEM (cyl_bottom));
+
+  if (color == NULL)
+    color = gegl_color_new ("white");
+
+  /* TODO: Use GeglColor directly in this plug-in */
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"),
+                        &mapvals.lightsource.color);
+  g_object_unref (color);
 }
