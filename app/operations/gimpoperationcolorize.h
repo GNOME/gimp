@@ -40,9 +40,12 @@ struct _GimpOperationColorize
 {
   GimpOperationPointFilter  parent_instance;
 
-  gdouble                   hue;
-  gdouble                   saturation;
-  gdouble                   lightness;
+  gfloat                    hue;
+  gfloat                    saturation;
+  gfloat                    lightness;
+  const Babl               *hsl_format;
+  const Babl               *fish_to_lum;
+  const Babl               *fish_from_hsl;
 };
 
 struct _GimpOperationColorizeClass
