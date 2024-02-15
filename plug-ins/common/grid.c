@@ -93,7 +93,7 @@ static GimpValueArray * grid_run              (GimpProcedure        *procedure,
 
 static guchar           best_cmap_match       (const guchar         *cmap,
                                                gint                  ncolors,
-                                               const GimpRGB        *color);
+                                               GeglColor            *color);
 static void             render_grid           (GimpImage            *image,
                                                GimpDrawable         *drawable,
                                                GimpProcedureConfig  *config,
@@ -138,13 +138,21 @@ grid_query_procedures (GimpPlugIn *plug_in)
 
 static GimpProcedure *
 grid_create_procedure (GimpPlugIn  *plug_in,
-                               const gchar *name)
+                       const gchar *name)
 {
   GimpProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      const GimpRGB black = { 0.0, 0.0, 0.0, 1.0 };
+      GeglColor *default_hcolor;
+      GeglColor *default_vcolor;
+      GeglColor *default_icolor;
+
+      gegl_init (NULL, NULL);
+
+      default_hcolor = gegl_color_new ("black");
+      default_vcolor = gegl_color_new ("black");
+      default_icolor = gegl_color_new ("black");
 
       procedure = gimp_image_procedure_new (plug_in, name,
                                             GIMP_PDB_PROC_TYPE_PLUGIN,
@@ -189,15 +197,14 @@ grid_create_procedure (GimpPlugIn  *plug_in,
                          G_PARAM_READWRITE);
 
       /* TODO: for "hcolor", "icolor" and "vcolor", the original code would use
-       * the foreground color as default. It would be interesting if
-       * GIMP_PROC_ARG_RGB() had a way to specify the foreground or background
-       * colors as default (instead of a hardcoded color).
+       * the foreground color as default. Future work would be to get the
+       * foreground/background color from context.
        */
-      GIMP_PROC_ARG_RGB (procedure, "hcolor",
-                         "H color",
-                         "Horizontal color",
-                         TRUE, &black,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_COLOR (procedure, "hcolor",
+                           "H color",
+                           "Horizontal color",
+                           TRUE, default_hcolor,
+                           G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "vwidth",
                          "V width",
@@ -217,11 +224,11 @@ grid_create_procedure (GimpPlugIn  *plug_in,
                          0, GIMP_MAX_IMAGE_SIZE, 8,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_RGB (procedure, "vcolor",
-                         "V color",
-                         "Vertical color",
-                         TRUE, &black,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_COLOR (procedure, "vcolor",
+                           "V color",
+                           "Vertical color",
+                           TRUE, default_vcolor,
+                           G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "iwidth",
                          "I width",
@@ -241,11 +248,15 @@ grid_create_procedure (GimpPlugIn  *plug_in,
                          0, GIMP_MAX_IMAGE_SIZE, 6,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_RGB (procedure, "icolor",
-                         "I color",
-                         "Intersection color",
-                         TRUE, &black,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_COLOR (procedure, "icolor",
+                           "I color",
+                           "Intersection color",
+                           TRUE, default_icolor,
+                           G_PARAM_READWRITE);
+
+      g_object_unref (default_hcolor);
+      g_object_unref (default_vcolor);
+      g_object_unref (default_icolor);
     }
 
   return procedure;
@@ -302,22 +313,22 @@ grid_run (GimpProcedure        *procedure,
 static guchar
 best_cmap_match (const guchar  *cmap,
                  gint           ncolors,
-                 const GimpRGB *color)
+                 GeglColor     *color)
 {
   guchar cmap_index = 0;
-  gint   max = MAXDIFF;
+  gint   max        = MAXDIFF;
   gint   i, diff, sum;
-  guchar r, g, b;
+  guchar rgb[3];
 
-  gimp_rgb_get_uchar (color, &r, &g, &b);
+  gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
 
   for (i = 0; i < ncolors; i++)
     {
-      diff = r - *cmap++;
+      diff = rgb[0] - *cmap++;
       sum = SQR (diff);
-      diff = g - *cmap++;
+      diff = rgb[1] - *cmap++;
       sum += SQR (diff);
-      diff = b - *cmap++;
+      diff = rgb[2] - *cmap++;
       sum += SQR (diff);
 
       if (sum < max)
@@ -390,37 +401,37 @@ render_grid (GimpImage           *image,
   gint        hwidth;
   gint        hspace;
   gint        hoffset;
-  GimpRGB    *hcolor_rgb;
+  GeglColor  *hcolor_gegl;
   gint        vwidth;
   gint        vspace;
   gint        voffset;
-  GimpRGB    *vcolor_rgb;
+  GeglColor  *vcolor_gegl;
   gint        iwidth;
   gint        ispace;
   gint        ioffset;
-  GimpRGB    *icolor_rgb;
+  GeglColor  *icolor_gegl;
 
   g_object_get (config,
                 "hwidth",  &hwidth,
                 "hspace",  &hspace,
                 "hoffset", &hoffset,
-                "hcolor",  &hcolor_rgb,
+                "hcolor",  &hcolor_gegl,
                 "vwidth",  &vwidth,
                 "vspace",  &vspace,
                 "voffset", &voffset,
-                "vcolor",  &vcolor_rgb,
+                "vcolor",  &vcolor_gegl,
                 "iwidth",  &iwidth,
                 "ispace",  &ispace,
                 "ioffset", &ioffset,
-                "icolor",  &icolor_rgb,
+                "icolor",  &icolor_gegl,
                 NULL);
 
-  gimp_rgba_get_uchar (hcolor_rgb,
-                       hcolor, hcolor + 1, hcolor + 2, hcolor + 3);
-  gimp_rgba_get_uchar (vcolor_rgb,
-                       vcolor, vcolor + 1, vcolor + 2, vcolor + 3);
-  gimp_rgba_get_uchar (icolor_rgb,
-                       icolor, icolor + 1, icolor + 2, icolor + 3);
+  if (hcolor_gegl == NULL)
+    hcolor_gegl = gegl_color_new ("black");
+  if (vcolor_gegl == NULL)
+    vcolor_gegl = gegl_color_new ("black");
+  if (icolor_gegl == NULL)
+    icolor_gegl = gegl_color_new ("black");
 
   alpha = gimp_drawable_has_alpha (drawable);
 
@@ -433,26 +444,31 @@ render_grid (GimpImage           *image,
         format = babl_format ("R'G'B'A u8");
       else
         format = babl_format ("R'G'B' u8");
+
+      gegl_color_get_pixel (hcolor_gegl, format, hcolor);
+      gegl_color_get_pixel (vcolor_gegl, format, vcolor);
+      gegl_color_get_pixel (icolor_gegl, format, icolor);
       break;
 
     case GIMP_GRAY:
-      hcolor[0] = gimp_rgb_luminance_uchar (hcolor_rgb);
-      vcolor[0] = gimp_rgb_luminance_uchar (vcolor_rgb);
-      icolor[0] = gimp_rgb_luminance_uchar (icolor_rgb);
       blend = TRUE;
 
       if (alpha)
         format = babl_format ("Y'A u8");
       else
         format = babl_format ("Y' u8");
+
+      gegl_color_get_pixel (hcolor_gegl, format, hcolor);
+      gegl_color_get_pixel (vcolor_gegl, format, vcolor);
+      gegl_color_get_pixel (icolor_gegl, format, icolor);
       break;
 
     case GIMP_INDEXED:
       cmap = gimp_image_get_colormap (image, NULL, &ncolors);
 
-      hcolor[0] = best_cmap_match (cmap, ncolors, hcolor_rgb);
-      vcolor[0] = best_cmap_match (cmap, ncolors, vcolor_rgb);
-      icolor[0] = best_cmap_match (cmap, ncolors, icolor_rgb);
+      hcolor[0] = best_cmap_match (cmap, ncolors, hcolor_gegl);
+      vcolor[0] = best_cmap_match (cmap, ncolors, vcolor_gegl);
+      icolor[0] = best_cmap_match (cmap, ncolors, icolor_gegl);
 
       g_free (cmap);
       blend = FALSE;
@@ -464,6 +480,10 @@ render_grid (GimpImage           *image,
       g_assert_not_reached ();
       blend = FALSE;
     }
+
+  g_clear_object (&hcolor_gegl);
+  g_clear_object (&vcolor_gegl);
+  g_clear_object (&icolor_gegl);
 
   bytes = babl_format_get_bytes_per_pixel (format);
 
@@ -617,7 +637,6 @@ update_values (Grid *grid)
 {
   GtkWidget *entry;
   GeglColor *color;
-  GimpRGB    rgb;
 
   entry = g_object_get_data (G_OBJECT (main_dialog), "width");
   g_object_set (grid->config,
@@ -650,18 +669,15 @@ update_values (Grid *grid)
                 NULL);
 
   color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (grid->hcolor_button));
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-  g_object_set (grid->config, "hcolor", &rgb, NULL);
+  g_object_set (grid->config, "hcolor", color, NULL);
   g_object_unref (color);
 
   color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (grid->vcolor_button));
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-  g_object_set (grid->config, "vcolor", &rgb, NULL);
+  g_object_set (grid->config, "vcolor", color, NULL);
   g_object_unref (color);
 
   color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (grid->icolor_button));
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-  g_object_set (grid->config, "icolor", &rgb, NULL);
+  g_object_set (grid->config, "icolor", color, NULL);
   g_object_unref (color);
 }
 
@@ -714,7 +730,6 @@ color_callback (GtkWidget *widget,
   Grid      *grid         = GRID (data);
   GtkWidget *chain_button = grid->color_chain;
   GeglColor *color;
-  GimpRGB    rgb;
 
   color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget));
 
@@ -726,14 +741,12 @@ color_callback (GtkWidget *widget,
         gimp_color_button_set_color (GIMP_COLOR_BUTTON (grid->vcolor_button), color);
     }
 
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-
   if (widget == grid->hcolor_button)
-    g_object_set (grid->config, "hcolor", &rgb, NULL);
+    g_object_set (grid->config, "hcolor", color, NULL);
   else if (widget == grid->vcolor_button)
-    g_object_set (grid->config, "vcolor", &rgb, NULL);
+    g_object_set (grid->config, "vcolor", color, NULL);
   else if (widget == grid->icolor_button)
-    g_object_set (grid->config, "icolor", &rgb, NULL);
+    g_object_set (grid->config, "icolor", color, NULL);
 
   g_object_unref (color);
 }
@@ -767,16 +780,15 @@ dialog (GimpImage           *image,
   gint             hwidth;
   gint             hspace;
   gint             hoffset;
-  GimpRGB         *hcolor;
+  GeglColor       *hcolor;
   gint             vwidth;
   gint             vspace;
   gint             voffset;
-  GimpRGB         *vcolor;
+  GeglColor       *vcolor;
   gint             iwidth;
   gint             ispace;
   gint             ioffset;
-  GimpRGB         *icolor;
-  GeglColor       *color;
+  GeglColor       *icolor;
 
   g_return_val_if_fail (main_dialog == NULL, FALSE);
 
@@ -1045,17 +1057,15 @@ dialog (GimpImage           *image,
 
   /*  put a chain_button under the color_buttons  */
   grid->color_chain = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-  if (gimp_rgba_distance (hcolor, vcolor) < 0.0001)
+  if (gimp_color_is_perceptually_identical (hcolor, vcolor))
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (grid->color_chain), TRUE);
   gtk_grid_attach (GTK_GRID (offset), grid->color_chain, 1, 4, 2, 1);
   gtk_widget_show (grid->color_chain);
 
   /*  attach color selectors  */
-  color = gegl_color_new (NULL);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), hcolor);
   grid->hcolor_button = gimp_color_button_new (_("Horizontal Color"),
                                                COLOR_BUTTON_WIDTH, 16,
-                                               color,
+                                               hcolor,
                                                GIMP_COLOR_AREA_SMALL_CHECKS);
   gimp_color_button_set_update (GIMP_COLOR_BUTTON (grid->hcolor_button), TRUE);
   gtk_grid_attach (GTK_GRID (offset), grid->hcolor_button, 1, 3, 1, 1);
@@ -1072,10 +1082,9 @@ dialog (GimpImage           *image,
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), vcolor);
   grid->vcolor_button = gimp_color_button_new (_("Vertical Color"),
                                                COLOR_BUTTON_WIDTH, 16,
-                                               color,
+                                               vcolor,
                                                GIMP_COLOR_AREA_SMALL_CHECKS);
   gimp_color_button_set_update (GIMP_COLOR_BUTTON (grid->vcolor_button), TRUE);
   gtk_grid_attach (GTK_GRID (offset), grid->vcolor_button, 2, 3, 1, 1);
@@ -1091,10 +1100,9 @@ dialog (GimpImage           *image,
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), icolor);
   grid->icolor_button = gimp_color_button_new (_("Intersection Color"),
                                                COLOR_BUTTON_WIDTH, 16,
-                                               color,
+                                               icolor,
                                                GIMP_COLOR_AREA_SMALL_CHECKS);
   gimp_color_button_set_update (GIMP_COLOR_BUTTON (grid->icolor_button), TRUE);
   gtk_grid_attach (GTK_GRID (offset), grid->icolor_button, 3, 3, 1, 1);
@@ -1103,7 +1111,9 @@ dialog (GimpImage           *image,
   gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (grid->icolor_button),
                                       color_config);
   g_object_unref (color_config);
-  g_object_unref (color);
+  g_object_unref (hcolor);
+  g_object_unref (vcolor);
+  g_object_unref (icolor);
 
   g_signal_connect (grid->icolor_button, "color-changed",
                     G_CALLBACK (color_callback),
