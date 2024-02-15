@@ -162,6 +162,17 @@ map_lightness (GimpHueSaturationConfig *config,
     return value + (v * (1.0 - value));
 }
 
+static inline gdouble
+map_lightness_achromatic (GimpHueSaturationConfig *config, gdouble value)
+{
+  gdouble v = config->lightness[GIMP_HUE_RANGE_ALL];
+
+  if (v < 0)
+    return value * (v + 1.0);
+  else
+    return value + (v * (1.0 - value));
+}
+
 static gboolean
 gimp_operation_hue_saturation_process (GeglOperation       *operation,
                                        void                *in_buf,
@@ -258,9 +269,16 @@ gimp_operation_hue_saturation_process (GeglOperation       *operation,
         }
       else
         {
-          hsl.h = map_hue        (config, hue, hsl.h);
-          hsl.s = map_saturation (config, hue, hsl.s);
-          hsl.l = map_lightness  (config, hue, hsl.l);
+          if (hsl.s <= 0.0)
+            {
+              hsl.l = map_lightness_achromatic (config, hsl.l);
+            }
+          else
+            {
+              hsl.h = map_hue (config, hue, hsl.h);
+              hsl.l = map_lightness (config, hue, hsl.l);
+              hsl.s = map_saturation (config, hue, hsl.s);
+            }
         }
 
       gimp_hsl_to_rgb (&hsl, &rgb);
