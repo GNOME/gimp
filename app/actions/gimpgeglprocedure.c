@@ -397,8 +397,15 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
             }
           else
             {
-              GParamSpec **pspecs;
-              guint        n_pspecs;
+              GParamSpec       **pspecs;
+              guint              n_pspecs;
+              gdouble            opacity;
+              GimpLayerMode      paint_mode;
+              GimpFilterRegion   region;
+
+              opacity    = gimp_drawable_filter_get_opacity (gegl_procedure->filter);
+              paint_mode = gimp_drawable_filter_get_paint_mode (gegl_procedure->filter);
+              region     = gimp_drawable_filter_get_region (gegl_procedure->filter);
 
               settings =
                 g_object_new (gimp_operation_config_get_type (active_tool->tool_info->gimp,
@@ -430,6 +437,12 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
                   g_value_unset (&value);
                 }
               g_free (pspecs);
+
+              g_object_set (settings,
+                            "gimp-opacity", opacity,
+                            "gimp-mode",    paint_mode,
+                            "gimp-region",  region,
+                            NULL);
             }
         }
 
