@@ -381,6 +381,29 @@ marshal_returned_PDB_value    (scheme        *sc,
         }
       /* Ensure result holds a string, possibly empty. */
     }
+  else if (GIMP_VALUE_HOLDS_COLOR (value))
+    {
+      GeglColor *color;
+      guchar     rgb[3] = { 0 };
+      gpointer   temp_val;
+
+      color = g_value_get_object (value);
+      if (color)
+        gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
+
+      temp_val = sc->vptr->cons
+                    (sc,
+                    sc->vptr->mk_integer (sc, rgb[0]),
+                    sc->vptr->cons
+                      (sc,
+                        sc->vptr->mk_integer (sc, rgb[1]),
+                        sc->vptr->cons
+                          (sc,
+                          sc->vptr->mk_integer (sc, rgb[2]),
+                          sc->NIL)));
+
+      result = temp_val;
+    }
   else if (G_VALUE_HOLDS_OBJECT (value))
     {
       /* G_VALUE_HOLDS_OBJECT only ensures value derives from GObject.
