@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-03 18:39+0000\n"
-"PO-Revision-Date: 2024-02-03 22:19+0200\n"
+"POT-Creation-Date: 2024-02-15 16:03+0000\n"
+"PO-Revision-Date: 2024-02-15 18:40+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -123,7 +123,7 @@ msgstr "Зберегти вивід консолі скриптфу"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
 #: plug-ins/script-fu/server/script-fu-server.c:878
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
 msgid "_Cancel"
 msgstr "_Скасувати"
 
@@ -184,44 +184,44 @@ msgstr "_Запустити сервер…"
 msgid "Server for remote Script-Fu operation"
 msgstr "Сервер для віддаленого виконання скриптфу"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:187
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "скриптфуне може обробляти два сценарії одночасно."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:191
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Ви вже запустили сценарій \"%s\"."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:220
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 msgid "_Reset"
 msgstr "С_кинути"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:224
 msgid "_OK"
 msgstr "_Гаразд"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:276
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:278
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:326
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:331
 msgid "Script-Fu Color Selection"
 msgstr "Скриптфу: Вибір кольору"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:457
 msgid "Script-Fu File Selection"
 msgstr "Скриптфу: Вибір файлу"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:456
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:460
 msgid "Script-Fu Folder Selection"
 msgstr "Скриптфу: Вибір теки"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:852
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:867
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Помилка під час виконання: %s"
@@ -551,21 +551,27 @@ msgstr "Глибина"
 msgid "Stain"
 msgstr "Пляма"
 
-#: plug-ins/script-fu/scripts/coffee.scm:91
-msgid "_Coffee Stain..."
-msgstr "_Кавові плями…"
+#: plug-ins/script-fu/scripts/coffee.scm:95
+#| msgid "_Coffee Stain..."
+msgid "_Stain..."
+msgstr "_Плями…"
 
-#: plug-ins/script-fu/scripts/coffee.scm:92
-msgid "Add realistic looking coffee stains to the image"
-msgstr "Заплямувати зображення реалістичними кавовими плямами"
+#: plug-ins/script-fu/scripts/coffee.scm:96
+msgid "Add layers of stain or blotch marks"
+msgstr "Додати шари плям"
 
-#: plug-ins/script-fu/scripts/coffee.scm:99
-msgid "Stains"
-msgstr "Кількість плям"
+#: plug-ins/script-fu/scripts/coffee.scm:102
+#| msgid "_Number of lines"
+msgid "Number of stains to add"
+msgstr "Кількість плям, які слід додати"
 
-#: plug-ins/script-fu/scripts/coffee.scm:100
+#: plug-ins/script-fu/scripts/coffee.scm:103
 msgid "Darken only"
 msgstr "Накласти плями у режимі «Лише темне»"
+
+#: plug-ins/script-fu/scripts/coffee.scm:104
+msgid "Gradient to color stains"
+msgstr "Градієнт кольорових плям"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:70
 msgid "_Difference Clouds"
@@ -846,32 +852,33 @@ msgstr "Напрямні з виді_леного"
 msgid "Create four guides around the bounding box of the current selection"
 msgstr "Створити 4 напрямні за габаритами вибраного"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
 msgstr "_Напрямна (за відсотком)…"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:31
 msgid ""
 "Add a guide at the position specified as a percentage of the image size"
 msgstr ""
 "Додати напрямні до розташування, вказаному у відсотках від розміру зображення"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Direction"
 msgstr "_Орієнтація"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Horizontal"
 msgstr "Горизонталь"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:36
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:38
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Vertical"
 msgstr "Вертикаль"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:39
 msgid "_Position (in %)"
 msgstr "_Розташування (у %)"
 
@@ -883,7 +890,7 @@ msgstr "Створити _напрямну…"
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "Додати напрямну до розташування, вказаному у точках"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "_Position"
 msgstr "_Розташування"
 
@@ -941,22 +948,18 @@ msgstr ""
 "переднього плану"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:114
-#| msgid "Number of lines"
 msgid "_Number of lines"
 msgstr "_Кількість ліній"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:115
-#| msgid "Sharpness (degrees)"
 msgid "S_harpness (degrees)"
 msgstr "_Різкість (в градусах)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:116
-#| msgid "Offset radius"
 msgid "O_ffset radius"
 msgstr "Раді_ус зсуву"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:117
-#| msgid "Randomness"
 msgid "Ran_domness"
 msgstr "Вип_адковість"
 
@@ -1203,17 +1206,14 @@ msgstr ""
 "Створити багатошарове зображення, додаючи ефект брижів до поточного шару"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:77
-#| msgid "Rippling strength"
 msgid "Ri_ppling strength"
 msgstr "Сила бри_жів"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:78
-#| msgid "Number of frames"
 msgid "_Number of frames"
 msgstr "_Кількість кадрів"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
-#| msgid "Edge behavior"
 msgid "Edge _behavior"
 msgstr "_Поведінка межі"
 
@@ -1349,22 +1349,18 @@ msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr "Розмити кути зображення, щоб мозаїка складалась без видимих швів"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:79
-#| msgid "Radius"
 msgid "Ra_dius"
 msgstr "Раді_ус"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:80
-#| msgid "Blur vertically"
 msgid "Blur _vertically"
 msgstr "Розмити _вертикально"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:81
-#| msgid "Blur horizontally"
 msgid "Blur _horizontally"
 msgstr "Розмити _горизонтально"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:82
-#| msgid "Blur type"
 msgid "Blur _type"
 msgstr "_Тип розмивання"
 
@@ -1500,6 +1496,12 @@ msgstr "Зсув тіні вздовж X"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Зсув тіні вздовж Y"
+
+#~ msgid "Add realistic looking coffee stains to the image"
+#~ msgstr "Заплямувати зображення реалістичними кавовими плямами"
+
+#~ msgid "Stains"
+#~ msgstr "Кількість плям"
 
 #~ msgid "Script-Fu Font Selection"
 #~ msgstr "Скриптфу: Вибір шрифту"
