@@ -15,7 +15,7 @@
 ; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-(define (script-fu-coffee-stain inImage inLayer inNumber inDark)
+(define (script-fu-coffee-stain inImage inLayer inNumber inDark inGradient)
   (let* (
         (theImage inImage)
         (theHeight (car (gimp-image-get-height theImage)))
@@ -59,7 +59,7 @@
                                     (- (* (+ (rand 15) 1) (+ (rand 15) 1)) 1)
                                     theSpread 4 2 TRUE TRUE)
 
-      (gimp-context-set-gradient "Coffee")
+      (gimp-context-set-gradient inGradient)
 
       ; only fill if there is a selection
       (if (> (car (gimp-selection-bounds theImage)) 0)
@@ -98,6 +98,7 @@
   SF-DRAWABLE    "The layer"   0
   SF-ADJUSTMENT _"Stains"      '(3 1 10 1 2 0 0)
   SF-TOGGLE     _"Darken only" TRUE
+  SF-GRADIENT   _"Gradient"    "Coffee"
 )
 
 (script-fu-menu-register "script-fu-coffee-stain" "<Image>/Filters/Decor")
