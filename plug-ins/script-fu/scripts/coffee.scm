@@ -92,16 +92,16 @@
 ; Argument inLayers is not used.
 
 (script-fu-register-filter "script-fu-coffee-stain"
-  _"_Coffee Stain..."
-  _"Add realistic looking coffee stains to the image"
+  _"_Stain..."
+  _"Add layers of stain or blotch marks"
   "Chris Gutteridge"
   "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
   "25th April 1998"
   "RGB*"
   SF-ONE-OR-MORE-DRAWABLE
-  SF-ADJUSTMENT _"Stains"      '(3 1 10 1 2 0 0)
+  SF-ADJUSTMENT _"Number of stains to add"      '(3 1 10 1 2 0 0)
   SF-TOGGLE     _"Darken only" TRUE
-  SF-GRADIENT   _"Gradient"    "Coffee"
+  SF-GRADIENT   _"Gradient to color stains"    "Coffee"
 )
 
 (script-fu-menu-register "script-fu-coffee-stain" "<Image>/Filters/Decor")
