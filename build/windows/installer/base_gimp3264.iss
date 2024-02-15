@@ -860,13 +860,7 @@ begin
 		InterpFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\interpreters\lua.interp');
         DebugMsg('PrepareInterp','Writing interpreter file for lua: ' + InterpFile);
 
-		if IsComponentSelected('gimpARM64') then
-		begin
-			LuaBin := 'lua5.1.exe'
-		end else
-		begin
-			LuaBin := 'luajit.exe'
-		end;
+		LuaBin := 'luajit.exe'
 
 		InterpContent := 'lua=' + ExpandConstant('{app}\bin\') + LuaBin + #10 +
 		          'luajit=' + ExpandConstant('{app}\bin\') + LuaBin + #10 +
