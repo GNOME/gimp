@@ -2753,6 +2753,9 @@ gimp_item_tree_view_effects_merged_clicked (GtkWidget        *widget,
 
           view->priv->effects_filter = NULL;
 
+          /* Close NDE pop-over on successful merge */
+          gtk_widget_set_visible (view->priv->effects_popover, FALSE);
+
           /* Hack to make the effects visibly change */
           gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), FALSE, FALSE);
           gimp_image_flush (image);
