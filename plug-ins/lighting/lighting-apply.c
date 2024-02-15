@@ -157,12 +157,12 @@ copy_from_config (GimpProcedureConfig *config)
 {
   GimpDrawable *temp_bump_map_drawable = NULL;
   GimpDrawable *temp_env_map_drawable  = NULL;
-  GimpRGB      *color_1;
-  GimpRGB      *color_2;
-  GimpRGB      *color_3;
-  GimpRGB      *color_4;
-  GimpRGB      *color_5;
-  GimpRGB      *color_6;
+  GeglColor    *color_1;
+  GeglColor    *color_2;
+  GeglColor    *color_3;
+  GeglColor    *color_4;
+  GeglColor    *color_5;
+  GeglColor    *color_6;
 
   g_object_get (config,
                 "distance", &mapvals.viewpoint.z,
@@ -234,17 +234,41 @@ copy_from_config (GimpProcedureConfig *config)
                 NULL);
 
   if (color_1)
-    gimp_rgba_set (&mapvals.lightsource[0].color, color_1->r, color_1->g, color_1->b, 1.0);
+    {
+      gegl_color_get_pixel (color_1, babl_format ("R'G'B'A double"),
+                            &mapvals.lightsource[0].color);
+      g_object_unref (color_1);
+    }
   if (color_2)
-    gimp_rgba_set (&mapvals.lightsource[1].color, color_2->r, color_2->g, color_2->b, 1.0);
+    {
+      gegl_color_get_pixel (color_2, babl_format ("R'G'B'A double"),
+                            &mapvals.lightsource[1].color);
+      g_object_unref (color_2);
+    }
   if (color_3)
-    gimp_rgba_set (&mapvals.lightsource[2].color, color_3->r, color_3->g, color_3->b, 1.0);
+    {
+      gegl_color_get_pixel (color_3, babl_format ("R'G'B'A double"),
+                            &mapvals.lightsource[2].color);
+      g_object_unref (color_3);
+    }
   if (color_4)
-    gimp_rgba_set (&mapvals.lightsource[3].color, color_4->r, color_4->g, color_4->b, 1.0);
+    {
+      gegl_color_get_pixel (color_4, babl_format ("R'G'B'A double"),
+                            &mapvals.lightsource[3].color);
+      g_object_unref (color_4);
+    }
   if (color_5)
-    gimp_rgba_set (&mapvals.lightsource[4].color, color_5->r, color_5->g, color_5->b, 1.0);
+    {
+      gegl_color_get_pixel (color_5, babl_format ("R'G'B'A double"),
+                            &mapvals.lightsource[4].color);
+      g_object_unref (color_5);
+    }
   if (color_6)
-    gimp_rgba_set (&mapvals.lightsource[5].color, color_6->r, color_6->g, color_6->b, 1.0);
+    {
+      gegl_color_get_pixel (color_6, babl_format ("R'G'B'A double"),
+                            &mapvals.lightsource[5].color);
+      g_object_unref (color_6);
+    }
 
   mapvals.bumpmaptype    = gimp_procedure_config_get_choice_id (config, "bumpmap-type");
   mapvals.light_selected = gimp_procedure_config_get_choice_id (config, "which-light");

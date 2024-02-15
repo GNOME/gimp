@@ -108,7 +108,21 @@ lighting_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      GimpRGB white = { 1.0, 1.0, 1.0, 1.0 };
+      GeglColor *default_color_1;
+      GeglColor *default_color_2;
+      GeglColor *default_color_3;
+      GeglColor *default_color_4;
+      GeglColor *default_color_5;
+      GeglColor *default_color_6;
+
+      gegl_init (NULL, NULL);
+
+      default_color_1 = gegl_color_new ("white");
+      default_color_2 = gegl_color_new ("white");
+      default_color_3 = gegl_color_new ("white");
+      default_color_4 = gegl_color_new ("white");
+      default_color_5 = gegl_color_new ("white");
+      default_color_6 = gegl_color_new ("white");
 
       procedure = gimp_image_procedure_new (plug_in, name,
                                             GIMP_PDB_PROC_TYPE_PLUGIN,
@@ -205,11 +219,11 @@ lighting_create_procedure (GimpPlugIn  *plug_in,
                             "light-point",
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_RGB (procedure, "light-color-1",
-                         _("Color"),
-                         _("Light source color"),
-                         TRUE, &white,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_COLOR (procedure, "light-color-1",
+                           _("Color"),
+                           _("Light source color"),
+                           TRUE, default_color_1,
+                           G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "light-intensity-1",
                             _("Intensity"),
@@ -318,299 +332,306 @@ lighting_create_procedure (GimpPlugIn  *plug_in,
 
       /* GUI-only arguments for additional light sources */
       GIMP_PROC_AUX_ARG_CHOICE (procedure, "light-type-2",
-                            _("Type"),
-                            _("Type of light source"),
-                            gimp_choice_new_with_values ("light-none",        NO_LIGHT,          _("None"),        NULL,
-                                                         "light-directional", DIRECTIONAL_LIGHT, _("Directional"), NULL,
-                                                         "light-point",       POINT_LIGHT,       _("Point"),       NULL,
-                                                         "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
-                                                         NULL),
-                            "light-none",
-                            G_PARAM_READWRITE);
+                                _("Type"),
+                                _("Type of light source"),
+                                gimp_choice_new_with_values ("light-none",        NO_LIGHT,          _("None"),        NULL,
+                                                             "light-directional", DIRECTIONAL_LIGHT, _("Directional"), NULL,
+                                                             "light-point",       POINT_LIGHT,       _("Point"),       NULL,
+                                                             "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
+                                                             NULL),
+                                "light-none",
+                                G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_RGB (procedure, "light-color-2",
-                         _("Color"),
-                         _("Light source color"),
-                         TRUE, &white,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_AUX_ARG_COLOR (procedure, "light-color-2",
+                               _("Color"),
+                               _("Light source color"),
+                               TRUE, default_color_2,
+                               G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-intensity-2",
-                            _("Intensity"),
-                            _("Light source intensity"),
-                            0, 100.0, 1.0,
-                            G_PARAM_READWRITE);
+                                _("Intensity"),
+                                _("Light source intensity"),
+                                0, 100.0, 1.0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-x-2",
-                            _("Light position X"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, -2,
-                            G_PARAM_READWRITE);
+                                _("Light position X"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, -2,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-y-2",
-                            _("Light position Y"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, -1,
-                            G_PARAM_READWRITE);
+                                _("Light position Y"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, -1,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-z-2",
-                            _("Light position Z"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1,
-                            G_PARAM_READWRITE);
+                                _("Light position Z"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 1,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-x-2",
-                            _("Light direction X"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1,
-                            G_PARAM_READWRITE);
+                                _("Light direction X"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 1,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-y-2",
-                            _("Light direction Y"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, -1,
-                            G_PARAM_READWRITE);
+                                _("Light direction Y"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, -1,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-z-2",
-                            _("Light direction Z"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1,
-                            G_PARAM_READWRITE);
+                                _("Light direction Z"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 1,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_CHOICE (procedure, "light-type-3",
-                            _("Type"),
-                            _("Type of light source"),
-                            gimp_choice_new_with_values ("light-none",        NO_LIGHT,          _("None"),        NULL,
-                                                         "light-directional", DIRECTIONAL_LIGHT, _("Directional"), NULL,
-                                                         "light-point",       POINT_LIGHT,       _("Point"),       NULL,
-                                                         "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
-                                                         NULL),
-                            "light-none",
-                            G_PARAM_READWRITE);
+                                _("Type"),
+                                _("Type of light source"),
+                                gimp_choice_new_with_values ("light-none",        NO_LIGHT,          _("None"),        NULL,
+                                                             "light-directional", DIRECTIONAL_LIGHT, _("Directional"), NULL,
+                                                             "light-point",       POINT_LIGHT,       _("Point"),       NULL,
+                                                             "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
+                                                             NULL),
+                                "light-none",
+                                G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_RGB (procedure, "light-color-3",
-                         _("Color"),
-                         _("Light source color"),
-                         TRUE, &white,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_AUX_ARG_COLOR (procedure, "light-color-3",
+                               _("Color"),
+                               _("Light source color"),
+                               TRUE, default_color_3,
+                               G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-intensity-3",
-                            _("Intensity"),
-                            _("Light source intensity"),
-                            0, 100.0, 1.0,
-                            G_PARAM_READWRITE);
+                                _("Intensity"),
+                                _("Light source intensity"),
+                                0, 100.0, 1.0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-x-3",
-                            _("Light position X"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1,
-                            G_PARAM_READWRITE);
+                                _("Light position X"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 1,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-y-3",
-                            _("Light position Y"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 2,
-                            G_PARAM_READWRITE);
+                                _("Light position Y"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 2,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-z-3",
-                            _("Light position Z"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1,
-                            G_PARAM_READWRITE);
+                                _("Light position Z"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 1,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-x-3",
-                            _("Light direction X"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                            G_PARAM_READWRITE);
+                                _("Light direction X"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-y-3",
-                            _("Light direction Y"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1,
-                            G_PARAM_READWRITE);
+                                _("Light direction Y"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 1,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-z-3",
-                            _("Light direction Z"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1,
-                            G_PARAM_READWRITE);
+                                _("Light direction Z"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 1,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_CHOICE (procedure, "light-type-4",
-                            _("Type"),
-                            _("Type of light source"),
-                            gimp_choice_new_with_values ("light-none",        NO_LIGHT,          _("None"),        NULL,
-                                                         "light-directional", DIRECTIONAL_LIGHT, _("Directional"), NULL,
-                                                         "light-point",       POINT_LIGHT,       _("Point"),       NULL,
-                                                         "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
-                                                         NULL),
-                            "light-none",
-                            G_PARAM_READWRITE);
+                                _("Type"),
+                                _("Type of light source"),
+                                gimp_choice_new_with_values ("light-none",        NO_LIGHT,          _("None"),        NULL,
+                                                             "light-directional", DIRECTIONAL_LIGHT, _("Directional"), NULL,
+                                                             "light-point",       POINT_LIGHT,       _("Point"),       NULL,
+                                                             "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
+                                                             NULL),
+                                "light-none",
+                                G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_RGB (procedure, "light-color-4",
-                         _("Color"),
-                         _("Light source color"),
-                         TRUE, &white,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_AUX_ARG_COLOR (procedure, "light-color-4",
+                               _("Color"),
+                               _("Light source color"),
+                               TRUE, default_color_4,
+                               G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-intensity-4",
-                            _("Intensity"),
-                            _("Light source intensity"),
-                            0, 100.0, 1.0,
-                            G_PARAM_READWRITE);
+                                _("Intensity"),
+                                _("Light source intensity"),
+                                0, 100.0, 1.0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-x-4",
-                            _("Light position X"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                            G_PARAM_READWRITE);
+                                _("Light position X"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-y-4",
-                            _("Light position Y"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                            G_PARAM_READWRITE);
+                                _("Light position Y"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-z-4",
-                            _("Light position Z"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1,
-                            G_PARAM_READWRITE);
+                                _("Light position Z"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 1,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-x-4",
-                            _("Light direction X"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                            G_PARAM_READWRITE);
+                                _("Light direction X"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-y-4",
-                            _("Light direction Y"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                            G_PARAM_READWRITE);
+                                _("Light direction Y"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-z-4",
-                            _("Light direction Z"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1,
-                            G_PARAM_READWRITE);
+                                _("Light direction Z"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 1,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_CHOICE (procedure, "light-type-5",
-                            _("Type"),
-                            _("Type of light source"),
-                            gimp_choice_new_with_values ("light-none",        NO_LIGHT,          _("None"),        NULL,
-                                                         "light-directional", DIRECTIONAL_LIGHT, _("Directional"), NULL,
-                                                         "light-point",       POINT_LIGHT,       _("Point"),       NULL,
-                                                         "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
-                                                         NULL),
-                            "light-none",
-                            G_PARAM_READWRITE);
+                                _("Type"),
+                                _("Type of light source"),
+                                gimp_choice_new_with_values ("light-none",        NO_LIGHT,          _("None"),        NULL,
+                                                             "light-directional", DIRECTIONAL_LIGHT, _("Directional"), NULL,
+                                                             "light-point",       POINT_LIGHT,       _("Point"),       NULL,
+                                                             "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
+                                                             NULL),
+                                "light-none",
+                                G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_RGB (procedure, "light-color-5",
-                         _("Color"),
-                         _("Light source color"),
-                         TRUE, &white,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_AUX_ARG_COLOR (procedure, "light-color-5",
+                               _("Color"),
+                               _("Light source color"),
+                               TRUE, default_color_5,
+                               G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-intensity-5",
-                            _("Intensity"),
-                            _("Light source intensity"),
-                            0, 100.0, 1.0,
-                            G_PARAM_READWRITE);
+                                _("Intensity"),
+                                _("Light source intensity"),
+                                0, 100.0, 1.0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-x-5",
-                            _("Light position X"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                            G_PARAM_READWRITE);
+                                _("Light position X"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-y-5",
-                            _("Light position Y"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                            G_PARAM_READWRITE);
+                                _("Light position Y"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-z-5",
-                            _("Light position Z"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1,
-                            G_PARAM_READWRITE);
+                                _("Light position Z"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 1,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-x-5",
-                            _("Light direction X"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                            G_PARAM_READWRITE);
+                                _("Light direction X"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-y-5",
-                            _("Light direction Y"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                            G_PARAM_READWRITE);
+                                _("Light direction Y"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-z-5",
-                            _("Light direction Z"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1,
-                            G_PARAM_READWRITE);
+                                _("Light direction Z"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 1,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_CHOICE (procedure, "light-type-6",
-                            _("Type"),
-                            _("Type of light source"),
-                            gimp_choice_new_with_values ("light-none",        NO_LIGHT,          _("None"),        NULL,
-                                                         "light-directional", DIRECTIONAL_LIGHT, _("Directional"), NULL,
-                                                         "light-point",       POINT_LIGHT,       _("Point"),       NULL,
-                                                         "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
-                                                         NULL),
-                            "light-none",
-                            G_PARAM_READWRITE);
+                                _("Type"),
+                                _("Type of light source"),
+                                gimp_choice_new_with_values ("light-none",        NO_LIGHT,          _("None"),        NULL,
+                                                             "light-directional", DIRECTIONAL_LIGHT, _("Directional"), NULL,
+                                                             "light-point",       POINT_LIGHT,       _("Point"),       NULL,
+                                                             "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
+                                                             NULL),
+                                "light-none",
+                                G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_RGB (procedure, "light-color-6",
-                         _("Color"),
-                         _("Light source color"),
-                         TRUE, &white,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_AUX_ARG_COLOR (procedure, "light-color-6",
+                               _("Color"),
+                               _("Light source color"),
+                               TRUE, default_color_6,
+                               G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-intensity-6",
-                            _("Intensity"),
-                            _("Light source intensity"),
-                            0, 100.0, 1.0,
-                            G_PARAM_READWRITE);
+                                _("Intensity"),
+                                _("Light source intensity"),
+                                0, 100.0, 1.0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-x-6",
-                            _("Light position X"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                            G_PARAM_READWRITE);
+                                _("Light position X"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-y-6",
-                            _("Light position Y"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                            G_PARAM_READWRITE);
+                                _("Light position Y"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-position-z-6",
-                            _("Light position Z"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1,
-                            G_PARAM_READWRITE);
+                                _("Light position Z"),
+                                _("Light source position (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 1,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-x-6",
-                            _("Light direction X"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                            G_PARAM_READWRITE);
+                                _("Light direction X"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-y-6",
-                            _("Light direction Y"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                            G_PARAM_READWRITE);
+                                _("Light direction Y"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "light-direction-z-6",
-                            _("Light direction Z"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1,
-                            G_PARAM_READWRITE);
+                                _("Light direction Z"),
+                                _("Light source direction (x,y,z)"),
+                                -G_MAXDOUBLE, G_MAXDOUBLE, 1,
+                                G_PARAM_READWRITE);
+
+      g_object_unref (default_color_1);
+      g_object_unref (default_color_2);
+      g_object_unref (default_color_3);
+      g_object_unref (default_color_4);
+      g_object_unref (default_color_5);
+      g_object_unref (default_color_6);
     }
 
   return procedure;
