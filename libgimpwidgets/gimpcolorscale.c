@@ -818,7 +818,7 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
 {
   GimpColorScalePrivate *priv  = GET_PRIVATE (scale);
   GtkRange              *range = GTK_RANGE (scale);
-  gdouble                rgb[4];
+  gdouble                rgb[3];
   gboolean               invert;
   gdouble                a;
   guint                  x, y;
@@ -828,7 +828,7 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
   invert = should_invert (range);
 
   buf = priv->buf;
-  gegl_color_get_pixel (priv->color, babl_format_with_space ("R'G'B'A double", priv->format), rgb);
+  gegl_color_get_pixel (priv->color, babl_format_with_space ("R'G'B' double", priv->format), rgb);
 
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
@@ -840,7 +840,7 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
         light = buf;
         /* this won't work correctly for very thin scales */
         dark  = (priv->height > GIMP_CHECK_SIZE_SM ?
-                 buf + GIMP_CHECK_SIZE_SM * priv->rowstride : light);
+                 buf + GIMP_CHECK_SIZE_SM * 3 * priv->width : light);
 
         for (x = 0, d = light, l = dark; x < priv->width; x++)
           {
@@ -864,8 +864,8 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
             l += 3;
 
             d[0] = (GIMP_CHECK_DARK + (rgb[0] - GIMP_CHECK_DARK) * a) * 255.999;
-            d[1] =(GIMP_CHECK_DARK + (rgb[1] - GIMP_CHECK_DARK) * a) * 255.999;
-            d[2] =(GIMP_CHECK_DARK + (rgb[2] - GIMP_CHECK_DARK) * a) * 255.999;
+            d[1] = (GIMP_CHECK_DARK + (rgb[1] - GIMP_CHECK_DARK) * a) * 255.999;
+            d[2] = (GIMP_CHECK_DARK + (rgb[2] - GIMP_CHECK_DARK) * a) * 255.999;
             d += 3;
           }
 
@@ -894,7 +894,7 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
             if (invert)
               a = 1.0 - a;
 
-            light[0] =  (GIMP_CHECK_LIGHT + (rgb[0] - GIMP_CHECK_LIGHT) * a) * 255.999;
+            light[0] = (GIMP_CHECK_LIGHT + (rgb[0] - GIMP_CHECK_LIGHT) * a) * 255.999;
             light[1] = (GIMP_CHECK_LIGHT + (rgb[1] - GIMP_CHECK_LIGHT) * a) * 255.999;
             light[2] = (GIMP_CHECK_LIGHT + (rgb[2] - GIMP_CHECK_LIGHT) * a) * 255.999;
 
