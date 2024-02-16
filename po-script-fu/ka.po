@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-06 23:40+0000\n"
-"PO-Revision-Date: 2024-02-09 18:54+0100\n"
+"POT-Creation-Date: 2024-02-15 20:23+0000\n"
+"PO-Revision-Date: 2024-02-16 12:24+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -119,7 +119,7 @@ msgstr ""
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
 #: plug-ins/script-fu/server/script-fu-server.c:878
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
 msgid "_Cancel"
 msgstr "გაუქმება"
 
@@ -178,47 +178,47 @@ msgstr "სერვერის _გაშვება..."
 msgid "Server for remote Script-Fu operation"
 msgstr ""
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:187
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr ""
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:191
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr ""
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:220
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 msgid "_Reset"
 msgstr "_განულება"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:224
 msgid "_OK"
 msgstr "კარგი"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:276
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:278
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:326
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:331
 msgid "Script-Fu Color Selection"
-msgstr ""
+msgstr "Script-Fu-ის ფერის არჩევანი"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:457
 msgid "Script-Fu File Selection"
-msgstr ""
+msgstr "Script-Fu-ის ფაილის არჩევანი"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:456
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:460
 msgid "Script-Fu Folder Selection"
-msgstr ""
+msgstr "Script-Fu-ის საქაღალდის არჩევანი"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:852
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:867
 #, c-format
 msgid "Error while executing %s:"
-msgstr ""
+msgstr "შეცდომა %s-ის შესრულებისას:"
 
 #: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:357
 #, c-format
@@ -535,21 +535,25 @@ msgstr "სიღრმე"
 msgid "Stain"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/coffee.scm:91
-msgid "_Coffee Stain..."
+#: plug-ins/script-fu/scripts/coffee.scm:95
+msgid "_Stain..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/coffee.scm:92
-msgid "Add realistic looking coffee stains to the image"
+#: plug-ins/script-fu/scripts/coffee.scm:96
+msgid "Add layers of stain or blotch marks"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/coffee.scm:99
-msgid "Stains"
-msgstr ""
+#: plug-ins/script-fu/scripts/coffee.scm:102
+msgid "Number of stains to add"
+msgstr "დასამატებელი ლაქების რაოდენობა"
 
-#: plug-ins/script-fu/scripts/coffee.scm:100
+#: plug-ins/script-fu/scripts/coffee.scm:103
 msgid "Darken only"
 msgstr "მხოლოდ გამუქება"
+
+#: plug-ins/script-fu/scripts/coffee.scm:104
+msgid "Gradient to color stains"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:70
 msgid "_Difference Clouds"
