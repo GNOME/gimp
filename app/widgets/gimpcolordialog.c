@@ -701,18 +701,18 @@ gimp_color_dialog_image_changed (GimpContext     *context,
 
       if (image)
         {
-          g_signal_connect_swapped (image, "notify::base-type",
-                                    G_CALLBACK (gimp_color_dialog_update),
-                                    dialog);
-          g_signal_connect (image, "simulation-profile-changed",
-                            G_CALLBACK (gimp_color_dialog_update_simulation),
-                            dialog);
-          g_signal_connect (image, "simulation-intent-changed",
-                            G_CALLBACK (gimp_color_dialog_update_simulation),
-                            dialog);
-          g_signal_connect (image, "simulation-bpc-changed",
-                            G_CALLBACK (gimp_color_dialog_update_simulation),
-                            dialog);
+          g_signal_connect_object (image, "notify::base-type",
+                                   G_CALLBACK (gimp_color_dialog_update),
+                                   dialog, G_CONNECT_SWAPPED);
+          g_signal_connect_object (image, "simulation-profile-changed",
+                                   G_CALLBACK (gimp_color_dialog_update_simulation),
+                                   dialog, 0);
+          g_signal_connect_object (image, "simulation-intent-changed",
+                                   G_CALLBACK (gimp_color_dialog_update_simulation),
+                                   dialog, 0);
+          g_signal_connect_object (image, "simulation-bpc-changed",
+                                   G_CALLBACK (gimp_color_dialog_update_simulation),
+                                   dialog, 0);
 
           gimp_color_dialog_update_simulation (image, dialog);
         }
@@ -759,9 +759,9 @@ gimp_color_dialog_show (GimpColorDialog *dialog)
       GimpContext *user_context = viewable_dialog->context->gimp->user_context;
       GimpImage   *image        = gimp_context_get_image (user_context);
 
-      g_signal_connect (user_context, "image-changed",
-                        G_CALLBACK (gimp_color_dialog_image_changed),
-                        dialog);
+      g_signal_connect_object (user_context, "image-changed",
+                               G_CALLBACK (gimp_color_dialog_image_changed),
+                               dialog, 0);
 
       gimp_color_dialog_image_changed (viewable_dialog->context,
                                        image, dialog);

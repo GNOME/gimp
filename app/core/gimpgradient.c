@@ -281,6 +281,9 @@ gimp_gradient_copy (GimpData *data,
     {
       cur = gimp_gradient_segment_new ();
 
+      g_clear_object (&cur->left_color);
+      g_clear_object (&cur->right_color);
+
       *cur = *orig;  /* Copy everything */
 
       cur->prev = prev;
@@ -2323,6 +2326,9 @@ gimp_gradient_get_flat_color (GimpContext       *context,
       if (color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
         gimp_color_set_alpha (flat_color, 0.0);
       break;
+
+    default:
+      g_return_val_if_reached (NULL);
     }
 
   return flat_color;

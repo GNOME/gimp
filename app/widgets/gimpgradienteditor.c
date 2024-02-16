@@ -999,7 +999,13 @@ gradient_editor_save_selection (GimpGradientEditor *editor)
     {
       seg = gimp_gradient_segment_new ();
 
+      g_clear_object (&seg->left_color);
+      g_clear_object (&seg->right_color);
+
       *seg = *oseg; /* Copy everything */
+
+      seg->left_color  = gegl_color_duplicate (oseg->left_color);
+      seg->right_color = gegl_color_duplicate (oseg->right_color);
 
       if (prev == NULL)
         tmp = seg; /* Remember first segment */
