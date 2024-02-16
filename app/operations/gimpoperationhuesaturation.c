@@ -34,6 +34,7 @@
 
 #include "gimp-intl.h"
 
+static void gimp_operation_hue_saturation_prepare (GeglOperation *operation);
 
 static gboolean gimp_operation_hue_saturation_process (GeglOperation       *operation,
                                                        void                *in_buf,
@@ -66,6 +67,7 @@ gimp_operation_hue_saturation_class_init (GimpOperationHueSaturationClass *klass
                                  NULL);
 
   point_class->process = gimp_operation_hue_saturation_process;
+  operation_class->prepare = gimp_operation_hue_saturation_prepare;
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,
@@ -171,6 +173,18 @@ map_lightness_achromatic (GimpHueSaturationConfig *config, gdouble value)
     return value * (v + 1.0);
   else
     return value + (v * (1.0 - value));
+}
+
+static void
+gimp_operation_hue_saturation_prepare (GeglOperation *operation)
+{
+  /* TODO: do the processing of this on in "HSLA float" instead of using
+           gimp_rgb_to_hsl and gimp_hsl_to_rgb */
+  const Babl *format = babl_format_with_space ("R'G'B'A float",
+                                               gegl_operation_get_format (operation, "input"));
+
+  gegl_operation_set_format (operation, "input", format);
+  gegl_operation_set_format (operation, "output", format);
 }
 
 static gboolean
