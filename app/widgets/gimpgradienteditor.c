@@ -1079,34 +1079,35 @@ gradient_editor_left_color_update (GimpColorDialog      *dialog,
   switch (state)
     {
     case GIMP_COLOR_DIALOG_UPDATE:
-      gimp_gradient_segment_range_blend (gradient,
-                                         editor->control_sel_l,
-                                         editor->control_sel_r,
-                                         color,
-                                         editor->control_sel_r->right_color,
-                                         TRUE, TRUE);
       break;
 
     case GIMP_COLOR_DIALOG_OK:
-      gimp_gradient_segment_range_blend (gradient,
-                                         editor->control_sel_l,
-                                         editor->control_sel_r,
-                                         color,
-                                         editor->control_sel_r->right_color,
-                                         TRUE, TRUE);
       gimp_gradient_segments_free (editor->saved_segments);
-      gtk_widget_destroy (editor->color_dialog);
-      editor->color_dialog = NULL;
-      gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
-      gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
-                              gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
       break;
 
     case GIMP_COLOR_DIALOG_CANCEL:
       gradient_editor_replace_selection (editor, editor->saved_segments);
+
       if (! editor->saved_dirty)
         gimp_data_clean (GIMP_DATA (gradient));
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gradient));
+      break;
+    }
+
+  gimp_gradient_segment_range_blend (gradient,
+                                     editor->control_sel_l,
+                                     editor->control_sel_r,
+                                     color,
+                                     editor->control_sel_r->right_color,
+                                     TRUE, TRUE);
+
+  switch (state)
+    {
+    case GIMP_COLOR_DIALOG_UPDATE:
+      break;
+
+    case GIMP_COLOR_DIALOG_OK:
+    case GIMP_COLOR_DIALOG_CANCEL:
       gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
@@ -1127,34 +1128,34 @@ gradient_editor_right_color_update (GimpColorDialog      *dialog,
   switch (state)
     {
     case GIMP_COLOR_DIALOG_UPDATE:
-      gimp_gradient_segment_range_blend (gradient,
-                                         editor->control_sel_l,
-                                         editor->control_sel_r,
-                                         editor->control_sel_l->left_color,
-                                         color,
-                                         TRUE, TRUE);
       break;
 
     case GIMP_COLOR_DIALOG_OK:
-      gimp_gradient_segment_range_blend (gradient,
-                                         editor->control_sel_l,
-                                         editor->control_sel_r,
-                                         editor->control_sel_l->left_color,
-                                         color,
-                                         TRUE, TRUE);
       gimp_gradient_segments_free (editor->saved_segments);
-      gtk_widget_destroy (editor->color_dialog);
-      editor->color_dialog = NULL;
-      gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
-      gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
-                              gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
       break;
 
     case GIMP_COLOR_DIALOG_CANCEL:
       gradient_editor_replace_selection (editor, editor->saved_segments);
+
       if (! editor->saved_dirty)
         gimp_data_clean (GIMP_DATA (gradient));
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gradient));
+      break;
+    }
+
+  gimp_gradient_segment_range_blend (gradient,
+                                     editor->control_sel_l,
+                                     editor->control_sel_r,
+                                     editor->control_sel_l->left_color,
+                                     color,
+                                     TRUE, TRUE);
+  switch (state)
+    {
+    case GIMP_COLOR_DIALOG_UPDATE:
+      break;
+
+    case GIMP_COLOR_DIALOG_OK:
+    case GIMP_COLOR_DIALOG_CANCEL:
       gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
