@@ -399,6 +399,8 @@ gimp_text_class_init (GimpTextClass *klass)
 static void
 gimp_text_init (GimpText *text)
 {
+  text->color              = gegl_color_new ("black");
+  text->outline_foreground = gegl_color_new ("gray");
 }
 
 static void
