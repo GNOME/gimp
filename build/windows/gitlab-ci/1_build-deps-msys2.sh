@@ -64,8 +64,18 @@ export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}"
 export XDG_DATA_DIRS="${GIMP_PREFIX}/share:${MSYSTEM_PREFIX}/share/"
 
 clone_or_pull() {
+  repo="https://gitlab.gnome.org/GNOME/${1}.git"
+
+  if [ "$CI_COMMIT_TAG" != "" ]; then
+    # For tagged jobs (i.e. release or test jobs for upcoming releases), use the
+    # last tag. Otherwise use the default branch's HEAD.
+    tag=$(git ls-remote --tags --exit-code --refs "$repo" | grep -oi "$1_[0-9]*_[0-9]*_[0-9]*" | sort --version-sort | tail -1)
+    git_options="--branch=$tag"
+    echo "Using tagged release of $1: $tag"
+  fi
+
   if [ ! -d "_${1}" ]; then
-    git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/${1}.git _${1} || exit 1
+    git clone $git_options --depth=${GIT_DEPTH} $repo _${1} || exit 1
   else
     cd _${1} && git pull && cd ..
   fi
