@@ -1060,9 +1060,22 @@ gradient_dither_pixel (GimpRGB *color,
 
   i = g_rand_int (dither_rand);
 
-  r = color->r + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0; i >>= 8;
-  g = color->g + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0; i >>= 8;
-  b = color->b + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0; i >>= 8;
+  if ((color->r == color->g) && (color->r == color->b))
+    {
+      gdouble dither = (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
+      r              = color->r + dither;
+      g              = color->g + dither;
+      b              = color->b + dither;
+    }
+  else
+    {
+      r = color->r + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
+      i >>= 8;
+      g = color->g + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
+      i >>= 8;
+      b = color->b + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
+      i >>= 8;
+    }
 
   if (color->a > 0.0 && color->a < 1.0)
     a = color->a + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
