@@ -52,6 +52,7 @@ if [ $retry -eq 0 ]; then
   echo "MSYS2 pacman repeatedly failed. See: https://github.com/msys2/MSYS2-packages/issues/4340"
   exit 1
 fi
+# End of install
 
 
 # Clone babl and GEGL (follow master branch)
