@@ -1,21 +1,21 @@
 #!/bin/bash
-# $MSYSTEM_CARCH and $MINGW_PACKAGE_PREFIX are defined by MSYS2.
-# https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
 
 set -e
 
+# $MSYSTEM_CARCH, $MSYSTEM_PREFIX and $MINGW_PACKAGE_PREFIX are defined by MSYS2.
+# https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
 if [[ "$MSYSTEM_CARCH" == "aarch64" ]]; then
-    export ARTIFACTS_SUFFIX="-a64"
-    export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
-    export GIMP_DISTRIB=`realpath ./gimp-a64`
+  export ARTIFACTS_SUFFIX="-a64"
+  export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
+  export GIMP_DISTRIB=`realpath ./gimp-a64`
 elif [[ "$CROSSROAD_PLATFORM" == "w64" ]] || [[ "$MSYSTEM_CARCH" == "x86_64" ]]; then
-    export ARTIFACTS_SUFFIX="-x64"
-    export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
-    export GIMP_DISTRIB=`realpath ./gimp-x64`
+  export ARTIFACTS_SUFFIX="-x64"
+  export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
+  export GIMP_DISTRIB=`realpath ./gimp-x64`
 else # [[ "$CROSSROAD_PLATFORM" == "w32" ]] || [[ "$MSYSTEM_CARCH" == "i686" ]];
-    export ARTIFACTS_SUFFIX="-x86"
-    export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
-    export GIMP_DISTRIB=`realpath ./gimp-x86`
+  export ARTIFACTS_SUFFIX="-x86"
+  export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
+  export GIMP_DISTRIB=`realpath ./gimp-x86`
 fi
 
 if [[ "$BUILD_TYPE" != "CI_CROSS" ]] && [[ "$BUILD_TYPE" != "CI_NATIVE" ]]; then

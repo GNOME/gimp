@@ -1,18 +1,18 @@
 #!/bin/bash
-# $MSYSTEM_CARCH, $MSYSTEM_PREFIX and $MINGW_PACKAGE_PREFIX are defined by MSYS2.
-# https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
 
 set -e
 
+# $MSYSTEM_CARCH, $MSYSTEM_PREFIX and $MINGW_PACKAGE_PREFIX are defined by MSYS2.
+# https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
 if [[ "$MSYSTEM_CARCH" == "aarch64" ]]; then
-    export ARTIFACTS_SUFFIX="-a64"
-    export MSYS2_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
+  export ARTIFACTS_SUFFIX="-a64"
+  export MSYS2_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
 elif [[ "$MSYSTEM_CARCH" == "x86_64" ]]; then
-    export ARTIFACTS_SUFFIX="-x64"
-    export MSYS2_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
+  export ARTIFACTS_SUFFIX="-x64"
+  export MSYS2_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
 else # [[ "$MSYSTEM_CARCH" == "i686" ]];
-    export ARTIFACTS_SUFFIX="-x86"
-    export MSYS2_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
+  export ARTIFACTS_SUFFIX="-x86"
+  export MSYS2_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
 fi
 
 if [[ "$BUILD_TYPE" == "CI_NATIVE" ]]; then
@@ -64,6 +64,7 @@ fi
 # mingw32 package of qoi was removed from MSYS2, we have download it by ourselves
 wget -O "${MSYS2_PREFIX}/include/qoi.h" https://raw.githubusercontent.com/phoboslab/qoi/master/qoi.h
 
+
 # Build GIMP
 export GIMP_PREFIX="`realpath ~/_install`${ARTIFACTS_SUFFIX}"
 export PATH="$GIMP_PREFIX/bin:$PATH"
@@ -108,7 +109,8 @@ fi
 
 
 # XXX Functional fix to the problem of non-configured interpreters
-make_cmd() {
+make_cmd ()
+{
   gimp_app_version=`grep -rI '\<version *:' ../meson.build | head -1 | sed "s/^.*version *: *'\([0-9]\+\.[0-9]\+\).[0-9]*' *,.*$/\1/"`
   echo "@echo off
         echo This is a $1 native build of GIMP.
