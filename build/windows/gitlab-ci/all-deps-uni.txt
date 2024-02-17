@@ -1,50 +1,50 @@
-DEPS_ARCH_binutils
-DEPS_ARCH_meson
-DEPS_ARCH_ccache
-DEPS_ARCH_aalib
-DEPS_ARCH_appstream-glib
-DEPS_ARCH_atk
-DEPS_ARCH_brotli
-DEPS_ARCH_cairo
-DEPS_ARCH_cfitsio
-DEPS_ARCH_drmingw
-DEPS_ARCH_gettext-tools
-DEPS_ARCH_gexiv2
-DEPS_ARCH_ghostscript
-DEPS_ARCH_gi-docgen
-DEPS_ARCH_glib2
-DEPS_ARCH_glib-networking
-DEPS_ARCH_gobject-introspection
-DEPS_ARCH_gobject-introspection-runtime
-DEPS_ARCH_graphviz
-DEPS_ARCH_gtk3
-DEPS_ARCH_headers-git
-DEPS_ARCH_iso-codes
-DEPS_ARCH_json-c
-DEPS_ARCH_json-glib
-DEPS_ARCH_lcms2
-DEPS_ARCH_lensfun
-DEPS_ARCH_libarchive
-DEPS_ARCH_libheif
-DEPS_ARCH_libiff
-DEPS_ARCH_libilbm
-DEPS_ARCH_libjxl
-DEPS_ARCH_libmng
-DEPS_ARCH_libmypaint
-DEPS_ARCH_libspiro
-DEPS_ARCH_libwebp
-DEPS_ARCH_libwmf
-DEPS_ARCH_luajit
-DEPS_ARCH_lua51-lgi
-DEPS_ARCH_maxflow
-DEPS_ARCH_mypaint-brushes
-DEPS_ARCH_openexr
-DEPS_ARCH_pango
-DEPS_ARCH_poppler
-DEPS_ARCH_poppler-data
-DEPS_ARCH_python
-DEPS_ARCH_python-gobject
-DEPS_ARCH_shared-mime-info
-DEPS_ARCH_suitesparse
-DEPS_ARCH_vala
-DEPS_ARCH_xpm-nox
+${MINGW_PACKAGE_PREFIX}-binutils \
+${MINGW_PACKAGE_PREFIX}-meson \
+${MINGW_PACKAGE_PREFIX}-ccache \
+${MINGW_PACKAGE_PREFIX}-aalib \
+${MINGW_PACKAGE_PREFIX}-appstream-glib \
+${MINGW_PACKAGE_PREFIX}-atk \
+${MINGW_PACKAGE_PREFIX}-brotli \
+${MINGW_PACKAGE_PREFIX}-cairo \
+${MINGW_PACKAGE_PREFIX}-cfitsio \
+${MINGW_PACKAGE_PREFIX}-drmingw \
+${MINGW_PACKAGE_PREFIX}-gettext-tools \
+${MINGW_PACKAGE_PREFIX}-gexiv2 \
+${MINGW_PACKAGE_PREFIX}-ghostscript \
+${MINGW_PACKAGE_PREFIX}-gi-docgen \
+${MINGW_PACKAGE_PREFIX}-glib2 \
+${MINGW_PACKAGE_PREFIX}-glib-networking \
+${MINGW_PACKAGE_PREFIX}-gobject-introspection \
+${MINGW_PACKAGE_PREFIX}-gobject-introspection-runtime \
+${MINGW_PACKAGE_PREFIX}-graphviz \
+${MINGW_PACKAGE_PREFIX}-gtk3 \
+${MINGW_PACKAGE_PREFIX}-headers-git \
+${MINGW_PACKAGE_PREFIX}-iso-codes \
+${MINGW_PACKAGE_PREFIX}-json-c \
+${MINGW_PACKAGE_PREFIX}-json-glib \
+${MINGW_PACKAGE_PREFIX}-lcms2 \
+${MINGW_PACKAGE_PREFIX}-lensfun \
+${MINGW_PACKAGE_PREFIX}-libarchive \
+${MINGW_PACKAGE_PREFIX}-libheif \
+${MINGW_PACKAGE_PREFIX}-libiff \
+${MINGW_PACKAGE_PREFIX}-libilbm \
+${MINGW_PACKAGE_PREFIX}-libjxl \
+${MINGW_PACKAGE_PREFIX}-libmng \
+${MINGW_PACKAGE_PREFIX}-libmypaint \
+${MINGW_PACKAGE_PREFIX}-libspiro \
+${MINGW_PACKAGE_PREFIX}-libwebp \
+${MINGW_PACKAGE_PREFIX}-libwmf \
+${MINGW_PACKAGE_PREFIX}-luajit \
+${MINGW_PACKAGE_PREFIX}-lua51-lgi \
+${MINGW_PACKAGE_PREFIX}-maxflow \
+${MINGW_PACKAGE_PREFIX}-mypaint-brushes \
+${MINGW_PACKAGE_PREFIX}-openexr \
+${MINGW_PACKAGE_PREFIX}-pango \
+${MINGW_PACKAGE_PREFIX}-poppler \
+${MINGW_PACKAGE_PREFIX}-poppler-data \
+${MINGW_PACKAGE_PREFIX}-python \
+${MINGW_PACKAGE_PREFIX}-python-gobject \
+${MINGW_PACKAGE_PREFIX}-shared-mime-info \
+${MINGW_PACKAGE_PREFIX}-suitesparse \
+${MINGW_PACKAGE_PREFIX}-vala \
+${MINGW_PACKAGE_PREFIX}-xpm-nox

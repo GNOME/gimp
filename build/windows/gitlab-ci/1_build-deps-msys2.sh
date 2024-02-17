@@ -32,16 +32,16 @@ fi
 
 
 # Install the required (pre-built) packages for babl and GEGL
-export DEPS_PATH="build/windows/gitlab-ci/all-deps-uni.txt"
-sed -i "s/DEPS_ARCH_/${MINGW_PACKAGE_PREFIX}-/g" $DEPS_PATH
-export GIMP_DEPS=`cat $DEPS_PATH`
+DEPS_LIST=$(cat build/windows/gitlab-ci/all-deps-uni.txt)
+DEPS_LIST=$(sed "s/\${MINGW_PACKAGE_PREFIX}-/${MINGW_PACKAGE_PREFIX}-/g" <<< $DEPS_LIST)
+DEPS_LIST=$(sed 's/\\//g' <<< $DEPS_LIST)
 
 retry=3
 while [ $retry -gt 0 ]; do
   timeout --signal=KILL 3m pacman --noconfirm -S --needed git                                \
                                                           base-devel                         \
                                                           ${MINGW_PACKAGE_PREFIX}-toolchain  \
-                                                          $GIMP_DEPS && break
+                                                          $DEPS_LIST && break
   echo "MSYS2 pacman timed out. Trying again."
   taskkill //t //F //IM "pacman.exe"
   rm -f c:/msys64/var/lib/pacman/db.lck

@@ -7,10 +7,11 @@ fi
 
 # Install the required (pre-built) packages for babl, GEGL and GIMP
 crossroad source msys2
-export DEPS_PATH="build/windows/gitlab-ci/all-deps-uni.txt"
-sed -i "s/DEPS_ARCH_//g" $DEPS_PATH
-export GIMP_DEPS=`cat $DEPS_PATH`
-crossroad install $GIMP_DEPS
+DEPS_LIST=$(cat build/windows/gitlab-ci/all-deps-uni.txt)
+DEPS_LIST=$(sed "s/\${MINGW_PACKAGE_PREFIX}-//g" <<< $DEPS_LIST)
+DEPS_LIST=$(sed 's/\\//g' <<< $DEPS_LIST)
+
+crossroad install $DEPS_LIST
 
 if [ $? -ne 0 ]; then
   echo "Installation of pre-built dependencies failed.";
