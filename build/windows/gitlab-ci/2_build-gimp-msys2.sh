@@ -22,17 +22,10 @@ if [[ "$BUILD_TYPE" == "CI_NATIVE" ]]; then
   rm -fr ~/_install${ARTIFACTS_SUFFIX}
   mv "_install${ARTIFACTS_SUFFIX}" ~
 else
-  # Make the script callable from every directory
+  # Make the script work locally
   if [[ "$0" != "build/windows/gitlab-ci/2_build-gimp-msys2.sh" ]]; then
-    GIMP_EXTDIR="$0"
-    GIMP_EXTDIR=$(sed 's|build/windows/gitlab-ci/2_build-gimp-msys2.sh||g' <<< $GIMP_EXTDIR)
-    cd $GIMP_EXTDIR
-  else
-    GIMP_GITDIR="$(pwd)"
-    GIMP_GITDIR=$(sed 's|build/windows/gitlab-ci||g' <<< $GIMP_GITDIR)
-    GIMP_GITDIR=$(sed 's|build/windows||g' <<< $GIMP_GITDIR)
-    GIMP_GITDIR=$(sed 's|build||g' <<< $GIMP_GITDIR)
-    cd $GIMP_GITDIR
+    echo "To run this script locally, please do it from to the gimp git folder"
+    exit 1
   fi
 
   pacman --noconfirm -Suy
@@ -40,6 +33,7 @@ fi
 
 
 # Install the required (pre-built) packages for GIMP
+GIMP_DIR=""
 DEPS_CODE=$(cat build/windows/gitlab-ci/1_build-deps-msys2.sh)
 DEPS_CODE=$(sed -n '/# Install the/,/# End of install/p' <<< $DEPS_CODE)
 echo "$DEPS_CODE" | bash

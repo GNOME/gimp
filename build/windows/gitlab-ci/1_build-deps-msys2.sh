@@ -12,27 +12,25 @@ else # [[ "$MSYSTEM_CARCH" == "i686" ]];
   export ARTIFACTS_SUFFIX="-x86"
 fi
 
-if [[ "$BUILD_TYPE" != "CI_NATIVE" ]]; then
-  # Make the script callable from every directory
+if [[ "$BUILD_TYPE" == "CI_NATIVE" ]]; then
+  GIMP_DIR=""
+else
+  # Make the script work locally
   if [[ "$0" != "build/windows/gitlab-ci/1_build-deps-msys2.sh" ]]; then
-    GIMP_EXTDIR="$0"
-    GIMP_EXTDIR=$(sed 's|build/windows/gitlab-ci/1_build-deps-msys2.sh||g' <<< $GIMP_EXTDIR)
-    GIMP_DIR="$GIMP_EXTDIR"
+    echo "To run this script locally, please do it from to the gimp git folder"
+    exit 1
   else
-    GIMP_GITDIR="$(pwd)"
-    GIMP_GITDIR=$(sed 's|build/windows/gitlab-ci||g' <<< $GIMP_GITDIR)
-    GIMP_GITDIR=$(sed 's|build/windows||g' <<< $GIMP_GITDIR)
-    GIMP_GITDIR=$(sed 's|build||g' <<< $GIMP_GITDIR)
-    GIMP_DIR="$GIMP_GITDIR"
+    GIMP_DIR=$(echo "${PWD##*/}/")
+    DEPS_DIR=$(dirname $PWD)
+    cd $DEPS_DIR
   fi
-  cd $GIMP_DIR
 
   pacman --noconfirm -Suy
 fi
 
 
 # Install the required (pre-built) packages for babl and GEGL
-DEPS_LIST=$(cat build/windows/gitlab-ci/all-deps-uni.txt)
+DEPS_LIST=$(cat ${GIMP_DIR}build/windows/gitlab-ci/all-deps-uni.txt)
 DEPS_LIST=$(sed "s/\${MINGW_PACKAGE_PREFIX}-/${MINGW_PACKAGE_PREFIX}-/g" <<< $DEPS_LIST)
 DEPS_LIST=$(sed 's/\\//g' <<< $DEPS_LIST)
 
@@ -108,10 +106,3 @@ configure_or_build babl "-Dwith-docs=false"
 configure_or_build gegl "-Ddocs=false \
                          -Dcairo=enabled -Dumfpack=enabled \
                          -Dopenexr=enabled -Dworkshop=true"
-
-
-if [[ "$BUILD_TYPE" != "CI_NATIVE" ]]; then
-  mv _babl ~
-  mv _gegl ~
-  mv "${GIMP_PREFIX}" ~
-fi
