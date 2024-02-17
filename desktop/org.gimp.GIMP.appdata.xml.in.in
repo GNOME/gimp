@@ -74,7 +74,7 @@
   </provides>
 
   <releases>
-    <release version="2.99.18" date="2024-01-03" type="development">
+    <release version="2.99.18" date="2024-02-17" type="development">
       <description>
         <p>
         GIMP 2.99.18 may be the last development version before release candidates, since we entered
