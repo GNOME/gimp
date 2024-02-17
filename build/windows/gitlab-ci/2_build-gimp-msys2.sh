@@ -95,7 +95,7 @@ fi
 # XXX Functional fix to the problem of non-configured interpreters
 make_cmd ()
 {
-  gimp_app_version=`grep -rI '\<version *:' ../meson.build | head -1 | sed "s/^.*version *: *'\([0-9]\+\.[0-9]\+\).[0-9]*' *,.*$/\1/"`
+  GIMP_APP_VERSION=$(grep GIMP_APP_VERSION config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
   echo "@echo off
         echo This is a $1 native build of GIMP.
         :: Don't run this under PowerShell since it produces UTF-16 files.
@@ -129,8 +129,8 @@ make_cmd ()
         @if not exist $2\lib\girepository-1.0\gegl*.typelib (copy lib\girepository-1.0\gegl*.typelib $2\lib\girepository-1.0) > nul
         @if not exist $2\lib\girepository-1.0\gimp*.typelib (copy lib\girepository-1.0\gimp*.typelib $2\lib\girepository-1.0) > nul
         set PATH=%PATH%;$2\bin
-        bin\gimp-$gimp_app_version.exe" > ${GIMP_PREFIX}/gimp.cmd
-  sed -i "s/GIMP_APP_VERSION/${gimp_app_version}/g" ${GIMP_PREFIX}/gimp.cmd
+        bin\gimp-$GIMP_APP_VERSION.exe" > ${GIMP_PREFIX}/gimp.cmd
+  sed -i "s/GIMP_APP_VERSION/${GIMP_APP_VERSION}/g" ${GIMP_PREFIX}/gimp.cmd
   sed -i 's|c:/|c:\\|g;s|msys64/|msys64\\|g' ${GIMP_PREFIX}/gimp.cmd
   echo "Please run the gimp.cmd file to get proper plug-in support."> ${GIMP_PREFIX}/README.txt
 }

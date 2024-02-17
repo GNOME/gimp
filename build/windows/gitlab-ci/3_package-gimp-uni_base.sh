@@ -81,7 +81,7 @@ mkdir ${GIMP_DISTRIB}/share
 cp -fr ${MSYS_PREFIX}/share/ghostscript/ ${GIMP_DISTRIB}/share/
 rm -r ${GIMP_DISTRIB}/share/ghostscript/*/doc
 cp -fr ${GIMP_PREFIX}/share/gimp/ ${GIMP_DISTRIB}/share/
-export GLIB_PATH=`echo ${MSYS_PREFIX}/share/glib-*/schemas`
+GLIB_PATH=$(echo ${MSYS_PREFIX}/share/glib-*/schemas)
 GLIB_PATH=$(sed "s|${MSYS_PREFIX}/||g" <<< $GLIB_PATH)
 mkdir -p ${GIMP_DISTRIB}/${GLIB_PATH}
 cp -fr ${MSYS_PREFIX}/share/glib-*/schemas/ ${GIMP_DISTRIB}/share/glib-*/
