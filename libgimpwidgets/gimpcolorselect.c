@@ -725,6 +725,9 @@ gimp_color_select_set_format (GimpColorSelector *selector,
 
       gtk_widget_queue_draw (select->xy_color);
       gtk_widget_queue_draw (select->z_color);
+      gimp_color_select_update (select,
+                                UPDATE_POS | UPDATE_XY_COLOR | UPDATE_Z_COLOR |
+                                UPDATE_CALLER);
     }
 }
 
