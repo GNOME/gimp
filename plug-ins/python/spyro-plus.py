@@ -580,7 +580,7 @@ class PreviewTool:
 
     # Implementation using pencil.  (A previous implementation using stroke was slower, and thus removed).
     def draw(self, layer, strokes, color=None):
-        success, foreground = Gimp.context_get_foreground()
+        foreground = Gimp.context_get_foreground()
         Gimp.context_push()
         Gimp.context_set_defaults()
         Gimp.context_set_foreground(foreground)
