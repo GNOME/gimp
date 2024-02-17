@@ -127,6 +127,7 @@ EXPORTS
 	gimp_color_selection_reset
 	gimp_color_selection_set_color
 	gimp_color_selection_set_config
+	gimp_color_selection_set_format
 	gimp_color_selection_set_old_color
 	gimp_color_selection_set_show_alpha
 	gimp_color_selection_set_simulation

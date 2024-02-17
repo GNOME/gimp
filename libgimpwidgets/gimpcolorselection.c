@@ -564,6 +564,29 @@ gimp_color_selection_color_changed (GimpColorSelection *selection)
 }
 
 /**
+ * gimp_color_selection_set_format:
+ * @selection: A #GimpColorSelection widget.
+ * @format:    A Babl format, with space.
+ *
+ * Updates all selectors with the current format.
+ *
+ * Since: 3.0
+ */
+void
+gimp_color_selection_set_format (GimpColorSelection *selection,
+                                const Babl          *format)
+{
+  g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
+
+  gimp_color_notebook_set_format (GIMP_COLOR_NOTEBOOK (selection->priv->notebook),
+                                  format);
+  gimp_color_selector_set_format (GIMP_COLOR_SELECTOR (selection->priv->scales),
+                                  format);
+
+  g_signal_emit (selection, selection_signals[COLOR_CHANGED], 0);
+}
+
+/**
  * gimp_color_selection_set_simulation:
  * @selection: A #GimpColorSelection widget.
  * @profile:   A #GimpColorProfile object.

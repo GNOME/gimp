@@ -102,9 +102,11 @@ static void   gimp_color_history_add_clicked     (GtkWidget          *widget,
 static void   gimp_color_dialog_image_changed    (GimpContext        *context,
                                                   GimpImage          *image,
                                                   GimpColorDialog    *dialog);
+static void   gimp_color_dialog_update_format    (GimpImage          *image,
+                                                  GimpColorDialog    *dialog);
 static void   gimp_color_dialog_update_simulation(GimpImage          *image,
                                                   GimpColorDialog    *dialog);
-static void   gimp_color_dialog_update           (GimpColorDialog    *dialog);
+static void   gimp_color_dialog_update_base_type (GimpColorDialog    *dialog);
 static void   gimp_color_dialog_show             (GimpColorDialog    *dialog);
 static void   gimp_color_dialog_hide             (GimpColorDialog    *dialog);
 
@@ -690,7 +692,7 @@ gimp_color_dialog_image_changed (GimpContext     *context,
       if (dialog->active_image)
         {
           g_signal_handlers_disconnect_by_func (dialog->active_image,
-                                                G_CALLBACK (gimp_color_dialog_update),
+                                                G_CALLBACK (gimp_color_dialog_update_base_type),
                                                 dialog);
           g_signal_handlers_disconnect_by_func (dialog->active_image,
                                                 gimp_color_dialog_update_simulation,
@@ -702,8 +704,11 @@ gimp_color_dialog_image_changed (GimpContext     *context,
       if (image)
         {
           g_signal_connect_object (image, "notify::base-type",
-                                   G_CALLBACK (gimp_color_dialog_update),
+                                   G_CALLBACK (gimp_color_dialog_update_base_type),
                                    dialog, G_CONNECT_SWAPPED);
+          g_signal_connect_object (image, "profile-changed",
+                                   G_CALLBACK (gimp_color_dialog_update_format),
+                                   dialog, 0);
           g_signal_connect_object (image, "simulation-profile-changed",
                                    G_CALLBACK (gimp_color_dialog_update_simulation),
                                    dialog, 0);
@@ -717,28 +722,48 @@ gimp_color_dialog_image_changed (GimpContext     *context,
           gimp_color_dialog_update_simulation (image, dialog);
         }
 
-      gimp_color_dialog_update (dialog);
+      gimp_color_dialog_update_base_type (dialog);
+      gimp_color_dialog_update_format (image, dialog);
     }
+}
+
+static void
+gimp_color_dialog_update_format (GimpImage       *image,
+                                 GimpColorDialog *dialog)
+{
+  const Babl *format = NULL;
+
+  g_return_if_fail (GIMP_IS_COLOR_DIALOG (dialog));
+
+  if (image)
+    format = gimp_image_get_layer_format (image, FALSE);
+
+  gimp_color_selection_set_format (GIMP_COLOR_SELECTION (dialog->selection), format);
 }
 
 static void
 gimp_color_dialog_update_simulation (GimpImage       *image,
                                      GimpColorDialog *dialog)
 {
+  GimpColorProfile         *profile = NULL;
+  GimpColorRenderingIntent  intent  = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+  gboolean                  bpc     = FALSE;
+
   g_return_if_fail (GIMP_IS_COLOR_DIALOG (dialog));
 
-  if (image && GIMP_IS_COLOR_DIALOG (dialog))
+  if (image)
     {
-      gimp_color_selection_set_simulation (GIMP_COLOR_SELECTION (dialog->selection),
-                                           gimp_image_get_simulation_profile (image),
-                                           gimp_image_get_simulation_intent (image),
-                                           gimp_image_get_simulation_bpc (image));
+      profile = gimp_image_get_simulation_profile (image);
+      intent  = gimp_image_get_simulation_intent (image);
+      bpc     = gimp_image_get_simulation_bpc (image);
     }
+
+  gimp_color_selection_set_simulation (GIMP_COLOR_SELECTION (dialog->selection),
+                                       profile, intent, bpc);
 }
 
-
 static void
-gimp_color_dialog_update (GimpColorDialog *dialog)
+gimp_color_dialog_update_base_type (GimpColorDialog *dialog)
 {
   if (dialog->active_image &&
       gimp_image_get_base_type (dialog->active_image) == GIMP_INDEXED)
@@ -765,7 +790,7 @@ gimp_color_dialog_show (GimpColorDialog *dialog)
 
       gimp_color_dialog_image_changed (viewable_dialog->context,
                                        image, dialog);
-      gimp_color_dialog_update (dialog);
+      gimp_color_dialog_update_base_type (dialog);
     }
   else
     {
