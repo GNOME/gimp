@@ -50,8 +50,11 @@
 #include "gui/icon-themes.h"
 #include "gui/themes.h"
 
+#include "menus/menus.h"
+
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpprefsbox.h"
+#include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "preferences-dialog-utils.h"
@@ -99,8 +102,6 @@ static void   welcome_dialog_create_release_page     (Gimp           *gimp,
 static void   welcome_dialog_new_image_dialog        (GtkWidget      *button,
                                                       GtkWidget      *welcome_dialog);
 static void   welcome_dialog_open_image_dialog       (GtkWidget      *button,
-                                                      GtkWidget      *welcome_dialog);
-static void   welcome_dialog_new_dialog_close        (GtkWidget      *dialog,
                                                       GtkWidget      *welcome_dialog);
 static void   welcome_dialog_new_dialog_response     (GtkWidget      *dialog,
                                                       gint            response_id,
@@ -1089,25 +1090,28 @@ static void
 welcome_dialog_new_image_dialog (GtkWidget *button,
                                  GtkWidget *welcome_dialog)
 {
-  GtkWidget *dialog;
+  GimpUIManager *manager;
+  Gimp          *gimp;
+  GtkWidget     *dialog;
 
-  dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                           gimp_widget_get_monitor (welcome_dialog),
-                                           NULL /*ui_manager*/,
-                                           welcome_dialog,
-                                           "gimp-image-new-dialog", -1, FALSE);
+  gimp    = g_object_get_data (G_OBJECT (welcome_dialog), "gimp");
+  manager = menus_get_image_manager_singleton (gimp);
 
-  if (dialog)
+  /* XXX: to avoid code duplication and divergence, we just call the "image-new"
+   * action, then we check that the new dialog singleton exists in order to
+   * handle its responses.
+   */
+  if (gimp_ui_manager_activate_action (manager, "image", "image-new") &&
+      (dialog = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
+                                                 "gimp-image-new-dialog")))
     {
       gtk_widget_set_visible (welcome_dialog, FALSE);
-
-      gtk_window_present (GTK_WINDOW (dialog));
       g_signal_connect (dialog, "response",
                         G_CALLBACK (welcome_dialog_new_dialog_response),
                         welcome_dialog);
-      g_signal_connect (dialog, "destroy",
-                        G_CALLBACK (welcome_dialog_new_dialog_close),
-                        welcome_dialog);
+      g_signal_connect_swapped (dialog, "destroy",
+                                G_CALLBACK (gtk_widget_destroy),
+                                welcome_dialog);
     }
 }
 
@@ -1133,15 +1137,6 @@ welcome_dialog_open_image_dialog (GtkWidget *button,
 }
 
 static void
-welcome_dialog_new_dialog_close (GtkWidget *dialog,
-                                 GtkWidget *welcome_dialog)
-{
-  /* Reshow Welcome Dialog if secondary dialogue is cancelled */
-  if (welcome_dialog)
-    gtk_widget_set_visible (welcome_dialog, TRUE);
-}
-
-static void
 welcome_dialog_new_dialog_response (GtkWidget *dialog,
                                     gint       response_id,
                                     GtkWidget *welcome_dialog)
@@ -1149,10 +1144,20 @@ welcome_dialog_new_dialog_response (GtkWidget *dialog,
   switch (response_id)
     {
     case GTK_RESPONSE_OK:
+      /* Don't destroy the welcome dialog directly, because it's possible to get
+       * the OK response without the new image dialog closing (in case it
+       * triggers a confirm dialog), followed by a GTK_RESPONSE_CANCEL.
+       *
+       * Let the "destroy" handlers take care of destroying the welcome dialog.
+       */
+      break;
+
+    case GTK_RESPONSE_CANCEL:
+    case GTK_RESPONSE_DELETE_EVENT:
       g_signal_handlers_disconnect_by_func (dialog,
-                                            welcome_dialog_new_dialog_close,
+                                            G_CALLBACK (gtk_widget_destroy),
                                             welcome_dialog);
-      gtk_widget_destroy (welcome_dialog);
+      gtk_widget_set_visible (welcome_dialog, TRUE);
       break;
 
     default:

@@ -121,9 +121,9 @@ image_new_dialog_new (GimpContext *context)
                           "gimp-image-new-dialog", private,
                           (GDestroyNotify) image_new_dialog_free);
 
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (image_new_dialog_response),
-                    private);
+  g_signal_connect_after (dialog, "response",
+                          G_CALLBACK (image_new_dialog_response),
+                          private);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
