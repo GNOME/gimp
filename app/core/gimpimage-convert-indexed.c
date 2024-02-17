@@ -171,8 +171,8 @@
 
 /* basic memory/quality tradeoff */
 #define PRECISION_R 8
-#define PRECISION_G 6
-#define PRECISION_B 6
+#define PRECISION_G 8
+#define PRECISION_B 8
 
 #define HIST_R_ELEMS (1<<PRECISION_R)
 #define HIST_G_ELEMS (1<<PRECISION_G)
@@ -258,6 +258,7 @@ typedef double etype;
 #define VOL_RMASKh (((1<<VOL_RBITSh)-1) << VOL_RBITSl)
 #define VOL_RMASKl ((1<<VOL_RBITSl)-1)
 /* The 5d compromise thing. */
+/*
 #define REF_FUNC(r,g,b) \
 ( \
  (((r) & VOL_RMASKh) << (VOL_BBITS + VOL_GBITS)) | \
@@ -266,6 +267,7 @@ typedef double etype;
  (((g) & VOL_GMASKl) << (VOL_BBITS)) | \
  (b) \
 )
+*/
 /* The full-on 6d thing. */
 /*
 #define REF_FUNC(r,g,b) \
@@ -279,9 +281,9 @@ typedef double etype;
 )
 */
 /* The boring old 3d thing. */
-/*
+
 #define REF_FUNC(r,g,b) (((r)<<(PRECISION_G+PRECISION_B)) | ((g)<<(PRECISION_B)) | (b))
-*/
+
 
 /* You even get to choose whether you want the accessor function
    implemented as a macro or an inline function.  Don't say I never
