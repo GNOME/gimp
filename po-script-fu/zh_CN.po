@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-02 04:07+0000\n"
-"PO-Revision-Date: 2024-01-02 16:38+0800\n"
+"POT-Creation-Date: 2024-02-15 20:23+0000\n"
+"PO-Revision-Date: 2024-02-17 10:43+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -124,8 +124,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "保存 Script-Fu 控制台输出"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:888
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
+#: plug-ins/script-fu/server/script-fu-server.c:878
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -150,27 +150,27 @@ msgstr "欢迎使用 TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "使用 Scheme 语言脚本化 GIMP"
 
-#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/server/script-fu-server.c:874
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu 服务器选项"
 
-#: plug-ins/script-fu/server/script-fu-server.c:889
+#: plug-ins/script-fu/server/script-fu-server.c:879
 msgid "_Start Server"
 msgstr "启动服务器(_S)"
 
-#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/server/script-fu-server.c:912
 msgid "Listen on IP:"
 msgstr "监听 IP："
 
-#: plug-ins/script-fu/server/script-fu-server.c:929
+#: plug-ins/script-fu/server/script-fu-server.c:919
 msgid "Server port:"
 msgstr "服务器端口："
 
-#: plug-ins/script-fu/server/script-fu-server.c:935
+#: plug-ins/script-fu/server/script-fu-server.c:925
 msgid "Server logfile:"
 msgstr "服务器日志文件："
 
-#: plug-ins/script-fu/server/script-fu-server.c:948
+#: plug-ins/script-fu/server/script-fu-server.c:938
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -186,44 +186,44 @@ msgstr "启动服务器(_S)…"
 msgid "Server for remote Script-Fu operation"
 msgstr "远程操作 Script-Fu 的服务器"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:187
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu 无法同时处理两个脚本。"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:191
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "你已经正在运行 “%s” 脚本。"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:220
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 msgid "_Reset"
 msgstr "重置(_R)"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:224
 msgid "_OK"
 msgstr "确定(_O)"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:276
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:278
 #, c-format
 msgid "%s:"
 msgstr "%s："
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:326
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:331
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 颜色选择"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:457
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 文件选择"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:456
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:460
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 文件夹选择"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:852
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:867
 #, c-format
 msgid "Error while executing %s:"
 msgstr "执行 %s 时出错："
@@ -233,34 +233,30 @@ msgstr "执行 %s 时出错："
 msgid "Error while loading %s:"
 msgstr "载入 %s 时出错："
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:76
+#: plug-ins/script-fu/scripts/add-bevel.scm:75
 msgid "Bumpmap"
 msgstr "凹凸贴图"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:189
+#: plug-ins/script-fu/scripts/add-bevel.scm:188
 msgid "Add B_evel..."
 msgstr "添加斜面(_E)…"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:190
+#: plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add a beveled border to an image"
 msgstr "给图像添加卷边"
 
+#. v3 >>> additional argument
+#: plug-ins/script-fu/scripts/add-bevel.scm:195
+msgid "_Thickness"
+msgstr "厚度(_T)"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:196
+msgid "_Work on copy"
+msgstr "在副本中操作(_W)"
+
 #: plug-ins/script-fu/scripts/add-bevel.scm:197
-msgid "Thickness"
-msgstr "厚度"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:198
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
-#: plug-ins/script-fu/scripts/old-photo.scm:104
-#: plug-ins/script-fu/scripts/round-corners.scm:145
-#: plug-ins/script-fu/scripts/slide.scm:262
-#: plug-ins/script-fu/scripts/spinning-globe.scm:107
-msgid "Work on copy"
-msgstr "在副本中操作"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:199
-msgid "Keep bump layer"
-msgstr "保持凹凸图层"
+msgid "_Keep bump layer"
+msgstr "保持凹凸图层(_K)"
 
 #: plug-ins/script-fu/scripts/addborder.scm:123
 msgid "Border Layer"
@@ -545,23 +541,27 @@ msgstr "深度"
 
 #: plug-ins/script-fu/scripts/coffee.scm:37
 msgid "Stain"
-msgstr "污迹"
+msgstr "污渍"
 
-#: plug-ins/script-fu/scripts/coffee.scm:91
-msgid "_Coffee Stain..."
-msgstr "咖啡迹(_C)…"
+#: plug-ins/script-fu/scripts/coffee.scm:95
+msgid "_Stain..."
+msgstr "污渍(_S)…"
 
-#: plug-ins/script-fu/scripts/coffee.scm:92
-msgid "Add realistic looking coffee stains to the image"
-msgstr "给图像添加视觉效果逼真的咖啡迹"
+#: plug-ins/script-fu/scripts/coffee.scm:96
+msgid "Add layers of stain or blotch marks"
+msgstr "添加污渍或斑点痕迹的图层"
 
-#: plug-ins/script-fu/scripts/coffee.scm:99
-msgid "Stains"
-msgstr "污迹"
+#: plug-ins/script-fu/scripts/coffee.scm:102
+msgid "Number of stains to add"
+msgstr "添加的污渍数量"
 
-#: plug-ins/script-fu/scripts/coffee.scm:100
+#: plug-ins/script-fu/scripts/coffee.scm:103
 msgid "Darken only"
 msgstr "仅变暗"
+
+#: plug-ins/script-fu/scripts/coffee.scm:104
+msgid "Gradient to color stains"
+msgstr "渐变彩色污渍"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:70
 msgid "_Difference Clouds"
@@ -710,6 +710,14 @@ msgstr "添加阴影"
 msgid "Shadow weight (%)"
 msgstr "阴影权重（%）"
 
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
+#: plug-ins/script-fu/scripts/old-photo.scm:104
+#: plug-ins/script-fu/scripts/round-corners.scm:145
+#: plug-ins/script-fu/scripts/slide.scm:262
+#: plug-ins/script-fu/scripts/spinning-globe.scm:111
+msgid "Work on copy"
+msgstr "在副本中操作"
+
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:164
 msgid "Flatten image"
 msgstr "平整图像"
@@ -832,30 +840,31 @@ msgstr "从选区新建参考线(_S)"
 msgid "Create four guides around the bounding box of the current selection"
 msgstr "沿目前选区的边界框生成四根参考线"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
 msgstr "新建参考线（按百分比）(_P)…"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:31
 msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr "在以图像尺寸的百分比指定的位置处添加一条参考线"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Direction"
 msgstr "方向(_D)"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Horizontal"
 msgstr "水平"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:36
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:38
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Vertical"
 msgstr "竖直"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:39
 msgid "_Position (in %)"
 msgstr "位置（按 %）(_P)"
 
@@ -867,7 +876,7 @@ msgstr "新建参考线(_G)…"
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "在指定的方向和位置（像素单位）添加参考线"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "_Position"
 msgstr "位置(_P)"
 
@@ -912,31 +921,31 @@ msgstr "渐变"
 msgid "Use current gradient"
 msgstr "使用当前渐变"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:106
+#: plug-ins/script-fu/scripts/line-nova.scm:107
 msgid "Line _Nova..."
 msgstr "超新星线(_N)…"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:107
+#: plug-ins/script-fu/scripts/line-nova.scm:108
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
 msgstr "以从中心向外发射的前景色射线填充图层"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:114
-msgid "Number of lines"
-msgstr "线的数量"
+msgid "_Number of lines"
+msgstr "线的数量(_N)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:115
-msgid "Sharpness (degrees)"
-msgstr "锐度（度数）"
+msgid "S_harpness (degrees)"
+msgstr "锐度（度数）(_H)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:116
-msgid "Offset radius"
-msgstr "位移半径"
+msgid "O_ffset radius"
+msgstr "位移半径(_F)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:117
-msgid "Randomness"
-msgstr "随机度"
+msgid "Ran_domness"
+msgstr "随机度(_D)"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:63
 msgid "_Rectangular..."
@@ -1163,27 +1172,26 @@ msgstr "反转图层顺序(_O)"
 msgid "Reverse the order of layers in the image"
 msgstr "反转图像中图层的顺序"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:69
+#: plug-ins/script-fu/scripts/ripply-anim.scm:70
 msgid "_Rippling..."
 msgstr "波纹(_R)…"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:70
+#: plug-ins/script-fu/scripts/ripply-anim.scm:71
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr "通过为当前图层添加波纹效果来创建一幅多层图像"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:77
-msgid "Rippling strength"
-msgstr "波纹强度"
+msgid "Ri_ppling strength"
+msgstr "波纹强度(_P)"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:78
-#: plug-ins/script-fu/scripts/waves-anim.scm:105
-msgid "Number of frames"
-msgstr "帧数"
+msgid "_Number of frames"
+msgstr "帧数(_N)"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
-msgid "Edge behavior"
-msgstr "边缘行为"
+msgid "Edge _behavior"
+msgstr "边缘行为(_B)"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Wrap"
@@ -1278,27 +1286,27 @@ msgstr "字体"
 msgid "Font color"
 msgstr "字体颜色"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:95
+#: plug-ins/script-fu/scripts/spinning-globe.scm:99
 msgid "_Spinning Globe..."
 msgstr "旋转球(_S)…"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:96
+#: plug-ins/script-fu/scripts/spinning-globe.scm:100
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr "创建一个将当前图像映射到旋转球体上的动画"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:103
+#: plug-ins/script-fu/scripts/spinning-globe.scm:107
 msgid "Frames"
 msgstr "帧数"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:104
+#: plug-ins/script-fu/scripts/spinning-globe.scm:108
 msgid "Turn from left to right"
 msgstr "从左往右转"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:105
+#: plug-ins/script-fu/scripts/spinning-globe.scm:109
 msgid "Transparent background"
 msgstr "透明背景"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:106
+#: plug-ins/script-fu/scripts/spinning-globe.scm:110
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "索引颜色数（0 = 保持 RGB）"
 
@@ -1314,27 +1322,27 @@ msgstr "可平铺模糊(_T)…"
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr "模糊图像边缘以使结果无缝拼合"
 
+#: plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "Ra_dius"
+msgstr "半径(_D)"
+
 #: plug-ins/script-fu/scripts/tileblur.scm:80
-msgid "Radius"
-msgstr "半径"
+msgid "Blur _vertically"
+msgstr "竖直模糊(_V)"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:81
-msgid "Blur vertically"
-msgstr "竖直模糊"
+msgid "Blur _horizontally"
+msgstr "水平模糊(_H)"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:82
-msgid "Blur horizontally"
-msgstr "水平模糊"
+msgid "Blur _type"
+msgstr "模糊类型(_T)"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
-msgid "Blur type"
-msgstr "模糊类型"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "IIR"
 msgstr "IIR"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "RLE"
 msgstr "RLE"
 
@@ -1363,6 +1371,10 @@ msgstr "振幅"
 #: plug-ins/script-fu/scripts/waves-anim.scm:104
 msgid "Wavelength"
 msgstr "波长"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "帧数"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:106
 msgid "Invert direction"
@@ -1453,6 +1465,12 @@ msgstr "投影 X 偏移"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "投影 Y 偏移"
+
+#~ msgid "Add realistic looking coffee stains to the image"
+#~ msgstr "给图像添加视觉效果逼真的咖啡迹"
+
+#~ msgid "Stains"
+#~ msgstr "污迹"
 
 #~ msgid "Script-Fu Font Selection"
 #~ msgstr "Script-Fu 字体选择"
@@ -2284,9 +2302,6 @@ msgstr "投影 Y 偏移"
 
 #~ msgid "Create an image filled with a swirly pattern"
 #~ msgstr "创建一幅以漩涡状图案填充的图像"
-
-#~ msgid "Number of times to whirl"
-#~ msgstr "旋转次数"
 
 #~ msgid "Quarter size"
 #~ msgstr "四分之一大小"
