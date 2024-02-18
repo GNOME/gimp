@@ -314,7 +314,7 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_INT (procedure, "color-mode",
                          _("Color mode"),
                          _("0: Apply colormap as specified by the parameters "
-                           "below; 1: Apply active gradient to final image"),
+                           "above; 1: Apply active gradient to final image"),
                          0, 1, 0,
                          G_PARAM_READWRITE);
 
