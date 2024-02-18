@@ -23,6 +23,8 @@ from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
+gi.require_version('Gegl', '0.4')
+from gi.repository import Gegl
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 gi.require_version('Gdk', '3.0')
@@ -352,7 +354,8 @@ def naive_hash(img):
 
     for x in range(x1, x2, step_x):
         for y in range(y1, y2, step_y):
-            hash += selection.get_pixel(x, y)[0] * x * y
+            color = selection.get_pixel(x, y)
+            hash += color.get_rgba()[0] * x * y
     return hash
 
 
@@ -2354,6 +2357,8 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
             engine.draw_full(layers[0])
 
         elif run_mode == Gimp.RunMode.INTERACTIVE:
+            Gegl.init (None)
+
             window = SpyroWindow(image, layers[0])
             Gtk.main()
 
