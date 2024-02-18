@@ -206,7 +206,7 @@ class HistogramExport(Gimp.PlugIn):
         # TODO: GFile props still don't have labels + only load existing files
         # (here we likely want to create a new file).
         "file": (Gio.File,
-                 _("Histogram _File"),
+                 _("Histogram File"),
                  "Histogram export file",
                  GObject.ParamFlags.READWRITE),
         "bucket-size":  (float,
