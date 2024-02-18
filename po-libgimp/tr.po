@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-07 12:49+0000\n"
-"PO-Revision-Date: 2024-02-08 01:42+0300\n"
+"POT-Creation-Date: 2024-02-15 20:21+0000\n"
+"PO-Revision-Date: 2024-02-18 01:43+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -183,7 +183,7 @@ msgid "Confirm Save"
 msgstr "Kaydetmeyi Onayla"
 
 #: libgimp/gimpexport.c:586 libgimp/gimpexport.c:668 libgimp/gimpexport.c:1242
-#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
+#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:554
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -436,13 +436,13 @@ msgid "_Open"
 msgstr "_Aç"
 
 #: libgimp/gimpproceduredialog.c:298 libgimp/gimpproceduredialog.c:571
-#: libgimpwidgets/gimpcolorbutton.c:558 libgimpwidgets/gimpfileentry.c:467
+#: libgimpwidgets/gimpcolorbutton.c:555 libgimpwidgets/gimpfileentry.c:467
 #: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
 #: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Tamam"
 
-#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:556
+#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:553
 msgid "_Reset"
 msgstr "_Sıfırla"
 
@@ -1911,118 +1911,118 @@ msgstr ""
 "Etkinleştirildiğinde, renk ölçeklerini LCh yerine HSV harmanlama kipini "
 "gösterecek biçimde ayarlar"
 
-#: libgimpconfig/gimpcolorconfig.c:222
+#: libgimpconfig/gimpcolorconfig.c:226
 msgid "Mode of operation"
 msgstr "İşlem kipi"
 
-#: libgimpconfig/gimpcolorconfig.c:230
+#: libgimpconfig/gimpcolorconfig.c:234
 msgid "Preferred RGB profile"
 msgstr "Yeğlenen RGB profili"
 
-#: libgimpconfig/gimpcolorconfig.c:237
+#: libgimpconfig/gimpcolorconfig.c:241
 msgid "Preferred grayscale profile"
 msgstr "Yeğlenen gri tonlamalı profil"
 
-#: libgimpconfig/gimpcolorconfig.c:244
+#: libgimpconfig/gimpcolorconfig.c:248
 msgid "CMYK profile"
 msgstr "CMYK profili"
 
-#: libgimpconfig/gimpcolorconfig.c:251
+#: libgimpconfig/gimpcolorconfig.c:255
 msgid "Monitor profile"
 msgstr "Ekran profili"
 
-#: libgimpconfig/gimpcolorconfig.c:258
+#: libgimpconfig/gimpcolorconfig.c:262
 msgid "Use the system monitor profile"
 msgstr "Sistem ekran profilini kullan"
 
-#: libgimpconfig/gimpcolorconfig.c:265
+#: libgimpconfig/gimpcolorconfig.c:269
 msgid "Simulation profile for soft-proofing"
 msgstr "Ekran provası için benzetim profili"
 
-#: libgimpconfig/gimpcolorconfig.c:272
+#: libgimpconfig/gimpcolorconfig.c:276
 msgid "Display rendering intent"
 msgstr "Ekran görselleştirme amacı"
 
-#: libgimpconfig/gimpcolorconfig.c:280
+#: libgimpconfig/gimpcolorconfig.c:284
 msgid "Use black point compensation for the display"
 msgstr "Ekran için siyah nokta dengelemesi kullan"
 
-#: libgimpconfig/gimpcolorconfig.c:287
+#: libgimpconfig/gimpcolorconfig.c:291
 msgid "Optimize display color transformations"
 msgstr "Ekran rengi dönüşümlerini eniyile"
 
-#: libgimpconfig/gimpcolorconfig.c:294
+#: libgimpconfig/gimpcolorconfig.c:298
 msgid "Soft-proofing rendering intent"
 msgstr "Ekran provası görselleştirme amacı"
 
-#: libgimpconfig/gimpcolorconfig.c:302
+#: libgimpconfig/gimpcolorconfig.c:306
 msgid "Use black point compensation for soft-proofing"
 msgstr "Ekran provası için siyah nokta dengelemesi kullan"
 
-#: libgimpconfig/gimpcolorconfig.c:309
+#: libgimpconfig/gimpcolorconfig.c:313
 msgid "Optimize soft-proofing color transformations"
 msgstr "Ekran provası renk dönüşümlerini eniyile"
 
-#: libgimpconfig/gimpcolorconfig.c:316
+#: libgimpconfig/gimpcolorconfig.c:320
 msgid "Mark out of gamut colors"
 msgstr "Dizi renklerinin dışındakileri işaretle"
 
-#: libgimpconfig/gimpcolorconfig.c:323
+#: libgimpconfig/gimpcolorconfig.c:327
 msgid "Out of gamut warning color"
 msgstr "Dizi dışı uyarı rengi"
 
-#: libgimpconfig/gimpcolorconfig.c:331
+#: libgimpconfig/gimpcolorconfig.c:335
 msgid "Show RGB 0..255 scales"
 msgstr "RGB 0..255 ölçeklerini göster"
 
-#: libgimpconfig/gimpcolorconfig.c:338
+#: libgimpconfig/gimpcolorconfig.c:342
 msgid "Show HSV instead of LCH"
 msgstr "LCH yerine HSV göster"
 
-#: libgimpconfig/gimpcolorconfig.c:699 libgimpconfig/gimpcolorconfig.c:892
+#: libgimpconfig/gimpcolorconfig.c:711 libgimpconfig/gimpcolorconfig.c:904
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "'%s' renk profili RGB renk uzayı için değildir."
 
-#: libgimpconfig/gimpcolorconfig.c:743 libgimpconfig/gimpcolorconfig.c:942
+#: libgimpconfig/gimpcolorconfig.c:755 libgimpconfig/gimpcolorconfig.c:954
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "'%s' renk profili GRİ renk uzayı için değildir."
 
-#: libgimpconfig/gimpcolorconfig.c:787 libgimpconfig/gimpcolorconfig.c:992
+#: libgimpconfig/gimpcolorconfig.c:799 libgimpconfig/gimpcolorconfig.c:1004
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "'%s' renk profili CMYK renk uzayı için değildir."
 
-#: libgimpconfig/gimpconfig-deserialize.c:120
+#: libgimpconfig/gimpconfig-deserialize.c:123
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s için alınan jeton geçerli bir UTF-8 dizgesi değil"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:492
+#: libgimpconfig/gimpconfig-deserialize.c:501
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "%s boolean jetonu için beklenen değer 'yes' ya da 'no', alınan değer '%s'"
 
-#: libgimpconfig/gimpconfig-deserialize.c:607
+#: libgimpconfig/gimpconfig-deserialize.c:616
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "%2$s jetonu için geçersiz değer '%1$s'"
 
-#: libgimpconfig/gimpconfig-deserialize.c:622
+#: libgimpconfig/gimpconfig-deserialize.c:631
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "%2$s jetonu için geçersiz değer '%1$ld'"
 
-#: libgimpconfig/gimpconfig-deserialize.c:691
+#: libgimpconfig/gimpconfig-deserialize.c:700
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "'%s' jetonu ayrıştırılırken: '%s"
 
 #: libgimpconfig/gimpconfig-iface.c:664 libgimpconfig/gimpconfig-iface.c:677
-#: libgimpconfig/gimpscanner.c:774 libgimpconfig/gimpscanner.c:856
+#: libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964
 #: libgimpwidgets/gimpcolorprofilestore.c:761
 msgid "fatal parse error"
 msgstr "ölümcül ayrıştırma hatası"
@@ -2056,17 +2056,17 @@ msgstr "'%s' için geçici dosya oluşturulamadı: "
 msgid "Error writing '%s': %s"
 msgstr "'%s' üzerine yazarken hata: %s"
 
-#: libgimpconfig/gimpscanner.c:422
+#: libgimpconfig/gimpscanner.c:424
 msgid "invalid UTF-8 string"
 msgstr "geçersiz UTF-8 dizgesi"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpscanner.c:649
+#: libgimpconfig/gimpscanner.c:651
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "boolean jeton için beklenen değer 'yes' ya da 'no', alınan değer '%s'"
 
-#: libgimpconfig/gimpscanner.c:883
+#: libgimpconfig/gimpscanner.c:991
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "'%s' ayrıştırılırken %d satırı içinde hata: %s"
@@ -2124,19 +2124,19 @@ msgstr "%s için küçük resim oluşturulamadı: %s"
 msgid "_Search:"
 msgstr "_Ara:"
 
-#: libgimpwidgets/gimpcolorbutton.c:380
+#: libgimpwidgets/gimpcolorbutton.c:377
 msgid "_Foreground Color"
 msgstr "Ö_nalan Rengi"
 
-#: libgimpwidgets/gimpcolorbutton.c:381
+#: libgimpwidgets/gimpcolorbutton.c:378
 msgid "_Background Color"
 msgstr "_Artalan Rengi"
 
-#: libgimpwidgets/gimpcolorbutton.c:386
+#: libgimpwidgets/gimpcolorbutton.c:383
 msgid "Blac_k"
 msgstr "Siya_h"
 
-#: libgimpwidgets/gimpcolorbutton.c:387
+#: libgimpwidgets/gimpcolorbutton.c:384
 msgid "_White"
 msgstr "_Beyaz"
 
@@ -2187,35 +2187,68 @@ msgstr "Üretici: "
 msgid "Copyright: "
 msgstr "Telif Hakkı: "
 
-#: libgimpwidgets/gimpcolorscales.c:212
+#: libgimpwidgets/gimpcolorscales.c:207
 msgid "Scales"
 msgstr "Ölçekler"
 
-#: libgimpwidgets/gimpcolorscales.c:446
+#: libgimpwidgets/gimpcolorscales.c:362 libgimpwidgets/gimpcolorscales.c:694
+#: libgimpwidgets/gimpcolorselect.c:518 libgimpwidgets/gimpcolorselect.c:691
+#: modules/color-selector-water.c:206 modules/color-selector-water.c:242
+#: modules/color-selector-wheel.c:136 modules/color-selector-wheel.c:175
+msgid "Profile: sRGB"
+msgstr "Profil: sRGB"
+
+#: libgimpwidgets/gimpcolorscales.c:459
 msgid "0..100"
 msgstr "0..100"
 
-#: libgimpwidgets/gimpcolorscales.c:448
+#: libgimpwidgets/gimpcolorscales.c:461
 msgid "0..255"
 msgstr "0..255"
 
-#: libgimpwidgets/gimpcolorscales.c:469
+#: libgimpwidgets/gimpcolorscales.c:482
 msgid "LCh"
 msgstr "LCh"
 
-#: libgimpwidgets/gimpcolorscales.c:471
+#: libgimpwidgets/gimpcolorscales.c:484
 msgid "HSV"
 msgstr "HSV"
 
-#: libgimpwidgets/gimpcolorselection.c:247
+#: libgimpwidgets/gimpcolorscales.c:711 libgimpwidgets/gimpcolorselect.c:707
+#: modules/color-selector-cmyk.c:302 modules/color-selector-cmyk.c:386
+#: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
+#, c-format
+msgid "Profile: %s"
+msgstr "Profil: %s"
+
+#: libgimpwidgets/gimpcolorscales.c:725 libgimpwidgets/gimpcolorselect.c:716
+#: modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
+msgid "Profile: <i>unknown</i>"
+msgstr "Profil: <i>bilinmiyor</i>"
+
+#: libgimpwidgets/gimpcolorselect.c:526 libgimpwidgets/gimpcolorselect.c:826
+#: libgimpwidgets/gimpcolorselect.c:843
+msgid "Soft-Proof Profile: <i>unknown</i>"
+msgstr "Ekran Provası Profili: <i>bilinmiyor</i>"
+
+#: libgimpwidgets/gimpcolorselect.c:810
+msgid "Soft-Proof Profile: sRGB"
+msgstr "Ekran Provası Profili: sRGB"
+
+#: libgimpwidgets/gimpcolorselect.c:817
+#, c-format
+msgid "Soft-Proof Profile: %s"
+msgstr "Ekran Provası Profili: %s"
+
+#: libgimpwidgets/gimpcolorselection.c:241
 msgid "Current:"
 msgstr "Geçerli:"
 
-#: libgimpwidgets/gimpcolorselection.c:256
+#: libgimpwidgets/gimpcolorselection.c:250
 msgid "Old:"
 msgstr "Eski:"
 
-#: libgimpwidgets/gimpcolorselection.c:343
+#: libgimpwidgets/gimpcolorselection.c:335
 msgid "HTML _notation:"
 msgstr "HTML _gösterimi:"
 
@@ -2376,19 +2409,19 @@ msgstr ""
 msgid "_Preview"
 msgstr "Öniz_leme"
 
-#: libgimpwidgets/gimppreviewarea.c:146
+#: libgimpwidgets/gimppreviewarea.c:155
 msgid "Check Size"
 msgstr "Denetleme Boyutu"
 
-#: libgimpwidgets/gimppreviewarea.c:154
+#: libgimpwidgets/gimppreviewarea.c:163
 msgid "Check Style"
 msgstr "Denetleme Biçemi"
 
-#: libgimpwidgets/gimppreviewarea.c:162
+#: libgimpwidgets/gimppreviewarea.c:171
 msgid "Custom Checks Color 1"
 msgstr "Özel Denetimler Rengi 1"
 
-#: libgimpwidgets/gimppreviewarea.c:169
+#: libgimpwidgets/gimppreviewarea.c:178
 msgid "Custom Checks Color 2"
 msgstr "Özel Denetimler Rengi 2"
 
@@ -2418,17 +2451,17 @@ msgstr "Rastgele oluşturulan sayı ile rastgele parçacık sayısı oluşturucu
 msgid "_Randomize"
 msgstr "_Rastgele"
 
-#: libgimpwidgets/gimpwidgets-private.c:50
+#: libgimpwidgets/gimpwidgets-private.c:51
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Pasif"
 
-#: libgimpwidgets/gimpwidgets-private.c:51
+#: libgimpwidgets/gimpwidgets-private.c:52
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Ekran"
 
-#: libgimpwidgets/gimpwidgets-private.c:52
+#: libgimpwidgets/gimpwidgets-private.c:53
 msgctxt "input-mode"
 msgid "Window"
 msgstr "Pencere"
@@ -2585,58 +2618,53 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Uzaklaştır"
 
-#: modules/color-selector-cmyk.c:87
+#: modules/color-selector-cmyk.c:86
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK renk seçici (renk profili kullanıyor)"
 
-#: modules/color-selector-cmyk.c:121
+#: modules/color-selector-cmyk.c:120
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:145
+#: modules/color-selector-cmyk.c:144
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:147
+#: modules/color-selector-cmyk.c:146
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:149
+#: modules/color-selector-cmyk.c:148
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:151
+#: modules/color-selector-cmyk.c:150
 msgid "_K"
 msgstr "_K"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:154
 msgid "Cyan"
 msgstr "Camgöbeği"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:155
 msgid "Magenta"
 msgstr "Macenta"
 
-#: modules/color-selector-cmyk.c:157
+#: modules/color-selector-cmyk.c:156
 msgid "Yellow"
 msgstr "Sarı"
 
-#: modules/color-selector-cmyk.c:158
+#: modules/color-selector-cmyk.c:157
 msgid "Black"
 msgstr "Siyah"
 
-#: modules/color-selector-cmyk.c:296 modules/color-selector-cmyk.c:382
+#: modules/color-selector-cmyk.c:289 modules/color-selector-cmyk.c:368
 msgid "Profile: (none)"
 msgstr "Profil: (hiçbiri)"
-
-#: modules/color-selector-cmyk.c:309 modules/color-selector-cmyk.c:400
-#, c-format
-msgid "Profile: %s"
-msgstr "Profil: %s"
 
 #: modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
@@ -2646,15 +2674,15 @@ msgstr "Suluboya biçemli renk seçici"
 msgid "Watercolor"
 msgstr "Suluboya"
 
-#: modules/color-selector-water.c:196
+#: modules/color-selector-water.c:197
 msgid "Pressure"
 msgstr "Basınç"
 
-#: modules/color-selector-wheel.c:72
+#: modules/color-selector-wheel.c:76
 msgid "HSV color wheel"
 msgstr "HSV renk tekeri"
 
-#: modules/color-selector-wheel.c:104
+#: modules/color-selector-wheel.c:108
 msgid "Wheel"
 msgstr "Teker"
 
