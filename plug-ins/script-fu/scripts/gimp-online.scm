@@ -60,7 +60,7 @@
 
 ; shortcuts to help topics
 (script-fu-register "gimp-help-concepts-paths"
-   _"Using _Paths"
+   _"_Using Paths"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
     "Roman Joost <romanofski@gimp.org>"
@@ -151,7 +151,7 @@
 
 
 (script-fu-register "gimp-help-using-selections"
-   _"Create and Use _Selections"
+   _"_Create and Use Selections"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
     "Roman Joost <romanofski@gimp.org>"
@@ -159,11 +159,11 @@
     ""
 )
 
-(script-fu-menu-register "gimp-help-using-simpleobjects"
+(script-fu-menu-register "gimp-help-using-selections"
 			 "<Image>/Help/User Manual")
 
 (script-fu-register "gimp-help-main"
-   _"_[Table of Contents]"
+   _"_Table of Contents"
    _"Bookmark to the user manual"
     "Alx Sa"
     "Alx Sa"
@@ -172,7 +172,7 @@
 )
 
 (script-fu-menu-register "gimp-help-main"
-			 "<Image>/Help/User Manual")
+			 "<Image>/Help/User Manual/[Table of Contents]")
 
 
 ;; Links to GIMP related web sites

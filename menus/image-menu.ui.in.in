@@ -894,6 +894,9 @@
         <item><attribute name="action">app.help-context-help</attribute></item>
         <submenu>
           <attribute name="label" translatable="yes" context="help-action">_User Manual</attribute>
+          <section>
+            <attribute name="section-name" translatable="no">Table of Contents</attribute>
+          </section>
         </submenu>
         <item><attribute name="action">app.dialogs-tips</attribute></item>
         <item><attribute name="action">app.dialogs-welcome</attribute></item>
