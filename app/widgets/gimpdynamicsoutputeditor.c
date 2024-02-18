@@ -415,7 +415,8 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
                     inputs[i].curve_property, &input_curve,
                     NULL);
 
-      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), INPUT_COLOR (i));
+      if (INPUT_COLOR (i))
+        gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), INPUT_COLOR (i));
       if (input == i)
         {
           gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
@@ -470,7 +471,9 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput       *output,
                 {
                   GeglColor *color = gegl_color_new (NULL);
 
-                  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), INPUT_COLOR (i));
+                  if (INPUT_COLOR (i))
+                    gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), INPUT_COLOR (i));
+
                   gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
                                                   input_curve, color);
                   g_object_unref (color);
