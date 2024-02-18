@@ -926,11 +926,8 @@ class ComputedParameters:
 
     def get_color(self, n):
         colors = self.gradients[4*n:4*(n+1)]
-        color = Gimp.RGB()
-        color.r = colors[0]
-        color.g = colors[1]
-        color.b = colors[2]
-        color.a = colors[3]
+        color = Gegl.Color.new("black")
+        color.set_rgba(colors[0], colors[1], colors[2], colors[3])
         return color
 
     def next_drawing(self):
