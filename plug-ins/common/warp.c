@@ -146,6 +146,7 @@ static void             warp                  (GimpDrawable        *drawable,
                                                GimpProcedureConfig *config);
 
 static gboolean         warp_dialog           (GimpDrawable        *drawable,
+                                               GimpProcedure       *procedure,
                                                GimpProcedureConfig *config);
 static void             warp_pixel            (GeglBuffer          *buffer,
                                                const Babl          *format,
@@ -160,9 +161,6 @@ static void             warp_pixel            (GeglBuffer          *buffer,
                                                guchar              *pixel,
                                                GimpProcedureConfig *config);
 
-static gboolean      warp_map_constrain       (GimpImage      *image,
-                                               GimpItem       *item,
-                                               gpointer        data);
 static gdouble       warp_map_mag_give_value  (guchar         *pt,
                                                gint            alpha,
                                                gint            bytes);
@@ -222,11 +220,11 @@ warp_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Twist or smear image in many "
                                           "different ways"),
-                                        "Smears an image along vector paths "
-                                        "calculated as the gradient of a "
-                                        "separate control matrix. The effect "
-                                        "can look like brushstrokes of acrylic "
-                                        "or watercolor paint, in some cases.",
+                                        _("Smears an image along vector paths "
+                                          "calculated as the gradient of a "
+                                          "separate control matrix. The effect "
+                                          "can look like brushstrokes of acrylic "
+                                          "or watercolor paint, in some cases."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "John P. Beale",
@@ -234,87 +232,91 @@ warp_create_procedure (GimpPlugIn  *plug_in,
                                       "1997");
 
       GIMP_PROC_ARG_DOUBLE (procedure, "amount",
-                            "Amount",
-                            "Pixel displacement multiplier",
+                            _("Step si_ze"),
+                            _("Pixel displacement multiplier"),
                             -G_MAXDOUBLE, G_MAXDOUBLE, 10.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DRAWABLE (procedure, "warp-map",
-                              "Warp map",
-                              "Displacement control map",
+                              _("Dis_placement Map"),
+                              _("Displacement control map"),
                               TRUE,
                               G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "iter",
-                         "Iter",
-                         "Iteration count",
+                         _("I_terations"),
+                         _("Iteration count"),
                          1, 100, 5,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "dither",
-                            "Dither",
-                            "Random dither amount",
+                            _("_Dither size"),
+                            _("Random dither amount"),
                             0, 100, 0.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "angle",
-                            "Angle",
-                            "Angle of gradient vector rotation",
+                            _("Rotatio_n angle"),
+                            _("Angle of gradient vector rotation"),
                             0, 360, 90.0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "wrap-type",
-                         "Wrap type",
-                         "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2), "
-                         "COLOR (3) }",
-                         0, 3, WRAP,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "wrap-type",
+                            _("On ed_ges"),
+                            _("Wrap type"),
+                            gimp_choice_new_with_values ("wrap",  WRAP,  _("Wrap"),             NULL,
+                                                         "smear", SMEAR, _("Smear"),            NULL,
+                                                         "black", BLACK, _("Black"),            NULL,
+                                                         "color", COLOR, _("Foreground Color"), NULL,
+                                                         NULL),
+                            "wrap",
+                            G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DRAWABLE (procedure, "mag-map",
-                              "Mag map",
-                              "Magnitude control map",
+                              _("_Magnitude Map"),
+                              _("Magnitude control map"),
                               TRUE,
                               G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "mag-use",
-                             "Mag use",
-                             "Use magnitude map",
+                             _("_Use magnitude map"),
+                             _("Use magnitude map"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "substeps",
-                         "Substeps",
-                         "Substeps between image updates",
+                         _("Su_bsteps"),
+                         _("Substeps between image updates"),
                          1, 100, 1,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DRAWABLE (procedure, "grad-map",
-                              "Grad map",
-                              "Gradient control map",
+                              _("Gradient Ma_p"),
+                              _("Gradient control map"),
                               TRUE,
                               G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "grad-scale",
-                            "Grad scale",
-                            "Scaling factor for gradient map (0=don't use)",
+                            _("Gradient s_cale"),
+                            _("Scaling factor for gradient map (0=don't use)"),
                             -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DRAWABLE (procedure, "vector-map",
-                              "Vector map",
-                              "Fixed vector control map",
+                              _("_Vector Map"),
+                              _("Fixed vector control map"),
                               TRUE,
                               G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "vector-scale",
-                            "Vector scale",
-                            "Scaling factor for fixed vector map (0=don't use)",
+                            _("Vector magn_itude"),
+                            _("Scaling factor for fixed vector map (0=don't use)"),
                             -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "vector-angle",
-                            "Vector angle",
-                            "Angle for fixed vector map",
+                            _("Ang_le"),
+                            _("Angle for fixed vector map"),
                             0, 360, 0.0,
                             G_PARAM_READWRITE);
     }
@@ -360,7 +362,17 @@ warp_run (GimpProcedure        *procedure,
 
   run_mode = _run_mode;
 
-  if (run_mode == GIMP_RUN_INTERACTIVE && ! warp_dialog (drawable, config))
+  /* Initialize maps for GUI */
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    g_object_set (config,
+                  "warp-map",   drawable,
+                  "mag-map",    drawable,
+                  "grad-map",   drawable,
+                  "vector-map", drawable,
+                  NULL);
+
+  if (run_mode == GIMP_RUN_INTERACTIVE &&
+      ! warp_dialog (drawable, procedure, config))
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_CANCEL,
                                              NULL);
@@ -373,466 +385,113 @@ warp_run (GimpProcedure        *procedure,
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
-static GtkWidget *
-spin_button_new (GtkAdjustment **adjustment,  /* return value */
-                 gdouble         value,
-                 gdouble         lower,
-                 gdouble         upper,
-                 gdouble         step_increment,
-                 gdouble         page_increment,
-                 gdouble         page_size,
-                 gdouble         climb_rate,
-                 guint           digits)
-{
-  GtkWidget *spinbutton;
-
-  *adjustment = gtk_adjustment_new (value, lower, upper,
-                                    step_increment, page_increment, 0);
-
-  spinbutton = gimp_spin_button_new (*adjustment,
-                                     climb_rate, digits);
-
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-
-  return spinbutton;
-}
-
 static gboolean
 warp_dialog (GimpDrawable        *drawable,
+             GimpProcedure       *procedure,
              GimpProcedureConfig *config)
 {
-  GtkWidget     *dlg;
-  GtkWidget     *vbox;
-  GtkWidget     *label;
-  GtkWidget     *toggle;
-  GtkWidget     *toggle_hbox;
-  GtkWidget     *frame;
-  GtkWidget     *grid;
-  GtkWidget     *spinbutton;
-  GtkAdjustment *adj;
-  GtkWidget     *combo;
-  GtkSizeGroup  *label_group;
-  GtkSizeGroup  *spin_group;
-  GSList        *group = NULL;
-  gboolean       run;
-
-  GimpDrawable  *warp_map;
-  GimpDrawable  *mag_map;
-  GimpDrawable  *grad_map;
-  GimpDrawable  *vector_map;
-  gdouble        amount;
-  gdouble        dither;
-  gdouble        angle;
-  gdouble        grad_scale;
-  gdouble        vector_scale;
-  gdouble        vector_angle;
-  gboolean       use_mag;
-  gint           substeps;
-  gint           iter_count;
-  gint           wrap_type;
-
-  gint32         warp_map_id;
-  gint32         mag_map_id;
-  gint32         grad_map_id;
-  gint32         vector_map_id;
+  GtkWidget    *dialog;
+  GtkWidget    *hbox;
+  gboolean      run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  g_object_get (config,
-                "amount",       &amount,
-                "warp-map",     &warp_map,
-                "iter",         &iter_count,
-                "dither",       &dither,
-                "angle",        &angle,
-                "wrap-type",    &wrap_type,
-                "mag-map",      &mag_map,
-                "mag-use",      &use_mag,
-                "substeps",     &substeps,
-                "grad-map",     &grad_map,
-                "grad-scale",   &grad_scale,
-                "vector-map",   &vector_map,
-                "vector-scale", &vector_scale,
-                "vector-angle", &vector_angle,
-                NULL);
-  warp_map_id   = gimp_item_get_id (GIMP_ITEM (warp_map));
-  mag_map_id    = gimp_item_get_id (GIMP_ITEM (mag_map));
-  grad_map_id   = gimp_item_get_id (GIMP_ITEM (grad_map));
-  vector_map_id = gimp_item_get_id (GIMP_ITEM (vector_map));
-  g_clear_object (&warp_map);
-  g_clear_object (&mag_map);
-  g_clear_object (&grad_map);
-  g_clear_object (&vector_map);
-
-  dlg = gimp_dialog_new (_("Warp"), PLUG_IN_ROLE,
-                         NULL, 0,
-                         gimp_standard_help_func, PLUG_IN_PROC,
-
-                         _("_Cancel"), GTK_RESPONSE_CANCEL,
-                         _("_OK"),     GTK_RESPONSE_OK,
-
-                         NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dlg));
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
-                      vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  frame = gimp_frame_new (_("Basic Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
-
-  spin_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-  label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-
-  /*  amount, iter */
-  spinbutton = spin_button_new (&adj, amount,
-                                -1000, 1000, /* ??? */
-                                1, 10, 0, 1, 2);
-  gtk_size_group_add_widget (spin_group, spinbutton);
-  g_object_unref (spin_group);
-
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                                    _("Step size:"), 0.0, 0.5,
-                                    spinbutton, 1);
-  gtk_size_group_add_widget (label_group, label);
-  g_object_unref (label_group);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &amount);
-
-  spinbutton = spin_button_new (&adj, iter_count,
-                                1, 100, 1, 5, 0, 1, 0);
-  gtk_size_group_add_widget (spin_group, spinbutton);
-
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                                    _("Iterations:"), 0.0, 0.5,
-                                    spinbutton, 1);
-  gtk_size_group_add_widget (label_group, label);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &iter_count);
-
-  /*  Displacement map menu  */
-  label = gtk_label_new (_("Displacement map:"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_label_set_yalign (GTK_LABEL (label), 1.0);
-  gtk_widget_set_margin_start (label, 12);
-  gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
-                    // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  combo = gimp_drawable_combo_box_new (warp_map_constrain,
-                                       drawable,
-                                       NULL);
-  gtk_widget_set_margin_start (combo, 12);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              warp_map_id,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &warp_map_id, NULL);
-
-  gtk_grid_attach (GTK_GRID (grid), combo, 2, 1, 1, 1);
-                    // GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (combo);
-
-  /* ======================================================================= */
-
-  /*  Displacement Type  */
-  label = gtk_label_new (_("On edges:"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
-                    // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  toggle_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_grid_attach (GTK_GRID (grid), toggle_hbox, 1, 2, 2, 1);
-                    // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (toggle_hbox);
-
-  toggle = gtk_radio_button_new_with_label (group, _("Wrap"));
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                     GINT_TO_POINTER (WRAP));
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_radio_button_update),
-                    &wrap_type);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                wrap_type == WRAP);
-
-  toggle = gtk_radio_button_new_with_label (group, _("Smear"));
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                     GINT_TO_POINTER (SMEAR));
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_radio_button_update),
-                    &wrap_type);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                wrap_type == SMEAR);
-
-  toggle = gtk_radio_button_new_with_label (group, _("Black"));
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                     GINT_TO_POINTER (BLACK));
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_radio_button_update),
-                    &wrap_type);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                wrap_type == BLACK);
-
-  toggle = gtk_radio_button_new_with_label (group, _("Foreground color"));
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                     GINT_TO_POINTER (COLOR));
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_radio_button_update),
-                    &wrap_type);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                wrap_type == COLOR);
-
-
-
-  /* -------------------------------------------------------------------- */
-  /* ---------    The secondary grid          --------------------------  */
-
-  frame = gimp_frame_new (_("Advanced Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
-
-  spinbutton = spin_button_new (&adj, dither,
-                                0, 100, 1, 10, 0, 1, 2);
-  gtk_size_group_add_widget (spin_group, spinbutton);
-
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                                    _("Dither size:"), 0.0, 0.5,
-                                    spinbutton, 1);
-  gtk_size_group_add_widget (label_group, label);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &dither);
-
-  spinbutton = spin_button_new (&adj, angle,
-                                0, 360, 1, 15, 0, 1, 1);
-  gtk_size_group_add_widget (spin_group, spinbutton);
-
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                                    _("Rotation angle:"), 0.0, 0.5,
-                                    spinbutton, 1);
-  gtk_size_group_add_widget (label_group, label);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &angle);
-
-  spinbutton = spin_button_new (&adj, substeps,
-                                1, 100, 1, 5, 0, 1, 0);
-  gtk_size_group_add_widget (spin_group, spinbutton);
-
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
-                                    _("Substeps:"), 0.0, 0.5,
-                                    spinbutton, 1);
-  gtk_size_group_add_widget (label_group, label);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &substeps);
-
-  /*  Magnitude map menu  */
-  label = gtk_label_new (_("Magnitude map:"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_label_set_yalign (GTK_LABEL (label), 1.0);
-  gtk_widget_set_margin_start (label, 12);
-  gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
-                    // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  combo = gimp_drawable_combo_box_new (warp_map_constrain,
-                                       drawable,
-                                       NULL);
-  gtk_widget_set_margin_start (combo, 12);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              mag_map_id,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &mag_map_id, NULL);
-
-  gtk_grid_attach (GTK_GRID (grid), combo, 2, 1, 1, 1);
-                    // GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (combo);
-
-  /*  Magnitude Usage  */
-  toggle_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_hbox), 1);
-  gtk_grid_attach (GTK_GRID (grid), toggle_hbox, 2, 2, 1, 1);
-                    // GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (toggle_hbox);
-
-  toggle = gtk_check_button_new_with_label (_("Use magnitude map"));
-  gtk_widget_set_margin_start (toggle, 12);
-  gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_mag);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &use_mag);
-
-
-  /* -------------------------------------------------------------------- */
-  /* ---------    The "other" grid          --------------------------  */
-
-  frame = gimp_frame_new (_("More Advanced Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
-
-  spinbutton = spin_button_new (&adj, grad_scale,
-                                -1000, 1000, /* ??? */
-                                0.01, 0.1, 0, 1, 3);
-  gtk_size_group_add_widget (spin_group, spinbutton);
-
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                                    _("Gradient scale:"), 0.0, 0.5,
-                                    spinbutton, 1);
-  gtk_size_group_add_widget (label_group, label);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &grad_scale);
-
-  /* ---------  Gradient map menu ----------------  */
-
-  combo = gimp_drawable_combo_box_new (warp_map_constrain,
-                                       drawable,
-                                       NULL);
-  gtk_widget_set_margin_start (combo, 12);
-  gtk_grid_attach (GTK_GRID (grid), combo, 2, 0, 1, 1);
-                    // GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (combo);
-
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              grad_map_id,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &grad_map_id, NULL);
-
-  gimp_help_set_help_data (combo, _("Gradient map selection menu"), NULL);
-
-  /* ---------------------------------------------- */
-
-  spinbutton = spin_button_new (&adj, vector_scale,
-                                -1000, 1000, /* ??? */
-                                0.01, 0.1, 0, 1, 3);
-  gtk_size_group_add_widget (spin_group, spinbutton);
-
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                                    _("Vector mag:"), 0.0, 0.5,
-                                    spinbutton, 1);
-  gtk_size_group_add_widget (label_group, label);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &vector_scale);
-
-  /* -------------------------------------------------------- */
-
-  spinbutton = spin_button_new (&adj, vector_angle,
-                                0, 360, 1, 15, 0, 1, 1);
-  gtk_size_group_add_widget (spin_group, spinbutton);
-
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
-                                    _("Angle:"), 0.0, 0.5,
-                                    spinbutton, 1);
-  gtk_size_group_add_widget (label_group, label);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &vector_angle);
-
-  /* ---------  Vector map menu ----------------  */
-  combo = gimp_drawable_combo_box_new (warp_map_constrain,
-                                       drawable,
-                                       NULL);
-  gtk_widget_set_margin_start (combo, 12);
-  gtk_grid_attach (GTK_GRID (grid), combo, 2, 1, 1, 1);
-                   // GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (combo);
-
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              vector_map_id,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &vector_map_id, NULL);
-
-  gimp_help_set_help_data (combo,
-                           _("Fixed-direction-vector map selection menu"),
-                           NULL);
-
-  gtk_widget_show (dlg);
-
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
-
-  gtk_widget_destroy (dlg);
-
-  g_object_set (config,
-                "amount",       amount,
-                "warp-map",     gimp_drawable_get_by_id (warp_map_id),
-                "iter",         iter_count,
-                "dither",       dither,
-                "angle",        angle,
-                "wrap-type",    wrap_type,
-                "mag-map",      gimp_drawable_get_by_id (mag_map_id),
-                "mag-use",      use_mag,
-                "substeps",     substeps,
-                "grad-map",     gimp_drawable_get_by_id (grad_map_id),
-                "grad-scale",   grad_scale,
-                "vector-map",   gimp_drawable_get_by_id (vector_map_id),
-                "vector-scale", vector_scale,
-                "vector-angle", vector_angle,
-                NULL);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Warp"));
+
+  /* Basic Options */
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "basic-options-left",
+                                  "amount", "iter", "wrap-type",
+                                  NULL);
+
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "basic-options-hbox",
+                                         "basic-options-left",
+                                         "warp-map",
+                                         NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_set_spacing (GTK_BOX (hbox), 12);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
+
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "basic-options-label", _("Basic Options"),
+                                   FALSE, FALSE);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "basic-options-frame",
+                                    "basic-options-label", FALSE,
+                                    "basic-options-hbox");
+
+  /* Advanced Options */
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "advanced-options-left",
+                                  "dither", "angle", "substeps",
+                                  NULL);
+
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "advanced-options-right",
+                                  "mag-map", "mag-use",
+                                  NULL);
+
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "advanced-options-hbox",
+                                         "advanced-options-left",
+                                         "advanced-options-right",
+                                         NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_set_spacing (GTK_BOX (hbox), 12);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
+
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "advanced-options-label",
+                                   _("Advanced Options"),
+                                   FALSE, FALSE);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "advanced-options-frame",
+                                    "advanced-options-label", FALSE,
+                                    "advanced-options-hbox");
+
+  /* More Advanced Options */
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "more-advanced-options-left",
+                                  "grad-scale", "vector-scale",
+                                  "vector-angle",
+                                  NULL);
+
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "more-advanced-options-hbox",
+                                         "more-advanced-options-left",
+                                         "grad-map", "vector-map",
+                                         NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_set_spacing (GTK_BOX (hbox), 12);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
+
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "more-advanced-options-label",
+                                   _("More Advanced Options"),
+                                   FALSE, FALSE);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "more-advanced-options-frame",
+                                    "more-advanced-options-label", FALSE,
+                                    "more-advanced-options-hbox");
+
+  /* Show dialog */
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "basic-options-frame",
+                              "advanced-options-frame",
+                              "more-advanced-options-frame",
+                              NULL);
+
+  gtk_widget_set_visible (dialog, TRUE);
+
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
 
   return run;
 }
@@ -1907,9 +1566,7 @@ warp_pixel (GeglBuffer          *buffer,
   guchar        *data;
   gint           wrap_type;
 
-  g_object_get (config,
-                "wrap-type", &wrap_type,
-                NULL);
+  wrap_type = gimp_procedure_config_get_choice_id (config, "wrap-type");
 
   /* Tile the image. */
   if (wrap_type == WRAP)
@@ -1956,17 +1613,4 @@ warp_pixel (GeglBuffer          *buffer,
       for (b = 0; b < bpp; b++)
         pixel[b] = data[b];
     }
-}
-
-/*  Warp interface functions  */
-
-static gboolean
-warp_map_constrain (GimpImage *image,
-                    GimpItem  *item,
-                    gpointer   data)
-{
-  GimpDrawable *d = data;
-
-  return (gimp_drawable_get_width  (GIMP_DRAWABLE (item)) == gimp_drawable_get_width  (d) &&
-          gimp_drawable_get_height (GIMP_DRAWABLE (item)) == gimp_drawable_get_height (d));
 }
