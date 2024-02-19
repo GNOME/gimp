@@ -1,5 +1,5 @@
 # Hungarian translation for gimp-plug-ins.
-# Copyright (C) 2000, 2001, 2003, 2004, 2007, 2008, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023 Free Software Foundation, Inc.
+# Copyright (C) 2000, 2001, 2003, 2004, 2007, 2008, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-plug-ins package.
 #
 # Andras Timar <timar at gnome dot hu>, 2000, 2001, 2003.
@@ -8,22 +8,22 @@
 # Arpad Biro <biro arpad gmail>, 2004, 2007, 2008.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2008, 2010, 2012, 2016, 2017, 2018.
 # András Prim <gimme at primandras dot hu>, 2012.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2015, 2016, 2019, 2020, 2021, 2022, 2023.
-# Balázs Meskó <mesko.balazs at fsf dot hu>, 2017, 2018, 2019, 2020, 2021, 2022.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2015, 2016, 2019, 2020, 2021, 2022, 2023, 2024.
+# Balázs Meskó <mesko.balazs at fsf dot hu>, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-15 00:07+0000\n"
-"PO-Revision-Date: 2023-03-15 01:11+0100\n"
+"POT-Creation-Date: 2024-02-15 20:02+0000\n"
+"PO-Revision-Date: 2024-02-19 20:30+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
-"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.08.2\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -54,13 +54,13 @@ msgstr "Látható rétegek igazítása"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1127 ../plug-ins/common/file-heif.c:1908
+#: ../plug-ins/common/file-gif-save.c:1127 ../plug-ins/common/file-heif.c:1927
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:708
-#: ../plug-ins/common/file-pdf-load.c:1338
+#: ../plug-ins/common/file-pdf-load.c:1356
 #: ../plug-ins/common/file-pdf-save.c:1020 ../plug-ins/common/file-ps.c:3447
 #: ../plug-ins/common/file-raw-data.c:1816 ../plug-ins/common/file-svg.c:663
-#: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
+#: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1210
 #: ../plug-ins/common/filter-pack.c:1264 ../plug-ins/common/fractal-trace.c:711
 #: ../plug-ins/common/grid.c:677 ../plug-ins/common/hot.c:614
 #: ../plug-ins/common/jigsaw.c:2415 ../plug-ins/common/mail.c:499
@@ -74,7 +74,7 @@ msgstr "Látható rétegek igazítása"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1983
+#: ../plug-ins/file-dds/ddsread.c:1401 ../plug-ins/file-dds/ddswrite.c:1983
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
 #: ../plug-ins/file-tiff/file-tiff-load.c:2664 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
@@ -119,9 +119,9 @@ msgstr "Mé_gse"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1909
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1928
 #: ../plug-ins/common/file-pdf-load.c:709 ../plug-ins/common/file-svg.c:664
-#: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
+#: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1211
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
 #: ../plug-ins/common/grid.c:678 ../plug-ins/common/hot.c:615
 #: ../plug-ins/common/jigsaw.c:2416 ../plug-ins/common/max-rgb.c:319
@@ -132,7 +132,7 @@ msgstr "Mé_gse"
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
 #: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
-#: ../plug-ins/file-dds/ddsread.c:1364 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/file-dds/ddsread.c:1402 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -445,19 +445,19 @@ msgstr "Függő_leges"
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1011
 #: ../plug-ins/common/decompose.c:598 ../plug-ins/common/file-cel.c:446
 #: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:715
-#: ../plug-ins/common/file-gegl.c:438 ../plug-ins/common/file-gif-load.c:992
+#: ../plug-ins/common/file-gegl.c:438 ../plug-ins/common/file-gif-load.c:1008
 #: ../plug-ins/common/file-jp2-load.c:1290 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1375
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1116
-#: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
+#: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:693
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
 #: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:2153 ../plug-ins/file-sgi/sgi.c:416
+#: ../plug-ins/file-psd/psd-load.c:2161 ../plug-ins/file-sgi/sgi.c:416
 #: ../plug-ins/file-tiff/file-tiff-load.c:1544
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -1080,7 +1080,7 @@ msgstr "CML-böngésző paramétereinek betöltése"
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
 #: ../plug-ins/common/file-ps.c:1075 ../plug-ins/common/file-ps.c:3397
-#: ../plug-ins/common/file-psp.c:2228 ../plug-ins/common/file-psp.c:2278
+#: ../plug-ins/common/file-psp.c:2237 ../plug-ins/common/file-psp.c:2287
 #: ../plug-ins/common/file-raw-data.c:477
 #: ../plug-ins/common/file-raw-data.c:1284 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:647
@@ -1520,12 +1520,12 @@ msgid "Uniform"
 msgstr "Egyenletes"
 
 #: ../plug-ins/common/contrast-retinex.c:319
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "Low"
 msgstr "Alacsony"
 
 #: ../plug-ins/common/contrast-retinex.c:320
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "High"
 msgstr "Magas"
 
@@ -2153,7 +2153,7 @@ msgstr "Fájl vége vagy hiba a képfejléc olvasása közben"
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:338
 #: ../plug-ins/common/file-gegl.c:322 ../plug-ins/common/file-gif-load.c:353
-#: ../plug-ins/common/file-heif.c:703 ../plug-ins/common/file-jp2-load.c:1077
+#: ../plug-ins/common/file-heif.c:737 ../plug-ins/common/file-jp2-load.c:1077
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1059
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1067
@@ -2243,7 +2243,7 @@ msgstr "„%s”: fájl vége vagy hiba a palettaadatok olvasása közben"
 #.
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:895
 #: ../plug-ins/common/file-html-table.c:238
-#: ../plug-ins/common/file-jpegxl.c:778 ../plug-ins/common/file-pcx.c:761
+#: ../plug-ins/common/file-jpegxl.c:787 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1278
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1221
@@ -2419,31 +2419,27 @@ msgstr "GIF-kép"
 msgid "This is not a GIF file"
 msgstr "Ez nem egy GIF-fájl"
 
-#: ../plug-ins/common/file-gif-load.c:419
-msgid "Non-square pixels.  Image might look squashed."
-msgstr "A képpontok nem négyzet alakúak. A kép megjelenése torzulhat."
-
-#: ../plug-ins/common/file-gif-load.c:994
+#: ../plug-ins/common/file-gif-load.c:1010
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Háttér (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:1021
+#: ../plug-ins/common/file-gif-load.c:1037
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "„%s” megnyitása (%d. képkocka)"
 
-#: ../plug-ins/common/file-gif-load.c:1050
+#: ../plug-ins/common/file-gif-load.c:1066
 #, c-format
 msgid "Frame %d"
 msgstr "%d. képkocka"
 
-#: ../plug-ins/common/file-gif-load.c:1052
+#: ../plug-ins/common/file-gif-load.c:1068
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "%d. képkocka (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:1083
+#: ../plug-ins/common/file-gif-load.c:1099
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -2592,11 +2588,11 @@ msgstr "Osztály:"
 msgid "C source code header"
 msgstr "C-forráskódfejléc"
 
-#: ../plug-ins/common/file-heif.c:143
+#: ../plug-ins/common/file-heif.c:147
 msgid "Loads HEIF images"
 msgstr "HEIF képeket tölt be"
 
-#: ../plug-ins/common/file-heif.c:144
+#: ../plug-ins/common/file-heif.c:148
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -2604,94 +2600,94 @@ msgstr ""
 "HEIF (nagy hatékonyságú képfájl) formátumban tárolt kép betöltése. A HEIF "
 "fájlok tipikus kiterjesztései a .heif és a .heic."
 
-#: ../plug-ins/common/file-heif.c:150 ../plug-ins/common/file-heif.c:179
+#: ../plug-ins/common/file-heif.c:154 ../plug-ins/common/file-heif.c:183
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: ../plug-ins/common/file-heif.c:173
+#: ../plug-ins/common/file-heif.c:177
 msgid "Exports HEIF images"
 msgstr "HEIF képeket exportál"
 
-#: ../plug-ins/common/file-heif.c:174
+#: ../plug-ins/common/file-heif.c:178
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr "Kép mentése HEIF (nagy hatékonyságú képfájl) formátumban."
 
-#: ../plug-ins/common/file-heif.c:194
+#: ../plug-ins/common/file-heif.c:198
 msgid "Exports AVIF images"
 msgstr "AVIF képeket exportál"
 
-#: ../plug-ins/common/file-heif.c:195
+#: ../plug-ins/common/file-heif.c:199
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Kép mentése AV1 képfájlformátumban (AVIF)"
 
-#: ../plug-ins/common/file-heif.c:742 ../plug-ins/common/file-heif.c:775
-#: ../plug-ins/common/file-heif.c:814 ../plug-ins/common/file-heif.c:880
+#: ../plug-ins/common/file-heif.c:776 ../plug-ins/common/file-heif.c:809
+#: ../plug-ins/common/file-heif.c:848 ../plug-ins/common/file-heif.c:914
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "HEIF kép betöltése meghiúsult: %s"
 
-#: ../plug-ins/common/file-heif.c:764
+#: ../plug-ins/common/file-heif.c:798
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "HEIF kép betöltése meghiúsult: A bemenet nem tartalmaz olvasható képeket"
 
-#: ../plug-ins/common/file-heif.c:1007
+#: ../plug-ins/common/file-heif.c:1041
 msgid "image content"
 msgstr "képtartalom"
 
-#: ../plug-ins/common/file-heif.c:1328
+#: ../plug-ins/common/file-heif.c:1361
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "A(z) „%s” exportálása %s kódoló használatával"
 
-#: ../plug-ins/common/file-heif.c:1379 ../plug-ins/common/file-heif.c:1633
+#: ../plug-ins/common/file-heif.c:1412 ../plug-ins/common/file-heif.c:1652
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "HEIF kép kódolása meghiúsult: %s"
 
-#: ../plug-ins/common/file-heif.c:1670
+#: ../plug-ins/common/file-heif.c:1689
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "HEIF kép írása meghiúsult: %s"
 
-#: ../plug-ins/common/file-heif.c:1759
+#: ../plug-ins/common/file-heif.c:1778
 msgid "primary"
 msgstr "elsődleges"
 
-#: ../plug-ins/common/file-heif.c:1904
+#: ../plug-ins/common/file-heif.c:1923
 msgid "Load HEIF Image"
 msgstr "HEIF kép betöltése"
 
-#: ../plug-ins/common/file-heif.c:1918
+#: ../plug-ins/common/file-heif.c:1937
 msgid "Select Image"
 msgstr "Kép kiválasztása"
 
-#: ../plug-ins/common/file-heif.c:2084
+#: ../plug-ins/common/file-heif.c:2103
 msgid "Nearly _lossless"
 msgstr "Majdnem _veszteségmentes"
 
-#: ../plug-ins/common/file-heif.c:2088 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2107 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "Mi_nőség:"
 
-#: ../plug-ins/common/file-heif.c:2131
+#: ../plug-ins/common/file-heif.c:2150
 msgid "Bit depth:"
 msgstr "Bitmélység:"
 
-#: ../plug-ins/common/file-heif.c:2137
+#: ../plug-ins/common/file-heif.c:2156
 msgid "8 bit/channel"
 msgstr "8 bit/csatorna"
 
-#: ../plug-ins/common/file-heif.c:2138
+#: ../plug-ins/common/file-heif.c:2157
 msgid "10 bit/channel"
 msgstr "10 bit/csatorna"
 
-#: ../plug-ins/common/file-heif.c:2139
+#: ../plug-ins/common/file-heif.c:2158
 msgid "12 bit/channel"
 msgstr "12 bit/csatorna"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2148 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2167 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:404
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
 msgid "Save color _profile"
@@ -2804,7 +2800,7 @@ msgstr "A táblacellák szélessége. Lehet konkrét vagy százalékos érték."
 
 #: ../plug-ins/common/file-html-table.c:663 ../plug-ins/common/file-ps.c:3535
 #: ../plug-ins/common/file-ps.c:3739 ../plug-ins/common/file-raw-data.c:1985
-#: ../plug-ins/common/film.c:945 ../plug-ins/common/smooth-palette.c:463
+#: ../plug-ins/common/film.c:948 ../plug-ins/common/smooth-palette.c:463
 #: ../plug-ins/common/tile.c:469 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
 #: ../plug-ins/print/print-page-layout.c:286
@@ -3181,49 +3177,49 @@ msgstr "%s-%s"
 msgid "%s-pages"
 msgstr "%s-oldalak"
 
-#: ../plug-ins/common/file-pdf-load.c:1334
+#: ../plug-ins/common/file-pdf-load.c:1352
 msgid "Import from PDF"
 msgstr "Importálás PDF-ből"
 
-#: ../plug-ins/common/file-pdf-load.c:1339 ../plug-ins/common/file-ps.c:3448
+#: ../plug-ins/common/file-pdf-load.c:1357 ../plug-ins/common/file-ps.c:3448
 #: ../plug-ins/file-tiff/file-tiff-load.c:2665
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "_Importálás"
 
-#: ../plug-ins/common/file-pdf-load.c:1372
+#: ../plug-ins/common/file-pdf-load.c:1390
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Hiba a megadott PDF-fájl oldalszámának lekérésekor."
 
 #. "Load in reverse order" toggle button
-#: ../plug-ins/common/file-pdf-load.c:1416
+#: ../plug-ins/common/file-pdf-load.c:1435
 msgid "Load in reverse order"
 msgstr "Betöltés fordított sorrendben"
 
-#: ../plug-ins/common/file-pdf-load.c:1434
+#: ../plug-ins/common/file-pdf-load.c:1453
 msgid "_Width (pixels):"
 msgstr "Szé_lesség (képpontban):"
 
-#: ../plug-ins/common/file-pdf-load.c:1435
+#: ../plug-ins/common/file-pdf-load.c:1454
 msgid "_Height (pixels):"
 msgstr "M_agasság (képpontban):"
 
-#: ../plug-ins/common/file-pdf-load.c:1437
+#: ../plug-ins/common/file-pdf-load.c:1456
 msgid "_Resolution:"
 msgstr "_Felbontás:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1448
+#: ../plug-ins/common/file-pdf-load.c:1467
 msgid "Use _Anti-aliasing"
 msgstr "Élsimítás _használata"
 
 #. White Background
-#: ../plug-ins/common/file-pdf-load.c:1457
+#: ../plug-ins/common/file-pdf-load.c:1476
 msgid "_Fill transparent areas with white"
 msgstr "Átlátszó területek _kitöltése fehérrel"
 
-#: ../plug-ins/common/file-pdf-load.c:1743
-#: ../plug-ins/common/file-pdf-load.c:1744 ../plug-ins/common/file-svg.c:852
+#: ../plug-ins/common/file-pdf-load.c:1762
+#: ../plug-ins/common/file-pdf-load.c:1763 ../plug-ins/common/file-svg.c:852
 #: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
@@ -3253,7 +3249,6 @@ msgstr ""
 
 #: ../plug-ins/common/file-pdf-save.c:899
 #: ../plug-ins/common/file-pdf-save.c:1067
-#| msgid "T_ransparent background"
 msgid "_Fill transparent areas with background color"
 msgstr "Átlátszó területek _kitöltése a háttérszínnel"
 
@@ -3787,97 +3782,103 @@ msgstr "Hiba a létrehozó kulcsszóadatok olvasásakor"
 msgid "Error reading color block"
 msgstr "Hiba a színblokk olvasásakor"
 
-#: ../plug-ins/common/file-psp.c:1138
+#: ../plug-ins/common/file-psp.c:1136
+#, c-format
+#| msgid "Unsupported drawable type"
+msgid "Error: Unsupported palette size"
+msgstr "Hiba: nem támogatott palettaméret"
+
+#: ../plug-ins/common/file-psp.c:1147
 #, c-format
 msgid "Error reading color palette"
 msgstr "Hiba a színpaletta olvasásakor"
 
-#: ../plug-ins/common/file-psp.c:1564 ../plug-ins/common/file-psp.c:1578
+#: ../plug-ins/common/file-psp.c:1573 ../plug-ins/common/file-psp.c:1587
 #, c-format
 msgid "zlib error"
 msgstr "zlib hiba"
 
-#: ../plug-ins/common/file-psp.c:1641 ../plug-ins/common/file-psp.c:1675
-#: ../plug-ins/common/file-psp.c:1685
+#: ../plug-ins/common/file-psp.c:1650 ../plug-ins/common/file-psp.c:1684
+#: ../plug-ins/common/file-psp.c:1694
 #, c-format
 msgid "Error reading layer extension information"
 msgstr "Hiba a réteg kiterjesztésinformációinak olvasásakor"
 
-#: ../plug-ins/common/file-psp.c:1662
+#: ../plug-ins/common/file-psp.c:1671
 #, c-format
 msgid "Error reading block information"
 msgstr "Hiba a blokkinformációk olvasásakor"
 
-#: ../plug-ins/common/file-psp.c:1742
+#: ../plug-ins/common/file-psp.c:1751
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Érvénytelen %s réteg részblokk, LAYER kell legyen"
 
-#: ../plug-ins/common/file-psp.c:1773 ../plug-ins/common/file-psp.c:1830
+#: ../plug-ins/common/file-psp.c:1782 ../plug-ins/common/file-psp.c:1839
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Hiba a réteginformációk olvasásakor"
 
-#: ../plug-ins/common/file-psp.c:1872
+#: ../plug-ins/common/file-psp.c:1881
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Érvénytelen rétegméret: %d×%d"
 
-#: ../plug-ins/common/file-psp.c:1933
+#: ../plug-ins/common/file-psp.c:1942
 #, c-format
 msgid "Error creating layer"
 msgstr "Hiba a réteg létrehozásakor"
 
-#: ../plug-ins/common/file-psp.c:1978
+#: ../plug-ins/common/file-psp.c:1987
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Érvénytelen %s réteg részblokk, CHANNEL kell legyen"
 
-#: ../plug-ins/common/file-psp.c:1994
+#: ../plug-ins/common/file-psp.c:2003
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Hiba a csatornainformációk olvasásakor"
 
-#: ../plug-ins/common/file-psp.c:2017
+#: ../plug-ins/common/file-psp.c:2026
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Érvénytelen %d csatornatípus a csatornainformációkban"
 
-#: ../plug-ins/common/file-psp.c:2121 ../plug-ins/common/file-psp.c:2138
+#: ../plug-ins/common/file-psp.c:2130 ../plug-ins/common/file-psp.c:2147
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Hiba a csőadatok olvasásakor"
 
-#: ../plug-ins/common/file-psp.c:2239
+#: ../plug-ins/common/file-psp.c:2248
 #, c-format
 msgid "Error reading file header."
 msgstr "Hiba a fájl fejléc olvasásakor."
 
-#: ../plug-ins/common/file-psp.c:2246
+#: ../plug-ins/common/file-psp.c:2255
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Helytelen fájl aláírás."
 
-#: ../plug-ins/common/file-psp.c:2260
+#: ../plug-ins/common/file-psp.c:2269
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Nem támogatott PSP fájlformátum-verzió: %d.%d."
 
-#: ../plug-ins/common/file-psp.c:2280
+#: ../plug-ins/common/file-psp.c:2289
 msgid "invalid block size"
 msgstr "érvénytelen blokkméret"
 
-#: ../plug-ins/common/file-psp.c:2289
+#: ../plug-ins/common/file-psp.c:2298
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Ismételt általános képattribútum blokk."
 
-#: ../plug-ins/common/file-psp.c:2319
+#: ../plug-ins/common/file-psp.c:2328
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Hiányzó általános képattribútum blokk."
 
-#: ../plug-ins/common/file-psp.c:2433
+#: ../plug-ins/common/file-psp.c:2442
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Az exportálás még nincs megvalósítva."
@@ -4137,8 +4138,8 @@ msgstr "Ismeretlen képtípusok nem dolgozhatók fel"
 #: ../plug-ins/common/file-sunras.c:1158 ../plug-ins/common/file-sunras.c:1252
 #: ../plug-ins/common/file-sunras.c:1335 ../plug-ins/common/file-sunras.c:1434
 #: ../plug-ins/common/file-xwd.c:1429 ../plug-ins/common/file-xwd.c:1532
-#: ../plug-ins/common/file-xwd.c:1691 ../plug-ins/common/file-xwd.c:1906
-#: ../plug-ins/common/file-xwd.c:2064 ../plug-ins/common/file-xwd.c:2327
+#: ../plug-ins/common/file-xwd.c:1691 ../plug-ins/common/file-xwd.c:1914
+#: ../plug-ins/common/file-xwd.c:2072 ../plug-ins/common/file-xwd.c:2335
 #: ../plug-ins/file-fits/fits.c:804
 msgid "EOF encountered on reading"
 msgstr "Fájl vége olvasás közben"
@@ -4729,7 +4730,7 @@ msgstr "„%s” nem nyitható meg írásra: "
 msgid "Error exporting '%s': "
 msgstr "Hiba „%s” exportálásakor: "
 
-#: ../plug-ins/common/file-xwd.c:1762 ../plug-ins/common/file-xwd.c:2160
+#: ../plug-ins/common/file-xwd.c:1770 ../plug-ins/common/file-xwd.c:2168
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "A(z) %s XWD-fájl sérült."
@@ -4751,115 +4752,115 @@ msgstr "Képek összevonása"
 msgid "Untitled"
 msgstr "Névtelen"
 
-#: ../plug-ins/common/film.c:817
+#: ../plug-ins/common/film.c:820
 msgid "Available images:"
 msgstr "Elérhető képek:"
 
-#: ../plug-ins/common/film.c:818
+#: ../plug-ins/common/film.c:821
 msgid "On film:"
 msgstr "A filmen:"
 
-#: ../plug-ins/common/film.c:869 ../plug-ins/common/unit-editor.c:210
+#: ../plug-ins/common/film.c:872 ../plug-ins/common/unit-editor.c:210
 msgid "_Add"
 msgstr "Hozzá_adás"
 
-#: ../plug-ins/common/film.c:869 ../plug-ins/imagemap/imap_polygon.c:530
+#: ../plug-ins/common/film.c:872 ../plug-ins/imagemap/imap_polygon.c:530
 msgid "_Remove"
 msgstr "E_ltávolítás"
 
 #. Create selection
-#: ../plug-ins/common/film.c:905 ../plug-ins/imagemap/imap_selection.c:338
+#: ../plug-ins/common/film.c:908 ../plug-ins/imagemap/imap_selection.c:338
 #: ../plug-ins/selection-to-path/selection-to-path.c:436
 msgid "Selection"
 msgstr "Kijelölés"
 
 #. Film height/color
-#: ../plug-ins/common/film.c:915 ../plug-ins/common/film.c:1203
+#: ../plug-ins/common/film.c:918 ../plug-ins/common/film.c:1206
 msgid "Filmstrip"
 msgstr "Filmszalag"
 
 #. Keep maximum image height
-#: ../plug-ins/common/film.c:924
+#: ../plug-ins/common/film.c:927
 msgid "_Fit height to images"
 msgstr "Magasság _igazítása a képekhez"
 
 #. Film color
-#: ../plug-ins/common/film.c:966
+#: ../plug-ins/common/film.c:969
 msgid "Select Film Color"
 msgstr "Film színének kiválasztása"
 
-#: ../plug-ins/common/film.c:971 ../plug-ins/common/film.c:1027
+#: ../plug-ins/common/film.c:974 ../plug-ins/common/film.c:1030
 msgid "Co_lor:"
 msgstr "S_zín:"
 
 #. Film numbering: Startindex/Font/color
-#: ../plug-ins/common/film.c:983
+#: ../plug-ins/common/film.c:986
 msgid "Numbering"
 msgstr "Számozás"
 
-#: ../plug-ins/common/film.c:1004
+#: ../plug-ins/common/film.c:1007
 msgid "Start _index:"
 msgstr "Első _kocka száma:"
 
-#: ../plug-ins/common/film.c:1017
+#: ../plug-ins/common/film.c:1020
 msgid "_Font:"
 msgstr "_Betűkészlet:"
 
 #. Numbering color
-#: ../plug-ins/common/film.c:1022
+#: ../plug-ins/common/film.c:1025
 msgid "Select Number Color"
 msgstr "Szám színének kiválasztása"
 
-#: ../plug-ins/common/film.c:1040
+#: ../plug-ins/common/film.c:1043
 msgid "At _bottom"
 msgstr "_Lent"
 
-#: ../plug-ins/common/film.c:1041
+#: ../plug-ins/common/film.c:1044
 msgid "At _top"
 msgstr "_Fent"
 
 #. ** The right frame keeps the image selection **
-#: ../plug-ins/common/film.c:1054
+#: ../plug-ins/common/film.c:1057
 msgid "Image Selection"
 msgstr "Képválasztás"
 
-#: ../plug-ins/common/film.c:1083
+#: ../plug-ins/common/film.c:1086
 msgid "All Values are Fractions of the Strip Height"
 msgstr "Az összes érték a filmszalag magasságának arányában értendő"
 
-#: ../plug-ins/common/film.c:1086
+#: ../plug-ins/common/film.c:1089
 msgid "Ad_vanced"
 msgstr "Hala_dó"
 
-#: ../plug-ins/common/film.c:1105
+#: ../plug-ins/common/film.c:1108
 msgid "Image _height:"
 msgstr "Kép m_agassága:"
 
-#: ../plug-ins/common/film.c:1116
+#: ../plug-ins/common/film.c:1119
 msgid "Image spac_ing:"
 msgstr "Képkockák _távolsága:"
 
-#: ../plug-ins/common/film.c:1127
+#: ../plug-ins/common/film.c:1130
 msgid "_Hole offset:"
 msgstr "Lyukak _eltolása:"
 
-#: ../plug-ins/common/film.c:1138
+#: ../plug-ins/common/film.c:1141
 msgid "Ho_le width:"
 msgstr "L_yukak szélessége:"
 
-#: ../plug-ins/common/film.c:1149
+#: ../plug-ins/common/film.c:1152
 msgid "Hol_e height:"
 msgstr "Ly_ukak magassága:"
 
-#: ../plug-ins/common/film.c:1160
+#: ../plug-ins/common/film.c:1163
 msgid "Hole sp_acing:"
 msgstr "Lyukak távo_lsága:"
 
-#: ../plug-ins/common/film.c:1171
+#: ../plug-ins/common/film.c:1174
 msgid "_Number height:"
 msgstr "S_zámok magassága:"
 
-#: ../plug-ins/common/film.c:1184
+#: ../plug-ins/common/film.c:1187
 msgid "Re_set"
 msgstr "_Visszaállítás"
 
@@ -6742,15 +6743,15 @@ msgstr "YCoCg dekódolása (méretezett)"
 msgid "Decode Alpha exponent"
 msgstr "Alfa-kitevő dekódolása"
 
-#: ../plug-ins/file-dds/ddsread.c:1361
+#: ../plug-ins/file-dds/ddsread.c:1399
 msgid "Load DDS"
 msgstr "DDS betöltése"
 
-#: ../plug-ins/file-dds/ddsread.c:1380
+#: ../plug-ins/file-dds/ddsread.c:1418
 msgid "_Load mipmaps"
 msgstr "Mipmapok be_töltése"
 
-#: ../plug-ins/file-dds/ddsread.c:1387
+#: ../plug-ins/file-dds/ddsread.c:1425
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "YCoCg/AExp képek _automatikus dekódolása észleléskor"
 
@@ -7254,21 +7255,21 @@ msgstr "Nem támogatott vagy érvénytelen rétegmaszkszélesség: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nem támogatott vagy érvénytelen rétegmaszkméret: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1540 ../plug-ins/file-psd/psd-load.c:2126
+#: ../plug-ins/file-psd/psd-load.c:1548 ../plug-ins/file-psd/psd-load.c:2134
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nem támogatott tömörítési mód: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2273
+#: ../plug-ins/file-psd/psd-load.c:2281
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2473
+#: ../plug-ins/file-psd/psd-load.c:2481
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nem támogatott vagy érvénytelen csatornaméret"
 
-#: ../plug-ins/file-psd/psd-load.c:2539
+#: ../plug-ins/file-psd/psd-load.c:2547
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Nem sikerült kibontani az adatokat"
@@ -7700,7 +7701,6 @@ msgid "Import from TIFF"
 msgstr "Importálás TIFF-ből"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:2681
-#| msgid "Show image"
 msgid "_Show reduced images"
 msgstr "_Csökkentett képek megjelenítése"
 
@@ -8874,7 +8874,7 @@ msgstr "Rácstípus:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "Normal"
 msgstr "Normál"
 
@@ -10651,7 +10651,6 @@ msgstr "Index betöltése innen: „%s”"
 
 #: ../plug-ins/help/gimphelplocale.c:239
 #, c-format
-#| msgid "Could not load '%s': %s"
 msgid "Could not load data from '%s': %s"
 msgstr "Nem sikerült betölteni az adatokat innen: „%s”: %s"
 
@@ -11071,83 +11070,83 @@ msgstr "Kijelölés megszüntetése"
 msgid "Unselect All"
 msgstr "Minden kijelölés megszüntetése"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:204
+#: ../plug-ins/imagemap/imap_edit_area_info.c:249
 msgid "Link Type"
 msgstr "Hivatkozás típusa"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:213
+#: ../plug-ins/imagemap/imap_edit_area_info.c:258
 msgid "_Web Site"
 msgstr "_Webhely"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:219
+#: ../plug-ins/imagemap/imap_edit_area_info.c:264
 msgid "_Ftp Site"
 msgstr "_FTP-hely"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:225
+#: ../plug-ins/imagemap/imap_edit_area_info.c:270
 msgid "_Gopher"
 msgstr "Go_pher"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:231
+#: ../plug-ins/imagemap/imap_edit_area_info.c:276
 msgid "Ot_her"
 msgstr "Egyé_b"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:237
+#: ../plug-ins/imagemap/imap_edit_area_info.c:282
 msgid "F_ile"
 msgstr "Fáj_l"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:243
+#: ../plug-ins/imagemap/imap_edit_area_info.c:288
 msgid "WAI_S"
 msgstr "WAI_S"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:249
+#: ../plug-ins/imagemap/imap_edit_area_info.c:294
 msgid "Tel_net"
 msgstr "Tel_net"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:255
+#: ../plug-ins/imagemap/imap_edit_area_info.c:300
 msgid "e-_mail"
 msgstr "e-ma_il"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:261
+#: ../plug-ins/imagemap/imap_edit_area_info.c:306
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr "A területre való kattintáskor aktiválandó _URL (kötelező):"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:263
+#: ../plug-ins/imagemap/imap_edit_area_info.c:308
 msgid "Select HTML file"
 msgstr "HTML-fájl kiválasztása"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:272
+#: ../plug-ins/imagemap/imap_edit_area_info.c:317
 msgid "Relati_ve link"
 msgstr "Relatí_v hivatkozás"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:278
+#: ../plug-ins/imagemap/imap_edit_area_info.c:323
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr "_Célkeret neve/azonosítója (csak keretek esetében használatos):"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:281
+#: ../plug-ins/imagemap/imap_edit_area_info.c:326
 msgid "ALT te_xt: (optional)"
 msgstr "„Alt”-szö_veg (nem kötelező):"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:284
+#: ../plug-ins/imagemap/imap_edit_area_info.c:329
 msgid "_Link"
 msgstr "_Hivatkozás"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:318
+#: ../plug-ins/imagemap/imap_edit_area_info.c:363
 msgid "Dimensions"
 msgstr "Méretek"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:322
+#: ../plug-ins/imagemap/imap_edit_area_info.c:367
 msgid "Pre_view"
 msgstr "_Előnézet"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:360
+#: ../plug-ins/imagemap/imap_edit_area_info.c:405
 msgid "_JavaScript"
 msgstr "_JavaScript"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:459
+#: ../plug-ins/imagemap/imap_edit_area_info.c:504
 msgid "Area Settings"
 msgstr "Terület beállításai"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:501
+#: ../plug-ins/imagemap/imap_edit_area_info.c:546
 #, c-format
 msgid "Area #%d Settings"
 msgstr "%d. terület beállításai"
@@ -12267,9 +12266,9 @@ msgid "Export Metadata File"
 msgstr "Metaadat fájl exportálása"
 
 #: ../plug-ins/metadata/metadata-tags.c:180
-#: ../plug-ins/metadata/metadata-tags.c:194
-#: ../plug-ins/metadata/metadata-tags.c:254
-#: ../plug-ins/metadata/metadata-tags.c:271
+#: ../plug-ins/metadata/metadata-tags.c:203
+#: ../plug-ins/metadata/metadata-tags.c:263
+#: ../plug-ins/metadata/metadata-tags.c:280
 msgid "Select a value"
 msgstr "Érték kiválasztása"
 
@@ -12290,178 +12289,215 @@ msgid "Digitized from a print on non-transparent medium"
 msgstr "Nem átlátszó médiumon lévő nyomatról digitalizálva"
 
 #: ../plug-ins/metadata/metadata-tags.c:185
+msgid "Original media with minor human edits"
+msgstr "Eredeti média kicsi emberi szerkesztésekkel"
+
+#: ../plug-ins/metadata/metadata-tags.c:186
+msgid "Composite of captured elements"
+msgstr "Rögzített elemek összetétele"
+
+#: ../plug-ins/metadata/metadata-tags.c:187
+msgid "Algorithmically-enhanced media"
+msgstr "Algoritmikusan javított média"
+
+#: ../plug-ins/metadata/metadata-tags.c:188
+msgid "Data-driven media"
+msgstr "Adatvezérelt média"
+
+#: ../plug-ins/metadata/metadata-tags.c:189
+#| msgid "Digital Source Type"
+msgid "Digital art"
+msgstr "Digitális művészet"
+
+#: ../plug-ins/metadata/metadata-tags.c:190
+msgid "Virtual recording"
+msgstr "Virtuális rögzítés"
+
+#: ../plug-ins/metadata/metadata-tags.c:191
+msgid "Composite including synthetic elements"
+msgstr "Szintetikus elemeket tartalmazó kompozit"
+
+#: ../plug-ins/metadata/metadata-tags.c:192
+msgid "Trained algorithmic media"
+msgstr "Képzett algoritmikus média"
+
+#: ../plug-ins/metadata/metadata-tags.c:193
+msgid "Pure algorithmic media"
+msgstr "Tiszta algoritmikus média"
+
+#: ../plug-ins/metadata/metadata-tags.c:194
 msgid "Created by software"
 msgstr "Szoftverrel létrehozva"
 
-#: ../plug-ins/metadata/metadata-tags.c:195
-#: ../plug-ins/metadata/metadata-tags.c:207
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:204
+#: ../plug-ins/metadata/metadata-tags.c:216
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "None"
 msgstr "Nincs"
 
-#: ../plug-ins/metadata/metadata-tags.c:196
-#: ../plug-ins/metadata/metadata-tags.c:208
+#: ../plug-ins/metadata/metadata-tags.c:205
+#: ../plug-ins/metadata/metadata-tags.c:217
 msgid "Not Applicable"
 msgstr "Nem alkalmazható"
 
-#: ../plug-ins/metadata/metadata-tags.c:197
+#: ../plug-ins/metadata/metadata-tags.c:206
 msgid "Unlimited Model Releases"
 msgstr "Korlátlan modell kiadás"
 
-#: ../plug-ins/metadata/metadata-tags.c:198
+#: ../plug-ins/metadata/metadata-tags.c:207
 msgid "Limited or Incomplete Model Releases"
 msgstr "Korlátozott vagy nem teljes modell kiadás"
 
-#: ../plug-ins/metadata/metadata-tags.c:209
+#: ../plug-ins/metadata/metadata-tags.c:218
 msgid "Unlimited Property Releases"
 msgstr "Korlátlan tulajdonú kiadás"
 
-#: ../plug-ins/metadata/metadata-tags.c:210
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "Limited or Incomplete Property Releases"
 msgstr "Korlátozott vagy nem teljes tulajdonú kiadás"
 
-#: ../plug-ins/metadata/metadata-tags.c:219
+#: ../plug-ins/metadata/metadata-tags.c:228
 msgid "Age Unknown"
 msgstr "Életkor ismeretlen"
 
-#: ../plug-ins/metadata/metadata-tags.c:220
+#: ../plug-ins/metadata/metadata-tags.c:229
 msgid "Age 25 or Over"
 msgstr "Életkor 25 vagy afelett"
 
-#: ../plug-ins/metadata/metadata-tags.c:221
+#: ../plug-ins/metadata/metadata-tags.c:230
 msgid "Age 24"
 msgstr "Életkor 24"
 
-#: ../plug-ins/metadata/metadata-tags.c:222
+#: ../plug-ins/metadata/metadata-tags.c:231
 msgid "Age 23"
 msgstr "Életkor 23"
 
-#: ../plug-ins/metadata/metadata-tags.c:223
+#: ../plug-ins/metadata/metadata-tags.c:232
 msgid "Age 22"
 msgstr "Életkor 22"
 
-#: ../plug-ins/metadata/metadata-tags.c:224
+#: ../plug-ins/metadata/metadata-tags.c:233
 msgid "Age 21"
 msgstr "Életkor 21"
 
-#: ../plug-ins/metadata/metadata-tags.c:225
+#: ../plug-ins/metadata/metadata-tags.c:234
 msgid "Age 20"
 msgstr "Életkor 20"
 
-#: ../plug-ins/metadata/metadata-tags.c:226
+#: ../plug-ins/metadata/metadata-tags.c:235
 msgid "Age 19"
 msgstr "Életkor 19"
 
-#: ../plug-ins/metadata/metadata-tags.c:227
+#: ../plug-ins/metadata/metadata-tags.c:236
 msgid "Age 18"
 msgstr "Életkor 18"
 
-#: ../plug-ins/metadata/metadata-tags.c:228
+#: ../plug-ins/metadata/metadata-tags.c:237
 msgid "Age 17"
 msgstr "Életkor 17"
 
-#: ../plug-ins/metadata/metadata-tags.c:229
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "Age 16"
 msgstr "Életkor 16"
 
-#: ../plug-ins/metadata/metadata-tags.c:230
+#: ../plug-ins/metadata/metadata-tags.c:239
 msgid "Age 15"
 msgstr "Életkor 15"
 
-#: ../plug-ins/metadata/metadata-tags.c:231
+#: ../plug-ins/metadata/metadata-tags.c:240
 msgid "Age 14 or Under"
 msgstr "Életkor 14 vagy azalatt"
 
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "2"
 msgstr "2"
 
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "3"
 msgstr "3"
 
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "4"
 msgstr "4"
 
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "6"
 msgstr "6"
 
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "7"
 msgstr "7"
 
-#: ../plug-ins/metadata/metadata-tags.c:245
-#: ../plug-ins/metadata/metadata-tags.c:281
-#: ../plug-ins/metadata/metadata-tags.c:288
-#: ../plug-ins/metadata/metadata-tags.c:295
+#: ../plug-ins/metadata/metadata-tags.c:254
+#: ../plug-ins/metadata/metadata-tags.c:290
+#: ../plug-ins/metadata/metadata-tags.c:297
+#: ../plug-ins/metadata/metadata-tags.c:304
 msgid "Unknown"
 msgstr "Ismeretlen"
 
 #. DO NOT SAVE
-#: ../plug-ins/metadata/metadata-tags.c:246
+#: ../plug-ins/metadata/metadata-tags.c:255
 msgid "Copyrighted"
 msgstr "Szerzői joggal védett"
 
 #. TRUE
-#: ../plug-ins/metadata/metadata-tags.c:247
+#: ../plug-ins/metadata/metadata-tags.c:256
 msgid "Public Domain"
 msgstr "Közkincs"
 
-#: ../plug-ins/metadata/metadata-tags.c:255
+#: ../plug-ins/metadata/metadata-tags.c:264
 msgid "Work"
 msgstr "Munkahelyi"
 
-#: ../plug-ins/metadata/metadata-tags.c:256
+#: ../plug-ins/metadata/metadata-tags.c:265
 msgid "Cell"
 msgstr "Mobil"
 
-#: ../plug-ins/metadata/metadata-tags.c:257
+#: ../plug-ins/metadata/metadata-tags.c:266
 msgid "Fax"
 msgstr "Fax"
 
-#: ../plug-ins/metadata/metadata-tags.c:258
+#: ../plug-ins/metadata/metadata-tags.c:267
 msgid "Home"
 msgstr "Otthoni"
 
-#: ../plug-ins/metadata/metadata-tags.c:259
+#: ../plug-ins/metadata/metadata-tags.c:268
 msgid "Pager"
 msgstr "Személyhívó"
 
-#: ../plug-ins/metadata/metadata-tags.c:272
+#: ../plug-ins/metadata/metadata-tags.c:281
 msgid "Male"
 msgstr "Férfi"
 
-#: ../plug-ins/metadata/metadata-tags.c:273
+#: ../plug-ins/metadata/metadata-tags.c:282
 msgid "Female"
 msgstr "Nő"
 
-#: ../plug-ins/metadata/metadata-tags.c:274
+#: ../plug-ins/metadata/metadata-tags.c:283
 msgid "Other"
 msgstr "Egyéb"
 
-#: ../plug-ins/metadata/metadata-tags.c:281
+#: ../plug-ins/metadata/metadata-tags.c:290
 msgid "Above sea level"
 msgstr "Tengerszint felett"
 
-#: ../plug-ins/metadata/metadata-tags.c:281
+#: ../plug-ins/metadata/metadata-tags.c:290
 msgid "Below sea level"
 msgstr "Tengerszint alatt"
 
-#: ../plug-ins/metadata/metadata-tags.c:288
+#: ../plug-ins/metadata/metadata-tags.c:297
 msgid "North"
 msgstr "Észak"
 
-#: ../plug-ins/metadata/metadata-tags.c:288
+#: ../plug-ins/metadata/metadata-tags.c:297
 msgid "South"
 msgstr "Dél"
 
-#: ../plug-ins/metadata/metadata-tags.c:295
+#: ../plug-ins/metadata/metadata-tags.c:304
 msgid "East"
 msgstr "Kelet"
 
-#: ../plug-ins/metadata/metadata-tags.c:295
+#: ../plug-ins/metadata/metadata-tags.c:304
 msgid "West"
 msgstr "Nyugat"
 
