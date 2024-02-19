@@ -1,21 +1,21 @@
 # Hungarian translation for gimp-windows-installer.
-# Copyright (C) 2017, 2018, 2021, 2022 the gimp authors.
+# Copyright (C) 2017, 2018, 2021, 2022, 2024 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 #
-# Balázs Úr <ur.balazs at fsf dot hu>, 2017, 2018, 2021, 2022.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2017, 2018, 2021, 2022, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-28 13:29+0000\n"
-"PO-Revision-Date: 2022-09-02 01:14+0200\n"
+"POT-Creation-Date: 2024-02-15 20:23+0000\n"
+"PO-Revision-Date: 2024-02-19 20:39+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
-"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 19.12.3\n"
+"X-Generator: Lokalize 23.08.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
@@ -28,8 +28,12 @@ msgstr "A beállítást összeállította: Jernej Simoncic, jernej-gimp@ena.si"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
-msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
-msgstr "A GIMP ezen verziója Windows 7-et, vagy újabb Windows verziót igényel."
+#| msgid ""
+#| "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgid ""
+"This version of GIMP requires Windows 10, or a newer version of Windows."
+msgstr ""
+"A GIMP ezen verziója Windows 10-et, vagy újabb Windows verziót igényel."
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
@@ -135,8 +139,8 @@ msgstr "Futásidejű programkönyvtárak"
 #: build/windows/installer/lang/setup.isl.xml.in:101
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
-"A GIMP által használt futásidejű programkönyvtárak, beleértve a GTK"
-" futtatókörnyezetet is"
+"A GIMP által használt futásidejű programkönyvtárak, beleértve a GTK "
+"futtatókörnyezetet is"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -316,14 +320,14 @@ msgstr ""
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
-"installing this version in %2, or choose a Custom install, and select a "
-"different installation folder.%n%nThe Setup will now exit."
+"Setup couldn't determine how to remove the old version automatically."
+"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+"before installing this version in %2, or choose a Custom install, and select "
+"a different installation folder.%n%nThe Setup will now exit."
 msgstr ""
 "A GIMP %1 nem telepíthető a jelenlegi GIMP verzió fölé, és a telepítő nem "
-"tudta megállapítani, hogyan távolítható el a régi verzió automatikusan.%n"
-"%nTávolítsa el a GIMP korábbi verzióját és a bővítményeket, mielőtt ezt a "
+"tudta megállapítani, hogyan távolítható el a régi verzió automatikusan."
+"%n%nTávolítsa el a GIMP korábbi verzióját és a bővítményeket, mielőtt ezt a "
 "verziót ide telepíti: %2, vagy válassza az Egyéni telepítést és válasszon "
 "másik telepítési mappát.%n%nA telepítő most kilép."
 
