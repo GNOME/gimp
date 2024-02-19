@@ -1889,7 +1889,7 @@ _gp_params_read (GIOChannel  *channel,
                                            &(*params)[i].data.d_color_array.colors[j].size, 1,
                                            user_data))
                 {
-                  for (gint k = 0; k < j; j++)
+                  for (gint k = 0; k < j; k++)
                     {
                       g_free ((*params)[i].data.d_color_array.colors[k].encoding);
                       g_free ((*params)[i].data.d_color_array.colors[k].profile_data);
@@ -1904,7 +1904,7 @@ _gp_params_read (GIOChannel  *channel,
                                           (*params)[i].data.d_color_array.colors[j].size,
                                           user_data))
                 {
-                  for (gint k = 0; k < j; j++)
+                  for (gint k = 0; k < j; k++)
                     {
                       g_free ((*params)[i].data.d_color_array.colors[k].encoding);
                       g_free ((*params)[i].data.d_color_array.colors[k].profile_data);
@@ -1918,7 +1918,7 @@ _gp_params_read (GIOChannel  *channel,
                                             &(*params)[i].data.d_color_array.colors[j].encoding, 1,
                                             user_data))
                 {
-                  for (gint k = 0; k < j; j++)
+                  for (gint k = 0; k < j; k++)
                     {
                       g_free ((*params)[i].data.d_color_array.colors[k].encoding);
                       g_free ((*params)[i].data.d_color_array.colors[k].profile_data);
@@ -1932,7 +1932,7 @@ _gp_params_read (GIOChannel  *channel,
                                            &(*params)[i].data.d_color_array.colors[j].profile_size, 1,
                                            user_data))
                 {
-                  for (gint k = 0; k < j; j++)
+                  for (gint k = 0; k < j; k++)
                     {
                       g_free ((*params)[i].data.d_color_array.colors[k].encoding);
                       g_free ((*params)[i].data.d_color_array.colors[k].profile_data);
@@ -1950,7 +1950,7 @@ _gp_params_read (GIOChannel  *channel,
                                               (*params)[i].data.d_color_array.colors[j].profile_size,
                                               user_data))
                     {
-                      for (gint k = 0; k < j; j++)
+                      for (gint k = 0; k < j; k++)
                         {
                           g_free ((*params)[i].data.d_color_array.colors[k].encoding);
                           g_free ((*params)[i].data.d_color_array.colors[k].profile_data);
