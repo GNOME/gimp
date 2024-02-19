@@ -263,8 +263,21 @@ deps-debian-x64:
     - _babl/_build-x64
     - _gegl/_build-x64
   before_script:
-    - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
-    - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
+    - if [ "$CI_COMMIT_TAG" != "" ]; then
+        repo=https://gitlab.gnome.org/GNOME/babl.git;
+        babl_tag=$(git ls-remote --tags --exit-code --refs "$repo" |
+                   grep -oi "BABL_[0-9]*_[0-9]*_[0-9]*"            |
+                   sort --version-sort | tail -1);
+        babl_branch="--branch=$babl_tag";
+
+        repo=https://gitlab.gnome.org/GNOME/gegl.git;
+        gegl_tag=$(git ls-remote --tags --exit-code --refs "$repo" |
+                   grep -oi "GEGL_[0-9]*_[0-9]*_[0-9]*"            |
+                   sort --version-sort | tail -1);
+        gegl_branch="--branch=$gegl_tag";
+      fi
+    - git clone $babl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
+    - git clone $gegl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
     - export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/pkgconfig"
     - export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
     - export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}"
