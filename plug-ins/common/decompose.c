@@ -218,11 +218,11 @@ static const Extract extract[] =
 
   { N_("LCH"), "CIE LCH(ab)", TRUE, 3, FALSE, { CPN_LCH_L, CPN_LCH_C, CPN_LCH_H } },
 
-  { N_("YCbCr_ITU_R470"),     "Y'CbCr", TRUE, 3, FALSE, { CPN_YCBCR_Y, CPN_YCBCR_CB, CPN_YCBCR_CR} },
-  { N_("YCbCr_ITU_R470_256"), "Y'CbCr", TRUE, 3, TRUE,  { CPN_YCBCR_Y, CPN_YCBCR_CB, CPN_YCBCR_CR} },
+  { N_("YCbCr470"),  "Y'CbCr", TRUE, 3, FALSE, { CPN_YCBCR_Y, CPN_YCBCR_CB, CPN_YCBCR_CR} },
+  { N_("YCbCr470f"), "Y'CbCr", TRUE, 3, TRUE,  { CPN_YCBCR_Y, CPN_YCBCR_CB, CPN_YCBCR_CR} },
 
-  { N_("YCbCr_ITU_R709"),     "Y'CbCr709", TRUE, 3, FALSE, { CPN_YCBCR709_Y, CPN_YCBCR709_CB, CPN_YCBCR709_CR} },
-  { N_("YCbCr_ITU_R709_256"), "Y'CbCr709", TRUE, 3, TRUE,  { CPN_YCBCR709_Y, CPN_YCBCR709_CB, CPN_YCBCR709_CR} }
+  { N_("YCbCr709"),  "Y'CbCr709", TRUE, 3, FALSE, { CPN_YCBCR709_Y, CPN_YCBCR709_CB, CPN_YCBCR709_CR} },
+  { N_("YCbCr709f"), "Y'CbCr709", TRUE, 3, TRUE,  { CPN_YCBCR709_Y, CPN_YCBCR709_CB, CPN_YCBCR709_CR} }
 };
 
 
@@ -294,24 +294,37 @@ decompose_create_procedure (GimpPlugIn  *plug_in,
                                       "Peter Kirchgessner, Clarence Risher",
                                       "1997");
 
-      GIMP_PROC_ARG_STRING (procedure, "decompose-type",
-                            "Decompose type",
-                            type_desc->str,
-                            "RGB",
+      GIMP_PROC_ARG_CHOICE (procedure, "decompose-type",
+                            _("Color _model"),
+                            _("The model to decompose to"),
+                            gimp_choice_new_with_values ("rgb",        0, _("RGB"),                NULL,
+                                                         "rgba",       1, _("RGBA"),               NULL,
+                                                         "alpha",      2, _("Alpha"),              NULL,
+                                                         "hsv",        3, _("HSV"),                NULL,
+                                                         "hsl",        4, _("HSL"),                NULL,
+                                                         "cmyk",       5, _("CMYK"),               NULL,
+                                                         "lab",        6, _("LAB"),                NULL,
+                                                         "lch",        7, _("LCH"),                NULL,
+                                                         "ycbcr470",   8, _("YCbCr ITU R470"),     NULL,
+                                                         "ycbcr709",   9, _("YCbCr ITU R709"),     NULL,
+                                                         "ycbcr470f", 10, _("YCbCr ITU R470 256"), NULL,
+                                                         "ycbcr709f", 11, _("YCbCr ITU R709 256"), NULL,
+                                                         NULL),
+                            "rgb",
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "layers-mode",
-                             "Layers mode",
+                             _("_Decompose to layers"),
                              _("Create channels as layers in a single image"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "use-registration",
-                             "Use registration",
-                             "When enabled, pixels in the foreground color "
-                             "will appear black in all output images. This "
-                             "can be used for things like crop marks that "
-                             "have to show up on all channels.",
+                             _("_Foreground as registration color"),
+                             _("When enabled, pixels in the foreground color "
+                               "will appear black in all output images. This "
+                               "can be used for things like crop marks that "
+                               "have to show up on all channels."),
                              FALSE,
                              G_PARAM_READWRITE);
 
@@ -362,7 +375,6 @@ decompose_run (GimpProcedure        *procedure,
   gint            num_layers;
   GString        *data;
   gchar          *decompose_type;
-  gchar          *tmp;
   gint            j;
 
   gegl_init (NULL, NULL);
@@ -383,19 +395,6 @@ decompose_run (GimpProcedure        *procedure,
     {
       drawable = drawables[0];
     }
-
-  g_object_get (config,
-                "decompose-type", &decompose_type,
-                NULL);
-
-  tmp = g_ascii_strup (decompose_type, -1);
-  g_free (decompose_type);
-
-  g_object_set (config,
-                "decompose-type", tmp,
-                NULL);
-
-  g_free (tmp);
 
   if (run_mode == GIMP_RUN_INTERACTIVE && ! decompose_dialog (procedure, G_OBJECT (config)))
     return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
@@ -836,21 +835,8 @@ decompose_dialog (GimpProcedure *procedure,
                   GObject       *config)
 {
   GtkWidget    *dialog;
-  GtkWidget    *main_vbox;
-  GtkWidget    *frame;
   GtkWidget    *vbox;
-  GtkWidget    *hbox;
-  GtkWidget    *label;
-  GtkListStore *store;
-  GtkWidget    *combo;
-  GtkWidget    *toggle;
-  gchar        *config_extract_type;
-  gint          j;
   gboolean      run;
-
-  g_object_get (config,
-                "decompose-type", &config_extract_type,
-                NULL);
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -860,74 +846,26 @@ decompose_dialog (GimpProcedure *procedure,
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "extract-label", _("Extract Channels"),
+                                   FALSE, FALSE);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "extract-frame",
+                                    "extract-label", FALSE,
+                                    "decompose-type");
 
-  frame = gimp_frame_new (_("Extract Channels"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "decompose-vbox",
+                                         "extract-frame", "layers-mode",
+                                         "use-registration",
+                                         NULL);
+  gtk_box_set_spacing (GTK_BOX (vbox), 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "decompose-vbox", NULL);
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new_with_mnemonic (_("Color _model:"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
-
-  for (j = 0; j < G_N_ELEMENTS (extract); j++)
-    {
-      if (extract[j].dialog)
-        {
-          gchar *label = g_strdup (gettext (extract[j].type));
-          gchar *l;
-
-          for (l = label; *l; l++)
-            if (*l == '-' || *l == '_')
-              *l = ' ';
-
-          gtk_list_store_insert_with_values (store, NULL,
-                                             G_N_ELEMENTS (extract),
-                                             0, extract[j].type,
-                                             1, label,
-                                             -1);
-
-          g_free (label);
-        }
-    }
-
-  combo = gimp_prop_string_combo_box_new (config, "decompose-type",
-                                          GTK_TREE_MODEL (store), 0, 1);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-
-  g_object_unref (store);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
-
-  toggle = gimp_prop_check_button_new (config, "layers-mode",
-                                       _("_Decompose to layers"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
-
-  toggle = gimp_prop_check_button_new (config, "use-registration",
-                                       _("_Foreground as registration color"));
-  gimp_help_set_help_data (toggle, _("Pixels in the foreground color will "
-                                     "appear black in all output images.  "
-                                     "This can be used for things like crop "
-                                     "marks that have to show up on all "
-                                     "channels."), PLUG_IN_PROC);
-  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
-
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
