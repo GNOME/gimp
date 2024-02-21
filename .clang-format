@@ -36,7 +36,6 @@ SpaceAfterCStyleCast: true
 ColumnLimit: 80
 PenaltyBreakAssignment: 60
 PenaltyBreakBeforeFirstCallParameter: 100
-PenaltyBreakString: 60
 PenaltyBreakOpenParenthesis: 40
 PenaltyExcessCharacter: 1
 # Strings are more often longer by usage, so let's give these slightly
