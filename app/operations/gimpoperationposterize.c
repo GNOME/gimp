@@ -51,6 +51,8 @@ static void     gimp_operation_posterize_set_property (GObject             *obje
                                                        const GValue        *value,
                                                        GParamSpec          *pspec);
 
+static void gimp_operation_posterize_prepare (GeglOperation *operation);
+
 static gboolean gimp_operation_posterize_process      (GeglOperation       *operation,
                                                        void                *in_buf,
                                                        void                *out_buf,
@@ -74,7 +76,7 @@ gimp_operation_posterize_class_init (GimpOperationPosterizeClass *klass)
 
   object_class->set_property = gimp_operation_posterize_set_property;
   object_class->get_property = gimp_operation_posterize_get_property;
-
+  operation_class->prepare   = gimp_operation_posterize_prepare;
   point_class->process       = gimp_operation_posterize_process;
 
   gegl_operation_class_set_keys (operation_class,
@@ -135,6 +137,17 @@ gimp_operation_posterize_set_property (GObject      *object,
       break;
     }
 }
+
+static void
+gimp_operation_posterize_prepare (GeglOperation *operation)
+{
+  const Babl *format = babl_format_with_space ("R~G~B~A float",
+                                               gegl_operation_get_format (operation, "input"));
+
+  gegl_operation_set_format (operation, "input", format);
+  gegl_operation_set_format (operation, "output", format);
+}
+
 
 static gboolean
 gimp_operation_posterize_process (GeglOperation       *operation,
