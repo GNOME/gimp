@@ -84,6 +84,7 @@ libgimpbase_headers_introspectable = files(
   'gimpbaseenums.h',
   'gimpbasetypes.h',
   'gimpchecks.h',
+  'gimpchoice.h',
   'gimpcpuaccel.h',
   'gimpenv.h',
   'gimplimits.h',
