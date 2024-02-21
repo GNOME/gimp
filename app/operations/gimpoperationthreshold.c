@@ -60,6 +60,7 @@ static gboolean gimp_operation_threshold_process (GeglOperation       *operation
                                                   const GeglRectangle *roi,
                                                   gint                 level);
 
+static void gimp_operation_threshold_prepare (GeglOperation *operation);
 
 G_DEFINE_TYPE (GimpOperationThreshold, gimp_operation_threshold,
                GIMP_TYPE_OPERATION_POINT_FILTER)
@@ -76,6 +77,8 @@ gimp_operation_threshold_class_init (GimpOperationThresholdClass *klass)
 
   object_class->set_property = gimp_operation_threshold_set_property;
   object_class->get_property = gimp_operation_threshold_get_property;
+
+  operation_class->prepare   = gimp_operation_threshold_prepare;
 
   point_class->process       = gimp_operation_threshold_process;
 
@@ -169,7 +172,17 @@ gimp_operation_threshold_set_property (GObject      *object,
     }
 }
 
- static gboolean
+static void
+gimp_operation_threshold_prepare (GeglOperation *operation)
+{
+  const Babl *format = babl_format_with_space (
+      "R'G'B'A float", gegl_operation_get_format (operation, "input"));
+
+  gegl_operation_set_format (operation, "input", format);
+  gegl_operation_set_format (operation, "output", format);
+}
+
+static gboolean
 gimp_operation_threshold_process (GeglOperation       *operation,
                                   void                *in_buf,
                                   void                *out_buf,
