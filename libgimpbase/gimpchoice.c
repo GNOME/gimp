@@ -237,7 +237,6 @@ gimp_choice_is_valid (GimpChoice  *choice,
 /**
  * gimp_choice_list_nicks:
  * @choice: a %GimpChoice.
- * @nick:   the nick to check.
  *
  * This procedure returns the list of nicks allowed for @choice.
  *
@@ -363,8 +362,6 @@ gimp_choice_get_documentation (GimpChoice   *choice,
  * means it cannot be chosen anymore (so [method@Gimp.Choice.is_valid] will
  * return %FALSE; nevertheless [method@Gimp.Choice.list_nicks] and other
  * functions to get information about a choice will still function).
- *
- * Returns: %TRUE if @nick is found, %FALSE otherwise.
  *
  * Since: 3.0
  **/
