@@ -37,8 +37,7 @@ ColumnLimit: 80
 PenaltyBreakAssignment: 60
 PenaltyBreakBeforeFirstCallParameter: 100
 PenaltyBreakString: 60
-# Uncomment this when we start using clang-format 14 in the CI.
-# PenaltyBreakOpenParenthesis: 40
+PenaltyBreakOpenParenthesis: 40
 PenaltyExcessCharacter: 1
 # Strings are more often longer by usage, so let's give these slightly
 # more space to breath.
