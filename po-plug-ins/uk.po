@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-19 20:51+0000\n"
-"PO-Revision-Date: 2024-02-20 15:41+0200\n"
+"POT-Creation-Date: 2024-02-20 14:42+0000\n"
+"PO-Revision-Date: 2024-02-21 08:25+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -33,7 +33,7 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/common/border-average.c:185 plug-ins/common/checkerboard.c:176
 #: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:584
 #: plug-ins/common/contrast-retinex.c:246 plug-ins/common/crop-zealous.c:151
-#: plug-ins/common/curve-bend.c:642 plug-ins/common/decompose.c:375
+#: plug-ins/common/curve-bend.c:642 plug-ins/common/decompose.c:387
 #: plug-ins/common/depth-merge.c:293 plug-ins/common/despeckle.c:231
 #: plug-ins/common/destripe.c:175 plug-ins/common/gradient-map.c:216
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:310
@@ -623,7 +623,7 @@ msgstr "Вертикально"
 #. * Create the "background" layer to hold the image...
 #.
 #: plug-ins/common/blinds.c:272 plug-ins/common/compose.c:1183
-#: plug-ins/common/decompose.c:645 plug-ins/common/file-cel.c:495
+#: plug-ins/common/decompose.c:644 plug-ins/common/file-cel.c:495
 #: plug-ins/common/file-cel.c:500 plug-ins/common/file-dicom.c:751
 #: plug-ins/common/file-farbfeld.c:321 plug-ins/common/file-gegl.c:471
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:345
@@ -1481,54 +1481,59 @@ msgstr "_Redness cr709:"
 
 #: plug-ins/common/compose.c:244 plug-ins/common/compose.c:438
 #: plug-ins/common/compose.c:501 plug-ins/common/decompose.c:193
-#: plug-ins/common/file-heif.c:2475
+#: plug-ins/common/decompose.c:300 plug-ins/common/file-heif.c:2475
 msgid "RGB"
 msgstr "RGB"
 
 #: plug-ins/common/compose.c:251 plug-ins/common/compose.c:439
 #: plug-ins/common/compose.c:502 plug-ins/common/decompose.c:194
+#: plug-ins/common/decompose.c:301
 msgid "RGBA"
 msgstr "RGBA"
 
 #: plug-ins/common/compose.c:259 plug-ins/common/compose.c:440
 #: plug-ins/common/compose.c:503 plug-ins/common/decompose.c:201
+#: plug-ins/common/decompose.c:303
 msgid "HSV"
 msgstr "HSV"
 
 #: plug-ins/common/compose.c:266 plug-ins/common/compose.c:441
 #: plug-ins/common/compose.c:504 plug-ins/common/decompose.c:206
+#: plug-ins/common/decompose.c:304
 msgid "HSL"
 msgstr "HSL"
 
 #: plug-ins/common/compose.c:273 plug-ins/common/compose.c:442
 #: plug-ins/common/compose.c:505 plug-ins/common/decompose.c:211
-#: plug-ins/common/file-jp2-load.c:1000
+#: plug-ins/common/decompose.c:305 plug-ins/common/file-jp2-load.c:1000
 msgid "CMYK"
 msgstr "CMYK"
 
 #: plug-ins/common/compose.c:281 plug-ins/common/compose.c:443
 #: plug-ins/common/compose.c:506 plug-ins/common/decompose.c:217
+#: plug-ins/common/decompose.c:306
 msgid "LAB"
 msgstr "LAB"
 
 #: plug-ins/common/compose.c:288 plug-ins/common/compose.c:444
 #: plug-ins/common/compose.c:507 plug-ins/common/decompose.c:219
+#: plug-ins/common/decompose.c:307
 msgid "LCH"
 msgstr "LCH"
 
-#: plug-ins/common/compose.c:295 plug-ins/common/decompose.c:221
+#: plug-ins/common/compose.c:295
 msgid "YCbCr_ITU_R470"
 msgstr "YCbCr_ITU_R470"
 
-#: plug-ins/common/compose.c:302 plug-ins/common/decompose.c:224
+#: plug-ins/common/compose.c:302
 msgid "YCbCr_ITU_R709"
 msgstr "YCbCr_ITU_R709"
 
-#: plug-ins/common/compose.c:309 plug-ins/common/decompose.c:222
+#: plug-ins/common/compose.c:309
 msgid "YCbCr_ITU_R470_256"
 msgstr "YCbCr_ITU_R470_256"
 
-#: plug-ins/common/compose.c:316 plug-ins/common/decompose.c:225
+#: plug-ins/common/compose.c:316
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
@@ -1575,22 +1580,27 @@ msgid "Fourth input image"
 msgstr "Четверте вхідне зображення"
 
 #: plug-ins/common/compose.c:436 plug-ins/common/compose.c:499
+#: plug-ins/common/decompose.c:298
 msgid "Color _model"
 msgstr "Кольорова _модель"
 
 #: plug-ins/common/compose.c:445 plug-ins/common/compose.c:508
+#: plug-ins/common/decompose.c:308
 msgid "YCbCr ITU R470"
 msgstr "YCbCr ITU R470"
 
 #: plug-ins/common/compose.c:446 plug-ins/common/compose.c:509
+#: plug-ins/common/decompose.c:309
 msgid "YCbCr ITU R709"
 msgstr "YCbCr ITU R709"
 
 #: plug-ins/common/compose.c:447 plug-ins/common/compose.c:510
+#: plug-ins/common/decompose.c:310
 msgid "YCbCr ITU R470 256"
 msgstr "YCbCr ITU R470 256"
 
 #: plug-ins/common/compose.c:448 plug-ins/common/compose.c:511
+#: plug-ins/common/decompose.c:311
 msgid "YCbCr ITU R709 256"
 msgstr "YCbCr ITU R709 256"
 
@@ -2219,7 +2229,7 @@ msgstr "Зелений"
 msgid "Blue"
 msgstr "Синій"
 
-#: plug-ins/common/decompose.c:199
+#: plug-ins/common/decompose.c:199 plug-ins/common/decompose.c:302
 msgid "Alpha"
 msgstr "Альфа"
 
@@ -2253,6 +2263,26 @@ msgstr "Жовтий"
 msgid "Black"
 msgstr "Чорний"
 
+#: plug-ins/common/decompose.c:221
+#| msgid "YCbCr"
+msgid "YCbCr470"
+msgstr "YCbCr470"
+
+#: plug-ins/common/decompose.c:222
+#| msgid "YCbCr"
+msgid "YCbCr470f"
+msgstr "YCbCr470f"
+
+#: plug-ins/common/decompose.c:224
+#| msgid "YCbCr"
+msgid "YCbCr709"
+msgstr "YCbCr709"
+
+#: plug-ins/common/decompose.c:225
+#| msgid "YCbCr"
+msgid "YCbCr709f"
+msgstr "YCbCr709f"
+
 #: plug-ins/common/decompose.c:261
 msgid "What to decompose: "
 msgstr "Що декомпонувати: "
@@ -2265,46 +2295,53 @@ msgstr "_Розібрати..."
 msgid "Decompose an image into separate colorspace components"
 msgstr "Розібрати зображення на окремі кольорові складові"
 
-#: plug-ins/common/decompose.c:305
-msgid "Create channels as layers in a single image"
-msgstr "Створити канали як шари у єдиному зображенні"
+#: plug-ins/common/decompose.c:299
+#| msgid "What to decompose: "
+msgid "The model to decompose to"
+msgstr "Модель для розкладу"
 
-#: plug-ins/common/decompose.c:403
-msgid "Decomposing"
-msgstr "Розкладання"
-
-#: plug-ins/common/decompose.c:528
-msgid "Image not suitable for this decomposition"
-msgstr "Зображення непридатне для такого розкладання"
-
-#: plug-ins/common/decompose.c:859
-msgid "Decompose"
-msgstr "Розібрати"
-
-#: plug-ins/common/decompose.c:869
-msgid "Extract Channels"
-msgstr "Добути канали"
-
-#: plug-ins/common/decompose.c:881
-msgid "Color _model:"
-msgstr "Кольорова _модель:"
-
-#: plug-ins/common/decompose.c:918
+#: plug-ins/common/decompose.c:317
 msgid "_Decompose to layers"
 msgstr "Розібрати на _шари"
 
-#: plug-ins/common/decompose.c:922
+#: plug-ins/common/decompose.c:318
+msgid "Create channels as layers in a single image"
+msgstr "Створити канали як шари у єдиному зображенні"
+
+#: plug-ins/common/decompose.c:323
 msgid "_Foreground as registration color"
 msgstr "П_ередній план як колір приведення"
 
-#: plug-ins/common/decompose.c:923
+#: plug-ins/common/decompose.c:324
+#| msgid ""
+#| "Pixels in the foreground color will appear black in all output images.  "
+#| "This can be used for things like crop marks that have to show up on all "
+#| "channels."
 msgid ""
-"Pixels in the foreground color will appear black in all output images.  This "
-"can be used for things like crop marks that have to show up on all channels."
+"When enabled, pixels in the foreground color will appear black in all output "
+"images. This can be used for things like crop marks that have to show up on "
+"all channels."
 msgstr ""
-"Точки кольору переднього плану будуть чорними на всіх створюваних "
+"Якщо увімкнено, точки кольору переднього плану будуть чорними на всіх"
+" створюваних "
 "зображеннях. Це може стати у нагоді для створення позначок для обрізки, "
 "видимих в усіх каналах."
+
+#: plug-ins/common/decompose.c:402
+msgid "Decomposing"
+msgstr "Розкладання"
+
+#: plug-ins/common/decompose.c:527
+msgid "Image not suitable for this decomposition"
+msgstr "Зображення непридатне для такого розкладання"
+
+#: plug-ins/common/decompose.c:845
+msgid "Decompose"
+msgstr "Розібрати"
+
+#: plug-ins/common/decompose.c:850
+msgid "Extract Channels"
+msgstr "Добути канали"
 
 #: plug-ins/common/depth-merge.c:204
 msgid "_Depth Merge..."
@@ -8353,52 +8390,43 @@ msgid ""
 "control matrix. The effect can look like brushstrokes of acrylic or "
 "watercolor paint, in some cases."
 msgstr ""
-"Розмазує зображення уздовж векторних контурів, які обчислено на основі"
-" градієнта окремої матриці керування. Результат, за певних умов, виглядатиме"
-" як мазки пензлем з акриловою або акварельною фарбою."
+"Розмазує зображення уздовж векторних контурів, які обчислено на основі "
+"градієнта окремої матриці керування. Результат, за певних умов, виглядатиме "
+"як мазки пензлем з акриловою або акварельною фарбою."
 
 #: plug-ins/common/warp.c:235
-#| msgid "Step size:"
 msgid "Step si_ze"
 msgstr "_Розмір кроку"
 
 #: plug-ins/common/warp.c:236
-#| msgid "Displacement map:"
 msgid "Pixel displacement multiplier"
 msgstr "Коефіцієнт зміщення пікселів"
 
 #: plug-ins/common/warp.c:241
-#| msgid "Displacement map:"
 msgid "Dis_placement Map"
 msgstr "Мапа з_міщення"
 
 #: plug-ins/common/warp.c:242
-#| msgid "Displacement map:"
 msgid "Displacement control map"
 msgstr "Мапа керування зміщення"
 
 #: plug-ins/common/warp.c:247
-#| msgid "Iterations:"
 msgid "I_terations"
 msgstr "_Ітерації"
 
 #: plug-ins/common/warp.c:248
-#| msgid "Filter Iteration Co_unt"
 msgid "Iteration count"
 msgstr "Кількість ітерацій"
 
 #: plug-ins/common/warp.c:253
-#| msgid "Dither size:"
 msgid "_Dither size"
 msgstr "Розмір р_озмивання"
 
 #: plug-ins/common/warp.c:254
-#| msgid "R_andom saturation"
 msgid "Random dither amount"
 msgstr "Випадкова величина розмивання"
 
 #: plug-ins/common/warp.c:259
-#| msgid "Rotation angle:"
 msgid "Rotatio_n angle"
 msgstr "Кут _обертання"
 
@@ -8407,12 +8435,10 @@ msgid "Angle of gradient vector rotation"
 msgstr "Кут обертання вектора градієнта"
 
 #: plug-ins/common/warp.c:265
-#| msgid "On edges:"
 msgid "On ed_ges"
 msgstr "На кра_ях"
 
 #: plug-ins/common/warp.c:266
-#| msgid "Color type"
 msgid "Wrap type"
 msgstr "Тип загортання"
 
@@ -8425,22 +8451,18 @@ msgid "Smear"
 msgstr "Пляма"
 
 #: plug-ins/common/warp.c:270
-#| msgid "Foreground color"
 msgid "Foreground Color"
 msgstr "Колір переднього плану"
 
 #: plug-ins/common/warp.c:276
-#| msgid "Magnitude map:"
 msgid "_Magnitude Map"
 msgstr "Мапа _величин"
 
 #: plug-ins/common/warp.c:277
-#| msgid "Magnitude map:"
 msgid "Magnitude control map"
 msgstr "Мапа керування величинами"
 
 #: plug-ins/common/warp.c:282
-#| msgid "Use magnitude map"
 msgid "_Use magnitude map"
 msgstr "Ви_користовувати мапу величин"
 
@@ -8449,7 +8471,6 @@ msgid "Use magnitude map"
 msgstr "Використовувати мапу значень"
 
 #: plug-ins/common/warp.c:288
-#| msgid "Substeps:"
 msgid "Su_bsteps"
 msgstr "П_ідкроки"
 
@@ -8458,17 +8479,14 @@ msgid "Substeps between image updates"
 msgstr "Підкроки між оновленням зображення"
 
 #: plug-ins/common/warp.c:294
-#| msgid "Gradient Map"
 msgid "Gradient Ma_p"
 msgstr "М_апа градієнта"
 
 #: plug-ins/common/warp.c:295
-#| msgid "Gradient Map"
 msgid "Gradient control map"
 msgstr "Мапа керування градієнта"
 
 #: plug-ins/common/warp.c:300
-#| msgid "Gradient scale:"
 msgid "Gradient s_cale"
 msgstr "_Масштаб градієнта"
 
@@ -8477,7 +8495,6 @@ msgid "Scaling factor for gradient map (0=don't use)"
 msgstr "Коефіцієнт масштабування мапи градієнта (0=не використовувати)"
 
 #: plug-ins/common/warp.c:306
-#| msgid "Vector mag:"
 msgid "_Vector Map"
 msgstr "_Векторна мапа"
 
@@ -8486,7 +8503,6 @@ msgid "Fixed vector control map"
 msgstr "Фіксована векторна мапа керування"
 
 #: plug-ins/common/warp.c:312
-#| msgid "Vector mag:"
 msgid "Vector magn_itude"
 msgstr "В_еличина вектора"
 
@@ -8496,7 +8512,6 @@ msgstr ""
 "Коефіцієнт масштабування фіксованої векторної мапи (0=не використовувати)"
 
 #: plug-ins/common/warp.c:318
-#| msgid "Ang_le offset:"
 msgid "Ang_le"
 msgstr "К_ут"
 
@@ -16292,6 +16307,9 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:496
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Color _model:"
+#~ msgstr "Кольорова _модель:"
 
 #~ msgid "Gradient map selection menu"
 #~ msgstr "Меню вибору градієнтної мапи"
