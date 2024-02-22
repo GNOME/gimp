@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-19 20:51+0000\n"
-"PO-Revision-Date: 2024-02-20 09:20+0800\n"
+"POT-Creation-Date: 2024-02-20 14:42+0000\n"
+"PO-Revision-Date: 2024-02-22 18:54+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -34,7 +34,7 @@ msgstr "在 C 语言中锻炼一只山羊"
 #: plug-ins/common/border-average.c:185 plug-ins/common/checkerboard.c:176
 #: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:584
 #: plug-ins/common/contrast-retinex.c:246 plug-ins/common/crop-zealous.c:151
-#: plug-ins/common/curve-bend.c:642 plug-ins/common/decompose.c:375
+#: plug-ins/common/curve-bend.c:642 plug-ins/common/decompose.c:387
 #: plug-ins/common/depth-merge.c:293 plug-ins/common/despeckle.c:231
 #: plug-ins/common/destripe.c:175 plug-ins/common/gradient-map.c:216
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:310
@@ -618,7 +618,7 @@ msgstr "竖直"
 #. * Create the "background" layer to hold the image...
 #.
 #: plug-ins/common/blinds.c:272 plug-ins/common/compose.c:1183
-#: plug-ins/common/decompose.c:645 plug-ins/common/file-cel.c:495
+#: plug-ins/common/decompose.c:644 plug-ins/common/file-cel.c:495
 #: plug-ins/common/file-cel.c:500 plug-ins/common/file-dicom.c:751
 #: plug-ins/common/file-farbfeld.c:321 plug-ins/common/file-gegl.c:471
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:345
@@ -1464,54 +1464,59 @@ msgstr "红色差 cr709(_R)："
 
 #: plug-ins/common/compose.c:244 plug-ins/common/compose.c:438
 #: plug-ins/common/compose.c:501 plug-ins/common/decompose.c:193
-#: plug-ins/common/file-heif.c:2475
+#: plug-ins/common/decompose.c:300 plug-ins/common/file-heif.c:2475
 msgid "RGB"
 msgstr "RGB"
 
 #: plug-ins/common/compose.c:251 plug-ins/common/compose.c:439
 #: plug-ins/common/compose.c:502 plug-ins/common/decompose.c:194
+#: plug-ins/common/decompose.c:301
 msgid "RGBA"
 msgstr "RGBA"
 
 #: plug-ins/common/compose.c:259 plug-ins/common/compose.c:440
 #: plug-ins/common/compose.c:503 plug-ins/common/decompose.c:201
+#: plug-ins/common/decompose.c:303
 msgid "HSV"
 msgstr "HSV"
 
 #: plug-ins/common/compose.c:266 plug-ins/common/compose.c:441
 #: plug-ins/common/compose.c:504 plug-ins/common/decompose.c:206
+#: plug-ins/common/decompose.c:304
 msgid "HSL"
 msgstr "HSL"
 
 #: plug-ins/common/compose.c:273 plug-ins/common/compose.c:442
 #: plug-ins/common/compose.c:505 plug-ins/common/decompose.c:211
-#: plug-ins/common/file-jp2-load.c:1000
+#: plug-ins/common/decompose.c:305 plug-ins/common/file-jp2-load.c:1000
 msgid "CMYK"
 msgstr "CMYK"
 
 #: plug-ins/common/compose.c:281 plug-ins/common/compose.c:443
 #: plug-ins/common/compose.c:506 plug-ins/common/decompose.c:217
+#: plug-ins/common/decompose.c:306
 msgid "LAB"
 msgstr "LAB"
 
 #: plug-ins/common/compose.c:288 plug-ins/common/compose.c:444
 #: plug-ins/common/compose.c:507 plug-ins/common/decompose.c:219
+#: plug-ins/common/decompose.c:307
 msgid "LCH"
 msgstr "LCH"
 
-#: plug-ins/common/compose.c:295 plug-ins/common/decompose.c:221
+#: plug-ins/common/compose.c:295
 msgid "YCbCr_ITU_R470"
 msgstr "YCbCr_ITU_R470"
 
-#: plug-ins/common/compose.c:302 plug-ins/common/decompose.c:224
+#: plug-ins/common/compose.c:302
 msgid "YCbCr_ITU_R709"
 msgstr "YCbCr_ITU_R709"
 
-#: plug-ins/common/compose.c:309 plug-ins/common/decompose.c:222
+#: plug-ins/common/compose.c:309
 msgid "YCbCr_ITU_R470_256"
 msgstr "YCbCr_ITU_R470_256"
 
-#: plug-ins/common/compose.c:316 plug-ins/common/decompose.c:225
+#: plug-ins/common/compose.c:316
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
@@ -1556,22 +1561,27 @@ msgid "Fourth input image"
 msgstr "第 4 输入图像"
 
 #: plug-ins/common/compose.c:436 plug-ins/common/compose.c:499
+#: plug-ins/common/decompose.c:298
 msgid "Color _model"
 msgstr "色彩模型(_M)"
 
 #: plug-ins/common/compose.c:445 plug-ins/common/compose.c:508
+#: plug-ins/common/decompose.c:308
 msgid "YCbCr ITU R470"
 msgstr "YCbCr ITU R470"
 
 #: plug-ins/common/compose.c:446 plug-ins/common/compose.c:509
+#: plug-ins/common/decompose.c:309
 msgid "YCbCr ITU R709"
 msgstr "YCbCr ITU R709"
 
 #: plug-ins/common/compose.c:447 plug-ins/common/compose.c:510
+#: plug-ins/common/decompose.c:310
 msgid "YCbCr ITU R470 256"
 msgstr "YCbCr ITU R470 256"
 
 #: plug-ins/common/compose.c:448 plug-ins/common/compose.c:511
+#: plug-ins/common/decompose.c:311
 msgid "YCbCr ITU R709 256"
 msgstr "YCbCr ITU R709 256"
 
@@ -2179,7 +2189,7 @@ msgstr "绿色"
 msgid "Blue"
 msgstr "蓝色"
 
-#: plug-ins/common/decompose.c:199
+#: plug-ins/common/decompose.c:199 plug-ins/common/decompose.c:302
 msgid "Alpha"
 msgstr "透明"
 
@@ -2213,6 +2223,22 @@ msgstr "黄色"
 msgid "Black"
 msgstr "黑色"
 
+#: plug-ins/common/decompose.c:221
+msgid "YCbCr470"
+msgstr "YCbCr470"
+
+#: plug-ins/common/decompose.c:222
+msgid "YCbCr470f"
+msgstr "YCbCr470f"
+
+#: plug-ins/common/decompose.c:224
+msgid "YCbCr709"
+msgstr "YCbCr709"
+
+#: plug-ins/common/decompose.c:225
+msgid "YCbCr709f"
+msgstr "YCbCr709f"
+
 #: plug-ins/common/decompose.c:261
 msgid "What to decompose: "
 msgstr "分解结果："
@@ -2225,45 +2251,46 @@ msgstr "分解(_D)…"
 msgid "Decompose an image into separate colorspace components"
 msgstr "将一幅图像分解到各自独立的颜色空间分量"
 
-#: plug-ins/common/decompose.c:305
-msgid "Create channels as layers in a single image"
-msgstr "在单个图像中将通道创建为图层"
+#: plug-ins/common/decompose.c:299
+msgid "The model to decompose to"
+msgstr "要分解为的模型"
 
-#: plug-ins/common/decompose.c:403
-msgid "Decomposing"
-msgstr "分解"
-
-#: plug-ins/common/decompose.c:528
-msgid "Image not suitable for this decomposition"
-msgstr "图像不适合该分解"
-
-#: plug-ins/common/decompose.c:859
-msgid "Decompose"
-msgstr "分解"
-
-#: plug-ins/common/decompose.c:869
-msgid "Extract Channels"
-msgstr "提取通道"
-
-#: plug-ins/common/decompose.c:881
-msgid "Color _model:"
-msgstr "色彩模型(_M)："
-
-#: plug-ins/common/decompose.c:918
+#: plug-ins/common/decompose.c:317
 msgid "_Decompose to layers"
 msgstr "分解到图层(_D)"
 
-#: plug-ins/common/decompose.c:922
+#: plug-ins/common/decompose.c:318
+msgid "Create channels as layers in a single image"
+msgstr "在单个图像中将通道创建为图层"
+
+#: plug-ins/common/decompose.c:323
 msgid "_Foreground as registration color"
 msgstr "前景色作为套准标记颜色(_F)"
 
-#: plug-ins/common/decompose.c:923
+#: plug-ins/common/decompose.c:324
 msgid ""
-"Pixels in the foreground color will appear black in all output images.  This "
-"can be used for things like crop marks that have to show up on all channels."
+"When enabled, pixels in the foreground color will appear black in all output "
+"images. This can be used for things like crop marks that have to show up on "
+"all channels."
 msgstr ""
-"前景色中的像素将在所有输出图像中表现为黑色。这可以用于像必须显示在所有通道上"
-"的剪裁标记等事情。"
+"当启用时，前景色中的像素将在所有输出图像中表现为黑色。这可以用于像必须显示在"
+"所有通道上的剪裁标记等事情。"
+
+#: plug-ins/common/decompose.c:402
+msgid "Decomposing"
+msgstr "分解"
+
+#: plug-ins/common/decompose.c:527
+msgid "Image not suitable for this decomposition"
+msgstr "图像不适合该分解"
+
+#: plug-ins/common/decompose.c:845
+msgid "Decompose"
+msgstr "分解"
+
+#: plug-ins/common/decompose.c:850
+msgid "Extract Channels"
+msgstr "提取通道"
 
 #: plug-ins/common/depth-merge.c:204
 msgid "_Depth Merge..."
@@ -15910,6 +15937,9 @@ msgstr "扫描仪/相机(_S)…"
 #: plug-ins/twain/twain.c:496
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#~ msgid "Color _model:"
+#~ msgstr "色彩模型(_M)："
 
 #~ msgid "Gradient map selection menu"
 #~ msgstr "渐变映射选择菜单"
