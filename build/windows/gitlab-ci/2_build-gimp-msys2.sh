@@ -21,6 +21,8 @@ if [[ "$BUILD_TYPE" == "CI_NATIVE" ]]; then
   # completely ridiculous.
   rm -fr ~/_install${ARTIFACTS_SUFFIX}
   mv "_install${ARTIFACTS_SUFFIX}" ~
+
+  export MESON_OPTIONS=""
 else
   # Make the script work locally
   if [[ "$0" != "build/windows/gitlab-ci/2_build-gimp-msys2.sh" ]]; then
@@ -29,6 +31,8 @@ else
   fi
 
   pacman --noconfirm -Suy
+
+  export MESON_OPTIONS="-Drelocatable-bundle=no"
 fi
 
 
@@ -76,7 +80,7 @@ if [ ! -f "_build${ARTIFACTS_SUFFIX}/build.ninja" ]; then
                  -Dgi-docgen=disabled                \
                  -Djavascript=disabled               \
                  -Ddirectx-sdk-dir="${MSYS2_PREFIX}" \
-                 -Dbuild-id=org.gimp.GIMP_official
+                 -Dbuild-id=org.gimp.GIMP_official $MESON_OPTIONS
   ninja
   ninja install
 else
