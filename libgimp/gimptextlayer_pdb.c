@@ -1862,6 +1862,42 @@ gimp_text_layer_set_outline_width (GimpTextLayer *layer,
 }
 
 /**
+ * gimp_text_layer_is_dynamic:
+ * @layer: The text layer.
+ *
+ * Checks whether or not a text layer is dynamic.
+ *
+ * This procedure checks whether or not a text layer is dynamic.
+ *
+ * Returns: Whether a text layer is dynamic.
+ *
+ * Since: 3.3
+ **/
+gboolean
+gimp_text_layer_is_dynamic (GimpTextLayer *layer)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean is_dynamic = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-is-dynamic",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    is_dynamic = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return is_dynamic;
+}
+
+/**
  * gimp_text_layer_resize:
  * @layer: The text layer.
  * @width: The new box width in pixels.

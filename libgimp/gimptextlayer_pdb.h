@@ -110,6 +110,7 @@ gdouble                  gimp_text_layer_get_outline_width       (GimpTextLayer 
 gboolean                 gimp_text_layer_set_outline_width       (GimpTextLayer             *layer,
                                                                   gdouble                    outline_width,
                                                                   GimpUnit                  *outline_unit);
+gboolean                 gimp_text_layer_is_dynamic              (GimpTextLayer             *layer);
 gboolean                 gimp_text_layer_resize                  (GimpTextLayer             *layer,
                                                                   gdouble                    width,
                                                                   gdouble                    height);

@@ -1729,16 +1729,18 @@ drawText (GimpLayer *layer,
 
   pango_layout_set_font_description (layout, font_description);
 
-  /* Width */
-  if (! PANGO_GRAVITY_IS_VERTICAL (pango_context_get_base_gravity (context)))
-    pango_layout_set_width (layout,
-                            gimp_drawable_get_width (GIMP_DRAWABLE (layer)) *
-                            PANGO_SCALE);
-  else
-    pango_layout_set_width (layout,
-                            gimp_drawable_get_height (GIMP_DRAWABLE (layer)) *
-                            PANGO_SCALE);
-
+  if (! gimp_text_layer_is_dynamic (GIMP_TEXT_LAYER (layer)))
+    {
+       /* Width */
+       if (! PANGO_GRAVITY_IS_VERTICAL (pango_context_get_base_gravity (context)))
+         pango_layout_set_width (layout,
+                                 gimp_drawable_get_width (GIMP_DRAWABLE (layer)) *
+                                 PANGO_SCALE);
+       else
+         pango_layout_set_width (layout,
+                                 gimp_drawable_get_height (GIMP_DRAWABLE (layer)) *
+                                 PANGO_SCALE);
+    }
   /* Justification, and Alignment */
   justify = FALSE;
   j = gimp_text_layer_get_justification (GIMP_TEXT_LAYER (layer));

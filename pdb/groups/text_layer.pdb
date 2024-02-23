@@ -1493,6 +1493,37 @@ CODE
     );
 }
 
+sub text_layer_is_dynamic {
+    $blurb = 'Checks whether or not a text layer is dynamic.';
+
+    $help = <<'HELP';
+This procedure checks whether or not a text layer is dynamic.
+HELP
+
+    $author = 'Idriss Fekir <mcsm224@gmail.com>';
+    $copyright = 'Idriss Fekir';
+    $date = '2026';
+    $since = '3.3';
+
+    @inargs = (
+        { name => 'layer', type => 'text_layer',
+          desc => 'The text layer' },
+    );
+
+    @outargs = (
+        { name => 'is_dynamic', type => 'boolean',
+          desc => 'Whether a text layer is dynamic' },
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+    is_dynamic = gimp_text_layer_get_text (layer)->box_mode == GIMP_TEXT_BOX_DYNAMIC;
+}
+CODE
+    );
+}
+
 sub text_layer_resize {
     $blurb = 'Resize the box of a text layer.';
 
@@ -1536,7 +1567,6 @@ HELP
 CODE
     );
 }
-
 
 @headers = qw(<pango/pango.h>
               "libgimpbase/gimpbase.h"
@@ -1596,6 +1626,7 @@ CODE
             text_layer_set_outline_miter_limit
             text_layer_get_outline_width
             text_layer_set_outline_width
+            text_layer_is_dynamic
             text_layer_resize);
 
 %exports = (app => [@procs], lib => [@procs]);

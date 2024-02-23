@@ -1495,6 +1495,35 @@ text_layer_set_outline_width_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+text_layer_is_dynamic_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpTextLayer *layer;
+  gboolean is_dynamic = FALSE;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+        is_dynamic = gimp_text_layer_get_text (layer)->box_mode == GIMP_TEXT_BOX_DYNAMIC;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), is_dynamic);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 text_layer_resize_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
@@ -2994,6 +3023,35 @@ register_text_layer_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      gimp_unit_inch (),
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-is-dynamic
+   */
+  procedure = gimp_procedure_new (text_layer_is_dynamic_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-is-dynamic");
+  gimp_procedure_set_static_help (procedure,
+                                  "Checks whether or not a text layer is dynamic.",
+                                  "This procedure checks whether or not a text layer is dynamic.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Idriss Fekir <mcsm224@gmail.com>",
+                                         "Idriss Fekir",
+                                         "2026");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("is-dynamic",
+                                                         "is dynamic",
+                                                         "Whether a text layer is dynamic",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
