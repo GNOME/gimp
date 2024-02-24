@@ -1589,7 +1589,6 @@ drawText (GimpLayer *layer,
   gdouble               indent;
   gdouble               line_spacing;
   gdouble               letter_spacing;
-  PangoAttribute       *letter_spacing_at;
   PangoAttrList        *attr_list = pango_attr_list_new ();
   PangoFontMap         *fontmap;
 
@@ -1774,8 +1773,21 @@ drawText (GimpLayer *layer,
 
   /* Letter Spacing */
   letter_spacing = gimp_text_layer_get_letter_spacing (GIMP_TEXT_LAYER (layer));
-  letter_spacing_at = pango_attr_letter_spacing_new ((int)(PANGO_SCALE * letter_spacing));
-  pango_attr_list_insert (attr_list, letter_spacing_at);
+  /*
+   * for some reason if the letter spacing is not specified in the pango markup
+   * (and is instead set for the pango layout) it is ignored.
+   */
+  if (fabs (letter_spacing) > 0.1)
+    {
+       if (markup != NULL && markup[0] != '\0')
+         markup = g_strdup_printf ("<span letter_spacing=\"%d\">%s</span>",
+                                   (gint) (letter_spacing * PANGO_SCALE),
+                                   markup);
+       else
+         markup = g_strdup_printf ("<span letter_spacing=\"%d\">%s</span>",
+                                   (gint) (letter_spacing * PANGO_SCALE),
+                                   text);
+    }
 
 
   pango_layout_set_attributes (layout, attr_list);
@@ -1802,6 +1814,9 @@ drawText (GimpLayer *layer,
     }
 
   pango_cairo_show_layout (cr, layout);
+
+  if (fabs (letter_spacing) > 0.1)
+    g_free (markup);
 
   g_free (text);
   g_free (language);
