@@ -59,6 +59,11 @@
   border: 1px solid @stronger-border-color;
 }
 
+/* Widget for various previews and icon tabs  */
+GimpView {
+  background-color: @extreme-bg-color;
+}
+
 /* Define the mouse-over color for the path
  * buttons in the various file dialogs.
  */
