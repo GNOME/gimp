@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-02-23 08:49+0000\n"
-"PO-Revision-Date: 2024-02-24 02:21+0300\n"
+"PO-Revision-Date: 2024-02-24 04:11+0300\n"
 "Last-Translator: Yuras Shumovich <shumovichy@gmail.com>\n"
 "Language-Team: Belarusian\n"
 "Language: be\n"
@@ -18716,7 +18716,7 @@ msgstr ""
 "<small>код зборкі <tt>%s</tt></small>\n"
 "\n"
 "<small>Перш чым паведамляць аб памылках, праверце іх наяўнасць \n"
-"у апошняй зборцы з Git master"
+"у апошняй зборцы з Git master.</small>"
 
 #: app/display/gimpdisplayshell-close.c:170
 #: app/display/gimpdisplayshell-close.c:268
