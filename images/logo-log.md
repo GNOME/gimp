@@ -2,7 +2,8 @@
 
 ## Logos
 
-* [GIMP 2.6, 2.8 and 2.10](https://gitlab.gnome.org/GNOME/gimp/-/blob/f73c4ed397d797ec1b5175f27b5c0f3538a87714/data/images/gimp-logo.png) by Jakub Steiner.
+* [GIMP 2.6, 2.8 and 2.10](https://gitlab.gnome.org/GNOME/gimp/-/blob/f73c4ed397d797ec1b5175f27b5c0f3538a87714/data/images/gimp-logo.png)
+  by Jakub Steiner in 2008.
 
   ![GIMP 2.6 to 2.10 logo](https://gitlab.gnome.org/GNOME/gimp/-/raw/f73c4ed397d797ec1b5175f27b5c0f3538a87714/data/images/gimp-logo.png)
 
@@ -23,19 +24,32 @@
   ![GIMP 2.4 logo](https://gitlab.gnome.org/GNOME/gimp/-/raw/b520a3eece0e06d24a98d6d2c7ee359b2b8e13cd/data/images/gimp-logo.png)
 
 * [Pre-GIMP 2.4](https://gitlab.gnome.org/GNOME/gimp/-/blob/0268c69940ef0ec39b80011b8d8ab3ed415031b0/data/images/gimp-logo.png)
-  by Jakub Steiner. This version was never used and soon changed.
+  by Jakub Steiner in 2006. This version was never used and soon changed.
 
   ![pre-GIMP 2.4 logo](https://gitlab.gnome.org/GNOME/gimp/-/raw/0268c69940ef0ec39b80011b8d8ab3ed415031b0/data/images/gimp-logo.png)
 
+* [Wizard Wilber](https://gitlab.gnome.org/GNOME/gimp/-/blob/a93fbc682e5574ea68eef58a09de609fb1cc5cc8/data/images/wilber-wizard.png)
+  was added in 2002 for the user installation dialog but is not used anymore in
+  modern GIMP (we just use the "gimp-wilber-eek" icon instead).
+
+  ![Wizard Wilber](https://gitlab.gnome.org/GNOME/gimp/-/raw/master/data/images/wilber-wizard.png)
+
+* [Wilber Construction Kit](https://gitlab.gnome.org/GNOME/gimp/-/commit/f9ea72123880de1976e8bace2fbca015ac312845)
+  adding accessories to the original Wilber by various team members, between
+  2000 to 2005: Jens Lautenbacher, Sven Neumann, Seth Burgess, Ville Pätsi,
+  Guillermo S. Romero, Carol Spears…
+
 * [SVG variant](https://gitlab.gnome.org/GNOME/gimp/-/blob/e33ff2b0895f8622051f310ca000f48ad45b5981/docs/Wilber.svg)
-  by Simon Budig.
+  by Simon Budig in 2000.
 
   ![SVG variant](https://gitlab.gnome.org/GNOME/gimp/-/raw/e6c52afb6e14915f64336ca4885f70f04e07bb8c/docs/Wilber.svg)
 
-* [Wilber Construction Kit](https://gitlab.gnome.org/GNOME/gimp/-/commit/f9ea72123880de1976e8bace2fbca015ac312845)
-  adding accessories to the original Wilber by various team members: Jens
-  Lautenbacher, Sven Neumann, Seth Burgess, Ville Pätsi, Guillermo S. Romero,
-  Carol Spears…
+* [French painter Wilber](https://gitlab.gnome.org/GNOME/gimp/-/blob/a93fbc682e5574ea68eef58a09de609fb1cc5cc8/data/images/wilber-tips.png)
+  exists since the start (1997), first as `app/wilber.h` [header
+  file](https://gitlab.gnome.org/GNOME/gimp/-/blob/32cefec8f76ccb20f1bf3f9311843ca47c1101c8/app/wilber.h),
+  then as [XMP](https://gitlab.gnome.org/GNOME/gimp/-/blob/f765a8216f29e0f4f56af767f582e5df59ae606b/pixmaps/wilber3.xpm),
+  before getting its final PNG format. It was used for the "Tip of the day"
+  popup (nowadays, we just use "dialog-information" icon).
 
 * [Original Wilber](https://gitlab.gnome.org/GNOME/gimp/-/commit/a4e97e61f982d3039d9d594de9477a5104491c52)
   by Tuomas Kuosmanen.
