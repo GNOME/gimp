@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-15 16:03+0000\n"
-"PO-Revision-Date: 2024-02-15 18:40+0200\n"
+"POT-Creation-Date: 2024-02-24 15:18+0000\n"
+"PO-Revision-Date: 2024-02-24 22:32+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -552,7 +552,6 @@ msgid "Stain"
 msgstr "Пляма"
 
 #: plug-ins/script-fu/scripts/coffee.scm:95
-#| msgid "_Coffee Stain..."
 msgid "_Stain..."
 msgstr "_Плями…"
 
@@ -561,7 +560,6 @@ msgid "Add layers of stain or blotch marks"
 msgstr "Додати шари плям"
 
 #: plug-ins/script-fu/scripts/coffee.scm:102
-#| msgid "_Number of lines"
 msgid "Number of stains to add"
 msgstr "Кількість плям, які слід додати"
 
@@ -735,7 +733,8 @@ msgid "Flatten image"
 msgstr "Звести зображення"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:63
-msgid "Using _Paths"
+#| msgid "Using _Paths"
+msgid "_Using Paths"
 msgstr "_Використання контурів"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:64
@@ -775,12 +774,14 @@ msgid "Drawing _Simple Objects"
 msgstr "_Малювання простих об'єктів"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:154
-msgid "Create and Use _Selections"
-msgstr "Зберегти та використати _вибране"
+#| msgid "Create and Use _Selections"
+msgid "_Create and Use Selections"
+msgstr "Створити і використати _вибране"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:166
-msgid "_[Table of Contents]"
-msgstr "_[Зміст]"
+#| msgid "_[Table of Contents]"
+msgid "_Table of Contents"
+msgstr "_Зміст"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:202
 msgid "_Main Web Site"
