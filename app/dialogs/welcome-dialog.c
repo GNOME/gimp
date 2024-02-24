@@ -51,7 +51,6 @@
 #include "gui/themes.h"
 
 #include "menus/menus.h"
-
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpprefsbox.h"
 #include "widgets/gimpuimanager.h"
@@ -111,7 +110,7 @@ static void   welcome_dialog_open_dialog_close       (GtkWidget      *dialog,
 static void   welcome_open_activated_callback        (GtkListBox     *listbox,
                                                       GtkListBoxRow  *row,
                                                       GtkWidget      *welcome_dialog);
-static void   welcome_open_multiple_callback         (GtkWidget      *button,
+static void   welcome_open_images_callback           (GtkWidget      *button,
                                                       GtkListBox     *listbox);
 
 static GtkWidget *welcome_dialog;
@@ -820,7 +819,7 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (welcome_open_multiple_callback),
+                    G_CALLBACK (welcome_open_images_callback),
                     listbox);
 }
 
@@ -1189,45 +1188,18 @@ welcome_open_activated_callback (GtkListBox    *listbox,
                                  GtkListBoxRow *row,
                                  GtkWidget     *welcome_dialog)
 {
-  GimpImage         *image   = NULL;
-  Gimp              *gimp    = g_object_get_data (G_OBJECT (welcome_dialog), "gimp");
-  GFile             *file    = NULL;
-  const gchar       *name;
-  GimpPDBStatusType  status;
-  GtkWidget         *parent;
-  GError            *error   = NULL;
-
-  g_return_if_fail (row != NULL);
-
-  parent = gtk_widget_get_parent (welcome_dialog);
-  file   = g_object_get_data (G_OBJECT (row), "file");
-  name   = gimp_file_get_utf8_name (file);
-
-  if (file && g_file_test (name, G_FILE_TEST_IS_REGULAR))
-    image = file_open_with_display (gimp, gimp_get_user_context (gimp), NULL, file, FALSE,
-                                    NULL, &status, NULL);
-
-  if (! image && status != GIMP_PDB_CANCEL)
-    {
-      gimp_message (gimp, G_OBJECT (parent), GIMP_MESSAGE_ERROR,
-                    _("Opening '%s' failed:\n\n%s"),
-                    gimp_file_get_utf8_name (file), error->message);
-      g_clear_error (&error);
-    }
-  else
-    {
-      gtk_widget_destroy (welcome_dialog);
-    }
+  welcome_open_images_callback (NULL, listbox);
 }
 
 static void
-welcome_open_multiple_callback (GtkWidget  *button,
-                                GtkListBox *listbox)
+welcome_open_images_callback (GtkWidget  *button,
+                              GtkListBox *listbox)
 {
-  GList      *rows    = NULL;
-  Gimp       *gimp    = NULL;
-  GError     *error   = NULL;
-  GtkWidget  *parent;
+  GList     *rows   = NULL;
+  Gimp      *gimp   = NULL;
+  GError    *error  = NULL;
+  gboolean   opened = FALSE;
+  GtkWidget *parent;
 
   if (! welcome_dialog)
     return;
@@ -1239,8 +1211,7 @@ welcome_open_multiple_callback (GtkWidget  *button,
   rows = gtk_list_box_get_selected_rows (listbox);
   if (rows)
     {
-      gtk_widget_set_sensitive (button, FALSE);
-      gtk_widget_set_sensitive (GTK_WIDGET (listbox), FALSE);
+      gtk_widget_set_sensitive (welcome_dialog, FALSE);
 
       for (GList *iter = rows; iter; iter = iter->next)
         {
@@ -1264,12 +1235,19 @@ welcome_open_multiple_callback (GtkWidget  *button,
                             gimp_file_get_utf8_name (file), error->message);
               g_clear_error (&error);
             }
+          else
+            {
+              opened = TRUE;
+            }
         }
 
       g_list_free (rows);
     }
 
-  gtk_widget_destroy (welcome_dialog);
+  /* If no images were successfully opened, leave the dialogue up */
+  gtk_widget_set_sensitive (welcome_dialog, TRUE);
+  if (opened)
+    gtk_widget_destroy (welcome_dialog);
 }
 
 static void
