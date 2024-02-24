@@ -762,7 +762,6 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       PangoFontDescription *pfd;
       GString              *xml;
       GString              *xml_bold_variant;
-      gchar                *fontformat;
       gchar                *family           = NULL;
       gchar                *style            = NULL;
       gchar                *psname           = NULL;
@@ -772,6 +771,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       gchar                *fullname2        = NULL;
       gchar                *escaped_file     = NULL;
       gchar                *file             = NULL;
+      hb_blob_t            *blob             = NULL;
       gint                  index            = -1;
       gint                  weight           = -1;
       gint                  width            = -1;
@@ -783,33 +783,21 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
 
       FcPatternGetString (fontset->fonts[i], FC_FILE, 0, (FcChar8 **) &file);
 
+      blob = hb_blob_create_from_file_or_fail (file);
       /*
-       * woff and woff2 cause problems with pango (probably with harfbuzz).
+       * Pango doesn't support non SFNT fonts because harfbuzz doesn't support them.
+       * woff and woff2, not supported by pango (because they are not yet supported by harfbuzz).
        * pcf,pcf.gz are bitmap font formats, not supported by pango (because of harfbuzz).
        * afm, pfm, pfb are type1 font formats, not supported by pango (because of harfbuzz).
        */
-      if (g_str_has_suffix (file, ".woff")   ||
-          g_str_has_suffix (file, ".woff2")  ||
-          g_str_has_suffix (file, ".pcf")    ||
-          g_str_has_suffix (file, ".pcf.gz") ||
-          g_str_has_suffix (file, ".afm")    ||
-          g_str_has_suffix (file, ".pfm")    ||
-          g_str_has_suffix (file, ".pfb"))
+      if (blob == NULL || hb_face_count (blob) == 0)
         {
           g_string_append_printf (ignored_fonts, "- %s (not supported by pango)\n", file);
           n_ignored++;
           continue;
         }
 
-      /* Pango doesn't support non SFNT fonts because harfbuzz doesn't  support them. */
-      if (FcPatternGetString (fontset->fonts[i], FC_FONTFORMAT, 0, (FcChar8 **) &fontformat) != FcResultMatch ||
-          (g_ascii_strcasecmp (fontformat, "TrueType") != 0 &&
-           g_ascii_strcasecmp (fontformat, "CFF")      != 0))
-        {
-          g_string_append_printf (ignored_fonts, "- %s (non-SFNT font)\n", file);
-          n_ignored++;
-          continue;
-        }
+      hb_blob_destroy (blob);
 
       /* Some variable fonts have only a family name and a font version. */
       if (FcPatternGetString (fontset->fonts[i], FC_FULLNAME, 0, (FcChar8 **) &fullname) != FcResultMatch)
