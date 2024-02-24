@@ -1602,6 +1602,10 @@ drawText (GimpLayer *layer,
   gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &x, &y);
   cairo_translate (cr, x, y);
 
+  /* Offset */
+  gimp_text_layer_get_offsets (GIMP_TEXT_LAYER (layer), &x, &y);
+  cairo_translate (cr, x, y);
+
   /* Color */
   /* When dealing with a gray/indexed image, the viewed color of the text layer
    * can be different than the one kept in the memory */

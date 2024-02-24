@@ -1099,6 +1099,7 @@ EXPORTS
 	gimp_text_layer_get_letter_spacing
 	gimp_text_layer_get_line_spacing
 	gimp_text_layer_get_markup
+	gimp_text_layer_get_offsets
 	gimp_text_layer_get_outline
 	gimp_text_layer_get_outline_antialias
 	gimp_text_layer_get_outline_cap_style

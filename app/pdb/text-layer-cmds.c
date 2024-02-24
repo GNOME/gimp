@@ -42,6 +42,7 @@
 #include "text/gimpfont.h"
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
+#include "text/gimptextlayout.h"
 
 #include "gimppdb.h"
 #include "gimppdberror.h"
@@ -964,6 +965,47 @@ text_layer_set_letter_spacing_invoker (GimpProcedure         *procedure,
 
   return gimp_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
+}
+
+static GimpValueArray *
+text_layer_get_offsets_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpTextLayer *layer;
+  gint x = 0;
+  gint y = 0;
+
+  layer = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpTextLayout *layout = gimp_text_layer_get_layout (layer);
+
+      if (layout == NULL)
+        success = FALSE;
+      else
+        {
+           gimp_text_layout_get_offsets (layout, &x, &y);
+           g_object_unref (layout);
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_set_int (gimp_value_array_index (return_vals, 1), x);
+      g_value_set_int (gimp_value_array_index (return_vals, 2), y);
+    }
+
+  return return_vals;
 }
 
 static GimpValueArray *
@@ -2475,6 +2517,41 @@ register_text_layer_procs (GimpPDB *pdb)
                                                     "The additional letter spacing to use.",
                                                     -8192.0, 8192.0, -8192.0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-get-offsets
+   */
+  procedure = gimp_procedure_new (text_layer_get_offsets_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-get-offsets");
+  gimp_procedure_set_static_help (procedure,
+                                  "Gets x, y offsets of the associated text layout.",
+                                  "This procedure returns the offsets of the text layout.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Idriss Fekir <mcsm224@gmail.com>",
+                                         "Idriss Fekir",
+                                         "2026");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_int ("x",
+                                                     "x",
+                                                     "x offset",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_int ("y",
+                                                     "y",
+                                                     "y offset",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

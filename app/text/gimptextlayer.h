@@ -57,19 +57,20 @@ struct _GimpTextLayerClass
 };
 
 
-GType       gimp_text_layer_get_type    (void) G_GNUC_CONST;
+GType             gimp_text_layer_get_type    (void) G_GNUC_CONST;
 
-GimpLayer * gimp_text_layer_new         (GimpImage     *image,
-                                         GimpText      *text);
-GimpText  * gimp_text_layer_get_text    (GimpTextLayer *layer);
-void        gimp_text_layer_set_text    (GimpTextLayer *layer,
-                                         GimpText      *text);
-void        gimp_text_layer_set         (GimpTextLayer *layer,
-                                         const gchar   *undo_desc,
-                                         const gchar   *first_property_name,
-                                         ...) G_GNUC_NULL_TERMINATED;
+GimpLayer       * gimp_text_layer_new         (GimpImage     *image,
+                                               GimpText      *text);
+GimpText        * gimp_text_layer_get_text    (GimpTextLayer *layer);
+void              gimp_text_layer_set_text    (GimpTextLayer *layer,
+                                               GimpText      *text);
+void              gimp_text_layer_set         (GimpTextLayer *layer,
+                                               const gchar   *undo_desc,
+                                               const gchar   *first_property_name,
+                                               ...) G_GNUC_NULL_TERMINATED;
 
-gboolean    gimp_item_is_text_layer     (GimpItem      *item);
+gboolean          gimp_item_is_text_layer     (GimpItem      *item);
+GimpTextLayout  * gimp_text_layer_get_layout  (GimpTextLayer *layer);
 
 void        gimp_text_layer_set_style_overlay_position
                                         (GimpTextLayer *layer,

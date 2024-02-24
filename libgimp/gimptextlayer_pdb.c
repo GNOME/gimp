@@ -1175,6 +1175,54 @@ gimp_text_layer_set_letter_spacing (GimpTextLayer *layer,
 }
 
 /**
+ * gimp_text_layer_get_offsets:
+ * @layer: The text layer.
+ * @x: (out): x offset.
+ * @y: (out): y offset.
+ *
+ * Gets x, y offsets of the associated text layout.
+ *
+ * This procedure returns the offsets of the text layout.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.3
+ **/
+gboolean
+gimp_text_layer_get_offsets (GimpTextLayer *layer,
+                             gint          *x,
+                             gint          *y)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-text-layer-get-offsets",
+                                               args);
+  gimp_value_array_unref (args);
+
+  *x = 0;
+  *y = 0;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *x = GIMP_VALUES_GET_INT (return_vals, 1);
+      *y = GIMP_VALUES_GET_INT (return_vals, 2);
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_text_layer_get_outline:
  * @layer: The text layer.
  *

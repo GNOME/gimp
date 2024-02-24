@@ -649,6 +649,47 @@ gimp_text_layer_get_style_overlay_offset (GimpTextLayer *layer,
   *offset_y = priv->style_overlay_offset_y;
 }
 
+GimpTextLayout *
+gimp_text_layer_get_layout (GimpTextLayer *layer)
+{
+   GimpTextLayout *layout;
+   GimpItem       *item;
+   GimpImage      *image;
+   GimpContainer  *container;
+   gdouble         xres;
+   gdouble         yres;
+   GError         *error = NULL;
+
+   if (! layer->text)
+     return FALSE;
+
+   item      = GIMP_ITEM (layer);
+   image     = gimp_item_get_image (item);
+   container = gimp_data_factory_get_container (image->gimp->font_factory);
+
+   gimp_data_factory_data_wait (image->gimp->font_factory);
+
+   if (gimp_container_is_empty (container))
+     {
+        gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+                              _("Due to lack of any fonts, "
+                                "text functionality is not available."));
+        return NULL;
+     }
+
+   gimp_image_get_resolution (image, &xres, &yres);
+
+   layout = gimp_text_layout_new (layer->text, image, xres, yres, &error);
+
+   if (error)
+     {
+        gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+        g_error_free (error);
+        return NULL;
+     }
+
+   return layout;
+}
 
 /*  private functions  */
 
