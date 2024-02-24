@@ -106,6 +106,7 @@ struct _GimpFont
 
   /*for backward compatibility*/
   gchar        *desc;
+  gchar        *file_path;
 };
 
 struct _GimpFontClass
@@ -264,15 +265,30 @@ gimp_font_deserialize_create (GType     type,
    */
   if (g_scanner_peek_next_token (scanner) == G_TOKEN_STRING)
     {
-      gchar* font_name = NULL;
+      PangoFontDescription *pfd        = NULL;
+      PangoFontMap         *fontmap    = NULL;
+      PangoContext         *context    = NULL;
+      PangoFcFont          *fc_font    = NULL;
+      FcPattern            *fc_pattern = NULL;
+      gchar                *font_name  = NULL;
+      gchar                *fullname   = NULL;
+      gchar                *file_path  = NULL;
 
       gimp_scanner_parse_string (scanner, &font_name);
+
+      fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
+      context = pango_font_map_create_context (fontmap);
+      pfd = pango_font_description_from_string (font_name);
+      fc_font = PANGO_FC_FONT (pango_context_load_font (context, pfd));
+      fc_pattern = pango_fc_font_get_pattern (fc_font);
+      FcPatternGetString (fc_pattern, FC_FULLNAME, 0, (FcChar8 **) &fullname);
+      FcPatternGetString (fc_pattern, FC_FILE,     0, (FcChar8 **) &file_path);
 
       for (i = 0; i < font_count; i++)
         {
           font = GIMP_FONT (gimp_container_get_child_by_index (fonts_container, i));
 
-          if (!g_strcmp0 (font->desc, font_name))
+          if (!g_strcmp0 (font->desc, font_name) || !g_strcmp0 (font->file_path, file_path))
             break;
 
           font = NULL;
@@ -283,6 +299,9 @@ gimp_font_deserialize_create (GType     type,
 
       g_object_ref (font);
 
+      g_object_unref (fontmap);
+      g_object_unref (context);
+      g_object_unref (fc_font);
       g_free (font_name);
 
       return GIMP_CONFIG (font);
@@ -508,6 +527,7 @@ gimp_font_set_font_info (GimpFont *font,
   font->index       = *(gint*)font_info[PROP_INDEX];
   font->slant       = *(gint*)font_info[PROP_SLANT];
   font->fontversion = *(gint*)font_info[PROP_FONTVERSION];
+  font->file_path   =  g_strdup ((gchar*)font_info[PROP_FILE]);
 }
 
 void
@@ -580,6 +600,7 @@ gimp_font_finalize (GObject *object)
   g_free (font->style);
   g_free (font->psname);
   g_free (font->desc);
+  g_free (font->file_path);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -620,6 +641,7 @@ gimp_font_get_memsize (GimpObject *object,
   memsize += gimp_string_get_memsize (font->style);
   memsize += gimp_string_get_memsize (font->psname);
   memsize += gimp_string_get_memsize (font->desc);
+  memsize += gimp_string_get_memsize (font->file_path);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

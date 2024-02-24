@@ -66,6 +66,7 @@ enum
 
   /*for backward compatibility*/
   PROP_DESC,
+  PROP_FILE,
 
   PROPERTIES_COUNT
 };

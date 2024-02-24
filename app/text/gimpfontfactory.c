@@ -635,6 +635,7 @@ gimp_font_factory_make_alias (GimpContainer *container,
   gchar                *style       = NULL;
   gchar                *psname      = NULL;
   gchar                *fullname    = NULL;
+  gchar                *file        = NULL;
   gint                  index       = -1;
   gint                  weight      = -1;
   gint                  width       = -1;
@@ -657,6 +658,7 @@ gimp_font_factory_make_alias (GimpContainer *container,
   /* this is for backward compatibility*/
   desc_str = pango_font_description_to_string (desc);
 
+  FcPatternGetString  (fcpattern, FC_FILE,            0, (FcChar8 **) &file);
   FcPatternGetString  (fcpattern, FC_FULLNAME,        0, (FcChar8 **) &fullname);
   FcPatternGetString  (fcpattern, FC_POSTSCRIPT_NAME, 0, (FcChar8 **) &psname);
   FcPatternGetString  (fcpattern, FC_STYLE,           0, (FcChar8 **) &style);
@@ -676,6 +678,7 @@ gimp_font_factory_make_alias (GimpContainer *container,
   font_info[PROP_INDEX]       = (gpointer) &index;
   font_info[PROP_SLANT]       = (gpointer) &slant;
   font_info[PROP_FONTVERSION] = (gpointer) &fontversion;
+  font_info[PROP_FILE]        = (gpointer)  file;
 
   /* This might be the only valid time where a NULL path is valid. Though I do
    * wonder if really these aliases are the right thing to do. Generic aliases
@@ -839,6 +842,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       font_info[PROP_INDEX]       = (gpointer) &index;
       font_info[PROP_SLANT]       = (gpointer) &slant;
       font_info[PROP_FONTVERSION] = (gpointer) &fontversion;
+      font_info[PROP_FILE]        = (gpointer)  file;
 
       /* Sometimes a font has more than one fullname,
        * sometimes the second is more appropriate for display,
