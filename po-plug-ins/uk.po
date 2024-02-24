@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-20 14:42+0000\n"
-"PO-Revision-Date: 2024-02-21 08:25+0200\n"
+"POT-Creation-Date: 2024-02-24 15:16+0000\n"
+"PO-Revision-Date: 2024-02-24 22:37+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -2264,22 +2264,18 @@ msgid "Black"
 msgstr "Чорний"
 
 #: plug-ins/common/decompose.c:221
-#| msgid "YCbCr"
 msgid "YCbCr470"
 msgstr "YCbCr470"
 
 #: plug-ins/common/decompose.c:222
-#| msgid "YCbCr"
 msgid "YCbCr470f"
 msgstr "YCbCr470f"
 
 #: plug-ins/common/decompose.c:224
-#| msgid "YCbCr"
 msgid "YCbCr709"
 msgstr "YCbCr709"
 
 #: plug-ins/common/decompose.c:225
-#| msgid "YCbCr"
 msgid "YCbCr709f"
 msgstr "YCbCr709f"
 
@@ -2296,7 +2292,6 @@ msgid "Decompose an image into separate colorspace components"
 msgstr "Розібрати зображення на окремі кольорові складові"
 
 #: plug-ins/common/decompose.c:299
-#| msgid "What to decompose: "
 msgid "The model to decompose to"
 msgstr "Модель для розкладу"
 
@@ -2313,19 +2308,14 @@ msgid "_Foreground as registration color"
 msgstr "П_ередній план як колір приведення"
 
 #: plug-ins/common/decompose.c:324
-#| msgid ""
-#| "Pixels in the foreground color will appear black in all output images.  "
-#| "This can be used for things like crop marks that have to show up on all "
-#| "channels."
 msgid ""
 "When enabled, pixels in the foreground color will appear black in all output "
 "images. This can be used for things like crop marks that have to show up on "
 "all channels."
 msgstr ""
-"Якщо увімкнено, точки кольору переднього плану будуть чорними на всіх"
-" створюваних "
-"зображеннях. Це може стати у нагоді для створення позначок для обрізки, "
-"видимих в усіх каналах."
+"Якщо увімкнено, точки кольору переднього плану будуть чорними на всіх "
+"створюваних зображеннях. Це може стати у нагоді для створення позначок для "
+"обрізки, видимих в усіх каналах."
 
 #: plug-ins/common/decompose.c:402
 msgid "Decomposing"
@@ -11577,11 +11567,14 @@ msgid "Color mode"
 msgstr "Режим кольорів"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:316
+#| msgid ""
+#| "0: Apply colormap as specified by the parameters below; 1: Apply active "
+#| "gradient to final image"
 msgid ""
-"0: Apply colormap as specified by the parameters below; 1: Apply active "
+"0: Apply colormap as specified by the parameters above; 1: Apply active "
 "gradient to final image"
 msgstr ""
-"0: застосувати мапу кольорів, як вказано параметрами нижче; 1: застосувати "
+"0: застосувати мапу кольорів, як вказано параметрами вище; 1: застосувати "
 "активний градієнт до остаточного зображення"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:322
