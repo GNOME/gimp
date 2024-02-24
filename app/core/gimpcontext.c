@@ -1957,15 +1957,7 @@ gimp_context_get_rgba_format (GimpContext  *context,
         *space_image = image;
     }
 
-  if (color != NULL &&
-      (space == NULL               ||
-#if BABL_MINOR_VERSION > 1 || (BABL_MINOR_VERSION == 1 && BABL_MICRO_VERSION >= 107)
-       ! babl_space_is_rgb (space) ||
-#else
-       babl_space_is_cmyk (space)  ||
-       babl_space_is_gray (space)  ||
-#endif
-       FALSE))
+  if (color != NULL && (space == NULL || ! babl_space_is_rgb (space)))
     {
       format = gegl_color_get_format (color);
       space  = babl_format_get_space (format);
@@ -1973,11 +1965,7 @@ gimp_context_get_rgba_format (GimpContext  *context,
         *space_image = NULL;
     }
 
-#if BABL_MINOR_VERSION > 1 || (BABL_MINOR_VERSION == 1 && BABL_MICRO_VERSION >= 107)
   if (! babl_space_is_rgb (space))
-#else
-  if (babl_space_is_cmyk (space) || babl_space_is_gray (space))
-#endif
     {
       format = NULL;
       space  = NULL;

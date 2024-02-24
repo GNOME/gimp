@@ -150,11 +150,7 @@ gimp_text_layout_new (GimpText     *text,
   pango_font_description_free (font_desc);
 
   target_space = gimp_image_get_layer_space (target_image);
-#if BABL_MINOR_VERSION > 1 || (BABL_MINOR_VERSION == 1 && BABL_MICRO_VERSION >= 107)
   if (babl_space_is_rgb (target_space) || babl_space_is_gray (target_space))
-#else
-  if (! babl_space_is_cmyk (target_space))
-#endif
     layout->layout_space = target_space;
   else
     layout->layout_space = NULL;

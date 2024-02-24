@@ -858,11 +858,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
     case GIMP_COLOR_PICK_MODE_RGB_PERCENT:
     case GIMP_COLOR_PICK_MODE_RGB_U8:
-#if BABL_MINOR_VERSION > 1 || (BABL_MINOR_VERSION == 1 && BABL_MICRO_VERSION >= 107)
       if (babl_space_is_gray (space) || babl_space_is_rgb (space))
-#else
-      if (! babl_space_is_cmyk (space))
-#endif
         color_profile = gimp_babl_format_get_color_profile (format);
 
       /* TRANSLATORS: R for Red (RGB) */
@@ -935,11 +931,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
       break;
 
     case GIMP_COLOR_PICK_MODE_GRAYSCALE:
-#if BABL_MINOR_VERSION > 1 || (BABL_MINOR_VERSION == 1 && BABL_MICRO_VERSION >= 107)
       if (babl_space_is_gray (space) || babl_space_is_rgb (space))
-#else
-      if (! babl_space_is_cmyk (space))
-#endif
         color_profile = gimp_babl_format_get_color_profile (format);
 
       /* TRANSLATORS: V for Value (grayscale) */
