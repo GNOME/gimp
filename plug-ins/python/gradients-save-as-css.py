@@ -218,7 +218,7 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
             procedure.set_attribution("Joao S. O. Bueno",
                                       "(c) GPL V3.0 or later",
                                       "2011")
-            procedure.add_menu_path('<Gradients>')
+            procedure.add_menu_path('<Gradients>/Gradients Menu')
 
             procedure.add_argument_from_property(self, "run-mode")
             procedure.add_argument_from_property(self, "gradient")

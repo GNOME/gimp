@@ -2,21 +2,25 @@
 
 <interface>
   <menu id="/patterns-popup">
-    <item><attribute name="action">patterns.patterns-open-as-image</attribute></item>
+    <submenu>
+      <attribute name="label" translatable="yes" context="patterns-action">Patterns Menu</attribute>
 
-    <!-- disabled because they are useless now
-    <item><attribute name="action">patterns.patterns-edit</attribute></item>
-    <section>
-      <item><attribute name="action">patterns.patterns-new</attribute></item>
-      <item><attribute name="action">patterns.patterns-duplicate</attribute></item>
-    </section>
-    -->
+      <item><attribute name="action">patterns.patterns-open-as-image</attribute></item>
 
-    <item><attribute name="action">patterns.patterns-copy-location</attribute></item>
-    <item><attribute name="action">patterns.patterns-show-in-file-manager</attribute></item>
-    <item><attribute name="action">patterns.patterns-delete</attribute></item>
-    <section>
-      <item><attribute name="action">patterns.patterns-refresh</attribute></item>
-    </section>
+      <!-- disabled because they are useless now
+      <item><attribute name="action">patterns.patterns-edit</attribute></item>
+      <section>
+        <item><attribute name="action">patterns.patterns-new</attribute></item>
+        <item><attribute name="action">patterns.patterns-duplicate</attribute></item>
+      </section>
+      -->
+
+      <item><attribute name="action">patterns.patterns-copy-location</attribute></item>
+      <item><attribute name="action">patterns.patterns-show-in-file-manager</attribute></item>
+      <item><attribute name="action">patterns.patterns-delete</attribute></item>
+      <section>
+        <item><attribute name="action">patterns.patterns-refresh</attribute></item>
+      </section>
+    </submenu>
   </menu>
 </interface>

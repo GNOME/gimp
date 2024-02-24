@@ -2,12 +2,16 @@
 
 <interface>
   <menu id="/templates-popup">
-    <item><attribute name="action">templates.templates-create-image</attribute></item>
-    <section>
-      <item><attribute name="action">templates.templates-new</attribute></item>
-      <item><attribute name="action">templates.templates-duplicate</attribute></item>
-      <item><attribute name="action">templates.templates-edit</attribute></item>
-      <item><attribute name="action">templates.templates-delete</attribute></item>
-    </section>
+    <submenu>
+      <attribute name="label" translatable="yes" context="templates-action">Templates Menu</attribute>
+
+      <item><attribute name="action">templates.templates-create-image</attribute></item>
+      <section>
+        <item><attribute name="action">templates.templates-new</attribute></item>
+        <item><attribute name="action">templates.templates-duplicate</attribute></item>
+        <item><attribute name="action">templates.templates-edit</attribute></item>
+        <item><attribute name="action">templates.templates-delete</attribute></item>
+      </section>
+    </submenu>
   </menu>
 </interface>

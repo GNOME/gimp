@@ -427,7 +427,7 @@ class PaletteSort (Gimp.PlugIn):
             procedure.set_attribution("João S. O. Bueno, Carol Spears, David Gowers",
                                       "João S. O. Bueno, Carol Spears, David Gowers",
                                       "2006-2014")
-            procedure.add_menu_path ('<Palettes>')
+            procedure.add_menu_path ('<Palettes>/Palettes Menu')
 
             procedure.add_argument_from_property(self, "run-mode")
             procedure.add_argument_from_property(self, "palette")

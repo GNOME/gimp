@@ -78,4 +78,4 @@
 )
 
 (script-fu-menu-register "script-fu-gradient-example"
-                         "<Gradients>")
+                         "<Gradients>/Gradients Menu")

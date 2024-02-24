@@ -2,15 +2,19 @@
 
 <interface>
   <menu id="/buffers-popup">
-    <section>
-      <item><attribute name="action">buffers.buffers-paste</attribute></item>
-      <item><attribute name="action">buffers.buffers-paste-in-place</attribute></item>
-      <item><attribute name="action">buffers.buffers-paste-into</attribute></item>
-      <item><attribute name="action">buffers.buffers-paste-into-in-place</attribute></item>
-      <item><attribute name="action">buffers.buffers-paste-as-new-layer</attribute></item>
-      <item><attribute name="action">buffers.buffers-paste-as-new-layer-in-place</attribute></item>
-      <item><attribute name="action">buffers.buffers-paste-as-new-image</attribute></item>
-      <item><attribute name="action">buffers.buffers-delete</attribute></item>
-    </section>
+    <submenu>
+      <attribute name="label" translatable="yes" context="buffers-action">Buffers Menu</attribute>
+
+      <section>
+        <item><attribute name="action">buffers.buffers-paste</attribute></item>
+        <item><attribute name="action">buffers.buffers-paste-in-place</attribute></item>
+        <item><attribute name="action">buffers.buffers-paste-into</attribute></item>
+        <item><attribute name="action">buffers.buffers-paste-into-in-place</attribute></item>
+        <item><attribute name="action">buffers.buffers-paste-as-new-layer</attribute></item>
+        <item><attribute name="action">buffers.buffers-paste-as-new-layer-in-place</attribute></item>
+        <item><attribute name="action">buffers.buffers-paste-as-new-image</attribute></item>
+        <item><attribute name="action">buffers.buffers-delete</attribute></item>
+      </section>
+    </submenu>
   </menu>
 </interface>

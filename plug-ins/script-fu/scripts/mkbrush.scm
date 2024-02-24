@@ -73,7 +73,7 @@
 )
 
 (script-fu-menu-register "script-fu-make-brush-rectangular"
-                         "<Brushes>")
+                         "<Brushes>/Brushes Menu")
 
 
 (define (script-fu-make-brush-rectangular-feathered name width height
@@ -144,7 +144,7 @@
 )
 
 (script-fu-menu-register "script-fu-make-brush-rectangular-feathered"
-                         "<Brushes>")
+                         "<Brushes>/Brushes Menu")
 
 
 (define (script-fu-make-brush-elliptical name width height spacing)
@@ -199,7 +199,7 @@
 )
 
 (script-fu-menu-register "script-fu-make-brush-elliptical"
-                         "<Brushes>")
+                         "<Brushes>/Brushes Menu")
 
 
 (define (script-fu-make-brush-elliptical-feathered name
@@ -269,4 +269,4 @@
 )
 
 (script-fu-menu-register "script-fu-make-brush-elliptical-feathered"
-                         "<Brushes>")
+                         "<Brushes>/Brushes Menu")

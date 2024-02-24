@@ -102,7 +102,7 @@ class PaletteOffset (Gimp.PlugIn):
             procedure.add_argument_from_property(self, "palette")
             procedure.add_argument_from_property(self, "amount")
             procedure.add_return_value_from_property(self, "new-palette")
-            procedure.add_menu_path ('<Palettes>')
+            procedure.add_menu_path ('<Palettes>/Palettes Menu')
         else:
             procedure = None
 

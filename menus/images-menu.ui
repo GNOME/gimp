@@ -2,8 +2,12 @@
 
 <interface>
   <menu id="/images-popup">
-    <item><attribute name="action">images.images-raise-views</attribute></item>
-    <item><attribute name="action">images.images-new-view</attribute></item>
-    <item><attribute name="action">images.images-delete</attribute></item>
+    <submenu>
+      <attribute name="label" translatable="yes" context="images-action">Images Menu</attribute>
+
+      <item><attribute name="action">images.images-raise-views</attribute></item>
+      <item><attribute name="action">images.images-new-view</attribute></item>
+      <item><attribute name="action">images.images-delete</attribute></item>
+    </submenu>
   </menu>
 </interface>

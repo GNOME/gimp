@@ -228,7 +228,7 @@
                       (string-append "palette." file-type)
                       )
   (script-fu-menu-register (string-append "gimp-palette-export-" export-type)
-                           "<Palettes>/Export as")
+                           "<Palettes>/Palettes Menu/Export as")
   )
 
 (define (bad-file-name)

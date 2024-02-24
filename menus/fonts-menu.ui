@@ -2,8 +2,12 @@
 
 <interface>
   <menu id="/fonts-popup">
-    <section>
-      <item><attribute name="action">fonts.fonts-refresh</attribute></item>
-    </section>
+    <submenu>
+      <attribute name="label" translatable="yes" context="fonts-action">Fonts Menu</attribute>
+
+      <section>
+        <item><attribute name="action">fonts.fonts-refresh</attribute></item>
+      </section>
+    </submenu>
   </menu>
 </interface>

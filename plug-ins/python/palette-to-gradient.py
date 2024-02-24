@@ -183,7 +183,7 @@ class PaletteToGradient (Gimp.PlugIn):
             procedure.add_argument_from_property(self, "palette")
             procedure.add_return_value_from_property(self, "new-gradient")
 
-            procedure.add_menu_path ('<Palettes>')
+            procedure.add_menu_path ('<Palettes>/Palettes Menu')
 
         return procedure
 

@@ -2,17 +2,21 @@
 
 <interface>
   <menu id="/error-console-popup">
-    <item><attribute name="action">error-console.error-console-clear</attribute></item>
-    <item><attribute name="action">error-console.error-console-select-all</attribute></item>
-    <section>
-      <item><attribute name="action">error-console.error-console-save-all</attribute></item>
-      <item><attribute name="action">error-console.error-console-save-selection</attribute></item>
-    </section>
     <submenu>
-      <attribute name="label" translatable="yes" context="error-console-action">_Highlight</attribute>
-      <item><attribute name="action">error-console.error-console-highlight-error</attribute></item>
-      <item><attribute name="action">error-console.error-console-highlight-warning</attribute></item>
-      <item><attribute name="action">error-console.error-console-highlight-info</attribute></item>
+      <attribute name="label" translatable="yes" context="error-console-action">Error Console Menu</attribute>
+
+      <item><attribute name="action">error-console.error-console-clear</attribute></item>
+      <item><attribute name="action">error-console.error-console-select-all</attribute></item>
+      <section>
+        <item><attribute name="action">error-console.error-console-save-all</attribute></item>
+        <item><attribute name="action">error-console.error-console-save-selection</attribute></item>
+      </section>
+      <submenu>
+        <attribute name="label" translatable="yes" context="error-console-action">_Highlight</attribute>
+        <item><attribute name="action">error-console.error-console-highlight-error</attribute></item>
+        <item><attribute name="action">error-console.error-console-highlight-warning</attribute></item>
+        <item><attribute name="action">error-console.error-console-highlight-info</attribute></item>
+      </submenu>
     </submenu>
   </menu>
 </interface>
