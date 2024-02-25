@@ -563,6 +563,10 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
         {
           type_name = "GimpParamPattern";
         }
+      else if (value_type == GEGL_TYPE_COLOR)
+        {
+          type_name = "GeglParamColor";
+        }
 
       if (type_name)
         {

@@ -19,6 +19,8 @@ gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
 gi.require_version('GimpUi', '3.0')
 from gi.repository import GimpUi
+gi.require_version('Gegl', '0.4')
+from gi.repository import Gegl
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -28,11 +30,12 @@ import sys
 def N_(message): return message
 def _(message): return GLib.dgettext(None, message)
 
-_color = Gimp.RGB()
-_color.set_uchar(240, 0, 0)
-_color.set_alpha(1.0)
-
 def foggify(procedure, run_mode, image, n_drawables, drawables, config, data):
+    Gegl.init(None)
+
+    _color = Gegl.Color.new("black")
+    _color.set_rgba(0.94, 0, 0, 1.0)
+
     # Work around not being able to set default color by only setting it
     # when color in our config is None. This won't help when resetting to
     # factory default. This also fixes a critical when running without
@@ -43,6 +46,7 @@ def foggify(procedure, run_mode, image, n_drawables, drawables, config, data):
 
     if run_mode == Gimp.RunMode.INTERACTIVE:
         GimpUi.init('python-fu-foggify')
+
         dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
         dialog.fill(None)
         if not dialog.run():
@@ -123,7 +127,7 @@ class Foggify (Gimp.PlugIn):
     # supposed to allow setting a default, except it doesn't seem to
     # work. I still leave it this way for now until we figure this out
     # as it should be the better syntax.
-    color = GObject.Property(type =Gimp.RGB, default=_color,
+    color = GObject.Property(type =Gegl.Color, default=None,
                              nick =_("_Fog color"),
                              blurb=_("Fog color"))
 

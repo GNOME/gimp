@@ -293,6 +293,20 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                     color, flags);
       g_clear_object (&color);
     }
+  else if (G_IS_PARAM_SPEC_OBJECT (pspec) &&
+           G_PARAM_SPEC_VALUE_TYPE (pspec) == GEGL_TYPE_COLOR)
+    {
+      GValue    *value;
+      GeglColor *color;
+
+      value = (GValue *) g_param_spec_get_default_value (pspec);
+      color = g_value_dup_object (value);
+
+      copy = gegl_param_spec_color (name, nick, blurb,
+                                    /*TRUE,*/
+                                    color, flags);
+      g_clear_object (&color);
+    }
   else if (G_IS_PARAM_SPEC_PARAM (pspec))
     {
       copy = g_param_spec_param (name, nick, blurb,
