@@ -36,4 +36,5 @@ gnome     = import('gnome')
 
 ## Data ##
 
+subdir('cursors')
 subdir('icons')
