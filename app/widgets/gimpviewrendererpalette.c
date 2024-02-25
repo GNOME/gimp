@@ -83,6 +83,11 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
   GimpViewRendererPalette *renderpal = GIMP_VIEW_RENDERER_PALETTE (renderer);
   GimpPalette             *palette;
   GimpColorTransform      *transform;
+  GtkStyleContext         *style;
+  GdkRGBA                 *bg_color = NULL;
+  GdkRGBA                 *fg_color = NULL;
+  guchar                   bg_rgb[3];
+  guchar                   fg_rgb[3];
   guchar                  *row;
   guchar                  *dest;
   GList                   *list;
@@ -95,6 +100,39 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
 
   if (gimp_palette_get_n_colors (palette) == 0)
     return;
+
+  /* Get background colors from context */
+  style = gtk_widget_get_style_context (widget);
+  gtk_style_context_get (style, gtk_style_context_get_state (style),
+                         GTK_STYLE_PROPERTY_COLOR,            &fg_color,
+                         GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &bg_color,
+                         NULL);
+
+  if (fg_color)
+    {
+      fg_rgb[0] = (gint) (fg_color->red * 255);
+      fg_rgb[1] = (gint) (fg_color->green * 255);
+      fg_rgb[2] = (gint) (fg_color->blue * 255);
+
+      gdk_rgba_free (fg_color);
+    }
+  else
+    {
+      fg_rgb[0] = fg_rgb[1] = fg_rgb[2] = 0;
+    }
+
+  if (bg_color)
+    {
+      bg_rgb[0] = (gint) (bg_color->red * 255);
+      bg_rgb[1] = (gint) (bg_color->green * 255);
+      bg_rgb[2] = (gint) (bg_color->blue * 255);
+
+      gdk_rgba_free (bg_color);
+    }
+  else
+    {
+      bg_rgb[0] = bg_rgb[1] = bg_rgb[2] = 255;
+    }
 
   grid_width = renderpal->draw_grid ? 1 : 0;
 
@@ -185,13 +223,23 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
                     }
                   else
                     {
-                      rgb[0] = rgb[1] = rgb[2] = (renderpal->draw_grid ? 0 : 255);
+                      if (renderpal->draw_grid)
+                        {
+                          for (gint i = 0; i < 3; i++)
+                            rgb[i] = fg_rgb[i];
+                        }
+                      else
+                        {
+                          for (gint i = 0; i < 3; i++)
+                            rgb[i] = bg_rgb[i];
+                        }
                     }
                 }
 
               if (renderpal->draw_grid && (x % renderpal->cell_width) == 0)
                 {
-                  GIMP_CAIRO_RGB24_SET_PIXEL (d, 0, 0, 0);
+                  GIMP_CAIRO_RGB24_SET_PIXEL (d, fg_rgb[0], fg_rgb[1],
+                                              fg_rgb[2]);
                 }
               else
                 {
