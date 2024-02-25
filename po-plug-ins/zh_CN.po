@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-20 14:42+0000\n"
-"PO-Revision-Date: 2024-02-22 18:54+0800\n"
+"POT-Creation-Date: 2024-02-25 08:11+0000\n"
+"PO-Revision-Date: 2024-02-25 18:24+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -11258,9 +11258,9 @@ msgstr "色彩模式"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:316
 msgid ""
-"0: Apply colormap as specified by the parameters below; 1: Apply active "
+"0: Apply colormap as specified by the parameters above; 1: Apply active "
 "gradient to final image"
-msgstr "0：应用通过下列参数指定的颜色表；1：应用活动渐变至最终图像"
+msgstr "0：应用通过上面参数指定的颜色表；1：应用活动渐变至最终图像"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:322
 msgid "Red stretch"
