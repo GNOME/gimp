@@ -1,0 +1,4 @@
+[wrap-git]
+url      = https://gitlab.gnome.org/GNOME/gimp-data
+revision = main
+depth    = 1

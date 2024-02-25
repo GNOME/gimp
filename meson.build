@@ -1203,10 +1203,6 @@ else
   warnings += vec_warning
 endif
 
-native_glib_minver = '2.2.0'
-native_glib = dependency('glib-2.0',    version: '>='+native_glib_minver, native: true)
-native_rsvg = dependency('librsvg-2.0', version: '>='+rsvg_minver, native: true)
-
 # Running tests headless
 xvfb_run = find_program('xvfb-run', required: get_option('headless-tests'))
 dbus_run_session = find_program('dbus-run-session', required: get_option('headless-tests'))
@@ -1820,9 +1816,16 @@ subdir('cursors')
 subdir('data')
 subdir('desktop')
 subdir('etc')
-subdir('icons')
 subdir('menus')
 subdir('themes')
+
+# Loading gimp-data subproject, the versions must be in sync.
+gimp_data = subproject('gimp-data', version: '=' + gimp_version,
+                       default_options: [
+                         'gimp-datadir=' + gimpdatadir,
+                       ])
+icons_imgs_sources = gimp_data.get_variable('icons_imgs_sources')
+icons_core_sources = gimp_data.get_variable('icons_core_sources')
 
 # Libraries (order here is important!)
 subdir('libgimpcolor')
