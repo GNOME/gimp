@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-10 11:11+0000\n"
-"PO-Revision-Date: 2024-02-14 03:55+0300\n"
+"POT-Creation-Date: 2024-02-19 19:34+0000\n"
+"PO-Revision-Date: 2024-02-23 01:28+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -5294,7 +5294,7 @@ msgstr "Her parça eğri kenarlara sahip"
 
 #: ../plug-ins/common/mail.c:158
 msgid "Send the image by email"
-msgstr "Görüntüyü eposta ile gönder"
+msgstr "Görüntüyü e-posta ile gönder"
 
 #: ../plug-ins/common/mail.c:168
 msgid "Send by E_mail..."
