@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-15 20:23+0000\n"
-"PO-Revision-Date: 2024-02-18 01:45+0300\n"
+"POT-Creation-Date: 2024-02-24 20:38+0000\n"
+"PO-Revision-Date: 2024-02-25 07:56+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -324,7 +324,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:236
 msgid "Intermediate frames"
-msgstr "Ara çerçeveler"
+msgstr "Ara kareler"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:237
 msgid "Max. blur radius"
@@ -340,8 +340,8 @@ msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
-"Burn-In betiği saydam bir önalan katmanı ve bir artalan katmanı olmak üzere "
-"iki katmana gereksinir."
+"Burn-In betiği iki katmana gereksinir. Saydamlığa sahip önalan katmanı ve "
+"bir artalan katmanı."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:224
 msgid "B_urn-In..."
@@ -352,7 +352,8 @@ msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
 msgstr ""
-"İki katman arasında 'burn-in' geçişi oluşturmak için ara katman oluştur"
+"İki katman arasında canlandırmalı 'burn-in' geçişi oluşturmak için ara "
+"katmanlar oluştur"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:232
 msgid "Glow color"
@@ -663,7 +664,7 @@ msgstr "_Yazı Tipi Eşlemini İşle..."
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
-"Yazı tipi adı süzgecine karşılık gelen yazı tiplerinin, önizlemeleriyle "
+"Yazı tipi adı süzgecine karşılık gelen yazı tiplerinin, ön izlemeleriyle "
 "doldurulmuş bir görüntü oluştur"
 
 #: plug-ins/script-fu/scripts/font-map.scm:167
@@ -744,7 +745,9 @@ msgid "Flatten image"
 msgstr "Görüntüyü düzleştir"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:63
-msgid "Using _Paths"
+#, fuzzy
+#| msgid "Using _Paths"
+msgid "_Using Paths"
 msgstr "_Yolları Kullanmak"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
@@ -785,11 +788,15 @@ msgid "Drawing _Simple Objects"
 msgstr "_Basit Nesneler Çizmek"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:154
-msgid "Create and Use _Selections"
+#, fuzzy
+#| msgid "Create and Use _Selections"
+msgid "_Create and Use Selections"
 msgstr "_Seçim Oluşturmak ve Kullanmak"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:166
-msgid "_[Table of Contents]"
+#, fuzzy
+#| msgid "_[Table of Contents]"
+msgid "_Table of Contents"
 msgstr "İçindekiler"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:202
@@ -1414,11 +1421,11 @@ msgstr "Boyut"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:104
 msgid "Wavelength"
-msgstr "Dalgaboyu"
+msgstr "Dalga boyu"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:105
 msgid "Number of frames"
-msgstr "Çerçeve sayısı"
+msgstr "Kare sayısı"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:106
 msgid "Invert direction"
