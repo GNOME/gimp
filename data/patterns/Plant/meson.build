@@ -1,3 +1,0 @@
-patterns = files(
-  'leaves.pat',
-)

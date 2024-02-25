@@ -1,3 +1,0 @@
-patterns = files(
-  'burlap.pat',
-)
