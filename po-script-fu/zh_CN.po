@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-15 20:23+0000\n"
-"PO-Revision-Date: 2024-02-17 10:43+0800\n"
+"POT-Creation-Date: 2024-02-25 08:12+0000\n"
+"PO-Revision-Date: 2024-02-25 18:22+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -723,8 +723,8 @@ msgid "Flatten image"
 msgstr "平整图像"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:63
-msgid "Using _Paths"
-msgstr "使用路径(_P)"
+msgid "_Using Paths"
+msgstr "使用路径(_U)"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:64
 #: plug-ins/script-fu/scripts/gimp-online.scm:77
@@ -763,12 +763,12 @@ msgid "Drawing _Simple Objects"
 msgstr "绘制简单对象(_S)"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:154
-msgid "Create and Use _Selections"
-msgstr "创建并使用选区(_S)"
+msgid "_Create and Use Selections"
+msgstr "创建并使用选区(_C)"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:166
-msgid "_[Table of Contents]"
-msgstr "_[目录]"
+msgid "_Table of Contents"
+msgstr "目录(_T)"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:202
 msgid "_Main Web Site"
