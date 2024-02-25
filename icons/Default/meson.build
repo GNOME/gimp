@@ -1,5 +1,6 @@
 if have_vector_icons
   # Only process the 64x64 icons for the 2 resource icons.
+  size='64'
   subdir('64')
 else
   gtk_encode_symbolic_svg = find_program('gtk-encode-symbolic-svg', native: true)

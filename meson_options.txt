@@ -1,0 +1,2 @@
+option('gimp-datadir', type: 'string',  value: '',   description: 'This must be set by GIMP')
+option('vector-icons', type: 'boolean', value: true, description: 'Use vector icons rather than raster ones', yield: true)
