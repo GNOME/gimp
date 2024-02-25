@@ -36,5 +36,7 @@ gnome     = import('gnome')
 
 ## Data ##
 
+subdir('brushes')
 subdir('cursors')
 subdir('icons')
+subdir('patterns')
