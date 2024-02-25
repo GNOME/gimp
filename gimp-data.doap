@@ -1,0 +1,93 @@
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:gnome="http://api.gnome.org/doap-extensions#"
+         xmlns="http://usefulinc.com/ns/doap#">
+
+  <name xml:lang="en">GIMP data</name>
+
+  <shortdesc xml:lang="en">GNU Image Manipulation Program's data</shortdesc>
+
+  <description xml:lang="en">
+      GIMP is an acronym for GNU Image Manipulation Program. It is a
+      freely distributed program for such tasks as photo retouching,
+      image composition and image authoring.
+      It has many capabilities. It can be used as a simple paint
+      program, an expert quality photo retouching program, an online
+      batch processing system, a mass production image renderer, an
+      image format converter, etc.
+      GIMP is expandable and extensible. It is designed to be
+      augmented with plug-ins and extensions to do just about
+      anything. The advanced scripting interface allows everything
+      from the simplest task to the most complex image manipulation
+      procedures to be easily scripted. GIMP is available for Linux,
+      Windows and OS X.
+  </description>
+  <description xml:lang="de">
+      GIMP ist die Abkürzung für GNU Image Manipulation Program.
+      Es ist ein frei verfügbares Programm für Aufgaben wie Fotoretusche,
+      Bildgestaltung und Bildbearbeitung.
+      GIMP hat viele Fähigkeiten. Sie können es verwenden für einfache
+      Zeichenaufgabben, professionelle Fotoretuschen, die Online-
+      Stapelverarbeitung, Bildrendering in der Massenproduktion,
+      die Umwandlung von Grafikdateien und vieles mehr.
+      GIMP ist durch Plug-ins erweiterungsfähig.
+      Mithilfe der Programmierschnittstelle von GIMP können Sie einfache
+      Aufgaben wie auch komplexe Bildverarbeitungprozeduren automatisieren.
+      GIMP steht Ihnen unter Linux, Windows und OS X zur Verfügung.
+  </description>
+  <description xml:lang="it">
+      GIMP è un acronimo per GNU Image Manipulation Program. È un
+      programma distribuito liberamente adatto al foto ritocco,
+      alla composizione e alla creazione di immagini.
+      È molto flessibile. Può essere usato come semplice programma
+      di disegno, come programma per il fotoritocco professionale,
+      come sistema di elaborazione bach in linea, come generatore
+      di immagini prodotte automaticamente, come convertitore tra
+      diversi formati immagine e altro ancora.
+      GIMP è espandibile ed estensibile. È stato progettato per
+      essere ampliato con plug-in ed estensioni per poter aggiungere
+      praticamente qualunque comando. L'interfaccia avanzata di
+      scripting semplifica la conversione in procedura dal compito
+      più semplice fino all'elaborazione di immagini più complessa.
+      GIMP è disponibile per Linux, Windows e OS X.
+  </description>
+
+  <homepage rdf:resource="https://www.gimp.org" />
+
+  <support-forum rdf:resource="https://www.gimp.org/discuss.html" />
+
+  <category rdf:resource="http://api.gnome.org/doap-extensions#apps" />
+
+  <support-forum rdf:resource="https://discourse.gnome.org/tag/gimp" />
+
+  <download-page rdf:resource="https:///www.gimp.org/downloads/" />
+
+  <bug-database
+    rdf:resource="https://gitlab.gnome.org/GNOME/gimp-data/-/issues"
+  />
+
+  <programming-language>C</programming-language>
+  <programming-language>Python</programming-language>
+  <programming-language>Scheme</programming-language>
+
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Michael Natterer</foaf:name>
+      <gnome:userid>mitch</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Michael Schumacher</foaf:name>
+      <gnome:userid>schumaml</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Jehan</foaf:name>
+      <gnome:userid>jehanp</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+
+</Project>
