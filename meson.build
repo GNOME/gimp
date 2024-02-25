@@ -1812,7 +1812,6 @@ subdir('po-script-fu')
 subdir('po-tags')
 subdir('po-tips')
 # Data / Desktop / xml files
-subdir('cursors')
 subdir('data')
 subdir('desktop')
 subdir('etc')
@@ -1826,6 +1825,8 @@ gimp_data = subproject('gimp-data', version: '=' + gimp_version,
                        ])
 icons_imgs_sources = gimp_data.get_variable('icons_imgs_sources')
 icons_core_sources = gimp_data.get_variable('icons_core_sources')
+cursors_sources    = gimp_data.get_variable('cursors_sources')
+pickers_sources    = gimp_data.get_variable('pickers_sources')
 
 # Libraries (order here is important!)
 subdir('libgimpcolor')
