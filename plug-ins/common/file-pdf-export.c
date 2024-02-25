@@ -1769,11 +1769,11 @@ drawText (GimpLayer *layer,
 
   /* Indentation */
   indent = gimp_text_layer_get_indent (GIMP_TEXT_LAYER (layer));
-  pango_layout_set_indent (layout, (int)(PANGO_SCALE * indent));
+  pango_layout_set_indent (layout, pango_units_from_double (gimp_units_to_pixels (indent, unit, y_res)));
 
   /* Line Spacing */
   line_spacing = gimp_text_layer_get_line_spacing (GIMP_TEXT_LAYER (layer));
-  pango_layout_set_spacing (layout, (int)(PANGO_SCALE * line_spacing));
+  pango_layout_set_spacing (layout, pango_units_from_double (gimp_units_to_pixels (line_spacing, unit, y_res)));
 
   /* Letter Spacing */
   letter_spacing = gimp_text_layer_get_letter_spacing (GIMP_TEXT_LAYER (layer));
