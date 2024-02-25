@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   id="svg11300"
+   sodipodi:version="0.32"
+   inkscape:version="0.91+devel r"
+   sodipodi:docname="gimp-join-miter.svg"
+   version="1.0"
+   viewBox="0 0 16 16">
+  <sodipodi:namedview
+     inkscape:cy="6.7789529"
+     inkscape:cx="7.40954"
+     inkscape:zoom="22.627417"
+     inkscape:window-height="1016"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="0.17254902"
+     bordercolor="#666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:showpageshadow="false"
+     showborder="true"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:current-layer="svg11300"
+     width="16px"
+     height="16px"
+     showgrid="true"
+     inkscape:window-maximized="1"
+     inkscape:document-units="px">
+    <inkscape:grid
+       type="xygrid"
+       id="grid86" />
+  </sodipodi:namedview>
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     stroke="#ef2929"
+     fill="#eeeeec"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="0.25490196"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="-14.198652"
+     inkscape:cy="-5.1663457"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="872"
+     inkscape:window-height="659"
+     inkscape:window-x="403"
+     inkscape:window-y="296"
+     id="namedview73" />
+  <metadata
+     id="metadata4">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title />
+          </cc:Agent>
+        </dc:creator>
+        <dc:source>http://jimmac.musichall.cz</dc:source>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/2.0/" />
+        <dc:title />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/2.0/">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Notice" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Attribution" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <g
+       id="g12821"
+       transform="scale(0.99974012,1)">
+      <g
+         id="join_miter"
+         transform="matrix(0.66399643,0,0,0.66354548,-597.26421,-105.00607)"
+         style="display:inline">
+        <path
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccc"
+           id="path18365"
+           d="m 900.04,181.75 -0.04,-23 h 23 v 17.5 h -6 v 5.5"
+           style="fill:#729fcf;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1" />
+        <rect
+           y="158.25"
+           x="899.5"
+           height="24"
+           width="24"
+           id="rect18367"
+           style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:9;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none" />
+        <path
+           inkscape:connector-curvature="0"
+           d="m 900.04,181.75 -0.04,-23 h 23 m -6,23 v -6 h 6"
+           style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#204a87;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+           id="path18369" />
+        <use
+           height="1250"
+           width="1250"
+           transform="translate(-3.999997)"
+           id="use18373"
+           xlink:href="#use5673"
+           y="0"
+           x="0" />
+        <use
+           height="1250"
+           width="1250"
+           transform="translate(-7.999997)"
+           id="use18375"
+           xlink:href="#use5673"
+           y="0"
+           x="0" />
+        <use
+           height="1250"
+           width="1250"
+           transform="translate(-12)"
+           id="use18377"
+           xlink:href="#use5673"
+           y="0"
+           x="0" />
+        <use
+           height="1250"
+           width="1250"
+           transform="translate(-12,4)"
+           id="use18379"
+           xlink:href="#use5673"
+           y="0"
+           x="0" />
+        <use
+           height="1250"
+           width="1250"
+           transform="translate(-12,8)"
+           id="use18381"
+           xlink:href="#use5673"
+           y="0"
+           x="0" />
+        <use
+           height="1250"
+           width="1250"
+           transform="translate(-12,12)"
+           id="use18383"
+           xlink:href="#use5673"
+           y="0"
+           x="0" />
+        <path
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccc"
+           d="m 900.9881,181.9102 -0.1501,-22.1908 h 22.1908 m -6.9833,22.1339 -0.0569,-6.9931 7.1539,0.0568"
+           style="opacity:0.5;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.89924371px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+           id="path32260" />
+      </g>
+      <path
+         id="path12803"
+         d="M 5.0120563,5.7709155 H 16.002859 Z M 5.770869,5.944495 V 16 Z"
+         style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.54183102;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

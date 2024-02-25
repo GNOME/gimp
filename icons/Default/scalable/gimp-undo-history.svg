@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="svg2"
+   viewBox="0 0 256.00003 256.00043"
+   inkscape:version="0.91+devel r"
+   sodipodi:docname="gimp-undo-history.svg"
+   height="16"
+   width="16">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     id="namedview1711"
+     showgrid="true"
+     inkscape:zoom="29.49995"
+     inkscape:cx="9.7001482"
+     inkscape:cy="12.084765"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     showguides="false"
+     units="px">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4251" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386" />
+  <g
+     id="g4253">
+    <path
+       sodipodi:nodetypes="cccccssccssccc"
+       inkscape:connector-curvature="0"
+       id="path11633"
+       d="M 70.601032,85.981076 3.5316205,153.38656 70.601032,220.00672 c 0.06162,-11.10191 0,-16.75274 0.06558,-49.89969 l 92.220378,-0.35977 c 14.00824,-0.0566 25.08553,11.05424 25.08553,25.12983 0,14.07566 -11.06144,25.12979 -25.15103,25.12979 h -8.3837 v 33.50639 h 8.38368 c 32.21158,0 58.68574,-26.45207 58.68574,-58.63618 0,-32.18422 -26.45862,-58.76592 -58.75125,-58.63624 l -92.154929,0.39259 z"
+       style="fill:#edd400;fill-opacity:1;stroke:#000000;stroke-width:4.97431374;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:31.99669266;marker:none"
+       id="rect35735-0-1"
+       width="255.95135"
+       height="255.99573"
+       x="0.045598611"
+       y="-256.0004"
+       transform="scale(1,-1)" />
+    <path
+       sodipodi:nodetypes="cccccssccssccc"
+       inkscape:connector-curvature="0"
+       id="path11633-6"
+       d="M 124.5259,4.8784926 67.018814,60.015168 124.5259,114.50945 c 0.0528,-9.08119 0,-13.70348 0.0562,-40.817193 l 79.07217,-0.294286 c 12.01102,-0.04637 21.509,9.042195 21.509,20.555825 0,11.513674 -9.48438,20.555784 -21.56515,20.555784 h -7.18837 v 27.40773 h 7.1884 c 27.61905,0 50.31868,-21.6374 50.31868,-47.963514 0,-26.326209 -22.68633,-48.069644 -50.37485,-47.963563 l -79.01607,0.321132 z"
+       style="opacity:0.5;fill:#edd400;fill-opacity:1;stroke:#000000;stroke-width:4.16585636;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>

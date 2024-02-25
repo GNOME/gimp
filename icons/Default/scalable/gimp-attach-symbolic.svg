@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="3.175mm"
+   height="3.175mm"
+   viewBox="0 0 3.175 3.175"
+   version="1.1"
+   id="svg10098"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
+   sodipodi:docname="gimp-attach.svg">
+  <defs
+     id="defs10092" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.2"
+     inkscape:cx="-2.1739592"
+     inkscape:cy="12.541184"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1366"
+     inkscape:window-height="741"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata10095">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-45.489427,-201.58463)">
+    <g
+       style="display:inline"
+       id="gimp-attach-12"
+       transform="matrix(0.2648149,0,0,0.26458333,-116.06452,155.33734)"
+       inkscape:label="gimp-attach-12"
+       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/24/gimp-attach.png"
+       inkscape:export-xdpi="192"
+       inkscape:export-ydpi="192">
+      <g
+         inkscape:export-ydpi="95.916092"
+         inkscape:export-xdpi="95.916092"
+         inkscape:export-filename="/home/aryeom/Desktop/Projects/GIMP-icon-attach_detach/attach12.png"
+         transform="translate(-0.00518497,-2.5439453e-6)"
+         id="g6983">
+        <g
+           id="g6970"
+           transform="translate(-78.930922,36.999995)">
+          <g
+             id="g6189">
+            <path
+               sodipodi:nodetypes="ccccc"
+               style="fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.99956268px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               d="m 689.99894,148.2929 -10e-5,-2 h 9.99135 v 2 z"
+               id="path6173"
+               inkscape:connector-curvature="0" />
+            <path
+               style="fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.99956268px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               d="m 699.9902,139.2929 h -9.99125 l 4.99573,8.00001 z"
+               id="path6175"
+               inkscape:connector-curvature="0"
+               sodipodi:nodetypes="cccc" />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 15.999999 16.000047"
+   id="svg7384"
+   height="16.000048"
+   width="16"
+   version="1.1"
+   inkscape:version="0.92pre1 unknown"
+   sodipodi:docname="gimp-reshow-filter.svg"
+   inkscape:export-filename="/home/klaus/gimpwip/gimp/icons/Symbolic/scalable/gimp-reshow-filter.png"
+   inkscape:export-xdpi="95.999718"
+   inkscape:export-ydpi="95.999718">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     id="namedview1516"
+     showgrid="true"
+     inkscape:zoom="16.347349"
+     inkscape:cx="18.181654"
+     inkscape:cy="7.0879735"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7384">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4286" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       gradientTransform="matrix(0.34682586,0,0,0.30620888,-154.35207,-275.32369)"
+       osb:paint="solid"
+       id="linearGradient19282-4">
+      <stop
+         id="stop19284-0"
+         offset="0"
+         style="stop-color:#bebebe;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(403.12162,-929.27501)"
+       gradientUnits="userSpaceOnUse"
+       y2="1049.8622"
+       x2="16"
+       y1="1049.8622"
+       x1="4"
+       id="linearGradient10250"
+       xlink:href="#linearGradient19282-4" />
+  </defs>
+  <g
+     id="g4292">
+    <g
+       transform="matrix(0.032,0,0,-0.03203203,15.6128,10.4745)"
+       id="g5594-6"
+       style="fill:#bebebe;fill-opacity:1" />
+    <g
+       transform="matrix(0.032,0,0,-0.03203203,9.67296,15.8401)"
+       id="g5598-5"
+       style="fill:#bebebe;fill-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       style="display:inline;fill:url(#linearGradient10250);fill-opacity:1;stroke:none;stroke-width:0.78246117"
+       d="m 4,11 v 5 h 12 v -5 z m 2.5714286,0.7143 h 0.8571428 v 3.5714 H 6.5714286 v -2.8571 l -0.8571429,0.7143 v -0.7143 z m 3,0 c 0.7122854,0 1.2857144,0.4779 1.2857144,1.0715 v 1.4284 c 0,0.5936 -0.573429,1.0715 -1.2857144,1.0715 -0.7122857,0 -1.2857143,-0.4779 -1.2857143,-1.0715 v -1.4284 c 0,-0.5936 0.5734286,-1.0715 1.2857143,-1.0715 z M 13.5,11.5 15,13 h -3 z m -3.9285714,0.9286 c -0.2374286,0 -0.4285715,0.1592 -0.4285715,0.3572 v 1.4284 c 0,0.198 0.1911429,0.3572 0.4285715,0.3572 C 9.8088571,14.5714 10,14.4122 10,14.2142 V 12.7858 C 10,12.5878 9.8088571,12.4286 9.5714286,12.4286 Z M 12,14 h 3 l -1.5,1.5 z"
+       id="rect28071" />
+    <path
+       sodipodi:nodetypes="ccscccccccccccscccsccc"
+       id="path4"
+       d="M 9.45,6.4433307 5.8725,0.27915212 C 6.3975,0.16721185 6.9375,0.10004768 7.5,0.10004768 c 1.8,0 3.45,0.63432824 4.74,1.67910422 L 9.495,6.5179576 Z M 0.345,5.3239279 C 1.035,3.1448233 2.7075,1.398555 4.845,0.5925849 L 7.59,5.3239279 Z M 0.15,6.0701965 H 5.7675 L 5.55,6.4433307 1.98,12.600048 C 0.75,11.27169 0,9.5104943 0,7.5627335 0,7.0478082 0.0525,6.555271 0.15,6.0701965 Z m 9.945,1.492537 2.925,-5.0373131 C 14.2425,3.8537786 15,5.6149727 15,7.5627335 15,8.0776587 14.9475,8.570196 14.85,9.0552705 H 9.2325 Z"
+       inkscape:connector-curvature="0"
+       style="fill:#bebebe;fill-opacity:1;stroke-width:0.74813193" />
+  </g>
+</svg>

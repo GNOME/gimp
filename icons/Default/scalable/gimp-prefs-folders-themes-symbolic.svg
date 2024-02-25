@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 15.999999 16"
+   id="svg7384"
+   height="16"
+   width="16"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-prefs-folders-themes.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview1507"
+     showgrid="false"
+     inkscape:zoom="14.75"
+     inkscape:cx="-831.81685"
+     inkscape:cy="-33.0374"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg7384" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient8074">
+      <stop
+         id="stop8072"
+         offset="0"
+         style="stop-color:#be00be;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient7561">
+      <stop
+         id="stop7558"
+         offset="0"
+         style="stop-color:#a5a5a5;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient7548">
+      <stop
+         id="stop7546"
+         offset="0"
+         style="stop-color:#ebebeb;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient7542">
+      <stop
+         id="stop7538"
+         offset="0"
+         style="stop-color:#c9c9c9;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       osb:paint="solid"
+       id="linearGradient19282">
+      <stop
+         id="stop19284"
+         offset="0"
+         style="stop-color:#b4b4b4;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0.34682586,0,0,0.30620888,-139.35207,801.03851)"
+       osb:paint="solid"
+       id="linearGradient19282-4">
+      <stop
+         id="stop19284-0"
+         offset="0"
+         style="stop-color:#bebebe;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(1175.3732,580.07676)"
+       gradientUnits="userSpaceOnUse"
+       y2="11"
+       x2="22"
+       y1="11"
+       x1="0"
+       id="linearGradient8352"
+       xlink:href="#linearGradient19282-4" />
+  </defs>
+  <g
+     transform="translate(-241.49624,-263.87401)"
+     style="display:inline"
+     id="preferences">
+    <g
+       transform="translate(226.49624,303.87401)"
+       id="gimp-prefs-folders-themes">
+      <path
+         style="display:inline;opacity:0.95;fill:url(#linearGradient8352);fill-opacity:1;stroke:none"
+         d="M 0.73046875,0 C 0.332915,0 0,0.332915 0,0.73046875 L 0,21.269531 C 0,21.679969 0.31988,22 0.73046875,22 L 21.269531,22 C 21.680106,22 22,21.680106 22,21.269531 L 22,7.6054688 C 22,7.207956 21.667085,6.875 21.269531,6.875 l -17.144531,0 0,11.6875 C 4.125,18.943375 3.818375,19.25 3.4375,19.25 3.056625,19.25 2.75,18.943375 2.75,18.5625 l 0,-12.375 C 2.75,5.806625 3.056625,5.5 3.4375,5.5 l 4.0820312,0 11.7304688,0 0,-1.9335938 C 19.25,3.1165062 18.883342,2.75 18.433594,2.75 L 8.25,2.75 8.25,0.73046875 C 8.25,0.3328875 7.9170852,0 7.5195312,0 Z m 8.43750005,8.4023438 3.6640622,0 c 0.435295,0 0.7938,0.21035 0.792969,0.4648437 l -0.02148,3.7949215 2.509765,-2.455078 c 0.04418,-0.04331 0.0999,-0.07057 0.164063,-0.08203 0.192498,-0.03442 0.462154,0.07306 0.683594,0.300781 l 2.488281,2.570313 c 0.295216,0.303686 0.396042,0.674817 0.21875,0.847656 l -2.513672,2.433594 3.853515,0 c 0.254494,0 0.464844,0.330339 0.464844,0.765625 l 0,3.664062 c 0,0.435295 -0.21035,0.7938 -0.464844,0.792969 L 16.085938,21.472656 13.84375,21.5 l -3.089844,0 C 10.232865,21.5 9.7809302,21.043559 9.5058594,20.361328 8.8408043,20.086147 8.4023438,19.639237 8.4023438,19.121094 l 0,-10.2539065 c 0,-0.2544937 0.3303385,-0.4648437 0.765625,-0.4648437 z M 9.25,9.25 l 0,1.75 3.5,0 0,-1.75 z m 7.191406,1.804688 -1.230468,1.203124 2.378906,2.433594 1.203125,-1.175781 z M 9.25,11.875 l 0,1.75 3.5,0 0,-1.75 z m 5.359375,0.984375 -1.011719,0.957031 0.0059,0.44336 2.154296,2.236328 1.230469,-1.203125 -2.378906,-2.433594 z M 9.25,14.5 l 0,1.75 3.5,0 0,-1.75 z m 4.361328,0.347656 0.01367,1.183594 0,1.914062 0.328125,0.328126 1.203125,-1.175782 -1.53125,-1.585937 z m 2.666016,2.277344 -0.02734,0.02734 0,3.472656 1.75,0 0,-3.5 -1.720703,0 -0.002,0 z m 2.597656,0 0,3.5 1.75,0 0,-3.5 z m -2.652344,0.05469 -1.53125,1.558593 -1.066406,1.039063 0,0.847656 1.75,0 0,-2.570312 z M 11,18 c -0.483254,0 -0.875,0.391746 -0.875,0.875 0,0.483254 0.391746,0.875 0.875,0.875 0.483254,0 0.875,-0.391746 0.875,-0.875 C 11.875,18.391746 11.483254,18 11,18 Z m -0.650391,2.601562 c 0.204998,0.138914 0.411273,0.250285 0.615235,0.333985 -0.203569,-0.08395 -0.41093,-0.196069 -0.615235,-0.333985 z m 0.638672,0.341797 c 0.199218,0.07973 0.393573,0.135311 0.578125,0.158203 -0.184625,-0.02377 -0.378949,-0.07808 -0.578125,-0.158203 z m 1.322266,0.05469 c -0.03508,0.0179 -0.07367,0.02928 -0.111328,0.04297 0.03755,-0.01385 0.07633,-0.02497 0.111328,-0.04297 z m -0.269531,0.08984 c -0.0426,0.0084 -0.08603,0.01549 -0.13086,0.01953 0.04493,-0.0043 0.08818,-0.01079 0.13086,-0.01953 z m -0.458985,0.01563 c 0.05665,0.0066 0.109642,0.0069 0.164063,0.0078 -0.0542,-0.0012 -0.107648,-0.001 -0.164063,-0.0078 z"
+         transform="matrix(0.72727273,0,0,0.72727273,15,-40)"
+         id="path15574-5"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

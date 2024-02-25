@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   height="16.000025"
+   id="gimp-warning"
+   viewBox="0 0 16.000446 16.000025"
+   inkscape:version="0.92pre1 unknown"
+   sodipodi:docname="gimp-warning.svg"
+   width="100%">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1346"
+     inkscape:window-height="939"
+     id="namedview1700"
+     showgrid="true"
+     inkscape:zoom="15.021272"
+     inkscape:cx="18.628969"
+     inkscape:cy="10.215851"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="gimp-warning"
+     showguides="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3964" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386" />
+  <g
+     style="display:inline"
+     transform="translate(-66.497722,-189.99994)"
+     id="g4237">
+    <g
+       transform="translate(-1.9352593,1.3196741)"
+       id="g4239">
+      <rect
+         id="rect6639-9"
+         width="16"
+         height="16"
+         x="68.432983"
+         y="188.68027"
+         style="fill:none;stroke-width:0.2" />
+      <g
+         transform="matrix(0.73770495,0,0,0.7757716,-155.30857,51.771056)"
+         style="display:inline;enable-background:new"
+         id="">
+        <path
+           style="fill:#f57900;fill-opacity:1;fill-rule:nonzero;stroke:#f57900;stroke-width:1.00000024;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 324.33756,194.52932 -8.97696,-16.82114 c -0.25803,-0.46725 -0.72492,-0.72684 -1.24489,-0.72684 -0.51997,0 -0.98926,0.31151 -1.2512,0.77876 l -8.91011,16.82114 c -0.20974,0.41533 -0.21213,0.98642 0.0461,1.40176 0.25825,0.41534 0.67335,0.623 1.19333,0.623 h 17.88707 c 0.51997,0 0.98904,-0.25958 1.19877,-0.67492 0.26173,-0.41534 0.26391,-0.93451 0.0579,-1.40176 z"
+           id="path10109"
+           inkscape:connector-curvature="0" />
+        <path
+           style="opacity:1;fill:#f57900;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:0.96627188;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 322.61753,193.53672 -7.72376,-14.45791 c -0.32893,-0.62467 -0.27639,-0.82509 -0.7763,-0.82509 -0.42997,0 -0.4844,0.29189 -0.79511,0.88153 l -7.63803,14.44622 c -0.44352,0.81347 -0.70421,1.11107 -0.49072,1.46911 0.21347,0.35804 0.53021,0.253 1.54298,0.27635 h 15.01208 c 0.94288,0.0117 1.15527,0.0252 1.32875,-0.33278 0.21648,-0.35805 -0.0461,-0.72765 -0.45989,-1.45743 z"
+           id="path1325"
+           inkscape:connector-curvature="0" />
+        <g
+           style="fill:#121312;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.76948965;stroke-miterlimit:4"
+           transform="matrix(0.58937196,0,0,0.51857899,300.05254,174.31075)"
+           id="g10114">
+          <path
+             style="fill:#121312;fill-opacity:1;stroke:none;stroke-width:1.89166403"
+             d="m 23.9,36.5 c -1.3,0 -2.3,-1.000007 -2.3,-2.485721 0,-1.6 0.9,-2.485715 2.3,-2.485715 1.4,0 2.2,0.885715 2.3,2.485715 C 26.2,35.499993 25.3,36.5 23.9,36.5 Z M 23.167629,28.004862 21.9,16.614286 h 4 l -1.267629,13.26802 z"
+             id="path10116"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="ssscsccccc" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

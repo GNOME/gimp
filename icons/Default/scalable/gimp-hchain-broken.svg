@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 24.000045 24"
+   id="svg7384"
+   height="24"
+   width="24.000046"
+   version="1.1"
+   inkscape:version="1.1.2 (1:1.1+202202050942+0a00cf5339)"
+   sodipodi:docname="gimp-hchain-broken.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1274"
+     inkscape:window-height="1387"
+     id="namedview1510"
+     showgrid="false"
+     inkscape:zoom="13.906409"
+     inkscape:cx="13.339173"
+     inkscape:cy="8.1257498"
+     inkscape:window-x="0"
+     inkscape:window-y="22"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7384"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:pagecheckerboard="0" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       id="linearGradient8074"
+       inkscape:swatch="solid">
+      <stop
+         id="stop8072"
+         offset="0"
+         style="stop-color:#be00be;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient7561"
+       inkscape:swatch="solid">
+      <stop
+         id="stop7558"
+         offset="0"
+         style="stop-color:#a5a5a5;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient7548"
+       inkscape:swatch="solid">
+      <stop
+         id="stop7546"
+         offset="0"
+         style="stop-color:#ebebeb;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient7542"
+       inkscape:swatch="solid">
+      <stop
+         id="stop7538"
+         offset="0"
+         style="stop-color:#c9c9c9;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       id="linearGradient19282"
+       inkscape:swatch="solid">
+      <stop
+         id="stop19284"
+         offset="0"
+         style="stop-color:#b4b4b4;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0.34682586,0,0,0.30620888,-154.35209,-275.32372)"
+       id="linearGradient19282-4"
+       inkscape:swatch="solid">
+      <stop
+         id="stop19284-0"
+         offset="0"
+         style="stop-color:#bebebe;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(-92.563007,1002.1929)"
+       gradientUnits="userSpaceOnUse"
+       y2="12"
+       x2="19"
+       y1="12"
+       x1="4"
+       id="linearGradient9926"
+       xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       gradientTransform="translate(61.708689,668.12871)"
+       gradientUnits="userSpaceOnUse"
+       y2="-64.000198"
+       x2="-626"
+       y1="-64.000198"
+       x1="-628"
+       id="linearGradient9932"
+       xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       gradientTransform="translate(61.708689,668.12871)"
+       gradientUnits="userSpaceOnUse"
+       y2="-74.000198"
+       x2="-626"
+       y1="-74.000198"
+       x1="-628"
+       id="linearGradient9938"
+       xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient19282-4"
+       id="linearGradient9932-0"
+       x1="-628"
+       y1="-64.000198"
+       x2="-626"
+       y2="-64.000198"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,1.4999997,1.4999998,0,115.50032,952.9998)" />
+  </defs>
+  <rect
+     transform="scale(-1)"
+     y="-24"
+     x="-23.999996"
+     height="24"
+     width="24"
+     id="rect4380"
+     style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+  <path
+     id="rect6775-6"
+     style="fill:url(#linearGradient9932-0);fill-opacity:1;stroke:#555555;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 6.25,5.5 c -1.5927497,2.6e-6 -2.875,1.1596 -2.875,2.6 v 2.6 H 1.8476562 C 1.1010548,10.7 0.5,11.243563 0.5,11.91875 v 0.1625 C 0.5,12.756437 1.1010548,13.3 1.8476562,13.3 H 3.375 v 2.6 c 0,1.4404 1.2822503,2.6 2.875,2.6 H 9.125 V 15.9 H 7.2083333 C 6.4119585,15.9 6.25,15.494549 6.25,14.774349 V 13.3 H 7.7773437 C 8.5239452,13.3 9.125,12.756437 9.125,12.08125 v -0.1625 C 9.125,11.243563 8.5239452,10.7 7.7773437,10.7 H 6.25 V 9.2730468 C 6.25,8.5528468 6.8911252,8.1 7.6875,8.1 H 9.125 V 5.5 Z m 8.625,0 v 2.6 h 1.4375 c 0.796375,2.6e-6 1.4375,0.5798 1.4375,1.3 v 1.3 h -1.4375 c -0.796375,0 -1.4375,0.5798 -1.4375,1.3 0,0.7202 0.641125,1.3 1.4375,1.3 H 17.75 v 1.3 c 0,0.7202 -0.161958,1.3 -0.958333,1.3 H 14.875 v 2.6 h 2.875 c 1.59275,0 2.875,-1.1596 2.875,-2.6 v -2.6 h 1.4375 c 0.796375,0 1.4375,-0.5798 1.4375,-1.3 0,-0.7202 -0.641125,-1.3 -1.4375,-1.3 H 20.625 V 8.1 c 0,-1.4404 -1.28225,-2.6 -2.875,-2.6 z" />
+</svg>

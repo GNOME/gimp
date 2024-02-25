@@ -1,0 +1,20 @@
+gimp-channel-alpha
+gimp-channel-blue
+gimp-channel-gray
+gimp-channel-green
+gimp-channel-indexed
+gimp-channel-red
+gimp-channel
+# In data/tool-presets/FX/Glow-Lights.gtp preset icon, which can be
+# viewed in "Tool Presets" list/grid as GIMP_VIEW_SIZE_MEDIUM.
+gimp-color-triangle
+gimp-floating-selection
+gimp-image
+gimp-layer-mask
+gimp-layer
+gimp-text-layer
+gimp-user-manual
+gimp-wilber
+
+# GIMP_ICON_PALETTE used for Palettes dialog as GIMP_VIEW_SIZE_MEDIUM
+gtk-select-color

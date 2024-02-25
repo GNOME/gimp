@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 16.000001 16"
+   id="svg7384"
+   height="16"
+   width="16.000002"
+   version="1.1"
+   inkscape:version="0.92pre1 unknown"
+   sodipodi:docname="gimp-histogram.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="501"
+     inkscape:window-height="405"
+     id="namedview1511"
+     showgrid="true"
+     inkscape:zoom="14.749984"
+     inkscape:cx="-14.335283"
+     inkscape:cy="9.2203492"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg7384">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4238" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       gradientTransform="matrix(0.34682586,0,0,0.30620888,-154.35207,-275.32369)"
+       osb:paint="solid"
+       id="linearGradient19282-4">
+      <stop
+         id="stop19284-0"
+         offset="0"
+         style="stop-color:#bebebe;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(1.1666667,0,0,1.4,603.71512,154.05109)"
+       gradientUnits="userSpaceOnUse"
+       y2="603"
+       x2="175.0002"
+       y1="603"
+       x1="163.0002"
+       id="linearGradient7536"
+       xlink:href="#linearGradient19282-4" />
+  </defs>
+  <g
+     transform="translate(-83.801823,-116.00527)"
+     style="display:inline"
+     id="stock">
+    <g
+       id="gimp-histogram"
+       transform="translate(83.801825,-920.35693)">
+      <g
+         transform="translate(-161.0002,437.3622)"
+         style="display:inline"
+         id="gimp-histogram-6">
+        <g
+           id="g3970-0"
+           transform="translate(0,5)">
+          <path
+             style="fill:url(#linearGradient7536);fill-opacity:1;stroke:none;stroke-width:1.27801931"
+             d="m 162.0002,609 0.72917,-1.4875 0.4375,-1.3125 h 1.16666 v 0 L 165.5002,595 h 1.16667 l 1.16666,5.6 h 1.16667 l 1.16667,2.8 1.16666,2.8 v 0 l 1.16667,-2.8 v -2.8 0 0 l 0.5,-0.6 0.66667,3.4 1.16666,2.8 v 0 l 1.16667,1.4 v 1.4 z"
+             id="path5449-8-0"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="ccccccccccccccccccccccc" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 15.999999 16"
+   id="svg7384"
+   height="16"
+   width="16"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-gradient-radial.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="501"
+     inkscape:window-height="405"
+     id="namedview1509"
+     showgrid="false"
+     inkscape:zoom="14.75"
+     inkscape:cx="-506.34846"
+     inkscape:cy="402.06709"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg7384" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient8074">
+      <stop
+         id="stop8072"
+         offset="0"
+         style="stop-color:#be00be;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient7561">
+      <stop
+         id="stop7558"
+         offset="0"
+         style="stop-color:#a5a5a5;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient7548">
+      <stop
+         id="stop7546"
+         offset="0"
+         style="stop-color:#ebebeb;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient7542">
+      <stop
+         id="stop7538"
+         offset="0"
+         style="stop-color:#c9c9c9;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       osb:paint="solid"
+       id="linearGradient19282">
+      <stop
+         id="stop19284"
+         offset="0"
+         style="stop-color:#b4b4b4;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0.34682586,0,0,0.30620888,-93.35187,262.03851)"
+       osb:paint="solid"
+       id="linearGradient19282-4">
+      <stop
+         id="stop19284-0"
+         offset="0"
+         style="stop-color:#bebebe;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(542.21239,317.9785)"
+       gradientUnits="userSpaceOnUse"
+       y2="290"
+       x2="-167.99998"
+       y1="290"
+       x1="-175.53925"
+       id="linearGradient7627"
+       xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       gradientTransform="translate(575.34866,317.9785)"
+       gradientUnits="userSpaceOnUse"
+       y2="507"
+       x2="75.000198"
+       y1="507"
+       x1="63.000198"
+       id="linearGradient7633"
+       xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       gradientTransform="translate(575.34866,317.9785)"
+       gradientUnits="userSpaceOnUse"
+       y2="290"
+       x2="-165"
+       y1="290"
+       x1="-179"
+       id="linearGradient7639"
+       xlink:href="#linearGradient19282-4" />
+  </defs>
+  <g
+     transform="translate(-117.53751,-150.94726)"
+     style="display:inline"
+     id="stock">
+    <g
+       id="gimp-gradient-radial"
+       style="display:inline"
+       transform="translate(56.537314,-348.05274)">
+      <path
+         style="fill:url(#linearGradient7639);fill-opacity:1;stroke:none"
+         d="m -179,283 0,14 14,0 0,-14 z m 1,1 12,0 0,12 -12,0 z"
+         transform="translate(241.0002,217)"
+         id="rect6886"
+         inkscape:connector-curvature="0" />
+      <ellipse
+         ry="4"
+         rx="3.7696295"
+         cy="290"
+         cx="-171.76962"
+         style="fill:url(#linearGradient7627);fill-opacity:1;stroke:none"
+         id="path6891"
+         transform="matrix(1.0611131,0,0,1,251.26721,217)" />
+      <path
+         style="opacity:0.3;fill:url(#linearGradient7633);fill-opacity:1;stroke:none"
+         d="m 69.0002,501 c -3.31371,0 -6,2.68629 -6,6 0,3.31371 2.68629,6 6,6 3.31371,0 6,-2.68629 6,-6 0,-3.31371 -2.68629,-6 -6,-6 z m 0,2 c 2.20914,0 4,1.79086 4,4 0,2.20914 -1.79086,4 -4,4 -2.20914,0 -4,-1.79086 -4,-4 0,-2.20914 1.79086,-4 4,-4 z"
+         id="path6893"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

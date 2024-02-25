@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   id="svg2928"
+   sodipodi:version="0.32"
+   inkscape:version="0.91+devel r"
+   sodipodi:docname="gimp-tool-bucket-fill.svg"
+   inkscape:export-filename="/home/jimmac/src/cvs/gnome/gimp/themes/Default/images/tools/stock-tool-bucket-fill-22.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
+   version="1.1"
+   viewBox="0 0 16 16">
+  <defs
+     id="defs2930">
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3932"
+       id="linearGradient8200"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.38179253,0,0,0.33704046,0.54501446,5.5882868)"
+       x1="2"
+       x2="8.9176159" />
+    <linearGradient
+       id="linearGradient3932">
+      <stop
+         id="stop3934"
+         stop-color="#709bd2" />
+      <stop
+         offset="1"
+         id="stop3936"
+         stop-color="#3465a4" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4394"
+       id="linearGradient8202"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.27983911,-0.16616902,0.16156486,0.28781334,-24.674235,24.794066)"
+       x1="83.84375"
+       x2="119" />
+    <linearGradient
+       id="linearGradient4394">
+      <stop
+         id="stop5137"
+         stop-color="#818181" />
+      <stop
+         id="stop5139"
+         offset="0.5"
+         stop-color="#ffffff" />
+      <stop
+         offset="1"
+         id="stop4398"
+         stop-color="#bebebe" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="0.11372549"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.313708"
+     inkscape:cx="-0.061593246"
+     inkscape:cy="2.0862935"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     showguides="false"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1440"
+     inkscape:window-height="752"
+     inkscape:window-x="269"
+     inkscape:window-y="213"
+     inkscape:showpageshadow="false"
+     inkscape:window-maximized="0"
+     inkscape:snap-global="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4515" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata2933">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Fill Tool</dc:title>
+        <dc:date>2005-08-19</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Andreas Nilsson</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/GPL/2.0/" />
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>fill</rdf:li>
+            <rdf:li>bucket</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/GPL/2.0/">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Notice" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/ShareAlike" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/SourceCode" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(0,-6)">
+    <g
+       id="g17431">
+      <path
+         sodipodi:nodetypes="ccccccz"
+         id="path2900-9"
+         d="m 7.8100226,11.651902 c 0,0 -5.585238,-0.112141 -5.585238,-0.112141 -0.7112541,0 -1.72490914,0.775732 -1.72490914,1.87537 v 4.098203 c 0,1.539298 1.98218864,1.535677 1.98218864,0.02925 l 0.038949,-4.021573 c 0,0 5.2890101,-1.869104 5.2890101,-1.869104 z"
+         inkscape:connector-curvature="0"
+         style="fill:url(#linearGradient8200);fill-rule:evenodd;stroke:#204a87;stroke-width:0.99893332" />
+      <path
+         sodipodi:nodetypes="ccccccc"
+         id="path2902-8"
+         d="m 2.7056393,13.416999 4.4228458,7.48281 c 0.3397174,0.549789 0.8858862,0.761126 1.4123868,0.480465 L 14.959676,17.56877 c 0.488246,-0.341888 0.714671,-0.984012 0.402872,-1.546379 L 10.934652,8.6787198 Z"
+         inkscape:connector-curvature="0"
+         style="fill:url(#linearGradient8202);fill-rule:evenodd;stroke:#555753;stroke-width:0.99836034" />
+      <ellipse
+         ry="1.46665"
+         rx="1.4672179"
+         transform="matrix(0.86559212,-0.50074972,0.49924834,0.86645894,0,0)"
+         id="path2904-4"
+         cx="0.79754722"
+         cy="16.619211"
+         style="fill:#d5d5d5;fill-rule:evenodd;stroke:#555753;stroke-width:1.06785142;stroke-linecap:round;fill-opacity:1" />
+      <path
+         sodipodi:nodetypes="ccccccc"
+         id="path2906-7"
+         d="m 3.9781345,13.76635 3.5698039,6.081693 c 0.4550389,0.804207 0.4823421,0.789946 1.0566548,0.38685 l 5.3338278,-3.221671 c 0.637533,-0.379238 0.771146,-0.235407 0.374576,-0.943108 L 10.618736,9.9154764 Z"
+         inkscape:connector-curvature="0"
+         style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.93490767" />
+      <path
+         sodipodi:nodetypes="cccc"
+         id="path2908-3"
+         d="M 8.9872277,12.558589 V 8.2673616 c 0,-2.3788676 5.0005823,-2.3055712 5.0005823,0.099046 v 4.7557264"
+         inkscape:connector-curvature="0"
+         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#555753;stroke-width:0.99893332;stroke-linecap:round" />
+    </g>
+  </g>
+</svg>

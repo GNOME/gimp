@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   id="svg30571"
+   version="1.1"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="gimp-tool-offset.svg"
+   inkscape:export-xdpi="98.181816"
+   inkscape:export-ydpi="98.181816">
+  <title
+     id="title7666">GIMP Offset Tool</title>
+  <defs
+     id="defs30573">
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3204-1"
+       id="linearGradient8313"
+       x1="191.02673"
+       y1="320.22839"
+       x2="173.83766"
+       y2="337.29449"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0292666,0,0,1.0292666,-184.64471,711.74006)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3204-1">
+      <stop
+         id="stop3206" />
+      <stop
+         offset="1"
+         id="stop3208"
+         stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="44.3125"
+     inkscape:cx="8"
+     inkscape:cy="8"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
+     inkscape:window-width="1535"
+     inkscape:window-height="876"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:snap-global="false"
+     showguides="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4011" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata30576">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>GIMP Offset Tool</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1036.3622)">
+    <g
+       id="gimp-tool-offset">
+      <g
+         inkscape:transform-center-y="0.025736985"
+         inkscape:transform-center-x="-4.7441149"
+         id="gimp-grid"
+         transform="matrix(0.96327079,0,0,0.96336725,0.2938523,1036.6552)">
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#d3d7cf;fill-opacity:1;fill-rule:nonzero;stroke:#888a85;stroke-width:0.99999905;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none"
+           id="rect1908-2"
+           width="15.610076"
+           height="15.608502"
+           x="0.19494273"
+           y="0.19574897"
+           rx="0.48743445"
+           ry="0.48929465" />
+      </g>
+      <g
+         style="stroke-width:1.34784341"
+         transform="matrix(0.74181427,0,0,0.74203773,2.0654856,269.40607)"
+         id="g3960">
+        <path
+           d="m 8,1036.6124 -3.5,2.7498 H 7 v 4 H 3.0000601 l -1.201e-4,-2.5 -2.7497286,3.5 2.7497286,3.368 v -2.368 H 7 v 4 H 4.5 l 3.5,2.7498 3.5,-2.7498 H 9 v -4 h 4 v 2.632 l 2.749789,-3.632 -2.749789,-3.5 v 2.5 H 9 v -4 h 2.5 z"
+           id="gimp-tool-move"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccccccccccccccccccccccccc"
+           stroke-miterlimit="10"
+           style="color:#000000;display:inline;fill:#3465a4;fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient8313);stroke-width:0.67451942;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none"
+           inkscape:export-xdpi="123.75011"
+           inkscape:export-ydpi="123.75011" />
+        <rect
+           style="opacity:0.33000004;fill:#d3d7cf;fill-opacity:1;stroke:none;stroke-width:1.63235557;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+           id="rect3947"
+           width="14.000186"
+           height="0.5"
+           x="1"
+           y="1044.1122" />
+        <rect
+           style="opacity:0.33000004;fill:#d3d7cf;fill-opacity:1;stroke:none;stroke-width:1.63235557;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+           id="rect3947-0"
+           width="14.000186"
+           height="0.5"
+           x="1037.3621"
+           y="-8.25"
+           transform="rotate(90)" />
+        <path
+           sodipodi:type="star"
+           style="opacity:0.5;fill:#d3d7cf;fill-opacity:1;stroke:none;stroke-width:2.69568682;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+           id="path3964"
+           sodipodi:sides="3"
+           sodipodi:cx="-8.0524263"
+           sodipodi:cy="1030.9637"
+           sodipodi:r1="1.2900716"
+           sodipodi:r2="0.6450358"
+           sodipodi:arg1="1.2298174"
+           sodipodi:arg2="2.2770149"
+           inkscape:flatsided="true"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="m -7.6210137,1032.1795 -1.700032,-1.45 2.1058261,-0.7473 z"
+           inkscape:transform-center-x="0.013957276"
+           inkscape:transform-center-y="-0.15930067"
+           transform="matrix(0.86531148,-0.32410991,0.7095743,0.39524547,-716.63553,627.75291)" />
+        <path
+           sodipodi:type="star"
+           style="opacity:0.5;fill:#d3d7cf;fill-opacity:1;stroke:none;stroke-width:2.69568682;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+           id="path3964-3"
+           sodipodi:sides="3"
+           sodipodi:cx="-8.0524263"
+           sodipodi:cy="1030.9637"
+           sodipodi:r1="1.2900716"
+           sodipodi:r2="0.6450358"
+           sodipodi:arg1="1.2298174"
+           sodipodi:arg2="2.2770149"
+           inkscape:flatsided="true"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="m -7.6210137,1032.1795 -1.700032,-1.45 2.1058261,-0.7473 z"
+           inkscape:transform-center-x="0.013957276"
+           inkscape:transform-center-y="0.15932022"
+           transform="matrix(0.86531148,0.32410991,0.7095743,-0.39524547,-716.62169,1460.984)" />
+        <path
+           sodipodi:type="star"
+           style="opacity:0.5;fill:#d3d7cf;fill-opacity:1;stroke:none;stroke-width:2.69568682;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+           id="path3964-3-2"
+           sodipodi:sides="3"
+           sodipodi:cx="-8.0524263"
+           sodipodi:cy="1030.9637"
+           sodipodi:r1="1.2900716"
+           sodipodi:r2="0.6450358"
+           sodipodi:arg1="1.2298174"
+           sodipodi:arg2="2.2770149"
+           inkscape:flatsided="true"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="m -7.6210137,1032.1795 -1.700032,-1.45 2.1058261,-0.7473 z"
+           inkscape:transform-center-x="-0.15932047"
+           inkscape:transform-center-y="0.013928413"
+           transform="matrix(0.32410991,-0.86531148,-0.39524547,-0.7095743,424.64115,1769.0065)" />
+        <path
+           sodipodi:type="star"
+           style="opacity:0.5;fill:#d3d7cf;fill-opacity:1;stroke:none;stroke-width:2.69568682;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+           id="path3964-3-2-8"
+           sodipodi:sides="3"
+           sodipodi:cx="-8.0524263"
+           sodipodi:cy="1030.9637"
+           sodipodi:r1="1.2900716"
+           sodipodi:r2="0.6450358"
+           sodipodi:arg1="1.2298174"
+           sodipodi:arg2="2.2770149"
+           inkscape:flatsided="true"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="m -7.6210137,1032.1795 -1.700032,-1.45 2.1058261,-0.7473 z"
+           inkscape:transform-center-x="0.15932002"
+           inkscape:transform-center-y="0.013928413"
+           transform="matrix(-0.32410991,-0.86531148,0.39524547,-0.7095743,-408.63197,1768.9313)" />
+      </g>
+    </g>
+  </g>
+</svg>

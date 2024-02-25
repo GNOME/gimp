@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 15.999999 16"
+   id="svg7384"
+   height="16"
+   width="16"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-tool-colorize.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="501"
+     inkscape:window-height="405"
+     id="namedview1509"
+     showgrid="false"
+     inkscape:zoom="14.75"
+     inkscape:cx="-233.73442"
+     inkscape:cy="46.03728"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg7384" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient8074">
+      <stop
+         id="stop8072"
+         offset="0"
+         style="stop-color:#be00be;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient7561">
+      <stop
+         id="stop7558"
+         offset="0"
+         style="stop-color:#a5a5a5;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient7548">
+      <stop
+         id="stop7546"
+         offset="0"
+         style="stop-color:#ebebeb;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient7542">
+      <stop
+         id="stop7538"
+         offset="0"
+         style="stop-color:#c9c9c9;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       osb:paint="solid"
+       id="linearGradient19282">
+      <stop
+         id="stop19284"
+         offset="0"
+         style="stop-color:#b4b4b4;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0.34682586,0,0,0.30620888,-73.35187,484.03851)"
+       osb:paint="solid"
+       id="linearGradient19282-4">
+      <stop
+         id="stop19284-0"
+         offset="0"
+         style="stop-color:#bebebe;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(322.73462,183.94869)"
+       gradientUnits="userSpaceOnUse"
+       y2="290"
+       x2="88.000198"
+       y1="290"
+       x1="85.000198"
+       id="linearGradient7114"
+       xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       gradientTransform="translate(322.73462,183.94869)"
+       gradientUnits="userSpaceOnUse"
+       y2="189.94922"
+       x2="334.17383"
+       y1="189.94922"
+       x1="324.17383"
+       id="linearGradient7121"
+       xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       gradientTransform="translate(322.73462,183.94869)"
+       gradientUnits="userSpaceOnUse"
+       y2="279"
+       x2="94.000191"
+       y1="279"
+       x1="83.000198"
+       id="linearGradient7127"
+       xlink:href="#linearGradient19282-4" />
+  </defs>
+  <g
+     transform="translate(-32.10094,-248.47217)"
+     style="display:inline"
+     id="tools">
+    <g
+       transform="translate(-48.89926,-28.52783)"
+       id="gimp-tool-colorize"
+       style="display:inline">
+      <rect
+         style="fill:url(#linearGradient7127);fill-opacity:1;stroke:none"
+         id="rect5063"
+         width="10.99999"
+         height="4"
+         x="83.000198"
+         y="277"
+         ry="1"
+         rx="1" />
+      <path
+         id="rect5065"
+         transform="translate(-238.17338,93.051316)"
+         d="m 331.17383,185.94922 c -0.554,0 -1,0.223 -1,0.5 0,0.277 0.446,0.5 1,0.5 l 2,0 0,3 -8,0 c -0.14106,0 -0.27501,0.0149 -0.39649,0.041 -0.0344,-0.0148 -0.0669,-0.041 -0.10351,-0.041 -0.11229,0 -0.20969,0.0869 -0.29297,0.21094 -0.12073,0.0826 -0.20703,0.17844 -0.20703,0.28906 0,0.0367 0.0262,0.0691 0.041,0.10351 -0.0261,0.12147 -0.041,0.25544 -0.041,0.39649 l 0,2 c 0,0.554 0.223,1 0.5,1 0.277,0 0.5,-0.446 0.5,-1 l 0,-2 8,0 c 0.14106,0 0.27501,-0.0149 0.39648,-0.041 0.0344,0.0148 0.0669,0.041 0.10352,0.041 0.11133,0 0.2081,-0.0868 0.29101,-0.20899 0.12215,-0.0829 0.20899,-0.17968 0.20899,-0.29101 0,-0.0367 -0.0262,-0.0691 -0.041,-0.10352 0.0264,-0.12198 0.041,-0.25467 0.041,-0.39648 l 0,-3 c 0,-0.14105 -0.0149,-0.27502 -0.041,-0.39649 0.0148,-0.0344 0.041,-0.0669 0.041,-0.10351 0,-0.11062 -0.0863,-0.20643 -0.20703,-0.28906 -0.0833,-0.12407 -0.18068,-0.21094 -0.29297,-0.21094 -0.0367,0 -0.0692,0.0262 -0.10352,0.041 -0.12147,-0.0261 -0.25542,-0.041 -0.39648,-0.041 z"
+         style="fill:url(#linearGradient7121);fill-opacity:1;stroke:none"
+         inkscape:connector-curvature="0" />
+      <rect
+         style="fill:url(#linearGradient7114);fill-opacity:1;stroke:none"
+         id="rect5073"
+         width="3.0000017"
+         height="6"
+         x="85.000198"
+         y="287"
+         rx="1"
+         ry="1" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg7384"
+   height="16"
+   width="16"
+   version="1.1"
+   sodipodi:docname="gimp-business-card.svg"
+   viewBox="0 0 16 16"
+   inkscape:version="0.92pre1 unknown">
+  <defs
+     id="defs9" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     id="namedview7"
+     showgrid="true"
+     inkscape:zoom="17.233959"
+     inkscape:cx="22.999456"
+     inkscape:cy="7.1643098"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7384">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4232" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="g4251">
+    <g
+       id="g4283">
+      <g
+         id="g4249"
+         transform="translate(0,-2.00005)">
+        <g
+           transform="rotate(90,120.53188,342.46813)"
+           id="layer10">
+          <path
+             sodipodi:nodetypes="sssssssssccccc"
+             inkscape:connector-curvature="0"
+             d="m -214.53025,448 c -0.82099,0 -1.406,0.64776 -1.406,1.4688 v 11.062 c 0,0.82099 0.58496,1.4688 1.406,1.4688 h 6.12525 c 0.82099,0 1.4688,-0.64776 1.4688,-1.4688 v -11.062 c 0,-0.82099 -0.64776,-1.4688 -1.4688,-1.4688 z m -0.406,1 h 7 v 12.0323 h -7 z"
+             style="fill:#bebebe"
+             id="path23868" />
+        </g>
+        <g
+           transform="matrix(0.39999997,0,0,0.38472814,-14.600118,-122.42284)"
+           id="layer9">
+          <path
+             inkscape:connector-curvature="0"
+             d="m 51.555,345.09 c -0.70541,0.62353 -1.5392,0.90625 -2.5547,0.90625 -1.0155,0 -1.8532,-0.29053 -2.5586,-0.91406 -1.1094,0.36328 -2.436,1.2878 -2.4375,2.9023 l -0.0039,3.0117 c -7.2e-4,0.554 0.446,1 1,1 h 8 c 0.554,0 1,-0.44602 1,-1 v -3 c 0,-1.3867 -1.1023,-2.5558 -2.4453,-2.9062 z"
+             style="fill:#bebebe"
+             id="path3940-5" />
+          <path
+             inkscape:connector-curvature="0"
+             transform="matrix(1.2,0,0,1.2,-10.4,-69)"
+             d="m 52,342.5 a 2.5,2.5 0 1 1 -5,0 2.5,2.5 0 1 1 5,0 z"
+             style="color:#bebebe;fill:#bebebe"
+             id="path3942-6" />
+        </g>
+      </g>
+      <rect
+         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.23736024;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         id="rect4251"
+         width="4"
+         height="1"
+         x="9"
+         y="6" />
+      <rect
+         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.23736024;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         id="rect4251-3"
+         width="4"
+         height="1"
+         x="9"
+         y="8" />
+      <rect
+         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.23736024;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         id="rect4251-6"
+         width="4"
+         height="1"
+         x="9"
+         y="10" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   id="svg30571"
+   version="1.1"
+   inkscape:version="0.91+devel r"
+   sodipodi:docname="gimp-rotate-90.svg">
+  <defs
+     id="defs30573" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="26.807756"
+     inkscape:cx="9.2465747"
+     inkscape:cy="7.1945305"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="752"
+     inkscape:window-x="1025"
+     inkscape:window-y="100"
+     inkscape:window-maximized="0"
+     showguides="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid10" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata30576">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1036.3622)">
+    <g
+       id="g17">
+      <rect
+         transform="rotate(-90)"
+         y="6.7876674e-14"
+         x="-1052.3622"
+         height="16"
+         width="16"
+         id="rect10176"
+         style="fill:none;stroke:none;stroke-width:1" />
+      <path
+         id="path15848"
+         transform="translate(0,1036.3622)"
+         d="M 6.4179688 2.2421875 C 3.0330807 2.2421875 0.2890625 5.1566 0.2890625 8.75 C 0.2890625 8.9213 0.23393045 9.6485062 0.24609375 9.8164062 L 2.1992188 9.8164062 C 2.1815857 9.6494063 2.1992188 8.9727813 2.1992188 8.8007812 C 2.1992188 6.3130813 4.074592 4.2441406 6.4179688 4.2441406 C 8.7613456 4.2441406 10.800781 6.2623 10.800781 8.75 C 10.800781 8.922 10.818421 10.049897 10.800781 10.216797 L 8.1992188 10.216797 L 11.800781 13.671875 L 15.375 10.216797 L 12.785156 10.216797 C 12.797406 10.048997 12.814453 8.9213 12.814453 8.75 C 12.814453 5.1566 9.8028571 2.2421875 6.4179688 2.2421875 z "
+         style="fill:#fcaf3e;fill-opacity:1;stroke:#ce5c00;stroke-width:0.4857651;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>

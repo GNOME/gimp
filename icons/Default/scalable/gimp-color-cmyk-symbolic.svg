@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   id="svg30571"
+   version="1.1"
+   inkscape:version="0.92pre1 unknown"
+   sodipodi:docname="gimp-color-cmyk.svg">
+  <defs
+     id="defs30573" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="32"
+     inkscape:cx="5.0666667"
+     inkscape:cy="5.611921"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     showborder="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:snap-global="false"
+     showguides="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4242" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata30576">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>
+          image/svg+xml
+        </dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Klaus Staedtler       </dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1036.3622)">
+    <g
+       id="g34">
+      <rect
+         y="1036.3622"
+         x="0"
+         height="16"
+         width="16"
+         id="rect6884"
+         style="opacity:0.3;fill:none;stroke:none" />
+      <path
+         sodipodi:nodetypes="cccccccccc"
+         inkscape:connector-curvature="0"
+         id="rect6886"
+         d="m 0,1036.3622 v 16 h 16 v -16 z m 1,1 h 14 v 14 H 1 Z"
+         style="fill:#bebebe;fill-opacity:1;stroke:none" />
+      <path
+         id="rect3938"
+         d="m 1,1044.3622 v 7 h 7 v -7 z m 0.921875,0.7832 h 0.7949219 l 1.5175781,2.2481 1.5039062,-2.2481 h 0.7949219 l -1.9335937,2.8633 v 2.6035 H 3.8554688 v -2.6035 z"
+         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.214;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:connector-curvature="0" />
+      <path
+         style="opacity:0.75;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.214;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 1,1 V 8 H 8 V 1 Z m 3.5898438,0.4960938 c 0.3271484,0 0.6357421,0.042969 0.9238281,0.1308593 0.2905273,0.085449 0.5625,0.2153321 0.8164062,0.3886719 v 0.78125 C 6.0810547,2.5649414 5.8144531,2.3901367 5.53125,2.2753906 5.2504883,2.1606445 4.9521484,2.1035156 4.6347656,2.1035156 c -0.625,0 -1.1035156,0.1928711 -1.4355468,0.5761719 -0.3320313,0.3808594 -0.4980469,0.9316406 -0.4980469,1.6542969 0,0.7202148 0.1660156,1.2729492 0.4980469,1.65625 0.3320312,0.3808594 0.8105468,0.5703125 1.4355468,0.5703125 0.3173828,0 0.6157227,-0.057129 0.8964844,-0.171875 C 5.8144531,6.2739258 6.0810547,6.1010742 6.3300781,5.8691406 V 6.640625 C 6.0712891,6.8164062 5.7963867,6.9492188 5.5058594,7.0371094 5.2177734,7.125 4.9121094,7.1679688 4.5898438,7.1679688 3.762207,7.1679688 3.1108398,6.9155273 2.6347656,6.4101562 2.1586914,5.9023438 1.921875,5.2104492 1.921875,4.3339844 1.921875,3.4550781 2.1586914,2.7631836 2.6347656,2.2578125 3.1108398,1.75 3.762207,1.4960938 4.5898438,1.4960938 Z"
+         transform="translate(0,1036.3622)"
+         id="rect3938-6"
+         inkscape:connector-curvature="0" />
+      <rect
+         y="1037.3622"
+         x="8"
+         height="7"
+         width="7"
+         id="rect3938-6-3"
+         style="opacity:0.50800003;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.214;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         y="1044.3622"
+         x="8"
+         height="7"
+         width="7"
+         id="rect3938-6-3-5"
+         style="opacity:0.25;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.214;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4003"
+         y="1043.7997"
+         x="8.1875"
+         style="font-style:normal;font-weight:normal;font-size:7.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           y="1043.7997"
+           x="8.1875"
+           id="tspan4005"
+           sodipodi:role="line">M</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4007"
+         y="1050.4872"
+         x="8.1875"
+         style="font-style:normal;font-weight:normal;font-size:7.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           y="1050.4872"
+           x="8.1875"
+           id="tspan4009"
+           sodipodi:role="line">K</tspan></text>
+    </g>
+  </g>
+</svg>

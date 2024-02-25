@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="16"
+   height="16"
+   id="svg2"
+   viewBox="0 0 16 16"
+   inkscape:version="0.92pre1 unknown"
+   sodipodi:docname="gimp-pattern.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     id="namedview1697"
+     showgrid="true"
+     inkscape:zoom="41.7193"
+     inkscape:cx="9.1125793"
+     inkscape:cy="6.9065382"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     showguides="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4244" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient11528"
+       id="linearGradient19943"
+       gradientUnits="userSpaceOnUse"
+       x1="69.1875"
+       y1="234.1875"
+       x2="76.0625"
+       y2="252.02119" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient11528">
+      <stop
+         style="stop-color:white;stop-opacity:1;"
+         offset="0"
+         id="stop11530" />
+      <stop
+         style="stop-color:white;stop-opacity:0.2360515"
+         offset="1"
+         id="stop11532" />
+    </linearGradient>
+  </defs>
+  <g
+     style="display:inline"
+     id="fill_pattern"
+     transform="matrix(0.88888939,0,0,0.88888939,-61.333341,-208.88902)">
+    <path
+       style="opacity:1;fill:#cc0000;fill-opacity:1;stroke:#cc0000;stroke-width:1.01419079;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 70.021817,235.5071 v 3.84054 c 0.324171,0.0931 0.674284,0.15612 1.029442,0.15612 1.988883,0 3.603048,-1.56669 3.603048,-3.49708 0,-0.16751 -0.0082,-0.33834 -0.03222,-0.49958 z m 11.870705,0 c -0.02347,0.16124 -0.03212,0.33207 -0.03212,0.49958 0,1.93039 1.614165,3.49708 3.603048,3.49708 0.355158,0 0.705271,-0.0631 1.029442,-0.15612 v -3.84054 z m -3.635166,4.99582 c -1.988883,0 -3.603049,1.56669 -3.603049,3.49708 0,1.93039 1.614166,3.49708 3.603049,3.49708 1.988882,0 3.603048,-1.56669 3.603048,-3.49708 0,-1.93039 -1.614166,-3.49708 -3.603048,-3.49708 z m -7.206097,7.99332 c -0.549002,0 -1.078341,0.13002 -1.544164,0.34347 v 3.65319 h 5.114991 c 0.02357,-0.16124 0.03222,-0.33208 0.03222,-0.49958 0,-1.93039 -1.614165,-3.49708 -3.603047,-3.49708 z m 14.412193,0 c -1.988883,0 -3.603048,1.56669 -3.603048,3.49708 h 4.63249 v -3.34096 c -0.324171,-0.0931 -0.674284,-0.15612 -1.029442,-0.15612 z"
+       id="path19823"
+       inkscape:connector-curvature="0" />
+    <path
+       id="path19825"
+       d="m 69.562227,235.56227 h 16.875475 v 16.87548 H 69.562227 Z"
+       style="fill:none;fill-opacity:1;stroke:#555753;stroke-width:1.1245147;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:connector-curvature="0" />
+    <path
+       id="path19827"
+       d="m 70.5,236.4998 h 15.00001 v 15.0001 H 70.5 Z"
+       style="fill:none;fill-opacity:1;stroke:url(#linearGradient19943);stroke-width:0.99999928;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

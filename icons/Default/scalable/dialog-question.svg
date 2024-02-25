@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   id="svg6361"
+   sodipodi:version="0.32"
+   inkscape:version="0.92pre1 unknown"
+   sodipodi:docname="gimp-question.svg"
+   version="1.1"
+   viewBox="0 0 16 16">
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     inkscape:guide-bbox="true"
+     showguides="false"
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="0.15294118"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="10.9384"
+     inkscape:cx="-6.3054201"
+     inkscape:cy="18.380885"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:showpageshadow="false"
+     fill="#deb887"
+     stroke="#204a87"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4232" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:date />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title />
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>help</rdf:li>
+            <rdf:li>browser</rdf:li>
+            <rdf:li>documentation</rdf:li>
+            <rdf:li>docs</rdf:li>
+            <rdf:li>man</rdf:li>
+            <rdf:li>info</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title />
+          </cc:Agent>
+        </dc:contributor>
+        <dc:source>http://tigert.com</dc:source>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(0,-32)">
+    <g
+       id="g4239">
+      <g
+         id="g4238">
+        <circle
+           style="fill:#3465a4;fill-opacity:1;stroke:#204a87;stroke-width:0.35752407"
+           id="path2093"
+           cx="8"
+           cy="40"
+           r="7.821238" />
+        <ellipse
+           id="path2209"
+           style="opacity:0.96022728;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.98728555;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           cx="7.9994893"
+           cy="40.000927"
+           rx="7.126667"
+           ry="7.1257772" />
+      </g>
+      <path
+         id="path5121"
+         d="M 6.504125,41.935698 6.47075,41.493009 C 6.437,40.62426 6.70475,39.738884 7.4568125,38.836126 7.99175,38.189193 8.426,37.627283 8.426,37.04818 c 0,-0.578914 -0.3841875,-0.987593 -1.203375,-1.004787 -0.5679375,0 -1.219875,0.18743 -1.6711875,0.493891 L 5,34.698325 C 5.6015,34.340471 6.5875625,34 7.7909375,34 9.980375,34 11,35.24323 11,36.639501 c 0,1.31106 -0.802312,2.1458 -1.4375625,2.877756 -0.6016875,0.681131 -0.8690625,1.345446 -0.852375,2.11179 v 0.306462 H 6.504125 Z"
+         style="overflow:visible;fill:#ffffff;stroke-width:0.18821897;filter:url(#filter5125)"
+         inkscape:connector-curvature="0" />
+      <ellipse
+         id="circle5123"
+         cy="44.488476"
+         cx="7.6722498"
+         style="overflow:visible;fill:#ffffff;stroke-width:0.18821897;filter:url(#filter5125)"
+         rx="1.5"
+         ry="1.5115254" />
+    </g>
+  </g>
+</svg>

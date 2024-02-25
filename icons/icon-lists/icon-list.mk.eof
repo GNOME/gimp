@@ -1,0 +1,59 @@
+if ENABLE_VECTOR_ICONS
+icons64dir  = $(iconsdir)/64x64/apps
+scalabledir = $(iconsdir)/scalable/apps
+
+icons64_DATA = \
+	64/gimp-frame.png					\
+	64/gimp-texture.png
+
+else
+icons12dir  = $(iconsdir)/12x12/apps
+icons16dir  = $(iconsdir)/16x16/apps
+icons18dir  = $(iconsdir)/18x18/apps
+icons22dir  = $(iconsdir)/22x22/apps
+icons24dir  = $(iconsdir)/24x24/apps
+icons32dir  = $(iconsdir)/32x32/apps
+icons48dir  = $(iconsdir)/48x48/apps
+icons64dir  = $(iconsdir)/64x64/apps
+icons96dir  = $(iconsdir)/96x96/apps
+icons128dir = $(iconsdir)/128x128/apps
+icons192dir = $(iconsdir)/192x192/apps
+icons256dir = $(iconsdir)/256x256/apps
+
+icons12_DATA = \
+	$(icons12_images)
+
+icons16_DATA = \
+	$(icons16_images)
+
+icons18_DATA = \
+	$(icons18_images)
+
+icons22_DATA = \
+	$(icons22_images)
+
+icons24_DATA = \
+	$(icons24_images)
+
+icons32_DATA = \
+	$(icons32_images)
+
+icons48_DATA = \
+	$(icons48_images)
+
+icons64_DATA = \
+	$(icons64_images) \
+	$(icons64_system_images)
+
+icons96_DATA = \
+	$(icons96_images)
+
+icons128_DATA = \
+	$(icons128_images)
+
+icons192_DATA = \
+	$(icons192_images)
+
+icons256_DATA = \
+	$(icons256_images)
+endif

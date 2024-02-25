@@ -1,0 +1,76 @@
+# Required sizes:
+# - as a viewable icon, when registering the GimpPaintInfo:
+#   * 16 (scaled) in status bar
+#     See gimp_statusbar_vprintf()
+#   * as action icon:
+#     + menu
+#     + action search: an icon in GtkCellRendererPixbuf (see
+#     GimpSearchPopup), whose default icon size is GTK_ICON_SIZE_MENU
+#     (16px).
+# - In device status.
+# - In Tool Preset Editor:
+#   * Header as GTK_ICON_SIZE_MENU (16px)
+#     See gimp_tool_preset_editor_sync_data()
+#   * Button as icon picker GIMP_VIEW_SIZE_SMALL (24px)
+#     See gimp_icon_picker_constructed()
+# - Toolbox default (DEFAULT_TOOL_ICON_SIZE) is GTK_ICON_SIZE_BUTTON (16px)
+#   Yet System theme sets:
+#   -GimpToolPalette-tool-icon-size:   large-toolbar; (24px)
+gimp-tool-airbrush
+gimp-tool-align
+gimp-tool-blur
+gimp-tool-brightness-contrast
+gimp-tool-bucket-fill
+gimp-tool-by-color-select
+gimp-tool-cage
+gimp-tool-clone
+gimp-tool-color-balance
+gimp-tool-color-picker
+gimp-tool-color-temperature
+gimp-tool-colorize
+gimp-tool-crop
+gimp-tool-curves
+gimp-tool-desaturate
+gimp-tool-dodge
+gimp-tool-ellipse-select
+gimp-tool-eraser
+gimp-tool-exposure
+gimp-tool-flip
+gimp-tool-foreground-select
+gimp-tool-free-select
+gimp-tool-fuzzy-select
+gimp-tool-gradient
+gimp-tool-handle-transform
+gimp-tool-heal
+gimp-tool-hue-saturation
+gimp-tool-ink
+gimp-tool-iscissors
+gimp-tool-levels
+gimp-tool-measure
+gimp-tool-move
+gimp-tool-mypaint-brush
+gimp-tool-n-point-deformation
+gimp-tool-offset
+gimp-tool-options
+gimp-tool-paintbrush
+gimp-tool-paint-select
+gimp-tool-path
+gimp-tool-pencil
+gimp-tool-perspective
+gimp-tool-perspective-clone
+gimp-tool-posterize
+gimp-tool-preset
+gimp-tool-rect-select
+gimp-tool-rotate
+gimp-tool-scale
+gimp-tool-seamless-clone
+gimp-tool-shadows-highlights
+gimp-tool-shear
+gimp-tool-smudge
+gimp-tool-text
+gimp-tool-threshold
+gimp-tool-transform-3d
+gimp-tool-unified-transform
+gimp-tool-warp
+gimp-tool-zoom
+

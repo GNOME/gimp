@@ -1,0 +1,14 @@
+# grep -rI icon_name modules/display-filter*
+# These are used in:
+# - GtkCellRendererPixbuf in GimpColorDisplayEditor (default 16px)
+
+# Default icon of GimpColorDisplay. Doesn't think it's actually used in
+# this context since it's always overriden. Still must be installed.
+gimp-display-filter
+
+gimp-display-filter-clip-warning
+gimp-display-filter-colorblind
+gimp-display-filter-contrast
+gimp-display-filter-gamma
+gimp-display-filter-lcms
+gimp-display-filter-proof

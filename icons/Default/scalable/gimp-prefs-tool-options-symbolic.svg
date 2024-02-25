@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 23.999999 23.999999"
+   id="svg7384"
+   height="24"
+   width="24"
+   version="1.1"
+   inkscape:version="0.92pre1 unknown"
+   sodipodi:docname="gimp-prefs-tool-options.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview1505"
+     showgrid="true"
+     inkscape:zoom="14.749633"
+     inkscape:cx="9.9727932"
+     inkscape:cy="10.101946"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg7384">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4242" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       gradientTransform="matrix(0.34682586,0,0,0.30620888,287.66936,571.4807)"
+       osb:paint="solid"
+       id="linearGradient19282-4">
+      <stop
+         id="stop19284-0"
+         offset="0"
+         style="stop-color:#bebebe;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(1.5000038,0,0,1.5000038,686.71849,250.54685)"
+       gradientUnits="userSpaceOnUse"
+       y2="197.55762"
+       x2="458.02139"
+       y1="197.55762"
+       x1="442.02142"
+       id="linearGradient8041"
+       xlink:href="#linearGradient19282-4" />
+  </defs>
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:url(#linearGradient8041);fill-opacity:1;stroke-width:0.13086061"
+     d="m 12.000055,-6.4468184e-4 c -0.438346,0 -1.324053,0.47490120184 -1.406253,0.79980202184 L 9.3310983,2.9993629 2.4681434e-5,3 V 18 H 3.2109778 l -1.6933693,4.686913 c -0.1108503,0.329956 0.0834,1.147068 0.5097613,1.286133 0.4676112,0.152505 1.1425079,-0.374971 1.183608,-0.750002 L 4.1103801,21 H 19.90437 l 0.849617,2.513085 c 0.191791,0.400261 0.671207,0.551041 1.013673,0.401371 0.356176,-0.175186 0.599956,-0.949593 0.421876,-1.224618 L 20.792072,18 h 3.172853 l 0.0351,-15 H 14.824217 L 13.309573,0.64974197 C 13.029508,0.28407104 12.431366,0 11.999995,0 Z M 12.000055,1.5 12.670962,3 h -1.259778 z m 4.500011,2.9993667 1.754885,1.7548845 h 2.490246 v 2.4902463 l 1.754885,1.7548845 -1.754885,1.754884 v 2.490247 h -2.490246 l -1.754885,1.754884 -1.754884,-1.754884 H 12.254936 V 12.254266 L 10.500051,10.499382 12.254936,8.7444975 V 6.2542512 h 2.490246 z M 11.87701,5.0735832 c 0.11295,0.05745 0.1449,0.2278656 0.02925,0.4775412 C 10.468281,7.8629452 10.094015,9.7852751 6.7734418,13.364629 6.437861,12.662357 5.7917194,12.174151 5.0390624,12.145876 7.8440096,8.2836063 8.3564109,8.2611662 11.355473,5.2845287 11.568744,5.0728632 11.764044,5.016208 11.876965,5.0735832 Z m 4.623056,2.2441557 v 6.3632861 c 1.75598,0 3.181644,-1.425634 3.181644,-3.181643 0,-1.7560095 -1.425664,-3.1816431 -3.181644,-3.1816431 z M 4.7402767,12.790398 c 0.776852,-0.0183 1.3815485,0.617326 1.5322239,1.166028 0.2535006,0.923117 -0.2211756,1.677769 -0.8525422,2.085935 -1.2111481,0.783002 -4.1339355,0.601936 -4.327151,-0.1464 2.0408152,7.35e-4 1.8333347,-2.222721 2.8242222,-2.841803 0.2870557,-0.179355 0.5642864,-0.257565 0.8232471,-0.263685 z M 5.5195737,18 H 18.899488 l 0.430666,2 H 4.7402767 Z"
+     id="gimp-prefs-tool-options"
+     sodipodi:nodetypes="cccccccccccccccccccccccccccccccccccccccccccccccccccsccccccccccccc" />
+</svg>

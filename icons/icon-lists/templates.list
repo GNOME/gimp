@@ -1,0 +1,14 @@
+# grep -rI icon-name etc/templaterc |sed 's/^.*"\([^"]*\)")/\1/' |sort|uniq
+# Used as:
+# - GimpTemplateView list or grid in GIMP_VIEW_SIZE_SMALL (24)
+# - Combo with size 16 in resize-dialog.c
+# - Combo with size 16 in preferences-dialog.c
+# - Combo with size 16 in image-new-dialog.c
+
+gimp-business-card
+gimp-display
+gimp-smartphone
+gimp-toilet-paper
+gimp-video
+gimp-web
+media-optical

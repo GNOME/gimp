@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   id="svg11300"
+   sodipodi:version="0.32"
+   inkscape:version="0.92pre1 unknown"
+   sodipodi:docname="gimp-group-layers.svg"
+   version="1.0"
+   viewBox="0 0 16 16"
+   inkscape:export-filename="/home/klaus/gimp/gimp/icons/Color/scalable/gimp-group-layers.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <sodipodi:namedview
+     inkscape:cy="7.3814123"
+     inkscape:cx="-3.0170353"
+     inkscape:zoom="23.160156"
+     inkscape:window-height="1016"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="0.17254902"
+     bordercolor="#666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:showpageshadow="false"
+     showborder="true"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:current-layer="layer1"
+     width="16px"
+     height="16px"
+     showgrid="true"
+     inkscape:window-maximized="1"
+     inkscape:document-units="px">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4291" />
+  </sodipodi:namedview>
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     stroke="#ef2929"
+     fill="#eeeeec"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="0.25490196"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="-14.198652"
+     inkscape:cy="-5.1663457"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="872"
+     inkscape:window-height="659"
+     inkscape:window-x="403"
+     inkscape:window-y="296"
+     width="32px"
+     height="32px"
+     id="namedview73" />
+  <metadata
+     id="metadata4">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title />
+          </cc:Agent>
+        </dc:creator>
+        <dc:source />
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/2.0/" />
+        <dc:title />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/2.0/">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Notice" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Attribution" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <g
+       id="g4244">
+      <rect
+         y="0"
+         x="0"
+         height="16"
+         width="16"
+         id="rect4236"
+         style="opacity:0.00000001;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.15470064;stroke-miterlimit:4;stroke-dasharray:none" />
+      <g
+         transform="matrix(0.39011433,0,0,0.40016098,-1.1677912,-1.0034397)"
+         id="g4312">
+        <path
+           inkscape:connector-curvature="0"
+           id="path216"
+           transform="matrix(2.5623875,0,0,2.4991487,3.000235,0.01393478)"
+           d="m 0.50390625,2.1953125 c -0.16263963,0 -0.31710869,0.1670602 -0.30859375,0.3339844 L 0.57421875,15.466797 c 0.008515,0.166924 0.17916045,0.332031 0.34179687,0.332031 H 13.15625 c 0.162635,0 0.315156,-0.165107 0.306641,-0.332031 L 13.320312,11.199219 12.199219,14 H 4 L 6.7011719,7.2480469 6.8007812,7 H 13.179688 L 13.097656,4.5488281 C 13.08914,4.3819044 12.918496,4.2148438 12.755859,4.2148438 H 7.5703125 c -0.1894957,0 -0.4815668,-0.1261773 -0.546875,-0.4433594 L 6.7851562,2.6113281 C 6.7244197,2.3163475 6.4399799,2.1953125 6.2773438,2.1953125 Z m 6.77539065,5.65625 -2.1191407,5.2968755 h 6.5605468 l 1.537109,-3.8398442 -0.04883,-1.4570313 z"
+           style="fill:#babdb6;fill-opacity:1;fill-rule:nonzero;stroke:#424242;stroke-width:0.39516774;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path233"
+           transform="matrix(2.5623875,0,0,2.4991487,3.000235,0.01393478)"
+           d="M 2.2949219,5.9511719 1.578125,14.902344 C 1.533742,15.304414 1.3984325,15.64171 0.97851562,15.796875 H 14.361328 c 0.443189,-0.01804 0.76044,-0.449762 0.792969,-0.951172 0.306768,-4.728173 0.644531,-8.6914061 0.644531,-8.6914061 0.02795,-0.1013229 -0.06653,-0.203125 -0.1875,-0.203125 z M 6.8007812,7 H 15 l -2.800781,7 H 4 L 6.7011719,7.2480469 Z M 7.2792969,7.8515625 5.1601562,13.148438 h 6.5605468 l 2.119141,-5.2968755 z"
+           style="color:#000000;display:block;visibility:visible;fill:#fcaf3e;fill-opacity:1;fill-rule:nonzero;stroke:#ce5c00;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none" />
+        <path
+           sodipodi:nodetypes="ccsscsc"
+           id="path304"
+           d="m 9.6202444,16.463921 32.7910986,0.06481 -1.574046,20.001979 c -0.08432,1.071511 -0.450678,1.428215 -1.872656,1.428215 -1.871502,0 -28.677968,-0.03241 -31.394742,-0.03241 0.2335983,-0.320811 0.3337557,-0.988623 0.3350963,-1.004612 z"
+           style="opacity:0.46590911;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient322);stroke-width:1.00452948px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
+           transform="matrix(0.993091,0,0,0.997896,0.297716,0.06983586)"
+           inkscape:r_cx="true"
+           inkscape:r_cy="true"
+           inkscape:connector-curvature="0" />
+        <g
+           inkscape:export-ydpi="74.800003"
+           inkscape:export-xdpi="74.800003"
+           inkscape:export-filename="/home/jimmac/ximian_art/icons/nautilus/suse93/gnome-fs-directory.png"
+           style="opacity:0.41477272;fill:url(#linearGradient11003);fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-miterlimit:4"
+           transform="matrix(1.040764,0,0.05449252,1.365642,-8.358528,0.921788)"
+           id="g217" />
+      </g>
+    </g>
+  </g>
+</svg>

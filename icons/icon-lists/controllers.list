@@ -1,0 +1,14 @@
+# grep -rI icon_name modules/controller-* app/widgets/gimpcontroller*
+# Used in:
+# - GimpControllerList as GtkCellRendererPixbuf (16px).
+
+# Default
+gimp-controller
+
+gimp-controller-keyboard
+gimp-controller-linux-input
+gimp-controller-midi
+gimp-controller-wheel
+
+# GIMP_ICON_CONTROLLER_MOUSE == GIMP_ICON_CURSOR
+gimp-cursor

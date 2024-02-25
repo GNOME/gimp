@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 23.999999 24.000561"
+   id="svg7384"
+   height="24.000561"
+   width="24"
+   version="1.1"
+   inkscape:version="1.1.2 (1:1.1+202202050942+0a00cf5339)"
+   sodipodi:docname="gimp-vchain.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1274"
+     inkscape:window-height="1387"
+     id="namedview1508"
+     showgrid="false"
+     inkscape:zoom="13.906433"
+     inkscape:cx="3.1999579"
+     inkscape:cy="23.370479"
+     inkscape:window-x="0"
+     inkscape:window-y="22"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg7384"
+     inkscape:pagecheckerboard="0"
+     inkscape:lockguides="true" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       id="linearGradient8074"
+       inkscape:swatch="solid">
+      <stop
+         id="stop8072"
+         offset="0"
+         style="stop-color:#be00be;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient7561"
+       inkscape:swatch="solid">
+      <stop
+         id="stop7558"
+         offset="0"
+         style="stop-color:#a5a5a5;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient7548"
+       inkscape:swatch="solid">
+      <stop
+         id="stop7546"
+         offset="0"
+         style="stop-color:#ebebeb;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient7542"
+       inkscape:swatch="solid">
+      <stop
+         id="stop7538"
+         offset="0"
+         style="stop-color:#c9c9c9;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       id="linearGradient19282"
+       inkscape:swatch="solid">
+      <stop
+         id="stop19284"
+         offset="0"
+         style="stop-color:#b4b4b4;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0.34682586,0,0,0.30620888,-154.35207,-275.32368)"
+       id="linearGradient19282-4"
+       inkscape:swatch="solid">
+      <stop
+         id="stop19284-0"
+         offset="0"
+         style="stop-color:#bebebe;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(1001.6641,152.94727)"
+       gradientUnits="userSpaceOnUse"
+       y2="164.94727"
+       x2="1017.1035"
+       y1="164.94727"
+       x1="1002.1035"
+       id="linearGradient9972"
+       xlink:href="#linearGradient19282-4" />
+  </defs>
+  <path
+     id="rect6775-9"
+     d="m 18.500002,6.2500125 c 0,-1.592749 -1.159617,-2.875017 -2.600001,-2.875017 H 13.3 v -1.437499 c 0,-0.796374 -0.579809,-1.437499 -1.300001,-1.437499 -0.7202,0 -1.3,0.641125 -1.3,1.437499 v 1.437499 H 8.099998 c -1.4404003,0 -2.6000005,1.282268 -2.6000005,2.875017 V 17.750003 c 0,1.59275 1.1596002,2.874998 2.6000005,2.874998 h 2.600001 v 1.527295 c 0,0.746637 0.543565,1.347704 1.218742,1.347704 h 0.1625 c 0.675194,0 1.21875,-0.601067 1.218759,-1.347704 v -1.527295 h 2.600001 c 1.440384,0 2.600001,-1.282248 2.600001,-2.874998 z m -2.600001,1.437498 v 8.6249945 c 0,0.796374 -0.579818,1.437498 -1.300001,1.437498 h -1.3 v -1.52739 c 0,-0.746541 -0.543565,-1.347607 -1.218759,-1.347607 h -0.1625 c -0.675177,0 -1.218742,0.601066 -1.218742,1.347607 v 1.52739 H 9.3999983 c -0.7202001,0 -1.3000086,-0.641124 -1.3000003,-1.437498 V 7.6875115 c 0,-0.796375 0.5798002,-1.437499 1.3000003,-1.437499 h 1.3000007 v 1.437498 c 0,0.796375 0.5798,1.437499 1.3,1.437499 0.720192,0 1.300001,-0.641124 1.300001,-1.437499 v -1.437498 h 1.3 c 0.720183,0 1.300001,0.641124 1.300001,1.437498 z"
+     style="fill:#bebebe;fill-opacity:1;stroke:#555555;stroke-width:0.999991;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:connector-curvature="0" />
+</svg>

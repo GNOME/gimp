@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   width="16"
+   height="16"
+   viewBox="0 0 16 16.000001"
+   id="svg2"
+   version="1.1">
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       id="linearGradient3165">
+      <stop
+         offset="0"
+         style="stop-color:#d7d7d7"
+         id="stop3171" />
+      <stop
+         offset=".5"
+         style="stop-color:#e7e7e7"
+         id="stop3173" />
+      <stop
+         offset="1"
+         style="stop-color:#d7d7d7"
+         id="stop3169" />
+    </linearGradient>
+    <linearGradient
+       y2="292.35999"
+       x2="250.17999"
+       y1="292.35999"
+       x1="90.589996"
+       gradientTransform="matrix(0.83174,0,0,0.83684,27.65,44.986)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient4656"
+       xlink:href="#linearGradient3165" />
+    <linearGradient
+       y2="292.35999"
+       x2="250.17999"
+       y1="292.35999"
+       x1="90.589996"
+       gradientTransform="matrix(0.83174,0,0,0.83684,27.65,44.986)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient4718"
+       xlink:href="#linearGradient3165" />
+    <linearGradient
+       y2="292.35999"
+       x2="250.17999"
+       y1="292.35999"
+       x1="90.589996"
+       gradientTransform="matrix(0.83174,0,0,0.83684,27.65,44.986)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient4720"
+       xlink:href="#linearGradient3165" />
+  </defs>
+  <g
+     id="g4284">
+    <g
+       id="g4267"
+       transform="matrix(1.0005594,0,0,0.99826523,-8.0039467,-7.9708221)">
+      <g
+         id="g3175-9-4-9"
+         transform="matrix(0.03584415,0,0,0.03807221,5.4570607,1.3686677)">
+        <rect
+           id="rect2168-6-5-1"
+           style="fill:#555753;fill-rule:evenodd;stroke:#8d8d8d;stroke-width:1px"
+           ry="21.429001"
+           height="182.86"
+           width="194.28999"
+           y="200.92999"
+           x="71.429001" />
+        <rect
+           id="rect3157-7-1-0"
+           style="fill:url(#linearGradient4656);fill-rule:evenodd;stroke:#f8f8f8;stroke-width:0.83429003px"
+           ry="17.931999"
+           height="153.02"
+           width="161.59"
+           y="213.14"
+           x="87.059998" />
+      </g>
+      <g
+         id="g3175-9-3-3"
+         transform="matrix(0.03575866,0,0,0.08172529,13.471472,-7.3937688)">
+        <rect
+           rx="15.16763"
+           id="rect2168-6-0-2"
+           style="fill:#555753;fill-rule:evenodd;stroke:#8d8d8d;stroke-width:1px"
+           ry="13.962881"
+           height="182.86"
+           width="194.28999"
+           y="200.92999"
+           x="71.429001" />
+        <rect
+           rx="22.751432"
+           id="rect3157-7-0-83"
+           style="fill:url(#linearGradient4718);fill-rule:evenodd;stroke:#f8f8f8;stroke-width:0.83429003px"
+           ry="13.784149"
+           height="166.22777"
+           width="162.81818"
+           y="209.82173"
+           x="87.059998" />
+      </g>
+      <g
+         id="g3175-9-4-2"
+         transform="matrix(0.03584415,0,0,0.03807221,5.4570607,9.3686682)">
+        <rect
+           id="rect2168-6-5-8"
+           style="fill:#555753;fill-rule:evenodd;stroke:#8d8d8d;stroke-width:1px"
+           ry="21.429001"
+           height="182.86"
+           width="194.28999"
+           y="200.92999"
+           x="71.429001" />
+        <rect
+           id="rect3157-7-1-9"
+           style="fill:url(#linearGradient4720);fill-rule:evenodd;stroke:#f8f8f8;stroke-width:0.83429003px"
+           ry="17.931999"
+           height="153.02"
+           width="161.59"
+           y="213.14"
+           x="87.059998" />
+      </g>
+      <text
+         id="text4722-7-6-9"
+         y="21.967489"
+         x="9.2196474"
+         style="font-style:normal;font-weight:normal;font-size:2.29596424px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#555753;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           y="21.967489"
+           x="9.2196474"
+           id="tspan4724-9-3-7">alt</tspan></text>
+      <text
+         id="text4722-6-0"
+         y="13.899693"
+         x="9.1518517"
+         style="font-style:normal;font-weight:normal;font-size:2.29596424px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#555753;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           y="13.899693"
+           x="9.1518517"
+           id="tspan4724-98-6">@</tspan></text>
+    </g>
+    <rect
+       style="opacity:0;fill:#555753;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4282"
+       width="16.000002"
+       height="16.000004"
+       x="-9.5367443e-07"
+       y="-1.430511e-06"
+       ry="6.0187583" />
+  </g>
+</svg>

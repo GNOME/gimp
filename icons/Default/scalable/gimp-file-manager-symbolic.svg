@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg7384"
+   height="16"
+   width="16"
+   version="1.1"
+   inkscape:version="0.92pre1 unknown"
+   sodipodi:docname="system-file-manager.svg"
+   viewBox="0 0 16 16">
+  <defs
+     id="defs9" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:document-units="px"
+     id="namedview7"
+     showgrid="false"
+     inkscape:zoom="55.5625"
+     inkscape:cx="8"
+     inkscape:cy="10.15973"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7384" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gnome Symbolic Icon Theme</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <title
+     id="title9167">Gnome Symbolic Icon Theme</title>
+  <g
+     id="g4237">
+    <g
+       transform="matrix(1,0,0,0.99995,-202,-489.9755)"
+       id="layer11">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 205.19,490 c -1.21,0 -2.19,1.02 -2.19,2.22 v 11.562 c 0,1.2008 0.98238,2.2188 2.1875,2.2188 h 9.625 c 1.2051,0 2.1875,-1.018 2.1875,-2.2188 V 492.22 c -0.01,-1.2 -0.99,-2.22 -2.2,-2.22 h -9.625 z m -0.1875,3 h 10 v 11 h -10 z m 1,1 v 4 h 8.0312 v -4 h -8.03 z m 2.3438,1.4375 a 0.50005,0.50005 0 0 1 0.0625,0 0.50005,0.50005 0 0 1 0.59375,0.5 V 496 h 2 v -0.0625 a 0.50005,0.50005 0 1 1 1,0 v 0.06 c 0,0.54535 -0.45465,1 -1,1 h -2 c -0.54535,0 -1,-0.45465 -1,-1 v -0.0625 a 0.50005,0.50005 0 0 1 0.34375,-0.5 z M 206.0338,499 v 4 h 8.0312 v -4 z m 2.3125,1.4375 a 0.50005,0.50005 0 0 1 0.0625,0 0.50005,0.50005 0 0 1 0.59375,0.5 V 501 h 2 v -0.0625 a 0.50005,0.50005 0 1 1 1,0 v 0.06 c 0,0.54535 -0.45465,1 -1,1 h -2 c -0.54535,0 -1,-0.45465 -1,-1 v -0.0625 a 0.50005,0.50005 0 0 1 0.34375,-0.5 z"
+         style="color:#000000;fill:#bebebe;fill-rule:evenodd"
+         id="rect11668-7" />
+    </g>
+  </g>
+</svg>
