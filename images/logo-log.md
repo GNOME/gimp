@@ -51,6 +51,8 @@
   before getting its final PNG format. It was used for the "Tip of the day"
   popup (nowadays, we just use "dialog-information" icon).
 
+  ![French painter Wilber](https://gitlab.gnome.org/GNOME/gimp/-/raw/a93fbc682e5574ea68eef58a09de609fb1cc5cc8/data/images/wilber-tips.png)
+
 * [Original Wilber](https://gitlab.gnome.org/GNOME/gimp/-/commit/a4e97e61f982d3039d9d594de9477a5104491c52)
   by Tuomas Kuosmanen.
 
