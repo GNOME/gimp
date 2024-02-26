@@ -58,3 +58,21 @@ itself (sometimes in bigger format, such as in the About dialog, sometimes as
 icon, etc.) and on various communication channels.
 
 For nostalgic people, here are the previous [logos and About dialog images](logo-log.md).
+
+### Update procedure
+
+When updating the logo, we also need to regenerate some files which are
+committed in this repository because of circular dependencies (GIMP needs them
+at compilation, but they need GIMP to be generated). Therefore a few additional
+steps are needed:
+
+1. Update the source image (TODO: exact file name(s) not chosen yet) in this
+   repository and push your change.
+2. From the main source repository, make sure that `gimp-data` subproject is
+   updated by running: `meson subprojects update`
+3. Build GIMP entirely locally from the main source repository: `ninja`
+4. Install your local GIMP: `ninja install`
+5. Still from the main source repository, run: `ninja subprojects/gimp-data/images/gimp.ico`
+6. The command will have updated `gimp.ico` directly in the source repository,
+   under `images/`. Verify the created file.
+7. If the `.ico` looks fine, commit this updated file and push.

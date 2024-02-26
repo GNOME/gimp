@@ -1,0 +1,53 @@
+import os
+import sys
+
+gi.require_version('Gegl', '0.4')
+from gi.repository import Gegl
+
+input_path  = '@PARENT_TOP_SRCDIR@/desktop/scalable/gimp.svg'
+output_path = '@SRCDIR@/gimp.ico'
+# List of sizes come from these links:
+# https://learn.microsoft.com/en-us/windows/apps/design/style/iconography/app-icon-construction
+# https://learn.microsoft.com/en-us/windows/win32/uxguide/vis-icons
+# Application icons and control panel items
+sizes       = [ 16, 32, 48, 256 ]
+# Quick Launch area
+sizes      += [ 40 ]
+# Additional sizes
+sizes      += [ 8, 10, 14, 22, 24, 40, 64, 96, 128 ]
+
+image_size = max(sizes)
+image = Gimp.Image.new(image_size, image_size, Gimp.ImageBaseType.RGB)
+
+for size in sizes:
+  procedure   = Gimp.get_pdb().lookup_procedure("file-svg-load")
+  config      = procedure.create_config()
+  config.set_property("file", Gio.file_new_for_path(input_path))
+
+  config.set_property("width",  size)
+  config.set_property("height", size)
+  Gimp.Procedure.run(procedure, config)
+  v = Gimp.Procedure.run(procedure, config)
+
+  if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+    sys.exit(os.EX_SOFTWARE)
+
+  tmp_image = v.index(1)
+  drawables = tmp_image.list_selected_drawables()
+  layer = Gimp.Layer.new_from_drawable (drawables[0], image)
+  image.insert_layer(layer, None, -1)
+  tmp_image.delete()
+
+procedure = Gimp.get_pdb().lookup_procedure("file-ico-save")
+config    = procedure.create_config()
+drawables = image.list_selected_drawables()
+config.set_property("image", image)
+config.set_property("num-drawables", len(drawables))
+config.set_property("drawables", Gimp.ObjectArray.new(Gimp.Drawable, drawables, False))
+config.set_property("file", Gio.file_new_for_path(output_path))
+Gimp.Procedure.run(procedure, config)
+
+v = Gimp.Procedure.run(procedure, config)
+
+if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+  sys.exit(os.EX_SOFTWARE)

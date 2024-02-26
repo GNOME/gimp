@@ -12,13 +12,15 @@ endif
 
 # Options passed by subproject() call:
 gimpdatadir = get_option('gimp-datadir')
+gimp_exe    = get_option('gimp-exe')
 
-if gimpdatadir == ''
+if gimpdatadir == '' or gimp_exe == ''
   error('gimp-data was not called with expected options: gimpdatadir')
 endif
 
 # Yielded options:
 have_vector_icons = get_option('vector-icons')
+build_gimp_ico    = get_option('windows-installer') or get_option('ms-store')
 
 ## Tools ##
 
@@ -39,4 +41,5 @@ gnome     = import('gnome')
 subdir('brushes')
 subdir('cursors')
 subdir('icons')
+subdir('images')
 subdir('patterns')
