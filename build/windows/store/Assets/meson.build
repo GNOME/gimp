@@ -248,3 +248,27 @@ foreach scale : scales
                             build_by_default: true,
                             env: gimp_run_env)
 endforeach
+
+
+# OTHER ASSETS
+
+## Generate default XCF file (uap4:ShellNewFileName)
+gen_new_xcf_conf = configuration_data()
+gen_new_xcf_conf.set('BUILDDIR', meson.current_build_dir())
+gen_new_xcf_py = configure_file(
+  input : 'gen-new-xcf.py.in',
+  output : 'gen-new-xcf.py',
+  configuration : gen_new_xcf_conf
+)
+
+xcf_file = custom_target('New_GIMP_Project.xcf',
+  input : [ gen_new_xcf_py ],
+  depend_files: [ wilber_path ],
+  output: [ 'New_GIMP_Project.xcf', ],
+  command: [ gimp_exe, '-nidfs',
+             '--batch-interpreter', 'python-fu-eval',
+             '-b', '-', '--quit'],
+  feed: true,
+  build_by_default: true,
+  env: gimp_run_env
+)
