@@ -201,6 +201,7 @@ ico_save_init (GimpImage   *image,
   info->hot_spot_y     = g_new0 (gint, info->num_icons);
 
   if (run_mode == GIMP_RUN_NONINTERACTIVE &&
+      info->is_cursor                     &&
       (n_hot_spot_x != info->num_icons ||
        n_hot_spot_y != info->num_icons))
     {
