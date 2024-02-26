@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-02-09 17:30+0000\n"
-"PO-Revision-Date: 2024-02-09 18:06+0100\n"
+"PO-Revision-Date: 2024-02-26 18:06+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -146,7 +146,7 @@ msgid ""
 "A new version of GIMP (%s) was released.\n"
 "It is recommended to update."
 msgstr ""
-"S'ha llançat una nova versió del GIMP (%s).\n"
+"S'ha publicat una nova versió del GIMP (%s).\n"
 "Es recomana actualitzar-lo."
 
 #: app/gimp-version.c:70
@@ -26745,7 +26745,7 @@ msgstr ""
 
 #: app/widgets/gimpcriticaldialog.c:216
 msgid "You are running an unsupported version!"
-msgstr "Esteu executant una versió no implementada!"
+msgstr "Esteu executant una versió sense suport!"
 
 #: app/widgets/gimpcriticaldialog.c:239 app/widgets/gimpcriticaldialog.c:595
 msgid ""
@@ -26883,7 +26883,7 @@ msgstr "El GIMP ha trobat un error: %s"
 #: app/widgets/gimpcriticaldialog.c:576
 #, c-format
 msgid "GIMP encountered several critical errors!"
-msgstr "GIMP ha trobat error greus crítics!"
+msgstr "GIMP ha trobat errors greus crítics!"
 
 #: app/widgets/gimpcriticaldialog.c:628
 msgid "_Restart GIMP"
