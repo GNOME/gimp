@@ -198,7 +198,7 @@ else
 endif
 
 if enable_console_bin
-  gimpconsole_exe = executable('gimp-console' + exec_ver,
+  gimpconsole_exe = executable(gimpconsole_exe_name,
     'main.c',
     libapp_sources,
     console_rc_file,
@@ -217,7 +217,7 @@ if enable_console_bin
   )
 endif
 
-gimpmain_exe = executable('gimp' + exec_ver,
+gimpmain_exe = executable(gimpmain_exe_name,
   'main.c',
   gui_rc_file,
   c_args: libapp_c_args,

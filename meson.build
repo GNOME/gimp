@@ -104,6 +104,9 @@ prefix    = get_option('prefix')
 buildtype = get_option('buildtype')
 exec_ver  = '-' + gimp_app_version
 
+gimpconsole_exe_name = 'gimp-console' + exec_ver
+gimpmain_exe_name    = 'gimp' + exec_ver
+
 compiler_args = []
 linker_args = []
 
@@ -1818,10 +1821,17 @@ subdir('etc')
 subdir('menus')
 subdir('themes')
 
+if enable_console_bin
+  gimp_exe_name=gimpconsole_exe_name
+else
+  gimp_exe_name=gimpmain_exe_name
+endif
+
 # Loading gimp-data subproject, the versions must be in sync.
 gimp_data = subproject('gimp-data', version: '=' + gimp_version,
                        default_options: [
                          'gimp-datadir=' + gimpdatadir,
+                         'gimp-exe='     + gimp_exe_name,
                        ])
 icons_imgs_sources = gimp_data.get_variable('icons_imgs_sources')
 icons_core_sources = gimp_data.get_variable('icons_core_sources')
