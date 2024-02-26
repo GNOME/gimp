@@ -4,20 +4,51 @@ import sys
 gi.require_version('Gegl', '0.4')
 from gi.repository import Gegl
 
+src_path    = '@PARENT_TOP_SRCDIR@/desktop/src/gimp.svg'
+# TODO: input_path is itself an extract from src_path, which we use for
+# simplicity. Eventually we want a single source.
 input_path  = '@PARENT_TOP_SRCDIR@/desktop/scalable/gimp.svg'
 output_path = '@SRCDIR@/gimp.ico'
 # List of sizes come from these links:
 # https://learn.microsoft.com/en-us/windows/apps/design/style/iconography/app-icon-construction
 # https://learn.microsoft.com/en-us/windows/win32/uxguide/vis-icons
-# Application icons and control panel items
-sizes       = [ 16, 32, 48, 256 ]
-# Quick Launch area
+# Application icons and control panel items: 16, 32 and 48 are in the variants lists.
+sizes       = [ 256 ]
+# Quick Launch area (TODO: it may be better to generate it from the 48x48
+# variant).
 sizes      += [ 40 ]
-# Additional sizes
-sizes      += [ 8, 10, 14, 22, 24, 40, 64, 96, 128 ]
+# Additional sizes: we don't generate sizes: 8, 10 and 14 because we don't have
+# pixel-perfect raster for these. We don't either 22 and 24 (TODO: though we
+# could try and generate these from the 32x32 or 48x48 sizes which are vector
+# too).
+sizes      += [ 64, 96, 128 ]
+# A bit of prettifying for the order of generated layers.
+sizes.sort()
 
 image_size = max(sizes)
 image = Gimp.Image.new(image_size, image_size, Gimp.ImageBaseType.RGB)
+
+# Variants: pixel-perfect raster or simplified SVG.
+variants = [(16, 303, 209), (22, 303, 167), (32, 302, 115), (48, 295, 40)]
+for size, x_pos, y_pos in variants:
+  procedure   = Gimp.get_pdb().lookup_procedure("file-svg-load")
+  config      = procedure.create_config()
+  config.set_property("file", Gio.file_new_for_path(src_path))
+
+  config.set_property("width",  400)
+  config.set_property("height", 300)
+  Gimp.Procedure.run(procedure, config)
+  v = Gimp.Procedure.run(procedure, config)
+
+  if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+    sys.exit(os.EX_SOFTWARE)
+
+  tmp_image = v.index(1)
+  tmp_image.crop (size, size, x_pos, y_pos)
+  drawables = tmp_image.list_selected_drawables()
+  layer = Gimp.Layer.new_from_drawable (drawables[0], image)
+  image.insert_layer(layer, None, 0)
+  tmp_image.delete()
 
 for size in sizes:
   procedure   = Gimp.get_pdb().lookup_procedure("file-svg-load")
@@ -35,7 +66,7 @@ for size in sizes:
   tmp_image = v.index(1)
   drawables = tmp_image.list_selected_drawables()
   layer = Gimp.Layer.new_from_drawable (drawables[0], image)
-  image.insert_layer(layer, None, -1)
+  image.insert_layer(layer, None, 0)
   tmp_image.delete()
 
 procedure = Gimp.get_pdb().lookup_procedure("file-ico-save")
