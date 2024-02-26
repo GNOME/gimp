@@ -75,22 +75,25 @@ gimp_layer_get_by_id (gint32 layer_id)
 
 /**
  * gimp_layer_new:
- * @image:   The image to which to add the layer.
- * @name:    The layer name.
- * @width:   The layer width.
- * @height:  The layer height.
- * @type:    The layer type.
- * @opacity: The layer opacity.
- * @mode:    The layer combination mode.
+ * @image:            The image to which to add the layer.
+ * @name: (nullable): The layer name.
+ * @width:            The layer width.
+ * @height:           The layer height.
+ * @type:             The layer type.
+ * @opacity:          The layer opacity.
+ * @mode:             The layer combination mode.
  *
  * Create a new layer.
  *
- * This procedure creates a new layer with the specified width, height,
- * and type. Name, opacity, and mode are also supplied parameters. The
- * new layer still needs to be added to the image, as this is not
- * automatic. Add the new layer with the gimp_image_insert_layer()
- * command. Other attributes such as layer mask modes, and offsets
- * should be set with explicit procedure calls.
+ * This procedure creates a new layer with the specified @width, @height, and
+ * @type. If @name is %NULL, a default layer name will be used.
+ * @opacity and @mode are also supplied parameters.
+ *
+ * The new layer still needs to be added to the image, as this is not automatic.
+ * Add the new layer with the [method@Image.insert_layer] method.
+ *
+ * Other attributes such as layer mask modes, and offsets should be set with
+ * explicit procedure calls.
  *
  * Returns: (transfer none): The newly created layer.
  *          The object belongs to libgimp and you should not free it.

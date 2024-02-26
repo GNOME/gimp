@@ -1257,7 +1257,7 @@ register_layer_procs (GimpPDB *pdb)
                                "gimp-layer-new");
   gimp_procedure_set_static_help (procedure,
                                   "Create a new layer.",
-                                  "This procedure creates a new layer with the specified width, height, and type. Name, opacity, and mode are also supplied parameters. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp-image-insert-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
+                                  "This procedure creates a new layer with the specified width, height, and type. If @name is %NULL, a default layer name will be used. Opacity, and mode are also supplied parameters. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp-image-insert-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
