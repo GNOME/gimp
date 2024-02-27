@@ -401,19 +401,6 @@ app_activate_callback (GimpCoreApp *app,
    */
   gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
 
-  /*  check for updates *after* enabling config autosave, so that the timestamp
-   *  is saved
-   */
-  gimp_update_auto_check (gimp->edit_config, gimp);
-
-  /* Setting properties to be used for the next run.  */
-  g_object_set (gimp->edit_config,
-                /* Set this after gimp_update_auto_check(). */
-                "config-version", GIMP_VERSION,
-                /* Set this after gimp_restore(). */
-                "prev-language",  current_language,
-                NULL);
-
 #ifndef GIMP_CONSOLE_COMPILATION
   if (! gimp->no_interface)
     {
@@ -470,6 +457,19 @@ app_activate_callback (GimpCoreApp *app,
       g_list_free_full (recovered_files, g_free);
     }
 #endif
+
+  /*  check for updates *after* enabling config autosave, so that the timestamp
+   *  is saved
+   */
+  gimp_update_auto_check (gimp->edit_config, gimp);
+
+  /* Setting properties to be used for the next run.  */
+  g_object_set (gimp->edit_config,
+                /* Set this after gimp_update_auto_check(). */
+                "config-version", GIMP_VERSION,
+                /* Set this after gimp_restore(). */
+                "prev-language",  current_language,
+                NULL);
 
   /*  Load the images given on the command-line. */
   filenames = gimp_core_app_get_filenames (app);
