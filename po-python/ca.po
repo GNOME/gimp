@@ -7,13 +7,13 @@
 # Quim Perez i Noguer <noguer a gmail.com>, 2005-2008.
 # Xavier Beà <xbea a pie.xtec.es>, 2003, 2004.
 # Xavier Conde Rueda <xaviconde a eresmas.com>, 2004.
-# Jordi Mas i Hernàndez <jmas@softcatala.org>, 2020-2023
+# Jordi Mas i Hernàndez <jmas@softcatala.org>, 2020-2024
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-10-21 01:50+0000\n"
-"PO-Revision-Date: 2023-10-22 13:18+0000\n"
+"PO-Revision-Date: 2024-02-27 13:18+0000\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "Language: ca\n"
@@ -239,7 +239,7 @@ msgstr "_Mostra de la mitjana"
 
 #: plug-ins/python/histogram-export.py:223
 msgid "Output _format"
-msgstr "_Format de sortida"
+msgstr "F_ormat de sortida"
 
 #: plug-ins/python/histogram-export.py:245
 msgid "Exports the image histogram to a text file (CSV)"

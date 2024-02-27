@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-06 23:39+0000\n"
-"PO-Revision-Date: 2024-02-06 23:39+0000\n"
+"POT-Creation-Date: 2024-02-25 08:10+0000\n"
+"PO-Revision-Date: 2024-02-27 23:39+0000\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -74,7 +74,6 @@ msgstr "El connector %s no pot gestionar transparències"
 
 #: libgimp/gimpexport.c:417
 #, c-format
-#| msgid "%s plug-in can't handle layers"
 msgid "%s plug-in can't handle layer effects"
 msgstr "El connector %s no pot gestionar efectes de la capa"
 
@@ -186,7 +185,7 @@ msgid "Confirm Save"
 msgstr "Confirmeu què voleu desar"
 
 #: libgimp/gimpexport.c:586 libgimp/gimpexport.c:668 libgimp/gimpexport.c:1242
-#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
+#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:554
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -445,13 +444,13 @@ msgid "_Open"
 msgstr "_Obre"
 
 #: libgimp/gimpproceduredialog.c:298 libgimp/gimpproceduredialog.c:571
-#: libgimpwidgets/gimpcolorbutton.c:558 libgimpwidgets/gimpfileentry.c:467
+#: libgimpwidgets/gimpcolorbutton.c:555 libgimpwidgets/gimpfileentry.c:467
 #: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
 #: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_D'acord"
 
-#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:556
+#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:553
 msgid "_Reset"
 msgstr "_Restableix"
 
@@ -1926,118 +1925,118 @@ msgstr ""
 "Quan està habilitat, estableix les escales de color per a mostrar el mode de"
 " barreja HSV en lloc de LCh"
 
-#: libgimpconfig/gimpcolorconfig.c:222
+#: libgimpconfig/gimpcolorconfig.c:226
 msgid "Mode of operation"
 msgstr "Mode d'operació"
 
-#: libgimpconfig/gimpcolorconfig.c:230
+#: libgimpconfig/gimpcolorconfig.c:234
 msgid "Preferred RGB profile"
 msgstr "Perfil preferit RGB"
 
-#: libgimpconfig/gimpcolorconfig.c:237
+#: libgimpconfig/gimpcolorconfig.c:241
 msgid "Preferred grayscale profile"
 msgstr "Perfil preferit d'escala de grisos"
 
-#: libgimpconfig/gimpcolorconfig.c:244
+#: libgimpconfig/gimpcolorconfig.c:248
 msgid "CMYK profile"
 msgstr "Perfil CMYK"
 
-#: libgimpconfig/gimpcolorconfig.c:251
+#: libgimpconfig/gimpcolorconfig.c:255
 msgid "Monitor profile"
 msgstr "Perfil del monitor"
 
-#: libgimpconfig/gimpcolorconfig.c:258
+#: libgimpconfig/gimpcolorconfig.c:262
 msgid "Use the system monitor profile"
 msgstr "Utilitzeu el perfil del monitor del sistema"
 
-#: libgimpconfig/gimpcolorconfig.c:265
+#: libgimpconfig/gimpcolorconfig.c:269
 msgid "Simulation profile for soft-proofing"
 msgstr "Perfil de simulació per a les proves en pantalla"
 
-#: libgimpconfig/gimpcolorconfig.c:272
+#: libgimpconfig/gimpcolorconfig.c:276
 msgid "Display rendering intent"
 msgstr "Propòsit de la renderització en pantalla"
 
-#: libgimpconfig/gimpcolorconfig.c:280
+#: libgimpconfig/gimpcolorconfig.c:284
 msgid "Use black point compensation for the display"
 msgstr "Utilitzeu la compensació del punt negre per a la pantalla"
 
-#: libgimpconfig/gimpcolorconfig.c:287
+#: libgimpconfig/gimpcolorconfig.c:291
 msgid "Optimize display color transformations"
 msgstr "Optimitzar les transformacions del color de pantalla"
 
-#: libgimpconfig/gimpcolorconfig.c:294
+#: libgimpconfig/gimpcolorconfig.c:298
 msgid "Soft-proofing rendering intent"
 msgstr "Intenció de renderització de les proves en pantalla"
 
-#: libgimpconfig/gimpcolorconfig.c:302
+#: libgimpconfig/gimpcolorconfig.c:306
 msgid "Use black point compensation for soft-proofing"
 msgstr "Utilitza la compensació del punt negre per a les proves en pantalla"
 
-#: libgimpconfig/gimpcolorconfig.c:309
+#: libgimpconfig/gimpcolorconfig.c:313
 msgid "Optimize soft-proofing color transformations"
 msgstr "Optimitza les transformacions del color per a les proves en pantalla"
 
-#: libgimpconfig/gimpcolorconfig.c:316
+#: libgimpconfig/gimpcolorconfig.c:320
 msgid "Mark out of gamut colors"
 msgstr "Marca els colors de la gamma"
 
-#: libgimpconfig/gimpcolorconfig.c:323
+#: libgimpconfig/gimpcolorconfig.c:327
 msgid "Out of gamut warning color"
 msgstr "Fora de la gamma dels colors d'alerta"
 
-#: libgimpconfig/gimpcolorconfig.c:331
+#: libgimpconfig/gimpcolorconfig.c:335
 msgid "Show RGB 0..255 scales"
 msgstr "Mostra les escales RGB 0..255"
 
-#: libgimpconfig/gimpcolorconfig.c:338
+#: libgimpconfig/gimpcolorconfig.c:342
 msgid "Show HSV instead of LCH"
 msgstr "Mostra l'HSV en lloc de LCH"
 
-#: libgimpconfig/gimpcolorconfig.c:699 libgimpconfig/gimpcolorconfig.c:892
+#: libgimpconfig/gimpcolorconfig.c:711 libgimpconfig/gimpcolorconfig.c:904
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "El perfil del color «%s» no és pel lloc del color RGB."
 
-#: libgimpconfig/gimpcolorconfig.c:743 libgimpconfig/gimpcolorconfig.c:942
+#: libgimpconfig/gimpcolorconfig.c:755 libgimpconfig/gimpcolorconfig.c:954
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "El perfil del color «%s» no és pel lloc del color gris."
 
-#: libgimpconfig/gimpcolorconfig.c:787 libgimpconfig/gimpcolorconfig.c:992
+#: libgimpconfig/gimpcolorconfig.c:799 libgimpconfig/gimpcolorconfig.c:1004
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "El perfil de color «%s» no és pel lloc del color CMYK."
 
-#: libgimpconfig/gimpconfig-deserialize.c:120
+#: libgimpconfig/gimpconfig-deserialize.c:123
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "el valor per a l'element %s no és una cadena de text UTF-8 vàlida"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:492
+#: libgimpconfig/gimpconfig-deserialize.c:501
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "S'esperava «yes» o «no» per a l'element booleà %s. Però s'ha trobat «%s»"
 
-#: libgimpconfig/gimpconfig-deserialize.c:607
+#: libgimpconfig/gimpconfig-deserialize.c:616
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "El valor «%s» no és vàlid per a l'element %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:622
+#: libgimpconfig/gimpconfig-deserialize.c:631
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "El valor «%ld» no és vàlid per a l'element %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:691
+#: libgimpconfig/gimpconfig-deserialize.c:700
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "en analitzar l'element «%s»: %s"
 
 #: libgimpconfig/gimpconfig-iface.c:664 libgimpconfig/gimpconfig-iface.c:677
-#: libgimpconfig/gimpscanner.c:774 libgimpconfig/gimpscanner.c:856
+#: libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964
 #: libgimpwidgets/gimpcolorprofilestore.c:761
 msgid "fatal parse error"
 msgstr "s'ha produït un error fatal d'anàlisi"
@@ -2071,17 +2070,17 @@ msgstr "No s'ha pogut crear el fitxer temporal per a «%s»:"
 msgid "Error writing '%s': %s"
 msgstr "S'ha produït un error en escriure «%s»: %s"
 
-#: libgimpconfig/gimpscanner.c:422
+#: libgimpconfig/gimpscanner.c:424
 msgid "invalid UTF-8 string"
 msgstr "cadena de text UTF-8 invàlida"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpscanner.c:649
+#: libgimpconfig/gimpscanner.c:651
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "S'esperava «yes» o «no» per a l'element booleà. Però s'ha trobat «%s»"
 
-#: libgimpconfig/gimpscanner.c:883
+#: libgimpconfig/gimpscanner.c:991
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "S'ha produït un error en analitzar «%s» a la línia %d: %s"
@@ -2137,19 +2136,19 @@ msgstr "No s'ha pogut crear la miniatura de %s: %s"
 msgid "_Search:"
 msgstr "_Cerca:"
 
-#: libgimpwidgets/gimpcolorbutton.c:380
+#: libgimpwidgets/gimpcolorbutton.c:377
 msgid "_Foreground Color"
 msgstr "Color de _primer pla"
 
-#: libgimpwidgets/gimpcolorbutton.c:381
+#: libgimpwidgets/gimpcolorbutton.c:378
 msgid "_Background Color"
 msgstr "Color de _fons"
 
-#: libgimpwidgets/gimpcolorbutton.c:386
+#: libgimpwidgets/gimpcolorbutton.c:383
 msgid "Blac_k"
 msgstr "_Negre"
 
-#: libgimpwidgets/gimpcolorbutton.c:387
+#: libgimpwidgets/gimpcolorbutton.c:384
 msgid "_White"
 msgstr "_Blanc"
 
@@ -2199,35 +2198,68 @@ msgstr "Fabricant: "
 msgid "Copyright: "
 msgstr "Copyright: "
 
-#: libgimpwidgets/gimpcolorscales.c:212
+#: libgimpwidgets/gimpcolorscales.c:207
 msgid "Scales"
 msgstr "Escales"
 
-#: libgimpwidgets/gimpcolorscales.c:446
+#: libgimpwidgets/gimpcolorscales.c:362 libgimpwidgets/gimpcolorscales.c:694
+#: libgimpwidgets/gimpcolorselect.c:518 libgimpwidgets/gimpcolorselect.c:691
+#: modules/color-selector-water.c:206 modules/color-selector-water.c:242
+#: modules/color-selector-wheel.c:136 modules/color-selector-wheel.c:175
+msgid "Profile: sRGB"
+msgstr "Perfil: sRGB"
+
+#: libgimpwidgets/gimpcolorscales.c:459
 msgid "0..100"
 msgstr "0..100"
 
-#: libgimpwidgets/gimpcolorscales.c:448
+#: libgimpwidgets/gimpcolorscales.c:461
 msgid "0..255"
 msgstr "0..255"
 
-#: libgimpwidgets/gimpcolorscales.c:469
+#: libgimpwidgets/gimpcolorscales.c:482
 msgid "LCh"
 msgstr "LCh"
 
-#: libgimpwidgets/gimpcolorscales.c:471
+#: libgimpwidgets/gimpcolorscales.c:484
 msgid "HSV"
 msgstr "HSV"
 
-#: libgimpwidgets/gimpcolorselection.c:247
+#: libgimpwidgets/gimpcolorscales.c:711 libgimpwidgets/gimpcolorselect.c:707
+#: modules/color-selector-cmyk.c:302 modules/color-selector-cmyk.c:386
+#: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
+#, c-format
+msgid "Profile: %s"
+msgstr "Perfil: %s"
+
+#: libgimpwidgets/gimpcolorscales.c:725 libgimpwidgets/gimpcolorselect.c:716
+#: modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
+msgid "Profile: <i>unknown</i>"
+msgstr "Perfil: <i>desconegut</i>"
+
+#: libgimpwidgets/gimpcolorselect.c:526 libgimpwidgets/gimpcolorselect.c:829
+#: libgimpwidgets/gimpcolorselect.c:846
+msgid "Soft-Proof Profile: <i>unknown</i>"
+msgstr "Perfil de prova en pantalla: <i>desconegut</i>"
+
+#: libgimpwidgets/gimpcolorselect.c:813
+msgid "Soft-Proof Profile: sRGB"
+msgstr "Perfil de prova en pantalla: sRGB"
+
+#: libgimpwidgets/gimpcolorselect.c:820
+#, c-format
+msgid "Soft-Proof Profile: %s"
+msgstr "Perfil de prova en pantalla: %s"
+
+#: libgimpwidgets/gimpcolorselection.c:241
 msgid "Current:"
 msgstr "Actual:"
 
-#: libgimpwidgets/gimpcolorselection.c:256
+#: libgimpwidgets/gimpcolorselection.c:250
 msgid "Old:"
 msgstr "Antic:"
 
-#: libgimpwidgets/gimpcolorselection.c:343
+#: libgimpwidgets/gimpcolorselection.c:335
 msgid "HTML _notation:"
 msgstr "_Notació HTML:"
 
@@ -2383,19 +2415,19 @@ msgstr ""
 msgid "_Preview"
 msgstr "_Previsualitza"
 
-#: libgimpwidgets/gimppreviewarea.c:146
+#: libgimpwidgets/gimppreviewarea.c:155
 msgid "Check Size"
 msgstr "Mida dels quadres"
 
-#: libgimpwidgets/gimppreviewarea.c:154
+#: libgimpwidgets/gimppreviewarea.c:163
 msgid "Check Style"
 msgstr "Estil dels quadres"
 
-#: libgimpwidgets/gimppreviewarea.c:162
+#: libgimpwidgets/gimppreviewarea.c:171
 msgid "Custom Checks Color 1"
 msgstr "Color personalitzat 1 de les comprovacions"
 
-#: libgimpwidgets/gimppreviewarea.c:169
+#: libgimpwidgets/gimppreviewarea.c:178
 msgid "Custom Checks Color 2"
 msgstr "Color personalitzat 2 de les comprovacions"
 
@@ -2427,17 +2459,17 @@ msgstr ""
 msgid "_Randomize"
 msgstr "Aleato_ritza"
 
-#: libgimpwidgets/gimpwidgets-private.c:50
+#: libgimpwidgets/gimpwidgets-private.c:51
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Inhabilitat"
 
-#: libgimpwidgets/gimpwidgets-private.c:51
+#: libgimpwidgets/gimpwidgets-private.c:52
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Pantalla"
 
-#: libgimpwidgets/gimpwidgets-private.c:52
+#: libgimpwidgets/gimpwidgets-private.c:53
 msgctxt "input-mode"
 msgid "Window"
 msgstr "Finestra"
@@ -2594,58 +2626,53 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Redueix"
 
-#: modules/color-selector-cmyk.c:87
+#: modules/color-selector-cmyk.c:86
 msgid "CMYK color selector (using color profile)"
 msgstr "Selecció de color CMYK (utilitzant un perfil de color)"
 
-#: modules/color-selector-cmyk.c:121
+#: modules/color-selector-cmyk.c:120
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:145
+#: modules/color-selector-cmyk.c:144
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:147
+#: modules/color-selector-cmyk.c:146
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:149
+#: modules/color-selector-cmyk.c:148
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:151
+#: modules/color-selector-cmyk.c:150
 msgid "_K"
 msgstr "_K"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:154
 msgid "Cyan"
 msgstr "Cian"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:155
 msgid "Magenta"
 msgstr "Magenta"
 
-#: modules/color-selector-cmyk.c:157
+#: modules/color-selector-cmyk.c:156
 msgid "Yellow"
 msgstr "Groc"
 
-#: modules/color-selector-cmyk.c:158
+#: modules/color-selector-cmyk.c:157
 msgid "Black"
 msgstr "Negre"
 
-#: modules/color-selector-cmyk.c:296 modules/color-selector-cmyk.c:382
+#: modules/color-selector-cmyk.c:289 modules/color-selector-cmyk.c:368
 msgid "Profile: (none)"
 msgstr "Perfil: (cap)"
-
-#: modules/color-selector-cmyk.c:309 modules/color-selector-cmyk.c:400
-#, c-format
-msgid "Profile: %s"
-msgstr "Perfil: %s"
 
 #: modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
@@ -2655,15 +2682,15 @@ msgstr "Selector de color amb estil aquarel·la"
 msgid "Watercolor"
 msgstr "Aquarel·la"
 
-#: modules/color-selector-water.c:196
+#: modules/color-selector-water.c:197
 msgid "Pressure"
 msgstr "Pressió"
 
-#: modules/color-selector-wheel.c:72
+#: modules/color-selector-wheel.c:76
 msgid "HSV color wheel"
 msgstr "Roda de colors HSV"
 
-#: modules/color-selector-wheel.c:104
+#: modules/color-selector-wheel.c:108
 msgid "Wheel"
 msgstr "Roda"
 
