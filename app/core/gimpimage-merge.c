@@ -448,6 +448,10 @@ gimp_image_merge_group_layer (GimpImage      *image,
       gimp_layer_set_composite_mode  (GIMP_LAYER (group), composite_mode,         TRUE);
     }
 
+  /* Merge down filter effects */
+  gimp_drawable_merge_filters (GIMP_DRAWABLE (group));
+  gimp_drawable_clear_filters (GIMP_DRAWABLE (group));
+
   layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (group),
                                            GIMP_TYPE_LAYER));
 

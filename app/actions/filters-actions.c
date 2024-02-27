@@ -911,6 +911,7 @@ filters_actions_update (GimpActionGroup *group,
   gboolean      gray           = FALSE;
   gboolean      alpha          = FALSE;
   gboolean      supports_alpha = FALSE;
+  gboolean      is_group       = FALSE;
 
   image = action_data_get_image (data);
 
@@ -937,7 +938,7 @@ filters_actions_update (GimpActionGroup *group,
           writable = ! gimp_item_is_content_locked (item, NULL);
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-            writable = FALSE;
+            is_group = TRUE;
         }
 
       g_list_free (drawables);
@@ -947,7 +948,7 @@ filters_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("filters-alien-map",               writable);
-  SET_SENSITIVE ("filters-antialias",               writable);
+  SET_SENSITIVE ("filters-antialias",               writable && !is_group);
   SET_SENSITIVE ("filters-apply-canvas",            writable);
   SET_SENSITIVE ("filters-apply-lens",              writable);
   SET_SENSITIVE ("filters-bayer-matrix",            writable);
@@ -974,11 +975,11 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-desaturate",              writable && !gray);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
   SET_SENSITIVE ("filters-diffraction-patterns",    writable);
-  SET_SENSITIVE ("filters-dilate",                  writable);
+  SET_SENSITIVE ("filters-dilate",                  writable && !is_group);
   SET_SENSITIVE ("filters-displace",                writable);
   SET_SENSITIVE ("filters-distance-map",            writable);
   SET_SENSITIVE ("filters-dropshadow",              writable && alpha);
-  SET_SENSITIVE ("filters-edge",                    writable);
+  SET_SENSITIVE ("filters-edge",                    writable && !is_group);
   SET_SENSITIVE ("filters-edge-laplace",            writable);
   SET_SENSITIVE ("filters-edge-neon",               writable);
   SET_SENSITIVE ("filters-edge-sobel",              writable);
@@ -997,9 +998,9 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-hue-chroma",              writable);
   SET_SENSITIVE ("filters-hue-saturation",          writable && !gray);
   SET_SENSITIVE ("filters-illusion",                writable);
-  SET_SENSITIVE ("filters-invert-linear",           writable);
-  SET_SENSITIVE ("filters-invert-perceptual",       writable);
-  SET_SENSITIVE ("filters-invert-value",            writable);
+  SET_SENSITIVE ("filters-invert-linear",           writable && !is_group);
+  SET_SENSITIVE ("filters-invert-perceptual",       writable && !is_group);
+  SET_SENSITIVE ("filters-invert-value",            writable && !is_group);
   SET_SENSITIVE ("filters-image-gradient",          writable);
   SET_SENSITIVE ("filters-kaleidoscope",            writable);
   SET_SENSITIVE ("filters-lens-blur",               writable);

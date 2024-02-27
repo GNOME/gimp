@@ -304,15 +304,6 @@ gimp_filter_tool_initialize (GimpTool     *tool,
     }
   drawable = drawables->data;
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("Cannot modify the pixels of layer groups."));
-
-      g_list_free (drawables);
-      return FALSE;
-    }
-
   if (gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,

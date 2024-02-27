@@ -2732,7 +2732,8 @@ gimp_item_tree_view_effects_merged_clicked (GtkWidget        *widget,
       return;
     }
 
-  if (view->priv->effects_drawable)
+  if (view->priv->effects_drawable &&
+      ! gimp_viewable_get_children (GIMP_VIEWABLE (view->priv->effects_drawable)))
     {
       GimpImage *image = view->priv->image;
       GeglNode  *op    = gimp_drawable_filter_get_operation (view->priv->effects_filter);
@@ -3239,12 +3240,20 @@ static void
 gimp_item_tree_effects_set_sensitive (GimpItemTreeView *view,
                                       gboolean          is_sensitive)
 {
+  gboolean is_group = FALSE;
+
+  /* Do not allow merging down effects on group layers */
+  if (view->priv->effects_drawable &&
+      gimp_viewable_get_children (GIMP_VIEWABLE (view->priv->effects_drawable)))
+    is_group = TRUE;
+
   gtk_widget_set_sensitive (view->priv->effects_box, is_sensitive);
   gtk_widget_set_sensitive (view->priv->effects_visible_button, is_sensitive);
   gtk_widget_set_sensitive (view->priv->effects_edit_button, is_sensitive);
   gtk_widget_set_sensitive (view->priv->effects_raise_button, is_sensitive);
   gtk_widget_set_sensitive (view->priv->effects_lower_button, is_sensitive);
-  gtk_widget_set_sensitive (view->priv->effects_merge_button, is_sensitive);
+  gtk_widget_set_sensitive (view->priv->effects_merge_button,
+                            (is_sensitive && ! is_group));
   gtk_widget_set_sensitive (view->priv->effects_remove_button, is_sensitive);
 }
 
