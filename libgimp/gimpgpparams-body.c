@@ -72,6 +72,10 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
           ! strcmp (param_def->value_type_name, "GBytes"))
         return g_param_spec_boxed (name, nick, blurb, G_TYPE_BYTES, flags);
 
+      if (! strcmp (param_def->type_name, "GParamBoxed") &&
+          ! strcmp (param_def->value_type_name, "GimpColorArray"))
+        return g_param_spec_boxed (name, nick, blurb, GIMP_TYPE_COLOR_ARRAY, flags);
+
       break;
 
     case GP_PARAM_DEF_TYPE_CHOICE:
