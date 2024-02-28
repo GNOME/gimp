@@ -17,6 +17,10 @@
 #   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
+gi.require_version('Babl', '0.1')
+from gi.repository import Babl
+gi.require_version('Gegl', '0.4')
+from gi.repository import Gegl
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
 from gi.repository import GObject
