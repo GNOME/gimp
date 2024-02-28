@@ -807,8 +807,15 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
         }
       else
         {
+          GeglRectangle rect;
+
           if (gimp_viewable_preview_is_frozen (GIMP_VIEWABLE (filter->drawable)))
             gimp_viewable_preview_thaw (GIMP_VIEWABLE (filter->drawable));
+
+          /* Update layer tree preview */
+          rect = gimp_drawable_get_bounding_box (filter->drawable);
+          gimp_drawable_update (filter->drawable, rect.x, rect.y,
+                                rect.width, rect.height);
         }
 
       if (filter)

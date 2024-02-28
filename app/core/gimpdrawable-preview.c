@@ -214,7 +214,7 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
   if (! image->gimp->config->layer_previews)
     return NULL;
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = gimp_drawable_get_buffer_with_effects (drawable);
 
   preview = gimp_temp_buf_new (dest_width, dest_height,
                                gimp_drawable_get_preview_format (drawable));
@@ -271,7 +271,7 @@ gimp_drawable_get_sub_pixbuf (GimpDrawable *drawable,
   if (! image->gimp->config->layer_previews)
     return NULL;
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = gimp_drawable_get_buffer_with_effects (drawable);
 
   pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
                            dest_width, dest_height);
@@ -433,7 +433,7 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
   if (! image->gimp->config->layer_previews)
     return NULL;
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = gimp_drawable_get_buffer_with_effects (drawable);
 
   if (no_async_drawable_previews < 0)
     {
