@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-25 08:12+0000\n"
-"PO-Revision-Date: 2024-02-27 19:52+0100\n"
+"POT-Creation-Date: 2024-02-27 15:33+0000\n"
+"PO-Revision-Date: 2024-02-28 19:52+0100\n"
 "Last-Translator: Quique Serrano <qserrano@outlook.com>\n"
 "Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
 "Language: ca\n"
@@ -711,8 +711,8 @@ msgid "_Fuzzy Border..."
 msgstr "Marc _difuminat..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:150
-msgid "Add a jagged border to an image"
-msgstr "Afegeix un marc difuminat a la imatge"
+msgid "Add a jagged, fuzzy border to an image"
+msgstr "Afegeix una vora irregular i difusa a una imatge"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:158
 #: plug-ins/script-fu/scripts/old-photo.scm:98
@@ -1520,4 +1520,3 @@ msgstr "Desplaçament de la X de l'ombra caiguda"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Desplaçament de la Y de l'ombra caiguda"
-
