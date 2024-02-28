@@ -220,6 +220,7 @@ EXPORTS
 	gimp_utf8_strtrim
 	gimp_value_array_append
 	gimp_value_array_copy
+	gimp_value_array_get_color_array
 	gimp_value_array_get_type
 	gimp_value_array_index
 	gimp_value_array_insert

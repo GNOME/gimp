@@ -22,11 +22,13 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #include <glib-object.h>
 #include <gobject/gvaluecollector.h>
 
 #include "gimpbasetypes.h"
 
+#include "gimpparamspecs.h"
 #include "gimpvaluearray.h"
 
 
@@ -75,6 +77,12 @@ G_DEFINE_BOXED_TYPE (GimpValueArray, gimp_value_array,
  *
  * Return a pointer to the value at @index contained in @value_array.
  *
+ * *Note*: in binding languages, some custom types fail to be correctly passed
+ * through. For these types, you should use specific functions.
+ * For instance, in the Python binding, a [type@ColorArray] `GValue`
+ * won't be usable with this function. You should use instead
+ * [method@ValueArray.get_color_array].
+ *
  * Returns: (transfer none): pointer to a value at @index in @value_array
  *
  * Since: 2.10
@@ -87,6 +95,40 @@ gimp_value_array_index (const GimpValueArray *value_array,
   g_return_val_if_fail (index < value_array->n_values, NULL);
 
   return value_array->values + index;
+}
+
+/**
+ * gimp_value_array_get_color_array:
+ * @value_array: #GimpValueArray to get a value from
+ * @index: index of the value of interest
+ *
+ * Return a pointer to the value at @index contained in @value_array. This value
+ * is supposed to be a [type@ColorArray].
+ *
+ * Returns: (transfer none) (array zero-terminated=1): the [type@ColorArray] stored at @index in @value_array.
+ *
+ * Since: 3.0
+ */
+/* XXX See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10885#note_2030308
+ * This explains why we created a specific function for GimpColorArray, instead
+ * of using the generic gimp_value_array_index().
+ */
+GeglColor **
+gimp_value_array_get_color_array (const GimpValueArray *value_array,
+                                  gint                  index)
+{
+  GValue         *value;
+  GimpColorArray  colors;
+
+  g_return_val_if_fail (value_array != NULL, NULL);
+  g_return_val_if_fail (index < value_array->n_values, NULL);
+
+  value = value_array->values + index;
+  g_return_val_if_fail (GIMP_VALUE_HOLDS_COLOR_ARRAY (value), NULL);
+
+  colors = g_value_get_boxed (value);
+
+  return colors;
 }
 
 static inline void

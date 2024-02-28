@@ -246,14 +246,19 @@ void            gimp_value_take_float_array       (GValue        *value,
                                                    gsize         length);
 
 
+/*
+ * GIMP_TYPE_COLOR_ARRAY
+ */
+
 /**
- * GIMP_TYPE_COLOR_ARRAY:
+ * GimpColorArray: (array zero-terminated=1) (element-type GeglColor)
  *
- * The #GType for a boxed type holding a %NULL-terminated array of GeglColor.
+ * A boxed type which is nothing more than an alias to a %NULL-terminated array
+ * of [class@Gegl.Color].
  *
  * The code fragments in the following example show the use of a property of
- * type %GIMP_TYPE_COLORV with g_object_class_install_property(), g_object_set()
- * and g_object_get().
+ * type %GIMP_TYPE_COLOR_ARRAY with g_object_class_install_property(),
+ * g_object_set() and g_object_get().
  *
  * ```C
  * g_object_class_install_property (object_class,
