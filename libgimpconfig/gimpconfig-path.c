@@ -213,10 +213,17 @@ static gchar        * gimp_config_path_unexpand_only (const gchar  *path) G_GNUC
 gchar *
 gimp_config_build_data_path (const gchar *name)
 {
-  return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name,
-                      G_SEARCHPATH_SEPARATOR_S,
-                      "${gimp_data_dir}", G_DIR_SEPARATOR_S, name,
-                      NULL);
+  if (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"))
+    /* Unit-testing mode: the source directory is where data is found. */
+    return g_strconcat (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
+                        G_DIR_SEPARATOR_S, "data",
+                        G_DIR_SEPARATOR_S, name,
+                        NULL);
+  else
+    return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name,
+                        G_SEARCHPATH_SEPARATOR_S,
+                        "${gimp_data_dir}", G_DIR_SEPARATOR_S, name,
+                        NULL);
 }
 
 /**

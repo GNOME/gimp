@@ -1840,6 +1840,9 @@ subdir('plug-ins')
 subdir('app')
 subdir('app-tools')
 
+# Unit testing
+subdir('libgimp/tests')
+
 # Docs
 subdir('docs')
 subdir('devel-docs')
