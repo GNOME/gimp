@@ -19,3 +19,14 @@ def gimp_assert(subtest_name, test):
                                                         subtest_name))
     sys.stderr.write("***** END FAILED SUBTEST ******\n\n")
   assert test
+
+def gimp_c_assert(c_filename, error_msg, test):
+  '''
+  This is called by the platform only, and print out the GError message from the
+  C test plug-in.
+  '''
+  if not test:
+    sys.stderr.write("\n**** START FAILED SUBTEST *****\n")
+    sys.stderr.write("ERROR: {}: {}\n".format(c_filename, error_msg))
+    sys.stderr.write("***** END FAILED SUBTEST ******\n\n")
+  assert test
