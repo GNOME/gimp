@@ -1424,7 +1424,7 @@ gimp_action_update_proxy_tooltip (GimpAction *action,
   const gchar       *help_id;
   const gchar       *reason         = NULL;
   gchar             *escaped_reason = NULL;
-  gchar             *markup;
+  gchar             *markup         = NULL;
 
   g_return_if_fail (GIMP_IS_ACTION (action));
 
@@ -1436,11 +1436,12 @@ gimp_action_update_proxy_tooltip (GimpAction *action,
   if (reason)
     escaped_reason = g_markup_escape_text (reason, -1);
 
-  markup = g_strdup_printf ("%s%s"                                   /* Action tooltip  */
-                            "<i><span weight='light'>%s</span></i>", /* Inactive reason */
-                            tooltip,
-                            escaped_reason && tooltip ? "\n" : "",
-                            escaped_reason ? escaped_reason : "");
+  if (tooltip || escaped_reason)
+    markup = g_strdup_printf ("%s%s"                                   /* Action tooltip  */
+                              "<i><span weight='light'>%s</span></i>", /* Inactive reason */
+                              tooltip ? tooltip : "",
+                              tooltip && escaped_reason ? "\n" : "",
+                              escaped_reason ? escaped_reason : "");
 
   /*  This hack makes sure we don't replace the tooltips of GimpButtons
    *  with extended callbacks (for Shift+Click etc.), because these
