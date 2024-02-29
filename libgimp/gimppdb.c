@@ -174,7 +174,8 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
 
   procedure = g_hash_table_lookup (pdb->priv->procedures, procedure_name);
 
-  if (! procedure)
+  if (! procedure && gimp_is_canonical_identifier (procedure_name) &&
+      gimp_pdb_procedure_exists (pdb, procedure_name))
     {
       procedure = _gimp_pdb_procedure_new (pdb, procedure_name);
 
