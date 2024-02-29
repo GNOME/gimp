@@ -372,12 +372,14 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
     "gimp-action-search-dialog",
     GIMP_HELP_ACTION_SEARCH_DIALOG },
 
+#ifndef GIMP_RELEASE
   { "dialogs-extensions", GIMP_ICON_PLUGIN,
     NC_("dialogs-action", "Manage _Extensions"), NULL,
     { NULL },
     NC_("dialogs-action", "Manage Extensions: search, install, uninstall, update."),
     "gimp-extensions-dialog",
     GIMP_HELP_EXTENSIONS_DIALOG }
+#endif
 };
 
 

@@ -128,7 +128,9 @@
           <attribute name="hidden-when">macos-menubar</attribute>
           <attribute name="action">app.dialogs-preferences</attribute>
         </item>
+        <!-- TODO: re-enable this when extensions are publicly released.
         <item><attribute name="action">app.dialogs-extensions</attribute></item>
+        -->
         <item>
           <attribute name="hidden-when">macos-menubar</attribute>
           <attribute name="action">app.dialogs-input-devices</attribute>
