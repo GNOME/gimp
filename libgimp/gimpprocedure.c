@@ -1934,14 +1934,16 @@ gimp_procedure_run_valist (GimpProcedure *procedure,
 
 /**
  * gimp_procedure_run_config: (rename-to gimp_procedure_run)
- * @procedure: the [class@gimp.Procedure] to run.
- * @config:    the @procedure's arguments.
+ * @procedure:          the [class@gimp.Procedure] to run.
+ * @config: (nullable): the @procedure's arguments.
  *
  * Runs @procedure, calling the run_func given in [ctor@Procedure.new].
  *
  * Create @config at default values with
  * [method@Gimp.Procedure.create_config] then set any argument you wish
  * to change from defaults with [method@GObject.Object.set].
+ *
+ * If @config is %NULL, the default arguments of @procedure will be used.
  *
  * Returns: (transfer full): The @procedure's return values.
  *
@@ -1953,10 +1955,17 @@ gimp_procedure_run_config (GimpProcedure       *procedure,
 {
   GimpValueArray *return_vals;
   GimpValueArray *args;
+  gboolean        free_config = FALSE;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
-  g_return_val_if_fail (gimp_procedure_config_get_procedure (config) == procedure, NULL);
+  g_return_val_if_fail (config == NULL || GIMP_IS_PROCEDURE_CONFIG (config), NULL);
+  g_return_val_if_fail (config == NULL || gimp_procedure_config_get_procedure (config) == procedure, NULL);
+
+  if (config == NULL)
+    {
+      config = gimp_procedure_create_config (procedure);
+      free_config = TRUE;
+    }
 
   args = gimp_procedure_new_arguments (procedure);
   _gimp_procedure_config_get_values (config, args);
@@ -1964,6 +1973,9 @@ gimp_procedure_run_config (GimpProcedure       *procedure,
   return_vals = _gimp_procedure_run_array (procedure, args);
 
   gimp_value_array_unref (args);
+
+  if (free_config)
+    g_object_unref (config);
 
   return return_vals;
 }
