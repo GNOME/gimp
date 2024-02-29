@@ -994,9 +994,9 @@ typedef enum
 /**
  * GimpRepeatMode:
  * @GIMP_REPEAT_NONE:       None (extend)
+ * @GIMP_REPEAT_TRUNCATE:   None (truncate)
  * @GIMP_REPEAT_SAWTOOTH:   Sawtooth wave
  * @GIMP_REPEAT_TRIANGULAR: Triangular wave
- * @GIMP_REPEAT_TRUNCATE:   Truncate
  *
  * Repeat modes for example for gradients.
  **/
@@ -1007,9 +1007,9 @@ GType gimp_repeat_mode_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_REPEAT_NONE,       /*< desc="None (extend)"   >*/
+  GIMP_REPEAT_TRUNCATE,   /*< desc="None (truncate)" >*/
   GIMP_REPEAT_SAWTOOTH,   /*< desc="Sawtooth wave"   >*/
-  GIMP_REPEAT_TRIANGULAR, /*< desc="Triangular wave" >*/
-  GIMP_REPEAT_TRUNCATE    /*< desc="Truncate"        >*/
+  GIMP_REPEAT_TRIANGULAR  /*< desc="Triangular wave" >*/
 } GimpRepeatMode;
 
 

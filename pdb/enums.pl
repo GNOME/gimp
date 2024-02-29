@@ -479,12 +479,12 @@ package Gimp::CodeGen::enums;
     GimpRepeatMode =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_REPEAT_NONE GIMP_REPEAT_SAWTOOTH
-			  GIMP_REPEAT_TRIANGULAR GIMP_REPEAT_TRUNCATE) ],
+	  symbols => [ qw(GIMP_REPEAT_NONE GIMP_REPEAT_TRUNCATE
+			  GIMP_REPEAT_SAWTOOTH GIMP_REPEAT_TRIANGULAR) ],
 	  mapping => { GIMP_REPEAT_NONE => '0',
-		       GIMP_REPEAT_SAWTOOTH => '1',
-		       GIMP_REPEAT_TRIANGULAR => '2',
-		       GIMP_REPEAT_TRUNCATE => '3' }
+		       GIMP_REPEAT_TRUNCATE => '1',
+		       GIMP_REPEAT_SAWTOOTH => '2',
+		       GIMP_REPEAT_TRIANGULAR => '3' }
 	},
     GimpRotationType =>
 	{ contig => 1,
