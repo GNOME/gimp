@@ -1,5 +1,7 @@
 ## gimp.ico ##
 
+build_gimp_ico = get_option('windows-installer')
+
 if build_gimp_ico
   gen_gimp_ico_conf = configuration_data()
   gen_gimp_ico_conf.set('PARENT_TOP_SRCDIR', meson.global_source_root())
@@ -19,11 +21,11 @@ if build_gimp_ico
     input : [ gen_gimp_ico_py ],
     depend_files: [ meson.global_source_root() / 'desktop/scalable/gimp.svg' ],
     output: [ 'gimp.ico', ],
-    # By having 'sh' first instead of gimp_exe, we prevent meson to check for
+    # By having 'sh' first instead of gimp_exe_name, we prevent meson to check for
     # the GIMP executable in PATH and fail before installation, since anyway
     # this target is a special-case which won't be built during the main build.
     command: [ 'sh', '-c',
-               gimp_exe + ' -nidfs --batch-interpreter python-fu-eval -b - --quit'],
+               gimp_exe_name + ' -nidfs --batch-interpreter python-fu-eval -b - --quit'],
     feed: true,
     build_by_default: false,
   )

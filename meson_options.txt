@@ -1,6 +1,0 @@
-option('gimp-datadir',      type: 'string',  value: '',    description: 'This must be set by GIMP')
-option('gimp-exe',          type: 'string',  value: '',    description: 'This must be set by GIMP')
-
-option('vector-icons',      type: 'boolean', value: true,  description: 'Use vector icons rather than raster ones', yield: true)
-option('windows-installer', type: 'boolean', value: false, description: 'Generate files needed for the Inno Windows installer', yield: true)
-option('ms-store',          type: 'boolean', value: false, description: 'Generate files needed for the Microsoft Store .msixupload', yield: true)
