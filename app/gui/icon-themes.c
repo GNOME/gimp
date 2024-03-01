@@ -255,8 +255,7 @@ icons_apply_theme (Gimp        *gimp,
       gchar *path;
 
       path = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
-                               "subprojects", "gimp-data", "icons",
-                               icon_theme_name, NULL);
+                               "gimp-data", "icons", icon_theme_name, NULL);
       file = g_file_new_for_path (path);
 
       applied = gimp_icons_set_icon_theme (file);

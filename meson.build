@@ -1827,16 +1827,8 @@ else
   gimp_exe_name=gimpmain_exe_name
 endif
 
-# Loading gimp-data subproject, the versions must be in sync.
-gimp_data = subproject('gimp-data', version: '=' + gimp_version,
-                       default_options: [
-                         'gimp-datadir=' + gimpdatadir,
-                         'gimp-exe='     + gimp_exe_name,
-                       ])
-icons_imgs_sources = gimp_data.get_variable('icons_imgs_sources')
-icons_core_sources = gimp_data.get_variable('icons_core_sources')
-cursors_sources    = gimp_data.get_variable('cursors_sources')
-pickers_sources    = gimp_data.get_variable('pickers_sources')
+# gimp-data submodule
+subdir('gimp-data')
 
 # Libraries (order here is important!)
 subdir('libgimpcolor')

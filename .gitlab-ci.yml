@@ -322,6 +322,7 @@ deps-debian-x64:
     - export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
     - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/local/share:/usr/share"
     - export GI_TYPELIB_PATH="${GIMP_PREFIX}/lib/`gcc -print-multiarch`/girepository-1.0/:${GI_TYPELIB_PATH}"
+    - git submodule update --init
   needs: ["deps-debian-x64"]
 
 gimp-debian-x64:
@@ -542,6 +543,7 @@ gimp-win-x64-cross:
     - apt-cache
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
+    - git submodule update --init
     - crossroad w64 gimp --run="build/windows/gitlab-ci/2_build-gimp-crossroad.sh"
   needs: ["deps-win-x64-cross"]
   artifacts:
@@ -641,6 +643,7 @@ gimp-win-x86-cross:
     - apt-cache
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
+    - git submodule update --init
     - crossroad w32 gimp --run="build/windows/gitlab-ci/2_build-gimp-crossroad.sh"
   needs: ["deps-win-x86-cross", "deps-win-x64-cross"]
   artifacts:
@@ -741,6 +744,7 @@ gimp-win-a64:
     - windows-aarch64
   before_script:
     # C:\msys64\usr\bin\pacman --noconfirm -Syyuu
+    - git submodule update --init
   script:
     - $stuck = Test-Path -Path "C:\msys64\var\lib\pacman\db.lck" -PathType Leaf
     - if ($stuck -eq "True") {
@@ -848,6 +852,7 @@ gimp-win-x64:
     - win32-ps
   before_script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
+    - git submodule update --init
   script:
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/2_build-gimp-msys2.sh"
   artifacts:
@@ -940,6 +945,7 @@ gimp-win-x86:
     - win32-ps
   before_script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
+    - git submodule update --init
   script:
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/2_build-gimp-msys2.sh"
   artifacts:
