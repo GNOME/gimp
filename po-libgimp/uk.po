@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-12 08:53+0000\n"
-"PO-Revision-Date: 2024-02-12 20:23+0200\n"
+"POT-Creation-Date: 2024-02-29 23:35+0000\n"
+"PO-Revision-Date: 2024-03-01 23:42+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -261,22 +261,22 @@ msgid "Allowed values:"
 msgstr "Дозволені значення:"
 
 #. procedure executed successfully
-#: libgimp/gimppdb.c:336
+#: libgimp/gimppdb.c:337
 msgid "success"
 msgstr "успішно"
 
 #. procedure execution failed
-#: libgimp/gimppdb.c:340
+#: libgimp/gimppdb.c:341
 msgid "execution error"
 msgstr "помилка при виконанні"
 
 #. procedure called incorrectly
-#: libgimp/gimppdb.c:344
+#: libgimp/gimppdb.c:345
 msgid "calling error"
 msgstr "помилка виклику"
 
 #. procedure execution cancelled
-#: libgimp/gimppdb.c:348
+#: libgimp/gimppdb.c:349
 msgid "cancelled"
 msgstr "скасовано"
 
@@ -370,12 +370,12 @@ msgstr[0] "%d процедура збігається із запитом"
 msgstr[1] "%d процедури збігають із запитом"
 msgstr[2] "%d процедур збігають із запитом"
 
-#: libgimp/gimpprocedure.c:2056
+#: libgimp/gimpprocedure.c:2068
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Процедура «%s» не повернула жодного значення"
 
-#: libgimp/gimpprocedure.c:2183
+#: libgimp/gimpprocedure.c:2195
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -384,7 +384,7 @@ msgstr ""
 "Процедура «%s» повернула некоректний тип значення для значення результату "
 "«%s» (#%d). Очікувався %s, отримано %s."
 
-#: libgimp/gimpprocedure.c:2195
+#: libgimp/gimpprocedure.c:2207
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
@@ -393,7 +393,7 @@ msgstr ""
 "Процедура «%s» викликана з деяким значенням аргументу «%s» (#%d). "
 "Очікувалось %s, отримано %s."
 
-#: libgimp/gimpprocedure.c:2230
+#: libgimp/gimpprocedure.c:2242
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -402,7 +402,7 @@ msgstr ""
 "Процедура «%s» повернула «%s» як значення «%s» (#%d, тип %s). Значення "
 "знаходиться поза межами припустимого діапазону"
 
-#: libgimp/gimpprocedure.c:2244
+#: libgimp/gimpprocedure.c:2256
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -411,12 +411,12 @@ msgstr ""
 "Процедура «%s» викликана із значенням «%s» аргументу «%s» (#%d, тип %s). "
 "Значення знаходиться поза межами допустимого діапазону."
 
-#: libgimp/gimpprocedure.c:2288
+#: libgimp/gimpprocedure.c:2300
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Процедура «%s» повернула некоректний рядок UTF-8 для аргументу «%s»"
 
-#: libgimp/gimpprocedure.c:2298
+#: libgimp/gimpprocedure.c:2310
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -1428,19 +1428,21 @@ msgid "None (extend)"
 msgstr "Немає (розширення)"
 
 #: libgimpbase/gimpbaseenums.c:1475
+#| msgctxt "repeat-mode"
+#| msgid "None (extend)"
+msgctxt "repeat-mode"
+msgid "None (truncate)"
+msgstr "Немає (обрізати)"
+
+#: libgimpbase/gimpbaseenums.c:1476
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Зубчата хвиля"
 
-#: libgimpbase/gimpbaseenums.c:1476
+#: libgimpbase/gimpbaseenums.c:1477
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Трикутна хвиля"
-
-#: libgimpbase/gimpbaseenums.c:1477
-msgctxt "repeat-mode"
-msgid "Truncate"
-msgstr "Обрізати"
 
 #: libgimpbase/gimpbaseenums.c:1539
 msgctxt "run-mode"
@@ -1997,22 +1999,22 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "значення для маркера %s не є коректним рядком UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:500
+#: libgimpconfig/gimpconfig-deserialize.c:501
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "очікувалось 'yes' або 'no' для булевого маркера %s, отримано '%s'"
 
-#: libgimpconfig/gimpconfig-deserialize.c:615
+#: libgimpconfig/gimpconfig-deserialize.c:616
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "неправильне значення '%s' для маркера %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:630
+#: libgimpconfig/gimpconfig-deserialize.c:631
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "неправильне значення '%ld' для маркера %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:699
+#: libgimpconfig/gimpconfig-deserialize.c:700
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "при синтаксичному розборі маркера '%s': %s"
@@ -2023,11 +2025,11 @@ msgstr "при синтаксичному розборі маркера '%s': %s
 msgid "fatal parse error"
 msgstr "критична помилка при синтаксичному розборі"
 
-#: libgimpconfig/gimpconfig-path.c:506
+#: libgimpconfig/gimpconfig-path.c:513
 msgid "File has no path representation"
 msgstr "Файл не має представлення у форматі шляху"
 
-#: libgimpconfig/gimpconfig-path.c:593
+#: libgimpconfig/gimpconfig-path.c:600
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Неможливо розширити ${%s}"
@@ -2188,7 +2190,6 @@ msgstr "Шкала"
 #: libgimpwidgets/gimpcolorselect.c:518 libgimpwidgets/gimpcolorselect.c:691
 #: modules/color-selector-water.c:206 modules/color-selector-water.c:242
 #: modules/color-selector-wheel.c:136 modules/color-selector-wheel.c:175
-#| msgid "Profile: %s"
 msgid "Profile: sRGB"
 msgstr "Профіль: sRGB"
 
@@ -2217,22 +2218,20 @@ msgstr "Профіль: %s"
 
 #: libgimpwidgets/gimpcolorscales.c:725 libgimpwidgets/gimpcolorselect.c:716
 #: modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
-#| msgid "Profile: (none)"
 msgid "Profile: <i>unknown</i>"
 msgstr "Профіль: <i>невідомий</i>"
 
-#: libgimpwidgets/gimpcolorselect.c:526 libgimpwidgets/gimpcolorselect.c:826
-#: libgimpwidgets/gimpcolorselect.c:843
+#: libgimpwidgets/gimpcolorselect.c:526 libgimpwidgets/gimpcolorselect.c:829
+#: libgimpwidgets/gimpcolorselect.c:846
 msgid "Soft-Proof Profile: <i>unknown</i>"
 msgstr "Профіль проби кольорів: <i>невідомий</i>"
 
-#: libgimpwidgets/gimpcolorselect.c:810
+#: libgimpwidgets/gimpcolorselect.c:813
 msgid "Soft-Proof Profile: sRGB"
 msgstr "Профіль проби кольорів: sRGB"
 
-#: libgimpwidgets/gimpcolorselect.c:817
+#: libgimpwidgets/gimpcolorselect.c:820
 #, c-format
-#| msgid "Profile: %s"
 msgid "Soft-Proof Profile: %s"
 msgstr "Профіль проби кольорів: %s"
 
@@ -3156,6 +3155,10 @@ msgstr "Цикли контрастності"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Контрастність"
+
+#~ msgctxt "repeat-mode"
+#~ msgid "Truncate"
+#~ msgstr "Обрізати"
 
 #~ msgid "Brush Selection"
 #~ msgstr "Вибір пензля"
