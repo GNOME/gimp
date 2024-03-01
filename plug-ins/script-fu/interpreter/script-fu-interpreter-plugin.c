@@ -24,6 +24,7 @@
 #include "config.h"
 #include <glib.h>
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>  /* gimp_ui_init */
 
 #include "libscriptfu/script-fu-intl.h"
 
@@ -102,7 +103,8 @@ script_fu_interpreter_class_init (ScriptFuInterpreterClass *klass)
 static void
 script_fu_interpreter_init (ScriptFuInterpreter *script_fu)
 {
-  /* Nothing to do. */
+  /* Init ui, gegl, babl.  Need gegl color in registration phase of plugin. */
+  gimp_ui_init ("script-fu-interpreter");
 }
 
 

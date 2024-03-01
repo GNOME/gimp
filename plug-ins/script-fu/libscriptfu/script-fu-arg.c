@@ -282,16 +282,14 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       break;
 
     case SF_COLOR:
-      /* Pass address of default color i.e. instance of GimpRGB.
-       * Color is owned by ScriptFu and exists for lifetime of SF process.
+      /* Setting the default by name.
+       *
+       * FIXME: use the default declared by name by script author.
        */
-      pspec = gimp_param_spec_rgb (name,
-                                   nick,
-                                   arg->label,
-                                   TRUE,  /* is alpha relevant */
-                                   &arg->default_value.sfa_color,
-                                   G_PARAM_READWRITE);
-      /* FUTURE: Default not now appear in PDB browser, but appears in widgets? */
+      /* G_PARAM_READWRITE instead of GIMP_PARAM_READWRITE, not equal. */
+      pspec = gegl_param_spec_color_from_string (name, nick, arg->label,
+                                                 "black", /* default */
+                                                 G_PARAM_READWRITE);
       break;
 
     case SF_TOGGLE:
@@ -464,13 +462,26 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
 
     case SF_COLOR:
       {
-        GimpRGB color;
-        guchar  r, g, b;
+        /* Since v3 PDB procedures traffic in GeglColor.
+         * But ScriptFu still represents as RGB uint8 in a list.
+         */
+        GeglColor *color;
 
-        gimp_value_get_rgb (gvalue, &color);
-        gimp_rgb_get_uchar (&color, &r, &g, &b);
-        g_string_append_printf (result_string, "'(%d %d %d)",
-                                (gint) r, (gint) g, (gint) b);
+        color = g_value_get_object (gvalue);
+        if (color)
+          {
+            guchar rgb[3] = { 0 };
+
+            gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
+            g_string_append_printf (result_string, "'(%d %d %d)",
+                                    (gint) rgb[0], (gint) rgb[1], (gint) rgb[2]);
+          }
+        else
+          {
+            gchar *msg = "Invalid color object in gvalue.";
+            g_warning ("%s", msg);
+            g_string_append_printf (result_string, "\"%s\"", msg);
+          }
       }
       break;
 

@@ -50,7 +50,11 @@ typedef struct
   gint   history;
 } SFEnum;
 
+/* Resources represented by proxy ID. */
 typedef gint32 SFResourceType;
+
+/* Color represented by GeglColor */
+typedef GeglColor SFColorType;
 
 typedef union
 {
@@ -60,7 +64,7 @@ typedef union
   gint32         sfa_channel;
   gint32         sfa_vectors;
   gint32         sfa_display;
-  GimpRGB        sfa_color;
+  SFColorType    sfa_color;
   gint32         sfa_toggle;
   gchar         *sfa_value;
   SFAdjustment   sfa_adjustment;
