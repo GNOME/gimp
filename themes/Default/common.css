@@ -440,6 +440,11 @@ checkbutton check:checked {
   color: @fg-color;
 }
 
+checkbutton check:disabled {
+  color: @disabled-fg-color;
+  background-color: @bg-color;
+}
+
 checkbutton:checked label, radiobutton:checked label {
   font-weight: bold;
 }
