@@ -420,6 +420,8 @@ about_dialog_add_update (GimpAboutDialog *dialog,
                                     "view-refresh",
                                     GTK_ICON_SIZE_MENU);
       gtk_label_set_text (GTK_LABEL (button_label), _("Check for updates"));
+      gtk_style_context_add_class (gtk_widget_get_style_context (button),
+                                   "text-button");
       g_signal_connect_swapped (button, "clicked",
                                 (GCallback) gimp_update_check, config);
 

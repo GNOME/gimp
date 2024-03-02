@@ -183,9 +183,9 @@ quit_close_all_dialog_new (Gimp     *gimp,
                                               "", GTK_RESPONSE_OK);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (private->dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   g_object_weak_ref (G_OBJECT (private->dialog),
                      (GWeakNotify) quit_close_all_dialog_free, private);
@@ -427,6 +427,8 @@ quit_close_all_dialog_container_changed (GimpContainer *images,
                     "use-stock", FALSE,
                     "image",     icon,
                     NULL);
+      gtk_style_context_add_class (gtk_widget_get_style_context (private->ok_button),
+                                   "text-button");
 
       gtk_dialog_set_default_response (GTK_DIALOG (private->dialog),
                                        GTK_RESPONSE_CANCEL);
