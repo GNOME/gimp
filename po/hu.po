@@ -10,16 +10,16 @@
 # Árpád Bíró <biro arpad at gmail dot com>, 2004, 2007, 2008.
 # Gábor Kelemen <kelemeng at gnome dot hu>, 2007, 2008, 2009, 2016.
 # Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
-# Balázs Meskó <mesko.balazs at fsf dot hu>, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
+# Balázs Meskó <mesko.balazs at fsf dot hu>, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 # Gabor Kelemen <kelemeng at ubuntu dot com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-19 19:36+0000\n"
-"PO-Revision-Date: 2024-02-22 01:48+0100\n"
-"Last-Translator: Balázs Úr <ur.balazs@fsf.hu>\n"
-"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"POT-Creation-Date: 2024-02-25 08:08+0000\n"
+"PO-Revision-Date: 2024-03-02 11:04+0100\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
+"Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1080,15 +1080,11 @@ msgid "Edit this color"
 msgstr "Szín szerkesztése"
 
 #: app/actions/colormap-actions.c:53
-#| msgctxt "palette-editor-action"
-#| msgid "_Delete Color"
 msgctxt "colormap-action"
 msgid "_Delete Color..."
 msgstr "Szín _törlése…"
 
 #: app/actions/colormap-actions.c:54
-#| msgctxt "colormap-action"
-#| msgid "_Select this Color"
 msgctxt "colormap-action"
 msgid "Delete this color"
 msgstr "A szín törlése"
@@ -2520,9 +2516,9 @@ msgstr "Adjon egy nevet a jelölőnek"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1213 app/dialogs/welcome-dialog.c:1263
-#: app/display/gimpdisplayshell-dnd.c:630 app/widgets/gimplayertreeview.c:813
-#: app/widgets/gimptoolbox.c:752 app/widgets/gimptoolbox-dnd.c:178
+#: app/dialogs/welcome-dialog.c:1234 app/display/gimpdisplayshell-dnd.c:630
+#: app/widgets/gimplayertreeview.c:813 app/widgets/gimptoolbox.c:752
+#: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3810,12 +3806,11 @@ msgstr ""
 "A vágólap tartalmának beillesztése egyetlen rétegként az eredeti helyén"
 
 #: app/actions/edit-actions.c:183
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste _Into Selection"
 msgctxt "edit-action"
 msgid "Paste as Floating Data _Into Selection"
-msgstr "Beillesztés a _kijelölésbe"
+msgstr "Beillesztés lebegő adatokként a _kijelölésbe"
 
 #: app/actions/edit-actions.c:185
 msgctxt "edit-action"
@@ -3823,12 +3818,11 @@ msgid "Paste the content of the clipboard into the current selection"
 msgstr "A vágólap tartalmának beillesztése a kijelölésbe"
 
 #: app/actions/edit-actions.c:190
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste Int_o Selection In Place"
 msgctxt "edit-action"
 msgid "Paste as Floating Data Int_o Selection In Place"
-msgstr "Helyben beillesztés a ki_jelölésbe"
+msgstr "Helyben beillesztés lebegő adatokként a ki_jelölésbe"
 
 #: app/actions/edit-actions.c:192
 msgctxt "edit-action"
@@ -3839,37 +3833,33 @@ msgstr ""
 "A vágólap tartalmának beillesztése a jelenlegi kijelölésbe az eredeti helyén"
 
 #: app/actions/edit-actions.c:198
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "_Paste as Single Layer"
 msgctxt "edit-action"
 msgid "Paste as _Floating Data"
-msgstr "Beillesztés _egyetlen rétegként"
+msgstr "Beillesztés _lebegő adatokként"
 
 #: app/actions/edit-actions.c:199
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste the content of the clipboard as a single layer"
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard as Floating Data"
-msgstr "A vágólap tartalmának beillesztése egyetlen rétegként"
+msgstr "A vágólap tartalmának beillesztése lebegő adatokként"
 
 #: app/actions/edit-actions.c:204
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste as Single Layer In P_lace"
 msgctxt "edit-action"
 msgid "Paste as Floa_ting Data In Place"
-msgstr "Beillesztés _helyben egyetlen rétegként"
+msgstr "Beillesztés helyben le_begő adatokként"
 
 #: app/actions/edit-actions.c:205
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste the content of the clipboard at its original position"
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard as Floating Data at its original position"
-msgstr "A vágólap tartalmának beillesztése az eredeti helyén"
+msgstr "A vágólap tartalmának beillesztése lebegő adatokként az eredeti helyén"
 
 #: app/actions/edit-actions.c:213
 msgctxt "edit-action"
@@ -4568,8 +4558,6 @@ msgid "_Edge..."
 msgstr "Szél_ek…"
 
 #: app/actions/filters-actions.c:281
-#| msgctxt "filters-action"
-#| msgid "_Laplace"
 msgctxt "filters-action"
 msgid "_Laplace..."
 msgstr "_Laplace…"
@@ -7558,34 +7546,30 @@ msgid "Invert the selection"
 msgstr "Kijelölés megfordítása"
 
 #: app/actions/select-actions.c:62
-#, fuzzy
 #| msgctxt "select-action"
 #| msgid "_Float"
 msgctxt "select-action"
 msgid "Cu_t and Float"
-msgstr "Le_begő"
+msgstr "Kivágás és le_begővé tétel"
 
 #: app/actions/select-actions.c:63
-#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste the selected buffer into the selection"
 msgctxt "select-action"
 msgid "Cut the selection directly into a floating selection"
-msgstr "A kijelölt tároló beillesztése a kijelölésbe"
+msgstr "A kijelölés kivágása közvetlenül lebegő kijelölésbe"
 
 #: app/actions/select-actions.c:68
-#, fuzzy
 #| msgid "Color and opacity:"
 msgctxt "select-action"
 msgid "_Copy and Float"
-msgstr "Szín és átlátszatlanság:"
+msgstr "_Másolás és lebegővé tétel"
 
 #: app/actions/select-actions.c:69
-#, fuzzy
 #| msgid "Cannot select items while a floating selection is active."
 msgctxt "select-action"
 msgid "Copy the selection directly into a floating selection"
-msgstr "Nem válaszhatók ki elemek, amíg egy lebegő kijelölés aktív."
+msgstr "A kiválasztás másolása közvetlenül lebegő kijelölésbe"
 
 #: app/actions/select-actions.c:74
 msgctxt "select-action"
@@ -7935,7 +7919,7 @@ msgstr "Szöveges fájl megnyitása (UTF-8)"
 
 #: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/vectors-import-dialog.c:93 app/dialogs/welcome-dialog.c:715
+#: app/dialogs/vectors-import-dialog.c:93 app/dialogs/welcome-dialog.c:714
 #: app/widgets/gimpiconpicker.c:489 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:716
 msgid "_Open"
@@ -9560,8 +9544,6 @@ msgid "Zoom in a lot"
 msgstr "Jelentős nagyítás"
 
 #: app/actions/view-actions.c:373
-#| msgctxt "view-zoom-action"
-#| msgid "1_6:1  (1600%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1 (1600%)"
 msgstr "16:1-es méretarány (1600%)"
@@ -9577,8 +9559,6 @@ msgid "Zoom 16:1"
 msgstr "Nagyítás beállítása 16:1 mértékre"
 
 #: app/actions/view-actions.c:381
-#| msgctxt "view-zoom-action"
-#| msgid "_8:1  (800%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1 (800%)"
 msgstr "8:1-es méretarány (800%)"
@@ -9594,8 +9574,6 @@ msgid "Zoom 8:1"
 msgstr "Nagyítás beállítása 8:1 mértékre"
 
 #: app/actions/view-actions.c:389
-#| msgctxt "view-zoom-action"
-#| msgid "_4:1  (400%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1 (400%)"
 msgstr "4:1-es méretarány (400%)"
@@ -9611,8 +9589,6 @@ msgid "Zoom 4:1"
 msgstr "Nagyítás beállítása 4:1 mértékre"
 
 #: app/actions/view-actions.c:397
-#| msgctxt "view-zoom-action"
-#| msgid "_2:1  (200%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1 (200%)"
 msgstr "2:1-es méretarány (200%)"
@@ -9628,8 +9604,6 @@ msgid "Zoom 2:1"
 msgstr "Nagyítás beállítása 2:1 mértékre"
 
 #: app/actions/view-actions.c:405
-#| msgctxt "view-zoom-action"
-#| msgid "_1:1  (100%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1 (100%)"
 msgstr "1:1-es méretarány (100%)"
@@ -9645,8 +9619,6 @@ msgid "Zoom 1:1"
 msgstr "Nagyítás beállítása 1:1 mértékre"
 
 #: app/actions/view-actions.c:413
-#| msgctxt "view-zoom-action"
-#| msgid "Zoom 1:2"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2 (50%)"
 msgstr "1:2-es méretarány (50%)"
@@ -9662,8 +9634,6 @@ msgid "Zoom 1:2"
 msgstr "Nagyítás beállítása 1:2 mértékre"
 
 #: app/actions/view-actions.c:421
-#| msgctxt "view-zoom-action"
-#| msgid "Zoom 1:4"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4 (25%)"
 msgstr "1:4-es méretarány (25%)"
@@ -9679,8 +9649,6 @@ msgid "Zoom 1:4"
 msgstr "Nagyítás beállítása 1:4 mértékre"
 
 #: app/actions/view-actions.c:429
-#| msgctxt "view-zoom-action"
-#| msgid "1:_8  (12.5%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8 (12.5%)"
 msgstr "1:8-as méretarány (12,5%)"
@@ -9696,8 +9664,6 @@ msgid "Zoom 1:8"
 msgstr "Nagyítás beállítása 1:8 mértékre"
 
 #: app/actions/view-actions.c:437
-#| msgctxt "view-zoom-action"
-#| msgid "1:1_6  (6.25%)"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16 (6.25%)"
 msgstr "1:16-os méretarány (6,25%)"
@@ -10035,11 +10001,10 @@ msgid "Move this window to screen %s"
 msgstr "Ezen ablak áthelyezése a(z) „%s” képernyőre"
 
 #: app/actions/window-commands.c:73
-#, fuzzy
 #| msgctxt "dock-action"
 #| msgid "_Open Display..."
 msgid "Open Display"
-msgstr "_Képernyő megnyitása…"
+msgstr "Képernyő megnyitása"
 
 #: app/actions/window-commands.c:78 app/dialogs/extensions-dialog.c:79
 #: app/dialogs/file-save-dialog.c:682 app/dialogs/grid-dialog.c:103
@@ -10065,18 +10030,19 @@ msgid ""
 "Experimental multi-display stuff!\n"
 "Click OK and have fun crashing GIMP..."
 msgstr ""
+"Kísérleti, több kijelzős dolgok!\n"
+"Kattintson az OK gombra, és élvezze a GIMP összeomlását…"
 
 #: app/actions/window-commands.c:92
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste the content of the clipboard"
 msgid "Please enter the name of the new display:"
-msgstr "A vágólap tartalmának beillesztése"
+msgstr "Adja meg az új kijelző nevét:"
 
 #: app/actions/window-commands.c:118
 #, c-format
 msgid "Can't open display '%s'. Please try another one:"
-msgstr ""
+msgstr "Nem nyitható meg a(z) „%s” kijelző. Próbálkozzon egy másikkal:"
 
 #: app/actions/windows-actions.c:102
 msgctxt "windows-action"
@@ -10403,8 +10369,6 @@ msgid "High"
 msgstr "Magas"
 
 #: app/config/config-enums.c:403
-#| msgctxt "layer-mode"
-#| msgid "LCh Color"
 msgctxt "theme-scheme"
 msgid "Light Colors"
 msgstr "Világos színek"
@@ -10415,8 +10379,6 @@ msgid "Middle Gray"
 msgstr "Középszürke"
 
 #: app/config/config-enums.c:405
-#| msgctxt "view-padding-color"
-#| msgid "_Dark Check Color"
 msgctxt "theme-scheme"
 msgid "Dark Colors"
 msgstr "Sötét színek"
@@ -10463,7 +10425,7 @@ msgstr "Réteg"
 
 #: app/config/gimpdialogconfig.c:418 app/core/gimpchannel.c:256
 #: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:124
-#: app/operations/gimpoperationthreshold.c:90
+#: app/operations/gimpoperationthreshold.c:93
 #: app/widgets/gimpchanneltreeview.c:332
 msgid "Channel"
 msgstr "Csatorna"
@@ -10474,16 +10436,14 @@ msgid "Path"
 msgstr "Útvonal"
 
 #: app/config/gimpdisplayconfig.c:144
-#, fuzzy
 #| msgid "Transparency"
 msgid "Transparency custom color 1"
-msgstr "Átlátszóság"
+msgstr "Átlátszóság 1. egyéni színe"
 
 #: app/config/gimpdisplayconfig.c:152
-#, fuzzy
 #| msgid "Transparency"
 msgid "Transparency custom color 2"
-msgstr "Átlátszóság"
+msgstr "Átlátszóság 2. egyéni színe"
 
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
@@ -10535,7 +10495,6 @@ msgid "Timestamp of the last update check."
 msgstr "A legutóbbi frissítés-ellenőrzés időbélyege."
 
 #: app/config/gimprc-blurbs.h:53
-#| msgid "The image '%s' has an embedded color profile"
 msgid "What to do when opening a file with an embedded ICC color profile."
 msgstr ""
 "Mi a teendő egy beágyazott ICC színprofilt tartalmazó fájl megnyitásakor."
@@ -10664,14 +10623,13 @@ msgstr ""
 "vonatkozik."
 
 #: app/config/gimprc-blurbs.h:185
-#, fuzzy
 #| msgid "When enabled, the selected pattern will be used for all tools."
 msgid ""
 "When enabled, the selected auto expand layer settings will be used for all "
 "tools."
 msgstr ""
-"Ha be van kapcsolva, akkor a kiválasztott minta az összes eszközre "
-"vonatkozik."
+"Ha be van kapcsolva, akkor a kiválasztott automatikusan bővülő réteg az "
+"összes eszközre vonatkozik."
 
 #: app/config/gimprc-blurbs.h:196
 msgid "Sets the browser used by the help system."
@@ -11209,7 +11167,7 @@ msgstr "A használandó téma neve."
 
 #: app/config/gimprc-blurbs.h:550
 msgid "Chooses the color scheme variant of the theme."
-msgstr ""
+msgstr "Kiválasztja a téma színsémaváltozatát."
 
 #: app/config/gimprc-blurbs.h:559
 msgid "Override theme-set icon sizes."
@@ -11630,6 +11588,8 @@ msgstr "Ha be van kapcsolva, akkor OpenCL-t használ néhány művelethez."
 #: app/config/gimprc-blurbs.h:788
 msgid "There's a tradeoff between speed and quality of the zoomed-out display."
 msgstr ""
+"A kicsinyített kijelző sebessége és minősége között kompromisszumot kell "
+"kötni."
 
 #: app/config/gimprc-blurbs.h:795
 msgid "When enabled, a search of actions will also return inactive actions."
@@ -12295,8 +12255,6 @@ msgstr "Rács"
 
 # TODO: shortcut valószínűleg ütközik
 #: app/core/core-enums.c:1310
-#| msgctxt "dialogs-action"
-#| msgid "Color_map Dialog"
 msgctxt "undo-type"
 msgid "Colormap remapping"
 msgstr "Színtérkép átállítása"
@@ -12657,28 +12615,25 @@ msgid "Select foreground"
 msgstr "Előtér kijelölése"
 
 #: app/core/core-enums.c:1399
-#, fuzzy
 #| msgctxt "paint-select-mode"
 #| msgid "Add to selection"
 msgctxt "undo-type"
 msgid "Add effect"
-msgstr "Hozzáadás a kijelöléshez"
+msgstr "Hatás hozzáadása"
 
 #: app/core/core-enums.c:1400
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Remove item"
 msgctxt "undo-type"
 msgid "Remove effect"
-msgstr "Elem eltávolítása"
+msgstr "Hatás eltávolítása"
 
 #: app/core/core-enums.c:1401
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Reorder item"
 msgctxt "undo-type"
 msgid "Reorder effect"
-msgstr "Elem átrendezése"
+msgstr "Hatás átrendezése"
 
 #: app/core/core-enums.c:1402
 msgctxt "undo-type"
@@ -12942,17 +12897,14 @@ msgid "FG to BG (RGB)"
 msgstr "Előtérből háttérbe (RGB)"
 
 #: app/core/gimp-gradients.c:83
-#| msgid "FG to BG (Hardedge)"
 msgid "FG to BG (Hard Edge)"
 msgstr "Előtérből háttérbe (éles határ)"
 
 #: app/core/gimp-gradients.c:91
-#| msgid "FG to BG (HSV counter-clockwise)"
 msgid "FG to BG (HSV Counter-Clockwise)"
 msgstr "Előtérből háttérbe (HSV óramutató járásával ellentétes)"
 
 #: app/core/gimp-gradients.c:99
-#| msgid "FG to BG (HSV clockwise hue)"
 msgid "FG to BG (HSV Clockwise Hue)"
 msgstr "Előtérből háttérbe (HSV óramutató járása szerinti árnyalat)"
 
@@ -12961,7 +12913,6 @@ msgid "FG to Transparent"
 msgstr "Előtérből átlátszóba"
 
 #: app/core/gimp-gradients.c:114
-#| msgid "FG to Transparent (Hardedge)"
 msgid "FG to Transparent (Hard Edge)"
 msgstr "Előtérből átlátszóba (éles határ)"
 
@@ -13641,17 +13592,15 @@ msgid "Render Stroke"
 msgstr "Körvonal megrajzolása"
 
 #: app/core/gimpdrawable-filters.c:160
-#, fuzzy
 #| msgid "Posterize levels"
 msgid "Rasterize filters"
-msgstr "Poszter szintjei"
+msgstr "Szűrők raszterizálása"
 
 #: app/core/gimpdrawable-filters.c:169
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Merge layers"
 msgid "Merge filter"
-msgstr "Rétegek összefésülése"
+msgstr "Szűrő összevonása"
 
 #: app/core/gimpdrawable-gradient.c:125 app/core/gimpdrawable-gradient.c:137
 #: app/tools/gimpgradienttool.c:1105
@@ -13955,10 +13904,10 @@ msgstr ""
 "A szövegrétegben lévő betűkészlet-információ formátuma megváltozott ebben: %s"
 
 #: app/core/gimpimage.c:2939
-#, fuzzy, c-format
+#, c-format
 #| msgid "Layer groups were added in %s"
 msgid "Layer effects were added in %s"
-msgstr "A rétegcsoportok ekkor kerültek hozzáadásra: %s"
+msgstr "A réteghatások ekkor kerültek hozzáadásra: %s"
 
 #: app/core/gimpimage.c:2962
 #, c-format
@@ -14177,26 +14126,24 @@ msgid "Add Color to Colormap"
 msgstr "Szín felvétele a színtérképbe"
 
 #: app/core/gimpimage-colormap.c:487
-#| msgctxt "undo-type"
-#| msgid "Change Colormap entry"
 msgctxt "undo-type"
 msgid "Delete Colormap entry"
 msgstr "Színtérkép-bejegyzés törlése"
 
-#: app/core/gimpimage-convert-indexed.c:799
+#: app/core/gimpimage-convert-indexed.c:855
 msgid "Cannot convert image: palette is empty."
 msgstr "A kép konvertálása nem lehetséges: a paletta üres."
 
-#: app/core/gimpimage-convert-indexed.c:811
+#: app/core/gimpimage-convert-indexed.c:867
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Kép konvertálása indexelt módba"
 
-#: app/core/gimpimage-convert-indexed.c:898
+#: app/core/gimpimage-convert-indexed.c:958
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Konvertálás indexelt színekre (2. fázis)"
 
-#: app/core/gimpimage-convert-indexed.c:947
+#: app/core/gimpimage-convert-indexed.c:1007
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Konvertálás indexelt színekre (3. fázis)"
 
@@ -14726,12 +14673,12 @@ msgstr ""
 "alapértelmezés szerinti érték lesz használva."
 
 #: app/core/gimppalette-load.c:203
-#, fuzzy, c-format
+#, c-format
 #| msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgid "Reading palette file '%s': red component out of range in line %d."
 msgstr ""
-"Hiba a(z) „%s” palettafájlban: az RGB érték kívül esik az engedélyezett "
-"tartományon a(z) %d. sorban."
+"Hiba a(z) „%s” palettafájlban: a vörös összetevő kívül esik a tartományon"
+" a(z) %d. sorban."
 
 #: app/core/gimppalette-load.c:211
 #, c-format
@@ -14740,12 +14687,12 @@ msgstr ""
 "Hiba a(z) „%s” palettafájlban: hiányzó vörös összetevő a(z) %d. sorban."
 
 #: app/core/gimppalette-load.c:220
-#, fuzzy, c-format
+#, c-format
 #| msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgid "Reading palette file '%s': green component out of range in line %d."
 msgstr ""
-"Hiba a(z) „%s” palettafájlban: az RGB érték kívül esik az engedélyezett "
-"tartományon a(z) %d. sorban."
+"Hiba a(z) „%s” palettafájlban: a zöld összetevő kívül esik a tartományon a(z)"
+" %d. sorban."
 
 #: app/core/gimppalette-load.c:228
 #, c-format
@@ -14753,12 +14700,12 @@ msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "Hiba a(z) „%s” palettafájlban: hiányzó zöld összetevő a(z) %d. sorban."
 
 #: app/core/gimppalette-load.c:237
-#, fuzzy, c-format
+#, c-format
 #| msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgid "Reading palette file '%s': blue component out of range in line %d."
 msgstr ""
-"Hiba a(z) „%s” palettafájlban: az RGB érték kívül esik az engedélyezett "
-"tartományon a(z) %d. sorban."
+"Hiba a(z) „%s” palettafájlban: a kék összetevő kívül esik a tartományon a(z) "
+"%d. sorban."
 
 #: app/core/gimppalette-load.c:245
 #, c-format
@@ -15990,7 +15937,7 @@ msgstr "Csak az aktív cs_oportokon belül fésüljön össze"
 msgid "_Discard invisible layers"
 msgstr "_Láthatatlan rétegek eldobása"
 
-#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:700
+#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:699
 msgid "Create a New Image"
 msgstr "Új kép létrehozása"
 
@@ -16023,7 +15970,7 @@ msgid "Image Properties"
 msgstr "Kép tulajdonságai"
 
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
-#: app/dialogs/welcome-dialog.c:188 app/tools/gimpcolorpickertool.c:351
+#: app/dialogs/welcome-dialog.c:187 app/tools/gimpcolorpickertool.c:351
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:746
 #: app/widgets/gimpcontrollerlist.c:625 app/widgets/gimpcriticaldialog.c:206
 #: app/widgets/gimpcriticaldialog.c:228 app/widgets/gimpsettingsbox.c:645
@@ -16410,10 +16357,10 @@ msgid "The selected source contains no colors."
 msgstr "A kijelölt forrásban nincsenek színek."
 
 #: app/dialogs/palette-import-dialog.c:452
-#, fuzzy, c-format
+#, c-format
 #| msgid "There is no palette to import."
 msgid "The palette was not imported: %s"
-msgstr "Nincs importálható paletta."
+msgstr "A paletta nem lett importálva: %s"
 
 #: app/dialogs/palette-import-dialog.c:464
 msgid "There is no palette to import."
@@ -16429,7 +16376,7 @@ msgstr ""
 "Valóban vissza kívánja állítani az összes beállítást az alapértelmezett "
 "értékekre?"
 
-#: app/dialogs/preferences-dialog.c:303 app/dialogs/welcome-dialog.c:355
+#: app/dialogs/preferences-dialog.c:303 app/dialogs/welcome-dialog.c:354
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr ""
 "A következő változtatások érvénybe léptetéséhez újra kell indítania a GIMP-"
@@ -16900,7 +16847,6 @@ msgstr "O_penCL használata"
 
 #. Very unstable tools
 #: app/dialogs/preferences-dialog.c:1577
-#| msgid "Experimental Playground"
 msgid "Experimental"
 msgstr "Kísérleti"
 
@@ -16970,10 +16916,9 @@ msgid "_Pattern"
 msgstr "Min_ta"
 
 #: app/dialogs/preferences-dialog.c:1675
-#, fuzzy
 #| msgid "Linked Layers"
 msgid "E_xpand Layers"
-msgstr "Láncolt rétegek"
+msgstr "Rétegek ki_bővítése"
 
 #. Move Tool
 #: app/dialogs/preferences-dialog.c:1679
@@ -17077,7 +17022,7 @@ msgstr "Öss_zes gyorsbillentyű törlése"
 
 #. Themes
 #: app/dialogs/preferences-dialog.c:1859 app/dialogs/preferences-dialog.c:1860
-#: app/dialogs/welcome-dialog.c:539
+#: app/dialogs/welcome-dialog.c:538
 msgid "Theme"
 msgstr "Téma"
 
@@ -17086,51 +17031,49 @@ msgid "Select Theme"
 msgstr "Téma kiválasztása"
 
 #: app/dialogs/preferences-dialog.c:1939
-#, fuzzy
 #| msgid "Use dark theme variant if available"
 msgid "Color scheme variant (if available)"
-msgstr "A sötét témaváltozat használata, ha az elérhető"
+msgstr "Sötét témaváltozat (ha elérhető)"
 
-#: app/dialogs/preferences-dialog.c:1944 app/dialogs/welcome-dialog.c:586
+#: app/dialogs/preferences-dialog.c:1944 app/dialogs/welcome-dialog.c:585
 msgid "_Override icon sizes set by the theme"
 msgstr "A téma által beállított ikonméretek _felülbírálása"
 
-#: app/dialogs/preferences-dialog.c:1957 app/dialogs/welcome-dialog.c:595
+#: app/dialogs/preferences-dialog.c:1957 app/dialogs/welcome-dialog.c:594
 msgid "Small"
 msgstr "Kicsi"
 
-#: app/dialogs/preferences-dialog.c:1959 app/dialogs/welcome-dialog.c:597
+#: app/dialogs/preferences-dialog.c:1959 app/dialogs/welcome-dialog.c:596
 msgid "Medium"
 msgstr "Közepes"
 
-#: app/dialogs/preferences-dialog.c:1961 app/dialogs/welcome-dialog.c:599
+#: app/dialogs/preferences-dialog.c:1961 app/dialogs/welcome-dialog.c:598
 msgid "Large"
 msgstr "Nagy"
 
-#: app/dialogs/preferences-dialog.c:1963 app/dialogs/welcome-dialog.c:601
+#: app/dialogs/preferences-dialog.c:1963 app/dialogs/welcome-dialog.c:600
 msgid "Huge"
 msgstr "Óriási"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:1976 app/dialogs/welcome-dialog.c:617
-#| msgid "Confirm Scaling"
+#: app/dialogs/preferences-dialog.c:1976 app/dialogs/welcome-dialog.c:616
 msgid "Font Scaling"
 msgstr "Betűk méretezése"
 
-#: app/dialogs/preferences-dialog.c:1978 app/dialogs/welcome-dialog.c:619
+#: app/dialogs/preferences-dialog.c:1978 app/dialogs/welcome-dialog.c:618
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr ""
 "A betűk méretezése nem fog működni az abszolút méreteket használó témákkal."
 
-#: app/dialogs/preferences-dialog.c:1984 app/dialogs/welcome-dialog.c:625
+#: app/dialogs/preferences-dialog.c:1984 app/dialogs/welcome-dialog.c:624
 msgid "50%"
 msgstr "50%"
 
-#: app/dialogs/preferences-dialog.c:1986 app/dialogs/welcome-dialog.c:627
+#: app/dialogs/preferences-dialog.c:1986 app/dialogs/welcome-dialog.c:626
 msgid "100%"
 msgstr "100%"
 
-#: app/dialogs/preferences-dialog.c:1988 app/dialogs/welcome-dialog.c:629
+#: app/dialogs/preferences-dialog.c:1988 app/dialogs/welcome-dialog.c:628
 msgid "200%"
 msgstr "200%"
 
@@ -17146,7 +17089,7 @@ msgstr "Ikontéma"
 msgid "Select an Icon Theme"
 msgstr "Ikontéma kiválasztása"
 
-#: app/dialogs/preferences-dialog.c:2133 app/dialogs/welcome-dialog.c:579
+#: app/dialogs/preferences-dialog.c:2133 app/dialogs/welcome-dialog.c:578
 msgid "Use symbolic icons if available"
 msgstr "Szimbolikus ikonok használata, ha azok elérhetőek"
 
@@ -17177,7 +17120,7 @@ msgstr "Aktív e_cset, minta és színátmenet megjelenítése"
 msgid "Show active _image"
 msgstr "Aktív ké_p megjelenítése"
 
-#: app/dialogs/preferences-dialog.c:2177 app/dialogs/welcome-dialog.c:676
+#: app/dialogs/preferences-dialog.c:2177 app/dialogs/welcome-dialog.c:675
 msgid "Use tool _groups"
 msgstr "Eszközcs_oportok használata"
 
@@ -18308,13 +18251,10 @@ msgid "_Stroke"
 msgstr "_Vonal"
 
 #: app/dialogs/stroke-dialog.c:174
-#| msgctxt "dash-preset"
-#| msgid "Line"
 msgid "Line"
 msgstr "Vonal"
 
 #: app/dialogs/stroke-dialog.c:198
-#| msgid "P_aint tool:"
 msgid "Paint tool"
 msgstr "Festőeszköz"
 
@@ -18356,7 +18296,7 @@ msgid "_Next Tip"
 msgstr "_Következő tipp"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1081
+#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1080
 msgid "Learn more"
 msgstr "További információ"
 
@@ -18435,58 +18375,49 @@ msgid "Lock path _visibility"
 msgstr "Útvonal _láthatóságának zárolása"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:182
+#: app/dialogs/welcome-dialog.c:181
 #, c-format
 msgid "Welcome to GIMP %s"
 msgstr "Üdvözli a GIMP %s"
 
-#: app/dialogs/welcome-dialog.c:227 app/dialogs/welcome-dialog.c:228
+#: app/dialogs/welcome-dialog.c:226 app/dialogs/welcome-dialog.c:227
 msgid "Welcome"
 msgstr "Üdvözlet"
 
-#: app/dialogs/welcome-dialog.c:239 app/dialogs/welcome-dialog.c:240
-#| msgctxt "undo-type"
-#| msgid "Pixelize"
+#: app/dialogs/welcome-dialog.c:238 app/dialogs/welcome-dialog.c:239
 msgid "Personalize"
 msgstr "Személyre szabás"
 
-#: app/dialogs/welcome-dialog.c:251 app/dialogs/welcome-dialog.c:252
-#| msgid "Contributing"
+#: app/dialogs/welcome-dialog.c:250 app/dialogs/welcome-dialog.c:251
 msgid "Contribute"
 msgstr "Közreműködés"
 
-#: app/dialogs/welcome-dialog.c:263 app/dialogs/welcome-dialog.c:264
-#| msgctxt "file-action"
-#| msgid "Crea_te"
+#: app/dialogs/welcome-dialog.c:262 app/dialogs/welcome-dialog.c:263
 msgid "Create"
 msgstr "Létrehozás"
 
-#: app/dialogs/welcome-dialog.c:279 app/dialogs/welcome-dialog.c:280
+#: app/dialogs/welcome-dialog.c:278 app/dialogs/welcome-dialog.c:279
 msgid "Release Notes"
 msgstr "Kiadási megjegyzések"
 
-#: app/dialogs/welcome-dialog.c:291
-#, fuzzy
+#: app/dialogs/welcome-dialog.c:290
 #| msgid ""
 #| "This welcome dialog is only shown at first launch. You can show it again "
 #| "from the \"Help\" menu."
 msgid ""
 "Show Welcome Dialog On Start (You can show it again from the \"Help\" menu)"
 msgstr ""
-"Ez az üdvözlő párbeszédablak csak az első indításkor jelenik meg. A „Súgó” "
-"menüből újra megjelenítheti."
+"Üdvözlő párbeszédablak megjelenítése indításkor (a „Súgó” menüből újra "
+"megjelenítheti)"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:416
+#: app/dialogs/welcome-dialog.c:415
 #, c-format
 msgid "You installed GIMP %s!"
 msgstr "A GIMP %s telepítésre került."
 
 #. Welcome message: left
-#: app/dialogs/welcome-dialog.c:431
-#| msgid ""
-#| "GIMP is a Free Software for image authoring and manipulation.\n"
-#| "Want to know more?"
+#: app/dialogs/welcome-dialog.c:430
 msgid ""
 "GIMP is Free Software for image authoring and manipulation.\n"
 "Want to know more?"
@@ -18494,25 +18425,22 @@ msgstr ""
 "A GIMP szabad szoftver képkészítéshez és -szerkesztéshez.\n"
 "Szeretne többet tudni?"
 
-#: app/dialogs/welcome-dialog.c:460
+#: app/dialogs/welcome-dialog.c:459
 msgid "GIMP website"
 msgstr "A GIMP weboldala"
 
-#: app/dialogs/welcome-dialog.c:464
+#: app/dialogs/welcome-dialog.c:463
 msgid "Tutorials"
 msgstr "Oktatóanyagok"
 
-#: app/dialogs/welcome-dialog.c:469
+#: app/dialogs/welcome-dialog.c:468
 msgid "Documentation"
 msgstr "Dokumentáció"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
 #. Welcome message: right
-#: app/dialogs/welcome-dialog.c:477
-#| msgid ""
-#| "GIMP is a Community Software under the GNU general public license v3.\n"
-#| "Want to contribute?"
+#: app/dialogs/welcome-dialog.c:476
 msgid ""
 "GIMP is Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
@@ -18520,130 +18448,121 @@ msgstr ""
 "A GIMP egy közösségi szoftver, GNU GPLv3 licenc alatt.\n"
 "Szeretne közreműködni?"
 
-#: app/dialogs/welcome-dialog.c:502
+#: app/dialogs/welcome-dialog.c:501
 msgid "Contributing"
 msgstr "Közreműködés"
 
-#: app/dialogs/welcome-dialog.c:507
+#: app/dialogs/welcome-dialog.c:506
 msgid "Donating"
 msgstr "Adományozás"
 
-#: app/dialogs/welcome-dialog.c:549
-#| msgid "Color space:"
+#: app/dialogs/welcome-dialog.c:548
 msgid "Color scheme"
 msgstr "Színséma"
 
-#: app/dialogs/welcome-dialog.c:566
-#| msgid "Icon Theme"
+#: app/dialogs/welcome-dialog.c:565
 msgid "Icon theme"
 msgstr "Ikontéma"
 
-#: app/dialogs/welcome-dialog.c:583
-#, fuzzy
+#: app/dialogs/welcome-dialog.c:582
 #| msgid "Confirm Scaling"
 msgid "Icon Scaling"
-msgstr "Átméretezés megerősítése"
+msgstr "Ikonok méretezése"
 
-#: app/dialogs/welcome-dialog.c:642
+#: app/dialogs/welcome-dialog.c:641
 msgid "GUI Language (requires restart)"
-msgstr ""
+msgstr "Felhasználói felület nyelve (újraindítást igényel)"
 
-#: app/dialogs/welcome-dialog.c:647
-#| msgid "Additional Input Controllers"
+#: app/dialogs/welcome-dialog.c:646
 msgid "Additional Customizations"
 msgstr "További személyre szabások"
 
-#: app/dialogs/welcome-dialog.c:656
-#, fuzzy
+#: app/dialogs/welcome-dialog.c:655
 #| msgid "Merge menu and title bar (client-side decoration)"
 msgid "Merge menu and title bar (requires restart)"
-msgstr "Menü és címsáv összevonása (kliens oldali dekoráció)"
+msgstr "Menü és címsáv összevonása (újraindítást igényel)"
 
-#: app/dialogs/welcome-dialog.c:664
-#, fuzzy
+#: app/dialogs/welcome-dialog.c:663
 #| msgid "Check for updates (requires internet)"
 msgid "Enable check for updates (requires internet)"
-msgstr "Frissítések keresése (internet szükséges)"
+msgstr "Frissítések keresésének engedélyezése (internetet igényel)"
 
-#: app/dialogs/welcome-dialog.c:703
+#: app/dialogs/welcome-dialog.c:702
 msgid "C_reate"
 msgstr "Lét_rehozás"
 
-#: app/dialogs/welcome-dialog.c:712
-#| msgctxt "export-file-type"
-#| msgid "OpenRaster Image"
+#: app/dialogs/welcome-dialog.c:711
 msgid "Open an Existing Image"
 msgstr "Meglévő kép megnyitása"
 
 #. Recent Files
-#: app/dialogs/welcome-dialog.c:724
-#| msgid "Revert Image"
+#: app/dialogs/welcome-dialog.c:723
 msgid "Recent Images"
 msgstr "Legutóbbi képek"
 
-#: app/dialogs/welcome-dialog.c:819
-#, fuzzy
+#: app/dialogs/welcome-dialog.c:818
 #| msgctxt "images-action"
 #| msgid "_Delete Image"
 msgid "O_pen Selected Images"
-msgstr "Kép _törlése"
+msgstr "Kiválasztott képek _megnyitása"
 
-#: app/dialogs/welcome-dialog.c:846
-#, fuzzy, c-format
+#: app/dialogs/welcome-dialog.c:845
+#, c-format
 #| msgid "Layer Attributes"
 msgid "Ways to contribute"
-msgstr "Réteg tulajdonságai"
+msgstr "Közreműködés módjai"
 
-#: app/dialogs/welcome-dialog.c:855
+#: app/dialogs/welcome-dialog.c:854
 msgid "Report Bugs"
-msgstr ""
+msgstr "Hibák jelentése"
 
-#: app/dialogs/welcome-dialog.c:857
+#: app/dialogs/welcome-dialog.c:856
 #, c-format
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
 "encounter is very important to the development."
 msgstr ""
+"Mint minden alkalmazás, a GIMP sem hibamentes, így a talált hibák jelentése "
+"nagyon fontos a fejlesztés szempontjából."
 
-#: app/dialogs/welcome-dialog.c:870
+#: app/dialogs/welcome-dialog.c:869
 msgid "Write Code"
-msgstr ""
+msgstr "Kód írása"
 
-#: app/dialogs/welcome-dialog.c:872
+#: app/dialogs/welcome-dialog.c:871
 #, c-format
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
 "contributor."
 msgstr ""
+"A fejlesztői weboldalunk az, ahol megismerkedhet azzal, hogyan működhet "
+"közre a forráskódban."
 
-#: app/dialogs/welcome-dialog.c:884
-#| msgctxt "undo-type"
-#| msgid "Translate Items"
+#: app/dialogs/welcome-dialog.c:883
 msgid "Translate"
 msgstr "Fordítás"
 
-#: app/dialogs/welcome-dialog.c:886
+#: app/dialogs/welcome-dialog.c:885
 #, c-format
 msgid "Contact the respective translation team for your language"
-msgstr ""
+msgstr "Lépjen kapcsolatba a nyelve fordítócsapatával"
 
-#: app/dialogs/welcome-dialog.c:898
-#| msgid "Donating"
+#: app/dialogs/welcome-dialog.c:897
 msgid "Donate"
 msgstr "Adományozás"
 
-#: app/dialogs/welcome-dialog.c:900
+#: app/dialogs/welcome-dialog.c:899
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
-msgstr ""
+msgstr "Az adományozás fontos: ez teszi fenntarthatóvá a GIMP-et."
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:945
+#: app/dialogs/welcome-dialog.c:944
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "A GIMP %s kiadási megjegyzései"
 
-#: app/dialogs/welcome-dialog.c:1056
+#: app/dialogs/welcome-dialog.c:1055
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr ""
@@ -19081,8 +19000,6 @@ msgstr "_Egyéb (%s)…"
 
 #: app/display/gimpdisplayshell-scale-dialog.c:250
 #, c-format
-#| msgctxt "view-padding-color"
-#| msgid "_Custom Color..."
 msgid "Custom Zoom (%s)..."
 msgstr "Egyéni nagyítás (%s)…"
 
@@ -20542,11 +20459,11 @@ msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr ""
 "A képpontok elmozdítása, igény esetén a kereteknél átgördítés a másik oldalra"
 
-#: app/operations/gimpoperationposterize.c:83
+#: app/operations/gimpoperationposterize.c:85
 msgid "Reduce to a limited set of colors"
 msgstr "Színek számának csökkentése egy korlátozott mennyiségre"
 
-#: app/operations/gimpoperationposterize.c:88
+#: app/operations/gimpoperationposterize.c:90
 msgid "Posterize levels"
 msgstr "Poszter szintjei"
 
@@ -20569,15 +20486,15 @@ msgstr "Vágás"
 msgid "How to clip"
 msgstr "Levágás módja"
 
-#: app/operations/gimpoperationthreshold.c:85 app/tools/gimpthresholdtool.c:94
+#: app/operations/gimpoperationthreshold.c:88 app/tools/gimpthresholdtool.c:94
 msgid "Reduce image to two colors using a threshold"
 msgstr "Kép színeinek kettőre csökkentése egy küszöb használatával"
 
-#: app/operations/gimpoperationthreshold.c:98
+#: app/operations/gimpoperationthreshold.c:101
 msgid "Low threshold"
 msgstr "Alacsony küszöbszint"
 
-#: app/operations/gimpoperationthreshold.c:105
+#: app/operations/gimpoperationthreshold.c:108
 msgid "High threshold"
 msgstr "Magas küszöbszint"
 
@@ -20647,6 +20564,8 @@ msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, "
 "gimp-light.css nor gimp.css."
 msgstr ""
+"Érvénytelen téma: a(z) „%s” könyvtár nem tartalmazza a következők egyikét "
+"sem: gimp-dark.css, gimp-gray.css, gimp-light.css vagy gimp.css."
 
 #: app/menus/shortcuts-rc.c:137
 #, c-format
@@ -20911,16 +20830,14 @@ msgid "Scatter brush as you paint"
 msgstr "Az ecset szétszórása festés közben"
 
 #: app/paint/gimppaintoptions.c:319
-#, fuzzy
 #| msgid "Linked Layers"
 msgid "Expand Layers"
-msgstr "Láncolt rétegek"
+msgstr "Rétegek kibővítése"
 
 #: app/paint/gimppaintoptions.c:320
-#, fuzzy
 #| msgid "Scatter brush as you paint"
 msgid "Expand active layer as you paint"
-msgstr "Az ecset szétszórása festés közben"
+msgstr "Az aktív réteg kibővítése festés közben"
 
 #: app/paint/gimppaintoptions.c:326 app/paint/gimppaintoptions.c:356
 msgid "Amount"
@@ -20928,24 +20845,21 @@ msgstr "Mérték"
 
 #: app/paint/gimppaintoptions.c:327
 msgid "Amount of expansion"
-msgstr ""
+msgstr "Bővítés mértéke"
 
 #: app/paint/gimppaintoptions.c:334
-#| msgid "Fill with"
 msgid "Fill layer with"
 msgstr "Réteg kitöltése ezzel"
 
 #: app/paint/gimppaintoptions.c:341
-#| msgid "Fill With"
 msgid "Fill Mask With"
 msgstr "Maszk kitöltése ezzel"
 
 #: app/paint/gimppaintoptions.c:342
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Apply layer mask"
 msgid "Fill layer mask with"
-msgstr "Rétegmaszk alkalmazása"
+msgstr "Rétegmaszk kitöltése ezzel"
 
 #: app/paint/gimppaintoptions.c:349
 msgid "Enable dynamics"
@@ -22677,7 +22591,7 @@ msgstr ""
 "Lehetséges, hogy bizonyos szövegtulajdonságok helytelenek. Ha nem kívánja "
 "szerkeszteni a szövegréteget, akkor a problémát figyelmen kívül hagyhatja."
 
-#: app/text/gimptextlayout.c:703
+#: app/text/gimptextlayout.c:699
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -23710,7 +23624,6 @@ msgid "%s: switch horizontal and vertical"
 msgstr "%s: a vízszintes és a függőleges felcserélése"
 
 #: app/tools/gimpfiltertool.c:1170
-#| msgid "filter"
 msgid "Add filter"
 msgstr "Szűrő hozzáadása"
 
@@ -23725,8 +23638,6 @@ msgid "Advanced Color Options"
 msgstr "Speciális színbeállítások"
 
 #: app/tools/gimpfiltertool.c:1387
-#| msgctxt "palettes-action"
-#| msgid "_Edit Palette..."
 msgid "Editing filter..."
 msgstr "Szűrő szerkesztése…"
 
@@ -24263,11 +24174,10 @@ msgstr "Érzékenység"
 
 #: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:98
 #: app/tools/gimppaintoptions-gui.c:530
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Disable Layer Mask"
 msgid "Fill Layer Mask With"
-msgstr "Rétegmaszk kikapcsolása"
+msgstr "Rétegmaszk kitöltése ezzel:"
 
 #: app/tools/gimpinktool.c:72
 msgid "Ink Tool: Calligraphy-style painting"
@@ -26293,7 +26203,6 @@ msgstr "_Keresés:"
 
 #: app/widgets/gimpactiongroup.c:1200
 #, c-format
-#| msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgid "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 
@@ -26424,35 +26333,35 @@ msgid "n/a"
 msgstr "ismeretlen"
 
 #. TRANSLATORS: V for Value (grayscale)
-#: app/widgets/gimpcolorframe.c:792 app/widgets/gimpcolorframe.c:946
+#: app/widgets/gimpcolorframe.c:792 app/widgets/gimpcolorframe.c:938
 msgctxt "Grayscale"
 msgid "V:"
 msgstr "V:"
 
 #. TRANSLATORS: A for Alpha (color transparency)
 #: app/widgets/gimpcolorframe.c:796 app/widgets/gimpcolorframe.c:809
-#: app/widgets/gimpcolorframe.c:877 app/widgets/gimpcolorframe.c:950
-#: app/widgets/gimpcolorframe.c:1003 app/widgets/gimpcolorframe.c:1030
-#: app/widgets/gimpcolorframe.c:1058 app/widgets/gimpcolorframe.c:1086
-#: app/widgets/gimpcolorframe.c:1113 app/widgets/gimpcolorframe.c:1160
+#: app/widgets/gimpcolorframe.c:873 app/widgets/gimpcolorframe.c:942
+#: app/widgets/gimpcolorframe.c:995 app/widgets/gimpcolorframe.c:1022
+#: app/widgets/gimpcolorframe.c:1050 app/widgets/gimpcolorframe.c:1078
+#: app/widgets/gimpcolorframe.c:1105 app/widgets/gimpcolorframe.c:1152
 msgctxt "Alpha channel"
 msgid "A:"
 msgstr "A:"
 
 #. TRANSLATORS: R for Red (RGB)
-#: app/widgets/gimpcolorframe.c:801 app/widgets/gimpcolorframe.c:869
+#: app/widgets/gimpcolorframe.c:801 app/widgets/gimpcolorframe.c:865
 msgctxt "RGB"
 msgid "R:"
 msgstr "R:"
 
 #. TRANSLATORS: G for Green (RGB)
-#: app/widgets/gimpcolorframe.c:803 app/widgets/gimpcolorframe.c:871
+#: app/widgets/gimpcolorframe.c:803 app/widgets/gimpcolorframe.c:867
 msgctxt "RGB"
 msgid "G:"
 msgstr "G:"
 
 #. TRANSLATORS: B for Blue (RGB)
-#: app/widgets/gimpcolorframe.c:805 app/widgets/gimpcolorframe.c:873
+#: app/widgets/gimpcolorframe.c:805 app/widgets/gimpcolorframe.c:869
 msgctxt "RGB"
 msgid "B:"
 msgstr "B:"
@@ -26463,147 +26372,147 @@ msgctxt "Indexed color"
 msgid "Index:"
 msgstr "Index:"
 
-#: app/widgets/gimpcolorframe.c:846 app/widgets/gimpcolorframe.c:883
-#: app/widgets/gimpcolorframe.c:953 app/widgets/gimpcolorframe.c:1162
+#: app/widgets/gimpcolorframe.c:846 app/widgets/gimpcolorframe.c:879
+#: app/widgets/gimpcolorframe.c:945 app/widgets/gimpcolorframe.c:1154
 msgctxt "Color"
 msgid "Profile:"
 msgstr "Profil:"
 
 #: app/widgets/gimpcolorframe.c:853 app/widgets/gimpcolorframe.c:854
-#: app/widgets/gimpcolorframe.c:931 app/widgets/gimpcolorframe.c:932
-#: app/widgets/gimpcolorframe.c:987 app/widgets/gimpcolorframe.c:988
-#: app/widgets/gimpcolorframe.c:1187 app/widgets/gimpcolorframe.c:1188
+#: app/widgets/gimpcolorframe.c:927 app/widgets/gimpcolorframe.c:928
+#: app/widgets/gimpcolorframe.c:979 app/widgets/gimpcolorframe.c:980
+#: app/widgets/gimpcolorframe.c:1179 app/widgets/gimpcolorframe.c:1180
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. TRANSLATORS: Hex for Hexadecimal (representation of a color)
-#: app/widgets/gimpcolorframe.c:880
+#: app/widgets/gimpcolorframe.c:876
 msgctxt "Color representation"
 msgid "Hex:"
 msgstr "Hexa:"
 
-#: app/widgets/gimpcolorframe.c:885 app/widgets/gimpcolorframe.c:955
-#: app/widgets/gimpcolorframe.c:1164
+#: app/widgets/gimpcolorframe.c:881 app/widgets/gimpcolorframe.c:947
+#: app/widgets/gimpcolorframe.c:1156
 msgctxt "Color"
 msgid "No Profile"
 msgstr "Nincs profil"
 
 #. TRANSLATORS: H for Hue (HSV color space)
-#: app/widgets/gimpcolorframe.c:995
+#: app/widgets/gimpcolorframe.c:987
 msgctxt "HSV color space"
 msgid "H:"
 msgstr "H:"
 
 #. TRANSLATORS: S for Saturation (HSV color space)
-#: app/widgets/gimpcolorframe.c:997
+#: app/widgets/gimpcolorframe.c:989
 msgctxt "HSV color space"
 msgid "S:"
 msgstr "S:"
 
 #. TRANSLATORS: V for Value (HSV color space)
-#: app/widgets/gimpcolorframe.c:999
+#: app/widgets/gimpcolorframe.c:991
 msgctxt "HSV color space"
 msgid "V:"
 msgstr "V:"
 
 #. TRANSLATORS: L for Lightness (LCH color space)
-#: app/widgets/gimpcolorframe.c:1022
+#: app/widgets/gimpcolorframe.c:1014
 msgctxt "LCH color space"
 msgid "L*:"
 msgstr "L*:"
 
 #. TRANSLATORS: C for Chroma (LCH color space)
-#: app/widgets/gimpcolorframe.c:1024
+#: app/widgets/gimpcolorframe.c:1016
 msgctxt "LCH color space"
 msgid "C*:"
 msgstr "C*:"
 
 #. TRANSLATORS: H for Hue angle (LCH color space)
-#: app/widgets/gimpcolorframe.c:1026
+#: app/widgets/gimpcolorframe.c:1018
 msgctxt "LCH color space"
 msgid "h°:"
 msgstr "h°:"
 
 #. TRANSLATORS: L* for Lightness (Lab color space)
-#: app/widgets/gimpcolorframe.c:1050
+#: app/widgets/gimpcolorframe.c:1042
 msgctxt "Lab color space"
 msgid "L*:"
 msgstr "L*:"
 
 #. TRANSLATORS: a* color channel in Lab color space
-#: app/widgets/gimpcolorframe.c:1052
+#: app/widgets/gimpcolorframe.c:1044
 msgctxt "Lab color space"
 msgid "a*:"
 msgstr "a*:"
 
 #. TRANSLATORS: b* color channel in Lab color space
-#: app/widgets/gimpcolorframe.c:1054
+#: app/widgets/gimpcolorframe.c:1046
 msgctxt "Lab color space"
 msgid "b*:"
 msgstr "b*:"
 
 #. TRANSLATORS: x from xyY color space
-#: app/widgets/gimpcolorframe.c:1078
+#: app/widgets/gimpcolorframe.c:1070
 msgctxt "xyY color space"
 msgid "x:"
 msgstr "x:"
 
 #. TRANSLATORS: y from xyY color space
-#: app/widgets/gimpcolorframe.c:1080
+#: app/widgets/gimpcolorframe.c:1072
 msgctxt "xyY color space"
 msgid "y:"
 msgstr "y:"
 
 #. TRANSLATORS: Y from xyY color space
-#: app/widgets/gimpcolorframe.c:1082
+#: app/widgets/gimpcolorframe.c:1074
 msgctxt "xyY color space"
 msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: Y from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1105
+#: app/widgets/gimpcolorframe.c:1097
 msgctxt "Yu'v' color space"
 msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: u' from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1107
+#: app/widgets/gimpcolorframe.c:1099
 msgctxt "Yu'v' color space"
 msgid "u':"
 msgstr "u':"
 
 #. TRANSLATORS: v' from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1109
+#: app/widgets/gimpcolorframe.c:1101
 msgctxt "Yu'v' color space"
 msgid "v':"
 msgstr "v':"
 
 #. TRANSLATORS: C for Cyan (CMYK)
-#: app/widgets/gimpcolorframe.c:1151
+#: app/widgets/gimpcolorframe.c:1143
 msgctxt "CMYK"
 msgid "C:"
 msgstr "C:"
 
 #. TRANSLATORS: M for Magenta (CMYK)
-#: app/widgets/gimpcolorframe.c:1153
+#: app/widgets/gimpcolorframe.c:1145
 msgctxt "CMYK"
 msgid "M:"
 msgstr "M:"
 
 #. TRANSLATORS: Y for Yellow (CMYK)
-#: app/widgets/gimpcolorframe.c:1155
+#: app/widgets/gimpcolorframe.c:1147
 msgctxt "CMYK"
 msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: K for Key/black (CMYK)
-#: app/widgets/gimpcolorframe.c:1157
+#: app/widgets/gimpcolorframe.c:1149
 msgctxt "CMYK"
 msgid "K:"
 msgstr "K:"
 
-#: app/widgets/gimpcolorframe.c:1205
+#: app/widgets/gimpcolorframe.c:1197
 msgctxt "Color value"
 msgid "n/a"
 msgstr "ismeretlen"
@@ -26618,8 +26527,6 @@ msgid "Edit Colormap Entry"
 msgstr "Színtérképbejegyzés szerkesztése"
 
 #: app/widgets/gimpcolormapeditor.c:468
-#| msgctxt "image-action"
-#| msgid "Set a color profile on the image"
 msgid "The color is used in this indexed image"
 msgstr "Ezt a színt használja ez az indexelt kép"
 
@@ -26628,10 +26535,9 @@ msgid "Color index:"
 msgstr "Színindex:"
 
 #: app/widgets/gimpcolormapselection.c:248
-#, fuzzy
 #| msgid "HTML notation:"
 msgid "HTML notation (sRGB):"
-msgstr "HTML-jelölés:"
+msgstr "HTML-jelölés (sRBG):"
 
 #: app/widgets/gimpcolormapselection.c:517
 msgid "Only indexed images have a colormap."
@@ -27490,11 +27396,10 @@ msgid "Pressure curve"
 msgstr "Nyomásgörbe"
 
 #: app/widgets/gimpdeviceinfo.c:261
-#, fuzzy
 #| msgctxt "space-bar-action"
 #| msgid "No action"
 msgid "Pad actions"
-msgstr "Nincs művelet"
+msgstr "Táblaműveletek"
 
 #: app/widgets/gimpdeviceinfo.c:1133 app/widgets/gimpdeviceinfo.c:1158
 msgid "(Device not present)"
@@ -27555,20 +27460,18 @@ msgid "The axis '%s' has no curve"
 msgstr "A(z) „%s” tengelyhez nem tartozik görbe"
 
 #: app/widgets/gimpdeviceinfoeditor.c:546
-#, fuzzy
 #| msgid "Search Actions"
 msgid "Pad Actions"
-msgstr "Keresési műveletek"
+msgstr "Táblaműveletek"
 
 #: app/widgets/gimpdeviceinfoeditor.c:633
-#, fuzzy
 #| msgid "Select the next event arriving from the controller"
 msgid "Select the next event arriving from the pad"
-msgstr "A vezérlőtől érkező következő esemény kijelölése"
+msgstr "A táblától érkező következő esemény kijelölése"
 
 #: app/widgets/gimpdeviceinfoeditor.c:677
 msgid "Pad Actions are not supported on your platform yet"
-msgstr ""
+msgstr "A táblaműveletek még nem támogatottak a platformján"
 
 #: app/widgets/gimpdeviceinfoeditor.c:900
 #, c-format
@@ -27578,45 +27481,42 @@ msgstr "%d. gomb"
 #: app/widgets/gimpdeviceinfoeditor.c:903
 #, c-format
 msgid "Ring %d"
-msgstr ""
+msgstr "%d. gyűrű"
 
 #: app/widgets/gimpdeviceinfoeditor.c:906
-#, fuzzy, c-format
+#, c-format
 #| msgid "Stop %d"
 msgid "Strip %d"
-msgstr "%d. megállás"
+msgstr "%d. szalag"
 
 #: app/widgets/gimpdeviceinfoeditor.c:1152
-#, fuzzy
 #| msgid "Select Controller Event Action"
 msgid "Select Pad Event Action"
-msgstr "Jelölje ki a vezérlő eseményéhez tartozó műveletet"
+msgstr "Jelölje ki a táblaeseményéhez tartozó műveletet"
 
 #: app/widgets/gimpdevicestatus.c:161
 msgid "Save device status"
 msgstr "Eszközállapot mentése"
 
 #: app/widgets/gimpdevicestatus.c:629
-#, fuzzy, c-format
+#, c-format
 #| msgid "Foreground: %d, %d, %d"
 msgid "Foreground: %d, %d, %d (in color space of \"%s\")"
-msgstr "Előtér: %d, %d, %d"
+msgstr "Előtér: %d, %d, %d („%s” színtérben)"
 
 #: app/widgets/gimpdevicestatus.c:633
 #, c-format
-#| msgid "Foreground: %d, %d, %d"
 msgid "Foreground: %d, %d, %d (in sRGB)"
 msgstr "Előtér: %d, %d, %d (sRGB-ben)"
 
 #: app/widgets/gimpdevicestatus.c:640
-#, fuzzy, c-format
+#, c-format
 #| msgid "Background: %d, %d, %d"
 msgid "Background: %d, %d, %d (in color space of \"%s\")"
-msgstr "Háttér: %d, %d, %d"
+msgstr "Háttér: %d, %d, %d („%s” színtérben)"
 
 #: app/widgets/gimpdevicestatus.c:644
 #, c-format
-#| msgid "Background: %d, %d, %d"
 msgid "Background: %d, %d, %d (in sRGB)"
 msgstr "Háttér: %d, %d, %d (sRGB-ben)"
 
@@ -27824,7 +27724,6 @@ msgstr "Pozíció: %0.4f"
 #.
 #: app/widgets/gimpgradienteditor.c:1335
 #, c-format
-#| msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgid "sRGB (%0.3f, %0.3f, %0.3f)"
 msgstr "sRGB (%0.3f, %0.3f, %0.3f)"
 
@@ -27840,7 +27739,6 @@ msgstr "Fényesség: %0.1f    Átlátszatlanság: %0.1f"
 
 #: app/widgets/gimpgradienteditor.c:1374
 #, c-format
-#| msgid "RGB (%d, %d, %d)"
 msgid "sRGB (%d, %d, %d)"
 msgstr "sRGB (%d, %d, %d)"
 
@@ -28128,76 +28026,63 @@ msgid "Set Item Exclusive Visibility Lock"
 msgstr "Elem láthatóságának zárolása kizárólagos módon"
 
 #: app/widgets/gimpitemtreeview.c:764
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Toggle Path _Visibility"
 msgid "Toggle the visibility of all filters."
-msgstr "Útvonal _láthatósága be/ki"
+msgstr "Az összes szűrő láthatósága be/ki."
 
 #: app/widgets/gimpitemtreeview.c:778
-#, fuzzy
 #| msgid "Move the selected filter up"
 msgid "Edit the selected filter."
-msgstr "A kijelölt szűrő feljebb helyezése"
+msgstr "A kijelölt szűrő szerkesztése."
 
 #: app/widgets/gimpitemtreeview.c:791
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Raise this layer one step in the layer stack"
 msgid "Raise filter one step up in the stack."
-msgstr "Ezen réteg eggyel feljebb helyezése a rétegek struktúrájában"
+msgstr "A réteg egy hellyel feljebb helyezése."
 
 #: app/widgets/gimpitemtreeview.c:804
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Lower this layer one step in the layer stack"
 msgid "Lower filter one step down in the stack."
-msgstr "Ezen réteg eggyel lejjebb helyezése a rétegek struktúrájában"
+msgstr "A réteg egy hellyel lejjebb helyezése."
 
 #: app/widgets/gimpitemtreeview.c:817
-#, fuzzy
 #| msgid "Move the selected filter down"
 msgid "Merge all active filters down."
-msgstr "A kijelölt szűrő lejjebb helyezése"
+msgstr "Az összes aktív szűrő egyesítése lefelé."
 
 #: app/widgets/gimpitemtreeview.c:830
-#| msgid "Move the selected filter up"
 msgid "Remove the selected filter."
 msgstr "A kijelölt szűrő eltávolítása."
 
 #: app/widgets/gimpitemtreeview.c:841
-#, fuzzy
 #| msgid "Layer Select"
 msgid "Layer Effects"
-msgstr "Réteg kijelölése"
+msgstr "Réteghatások"
 
 #: app/widgets/gimpitemtreeview.c:872
-#, fuzzy
 #| msgid "Select layers by patterns and store layer sets"
 msgid "Select items by patterns and store item sets"
-msgstr "Rétegek kijelölése minták alapján, és rétegkészletek tárolása"
+msgstr "Elemek kijelölése minták alapján, és elemkészletek tárolása"
 
 #: app/widgets/gimpitemtreeview.c:1721
 #, c-format
-#| msgid "No filter selected"
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "%d elem kijelölve"
 msgstr[1] "%d elem kijelölve"
 
 #: app/widgets/gimpitemtreeview.c:2640 app/widgets/gimpitemtreeview.c:2685
-#| msgctxt "undo-type"
-#| msgid "Reorder item"
 msgid "Reorder filter"
 msgstr "Szűrő átrendezése"
 
 #: app/widgets/gimpitemtreeview.c:2730
 msgid "Effects from active tools can not be merged."
-msgstr ""
+msgstr "Az aktív eszközök hatásai nem egyesíthetők."
 
 #: app/widgets/gimpitemtreeview.c:2783
-#| msgctxt "undo-type"
-#| msgid "Remove item"
 msgid "Remove filter"
 msgstr "Szűrő eltávolítása"
 
@@ -29323,8 +29208,6 @@ msgid "_Select"
 msgstr "Ki_jelölés"
 
 #: menus/image-menu.ui.in.in:153
-#| msgctxt "select-action"
-#| msgid "_Float"
 msgctxt "view-action"
 msgid "_Float"
 msgstr "Le_begő"
@@ -29622,7 +29505,7 @@ msgctxt "help-action"
 msgid "_User Manual"
 msgstr "_Felhasználói kézikönyv"
 
-#: menus/image-menu.ui.in.in:909
+#: menus/image-menu.ui.in.in:912
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "_GIMP-webhely"
