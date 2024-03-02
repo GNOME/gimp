@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-19 19:39+0000\n"
-"PO-Revision-Date: 2024-02-19 20:42+0100\n"
+"POT-Creation-Date: 2024-03-02 19:25+0000\n"
+"PO-Revision-Date: 2024-03-02 20:43+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -112,51 +112,51 @@ msgstr "Mentés színes HTML szövegként"
 msgid "Colored HTML text"
 msgstr "Színes HTML szöveg"
 
-#: plug-ins/python/foggify.py:107
+#: plug-ins/python/foggify.py:111
 msgid "Layer _name"
 msgstr "Réteg _neve"
 
-#: plug-ins/python/foggify.py:108
+#: plug-ins/python/foggify.py:112
 msgid "Layer name"
 msgstr "Réteg neve"
 
-#: plug-ins/python/foggify.py:109
+#: plug-ins/python/foggify.py:113
 msgid "Clouds"
 msgstr "Felhők"
 
-#: plug-ins/python/foggify.py:112
+#: plug-ins/python/foggify.py:116
 msgid "_Turbulence"
 msgstr "Ö_rvénylés"
 
-#: plug-ins/python/foggify.py:113
+#: plug-ins/python/foggify.py:117
 msgid "Turbulence"
 msgstr "Örvénylés"
 
-#: plug-ins/python/foggify.py:117
+#: plug-ins/python/foggify.py:121
 msgid "O_pacity"
 msgstr "Átlátszat_lanság"
 
-#: plug-ins/python/foggify.py:118
+#: plug-ins/python/foggify.py:122
 msgid "Opacity"
 msgstr "Átlátszatlanság"
 
-#: plug-ins/python/foggify.py:127
+#: plug-ins/python/foggify.py:131
 msgid "_Fog color"
 msgstr "_Köd színe"
 
-#: plug-ins/python/foggify.py:128
+#: plug-ins/python/foggify.py:132
 msgid "Fog color"
 msgstr "Köd színe"
 
-#: plug-ins/python/foggify.py:144
+#: plug-ins/python/foggify.py:148
 msgid "Add a layer of fog"
 msgstr "Ködréteg hozzáadása"
 
-#: plug-ins/python/foggify.py:145
+#: plug-ins/python/foggify.py:149
 msgid "Adds a layer of fog to the image."
 msgstr "Ködréteget ad hozzá a képhez."
 
-#: plug-ins/python/foggify.py:147
+#: plug-ins/python/foggify.py:151
 msgid "_Fog..."
 msgstr "_Köd…"
 
@@ -197,7 +197,6 @@ msgid "Creates a new palette from a given gradient"
 msgstr "Új palettát hoz létre az adott színátmenetből"
 
 #: plug-ins/python/gradients-save-as-css.py:217
-#| msgid "Save as CSS..."
 msgid "Save Gradient as CSS..."
 msgstr "Színátmenet mentése CSS-ként…"
 
@@ -226,8 +225,9 @@ msgid "Histogram Export..."
 msgstr "Hisztogram exportálása…"
 
 #: plug-ins/python/histogram-export.py:209
-msgid "Histogram _File"
-msgstr "Hisztogram _fájl"
+#| msgid "Histogram _File"
+msgid "Histogram File"
+msgstr "Hisztogram fájl"
 
 #: plug-ins/python/histogram-export.py:213
 msgid "_Bucket Size"
@@ -238,7 +238,6 @@ msgid "Sample _Average"
 msgstr "Minta átl_ag"
 
 #: plug-ins/python/histogram-export.py:223
-#| msgid "Output format"
 msgid "Output _format"
 msgstr "Kimeneti _formátum"
 
