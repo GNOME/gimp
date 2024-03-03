@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-25 08:11+0000\n"
-"PO-Revision-Date: 2024-02-25 18:24+0800\n"
+"POT-Creation-Date: 2024-03-03 02:09+0000\n"
+"PO-Revision-Date: 2024-03-03 16:47+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -66,7 +66,7 @@ msgstr "锻炼一只山羊（C）"
 #: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1379
 #: plug-ins/common/cml-explorer.c:2146 plug-ins/common/cml-explorer.c:2356
 #: plug-ins/common/colormap-remap.c:694 plug-ins/common/curve-bend.c:1809
-#: plug-ins/common/curve-bend.c:1844 plug-ins/common/file-gif-save.c:1198
+#: plug-ins/common/curve-bend.c:1844 plug-ins/common/file-gif-save.c:1222
 #: plug-ins/common/file-heif.c:2314 plug-ins/common/file-pdf-load.c:686
 #: plug-ins/common/file-pdf-save.c:1054 plug-ins/common/grid.c:819
 #: plug-ins/common/qbist.c:836 plug-ins/common/qbist.c:878
@@ -533,11 +533,11 @@ msgstr "回放速度"
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:906 plug-ins/common/file-gif-save.c:1308
+#: plug-ins/common/animation-play.c:906 plug-ins/common/file-gif-save.c:1366
 msgid "Cumulative layers (combine)"
 msgstr "累积图层（组合）"
 
-#: plug-ins/common/animation-play.c:911 plug-ins/common/file-gif-save.c:1310
+#: plug-ins/common/animation-play.c:911 plug-ins/common/file-gif-save.c:1368
 msgid "One frame per layer (replace)"
 msgstr "每图层一帧（替换）"
 
@@ -622,8 +622,8 @@ msgstr "竖直"
 #: plug-ins/common/file-cel.c:500 plug-ins/common/file-dicom.c:751
 #: plug-ins/common/file-farbfeld.c:321 plug-ins/common/file-gegl.c:471
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:345
-#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:728
-#: plug-ins/common/file-pcx.c:736 plug-ins/common/file-pcx.c:744
+#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:729
+#: plug-ins/common/file-pcx.c:737 plug-ins/common/file-pcx.c:745
 #: plug-ins/common/file-pix.c:456 plug-ins/common/file-png.c:947
 #: plug-ins/common/file-pnm.c:868 plug-ins/common/file-qoi.c:320
 #: plug-ins/common/file-raw-data.c:1828 plug-ins/common/file-sunras.c:1082
@@ -1206,13 +1206,13 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/common/cml-explorer.c:2212 plug-ins/common/curve-bend.c:781
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
 #: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1218
-#: plug-ins/common/file-pcx.c:1216 plug-ins/common/file-pdf-save.c:659
+#: plug-ins/common/file-pcx.c:1217 plug-ins/common/file-pdf-save.c:659
 #: plug-ins/common/file-png.c:1518 plug-ins/common/file-raw-data.c:1337
 #: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
 #: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1381
 #: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-save.c:341
 #: plug-ins/file-fli/fli-gimp.c:809 plug-ins/file-icns/file-icns-save.c:427
-#: plug-ins/file-ico/ico-save.c:1342 plug-ins/file-ico/ico-save.c:1559
+#: plug-ins/file-ico/ico-save.c:1343 plug-ins/file-ico/ico-save.c:1560
 #: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2219
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:590
@@ -2645,8 +2645,8 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:845 plug-ins/common/file-farbfeld.c:372
-#: plug-ins/common/file-gif-save.c:951 plug-ins/common/file-html-table.c:359
-#: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1100
+#: plug-ins/common/file-gif-save.c:975 plug-ins/common/file-html-table.c:359
+#: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1101
 #: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1510
 #: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1321
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
@@ -2654,7 +2654,7 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/common/file-xpm.c:705 plug-ins/common/file-xwd.c:720
 #: plug-ins/file-bmp/bmp-save.c:333 plug-ins/file-fits/fits.c:673
 #: plug-ins/file-fli/fli-gimp.c:776 plug-ins/file-icns/file-icns-save.c:612
-#: plug-ins/file-ico/ico-save.c:1334 plug-ins/file-ico/ico-save.c:1543
+#: plug-ins/file-ico/ico-save.c:1335 plug-ins/file-ico/ico-save.c:1544
 #: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2165
 #: plug-ins/file-sgi/sgi.c:645 plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
@@ -2904,7 +2904,7 @@ msgstr "GEGL 导出插件不支持多图层。"
 msgid "Could not open '%s'"
 msgstr "无法打开“%s”"
 
-#: plug-ins/common/file-gif-load.c:178 plug-ins/common/file-gif-save.c:150
+#: plug-ins/common/file-gif-load.c:178 plug-ins/common/file-gif-save.c:151
 msgid "GIF image"
 msgstr "GIF 图像"
 
@@ -3060,15 +3060,15 @@ msgstr ""
 msgid "Too much compressed data, ignoring extra..."
 msgstr "太多压缩的数据，正在忽略额外数据…"
 
-#: plug-ins/common/file-gif-save.c:152
+#: plug-ins/common/file-gif-save.c:153
 msgid "GIF"
 msgstr "GIF"
 
-#: plug-ins/common/file-gif-save.c:155
+#: plug-ins/common/file-gif-save.c:156
 msgid "exports files in GIF file format"
 msgstr "以 GIF 文件格式导出文件"
 
-#: plug-ins/common/file-gif-save.c:158
+#: plug-ins/common/file-gif-save.c:159
 #, no-c-format
 msgid ""
 "Export a file in GIF format, with possible animation, transparency, and "
@@ -3081,129 +3081,137 @@ msgstr ""
 "并将“as-animation”参数设为 TRUE。该插件将把 <50% 透明通道解释为透明度。在非交"
 "互式运行时，注释将取自“gimp-comment”寄生物。"
 
-#: plug-ins/common/file-gif-save.c:184 plug-ins/common/file-mng.c:278
+#: plug-ins/common/file-gif-save.c:185 plug-ins/common/file-mng.c:278
 msgid "_Interlace"
 msgstr "交错(_I)"
 
-#: plug-ins/common/file-gif-save.c:185
+#: plug-ins/common/file-gif-save.c:186
 msgid "Try to export as interlaced"
 msgstr "尝试以隔行扫描导出"
 
-#: plug-ins/common/file-gif-save.c:190
+#: plug-ins/common/file-gif-save.c:191
 msgid "Loop _Forever"
 msgstr "永远循环(_F)"
 
-#: plug-ins/common/file-gif-save.c:191
+#: plug-ins/common/file-gif-save.c:192
 msgid "(animated gif) Loop infinitely"
 msgstr "（GIF 动画）无限循环"
 
-#: plug-ins/common/file-gif-save.c:196
+#: plug-ins/common/file-gif-save.c:197
 msgid "_Number of repeats"
 msgstr "重复次数(_N)"
 
-#: plug-ins/common/file-gif-save.c:197
+#: plug-ins/common/file-gif-save.c:198
 msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
 msgstr "（GIF 动画）重复的次数（如果“loop”为 TRUE 则忽略该选项）"
 
-#: plug-ins/common/file-gif-save.c:203
+#: plug-ins/common/file-gif-save.c:204
 msgid "_Delay between frames when unspecified"
 msgstr "未指定时帧之间的延时(_D)"
 
-#: plug-ins/common/file-gif-save.c:204
+#: plug-ins/common/file-gif-save.c:205
 msgid "(animated gif) Default delay between frames in milliseconds"
 msgstr "（GIF 动画）以毫秒为单位的帧之间的默认延时"
 
-#: plug-ins/common/file-gif-save.c:210
+#: plug-ins/common/file-gif-save.c:211
 msgid "Frame disposal _when unspecified"
 msgstr "未指定时的帧处理(_W)"
 
-#: plug-ins/common/file-gif-save.c:211
+#: plug-ins/common/file-gif-save.c:212
 msgid ""
 "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)"
 msgstr "（GIF 动画）默认的处理类型（0=“不关心”，1=“组合”，2=“替换”）"
 
-#: plug-ins/common/file-gif-save.c:219
+#: plug-ins/common/file-gif-save.c:220
 msgid "_As animation"
 msgstr "作为动画(_A)"
 
-#: plug-ins/common/file-gif-save.c:220
+#: plug-ins/common/file-gif-save.c:221
 msgid "Export GIF as animation?"
 msgstr "导出 GIF 为动画吗？"
 
-#: plug-ins/common/file-gif-save.c:225
+#: plug-ins/common/file-gif-save.c:226
 msgid "_Use delay entered above for all frames"
 msgstr "上面输入的延迟用于所有帧(_U)"
 
-#: plug-ins/common/file-gif-save.c:226
+#: plug-ins/common/file-gif-save.c:227
 msgid "(animated gif) Use specified delay for all frames"
 msgstr "（GIF 动画）为所有帧使用指定延时"
 
-#: plug-ins/common/file-gif-save.c:231
+#: plug-ins/common/file-gif-save.c:232
 msgid "Use dis_posal entered above for all frames"
 msgstr "上面输入的处理用于所有帧(_P)"
 
-#: plug-ins/common/file-gif-save.c:233
+#: plug-ins/common/file-gif-save.c:234
 msgid "(animated gif) Use specified disposal for all frames"
 msgstr "（GIF 动画）为所有帧使用指定处理"
 
-#: plug-ins/common/file-gif-save.c:238
+#: plug-ins/common/file-gif-save.c:239
 msgid "Sa_ve comment"
 msgstr "保存注释(_V)"
 
-#: plug-ins/common/file-gif-save.c:239
+#: plug-ins/common/file-gif-save.c:240
 msgid "Save the image comment in the GIF file"
 msgstr "在 GIF 文件中保存图像注释"
 
-#: plug-ins/common/file-gif-save.c:244
+#: plug-ins/common/file-gif-save.c:245
 msgid "Commen_t"
 msgstr "注释(_T)"
 
-#: plug-ins/common/file-gif-save.c:245
+#: plug-ins/common/file-gif-save.c:246
 msgid "Image comment"
 msgstr "图像注释"
 
-#: plug-ins/common/file-gif-save.c:377
+#: plug-ins/common/file-gif-save.c:378
 #, c-format
 msgid "GIF format does not support multiple layers."
 msgstr "GIF 格式不支持多图层。"
 
-#: plug-ins/common/file-gif-save.c:582
+#: plug-ins/common/file-gif-save.c:583
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "无法简单地进一步减少颜色。正在作为不透明导出。"
 
-#: plug-ins/common/file-gif-save.c:701
+#: plug-ins/common/file-gif-save.c:702
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr "无法导出“%s”。GIF 文件格式不支持宽度或高度大于 %d 像素的图像。"
 
-#: plug-ins/common/file-gif-save.c:828
+#: plug-ins/common/file-gif-save.c:725
+#, c-format
+msgid ""
+"Unable to export '%s'.  Please convert your image to 8 bit integer "
+"precision, as the GIF file format does not support higher precisions."
+msgstr ""
+"无法导出“%s”。请将您的图像转换为 8 位整数精度，GIF 文件格式不支持更高的精度。"
+
+#: plug-ins/common/file-gif-save.c:852
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr "GIF 格式只支持 7 位 ASCII 编码的注释。注释没有被保存。"
 
-#: plug-ins/common/file-gif-save.c:924
+#: plug-ins/common/file-gif-save.c:948
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr "无法导出 RGB 颜色图像。请先转换成索引颜色或灰阶。"
 
-#: plug-ins/common/file-gif-save.c:1144
+#: plug-ins/common/file-gif-save.c:1168
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "插入了延时以防止生成严重阻塞 CPU 的动画。"
 
-#: plug-ins/common/file-gif-save.c:1193
+#: plug-ins/common/file-gif-save.c:1217
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr "您试图导出为 GIF 的图像含有超出图像实际边界的图层。"
 
-#: plug-ins/common/file-gif-save.c:1199
+#: plug-ins/common/file-gif-save.c:1223
 msgid "Cr_op"
 msgstr "剪裁(_O)"
 
-#: plug-ins/common/file-gif-save.c:1210
+#: plug-ins/common/file-gif-save.c:1234
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -3211,19 +3219,27 @@ msgstr ""
 "GIF 文件格式不允许这种情况。您可以选择裁掉所有图层中超出图像边界的部分，或者"
 "取消导出。"
 
-#: plug-ins/common/file-gif-save.c:1300 plug-ins/common/file-mng.c:1638
+#: plug-ins/common/file-gif-save.c:1289
+msgid ""
+"The GIF format only supports 8 bit integer precision.\n"
+"Your image will be converted on export, which may change the pixel values."
+msgstr ""
+"GIF 格式仅支持 8 位整数精度。\n"
+"您的图像将在导出时被转换，这可能会改变像素值。"
+
+#: plug-ins/common/file-gif-save.c:1358 plug-ins/common/file-mng.c:1638
 msgid "milliseconds"
 msgstr "毫秒"
 
-#: plug-ins/common/file-gif-save.c:1306
+#: plug-ins/common/file-gif-save.c:1364
 msgid "I don't care"
 msgstr "我不关心"
 
-#: plug-ins/common/file-gif-save.c:1342
+#: plug-ins/common/file-gif-save.c:1400
 msgid "Animated GIF"
 msgstr "GIF 动画"
 
-#: plug-ins/common/file-gif-save.c:1349
+#: plug-ins/common/file-gif-save.c:1407
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -4179,60 +4195,60 @@ msgstr "不支持或无效的图像宽度：%d"
 msgid "Unsupported or invalid image height: %d"
 msgstr "不支持或无效的图像高度：%d"
 
-#: plug-ins/common/file-pcx.c:705
+#: plug-ins/common/file-pcx.c:706
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "PCX 文件头中的无效的每行字节数"
 
-#: plug-ins/common/file-pcx.c:712
+#: plug-ins/common/file-pcx.c:713
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "XCX 文件头中的分辨率超出边界，将使用 72×72"
 
-#: plug-ins/common/file-pcx.c:720
+#: plug-ins/common/file-pcx.c:721
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "图像尺寸过大：宽 %d x 高 %d"
 
-#: plug-ins/common/file-pcx.c:847
+#: plug-ins/common/file-pcx.c:848
 msgid "Unusual PCX flavour, giving up"
 msgstr "异常的 PCX 类型，放弃"
 
-#: plug-ins/common/file-pcx.c:873
+#: plug-ins/common/file-pcx.c:874
 msgid "Import from PCX"
 msgstr "从 PCX 导入"
 
-#: plug-ins/common/file-pcx.c:882
+#: plug-ins/common/file-pcx.c:883
 msgid "Use PCX image's built-in palette"
 msgstr "使用 PCX 图像的内置色板"
 
-#: plug-ins/common/file-pcx.c:883
+#: plug-ins/common/file-pcx.c:884
 msgid "Use black and white palette"
 msgstr "使用黑色和白色色板"
 
-#: plug-ins/common/file-pcx.c:1167 plug-ins/common/file-pnm.c:1630
+#: plug-ins/common/file-pcx.c:1168 plug-ins/common/file-pnm.c:1630
 msgid "Cannot export images with alpha channel."
 msgstr "无法导出带有透明通道的图像。"
 
-#: plug-ins/common/file-pcx.c:1187
+#: plug-ins/common/file-pcx.c:1188
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "无效的 X 偏移：%d"
 
-#: plug-ins/common/file-pcx.c:1193
+#: plug-ins/common/file-pcx.c:1194
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "无效的 Y 偏移：%d"
 
-#: plug-ins/common/file-pcx.c:1199
+#: plug-ins/common/file-pcx.c:1200
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "右边框超出边界（须 < %d）：%d"
 
-#: plug-ins/common/file-pcx.c:1206
+#: plug-ins/common/file-pcx.c:1207
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "下边框超出边界（须 < %d）：%d"
 
-#: plug-ins/common/file-pcx.c:1282 plug-ins/common/file-qoi.c:393
+#: plug-ins/common/file-pcx.c:1283 plug-ins/common/file-qoi.c:393
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "写入文件“%s”失败：%s"
@@ -9548,7 +9564,7 @@ msgstr "图标 #%d 具有零宽度或高度"
 msgid "Invalid ANI metadata"
 msgstr "无效的 ANI 元数据"
 
-#: plug-ins/file-ico/ico-save.c:213
+#: plug-ins/file-ico/ico-save.c:214
 #, c-format
 msgid ""
 "Called non-interactively with %d and %d hotspot coordinates with an image of "
