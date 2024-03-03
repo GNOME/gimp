@@ -392,19 +392,19 @@ xmc_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "size-replace",
                              "Size replace",
-                             "Replace existent size or not",
+                             _("Replace existent size or not"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "delay",
                          "Delay",
-                         "Default delay",
+                         _("Default delay"),
                          CURSOR_MINIMUM_DELAY, G_MAXINT, CURSOR_DEFAULT_DELAY,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "delay-replace",
                              "Delay replace",
-                             "Replace existent delay or not",
+                             _("Replace existent delay or not"),
                              FALSE,
                              G_PARAM_READWRITE);
 
