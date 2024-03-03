@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-02 19:24+0000\n"
-"PO-Revision-Date: 2024-03-02 22:22+0100\n"
+"POT-Creation-Date: 2024-03-03 12:40+0000\n"
+"PO-Revision-Date: 2024-03-03 17:06+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -68,7 +68,7 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1379
 #: plug-ins/common/cml-explorer.c:2146 plug-ins/common/cml-explorer.c:2356
 #: plug-ins/common/colormap-remap.c:694 plug-ins/common/curve-bend.c:1809
-#: plug-ins/common/curve-bend.c:1844 plug-ins/common/file-gif-save.c:1198
+#: plug-ins/common/curve-bend.c:1844 plug-ins/common/file-gif-save.c:1222
 #: plug-ins/common/file-heif.c:2314 plug-ins/common/file-pdf-load.c:686
 #: plug-ins/common/file-pdf-save.c:1054 plug-ins/common/grid.c:819
 #: plug-ins/common/qbist.c:836 plug-ins/common/qbist.c:878
@@ -540,11 +540,11 @@ msgstr "Hitrost predvajanja"
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:906 plug-ins/common/file-gif-save.c:1308
+#: plug-ins/common/animation-play.c:906 plug-ins/common/file-gif-save.c:1366
 msgid "Cumulative layers (combine)"
 msgstr "kumulativne plasti (združuj)"
 
-#: plug-ins/common/animation-play.c:911 plug-ins/common/file-gif-save.c:1310
+#: plug-ins/common/animation-play.c:911 plug-ins/common/file-gif-save.c:1368
 msgid "One frame per layer (replace)"
 msgstr "ena sličica na plast (zamenjaj)"
 
@@ -2258,22 +2258,18 @@ msgid "Black"
 msgstr "Črna"
 
 #: plug-ins/common/decompose.c:221
-#| msgid "YCbCr"
 msgid "YCbCr470"
 msgstr "YCbCr470"
 
 #: plug-ins/common/decompose.c:222
-#| msgid "YCbCr"
 msgid "YCbCr470f"
 msgstr "YCbCr470f"
 
 #: plug-ins/common/decompose.c:224
-#| msgid "YCbCr"
 msgid "YCbCr709"
 msgstr "YCbCr709"
 
 #: plug-ins/common/decompose.c:225
-#| msgid "YCbCr"
 msgid "YCbCr709f"
 msgstr "YCbCr709f"
 
@@ -2290,9 +2286,8 @@ msgid "Decompose an image into separate colorspace components"
 msgstr "Razstavi sliko na ločene komponente barvnega prostora"
 
 #: plug-ins/common/decompose.c:299
-#, fuzzy
 msgid "The model to decompose to"
-msgstr "Model za razgradnjo"
+msgstr "Model za razstavljanje"
 
 #: plug-ins/common/decompose.c:317
 msgid "_Decompose to layers"
@@ -2693,7 +2688,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:845 plug-ins/common/file-farbfeld.c:372
-#: plug-ins/common/file-gif-save.c:951 plug-ins/common/file-html-table.c:359
+#: plug-ins/common/file-gif-save.c:975 plug-ins/common/file-html-table.c:359
 #: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1101
 #: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1510
 #: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1321
@@ -2953,7 +2948,7 @@ msgstr "Vstavek izvoza GEGL ne podpira več plasti."
 msgid "Could not open '%s'"
 msgstr "»%s« ni mogoče odpreti"
 
-#: plug-ins/common/file-gif-load.c:178 plug-ins/common/file-gif-save.c:150
+#: plug-ins/common/file-gif-load.c:178 plug-ins/common/file-gif-save.c:151
 msgid "GIF image"
 msgstr "Slika GIF"
 
@@ -3113,15 +3108,15 @@ msgstr ""
 msgid "Too much compressed data, ignoring extra..."
 msgstr "Preveč stisnjenih podatkov, dodatni bodo prezrti …"
 
-#: plug-ins/common/file-gif-save.c:152
+#: plug-ins/common/file-gif-save.c:153
 msgid "GIF"
 msgstr "GIF"
 
-#: plug-ins/common/file-gif-save.c:155
+#: plug-ins/common/file-gif-save.c:156
 msgid "exports files in GIF file format"
 msgstr "Izvozi datoteke v zapisu slikovnih datotek GIF."
 
-#: plug-ins/common/file-gif-save.c:158
+#: plug-ins/common/file-gif-save.c:159
 #, no-c-format
 msgid ""
 "Export a file in GIF format, with possible animation, transparency, and "
@@ -3136,99 +3131,99 @@ msgstr ""
 "alfe kot prosojno. Pri ne-interaktivnem zagonu se vrednost komentarja "
 "povzame iz parazita »gimp-comment«.  "
 
-#: plug-ins/common/file-gif-save.c:184 plug-ins/common/file-mng.c:278
+#: plug-ins/common/file-gif-save.c:185 plug-ins/common/file-mng.c:278
 msgid "_Interlace"
 msgstr "Preplet_i"
 
-#: plug-ins/common/file-gif-save.c:185
+#: plug-ins/common/file-gif-save.c:186
 msgid "Try to export as interlaced"
 msgstr "Poskusi izvoziti kot prepleteno"
 
-#: plug-ins/common/file-gif-save.c:190
+#: plug-ins/common/file-gif-save.c:191
 msgid "Loop _Forever"
 msgstr "Zankaj ne_skončno"
 
-#: plug-ins/common/file-gif-save.c:191
+#: plug-ins/common/file-gif-save.c:192
 msgid "(animated gif) Loop infinitely"
 msgstr "(animirani GIF) Neskončno zankaj animacijo"
 
-#: plug-ins/common/file-gif-save.c:196
+#: plug-ins/common/file-gif-save.c:197
 msgid "_Number of repeats"
 msgstr "_Število ponovitev"
 
-#: plug-ins/common/file-gif-save.c:197
+#: plug-ins/common/file-gif-save.c:198
 msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
 msgstr "(animirani GIF) Število ponovitev (prezrto, če je »loop« enako TRUE)"
 
-#: plug-ins/common/file-gif-save.c:203
+#: plug-ins/common/file-gif-save.c:204
 msgid "_Delay between frames when unspecified"
 msgstr "_Zakasnitev med sličicami, kjer ni določena"
 
-#: plug-ins/common/file-gif-save.c:204
+#: plug-ins/common/file-gif-save.c:205
 msgid "(animated gif) Default delay between frames in milliseconds"
 msgstr "(animirani GIF) Privzeta zakasnitev med sličicami v ms"
 
-#: plug-ins/common/file-gif-save.c:210
+#: plug-ins/common/file-gif-save.c:211
 msgid "Frame disposal _when unspecified"
 msgstr "Opu_stitev sličic, kjer ni določeno"
 
-#: plug-ins/common/file-gif-save.c:211
+#: plug-ins/common/file-gif-save.c:212
 msgid ""
 "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)"
 msgstr ""
 "(animirani GIF) Privzeta vrsta odlaganja (0 = vseeno; 1 = združi; 2 = "
 "zamenjaj)"
 
-#: plug-ins/common/file-gif-save.c:219
+#: plug-ins/common/file-gif-save.c:220
 msgid "_As animation"
 msgstr "Kot _animacija"
 
-#: plug-ins/common/file-gif-save.c:220
+#: plug-ins/common/file-gif-save.c:221
 msgid "Export GIF as animation?"
 msgstr "Izvozi sliko GIF kot animacijo?"
 
-#: plug-ins/common/file-gif-save.c:225
+#: plug-ins/common/file-gif-save.c:226
 msgid "_Use delay entered above for all frames"
 msgstr "_Uporabi zgoraj vneseno zakasnitev za vse sličice"
 
-#: plug-ins/common/file-gif-save.c:226
+#: plug-ins/common/file-gif-save.c:227
 msgid "(animated gif) Use specified delay for all frames"
 msgstr "(animirani GIF) Uporabi privzeto zakasnitev za vse sličice"
 
-#: plug-ins/common/file-gif-save.c:231
+#: plug-ins/common/file-gif-save.c:232
 msgid "Use dis_posal entered above for all frames"
 msgstr "Upo_rabi zgoraj vneseno opustitev za vse sličice"
 
-#: plug-ins/common/file-gif-save.c:233
+#: plug-ins/common/file-gif-save.c:234
 msgid "(animated gif) Use specified disposal for all frames"
 msgstr "(animirani IGF) Uporabi navedeno odlaganje za vse sličice"
 
-#: plug-ins/common/file-gif-save.c:238
+#: plug-ins/common/file-gif-save.c:239
 msgid "Sa_ve comment"
 msgstr "Shra_ni komentar"
 
-#: plug-ins/common/file-gif-save.c:239
+#: plug-ins/common/file-gif-save.c:240
 msgid "Save the image comment in the GIF file"
 msgstr "Shrani komentar slike v datoteko GIF"
 
-#: plug-ins/common/file-gif-save.c:244
+#: plug-ins/common/file-gif-save.c:245
 msgid "Commen_t"
 msgstr "Komen_tar"
 
-#: plug-ins/common/file-gif-save.c:245
+#: plug-ins/common/file-gif-save.c:246
 msgid "Image comment"
 msgstr "Komentar slike"
 
-#: plug-ins/common/file-gif-save.c:377
+#: plug-ins/common/file-gif-save.c:378
 #, c-format
 msgid "GIF format does not support multiple layers."
 msgstr "Zapis GIF ne podpira več plasti."
 
-#: plug-ins/common/file-gif-save.c:582
+#: plug-ins/common/file-gif-save.c:583
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "Nadaljnja redukcija barv enostavno ni možna. Shranjeno kot prekrivno."
 
-#: plug-ins/common/file-gif-save.c:701
+#: plug-ins/common/file-gif-save.c:702
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -3237,7 +3232,16 @@ msgstr ""
 "Shranjevanje ‘%s’ ni uspelo.  Vrsta datotek GIF ne podpira slik, ki so "
 "daljše ali širše od %d slikovnih točk."
 
-#: plug-ins/common/file-gif-save.c:828
+#: plug-ins/common/file-gif-save.c:725
+#, c-format
+msgid ""
+"Unable to export '%s'.  Please convert your image to 8 bit integer "
+"precision, as the GIF file format does not support higher precisions."
+msgstr ""
+"Ni možno izvoziti »%s«.  Prosimo, pretvorite svojo sliko v natančnost 8-"
+"bitnih celih števil, saj zapis datoteke GIF ne podpira višjih natančnosti."
+
+#: plug-ins/common/file-gif-save.c:852
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3245,19 +3249,19 @@ msgstr ""
 "Zapis GIF podpira komentarje le v 7-bitni kodni tabeli ASCII. Komentar ne bo "
 "shranjen."
 
-#: plug-ins/common/file-gif-save.c:924
+#: plug-ins/common/file-gif-save.c:948
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Barvnih slik RGB ni mogoče izvoziti. Najprej pretvorite v indeksirano ali "
 "sivinsko sliko."
 
-#: plug-ins/common/file-gif-save.c:1144
+#: plug-ins/common/file-gif-save.c:1168
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 "Zaradi preprečitve preobremenitve CPE pri animaciji je vstavljena zakasnitev."
 
-#: plug-ins/common/file-gif-save.c:1193
+#: plug-ins/common/file-gif-save.c:1217
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -3265,11 +3269,11 @@ msgstr ""
 "Slika, ki jo želite izvoziti kot GIF, vsebuje plasti, ki se raztezajo prek "
 "dejanskih meja slike."
 
-#: plug-ins/common/file-gif-save.c:1199
+#: plug-ins/common/file-gif-save.c:1223
 msgid "Cr_op"
 msgstr "_Obreži"
 
-#: plug-ins/common/file-gif-save.c:1210
+#: plug-ins/common/file-gif-save.c:1234
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -3277,19 +3281,28 @@ msgstr ""
 "Datotečni zapis GIF tega ne podpira.  Izberite, ali želite vse plasti "
 "porezati na robove slike ali pa preklicati izvažanje."
 
-#: plug-ins/common/file-gif-save.c:1300 plug-ins/common/file-mng.c:1638
+#: plug-ins/common/file-gif-save.c:1289
+msgid ""
+"The GIF format only supports 8 bit integer precision.\n"
+"Your image will be converted on export, which may change the pixel values."
+msgstr ""
+"Zapis GIF podpira samo 8-bitno natančnost celih števil.\n"
+"Vaša slika bo ob izvozu pretvorjena, kar lahko spremeni vrednosti slikovnih "
+"točk."
+
+#: plug-ins/common/file-gif-save.c:1358 plug-ins/common/file-mng.c:1638
 msgid "milliseconds"
 msgstr "milisekund"
 
-#: plug-ins/common/file-gif-save.c:1306
+#: plug-ins/common/file-gif-save.c:1364
 msgid "I don't care"
 msgstr "vseeno mi je"
 
-#: plug-ins/common/file-gif-save.c:1342
+#: plug-ins/common/file-gif-save.c:1400
 msgid "Animated GIF"
 msgstr "Animirani GIF"
 
-#: plug-ins/common/file-gif-save.c:1349
+#: plug-ins/common/file-gif-save.c:1407
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -6356,6 +6369,18 @@ msgstr ""
 msgid "X11 Mouse Cursor"
 msgstr "Miškin kazalec X11"
 
+#: plug-ins/common/file-xmc.c:395
+msgid "Replace existent size or not"
+msgstr "Zamenjajte obstoječo velikost ali ne"
+
+#: plug-ins/common/file-xmc.c:401
+msgid "Default delay"
+msgstr "Privzeta zakasnitev"
+
+#: plug-ins/common/file-xmc.c:407
+msgid "Replace existent delay or not"
+msgstr "Zamenjajte obstoječo zakasnitev ali ne"
+
 #: plug-ins/common/file-xmc.c:541
 #, c-format
 msgid ""
@@ -8323,7 +8348,6 @@ msgid "Twist or smear image in many different ways"
 msgstr "Zvije ali razmaže sliko na veliko različnih načinov"
 
 #: plug-ins/common/warp.c:223
-#, fuzzy
 msgid ""
 "Smears an image along vector paths calculated as the gradient of a separate "
 "control matrix. The effect can look like brushstrokes of acrylic or "
@@ -8348,7 +8372,7 @@ msgstr "_Zemljevid razmestitve"
 #: plug-ins/common/warp.c:242
 #, fuzzy
 msgid "Displacement control map"
-msgstr "Zemljevid razmestitve"
+msgstr "Zemljevid nadzora razmestitve"
 
 #: plug-ins/common/warp.c:247
 msgid "I_terations"
@@ -8364,9 +8388,8 @@ msgstr "Velikost _drgeta"
 
 #: plug-ins/common/warp.c:254
 #, fuzzy
-#| msgid "R_andom saturation"
 msgid "Random dither amount"
-msgstr "Naključna _nasičenost"
+msgstr "Količina naključnega trepeta/stresanja"
 
 #: plug-ins/common/warp.c:259
 msgid "Rotatio_n angle"
@@ -8398,22 +8421,16 @@ msgid "Foreground Color"
 msgstr "Barva ospredja"
 
 #: plug-ins/common/warp.c:276
-#, fuzzy
-#| msgid "Magnitude map:"
 msgid "_Magnitude Map"
-msgstr "Zemljevid z magnitudami:"
+msgstr "_Zemljevid z magnitudami"
 
 #: plug-ins/common/warp.c:277
-#, fuzzy
-#| msgid "Magnitude map:"
 msgid "Magnitude control map"
-msgstr "Zemljevid z magnitudami:"
+msgstr "Nadzorni zemljevid z magnitudami"
 
 #: plug-ins/common/warp.c:282
-#, fuzzy
-#| msgid "Use magnitude map"
 msgid "_Use magnitude map"
-msgstr "Uporabi zemljevid z magnitudami"
+msgstr "_Uporabi zemljevid z magnitudami"
 
 #: plug-ins/common/warp.c:283
 msgid "Use magnitude map"
@@ -11520,15 +11537,11 @@ msgid "Color mode"
 msgstr "Barvni način"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:316
-#, fuzzy
-#| msgid ""
-#| "0: Apply colormap as specified by the parameters below; 1: Apply active "
-#| "gradient to final image"
 msgid ""
 "0: Apply colormap as specified by the parameters above; 1: Apply active "
 "gradient to final image"
 msgstr ""
-"0: uveljavi katalog barv, kot je določeno s spodnjimi parametri; 1: uveljavi "
+"0: uveljavi katalog barv, kot je določeno z zgornjimi parametri; 1: uveljavi "
 "dejavni preliv na končni sliki"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:322
