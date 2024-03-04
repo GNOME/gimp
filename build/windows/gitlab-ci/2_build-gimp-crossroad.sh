@@ -16,7 +16,7 @@ fi
 mkdir _build${ARTIFACTS_SUFFIX} && cd _build${ARTIFACTS_SUFFIX}
 crossroad meson setup .. -Dgi-docgen=disabled \
                          -Djavascript=disabled $MESON_OPTIONS
-ninja && ninja install
+(ninja && ninja install) || exit 1
 cd ..
 
 
