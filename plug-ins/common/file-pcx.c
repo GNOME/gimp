@@ -575,8 +575,8 @@ load_multi (GimpProcedure  *procedure,
   if (! image)
     {
       fclose (fd);
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not load DCX image"));
+      g_prefix_error (error,
+                      _("Could not load DCX image: "));
       return NULL;
     }
 
@@ -665,7 +665,6 @@ load_image (GimpProcedure  *procedure,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not read header from '%s'"),
                    filename);
-      fclose (fd);
       return NULL;
     }
 
@@ -676,7 +675,6 @@ load_image (GimpProcedure  *procedure,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a PCX file"),
                    filename);
-      fclose (fd);
       return NULL;
     }
 
@@ -690,21 +688,23 @@ load_image (GimpProcedure  *procedure,
 
   if ((width <= 0) || (width > GIMP_MAX_IMAGE_SIZE))
     {
-      g_message (_("Unsupported or invalid image width: %d"), width);
-      fclose (fd);
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Unsupported or invalid image width: %d"),
+                   width);
       return NULL;
     }
   if ((height <= 0) || (height > GIMP_MAX_IMAGE_SIZE))
     {
-      g_message (_("Unsupported or invalid image height: %d"), height);
-      fclose (fd);
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Unsupported or invalid image height: %d"),
+                   height);
       return NULL;
     }
   if ((bytesperline + 1) < ((width * pcx_header.bpp + 7) / 8) ||
       bytesperline == 0)
     {
-      g_message (_("Invalid number of bytes per line in PCX header"));
-      fclose (fd);
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Invalid number of bytes per line in PCX header"));
       return NULL;
     }
   if ((resolution_x < 1) || (resolution_x > GIMP_MAX_RESOLUTION) ||
@@ -718,8 +718,9 @@ load_image (GimpProcedure  *procedure,
   /* Shield against potential buffer overflows in load_*() functions. */
   if (G_MAXSIZE / width / height < 3)
     {
-      g_message (_("Image dimensions too large: width %d x height %d"), width, height);
-      fclose (fd);
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Image dimensions too large: width %d x height %d"),
+                   width, height);
       return NULL;
     }
 
@@ -845,8 +846,9 @@ load_image (GimpProcedure  *procedure,
     }
   else
     {
-      g_message (_("Unusual PCX flavour, giving up"));
-      fclose (fd);
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Unusual PCX flavour, giving up"));
+      g_object_unref (buffer);
       return NULL;
     }
 
