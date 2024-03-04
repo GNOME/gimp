@@ -338,10 +338,10 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
   /*  mask color */
-  button = gimp_prop_color_button_new (config, "mask-color",
-                                       NULL,
-                                       128, 24,
-                                       GIMP_COLOR_AREA_SMALL_CHECKS);
+  button = gimp_prop_gegl_color_button_new (config, "mask-color",
+                                            NULL,
+                                            128, 24,
+                                            GIMP_COLOR_AREA_SMALL_CHECKS);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 GIMP_CONTEXT (config));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
