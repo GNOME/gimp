@@ -517,8 +517,8 @@ load_single (GimpProcedure  *procedure,
 
   if (! image)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not load PCX image"));
+      g_prefix_error (error,
+                      _("Could not load PCX image: "));
       return NULL;
     }
 
