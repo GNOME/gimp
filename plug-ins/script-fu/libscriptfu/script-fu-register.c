@@ -32,6 +32,8 @@
 #include "script-fu-script.h"
 #include "script-fu-register.h"
 #include "script-fu-errors.h"
+#include "script-fu-resource.h"
+#include "scheme-marshal.h"
 
 
 /* Methods for a script's call to script-fu-register or script-fu-register-filter.
@@ -164,27 +166,26 @@ script_fu_parse_default_spec (scheme   *sc,
     case SF_COLOR:
       if (sc->vptr->is_string (default_spec))
         {
-          if (! gimp_rgb_parse_css (&arg->default_value.sfa_color,
-                                    sc->vptr->string_value (default_spec),
-                                    -1))
+          /* default_spec is name of default */
+          gchar *name_of_default = sc->vptr->string_value (default_spec);
+
+          if (! sf_color_arg_set_default_by_name (arg, name_of_default))
             return registration_error (sc, "invalid default color name");
-
-          gimp_rgb_set_alpha (&arg->default_value.sfa_color, 1.0);
         }
-      else if (sc->vptr->is_list (sc, default_spec) &&
-                sc->vptr->list_length (sc, default_spec) == 3)
+      else if (sc->vptr->is_list (sc, default_spec))
         {
-          pointer color_list;
-          guchar  r, g, b;
+          /* default_spec is list of numbers. */
+          GeglColor *color = marshal_component_list_to_color (sc, default_spec);
 
-          color_list = default_spec;
-          r = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)), 0, 255);
-          color_list = sc->vptr->pair_cdr (color_list);
-          g = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)), 0, 255);
-          color_list = sc->vptr->pair_cdr (color_list);
-          b = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)), 0, 255);
-
-          gimp_rgb_set_uchar (&arg->default_value.sfa_color, r, g, b);
+          if (color == NULL)
+            {
+              return registration_error (sc, "color default list of integers not encode a color");
+            }
+          else
+            {
+              sf_color_arg_set_default_by_color (arg, color);
+              g_object_unref (color);
+            }
         }
       else
         {
@@ -291,14 +292,12 @@ script_fu_parse_default_spec (scheme   *sc,
     case SF_PATTERN:
     case SF_BRUSH:
     case SF_GRADIENT:
-      /* Ignore default_spec given by author, it is just placeholder in script.
-       * We can't look up resource by name at registration time.
-       * The ParamSpecResource does not conveniently take a default.
-       * It makes no sense to set objects for defaults.
-       * Compare to SF_IMAGE.
-       * Since v3.
-       */
-      arg->default_value.sfa_resource = -1;
+      /* Default_spec given by author is a name. */
+      if (!sc->vptr->is_string (default_spec))
+        return registration_error (sc, "resource defaults must be strings");
+
+      sf_resource_set_default (&arg->default_value.sfa_resource,
+                               sc->vptr->string_value (default_spec));
       break;
 
     case SF_OPTION:

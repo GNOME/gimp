@@ -21,6 +21,8 @@
 #include "scheme-marshal.h"
 #include "script-fu-errors.h"
 
+/* When include scheme-private.h, must undef cons macro */
+#undef cons
 
 static pointer get_item_from_ID_in_script (scheme    *sc,
                                            pointer   a,
@@ -256,4 +258,83 @@ get_item_from_ID_in_script (scheme   *sc,
 
   /* ensure *object_handle is NULL or a valid reference to a object */
   return NULL;  /* no error */
+}
+
+/* Caller owns the returned GeglColor.
+ * Returns NULL on failure:
+ *  - list wrong length
+ *  - list elements not numbers.
+ */
+GeglColor *
+marshal_component_list_to_color (scheme  *sc,
+                                 pointer  color_list)
+{
+  GeglColor *color_result;
+  guchar     r = 0, g = 0, b = 0;
+
+  /* FIXME dispatch on list length and create different format colors */
+
+  if (sc->vptr->list_length (sc, color_list) != 3)
+    return NULL;
+
+  if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
+    r = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                0, 255);
+  else
+    return NULL;
+
+  color_list = sc->vptr->pair_cdr (color_list);
+  if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
+    g = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                0, 255);
+  else
+    return NULL;
+
+  color_list = sc->vptr->pair_cdr (color_list);
+  if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
+    b = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                0, 255);
+  else
+    return NULL;
+
+  color_result = gegl_color_new ("black");
+  gegl_color_set_rgba_with_space (color_result,
+                                  (gdouble) r / 255.0,
+                                  (gdouble) g / 255.0,
+                                  (gdouble) b / 255.0,
+                                  1.0, NULL);
+  return color_result;
+}
+
+/* Returns (0 0 0) if color is NULL. */
+/* FIXME this should return a list
+ * the same length as the count of components in the color.
+ * E.G. gimp-drawable-get-pixel may return indexed, rgb, or rgba.
+ */
+pointer
+marshal_color_to_component_list (scheme    *sc,
+                                 GeglColor *color)
+{
+  guchar rgb[3] = { 0 };
+
+  /* Warn when color has different count of components than
+   * the 3 of the pixel we are converting to.
+   */
+  if (babl_format_get_n_components (gegl_color_get_format (color)) != 3)
+    {
+      g_warning ("%s converting to pixel with loss/gain of components", G_STRFUNC);
+    }
+
+  if (color)
+    gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
+  /* else will return (0 0 0) */
+
+  return sc->vptr->cons (
+      sc,
+      sc->vptr->mk_integer (sc, rgb[0]),
+      sc->vptr->cons (sc,
+                      sc->vptr->mk_integer (sc, rgb[1]),
+                      sc->vptr->cons (sc,
+                                      sc->vptr->mk_integer (sc, rgb[2]),
+                                      sc->NIL)));
 }

@@ -383,26 +383,10 @@ marshal_returned_PDB_value    (scheme        *sc,
     }
   else if (GIMP_VALUE_HOLDS_COLOR (value))
     {
-      GeglColor *color;
-      guchar     rgb[3] = { 0 };
-      gpointer   temp_val;
+      GeglColor *color = g_value_get_object (value);
 
-      color = g_value_get_object (value);
-      if (color)
-        gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
-
-      temp_val = sc->vptr->cons
-                    (sc,
-                    sc->vptr->mk_integer (sc, rgb[0]),
-                    sc->vptr->cons
-                      (sc,
-                        sc->vptr->mk_integer (sc, rgb[1]),
-                        sc->vptr->cons
-                          (sc,
-                          sc->vptr->mk_integer (sc, rgb[2]),
-                          sc->NIL)));
-
-      result = temp_val;
+      result = marshal_color_to_component_list (sc, color);
+      /* Ensure result holds a list, at worst (0 0 0). */
     }
   else if (G_VALUE_HOLDS_OBJECT (value))
     {

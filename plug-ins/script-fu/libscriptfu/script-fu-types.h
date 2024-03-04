@@ -20,6 +20,8 @@
 
 
 #include "script-fu-enums.h"
+#include "script-fu-color.h"
+#include "script-fu-resource.h"
 
 
 typedef struct
@@ -49,12 +51,6 @@ typedef struct
   gchar *type_name;
   gint   history;
 } SFEnum;
-
-/* Resources represented by proxy ID. */
-typedef gint32 SFResourceType;
-
-/* Color represented by GimpRGB.  */
-typedef GimpRGB SFColorType;
 
 typedef union
 {
@@ -112,5 +108,14 @@ typedef struct
   SFScript *script;   /* script which defined this menu path and label */
   gchar    *menu_path;
 } SFMenu;
+
+/* Declared here and defined in script-fu-color.c because use SFArg. */
+gboolean   sf_color_arg_set_default_by_name  (SFArg       *arg,
+                                              gchar       *name_of_default);
+void       sf_color_arg_set_default_by_color (SFArg       *arg,
+                                              GeglColor   *color);
+GeglColor* sf_color_arg_get_default_color    (SFArg       *arg);
+/* FIXME this should go away. */
+gchar*     sf_color_arg_get_name_of_default  (SFArg       *arg);
 
 #endif /*  __SCRIPT_FU_TYPES__  */

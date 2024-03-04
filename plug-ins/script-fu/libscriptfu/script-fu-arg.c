@@ -140,7 +140,17 @@ script_fu_arg_free (SFArg *arg)
     }
 }
 
-/* Reset: copy the default value to current value. */
+/* Reset: copy the default value to current value.
+ * This is only for old-style scripts and interface:
+ * new-style scripts keep args in a ProcedureConfig, which is resettable.
+ * Invoked when user chooses "Reset" button in the old-style dialog.
+ *
+ * Old-style reset is to the "factory default"
+ * i.e. the default declared in the script.
+ * New-style dialog also allows reset to "initial values"
+ * which are the values when the dialog appeared,
+ * which can be values from a previous run.
+ */
 void
 script_fu_arg_reset (SFArg *arg, gboolean should_reset_ids)
 {
@@ -282,14 +292,20 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       break;
 
     case SF_COLOR:
-      /* Setting the default by name.
-       *
-       * FIXME: use the default declared by name by script author.
-       */
-      /* G_PARAM_READWRITE instead of GIMP_PARAM_READWRITE, not equal. */
+      /* FIXME by name is wrong, but that is a separate issue from refactor. */
+      /* Set the default by name. */
+      /* G_PARAM_READWRITE vs GIMP_PARAM_READWRITE, they are not equal. */
       pspec = gegl_param_spec_color_from_string (name, nick, arg->label,
-                                                 "black", /* default */
+                                                 sf_color_arg_get_name_of_default (arg),
                                                  G_PARAM_READWRITE);
+      /* FIXME instead use this
+      {
+        GeglColor *color = sf_color_arg_get_color_of_default (arg);
+
+        pspec = gegl_param_spec_color (name, nick, arg->label, color, G_PARAM_READWRITE);
+        g_object_unref (color);
+      }
+      */
       break;
 
     case SF_TOGGLE:
@@ -315,6 +331,11 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       break;
 
     /* Subclasses of GimpResource.  Special widgets. */
+    /* The name_of_default was declared by the plugin author.
+     *
+     * FIXME: after the param_spec takes a default
+     * each should pass arg sf_resource_get_name_of_default (arg).
+     */
     case SF_FONT:
       pspec = gimp_param_spec_font (name,
                                     nick,
@@ -470,11 +491,9 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
         color = g_value_get_object (gvalue);
         if (color)
           {
-            guchar rgb[3] = { 0 };
-
-            gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
-            g_string_append_printf (result_string, "'(%d %d %d)",
-                                    (gint) rgb[0], (gint) rgb[1], (gint) rgb[2]);
+            gchar *repr = sf_color_get_repr_from_gegl_color (color);
+            g_string_append (result_string, repr);
+            g_free (repr);
           }
         else
           {
@@ -616,11 +635,9 @@ script_fu_arg_append_repr_from_self (SFArg       *arg,
 
     case SF_COLOR:
       {
-        guchar r, g, b;
-
-        gimp_rgb_get_uchar (&arg_value->sfa_color, &r, &g, &b);
-        g_string_append_printf (result_string, "'(%d %d %d)",
-                                (gint) r, (gint) g, (gint) b);
+        gchar *repr = sf_color_get_repr (&arg_value->sfa_color);
+        g_string_append (result_string, repr);
+        g_free (repr);
       }
       break;
 

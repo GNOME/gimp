@@ -150,7 +150,8 @@
   SF-TOGGLE     "Shadow"             TRUE
   SF-COLOR      "Background color"   "white"
   SF-COLOR      "Sphere color"       "red"
-  SF-BRUSH      "Brush"              '("2. Hardness 100" 100 44 0)
+  ; v3 >>> only declare name of default brush
+  SF-BRUSH      "Brush"              "2. Hardness 100"
   SF-STRING     "Text"               "Tiny-Fu rocks!"
   SF-TEXT       "Multi-line text"    "Hello,\nWorld!"
   SF-PATTERN    "Pattern"            "Maple Leaves"

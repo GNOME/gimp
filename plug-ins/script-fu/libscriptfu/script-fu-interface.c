@@ -89,9 +89,9 @@ static void   script_fu_resource_set_handler (gpointer       data,
                                               gpointer       resource,
                                               gboolean       closing);
 
-static GtkWidget * script_fu_resource_widget (const gchar   *title,
-                                              gint32        *model,
-                                              GType          resource_type);
+static GtkWidget * script_fu_resource_widget (const gchar    *title,
+                                              SFResourceType *model,
+                                              GType           resource_type);
 
 static void   script_fu_flush_events         (void);
 static void   script_fu_activate_main_dialog (void);
@@ -323,9 +323,7 @@ script_fu_interface (SFScript  *script,
         case SF_COLOR:
           {
             GimpColorConfig *config;
-            GeglColor       *color = gegl_color_new (NULL);
-
-            gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &arg->value.sfa_color);
+            GeglColor       *color = sf_color_get_gegl_color (&arg->value.sfa_color);
 
             left_align = TRUE;
             widget = gimp_color_button_new (_("Script-Fu Color Selection"),
@@ -470,8 +468,12 @@ script_fu_interface (SFScript  *script,
           break;
 
         case SF_FONT:
+          /* FIXME this should be a method of the arg.
+          in script-fu-resource and it should return the default.
+          */
           script_fu_arg_init_resource (arg, GIMP_TYPE_FONT);
           widget = script_fu_resource_widget (label_text,
+                                              /* FIXME and the call can go here*/
                                               &arg->value.sfa_resource,
                                               GIMP_TYPE_FONT);
           break;
@@ -609,36 +611,41 @@ script_fu_interface (SFScript  *script,
  * Widget will update model if user touches widget.
  */
 static GtkWidget *
-script_fu_resource_widget (const gchar   *title,
-                           gint32        *model,
-                           GType          resource_type)
+script_fu_resource_widget (const gchar    *title,
+                           SFResourceType *model,
+                           GType           resource_type)
 {
   GtkWidget    *result_widget = NULL;
 
   g_debug ("%s type: %" G_GSIZE_FORMAT, G_STRFUNC, resource_type);
 
-  /* Passing NULL resource sets initial choice to resource from context.
-   * Passing empty string for outer widget label, since we provide our own.
+  /* Passing empty string for outer widget label,
+   * since this old-style interface makes the label.
    */
   if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
     {
-      result_widget = gimp_font_chooser_new (title, "", NULL);
+      result_widget = gimp_font_chooser_new (title, "",
+                                             sf_resource_get_default (model));
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
     {
-      result_widget = gimp_brush_chooser_new (title, "", NULL);
+      result_widget = gimp_brush_chooser_new (title, "",
+                                             sf_resource_get_default (model));
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
     {
-      result_widget = gimp_gradient_chooser_new (title, "", NULL);
+      result_widget = gimp_gradient_chooser_new (title, "",
+                                             sf_resource_get_default (model));
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
     {
-      result_widget = gimp_palette_chooser_new (title, "", NULL);
+      result_widget = gimp_palette_chooser_new (title, "",
+                                             sf_resource_get_default (model));
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PATTERN))
     {
-      result_widget = gimp_pattern_chooser_new (title, "", NULL);
+      result_widget = gimp_pattern_chooser_new (title, "",
+                                             sf_resource_get_default (model));
     }
   else
     {
@@ -700,11 +707,11 @@ script_fu_combo_callback (GtkWidget *widget,
 
 static void
 script_fu_color_button_update (GimpColorButton *button,
-                               GimpRGB         *rgb)
+                               SFColorType     *arg_value)
 {
   GeglColor *color = gimp_color_button_get_color (button);
 
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgb);
+  sf_color_set_from_gegl_color (arg_value, color);
 
   g_object_unref (color);
 }
@@ -879,13 +886,16 @@ script_fu_ok (SFScript *script)
   g_free (command);
 }
 
+/* On user clicking "Reset" button. */
 static void
 script_fu_reset (SFScript *script)
 {
   gint i;
 
+  /* Reset the model to defaults. */
   script_fu_script_reset (script, FALSE);
 
+  /* Reset the view to the model values. */
   for (i = 0; i < script->n_args; i++)
     {
       SFArgValue *value  = &script->args[i].value;
@@ -903,9 +913,8 @@ script_fu_reset (SFScript *script)
 
         case SF_COLOR:
           {
-            GeglColor *color = gegl_color_new (NULL);
+            GeglColor *color = sf_color_get_gegl_color (&value->sfa_color);
 
-            gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &value->sfa_color);
             gimp_color_button_set_color (GIMP_COLOR_BUTTON (widget), color);
             g_object_unref (color);
           }
@@ -969,16 +978,14 @@ script_fu_reset (SFScript *script)
                                          value->sfa_file.filename);
           break;
 
-        /* Pass NULL to reset to the value from context.
-         * Since v3, script author cannot specify default resource by name.
-         */
         case SF_FONT:
         case SF_PALETTE:
         case SF_PATTERN:
         case SF_GRADIENT:
         case SF_BRUSH:
           gimp_resource_chooser_set_resource (GIMP_RESOURCE_CHOOSER (widget),
-                                              NULL);
+                                              sf_resource_get_default (
+                                                &value->sfa_resource));
           break;
 
         case SF_OPTION:
