@@ -270,13 +270,8 @@ Name: "{autodesktop}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{
 [Files]
 ;setup files
 Source: "windows-installer-intro-small.bmp"; Flags: dontcopy
-#ifndef DEVEL
 Source: "installsplash.bmp"; Flags: dontcopy
 Source: "installsplash_small.bmp"; Flags: dontcopy
-#else
-Source: "installsplash-devel.bmp"; Destname: "installsplash.bmp"; Flags: dontcopy
-Source: "installsplash_small-devel.bmp"; Destname: "installsplash_small.bmp"; Flags: dontcopy
-#endif
 
 #ifndef NOFILES
 ;Required neutral components (minimal install)

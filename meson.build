@@ -1821,13 +1821,7 @@ subdir('etc')
 subdir('menus')
 subdir('themes')
 
-if enable_console_bin
-  gimp_exe_name=gimpconsole_exe_name
-else
-  gimp_exe_name=gimpmain_exe_name
-endif
-
-# gimp-data submodule
+# gimp-data submodule part 1
 subdir('gimp-data')
 
 # Libraries (order here is important!)
@@ -1846,6 +1840,9 @@ subdir('plug-ins')
 subdir('app')
 subdir('app-tools')
 
+# gimp-data submodule part 2
+subdir('gimp-data/images/')
+
 # Unit testing
 subdir('libgimp/tests')
 
@@ -1856,7 +1853,7 @@ subdir('devel-docs')
 # Windows installer
 if get_option('windows-installer')
   subdir('po-windows-installer')
-  subdir('build/windows/installer')
+  subdir('build/windows/installer/lang')
 endif
 
 pkgconfig.generate(libgimp,
