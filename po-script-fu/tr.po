@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-24 20:38+0000\n"
-"PO-Revision-Date: 2024-02-25 07:56+0300\n"
+"POT-Creation-Date: 2024-02-25 08:12+0000\n"
+"PO-Revision-Date: 2024-02-26 01:24+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -745,10 +745,8 @@ msgid "Flatten image"
 msgstr "Görüntüyü düzleştir"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:63
-#, fuzzy
-#| msgid "Using _Paths"
 msgid "_Using Paths"
-msgstr "_Yolları Kullanmak"
+msgstr "Yolları _Kullanmak"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
 #: plug-ins/script-fu/scripts/gimp-online.scm:64
@@ -788,16 +786,12 @@ msgid "Drawing _Simple Objects"
 msgstr "_Basit Nesneler Çizmek"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:154
-#, fuzzy
-#| msgid "Create and Use _Selections"
 msgid "_Create and Use Selections"
-msgstr "_Seçim Oluşturmak ve Kullanmak"
+msgstr "Seçim _Oluşturmak ve Kullanmak"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:166
-#, fuzzy
-#| msgid "_[Table of Contents]"
 msgid "_Table of Contents"
-msgstr "İçindekiler"
+msgstr "İçi_ndekiler"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:202
 msgid "_Main Web Site"
