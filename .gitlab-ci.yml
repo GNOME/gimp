@@ -12,8 +12,8 @@
 #
 # To force step-specific pipelines without waiting for commits and/or
 # pipelines, these are the variable you should set:
-# - GIMP_CI_MESON_GCC: trigger the Debian gcc build.
 # - GIMP_CI_MESON_CLANG: trigger the Debian clang build.
+# - GIMP_CI_MESON_GCC: trigger the Debian gcc build.
 # - GIMP_CI_RASTER_ICONS: trigger the Debian build without vector icons.
 # - GIMP_CI_CROSSROAD_WIN64: trigger the crossroad build for Win 64-bit.
 # - GIMP_CI_CROSSROAD_WIN32: trigger the crossroad build for Win 32-bit.
@@ -249,6 +249,9 @@ deps-debian-x64:
     # This is needed for the BMP image generation for the installer.
     # See commit e1203e9f76f.
     - if: '$GIMP_CI_WIN_INSTALLER != null'
+  variables:
+    CC: "clang"
+    CXX: "clang++"
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   cache:
@@ -284,6 +287,10 @@ deps-debian-x64:
     - export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
     - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/local/share:/usr/share"
   script:
+    - mkdir -p "$APT_CACHE"
+    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
+                         clang
+                         libomp-dev
     - mkdir _babl/_build-x64 && cd _babl/_build-x64
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
     - ninja && ninja install
@@ -331,10 +338,17 @@ gimp-debian-x64:
     # On releases.
     - if: '$CI_COMMIT_TAG != null'
     # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_MESON_GCC != null'
+    - if: '$GIMP_CI_MESON_CLANG != null'
     - if: '$GIMP_CI_SOURCES != null'
   extends: .gimp-debian-base
+  variables:
+    CC: "clang"
+    CXX: "clang++"
   script:
+    - mkdir -p "$APT_CACHE"
+    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
+                         clang
+                         libomp-dev
     - mkdir -p _build-x64 && cd _build-x64
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
                      -Dgi-docgen=enabled
@@ -363,19 +377,12 @@ gimp-debian-x64:
       - "_build-x64/build/windows/installer/"
       - "${INSTALL_DIR}"
 
-gimp-debian-clang:
+gimp-debian-gcc:
   rules:
     # Custom builds only (web GUI, API or schedules).
-    - if: '$GIMP_CI_MESON_CLANG != null'
+    - if: '$GIMP_CI_MESON_GCC != null'
   extends: .gimp-debian-base
-  variables:
-    CC: "clang"
-    CXX: "clang++"
   script:
-    - mkdir -p "$APT_CACHE"
-    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
-                         clang
-                         libomp-dev
     - mkdir -p _build-x64 && cd _build-x64
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
     - ninja && ninja test
