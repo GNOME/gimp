@@ -939,8 +939,6 @@ context_select_color (GimpActionSelectType  select_type,
                                0, 1, 4, 0, FALSE);
 
   context_set_color_index (index, use_colormap, use_palette, color);
-
-  g_object_unref (color);
 }
 
 static gint
