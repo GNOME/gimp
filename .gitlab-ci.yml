@@ -813,7 +813,7 @@ deps-win-x64:
   stage: dependencies
   variables:
     BUILD_TYPE: "CI_NATIVE"
-    MSYSTEM: "MINGW64"
+    MSYSTEM: "CLANG64"
     CHERE_INVOKING: "yes"
   tags:
     - win32-ps
@@ -841,13 +841,15 @@ gimp-win-x64:
   stage: gimp
   variables:
     BUILD_TYPE: "CI_NATIVE"
-    MSYSTEM: "MINGW64"
+    MSYSTEM: "CLANG64"
     CHERE_INVOKING: "yes"
   tags:
     - win32-ps
   before_script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
   script:
+    # Temporary patch until we use the LLVM 18.
+    - git apply ./build/windows/patches/0001-clang-rc-files-fix.patch
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/2_build-gimp-msys2.sh"
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
@@ -872,7 +874,7 @@ packaging-win-x64:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
   stage: packaging
   variables:
-    MSYSTEM: "MINGW64"
+    MSYSTEM: "CLANG64"
     CHERE_INVOKING: "yes"
   tags:
     - win32-ps

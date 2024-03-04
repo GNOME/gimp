@@ -34,21 +34,28 @@ DEPS_LIST=$(cat ${GIMP_DIR}build/windows/gitlab-ci/all-deps-uni.txt)
 DEPS_LIST=$(sed "s/\${MINGW_PACKAGE_PREFIX}-/${MINGW_PACKAGE_PREFIX}-/g" <<< $DEPS_LIST)
 DEPS_LIST=$(sed 's/\\//g' <<< $DEPS_LIST)
 
-retry=3
-while [ $retry -gt 0 ]; do
-  timeout --signal=KILL 3m pacman --noconfirm -S --needed git                                \
-                                                          base-devel                         \
-                                                          ${MINGW_PACKAGE_PREFIX}-toolchain  \
-                                                          $DEPS_LIST && break
-  echo "MSYS2 pacman timed out. Trying again."
-  taskkill //t //F //IM "pacman.exe"
-  rm -f c:/msys64/var/lib/pacman/db.lck
-  : $((--retry))
-done
+if [[ "$MSYSTEM_CARCH" == "aarch64" ]]; then
+  retry=3
+  while [ $retry -gt 0 ]; do
+    timeout --signal=KILL 3m pacman --noconfirm -S --needed git                                \
+                                                            base-devel                         \
+                                                            ${MINGW_PACKAGE_PREFIX}-toolchain  \
+                                                            $DEPS_LIST && break
+    echo "MSYS2 pacman timed out. Trying again."
+    taskkill //t //F //IM "pacman.exe"
+    rm -f c:/msys64/var/lib/pacman/db.lck
+    : $((--retry))
+  done
 
-if [ $retry -eq 0 ]; then
-  echo "MSYS2 pacman repeatedly failed. See: https://github.com/msys2/MSYS2-packages/issues/4340"
-  exit 1
+  if [ $retry -eq 0 ]; then
+    echo "MSYS2 pacman repeatedly failed. See: https://github.com/msys2/MSYS2-packages/issues/4340"
+    exit 1
+  fi
+else
+  pacman --noconfirm -S --needed git                                \
+                                 base-devel                         \
+                                 ${MINGW_PACKAGE_PREFIX}-toolchain  \
+                                 $DEPS_LIST
 fi
 # End of install
 

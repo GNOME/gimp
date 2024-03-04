@@ -1,16 +1,8 @@
 #!/bin/bash
 
-if [[ "$MSYSTEM" == "CLANGARM64" ]]; then
-  # Apparently -v is unknown argument for clangarm64 version of objcopy.exe.
-  export OBJCOPY_OPTIONS=""
-else
-  export OBJCOPY_OPTIONS="-v"
-fi
-
-
 # Generate .debug
-find . \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \) -type f -exec objcopy ${OBJCOPY_OPTIONS} --only-keep-debug '{}' '{}'.debug \;
-find . \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \) -type f -exec objcopy ${OBJCOPY_OPTIONS} --add-gnu-debuglink='{}'.debug '{}' --strip-unneeded \;
+find . \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \) -type f -exec objcopy --only-keep-debug '{}' '{}'.debug \;
+find . \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \) -type f -exec objcopy --add-gnu-debuglink='{}'.debug '{}' --strip-unneeded \;
 
 # Copy .debug to .debug folder
 dbgList=$(find . -iname '*.debug') && dbgArray=($dbgList)
