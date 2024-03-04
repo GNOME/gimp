@@ -1,0 +1,16 @@
+import os
+import sys
+
+image     = Gimp.list_images()[0]
+procedure = Gimp.get_pdb().lookup_procedure("file-png-save")
+config    = procedure.create_config()
+image.flatten()
+image.scale(1920, 1080)
+drawables = image.list_selected_drawables()
+config.set_property("image", image)
+config.set_property("num-drawables", len(drawables))
+config.set_property("drawables", Gimp.ObjectArray.new(Gimp.Drawable, drawables, False))
+config.set_property("file", Gio.file_new_for_path("gimp-data/images/gimp-splash.png"))
+retval = procedure.run(config)
+if retval.index(0) != Gimp.PDBStatusType.SUCCESS:
+  sys.exit(os.EX_SOFTWARE)
