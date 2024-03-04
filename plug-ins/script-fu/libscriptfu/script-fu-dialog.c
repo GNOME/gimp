@@ -139,8 +139,7 @@ script_fu_dialog_run (GimpProcedure        *procedure,
    * because Gimp shows progress: the name of all called PDB procedures.
    */
 
-  /* Script's menu label */
-  gimp_ui_init (script_fu_script_get_title (script));
+  /* Requires gimp_ui_init already called. */
 
 #if DEBUG_CONFIG_PROPERTIES
   dump_properties (config);

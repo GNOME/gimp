@@ -103,8 +103,8 @@ script_fu_interpreter_class_init (ScriptFuInterpreterClass *klass)
 static void
 script_fu_interpreter_init (ScriptFuInterpreter *script_fu)
 {
-  /* Init ui, gegl, babl.  Need gegl color in registration phase of plugin. */
-  gimp_ui_init ("script-fu-interpreter");
+  /* Nothing to do. */
+  /* You can't call gimp_ui_init here, must be later. */
 }
 
 
@@ -136,6 +136,12 @@ static GimpProcedure *
 script_fu_interpreter_create_procedure (GimpPlugIn  *plug_in,
                                         const gchar *proc_name)
 {
+  /* Init ui, gegl, babl.
+   * Some plugins need gegl color in registration phase.
+   * create_procedure is also called at run phase, this suffices for both phases.
+   */
+  gimp_ui_init ("script-fu-interpreter");
+
   return script_fu_interpreter_create_proc_at_path (plug_in,
                                                     proc_name,
                                                     path_to_this_script);

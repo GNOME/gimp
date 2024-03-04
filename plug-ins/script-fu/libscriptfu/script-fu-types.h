@@ -53,8 +53,8 @@ typedef struct
 /* Resources represented by proxy ID. */
 typedef gint32 SFResourceType;
 
-/* Color represented by GeglColor */
-typedef GeglColor SFColorType;
+/* Color represented by GimpRGB.  */
+typedef GimpRGB SFColorType;
 
 typedef union
 {
