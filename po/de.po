@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-16 09:15+0000\n"
-"PO-Revision-Date: 2024-01-20 20:01+0100\n"
+"POT-Creation-Date: 2024-03-02 10:13+0000\n"
+"PO-Revision-Date: 2024-03-04 18:57+0100\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -33,7 +33,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Project-Style: gnome\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
@@ -110,6 +110,8 @@ msgstr "Neuer Farbverlauf: VG nach Transparent (harte Kante)"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "Some text tool algorithm enhancement when replacing formatted text"
 msgstr ""
+"Einige Algorithmusverbesserungen im Textwerkzeug beim Ersetzen von "
+"formatiertem Text"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid ""
@@ -19563,82 +19565,82 @@ msgstr "GIMP-Pinsel (animiert)"
 msgid "GIMP pattern"
 msgstr "GIMP-Muster"
 
-#: ../app/gegl/gimp-babl.c:317 ../app/gegl/gimp-babl.c:318
-#: ../app/gegl/gimp-babl.c:319 ../app/gegl/gimp-babl.c:320
-#: ../app/gegl/gimp-babl.c:321 ../app/gegl/gimp-babl.c:322
-#: ../app/gegl/gimp-babl.c:323 ../app/gegl/gimp-babl.c:324
-#: ../app/gegl/gimp-babl.c:325 ../app/gegl/gimp-babl.c:326
-#: ../app/gegl/gimp-babl.c:327 ../app/gegl/gimp-babl.c:328
+#: ../app/gegl/gimp-babl.c:320 ../app/gegl/gimp-babl.c:321
+#: ../app/gegl/gimp-babl.c:322 ../app/gegl/gimp-babl.c:323
+#: ../app/gegl/gimp-babl.c:324 ../app/gegl/gimp-babl.c:325
+#: ../app/gegl/gimp-babl.c:326 ../app/gegl/gimp-babl.c:327
+#: ../app/gegl/gimp-babl.c:328 ../app/gegl/gimp-babl.c:329
+#: ../app/gegl/gimp-babl.c:330 ../app/gegl/gimp-babl.c:331
 #: ../app/plug-in/gimppluginprocedure.c:1013
 msgid "RGB"
 msgstr "RGB"
 
-#: ../app/gegl/gimp-babl.c:330 ../app/gegl/gimp-babl.c:331
-#: ../app/gegl/gimp-babl.c:332 ../app/gegl/gimp-babl.c:333
-#: ../app/gegl/gimp-babl.c:334 ../app/gegl/gimp-babl.c:335
-#: ../app/gegl/gimp-babl.c:336 ../app/gegl/gimp-babl.c:337
-#: ../app/gegl/gimp-babl.c:338 ../app/gegl/gimp-babl.c:339
-#: ../app/gegl/gimp-babl.c:340 ../app/gegl/gimp-babl.c:341
+#: ../app/gegl/gimp-babl.c:333 ../app/gegl/gimp-babl.c:334
+#: ../app/gegl/gimp-babl.c:335 ../app/gegl/gimp-babl.c:336
+#: ../app/gegl/gimp-babl.c:337 ../app/gegl/gimp-babl.c:338
+#: ../app/gegl/gimp-babl.c:339 ../app/gegl/gimp-babl.c:340
+#: ../app/gegl/gimp-babl.c:341 ../app/gegl/gimp-babl.c:342
+#: ../app/gegl/gimp-babl.c:343 ../app/gegl/gimp-babl.c:344
 msgid "RGB-alpha"
 msgstr "RGB-Alpha"
 
-#: ../app/gegl/gimp-babl.c:343 ../app/gegl/gimp-babl.c:344
-#: ../app/gegl/gimp-babl.c:345 ../app/gegl/gimp-babl.c:346
-#: ../app/gegl/gimp-babl.c:347 ../app/gegl/gimp-babl.c:348
-#: ../app/gegl/gimp-babl.c:349 ../app/gegl/gimp-babl.c:350
-#: ../app/gegl/gimp-babl.c:351 ../app/gegl/gimp-babl.c:352
-#: ../app/gegl/gimp-babl.c:353 ../app/gegl/gimp-babl.c:354
+#: ../app/gegl/gimp-babl.c:346 ../app/gegl/gimp-babl.c:347
+#: ../app/gegl/gimp-babl.c:348 ../app/gegl/gimp-babl.c:349
+#: ../app/gegl/gimp-babl.c:350 ../app/gegl/gimp-babl.c:351
+#: ../app/gegl/gimp-babl.c:352 ../app/gegl/gimp-babl.c:353
+#: ../app/gegl/gimp-babl.c:354 ../app/gegl/gimp-babl.c:355
+#: ../app/gegl/gimp-babl.c:356 ../app/gegl/gimp-babl.c:357
 #: ../app/plug-in/gimppluginprocedure.c:1031
 msgid "Grayscale"
 msgstr "Graustufen"
 
-#: ../app/gegl/gimp-babl.c:356 ../app/gegl/gimp-babl.c:357
-#: ../app/gegl/gimp-babl.c:358 ../app/gegl/gimp-babl.c:359
-#: ../app/gegl/gimp-babl.c:360 ../app/gegl/gimp-babl.c:361
-#: ../app/gegl/gimp-babl.c:362 ../app/gegl/gimp-babl.c:363
-#: ../app/gegl/gimp-babl.c:364 ../app/gegl/gimp-babl.c:365
-#: ../app/gegl/gimp-babl.c:366 ../app/gegl/gimp-babl.c:367
+#: ../app/gegl/gimp-babl.c:359 ../app/gegl/gimp-babl.c:360
+#: ../app/gegl/gimp-babl.c:361 ../app/gegl/gimp-babl.c:362
+#: ../app/gegl/gimp-babl.c:363 ../app/gegl/gimp-babl.c:364
+#: ../app/gegl/gimp-babl.c:365 ../app/gegl/gimp-babl.c:366
+#: ../app/gegl/gimp-babl.c:367 ../app/gegl/gimp-babl.c:368
+#: ../app/gegl/gimp-babl.c:369 ../app/gegl/gimp-babl.c:370
 msgid "Grayscale-alpha"
 msgstr "Graustufen-Alpha"
 
-#: ../app/gegl/gimp-babl.c:369 ../app/gegl/gimp-babl.c:370
-#: ../app/gegl/gimp-babl.c:371 ../app/gegl/gimp-babl.c:372
-#: ../app/gegl/gimp-babl.c:373 ../app/gegl/gimp-babl.c:374
-#: ../app/gegl/gimp-babl.c:375 ../app/gegl/gimp-babl.c:376
-#: ../app/gegl/gimp-babl.c:377 ../app/gegl/gimp-babl.c:378
-#: ../app/gegl/gimp-babl.c:379 ../app/gegl/gimp-babl.c:380
+#: ../app/gegl/gimp-babl.c:372 ../app/gegl/gimp-babl.c:373
+#: ../app/gegl/gimp-babl.c:374 ../app/gegl/gimp-babl.c:375
+#: ../app/gegl/gimp-babl.c:376 ../app/gegl/gimp-babl.c:377
+#: ../app/gegl/gimp-babl.c:378 ../app/gegl/gimp-babl.c:379
+#: ../app/gegl/gimp-babl.c:380 ../app/gegl/gimp-babl.c:381
+#: ../app/gegl/gimp-babl.c:382 ../app/gegl/gimp-babl.c:383
 msgid "Red component"
 msgstr "Rot-Komponente"
 
-#: ../app/gegl/gimp-babl.c:382 ../app/gegl/gimp-babl.c:383
-#: ../app/gegl/gimp-babl.c:384 ../app/gegl/gimp-babl.c:385
-#: ../app/gegl/gimp-babl.c:386 ../app/gegl/gimp-babl.c:387
-#: ../app/gegl/gimp-babl.c:388 ../app/gegl/gimp-babl.c:389
-#: ../app/gegl/gimp-babl.c:390 ../app/gegl/gimp-babl.c:391
-#: ../app/gegl/gimp-babl.c:392 ../app/gegl/gimp-babl.c:393
+#: ../app/gegl/gimp-babl.c:385 ../app/gegl/gimp-babl.c:386
+#: ../app/gegl/gimp-babl.c:387 ../app/gegl/gimp-babl.c:388
+#: ../app/gegl/gimp-babl.c:389 ../app/gegl/gimp-babl.c:390
+#: ../app/gegl/gimp-babl.c:391 ../app/gegl/gimp-babl.c:392
+#: ../app/gegl/gimp-babl.c:393 ../app/gegl/gimp-babl.c:394
+#: ../app/gegl/gimp-babl.c:395 ../app/gegl/gimp-babl.c:396
 msgid "Green component"
 msgstr "Grün-Komponente"
 
-#: ../app/gegl/gimp-babl.c:395 ../app/gegl/gimp-babl.c:396
-#: ../app/gegl/gimp-babl.c:397 ../app/gegl/gimp-babl.c:398
-#: ../app/gegl/gimp-babl.c:399 ../app/gegl/gimp-babl.c:400
-#: ../app/gegl/gimp-babl.c:401 ../app/gegl/gimp-babl.c:402
-#: ../app/gegl/gimp-babl.c:403 ../app/gegl/gimp-babl.c:404
-#: ../app/gegl/gimp-babl.c:405 ../app/gegl/gimp-babl.c:406
+#: ../app/gegl/gimp-babl.c:398 ../app/gegl/gimp-babl.c:399
+#: ../app/gegl/gimp-babl.c:400 ../app/gegl/gimp-babl.c:401
+#: ../app/gegl/gimp-babl.c:402 ../app/gegl/gimp-babl.c:403
+#: ../app/gegl/gimp-babl.c:404 ../app/gegl/gimp-babl.c:405
+#: ../app/gegl/gimp-babl.c:406 ../app/gegl/gimp-babl.c:407
+#: ../app/gegl/gimp-babl.c:408 ../app/gegl/gimp-babl.c:409
 msgid "Blue component"
 msgstr "Blau-Komponente"
 
-#: ../app/gegl/gimp-babl.c:408 ../app/gegl/gimp-babl.c:409
-#: ../app/gegl/gimp-babl.c:410 ../app/gegl/gimp-babl.c:411
-#: ../app/gegl/gimp-babl.c:412 ../app/gegl/gimp-babl.c:413
+#: ../app/gegl/gimp-babl.c:411 ../app/gegl/gimp-babl.c:412
+#: ../app/gegl/gimp-babl.c:413 ../app/gegl/gimp-babl.c:414
+#: ../app/gegl/gimp-babl.c:415 ../app/gegl/gimp-babl.c:416
 msgid "Alpha component"
 msgstr "Alpha-Komponente"
 
-#: ../app/gegl/gimp-babl.c:441
+#: ../app/gegl/gimp-babl.c:444
 msgid "Indexed-alpha"
 msgstr "Indiziert-Alpha"
 
-#: ../app/gegl/gimp-babl.c:443 ../app/plug-in/gimppluginprocedure.c:1049
+#: ../app/gegl/gimp-babl.c:446 ../app/plug-in/gimppluginprocedure.c:1049
 msgid "Indexed"
 msgstr "Indiziert"
 
