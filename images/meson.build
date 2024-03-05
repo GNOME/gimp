@@ -15,7 +15,12 @@ env.set('GIMP_TESTING_PLUGINDIRS', meson.global_build_root() / 'plug-ins')
 env.append('GIMP_TESTING_PLUGINDIRS', meson.global_build_root() / 'plug-ins/python')
 env.append('GIMP_TESTING_PLUGINDIRS', meson.global_build_root() / 'plug-ins/common/test-plug-ins/')
 
+env.set('GIMP_TESTING_INTERPRETER_DIRS', meson.global_build_root() / 'plug-ins/python/')
+env.set('GIMP_TESTING_ENVIRON_DIRS', meson.global_source_root() / 'data/environ/')
+
+env.prepend('GI_TYPELIB_PATH', prefix / 'lib/girepository-1.0/')
 env.prepend('GI_TYPELIB_PATH', meson.global_build_root() / 'libgimp')
+
 env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimp')
 env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpbase')
 env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpcolor')
@@ -24,6 +29,18 @@ env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpmath')
 env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpmodule')
 env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpthumb')
 env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpwidgets')
+
+if platform_windows
+  # On Windows, DLL are found through PATH rather than LD_LIBRARY_PATH.
+  env.prepend('PATH', meson.global_build_root() / 'libgimp')
+  env.prepend('PATH', meson.global_build_root() / 'libgimpbase')
+  env.prepend('PATH', meson.global_build_root() / 'libgimpcolor')
+  env.prepend('PATH', meson.global_build_root() / 'libgimpconfig')
+  env.prepend('PATH', meson.global_build_root() / 'libgimpmath')
+  env.prepend('PATH', meson.global_build_root() / 'libgimpmodule')
+  env.prepend('PATH', meson.global_build_root() / 'libgimpthumb')
+  env.prepend('PATH', meson.global_build_root() / 'libgimpwidgets')
+endif
 
 ## Splash Image and Welcome Dialog ##
 
