@@ -227,6 +227,7 @@ gimp_plug_in_manager_initialize (GimpPlugInManager  *manager,
                                  GimpInitStatusFunc  status_callback)
 {
   GimpCoreConfig *config;
+  const gchar    *path_str;
   GList          *path;
 
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
@@ -236,13 +237,20 @@ gimp_plug_in_manager_initialize (GimpPlugInManager  *manager,
 
   status_callback (NULL, _("Plug-in Interpreters"), 0.8);
 
-  path = gimp_config_path_expand_to_files (config->interpreter_path, NULL);
+  path_str = g_getenv ("GIMP_TESTING_INTERPRETER_DIRS");
+  if (! path_str)
+    path_str = config->interpreter_path;
+
+  path = gimp_config_path_expand_to_files (path_str, NULL);
   gimp_interpreter_db_load (manager->interpreter_db, path);
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   status_callback (NULL, _("Plug-in Environment"), 0.9);
 
-  path = gimp_config_path_expand_to_files (config->environ_path, NULL);
+  path_str = g_getenv ("GIMP_TESTING_ENVIRON_DIRS");
+  if (! path_str)
+    path_str = config->environ_path;
+  path = gimp_config_path_expand_to_files (path_str, NULL);
   gimp_environ_table_load (manager->environ_table, path);
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
