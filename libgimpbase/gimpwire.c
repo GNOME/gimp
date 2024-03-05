@@ -125,7 +125,14 @@ gimp_wire_read (GIOChannel *channel,
             }
           while (G_UNLIKELY (status == G_IO_STATUS_AGAIN));
 
-          if (G_UNLIKELY (status != G_IO_STATUS_NORMAL))
+          if (G_UNLIKELY (bytes == 0 && status == G_IO_STATUS_EOF))
+            {
+              g_warning ("%s: gimp_wire_read(): unexpected EOF",
+                         g_get_prgname ());
+              wire_error_val = TRUE;
+              return FALSE;
+            }
+          else if (G_UNLIKELY (status != G_IO_STATUS_NORMAL))
             {
               if (error)
                 {
@@ -139,14 +146,6 @@ gimp_wire_read (GIOChannel *channel,
                              g_get_prgname ());
                 }
 
-              wire_error_val = TRUE;
-              return FALSE;
-            }
-
-          if (G_UNLIKELY (bytes == 0))
-            {
-              g_warning ("%s: gimp_wire_read(): unexpected EOF",
-                         g_get_prgname ());
               wire_error_val = TRUE;
               return FALSE;
             }
