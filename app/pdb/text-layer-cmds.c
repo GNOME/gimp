@@ -21,7 +21,6 @@
 
 #include "stamp-pdbgen.h"
 
-#include <cairo.h>
 #include <pango/pango.h>
 
 #include <gegl.h>
@@ -29,7 +28,6 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
 
 #include "libgimpbase/gimpbase.h"
 
@@ -759,16 +757,16 @@ text_layer_set_color_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpTextLayer *layer;
-  GimpRGB color;
+  GeglColor *color;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
-  gimp_value_get_rgb (gimp_value_array_index (args, 1), &color);
+  color = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
       gimp_text_layer_set (layer,
                            _("Set text layer attribute"),
-                           "color", &color,
+                           "color", color,
                            NULL);
     }
 
@@ -1711,12 +1709,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                                            FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("color",
-                                                    "color",
-                                                    "The color to use for the text",
-                                                    FALSE,
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
+                               gegl_param_spec_color ("color",
+                                                      "color",
+                                                      "The color to use for the text",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

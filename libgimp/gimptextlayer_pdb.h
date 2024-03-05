@@ -71,7 +71,7 @@ gboolean                       gimp_text_layer_set_justification  (GimpTextLayer
                                                                    GimpTextJustification  justify);
 GeglColor*                     gimp_text_layer_get_color          (GimpTextLayer         *layer);
 gboolean                       gimp_text_layer_set_color          (GimpTextLayer         *layer,
-                                                                   const GimpRGB         *color);
+                                                                   GeglColor             *color);
 gdouble                        gimp_text_layer_get_indent         (GimpTextLayer         *layer);
 gboolean                       gimp_text_layer_set_indent         (GimpTextLayer         *layer,
                                                                    gdouble                indent);

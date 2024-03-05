@@ -917,7 +917,7 @@ gimp_text_layer_get_color (GimpTextLayer *layer)
  **/
 gboolean
 gimp_text_layer_set_color (GimpTextLayer *layer,
-                           const GimpRGB *color)
+                           GeglColor     *color)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -925,7 +925,7 @@ gimp_text_layer_set_color (GimpTextLayer *layer,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_TEXT_LAYER, layer,
-                                          GIMP_TYPE_RGB, color,
+                                          GEGL_TYPE_COLOR, color,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),

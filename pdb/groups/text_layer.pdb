@@ -58,7 +58,7 @@ HELP
   GeglColor *color;
 
   color = gimp_context_get_foreground (context);
-  
+
   gimp_text = g_object_new (GIMP_TYPE_TEXT,
                             "text",           text,
                             "font",           font,
@@ -66,7 +66,7 @@ HELP
                             "font-size-unit", unit,
                             "color",          color,
                             NULL);
-  
+
   layer = GIMP_TEXT_LAYER (gimp_text_layer_new (image, gimp_text));
   g_object_unref (gimp_text);
 
@@ -100,7 +100,7 @@ HELP
         { name => 'text', type => 'string',
           desc => 'The text from the specified text layer.' }
     );
-    
+
     %invoke = (
         code => <<'CODE'
 {
@@ -160,7 +160,7 @@ HELP
         { name => 'markup', type => 'string',
           desc => 'The markup which represents the style of the specified text layer.' }
     );
-    
+
     %invoke = (
         code => <<'CODE'
 {
@@ -245,7 +245,7 @@ HELP
         { name => 'font', type => 'font',
           desc => 'The font which is used in the specified text layer.' }
     );
-    
+
     %invoke = (
         code => <<'CODE'
 {
@@ -311,7 +311,7 @@ HELP
         { name => 'unit', type => 'unit',
           desc => 'The unit used for the font size' }
     );
-    
+
     %invoke = (
         code => <<'CODE'
 {
@@ -434,7 +434,7 @@ HELP
         { name => 'style', type => 'enum GimpTextHintStyle',
           desc => 'The hint style used for font outlines' }
     );
-    
+
     %invoke = (
         code => <<'CODE'
 {
@@ -754,7 +754,7 @@ HELP
     @inargs = (
         { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
-        { name => 'color', type => 'color',
+        { name => 'color', type => 'geglcolor',
           desc => 'The color to use for the text' }
     );
 
@@ -763,7 +763,7 @@ HELP
 {
   gimp_text_layer_set (layer,
                        _("Set text layer attribute"),
-                       "color", &color,
+                       "color", color,
                        NULL);
 }
 CODE
@@ -933,8 +933,8 @@ HELP
         { name => 'letter_spacing', type => '-8192.0 <= float <= 8192.0',
           desc => 'The additional letter spacing to use.' }
     );
-    
-    %invoke = (    
+
+    %invoke = (
         code => <<'CODE'
 {
   gimp_text_layer_set (layer,
