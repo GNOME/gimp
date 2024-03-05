@@ -40,7 +40,7 @@ struct _GimpOperationSemiFlatten
 {
   GeglOperationPointFilter  parent_instance;
 
-  GimpRGB                   color;
+  GeglColor                *color;
 };
 
 struct _GimpOperationSemiFlattenClass

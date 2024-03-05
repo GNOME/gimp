@@ -2090,10 +2090,10 @@ sub plug_in_laplace {
 
     $help = <<'HELP';
 This plug-in creates one-pixel wide edges from the
-image, with the value proportional to the gradient. 
-It uses the Laplace operator (a 3x3 kernel with -8 
-in the middle). The image has to be laplacered to 
-get useful results, a gauss_iir with 1.5 - 5.0 
+image, with the value proportional to the gradient.
+It uses the Laplace operator (a 3x3 kernel with -8
+in the middle). The image has to be laplacered to
+get useful results, a gauss_iir with 1.5 - 5.0
 depending on the noise in the image is best.
 HELP
 
@@ -2195,7 +2195,7 @@ HELP
       g_object_unref (color);
 
       node = wrap_in_selection_bounds (node, drawable);
- 
+
       gimp_drawable_apply_operation (drawable, progress,
                                     C_("undo-type", "Lens Distortion"),
                                     node);
@@ -2424,7 +2424,7 @@ sub plug_in_mblur_inward {
     $blurb = 'Simulate movement using directional blur';
 
     $help = <<'HELP';
-This procedure is equivalent to plug-in-mblur but 
+This procedure is equivalent to plug-in-mblur but
 performs the zoom blur inward instead of outward.
 HELP
 
@@ -4058,15 +4058,13 @@ HELP
     {
       GeglNode  *node;
       GeglColor *color;
-      GimpRGB    rgb;
 
       color = gimp_context_get_background (context);
-      gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
 
       node =
         gegl_node_new_child (NULL,
                              "operation", "gimp:semi-flatten",
-                             "color",     &rgb,
+                             "color",     color,
                              NULL);
 
       gimp_drawable_apply_operation (drawable, progress,

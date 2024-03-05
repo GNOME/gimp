@@ -3947,15 +3947,13 @@ plug_in_semiflatten_invoker (GimpProcedure         *procedure,
         {
           GeglNode  *node;
           GeglColor *color;
-          GimpRGB    rgb;
 
           color = gimp_context_get_background (context);
-          gegl_color_get_rgba_with_space (color, &rgb.r, &rgb.g, &rgb.b, &rgb.a, NULL);
 
           node =
             gegl_node_new_child (NULL,
                                  "operation", "gimp:semi-flatten",
-                                 "color",     &rgb,
+                                 "color",     color,
                                  NULL);
 
           gimp_drawable_apply_operation (drawable, progress,

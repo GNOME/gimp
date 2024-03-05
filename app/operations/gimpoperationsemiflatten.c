@@ -73,7 +73,7 @@ gimp_operation_semi_flatten_class_init (GimpOperationSemiFlattenClass *klass)
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
-  GimpRGB                        white;
+  GeglColor                     *color;
 
   object_class->set_property = gimp_operation_semi_flatten_set_property;
   object_class->get_property = gimp_operation_semi_flatten_get_property;
@@ -88,13 +88,13 @@ gimp_operation_semi_flatten_class_init (GimpOperationSemiFlattenClass *klass)
 
   point_class->process     = gimp_operation_semi_flatten_process;
 
-  gimp_rgba_set (&white, 1.0, 1.0, 1.0, 1.0);
+  color = gegl_color_new ("white");
 
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gimp_param_spec_rgb ("color",
+                                   gegl_param_spec_color ("color",
                                                         _("Color"),
                                                         _("The color"),
-                                                        FALSE, &white,
+                                                        /*FALSE,*/ color,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
@@ -115,7 +115,7 @@ gimp_operation_semi_flatten_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_COLOR:
-      gimp_value_set_rgb (value, &self->color);
+      g_value_set_object (value, self->color);
       break;
 
     default:
@@ -135,7 +135,7 @@ gimp_operation_semi_flatten_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_COLOR:
-      gimp_value_get_rgb (value, &self->color);
+      g_set_object  (&self->color, g_value_get_object (value));
       break;
 
    default:
@@ -177,9 +177,14 @@ gimp_operation_semi_flatten_process (GeglOperation       *operation,
         }
       else
         {
-          dest[RED]   = src[RED]   * alpha + self->color.r * (1.0 - alpha);
-          dest[GREEN] = src[GREEN] * alpha + self->color.g * (1.0 - alpha);
-          dest[BLUE]  = src[BLUE]  * alpha + self->color.b * (1.0 - alpha);
+          gdouble rgba[4];
+
+          gegl_color_get_rgba_with_space (self->color, &rgba[0], &rgba[1],
+                                          &rgba[2], &rgba[3], NULL);
+
+          dest[RED]   = src[RED]   * alpha + rgba[0] * (1.0 - alpha);
+          dest[GREEN] = src[GREEN] * alpha + rgba[1] * (1.0 - alpha);
+          dest[BLUE]  = src[BLUE]  * alpha + rgba[2] * (1.0 - alpha);
           dest[ALPHA] = 1.0;
         }
 
