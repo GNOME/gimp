@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-03 02:09+0000\n"
-"PO-Revision-Date: 2024-03-03 16:47+0800\n"
+"POT-Creation-Date: 2024-03-04 20:55+0000\n"
+"PO-Revision-Date: 2024-03-05 16:51+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -622,8 +622,8 @@ msgstr "竖直"
 #: plug-ins/common/file-cel.c:500 plug-ins/common/file-dicom.c:751
 #: plug-ins/common/file-farbfeld.c:321 plug-ins/common/file-gegl.c:471
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:345
-#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:729
-#: plug-ins/common/file-pcx.c:737 plug-ins/common/file-pcx.c:745
+#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:730
+#: plug-ins/common/file-pcx.c:738 plug-ins/common/file-pcx.c:746
 #: plug-ins/common/file-pix.c:456 plug-ins/common/file-png.c:947
 #: plug-ins/common/file-pnm.c:868 plug-ins/common/file-qoi.c:320
 #: plug-ins/common/file-raw-data.c:1828 plug-ins/common/file-sunras.c:1082
@@ -1206,7 +1206,7 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/common/cml-explorer.c:2212 plug-ins/common/curve-bend.c:781
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
 #: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1218
-#: plug-ins/common/file-pcx.c:1217 plug-ins/common/file-pdf-save.c:659
+#: plug-ins/common/file-pcx.c:1219 plug-ins/common/file-pdf-save.c:659
 #: plug-ins/common/file-png.c:1518 plug-ins/common/file-raw-data.c:1337
 #: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
 #: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1381
@@ -2646,7 +2646,7 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #.
 #: plug-ins/common/file-cel.c:845 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-gif-save.c:975 plug-ins/common/file-html-table.c:359
-#: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1101
+#: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1103
 #: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1510
 #: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1321
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
@@ -4145,9 +4145,8 @@ msgid "PCX format does not support multiple layers."
 msgstr "PCX 格式不支持多图层。"
 
 #: plug-ins/common/file-pcx.c:521
-#, c-format
-msgid "Could not load PCX image"
-msgstr "无法加载 PCX 图像"
+msgid "Could not load PCX image: "
+msgstr "无法加载 PCX 图像："
 
 #: plug-ins/common/file-pcx.c:568
 #, c-format
@@ -4155,9 +4154,8 @@ msgid "DCX image offset exceeds the file size"
 msgstr "DCX 图像偏移超出文件大小"
 
 #: plug-ins/common/file-pcx.c:579
-#, c-format
-msgid "Could not load DCX image"
-msgstr "无法加载 DCX 图像"
+msgid "Could not load DCX image: "
+msgstr "无法加载 DCX 图像："
 
 #: plug-ins/common/file-pcx.c:602
 #, c-format
@@ -4178,12 +4176,12 @@ msgstr "%s：无法加载所有 DCX 图像：%s\n"
 msgid "Could not read header from '%s'"
 msgstr "无法从“%s”读取文件头"
 
-#: plug-ins/common/file-pcx.c:677
+#: plug-ins/common/file-pcx.c:676
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "“%s”不是 PCX 文件"
 
-#: plug-ins/common/file-pcx.c:693 plug-ins/common/file-wbmp.c:263
+#: plug-ins/common/file-pcx.c:692 plug-ins/common/file-wbmp.c:263
 #: plug-ins/file-bmp/bmp-load.c:727 plug-ins/file-psd/psd-load.c:548
 #, c-format
 msgid "Unsupported or invalid image width: %d"
@@ -4195,7 +4193,8 @@ msgstr "不支持或无效的图像宽度：%d"
 msgid "Unsupported or invalid image height: %d"
 msgstr "不支持或无效的图像高度：%d"
 
-#: plug-ins/common/file-pcx.c:706
+#: plug-ins/common/file-pcx.c:707
+#, c-format
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "PCX 文件头中的无效的每行字节数"
 
@@ -4203,52 +4202,53 @@ msgstr "PCX 文件头中的无效的每行字节数"
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "XCX 文件头中的分辨率超出边界，将使用 72×72"
 
-#: plug-ins/common/file-pcx.c:721
+#: plug-ins/common/file-pcx.c:722
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "图像尺寸过大：宽 %d x 高 %d"
 
-#: plug-ins/common/file-pcx.c:848
+#: plug-ins/common/file-pcx.c:850
+#, c-format
 msgid "Unusual PCX flavour, giving up"
 msgstr "异常的 PCX 类型，放弃"
 
-#: plug-ins/common/file-pcx.c:874
+#: plug-ins/common/file-pcx.c:876
 msgid "Import from PCX"
 msgstr "从 PCX 导入"
 
-#: plug-ins/common/file-pcx.c:883
+#: plug-ins/common/file-pcx.c:885
 msgid "Use PCX image's built-in palette"
 msgstr "使用 PCX 图像的内置色板"
 
-#: plug-ins/common/file-pcx.c:884
+#: plug-ins/common/file-pcx.c:886
 msgid "Use black and white palette"
 msgstr "使用黑色和白色色板"
 
-#: plug-ins/common/file-pcx.c:1168 plug-ins/common/file-pnm.c:1630
+#: plug-ins/common/file-pcx.c:1170 plug-ins/common/file-pnm.c:1630
 msgid "Cannot export images with alpha channel."
 msgstr "无法导出带有透明通道的图像。"
 
-#: plug-ins/common/file-pcx.c:1188
+#: plug-ins/common/file-pcx.c:1190
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "无效的 X 偏移：%d"
 
-#: plug-ins/common/file-pcx.c:1194
+#: plug-ins/common/file-pcx.c:1196
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "无效的 Y 偏移：%d"
 
-#: plug-ins/common/file-pcx.c:1200
+#: plug-ins/common/file-pcx.c:1202
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "右边框超出边界（须 < %d）：%d"
 
-#: plug-ins/common/file-pcx.c:1207
+#: plug-ins/common/file-pcx.c:1209
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "下边框超出边界（须 < %d）：%d"
 
-#: plug-ins/common/file-pcx.c:1283 plug-ins/common/file-qoi.c:393
+#: plug-ins/common/file-pcx.c:1285 plug-ins/common/file-qoi.c:393
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "写入文件“%s”失败：%s"
@@ -6247,6 +6247,18 @@ msgstr ""
 #: plug-ins/common/file-xmc.c:301 plug-ins/common/file-xmc.c:350
 msgid "X11 Mouse Cursor"
 msgstr "X11 鼠标指针"
+
+#: plug-ins/common/file-xmc.c:395
+msgid "Replace existent size or not"
+msgstr "是否替换现存大小"
+
+#: plug-ins/common/file-xmc.c:401
+msgid "Default delay"
+msgstr "默认延时"
+
+#: plug-ins/common/file-xmc.c:407
+msgid "Replace existent delay or not"
+msgstr "是否替换现存延时"
 
 #: plug-ins/common/file-xmc.c:541
 #, c-format
