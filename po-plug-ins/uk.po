@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-03 12:40+0000\n"
-"PO-Revision-Date: 2024-03-03 21:10+0200\n"
+"POT-Creation-Date: 2024-03-04 20:55+0000\n"
+"PO-Revision-Date: 2024-03-05 22:09+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -627,8 +627,8 @@ msgstr "Вертикально"
 #: plug-ins/common/file-cel.c:500 plug-ins/common/file-dicom.c:751
 #: plug-ins/common/file-farbfeld.c:321 plug-ins/common/file-gegl.c:471
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:345
-#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:729
-#: plug-ins/common/file-pcx.c:737 plug-ins/common/file-pcx.c:745
+#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:730
+#: plug-ins/common/file-pcx.c:738 plug-ins/common/file-pcx.c:746
 #: plug-ins/common/file-pix.c:456 plug-ins/common/file-png.c:947
 #: plug-ins/common/file-pnm.c:868 plug-ins/common/file-qoi.c:320
 #: plug-ins/common/file-raw-data.c:1828 plug-ins/common/file-sunras.c:1082
@@ -1217,7 +1217,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/cml-explorer.c:2212 plug-ins/common/curve-bend.c:781
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
 #: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1218
-#: plug-ins/common/file-pcx.c:1217 plug-ins/common/file-pdf-save.c:659
+#: plug-ins/common/file-pcx.c:1219 plug-ins/common/file-pdf-save.c:659
 #: plug-ins/common/file-png.c:1518 plug-ins/common/file-raw-data.c:1337
 #: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
 #: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1381
@@ -2696,7 +2696,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #.
 #: plug-ins/common/file-cel.c:845 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-gif-save.c:975 plug-ins/common/file-html-table.c:359
-#: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1101
+#: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1103
 #: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1510
 #: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1321
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
@@ -3249,9 +3249,9 @@ msgid ""
 "Unable to export '%s'.  Please convert your image to 8 bit integer "
 "precision, as the GIF file format does not support higher precisions."
 msgstr ""
-"Не вдалося експортувати «%s». Будь ласка, перетворіть ваше зображення до"
-" 8-бітової цілочисельної точності, оскільки у форматі файлів GIF не"
-" передбачено підтримки більшої точності."
+"Не вдалося експортувати «%s». Будь ласка, перетворіть ваше зображення до 8-"
+"бітової цілочисельної точності, оскільки у форматі файлів GIF не передбачено "
+"підтримки більшої точності."
 
 #: plug-ins/common/file-gif-save.c:852
 msgid ""
@@ -3300,8 +3300,8 @@ msgid ""
 "Your image will be converted on export, which may change the pixel values."
 msgstr ""
 "У форматі GIF передбачено підтримку лише 8-бітової цілочисельної точності.\n"
-"Ваше зображення буде перетворено при експортуванні, що призведе до зміни"
-" значень пікселів."
+"Ваше зображення буде перетворено при експортуванні, що призведе до зміни "
+"значень пікселів."
 
 #: plug-ins/common/file-gif-save.c:1358 plug-ins/common/file-mng.c:1638
 msgid "milliseconds"
@@ -4248,9 +4248,9 @@ msgid "PCX format does not support multiple layers."
 msgstr "Для формату PCX не передбачено підтримку декількох шарів."
 
 #: plug-ins/common/file-pcx.c:521
-#, c-format
-msgid "Could not load PCX image"
-msgstr "Не вдалося завантажити зображення PCX"
+#| msgid "Could not load PCX image"
+msgid "Could not load PCX image: "
+msgstr "Не вдалося завантажити зображення PCX: "
 
 #: plug-ins/common/file-pcx.c:568
 #, c-format
@@ -4258,9 +4258,9 @@ msgid "DCX image offset exceeds the file size"
 msgstr "Відступ зображення DCX перевищує розмір файла"
 
 #: plug-ins/common/file-pcx.c:579
-#, c-format
-msgid "Could not load DCX image"
-msgstr "Не вдалося завантажити зображення DCX"
+#| msgid "Could not load DCX image"
+msgid "Could not load DCX image: "
+msgstr "Не вдалося завантажити зображення DCX: "
 
 #: plug-ins/common/file-pcx.c:602
 #, c-format
@@ -4281,12 +4281,12 @@ msgstr "%s: не вдалося завантажити усі зображенн
 msgid "Could not read header from '%s'"
 msgstr "Не вдається зчитати заголовок з «%s»"
 
-#: plug-ins/common/file-pcx.c:677
+#: plug-ins/common/file-pcx.c:676
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "«%s»: не є файлом PCX"
 
-#: plug-ins/common/file-pcx.c:693 plug-ins/common/file-wbmp.c:263
+#: plug-ins/common/file-pcx.c:692 plug-ins/common/file-wbmp.c:263
 #: plug-ins/file-bmp/bmp-load.c:727 plug-ins/file-psd/psd-load.c:548
 #, c-format
 msgid "Unsupported or invalid image width: %d"
@@ -4298,7 +4298,8 @@ msgstr "Непідтримувана ширина зображення: %d"
 msgid "Unsupported or invalid image height: %d"
 msgstr "Непідтримувана висота зображення: %d"
 
-#: plug-ins/common/file-pcx.c:706
+#: plug-ins/common/file-pcx.c:707
+#, c-format
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Некоректна кількість байтів на рядок у заголовку PCX"
 
@@ -4306,52 +4307,53 @@ msgstr "Некоректна кількість байтів на рядок у 
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "Роздільність виходить за межі заголовка XCX, використовуємо 72x72"
 
-#: plug-ins/common/file-pcx.c:721
+#: plug-ins/common/file-pcx.c:722
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Розміри зображення великі: ширина %d x висота %d"
 
-#: plug-ins/common/file-pcx.c:848
+#: plug-ins/common/file-pcx.c:850
+#, c-format
 msgid "Unusual PCX flavour, giving up"
 msgstr "Незвичайний вигляд файлу PCX. Вихід"
 
-#: plug-ins/common/file-pcx.c:874
+#: plug-ins/common/file-pcx.c:876
 msgid "Import from PCX"
 msgstr "Імпорт з PCX"
 
-#: plug-ins/common/file-pcx.c:883
+#: plug-ins/common/file-pcx.c:885
 msgid "Use PCX image's built-in palette"
 msgstr "Скористатися вбудованою палітрою зображення PCX"
 
-#: plug-ins/common/file-pcx.c:884
+#: plug-ins/common/file-pcx.c:886
 msgid "Use black and white palette"
 msgstr "Скористатися чорно-білою палітрою"
 
-#: plug-ins/common/file-pcx.c:1168 plug-ins/common/file-pnm.c:1630
+#: plug-ins/common/file-pcx.c:1170 plug-ins/common/file-pnm.c:1630
 msgid "Cannot export images with alpha channel."
 msgstr "Неможливо експортувати зображення з альфа-каналом."
 
-#: plug-ins/common/file-pcx.c:1188
+#: plug-ins/common/file-pcx.c:1190
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Некоректний зсув вздовж X: %d"
 
-#: plug-ins/common/file-pcx.c:1194
+#: plug-ins/common/file-pcx.c:1196
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Некоректний зсув вздовж Y: %d"
 
-#: plug-ins/common/file-pcx.c:1200
+#: plug-ins/common/file-pcx.c:1202
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Права межа знаходиться за припустимими межами (має бути < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1207
+#: plug-ins/common/file-pcx.c:1209
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Нижня межа знаходиться за припустимими межами (має бути < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1283 plug-ins/common/file-qoi.c:393
+#: plug-ins/common/file-pcx.c:1285 plug-ins/common/file-qoi.c:393
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Помилка при записі до файлу «%s»: %s"
@@ -6424,7 +6426,6 @@ msgid "Replace existent size or not"
 msgstr "Чи слід замінювати наявний розмір"
 
 #: plug-ins/common/file-xmc.c:401
-#| msgid "Default fra_me delay"
 msgid "Default delay"
 msgstr "Типова затримка"
 
