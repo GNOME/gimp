@@ -2379,23 +2379,21 @@ HELP
 {
   gchar *uri;
   gchar *folded_uri;
-  gchar *folded_ext;
 
   uri        = g_file_get_uri (file);
   folded_uri = g_utf8_casefold (uri, -1);
-  folded_ext = g_utf8_casefold (".xcf", -1);
 
-  if (! g_str_has_suffix (folded_uri, folded_ext))
+  if (! g_regex_match_simple ("\\.xcf(\\.?(gz|bz2|xz))?$", uri, G_REGEX_CASELESS, 0))
     {
       gchar *dot = g_strrstr (uri, ".");
 
       if (dot != NULL && strstr (dot + 1, G_DIR_SEPARATOR_S) == NULL)
         g_printerr ("%s: failure to set file '%s' with extension '%s'. "
-                    "The extension must be '.xcf'.\n",
+                    "The extension must be '.xcf' (or a compressed variant).\n",
                     "gimp_image_set_file", uri, dot + 1);
       else
         g_printerr ("%s: failure to set file '%s' without extension. "
-                    "The extension must be '.xcf'.\n",
+                    "The extension must be '.xcf' (or a compressed variant).\n",
                     "gimp_image_set_file", uri);
 
       success = FALSE;
@@ -2405,7 +2403,6 @@ HELP
 
   g_free (uri);
   g_free (folded_uri);
-  g_free (folded_ext);
 }
 CODE
     );
