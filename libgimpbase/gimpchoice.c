@@ -237,7 +237,6 @@ gimp_choice_is_valid (GimpChoice  *choice,
 /**
  * gimp_choice_list_nicks:
  * @choice: a %GimpChoice.
- * @nick:   the nick to check.
  *
  * This procedure returns the list of nicks allowed for @choice.
  *
