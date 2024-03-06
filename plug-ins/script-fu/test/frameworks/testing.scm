@@ -15,6 +15,8 @@
 ; ReportStmt      ~ (testing:report)
 ; LoadStmt        ~ (testing:load-test <filename>)
 ; AllPassedPredicate ~ (testing:all-passed?)
+
+; PrintStmt       ~ (test! "message")
 ;
 ; AssertStmt and AssertErrorStmt and AssertPDBTrue
 ;   - have side effects on the testing state,
@@ -103,6 +105,15 @@
                  code
                  actual-error
                  expected-error)))
+
+; Print a line break and a string, usually the test name.
+; Side effects on the REPL.
+; No affect on testing state, no association with any test result
+; except by proximity in the output.
+(define (test! string)
+  (displayln "")
+  (displayln string))
+
 
 ; reset testing state when test framework is loaded
 (testing:reset!)

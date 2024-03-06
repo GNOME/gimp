@@ -45,6 +45,7 @@ if not stable
     'tests' / 'PDB' / 'selection' / 'selection.scm',
     'tests' / 'PDB' / 'selection' / 'selection-from.scm',
     'tests' / 'PDB' / 'selection' / 'selection-by.scm',
+    'tests' / 'PDB' / 'selection' / 'selection-by-shape.scm',
 
     'tests' / 'PDB' / 'resource' / 'resource.scm',
     'tests' / 'PDB' / 'resource' / 'resource-ops.scm',
@@ -66,10 +67,11 @@ if not stable
     'tests' / 'PDB' / 'gimp' / 'refresh.scm',
     'tests' / 'PDB' / 'gimp' / 'procedures.scm',
 
+    # uncategorized tests
     'tests' / 'PDB' / 'misc.scm',
     'tests' / 'PDB' / 'enums.scm',
-
     'tests' / 'PDB' / 'bind-args.scm',
+    'tests' / 'PDB' / 'pixel.scm',
 
     # comprehensive, total test
     'tests' / 'PDB' / 'pdb.scm',

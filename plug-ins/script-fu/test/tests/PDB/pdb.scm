@@ -36,6 +36,7 @@
 (testing:load-test "selection.scm")
 (testing:load-test "selection-from.scm")
 (testing:load-test "selection-by.scm")
+(testing:load-test "selection-by-shape.scm")
 
 (testing:load-test "channel-new.scm")
 (testing:load-test "channel-attributes.scm")
@@ -93,10 +94,12 @@
 
 ; gimp-parasite
 
-
+; uncategorized tests
 (testing:load-test "misc.scm")
 (testing:load-test "enums.scm")
 (testing:load-test "bind-args.scm")
+(testing:load-test "pixel.scm")
+
 
 ; report the result
 (testing:report)

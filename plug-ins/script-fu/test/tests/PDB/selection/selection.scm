@@ -89,19 +89,18 @@
 
 ;                misc selection operations
 
-; gimp-selection-value
+; value of the selection mask at coords 1,1 is 0 since selection is none
+; return int in range [0,255]
+(assert `(= (car (gimp-selection-value ,testImage 1 1))
+            0))
+
 
 
 ;              change selection to totally new selection
 ; Not a function of existing selection, by color or shape.
 
-;gimp-image-select-color
-;  ,testImage
- ; CHANNEL-OP-ADD
-;  drawable
-;  "red")
+; See selection-by.scm for gimp-image-select-color, gimp-image-select-contiguous-color
 
-; gimp-image-select-contiguous-color
 ; ellipse
 ; polygon
 ; rectangle

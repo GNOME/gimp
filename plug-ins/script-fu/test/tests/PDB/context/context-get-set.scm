@@ -1,7 +1,8 @@
 ; test getters and setters of GimpContext
 ; (sic its not an object or class)
 
-; TODO context push pop list-paint-methods
+; see context-stack.scm for context push pop
+; see paint/paint-methods for context-list-paint-methods
 
 ;                        set-line-dash-pattern
 
@@ -39,4 +40,62 @@
 
 
 
+;                        color
+
+; On clean install, foreground is black
+(assert `(equal? (car (gimp-context-get-foreground))
+            '(0 0 0)))
+
+; On clean install, background is white
+(assert `(equal? (car (gimp-context-get-background))
+            '(255 255 255)))
+
+; swap
+(assert `(gimp-context-swap-colors))
+
+; swap effective, foreground now white
+(assert `(equal? (car (gimp-context-get-foreground))
+            '(255 255 255)))
+
+; can set foreground color by name
+(assert `(gimp-context-set-foreground "red"))
+; effective
+(assert `(equal? (car (gimp-context-get-foreground))
+            '(255 0 0)))
+
+; can set foreground by tuple
+(assert `(gimp-context-set-foreground '(0 255 0)))
+; effective
+(assert `(equal? (car (gimp-context-get-foreground))
+            '(0 255 0)))
+
+; invalid tuple: one too many components
+; alpha is not a component
+(assert-error `(gimp-context-set-foreground '(0 255 0 1))
+              "in script, expected type: color list of numeric components for argument 1 to gimp-context-set-foreground")
+
+; Test this last so it cleans up
+; set to default
+(assert `(gimp-context-set-default-colors))
+
+; effective, foreground is back to black
+(assert `(equal? (car (gimp-context-get-foreground))
+            '(0 0 0)))
+
+
+
+;                   gradient blend color space
+
+; default, after a clean install
+(assert `(equal? (car (gimp-context-get-gradient-blend-color-space))
+             GRADIENT-BLEND-RGB-PERCEPTUAL))
+
+; set
+(assert `(gimp-context-set-gradient-blend-color-space GRADIENT-BLEND-RGB-LINEAR))
+; set effective
+(assert `(equal? (car (gimp-context-get-gradient-blend-color-space))
+             GRADIENT-BLEND-RGB-LINEAR))
+
+; clean up after test, restore to default
+(assert `(gimp-context-set-gradient-blend-color-space GRADIENT-BLEND-RGB-PERCEPTUAL))
 
