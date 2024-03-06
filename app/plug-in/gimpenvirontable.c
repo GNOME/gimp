@@ -341,6 +341,11 @@ gimp_environ_table_load_env_file (GimpEnvironTable *environ_table,
 
           separator = name;
           name = q + 1;
+
+#ifdef G_OS_WIN32
+          if (g_strcmp0 (separator, ":") == 0)
+            separator = ";";
+#endif
         }
 
       if (! gimp_environ_table_legal_name (name))
