@@ -61,29 +61,7 @@ sf_color_get_repr (SFColorType *arg_value)
   return g_strdup_printf ("'(%d %d %d)", (gint) r, (gint) g, (gint) b);
 }
 
-/* FIXME sf_color_arg_get_name_of_default goes away after the refactor.
- * when we create a param spec by color, not by name.
- */
-
-/* Get the name of the default.
- *
- * Returns null when the default has no name,
- * when script author alternatively declared the color by a list of integers,
- * and that color doesn't represent a nameable color.
- *
- * Returned string is owned by instance/self.
- */
-gchar*
-sf_color_arg_get_name_of_default (SFArg *arg)
-{
-  /* FIXME get the default name declared at registration time.
-   * or if not declared by name (optionally by list), return NULL.
-   */
-  return "black";
-}
-
-/* Get GeglColor
- * Knows that SFColorType is GimpRGB and format is quad of double.
+/* Returns GeglColor from SFColorType: GimpRGB w format quad of double.
  *
  * Returned GeglColor is owned by caller.
  */

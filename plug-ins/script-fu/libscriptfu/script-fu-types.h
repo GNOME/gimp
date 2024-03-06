@@ -115,7 +115,5 @@ gboolean   sf_color_arg_set_default_by_name  (SFArg       *arg,
 void       sf_color_arg_set_default_by_color (SFArg       *arg,
                                               GeglColor   *color);
 GeglColor* sf_color_arg_get_default_color    (SFArg       *arg);
-/* FIXME this should go away. */
-gchar*     sf_color_arg_get_name_of_default  (SFArg       *arg);
 
 #endif /*  __SCRIPT_FU_TYPES__  */

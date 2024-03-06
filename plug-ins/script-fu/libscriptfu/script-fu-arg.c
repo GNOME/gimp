@@ -292,20 +292,12 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       break;
 
     case SF_COLOR:
-      /* FIXME by name is wrong, but that is a separate issue from refactor. */
-      /* Set the default by name. */
-      /* G_PARAM_READWRITE vs GIMP_PARAM_READWRITE, they are not equal. */
-      pspec = gegl_param_spec_color_from_string (name, nick, arg->label,
-                                                 sf_color_arg_get_name_of_default (arg),
-                                                 G_PARAM_READWRITE);
-      /* FIXME instead use this
       {
-        GeglColor *color = sf_color_arg_get_color_of_default (arg);
+        GeglColor *color = sf_color_arg_get_default_color (arg);
 
         pspec = gegl_param_spec_color (name, nick, arg->label, color, G_PARAM_READWRITE);
         g_object_unref (color);
       }
-      */
       break;
 
     case SF_TOGGLE:
