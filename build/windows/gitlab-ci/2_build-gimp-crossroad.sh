@@ -14,8 +14,10 @@ fi
 
 # Build GIMP
 mkdir _build${ARTIFACTS_SUFFIX} && cd _build${ARTIFACTS_SUFFIX}
-crossroad meson setup .. -Dgi-docgen=disabled \
-                         -Djavascript=disabled $MESON_OPTIONS
+crossroad meson setup .. -Dgi-docgen=disabled                 \
+                         -Djavascript=disabled -Dlua=disabled \
+                         -Dpython=disabled -Dvala=disabled    \
+                         $MESON_OPTIONS
 (ninja && ninja install) || exit 1
 cd ..
 

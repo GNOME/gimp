@@ -90,14 +90,14 @@ download_lang Swedish.isl
 download_lang Vietnamese.isl
 
 
-$debian_generated = Test-Path -Path "_build-x64/build/windows/installer"
-if ($debian_generated -eq "True")
+$a64_generated = Test-Path -Path "_build-a64/build/windows/installer"
+if ($a64_generated -eq "True")
   {
     # Copy generated language files into the source directory
-    Copy-Item _build-x64/build/windows/installer/lang/*isl build/windows/installer/lang
+    Copy-Item _build-a64/build/windows/installer/lang/*isl build/windows/installer/lang
 
     # Copy generated welcome images into the source directory
-    Copy-Item _build-x64/build/windows/installer/*bmp build/windows/installer/
+    Copy-Item _build-a64/build/windows/installer/*bmp build/windows/installer/
   }
 
 
