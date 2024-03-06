@@ -338,3 +338,29 @@ marshal_color_to_component_list (scheme    *sc,
                                       sc->vptr->mk_integer (sc, rgb[2]),
                                       sc->NIL)));
 }
+
+/* ColorArray */
+
+/* Returns a vector of lists, where each list is a pixel i.e.
+ * list of numerics, each the intensity component in a channel.
+ *
+ * array is a null-terminated array of pointers to GeglColor which is-a GObject.
+ *
+ * The returned vector can be empty, when the passed array is empty.
+ */
+pointer
+marshal_color_array_to_vector (scheme         *sc,
+                               GimpColorArray  array)
+{
+  guint   array_length = gimp_color_array_get_length (array);
+  pointer result       = sc->vptr->mk_vector (sc, array_length);
+
+  for (guint j = 0; j < array_length; j++)
+    {
+      pointer component_list = marshal_color_to_component_list (sc, array[j]);
+
+      sc->vptr->set_vector_elem (result, j, component_list);
+    }
+
+  return result;
+}

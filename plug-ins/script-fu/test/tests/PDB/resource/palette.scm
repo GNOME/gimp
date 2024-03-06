@@ -38,8 +38,9 @@
             0))
 
 ; new palette has empty colormap
-; (0 #())
-(assert `(= (car (gimp-palette-get-colors ,testNewPalette))
+; v2 returns (0 #())
+; v3 returns (#())
+(assert `(= (vector-length (car (gimp-palette-get-colors ,testNewPalette)))
             0))
 
 ; new palette has zero columns
@@ -76,8 +77,9 @@
             256))
 
 ; Bears palette colormap array is size 256 vector of 3-tuple lists
-; (256 #((8 8 8) ... ))
-(assert `(= (vector-length (cadr (gimp-palette-get-colors ,testBearsPalette)))
+; v2 get_colors returns (256 #((8 8 8) ... ))
+; v3            returns (#((8 8 8) ... ))
+(assert `(= (vector-length (car (gimp-palette-get-colors ,testBearsPalette)))
             256))
 
 ; Bears palette has zero columns

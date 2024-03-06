@@ -42,4 +42,7 @@ GeglColor*    marshal_component_list_to_color (scheme    *sc,
 pointer       marshal_color_to_component_list (scheme    *sc,
                                                GeglColor *color);
 
+pointer       marshal_color_array_to_vector   (scheme         *sc,
+                                               GimpColorArray  array);
+
 #endif /* __SCHEME_MARSHAL_H__ */
