@@ -765,11 +765,15 @@ gimp_text_style_editor_set_color (GimpTextStyleEditor *editor,
   if (color_tag)
     gimp_text_tag_get_fg_color (color_tag, &color);
 
+  if (! color)
+    color = gegl_color_new ("black");
+
   g_signal_handlers_block_by_func (editor->color_button,
                                    gimp_text_style_editor_color_changed,
                                    editor);
 
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (editor->color_button), color);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (editor->color_button),
+                               color);
   g_clear_object (&color);
 
   /* FIXME should have "inconsistent" state as for font and size */
