@@ -109,22 +109,6 @@
       <value>Include information to help with debugging GIMP</value>
     </config>
     <!-- Components -->
-    <config name="ComponentsGtkWimp">
-      <value>MS-Windows engine for GTK</value>
-    </config>
-    <!-- Components -->
-    <config name="ComponentsGtkWimpDescription">
-      <value>Native Windows look for GIMP</value>
-    </config>
-    <!-- Components -->
-    <config name="ComponentsCompat">
-      <value>Support for old plug-ins</value>
-    </config>
-    <!-- Components -->
-    <config name="ComponentsCompatDescription">
-      <value>Install libraries needed by old third-party plug-ins</value>
-    </config>
-    <!-- Components -->
     <config name="ComponentsTranslations">
       <value>Translations</value>
     </config>
@@ -170,7 +154,7 @@
     </config>
     <!-- Compoments, only when installing on x64 Windows -->
     <config name="ComponentsGimp32Description">
-      <value>Include files necessary for using 32-bit plug-ins.%nRequired for Python support.</value>
+      <value>Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN support.</value>
     </config>
 
     <!-- Additional installation tasks -->
