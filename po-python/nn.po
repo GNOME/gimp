@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-16 10:28+0000\n"
-"PO-Revision-Date: 2024-01-20 16:23+0100\n"
+"POT-Creation-Date: 2024-03-07 15:33+0000\n"
+"PO-Revision-Date: 2024-03-07 16:49+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <i18n-no@lister.ping.uio.no>\n"
 "Language: nn\n"
@@ -24,7 +24,7 @@ msgstr "Lagra som farga HTML-tekst…"
 #: plug-ins/python/colorxhtml.py:92 plug-ins/python/colorxhtml.py:98
 #: plug-ins/python/gradients-save-as-css.py:116
 #: plug-ins/python/palette-offset.py:135
-#: plug-ins/python/python-console/python-console.py:271
+#: plug-ins/python/python-console/python-console.py:272
 #: plug-ins/python/spyro-plus.py:1719
 msgid "_Cancel"
 msgstr "_Avbryt"
@@ -105,51 +105,51 @@ msgstr "Lagra som farga HTML-tekst"
 msgid "Colored HTML text"
 msgstr "Farga HTML-tekst"
 
-#: plug-ins/python/foggify.py:107
+#: plug-ins/python/foggify.py:111
 msgid "Layer _name"
 msgstr "_Lagnamnet"
 
-#: plug-ins/python/foggify.py:108
+#: plug-ins/python/foggify.py:112
 msgid "Layer name"
 msgstr "Lagnamnet"
 
-#: plug-ins/python/foggify.py:109
+#: plug-ins/python/foggify.py:113
 msgid "Clouds"
 msgstr "Skyer"
 
-#: plug-ins/python/foggify.py:112
+#: plug-ins/python/foggify.py:116
 msgid "_Turbulence"
 msgstr "_Turbulens"
 
-#: plug-ins/python/foggify.py:113
+#: plug-ins/python/foggify.py:117
 msgid "Turbulence"
 msgstr "Turbulens"
 
-#: plug-ins/python/foggify.py:117
+#: plug-ins/python/foggify.py:121
 msgid "O_pacity"
 msgstr "_Dekkevne"
 
-#: plug-ins/python/foggify.py:118
+#: plug-ins/python/foggify.py:122
 msgid "Opacity"
 msgstr "Dekkevne"
 
-#: plug-ins/python/foggify.py:127
+#: plug-ins/python/foggify.py:131
 msgid "_Fog color"
 msgstr "_Tåkefarge"
 
-#: plug-ins/python/foggify.py:128
+#: plug-ins/python/foggify.py:132
 msgid "Fog color"
 msgstr "Tåkefarge"
 
-#: plug-ins/python/foggify.py:144
+#: plug-ins/python/foggify.py:148
 msgid "Add a layer of fog"
 msgstr "Legg til eit tåkelag"
 
-#: plug-ins/python/foggify.py:145
+#: plug-ins/python/foggify.py:149
 msgid "Adds a layer of fog to the image."
 msgstr "Legg eit tåkelag til i biletet."
 
-#: plug-ins/python/foggify.py:147
+#: plug-ins/python/foggify.py:151
 msgid "_Fog..."
 msgstr "_Tåke …"
 
@@ -167,12 +167,12 @@ msgstr "Lagra som CSS-fil…"
 
 #: plug-ins/python/gradients-save-as-css.py:190
 #: plug-ins/python/palette-sort.py:345
-#: plug-ins/python/python-console/python-console.py:296
+#: plug-ins/python/python-console/python-console.py:300
 msgid "Run mode"
 msgstr "Køyremodus"
 
 #: plug-ins/python/gradients-save-as-css.py:191
-#: plug-ins/python/python-console/python-console.py:296
+#: plug-ins/python/python-console/python-console.py:300
 msgid "The run mode"
 msgstr "Køyremodusen"
 
@@ -218,8 +218,8 @@ msgid "Histogram Export..."
 msgstr "Histogrameksport…"
 
 #: plug-ins/python/histogram-export.py:209
-msgid "Histogram _File"
-msgstr "Histogram_fil"
+msgid "Histogram File"
+msgstr "Histogramfil"
 
 #: plug-ins/python/histogram-export.py:213
 msgid "_Bucket Size"
@@ -445,137 +445,137 @@ msgstr "Opprett ein repeterande fargeovergang med fargar frå paletten"
 msgid "Create a new repeating gradient using colors from the palette."
 msgstr "Opprett ein ny repeterande fargeovergang med fargar frå paletten."
 
-#: plug-ins/python/python-console/python-console.py:78
+#: plug-ins/python/python-console/python-console.py:79
 msgid "Python Console"
 msgstr "Python konsoll"
 
-#: plug-ins/python/python-console/python-console.py:80
-#: plug-ins/python/python-console/python-console.py:272
+#: plug-ins/python/python-console/python-console.py:81
+#: plug-ins/python/python-console/python-console.py:273
 msgid "_Save"
 msgstr "_Lagra"
 
-#: plug-ins/python/python-console/python-console.py:81
+#: plug-ins/python/python-console/python-console.py:82
 msgid "Cl_ear"
 msgstr "_Slett"
 
-#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:83
 msgid "_Browse..."
 msgstr "_Bla gjennom …"
 
-#: plug-ins/python/python-console/python-console.py:83
-#: plug-ins/python/python-console/python-console.py:220
+#: plug-ins/python/python-console/python-console.py:84
+#: plug-ins/python/python-console/python-console.py:221
 msgid "_Close"
 msgstr "_Lukk"
 
-#: plug-ins/python/python-console/python-console.py:217
+#: plug-ins/python/python-console/python-console.py:218
 msgid "Python Procedure Browser"
 msgstr "Python Procedure Browser"
 
-#: plug-ins/python/python-console/python-console.py:219
+#: plug-ins/python/python-console/python-console.py:220
 msgid "_Apply"
 msgstr "_Bruk"
 
-#: plug-ins/python/python-console/python-console.py:245
+#: plug-ins/python/python-console/python-console.py:246
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kan ikkje opna «%s» for skriving: %s"
 
-#: plug-ins/python/python-console/python-console.py:260
+#: plug-ins/python/python-console/python-console.py:261
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Klarte ikkje skrive til «%s»: %s"
 
-#: plug-ins/python/python-console/python-console.py:269
+#: plug-ins/python/python-console/python-console.py:270
 msgid "Save Python-Fu Console Output"
 msgstr "Lagra utdata frå Python-Fu-konsollen"
 
-#: plug-ins/python/python-console/python-console.py:317
+#: plug-ins/python/python-console/python-console.py:321
 msgid "Python _Console"
 msgstr "_Python-konsoll"
 
-#: plug-ins/python/python-console/python-console.py:318
+#: plug-ins/python/python-console/python-console.py:322
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interaktiv Gimp-Python tolkar"
 
-#: plug-ins/python/python-console/python-console.py:319
+#: plug-ins/python/python-console/python-console.py:323
 msgid "Type in commands and see results"
 msgstr "Skriv inn kommandoar og sjå resultata"
 
-#: plug-ins/python/spyro-plus.py:49
+#: plug-ins/python/spyro-plus.py:51
 msgid "Spyro Layer"
 msgstr "Spyrolag"
 
-#: plug-ins/python/spyro-plus.py:50
+#: plug-ins/python/spyro-plus.py:52
 msgid "Spyro Path"
 msgstr "Spyro-bane"
 
-#: plug-ins/python/spyro-plus.py:60
+#: plug-ins/python/spyro-plus.py:62
 msgid "As New Layer"
 msgstr "Som nytt lag"
 
-#: plug-ins/python/spyro-plus.py:61
+#: plug-ins/python/spyro-plus.py:63
 msgid "Redraw on last active layer"
 msgstr "Teikna på nytt på sist brukte lag"
 
-#: plug-ins/python/spyro-plus.py:62
+#: plug-ins/python/spyro-plus.py:64
 msgid "As Path"
 msgstr "Som bane"
 
-#: plug-ins/python/spyro-plus.py:110
+#: plug-ins/python/spyro-plus.py:112
 msgid "Circle"
 msgstr "Sirkel"
 
-#: plug-ins/python/spyro-plus.py:146
+#: plug-ins/python/spyro-plus.py:148
 msgid "Polygon-Star"
 msgstr "Mangekant - Stjerne"
 
 #. Sine wave on a circle ring.
-#: plug-ins/python/spyro-plus.py:162 plug-ins/python/spyro-plus.py:989
+#: plug-ins/python/spyro-plus.py:164 plug-ins/python/spyro-plus.py:989
 msgid "Sine"
 msgstr "Sinus"
 
 #. Semi-circles, based on a polygon
-#: plug-ins/python/spyro-plus.py:172
+#: plug-ins/python/spyro-plus.py:174
 msgid "Bumps"
 msgstr "Humpar"
 
-#: plug-ins/python/spyro-plus.py:277
+#: plug-ins/python/spyro-plus.py:279
 msgid "Rack"
 msgstr "Hylle"
 
-#: plug-ins/python/spyro-plus.py:321
+#: plug-ins/python/spyro-plus.py:323
 msgid "Frame"
 msgstr "Ramme"
 
-#: plug-ins/python/spyro-plus.py:433
+#: plug-ins/python/spyro-plus.py:436
 msgid "Selection"
 msgstr "Utval"
 
-#: plug-ins/python/spyro-plus.py:518
+#: plug-ins/python/spyro-plus.py:521
 msgid "Pencil"
 msgstr "Blyant"
 
-#: plug-ins/python/spyro-plus.py:534
+#: plug-ins/python/spyro-plus.py:537
 msgid "AirBrush"
 msgstr "Luftpensel"
 
-#: plug-ins/python/spyro-plus.py:601
+#: plug-ins/python/spyro-plus.py:604
 msgid "Preview"
 msgstr "Førehandsvising"
 
-#: plug-ins/python/spyro-plus.py:606
+#: plug-ins/python/spyro-plus.py:609
 msgid "Stroke"
 msgstr "Strok"
 
-#: plug-ins/python/spyro-plus.py:653
+#: plug-ins/python/spyro-plus.py:656
 msgid "PaintBrush"
 msgstr "Pensel"
 
-#: plug-ins/python/spyro-plus.py:655
+#: plug-ins/python/spyro-plus.py:658
 msgid "Ink"
 msgstr "Blekk"
 
-#: plug-ins/python/spyro-plus.py:656
+#: plug-ins/python/spyro-plus.py:659
 msgid "MyPaintBrush"
 msgstr "MyPaintBrush"
 
