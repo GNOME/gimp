@@ -383,8 +383,10 @@ struct _EXRLoader
       {
         exif_data = (guchar *)(exif->value().data.get());
         *size = exif->value().size;
-        // darktable appends a jpg-compatible exif00 string, so get rid of that again:
-        if ( ! memcmp (jpeg_exif, exif_data, sizeof(jpeg_exif)))
+        /* darktable 4.0.0 and earlier appended a jpg-compatible exif00 string,
+         * so get rid of that again. We explicitly reduce the size by 1 since
+         * the compiler adds an extra \0 to the end of jpeg_exif. */
+        if ( ! memcmp (jpeg_exif, exif_data, sizeof(jpeg_exif)-1))
           {
             *size -= 6;
             exif_data += 6;
