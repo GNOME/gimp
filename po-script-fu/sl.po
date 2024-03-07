@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8 scriptfu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-02 19:25+0000\n"
-"PO-Revision-Date: 2024-03-02 22:28+0100\n"
+"POT-Creation-Date: 2024-03-07 15:33+0000\n"
+"PO-Revision-Date: 2024-03-07 19:29+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -212,19 +212,19 @@ msgstr "V _redu"
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:331
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:329
 msgid "Script-Fu Color Selection"
 msgstr "Izbor barv Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:457
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:455
 msgid "Script-Fu File Selection"
 msgstr "Izbor datoteke Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:460
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:458
 msgid "Script-Fu Folder Selection"
 msgstr "Izbor mape Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:867
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:874
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Napaka pri izvajanju %s:"
@@ -256,7 +256,6 @@ msgid "_Work on copy"
 msgstr "_Obdeluj kopijo"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:197
-#, fuzzy
 msgid "_Keep bump layer"
 msgstr "_Ohrani plast poslikave"
 
