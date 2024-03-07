@@ -18,16 +18,16 @@
 # Hartmut Kuhse <hatti@gimp.org>, 2016.
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2011-2012, 2016-2018.
 # Tim Sabsch <tim@sabsch.com>, 2018-2021, 2024.
-# Philipp Kiemle <philipp.kiemle@gmail.com>, 2021.
+# Philipp Kiemle <philipp.kiemle@gmail.com>, 2021, 2024.
 # Jürgen Benvenuti <gastornis@posteo.org>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-25 15:55+0000\n"
-"PO-Revision-Date: 2024-02-25 17:23+0100\n"
-"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
+"POT-Creation-Date: 2024-03-02 19:22+0000\n"
+"PO-Revision-Date: 2024-03-04 21:35+0100\n"
+"Last-Translator: Philipp Kiemle <philipp.kiemle@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -3162,30 +3162,30 @@ msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "Befehle nach Schlüsselwort suchen und dann ausführen"
 
-#: app/actions/dialogs-actions.c:376
+#: app/actions/dialogs-actions.c:377
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
 msgstr "_Erweiterungen verwalten"
 
-#: app/actions/dialogs-actions.c:378
+#: app/actions/dialogs-actions.c:379
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
 msgstr ""
 "Erweiterungen verwalten: Suchen, Installieren, Deinstallieren, Aktualisieren."
 
-#: app/actions/dialogs-actions.c:441
+#: app/actions/dialogs-actions.c:443
 msgid "Tool_box"
 msgstr "_Werkzeugkasten"
 
-#: app/actions/dialogs-actions.c:442
+#: app/actions/dialogs-actions.c:444
 msgid "Raise the toolbox"
 msgstr "Den Werkzeugkasten anheben"
 
-#: app/actions/dialogs-actions.c:446
+#: app/actions/dialogs-actions.c:448
 msgid "New Tool_box"
 msgstr "Neuer _Werkzeugkasten"
 
-#: app/actions/dialogs-actions.c:447
+#: app/actions/dialogs-actions.c:449
 msgid "Create a new toolbox"
 msgstr "Einen neuen Werkzeugkasten erstellen"
 
@@ -5585,7 +5585,7 @@ msgstr "Diesen Farbverlauf bearbeiten"
 msgid "Save '%s' as POV-Ray"
 msgstr "»%s« als POV-Ray-Datei speichern"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:891
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:893
 msgctxt "help-action"
 msgid "_Help"
 msgstr "_Hilfe"
@@ -10184,7 +10184,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Zum vorherigen Bild wechseln"
 
-#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:880
+#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:882
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "_Reiteranordnung"
@@ -10578,8 +10578,8 @@ msgstr "Transparenz"
 #: app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to "
-"focus\"."
+"receives the focus. This is useful for window managers using \"click to focus"
+"\"."
 msgstr ""
 "Wenn dieses Option ausgewählt ist, wird ein Bild zum aktiven Bild sobald "
 "dessen Fenster den Fokus erhält. Diese Funktion ist sinnvoll für Fenster-"
@@ -10827,7 +10827,7 @@ msgstr "Standardmäßig den Bildkommentar exportieren."
 
 #: app/config/gimprc-blurbs.h:242 app/dialogs/preferences-dialog.c:1469
 msgid "Export the image's thumbnail by default"
-msgstr "Standardmäßig das Vorschaubild des Bildes exportieren."
+msgstr "Standardmäßig das Vorschaubild des Bildes exportieren"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
@@ -15663,7 +15663,7 @@ msgstr "<u>Veröffentlichungshinweis</u>: <i>%s</i>"
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "GIMP %s herunterladen (veröffentlicht am %s)\n"
 
-#: app/dialogs/about-dialog.c:422 app/dialogs/about-dialog.c:443
+#: app/dialogs/about-dialog.c:422 app/dialogs/about-dialog.c:445
 msgid "Check for updates"
 msgstr "Nach Aktualisierungen suchen"
 
@@ -15671,16 +15671,16 @@ msgstr "Nach Aktualisierungen suchen"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:462
+#: app/dialogs/about-dialog.c:464
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Zuletzt überprüft am %s um %s"
 
-#: app/dialogs/about-dialog.c:689
+#: app/dialogs/about-dialog.c:691
 msgid "GIMP is brought to you by"
 msgstr "GIMP wurde Ihnen gebracht von"
 
-#: app/dialogs/about-dialog.c:765
+#: app/dialogs/about-dialog.c:767
 #, c-format
 msgid ""
 "This is an unstable development release\n"
@@ -17379,10 +17379,8 @@ msgstr "Riesig"
 
 #. Font sizes.
 #: app/dialogs/preferences-dialog.c:1976 app/dialogs/welcome-dialog.c:616
-#, fuzzy
-#| msgid "Confirm Scaling"
 msgid "Font Scaling"
-msgstr "Skalieren bestätigen"
+msgstr "Schrift-Skalierung"
 
 #: app/dialogs/preferences-dialog.c:1978 app/dialogs/welcome-dialog.c:618
 msgid "Font scaling will not work with themes using absolute sizes."
@@ -17414,7 +17412,7 @@ msgstr "Symbol-Thema auswählen"
 
 #: app/dialogs/preferences-dialog.c:2133 app/dialogs/welcome-dialog.c:578
 msgid "Use symbolic icons if available"
-msgstr ""
+msgstr "Stilisierte Symbole verwenden, falls verfügbar"
 
 #: app/dialogs/preferences-dialog.c:2143 app/dialogs/preferences-dialog.c:2144
 #: app/widgets/gimptoolbox.c:467
@@ -18451,16 +18449,16 @@ msgstr ""
 msgid "_Discard Changes"
 msgstr "Änderungen _verwerfen"
 
-#: app/dialogs/quit-dialog.c:524
+#: app/dialogs/quit-dialog.c:526
 #, c-format
 msgid "Exported to %s"
 msgstr "Exportiert als %s"
 
-#: app/dialogs/quit-dialog.c:625
+#: app/dialogs/quit-dialog.c:627
 msgid "Save this image"
 msgstr "Dieses Bild speichern"
 
-#: app/dialogs/quit-dialog.c:627
+#: app/dialogs/quit-dialog.c:629
 msgid "Save as"
 msgstr "Speichern unter"
 
@@ -18600,11 +18598,11 @@ msgstr "_Pinseldynamik emulieren"
 
 #: app/dialogs/tips-dialog.c:88
 msgid "The GIMP tips file is empty!"
-msgstr "Die Datei mit den »GIMP-Tipps des Tages« ist leer."
+msgstr "Die Datei mit den »GIMP-Tipps des Tages« ist leer!"
 
 #: app/dialogs/tips-dialog.c:92
 msgid "The GIMP tips file appears to be missing!"
-msgstr "Die Datei für die »GIMP-Tipps des Tages« wurde nicht gefunden."
+msgstr "Die Datei für die »GIMP-Tipps des Tages« wurde nicht gefunden!"
 
 #: app/dialogs/tips-dialog.c:94
 #, c-format
@@ -18616,7 +18614,7 @@ msgstr ""
 #: app/dialogs/tips-dialog.c:100
 msgid "The GIMP tips file could not be parsed!"
 msgstr ""
-"Die Datei mit den »GIMP-Tipps des Tages« konnte nicht analysiert werden."
+"Die Datei mit den »GIMP-Tipps des Tages« konnte nicht analysiert werden!"
 
 #: app/dialogs/tips-dialog.c:128
 msgid "GIMP Tip of the Day"
@@ -18650,7 +18648,7 @@ msgstr "GIMP-Benutzerinstallation"
 
 #: app/dialogs/user-install-dialog.c:95
 msgid "User installation failed!"
-msgstr "Benutzerinstallation fehlgeschlagen."
+msgstr "Benutzerinstallation fehlgeschlagen!"
 
 #: app/dialogs/user-install-dialog.c:97
 msgid "The GIMP user installation failed; see the log for details."
@@ -18727,39 +18725,27 @@ msgid "Welcome"
 msgstr "Willkommen"
 
 #: app/dialogs/welcome-dialog.c:238 app/dialogs/welcome-dialog.c:239
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Pixelize"
 msgid "Personalize"
-msgstr "Verpixeln"
+msgstr "Personalisieren"
 
 #: app/dialogs/welcome-dialog.c:250 app/dialogs/welcome-dialog.c:251
-#, fuzzy
-#| msgid "Contributing"
 msgid "Contribute"
 msgstr "Mitmachen"
 
 #: app/dialogs/welcome-dialog.c:262 app/dialogs/welcome-dialog.c:263
-#, fuzzy
-#| msgctxt "file-action"
-#| msgid "Crea_te"
 msgid "Create"
-msgstr "_Erstellen"
+msgstr "Erstellen"
 
 #: app/dialogs/welcome-dialog.c:278 app/dialogs/welcome-dialog.c:279
 msgid "Release Notes"
 msgstr "Veröffentlichungshinweise"
 
 #: app/dialogs/welcome-dialog.c:290
-#, fuzzy
-#| msgid ""
-#| "This welcome dialog is only shown at first launch. You can show it again "
-#| "from the \"Help\" menu."
 msgid ""
 "Show Welcome Dialog On Start (You can show it again from the \"Help\" menu)"
 msgstr ""
-"Dieser Willkommen-Dialog wird nur beim ersten Start angezeigt. Sie können "
-"ihn erneut im »Hilfe«-Menü aufrufen."
+"Willkommen-Dialog beim Start anzeigen (Sie können ihn aus dem »Hilfe«-Menü "
+"erneut aufrufen)"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:415
@@ -18830,23 +18816,19 @@ msgstr "Symbol-Skalierung"
 
 #: app/dialogs/welcome-dialog.c:641
 msgid "GUI Language (requires restart)"
-msgstr ""
+msgstr "Sprache der Benutzeroberfläche (erfordert Neustart)"
 
 #: app/dialogs/welcome-dialog.c:646
-#, fuzzy
-#| msgid "Additional Input Controllers"
 msgid "Additional Customizations"
-msgstr "Zusätzliche Eingabegeräte"
+msgstr "Zusätzliche Einstellungen"
 
 #: app/dialogs/welcome-dialog.c:655
 msgid "Merge menu and title bar (requires restart)"
 msgstr "Menü und Titelleiste vereinen (Neustart erforderlich)"
 
 #: app/dialogs/welcome-dialog.c:663
-#, fuzzy
-#| msgid "Check for updates (requires internet)"
 msgid "Enable check for updates (requires internet)"
-msgstr "Auf Aktualisierungen prüfen (Internet erforderlich)"
+msgstr "Aktualisierungsprüfung aktivieren (Internet erforderlich)"
 
 #: app/dialogs/welcome-dialog.c:702
 msgid "C_reate"
@@ -19436,7 +19418,7 @@ msgstr "_Softproofing-Profil:"
 # http://de.wikipedia.org/wiki/Rendering_intent
 #: app/display/gimpstatusbar.c:553
 msgid "_Rendering Intent: "
-msgstr "_Darstellungsziel:"
+msgstr "_Darstellungsziel: "
 
 # https://www.drucker-kalibrieren.com/blog/tiefenkompensation-black-point-compensation/
 #: app/display/gimpstatusbar.c:562
@@ -19606,7 +19588,7 @@ msgstr "Klicken und ziehen zum Verschieben oder Entfernen des Schiebereglers"
 
 #: app/display/gimptoolline.c:1588
 msgid "Click-Drag to move the slider"
-msgstr "Klicken und ziehen zum Verschieben des Schiebereglers."
+msgstr "Klicken und ziehen zum Verschieben des Schiebereglers"
 
 #: app/display/gimptoolline.c:1599
 msgid "Click-Drag away to remove the slider"
@@ -21824,8 +21806,8 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "Prozedur »%s« wurde mit einem falschen Wertetyp für das Argument »%s« (Nr. "
 "%d) aufgerufen. %s erwartet, %s erhalten."
@@ -22932,7 +22914,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr ""
 "Franz jagt im komplett verwahrlosten\n"
-"Taxi quer durch Bayern. 012345689"
+"Taxi quer durch Bayern."
 
 #: app/text/gimpfontfactory.c:447
 #, c-format
@@ -25656,7 +25638,7 @@ msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Hinting ändert die Schriftränder, um bei kleinen Größen ein besseres "
-"Schriftbild zu erzeugen."
+"Schriftbild zu erzeugen"
 
 #: app/tools/gimptextoptions.c:195
 msgid "The text language may have an effect on the way the text is rendered."
@@ -26840,7 +26822,7 @@ msgstr "Den gewählten Filter nach unten verschieben"
 
 #: app/widgets/gimpcolordisplayeditor.c:337
 msgid "Reset the selected filter to default values"
-msgstr "Den gewählten Filter auf die Standardwerte zurücksetzen."
+msgstr "Den gewählten Filter auf die Standardwerte zurücksetzen"
 
 #: app/widgets/gimpcolordisplayeditor.c:525
 #, c-format
@@ -27409,7 +27391,7 @@ msgstr ""
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr ""
 "Kopieren Sie die Fehlerinformationen in die Zwischenablage, indem Sie "
-"Folgendes anklicken:"
+"Folgendes anklicken: "
 
 #: app/widgets/gimpcriticaldialog.c:243 app/widgets/gimpcriticaldialog.c:599
 msgid "Open our bug tracker in the browser by clicking: "
@@ -27851,7 +27833,7 @@ msgstr "Felder auswählen"
 #: app/widgets/gimpdashboard.c:3322
 msgctxt "dashboard-value"
 msgid "N/A"
-msgstr "n.v."
+msgstr "N.V."
 
 #: app/widgets/gimpdashboard.c:3331 app/widgets/gimpdashboard.c:4339
 msgctxt "dashboard-value"
@@ -29821,310 +29803,310 @@ msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "A_blagen"
 
-#: menus/image-menu.ui.in.in:147
+#: menus/image-menu.ui.in.in:149
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_Auswahl"
 
-#: menus/image-menu.ui.in.in:153
+#: menus/image-menu.ui.in.in:155
 msgctxt "view-action"
 msgid "_Float"
 msgstr "_Schwebend"
 
-#: menus/image-menu.ui.in.in:180
+#: menus/image-menu.ui.in.in:182
 msgctxt "view-action"
 msgid "_View"
 msgstr "An_sicht"
 
-#: menus/image-menu.ui.in.in:185
+#: menus/image-menu.ui.in.in:187
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "_Vergrößerung"
 
-#: menus/image-menu.ui.in.in:210
+#: menus/image-menu.ui.in.in:212
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "_Drehen und Spiegeln"
 
-#: menus/image-menu.ui.in.in:234
+#: menus/image-menu.ui.in.in:236
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Auf Bildschirm verschieben"
 
-#: menus/image-menu.ui.in.in:243
+#: menus/image-menu.ui.in.in:245
 msgctxt "view-action"
 msgid "_Color Management"
 msgstr "_Farbverwaltung"
 
-#: menus/image-menu.ui.in.in:250
+#: menus/image-menu.ui.in.in:252
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
 msgstr "_Darstellungsziel"
 
-#: menus/image-menu.ui.in.in:282
+#: menus/image-menu.ui.in.in:284
 msgctxt "view-action"
 msgid "_Padding Color"
 msgstr "_Rahmenfarbe"
 
-#: menus/image-menu.ui.in.in:306
+#: menus/image-menu.ui.in.in:308
 msgctxt "image-action"
 msgid "_Image"
 msgstr "_Bild"
 
-#: menus/image-menu.ui.in.in:313
+#: menus/image-menu.ui.in.in:315
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_Modus"
 
-#: menus/image-menu.ui.in.in:319
+#: menus/image-menu.ui.in.in:321
 msgctxt "image-action"
 msgid "_Encoding"
 msgstr "K_odierung"
 
-#: menus/image-menu.ui.in.in:335
+#: menus/image-menu.ui.in.in:337
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "Farbverwaltung"
 
 # http://de.wikipedia.org/wiki/Rendering_intent
 # https://de.wikipedia.org/wiki/Softproof
-#: menus/image-menu.ui.in.in:352
+#: menus/image-menu.ui.in.in:354
 msgctxt "image-action"
 msgid "Soft-Proofing Re_ndering Intent"
 msgstr "_Darstellungsziel des Softproofs"
 
-#: menus/image-menu.ui.in.in:366
+#: menus/image-menu.ui.in.in:368
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: menus/image-menu.ui.in.in:399
+#: menus/image-menu.ui.in.in:401
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_Hilfslinien"
 
-#: menus/image-menu.ui.in.in:407
+#: menus/image-menu.ui.in.in:409
 msgctxt "image-action"
 msgid "Meta_data"
 msgstr "Meta_daten"
 
-#: menus/image-menu.ui.in.in:415
+#: menus/image-menu.ui.in.in:417
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "_Ebene"
 
-#: menus/image-menu.ui.in.in:436
+#: menus/image-menu.ui.in.in:438
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "_Stapel"
 
-#: menus/image-menu.ui.in.in:453
+#: menus/image-menu.ui.in.in:455
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Maske"
 
-#: menus/image-menu.ui.in.in:475
+#: menus/image-menu.ui.in.in:477
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "Tr_ansparenz"
 
-#: menus/image-menu.ui.in.in:493
+#: menus/image-menu.ui.in.in:495
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: menus/image-menu.ui.in.in:523
+#: menus/image-menu.ui.in.in:525
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Farben"
 
-#: menus/image-menu.ui.in.in:544
+#: menus/image-menu.ui.in.in:546
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Automatisch"
 
-#: menus/image-menu.ui.in.in:552
+#: menus/image-menu.ui.in.in:554
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "_Komponenten"
 
-#: menus/image-menu.ui.in.in:558
+#: menus/image-menu.ui.in.in:560
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "_Entsättigen"
 
-#: menus/image-menu.ui.in.in:565
+#: menus/image-menu.ui.in.in:567
 msgctxt "image-action"
 msgid "_Map"
 msgstr "_Abbilden"
 
 # https://de.wikipedia.org/wiki/Tone_Mapping
-#: menus/image-menu.ui.in.in:576
+#: menus/image-menu.ui.in.in:578
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "_Dynamikkompression"
 
-#: menus/image-menu.ui.in.in:583
+#: menus/image-menu.ui.in.in:585
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "_Information"
 
-#: menus/image-menu.ui.in.in:601
+#: menus/image-menu.ui.in.in:603
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "_Werkzeuge"
 
-#: menus/image-menu.ui.in.in:604
+#: menus/image-menu.ui.in.in:606
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "_Auswahlwerkzeuge"
 
-#: menus/image-menu.ui.in.in:617
+#: menus/image-menu.ui.in.in:619
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "_Malwerkzeuge"
 
-#: menus/image-menu.ui.in.in:634
+#: menus/image-menu.ui.in.in:636
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "_Transformationen"
 
-#: menus/image-menu.ui.in.in:673
+#: menus/image-menu.ui.in.in:675
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "Filte_r"
 
-#: menus/image-menu.ui.in.in:678
+#: menus/image-menu.ui.in.in:680
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "Zuletzt verwendet"
 
-#: menus/image-menu.ui.in.in:687
+#: menus/image-menu.ui.in.in:689
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "_Weichzeichnen"
 
-#: menus/image-menu.ui.in.in:702
+#: menus/image-menu.ui.in.in:704
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "_Verbessern"
 
-#: menus/image-menu.ui.in.in:712
+#: menus/image-menu.ui.in.in:714
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "Ver_zerren"
 
-#: menus/image-menu.ui.in.in:731
+#: menus/image-menu.ui.in.in:733
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_Licht und Schatten"
 
-#: menus/image-menu.ui.in.in:746
+#: menus/image-menu.ui.in.in:748
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "_Rauschen"
 
-#: menus/image-menu.ui.in.in:756
+#: menus/image-menu.ui.in.in:758
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "_Kanten finden"
 
-#: menus/image-menu.ui.in.in:765
+#: menus/image-menu.ui.in.in:767
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "_Allgemein"
 
-#: menus/image-menu.ui.in.in:776
+#: menus/image-menu.ui.in.in:778
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "K_ombinieren"
 
-#: menus/image-menu.ui.in.in:779
+#: menus/image-menu.ui.in.in:781
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "_Künstlerisch"
 
-#: menus/image-menu.ui.in.in:791
+#: menus/image-menu.ui.in.in:793
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "_Dekoration"
 
-#: menus/image-menu.ui.in.in:794
+#: menus/image-menu.ui.in.in:796
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "_Abbilden"
 
-#: menus/image-menu.ui.in.in:806
+#: menus/image-menu.ui.in.in:808
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "_Render"
 
-#: menus/image-menu.ui.in.in:809
+#: menus/image-menu.ui.in.in:811
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "_Fraktale"
 
-#: menus/image-menu.ui.in.in:812
+#: menus/image-menu.ui.in.in:814
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "_Rauschen"
 
-#: menus/image-menu.ui.in.in:820
+#: menus/image-menu.ui.in.in:822
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_Muster"
 
-#: menus/image-menu.ui.in.in:833
+#: menus/image-menu.ui.in.in:835
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "_Web"
 
-#: menus/image-menu.ui.in.in:839
+#: menus/image-menu.ui.in.in:841
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "An_imation"
 
-#: menus/image-menu.ui.in.in:842
+#: menus/image-menu.ui.in.in:844
 msgctxt "filters-action"
 msgid "De_velopment"
 msgstr "_Entwicklung"
 
-#: menus/image-menu.ui.in.in:844
+#: menus/image-menu.ui.in.in:846
 msgctxt "filters-action"
 msgid "_Goat exercises"
 msgstr ""
 
-#: menus/image-menu.ui.in.in:847
+#: menus/image-menu.ui.in.in:849
 msgctxt "filters-action"
 msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
-#: menus/image-menu.ui.in.in:850
+#: menus/image-menu.ui.in.in:852
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: menus/image-menu.ui.in.in:857
+#: menus/image-menu.ui.in.in:859
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Fenster"
 
-#: menus/image-menu.ui.in.in:860
+#: menus/image-menu.ui.in.in:862
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "_Kürzlich geschlossene Docks"
 
-#: menus/image-menu.ui.in.in:864
+#: menus/image-menu.ui.in.in:866
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_Andockbare Dialoge"
 
-#: menus/image-menu.ui.in.in:896
+#: menus/image-menu.ui.in.in:898
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "Benutzer_handbuch"
 
-#: menus/image-menu.ui.in.in:912
+#: menus/image-menu.ui.in.in:914
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "_GIMP im Internet"
@@ -30235,7 +30217,7 @@ msgstr "Pfadmenü"
 #~ msgstr ""
 #~ "Wie mit eingebetteten Farbprofilen beim Dateiöffnen umgegangen wird."
 
-#, fuzzy, c-format
+#, fuzzy
 #~| msgid "Skipping '%s': wrong pluginrc file format version."
 #~ msgid "Skipping '%s': wrong shortcutsrc file format version."
 #~ msgstr "»%s« wird übersprungen: Falsche pluginrc Dateiformatversion."
@@ -30403,7 +30385,6 @@ msgstr "Pfadmenü"
 #~ msgid "Zoom In"
 #~ msgstr "Vergrößern"
 
-#, c-format
 #~ msgid "Rotate %s?"
 #~ msgstr "%s drehen?"
 
@@ -30419,67 +30400,54 @@ msgstr "Pfadmenü"
 #~ msgid "Invalid empty paint dynamics name"
 #~ msgstr "Ungültiger, leerer Name der Malmethode"
 
-#, c-format
 #~ msgid "Paint dynamics '%s' not found"
 #~ msgstr "Malmethode »%s« wurde nicht gefunden"
 
-#, c-format
 #~ msgid "Paint dynamics '%s' is not editable"
 #~ msgstr "Malmethode »%s« ist nicht veränderbar"
 
-#, c-format
 #~ msgid "Paint dynamics '%s' is not renamable"
 #~ msgstr "Pinseldynamik »%s« lässt sich nicht umbenennen"
 
 #~ msgid "Invalid empty MyPaint brush name"
 #~ msgstr "Ungültiger, leerer MyPaint-Pinselname"
 
-#, c-format
 #~ msgid "MyPaint brush '%s' not found"
 #~ msgstr "MyPaint-Pinsel »%s« wurde nicht gefunden"
 
-#, c-format
 #~ msgid "MyPaint brush '%s' is not editable"
 #~ msgstr "MyPaint-Pinsel »%s« ist nicht veränderbar"
 
-#, c-format
 #~ msgid "MyPaint brush '%s' is not renamable"
 #~ msgstr "MyPaint-Pinsel »%s« lässt sich nicht umbenennen"
 
 #~ msgid "Invalid empty pattern name"
 #~ msgstr "Ungültiger, leerer Mustername"
 
-#, c-format
 #~ msgid "Pattern '%s' not found"
 #~ msgstr "Muster »%s« wurde nicht gefunden"
 
 #~ msgid "Invalid empty gradient name"
 #~ msgstr "Ungültiger, leerer Farbverlaufsname"
 
-#, c-format
 #~ msgid "Gradient '%s' not found"
 #~ msgstr "Farbverlauf »%s« wurde nicht gefunden"
 
-#, c-format
 #~ msgid "Gradient '%s' is not editable"
 #~ msgstr "Verlauf »%s« ist nicht veränderbar"
 
-#, c-format
 #~ msgid "Gradient '%s' is not renamable"
 #~ msgstr "Verlauf »%s« lässt sich nicht umbenennen"
 
-#, c-format
 #~ msgid "Palette '%s' not found"
 #~ msgstr "Palette »%s« wurde nicht gefunden"
 
-#, c-format
 #~ msgid "Palette '%s' is not editable"
 #~ msgstr "Palette »%s« ist nicht veränderbar"
 
 #~ msgid "Invalid empty font name"
 #~ msgstr "Ungültiger, leerer Schriftname"
 
-#, c-format
 #~ msgid "Font '%s' not found"
 #~ msgstr "Schrift »%s« wurde nicht gefunden"
 
@@ -30500,7 +30468,6 @@ msgstr "Pfadmenü"
 #~ "Bitte stellen Sie sicher, dass die XML-Menüdateien korrekt installiert "
 #~ "sind."
 
-#, c-format
 #~ msgid "There was an error parsing the menu definition from %s: %s"
 #~ msgstr ""
 #~ "Beim Analysieren der Menüdefinition von %s ist ein Fehler aufgetreten: %s"
@@ -30573,7 +30540,6 @@ msgstr "Pfadmenü"
 #~ msgid "_Intersect with Selection"
 #~ msgstr "Schnittmenge _bilden"
 
-#, c-format
 #~ msgid ""
 #~ "Floating Selection\n"
 #~ "(%s)"
@@ -31427,7 +31393,6 @@ msgstr "Pfadmenü"
 #~ "Wenn diese Option ausgewählt ist, wird der Mauszeiger beim Verwenden "
 #~ "eines Malwerkzeugs über dem Bild angezeigt."
 
-#, c-format
 #~ msgid "Index %d"
 #~ msgstr "Index %d"
 
@@ -31437,7 +31402,6 @@ msgstr "Pfadmenü"
 #~ msgid "Dynamics Options"
 #~ msgstr "Optionen der Zeichendynamik"
 
-#, c-format
 #~ msgid "The active layer's pixels are locked."
 #~ msgstr "Die Pixel der aktiven Ebene sind gesperrt."
 
