@@ -1332,10 +1332,11 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
                              GError       **error)
 {
 
-  GByteArray   *exif_bytes;
+  GByteArray   *exif_bytes     = NULL;
   GimpMetadata *exif_metadata;
-  guint8        data_size[2] = { 0, };
-  const guint8  eoi[2] = { 0xff, 0xd9 };
+  const guchar  exif_marker[6] = "Exif\0\0";
+  const guchar *data;
+  gint          data_length;
 
   g_return_val_if_fail (GIMP_IS_METADATA (metadata), FALSE);
   g_return_val_if_fail (exif_data != NULL || exif_data_length == 0, FALSE);
@@ -1348,25 +1349,41 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
       return FALSE;
     }
 
-  data_size[0] = ((exif_data_length + 2) & 0xFF00) >> 8;
-  data_size[1] = ((exif_data_length + 2) & 0x00FF);
+  /* Old GIMP exif parasite marker "Exif\0\0" needs special handling. */
+  if (exif_data_length >= 6 &&
+      ! memcmp (exif_marker, exif_data, sizeof(exif_marker)))
+    {
+      guint8        data_size[2]  = { 0, };
+      const guint8  eoi[2]        = { 0xff, 0xd9 };
 
-  exif_bytes = g_byte_array_new ();
-  exif_bytes = g_byte_array_append (exif_bytes,
-                                    minimal_exif, G_N_ELEMENTS (minimal_exif));
-  exif_bytes = g_byte_array_append (exif_bytes,
-                                    data_size, 2);
-  exif_bytes = g_byte_array_append (exif_bytes,
-                                    (guint8 *) exif_data, exif_data_length);
-  exif_bytes = g_byte_array_append (exif_bytes, eoi, 2);
+      data_size[0] = ((exif_data_length + 2) & 0xFF00) >> 8;
+      data_size[1] = ((exif_data_length + 2) & 0x00FF);
+
+      exif_bytes = g_byte_array_new ();
+      exif_bytes = g_byte_array_append (exif_bytes,
+                                        minimal_exif, G_N_ELEMENTS (minimal_exif));
+      exif_bytes = g_byte_array_append (exif_bytes,
+                                        data_size, 2);
+      exif_bytes = g_byte_array_append (exif_bytes,
+                                        (guint8 *) exif_data, exif_data_length);
+      exif_bytes = g_byte_array_append (exif_bytes, eoi, 2);
+      data = exif_bytes->data;
+      data_length = exif_bytes->len;
+    }
+  else
+    {
+      data = exif_data;
+      data_length = exif_data_length;
+    }
 
   exif_metadata = gimp_metadata_new ();
 
   if (! gexiv2_metadata_open_buf (GEXIV2_METADATA (exif_metadata),
-                                  exif_bytes->data, exif_bytes->len, error))
+                                  data, data_length, error))
     {
       g_object_unref (exif_metadata);
-      g_byte_array_free (exif_bytes, TRUE);
+      if (exif_bytes)
+        g_byte_array_free (exif_bytes, TRUE);
       return FALSE;
     }
 
@@ -1375,13 +1392,15 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
       g_set_error (error, GIMP_METADATA_ERROR, 0,
                    _("Parsing Exif data failed."));
       g_object_unref (exif_metadata);
-      g_byte_array_free (exif_bytes, TRUE);
+      if (exif_bytes)
+        g_byte_array_free (exif_bytes, TRUE);
       return FALSE;
     }
 
   gimp_metadata_add (exif_metadata, metadata);
   g_object_unref (exif_metadata);
-  g_byte_array_free (exif_bytes, TRUE);
+  if (exif_bytes)
+    g_byte_array_free (exif_bytes, TRUE);
 
   return TRUE;
 }
