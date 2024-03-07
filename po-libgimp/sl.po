@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-02 19:24+0000\n"
-"PO-Revision-Date: 2024-03-02 22:15+0100\n"
+"POT-Creation-Date: 2024-03-07 15:32+0000\n"
+"PO-Revision-Date: 2024-03-07 19:27+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1429,7 +1429,6 @@ msgid "None (extend)"
 msgstr "Brez (razširi)"
 
 #: libgimpbase/gimpbaseenums.c:1475
-#, fuzzy
 msgctxt "repeat-mode"
 msgid "None (truncate)"
 msgstr "Brez (odreži)"
@@ -2250,9 +2249,8 @@ msgid "The controller's name"
 msgstr "Ime krmilnika"
 
 #: libgimpwidgets/gimpcontroller.c:113
-#, fuzzy
 msgid "The controller's state, as human-readable string"
-msgstr "Stanje krmilnika kot človeško berljiv niz"
+msgstr "Stanje krmilnika kot niz v človeku berljivi obliki"
 
 #: libgimpwidgets/gimpdialog.c:198
 msgid "_Help"
