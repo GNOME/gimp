@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-04 20:55+0000\n"
-"PO-Revision-Date: 2024-03-05 22:09+0200\n"
+"POT-Creation-Date: 2024-03-07 18:17+0000\n"
+"PO-Revision-Date: 2024-03-07 23:38+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -148,7 +148,7 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/file-heif.c:2315 plug-ins/common/file-pdf-load.c:687
 #: plug-ins/common/grid.c:820 plug-ins/common/qbist.c:933
 #: plug-ins/common/sphere-designer.c:2652 plug-ins/common/unit-editor.c:266
-#: plug-ins/file-exr/file-exr.c:422 plug-ins/file-psd/psd-load.c:3561
+#: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3561
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -635,7 +635,7 @@ msgstr "Вертикально"
 #: plug-ins/common/file-tga.c:1116 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:911 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
-#: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:281
+#: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:285
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:700
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
@@ -2623,7 +2623,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:784
 #: plug-ins/common/file-xbm.c:741 plug-ins/common/file-xmc.c:646
 #: plug-ins/common/file-xpm.c:384 plug-ins/common/file-xwd.c:484
-#: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:193
+#: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:493
 #: plug-ins/file-icns/file-icns-load.c:508 plug-ins/file-ico/ico-load.c:673
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
@@ -2943,7 +2943,7 @@ msgstr "Пензель GIMP"
 msgid "Radiance RGBE"
 msgstr "Radiance RGBE"
 
-#: plug-ins/common/file-gegl.c:133 plug-ins/file-exr/file-exr.c:109
+#: plug-ins/common/file-gegl.c:133 plug-ins/file-exr/file-exr.c:111
 msgid "OpenEXR image"
 msgstr "Зображення OpenEXR"
 
@@ -4248,7 +4248,6 @@ msgid "PCX format does not support multiple layers."
 msgstr "Для формату PCX не передбачено підтримку декількох шарів."
 
 #: plug-ins/common/file-pcx.c:521
-#| msgid "Could not load PCX image"
 msgid "Could not load PCX image: "
 msgstr "Не вдалося завантажити зображення PCX: "
 
@@ -4258,7 +4257,6 @@ msgid "DCX image offset exceeds the file size"
 msgstr "Відступ зображення DCX перевищує розмір файла"
 
 #: plug-ins/common/file-pcx.c:579
-#| msgid "Could not load DCX image"
 msgid "Could not load DCX image: "
 msgstr "Не вдалося завантажити зображення DCX: "
 
@@ -4788,7 +4786,7 @@ msgstr "Помилка при читанні «%s». Файл пошкоджен
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Невідома модель кольорів у PNG файлі «%s»."
 
-#: plug-ins/common/file-png.c:912 plug-ins/file-exr/file-exr.c:260
+#: plug-ins/common/file-png.c:912 plug-ins/file-exr/file-exr.c:264
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Неможливо створити нове зображення для «%s»: %s"
@@ -6072,6 +6070,7 @@ msgid "Merge imported paths"
 msgstr "Об'єднати імпортовані контури"
 
 #: plug-ins/common/file-svg.c:382 plug-ins/common/file-svg.c:811
+#: plug-ins/file-exr/file-exr.c:356 plug-ins/file-exr/file-exr.c:370
 msgid "Unknown reason"
 msgstr "Невідома причина"
 
@@ -9337,44 +9336,50 @@ msgstr "Збереження: %s"
 msgid "Mipmap Options"
 msgstr "Параметри MIP-текстур"
 
-#: plug-ins/file-exr/file-exr.c:112
+#: plug-ins/file-exr/file-exr.c:114
 msgid "Loads files in the OpenEXR file format"
 msgstr "Завантажує файли у форматі OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:201
+#: plug-ins/file-exr/file-exr.c:205
 #, c-format
 msgid "Error opening file '%s' for reading"
 msgstr "Помилка відкривання файлу «%s» для читання"
 
-#: plug-ins/file-exr/file-exr.c:212
+#: plug-ins/file-exr/file-exr.c:216
 #, c-format
 msgid "Error querying image dimensions from '%s'"
 msgstr "Помилка запиту розмірів зображення з «%s»"
 
-#: plug-ins/file-exr/file-exr.c:232
+#: plug-ins/file-exr/file-exr.c:236
 #, c-format
 msgid "Error querying image precision from '%s'"
 msgstr "Помилка запиту точності зображення з «%s»"
 
-#: plug-ins/file-exr/file-exr.c:250
+#: plug-ins/file-exr/file-exr.c:254
 #, c-format
 msgid "Error querying image type from '%s'"
 msgstr "Помилка запиту типу зображення з «%s»"
 
-#: plug-ins/file-exr/file-exr.c:312
+#: plug-ins/file-exr/file-exr.c:316
 #, c-format
 msgid "Error reading pixel data from '%s'"
 msgstr "Помилка зчитування даних точок з «%s»"
 
-#: plug-ins/file-exr/file-exr.c:419
+#: plug-ins/file-exr/file-exr.c:355 plug-ins/file-exr/file-exr.c:369
+#, c-format
+#| msgid "Failed to set metadata tag %s: %s"
+msgid "Failed to load metadata: %s"
+msgstr "Не вдалося завантажити метадані: %s"
+
+#: plug-ins/file-exr/file-exr.c:432
 msgid "Import OpenEXR"
 msgstr "Імпортувати OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:433
+#: plug-ins/file-exr/file-exr.c:446
 msgid "Unknown Channel Name"
 msgstr "Невідома назва каналу"
 
-#: plug-ins/file-exr/file-exr.c:434
+#: plug-ins/file-exr/file-exr.c:447
 msgid ""
 "The image contains a single unknown channel.\n"
 "It has been converted to grayscale."
