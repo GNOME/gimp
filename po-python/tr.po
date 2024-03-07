@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-18 19:21+0000\n"
-"PO-Revision-Date: 2024-02-18 22:56+0300\n"
-"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"POT-Creation-Date: 2024-03-04 20:58+0000\n"
+"PO-Revision-Date: 2024-03-06 04:26+0300\n"
+"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -117,51 +117,51 @@ msgstr "Renkli HTML metni olarak kaydet"
 msgid "Colored HTML text"
 msgstr "Renkli HTML metni"
 
-#: plug-ins/python/foggify.py:107
+#: plug-ins/python/foggify.py:111
 msgid "Layer _name"
 msgstr "Katman _adı"
 
-#: plug-ins/python/foggify.py:108
+#: plug-ins/python/foggify.py:112
 msgid "Layer name"
 msgstr "Katman adı"
 
-#: plug-ins/python/foggify.py:109
+#: plug-ins/python/foggify.py:113
 msgid "Clouds"
 msgstr "Bulutlar"
 
-#: plug-ins/python/foggify.py:112
+#: plug-ins/python/foggify.py:116
 msgid "_Turbulence"
 msgstr "_Türbülans"
 
-#: plug-ins/python/foggify.py:113
+#: plug-ins/python/foggify.py:117
 msgid "Turbulence"
 msgstr "Türbülans"
 
-#: plug-ins/python/foggify.py:117
+#: plug-ins/python/foggify.py:121
 msgid "O_pacity"
 msgstr "_Matlık"
 
-#: plug-ins/python/foggify.py:118
+#: plug-ins/python/foggify.py:122
 msgid "Opacity"
 msgstr "Matlık"
 
-#: plug-ins/python/foggify.py:127
+#: plug-ins/python/foggify.py:131
 msgid "_Fog color"
 msgstr "_Sis rengi"
 
-#: plug-ins/python/foggify.py:128
+#: plug-ins/python/foggify.py:132
 msgid "Fog color"
 msgstr "Sis rengi"
 
-#: plug-ins/python/foggify.py:144
+#: plug-ins/python/foggify.py:148
 msgid "Add a layer of fog"
 msgstr "Sisli bir katman ekle"
 
-#: plug-ins/python/foggify.py:145
+#: plug-ins/python/foggify.py:149
 msgid "Adds a layer of fog to the image."
 msgstr "Görüntüye sis katmanı ekler."
 
-#: plug-ins/python/foggify.py:147
+#: plug-ins/python/foggify.py:151
 msgid "_Fog..."
 msgstr "_Sis..."
 
@@ -230,8 +230,8 @@ msgid "Histogram Export..."
 msgstr "Histogram Dışa Aktar..."
 
 #: plug-ins/python/histogram-export.py:209
-msgid "Histogram _File"
-msgstr "Histogram _Dosyası"
+msgid "Histogram File"
+msgstr "Histogram Dosyası"
 
 #: plug-ins/python/histogram-export.py:213
 msgid "_Bucket Size"
