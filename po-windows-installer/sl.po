@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-16 10:29+0000\n"
+"POT-Creation-Date: 2024-03-07 15:34+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: \n"
@@ -151,88 +151,73 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Vključi podatke, ki pomagajo razhroščevati GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-msgid "MS-Windows engine for GTK"
-msgstr "Pogon MS-Windows za GTK+"
-
 #: build/windows/installer/lang/setup.isl.xml.in:117
-msgid "Native Windows look for GIMP"
-msgstr "Windows izgled za GIMP"
-
-#: build/windows/installer/lang/setup.isl.xml.in:121
-msgid "Support for old plug-ins"
-msgstr "Podpora za stare vtičnike"
-
-#: build/windows/installer/lang/setup.isl.xml.in:125
-msgid "Install libraries needed by old third-party plug-ins"
-msgstr "Podporne knjižnice za stare zunanje vtičnike za GIMP"
-
-#: build/windows/installer/lang/setup.isl.xml.in:129
-#: build/windows/installer/lang/setup.isl.xml.in:133
 msgid "Translations"
 msgstr "Prevodi"
 
-#: build/windows/installer/lang/setup.isl.xml.in:137
+#: build/windows/installer/lang/setup.isl.xml.in:121
 msgid "Python scripting"
 msgstr "Podpora za Python"
 
-#: build/windows/installer/lang/setup.isl.xml.in:141
+#: build/windows/installer/lang/setup.isl.xml.in:125
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr ""
 "Omogoča izvajanje vtičnikov za GIMP, napisanih v programskem jeziku Python."
 
-#: build/windows/installer/lang/setup.isl.xml.in:145
+#: build/windows/installer/lang/setup.isl.xml.in:129
 msgid "Lua scripting"
 msgstr "Podpora za skripte Lua"
 
-#: build/windows/installer/lang/setup.isl.xml.in:149
+#: build/windows/installer/lang/setup.isl.xml.in:133
 msgid "Allows you to use GIMP plugins written in Lua scripting language."
 msgstr ""
 "Omogoča izvajanje vtičnikov za GIMP, napisanih v programskem jeziku Lua."
 
-#: build/windows/installer/lang/setup.isl.xml.in:153
+#: build/windows/installer/lang/setup.isl.xml.in:137
 msgid "MyPaint brushes"
 msgstr "Čopiči MyPaint"
 
-#: build/windows/installer/lang/setup.isl.xml.in:157
+#: build/windows/installer/lang/setup.isl.xml.in:141
 msgid "Install the default set of MyPaint brushes"
 msgstr "Namesti privzeti nabor čopičev MyPaint"
 
-#: build/windows/installer/lang/setup.isl.xml.in:161
+#: build/windows/installer/lang/setup.isl.xml.in:145
 msgid "PostScript support"
 msgstr "Podpora za PostScript"
 
-#: build/windows/installer/lang/setup.isl.xml.in:165
+#: build/windows/installer/lang/setup.isl.xml.in:149
 msgid "Allow GIMP to load PostScript files"
 msgstr "Omogoči nalaganje PostScript datotek"
 
-#: build/windows/installer/lang/setup.isl.xml.in:169
+#: build/windows/installer/lang/setup.isl.xml.in:153
 msgid "Support for 32-bit plug-ins"
 msgstr "Podpora za 32-bitne vtičnike"
 
-#: build/windows/installer/lang/setup.isl.xml.in:173
+#: build/windows/installer/lang/setup.isl.xml.in:157
 msgid ""
-"Include files necessary for using 32-bit plug-ins.%nRequired for Python "
+"Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
 "support."
 msgstr ""
-"Omogoča uporabo 32-bitnih vtičnikov.%nPotrebno za uporabo podpore za Python."
+"Vključi datoteke, potrebne za uporabo 32-bitnih vtičnikov.%nObvezno za "
+"uporabo podpore za TWAIN."
 
-#: build/windows/installer/lang/setup.isl.xml.in:178
+#: build/windows/installer/lang/setup.isl.xml.in:162
 msgid "Additional icons:"
 msgstr "Dodatne ikone:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:182
+#: build/windows/installer/lang/setup.isl.xml.in:166
 msgid "Create a &desktop icon"
 msgstr "Ustvari ikono na n&amizju"
 
-#: build/windows/installer/lang/setup.isl.xml.in:186
+#: build/windows/installer/lang/setup.isl.xml.in:170
 msgid "Create a &Quick Launch icon"
 msgstr "Ustvari ikono v vrstici &hitri zagon"
 
-#: build/windows/installer/lang/setup.isl.xml.in:190
+#: build/windows/installer/lang/setup.isl.xml.in:174
 msgid "Remove previous GIMP version"
 msgstr "Odstrani prejçnjo razliźico programa GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:195
+#: build/windows/installer/lang/setup.isl.xml.in:179
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -241,43 +226,43 @@ msgstr ""
 "nalaganju vtičnikov pojavijo sporočila o napakah, poizkusite odstraniti in "
 "ponovno namestiti GIMP."
 
-#: build/windows/installer/lang/setup.isl.xml.in:199
+#: build/windows/installer/lang/setup.isl.xml.in:183
 msgid "Error extracting temporary data."
 msgstr "Prišlo je do napake pri razširjanju začasnih datotek."
 
-#: build/windows/installer/lang/setup.isl.xml.in:203
+#: build/windows/installer/lang/setup.isl.xml.in:187
 msgid "Error updating Python interpreter info."
 msgstr "Prišlo je do napake pri nastavljanju podpore za Python."
 
-#: build/windows/installer/lang/setup.isl.xml.in:207
+#: build/windows/installer/lang/setup.isl.xml.in:191
 msgid "Error updating MyPaint brushes info."
 msgstr "Prišlo je do napake pri posodabljanju podatkov za čopiče MyPaint."
 
-#: build/windows/installer/lang/setup.isl.xml.in:211
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "There was an error updating %1."
 msgstr "Prišlo je do napake pri branju datoteke %1."
 
-#: build/windows/installer/lang/setup.isl.xml.in:215
+#: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "There was an error updating GIMP's configuration file %1."
 msgstr "Prišlo je do napake pri pisanju nastavitev v datoteko %1."
 
-#: build/windows/installer/lang/setup.isl.xml.in:220
+#: build/windows/installer/lang/setup.isl.xml.in:204
 msgid "Edit with GIMP"
 msgstr "Uredi z GIMP-om"
 
-#: build/windows/installer/lang/setup.isl.xml.in:225
+#: build/windows/installer/lang/setup.isl.xml.in:209
 msgid "Select file associations"
 msgstr "Povezovanje vrst datotek"
 
-#: build/windows/installer/lang/setup.isl.xml.in:229
+#: build/windows/installer/lang/setup.isl.xml.in:213
 msgid "Extensions:"
 msgstr "Pripone:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:233
+#: build/windows/installer/lang/setup.isl.xml.in:217
 msgid "Select the file types you wish to associate with GIMP"
 msgstr "Izberite vste datotek, ki bi jih radi odpirali z GIMP-om"
 
-#: build/windows/installer/lang/setup.isl.xml.in:237
+#: build/windows/installer/lang/setup.isl.xml.in:221
 msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
@@ -285,27 +270,27 @@ msgstr ""
 "Tu lahko izberete vrste datotek, ki se bodo odprle v GIMP-u, ko jih "
 "dvokliknete v Raziskovalcu."
 
-#: build/windows/installer/lang/setup.isl.xml.in:241
+#: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Select &All"
 msgstr "Izberi &vse"
 
-#: build/windows/installer/lang/setup.isl.xml.in:245
+#: build/windows/installer/lang/setup.isl.xml.in:229
 msgid "Unselect &All"
 msgstr "Počisti iz&bor"
 
-#: build/windows/installer/lang/setup.isl.xml.in:249
+#: build/windows/installer/lang/setup.isl.xml.in:233
 msgid "Select &Unused"
 msgstr "Izberi ne&uporabljene"
 
-#: build/windows/installer/lang/setup.isl.xml.in:254
+#: build/windows/installer/lang/setup.isl.xml.in:238
 msgid "File types to associate with GIMP:"
 msgstr "Vrste datotek, ki jih bo odpiral GIMP:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:258
+#: build/windows/installer/lang/setup.isl.xml.in:242
 msgid "Removing previous version of GIMP:"
 msgstr "Odstranjevanje starejših različic programa GIMP:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:262
+#: build/windows/installer/lang/setup.isl.xml.in:246
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
 "the automatic uninstall of old version has failed.%n%nPlease remove the "
@@ -319,7 +304,7 @@ msgstr ""
 "odstranite prejšnjo različico, ali pa izberite namestitev po meri, in GIMP "
 "%1 namestite v drugo mapo.%n%nNamestitveni program se bo zdaj končal."
 
-#: build/windows/installer/lang/setup.isl.xml.in:266
+#: build/windows/installer/lang/setup.isl.xml.in:250
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
 "Setup couldn't determine how to remove the old version automatically.%n"
@@ -334,7 +319,7 @@ msgstr ""
 "meri, in GIMP %1 namestite v drugo mapo.%n%nNamestitveni program se bo zdaj "
 "končal."
 
-#: build/windows/installer/lang/setup.isl.xml.in:270
+#: build/windows/installer/lang/setup.isl.xml.in:254
 msgid ""
 "Previous GIMP version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
@@ -345,55 +330,55 @@ msgstr ""
 "program bo dokončal namestitev po ponovnem zagonu, ko se prvič prijavi "
 "administrator."
 
-#: build/windows/installer/lang/setup.isl.xml.in:275
+#: build/windows/installer/lang/setup.isl.xml.in:259
 msgid "There was an error restarting the Setup. (%1)"
 msgstr "Prišlo je do napake pri ponovnem zagonu namestitvenega programa. (%1)"
 
-#: build/windows/installer/lang/setup.isl.xml.in:279
+#: build/windows/installer/lang/setup.isl.xml.in:263
 msgid "Cleaning up old files..."
 msgstr "Čiščenje starih datotek ..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:284
+#: build/windows/installer/lang/setup.isl.xml.in:268
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "GIMP spada med prosto programje.%n%nObiščite"
 
-#: build/windows/installer/lang/setup.isl.xml.in:288
+#: build/windows/installer/lang/setup.isl.xml.in:272
 msgid "for free updates."
 msgstr "za brezplačne posodobitve."
 
-#: build/windows/installer/lang/setup.isl.xml.in:292
+#: build/windows/installer/lang/setup.isl.xml.in:276
 msgid "Setting up file associations..."
 msgstr "Nastavljam povezane vrste datotek..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:295
+#: build/windows/installer/lang/setup.isl.xml.in:279
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Pripravljam okolje za GIMP Python..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:298
+#: build/windows/installer/lang/setup.isl.xml.in:282
 msgid "Setting up MyPaint brushes..."
 msgstr "Nastavljanje čopičev MyPaint ..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:301
+#: build/windows/installer/lang/setup.isl.xml.in:285
 msgid "Setting up GIMP environment..."
 msgstr "Pripravljam okolje za GIMP..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:304
+#: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
 msgstr "Pripravljam nastavitve za 32-bitne vtičnike..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:309
+#: build/windows/installer/lang/setup.isl.xml.in:293
 msgid "Launch GIMP"
 msgstr "Zaženi GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:314
+#: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Removing add-on"
 msgstr "Odstranjujem dodatek"
 
-#: build/windows/installer/lang/setup.isl.xml.in:318
+#: build/windows/installer/lang/setup.isl.xml.in:302
 msgid "Internal error (%1)."
 msgstr "Notranja napaka (%1)."
 
-#: build/windows/installer/lang/setup.isl.xml.in:323
+#: build/windows/installer/lang/setup.isl.xml.in:307
 msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
