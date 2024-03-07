@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-03 12:40+0000\n"
-"PO-Revision-Date: 2024-03-03 17:06+0100\n"
+"POT-Creation-Date: 2024-03-07 18:17+0000\n"
+"PO-Revision-Date: 2024-03-07 19:40+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -151,7 +151,7 @@ msgstr "Povadi kozo (JavaScript)"
 #: plug-ins/common/file-heif.c:2315 plug-ins/common/file-pdf-load.c:687
 #: plug-ins/common/grid.c:820 plug-ins/common/qbist.c:933
 #: plug-ins/common/sphere-designer.c:2652 plug-ins/common/unit-editor.c:266
-#: plug-ins/file-exr/file-exr.c:422 plug-ins/file-psd/psd-load.c:3561
+#: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3561
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -629,15 +629,15 @@ msgstr "Navpične"
 #: plug-ins/common/file-cel.c:500 plug-ins/common/file-dicom.c:751
 #: plug-ins/common/file-farbfeld.c:321 plug-ins/common/file-gegl.c:471
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:345
-#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:729
-#: plug-ins/common/file-pcx.c:737 plug-ins/common/file-pcx.c:745
+#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:730
+#: plug-ins/common/file-pcx.c:738 plug-ins/common/file-pcx.c:746
 #: plug-ins/common/file-pix.c:456 plug-ins/common/file-png.c:947
 #: plug-ins/common/file-pnm.c:868 plug-ins/common/file-qoi.c:320
 #: plug-ins/common/file-raw-data.c:1828 plug-ins/common/file-sunras.c:1082
 #: plug-ins/common/file-tga.c:1116 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:911 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
-#: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:281
+#: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:285
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:700
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
@@ -1217,7 +1217,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/common/cml-explorer.c:2212 plug-ins/common/curve-bend.c:781
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
 #: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1218
-#: plug-ins/common/file-pcx.c:1217 plug-ins/common/file-pdf-save.c:659
+#: plug-ins/common/file-pcx.c:1219 plug-ins/common/file-pdf-save.c:659
 #: plug-ins/common/file-png.c:1518 plug-ins/common/file-raw-data.c:1337
 #: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
 #: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1381
@@ -2616,7 +2616,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:784
 #: plug-ins/common/file-xbm.c:741 plug-ins/common/file-xmc.c:646
 #: plug-ins/common/file-xpm.c:384 plug-ins/common/file-xwd.c:484
-#: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:193
+#: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:493
 #: plug-ins/file-icns/file-icns-load.c:508 plug-ins/file-ico/ico-load.c:673
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
@@ -2689,7 +2689,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #.
 #: plug-ins/common/file-cel.c:845 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-gif-save.c:975 plug-ins/common/file-html-table.c:359
-#: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1101
+#: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1103
 #: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1510
 #: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1321
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
@@ -2934,7 +2934,7 @@ msgstr "Čopič GIMP"
 msgid "Radiance RGBE"
 msgstr "Sevanje RGBE"
 
-#: plug-ins/common/file-gegl.c:133 plug-ins/file-exr/file-exr.c:109
+#: plug-ins/common/file-gegl.c:133 plug-ins/file-exr/file-exr.c:111
 msgid "OpenEXR image"
 msgstr "Slika OpenEXR"
 
@@ -4227,9 +4227,8 @@ msgid "PCX format does not support multiple layers."
 msgstr "Zapis PCX ne podpira več plasti."
 
 #: plug-ins/common/file-pcx.c:521
-#, c-format
-msgid "Could not load PCX image"
-msgstr "Slike PCX ni mogoče naložiti."
+msgid "Could not load PCX image: "
+msgstr "Slike PCX ni mogoče naložiti: "
 
 #: plug-ins/common/file-pcx.c:568
 #, c-format
@@ -4237,9 +4236,8 @@ msgid "DCX image offset exceeds the file size"
 msgstr "Zamik slike DCX presega velikost datoteke"
 
 #: plug-ins/common/file-pcx.c:579
-#, c-format
-msgid "Could not load DCX image"
-msgstr "Slike DCX ni mogoče naložiti."
+msgid "Could not load DCX image: "
+msgstr "Slike DCX ni mogoče naložiti: "
 
 #: plug-ins/common/file-pcx.c:602
 #, c-format
@@ -4260,12 +4258,12 @@ msgstr "%s: ni mogoče naložiti vseh slik DCX: %s\n"
 msgid "Could not read header from '%s'"
 msgstr "Glave datoteke »%s« ni mogoče prebrati"
 
-#: plug-ins/common/file-pcx.c:677
+#: plug-ins/common/file-pcx.c:676
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "»%s« ni datoteka PCX"
 
-#: plug-ins/common/file-pcx.c:693 plug-ins/common/file-wbmp.c:263
+#: plug-ins/common/file-pcx.c:692 plug-ins/common/file-wbmp.c:263
 #: plug-ins/file-bmp/bmp-load.c:727 plug-ins/file-psd/psd-load.c:548
 #, c-format
 msgid "Unsupported or invalid image width: %d"
@@ -4277,7 +4275,8 @@ msgstr "Nepodprta ali neveljavna širina slike: %d"
 msgid "Unsupported or invalid image height: %d"
 msgstr "Nepodprta ali neveljavna višina slike: %d"
 
-#: plug-ins/common/file-pcx.c:706
+#: plug-ins/common/file-pcx.c:707
+#, c-format
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Neveljavno število bajtov na vrstico v glavi PCX"
 
@@ -4285,52 +4284,53 @@ msgstr "Neveljavno število bajtov na vrstico v glavi PCX"
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "Ločljivost prek meja v glavi XCX, uporabljeno bo 72x72"
 
-#: plug-ins/common/file-pcx.c:721
+#: plug-ins/common/file-pcx.c:722
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Dimenzije slike so prevelike: širina %d x višina %d"
 
-#: plug-ins/common/file-pcx.c:848
+#: plug-ins/common/file-pcx.c:850
+#, c-format
 msgid "Unusual PCX flavour, giving up"
 msgstr "Nenavadna vrsta PCX, sledi prekinitev"
 
-#: plug-ins/common/file-pcx.c:874
+#: plug-ins/common/file-pcx.c:876
 msgid "Import from PCX"
 msgstr "Uvozi iz PCX"
 
-#: plug-ins/common/file-pcx.c:883
+#: plug-ins/common/file-pcx.c:885
 msgid "Use PCX image's built-in palette"
 msgstr "Uporabi vgrajeno paleto slike PCX"
 
-#: plug-ins/common/file-pcx.c:884
+#: plug-ins/common/file-pcx.c:886
 msgid "Use black and white palette"
 msgstr "Uporabi črno-belo paleto"
 
-#: plug-ins/common/file-pcx.c:1168 plug-ins/common/file-pnm.c:1630
+#: plug-ins/common/file-pcx.c:1170 plug-ins/common/file-pnm.c:1630
 msgid "Cannot export images with alpha channel."
 msgstr "Slik ni mogoče izvoziti s kanalom alfa."
 
-#: plug-ins/common/file-pcx.c:1188
+#: plug-ins/common/file-pcx.c:1190
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Neveljaven zamik X: %d"
 
-#: plug-ins/common/file-pcx.c:1194
+#: plug-ins/common/file-pcx.c:1196
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Neveljavna zamik Y: %d"
 
-#: plug-ins/common/file-pcx.c:1200
+#: plug-ins/common/file-pcx.c:1202
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Desni rob je zunaj meja (mora biti < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1207
+#: plug-ins/common/file-pcx.c:1209
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Spodnji rob je zunaj meja (mora biti < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1283 plug-ins/common/file-qoi.c:393
+#: plug-ins/common/file-pcx.c:1285 plug-ins/common/file-qoi.c:393
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Pisanje v datoteko »%s« ni uspelo: %s"
@@ -4760,7 +4760,7 @@ msgstr "Napaka pri branju »%s«. Je datoteka poškodovana?"
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Neznan barvni model v datoteki PNG »%s«."
 
-#: plug-ins/common/file-png.c:912 plug-ins/file-exr/file-exr.c:260
+#: plug-ins/common/file-png.c:912 plug-ins/file-exr/file-exr.c:264
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Nove slike za »%s« ni mogoče ustvariti: %s"
@@ -6027,6 +6027,7 @@ msgid "Merge imported paths"
 msgstr "Spoji uvožene poti"
 
 #: plug-ins/common/file-svg.c:382 plug-ins/common/file-svg.c:811
+#: plug-ins/file-exr/file-exr.c:356 plug-ins/file-exr/file-exr.c:370
 msgid "Unknown reason"
 msgstr "Neznani razlog"
 
@@ -8370,7 +8371,6 @@ msgid "Dis_placement Map"
 msgstr "_Zemljevid razmestitve"
 
 #: plug-ins/common/warp.c:242
-#, fuzzy
 msgid "Displacement control map"
 msgstr "Zemljevid nadzora razmestitve"
 
@@ -8387,9 +8387,8 @@ msgid "_Dither size"
 msgstr "Velikost _drgeta"
 
 #: plug-ins/common/warp.c:254
-#, fuzzy
 msgid "Random dither amount"
-msgstr "Količina naključnega trepeta/stresanja"
+msgstr "Količina naključnega drgeta"
 
 #: plug-ins/common/warp.c:259
 msgid "Rotatio_n angle"
@@ -8451,15 +8450,13 @@ msgstr "Zemljevid _preliva"
 
 #: plug-ins/common/warp.c:295
 #, fuzzy
-#| msgid "Gradient Map"
 msgid "Gradient control map"
-msgstr "Zemljevid preliva"
+msgstr "Zemljevid nadzora preliva"
 
 #: plug-ins/common/warp.c:300
 #, fuzzy
-#| msgid "Gradient scale:"
 msgid "Gradient s_cale"
-msgstr "Sprememba merila preliva:"
+msgstr "Spre_memba merila preliva"
 
 #: plug-ins/common/warp.c:301
 #, fuzzy
@@ -8478,9 +8475,8 @@ msgstr "Zemljevid z vektorji nespremenljive smeri"
 
 #: plug-ins/common/warp.c:312
 #, fuzzy
-#| msgid "Vector mag:"
 msgid "Vector magn_itude"
-msgstr "Mag. vektor:"
+msgstr "Mag. vektorja"
 
 #: plug-ins/common/warp.c:313
 #, fuzzy
@@ -9300,44 +9296,50 @@ msgstr "Shranjevanje: %s"
 msgid "Mipmap Options"
 msgstr "Možnosti mipmapov"
 
-#: plug-ins/file-exr/file-exr.c:112
+#: plug-ins/file-exr/file-exr.c:114
 msgid "Loads files in the OpenEXR file format"
 msgstr "Naloži datoteke v zapisu OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:201
+#: plug-ins/file-exr/file-exr.c:205
 #, c-format
 msgid "Error opening file '%s' for reading"
 msgstr "Napaka pri odpiranju datoteke »%s« za branje"
 
-#: plug-ins/file-exr/file-exr.c:212
+#: plug-ins/file-exr/file-exr.c:216
 #, c-format
 msgid "Error querying image dimensions from '%s'"
 msgstr "Napaka pri poizvedovanju o merah slike iz »%s«"
 
-#: plug-ins/file-exr/file-exr.c:232
+#: plug-ins/file-exr/file-exr.c:236
 #, c-format
 msgid "Error querying image precision from '%s'"
 msgstr "Napaka pri poizvedovanju o natančnosti slike iz »%s«"
 
-#: plug-ins/file-exr/file-exr.c:250
+#: plug-ins/file-exr/file-exr.c:254
 #, c-format
 msgid "Error querying image type from '%s'"
 msgstr "Napaka pri poizvedovanju o vrsti slike iz »%s«"
 
-#: plug-ins/file-exr/file-exr.c:312
+#: plug-ins/file-exr/file-exr.c:316
 #, c-format
 msgid "Error reading pixel data from '%s'"
 msgstr "Napaka pri branju podatkov slikovnih točk iz »%s«"
 
-#: plug-ins/file-exr/file-exr.c:419
+#: plug-ins/file-exr/file-exr.c:355 plug-ins/file-exr/file-exr.c:369
+#, fuzzy, c-format
+#| msgid "Failed to set metadata tag %s: %s"
+msgid "Failed to load metadata: %s"
+msgstr "Značke metapodatkov %s ni mogoče določiti: %s"
+
+#: plug-ins/file-exr/file-exr.c:432
 msgid "Import OpenEXR"
 msgstr "Uvozi OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:433
+#: plug-ins/file-exr/file-exr.c:446
 msgid "Unknown Channel Name"
 msgstr "Neznano ime kanala"
 
-#: plug-ins/file-exr/file-exr.c:434
+#: plug-ins/file-exr/file-exr.c:447
 msgid ""
 "The image contains a single unknown channel.\n"
 "It has been converted to grayscale."
