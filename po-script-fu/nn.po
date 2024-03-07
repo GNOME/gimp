@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-11 19:02+0000\n"
-"PO-Revision-Date: 2024-01-15 18:57+0100\n"
+"POT-Creation-Date: 2024-03-06 15:41+0000\n"
+"PO-Revision-Date: 2024-03-07 16:29+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -121,8 +121,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "Lagra utdata frå Script-Fu konsollen"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:888
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
+#: plug-ins/script-fu/server/script-fu-server.c:878
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
 msgid "_Cancel"
 msgstr "_Avbryt"
 
@@ -147,27 +147,27 @@ msgstr "Velkommen til TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Lag skript i GIMP i Scheme-språket"
 
-#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/server/script-fu-server.c:874
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu tenaralternativ"
 
-#: plug-ins/script-fu/server/script-fu-server.c:889
+#: plug-ins/script-fu/server/script-fu-server.c:879
 msgid "_Start Server"
 msgstr "_Start tenaren"
 
-#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/server/script-fu-server.c:912
 msgid "Listen on IP:"
 msgstr "Lytt på IP:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:929
+#: plug-ins/script-fu/server/script-fu-server.c:919
 msgid "Server port:"
 msgstr "Tenarport:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:935
+#: plug-ins/script-fu/server/script-fu-server.c:925
 msgid "Server logfile:"
 msgstr "Loggfil for tenar:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:948
+#: plug-ins/script-fu/server/script-fu-server.c:938
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -183,44 +183,44 @@ msgstr "_Start tenaren …"
 msgid "Server for remote Script-Fu operation"
 msgstr "Tenar for fjernoperering av Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:187
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kan ikkje køyra to skript samtidig."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:191
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Skriptet «%s» er i bruk nå."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:220
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 msgid "_Reset"
 msgstr "_Tilbakestill"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:224
 msgid "_OK"
 msgstr "_OK"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:276
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:278
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:326
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:329
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu fargeval"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:455
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu filval"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:456
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:458
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu mappeval"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:852
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:874
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Feil under utføringa av %s:"
@@ -230,34 +230,30 @@ msgstr "Feil under utføringa av %s:"
 msgid "Error while loading %s:"
 msgstr "Feil ved lastinga av %s:"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:76
+#: plug-ins/script-fu/scripts/add-bevel.scm:75
 msgid "Bumpmap"
 msgstr "Punktbilete"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:189
+#: plug-ins/script-fu/scripts/add-bevel.scm:188
 msgid "Add B_evel..."
 msgstr "Legg til _fasettkant…"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:190
+#: plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add a beveled border to an image"
 msgstr "Legg ein fasettert kant rundt biletet"
 
+#. v3 >>> additional argument
+#: plug-ins/script-fu/scripts/add-bevel.scm:195
+msgid "_Thickness"
+msgstr "_Tjukkleik"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:196
+msgid "_Work on copy"
+msgstr "Arbeid på ein kopi"
+
 #: plug-ins/script-fu/scripts/add-bevel.scm:197
-msgid "Thickness"
-msgstr "Breidde"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:198
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
-#: plug-ins/script-fu/scripts/old-photo.scm:104
-#: plug-ins/script-fu/scripts/round-corners.scm:145
-#: plug-ins/script-fu/scripts/slide.scm:262
-#: plug-ins/script-fu/scripts/spinning-globe.scm:111
-msgid "Work on copy"
-msgstr "Arbeid på kopi"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:199
-msgid "Keep bump layer"
-msgstr "Behald humplaget"
+msgid "_Keep bump layer"
+msgstr "Behald ruglelaget"
 
 #: plug-ins/script-fu/scripts/addborder.scm:123
 msgid "Border Layer"
@@ -556,21 +552,25 @@ msgstr "Djupn"
 msgid "Stain"
 msgstr "Flekkar"
 
-#: plug-ins/script-fu/scripts/coffee.scm:91
-msgid "_Coffee Stain..."
-msgstr "_Kaffiflekkar …"
+#: plug-ins/script-fu/scripts/coffee.scm:95
+msgid "_Stain..."
+msgstr "_Flekkar…"
 
-#: plug-ins/script-fu/scripts/coffee.scm:92
-msgid "Add realistic looking coffee stains to the image"
-msgstr "Legg inn realistiske kaffiflekkar i biletet"
+#: plug-ins/script-fu/scripts/coffee.scm:96
+msgid "Add layers of stain or blotch marks"
+msgstr "Legg  til lag med flekkar"
 
-#: plug-ins/script-fu/scripts/coffee.scm:99
-msgid "Stains"
-msgstr "Flekkar"
+#: plug-ins/script-fu/scripts/coffee.scm:102
+msgid "Number of stains to add"
+msgstr "Kor mange flekkar som skal leggjast til"
 
-#: plug-ins/script-fu/scripts/coffee.scm:100
+#: plug-ins/script-fu/scripts/coffee.scm:103
 msgid "Darken only"
 msgstr "Gjer bare mørkare"
+
+#: plug-ins/script-fu/scripts/coffee.scm:104
+msgid "Gradient to color stains"
+msgstr "Fargeovergang til fargeflekkar"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:70
 msgid "_Difference Clouds"
@@ -721,13 +721,21 @@ msgstr "Legg til skygge"
 msgid "Shadow weight (%)"
 msgstr "Vekting av skygge (%)"
 
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
+#: plug-ins/script-fu/scripts/old-photo.scm:104
+#: plug-ins/script-fu/scripts/round-corners.scm:145
+#: plug-ins/script-fu/scripts/slide.scm:262
+#: plug-ins/script-fu/scripts/spinning-globe.scm:111
+msgid "Work on copy"
+msgstr "Arbeid på kopi"
+
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:164
 msgid "Flatten image"
 msgstr "Flat ut biletet"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:63
-msgid "Using _Paths"
-msgstr "_Bruker banar"
+msgid "_Using Paths"
+msgstr "Bruka _banar"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:64
 #: plug-ins/script-fu/scripts/gimp-online.scm:77
@@ -766,12 +774,12 @@ msgid "Drawing _Simple Objects"
 msgstr "Teikne enkle objekt"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:154
-msgid "Create and Use _Selections"
+msgid "_Create and Use Selections"
 msgstr "Opprett og bruk _utval"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:166
-msgid "_[Table of Contents]"
-msgstr "_[Innhaldsliste]"
+msgid "_Table of Contents"
+msgstr "_Innhaldsliste"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:202
 msgid "_Main Web Site"
@@ -843,32 +851,33 @@ msgstr "Nye hjelpelinjer frå _utvalet"
 msgid "Create four guides around the bounding box of the current selection"
 msgstr "Lagar fire hjelpelinjer ved kantane til det gjeldande utvalet"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
 msgstr "Ny hjelpelinje (i _%) …"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:31
 msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr ""
 "Legg til ei hjelpelinje i den spesifiserte posisjonen som prosent av "
 "biletstorleiken"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Direction"
 msgstr "_Retning"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Horizontal"
 msgstr "Horisontal"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:36
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:38
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Vertical"
 msgstr "Vertikal"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:39
 msgid "_Position (in %)"
 msgstr "_Posisjon (i %)"
 
@@ -881,7 +890,7 @@ msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr ""
 "Legg til ei hjelpelinje i den spesifiserte retninga og posisjonen i pikslar)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "_Position"
 msgstr "_Posisjon"
 
@@ -926,11 +935,11 @@ msgstr "Fargeovergang"
 msgid "Use current gradient"
 msgstr "Bruk gjeldande fargeovergang"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:106
+#: plug-ins/script-fu/scripts/line-nova.scm:107
 msgid "Line _Nova..."
 msgstr "Line _Nova …"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:107
+#: plug-ins/script-fu/scripts/line-nova.scm:108
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
@@ -939,20 +948,20 @@ msgstr ""
 "forgrunnsfargen"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:114
-msgid "Number of lines"
-msgstr "Talet på strålar"
+msgid "_Number of lines"
+msgstr "Talet på _linjer"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:115
-msgid "Sharpness (degrees)"
-msgstr "Mellomrom (grader)"
+msgid "S_harpness (degrees)"
+msgstr "_Skarpleik (grader)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:116
-msgid "Offset radius"
-msgstr "Forskyvingsradius"
+msgid "O_ffset radius"
+msgstr "Forskyvings_radius"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:117
-msgid "Randomness"
-msgstr "Slump"
+msgid "Ran_domness"
+msgstr "_Slump"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:63
 msgid "_Rectangular..."
@@ -1119,7 +1128,6 @@ msgid "_Brush name"
 msgstr "_Penselnamn"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#| msgid "Brush"
 msgid "My Brush"
 msgstr "My Brush"
 
@@ -1129,7 +1137,6 @@ msgid "_File name"
 msgstr "_Filnamn"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:71
-#| msgid "Airbrush"
 msgid "mybrush"
 msgstr "mybrush"
 
@@ -1154,7 +1161,6 @@ msgid "My Pattern"
 msgstr "Mitt mønsterelement"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
-#| msgid "Pattern"
 msgid "mypattern"
 msgstr "mypattern"
 
@@ -1190,11 +1196,11 @@ msgstr "_Reverser rekkefølgja for laga"
 msgid "Reverse the order of layers in the image"
 msgstr "Reverser rekkefølgja for biletlaga"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:69
+#: plug-ins/script-fu/scripts/ripply-anim.scm:70
 msgid "_Rippling..."
 msgstr "_Krusning …"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:70
+#: plug-ins/script-fu/scripts/ripply-anim.scm:71
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
@@ -1202,17 +1208,16 @@ msgstr ""
 "aktive laget"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:77
-msgid "Rippling strength"
-msgstr "Krusningsstyrke"
+msgid "Ri_ppling strength"
+msgstr "_Krusningsstyrke"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:78
-#: plug-ins/script-fu/scripts/waves-anim.scm:105
-msgid "Number of frames"
-msgstr "Talet på rammer"
+msgid "_Number of frames"
+msgstr "_Talet på rammer"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
-msgid "Edge behavior"
-msgstr "Kanthandtering"
+msgid "Edge _behavior"
+msgstr "Kant_oppførsel"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Wrap"
@@ -1344,27 +1349,27 @@ msgstr "_Slør flisfugene …"
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr "Slører biletkantane slik at bileta kan flisleggast utan fuger"
 
+#: plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "Ra_dius"
+msgstr "R_adius"
+
 #: plug-ins/script-fu/scripts/tileblur.scm:80
-msgid "Radius"
-msgstr "Radius"
+msgid "Blur _vertically"
+msgstr "Slør _loddrett"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:81
-msgid "Blur vertically"
-msgstr "Slør vertikalt"
+msgid "Blur _horizontally"
+msgstr "Slør _horisontalt"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:82
-msgid "Blur horizontally"
-msgstr "Slør horisontalt"
+msgid "Blur _type"
+msgstr "Slørings_type"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
-msgid "Blur type"
-msgstr "Sløringstype"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "IIR"
 msgstr "IIR"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "RLE"
 msgstr "RLE"
 
@@ -1395,6 +1400,10 @@ msgstr "Amplityde"
 #: plug-ins/script-fu/scripts/waves-anim.scm:104
 msgid "Wavelength"
 msgstr "Bølgelengde"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "Talet på rammer"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:106
 msgid "Invert direction"
@@ -1489,6 +1498,12 @@ msgstr "X-forsyving av slagskyggen"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Y-forsyving av slagskyggen"
+
+#~ msgid "Add realistic looking coffee stains to the image"
+#~ msgstr "Legg inn realistiske kaffiflekkar i biletet"
+
+#~ msgid "Stains"
+#~ msgstr "Flekkar"
 
 #~ msgid "_Console"
 #~ msgstr "_Konsoll"
@@ -2385,9 +2400,6 @@ msgstr "Y-forsyving av slagskyggen"
 
 #~ msgid "Create an image filled with a swirly pattern"
 #~ msgstr "Lager eit bilete fylt med eit kvervlande mønster"
-
-#~ msgid "Number of times to whirl"
-#~ msgstr "Talet på roteringar"
 
 #~ msgid "Quarter size"
 #~ msgstr "Biletstorleik"
