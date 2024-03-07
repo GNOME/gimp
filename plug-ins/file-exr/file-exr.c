@@ -61,6 +61,8 @@ static GimpValueArray * exr_load             (GimpProcedure         *procedure,
                                               gpointer               run_data);
 
 static GimpImage      * load_image           (GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
                                               gboolean               interactive,
                                               GError               **error);
 static void             sanitize_comment     (gchar                 *comment);
@@ -145,7 +147,7 @@ exr_load (GimpProcedure         *procedure,
 
   gegl_init (NULL, NULL);
 
-  image = load_image (file, run_mode == GIMP_RUN_INTERACTIVE,
+  image = load_image (file, metadata, flags, run_mode == GIMP_RUN_INTERACTIVE,
                       &error);
 
   if (! image)
@@ -163,9 +165,11 @@ exr_load (GimpProcedure         *procedure,
 }
 
 static GimpImage *
-load_image (GFile        *file,
-            gboolean      interactive,
-            GError      **error)
+load_image (GFile                 *file,
+            GimpMetadata          *metadata,
+            GimpMetadataLoadFlags *flags,
+            gboolean               interactive,
+            GError               **error)
 {
   EXRLoader        *loader;
   gint              width;
@@ -340,32 +344,41 @@ load_image (GFile        *file,
   exif_data = exr_loader_get_exif (loader, &exif_size);
   xmp_data  = exr_loader_get_xmp  (loader, &xmp_size);
 
-  if (exif_data || xmp_data)
+  if (metadata && (exif_data || xmp_data))
     {
-      GimpMetadata          *metadata = gimp_metadata_new ();
-      GimpMetadataLoadFlags  flags    = GIMP_METADATA_LOAD_ALL;
-
       if (exif_data)
         {
-          gimp_metadata_set_from_exif (metadata, exif_data, exif_size, NULL);
+          GError *error = NULL;
+
+          if (! gimp_metadata_set_from_exif (metadata, exif_data, exif_size, &error))
+            {
+              g_message (_("Failed to load metadata: %s"),
+                         error ? error->message : _("Unknown reason"));
+              g_clear_error (&error);
+            }
+
           g_free (exif_data);
         }
 
       if (xmp_data)
         {
-          gimp_metadata_set_from_xmp (metadata, xmp_data, xmp_size, NULL);
+          GError *error = NULL;
+
+          if (! gimp_metadata_set_from_xmp (metadata, xmp_data, xmp_size, &error))
+            {
+              g_message (_("Failed to load metadata: %s"),
+                         error ? error->message : _("Unknown reason"));
+              g_clear_error (&error);
+            }
           g_free (xmp_data);
         }
 
       if (comment)
-        flags &= ~GIMP_METADATA_LOAD_COMMENT;
+        *flags &= ~GIMP_METADATA_LOAD_COMMENT;
 
       if (profile)
-        flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
+        *flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
-      gimp_image_metadata_load_finish (image, "image/exr",
-                                       metadata, flags);
-      g_object_unref (metadata);
     }
 
   gimp_progress_update (1.0);
