@@ -616,6 +616,10 @@ shoot_dialog (GimpProcedure        *procedure,
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "color-profile", NULL);
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
+  /* Get the screen on which we are running */
+  if (run)
+    *monitor = gimp_widget_get_monitor (dialog);
+
   gtk_widget_destroy (dialog);
 
   if (run)
