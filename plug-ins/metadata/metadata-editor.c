@@ -99,11 +99,21 @@ enum
   ME_RENDER_OTHER,
 };
 
+enum
+{
+  ME_HINT_NONE,
+  ME_HINT_ID_ONLY,
+  ME_HINT_NEWLINE,
+  ME_HINT_COMMA,
+};
+
+
 typedef struct
 {
   guint     index;
   gchar    *label;
   gint      widget_type;
+  gint      hint_type;
   gchar    *id;
   gchar    *extra_id1;   /* date_box: button id; tree view: add button id */
   gchar    *extra_id2;   /* date_box: icon name for button; tree view: remove button id */
@@ -460,6 +470,10 @@ cell_edited_callback_combo                      (GtkCellRendererCombo *cell,
                                                  gpointer              data,
                                                  int                   index);
 
+gchar *
+create_metadata_tooltip                         (const me_widget_info *widget_info,
+                                                 gint                  id);
+
 
 G_DEFINE_TYPE (Metadata, metadata, GIMP_TYPE_PLUG_IN)
 
@@ -485,98 +499,98 @@ metadata_editor meta_args;
 
 static const me_widget_info description_tab_data[] =
 {
-  { 0, N_("Document Title"),          ME_WIDGET_ENTRY,      "Xmp.dc.title" },
-  { 1, N_("Author"),                  ME_WIDGET_TEXT,       "Xmp.dc.creator" },
-  { 2, N_("Author Title"),            ME_WIDGET_ENTRY,      "Xmp.photoshop.AuthorsPosition" },
-  { 3, N_("Description"),             ME_WIDGET_TEXT,       "Xmp.dc.description" },
-  { 4, N_("Description Writer"),      ME_WIDGET_ENTRY,      "Xmp.photoshop.CaptionWriter" },
-  { 5, N_("Rating"),                  ME_WIDGET_COMBO,      "Xmp.xmp.Rating" },
-  { 6, N_("Keywords"),                ME_WIDGET_TEXT,       "Xmp.dc.subject" },
-  { 7, "",                            ME_WIDGET_SEPARATOR,  "" },
-  { 8, N_("Copyright Status"),        ME_WIDGET_COMBO,      "Xmp.xmpRights.Marked" },
-  { 9, N_("Copyright Notice"),        ME_WIDGET_ENTRY,      "Xmp.dc.rights" },
-  { 10, N_("Copyright URL"),          ME_WIDGET_ENTRY,      "Xmp.xmpRights.WebStatement" },
+  { 0, N_("Document Title"),          ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY,  "Xmp.dc.title" },
+  { 1, N_("Author"),                  ME_WIDGET_TEXT,      ME_HINT_NEWLINE,  "Xmp.dc.creator" },
+  { 2, N_("Author Title"),            ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY,  "Xmp.photoshop.AuthorsPosition" },
+  { 3, N_("Description"),             ME_WIDGET_TEXT,      ME_HINT_ID_ONLY,  "Xmp.dc.description" },
+  { 4, N_("Description Writer"),      ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY,  "Xmp.photoshop.CaptionWriter" },
+  { 5, N_("Rating"),                  ME_WIDGET_COMBO,     ME_HINT_ID_ONLY,  "Xmp.xmp.Rating" },
+  { 6, N_("Keywords"),                ME_WIDGET_TEXT,      ME_HINT_NEWLINE,  "Xmp.dc.subject" },
+  { 7, "",                            ME_WIDGET_SEPARATOR, ME_HINT_NONE,     "" },
+  { 8, N_("Copyright Status"),        ME_WIDGET_COMBO,     ME_HINT_ID_ONLY,  "Xmp.xmpRights.Marked" },
+  { 9, N_("Copyright Notice"),        ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY,  "Xmp.dc.rights" },
+  { 10, N_("Copyright URL"),          ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY,  "Xmp.xmpRights.WebStatement" },
 };
 static const gint n_description_tab_data = G_N_ELEMENTS (description_tab_data);
 
 static const me_widget_info iptc_tab_data[] =
 {
-  { 0, N_("Address"),                 ME_WIDGET_TEXT,       "Xmp.iptc.CiAdrExtadr" },
-  { 1, N_("City"),                    ME_WIDGET_ENTRY,      "Xmp.iptc.CiAdrCity" },
-  { 2, N_("State / Province"),        ME_WIDGET_ENTRY,      "Xmp.iptc.CiAdrRegion" },
-  { 3, N_("Postal Code"),             ME_WIDGET_ENTRY,      "Xmp.iptc.CiAdrPcode" },
-  { 4, N_("Country"),                 ME_WIDGET_ENTRY,      "Xmp.iptc.CiAdrCtry" },
-  { 5, "",                            ME_WIDGET_SEPARATOR,  "" },
-  { 6, N_("Phone(s)"),                ME_WIDGET_TEXT,       "Xmp.iptc.CiTelWork" },
-  { 7, N_("E-mail(s)"),               ME_WIDGET_TEXT,       "Xmp.iptc.CiEmailWork" },
-  { 8, N_("Website(s)"),              ME_WIDGET_TEXT,       "Xmp.iptc.CiUrlWork" },
-  { 9, "",                            ME_WIDGET_SEPARATOR,  "" },
-  { 10, N_("Creation Date"),          ME_WIDGET_DATE_BOX,   "Xmp.photoshop.DateCreated",
+  { 0, N_("Address"),                 ME_WIDGET_TEXT,      ME_HINT_ID_ONLY, "Xmp.iptc.CiAdrExtadr" },
+  { 1, N_("City"),                    ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.iptc.CiAdrCity" },
+  { 2, N_("State / Province"),        ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.iptc.CiAdrRegion" },
+  { 3, N_("Postal Code"),             ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.iptc.CiAdrPcode" },
+  { 4, N_("Country"),                 ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.iptc.CiAdrCtry" },
+  { 5, "",                            ME_WIDGET_SEPARATOR, ME_HINT_NONE,    "" },
+  { 6, N_("Phone(s)"),                ME_WIDGET_TEXT,      ME_HINT_NEWLINE, "Xmp.iptc.CiTelWork" },
+  { 7, N_("E-mail(s)"),               ME_WIDGET_TEXT,      ME_HINT_NEWLINE, "Xmp.iptc.CiEmailWork" },
+  { 8, N_("Website(s)"),              ME_WIDGET_TEXT,      ME_HINT_NEWLINE, "Xmp.iptc.CiUrlWork" },
+  { 9, "",                            ME_WIDGET_SEPARATOR, ME_HINT_NONE,    "" },
+  { 10, N_("Creation Date"),          ME_WIDGET_DATE_BOX,  ME_HINT_ID_ONLY, "Xmp.photoshop.DateCreated",
         "create_date_button",         "gimp-grid" },
-  { 11, N_("Intellectual Genre"),     ME_WIDGET_ENTRY,      "Xmp.iptc.IntellectualGenre" },
-  { 12, N_("IPTC Scene Code"),        ME_WIDGET_TEXT,       "Xmp.iptc.Scene" },
-  { 13, "",                           ME_WIDGET_SEPARATOR,  "" },
-  { 14, N_("Sublocation"),            ME_WIDGET_ENTRY,      "Xmp.iptc.Location" },
-  { 15, N_("City"),                   ME_WIDGET_ENTRY,      "Xmp.photoshop.City" },
-  { 16, N_("State / Province"),       ME_WIDGET_ENTRY,      "Xmp.photoshop.State" },
-  { 17, N_("Country"),                ME_WIDGET_ENTRY,      "Xmp.photoshop.Country" },
-  { 18, N_("Country ISO-Code"),       ME_WIDGET_ENTRY,      "Xmp.iptc.CountryCode" },
-  { 19, "",                           ME_WIDGET_SEPARATOR,  "" },
-  { 20, N_("Urgency"),                ME_WIDGET_COMBO,      "Xmp.photoshop.Urgency" },
-  { 21, N_("Headline"),               ME_WIDGET_TEXT,       "Xmp.photoshop.Headline" },
-  { 22, N_("IPTC Subject Code"),      ME_WIDGET_TEXT,       "Xmp.iptc.SubjectCode" },
-  { 23, "",                           ME_WIDGET_SEPARATOR,  "" },
-  { 24, N_("Job Identifier"),         ME_WIDGET_ENTRY,      "Xmp.photoshop.TransmissionReference" },
-  { 25, N_("Instructions"),           ME_WIDGET_TEXT,       "Xmp.photoshop.Instructions" },
-  { 26, N_("Credit Line"),            ME_WIDGET_ENTRY,      "Xmp.photoshop.Credit" },
-  { 27, N_("Source"),                 ME_WIDGET_ENTRY,      "Xmp.photoshop.Source" },
-  { 28, N_("Usage Terms"),            ME_WIDGET_TEXT,       "Xmp.xmpRights.UsageTerms" },
+  { 11, N_("Intellectual Genre"),     ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.iptc.IntellectualGenre" },
+  { 12, N_("IPTC Scene Code"),        ME_WIDGET_TEXT,      ME_HINT_ID_ONLY, "Xmp.iptc.Scene" },
+  { 13, "",                           ME_WIDGET_SEPARATOR, ME_HINT_NONE,    "" },
+  { 14, N_("Sublocation"),            ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.iptc.Location" },
+  { 15, N_("City"),                   ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.photoshop.City" },
+  { 16, N_("State / Province"),       ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.photoshop.State" },
+  { 17, N_("Country"),                ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.photoshop.Country" },
+  { 18, N_("Country ISO-Code"),       ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.iptc.CountryCode" },
+  { 19, "",                           ME_WIDGET_SEPARATOR, ME_HINT_NONE,    "" },
+  { 20, N_("Urgency"),                ME_WIDGET_COMBO,     ME_HINT_ID_ONLY, "Xmp.photoshop.Urgency" },
+  { 21, N_("Headline"),               ME_WIDGET_TEXT,      ME_HINT_ID_ONLY, "Xmp.photoshop.Headline" },
+  { 22, N_("IPTC Subject Code"),      ME_WIDGET_TEXT,      ME_HINT_ID_ONLY, "Xmp.iptc.SubjectCode" },
+  { 23, "",                           ME_WIDGET_SEPARATOR, ME_HINT_NONE,    "" },
+  { 24, N_("Job Identifier"),         ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.photoshop.TransmissionReference"},
+  { 25, N_("Instructions"),           ME_WIDGET_TEXT,      ME_HINT_ID_ONLY, "Xmp.photoshop.Instructions" },
+  { 26, N_("Credit Line"),            ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.photoshop.Credit" },
+  { 27, N_("Source"),                 ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.photoshop.Source" },
+  { 28, N_("Usage Terms"),            ME_WIDGET_TEXT,      ME_HINT_ID_ONLY, "Xmp.xmpRights.UsageTerms" },
 };
 static const gint n_iptc_tab_data = G_N_ELEMENTS (iptc_tab_data);
 
 static const me_widget_info iptc_extension_tab_data[] =
 {
-  { 0, N_("Person Shown"),            ME_WIDGET_TEXT,       "Xmp.iptcExt.PersonInImage" },
-  { 1, N_("Sublocation"),             ME_WIDGET_ENTRY,      "Xmp.iptcExt.Sublocation" },
-  { 2, N_("City"),                    ME_WIDGET_ENTRY,      "Xmp.iptcExt.City" },
-  { 3, N_("State / Province"),        ME_WIDGET_ENTRY,      "Xmp.iptcExt.ProvinceState" },
-  { 4, N_("Country"),                 ME_WIDGET_ENTRY,      "Xmp.iptcExt.CountryName" },
-  { 5, N_("Country ISO-Code"),        ME_WIDGET_ENTRY,      "Xmp.iptcExt.CountryCode" },
-  { 6, N_("World Region"),            ME_WIDGET_ENTRY,      "Xmp.iptcExt.WorldRegion" },
-  { 7, N_("Location Shown"),          ME_WIDGET_TREE_GRID,  "Xmp.iptcExt.LocationShown",
+  { 0, N_("Person Shown"),            ME_WIDGET_TEXT,           ME_HINT_ID_ONLY, "Xmp.iptcExt.PersonInImage" },
+  { 1, N_("Sublocation"),             ME_WIDGET_ENTRY,          ME_HINT_ID_ONLY, "Xmp.iptcExt.Sublocation" },
+  { 2, N_("City"),                    ME_WIDGET_ENTRY,          ME_HINT_ID_ONLY, "Xmp.iptcExt.City" },
+  { 3, N_("State / Province"),        ME_WIDGET_ENTRY,          ME_HINT_ID_ONLY, "Xmp.iptcExt.ProvinceState" },
+  { 4, N_("Country"),                 ME_WIDGET_ENTRY,          ME_HINT_ID_ONLY, "Xmp.iptcExt.CountryName" },
+  { 5, N_("Country ISO-Code"),        ME_WIDGET_ENTRY,          ME_HINT_ID_ONLY, "Xmp.iptcExt.CountryCode" },
+  { 6, N_("World Region"),            ME_WIDGET_ENTRY,          ME_HINT_ID_ONLY, "Xmp.iptcExt.WorldRegion" },
+  { 7, N_("Location Shown"),          ME_WIDGET_TREE_GRID,      ME_HINT_ID_ONLY, "Xmp.iptcExt.LocationShown",
        "add_shown_location_button",   "rem_shown_location_button" },
-  { 8, N_("Featured Organization"),   ME_WIDGET_TREE_GRID,  "Xmp.iptcExt.OrganisationInImageName",
+  { 8, N_("Featured Organization"),   ME_WIDGET_TREE_GRID,      ME_HINT_ID_ONLY, "Xmp.iptcExt.OrganisationInImageName",
        "add_feat_org_name_button",    "rem_feat_org_name_button" },
-  { 9, N_("Organization Code"),       ME_WIDGET_TREE_GRID,  "Xmp.iptcExt.OrganisationInImageCode",
+  { 9, N_("Organization Code"),       ME_WIDGET_TREE_GRID,      ME_HINT_ID_ONLY, "Xmp.iptcExt.OrganisationInImageCode",
        "add_feat_org_code_button",    "rem_feat_org_code_button" },
-  { 10, N_("Event"),                  ME_WIDGET_ENTRY,      "Xmp.iptcExt.Event" },
-  { 11, N_("Artwork or Object"),      ME_WIDGET_TREE_GRID,  "Xmp.iptcExt.ArtworkOrObject",
+  { 10, N_("Event"),                  ME_WIDGET_ENTRY,          ME_HINT_ID_ONLY, "Xmp.iptcExt.Event" },
+  { 11, N_("Artwork or Object"),      ME_WIDGET_TREE_GRID,      ME_HINT_ID_ONLY, "Xmp.iptcExt.ArtworkOrObject",
         "add_artwork_object_button",  "rem_artwork_object_button" },
-  { 12, "",                           ME_WIDGET_SEPARATOR,  "" },
-  { 13, N_("Additional Model Info"),  ME_WIDGET_TEXT,       "Xmp.iptcExt.AddlModelInfo" },
-  { 14, N_("Model Age"),              ME_WIDGET_TEXT,       "Xmp.iptcExt.ModelAge" },
-  { 15, N_("Minor Model Age Disclosure"), ME_WIDGET_COMBO,     "Xmp.plus.MinorModelAgeDisclosure" },
-  { 16, N_("Model Release Status"),       ME_WIDGET_COMBO,     "Xmp.plus.ModelReleaseStatus" },
-  { 17, N_("Model Release Identifier"),   ME_WIDGET_TREE_GRID, "Xmp.plus.ModelReleaseID",
+  { 12, "",                           ME_WIDGET_SEPARATOR,      ME_HINT_NONE,    "" },
+  { 13, N_("Additional Model Info"),  ME_WIDGET_TEXT,           ME_HINT_ID_ONLY, "Xmp.iptcExt.AddlModelInfo" },
+  { 14, N_("Model Age"),              ME_WIDGET_TEXT,           ME_HINT_ID_ONLY, "Xmp.iptcExt.ModelAge" },
+  { 15, N_("Minor Model Age Disclosure"), ME_WIDGET_COMBO,      ME_HINT_ID_ONLY, "Xmp.plus.MinorModelAgeDisclosure" },
+  { 16, N_("Model Release Status"),       ME_WIDGET_COMBO,      ME_HINT_ID_ONLY, "Xmp.plus.ModelReleaseStatus" },
+  { 17, N_("Model Release Identifier"),   ME_WIDGET_TREE_GRID,  ME_HINT_ID_ONLY, "Xmp.plus.ModelReleaseID",
         "add_model_rel_id_button",    "rem_model_rel_id_button" },
-  { 18, "",                           ME_WIDGET_SEPARATOR,  "" },
-  { 19, N_("Image Supplier Name"),    ME_WIDGET_ENTRY,      "Xmp.plus.ImageSupplierName" },
-  { 20, N_("Image Supplier ID"),      ME_WIDGET_ENTRY,      "Xmp.plus.ImageSupplierID" },
-  { 21, N_("Supplier's Image ID"),    ME_WIDGET_ENTRY,      "Xmp.plus.ImageSupplierImageID" },
-  { 22, N_("Registry Entry"),         ME_WIDGET_TREE_GRID,  "Xmp.iptcExt.RegistryId",
+  { 18, "",                           ME_WIDGET_SEPARATOR,      ME_HINT_NONE,    "" },
+  { 19, N_("Image Supplier Name"),    ME_WIDGET_ENTRY,          ME_HINT_ID_ONLY, "Xmp.plus.ImageSupplierName" },
+  { 20, N_("Image Supplier ID"),      ME_WIDGET_ENTRY,          ME_HINT_ID_ONLY, "Xmp.plus.ImageSupplierID" },
+  { 21, N_("Supplier's Image ID"),    ME_WIDGET_ENTRY,          ME_HINT_ID_ONLY, "Xmp.plus.ImageSupplierImageID" },
+  { 22, N_("Registry Entry"),         ME_WIDGET_TREE_GRID,      ME_HINT_ID_ONLY, "Xmp.iptcExt.RegistryId",
         "add_reg_entry_button",       "rem_reg_entry_button" },
-  { 23, N_("Max. Available Width"),   ME_WIDGET_ENTRY,      "Xmp.iptcExt.MaxAvailWidth" },
-  { 24, N_("Max. Available Height"),  ME_WIDGET_ENTRY,      "Xmp.iptcExt.MaxAvailHeight" },
-  { 25, N_("Digital Source Type"),    ME_WIDGET_COMBO,      "Xmp.iptcExt.DigitalSourceType" },
-  { 26, "",                           ME_WIDGET_SEPARATOR,  "" },
-  { 27, N_("Image Creator"),          ME_WIDGET_TREE_GRID,  "Xmp.plus.ImageCreator",
+  { 23, N_("Max. Available Width"),   ME_WIDGET_ENTRY,          ME_HINT_ID_ONLY, "Xmp.iptcExt.MaxAvailWidth" },
+  { 24, N_("Max. Available Height"),  ME_WIDGET_ENTRY,          ME_HINT_ID_ONLY, "Xmp.iptcExt.MaxAvailHeight" },
+  { 25, N_("Digital Source Type"),    ME_WIDGET_COMBO,          ME_HINT_ID_ONLY, "Xmp.iptcExt.DigitalSourceType" },
+  { 26, "",                           ME_WIDGET_SEPARATOR,      ME_HINT_NONE,    "" },
+  { 27, N_("Image Creator"),          ME_WIDGET_TREE_GRID,      ME_HINT_ID_ONLY, "Xmp.plus.ImageCreator",
         "add_image_creator_button",   "rem_image_creator_button" },
-  { 28, N_("Copyright Owner"),        ME_WIDGET_TREE_GRID,  "Xmp.plus.CopyrightOwner",
+  { 28, N_("Copyright Owner"),        ME_WIDGET_TREE_GRID,      ME_HINT_ID_ONLY, "Xmp.plus.CopyrightOwner",
         "add_copyright_own_button",   "rem_copyright_own_button" },
-  { 29, N_("Licensor"),               ME_WIDGET_TREE_GRID,  "Xmp.plus.Licensor",
+  { 29, N_("Licensor"),               ME_WIDGET_TREE_GRID,      ME_HINT_ID_ONLY, "Xmp.plus.Licensor",
         "add_licensor_button",        "rem_licensor_button" },
-  { 30, N_("Property Release Status"), ME_WIDGET_COMBO,     "Xmp.plus.PropertyReleaseStatus" },
-  { 31, N_("Property Release Identifier"), ME_WIDGET_TREE_GRID, "Xmp.plus.PropertyReleaseID",
+  { 30, N_("Property Release Status"), ME_WIDGET_COMBO,         ME_HINT_ID_ONLY, "Xmp.plus.PropertyReleaseStatus" },
+  { 31, N_("Property Release Identifier"), ME_WIDGET_TREE_GRID, ME_HINT_ID_ONLY, "Xmp.plus.PropertyReleaseID",
         "add_prop_rel_id_button",     "rem_prop_rel_id_button" },
 };
 static const gint n_iptc_extension_tab_data = G_N_ELEMENTS (iptc_extension_tab_data);
@@ -676,44 +690,44 @@ static const gint n_property_release_id_info = G_N_ELEMENTS (property_release_id
 
 static const me_widget_info categories_labels[] =
 {
-  { 0, N_("Category"),                ME_WIDGET_ENTRY,      "Xmp.photoshop.Category" },
-  { 1, N_("Supplemental Category"),   ME_WIDGET_TEXT,       "Xmp.photoshop.SupplementalCategories" },
+  { 0, N_("Category"),                ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.photoshop.Category" },
+  { 1, N_("Supplemental Category"),   ME_WIDGET_TEXT,      ME_HINT_ID_ONLY, "Xmp.photoshop.SupplementalCategories" },
 };
 static const gint n_categories_labels = G_N_ELEMENTS (categories_labels);
 
 static const me_widget_info gps_labels[] =
 {
-  { 0, N_("Longitude"),               ME_WIDGET_ENTRY,      "Exif.GPSInfo.GPSLongitude" },
-  { 1, N_("Longitude Reference"),     ME_WIDGET_COMBO,      "Exif.GPSInfo.GPSLongitudeRef" },
-  { 2, N_("Latitude"),                ME_WIDGET_ENTRY,      "Exif.GPSInfo.GPSLatitude" },
-  { 3, N_("Latitude Reference"),      ME_WIDGET_COMBO,      "Exif.GPSInfo.GPSLatitudeRef" },
-  { 4, N_("Altitude"),                ME_WIDGET_EC_BOX,     "Exif.GPSInfo.GPSAltitude",
+  { 0, N_("Longitude"),               ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Exif.GPSInfo.GPSLongitude" },
+  { 1, N_("Longitude Reference"),     ME_WIDGET_COMBO,     ME_HINT_ID_ONLY, "Exif.GPSInfo.GPSLongitudeRef" },
+  { 2, N_("Latitude"),                ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Exif.GPSInfo.GPSLatitude" },
+  { 3, N_("Latitude Reference"),      ME_WIDGET_COMBO,     ME_HINT_ID_ONLY, "Exif.GPSInfo.GPSLatitudeRef" },
+  { 4, N_("Altitude"),                ME_WIDGET_EC_BOX,    ME_HINT_ID_ONLY, "Exif.GPSInfo.GPSAltitude",
        "GPSAltitudeSystem" },
-  { 5, N_("Altitude Reference"),      ME_WIDGET_COMBO,      "Exif.GPSInfo.GPSAltitudeRef" },
+  { 5, N_("Altitude Reference"),      ME_WIDGET_COMBO,     ME_HINT_ID_ONLY, "Exif.GPSInfo.GPSAltitudeRef" },
 };
 static const gint n_gps_labels = G_N_ELEMENTS (gps_labels);
 
 static const me_widget_info dicom_info_labels[] =
 {
-  { 0, N_("Patient"),                 ME_WIDGET_ENTRY,      "Xmp.DICOM.PatientName" },
-  { 1, N_("Patient ID"),              ME_WIDGET_ENTRY,      "Xmp.DICOM.PatientID" },
-  { 2, N_("Date of Birth"),           ME_WIDGET_DATE_BOX,   "Xmp.DICOM.PatientDOB",
+  { 0, N_("Patient"),                 ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.DICOM.PatientName" },
+  { 1, N_("Patient ID"),              ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.DICOM.PatientID" },
+  { 2, N_("Date of Birth"),           ME_WIDGET_DATE_BOX,  ME_HINT_ID_ONLY, "Xmp.DICOM.PatientDOB",
       "dob_date_button",              "gimp-grid" },
-  { 3, N_("Patient Sex"),             ME_WIDGET_COMBO,      "Xmp.DICOM.PatientSex" },
-  { 4, "",                            ME_WIDGET_SEPARATOR,  "" },
-  { 5, N_("Study ID"),                ME_WIDGET_ENTRY,      "Xmp.DICOM.StudyID" },
-  { 6, N_("Referring Physician"),     ME_WIDGET_ENTRY,      "Xmp.DICOM.StudyPhysician" },
-  { 7, N_("Study Date"),              ME_WIDGET_DATE_BOX,   "Xmp.DICOM.StudyDateTime",
+  { 3, N_("Patient Sex"),             ME_WIDGET_COMBO,     ME_HINT_ID_ONLY, "Xmp.DICOM.PatientSex" },
+  { 4, "",                            ME_WIDGET_SEPARATOR, ME_HINT_ID_ONLY, "" },
+  { 5, N_("Study ID"),                ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.DICOM.StudyID" },
+  { 6, N_("Referring Physician"),     ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.DICOM.StudyPhysician" },
+  { 7, N_("Study Date"),              ME_WIDGET_DATE_BOX,  ME_HINT_ID_ONLY, "Xmp.DICOM.StudyDateTime",
       "study_date_button",            "gimp-grid" },
-  { 8, N_("Study Description"),       ME_WIDGET_TEXT ,      "Xmp.DICOM.StudyDescription" },
-  { 9, N_("Series Number"),           ME_WIDGET_ENTRY,      "Xmp.DICOM.SeriesNumber" },
-  { 10, N_("Modality"),               ME_WIDGET_ENTRY,      "Xmp.DICOM.SeriesModality" },
-  { 11, N_("Series Date"),            ME_WIDGET_DATE_BOX,   "Xmp.DICOM.SeriesDateTime",
+  { 8, N_("Study Description"),       ME_WIDGET_TEXT ,     ME_HINT_ID_ONLY, "Xmp.DICOM.StudyDescription" },
+  { 9, N_("Series Number"),           ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.DICOM.SeriesNumber" },
+  { 10, N_("Modality"),               ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.DICOM.SeriesModality" },
+  { 11, N_("Series Date"),            ME_WIDGET_DATE_BOX,  ME_HINT_ID_ONLY, "Xmp.DICOM.SeriesDateTime",
       "series_date_button",           "gimp-grid" },
-  { 12, N_("Series Description"),     ME_WIDGET_TEXT ,      "Xmp.DICOM.SeriesDescription" },
-  { 13, "",                           ME_WIDGET_SEPARATOR,  "" },
-  { 14, N_("Equipment Institution"),  ME_WIDGET_ENTRY,      "Xmp.DICOM.EquipmentInstitution" },
-  { 15, N_("Equipment Manufacturer"), ME_WIDGET_ENTRY,      "Xmp.DICOM.EquipmentManufacturer" },
+  { 12, N_("Series Description"),     ME_WIDGET_TEXT ,     ME_HINT_ID_ONLY, "Xmp.DICOM.SeriesDescription" },
+  { 13, "",                           ME_WIDGET_SEPARATOR, ME_HINT_NONE,    "" },
+  { 14, N_("Equipment Institution"),  ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.DICOM.EquipmentInstitution" },
+  { 15, N_("Equipment Manufacturer"), ME_WIDGET_ENTRY,     ME_HINT_ID_ONLY, "Xmp.DICOM.EquipmentManufacturer" },
 };
 static const gint n_dicom_info_labels = G_N_ELEMENTS (dicom_info_labels);
 
@@ -758,11 +772,11 @@ metadata_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Edit metadata (IPTC, EXIF, XMP)"),
-                                        "Edit metadata information attached "
-                                        "to the current image. Some or all "
-                                        "of this metadata will be saved in "
-                                        "the file, depending on the output "
-                                        "file format.",
+                                        _("Edit metadata information attached "
+                                          "to the current image. Some or all "
+                                          "of this metadata will be saved in "
+                                          "the file, depending on the output "
+                                          "file format."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Ben Touchette",
@@ -879,9 +893,15 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
   /* Labels on the left, data entry widgets on the right */
   for (int i = 0; i < n_items; i++)
     {
+      gchar * tooltip = NULL;
+
+      tooltip = create_metadata_tooltip (widget_info, i);
+
       if (widget_info[i].widget_type != ME_WIDGET_SEPARATOR)
         {
           label = gtk_label_new (_(widget_info[i].label));
+          if (tooltip)
+            gtk_widget_set_tooltip_text (label, tooltip);
           gtk_widget_set_margin_start (label, 3);
           gtk_widget_set_margin_top (label, 3);
           gtk_widget_set_margin_end (label, 3);
@@ -893,7 +913,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
           gtk_grid_attach (GTK_GRID (grid), label,
                            0, widget_info[i].index,
                            1, 1);
-          gtk_widget_show (label);
+          gtk_widget_set_visible (label, TRUE);
         }
 
       switch (widget_info[i].widget_type)
@@ -903,6 +923,8 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             GtkWidget *entry;
 
             entry = gtk_entry_new ();
+            if (tooltip)
+              gtk_widget_set_tooltip_text (entry, tooltip);
             gtk_widget_set_hexpand(GTK_WIDGET (entry), TRUE);
             gtk_widget_set_margin_end (entry, 5);
             gtk_grid_attach (GTK_GRID (grid), entry,
@@ -926,14 +948,16 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                                  GTK_SHADOW_IN);
             gtk_widget_set_margin_end (scrolled_window, 5);
-            gtk_widget_show (scrolled_window);
+            gtk_widget_set_visible (scrolled_window, TRUE);
 
             textview = gtk_text_view_new();
+            if (tooltip)
+              gtk_widget_set_tooltip_text (textview, tooltip);
             gtk_container_add (GTK_CONTAINER (scrolled_window), textview);
             gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (textview), GTK_WRAP_WORD);
             gtk_text_view_set_left_margin (GTK_TEXT_VIEW (textview), 6);
             gtk_text_view_set_right_margin (GTK_TEXT_VIEW (textview), 6);
-            gtk_widget_show (textview);
+            gtk_widget_set_visible (textview, TRUE);
             gtk_grid_attach (GTK_GRID (grid), scrolled_window,
                              1, widget_info[i].index,
                              1, 1);
@@ -947,13 +971,15 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             GtkWidget *combo;
 
             combo = gtk_combo_box_text_new ();
+            if (tooltip)
+              gtk_widget_set_tooltip_text (combo, tooltip);
             gtk_widget_set_hexpand(GTK_WIDGET (combo), TRUE);
             gtk_widget_set_margin_end (combo, 5);
             gtk_widget_set_can_focus (combo, FALSE);
             gtk_grid_attach (GTK_GRID (grid), combo,
                              1, widget_info[i].index,
                              1, 1);
-            gtk_widget_show (combo);
+            gtk_widget_set_visible (combo, TRUE);
             g_hash_table_insert (meta_info->widgets, widget_info[i].id,
                                  (gpointer) combo);
           }
@@ -970,12 +996,14 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             gtk_grid_attach (GTK_GRID (grid), date_box,
                              1, widget_info[i].index,
                              1, 1);
-            gtk_widget_show (date_box);
+            gtk_widget_set_visible (date_box, TRUE);
 
             date_entry = gtk_entry_new ();
+            if (tooltip)
+              gtk_widget_set_tooltip_text (date_entry, tooltip);
             gtk_widget_set_hexpand(GTK_WIDGET (date_entry), TRUE);
             gtk_box_pack_start (GTK_BOX (date_box), date_entry, TRUE, TRUE, 0);
-            gtk_widget_show (date_entry);
+            gtk_widget_set_visible (date_entry, TRUE);
             g_hash_table_insert (meta_info->widgets, widget_info[i].id,
                                  (gpointer) date_entry);
 
@@ -986,7 +1014,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             gtk_widget_set_margin_end (button, 5);
             gtk_widget_set_margin_bottom (button, 1);
             gtk_container_add (GTK_CONTAINER (date_box), button);
-            gtk_widget_show (button);
+            gtk_widget_set_visible (button, TRUE);
             g_hash_table_insert (meta_args.widgets, widget_info[i].extra_id1,
                                  (gpointer) button);
           }
@@ -1006,12 +1034,14 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             gtk_grid_attach (GTK_GRID (grid), ec_box,
                              1, widget_info[i].index,
                              1, 1);
-            gtk_widget_show (ec_box);
+            gtk_widget_set_visible (ec_box, TRUE);
 
             ec_entry = gtk_entry_new ();
+            if (tooltip)
+              gtk_widget_set_tooltip_text (ec_entry, tooltip);
             gtk_widget_set_hexpand(GTK_WIDGET (ec_entry), TRUE);
             gtk_box_pack_start (GTK_BOX (ec_box), ec_entry, TRUE, TRUE, 0);
-            gtk_widget_show (ec_entry);
+            gtk_widget_set_visible (ec_entry, TRUE);
             g_hash_table_insert (meta_info->widgets, widget_info[i].id,
                                  (gpointer) ec_entry);
 
@@ -1020,7 +1050,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             gtk_widget_set_can_focus (ec_combo, FALSE);
             g_object_set (G_OBJECT (ec_combo), "width_request", 100, NULL);
             gtk_box_pack_start (GTK_BOX (ec_box), ec_combo, FALSE, FALSE, 0);
-            gtk_widget_show (ec_combo);
+            gtk_widget_set_visible (ec_combo, TRUE);
             g_hash_table_insert (meta_info->widgets, widget_info[i].extra_id1,
                                  (gpointer) ec_combo);
           }
@@ -1048,6 +1078,9 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
 
           break;
         }
+
+      if (tooltip)
+        g_free (tooltip);
     }
 }
 
@@ -5651,4 +5684,36 @@ gpsaltsys_combo_callback (GtkComboBoxText *combo,
     }
 
   last_gpsaltsys_sel = selection;
+}
+
+gchar *
+create_metadata_tooltip (const me_widget_info *widget_info,
+                         gint                  index)
+{
+  gchar *tooltip = NULL;
+
+  switch (widget_info[index].hint_type)
+    {
+      case ME_HINT_NEWLINE:
+        tooltip = g_strdup_printf (_("One value per line.\n"
+                                     "Stored at %s"),
+                                     widget_info[index].id);
+        break;
+
+      case ME_HINT_COMMA:
+        tooltip = g_strdup_printf (_("Separate values with commas.\n"
+                                     "Stored at %s"),
+                                     widget_info[index].id);
+        break;
+
+      case ME_HINT_ID_ONLY:
+        tooltip = g_strdup_printf (_("Stored at %s"),
+                                     widget_info[index].id);
+        break;
+
+      default:
+        break;
+    }
+
+  return tooltip;
 }
