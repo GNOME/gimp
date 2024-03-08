@@ -1213,6 +1213,12 @@ gimp_drawable_filter_sync_mask (GimpDrawableFilter *filter)
       filter->filter_area.width  = mask->x2 - mask->x1;
       filter->filter_area.height = mask->y2 - mask->y1;
 
+      gimp_item_mask_intersect (GIMP_ITEM (filter->drawable),
+                                &filter->filter_area.x,
+                                &filter->filter_area.y,
+                                &filter->filter_area.width,
+                                &filter->filter_area.height);
+
       gimp_drawable_filter_sync_region (filter);
     }
 }
