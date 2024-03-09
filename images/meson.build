@@ -111,3 +111,5 @@ if build_gimp_ico
                            build_by_default: false,
                            env: env)
 endif
+
+subdir('logo')
