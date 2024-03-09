@@ -10,7 +10,7 @@
 (define newTestImage (car (gimp-image-new 21 22 RGB)))
 
 ; Load test image that already has drawable
-(define testImage (testing:load-test-image "wilber.png"))
+(define testImage (testing:load-test-image "gimp-logo.png"))
 
 
 
@@ -57,8 +57,8 @@
             INDEXED))
 
 
-; testImage has a layer named same as file "wilber.png"
-; TODO Why does "Background" work but app shows "wilber.png"
+; testImage has a layer named same as file "gimp-logo.png"
+; TODO Why does "Background" work but app shows "gimp-logo.png"
 
 ; drawable of indexed image is also indexed
 (assert `(= (car (gimp-drawable-is-indexed

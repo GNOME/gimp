@@ -4,7 +4,7 @@
 
 ; setup
 ; Load test image that already has drawable
-(define testImage (testing:load-test-image "wilber.png"))
+(define testImage (testing:load-test-image "gimp-logo.png"))
 
 
 
@@ -37,7 +37,7 @@
 ; FIXME seems to fail??? because name is actually "Background"
 
 ; the same layer can be got by name
-; FIXME app shows layer name is "wilber.png" same as image name
+; FIXME app shows layer name is "gimp-logo.png" same as image name
 (assert `(= (car (gimp-image-get-layer-by-name ,testImage "Background"))
             ,testLayer))
 

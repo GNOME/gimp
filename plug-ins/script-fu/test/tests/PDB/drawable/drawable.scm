@@ -5,7 +5,7 @@
 ; kernel operations on drawable as set of pixels tested elsewhere
 
 ; setup
-(define testImage (testing:load-test-image "wilber.png"))
+(define testImage (testing:load-test-image "gimp-logo.png"))
 ; Wilber has one layer
 (define testDrawable (vector-ref (cadr (gimp-image-get-layers testImage)) 0))
 

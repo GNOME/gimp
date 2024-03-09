@@ -12,7 +12,7 @@
 
 ; setup
 ; Load test image that already has drawable
-(define testImage (testing:load-test-image "wilber.png"))
+(define testImage (testing:load-test-image "gimp-logo.png"))
 
 ; get all the root layers
 ; testImage has exactly one root layer.

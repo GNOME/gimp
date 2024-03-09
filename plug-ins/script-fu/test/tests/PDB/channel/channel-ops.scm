@@ -7,7 +7,7 @@
 
 ; setup
 ; Load test image that already has drawable
-(define testImage (testing:load-test-image "wilber.png"))
+(define testImage (testing:load-test-image "gimp-logo.png"))
 
 ; gimp-channel-ops-duplicate is deprecated, use gimp-image-duplicate
 ; gimp-channel-ops-offset deprecated, use gimp-drawable-offset

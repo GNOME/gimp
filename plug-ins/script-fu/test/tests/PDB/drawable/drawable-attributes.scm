@@ -3,7 +3,7 @@
 
 ; setup
 
-(define testImage (testing:load-test-image "wilber.png"))
+(define testImage (testing:load-test-image "gimp-logo.png"))
 ; Wilber has one layer
 ; cadr is vector, first element is a drawable
 (define testDrawable (vector-ref (cadr (gimp-image-get-layers testImage)) 0))

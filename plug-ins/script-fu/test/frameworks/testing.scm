@@ -454,7 +454,7 @@
 ; Returns ID of image
 ; Knows installed image directory (not dedicated to testing but always there.)
 ; Accepts image suffixes that Gimp can load.
-; Typical is /usr/local/share/gimp/2.99/images/wilber.png
+; Typical is /usr/local/share/gimp/2.99/images/gimp-logo.png
 (define (testing:load-test-image filename)
   (gimp-message (path-to-test-images filename))
   ; unpack ID via car

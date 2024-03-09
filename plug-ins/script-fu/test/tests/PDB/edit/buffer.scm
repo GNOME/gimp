@@ -16,7 +16,7 @@
 
 ; setup
 ; Load test image that already has drawable
-(define testImage (testing:load-test-image "wilber.png"))
+(define testImage (testing:load-test-image "gimp-logo.png"))
 
 ; the layer is the zeroeth element in the vector which is the second element
 ; but cadr returns the second element!!
@@ -43,11 +43,11 @@
                     "bufferName"))
 
 ; buffer has same size as image when created with no selection
-; test image is 256x256
+; test image is 128x128
 (assert `(= (car (gimp-buffer-get-width "bufferName"))
-            256))
+            128))
 (assert `(= (car (gimp-buffer-get-height "bufferName"))
-            256))
+            128))
 
 ; new buffer has alpha: the image is RGB but the buffer has bpp 4
 ; This is not well documented.

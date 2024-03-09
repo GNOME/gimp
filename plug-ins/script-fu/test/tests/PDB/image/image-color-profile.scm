@@ -27,7 +27,7 @@
 
 
 ; setup
-(define testImage (testing:load-test-image "wilber.png"))
+(define testImage (testing:load-test-image "gimp-logo.png"))
 
 ; an image we use just to transfer color profiles
 (define colorImage (car (gimp-image-new 21 22 RGB)))

@@ -1068,7 +1068,7 @@ dev-docs:
       mkdir $DIR_NAME                                                                       &&
       mv "${DEB_GIMP_PREFIX}/share/doc/babl-$BABL_API_VER" $DIR_NAME/                       &&
       TAR_NAME="$DIR_NAME.tar.xz"                                                           &&
-      tar -cJf ${TAR_NAME} $DIR_NAME                                                        &&
+      tar --dereference -cJf ${TAR_NAME} $DIR_NAME                                          &&
       sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                          &&
       sha512sum $TAR_NAME > ${TAR_NAME}.SHA512SUMS
     - GEGL_MAJ_VER=$(grep GEGL_MAJOR_VERSION _gegl/${DEB_BUILD_DIR}/config.h |head -1 |sed 's/^[^0-9]*\([0-9]*\).*$/\1/') &&
@@ -1080,7 +1080,7 @@ dev-docs:
       mkdir $DIR_NAME                                                                       &&
       mv "${DEB_GIMP_PREFIX}/share/doc/gegl-$GEGL_API_VER" $DIR_NAME/                       &&
       TAR_NAME="$DIR_NAME.tar.xz"                                                           &&
-      tar -cJf ${TAR_NAME} $DIR_NAME                                                        &&
+      tar --dereference -cJf ${TAR_NAME} $DIR_NAME                                          &&
       sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                          &&
       sha512sum $TAR_NAME > ${TAR_NAME}.SHA512SUMS
     - GIMP_VER=$(grep GIMP_VERSION ${DEB_BUILD_DIR}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/') &&
@@ -1090,7 +1090,7 @@ dev-docs:
       mv "${DEB_GIMP_PREFIX}/share/doc/gimp-$APP_VER" $DIR_NAME/reference                   &&
       mv ${DEB_BUILD_DIR}/devel-docs/g-ir-docs $DIR_NAME/                                   &&
       TAR_NAME="$DIR_NAME.tar.xz"                                                           &&
-      tar -cJf ${TAR_NAME} $DIR_NAME                                                        &&
+      tar --dereference -cJf ${TAR_NAME} $DIR_NAME                                          &&
       sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                          &&
       sha512sum $TAR_NAME > ${TAR_NAME}.SHA512SUMS
   needs: ["deps-debian-x64", "gimp-debian-x64"]

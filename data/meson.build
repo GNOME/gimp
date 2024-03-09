@@ -1,7 +1,6 @@
 subdir('dynamics')
 subdir('environ')
 subdir('gradients')
-subdir('images')
 subdir('interpreters')
 subdir('palettes')
 subdir('tags')

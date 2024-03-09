@@ -17,7 +17,7 @@
 ;(define testImage (car (gimp-image-new 21 22 RGB)))
 
 ; Load test image that already has drawable
-(define testImage (testing:load-test-image "wilber.png"))
+(define testImage (testing:load-test-image "gimp-logo.png"))
 
 (define testLayers (cadr (gimp-image-get-layers testImage )))
 ; assert testLayers is-a vector of length one

@@ -17,7 +17,7 @@
 ; setup
 
 ; an image
-(define testImage (testing:load-test-image "wilber.png"))
+(define testImage (testing:load-test-image "gimp-logo.png"))
 ; a second image
 (define testImage2 (car (gimp-image-new 21 22 RGB)))
 
@@ -83,7 +83,7 @@
 
 
 ; reconnect succeeds
-; Make displays of wilber.png now show the testImage2 that is not now displayed
+; Make displays of gimp-logo now show the testImage2 that is not now displayed
 (assert `(gimp-displays-reconnect ,testImage ,testImage2 ))
 ; display ID is still valid
 (assert-PDB-true `(gimp-display-id-is-valid ,testDisplay))

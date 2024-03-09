@@ -2,7 +2,7 @@
 ; COLOR=>GRAY=>INDEXED=>GRAY
 
 ; setup
-(define testImage (testing:load-test-image "wilber.png"))
+(define testImage (testing:load-test-image "gimp-logo.png"))
 
 ; test image is RGB
 (assert `(= (car (gimp-image-get-base-type ,testImage))
