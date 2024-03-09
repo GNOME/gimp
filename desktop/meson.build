@@ -1,32 +1,3 @@
-sizes = [
-  '16',
-  '22',
-  '24',
-  '32',
-  '48',
-  '64',
-  '256',
-]
-
-
-# XXX: the old autotools build used to `touch` the (datadir) /icons/hicolor
-# folder at install time in order to comply with the "Icon Theme Specification"
-# (see the "Implementation Notes" section about changing the mtime of the
-# toplevel icon directory after installing/updating icon themes).
-# This part was not reimplemented in our meson build. Unsure if this is still
-# needed or even if this is the role of the application build to take care of
-# this.
-
-foreach size : sizes
-  sizedir = size+'x'+size
-  install_data(sizedir / 'gimp.png',
-    install_dir: get_option('datadir') / 'icons' / 'hicolor' / sizedir / 'apps'
-  )
-endforeach
-install_data('scalable/gimp.svg',
-  install_dir: get_option('datadir') / 'icons' / 'hicolor' / 'scalable' / 'apps'
-)
-
 desktopfilename = 'gimp.desktop'
 
 desktop_conf = configuration_data()
