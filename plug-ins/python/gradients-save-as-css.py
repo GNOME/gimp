@@ -40,9 +40,6 @@ def _(message): return GLib.dgettext(None, message)
 
 
 w3c_template = """background-image: linear-gradient(top, %s);\n"""
-moz_template = """background-image: -moz-linear-gradient(center top, %s);\n"""
-webkit_template = """background-image: -webkit-gradient(linear, """ \
-                  """left top, left bottom, %s);\n"""
 
 color_to_html = lambda c: "rgb(%d,%d,%d)" % (c.r, c.g, c.b)
 
@@ -146,7 +143,6 @@ def gradient_css_save(procedure, config, data):
                                            GLib.Error(error))
 
     stops = []
-    wk_stops = []
     n_segments = gradient.get_number_of_segments()
     last_stop = None
     for index in range(n_segments):
@@ -156,21 +152,15 @@ def gradient_css_save(procedure, config, data):
         success, rpos = gradient.segment_get_right_pos(index)
 
         lstop = color_to_html(lcolor) + " %d%%" % int(100 * lpos)
-        wk_lstop = "color-stop(%.03f, %s)" %(lpos, color_to_html(lcolor))
         if lstop != last_stop:
             stops.append(lstop)
-            wk_stops.append(wk_lstop)
 
         rstop = color_to_html(rcolor) + " %d%%" % int(100 * rpos)
-        wk_rstop = "color-stop(%.03f, %s)" %(rpos, color_to_html(rcolor))
 
         stops.append(rstop)
-        wk_stops.append(wk_rstop)
         last_stop = rstop
 
     final_text = w3c_template % ", ".join(stops)
-    final_text += moz_template % ",".join(stops)
-    final_text += webkit_template % ",".join(wk_stops)
 
     success, etag = file.replace_contents(bytes(format_text(final_text), encoding='utf-8'),
                                           etag=None,
