@@ -69,7 +69,7 @@ install_data('gimp-logo.svg',
              install_dir: get_option('datadir') / 'icons' / 'hicolor' / 'scalable' / 'apps',
              rename: 'gimp.svg')
 
-## gimp.ico ##
+## gimp.ico (Windows) ##
 
 build_gimp_ico = get_option('windows-installer')
 
@@ -97,3 +97,23 @@ if build_gimp_ico
                            build_by_default: false,
                            env: env)
 endif
+
+## gimp.icns (macOS) ##
+
+gen_gimp_icns_conf = configuration_data()
+gen_gimp_icns_conf.set('BUILDDIR', meson.current_build_dir())
+gen_gimp_icns_conf.set('SRCDIR', meson.current_source_dir())
+gen_gimp_icns_py = configure_file(input : 'gen-gimp-icns.py.in',
+                                 output : 'gen-gimp-icns.py',
+                                 configuration : gen_gimp_icns_conf)
+
+gimp_ico = custom_target('gimp.icns',
+                         input : [ gen_gimp_icns_py ],
+                         depend_files: [ 'gimp-logo.svg' ],
+                         output: [ 'gimp.icns' ],
+                         command: [ gimp_exe,'-nidfs',
+                                    '--batch-interpreter', 'python-fu-eval',
+                                    '-b', '-', '--quit'],
+                         feed: true,
+                         build_by_default: false,
+                         env: env)
