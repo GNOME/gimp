@@ -454,23 +454,18 @@ legacy_icons_64 = [
   '64/gimp-texture.png',
   '64/gimp-user-manual.png',
   '64/gimp-wilber-eek.png',
-  '64/gimp-wilber-outline.png',
   '64/gimp-wilber.png',
 ]
 legacy_icons_96 = [
-  '96/gimp-wilber-outline.png',
   '96/gimp-wilber.png',
 ]
 legacy_icons_128 = [
-  '128/gimp-wilber-outline.png',
   '128/gimp-wilber.png',
 ]
 legacy_icons_192 = [
-  '192/gimp-wilber-outline.png',
   '192/gimp-wilber.png',
 ]
 legacy_icons_256 = [
-  '256/gimp-wilber-outline.png',
   '256/gimp-wilber.png',
 ]
 
