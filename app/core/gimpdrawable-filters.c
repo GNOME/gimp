@@ -182,6 +182,7 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
   gimp_drawable_set_buffer (GIMP_DRAWABLE (gimp_image_get_mask (image)),
                             FALSE, NULL, buffer);
   g_object_unref (buffer);
+  g_object_ref_sink (selection);
   g_object_unref (selection);
 
   gimp_drawable_filters_changed (drawable);
