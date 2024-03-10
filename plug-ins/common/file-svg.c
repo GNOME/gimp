@@ -111,6 +111,9 @@ static GimpPDBStatusType   load_dialog       (GFile                 *file,
                                               RsvgHandleFlags       *rsvg_flags,
                                               GError               **error);
 
+static void              svg_destroy_surface (guchar                *pixels,
+                                              cairo_surface_t       *surface);
+
 
 
 G_DEFINE_TYPE (Svg, svg, GIMP_TYPE_PLUG_IN)
@@ -482,8 +485,8 @@ load_rsvg_pixbuf (GFile            *file,
   RsvgHandle *handle;
 
 #if LIBRSVG_CHECK_VERSION(2, 46, 0)
-  cairo_surface_t *surf = NULL;
-  cairo_t         *cr = NULL;
+  cairo_surface_t *surface  = NULL;
+  cairo_t         *cr       = NULL;
   RsvgRectangle    viewport = { 0, };
   guchar          *src;
   gint             y;
@@ -505,21 +508,18 @@ load_rsvg_pixbuf (GFile            *file,
 
   rsvg_handle_set_dpi (handle, resolution);
 #if LIBRSVG_CHECK_VERSION(2, 46, 0)
-  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, width, height);
-  surf = cairo_image_surface_create_for_data (gdk_pixbuf_get_pixels (pixbuf),
-                                              CAIRO_FORMAT_ARGB32,
-                                              gdk_pixbuf_get_width (pixbuf),
-                                              gdk_pixbuf_get_height (pixbuf),
-                                              gdk_pixbuf_get_rowstride (pixbuf));
-  cr = cairo_create (surf);
+  surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
+  cr      = cairo_create (surface);
 
-  viewport.width = width;
+  viewport.width  = width;
   viewport.height = height;
 
   rsvg_handle_render_document (handle, cr, &viewport, NULL);
-
+  pixbuf = gdk_pixbuf_new_from_data (cairo_image_surface_get_data (surface),
+                                     GDK_COLORSPACE_RGB, TRUE, 8, width, height,
+                                     cairo_format_stride_for_width (CAIRO_FORMAT_ARGB32, width),
+                                     (GdkPixbufDestroyNotify) svg_destroy_surface, surface);
   cairo_destroy (cr);
-  cairo_surface_destroy (surf);
 
   /* un-premultiply the data */
   src = gdk_pixbuf_get_pixels (pixbuf);
@@ -527,7 +527,7 @@ load_rsvg_pixbuf (GFile            *file,
   for (y = 0; y < height; y++)
     {
       guchar *s = src;
-      gint w = width;
+      gint    w = width;
 
       while (w--)
         {
@@ -862,4 +862,11 @@ load_dialog (GFile                *file,
   gtk_widget_destroy (dialog);
 
   return run ? GIMP_PDB_SUCCESS : GIMP_PDB_CANCEL;
+}
+
+static void
+svg_destroy_surface (guchar          *pixels,
+                     cairo_surface_t *surface)
+{
+  cairo_surface_destroy (surface);
 }
