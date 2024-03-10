@@ -1,29 +1,36 @@
-## Logo used in About dialog and API reference documentation ##
+## Logo used in About dialog ##
 
-docs_logo = stable ? 'gimp-logo' : 'gimp-devel-logo'
+# Always install the main logo. We actually use the variant with a shadow so
+# that it always displays properly, even in the extreme case where the
+# background was using Wilber's main color.
+logo_png = custom_target('gimp-logo.png',
+                         input : 'gimp-logo-shadow.svg',
+                         output: 'gimp-logo.png',
+                         command: [
+                           colorsvg2png, '@INPUT@', '@OUTPUT@', '128',
+                         ],
+                         install: true,
+                         install_dir: gimpdatadir / 'images')
 
-logos = [ 'gimp-logo' ]
 if not stable
-  logos += 'gimp-devel-logo'
+  logo_png = custom_target('gimp-devel-logo.png',
+                           input : 'gimp-devel-logo.svg',
+                           output: 'gimp-devel-logo.png',
+                           command: [
+                             colorsvg2png, '@INPUT@', '@OUTPUT@', '128',
+                           ],
+                           install: true,
+                           install_dir: gimpdatadir / 'images')
+
 endif
 
-pngs = []
-foreach logo: logos
-  logo_png = custom_target(logo + '.png',
-                input : logo + '.svg',
-                output: logo + '.png',
-                command: [
-                colorsvg2png, '@INPUT@', '@OUTPUT@', '128',
-                ],
-                install: true,
-                install_dir: gimpdatadir / 'images')
+## Logo used in API reference documentation ##
 
-  if logo == docs_logo and gi_docgen.found()
-    install_symlink(logo + '.png',
-                    install_dir: get_option('datadir') / 'doc' / 'gimp-@0@'.format(gimp_app_version) / 'images',
-                    pointing_to: logo_png.full_path())
-  endif
-endforeach
+if gi_docgen.found()
+  install_symlink(fs.name(logo_png.full_path()),
+                  install_dir: get_option('datadir') / 'doc' / 'gimp-@0@'.format(gimp_app_version) / 'images',
+                  pointing_to: logo_png.full_path())
+endif
 
 ## Logo used in the desktop (system menus/overview, title bar, etc.) ##
 
