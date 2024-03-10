@@ -44,8 +44,43 @@ foreach install : install_icons
       endif
     endforeach
 
+    # gimp-wilber icon in color is the official logo with shadow.
+    wilber = '@0@/gimp-wilber.svg'.format(indir)
+    if wilber in icons
+      newicons = []
+      foreach icon : icons
+        if icon != wilber
+          newicons += icon
+        endif
+      endforeach
+      icons = newicons
+      install_data(meson.project_source_root() / 'gimp-data/images/logo/gimp-logo-shadow.svg',
+                   rename: 'gimp-wilber.svg',
+                   install_dir: gimpiconsdir / theme / outdir / 'logo/unisize')
+    endif
+
+    # gimp-wilber icon in symbolic uses the unicolor logo, except for smaller
+    # sizes, where we use a simplified unicolor version.
+    wilber = '@0@/gimp-wilber-symbolic.svg'.format(indir)
+    if wilber in icons
+      newicons = []
+      foreach icon : icons
+        if icon != wilber
+          newicons += icon
+        endif
+      endforeach
+      icons = newicons
+      install_data(meson.project_source_root() / 'gimp-data/images/logo/gimp-logo-unicolor.svg',
+                   rename: 'gimp-wilber-symbolic.svg',
+                   install_dir: gimpiconsdir / theme / outdir / 'logo/big')
+      install_data(meson.project_source_root() / 'gimp-data/images/logo/gimp-wilber-symbolic.svg',
+                   rename: 'gimp-wilber-symbolic.svg',
+                   install_dir: gimpiconsdir / theme / outdir / 'logo/small')
+    endif
+
     install_data(icons, install_dir: gimpiconsdir / theme / outdir / 'apps')
 
+    # Duplicate gimp-wilber-eek as image-missing
     wilber_eek = '@0@/gimp-wilber-eek@1@'.format(indir, suffix)
     if wilber_eek in icons
       # Note: since this is just a copy of gimp-wilber-week, we could just do a
