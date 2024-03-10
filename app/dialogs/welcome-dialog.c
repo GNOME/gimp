@@ -190,6 +190,9 @@ welcome_dialog_new (Gimp       *gimp,
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER_ON_PARENT);
   g_free (title);
 
+  gtk_widget_set_margin_start (GTK_WIDGET (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), 0);
+  gtk_widget_set_margin_end (GTK_WIDGET (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), 0);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (welcome_dialog_response),
                     dialog);
@@ -228,7 +231,10 @@ welcome_dialog_new (Gimp       *gimp,
                                        "gimp-welcome",
                                        NULL,
                                        &top_iter);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_widget_set_margin_top (main_vbox, 0);
+  gtk_widget_set_margin_bottom (main_vbox, 0);
+  gtk_widget_set_margin_start (main_vbox, 0);
+  gtk_widget_set_margin_end (main_vbox, 0);
 
   welcome_dialog_create_welcome_page (gimp, dialog, main_vbox);
   gtk_widget_set_visible (main_vbox, TRUE);
@@ -395,7 +401,7 @@ welcome_dialog_create_welcome_page (Gimp      *gimp,
   image = gtk_image_new_from_icon_name ("gimp-wilber",
                                         GTK_ICON_SIZE_DIALOG);
   gtk_widget_set_valign (image, GTK_ALIGN_CENTER);
-  gtk_box_pack_start (GTK_BOX (main_vbox), image, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), image, TRUE, TRUE, 0);
   gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect (welcome_dialog,
@@ -1409,12 +1415,7 @@ welcome_size_allocate (GtkWidget     *welcome_dialog,
   GdkPixbuf     *pixbuf;
   GdkMonitor    *monitor;
   GdkRectangle   workarea;
-  gint           min_width;
-  gint           min_height;
-  gint           max_width;
-  gint           max_height;
   gint           image_width;
-  gint           image_height;
 
   if (gtk_image_get_storage_type (GTK_IMAGE (image)) == GTK_IMAGE_PIXBUF)
     return;
@@ -1422,33 +1423,27 @@ welcome_size_allocate (GtkWidget     *welcome_dialog,
   monitor = gimp_get_monitor_at_pointer ();
   gdk_monitor_get_workarea (monitor, &workarea);
 
-  min_width  = workarea.width  / 8;
-  min_height = workarea.height / 8;
-  max_width  = workarea.width  / 4;
-  max_height = workarea.height / 4;
-
-  image_width = allocation->width + 20;
-  image_height = allocation->height + 20;
-
-  /* On big monitors, we get very huge images with a lot of empty space.
-   * So let's go with a logic so that we want a max and min size
-   * (relatively to desktop area), but we also want to avoid too much
-   * empty space. This is why we compute first the dialog size without
-   * any image in there.
+  image_width = MAX (allocation->width - 2, workarea.width / 4);
+  /* Splash screens are fullHD. We should not load it bigger.
+   * See: https://gitlab.gnome.org/GNOME/gimp-data/-/blob/main/images/README.md#requirements
    */
-  image_width = CLAMP (image_width, min_width, max_width);
-  image_height = CLAMP (image_height, min_height, max_height);
+  image_width = MIN (image_width, 1920);
 
   splash_file = gimp_data_directory_file ("images", "gimp-splash.png", NULL);
   pixbuf = gdk_pixbuf_new_from_file_at_scale (g_file_peek_path (splash_file),
-                                              image_width, image_height,
+                                              image_width, -1,
                                               TRUE, &error);
   if (pixbuf)
     {
       gtk_image_set_from_pixbuf (GTK_IMAGE (image), pixbuf);
       g_object_unref (pixbuf);
     }
+  else if (error)
+    {
+      g_printerr ("%s: %s\n", G_STRFUNC, error->message);
+    }
   g_object_unref (splash_file);
+  g_clear_error (&error);
 
   gtk_widget_set_visible (image, TRUE);
 
