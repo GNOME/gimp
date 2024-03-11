@@ -100,10 +100,16 @@ shape](https://developer.apple.com/design/human-interface-guidelines/app-icons#m
 while giving some freedom on designing a bit said shape into familiar
 skeuomorphic shapes.
 
-On this OS, we make our rounded background shape look like a canvas and
-display Wilber over it.
+On this OS, we make our rounded background shape look like a canvas supported on
+an easel and we display Wilber over it.
 
-TODO
+![macOS logo](gimp-logo-macos.svg)
+
+This logo doesn't render well on small sizes and in particular, the easel legs
+would not be obvious. So for any icon under 48×48, we use a simplified variant,
+only using the rounded shape, but no easel design:
+
+![macOS logo under 48×48 pixels](gimp-logo-macos-small.svg)
 
 ### Windows
 
@@ -132,12 +138,13 @@ It would also work very well for silk-screen printing.
 ## Outline variant
 
 This logo variant can be used typically for simple usages when you want
-to display or print logo as simple lines.
+to display or print logo as outlines. Except for the bristles, the whole shape
+is made of connected lines.
+
+![Outline variant of GIMP logo](gimp-logo-outline.svg)
 
 A very good example would be to create embroidered t-shirts with the
 official logo.
-
-TODO
 
 ## Icon
 
