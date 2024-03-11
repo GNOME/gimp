@@ -18,7 +18,13 @@
 
 sub resource_get_by_name {
     $blurb = "Returns a resource with the given name.";
-    $help  = "Returns a resource with the given name.";
+    $help  = <<HELP;
+Returns an existing resource having the given name.
+Returns %NULL when no resource exists of that name.
+
+There may be many fonts having the same name.
+See gimp_font_get_by_name().
+HELP
 
     &jehan_pdb_misc('2023', '3.0');
 
@@ -26,7 +32,7 @@ sub resource_get_by_name {
 
     @inargs = (
         { name => 'type_name', type => 'string', non_empty => 1,
-          desc => 'The name of the resource type' },
+          desc => 'The name of the resource type e.g. GimpFont' },
 	{ name => 'resource_name', type => 'string', non_empty => 1,
 	  desc => 'The name of the resource' }
     );
@@ -34,7 +40,8 @@ sub resource_get_by_name {
     @outargs = (
       { name => 'resource',
         type => 'resource',
-        desc => "The resource" }
+        desc => "The resource",
+        none_ok => 1}
     );
 
     %invoke = (
@@ -42,9 +49,11 @@ sub resource_get_by_name {
 {
   resource = gimp_pdb_get_resource (gimp, g_type_from_name (type_name), resource_name,
                                     GIMP_PDB_DATA_ACCESS_READ, error);
-
-  if (! resource)
-    success = FALSE;
+  /* gimp_pdb_get_resource can return errors about writeable or renameable when not ACCESS_READ,
+   * but only "not found" error for ACCESS_READ.
+   * Ignore "not found" error, just return NULL.
+   */
+   g_clear_error (error);
 }
 CODE
     );

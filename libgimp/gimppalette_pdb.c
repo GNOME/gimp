@@ -81,9 +81,10 @@ gimp_palette_new (const gchar *name)
  *
  * Returns the palette with the given name.
  *
- * Returns the palette with the given name.
+ * Returns an existing palette having the given name. Returns %NULL
+ * when no palette exists of that name.
  *
- * Returns: (transfer none): The palette.
+ * Returns: (nullable) (transfer none): The palette.
  *
  * Since: 3.0
  **/

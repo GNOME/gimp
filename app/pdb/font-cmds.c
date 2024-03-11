@@ -86,9 +86,8 @@ font_get_by_name_invoker (GimpProcedure         *procedure,
   if (success)
     {
       font = GIMP_FONT (gimp_pdb_get_resource (gimp, GIMP_TYPE_FONT, name, GIMP_PDB_DATA_ACCESS_READ, error));
-
-      if (! font)
-        success = FALSE;
+      /* Ignore "not found" error, just return NULL. */
+      g_clear_error (error);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -195,7 +194,8 @@ register_font_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Returns a font with the given name.",
                                   "If several fonts are named identically, the one which is returned by this function should be considered random. This can be used when you know you won't have multiple fonts of this name or that you don't want to choose (non-interactive scripts, etc.).\n"
-                                  "If you need more control, you should use 'gimp-fonts-get-by-name' instead.",
+                                  "If you need more control, you should use 'gimp-fonts-get-by-name' instead.\n"
+                                  "Returns %NULL when no font exists of that name.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -212,7 +212,7 @@ register_font_procs (GimpPDB *pdb)
                                    gimp_param_spec_font ("font",
                                                          "font",
                                                          "The font",
-                                                         FALSE,
+                                                         TRUE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

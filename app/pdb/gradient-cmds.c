@@ -96,8 +96,8 @@ gradient_get_by_name_invoker (GimpProcedure         *procedure,
       gradient = GIMP_GRADIENT (gimp_pdb_get_resource (gimp, GIMP_TYPE_GRADIENT, name,
                                                        GIMP_PDB_DATA_ACCESS_READ, error));
 
-      if (! gradient)
-        success = FALSE;
+      /* Ignore "not found" error, just return NULL. */
+      g_clear_error (error);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -1293,7 +1293,7 @@ register_gradient_procs (GimpPDB *pdb)
                                "gimp-gradient-get-by-name");
   gimp_procedure_set_static_help (procedure,
                                   "Returns the gradient with the given name.",
-                                  "Returns the gradient with the given name.",
+                                  "Returns an existing gradient having the given name. Returns %NULL when no gradient exists of that name.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -1310,7 +1310,7 @@ register_gradient_procs (GimpPDB *pdb)
                                    gimp_param_spec_gradient ("gradient",
                                                              "gradient",
                                                              "The gradient",
-                                                             FALSE,
+                                                             TRUE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

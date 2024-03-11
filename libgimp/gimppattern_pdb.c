@@ -42,9 +42,10 @@
  *
  * Returns the pattern with the given name.
  *
- * Returns the pattern with the given name.
+ * Returns an existing pattern having the given name. Returns %NULL
+ * when no pattern exists of that name.
  *
- * Returns: (transfer none): The pattern.
+ * Returns: (nullable) (transfer none): The pattern.
  *
  * Since: 3.0
  **/

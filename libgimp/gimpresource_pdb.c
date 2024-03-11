@@ -38,14 +38,17 @@
 
 /**
  * _gimp_resource_get_by_name:
- * @type_name: The name of the resource type.
+ * @type_name: The name of the resource type e.g. GimpFont.
  * @resource_name: The name of the resource.
  *
  * Returns a resource with the given name.
  *
- * Returns a resource with the given name.
+ * Returns an existing resource having the given name. Returns %NULL
+ * when no resource exists of that name.
+ * There may be many fonts having the same name. See
+ * gimp_font_get_by_name().
  *
- * Returns: (transfer none): The resource.
+ * Returns: (nullable) (transfer none): The resource.
  *
  * Since: 3.0
  **/

@@ -63,8 +63,8 @@ pattern_get_by_name_invoker (GimpProcedure         *procedure,
     {
       pattern = GIMP_PATTERN (gimp_pdb_get_resource (gimp, GIMP_TYPE_PATTERN, name, GIMP_PDB_DATA_ACCESS_READ, error));
 
-      if (! pattern)
-        success = FALSE;
+      /* Ignore "not found" error, just return NULL. */
+      g_clear_error (error);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -181,7 +181,7 @@ register_pattern_procs (GimpPDB *pdb)
                                "gimp-pattern-get-by-name");
   gimp_procedure_set_static_help (procedure,
                                   "Returns the pattern with the given name.",
-                                  "Returns the pattern with the given name.",
+                                  "Returns an existing pattern having the given name. Returns %NULL when no pattern exists of that name.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -198,7 +198,7 @@ register_pattern_procs (GimpPDB *pdb)
                                    gimp_param_spec_pattern ("pattern",
                                                             "pattern",
                                                             "The pattern",
-                                                            FALSE,
+                                                            TRUE,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

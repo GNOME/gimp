@@ -68,9 +68,11 @@ resource_get_by_name_invoker (GimpProcedure         *procedure,
     {
       resource = gimp_pdb_get_resource (gimp, g_type_from_name (type_name), resource_name,
                                         GIMP_PDB_DATA_ACCESS_READ, error);
-
-      if (! resource)
-        success = FALSE;
+      /* gimp_pdb_get_resource can return errors about writeable or renameable when not ACCESS_READ,
+       * but only "not found" error for ACCESS_READ.
+       * Ignore "not found" error, just return NULL.
+       */
+       g_clear_error (error);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -515,7 +517,8 @@ register_resource_procs (GimpPDB *pdb)
                                "gimp-resource-get-by-name");
   gimp_procedure_set_static_help (procedure,
                                   "Returns a resource with the given name.",
-                                  "Returns a resource with the given name.",
+                                  "Returns an existing resource having the given name. Returns %NULL when no resource exists of that name.\n"
+                                  "There may be many fonts having the same name. See 'gimp-font-get-by-name'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Jehan",
@@ -524,7 +527,7 @@ register_resource_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("type-name",
                                                        "type name",
-                                                       "The name of the resource type",
+                                                       "The name of the resource type e.g. GimpFont",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
@@ -539,7 +542,7 @@ register_resource_procs (GimpPDB *pdb)
                                    gimp_param_spec_resource ("resource",
                                                              "resource",
                                                              "The resource",
-                                                             FALSE,
+                                                             TRUE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

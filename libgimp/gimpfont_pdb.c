@@ -83,8 +83,9 @@ _gimp_font_get_lookup_name (GimpFont *font)
  * want to choose (non-interactive scripts, etc.).
  * If you need more control, you should use gimp_fonts_get_by_name()
  * instead.
+ * Returns %NULL when no font exists of that name.
  *
- * Returns: (transfer none): The font.
+ * Returns: (nullable) (transfer none): The font.
  *
  * Since: 3.0
  **/

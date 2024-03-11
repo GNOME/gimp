@@ -78,10 +78,10 @@ gimp_brush_new (const gchar *name)
  *
  * Returns the brush with the given name.
  *
- * Search and return an existing brush with the name in argument, or
- * nothing if no brush has this name.
+ * Return an existing brush having the given name. Returns %NULL when
+ * no brush exists of that name.
  *
- * Returns: (transfer none): The brush.
+ * Returns: (nullable) (transfer none): The brush.
  *
  * Since: 3.0
  **/

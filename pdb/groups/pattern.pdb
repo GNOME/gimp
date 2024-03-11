@@ -26,7 +26,10 @@ $pattern_arg_spec = { name => 'pattern', type => 'pattern', non_empty => 1,
 
 sub pattern_get_by_name {
     $blurb = "Returns the pattern with the given name.";
-    $help  = "Returns the pattern with the given name.";
+    $help  = <<HELP;
+Returns an existing pattern having the given name.
+Returns %NULL when no pattern exists of that name.
+HELP
 
     &mitch_pdb_misc('2023', '3.0');
 
@@ -36,8 +39,10 @@ sub pattern_get_by_name {
     );
 
     @outargs = (
-      { name => 'pattern', type => 'pattern', non_empty => 1,
-        desc => 'The pattern' }
+      { name => 'pattern',
+        type => 'pattern',
+        desc => 'The pattern',
+        none_ok => 1 }
     );
 
     %invoke = (
@@ -45,8 +50,8 @@ sub pattern_get_by_name {
 {
   pattern = GIMP_PATTERN (gimp_pdb_get_resource (gimp, GIMP_TYPE_PATTERN, name, GIMP_PDB_DATA_ACCESS_READ, error));
 
-  if (! pattern)
-    success = FALSE;
+  /* Ignore "not found" error, just return NULL. */
+  g_clear_error (error);
 }
 CODE
     );

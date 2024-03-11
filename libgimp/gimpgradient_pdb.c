@@ -78,9 +78,10 @@ gimp_gradient_new (const gchar *name)
  *
  * Returns the gradient with the given name.
  *
- * Returns the gradient with the given name.
+ * Returns an existing gradient having the given name. Returns %NULL
+ * when no gradient exists of that name.
  *
- * Returns: (transfer none): The gradient.
+ * Returns: (nullable) (transfer none): The gradient.
  *
  * Since: 3.0
  **/

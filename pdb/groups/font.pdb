@@ -73,6 +73,8 @@ have multiple fonts of this name or that you don't want to choose
 (non-interactive scripts, etc.).
 
 If you need more control, you should use gimp_fonts_get_by_name() instead.
+
+Returns %NULL when no font exists of that name.
 HELP
 
     &mitch_pdb_misc('2023', '3.0');
@@ -83,17 +85,18 @@ HELP
     );
 
     @outargs = (
-      { name => 'font', type => 'font', non_empty => 1,
-        desc => 'The font' }
+      { name => 'font',
+        type => 'font',
+        desc => 'The font',
+        none_ok => 1 }
     );
 
     %invoke = (
         code => <<'CODE'
 {
   font = GIMP_FONT (gimp_pdb_get_resource (gimp, GIMP_TYPE_FONT, name, GIMP_PDB_DATA_ACCESS_READ, error));
-
-  if (! font)
-    success = FALSE;
+  /* Ignore "not found" error, just return NULL. */
+  g_clear_error (error);
 }
 CODE
     );
