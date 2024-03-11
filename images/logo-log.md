@@ -2,8 +2,13 @@
 
 ## Logos
 
+* [GIMP 3.0](logo/README.md) by Aryeom in 2024, under [Creative Commons
+  Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/3.0/) license:
+
+  ![Current GIMP logo](logo/gimp-logo.svg)
+
 * [GIMP 2.6, 2.8 and 2.10](https://gitlab.gnome.org/GNOME/gimp/-/blob/f73c4ed397d797ec1b5175f27b5c0f3538a87714/data/images/gimp-logo.png)
-  by Jakub Steiner in 2008.
+  by Jakub Steiner in 2008 under [Creative Commons by-sa 3.0](https://creativecommons.org/licenses/by-sa/3.0/):
 
   ![GIMP 2.6 to 2.10 logo](https://gitlab.gnome.org/GNOME/gimp/-/raw/f73c4ed397d797ec1b5175f27b5c0f3538a87714/data/images/gimp-logo.png)
 
@@ -32,7 +37,7 @@
   was added in 2002 for the user installation dialog but is not used anymore in
   modern GIMP (we just use the "gimp-wilber-eek" icon instead).
 
-  ![Wizard Wilber](https://gitlab.gnome.org/GNOME/gimp/-/raw/master/data/images/wilber-wizard.png)
+  ![Wizard Wilber](https://gitlab.gnome.org/GNOME/gimp/-/raw/0d83d2008d4f80f87be898bbff9b6c652c74157e/data/images/wilber-wizard.png)
 
 * [Wilber Construction Kit](https://gitlab.gnome.org/GNOME/gimp/-/commit/f9ea72123880de1976e8bace2fbca015ac312845)
   adding accessories to the original Wilber by various team members, between

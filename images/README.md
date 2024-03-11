@@ -57,6 +57,9 @@ The logo is used on the website, as application icon, inside the software
 itself (sometimes in bigger format, such as in the About dialog, sometimes as
 icon, etc.) and on various communication channels.
 
+For the current logo and its usage rules, ckeck out our [logo usage
+guidelines](logo/README.md).
+
 For nostalgic people, here are the previous [logos and About dialog images](logo-log.md).
 
 ### Update procedure
