@@ -86,8 +86,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.1.tar.gz",
-                            "sha256": "3078651f995cb6313b1041f07f4dd1bf0e9e4d394d6e2adc6e92ad0b621291fa",
+                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.2.tar.gz",
+                            "sha256": "543bead934135f20f438e0b6d8858c55c5fcb7ff80f5d1d55489965f1aad58b9",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 769,
@@ -488,7 +488,16 @@
             "buildsystem": "cmake-ninja",
             "builddir": true,
             "config-opts": [
-                "-DWITH_GDK_PIXBUF=OFF"
+                "-DWITH_GDK_PIXBUF=OFF",
+                "-DWITH_EXAMPLES=OFF",
+                "-DENABLE_PLUGIN_LOADING=OFF",
+                "-DWITH_LIBDE265=ON",
+                "-DWITH_X265=ON",
+                "-DWITH_DAV1D=ON",
+                "-DWITH_AOM_DECODER=ON",
+                "-DWITH_AOM_ENCODER=ON",
+                "-DWITH_JPEG_DECODER=ON",
+                "-DWITH_OpenJPEG_DECODER=ON"
             ],
             "cleanup": [
                 "/bin",
@@ -497,10 +506,11 @@
             "modules": [
                 {
                     "name": "libde265",
+                    "buildsystem": "cmake-ninja",
                     "config-opts": [
-                        "--disable-dec265",
-                        "--disable-encoder",
-                        "--disable-sherlock265"
+                        "-DENABLE_SDL=OFF",
+                        "-DENABLE_DECODER=OFF",
+                        "-DENABLE_ENCODER=OFF"
                     ],
                     "cleanup": [
                         "/bin"
@@ -508,8 +518,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.12/libde265-1.0.12.tar.gz",
-                            "sha256": "62185ea2182e68cf68bba20cc6eb4c287407b509cf0a827d7ddb75614db77b5c",
+                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.15/libde265-1.0.15.tar.gz",
+                            "sha256": "00251986c29d34d3af7117ed05874950c875dd9292d016be29d3b3762666511d",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 11239,
@@ -617,8 +627,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/strukturag/libheif/releases/download/v1.17.3/libheif-1.17.3.tar.gz",
-                    "sha256": "8d5b6292e7931324f81f871f250ecbb9f874aa3c66b4f6f35ceb0bf3163b53ea",
+                    "url": "https://github.com/strukturag/libheif/releases/download/v1.17.6/libheif-1.17.6.tar.gz",
+                    "sha256": "8390baf4913eda0a183e132cec62b875fb2ef507ced5ddddc98dfd2f17780aee",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 64439,
@@ -682,23 +692,6 @@
             ]
         },
         {
-            "name": "cairo",
-            "buildsystem": "meson",
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://cairographics.org/snapshots/cairo-1.17.8.tar.xz",
-                    "sha256": "5b10c8892d1b58d70d3f0ba5b47863a061262fa56b9dc7944161f8c8b783bc64",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 247,
-                        "stable-only": true,
-                        "url-template": "https://cairographics.org/snapshots/cairo-$version.tar.xz"
-                    }
-                }
-            ]
-        },
-        {
             "name": "qoi",
             "buildsystem": "simple",
             "build-commands": [
@@ -708,7 +701,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/phoboslab/qoi.git",
-                    "commit": "f6dffaf1e8170cdd79945a4fb60f6403e447e020"
+                    "commit": "30d15d79b7726b977cd889151cc5cd6b17742f8f"
                 }
             ]
         },
