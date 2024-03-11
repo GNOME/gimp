@@ -1330,7 +1330,6 @@ save_image (GFile        *file,
   guchar           *fixed;            /* Fixed-up pixel data */
   guchar           *pixel;            /* Pixel data */
   gdouble           xres, yres;       /* GIMP resolution (dpi) */
-  png_color_16      background;       /* Background color */
   png_time          mod_time;         /* Modification time (ie NOW) */
   time_t            cutime;           /* Time since epoch */
   struct tm        *gmt;              /* GMT broken down */
@@ -1743,21 +1742,46 @@ save_image (GFile        *file,
 
   if (save_bkgd)
     {
-      GeglColor *color;
-      GimpRGB    rgb;
-      guchar     c[3];
-
-      color = gimp_context_get_background ();
-      gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' u8", NULL), c);
-      gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), &rgb);
-      g_object_unref (color);
+      GeglColor    *color;
+      png_color_16  background;       /* Background color */
 
       background.index = 0;
-      background.red   = c[0];
-      background.green = c[1];
-      background.blue  = c[2];
-      background.gray  = gimp_rgb_luminance_uchar (&rgb);
+      color = gimp_context_get_background ();
+      if (bit_depth < 16)
+        {
+          /* Per PNG spec 1.2: "(If the image bit depth is less than 16, the
+           * least significant bits are used and the others are 0.)"
+           * And png_set_bKGD() doesn't handle the conversion for us, if we try
+           * to set a u16 background, it outputs the following warning:
+           * > libpng warning: Ignoring attempt to write 16-bit bKGD chunk when bit_depth is 8
+           */
+          guint8 rgb[3];
+          guint8 gray;
+
+          gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' u8", space), rgb);
+          gegl_color_get_pixel (color, babl_format_with_space ("Y' u8", space), &gray);
+
+          background.red   = rgb[0];
+          background.green = rgb[1];
+          background.blue  = rgb[2];
+          background.gray  = gray;
+        }
+      else
+        {
+          guint16 rgb[3];
+          guint16 gray;
+
+          gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' u16", space), rgb);
+          gegl_color_get_pixel (color, babl_format_with_space ("Y' u16", space), &gray);
+
+          background.red   = rgb[0];
+          background.green = rgb[1];
+          background.blue  = rgb[2];
+          background.gray  = gray;
+        }
+
       png_set_bKGD (pp, info, &background);
+      g_object_unref (color);
     }
 
   if (save_offs)
