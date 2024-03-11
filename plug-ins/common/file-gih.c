@@ -279,6 +279,8 @@ gih_save (GimpProcedure        *procedure,
       gint        cell_width;
       gint        cell_height;
 
+      gimp_pixpipe_params_init (&gihparams);
+
       export = gimp_export_image (&image, &n_drawables, &drawables, "GIH",
                                   GIMP_EXPORT_CAN_HANDLE_RGB   |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY  |
@@ -317,6 +319,43 @@ gih_save (GimpProcedure        *procedure,
           g_free (name);
         }
 
+      parasite = gimp_image_get_parasite (orig_image,
+                                          "gimp-brush-pipe-parameters");
+      if (parasite)
+       {
+          gchar   *parasite_data;
+          guint32  parasite_size;
+
+          parasite_data = (gchar *) gimp_parasite_get_data (parasite,
+                                                            &parasite_size);
+          parasite_data = g_strndup (parasite_data, parasite_size);
+
+          gimp_pixpipe_params_parse (parasite_data, &gihparams);
+          g_object_set (config,
+                        "num-cells",       gihparams.ncells,
+                        "dimension",       gihparams.dim,
+                        "selection-modes", gihparams.selection,
+                        NULL);
+
+          if (gihparams.dim > 0)
+            {
+              GBytes *ranks = NULL;
+              guint8  rank_int[gihparams.dim];
+
+              for (gint i = 0; i < gihparams.dim; i++)
+                rank_int[i] = (guint8) gihparams.rank[i];
+
+              ranks =
+                g_bytes_new (rank_int, sizeof (guint8) * gihparams.dim);
+              g_object_set (config, "ranks", ranks, NULL);
+
+              g_bytes_unref (ranks);
+            }
+
+          gimp_parasite_free (parasite);
+          g_free (parasite_data);
+       }
+
       g_object_get (config,
                     "cell-width",  &cell_width,
                     "cell-height", &cell_height,
@@ -352,8 +391,6 @@ gih_save (GimpProcedure        *procedure,
           goto out;
         }
     }
-
-  gimp_pixpipe_params_init (&gihparams);
 
   g_object_get (config,
                 "spacing",         &spacing,
@@ -412,6 +449,8 @@ gih_save (GimpProcedure        *procedure,
                                         description);
           gimp_image_attach_parasite (orig_image, parasite);
           gimp_parasite_free (parasite);
+
+          gimp_image_detach_parasite (image, "gimp-brush-pipe-parameters");
         }
       else
         {
