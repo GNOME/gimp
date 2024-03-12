@@ -27,8 +27,10 @@
 #include "gegl/gimp-gegl-loops.h"
 
 #include "gimpchannel.h"
+#include "core/gimpcontainer.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-edit.h"
+#include "core/gimpdrawable-filters.h"
 #include "gimpdrawablefilter.h"
 #include "gimpcontext.h"
 #include "gimpfilloptions.h"
@@ -201,6 +203,7 @@ gimp_drawable_edit_fill (GimpDrawable    *drawable,
       gdouble                 opacity;
       GimpLayerMode           mode;
       GimpLayerCompositeMode  composite_mode;
+      GimpContainer          *filter_stack;
 
       opacity        = gimp_context_get_opacity (context);
       mode           = gimp_context_get_paint_mode (context);
@@ -224,6 +227,12 @@ gimp_drawable_edit_fill (GimpDrawable    *drawable,
                                         composite_mode);
 
       gimp_drawable_filter_apply  (filter, NULL);
+      /* Move to bottom of filter stack */
+      filter_stack = gimp_drawable_get_filters (drawable);
+      if (filter_stack)
+        gimp_container_reorder (filter_stack, GIMP_OBJECT (filter),
+                                gimp_container_get_n_children (filter_stack) - 1);
+
       gimp_drawable_filter_commit (filter, FALSE, NULL, FALSE);
 
       g_object_unref (filter);

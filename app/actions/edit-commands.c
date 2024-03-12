@@ -33,10 +33,13 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-edit.h"
+#include "core/gimpdrawable-filters.h"
+#include "core/gimpdrawablefilter.h"
 #include "core/gimpfilloptions.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-new.h"
 #include "core/gimplayermask.h"
+#include "core/gimplist.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 
@@ -718,6 +721,53 @@ edit_paste (GimpDisplay   *display,
                                             merged, x, y, width, height)))
         {
           gimp_image_set_selected_layers (image, pasted_layers);
+
+          /* Copy over layer effects */
+          if (GIMP_IS_IMAGE (paste))
+            {
+              GList *old_layers_list;
+              GList *new_layers_list;
+
+              old_layers_list = gimp_image_get_layer_iter (GIMP_IMAGE (paste));
+              for (new_layers_list = pasted_layers; new_layers_list;
+                   new_layers_list = g_list_next (new_layers_list))
+                {
+                  GimpLayer *layer     = old_layers_list->data;
+                  GimpLayer *new_layer = new_layers_list->data;
+
+                  if (gimp_drawable_has_filters (GIMP_DRAWABLE (layer)))
+                    {
+                      GList         *filter_list;
+                      GimpContainer *filters;
+
+                      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
+
+                      for (filter_list = GIMP_LIST (filters)->queue->tail;
+                           filter_list;
+                           filter_list = g_list_previous (filter_list))
+                        {
+                          if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+                            {
+                              GimpDrawableFilter *old_filter = filter_list->data;
+                              GimpDrawableFilter *filter;
+
+                              filter =
+                                gimp_drawable_filter_duplicate (GIMP_DRAWABLE (new_layer),
+                                                                old_filter);
+
+                              gimp_drawable_filter_apply (filter, NULL);
+                              gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
+
+                              gimp_drawable_filter_layer_mask_freeze (filter);
+                              g_object_unref (filter);
+                            }
+                        }
+                    }
+
+                  old_layers_list = g_list_next (old_layers_list);
+                }
+            }
+
           g_list_free (pasted_layers);
           gimp_image_flush (image);
         }
