@@ -36,34 +36,30 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+/* Magic numbers */
 
 #define PLUG_IN_PROC_REMAP  "plug-in-colormap-remap"
 #define PLUG_IN_PROC_SWAP   "plug-in-colormap-swap"
 #define PLUG_IN_BINARY      "colormap-remap"
 #define PLUG_IN_ROLE        "gimp-colormap-remap"
 
-struct _GimpRemap
+typedef struct _Remap Remap;
+typedef struct _RemapClass RemapClass;
+
+struct _Remap
 {
-  GimpPlugIn      parent_instance;
-
-  GtkApplication *app;
-  GtkWindow      *window;
-  GimpImage      *image;
-  guchar          map[256];
-  gint            n_cols;
-
-  GMenu          *menu;
+  GimpPlugIn parent_instance;
 };
 
+struct _RemapClass
+{
+  GimpPlugInClass parent_class;
+};
 
-#define GIMP_TYPE_REMAP (gimp_remap_get_type ())
-G_DECLARE_FINAL_TYPE (GimpRemap, gimp_remap, GIMP, REMAP, GimpPlugIn)
-
+#define REMAP_TYPE  (remap_get_type ())
+#define REMAP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), REMAP_TYPE, Remap))
 
 GType                   remap_get_type         (void) G_GNUC_CONST;
-
-static void             gimp_remap_finalize    (GObject              *object);
-
 static GList          * remap_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * remap_create_procedure (GimpPlugIn           *plug_in,
                                                 const gchar          *name);
@@ -76,63 +72,72 @@ static GimpValueArray * remap_run              (GimpProcedure        *procedure,
                                                 GimpProcedureConfig  *config,
                                                 gpointer              run_data);
 
-static gboolean         real_remap             (GimpImage            *image,
-                                                gint                  num_colors,
-                                                guchar               *map);
+static gboolean         remap_dialog           (GimpProcedure        *procedure,
+                                                GObject              *config,
+                                                GimpImage            *image);
 
-static gboolean         remap_dialog           (GimpImage            *image,
-                                                guchar               *map,
-                                                GimpRemap            *remap);
+static gboolean         read_image_palette     (GimpImage            *image,
+                                                gint                 *ncolors_out);
 
-static void             remap_sort_hue_action  (GSimpleAction        *action,
-                                                GVariant             *parameter,
-                                                gpointer              user_data);
-static void             remap_sort_sat_action  (GSimpleAction        *action,
-                                                GVariant             *parameter,
-                                                gpointer              user_data);
-static void             remap_sort_val_action  (GSimpleAction        *action,
-                                                GVariant             *parameter,
-                                                gpointer              user_data);
-static void             remap_reverse_action   (GSimpleAction        *action,
-                                                GVariant             *parameter,
-                                                gpointer              user_data);
-static void             remap_reset_action     (GSimpleAction        *action,
-                                                GVariant             *parameter,
-                                                gpointer              user_data);
+static GtkWidget *      create_icon_view       (gint                  col_count,
+                                                gint                 *item_width,
+                                                gint                 *item_height);
 
-static void             on_app_activate        (GApplication         *gapp,
-                                                gpointer              user_data);
+static GtkWidget *      create_scrolled_window (GtkWidget            *dialog,
+                                                gint                  item_width,
+                                                gint                  item_height,
+                                                gint                  ncolors,
+                                                gint                  col_count);
+
+static void             remap_sort             (gint             column,
+                                                GtkSortType      order);
+static void             remap_sort_hue         (GtkButton       *action,
+                                                gpointer         user_data);
+static void             remap_sort_sat         (GtkButton       *action,
+                                                gpointer         user_data);
+static void             remap_sort_val         (GtkButton       *action,
+                                                gpointer        user_data);
+static void             remap_sort_index       (GtkButton       *action,
+                                                gpointer         user_data);
+static void             remap_reverse_order    (GtkButton       *action,
+                                                gpointer         user_data);
+
+static gboolean         real_remap             (GimpImage       *image);
+
+static gboolean         check_index_map        (GimpImage *image);
+
+static void             populate_index_map_from_store (void);
+
+static void             store_last_vals (GimpProcedureConfig *config);
+static void             read_last_vals  (GimpProcedureConfig *config);
 
 
+G_DEFINE_TYPE (Remap, remap, GIMP_TYPE_PLUG_IN)
 
-G_DEFINE_TYPE (GimpRemap, gimp_remap, GIMP_TYPE_PLUG_IN)
-
-GIMP_MAIN (GIMP_TYPE_REMAP)
+GIMP_MAIN (REMAP_TYPE)
 DEFINE_STD_SET_I18N
 
 
-static GtkWindow    *window   = NULL;
-static GtkListStore *store    = NULL;
-static gboolean      remap_ok = FALSE;
-
-static const GActionEntry ACTIONS[] =
+enum
 {
-  { "sort-hue", remap_sort_hue_action },
-  { "sort-sat", remap_sort_sat_action },
-  { "sort-val", remap_sort_val_action },
-
-  { "reverse", remap_reverse_action },
-
-  { "reset", remap_reset_action },
+  COLOR_INDEX,
+  COLOR_INDEX_TEXT,
+  COLOR_RGB,
+  COLOR_H,
+  COLOR_S,
+  COLOR_V,
+  NUM_COLS
 };
 
+
+static GtkListStore *store; /* To store the color indices and other data */
+static gint          reverse_order[256]; /* store indices to reverse order of icons*/
+static guchar        index_map_old_new[256]; /* store remapped indices */
+
 static void
-gimp_remap_class_init (GimpRemapClass *klass)
+remap_class_init (RemapClass *klass)
 {
   GimpPlugInClass *plug_in_class  = GIMP_PLUG_IN_CLASS (klass);
-  GObjectClass    *object_class   = G_OBJECT_CLASS (klass);
-
-  object_class->finalize          = gimp_remap_finalize;
 
   plug_in_class->query_procedures = remap_query_procedures;
   plug_in_class->create_procedure = remap_create_procedure;
@@ -140,17 +145,7 @@ gimp_remap_class_init (GimpRemapClass *klass)
 }
 
 static void
-gimp_remap_finalize (GObject *object)
-{
-  GimpRemap *remap = GIMP_REMAP (object);
-
-  G_OBJECT_CLASS (gimp_remap_parent_class)->finalize (object);
-
-  g_clear_object (&remap->menu);
-}
-
-static void
-gimp_remap_init (GimpRemap *remap)
+remap_init (Remap *remap)
 {
 }
 
@@ -167,11 +162,11 @@ remap_query_procedures (GimpPlugIn *plug_in)
 
 static GimpProcedure *
 remap_create_procedure (GimpPlugIn  *plug_in,
-                       const gchar *name)
+                        const gchar *name)
 {
   GimpProcedure *procedure = NULL;
 
-  if (! strcmp (name, PLUG_IN_PROC_REMAP))
+  if (strcmp (name, PLUG_IN_PROC_REMAP) == 0)
     {
       procedure = gimp_image_procedure_new (plug_in, name,
                                             GIMP_PDB_PROC_TYPE_PLUGIN,
@@ -205,7 +200,7 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                            _("Remap array for the colormap"),
                            G_PARAM_READWRITE);
     }
-  else if (! strcmp (name, PLUG_IN_PROC_SWAP))
+  else if (strcmp (name, PLUG_IN_PROC_SWAP) == 0)
     {
       procedure = gimp_image_procedure_new (plug_in, name,
                                             GIMP_PDB_PROC_TYPE_PLUGIN,
@@ -258,213 +253,497 @@ remap_run (GimpProcedure        *procedure,
            GimpProcedureConfig  *config,
            gpointer              run_data)
 {
-  GMenu *section;
-  gint   i;
-
-  GimpRemap *remap = GIMP_REMAP (run_data);
-
-  remap = GIMP_REMAP (gimp_procedure_get_plug_in (procedure));
-#if GLIB_CHECK_VERSION(2,74,0)
-  remap->app = gtk_application_new (NULL, G_APPLICATION_DEFAULT_FLAGS);
-#else
-  remap->app = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
-#endif
-  remap->image = image;
-
-  remap->menu = g_menu_new ();
-
-  section = g_menu_new ();
-  g_menu_append (section, _("Sort on Hue"), "win.sort-hue");
-  g_menu_append (section, _("Sort on Saturation"), "win.sort-sat");
-  g_menu_append (section, _("Sort on Value"), "win.sort-val");
-  g_menu_append_section (remap->menu, NULL, G_MENU_MODEL (section));
-  g_clear_object (&section);
-
-  section = g_menu_new ();
-  g_menu_append (section, _("Reverse Order"), "win.reverse");
-  g_menu_append (section, _("Reset Order"), "win.reset");
-  g_menu_append_section (remap->menu, NULL, G_MENU_MODEL (section));
-  g_clear_object (&section);
+  gint i;
 
   gegl_init (NULL, NULL);
 
-  /*  Make sure that the image is indexed  */
-  if (gimp_image_get_base_type (image) != GIMP_INDEXED)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
-                                             NULL);
-
-  for (i = 0; i < 256; i++)
-    remap->map[i] = i;
-
-  if (strcmp (gimp_procedure_get_name (procedure),
-              PLUG_IN_PROC_REMAP) == 0)
+  for (i = 0; i < 256; ++i)
     {
-      GBytes       *col_args_bytes;
-      const guchar *col_args;
+      index_map_old_new[i] = i;
+    }
 
-      g_free (gimp_image_get_colormap (image, NULL, &remap->n_cols));
+  if (gimp_image_get_base_type (image) != GIMP_INDEXED)
+    {
+      GError *error;
+      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Procedure '%s' only works with indexed images."),
+                   gimp_procedure_get_name (procedure));
 
-      g_object_get (config,
-                    "map", &col_args_bytes,
-                    NULL);
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               error);
+    }
 
-      col_args = g_bytes_get_data (col_args_bytes, NULL);
-
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          g_signal_connect (remap->app, "activate", G_CALLBACK (on_app_activate), remap);
-          g_application_run (G_APPLICATION (remap->app), 0, NULL);
-          g_clear_object (&remap->app);
-
-          if (! remap_ok)
-            return gimp_procedure_new_return_values (procedure,
-                                                     GIMP_PDB_CANCEL,
-                                                     NULL);
-          break;
-
-        case GIMP_RUN_NONINTERACTIVE:
-          if (remap->n_cols != g_bytes_get_size (col_args_bytes))
-            return gimp_procedure_new_return_values (procedure,
-                                                     GIMP_PDB_CALLING_ERROR,
-                                                     NULL);
-
-          for (i = 0; i < remap->n_cols; i++)
-            remap->map[i] = col_args[i];
-          break;
-
-        case GIMP_RUN_WITH_LAST_VALS:
-          break;
-        }
-
-      if (! real_remap (image, remap->n_cols, remap->map))
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_EXECUTION_ERROR,
-                                                 NULL);
+  if (strcmp (gimp_procedure_get_name (procedure), PLUG_IN_PROC_SWAP) == 0)
+    {
+      gint          index1;
+      gint          index2;
+      gint          temp;
+      GimpPalette  *palette;
+      gint          ncolors;
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
-    }
-  else if (strcmp (gimp_procedure_get_name (procedure),
-                   PLUG_IN_PROC_SWAP) == 0)
-    {
-      guchar tmp;
-      gint   n_cols;
-      gint   index1;
-      gint   index2;
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CALLING_ERROR,
+                                                   NULL);
+        }
 
       g_object_get (config,
                     "index1", &index1,
                     "index2", &index2,
                     NULL);
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CALLING_ERROR,
-                                                 NULL);
+      palette = gimp_image_get_palette       (image);
+      ncolors = gimp_palette_get_color_count (palette);
 
-      g_free (gimp_image_get_colormap (image, NULL, &n_cols));
+      if (index1 >= ncolors || index2 >= ncolors
+          || index1 < 0 || index2 < 0)
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CALLING_ERROR,
+                                                   NULL);
+        }
 
-      if (index1 >= n_cols || index2 >= n_cols)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CALLING_ERROR,
-                                                 NULL);
+      temp = index_map_old_new[index1];
+      index_map_old_new[index1] = index_map_old_new[index2];
+      index_map_old_new[index2] = temp;
 
-      tmp = remap->map[index1];
-      remap->map[index1] = remap->map[index2];
-      remap->map[index2] = tmp;
-
-      if (! real_remap (image, n_cols, remap->map))
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_EXECUTION_ERROR,
-                                                 NULL);
+      real_remap (image);
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_SUCCESS,
+                                               NULL);
     }
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  if (run_mode == GIMP_RUN_NONINTERACTIVE ||
+      run_mode == GIMP_RUN_WITH_LAST_VALS)
+    {
+      read_last_vals (config);
+      if (! check_index_map (image))
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CALLING_ERROR,
+                                                   NULL);
+        }
+      real_remap (image);
+      gimp_displays_flush ();
+      return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+    }
+
+  if (run_mode == GIMP_RUN_INTERACTIVE &&
+      remap_dialog (procedure, G_OBJECT (config), image))
+    {
+      populate_index_map_from_store ();
+      real_remap (image);
+      store_last_vals (config);
+      gimp_displays_flush ();
+      return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+    }
+
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
+}
+
+static gboolean
+check_index_map (GimpImage *image)
+{
+  gint         i;
+  gint         ncolors;
+  GimpPalette *palette;
+
+  palette = gimp_image_get_palette       (image);
+  ncolors = gimp_palette_get_color_count (palette);
+
+  for (i = 0; i < ncolors; ++i)
+    {
+      if (index_map_old_new[i] >= ncolors)
+        {
+          return FALSE;
+        }
+    }
+  return TRUE;
+}
+
+
+static void
+read_last_vals (GimpProcedureConfig *config)
+{
+  const guchar *last_vals;
+
+  GBytes *bytes;
+  gint    i;
+
+  g_object_get (G_OBJECT (config), "map", &bytes, NULL);
+  last_vals = g_bytes_get_data (bytes, NULL);
+
+  if (bytes != NULL)
+    {
+      for (i = 0; i < 256; ++i)
+        {
+          index_map_old_new[i] = last_vals[i];
+        }
+    }
+
+  g_bytes_unref (bytes);
+}
+
+static void
+store_last_vals (GimpProcedureConfig *config)
+{
+  GBytes *bytes;
+  bytes = g_bytes_new (&index_map_old_new, sizeof (guchar) * 256);
+  g_object_set (G_OBJECT (config), "map", bytes, NULL);
+  g_bytes_unref (bytes);
 }
 
 
 static gboolean
-real_remap (GimpImage *image,
-            gint       num_colors,
-            guchar    *map)
+read_image_palette (GimpImage *image,
+                    gint      *ncolors_out)
 {
-  guchar   *cmap;
-  guchar   *new_cmap;
-  guchar   *new_cmap_i;
-  gint      ncols;
-  GList    *layers;
-  GList    *list;
-  glong     pixels    = 0;
-  glong     processed = 0;
-  guchar    pixel_map[256];
-  gboolean  valid[256];
-  gint      i;
+  GtkTreeIter   iter;
+  gint          index;
+  gint          ncolors;
+  GimpPalette  *palette;
+  GeglColor   **colors;
 
-  cmap = gimp_image_get_colormap (image, NULL, &ncols);
+  palette = gimp_image_get_palette       (image);
+  ncolors = gimp_palette_get_color_count (palette);
 
-  g_return_val_if_fail (cmap != NULL, FALSE);
-  g_return_val_if_fail (ncols > 0, FALSE);
+  g_return_val_if_fail ((ncolors > 0) && (ncolors <= 256), FALSE);
 
-  if (num_colors != ncols)
+  colors = gimp_palette_get_colors (palette);
+  for (index = 0; index < ncolors; ++index)
     {
-      g_message (_("Invalid remap array was passed to remap function"));
+      GeglColor *c = colors[index];
+      gdouble  r, g, b;
+      GimpRGB  rgb;
+      GimpHSV  hsv;
+      gchar   *text  = g_strdup_printf ("%d", index);
+
+      gegl_color_get_rgba (c, &r, &g, &b, NULL);
+
+      gimp_rgb_set_uchar (&rgb,
+                          ROUND (r * 255),
+                          ROUND (g * 255),
+                          ROUND (b * 255));
+      gimp_rgb_to_hsv (&rgb, &hsv);
+
+      reverse_order[index] = ncolors - index - 1;
+
+      gtk_list_store_append (store, &iter);
+      gtk_list_store_set (store, &iter,
+                          COLOR_INDEX,      index,
+                          COLOR_INDEX_TEXT, text,
+                          COLOR_RGB,        &rgb,
+                          COLOR_H,          hsv.h,
+                          COLOR_S,          hsv.s,
+                          COLOR_V,          hsv.v,
+                          -1);
+      g_free (text);
+    }
+  gimp_color_array_free (colors);
+
+  if (ncolors_out != NULL)
+    {
+      *ncolors_out = ncolors;
+    }
+
+  return TRUE;
+}
+
+static GtkWidget *
+create_icon_view (gint  col_count,
+                  gint *item_width,
+                  gint *item_height)
+{
+  GtkWidget       *iv;
+  GtkCellRenderer *renderer;
+  gint             icon_width;
+  gint             icon_height;
+  GtkIconSize      icon_size    = GTK_ICON_SIZE_LARGE_TOOLBAR;
+  gint             item_padding = 5;
+  gint             row_spacing  = 2;
+  gint             col_spacing  = 2;
+  gint             text_height  = 21;
+
+  gtk_icon_size_lookup (icon_size, &icon_width, &icon_height);
+
+  *item_width  = icon_width + item_padding * 2 + row_spacing + col_spacing;
+
+  *item_height = icon_height + text_height + item_padding * 2;
+
+  iv = gtk_icon_view_new_with_model (GTK_TREE_MODEL (store));
+
+  gtk_icon_view_set_selection_mode   (GTK_ICON_VIEW (iv), GTK_SELECTION_SINGLE);
+  gtk_icon_view_set_item_orientation (GTK_ICON_VIEW (iv), GTK_ORIENTATION_VERTICAL);
+  gtk_icon_view_set_item_padding     (GTK_ICON_VIEW (iv), item_padding);
+  gtk_icon_view_set_columns          (GTK_ICON_VIEW (iv), col_count);
+  gtk_icon_view_set_row_spacing      (GTK_ICON_VIEW (iv), row_spacing);
+  gtk_icon_view_set_column_spacing   (GTK_ICON_VIEW (iv), col_spacing);
+  gtk_icon_view_set_reorderable      (GTK_ICON_VIEW (iv), TRUE);
+
+  gtk_widget_set_can_focus (iv, TRUE);
+
+  renderer = gimp_cell_renderer_color_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (iv), renderer, TRUE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (iv), renderer,
+                                  "color", COLOR_RGB,
+                                  NULL);
+  g_object_set (renderer,
+                "icon-size", icon_size,
+                "xpad",      0,
+                "ypad",      0,
+                NULL);
+
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_cell_layout_pack_end (GTK_CELL_LAYOUT (iv), renderer, TRUE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (iv), renderer,
+                                  "text", COLOR_INDEX_TEXT,
+                                  NULL);
+  g_object_set (renderer,
+                "size-points", 9.0,   /*TODO: should it be scaled with the UI scale ? */
+                "xalign",      0.5,
+                NULL);
+  return iv;
+}
+
+static GtkWidget *
+create_scrolled_window (GtkWidget *dialog,
+                        gint       item_width,
+                        gint       item_height,
+                        gint       ncolors,
+                        gint       col_count)
+{
+  GtkWidget *sw;
+  gint       nrows;
+  gint       widget_padding = 6 * 2;
+
+  nrows = MIN (ncolors / col_count + 1, 8);
+  if (ncolors > 99)
+    item_width += 4; /* take into account increased text width when indices > 99 */
+
+  /* last parameter is intentionally set to 'dummy'
+   * so we can create scrolled window before the container contents.
+   * The window contents will be inserted at the later step */
+  sw = gimp_procedure_dialog_fill_scrolled_window (GIMP_PROCEDURE_DIALOG (dialog), "sw",
+                                                   "intentional-dummy");
+
+  gtk_widget_set_size_request (sw, item_width * col_count, -1);
+  gtk_widget_set_vexpand (sw, TRUE);
+
+  gtk_scrolled_window_set_min_content_width  (GTK_SCROLLED_WINDOW (sw),
+                                              item_width * col_count);
+  gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (sw),
+                                              item_height * nrows + widget_padding);
+  return sw;
+}
+
+static void
+remap_sort (gint             column,
+            GtkSortType      order)
+{
+#define REMAP_COL_ID GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID
+  gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (store), column, order);
+  gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (store), REMAP_COL_ID, 0);
+#undef REMAP_COL_ID
+}
+
+static void
+remap_sort_hue (GtkButton *button,
+                gpointer  user_data)
+{
+  remap_sort (COLOR_H, GTK_SORT_ASCENDING);
+}
+
+static void
+remap_sort_sat (GtkButton *button,
+                gpointer  user_data)
+{
+  remap_sort (COLOR_S, GTK_SORT_ASCENDING);
+}
+
+static void
+remap_sort_val (GtkButton *button,
+                gpointer   user_data)
+{
+  remap_sort (COLOR_V, GTK_SORT_ASCENDING);
+}
+
+static void
+remap_sort_index (GtkButton *button,
+                  gpointer   user_data)
+{
+  remap_sort (COLOR_INDEX, GTK_SORT_ASCENDING);
+}
+
+static void
+remap_reverse_order (GtkButton *button,
+                     gpointer   user_data)
+{
+  gtk_list_store_reorder (store, reverse_order);
+}
+
+
+static gboolean
+remap_dialog (GimpProcedure *procedure,
+              GObject       *config,
+              GimpImage     *image)
+{
+  GtkWidget *dialog;
+  GtkWidget *button;
+  GtkWidget *w;
+  GtkWidget *hintbox;
+  GtkWidget *box;
+  GtkWidget *box2;
+  GtkWidget *icons;
+  gboolean   run;
+  gint       ncolors;
+  gint       item_width;
+  gint       item_height;
+  gint       col_count = 16;
+
+  gimp_ui_init (PLUG_IN_BINARY);
+
+
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Rearrange Colors"));
+
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
+  store = gtk_list_store_new (NUM_COLS,
+                              G_TYPE_INT, G_TYPE_STRING, GIMP_TYPE_RGB,
+                              G_TYPE_DOUBLE, G_TYPE_DOUBLE, G_TYPE_DOUBLE);
+
+  if (! read_image_palette (image, &ncolors))
+    {
       return FALSE;
     }
 
-  for (i = 0; i < ncols; i++)
-    valid[i] = FALSE;
+  icons = create_icon_view (col_count, &item_width, &item_height);
 
-  for (i = 0; i < ncols; i++)
+  /* scrolled window widget name is "sw" */
+  w = create_scrolled_window (dialog, item_width, item_height, ncolors, col_count);
+  gtk_container_add (GTK_CONTAINER (w), icons);
+
+  /* "dummy" is intentional. so we can "fill the box" and then actually fill it with our controls */
+  box2 = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog), "buttonbox",
+                                         "intentional-dummy", NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (box2),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  gtk_widget_set_margin_bottom (box2, 12);
+  gtk_widget_set_margin_top    (box2, 12);
+
+  button = gtk_button_new_with_label (_("Sort on Hue"));
+  gtk_box_pack_start (GTK_BOX (box2), button, TRUE, FALSE, 0);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (remap_sort_hue),
+                    NULL);
+
+  button = gtk_button_new_with_label (_("Sort on Saturation"));
+  gtk_box_pack_start (GTK_BOX (box2), button, TRUE, FALSE, 0);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (remap_sort_sat),
+                    NULL);
+
+  button = gtk_button_new_with_label (_("Sort on Value"));
+  gtk_box_pack_start (GTK_BOX (box2), button, TRUE, FALSE, 0);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (remap_sort_val),
+                    NULL);
+
+  button = gtk_button_new_with_label (_("Reverse Order"));
+  gtk_box_pack_start (GTK_BOX (box2), button, TRUE, FALSE, 0);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (remap_reverse_order),
+                    NULL);
+
+  button = gtk_button_new_with_label (_("Reset Order"));
+  gtk_box_pack_start (GTK_BOX (box2), button, TRUE, FALSE, 0);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (remap_sort_index),
+                    NULL);
+
+  box = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog), "vbox",
+                                        "sw", "buttonbox", NULL);
+
+  hintbox = gimp_hint_box_new (_("Drag and drop colors to rearrange the colormap.\n"
+                                 "The numbers shown are the original indices."));
+  gtk_box_pack_start (GTK_BOX (box), hintbox, FALSE, FALSE, 0);
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                               "vbox", NULL);
+
+  gtk_widget_show_all (dialog);
+
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
+  return run;
+}
+
+static void
+populate_index_map_from_store (void)
+{
+  GtkTreeIter iter;
+  gint        old_index = 0;
+  gboolean    valid;
+
+  for (valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (store), &iter);
+       valid;
+       valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (store), &iter))
     {
-      if (map[i] >= ncols)
-        {
-          g_message (_("Invalid remap array was passed to remap function"));
-          return FALSE;
-        }
+      gint new_index;
 
-      valid[map[i]] = TRUE;
-      pixel_map[map[i]] = i;
+      gtk_tree_model_get (GTK_TREE_MODEL (store), &iter,
+                          COLOR_INDEX, &new_index,
+                          -1);
+      index_map_old_new[old_index] = new_index;
+      ++old_index;
     }
+}
 
-  for (i = 0; i < ncols; i++)
-    if (valid[i] == FALSE)
-      {
-        g_message (_("Invalid remap array was passed to remap function"));
-        return FALSE;
-      }
+static gboolean
+real_remap (GimpImage *image)
+{
+  guchar        pixmap[256]; /* map new-pixel index to old. pixmap[new-index] = old-index */
+  gint          i;
+  gint          ncolors;
+  GimpPalette  *palette;
+  GeglColor   **colors;
+  GList        *layers;
+  GList        *list;
+  glong         total_pixels = 0;
+  glong         processed    = 0;
 
-  new_cmap = g_new (guchar, ncols * 3);
-
-  new_cmap_i = new_cmap;
-
-  for (i = 0; i < ncols; i++)
-    {
-      gint j = map[i] * 3;
-
-      *new_cmap_i++ = cmap[j];
-      *new_cmap_i++ = cmap[j + 1];
-      *new_cmap_i++ = cmap[j + 2];
-    }
+  palette = gimp_image_get_palette       (image);
+  ncolors = gimp_palette_get_color_count (palette);
+  colors  = gimp_palette_get_colors      (palette);
 
   gimp_image_undo_group_start (image);
-
-  gimp_image_set_colormap (image, new_cmap, ncols);
-
-  g_free (cmap);
-  g_free (new_cmap);
+  for (i = 0; i < ncolors; ++i)
+    {
+      gint new_index    = index_map_old_new[i];
+      pixmap[new_index] = i;
+      gimp_palette_entry_set_color (palette, i, colors[new_index]);
+    }
+  gimp_color_array_free (colors);
 
   gimp_progress_init (_("Rearranging the colormap"));
-
-  /*  There is no needs to process the layers recursively, because
-   *  indexed images cannot have layer groups.
-   */
   layers = gimp_image_list_layers (image);
 
+  /**  There is no needs to process the layers recursively, because
+   *  indexed images cannot have layer groups.
+   */
   for (list = layers; list; list = list->next)
-    pixels +=
-      gimp_drawable_get_width (list->data) * gimp_drawable_get_height (list->data);
+    {
+      total_pixels += gimp_drawable_get_width (list->data) *
+                      gimp_drawable_get_height (list->data);
+    }
 
   for (list = layers; list; list = list->next)
     {
@@ -477,13 +756,13 @@ real_remap (GimpImage *image,
       gint                width, height, bpp;
       gint                update = 0;
 
-      buffer = gimp_drawable_get_buffer (list->data);
+      buffer = gimp_drawable_get_buffer        (list->data);
       shadow = gimp_drawable_get_shadow_buffer (list->data);
 
-      width   = gegl_buffer_get_width  (buffer);
-      height  = gegl_buffer_get_height (buffer);
-      format  = gegl_buffer_get_format (buffer);
-      bpp     = babl_format_get_bytes_per_pixel (format);
+      width  = gegl_buffer_get_width  (buffer);
+      height = gegl_buffer_get_height (buffer);
+      format = gegl_buffer_get_format (buffer);
+      bpp    = babl_format_get_bytes_per_pixel (format);
 
       iter = gegl_buffer_iterator_new (buffer,
                                        GEGL_RECTANGLE (0, 0, width, height), 0,
@@ -512,13 +791,13 @@ real_remap (GimpImage *image,
               if (bpp == 1)
                 {
                   for (x = 0; x < src_roi->width; x++)
-                    *dest++ = pixel_map[*src++];
+                    *dest++ = pixmap[*src++];
                 }
               else
                 {
                   for (x = 0; x < src_roi->width; x++)
                     {
-                      *dest++ = pixel_map[*src++];
+                      *dest++ = pixmap[*src++];
                       *dest++ = *src++;
                     }
                 }
@@ -531,7 +810,9 @@ real_remap (GimpImage *image,
           update %= 16;
 
           if (update == 0)
-            gimp_progress_update ((gdouble) processed / pixels);
+            {
+              gimp_progress_update ((gdouble) processed / total_pixels);
+            }
 
           update++;
         }
@@ -543,306 +824,8 @@ real_remap (GimpImage *image,
       gimp_drawable_update (list->data, 0, 0, width, height);
     }
 
-  g_list_free (layers);
-
-  gimp_progress_update (1.0);
-
   gimp_image_undo_group_end (image);
-
+  g_list_free (layers);
+  gimp_progress_update (1.0);
   return TRUE;
-}
-
-
-/* dialog */
-
-#define RESPONSE_RESET 1
-
-enum
-{
-  COLOR_INDEX,
-  COLOR_INDEX_TEXT,
-  COLOR_RGB,
-  COLOR_H,
-  COLOR_S,
-  COLOR_V,
-  NUM_COLS
-};
-
-static  gint          reverse_order[256];
-
-
-static void
-remap_sort (GtkTreeSortable *store,
-            gint             column,
-            GtkSortType      order)
-{
-  gtk_tree_sortable_set_sort_column_id (store, column, order);
-  gtk_tree_sortable_set_sort_column_id (store,
-                                        GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID, 0);
-}
-
-static void
-remap_sort_hue_action  (GSimpleAction *action,
-                        GVariant      *parameter,
-                        gpointer       user_data)
-{
-  remap_sort (GTK_TREE_SORTABLE (store), COLOR_H, GTK_SORT_ASCENDING);
-}
-
-static void
-remap_sort_sat_action  (GSimpleAction *action,
-                        GVariant      *parameter,
-                        gpointer       user_data)
-{
-  remap_sort (GTK_TREE_SORTABLE (store), COLOR_S, GTK_SORT_ASCENDING);
-}
-
-static void
-remap_sort_val_action  (GSimpleAction *action,
-                         GVariant     *parameter,
-                         gpointer      user_data)
-{
-  remap_sort (GTK_TREE_SORTABLE (store), COLOR_V, GTK_SORT_ASCENDING);
-}
-
-static void
-remap_reset_action (GSimpleAction *action,
-                    GVariant      *parameter,
-                    gpointer       user_data)
-{
-  remap_sort (GTK_TREE_SORTABLE (store), COLOR_INDEX,
-              GTK_SORT_ASCENDING);
-}
-
-static void
-remap_reverse_action (GSimpleAction *action,
-                      GVariant      *parameter,
-                      gpointer       user_data)
-{
-  gtk_list_store_reorder (store, reverse_order);
-}
-
-static gboolean
-remap_popup_menu (GtkWidget      *widget,
-                  GdkEventButton *event,
-                  GimpRemap      *remap)
-{
-  GtkWidget  *menu;
-
-  menu = gtk_menu_new_from_model (G_MENU_MODEL (remap->menu));
-
-  gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET (window), NULL);
-  gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
-
-  return TRUE;
-}
-
-static gboolean
-remap_button_press (GtkWidget      *widget,
-                    GdkEventButton *event,
-                    GimpRemap      *remap)
-{
-  if (gdk_event_triggers_context_menu ((GdkEvent *) event))
-    return remap_popup_menu (widget, event, remap);
-
-  return FALSE;
-}
-
-static void
-remap_response (GtkWidget *dialog,
-                gint       response_id,
-                GimpRemap *remap)
-{
-  switch (response_id)
-    {
-    case RESPONSE_RESET:
-      remap_reset_action (NULL, NULL, NULL);
-      break;
-
-    case GTK_RESPONSE_OK:
-      remap_ok = TRUE;
-      /* fallthrough */
-
-    default:
-      gtk_widget_destroy (GTK_WIDGET (window));
-      break;
-    }
-}
-
-static gboolean
-remap_dialog (GimpImage *image,
-              guchar    *map,
-              GimpRemap *remap)
-{
-  GtkWidget       *dialog;
-  GtkWidget       *vbox;
-  GtkWidget       *box;
-  GtkWidget       *iconview;
-  GtkCellRenderer *renderer;
-  GtkTreeIter      iter;
-  guchar          *cmap;
-  gint             ncols, i;
-  gboolean         valid;
-
-  gimp_ui_init (PLUG_IN_BINARY);
-
-  dialog = gimp_dialog_new (_("Rearrange Colormap"), PLUG_IN_ROLE,
-                            GTK_WIDGET (window), 0,
-                            gimp_standard_help_func, PLUG_IN_PROC_REMAP,
-
-                            _("_Reset"),  RESPONSE_RESET,
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                            RESPONSE_RESET,
-                                            GTK_RESPONSE_OK,
-                                            GTK_RESPONSE_CANCEL,
-                                            -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      vbox, TRUE, TRUE, 0);
-
-  cmap = gimp_image_get_colormap (image, NULL, &ncols);
-
-  g_return_val_if_fail ((ncols > 0) && (ncols <= 256), FALSE);
-
-  store = gtk_list_store_new (NUM_COLS,
-                              G_TYPE_INT, G_TYPE_STRING, GIMP_TYPE_RGB,
-                              G_TYPE_DOUBLE, G_TYPE_DOUBLE, G_TYPE_DOUBLE);
-
-  for (i = 0; i < ncols; i++)
-    {
-      GimpRGB  rgb;
-      GimpHSV  hsv;
-      gint     index = map[i];
-      gchar   *text  = g_strdup_printf ("%d", index);
-
-      gimp_rgb_set_uchar (&rgb,
-                          cmap[index * 3],
-                          cmap[index * 3 + 1],
-                          cmap[index * 3 + 2]);
-      gimp_rgb_to_hsv (&rgb, &hsv);
-
-      reverse_order[i] = ncols - i - 1;
-
-      gtk_list_store_append (store, &iter);
-      gtk_list_store_set (store, &iter,
-                          COLOR_INDEX,      index,
-                          COLOR_INDEX_TEXT, text,
-                          COLOR_RGB,        &rgb,
-                          COLOR_H,          hsv.h,
-                          COLOR_S,          hsv.s,
-                          COLOR_V,          hsv.v,
-                          -1);
-      g_free (text);
-    }
-
-  g_free (cmap);
-
-  iconview = gtk_icon_view_new_with_model (GTK_TREE_MODEL (store));
-  g_object_unref (store);
-
-  gtk_box_pack_start (GTK_BOX (vbox), iconview, TRUE, TRUE, 0);
-
-  gtk_icon_view_set_selection_mode (GTK_ICON_VIEW (iconview),
-                                    GTK_SELECTION_SINGLE);
-  gtk_icon_view_set_item_orientation (GTK_ICON_VIEW (iconview),
-                                      GTK_ORIENTATION_VERTICAL);
-  gtk_icon_view_set_columns (GTK_ICON_VIEW (iconview), 16);
-  gtk_icon_view_set_row_spacing (GTK_ICON_VIEW (iconview), 0);
-  gtk_icon_view_set_column_spacing (GTK_ICON_VIEW (iconview), 0);
-  gtk_icon_view_set_reorderable (GTK_ICON_VIEW (iconview), TRUE);
-
-  renderer = gimp_cell_renderer_color_new ();
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (iconview), renderer, TRUE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (iconview), renderer,
-                                  "color", COLOR_RGB,
-                                  NULL);
-  g_object_set (renderer,
-                "width", 24,
-                NULL);
-
-  renderer = gtk_cell_renderer_text_new ();
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (iconview), renderer, TRUE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (iconview), renderer,
-                                  "text", COLOR_INDEX_TEXT,
-                                  NULL);
-  g_object_set (renderer,
-                "size-points", 6.0,
-                "xalign",      0.5,
-                "ypad",        0,
-                NULL);
-
-  g_signal_connect (iconview, "popup-menu",
-                    G_CALLBACK (remap_popup_menu),
-                    remap);
-
-  g_signal_connect (iconview, "button-press-event",
-                    G_CALLBACK (remap_button_press),
-                    remap);
-
-  g_action_map_add_action_entries (G_ACTION_MAP (window),
-                                   ACTIONS, G_N_ELEMENTS (ACTIONS),
-                                   remap);
-
-  box = gimp_hint_box_new (_("Drag and drop colors to rearrange the colormap.  "
-                             "The numbers shown are the original indices.  "
-                             "Right-click for a menu with sort options."));
-
-  gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
-  gtk_widget_show (box);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (remap_response),
-                    remap);
-
-  gtk_widget_show_all (dialog);
-
-  i = 0;
-
-  for (valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (store), &iter);
-       valid;
-       valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (store), &iter))
-    {
-      gint index;
-
-      gtk_tree_model_get (GTK_TREE_MODEL (store), &iter,
-                          COLOR_INDEX, &index,
-                          -1);
-      map[i++] = index;
-    }
-
-  return remap_ok;
-}
-
-static void
-on_app_activate (GApplication *gapp,
-                 gpointer      user_data)
-{
-  GimpRemap      *remap = GIMP_REMAP (user_data);
-  GtkApplication *app  = GTK_APPLICATION (gapp);
-
-  window = GTK_WINDOW (gtk_application_window_new (app));
-  gtk_window_set_title (window, _("Rearrange Colors"));
-  gtk_window_set_role (window, PLUG_IN_ROLE);
-  gimp_help_connect (GTK_WIDGET (window),
-                     gimp_standard_help_func, PLUG_IN_PROC_REMAP,
-                     window, NULL);
-
-  remap_dialog (remap->image, remap->map, remap);
-
-  gtk_application_set_accels_for_action (app, "win.sort-hue", (const char*[]) { NULL });
-  gtk_application_set_accels_for_action (app, "win.sort-sat", (const char*[]) { NULL });
-  gtk_application_set_accels_for_action (app, "win.sort-val", (const char*[]) { NULL });
-
-  gtk_application_set_accels_for_action (app, "win.reverse", (const char*[]) { NULL });
-
-  gtk_application_set_accels_for_action (app, "win.reset", (const char*[]) { NULL });
 }
