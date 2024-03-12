@@ -207,13 +207,13 @@ welcome_dialog_new (Gimp       *gimp,
   gimp_prefs_box_set_header_visible (GIMP_PREFS_BOX (prefs_box), FALSE);
   gtk_stack_switcher_set_stack (GTK_STACK_SWITCHER (switcher),
                                 GTK_STACK (stack));
-  gtk_container_set_border_width (GTK_CONTAINER (switcher), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (switcher), 2);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       switcher, FALSE, FALSE, 0);
   gtk_widget_set_halign (switcher, GTK_ALIGN_CENTER);
   gtk_widget_set_visible (switcher, TRUE);
 
-  gtk_container_set_border_width (GTK_CONTAINER (prefs_box), 12);
+  gtk_container_set_border_width (GTK_CONTAINER (prefs_box), 0);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       prefs_box, TRUE, TRUE, 0);
   gtk_widget_set_visible (prefs_box, TRUE);
@@ -415,6 +415,8 @@ welcome_dialog_create_welcome_page (Gimp      *gimp,
   gtk_grid_set_row_spacing (GTK_GRID (grid), 0);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, TRUE, TRUE, 0);
+  gtk_widget_set_margin_start (GTK_WIDGET (grid), 12);
+  gtk_widget_set_margin_end (GTK_WIDGET (grid), 12);
   gtk_widget_set_visible (grid, TRUE);
 
   /* Translators: the %s string will be the version, e.g. "3.0". */
