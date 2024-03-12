@@ -60,8 +60,8 @@ pdb.script_fu_drop_shadow(img, layer, -3, -3, blur,
 ```
 becomes
 ```
-        c = Gimp.RGB()
-        c.set(240.0, 180.0, 70.0)
+        c = Gegl.Color.new("black")
+        c.set_rgba(0.94, 0.71, 0.27, 1.0)
         Gimp.get_pdb().run_procedure('script-fu-drop-shadow',
                                      [ Gimp.RunMode.NONINTERACTIVE,
                                        GObject.Value(Gimp.Image, img),

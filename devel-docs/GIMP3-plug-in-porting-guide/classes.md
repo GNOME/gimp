@@ -82,19 +82,12 @@ are now in their own module:
 Gimp.ChannelOps.REPLACE
 ```
 
-## Gimp.RGB
+## Gegl.Color
 
 In legacy plug-ins you could pass a simple list of integers, like (0, 0, 0).
-In 3.0+, create a Gimp.RGB object:
+In 3.0+, create a Gegl.Color object:
 
 ```
-    c = Gimp.RGB()
-    c.set(240.0, 180.0, 70.0)
-```
-or
-```
-    c.r = 0
-    c.g = 0
-    c.b = 0
-    c.a = 1
+    c = Gegl.Color.new("black")
+    c.set_rgba(0.94, 0.71, 0.27, 1.0)
 ```
