@@ -73,22 +73,6 @@ wish, as though various paints was poured on it.
 This concept is not currently used in GIMP itself, nor on any website, but this
 is part of the base design.
 
-## Development logo
-
-We also have a fun "development logo" variant (`gimp-devel-logo.svg`), which is
-only used in unstable builds, as the name implies.
-
-![Color development logo](gimp-devel-logo.svg)
-
-It features rainbow colors being spilled on Wilber, like a scientific
-experiment with colors, to represent the experimental side of Wilber.
-
-This development logo is swapped with the main logo in the About dialog
-of unstable versions.
-
-*Note: currently the development logo only comes with a shadow since the
-software is the only place we use it so far.*
-
 ## Specific OS variants
 
 Some OSes have specific design guidelines.
@@ -125,15 +109,19 @@ In pure grayscale, we provide a simpler unicolor variant
 (`gimp-wilber-unicolor.svg`) which is preferred to making the main logo
 grayscale:
 
-![Unicolor logo](gimp-logo-unicolor.svg)
+<img style="background-color:white" src="gimp-logo-unicolor.svg" alt="GIMP's Unicolor logo" />
 
 In this variant, the brush handle is simply removed, relying even more
 on negative space design, giving some further elegance to the logo.
 
-This logo can render pretty well on documents meant to be grayscale, or on
-goodies printed with a single color.
+This logo can render pretty well on documents meant to be grayscale, both
+printed documents or on screen, or on goodies printed with a single color.
 
 It would also work very well for silk-screen printing.
+
+*Note: since the unicolor logo is made to be recolored, this participated a lot
+to the design of the eyes of Wilber (in all versions) which needed to not look
+scary whatever the color variant.*
 
 ## Outline variant
 
@@ -141,7 +129,7 @@ This logo variant can be used typically for simple usages when you want
 to display or print logo as outlines. Except for the bristles, the whole shape
 is made of connected lines.
 
-![Outline variant of GIMP logo](gimp-logo-outline.svg)
+<img style="background-color:rgb(54,53,58)" src="gimp-logo-outline.svg" alt="Outline variant of GIMP logo" />
 
 A very good example would be to create embroidered t-shirts with the
 official logo.
@@ -172,28 +160,61 @@ As example of icon resizing:
 
 The Symbolic variant uses the [unicolor version of the
 logo](#grayscaleunicolor-variant) (`gimp-logo-unicolor.svg`) for all sizes over
-32×32:
-
-![Design used for symbolic Wilber icon](gimp-logo-unicolor.svg)
+32×32.
 
 On smaller sizes (32x32 and below), we use a simplified version
 (`gimp-wilber-symbolic.svg`) so that the brush doesn't look as a lost
 pixel and the mouth doesn't look over-detailed:
 
-![Design used for symbolic Wilber icon for 32x32 and smaller](gimp-wilber-symbolic.svg)
+<img style="background-color:white" src="gimp-wilber-symbolic.svg" alt="Design used for symbolic Wilber icon for 32x32 and smaller" />
+
+As example of icon resizing:
 
 * Unicolor icon in 48×48: <img src="gimp-logo-unicolor.svg" width="48" height="48"/>
 * Simplified icon in 16×16: <img src="gimp-wilber-symbolic.svg" width="16" height="16"/>
-
-*Note: since the Symbolic icons get recolored, this participated a lot to the
-design of the eyes of Wilber (in all versions) which needed to not look scary
-whatever the color variant.*
 
 ### Wilber-eek
 
 For errors in GIMP, we have a specific variant of the logo used as icon:
 
 TODO
+
+## Background (accent) color preferences
+
+Freedesktop's AppStream specifications introduced the concept of ["brand
+colors"](https://freedesktop.org/software/appstream/docs/chap-Metadata.html#tag-branding)
+(also called "accent colors" sometimes), which are basically background colors
+to be used behind the logo in either dark or light color schemes.
+
+GNOME [announced making use](https://docs.flathub.org/blog/introducing-app-brand-colors/)
+of this metadata in 2024 and Elementary OS and Pop!OS have been using this
+concept [since longer](https://github.com/ximion/appstream/issues/187).
+
+Other desktop environments or OSes may have similar concepts.
+
+We don't have such accent colors defined for GIMP logo yet. TODO.
+
+## Fun variations of the logo
+
+We also make fun "development logo" variants (`gimp-devel-logo.svg`), which are
+only used in unstable builds, as the name implies. Our current development logo
+is:
+
+![Color development logo](gimp-devel-logo.svg)
+
+It features rainbow colors being spilled on Wilber, like a scientific
+experiment with colors, to represent the experimental side of Wilber.
+
+The development logo is swapped with the main logo in the About dialog
+of unstable versions. It is not used as "app logo" in menus, title bars and so
+on.
+
+**Development logos are not to be considered "official".** They are only fun
+experimental Wilbers, which can be swapped anytime as examples of variations of
+Wilber.
+
+*Note: currently the development logo only comes with a shadow since the
+software is the only place we use it so far.*
 
 ## Licensing
 
