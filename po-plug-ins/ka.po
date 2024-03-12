@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-09 12:23+0000\n"
-"PO-Revision-Date: 2024-03-10 15:52+0100\n"
+"POT-Creation-Date: 2024-03-12 15:14+0000\n"
+"PO-Revision-Date: 2024-03-12 18:52+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -61,12 +61,12 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
 #: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1379
 #: plug-ins/common/cml-explorer.c:2146 plug-ins/common/cml-explorer.c:2356
-#: plug-ins/common/colormap-remap.c:694 plug-ins/common/curve-bend.c:1809
-#: plug-ins/common/curve-bend.c:1844 plug-ins/common/file-gif-save.c:1222
-#: plug-ins/common/file-heif.c:2314 plug-ins/common/file-pdf-load.c:686
-#: plug-ins/common/file-pdf-save.c:1054 plug-ins/common/grid.c:819
-#: plug-ins/common/qbist.c:836 plug-ins/common/qbist.c:878
-#: plug-ins/common/qbist.c:932 plug-ins/common/sphere-designer.c:2292
+#: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
+#: plug-ins/common/file-gif-save.c:1222 plug-ins/common/file-heif.c:2314
+#: plug-ins/common/file-pdf-load.c:686 plug-ins/common/file-pdf-save.c:1054
+#: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:836
+#: plug-ins/common/qbist.c:878 plug-ins/common/qbist.c:932
+#: plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2651 plug-ins/common/unit-editor.c:435
 #: plug-ins/file-tiff/file-tiff-load.c:2547 plug-ins/flame/flame.c:622
 #: plug-ins/flame/flame.c:827
@@ -138,12 +138,12 @@ msgstr ""
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1380 plug-ins/common/colormap-remap.c:695
-#: plug-ins/common/file-heif.c:2315 plug-ins/common/file-pdf-load.c:687
-#: plug-ins/common/grid.c:820 plug-ins/common/qbist.c:933
-#: plug-ins/common/sphere-designer.c:2652 plug-ins/common/unit-editor.c:266
-#: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3561
-#: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
+#: plug-ins/common/cml-explorer.c:1380 plug-ins/common/file-heif.c:2315
+#: plug-ins/common/file-pdf-load.c:687 plug-ins/common/grid.c:820
+#: plug-ins/common/qbist.c:933 plug-ins/common/sphere-designer.c:2652
+#: plug-ins/common/unit-editor.c:266 plug-ins/file-exr/file-exr.c:435
+#: plug-ins/file-psd/psd-load.c:3561 plug-ins/flame/flame.c:828
+#: plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3446
@@ -1191,7 +1191,7 @@ msgstr ""
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
 #: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1218
 #: plug-ins/common/file-pcx.c:1219 plug-ins/common/file-pdf-save.c:659
-#: plug-ins/common/file-png.c:1518 plug-ins/common/file-raw-data.c:1337
+#: plug-ins/common/file-png.c:1517 plug-ins/common/file-raw-data.c:1337
 #: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
 #: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1381
 #: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-save.c:341
@@ -1241,106 +1241,95 @@ msgstr ""
 msgid "Error: failed to load parameters"
 msgstr "შეცდომა: პარამეტრების ჩატვირთვა შეუძლებელია"
 
-#: plug-ins/common/colormap-remap.c:186
+#: plug-ins/common/colormap-remap.c:181
 msgid "R_earrange Colormap..."
 msgstr ""
 
-#: plug-ins/common/colormap-remap.c:192
+#: plug-ins/common/colormap-remap.c:187
 msgid "Rearrange the colormap"
 msgstr ""
 
-#: plug-ins/common/colormap-remap.c:193
+#: plug-ins/common/colormap-remap.c:188
 msgid ""
 "This procedure takes an indexed image and lets you alter the positions of "
 "colors in the colormap without visually changing the image."
 msgstr ""
 
-#: plug-ins/common/colormap-remap.c:204
+#: plug-ins/common/colormap-remap.c:199
 msgid "Map"
 msgstr "რუკა"
 
-#: plug-ins/common/colormap-remap.c:205
+#: plug-ins/common/colormap-remap.c:200
 msgid "Remap array for the colormap"
 msgstr ""
 
-#: plug-ins/common/colormap-remap.c:220
+#: plug-ins/common/colormap-remap.c:215
 msgid "_Swap Colors"
 msgstr "ფერების _მიმოცვლა"
 
-#: plug-ins/common/colormap-remap.c:224
+#: plug-ins/common/colormap-remap.c:219
 msgid "Swap two colors in the colormap"
 msgstr ""
 
-#: plug-ins/common/colormap-remap.c:225
+#: plug-ins/common/colormap-remap.c:220
 msgid ""
 "This procedure takes an indexed image and lets you swap the positions of two "
 "colors in the colormap without visually changing the image."
 msgstr ""
 
-#: plug-ins/common/colormap-remap.c:237
+#: plug-ins/common/colormap-remap.c:232
 msgid "Index 1"
 msgstr "ინდექსი 1"
 
-#: plug-ins/common/colormap-remap.c:238
+#: plug-ins/common/colormap-remap.c:233
 msgid "First index in the colormap"
 msgstr ""
 
-#: plug-ins/common/colormap-remap.c:243
+#: plug-ins/common/colormap-remap.c:238
 msgid "Index 2"
 msgstr "ინდექსი 2"
 
-#: plug-ins/common/colormap-remap.c:244
+#: plug-ins/common/colormap-remap.c:239
 msgid "Second (other) index in the colormap"
 msgstr ""
 
-#: plug-ins/common/colormap-remap.c:277
+#: plug-ins/common/colormap-remap.c:269
+#, c-format
+msgid "Procedure '%s' only works with indexed images."
+msgstr ""
+
+#: plug-ins/common/colormap-remap.c:610
+msgid "Rearrange Colors"
+msgstr ""
+
+#: plug-ins/common/colormap-remap.c:641
 msgid "Sort on Hue"
 msgstr ""
 
-#: plug-ins/common/colormap-remap.c:278
+#: plug-ins/common/colormap-remap.c:647
 msgid "Sort on Saturation"
 msgstr "გაჯერებულობაზე დალაგება"
 
-#: plug-ins/common/colormap-remap.c:279
+#: plug-ins/common/colormap-remap.c:653
 msgid "Sort on Value"
 msgstr ""
 
-#: plug-ins/common/colormap-remap.c:284
+#: plug-ins/common/colormap-remap.c:659
 msgid "Reverse Order"
 msgstr "შებრუნებული მიმდევრობით"
 
-#: plug-ins/common/colormap-remap.c:285
+#: plug-ins/common/colormap-remap.c:665
 msgid "Reset Order"
 msgstr "შებრუნებული მიმდევრობით"
 
-#: plug-ins/common/colormap-remap.c:412 plug-ins/common/colormap-remap.c:423
-#: plug-ins/common/colormap-remap.c:434
-msgid "Invalid remap array was passed to remap function"
-msgstr ""
-
-#: plug-ins/common/colormap-remap.c:458
-msgid "Rearranging the colormap"
-msgstr ""
-
-#: plug-ins/common/colormap-remap.c:689
-msgid "Rearrange Colormap"
-msgstr ""
-
-#. The Reset button
-#: plug-ins/common/colormap-remap.c:693 plug-ins/common/curve-bend.c:1250
-#: plug-ins/common/sphere-designer.c:2650 plug-ins/common/tile-small.c:525
-#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:913
-msgid "_Reset"
-msgstr "_განულება"
-
-#: plug-ins/common/colormap-remap.c:795
+#: plug-ins/common/colormap-remap.c:674
 msgid ""
-"Drag and drop colors to rearrange the colormap.  The numbers shown are the "
-"original indices.  Right-click for a menu with sort options."
+"Drag and drop colors to rearrange the colormap.\n"
+"The numbers shown are the original indices."
 msgstr ""
 
-#: plug-ins/common/colormap-remap.c:833
-msgid "Rearrange Colors"
+#: plug-ins/common/colormap-remap.c:736
+msgid "Rearranging the colormap"
 msgstr ""
 
 #. Decompositions availables.
@@ -2032,6 +2021,13 @@ msgstr "მიმოცვლა"
 msgid "Swap the two curves"
 msgstr "ორი მრუდის მიმოცვლა"
 
+#. The Reset button
+#: plug-ins/common/curve-bend.c:1250 plug-ins/common/sphere-designer.c:2650
+#: plug-ins/common/tile-small.c:525 plug-ins/gimpressionist/preview.c:182
+#: plug-ins/ifs-compose/ifs-compose.c:913
+msgid "_Reset"
+msgstr "_განულება"
+
 #: plug-ins/common/curve-bend.c:1255
 msgid "Reset the active curve"
 msgstr ""
@@ -2298,7 +2294,7 @@ msgstr ""
 
 #: plug-ins/common/depth-merge.c:242
 msgid "Depth map 2"
-msgstr "სიღრმის რუკა 1"
+msgstr "სიღრმის რუკა 2"
 
 #: plug-ins/common/depth-merge.c:247
 msgid "O_verlap"
@@ -2615,7 +2611,7 @@ msgstr ""
 #: plug-ins/common/file-cel.c:845 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-gif-save.c:975 plug-ins/common/file-html-table.c:359
 #: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1103
-#: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1510
+#: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1509
 #: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1321
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
 #: plug-ins/common/file-tga.c:1229 plug-ins/common/file-xbm.c:1050
@@ -3266,20 +3262,20 @@ msgstr "_განზომილება"
 msgid "How many dimensions the animated brush has"
 msgstr ""
 
-#: plug-ins/common/file-gih.c:475
+#: plug-ins/common/file-gih.c:514
 msgid "Width Mismatch!"
 msgstr ""
 
-#: plug-ins/common/file-gih.c:476
+#: plug-ins/common/file-gih.c:515
 msgid "Height Mismatch!"
 msgstr ""
 
-#: plug-ins/common/file-gih.c:523
+#: plug-ins/common/file-gih.c:562
 #, c-format
 msgid "Displays as a %d × %d grid on each layer"
 msgstr ""
 
-#: plug-ins/common/file-gih.c:709
+#: plug-ins/common/file-gih.c:748
 msgid "Ranks:"
 msgstr "რანგები:"
 
@@ -3982,7 +3978,7 @@ msgstr ""
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:724 plug-ins/common/file-png.c:2318
+#: plug-ins/common/file-mng.c:724 plug-ins/common/file-png.c:2342
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 
@@ -4636,17 +4632,17 @@ msgid ""
 "to apply this offset to the layer?"
 msgstr ""
 
-#: plug-ins/common/file-png.c:1475
+#: plug-ins/common/file-png.c:1474
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr ""
 
-#: plug-ins/common/file-png.c:1484
+#: plug-ins/common/file-png.c:1483
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 
-#: plug-ins/common/file-png.c:1492
+#: plug-ins/common/file-png.c:1491
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr ""
