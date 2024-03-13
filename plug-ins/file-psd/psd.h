@@ -28,7 +28,7 @@
 #define PSD_DEBUG 3
 #define IFDBG(level) if (PSD_DEBUG >= level)
 
-/* Set to FALSE to suppress pop-up warnings about lossy file conversions */
+/* Set to FALSE to suppress pop-up warnings about lossy blend mode conversions */
 #define CONVERSION_WARNINGS             FALSE
 
 #define LOAD_PROC                       "file-psd-load"
@@ -601,7 +601,6 @@ typedef struct
 /* PSD Layer data structure */
 typedef struct
 {
-  gboolean              drop;                   /* Do not add layer to GIMP image */
   gint32                top;                    /* Layer top */
   gint32                left;                   /* Layer left */
   gint32                bottom;                 /* Layer bottom */
