@@ -540,7 +540,7 @@ psd_load_metadata (GimpProcedure         *procedure,
         default:
           g_printerr ("[%s] %s\n", "file-psd-load-metadata",
                       _("Metadata fill layers are not supported "
-                        "and will be dropped."));
+                        "and will show up as empty layers."));
           break;
         }
 

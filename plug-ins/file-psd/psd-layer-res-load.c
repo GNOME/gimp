@@ -20,24 +20,24 @@
 
 /* ----- Known Layer Resource Block Types -----
   All layer resources not otherwise handled, including unknown types
-  are dropped with a warning.
+  will show up empty with a warning.
 
   * Adjustment layer IDs *
-  PSD_LADJ_LEVEL          "levl"    Drop Layer  * Adjustment layer - levels (PS4) *
-  PSD_LADJ_CURVE          "curv"    Drop Layer  * Adjustment layer - curves (PS4) *
-  PSD_LADJ_BRIGHTNESS     "brit"    Drop Layer  * Adjustment layer - brightness contrast (PS4) *
-  PSD_LADJ_BALANCE        "blnc"    Drop Layer  * Adjustment layer - color balance (PS4) *
-  PSD_LADJ_BLACK_WHITE    "blwh"    Drop Layer  * Adjustment layer - black & white (PS10) *
-  PSD_LADJ_HUE            "hue "    Drop Layer  * Adjustment layer - old hue saturation (PS4) *
-  PSD_LADJ_HUE2           "hue2"    Drop Layer  * Adjustment layer - hue saturation (PS5) *
-  PSD_LADJ_SELECTIVE      "selc"    Drop Layer  * Adjustment layer - selective color (PS4) *
-  PSD_LADJ_MIXER          "mixr"    Drop Layer  * Adjustment layer - channel mixer (PS9) *
-  PSD_LADJ_GRAD_MAP       "grdm"    Drop Layer  * Adjustment layer - gradient map (PS9) *
-  PSD_LADJ_PHOTO_FILT     "phfl"    Drop Layer  * Adjustment layer - photo filter (PS9) *
-  PSD_LADJ_EXPOSURE       "expA"    Drop Layer  * Adjustment layer - exposure (PS10) *
-  PSD_LADJ_INVERT         "nvrt"    Drop Layer  * Adjustment layer - invert (PS4) *
-  PSD_LADJ_THRESHOLD      "thrs"    Drop Layer  * Adjustment layer - threshold (PS4) *
-  PSD_LADJ_POSTERIZE      "post"    Drop Layer  * Adjustment layer - posterize (PS4) *
+  PSD_LADJ_LEVEL          "levl"    Empty Layer  * Adjustment layer - levels (PS4) *
+  PSD_LADJ_CURVE          "curv"    Empty Layer  * Adjustment layer - curves (PS4) *
+  PSD_LADJ_BRIGHTNESS     "brit"    Empty Layer  * Adjustment layer - brightness contrast (PS4) *
+  PSD_LADJ_BALANCE        "blnc"    Empty Layer  * Adjustment layer - color balance (PS4) *
+  PSD_LADJ_BLACK_WHITE    "blwh"    Empty Layer  * Adjustment layer - black & white (PS10) *
+  PSD_LADJ_HUE            "hue "    Empty Layer  * Adjustment layer - old hue saturation (PS4) *
+  PSD_LADJ_HUE2           "hue2"    Empty Layer  * Adjustment layer - hue saturation (PS5) *
+  PSD_LADJ_SELECTIVE      "selc"    Empty Layer  * Adjustment layer - selective color (PS4) *
+  PSD_LADJ_MIXER          "mixr"    Empty Layer  * Adjustment layer - channel mixer (PS9) *
+  PSD_LADJ_GRAD_MAP       "grdm"    Empty Layer  * Adjustment layer - gradient map (PS9) *
+  PSD_LADJ_PHOTO_FILT     "phfl"    Empty Layer  * Adjustment layer - photo filter (PS9) *
+  PSD_LADJ_EXPOSURE       "expA"    Empty Layer  * Adjustment layer - exposure (PS10) *
+  PSD_LADJ_INVERT         "nvrt"    Empty Layer  * Adjustment layer - invert (PS4) *
+  PSD_LADJ_THRESHOLD      "thrs"    Empty Layer  * Adjustment layer - threshold (PS4) *
+  PSD_LADJ_POSTERIZE      "post"    Empty Layer  * Adjustment layer - posterize (PS4) *
   PSD_LADJ_VIBRANCE       "vibA"        -       * Adjustment layer - vibrance (PS10) *
   PSD_LADJ_COLOR_LOOKUP   "clrL"        -       * Adjustment layer - color lookup (PS13) *
 
@@ -503,18 +503,8 @@ load_resource_ladj (const PSDlayerres  *res_a,
                     GError            **error)
 {
   /* Load adjustment layer */
-  static gboolean   msg_flag = FALSE;
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Adjustment layer", res_a->key);
-  lyr_a->drop = TRUE;
-  if (! msg_flag && CONVERSION_WARNINGS)
-    {
-      g_message ("Warning:\n"
-                 "The image file contains adjustment layers. "
-                 "These are not supported by the GIMP and will "
-                 "be dropped.");
-      msg_flag = TRUE;
-    }
 
   return 0;
 }
@@ -526,17 +516,8 @@ load_resource_lfil (const PSDlayerres  *res_a,
                     GError            **error)
 {
   /* Load fill layer */
-  static gboolean   msg_flag = FALSE;
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Fill layer", res_a->key);
-  if (! msg_flag && CONVERSION_WARNINGS)
-    {
-      g_message ("Warning:\n"
-                 "The image file contains fill layers. "
-                 "These are not supported by the GIMP and will "
-                 "be rasterized.");
-      msg_flag = TRUE;
-    }
 
   return 0;
 }
@@ -548,17 +529,8 @@ load_resource_lfx (const PSDlayerres  *res_a,
                    GError            **error)
 {
   /* Load layer effects */
-  static gboolean   msg_flag = FALSE;
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Layer effects", res_a->key);
-  if (! msg_flag && CONVERSION_WARNINGS)
-    {
-      g_message ("Warning:\n"
-                 "The image file contains layer effects. "
-                 "These are not supported by the GIMP and will "
-                 "be dropped.");
-      msg_flag = TRUE;
-    }
 
   return 0;
 }
@@ -583,17 +555,7 @@ load_resource_ltyp (const PSDlayerres  *res_a,
   guint64           t_ty;
   gchar            *classID;
 
-  static gboolean   msg_flag = FALSE;
-
   IFDBG(2) g_debug ("Process layer resource block %.4s: Type tool layer", res_a->key);
-  if (! msg_flag && CONVERSION_WARNINGS)
-    {
-      g_message ("Warning:\n"
-                 "The image file contains type tool layers. "
-                 "These are not supported by the GIMP and will "
-                 "be dropped.");
-      msg_flag = TRUE;
-    }
 
   /* New style type tool layers (ps6) */
   if (memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
