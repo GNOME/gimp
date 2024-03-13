@@ -90,6 +90,8 @@ static gint             add_merged_image           (GimpImage      *image,
                                                     GError        **error);
 
 /*  Local utility function prototypes  */
+static void             convert_clipping_groups    (PSDimage       *img_a,
+                                                    PSDlayer      **lyr_a);
 static GimpLayer      * add_clipping_group         (GimpImage      *image,
                                                     GimpLayer      *parent);
 
@@ -1785,60 +1787,13 @@ free_lyr_chn (PSDchannel **lyr_chn, gint channel_count)
   g_free (lyr_chn);
 }
 
-static gint
-add_layers (GimpImage     *image,
-            PSDimage      *img_a,
-            PSDlayer     **lyr_a,
-            GInputStream  *input,
-            GError       **error)
+static void
+convert_clipping_groups (PSDimage  *img_a,
+                         PSDlayer **lyr_a)
 {
-  PSDchannel          **lyr_chn;
-  GArray               *parent_group_stack;
-  GimpLayer            *parent_group = NULL;
-  GimpLayer            *clipping_group = NULL;
-  guint16               alpha_chn;
-  guint16               user_mask_chn;
-  guint16               layer_channels, base_channels;
-  guint16               channel_idx[MAX_CHANNELS];
-  guint16               bps;
-  gint32                l_x;                   /* Layer x */
-  gint32                l_y;                   /* Layer y */
-  gint32                l_w;                   /* Layer width */
-  gint32                l_h;                   /* Layer height */
-  gint32                lm_x;                  /* Layer mask x */
-  gint32                lm_y;                  /* Layer mask y */
-  gint32                lm_w;                  /* Layer mask width */
-  gint32                lm_h;                  /* Layer mask height */
-  GimpLayer            *layer           = NULL;
-  GimpLayerMask        *mask            = NULL;
-  GList                *selected_layers = NULL;
-  gint                  lidx;                  /* Layer index */
-  gint                  cidx;                  /* Channel index */
-  gint                  gidx;                  /* Clipping group start index */
-  gboolean              alpha;
-  gboolean              user_mask;
-  gboolean              empty;
-  gboolean              empty_mask;
-  gboolean              use_clipping_group;
-  GeglBuffer           *buffer;
-  GimpImageType         image_type;
-  LayerModeInfo         mode_info;
-
-
-  IFDBG(2) g_debug ("Number of layers: %d", img_a->num_layers);
-
-  if (img_a->merged_image_only || img_a->num_layers == 0)
-    {
-      IFDBG(2) g_debug ("No layers to process");
-      return 0;
-    }
-
-  /* Layered image - Photoshop 3 style */
-  if (! psd_seek (input, img_a->layer_data_start, G_SEEK_SET, error))
-    {
-      psd_set_error (error);
-      return -1;
-    }
+  gboolean  use_clipping_group;
+  gint      lidx;                  /* Layer index */
+  gint      gidx;                  /* Clipping group start index */
 
   IFDBG(3) g_debug ("Pre process layers...");
   use_clipping_group = FALSE;
@@ -1906,6 +1861,62 @@ add_layers (GimpImage     *image,
           lyr_a[lidx]->clipping_group_type = 0;
         }
     }
+}
+
+static gint
+add_layers (GimpImage     *image,
+            PSDimage      *img_a,
+            PSDlayer     **lyr_a,
+            GInputStream  *input,
+            GError       **error)
+{
+  PSDchannel          **lyr_chn;
+  GArray               *parent_group_stack;
+  GimpLayer            *parent_group = NULL;
+  GimpLayer            *clipping_group = NULL;
+  guint16               alpha_chn;
+  guint16               user_mask_chn;
+  guint16               layer_channels, base_channels;
+  guint16               channel_idx[MAX_CHANNELS];
+  guint16               bps;
+  gint32                l_x;                   /* Layer x */
+  gint32                l_y;                   /* Layer y */
+  gint32                l_w;                   /* Layer width */
+  gint32                l_h;                   /* Layer height */
+  gint32                lm_x;                  /* Layer mask x */
+  gint32                lm_y;                  /* Layer mask y */
+  gint32                lm_w;                  /* Layer mask width */
+  gint32                lm_h;                  /* Layer mask height */
+  GimpLayer            *layer           = NULL;
+  GimpLayerMask        *mask            = NULL;
+  GList                *selected_layers = NULL;
+  gint                  lidx;                  /* Layer index */
+  gint                  cidx;                  /* Channel index */
+  gboolean              alpha;
+  gboolean              user_mask;
+  gboolean              empty;
+  gboolean              empty_mask;
+  GeglBuffer           *buffer;
+  GimpImageType         image_type;
+  LayerModeInfo         mode_info;
+
+
+  IFDBG(2) g_debug ("Number of layers: %d", img_a->num_layers);
+
+  if (img_a->merged_image_only || img_a->num_layers == 0)
+    {
+      IFDBG(2) g_debug ("No layers to process");
+      return 0;
+    }
+
+  /* Layered image - Photoshop 3 style */
+  if (! psd_seek (input, img_a->layer_data_start, G_SEEK_SET, error))
+    {
+      psd_set_error (error);
+      return -1;
+    }
+
+  convert_clipping_groups (img_a, lyr_a);
 
   /* set the root of the group hierarchy */
   parent_group_stack = g_array_new (FALSE, FALSE, sizeof (GimpLayer *));
