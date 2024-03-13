@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-07 18:17+0000\n"
-"PO-Revision-Date: 2024-03-07 23:38+0200\n"
+"POT-Creation-Date: 2024-03-12 15:14+0000\n"
+"PO-Revision-Date: 2024-03-13 21:55+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -64,12 +64,12 @@ msgstr "Потренувати козу (Сі)"
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
 #: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1379
 #: plug-ins/common/cml-explorer.c:2146 plug-ins/common/cml-explorer.c:2356
-#: plug-ins/common/colormap-remap.c:694 plug-ins/common/curve-bend.c:1809
-#: plug-ins/common/curve-bend.c:1844 plug-ins/common/file-gif-save.c:1222
-#: plug-ins/common/file-heif.c:2314 plug-ins/common/file-pdf-load.c:686
-#: plug-ins/common/file-pdf-save.c:1054 plug-ins/common/grid.c:819
-#: plug-ins/common/qbist.c:836 plug-ins/common/qbist.c:878
-#: plug-ins/common/qbist.c:932 plug-ins/common/sphere-designer.c:2292
+#: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
+#: plug-ins/common/file-gif-save.c:1222 plug-ins/common/file-heif.c:2314
+#: plug-ins/common/file-pdf-load.c:686 plug-ins/common/file-pdf-save.c:1054
+#: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:836
+#: plug-ins/common/qbist.c:878 plug-ins/common/qbist.c:932
+#: plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2651 plug-ins/common/unit-editor.c:435
 #: plug-ins/file-tiff/file-tiff-load.c:2547 plug-ins/flame/flame.c:622
 #: plug-ins/flame/flame.c:827
@@ -144,12 +144,12 @@ msgstr "Потренувати козу (Javascript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1380 plug-ins/common/colormap-remap.c:695
-#: plug-ins/common/file-heif.c:2315 plug-ins/common/file-pdf-load.c:687
-#: plug-ins/common/grid.c:820 plug-ins/common/qbist.c:933
-#: plug-ins/common/sphere-designer.c:2652 plug-ins/common/unit-editor.c:266
-#: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3561
-#: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
+#: plug-ins/common/cml-explorer.c:1380 plug-ins/common/file-heif.c:2315
+#: plug-ins/common/file-pdf-load.c:687 plug-ins/common/grid.c:820
+#: plug-ins/common/qbist.c:933 plug-ins/common/sphere-designer.c:2652
+#: plug-ins/common/unit-editor.c:266 plug-ins/file-exr/file-exr.c:435
+#: plug-ins/file-psd/psd-load.c:3561 plug-ins/flame/flame.c:828
+#: plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3446
@@ -1218,7 +1218,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
 #: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1218
 #: plug-ins/common/file-pcx.c:1219 plug-ins/common/file-pdf-save.c:659
-#: plug-ins/common/file-png.c:1518 plug-ins/common/file-raw-data.c:1337
+#: plug-ins/common/file-png.c:1517 plug-ins/common/file-raw-data.c:1337
 #: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
 #: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1381
 #: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-save.c:341
@@ -1270,15 +1270,15 @@ msgstr ""
 msgid "Error: failed to load parameters"
 msgstr "Помилка: не вдається завантажити параметри"
 
-#: plug-ins/common/colormap-remap.c:186
+#: plug-ins/common/colormap-remap.c:181
 msgid "R_earrange Colormap..."
 msgstr "_Перебудувати мапу кольорів..."
 
-#: plug-ins/common/colormap-remap.c:192
+#: plug-ins/common/colormap-remap.c:187
 msgid "Rearrange the colormap"
 msgstr "Перебудувати мапу кольорів"
 
-#: plug-ins/common/colormap-remap.c:193
+#: plug-ins/common/colormap-remap.c:188
 msgid ""
 "This procedure takes an indexed image and lets you alter the positions of "
 "colors in the colormap without visually changing the image."
@@ -1286,23 +1286,23 @@ msgstr ""
 "Ці процедура обробляє індексоване зображення і надає вам змогу змінити "
 "позиції кольорів на мапі кольорів без візуальної зміни зображення."
 
-#: plug-ins/common/colormap-remap.c:204
+#: plug-ins/common/colormap-remap.c:199
 msgid "Map"
 msgstr "Мапа"
 
-#: plug-ins/common/colormap-remap.c:205
+#: plug-ins/common/colormap-remap.c:200
 msgid "Remap array for the colormap"
 msgstr "Перебудувати масив для мапи кольорів"
 
-#: plug-ins/common/colormap-remap.c:220
+#: plug-ins/common/colormap-remap.c:215
 msgid "_Swap Colors"
 msgstr "Поміняти _місцями кольори"
 
-#: plug-ins/common/colormap-remap.c:224
+#: plug-ins/common/colormap-remap.c:219
 msgid "Swap two colors in the colormap"
 msgstr "Поміняти місцями два кольори на мапі"
 
-#: plug-ins/common/colormap-remap.c:225
+#: plug-ins/common/colormap-remap.c:220
 msgid ""
 "This procedure takes an indexed image and lets you swap the positions of two "
 "colors in the colormap without visually changing the image."
@@ -1311,74 +1311,66 @@ msgstr ""
 "місцями позиції двох кольорів на мапі кольорів без візуальної зміни "
 "зображення."
 
-#: plug-ins/common/colormap-remap.c:237
+#: plug-ins/common/colormap-remap.c:232
 msgid "Index 1"
 msgstr "Індекс 1"
 
-#: plug-ins/common/colormap-remap.c:238
+#: plug-ins/common/colormap-remap.c:233
 msgid "First index in the colormap"
 msgstr "Перший індекс на мапі кольорів"
 
-#: plug-ins/common/colormap-remap.c:243
+#: plug-ins/common/colormap-remap.c:238
 msgid "Index 2"
 msgstr "Індекс 2"
 
-#: plug-ins/common/colormap-remap.c:244
+#: plug-ins/common/colormap-remap.c:239
 msgid "Second (other) index in the colormap"
 msgstr "Другий (інший) індекс на мапі кольорів"
 
-#: plug-ins/common/colormap-remap.c:277
+#: plug-ins/common/colormap-remap.c:269
+#, c-format
+#| msgid "Procedure '%s' only works with one drawable."
+msgid "Procedure '%s' only works with indexed images."
+msgstr "Процедура «%s» працює лише з індексованими зображеннями."
+
+#: plug-ins/common/colormap-remap.c:610
+msgid "Rearrange Colors"
+msgstr "Переупорядкувати кольори"
+
+#: plug-ins/common/colormap-remap.c:641
 msgid "Sort on Hue"
 msgstr "Відсортувати за тоном"
 
-#: plug-ins/common/colormap-remap.c:278
+#: plug-ins/common/colormap-remap.c:647
 msgid "Sort on Saturation"
 msgstr "Відсортувати за насиченістю"
 
-#: plug-ins/common/colormap-remap.c:279
+#: plug-ins/common/colormap-remap.c:653
 msgid "Sort on Value"
 msgstr "Відсортувати за яскравістю"
 
-#: plug-ins/common/colormap-remap.c:284
+#: plug-ins/common/colormap-remap.c:659
 msgid "Reverse Order"
 msgstr "Зворотний порядок"
 
-#: plug-ins/common/colormap-remap.c:285
+#: plug-ins/common/colormap-remap.c:665
 msgid "Reset Order"
 msgstr "Скинути порядок"
 
-#: plug-ins/common/colormap-remap.c:412 plug-ins/common/colormap-remap.c:423
-#: plug-ins/common/colormap-remap.c:434
-msgid "Invalid remap array was passed to remap function"
-msgstr "Функції передано некоректну множину"
+#: plug-ins/common/colormap-remap.c:674
+#| msgid ""
+#| "Drag and drop colors to rearrange the colormap.  The numbers shown are "
+#| "the original indices.  Right-click for a menu with sort options."
+msgid ""
+"Drag and drop colors to rearrange the colormap.\n"
+"The numbers shown are the original indices."
+msgstr ""
+"Використовуйте функцію drag-n-drop для перерозподілу мапи.\n"
+"Числами  позначається оригінальний індекс кольору."
 
-#: plug-ins/common/colormap-remap.c:458
+#: plug-ins/common/colormap-remap.c:736
 msgid "Rearranging the colormap"
 msgstr "Перебудова мапи кольорів"
-
-#: plug-ins/common/colormap-remap.c:689
-msgid "Rearrange Colormap"
-msgstr "Перебудувати мапу кольорів"
-
-#. The Reset button
-#: plug-ins/common/colormap-remap.c:693 plug-ins/common/curve-bend.c:1250
-#: plug-ins/common/sphere-designer.c:2650 plug-ins/common/tile-small.c:525
-#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:913
-msgid "_Reset"
-msgstr "_Скинути"
-
-#: plug-ins/common/colormap-remap.c:795
-msgid ""
-"Drag and drop colors to rearrange the colormap.  The numbers shown are the "
-"original indices.  Right-click for a menu with sort options."
-msgstr ""
-"Використовуйте функцію drag-n-drop для перерозподілу мапи. Числами "
-"позначається оригінальний індекс кольору. Меню сортування кольорів "
-"викликається правою кнопкою миші."
-
-#: plug-ins/common/colormap-remap.c:833
-msgid "Rearrange Colors"
-msgstr "Переупорядкувати кольори"
 
 #. Decompositions availables.
 #. * All the following values have to be kept in sync with those of decompose.c
@@ -2102,6 +2094,13 @@ msgstr "_Переставити"
 msgid "Swap the two curves"
 msgstr "Переставити дві криві"
 
+#. The Reset button
+#: plug-ins/common/curve-bend.c:1250 plug-ins/common/sphere-designer.c:2650
+#: plug-ins/common/tile-small.c:525 plug-ins/gimpressionist/preview.c:182
+#: plug-ins/ifs-compose/ifs-compose.c:913
+msgid "_Reset"
+msgstr "_Скинути"
+
 #: plug-ins/common/curve-bend.c:1255
 msgid "Reset the active curve"
 msgstr "Скинути активну криву"
@@ -2697,7 +2696,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-cel.c:845 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-gif-save.c:975 plug-ins/common/file-html-table.c:359
 #: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1103
-#: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1510
+#: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1509
 #: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1321
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
 #: plug-ins/common/file-tga.c:1229 plug-ins/common/file-xbm.c:1050
@@ -3388,20 +3387,20 @@ msgstr "Розмір_ність"
 msgid "How many dimensions the animated brush has"
 msgstr "Кількість розмірностей анімаційного пензля"
 
-#: plug-ins/common/file-gih.c:475
+#: plug-ins/common/file-gih.c:514
 msgid "Width Mismatch!"
 msgstr "Невідповідність ширини!"
 
-#: plug-ins/common/file-gih.c:476
+#: plug-ins/common/file-gih.c:515
 msgid "Height Mismatch!"
 msgstr "Невідповідність висоти!"
 
-#: plug-ins/common/file-gih.c:523
+#: plug-ins/common/file-gih.c:562
 #, c-format
 msgid "Displays as a %d × %d grid on each layer"
 msgstr "Показує як ґратку %d × %d на кожному шарі"
 
-#: plug-ins/common/file-gih.c:709
+#: plug-ins/common/file-gih.c:748
 msgid "Ranks:"
 msgstr "Кількість кадрів:"
 
@@ -4135,7 +4134,7 @@ msgstr "Записати фрагмент tIME (час створення)"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:724 plug-ins/common/file-png.c:2318
+#: plug-ins/common/file-mng.c:724 plug-ins/common/file-png.c:2342
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Не вдається зберегти прозорість, натомість зберігатиметься непрозорість."
@@ -4820,13 +4819,13 @@ msgstr ""
 "Зображення формату PNG, яке ви імпортуєте, має зміщення %d, %d. Застосувати "
 "це зміщення до шару?"
 
-#: plug-ins/common/file-png.c:1475
+#: plug-ins/common/file-png.c:1474
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr ""
 "Помилка створення PNG (записування struct) під час експортування «%s»."
 
-#: plug-ins/common/file-png.c:1484
+#: plug-ins/common/file-png.c:1483
 #, c-format
 msgid ""
 "Error while exporting '%s'. Could not create PNG header info structure."
@@ -4834,7 +4833,7 @@ msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
 
-#: plug-ins/common/file-png.c:1492
+#: plug-ins/common/file-png.c:1491
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
@@ -9367,7 +9366,6 @@ msgstr "Помилка зчитування даних точок з «%s»"
 
 #: plug-ins/file-exr/file-exr.c:355 plug-ins/file-exr/file-exr.c:369
 #, c-format
-#| msgid "Failed to set metadata tag %s: %s"
 msgid "Failed to load metadata: %s"
 msgstr "Не вдалося завантажити метадані: %s"
 
@@ -16335,6 +16333,12 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:496
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Invalid remap array was passed to remap function"
+#~ msgstr "Функції передано некоректну множину"
+
+#~ msgid "Rearrange Colormap"
+#~ msgstr "Перебудувати мапу кольорів"
 
 #~ msgid "Color _model:"
 #~ msgstr "Кольорова _модель:"
