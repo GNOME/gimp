@@ -1866,7 +1866,7 @@ xcf_save_prop (XcfInfo    *info,
                         xcf_write_int32_check_error (info, (guint32 *) &profile_length, 1, ;);
 
                         if (profile_data)
-                          xcf_write_int8_check_error (info, (guint8 *) &profile_data, profile_length, ;);
+                          xcf_write_int8_check_error (info, profile_data, profile_length, ;);
                       }
                     else
                       {

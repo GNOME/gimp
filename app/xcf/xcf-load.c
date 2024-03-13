@@ -2681,9 +2681,6 @@ xcf_load_effect_props (XcfInfo      *info,
                                           GIMP_MESSAGE_WARNING,
                                           "XCF Warning: Invalid profile for "
                                           "serialized color.");
-
-                            valid_prop_value = FALSE;
-                            break;
                           }
 
                         format = babl_format_with_space (babl_format_get_encoding (format), space);
