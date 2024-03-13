@@ -92,6 +92,7 @@ static void   welcome_dialog_create_contribute_page  (Gimp           *gimp,
                                                       GtkWidget      *welcome_dialog,
                                                       GtkWidget      *main_vbox);
 static void   welcome_dialog_create_creation_page    (Gimp           *gimp,
+                                                      GimpConfig     *config,
                                                       GtkWidget      *welcome_dialog,
                                                       GtkWidget      *main_vbox);
 static void   welcome_dialog_create_release_page     (Gimp           *gimp,
@@ -173,7 +174,6 @@ welcome_dialog_new (Gimp       *gimp,
 
   GtkWidget   *prefs_box;
   GtkWidget   *main_vbox;
-  GtkWidget   *toggle;
 
   gchar       *title;
 
@@ -272,7 +272,7 @@ welcome_dialog_new (Gimp       *gimp,
                                        &top_iter);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
 
-  welcome_dialog_create_creation_page (gimp, dialog, main_vbox);
+  welcome_dialog_create_creation_page (gimp, config, dialog, main_vbox);
   gtk_widget_set_visible (main_vbox, TRUE);
 
   /* If dialog is set to always show on load, switch to the Create page */
@@ -290,13 +290,6 @@ welcome_dialog_new (Gimp       *gimp,
 
   welcome_dialog_create_release_page (gimp, dialog, main_vbox);
   gtk_widget_set_visible (main_vbox, TRUE);
-
-  /* "Always show welcome dialog" checkbox */
-  toggle = prefs_check_button_add (G_OBJECT (config), "show-welcome-dialog",
-                                   _("Show Welcome Dialog On Start "
-                                     "(You can show it again from the \"Help\" menu)"),
-                                   GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))));
-  gtk_widget_set_margin_start (toggle, 8);
 
   return dialog;
 }
@@ -689,6 +682,7 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
 
 static void
 welcome_dialog_create_creation_page (Gimp       *gimp,
+                                     GimpConfig *config,
                                      GtkWidget  *welcome_dialog,
                                      GtkWidget  *main_vbox)
 {
@@ -696,6 +690,7 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
   GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *listbox;
+  GtkWidget *toggle;
   gint       num_images;
   gint       list_count;
 
@@ -829,6 +824,16 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
   g_signal_connect (button, "clicked",
                     G_CALLBACK (welcome_open_images_callback),
                     listbox);
+
+  /* "Always show welcome dialog" checkbox */
+  toggle = prefs_check_button_add (G_OBJECT (config), "show-welcome-dialog",
+                                   _("Show on Start "
+                                     "(You can show the Welcome dialog again from the \"Help\" menu)"),
+                                   GTK_BOX (main_vbox));
+  gtk_container_child_set (GTK_CONTAINER (main_vbox), toggle,
+                           "fill",      TRUE,
+                           "pack-type", GTK_PACK_END,
+                           NULL);
 }
 
 static void
