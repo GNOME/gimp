@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-12 15:14+0000\n"
-"PO-Revision-Date: 2024-03-13 21:55+0200\n"
+"POT-Creation-Date: 2024-03-14 01:41+0000\n"
+"PO-Revision-Date: 2024-03-14 20:26+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -1329,7 +1329,6 @@ msgstr "Другий (інший) індекс на мапі кольорів"
 
 #: plug-ins/common/colormap-remap.c:269
 #, c-format
-#| msgid "Procedure '%s' only works with one drawable."
 msgid "Procedure '%s' only works with indexed images."
 msgstr "Процедура «%s» працює лише з індексованими зображеннями."
 
@@ -1358,9 +1357,6 @@ msgid "Reset Order"
 msgstr "Скинути порядок"
 
 #: plug-ins/common/colormap-remap.c:674
-#| msgid ""
-#| "Drag and drop colors to rearrange the colormap.  The numbers shown are "
-#| "the original indices.  Right-click for a menu with sort options."
 msgid ""
 "Drag and drop colors to rearrange the colormap.\n"
 "The numbers shown are the original indices."
@@ -3327,6 +3323,23 @@ msgstr ""
 msgid "GIMP brush (animated)"
 msgstr "Пензель GIMP(анімаційний)"
 
+#: plug-ins/common/file-gih.c:161
+#| msgid "Exports files in the GIMP brush file format"
+msgid "Exports images in GIMP Brush Pipe format"
+msgstr "Експортує зображення у форматі каналу пензлів GIMP"
+
+#: plug-ins/common/file-gih.c:163
+msgid ""
+"This plug-in exports an image in the GIMP brush pipe format. For a colored "
+"brush pipe, RGBA layers are used, otherwise the layers should be grayscale "
+"masks. The image can be multi-layered, and additionally the layers can be "
+"divided into a rectangular array of brushes."
+msgstr ""
+"Цей додаток експортує зображення у форматі каналу пензлів GIMP. Для"
+" кольорового каналу пензля буде використано шари RGBA, інші дані шарів мають"
+" бути масками у відтінках сірого. Зображення може бути багатошаровим, крім"
+" того, шари може бути поділено на прямокутний масив пензлів."
+
 #: plug-ins/common/file-gih.c:180
 msgid "Brush Pipe"
 msgstr "Анімаційний пензель"
@@ -3370,6 +3383,11 @@ msgstr "_Ранг"
 #: plug-ins/common/file-gih.c:218
 msgid "Ranks of the dimensions"
 msgstr "Ранги розмірностей"
+
+#: plug-ins/common/file-gih.c:223
+#| msgid "Selection d_elay"
+msgid "Selection modes"
+msgstr "Режими позначення"
 
 #: plug-ins/common/file-gih.c:229
 msgid "Display as"
