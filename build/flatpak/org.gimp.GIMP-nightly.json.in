@@ -4,7 +4,18 @@
     "runtime": "org.gnome.Platform",
     "runtime-version": "master",
     "sdk": "org.gnome.Sdk",
+    "sdk-extensions": [
+        "org.freedesktop.Sdk.Extension.llvm17"
+    ],
     "command": "gimp-@GIMP_APP_VERSION@",
+    "build-options": {
+        "append-path": "/usr/lib/sdk/llvm17/bin",
+        "prepend-ld-library-path": "/usr/lib/sdk/llvm17/lib",
+        "env": {
+            "CC": "clang",
+            "CXX": "clang++"
+        }
+    },
     "separate-locales": false,
     "rename-desktop-file": "gimp.desktop",
     "rename-icon": "gimp",
@@ -122,7 +133,7 @@
             "name": "openexr",
             "config-opts": [
                 "-DBUILD_SHARED_LIBS=ON",
-                "-DOPENEXR_INSTALL_EXAMPLES=OFF",
+                "-DOPENEXR_BUILD_EXAMPLES=OFF",
                 "-DBUILD_TESTING=OFF",
                 "-DOPENEXR_INSTALL_PKG_CONFIG=ON"
             ],
@@ -198,7 +209,7 @@
             "config-opts": [
                 "-DENABLE_GOBJECT_INTROSPECTION=OFF",
                 "-DENABLE_CPP=OFF",
-                "-DOpenJPEG_DIR=/usr/lib64/openjpeg-2.3",
+                "-DENABLE_LIBOPENJPEG=openjpeg2",
                 "-DENABLE_BOOST=OFF",
                 "-DWITH_NSS3:BOOL=OFF",
                 "-DENABLE_QT5:BOOL=OFF",
@@ -225,7 +236,14 @@
             ]
         },
         {
+            "//": "FIX ME! aalib isn't building with Clang even with MSYS2 patches",
             "name": "aalib",
+            "build-options": {
+                "env": {
+                    "CC": "gcc",
+                    "CXX": "gcc"
+                }
+            },
             "config-opts": [
                 "--disable-static",
                 "--with-slang-driver=no"
@@ -417,40 +435,28 @@
             ]
         },
         {
-            "//": "Shamelessly taken from org.octave.Octave manifest!",
+            "//": "Originally taken from org.octave.Octave manifest",
             "name": "SuiteSparse",
-            "no-autogen": true,
-            "make-args": [
-                "BLAS=-lopenblas",
-                "LAPACK=",
-                "library"
-            ],
-            "make-install-args": [
-                "BLAS=-lopenblas",
-                "LAPACK=",
-                "INSTALL_LIB=/app/lib",
-                "INSTALL_INCLUDE=/app/include/suitesparse",
-                "library"
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DBLA_VENDOR=OpenBLAS",
+                "-DSUITESPARSE_USE_OPENMP=OFF",
+                "-DSUITESPARSE_DEMOS=OFF",
+                "-DCMAKE_INSTALL_LIBDIR=/app/lib",
+                "-DCMAKE_INSTALL_INCLUDEDIR=/app/include/suitesparse"
             ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v5.13.0.tar.gz",
-                    "sha256": "59c6ca2959623f0c69226cf9afb9a018d12a37fab3a8869db5f6d7f83b6b147d",
+                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.6.0.tar.gz",
+                    "sha256": "19cbeb9964ebe439413dd66d82ace1f904adc5f25d8a823c1b48c34bd0d29ea5",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 4908,
                         "stable-only": true,
-                        "//": "patches don't apply. Avoiding flathubbot to spam us with broken updates",
-                        "versions": {
-                            "<": "6.0.0"
-                        },
                         "url-template": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v$version.tar.gz"
                     }
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/suitesparse-reduce-build.patch"
                 }
             ],
             "modules": [
@@ -459,9 +465,8 @@
                     "no-autogen": true,
                     "make-args": [
                         "DYNAMIC_ARCH=1",
-                        "FC=gfortran",
-                        "NO_CBLAS=1",
-                        "NO_LAPACKE=1",
+                        "DNOFORTRAN=1",
+                        "DC_LAPACK=1",
                         "USE_OPENMP=0"
                     ],
                     "make-install-args": [

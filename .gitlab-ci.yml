@@ -429,6 +429,10 @@ packaging-flatpak-x64:
     - flatpak info org.gnome.Platform
     - flatpak info org.gnome.Sdk
 
+    # Install LLVM/Clang
+    - flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    - flatpak install --user flathub org.freedesktop.Sdk.Extension.llvm17 -y
+
     # Print the date, since appstream depends on local timezone
     - date && date -u
 
