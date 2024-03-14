@@ -158,16 +158,16 @@ gih_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_procedure_set_documentation (procedure,
-                                        "exports images in GIMP brush pipe "
-                                        "format",
-                                        "This plug-in exports an image in "
-                                        "the GIMP brush pipe format. For a "
-                                        "colored brush pipe, RGBA layers are "
-                                        "used, otherwise the layers should be "
-                                        "grayscale masks. The image can be "
-                                        "multi-layered, and additionally the "
-                                        "layers can be divided into a "
-                                        "rectangular array of brushes.",
+                                        _("Exports images in GIMP Brush Pipe "
+                                          "format"),
+                                        _("This plug-in exports an image in "
+                                          "the GIMP brush pipe format. For a "
+                                          "colored brush pipe, RGBA layers are "
+                                          "used, otherwise the layers should be "
+                                          "grayscale masks. The image can be "
+                                          "multi-layered, and additionally the "
+                                          "layers can be divided into a "
+                                          "rectangular array of brushes."),
                                         SAVE_PROC);
       gimp_procedure_set_attribution (procedure,
                                       "Tor Lillqvist",
@@ -220,7 +220,7 @@ gih_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_STRV (procedure, "selection-modes",
                           "Selection modes",
-                          "Selection modes",
+                          _("Selection modes"),
                           GIMP_PARAM_READWRITE);
 
       /* Auxiliary arguments. Only useful for the GUI, to pass info around. */

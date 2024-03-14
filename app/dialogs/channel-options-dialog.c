@@ -99,7 +99,7 @@ channel_options_dialog_new (GimpImage                  *image,
   GtkWidget            *dialog;
   GtkAdjustment        *opacity_adj;
   GtkWidget            *scale;
-  GimpRGB               rgb;
+  gdouble               rgba[4];
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel), NULL);
@@ -140,8 +140,8 @@ channel_options_dialog_new (GimpImage                  *image,
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) channel_options_dialog_free, private);
 
-  gegl_color_get_pixel (channel_color, babl_format ("R'G'B'A double"), &rgb);
-  opacity_adj = gtk_adjustment_new (rgb.a * 100.0,
+  gegl_color_get_pixel (channel_color, babl_format ("R'G'B'A double"), rgba);
+  opacity_adj = gtk_adjustment_new (rgba[3] * 100.0,
                                     0.0, 100.0, 1.0, 10.0, 0);
   scale = gimp_spin_scale_new (opacity_adj, NULL, 1);
   gtk_widget_set_size_request (scale, 200, -1);
