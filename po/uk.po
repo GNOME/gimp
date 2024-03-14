@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-11 21:13+0000\n"
-"PO-Revision-Date: 2024-03-13 21:47+0200\n"
+"POT-Creation-Date: 2024-03-13 23:39+0000\n"
+"PO-Revision-Date: 2024-03-14 20:29+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2519,7 +2519,7 @@ msgstr "Введіть опис позначки"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1234 app/display/gimpdisplayshell-dnd.c:630
+#: app/dialogs/welcome-dialog.c:1247 app/display/gimpdisplayshell-dnd.c:630
 #: app/widgets/gimplayertreeview.c:813 app/widgets/gimptoolbox.c:752
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -7904,7 +7904,7 @@ msgstr "Відкривання текстового файла (UTF-8)"
 
 #: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/vectors-import-dialog.c:93 app/dialogs/welcome-dialog.c:714
+#: app/dialogs/vectors-import-dialog.c:93 app/dialogs/welcome-dialog.c:717
 #: app/widgets/gimpiconpicker.c:489 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:716
 msgid "_Open"
@@ -15842,7 +15842,7 @@ msgstr "Об'єднати лише в межах чинних _груп"
 msgid "_Discard invisible layers"
 msgstr "_Відмовитися від невидимих шарів"
 
-#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:699
+#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:702
 msgid "Create a New Image"
 msgstr "Створення нового зображення"
 
@@ -16281,7 +16281,7 @@ msgstr "Скинути всі параметри"
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "Дійсно бажаєте повернутись до початкових значень усіх параметрів?"
 
-#: app/dialogs/preferences-dialog.c:303 app/dialogs/welcome-dialog.c:354
+#: app/dialogs/preferences-dialog.c:303 app/dialogs/welcome-dialog.c:353
 msgid ""
 "You will have to restart GIMP for the following changes to take effect:"
 msgstr "Щоб зміни вступили в дію, необхідно перезапустити GIMP."
@@ -16925,7 +16925,7 @@ msgstr "Вилучити всі _клавіатурні скорочення"
 
 #. Themes
 #: app/dialogs/preferences-dialog.c:1859 app/dialogs/preferences-dialog.c:1860
-#: app/dialogs/welcome-dialog.c:538
+#: app/dialogs/welcome-dialog.c:539
 msgid "Theme"
 msgstr "Тема"
 
@@ -16937,46 +16937,46 @@ msgstr "Вибір теми"
 msgid "Color scheme variant (if available)"
 msgstr "Варіант схеми кольорів (якщо доступний)"
 
-#: app/dialogs/preferences-dialog.c:1944 app/dialogs/welcome-dialog.c:585
+#: app/dialogs/preferences-dialog.c:1944 app/dialogs/welcome-dialog.c:586
 msgid "_Override icon sizes set by the theme"
 msgstr "П_еревизначити розміри піктограм, які встановлено темою"
 
-#: app/dialogs/preferences-dialog.c:1957 app/dialogs/welcome-dialog.c:594
+#: app/dialogs/preferences-dialog.c:1957 app/dialogs/welcome-dialog.c:595
 msgid "Small"
 msgstr "Малий"
 
-#: app/dialogs/preferences-dialog.c:1959 app/dialogs/welcome-dialog.c:596
+#: app/dialogs/preferences-dialog.c:1959 app/dialogs/welcome-dialog.c:597
 msgid "Medium"
 msgstr "Середній"
 
-#: app/dialogs/preferences-dialog.c:1961 app/dialogs/welcome-dialog.c:598
+#: app/dialogs/preferences-dialog.c:1961 app/dialogs/welcome-dialog.c:599
 msgid "Large"
 msgstr "Великий"
 
-#: app/dialogs/preferences-dialog.c:1963 app/dialogs/welcome-dialog.c:600
+#: app/dialogs/preferences-dialog.c:1963 app/dialogs/welcome-dialog.c:601
 msgid "Huge"
 msgstr "Величезний"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:1976 app/dialogs/welcome-dialog.c:616
+#: app/dialogs/preferences-dialog.c:1976 app/dialogs/welcome-dialog.c:617
 msgid "Font Scaling"
 msgstr "Масштабування шрифтів"
 
-#: app/dialogs/preferences-dialog.c:1978 app/dialogs/welcome-dialog.c:618
+#: app/dialogs/preferences-dialog.c:1978 app/dialogs/welcome-dialog.c:619
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr ""
 "Масштабування шрифтів не працюватиме з темами, де використано абсолютні "
 "розміри."
 
-#: app/dialogs/preferences-dialog.c:1984 app/dialogs/welcome-dialog.c:624
+#: app/dialogs/preferences-dialog.c:1984 app/dialogs/welcome-dialog.c:625
 msgid "50%"
 msgstr "50%"
 
-#: app/dialogs/preferences-dialog.c:1986 app/dialogs/welcome-dialog.c:626
+#: app/dialogs/preferences-dialog.c:1986 app/dialogs/welcome-dialog.c:627
 msgid "100%"
 msgstr "100%"
 
-#: app/dialogs/preferences-dialog.c:1988 app/dialogs/welcome-dialog.c:628
+#: app/dialogs/preferences-dialog.c:1988 app/dialogs/welcome-dialog.c:629
 msgid "200%"
 msgstr "200%"
 
@@ -16992,7 +16992,7 @@ msgstr "Тема піктограм"
 msgid "Select an Icon Theme"
 msgstr "Виберіть тему піктограм"
 
-#: app/dialogs/preferences-dialog.c:2133 app/dialogs/welcome-dialog.c:578
+#: app/dialogs/preferences-dialog.c:2133 app/dialogs/welcome-dialog.c:579
 msgid "Use symbolic icons if available"
 msgstr "Використовувати символічні піктограми, якщо доступні"
 
@@ -17023,7 +17023,7 @@ msgstr "_Пензлі, текстури та градієнти"
 msgid "Show active _image"
 msgstr "Показувати _активне зображення"
 
-#: app/dialogs/preferences-dialog.c:2177 app/dialogs/welcome-dialog.c:675
+#: app/dialogs/preferences-dialog.c:2177 app/dialogs/welcome-dialog.c:676
 msgid "Use tool _groups"
 msgstr "_Групувати інструменти"
 
@@ -18197,7 +18197,7 @@ msgid "_Next Tip"
 msgstr "_Наступна"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1080
+#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1093
 msgid "Learn more"
 msgstr "Дізнатись більше"
 
@@ -18285,41 +18285,34 @@ msgstr "Заблокувати видимість _шляху"
 msgid "Welcome to GIMP %s"
 msgstr "Вітаємо у GIMP %s"
 
-#: app/dialogs/welcome-dialog.c:226 app/dialogs/welcome-dialog.c:227
+#: app/dialogs/welcome-dialog.c:229 app/dialogs/welcome-dialog.c:230
 msgid "Welcome"
 msgstr "Вітаємо"
 
-#: app/dialogs/welcome-dialog.c:238 app/dialogs/welcome-dialog.c:239
+#: app/dialogs/welcome-dialog.c:244 app/dialogs/welcome-dialog.c:245
 msgid "Personalize"
 msgstr "Персоналізувати…"
 
-#: app/dialogs/welcome-dialog.c:250 app/dialogs/welcome-dialog.c:251
+#: app/dialogs/welcome-dialog.c:256 app/dialogs/welcome-dialog.c:257
 msgid "Contribute"
 msgstr "Участь у проєкті"
 
-#: app/dialogs/welcome-dialog.c:262 app/dialogs/welcome-dialog.c:263
+#: app/dialogs/welcome-dialog.c:268 app/dialogs/welcome-dialog.c:269
 msgid "Create"
 msgstr "Створити"
 
-#: app/dialogs/welcome-dialog.c:278 app/dialogs/welcome-dialog.c:279
+#: app/dialogs/welcome-dialog.c:284 app/dialogs/welcome-dialog.c:285
 msgid "Release Notes"
 msgstr "Нотатки щодо випуску"
 
-#: app/dialogs/welcome-dialog.c:290
-msgid ""
-"Show Welcome Dialog On Start (You can show it again from the \"Help\" menu)"
-msgstr ""
-"Показувати вітальне вікно після запуску (Відкрити його знову можна за "
-"допомогою меню «Довідка»)"
-
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:415
+#: app/dialogs/welcome-dialog.c:416
 #, c-format
 msgid "You installed GIMP %s!"
 msgstr "Вами встановлено GIMP %s!"
 
 #. Welcome message: left
-#: app/dialogs/welcome-dialog.c:430
+#: app/dialogs/welcome-dialog.c:431
 msgid ""
 "GIMP is Free Software for image authoring and manipulation.\n"
 "Want to know more?"
@@ -18328,22 +18321,22 @@ msgstr ""
 "зображеннями.\n"
 "Хочете дізнатися більше?"
 
-#: app/dialogs/welcome-dialog.c:459
+#: app/dialogs/welcome-dialog.c:460
 msgid "GIMP website"
 msgstr "Сайт GIMP"
 
-#: app/dialogs/welcome-dialog.c:463
+#: app/dialogs/welcome-dialog.c:464
 msgid "Tutorials"
 msgstr "Підручники"
 
-#: app/dialogs/welcome-dialog.c:468
+#: app/dialogs/welcome-dialog.c:469
 msgid "Documentation"
 msgstr "Документація"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
 #. Welcome message: right
-#: app/dialogs/welcome-dialog.c:476
+#: app/dialogs/welcome-dialog.c:477
 msgid ""
 "GIMP is Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
@@ -18352,69 +18345,79 @@ msgstr ""
 "випущено за умов дотримання GNU general public license v3.\n"
 "Хочете взяти участь у розробці?"
 
-#: app/dialogs/welcome-dialog.c:501
+#: app/dialogs/welcome-dialog.c:502
 msgid "Contributing"
 msgstr "Участь"
 
-#: app/dialogs/welcome-dialog.c:506
+#: app/dialogs/welcome-dialog.c:507
 msgid "Donating"
 msgstr "Фінансова підтримка"
 
-#: app/dialogs/welcome-dialog.c:548
+#: app/dialogs/welcome-dialog.c:549
 msgid "Color scheme"
 msgstr "Схема кольорів"
 
-#: app/dialogs/welcome-dialog.c:565
+#: app/dialogs/welcome-dialog.c:566
 msgid "Icon theme"
 msgstr "Тема піктограм"
 
-#: app/dialogs/welcome-dialog.c:582
+#: app/dialogs/welcome-dialog.c:583
 msgid "Icon Scaling"
 msgstr "Масштабування піктограм"
 
-#: app/dialogs/welcome-dialog.c:641
+#: app/dialogs/welcome-dialog.c:642
 msgid "GUI Language (requires restart)"
 msgstr "Мова інтерфейсу (потребує перезапуску)"
 
-#: app/dialogs/welcome-dialog.c:646
+#: app/dialogs/welcome-dialog.c:647
 msgid "Additional Customizations"
 msgstr "Додаткове налаштовування"
 
-#: app/dialogs/welcome-dialog.c:655
+#: app/dialogs/welcome-dialog.c:656
 msgid "Merge menu and title bar (requires restart)"
 msgstr "Об'єднати меню і смужку заголовка (потребує перезапуску програми)"
 
-#: app/dialogs/welcome-dialog.c:663
+#: app/dialogs/welcome-dialog.c:664
 msgid "Enable check for updates (requires internet)"
 msgstr "Увімкнути пошук оновлень (потрібне з'єднання із інтернетом)"
 
-#: app/dialogs/welcome-dialog.c:702
+#: app/dialogs/welcome-dialog.c:705
 msgid "C_reate"
 msgstr "С_творити"
 
-#: app/dialogs/welcome-dialog.c:711
+#: app/dialogs/welcome-dialog.c:714
 msgid "Open an Existing Image"
 msgstr "Відкрити наявне зображення"
 
 #. Recent Files
-#: app/dialogs/welcome-dialog.c:723
+#: app/dialogs/welcome-dialog.c:726
 msgid "Recent Images"
 msgstr "Нещодавні зображення"
 
-#: app/dialogs/welcome-dialog.c:818
+#: app/dialogs/welcome-dialog.c:821
 msgid "O_pen Selected Images"
 msgstr "_Відкрити позначені зображення"
 
-#: app/dialogs/welcome-dialog.c:845
+#: app/dialogs/welcome-dialog.c:830
+#| msgid ""
+#| "Show Welcome Dialog On Start (You can show it again from the \"Help\" "
+#| "menu)"
+msgid ""
+"Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
+msgstr ""
+"Показувати після запуску (Відкрити вікно вітання знову можна за "
+"допомогою меню «Довідка»)"
+
+#: app/dialogs/welcome-dialog.c:858
 #, c-format
 msgid "Ways to contribute"
 msgstr "Способи участі у розробці"
 
-#: app/dialogs/welcome-dialog.c:854
+#: app/dialogs/welcome-dialog.c:867
 msgid "Report Bugs"
 msgstr "Звітування про вади"
 
-#: app/dialogs/welcome-dialog.c:856
+#: app/dialogs/welcome-dialog.c:869
 #, c-format
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
@@ -18423,11 +18426,11 @@ msgstr ""
 "Як будь-яка програма, GIMP не позбавлений вад, тому звітування про вади, які "
 "вам трапилися, є дуже важливим для розробки програми."
 
-#: app/dialogs/welcome-dialog.c:869
+#: app/dialogs/welcome-dialog.c:882
 msgid "Write Code"
 msgstr "Написання коду"
 
-#: app/dialogs/welcome-dialog.c:871
+#: app/dialogs/welcome-dialog.c:884
 #, c-format
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
@@ -18436,32 +18439,32 @@ msgstr ""
 "На нашому сайті для розробників розміщено початкові відомості щодо того, як "
 "зробити свій внесок у програмний код."
 
-#: app/dialogs/welcome-dialog.c:883
+#: app/dialogs/welcome-dialog.c:896
 msgid "Translate"
 msgstr "Переклад"
 
-#: app/dialogs/welcome-dialog.c:885
+#: app/dialogs/welcome-dialog.c:898
 #, c-format
 msgid "Contact the respective translation team for your language"
 msgstr "Зв'яжіться із відповідною командою перекладачів вашою мовою"
 
-#: app/dialogs/welcome-dialog.c:897
+#: app/dialogs/welcome-dialog.c:910
 msgid "Donate"
 msgstr "Фінансова підтримка"
 
-#: app/dialogs/welcome-dialog.c:899
+#: app/dialogs/welcome-dialog.c:912
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr ""
 "Фінансові пожертви дуже важливі: вони забезпечують стійкість розробки GIMP."
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:944
+#: app/dialogs/welcome-dialog.c:957
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "Нотатки щодо випуску GIMP %s"
 
-#: app/dialogs/welcome-dialog.c:1055
+#: app/dialogs/welcome-dialog.c:1068
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "Натисніть пункти опису випуску з позначкою %s, щоб переглянути огляд."
@@ -29006,7 +29009,6 @@ msgid "Color Tags"
 msgstr "Мітки кольорів"
 
 #: menus/colormap-menu.ui:6
-#| msgid "Colormap"
 msgctxt "colormap-action"
 msgid "Colormap Menu"
 msgstr "Меню мапи кольорів"
