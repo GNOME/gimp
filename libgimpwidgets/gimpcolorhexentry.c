@@ -137,19 +137,24 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
 
   private->color = gegl_color_new ("black");
 
-  store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, GIMP_TYPE_RGB);
+  store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, GEGL_TYPE_COLOR);
 
   gimp_rgb_list_names (&names, &colors, &num_colors);
 
   for (i = 0; i < num_colors; i++)
     {
       GtkTreeIter  iter;
+      GeglColor   *named_color = gegl_color_new ("black");
+
+      gegl_color_set_rgba_with_space (named_color, colors[i].r, colors[i].g,
+                                      colors[i].b, colors[i].a, NULL);
 
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter,
                           COLUMN_NAME,  names[i],
-                          COLUMN_COLOR, colors + i,
+                          COLUMN_COLOR, named_color,
                           -1);
+      g_object_unref (named_color);
     }
 
   g_free (colors);

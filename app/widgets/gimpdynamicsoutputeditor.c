@@ -215,23 +215,26 @@ gimp_dynamics_output_editor_constructed (GObject *object)
                                             G_TYPE_INT,
                                             G_TYPE_BOOLEAN,
                                             G_TYPE_STRING,
-                                            GIMP_TYPE_RGB);
+                                            GEGL_TYPE_COLOR);
 
   for (i = 0; i < G_N_ELEMENTS (inputs); i++)
     {
-      gboolean use_input;
+      gboolean   use_input;
+      GeglColor *color = gegl_color_new ("black");
 
       g_object_get (private->output,
                     inputs[i].use_property, &use_input,
                     NULL);
 
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), inputs[i].color);
       gtk_list_store_insert_with_values (private->input_list,
                                          &private->input_iters[i], -1,
                                          INPUT_COLUMN_INDEX,     i,
                                          INPUT_COLUMN_USE_INPUT, use_input,
                                          INPUT_COLUMN_NAME,      gettext (inputs[i].label),
-                                         INPUT_COLUMN_COLOR,     &inputs[i].color,
+                                         INPUT_COLUMN_COLOR,     color,
                                          -1);
+      g_object_unref (color);
     }
 
   view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (private->input_list));

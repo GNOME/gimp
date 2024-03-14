@@ -415,18 +415,10 @@ read_image_palette (GimpImage *image,
   for (index = 0; index < ncolors; ++index)
     {
       GeglColor *c   = colors[index];
-      gdouble    r, g, b;
-      GimpRGB    rgb;
       gdouble    hsv[3];
       gchar     *text = g_strdup_printf ("%d", index);
 
-      gegl_color_get_rgba (c, &r, &g, &b, NULL);
       gegl_color_get_pixel (c, babl_format ("HSV double"), hsv);
-
-      gimp_rgb_set_uchar (&rgb,
-                          ROUND (r * 255),
-                          ROUND (g * 255),
-                          ROUND (b * 255));
 
       reverse_order[index] = ncolors - index - 1;
 
@@ -434,7 +426,7 @@ read_image_palette (GimpImage *image,
       gtk_list_store_set (store, &iter,
                           COLOR_INDEX,       index,
                           COLOR_INDEX_TEXT,  text,
-                          COLOR_RGB,        &rgb,
+                          COLOR_RGB,         c,
                           COLOR_H,           hsv[0],
                           COLOR_S,           hsv[1],
                           COLOR_V,           hsv[2],
@@ -616,7 +608,7 @@ remap_dialog (GimpProcedure *procedure,
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
   store = gtk_list_store_new (NUM_COLS,
-                              G_TYPE_INT, G_TYPE_STRING, GIMP_TYPE_RGB,
+                              G_TYPE_INT, G_TYPE_STRING, GEGL_TYPE_COLOR,
                               G_TYPE_DOUBLE, G_TYPE_DOUBLE, G_TYPE_DOUBLE);
 
   if (! read_image_palette (image, &ncolors))
