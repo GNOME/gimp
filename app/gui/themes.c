@@ -492,10 +492,22 @@ themes_apply_theme (Gimp          *gimp,
         }
 
       if (! error && config->font_relative_size != 1.0)
-        g_output_stream_printf (output, NULL, NULL, &error,
-                                "\n"
-                                "* { font-size: %frem; }",
-                                config->font_relative_size);
+        {
+          /* CSS does not like numbers with commas as the radix.
+           * To prevent, we create the string with a point used. */
+          gchar *font_size_string = NULL;
+          gint   font_size;
+
+          font_size = config->font_relative_size * 100;
+          font_size_string = g_strdup_printf ("%d.%d", (font_size / 100),
+                                              font_size % 100);
+
+          g_output_stream_printf (output, NULL, NULL, &error,
+                                  "\n"
+                                  "* { font-size: %srem; }",
+                                  font_size_string);
+          g_free (font_size_string);
+        }
 
       if (! error)
         {
