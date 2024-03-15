@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-07 18:17+0000\n"
-"PO-Revision-Date: 2024-03-07 19:40+0100\n"
+"POT-Creation-Date: 2024-03-14 01:41+0000\n"
+"PO-Revision-Date: 2024-03-15 09:43+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -67,12 +67,12 @@ msgstr "Povadi kozo (C)"
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
 #: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1379
 #: plug-ins/common/cml-explorer.c:2146 plug-ins/common/cml-explorer.c:2356
-#: plug-ins/common/colormap-remap.c:694 plug-ins/common/curve-bend.c:1809
-#: plug-ins/common/curve-bend.c:1844 plug-ins/common/file-gif-save.c:1222
-#: plug-ins/common/file-heif.c:2314 plug-ins/common/file-pdf-load.c:686
-#: plug-ins/common/file-pdf-save.c:1054 plug-ins/common/grid.c:819
-#: plug-ins/common/qbist.c:836 plug-ins/common/qbist.c:878
-#: plug-ins/common/qbist.c:932 plug-ins/common/sphere-designer.c:2292
+#: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
+#: plug-ins/common/file-gif-save.c:1222 plug-ins/common/file-heif.c:2314
+#: plug-ins/common/file-pdf-load.c:686 plug-ins/common/file-pdf-save.c:1054
+#: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:836
+#: plug-ins/common/qbist.c:878 plug-ins/common/qbist.c:932
+#: plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2651 plug-ins/common/unit-editor.c:435
 #: plug-ins/file-tiff/file-tiff-load.c:2547 plug-ins/flame/flame.c:622
 #: plug-ins/flame/flame.c:827
@@ -147,12 +147,12 @@ msgstr "Povadi kozo (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1380 plug-ins/common/colormap-remap.c:695
-#: plug-ins/common/file-heif.c:2315 plug-ins/common/file-pdf-load.c:687
-#: plug-ins/common/grid.c:820 plug-ins/common/qbist.c:933
-#: plug-ins/common/sphere-designer.c:2652 plug-ins/common/unit-editor.c:266
-#: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3561
-#: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
+#: plug-ins/common/cml-explorer.c:1380 plug-ins/common/file-heif.c:2315
+#: plug-ins/common/file-pdf-load.c:687 plug-ins/common/grid.c:820
+#: plug-ins/common/qbist.c:933 plug-ins/common/sphere-designer.c:2652
+#: plug-ins/common/unit-editor.c:266 plug-ins/file-exr/file-exr.c:435
+#: plug-ins/file-psd/psd-load.c:3561 plug-ins/flame/flame.c:828
+#: plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3446
@@ -1218,7 +1218,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
 #: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1218
 #: plug-ins/common/file-pcx.c:1219 plug-ins/common/file-pdf-save.c:659
-#: plug-ins/common/file-png.c:1518 plug-ins/common/file-raw-data.c:1337
+#: plug-ins/common/file-png.c:1517 plug-ins/common/file-raw-data.c:1337
 #: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
 #: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1381
 #: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-save.c:341
@@ -1269,15 +1269,15 @@ msgstr ""
 msgid "Error: failed to load parameters"
 msgstr "Napaka: parametrov ni mogoče naložiti"
 
-#: plug-ins/common/colormap-remap.c:186
+#: plug-ins/common/colormap-remap.c:181
 msgid "R_earrange Colormap..."
 msgstr "Pr_erazporedi barve ..."
 
-#: plug-ins/common/colormap-remap.c:192
+#: plug-ins/common/colormap-remap.c:187
 msgid "Rearrange the colormap"
 msgstr "Prerazporedi barve"
 
-#: plug-ins/common/colormap-remap.c:193
+#: plug-ins/common/colormap-remap.c:188
 msgid ""
 "This procedure takes an indexed image and lets you alter the positions of "
 "colors in the colormap without visually changing the image."
@@ -1285,23 +1285,23 @@ msgstr ""
 "Ta postopek vzame indeksirano sliko in omogoča spreminjanje položajev barv v "
 "katalogu barv, ne da bi sliko vizualno spremenil."
 
-#: plug-ins/common/colormap-remap.c:204
+#: plug-ins/common/colormap-remap.c:199
 msgid "Map"
 msgstr "Preslikaj"
 
-#: plug-ins/common/colormap-remap.c:205
+#: plug-ins/common/colormap-remap.c:200
 msgid "Remap array for the colormap"
 msgstr "Polje preslikav za katalog barv"
 
-#: plug-ins/common/colormap-remap.c:220
+#: plug-ins/common/colormap-remap.c:215
 msgid "_Swap Colors"
 msgstr "_Zamenjaj barvi"
 
-#: plug-ins/common/colormap-remap.c:224
+#: plug-ins/common/colormap-remap.c:219
 msgid "Swap two colors in the colormap"
 msgstr "Zamenja dve barvi v katalogu barv"
 
-#: plug-ins/common/colormap-remap.c:225
+#: plug-ins/common/colormap-remap.c:220
 msgid ""
 "This procedure takes an indexed image and lets you swap the positions of two "
 "colors in the colormap without visually changing the image."
@@ -1309,76 +1309,62 @@ msgstr ""
 "Ta postopek vzame indeksirano sliko in omogoča zamenjavo položajev dveh barv "
 "v katalogu barv, ne da bi sliko vizualno spremenili."
 
-#: plug-ins/common/colormap-remap.c:237
+#: plug-ins/common/colormap-remap.c:232
 msgid "Index 1"
 msgstr "Indeks 1"
 
-#: plug-ins/common/colormap-remap.c:238
+#: plug-ins/common/colormap-remap.c:233
 msgid "First index in the colormap"
 msgstr "Prvi indeks v katalogu barv"
 
-#: plug-ins/common/colormap-remap.c:243
+#: plug-ins/common/colormap-remap.c:238
 msgid "Index 2"
 msgstr "Indeks 2"
 
-#: plug-ins/common/colormap-remap.c:244
+#: plug-ins/common/colormap-remap.c:239
 msgid "Second (other) index in the colormap"
 msgstr "Drugi indeks v katalogu barv"
 
-#: plug-ins/common/colormap-remap.c:277
+#: plug-ins/common/colormap-remap.c:269
+#, c-format
+msgid "Procedure '%s' only works with indexed images."
+msgstr "Procedura »%s« deluje le z enim indeksiranimi slikami."
+
+#: plug-ins/common/colormap-remap.c:610
+msgid "Rearrange Colors"
+msgstr "Prerazporedi barve"
+
+#: plug-ins/common/colormap-remap.c:641
 msgid "Sort on Hue"
 msgstr "Razvrsti glede na obarvanost"
 
-#: plug-ins/common/colormap-remap.c:278
+#: plug-ins/common/colormap-remap.c:647
 msgid "Sort on Saturation"
 msgstr "Razvrsti glede na nasičenost"
 
-#: plug-ins/common/colormap-remap.c:279
+#: plug-ins/common/colormap-remap.c:653
 msgid "Sort on Value"
 msgstr "Razvrsti glede na vrednost"
 
-#: plug-ins/common/colormap-remap.c:284
+#: plug-ins/common/colormap-remap.c:659
 msgid "Reverse Order"
 msgstr "Preobrni zaporedje"
 
-#: plug-ins/common/colormap-remap.c:285
+#: plug-ins/common/colormap-remap.c:665
 msgid "Reset Order"
 msgstr "Ponastavi zaporedje"
 
-#: plug-ins/common/colormap-remap.c:412 plug-ins/common/colormap-remap.c:423
-#: plug-ins/common/colormap-remap.c:434
-msgid "Invalid remap array was passed to remap function"
+#: plug-ins/common/colormap-remap.c:674
+msgid ""
+"Drag and drop colors to rearrange the colormap.\n"
+"The numbers shown are the original indices."
 msgstr ""
-"Funkciji ponovne preslikave je bila podana neveljavna matrika ponovne "
-"preslikave"
+"Povlecite in spustite barve, da spremenite razpored kataloga barv.\n"
+"Prikazane številke so izvirni indeksi."
 
-#: plug-ins/common/colormap-remap.c:458
+#: plug-ins/common/colormap-remap.c:736
 msgid "Rearranging the colormap"
 msgstr "Prerazporejanje barv v katalogu ..."
-
-#: plug-ins/common/colormap-remap.c:689
-msgid "Rearrange Colormap"
-msgstr "Prerazporedi katalog barv"
-
-#. The Reset button
-#: plug-ins/common/colormap-remap.c:693 plug-ins/common/curve-bend.c:1250
-#: plug-ins/common/sphere-designer.c:2650 plug-ins/common/tile-small.c:525
-#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:913
-msgid "_Reset"
-msgstr "_Ponastavi"
-
-#: plug-ins/common/colormap-remap.c:795
-msgid ""
-"Drag and drop colors to rearrange the colormap.  The numbers shown are the "
-"original indices.  Right-click for a menu with sort options."
-msgstr ""
-"Povlecite in spustite barve, da spremenite razpored kataloga barv.  "
-"Prikazane številke so izvirni indeksi.  Desno kliknite za meni z možnostmi "
-"razvrščanja."
-
-#: plug-ins/common/colormap-remap.c:833
-msgid "Rearrange Colors"
-msgstr "Prerazporedi barve"
 
 #. Decompositions availables.
 #. * All the following values have to be kept in sync with those of decompose.c
@@ -2096,6 +2082,13 @@ msgstr "Za_menjaj"
 msgid "Swap the two curves"
 msgstr "Zamenjaj krivulji"
 
+#. The Reset button
+#: plug-ins/common/curve-bend.c:1250 plug-ins/common/sphere-designer.c:2650
+#: plug-ins/common/tile-small.c:525 plug-ins/gimpressionist/preview.c:182
+#: plug-ins/ifs-compose/ifs-compose.c:913
+msgid "_Reset"
+msgstr "_Ponastavi"
+
 #: plug-ins/common/curve-bend.c:1255
 msgid "Reset the active curve"
 msgstr "Ponastavi aktivno krivuljo"
@@ -2690,7 +2683,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-cel.c:845 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-gif-save.c:975 plug-ins/common/file-html-table.c:359
 #: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1103
-#: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1510
+#: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1509
 #: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1321
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
 #: plug-ins/common/file-tga.c:1229 plug-ins/common/file-xbm.c:1050
@@ -3314,6 +3307,22 @@ msgstr ""
 msgid "GIMP brush (animated)"
 msgstr "Čopič GIMP (animiran)"
 
+#: plug-ins/common/file-gih.c:161
+msgid "Exports images in GIMP Brush Pipe format"
+msgstr "Izvozi slike v zapisu cevovoda čopičev GIMP."
+
+#: plug-ins/common/file-gih.c:163
+msgid ""
+"This plug-in exports an image in the GIMP brush pipe format. For a colored "
+"brush pipe, RGBA layers are used, otherwise the layers should be grayscale "
+"masks. The image can be multi-layered, and additionally the layers can be "
+"divided into a rectangular array of brushes."
+msgstr ""
+"Ta vstavek izvozi sliko v obliki cevovoda čopičev GIMP. Za cevovod barvnih "
+"čopičev se uporabljajo plasti RGBA, sicer morajo biti plasti sivinske maske. "
+"Slika je lahko večplastna, poleg tega pa lahko plasti razdelimo na "
+"pravokotno polje čopičev."
+
 #: plug-ins/common/file-gih.c:180
 msgid "Brush Pipe"
 msgstr "Cev čopičev"
@@ -3358,6 +3367,10 @@ msgstr "_Rang"
 msgid "Ranks of the dimensions"
 msgstr "Rangi mer"
 
+#: plug-ins/common/file-gih.c:223
+msgid "Selection modes"
+msgstr "Načini izbiranja"
+
 #: plug-ins/common/file-gih.c:229
 msgid "Display as"
 msgstr "Pokaži kot"
@@ -3374,20 +3387,20 @@ msgstr "D_imenzija"
 msgid "How many dimensions the animated brush has"
 msgstr "Koliko dimenzij ima animirani čopič"
 
-#: plug-ins/common/file-gih.c:475
+#: plug-ins/common/file-gih.c:514
 msgid "Width Mismatch!"
 msgstr "Neujemanje po širini!"
 
-#: plug-ins/common/file-gih.c:476
+#: plug-ins/common/file-gih.c:515
 msgid "Height Mismatch!"
 msgstr "Neujemanje po višini!"
 
-#: plug-ins/common/file-gih.c:523
+#: plug-ins/common/file-gih.c:562
 #, c-format
 msgid "Displays as a %d × %d grid on each layer"
 msgstr "Prikaže se kot mreža %d × %d na vsaki plasti"
 
-#: plug-ins/common/file-gih.c:709
+#: plug-ins/common/file-gih.c:748
 msgid "Ranks:"
 msgstr "Razred:"
 
@@ -4115,7 +4128,7 @@ msgstr "Zapiši košček tIME (čas nastanka)"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:724 plug-ins/common/file-png.c:2318
+#: plug-ins/common/file-mng.c:724 plug-ins/common/file-png.c:2342
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Prosojnosti ni mogoče shraniti brez izgub, zato bo shranjena prekrivnost."
@@ -4794,19 +4807,19 @@ msgstr ""
 "Slika PNG, ki jo uvažate, določa odmik %d, %d. Želite uveljaviti ta odmik na "
 "plasti?"
 
-#: plug-ins/common/file-png.c:1475
+#: plug-ins/common/file-png.c:1474
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Napaka pri ustvarjanju pisalne strukture za PNG pri izvažanju »%s«."
 
-#: plug-ins/common/file-png.c:1484
+#: plug-ins/common/file-png.c:1483
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Napaka pri izvažanju »%s«. Podatkovne strukture flave PNG ni mogoče "
 "ustvariti."
 
-#: plug-ins/common/file-png.c:1492
+#: plug-ins/common/file-png.c:1491
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Napaka pri izvažanju »%s«. Slike ni mogoče izvoziti."
@@ -8395,9 +8408,8 @@ msgid "Rotatio_n angle"
 msgstr "Kot suka_nja"
 
 #: plug-ins/common/warp.c:260
-#, fuzzy
 msgid "Angle of gradient vector rotation"
-msgstr "Kot vrtenja gradientnega vektorja"
+msgstr "Kot vrtenja vektorja preliva"
 
 #: plug-ins/common/warp.c:265
 msgid "On ed_ges"
@@ -8444,42 +8456,34 @@ msgid "Substeps between image updates"
 msgstr "Podkoraki med posodobitvami slik"
 
 #: plug-ins/common/warp.c:294
-#, fuzzy
 msgid "Gradient Ma_p"
 msgstr "Zemljevid _preliva"
 
 #: plug-ins/common/warp.c:295
-#, fuzzy
 msgid "Gradient control map"
 msgstr "Zemljevid nadzora preliva"
 
 #: plug-ins/common/warp.c:300
-#, fuzzy
 msgid "Gradient s_cale"
 msgstr "Spre_memba merila preliva"
 
 #: plug-ins/common/warp.c:301
-#, fuzzy
 msgid "Scaling factor for gradient map (0=don't use)"
 msgstr "Faktor prilagajanja velikosti za zemljevid preliva (0=ne uporabljaj)"
 
 #: plug-ins/common/warp.c:306
-#, fuzzy
 msgid "_Vector Map"
-msgstr "Mag. vektor"
+msgstr "Zemljevid _vektorjev"
 
 #: plug-ins/common/warp.c:307
-#, fuzzy
 msgid "Fixed vector control map"
 msgstr "Zemljevid z vektorji nespremenljive smeri"
 
 #: plug-ins/common/warp.c:312
-#, fuzzy
 msgid "Vector magn_itude"
-msgstr "Mag. vektorja"
+msgstr "Magn_ituda vektorja"
 
 #: plug-ins/common/warp.c:313
-#, fuzzy
 msgid "Scaling factor for fixed vector map (0=don't use)"
 msgstr ""
 "Faktor spremembe velikosti za zemljevid z vektorji nespremenljive smeri "
@@ -8490,7 +8494,6 @@ msgid "Ang_le"
 msgstr "_Kot"
 
 #: plug-ins/common/warp.c:319
-#, fuzzy
 msgid "Angle for fixed vector map"
 msgstr "Kot za zemljevid z vektorji nespremenljive smeri"
 
@@ -8936,9 +8939,8 @@ msgid "YCoCg (DXT5)"
 msgstr "YCoCg (DXT5)"
 
 #: plug-ins/file-dds/dds.c:201
-#, fuzzy
 msgid "YCoCg scaled (DXT5)"
-msgstr "YCoCg, umerjeno/skalirano (DXT5)"
+msgstr "YCoCg, umerjeno (DXT5)"
 
 #: plug-ins/file-dds/dds.c:207
 msgid "Use percept_ual error metric"
@@ -9326,10 +9328,9 @@ msgid "Error reading pixel data from '%s'"
 msgstr "Napaka pri branju podatkov slikovnih točk iz »%s«"
 
 #: plug-ins/file-exr/file-exr.c:355 plug-ins/file-exr/file-exr.c:369
-#, fuzzy, c-format
-#| msgid "Failed to set metadata tag %s: %s"
+#, c-format
 msgid "Failed to load metadata: %s"
-msgstr "Značke metapodatkov %s ni mogoče določiti: %s"
+msgstr "Nalaganje metapodatkov je spodletelo: %s"
 
 #: plug-ins/file-exr/file-exr.c:432
 msgid "Import OpenEXR"
@@ -10183,7 +10184,6 @@ msgstr ""
 "Ostalo bo zavrženo."
 
 #: plug-ins/file-psd/psd-save.c:2671
-#, fuzzy
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
@@ -10192,8 +10192,8 @@ msgid ""
 msgstr ""
 "Opuščeni načini plasti so bolje združljivi s programom Photoshop, vendar ne "
 "podpirajo Clip to Backdrop, ki je potreben za uporabo Photoshopove ‘Blend "
-"Clipped Layers as Group’.. Če naletite na težave s prikazom, preklopite na "
-"te vrste oz. načine plasti."
+"Clipped Layers as Group’. Če naletite na težave s prikazom, preklopite na te "
+"vrste oz. načine plasti."
 
 #: plug-ins/file-psd/psd-util.c:176
 #, c-format
@@ -14412,22 +14412,18 @@ msgid "Light direction Z"
 msgstr "Smer svetlobe Z"
 
 #: plug-ins/lighting/lighting-main.c:271
-#, fuzzy
 msgid "Ambient intensity"
 msgstr "Intenzivnost okoljske svetlobe"
 
 #: plug-ins/lighting/lighting-main.c:272
-#, fuzzy
 msgid "Material ambient intensity (Glowing)"
-msgstr "Intenzivnost okoljske svetobe materiala (žareče)"
+msgstr "Intenzivnost okoljske svetlobe materiala (žareče)"
 
 #: plug-ins/lighting/lighting-main.c:278
-#, fuzzy
 msgid "Diffuse intensity"
 msgstr "Intenzivnost razpršene svetlobe"
 
 #: plug-ins/lighting/lighting-main.c:279
-#, fuzzy
 msgid "Material diffuse intensity (Bright)"
 msgstr "Intenzivnost razpršene svetlobe materiala (svetlo)"
 
@@ -14450,14 +14446,13 @@ msgid "Material specular reflectivity"
 msgstr "Zrcalna odbojnost materiala"
 
 #: plug-ins/lighting/lighting-main.c:297
-#, fuzzy
 msgid "Highlight"
 msgstr "Svetla področja"
 
 #: plug-ins/lighting/lighting-main.c:298
-#, fuzzy
 msgid "Material highlight (note, it's exponential) (Polished)"
-msgstr "Svetlo poudarjanje materiala (upoštevajte, da je eksponentno)"
+msgstr ""
+"Svetlo poudarjanje materiala (upoštevajte, da je eksponentno) (polirano)"
 
 #: plug-ins/lighting/lighting-main.c:304
 msgid "Metallic"
@@ -14709,9 +14704,8 @@ msgid "Ambie_nt"
 msgstr "_Okoljska"
 
 #: plug-ins/map-object/map-object-main.c:279
-#, fuzzy
 msgid "Material ambient intensity"
-msgstr "Intenzivnost okoljske materiala"
+msgstr "Intenzivnost okoljske svetlobe materiala"
 
 #: plug-ins/map-object/map-object-main.c:284
 msgid "D_iffuse"
@@ -14730,7 +14724,6 @@ msgid "Spec_ular"
 msgstr "Zrca_lna"
 
 #: plug-ins/map-object/map-object-main.c:303
-#, fuzzy
 msgid "Highligh_t"
 msgstr "Svetla podro_čja"
 
