@@ -74,35 +74,21 @@ function download_lang_official ([string]$langfile)
 
 #New-Item -ItemType Directory -Path "$INNOPATH/Languages/" -Force
 
+
 # Download Unofficial translations (of unknown quality and maintenance)
 # Cf. https://jrsoftware.org/files/istrans/
-function download_lang ([string]$langfile)
-{
-  if (Test-Path -Path "$langfile" -PathType Leaf)
-    {
-      Remove-Item -Path "$langfile" -Force
-    }
-  Invoke-WebRequest -URI "https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/Unofficial/${langfile}" -OutFile "$INNOPATH/Languages/Unofficial/${langfile}"
-}
-
 New-Item -ItemType Directory -Path "$INNOPATH/Languages/Unofficial/" -Force
-download_lang Basque.isl
-download_lang Belarusian.isl
-download_lang ChineseSimplified.isl
-download_lang ChineseTraditional.isl
-download_lang EnglishBritish.isl
-download_lang Esperanto.isl
-download_lang Galician.isl
-download_lang Georgian.isl
-download_lang Greek.isl
-download_lang Indonesian.isl
-download_lang Latvian.isl
-download_lang Lithuanian.isl
-download_lang Malaysian.isl
-download_lang Marathi.islu
-download_lang Romanian.isl
-download_lang Swedish.isl
-download_lang Vietnamese.isl
+
+$xmlObject = New-Object XML
+$xmlObject.Load("$PWD\build\windows\installer\lang\iso_639_custom.xml")
+$langsArray = $xmlObject.iso_639_entries.iso_639_entry |
+              Select-Object -ExpandProperty inno_code  | Where-Object { $_ -like "*Unofficial*" }
+
+foreach ($langfile in $langsArray)
+  {
+    $langfileUnix = $langfile.Replace('\\', '/')
+    Invoke-WebRequest -URI "https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/$langfileUnix" -OutFile "$INNOPATH/$langfileUnix"
+  }
 
 
 $gen_path = Resolve-Path -Path "_build-*\build\windows\installer" | Select-Object -ExpandProperty Path
@@ -110,6 +96,7 @@ if (Test-Path -Path $gen_path)
   {
     # Copy generated language files into the source directory
     Copy-Item $gen_path\lang\*isl build\windows\installer\lang\
+    Copy-Item $gen_path\*list build\windows\installer\
 
     # Copy generated images into the source directory
     Copy-Item $gen_path\*bmp build\windows\installer\

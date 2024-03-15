@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+This file gives a list of some languages in the ISO 639
+standard, and is used to generate lists to our .iss script
+-->
+
+<!DOCTYPE iso_639_entries [
+	<!ELEMENT iso_639_entries (iso_639_entry+)>
+	<!ELEMENT iso_639_entry EMPTY>
+	<!ATTLIST iso_639_entry
+		dl_code		CDATA	#REQUIRED
+		inno_code	CDATA	#REQUIRED
+		name			CDATA	#REQUIRED
+	>
+]>
+
+<iso_639_entries>
+	<iso_639_entry
+		dl_code="am"
+		inno_code=""
+		name="አማርኛ" />
+	<iso_639_entry
+		dl_code="ar"
+		inno_code=""
+		name="اَلْعَرَبِيَّةُ" />
+	<iso_639_entry
+		dl_code="ast"
+		inno_code=""
+		name="Asturianu" />
+	<iso_639_entry
+		dl_code="az"
+		inno_code=""
+		name="Azərbaycan dili" />
+	<iso_639_entry
+		dl_code="be"
+		inno_code="Languages\\Unofficial\\Belarusian.isl"
+		name="беларуская мова" />
+	<iso_639_entry
+		dl_code="bg"
+		inno_code="Languages\\Bulgarian.isl"
+		name="български език" />
+	<iso_639_entry
+		dl_code="br"
+		inno_code=""
+		name="Brezhoneg" />
+	<iso_639_entry
+		dl_code="bs"
+		inno_code=""
+		name="Bosanski" />
+	<iso_639_entry
+		dl_code="ca"
+		inno_code="Languages\\Catalan.isl"
+		name="Català" />
+	<iso_639_entry
+		dl_code="ca@valencia"
+		inno_code=""
+		name="Valencià" />
+	<iso_639_entry
+		dl_code="ckb"
+		inno_code=""
+		name="کوردی" />
+	<iso_639_entry
+		dl_code="cs"
+		inno_code="Languages\\Czech.isl"
+		name="Čeština" />
+	<iso_639_entry
+		dl_code="csb"
+		inno_code=""
+		name="Kaszëbsczi" />
+	<iso_639_entry
+		dl_code="da"
+		inno_code="Languages\\Danish.isl"
+		name="Dansk" />
+	<iso_639_entry
+		dl_code="de"
+		inno_code="Languages\\German.isl"
+		name="Deutsch" />
+	<iso_639_entry
+		dl_code="dz"
+		inno_code=""
+		name="རྫོང་ཁ་" />
+	<iso_639_entry
+		dl_code="el"
+		inno_code="Languages\\Unofficial\\Greek.isl"
+		name="Ελληνικά" />
+	<iso_639_entry
+		dl_code="en_CA"
+		inno_code=""
+		name="English (Canada)" />
+	<iso_639_entry
+		dl_code="en_GB"
+		inno_code="Languages\\Unofficial\\EnglishBritish.isl"
+		name="English (United Kingdom)" />
+	<iso_639_entry
+		dl_code="eo"
+		inno_code="Languages\\Unofficial\\Esperanto.isl"
+		name="Esperanto" />
+	<iso_639_entry
+		dl_code="es"
+		inno_code="Languages\\Spanish.isl"
+		name="Español" />
+	<iso_639_entry
+		dl_code="et"
+		inno_code=""
+		name="Eesti keel" />
+	<iso_639_entry
+		dl_code="eu"
+		inno_code="Languages\\Unofficial\\Basque.isl"
+		name="Euskara" />
+	<iso_639_entry
+		dl_code="fa"
+		inno_code=""
+		name="فارسی" />
+	<iso_639_entry
+		dl_code="fi"
+		inno_code="Languages\\Finnish.isl"
+		name="Suomi" />
+	<iso_639_entry
+		dl_code="fr"
+		inno_code="Languages\\French.isl"
+		name="Français" />
+	<iso_639_entry
+		dl_code="ga"
+		inno_code=""
+		name="Gaeilge" />
+	<iso_639_entry
+		dl_code="gd"
+		inno_code=""
+		name="Gàidhlig" />
+	<iso_639_entry
+		dl_code="gl"
+		inno_code="Languages\\Unofficial\\Galician.isl"
+		name="Galego" />
+	<iso_639_entry
+		dl_code="gu"
+		inno_code=""
+		name="ગુજરાતી" />
+	<iso_639_entry
+		dl_code="he"
+		inno_code="Languages\\Hebrew.isl"
+		name="עִבְֿרִית" />
+	<iso_639_entry
+		dl_code="hi"
+		inno_code=""
+		name="हिन्दी" />
+	<iso_639_entry
+		dl_code="hr"
+		inno_code=""
+		name="Hrvatski" />
+	<iso_639_entry
+		dl_code="hu"
+		inno_code="Languages\\Hungarian.isl"
+		name="Magyar nyelv" />
+	<iso_639_entry
+		dl_code="id"
+		inno_code="Languages\\Unofficial\\Indonesian.isl"
+		name="Bahasa Indonesia" />
+	<iso_639_entry
+		dl_code="is"
+		inno_code="Languages\\Icelandic.isl"
+		name="Íslenska" />
+	<iso_639_entry
+		dl_code="it"
+		inno_code="Languages\\Italian.isl"
+		name="Italiano" />
+	<iso_639_entry
+		dl_code="ja"
+		inno_code="Languages\\Japanese.isl"
+		name="日本語" />
+	<iso_639_entry
+		dl_code="ka"
+		inno_code="Languages\\Unofficial\\Georgian.isl"
+		name="ქართული ენა" />
+	<iso_639_entry
+		dl_code="kab"
+		inno_code="Default.isl,lang\\kab.isl"
+		name="Taqbaylit" />
+	<iso_639_entry
+		dl_code="kk"
+		inno_code=""
+		name="Qazaq" />
+	<iso_639_entry
+		dl_code="km"
+		inno_code=""
+		name="ភាសាខ្មែរ" />
+	<iso_639_entry
+		dl_code="kn"
+		inno_code=""
+		name="ಕನ್ನಡ" />
+	<iso_639_entry
+		dl_code="ko"
+		inno_code="Languages\\Korean.isl"
+		name="한국어" />
+	<iso_639_entry
+		dl_code="ky"
+		inno_code=""
+		name="Кыргыз тили" />
+	<iso_639_entry
+		dl_code="lt"
+		inno_code="Languages\\Unofficial\\Lithuanian.isl"
+		name="Lietuvių kalba" />
+	<iso_639_entry
+		dl_code="lv"
+		inno_code="Languages\\Unofficial\\Latvian.isl"
+		name="Latviešu valoda" />
+	<iso_639_entry
+		dl_code="mk"
+		inno_code=""
+		name="македонски" />
+	<iso_639_entry
+		dl_code="ml"
+		inno_code=""
+		name="മലയാളം" />
+	<iso_639_entry
+		dl_code="mr"
+		inno_code="Languages\\Unofficial\\Marathi.islu"
+		name="मराठी" />
+	<iso_639_entry
+		dl_code="ms"
+		inno_code="Languages\\Unofficial\\Malaysian.isl"
+		name="Bahasa Melayu" />
+	<iso_639_entry
+		dl_code="my"
+		inno_code=""
+		name="မြန်မာဘာသာ" />
+	<iso_639_entry
+		dl_code="nb"
+		inno_code=""
+		name="Bokmål" />
+	<iso_639_entry
+		dl_code="nds"
+		inno_code=""
+		name="Plattdütsch" />
+	<iso_639_entry
+		dl_code="ne"
+		inno_code=""
+		name="नेपाली" />
+	<iso_639_entry
+		dl_code="nl"
+		inno_code="Languages\\Dutch.isl"
+		name="Nederlands" />
+	<iso_639_entry
+		dl_code="nn"
+		inno_code="Languages\\Norwegian.isl"
+		name="Nynorsk" />
+	<iso_639_entry
+		dl_code="oc"
+		inno_code=""
+		name="Occitan" />
+	<iso_639_entry
+		dl_code="pa"
+		inno_code=""
+		name="ਪੰਜਾਬੀ" />
+	<iso_639_entry
+		dl_code="pl"
+		inno_code="Languages\\Polish.isl"
+		name="Polski" />
+	<iso_639_entry
+		dl_code="pt"
+		inno_code="Languages\\Portuguese.isl"
+		name="Português (Portugal)" />
+	<iso_639_entry
+		dl_code="pt_BR"
+		inno_code="Languages\\BrazilianPortuguese.isl"
+		name="Português (Brasil)" />
+	<iso_639_entry
+		dl_code="ro"
+		inno_code="Languages\\Unofficial\\Romanian.isl"
+		name="Românește" />
+	<iso_639_entry
+		dl_code="ru"
+		inno_code="Languages\\Russian.isl"
+		name="Pусский язык" />
+	<iso_639_entry
+		dl_code="rw"
+		inno_code=""
+		name="Ikinyarwanda" />
+	<iso_639_entry
+		dl_code="sk"
+		inno_code="Languages\\Slovak.isl"
+		name="Slovenčina (sk)" />
+	<iso_639_entry
+		dl_code="si"
+		inno_code=""
+		name="සිංහල" />
+	<iso_639_entry
+		dl_code="sl"
+		inno_code="Languages\\Slovenian.isl"
+		name="Slovenščina (sl)" />
+	<iso_639_entry
+		dl_code="sr"
+		inno_code=""
+		name="Cрпски језик" />
+	<iso_639_entry
+		dl_code="sr@latin"
+		inno_code=""
+		name="Cрпски језик (latin)" />
+	<iso_639_entry
+		dl_code="sv"
+		inno_code="Languages\\Unofficial\\Swedish.isl"
+		name="Svenska" />
+	<iso_639_entry
+		dl_code="ta"
+		inno_code=""
+		name="தமிழ்" />
+	<iso_639_entry
+		dl_code="te"
+		inno_code=""
+		name="తెలుగు" />
+	<iso_639_entry
+		dl_code="th"
+		inno_code=""
+		name="ภาษาไทย" />
+	<iso_639_entry
+		dl_code="tr"
+		inno_code="Languages\\Turkish.isl"
+		name="Türkçe" />
+	<iso_639_entry
+		dl_code="tt"
+		inno_code=""
+		name="татар теле" />
+	<iso_639_entry
+		dl_code="uk"
+		inno_code="Languages\\Ukrainian.isl"
+		name="українська мова" />
+	<iso_639_entry
+		dl_code="vi"
+		inno_code="Languages\\Unofficial\\Vietnamese.isl"
+		name="Tiếng Việt" />
+	<iso_639_entry
+		dl_code="xh"
+		inno_code=""
+		name="IsiXhosa" />
+	<iso_639_entry
+		dl_code="yi"
+		inno_code=""
+		name="יידיש" />
+	<iso_639_entry
+		dl_code="zh_CN"
+		inno_code="Languages\\Unofficial\\ChineseSimplified.isl"
+		name="簡體中文" />
+	<iso_639_entry
+		dl_code="zh_HK"
+		inno_code=""
+		name="香港中文" />
+	<iso_639_entry
+		dl_code="zh_TW"
+		inno_code="Languages\\Unofficial\\ChineseTraditional.isl"
+		name="繁體中文" />
+</iso_639_entries>

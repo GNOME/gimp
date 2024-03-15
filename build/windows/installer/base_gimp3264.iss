@@ -217,50 +217,7 @@ UninstallFilesDir={app}\uninst
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl,lang\en.setup.isl"
-Name: "be"; MessagesFile: "compiler:Languages\Unofficial\Belarusian.isl,lang\be.setup.isl"
-Name: "bg"; MessagesFile: "compiler:Languages\Bulgarian.isl,lang\bg.setup.isl"
-Name: "ca"; MessagesFile: "compiler:Languages\Catalan.isl,lang\ca.setup.isl"
-Name: "cs"; MessagesFile: "compiler:Languages\Czech.isl,lang\cs.setup.isl"
-Name: "da"; MessagesFile: "compiler:Languages\Danish.isl,lang\da.setup.isl"
-Name: "de"; MessagesFile: "compiler:Languages\German.isl,lang\de.setup.isl"
-Name: "el"; MessagesFile: "compiler:Languages\Unofficial\Greek.isl,lang\el.setup.isl"
-Name: "en_GB"; MessagesFile: "compiler:Languages\Unofficial\EnglishBritish.isl,lang\en_GB.setup.isl"
-Name: "eo"; MessagesFile: "compiler:Languages\Unofficial\Esperanto.isl,lang\eo.setup.isl"
-Name: "es"; MessagesFile: "compiler:Languages\Spanish.isl,lang\es.setup.isl"
-Name: "eu"; MessagesFile: "compiler:Languages\Unofficial\Basque.isl,lang\eu.setup.isl"
-Name: "fi"; MessagesFile: "compiler:Languages\Finnish.isl,lang\fi.setup.isl"
-Name: "fr"; MessagesFile: "compiler:Languages\French.isl,lang\fr.setup.isl"
-Name: "gl"; MessagesFile: "compiler:Languages\Unofficial\Galician.isl,lang\gl.setup.isl"
-Name: "he"; MessagesFile: "compiler:Languages\Hebrew.isl,lang\he.setup.isl"
-Name: "hu"; MessagesFile: "compiler:Languages\Hungarian.isl,lang\hu.setup.isl"
-;Name: "hr"; MessagesFile: "compiler:Languages\Unofficial\Croatian.isl,lang\hr.setup.isl"
-Name: "id"; MessagesFile: "compiler:Languages\Unofficial\Indonesian.isl,lang\id.setup.isl"
-Name: "is"; MessagesFile: "compiler:Languages\Icelandic.isl,lang\is.setup.isl"
-Name: "it"; MessagesFile: "compiler:Languages\Italian.isl,lang\it.setup.isl"
-Name: "ja"; MessagesFile: "compiler:Languages\Japanese.isl,lang\ja.setup.isl"
-Name: "ka"; MessagesFile: "compiler:Languages\Unofficial\Georgian.isl,lang\ka.setup.isl"
-Name: "kab"; MessagesFile: "compiler:Default.isl,lang\kab.isl,lang\kab.setup.isl"
-Name: "ko"; MessagesFile: "compiler:Languages\Korean.isl,lang\ko.setup.isl"
-Name: "lt"; MessagesFile: "compiler:Languages\Unofficial\Lithuanian.isl,lang\lt.setup.isl"
-Name: "lv"; MessagesFile: "compiler:Languages\Unofficial\Latvian.isl,lang\lv.setup.isl"
-Name: "mr"; MessagesFile: "compiler:Languages\Unofficial\Marathi.islu,lang\mr.setup.isl"
-Name: "ms"; MessagesFile: "compiler:Languages\Unofficial\Malaysian.isl,lang\ms.setup.isl"
-Name: "nl"; MessagesFile: "compiler:Languages\Dutch.isl,lang\nl.setup.isl"
-Name: "nn"; MessagesFile: "compiler:Languages\Norwegian.isl,lang\nn.setup.isl"
-Name: "pl"; MessagesFile: "compiler:Languages\Polish.isl,lang\pl.setup.isl"
-Name: "pt"; MessagesFile: "compiler:Languages\Portuguese.isl,lang\pt.setup.isl"
-Name: "pt_BR"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl,lang\pt_BR.setup.isl"
-Name: "ro"; MessagesFile: "compiler:Languages\Unofficial\Romanian.isl,lang\ro.setup.isl"
-Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl,lang\ru.setup.isl"
-Name: "sk"; MessagesFile: "compiler:Languages\Slovak.isl,lang\sk.setup.isl"
-Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl,lang\sl.setup.isl"
-Name: "sv"; MessagesFile: "compiler:Languages\Unofficial\Swedish.isl,lang\sv.setup.isl"
-Name: "tr"; MessagesFile: "compiler:Languages\Turkish.isl,lang\tr.setup.isl"
-Name: "uk"; MessagesFile: "compiler:Languages\Ukrainian.isl,lang\uk.setup.isl"
-Name: "vi"; MessagesFile: "compiler:Languages\Unofficial\Vietnamese.isl,lang\vi.setup.isl"
-Name: "zh_CN"; MessagesFile: "compiler:Languages\Unofficial\ChineseSimplified.isl,lang\zh_CN.setup.isl"
-Name: "zh_TW"; MessagesFile: "compiler:Languages\Unofficial\ChineseTraditional.isl,lang\zh_TW.setup.isl"
-;Name: "ro"; MessagesFile: "Romanian.islu,ro.setup.islu"
+#include "base_po-msg.list"
 
 [Types]
 ;Name: normal; Description: "{cm:TypeTypical}"
@@ -288,6 +245,7 @@ Name: gs; Description: "{cm:ComponentsGhostscript}"; Types: full custom
 
 ;Locales
 Name: loc; Description: "{cm:ComponentsTranslations}"; Types: full custom
+#include "base_po-cmp.list"
 
 #ifdef LUA
 Name: lua; Description: "{cm:ComponentsLua}"; Types: full custom
@@ -336,8 +294,8 @@ Source: "{#DEPS_DIR32}\share\*"; DestDir: "{app}\share"; Excludes: "{#OMISSIONS}
 
 ;Optional neutral components (complete install)
 Source: "{#DEPS_DIR32}\share\ghostscript\*"; DestDir: "{app}\share\ghostscript"; Components: gs and ({#GIMP_ARCHS}); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: dontcopy recursesubdirs restartreplace uninsrestartdelete ignoreversion
+#include "base_po-files.list"
 #ifdef LUA
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\interpreters\lua.interp"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters"; Components: lua and ({#GIMP_ARCHS}); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR32}\share\lua\*"; DestDir: "{app}\share\lua"; Components: lua and ({#GIMP_ARCHS}); Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
