@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-25 08:12+0000\n"
-"PO-Revision-Date: 2024-02-26 01:24+0300\n"
-"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"POT-Creation-Date: 2024-03-11 21:17+0000\n"
+"PO-Revision-Date: 2024-03-13 19:09+0300\n"
+"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -220,20 +220,20 @@ msgstr "_Tamam"
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:331
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:329
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu Renk Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:457
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:455
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu Dosya Seçimi"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:460
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:458
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu Dizin Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:867
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:874
 #, c-format
 msgid "Error while executing %s:"
 msgstr "%s yürütülürken hata:"
@@ -427,7 +427,7 @@ msgstr "Ak alanları oy"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:95
 msgid "Background"
-msgstr "Artalan"
+msgstr "Arka plan"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:96
 msgid "Layer 1"
@@ -517,7 +517,7 @@ msgstr "Devre parçacığı"
 
 #: plug-ins/script-fu/scripts/circuit.scm:141
 msgid "No background (only for separate layer)"
-msgstr "Artalan yok (yalnız ayrı katman için)"
+msgstr "Arka plan yok (yalnız ayrı katman için)"
 
 #: plug-ins/script-fu/scripts/circuit.scm:142
 #: plug-ins/script-fu/scripts/lava.scm:141
@@ -1272,7 +1272,7 @@ msgstr "Y konum gölgesi"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Add background"
-msgstr "Artalan ekle"
+msgstr "Arka plan ekle"
 
 #: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Se_t Colormap..."
