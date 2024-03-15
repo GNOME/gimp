@@ -304,7 +304,7 @@ Source: "installsplash_small-devel.bmp"; Destname: "installsplash_small.bmp"; Fl
 #define GIMP_ARCHS="gimp32 or gimp64 or gimpARM64"
 Source: "{#GIMP_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\environ\*"; DestDir: "{app}\lib\gimp\{#DIR_VER}\environ"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\interpreters\*"; DestDir: "{app}\lib\gimp\{#DIR_VER}\interpreters"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\interpreters\gimp-script-fu-interpreter.interp"; DestDir: "{app}\lib\gimp\{#DIR_VER}\interpreters"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#GIMP_DIR32}\share\metainfo\*"; DestDir: "{app}\share\metainfo"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
@@ -318,10 +318,12 @@ Source: "{#DEPS_DIR32}\share\ghostscript\*"; DestDir: "{app}\share\ghostscript";
 Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #ifdef LUA
+Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\interpreters\lua.interp"; DestDir: "{app}\lib\gimp\{#DIR_VER}\interpreters"; Components: lua and ({#GIMP_ARCHS}); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR32}\share\lua\*"; DestDir: "{app}\share\lua"; Components: lua and ({#GIMP_ARCHS}); Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 #endif
 Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #ifdef PYTHON
+Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\interpreters\pygimp.interp"; DestDir: "{app}\lib\gimp\{#DIR_VER}\interpreters"; Components: py and ({#GIMP_ARCHS}); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\*.py"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #endif
 
