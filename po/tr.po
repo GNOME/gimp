@@ -1,40 +1,14 @@
 # Turkish translation for GIMP
 # Copyright (C) 2001,2003, 2004 Free Software Foundation, Inc.
-# Copyright (C) 2005-2023 GIMP's COPYRIGHT HOLDER
+# Copyright (C) 2005-2024 GIMP's COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
 #
-# Eski Sürüm Çevirmenleri
-# --------------------------------------
 # Fatih Demir <kabalak@gtranslator.org>, 2001.
 # Ömer Fadıl USTA <omer_fad@hotmail.com>, 2001.
 # Alper Ersoy <aersoy@tfz.net>, 2001.
 # Görkem Çetin <gorkem@kde.org>, 2003, 2004.
-# Ubuntu Türkiye Çeviri Takımı tarafından çevrilmiştir, 2010.
+# Ubuntu Türkiye Çeviri Takımı, 2010.
 # Simge Sezgin <simgesezgin88@gmail.com>, 2015.
-#
-# Launchpad Katkıcıları
-# --------------------------------------
-# Angel Spy https://launchpad.net/~dilara.ekinci
-# Burak Yucesoy https://launchpad.net/~burakyucesoy
-# Caner Dağlı https://launchpad.net/~eldirr
-# Captain-G https://launchpad.net/~cihangiruluaslan
-# Egemen Özkan https://launchpad.net/~egozkan
-# EsatYuce https://launchpad.net/~esat
-# Hasan Yılmaz https://launchpad.net/~hasanyilmaz
-# Hasan İlingi https://launchpad.net/~hasanilingi1981-gmail
-# Jimi Green https://launchpad.net/~spevja
-# Kılıç Köken https://launchpad.net/~kilickoken
-# PolatArasan https://launchpad.net/~polat-talforum
-# Yiğit Ateş https://launchpad.net/~yigitates52
-# ergin üresin https://launchpad.net/~ergin012
-# erkuserdem https://launchpad.net/~erkuserdem
-# erokay https://launchpad.net/~erokayca
-# maydin95 https://launchpad.net/~mma-95
-# sagirbas https://launchpad.net/~soner-agirbas2
-# servetummetoglu https://launchpad.net/~servetummetoglu-hotmail
-#
-# Güncel Sürüm Çevirmenleri
-# --------------------------------------
 # Muhammet Kara <muhammetk@gmail.com>, 2011-2021.
 # Sabri Ünal <libreajans@gmail.com>, 2018-2020, 2022-2024.
 # Emin Tufan Çetin <etcetin@gmail.com>, 2019-2024.
@@ -43,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-10 20:59+0000\n"
-"PO-Revision-Date: 2024-03-11 12:11+0300\n"
-"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"POT-Creation-Date: 2024-03-15 12:50+0000\n"
+"PO-Revision-Date: 2024-03-15 08:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -1111,22 +1085,22 @@ msgstr "Bu rengi sil"
 #: app/actions/colormap-actions.c:62
 msgctxt "colormap-action"
 msgid "_Add Color from FG"
-msgstr "_ÖA'dan Renk Ekle"
+msgstr "_ÖP’den Renk Ekle"
 
 #: app/actions/colormap-actions.c:63 app/widgets/gimpcolordialog.c:217
 msgctxt "colormap-action"
 msgid "Add current foreground color"
-msgstr "Geçerli önalan rengini ekle"
+msgstr "Geçerli ön plan rengini ekle"
 
 #: app/actions/colormap-actions.c:68
 msgctxt "colormap-action"
 msgid "_Add Color from BG"
-msgstr "_AA'ya Renk Ekle"
+msgstr "_AP’den Renk Ekle"
 
 #: app/actions/colormap-actions.c:69
 msgctxt "colormap-action"
 msgid "Add current background color"
-msgstr "Geçerli artalan rengini ekle"
+msgstr "Geçerli arka plan rengini ekle"
 
 #: app/actions/colormap-actions.c:77
 msgctxt "colormap-action"
@@ -1176,7 +1150,7 @@ msgstr "Öntanımlı _Renkler"
 #: app/actions/context-actions.c:49
 msgctxt "context-action"
 msgid "Set foreground color to black, background color to white"
-msgstr "Önalan rengini siyah, artalan rengini beyaz olarak ayarla"
+msgstr "Ön plan rengini siyah, arka plan rengini beyaz olarak ayarla"
 
 #: app/actions/context-actions.c:54
 msgctxt "context-action"
@@ -1186,637 +1160,637 @@ msgstr "Renkleri _Değiştir"
 #: app/actions/context-actions.c:55
 msgctxt "context-action"
 msgid "Exchange foreground and background colors"
-msgstr "Önalan ile artalan renklerini karşılıklı değiştir"
+msgstr "Ön plan ile arka plan renklerini karşılıklı değiştir"
 
 #: app/actions/context-actions.c:63
 msgctxt "context-action"
 msgid "Foreground: Set Color From Palette"
-msgstr "Önalan: Paletten Renk Ata"
+msgstr "Ön Plan: Paletten Renk Ata"
 
 #: app/actions/context-actions.c:67
 msgctxt "context-action"
 msgid "Foreground: Use First Palette Color"
-msgstr "Önalan: İlk Palet Rengini Kullan"
+msgstr "Ön Plan: İlk Palet Rengini Kullan"
 
 #: app/actions/context-actions.c:71
 msgctxt "context-action"
 msgid "Foreground: Use Last Palette Color"
-msgstr "Önalan: Son Palet Rengini Kullan"
+msgstr "Ön Plan: Son Palet Rengini Kullan"
 
 #: app/actions/context-actions.c:75
 msgctxt "context-action"
 msgid "Foreground: Use Previous Palette Color"
-msgstr "Önalan: Önceki Palet Rengini Kullan"
+msgstr "Ön Plan: Önceki Palet Rengini Kullan"
 
 #: app/actions/context-actions.c:79
 msgctxt "context-action"
 msgid "Foreground: Use Next Palette Color"
-msgstr "Önalan: Sonraki Palet Rengini Kullan"
+msgstr "Ön Plan: Sonraki Palet Rengini Kullan"
 
 #: app/actions/context-actions.c:83
 msgctxt "context-action"
 msgid "Foreground: Skip Back Palette Color"
-msgstr "Önalan: Önceki Palet Rengine Geç"
+msgstr "Ön Plan: Önceki Palet Rengine Geç"
 
 #: app/actions/context-actions.c:87
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Palette Color"
-msgstr "Önalan: Sonraki Palet Rengine Geç"
+msgstr "Ön Plan: Sonraki Palet Rengine Geç"
 
 #: app/actions/context-actions.c:95
 msgctxt "context-action"
 msgid "Background: Set Color From Palette"
-msgstr "Artalan: Paletten Renk Ata"
+msgstr "Arka Plan: Paletten Renk Ata"
 
 #: app/actions/context-actions.c:99
 msgctxt "context-action"
 msgid "Background: Use First Palette Color"
-msgstr "Artalan: İlk Palet Rengini Kullan"
+msgstr "Arka Plan: İlk Palet Rengini Kullan"
 
 #: app/actions/context-actions.c:103
 msgctxt "context-action"
 msgid "Background: Use Last Palette Color"
-msgstr "Artalan: Son Palet Rengini Kullan"
+msgstr "Arka Plan: Son Palet Rengini Kullan"
 
 #: app/actions/context-actions.c:107
 msgctxt "context-action"
 msgid "Background: Use Previous Palette Color"
-msgstr "Artalan: Önceki Palet Rengini Kullan"
+msgstr "Arka Plan: Önceki Palet Rengini Kullan"
 
 #: app/actions/context-actions.c:111
 msgctxt "context-action"
 msgid "Background: Use Next Palette Color"
-msgstr "Artalan: Sonraki Palet Rengini Kullan"
+msgstr "Arka Plan: Sonraki Palet Rengini Kullan"
 
 #: app/actions/context-actions.c:115
 msgctxt "context-action"
 msgid "Background: Skip Back Palette Color"
-msgstr "Artalan: Önceki Palet Rengine Geç"
+msgstr "Arka Plan: Önceki Palet Rengine Geç"
 
 #: app/actions/context-actions.c:119
 msgctxt "context-action"
 msgid "Background: Skip Forward Palette Color"
-msgstr "Artalan: Sonraki Palet Rengine Geç"
+msgstr "Arka Plan: Sonraki Palet Rengine Geç"
 
 #: app/actions/context-actions.c:127
 msgctxt "context-action"
 msgid "Foreground: Set Color From Colormap"
-msgstr "Önalan: Renk Eşleminden Renk Ata"
+msgstr "Ön Plan: Renk Eşleminden Renk Ata"
 
 #: app/actions/context-actions.c:131
 msgctxt "context-action"
 msgid "Foreground: Use First Color From Colormap"
-msgstr "Önalan: Renk Eşleminden İlk Rengi Kullan"
+msgstr "Ön Plan: Renk Eşleminden İlk Rengi Kullan"
 
 #: app/actions/context-actions.c:135
 msgctxt "context-action"
 msgid "Foreground: Use Last Color From Colormap"
-msgstr "Önalan: Renk Eşleminden Son Rengi Kullan"
+msgstr "Ön Plan: Renk Eşleminden Son Rengi Kullan"
 
 #: app/actions/context-actions.c:139
 msgctxt "context-action"
 msgid "Foreground: Use Previous Color From Colormap"
-msgstr "Önalan: Renk Eşleminden Önceki Rengi Kullan"
+msgstr "Ön Plan: Renk Eşleminden Önceki Rengi Kullan"
 
 #: app/actions/context-actions.c:143
 msgctxt "context-action"
 msgid "Foreground: Use Next Color From Colormap"
-msgstr "Önalan: Renk Eşleminden Sonraki Rengi Kullan"
+msgstr "Ön Plan: Renk Eşleminden Sonraki Rengi Kullan"
 
 #: app/actions/context-actions.c:147
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Colormap"
-msgstr "Önalan: Renk Eşleminden Önceki Renge Geç"
+msgstr "Ön Plan: Renk Eşleminden Önceki Renge Geç"
 
 #: app/actions/context-actions.c:151
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Colormap"
-msgstr "Önalan: Renk Eşleminden Sonraki Renge Geç"
+msgstr "Ön Plan: Renk Eşleminden Sonraki Renge Geç"
 
 #: app/actions/context-actions.c:159
 msgctxt "context-action"
 msgid "Background: Set Color From Colormap"
-msgstr "Artalan: Renk Eşleminden Renk Ata"
+msgstr "Arka Plan: Renk Eşleminden Renk Ata"
 
 #: app/actions/context-actions.c:163
 msgctxt "context-action"
 msgid "Background: Use First Color From Colormap"
-msgstr "Artalan: Renk Eşleminden İlk Rengi Kullan"
+msgstr "Arka Plan: Renk Eşleminden İlk Rengi Kullan"
 
 #: app/actions/context-actions.c:167
 msgctxt "context-action"
 msgid "Background: Use Last Color From Colormap"
-msgstr "Artalan: Renk Eşleminden Son Rengi Kullan"
+msgstr "Arka Plan: Renk Eşleminden Son Rengi Kullan"
 
 #: app/actions/context-actions.c:171
 msgctxt "context-action"
 msgid "Background: Use Previous Color From Colormap"
-msgstr "Artalan: Renk Eşleminden Önceki Rengi Kullan"
+msgstr "Arka Plan: Renk Eşleminden Önceki Rengi Kullan"
 
 #: app/actions/context-actions.c:175
 msgctxt "context-action"
 msgid "Background: Use Next Color From Colormap"
-msgstr "Artalan: Renk Eşleminden Sonraki Rengi Kullan"
+msgstr "Arka Plan: Renk Eşleminden Sonraki Rengi Kullan"
 
 #: app/actions/context-actions.c:179
 msgctxt "context-action"
 msgid "Background: Skip Back Color From Colormap"
-msgstr "Artalan: Renk Eşleminden Önceki Renge Geç"
+msgstr "Arka Plan: Renk Eşleminden Önceki Renge Geç"
 
 #: app/actions/context-actions.c:183
 msgctxt "context-action"
 msgid "Background: Skip Forward Color From Colormap"
-msgstr "Artalan: Renk Eşleminden Sonraki Renge Geç"
+msgstr "Arka Plan: Renk Eşleminden Sonraki Renge Geç"
 
 #: app/actions/context-actions.c:191
 msgctxt "context-action"
 msgid "Foreground: Set Color From Swatch"
-msgstr "Önalan: Renk Örneğinden Renk Ata"
+msgstr "Ön Plan: Renk Örneğinden Renk Ata"
 
 #: app/actions/context-actions.c:195
 msgctxt "context-action"
 msgid "Foreground: Use First Color From Swatch"
-msgstr "Önalan: Renk Örneğinden İlk Rengi Kullan"
+msgstr "Ön Plan: Renk Örneğinden İlk Rengi Kullan"
 
 #: app/actions/context-actions.c:199
 msgctxt "context-action"
 msgid "Foreground: Use Last Color From Swatch"
-msgstr "Önalan: Renk Örneğinden Son Rengi Kullan"
+msgstr "Ön Plan: Renk Örneğinden Son Rengi Kullan"
 
 #: app/actions/context-actions.c:203
 msgctxt "context-action"
 msgid "Foreground: Use Previous Color From Swatch"
-msgstr "Önalan: Renk Örneğinden Önceki Rengi Kullan"
+msgstr "Ön Plan: Renk Örneğinden Önceki Rengi Kullan"
 
 #: app/actions/context-actions.c:207
 msgctxt "context-action"
 msgid "Foreground: Use Next Color From Swatch"
-msgstr "Önalan: Renk Örneğinden Sonraki Rengi Kullan"
+msgstr "Ön Plan: Renk Örneğinden Sonraki Rengi Kullan"
 
 #: app/actions/context-actions.c:211
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Swatch"
-msgstr "Önalan: Renk Örneğinden Önceki Renge Geç"
+msgstr "Ön Plan: Renk Örneğinden Önceki Renge Geç"
 
 #: app/actions/context-actions.c:215
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Swatch"
-msgstr "Önalan: Renk Örneğinden Sonraki Renge Geç"
+msgstr "Ön Plan: Renk Örneğinden Sonraki Renge Geç"
 
 #: app/actions/context-actions.c:223
 msgctxt "context-action"
 msgid "Background: Set Color From Swatch"
-msgstr "Artalan: Renk Örneğinden Renk Ata"
+msgstr "Arka Plan: Renk Örneğinden Renk Ata"
 
 #: app/actions/context-actions.c:227
 msgctxt "context-action"
 msgid "Background: Use First Color From Swatch"
-msgstr "Artalan: Renk Örneğinden İlk Rengi Kullan"
+msgstr "Arka Plan: Renk Örneğinden İlk Rengi Kullan"
 
 #: app/actions/context-actions.c:231
 msgctxt "context-action"
 msgid "Background: Use Last Color From Swatch"
-msgstr "Artalan: Renk Örneğinden Son Rengi Kullan"
+msgstr "Arka Plan: Renk Örneğinden Son Rengi Kullan"
 
 #: app/actions/context-actions.c:235
 msgctxt "context-action"
 msgid "Background: Use Previous Color From Swatch"
-msgstr "Artalan: Renk Örneğinden Önceki Rengi Kullan"
+msgstr "Arka Plan: Renk Örneğinden Önceki Rengi Kullan"
 
 #: app/actions/context-actions.c:239
 msgctxt "context-action"
 msgid "Background: Use Next Color From Swatch"
-msgstr "Artalan: Renk Örneğinden Sonraki Rengi Kullan"
+msgstr "Arka Plan: Renk Örneğinden Sonraki Rengi Kullan"
 
 #: app/actions/context-actions.c:243
 msgctxt "context-action"
 msgid "Background: Skip Color Back From Swatch"
-msgstr "Artalan: Renk Örneğinden Önceki Renge Geç"
+msgstr "Arka Plan: Renk Örneğinden Önceki Renge Geç"
 
 #: app/actions/context-actions.c:247
 msgctxt "context-action"
 msgid "Background: Skip Color Forward From Swatch"
-msgstr "Artalan: Renk Örneğinden Sonraki Renge Geç"
+msgstr "Arka Plan: Renk Örneğinden Sonraki Renge Geç"
 
 #: app/actions/context-actions.c:255
 msgctxt "context-action"
 msgid "Foreground Red: Set"
-msgstr "Önalan Kırmızı: Ayarla"
+msgstr "Ön Plan Kırmızı: Ayarla"
 
 #: app/actions/context-actions.c:259
 msgctxt "context-action"
 msgid "Foreground Red: Set to Minimum"
-msgstr "Önalan Kırmızı: En Düşüğe Ayarla"
+msgstr "Ön Plan Kırmızı: En Düşüğe Ayarla"
 
 #: app/actions/context-actions.c:263
 msgctxt "context-action"
 msgid "Foreground Red: Set to Maximum"
-msgstr "Önalan Kırmızı: En Yükseğe Ayarla"
+msgstr "Ön Plan Kırmızı: En Yükseğe Ayarla"
 
 #: app/actions/context-actions.c:267
 msgctxt "context-action"
 msgid "Foreground Red: Decrease by 1%"
-msgstr "Önalan Kırmızı: %1 Azalt"
+msgstr "Ön Plan Kırmızı: %1 Azalt"
 
 #: app/actions/context-actions.c:271
 msgctxt "context-action"
 msgid "Foreground Red: Increase by 1%"
-msgstr "Önalan Kırmızı: %1 Artır"
+msgstr "Ön Plan Kırmızı: %1 Artır"
 
 #: app/actions/context-actions.c:275
 msgctxt "context-action"
 msgid "Foreground Red: Decrease by 10%"
-msgstr "Önalan Kırmızı: %10 Azalt"
+msgstr "Ön Plan Kırmızı: %10 Azalt"
 
 #: app/actions/context-actions.c:279
 msgctxt "context-action"
 msgid "Foreground Red: Increase by 10%"
-msgstr "Önalan Kırmızı: %10 Artır"
+msgstr "Ön Plan Kırmızı: %10 Artır"
 
 #: app/actions/context-actions.c:287
 msgctxt "context-action"
 msgid "Foreground Green: Set"
-msgstr "Önalan Yeşil: Ayarla"
+msgstr "Ön Plan Yeşil: Ayarla"
 
 #: app/actions/context-actions.c:291
 msgctxt "context-action"
 msgid "Foreground Green: Set to Minimum"
-msgstr "Önalan Yeşil: En Düşüğe Ayarla"
+msgstr "Ön Plan Yeşil: En Düşüğe Ayarla"
 
 #: app/actions/context-actions.c:295
 msgctxt "context-action"
 msgid "Foreground Green: Set to Maximum"
-msgstr "Önalan Yeşil: En Yükseğe Ayarla"
+msgstr "Ön Plan Yeşil: En Yükseğe Ayarla"
 
 #: app/actions/context-actions.c:299
 msgctxt "context-action"
 msgid "Foreground Green: Decrease by 1%"
-msgstr "Önalan Yeşil: %1 Azalt"
+msgstr "Ön Plan Yeşil: %1 Azalt"
 
 #: app/actions/context-actions.c:303
 msgctxt "context-action"
 msgid "Foreground Green: Increase by 1%"
-msgstr "Önalan Yeşil: %1 Artır"
+msgstr "Ön Plan Yeşil: %1 Artır"
 
 #: app/actions/context-actions.c:307
 msgctxt "context-action"
 msgid "Foreground Green: Decrease by 10%"
-msgstr "Önalan Yeşil: %10 Azalt"
+msgstr "Ön Plan Yeşil: %10 Azalt"
 
 #: app/actions/context-actions.c:311
 msgctxt "context-action"
 msgid "Foreground Green: Increase by 10%"
-msgstr "Önalan Yeşil: %10 Artır"
+msgstr "Ön Plan Yeşil: %10 Artır"
 
 #: app/actions/context-actions.c:319
 msgctxt "context-action"
 msgid "Foreground Blue: Set"
-msgstr "Önalan Mavi: Ayarla"
+msgstr "Ön Plan Mavi: Ayarla"
 
 #: app/actions/context-actions.c:323
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Minimum"
-msgstr "Önalan Mavi: En Düşüğe Ayarla"
+msgstr "Ön Plan Mavi: En Düşüğe Ayarla"
 
 #: app/actions/context-actions.c:327
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Maximum"
-msgstr "Önalan Mavi: En Yükseğe Ayarla"
+msgstr "Ön Plan Mavi: En Yükseğe Ayarla"
 
 #: app/actions/context-actions.c:331
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 1%"
-msgstr "Önalan Mavi: %1 Azalt"
+msgstr "Ön Plan Mavi: %1 Azalt"
 
 #: app/actions/context-actions.c:335
 msgctxt "context-action"
 msgid "Foreground Blue: Increase by 1%"
-msgstr "Önalan Mavi: %1 Artır"
+msgstr "Ön Plan Mavi: %1 Artır"
 
 #: app/actions/context-actions.c:339
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 10%"
-msgstr "Önalan Mavi: %10 Azalt"
+msgstr "Ön Plan Mavi: %10 Azalt"
 
 #: app/actions/context-actions.c:343
 msgctxt "context-action"
 msgid "Foreground Blue: Increase by 10%"
-msgstr "Önalan Mavi: %10 Artır"
+msgstr "Ön Plan Mavi: %10 Artır"
 
 #: app/actions/context-actions.c:351
 msgctxt "context-action"
 msgid "Background Red: Set"
-msgstr "Artalan Kırmızı: Ayarla"
+msgstr "Arka Plan Kırmızı: Ayarla"
 
 #: app/actions/context-actions.c:355
 msgctxt "context-action"
 msgid "Background Red: Set to Minimum"
-msgstr "Artalan Kırmızı: En Düşüğe Ayarla"
+msgstr "Arka Plan Kırmızı: En Düşüğe Ayarla"
 
 #: app/actions/context-actions.c:359
 msgctxt "context-action"
 msgid "Background Red: Set to Maximum"
-msgstr "Artalan Kırmızı: En Yükseğe Ayarla"
+msgstr "Arka Plan Kırmızı: En Yükseğe Ayarla"
 
 #: app/actions/context-actions.c:363
 msgctxt "context-action"
 msgid "Background Red: Decrease by 1%"
-msgstr "Artalan Kırmızı: %1 Azalt"
+msgstr "Arka Plan Kırmızı: %1 Azalt"
 
 #: app/actions/context-actions.c:367
 msgctxt "context-action"
 msgid "Background Red: Increase by 1%"
-msgstr "Artalan Kırmızı: %1 Artır"
+msgstr "Arka Plan Kırmızı: %1 Artır"
 
 #: app/actions/context-actions.c:371
 msgctxt "context-action"
 msgid "Background Red: Decrease by 10%"
-msgstr "Artalan Kırmızı: %10 Azalt"
+msgstr "Arka Plan Kırmızı: %10 Azalt"
 
 #: app/actions/context-actions.c:375
 msgctxt "context-action"
 msgid "Background Red: Increase by 10%"
-msgstr "Artalan Kırmızı: %10 Artır"
+msgstr "Arka Plan Kırmızı: %10 Artır"
 
 #: app/actions/context-actions.c:383
 msgctxt "context-action"
 msgid "Background Green: Set"
-msgstr "Artalan Yeşil: Ayarla"
+msgstr "Arka Plan Yeşil: Ayarla"
 
 #: app/actions/context-actions.c:387
 msgctxt "context-action"
 msgid "Background Green: Set to Minimum"
-msgstr "Artalan Yeşil: En Düşüğe Ayarla"
+msgstr "Arka Plan Yeşil: En Düşüğe Ayarla"
 
 #: app/actions/context-actions.c:391
 msgctxt "context-action"
 msgid "Background Green: Set to Maximum"
-msgstr "Artalan Yeşil: En Yükseğe Ayarla"
+msgstr "Arka Plan Yeşil: En Yükseğe Ayarla"
 
 #: app/actions/context-actions.c:395
 msgctxt "context-action"
 msgid "Background Green: Decrease by 1%"
-msgstr "Artalan Yeşil: %1 Azalt"
+msgstr "Arka Plan Yeşil: %1 Azalt"
 
 #: app/actions/context-actions.c:399
 msgctxt "context-action"
 msgid "Background Green: Increase by 1%"
-msgstr "Artalan Yeşil: %1 Artır"
+msgstr "Arka Plan Yeşil: %1 Artır"
 
 #: app/actions/context-actions.c:403
 msgctxt "context-action"
 msgid "Background Green: Decrease by 10%"
-msgstr "Artalan Yeşil: %10 Azalt"
+msgstr "Arka Plan Yeşil: %10 Azalt"
 
 #: app/actions/context-actions.c:407
 msgctxt "context-action"
 msgid "Background Green: Increase by 10%"
-msgstr "Artalan Yeşil: %10 Artır"
+msgstr "Arka Plan Yeşil: %10 Artır"
 
 #: app/actions/context-actions.c:415
 msgctxt "context-action"
 msgid "Background Blue: Set"
-msgstr "Artalan Mavi: Ayarla"
+msgstr "Arka Plan Mavi: Ayarla"
 
 #: app/actions/context-actions.c:419
 msgctxt "context-action"
 msgid "Background Blue: Set to Minimum"
-msgstr "Artalan Mavi: En Düşüğe Ayarla"
+msgstr "Arka Plan Mavi: En Düşüğe Ayarla"
 
 #: app/actions/context-actions.c:423
 msgctxt "context-action"
 msgid "Background Blue: Set to Maximum"
-msgstr "Artalan Mavi: En Yükseğe Ayarla"
+msgstr "Arka Plan Mavi: En Yükseğe Ayarla"
 
 #: app/actions/context-actions.c:427
 msgctxt "context-action"
 msgid "Background Blue: Decrease by 1%"
-msgstr "Artalan Mavi: %1 Azalt"
+msgstr "Arka Plan Mavi: %1 Azalt"
 
 #: app/actions/context-actions.c:431
 msgctxt "context-action"
 msgid "Background Blue: Increase by 1%"
-msgstr "Artalan Mavi: %1 Artır"
+msgstr "Arka Plan Mavi: %1 Artır"
 
 #: app/actions/context-actions.c:435
 msgctxt "context-action"
 msgid "Background Blue: Decrease by 10%"
-msgstr "Artalan Mavi: %10 Azalt"
+msgstr "Arka Plan Mavi: %10 Azalt"
 
 #: app/actions/context-actions.c:439
 msgctxt "context-action"
 msgid "Background Blue: Increase by 10%"
-msgstr "Artalan Mavi: %10 Artır"
+msgstr "Arka Plan Mavi: %10 Artır"
 
 #: app/actions/context-actions.c:447
 msgctxt "context-action"
 msgid "Foreground Hue: Set"
-msgstr "Önalan Renk Tonu: Ayarla"
+msgstr "Ön Plan Renk Tonu: Ayarla"
 
 #: app/actions/context-actions.c:451
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Minimum"
-msgstr "Önalan Renk Tonu: En Düşüğe Ayarla"
+msgstr "Ön Plan Renk Tonu: En Düşüğe Ayarla"
 
 #: app/actions/context-actions.c:455
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Maximum"
-msgstr "Önalan Renk Tonu: En Yükseğe Ayarla"
+msgstr "Ön Plan Renk Tonu: En Yükseğe Ayarla"
 
 #: app/actions/context-actions.c:459
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 1%"
-msgstr "Önalan Renk Tonu: %1 Azalt"
+msgstr "Ön Plan Renk Tonu: %1 Azalt"
 
 #: app/actions/context-actions.c:463
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 1%"
-msgstr "Önalan Renk Tonu: %1 Artır"
+msgstr "Ön Plan Renk Tonu: %1 Artır"
 
 #: app/actions/context-actions.c:467
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 10%"
-msgstr "Önalan Renk Tonu: %10 Azalt"
+msgstr "Ön Plan Renk Tonu: %10 Azalt"
 
 #: app/actions/context-actions.c:471
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 10%"
-msgstr "Önalan Renk Tonu: %10 Artır"
+msgstr "Ön Plan Renk Tonu: %10 Artır"
 
 #: app/actions/context-actions.c:479
 msgctxt "context-action"
 msgid "Foreground Saturation: Set"
-msgstr "Önalan Doygunluğu: Ayarla"
+msgstr "Ön Plan Doygunluğu: Ayarla"
 
 #: app/actions/context-actions.c:483
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Minimum"
-msgstr "Önalan Doygunluğu: En Düşüğe Ayarla"
+msgstr "Ön Plan Doygunluğu: En Düşüğe Ayarla"
 
 #: app/actions/context-actions.c:487
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Maximum"
-msgstr "Önalan Doygunluğu: En Yükseğe Ayarla"
+msgstr "Ön Plan Doygunluğu: En Yükseğe Ayarla"
 
 #: app/actions/context-actions.c:491
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 1%"
-msgstr "Önalan Doygunluğu: %1 Azalt"
+msgstr "Ön Plan Doygunluğu: %1 Azalt"
 
 #: app/actions/context-actions.c:495
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 1%"
-msgstr "Önalan Doygunluğu: %1 Artır"
+msgstr "Ön Plan Doygunluğu: %1 Artır"
 
 #: app/actions/context-actions.c:499
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 10%"
-msgstr "Önalan Doygunluğu: %10 Azalt"
+msgstr "Ön Plan Doygunluğu: %10 Azalt"
 
 #: app/actions/context-actions.c:503
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 10%"
-msgstr "Önalan Doygunluğu: %10 Artır"
+msgstr "Ön Plan Doygunluğu: %10 Artır"
 
 #: app/actions/context-actions.c:511
 msgctxt "context-action"
 msgid "Foreground Value: Set"
-msgstr "Önalan Değeri: Ayarla"
+msgstr "Ön Plan Değeri: Ayarla"
 
 #: app/actions/context-actions.c:515
 msgctxt "context-action"
 msgid "Foreground Value: Set to Minimum"
-msgstr "Önalan Değeri: En Düşüğe Ayarla"
+msgstr "Ön Plan Değeri: En Düşüğe Ayarla"
 
 #: app/actions/context-actions.c:519
 msgctxt "context-action"
 msgid "Foreground Value: Set to Maximum"
-msgstr "Önalan Değeri: En Yükseğe Ayarla"
+msgstr "Ön Plan Değeri: En Yükseğe Ayarla"
 
 #: app/actions/context-actions.c:523
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 1%"
-msgstr "Önalan Değeri: %1 Azalt"
+msgstr "Ön Plan Değeri: %1 Azalt"
 
 #: app/actions/context-actions.c:527
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 1%"
-msgstr "Önalan Değeri: %1 Artır"
+msgstr "Ön Plan Değeri: %1 Artır"
 
 #: app/actions/context-actions.c:531
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 10%"
-msgstr "Önalan Değeri: %10 Azalt"
+msgstr "Ön Plan Değeri: %10 Azalt"
 
 #: app/actions/context-actions.c:535
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 10%"
-msgstr "Önalan Değeri: %10 Artır"
+msgstr "Ön Plan Değeri: %10 Artır"
 
 #: app/actions/context-actions.c:543
 msgctxt "context-action"
 msgid "Background Hue: Set"
-msgstr "Artalan Renk Tonu: Ayarla"
+msgstr "Arka Plan Renk Tonu: Ayarla"
 
 #: app/actions/context-actions.c:547
 msgctxt "context-action"
 msgid "Background Hue: Set to Minimum"
-msgstr "Artalan Renk Tonu: En Düşüğe Ayarla"
+msgstr "Arka Plan Renk Tonu: En Düşüğe Ayarla"
 
 #: app/actions/context-actions.c:551
 msgctxt "context-action"
 msgid "Background Hue: Set to Maximum"
-msgstr "Artalan Renk Tonu: En Yükseğe Ayarla"
+msgstr "Arka Plan Renk Tonu: En Yükseğe Ayarla"
 
 #: app/actions/context-actions.c:555
 msgctxt "context-action"
 msgid "Background Hue: Decrease by 1%"
-msgstr "Artalan Renk Tonu: %1 Azalt"
+msgstr "Arka Plan Renk Tonu: %1 Azalt"
 
 #: app/actions/context-actions.c:559
 msgctxt "context-action"
 msgid "Background Hue: Increase by 1%"
-msgstr "Artalan Renk Tonu: %1 Artır"
+msgstr "Arka Plan Renk Tonu: %1 Artır"
 
 #: app/actions/context-actions.c:563
 msgctxt "context-action"
 msgid "Background Hue: Decrease by 10%"
-msgstr "Artalan Renk Tonu: %10 Azalt"
+msgstr "Arka Plan Renk Tonu: %10 Azalt"
 
 #: app/actions/context-actions.c:567
 msgctxt "context-action"
 msgid "Background Hue: Increase by 10%"
-msgstr "Artalan Renk Tonu: %10 Artır"
+msgstr "Arka Plan Renk Tonu: %10 Artır"
 
 #: app/actions/context-actions.c:575
 msgctxt "context-action"
 msgid "Background Saturation: Set"
-msgstr "Artalan Doygunluğu: Ayarla"
+msgstr "Arka Plan Doygunluğu: Ayarla"
 
 #: app/actions/context-actions.c:579
 msgctxt "context-action"
 msgid "Background Saturation: Set to Minimum"
-msgstr "Artalan Doygunluğu: En Düşüğe Ayarla"
+msgstr "Arka Plan Doygunluğu: En Düşüğe Ayarla"
 
 #: app/actions/context-actions.c:583
 msgctxt "context-action"
 msgid "Background Saturation: Set to Maximum"
-msgstr "Artalan Doygunluğu: En Yükseğe Ayarla"
+msgstr "Arka Plan Doygunluğu: En Yükseğe Ayarla"
 
 #: app/actions/context-actions.c:587
 msgctxt "context-action"
 msgid "Background Saturation: Decrease by 1%"
-msgstr "Artalan Doygunluğu: %1 Azalt"
+msgstr "Arka Plan Doygunluğu: %1 Azalt"
 
 #: app/actions/context-actions.c:591
 msgctxt "context-action"
 msgid "Background Saturation: Increase by 1%"
-msgstr "Artalan Doygunluğu: %1 Artır"
+msgstr "Arka Plan Doygunluğu: %1 Artır"
 
 #: app/actions/context-actions.c:595
 msgctxt "context-action"
 msgid "Background Saturation: Decrease by 10%"
-msgstr "Artalan Doygunluğu: %10 Azalt"
+msgstr "Arka Plan Doygunluğu: %10 Azalt"
 
 #: app/actions/context-actions.c:599
 msgctxt "context-action"
 msgid "Background Saturation: Increase by 10%"
-msgstr "Artalan Doygunluğu: %10 Artır"
+msgstr "Arka Plan Doygunluğu: %10 Artır"
 
 #: app/actions/context-actions.c:607
 msgctxt "context-action"
 msgid "Background Value: Set"
-msgstr "Artalan Değeri: Ayarla"
+msgstr "Arka Plan Değeri: Ayarla"
 
 #: app/actions/context-actions.c:611
 msgctxt "context-action"
 msgid "Background Value: Set to Minimum"
-msgstr "Artalan Değeri: En Düşüğe Ayarla"
+msgstr "Arka Plan Değeri: En Düşüğe Ayarla"
 
 #: app/actions/context-actions.c:615
 msgctxt "context-action"
 msgid "Background Value: Set to Maximum"
-msgstr "Artalan Değeri: En Yükseğe Ayarla"
+msgstr "Arka Plan Değeri: En Yükseğe Ayarla"
 
 #: app/actions/context-actions.c:619
 msgctxt "context-action"
 msgid "Background Value: Decrease by 1%"
-msgstr "Artalan Değeri: %1 Azalt"
+msgstr "Arka Plan Değeri: %1 Azalt"
 
 #: app/actions/context-actions.c:623
 msgctxt "context-action"
 msgid "Background Value: Increase by 1%"
-msgstr "Artalan Değeri: %1 Artır"
+msgstr "Arka Plan Değeri: %1 Artır"
 
 #: app/actions/context-actions.c:627
 msgctxt "context-action"
 msgid "Background Value: Decrease by 10%"
-msgstr "Artalan Değeri: %10 Azalt"
+msgstr "Arka Plan Değeri: %10 Azalt"
 
 #: app/actions/context-actions.c:631
 msgctxt "context-action"
 msgid "Background Value: Increase by 10%"
-msgstr "Artalan Değeri: %10 Artır"
+msgstr "Arka Plan Değeri: %10 Artır"
 
 #: app/actions/context-actions.c:639
 msgctxt "context-action"
@@ -2535,7 +2509,7 @@ msgstr "İşaretçi için bir açıklama girin"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1234 app/display/gimpdisplayshell-dnd.c:630
+#: app/dialogs/welcome-dialog.c:1247 app/display/gimpdisplayshell-dnd.c:630
 #: app/widgets/gimplayertreeview.c:813 app/widgets/gimptoolbox.c:752
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -2806,7 +2780,7 @@ msgstr "Renk_ler"
 #: app/actions/dialogs-actions.c:159
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
-msgstr "ÖA/AA renk iletişim kutusunu aç"
+msgstr "ÖP/AP renk iletişim kutusunu aç"
 
 #: app/actions/dialogs-actions.c:164
 msgctxt "dialogs-action"
@@ -3858,22 +3832,22 @@ msgstr "Pano içeriğini özgün konumuna Yüzen Veri olarak yapıştır"
 #: app/actions/edit-actions.c:213
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
-msgstr "_ÖA Rengi İle Doldur"
+msgstr "_ÖP Rengi İle Doldur"
 
 #: app/actions/edit-actions.c:214
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
-msgstr "Seçimi, önalan rengini kullanarak doldur"
+msgstr "Seçimi, ön plan rengini kullanarak doldur"
 
 #: app/actions/edit-actions.c:219
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
-msgstr "_AA Rengi İle Doldur"
+msgstr "_AP Rengi İle Doldur"
 
 #: app/actions/edit-actions.c:220
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
-msgstr "Seçimi, artalan rengini kullanarak doldur"
+msgstr "Seçimi, arka plan rengini kullanarak doldur"
 
 #: app/actions/edit-actions.c:225
 msgctxt "edit-action"
@@ -5176,13 +5150,13 @@ msgstr "Sa_ğ Bitim Noktası"
 #: app/actions/gradient-editor-actions.c:214
 msgctxt "gradient-editor-action"
 msgid "_Foreground Color"
-msgstr "Ö_nalan Rengi"
+msgstr "Ö_n Plan Rengi"
 
 #: app/actions/gradient-editor-actions.c:171
 #: app/actions/gradient-editor-actions.c:219
 msgctxt "gradient-editor-action"
 msgid "_Background Color"
-msgstr "_Artalan Rengi"
+msgstr "_Arka Plan Rengi"
 
 #: app/actions/gradient-editor-actions.c:204
 msgctxt "gradient-editor-action"
@@ -5204,25 +5178,25 @@ msgstr "_Değişmez"
 #: app/actions/gradient-editor-actions.c:291
 msgctxt "gradient-editor-color-type"
 msgid "F_oreground Color"
-msgstr "Ö_nalan Rengi"
+msgstr "Ö_n Plan Rengi"
 
 #: app/actions/gradient-editor-actions.c:268
 #: app/actions/gradient-editor-actions.c:296
 msgctxt "gradient-editor-color-type"
 msgid "Fo_reground Color (Transparent)"
-msgstr "Ön_alan Rengi (Saydam)"
+msgstr "Ön_ Plan Rengi (Saydam)"
 
 #: app/actions/gradient-editor-actions.c:273
 #: app/actions/gradient-editor-actions.c:301
 msgctxt "gradient-editor-color-type"
 msgid "_Background Color"
-msgstr "_Artalan Rengi"
+msgstr "_Arka Plan Rengi"
 
 #: app/actions/gradient-editor-actions.c:278
 #: app/actions/gradient-editor-actions.c:306
 msgctxt "gradient-editor-color-type"
 msgid "B_ackground Color (Transparent)"
-msgstr "Ar_talan Rengi (Saydam)"
+msgstr "Ar_ka Plan Rengi (Saydam)"
 
 #: app/actions/gradient-editor-actions.c:314
 msgctxt "gradient-editor-blending"
@@ -7196,22 +7170,22 @@ msgstr "Etkin Paleti Düzenle"
 #: app/actions/palette-editor-actions.c:68
 msgctxt "palette-editor-action"
 msgid "New Color from _FG"
-msgstr "_ÖA'dan Yeni Renk"
+msgstr "_ÖP’den Yeni Renk"
 
 #: app/actions/palette-editor-actions.c:70
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the foreground color"
-msgstr "Önalan renginden yeni giriş oluştur"
+msgstr "Ön plan renginden yeni giriş oluştur"
 
 #: app/actions/palette-editor-actions.c:75
 msgctxt "palette-editor-action"
 msgid "New Color from _BG"
-msgstr "_AA'dan Yeni Renk"
+msgstr "_AP’den Yeni Renk"
 
 #: app/actions/palette-editor-actions.c:77
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the background color"
-msgstr "Artalan renginden yeni giriş oluştur"
+msgstr "Arka plan renginden yeni giriş oluştur"
 
 #: app/actions/palette-editor-actions.c:85
 msgid "Zoom _In"
@@ -7886,7 +7860,7 @@ msgstr "Metin Dosyasını Aç (UTF-8)"
 
 #: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/vectors-import-dialog.c:93 app/dialogs/welcome-dialog.c:714
+#: app/dialogs/vectors-import-dialog.c:93 app/dialogs/welcome-dialog.c:717
 #: app/widgets/gimpiconpicker.c:489 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:716
 msgid "_Open"
@@ -9775,7 +9749,7 @@ msgstr "_Temadan"
 #: app/actions/view-actions.c:550
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
-msgstr "Geçerli temanın artalan rengini kullan"
+msgstr "Geçerli temanın arka plan rengini kullan"
 
 #: app/actions/view-actions.c:555
 msgctxt "view-padding-color"
@@ -10341,7 +10315,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "'%%s' ayrıştırma hatası: satır %s karakterden daha uzun."
 
 #: app/config/gimpconfig-file.c:153 app/config/gimpconfig-file.c:197
-#: app/core/gimp-tags.c:145 app/gui/themes.c:513
+#: app/core/gimp-tags.c:145 app/gui/themes.c:525
 #: app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -10397,8 +10371,8 @@ msgstr "Saydamlık özel renk 2"
 #: app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "Etkinleştirildiğinde, görüntü penceresi odaklandığında görüntü etkin hale "
 "gelir. Bu özellik \"tıklayarak odakla\" özelliğini kullanan pencere "
@@ -11390,7 +11364,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:729
 msgid "Show the current foreground and background colors in the toolbox."
-msgstr "Geçerli önalan ve artalan renklerini araç kutusunda göster."
+msgstr "Geçerli ön plan ve arka plan renklerini araç kutusunda göster."
 
 #: app/config/gimprc-blurbs.h:732
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
@@ -11565,12 +11539,12 @@ msgstr "Eşit dikey boşluklarla dikey olarak dağıt"
 #: app/core/core-enums.c:101
 msgctxt "bucket-fill-mode"
 msgid "FG color fill"
-msgstr "ÖA renk doldurma"
+msgstr "ÖP renk doldurma"
 
 #: app/core/core-enums.c:102
 msgctxt "bucket-fill-mode"
 msgid "BG color fill"
-msgstr "AA renk doldurma"
+msgstr "AP renk doldurma"
 
 #: app/core/core-enums.c:103
 msgctxt "bucket-fill-mode"
@@ -11847,12 +11821,12 @@ msgstr "Desen"
 #: app/core/core-enums.c:632
 msgctxt "fill-style"
 msgid "Foreground color"
-msgstr "Önalan rengi"
+msgstr "Ön plan rengi"
 
 #: app/core/core-enums.c:633
 msgctxt "fill-style"
 msgid "Background color"
-msgstr "Artalan rengi"
+msgstr "Arka plan rengi"
 
 #: app/core/core-enums.c:634
 msgctxt "fill-style"
@@ -11877,50 +11851,50 @@ msgstr "Sabit"
 #: app/core/core-enums.c:695
 msgctxt "gradient-color"
 msgid "Foreground color"
-msgstr "Önalan rengi"
+msgstr "Ön plan rengi"
 
 #. Translators: this is an abbreviated version of "Foreground color".
 #. Keep it short.
 #: app/core/core-enums.c:698
 msgctxt "gradient-color"
 msgid "FG"
-msgstr "ÖA"
+msgstr "ÖP"
 
 #: app/core/core-enums.c:699
 msgctxt "gradient-color"
 msgid "Foreground color (transparent)"
-msgstr "Önalan rengi (saydam)"
+msgstr "Ön plan rengi (saydam)"
 
 #. Translators: this is an abbreviated version of "Foreground color (transparent)".
 #. Keep it short.
 #: app/core/core-enums.c:702
 msgctxt "gradient-color"
 msgid "FG (t)"
-msgstr "ÖA (s)"
+msgstr "ÖP (s)"
 
 #: app/core/core-enums.c:703
 msgctxt "gradient-color"
 msgid "Background color"
-msgstr "Artalan rengi"
+msgstr "Arka plan rengi"
 
 #. Translators: this is an abbreviated version of "Background color".
 #. Keep it short.
 #: app/core/core-enums.c:706
 msgctxt "gradient-color"
 msgid "BG"
-msgstr "AA"
+msgstr "AP"
 
 #: app/core/core-enums.c:707
 msgctxt "gradient-color"
 msgid "Background color (transparent)"
-msgstr "Artalan rengi (saydam)"
+msgstr "Arka plan rengi (saydam)"
 
 #. Translators: this is an abbreviated version of "Background color (transparent)".
 #. Keep it short.
 #: app/core/core-enums.c:710
 msgctxt "gradient-color"
 msgid "BG (t)"
-msgstr "AA (s)"
+msgstr "AP (s)"
 
 #: app/core/core-enums.c:823
 msgctxt "histogram-channel"
@@ -12501,7 +12475,7 @@ msgstr "Mürekkep"
 #: app/core/core-enums.c:1396
 msgctxt "undo-type"
 msgid "Select foreground"
-msgstr "Önalanı seç"
+msgstr "Ön planı seç"
 
 #: app/core/core-enums.c:1399
 msgctxt "undo-type"
@@ -12771,27 +12745,27 @@ msgstr "Özel"
 
 #: app/core/gimp-gradients.c:75
 msgid "FG to BG (RGB)"
-msgstr "ÖA'dan AA'ya (RGB)"
+msgstr "ÖP’den AP’ye (RGB)"
 
 #: app/core/gimp-gradients.c:83
 msgid "FG to BG (Hard Edge)"
-msgstr "ÖA'dan AA'ya (Sert Kenarlı)"
+msgstr "ÖP’den AP’ye (Sert Kenarlı)"
 
 #: app/core/gimp-gradients.c:91
 msgid "FG to BG (HSV Counter-Clockwise)"
-msgstr "ÖA'dan AA'ya (HSV Saat Yönünün Tersi)"
+msgstr "ÖP’den AP’ye (HSV Saat Yönünün Tersi)"
 
 #: app/core/gimp-gradients.c:99
 msgid "FG to BG (HSV Clockwise Hue)"
-msgstr "ÖA'dan AA'ya (HSV Saat Yönünde Renk Tonu)"
+msgstr "ÖP’den AP’ye (HSV Saat Yönünde Renk Tonu)"
 
 #: app/core/gimp-gradients.c:107
 msgid "FG to Transparent"
-msgstr "ÖA'dan Saydama"
+msgstr "ÖP’den Saydama"
 
 #: app/core/gimp-gradients.c:114
 msgid "FG to Transparent (Hard Edge)"
-msgstr "ÖA'dan Saydama (Sert Kenarlı)"
+msgstr "ÖP’den Saydama (Sert Kenarlı)"
 
 #. Translator:  This message is displayed while GIMP is waiting for
 #. * some operation to finish.  The %s argument is a message describing
@@ -12833,7 +12807,7 @@ msgstr "“%s” alt süreci çalıştırılamadı (%s)"
 msgid "tags-locale:C"
 msgstr "tags-locale:tr"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:525
+#: app/core/gimp-tags.c:156 app/gui/themes.c:537
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "'%s': %s kapatılırken hata"
@@ -13282,19 +13256,19 @@ msgstr "Seçim Maskesi"
 
 #: app/core/gimpcontext.c:668
 msgid "Foreground"
-msgstr "Önalan"
+msgstr "Ön plan"
 
 #: app/core/gimpcontext.c:669 app/core/gimpgrid.c:95
 msgid "Foreground color"
-msgstr "Önalan rengi"
+msgstr "Ön plan rengi"
 
 #: app/core/gimpcontext.c:675 app/core/gimpimage-new.c:163
 msgid "Background"
-msgstr "Artalan"
+msgstr "Arka plan"
 
 #: app/core/gimpcontext.c:676 app/core/gimpgrid.c:102
 msgid "Background color"
-msgstr "Artalan rengi"
+msgstr "Arka plan rengi"
 
 #: app/core/gimpcontext.c:682 app/core/gimpcontext.c:683
 #: app/operations/gimpoperationsettings.c:100 app/widgets/gimpbrushselect.c:176
@@ -13554,12 +13528,12 @@ msgstr "Tüyleme yarıçapı"
 #: app/core/gimpfilloptions.c:393 app/core/gimpfilloptions.c:506
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
-msgstr "Önalan Rengi İle Doldur"
+msgstr "Ön Plan Rengi İle Doldur"
 
 #: app/core/gimpfilloptions.c:398 app/core/gimpfilloptions.c:509
 msgctxt "undo-type"
 msgid "Fill with Background Color"
-msgstr "Artalan Rengi İle Doldur"
+msgstr "Arka Plan Rengi İle Doldur"
 
 #: app/core/gimpfilloptions.c:408
 msgctxt "undo-type"
@@ -13633,7 +13607,7 @@ msgstr "Izgara için kullanılan satır biçemi."
 
 #: app/core/gimpgrid.c:96
 msgid "The foreground color of the grid."
-msgstr "Izgaranın önalan rengi."
+msgstr "Izgaranın ön plan rengi."
 
 #: app/core/gimpgrid.c:103
 msgid ""
@@ -15107,7 +15081,7 @@ msgstr "Küme"
 
 #: app/core/gimptoolpreset.c:150
 msgid "Apply stored FG/BG"
-msgstr "Depolanan ÖA/AA'yı uygula"
+msgstr "Depolanan ÖP/AP’yi uygula"
 
 #: app/core/gimptoolpreset.c:157
 msgid "Apply stored opacity/paint mode"
@@ -15622,11 +15596,11 @@ msgstr "Gezgini Görüntüle"
 
 #: app/dialogs/dialogs.c:420
 msgid "FG/BG"
-msgstr "ÖA/AA"
+msgstr "ÖP/AP"
 
 #: app/dialogs/dialogs.c:420
 msgid "FG/BG Color"
-msgstr "ÖA/AA Rengi"
+msgstr "ÖP/AP Rengi"
 
 #: app/dialogs/extensions-dialog.c:76 app/widgets/gimpfileprocview.c:210
 msgid "Extensions"
@@ -15798,7 +15772,7 @@ msgstr "Yalnızca etkin _kümeler içinde birleştir"
 msgid "_Discard invisible layers"
 msgstr "Görünmez katmanları _gözden çıkar"
 
-#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:699
+#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:702
 msgid "Create a New Image"
 msgstr "Yeni Görüntü Oluştur"
 
@@ -16239,7 +16213,7 @@ msgstr "Tüm Tercihleri Sıfırla"
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "Tüm tercihleri öntanımlı değerlere getirmek istiyor musunuz?"
 
-#: app/dialogs/preferences-dialog.c:303 app/dialogs/welcome-dialog.c:354
+#: app/dialogs/preferences-dialog.c:303 app/dialogs/welcome-dialog.c:353
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr ""
 "İzleyen değişikliklerin etkin olabilmesi için GIMP’i yeniden başlatmalısınız:"
@@ -16888,7 +16862,7 @@ msgstr "_Tüm Klavye Kısayollarını Kaldır"
 
 #. Themes
 #: app/dialogs/preferences-dialog.c:1859 app/dialogs/preferences-dialog.c:1860
-#: app/dialogs/welcome-dialog.c:538
+#: app/dialogs/welcome-dialog.c:539
 msgid "Theme"
 msgstr "Tema"
 
@@ -16900,44 +16874,44 @@ msgstr "Tema Seç"
 msgid "Color scheme variant (if available)"
 msgstr "Renk şeması çeşidi (varsa)"
 
-#: app/dialogs/preferences-dialog.c:1944 app/dialogs/welcome-dialog.c:585
+#: app/dialogs/preferences-dialog.c:1944 app/dialogs/welcome-dialog.c:586
 msgid "_Override icon sizes set by the theme"
 msgstr "Temaca ayarlanan simge boyutlarının _üzerine yaz"
 
-#: app/dialogs/preferences-dialog.c:1957 app/dialogs/welcome-dialog.c:594
+#: app/dialogs/preferences-dialog.c:1957 app/dialogs/welcome-dialog.c:595
 msgid "Small"
 msgstr "Küçük"
 
-#: app/dialogs/preferences-dialog.c:1959 app/dialogs/welcome-dialog.c:596
+#: app/dialogs/preferences-dialog.c:1959 app/dialogs/welcome-dialog.c:597
 msgid "Medium"
 msgstr "Orta"
 
-#: app/dialogs/preferences-dialog.c:1961 app/dialogs/welcome-dialog.c:598
+#: app/dialogs/preferences-dialog.c:1961 app/dialogs/welcome-dialog.c:599
 msgid "Large"
 msgstr "Büyük"
 
-#: app/dialogs/preferences-dialog.c:1963 app/dialogs/welcome-dialog.c:600
+#: app/dialogs/preferences-dialog.c:1963 app/dialogs/welcome-dialog.c:601
 msgid "Huge"
 msgstr "Kocaman"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:1976 app/dialogs/welcome-dialog.c:616
+#: app/dialogs/preferences-dialog.c:1976 app/dialogs/welcome-dialog.c:617
 msgid "Font Scaling"
 msgstr "Yazı Tipi Ölçekleme"
 
-#: app/dialogs/preferences-dialog.c:1978 app/dialogs/welcome-dialog.c:618
+#: app/dialogs/preferences-dialog.c:1978 app/dialogs/welcome-dialog.c:619
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr "Yazı tipi ölçekleme mutlak boyutları kullanan temalarla çalışmaz."
 
-#: app/dialogs/preferences-dialog.c:1984 app/dialogs/welcome-dialog.c:624
+#: app/dialogs/preferences-dialog.c:1984 app/dialogs/welcome-dialog.c:625
 msgid "50%"
 msgstr "%50"
 
-#: app/dialogs/preferences-dialog.c:1986 app/dialogs/welcome-dialog.c:626
+#: app/dialogs/preferences-dialog.c:1986 app/dialogs/welcome-dialog.c:627
 msgid "100%"
 msgstr "%100"
 
-#: app/dialogs/preferences-dialog.c:1988 app/dialogs/welcome-dialog.c:628
+#: app/dialogs/preferences-dialog.c:1988 app/dialogs/welcome-dialog.c:629
 msgid "200%"
 msgstr "%200"
 
@@ -16953,7 +16927,7 @@ msgstr "Simge Teması"
 msgid "Select an Icon Theme"
 msgstr "Simge Teması Seç"
 
-#: app/dialogs/preferences-dialog.c:2133 app/dialogs/welcome-dialog.c:578
+#: app/dialogs/preferences-dialog.c:2133 app/dialogs/welcome-dialog.c:579
 msgid "Use symbolic icons if available"
 msgstr "Oluyorsa, sembolik simgeleri kullan"
 
@@ -16974,7 +16948,7 @@ msgstr "GIMP _logosunu göster (sürükle bırak hedefinde)"
 
 #: app/dialogs/preferences-dialog.c:2160
 msgid "Show _foreground & background color"
-msgstr "_Önalan ve artalan rengini göster"
+msgstr "_Ön plan ve arka plan rengini göster"
 
 #: app/dialogs/preferences-dialog.c:2164
 msgid "Show active _brush, pattern & gradient"
@@ -16984,7 +16958,7 @@ msgstr "Etkin _fırçayı, deseni ve renk geçişini göster"
 msgid "Show active _image"
 msgstr "Etkin _görüntüyü göster"
 
-#: app/dialogs/preferences-dialog.c:2177 app/dialogs/welcome-dialog.c:675
+#: app/dialogs/preferences-dialog.c:2177 app/dialogs/welcome-dialog.c:676
 msgid "Use tool _groups"
 msgstr "Araç _kümelerini kullan"
 
@@ -18159,7 +18133,7 @@ msgid "_Next Tip"
 msgstr "_Sonraki İpucu"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1080
+#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1093
 msgid "Learn more"
 msgstr "Daha çok bilgi edin"
 
@@ -18242,41 +18216,34 @@ msgstr "Yol _görünürlüğünü kilitle"
 msgid "Welcome to GIMP %s"
 msgstr "GIMP %sʼe hoş geldiniz"
 
-#: app/dialogs/welcome-dialog.c:226 app/dialogs/welcome-dialog.c:227
+#: app/dialogs/welcome-dialog.c:229 app/dialogs/welcome-dialog.c:230
 msgid "Welcome"
 msgstr "Hoş Geldiniz"
 
-#: app/dialogs/welcome-dialog.c:238 app/dialogs/welcome-dialog.c:239
+#: app/dialogs/welcome-dialog.c:244 app/dialogs/welcome-dialog.c:245
 msgid "Personalize"
 msgstr "Kişiselleştir"
 
-#: app/dialogs/welcome-dialog.c:250 app/dialogs/welcome-dialog.c:251
+#: app/dialogs/welcome-dialog.c:256 app/dialogs/welcome-dialog.c:257
 msgid "Contribute"
 msgstr "Katkı Ver"
 
-#: app/dialogs/welcome-dialog.c:262 app/dialogs/welcome-dialog.c:263
+#: app/dialogs/welcome-dialog.c:268 app/dialogs/welcome-dialog.c:269
 msgid "Create"
 msgstr "Oluştur"
 
-#: app/dialogs/welcome-dialog.c:278 app/dialogs/welcome-dialog.c:279
+#: app/dialogs/welcome-dialog.c:284 app/dialogs/welcome-dialog.c:285
 msgid "Release Notes"
 msgstr "Sürüm Notları"
 
-#: app/dialogs/welcome-dialog.c:290
-msgid ""
-"Show Welcome Dialog On Start (You can show it again from the \"Help\" menu)"
-msgstr ""
-"Başlagıçta Hoş Geldiniz İletişim Kutusunu Göster (\"Yardım\" menüsünden "
-"yeniden gösterebilirsiniz)"
-
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:415
+#: app/dialogs/welcome-dialog.c:416
 #, c-format
 msgid "You installed GIMP %s!"
 msgstr "GIMP %s kurdunuz!"
 
 #. Welcome message: left
-#: app/dialogs/welcome-dialog.c:430
+#: app/dialogs/welcome-dialog.c:431
 msgid ""
 "GIMP is Free Software for image authoring and manipulation.\n"
 "Want to know more?"
@@ -18284,22 +18251,22 @@ msgstr ""
 "GIMP, görüntü üretme ve işleme için Özgür Yazılımdır.\n"
 "Daha çoğunu öğrenmek ister misiniz?"
 
-#: app/dialogs/welcome-dialog.c:459
+#: app/dialogs/welcome-dialog.c:460
 msgid "GIMP website"
 msgstr "GIMP web sitesi"
 
-#: app/dialogs/welcome-dialog.c:463
+#: app/dialogs/welcome-dialog.c:464
 msgid "Tutorials"
 msgstr "Dersler"
 
-#: app/dialogs/welcome-dialog.c:468
+#: app/dialogs/welcome-dialog.c:469
 msgid "Documentation"
 msgstr "Belgelendirme"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
 #. Welcome message: right
-#: app/dialogs/welcome-dialog.c:476
+#: app/dialogs/welcome-dialog.c:477
 msgid ""
 "GIMP is Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
@@ -18307,69 +18274,80 @@ msgstr ""
 "GIMP, GNU genel kamu lisansı v3 lisansıyla dağıtılan Topluluk Yazılımıdır.\n"
 "Katkıda bulunmak ister misiniz?"
 
-#: app/dialogs/welcome-dialog.c:501
+#: app/dialogs/welcome-dialog.c:502
 msgid "Contributing"
 msgstr "Katkı vermek"
 
-#: app/dialogs/welcome-dialog.c:506
+#: app/dialogs/welcome-dialog.c:507
 msgid "Donating"
 msgstr "Bağış Yap"
 
-#: app/dialogs/welcome-dialog.c:548
+#: app/dialogs/welcome-dialog.c:549
 msgid "Color scheme"
 msgstr "Renk şeması"
 
-#: app/dialogs/welcome-dialog.c:565
+#: app/dialogs/welcome-dialog.c:566
 msgid "Icon theme"
 msgstr "Simge teması"
 
-#: app/dialogs/welcome-dialog.c:582
+#: app/dialogs/welcome-dialog.c:583
 msgid "Icon Scaling"
 msgstr "Simge Ölçekleme"
 
-#: app/dialogs/welcome-dialog.c:641
+#: app/dialogs/welcome-dialog.c:642
 msgid "GUI Language (requires restart)"
 msgstr "Arayüz Dili (yeniden başlatma gerektirir)"
 
-#: app/dialogs/welcome-dialog.c:646
+#: app/dialogs/welcome-dialog.c:647
 msgid "Additional Customizations"
 msgstr "Ek Özelleştirmeler"
 
-#: app/dialogs/welcome-dialog.c:655
+#: app/dialogs/welcome-dialog.c:656
 msgid "Merge menu and title bar (requires restart)"
 msgstr "Menü ve başlık çubuğunu birleştir (yeniden başlatma gerektirir)"
 
-#: app/dialogs/welcome-dialog.c:663
+#: app/dialogs/welcome-dialog.c:664
 msgid "Enable check for updates (requires internet)"
 msgstr "Güncellemeleri denetleyi etkinleştir (internet gerekir)"
 
-#: app/dialogs/welcome-dialog.c:702
+#: app/dialogs/welcome-dialog.c:705
 msgid "C_reate"
 msgstr "Oluştu_r"
 
-#: app/dialogs/welcome-dialog.c:711
+#: app/dialogs/welcome-dialog.c:714
 msgid "Open an Existing Image"
 msgstr "Var Olan Görüntüyü Aç"
 
 #. Recent Files
-#: app/dialogs/welcome-dialog.c:723
+#: app/dialogs/welcome-dialog.c:726
 msgid "Recent Images"
 msgstr "Son Görüntüler"
 
-#: app/dialogs/welcome-dialog.c:818
+#: app/dialogs/welcome-dialog.c:821
 msgid "O_pen Selected Images"
 msgstr "Seçilen Görüntüleri _Aç"
 
-#: app/dialogs/welcome-dialog.c:845
+#: app/dialogs/welcome-dialog.c:830
+#, fuzzy
+#| msgid ""
+#| "Show Welcome Dialog On Start (You can show it again from the \"Help\" "
+#| "menu)"
+msgid ""
+"Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
+msgstr ""
+"Başlagıçta Hoş Geldiniz İletişim Kutusunu Göster (\"Yardım\" menüsünden "
+"yeniden gösterebilirsiniz)"
+
+#: app/dialogs/welcome-dialog.c:858
 #, c-format
 msgid "Ways to contribute"
 msgstr "Katkı verme yolları"
 
-#: app/dialogs/welcome-dialog.c:854
+#: app/dialogs/welcome-dialog.c:867
 msgid "Report Bugs"
 msgstr "Hata Bildir"
 
-#: app/dialogs/welcome-dialog.c:856
+#: app/dialogs/welcome-dialog.c:869
 #, c-format
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
@@ -18378,11 +18356,11 @@ msgstr ""
 "Her uygulama gibi GIMP de hatasız değildir, ve karşılaştığınız hataları "
 "bildirmeniz geliştirme için çok önemlidir."
 
-#: app/dialogs/welcome-dialog.c:869
+#: app/dialogs/welcome-dialog.c:882
 msgid "Write Code"
 msgstr "Kod Yazın"
 
-#: app/dialogs/welcome-dialog.c:871
+#: app/dialogs/welcome-dialog.c:884
 #, c-format
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
@@ -18391,31 +18369,31 @@ msgstr ""
 "Koda katkıda bulunmak isterseniz Geliştirici Web Sitemizden öğrenmeye "
 "başlayabilirsiniz."
 
-#: app/dialogs/welcome-dialog.c:883
+#: app/dialogs/welcome-dialog.c:896
 msgid "Translate"
 msgstr "Çevir"
 
-#: app/dialogs/welcome-dialog.c:885
+#: app/dialogs/welcome-dialog.c:898
 #, c-format
 msgid "Contact the respective translation team for your language"
 msgstr "Dilinizle ilgili çeviri ekibiyle iletişime geçin"
 
-#: app/dialogs/welcome-dialog.c:897
+#: app/dialogs/welcome-dialog.c:910
 msgid "Donate"
 msgstr "Bağış Yap"
 
-#: app/dialogs/welcome-dialog.c:899
+#: app/dialogs/welcome-dialog.c:912
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr "Bağışlarınız önemlidir: GIMP’i sürdürülebilir kılar."
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:944
+#: app/dialogs/welcome-dialog.c:957
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "GIMP %s Sürüm Notları"
 
-#: app/dialogs/welcome-dialog.c:1055
+#: app/dialogs/welcome-dialog.c:1068
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "Tur almak için %s madde imli yayın ögelerine tıklayın."
@@ -20882,7 +20860,7 @@ msgstr "Eklenti"
 #: app/pdb/drawable-cmds.c:974 app/tools/gimpforegroundselecttool.c:1039
 msgctxt "command"
 msgid "Foreground Select"
-msgstr "Önalanı Seç"
+msgstr "Ön Planı Seç"
 
 #: app/pdb/drawable-color-cmds.c:85
 msgctxt "undo-type"
@@ -21268,8 +21246,8 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için yanlış bir değer türü ile "
 "çağrıldı (#%d). İstenen %s, olan %s."
@@ -22908,12 +22886,12 @@ msgstr "Geçerli bir çizgi sanatı kaynağı seçilmedi."
 #: app/tools/gimpbucketfilltool.c:818 app/tools/gimpbucketfilltool.c:958
 #: app/tools/gimpcolorpickertool.c:270 app/tools/gimppainttool.c:505
 msgid "Click in any image to pick the background color"
-msgstr "Artalan rengini seçmek için herhangi bir görüntüye tıklayın"
+msgstr "Arka plan rengini seçmek için herhangi bir görüntüye tıklayın"
 
 #: app/tools/gimpbucketfilltool.c:825 app/tools/gimpbucketfilltool.c:967
 #: app/tools/gimpcolorpickertool.c:262 app/tools/gimppainttool.c:499
 msgid "Click in any image to pick the foreground color"
-msgstr "Önalan rengini seçmek için herhangi bir görüntüye tıklayın"
+msgstr "Ön plan rengini seçmek için herhangi bir görüntüye tıklayın"
 
 #: app/tools/gimpbycolorselecttool.c:70
 msgid "Select by Color"
@@ -23406,7 +23384,7 @@ msgstr "_Elips Seçim"
 #: app/tools/gimperasertool.c:72
 msgid "Eraser Tool: Erase to background or transparency using a brush"
 msgstr ""
-"Silgi Aracı: Bir fırça kullanarak artalana ya da saydamlığa yönelik sil"
+"Silgi Aracı: Bir fırça kullanarak arka plana ya da saydamlığa yönelik sil"
 
 #: app/tools/gimperasertool.c:73
 msgid "_Eraser"
@@ -23423,7 +23401,7 @@ msgstr "Çizgiyi silmek için tıklayın"
 #: app/tools/gimperasertool.c:107
 #, c-format
 msgid "%s to pick a background color"
-msgstr "Bir artalan rengi seçmek için %s"
+msgstr "Bir arka plan rengi seçmek için %s"
 
 #. the anti_erase toggle
 #: app/tools/gimperasertool.c:166
@@ -23627,15 +23605,15 @@ msgstr "Darbe genişliğini öntanımlı boyutlarına sıfırla"
 
 #: app/tools/gimpforegroundselecttool.c:193
 msgid "Foreground Select"
-msgstr "Önalan Seçim"
+msgstr "Ön Plan Seçim"
 
 #: app/tools/gimpforegroundselecttool.c:194
 msgid "Foreground Select Tool: Select a region containing foreground objects"
-msgstr "Önalan Seçim Aracı: Önalan nesnelerini içeren bir bölge seç"
+msgstr "Ön Plan Seçim Aracı: Ön Plan nesnelerini içeren bir bölge seç"
 
 #: app/tools/gimpforegroundselecttool.c:195
 msgid "F_oreground Select"
-msgstr "_Önalan Seçim"
+msgstr "_Ön Plan Seçim"
 
 #: app/tools/gimpforegroundselecttool.c:293
 msgid "Cannot select from multiple layers."
@@ -23643,7 +23621,7 @@ msgstr "Çoklu katmanlardan seçim yapılamaz."
 
 #: app/tools/gimpforegroundselecttool.c:326
 msgid "Dialog for foreground select"
-msgstr "Önalan seçim iletişim kutusu"
+msgstr "Ön plan seçim iletişim kutusu"
 
 #: app/tools/gimpforegroundselecttool.c:343
 msgid "_Preview mask"
@@ -23651,7 +23629,7 @@ msgstr "Maske _ön izle"
 
 #: app/tools/gimpforegroundselecttool.c:354
 msgid "Select foreground pixels"
-msgstr "Önalan piksellerini seç"
+msgstr "Ön plan piksellerini seç"
 
 #: app/tools/gimpforegroundselecttool.c:630
 #: app/tools/gimpforegroundselecttool.c:635
@@ -23664,11 +23642,11 @@ msgstr "saflaştırma için Enter tuşuna bas."
 
 #: app/tools/gimpforegroundselecttool.c:658
 msgid "Selecting foreground"
-msgstr "Önalan seçiliyor"
+msgstr "Ön plan seçiliyor"
 
 #: app/tools/gimpforegroundselecttool.c:660
 msgid "Selecting background"
-msgstr "Artalan seçiliyor"
+msgstr "Arka plan seçiliyor"
 
 #: app/tools/gimpforegroundselecttool.c:662
 msgid "Selecting unknown"
@@ -24439,7 +24417,7 @@ msgstr "Sa_rmala"
 
 #: app/tools/gimpoffsettool.c:553
 msgid "Fill with _background color"
-msgstr "_Artalan rengi ile doldur"
+msgstr "_Arka plan rengi ile doldur"
 
 #: app/tools/gimpoffsettool.c:556
 msgid "Make _transparent"
@@ -24854,7 +24832,7 @@ msgstr "_Kusursuz Kopyalama"
 
 #: app/tools/gimpseamlessclonetool.c:793
 msgid "Cloning the foreground object"
-msgstr "Önalan nesnesi kopyalanıyor"
+msgstr "Ön plan nesnesi kopyalanıyor"
 
 #: app/tools/gimpselectionoptions.c:89
 msgid "Enable feathering of selection edges"
@@ -25823,12 +25801,12 @@ msgstr "Görüntü"
 #: app/tools/tools-enums.c:218
 msgctxt "matting-draw-mode"
 msgid "Draw foreground"
-msgstr "Önalan çiz"
+msgstr "Ön plan çiz"
 
 #: app/tools/tools-enums.c:219
 msgctxt "matting-draw-mode"
 msgid "Draw background"
-msgstr "Artalan çiz"
+msgstr "Arka plan çiz"
 
 #: app/tools/tools-enums.c:220
 msgctxt "matting-draw-mode"
@@ -27342,22 +27320,22 @@ msgstr "Aygıt durumunu kaydet"
 #: app/widgets/gimpdevicestatus.c:629
 #, c-format
 msgid "Foreground: %d, %d, %d (in color space of \"%s\")"
-msgstr "Önalan: %d, %d, %d (\"%s\" renk uzayında)"
+msgstr "Ön plan: %d, %d, %d (\"%s\" renk uzayında)"
 
 #: app/widgets/gimpdevicestatus.c:633
 #, c-format
 msgid "Foreground: %d, %d, %d (in sRGB)"
-msgstr "Önalan: %d, %d, %d (sRGB içinde)"
+msgstr "Ön plan: %d, %d, %d (sRGB içinde)"
 
 #: app/widgets/gimpdevicestatus.c:640
 #, c-format
 msgid "Background: %d, %d, %d (in color space of \"%s\")"
-msgstr "Artalan: %d, %d, %d (\"%s\" renk uzayında)"
+msgstr "Arka plan: %d, %d, %d (\"%s\" renk uzayında)"
 
 #: app/widgets/gimpdevicestatus.c:644
 #, c-format
 msgid "Background: %d, %d, %d (in sRGB)"
-msgstr "Artalan: %d, %d, %d (sRGB içinde)"
+msgstr "Arka plan: %d, %d, %d (sRGB içinde)"
 
 #: app/widgets/gimpdnd-xds.c:205
 msgid "The given filename does not have any known file extension."
@@ -27521,7 +27499,7 @@ msgstr "Renk Doldur"
 
 #: app/widgets/gimpfilleditor.c:164
 msgid "Fill BG Color"
-msgstr "AA Renk Doldur"
+msgstr "AP Renk Doldur"
 
 #: app/widgets/gimpfilleditor.c:187
 msgid "_Antialiasing"
@@ -27586,11 +27564,11 @@ msgstr "sRGB (%d, %d, %d)"
 
 #: app/widgets/gimpgradienteditor.c:1385
 msgid "Foreground color set to:"
-msgstr "Önalan rengi değiştirildi:"
+msgstr "Ön plan rengi değiştirildi:"
 
 #: app/widgets/gimpgradienteditor.c:1392
 msgid "Background color set to:"
-msgstr "Artalan rengi değiştirildi:"
+msgstr "Arka plan rengi değiştirildi:"
 
 #: app/widgets/gimpgradienteditor.c:1667 app/widgets/gimpgradienteditor.c:1728
 #, c-format
@@ -27631,19 +27609,19 @@ msgstr "Çizgi _biçemi:"
 
 #: app/widgets/gimpgrideditor.c:150
 msgid "Change grid foreground color"
-msgstr "Izgaranın önalan rengini değiştir"
+msgstr "Izgaranın ön plan rengini değiştir"
 
 #: app/widgets/gimpgrideditor.c:158
 msgid "_Foreground color:"
-msgstr "_Önalan rengi:"
+msgstr "Ö_n plan rengi:"
 
 #: app/widgets/gimpgrideditor.c:162
 msgid "Change grid background color"
-msgstr "Izgaranın artalan rengini değiştir"
+msgstr "Izgaranın arka plan rengini değiştir"
 
 #: app/widgets/gimpgrideditor.c:170
 msgid "_Background color:"
-msgstr "_Artalan rengi:"
+msgstr "_Arka plan rengi:"
 
 #: app/widgets/gimphelp.c:370
 msgid "Help browser is missing"
@@ -28479,18 +28457,18 @@ msgstr "Ön izleme oluşturuluyor..."
 
 #: app/widgets/gimptoolbox-color-area.c:233
 msgid "Change Foreground Color"
-msgstr "Önalan Rengini Değiştir"
+msgstr "Ön Plan Rengini Değiştir"
 
 #: app/widgets/gimptoolbox-color-area.c:238
 msgid "Change Background Color"
-msgstr "Artalan Rengini Değiştir"
+msgstr "Arka Plan Rengini Değiştir"
 
 #: app/widgets/gimptoolbox-color-area.c:298
 msgid ""
 "The active foreground color.\n"
 "Click to open the color selection dialog."
 msgstr ""
-"Etkin önalan rengi.\n"
+"Etkin ön plan rengi.\n"
 "Renk seçim iletişim kutusunu açmak için tıklayın."
 
 #: app/widgets/gimptoolbox-color-area.c:303
@@ -28498,7 +28476,7 @@ msgid ""
 "The active background color.\n"
 "Click to open the color selection dialog."
 msgstr ""
-"Etkin artalan rengi.\n"
+"Etkin arka plan rengi.\n"
 "Renk seçim iletişim kutusunu açmak için tıklayın."
 
 #: app/widgets/gimptoolbox-image-area.c:120
@@ -28704,12 +28682,12 @@ msgstr "Yeğlenen RGB (%s)"
 #: app/widgets/widgets-enums.c:24
 msgctxt "active-color"
 msgid "Foreground"
-msgstr "Önalan"
+msgstr "Ön plan"
 
 #: app/widgets/widgets-enums.c:25
 msgctxt "active-color"
 msgid "Background"
-msgstr "Artalan"
+msgstr "Arka plan"
 
 #: app/widgets/widgets-enums.c:53
 msgctxt "circle-background"
@@ -28729,12 +28707,12 @@ msgstr "Yalnızca seç"
 #: app/widgets/widgets-enums.c:116
 msgctxt "color-pick-target"
 msgid "Set foreground color"
-msgstr "Önalan rengini ayarla"
+msgstr "Ön plan rengini ayarla"
 
 #: app/widgets/widgets-enums.c:117
 msgctxt "color-pick-target"
 msgid "Set background color"
-msgstr "Artalan rengini ayarla"
+msgstr "Arka plan rengini ayarla"
 
 #: app/widgets/widgets-enums.c:118
 msgctxt "color-pick-target"
