@@ -6,6 +6,49 @@
 This is the unstable branch of GIMP.
 
 
+Overview of Changes from GIMP 2.99.18 to GIMP 3.0.0-RC1
+=======================================================
+
+Core:
+
+  - Conversion to Indexed:
+    * color precision increased;
+    * error diffusion in linear RGB while keeping palette generation as
+      CIE Lab.
+  - GIMP's GEGL operations:
+    * Posterize operates with a perceptual gamma;
+    * Threshold: processing with non-linear RGB;
+    * Hue-Saturation: using HSLA float as processing space which should be
+      quicker than previous implementation.
+  - Welcome dialog:
+    * Multiple images can be selected and opened at once with Enter key.
+    * "Show on Start" is now displayed specifically in the "Create" tab.
+  - Group layers can now have non-destructive layer effects.
+
+Tools:
+
+  - Gradient tool: the "Repeat" mode "Truncate" has been renamed "None
+    (truncate)" and reordered to be second in the list, just after "None
+    (extend)".
+
+Plug-ins:
+
+  - Plug-ins ported to GimpProcedureDialog: Warp, decompose.
+
+API:
+
+  - Changes in libgimp:
+    * gimp_procedure_run_config() can run with no config objects (equivalent to
+      run the prodcedure with default arguments).
+
+Build:
+
+  - Minimum dependency version bumps:
+    * babl 0.1.108
+  - Started a skeleton for unit testing framework for libgimp (only a few tests
+    so far but we eventually target exhaustivity).
+
+
 Overview of Changes from GIMP 2.99.16 to GIMP 2.99.18
 =====================================================
 
