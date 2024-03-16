@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-04 20:55+0000\n"
-"PO-Revision-Date: 2024-03-05 13:34+0100\n"
+"POT-Creation-Date: 2024-03-14 01:41+0000\n"
+"PO-Revision-Date: 2024-03-16 17:14+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -72,12 +72,12 @@ msgstr "Ejercitar una cabra (C)"
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
 #: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1379
 #: plug-ins/common/cml-explorer.c:2146 plug-ins/common/cml-explorer.c:2356
-#: plug-ins/common/colormap-remap.c:694 plug-ins/common/curve-bend.c:1809
-#: plug-ins/common/curve-bend.c:1844 plug-ins/common/file-gif-save.c:1222
-#: plug-ins/common/file-heif.c:2314 plug-ins/common/file-pdf-load.c:686
-#: plug-ins/common/file-pdf-save.c:1054 plug-ins/common/grid.c:819
-#: plug-ins/common/qbist.c:836 plug-ins/common/qbist.c:878
-#: plug-ins/common/qbist.c:932 plug-ins/common/sphere-designer.c:2292
+#: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
+#: plug-ins/common/file-gif-save.c:1222 plug-ins/common/file-heif.c:2314
+#: plug-ins/common/file-pdf-load.c:686 plug-ins/common/file-pdf-save.c:1054
+#: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:836
+#: plug-ins/common/qbist.c:878 plug-ins/common/qbist.c:932
+#: plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2651 plug-ins/common/unit-editor.c:435
 #: plug-ins/file-tiff/file-tiff-load.c:2547 plug-ins/flame/flame.c:622
 #: plug-ins/flame/flame.c:827
@@ -153,12 +153,12 @@ msgstr "Ejercitar una cabra (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1380 plug-ins/common/colormap-remap.c:695
-#: plug-ins/common/file-heif.c:2315 plug-ins/common/file-pdf-load.c:687
-#: plug-ins/common/grid.c:820 plug-ins/common/qbist.c:933
-#: plug-ins/common/sphere-designer.c:2652 plug-ins/common/unit-editor.c:266
-#: plug-ins/file-exr/file-exr.c:422 plug-ins/file-psd/psd-load.c:3561
-#: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
+#: plug-ins/common/cml-explorer.c:1380 plug-ins/common/file-heif.c:2315
+#: plug-ins/common/file-pdf-load.c:687 plug-ins/common/grid.c:820
+#: plug-ins/common/qbist.c:933 plug-ins/common/sphere-designer.c:2652
+#: plug-ins/common/unit-editor.c:266 plug-ins/file-exr/file-exr.c:435
+#: plug-ins/file-psd/psd-load.c:3561 plug-ins/flame/flame.c:828
+#: plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3446
@@ -646,7 +646,7 @@ msgstr "Vertical"
 #: plug-ins/common/file-tga.c:1116 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:911 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
-#: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:281
+#: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:285
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:700
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
@@ -1235,7 +1235,7 @@ msgstr "Guardar los parámetros del Examinador CML"
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
 #: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1218
 #: plug-ins/common/file-pcx.c:1219 plug-ins/common/file-pdf-save.c:659
-#: plug-ins/common/file-png.c:1518 plug-ins/common/file-raw-data.c:1337
+#: plug-ins/common/file-png.c:1517 plug-ins/common/file-raw-data.c:1337
 #: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
 #: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1381
 #: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-save.c:341
@@ -1287,15 +1287,15 @@ msgstr ""
 msgid "Error: failed to load parameters"
 msgstr "Error: falló al cargar los parámetros"
 
-#: plug-ins/common/colormap-remap.c:186
+#: plug-ins/common/colormap-remap.c:181
 msgid "R_earrange Colormap..."
 msgstr "R_eordenar el mapa de colores…"
 
-#: plug-ins/common/colormap-remap.c:192
+#: plug-ins/common/colormap-remap.c:187
 msgid "Rearrange the colormap"
 msgstr "Reordenar el mapa de colores"
 
-#: plug-ins/common/colormap-remap.c:193
+#: plug-ins/common/colormap-remap.c:188
 msgid ""
 "This procedure takes an indexed image and lets you alter the positions of "
 "colors in the colormap without visually changing the image."
@@ -1304,23 +1304,23 @@ msgstr ""
 "posiciones de los colores en el mapa de colores sin cambiar visualmente la "
 "imagen."
 
-#: plug-ins/common/colormap-remap.c:204
+#: plug-ins/common/colormap-remap.c:199
 msgid "Map"
 msgstr "Asignar"
 
-#: plug-ins/common/colormap-remap.c:205
+#: plug-ins/common/colormap-remap.c:200
 msgid "Remap array for the colormap"
 msgstr "Reasignar matriz para el mapa de colores"
 
-#: plug-ins/common/colormap-remap.c:220
+#: plug-ins/common/colormap-remap.c:215
 msgid "_Swap Colors"
 msgstr "Intercambiar colore_s"
 
-#: plug-ins/common/colormap-remap.c:224
+#: plug-ins/common/colormap-remap.c:219
 msgid "Swap two colors in the colormap"
 msgstr "Intercambiar dos colores en el mapa de colores"
 
-#: plug-ins/common/colormap-remap.c:225
+#: plug-ins/common/colormap-remap.c:220
 msgid ""
 "This procedure takes an indexed image and lets you swap the positions of two "
 "colors in the colormap without visually changing the image."
@@ -1329,76 +1329,62 @@ msgstr ""
 "posiciones de dos colores en el mapa de colores sin cambiar visualmente la "
 "imagen."
 
-#: plug-ins/common/colormap-remap.c:237
+#: plug-ins/common/colormap-remap.c:232
 msgid "Index 1"
 msgstr "Índice 1"
 
-#: plug-ins/common/colormap-remap.c:238
+#: plug-ins/common/colormap-remap.c:233
 msgid "First index in the colormap"
 msgstr "Primer índice en el mapa de colores"
 
-#: plug-ins/common/colormap-remap.c:243
+#: plug-ins/common/colormap-remap.c:238
 msgid "Index 2"
 msgstr "Índice 2"
 
-#: plug-ins/common/colormap-remap.c:244
+#: plug-ins/common/colormap-remap.c:239
 msgid "Second (other) index in the colormap"
 msgstr "Segundo (otro) índice en el mapa de colores"
 
-#: plug-ins/common/colormap-remap.c:277
+#: plug-ins/common/colormap-remap.c:269
+#, c-format
+msgid "Procedure '%s' only works with indexed images."
+msgstr "El procedimiento «%s» sólo funciona con imágenes indexadas."
+
+#: plug-ins/common/colormap-remap.c:610
+msgid "Rearrange Colors"
+msgstr "Reorganizar colores"
+
+#: plug-ins/common/colormap-remap.c:641
 msgid "Sort on Hue"
 msgstr "Ordenar según tonalidad"
 
-#: plug-ins/common/colormap-remap.c:278
+#: plug-ins/common/colormap-remap.c:647
 msgid "Sort on Saturation"
 msgstr "Ordenar según la saturación"
 
-#: plug-ins/common/colormap-remap.c:279
+#: plug-ins/common/colormap-remap.c:653
 msgid "Sort on Value"
 msgstr "Ordenar según el valor"
 
-#: plug-ins/common/colormap-remap.c:284
+#: plug-ins/common/colormap-remap.c:659
 msgid "Reverse Order"
 msgstr "Orden inverso"
 
-#: plug-ins/common/colormap-remap.c:285
+#: plug-ins/common/colormap-remap.c:665
 msgid "Reset Order"
 msgstr "Reiniciar el orden"
 
-#: plug-ins/common/colormap-remap.c:412 plug-ins/common/colormap-remap.c:423
-#: plug-ins/common/colormap-remap.c:434
-msgid "Invalid remap array was passed to remap function"
+#: plug-ins/common/colormap-remap.c:674
+msgid ""
+"Drag and drop colors to rearrange the colormap.\n"
+"The numbers shown are the original indices."
 msgstr ""
-"Se ha pasado una matriz de reasignación inválida a la función de reasignación"
+"Arrastre y suelte los colores para reconfigurar el mapa de color.\n"
+"Los números que se muestran son los índices originales."
 
-#: plug-ins/common/colormap-remap.c:458
+#: plug-ins/common/colormap-remap.c:736
 msgid "Rearranging the colormap"
 msgstr "Reordenando el mapa de colores"
-
-#: plug-ins/common/colormap-remap.c:689
-msgid "Rearrange Colormap"
-msgstr "Reordenar el mapa de colores"
-
-# //R ¿Esto existe?
-#. The Reset button
-#: plug-ins/common/colormap-remap.c:693 plug-ins/common/curve-bend.c:1250
-#: plug-ins/common/sphere-designer.c:2650 plug-ins/common/tile-small.c:525
-#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:913
-msgid "_Reset"
-msgstr "_Restablecer"
-
-#: plug-ins/common/colormap-remap.c:795
-msgid ""
-"Drag and drop colors to rearrange the colormap.  The numbers shown are the "
-"original indices.  Right-click for a menu with sort options."
-msgstr ""
-"Arrastre y suelte los colores para reconfigurar la paleta. Los números que "
-"se muestran son los índices originales. Pulse el botón derecho para abrir un "
-"menú con opciones de ordenación."
-
-#: plug-ins/common/colormap-remap.c:833
-msgid "Rearrange Colors"
-msgstr "Reorganizar colores"
 
 #. Decompositions availables.
 #. * All the following values have to be kept in sync with those of decompose.c
@@ -2127,6 +2113,14 @@ msgstr "I_ntercambiar"
 msgid "Swap the two curves"
 msgstr "Intercambiar las dos curvas"
 
+# //R ¿Esto existe?
+#. The Reset button
+#: plug-ins/common/curve-bend.c:1250 plug-ins/common/sphere-designer.c:2650
+#: plug-ins/common/tile-small.c:525 plug-ins/gimpressionist/preview.c:182
+#: plug-ins/ifs-compose/ifs-compose.c:913
+msgid "_Reset"
+msgstr "_Restablecer"
+
 #: plug-ins/common/curve-bend.c:1255
 msgid "Reset the active curve"
 msgstr "Reiniciar la curva activa"
@@ -2289,22 +2283,18 @@ msgid "Black"
 msgstr "Negro"
 
 #: plug-ins/common/decompose.c:221
-#| msgid "YCbCr"
 msgid "YCbCr470"
 msgstr "YCbCr470"
 
 #: plug-ins/common/decompose.c:222
-#| msgid "YCbCr"
 msgid "YCbCr470f"
 msgstr "YCbCr470f"
 
 #: plug-ins/common/decompose.c:224
-#| msgid "YCbCr"
 msgid "YCbCr709"
 msgstr "YCbCr709"
 
 #: plug-ins/common/decompose.c:225
-#| msgid "YCbCr"
 msgid "YCbCr709f"
 msgstr "YCbCr709f"
 
@@ -2653,7 +2643,7 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:784
 #: plug-ins/common/file-xbm.c:741 plug-ins/common/file-xmc.c:646
 #: plug-ins/common/file-xpm.c:384 plug-ins/common/file-xwd.c:484
-#: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:193
+#: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:493
 #: plug-ins/file-icns/file-icns-load.c:508 plug-ins/file-ico/ico-load.c:673
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
@@ -2727,7 +2717,7 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #: plug-ins/common/file-cel.c:845 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-gif-save.c:975 plug-ins/common/file-html-table.c:359
 #: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1103
-#: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1510
+#: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1509
 #: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1321
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
 #: plug-ins/common/file-tga.c:1229 plug-ins/common/file-xbm.c:1050
@@ -2973,7 +2963,7 @@ msgstr "Pincel de GIMP"
 msgid "Radiance RGBE"
 msgstr "Resplandor RGBE"
 
-#: plug-ins/common/file-gegl.c:133 plug-ins/file-exr/file-exr.c:109
+#: plug-ins/common/file-gegl.c:133 plug-ins/file-exr/file-exr.c:111
 msgid "OpenEXR image"
 msgstr "Imagen OpenEXR"
 
@@ -3356,6 +3346,23 @@ msgstr ""
 msgid "GIMP brush (animated)"
 msgstr "Pincel GIMP (animado)"
 
+#: plug-ins/common/file-gih.c:161
+msgid "Exports images in GIMP Brush Pipe format"
+msgstr "Exporta imágenes en el formato de tubería de pinceles de GIMP"
+
+#: plug-ins/common/file-gih.c:163
+msgid ""
+"This plug-in exports an image in the GIMP brush pipe format. For a colored "
+"brush pipe, RGBA layers are used, otherwise the layers should be grayscale "
+"masks. The image can be multi-layered, and additionally the layers can be "
+"divided into a rectangular array of brushes."
+msgstr ""
+"Este complemento exporta una imagen en el formato de tubería de pincel de "
+"GIMP. Para una tubería de pincel de color, se utilizan capas RGBA, de lo "
+"contrario las capas deben ser máscaras en escala de grises. La imagen puede "
+"tener varias capas y, además, las capas pueden dividirse en una matriz "
+"rectangular de pinceles."
+
 #: plug-ins/common/file-gih.c:180
 msgid "Brush Pipe"
 msgstr "Tubería de pinceles"
@@ -3400,6 +3407,10 @@ msgstr "_Rango"
 msgid "Ranks of the dimensions"
 msgstr "Rangos de las dimensiones"
 
+#: plug-ins/common/file-gih.c:223
+msgid "Selection modes"
+msgstr "Modos de selección"
+
 #: plug-ins/common/file-gih.c:229
 msgid "Display as"
 msgstr "Mostrar como"
@@ -3416,20 +3427,20 @@ msgstr "D_imensión"
 msgid "How many dimensions the animated brush has"
 msgstr "Cuántas dimensiones tiene el pincel animado"
 
-#: plug-ins/common/file-gih.c:475
+#: plug-ins/common/file-gih.c:514
 msgid "Width Mismatch!"
 msgstr "¡Anchura incoherente!"
 
-#: plug-ins/common/file-gih.c:476
+#: plug-ins/common/file-gih.c:515
 msgid "Height Mismatch!"
 msgstr "¡Altura incoherente!"
 
-#: plug-ins/common/file-gih.c:523
+#: plug-ins/common/file-gih.c:562
 #, c-format
 msgid "Displays as a %d × %d grid on each layer"
 msgstr "Se muestra como una cuadrícula %d × %d en cada capa"
 
-#: plug-ins/common/file-gih.c:709
+#: plug-ins/common/file-gih.c:748
 msgid "Ranks:"
 msgstr "Rangos:"
 
@@ -4170,7 +4181,7 @@ msgstr "Escribir fragmento tIME (hora de creación)"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:724 plug-ins/common/file-png.c:2318
+#: plug-ins/common/file-mng.c:724 plug-ins/common/file-png.c:2342
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "No se pudo guardar la transparencia sin pérdidas, guardando la opacidad en "
@@ -4829,7 +4840,7 @@ msgstr "Ocurrió un error al leer el archivo «%s». ¿Está corrupto el archivo
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Modelo de color desconocido en el archivo PNG «%s»."
 
-#: plug-ins/common/file-png.c:912 plug-ins/file-exr/file-exr.c:260
+#: plug-ins/common/file-png.c:912 plug-ins/file-exr/file-exr.c:264
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "No se pudo crear una imagen nueva para «%s»: %s"
@@ -4863,19 +4874,19 @@ msgstr ""
 "La imagen PNG que está importando especifica un desplazamiento de %d, %d. "
 "¿Quiere aplicar este desplazamiento a la capa?"
 
-#: plug-ins/common/file-png.c:1475
+#: plug-ins/common/file-png.c:1474
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Error al crear la estructura de escritura PNG mientras exporta «%s»."
 
-#: plug-ins/common/file-png.c:1484
+#: plug-ins/common/file-png.c:1483
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Error al exportar «%s». No se pudo crear la estructura de información del "
 "encabezado PNG."
 
-#: plug-ins/common/file-png.c:1492
+#: plug-ins/common/file-png.c:1491
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Error al exportar «%s». No se pudo exportar la imagen."
@@ -6110,6 +6121,7 @@ msgid "Merge imported paths"
 msgstr "Combinar las rutas importadas"
 
 #: plug-ins/common/file-svg.c:382 plug-ins/common/file-svg.c:811
+#: plug-ins/file-exr/file-exr.c:356 plug-ins/file-exr/file-exr.c:370
 msgid "Unknown reason"
 msgstr "Razón desconocida"
 
@@ -9396,44 +9408,49 @@ msgstr "Guardando: %s"
 msgid "Mipmap Options"
 msgstr "Opciones del mipmap"
 
-#: plug-ins/file-exr/file-exr.c:112
+#: plug-ins/file-exr/file-exr.c:114
 msgid "Loads files in the OpenEXR file format"
 msgstr "Carga archivos en el formato de archivo OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:201
+#: plug-ins/file-exr/file-exr.c:205
 #, c-format
 msgid "Error opening file '%s' for reading"
 msgstr "Error al abrir el archivo «%s» para lectura"
 
-#: plug-ins/file-exr/file-exr.c:212
+#: plug-ins/file-exr/file-exr.c:216
 #, c-format
 msgid "Error querying image dimensions from '%s'"
 msgstr "Error al consultar las dimensiones de la imagen «%s»"
 
-#: plug-ins/file-exr/file-exr.c:232
+#: plug-ins/file-exr/file-exr.c:236
 #, c-format
 msgid "Error querying image precision from '%s'"
 msgstr "Error al consultar la precisión de la imagen «%s»"
 
-#: plug-ins/file-exr/file-exr.c:250
+#: plug-ins/file-exr/file-exr.c:254
 #, c-format
 msgid "Error querying image type from '%s'"
 msgstr "Error al consultar el tipo de la imagen «%s»"
 
-#: plug-ins/file-exr/file-exr.c:312
+#: plug-ins/file-exr/file-exr.c:316
 #, c-format
 msgid "Error reading pixel data from '%s'"
 msgstr "Error al leer los datos de los píxeles de «%s»"
 
-#: plug-ins/file-exr/file-exr.c:419
+#: plug-ins/file-exr/file-exr.c:355 plug-ins/file-exr/file-exr.c:369
+#, c-format
+msgid "Failed to load metadata: %s"
+msgstr "No se pudieron cargar los metadatos: %s"
+
+#: plug-ins/file-exr/file-exr.c:432
 msgid "Import OpenEXR"
 msgstr "Importar OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:433
+#: plug-ins/file-exr/file-exr.c:446
 msgid "Unknown Channel Name"
 msgstr "Nombre del canal desconocido"
 
-#: plug-ins/file-exr/file-exr.c:434
+#: plug-ins/file-exr/file-exr.c:447
 msgid ""
 "The image contains a single unknown channel.\n"
 "It has been converted to grayscale."
@@ -16431,6 +16448,14 @@ msgstr "_Escáner/Cámara…"
 #: plug-ins/twain/twain.c:496
 msgid "Transferring data from scanner/camera"
 msgstr "Transfiriendo datos desde el escáner/cámara"
+
+#~ msgid "Invalid remap array was passed to remap function"
+#~ msgstr ""
+#~ "Se ha pasado una matriz de reasignación inválida a la función de "
+#~ "reasignación"
+
+#~ msgid "Rearrange Colormap"
+#~ msgstr "Reordenar el mapa de colores"
 
 #~ msgid "Color _model:"
 #~ msgstr "_Modelo de color:"
