@@ -1,9 +1,8 @@
 # Default commit CI should only run the following pipelines:
-# - Linux native GCC build (base & fast)
+# - Linux native CLang build (base & fast)
 # - Win64 crossbuild (base & fast)
 # Scheduled CI ($CI_PIPELINE_SOURCE == "schedule") will run regularly:
-# - Linux native CLang build (rare usefulness)
-# - Win32 crossbuild (rare usefulness)
+# - Linux native GCC build (rare usefulness)
 # - Win Aarch64/64/32 native builds (base but slow)
 # - Flatpak build (slow and doesn't need constant publishing)
 # - cppcheck (static code analysis)
