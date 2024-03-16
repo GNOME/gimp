@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-28 22:31+0000\n"
-"PO-Revision-Date: 2023-10-29 00:45+0200\n"
+"POT-Creation-Date: 2024-03-11 21:17+0000\n"
+"PO-Revision-Date: 2024-03-16 17:24+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -26,22 +26,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: plug-ins/python/colorxhtml.py:91
 msgid "Save as colored HTML text..."
 msgstr "Guardar como texto HTML coloreado…"
 
 #: plug-ins/python/colorxhtml.py:92 plug-ins/python/colorxhtml.py:98
-#: plug-ins/python/gradients-save-as-css.py:116
+#: plug-ins/python/gradients-save-as-css.py:113
 #: plug-ins/python/palette-offset.py:135
-#: plug-ins/python/python-console/python-console.py:271
+#: plug-ins/python/python-console/python-console.py:272
 #: plug-ins/python/spyro-plus.py:1719
 msgid "_Cancel"
 msgstr "_Cancelar"
 
 #: plug-ins/python/colorxhtml.py:93 plug-ins/python/colorxhtml.py:99
-#: plug-ins/python/gradients-save-as-css.py:117
+#: plug-ins/python/gradients-save-as-css.py:114
 #: plug-ins/python/palette-offset.py:136 plug-ins/python/spyro-plus.py:1720
 msgid "_OK"
 msgstr "_Aceptar"
@@ -117,91 +117,91 @@ msgstr "Guardar como texto HTML coloreado"
 msgid "Colored HTML text"
 msgstr "Texto HTML coloreado"
 
-#: plug-ins/python/foggify.py:100
+#: plug-ins/python/foggify.py:111
 msgid "Layer _name"
 msgstr "_Nombre de la capa"
 
-#: plug-ins/python/foggify.py:101
+#: plug-ins/python/foggify.py:112
 msgid "Layer name"
 msgstr "Nombre de la capa"
 
-#: plug-ins/python/foggify.py:102
+#: plug-ins/python/foggify.py:113
 msgid "Clouds"
 msgstr "Nubes"
 
-#: plug-ins/python/foggify.py:105
+#: plug-ins/python/foggify.py:116
 msgid "_Turbulence"
 msgstr "_Turbulencia"
 
-#: plug-ins/python/foggify.py:106
+#: plug-ins/python/foggify.py:117
 msgid "Turbulence"
 msgstr "Turbulencia"
 
-#: plug-ins/python/foggify.py:110
+#: plug-ins/python/foggify.py:121
 msgid "O_pacity"
 msgstr "O_pacidad"
 
-#: plug-ins/python/foggify.py:111
+#: plug-ins/python/foggify.py:122
 msgid "Opacity"
 msgstr "Opacidad"
 
-#: plug-ins/python/foggify.py:120
+#: plug-ins/python/foggify.py:131
 msgid "_Fog color"
 msgstr "Color de la _niebla"
 
-#: plug-ins/python/foggify.py:121
+#: plug-ins/python/foggify.py:132
 msgid "Fog color"
 msgstr "Color de la niebla"
 
-#: plug-ins/python/foggify.py:137
+#: plug-ins/python/foggify.py:148
 msgid "Add a layer of fog"
 msgstr "Añadir una capa de niebla"
 
-#: plug-ins/python/foggify.py:138
+#: plug-ins/python/foggify.py:149
 msgid "Adds a layer of fog to the image."
 msgstr "Añadir una capa de niebla a la imagen."
 
-#: plug-ins/python/foggify.py:140
+#: plug-ins/python/foggify.py:151
 msgid "_Fog..."
 msgstr "_Niebla…"
 
-#: plug-ins/python/gradients-save-as-css.py:97
+#: plug-ins/python/gradients-save-as-css.py:94
 msgid "_File..."
 msgstr "_Archivo…"
 
-#: plug-ins/python/gradients-save-as-css.py:105
+#: plug-ins/python/gradients-save-as-css.py:102
 msgid "Choose CSS file..."
 msgstr "Elegir un archivo CSS…"
 
-#: plug-ins/python/gradients-save-as-css.py:114
+#: plug-ins/python/gradients-save-as-css.py:111
 msgid "Save as CSS file..."
 msgstr "Guardar como archivo CSS…"
 
-#: plug-ins/python/gradients-save-as-css.py:190
+#: plug-ins/python/gradients-save-as-css.py:180
 #: plug-ins/python/palette-sort.py:345
-#: plug-ins/python/python-console/python-console.py:296
+#: plug-ins/python/python-console/python-console.py:300
 msgid "Run mode"
 msgstr "Modo de ejecución"
 
-#: plug-ins/python/gradients-save-as-css.py:191
-#: plug-ins/python/python-console/python-console.py:296
+#: plug-ins/python/gradients-save-as-css.py:181
+#: plug-ins/python/python-console/python-console.py:300
 msgid "The run mode"
 msgstr "El modo de ejecución"
 
-#: plug-ins/python/gradients-save-as-css.py:195
+#: plug-ins/python/gradients-save-as-css.py:185
 msgid "_Gradient to use"
 msgstr "_Degradado que usar"
 
-#: plug-ins/python/gradients-save-as-css.py:198
+#: plug-ins/python/gradients-save-as-css.py:188
 msgid "_File"
 msgstr "_Archivo"
 
-#: plug-ins/python/gradients-save-as-css.py:214
-#: plug-ins/python/gradients-save-as-css.py:215
+#: plug-ins/python/gradients-save-as-css.py:204
+#: plug-ins/python/gradients-save-as-css.py:205
 msgid "Creates a new palette from a given gradient"
 msgstr "Crea una paleta nueva a partir de un degradado dado"
 
-#: plug-ins/python/gradients-save-as-css.py:217
+#: plug-ins/python/gradients-save-as-css.py:207
 msgid "Save Gradient as CSS..."
 msgstr "Guardar degradado como CSS…"
 
@@ -230,8 +230,8 @@ msgid "Histogram Export..."
 msgstr "Exportación de histograma…"
 
 #: plug-ins/python/histogram-export.py:209
-msgid "Histogram _File"
-msgstr "_Archivo del histograma"
+msgid "Histogram File"
+msgstr "Archivo del histograma"
 
 #: plug-ins/python/histogram-export.py:213
 msgid "_Bucket Size"
@@ -460,140 +460,140 @@ msgid "Create a new repeating gradient using colors from the palette."
 msgstr ""
 "Crear un degradado nuevo que se repite, utilizando los colores de la paleta."
 
-#: plug-ins/python/python-console/python-console.py:78
+#: plug-ins/python/python-console/python-console.py:79
 msgid "Python Console"
 msgstr "Consola de Python"
 
-#: plug-ins/python/python-console/python-console.py:80
-#: plug-ins/python/python-console/python-console.py:272
+#: plug-ins/python/python-console/python-console.py:81
+#: plug-ins/python/python-console/python-console.py:273
 msgid "_Save"
 msgstr "_Guardar"
 
-#: plug-ins/python/python-console/python-console.py:81
+#: plug-ins/python/python-console/python-console.py:82
 msgid "Cl_ear"
 msgstr "_Limpiar"
 
-#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:83
 msgid "_Browse..."
 msgstr "_Examinar…"
 
-#: plug-ins/python/python-console/python-console.py:83
-#: plug-ins/python/python-console/python-console.py:220
+#: plug-ins/python/python-console/python-console.py:84
+#: plug-ins/python/python-console/python-console.py:221
 msgid "_Close"
 msgstr "_Cerrar"
 
-#: plug-ins/python/python-console/python-console.py:217
+#: plug-ins/python/python-console/python-console.py:218
 msgid "Python Procedure Browser"
 msgstr "Examinador de procedimientos de Python"
 
-#: plug-ins/python/python-console/python-console.py:219
+#: plug-ins/python/python-console/python-console.py:220
 msgid "_Apply"
 msgstr "_Aplicar"
 
-#: plug-ins/python/python-console/python-console.py:245
+#: plug-ins/python/python-console/python-console.py:246
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "No se pudo abrir «%s» para escribir: %s"
 
-#: plug-ins/python/python-console/python-console.py:260
+#: plug-ins/python/python-console/python-console.py:261
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "No se pudo escribir en «%s»: %s"
 
-#: plug-ins/python/python-console/python-console.py:269
+#: plug-ins/python/python-console/python-console.py:270
 msgid "Save Python-Fu Console Output"
 msgstr "Guardar la salida de la consola de Python-Fu"
 
-#: plug-ins/python/python-console/python-console.py:317
+#: plug-ins/python/python-console/python-console.py:321
 msgid "Python _Console"
 msgstr "_Consola de Python"
 
-#: plug-ins/python/python-console/python-console.py:318
+#: plug-ins/python/python-console/python-console.py:322
 msgid "Interactive GIMP Python interpreter"
 msgstr "Intérprete interactivo de Python en GIMP"
 
-#: plug-ins/python/python-console/python-console.py:319
+#: plug-ins/python/python-console/python-console.py:323
 msgid "Type in commands and see results"
 msgstr "Escriba los comandos y vea los resultados"
 
 #
-#: plug-ins/python/spyro-plus.py:49
+#: plug-ins/python/spyro-plus.py:51
 msgid "Spyro Layer"
 msgstr "Capa espiro"
 
-#: plug-ins/python/spyro-plus.py:50
+#: plug-ins/python/spyro-plus.py:52
 msgid "Spyro Path"
 msgstr "Ruta del espirógrafo"
 
-#: plug-ins/python/spyro-plus.py:60
+#: plug-ins/python/spyro-plus.py:62
 msgid "As New Layer"
 msgstr "Como capa nueva"
 
-#: plug-ins/python/spyro-plus.py:61
+#: plug-ins/python/spyro-plus.py:63
 msgid "Redraw on last active layer"
 msgstr "Redibujar en la última capa activa"
 
-#: plug-ins/python/spyro-plus.py:62
+#: plug-ins/python/spyro-plus.py:64
 msgid "As Path"
 msgstr "Como ruta"
 
-#: plug-ins/python/spyro-plus.py:110
+#: plug-ins/python/spyro-plus.py:112
 msgid "Circle"
 msgstr "Círculo"
 
-#: plug-ins/python/spyro-plus.py:146
+#: plug-ins/python/spyro-plus.py:148
 msgid "Polygon-Star"
 msgstr "Polígono estrellado"
 
 # Como seno, conseno, sinusoidal, sinusoide
 #. Sine wave on a circle ring.
-#: plug-ins/python/spyro-plus.py:162 plug-ins/python/spyro-plus.py:989
+#: plug-ins/python/spyro-plus.py:164 plug-ins/python/spyro-plus.py:989
 msgid "Sine"
 msgstr "Sinusoide"
 
 #. Semi-circles, based on a polygon
-#: plug-ins/python/spyro-plus.py:172
+#: plug-ins/python/spyro-plus.py:174
 msgid "Bumps"
 msgstr "Protuberancias"
 
-#: plug-ins/python/spyro-plus.py:277
+#: plug-ins/python/spyro-plus.py:279
 msgid "Rack"
 msgstr "Estante"
 
-#: plug-ins/python/spyro-plus.py:321
+#: plug-ins/python/spyro-plus.py:323
 msgid "Frame"
 msgstr "Cuadro"
 
-#: plug-ins/python/spyro-plus.py:433
+#: plug-ins/python/spyro-plus.py:436
 msgid "Selection"
 msgstr "Selección"
 
-#: plug-ins/python/spyro-plus.py:518
+#: plug-ins/python/spyro-plus.py:521
 msgid "Pencil"
 msgstr "Lápiz"
 
-#: plug-ins/python/spyro-plus.py:534
+#: plug-ins/python/spyro-plus.py:537
 msgid "AirBrush"
 msgstr "Aerógrafo"
 
-#: plug-ins/python/spyro-plus.py:601
+#: plug-ins/python/spyro-plus.py:604
 msgid "Preview"
 msgstr "Vista previa"
 
-#: plug-ins/python/spyro-plus.py:606
+#: plug-ins/python/spyro-plus.py:609
 msgid "Stroke"
 msgstr "Trazo"
 
-#: plug-ins/python/spyro-plus.py:653
+#: plug-ins/python/spyro-plus.py:656
 msgid "PaintBrush"
 msgstr "Pincel"
 
-#: plug-ins/python/spyro-plus.py:655
+#: plug-ins/python/spyro-plus.py:658
 msgid "Ink"
 msgstr "Tinta"
 
 # Quizá no se debería traducir.
-#: plug-ins/python/spyro-plus.py:656
+#: plug-ins/python/spyro-plus.py:659
 msgid "MyPaintBrush"
 msgstr "Pincel MyPaint"
 
