@@ -39,6 +39,12 @@
 
 #define COMP_MODE_SIZE sizeof(guint16)
 
+typedef struct
+{
+  gint32  group_index; /* first layer from the top that has clipping */
+  gint32  last_index;  /* last layer that will be part of the clipping group */
+} ClippingInfo;
+
 
 /*  Local function prototypes  */
 static gint             read_header_block          (PSDimage       *img_a,
@@ -90,7 +96,10 @@ static gint             add_merged_image           (GimpImage      *image,
                                                     GError        **error);
 
 /*  Local utility function prototypes  */
-static void             convert_clipping_groups    (PSDimage       *img_a,
+static void       check_duplicate_clipping_group   (PSDlayer      **lyr_a,
+                                                    gint16          num_layers,
+                                                    ClippingInfo   *clipping_info);
+static void             mark_clipping_groups       (PSDimage       *img_a,
                                                     PSDlayer      **lyr_a);
 static GimpLayer      * add_clipping_group         (GimpImage      *image,
                                                     GimpLayer      *parent);
@@ -1788,17 +1797,49 @@ free_lyr_chn (PSDchannel **lyr_chn, gint channel_count)
 }
 
 static void
-convert_clipping_groups (PSDimage  *img_a,
-                         PSDlayer **lyr_a)
+check_duplicate_clipping_group (PSDlayer     **lyr_a,
+                                gint16         num_layers,
+                                ClippingInfo  *clipping_info)
 {
-  gboolean  use_clipping_group;
-  gint      lidx;                  /* Layer index */
-  gint      gidx;                  /* Clipping group start index */
+  /* Check whether there is a Photoshop group containing the same layers as
+   * the new GIMP clipping group that we intend to add. If that is the case
+   * there is no reason to add an extra clipping group.
+   * Example image: see layers 55-52 and 40-37 */
 
-  IFDBG(3) g_debug ("Pre process layers...");
+  /* 1. There should be a PS group just above where our group_index is */
+  if (clipping_info->group_index < num_layers-1 &&
+      (lyr_a[clipping_info->group_index+1]->group_type == 1 ||
+       lyr_a[clipping_info->group_index+1]->group_type == 2))
+    {
+      /* 2. The PS group should end right below where our last_index is */
+      if (clipping_info->last_index > 0 &&
+          lyr_a[clipping_info->last_index-1]->group_type == 3)
+        {
+          IFDBG(3) g_debug ("\tClipping group is a duplicate, removing extra group from %d to %d",
+                     clipping_info->last_index, clipping_info->group_index);
+          lyr_a[clipping_info->group_index]->clipping_group_type = 0;
+          lyr_a[clipping_info->last_index]->clipping_group_type = 0;
+        }
+    }
+}
+
+static void
+mark_clipping_groups (PSDimage  *img_a,
+                      PSDlayer **lyr_a)
+{
+  ClippingInfo  parent_info = {-1, -1};
+  GArray       *clipping_group_stack;
+  gboolean      use_clipping_group;
+  gint          lidx;
+
+  IFDBG(3) g_debug ("Pre process layers to find and mark clipping groups");
+
+  clipping_group_stack = g_array_new (FALSE, FALSE, sizeof (ClippingInfo));
+  g_array_append_val (clipping_group_stack, parent_info);
+
   use_clipping_group = FALSE;
-  gidx = -1;
-  for (lidx = 0; lidx < img_a->num_layers; ++lidx)
+
+  for (lidx = img_a->num_layers-1; lidx >= 0; --lidx)
     {
       lyr_a[lidx]->unsupported_features = img_a->unsupported_features;
 
@@ -1809,58 +1850,129 @@ convert_clipping_groups (PSDimage  *img_a,
            * starting with the first non-clipping layer and including all
            * the clipping layers above it.
            */
-          if (lidx > 0)
+          if (use_clipping_group)
             {
-              if (lyr_a[lidx]->group_type != 0)
-                {
-                  /* Ignoring group layers with clipping set for now. */
-                  IFDBG(3) g_debug ("Group Layer with clipping: [%d] %s",
-                                    lidx, lyr_a[lidx]->name);
-                  use_clipping_group = FALSE;
-                  gidx = -1;
-                }
-              else if (gidx == -1)
-                {
-                  use_clipping_group = TRUE;
-
-                  /* Looking at the results we should ignore layer groups */
-                  if (lyr_a[lidx-1]->group_type == 0)
-                    gidx = lidx - 1;
-                  else
-                    gidx = lidx;
-
-                  lyr_a[gidx]->clipping_group_type = 1; /* start clipping group */
-                  IFDBG(3) g_debug ("Layer: %s - start of clipping group", lyr_a[gidx]->name);
-                }
-              else if (lidx + 1 == img_a->num_layers && use_clipping_group)
-                {
-                  /* end clipping group at the top of the layer stack */
-                  lyr_a[lidx]->clipping_group_type = 2; /* end clipping group */
-                  IFDBG(3) g_debug ("Layer: %s - end of clipping group", lyr_a[lidx]->name);
-
-                  use_clipping_group = FALSE;
-                  gidx = -1;
-                }
-              else
-                {
-                  lyr_a[lidx]->clipping_group_type = 0;
-                }
+              /* continuation of the clipping group */
+              IFDBG(3) g_debug ("[%d] clipping continues", lidx);
             }
-        }
-      else if (use_clipping_group)
-        {
-          /* end clipping group */
-          lyr_a[lidx-1]->clipping_group_type = 2;
-          IFDBG(3) g_debug ("Layer: %s - end of clipping group", lyr_a[lidx-1]->name);
-
-          use_clipping_group = FALSE;
-          gidx = -1;
+          else
+            {
+              /* top of the clipping group */
+              lyr_a[lidx]->clipping_group_type = 2;
+              use_clipping_group = TRUE;
+              parent_info.group_index = lidx;
+              parent_info.last_index = lidx;
+              IFDBG(3) g_debug ("[%d] clipping START", lidx);
+            }
+          if (lyr_a[lidx]->group_type == 1 || lyr_a[lidx]->group_type == 2)
+            {
+              /* We are going into a group, add parent_info for clipping */
+              g_array_append_val (clipping_group_stack, parent_info);
+              use_clipping_group = FALSE;
+              IFDBG(3) g_debug ("\tDescending into a group");
+              parent_info.last_index = -1;
+            }
+          else if (lyr_a[lidx]->group_type == 3)
+            {
+              /* bottom of group should never be reached here! */
+              g_critical ("Unexpected group end marker, should not happen!");
+            }
         }
       else
         {
-          lyr_a[lidx]->clipping_group_type = 0;
+          if (use_clipping_group)
+            {
+              /* bottom of the clipping group, unless this is a group,
+               * in which case we need to find the group start marker. */
+              parent_info.last_index = lidx;
+              use_clipping_group = FALSE;
+              if (lyr_a[lidx]->group_type == 1 || lyr_a[lidx]->group_type == 2)
+                {
+                  /* We are going into a group, add parent_info for clipping */
+                  g_array_append_val (clipping_group_stack, parent_info);
+                  IFDBG(3) g_debug ("[%d] Descending into a group that the bottom of a clipping group",
+                                    lidx);
+                }
+              else
+                {
+                  lyr_a[lidx]->clipping_group_type = 1; /* start clipping group */
+                  IFDBG(3) g_debug ("[%d] Clipping group END: Add group from here to layer %d",
+                                    lidx, parent_info.group_index);
+                  check_duplicate_clipping_group (lyr_a, img_a->num_layers, &parent_info);
+                }
+              parent_info.group_index = -1;
+              parent_info.last_index = -1;
+            }
+          else
+            {
+              /* continuation of normal (non clipping) layers */
+              lyr_a[lidx]->clipping_group_type = 0;
+
+              if (lyr_a[lidx]->group_type == 3)
+                {
+                  /* bottom of group: go back in the stack one level */
+                  if (clipping_group_stack->len)
+                    {
+                      parent_info = g_array_index (clipping_group_stack, ClippingInfo,
+                                                  clipping_group_stack->len - 1);
+                      g_array_remove_index (clipping_group_stack,
+                                            clipping_group_stack->len - 1);
+                      if (parent_info.group_index > -1)
+                        {
+                          /* Test if we were in a group that was the start of a
+                           * clipping group, but is itself not clipping!
+                           * (example image layers 96-27) */
+                          if (lyr_a[parent_info.last_index]->clipping == 0)
+                            {
+                              /* found the bottom of the clipping group */
+                              lyr_a[lidx]->clipping_group_type = 1; /* start clipping group */
+                              parent_info.last_index = lidx;
+                              use_clipping_group = FALSE;
+                              IFDBG(3) g_debug ("[%d] Clipping group END: Add group from here to layer %d",
+                                                lidx, parent_info.group_index);
+                              check_duplicate_clipping_group (lyr_a, img_a->num_layers,
+                                                              &parent_info);
+                              parent_info.group_index = -1;
+                              parent_info.last_index  = -1;
+                            }
+                          else
+                            {
+                              IFDBG(3) g_debug ("[%d] No clipping group ending, going level up", lidx);
+                              use_clipping_group = TRUE;
+                            }
+                        }
+                      else
+                        {
+                          IFDBG(3) g_debug ("[%d] No clipping group ending, going level up", lidx);
+                        }
+                    }
+                  else
+                    {
+                      g_critical ("Unmatched group layer start marker at layer %d.", lidx);
+                      parent_info.group_index = -1;
+                      parent_info.last_index  = -1;
+                    }
+                }
+              else
+                {
+                  IFDBG(3) g_debug ("[%d] No clipping", lidx);
+                  if (lyr_a[lidx]->group_type == 1 || lyr_a[lidx]->group_type == 2)
+                    {
+                      if (clipping_group_stack->len)
+                        {
+                          IFDBG(3) g_debug ("\tDescending into a group");
+                          /* We are going into a group, add parent_info for clipping */
+                          g_array_append_val (clipping_group_stack, parent_info);
+                          parent_info.group_index = -1;
+                          parent_info.last_index = -1;
+                          use_clipping_group = FALSE;
+                        }
+                    }
+                }
+            }
         }
     }
+  g_array_free (clipping_group_stack, FALSE);
 }
 
 static gint
@@ -1872,6 +1984,7 @@ add_layers (GimpImage     *image,
 {
   PSDchannel          **lyr_chn;
   GArray               *parent_group_stack;
+  //GArray               *clipping_group_stack;
   GimpLayer            *parent_group = NULL;
   GimpLayer            *clipping_group = NULL;
   guint16               alpha_chn;
@@ -1916,7 +2029,7 @@ add_layers (GimpImage     *image,
       return -1;
     }
 
-  convert_clipping_groups (img_a, lyr_a);
+  mark_clipping_groups (img_a, lyr_a);
 
   /* set the root of the group hierarchy */
   parent_group_stack = g_array_new (FALSE, FALSE, sizeof (GimpLayer *));
@@ -2257,7 +2370,12 @@ add_layers (GimpImage     *image,
            * start marker.
            */
           if (lyr_a[lidx]->name)
-            gimp_item_set_name (GIMP_ITEM (layer), lyr_a[lidx]->name);
+            {
+              gchar *debug_name = g_strdup_printf ("[%d] %s", lidx, lyr_a[lidx]->name);
+
+              gimp_item_set_name (GIMP_ITEM (layer), debug_name/*lyr_a[lidx]->name*/);
+              g_free (debug_name);
+            }
 
           /* Set the layer properties (skip this for layer group end
            * markers; we set their properties when processing the start
@@ -2533,6 +2651,7 @@ add_layers (GimpImage     *image,
     }
   g_free (lyr_a);
   g_array_free (parent_group_stack, FALSE);
+  //g_array_free (clipping_group_stack, FALSE);
 
   /* Set the selected layers */
   gimp_image_take_selected_layers (image, selected_layers);
