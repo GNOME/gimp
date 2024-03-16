@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-27 07:36+0000\n"
-"PO-Revision-Date: 2023-12-27 20:48+0100\n"
+"POT-Creation-Date: 2024-03-11 21:17+0000\n"
+"PO-Revision-Date: 2024-03-16 15:46+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -133,8 +133,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "Guardar la salida de la consola de Script-Fu"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:888
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
+#: plug-ins/script-fu/server/script-fu-server.c:878
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -159,27 +159,27 @@ msgstr "Bienvenido a TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Creación de scripts para GIMP en lenguaje Scheme"
 
-#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/server/script-fu-server.c:874
 msgid "Script-Fu Server Options"
 msgstr "Opciones de servidor de Script-Fu"
 
-#: plug-ins/script-fu/server/script-fu-server.c:889
+#: plug-ins/script-fu/server/script-fu-server.c:879
 msgid "_Start Server"
 msgstr "_Iniciar servidor"
 
-#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/server/script-fu-server.c:912
 msgid "Listen on IP:"
 msgstr "Escuchando en la IP:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:929
+#: plug-ins/script-fu/server/script-fu-server.c:919
 msgid "Server port:"
 msgstr "Puerto del servidor:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:935
+#: plug-ins/script-fu/server/script-fu-server.c:925
 msgid "Server logfile:"
 msgstr "Archivo de registro del servidor:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:948
+#: plug-ins/script-fu/server/script-fu-server.c:938
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -195,44 +195,44 @@ msgstr "_Iniciar servidor…"
 msgid "Server for remote Script-Fu operation"
 msgstr "Servidor para el funcionamiento remoto de Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:187
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu no puede procesar dos scripts a la vez."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:191
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Ya está ejecutando el script «%s»."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:220
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 msgid "_Reset"
 msgstr "_Restablecer"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:224
 msgid "_OK"
 msgstr "_Aceptar"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:276
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:278
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:326
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:329
 msgid "Script-Fu Color Selection"
 msgstr "Selección de color de Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:455
 msgid "Script-Fu File Selection"
 msgstr "Selección de archivos de Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:456
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:458
 msgid "Script-Fu Folder Selection"
 msgstr "Selección de carpetas de Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:852
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:874
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Error al ejecutar %s:"
@@ -242,34 +242,30 @@ msgstr "Error al ejecutar %s:"
 msgid "Error while loading %s:"
 msgstr "Error al cargar %s:"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:76
+#: plug-ins/script-fu/scripts/add-bevel.scm:75
 msgid "Bumpmap"
 msgstr "Mapa de relieve"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:189
+#: plug-ins/script-fu/scripts/add-bevel.scm:188
 msgid "Add B_evel..."
 msgstr "Añadir _bisel…"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:190
+#: plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add a beveled border to an image"
 msgstr "Añadir un borde biselado a una imagen"
 
+#. v3 >>> additional argument
+#: plug-ins/script-fu/scripts/add-bevel.scm:195
+msgid "_Thickness"
+msgstr "_Grosor"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:196
+msgid "_Work on copy"
+msgstr "_Trabajar en copia"
+
 #: plug-ins/script-fu/scripts/add-bevel.scm:197
-msgid "Thickness"
-msgstr "Grosor"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:198
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
-#: plug-ins/script-fu/scripts/old-photo.scm:104
-#: plug-ins/script-fu/scripts/round-corners.scm:145
-#: plug-ins/script-fu/scripts/slide.scm:262
-#: plug-ins/script-fu/scripts/spinning-globe.scm:107
-msgid "Work on copy"
-msgstr "Trabajar en copia"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:199
-msgid "Keep bump layer"
-msgstr "Mantener la capa de relieve"
+msgid "_Keep bump layer"
+msgstr "_Mantener la capa de relieve"
 
 #: plug-ins/script-fu/scripts/addborder.scm:123
 msgid "Border Layer"
@@ -571,25 +567,29 @@ msgstr "Profundidad"
 msgid "Stain"
 msgstr "Mancha"
 
-#: plug-ins/script-fu/scripts/coffee.scm:91
-msgid "_Coffee Stain..."
-msgstr "Manchas de _café…"
+#: plug-ins/script-fu/scripts/coffee.scm:95
+msgid "_Stain..."
+msgstr "_Mancha…"
 
-#: plug-ins/script-fu/scripts/coffee.scm:92
-msgid "Add realistic looking coffee stains to the image"
-msgstr "Añadir manchas de café de aspecto realista a la imagen"
+#: plug-ins/script-fu/scripts/coffee.scm:96
+msgid "Add layers of stain or blotch marks"
+msgstr "Añadir capas de manchas o marcas de manchas"
 
-#: plug-ins/script-fu/scripts/coffee.scm:99
-msgid "Stains"
-msgstr "Manchas"
+#: plug-ins/script-fu/scripts/coffee.scm:102
+msgid "Number of stains to add"
+msgstr "Número de manchas que añadir"
 
-#: plug-ins/script-fu/scripts/coffee.scm:100
+#: plug-ins/script-fu/scripts/coffee.scm:103
 msgid "Darken only"
 msgstr "Solo oscurecer"
 
+#: plug-ins/script-fu/scripts/coffee.scm:104
+msgid "Gradient to color stains"
+msgstr "Degradado a manchas de color"
+
 #: plug-ins/script-fu/scripts/difference-clouds.scm:70
-msgid "_Difference Clouds..."
-msgstr "Nubes de _diferencia…"
+msgid "_Difference Clouds"
+msgstr "Nubes de _diferencia"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
@@ -739,13 +739,21 @@ msgstr "Añadir sombra"
 msgid "Shadow weight (%)"
 msgstr "Peso de la sombra (%)"
 
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
+#: plug-ins/script-fu/scripts/old-photo.scm:104
+#: plug-ins/script-fu/scripts/round-corners.scm:145
+#: plug-ins/script-fu/scripts/slide.scm:262
+#: plug-ins/script-fu/scripts/spinning-globe.scm:111
+msgid "Work on copy"
+msgstr "Trabajar en copia"
+
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:164
 msgid "Flatten image"
 msgstr "Aplanar imagen"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:63
-msgid "Using _Paths"
-msgstr "Utilización de las _rutas"
+msgid "_Using Paths"
+msgstr "_Utilización de las rutas"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:64
 #: plug-ins/script-fu/scripts/gimp-online.scm:77
@@ -784,12 +792,12 @@ msgid "Drawing _Simple Objects"
 msgstr "Dibujar objetos _sencillos"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:154
-msgid "Create and Use _Selections"
-msgstr "Crear y usar las _selecciones"
+msgid "_Create and Use Selections"
+msgstr "_Crear y usar las selecciones"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:166
-msgid "_[Table of Contents]"
-msgstr "_[Índice]"
+msgid "_Table of Contents"
+msgstr "_Índice"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:202
 msgid "_Main Web Site"
@@ -862,32 +870,33 @@ msgid "Create four guides around the bounding box of the current selection"
 msgstr ""
 "Crear cuatro guías alrededor de la caja de contorno de la selección actual"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
 msgstr "Guía nueva (por _porcentaje)…"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:31
 msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr ""
 "Añadir una línea guía en la posición especificada como porcentaje del tamaño "
 "de la imagen"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Direction"
 msgstr "_Dirección"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:36
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:38
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "Vertical"
 msgstr "Vertical"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:39
 msgid "_Position (in %)"
 msgstr "_Posición (en %)"
 
@@ -900,7 +909,7 @@ msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr ""
 "Añadir una línea guía en la orientación y posición especificadas en píxeles"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "_Position"
 msgstr "_Posición"
 
@@ -945,11 +954,11 @@ msgstr "Degradado"
 msgid "Use current gradient"
 msgstr "Usar el degradado actual"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:106
+#: plug-ins/script-fu/scripts/line-nova.scm:107
 msgid "Line _Nova..."
 msgstr "_Nova de líneas…"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:107
+#: plug-ins/script-fu/scripts/line-nova.scm:108
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
@@ -958,21 +967,21 @@ msgstr ""
 "frente"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:114
-msgid "Number of lines"
-msgstr "Número de líneas"
+msgid "_Number of lines"
+msgstr "_Número de líneas"
 
 # //O Gracias de nuevo por los consejos.
 #: plug-ins/script-fu/scripts/line-nova.scm:115
-msgid "Sharpness (degrees)"
-msgstr "Ángulo de la púas"
+msgid "S_harpness (degrees)"
+msgstr "N_itidez (grados)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:116
-msgid "Offset radius"
-msgstr "Radio de desplazamiento"
+msgid "O_ffset radius"
+msgstr "Radio de despla_zamiento"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:117
-msgid "Randomness"
-msgstr "Aleatoriedad"
+msgid "Ran_domness"
+msgstr "Alea_toriedad"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:63
 msgid "_Rectangular..."
@@ -1209,28 +1218,27 @@ msgstr "_Orden inverso de las capas"
 msgid "Reverse the order of layers in the image"
 msgstr "Invertir el orden de las capas de la imagen"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:69
+#: plug-ins/script-fu/scripts/ripply-anim.scm:70
 msgid "_Rippling..."
 msgstr "_Ondas…"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm:70
+#: plug-ins/script-fu/scripts/ripply-anim.scm:71
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
 "Crear una imagen multicapa añadiendo un efecto de rizado a la capa actual"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:77
-msgid "Rippling strength"
-msgstr "Fuerza de ondulación"
+msgid "Ri_ppling strength"
+msgstr "Fuerza de on_dulación"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:78
-#: plug-ins/script-fu/scripts/waves-anim.scm:105
-msgid "Number of frames"
-msgstr "Número de fotogramas"
+msgid "_Number of frames"
+msgstr "_Número de fotogramas"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
-msgid "Edge behavior"
-msgstr "Comportamiento del borde"
+msgid "Edge _behavior"
+msgstr "Comportamiento del _borde"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Wrap"
@@ -1330,28 +1338,28 @@ msgstr "Tipografía"
 msgid "Font color"
 msgstr "Color de la tipografía"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:95
+#: plug-ins/script-fu/scripts/spinning-globe.scm:99
 msgid "_Spinning Globe..."
 msgstr "Globo _giratorio…"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:96
+#: plug-ins/script-fu/scripts/spinning-globe.scm:100
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr ""
 "Crear una animación proyectando la imagen actual sobre una esfera giratoria"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:103
+#: plug-ins/script-fu/scripts/spinning-globe.scm:107
 msgid "Frames"
 msgstr "Fotogramas"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:104
+#: plug-ins/script-fu/scripts/spinning-globe.scm:108
 msgid "Turn from left to right"
 msgstr "Girar de izquierda a derecha"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:105
+#: plug-ins/script-fu/scripts/spinning-globe.scm:109
 msgid "Transparent background"
 msgstr "Fondo transparente"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm:106
+#: plug-ins/script-fu/scripts/spinning-globe.scm:110
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indexar a n colores (0 = permanece RGB)"
 
@@ -1369,27 +1377,27 @@ msgstr ""
 "Desenfocar los bordes de una imagen para el resultado forme un mosaico con "
 "facilidad"
 
+#: plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "Ra_dius"
+msgstr "Ra_dio"
+
 #: plug-ins/script-fu/scripts/tileblur.scm:80
-msgid "Radius"
-msgstr "Radio"
+msgid "Blur _vertically"
+msgstr "Desenfocar _verticalmente"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:81
-msgid "Blur vertically"
-msgstr "Desenfocar verticalmente"
+msgid "Blur _horizontally"
+msgstr "Desenfocar _horizontalmente"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:82
-msgid "Blur horizontally"
-msgstr "Desenfocar horizontalmente"
+msgid "Blur _type"
+msgstr "_Tipo de desenfoque"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
-msgid "Blur type"
-msgstr "Tipo de desenfoque"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "IIR"
 msgstr "IIR"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:83
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "RLE"
 msgstr "RLE"
 
@@ -1420,6 +1428,10 @@ msgstr "Amplitud"
 #: plug-ins/script-fu/scripts/waves-anim.scm:104
 msgid "Wavelength"
 msgstr "Longitud de onda"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "Número de fotogramas"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:106
 msgid "Invert direction"
@@ -1513,6 +1525,12 @@ msgstr "Desplazamiento X de la sombra base"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Desplazamiento Y de la sombra base"
+
+#~ msgid "Add realistic looking coffee stains to the image"
+#~ msgstr "Añadir manchas de café de aspecto realista a la imagen"
+
+#~ msgid "Stains"
+#~ msgstr "Manchas"
 
 #~ msgid "Interactive Scheme Development"
 #~ msgstr "Desarrollo interactivo de esquemas"
@@ -2422,9 +2440,6 @@ msgstr "Desplazamiento Y de la sombra base"
 
 #~ msgid "Create an image filled with a swirly pattern"
 #~ msgstr "Crear una imagen rellena de un patrón en espiral"
-
-#~ msgid "Number of times to whirl"
-#~ msgstr "Número de veces a girar"
 
 #~ msgid "Quarter size"
 #~ msgstr "Tamaño del cuadrante"
