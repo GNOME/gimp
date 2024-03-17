@@ -138,9 +138,9 @@ gimp_preview_area_class_init (GimpPreviewAreaClass *klass)
   gegl_init (NULL, NULL);
 
   color1_default = gegl_color_new (NULL);
-  gegl_color_set_pixel (color1_default, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR1);
+  gegl_color_set_pixel (color1_default, babl_format ("R'G'B'A double"), GIMP_CHECKS_CUSTOM_COLOR1);
   color2_default = gegl_color_new (NULL);
-  gegl_color_set_pixel (color2_default, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR2);
+  gegl_color_set_pixel (color2_default, babl_format ("R'G'B'A double"), GIMP_CHECKS_CUSTOM_COLOR2);
 
   object_class->dispose       = gimp_preview_area_dispose;
   object_class->finalize      = gimp_preview_area_finalize;
@@ -196,9 +196,9 @@ gimp_preview_area_init (GimpPreviewArea *area)
   priv->check_size          = DEFAULT_CHECK_SIZE;
   priv->check_type          = DEFAULT_CHECK_TYPE;
   priv->check_custom_color1 = gegl_color_new (NULL);
-  gegl_color_set_pixel (priv->check_custom_color1, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR1);
+  gegl_color_set_pixel (priv->check_custom_color1, babl_format ("R'G'B'A double"), GIMP_CHECKS_CUSTOM_COLOR1);
   priv->check_custom_color2 = gegl_color_new (NULL);
-  gegl_color_set_pixel (priv->check_custom_color2, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR2);
+  gegl_color_set_pixel (priv->check_custom_color2, babl_format ("R'G'B'A double"), GIMP_CHECKS_CUSTOM_COLOR2);
   priv->max_width           = -1;
   priv->max_height          = -1;
 

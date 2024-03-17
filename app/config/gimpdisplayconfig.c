@@ -138,7 +138,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                          GIMP_CHECK_TYPE_GRAY_CHECKS,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR1);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), GIMP_CHECKS_CUSTOM_COLOR1);
   GIMP_CONFIG_PROP_COLOR (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR1,
                           "transparency-custom-color1",
                           _("Transparency custom color 1"),
@@ -146,7 +146,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                           color,
                           GIMP_PARAM_STATIC_STRINGS);
 
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR2);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), GIMP_CHECKS_CUSTOM_COLOR2);
   GIMP_CONFIG_PROP_COLOR (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR2,
                           "transparency-custom-color2",
                           _("Transparency custom color 2"),
@@ -413,11 +413,11 @@ gimp_display_config_init (GimpDisplayConfig *config)
   GeglColor *color;
 
   color = gegl_color_new (NULL);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR1);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), GIMP_CHECKS_CUSTOM_COLOR1);
   config->transparency_custom_color1 = color;
 
   color = gegl_color_new (NULL);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR2);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), GIMP_CHECKS_CUSTOM_COLOR2);
   config->transparency_custom_color2 = color;
 
   config->default_view =

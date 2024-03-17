@@ -36,9 +36,9 @@
 /**
  * SECTION: gimpcellrenderercolor
  * @title: GimpCellRendererColor
- * @short_description: A #GtkCellRenderer to display a #GimpRGB color.
+ * @short_description: A #GtkCellRenderer to display a #GeglColor color.
  *
- * A #GtkCellRenderer to display a #GimpRGB color.
+ * A #GtkCellRenderer to display a #GeglColor color.
  **/
 
 

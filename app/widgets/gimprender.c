@@ -47,9 +47,9 @@ gimp_render_init (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   color1 = gegl_color_new (NULL);
-  gegl_color_set_pixel (color1, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR1);
+  gegl_color_set_pixel (color1, babl_format ("R'G'B'A double"), GIMP_CHECKS_CUSTOM_COLOR1);
   color2 = gegl_color_new (NULL);
-  gegl_color_set_pixel (color2, babl_format ("R'G'B'A double"), &GIMP_CHECKS_CUSTOM_COLOR2);
+  gegl_color_set_pixel (color2, babl_format ("R'G'B'A double"), GIMP_CHECKS_CUSTOM_COLOR2);
 
   g_signal_connect (gimp->config, "notify::transparency-type",
                     G_CALLBACK (gimp_render_setup_notify),
