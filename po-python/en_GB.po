@@ -1,15 +1,17 @@
 # This is the English, British catalogue for GIMP Python.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Piers Cornwell <piers.cornwell@usa.net>, 2000.
-# Gareth Owen <gowen72@yahoo.com>, David Lodge <dave@cirt.net>, 2004.
-# Bruce Cowan <bruce@bcowan.me.uk>, 2009-2020.
+# Gareth Owen <gowen72@yahoo.com>, 2004.
+# David Lodge <dave@cirt.net>, 2004.
+# Bruce Cowan <bruce@bcowan.me.uk>, 2009-2024.
+# Andi Chandler <andi@gowling.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-26 14:47+0000\n"
-"PO-Revision-Date: 2020-05-26 23:13+0100\n"
+"POT-Creation-Date: 2024-03-08 22:04+0000\n"
+"PO-Revision-Date: 2024-03-17 20:37+0000\n"
 "Last-Translator: Bruce Cowan <bruce@bcowan.me.uk>\n"
 "Language-Team: English - United Kingdom <en@li.org>\n"
 "Language: en_GB\n"
@@ -17,39 +19,39 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 3.36.0\n"
+"X-Generator: Poedit 3.4.2\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:395
+#: ../plug-ins/pygimp/gimpfu.py:396
 msgid "Missing exception information"
 msgstr "Missing exception information"
 
-#: ../plug-ins/pygimp/gimpfu.py:404
+#: ../plug-ins/pygimp/gimpfu.py:405
 #, python-format
 msgid "An error occurred running %s"
 msgstr "An error occurred running %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:415
+#: ../plug-ins/pygimp/gimpfu.py:416
 msgid "_More Information"
 msgstr "_More Information"
 
-#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
-#: ../plug-ins/pygimp/gimpfu.py:546
+#: ../plug-ins/pygimp/gimpfu.py:529 ../plug-ins/pygimp/gimpfu.py:541
+#: ../plug-ins/pygimp/gimpfu.py:547
 msgid "No"
 msgstr "No"
 
-#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
+#: ../plug-ins/pygimp/gimpfu.py:539 ../plug-ins/pygimp/gimpfu.py:547
 msgid "Yes"
 msgstr "Yes"
 
-#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:600 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu File Selection"
 
-#: ../plug-ins/pygimp/gimpfu.py:648
+#: ../plug-ins/pygimp/gimpfu.py:649
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu Folder Selection"
 
-#: ../plug-ins/pygimp/gimpfu.py:737
+#: ../plug-ins/pygimp/gimpfu.py:738
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Invalid input for '%s'"
@@ -106,47 +108,47 @@ msgstr "Gradient to use"
 msgid "File Name"
 msgstr "File Name"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:89
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Exports the image histogram to a text file (CSV)"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:94
 msgid "_Export histogram..."
 msgstr "_Export histogram..."
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
 msgid "_Image"
 msgstr "_Image"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
 msgid "_Drawable"
 msgstr "_Drawable"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
 msgid "Histogram _File"
 msgstr "Histogram _File"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
 msgid "_Bucket Size"
 msgstr "_Bucket Size"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
 msgid "Sample _Average"
 msgstr "Sample _Average"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
 msgid "Output format"
 msgstr "Output format"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
 msgid "Pixel count"
 msgstr "Pixel count"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
 msgid "Normalized"
 msgstr "Normalised"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:104
 msgid "Percent"
 msgstr "Percent"
 
@@ -187,7 +189,7 @@ msgid "_Offset Palette..."
 msgstr "_Offset Palette..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
@@ -261,60 +263,60 @@ msgstr "Chroma (LCHab)"
 msgid "Hue (LCHab)"
 msgstr "Hue (LCHab)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:313
 msgid "Sort the colors in a palette"
 msgstr "Sort the colours in a palette"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:332
 msgid "_Sort Palette..."
 msgstr "_Sort Palette..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
 msgid "Se_lections"
 msgstr "Se_lections"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "All"
 msgstr "All"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "Slice / Array"
 msgstr "Slice / Array"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "Autoslice (fg->bg)"
 msgstr "Autoslice (fg->bg)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
 msgid "Partitioned"
 msgstr "Partitioned"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
 msgid "Slice _expression"
 msgstr "Slice _expression"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:340
 msgid "Channel to _sort"
 msgstr "Channel to _sort"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
 msgid "_Ascending"
 msgstr "_Ascending"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:343
 msgid "Secondary Channel to s_ort"
 msgstr "Secondary Channel to s_ort"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
 msgid "_Quantization"
 msgstr "_Quantisation"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:347
 msgid "_Partitioning channel"
 msgstr "_Partitioning channel"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:349
 msgid "Partition q_uantization"
 msgstr "Partition q_uantisation"
 
@@ -452,7 +454,6 @@ msgid "Spyro Layer"
 msgstr "Spyro Layer"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:45
-#| msgid "Spyrograph"
 msgid "Spyro Path"
 msgstr "Spyro Path"
 
@@ -551,11 +552,11 @@ msgstr "Epitrochoid"
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1395
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1397
 msgid "Curve Type"
 msgstr "Curve Type"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1396
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1398
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -563,35 +564,35 @@ msgstr ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1401
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1403
 msgid "Tool"
 msgstr "Tool"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1402
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1404
 msgid ""
-"The tool with which to draw the pattern.The Preview tool just draws quickly."
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1407
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
 msgid "Long Gradient"
 msgstr "Long Gradient"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1411
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
 "gradient and repeat mode from the gradient tool settings."
 msgstr ""
-"When unchecked, the current tool settings will be used. When checked, will "
-"use a long gradient to match the length of the pattern, based on current "
+"When unticked, the current tool settings will be used. When ticked, will use "
+"a long gradient to match the length of the pattern, based on current "
 "gradient and repeat mode from the gradient tool settings."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1429
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Specify pattern using one of the following tabs:"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1433
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -603,7 +604,7 @@ msgstr ""
 "you follow the instructions from the toy kit manuals, results should be "
 "similar."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1455
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1457
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -611,12 +612,12 @@ msgstr ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1458
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1484
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1460
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1486
 msgid "Fixed Gear Teeth"
 msgstr "Fixed Gear Teeth"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1464
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1466
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -624,16 +625,16 @@ msgstr ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1467
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1489
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1469
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1491
 msgid "Moving Gear Teeth"
 msgstr "Moving Gear Teeth"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1472
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1474
 msgid "Hole percent"
 msgstr "Hole percent"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1473
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1475
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -641,11 +642,11 @@ msgstr ""
 "How far is the hole from the centre of the moving gear. 100% means that the "
 "hole is at the gear's edge."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1494
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1496
 msgid "Hole Number"
 msgstr "Hole Number"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1495
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1497
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -653,28 +654,27 @@ msgstr ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "centre. The maximum hole number is different for each gear."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
 msgid "Flower Petals"
 msgstr "Flower Petals"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
-#| msgid "Number of sides of the shape."
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
 msgid "The number of petals in the pattern."
 msgstr "The number of petals in the pattern."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1511
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1513
 msgid "Petal Skip"
 msgstr "Petal Skip"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1512
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1514
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "The number of petals to advance for drawing the next petal."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1517
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1519
 msgid "Hole Radius(%)"
 msgstr "Hole Radius(%)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1518
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1520
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
@@ -684,11 +684,11 @@ msgstr ""
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
 "produce no hole. A Value of 99 will produce a thin line on the edge."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1531
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1533
 msgid "Width(%)"
 msgstr "Width(%)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1532
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1534
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
@@ -698,24 +698,24 @@ msgstr ""
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
 "fixed gear."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1542
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1544
 msgid "Visual"
 msgstr "Visual"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1547
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1549
 msgid "Toy Kit"
 msgstr "Toy Kit"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1552
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1554
 msgid "Gears"
 msgstr "Gears"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1564
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1566
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
 msgid "Rotation"
 msgstr "Rotation"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1565
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1567
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -723,11 +723,11 @@ msgstr ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1588
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1590
 msgid "Shape"
 msgstr "Shape"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1589
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1591
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -741,52 +741,51 @@ msgstr ""
 "boundary. Selection will hug boundaries of current selection - try something "
 "non-rectangular."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
 msgid "Sides"
 msgstr "Sides"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
 msgid "Number of sides of the shape."
 msgstr "Number of sides of the shape."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
 msgid "Morph"
 msgstr "Morph"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr "Morph fixed gear shape. Only affects some of the shapes."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Rotation of the fixed gear, in degrees"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
 msgid "Margin (px)"
 msgstr "Margin (px)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
 msgid "Margin from edge of selection."
 msgstr "Margin from edge of selection."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1628
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
 msgid "Make width and height equal"
 msgstr "Make width and height equal"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1632
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
 msgstr ""
-"When unchecked, the pattern will fill the current image or selection. When "
-"checked, the pattern will have same width and height, and will be centred."
+"When unticked, the pattern will fill the current image or selection. When "
+"ticked, the pattern will have same width and height, and will be centred."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1654
-#| msgid "Redraw"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1656
 msgid "Re_draw"
 msgstr "Re_draw"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1655
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -794,22 +793,19 @@ msgstr ""
 "If you change the settings of a tool, change colour, or change the "
 "selection, press this to preview how the pattern looks."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
-#| msgid "Reset"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
 msgid "_Reset"
 msgstr "_Reset"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1658
-#| msgid "Cancel"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1660
 msgid "_Cancel"
 msgstr "_Cancel"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
-#| msgid "OK"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1661
 msgid "_OK"
 msgstr "_OK"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1665
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1667
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
@@ -817,36 +813,36 @@ msgstr ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1677
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1679
 msgid "Spyrogimp"
 msgstr "Spyrogimp"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1686
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2191
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1688
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2195
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr "Draw spyrographs using current tool settings and selection."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1699
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1701
 msgid "Curve Pattern"
 msgstr "Curve Pattern"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1702
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1704
 msgid "Fixed Gear"
 msgstr "Fixed Gear"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1705
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1707
 msgid "Size"
 msgstr "Size"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2039
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2047
 msgid "Rendering Pattern"
 msgstr "Rendering Pattern"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2051
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2059
 msgid "Please wait : Rendering Pattern"
 msgstr "Please wait : Rendering Pattern"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2160
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2164
 msgid "Spyrogimp..."
 msgstr "Spyrogimp..."
 
