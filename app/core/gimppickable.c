@@ -200,7 +200,7 @@ gimp_pickable_get_buffer_with_effects (GimpPickable *pickable)
   if (pickable_iface->get_buffer_with_effects)
     return pickable_iface->get_buffer_with_effects (pickable);
   else if (pickable_iface->get_buffer)
-    return pickable_iface->get_buffer (pickable);
+    return g_object_ref (pickable_iface->get_buffer (pickable));
 
   return NULL;
 }

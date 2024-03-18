@@ -83,7 +83,8 @@ sub_preview_data_new (const Babl          *format,
   SubPreviewData *data = g_slice_new (SubPreviewData);
 
   data->format = format;
-  data->buffer = g_object_ref (buffer);
+  /* We take ownership if the buffer reference. */
+  data->buffer = buffer;
   data->rect   = *rect;
   data->scale  = scale;
 
@@ -231,6 +232,7 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
                    gimp_temp_buf_get_format (preview),
                    gimp_temp_buf_get_data (preview),
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
+  g_object_unref (buffer);
 
   return preview;
 }
@@ -327,6 +329,8 @@ gimp_drawable_get_sub_pixbuf (GimpDrawable *drawable,
                        gdk_pixbuf_get_rowstride (pixbuf),
                        GEGL_ABYSS_CLAMP);
     }
+
+  g_object_unref (buffer);
 
   return pixbuf;
 }

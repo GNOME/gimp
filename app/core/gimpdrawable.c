@@ -1537,17 +1537,17 @@ gimp_drawable_get_buffer_with_effects (GimpDrawable *drawable)
             }
           else
             {
-              return buffer;
+              return g_object_ref (buffer);
             }
         }
       else
         {
-          return GIMP_DRAWABLE_GET_CLASS (drawable)->get_buffer (drawable);
+          return g_object_ref (GIMP_DRAWABLE_GET_CLASS (drawable)->get_buffer (drawable));
         }
     }
   else
     {
-      return drawable->private->paint_buffer;
+      return g_object_ref (drawable->private->paint_buffer);
     }
 }
 
