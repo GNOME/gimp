@@ -2496,8 +2496,8 @@ xcf_load_effect_props (XcfInfo      *info,
                               "XCF Warning: filter \"%s\" does not "
                               "have the %s property. It was not set.",
                               filter->operation_name, filter_prop_name);
-                g_free (filter_prop_name);
-                break;
+                valid_prop_value = FALSE;
+                goto set_or_seek_node_property;
               }
 
             switch (filter_type)
@@ -2704,6 +2704,7 @@ xcf_load_effect_props (XcfInfo      *info,
                   break;
               }
 
+set_or_seek_node_property:
             if (valid_prop_value)
               gegl_node_set_property (filter->operation, filter_prop_name,
                                       &filter_prop_value);
