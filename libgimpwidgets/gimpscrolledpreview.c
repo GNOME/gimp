@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -546,8 +547,8 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
       GdkCursor       *cursor;
       GtkBorder        border;
       GimpCheckType    check_type;
-      GimpRGB          check_custom_color1;
-      GimpRGB          check_custom_color2;
+      GeglColor       *check_custom_color1;
+      GeglColor       *check_custom_color2;
       gint             area_width;
       gint             area_height;
       gint             x, y;

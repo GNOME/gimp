@@ -278,13 +278,14 @@ gimp_gradient_select_preview_draw (cairo_t *cr,
        x < src_width;
        x++, src += 4, dest += 4)
     {
-      GimpRGB color;
-      guchar  r, g, b, a;
+      GeglColor *color = gegl_color_new ("black");
+      guchar     rgba[4];
 
-      gimp_rgba_set (&color, src[0], src[1], src[2], src[3]);
-      gimp_rgba_get_uchar (&color, &r, &g, &b, &a);
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), src);
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A u8"), rgba);
 
-      GIMP_CAIRO_ARGB32_SET_PIXEL (dest, r, g, b, a);
+      GIMP_CAIRO_ARGB32_SET_PIXEL (dest, rgba[0], rgba[1], rgba[2], rgba[3]);
+      g_object_unref (color);
     }
 
   cairo_surface_mark_dirty (surface);

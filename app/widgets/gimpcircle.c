@@ -508,17 +508,16 @@ gimp_circle_background_hsv (gdouble  angle,
                             gdouble  distance,
                             guchar  *rgb)
 {
-  GimpHSV hsv;
-  GimpRGB color;
+  gdouble    hsv[3];
+  GeglColor *color = gegl_color_new ("black");
 
-  gimp_hsv_set (&hsv,
-                angle / (2.0 * G_PI),
-                distance,
-                1 - sqrt (distance) / 4 /* it just looks nicer this way */);
+  hsv[0] = angle / (2.0 * G_PI);
+  hsv[1] = distance;
+  hsv[2] = 1 - sqrt (distance) / 4;
 
-  gimp_hsv_to_rgb (&hsv, &color);
-
-  gimp_rgb_get_uchar (&color, rgb, rgb + 1, rgb + 2);
+  gegl_color_set_pixel (color, babl_format ("HSV double"), hsv);
+  gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
+  g_object_unref (color);
 }
 
 static void

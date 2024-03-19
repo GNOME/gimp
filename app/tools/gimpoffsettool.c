@@ -101,7 +101,7 @@ static void       gimp_offset_tool_edge_behavior_toggled (GtkToggleButton       
                                                           GimpOffsetTool        *offset_tool);
 
 static void       gimp_offset_tool_background_changed    (GimpContext           *context,
-                                                          const GimpRGB         *color,
+                                                          GeglColor             *color,
                                                           GimpOffsetTool        *offset_tool);
 
 static gint       gimp_offset_tool_get_width             (GimpOffsetTool        *offset_tool);
@@ -636,7 +636,7 @@ gimp_offset_tool_edge_behavior_toggled (GtkToggleButton *toggle,
 
 static void
 gimp_offset_tool_background_changed (GimpContext    *context,
-                                     const GimpRGB  *color,
+                                     GeglColor      *color,
                                      GimpOffsetTool *offset_tool)
 {
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (offset_tool);

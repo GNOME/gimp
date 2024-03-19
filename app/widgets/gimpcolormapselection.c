@@ -108,7 +108,7 @@ static void   gimp_colormap_selection_entry_activated (GimpPaletteView       *vi
                                                        GimpColormapSelection *selection);
 static void   gimp_colormap_selection_color_dropped   (GimpPaletteView       *view,
                                                        GimpPaletteEntry      *entry,
-                                                       const GimpRGB         *color,
+                                                       GeglColor             *color,
                                                        GimpColormapSelection *selection);
 
 static void   gimp_colormap_adjustment_changed        (GtkAdjustment         *adjustment,
@@ -661,7 +661,7 @@ gimp_colormap_selection_entry_activated (GimpPaletteView       *view,
 static void
 gimp_colormap_selection_color_dropped (GimpPaletteView       *view,
                                        GimpPaletteEntry      *entry,
-                                       const GimpRGB         *color,
+                                       GeglColor             *color,
                                        GimpColormapSelection *selection)
 {
 }

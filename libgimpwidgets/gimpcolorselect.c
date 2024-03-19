@@ -219,7 +219,7 @@ static void       gimp_color_select_update_pos             (GimpColorSelect     
 static void       gimp_color_select_drop_color             (GtkWidget          *widget,
                                                             gint                x,
                                                             gint                y,
-                                                            const GimpRGB      *color,
+                                                            GeglColor          *color,
                                                             gpointer            data);
 #endif
 
@@ -1036,7 +1036,7 @@ static void
 gimp_color_select_drop_color (GtkWidget     *widget,
                               gint           x,
                               gint           y,
-                              const GimpRGB *color,
+                              GeglColor     *color,
                               gpointer       data)
 {
   GimpColorSelect *select = GIMP_COLOR_SELECT (data);

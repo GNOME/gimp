@@ -422,7 +422,7 @@ gimp_prop_color_button_new (GObject           *config,
  * @height:        Height of color button.
  * @type:          How transparency is represented.
  *
- * Creates a #GimpColorPanel to set and display the value of a #GimpRGB
+ * Creates a #GimpColorPanel to set and display the value of a #GeglColor
  * property.  Pressing the button brings up a color selector dialog.
  * If @title is %NULL, the @property_name's nick will be used as label
  * of the returned widget.
