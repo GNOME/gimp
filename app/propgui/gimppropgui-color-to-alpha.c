@@ -43,24 +43,30 @@ threshold_picked (GObject       *config,
                   gdouble        x,
                   gdouble        y,
                   const Babl    *sample_format,
-                  const GimpRGB *picked_color)
+                  GeglColor     *picked_color)
 {
-  GimpRGB *color;
-  gdouble  threshold = 0.0;
+  GeglColor *color;
+  gdouble    threshold = 0.0;
+  gdouble    rgb[3];
+  gdouble    picked_rgb[3];
 
   g_object_get (config,
                 "color", &color,
                 NULL);
 
-  threshold = MAX (threshold, fabs (picked_color->r - color->r));
-  threshold = MAX (threshold, fabs (picked_color->g - color->g));
-  threshold = MAX (threshold, fabs (picked_color->b - color->b));
+  gegl_color_get_pixel (color, babl_format ("R'G'B' double"), rgb);
+  gegl_color_get_pixel (picked_color, babl_format ("R'G'B' double"),
+                        picked_rgb);
+
+  threshold = MAX (threshold, fabs (picked_rgb[0] - rgb[0]));
+  threshold = MAX (threshold, fabs (picked_rgb[1] - rgb[1]));
+  threshold = MAX (threshold, fabs (picked_rgb[2] - rgb[2]));
 
   g_object_set (config,
                 identifier, threshold,
                 NULL);
 
-  g_free (color);
+  g_object_unref (color);
 }
 
 GtkWidget *
