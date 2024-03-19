@@ -92,12 +92,16 @@ static gboolean gimp_ui_initialized = FALSE;
  *             executable and _not_ the PDB procedure name.
  *
  * This function initializes GTK+ with gtk_init().
+ * It also initializes Gegl and Babl.
  *
  * It also sets up various other things so that the plug-in user looks
  * and behaves like the GIMP core. This includes selecting the GTK+
  * theme and setting up the help system as chosen in the GIMP
  * preferences. Any plug-in that provides a user interface should call
  * this function.
+ *
+ * It can safely be called more than once.
+ * Calls after the first return quickly with no effect.
  **/
 void
 gimp_ui_init (const gchar *prog_name)
