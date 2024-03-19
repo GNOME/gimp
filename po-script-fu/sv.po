@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-15 16:03+0000\n"
-"PO-Revision-Date: 2024-02-15 21:14+0100\n"
+"POT-Creation-Date: 2024-02-24 15:18+0000\n"
+"PO-Revision-Date: 2024-02-24 16:21+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -736,8 +736,8 @@ msgid "Flatten image"
 msgstr "Platta till bilden"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:63
-msgid "Using _Paths"
-msgstr "Användning av _banor"
+msgid "_Using Paths"
+msgstr "_Användning av banor"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:64
 #: plug-ins/script-fu/scripts/gimp-online.scm:77
@@ -776,12 +776,12 @@ msgid "Drawing _Simple Objects"
 msgstr "Rita _enkla objekt"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:154
-msgid "Create and Use _Selections"
+msgid "_Create and Use Selections"
 msgstr "Skapa och använd _markeringar"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:166
-msgid "_[Table of Contents]"
-msgstr "_[Innehållsförteckning]"
+msgid "_Table of Contents"
+msgstr "_Innehållsförteckning"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:202
 msgid "_Main Web Site"
