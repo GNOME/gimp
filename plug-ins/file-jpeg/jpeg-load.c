@@ -273,7 +273,7 @@ load_image (GFile        *file,
                        (gint) (len - sizeof (JPEG_APP_HEADER_EXIF)));
 #endif
             }
-          else if ((marker->marker == JPEG_APP0 + 13))
+          else if (marker->marker == JPEG_APP0 + 13)
             {
               photoshop_data = g_new (guchar, len);
               photoshop_len  = len;
