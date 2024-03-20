@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-14 01:41+0000\n"
-"PO-Revision-Date: 2024-03-14 20:26+0200\n"
+"POT-Creation-Date: 2024-03-19 04:42+0000\n"
+"PO-Revision-Date: 2024-03-20 12:11+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -148,7 +148,7 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/file-pdf-load.c:687 plug-ins/common/grid.c:820
 #: plug-ins/common/qbist.c:933 plug-ins/common/sphere-designer.c:2652
 #: plug-ins/common/unit-editor.c:266 plug-ins/file-exr/file-exr.c:435
-#: plug-ins/file-psd/psd-load.c:3561 plug-ins/flame/flame.c:828
+#: plug-ins/file-psd/psd-load.c:3696 plug-ins/flame/flame.c:828
 #: plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -639,7 +639,7 @@ msgstr "Вертикально"
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:700
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:2757 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2892 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/gimpressionist/general.c:147
@@ -1332,31 +1332,31 @@ msgstr "Другий (інший) індекс на мапі кольорів"
 msgid "Procedure '%s' only works with indexed images."
 msgstr "Процедура «%s» працює лише з індексованими зображеннями."
 
-#: plug-ins/common/colormap-remap.c:610
+#: plug-ins/common/colormap-remap.c:602
 msgid "Rearrange Colors"
 msgstr "Переупорядкувати кольори"
 
-#: plug-ins/common/colormap-remap.c:641
+#: plug-ins/common/colormap-remap.c:633
 msgid "Sort on Hue"
 msgstr "Відсортувати за тоном"
 
-#: plug-ins/common/colormap-remap.c:647
+#: plug-ins/common/colormap-remap.c:639
 msgid "Sort on Saturation"
 msgstr "Відсортувати за насиченістю"
 
-#: plug-ins/common/colormap-remap.c:653
+#: plug-ins/common/colormap-remap.c:645
 msgid "Sort on Value"
 msgstr "Відсортувати за яскравістю"
 
-#: plug-ins/common/colormap-remap.c:659
+#: plug-ins/common/colormap-remap.c:651
 msgid "Reverse Order"
 msgstr "Зворотний порядок"
 
-#: plug-ins/common/colormap-remap.c:665
+#: plug-ins/common/colormap-remap.c:657
 msgid "Reset Order"
 msgstr "Скинути порядок"
 
-#: plug-ins/common/colormap-remap.c:674
+#: plug-ins/common/colormap-remap.c:666
 msgid ""
 "Drag and drop colors to rearrange the colormap.\n"
 "The numbers shown are the original indices."
@@ -1364,7 +1364,7 @@ msgstr ""
 "Використовуйте функцію drag-n-drop для перерозподілу мапи.\n"
 "Числами  позначається оригінальний індекс кольору."
 
-#: plug-ins/common/colormap-remap.c:736
+#: plug-ins/common/colormap-remap.c:728
 msgid "Rearranging the colormap"
 msgstr "Перебудова мапи кольорів"
 
@@ -1997,7 +1997,7 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
 #: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
 #: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
-#: plug-ins/file-psd/psd-load.c:169 plug-ins/file-psd/psd-load.c:174
+#: plug-ins/file-psd/psd-load.c:180 plug-ins/file-psd/psd-load.c:185
 #: plug-ins/file-psd/psd-save.c:2224 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1784
@@ -2622,7 +2622,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:493
 #: plug-ins/file-icns/file-icns-load.c:508 plug-ins/file-ico/ico-load.c:673
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
-#: plug-ins/file-psd/psd-load.c:182 plug-ins/file-raw/file-darktable.c:417
+#: plug-ins/file-psd/psd-load.c:193 plug-ins/file-raw/file-darktable.c:417
 #: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:333
 #: plug-ins/file-tiff/file-tiff-load.c:291
 #, c-format
@@ -3324,7 +3324,6 @@ msgid "GIMP brush (animated)"
 msgstr "Пензель GIMP(анімаційний)"
 
 #: plug-ins/common/file-gih.c:161
-#| msgid "Exports files in the GIMP brush file format"
 msgid "Exports images in GIMP Brush Pipe format"
 msgstr "Експортує зображення у форматі каналу пензлів GIMP"
 
@@ -3335,10 +3334,10 @@ msgid ""
 "masks. The image can be multi-layered, and additionally the layers can be "
 "divided into a rectangular array of brushes."
 msgstr ""
-"Цей додаток експортує зображення у форматі каналу пензлів GIMP. Для"
-" кольорового каналу пензля буде використано шари RGBA, інші дані шарів мають"
-" бути масками у відтінках сірого. Зображення може бути багатошаровим, крім"
-" того, шари може бути поділено на прямокутний масив пензлів."
+"Цей додаток експортує зображення у форматі каналу пензлів GIMP. Для "
+"кольорового каналу пензля буде використано шари RGBA, інші дані шарів мають "
+"бути масками у відтінках сірого. Зображення може бути багатошаровим, крім "
+"того, шари може бути поділено на прямокутний масив пензлів."
 
 #: plug-ins/common/file-gih.c:180
 msgid "Brush Pipe"
@@ -3385,7 +3384,6 @@ msgid "Ranks of the dimensions"
 msgstr "Ранги розмірностей"
 
 #: plug-ins/common/file-gih.c:223
-#| msgid "Selection d_elay"
 msgid "Selection modes"
 msgstr "Режими позначення"
 
@@ -4302,13 +4300,13 @@ msgid "'%s' is not a PCX file"
 msgstr "«%s»: не є файлом PCX"
 
 #: plug-ins/common/file-pcx.c:692 plug-ins/common/file-wbmp.c:263
-#: plug-ins/file-bmp/bmp-load.c:727 plug-ins/file-psd/psd-load.c:548
+#: plug-ins/file-bmp/bmp-load.c:727 plug-ins/file-psd/psd-load.c:559
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Непідтримувана ширина зображення: %d"
 
 #: plug-ins/common/file-pcx.c:699 plug-ins/common/file-wbmp.c:269
-#: plug-ins/file-bmp/bmp-load.c:733 plug-ins/file-psd/psd-load.c:540
+#: plug-ins/file-bmp/bmp-load.c:733 plug-ins/file-psd/psd-load.c:551
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Непідтримувана висота зображення: %d"
@@ -10072,116 +10070,116 @@ msgstr "Використовувати _маркери перезапуску"
 msgid "JPEG format does not support multiple layers."
 msgstr "Для формату JPEG не передбачено підтримку декількох шарів."
 
-#: plug-ins/file-psd/psd-load.c:292 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:303 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Помилка при відкритті файлу PSD: «%s»"
 
-#: plug-ins/file-psd/psd-load.c:440
+#: plug-ins/file-psd/psd-load.c:451
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "Некоректний формат шару метаданих PSD"
 
-#: plug-ins/file-psd/psd-load.c:519
+#: plug-ins/file-psd/psd-load.c:530
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Цей файл — некоректний документ Photoshop"
 
-#: plug-ins/file-psd/psd-load.c:526
+#: plug-ins/file-psd/psd-load.c:537
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Непідтримувана версія формату файлу: %d"
 
-#: plug-ins/file-psd/psd-load.c:533
+#: plug-ins/file-psd/psd-load.c:544
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Надто багато каналів у файлі: %d"
 
-#: plug-ins/file-psd/psd-load.c:557
+#: plug-ins/file-psd/psd-load.c:568
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Непідтримуваний або хибний розмір зображення: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:572 plug-ins/file-psd/psd-load.c:583
+#: plug-ins/file-psd/psd-load.c:583 plug-ins/file-psd/psd-load.c:594
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Непідтримувана модель кольорів: %s"
 
-#: plug-ins/file-psd/psd-load.c:610
+#: plug-ins/file-psd/psd-load.c:621
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Непідтримувана розрядність на канал: %d"
 
-#: plug-ins/file-psd/psd-load.c:644 plug-ins/file-psd/psd-load.c:654
-#: plug-ins/file-psd/psd-load.c:894 plug-ins/file-psd/psd-load.c:1253
+#: plug-ins/file-psd/psd-load.c:655 plug-ins/file-psd/psd-load.c:665
+#: plug-ins/file-psd/psd-load.c:904 plug-ins/file-psd/psd-load.c:1263
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Цей файл пошкоджений!"
 
-#: plug-ins/file-psd/psd-load.c:823
+#: plug-ins/file-psd/psd-load.c:833
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Надто багато каналів у шарі: %d"
 
-#: plug-ins/file-psd/psd-load.c:930
+#: plug-ins/file-psd/psd-load.c:940
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Непідтримувана чи некоректна висота шару: %d"
 
-#: plug-ins/file-psd/psd-load.c:939
+#: plug-ins/file-psd/psd-load.c:949
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Непідтримувана чи некоректні ширина шару: %d"
 
-#: plug-ins/file-psd/psd-load.c:949
+#: plug-ins/file-psd/psd-load.c:959
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір шару: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:974
+#: plug-ins/file-psd/psd-load.c:984
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Непідтримуваний або некоректний розмір відомостей щодо маски."
 
-#: plug-ins/file-psd/psd-load.c:1157
+#: plug-ins/file-psd/psd-load.c:1167
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Непідтримувана чи некоректна висота маски: %d"
 
-#: plug-ins/file-psd/psd-load.c:1166
+#: plug-ins/file-psd/psd-load.c:1176
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Непідтримувана чи хибна ширина маски: %d"
 
-#: plug-ins/file-psd/psd-load.c:1176
+#: plug-ins/file-psd/psd-load.c:1186
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір маски: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2074 plug-ins/file-psd/psd-load.c:2730
+#: plug-ins/file-psd/psd-load.c:2178 plug-ins/file-psd/psd-load.c:2865
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Непідтримуваний метод стиснення: %d"
 
-#: plug-ins/file-psd/psd-load.c:2923
+#: plug-ins/file-psd/psd-load.c:3058
 msgid "Extra"
 msgstr "Додатково"
 
-#: plug-ins/file-psd/psd-load.c:3127
+#: plug-ins/file-psd/psd-load.c:3262
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Непідтримуваний чи некоректний розмір каналу"
 
-#: plug-ins/file-psd/psd-load.c:3196
+#: plug-ins/file-psd/psd-load.c:3331
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Не вдається розпакувати дані"
 
-#: plug-ins/file-psd/psd-load.c:3577
+#: plug-ins/file-psd/psd-load.c:3712
 msgid "Duotone Import"
 msgstr "Двотонове імпортування"
 
-#: plug-ins/file-psd/psd-load.c:3578
+#: plug-ins/file-psd/psd-load.c:3713
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10191,11 +10189,11 @@ msgstr ""
 "Дані двотонового простору кольорів було збережено,\n"
 "їх можна повторно застосувати при експортуванні."
 
-#: plug-ins/file-psd/psd-load.c:3600 plug-ins/file-psd/psd-save.c:2670
+#: plug-ins/file-psd/psd-load.c:3735 plug-ins/file-psd/psd-save.c:2670
 msgid "Compatibility Notice"
 msgstr "Зауваження щодо сумісності"
 
-#: plug-ins/file-psd/psd-load.c:3601
+#: plug-ins/file-psd/psd-load.c:3736
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -10341,9 +10339,12 @@ msgid "Import PSD metadata"
 msgstr "Імпорт метаданих PSD"
 
 #: plug-ins/file-psd/psd.c:542
-msgid "Metadata fill layers are not supported and will be dropped."
+#| msgid "Metadata fill layers are not supported and will be dropped."
+msgid ""
+"Metadata fill layers are not supported and will show up as empty layers."
 msgstr ""
-"Підтримки шарів заповнення метаданих ще не реалізовано, їх буде відкинуто."
+"Підтримки шарів заповнення метаданих ще не реалізовано, їх буде показано як"
+" порожні шари."
 
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
