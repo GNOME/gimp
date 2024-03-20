@@ -21,6 +21,7 @@
 #include <glib.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "scheme-wrapper.h"       /* type "pointer" */
 
@@ -78,6 +79,9 @@ script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProc
     return gimp_procedure_new_return_values (procedure, GIMP_PDB_CALLING_ERROR, NULL);
 
   ts_set_run_mode (run_mode);
+
+  /* Need Gegl.  Also inits ui, needed when mode is interactive. */
+  gimp_ui_init ("script-fu");
 
   begin_interpret_default_dialect ();
 
@@ -162,6 +166,9 @@ script_fu_run_procedure (GimpProcedure       *procedure,
 
   ts_set_run_mode (run_mode);
 
+  /* Need Gegl.  Also inits ui, needed when mode is interactive. */
+  gimp_ui_init ("script-fu");
+
   begin_interpret_default_dialect ();
 
   switch (run_mode)
@@ -176,7 +183,7 @@ script_fu_run_procedure (GimpProcedure       *procedure,
         /*  ...then acquire the rest of arguments (if any) with a dialog  */
         if (script->n_args > min_args)
           {
-            status = script_fu_interface (script, min_args);
+            status = script_fu_interface_dialog (script, min_args);
             break;
           }
         /*  otherwise (if the script takes no more arguments), skip

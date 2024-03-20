@@ -163,8 +163,8 @@ script_fu_interface_report_cc (const gchar *command)
 }
 
 GimpPDBStatusType
-script_fu_interface (SFScript  *script,
-                     gint       start_arg)
+script_fu_interface_dialog (SFScript  *script,
+                            gint       start_arg)
 {
   GtkWidget    *dialog;
   GtkWidget    *vbox;
@@ -174,7 +174,7 @@ script_fu_interface (SFScript  *script,
   gchar        *title;
   gint          i;
 
-  static gboolean gtk_initted = FALSE;
+  /* Requires gimp_ui_init called previously. */
 
   g_debug ("%s", G_STRFUNC);
 
@@ -197,13 +197,6 @@ script_fu_interface (SFScript  *script,
     }
 
   g_return_val_if_fail (script != NULL, FALSE);
-
-  if (!gtk_initted)
-    {
-      gimp_ui_init ("script-fu");
-
-      gtk_initted = TRUE;
-    }
 
   sf_status = GIMP_PDB_SUCCESS;
 
