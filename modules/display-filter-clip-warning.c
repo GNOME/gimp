@@ -33,9 +33,9 @@
 #include "libgimp/libgimp-intl.h"
 
 
-#define DEFAULT_SHADOWS_COLOR    (&(GimpRGB) {0.25, 0.25, 1.00, 1.00})
-#define DEFAULT_HIGHLIGHTS_COLOR (&(GimpRGB) {1.00, 0.25, 0.25, 1.00})
-#define DEFAULT_BOGUS_COLOR      (&(GimpRGB) {1.00, 1.00, 0.25, 1.00})
+#define DEFAULT_SHADOWS_COLOR    ((gdouble[]) {0.25, 0.25, 1.00, 1.00})
+#define DEFAULT_HIGHLIGHTS_COLOR ((gdouble[]) {1.00, 0.25, 0.25, 1.00})
+#define DEFAULT_BOGUS_COLOR      ((gdouble[]) {1.00, 1.00, 0.25, 1.00})
 
 
 #define CDISPLAY_TYPE_CLIP_WARNING            (cdisplay_clip_warning_get_type ())
@@ -61,11 +61,11 @@ struct _CdisplayClipWarning
   GimpColorDisplay  parent_instance;
 
   gboolean          show_shadows;
-  GimpRGB           shadows_color;
+  GeglColor        *shadows_color;
   gboolean          show_highlights;
-  GimpRGB           highlights_color;
+  GeglColor        *highlights_color;
   gboolean          show_bogus;
-  GimpRGB           bogus_color;
+  GeglColor        *bogus_color;
   gboolean          include_alpha;
   gboolean          include_transparent;
 
@@ -94,6 +94,7 @@ enum
 
 GType          cdisplay_clip_warning_get_type       (void);
 
+static void    cdisplay_clip_warning_finalize       (GObject             *object);
 static void    cdisplay_clip_warning_set_property   (GObject             *object,
                                                      guint                property_id,
                                                      const GValue        *value,
@@ -152,10 +153,14 @@ cdisplay_clip_warning_class_init (CdisplayClipWarningClass *klass)
 {
   GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
   GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
+  GeglColor             *color         = gegl_color_new (NULL);
 
-  object_class->get_property     = cdisplay_clip_warning_get_property;
-  object_class->set_property     = cdisplay_clip_warning_set_property;
+  object_class->finalize     = cdisplay_clip_warning_finalize;
+  object_class->get_property = cdisplay_clip_warning_get_property;
+  object_class->set_property = cdisplay_clip_warning_set_property;
 
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"),
+                        DEFAULT_SHADOWS_COLOR);
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SHADOWS,
                             "show-shadows",
                             _("Show shadows"),
@@ -163,14 +168,13 @@ cdisplay_clip_warning_class_init (CdisplayClipWarningClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_SHADOWS_COLOR,
-                        "shadows-color",
-                        _("Shadows color"),
-                        _("Shadows warning color"),
-                        FALSE,
-                        DEFAULT_SHADOWS_COLOR,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_CONFIG_PARAM_DEFAULTS);
+   GIMP_CONFIG_PROP_COLOR (object_class, PROP_SHADOWS_COLOR,
+                           "shadows-color",
+                           _("Shadows color"),
+                           _("Shadows warning color"),
+                           color,
+                           GIMP_PARAM_STATIC_STRINGS |
+                           GIMP_CONFIG_PARAM_DEFAULTS);
 
   gegl_param_spec_set_property_key (
     g_object_class_find_property (G_OBJECT_CLASS (klass), "shadows-color"),
@@ -183,14 +187,15 @@ cdisplay_clip_warning_class_init (CdisplayClipWarningClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_HIGHLIGHTS_COLOR,
-                        "highlights-color",
-                        _("Highlights color"),
-                        _("Highlights warning color"),
-                        FALSE,
-                        DEFAULT_HIGHLIGHTS_COLOR,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_CONFIG_PARAM_DEFAULTS);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"),
+                        DEFAULT_HIGHLIGHTS_COLOR);
+  GIMP_CONFIG_PROP_COLOR (object_class, PROP_HIGHLIGHTS_COLOR,
+                          "highlights-color",
+                          _("Highlights color"),
+                          _("Highlights warning color"),
+                          color,
+                          GIMP_PARAM_STATIC_STRINGS |
+                          GIMP_CONFIG_PARAM_DEFAULTS);
 
   gegl_param_spec_set_property_key (
     g_object_class_find_property (G_OBJECT_CLASS (klass), "highlights-color"),
@@ -203,14 +208,15 @@ cdisplay_clip_warning_class_init (CdisplayClipWarningClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_BOGUS_COLOR,
-                        "bogus-color",
-                        _("Bogus color"),
-                        _("Bogus warning color"),
-                        FALSE,
-                        DEFAULT_BOGUS_COLOR,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_CONFIG_PARAM_DEFAULTS);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"),
+                        DEFAULT_BOGUS_COLOR);
+  GIMP_CONFIG_PROP_COLOR (object_class, PROP_BOGUS_COLOR,
+                          "bogus-color",
+                          _("Bogus color"),
+                          _("Bogus warning color"),
+                          color,
+                          GIMP_PARAM_STATIC_STRINGS |
+                          GIMP_CONFIG_PARAM_DEFAULTS);
 
   gegl_param_spec_set_property_key (
     g_object_class_find_property (G_OBJECT_CLASS (klass), "bogus-color"),
@@ -235,6 +241,8 @@ cdisplay_clip_warning_class_init (CdisplayClipWarningClass *klass)
   display_class->icon_name       = GIMP_ICON_DISPLAY_FILTER_CLIP_WARNING;
 
   display_class->convert_buffer  = cdisplay_clip_warning_convert_buffer;
+
+  g_object_unref (color);
 }
 
 static void
@@ -245,6 +253,32 @@ cdisplay_clip_warning_class_finalize (CdisplayClipWarningClass *klass)
 static void
 cdisplay_clip_warning_init (CdisplayClipWarning *clip_warning)
 {
+  GeglColor *color;
+
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"),
+                        DEFAULT_SHADOWS_COLOR);
+  clip_warning->shadows_color = color;
+
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"),
+                        DEFAULT_HIGHLIGHTS_COLOR);
+  clip_warning->highlights_color = color;
+
+  color = gegl_color_new (NULL);
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"),
+                        DEFAULT_BOGUS_COLOR);
+  clip_warning->bogus_color = color;
+}
+
+static void
+cdisplay_clip_warning_finalize (GObject *object)
+{
+  CdisplayClipWarning *clip_warning = CDISPLAY_CLIP_WARNING (object);
+
+  g_clear_object (&clip_warning->shadows_color);
+  g_clear_object (&clip_warning->highlights_color);
+  g_clear_object (&clip_warning->bogus_color);
 }
 
 static void
@@ -261,21 +295,21 @@ cdisplay_clip_warning_get_property (GObject    *object,
       g_value_set_boolean (value, clip_warning->show_shadows);
       break;
     case PROP_SHADOWS_COLOR:
-      g_value_set_boxed (value, &clip_warning->shadows_color);
+      g_value_set_object (value, clip_warning->shadows_color);
       break;
 
     case PROP_SHOW_HIGHLIGHTS:
       g_value_set_boolean (value, clip_warning->show_highlights);
       break;
     case PROP_HIGHLIGHTS_COLOR:
-      g_value_set_boxed (value, &clip_warning->highlights_color);
+      g_value_set_object (value, clip_warning->highlights_color);
       break;
 
     case PROP_SHOW_BOGUS:
       g_value_set_boolean (value, clip_warning->show_bogus);
       break;
     case PROP_BOGUS_COLOR:
-      g_value_set_boxed (value, &clip_warning->bogus_color);
+      g_value_set_object (value, clip_warning->bogus_color);
       break;
 
     case PROP_INCLUDE_ALPHA:
@@ -314,21 +348,24 @@ cdisplay_clip_warning_set_property (GObject      *object,
       SET_MEMBER_VAL (show_shadows, gboolean, g_value_get_boolean (value));
       break;
     case PROP_SHADOWS_COLOR:
-      SET_MEMBER_PTR (shadows_color, g_value_get_boxed (value));
+      g_clear_object (&clip_warning->shadows_color);
+      clip_warning->shadows_color = gegl_color_duplicate (g_value_get_object (value));
       break;
 
     case PROP_SHOW_HIGHLIGHTS:
       SET_MEMBER_VAL (show_highlights, gboolean, g_value_get_boolean (value));
       break;
     case PROP_HIGHLIGHTS_COLOR:
-      SET_MEMBER_PTR (highlights_color, g_value_get_boxed (value));
+      g_clear_object (&clip_warning->highlights_color);
+      clip_warning->highlights_color = gegl_color_duplicate (g_value_get_object (value));
       break;
 
     case PROP_SHOW_BOGUS:
       SET_MEMBER_VAL (show_bogus, gboolean, g_value_get_boolean (value));
       break;
     case PROP_BOGUS_COLOR:
-      SET_MEMBER_PTR (bogus_color, g_value_get_boxed (value));
+      g_clear_object (&clip_warning->bogus_color);
+      clip_warning->bogus_color = gegl_color_duplicate (g_value_get_object (value));
       break;
 
     case PROP_INCLUDE_ALPHA:
@@ -342,6 +379,15 @@ cdisplay_clip_warning_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+
+    if (property_id == PROP_SHADOWS_COLOR    ||
+        property_id == PROP_HIGHLIGHTS_COLOR ||
+        property_id == PROP_BOGUS_COLOR)
+      {
+        cdisplay_clip_warning_update_colors (clip_warning);
+        g_object_notify (G_OBJECT (clip_warning), pspec->name);
+        gimp_color_display_changed (GIMP_COLOR_DISPLAY (clip_warning));
+      }
 
 #undef SET_MEMBER_PTR
 #undef SET_MEMBER_VAL
@@ -449,32 +495,42 @@ cdisplay_clip_warning_update_colors (CdisplayClipWarning *clip_warning)
       gfloat *alt_color = clip_warning->colors[i][1];
       gfloat  alt_value;
       gint    n         = 0;
+      gfloat  rgb[3];
 
       memset (color, 0, 3 * sizeof (gfloat));
 
       if (i & WARNING_SHADOW)
         {
-          color[0] += clip_warning->shadows_color.r;
-          color[1] += clip_warning->shadows_color.g;
-          color[2] += clip_warning->shadows_color.b;
+          gegl_color_get_pixel (clip_warning->shadows_color,
+                                babl_format ("R'G'B' float"),
+                                rgb);
+          color[0] += rgb[0];
+          color[1] += rgb[1];
+          color[2] += rgb[2];
 
           n++;
         }
 
       if (i & WARNING_HIGHLIGHT)
         {
-          color[0] += clip_warning->highlights_color.r;
-          color[1] += clip_warning->highlights_color.g;
-          color[2] += clip_warning->highlights_color.b;
+          gegl_color_get_pixel (clip_warning->highlights_color,
+                                babl_format ("R'G'B' float"),
+                                rgb);
+          color[0] += rgb[0];
+          color[1] += rgb[1];
+          color[2] += rgb[2];
 
           n++;
         }
 
       if (i & WARNING_BOGUS)
         {
-          color[0] += clip_warning->bogus_color.r;
-          color[1] += clip_warning->bogus_color.g;
-          color[2] += clip_warning->bogus_color.b;
+          gegl_color_get_pixel (clip_warning->bogus_color,
+                                babl_format ("R'G'B' float"),
+                                rgb);
+          color[0] += rgb[0];
+          color[1] += rgb[1];
+          color[2] += rgb[2];
 
           n++;
         }

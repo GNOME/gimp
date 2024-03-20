@@ -2486,15 +2486,15 @@ color1_changed (GimpColorButton *button)
   if (t)
     {
       GeglColor *color;
-      GimpRGB    rgb;
+      gdouble    rgba[4];
 
       color = gimp_color_button_get_color (button);
-      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgba);
 
-      t->color1.x = rgb.r;
-      t->color1.y = rgb.g;
-      t->color1.z = rgb.b;
-      t->color1.w = rgb.a;
+      t->color1.x = rgba[0];
+      t->color1.y = rgba[1];
+      t->color1.z = rgba[2];
+      t->color1.w = rgba[3];
 
       restartrender ();
 
@@ -2510,15 +2510,15 @@ color2_changed (GimpColorButton *button)
   if (t)
     {
       GeglColor *color;
-      GimpRGB    rgb;
+      gdouble    rgba[4];
 
       color = gimp_color_button_get_color (button);
-      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgba);
 
-      t->color2.x = rgb.r;
-      t->color2.y = rgb.g;
-      t->color2.z = rgb.b;
-      t->color2.w = rgb.a;
+      t->color2.x = rgba[0];
+      t->color2.y = rgba[1];
+      t->color2.z = rgba[2];
+      t->color2.w = rgba[3];
 
       restartrender ();
 
@@ -2531,7 +2531,7 @@ drawcolor1 (GtkWidget *w)
 {
   static GtkWidget *lastw = NULL;
   GeglColor        *color;
-  GimpRGB           rgb;
+  gdouble           rgba[4];
   texture          *t = currenttexture ();
 
   if (w)
@@ -2545,9 +2545,11 @@ drawcolor1 (GtkWidget *w)
     return;
 
   color = gegl_color_new (NULL);
-  gimp_rgba_set (&rgb,
-                 t->color1.x, t->color1.y, t->color1.z, t->color1.w);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  rgba[0] = t->color1.x;
+  rgba[1] = t->color1.y;
+  rgba[2] = t->color1.z;
+  rgba[3] = t->color1.w;
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgba);
 
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (w), color);
   g_object_unref (color);
@@ -2558,7 +2560,7 @@ drawcolor2 (GtkWidget *w)
 {
   static GtkWidget *lastw = NULL;
   GeglColor        *color;
-  GimpRGB           rgb;
+  gdouble           rgba[4];
   texture          *t = currenttexture ();
 
   if (w)
@@ -2572,9 +2574,11 @@ drawcolor2 (GtkWidget *w)
     return;
 
   color = gegl_color_new (NULL);
-  gimp_rgba_set (&rgb,
-                 t->color2.x, t->color2.y, t->color2.z, t->color2.w);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+  rgba[0] = t->color2.x;
+  rgba[1] = t->color2.y;
+  rgba[2] = t->color2.z;
+  rgba[3] = t->color2.w;
+  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgba);
 
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (w), color);
   g_object_unref (color);

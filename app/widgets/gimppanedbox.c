@@ -362,10 +362,12 @@ gimp_paned_box_drop_indicator_draw (GtkWidget *widget,
                                     gpointer   data)
 {
   GimpPanedBox *paned_box = GIMP_PANED_BOX (widget);
-  GimpRGB       color;
+  GeglColor    *color;
+  gdouble       rgba[4];
   gsize         i;
 
-  gimp_rgb_parse_hex (&color, DROP_HIGHLIGHT_COLOR, -1);
+  color = gimp_color_parse_hex (DROP_HIGHLIGHT_COLOR, -1);
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgba);
 
   for (i = 0; i < G_N_ELEMENTS (paned_box->p->dnd_highlights); i++)
     {
@@ -374,7 +376,10 @@ gimp_paned_box_drop_indicator_draw (GtkWidget *widget,
       if (! highlight->active)
         continue;
 
-      cairo_set_source_rgba (cr, color.r, color.g, color.b, highlight->opacity);
+      rgba[3] = highlight->opacity;
+      gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgba);
+
+      gimp_cairo_set_source_color (cr, color, NULL, FALSE, widget);
 
       cairo_rectangle (cr,
                        highlight->area.x,
@@ -384,6 +389,7 @@ gimp_paned_box_drop_indicator_draw (GtkWidget *widget,
 
       cairo_fill (cr);
     }
+  g_object_unref (color);
 
   return FALSE;
 }

@@ -232,7 +232,7 @@ static cairo_surface_t *get_cairo_surface        (GimpDrawable         *drawable
                                                   gboolean              as_mask,
                                                   GError              **error);
 
-static GimpRGB          get_layer_color          (GimpLayer            *layer,
+static GeglColor *      get_layer_color          (GimpLayer            *layer,
                                                   gboolean             *single);
 
 static void             drawText                 (GimpLayer            *layer,
@@ -1463,11 +1463,11 @@ get_cairo_surface (GimpDrawable  *drawable,
 /* A function to check if a drawable is single colored This allows to
  * convert bitmaps to vector where possible
  */
-static GimpRGB
+static GeglColor *
 get_layer_color (GimpLayer *layer,
                  gboolean  *single)
 {
-  GimpRGB col;
+  GeglColor *col = gegl_color_new (NULL);
   gdouble red, green, blue, alpha;
   gdouble dev, devSum;
   gdouble median, pixels, count, percentile;
@@ -1483,7 +1483,7 @@ get_layer_color (GimpLayer *layer,
     {
       /* FIXME: We can't do a proper histogram on indexed layers! */
       *single = FALSE;
-      col. r = col.g = col.b = col.a = 0;
+      gegl_color_set_rgba (col, 0.0, 0.0, 0.0, 0.0);
       return col;
     }
 
@@ -1528,11 +1528,7 @@ get_layer_color (GimpLayer *layer,
   devSum += dev;
   *single = devSum == 0;
 
-  col.r = red   / 255;
-  col.g = green / 255;
-  col.b = blue  / 255;
-  col.a = alpha / 255;
-
+  gegl_color_set_rgba (col, red, green, blue, alpha);
   return col;
 }
 
@@ -1891,8 +1887,8 @@ draw_layer (GimpLayer           **layers,
         {
           /* For raster layers */
 
-          GimpRGB  layer_color;
-          gboolean single_color = FALSE;
+          GeglColor *layer_color;
+          gboolean    single_color = FALSE;
 
           layer_color = get_layer_color (layer, &single_color);
 
@@ -1902,11 +1898,7 @@ draw_layer (GimpLayer           **layers,
 
           if (vectorize && single_color)
             {
-              cairo_set_source_rgba (cr,
-                                     layer_color.r,
-                                     layer_color.g,
-                                     layer_color.b,
-                                     layer_color.a * opacity);
+              gimp_cairo_set_source_color (cr, layer_color, NULL, FALSE, NULL);
               if (mask)
                 cairo_mask_surface (cr, mask_image, x, y);
               else
@@ -1938,6 +1930,8 @@ draw_layer (GimpLayer           **layers,
 
               cairo_surface_destroy (layer_image);
             }
+
+          g_object_unref (layer_color);
         }
       else
         {
