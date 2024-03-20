@@ -79,7 +79,6 @@ libapp = static_library('app',
 gimpconsole_deps = [
   cairo,
   dbghelp,
-  drmingw,
   gdk_pixbuf,
   gegl,
   gexiv2,

@@ -31,22 +31,7 @@
 #include "errors.h"
 #include "signals.h"
 
-#ifdef G_OS_WIN32
-#ifdef HAVE_EXCHNDL
-#include <windows.h>
-#include <time.h>
-#include <exchndl.h>
-
-static LPTOP_LEVEL_EXCEPTION_FILTER g_prevExceptionFilter = NULL;
-
-static LONG WINAPI  gimp_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo);
-#endif
-
-#else
-
 static void         gimp_sigfatal_handler (gint sig_num) G_GNUC_NORETURN;
-
-#endif
 
 
 void
@@ -60,9 +45,6 @@ gimp_init_signal_handlers (gchar **backtrace_file)
 #endif
   gchar   *filename;
   gchar   *dir;
-#if defined (G_OS_WIN32) && defined (HAVE_EXCHNDL)
-  wchar_t *backtrace_file_utf16;
-#endif
 
 #ifdef G_OS_WIN32
 #ifdef ENABLE_RELOCATABLE_RESOURCES
@@ -100,35 +82,8 @@ gimp_init_signal_handlers (gchar **backtrace_file)
   g_free (filename);
   g_free (dir);
 
-#ifdef G_OS_WIN32
-  /* Use Dr. Mingw (dumps backtrace on crash) if it is available. Do
-   * nothing otherwise on Win32.
-   * The user won't get any stack trace from glib anyhow.
-   * Without Dr. MinGW, It's better to let Windows inform about the
-   * program error, and offer debugging (if the user has installed MSVC
-   * or some other compiler that knows how to install itself as a
-   * handler for program errors).
-   */
 
-#ifdef HAVE_EXCHNDL
-  /* Order is very important here. We need to add our signal handler
-   * first, then run ExcHndlInit() which will add its own handler, so
-   * that ExcHnl's handler runs first since that's in FILO order.
-   */
-  if (! g_prevExceptionFilter)
-    g_prevExceptionFilter = SetUnhandledExceptionFilter (gimp_sigfatal_handler);
-
-  ExcHndlInit ();
-
-  if ((backtrace_file_utf16 = g_utf8_to_utf16 (*backtrace_file, -1, NULL, NULL, NULL)))
-    {
-      ExcHndlSetLogFileNameW (backtrace_file_utf16);
-      g_free (backtrace_file_utf16);
-    }
-
-#endif /* HAVE_EXCHNDL */
-
-#else
+#ifndef G_OS_WIN32
 
   /* Handle fatal signals */
 
@@ -157,46 +112,16 @@ gimp_init_signal_handlers (gchar **backtrace_file)
   /* Restart syscalls on SIGCHLD */
   gimp_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
 
-#endif /* G_OS_WIN32 */
-}
-
-
-#ifdef G_OS_WIN32
-
-#ifdef HAVE_EXCHNDL
-static LONG WINAPI
-gimp_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
-{
-  EXCEPTION_RECORD *er;
-  int               fatal;
-
-  if (pExceptionInfo == NULL ||
-      pExceptionInfo->ExceptionRecord == NULL)
-    return EXCEPTION_CONTINUE_SEARCH;
-
-  er = pExceptionInfo->ExceptionRecord;
-  fatal = I_RpcExceptionFilter (er->ExceptionCode);
-
-  /* IREF() returns EXCEPTION_CONTINUE_SEARCH for fatal exceptions */
-  if (fatal == EXCEPTION_CONTINUE_SEARCH)
-    {
-      /* Just in case, so that we don't loop or anything similar, just
-       * re-establish previous handler.
-       */
-      SetUnhandledExceptionFilter (g_prevExceptionFilter);
-
-      /* Now process the exception. */
-      gimp_fatal_error ("unhandled exception");
-    }
-
-  if (g_prevExceptionFilter && g_prevExceptionFilter != gimp_sigfatal_handler)
-    return g_prevExceptionFilter (pExceptionInfo);
-  else
-    return EXCEPTION_CONTINUE_SEARCH;
-}
-#endif
-
 #else
+  signal (SIGTERM, gimp_sigfatal_handler);
+
+  signal (SIGABRT, gimp_sigfatal_handler);
+  signal (SIGSEGV, gimp_sigfatal_handler);
+  signal (SIGFPE, gimp_sigfatal_handler);
+#endif /* ! G_OS_WIN32 */
+}
+
+
 
 /* gimp core signal handler for fatal signals */
 
@@ -205,21 +130,23 @@ gimp_sigfatal_handler (gint sig_num)
 {
   switch (sig_num)
     {
+#ifndef G_OS_WIN32
     case SIGHUP:
     case SIGINT:
     case SIGQUIT:
+#endif
     case SIGTERM:
       gimp_terminate (g_strsignal (sig_num));
       break;
 
     case SIGABRT:
-    case SIGBUS:
     case SIGSEGV:
     case SIGFPE:
+#ifndef G_OS_WIN32
+    case SIGBUS:
+#endif
     default:
       gimp_fatal_error (g_strsignal (sig_num));
       break;
     }
 }
-
-#endif /* G_OS_WIN32 */

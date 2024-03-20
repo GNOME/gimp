@@ -1154,7 +1154,6 @@ gimp_flags_value_get_abbrev (GFlagsClass       *flags_class,
 gboolean
 gimp_stack_trace_available (gboolean optimal)
 {
-#ifndef G_OS_WIN32
   gchar    *lld_path = NULL;
   gboolean  has_lldb = FALSE;
 
@@ -1180,11 +1179,6 @@ gimp_stack_trace_available (gboolean optimal)
   if (! optimal)
     return TRUE;
 #endif
-#else /* G_OS_WIN32 */
-#ifdef HAVE_EXCHNDL
-  return TRUE;
-#endif
-#endif /* G_OS_WIN32 */
   return FALSE;
 }
 

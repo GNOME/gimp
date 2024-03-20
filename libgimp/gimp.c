@@ -57,11 +57,6 @@
 
 #else
 
-#ifdef HAVE_EXCHNDL
-#include <time.h>
-#include <exchndl.h>
-#endif
-
 #include <signal.h>
 #endif
 
@@ -105,20 +100,7 @@
 static void   gimp_close        (void);
 
 
-#ifdef G_OS_WIN32
-
-#ifdef HAVE_EXCHNDL
-static LONG WINAPI gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo);
-
-static LPTOP_LEVEL_EXCEPTION_FILTER  _prevExceptionFilter    = NULL;
-static gchar                         *plug_in_backtrace_path = NULL;
-#endif
-
-#else /* ! G_OS_WIN32 */
-
 static void        gimp_plugin_sigfatal_handler (gint sig_num);
-
-#endif /* G_OS_WIN32 */
 
 
 static GimpPlugIn         *PLUG_IN               = NULL;
@@ -236,72 +218,6 @@ gimp_main (GType  plug_in_type,
     g_free (bin_dir);
   }
 
-#ifdef HAVE_EXCHNDL
-  /* Use Dr. Mingw (dumps backtrace on crash) if it is available. */
-  {
-    time_t   t;
-#ifdef ENABLE_RELOCATABLE_RESOURCES
-    gchar   *plugin_dir;
-    size_t   codeview_path_len;
-    gchar   *codeview_path;
-#endif
-    gchar   *filename;
-    gchar   *dir;
-    wchar_t *plug_in_backtrace_path_utf16;
-
-#ifdef ENABLE_RELOCATABLE_RESOURCES
-    /* FIXME: https://github.com/jrfonseca/drmingw/issues/91
-     * FIXME: This needs to take into account the plugin path
-    plugin_dir = ???
-    codeview_path_len = strlen (g_getenv ("_NT_SYMBOL_PATH") ? g_getenv ("_NT_SYMBOL_PATH") : "") + strlen (plugin_dir) + 2;
-    codeview_path = g_try_malloc (codeview_path_len);
-    if (codeview_path == NULL)
-      {
-        g_warning ("Failed to allocate memory");
-      }
-    if (g_getenv ("_NT_SYMBOL_PATH"))
-      g_snprintf (codeview_path, codeview_path_len, "%s;%s", plugin_dir, g_getenv ("_NT_SYMBOL_PATH"));
-    else
-      g_snprintf (codeview_path, codeview_path_len, "%s", plugin_dir);
-    g_setenv ("_NT_SYMBOL_PATH", codeview_path, TRUE);
-    g_free (codeview_path);
-    g_free (plugin_dir);*/
-#endif
-
-    /* This has to be the non-roaming directory (i.e., the local
-     * directory) as backtraces correspond to the binaries on this
-     * system.
-     */
-    dir = g_build_filename (g_get_user_data_dir (),
-                            GIMPDIR, GIMP_USER_VERSION, "CrashLog",
-                            NULL);
-    /* Ensure the path exists. */
-    g_mkdir_with_parents (dir, 0700);
-
-    time (&t);
-    filename = g_strdup_printf ("%s-crash-%" G_GUINT64_FORMAT ".txt",
-                                g_get_prgname(), t);
-    plug_in_backtrace_path = g_build_filename (dir, filename, NULL);
-    g_free (filename);
-    g_free (dir);
-
-    /* Similar to core crash handling in app/signals.c, the order here
-     * is very important!
-     */
-    if (! _prevExceptionFilter)
-      _prevExceptionFilter = SetUnhandledExceptionFilter (gimp_plugin_sigfatal_handler);
-
-    ExcHndlInit ();
-
-    plug_in_backtrace_path_utf16 = g_utf8_to_utf16 (plug_in_backtrace_path,
-                                                    -1, NULL, NULL, NULL);
-    if (plug_in_backtrace_path_utf16)
-      {
-        ExcHndlSetLogFileNameW (plug_in_backtrace_path_utf16);
-        g_free (plug_in_backtrace_path_utf16);
-      }
-  }
-#endif /* HAVE_EXCHNDL */
 
 #ifndef _WIN64
   {
@@ -444,6 +360,12 @@ gimp_main (GType  plug_in_type,
   /* Restart syscalls interrupted by SIGCHLD */
   gimp_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
 
+#else
+  signal (SIGTERM, gimp_plugin_sigfatal_handler);
+
+  signal (SIGABRT, gimp_plugin_sigfatal_handler);
+  signal (SIGSEGV, gimp_plugin_sigfatal_handler);
+  signal (SIGFPE, gimp_plugin_sigfatal_handler);
 #endif /* ! G_OS_WIN32 */
 
 #ifdef G_OS_WIN32
@@ -632,11 +554,6 @@ void
 gimp_quit (void)
 {
   gimp_close ();
-
-#if defined G_OS_WIN32 && defined HAVE_EXCHNDL
-  if (plug_in_backtrace_path)
-    g_free (plug_in_backtrace_path);
-#endif
 
   exit (EXIT_SUCCESS);
 }
@@ -1034,71 +951,34 @@ gimp_close (void)
 
 
 
-#ifdef G_OS_WIN32
-
-#ifdef HAVE_EXCHNDL
-static LONG WINAPI
-gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
-{
-  g_printerr ("Plugin signal handler: %s: fatal error\n", progname);
-
-  SetUnhandledExceptionFilter (_prevExceptionFilter);
-
-  /* For simplicity, do not make a difference between QUERY and ALWAYS
-   * on Windows (at least not for now).
-   */
-  if (stack_trace_mode != GIMP_STACK_TRACE_NEVER &&
-      g_file_test (plug_in_backtrace_path, G_FILE_TEST_IS_REGULAR))
-    {
-      FILE   *stream;
-      guchar  buffer[256];
-      size_t  read_len;
-
-      stream = g_fopen (plug_in_backtrace_path, "r");
-      do
-        {
-          /* Just read and output directly the file content. */
-          read_len = fread (buffer, 1, sizeof (buffer) - 1, stream);
-          buffer[read_len] = '\0';
-          g_printerr ("%s", buffer);
-        }
-      while (read_len);
-      fclose (stream);
-    }
-
-  if (_prevExceptionFilter && _prevExceptionFilter != gimp_plugin_sigfatal_handler)
-    return _prevExceptionFilter (pExceptionInfo);
-  else
-    return EXCEPTION_CONTINUE_SEARCH;
-}
-#endif /* HAVE_EXCHNDL */
-
-#else /* ! G_OS_WIN32 */
-
 static void
 gimp_plugin_sigfatal_handler (gint sig_num)
 {
   switch (sig_num)
     {
+#ifndef G_OS_WIN32
     case SIGHUP:
     case SIGINT:
     case SIGQUIT:
+#endif
     case SIGTERM:
       g_printerr ("%s terminated: %s\n", progname, g_strsignal (sig_num));
       break;
 
     case SIGABRT:
-    case SIGBUS:
     case SIGSEGV:
     case SIGFPE:
+#ifndef G_OS_WIN32
+    case SIGBUS:
     case SIGPIPE:
+#endif
     default:
       g_printerr ("%s: fatal error: %s\n", progname, g_strsignal (sig_num));
+#ifndef G_OS_WIN32
       switch (stack_trace_mode)
         {
         case GIMP_STACK_TRACE_NEVER:
           break;
-
         case GIMP_STACK_TRACE_QUERY:
           {
             sigset_t sigset;
@@ -1119,6 +999,7 @@ gimp_plugin_sigfatal_handler (gint sig_num)
           }
           break;
         }
+#endif
       break;
     }
 
@@ -1128,8 +1009,6 @@ gimp_plugin_sigfatal_handler (gint sig_num)
    */
   exit (EXIT_FAILURE);
 }
-
-#endif /* G_OS_WIN32 */
 
 void
 _gimp_config (GPConfig *config)

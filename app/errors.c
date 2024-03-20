@@ -315,8 +315,6 @@ gimp_eek (const gchar *reason,
    * trace if the rest fails. */
   g_printerr ("%s: %s: %s\n", full_prog_name, reason, message);
 
-#if ! defined (G_OS_WIN32) || defined (HAVE_EXCHNDL)
-
   if (use_handler)
     {
 #ifndef GIMP_CONSOLE_COMPILATION
@@ -360,15 +358,10 @@ gimp_eek (const gchar *reason,
           g_snprintf (timestamp, 16, "%"G_GINT64_FORMAT, the_errors_gimp->config->last_release_timestamp);
           args[7] = timestamp;
 
-#ifndef G_OS_WIN32
-          /* On Win32, the trace has already been processed by ExcHnl
-           * and is waiting for us in a text file.
-           */
           fd = g_fopen (backtrace_file, "w");
           has_backtrace = gimp_stack_trace_print ((const gchar *) full_prog_name,
                                                   fd, NULL);
           fclose (fd);
-#endif
 
           /* We don't care about any return value. If it fails, too
            * bad, we just won't have any stack trace.
@@ -425,7 +418,6 @@ gimp_eek (const gchar *reason,
         }
 #endif /* ! G_OS_WIN32 */
     }
-#endif /* ! G_OS_WIN32 || HAVE_EXCHNDL */
 
 #if defined (G_OS_WIN32) && ! defined (GIMP_CONSOLE_COMPILATION)
   /* g_on_error_* don't do anything reasonable on Win32. */

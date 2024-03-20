@@ -199,6 +199,7 @@ bundle(MSYSTEM_PREFIX, "etc/ssl/cert.pem")
 ## MAIN EXECUTABLES AND DEPENDENCIES
 ### Minimal (and some additional) executables for the 'bin' folder
 bundle(GIMP_PREFIX, "bin/gimp*.exe")
+bundle(GIMP_PREFIX, "bin/lldb.exe")
 ### Bundled just to promote GEGL. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10580
 bundle(GIMP_PREFIX, "bin/gegl.exe")
 ### Deps (DLLs) of the binaries in 'bin' and 'lib' dirs

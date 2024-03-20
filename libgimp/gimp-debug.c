@@ -29,11 +29,6 @@
 
 #else
 
-#ifdef HAVE_EXCHNDL
-#include <time.h>
-#include <exchndl.h>
-#endif
-
 #include <signal.h>
 #endif
 
