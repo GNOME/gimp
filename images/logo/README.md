@@ -28,14 +28,14 @@ side of GIMP as a community project rather than showing a corporate image.
 
 The 5 colors used in the main logo are:
 
-1. Face: `#878787`
-2. Brush wood (handle): `#f58a19`
-3. Brush metal ring (ferrule): `#cccccc`
-4. Brush hair (bristles), iris and nose: `#000000`
+1. Face and lower part of bristles: `#8c8073`
+2. Brush wood (handle): `#f2840`
+3. Brush metal ring (ferrule): `#bbbbbb`
+4. Top part of brush hair (bristles), iris and nose: `#000000`
 5. White of Wilber eye and light reflection (on eye, nose): `#ffffff`
 
 There is some play with negative space in the separation between face
-and nose, as well as the brush and its bristles.
+and nose.
 
 This flat logo is used for desktop usage (menus, GNOME overview, title
 bar, etc.).
@@ -121,7 +121,8 @@ It would also work very well for silk-screen printing.
 
 *Note: since the unicolor logo is made to be recolored, this participated a lot
 to the design of the eyes of Wilber (in all versions) which needed to not look
-scary whatever the color variant.*
+scary whatever the color variant. Nevertheless it is designed in particular for
+being printed as a dark color on a light background.*
 
 ## Outline variant
 
@@ -158,20 +159,18 @@ As example of icon resizing:
 
 ### Symbolic Icon
 
-The Symbolic variant uses the [unicolor version of the
-logo](#grayscaleunicolor-variant) (`gimp-logo-unicolor.svg`) for all sizes over
-32×32.
-
-On smaller sizes (32x32 and below), we use a simplified version
-(`gimp-wilber-symbolic.svg`) so that the brush doesn't look as a lost
-pixel and the mouth doesn't look over-detailed:
-
-<img style="background-color:white" src="gimp-wilber-symbolic.svg" alt="Design used for symbolic Wilber icon for 32x32 and smaller" />
+The Symbolic variant uses a [dedicated symbolic version of the
+logo](#grayscaleunicolor-variant) (`gimp-wilber-symbolic.svg`) for all sizes.
+The symbolic variant is similar to the unicolor variant except that the eyes and
+noses are colored with the `!important` property, ensuring that GIMP does not
+recolor these parts of the design.
+This way, we avoid the problem of Wilber seemingly looking up because the
+highlight in the eyes becomes black and therefore looks like an iris.
 
 As example of icon resizing:
 
-* Unicolor icon in 48×48: <img src="gimp-logo-unicolor.svg" width="48" height="48"/>
-* Simplified icon in 16×16: <img src="gimp-wilber-symbolic.svg" width="16" height="16"/>
+* Symbolic icon in 48×48: <img src="gimp-wilber-symbolic.svg" width="48" height="48"/>
+* Symbolic icon in 16×16: <img src="gimp-wilber-symbolic.svg" width="16" height="16"/>
 
 ### Wilber-eek
 
@@ -203,7 +202,9 @@ is:
 ![Color development logo](gimp-devel-logo.svg)
 
 It features rainbow colors being spilled on Wilber, like a scientific
-experiment with colors, to represent the experimental side of Wilber.
+experiment with colors, to represent the experimental side of Wilber. This logo
+still features Wilber in gray with an older brush using negative space design,
+as was originally proposed.
 
 The development logo is swapped with the main logo in the About dialog
 of unstable versions. It is not used as "app logo" in menus, title bars and so
@@ -221,6 +222,9 @@ software is the only place we use it so far.*
 The icons are authored by Aryeom, with feedbacks from various contributors, in
 particular (in alphabetical order): Jehan, Øyvind Kolås, Simon Budig and Ville
 Pätsi.
+
+Remarks from people on Gitlab were also taken into account during design
+editing.
 
 The files are licensed under [Creative Commons Attribution-ShareAlike 4.0
 International](https://creativecommons.org/licenses/by-sa/4.0/).

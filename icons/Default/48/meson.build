@@ -31,12 +31,7 @@ foreach icon : source_icons
   outname   = icon_name
   outdir    = gimpiconsdir / theme / icons_dir / 'apps'
   if icon == 'gimp-wilber'
-    if size.to_int() <= 32
-      input_path = meson.project_source_root() / 'gimp-data/images/logo/gimp-wilber-symbolic.svg'
-    else
-      input_path = meson.project_source_root() / 'gimp-data/images/logo/gimp-logo-unicolor.svg'
-      outname    = 'gimp-logo-unicolor.symbolic.png'
-    endif
+    input_path = meson.project_source_root() / 'gimp-data/images/logo/gimp-wilber-symbolic.svg'
   else
     input_path = '../scalable/' + icon + '-symbolic.svg'
   endif

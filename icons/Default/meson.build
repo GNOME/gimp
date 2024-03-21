@@ -59,8 +59,6 @@ foreach install : install_icons
                    install_dir: gimpiconsdir / theme / outdir / 'logo/unisize')
     endif
 
-    # gimp-wilber icon in symbolic uses the unicolor logo, except for smaller
-    # sizes, where we use a simplified unicolor version.
     wilber = '@0@/gimp-wilber-symbolic.svg'.format(indir)
     if wilber in icons
       newicons = []
@@ -70,12 +68,9 @@ foreach install : install_icons
         endif
       endforeach
       icons = newicons
-      install_data(meson.project_source_root() / 'gimp-data/images/logo/gimp-logo-unicolor.svg',
-                   rename: 'gimp-wilber-symbolic.svg',
-                   install_dir: gimpiconsdir / theme / outdir / 'logo/big')
       install_data(meson.project_source_root() / 'gimp-data/images/logo/gimp-wilber-symbolic.svg',
                    rename: 'gimp-wilber-symbolic.svg',
-                   install_dir: gimpiconsdir / theme / outdir / 'logo/small')
+                   install_dir: gimpiconsdir / theme / outdir / 'logo/unisize')
     endif
 
     install_data(icons, install_dir: gimpiconsdir / theme / outdir / 'apps')
