@@ -41,7 +41,7 @@ def _(message): return GLib.dgettext(None, message)
 
 w3c_template = """background-image: linear-gradient(top, %s);\n"""
 
-color_to_html = lambda c: "rgb(%d,%d,%d)" % (c.r, c.g, c.b)
+color_to_html = lambda r, g, b: "rgb(%d,%d,%d)" % (int(255 * r), int(255 * g), int(255 * b))
 
 def format_text(text):
     counter = 0
@@ -146,19 +146,22 @@ def gradient_css_save(procedure, config, data):
     n_segments = gradient.get_number_of_segments()
     last_stop = None
     for index in range(n_segments):
-        success, lcolor, lopacity = gradient.segment_get_left_color(index)
-        success, rcolor, ropacity = gradient.segment_get_right_color(index)
+        lcolor = gradient.segment_get_left_color(index)
+        rcolor = gradient.segment_get_right_color(index)
         success, lpos = gradient.segment_get_left_pos(index)
         success, rpos = gradient.segment_get_right_pos(index)
 
-        lstop = color_to_html(lcolor) + " %d%%" % int(100 * lpos)
-        if lstop != last_stop:
-            stops.append(lstop)
+        if lcolor != None and rcolor != None:
+            lr, lg, lb, la = lcolor.get_rgba()
+            rr, rg, rb, ra = rcolor.get_rgba()
+            lstop = color_to_html(lr, lg, lb) + " %d%%" % int(100 * lpos)
+            if lstop != last_stop:
+                stops.append(lstop)
 
-        rstop = color_to_html(rcolor) + " %d%%" % int(100 * rpos)
+            rstop = color_to_html(rr, rg, rb) + " %d%%" % int(100 * rpos)
 
-        stops.append(rstop)
-        last_stop = rstop
+            stops.append(rstop)
+            last_stop = rstop
 
     final_text = w3c_template % ", ".join(stops)
 

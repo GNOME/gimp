@@ -47,10 +47,10 @@ def make_gradient(palette, num_segments, num_colors):
             color_number_next = 0
         else:
             color_number_next = color_number + 1
-        _, color_left = palette.entry_get_color(color_number)
-        _, color_right = palette.entry_get_color(color_number_next)
-        gradient.segment_set_left_color( color_number, color_left, 100.0)
-        gradient.segment_set_right_color(color_number, color_right, 100.0)
+        color_left = palette.entry_get_color(color_number)
+        color_right = palette.entry_get_color(color_number_next)
+        gradient.segment_set_left_color(color_number, color_left)
+        gradient.segment_set_right_color(color_number, color_right)
 
     # Side effects on the context. Probably not what most would expect.
     Gimp.context_set_gradient(gradient)
