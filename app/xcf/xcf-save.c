@@ -1851,10 +1851,10 @@ xcf_save_prop (XcfInfo    *info,
 
                     bytes = gegl_color_get_bytes (color, format);
                     data  = (guint8 *) g_bytes_get_data (bytes, &data_length);
-                    g_bytes_unref (bytes);
 
                     xcf_write_int32_check_error (info, (guint32 *) &data_length, 1, ;);
                     xcf_write_int8_check_error (info, (const guint8 *) data, data_length, ;);
+                    g_bytes_unref (bytes);
 
                     space = babl_format_get_space (format);
                     if (space != babl_space ("sRGB"))
