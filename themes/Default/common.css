@@ -160,6 +160,7 @@ notebook header tabs tab {
   background-color: @bg-color;
   background-image: none;
   border: 1px solid @strong-border-color;
+  box-shadow: none;
   margin-left: 2px;
   margin-right: 2px;
   min-width: 30px;
