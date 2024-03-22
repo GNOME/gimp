@@ -31,8 +31,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-19 14:07+0100\n"
-"PO-Revision-Date: 2024-02-19 14:11+0100\n"
+"POT-Creation-Date: 2024-03-22 01:49+0100\n"
+"PO-Revision-Date: 2024-03-22 01:49+0100\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -290,22 +290,22 @@ msgid "Allowed values:"
 msgstr "Valori consentiti:"
 
 #. procedure executed successfully
-#: ../libgimp/gimppdb.c:336
+#: ../libgimp/gimppdb.c:337
 msgid "success"
 msgstr "azione riuscita"
 
 #. procedure execution failed
-#: ../libgimp/gimppdb.c:340
+#: ../libgimp/gimppdb.c:341
 msgid "execution error"
 msgstr "errore di esecuzione"
 
 #. procedure called incorrectly
-#: ../libgimp/gimppdb.c:344
+#: ../libgimp/gimppdb.c:345
 msgid "calling error"
 msgstr "errore di chiamata"
 
 #. procedure execution cancelled
-#: ../libgimp/gimppdb.c:348
+#: ../libgimp/gimppdb.c:349
 msgid "cancelled"
 msgstr "annullato"
 
@@ -397,12 +397,12 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedura corrisponde all'interrogazione"
 msgstr[1] "%d procedure corrispondono all'interrogazione"
 
-#: ../libgimp/gimpprocedure.c:2056
+#: ../libgimp/gimpprocedure.c:2068
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "La procedura \"%s\" non ha restituito valori di ritorno"
 
-#: ../libgimp/gimpprocedure.c:2183
+#: ../libgimp/gimpprocedure.c:2195
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -411,7 +411,7 @@ msgstr ""
 "La procedura \"%s\" ha restituito un tipo di valore sbagliato per il valore "
 "di ritorno \"%s\" (#%d). Era previsto %s, ottenuto %s."
 
-#: ../libgimp/gimpprocedure.c:2195
+#: ../libgimp/gimpprocedure.c:2207
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
@@ -420,7 +420,7 @@ msgstr ""
 "La procedura \"%s\" è stata chiamata con un tipo di valore sbagliato per "
 "l'argomento \"%s\" (#%d). Era previsto %s, ottenuto %s."
 
-#: ../libgimp/gimpprocedure.c:2230
+#: ../libgimp/gimpprocedure.c:2242
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -429,7 +429,7 @@ msgstr ""
 "La procedura \"%s\" la restituito \"%s\" come valore di ritorno \"%s\" (#%d, "
 "tipo %s). Questo valore è fuori campo."
 
-#: ../libgimp/gimpprocedure.c:2244
+#: ../libgimp/gimpprocedure.c:2256
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -438,14 +438,14 @@ msgstr ""
 "La procedura \"%s\" è stata chiamata con il valore \"%s\" per l'argomento "
 "\"%s\" (#%d, tipo %s). Questo valore è fuori campo."
 
-#: ../libgimp/gimpprocedure.c:2288
+#: ../libgimp/gimpprocedure.c:2300
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "La procedura \"%s\" ha restituito una stringa UTF-8 non valida per "
 "l'argomento \"%s\"."
 
-#: ../libgimp/gimpprocedure.c:2298
+#: ../libgimp/gimpprocedure.c:2310
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -1464,22 +1464,22 @@ msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Nessuna (estesa)"
 
-# repeat-mode
 #: ../libgimpbase/gimpbaseenums.c:1475
+msgctxt "repeat-mode"
+msgid "None (truncate)"
+msgstr "Nessuna (troncata)"
+
+# repeat-mode
+#: ../libgimpbase/gimpbaseenums.c:1476
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Onda a dente di sega"
 
 # repeat-mode
-#: ../libgimpbase/gimpbaseenums.c:1476
+#: ../libgimpbase/gimpbaseenums.c:1477
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Onda triangolare"
-
-#: ../libgimpbase/gimpbaseenums.c:1477
-msgctxt "repeat-mode"
-msgid "Truncate"
-msgstr "Troncata"
 
 #: ../libgimpbase/gimpbaseenums.c:1539
 msgctxt "run-mode"
@@ -1696,22 +1696,22 @@ msgstr "È possibile caricare i metadati solo da file locali"
 msgid "Can save metadata only to local files"
 msgstr "È possibile salvare i metadati sono su file locali"
 
-#: ../libgimpbase/gimpmetadata.c:1347
+#: ../libgimpbase/gimpmetadata.c:1348
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Dimensione non valida dati Exif."
 
-#: ../libgimpbase/gimpmetadata.c:1376
+#: ../libgimpbase/gimpmetadata.c:1393
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Fallita l'analisi dei dati Exif."
 
-#: ../libgimpbase/gimpmetadata.c:1426
+#: ../libgimpbase/gimpmetadata.c:1445
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Fallita l'analisi dei dati IPTC."
 
-#: ../libgimpbase/gimpmetadata.c:1474
+#: ../libgimpbase/gimpmetadata.c:1493
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Fallita l'analisi dei dati XMP."
@@ -2065,11 +2065,11 @@ msgstr "durante l'analisi del token \"%s\": %s"
 msgid "fatal parse error"
 msgstr "errore di analisi irrimediabile"
 
-#: ../libgimpconfig/gimpconfig-path.c:506
+#: ../libgimpconfig/gimpconfig-path.c:513
 msgid "File has no path representation"
 msgstr "Il file non ha rappresentazione del percorso"
 
-#: ../libgimpconfig/gimpconfig-path.c:593
+#: ../libgimpconfig/gimpconfig-path.c:600
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Impossibile espandere ${%s}"
@@ -3094,77 +3094,77 @@ msgstr "RRT Aces"
 #. Translators: "Clip Warning" is the name of a (color) display filter
 #. * that highlights pixels outside of the color space range.
 #. * Shown as a label description.
-#: ../modules/display-filter-clip-warning.c:124
+#: ../modules/display-filter-clip-warning.c:125
 msgid "Clip warning color display filter"
 msgstr "Filtro di visualizzazione colore di avvertimento di taglio"
 
-#: ../modules/display-filter-clip-warning.c:161
+#: ../modules/display-filter-clip-warning.c:166
 msgid "Show shadows"
 msgstr "Mostra ombre"
 
-#: ../modules/display-filter-clip-warning.c:162
+#: ../modules/display-filter-clip-warning.c:167
 msgid "Show warning for pixels with a negative component"
 msgstr "Mostra un avvertimento per ogni pixel con una componente negativa"
 
-#: ../modules/display-filter-clip-warning.c:168
+#: ../modules/display-filter-clip-warning.c:173
 msgid "Shadows color"
 msgstr "Colore ombre"
 
-#: ../modules/display-filter-clip-warning.c:169
+#: ../modules/display-filter-clip-warning.c:174
 msgid "Shadows warning color"
 msgstr "Colore di avvertimento ombre"
 
-#: ../modules/display-filter-clip-warning.c:181
+#: ../modules/display-filter-clip-warning.c:185
 msgid "Show highlights"
 msgstr "Mostra alteluci"
 
-#: ../modules/display-filter-clip-warning.c:182
+#: ../modules/display-filter-clip-warning.c:186
 msgid "Show warning for pixels with a component greater than one"
 msgstr ""
 "Mostra un avvertimento per i pixel con una componente più grande di uno"
 
-#: ../modules/display-filter-clip-warning.c:188
+#: ../modules/display-filter-clip-warning.c:194
 msgid "Highlights color"
 msgstr "Colore alteluci"
 
-#: ../modules/display-filter-clip-warning.c:189
+#: ../modules/display-filter-clip-warning.c:195
 msgid "Highlights warning color"
 msgstr "Colore di avvertimento alteluci"
 
-#: ../modules/display-filter-clip-warning.c:201
+#: ../modules/display-filter-clip-warning.c:206
 msgid "Show bogus"
 msgstr "Mostra falso"
 
-#: ../modules/display-filter-clip-warning.c:202
+#: ../modules/display-filter-clip-warning.c:207
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr ""
 "Mostra un avvertimento per i pixel con una componente infinita o non numerica"
 
-#: ../modules/display-filter-clip-warning.c:208
+#: ../modules/display-filter-clip-warning.c:215
 msgid "Bogus color"
 msgstr "Colore falso"
 
-#: ../modules/display-filter-clip-warning.c:209
+#: ../modules/display-filter-clip-warning.c:216
 msgid "Bogus warning color"
 msgstr "Colore di avvertimento colore falso"
 
-#: ../modules/display-filter-clip-warning.c:221
+#: ../modules/display-filter-clip-warning.c:227
 msgid "Include alpha component"
 msgstr "Include componente alfa"
 
-#: ../modules/display-filter-clip-warning.c:222
+#: ../modules/display-filter-clip-warning.c:228
 msgid "Include alpha component in the warning"
 msgstr "Include componente alfa nell'avvertimento"
 
-#: ../modules/display-filter-clip-warning.c:228
+#: ../modules/display-filter-clip-warning.c:234
 msgid "Include transparent pixels"
 msgstr "Include i pixel trasparenti"
 
-#: ../modules/display-filter-clip-warning.c:229
+#: ../modules/display-filter-clip-warning.c:235
 msgid "Include fully transparent pixels in the warning"
 msgstr "Include i pixel completamente trasparenti nell'avvertimento"
 
-#: ../modules/display-filter-clip-warning.c:233
+#: ../modules/display-filter-clip-warning.c:239
 msgid "Clip Warning"
 msgstr "Avvertimento taglio"
 
