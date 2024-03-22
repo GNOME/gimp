@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-19 14:13+0100\n"
-"PO-Revision-Date: 2024-02-19 14:25+0100\n"
+"POT-Creation-Date: 2024-03-22 11:27+0100\n"
+"PO-Revision-Date: 2024-03-22 11:28+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "Language: it\n"
@@ -122,7 +122,7 @@ msgstr "Salva il risultato della console Script-Fu"
 
 #: ../plug-ins/script-fu/console/script-fu-console.c:250
 #: ../plug-ins/script-fu/server/script-fu-server.c:878
-#: ../plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
+#: ../plug-ins/script-fu/libscriptfu/script-fu-interface.c:216
 msgid "_Cancel"
 msgstr "A_nnulla"
 
@@ -193,31 +193,31 @@ msgstr "Script-Fu non può elaborare due o più script contemporaneamente."
 msgid "You are already running the \"%s\" script."
 msgstr "Lo script \"%s\" è già in esecuzione."
 
-#: ../plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: ../plug-ins/script-fu/libscriptfu/script-fu-interface.c:215
 msgid "_Reset"
 msgstr "_Reimposta"
 
-#: ../plug-ins/script-fu/libscriptfu/script-fu-interface.c:224
+#: ../plug-ins/script-fu/libscriptfu/script-fu-interface.c:217
 msgid "_OK"
 msgstr "_OK"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/libscriptfu/script-fu-interface.c:278
+#: ../plug-ins/script-fu/libscriptfu/script-fu-interface.c:271
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/libscriptfu/script-fu-interface.c:331
+#: ../plug-ins/script-fu/libscriptfu/script-fu-interface.c:322
 msgid "Script-Fu Color Selection"
 msgstr "Selezione colore Script-fu"
 
-#: ../plug-ins/script-fu/libscriptfu/script-fu-interface.c:457
+#: ../plug-ins/script-fu/libscriptfu/script-fu-interface.c:448
 msgid "Script-Fu File Selection"
 msgstr "Selezione file Script-Fu"
 
-#: ../plug-ins/script-fu/libscriptfu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/libscriptfu/script-fu-interface.c:451
 msgid "Script-Fu Folder Selection"
 msgstr "Selezione cartella Script-fu"
 
@@ -737,8 +737,8 @@ msgid "Flatten image"
 msgstr "Immagine appiattita"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:63
-msgid "Using _Paths"
-msgstr "Uso dei _tracciati"
+msgid "_Using Paths"
+msgstr "_Uso dei tracciati"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:64
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:77
@@ -777,12 +777,12 @@ msgid "Drawing _Simple Objects"
 msgstr "Disegno di oggetti _semplici"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:154
-msgid "Create and Use _Selections"
-msgstr "Creare e usare le _selezioni"
+msgid "_Create and Use Selections"
+msgstr "_Crea e usa le selezioni"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:166
-msgid "_[Table of Contents]"
-msgstr "_[Sommario]"
+msgid "_Table of Contents"
+msgstr "_Sommario"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:202
 msgid "_Main Web Site"
@@ -1113,7 +1113,9 @@ msgstr "Mappa J_ava..."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:399
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
-msgstr "Esporta la tavolozza attiva come una java.util.Hashtable&lt;stringa, colore&gt;"
+msgstr ""
+"Esporta la tavolozza attiva come una java.util.Hashtable&lt;stringa, "
+"colore&gt;"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:58
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:46
