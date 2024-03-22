@@ -1,12 +1,12 @@
 # The GIMP Windows installer translation.
-# Copyright (C) 2018 Free Software Foundation, Inc.
-# Marco Ciampa <ciampix@posteo.net>, 2018.
+# Copyright (C) 2018-2024 Free Software Foundation, Inc.
+# Marco Ciampa <ciampix@posteo.net>, 2018-2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Windows Installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-08-22 21:28+0200\n"
-"PO-Revision-Date: 2021-09-08 21:00+0200\n"
+"PO-Revision-Date: 2024-03-22 01:46+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: Italian <it@li.org>\n"
 "Language: it\n"
@@ -136,9 +136,8 @@ msgid "Run-time libraries"
 msgstr "Librerie a run-time"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-#, fuzzy
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
-msgstr "Librerie a run-time usate da GIMP, incluso l'ambiente run-time GTK+"
+msgstr "Librerie a run-time usate da GIMP, incluso l'ambiente run-time GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -149,9 +148,8 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Includi informazioni per aiutare il debug di GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-#, fuzzy
 msgid "MS-Windows engine for GTK"
-msgstr "Motore GTK+ per MS-Windows"
+msgstr "Motore GTK per MS-Windows"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
