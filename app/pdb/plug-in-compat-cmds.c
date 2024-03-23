@@ -1084,10 +1084,10 @@ plug_in_colortoalpha_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  GimpRGB color;
+  GeglColor *color;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  gimp_value_get_rgb (gimp_value_array_index (args, 3), &color);
+  color = g_value_get_object (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -1095,7 +1095,7 @@ plug_in_colortoalpha_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GeglColor *gegl_color = gimp_gegl_color_new (&color, NULL);
+          GeglColor *gegl_color = gegl_color_duplicate (color);
           GeglNode  *node =
             gegl_node_new_child (NULL,
                                  "operation", "gegl:color-to-alpha",
@@ -1795,17 +1795,14 @@ plug_in_exchange_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GimpRGB    from;
-          GimpRGB    to;
-          GeglColor *gegl_from;
-          GeglColor *gegl_to;
+          GeglColor *gegl_from = gegl_color_new (NULL);
+          GeglColor *gegl_to = gegl_color_new (NULL);
           GeglNode  *node;
 
-          gimp_rgb_set_uchar (&from, from_red, from_green, from_blue);
-          gimp_rgb_set_uchar (&to,   to_red,   to_green,   to_blue);
-
-          gegl_from = gimp_gegl_color_new (&from, NULL);
-          gegl_to   = gimp_gegl_color_new (&to,   NULL);
+          gegl_color_set_rgba (gegl_from, from_red / 255.0, from_green / 255.0,
+                               from_blue / 255.0, 1.0);
+          gegl_color_set_rgba (gegl_to, to_red / 255.0, to_green / 255.0,
+                               to_blue / 255.0, 1.0);
 
           node = gegl_node_new_child (NULL,
                                       "operation",       "gegl:color-exchange",
@@ -2921,7 +2918,7 @@ plug_in_nova_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gint xcenter;
   gint ycenter;
-  GimpRGB color;
+  GeglColor *color;
   gint radius;
   gint nspoke;
   gint randomhue;
@@ -2929,7 +2926,7 @@ plug_in_nova_invoker (GimpProcedure         *procedure,
   drawable = g_value_get_object (gimp_value_array_index (args, 2));
   xcenter = g_value_get_int (gimp_value_array_index (args, 3));
   ycenter = g_value_get_int (gimp_value_array_index (args, 4));
-  gimp_value_get_rgb (gimp_value_array_index (args, 5), &color);
+  color = g_value_get_object (gimp_value_array_index (args, 5));
   radius = g_value_get_int (gimp_value_array_index (args, 6));
   nspoke = g_value_get_int (gimp_value_array_index (args, 7));
   randomhue = g_value_get_int (gimp_value_array_index (args, 8));
@@ -2940,10 +2937,12 @@ plug_in_nova_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
+          GeglColor *gegl_color;
           GeglNode  *node;
-          GeglColor *gegl_color = gimp_gegl_color_new (&color, NULL);
           gdouble    center_x   = (gdouble) xcenter / (gdouble) gimp_item_get_width (GIMP_ITEM (drawable));
           gdouble    center_y   = (gdouble) ycenter / (gdouble) gimp_item_get_height (GIMP_ITEM (drawable));
+
+          gegl_color = gegl_color_duplicate (color);
 
           node = gegl_node_new_child (NULL,
                                       "operation",    "gegl:supernova",
@@ -5618,12 +5617,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("color",
-                                                    "color",
-                                                    "Color to remove",
-                                                    FALSE,
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
+                               gegl_param_spec_color ("color",
+                                                      "color",
+                                                      "Color to remove",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -7663,12 +7661,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                  G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("color",
-                                                    "color",
-                                                    "Color of supernova",
-                                                    FALSE,
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
+                               gegl_param_spec_color ("color",
+                                                      "color",
+                                                      "Color of supernova",
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("radius",
                                                  "radius",

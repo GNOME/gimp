@@ -947,13 +947,16 @@ mng_save_image (GFile         *file,
   /* how do we get this to work? */
   if (config_bkgd)
     {
-      GimpRGB bgcolor;
-      guchar red, green, blue;
+      GeglColor *background;
+      guchar     rgb[3];
+      guchar     luminance[1];
 
-      gimp_context_get_background (&bgcolor);
-      gimp_rgb_get_uchar (&bgcolor, &red, &green, &blue);
+      background = gimp_context_get_background ();
+      gegl_color_get_pixel (background, babl_format ("R'G'B' u8"), rgb);
+      gegl_color_get_pixel (background, babl_format ("Y' u8"), luminance);
+      g_object_unref (background);
 
-      if (mng_putchunk_back (handle, red, green, blue,
+      if (mng_putchunk_back (handle, rgb[0], rgb[1], rgb[2],
                              MNG_BACKGROUNDCOLOR_MANDATORY,
                              0, MNG_BACKGROUNDIMAGE_NOTILE) != MNG_NOERROR)
         {
@@ -962,8 +965,8 @@ mng_save_image (GFile         *file,
         }
 
       if (mng_putchunk_bkgd (handle, MNG_FALSE, 2, 0,
-                             gimp_rgb_luminance_uchar (&bgcolor),
-                             red, green, blue) != MNG_NOERROR)
+                             luminance,
+                             rgb[0], rgb[1], rgb[2])) != MNG_NOERROR)
         {
           g_warning ("Unable to mng_putchunk_bkgd() in mng_save_image()");
           goto err3;

@@ -808,6 +808,9 @@ paint_ring (GimpColorWheel *wheel,
 {
   GtkWidget             *widget = GTK_WIDGET (wheel);
   GimpColorWheelPrivate *priv   = gimp_color_wheel_get_instance_private (wheel);
+  GeglColor             *color  = gegl_color_new (NULL);
+  const Babl            *render_space;
+  gdouble                luminance[1];
   gint                   width, height;
   gint                   xx, yy;
   gdouble                dx, dy, dist;
@@ -824,6 +827,8 @@ paint_ring (GimpColorWheel *wheel,
 
   width  = gtk_widget_get_allocated_width  (widget);
   height = gtk_widget_get_allocated_height (widget);
+
+  render_space = gimp_widget_get_render_space (widget, priv->config);
 
   center_x = width  / 2.0;
   center_y = height / 2.0;
@@ -891,7 +896,9 @@ paint_ring (GimpColorWheel *wheel,
   b = 1.0;
   hsv_to_rgb (&r, &g, &b);
 
-  if (GIMP_RGB_LUMINANCE (r, g, b) > 0.5)
+  gegl_color_set_rgba_with_space (color, r, g, b, 1.0, render_space);
+  gegl_color_get_pixel (color, babl_format ("Y' double"), luminance);
+  if (luminance[0] > 0.5)
     cairo_set_source_rgb (source_cr, 0.0, 0.0, 0.0);
   else
     cairo_set_source_rgb (source_cr, 1.0, 1.0, 1.0);
@@ -920,6 +927,7 @@ paint_ring (GimpColorWheel *wheel,
 
   cairo_restore (cr);
 
+  g_object_unref (color);
   g_free (buf);
 }
 
@@ -958,6 +966,9 @@ paint_triangle (GimpColorWheel *wheel,
 {
   GtkWidget             *widget = GTK_WIDGET (wheel);
   GimpColorWheelPrivate *priv   = gimp_color_wheel_get_instance_private (wheel);
+  GeglColor             *color  = gegl_color_new (NULL);
+  const Babl            *render_space;
+  gdouble                luminance[1];
   gint                   hx, hy, sx, sy, vx, vy; /* HSV vertices */
   gint                   x1, y1, r1, g1, b1; /* First vertex in scanline order */
   gint                   x2, y2, r2, g2, b2; /* Second vertex */
@@ -976,6 +987,8 @@ paint_triangle (GimpColorWheel *wheel,
 
   width  = gtk_widget_get_allocated_width  (widget);
   height = gtk_widget_get_allocated_height (widget);
+
+  render_space = gimp_widget_get_render_space (widget, priv->config);
 
   /* Compute triangle's vertices */
 
@@ -1127,7 +1140,9 @@ paint_triangle (GimpColorWheel *wheel,
 
   gtk_style_context_save (context);
 
-  if (GIMP_RGB_LUMINANCE (r, g, b) > 0.5)
+  gegl_color_set_rgba_with_space (color, r, g, b, 1.0, render_space);
+  gegl_color_get_pixel (color, babl_format ("Y' double"), luminance);
+  if (luminance[0] > 0.5)
     {
       gtk_style_context_add_class (context, "light-area-focus");
       cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
@@ -1137,6 +1152,7 @@ paint_triangle (GimpColorWheel *wheel,
       gtk_style_context_add_class (context, "dark-area-focus");
       cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
     }
+  g_object_unref (color);
 
 #define RADIUS 4
 #define FOCUS_RADIUS 6

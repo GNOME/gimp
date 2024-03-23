@@ -787,7 +787,7 @@ HELP
 	  desc => 'Input image (unused)' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'Input drawable' },
-	{ name => 'color', type => 'color',
+	{ name => 'color', type => 'geglcolor',
 	  desc => 'Color to remove' }
     );
 
@@ -798,7 +798,7 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
-      GeglColor *gegl_color = gimp_gegl_color_new (&color, NULL);
+      GeglColor *gegl_color = gegl_color_duplicate (color);
       GeglNode  *node =
         gegl_node_new_child (NULL,
                              "operation", "gegl:color-to-alpha",
@@ -1575,17 +1575,14 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
-      GimpRGB    from;
-      GimpRGB    to;
-      GeglColor *gegl_from;
-      GeglColor *gegl_to;
+      GeglColor *gegl_from = gegl_color_new (NULL);
+      GeglColor *gegl_to = gegl_color_new (NULL);
       GeglNode  *node;
 
-      gimp_rgb_set_uchar (&from, from_red, from_green, from_blue);
-      gimp_rgb_set_uchar (&to,   to_red,   to_green,   to_blue);
-
-      gegl_from = gimp_gegl_color_new (&from, NULL);
-      gegl_to   = gimp_gegl_color_new (&to,   NULL);
+      gegl_color_set_rgba (gegl_from, from_red / 255.0, from_green / 255.0,
+                           from_blue / 255.0, 1.0);
+      gegl_color_set_rgba (gegl_to, to_red / 255.0, to_green / 255.0,
+                           to_blue / 255.0, 1.0);
 
       node = gegl_node_new_child (NULL,
                                   "operation",       "gegl:color-exchange",
@@ -2881,8 +2878,8 @@ HELP
           desc => 'X coordinates of the center of supernova' },
         { name => 'ycenter', type => 'int32',
           desc => 'Y coordinates of the center of supernova' },
-	{ name => 'color', type => 'color',
-	  desc => 'Color of supernova' },
+        { name => 'color', type => 'geglcolor',
+          desc => 'Color of supernova' },
         { name => 'radius', type => '1 <= int32 <= 3000',
           desc => 'Radius of supernova' },
         { name => 'nspoke', type => '1 <= int32 <= 1024',
@@ -2898,10 +2895,12 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
+      GeglColor *gegl_color;
       GeglNode  *node;
-      GeglColor *gegl_color = gimp_gegl_color_new (&color, NULL);
       gdouble    center_x   = (gdouble) xcenter / (gdouble) gimp_item_get_width (GIMP_ITEM (drawable));
       gdouble    center_y   = (gdouble) ycenter / (gdouble) gimp_item_get_height (GIMP_ITEM (drawable));
+
+      gegl_color = gegl_color_duplicate (color);
 
       node = gegl_node_new_child (NULL,
                                   "operation",    "gegl:supernova",

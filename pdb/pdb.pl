@@ -283,7 +283,8 @@ package Gimp::CodeGen::pdb;
 		     get_value_func  => '$var = g_value_get_object ($value)',
 		     dup_value_func  => '$var = g_value_dup_object (gimp_value_array_index ($value))',
 		     set_value_func  => 'g_value_set_object ($value, $var)',
-		     take_value_func => 'g_value_take_object ($value, $var)' },
+		     take_value_func => 'g_value_take_object ($value, $var)',
+		     headers         => [ qw(<cairo.h> "libgimpcolor/gimpcolor.h") ] },
 
     display     => { name            => 'DISPLAY',
 		     gtype           => 'GIMP_TYPE_DISPLAY',

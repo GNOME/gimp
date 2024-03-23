@@ -453,7 +453,6 @@ dialog_update_preview (GtkWidget *widget,
   GBytes             *cache;
   const guchar       *cache_start;
   GeglColor          *color;
-  GimpRGB             background;
   guchar              bg[4];
   gint                width;
   gint                height;
@@ -477,18 +476,19 @@ dialog_update_preview (GtkWidget *widget,
   if (bg_trans)
     gimp_color_set_alpha (color, 0.0);
 
-  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), &background);
-  g_object_unref (color);
-
   if (gimp_drawable_is_gray (drawable))
     {
-      bg[0] = gimp_rgb_luminance_uchar (&background);
-      gimp_rgba_get_uchar (&background, NULL, NULL, NULL, bg + 3);
+      guchar luminance[2];
+
+      gegl_color_get_pixel (color, babl_format ("Y'A u8"), luminance);
+      bg[0] = luminance[0];
+      bg[3] = luminance[1];
     }
   else
     {
-      gimp_rgba_get_uchar (&background, bg, bg + 1, bg + 2, bg + 3);
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A u8"), bg);
     }
+  g_object_unref (color);
 
   buffer = g_new (guchar, width * height * bpp);
 
