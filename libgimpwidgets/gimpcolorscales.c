@@ -887,8 +887,8 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
   GeglColor         *color    = gimp_color_selector_get_color (selector);
   gdouble            value    = gimp_label_spin_get_value (GIMP_LABEL_SPIN (scale));
   gdouble            lch[4];
-  gdouble            hsv[4];
-  gdouble            rgb[4];
+  gfloat             hsv[4];
+  gfloat             rgb[4];
   gint               i;
 
   for (i = 0; i < G_N_ELEMENTS (scale_defs); i++)
@@ -896,21 +896,21 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
       break;
 
   gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", scales->format), rgb);
-  gegl_color_get_pixel (color, babl_format_with_space ("HSVA double", scales->format), hsv);
-  gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) alpha double"), lch);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSVA float", scales->format), hsv);
+  gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) alpha float"), lch);
 
   switch (i)
     {
     case GIMP_COLOR_SELECTOR_HUE:
-      hsv[0] = value / 360.0;
+      hsv[0] = value / 360.0f;
       break;
 
     case GIMP_COLOR_SELECTOR_SATURATION:
-      hsv[1] = value / 100.0;
+      hsv[1] = value / 100.0f;
       break;
 
     case GIMP_COLOR_SELECTOR_VALUE:
-      hsv[2] = value / 100.0;
+      hsv[2] = value / 100.0f;
       break;
 
     case GIMP_COLOR_SELECTOR_RED:
@@ -962,12 +962,12 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
   if ((i >= GIMP_COLOR_SELECTOR_HUE) &&
       (i <= GIMP_COLOR_SELECTOR_VALUE))
     {
-      gegl_color_set_pixel (color, babl_format_with_space ("HSVA double", scales->format), hsv);
+      gegl_color_set_pixel (color, babl_format_with_space ("HSVA float", scales->format), hsv);
     }
   else if ((i >= GIMP_COLOR_SELECTOR_LCH_LIGHTNESS) &&
            (i <= GIMP_COLOR_SELECTOR_LCH_HUE))
     {
-      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) alpha double"), lch);
+      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) alpha float"), lch);
     }
   else if (((i >= GIMP_COLOR_SELECTOR_RED) &&
             (i <= GIMP_COLOR_SELECTOR_BLUE)) ||

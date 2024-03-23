@@ -1060,9 +1060,9 @@ gimp_scanner_parse_deprecated_color (GimpScanner  *scanner,
 
             *color = gegl_color_new (NULL);
             if (is_hsv)
-              gegl_color_set_pixel (*color, babl_format ("HSVA double"), col);
+              gegl_color_set_pixel (*color, babl_format ("HSVA float"), col);
             else
-              gegl_color_set_pixel (*color, babl_format ("R'G'B'A double"), col);
+              gegl_color_set_pixel (*color, babl_format ("R'G'B'A float"), col);
 
             /* Indicates success. */
             token = G_TOKEN_NONE;
