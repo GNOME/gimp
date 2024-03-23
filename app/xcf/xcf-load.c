@@ -1104,6 +1104,8 @@ xcf_load_add_effects (XcfInfo   *info,
 
                   gimp_drawable_filter_layer_mask_freeze (filter);
 
+                  gimp_filter_set_active (GIMP_FILTER (filter), data->is_visible);
+
                   g_object_unref (filter);
                 }
             }
