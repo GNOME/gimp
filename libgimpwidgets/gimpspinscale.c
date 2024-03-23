@@ -615,8 +615,8 @@ gimp_spin_scale_get_target (GtkWidget *widget,
       /* For motion events or main button clicks, the target depends on
        * the position.
        */
-      if (x >= layout_x && x < layout_x + logical.width  &&
-          y >= layout_y && y < layout_y + logical.height)
+      if (x >= layout_x && x < layout_x + logical.width &&
+          y >= (layout_y + logical.height)/4 && y < 3 * (layout_y + logical.height)/4)
         {
           return TARGET_NUMBER;
         }
