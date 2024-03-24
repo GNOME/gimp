@@ -517,9 +517,11 @@ jigsaw (GObject      *config,
       GBytes *buffer_bytes;
 
       gimp_preview_get_size (preview, &width, &height);
+
       buffer_bytes = gimp_drawable_get_thumbnail_data (drawable,
                                                        width, height,
                                                        &width, &height, &bytes);
+
       buffer = g_bytes_unref_to_data (buffer_bytes, &buffer_size);
     }
   else
@@ -559,6 +561,9 @@ jigsaw (GObject      *config,
   if (preview)
     {
       gimp_preview_draw_buffer (preview, buffer, width * bytes);
+
+      gimp_preview_set_bounds (preview, 0, 0, width, height);
+      gimp_preview_set_size (preview, width, height);
     }
   else
     {
@@ -580,10 +585,13 @@ static void
 jigsaw_preview (GtkWidget *widget,
                 GObject   *config)
 {
-  GimpPreview  *preview  = GIMP_PREVIEW (widget);
-  GimpDrawable *drawable = g_object_get_data (config, "drawable");
+  GimpDrawablePreview  *preview;
+  GimpDrawable         *drawable;
 
-  jigsaw (config, drawable, preview);
+  preview = GIMP_DRAWABLE_PREVIEW (widget);
+  drawable = gimp_drawable_preview_get_drawable (preview);
+
+  jigsaw (config, drawable, GIMP_PREVIEW (widget));
 }
 
 static void
@@ -2528,8 +2536,6 @@ jigsaw_dialog (GimpProcedure *procedure,
   preview = gimp_procedure_dialog_get_drawable_preview (GIMP_PROCEDURE_DIALOG (dialog),
                                                         "preview", drawable);
   gtk_widget_set_margin_bottom (preview, 12);
-
-  g_object_set_data (config, "drawable", drawable);
 
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (jigsaw_preview),
