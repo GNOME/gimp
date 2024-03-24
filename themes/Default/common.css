@@ -606,12 +606,8 @@ switch image {
   color: transparent;
 }
 
-/* XXX: should the min-height actually go in the Compact theme instead?
- * I find the headerbar on GNOME default theme (Adwaita) to be kinda huge. But
- * maybe the default theme should not try and override this?
- */
 headerbar {
-  min-height: 0px;
+  min-height: 36px;
   background-color: @bg-color;
   background-image: none;
   border-color: @edge-border-color;
