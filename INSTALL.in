@@ -208,17 +208,20 @@ help in that regard:
 
         https://github.com/jrfonseca/drmingw
 
- 17. Configure GIMP by running `meson _build`. You may want to pass some
+ 17. Optional step if compiling GIMP from git (unneeded from tarball): you need
+     to initialize submodules with command `git submodule update --init`.
+
+ 18. Configure GIMP by running `meson _build`. You may want to pass some
      options to it, see below.
 
- 18. Build GIMP by running `ninja -C _build'.
+ 19. Build GIMP by running `ninja -C _build'.
 
- 19. Install GIMP by running `ninja -C _build install'. In order to
+ 20. Install GIMP by running `ninja -C _build install'. In order to
      avoid clashes with other versions of GIMP, we install a binary
      called gimp-@GIMP_APP_VERSION@. By default there's also a link created so that
      you can type 'gimp' to start gimp-@GIMP_APP_VERSION@.
 
- 20. Summary of required packages and what version you need:
+ 21. Summary of required packages and what version you need:
 
      Package Name         Version
 
@@ -251,7 +254,7 @@ help in that regard:
      poppler-data         @POPPLER_DATA_REQUIRED_VERSION@
      zlib
 
- 21. Summary of optional packages:
+ 22. Summary of optional packages:
 
      Package Name        Version        Feature
 
@@ -273,7 +276,7 @@ help in that regard:
      webkit              @WEBKITGTK_REQUIRED_VERSION@         Help browser & webpage
      vala                -              Vala plug-ins
 
- 22. Summary of optional runtime dependencies:
+ 23. Summary of optional runtime dependencies:
 
      darktable >= 1.7, with lua support enabled for raw loading
      RawTherapee >= 5.2 for raw loading
