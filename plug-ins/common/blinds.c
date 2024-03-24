@@ -305,8 +305,6 @@ blinds_dialog (GimpProcedure *procedure,
                                                         "preview", drawable);
   gtk_widget_set_margin_bottom (preview, 12);
 
-  g_object_set_data (config, "drawable", drawable);
-
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (dialog_update_preview),
                     config);
@@ -445,27 +443,27 @@ static void
 dialog_update_preview (GtkWidget *widget,
                        GObject   *config)
 {
-  GimpPreview        *preview  = GIMP_PREVIEW (widget);
-  GimpDrawable       *drawable = g_object_get_data (config, "drawable");
-  gint                y;
-  const guchar       *p;
-  guchar             *buffer;
-  GBytes             *cache;
-  const guchar       *cache_start;
-  GeglColor          *color;
-  guchar              bg[4];
-  gint                width;
-  gint                height;
-  gint                bpp;
-  GimpOrientationType orientation;
-  gint                bg_trans;
+  GimpDrawablePreview *preview  = GIMP_DRAWABLE_PREVIEW (widget);
+  GimpDrawable        *drawable = gimp_drawable_preview_get_drawable (preview);
+  gint                 y;
+  const guchar        *p;
+  guchar              *buffer;
+  GBytes              *cache;
+  const guchar        *cache_start;
+  GeglColor           *color;
+  guchar               bg[4];
+  gint                 width;
+  gint                 height;
+  gint                 bpp;
+  GimpOrientationType  orientation;
+  gint                 bg_trans;
 
   g_object_get (config,
                 "bg-transparent", &bg_trans,
                 "orientation",    &orientation,
                 NULL);
 
-  gimp_preview_get_size (preview, &width, &height);
+  gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
   cache = gimp_drawable_get_thumbnail_data (drawable,
                                             width, height,
                                             &width, &height, &bpp);
@@ -561,7 +559,9 @@ dialog_update_preview (GtkWidget *widget,
       g_free (dr);
     }
 
-  gimp_preview_draw_buffer (preview, buffer, width * bpp);
+  gimp_preview_draw_buffer (GIMP_PREVIEW (preview), buffer, width * bpp);
+  gimp_preview_set_bounds (GIMP_PREVIEW (preview), 0, 0, width, height);
+  gimp_preview_set_size (GIMP_PREVIEW (preview), width, height);
 
   g_free (buffer);
   g_bytes_unref (cache);
