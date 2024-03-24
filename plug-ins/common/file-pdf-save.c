@@ -244,6 +244,7 @@ static void             drawText                 (GimpLayer            *layer,
 static gboolean         draw_layer               (GimpLayer           **layers,
                                                   gint                  n_layers,
                                                   GimpProcedureConfig  *config,
+                                                  gboolean              single_image,
                                                   gint                  j,
                                                   cairo_t              *cr,
                                                   gdouble               x_res,
@@ -315,13 +316,13 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("Portable Document Format"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Save files in PDF format",
-                                        "Saves files in Adobe's Portable "
-                                        "Document Format. PDF is designed to "
-                                        "be easily processed by a variety of "
-                                        "different platforms, and is a "
-                                        "distant cousin of PostScript.",
-                                        name);
+                                        _("Save files in PDF format"),
+                                        _("Saves files in Adobe's Portable "
+                                          "Document Format. PDF is designed to "
+                                          "be easily processed by a variety of "
+                                          "different platforms, and is a "
+                                          "distant cousin of PostScript."),
+                                          name);
       gimp_procedure_set_attribution (procedure,
                                       "Barak Itkin, Lionel N., Jehan",
                                       "Copyright Barak Itkin, Lionel N., Jehan",
@@ -335,44 +336,44 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                           "pdf");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "vectorize",
-                             _("Convert bitmaps to vector graphics where possible"),
+                             _("Convert _bitmaps to vector graphics where possible"),
                              _("Convert bitmaps to vector graphics where possible"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "ignore-hidden",
-                             _("Omit hidden layers and layers with zero opacity"),
+                             _("O_mit hidden layers and layers with zero opacity"),
                              _("Non-visible layers will not be exported"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "apply-masks",
-                             _("Apply layer masks"),
+                             _("_Apply layer masks"),
                              _("Apply layer masks before saving (Keeping the mask "
-                             "will not change the output, only the PDF structure)"),
+                               "will not change the output, only the PDF structure)"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "layers-as-pages",
-                             _("Layers as pages"),
+                             _("La_yers as pages"),
                              _("Layers as pages (bottom layers first)."),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "reverse-order",
-                             _("Reverse order"),
+                             _("Re_verse order"),
                              _("Reverse the pages order (top layers first)."),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "root-layers-only",
-                             _("Root layers only"),
+                             _("Roo_t layers only"),
                              _("Only the root layers are considered pages"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "convert-text-layers",
-                             _("Convert text layers to image"),
+                             _("Convert te_xt layers to image"),
                              _("Convert text layers to raster graphics"),
                              FALSE,
                              G_PARAM_READWRITE);
@@ -380,7 +381,7 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_BOOLEAN (procedure, "fill-background-color",
                              _("_Fill transparent areas with background color"),
                              _("Fill transparent areas with background color if "
-                             "layer has an alpha channel"),
+                               "layer has an alpha channel"),
                              TRUE,
                              G_PARAM_READWRITE);
     }
@@ -398,12 +399,12 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
 #endif
 
       gimp_procedure_set_documentation (procedure,
-                                        "Save files in PDF format",
-                                        "Saves files in Adobe's Portable "
-                                        "Document Format. PDF is designed to "
-                                        "be easily processed by a variety of "
-                                        "different platforms, and is a "
-                                        "distant cousin of PostScript.",
+                                        _("Save files in PDF format"),
+                                        _("Saves files in Adobe's Portable "
+                                          "Document Format. PDF is designed to "
+                                          "be easily processed by a variety of "
+                                          "different platforms, and is a "
+                                          "distant cousin of PostScript."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Barak Itkin",
@@ -418,9 +419,9 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                           G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "count",
-                         "Count",
-                         "The number of images entered (This will be the "
-                         "number of pages).",
+                         _("Count"),
+                         _("The number of images entered (This will be the "
+                           "number of pages)."),
                          1, MAX_PAGE_COUNT, 1,
                          G_PARAM_READWRITE);
 
@@ -431,34 +432,34 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "vectorize",
-                             "Vectorize",
-                             "Convert bitmaps to vector graphics where possible.",
+                             _("Convert _bitmaps to vector graphics where possible"),
+                             _("Convert bitmaps to vector graphics where possible"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "ignore-hidden",
-                             "Ignore hidden",
-                             "Omit hidden layers and layers with zero opacity.",
+                             _("O_mit hidden layers and layers with zero opacity"),
+                             _("Non-visible layers will not be exported"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "apply-masks",
-                             "Apply masks",
-                             "Apply layer masks before saving (Keeping them "
-                             "will not change the output),",
+                             _("_Apply layer masks"),
+                             _("Apply layer masks before saving (Keeping the mask "
+                               "will not change the output, only the PDF structure)"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "fill-background-color",
                              _("_Fill transparent areas with background color"),
                              _("Fill transparent areas with background color if "
-                             "layer has an alpha channel"),
+                               "layer has an alpha channel"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_STRING (procedure, "uri",
-                            "URI",
-                            "The URI of the file to save to",
+                            _("Save to"),
+                            _("The URI of the file to save to"),
                             NULL,
                             GIMP_PARAM_READWRITE);
     }
@@ -510,13 +511,13 @@ pdf_save_multi (GimpProcedure        *procedure,
                 GimpProcedureConfig  *config,
                 gpointer              run_data)
 {
-  GError            *error  = NULL;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GError            *error     = NULL;
+  GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
   gchar             *uri;
   const gint32      *image_ids = NULL;
-  GimpImage         *image = NULL;
-  GFile             *file;
+  GimpImage         *image     = NULL;
+  GFile             *file      = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -527,9 +528,14 @@ pdf_save_multi (GimpProcedure        *procedure,
                 "images",   &image_ids,
                 NULL);
 
-  file = g_file_new_for_uri (uri);
-  g_free (uri);
-  file_name = g_file_get_path (file);
+  if (uri != NULL)
+    {
+      file = g_file_new_for_uri (uri);
+      g_free (uri);
+    }
+
+  if (file != NULL)
+    file_name = g_file_get_path (file);
 
   if (image_ids)
     for (gint i = 0; i < multi_page.image_count; i++)
@@ -643,14 +649,16 @@ pdf_save_image (GimpProcedure        *procedure,
   FILE                   *fp;
   gint                    i;
   gboolean                apply_masks;
-  gboolean                layers_as_pages;
+  gboolean                layers_as_pages = FALSE;
   gboolean                fill_background_color;
 
   g_object_get (config,
                 "apply-masks",           &apply_masks,
-                "layers-as-pages",       &layers_as_pages,
                 "fill-background-color", &fill_background_color,
                 NULL);
+
+  if (single_image)
+    g_object_get (config, "layers-as-pages", &layers_as_pages, NULL);
 
   fp = g_fopen (file_name, "wb");
   if (! fp)
@@ -786,7 +794,7 @@ pdf_save_image (GimpProcedure        *procedure,
       for (j = 0; j < n_layers; j++)
         {
           if (! draw_layer (layers, n_layers, config,
-                            j, cr, x_res, y_res,
+                            j, single_image, cr, x_res, y_res,
                             gimp_procedure_get_name (procedure),
                             show_progress,
                             /* Progression is showed per image, and would restart at 0
@@ -1000,10 +1008,6 @@ gui_multi (GimpProcedure       *procedure,
   GtkWidget   *file_entry;
   GtkWidget   *file_browse;
   GtkWidget   *file_hbox;
-  GtkWidget   *vectorize_c;
-  GtkWidget   *ignore_hidden_c;
-  GtkWidget   *fill_background_c;
-  GtkWidget   *apply_c;
   GtkWidget   *scroll;
   GtkWidget   *page_view;
   GtkWidget   *h_but_box;
@@ -1013,33 +1017,19 @@ gui_multi (GimpProcedure       *procedure,
   GtkWidget   *add_image;
   gboolean     run;
   const gchar *temp;
-  gboolean     vectorize;
-  gboolean     ignore_hidden;
-  gboolean     fill_background_color;
-  gboolean     apply_masks;
-  gboolean     layers_as_pages;
-  gboolean     reverse_order;
-  gboolean     convert_text;
-
-  g_object_get (config,
-                "vectorize",             &vectorize,
-                "ignore-hidden",         &ignore_hidden,
-                "fill-background-color", &fill_background_color,
-                "apply-masks",           &apply_masks,
-                "layers-as-pages",       &layers_as_pages,
-                "reverse-order",         &reverse_order,
-                "convert-text-layers",   &convert_text,
-                NULL);
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  window = gimp_export_dialog_new ("PDF", PLUG_IN_ROLE, SAVE_MULTI_PROC);
+  window = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as Multi-Page PDF"));
+  gimp_procedure_dialog_set_ok_label (GIMP_PROCEDURE_DIALOG (window), _("_Export"));
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 10);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (window)),
-                      vbox, TRUE, TRUE, 0);
-
-  gtk_container_set_border_width (GTK_CONTAINER (window), 12);
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (window),
+                                         "multi-pdf-options-vbox",
+                                         "apply-masks", "vectorize",
+                                         "fill-background-color",
+                                         "ignore-hidden", NULL);
 
   file_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
   file_label = gtk_label_new (_("Save to:"));
@@ -1055,10 +1045,15 @@ gui_multi (GimpProcedure       *procedure,
                                              NULL);
 
   gtk_box_pack_start (GTK_BOX (file_hbox), file_label, FALSE, FALSE, 0);
+  gtk_widget_set_visible (file_label, TRUE);
   gtk_box_pack_start (GTK_BOX (file_hbox), file_entry, TRUE, TRUE, 0);
+  gtk_widget_set_visible (file_entry, TRUE);
   gtk_box_pack_start (GTK_BOX (file_hbox), file_browse, FALSE, FALSE, 0);
+  gtk_widget_set_visible (file_browse, TRUE);
 
   gtk_box_pack_start (GTK_BOX (vbox), file_hbox, TRUE, TRUE, 0);
+  gtk_widget_set_visible (file_hbox, TRUE);
+  gtk_box_reorder_child (GTK_BOX (vbox), file_hbox, 0);
 
   page_view = gtk_icon_view_new ();
   model = create_model ();
@@ -1073,53 +1068,40 @@ gui_multi (GimpProcedure       *procedure,
 
   scroll = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_set_size_request (scroll, -1, 300);
+  gtk_widget_set_visible (scroll, TRUE);
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
   gtk_container_add (GTK_CONTAINER (scroll), page_view);
+  gtk_widget_set_visible (page_view, TRUE);
 
   gtk_box_pack_start (GTK_BOX (vbox), scroll, TRUE, TRUE, 0);
+  gtk_box_reorder_child (GTK_BOX (vbox), scroll, 1);
 
   h_but_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (h_but_box), GTK_BUTTONBOX_START);
 
   del = gtk_button_new_with_label (_("Remove the selected pages"));
   gtk_box_pack_start (GTK_BOX (h_but_box), del, TRUE, TRUE, 0);
+  gtk_widget_set_visible (del, TRUE);
 
   gtk_box_pack_start (GTK_BOX (vbox), h_but_box, FALSE, FALSE, 0);
+  gtk_widget_set_visible (h_but_box, TRUE);
+  gtk_box_reorder_child (GTK_BOX (vbox), h_but_box, 2);
 
   h_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
 
   img_combo = gimp_image_combo_box_new (NULL, NULL, NULL);
   gtk_box_pack_start (GTK_BOX (h_box), img_combo, FALSE, FALSE, 0);
+  gtk_widget_set_visible (img_combo, TRUE);
 
   add_image = gtk_button_new_with_label (_("Add this image"));
   gtk_box_pack_start (GTK_BOX (h_box), add_image, FALSE, FALSE, 0);
+  gtk_widget_set_visible (add_image, TRUE);
 
   gtk_box_pack_start (GTK_BOX (vbox), h_box, FALSE, FALSE, 0);
-
-  ignore_hidden_c = gtk_check_button_new_with_mnemonic (_("_Omit hidden layers and layers with zero opacity"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_hidden_c),
-                                ignore_hidden);
-  gtk_box_pack_end (GTK_BOX (vbox), ignore_hidden_c, FALSE, FALSE, 0);
-
-  fill_background_c = gtk_check_button_new_with_mnemonic (_("_Fill transparent areas with background color"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (fill_background_c),
-                                fill_background_color);
-  gtk_box_pack_end (GTK_BOX (vbox), fill_background_c, FALSE, FALSE, 0);
-
-  vectorize_c = gtk_check_button_new_with_mnemonic (_("Convert _bitmaps to vector graphics where possible"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (vectorize_c),
-                                vectorize);
-  gtk_box_pack_end (GTK_BOX (vbox), vectorize_c, FALSE, FALSE, 0);
-
-  apply_c = gtk_check_button_new_with_mnemonic (_("_Apply layer masks before saving"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c),
-                                apply_masks);
-  gtk_box_pack_end (GTK_BOX (vbox), apply_c, FALSE, FALSE, 0);
-  gimp_help_set_help_data (apply_c, _("Keeping the masks will not change the output"), NULL);
-
-  gtk_widget_show_all (window);
+  gtk_widget_set_visible (h_box, TRUE);
+  gtk_box_reorder_child (GTK_BOX (vbox), h_box, 3);
 
   g_signal_connect (G_OBJECT (file_browse), "clicked",
                     G_CALLBACK (choose_file_call),
@@ -1137,19 +1119,22 @@ gui_multi (GimpProcedure       *procedure,
                     G_CALLBACK (remove_call),
                     NULL);
 
-  run = gtk_dialog_run (GTK_DIALOG (window)) == GTK_RESPONSE_OK;
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (window),
+                              "multi-pdf-options-vbox",
+                              NULL);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (window));
 
-  run &= get_image_list ();
+  if (run)
+    {
+      run &= get_image_list ();
 
-  temp = gtk_entry_get_text (GTK_ENTRY (file_entry));
-  g_stpcpy (file_name, temp);
-
-  ignore_hidden =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ignore_hidden_c));
-  vectorize =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (vectorize_c));
-  apply_masks =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (apply_c));
+      temp = gtk_entry_get_text (GTK_ENTRY (file_entry));
+      if (temp != NULL)
+        {
+          g_stpcpy (file_name, temp);
+          g_object_set (config, "uri", temp, NULL);
+        }
+    }
 
   gtk_widget_destroy (window);
 
@@ -1175,7 +1160,7 @@ choose_file_call (GtkWidget *browse_button,
     }
 
   file_name = g_file_get_path (file);
-  gtk_widget_hide (file_choose);
+  gtk_widget_set_visible (file_choose, FALSE);
 }
 
 /* A function to create the basic GtkTreeModel for the icon view */
@@ -1796,6 +1781,7 @@ static gboolean
 draw_layer (GimpLayer           **layers,
             gint                  n_layers,
             GimpProcedureConfig  *config,
+            gboolean              single_image,
             gint                  j,
             cairo_t              *cr,
             gdouble               x_res,
@@ -1811,7 +1797,7 @@ draw_layer (GimpLayer           **layers,
   gdouble    opacity;
   gboolean   vectorize;
   gboolean   ignore_hidden;
-  gboolean   layers_as_pages;
+  gboolean   layers_as_pages = FALSE;
   gboolean   reverse_order;
   gboolean   root_layers_only;
   gboolean   convert_text;
@@ -1819,11 +1805,15 @@ draw_layer (GimpLayer           **layers,
   g_object_get (config,
                 "vectorize",           &vectorize,
                 "ignore-hidden",       &ignore_hidden,
-                "layers-as-pages",     &layers_as_pages,
-                "reverse-order",       &reverse_order,
-                "root-layers-only",    &root_layers_only,
-                "convert-text-layers", &convert_text,
                 NULL);
+
+  if (single_image)
+    g_object_get (config,
+                  "layers-as-pages",     &layers_as_pages,
+                  "reverse-order",       &reverse_order,
+                  "root-layers-only",    &root_layers_only,
+                  "convert-text-layers", &convert_text,
+                  NULL);
 
   if (reverse_order && layers_as_pages)
     layer = layers [j];
@@ -1845,7 +1835,7 @@ draw_layer (GimpLayer           **layers,
       for (i = 0; i < children_num; i++)
         {
           if (! draw_layer ((GimpLayer **) children, children_num,
-                            config, i,
+                            config, single_image, i,
                             cr, x_res, y_res, name,
                             show_progress,
                             progress_start + i * (progress_end - progress_start) / children_num,
