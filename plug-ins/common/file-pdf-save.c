@@ -794,7 +794,7 @@ pdf_save_image (GimpProcedure        *procedure,
       for (j = 0; j < n_layers; j++)
         {
           if (! draw_layer (layers, n_layers, config,
-                            j, single_image, cr, x_res, y_res,
+                            single_image, j, cr, x_res, y_res,
                             gimp_procedure_get_name (procedure),
                             show_progress,
                             /* Progression is showed per image, and would restart at 0
