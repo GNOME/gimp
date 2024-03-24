@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-19 04:42+0000\n"
-"PO-Revision-Date: 2024-03-22 16:09+0100\n"
+"POT-Creation-Date: 2024-03-24 02:20+0000\n"
+"PO-Revision-Date: 2024-03-24 14:51+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -48,7 +48,7 @@ msgstr "Ejercitar una cabra en el lenguaje C"
 #: plug-ins/common/jigsaw.c:466 plug-ins/common/nl-filter.c:217
 #: plug-ins/common/qbist.c:252 plug-ins/common/sample-colorize.c:427
 #: plug-ins/common/smooth-palette.c:195 plug-ins/common/sparkle.c:300
-#: plug-ins/common/sphere-designer.c:3201 plug-ins/common/tile.c:218
+#: plug-ins/common/sphere-designer.c:3205 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:243
 #: plug-ins/common/warp.c:346 plug-ins/common/wavelet-decompose.c:181
 #: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:427
@@ -74,11 +74,11 @@ msgstr "Ejercitar una cabra (C)"
 #: plug-ins/common/cml-explorer.c:2146 plug-ins/common/cml-explorer.c:2356
 #: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
 #: plug-ins/common/file-gif-save.c:1222 plug-ins/common/file-heif.c:2314
-#: plug-ins/common/file-pdf-load.c:686 plug-ins/common/file-pdf-save.c:1054
+#: plug-ins/common/file-pdf-load.c:686 plug-ins/common/file-pdf-save.c:1044
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:836
 #: plug-ins/common/qbist.c:878 plug-ins/common/qbist.c:932
 #: plug-ins/common/sphere-designer.c:2292
-#: plug-ins/common/sphere-designer.c:2651 plug-ins/common/unit-editor.c:435
+#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
 #: plug-ins/file-tiff/file-tiff-load.c:2547 plug-ins/flame/flame.c:622
 #: plug-ins/flame/flame.c:827
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1522
@@ -155,7 +155,7 @@ msgstr "Ejercitar una cabra (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1380 plug-ins/common/file-heif.c:2315
 #: plug-ins/common/file-pdf-load.c:687 plug-ins/common/grid.c:820
-#: plug-ins/common/qbist.c:933 plug-ins/common/sphere-designer.c:2652
+#: plug-ins/common/qbist.c:933 plug-ins/common/sphere-designer.c:2656
 #: plug-ins/common/unit-editor.c:266 plug-ins/file-exr/file-exr.c:435
 #: plug-ins/file-psd/psd-load.c:3696 plug-ins/flame/flame.c:828
 #: plug-ins/fractal-explorer/fractal-explorer.c:1391
@@ -1029,7 +1029,7 @@ msgstr "Semilla aleatoria"
 #: plug-ins/common/curve-bend.c:1267 plug-ins/common/curve-bend.c:1810
 #: plug-ins/common/file-cel.c:1009 plug-ins/common/qbist.c:837
 #: plug-ins/common/qbist.c:1020 plug-ins/common/sphere-designer.c:2295
-#: plug-ins/common/sphere-designer.c:2700 plug-ins/flame/flame.c:624
+#: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1233
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:796
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1523
@@ -1043,9 +1043,9 @@ msgstr "_Abrir"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1464 plug-ins/common/cml-explorer.c:2147
 #: plug-ins/common/curve-bend.c:1279 plug-ins/common/curve-bend.c:1845
-#: plug-ins/common/file-pdf-save.c:1053 plug-ins/common/qbist.c:879
+#: plug-ins/common/file-pdf-save.c:1043 plug-ins/common/qbist.c:879
 #: plug-ins/common/qbist.c:1028 plug-ins/common/sphere-designer.c:2295
-#: plug-ins/common/sphere-designer.c:2708 plug-ins/flame/flame.c:624
+#: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1241
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:804
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1561
@@ -1233,8 +1233,8 @@ msgstr "Guardar los parámetros del Examinador CML"
 
 #: plug-ins/common/cml-explorer.c:2212 plug-ins/common/curve-bend.c:781
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
-#: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1218
-#: plug-ins/common/file-pcx.c:1219 plug-ins/common/file-pdf-save.c:659
+#: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1221
+#: plug-ins/common/file-pcx.c:1219 plug-ins/common/file-pdf-save.c:667
 #: plug-ins/common/file-png.c:1517 plug-ins/common/file-raw-data.c:1337
 #: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
 #: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1381
@@ -2002,7 +2002,7 @@ msgstr "No puede operar sobre selecciones vacías."
 #: plug-ins/common/curve-bend.c:834 plug-ins/common/file-cel.c:350
 #: plug-ins/common/file-cel.c:402 plug-ins/common/file-dicom.c:383
 #: plug-ins/common/file-farbfeld.c:298 plug-ins/common/file-gif-load.c:416
-#: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1402
+#: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1405
 #: plug-ins/common/file-pcx.c:509 plug-ins/common/file-pcx.c:552
 #: plug-ins/common/file-png.c:665 plug-ins/common/file-ps.c:1109
 #: plug-ins/common/file-ps.c:3619 plug-ins/common/file-psp.c:2633
@@ -2115,7 +2115,7 @@ msgstr "Intercambiar las dos curvas"
 
 # //R ¿Esto existe?
 #. The Reset button
-#: plug-ins/common/curve-bend.c:1250 plug-ins/common/sphere-designer.c:2650
+#: plug-ins/common/curve-bend.c:1250 plug-ins/common/sphere-designer.c:2654
 #: plug-ins/common/tile-small.c:525 plug-ins/gimpressionist/preview.c:182
 #: plug-ins/ifs-compose/ifs-compose.c:913
 msgid "_Reset"
@@ -3322,7 +3322,7 @@ msgstr ""
 "Su imagen se convertirá al exportarla, lo que puede cambiar los valores de "
 "los píxeles."
 
-#: plug-ins/common/file-gif-save.c:1358 plug-ins/common/file-mng.c:1638
+#: plug-ins/common/file-gif-save.c:1358 plug-ins/common/file-mng.c:1641
 msgid "milliseconds"
 msgstr "milisegundos"
 
@@ -4187,47 +4187,47 @@ msgstr ""
 "No se pudo guardar la transparencia sin pérdidas, guardando la opacidad en "
 "su lugar."
 
-#: plug-ins/common/file-mng.c:1591
+#: plug-ins/common/file-mng.c:1594
 msgid "MNG Options"
 msgstr "Opciones de MNG"
 
-#: plug-ins/common/file-mng.c:1600 plug-ins/common/file-png.c:233
+#: plug-ins/common/file-mng.c:1603 plug-ins/common/file-png.c:233
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/file-mng.c:1601
+#: plug-ins/common/file-mng.c:1604
 msgid "JNG"
 msgstr "JNG"
 
-#: plug-ins/common/file-mng.c:1604
+#: plug-ins/common/file-mng.c:1607
 msgid "PNG + delta PNG"
 msgstr "PNG + PNG Delta"
 
-#: plug-ins/common/file-mng.c:1605
+#: plug-ins/common/file-mng.c:1608
 msgid "JNG + delta PNG"
 msgstr "JNG + PNG Delta"
 
-#: plug-ins/common/file-mng.c:1606
+#: plug-ins/common/file-mng.c:1609
 msgid "All PNG"
 msgstr "Todo PNG"
 
-#: plug-ins/common/file-mng.c:1607
+#: plug-ins/common/file-mng.c:1610
 msgid "All JNG"
 msgstr "Todo JNG"
 
-#: plug-ins/common/file-mng.c:1615
+#: plug-ins/common/file-mng.c:1618
 msgid "Combine"
 msgstr "Combinar"
 
-#: plug-ins/common/file-mng.c:1616
+#: plug-ins/common/file-mng.c:1619
 msgid "Replace"
 msgstr "Reemplazar"
 
-#: plug-ins/common/file-mng.c:1651
+#: plug-ins/common/file-mng.c:1654
 msgid "Animated MNG Options"
 msgstr "Opciones del MNG animado"
 
-#: plug-ins/common/file-mng.c:1661
+#: plug-ins/common/file-mng.c:1664
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
@@ -4404,7 +4404,7 @@ msgstr "Borde inferior fuera de los límites (debe ser < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Ocurrió un error al escribir en el archivo «%s»: %s"
 
-#: plug-ins/common/file-pdf-load.c:319 plug-ins/common/file-pdf-save.c:315
+#: plug-ins/common/file-pdf-load.c:319 plug-ins/common/file-pdf-save.c:316
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
@@ -4523,27 +4523,45 @@ msgstr "_Resolución:"
 msgid "pixels/%a"
 msgstr "píxeles/%a"
 
-#: plug-ins/common/file-pdf-save.c:331
+#: plug-ins/common/file-pdf-save.c:319 plug-ins/common/file-pdf-save.c:402
+msgid "Save files in PDF format"
+msgstr "Guarda archivos en formato PDF"
+
+#: plug-ins/common/file-pdf-save.c:320 plug-ins/common/file-pdf-save.c:403
+msgid ""
+"Saves files in Adobe's Portable Document Format. PDF is designed to be "
+"easily processed by a variety of different platforms, and is a distant "
+"cousin of PostScript."
+msgstr ""
+"Guarda archivos en el formato de documento portátil de Adobe. PDF está "
+"diseñado para ser procesado fácilmente por una variedad de plataformas "
+"diferentes, y es un primo lejano de PostScript."
+
+#: plug-ins/common/file-pdf-save.c:332
 msgid "PDF"
 msgstr "PDF"
 
-#: plug-ins/common/file-pdf-save.c:338 plug-ins/common/file-pdf-save.c:339
+#: plug-ins/common/file-pdf-save.c:339 plug-ins/common/file-pdf-save.c:435
+msgid "Convert _bitmaps to vector graphics where possible"
+msgstr "Convertir los mapas de _bit a gráficos vectoriales cuando sea posible"
+
+#: plug-ins/common/file-pdf-save.c:340 plug-ins/common/file-pdf-save.c:436
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Convertir los mapas de bit a gráficos vectoriales cuando sea posible"
 
-#: plug-ins/common/file-pdf-save.c:344
-msgid "Omit hidden layers and layers with zero opacity"
-msgstr "Omitir las capas ocultas y las que tienen opacidad cero"
+#: plug-ins/common/file-pdf-save.c:345 plug-ins/common/file-pdf-save.c:441
+msgid "O_mit hidden layers and layers with zero opacity"
+msgstr "O_mitir las capas ocultas y las que tienen opacidad cero"
 
-#: plug-ins/common/file-pdf-save.c:345
+#: plug-ins/common/file-pdf-save.c:346 plug-ins/common/file-pdf-save.c:442
 msgid "Non-visible layers will not be exported"
 msgstr "Las capas no visibles no se exportarán"
 
-#: plug-ins/common/file-pdf-save.c:350
-msgid "Apply layer masks"
-msgstr "Aplicar máscaras de capa"
+#: plug-ins/common/file-pdf-save.c:351 plug-ins/common/file-pdf-save.c:447
+msgid "_Apply layer masks"
+msgstr "_Aplicar máscaras de capa"
 
-#: plug-ins/common/file-pdf-save.c:351
+#: plug-ins/common/file-pdf-save.c:352 plug-ins/common/file-pdf-save.c:448
 msgid ""
 "Apply layer masks before saving (Keeping the mask will not change the "
 "output, only the PDF structure)"
@@ -4551,55 +4569,70 @@ msgstr ""
 "Aplicar máscaras de capa antes de guardar (Mantener la máscara no cambiará "
 "la salida, sólo la estructura del PDF)"
 
-#: plug-ins/common/file-pdf-save.c:357
-msgid "Layers as pages"
-msgstr "Capas como páginas"
-
 #: plug-ins/common/file-pdf-save.c:358
+msgid "La_yers as pages"
+msgstr "Ca_pas como páginas"
+
+#: plug-ins/common/file-pdf-save.c:359
 msgid "Layers as pages (bottom layers first)."
 msgstr "Capas como páginas (capas inferiores primero)."
 
-#: plug-ins/common/file-pdf-save.c:363
-msgid "Reverse order"
-msgstr "Orden inverso"
-
 #: plug-ins/common/file-pdf-save.c:364
+msgid "Re_verse order"
+msgstr "Orden in_verso"
+
+#: plug-ins/common/file-pdf-save.c:365
 msgid "Reverse the pages order (top layers first)."
 msgstr "Invertir el orden de las páginas (capas superiores primero)."
 
-#: plug-ins/common/file-pdf-save.c:369
-msgid "Root layers only"
-msgstr "Sólo capas raíz"
-
 #: plug-ins/common/file-pdf-save.c:370
+msgid "Roo_t layers only"
+msgstr "Sólo capas raí_z"
+
+#: plug-ins/common/file-pdf-save.c:371
 msgid "Only the root layers are considered pages"
 msgstr "Sólo se consideran páginas las capas raíz"
 
-#: plug-ins/common/file-pdf-save.c:375
-msgid "Convert text layers to image"
-msgstr "Convertir capas de texto a imagen"
-
 #: plug-ins/common/file-pdf-save.c:376
+msgid "Convert te_xt layers to image"
+msgstr "Convertir capas de te_xto a imagen"
+
+#: plug-ins/common/file-pdf-save.c:377
 msgid "Convert text layers to raster graphics"
 msgstr "Convertir capas de texto a gráficos rasterizados"
 
-#: plug-ins/common/file-pdf-save.c:381 plug-ins/common/file-pdf-save.c:453
-#: plug-ins/common/file-pdf-save.c:1106
+#: plug-ins/common/file-pdf-save.c:382 plug-ins/common/file-pdf-save.c:454
 msgid "_Fill transparent areas with background color"
 msgstr "_Rellenar las zonas transparentes con el color de fondo"
 
-#: plug-ins/common/file-pdf-save.c:382 plug-ins/common/file-pdf-save.c:454
+#: plug-ins/common/file-pdf-save.c:383 plug-ins/common/file-pdf-save.c:455
 msgid ""
 "Fill transparent areas with background color if layer has an alpha channel"
 msgstr ""
 "Rellenar las áreas transparentes con el color de fondo si la capa tiene un "
 "canal alfa"
 
-#: plug-ins/common/file-pdf-save.c:395
+#: plug-ins/common/file-pdf-save.c:396
 msgid "_Create multipage PDF..."
 msgstr "_Crear PDF de varias páginas…"
 
-#: plug-ins/common/file-pdf-save.c:670
+#: plug-ins/common/file-pdf-save.c:422
+msgid "Count"
+msgstr "Cuenta"
+
+#: plug-ins/common/file-pdf-save.c:423
+msgid "The number of images entered (This will be the number of pages)."
+msgstr "El número de imágenes introducidas (este será el número de páginas)."
+
+#: plug-ins/common/file-pdf-save.c:461
+msgid "Save to"
+msgstr "Guardar en"
+
+#: plug-ins/common/file-pdf-save.c:462
+msgid "The URI of the file to save to"
+msgstr "El URI del archivo en el que guardar"
+
+#: plug-ins/common/file-pdf-save.c:678
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -4612,7 +4645,7 @@ msgstr ""
 "Asegúrese de que ha introducido un nombre de archivo válido y que la carpeta "
 "de destino no es de solo lectura."
 
-#: plug-ins/common/file-pdf-save.c:947
+#: plug-ins/common/file-pdf-save.c:955
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -4624,57 +4657,50 @@ msgstr ""
 "tipografías que faltan antes de exportar, de otro modo su diseño podría no "
 "verse bien."
 
-#: plug-ins/common/file-pdf-save.c:1045
+#: plug-ins/common/file-pdf-save.c:1025
+msgid "Export Image as Multi-Page PDF"
+msgstr "Exportar la imagen como PDF de varias páginas"
+
+#: plug-ins/common/file-pdf-save.c:1026
+#: plug-ins/metadata/metadata-editor.c:5560
+msgid "_Export"
+msgstr "_Exportar"
+
+#: plug-ins/common/file-pdf-save.c:1035
 msgid "Save to:"
 msgstr "Guardar en:"
 
-#: plug-ins/common/file-pdf-save.c:1049
+#: plug-ins/common/file-pdf-save.c:1039
 msgid "Browse..."
 msgstr "Explorar…"
 
-#: plug-ins/common/file-pdf-save.c:1050
+#: plug-ins/common/file-pdf-save.c:1040
 msgid "Multipage PDF export"
 msgstr "Exportación de PDF de varias páginas"
 
-#: plug-ins/common/file-pdf-save.c:1086
+#: plug-ins/common/file-pdf-save.c:1084
 msgid "Remove the selected pages"
 msgstr "Eliminar las páginas seleccionadas"
 
 # Pendiente hasa que sepa lo que significa. FVD
 # Puede ser una imagen pix de Alias WaveFront
 # Gracias ¿Quién lo dice? pon tus iniciales. FVD
-#: plug-ins/common/file-pdf-save.c:1096
+#: plug-ins/common/file-pdf-save.c:1098
 msgid "Add this image"
 msgstr "Añadir esta imagen"
 
-#: plug-ins/common/file-pdf-save.c:1101
-msgid "_Omit hidden layers and layers with zero opacity"
-msgstr "_Omitir las capas ocultas y las que tienen opacidad cero"
-
-#: plug-ins/common/file-pdf-save.c:1111
-msgid "Convert _bitmaps to vector graphics where possible"
-msgstr "Convertir los mapas de _bit a gráficos vectoriales cuando sea posible"
-
-#: plug-ins/common/file-pdf-save.c:1116
-msgid "_Apply layer masks before saving"
-msgstr "_Aplicar máscaras de capa antes de guardar"
-
-#: plug-ins/common/file-pdf-save.c:1120
-msgid "Keeping the masks will not change the output"
-msgstr "Mantener las máscaras no cambiará la salida"
-
-#: plug-ins/common/file-pdf-save.c:1209 plug-ins/common/file-pdf-save.c:1282
-#: plug-ins/common/file-pdf-save.c:1380 plug-ins/common/file-ps.c:2098
+#: plug-ins/common/file-pdf-save.c:1194 plug-ins/common/file-pdf-save.c:1267
+#: plug-ins/common/file-pdf-save.c:1365 plug-ins/common/file-ps.c:2098
 #: plug-ins/file-tiff/file-tiff-load.c:1530
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
 
-#: plug-ins/common/file-pdf-save.c:1249
+#: plug-ins/common/file-pdf-save.c:1234
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Error: para guardar el archivo, debe añadirse al menos una imagen."
 
-#: plug-ins/common/file-pdf-save.c:1427 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-save.c:1412 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
 "No se puede manejar el tamaño (ya sea la anchura o la altura) de la imagen."
@@ -7950,7 +7976,7 @@ msgid "Create an image of a textured sphere"
 msgstr "Crea una imagen de una esfera texturizada"
 
 #: plug-ins/common/sphere-designer.c:1835
-#: plug-ins/common/sphere-designer.c:2794
+#: plug-ins/common/sphere-designer.c:2798
 msgid "Texture"
 msgstr "Textura"
 
@@ -7959,7 +7985,7 @@ msgid "Bumpmap"
 msgstr "Mapa de relieve"
 
 #: plug-ins/common/sphere-designer.c:1839
-#: plug-ins/common/sphere-designer.c:2796
+#: plug-ins/common/sphere-designer.c:2800
 msgid "Light"
 msgstr "Luz"
 
@@ -7976,24 +8002,24 @@ msgstr "Abrir archivo"
 msgid "Save File"
 msgstr "Guardar archivo"
 
-#: plug-ins/common/sphere-designer.c:2646
+#: plug-ins/common/sphere-designer.c:2650
 msgid "Sphere Designer"
 msgstr "Diseñador de esferas"
 
-#: plug-ins/common/sphere-designer.c:2747
+#: plug-ins/common/sphere-designer.c:2751
 msgid "Layers"
 msgstr "Capas"
 
-#: plug-ins/common/sphere-designer.c:2758
+#: plug-ins/common/sphere-designer.c:2762
 #: plug-ins/gradient-flare/gradient-flare.c:3045
 msgid "_New"
 msgstr "_Nueva"
 
-#: plug-ins/common/sphere-designer.c:2764
+#: plug-ins/common/sphere-designer.c:2768
 msgid "D_uplicate"
 msgstr "D_uplicar"
 
-#: plug-ins/common/sphere-designer.c:2770
+#: plug-ins/common/sphere-designer.c:2774
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1357
 #: plug-ins/gimpressionist/presets.c:1071
@@ -8002,94 +8028,94 @@ msgstr "D_uplicar"
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: plug-ins/common/sphere-designer.c:2780
+#: plug-ins/common/sphere-designer.c:2784
 msgid "Properties"
 msgstr "Propiedades"
 
-#: plug-ins/common/sphere-designer.c:2795
+#: plug-ins/common/sphere-designer.c:2799
 msgid "Bump"
 msgstr "Relieve"
 
-#: plug-ins/common/sphere-designer.c:2803
+#: plug-ins/common/sphere-designer.c:2807
 msgid "Type:"
 msgstr "Tipo:"
 
-#: plug-ins/common/sphere-designer.c:2822
+#: plug-ins/common/sphere-designer.c:2826
 msgid "Texture:"
 msgstr "Textura:"
 
-#: plug-ins/common/sphere-designer.c:2827
+#: plug-ins/common/sphere-designer.c:2831
 msgid "Colors:"
 msgstr "Colores:"
 
-#: plug-ins/common/sphere-designer.c:2830
-#: plug-ins/common/sphere-designer.c:2841
+#: plug-ins/common/sphere-designer.c:2834
+#: plug-ins/common/sphere-designer.c:2845
 msgid "Color Selection Dialog"
 msgstr "Diálogo de selección de color"
 
 #. Scale
-#: plug-ins/common/sphere-designer.c:2852 plug-ins/gimpressionist/paper.c:191
+#: plug-ins/common/sphere-designer.c:2856 plug-ins/gimpressionist/paper.c:191
 #: plug-ins/ifs-compose/ifs-compose.c:669
 msgid "Scale:"
 msgstr "Escala:"
 
-#: plug-ins/common/sphere-designer.c:2860
+#: plug-ins/common/sphere-designer.c:2864
 msgid "Turbulence:"
 msgstr "Turbulencia:"
 
-#: plug-ins/common/sphere-designer.c:2868
+#: plug-ins/common/sphere-designer.c:2872
 msgid "Amount:"
 msgstr "Cantidad:"
 
-#: plug-ins/common/sphere-designer.c:2875
+#: plug-ins/common/sphere-designer.c:2879
 msgid "Exp.:"
 msgstr "Exp.:"
 
-#: plug-ins/common/sphere-designer.c:2882
+#: plug-ins/common/sphere-designer.c:2886
 msgid "Transformations"
 msgstr "Transformaciones"
 
-#: plug-ins/common/sphere-designer.c:2896
+#: plug-ins/common/sphere-designer.c:2900
 msgid "Scale X:"
 msgstr "Escala X:"
 
-#: plug-ins/common/sphere-designer.c:2904
+#: plug-ins/common/sphere-designer.c:2908
 msgid "Scale Y:"
 msgstr "Escala Y:"
 
-#: plug-ins/common/sphere-designer.c:2912
+#: plug-ins/common/sphere-designer.c:2916
 msgid "Scale Z:"
 msgstr "Escala Z:"
 
-#: plug-ins/common/sphere-designer.c:2923
+#: plug-ins/common/sphere-designer.c:2927
 msgid "Rotate X:"
 msgstr "Rotación X:"
 
-#: plug-ins/common/sphere-designer.c:2930
+#: plug-ins/common/sphere-designer.c:2934
 msgid "Rotate Y:"
 msgstr "Rotación Y:"
 
-#: plug-ins/common/sphere-designer.c:2937
+#: plug-ins/common/sphere-designer.c:2941
 msgid "Rotate Z:"
 msgstr "Rotación Z:"
 
-#: plug-ins/common/sphere-designer.c:2947
+#: plug-ins/common/sphere-designer.c:2951
 msgid "Position X:"
 msgstr "Posición X:"
 
-#: plug-ins/common/sphere-designer.c:2955
+#: plug-ins/common/sphere-designer.c:2959
 msgid "Position Y:"
 msgstr "Posición Y:"
 
-#: plug-ins/common/sphere-designer.c:2963
+#: plug-ins/common/sphere-designer.c:2967
 msgid "Position Z:"
 msgstr "Posición Z:"
 
-#: plug-ins/common/sphere-designer.c:3095
+#: plug-ins/common/sphere-designer.c:3099
 msgid "Rendering sphere"
 msgstr "Renderizando esfera"
 
-#: plug-ins/common/sphere-designer.c:3215
+#: plug-ins/common/sphere-designer.c:3219
 msgid "Region selected for plug-in is empty"
 msgstr "La región seleccionada para el complemento está vacía"
 
@@ -15621,10 +15647,6 @@ msgstr "Importar archivo de metadatos"
 msgid "Export Metadata File"
 msgstr "Exportar archivo de metadatos"
 
-#: plug-ins/metadata/metadata-editor.c:5560
-msgid "_Export"
-msgstr "_Exportar"
-
 #: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:210
 #: plug-ins/metadata/metadata-tags.c:270 plug-ins/metadata/metadata-tags.c:287
 msgid "Select a value"
@@ -16451,6 +16473,15 @@ msgstr "_Escáner/Cámara…"
 #: plug-ins/twain/twain.c:496
 msgid "Transferring data from scanner/camera"
 msgstr "Transfiriendo datos desde el escáner/cámara"
+
+#~ msgid "_Omit hidden layers and layers with zero opacity"
+#~ msgstr "_Omitir las capas ocultas y las que tienen opacidad cero"
+
+#~ msgid "_Apply layer masks before saving"
+#~ msgstr "_Aplicar máscaras de capa antes de guardar"
+
+#~ msgid "Keeping the masks will not change the output"
+#~ msgstr "Mantener las máscaras no cambiará la salida"
 
 #~ msgid "Invalid remap array was passed to remap function"
 #~ msgstr ""
