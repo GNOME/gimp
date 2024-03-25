@@ -272,11 +272,12 @@ user_install_detect_old (GimpUserInstall *install,
   gboolean  migrate = FALSE;
 
   version = strstr (dir, GIMP_APP_VERSION);
-  g_snprintf (version, 5, "%d.XY", 2);
 
   if (version)
     {
       gint i;
+
+      g_snprintf (version, 5, "%d.XY", 2);
 
       for (i = (GIMP_MINOR_VERSION & ~1); i >= 0; i -= 2)
         {
