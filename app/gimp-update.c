@@ -35,6 +35,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "core/core-types.h"
+#include "core/gimp.h"
 
 #include "config/gimpcoreconfig.h"
 #include "config/gimpguiconfig.h"
@@ -610,8 +611,9 @@ gimp_update_auto_check (GimpCoreConfig *config,
        * updates right now. Otherwise, if the user has set the welcome
        * dialog to always appear on load, show the Create page on start.
        */
-      gtk_widget_set_visible (welcome_dialog_create (gimp, is_update),
-                              TRUE);
+      if (! gimp->no_interface)
+        gtk_widget_set_visible (welcome_dialog_create (gimp, is_update),
+                                TRUE);
 
       /* Do not check for new updates when GIMP was just updated. */
       if (is_update)
