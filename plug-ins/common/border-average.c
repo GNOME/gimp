@@ -66,7 +66,7 @@ static GimpValueArray * border_average_run                    (GimpProcedure    
 static void      borderaverage        (GObject      *config,
                                        GeglBuffer   *buffer,
                                        GimpDrawable *drawable,
-                                       GimpRGB      *result);
+                                       GeglColor    *result);
 
 static gboolean  borderaverage_dialog (GimpProcedure *procedure,
                                        GObject       *config,
@@ -149,11 +149,11 @@ border_average_create_procedure (GimpPlugIn  *plug_in,
                          0, G_MAXINT, 4,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_RGB (procedure, "borderaverage",
-                         _("The average color of the specified border."),
-                         _("The average color of the specified border."),
-                         TRUE, NULL,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_VAL_COLOR (procedure, "borderaverage",
+                           _("The average color of the specified border."),
+                           _("The average color of the specified border."),
+                           TRUE, NULL,
+                           G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -172,7 +172,7 @@ border_average_run (GimpProcedure        *procedure,
   GimpDrawable      *drawable;
   GimpValueArray    *return_vals = NULL;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRGB            result_color = { 0.0, };
+  GeglColor         *result_color;
   GeglBuffer        *buffer;
 
   gegl_init (NULL, NULL);
@@ -194,11 +194,15 @@ border_average_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
+  result_color = gegl_color_new ("transparent");
   buffer = gimp_drawable_get_buffer (drawable);
 
   if (run_mode == GIMP_RUN_INTERACTIVE &&
       ! borderaverage_dialog (procedure, G_OBJECT (config), image, drawable))
-    return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
+    {
+      g_object_unref (result_color);
+      return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
+    }
 
   if (status == GIMP_PDB_SUCCESS)
     {
@@ -206,16 +210,10 @@ border_average_run (GimpProcedure        *procedure,
       if (gimp_drawable_is_rgb (drawable))
         {
           gimp_progress_init ( _("Border Average"));
-          borderaverage (G_OBJECT (config), buffer, drawable, &result_color);
+          borderaverage (G_OBJECT (config), buffer, drawable, result_color);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
-            {
-              GeglColor *color = gegl_color_new ("black");
-
-              gegl_color_set_rgba_with_space (color, result_color.r, result_color.g, result_color.b, result_color.a, NULL);
-              gimp_context_set_foreground (color);
-              g_object_unref (color);
-            }
+            gimp_context_set_foreground (result_color);
         }
       else
         {
@@ -228,7 +226,7 @@ border_average_run (GimpProcedure        *procedure,
   return_vals = gimp_procedure_new_return_values (procedure, status, NULL);
 
   if (status == GIMP_PDB_SUCCESS)
-    GIMP_VALUES_SET_RGB (return_vals, 1, &result_color);
+    GIMP_VALUES_SET_COLOR (return_vals, 1, result_color);
 
   return return_vals;
 }
@@ -238,7 +236,7 @@ static void
 borderaverage (GObject      *config,
                GeglBuffer   *buffer,
                GimpDrawable *drawable,
-               GimpRGB      *result)
+               GeglColor    *result)
 {
   gint            x, y, width, height;
   gint            max;
@@ -257,7 +255,7 @@ borderaverage (GObject      *config,
 
   if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
-      gimp_rgba_set_uchar (result, 0, 0, 0, 255);
+      gegl_color_set_rgba (result, 0.0, 0.0, 0.0, 1.0);
       return;
     }
 
@@ -352,7 +350,7 @@ borderaverage (GObject      *config,
     }
 
   /* return the color */
-  gimp_rgba_set_uchar (result, r, g, b, 255);
+  gegl_color_set_rgba (result, r / 255.0, g / 255.0, b / 255.0, 1.0);
 
   g_free (cube);
 }

@@ -53,8 +53,8 @@
  *
  * To obtain the user-set colors in Preferences, just call:
  * |[<!-- language="C" -->
- * GimpRGB color1 = *(gimp_check_custom_color1 ());
- * GimpRGB color2 = *(gimp_check_custom_color2 ());
+ * GeglColor *color1 = gimp_check_custom_color1 ();
+ * GeglColor *color2 = gimp_check_custom_color2 ();
  * gimp_checks_get_colors (gimp_check_type (), &color1, &color2);
  * ]|
  *

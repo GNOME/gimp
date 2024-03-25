@@ -231,7 +231,7 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
   guint32                 parasite_data_size;
   gboolean                antialias;
   gdouble                 spacing;
-  GimpRGB                 rgb;
+  GeglColor              *rgb  = gegl_color_new ("none");
   glong                   color;
   gint                    i;
 
@@ -277,14 +277,15 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
   spacing = g_strtod (params[LINE_SPACING], NULL);
 
   color = strtol (params[COLOR], NULL, 16);
-  gimp_rgba_set_uchar (&rgb, color >> 16, color >> 8, color, 255);
+  gegl_color_set_rgba (rgb, (color >> 16) / 255.0f, (color >> 8) / 255.0f,
+                       color / 255.0f, 1.0);
 
   retval = g_object_new (GIMP_TYPE_TEXT,
                          "text",         text,
                          "antialias",    antialias,
                          "justify",      justify,
                          "line-spacing", spacing,
-                         "color",        &rgb,
+                         "color",        rgb,
                          NULL);
 
   gimp_text_set_font_from_xlfd (GIMP_TEXT (retval), params[XLFD]);
@@ -293,6 +294,7 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
   g_free (str);
   g_free (text);
   g_strfreev (params);
+  g_object_unref (rgb);
 
   return retval;
 }
