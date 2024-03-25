@@ -44,7 +44,7 @@
 #define PLUG_IN_BINARY "blinds"
 #define PLUG_IN_ROLE   "gimp-blinds"
 
-#define MAX_FANS       100
+#define MAX_FANS       1024
 
 
 typedef struct _Blinds      Blinds;
@@ -153,13 +153,13 @@ blinds_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_INT (procedure, "angle-displacement",
                          _("_Displacement"),
                          _("Angle of Displacement"),
-                         0, 360, 30,
+                         0, 90, 30,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "num-segments",
                          _("_Number of segments"),
                          _("Number of segments in blinds"),
-                         1, 1024, 3,
+                         1, MAX_FANS, 3,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "orientation",
