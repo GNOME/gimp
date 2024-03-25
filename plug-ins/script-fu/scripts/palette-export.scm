@@ -90,7 +90,7 @@
 (define (color-rgb-to-css color)
   (string-append "rgb(" (number->string (color-get-red color))
                  ", " (number->string (color-get-green color))
-                 ", " (number->string (color-get-blue color)) ")")
+                 ", " (number->string (color-get-blue color)) ");")
   )
 
 ; Convert a color to a simple pair of braces with comma separated values
