@@ -26,14 +26,11 @@ git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git _gegl
 
 # Build babl and GEGL
 mkdir _babl/_build${ARTIFACTS_SUFFIX}/ && cd _babl/_build${ARTIFACTS_SUFFIX}/
-crossroad meson setup .. -Denable-gir=false \
-                         -Dlibdir=lib
+crossroad meson setup .. -Denable-gir=false
 ninja && ninja install
 
 mkdir ../../_gegl/_build${ARTIFACTS_SUFFIX}/ && cd ../../_gegl/_build${ARTIFACTS_SUFFIX}/
-crossroad meson setup .. -Dintrospection=false \
-                         -Dlibdir=lib          \
-                         -Dsdl2=disabled
+crossroad meson setup .. -Dintrospection=false
 ninja && ninja install
 cd ../../
 
