@@ -53,11 +53,25 @@ else
   endif
 endif
 
+# Use a temporary config directory in the top build root for 2 reasons: first
+# because we don't want to pollute any existing user config folder; second
+# because the default directory may not be writable (we have the case in macOS
+# CI), but the build dir always is.
+# XXX We might also want to delete this directory before every use, especially
+# when using the binary for testing (ensuring we always start from a fresh
+# config). But for now, let's keep it as-is.
+gimp_exe_config_dir = custom_target('gimp_exe_config_dir',
+                                    output: [ '.tmp-config' ],
+                                    command: [ 'mkdir', '-p', '@OUTDIR@' + '/.tmp-config' ],
+                                    build_by_default: true)
+env.set('GIMP3_DIRECTORY', gimp_exe_config_dir.full_path())
+
 ## Splash Image and Welcome Dialog ##
 
 splash = custom_target('gimp-splash.png',
                        input : [ 'export-splash.py' ],
                        output: [ 'gimp-splash.png', ],
+                       depends: [ gimp_exe_config_dir ],
                        command: [ gimp_exe, '-nidfs',
                                   files('gimp-splash.xcf.xz'),
                                   '--batch-interpreter', 'python-fu-eval',
@@ -74,6 +88,7 @@ if get_option('windows-installer')
   installsplash = custom_target('installsplash.bmp',
                                 input : [ 'splash2installer.py' ],
                                 output: [ 'stamp-installsplash.bmp', ],
+                                depends: [ gimp_exe_config_dir ],
                                 command: [ gimp_exe, '-nidfs',
                                            files('gimp-splash.xcf.xz'),
                                            '--batch-interpreter', 'python-fu-eval',
