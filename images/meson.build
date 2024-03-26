@@ -41,6 +41,15 @@ if meson.can_run_host_binaries()
     env.prepend('PATH', meson.global_build_root() / 'libgimpmodule')
     env.prepend('PATH', meson.global_build_root() / 'libgimpthumb')
     env.prepend('PATH', meson.global_build_root() / 'libgimpwidgets')
+  elif platform_osx
+    env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimp')
+    env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpbase')
+    env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpcolor')
+    env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpconfig')
+    env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpmath')
+    env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpmodule')
+    env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpthumb')
+    env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpwidgets')
   endif
 else
   # Cross-builds require an existing native GIMP installed, unless we
