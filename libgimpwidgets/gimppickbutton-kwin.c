@@ -82,18 +82,20 @@ _gimp_pick_button_kwin_pick (GimpPickButton *button)
                                    -1, NULL, &error);
   if (retval)
     {
-      GimpRGB rgb;
-      guint32 color;
+      GeglColor *rgb = gegl_color_new ("none");
+      guint32    color;
 
       g_variant_get (retval, "((u))", &color);
       g_variant_unref (retval);
       /* Returned value is ARGB stored in uint32. */
-      gimp_rgba_set_uchar (&rgb,
-                           (color  >> 16 ) & 0xff, /* Red                           */
-                           (color >> 8) & 0xff,    /* Green                         */
-                           color & 0xff,           /* Blue: least significant byte. */
-                           (color >> 24) & 0xff);  /* Alpha: most significant byte. */
-      g_signal_emit_by_name (button, "color-picked", &rgb);
+      gegl_color_set_rgba (rgb,
+                           ((color >> 16) & 0xff) / 255.0,   /* Red                           */
+                           ((color >> 8) & 0xff) / 255.0,    /* Green                         */
+                           (color & 0xff) / 255.0,           /* Blue: least significant byte. */
+                           ((color >> 24) & 0xff) / 255.0);  /* Alpha: most significant byte. */
+
+      g_signal_emit_by_name (button, "color-picked", rgb);
+      g_object_unref (rgb);
     }
   else
     {

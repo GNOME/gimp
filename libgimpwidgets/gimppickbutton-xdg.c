@@ -98,11 +98,14 @@ pick_color_xdg_dbus_signal (GDBusProxy      *proxy,
        */
       if (response == 0)
         {
-          GimpRGB color;
+          GeglColor *color   = gegl_color_new ("none");
+          gdouble    rgba[4] = {0.0, 0.0, 0.0, 1.0};
 
-          if (g_variant_lookup (results, "color", "(ddd)", &color.r, &color.g, &color.b))
+          if (g_variant_lookup (results, "color", "(ddd)", &rgba[0], &rgba[1], &rgba[2]))
             {
-              g_signal_emit_by_name (button, "color-picked", &color);
+              gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgba);
+              g_signal_emit_by_name (button, "color-picked", color);
+              g_object_unref (color);
             }
         }
 

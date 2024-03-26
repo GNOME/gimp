@@ -185,7 +185,8 @@ gimp_pick_button_pick (GimpPickButton *button,
   GdkScreen        *screen = gdk_event_get_screen (event);
   GimpColorProfile *monitor_profile;
   GdkMonitor       *monitor;
-  GimpRGB           rgb;
+  GeglColor        *rgb    = gegl_color_new ("none");
+  const Babl       *space  = NULL;
   gint              x_root;
   gint              y_root;
   gdouble           x_win;
@@ -195,6 +196,15 @@ gimp_pick_button_pick (GimpPickButton *button,
   gdk_event_get_coords (event, &x_win, &y_win);
   x_root += x_win;
   y_root += y_win;
+
+  monitor = gdk_display_get_monitor_at_point (gdk_screen_get_display (screen),
+                                              x_root, y_root);
+  monitor_profile = gimp_monitor_get_color_profile (monitor);
+
+  if (monitor_profile)
+    space = gimp_color_profile_get_space (monitor_profile,
+                                          GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                          NULL);
 
 #ifdef G_OS_WIN32
 
@@ -215,11 +225,12 @@ gimp_pick_button_pick (GimpPickButton *button,
     win32_color = GetPixel (hdc, x_root + rect.left, y_root + rect.top);
     ReleaseDC (HWND_DESKTOP, hdc);
 
-    gimp_rgba_set_uchar (&rgb,
-                         GetRValue (win32_color),
-                         GetGValue (win32_color),
-                         GetBValue (win32_color),
-                         255);
+    gegl_color_set_rgba_with_space (rgb,
+                                    GetRValue (win32_color) / 255.0,
+                                    GetGValue (win32_color) / 255.0,
+                                    GetBValue (win32_color) / 255.0,
+                                    1.0,
+                                    space);
   }
 
 #else
@@ -262,47 +273,18 @@ gimp_pick_button_pick (GimpPickButton *button,
 
     cairo_surface_destroy (image);
 
-    gimp_rgba_set_uchar (&rgb, color[0], color[1], color[2], 255);
+    gegl_color_set_rgba_with_space (rgb,
+                                    color[0] / 255.0,
+                                    color[1] / 255.0,
+                                    color[2] / 255.0,
+                                    1.0,
+                                    space);
   }
 
 #endif
 
-  monitor = gdk_display_get_monitor_at_point (gdk_screen_get_display (screen),
-                                              x_root, y_root);
-  monitor_profile = gimp_monitor_get_color_profile (monitor);
-
-  if (monitor_profile)
-    {
-      GimpColorProfile        *srgb_profile;
-      GimpColorTransform      *transform;
-      const Babl              *format;
-      GimpColorTransformFlags  flags = 0;
-
-      format = babl_format ("R'G'B'A double");
-
-      flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
-      flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
-
-      srgb_profile = gimp_color_profile_new_rgb_srgb ();
-      transform = gimp_color_transform_new (monitor_profile, format,
-                                            srgb_profile,    format,
-                                            GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                            flags);
-      g_object_unref (srgb_profile);
-
-      if (transform)
-        {
-          gimp_color_transform_process_pixels (transform,
-                                               format, &rgb,
-                                               format, &rgb,
-                                               1);
-          gimp_rgb_clamp (&rgb);
-
-          g_object_unref (transform);
-        }
-    }
-
-  g_signal_emit_by_name (button, "color-picked", &rgb);
+  g_signal_emit_by_name (button, "color-picked", rgb);
+  g_object_unref (rgb);
 }
 
 /* entry point to this file, called from gimppickbutton.c */

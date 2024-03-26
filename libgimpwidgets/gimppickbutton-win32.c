@@ -145,7 +145,7 @@ static void               remove_screen_data               (void);
 static void               screen_changed                   (void);
 static void               ensure_screen_tracking           (void);
 static void               remove_screen_tracking           (void);
-static GimpRGB            pick_color_with_gdi              (POINT           physical_point);
+static GeglColor *        pick_color_with_gdi              (POINT           physical_point);
 static void               user_picked                      (MonitorData    *monitor,
                                                             POINT           physical_point);
 void                      _gimp_pick_button_win32_pick     (GimpPickButton *button);
@@ -1069,12 +1069,12 @@ remove_screen_tracking (void)
  * as of today there's no documented method to retrieve colors
  * at higher bit depths. */
 
-static GimpRGB
+static GeglColor *
 pick_color_with_gdi (POINT physical_point)
 {
-  GimpRGB  rgb;
-  COLORREF color;
-  HDC      hdc;
+  GeglColor *rgb = gegl_color_new ("none");
+  COLORREF   color;
+  HDC        hdc;
 
   hdc = GetDC (HWND_DESKTOP);
 
@@ -1083,7 +1083,11 @@ pick_color_with_gdi (POINT physical_point)
 
   color = GetPixel (hdc, physical_point.x, physical_point.y);
 
-  gimp_rgba_set_uchar (&rgb, GetRValue (color), GetGValue (color), GetBValue (color), 255);
+  gegl_color_set_rgba (rgb,
+                       GetRValue (color) / 255.0,
+                       GetGValue (color) / 255.0,
+                       GetBValue (color) / 255.0,
+                       1.0);
 
   ReleaseDC (HWND_DESKTOP, hdc);
 
@@ -1094,7 +1098,7 @@ static void
 user_picked (MonitorData *monitor,
              POINT        physical_point)
 {
-  GimpRGB rgb;
+  GeglColor *rgb;
   GList *l;
 
   /* Currently unused */
@@ -1105,7 +1109,8 @@ user_picked (MonitorData *monitor,
   for (l = pickers; l != NULL; l = l->next)
     {
       GimpPickButton *button = GIMP_PICK_BUTTON (l->data);
-      g_signal_emit_by_name (button, "color-picked", &rgb);
+      g_signal_emit_by_name (button, "color-picked", rgb);
+      g_object_unref (rgb);
     }
 }
 

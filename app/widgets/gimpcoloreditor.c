@@ -99,7 +99,7 @@ static void   gimp_color_editor_fg_bg_notify      (GtkWidget         *widget,
                                                    GParamSpec        *pspec,
                                                    GimpColorEditor   *editor);
 static void   gimp_color_editor_color_picked      (GtkWidget         *widget,
-                                                   const GimpRGB     *rgb,
+                                                   const GeglColor   *color,
                                                    GimpColorEditor   *editor);
 static void   gimp_color_editor_entry_changed     (GimpColorHexEntry *entry,
                                                    GimpColorEditor   *editor);
@@ -706,21 +706,15 @@ gimp_color_editor_fg_bg_notify (GtkWidget       *widget,
 
 static void
 gimp_color_editor_color_picked (GtkWidget       *widget,
-                                const GimpRGB   *rgb,
+                                const GeglColor *color,
                                 GimpColorEditor *editor)
 {
-  if (editor->context)
+  if (editor->context && color)
     {
-      GeglColor *color = gegl_color_new ("black");
-
-      gegl_color_set_rgba_with_space (color, rgb->r, rgb->g, rgb->b, rgb->a, NULL);
-
       if (editor->edit_bg)
         gimp_context_set_background (editor->context, color);
       else
         gimp_context_set_foreground (editor->context, color);
-
-      g_object_unref (color);
     }
 }
 

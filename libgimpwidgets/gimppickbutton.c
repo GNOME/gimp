@@ -87,7 +87,7 @@ gimp_pick_button_class_init (GimpPickButtonClass* klass)
   /**
    * GimpPickButton::color-picked:
    * @gimppickbutton: the object which received the signal.
-   * @color: pointer to a #GimpRGB structure that holds the picked color
+   * @color: pointer to a #GeglColor structure that holds the picked color
    *
    * This signal is emitted when the user has picked a color.
    **/
@@ -98,7 +98,7 @@ gimp_pick_button_class_init (GimpPickButtonClass* klass)
                   G_STRUCT_OFFSET (GimpPickButtonClass, color_picked),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_RGB);
+                  GEGL_TYPE_COLOR);
 
   object_class->dispose = gimp_pick_button_dispose;
 
