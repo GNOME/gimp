@@ -33,7 +33,7 @@
 }
 
 /* Titlebar color when window is out of focus */
-.csd, .titlebar:backdrop, .titlebar label:backdrop, menubar:backdrop
+.titlebar:backdrop, .titlebar label:backdrop
 {
   background-color: @hover-color;
 }
@@ -507,7 +507,7 @@ border {
 
 /* give the menu bar a color, fix for the default color being too dark */
 menubar {
-  background-color: @bg-color;
+  background-color: transparent;
   background-image: none;
   box-shadow: 0 -1px @edge-border-color inset;
 }
@@ -623,6 +623,7 @@ headerbar {
 
 headerbar:backdrop * {
   color: @disabled-fg-color;
+  background-color: transparent;
 }
 
 /* Prevent overlapping menu/header borderlines for CSD */
