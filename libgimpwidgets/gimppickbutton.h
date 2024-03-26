@@ -49,7 +49,7 @@ struct _GimpPickButtonClass
   GtkButtonClass  parent_class;
 
   void (* color_picked) (GimpPickButton *button,
-                         const GimpRGB  *color);
+                         GeglColor      *color);
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);

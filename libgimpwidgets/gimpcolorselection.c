@@ -117,7 +117,7 @@ static void   gimp_color_selection_scales_changed    (GimpColorSelector  *select
                                                       GeglColor          *color,
                                                       GimpColorSelection *selection);
 static void   gimp_color_selection_color_picked      (GtkWidget          *widget,
-                                                      const GimpRGB      *rgb,
+                                                      GeglColor          *rgb,
                                                       GimpColorSelection *selection);
 static void   gimp_color_selection_entry_changed     (GimpColorHexEntry  *entry,
                                                       GimpColorSelection *selection);
@@ -742,15 +742,15 @@ gimp_color_selection_scales_changed (GimpColorSelector  *selector,
 
 static void
 gimp_color_selection_color_picked (GtkWidget          *widget,
-                                   const GimpRGB      *rgb,
+                                   GeglColor          *rgb,
                                    GimpColorSelection *selection)
 {
-  GeglColor *color = gegl_color_new (NULL);
+  if (rgb)
+    {
+      gimp_color_selection_set_color (selection, rgb);
 
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
-  gimp_color_selection_set_color (selection, color);
-
-  g_object_unref (color);
+      g_object_unref (rgb);
+    }
 }
 
 static void
