@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-13 23:39+0000\n"
-"PO-Revision-Date: 2024-03-14 20:29+0200\n"
+"POT-Creation-Date: 2024-03-26 16:58+0000\n"
+"PO-Revision-Date: 2024-03-26 21:22+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -10380,7 +10380,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Помилка аналізу '%%s': рядок довший за %s символів."
 
 #: app/config/gimpconfig-file.c:153 app/config/gimpconfig-file.c:197
-#: app/core/gimp-tags.c:145 app/gui/themes.c:513
+#: app/core/gimp-tags.c:145 app/gui/themes.c:522
 #: app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -12326,7 +12326,7 @@ msgctxt "undo-type"
 msgid "Text"
 msgstr "Текст"
 
-#: app/core/core-enums.c:1339 app/core/gimpdrawable-transform.c:711
+#: app/core/core-enums.c:1339 app/core/gimpdrawable-transform.c:717
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Перетворення"
@@ -12878,7 +12878,7 @@ msgstr "Не вдалося виконати дочірній процес «%s�
 msgid "tags-locale:C"
 msgstr "tags-locale:uk"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:525
+#: app/core/gimp-tags.c:156 app/gui/themes.c:534
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Помилка закривання '%s': %s"
@@ -13211,7 +13211,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Обернути канал"
 
-#: app/core/gimpchannel.c:263 app/core/gimpdrawable-transform.c:1039
+#: app/core/gimpchannel.c:263 app/core/gimpdrawable-transform.c:1045
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Перетворити канал"
@@ -13538,22 +13538,22 @@ msgstr "Тягнучий зсув"
 msgid "Not enough points to stroke"
 msgstr "Бракує точок для обведення"
 
-#: app/core/gimpdrawable-transform.c:798 app/tools/gimpfliptool.c:135
+#: app/core/gimpdrawable-transform.c:804 app/tools/gimpfliptool.c:135
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Віддзеркалення"
 
-#: app/core/gimpdrawable-transform.c:881 app/tools/gimprotatetool.c:130
+#: app/core/gimpdrawable-transform.c:887 app/tools/gimprotatetool.c:130
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Обертання"
 
-#: app/core/gimpdrawable-transform.c:1037 app/core/gimplayer.c:434
+#: app/core/gimpdrawable-transform.c:1043 app/core/gimplayer.c:434
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Перетворення шару"
 
-#: app/core/gimpdrawable-transform.c:1050
+#: app/core/gimpdrawable-transform.c:1056
 msgid "Transformation"
 msgstr "Перетворення"
 
@@ -14164,7 +14164,7 @@ msgstr "Неможливо об'єднати невидимий шар."
 msgid "Cannot merge down to a layer group."
 msgstr "Не вдалось виконати зведення у групу шарів."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2746
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2762
 msgid "The layer to merge down to is locked."
 msgstr "Шар, я який має бути виконане зведення, замкнений"
 
@@ -18399,14 +18399,11 @@ msgid "O_pen Selected Images"
 msgstr "_Відкрити позначені зображення"
 
 #: app/dialogs/welcome-dialog.c:830
-#| msgid ""
-#| "Show Welcome Dialog On Start (You can show it again from the \"Help\" "
-#| "menu)"
 msgid ""
 "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr ""
-"Показувати після запуску (Відкрити вікно вітання знову можна за "
-"допомогою меню «Довідка»)"
+"Показувати після запуску (Відкрити вікно вітання знову можна за допомогою "
+"меню «Довідка»)"
 
 #: app/dialogs/welcome-dialog.c:858
 #, c-format
@@ -20918,11 +20915,11 @@ msgstr "Фіксоване"
 msgid "Combine Masks"
 msgstr "Об'єднати маски"
 
-#: app/pdb/drawable-cmds.c:647
+#: app/pdb/drawable-cmds.c:651
 msgid "Plug-in"
 msgstr "Додаток"
 
-#: app/pdb/drawable-cmds.c:974 app/tools/gimpforegroundselecttool.c:1039
+#: app/pdb/drawable-cmds.c:978 app/tools/gimpforegroundselecttool.c:1039
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Вибір переднього плану"
@@ -21392,14 +21389,14 @@ msgid ""
 msgstr ""
 "Процедуру «%s» було викликано з некоректним рядком UTF-8 для аргументу «%s»."
 
-#: app/pdb/image-cmds.c:2501
+#: app/pdb/image-cmds.c:2504
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "Роздільність зображення поза допустимими межами, використовується типове "
 "значення."
 
-#: app/pdb/image-select-cmds.c:303 app/tools/gimpfreeselecttool.c:105
+#: app/pdb/image-select-cmds.c:306 app/tools/gimpfreeselecttool.c:105
 msgid "Free Select"
 msgstr "Вільне вибирання"
 
@@ -21529,7 +21526,7 @@ msgctxt "undo-type"
 msgid "DoG Edge Detect"
 msgstr "Виділення меж"
 
-#: app/pdb/plug-in-compat-cmds.c:1578 app/pdb/plug-in-compat-cmds.c:2900
+#: app/pdb/plug-in-compat-cmds.c:1578 app/pdb/plug-in-compat-cmds.c:2897
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Звичайний"
@@ -21549,262 +21546,262 @@ msgctxt "undo-type"
 msgid "Engrave"
 msgstr "Гравірування"
 
-#: app/pdb/plug-in-compat-cmds.c:1823
+#: app/pdb/plug-in-compat-cmds.c:1820
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "Заміна кольору"
 
-#: app/pdb/plug-in-compat-cmds.c:1871
+#: app/pdb/plug-in-compat-cmds.c:1868
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "Відблиск лінзи"
 
-#: app/pdb/plug-in-compat-cmds.c:1936
+#: app/pdb/plug-in-compat-cmds.c:1933
 msgctxt "undo-type"
 msgid "Fractal Trace"
 msgstr "Фрактальний слід"
 
-#: app/pdb/plug-in-compat-cmds.c:2120
+#: app/pdb/plug-in-compat-cmds.c:2117
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "Скляна плитка"
 
-#: app/pdb/plug-in-compat-cmds.c:2173
+#: app/pdb/plug-in-compat-cmds.c:2170
 msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "Шум HSV"
 
-#: app/pdb/plug-in-compat-cmds.c:2216
+#: app/pdb/plug-in-compat-cmds.c:2213
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "Ілюзія"
 
-#: app/pdb/plug-in-compat-cmds.c:2253
+#: app/pdb/plug-in-compat-cmds.c:2250
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Лаплас"
 
-#: app/pdb/plug-in-compat-cmds.c:2322
+#: app/pdb/plug-in-compat-cmds.c:2319
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Викривлення лінзи"
 
-#: app/pdb/plug-in-compat-cmds.c:2362
+#: app/pdb/plug-in-compat-cmds.c:2359
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Плитка без швів"
 
-#: app/pdb/plug-in-compat-cmds.c:2422
+#: app/pdb/plug-in-compat-cmds.c:2419
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "Лабіринт"
 
-#: app/pdb/plug-in-compat-cmds.c:2505 app/pdb/plug-in-compat-cmds.c:2589
+#: app/pdb/plug-in-compat-cmds.c:2502 app/pdb/plug-in-compat-cmds.c:2586
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Розмиття руху"
 
-#: app/pdb/plug-in-compat-cmds.c:2636
+#: app/pdb/plug-in-compat-cmds.c:2633
 msgctxt "undo-type"
 msgid "Median Blur"
 msgstr "Медіанне розмиття"
 
-#: app/pdb/plug-in-compat-cmds.c:2728
+#: app/pdb/plug-in-compat-cmds.c:2725
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Мозаїка"
 
-#: app/pdb/plug-in-compat-cmds.c:2772
+#: app/pdb/plug-in-compat-cmds.c:2769
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Неон"
 
-#: app/pdb/plug-in-compat-cmds.c:2860
+#: app/pdb/plug-in-compat-cmds.c:2857
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "Газетний папір"
 
-#: app/pdb/plug-in-compat-cmds.c:2962
+#: app/pdb/plug-in-compat-cmds.c:2961
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Наднова"
 
-#: app/pdb/plug-in-compat-cmds.c:3006 app/pdb/plug-in-compat-cmds.c:3074
+#: app/pdb/plug-in-compat-cmds.c:3005 app/pdb/plug-in-compat-cmds.c:3073
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Олійна фарба"
 
-#: app/pdb/plug-in-compat-cmds.c:3165
+#: app/pdb/plug-in-compat-cmds.c:3164
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Паперова плитка"
 
-#: app/pdb/plug-in-compat-cmds.c:3214
+#: app/pdb/plug-in-compat-cmds.c:3213
 msgctxt "undo-type"
 msgid "Photocopy"
 msgstr "Фотокопія"
 
-#: app/pdb/plug-in-compat-cmds.c:3255 app/pdb/plug-in-compat-cmds.c:3298
+#: app/pdb/plug-in-compat-cmds.c:3254 app/pdb/plug-in-compat-cmds.c:3297
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Пікселізація"
 
-#: app/pdb/plug-in-compat-cmds.c:3349
+#: app/pdb/plug-in-compat-cmds.c:3348
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Плазма"
 
-#: app/pdb/plug-in-compat-cmds.c:3403
+#: app/pdb/plug-in-compat-cmds.c:3402
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Полярні координати"
 
-#: app/pdb/plug-in-compat-cmds.c:3443
+#: app/pdb/plug-in-compat-cmds.c:3442
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Усунення червоних очей"
 
-#: app/pdb/plug-in-compat-cmds.c:3496
+#: app/pdb/plug-in-compat-cmds.c:3495
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Випадкове жбурляння"
 
-#: app/pdb/plug-in-compat-cmds.c:3549
+#: app/pdb/plug-in-compat-cmds.c:3548
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Випадковий відбір"
 
-#: app/pdb/plug-in-compat-cmds.c:3602
+#: app/pdb/plug-in-compat-cmds.c:3601
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Випадкова пляма"
 
-#: app/pdb/plug-in-compat-cmds.c:3677
+#: app/pdb/plug-in-compat-cmds.c:3676
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "RGB шум"
 
-#: app/pdb/plug-in-compat-cmds.c:3747
+#: app/pdb/plug-in-compat-cmds.c:3746
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Брижі"
 
-#: app/pdb/plug-in-compat-cmds.c:3872
+#: app/pdb/plug-in-compat-cmds.c:3871
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Зашумлення"
 
-#: app/pdb/plug-in-compat-cmds.c:3916
+#: app/pdb/plug-in-compat-cmds.c:3915
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Вибіркове розмиття за Гаусом"
 
-#: app/pdb/plug-in-compat-cmds.c:3960
+#: app/pdb/plug-in-compat-cmds.c:3959
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Напівсплющення"
 
-#: app/pdb/plug-in-compat-cmds.c:4003
+#: app/pdb/plug-in-compat-cmds.c:4002
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Зсув"
 
-#: app/pdb/plug-in-compat-cmds.c:4108
+#: app/pdb/plug-in-compat-cmds.c:4107
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Синус"
 
-#: app/pdb/plug-in-compat-cmds.c:4156
+#: app/pdb/plug-in-compat-cmds.c:4155
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Собель"
 
-#: app/pdb/plug-in-compat-cmds.c:4204
+#: app/pdb/plug-in-compat-cmds.c:4203
 msgctxt "undo-type"
 msgid "Softglow"
 msgstr "М'яке світло"
 
-#: app/pdb/plug-in-compat-cmds.c:4265
+#: app/pdb/plug-in-compat-cmds.c:4264
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Суцільний шум"
 
-#: app/pdb/plug-in-compat-cmds.c:4309
+#: app/pdb/plug-in-compat-cmds.c:4308
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Розсіювання"
 
-#: app/pdb/plug-in-compat-cmds.c:4350
+#: app/pdb/plug-in-compat-cmds.c:4349
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Порогова альфа"
 
-#: app/pdb/plug-in-compat-cmds.c:4396
+#: app/pdb/plug-in-compat-cmds.c:4395
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Різкість (маска зменшення різкості)"
 
-#: app/pdb/plug-in-compat-cmds.c:4442
+#: app/pdb/plug-in-compat-cmds.c:4441
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Відео"
 
-#: app/pdb/plug-in-compat-cmds.c:4479
+#: app/pdb/plug-in-compat-cmds.c:4478
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Інверсія яскравості"
 
-#: app/pdb/plug-in-compat-cmds.c:4580
+#: app/pdb/plug-in-compat-cmds.c:4579
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Поширення значень"
 
-#: app/pdb/plug-in-compat-cmds.c:4627
+#: app/pdb/plug-in-compat-cmds.c:4626
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Дилатація"
 
-#: app/pdb/plug-in-compat-cmds.c:4674
+#: app/pdb/plug-in-compat-cmds.c:4673
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Ерозія"
 
-#: app/pdb/plug-in-compat-cmds.c:4737
+#: app/pdb/plug-in-compat-cmds.c:4736
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Хвилі"
 
-#: app/pdb/plug-in-compat-cmds.c:4785
+#: app/pdb/plug-in-compat-cmds.c:4784
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Вихор та щипок..."
 
-#: app/pdb/plug-in-compat-cmds.c:4837
+#: app/pdb/plug-in-compat-cmds.c:4836
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Вітер"
 
-#: app/pdb/resource-cmds.c:465
+#: app/pdb/resource-cmds.c:467
 #, c-format
 msgid "Resource '%s' is not renamable"
 msgstr "Ресурс «%s» не можна перейменовувати"
 
-#: app/pdb/text-layer-cmds.c:96
+#: app/pdb/text-layer-cmds.c:98
 #, c-format
 msgid "Failed to create text layer"
 msgstr "Не вдалось створити текстовий шар"
 
-#: app/pdb/text-layer-cmds.c:160 app/pdb/text-layer-cmds.c:298
-#: app/pdb/text-layer-cmds.c:363 app/pdb/text-layer-cmds.c:422
-#: app/pdb/text-layer-cmds.c:480 app/pdb/text-layer-cmds.c:538
-#: app/pdb/text-layer-cmds.c:596 app/pdb/text-layer-cmds.c:654
-#: app/pdb/text-layer-cmds.c:712 app/pdb/text-layer-cmds.c:768
-#: app/pdb/text-layer-cmds.c:826 app/pdb/text-layer-cmds.c:884
-#: app/pdb/text-layer-cmds.c:942 app/pdb/text-layer-cmds.c:977
+#: app/pdb/text-layer-cmds.c:162 app/pdb/text-layer-cmds.c:300
+#: app/pdb/text-layer-cmds.c:365 app/pdb/text-layer-cmds.c:424
+#: app/pdb/text-layer-cmds.c:482 app/pdb/text-layer-cmds.c:540
+#: app/pdb/text-layer-cmds.c:598 app/pdb/text-layer-cmds.c:656
+#: app/pdb/text-layer-cmds.c:714 app/pdb/text-layer-cmds.c:770
+#: app/pdb/text-layer-cmds.c:828 app/pdb/text-layer-cmds.c:886
+#: app/pdb/text-layer-cmds.c:944 app/pdb/text-layer-cmds.c:979
 msgid "Set text layer attribute"
 msgstr "Зміна ознак текстового шару"
 
-#: app/pdb/text-layer-cmds.c:229
+#: app/pdb/text-layer-cmds.c:231
 msgid "Set text layer markup"
 msgstr "Встановити розмітку текстового шару"
 
@@ -22115,11 +22112,11 @@ msgstr "Діапазон призначень"
 msgid "Gray Handling"
 msgstr "Управління сірим"
 
-#: app/propgui/gimppropgui-color-to-alpha.c:107
+#: app/propgui/gimppropgui-color-to-alpha.c:113
 msgid "Pick farthest full-transparency color"
 msgstr "Вибрати найвіддаленіший повністю прозорий колір"
 
-#: app/propgui/gimppropgui-color-to-alpha.c:128
+#: app/propgui/gimppropgui-color-to-alpha.c:134
 msgid "Pick nearest full-opacity color"
 msgstr "Вибрати найближчий повністю непрозорий колір"
 
@@ -27964,63 +27961,67 @@ msgstr[1] "Вибрано %d об'єкти"
 msgstr[2] "Вибрано %d об'єктів"
 msgstr[3] "Вибрано %d об'єкт"
 
-#: app/widgets/gimpitemtreeview.c:2640 app/widgets/gimpitemtreeview.c:2685
+#: app/widgets/gimpitemtreeview.c:2631 app/widgets/gimpitemtreeview.c:2684
+msgid "Cannot reorder a filter that is being edited."
+msgstr "Не можна змінювати місце у порядку для фільтра, який редагують."
+
+#: app/widgets/gimpitemtreeview.c:2648 app/widgets/gimpitemtreeview.c:2701
 msgid "Reorder filter"
 msgstr "Перевпорядкувати фільтр"
 
-#: app/widgets/gimpitemtreeview.c:2730
+#: app/widgets/gimpitemtreeview.c:2746
 msgid "Effects from active tools can not be merged."
 msgstr "Ефекти з активних інструментів не може бути об'єднано."
 
-#: app/widgets/gimpitemtreeview.c:2784
+#: app/widgets/gimpitemtreeview.c:2800
 msgid "Remove filter"
 msgstr "Вилучити фільтр"
 
-#: app/widgets/gimpitemtreeview.c:3306
+#: app/widgets/gimpitemtreeview.c:3322
 msgid "No layer set stored"
 msgstr "Немає збережених наборів шарів"
 
-#: app/widgets/gimpitemtreeview.c:3328
+#: app/widgets/gimpitemtreeview.c:3344
 msgid "New layer set's name"
 msgstr "Назва нового набору шарів"
 
-#: app/widgets/gimpitemtreeview.c:3370 app/widgets/gimpitemtreeview.c:3385
+#: app/widgets/gimpitemtreeview.c:3386 app/widgets/gimpitemtreeview.c:3401
 msgid "Select layers by text search"
 msgstr "Позначення шарів за текстовим пошуком"
 
-#: app/widgets/gimpitemtreeview.c:3372 app/widgets/gimpitemtreeview.c:3387
+#: app/widgets/gimpitemtreeview.c:3388 app/widgets/gimpitemtreeview.c:3403
 msgid "Text search"
 msgstr "Текстовий пошук"
 
-#: app/widgets/gimpitemtreeview.c:3391
+#: app/widgets/gimpitemtreeview.c:3407
 msgid "Select layers by glob patterns"
 msgstr "Позначення шарів за взірцями із замінниками"
 
-#: app/widgets/gimpitemtreeview.c:3393
+#: app/widgets/gimpitemtreeview.c:3409
 msgid "Glob pattern search"
 msgstr "Пошук за взірцем із замінниками"
 
-#: app/widgets/gimpitemtreeview.c:3397
+#: app/widgets/gimpitemtreeview.c:3413
 msgid "Select layers by regular expressions"
 msgstr "Позначення шарів за формальними виразами"
 
-#: app/widgets/gimpitemtreeview.c:3399
+#: app/widgets/gimpitemtreeview.c:3415
 msgid "Regular Expression search"
 msgstr "Пошук за формальним виразом"
 
-#: app/widgets/gimpitemtreeview.c:3454
+#: app/widgets/gimpitemtreeview.c:3470
 msgid "search"
 msgstr "пошук"
 
-#: app/widgets/gimpitemtreeview.c:3455
+#: app/widgets/gimpitemtreeview.c:3471
 msgid "glob"
 msgstr "замінник"
 
-#: app/widgets/gimpitemtreeview.c:3455
+#: app/widgets/gimpitemtreeview.c:3471
 msgid "regexp"
 msgstr "форм. вираз"
 
-#: app/widgets/gimpitemtreeview.c:3624
+#: app/widgets/gimpitemtreeview.c:3640
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Некоректний формальний вираз: %s\n"
@@ -28945,7 +28946,7 @@ msgid ""
 msgstr ""
 "Цей файл XCF пошкоджений! Не вдалось відновити навіть малу його частину!"
 
-#: app/xcf/xcf-load.c:1157
+#: app/xcf/xcf-load.c:1159
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
