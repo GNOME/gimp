@@ -2619,13 +2619,21 @@ static void
 gimp_item_tree_view_effects_raised_clicked (GtkWidget        *widget,
                                             GimpItemTreeView *view)
 {
+  GimpImage *image = view->priv->image;
+
   if (! view->priv->effects_filter ||
       ! GIMP_IS_DRAWABLE_FILTER (view->priv->effects_filter))
     return;
 
+  if (gimp_drawable_filter_get_mask (view->priv->effects_filter) == NULL)
+    {
+      gimp_message_literal (image->gimp, G_OBJECT (view), GIMP_MESSAGE_ERROR,
+                            _("Cannot reorder a filter that is being edited."));
+      return;
+    }
+
   if (view->priv->effects_drawable)
     {
-      GimpImage     *image = view->priv->image;
       GimpContainer *filters;
       gint           index;
 
@@ -2664,13 +2672,21 @@ static void
 gimp_item_tree_view_effects_lowered_clicked (GtkWidget        *widget,
                                              GimpItemTreeView *view)
 {
+  GimpImage *image = view->priv->image;
+
   if (! view->priv->effects_filter ||
       ! GIMP_IS_DRAWABLE_FILTER (view->priv->effects_filter))
     return;
 
+  if (gimp_drawable_filter_get_mask (view->priv->effects_filter) == NULL)
+    {
+      gimp_message_literal (image->gimp, G_OBJECT (view), GIMP_MESSAGE_ERROR,
+                            _("Cannot reorder a filter that is being edited."));
+      return;
+    }
+
   if (view->priv->effects_drawable)
     {
-      GimpImage     *image = view->priv->image;
       GimpContainer *filters;
       gint           index;
 
