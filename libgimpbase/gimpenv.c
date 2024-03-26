@@ -924,9 +924,8 @@ gimp_plug_in_directory_file (const gchar *first_element,
  * and *@path is replaced with a pointer to a new string with the
  * run-time prefix spliced in.
  *
- * On Linux, it does the same thing, but only if BinReloc support is enabled.
- * On other Unices, it does nothing because those platforms don't have a
- * way to find out where our binary is.
+ * On Linux and other Unices, it does the same thing, but only if BinReloc
+ * support is enabled, and only if we are not running GIMP in-build directory.
  */
 static void
 gimp_path_runtime_fix (gchar **path)
@@ -963,10 +962,15 @@ gimp_path_runtime_fix (gchar **path)
       *path = g_build_filename (gimp_installation_directory (), *path, NULL);
       g_free (p);
     }
-#else
+#elif defined (ENABLE_RELOCATABLE_RESOURCES)
   gchar *p;
 
-  if (strncmp (*path, PREFIX G_DIR_SEPARATOR_S,
+  /* XXX: I could actually test any of the other GIMP_TESTING_* environment
+   * variables. The goal is only to check if we are running GIMP from within the
+   * build directory. In such case, no substitution should happen.
+   */
+  if (! g_getenv ("GIMP_TESTING_PLUGINDIRS") &&
+      strncmp (*path, PREFIX G_DIR_SEPARATOR_S,
                strlen (PREFIX G_DIR_SEPARATOR_S)) == 0)
     {
       /* This is a compile-time entry. Replace the path with the
