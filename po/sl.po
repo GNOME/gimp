@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-13 23:39+0000\n"
-"PO-Revision-Date: 2024-03-15 09:35+0100\n"
+"POT-Creation-Date: 2024-03-26 16:58+0000\n"
+"PO-Revision-Date: 2024-03-26 20:57+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -10362,7 +10362,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Napaka pri razločevanju »%%s«: vrstica daljša od %s znakov."
 
 #: app/config/gimpconfig-file.c:153 app/config/gimpconfig-file.c:197
-#: app/core/gimp-tags.c:145 app/gui/themes.c:513
+#: app/core/gimp-tags.c:145 app/gui/themes.c:522
 #: app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -12283,7 +12283,7 @@ msgctxt "undo-type"
 msgid "Text"
 msgstr "Besedilo"
 
-#: app/core/core-enums.c:1339 app/core/gimpdrawable-transform.c:711
+#: app/core/core-enums.c:1339 app/core/gimpdrawable-transform.c:717
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Preoblikuj"
@@ -12831,7 +12831,7 @@ msgstr "Izvajanje podrejenega procesa »%s« je spodletelo (%s)"
 msgid "tags-locale:C"
 msgstr "tips-locale:sl"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:525
+#: app/core/gimp-tags.c:156 app/gui/themes.c:534
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Napaka pri zapiranju »%s«: %s"
@@ -13169,7 +13169,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Zasukaj kanal"
 
-#: app/core/gimpchannel.c:263 app/core/gimpdrawable-transform.c:1039
+#: app/core/gimpchannel.c:263 app/core/gimpdrawable-transform.c:1045
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Preoblikuj kanal"
@@ -13496,22 +13496,22 @@ msgstr "Zamakni risani predmet"
 msgid "Not enough points to stroke"
 msgstr "Premalo točk za potezo"
 
-#: app/core/gimpdrawable-transform.c:798 app/tools/gimpfliptool.c:135
+#: app/core/gimpdrawable-transform.c:804 app/tools/gimpfliptool.c:135
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Prezrcali"
 
-#: app/core/gimpdrawable-transform.c:881 app/tools/gimprotatetool.c:130
+#: app/core/gimpdrawable-transform.c:887 app/tools/gimprotatetool.c:130
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Zasukaj"
 
-#: app/core/gimpdrawable-transform.c:1037 app/core/gimplayer.c:434
+#: app/core/gimpdrawable-transform.c:1043 app/core/gimplayer.c:434
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Preoblikuj plast"
 
-#: app/core/gimpdrawable-transform.c:1050
+#: app/core/gimpdrawable-transform.c:1056
 msgid "Transformation"
 msgstr "Preoblikovanje"
 
@@ -14118,7 +14118,7 @@ msgstr "Nevidne plasti ni mogoče spojiti navzdol."
 msgid "Cannot merge down to a layer group."
 msgstr "Na skupino plasti ni mogoče spajati."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2746
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2762
 msgid "The layer to merge down to is locked."
 msgstr "Plast, na katero želite spajati, je zaklenjena."
 
@@ -20836,11 +20836,11 @@ msgstr "Nespremenljivo"
 msgid "Combine Masks"
 msgstr "Združi maske"
 
-#: app/pdb/drawable-cmds.c:647
+#: app/pdb/drawable-cmds.c:651
 msgid "Plug-in"
 msgstr "Vstavek"
 
-#: app/pdb/drawable-cmds.c:974 app/tools/gimpforegroundselecttool.c:1039
+#: app/pdb/drawable-cmds.c:978 app/tools/gimpforegroundselecttool.c:1039
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Izbor ospredja"
@@ -21306,14 +21306,14 @@ msgid ""
 msgstr ""
 "Procedura »%s« je bila klicana z neveljavnim nizom UTF-8 za argument »%s«."
 
-#: app/pdb/image-cmds.c:2501
+#: app/pdb/image-cmds.c:2504
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "Ločljivost slike je prekoračila meje, zato bo uporabljena privzeta "
 "ločljivost."
 
-#: app/pdb/image-select-cmds.c:303 app/tools/gimpfreeselecttool.c:105
+#: app/pdb/image-select-cmds.c:306 app/tools/gimpfreeselecttool.c:105
 msgid "Free Select"
 msgstr "Prosto izbiranje"
 
@@ -21443,7 +21443,7 @@ msgctxt "undo-type"
 msgid "DoG Edge Detect"
 msgstr "Razpoznava robov z razliko po Gaussu"
 
-#: app/pdb/plug-in-compat-cmds.c:1578 app/pdb/plug-in-compat-cmds.c:2900
+#: app/pdb/plug-in-compat-cmds.c:1578 app/pdb/plug-in-compat-cmds.c:2897
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Normaliziraj"
@@ -21463,262 +21463,262 @@ msgctxt "undo-type"
 msgid "Engrave"
 msgstr "Vgraviraj"
 
-#: app/pdb/plug-in-compat-cmds.c:1823
+#: app/pdb/plug-in-compat-cmds.c:1820
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "Izmenjava barv"
 
-#: app/pdb/plug-in-compat-cmds.c:1871
+#: app/pdb/plug-in-compat-cmds.c:1868
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "Odblesk objektiva"
 
-#: app/pdb/plug-in-compat-cmds.c:1936
+#: app/pdb/plug-in-compat-cmds.c:1933
 msgctxt "undo-type"
 msgid "Fractal Trace"
 msgstr "Sledenje fraktala"
 
-#: app/pdb/plug-in-compat-cmds.c:2120
+#: app/pdb/plug-in-compat-cmds.c:2117
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "Tlakovanje s steklom"
 
-#: app/pdb/plug-in-compat-cmds.c:2173
+#: app/pdb/plug-in-compat-cmds.c:2170
 msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "Šum HSV"
 
-#: app/pdb/plug-in-compat-cmds.c:2216
+#: app/pdb/plug-in-compat-cmds.c:2213
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "Iluzija"
 
-#: app/pdb/plug-in-compat-cmds.c:2253
+#: app/pdb/plug-in-compat-cmds.c:2250
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Laplace"
 
-#: app/pdb/plug-in-compat-cmds.c:2322
+#: app/pdb/plug-in-compat-cmds.c:2319
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Popačenje leč"
 
-#: app/pdb/plug-in-compat-cmds.c:2362
+#: app/pdb/plug-in-compat-cmds.c:2359
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Tlakuj neopazno"
 
-#: app/pdb/plug-in-compat-cmds.c:2422
+#: app/pdb/plug-in-compat-cmds.c:2419
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "Blodnjak"
 
-#: app/pdb/plug-in-compat-cmds.c:2505 app/pdb/plug-in-compat-cmds.c:2589
+#: app/pdb/plug-in-compat-cmds.c:2502 app/pdb/plug-in-compat-cmds.c:2586
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Zabriši kot pri gibanju"
 
-#: app/pdb/plug-in-compat-cmds.c:2636
+#: app/pdb/plug-in-compat-cmds.c:2633
 msgctxt "undo-type"
 msgid "Median Blur"
 msgstr "Zabrisanost mediane"
 
-#: app/pdb/plug-in-compat-cmds.c:2728
+#: app/pdb/plug-in-compat-cmds.c:2725
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mozaik"
 
-#: app/pdb/plug-in-compat-cmds.c:2772
+#: app/pdb/plug-in-compat-cmds.c:2769
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Neon"
 
-#: app/pdb/plug-in-compat-cmds.c:2860
+#: app/pdb/plug-in-compat-cmds.c:2857
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "Časopisni tisk"
 
-#: app/pdb/plug-in-compat-cmds.c:2962
+#: app/pdb/plug-in-compat-cmds.c:2961
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Supernova"
 
-#: app/pdb/plug-in-compat-cmds.c:3006 app/pdb/plug-in-compat-cmds.c:3074
+#: app/pdb/plug-in-compat-cmds.c:3005 app/pdb/plug-in-compat-cmds.c:3073
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Naolji"
 
-#: app/pdb/plug-in-compat-cmds.c:3165
+#: app/pdb/plug-in-compat-cmds.c:3164
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Tlakuj kot papir"
 
-#: app/pdb/plug-in-compat-cmds.c:3214
+#: app/pdb/plug-in-compat-cmds.c:3213
 msgctxt "undo-type"
 msgid "Photocopy"
 msgstr "Fotokopiraj"
 
-#: app/pdb/plug-in-compat-cmds.c:3255 app/pdb/plug-in-compat-cmds.c:3298
+#: app/pdb/plug-in-compat-cmds.c:3254 app/pdb/plug-in-compat-cmds.c:3297
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pikseliziraj"
 
-#: app/pdb/plug-in-compat-cmds.c:3349
+#: app/pdb/plug-in-compat-cmds.c:3348
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plazma"
 
-#: app/pdb/plug-in-compat-cmds.c:3403
+#: app/pdb/plug-in-compat-cmds.c:3402
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Polarne koordinate"
 
-#: app/pdb/plug-in-compat-cmds.c:3443
+#: app/pdb/plug-in-compat-cmds.c:3442
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Odstrani rdeče oči"
 
-#: app/pdb/plug-in-compat-cmds.c:3496
+#: app/pdb/plug-in-compat-cmds.c:3495
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Naključno vrženo"
 
-#: app/pdb/plug-in-compat-cmds.c:3549
+#: app/pdb/plug-in-compat-cmds.c:3548
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Naključno naberi"
 
-#: app/pdb/plug-in-compat-cmds.c:3602
+#: app/pdb/plug-in-compat-cmds.c:3601
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Naključno nerazločno"
 
-#: app/pdb/plug-in-compat-cmds.c:3677
+#: app/pdb/plug-in-compat-cmds.c:3676
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "Šum RGB"
 
-#: app/pdb/plug-in-compat-cmds.c:3747
+#: app/pdb/plug-in-compat-cmds.c:3746
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Zgrbanči"
 
-#: app/pdb/plug-in-compat-cmds.c:3872
+#: app/pdb/plug-in-compat-cmds.c:3871
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Zašumi"
 
-#: app/pdb/plug-in-compat-cmds.c:3916
+#: app/pdb/plug-in-compat-cmds.c:3915
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Selektivno Gaussovo zabrisanje"
 
-#: app/pdb/plug-in-compat-cmds.c:3960
+#: app/pdb/plug-in-compat-cmds.c:3959
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Napol splošči"
 
-#: app/pdb/plug-in-compat-cmds.c:4003
+#: app/pdb/plug-in-compat-cmds.c:4002
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Zamakni"
 
-#: app/pdb/plug-in-compat-cmds.c:4108
+#: app/pdb/plug-in-compat-cmds.c:4107
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Sinus"
 
-#: app/pdb/plug-in-compat-cmds.c:4156
+#: app/pdb/plug-in-compat-cmds.c:4155
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: app/pdb/plug-in-compat-cmds.c:4204
+#: app/pdb/plug-in-compat-cmds.c:4203
 msgctxt "undo-type"
 msgid "Softglow"
 msgstr "Mehko žarenje"
 
-#: app/pdb/plug-in-compat-cmds.c:4265
+#: app/pdb/plug-in-compat-cmds.c:4264
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Enakomeren šum"
 
-#: app/pdb/plug-in-compat-cmds.c:4309
+#: app/pdb/plug-in-compat-cmds.c:4308
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Razširi"
 
-#: app/pdb/plug-in-compat-cmds.c:4350
+#: app/pdb/plug-in-compat-cmds.c:4349
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Prag alfe"
 
-#: app/pdb/plug-in-compat-cmds.c:4396
+#: app/pdb/plug-in-compat-cmds.c:4395
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Izostri (maska neostrine)"
 
-#: app/pdb/plug-in-compat-cmds.c:4442
+#: app/pdb/plug-in-compat-cmds.c:4441
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Video"
 
-#: app/pdb/plug-in-compat-cmds.c:4479
+#: app/pdb/plug-in-compat-cmds.c:4478
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Preobrni vrednost"
 
-#: app/pdb/plug-in-compat-cmds.c:4580
+#: app/pdb/plug-in-compat-cmds.c:4579
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Razširi vrednost"
 
-#: app/pdb/plug-in-compat-cmds.c:4627
+#: app/pdb/plug-in-compat-cmds.c:4626
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Razlij"
 
-#: app/pdb/plug-in-compat-cmds.c:4674
+#: app/pdb/plug-in-compat-cmds.c:4673
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Razjedi"
 
-#: app/pdb/plug-in-compat-cmds.c:4737
+#: app/pdb/plug-in-compat-cmds.c:4736
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Valovanje"
 
-#: app/pdb/plug-in-compat-cmds.c:4785
+#: app/pdb/plug-in-compat-cmds.c:4784
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Vrtinči in odščipni"
 
-#: app/pdb/plug-in-compat-cmds.c:4837
+#: app/pdb/plug-in-compat-cmds.c:4836
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Veter"
 
-#: app/pdb/resource-cmds.c:465
+#: app/pdb/resource-cmds.c:467
 #, c-format
 msgid "Resource '%s' is not renamable"
 msgstr "Vira »%s« ni mogoče preimenovati"
 
-#: app/pdb/text-layer-cmds.c:96
+#: app/pdb/text-layer-cmds.c:98
 #, c-format
 msgid "Failed to create text layer"
 msgstr "Ustvarjanje plasti besedila ni uspelo"
 
-#: app/pdb/text-layer-cmds.c:160 app/pdb/text-layer-cmds.c:298
-#: app/pdb/text-layer-cmds.c:363 app/pdb/text-layer-cmds.c:422
-#: app/pdb/text-layer-cmds.c:480 app/pdb/text-layer-cmds.c:538
-#: app/pdb/text-layer-cmds.c:596 app/pdb/text-layer-cmds.c:654
-#: app/pdb/text-layer-cmds.c:712 app/pdb/text-layer-cmds.c:768
-#: app/pdb/text-layer-cmds.c:826 app/pdb/text-layer-cmds.c:884
-#: app/pdb/text-layer-cmds.c:942 app/pdb/text-layer-cmds.c:977
+#: app/pdb/text-layer-cmds.c:162 app/pdb/text-layer-cmds.c:300
+#: app/pdb/text-layer-cmds.c:365 app/pdb/text-layer-cmds.c:424
+#: app/pdb/text-layer-cmds.c:482 app/pdb/text-layer-cmds.c:540
+#: app/pdb/text-layer-cmds.c:598 app/pdb/text-layer-cmds.c:656
+#: app/pdb/text-layer-cmds.c:714 app/pdb/text-layer-cmds.c:770
+#: app/pdb/text-layer-cmds.c:828 app/pdb/text-layer-cmds.c:886
+#: app/pdb/text-layer-cmds.c:944 app/pdb/text-layer-cmds.c:979
 msgid "Set text layer attribute"
 msgstr "Določite atribute plasti besedila"
 
-#: app/pdb/text-layer-cmds.c:229
+#: app/pdb/text-layer-cmds.c:231
 msgid "Set text layer markup"
 msgstr "Določite označevanje plasti besedila"
 
@@ -22029,11 +22029,11 @@ msgstr "Obseg cilja"
 msgid "Gray Handling"
 msgstr "Ravnanje s sivino"
 
-#: app/propgui/gimppropgui-color-to-alpha.c:107
+#: app/propgui/gimppropgui-color-to-alpha.c:113
 msgid "Pick farthest full-transparency color"
 msgstr "Izberi najbolj oddaljeno barvo za polno prosojnost"
 
-#: app/propgui/gimppropgui-color-to-alpha.c:128
+#: app/propgui/gimppropgui-color-to-alpha.c:134
 msgid "Pick nearest full-opacity color"
 msgstr "Izberite najbližjo barvo polne prekrivnosti"
 
@@ -27858,63 +27858,67 @@ msgstr[1] "%d element je izbran"
 msgstr[2] "%d elementa sta izbrana"
 msgstr[3] "%d elementi so izbrani"
 
-#: app/widgets/gimpitemtreeview.c:2640 app/widgets/gimpitemtreeview.c:2685
+#: app/widgets/gimpitemtreeview.c:2631 app/widgets/gimpitemtreeview.c:2684
+msgid "Cannot reorder a filter that is being edited."
+msgstr "Filtra, ki ga urejate, ni mogoče prerazvrstiti."
+
+#: app/widgets/gimpitemtreeview.c:2648 app/widgets/gimpitemtreeview.c:2701
 msgid "Reorder filter"
 msgstr "Prerazvrsti filter"
 
-#: app/widgets/gimpitemtreeview.c:2730
+#: app/widgets/gimpitemtreeview.c:2746
 msgid "Effects from active tools can not be merged."
 msgstr "Učinkov dejavnih orodij ni mogoče spojiti."
 
-#: app/widgets/gimpitemtreeview.c:2784
+#: app/widgets/gimpitemtreeview.c:2800
 msgid "Remove filter"
 msgstr "Odstrani filter"
 
-#: app/widgets/gimpitemtreeview.c:3306
+#: app/widgets/gimpitemtreeview.c:3322
 msgid "No layer set stored"
 msgstr "Nobena množica plasti ni shranjena"
 
-#: app/widgets/gimpitemtreeview.c:3328
+#: app/widgets/gimpitemtreeview.c:3344
 msgid "New layer set's name"
 msgstr "Ime novega nabora plasti"
 
-#: app/widgets/gimpitemtreeview.c:3370 app/widgets/gimpitemtreeview.c:3385
+#: app/widgets/gimpitemtreeview.c:3386 app/widgets/gimpitemtreeview.c:3401
 msgid "Select layers by text search"
 msgstr "Izberi plati z iskanjem besedila"
 
-#: app/widgets/gimpitemtreeview.c:3372 app/widgets/gimpitemtreeview.c:3387
+#: app/widgets/gimpitemtreeview.c:3388 app/widgets/gimpitemtreeview.c:3403
 msgid "Text search"
 msgstr "Iskanje besedila"
 
-#: app/widgets/gimpitemtreeview.c:3391
+#: app/widgets/gimpitemtreeview.c:3407
 msgid "Select layers by glob patterns"
 msgstr "Izberite plasti po vzorcih glob"
 
-#: app/widgets/gimpitemtreeview.c:3393
+#: app/widgets/gimpitemtreeview.c:3409
 msgid "Glob pattern search"
 msgstr "Iskanje vzorcev Glob"
 
-#: app/widgets/gimpitemtreeview.c:3397
+#: app/widgets/gimpitemtreeview.c:3413
 msgid "Select layers by regular expressions"
 msgstr "Izberi plasti z regularnimi izrazi"
 
-#: app/widgets/gimpitemtreeview.c:3399
+#: app/widgets/gimpitemtreeview.c:3415
 msgid "Regular Expression search"
 msgstr "Iskanje z regularnimi izrazi"
 
-#: app/widgets/gimpitemtreeview.c:3454
+#: app/widgets/gimpitemtreeview.c:3470
 msgid "search"
 msgstr "išči"
 
-#: app/widgets/gimpitemtreeview.c:3455
+#: app/widgets/gimpitemtreeview.c:3471
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3455
+#: app/widgets/gimpitemtreeview.c:3471
 msgid "regexp"
 msgstr "regularni izraz"
 
-#: app/widgets/gimpitemtreeview.c:3624
+#: app/widgets/gimpitemtreeview.c:3640
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Neveljaven regularni izraz: %s\n"
@@ -28842,7 +28846,7 @@ msgstr ""
 "Datoteka XCF je okvarjena!  Iz nje ni bilo mogoče rešiti niti najmanjšega "
 "dela podatkov."
 
-#: app/xcf/xcf-load.c:1157
+#: app/xcf/xcf-load.c:1159
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
