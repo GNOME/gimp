@@ -52,7 +52,7 @@
 #define GIMP_CRITICAL_RESPONSE_RESTART   3
 #define GIMP_CRITICAL_RESPONSE_DOWNLOAD  4
 
-#define BUTTON1_TEXT _("Copy Bug Information")
+#define BUTTON1_TEXT _("Copy Text")
 #define BUTTON2_TEXT _("Open Bug Tracker")
 
 enum
@@ -236,31 +236,27 @@ gimp_critical_dialog_constructed (GObject *object)
                               " \xe2\x80\xa2 %s\n"
                               " \xe2\x80\xa2 %s\n"
                               " \xe2\x80\xa2 %s",
-                              _("To help us improve GIMP, you can report the bug with "
-                                "these simple steps:"),
-                              _("Copy the bug information to the clipboard by clicking: "),
-                              BUTTON1_TEXT,
-                              _("Open our bug tracker in the browser by clicking: "),
-                              BUTTON2_TEXT,
-                              _("Create a login if you don't have one yet."),
-                              _("Paste the clipboard text in a new bug report."),
-                              _("Add relevant information in English in the bug report "
-                                "explaining what you were doing when this error occurred."),
+                              _("This dialog can be closed directly, but to help us "
+                                "improve GIMP, you can report the bug with these steps:"),
+                              _("Copy the text below to the clipboard by clicking: "),
+                                BUTTON1_TEXT,
+                              _("Create an account or log in to our bug tracker by clicking: "),
+                                BUTTON2_TEXT,
+                              _("Fill in the info requested by the bug template in English."),
+                              _("After this, paste the text into the appropriate place."),
+                               ("\n"),
                               _("This error may have left GIMP in an inconsistent state. "
                                 "It is advised to save your work and restart GIMP."));
       gtk_label_set_text (GTK_LABEL (dialog->center_label), text);
       g_free (text);
 
-      text = _("You can also close the dialog directly but "
-               "reporting bugs is the best way to make your "
-               "software awesome.");
       gtk_label_set_text (GTK_LABEL (dialog->bottom_label), text);
     }
 
   buffer = gtk_text_buffer_new (NULL);
   version = gimp_version (TRUE, FALSE);
   text = g_strdup_printf ("<!-- %s -->\n\n\n```\n%s\n```",
-                          _("Copy-paste this whole debug data to report to developers"),
+                          _("This text can, but does not always, contain personal data (e.g. in paths, filenames)."),
                           version);
   gtk_text_buffer_set_text (buffer, text, -1);
   g_free (version);
@@ -592,16 +588,14 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
                               " \xe2\x80\xa2 %s\n"
                               " \xe2\x80\xa2 %s\n"
                               " \xe2\x80\xa2 %s",
-                              _("To help us improve GIMP, you can report the bug with "
-                                "these simple steps:"),
-                              _("Copy the bug information to the clipboard by clicking: "),
-                              BUTTON1_TEXT,
-                              _("Open our bug tracker in the browser by clicking: "),
-                              BUTTON2_TEXT,
-                              _("Create a login if you don't have one yet."),
-                              _("Paste the clipboard text in a new bug report."),
-                              _("Add relevant information in English in the bug report "
-                                "explaining what you were doing when this error occurred."));
+                              _("This dialog can be closed directly, but to help us "
+                                "improve GIMP, you can report the bug with these steps:"),
+                              _("Copy the text below to the clipboard by clicking: "),
+                                BUTTON1_TEXT,
+                              _("Create an account or log in to our bug tracker by clicking: "),
+                                BUTTON2_TEXT,
+                              _("Fill in the info requested by the bug template in English."),
+                              _("After this, paste the text into the appropriate place."));
       gtk_label_set_text (GTK_LABEL (critical->center_label), text);
       g_free (text);
     }
