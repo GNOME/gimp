@@ -1,24 +1,27 @@
 # Default commit CI should only run the following pipelines:
-# - Linux native CLang build (base & fast)
-# - Win64 crossbuild (base & fast)
+# - Linux build (base & fast)
+# - Win crossbuild (base & fast)
 # Scheduled CI ($CI_PIPELINE_SOURCE == "schedule") will run regularly:
-# - Linux native GCC build (rare usefulness)
-# - Win Aarch64/64/32 native builds (base but slow)
-# - Flatpak build (slow and doesn't need constant publishing)
+# - Linux GCC build (rare usefulness)
+# - Linux build without vector icons (rare usefulness)
+# - Linux Flatpak build (base but slow)
+# - Win builds: Inno Windows installer (base but slow)
 # - cppcheck (static code analysis)
 # Releases ($CI_COMMIT_TAG != null) should run only:
-# - Win Aarch64/64/32 native builds (Inno Windows installer creation)
+# - Source tarball (base & fast)
+# - Developer documentation (base & fast)
+# - Win builds: Inno Windows installer (base but slow)
 #
 # To force step-specific pipelines without waiting for commits and/or
 # pipelines, these are the variable you should set:
-# - GIMP_CI_MESON_CLANG: trigger the Debian clang build.
-# - GIMP_CI_MESON_GCC: trigger the Debian gcc build.
-# - GIMP_CI_RASTER_ICONS: trigger the Debian build without vector icons.
+# - GIMP_CI_MESON_CLANG: trigger the Debian Clang build with AppImage artifact.
+# - GIMP_CI_MESON_GCC: trigger the Debian GCC build with AppImage artifact.
+# - GIMP_CI_RASTER_ICONS: trigger the Debian Clang build with AppImage artifact without vector icons.
 # - GIMP_CI_CROSSROAD_WIN64: trigger the crossroad build for Win 64-bit.
 # - GIMP_CI_MSYS2_WIN_AARCH64: trigger the native MSYS2 build for Win Aarch64.
 # - GIMP_CI_MSYS2_WIN64: trigger the native MSYS2 build for Win 64-bit.
 # - GIMP_CI_MSYS2_WIN32: trigger the native MSYS2 build for Win 32-bit.
-# - GIMP_CI_SOURCES: trigger the Debian build and the source tarball job.
+# - GIMP_CI_SOURCES: trigger the Debian Clang build and the source tarball job.
 # - GIMP_CI_FLATPAK: trigger the flatpak build and publishing.
 # - GIMP_CI_WIN_INSTALLER: trigger all native MSYS2 builds then creates Inno Windows installer.
 # - GIMP_CI_CPPCHECK: trigger cppcheck static analysis.
@@ -52,7 +55,7 @@ workflow:
     CC: "ccache clang"
     CXX: "ccache clang++"
   cache:
-    key: $CI_JOB_NAME
+    key: ${CI_JOB_NAME}${VARIANT}
     paths:
       - _ccache/
   # Universal variables (works in all POSIX OSes and archs)
@@ -124,6 +127,7 @@ image-debian-x64:
             ghostscript
             gi-docgen
             git
+            gjs
             glib-networking
             gobject-introspection
             graphviz
@@ -186,8 +190,24 @@ image-debian-x64:
 
 ## GNU/Linux 64-bit CIs (Debian bookworm) ##
 
-.deps-debian-base:
+deps-debian-x64:
   extends: .default
+  rules:
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+      interruptible: false
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_MESON_GCC != null'
+      variables:
+        CC: "ccache cc"
+        CXX: "ccache c++"
+    - if: '$GIMP_CI_RASTER_ICONS != null'
+    - if: '$GIMP_CI_MESON_CLANG != null'
+    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
+    - if: '$GIMP_CI_SOURCES != null'
+    # On merge requests and commits.
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "push"'
   needs: ["image-debian-x64"]
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
@@ -226,110 +246,76 @@ image-debian-x64:
       - _gegl/_build${ARTIFACTS_SUFFIX}/
     expire_in: 2 hours
 
-deps-debian-x64:
-  extends: .deps-debian-base
+gimp-debian-x64:
+  extends: .default
   rules:
     # On releases.
     - if: '$CI_COMMIT_TAG != null'
       interruptible: false
     # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_MESON_CLANG != null'
+    - if: '$GIMP_CI_MESON_GCC != null'
+      variables:
+        CC: "ccache cc"
+        CXX: "ccache c++"
+        VARIANT: "-gcc"
     - if: '$GIMP_CI_RASTER_ICONS != null'
+      variables:
+        MESON_OPTIONS: "-Dvector-icons=false"
+        VARIANT: "-raster"
+    - if: '$GIMP_CI_MESON_CLANG != null'
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
     - if: '$GIMP_CI_SOURCES != null'
     # On merge requests and commits.
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_PIPELINE_SOURCE == "push"'
-
-# GitLab "rules:variables:" is buggy so let's use jobs
-deps-debian-gcc:
-  extends: .deps-debian-base
-  rules:
-    # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_MESON_GCC != null'
-  variables:
-    CC: "ccache gcc"
-    CXX: "ccache gcc"
-
-.gimp-debian-base:
-  extends: .default
   needs: ["deps-debian-x64"]
   stage: gimp
   image: $CI_REGISTRY_IMAGE:build-debian-latest
-  before_script:
-    # Universal variables
-    - !reference [.default, before_script]
-    - mkdir -p _build${ARTIFACTS_SUFFIX} && cd _build${ARTIFACTS_SUFFIX}
-  after_script:
-    - ccache --show-stats
-  artifacts:
-    paths:
-      - _install${ARTIFACTS_SUFFIX}/
-      - _build${ARTIFACTS_SUFFIX}/
-    expire_in: 1 days
-
-gimp-debian-x64:
-  extends: .gimp-debian-base
-  rules:
-    # On releases.
-    - if: '$CI_COMMIT_TAG != null'
-      interruptible: false
-    # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_MESON_CLANG != null'
-    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
-    - if: '$GIMP_CI_SOURCES != null'
-    # On merge requests and commits.
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_PIPELINE_SOURCE == "push"'
   script:
+    # Check building
+    - mkdir -p _build${ARTIFACTS_SUFFIX} && cd _build${ARTIFACTS_SUFFIX}
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
                      -Dgi-docgen=enabled
                      -Dg-ir-doc=true
+                     -Drelocatable-bundle=no
+                     $MESON_OPTIONS
     - ninja
+    # Check execution
     - ninja test
-    # The src should not be changed by the build. If it is, something is
-    # wrong. Let's print out the diff for debugging in such case, and
-    # exit to fail the CI.
-    - if [ $(git diff |wc -l) -ne 0 ]; then
-        git diff;
-        exit 1;
+    # Check source
+    - echo ${VARIANT}
+    - if [[ "${VARIANT}" != "-gcc" ]] && [[ "${VARIANT}" != "-raster" ]]; then
+        if [ $(git diff |wc -l) -ne 0 ]; then
+          git diff;
+          exit 1;
+        fi;
+        ninja dist;
       fi
-    - ninja dist
+    # Make sure that GIMP is testable locally on Debian
+    # We apply these ugly patches since #6798 isn't fixed yet
+    # and appstream-cli get confused with our exotic naming and fails
+    - cd ..
+    - git apply -v build/linux/appimage/patches/0001-desktop-po-Use-reverse-DNS-naming.patch
+    - git apply -v build/linux/appimage/patches/0001-images-logo-Use-reverse-DNS-naming.patch
+    - meson configure _build${ARTIFACTS_SUFFIX} -Drelocatable-bundle=yes -Dvector-icons=true
+    - cd _build${ARTIFACTS_SUFFIX}
+    - ninja
     - ninja install
+    - ccache --show-stats
+    - cd ..
+    - bash -x build/linux/appimage/package-gimp-appimage.sh
   artifacts:
+    name: "${CI_JOB_NAME}${VARIANT}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
+    expose_as: 'Linux appimage'
     paths:
+      - build/linux/appimage/_Output/
       - _install${ARTIFACTS_SUFFIX}/
-      - _build${ARTIFACTS_SUFFIX}/config.h
       - _build${ARTIFACTS_SUFFIX}/meson-dist/
+      - _build${ARTIFACTS_SUFFIX}/config.h
       - _build${ARTIFACTS_SUFFIX}/devel-docs/
-      - _build${ARTIFACTS_SUFFIX}/meson-logs/
     reports:
       junit: "_build${ARTIFACTS_SUFFIX}/meson-logs/testlog.junit.xml"
-
-gimp-debian-gcc:
-  extends: .gimp-debian-base
-  rules:
-    # Custom builds only (web GUI, API or schedules).
-    - if: '$GIMP_CI_MESON_GCC != null'
-  needs: ["deps-debian-gcc"]
-  variables:
-    CC: "ccache gcc"
-    CXX: "ccache gcc"
-  script:
-    - meson setup .. -Dprefix="${GIMP_PREFIX}"
-    - ninja
-    - ninja test
-
-gimp-debian-raster-icons:
-  extends: .gimp-debian-base
-  rules:
-    # Custom builds only (web GUI, API or schedules).
-    - if: '$GIMP_CI_RASTER_ICONS != null'
-  script:
-    - meson setup .. -Dprefix="${GIMP_PREFIX}"
-                     -Dvector-icons=false
-    - ninja
-    - ninja test
+    expire_in: 2 days
 
 include: 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
 gimp-flatpak-x64:
@@ -351,7 +337,7 @@ gimp-flatpak-x64:
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
   variables:
     # Replace with your manifest path
-    MANIFEST_PATH: "build/flatpak/org.gimp.GIMP-nightly.json"
+    MANIFEST_PATH: "build/linux/flatpak/org.gimp.GIMP-nightly.json"
     RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
     # Replace with your application name, as written in the manifest
     FLATPAK_MODULE: "gimp"
@@ -382,8 +368,8 @@ gimp-flatpak-x64:
     - flatpak build-init ${GIMP_PREFIX} $APP_ID org.gnome.Sdk org.gnome.Platform
     - flatpak build ${GIMP_PREFIX} meson setup _build${ARTIFACTS_SUFFIX} || echo "Generated log"
     - GIMP_APP_VERSION=$(grep 'Project version' _build${ARTIFACTS_SUFFIX}/meson-logs/meson-log.txt | head -1 | sed -e 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/' -e 's/\([0-9]\+\.[0-9]\+\)\..*/\1/')
-    - cp build/flatpak/org.gimp.GIMP-nightly.json.in build/flatpak/org.gimp.GIMP-nightly.json
-    - sed -i "s/@GIMP_APP_VERSION@/$GIMP_APP_VERSION/g" build/flatpak/org.gimp.GIMP-nightly.json
+    - cp build/linux/flatpak/org.gimp.GIMP-nightly.json.in build/linux/flatpak/org.gimp.GIMP-nightly.json
+    - sed -i "s/@GIMP_APP_VERSION@/$GIMP_APP_VERSION/g" build/linux/flatpak/org.gimp.GIMP-nightly.json
 
     # GNOME script to customize the manifest
     - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
