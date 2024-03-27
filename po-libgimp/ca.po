@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-25 08:10+0000\n"
-"PO-Revision-Date: 2024-02-29 23:39+0000\n"
+"POT-Creation-Date: 2024-03-25 21:26+0000\n"
+"PO-Revision-Date: 2024-03-27 23:39+0000\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -274,22 +274,22 @@ msgid "Allowed values:"
 msgstr "Valors permesos:"
 
 #. procedure executed successfully
-#: libgimp/gimppdb.c:336
+#: libgimp/gimppdb.c:337
 msgid "success"
 msgstr "èxit"
 
 #. procedure execution failed
-#: libgimp/gimppdb.c:340
+#: libgimp/gimppdb.c:341
 msgid "execution error"
 msgstr "error d'execució"
 
 #. procedure called incorrectly
-#: libgimp/gimppdb.c:344
+#: libgimp/gimppdb.c:345
 msgid "calling error"
 msgstr "error en la crida"
 
 #. procedure execution cancelled
-#: libgimp/gimppdb.c:348
+#: libgimp/gimppdb.c:349
 msgid "cancelled"
 msgstr "cancel·lada"
 
@@ -381,12 +381,12 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d procediment es correspon amb la vostra cerca"
 msgstr[1] "%d procediments es corresponen amb la vostra cerca"
 
-#: libgimp/gimpprocedure.c:2056
+#: libgimp/gimpprocedure.c:2068
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "El procediment «%s» no ha tornat cap valor de retorn"
 
-#: libgimp/gimpprocedure.c:2183
+#: libgimp/gimpprocedure.c:2195
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -395,7 +395,7 @@ msgstr ""
 "El procediment «%s» ha tornat un tipus de valor incorrecte per al valor de "
 "retorn «%s» (#%d). Esperat %s, obtingut %s."
 
-#: libgimp/gimpprocedure.c:2195
+#: libgimp/gimpprocedure.c:2207
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
@@ -404,7 +404,7 @@ msgstr ""
 "El procediment «%s» s'ha cridat amb un tipus de valor erroni per a "
 "l'argument «%s» (#%d). Esperat %s, obtingut %s."
 
-#: libgimp/gimpprocedure.c:2230
+#: libgimp/gimpprocedure.c:2242
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value"
@@ -413,7 +413,7 @@ msgstr ""
 "El procediment «%s» ha tornat «%s» com a valor de retorn «%s» (#%d, tipus "
 "%s). Aquest valor està fora de l'interval."
 
-#: libgimp/gimpprocedure.c:2244
+#: libgimp/gimpprocedure.c:2256
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -422,14 +422,14 @@ msgstr ""
 "El procediment «%s» s'ha cridat amb un valor «%s» per a l'argument «%s» "
 "(#%d, tipus %s). Aquest valor està fora de l'interval."
 
-#: libgimp/gimpprocedure.c:2288
+#: libgimp/gimpprocedure.c:2300
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "El procediment «%s» ha tornat una cadena UTF-8 no vàlida per a l'argument "
 "«%s»."
 
-#: libgimp/gimpprocedure.c:2298
+#: libgimp/gimpprocedure.c:2310
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -1443,18 +1443,18 @@ msgstr "Cap (ampliat)"
 
 #: libgimpbase/gimpbaseenums.c:1475
 msgctxt "repeat-mode"
-msgid "Sawtooth wave"
-msgstr "Ona dents de serra"
+msgid "None (truncate)"
+msgstr "Cap (truncat)"
 
 #: libgimpbase/gimpbaseenums.c:1476
 msgctxt "repeat-mode"
-msgid "Triangular wave"
-msgstr "Ona triangular"
+msgid "Sawtooth wave"
+msgstr "Ona dents de serra"
 
 #: libgimpbase/gimpbaseenums.c:1477
 msgctxt "repeat-mode"
-msgid "Truncate"
-msgstr "Truncar"
+msgid "Triangular wave"
+msgstr "Ona triangular"
 
 #: libgimpbase/gimpbaseenums.c:1539
 msgctxt "run-mode"
@@ -1671,22 +1671,22 @@ msgstr "Les metadades només es poden carregar des de fitxers locals"
 msgid "Can save metadata only to local files"
 msgstr "Les metadades només es poden desar a fitxers locals"
 
-#: libgimpbase/gimpmetadata.c:1347
+#: libgimpbase/gimpmetadata.c:1348
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Les dades EXIF no són vàlides."
 
-#: libgimpbase/gimpmetadata.c:1376
+#: libgimpbase/gimpmetadata.c:1393
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "L'anàlisi de les dades EXIF ha fallat."
 
-#: libgimpbase/gimpmetadata.c:1426
+#: libgimpbase/gimpmetadata.c:1445
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "L'anàlisi de les dades IPTC ha fallat."
 
-#: libgimpbase/gimpmetadata.c:1474
+#: libgimpbase/gimpmetadata.c:1493
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "L'anàlisi de les dades XMP ha fallat."
@@ -2041,11 +2041,11 @@ msgstr "en analitzar l'element «%s»: %s"
 msgid "fatal parse error"
 msgstr "s'ha produït un error fatal d'anàlisi"
 
-#: libgimpconfig/gimpconfig-path.c:506
+#: libgimpconfig/gimpconfig-path.c:513
 msgid "File has no path representation"
 msgstr "El fitxer no té representació del camí"
 
-#: libgimpconfig/gimpconfig-path.c:593
+#: libgimpconfig/gimpconfig-path.c:600
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "No es pot expandir ${%s}"
@@ -3048,75 +3048,75 @@ msgstr "Aces RRT"
 #. Translators: "Clip Warning" is the name of a (color) display filter
 #. * that highlights pixels outside of the color space range.
 #. * Shown as a label description.
-#: modules/display-filter-clip-warning.c:124
+#: modules/display-filter-clip-warning.c:125
 msgid "Clip warning color display filter"
 msgstr "Filtre de visualització del color d'avís del clip"
 
-#: modules/display-filter-clip-warning.c:161
+#: modules/display-filter-clip-warning.c:166
 msgid "Show shadows"
 msgstr "Mostra les ombres"
 
-#: modules/display-filter-clip-warning.c:162
+#: modules/display-filter-clip-warning.c:167
 msgid "Show warning for pixels with a negative component"
 msgstr "Mostra l'avís per a píxels amb un component negatiu"
 
-#: modules/display-filter-clip-warning.c:168
+#: modules/display-filter-clip-warning.c:173
 msgid "Shadows color"
 msgstr "Mostra el color"
 
-#: modules/display-filter-clip-warning.c:169
+#: modules/display-filter-clip-warning.c:174
 msgid "Shadows warning color"
 msgstr "Color d'advertència d'ombres"
 
-#: modules/display-filter-clip-warning.c:181
+#: modules/display-filter-clip-warning.c:185
 msgid "Show highlights"
 msgstr "Mostra els ressaltats"
 
-#: modules/display-filter-clip-warning.c:182
+#: modules/display-filter-clip-warning.c:186
 msgid "Show warning for pixels with a component greater than one"
 msgstr "Mostra l'avís per a píxels amb un component superior a un"
 
-#: modules/display-filter-clip-warning.c:188
+#: modules/display-filter-clip-warning.c:194
 msgid "Highlights color"
 msgstr "Color ressaltat"
 
-#: modules/display-filter-clip-warning.c:189
+#: modules/display-filter-clip-warning.c:195
 msgid "Highlights warning color"
 msgstr "Ressalta el color d'avís"
 
-#: modules/display-filter-clip-warning.c:201
+#: modules/display-filter-clip-warning.c:206
 msgid "Show bogus"
 msgstr "Mostra falsa"
 
-#: modules/display-filter-clip-warning.c:202
+#: modules/display-filter-clip-warning.c:207
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr "Mostra l'avís per a píxels amb un component infinit o NaN"
 
-#: modules/display-filter-clip-warning.c:208
+#: modules/display-filter-clip-warning.c:215
 msgid "Bogus color"
 msgstr "Color fals"
 
-#: modules/display-filter-clip-warning.c:209
+#: modules/display-filter-clip-warning.c:216
 msgid "Bogus warning color"
 msgstr "Color d'avís fals"
 
-#: modules/display-filter-clip-warning.c:221
+#: modules/display-filter-clip-warning.c:227
 msgid "Include alpha component"
 msgstr "Inclou el component alfa"
 
-#: modules/display-filter-clip-warning.c:222
+#: modules/display-filter-clip-warning.c:228
 msgid "Include alpha component in the warning"
 msgstr "Inclou el component alfa en l'avís"
 
-#: modules/display-filter-clip-warning.c:228
+#: modules/display-filter-clip-warning.c:234
 msgid "Include transparent pixels"
 msgstr "Inclou píxels transparents"
 
-#: modules/display-filter-clip-warning.c:229
+#: modules/display-filter-clip-warning.c:235
 msgid "Include fully transparent pixels in the warning"
 msgstr "Inclou píxels totalment transparents en l'avís"
 
-#: modules/display-filter-clip-warning.c:233
+#: modules/display-filter-clip-warning.c:239
 msgid "Clip Warning"
 msgstr "Avís del clip"
 
@@ -3168,6 +3168,10 @@ msgstr "Cicles de contrast"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Contrast"
+
+#~ msgctxt "repeat-mode"
+#~ msgid "Truncate"
+#~ msgstr "Truncar"
 
 #~ msgid "Brush Selection"
 #~ msgstr "Selecció del pinzell"
