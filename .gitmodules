@@ -2,4 +2,3 @@
 	path = gimp-data
 	url = https://gitlab.gnome.org/GNOME/gimp-data.git
 	shallow = true
-	branch = wip/Jehan/git-submodules
