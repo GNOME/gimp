@@ -458,6 +458,8 @@ gimp-win-x64-cross:
     - .cache/crossroad/
     - apt-cache
   script:
+    - mkdir -p "$APT_CACHE"
+    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE" libomp-dev
     - git submodule update --init
     # So that we can use gimp-console from gimp-debian-x64 project.
     - GIMP_APP_VERSION=$(grep GIMP_APP_VERSION ${DEB_BUILD_DIR}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
@@ -570,6 +572,8 @@ gimp-win-x86-cross:
     - .cache/crossroad/
     - apt-cache
   script:
+    - mkdir -p "$APT_CACHE"
+    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE" libomp-dev
     - git submodule update --init
     # So that we can use gimp-console from gimp-debian-x64 project.
     - GIMP_APP_VERSION=$(grep GIMP_APP_VERSION ${DEB_BUILD_DIR}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
