@@ -26,10 +26,14 @@ endif
 
 ## Logo used in API reference documentation ##
 
+installed_image = gimpdatadir / 'images' / fs.name(logo_png.full_path())
+if not fs.is_absolute(installed_image)
+  installed_image = prefix / installed_image
+endif
 if gi_docgen.found()
   install_symlink(fs.name(logo_png.full_path()),
                   install_dir: get_option('datadir') / 'doc' / 'gimp-@0@'.format(gimp_app_version) / 'images',
-                  pointing_to: logo_png.full_path())
+                  pointing_to: installed_image)
 endif
 
 ## Logo used in the desktop (system menus/overview, title bar, etc.) ##
