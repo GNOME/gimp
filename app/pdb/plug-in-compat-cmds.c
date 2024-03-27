@@ -3329,10 +3329,14 @@ plug_in_plasma_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GeglNode *node;
-          gint      x, y, width, height;
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GeglNode  *node;
+          gint       x, y, width, height;
 
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+
+          if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
+            x = y = 0;
 
           node = gegl_node_new_child (NULL,
                                       "operation",  "gegl:plasma",
