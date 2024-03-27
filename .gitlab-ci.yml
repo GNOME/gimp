@@ -1,5 +1,6 @@
 # Default commit CI should only run the following pipelines:
 # - Linux native CLang build (base & fast)
+# - AppImage build (base & fast)
 # - Win64 crossbuild (base & fast)
 # Scheduled CI ($CI_PIPELINE_SOURCE == "schedule") will run regularly:
 # - Linux native GCC build (rare usefulness)
@@ -19,6 +20,7 @@
 # - GIMP_CI_MSYS2_WIN64: trigger the native MSYS2 build for Win 64-bit.
 # - GIMP_CI_MSYS2_WIN32: trigger the native MSYS2 build for Win 32-bit.
 # - GIMP_CI_SOURCES: trigger the Debian build and the source tarball job.
+# - GIMP_CI_APPIMAGE: trigger the AppImage build.
 # - GIMP_CI_FLATPAK: trigger the (normally) weekly flatpak build and publishing.
 # - GIMP_CI_WIN_INSTALLER: trigger all native MSYS2 builds then creates Inno Windows installer.
 # - GIMP_CI_CPPCHECK: trigger cppcheck static analysis.
@@ -114,6 +116,7 @@ image-debian-x64:
             ghostscript
             gi-docgen
             git
+            gjs
             glib-networking
             gobject-introspection
             graphviz
@@ -292,7 +295,7 @@ gimp-debian-x64:
       - _build${ARTIFACTS_SUFFIX}/config.h
       - _build${ARTIFACTS_SUFFIX}/meson-dist/
       - _build${ARTIFACTS_SUFFIX}/devel-docs/
-      - _build${ARTIFACTS_SUFFIX}/build/flatpak/
+      - _build${ARTIFACTS_SUFFIX}/build/linux/flatpak/
       - _build${ARTIFACTS_SUFFIX}/meson-logs/
     reports:
       junit: "_build${ARTIFACTS_SUFFIX}/meson-logs/testlog.junit.xml"
@@ -322,6 +325,40 @@ gimp-debian-raster-icons:
     - ninja
     - ninja test
 
+packaging-appimage-x64-nightly:
+  extends: .gimp-debian-base
+  rules:
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_APPIMAGE != null'
+    # On commits and merge requests.
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+  stage: packaging
+  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  script:
+    # Ideally, we should use the bloated Debian pipeline, but we can't because
+    # #6798 wasn't fixed, which makes appstreamcli check confused and fail
+    - cd ../gimp-data
+    - git apply -v ../build/linux/appimage/patches/0001-images-logo-Use-reverse-DNS-naming.patch
+    - cd ..
+    - git apply -v build/linux/appimage/patches/0001-desktop-po-Use-reverse-DNS-naming.patch
+    - cd _build${ARTIFACTS_SUFFIX}
+    - meson setup .. -Dprefix="${GIMP_PREFIX}"
+                     -Dgi-docgen=disabled
+                     -Dbuild-id=org.gimp.GIMP_official
+                     -Drelocatable-bundle=yes
+    - ninja
+    - ninja install
+    - cd ..
+    - bash -x build/linux/appimage/package-gimp-appimage.sh x86_x64 usr
+  artifacts:
+    expose_as: 'Linux appimage'
+    paths:
+      - build/linux/appimage/_Output/
+  needs: ["image-debian-x64", "deps-debian-x64"]
+
 include: 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
 packaging-flatpak-x64:
 # See: https://gitlab.gnome.org/GNOME/Initiatives/-/wikis/DevOps-with-Flatpak
@@ -342,7 +379,7 @@ packaging-flatpak-x64:
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
   variables:
     # Replace with your manifest path
-    MANIFEST_PATH: "build/flatpak/org.gimp.GIMP-nightly.json"
+    MANIFEST_PATH: "build/linux/flatpak/org.gimp.GIMP-nightly.json"
     RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
     # Replace with your application name, as written in the manifest
     FLATPAK_MODULE: "gimp"
@@ -370,7 +407,7 @@ packaging-flatpak-x64:
     - date && date -u
 
     # Get pre-configured manifest from Debian job
-    - cp _build${ARTIFACTS_SUFFIX}/build/flatpak/*json build/flatpak/
+    - cp _build${ARTIFACTS_SUFFIX}/build/linux/flatpak/*json build/linux/flatpak/
 
     # GNOME script to customize the manifest
     - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
