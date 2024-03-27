@@ -705,6 +705,8 @@ gimp-win-a64:
     - _install-a64
     - _build-a64/build/windows/installer/
     - _build-a64/meson-*/
+    # Needed by 4_dist-gimp-inno.ps1 in dist-installer-weekly
+    - _build-a64/config.h
   cache:
     paths:
     - _ccache/
@@ -746,6 +748,8 @@ packaging-win-a64:
     - gimp-a64
     # Just passing-through splash and language files for the Windows installer.
     - _build-a64/build/windows/installer/
+    # Needed by 4_dist-gimp-inno.ps1 in dist-installer-weekly
+    - _build-a64/config.h
     - done-dll.list
   needs: ["gimp-win-a64"]
 
