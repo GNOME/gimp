@@ -6695,8 +6695,8 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
-                                                    "Radius of gaussian blur (in pixels",
-                                                    0.0, 500.0, 0.0,
+                                                    "Radius of gaussian blur (in pixels)",
+                                                    0.0, 1500.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("horizontal",
