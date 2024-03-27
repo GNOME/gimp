@@ -1,8 +1,16 @@
 #!/bin/bash
 
+# crossroad don't have LLVM/Clang backend yet
+if [[ "$BUILD_TYPE" != "CI_CROSS" ]] && [[ "$MSYSTEM_CARCH" != "i686" ]]; then
+  export OBJCOPY="llvm-objcopy"
+else
+	export OBJCOPY="objcopy"
+fi
+
+
 # Generate .debug
-find . \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \) -type f -exec objcopy --only-keep-debug '{}' '{}'.debug \;
-find . \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \) -type f -exec objcopy --add-gnu-debuglink='{}'.debug '{}' --strip-unneeded \;
+find . \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \) -type f -exec $OBJCOPY --only-keep-debug '{}' '{}'.debug \;
+find . \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \) -type f -exec $OBJCOPY --add-gnu-debuglink='{}'.debug '{}' --strip-unneeded \;
 
 # Copy .debug to .debug folder
 dbgList=$(find . -iname '*.debug') && dbgArray=($dbgList)
