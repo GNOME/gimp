@@ -287,6 +287,15 @@ if platform_windows and cc.get_id() == 'gcc'
   compiler_args += msvc_compat_args
 endif
 
+# Generate .pdb (CodeView) debug symbols (for the MS Store version)
+# TODO: REMOVE 'if host_cpu...' WHEN GCC 14 IS ON MSYS2
+if host_cpu_family != 'x86'
+# crossroad don't have LLVM/Clang backend yet
+if platform_windows and not meson.is_cross_build()
+  compiler_args += '-gcodeview'
+  linker_args += '-Wl,--pdb='
+endif
+endif
 
 conf.set('HAVE__NL_MEASUREMENT_MEASUREMENT',
   cc.compiles('''

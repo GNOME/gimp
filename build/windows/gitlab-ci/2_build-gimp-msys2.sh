@@ -90,6 +90,35 @@ else
 fi
 
 
+# Copy .pdb to where the .dll or .exe is
+# This ideally should de done by a meson install script (but I have no expertise)
+# or, better, by meson itself: https://github.com/mesonbuild/meson/issues/12977
+
+# TODO: REMOVE 'if [[ "$MSYSTEM...' WHEN GCC 14 IS ON MSYS2
+if [[ "$MSYSTEM_CARCH" != "i686" ]]; then
+build_binList=$(find . \( -iname '*.dll' -or -iname '*.exe' \)) && build_binArray=($build_binList)
+for build_bin in "${build_binArray[@]}"; do
+  build_bin_name="${build_bin##*/}"
+  prefix_bin=$(find ${GIMP_PREFIX} -iname "$build_bin_name")
+  prefix_binList+="$prefix_bin "
+done
+
+prefix_binArray=($prefix_binList)
+echo $prefix_binList
+for prefix_bin in "${prefix_binArray[@]}"; do
+ echo "BIN_DIR is $prefix_bin"
+  BIN_DIR="${prefix_bin%/*}"
+  prefix_bin_str="$prefix_bin"
+  PDB_NAME="${prefix_bin_str##*/}"
+  PDB_NAME=$(sed 's/\.dll/\.pdb/g' <<< $PDB_NAME)
+  PDB_NAME=$(sed 's/\.exe/\.pdb/g' <<< $PDB_NAME)
+  PDB=$(find . -name $PDB_NAME)
+  echo "PDB is $PDB"
+  cp "$PDB" "$BIN_DIR"
+done
+fi
+
+
 # XXX Functional fix to the problem of non-configured interpreters
 make_cmd ()
 {
