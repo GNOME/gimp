@@ -1,5 +1,6 @@
 # Default commit CI should only run the following pipelines:
 # - Linux native CLang build (base & fast)
+# - AppImage build (base & fast)
 # - Win64 crossbuild (base & fast)
 # Scheduled CI ($CI_PIPELINE_SOURCE == "schedule") will run regularly:
 # - Linux native GCC build (rare usefulness)
@@ -19,6 +20,7 @@
 # - GIMP_CI_MSYS2_WIN_AARCH64: trigger the native MSYS2 build for Win Aarch64.
 # - GIMP_CI_MSYS2_WIN64: trigger the native MSYS2 build for Win 64-bit.
 # - GIMP_CI_MSYS2_WIN32: trigger the native MSYS2 build for Win 32-bit.
+# - GIMP_CI_APPIMAGE: trigger the AppImage build.
 # - GIMP_CI_FLATPAK: trigger the (normally) weekly flatpak build and publishing.
 # - GIMP_CI_WIN_INSTALLER: trigger all native MSYS2 builds then creates Inno Windows installer.
 # - GIMP_CI_SOURCES: trigger the Debian gcc build and the source tarball job.
@@ -372,7 +374,7 @@ gimp-debian-x64:
       - "_build-x64/meson-logs"
       - "_build-x64/meson-dist"
       - "_build-x64/devel-docs"
-      - "_build-x64/build/flatpak/"
+      - "_build-x64/build/linux/flatpak/"
       - "_build-x64/build/windows/installer/"
       - "${INSTALL_DIR}"
 
@@ -418,7 +420,7 @@ packaging-flatpak-x64:
   variables:
     GIT_SUBMODULE_STRATEGY: normal
     # Replace with your manifest path
-    MANIFEST_PATH: "build/flatpak/org.gimp.GIMP-nightly.json"
+    MANIFEST_PATH: "build/linux/flatpak/org.gimp.GIMP-nightly.json"
     RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
     # Replace with your application name, as written in the manifest
     FLATPAK_MODULE: "gimp"
@@ -437,7 +439,7 @@ packaging-flatpak-x64:
     - date && date -u
 
     # Get pre-configured manifest from Debian job
-    - cp _build-x64/build/flatpak/*json build/flatpak/
+    - cp _build-x64/build/linux/flatpak/*json build/linux/flatpak/
 
     # GNOME script to customize the manifest
     - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
@@ -472,6 +474,26 @@ packaging-flatpak-x64:
       paths:
         - '.flatpak-builder/cache'
         - '.flatpak-builder/ccache'
+
+packaging-appimage-x64-nightly:
+  rules:
+    # On commits and merge requests.
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_APPIMAGE != null'
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  stage: packaging
+  script:
+    - bash -x build/linux/appimage/package-gimp-appimage.sh
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
+    when: always
+    paths:
+      - "build/linux/appimage/_Output"
+  needs: ["image-debian-x64"]
 
 ## WINDOWS 64-bit CI (cross-build crossroad) ##
 

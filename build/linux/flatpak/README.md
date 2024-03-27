@@ -19,7 +19,7 @@ This job will build whatever is on GIMP's repository `master` branch (this
 branch should be kept buildable and usable at all time, not only for scheduled
 jobs, but also for all contributors to be able to improve GIMP at all time).
 
-The nightly manifest file is: `build/flatpak/org.gimp.GIMP-nightly.json`
+The nightly manifest file is: `build/linux/flatpak/org.gimp.GIMP-nightly.json.in`
 
 This file should remain as close as possible to the development manifest
 (`org.gimp.GIMP.json` file on the `beta` branch of the Flathub repository) which
