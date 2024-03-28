@@ -2250,8 +2250,18 @@ add_layers (GimpImage     *image,
                    * From the one example I have (see #8411) it looks like
                    * that channel is the same as the alpha channel. */
                   IFDBG(2) g_debug ("This layer has an extra channel (id: %d)", lyr_chn[cidx]->id);
-                  channel_idx[layer_channels+1] = cidx;   /* Assumes in sane order */
-                  layer_channels += 2;                    /* RGB, Lab, CMYK etc.   */
+                  if (layer_channels == base_channels)
+                    {
+                      /* Issue: 11131: More than one extra channel is possible.
+                       * First extra channel: skip alpha channel */
+                      channel_idx[layer_channels+1] = cidx;
+                      layer_channels += 2;
+                    }
+                  else
+                    {
+                      channel_idx[layer_channels] = cidx;
+                      layer_channels++;
+                    }
                 }
             }
           else
@@ -2272,6 +2282,14 @@ add_layers (GimpImage     *image,
               channel_idx[base_channels] = alpha_chn;
             }
           base_channels++;
+        }
+      else if (layer_channels > base_channels)
+        {
+          IFDBG(3) g_debug ("No alpha channel, but we have extra channels!");
+          /* We have a gap for the non existent alpha channel.
+           * Just move the last extra channel there (untested, we don't have examples). */
+          channel_idx[base_channels] = channel_idx[layer_channels-1];
+          layer_channels--;
         }
 
       IFDBG(4) g_debug ("Create the layer (group type: %d, clipping group type: %d)",
