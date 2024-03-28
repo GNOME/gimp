@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-13 09:59+0000\n"
-"PO-Revision-Date: 2024-03-13 19:14+0300\n"
+"POT-Creation-Date: 2024-03-19 04:41+0000\n"
+"PO-Revision-Date: 2024-03-25 17:42+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -480,7 +480,7 @@ msgstr "Palet Seçici"
 
 #: libgimp/gimpproceduredialog.c:800
 msgid "Pattern Chooser"
-msgstr "Desen Seçici"
+msgstr "Örüntü Seçici"
 
 #: libgimp/gimpproceduredialog.c:2532
 msgid "Reset to _Initial Values"
@@ -787,7 +787,7 @@ msgstr "Görüntü"
 #: libgimpbase/gimpbaseenums.c:275
 msgctxt "clone-type"
 msgid "Pattern"
-msgstr "Desen"
+msgstr "Örüntü"
 
 #: libgimpbase/gimpbaseenums.c:311
 msgctxt "color-tag"
@@ -963,7 +963,7 @@ msgstr "Saydamlık"
 #: libgimpbase/gimpbaseenums.c:525
 msgctxt "fill-type"
 msgid "Pattern"
-msgstr "Desen"
+msgstr "Örüntü"
 
 #: libgimpbase/gimpbaseenums.c:583
 msgctxt "gradient-blend-color-space"
