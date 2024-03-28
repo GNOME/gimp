@@ -875,7 +875,7 @@ welcome_dialog_create_contribute_page (Gimp       *gimp,
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_set_visible (label, TRUE);
-  button = gtk_link_button_new_with_label ("https://www.gimp.org/bugs/", "Report Bugs");
+  button = gtk_link_button_new_with_label ("https://www.gimp.org/bugs/", _("Report Bugs"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
 
@@ -889,7 +889,7 @@ welcome_dialog_create_contribute_page (Gimp       *gimp,
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_set_visible (label, TRUE);
-  button = gtk_link_button_new_with_label ("https://developer.gimp.org/", "Write Code");
+  button = gtk_link_button_new_with_label ("https://developer.gimp.org/", _("Write Code"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
 
@@ -903,7 +903,7 @@ welcome_dialog_create_contribute_page (Gimp       *gimp,
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_set_visible (label, TRUE);
-  button = gtk_link_button_new_with_label ("https://l10n.gnome.org/teams/", "Translate");
+  button = gtk_link_button_new_with_label ("https://l10n.gnome.org/teams/", _("Translate"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
 
@@ -917,10 +917,10 @@ welcome_dialog_create_contribute_page (Gimp       *gimp,
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_set_visible (label, TRUE);
-  button = gtk_link_button_new_with_label ("https://liberapay.com/GIMP/donate", "Donate via Liberapay");
+  button = gtk_link_button_new_with_label ("https://liberapay.com/GIMP/donate", _("Donate via Liberapay"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
-  button = gtk_link_button_new_with_label ("https://www.gimp.org/donating/", "Other donation options");
+  button = gtk_link_button_new_with_label ("https://www.gimp.org/donating/", _("Other donation options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
 }

@@ -553,7 +553,7 @@ _("Chooses the color scheme variant of the theme.")
 "Sets the theme search path."
 
 #define ICON_THEME_BLURB \
-"The name of the icon theme to use."
+_("The name of the icon theme to use.")
 
 #define OVERRIDE_THEME_ICON_SIZE_BLURB \
 _("Override theme-set icon sizes.")
