@@ -110,6 +110,10 @@ border_average_create_procedure (GimpPlugIn  *plug_in,
                                  const gchar *name)
 {
   GimpProcedure *procedure = NULL;
+  GeglColor     *default_return_color;
+
+  gegl_init (NULL, NULL);
+  default_return_color = gegl_color_new ("none");
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
@@ -152,9 +156,10 @@ border_average_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_VAL_COLOR (procedure, "borderaverage",
                            _("The average color of the specified border."),
                            _("The average color of the specified border."),
-                           TRUE, NULL,
+                           TRUE, default_return_color,
                            G_PARAM_READWRITE);
     }
+  g_object_unref (default_return_color);
 
   return procedure;
 }

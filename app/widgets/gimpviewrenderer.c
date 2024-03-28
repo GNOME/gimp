@@ -121,11 +121,6 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpViewRenderer, gimp_view_renderer, G_TYPE_OBJECT)
 
 static guint renderer_signals[LAST_SIGNAL] = { 0 };
 
-static GimpRGB  black_color;
-static GimpRGB  white_color;
-static GimpRGB  green_color;
-static GimpRGB  red_color;
-
 
 static void
 gimp_view_renderer_class_init (GimpViewRendererClass *klass)
@@ -154,11 +149,6 @@ gimp_view_renderer_class_init (GimpViewRendererClass *klass)
   klass->frame_right     = 0;
   klass->frame_top       = 0;
   klass->frame_bottom    = 0;
-
-  gimp_rgba_set (&black_color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-  gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
-  gimp_rgba_set (&green_color, 0.0, 0.94, 0.0, GIMP_OPACITY_OPAQUE);
-  gimp_rgba_set (&red_color,   1.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 }
 
 static void
@@ -171,7 +161,7 @@ gimp_view_renderer_init (GimpViewRenderer *renderer)
   renderer->dot_for_dot  = TRUE;
 
   renderer->border_type  = GIMP_VIEW_BORDER_BLACK;
-  renderer->border_color = black_color;
+  renderer->border_color = gegl_color_new ("black");
 
   renderer->size         = -1;
 
@@ -183,6 +173,7 @@ gimp_view_renderer_dispose (GObject *object)
 {
   GimpViewRenderer *renderer = GIMP_VIEW_RENDERER (object);
 
+  g_clear_object (&renderer->border_color);
   if (renderer->viewable)
     gimp_view_renderer_set_viewable (renderer, NULL);
 
@@ -470,7 +461,7 @@ void
 gimp_view_renderer_set_border_type (GimpViewRenderer   *renderer,
                                     GimpViewBorderType  border_type)
 {
-  GimpRGB *border_color = &black_color;
+  GeglColor *border_color = NULL;
 
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
 
@@ -479,32 +470,36 @@ gimp_view_renderer_set_border_type (GimpViewRenderer   *renderer,
   switch (border_type)
     {
     case GIMP_VIEW_BORDER_BLACK:
-      border_color = &black_color;
+      border_color = gegl_color_new ("black");
       break;
     case GIMP_VIEW_BORDER_WHITE:
-      border_color = &white_color;
+      border_color = gegl_color_new ("white");
       break;
     case GIMP_VIEW_BORDER_GREEN:
-      border_color = &green_color;
+      border_color = gegl_color_new ("green");
+      gegl_color_set_rgba (border_color, 0.0, 0.94, 0.0, 1.0);
       break;
     case GIMP_VIEW_BORDER_RED:
-      border_color = &red_color;
+      border_color = gegl_color_new ("red");
       break;
     }
 
   gimp_view_renderer_set_border_color (renderer, border_color);
+  if (border_color)
+    g_object_unref (border_color);
 }
 
 void
 gimp_view_renderer_set_border_color (GimpViewRenderer *renderer,
-                                     const GimpRGB    *color)
+                                     GeglColor        *color)
 {
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
   g_return_if_fail (color != NULL);
 
-  if (gimp_rgb_distance (&renderer->border_color, color) > RGB_EPSILON)
+  if (! gimp_color_is_perceptually_identical (renderer->border_color, color))
     {
-      renderer->border_color = *color;
+      g_clear_object (&renderer->border_color);
+      renderer->border_color = gegl_color_duplicate (color);
 
       gimp_view_renderer_update_idle (renderer);
     }
@@ -670,7 +665,8 @@ gimp_view_renderer_draw (GimpViewRenderer *renderer,
 
       cairo_set_line_width (cr, renderer->border_width);
       cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
-      gimp_cairo_set_source_rgb (cr, &renderer->border_color);
+      gimp_cairo_set_source_color (cr, renderer->border_color, NULL, FALSE,
+                                   widget);
 
       x = (available_width  - width)  / 2.0;
       y = (available_height - height) / 2.0;

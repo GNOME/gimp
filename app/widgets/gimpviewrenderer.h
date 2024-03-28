@@ -52,7 +52,7 @@ struct _GimpViewRenderer
   guint               is_popup    : 1;
 
   GimpViewBorderType  border_type;
-  GimpRGB             border_color;
+  GeglColor          *border_color;
 
   /*< protected >*/
   cairo_surface_t    *surface;
@@ -120,7 +120,7 @@ void   gimp_view_renderer_set_dot_for_dot  (GimpViewRenderer   *renderer,
 void   gimp_view_renderer_set_border_type  (GimpViewRenderer   *renderer,
                                             GimpViewBorderType  border_type);
 void   gimp_view_renderer_set_border_color (GimpViewRenderer   *renderer,
-                                            const GimpRGB      *border_color);
+                                            GeglColor          *border_color);
 void   gimp_view_renderer_set_background   (GimpViewRenderer   *renderer,
                                             const gchar        *icon_name);
 void   gimp_view_renderer_set_color_config (GimpViewRenderer   *renderer,
