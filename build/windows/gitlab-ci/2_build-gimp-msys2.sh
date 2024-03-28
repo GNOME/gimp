@@ -75,6 +75,9 @@ export CCACHE_DIR="${CCACHE_BASEDIR}/_ccache"
 #ccache --zero-stats
 #ccache --show-stats
 
+
+git submodule update --init
+
 if [ ! -f "_build${ARTIFACTS_SUFFIX}/build.ninja" ]; then
   mkdir -p "_build${ARTIFACTS_SUFFIX}" && cd "_build${ARTIFACTS_SUFFIX}"
   # We disable javascript as we are not able for the time being to add a

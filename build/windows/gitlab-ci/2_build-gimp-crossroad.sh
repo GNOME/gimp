@@ -13,7 +13,7 @@ fi
 
 
 # Build GIMP
-mkdir _build${ARTIFACTS_SUFFIX} && cd _build${ARTIFACTS_SUFFIX}
+mkdir _build${ARTIFACTS_SUFFIX}-cross && cd _build${ARTIFACTS_SUFFIX}-cross
 crossroad meson setup .. -Dgi-docgen=disabled                 \
                          -Djavascript=disabled -Dlua=disabled \
                          -Dpython=disabled -Dvala=disabled    \
@@ -24,7 +24,7 @@ cd ..
 
 ## XXX Functional fix to the problem of non-configured interpreters
 ## XXX Also, functional generator of the pixbuf 'loaders.cache' for GUI image support
-GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build${ARTIFACTS_SUFFIX}-cross/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 GDK_PATH=$(echo ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-*/*/)
 GDK_PATH=$(sed "s|${CROSSROAD_PREFIX}/||g" <<< $GDK_PATH)
 GDK_PATH=$(sed 's|/|\\|g' <<< $GDK_PATH)
@@ -43,7 +43,7 @@ echo "Please run the gimp.cmd file to know the actual plug-in support." > ${CROS
 
 
 # Copy built GIMP, babl and GEGL and pre-built packages to GIMP_PREFIX
-cp -fr $CROSSROAD_PREFIX/ _install${ARTIFACTS_SUFFIX}/
+cp -fr $CROSSROAD_PREFIX/ _install${ARTIFACTS_SUFFIX}-cross/
 
 if [[ "x$CROSSROAD_PLATFORM" = "xw32" ]]; then
   # We fail to install wine32 in x86 dep job and Gitlab "needs" field

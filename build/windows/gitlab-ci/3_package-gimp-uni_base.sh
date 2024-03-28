@@ -35,10 +35,11 @@ fi
 
 # Package deps and GIMP files
 export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
-export PATH="$GIMP_PREFIX/bin:$PATH"
 if [[ "$BUILD_TYPE" == "CI_CROSS" ]]; then
+  export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}-cross"
   export MSYS_PREFIX="$GIMP_PREFIX"
 fi
+export PATH="$GIMP_PREFIX/bin:$PATH"
 
 ## Copy a previously built wrapper at tree root, less messy than
 ## having to look inside bin/, in the middle of all the DLLs.
