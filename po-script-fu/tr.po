@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-11 21:17+0000\n"
-"PO-Revision-Date: 2024-03-13 19:09+0300\n"
+"POT-Creation-Date: 2024-03-19 04:43+0000\n"
+"PO-Revision-Date: 2024-03-25 17:48+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -61,7 +61,7 @@ msgstr "_Logolar"
 
 #: plug-ins/script-fu/script-fu.c:327
 msgid "_Patterns"
-msgstr "_Desenler"
+msgstr "Örü_ntüler"
 
 #: plug-ins/script-fu/script-fu.c:330
 msgid "_Web Page Themes"
@@ -73,7 +73,7 @@ msgstr "Y_abancı Parıltı"
 
 #: plug-ins/script-fu/script-fu.c:334
 msgid "_Beveled Pattern"
-msgstr "_Eğimli Desen"
+msgstr "_Eğimli Örüntü"
 
 #: plug-ins/script-fu/script-fu.c:336
 msgid "_Classic.Gimp.Org"
@@ -536,7 +536,7 @@ msgstr "_Bezimsileştir..."
 
 #: plug-ins/script-fu/scripts/clothify.scm:53
 msgid "Add a cloth-like texture to the selected region (or alpha)"
-msgstr "Seçilen bölgeye (veya alfaya) bezimsi bir doku ekle"
+msgstr "Seçilen bölgeye (veya alfaya) bezimsi bir desen ekle"
 
 #: plug-ins/script-fu/scripts/clothify.scm:60
 msgid "Blur X"
@@ -1159,23 +1159,23 @@ msgstr "_Boşluk"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
 msgid "Paste as New _Pattern..."
-msgstr "Yeni _Desen Olarak Yapıştır..."
+msgstr "Yeni Örü_ntü Olarak Yapıştır..."
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:53
 msgid "Paste the clipboard contents into a new pattern"
-msgstr "Pano içeriğini yeni bir desene yapıştır"
+msgstr "Pano içeriğini yeni bir örüntüye yapıştır"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
 msgid "_Pattern name"
-msgstr "_Desen adı"
+msgstr "Örü_ntü adı"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
 msgid "My Pattern"
-msgstr "Desenim"
+msgstr "Örüntüm"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
 msgid "mypattern"
-msgstr "desenim"
+msgstr "örüntüm"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:197
 msgid "_Perspective..."
