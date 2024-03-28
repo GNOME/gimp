@@ -115,7 +115,8 @@ static GimpValueArray * qbist_run              (GimpProcedure        *procedure,
                                                 GimpProcedureConfig  *config,
                                                 gpointer              run_data);
 
-static gboolean         dialog_run             (void);
+static gboolean         dialog_run             (GimpProcedure        *procedure,
+                                                GimpProcedureConfig  *config);
 static void             dialog_new_variations  (GtkWidget            *widget,
                                                 gpointer              data);
 static void             dialog_update_previews (GtkWidget            *widget,
@@ -189,16 +190,23 @@ qbist_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Generate a huge variety of "
                                           "abstract patterns"),
-                                        "This Plug-in is based on an article by "
-                                        "Jörn Loviscach (appeared in c't 10/95, "
-                                        "page 326). It generates modern art "
-                                        "pictures from a random genetic "
-                                        "formula.",
+                                        _("This Plug-in is based on an article by "
+                                          "Jörn Loviscach (appeared in c't 10/95, "
+                                          "page 326). It generates modern art "
+                                          "pictures from a random genetic "
+                                          "formula."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Jörn Loviscach, Jens Ch. Restemeier",
                                       "Jörn Loviscach, Jens Ch. Restemeier",
                                       PLUG_IN_VERSION);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "anti-aliasing",
+                             _("_Anti-aliasing"),
+                             _("Enable anti-aliasing using an oversampling "
+                               "algorithm"),
+                             TRUE,
+                             G_PARAM_READWRITE);
 
       /* Saving the pattern as a parasite is a trick allowing to store
        * random binary data.
@@ -206,11 +214,6 @@ qbist_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_AUX_ARG_PARASITE (procedure, "pattern",
                                   "Qbist pattern", NULL,
                                   G_PARAM_READWRITE);
-
-      GIMP_PROC_AUX_ARG_INT (procedure, "oversampling",
-                             "Oversampling", NULL,
-                             1, 4, 4,
-                             G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_STRING (procedure, "data-path",
                                 "Path of data file",
@@ -241,6 +244,7 @@ qbist_run (GimpProcedure        *procedure,
   guint32             pattern_data_length;
   gint                total_pixels;
   gint                done_pixels;
+  gboolean            anti_aliasing = TRUE;
 
   gegl_init (NULL, NULL);
 
@@ -284,14 +288,12 @@ qbist_run (GimpProcedure        *procedure,
 
   memset (&qbist_info, 0, sizeof (qbist_info));
   create_info (&qbist_info.info);
-  qbist_info.oversampling = 4;
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       g_object_get (config,
                     "data-path",    &qbist_info.path,
-                    "oversampling", &qbist_info.oversampling,
                     "pattern",      &pattern_parasite,
                     NULL);
       if (pattern_parasite)
@@ -303,17 +305,18 @@ qbist_run (GimpProcedure        *procedure,
           pattern_parasite = NULL;
         }
 
-      if (! dialog_run ())
+      if (! dialog_run (procedure, config))
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_CANCEL,
                                                  NULL);
+
+      g_object_get (config, "anti-aliasing", &anti_aliasing, NULL);
 
       pattern_parasite = gimp_parasite_new ("pattern", 0,
                                             sizeof (qbist_info.info),
                                             &qbist_info.info);
       g_object_set (config,
                     "data-path",    qbist_info.path,
-                    "oversampling", qbist_info.oversampling,
                     "pattern",      pattern_parasite,
                     NULL);
       gimp_parasite_free (pattern_parasite);
@@ -327,9 +330,9 @@ qbist_run (GimpProcedure        *procedure,
 
     case GIMP_RUN_WITH_LAST_VALS:
       g_object_get (config,
-                    "data-path",    &qbist_info.path,
-                    "oversampling", &qbist_info.oversampling,
-                    "pattern",      &pattern_parasite,
+                    "data-path",     &qbist_info.path,
+                    "anti-aliasing", &anti_aliasing,
+                    "pattern",       &pattern_parasite,
                     NULL);
 
       if (pattern_parasite)
@@ -345,6 +348,8 @@ qbist_run (GimpProcedure        *procedure,
 
   total_pixels = img_width * img_height;
   done_pixels  = 0;
+
+  qbist_info.oversampling = anti_aliasing ? 4 : 1;
 
   buffer = gimp_drawable_get_shadow_buffer (drawable);
 
@@ -839,9 +844,9 @@ dialog_load (GtkWidget *widget,
                                         NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
   if (qbist_info.path)
@@ -881,9 +886,9 @@ dialog_save (GtkWidget *widget,
                                         NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
@@ -903,16 +908,9 @@ dialog_save (GtkWidget *widget,
   gtk_widget_destroy (dialog);
 }
 
-static void
-dialog_toggle_antialaising (GtkWidget *widget,
-                            gpointer   data)
-{
-  qbist_info.oversampling =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)) ? 4 : 1;
-}
-
 static gboolean
-dialog_run (void)
+dialog_run (GimpProcedure       *procedure,
+            GimpProcedureConfig *config)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
@@ -925,33 +923,21 @@ dialog_run (void)
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("G-Qbist"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("G-Qbist"));
 
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "qbist-vbox", "anti-aliasing",
+                                         NULL);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_widget_set_margin_bottom (grid, 6);
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
+  gtk_box_reorder_child (GTK_BOX (vbox), grid, 0);
 
   info[0] = qbist_info.info;
   dialog_new_variations (NULL, NULL);
@@ -971,7 +957,7 @@ dialog_run (void)
           gtk_grid_attach (GTK_GRID (grid), frame, i % 3, i / 3, 1, 2);
 
           gtk_container_add (GTK_CONTAINER (frame), button);
-          gtk_widget_show (frame);
+          gtk_widget_set_visible (frame, TRUE);
         }
       else if (i > 2)
         {
@@ -982,7 +968,7 @@ dialog_run (void)
           gtk_grid_attach (GTK_GRID (grid), button, i % 3, i / 3, 1, 1);
         }
       gtk_widget_set_valign (button, GTK_ALIGN_END);
-      gtk_widget_show (button);
+      gtk_widget_set_visible (button, TRUE);
 
       g_signal_connect (button, "clicked",
                         G_CALLBACK (dialog_select_preview),
@@ -991,27 +977,18 @@ dialog_run (void)
       preview[i] = gimp_preview_area_new ();
       gtk_widget_set_size_request (preview[i], preview_size, preview_size);
       gtk_container_add (GTK_CONTAINER (button), preview[i]);
-      gtk_widget_show (preview[i]);
+      gtk_widget_set_visible (preview[i], TRUE);
     }
-
-  button = gtk_check_button_new_with_mnemonic (_("_Antialiasing"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                qbist_info.oversampling > 1);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (dialog_toggle_antialaising),
-                    NULL);
 
   bbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_START);
+  gtk_widget_set_margin_top (bbox, 6);
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
-  gtk_widget_show (bbox);
+  gtk_widget_set_visible (bbox, TRUE);
 
   button = gtk_button_new_with_mnemonic (_("_Undo"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_undo),
@@ -1019,7 +996,7 @@ dialog_run (void)
 
   button = gtk_button_new_with_mnemonic (_("_Open"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_load),
@@ -1027,16 +1004,18 @@ dialog_run (void)
 
   button = gtk_button_new_with_mnemonic (_("_Save"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_save),
                     NULL);
 
-  gtk_widget_show (dialog);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "qbist-vbox", NULL);
+  gtk_widget_set_visible (dialog, TRUE);
   dialog_update_previews (NULL, preview_size);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   if (run)
     qbist_info.info = info[0];
