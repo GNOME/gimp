@@ -46,6 +46,19 @@
 (assert '(equal? (integer->char 13) #\return))
 (assert '(equal? (integer->char 32) #\space))
 
+; Mispelled sharp constants
+; Any sequence of chars starting with #\n, up to a delimiter,
+; that does not match "newline"
+; is parsed as the sharp constant for the lower case ASCII n char.\
+; Similarly for tab, return, space
+(test! "mispelled sharp char constant for newline")
+; 110 is the codepoint for lower case n
+(assert '(equal? (integer->char 110) #\n))
+(assert '(equal? (integer->char 110) #\newlin))
+(assert '(equal? (integer->char 110) #\newlines))
+
+
+
 
 
 ;          sharp constant character
@@ -84,7 +97,7 @@
 ; by a sharp constant hex e.g. #\x1f for 31
 
 
-; Edge codepoint tests
+(test! "Edge codepoint tests")
 ; Tests of edge cases, near a code slightly different
 
 ; Codepoint US Unit Separator, edge case to 32, space
@@ -153,7 +166,7 @@
             #\x0))
 
 
-;            sharp constants for delimiter characters
+(test! "sharp constants for delimiter characters")
 
 ; These test the sharp constant notation for characters space and parens
 ; These are in the ASCII range

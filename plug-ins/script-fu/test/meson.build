@@ -7,6 +7,8 @@ if not stable
   ]
 
   test_scripts = [
+    # test binding to the PDB
+
     'tests' / 'PDB' / 'image' / 'image-new.scm',
     'tests' / 'PDB' / 'image' / 'image-precision.scm',
     'tests' / 'PDB' / 'image' / 'image-indexed.scm',
@@ -76,6 +78,7 @@ if not stable
     # comprehensive, total test
     'tests' / 'PDB' / 'pdb.scm',
 
+    # test TinyScheme embedded interpreter
 
     'tests' / 'TS' / 'sharp-expr.scm',
     'tests' / 'TS' / 'sharp-expr-char.scm',
@@ -84,7 +87,10 @@ if not stable
     'tests' / 'TS' / 'cond-expand.scm',
     'tests' / 'TS' / 'atom2string.scm',
     'tests' / 'TS' / 'integer2char.scm',
-    'tests' / 'TS' / 'string-port.scm',
+    'tests' / 'TS' / 'string-escape.scm',
+    'tests' / 'TS' / 'string-port-input.scm',
+    'tests' / 'TS' / 'string-port-output.scm',
+    # WIP 'tests' / 'TS' / 'string-port-unichar.scm',
     'tests' / 'TS' / 'testing.scm',
     'tests' / 'TS' / 'vector.scm',
     'tests' / 'TS' / 'no-memory.scm',
