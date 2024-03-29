@@ -168,6 +168,7 @@ pointer mk_empty_string(scheme *sc, int len, gunichar fill);
 pointer mk_byte (scheme *sc, guint8 b);
 pointer mk_character(scheme *sc, gunichar c);
 pointer mk_foreign_func(scheme *sc, foreign_func f);
+pointer mk_port (scheme *sc, void *port);
 void    putcharacter(scheme *sc, gunichar c);
 void    putstr(scheme *sc, const char *s);
 int list_length(scheme *sc, pointer a);

@@ -44,6 +44,7 @@
 #include "../script-fu-intl.h"
 
 #include "scheme-private.h"
+#include "string-port.h"
 
 #if !STANDALONE
 static ts_output_func   ts_output_handler = NULL;
@@ -388,13 +389,10 @@ static char *store_string(scheme *sc, int len, const char *str, gunichar fill);
 static pointer mk_vector(scheme *sc, int len);
 static pointer mk_atom(scheme *sc, char *q);
 static pointer mk_sharp_const(scheme *sc, char *name);
-static pointer mk_port(scheme *sc, port *p);
 static pointer port_from_filename(scheme *sc, const char *fn, int prop);
 static pointer port_from_file(scheme *sc, FILE *, int prop);
-static pointer port_from_string(scheme *sc, char *start, char *past_the_end, int prop);
 static port *port_rep_from_filename(scheme *sc, const char *fn, int prop);
 static port *port_rep_from_file(scheme *sc, FILE *, int prop);
-static port *port_rep_from_string(scheme *sc, char *start, char *past_the_end, int prop);
 static void port_close(scheme *sc, pointer p, int flag);
 static void mark(pointer a);
 static void gc(scheme *sc, pointer a, pointer b);
@@ -972,7 +970,8 @@ static pointer oblist_all_symbols(scheme *sc)
 
 #endif
 
-static pointer mk_port(scheme *sc, port *p) {
+/* Declare p as void* but require port* */
+pointer mk_port(scheme *sc, void *p) {
   pointer x = get_cell(sc, sc->NIL, sc->NIL);
 
   typeflag(x) = T_PORT|T_ATOM;
@@ -1462,15 +1461,24 @@ static void gc(scheme *sc, pointer a, pointer b) {
 }
 
 static void finalize_cell(scheme *sc, pointer a) {
-  if(is_string(a)) {
-    sc->free(strvalue(a));
-  } else if(is_port(a)) {
-    if(a->_object._port->kind&port_file
-       && a->_object._port->rep.stdio.closeit) {
-      port_close(sc,a,port_input|port_output);
+  if (is_string(a))
+    {
+      sc->free(strvalue(a));
     }
-    sc->free(a->_object._port);
-  }
+  else if(is_port(a))
+    {
+      if(a->_object._port->kind & port_file)
+        {
+          if (a->_object._port->rep.stdio.closeit)
+            port_close(sc,a,port_input|port_output);
+          sc->free(a->_object._port);
+        }
+      else
+        {
+          /* Is string port. */
+          string_port_dispose (sc, a);
+        }
+    }
 }
 
 /* ========== Routines for Reading ========== */
@@ -1571,58 +1579,7 @@ static pointer port_from_file(scheme *sc, FILE *f, int prop) {
   return mk_port(sc,pt);
 }
 
-static port *port_rep_from_string(scheme *sc, char *start, char *past_the_end, int prop) {
-  port *pt;
-  pt=(port*)sc->malloc(sizeof(port));
-  if(pt==0) {
-    return 0;
-  }
-  pt->kind=port_string|prop;
-  pt->rep.string.start=start;
-  pt->rep.string.curr=start;
-  pt->rep.string.past_the_end=past_the_end;
-  return pt;
-}
 
-static pointer port_from_string(scheme *sc, char *start, char *past_the_end, int prop) {
-  port *pt;
-  pt=port_rep_from_string(sc,start,past_the_end,prop);
-  if(pt==0) {
-    return sc->NIL;
-  }
-  return mk_port(sc,pt);
-}
-
-#define BLOCK_SIZE 256
-
-static port *port_rep_from_scratch(scheme *sc) {
-  port *pt;
-  char *start;
-  pt=(port*)sc->malloc(sizeof(port));
-  if(pt==0) {
-    return 0;
-  }
-  start=sc->malloc(BLOCK_SIZE);
-  if(start==0) {
-    return 0;
-  }
-  memset(start,' ',BLOCK_SIZE-1);
-  start[BLOCK_SIZE-1]='\0';
-  pt->kind=port_string|port_output|port_srfi6;
-  pt->rep.string.start=start;
-  pt->rep.string.curr=start;
-  pt->rep.string.past_the_end=start+BLOCK_SIZE-1;
-  return pt;
-}
-
-static pointer port_from_scratch(scheme *sc) {
-  port *pt;
-  pt=port_rep_from_scratch(sc);
-  if(pt==0) {
-    return sc->NIL;
-  }
-  return mk_port(sc,pt);
-}
 
 static void port_close(scheme *sc, pointer p, int flag) {
   port *pt=p->_object._port;
@@ -1697,16 +1654,9 @@ static gint
 basic_inbyte (port *pt)
 {
   if (pt->kind & port_file)
-    {
-      return fgetc (pt->rep.stdio.file);
-    }
+    return fgetc (pt->rep.stdio.file);
   else
-    {
-      if (pt->rep.string.curr == pt->rep.string.past_the_end)
-        return EOF;
-      else
-        return (guint8) *pt->rep.string.curr++;
-    }
+    return string_port_inbyte (pt);
 }
 
 /* Read a single unsigned byte from the active port. */
@@ -1754,43 +1704,15 @@ backbyte (scheme *sc, gint b)
     return;
   pt = sc->inport->_object._port;
   if (pt->kind & port_file)
-    {
-      ungetc (b, pt->rep.stdio.file);
-    }
+    ungetc (b, pt->rep.stdio.file);
   else
-    {
-      if (pt->rep.string.start != NULL &&
-          pt->rep.string.curr > pt->rep.string.start)
-        {
-          pt->rep.string.curr--;
-        }
-    }
+    string_port_backbyte (pt);
 }
 
-static int realloc_port_string(scheme *sc, port *p)
-{
-  char *start=p->rep.string.start;
-  size_t new_size=p->rep.string.past_the_end-start+1+BLOCK_SIZE;
-  char *str=sc->malloc(new_size);
-  if(str) {
-    memset(str,' ',new_size-1);
-    str[new_size-1]='\0';
-    strcpy(str,start);
-    p->rep.string.start=str;
-    p->rep.string.past_the_end=str+new_size-1;
-    p->rep.string.curr-=start-str;
-    sc->free(start);
-    return 1;
-  } else {
-    return 0;
-  }
-}
 
 static void
 putbytes (scheme *sc, const char *bytes, int byte_count)
 {
-  int   free_bytes;     /* Space remaining in buffer (in bytes) */
-  int   l;
   port *pt=sc->outport->_object._port;
 
   if(pt->kind&port_file) {
@@ -1810,22 +1732,11 @@ putbytes (scheme *sc, const char *bytes, int byte_count)
           fflush (pt->rep.stdio.file);
         }
 #endif
-  } else {
-    if (pt->rep.string.past_the_end != pt->rep.string.curr)
-    {
-       free_bytes = pt->rep.string.past_the_end - pt->rep.string.curr;
-       l          = min (byte_count, free_bytes);
-       memcpy (pt->rep.string.curr, bytes, l);
-       pt->rep.string.curr += l;
-    }
-    else if(pt->kind&port_srfi6&&realloc_port_string(sc,pt))
-    {
-       free_bytes = pt->rep.string.past_the_end - pt->rep.string.curr;
-       l          = min (byte_count, free_bytes);
-       memcpy (pt->rep.string.curr, bytes, byte_count);
-       pt->rep.string.curr += l;
-    }
   }
+  else
+    {
+      string_port_put_bytes (sc, pt, bytes, byte_count);
+    }
 }
 
 static void
@@ -4388,52 +4299,27 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
                case OP_OPEN_INOUTSTRING:  prop=port_input|port_output; break;
                default:                   break;  /* Quiet the compiler */
           }
-          p = port_from_string (sc,
-                                strvalue (car (sc->args)),
-                                strvalue (car (sc->args)) + strlength (car (sc->args)),
-                                prop);
+          p = string_port_open_input_string (sc, car (sc->args), prop);
+
           if(p==sc->NIL) {
                s_return(sc,sc->F);
           }
           s_return(sc,p);
      }
      case OP_OPEN_OUTSTRING: /* open-output-string */ {
-          pointer p;
-          if(car(sc->args)==sc->NIL) {
-               p=port_from_scratch(sc);
-               if(p==sc->NIL) {
-                    s_return(sc,sc->F);
-               }
-          } else {
-               p=port_from_string(sc, strvalue(car(sc->args)),
-                          strvalue(car(sc->args))+strlength(car(sc->args)),
-                          port_output);
-               if(p==sc->NIL) {
-                    s_return(sc,sc->F);
-               }
-          }
-          s_return(sc,p);
+          pointer p = string_port_open_output_string (sc, car(sc->args));
+          if( p == sc->NIL)
+              s_return(sc,sc->F);
+          else
+            s_return(sc,p);
      }
      case OP_GET_OUTSTRING: /* get-output-string */ {
           port *p;
 
-          if ((p=car(sc->args)->_object._port)->kind&port_string) {
-               off_t size;
-               char *str;
-
-               size=p->rep.string.curr-p->rep.string.start+1;
-               str=sc->malloc(size);
-               if(str != NULL) {
-                    pointer s;
-
-                    memcpy(str,p->rep.string.start,size-1);
-                    str[size-1]='\0';
-                    s=mk_string(sc,str);
-                    sc->free(str);
-                    s_return(sc,s);
-               }
-          }
-          s_return(sc,sc->F);
+          if ((p=car(sc->args)->_object._port)->kind&port_string)
+            s_return (sc, string_port_get_output_string (sc, p));
+          else
+            s_return(sc, sc->F);
      }
 #endif
 
@@ -5367,10 +5253,7 @@ void scheme_load_string(scheme *sc, const char *cmd) {
   dump_stack_reset(sc);
   sc->envir = sc->global_env;
   sc->file_i=0;
-  sc->load_stack[0].kind=port_input|port_string;
-  sc->load_stack[0].rep.string.start=(char*)cmd; /* This func respects const */
-  sc->load_stack[0].rep.string.past_the_end=(char*)cmd+strlen(cmd);
-  sc->load_stack[0].rep.string.curr=(char*)cmd;
+  string_port_init_static_port (sc->load_stack, cmd);
   sc->loadport=mk_port(sc,sc->load_stack);
   sc->retcode=0;
   sc->interactive_repl=0;
