@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-03-26 16:58+0000\n"
-"PO-Revision-Date: 2024-03-27 18:06+0100\n"
+"PO-Revision-Date: 2024-03-29 18:06+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -27494,7 +27494,7 @@ msgstr "Accions de tauleta tàctil"
 
 #: app/widgets/gimpdeviceinfoeditor.c:633
 msgid "Select the next event arriving from the pad"
-msgstr "Selecciona el següent esdeveniment que arribi de de la tauleta tàctil"
+msgstr "Selecciona el següent esdeveniment que arribi de la tauleta tàctil"
 
 #: app/widgets/gimpdeviceinfoeditor.c:677
 msgid "Pad Actions are not supported on your platform yet"
@@ -28072,7 +28072,7 @@ msgstr "Fusiona cap avall tots els filtres actius."
 
 #: app/widgets/gimpitemtreeview.c:830
 msgid "Remove the selected filter."
-msgstr "Suprimeix el filtre seleccionat"
+msgstr "Suprimeix el filtre seleccionat."
 
 #: app/widgets/gimpitemtreeview.c:841
 msgid "Layer Effects"
