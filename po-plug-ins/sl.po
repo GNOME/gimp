@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-24 02:20+0000\n"
-"PO-Revision-Date: 2024-03-24 17:08+0100\n"
+"POT-Creation-Date: 2024-03-28 17:56+0000\n"
+"PO-Revision-Date: 2024-03-29 07:42+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -33,7 +33,7 @@ msgid "Exercise a goat in the C language"
 msgstr "Povadi kozo v jeziku C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:201
-#: plug-ins/common/border-average.c:185 plug-ins/common/checkerboard.c:176
+#: plug-ins/common/border-average.c:190 plug-ins/common/checkerboard.c:176
 #: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:584
 #: plug-ins/common/contrast-retinex.c:246 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:642 plug-ins/common/decompose.c:387
@@ -41,7 +41,7 @@ msgstr "Povadi kozo v jeziku C"
 #: plug-ins/common/destripe.c:175 plug-ins/common/gradient-map.c:216
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:310
 #: plug-ins/common/jigsaw.c:466 plug-ins/common/nl-filter.c:217
-#: plug-ins/common/qbist.c:252 plug-ins/common/sample-colorize.c:427
+#: plug-ins/common/qbist.c:256 plug-ins/common/sample-colorize.c:427
 #: plug-ins/common/smooth-palette.c:195 plug-ins/common/sparkle.c:300
 #: plug-ins/common/sphere-designer.c:3205 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:243
@@ -70,9 +70,8 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
 #: plug-ins/common/file-gif-save.c:1222 plug-ins/common/file-heif.c:2314
 #: plug-ins/common/file-pdf-load.c:686 plug-ins/common/file-pdf-save.c:1044
-#: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:836
-#: plug-ins/common/qbist.c:878 plug-ins/common/qbist.c:932
-#: plug-ins/common/sphere-designer.c:2292
+#: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
+#: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
 #: plug-ins/file-tiff/file-tiff-load.c:2547 plug-ins/flame/flame.c:622
 #: plug-ins/flame/flame.c:827
@@ -149,10 +148,9 @@ msgstr "Povadi kozo (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1380 plug-ins/common/file-heif.c:2315
 #: plug-ins/common/file-pdf-load.c:687 plug-ins/common/grid.c:820
-#: plug-ins/common/qbist.c:933 plug-ins/common/sphere-designer.c:2656
-#: plug-ins/common/unit-editor.c:266 plug-ins/file-exr/file-exr.c:435
-#: plug-ins/file-psd/psd-load.c:3696 plug-ins/flame/flame.c:828
-#: plug-ins/fractal-explorer/fractal-explorer.c:1391
+#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
+#: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3696
+#: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3446
@@ -650,51 +648,51 @@ msgstr "Navpične"
 msgid "Background"
 msgstr "Ozadje"
 
-#: plug-ins/common/border-average.c:124
+#: plug-ins/common/border-average.c:128
 msgid "_Border Average..."
 msgstr "_Povprečje robu ..."
 
-#: plug-ins/common/border-average.c:128
+#: plug-ins/common/border-average.c:132
 msgid "Set foreground to the average color of the image border"
 msgstr "Nastavi ospredje na povprečno barvo roba slike"
 
-#: plug-ins/common/border-average.c:137
+#: plug-ins/common/border-average.c:141
 msgid "_Thickness"
 msgstr "_Debelina"
 
-#: plug-ins/common/border-average.c:138
+#: plug-ins/common/border-average.c:142
 msgid "Border size to take in count"
 msgstr "Velikost obrobe, ki jo je treba upoštevati"
 
-#: plug-ins/common/border-average.c:142
+#: plug-ins/common/border-average.c:146
 msgid "Thickness unit of measure"
 msgstr "Merska enota za debelino"
 
-#: plug-ins/common/border-average.c:143
+#: plug-ins/common/border-average.c:147
 msgid "Border size unit of measure"
 msgstr "Merska enota velikosti obrobe"
 
-#: plug-ins/common/border-average.c:147
+#: plug-ins/common/border-average.c:151
 msgid "Bucket Si_ze"
 msgstr "Velikost _vedra"
 
-#: plug-ins/common/border-average.c:148
+#: plug-ins/common/border-average.c:152
 msgid "Bits for bucket size (default=4: 16 Levels)"
 msgstr "Biti za velikost vedra (privzeto = 4: 16 nivojev)"
 
-#: plug-ins/common/border-average.c:153 plug-ins/common/border-average.c:154
+#: plug-ins/common/border-average.c:157 plug-ins/common/border-average.c:158
 msgid "The average color of the specified border."
 msgstr "Povprečna barva navedene obrobe."
 
-#: plug-ins/common/border-average.c:208 plug-ins/common/border-average.c:392
+#: plug-ins/common/border-average.c:217 plug-ins/common/border-average.c:395
 msgid "Border Average"
 msgstr "Povprečje robu"
 
-#: plug-ins/common/border-average.c:403
+#: plug-ins/common/border-average.c:406
 msgid "Border Size"
 msgstr "Velikost roba"
 
-#: plug-ins/common/border-average.c:430
+#: plug-ins/common/border-average.c:433
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:843
 msgid "Number of Colors"
 msgstr "Število barv"
@@ -1013,8 +1011,8 @@ msgstr "Naključno zrno"
 #. The Load button
 #: plug-ins/common/cml-explorer.c:1456 plug-ins/common/cml-explorer.c:2357
 #: plug-ins/common/curve-bend.c:1267 plug-ins/common/curve-bend.c:1810
-#: plug-ins/common/file-cel.c:1009 plug-ins/common/qbist.c:837
-#: plug-ins/common/qbist.c:1020 plug-ins/common/sphere-designer.c:2295
+#: plug-ins/common/file-cel.c:1009 plug-ins/common/qbist.c:842
+#: plug-ins/common/qbist.c:997 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1233
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:796
@@ -1029,8 +1027,8 @@ msgstr "_Odpri"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1464 plug-ins/common/cml-explorer.c:2147
 #: plug-ins/common/curve-bend.c:1279 plug-ins/common/curve-bend.c:1845
-#: plug-ins/common/file-pdf-save.c:1043 plug-ins/common/qbist.c:879
-#: plug-ins/common/qbist.c:1028 plug-ins/common/sphere-designer.c:2295
+#: plug-ins/common/file-pdf-save.c:1043 plug-ins/common/qbist.c:884
+#: plug-ins/common/qbist.c:1005 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1241
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:804
@@ -1860,8 +1858,7 @@ msgstr "Gla_jenje"
 msgid "Smoothing"
 msgstr "Glajenje"
 
-#: plug-ins/common/curve-bend.c:439 plug-ins/common/qbist.c:997
-#: plug-ins/lighting/lighting-main.c:310
+#: plug-ins/common/curve-bend.c:439 plug-ins/lighting/lighting-main.c:310
 msgid "_Antialiasing"
 msgstr "_Glajenje robov"
 
@@ -1977,7 +1974,7 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/file-ps.c:3619 plug-ins/common/file-psp.c:2633
 #: plug-ins/common/file-psp.c:2683 plug-ins/common/file-qoi.c:299
 #: plug-ins/common/file-raw-data.c:515 plug-ins/common/file-raw-data.c:1665
-#: plug-ins/common/file-sunras.c:457 plug-ins/common/file-svg.c:380
+#: plug-ins/common/file-sunras.c:457 plug-ins/common/file-svg.c:383
 #: plug-ins/common/file-svg.c:809 plug-ins/common/file-tga.c:447
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
@@ -2491,7 +2488,7 @@ msgstr "Iz slike odstrani navpične artefakte v obliki trakov."
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:195
 #: plug-ins/common/file-ps.c:386 plug-ins/common/file-ps.c:500
-#: plug-ins/common/file-raw-data.c:355 plug-ins/common/file-svg.c:189
+#: plug-ins/common/file-raw-data.c:355 plug-ins/common/file-svg.c:192
 #: plug-ins/common/file-wmf.c:184 plug-ins/common/smooth-palette.c:135
 #: plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
@@ -3666,7 +3663,7 @@ msgstr "Širina posamezne celice v tabeli. Možen je vpis števila ali odstotka.
 
 #: plug-ins/common/file-html-table.c:202 plug-ins/common/file-ps.c:392
 #: plug-ins/common/file-ps.c:507 plug-ins/common/file-raw-data.c:360
-#: plug-ins/common/file-svg.c:197 plug-ins/common/file-wmf.c:191
+#: plug-ins/common/file-svg.c:200 plug-ins/common/file-wmf.c:191
 #: plug-ins/common/smooth-palette.c:141 plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
 msgstr "_Višina"
@@ -4197,7 +4194,7 @@ msgstr ""
 "Nove vzorce GIMP lahko ustvarite tako, da jih izvozite na ustreznem mestu s "
 "tem vstavkom."
 
-#: plug-ins/common/file-pat.c:128 plug-ins/common/qbist.c:968
+#: plug-ins/common/file-pat.c:128 plug-ins/common/qbist.c:954
 #: plug-ins/gfig/gfig-dialog.c:572
 msgid "Pattern"
 msgstr "Vzorec"
@@ -6016,19 +6013,19 @@ msgstr "_Navadno"
 msgid "R_un-Length Encoded"
 msgstr "_Kodirano s tekočo dolžino (RLE)"
 
-#: plug-ins/common/file-svg.c:160
+#: plug-ins/common/file-svg.c:163
 msgid "SVG image"
 msgstr "Slika SVG"
 
-#: plug-ins/common/file-svg.c:183 plug-ins/common/file-wmf.c:177
+#: plug-ins/common/file-svg.c:186 plug-ins/common/file-wmf.c:177
 msgid "Resolu_tion"
 msgstr "Ločljivos_t"
 
-#: plug-ins/common/file-svg.c:184
+#: plug-ins/common/file-svg.c:187
 msgid "Resolution to use for rendering the SVG"
 msgstr "Ločljivost, uporabljena za upodabljanje SVG"
 
-#: plug-ins/common/file-svg.c:190
+#: plug-ins/common/file-svg.c:193
 msgid ""
 "Width (in pixels) to load the SVG in. (0 for original width, a negative "
 "width to specify a maximum width)"
@@ -6036,7 +6033,7 @@ msgstr ""
 "Širina (v slikovnih točkah) za nalaganje SVG (0 za izvirno širino, negativna "
 "širina za določitev največje širine)."
 
-#: plug-ins/common/file-svg.c:198
+#: plug-ins/common/file-svg.c:201
 msgid ""
 "Height (in pixels) to load the SVG in. (0 for original height, a negative "
 "height to specify a maximum height)"
@@ -6044,37 +6041,37 @@ msgstr ""
 "Višina (v slikovnih točkah) za nalaganje SVG (0 za izvirno višino, negativna "
 "višina za določitev največje višine)."
 
-#: plug-ins/common/file-svg.c:205
+#: plug-ins/common/file-svg.c:208
 msgid "_Paths"
 msgstr "_Poti"
 
-#: plug-ins/common/file-svg.c:206
+#: plug-ins/common/file-svg.c:209
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr "Ali in kako uvoziti poti, da jih je mogoče uporabiti z orodjem poti"
 
-#: plug-ins/common/file-svg.c:207
+#: plug-ins/common/file-svg.c:210
 msgid "Don't import paths"
 msgstr "Ne uvozi poti"
 
-#: plug-ins/common/file-svg.c:208
+#: plug-ins/common/file-svg.c:211
 msgid "Import paths individually"
 msgstr "Uvozi poti posamično"
 
-#: plug-ins/common/file-svg.c:209
+#: plug-ins/common/file-svg.c:212
 msgid "Merge imported paths"
 msgstr "Spoji uvožene poti"
 
-#: plug-ins/common/file-svg.c:382 plug-ins/common/file-svg.c:811
+#: plug-ins/common/file-svg.c:385 plug-ins/common/file-svg.c:811
 #: plug-ins/file-exr/file-exr.c:356 plug-ins/file-exr/file-exr.c:370
 msgid "Unknown reason"
 msgstr "Neznani razlog"
 
-#: plug-ins/common/file-svg.c:388
+#: plug-ins/common/file-svg.c:391
 msgid "Rendering SVG"
 msgstr "Upodabljanje SVG ..."
 
-#: plug-ins/common/file-svg.c:398
+#: plug-ins/common/file-svg.c:401
 msgid "Rendered SVG"
 msgstr "Upodobljeni SVG"
 
@@ -7165,28 +7162,28 @@ msgstr "Količina osvetljenosti na robovih vsakega koščka"
 msgid "Assembling jigsaw"
 msgstr "Izdelava sestavljanke ..."
 
-#: plug-ins/common/jigsaw.c:707
+#: plug-ins/common/jigsaw.c:715
 msgid "draw_jigsaw: bad style\n"
 msgstr "draw_jigsaw: slab slog\n"
 
-#: plug-ins/common/jigsaw.c:2470
+#: plug-ins/common/jigsaw.c:2478
 msgid "Jigsaw"
 msgstr "Sestavljanka"
 
-#: plug-ins/common/jigsaw.c:2489
+#: plug-ins/common/jigsaw.c:2497
 msgid "Number of Tiles"
 msgstr "Število tlakovcev"
 
-#: plug-ins/common/jigsaw.c:2507
+#: plug-ins/common/jigsaw.c:2515
 msgid "Bevel Edges"
 msgstr "Izboči robove"
 
 #. frame for primitive radio buttons
-#: plug-ins/common/jigsaw.c:2517
+#: plug-ins/common/jigsaw.c:2525
 msgid "Square"
 msgstr "Pravokotno"
 
-#: plug-ins/common/jigsaw.c:2518
+#: plug-ins/common/jigsaw.c:2526
 msgid "Curved"
 msgstr "Ukrivljeno"
 
@@ -7421,27 +7418,44 @@ msgstr "Brskalnik procedur"
 msgid "Procedure %s allows only interactive invocation."
 msgstr "Postopek %s omogoča samo interaktivni klic."
 
-#: plug-ins/common/qbist.c:185
+#: plug-ins/common/qbist.c:186
 msgid "_Qbist..."
 msgstr "_Qbist ..."
 
-#: plug-ins/common/qbist.c:190
+#: plug-ins/common/qbist.c:191
 msgid "Generate a huge variety of abstract patterns"
 msgstr "Ustvari velik nabor abstraktnih vzorcev"
 
-#: plug-ins/common/qbist.c:217
+#: plug-ins/common/qbist.c:193
+msgid ""
+"This Plug-in is based on an article by Jörn Loviscach (appeared in c't "
+"10/95, page 326). It generates modern art pictures from a random genetic "
+"formula."
+msgstr ""
+"Ta vstavek temelji na članku Jörna Loviscacha (objavljen v c't 10/95, stran "
+"326). Ustvarja sodobne umetniške slike iz naključne genetske formule."
+
+#: plug-ins/common/qbist.c:205
+msgid "_Anti-aliasing"
+msgstr "_Glajenje robov"
+
+#: plug-ins/common/qbist.c:206
+msgid "Enable anti-aliasing using an oversampling algorithm"
+msgstr "Omogoči glajenje robov z algoritmom prevzorčenja"
+
+#: plug-ins/common/qbist.c:220
 msgid "Any file which will be used as source for pattern generation"
 msgstr "Poljubna datoteka, ki bo uporabljena kot vir za tvorbo vzorca."
 
-#: plug-ins/common/qbist.c:360
+#: plug-ins/common/qbist.c:365
 msgid "Qbist"
 msgstr "Qbist"
 
-#: plug-ins/common/qbist.c:832
+#: plug-ins/common/qbist.c:837
 msgid "Load QBE File"
 msgstr "Naloži datoteko QBE"
 
-#: plug-ins/common/qbist.c:874
+#: plug-ins/common/qbist.c:879
 msgid "Save as QBE File"
 msgstr "Shrani kot datoteko QBE"
 
@@ -7449,7 +7463,7 @@ msgstr "Shrani kot datoteko QBE"
 msgid "G-Qbist"
 msgstr "G-Qbist"
 
-#: plug-ins/common/qbist.c:1012
+#: plug-ins/common/qbist.c:989
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:715
 msgid "_Undo"
 msgstr "_Razveljavi"
