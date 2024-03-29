@@ -5273,16 +5273,8 @@ SCHEME_EXPORT void scheme_set_input_port_file(scheme *sc, FILE *fin) {
   sc->inport=port_from_file(sc,fin,port_input);
 }
 
-void scheme_set_input_port_string(scheme *sc, char *start, char *past_the_end) {
-  sc->inport=port_from_string(sc,start,past_the_end,port_input);
-}
-
 SCHEME_EXPORT void scheme_set_output_port_file(scheme *sc, FILE *fout) {
   sc->outport=port_from_file(sc,fout,port_output);
-}
-
-void scheme_set_output_port_string(scheme *sc, char *start, char *past_the_end) {
-  sc->outport=port_from_string(sc,start,past_the_end,port_output);
 }
 
 void scheme_set_external_data(scheme *sc, void *p) {
