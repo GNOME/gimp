@@ -1065,22 +1065,39 @@ gimp_color_area_drag_data_get (GtkWidget        *widget,
                                guint             time)
 {
   GimpColorAreaPrivate *priv = GET_PRIVATE (widget);
-  gdouble               rgb[4];
-  guint16               vals[4];
+  const Babl           *format;
+  const gchar          *encoding;
+  gint                  encoding_length;
+  guchar                pixel[40];
+  gint                  pixel_length;
+  guint8               *profile_data   = NULL;
+  int                   profile_length = 0;
+  guchar               *data;
+  gint                  data_length;
 
-  gegl_color_get_pixel (priv->color, babl_format_with_space ("R'G'B'A double", NULL), rgb);
-  vals[0] = rgb[0] * 0xffff;
-  vals[1] = rgb[1] * 0xffff;
-  vals[2] = rgb[2] * 0xffff;
+  g_return_if_fail (selection_data != NULL);
+  g_return_if_fail (priv->color != NULL);
 
-  if (priv->type == GIMP_COLOR_AREA_FLAT)
-    vals[3] = 0xffff;
-  else
-    vals[3] = rgb[3] * 0xffff;
+  format          = gegl_color_get_format (priv->color);
+  encoding        = babl_format_get_encoding (format);
+  encoding_length = strlen (encoding) + 1;
+  pixel_length    = babl_format_get_bytes_per_pixel (format);
+  gegl_color_get_pixel (priv->color, format, pixel);
+
+  if (babl_format_get_space (format) != babl_space ("sRGB"))
+    profile_data = (guint8 *) babl_space_get_icc (babl_format_get_space (format),
+                                                  &profile_length);
+
+  data_length = encoding_length + pixel_length + profile_length;
+  data = g_malloc0 (data_length);
+  memcpy (data, encoding, encoding_length);
+  memcpy (data + encoding_length, pixel, pixel_length);
+  if (profile_length > 0)
+    memcpy (data + encoding_length + pixel_length, profile_data, profile_length);
 
   gtk_selection_data_set (selection_data,
-                          gdk_atom_intern ("application/x-color", FALSE),
-                          16, (guchar *) vals, 8);
+                          gtk_selection_data_get_target (selection_data),
+                          8, (const guchar *) data, data_length);
 }
 
 static void
