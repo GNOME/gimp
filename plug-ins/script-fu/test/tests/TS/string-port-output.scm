@@ -117,36 +117,38 @@
 ; Some Schemes have an optional argument a string that is the initial contents?
 ; Guile does not. Racket does not, but takes a name for the port. MIT does not.
 ;
-; The initial string is always overwritten, and is just an allocation.
-; Only the size of the initial string matters, not the contents.
+; The initial string is now ignored, Gimp v3
+; In v2, the initial string was always overwritten, but used for the contents.
+; Only the size of the initial string ed, not the contents.
 ; Also, see test9.scm, which tests this using a string whose scope is larger
 ; and so does not get garbage collected.
 
 (define aLimitedStringPort (open-output-string "initial"))
 
-(test! "initial contents string is just an allocation")
-; !!! only 7 bytes are allocated.
+(test! "initial contents string is ignored")
 ; get-output-string returns empty string, not the initial contents.
 (assert `(string=? (get-output-string ,aLimitedStringPort)
                     ""))
 
-(test! "writing to output string-port w initial contents may truncate")
+; This is a v2 test.
+; (test! "writing to output string-port w initial contents may truncate")
 ; Only 7 chars are written, and a double quote char takes one
-(assert `(string=?
-           (begin
-              (write "INITIALPLUS" ,aLimitedStringPort)
-              (get-output-string ,aLimitedStringPort))
-           "\"INITIA"))
+;(assert `(string=?
+;           (begin
+;              (write "INITIALPLUS" ,aLimitedStringPort)
+;              (get-output-string ,aLimitedStringPort))
+;           "\"INITIA"))
+
 
 ;(test! "port contents survive garbage collection")
+; This is v3 test.
 ; using aStringPort whose contents are "INITIAL"
-; TODO this may be crashing
-;(assert `(string=?
- ;          (begin
-              ; TODO need to open a port and write to it
- ;             (gc)
- ;             (get-output-string ,aLimitedStringPort))
- ;          "\"INITIAL\""))
+(assert `(string=?
+           (begin
+              (write "INITIAL",aLimitedStringPort)
+              (gc)
+              (get-output-string ,aLimitedStringPort))
+           "\"INITIAL\""))
 
 
 
@@ -207,15 +209,14 @@
 ; where second write crosses end boundary of 256 char buffer.
 
 ; issue #9495
-; Failing
-;(assert '(string=?
-;           (let* ((aStringPort (open-output-string)))
-;              (write (string->symbol (make-string 250 #\A)) aStringPort)
-;              (write (string->symbol (make-string 7 #\B)) aStringPort)
-;              (get-output-string aStringPort))
-;           (string-append
-;              (make-string 250 #\A)
-;              (make-string 7 #\B))))
+(assert '(string=?
+           (let* ((aStringPort (open-output-string)))
+              (write (string->symbol (make-string 250 #\A)) aStringPort)
+              (write (string->symbol (make-string 7 #\B)) aStringPort)
+              (get-output-string aStringPort))
+           (string-append
+              (make-string 250 #\A)
+              (make-string 7 #\B))))
 
 
 
@@ -224,7 +225,6 @@
 
 ; !!! Note in this case lack of escaped quotes on what is read
 
-; FIXME, this fails
 (test! "read's of a get-output-string return what was write'd before")
 ; setup
 (define aOutStringPort (open-output-string))

@@ -4299,6 +4299,15 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
                case OP_OPEN_INOUTSTRING:  prop=port_input|port_output; break;
                default:                   break;  /* Quiet the compiler */
           }
+          /* !!! open-input-output-string is defined same as open-input-string.
+           * The prop argument has no effect.
+           * This version's behavior is not the same as upstream.
+           *
+           * Because no document specifies how input-output should work,
+           * we cannot test whatever is implemented upstream.
+           * Assume it should be a pipe, a string-port does NOT have
+           * both a read and write pointer, and so cannot be a pipe.
+           */
           p = string_port_open_input_string (sc, car (sc->args), prop);
 
           if(p==sc->NIL) {
