@@ -9,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-28 17:56+0000\n"
-"PO-Revision-Date: 2024-03-28 21:45+0200\n"
+"POT-Creation-Date: 2024-03-30 03:37+0000\n"
+"PO-Revision-Date: 2024-03-30 11:23+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
+"Language-Team: Ukrainian\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -146,7 +146,7 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/cml-explorer.c:1380 plug-ins/common/file-heif.c:2315
 #: plug-ins/common/file-pdf-load.c:687 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
-#: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3696
+#: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3714
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -637,7 +637,7 @@ msgstr "Вертикально"
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:700
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:2892 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2910 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/gimpressionist/general.c:147
@@ -1218,7 +1218,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-pcx.c:1219 plug-ins/common/file-pdf-save.c:667
 #: plug-ins/common/file-png.c:1517 plug-ins/common/file-raw-data.c:1337
 #: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
-#: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1381
+#: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1284
 #: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-save.c:341
 #: plug-ins/file-fli/fli-gimp.c:809 plug-ins/file-icns/file-icns-save.c:427
 #: plug-ins/file-ico/ico-save.c:1343 plug-ins/file-ico/ico-save.c:1560
@@ -1985,7 +1985,7 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-sunras.c:457 plug-ins/common/file-svg.c:383
 #: plug-ins/common/file-svg.c:809 plug-ins/common/file-tga.c:447
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
-#: plug-ins/common/file-xmc.c:656 plug-ins/common/file-xmc.c:895
+#: plug-ins/common/file-xmc.c:668 plug-ins/common/file-xmc.c:907
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
 #: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:169
 #: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
@@ -2613,7 +2613,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-ps.c:1099 plug-ins/common/file-raw-data.c:1657
 #: plug-ins/common/file-sunras.c:449 plug-ins/common/file-tga.c:439
 #: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:784
-#: plug-ins/common/file-xbm.c:741 plug-ins/common/file-xmc.c:646
+#: plug-ins/common/file-xbm.c:741 plug-ins/common/file-xmc.c:658
 #: plug-ins/common/file-xpm.c:384 plug-ins/common/file-xwd.c:484
 #: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:493
@@ -6336,7 +6336,8 @@ msgstr "За_писати коментар"
 msgid "Write a comment at the beginning of the file."
 msgstr "Записати коментар на початку файла."
 
-#: plug-ins/common/file-xbm.c:221 plug-ins/common/mail.c:235
+#: plug-ins/common/file-xbm.c:221 plug-ins/common/file-xmc.c:442
+#: plug-ins/common/mail.c:235
 msgid "Co_mment"
 msgstr "_Коментар"
 
@@ -6368,7 +6369,7 @@ msgstr "_X «гарячої точки»"
 msgid "X coordinate of hotspot"
 msgstr "Координата X «гарячої точки»"
 
-#: plug-ins/common/file-xbm.c:248
+#: plug-ins/common/file-xbm.c:248 plug-ins/common/file-xmc.c:377
 msgid "Hot spot _Y"
 msgstr "_Y «гарячої точки»"
 
@@ -6455,22 +6456,140 @@ msgstr ""
 "Коментар не вплине на можливість вбудовування XBM до коду мовою Сі."
 
 #: plug-ins/common/file-xmc.c:301 plug-ins/common/file-xmc.c:350
+#: plug-ins/common/file-xmc.c:352
 msgid "X11 Mouse Cursor"
 msgstr "Курсор миші X11"
 
-#: plug-ins/common/file-xmc.c:395
-msgid "Replace existent size or not"
-msgstr "Чи слід замінювати наявний розмір"
+#: plug-ins/common/file-xmc.c:304
+#| msgid "Loads files of Windows BMP file format"
+msgid "Loads files of X11 Mouse Cursor file format"
+msgstr "Завантажує файли у форматі файлів вказівника миші X11"
 
-#: plug-ins/common/file-xmc.c:401
-msgid "Default delay"
-msgstr "Типова затримка"
+#: plug-ins/common/file-xmc.c:306
+#| msgid "This plug-in loads SGI image files."
+msgid "This plug-in loads X11 Mouse Cursor (XMC) files."
+msgstr ""
+"Цей додаток призначено для завантаження файлів вказівника миші X11 (XMC)."
 
-#: plug-ins/common/file-xmc.c:407
-msgid "Replace existent delay or not"
-msgstr "Чи слід замінювати наявну затримку"
+#: plug-ins/common/file-xmc.c:331
+msgid ""
+"Loads only first frame of X11 Mouse Cursor's animation sequence which "
+"nominal size is the closest of thumb-size to be used as a thumbnail"
+msgstr ""
+"Завантажує лише перший кадр послідовності анімації вказівника миші X11,"
+" номінальний розмір якого є найближчим до розміру мініатюри, щоб використати"
+" його як мініатюру which "
+"nominal size is the closest of thumb-size to be used as a thumbnail"
 
-#: plug-ins/common/file-xmc.c:541
+#: plug-ins/common/file-xmc.c:355
+#| msgid "Exports files in the PNM file format"
+msgid "Exports files of X11 cursor file"
+msgstr "Експортує файли у вказівників X11"
+
+#: plug-ins/common/file-xmc.c:356
+#| msgid "This plug-in exports SGI image files."
+msgid "This plug-in exports X11 Mouse Cursor (XMC) files"
+msgstr ""
+"Цей додаток призначено для експортування файлів вказівника миші X11 (XMC)"
+
+#: plug-ins/common/file-xmc.c:370
+#| msgid "Hot spot _X:"
+msgid "Hot spot _X"
+msgstr "_X «гарячої точки»"
+
+#: plug-ins/common/file-xmc.c:371
+msgid "X-coordinate of hot spot (use -1, -1 to keep original hot spot)"
+msgstr ""
+"X-координата «гарячої точки» (скористайтеся парою -1, -1, щоб зберегти"
+" початкову «гарячу точку»)"
+
+#: plug-ins/common/file-xmc.c:378
+msgid "Y-coordinate of hot spot (use -1, -1 to keep original hot spot)"
+msgstr ""
+"Y-координата «гарячої точки» (скористайтеся парою -1, -1, щоб зберегти"
+" початкову «гарячу точку»)"
+
+#: plug-ins/common/file-xmc.c:384
+#| msgid "_Auto-Crop all frames"
+msgid "_Auto Crop all frames"
+msgstr "_Автокадрувати всі кадри"
+
+#: plug-ins/common/file-xmc.c:385
+#| msgid "Reverse the pages order (top layers first)."
+msgid "Remove the empty borders of all frames."
+msgstr "Вилучити порожні рамки з усіх кадрів."
+
+#: plug-ins/common/file-xmc.c:390
+#| msgid ""
+#| "_Size where\n"
+#| "unspecified:"
+msgid "Si_ze where unspecified"
+msgstr "_Розмір, де не вказано"
+
+#: plug-ins/common/file-xmc.c:391
+#| msgid "_Delay between frames when unspecified"
+msgid "Default frame size if unspecified"
+msgstr "Типовий розмір кадру, якщо не зазначено"
+
+#: plug-ins/common/file-xmc.c:405
+#| msgid "Use default dela_y for all frames"
+msgid "_Use default size for all frames"
+msgstr "Ви_користати типовий розмір для усіх кадрів"
+
+#: plug-ins/common/file-xmc.c:406
+#| msgid "Use default dela_y for all frames"
+msgid "Use default size for all frames"
+msgstr "Використати типовий розмір для усіх кадрів"
+
+#: plug-ins/common/file-xmc.c:411
+#| msgid ""
+#| "_Delay where\n"
+#| "unspecified:"
+msgid "_Delay where unspecified"
+msgstr "_Затримка, де не вказано"
+
+#: plug-ins/common/file-xmc.c:412
+#| msgid "Enter time span in milliseconds in which each frame is rendered."
+msgid "Default time span in milliseconds in which each frame is rendered"
+msgstr ""
+"Типовий інтервал часу у мілісекундах, протягом якого показується кожен кадр"
+
+#: plug-ins/common/file-xmc.c:418
+#| msgid "Use default dela_y for all frames"
+msgid "Use default delay for all _frames"
+msgstr "Використати типову затри_мку для всіх кадрів"
+
+#: plug-ins/common/file-xmc.c:419
+#| msgid "Use default dela_y for all frames"
+msgid "Use default delay for all frames"
+msgstr "Використати типову затримку для всіх кадрів"
+
+#: plug-ins/common/file-xmc.c:424
+#| msgid "_Copyright:"
+msgid "C_opyright"
+msgstr "_Авторські права"
+
+#: plug-ins/common/file-xmc.c:425
+#| msgid "Enter copyright information."
+msgid "Copyright information"
+msgstr "Відомості щодо авторських прав"
+
+#: plug-ins/common/file-xmc.c:433
+#| msgid "_License:"
+msgid "Lice_nse"
+msgstr "_Ліцензія"
+
+#: plug-ins/common/file-xmc.c:434
+#| msgid "Enter license information."
+msgid "License information"
+msgstr "Умови ліцензування"
+
+#: plug-ins/common/file-xmc.c:443
+#| msgid "Save comment"
+msgid "Optional comment"
+msgstr "Необов'язковий коментар"
+
+#: plug-ins/common/file-xmc.c:553
 #, c-format
 msgid ""
 "Cannot set the hot spot!\n"
@@ -6479,70 +6598,54 @@ msgstr ""
 "Не вдалось установити «гарячу точку»!\n"
 "Потрібно розставити шари так, щоб вони перетинались."
 
-#: plug-ins/common/file-xmc.c:663
+#: plug-ins/common/file-xmc.c:675
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "«%s» не є коректним курсором X"
 
-#: plug-ins/common/file-xmc.c:676
+#: plug-ins/common/file-xmc.c:688
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
 msgstr "Кадр %d з «%s» занадто широкий для курсора X."
 
-#: plug-ins/common/file-xmc.c:684
+#: plug-ins/common/file-xmc.c:696
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "Кадр %d з «%s» занадто високий для курсора X."
 
-#: plug-ins/common/file-xmc.c:955
+#: plug-ins/common/file-xmc.c:967
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "відсутній фрагмент зображення у «%s»."
 
-#: plug-ins/common/file-xmc.c:996
+#: plug-ins/common/file-xmc.c:1008
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "Ширина «%s» занадто велика для курсора X."
 
-#: plug-ins/common/file-xmc.c:1005
+#: plug-ins/common/file-xmc.c:1017
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "Висота «%s» занадто велика для курсора X."
 
-#: plug-ins/common/file-xmc.c:1069
+#: plug-ins/common/file-xmc.c:1081
 #, c-format
 msgid "A read error occurred."
 msgstr "Помилка при читанні."
 
-#: plug-ins/common/file-xmc.c:1109
-msgid "Export Image as X11 Mouse Cursor"
-msgstr "Експортувати зображення як вказівник миші X11"
-
-#: plug-ins/common/file-xmc.c:1128 plug-ins/file-ico/ico-dialog.c:584
-msgid "Hot spot _X:"
-msgstr "_X «гарячої точки»:"
-
-#: plug-ins/common/file-xmc.c:1132
+#: plug-ins/common/file-xmc.c:1120
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Введіть координату X «гарячої точки». Початок координат у верхньому лівому "
 "куті."
 
-#: plug-ins/common/file-xmc.c:1142 plug-ins/file-ico/ico-dialog.c:597
-msgid "Hot spot _Y:"
-msgstr "_Y «гарячої точки»:"
-
-#: plug-ins/common/file-xmc.c:1146
+#: plug-ins/common/file-xmc.c:1131
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Введіть координату Y «гарячої точки». Початок координат у верхньому лівому "
 "куті."
 
-#: plug-ins/common/file-xmc.c:1152
-msgid "_Auto-Crop all frames"
-msgstr "_Автокадрувати всі кадри"
-
-#: plug-ins/common/file-xmc.c:1156
+#: plug-ins/common/file-xmc.c:1143
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -6555,15 +6658,7 @@ msgstr ""
 "Заберіть позначку, якщо плануєте редагувати експортований курсор через інші "
 "програми."
 
-#: plug-ins/common/file-xmc.c:1175
-msgid ""
-"_Size where\n"
-"unspecified:"
-msgstr ""
-"_Розмір, де\n"
-"не вказано:"
-
-#: plug-ins/common/file-xmc.c:1179
+#: plug-ins/common/file-xmc.c:1155
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -6581,76 +6676,31 @@ msgstr ""
 "Його використовують лише для визначення залежності рамки від послідовності "
 "анімації та послідовності, яка базується на значенні «gtk-cursor-theme-size»."
 
-#: plug-ins/common/file-xmc.c:1192
-msgid "Use size entered above for all frames"
-msgstr "_Використати введений вище розмір для всіх кадрів"
-
-#: plug-ins/common/file-xmc.c:1199
-msgid ""
-"_Delay where\n"
-"unspecified:"
-msgstr ""
-"_Затримка, де\n"
-"не вказано:"
-
-#: plug-ins/common/file-xmc.c:1204
-msgid "Enter time span in milliseconds in which each frame is rendered."
-msgstr ""
-"Введіть інтервал часу у мілісекундах протягом якого показується кожен кадр."
-
-#: plug-ins/common/file-xmc.c:1218
-msgid "Use delay entered above for all frames"
-msgstr "Використати введену вище затримку для всіх кадрів"
-
-#: plug-ins/common/file-xmc.c:1225
-msgid "_Copyright:"
-msgstr "_Авторські права:"
-
-#: plug-ins/common/file-xmc.c:1229
-msgid "Enter copyright information."
-msgstr "Вкажіть інформацію про авторські права"
-
-#: plug-ins/common/file-xmc.c:1235
-msgid "_License:"
-msgstr "_Ліцензія:"
-
-#: plug-ins/common/file-xmc.c:1239
-msgid "Enter license information."
-msgstr "Введіть інформацію про ліцензію"
-
-#: plug-ins/common/file-xmc.c:1249
-msgid "_Other:"
-msgstr "_Інше:"
-
-#: plug-ins/common/file-xmc.c:1263
-msgid "Enter other comment if you want."
-msgstr "Введіть бажаний коментар"
-
 #. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1368 plug-ins/file-webp/file-webp-save.c:198
+#: plug-ins/common/file-xmc.c:1271 plug-ins/file-webp/file-webp-save.c:198
 #: plug-ins/file-webp/file-webp-save.c:597
 #, c-format
 msgid "Saving '%s'"
 msgstr "Збереження «%s»"
 
-#: plug-ins/common/file-xmc.c:1443
+#: plug-ins/common/file-xmc.c:1346
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr ""
 "Кадр «%s» занадто широкий. Треба зменшити, щоб ширина не перевищувала %dpx."
 
-#: plug-ins/common/file-xmc.c:1453
+#: plug-ins/common/file-xmc.c:1356
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr ""
 "Кадр «%s» занадто високий. Треба зменшити, щоб висота не перевищувала %dpx."
 
-#: plug-ins/common/file-xmc.c:1463
+#: plug-ins/common/file-xmc.c:1366
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Ширина і/або висота кадру «%s» дорівнює нулю!"
 
-#: plug-ins/common/file-xmc.c:1505
+#: plug-ins/common/file-xmc.c:1408
 #, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
@@ -6662,7 +6712,7 @@ msgstr ""
 "Спробуйте змінити позицію гарячої точки, геометрію шару або зберегти без "
 "автоматичного обрізування."
 
-#: plug-ins/common/file-xmc.c:1679
+#: plug-ins/common/file-xmc.c:1582
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -6675,7 +6725,7 @@ msgstr ""
 "курсорів X bitmap.\n"
 "Це може не підтримуватись деякими середовищами."
 
-#: plug-ins/common/file-xmc.c:1687
+#: plug-ins/common/file-xmc.c:1590
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -6687,7 +6737,7 @@ msgstr ""
 "Це можна виправити увімкнувши у вікні експорту функцію «Замінити розмір всіх "
 "кадрів…», інакше курсор може не з'явитися в аплеті налаштовування GNOME."
 
-#: plug-ins/common/file-xmc.c:1969
+#: plug-ins/common/file-xmc.c:1873
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -6699,7 +6749,7 @@ msgstr ""
 "Їх буде обрізано до %dpx. Перевірте експортований курсор."
 
 #. translators: the %i is *always* 8 here
-#: plug-ins/common/file-xmc.c:2066
+#: plug-ins/common/file-xmc.c:1970
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -7489,12 +7539,11 @@ msgid ""
 "10/95, page 326). It generates modern art pictures from a random genetic "
 "formula."
 msgstr ""
-"Цей додаток засновано на статті Jörn Loviscach (опубліковано у c't 10/95,"
-" сторінка 326). Він створює зображення сучасного мистецтва на основі"
-" випадкової генетичної формули."
+"Цей додаток засновано на статті Jörn Loviscach (опубліковано у c't 10/95, "
+"сторінка 326). Він створює зображення сучасного мистецтва на основі "
+"випадкової генетичної формули."
 
 #: plug-ins/common/qbist.c:205
-#| msgid "_Antialiasing"
 msgid "_Anti-aliasing"
 msgstr "З_гладжування"
 
@@ -9862,6 +9911,14 @@ msgstr "32 біт/точку, 8-біт альфа-канал, без паліт�
 msgid "Compressed (PNG)"
 msgstr "Стиснений (PNG)"
 
+#: plug-ins/file-ico/ico-dialog.c:584
+msgid "Hot spot _X:"
+msgstr "_X «гарячої точки»:"
+
+#: plug-ins/file-ico/ico-dialog.c:597
+msgid "Hot spot _Y:"
+msgstr "_Y «гарячої точки»:"
+
 #: plug-ins/file-ico/ico-load.c:224
 #, c-format
 msgid "Could not read '%lu' bytes"
@@ -10198,30 +10255,30 @@ msgstr "Непідтримувана чи хибна ширина маски: %d
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір маски: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2178 plug-ins/file-psd/psd-load.c:2865
+#: plug-ins/file-psd/psd-load.c:2178 plug-ins/file-psd/psd-load.c:2883
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Непідтримуваний метод стиснення: %d"
 
-#: plug-ins/file-psd/psd-load.c:3058
+#: plug-ins/file-psd/psd-load.c:3076
 msgid "Extra"
 msgstr "Додатково"
 
-#: plug-ins/file-psd/psd-load.c:3262
+#: plug-ins/file-psd/psd-load.c:3280
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Непідтримуваний чи некоректний розмір каналу"
 
-#: plug-ins/file-psd/psd-load.c:3331
+#: plug-ins/file-psd/psd-load.c:3349
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Не вдається розпакувати дані"
 
-#: plug-ins/file-psd/psd-load.c:3712
+#: plug-ins/file-psd/psd-load.c:3730
 msgid "Duotone Import"
 msgstr "Двотонове імпортування"
 
-#: plug-ins/file-psd/psd-load.c:3713
+#: plug-ins/file-psd/psd-load.c:3731
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10231,11 +10288,11 @@ msgstr ""
 "Дані двотонового простору кольорів було збережено,\n"
 "їх можна повторно застосувати при експортуванні."
 
-#: plug-ins/file-psd/psd-load.c:3735 plug-ins/file-psd/psd-save.c:2670
+#: plug-ins/file-psd/psd-load.c:3753 plug-ins/file-psd/psd-save.c:2670
 msgid "Compatibility Notice"
 msgstr "Зауваження щодо сумісності"
 
-#: plug-ins/file-psd/psd-load.c:3736
+#: plug-ins/file-psd/psd-load.c:3754
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -16389,6 +16446,30 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:496
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Replace existent size or not"
+#~ msgstr "Чи слід замінювати наявний розмір"
+
+#~ msgid "Default delay"
+#~ msgstr "Типова затримка"
+
+#~ msgid "Replace existent delay or not"
+#~ msgstr "Чи слід замінювати наявну затримку"
+
+#~ msgid "Export Image as X11 Mouse Cursor"
+#~ msgstr "Експортувати зображення як вказівник миші X11"
+
+#~ msgid "Use size entered above for all frames"
+#~ msgstr "_Використати введений вище розмір для всіх кадрів"
+
+#~ msgid "Use delay entered above for all frames"
+#~ msgstr "Використати введену вище затримку для всіх кадрів"
+
+#~ msgid "_Other:"
+#~ msgstr "_Інше:"
+
+#~ msgid "Enter other comment if you want."
+#~ msgstr "Введіть бажаний коментар"
 
 #~ msgid "_Omit hidden layers and layers with zero opacity"
 #~ msgstr "_Пропустити приховані шари і шари без прозорості"
