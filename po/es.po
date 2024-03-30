@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-13 23:39+0000\n"
-"PO-Revision-Date: 2024-03-16 17:04+0100\n"
+"POT-Creation-Date: 2024-03-26 16:58+0000\n"
+"PO-Revision-Date: 2024-03-30 20:16+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -10384,7 +10384,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Error al analizar «%%s»: la línea es más larga que %s caracteres."
 
 #: app/config/gimpconfig-file.c:153 app/config/gimpconfig-file.c:197
-#: app/core/gimp-tags.c:145 app/gui/themes.c:513
+#: app/core/gimp-tags.c:145 app/gui/themes.c:522
 #: app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -12405,7 +12405,7 @@ msgctxt "undo-type"
 msgid "Text"
 msgstr "Texto"
 
-#: app/core/core-enums.c:1339 app/core/gimpdrawable-transform.c:711
+#: app/core/core-enums.c:1339 app/core/gimpdrawable-transform.c:717
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transformar"
@@ -12954,7 +12954,7 @@ msgstr "Falló al ejecutar el proceso hijo «%s» (%s)"
 msgid "tags-locale:C"
 msgstr "tags-locale:es"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:525
+#: app/core/gimp-tags.c:156 app/gui/themes.c:534
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Error al cerrar «%s»: %s"
@@ -13299,7 +13299,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Rotar el canal"
 
-#: app/core/gimpchannel.c:263 app/core/gimpdrawable-transform.c:1039
+#: app/core/gimpchannel.c:263 app/core/gimpdrawable-transform.c:1045
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Transformar el canal"
@@ -13627,22 +13627,22 @@ msgstr "Desplazar el dibujable"
 msgid "Not enough points to stroke"
 msgstr "No hay suficientes puntos para trazar"
 
-#: app/core/gimpdrawable-transform.c:798 app/tools/gimpfliptool.c:135
+#: app/core/gimpdrawable-transform.c:804 app/tools/gimpfliptool.c:135
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Voltear"
 
-#: app/core/gimpdrawable-transform.c:881 app/tools/gimprotatetool.c:130
+#: app/core/gimpdrawable-transform.c:887 app/tools/gimprotatetool.c:130
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Rotar"
 
-#: app/core/gimpdrawable-transform.c:1037 app/core/gimplayer.c:434
+#: app/core/gimpdrawable-transform.c:1043 app/core/gimplayer.c:434
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Transformar la capa"
 
-#: app/core/gimpdrawable-transform.c:1050
+#: app/core/gimpdrawable-transform.c:1056
 msgid "Transformation"
 msgstr "Transformación"
 
@@ -14257,7 +14257,7 @@ msgstr "No se puede combinar una capa invisible."
 msgid "Cannot merge down to a layer group."
 msgstr "No se puede hacer una combinación a un grupo de capas."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2746
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2762
 msgid "The layer to merge down to is locked."
 msgstr "La capa a la que se pretende combinar está bloqueada."
 
@@ -21006,11 +21006,11 @@ msgstr "Fijo"
 msgid "Combine Masks"
 msgstr "Combinar máscaras"
 
-#: app/pdb/drawable-cmds.c:647
+#: app/pdb/drawable-cmds.c:651
 msgid "Plug-in"
 msgstr "Complemento"
 
-#: app/pdb/drawable-cmds.c:974 app/tools/gimpforegroundselecttool.c:1039
+#: app/pdb/drawable-cmds.c:978 app/tools/gimpforegroundselecttool.c:1039
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Selección de primer plano"
@@ -21488,13 +21488,13 @@ msgstr ""
 "El procedimiento «%s» se ha llamado con una cadena UTF-8 no válida para el "
 "argumento «%s»."
 
-#: app/pdb/image-cmds.c:2501
+#: app/pdb/image-cmds.c:2504
 msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "La resolución de la Imagen se sale de los límites; usando la resolución "
 "predeterminada en su lugar."
 
-#: app/pdb/image-select-cmds.c:303 app/tools/gimpfreeselecttool.c:105
+#: app/pdb/image-select-cmds.c:306 app/tools/gimpfreeselecttool.c:105
 msgid "Free Select"
 msgstr "Selección libre"
 
@@ -21625,7 +21625,7 @@ msgctxt "undo-type"
 msgid "DoG Edge Detect"
 msgstr "Detección de bordes DoG"
 
-#: app/pdb/plug-in-compat-cmds.c:1578 app/pdb/plug-in-compat-cmds.c:2900
+#: app/pdb/plug-in-compat-cmds.c:1578 app/pdb/plug-in-compat-cmds.c:2897
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Normalizar"
@@ -21645,264 +21645,264 @@ msgctxt "undo-type"
 msgid "Engrave"
 msgstr "Grabar"
 
-#: app/pdb/plug-in-compat-cmds.c:1823
+#: app/pdb/plug-in-compat-cmds.c:1820
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "Intercambio de color"
 
-#: app/pdb/plug-in-compat-cmds.c:1871
+#: app/pdb/plug-in-compat-cmds.c:1868
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "Reflejo en la lente"
 
-#: app/pdb/plug-in-compat-cmds.c:1936
+#: app/pdb/plug-in-compat-cmds.c:1933
 msgctxt "undo-type"
 msgid "Fractal Trace"
 msgstr "Traza fractal"
 
-#: app/pdb/plug-in-compat-cmds.c:2120
+#: app/pdb/plug-in-compat-cmds.c:2117
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "Mosaico de cristal"
 
-#: app/pdb/plug-in-compat-cmds.c:2173
+#: app/pdb/plug-in-compat-cmds.c:2170
 msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "Ruido HSV"
 
-#: app/pdb/plug-in-compat-cmds.c:2216
+#: app/pdb/plug-in-compat-cmds.c:2213
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "Ilusión"
 
-#: app/pdb/plug-in-compat-cmds.c:2253
+#: app/pdb/plug-in-compat-cmds.c:2250
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Laplace"
 
 # Location lo traducimos por lugar (Serrador)
-#: app/pdb/plug-in-compat-cmds.c:2322
+#: app/pdb/plug-in-compat-cmds.c:2319
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Distorsión de lente"
 
-#: app/pdb/plug-in-compat-cmds.c:2362
+#: app/pdb/plug-in-compat-cmds.c:2359
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Mosaico sin costura"
 
-#: app/pdb/plug-in-compat-cmds.c:2422
+#: app/pdb/plug-in-compat-cmds.c:2419
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "Laberinto"
 
-#: app/pdb/plug-in-compat-cmds.c:2505 app/pdb/plug-in-compat-cmds.c:2589
+#: app/pdb/plug-in-compat-cmds.c:2502 app/pdb/plug-in-compat-cmds.c:2586
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Desenfoque de movimiento"
 
-#: app/pdb/plug-in-compat-cmds.c:2636
+#: app/pdb/plug-in-compat-cmds.c:2633
 msgctxt "undo-type"
 msgid "Median Blur"
 msgstr "Desenfoque de mediana"
 
-#: app/pdb/plug-in-compat-cmds.c:2728
+#: app/pdb/plug-in-compat-cmds.c:2725
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mosaico"
 
-#: app/pdb/plug-in-compat-cmds.c:2772
+#: app/pdb/plug-in-compat-cmds.c:2769
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Neón"
 
-#: app/pdb/plug-in-compat-cmds.c:2860
+#: app/pdb/plug-in-compat-cmds.c:2857
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "Papel de periódico"
 
-#: app/pdb/plug-in-compat-cmds.c:2962
+#: app/pdb/plug-in-compat-cmds.c:2961
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Supernova"
 
-#: app/pdb/plug-in-compat-cmds.c:3006 app/pdb/plug-in-compat-cmds.c:3074
+#: app/pdb/plug-in-compat-cmds.c:3005 app/pdb/plug-in-compat-cmds.c:3073
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Pintura al óleo"
 
-#: app/pdb/plug-in-compat-cmds.c:3165
+#: app/pdb/plug-in-compat-cmds.c:3164
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Mosaico de papel"
 
-#: app/pdb/plug-in-compat-cmds.c:3214
+#: app/pdb/plug-in-compat-cmds.c:3213
 msgctxt "undo-type"
 msgid "Photocopy"
 msgstr "Fotocopia"
 
 # Debe ir en minúsculas por las reglas de estilo
-#: app/pdb/plug-in-compat-cmds.c:3255 app/pdb/plug-in-compat-cmds.c:3298
+#: app/pdb/plug-in-compat-cmds.c:3254 app/pdb/plug-in-compat-cmds.c:3297
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pixelar"
 
-#: app/pdb/plug-in-compat-cmds.c:3349
+#: app/pdb/plug-in-compat-cmds.c:3348
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plasma"
 
-#: app/pdb/plug-in-compat-cmds.c:3403
+#: app/pdb/plug-in-compat-cmds.c:3402
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Coordenadas polares"
 
-#: app/pdb/plug-in-compat-cmds.c:3443
+#: app/pdb/plug-in-compat-cmds.c:3442
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Eliminar ojos rojos"
 
-#: app/pdb/plug-in-compat-cmds.c:3496
+#: app/pdb/plug-in-compat-cmds.c:3495
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Desordenar aleatoriamente"
 
-#: app/pdb/plug-in-compat-cmds.c:3549
+#: app/pdb/plug-in-compat-cmds.c:3548
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Escoger aleatoriamente"
 
-#: app/pdb/plug-in-compat-cmds.c:3602
+#: app/pdb/plug-in-compat-cmds.c:3601
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Derretir aleatoriamente"
 
-#: app/pdb/plug-in-compat-cmds.c:3677
+#: app/pdb/plug-in-compat-cmds.c:3676
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "Ruido RGB"
 
-#: app/pdb/plug-in-compat-cmds.c:3747
+#: app/pdb/plug-in-compat-cmds.c:3746
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Rizado"
 
-#: app/pdb/plug-in-compat-cmds.c:3872
+#: app/pdb/plug-in-compat-cmds.c:3871
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Ruidoso"
 
-#: app/pdb/plug-in-compat-cmds.c:3916
+#: app/pdb/plug-in-compat-cmds.c:3915
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Desenfoque gaussiano selectivo"
 
-#: app/pdb/plug-in-compat-cmds.c:3960
+#: app/pdb/plug-in-compat-cmds.c:3959
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Semiaplanar"
 
-#: app/pdb/plug-in-compat-cmds.c:4003
+#: app/pdb/plug-in-compat-cmds.c:4002
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Desplazar"
 
-#: app/pdb/plug-in-compat-cmds.c:4108
+#: app/pdb/plug-in-compat-cmds.c:4107
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Seno"
 
-#: app/pdb/plug-in-compat-cmds.c:4156
+#: app/pdb/plug-in-compat-cmds.c:4155
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sóbel"
 
-#: app/pdb/plug-in-compat-cmds.c:4204
+#: app/pdb/plug-in-compat-cmds.c:4203
 msgctxt "undo-type"
 msgid "Softglow"
 msgstr "Resplandor suave"
 
-#: app/pdb/plug-in-compat-cmds.c:4265
+#: app/pdb/plug-in-compat-cmds.c:4264
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Ruido sólido"
 
-#: app/pdb/plug-in-compat-cmds.c:4309
+#: app/pdb/plug-in-compat-cmds.c:4308
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Extender"
 
-#: app/pdb/plug-in-compat-cmds.c:4350
+#: app/pdb/plug-in-compat-cmds.c:4349
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Umbral alfa"
 
-#: app/pdb/plug-in-compat-cmds.c:4396
+#: app/pdb/plug-in-compat-cmds.c:4395
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Enfocar (Máscara de desenfoque)"
 
-#: app/pdb/plug-in-compat-cmds.c:4442
+#: app/pdb/plug-in-compat-cmds.c:4441
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Vídeo"
 
-#: app/pdb/plug-in-compat-cmds.c:4479
+#: app/pdb/plug-in-compat-cmds.c:4478
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Invertir valor"
 
-#: app/pdb/plug-in-compat-cmds.c:4580
+#: app/pdb/plug-in-compat-cmds.c:4579
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Propagar valor"
 
-#: app/pdb/plug-in-compat-cmds.c:4627
+#: app/pdb/plug-in-compat-cmds.c:4626
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Dilatar"
 
-#: app/pdb/plug-in-compat-cmds.c:4674
+#: app/pdb/plug-in-compat-cmds.c:4673
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Erosionar"
 
-#: app/pdb/plug-in-compat-cmds.c:4737
+#: app/pdb/plug-in-compat-cmds.c:4736
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Ondas"
 
-#: app/pdb/plug-in-compat-cmds.c:4785
+#: app/pdb/plug-in-compat-cmds.c:4784
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Girar y comprimir"
 
-#: app/pdb/plug-in-compat-cmds.c:4837
+#: app/pdb/plug-in-compat-cmds.c:4836
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Viento"
 
-#: app/pdb/resource-cmds.c:465
+#: app/pdb/resource-cmds.c:467
 #, c-format
 msgid "Resource '%s' is not renamable"
 msgstr "El recurso «%s» no es renombrable"
 
-#: app/pdb/text-layer-cmds.c:96
+#: app/pdb/text-layer-cmds.c:98
 #, c-format
 msgid "Failed to create text layer"
 msgstr "No se ha podido crear la capa de texto"
 
-#: app/pdb/text-layer-cmds.c:160 app/pdb/text-layer-cmds.c:298
-#: app/pdb/text-layer-cmds.c:363 app/pdb/text-layer-cmds.c:422
-#: app/pdb/text-layer-cmds.c:480 app/pdb/text-layer-cmds.c:538
-#: app/pdb/text-layer-cmds.c:596 app/pdb/text-layer-cmds.c:654
-#: app/pdb/text-layer-cmds.c:712 app/pdb/text-layer-cmds.c:768
-#: app/pdb/text-layer-cmds.c:826 app/pdb/text-layer-cmds.c:884
-#: app/pdb/text-layer-cmds.c:942 app/pdb/text-layer-cmds.c:977
+#: app/pdb/text-layer-cmds.c:162 app/pdb/text-layer-cmds.c:300
+#: app/pdb/text-layer-cmds.c:365 app/pdb/text-layer-cmds.c:424
+#: app/pdb/text-layer-cmds.c:482 app/pdb/text-layer-cmds.c:540
+#: app/pdb/text-layer-cmds.c:598 app/pdb/text-layer-cmds.c:656
+#: app/pdb/text-layer-cmds.c:714 app/pdb/text-layer-cmds.c:770
+#: app/pdb/text-layer-cmds.c:828 app/pdb/text-layer-cmds.c:886
+#: app/pdb/text-layer-cmds.c:944 app/pdb/text-layer-cmds.c:979
 msgid "Set text layer attribute"
 msgstr "Establecer el atributo de la capa de texto"
 
-#: app/pdb/text-layer-cmds.c:229
+#: app/pdb/text-layer-cmds.c:231
 msgid "Set text layer markup"
 msgstr "Establecer el marcado de la capa de texto"
 
@@ -22213,11 +22213,11 @@ msgstr "Rango de destino"
 msgid "Gray Handling"
 msgstr "Manipulación de color gris"
 
-#: app/propgui/gimppropgui-color-to-alpha.c:107
+#: app/propgui/gimppropgui-color-to-alpha.c:113
 msgid "Pick farthest full-transparency color"
 msgstr "Seleccionar el color de gran transparencia más lejano"
 
-#: app/propgui/gimppropgui-color-to-alpha.c:128
+#: app/propgui/gimppropgui-color-to-alpha.c:134
 msgid "Pick nearest full-opacity color"
 msgstr "Seleccionar el color de gran opacidad más cercano"
 
@@ -28083,64 +28083,68 @@ msgid_plural "%d items selected"
 msgstr[0] "%d elemento seleccionado"
 msgstr[1] "%d elementos seleccionados"
 
-#: app/widgets/gimpitemtreeview.c:2640 app/widgets/gimpitemtreeview.c:2685
+#: app/widgets/gimpitemtreeview.c:2631 app/widgets/gimpitemtreeview.c:2684
+msgid "Cannot reorder a filter that is being edited."
+msgstr "No se puede reordenar un filtro que se está editando."
+
+#: app/widgets/gimpitemtreeview.c:2648 app/widgets/gimpitemtreeview.c:2701
 msgid "Reorder filter"
 msgstr "Reordenar filtro"
 
-#: app/widgets/gimpitemtreeview.c:2730
+#: app/widgets/gimpitemtreeview.c:2746
 msgid "Effects from active tools can not be merged."
 msgstr "Los efectos de las herramientas activas no se pueden fusionar."
 
-#: app/widgets/gimpitemtreeview.c:2784
+#: app/widgets/gimpitemtreeview.c:2800
 msgid "Remove filter"
 msgstr "Eliminar filtro"
 
-#: app/widgets/gimpitemtreeview.c:3306
+#: app/widgets/gimpitemtreeview.c:3322
 msgid "No layer set stored"
 msgstr "No hay ningún conjunto de capas almacenado"
 
-#: app/widgets/gimpitemtreeview.c:3328
+#: app/widgets/gimpitemtreeview.c:3344
 msgid "New layer set's name"
 msgstr "Nombre del nuevo conjunto de capas"
 
-#: app/widgets/gimpitemtreeview.c:3370 app/widgets/gimpitemtreeview.c:3385
+#: app/widgets/gimpitemtreeview.c:3386 app/widgets/gimpitemtreeview.c:3401
 msgid "Select layers by text search"
 msgstr "Seleccionar capas por búsqueda de texto"
 
-#: app/widgets/gimpitemtreeview.c:3372 app/widgets/gimpitemtreeview.c:3387
+#: app/widgets/gimpitemtreeview.c:3388 app/widgets/gimpitemtreeview.c:3403
 msgid "Text search"
 msgstr "Búsqueda de texto"
 
-#: app/widgets/gimpitemtreeview.c:3391
+#: app/widgets/gimpitemtreeview.c:3407
 msgid "Select layers by glob patterns"
 msgstr "Seleccionar capas por patrones glob"
 
-#: app/widgets/gimpitemtreeview.c:3393
+#: app/widgets/gimpitemtreeview.c:3409
 msgid "Glob pattern search"
 msgstr "Búsqueda de patrón glob"
 
-#: app/widgets/gimpitemtreeview.c:3397
+#: app/widgets/gimpitemtreeview.c:3413
 msgid "Select layers by regular expressions"
 msgstr "Seleccionar capas por expresiones regulares"
 
-#: app/widgets/gimpitemtreeview.c:3399
+#: app/widgets/gimpitemtreeview.c:3415
 msgid "Regular Expression search"
 msgstr "Búsqueda por expresiones regulares"
 
 # Viendo el programa, parece más bien "cizalla". FVD
-#: app/widgets/gimpitemtreeview.c:3454
+#: app/widgets/gimpitemtreeview.c:3470
 msgid "search"
 msgstr "buscar"
 
-#: app/widgets/gimpitemtreeview.c:3455
+#: app/widgets/gimpitemtreeview.c:3471
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3455
+#: app/widgets/gimpitemtreeview.c:3471
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimpitemtreeview.c:3624
+#: app/widgets/gimpitemtreeview.c:3640
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Expresión regular no válida: %s\n"
@@ -29066,7 +29070,7 @@ msgstr ""
 "¡Este archivo XCF está corrupto! No he podido salvar de él ni siquiera una "
 "imagen parcial."
 
-#: app/xcf/xcf-load.c:1157
+#: app/xcf/xcf-load.c:1159
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
