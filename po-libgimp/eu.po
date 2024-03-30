@@ -12,8 +12,8 @@
 msgid ""
 msgstr "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-19 19:37+0000\n"
-"PO-Revision-Date: 2024-02-25 10:00+0100\n"
+"POT-Creation-Date: 2024-03-25 21:26+0000\n"
+"PO-Revision-Date: 2024-03-30 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -253,22 +253,22 @@ msgid "Allowed values:"
 msgstr "Onartutako balioak:"
 
 #. procedure executed successfully
-#: libgimp/gimppdb.c:336
+#: libgimp/gimppdb.c:337
 msgid "success"
 msgstr "ongi burutu da"
 
 #. procedure execution failed
-#: libgimp/gimppdb.c:340
+#: libgimp/gimppdb.c:341
 msgid "execution error"
 msgstr "exekuzioko errorea"
 
 #. procedure called incorrectly
-#: libgimp/gimppdb.c:344
+#: libgimp/gimppdb.c:345
 msgid "calling error"
 msgstr "deiaren errorea"
 
 #. procedure execution cancelled
-#: libgimp/gimppdb.c:348
+#: libgimp/gimppdb.c:349
 msgid "cancelled"
 msgstr "bertan behera utzita"
 
@@ -360,45 +360,45 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "prozedura %d bat dator kontsultarekin"
 msgstr[1] "%d prozedura bat datoz kontsultarekin"
 
-#: libgimp/gimpprocedure.c:2056
+#: libgimp/gimpprocedure.c:2068
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "'%s' prozedurak ez du itzulerako baliorik itzuli"
 
-#: libgimp/gimpprocedure.c:2183
+#: libgimp/gimpprocedure.c:2195
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr "'%s' prozedurak itzulerako '%s' (#%d) balioaren okerreko balio mota itzuli du. %s espero zen, baina %s jaso da."
 
-#: libgimp/gimpprocedure.c:2195
+#: libgimp/gimpprocedure.c:2207
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
 "'%s' (#%d). Expected %s, got %s."
 msgstr "'%s' prozedurak itzulerako '%s' (#%d) argumentuaren okerreko balio mota itzuli du. %s espero zen, baina %s jaso da."
 
-#: libgimp/gimpprocedure.c:2230
+#: libgimp/gimpprocedure.c:2242
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr "'%s' prozedurak '%s' itzuli du '%s' (#%d, %s mota) itzulerako balio gisa. Balio hau barrutiz kanpo dago."
 
-#: libgimp/gimpprocedure.c:2244
+#: libgimp/gimpprocedure.c:2256
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr "'%1$s' prozedurak '%3$s' (#%4$d, %5$s mota) argumentua '%2$s' balioarekin deitu du. Balio hau barrutiz kanpo dago."
 
-#: libgimp/gimpprocedure.c:2288
+#: libgimp/gimpprocedure.c:2300
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "'%s' prozedurak baliogabeko UTF-8 kate bat itzuli du '%s' argumenturako."
 
-#: libgimp/gimpprocedure.c:2298
+#: libgimp/gimpprocedure.c:2310
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -1406,18 +1406,18 @@ msgstr "Bat ere ez (hedatua)"
 
 #: libgimpbase/gimpbaseenums.c:1475
 msgctxt "repeat-mode"
-msgid "Sawtooth wave"
-msgstr "Uhin horzduna"
+msgid "None (truncate)"
+msgstr "Bat ere ez (moztu)"
 
 #: libgimpbase/gimpbaseenums.c:1476
 msgctxt "repeat-mode"
-msgid "Triangular wave"
-msgstr "Uhin triangeluarra"
+msgid "Sawtooth wave"
+msgstr "Uhin horzduna"
 
 #: libgimpbase/gimpbaseenums.c:1477
 msgctxt "repeat-mode"
-msgid "Truncate"
-msgstr "Trunkatu"
+msgid "Triangular wave"
+msgstr "Uhin triangeluarra"
 
 #: libgimpbase/gimpbaseenums.c:1539
 msgctxt "run-mode"
@@ -1634,22 +1634,22 @@ msgstr "Metadatuak fitxategi lokaletatik soilik karga daitezke"
 msgid "Can save metadata only to local files"
 msgstr "Metadatuak fitxategi lokaletan soilik gorde daitezke"
 
-#: libgimpbase/gimpmetadata.c:1347
+#: libgimpbase/gimpmetadata.c:1348
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "EXIF datuen baliogabeko tamaina."
 
-#: libgimpbase/gimpmetadata.c:1376
+#: libgimpbase/gimpmetadata.c:1393
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "EXIF datuen analisiak huts egin du."
 
-#: libgimpbase/gimpmetadata.c:1426
+#: libgimpbase/gimpmetadata.c:1445
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "IPTC datuen analisiak huts egin du."
 
-#: libgimpbase/gimpmetadata.c:1474
+#: libgimpbase/gimpmetadata.c:1493
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "XMP datuen analisiak huts egin du."
@@ -1965,11 +1965,11 @@ msgstr "'%s' tokena analizatzen zen bitartean: %s"
 msgid "fatal parse error"
 msgstr "analisi-errore larria"
 
-#: libgimpconfig/gimpconfig-path.c:506
+#: libgimpconfig/gimpconfig-path.c:513
 msgid "File has no path representation"
 msgstr "Fitxategiak ez dauka bide-ordezkatzerik"
 
-#: libgimpconfig/gimpconfig-path.c:593
+#: libgimpconfig/gimpconfig-path.c:600
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Ezin da ${%s} zabaldu"
@@ -2956,75 +2956,75 @@ msgstr "Aces RRT"
 #. Translators: "Clip Warning" is the name of a (color) display filter
 #. * that highlights pixels outside of the color space range.
 #. * Shown as a label description.
-#: modules/display-filter-clip-warning.c:124
+#: modules/display-filter-clip-warning.c:125
 msgid "Clip warning color display filter"
 msgstr "Mozte-abisuko kolorea bistaratzeko iragazkia"
 
-#: modules/display-filter-clip-warning.c:161
+#: modules/display-filter-clip-warning.c:166
 msgid "Show shadows"
 msgstr "Erakutsi itzalak"
 
-#: modules/display-filter-clip-warning.c:162
+#: modules/display-filter-clip-warning.c:167
 msgid "Show warning for pixels with a negative component"
 msgstr "Erakutsi abisua osagai negatiboa duten pixeletarako"
 
-#: modules/display-filter-clip-warning.c:168
+#: modules/display-filter-clip-warning.c:173
 msgid "Shadows color"
 msgstr "Itzalen kolorea"
 
-#: modules/display-filter-clip-warning.c:169
+#: modules/display-filter-clip-warning.c:174
 msgid "Shadows warning color"
 msgstr "Itzalen abisuaren kolorea"
 
-#: modules/display-filter-clip-warning.c:181
+#: modules/display-filter-clip-warning.c:185
 msgid "Show highlights"
 msgstr "Erakutsi distirak"
 
-#: modules/display-filter-clip-warning.c:182
+#: modules/display-filter-clip-warning.c:186
 msgid "Show warning for pixels with a component greater than one"
 msgstr "Erakutsi abisua bat baino handiagoa den osagaia duten pixeletarako"
 
-#: modules/display-filter-clip-warning.c:188
+#: modules/display-filter-clip-warning.c:194
 msgid "Highlights color"
 msgstr "Distiren kolorea"
 
-#: modules/display-filter-clip-warning.c:189
+#: modules/display-filter-clip-warning.c:195
 msgid "Highlights warning color"
 msgstr "Distiren abisuaren kolorea"
 
-#: modules/display-filter-clip-warning.c:201
+#: modules/display-filter-clip-warning.c:206
 msgid "Show bogus"
 msgstr "Erakutsi faltsuak"
 
-#: modules/display-filter-clip-warning.c:202
+#: modules/display-filter-clip-warning.c:207
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr "Erakutsi abisua osagai mugagabea edo NaN osagaia duten pixeletarako"
 
-#: modules/display-filter-clip-warning.c:208
+#: modules/display-filter-clip-warning.c:215
 msgid "Bogus color"
 msgstr "Faltsuen kolorea"
 
-#: modules/display-filter-clip-warning.c:209
+#: modules/display-filter-clip-warning.c:216
 msgid "Bogus warning color"
 msgstr "Faltsuen abisuaren kolorea"
 
-#: modules/display-filter-clip-warning.c:221
+#: modules/display-filter-clip-warning.c:227
 msgid "Include alpha component"
 msgstr "Sartu alfa osagaia"
 
-#: modules/display-filter-clip-warning.c:222
+#: modules/display-filter-clip-warning.c:228
 msgid "Include alpha component in the warning"
 msgstr "Sartu alfa osagaia abisuan"
 
-#: modules/display-filter-clip-warning.c:228
+#: modules/display-filter-clip-warning.c:234
 msgid "Include transparent pixels"
 msgstr "Sartu pixel gardenak"
 
-#: modules/display-filter-clip-warning.c:229
+#: modules/display-filter-clip-warning.c:235
 msgid "Include fully transparent pixels in the warning"
 msgstr "Sartu pixel erabat gardenak abisuan"
 
-#: modules/display-filter-clip-warning.c:233
+#: modules/display-filter-clip-warning.c:239
 msgid "Clip Warning"
 msgstr "Mozte-abisua"
 
@@ -3075,6 +3075,10 @@ msgstr "Kontraste-zikloak"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrastea"
+
+#~ msgctxt "repeat-mode"
+#~ msgid "Truncate"
+#~ msgstr "Trunkatu"
 
 #~ msgid "Brush Selection"
 #~ msgstr "Brotxaren hautapena"
