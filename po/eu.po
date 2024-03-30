@@ -12,8 +12,8 @@
 msgid ""
 msgstr "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-19 19:36+0000\n"
-"PO-Revision-Date: 2024-02-25 20:00+0100\n"
+"POT-Creation-Date: 2024-03-26 16:58+0000\n"
+"PO-Revision-Date: 2024-03-30 20:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -2410,7 +2410,7 @@ msgstr "240 Segundoak"
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
-#: app/tools/gimpfiltertool.c:367 app/tools/gimpforegroundselecttool.c:331
+#: app/tools/gimpfiltertool.c:358 app/tools/gimpforegroundselecttool.c:331
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:465 app/widgets/gimpcontrollereditor.c:662
@@ -2480,9 +2480,9 @@ msgstr "Sartu markatzailearen deskribapen bat"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1213 app/dialogs/welcome-dialog.c:1263
-#: app/display/gimpdisplayshell-dnd.c:630 app/widgets/gimplayertreeview.c:813
-#: app/widgets/gimptoolbox.c:752 app/widgets/gimptoolbox-dnd.c:178
+#: app/dialogs/welcome-dialog.c:1247 app/display/gimpdisplayshell-dnd.c:630
+#: app/widgets/gimplayertreeview.c:813 app/widgets/gimptoolbox.c:752
+#: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3090,29 +3090,29 @@ msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "Bilatu komandoak gako-hitzaren bidez, eta exekutatu komandoak"
 
-#: app/actions/dialogs-actions.c:376
+#: app/actions/dialogs-actions.c:377
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
 msgstr "Kudeatu _hedapenak"
 
-#: app/actions/dialogs-actions.c:378
+#: app/actions/dialogs-actions.c:379
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
 msgstr "Kudeatu hedapenak: bilatu, instalatu, desinstalatu, eguneratu."
 
-#: app/actions/dialogs-actions.c:441
+#: app/actions/dialogs-actions.c:443
 msgid "Tool_box"
 msgstr "Tresna-_kutxa"
 
-#: app/actions/dialogs-actions.c:442
+#: app/actions/dialogs-actions.c:444
 msgid "Raise the toolbox"
 msgstr "Igo tresna-kutxa"
 
-#: app/actions/dialogs-actions.c:446
+#: app/actions/dialogs-actions.c:448
 msgid "New Tool_box"
 msgstr "Tresna-kut_xa berria"
 
-#: app/actions/dialogs-actions.c:447
+#: app/actions/dialogs-actions.c:449
 msgid "Create a new toolbox"
 msgstr "Sortu tresna-kutxa berria"
 
@@ -3951,7 +3951,7 @@ msgctxt "error-console-action"
 msgid "Select all error messages"
 msgstr "Hautatu errore guztiak"
 
-#: app/actions/error-console-actions.c:52 menus/error-console-menu.ui:12
+#: app/actions/error-console-actions.c:52 menus/error-console-menu.ui:15
 msgctxt "error-console-action"
 msgid "_Highlight"
 msgstr "_Nabarmendu"
@@ -4960,25 +4960,25 @@ msgstr "Erakutsi berriro erabilitako azken pluginaren elkarrizketa-koadroa"
 msgid "%s..."
 msgstr "%s..."
 
-#: app/actions/filters-actions.c:1178
+#: app/actions/filters-actions.c:1179
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Erre_pikatu \"%s\""
 
-#: app/actions/filters-actions.c:1179
+#: app/actions/filters-actions.c:1180
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Erakutsi _berriro \"%s\""
 
-#: app/actions/filters-actions.c:1217
+#: app/actions/filters-actions.c:1218
 msgid "Repeat Last"
 msgstr "Errepikatu azkena"
 
-#: app/actions/filters-actions.c:1219
+#: app/actions/filters-actions.c:1220
 msgid "Re-Show Last"
 msgstr "Erakutsi berriro azkena"
 
-#: app/actions/filters-actions.c:1222 app/actions/filters-actions.c:1224
+#: app/actions/filters-actions.c:1223 app/actions/filters-actions.c:1225
 msgid "No last used filters"
 msgstr "Ez dago erabilitako azken iragazkien zerrendarik"
 
@@ -5456,7 +5456,7 @@ msgstr "Editatu gradiente hau"
 msgid "Save '%s' as POV-Ray"
 msgstr "Gorde \"%s\" POV-Ray gisa"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:891
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:893
 msgctxt "help-action"
 msgid "_Help"
 msgstr "La_guntza"
@@ -7353,7 +7353,7 @@ msgstr "Berrezarri iragazki guztiak"
 #: app/dialogs/preferences-dialog.c:1080 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
-#: app/tools/gimpfiltertool.c:366 app/tools/gimptransformgridtool.c:1261
+#: app/tools/gimpfiltertool.c:357 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:464 app/widgets/gimpcolordisplayeditor.c:332
 msgid "_Reset"
 msgstr "_Berrezarri"
@@ -7803,7 +7803,7 @@ msgstr "Ireki testu-fitxategia (UTF-8)"
 
 #: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/vectors-import-dialog.c:93 app/dialogs/welcome-dialog.c:715
+#: app/dialogs/vectors-import-dialog.c:93 app/dialogs/welcome-dialog.c:717
 #: app/widgets/gimpiconpicker.c:489 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:716
 msgid "_Open"
@@ -9880,7 +9880,7 @@ msgstr "Ireki pantaila"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
-#: app/tools/gimpfiltertool.c:368 app/widgets/gimpcolordialog.c:466
+#: app/tools/gimpfiltertool.c:359 app/widgets/gimpcolordialog.c:466
 #: app/widgets/gimpcontrollereditor.c:663
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:178 app/widgets/gimpmodifierseditor.c:689
@@ -9924,7 +9924,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Aldatu aurreko irudira"
 
-#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:880
+#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:882
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "_Fitxen kokalekua"
@@ -10250,7 +10250,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Errorea '%%s' analizatzean: lerroak %s karaktere baino gehiago ditu."
 
 #: app/config/gimpconfig-file.c:153 app/config/gimpconfig-file.c:197
-#: app/core/gimp-tags.c:145 app/gui/themes.c:513
+#: app/core/gimp-tags.c:145 app/gui/themes.c:522
 #: app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -10279,7 +10279,7 @@ msgstr "Geruza"
 
 #: app/config/gimpdialogconfig.c:418 app/core/gimpchannel.c:256
 #: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:124
-#: app/operations/gimpoperationthreshold.c:90
+#: app/operations/gimpoperationthreshold.c:93
 #: app/widgets/gimpchanneltreeview.c:332
 msgid "Channel"
 msgstr "Kanala"
@@ -11988,7 +11988,7 @@ msgctxt "undo-type"
 msgid "Text"
 msgstr "Testua"
 
-#: app/core/core-enums.c:1339 app/core/gimpdrawable-transform.c:711
+#: app/core/core-enums.c:1339 app/core/gimpdrawable-transform.c:717
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Eraldatu"
@@ -12527,7 +12527,7 @@ msgstr "Ezin izan da “%s” prozesu haurra exekutatu (%s)"
 msgid "tags-locale:C"
 msgstr "tips-locale:eu"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:525
+#: app/core/gimp-tags.c:156 app/gui/themes.c:534
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Errorea '%s' ixtean: %s"
@@ -12843,7 +12843,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Biratu kanala"
 
-#: app/core/gimpchannel.c:263 app/core/gimpdrawable-transform.c:1039
+#: app/core/gimpchannel.c:263 app/core/gimpdrawable-transform.c:1045
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Eraldatu kanala"
@@ -13162,22 +13162,22 @@ msgstr "Desplazatu marrazgaia"
 msgid "Not enough points to stroke"
 msgstr "Ez dago nahikoa puntu trazatzeko"
 
-#: app/core/gimpdrawable-transform.c:798 app/tools/gimpfliptool.c:135
+#: app/core/gimpdrawable-transform.c:804 app/tools/gimpfliptool.c:135
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Irauli"
 
-#: app/core/gimpdrawable-transform.c:881 app/tools/gimprotatetool.c:130
+#: app/core/gimpdrawable-transform.c:887 app/tools/gimprotatetool.c:130
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Biratu"
 
-#: app/core/gimpdrawable-transform.c:1037 app/core/gimplayer.c:434
+#: app/core/gimpdrawable-transform.c:1043 app/core/gimplayer.c:434
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Eraldatu geruza"
 
-#: app/core/gimpdrawable-transform.c:1050
+#: app/core/gimpdrawable-transform.c:1056
 msgid "Transformation"
 msgstr "Eraldatzea"
 
@@ -13658,20 +13658,20 @@ msgctxt "undo-type"
 msgid "Delete Colormap entry"
 msgstr "Ezabatu kolore-maparen sarrera"
 
-#: app/core/gimpimage-convert-indexed.c:799
+#: app/core/gimpimage-convert-indexed.c:855
 msgid "Cannot convert image: palette is empty."
 msgstr "Ezin da irudia bihurtu, paleta hutsik dagoelako."
 
-#: app/core/gimpimage-convert-indexed.c:811
+#: app/core/gimpimage-convert-indexed.c:867
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Bihurtu irudia kolore indexatuetara"
 
-#: app/core/gimpimage-convert-indexed.c:898
+#: app/core/gimpimage-convert-indexed.c:958
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Kolore indexatuetara bihurtzen (2. urratsa)"
 
-#: app/core/gimpimage-convert-indexed.c:947
+#: app/core/gimpimage-convert-indexed.c:1007
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Kolore indexatuetara bihurtzen (3. urratsa)"
 
@@ -13776,7 +13776,7 @@ msgstr "Ezin da geruza ikusezin bat beherantz batu."
 msgid "Cannot merge down to a layer group."
 msgstr "Ezin da geruzen talde batean batu."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2745
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2762
 msgid "The layer to merge down to is locked."
 msgstr "Batzea nahi den helburuko geruza blokeatuta dago."
 
@@ -13794,12 +13794,12 @@ msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Batu geruza taldea"
 
-#: app/core/gimpimage-merge.c:499
+#: app/core/gimpimage-merge.c:503
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Batu ikusgai dauden bideak"
 
-#: app/core/gimpimage-merge.c:535
+#: app/core/gimpimage-merge.c:539
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr "Ez daude batzeko behar adina bide ikusgai. Gutxienez bi behar dira."
 
@@ -14879,7 +14879,7 @@ msgstr "<u>Argitalpenaren iruzkina</u>: <i>%s</i>"
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Deskargatu GIMP %s (argitaratze-data: %s)\n"
 
-#: app/dialogs/about-dialog.c:422 app/dialogs/about-dialog.c:443
+#: app/dialogs/about-dialog.c:422 app/dialogs/about-dialog.c:445
 msgid "Check for updates"
 msgstr "Begiratu eguneratzeak dauden"
 
@@ -14887,16 +14887,16 @@ msgstr "Begiratu eguneratzeak dauden"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:462
+#: app/dialogs/about-dialog.c:464
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Azken egiaztatze-data: %s, ordua: %s"
 
-#: app/dialogs/about-dialog.c:689
+#: app/dialogs/about-dialog.c:691
 msgid "GIMP is brought to you by"
 msgstr "GIMP honek ekartzen dizu:"
 
-#: app/dialogs/about-dialog.c:765
+#: app/dialogs/about-dialog.c:767
 #, c-format
 msgid ""
 "This is an unstable development release\n"
@@ -15409,7 +15409,7 @@ msgstr "Batu _talde aktiboekin soilik"
 msgid "_Discard invisible layers"
 msgstr "_Baztertu geruza ikusezinak"
 
-#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:700
+#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:702
 msgid "Create a New Image"
 msgstr "Sortu irudi berria"
 
@@ -15440,7 +15440,7 @@ msgid "Image Properties"
 msgstr "Irudiaren propietateak"
 
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
-#: app/dialogs/welcome-dialog.c:188 app/tools/gimpcolorpickertool.c:351
+#: app/dialogs/welcome-dialog.c:187 app/tools/gimpcolorpickertool.c:351
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:746
 #: app/widgets/gimpcontrollerlist.c:625 app/widgets/gimpcriticaldialog.c:206
 #: app/widgets/gimpcriticaldialog.c:228 app/widgets/gimpsettingsbox.c:645
@@ -15834,7 +15834,7 @@ msgstr "Berrezarri hobespen guztiak"
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "Nahi duzu hobespen guztiak balio lehenetsietara berrezartzea?"
 
-#: app/dialogs/preferences-dialog.c:303 app/dialogs/welcome-dialog.c:355
+#: app/dialogs/preferences-dialog.c:303 app/dialogs/welcome-dialog.c:353
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "GIMP berrabiarazi beharko duzu aldaketak eragina izan dezaten:"
 
@@ -17543,16 +17543,16 @@ msgstr "Sakatu '%s' aldaketa guztiak baztertu eta irudi guztiak ixteko."
 msgid "_Discard Changes"
 msgstr "_Baztertu aldaketak"
 
-#: app/dialogs/quit-dialog.c:524
+#: app/dialogs/quit-dialog.c:526
 #, c-format
 msgid "Exported to %s"
 msgstr "Esportatu hona: %s"
 
-#: app/dialogs/quit-dialog.c:625
+#: app/dialogs/quit-dialog.c:627
 msgid "Save this image"
 msgstr "Gorde irudi hau"
 
-#: app/dialogs/quit-dialog.c:627
+#: app/dialogs/quit-dialog.c:629
 msgid "Save as"
 msgstr "Gorde honela"
 
@@ -17717,7 +17717,7 @@ msgid "_Next Tip"
 msgstr "_Hurrengo aholkua"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1081
+#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1093
 msgid "Learn more"
 msgstr "Ikasi gehiago"
 
@@ -17795,35 +17795,30 @@ msgid "Lock path _visibility"
 msgstr "Blokeatu bidearen _ikusgaitasuna"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:182
+#: app/dialogs/welcome-dialog.c:181
 #, c-format
 msgid "Welcome to GIMP %s"
 msgstr "Ongi etorri GIMP %s bertsiora"
 
-#: app/dialogs/welcome-dialog.c:227 app/dialogs/welcome-dialog.c:228
+#: app/dialogs/welcome-dialog.c:229 app/dialogs/welcome-dialog.c:230
 msgid "Welcome"
 msgstr "Ongi etorri"
 
-#: app/dialogs/welcome-dialog.c:239 app/dialogs/welcome-dialog.c:240
+#: app/dialogs/welcome-dialog.c:244 app/dialogs/welcome-dialog.c:245
 msgid "Personalize"
 msgstr "Pertsonalizatu"
 
-#: app/dialogs/welcome-dialog.c:251 app/dialogs/welcome-dialog.c:252
+#: app/dialogs/welcome-dialog.c:256 app/dialogs/welcome-dialog.c:257
 msgid "Contribute"
 msgstr "Lagundu"
 
-#: app/dialogs/welcome-dialog.c:263 app/dialogs/welcome-dialog.c:264
+#: app/dialogs/welcome-dialog.c:268 app/dialogs/welcome-dialog.c:269
 msgid "Create"
 msgstr "Sortu"
 
-#: app/dialogs/welcome-dialog.c:279 app/dialogs/welcome-dialog.c:280
+#: app/dialogs/welcome-dialog.c:284 app/dialogs/welcome-dialog.c:285
 msgid "Release Notes"
 msgstr "Argitalpenaren oharrak"
-
-#: app/dialogs/welcome-dialog.c:291
-msgid ""
-"Show Welcome Dialog On Start (You can show it again from the \"Help\" menu)"
-msgstr "Erakutsi ongi etorriko elkarrizketa-koadroa abioan (berriro erakusteko, joan \"Laguntza\" menura)"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:416
@@ -17897,75 +17892,80 @@ msgstr "Batu menua eta titulu-barra (berrabiarazi behar da)"
 msgid "Enable check for updates (requires internet)"
 msgstr "Gaitu eguneratzeak bilatzea (internet behar da)"
 
-#: app/dialogs/welcome-dialog.c:703
+#: app/dialogs/welcome-dialog.c:705
 msgid "C_reate"
 msgstr "S_ortu"
 
-#: app/dialogs/welcome-dialog.c:712
+#: app/dialogs/welcome-dialog.c:714
 msgid "Open an Existing Image"
 msgstr "Ireki lehendik dagoen irudi bat"
 
 #. Recent Files
-#: app/dialogs/welcome-dialog.c:724
+#: app/dialogs/welcome-dialog.c:726
 msgid "Recent Images"
 msgstr "Azken irudiak"
 
-#: app/dialogs/welcome-dialog.c:819
+#: app/dialogs/welcome-dialog.c:821
 msgid "O_pen Selected Images"
 msgstr "I_reki hautatutako irudiak"
 
-#: app/dialogs/welcome-dialog.c:846
+#: app/dialogs/welcome-dialog.c:830
+msgid ""
+"Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
+msgstr "Erakutsi abioan (ongi etorriko elkarrizketa-koadroa berriro erakusteko, joan \"Laguntza\" menura)"
+
+#: app/dialogs/welcome-dialog.c:858
 #, c-format
 msgid "Ways to contribute"
 msgstr "Laguntzeko moduak"
 
-#: app/dialogs/welcome-dialog.c:855
+#: app/dialogs/welcome-dialog.c:867
 msgid "Report Bugs"
 msgstr "Eman akatsen berri"
 
-#: app/dialogs/welcome-dialog.c:857
+#: app/dialogs/welcome-dialog.c:869
 #, c-format
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
 "encounter is very important to the development."
 msgstr "Edozein aplikaziok bezala, GIMPek ere akatsak ditu. Akats horiek jakinaraztea garrantzitsua da GIMP garatzeko."
 
-#: app/dialogs/welcome-dialog.c:870
+#: app/dialogs/welcome-dialog.c:882
 msgid "Write Code"
 msgstr "Idatzi kodea"
 
-#: app/dialogs/welcome-dialog.c:872
+#: app/dialogs/welcome-dialog.c:884
 #, c-format
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
 "contributor."
 msgstr "Garatzaileen webgunean kodearen bidez nola lagundu ikasi dezakezu."
 
-#: app/dialogs/welcome-dialog.c:884
+#: app/dialogs/welcome-dialog.c:896
 msgid "Translate"
 msgstr "Itzuli"
 
-#: app/dialogs/welcome-dialog.c:886
+#: app/dialogs/welcome-dialog.c:898
 #, c-format
 msgid "Contact the respective translation team for your language"
 msgstr "Hitz egin zure hizkuntzaren itzulpen-taldearekin"
 
-#: app/dialogs/welcome-dialog.c:898
+#: app/dialogs/welcome-dialog.c:910
 msgid "Donate"
 msgstr "Lagundu diruz"
 
-#: app/dialogs/welcome-dialog.c:900
+#: app/dialogs/welcome-dialog.c:912
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr "Dirua ematea garrantzitsua da, horrela GIMPek iraun ahal izango baitu."
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:945
+#: app/dialogs/welcome-dialog.c:957
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "GIMP %s bertsioaren oharrak"
 
-#: app/dialogs/welcome-dialog.c:1056
+#: app/dialogs/welcome-dialog.c:1068
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "Egin klik %s buleta bat duten elementuetan bisitaldi bat egiteko."
@@ -18276,8 +18276,8 @@ msgid "Drop New Path"
 msgstr "Bota bide berria"
 
 #: app/display/gimpdisplayshell-dnd.c:365 app/tools/gimpbucketfilltool.c:610
-#: app/tools/gimpcagetool.c:243 app/tools/gimpfiltertool.c:310
-#: app/tools/gimpgradienttool.c:276 app/tools/gimpselectiontool.c:567
+#: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
+#: app/tools/gimpselectiontool.c:567
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Ezin da geruzen taldeko pixelik aldatu."
@@ -19799,7 +19799,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Bihurtu koloreak gris-itzaletara"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1280
+#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1271
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:273
@@ -19822,11 +19822,11 @@ msgstr "Doitu kolore-mailak"
 msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr "Mugitu pixelak, aukeran ertzetara egokituta"
 
-#: app/operations/gimpoperationposterize.c:83
+#: app/operations/gimpoperationposterize.c:85
 msgid "Reduce to a limited set of colors"
 msgstr "Murriztu kolore multzo mugatu batera"
 
-#: app/operations/gimpoperationposterize.c:88
+#: app/operations/gimpoperationposterize.c:90
 msgid "Posterize levels"
 msgstr "Posterizatu mailak"
 
@@ -19838,7 +19838,7 @@ msgstr "Ordeztu gardentasun partziala kolore batekin"
 msgid "The color"
 msgstr "Kolorea"
 
-#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1244
+#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1235
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:109
 #: app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -19849,15 +19849,15 @@ msgstr "Mozketa"
 msgid "How to clip"
 msgstr "Nola moztu"
 
-#: app/operations/gimpoperationthreshold.c:85 app/tools/gimpthresholdtool.c:94
+#: app/operations/gimpoperationthreshold.c:88 app/tools/gimpthresholdtool.c:94
 msgid "Reduce image to two colors using a threshold"
 msgstr "Murriztu irudia bi koloretara atalase bat erabiliz"
 
-#: app/operations/gimpoperationthreshold.c:98
+#: app/operations/gimpoperationthreshold.c:101
 msgid "Low threshold"
 msgstr "Atalase baxua"
 
-#: app/operations/gimpoperationthreshold.c:105
+#: app/operations/gimpoperationthreshold.c:108
 msgid "High threshold"
 msgstr "Atalase altua"
 
@@ -20367,11 +20367,11 @@ msgstr "Finkoa"
 msgid "Combine Masks"
 msgstr "Konbinatu maskarak"
 
-#: app/pdb/drawable-cmds.c:647
+#: app/pdb/drawable-cmds.c:651
 msgid "Plug-in"
 msgstr "Plugina"
 
-#: app/pdb/drawable-cmds.c:974 app/tools/gimpforegroundselecttool.c:1039
+#: app/pdb/drawable-cmds.c:978 app/tools/gimpforegroundselecttool.c:1039
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Aurreko planoaren hautapena"
@@ -20808,12 +20808,12 @@ msgid ""
 "'%s'."
 msgstr "'%s' prozedura baliogabeko UTF-8 kate batekin deitu da '%s' argumenturako."
 
-#: app/pdb/image-cmds.c:2501
+#: app/pdb/image-cmds.c:2504
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "Irudiaren bereizmena mugetatik kanpo dago, bereizmen lehenetsia erabiliko da horren ordez."
 
-#: app/pdb/image-select-cmds.c:303 app/tools/gimpfreeselecttool.c:105
+#: app/pdb/image-select-cmds.c:306 app/tools/gimpfreeselecttool.c:105
 msgid "Free Select"
 msgstr "Hautapen librea"
 
@@ -20943,7 +20943,7 @@ msgctxt "undo-type"
 msgid "DoG Edge Detect"
 msgstr "GDren ertz-detekzioa"
 
-#: app/pdb/plug-in-compat-cmds.c:1578 app/pdb/plug-in-compat-cmds.c:2900
+#: app/pdb/plug-in-compat-cmds.c:1578 app/pdb/plug-in-compat-cmds.c:2897
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Normalizatu"
@@ -20963,242 +20963,242 @@ msgctxt "undo-type"
 msgid "Engrave"
 msgstr "Grabatu"
 
-#: app/pdb/plug-in-compat-cmds.c:1823
+#: app/pdb/plug-in-compat-cmds.c:1820
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "Kolore-trukea"
 
-#: app/pdb/plug-in-compat-cmds.c:1871
+#: app/pdb/plug-in-compat-cmds.c:1868
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "Leiarren dirdaia"
 
-#: app/pdb/plug-in-compat-cmds.c:1936
+#: app/pdb/plug-in-compat-cmds.c:1933
 msgctxt "undo-type"
 msgid "Fractal Trace"
 msgstr "Arrasto fraktala"
 
-#: app/pdb/plug-in-compat-cmds.c:2120
+#: app/pdb/plug-in-compat-cmds.c:2117
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "Beiratea"
 
-#: app/pdb/plug-in-compat-cmds.c:2173
+#: app/pdb/plug-in-compat-cmds.c:2170
 msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "HSV zarata"
 
-#: app/pdb/plug-in-compat-cmds.c:2216
+#: app/pdb/plug-in-compat-cmds.c:2213
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "Ilusioa"
 
-#: app/pdb/plug-in-compat-cmds.c:2253
+#: app/pdb/plug-in-compat-cmds.c:2250
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Laplace"
 
-#: app/pdb/plug-in-compat-cmds.c:2322
+#: app/pdb/plug-in-compat-cmds.c:2319
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Leiar-distortsioa"
 
-#: app/pdb/plug-in-compat-cmds.c:2362
+#: app/pdb/plug-in-compat-cmds.c:2359
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Josturarik gabeko lauzak"
 
-#: app/pdb/plug-in-compat-cmds.c:2422
+#: app/pdb/plug-in-compat-cmds.c:2419
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "Labirintoa"
 
-#: app/pdb/plug-in-compat-cmds.c:2505 app/pdb/plug-in-compat-cmds.c:2589
+#: app/pdb/plug-in-compat-cmds.c:2502 app/pdb/plug-in-compat-cmds.c:2586
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Mugimendu-lausotzea"
 
-#: app/pdb/plug-in-compat-cmds.c:2636
+#: app/pdb/plug-in-compat-cmds.c:2633
 msgctxt "undo-type"
 msgid "Median Blur"
 msgstr "Mediana-lausotzea"
 
-#: app/pdb/plug-in-compat-cmds.c:2728
+#: app/pdb/plug-in-compat-cmds.c:2725
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mosaikoa"
 
-#: app/pdb/plug-in-compat-cmds.c:2772
+#: app/pdb/plug-in-compat-cmds.c:2769
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Neona"
 
-#: app/pdb/plug-in-compat-cmds.c:2860
+#: app/pdb/plug-in-compat-cmds.c:2857
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "Prentsa-papera"
 
-#: app/pdb/plug-in-compat-cmds.c:2962
+#: app/pdb/plug-in-compat-cmds.c:2961
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Supernoba"
 
-#: app/pdb/plug-in-compat-cmds.c:3006 app/pdb/plug-in-compat-cmds.c:3074
+#: app/pdb/plug-in-compat-cmds.c:3005 app/pdb/plug-in-compat-cmds.c:3073
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Olioz pintatu"
 
-#: app/pdb/plug-in-compat-cmds.c:3165
+#: app/pdb/plug-in-compat-cmds.c:3164
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Paper-lauzak"
 
-#: app/pdb/plug-in-compat-cmds.c:3214
+#: app/pdb/plug-in-compat-cmds.c:3213
 msgctxt "undo-type"
 msgid "Photocopy"
 msgstr "Fotokopia"
 
-#: app/pdb/plug-in-compat-cmds.c:3255 app/pdb/plug-in-compat-cmds.c:3298
+#: app/pdb/plug-in-compat-cmds.c:3254 app/pdb/plug-in-compat-cmds.c:3297
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pixelizatu"
 
-#: app/pdb/plug-in-compat-cmds.c:3349
+#: app/pdb/plug-in-compat-cmds.c:3348
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plasma"
 
-#: app/pdb/plug-in-compat-cmds.c:3403
+#: app/pdb/plug-in-compat-cmds.c:3402
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Koordenatu polarrak"
 
-#: app/pdb/plug-in-compat-cmds.c:3443
+#: app/pdb/plug-in-compat-cmds.c:3442
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Begi gorriak kentzea"
 
-#: app/pdb/plug-in-compat-cmds.c:3496
+#: app/pdb/plug-in-compat-cmds.c:3495
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Ausazko jaurtitzea"
 
-#: app/pdb/plug-in-compat-cmds.c:3549
+#: app/pdb/plug-in-compat-cmds.c:3548
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Ausazko aukeratzea"
 
-#: app/pdb/plug-in-compat-cmds.c:3602
+#: app/pdb/plug-in-compat-cmds.c:3601
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Ausazko urtzea"
 
-#: app/pdb/plug-in-compat-cmds.c:3677
+#: app/pdb/plug-in-compat-cmds.c:3676
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "RGB zarata"
 
-#: app/pdb/plug-in-compat-cmds.c:3747
+#: app/pdb/plug-in-compat-cmds.c:3746
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Izurtu"
 
-#: app/pdb/plug-in-compat-cmds.c:3872
+#: app/pdb/plug-in-compat-cmds.c:3871
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Sartu zarata"
 
-#: app/pdb/plug-in-compat-cmds.c:3916
+#: app/pdb/plug-in-compat-cmds.c:3915
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Gaussen lausotze selektiboa"
 
-#: app/pdb/plug-in-compat-cmds.c:3962
+#: app/pdb/plug-in-compat-cmds.c:3959
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Berdindu erdizka"
 
-#: app/pdb/plug-in-compat-cmds.c:4005
+#: app/pdb/plug-in-compat-cmds.c:4002
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Desplazatu"
 
-#: app/pdb/plug-in-compat-cmds.c:4110
+#: app/pdb/plug-in-compat-cmds.c:4107
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Sinua"
 
-#: app/pdb/plug-in-compat-cmds.c:4158
+#: app/pdb/plug-in-compat-cmds.c:4155
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobela"
 
-#: app/pdb/plug-in-compat-cmds.c:4206
+#: app/pdb/plug-in-compat-cmds.c:4203
 msgctxt "undo-type"
 msgid "Softglow"
 msgstr "Lausotze leuna"
 
-#: app/pdb/plug-in-compat-cmds.c:4267
+#: app/pdb/plug-in-compat-cmds.c:4264
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Zarata solidoa"
 
-#: app/pdb/plug-in-compat-cmds.c:4311
+#: app/pdb/plug-in-compat-cmds.c:4308
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Sakabanatu"
 
-#: app/pdb/plug-in-compat-cmds.c:4352
+#: app/pdb/plug-in-compat-cmds.c:4349
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Atalase-alfa..."
 
-#: app/pdb/plug-in-compat-cmds.c:4398
+#: app/pdb/plug-in-compat-cmds.c:4395
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Fokuratu (desfokuratze-maskara)"
 
-#: app/pdb/plug-in-compat-cmds.c:4444
+#: app/pdb/plug-in-compat-cmds.c:4441
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Bideoa"
 
-#: app/pdb/plug-in-compat-cmds.c:4481
+#: app/pdb/plug-in-compat-cmds.c:4478
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Balioen alderantzikatzea"
 
-#: app/pdb/plug-in-compat-cmds.c:4582
+#: app/pdb/plug-in-compat-cmds.c:4579
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Balioen hedatzea"
 
-#: app/pdb/plug-in-compat-cmds.c:4629
+#: app/pdb/plug-in-compat-cmds.c:4626
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Luzatu"
 
-#: app/pdb/plug-in-compat-cmds.c:4676
+#: app/pdb/plug-in-compat-cmds.c:4673
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Higatu"
 
-#: app/pdb/plug-in-compat-cmds.c:4739
+#: app/pdb/plug-in-compat-cmds.c:4736
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Uhinak"
 
-#: app/pdb/plug-in-compat-cmds.c:4787
+#: app/pdb/plug-in-compat-cmds.c:4784
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Bihurritu eta tiratu"
 
-#: app/pdb/plug-in-compat-cmds.c:4839
+#: app/pdb/plug-in-compat-cmds.c:4836
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Haizea"
 
-#: app/pdb/resource-cmds.c:465
+#: app/pdb/resource-cmds.c:467
 #, c-format
 msgid "Resource '%s' is not renamable"
 msgstr "'%s' baliabidearen izena ez da aldagarria"
@@ -21520,11 +21520,11 @@ msgstr "Helburu-barrutia"
 msgid "Gray Handling"
 msgstr "Grisaren maneiua"
 
-#: app/propgui/gimppropgui-color-to-alpha.c:107
+#: app/propgui/gimppropgui-color-to-alpha.c:113
 msgid "Pick farthest full-transparency color"
 msgstr "Aukeratu gardentasun osoko kolorerik urrunena"
 
-#: app/propgui/gimppropgui-color-to-alpha.c:128
+#: app/propgui/gimppropgui-color-to-alpha.c:134
 msgid "Pick nearest full-opacity color"
 msgstr "Aukeratu opakutasun osoko kolorerik hurbilena"
 
@@ -21893,7 +21893,7 @@ msgstr "Arazoak egon dira '%s' geruzako testu-parasitoa analizatzean:\n"
 "\n"
 "Testu-propietate batzuk gaizki daude. Testu-geruza editatzea ez baduzu nahi, ez duzu zer kezkatu beharrik."
 
-#: app/text/gimptextlayout.c:703
+#: app/text/gimptextlayout.c:699
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -22858,62 +22858,62 @@ msgstr "Oihaleko kon_trolak"
 msgid "Show on-canvas filter controls"
 msgstr "Erakutsi oihaleko iragazki-kontrolak"
 
-#: app/tools/gimpfiltertool.c:319 app/tools/gimpselectiontool.c:575
+#: app/tools/gimpfiltertool.c:310 app/tools/gimpselectiontool.c:575
 #, c-format
 msgid "A selected item's pixels are locked."
 msgstr "Hautatutako elementu baten pixelak blokeatuta daude."
 
-#: app/tools/gimpfiltertool.c:331 app/tools/gimppainttool.c:362
+#: app/tools/gimpfiltertool.c:322 app/tools/gimppainttool.c:362
 #: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2547
 msgid "A selected layer is not visible."
 msgstr "Hautatutako geruza bat ez dago ikusgai."
 
-#: app/tools/gimpfiltertool.c:669
+#: app/tools/gimpfiltertool.c:660
 msgid "Click to switch the original and filtered sides"
 msgstr "Egin klik jatorrizko eta iragazitako aldeak txandakatzeko"
 
-#: app/tools/gimpfiltertool.c:673
+#: app/tools/gimpfiltertool.c:664
 msgid "Click to switch between vertical and horizontal"
 msgstr "Egin klik modu bertikala eta modu horizontala txandakatzeko"
 
-#: app/tools/gimpfiltertool.c:677
+#: app/tools/gimpfiltertool.c:668
 msgid "Click to move the split guide"
 msgstr "Egin klik zatitze-marra mugitzeko"
 
-#: app/tools/gimpfiltertool.c:679
+#: app/tools/gimpfiltertool.c:670
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: txandakatu jatorrizkoa eta iragazia"
 
-#: app/tools/gimpfiltertool.c:680
+#: app/tools/gimpfiltertool.c:671
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: txandakatu horizontala eta bertikala"
 
-#: app/tools/gimpfiltertool.c:1170
+#: app/tools/gimpfiltertool.c:1161
 msgid "Add filter"
 msgstr "Gehitu iragazkia"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1257
+#: app/tools/gimpfiltertool.c:1248
 msgid "Blending Options"
 msgstr "Nahaste-aukerak"
 
 #. The Color Options expander
-#: app/tools/gimpfiltertool.c:1295
+#: app/tools/gimpfiltertool.c:1286
 msgid "Advanced Color Options"
 msgstr "Kolore-aukera aurreratuak"
 
-#: app/tools/gimpfiltertool.c:1387
+#: app/tools/gimpfiltertool.c:1378
 msgid "Editing filter..."
 msgstr "Iragazkia editatzen..."
 
-#: app/tools/gimpfiltertool.c:1735 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1726 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Inportatu '%s' ezarpenak"
 
-#: app/tools/gimpfiltertool.c:1737 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1728 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Esportatu '%s' ezarpenak"
@@ -25545,35 +25545,35 @@ msgid "n/a"
 msgstr "e/e"
 
 #. TRANSLATORS: V for Value (grayscale)
-#: app/widgets/gimpcolorframe.c:792 app/widgets/gimpcolorframe.c:946
+#: app/widgets/gimpcolorframe.c:792 app/widgets/gimpcolorframe.c:938
 msgctxt "Grayscale"
 msgid "V:"
 msgstr "V:"
 
 #. TRANSLATORS: A for Alpha (color transparency)
 #: app/widgets/gimpcolorframe.c:796 app/widgets/gimpcolorframe.c:809
-#: app/widgets/gimpcolorframe.c:877 app/widgets/gimpcolorframe.c:950
-#: app/widgets/gimpcolorframe.c:1003 app/widgets/gimpcolorframe.c:1030
-#: app/widgets/gimpcolorframe.c:1058 app/widgets/gimpcolorframe.c:1086
-#: app/widgets/gimpcolorframe.c:1113 app/widgets/gimpcolorframe.c:1160
+#: app/widgets/gimpcolorframe.c:873 app/widgets/gimpcolorframe.c:942
+#: app/widgets/gimpcolorframe.c:995 app/widgets/gimpcolorframe.c:1022
+#: app/widgets/gimpcolorframe.c:1050 app/widgets/gimpcolorframe.c:1078
+#: app/widgets/gimpcolorframe.c:1105 app/widgets/gimpcolorframe.c:1152
 msgctxt "Alpha channel"
 msgid "A:"
 msgstr "A:"
 
 #. TRANSLATORS: R for Red (RGB)
-#: app/widgets/gimpcolorframe.c:801 app/widgets/gimpcolorframe.c:869
+#: app/widgets/gimpcolorframe.c:801 app/widgets/gimpcolorframe.c:865
 msgctxt "RGB"
 msgid "R:"
 msgstr "G:"
 
 #. TRANSLATORS: G for Green (RGB)
-#: app/widgets/gimpcolorframe.c:803 app/widgets/gimpcolorframe.c:871
+#: app/widgets/gimpcolorframe.c:803 app/widgets/gimpcolorframe.c:867
 msgctxt "RGB"
 msgid "G:"
 msgstr "B:"
 
 #. TRANSLATORS: B for Blue (RGB)
-#: app/widgets/gimpcolorframe.c:805 app/widgets/gimpcolorframe.c:873
+#: app/widgets/gimpcolorframe.c:805 app/widgets/gimpcolorframe.c:869
 msgctxt "RGB"
 msgid "B:"
 msgstr "U:"
@@ -25584,147 +25584,147 @@ msgctxt "Indexed color"
 msgid "Index:"
 msgstr "Indizea:"
 
-#: app/widgets/gimpcolorframe.c:846 app/widgets/gimpcolorframe.c:883
-#: app/widgets/gimpcolorframe.c:953 app/widgets/gimpcolorframe.c:1162
+#: app/widgets/gimpcolorframe.c:846 app/widgets/gimpcolorframe.c:879
+#: app/widgets/gimpcolorframe.c:945 app/widgets/gimpcolorframe.c:1154
 msgctxt "Color"
 msgid "Profile:"
 msgstr "Profila:"
 
 #: app/widgets/gimpcolorframe.c:853 app/widgets/gimpcolorframe.c:854
-#: app/widgets/gimpcolorframe.c:931 app/widgets/gimpcolorframe.c:932
-#: app/widgets/gimpcolorframe.c:987 app/widgets/gimpcolorframe.c:988
-#: app/widgets/gimpcolorframe.c:1187 app/widgets/gimpcolorframe.c:1188
+#: app/widgets/gimpcolorframe.c:927 app/widgets/gimpcolorframe.c:928
+#: app/widgets/gimpcolorframe.c:979 app/widgets/gimpcolorframe.c:980
+#: app/widgets/gimpcolorframe.c:1179 app/widgets/gimpcolorframe.c:1180
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. TRANSLATORS: Hex for Hexadecimal (representation of a color)
-#: app/widgets/gimpcolorframe.c:880
+#: app/widgets/gimpcolorframe.c:876
 msgctxt "Color representation"
 msgid "Hex:"
 msgstr "Hamaseitarra:"
 
-#: app/widgets/gimpcolorframe.c:885 app/widgets/gimpcolorframe.c:955
-#: app/widgets/gimpcolorframe.c:1164
+#: app/widgets/gimpcolorframe.c:881 app/widgets/gimpcolorframe.c:947
+#: app/widgets/gimpcolorframe.c:1156
 msgctxt "Color"
 msgid "No Profile"
 msgstr "Profilik ez"
 
 #. TRANSLATORS: H for Hue (HSV color space)
-#: app/widgets/gimpcolorframe.c:995
+#: app/widgets/gimpcolorframe.c:987
 msgctxt "HSV color space"
 msgid "H:"
 msgstr "H:"
 
 #. TRANSLATORS: S for Saturation (HSV color space)
-#: app/widgets/gimpcolorframe.c:997
+#: app/widgets/gimpcolorframe.c:989
 msgctxt "HSV color space"
 msgid "S:"
 msgstr "S:"
 
 #. TRANSLATORS: V for Value (HSV color space)
-#: app/widgets/gimpcolorframe.c:999
+#: app/widgets/gimpcolorframe.c:991
 msgctxt "HSV color space"
 msgid "V:"
 msgstr "V:"
 
 #. TRANSLATORS: L for Lightness (LCH color space)
-#: app/widgets/gimpcolorframe.c:1022
+#: app/widgets/gimpcolorframe.c:1014
 msgctxt "LCH color space"
 msgid "L*:"
 msgstr "L*:"
 
 #. TRANSLATORS: C for Chroma (LCH color space)
-#: app/widgets/gimpcolorframe.c:1024
+#: app/widgets/gimpcolorframe.c:1016
 msgctxt "LCH color space"
 msgid "C*:"
 msgstr "C*:"
 
 #. TRANSLATORS: H for Hue angle (LCH color space)
-#: app/widgets/gimpcolorframe.c:1026
+#: app/widgets/gimpcolorframe.c:1018
 msgctxt "LCH color space"
 msgid "h°:"
 msgstr "h°:"
 
 #. TRANSLATORS: L* for Lightness (Lab color space)
-#: app/widgets/gimpcolorframe.c:1050
+#: app/widgets/gimpcolorframe.c:1042
 msgctxt "Lab color space"
 msgid "L*:"
 msgstr "L*:"
 
 #. TRANSLATORS: a* color channel in Lab color space
-#: app/widgets/gimpcolorframe.c:1052
+#: app/widgets/gimpcolorframe.c:1044
 msgctxt "Lab color space"
 msgid "a*:"
 msgstr "a*:"
 
 #. TRANSLATORS: b* color channel in Lab color space
-#: app/widgets/gimpcolorframe.c:1054
+#: app/widgets/gimpcolorframe.c:1046
 msgctxt "Lab color space"
 msgid "b*:"
 msgstr "b*:"
 
 #. TRANSLATORS: x from xyY color space
-#: app/widgets/gimpcolorframe.c:1078
+#: app/widgets/gimpcolorframe.c:1070
 msgctxt "xyY color space"
 msgid "x:"
 msgstr "x:"
 
 #. TRANSLATORS: y from xyY color space
-#: app/widgets/gimpcolorframe.c:1080
+#: app/widgets/gimpcolorframe.c:1072
 msgctxt "xyY color space"
 msgid "y:"
 msgstr "y:"
 
 #. TRANSLATORS: Y from xyY color space
-#: app/widgets/gimpcolorframe.c:1082
+#: app/widgets/gimpcolorframe.c:1074
 msgctxt "xyY color space"
 msgid "Y:"
 msgstr "H:"
 
 #. TRANSLATORS: Y from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1105
+#: app/widgets/gimpcolorframe.c:1097
 msgctxt "Yu'v' color space"
 msgid "Y:"
 msgstr "H:"
 
 #. TRANSLATORS: u' from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1107
+#: app/widgets/gimpcolorframe.c:1099
 msgctxt "Yu'v' color space"
 msgid "u':"
 msgstr "u':"
 
 #. TRANSLATORS: v' from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1109
+#: app/widgets/gimpcolorframe.c:1101
 msgctxt "Yu'v' color space"
 msgid "v':"
 msgstr "v':"
 
 #. TRANSLATORS: C for Cyan (CMYK)
-#: app/widgets/gimpcolorframe.c:1151
+#: app/widgets/gimpcolorframe.c:1143
 msgctxt "CMYK"
 msgid "C:"
 msgstr "C:"
 
 #. TRANSLATORS: M for Magenta (CMYK)
-#: app/widgets/gimpcolorframe.c:1153
+#: app/widgets/gimpcolorframe.c:1145
 msgctxt "CMYK"
 msgid "M:"
 msgstr "M:"
 
 #. TRANSLATORS: Y for Yellow (CMYK)
-#: app/widgets/gimpcolorframe.c:1155
+#: app/widgets/gimpcolorframe.c:1147
 msgctxt "CMYK"
 msgid "Y:"
 msgstr "H:"
 
 #. TRANSLATORS: K for Key/black (CMYK)
-#: app/widgets/gimpcolorframe.c:1157
+#: app/widgets/gimpcolorframe.c:1149
 msgctxt "CMYK"
 msgid "K:"
 msgstr "B:"
 
-#: app/widgets/gimpcolorframe.c:1205
+#: app/widgets/gimpcolorframe.c:1197
 msgctxt "Color value"
 msgid "n/a"
 msgstr "e/e"
@@ -27238,63 +27238,67 @@ msgid_plural "%d items selected"
 msgstr[0] "Elementu %d hautatu da"
 msgstr[1] "%d elementu hautatu dira"
 
-#: app/widgets/gimpitemtreeview.c:2640 app/widgets/gimpitemtreeview.c:2685
+#: app/widgets/gimpitemtreeview.c:2631 app/widgets/gimpitemtreeview.c:2684
+msgid "Cannot reorder a filter that is being edited."
+msgstr "Ezin da berrordenatu editatzen ari den iragazki bat."
+
+#: app/widgets/gimpitemtreeview.c:2648 app/widgets/gimpitemtreeview.c:2701
 msgid "Reorder filter"
 msgstr "Berrordenatu iragazkia"
 
-#: app/widgets/gimpitemtreeview.c:2730
+#: app/widgets/gimpitemtreeview.c:2746
 msgid "Effects from active tools can not be merged."
 msgstr "Tresna aktiboen efektuak ezin dira batu."
 
-#: app/widgets/gimpitemtreeview.c:2783
+#: app/widgets/gimpitemtreeview.c:2800
 msgid "Remove filter"
 msgstr "Kendu iragazkia"
 
-#: app/widgets/gimpitemtreeview.c:3297
+#: app/widgets/gimpitemtreeview.c:3322
 msgid "No layer set stored"
 msgstr "Ez da geruza multzorik gorde"
 
-#: app/widgets/gimpitemtreeview.c:3319
+#: app/widgets/gimpitemtreeview.c:3344
 msgid "New layer set's name"
 msgstr "Geruza multzo berriaren izena"
 
-#: app/widgets/gimpitemtreeview.c:3361 app/widgets/gimpitemtreeview.c:3376
+#: app/widgets/gimpitemtreeview.c:3386 app/widgets/gimpitemtreeview.c:3401
 msgid "Select layers by text search"
 msgstr "Hautatu geruzak testu-bilaketaren bidez"
 
-#: app/widgets/gimpitemtreeview.c:3363 app/widgets/gimpitemtreeview.c:3378
+#: app/widgets/gimpitemtreeview.c:3388 app/widgets/gimpitemtreeview.c:3403
 msgid "Text search"
 msgstr "Testu-bilaketa"
 
-#: app/widgets/gimpitemtreeview.c:3382
+#: app/widgets/gimpitemtreeview.c:3407
 msgid "Select layers by glob patterns"
 msgstr "Hautatu geruzak eredu globalen bidez"
 
-#: app/widgets/gimpitemtreeview.c:3384
+#: app/widgets/gimpitemtreeview.c:3409
 msgid "Glob pattern search"
 msgstr "Eredu globalen bilaketa"
 
-#: app/widgets/gimpitemtreeview.c:3388
+#: app/widgets/gimpitemtreeview.c:3413
 msgid "Select layers by regular expressions"
 msgstr "Hautatu geruzak adierazpen erregularren bidez"
 
-#: app/widgets/gimpitemtreeview.c:3390
+#: app/widgets/gimpitemtreeview.c:3415
 msgid "Regular Expression search"
 msgstr "Adierazpen erregularren bilaketa"
 
-#: app/widgets/gimpitemtreeview.c:3445
+#: app/widgets/gimpitemtreeview.c:3470
 msgid "search"
 msgstr "bilaketa"
 
-#: app/widgets/gimpitemtreeview.c:3446
+#: app/widgets/gimpitemtreeview.c:3471
 msgid "glob"
 msgstr "globala"
 
-#: app/widgets/gimpitemtreeview.c:3446
+#: app/widgets/gimpitemtreeview.c:3471
 msgid "regexp"
 msgstr "adierazpen erregularra"
 
-#: app/widgets/gimpitemtreeview.c:3615
+#: app/widgets/gimpitemtreeview.c:3640
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Adierazpen erregular baliogabea: %s\n"
@@ -27727,7 +27731,7 @@ msgstr "'%s' testu-fitxategia idazteak huts egin du: %s"
 msgid "_Use selected font"
 msgstr "_Erabili hautatutako letra-tipoa"
 
-#: app/widgets/gimptextstyleeditor.c:211 app/widgets/gimptextstyleeditor.c:1325
+#: app/widgets/gimptextstyleeditor.c:211 app/widgets/gimptextstyleeditor.c:1329
 msgid "Change font of selected text"
 msgstr "Aldatu hautatutako testuaren letra-tipoa"
 
@@ -27767,7 +27771,7 @@ msgstr "Azpimarra"
 msgid "Strikethrough"
 msgstr "Marratua"
 
-#: app/widgets/gimptextstyleeditor.c:1317
+#: app/widgets/gimptextstyleeditor.c:1321
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
 msgstr "\"%s\" letra-tipoa ez dago eragilgarri sistema honetan"
@@ -28195,7 +28199,7 @@ msgid ""
 "from it."
 msgstr "XCF fitxategia hondatuta dago!  Ezin izan da irudiaren datuen zati bat ere berreskuratu."
 
-#: app/xcf/xcf-load.c:1157
+#: app/xcf/xcf-load.c:1159
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28240,6 +28244,11 @@ msgctxt "brushes-action"
 msgid "Brushes Menu"
 msgstr "Brotxa-menua"
 
+#: menus/buffers-menu.ui:6
+msgctxt "buffers-action"
+msgid "Buffers Menu"
+msgstr "Bufferren menua"
+
 #: menus/channels-menu.ui:6
 msgctxt "channels-action"
 msgid "Channels Menu"
@@ -28248,6 +28257,11 @@ msgstr "Kanal-menua"
 #: menus/channels-menu.ui:11 menus/layers-menu.ui:32 menus/vectors-menu.ui:12
 msgid "Color Tags"
 msgstr "Kolore-etiketak"
+
+#: menus/colormap-menu.ui:6
+msgctxt "colormap-action"
+msgid "Colormap Menu"
+msgstr "Kolore-mapen menua"
 
 #: menus/cursor-info-menu.ui:6
 msgctxt "cursor-info-action"
@@ -28284,6 +28298,11 @@ msgctxt "file-action"
 msgid "Move to Screen"
 msgstr "Eraman pantailara"
 
+#: menus/documents-menu.ui:6
+msgctxt "documents-action"
+msgid "Documents Menu"
+msgstr "Dokumentu-menua"
+
 #: menus/dynamics-editor-menu.ui:6
 msgctxt "dynamics-editor-action"
 msgid "Paint Dynamics Editor Menu"
@@ -28293,6 +28312,16 @@ msgstr "Margo-dinamikaren editorearen menua"
 msgctxt "dynamics-action"
 msgid "Paint Dynamics Menu"
 msgstr "Margo-dinamikaren menua"
+
+#: menus/error-console-menu.ui:6
+msgctxt "error-console-action"
+msgid "Error Console Menu"
+msgstr "Errore-kontsolaren menua"
+
+#: menus/fonts-menu.ui:6
+msgctxt "fonts-action"
+msgid "Fonts Menu"
+msgstr "Letra-tipoen menua"
 
 #: menus/gradient-editor-menu.ui:6
 msgctxt "gradient-editor-action"
@@ -28338,310 +28367,315 @@ msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_Bufferra"
 
-#: menus/image-menu.ui.in.in:147
+#: menus/image-menu.ui.in.in:149
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_Hautatu"
 
-#: menus/image-menu.ui.in.in:153
+#: menus/image-menu.ui.in.in:155
 msgctxt "view-action"
 msgid "_Float"
 msgstr "_Bihurtu mugikor"
 
-#: menus/image-menu.ui.in.in:180
+#: menus/image-menu.ui.in.in:182
 msgctxt "view-action"
 msgid "_View"
 msgstr "_Ikusi"
 
-#: menus/image-menu.ui.in.in:185
+#: menus/image-menu.ui.in.in:187
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "_Zooma"
 
-#: menus/image-menu.ui.in.in:210
+#: menus/image-menu.ui.in.in:212
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "_Irauli eta biratu"
 
-#: menus/image-menu.ui.in.in:234
+#: menus/image-menu.ui.in.in:236
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Eraman pantailara"
 
-#: menus/image-menu.ui.in.in:243
+#: menus/image-menu.ui.in.in:245
 msgctxt "view-action"
 msgid "_Color Management"
 msgstr "_Kolore-kudeaketa"
 
-#: menus/image-menu.ui.in.in:250
+#: menus/image-menu.ui.in.in:252
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
 msgstr "Pantailaren e_rrendatze-saiakera"
 
-#: menus/image-menu.ui.in.in:282
+#: menus/image-menu.ui.in.in:284
 msgctxt "view-action"
 msgid "_Padding Color"
 msgstr "_Kolore betegarria"
 
-#: menus/image-menu.ui.in.in:306
+#: menus/image-menu.ui.in.in:308
 msgctxt "image-action"
 msgid "_Image"
 msgstr "Ir_udia"
 
-#: menus/image-menu.ui.in.in:313
+#: menus/image-menu.ui.in.in:315
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_Modua"
 
-#: menus/image-menu.ui.in.in:319
+#: menus/image-menu.ui.in.in:321
 msgctxt "image-action"
 msgid "_Encoding"
 msgstr "_Kodeketa"
 
-#: menus/image-menu.ui.in.in:335
+#: menus/image-menu.ui.in.in:337
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "Kolore-k_udeaketa"
 
-#: menus/image-menu.ui.in.in:352
+#: menus/image-menu.ui.in.in:354
 msgctxt "image-action"
 msgid "Soft-Proofing Re_ndering Intent"
 msgstr "_Pantailako probako errendatze-saiakera"
 
-#: menus/image-menu.ui.in.in:366
+#: menus/image-menu.ui.in.in:368
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "_Eraldatu"
 
-#: menus/image-menu.ui.in.in:399
+#: menus/image-menu.ui.in.in:401
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_Gidak"
 
-#: menus/image-menu.ui.in.in:407
+#: menus/image-menu.ui.in.in:409
 msgctxt "image-action"
 msgid "Meta_data"
 msgstr "Meta_datuak"
 
-#: menus/image-menu.ui.in.in:415
+#: menus/image-menu.ui.in.in:417
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "Ge_ruza"
 
-#: menus/image-menu.ui.in.in:436
+#: menus/image-menu.ui.in.in:438
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "_Pila"
 
-#: menus/image-menu.ui.in.in:453
+#: menus/image-menu.ui.in.in:455
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Maskara"
 
-#: menus/image-menu.ui.in.in:475
+#: menus/image-menu.ui.in.in:477
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "_Gardentasuna"
 
-#: menus/image-menu.ui.in.in:493
+#: menus/image-menu.ui.in.in:495
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "_Eraldatu"
 
-#: menus/image-menu.ui.in.in:523
+#: menus/image-menu.ui.in.in:525
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Koloreak"
 
-#: menus/image-menu.ui.in.in:544
+#: menus/image-menu.ui.in.in:546
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Automatikoa"
 
-#: menus/image-menu.ui.in.in:552
+#: menus/image-menu.ui.in.in:554
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "_Osagaiak"
 
-#: menus/image-menu.ui.in.in:558
+#: menus/image-menu.ui.in.in:560
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "D_esasetu"
 
-#: menus/image-menu.ui.in.in:565
+#: menus/image-menu.ui.in.in:567
 msgctxt "image-action"
 msgid "_Map"
 msgstr "_Mapa"
 
-#: menus/image-menu.ui.in.in:576
+#: menus/image-menu.ui.in.in:578
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "_Tonuen mapatzea"
 
-#: menus/image-menu.ui.in.in:583
+#: menus/image-menu.ui.in.in:585
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "I_nformazioa"
 
-#: menus/image-menu.ui.in.in:601
+#: menus/image-menu.ui.in.in:603
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "_Tresnak"
 
-#: menus/image-menu.ui.in.in:604
+#: menus/image-menu.ui.in.in:606
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "_Hautapen-tresnak"
 
-#: menus/image-menu.ui.in.in:617
+#: menus/image-menu.ui.in.in:619
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "_Margotze-tresnak"
 
-#: menus/image-menu.ui.in.in:634
+#: menus/image-menu.ui.in.in:636
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "_Eraldatze-tresnak"
 
-#: menus/image-menu.ui.in.in:673
+#: menus/image-menu.ui.in.in:675
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "Ir_agazkiak"
 
-#: menus/image-menu.ui.in.in:678
+#: menus/image-menu.ui.in.in:680
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "Azken aldian erabilia"
 
-#: menus/image-menu.ui.in.in:687
+#: menus/image-menu.ui.in.in:689
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "_Lausotu"
 
-#: menus/image-menu.ui.in.in:702
+#: menus/image-menu.ui.in.in:704
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "_Nabarmendu"
 
-#: menus/image-menu.ui.in.in:712
+#: menus/image-menu.ui.in.in:714
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "_Desitxuratu"
 
-#: menus/image-menu.ui.in.in:731
+#: menus/image-menu.ui.in.in:733
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_Argia eta itzala"
 
-#: menus/image-menu.ui.in.in:746
+#: menus/image-menu.ui.in.in:748
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "_Zarata"
 
-#: menus/image-menu.ui.in.in:756
+#: menus/image-menu.ui.in.in:758
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "Detektatu e_rtzak"
 
-#: menus/image-menu.ui.in.in:765
+#: menus/image-menu.ui.in.in:767
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "_Generikoa"
 
-#: menus/image-menu.ui.in.in:776
+#: menus/image-menu.ui.in.in:778
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "Ko_nbinatu"
 
-#: menus/image-menu.ui.in.in:779
+#: menus/image-menu.ui.in.in:781
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "A_rtistikoa"
 
-#: menus/image-menu.ui.in.in:791
+#: menus/image-menu.ui.in.in:793
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "_Dekorazioa"
 
-#: menus/image-menu.ui.in.in:794
+#: menus/image-menu.ui.in.in:796
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "_Mapa"
 
-#: menus/image-menu.ui.in.in:806
+#: menus/image-menu.ui.in.in:808
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "_Errendatu"
 
-#: menus/image-menu.ui.in.in:809
+#: menus/image-menu.ui.in.in:811
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "_Fraktalak"
 
-#: menus/image-menu.ui.in.in:812
+#: menus/image-menu.ui.in.in:814
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "_Zarata"
 
-#: menus/image-menu.ui.in.in:820
+#: menus/image-menu.ui.in.in:822
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_Eredua"
 
-#: menus/image-menu.ui.in.in:833
+#: menus/image-menu.ui.in.in:835
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "_Weba"
 
-#: menus/image-menu.ui.in.in:839
+#: menus/image-menu.ui.in.in:841
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "An_imazioa"
 
-#: menus/image-menu.ui.in.in:842
+#: menus/image-menu.ui.in.in:844
 msgctxt "filters-action"
 msgid "De_velopment"
 msgstr "_Garapena"
 
-#: menus/image-menu.ui.in.in:844
+#: menus/image-menu.ui.in.in:846
 msgctxt "filters-action"
 msgid "_Goat exercises"
 msgstr "A_huntz-ariketak"
 
-#: menus/image-menu.ui.in.in:847
+#: menus/image-menu.ui.in.in:849
 msgctxt "filters-action"
 msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
-#: menus/image-menu.ui.in.in:850
+#: menus/image-menu.ui.in.in:852
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: menus/image-menu.ui.in.in:857
+#: menus/image-menu.ui.in.in:859
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Leihoak"
 
-#: menus/image-menu.ui.in.in:860
+#: menus/image-menu.ui.in.in:862
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "Duela gutxi _itxitako atrakagarriak"
 
-#: menus/image-menu.ui.in.in:864
+#: menus/image-menu.ui.in.in:866
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "Elkarrizketa-koadro _atrakagaiak"
 
-#: menus/image-menu.ui.in.in:896
+#: menus/image-menu.ui.in.in:898
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "_Eskuliburua"
 
-#: menus/image-menu.ui.in.in:909
+#: menus/image-menu.ui.in.in:914
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "_GIMP linean"
+
+#: menus/images-menu.ui:6
+msgctxt "images-action"
+msgid "Images Menu"
+msgstr "Irudien menua"
 
 #: menus/layers-menu.ui:6
 msgctxt "layers-action"
@@ -28663,6 +28697,11 @@ msgctxt "layers-action"
 msgid "Composite Mode"
 msgstr "Konposizio modua"
 
+#: menus/mypaint-brushes-menu.ui:6
+msgctxt "mypaint-brushes-action"
+msgid "MyPaint Brushes Menu"
+msgstr "MyPaint brotxen menua"
+
 #: menus/palette-editor-menu.ui:6
 msgctxt "palette-editor-action"
 msgid "Palette Editor Menu"
@@ -28673,10 +28712,15 @@ msgctxt "palettes-action"
 msgid "Palettes Menu"
 msgstr "Paleta-menua"
 
-#: menus/palettes-menu.ui:24
+#: menus/palettes-menu.ui:23
 msgctxt "palettes-action"
 msgid "Export as"
 msgstr "Esportatu honela"
+
+#: menus/patterns-menu.ui:6
+msgctxt "patterns-action"
+msgid "Patterns Menu"
+msgstr "Ereduen menua"
 
 #: menus/sample-points-menu.ui:6
 msgctxt "sample-points-action"
@@ -28687,6 +28731,11 @@ msgstr "Lagin-puntuaren menua"
 msgctxt "select-action"
 msgid "Selection Editor Menu"
 msgstr "Hautapen-editorearen menua"
+
+#: menus/templates-menu.ui:6
+msgctxt "templates-action"
+msgid "Templates Menu"
+msgstr "Txantiloi-menua"
 
 #: menus/text-tool-menu.ui:6
 msgctxt "text-tool-action"
@@ -28833,10 +28882,6 @@ msgstr "Bide-menua"
 #~ msgid "Use editor"
 #~ msgstr "Erabili editorea"
 
-#~ msgctxt "buffers-action"
-#~ msgid "Buffers Menu"
-#~ msgstr "Bufferren menua"
-
 #~ msgctxt "context-action"
 #~ msgid "_Context"
 #~ msgstr "_Testuingurua"
@@ -28909,14 +28954,6 @@ msgstr "Bide-menua"
 #~ msgid "Dialogs Menu"
 #~ msgstr "Elkarrizketa-koadroen menua"
 
-#~ msgctxt "documents-action"
-#~ msgid "Documents Menu"
-#~ msgstr "Dokumentu-menua"
-
-#~ msgctxt "error-console-action"
-#~ msgid "Error Console Menu"
-#~ msgstr "Errore-kontsolaren menua"
-
 #~ msgctxt "filters-action"
 #~ msgid "_Clouds"
 #~ msgstr "_Hodeiak"
@@ -28925,17 +28962,9 @@ msgstr "Bide-menua"
 #~ msgid "_Nature"
 #~ msgstr "_Natura"
 
-#~ msgctxt "fonts-action"
-#~ msgid "Fonts Menu"
-#~ msgstr "Letra-tipoen menua"
-
 #~ msgctxt "image-action"
 #~ msgid "Image Menu"
 #~ msgstr "Irudi-menua"
-
-#~ msgctxt "images-action"
-#~ msgid "Images Menu"
-#~ msgstr "Irudien menua"
 
 #~ msgctxt "layers-action"
 #~ msgid "_Properties"
@@ -28953,21 +28982,9 @@ msgstr "Bide-menua"
 #~ msgid "Add La_yer Masks"
 #~ msgstr "_Gehitu geruza-maskarak"
 
-#~ msgctxt "mypaint-brushes-action"
-#~ msgid "MyPaint Brushes Menu"
-#~ msgstr "MyPaint brotxen menua"
-
-#~ msgctxt "patterns-action"
-#~ msgid "Patterns Menu"
-#~ msgstr "Ereduen menua"
-
 #~ msgctxt "quick-mask-action"
 #~ msgid "Quick Mask Menu"
 #~ msgstr "Maskara azkarraren menua"
-
-#~ msgctxt "templates-action"
-#~ msgid "Templates Menu"
-#~ msgstr "Txantiloi-menua"
 
 #~ msgctxt "tools-action"
 #~ msgid "_Color Tools"
