@@ -404,6 +404,7 @@ gimp_drawable_filter_duplicate (GimpDrawable       *drawable,
   filter = gimp_drawable_filter_new (drawable, undo_desc, node, icon_name);
   g_object_unref (node);
 
+  gimp_drawable_filter_set_clip (filter, prior_filter->clip);
   gimp_drawable_filter_set_opacity (filter, prior_filter->opacity);
   gimp_drawable_filter_set_mode (filter,
                                  prior_filter->paint_mode,
