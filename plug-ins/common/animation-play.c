@@ -641,14 +641,10 @@ repaint_da (GtkWidget *darea,
   cairo_pattern_t *check;
   GeglColor       *color1 = (GeglColor *) gimp_check_custom_color1 ();
   GeglColor       *color2 = (GeglColor *) gimp_check_custom_color2 ();
-  GimpRGB          rgb1;
-  GimpRGB          rgb2;
 
   gimp_checks_get_colors (gimp_check_type (), &color1, &color2);
 
-  gegl_color_get_pixel (color1, babl_format ("R'G'B'A double"), &rgb1);
-  gegl_color_get_pixel (color2, babl_format ("R'G'B'A double"), &rgb2);
-  check = gimp_cairo_checkerboard_create (cr, 32, &rgb1, &rgb2);
+  check = gimp_cairo_checkerboard_create (cr, 32, color1, color2);
 
   cairo_set_source (cr, check);
   cairo_paint (cr);

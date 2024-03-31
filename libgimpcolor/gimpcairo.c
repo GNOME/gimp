@@ -95,10 +95,10 @@ gimp_cairo_set_source_rgba (cairo_t       *cr,
  * Since: 2.6
  **/
 cairo_pattern_t *
-gimp_cairo_checkerboard_create (cairo_t       *cr,
-                                gint           size,
-                                const GimpRGB *light,
-                                const GimpRGB *dark)
+gimp_cairo_checkerboard_create (cairo_t         *cr,
+                                gint             size,
+                                const GeglColor *light,
+                                const GeglColor *dark)
 {
   cairo_t         *context;
   cairo_surface_t *surface;
@@ -113,20 +113,34 @@ gimp_cairo_checkerboard_create (cairo_t       *cr,
   context = cairo_create (surface);
 
   if (light)
-    gimp_cairo_set_source_rgb (context, light);
+    {
+      gdouble rgb[3];
+
+      gegl_color_get_pixel (GEGL_COLOR (light), babl_format ("R'G'B' double"), rgb);
+      cairo_set_source_rgb (context, rgb[0], rgb[1], rgb[2]);
+    }
   else
-    cairo_set_source_rgb (context,
-                          GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT);
+    {
+      cairo_set_source_rgb (context,
+                            GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT);
+    }
 
   cairo_rectangle (context, 0,    0,    size, size);
   cairo_rectangle (context, size, size, size, size);
   cairo_fill (context);
 
   if (dark)
-    gimp_cairo_set_source_rgb (context, dark);
+    {
+      gdouble rgb[3];
+
+      gegl_color_get_pixel (GEGL_COLOR (dark), babl_format ("R'G'B' double"), rgb);
+      cairo_set_source_rgb (context, rgb[0], rgb[1], rgb[2]);
+    }
   else
-    cairo_set_source_rgb (context,
-                          GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK);
+    {
+      cairo_set_source_rgb (context,
+                            GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK);
+    }
 
   cairo_rectangle (context, 0,    size, size, size);
   cairo_rectangle (context, size, 0,    size, size);

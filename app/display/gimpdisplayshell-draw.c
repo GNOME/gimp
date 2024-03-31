@@ -113,19 +113,19 @@ gimp_display_shell_draw_checkerboard (GimpDisplayShell *shell,
 
   if (G_UNLIKELY (! shell->checkerboard))
     {
-      GimpCheckSize check_size;
-      GimpRGB       rgb1;
-      GimpRGB       rgb2;
+      GimpCheckSize    check_size;
+      const GeglColor *rgb1;
+      const GeglColor *rgb2;
 
       g_object_get (shell->display->config,
                     "transparency-size", &check_size,
                     NULL);
 
-      gegl_color_get_pixel (GEGL_COLOR (gimp_render_check_color1 ()), babl_format ("R'G'B'A double"), &rgb1);
-      gegl_color_get_pixel (GEGL_COLOR (gimp_render_check_color2 ()), babl_format ("R'G'B'A double"), &rgb2);
+      rgb1 = gimp_render_check_color1 ();
+      rgb2 = gimp_render_check_color2 ();
 
       shell->checkerboard =
-        gimp_cairo_checkerboard_create (cr, 1 << (check_size + 2), &rgb1, &rgb2);
+        gimp_cairo_checkerboard_create (cr, 1 << (check_size + 2), rgb1, rgb2);
     }
 
   cairo_translate (cr, - shell->offset_x, - shell->offset_y);

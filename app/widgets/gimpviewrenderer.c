@@ -778,12 +778,12 @@ gimp_view_renderer_real_draw (GimpViewRenderer *renderer,
         {
           if (! renderer->priv->pattern)
             {
-              GimpRGB rgb1;
-              GimpRGB rgb2;
+              const GeglColor *rgb1;
+              const GeglColor *rgb2;
 
-              gegl_color_get_pixel ((GeglColor *) gimp_render_check_color1 (), babl_format ("R'G'B'A double"), &rgb1);
-              gegl_color_get_pixel ((GeglColor *) gimp_render_check_color2 (), babl_format ("R'G'B'A double"), &rgb2);
-              renderer->priv->pattern = gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM, &rgb1, &rgb2);
+              rgb1 = gimp_render_check_color1 ();
+              rgb2 = gimp_render_check_color2 ();
+              renderer->priv->pattern = gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM, rgb1, rgb2);
             }
 
           cairo_set_source (cr, renderer->priv->pattern);
@@ -1158,12 +1158,12 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
     {
       if (! renderer->priv->pattern)
         {
-          GimpRGB rgb1;
-          GimpRGB rgb2;
+          const GeglColor *rgb1;
+          const GeglColor *rgb2;
 
-          gegl_color_get_pixel ((GeglColor *) gimp_render_check_color1 (), babl_format ("R'G'B'A double"), &rgb1);
-          gegl_color_get_pixel ((GeglColor *) gimp_render_check_color2 (), babl_format ("R'G'B'A double"), &rgb2);
-          renderer->priv->pattern = gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM, &rgb1, &rgb2);
+          rgb1 = gimp_render_check_color1 ();
+          rgb2 = gimp_render_check_color2 ();
+          renderer->priv->pattern = gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM, rgb1, rgb2);
         }
     }
 
