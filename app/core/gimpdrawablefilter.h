@@ -75,6 +75,7 @@ GimpLayerColorSpace
 GimpLayerCompositeMode
            gimp_drawable_filter_get_composite_mode
                                                (GimpDrawableFilter  *filter);
+gboolean   gimp_drawable_filter_get_clip       (GimpDrawableFilter  *filter);
 GimpFilterRegion
            gimp_drawable_filter_get_region     (GimpDrawableFilter  *filter);
 

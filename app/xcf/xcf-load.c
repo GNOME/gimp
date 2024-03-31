@@ -105,6 +105,7 @@ typedef struct
   GimpLayerColorSpace    blend_space;
   GimpLayerColorSpace    composite_space;
   GimpLayerCompositeMode composite_mode;
+  gboolean               clip;
   GimpFilterRegion       region;
 
   gboolean               unsupported_operation;
@@ -1092,6 +1093,7 @@ xcf_load_add_effects (XcfInfo   *info,
                                                  data->blend_space,
                                                  data->composite_space,
                                                  data->composite_mode);
+                  gimp_drawable_filter_set_clip (filter, data->clip);
                   gimp_drawable_filter_set_region (filter, data->region);
 
                   gimp_drawable_filter_apply (filter, NULL);
@@ -2715,6 +2717,15 @@ set_or_seek_node_property:
 
             g_value_unset (&filter_prop_value);
             g_free (filter_prop_name);
+          }
+          break;
+
+        case PROP_FILTER_CLIP:
+          {
+            gboolean clip;
+
+            xcf_read_int32 (info, (guint32 *) &clip, 1);
+            filter->clip = clip;
           }
           break;
 

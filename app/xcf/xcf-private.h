@@ -71,7 +71,8 @@ typedef enum
   PROP_LOCK_VISIBILITY    = 42,
   PROP_SELECTED_PATH      = 43,
   PROP_FILTER_REGION      = 44,
-  PROP_FILTER_ARGUMENT    = 45
+  PROP_FILTER_ARGUMENT    = 45,
+  PROP_FILTER_CLIP        = 46
 } PropType;
 
 typedef enum
