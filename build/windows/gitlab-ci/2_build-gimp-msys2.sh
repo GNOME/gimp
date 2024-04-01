@@ -37,6 +37,7 @@ fi
 
 
 # Install the required (pre-built) packages for GIMP
+# We take code from deps script to better maintenance
 GIMP_DIR=""
 DEPS_CODE=$(cat build/windows/gitlab-ci/1_build-deps-msys2.sh)
 DEPS_CODE=$(sed -n '/# Install the/,/# End of install/p' <<< $DEPS_CODE)
@@ -49,11 +50,16 @@ wget -O "${MSYS2_PREFIX}/include/qoi.h" https://raw.githubusercontent.com/phobos
 
 # Build GIMP
 export GIMP_PREFIX="`realpath ~/_install`${ARTIFACTS_SUFFIX}"
+# Universal variables
+# FIX ME: We can't set them modularly like we install deps modularly
 export PATH="$GIMP_PREFIX/bin:$PATH"
-export PKG_CONFIG_PATH="${GIMP_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH"
-export PKG_CONFIG_PATH="${GIMP_PREFIX}/share/pkgconfig:$PKG_CONFIG_PATH"
-export LD_LIBRARY_PATH="${GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}"
-export XDG_DATA_DIRS="${GIMP_PREFIX}/share:${MSYSTEM_PREFIX}/share/"
+gcc -print-multi-os-directory | grep . && LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || LIB_DIR="lib"
+gcc -print-multiarch | grep . && LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
+export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+export LD_LIBRARY_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
+export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
+# End of universal variables
 
 if [ ! -d "_ccache" ]; then
   mkdir -p _ccache

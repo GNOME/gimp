@@ -197,11 +197,13 @@ deps-debian-x64:
       fi
     - git clone $babl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
     - git clone $gegl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
-    - export PKG_CONFIG_PATH="${DEB_GIMP_PREFIX}/lib/pkgconfig"
-    - export PKG_CONFIG_PATH="${DEB_GIMP_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
-    - export LD_LIBRARY_PATH="${DEB_GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}"
-    - export LD_LIBRARY_PATH="${DEB_GIMP_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
-    - export XDG_DATA_DIRS="${DEB_GIMP_PREFIX}/share:/usr/local/share:/usr/share"
+    - export PATH="$DEB_GIMP_PREFIX/bin:$PATH"
+    - gcc -print-multi-os-directory | grep . && LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || LIB_DIR="lib"
+    - gcc -print-multiarch | grep . && LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
+    - export PKG_CONFIG_PATH="${DEB_GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+    - export LD_LIBRARY_PATH="${DEB_GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    - export XDG_DATA_DIRS="${DEB_GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
+    - export GI_TYPELIB_PATH="${DEB_GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
   script:
     - mkdir -p "$APT_CACHE"
     - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
@@ -231,14 +233,13 @@ deps-debian-x64:
     - "${DEB_BUILD_DIR}"
     - "${DEB_INSTALL_DIR}"
   before_script:
-    - export PATH="${DEB_GIMP_PREFIX}/bin:$PATH"
-    - export PKG_CONFIG_PATH="${DEB_GIMP_PREFIX}/lib/pkgconfig:${DEB_GIMP_PREFIX}/share/pkgconfig"
-    - export PKG_CONFIG_PATH="${DEB_GIMP_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
-    - export PKG_CONFIG_PATH="${DEB_GIMP_PREFIX}/share/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
-    - export LD_LIBRARY_PATH="${DEB_GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}"
-    - export LD_LIBRARY_PATH="${DEB_GIMP_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
-    - export XDG_DATA_DIRS="${DEB_GIMP_PREFIX}/share:/usr/local/share:/usr/share"
-    - export GI_TYPELIB_PATH="${DEB_GIMP_PREFIX}/lib/`gcc -print-multiarch`/girepository-1.0/:${GI_TYPELIB_PATH}"
+    - export PATH="$DEB_GIMP_PREFIX/bin:$PATH"
+    - gcc -print-multi-os-directory | grep . && LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || LIB_DIR="lib"
+    - gcc -print-multiarch | grep . && LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
+    - export PKG_CONFIG_PATH="${DEB_GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+    - export LD_LIBRARY_PATH="${DEB_GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    - export XDG_DATA_DIRS="${DEB_GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
+    - export GI_TYPELIB_PATH="${DEB_GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
     - git submodule update --init
   needs: ["deps-debian-x64"]
 
@@ -465,9 +466,10 @@ gimp-win-x64-cross:
     - GIMP_APP_VERSION=$(grep GIMP_APP_VERSION ${DEB_BUILD_DIR}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
     - mkdir bin
     - echo "#!/bin/sh" > bin/gimp-console-$GIMP_APP_VERSION
-    - echo export LD_LIBRARY_PATH="${DEB_GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}" >> bin/gimp-console-$GIMP_APP_VERSION
-    - echo export LD_LIBRARY_PATH="${DEB_GIMP_PREFIX}/lib/`gcc -print-multiarch`:\$LD_LIBRARY_PATH" >> bin/gimp-console-$GIMP_APP_VERSION
-    - echo export GI_TYPELIB_PATH="${DEB_GIMP_PREFIX}/lib/`gcc -print-multiarch`/girepository-1.0/:${GI_TYPELIB_PATH}" >> bin/gimp-console-$GIMP_APP_VERSION
+    - gcc -print-multi-os-directory | grep . && LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || LIB_DIR="lib"
+    - gcc -print-multiarch | grep . && LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
+    - echo export LD_LIBRARY_PATH="${DEB_GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> bin/gimp-console-$GIMP_APP_VERSION
+    - echo export GI_TYPELIB_PATH="${DEB_GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}" >> bin/gimp-console-$GIMP_APP_VERSION
     - echo "${DEB_GIMP_PREFIX}/bin/gimp-console-$GIMP_APP_VERSION \"\$@\"" >> bin/gimp-console-$GIMP_APP_VERSION
     - chmod u+x bin/gimp-console-$GIMP_APP_VERSION
     - export PATH="`pwd`/bin:$PATH"
@@ -579,9 +581,10 @@ gimp-win-x86-cross:
     - GIMP_APP_VERSION=$(grep GIMP_APP_VERSION ${DEB_BUILD_DIR}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
     - mkdir bin
     - echo "#!/bin/sh" > bin/gimp-console-$GIMP_APP_VERSION
-    - echo export LD_LIBRARY_PATH="${DEB_GIMP_PREFIX}/lib:${LD_LIBRARY_PATH}" >> bin/gimp-console-$GIMP_APP_VERSION
-    - echo export LD_LIBRARY_PATH="${DEB_GIMP_PREFIX}/lib/`gcc -print-multiarch`:\$LD_LIBRARY_PATH" >> bin/gimp-console-$GIMP_APP_VERSION
-    - echo export GI_TYPELIB_PATH="${DEB_GIMP_PREFIX}/lib/`gcc -print-multiarch`/girepository-1.0/:${GI_TYPELIB_PATH}" >> bin/gimp-console-$GIMP_APP_VERSION
+    - gcc -print-multi-os-directory | grep . && LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || LIB_DIR="lib"
+    - gcc -print-multiarch | grep . && LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
+    - echo export LD_LIBRARY_PATH="${DEB_GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> bin/gimp-console-$GIMP_APP_VERSION
+    - echo export GI_TYPELIB_PATH="${DEB_GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}" >> bin/gimp-console-$GIMP_APP_VERSION
     - echo "${DEB_GIMP_PREFIX}/bin/gimp-console-$GIMP_APP_VERSION \"\$@\"" >> bin/gimp-console-$GIMP_APP_VERSION
     - chmod u+x bin/gimp-console-$GIMP_APP_VERSION
     - export PATH="`pwd`/bin:$PATH"

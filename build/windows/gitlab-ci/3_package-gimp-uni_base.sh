@@ -25,6 +25,7 @@ fi
 
 if [[ "$BUILD_TYPE" != "CI_CROSS" ]]; then
   # Install the required (pre-built) packages again
+  # We take code from deps script to better maintenance
   GIMP_DIR=""
   DEPS_CODE=$(cat build/windows/gitlab-ci/1_build-deps-msys2.sh)
   DEPS_CODE=$(sed -n '/# Install the/,/# End of install/p' <<< $DEPS_CODE)
