@@ -182,7 +182,7 @@ gimp_cairo_surface_get_format (cairo_surface_t *surface)
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 17, 2)
     /* Since Cairo 1.17.2 */
     case CAIRO_FORMAT_RGB96F:   return babl_format ("R'G'B' float");
-    case CAIRO_FORMAT_RGBA128F: return babl_format ("R'G'B'A float");
+    case CAIRO_FORMAT_RGBA128F: return babl_format ("R'aG'aB'aA float");
 #endif
 
     default:

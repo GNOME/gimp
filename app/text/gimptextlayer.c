@@ -1029,13 +1029,13 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   switch (gimp_text_layout_get_trc (layout))
     {
     case GIMP_TRC_LINEAR:
-      format = babl_format_with_space ("RGBA float", gimp_text_layout_get_space (layout));
+      format = babl_format_with_space ("RaGaBaA float", gimp_text_layout_get_space (layout));
       break;
     case GIMP_TRC_NON_LINEAR:
-      format = babl_format_with_space ("R'G'B'A float", gimp_text_layout_get_space (layout));
+      format = babl_format_with_space ("R'aG'aB'aA float", gimp_text_layout_get_space (layout));
       break;
     case GIMP_TRC_PERCEPTUAL:
-      format = babl_format_with_space ("R~G~B~A float", gimp_text_layout_get_space (layout));
+      format = babl_format_with_space ("R~aG~aB~aA float", gimp_text_layout_get_space (layout));
       break;
     default:
       g_return_if_reached ();
