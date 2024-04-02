@@ -300,7 +300,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
 
   closure = g_cclosure_new (G_CALLBACK (quit_close_all_dialog_container_changed),
                             private, NULL);
-  g_object_watch_closure (G_OBJECT (private->dialog), closure);
+  g_signal_connect_swapped (private->dialog, "destroy", G_CALLBACK (g_closure_invalidate), closure);
   g_signal_connect_closure (private->images, "add", closure, FALSE);
   g_signal_connect_closure (private->images, "remove", closure, FALSE);
 
