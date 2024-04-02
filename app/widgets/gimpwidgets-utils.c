@@ -1096,7 +1096,7 @@ gimp_get_message_icon_name (GimpMessageSeverity severity)
 
 gboolean
 gimp_get_color_tag_color (GimpColorTag  color_tag,
-                          GimpRGB      *color,
+                          GeglColor    *color,
                           gboolean      inherited)
 {
   static const struct
@@ -1123,16 +1123,25 @@ gimp_get_color_tag_color (GimpColorTag  color_tag,
 
   if (color_tag > GIMP_COLOR_TAG_NONE)
     {
-      gimp_rgba_set_uchar (color,
-                           colors[color_tag].r,
-                           colors[color_tag].g,
-                           colors[color_tag].b,
-                           255);
+      gegl_color_set_rgba (color,
+                           colors[color_tag].r / 255.0f,
+                           colors[color_tag].g / 255.0f,
+                           colors[color_tag].b / 255.0f,
+                           1.0f);
 
       if (inherited)
         {
-          gimp_rgb_composite (color, &(GimpRGB) {1.0, 1.0, 1.0, 0.2},
+          /* TODO: Replace once gimp_rgb_composite () is replaced with
+           * GeglColor composite function */
+          GimpRGB temp_color;
+
+          gegl_color_get_pixel (color, babl_format ("R'G'B'A double"),
+                                &temp_color);
+          gimp_rgb_set_alpha (&temp_color, 1.0f);
+          gimp_rgb_composite (&temp_color, &(GimpRGB) {1.0, 1.0, 1.0, 0.2},
                               GIMP_RGB_COMPOSITE_NORMAL);
+          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"),
+                                &temp_color);
         }
 
       return TRUE;

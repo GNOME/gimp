@@ -55,12 +55,9 @@ items_actions_setup (GimpActionGroup *group,
         }
       else
         {
-          GeglColor *color;
-          GimpRGB    rgb;
+          GeglColor *color = gegl_color_new ("none");
 
-          gimp_get_color_tag_color (value->value, &rgb, FALSE);
-          color = gegl_color_new (NULL);
-          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
+          gimp_get_color_tag_color (value->value, color, FALSE);
           gimp_action_group_set_action_color (group, action, color, FALSE);
           g_object_unref (color);
         }
@@ -77,14 +74,14 @@ items_actions_update (GimpActionGroup *group,
   GEnumClass *enum_class;
   GEnumValue *value;
   gchar       action[32];
-  gboolean    visible       = FALSE;
-  gboolean    has_color_tag = FALSE;
+  gboolean    visible           = FALSE;
+  gboolean    has_color_tag     = FALSE;
   gboolean    lock_content      = TRUE;
   gboolean    can_lock_content  = FALSE;
   gboolean    lock_position     = TRUE;
   gboolean    can_lock_position = FALSE;
-  GimpRGB     tag_color;
-  GList       *iter;
+  GeglColor  *tag_color         = gegl_color_new ("none");
+  GList      *iter;
 
   for (iter = items; iter; iter = iter->next)
     {
@@ -116,8 +113,9 @@ items_actions_update (GimpActionGroup *group,
 
       has_color_tag = (has_color_tag ||
                        gimp_get_color_tag_color (gimp_item_get_color_tag (item),
-                                                 &tag_color, FALSE));
+                                                 tag_color, FALSE));
     }
+  g_object_unref (tag_color);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)

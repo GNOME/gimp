@@ -1619,7 +1619,8 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
   GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (view);
   GimpItem              *item      = GIMP_ITEM (viewable);
   GtkTreeIter           *iter;
-  GimpRGB                color;
+  GeglColor             *color     = gegl_color_new ("none");
+  GdkRGBA                rgba;
   gboolean               has_color;
   const gchar           *icon_name;
   gint                   n_locks;
@@ -1628,9 +1629,11 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
                                          parent_insert_data, index);
 
   has_color = gimp_get_color_tag_color (gimp_item_get_merged_color_tag (item),
-                                        &color,
+                                        color,
                                         gimp_item_get_color_tag (item) ==
                                         GIMP_COLOR_TAG_NONE);
+  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgba);
+  g_object_unref (color);
 
   n_locks = gimp_item_tree_view_get_n_locks (item_view, item, &icon_name);
 
@@ -1650,7 +1653,7 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
                       icon_name,
 
                       item_view->priv->model_column_color_tag,
-                      has_color ? (GdkRGBA *) &color : NULL,
+                      has_color ? &rgba : NULL,
                       -1);
 
   if (GIMP_IS_LAYER_TREE_VIEW (item_view))
@@ -2835,17 +2838,20 @@ gimp_item_tree_view_color_tag_changed (GimpItem         *item,
   if (iter)
     {
       GimpContainer *children;
-      GimpRGB        color;
+      GeglColor     *color = gegl_color_new ("none");
+      GdkRGBA        rgba;
       gboolean       has_color;
 
       has_color = gimp_get_color_tag_color (gimp_item_get_merged_color_tag (item),
-                                            &color,
+                                            color,
                                             gimp_item_get_color_tag (item) ==
                                             GIMP_COLOR_TAG_NONE);
+      gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgba);
+      g_object_unref (color);
 
       gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                           view->priv->model_column_color_tag,
-                          has_color ? (GdkRGBA *) &color : NULL,
+                          has_color ? &rgba : NULL,
                           -1);
 
       children = gimp_viewable_get_children (GIMP_VIEWABLE (item));

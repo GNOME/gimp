@@ -216,7 +216,7 @@ item_options_dialog_new (GimpImage               *image,
            list = g_list_next (list))
         {
           GimpColorTag  color_tag;
-          GimpRGB       rgb;
+          GeglColor    *rgb = gegl_color_new ("none");
           GtkWidget    *image;
 
           radio = list->data;
@@ -228,25 +228,22 @@ item_options_dialog_new (GimpImage               *image,
           color_tag = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (radio),
                                                           "gimp-item-data"));
 
-          if (gimp_get_color_tag_color (color_tag, &rgb, FALSE))
+          if (gimp_get_color_tag_color (color_tag, rgb, FALSE))
             {
-              GeglColor *color = gegl_color_new (NULL);
-              gint       w, h;
+              gint w, h;
 
-              gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-              image = gimp_color_area_new (color, GIMP_COLOR_AREA_FLAT, 0);
+              image = gimp_color_area_new (rgb, GIMP_COLOR_AREA_FLAT, 0);
               gimp_color_area_set_color_config (GIMP_COLOR_AREA (image),
                                                 context->gimp->config->color_management);
               gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &w, &h);
               gtk_widget_set_size_request (image, w, h);
-
-              g_object_unref (color);
             }
           else
             {
               image = gtk_image_new_from_icon_name (GIMP_ICON_CLOSE,
                                                     GTK_ICON_SIZE_MENU);
             }
+          g_object_unref (rgb);
 
           gtk_container_add (GTK_CONTAINER (radio), image);
           gtk_widget_show (image);
