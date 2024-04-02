@@ -83,10 +83,12 @@ if [ ! -f "_build${ARTIFACTS_SUFFIX}/build.ninja" ]; then
   # available on MSYS2 and we are told it's very hard to build them).
   # TODO: re-enable javascript plug-ins when we can figure this out.
   meson setup .. -Dprefix="${GIMP_PREFIX}"           \
-                 -Dgi-docgen=disabled                \
+                 -Dgi-docgen=enabled                 \
+                 -Dg-ir-doc=false                    \
                  -Djavascript=disabled               \
                  -Ddirectx-sdk-dir="${MSYS2_PREFIX}" \
                  -Dwindows-installer=true            \
+                 -Db_lto=true                        \
                  -Dbuild-id=org.gimp.GIMP_official $MESON_OPTIONS
   ninja
   ninja install

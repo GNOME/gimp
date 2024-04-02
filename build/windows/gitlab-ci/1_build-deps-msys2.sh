@@ -112,6 +112,6 @@ configure_or_build ()
   fi
 }
 
-configure_or_build babl "-Dwith-docs=false"
+configure_or_build babl "-Dwith-docs=true -Db_lto=true"
 
-configure_or_build gegl "-Ddocs=false -Dworkshop=true"
+configure_or_build gegl "-Ddocs=true -Dworkshop=true -Db_lto=true"
