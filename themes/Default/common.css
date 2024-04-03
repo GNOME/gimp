@@ -473,6 +473,11 @@ tooltip box
   border: 0px solid @transparent;
 }
 
+/* Prevents flickering effect on some desktops */
+tooltip decoration {
+  box-shadow: 0px 0px;
+}
+
 /* The border around a tooltip */
 .background {
   background-color: @bg-color;
