@@ -9103,13 +9103,13 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                g_param_spec_double ("spread-amount-x",
                                                     "spread amount x",
                                                     "Horizontal spread amount",
-                                                    0, 200, 0,
+                                                    0, 512, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("spread-amount-y",
                                                     "spread amount y",
                                                     "Vertical spread amount",
-                                                    0, 200, 0,
+                                                    0, 512, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

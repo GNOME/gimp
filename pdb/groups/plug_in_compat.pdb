@@ -4449,9 +4449,9 @@ HELP
 	  desc => 'Input image (unused)' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'Input drawable' },
-	{ name => 'spread_amount_x', type => '0 <= float <= 200',
+	{ name => 'spread_amount_x', type => '0 <= float <= 512',
 	  desc => 'Horizontal spread amount' },
-	{ name => 'spread_amount_y', type => '0 <= float <= 200',
+	{ name => 'spread_amount_y', type => '0 <= float <= 512',
 	  desc => 'Vertical spread amount' }
     );
 
