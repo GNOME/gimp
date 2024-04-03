@@ -129,6 +129,10 @@ entry.italic {
     color: rgba (1.0, 0.0, 0.0, 1.0);
 }
 
+tooltip decoration {
+  box-shadow: 0px 0px;
+}
+
 treeview header button {
     padding: 6px;
 }
