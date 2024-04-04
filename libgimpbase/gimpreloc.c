@@ -452,6 +452,7 @@ gchar *
 _gimp_reloc_find_prefix (const gchar *default_prefix)
 {
   gchar *dir1, *dir2;
+  gchar *exe_dir;
 
   if (exe == NULL)
     {
@@ -464,6 +465,24 @@ _gimp_reloc_find_prefix (const gchar *default_prefix)
 
   dir1 = g_path_get_dirname (exe);
   dir2 = g_path_get_dirname (dir1);
+
+  exe_dir = g_path_get_basename (dir1);
+  if (g_strcmp0 (exe_dir, "bin") != 0 && ! g_str_has_prefix (exe_dir, "lib"))
+    {
+      g_free (exe_dir);
+      exe_dir = g_path_get_basename (dir2);
+      if (g_str_has_prefix (exe_dir, "lib"))
+        {
+          /* Supporting multiarch folders, such as lib/x86_64-linux-gnu/ */
+          gchar *dir3 = g_path_get_dirname (dir2);
+
+          g_free (dir2);
+          dir2 = dir3;
+        }
+    }
+
   g_free (dir1);
+  g_free (exe_dir);
+
   return dir2;
 }
