@@ -23,7 +23,12 @@ Core:
   - Welcome dialog:
     * Multiple images can be selected and opened at once with Enter key.
     * "Show on Start" is now displayed specifically in the "Create" tab.
-  - Group layers can now have non-destructive layer effects.
+  - Non-destructive layer effects:
+    * can now be applied on group layers;
+    * cannot be reordered anymore while being edited.
+  - More GimpRGB code replaced by GeglColor (space invasion).
+  - New official software logo!
+    See: https://gitlab.gnome.org/GNOME/gimp-data/-/blob/main/images/logo/README.md
 
 Tools:
 
@@ -33,13 +38,18 @@ Tools:
 
 Plug-ins:
 
-  - Plug-ins ported to GimpProcedureDialog: Warp, decompose.
+  - Plug-ins ported to GimpProcedureDialog: Warp, decompose,
+    file-pdf-save-multi, qbist, file-xmc.
+  - PSD: unsupported layers are not dropped anymore (they will usually show
+    empty instead).
 
 API:
 
   - Changes in libgimp:
     * gimp_procedure_run_config() can run with no config objects (equivalent to
       run the prodcedure with default arguments).
+  - Changes in libgimpwidgets:
+    * GimpColorArea: dropped colors are now passed as GeglColor.
 
 Build:
 
@@ -47,6 +57,18 @@ Build:
     * babl 0.1.108
   - Started a skeleton for unit testing framework for libgimp (only a few tests
     so far but we eventually target exhaustivity).
+  - Main CI jobs are now compiled with Clang, as well as Windows installer and
+    Nightly Flatpak builds. Some benchmarks run by Øyvind show we can gain a bit
+    of performance in some situations in babl/GEGL/ctx codepaths, thanks to
+    better auto-vectorization support.
+  - New gimp-data repository used as a git submodule:
+    * Various data were moved to gimp-data: icons, cursors, patterns, brushes
+      and application icon/logo.
+    * Various files are generated from the source logo: wilber.ico (for Windows
+      installer), gimp.icns (macOS), desktop application icons for Unix-like
+      systems, Wilber icons of the "Default" icon theme within the application.
+    * Splash image and Windows installer's BMP images are generated from the
+      splash image contributed as XCF.
 
 
 Overview of Changes from GIMP 2.99.16 to GIMP 2.99.18
