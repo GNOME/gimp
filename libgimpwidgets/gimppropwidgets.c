@@ -2894,7 +2894,7 @@ gimp_prop_file_chooser_button_setup (GtkWidget  *button,
                   G_CALLBACK (gimp_prop_file_chooser_button_notify),
                   button);
 
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   return button;
 }
@@ -2920,7 +2920,6 @@ gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
       if (file)
         {
           value = gimp_file_get_config_path (file, NULL);
-          g_object_unref (file);
         }
 
       g_object_get (config, param_spec->name, &v, NULL);
