@@ -9487,7 +9487,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                g_param_spec_double ("wavelength",
                                                     "wavelength",
                                                     "The Wavelength of the Waves",
-                                                    0.1, 1000, 0.1,
+                                                    0.1, 100, 0.1,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("type",

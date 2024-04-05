@@ -4914,7 +4914,7 @@ HELP
 	  desc => 'The Amplitude of the Waves' },
 	{ name => 'phase', type => '-360 <= float <= 360',
 	  desc => 'The Phase of the Waves' },
-	{ name => 'wavelength', type => '0.1 <= float <= 1000',
+	{ name => 'wavelength', type => '0.1 <= float <= 100',
 	  desc => 'The Wavelength of the Waves' },
 	{ name => 'type', type => 'boolean',
 	  desc => 'Type of waves: { 0 = smeared, 1 = black }' },
