@@ -1790,10 +1790,8 @@ meson.add_dist_script('meson_dist_script.sh',
                       generate_version_h ?  gitversion_h.full_path() : gitversion_h,
                       meson.project_source_root(), meson.project_build_root())
 
-
 ################################################################################
-# Subdirs
-
+# Subdirs: part 1
 
 rootInclude = include_directories('.')
 appInclude  = include_directories('app')
@@ -1839,6 +1837,88 @@ subdir('modules')
 subdir('plug-ins')
 subdir('app')
 subdir('app-tools')
+
+################################################################################
+# Make GIMP runnable without being installed for unit-testing or as a build
+# tool.
+
+gimp_run_env=environment()
+
+if meson.can_run_host_binaries()
+  if enable_console_bin
+    gimp_exe=gimpconsole_exe
+  else
+    gimp_exe=gimpmain_exe
+  endif
+
+  menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
+  gimp_run_env.set('GIMP_TESTING_MENUS_PATH', menu_paths)
+
+  gimp_run_env.set('GIMP_TESTING_PLUGINDIRS', meson.global_build_root() / 'plug-ins')
+  gimp_run_env.append('GIMP_TESTING_PLUGINDIRS', meson.global_build_root() / 'plug-ins/python')
+  gimp_run_env.append('GIMP_TESTING_PLUGINDIRS', meson.global_build_root() / 'plug-ins/common/test-plug-ins/')
+
+  gimp_run_env.set('GIMP_TESTING_INTERPRETER_DIRS', meson.global_build_root() / 'plug-ins/python/')
+  gimp_run_env.set('GIMP_TESTING_ENVIRON_DIRS', meson.global_source_root() / 'data/environ/')
+
+  gimp_run_env.prepend('GI_TYPELIB_PATH', prefix / 'lib/girepository-1.0/')
+  gimp_run_env.prepend('GI_TYPELIB_PATH', meson.global_build_root() / 'libgimp')
+
+  gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimp')
+  gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpbase')
+  gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpcolor')
+  gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpconfig')
+  gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpmath')
+  gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpmodule')
+  gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpthumb')
+  gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpwidgets')
+
+  if platform_windows
+    # On Windows, DLL are found through PATH rather than LD_LIBRARY_PATH.
+    gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimp')
+    gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimpbase')
+    gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimpcolor')
+    gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimpconfig')
+    gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimpmath')
+    gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimpmodule')
+    gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimpthumb')
+    gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimpwidgets')
+  elif platform_osx
+    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimp')
+    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpbase')
+    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpcolor')
+    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpconfig')
+    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpmath')
+    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpmodule')
+    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpthumb')
+    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpwidgets')
+  endif
+else
+  # Cross-builds require an existing native GIMP installed, unless we
+  # can run target binaries.
+  gimp_exe = find_program([gimpconsole_exe_name, gimpmain_exe_name],
+                          native: true, required: false)
+
+  if not gimp_exe.found()
+    error('When cross-compiling, the build requires either an exe_wrapper or a native GIMP installed (@0@ or @1@).'.format(gimpconsole_exe_name, gimpmain_exe_name))
+  endif
+endif
+
+# Use a temporary config directory in the top build root for 2 reasons: first
+# because we don't want to pollute any existing user config folder; second
+# because the default directory may not be writable (we have the case in macOS
+# CI), but the build dir always is.
+# XXX We might also want to delete this directory before every use, especially
+# when using the binary for testing (ensuring we always start from a fresh
+# config). But for now, let's keep it as-is.
+gimp_exe_config_dir = custom_target('gimp_exe_config_dir',
+                                    output: [ '.tmp-config' ],
+                                    command: [ 'mkdir', '-p', '@OUTDIR@' + '/.tmp-config' ],
+                                    build_by_default: true)
+gimp_run_env.set('GIMP3_DIRECTORY', gimp_exe_config_dir.full_path())
+
+################################################################################
+# Subdirs: part 2
 
 # gimp-data submodule part 2
 subdir('gimp-data/images/')
