@@ -75,7 +75,11 @@ steps are needed:
    updated by running: `meson subprojects update`
 3. Build GIMP entirely locally from the main source repository: `ninja`
 4. Install your local GIMP: `ninja install`
-5. Still from the main source repository, run: `ninja gimp-data/images/logo/gimp.ico`
-6. The command will have updated `gimp.ico` directly in the source repository,
-   under `images/logo/`. Verify the created file.
-7. If the `.ico` looks fine, commit this updated file and push.
+5. Still from the main source repository, run:
+```sh
+ninja gimp-data/images/logo/gimp.ico
+ninja gimp-data/images/logo/fileicon.ico
+```
+6. The command will have updated `gimp.ico` and `fileicon.ico` directly in the
+   source repository, under `images/logo/`. Verify the created files.
+7. If the `.ico` files look fine, commit these updated files and push.

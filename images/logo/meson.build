@@ -73,23 +73,24 @@ install_data('gimp-logo.svg',
              install_dir: get_option('datadir') / 'icons' / 'hicolor' / 'scalable' / 'apps',
              rename: 'gimp.svg')
 
-## gimp.ico (Windows) ##
+## gimp.ico and fileicon.ico (Windows) ##
 
-build_gimp_ico = get_option('windows-installer')
+build_ico_files = get_option('windows-installer')
 
-if build_gimp_ico
-  gen_gimp_ico_conf = configuration_data()
-  gen_gimp_ico_conf.set('PARENT_TOP_SRCDIR', meson.global_source_root())
-  gen_gimp_ico_conf.set('SRCDIR', meson.current_source_dir())
+if build_ico_files
+  # `gimp.ico` and `fileicon.ico` are used in gimp.rc compiled in GIMP for
+  # Windows. Since these are circular dependencies (GIMP needs them on Windows
+  # and the icons need GIMP to be created), we committed both ico files into
+  # this repository and this target is made optional. It must be built
+  # explicitly by maintainers as part of the procedure when updating the logo.
+
+  gen_ico_conf = configuration_data()
+  gen_ico_conf.set('PARENT_TOP_SRCDIR', meson.global_source_root())
+  gen_ico_conf.set('SRCDIR', meson.current_source_dir())
+
   gen_gimp_ico_py = configure_file(input : 'gen-gimp-ico.py.in',
                                    output : 'gen-gimp-ico.py',
-                                   configuration : gen_gimp_ico_conf)
-
-  # `gimp.ico` is used in gimp.rc compiled in GIMP for Windows.
-  # Since it is a circular dependency (GIMP needs it on Windows and the icon
-  # needs GIMP to be created), we committed gimp.ico into this repository and
-  # this target is made optional. It must be built explicitly by maintainers as
-  # part of the procedure when updating the logo.
+                                   configuration : gen_ico_conf)
   gimp_ico = custom_target('gimp.ico',
                            input : [ gen_gimp_ico_py ],
                            depend_files: [ 'gimp-logo.svg' ],
@@ -101,6 +102,21 @@ if build_gimp_ico
                            feed: true,
                            build_by_default: false,
                            env: gimp_run_env)
+
+  gen_fileicon_ico_py = configure_file(input : 'gen-fileicon-ico.py.in',
+                                       output : 'gen-fileicon-ico.py',
+                                       configuration : gen_ico_conf)
+  fileicon_ico = custom_target('fileicon.ico',
+                               input : [ gen_fileicon_ico_py ],
+                               depend_files: [ 'gimp-logo-shadow.svg', 'fileicon-base.svg' ],
+                               depends: [ gimp_exe_config_dir ],
+                               output: [ 'fileicon.ico', ],
+                               command: [ gimp_exe,'-nidfs',
+                                          '--batch-interpreter', 'python-fu-eval',
+                                          '-b', '-', '--quit'],
+                               feed: true,
+                               build_by_default: false,
+                               env: gimp_run_env)
 endif
 
 ## gimp.icns (macOS) ##
