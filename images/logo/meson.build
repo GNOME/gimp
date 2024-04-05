@@ -100,7 +100,7 @@ if build_gimp_ico
                                       '-b', '-', '--quit'],
                            feed: true,
                            build_by_default: false,
-                           env: env)
+                           env: gimp_run_env)
 endif
 
 ## gimp.icns (macOS) ##
@@ -122,4 +122,4 @@ gimp_ico = custom_target('gimp.icns',
                                     '-b', '-', '--quit'],
                          feed: true,
                          build_by_default: false,
-                         env: env)
+                         env: gimp_run_env)
