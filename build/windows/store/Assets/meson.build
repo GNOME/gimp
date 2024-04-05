@@ -252,6 +252,58 @@ endforeach
 
 # OTHER ASSETS
 
+## fileicon icon (for XCF and other filetypes)
+fileicon_path = meson.project_source_root() / 'gimp-data/images/logo/' / 'fileicon-base' + '.svg'
+foreach scale : scales
+  if scale == '100'
+    icon_name = 'fileicon.png'
+  else
+    icon_name = 'fileicon.scale-' + scale + '.png'
+  endif
+  scale_int = scale.to_int()
+  size = 44 * scale_int / 100
+  size_str = size.to_string()
+  conf = configuration_data()
+  conf.set('TOP_SRCDIR', meson.project_source_root())
+  conf.set('OUTPUT',     meson.current_build_dir() / icon_name)
+  conf.set('LOGO_DIM',   size_str)
+  gen_fileicon_py = configure_file(input : 'gen-fileicon-png.py.in',
+                                   output : 'gen-fileicon-png-' + size_str + '.py',
+                                   configuration : conf)
+  custom_target(icon_name,
+                input : [ gen_fileicon_py ],
+                depend_files: [ wilber_path, fileicon_path ],
+                output: [ icon_name ],
+                command: [ gimp_exe, '-nidfs',
+                           '--batch-interpreter', 'python-fu-eval',
+                           '-b', '-', '--quit'],
+                feed: true,
+                build_by_default: true,
+                env: gimp_run_env)
+endforeach
+
+foreach size : sizes
+  icon_name = 'fileicon.targetsize-' + size + '.png'
+  conf = configuration_data()
+  conf.set('TOP_SRCDIR', meson.project_source_root())
+  conf.set('OUTPUT',     meson.current_build_dir() / icon_name)
+  conf.set('LOGO_DIM',   size)
+  gen_fileicon_py = configure_file(input : 'gen-fileicon-png.py.in',
+                                   output : 'gen-fileicon-png-' + size + '.py',
+                                   configuration : conf)
+  custom_target(icon_name,
+                input : [ gen_fileicon_py ],
+                depend_files: [ wilber_path, fileicon_path ],
+                output: [ icon_name ],
+                command: [ gimp_exe, '-nidfs',
+                            '--batch-interpreter', 'python-fu-eval',
+                            '-b', '-', '--quit'],
+                feed: true,
+                build_by_default: true,
+                env: gimp_run_env)
+endforeach
+
+
 ## Generate default XCF file (uap4:ShellNewFileName)
 gen_new_xcf_conf = configuration_data()
 gen_new_xcf_conf.set('BUILDDIR', meson.current_build_dir())

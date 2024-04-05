@@ -65,5 +65,5 @@ END
 
 #include "winuser.h"
 1	ICON	QUOTE(TOP_SRCDIR) "/gimp-data/images/logo/gimp.ico"
-2	ICON	QUOTE(TOP_SRCDIR) "/build/windows/fileicon.ico"
+2	ICON	QUOTE(TOP_SRCDIR) "/gimp-data/images/logo/fileicon.ico"
 CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST QUOTE(TOP_SRCDIR) "/build/windows/gimp.manifest"
