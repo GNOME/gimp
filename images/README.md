@@ -79,7 +79,9 @@ steps are needed:
 ```sh
 ninja gimp-data/images/logo/gimp.ico
 ninja gimp-data/images/logo/fileicon.ico
+ninja gimp-data/images/logo/plug-ins.ico
 ```
-6. The command will have updated `gimp.ico` and `fileicon.ico` directly in the
-   source repository, under `images/logo/`. Verify the created files.
+6. The command will have updated `gimp.ico`, `fileicon.ico` and `plug-ins.ico`
+   directly in the source repository, under `images/logo/`. Verify the created
+   files.
 7. If the `.ico` files look fine, commit these updated files and push.

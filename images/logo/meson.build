@@ -117,6 +117,22 @@ if build_ico_files
                                feed: true,
                                build_by_default: false,
                                env: gimp_run_env)
+
+  # Similarly `plug-ins.ico` is used in gimp-plug-ins.rc.
+  gen_plug_ins_ico_py = configure_file(input : 'gen-plug-ins-ico.py.in',
+                                       output : 'gen-plug-ins-ico.py',
+                                       configuration : gen_ico_conf)
+  fileicon_ico = custom_target('plug-ins.ico',
+                               input : [ gen_plug_ins_ico_py ],
+                               depend_files: [ 'gimp-logo-shadow.svg', 'plug-ins-base.svg' ],
+                               depends: [ gimp_exe_config_dir ],
+                               output: [ 'plug-ins.ico', ],
+                               command: [ gimp_exe,'-nidfs',
+                                          '--batch-interpreter', 'python-fu-eval',
+                                          '-b', '-', '--quit'],
+                               feed: true,
+                               build_by_default: false,
+                               env: gimp_run_env)
 endif
 
 ## gimp.icns (macOS) ##
