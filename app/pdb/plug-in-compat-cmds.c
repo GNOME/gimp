@@ -3397,10 +3397,14 @@ plug_in_plasma_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GeglNode *node;
-          gint      x, y, width, height;
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GeglNode  *node;
+          gint       x, y, width, height;
 
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+
+          if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
+            x = y = 0;
 
           node = gegl_node_new_child (NULL,
                                       "operation",  "gegl:plasma",
@@ -6373,8 +6377,8 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
-                                                    "Radius of gaussian blur (in pixels",
-                                                    0.0, 500.0, 0.0,
+                                                    "Radius of gaussian blur (in pixels)",
+                                                    0.0, 1500.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("horizontal",
@@ -6475,8 +6479,8 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
-                                                    "Radius of gaussian blur (in pixels",
-                                                    0.0, 500.0, 0.0,
+                                                    "Radius of gaussian blur (in pixels)",
+                                                    0.0, 1500.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("horizontal",
@@ -9021,13 +9025,13 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                g_param_spec_double ("spread-amount-x",
                                                     "spread amount x",
                                                     "Horizontal spread amount",
-                                                    0, 200, 0,
+                                                    0, 512, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("spread-amount-y",
                                                     "spread amount y",
                                                     "Vertical spread amount",
-                                                    0, 200, 0,
+                                                    0, 512, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -9483,7 +9487,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                g_param_spec_double ("wavelength",
                                                     "wavelength",
                                                     "The Wavelength of the Waves",
-                                                    0.1, 50, 0.1,
+                                                    0.1, 1000, 0.1,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("type",
