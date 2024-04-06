@@ -7,18 +7,30 @@
 /*------------------ Ugly internals -----------------------------------*/
 /*------------------ Of interest only to FFI users --------------------*/
 
-enum scheme_port_kind {
+/* FIXME: should be a bit field.
+ * Closing should not clear the entire field.
+ * The enum or bit-field type should be referenced.
+ * Subkind should be enum in, out, or in/out.
+ */
+enum PortData {
+  /* port_free is not a bit that can be set.
+   * closing does kind=port_free which clears the entire value,
+   * losing the kind and subkind.
+   * FIXME: is_closed should be a state bit.
+   */
   port_free=0,
+  /* Kind */
   port_file=1,
   port_string=2,
-  port_srfi6=4,
-  port_input=16,
-  port_output=32,
-  port_saw_EOF=64
+  /* Subkind */
+  port_input=4,
+  port_output=8,
+  /* A state, for all kinds. */
+  port_saw_EOF=16
 };
 
 typedef struct port {
-  unsigned char kind;
+  unsigned int kind;
   union {
     struct {
       FILE *file;

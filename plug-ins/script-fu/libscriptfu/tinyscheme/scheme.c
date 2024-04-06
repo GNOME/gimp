@@ -694,6 +694,7 @@ static pointer _get_cell(scheme *sc, pointer a, pointer b) {
         || sc->free_cell == sc->NIL) {
       /* if only a few recovered, get more to avoid fruitless gc's */
       if (!alloc_cellseg(sc,1) && sc->free_cell == sc->NIL) {
+        g_warning ("%s", G_STRFUNC);
         sc->no_memory=1;
         return sc->sink;
       }
@@ -718,12 +719,14 @@ static pointer reserve_cells(scheme *sc, int n) {
                if (sc->fcells < n) {
                        /* If there still aren't, try getting more heap */
                        if (!alloc_cellseg(sc,1)) {
+                               g_warning ("%s", G_STRFUNC);
                                sc->no_memory=1;
                                return sc->NIL;
                        }
                }
                if (sc->fcells < n) {
                        /* If all fail, report failure */
+                       g_warning ("%s", G_STRFUNC);
                        sc->no_memory=1;
                        return sc->NIL;
                }
@@ -748,6 +751,7 @@ static pointer get_consecutive_cells(scheme *sc, int n) {
   /* If there still aren't, try getting more heap */
   if (!alloc_cellseg(sc,1))
     {
+      g_warning ("%s", G_STRFUNC);
       sc->no_memory=1;
       return sc->sink;
     }
@@ -756,6 +760,7 @@ static pointer get_consecutive_cells(scheme *sc, int n) {
   if (x != sc->NIL) { return x; }
 
   /* If all fail, report failure */
+  g_warning ("%s", G_STRFUNC);
   sc->no_memory=1;
   return sc->sink;
 }
@@ -1080,6 +1085,7 @@ static char *store_string(scheme *sc, int char_cnt,
      }
 
      if(q==0) {
+       g_warning ("%s", G_STRFUNC);
        sc->no_memory=1;
        return sc->strbuff;
      }
@@ -1473,12 +1479,22 @@ static void finalize_cell(scheme *sc, pointer a) {
             port_close(sc,a,port_input|port_output);
           sc->free(a->_object._port);
         }
-      else
+      else if (a->_object._port->kind & port_string)
         {
-          /* Is string port. */
           string_port_dispose (sc, a);
         }
+      else
+        {
+          /* It must have been closed.
+           * FIXME: This is leaking if a string-port was closed?
+           * Closing should not set the entire kind to zero
+           * since it loses the kind of string-port.
+           */
+          g_assert (a->_object._port->kind == port_free);
+          g_warning ("%s Did not dispose port already closed %p.", G_STRFUNC, a->_object._port);
+        }
     }
+    /* Else object has no allocation. */
 }
 
 /* ========== Routines for Reading ========== */
@@ -3768,6 +3784,7 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
           newlen = p1_len+utf8_len+p2_len;
           newstr = (char *)sc->malloc(newlen+1);
           if (newstr == NULL) {
+             g_warning ("%s string-set", G_STRFUNC);
              sc->no_memory=1;
              Error_1(sc,"string-set!: No memory to alter string:",x);
           }
@@ -3803,6 +3820,7 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
 
        newstr = (char *)sc->malloc(len+1);
        if (newstr == NULL) {
+          g_warning ("%s string-append", G_STRFUNC);
           sc->no_memory=1;
           Error_1(sc,"string-set!: No memory to append strings:",car(sc->args));
        }
@@ -3857,6 +3875,7 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
 
           str = (char *)sc->malloc(len+1);
           if (str == NULL) {
+             g_warning ("%s substring", G_STRFUNC);
              sc->no_memory=1;
              Error_1(sc,"string-set!: No memory to extract substring:",car(sc->args));
           }

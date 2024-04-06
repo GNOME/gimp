@@ -55,6 +55,16 @@
 
 /* Local */
 
+/* Called on failure to malloc. */
+static void
+no_memory (scheme *sc, const gchar *allocation_reason)
+{
+  /* Make the eval cycle end. */
+  sc->no_memory = 1;
+  /* report what we were trying to allocate. */
+  g_warning ("%s", allocation_reason);
+}
+
 /* Init a port struct for a string-port.
  *
  * The passed buffer is a byte buffer.
@@ -67,7 +77,7 @@
  *    - invariant: last byte is NUL
  */
 static void
-init_port_struct (port *port, int kind, gchar *buffer, guint size)
+init_port_struct (port *port, unsigned int kind, gchar *buffer, guint size)
 {
   port->kind                    = kind;
 
@@ -121,12 +131,20 @@ input_port_struct_from_string (scheme *sc, char *start) {
   /* Allocate port struct. */
   port_struct = (port*)sc->malloc (sizeof (port));
   if (port_struct == NULL)
-    return NULL;
+    {
+      no_memory (sc, "input port struct");
+      return NULL;
+    }
+
 
   /* Allocate and copy contents. */
   copy = sc->malloc (buffer_size_bytes);
   if (copy == NULL)
-    return NULL;
+    {
+      no_memory (sc, "input port buffer");
+      return NULL;
+    }
+
   /* Assert strcpy writes NUL at end of buffer. */
   strcpy (copy, start);
 
@@ -146,11 +164,10 @@ input_port_from_string (scheme *sc, char *start) {
   port *port_struct;
 
   port_struct = input_port_struct_from_string (sc, start);
-  if (port_struct == NULL) {
+  if (port_struct == NULL)
     return sc->NIL;
-  }
-
-  return mk_port (sc, port_struct);
+  else
+    return mk_port (sc, port_struct);
 }
 
 /* Create a port struct of kind output having a fresh allocated buffer.
@@ -194,7 +211,10 @@ output_port_from_scratch (scheme *sc)
 {
   port *pt = output_port_struct_from_scratch (sc);
   if (pt == NULL)
-    return sc->NIL;
+    {
+      no_memory (sc, "output port struct");
+      return sc->NIL;
+    }
   else
     return mk_port (sc, pt);
 }
@@ -252,6 +272,8 @@ output_port_expand_by_at_least (scheme *sc, port *p, size_t byte_count)
    */
   /* GLib MAX */
   size_t new_size = current_content_size_bytes + MAX (byte_count, STRING_PORT_MIN_ALLOCATION) + 1;
+
+  g_debug ("%s current contents %i new size %i", G_STRFUNC, current_content_size_bytes, new_size);
 
   new_buffer = sc->malloc (new_size);
   if (new_buffer)
@@ -328,7 +350,7 @@ string_port_put_bytes (scheme *sc, port *pt, const gchar *bytes, guint byte_coun
   else if (output_port_expand_by_at_least (sc, pt, byte_count))
     output_port_write_bytes (pt, bytes, byte_count);
   else
-    g_warning ("Failed to allocate bytes for output string-port");
+    no_memory (sc, "expand output port");
 }
 
 
@@ -384,6 +406,8 @@ string_port_open_input_string (scheme *sc, pointer scheme_string, int prop)
 void
 string_port_dispose (scheme  *sc, pointer port_cell)
 {
+  g_debug ("%s content size %l", G_STRFUNC, strlen (port_cell->_object._port->rep.string.start) + 1);
+
   /* Free allocated buffer. */
   sc->free (port_cell->_object._port->rep.string.start);
 
@@ -412,7 +436,10 @@ string_port_get_output_string (scheme *sc, port *p)
   result = mk_string (sc, p->rep.string.start);
 
   if (result == sc->NIL)
-    result = sc->F;
+    {
+      no_memory (sc, "get output string");
+      result = sc->F;
+    }
   return result;
 }
 
@@ -441,6 +468,7 @@ string_port_init_static_port (port *port, const gchar *command)
   port->kind = port_input|port_string;
 
   port->rep.string.start        = c_string;
+  /* address arithmetic */
   port->rep.string.past_the_end = c_string + strlen (c_string);
   port->rep.string.curr         = c_string;
 }

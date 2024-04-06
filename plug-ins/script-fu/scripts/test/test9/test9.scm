@@ -19,22 +19,12 @@
   (display msg)
   (newline))
 
-(define (trim char chars)
-  (if (= (char->integer char) (char->integer (car chars)))
-      (trim char (cdr chars))
-      chars))
-
-(define (rtrim str)
-  (list->string (reverse (trim #\space (reverse (string->list str))))))
-
+; This is a canonical implementation
+; but assumes string-port and call-with-output-string is implemented.
+; FUTURE: in init.scm
 (define (any->string any)
-  (let* ((to-string
-           (lambda (any)
-             (let* ((str (make-string 256)))
-               (call-with-output-string str
-                 (lambda (port) (write any port)))
-               str))))
-    (rtrim (to-string any))))
+  (call-with-output-string (lambda (port) (write any port))))
+
 
 (define (write-all-bytes port bytes)
   (if (null? bytes)
@@ -43,28 +33,59 @@
       (write-byte (car bytes) port)
       (write-all-bytes port (cdr bytes)))))
 
+; !!! bytes->string works for any byte except NUL 0x00
+; In that case, it returns a string the prefix of the sequence of bytes up to the NUL.
+; Also, the returned string might not be properly UTF-8 encoded
+; and therefore might not display correctly.
 (define (bytes->string bytes)
-  (let* ((str (make-string (length bytes))))
-    (call-with-output-string str
-      (lambda (port) (map (lambda (b) (write-byte b port)) bytes)))
-    str))
+   (call-with-output-string
+      (lambda (port) (map (lambda (b) (write-byte b port)) bytes))))
 
-(define (with-string open-function str function)
-  (let ((port (open-function str)))
+; Returns a testresult, a list of (success errmsg)
+; Calls open-function to open a port on str
+; Then calls function, which is a test function taking a port.
+; The test function reads from the port.
+; The test function returns a test-result object.
+;
+; We don't absolutely need this except that it captures failure to open string-port.
+; Instead we could just call-with-input-string
+(define (call-test-with-string str function)
+  (let ((port (open-input-string str)))
     (if (port? port)
-      (let ((result '()))
-        (set! result (function port))
-        (close-port port)
-        result)
-      (make-testresult #f "Failed to open string for string port!"))))
+      (function port)
+      (begin
+        (gimp-message "Fail open string-port")
+        (make-testresult #f "Failed to open string for string port!")))))
 
+
+; Formerly the next two functions were defined
+; using the SF v2 semantics of an output string port.
+; SF v3 output string-port now is different,
+; and thes two functions are as in MIT Scheme.
+; FUTURE: both these function in init.scm i.e. in the SF dialect.
+
+; Calls function and returns the result of the function call.
+; The function must take a port.
+; The port passed to the function is a string-port from the given string.
 (define (call-with-input-string str function)
-  (with-string open-input-string str function))
+  (let ((port (open-input-string str)))
+    (function port)))
 
-(define (call-with-output-string str function)
-  (with-string open-output-string str function))
+; Returns a string that is what procedure writes to a string-port.
+; Procedure takes a port.
+; MIT call-with-output-string semantics: procedure result is lost,
+; and it does not take a string
+; and only its side effects on the port are returned as a string.
+; !!! This cannot properly wrap a test procedure, since it loses the result.
+(define (call-with-output-string procedure)
+  (let ((port (open-output-string )))
+    (procedure port)
+    (get-output-string port)))
+  ; port goes out of scope and is garbage collected even without closing
+
 
 ; Loops from i to n-1.
+; Using recursion.
 (define (loop i n function)
   (if (< i n)
     (begin
@@ -105,6 +126,13 @@
 (define test-data-256bytes
   (let ((result '()))
     (loop 0 256 (lambda (i) (set! result (cons i result))))
+  (reverse (map integer->byte result))))
+
+; all bytes except NUL
+; returns list of bytes in range 1..255
+(define test-data-255bytes
+  (let ((result '()))
+    (loop 1 256 (lambda (i) (set! result (cons i result))))
   (reverse (map integer->byte result))))
 
 (define test-data-1char
@@ -193,6 +221,22 @@
     (loop 0 256 try)
     (make-testresult (null? errors) errors)))
 
+; This is improper test function.
+; It aborts testing by call error instead of continuing
+; An earlier version using loop suffered runaway memory exhaustion.
+(define (test-read-byte-all-values-except-NUL port)
+  (let* ((errors '())
+         (try
+           (lambda (i)
+             (let ((result (assert `(= (byte->integer (read-byte ,port)) ,i))))
+               (if (not (testresult-success result))
+                 (error "failed test-read-byte-all-values-except-NUL")
+                 '())))))
+    (do ((i 1 (+ i 1)))
+      ((< i 256) i)
+      (try i))
+    (make-testresult (null? errors) errors)))
+
 ; Ensure that we can read a single char (not multi-byte).
 ; Test data: test-data-1byte
 (define (test-read-char-single-ascii port)
@@ -249,7 +293,10 @@
 ; Wrapper functions for the port read and write tests.
 
 (define (test-input-string-port test-data test-function)
-  (call-with-input-string (bytes->string test-data) test-function))
+  (let ((test-string (bytes->string test-data)))
+    (call-with-input-string test-string test-function)))
+; WAS
+;  (call-with-input-string (bytes->string test-data) test-function))
 
 (define (test-string-port-read-byte-single)
   (test-input-string-port test-data-1byte test-read-byte-single))
@@ -257,8 +304,8 @@
 (define (test-string-port-read-byte-peek)
   (test-input-string-port test-data-1byte test-read-byte-peek))
 
-(define (test-string-port-read-byte-all-values)
-  (test-input-string-port test-data-256bytes test-read-byte-all-values))
+(define (test-string-port-read-byte-all-values-except-NUL)
+  (test-input-string-port test-data-255bytes test-read-byte-all-values-except-NUL))
 
 (define (test-string-port-read-char-single-ascii)
   (test-input-string-port test-data-1byte test-read-char-single-ascii))
@@ -278,10 +325,22 @@
 (define (test-string-port-read-char-overflow)
   (test-input-string-port test-data-1char test-read-char-overflow))
 
+; On a string port,
+; check that what first function writes to port
+; is what second function reads from port.
+;
+; test-data is not used, the verify function knows expected string.
+;
+; Either the write or read may fail but this version loses the write failure,
+; so you should also test the write by itself.
 (define (test-string-port-write test-data write-test verify-write-test)
-  (let* ((str (make-string (length test-data)))
-         (write-result (call-with-output-string str write-test))
-         (read-result (call-with-input-string str verify-write-test)))
+; With SF v2 semantics for call-with-output-string
+;  (let* ((str (make-string (length test-data)))
+;         (write-result (call-with-output-string "" write-test))
+;         (read-result (call-with-input-string str verify-write-test)))
+ (let* ((written-str (call-with-output-string write-test))
+        (write-result (make-testresult #t written-str))
+        (read-result (call-test-with-string written-str verify-write-test)))
     (if (and (testresult-success write-result)
              (testresult-success read-result))
       (make-testresult #t '())
@@ -304,9 +363,6 @@
   (let ((filepath (plugin-tmp-filepath "fileport")))
     (call-with-output-file filepath (lambda (port) (write-all-bytes port test-data)))
     (call-with-input-file filepath test-function)))
-
-(define (test-file-port-read-byte-single)
-  (test-input-file-port test-data-1byte test-read-byte-single))
 
 (define (test-file-port-read-byte-single)
   (test-input-file-port test-data-1byte test-read-byte-single))
@@ -348,11 +404,11 @@
           "read-error: " (any->string (testresult-error read-result)))))))
 
 (define (test-file-port-write-byte-single)
-  (test-string-port-write
+  (test-file-port-write
     test-data-1byte test-write-byte-single test-write-byte-single-verify))
 
 (define (test-file-port-write-char-single)
-  (test-string-port-write
+  (test-file-port-write
     test-data-1char test-write-char-single test-write-char-single-verify))
 
 ; ----- Generic string tests -----
@@ -388,19 +444,19 @@
 ; Test string functions on strings which are created by writing bytes into
 ; a string port.
 
-; Write byte sequence of 你 into a string and ensure string-count returns 1.
+; Write byte sequence of 你 into a string-port
+; and ensure string-length of string from the port returns 1.
 (define (test-string-port-string-count)
-  (let* ((str (make-string 3))
-     (port (open-output-string str)))
+  (let* ((port (open-output-string)))
   (begin
     ; 你 = E4 BD A0 = 228 189 160
     (write-byte (integer->byte 228) port)
     (write-byte (integer->byte 189) port)
     (write-byte (integer->byte 160) port)
-    (close-port port)
+    ; not close port, it goes out of scope and is gc
     (assert
-      `(and (= (char->integer (car (string->list ,str))) 20320) ; 20320 = 你 (UTF-32)
-            (= (string-length ,str) 1))))))
+      `(and (= (char->integer (car (string->list (get-output-string ,port)))) 20320) ; 20320 = 你 (UTF-32)
+            (= (string-length (get-output-string ,port)) 1))))))
 
 ; ---------- Test Execution ----------
 
@@ -418,6 +474,10 @@
   (display msg) (newline))
 
 (define (run-test test)
+  ; log the test to Gimp Error Console when executed.
+  ; So severe errors leave a trace.
+  ; And until we fix SF hijacking stdout.
+  (gimp-message (symbol->string test))
   (display test) (display ": ")
   (let ((result ((eval test))))
     (if (car result)
@@ -440,7 +500,7 @@
   (run-tests
     'test-string-port-read-byte-single
     'test-string-port-read-byte-peek
-    'test-string-port-read-byte-all-values
+    'test-string-port-read-byte-all-values-except-NUL
     'test-string-port-read-char-single-ascii
     'test-string-port-read-char-single
     'test-string-port-read-char-peek
@@ -482,7 +542,13 @@
 (define (run-string-tests-string-port)
   (run-test 'test-string-port-string-count))
 
+; SF hijacks stdout so all calls to display just write to SF (as an error msg)
+; so it usually disappears.
+; This is a hack, writing a few lines to Gimp Error Console using gimp-message.
+; We should not need to redirect display to a string-port
+; using with-log-to-gimp-message see below.
 (define (run-all-tests)
+  (gimp-message "Begin all tests")
   (displayln "========== Information ==========")
   (displayln "To run a single test individually, specify the name of the test.")
   (displayln (string-append "Temporary files with format 'script-fu-test9-*.txt' can be found in: " temp-path))
@@ -506,42 +572,46 @@
   (run-file-port-tests)
   (newline)
   (if (= tests-failed 0)
-    (displayln "ALL tests passed!")
-    (displayln
+    ;(displayln "ALL tests passed!")
+    (gimp-message "ALL tests passed!")
+    ;(displayln
+    (gimp-message
       (string-append
         "Test 9: " (number->string tests-failed)
         " tests FAILED. Run tests in Script-Fu console for details."))))
 
+; wrapper that redirects display to gimp-message.
+; Not used because buffering messages makes it hard to debug this test program.
+; FUTURE: fix ScriptFu to not hijack the output port
+; and display function will write to stdout as it should.
 (define (with-log-to-gimp-message function)
-  (let ((test-log (make-string 4096)))
-    (call-with-output-string test-log
-      (lambda (port)
-        (set-output-port port)
-        (function)))
-    (gimp-message (rtrim test-log))))
+    (gimp-message (call-with-output-string
+                    (lambda (port)
+                      (set-output-port port)
+                      (function)))))
 
 (define (name->function name)
   (eval (call-with-input-string (string-append "'" name) read)))
 
-(define (select-run-function testname)
-  (if (> (string-length testname) 0)
-    (lambda () (run-test (name->function testname)))
-    run-all-tests))
-
 (define (script-fu-test9 testname)
-  (with-log-to-gimp-message (select-run-function testname)))
+  ; OLD (with-log-to-gimp-message (select-run-function testname)))
+  ; NEW log to gimp later, at each test
+  (gimp-message testname)
+  (if (> (string-length testname) 0)
+    (run-test (name->function testname))
+    (run-all-tests)))
 
 ; ---------- Script registration ----------
 
 (script-fu-register
   "script-fu-test9"
-  "Test SF interpreter 9"
-  "Test byte and utf8 char handling. Must print SUCCESS for each test case."
+  "Test TinyScheme byte and UTF-8 char handling."
+  "Logs tests to Gimp Error Console and stdout."
   "Richard Szibele"
   "Copyright (C) 2022, Richard Szibele"
   "2022"
   ""
-  SF-STRING "Test (optional)" ""
+  SF-STRING "Test name (optional)" ""
 )
 
 (script-fu-menu-register "script-fu-test9" "<Image>/Test")
