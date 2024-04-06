@@ -29,7 +29,7 @@ else
     echo "To run this script locally, please do it from to the gimp git folder"
     exit 1
   fi
-  git submodule update --init
+  git submodule update --init --force
   pacman --noconfirm -Suy
   export MESON_OPTIONS="-Drelocatable-bundle=no"
 fi
