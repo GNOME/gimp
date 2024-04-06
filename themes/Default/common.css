@@ -628,3 +628,8 @@ headerbar:backdrop * {
 headerbar button.titlebutton, headerbar > menubar {
   box-shadow: none;
 }
+
+.titlebar {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
