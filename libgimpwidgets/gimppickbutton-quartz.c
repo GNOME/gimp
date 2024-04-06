@@ -156,7 +156,8 @@
   CGImageRef        root_image_ref;
   CFDataRef         pixel_data;
   const guchar     *data;
-  GeglColor        *rgb         = gegl_color_new ("none");
+  GeglColor        *rgb         = gegl_color_new ("black");
+  guchar            temp_rgb[3];
   const Babl       *space       = NULL;
   NSPoint           point;
   GimpColorProfile *profile     = NULL;
@@ -212,12 +213,11 @@
       g_object_unref (profile);
     }
 
-  gegl_color_set_rgba_with_space (rgb,
-                                  data[2] / 255.0,
-                                  data[1] / 255.0,
-                                  data[0] / 255.0,
-                                  1.0,
-                                  space);
+  for (gint i = 0; i < 3; i++)
+    temp_rgb[i] = data[2 - i];
+
+  gegl_color_set_pixel (rgb, babl_format_with_space ("R'G'B' u8", space),
+                        temp_rgb);
 
   CGImageRelease (root_image_ref);
   CFRelease (pixel_data);

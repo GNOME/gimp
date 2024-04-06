@@ -1072,9 +1072,10 @@ remove_screen_tracking (void)
 static GeglColor *
 pick_color_with_gdi (POINT physical_point)
 {
-  GeglColor *rgb = gegl_color_new ("none");
+  GeglColor *rgb = gegl_color_new ("black");
   COLORREF   color;
   HDC        hdc;
+  guchar     temp_rgb[3];
 
   hdc = GetDC (HWND_DESKTOP);
 
@@ -1083,11 +1084,11 @@ pick_color_with_gdi (POINT physical_point)
 
   color = GetPixel (hdc, physical_point.x, physical_point.y);
 
-  gegl_color_set_rgba (rgb,
-                       GetRValue (color) / 255.0,
-                       GetGValue (color) / 255.0,
-                       GetBValue (color) / 255.0,
-                       1.0);
+  temp_rgb[0] = GetRValue (color);
+  temp_rgb[1] = GetGValue (color);
+  temp_rgb[2] = GetBValue (color);
+
+  gegl_color_set_pixel (rgb, babl_format ("R'G'B' u8"), temp_rgb);
 
   ReleaseDC (HWND_DESKTOP, hdc);
 
@@ -1099,7 +1100,7 @@ user_picked (MonitorData *monitor,
              POINT        physical_point)
 {
   GeglColor *rgb;
-  GList *l;
+  GList     *l;
 
   /* Currently unused */
   (void) monitor;

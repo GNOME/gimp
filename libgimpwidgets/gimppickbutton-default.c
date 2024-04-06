@@ -185,7 +185,7 @@ gimp_pick_button_pick (GimpPickButton *button,
   GdkScreen        *screen = gdk_event_get_screen (event);
   GimpColorProfile *monitor_profile;
   GdkMonitor       *monitor;
-  GeglColor        *rgb    = gegl_color_new ("none");
+  GeglColor        *rgb    = gegl_color_new ("black");
   const Babl       *space  = NULL;
   gint              x_root;
   gint              y_root;
@@ -212,6 +212,7 @@ gimp_pick_button_pick (GimpPickButton *button,
     HDC      hdc;
     RECT     rect;
     COLORREF win32_color;
+    guchar   temp_rgb[3];
 
     /* For MS Windows, use native GDI functions to get the pixel, as
      * cairo does not handle the case where you have multiple monitors
@@ -225,12 +226,12 @@ gimp_pick_button_pick (GimpPickButton *button,
     win32_color = GetPixel (hdc, x_root + rect.left, y_root + rect.top);
     ReleaseDC (HWND_DESKTOP, hdc);
 
-    gegl_color_set_rgba_with_space (rgb,
-                                    GetRValue (win32_color) / 255.0,
-                                    GetGValue (win32_color) / 255.0,
-                                    GetBValue (win32_color) / 255.0,
-                                    1.0,
-                                    space);
+    temp_rgb[0] = GetRValue (win32_color);
+    temp_rgb[1] = GetGValue (win32_color);
+    temp_rgb[2] = GetBValue (win32_color);
+
+    gegl_color_set_pixel (rgb, babl_format_with_space ("R'G'B' u8", space),
+                          temp_rgb);
   }
 
 #else
@@ -273,12 +274,8 @@ gimp_pick_button_pick (GimpPickButton *button,
 
     cairo_surface_destroy (image);
 
-    gegl_color_set_rgba_with_space (rgb,
-                                    color[0] / 255.0,
-                                    color[1] / 255.0,
-                                    color[2] / 255.0,
-                                    1.0,
-                                    space);
+    gegl_color_set_pixel (rgb, babl_format_with_space ("R'G'B' u8", space),
+                          color);
   }
 
 #endif
