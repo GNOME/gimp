@@ -24,6 +24,7 @@ executable_name = 'script-fu'
 plugin_sources = [
   'script-fu-eval.c',
   'script-fu-text-console.c',
+  'script-fu-refresh.c',
 
   'script-fu.c',
 ]

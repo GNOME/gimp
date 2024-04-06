@@ -52,9 +52,6 @@ static GimpValueArray * script_fu_batch_run        (GimpProcedure        *proced
 static void             script_fu_run_init         (GimpProcedure        *procedure,
                                                     GimpRunMode           run_mode);
 static void             script_fu_extension_init   (GimpPlugIn           *plug_in);
-static GimpValueArray * script_fu_refresh_proc     (GimpProcedure        *procedure,
-                                                    GimpProcedureConfig  *config,
-                                                    gpointer              run_data);
 
 
 G_DEFINE_TYPE (ScriptFu, script_fu, GIMP_TYPE_PLUG_IN)
@@ -309,8 +306,6 @@ script_fu_run_init (GimpProcedure *procedure,
 static void
 script_fu_extension_init (GimpPlugIn *plug_in)
 {
-  GimpProcedure *procedure;
-
   gimp_plug_in_add_menu_branch (plug_in, "<Image>/Help", N_("_GIMP Online"));
   gimp_plug_in_add_menu_branch (plug_in, "<Image>/Help", N_("_User Manual"));
 
@@ -338,58 +333,7 @@ script_fu_extension_init (GimpPlugIn *plug_in)
   gimp_plug_in_add_menu_branch (plug_in, "<Image>/Filters",
                                 N_("Alpha to _Logo"));
 
-  procedure = gimp_procedure_new (plug_in, "script-fu-refresh",
-                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                  script_fu_refresh_proc, NULL, NULL);
-
-  gimp_procedure_set_menu_label (procedure, _("_Refresh Scripts"));
-  gimp_procedure_add_menu_path (procedure,
-                                "<Image>/Filters/Development/Script-Fu");
-
-  gimp_procedure_set_documentation (procedure,
-                                    _("Re-read all available Script-Fu scripts"),
-                                    "Re-read all available Script-Fu scripts",
-                                    "script-fu-refresh");
-  gimp_procedure_set_attribution (procedure,
-                                  "Spencer Kimball & Peter Mattis",
-                                  "Spencer Kimball & Peter Mattis",
-                                  "1997");
-
-  GIMP_PROC_ARG_ENUM (procedure, "run-mode",
-                      "Run mode",
-                      "The run mode",
-                      GIMP_TYPE_RUN_MODE,
-                      GIMP_RUN_INTERACTIVE,
-                      G_PARAM_READWRITE);
-
-  gimp_plug_in_add_temp_procedure (plug_in, procedure);
-  g_object_unref (procedure);
-}
-
-static GimpValueArray *
-script_fu_refresh_proc (GimpProcedure        *procedure,
-                        GimpProcedureConfig  *config,
-                        gpointer              run_data)
-{
-  if (script_fu_extension_is_busy ())
-    {
-      g_message (_("You can not use \"Refresh Scripts\" while a "
-                   "Script-Fu dialog box is open.  Please close "
-                   "all Script-Fu windows and try again."));
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
-                                               NULL);
-    }
-  else
-    {
-      /*  Reload all of the available scripts  */
-      GList *path = script_fu_search_path ();
-
-      script_fu_find_and_register_scripts (gimp_procedure_get_plug_in (procedure), path);
-
-      g_list_free_full (path, (GDestroyNotify) g_object_unref);
-    }
-
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  /* Commented out until fixed or replaced.
+   * script_fu_register_refresh_procedure (plug_in);
+   */
 }

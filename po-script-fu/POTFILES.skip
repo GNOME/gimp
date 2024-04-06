@@ -49,6 +49,7 @@ plug-ins/pagecurl
 plug-ins/print
 plug-ins/python
 plug-ins/screenshot
+plug-ins/script-fu/script-fu-refresh.c
 plug-ins/script-fu/scripts/contactsheet.scm
 plug-ins/script-fu/scripts/clothify-v3.scm
 plug-ins/script-fu/scripts/test-v3.scm
