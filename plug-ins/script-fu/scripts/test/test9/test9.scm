@@ -19,12 +19,6 @@
   (display msg)
   (newline))
 
-; This is a canonical implementation
-; but assumes string-port and call-with-output-string is implemented.
-; FUTURE: in init.scm
-(define (any->string any)
-  (call-with-output-string (lambda (port) (write any port))))
-
 
 (define (write-all-bytes port bytes)
   (if (null? bytes)
@@ -58,31 +52,7 @@
         (make-testresult #f "Failed to open string for string port!")))))
 
 
-; Formerly the next two functions were defined
-; using the SF v2 semantics of an output string port.
-; SF v3 output string-port now is different,
-; and thes two functions are as in MIT Scheme.
-; FUTURE: both these function in init.scm i.e. in the SF dialect.
-
-; Calls function and returns the result of the function call.
-; The function must take a port.
-; The port passed to the function is a string-port from the given string.
-(define (call-with-input-string str function)
-  (let ((port (open-input-string str)))
-    (function port)))
-
-; Returns a string that is what procedure writes to a string-port.
-; Procedure takes a port.
-; MIT call-with-output-string semantics: procedure result is lost,
-; and it does not take a string
-; and only its side effects on the port are returned as a string.
-; !!! This cannot properly wrap a test procedure, since it loses the result.
-(define (call-with-output-string procedure)
-  (let ((port (open-output-string )))
-    (procedure port)
-    (get-output-string port)))
-  ; port goes out of scope and is garbage collected even without closing
-
+; any->string, call-with-input-string, and call-with-output-string are in init.scm
 
 ; Loops from i to n-1.
 ; Using recursion.

@@ -368,46 +368,7 @@
 
 
 
-
-
-;    port utility
-
-
-(define (with-string open-function str function)
-  (let ((port (open-function str)))
-    (if (port? port)
-      (let ((result '()))
-        (set! result (function port))
-        (close-port port)
-        result)
-      ; Testing internal error.  Hijack the testing framework
-      (testing:log-fail! "Failed to open string for string port!" '() ))))
-
-(define (call-with-output-string str function)
-  (with-string open-output-string str function))
-
-
-
 ;   string utility
-
-(define (trim char chars)
-  (if (= (char->integer char) (char->integer (car chars)))
-      (trim char (cdr chars))
-      chars))
-
-(define (rtrim str)
-  (list->string (reverse (trim #\space (reverse (string->list str))))))
-
-; any is code
-; Not using atom->string.  Using write
-(define (any->string any)
-  (let* ((to-string
-           (lambda (any)
-             (let* ((str (make-string 256)))
-               (call-with-output-string str
-                 (lambda (port) (write any port)))
-               str))))
-    (rtrim (to-string any))))
 
 
 ; string-prefix? is in R5RS but not tinyscheme.

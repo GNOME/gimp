@@ -668,6 +668,34 @@
                          (set-output-port prev-outport)
                          res)))))
 
+
+; Idioms using string-port.
+; See MIT/GNU Scheme.
+; Analogs of functions using file-port.
+; Used string-ports are not closed, they go out of scope and are garbage collected.
+
+; Returns string that procedure outputs to a port.
+; Require procedure takes a port.
+; Procedure result is lost, only its side effects on the port are returned as a string.
+(define (call-with-output-string procedure)
+  (let ((port (open-output-string )))
+    (procedure port)
+    (get-output-string port)))
+
+
+; Returns the result of calling procedure.
+; Require procedure takes a port.
+; The port passed to the procedure is a string-port from the given string.
+(define (call-with-input-string str procedure)
+  (let ((port (open-input-string str)))
+    (procedure port)))
+
+; Returns string representation of any Scheme object
+; aka MIT write-to-string
+(define (any->string any)
+  (call-with-output-string (lambda (port) (write any port))))
+
+
 ; Random number generator (maximum cycle)
 (define *seed* 1)
 (define (random-next)
