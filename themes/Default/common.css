@@ -421,7 +421,7 @@ GimpSpinScale button
 }
 
 /* Checkboxes */
-checkbutton, checkbutton.text-button, radiobutton, checkbutton label {
+checkbutton, checkbutton.text-button, radiobutton, radiobutton.text-button, checkbutton label {
   color: @fg-color;
   background-color: @bg-color;
 }
