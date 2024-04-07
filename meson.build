@@ -289,6 +289,13 @@ if platform_windows and cc.get_id() == 'gcc'
   compiler_args += msvc_compat_args
 endif
 
+# Generate .pdb (CodeView) debug symbols (makes possible to debug with DIA SDK)
+pdb_support = cc.has_argument('-gcodeview') and cc.has_link_argument('-Wl,--pdb=')
+if platform_windows and pdb_support
+  compiler_args += '-gcodeview'
+  linker_args += '-Wl,--pdb='
+endif
+
 
 conf.set('HAVE__NL_MEASUREMENT_MEASUREMENT',
   cc.compiles('''
@@ -2017,7 +2024,14 @@ pkgconfig.generate(libgimpui,
   ],
 )
 
-
+################################################################################
+# Install native debug data (.pdb) on Windows
+# Ideally meson should take care of it automatically.
+# See: https://github.com/mesonbuild/meson/issues/12977
+if platform_windows and pdb_support
+  install_win_debug_script = find_program('./meson_install_win_debug.sh')
+  meson.add_install_script(install_win_debug_script)
+endif
 
 ################################################################################
 # Subdir installations

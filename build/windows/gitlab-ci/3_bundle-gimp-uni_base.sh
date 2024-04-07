@@ -139,6 +139,13 @@ for exe in "${binArray[@]}"; do
   cp -fr $exe ${GIMP_DISTRIB}/bin/
 done
 
+### .pdb (CodeView) debug symbols
+### TODO: REMOVE 'if [[ "$MSYSTEM...' WHEN GCC 14 IS ON MSYS2
+### crossroad don't have LLVM/Clang backend yet
+if [[ "$MSYSTEM_CARCH" != "i686" ]] && [[ "$BUILD_TYPE" != "CI_CROSS" ]]; then
+  cp -fr ${GIMP_PREFIX}/bin/*.pdb ${GIMP_DISTRIB}/bin/
+fi
+
 ## Optional executables, .DLLs and resources for GObject Introspection support
 if [[ "$BUILD_TYPE" != "CI_CROSS" ]]; then
   cp -fr ${MSYS_PREFIX}/bin/libgirepository-*.dll ${GIMP_DISTRIB}/bin/
