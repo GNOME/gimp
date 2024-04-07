@@ -887,20 +887,16 @@ CML_main_function (gboolean preview_p)
            index < MIN (cell_num, width_by_pixel / VALS.scale);
            index++)
         {
-          guchar  buffer[4];
-          GimpRGB rgb;
-          GimpHSV hsv;
+          gfloat hsv[3] = {0, 0, 0};
 
           gegl_buffer_sample (src_buffer, x + (index * VALS.scale), y, NULL,
-                              buffer, src_format,
+                              buffer, babl_format ("HSV float"),
                               GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-          gimp_rgb_set_uchar (&rgb, buffer[0], buffer[1], buffer[2]);
-          gimp_rgb_to_hsv (&rgb, &hsv);
 
-          hues[index] = hsv.h;
-          sats[index] = hsv.s;
-          vals[index] = hsv.v;
+          hues[index] = hsv[0];
+          sats[index] = hsv[1];
+          vals[index] = hsv[2];
         }
     }
 

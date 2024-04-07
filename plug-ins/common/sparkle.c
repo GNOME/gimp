@@ -1030,6 +1030,7 @@ fspike (GObject      *config,
       break;
     }
 
+  gegl_color = gegl_color_new ("black");
   /* draw the major spikes */
   for (i = 0; i < spike_pts; i++)
     {
@@ -1060,32 +1061,32 @@ fspike (GObject      *config,
 
       if (random_hue > 0.0 || random_saturation > 0.0)
         {
-          GimpRGB rgb;
-          GimpHSV hsv;
+          gfloat rgb[3];
+          gfloat hsv[3];
 
-          rgb.r = (gdouble) (255 - color[0]) / 255.0;
-          rgb.g = (gdouble) (255 - color[1]) / 255.0;
-          rgb.b = (gdouble) (255 - color[2]) / 255.0;
+          for (gint j = 0; j < 3; j++)
+            rgb[j] = (gdouble) (255 - color[j]) / 255.0;
 
-          gimp_rgb_to_hsv (&rgb, &hsv);
+          gegl_color_set_pixel (gegl_color, babl_format ("R'G'B' float"), rgb);
+          gegl_color_set_pixel (gegl_color, babl_format ("HSV float"), hsv);
 
-          hsv.h += random_hue * g_rand_double_range (gr, -0.5, 0.5);
+          hsv[0] += random_hue * g_rand_double_range (gr, -0.5, 0.5);
 
-          if (hsv.h >= 1.0)
-            hsv.h -= 1.0;
-          else if (hsv.h < 0.0)
-            hsv.h += 1.0;
+          if (hsv[0] >= 1.0)
+            hsv[0] -= 1.0;
+          else if (hsv[0] < 0.0)
+            hsv[0] += 1.0;
 
-          hsv.v += (random_saturation *
+          hsv[2] += (random_saturation *
                     g_rand_double_range (gr, -1.0, 1.0));
 
-          hsv.v = CLAMP (hsv.v, 0.0, 1.0);
+          hsv[2] = CLAMP (hsv[2], 0.0, 1.0);
 
-          gimp_hsv_to_rgb (&hsv, &rgb);
+          gegl_color_set_pixel (gegl_color, babl_format ("HSV float"), hsv);
+          gegl_color_get_pixel (gegl_color, babl_format ("R'G'B' float"), rgb);
 
-          color[0] = 255 - ROUND (rgb.r * 255.0);
-          color[1] = 255 - ROUND (rgb.g * 255.0);
-          color[2] = 255 - ROUND (rgb.b * 255.0);
+          for (gint j = 0; j < 3; j++)
+            color[j] = 255 - ROUND (rgb[j] * 255.0);
         }
 
       dx = 0.2 * cos (theta * G_PI / 180.0);
@@ -1127,4 +1128,5 @@ fspike (GObject      *config,
 
       theta += 360.0 / spike_pts;
     }
+  g_object_unref (gegl_color);
 }
