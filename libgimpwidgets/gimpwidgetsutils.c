@@ -714,25 +714,28 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
                   }
               }
 
-            filename = g_utf16_to_utf8 (filename_utf16, -1, NULL, NULL, NULL);
+            if (filename_utf16 != NULL)
+              {
+                filename = g_utf16_to_utf8 (filename_utf16, -1, NULL, NULL, NULL);
 
-            GetColorDirectoryW (NULL, NULL, &len);
-            dir_utf16 = g_malloc0 (len);
-            GetColorDirectoryW (NULL, dir_utf16, &len);
+                GetColorDirectoryW (NULL, NULL, &len);
+                dir_utf16 = g_malloc0 (len);
+                GetColorDirectoryW (NULL, dir_utf16, &len);
 
-            dir = g_utf16_to_utf8 (dir_utf16, -1, NULL, NULL, NULL);
+                dir = g_utf16_to_utf8 (dir_utf16, -1, NULL, NULL, NULL);
 
-            fullpath = g_build_filename (dir, filename, NULL);
-            file = g_file_new_for_path (fullpath);
+                fullpath = g_build_filename (dir, filename, NULL);
+                file = g_file_new_for_path (fullpath);
 
-            profile = gimp_color_profile_new_from_file (file, NULL);
-            g_object_unref (file);
+                profile = gimp_color_profile_new_from_file (file, NULL);
+                g_object_unref (file);
 
-            g_free (fullpath);
-            g_free (dir);
-            g_free (dir_utf16);
-            g_free (filename);
-            g_free (filename_utf16);
+                g_free (fullpath);
+                g_free (dir);
+                g_free (dir_utf16);
+                g_free (filename);
+                g_free (filename_utf16);
+              }
           }
       }
   }
