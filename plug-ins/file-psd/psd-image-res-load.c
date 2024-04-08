@@ -1743,13 +1743,15 @@ load_resource_2999 (const PSDimageres  *res_a,
     return -1;
 
   /* Convert from fixed to floating point */
-  if (psd_read (input, &path_flatness_int, 1, error) < 1 ||
-      psd_read (input, &path_flatness_fixed, 1, error) < 1)
+  if (psd_read (input, &path_flatness_int, 2, error) < 2 ||
+      psd_read (input, &path_flatness_fixed, 2, error) < 2)
     {
       psd_set_error (error);
       return -1;
     }
   path_flatness_fixed = GINT16_FROM_BE (path_flatness_fixed);
+  path_flatness_int   = GINT16_FROM_BE (path_flatness_int);
+
   /* Converting from Adobe fixed point value to float */
   path_flatness = (path_flatness_fixed - 0.5f) / 65536.0;
   path_flatness += path_flatness_int;
@@ -1769,7 +1771,7 @@ load_resource_2999 (const PSDimageres  *res_a,
   gimp_parasite_free (parasite);
 
   /* Adobe says they ignore the last two bytes, the fill rule */
-  if (psd_read (input, &path_flatness_fixed, 1, error) < 1)
+  if (psd_read (input, &path_flatness_fixed, 2, error) < 2)
     {
       psd_set_error (error);
       return -1;
