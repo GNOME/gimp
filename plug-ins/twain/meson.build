@@ -24,12 +24,12 @@ plugin_sources += windows.compile_resources(
 )
 
 twain = executable(plugin_name,
-  plugin_sources,
-  dependencies: [
-    libgimp_dep,
-    glib,
-    gtk3,
-  ],
-  install: true,
-  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
-)
+                   plugin_sources,
+                   dependencies: [
+                     libgimp_dep,
+                     glib,
+                     gtk3,
+                   ],
+                   install: true,
+                   install_dir: gimpplugindir / 'plug-ins' / plugin_name)
+plugin_executables += [twain.full_path()]

@@ -29,21 +29,20 @@ if not meson.is_cross_build()
 
   # Note the server rolls its own log, no need for a different G_LOG_DOMAIN
 
-  executable(executable_name,
-    plugin_sources,
-    dependencies: [
-      libgimpui_dep,
-      math,
-      winsock,
-    ],
-    c_args: [
-      '-DG_LOG_DOMAIN="scriptfu"',
-    ],
-    include_directories: [
-      scriptfuInclude,
-    ],
-    link_with : libscriptfu,
-    install: true,
-    install_dir: gimpplugindir / 'plug-ins' / executable_name,
-  )
+  plugin_exe = executable(executable_name,
+                          plugin_sources,
+                          dependencies: [
+                            libgimpui_dep,
+                            math,
+                            winsock,
+                          ],
+                          c_args: [
+                            '-DG_LOG_DOMAIN="scriptfu"',
+                          ],
+                          include_directories: [
+                            scriptfuInclude,
+                          ],
+                          link_with : libscriptfu,
+                          install: true,
+                          install_dir: gimpplugindir / 'plug-ins' / executable_name)
 endif

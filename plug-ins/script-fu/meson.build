@@ -59,21 +59,21 @@ if not meson.is_cross_build()
 
   # libscriptfu is installed to standard place; no rpath necessary
 
-  executable(executable_name,
-    plugin_sources,
-    dependencies: [
-      libgimpui_dep,
-      math,
-      gi,
-    ],
-    c_args: [
-      '-DG_LOG_DOMAIN="scriptfu"',
-    ],
-    include_directories: [
-      libscriptfuInclude,
-    ],
-    link_with : [libscriptfuconsole, libscriptfu ],
-    install: true,
-    install_dir: gimpplugindir / 'plug-ins' / executable_name,
-  )
+  plugin_exe = executable(executable_name,
+                          plugin_sources,
+                          dependencies: [
+                            libgimpui_dep,
+                            math,
+                            gi,
+                          ],
+                          c_args: [
+                            '-DG_LOG_DOMAIN="scriptfu"',
+                          ],
+                          include_directories: [
+                            libscriptfuInclude,
+                          ],
+                          link_with : [libscriptfuconsole, libscriptfu ],
+                          install: true,
+                          install_dir: gimpplugindir / 'plug-ins' / executable_name)
+  plugin_executables += [plugin_exe.full_path()]
 endif

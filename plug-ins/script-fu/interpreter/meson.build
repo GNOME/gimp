@@ -27,18 +27,18 @@ if not meson.is_cross_build()
   # GIMP queries scripts with shebangs, which invokes gimp-script-fu-interpreter-3.0.
 
   script_fu_interpreter = executable(executable_name,
-    plugin_sources,
-    dependencies: [
-      libgimpui_dep,
-      math,
-    ],
-    c_args: [
-      '-DG_LOG_DOMAIN="scriptfu"',
-    ],
-    include_directories: [
-      scriptfuInclude,
-    ],
-    link_with : libscriptfu,
-    install: true,
-  )
+                                     plugin_sources,
+                                     dependencies: [
+                                       libgimpui_dep,
+                                       math,
+                                     ],
+                                     c_args: [
+                                       '-DG_LOG_DOMAIN="scriptfu"',
+                                     ],
+                                     include_directories: [
+                                       scriptfuInclude,
+                                     ],
+                                     link_with : libscriptfu,
+                                     install: true)
+  plugin_executables += [plugin_exe.full_path()]
 endif

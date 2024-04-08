@@ -32,16 +32,16 @@ help_plugin_lib = static_library('help_plugin',
   install: false,
 )
 
-executable(plugin_name,
-  'help.c',
-  dependencies: [
-    libgimpui_dep,
-    gio,
-    gdk_pixbuf,
-  ],
-  link_with: [
-    help_plugin_lib,
-  ],
-  install: true,
-  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
-)
+plugin_exe = executable(plugin_name,
+                        'help.c',
+                        dependencies: [
+                          libgimpui_dep,
+                          gio,
+                          gdk_pixbuf,
+                        ],
+                        link_with: [
+                          help_plugin_lib,
+                        ],
+                        install: true,
+                        install_dir: gimpplugindir / 'plug-ins' / plugin_name)
+plugin_executables += [plugin_exe.full_path()]

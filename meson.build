@@ -1831,6 +1831,7 @@ subdir('libgimpwidgets')
 subdir('libgimp')
 
 # Executables, plugins
+plugin_executables = []
 subdir('extensions')
 subdir('modules')
 subdir('plug-ins')
@@ -1845,10 +1846,11 @@ gimp_run_env=environment()
 
 if meson.can_run_host_binaries()
   if enable_console_bin
-    gimp_exe=gimpconsole_exe
+    gimp_exe_depends = gimpconsole_exe
   else
-    gimp_exe=gimpmain_exe
+    gimp_exe_depends = gimpmain_exe
   endif
+  gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_exe_depends.full_path())
 
   menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
   gimp_run_env.set('GIMP_TESTING_MENUS_PATH', menu_paths)
@@ -1883,25 +1885,41 @@ if meson.can_run_host_binaries()
     gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimpthumb')
     gimp_run_env.prepend('PATH', meson.global_build_root() / 'libgimpwidgets')
   elif platform_osx
-    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimp')
-    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpbase')
-    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpcolor')
-    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpconfig')
-    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpmath')
-    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpmodule')
-    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpthumb')
-    gimp_run_env.prepend('DYLD_LIBRARY_PATH', meson.global_build_root() / 'libgimpwidgets')
+    gimp_exe_depends += [gimp_exe_typelib]
+
+    gimp_run_env.set('GIMP_GLOBAL_BUILD_ROOT', meson.global_build_root())
+
+    gimp_run_env.set('GIMP_GI_DIR', gi.get_variable('libdir'))
+
+    gimp_run_env.set('GIMP_TEMP_UPDATE_RPATH', gimp_exe_depends.full_path())
+    gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimp.full_path())
+    gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpbase.full_path())
+    gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpcolor.full_path())
+    gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpconfig.full_path())
+    gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpmath.full_path())
+    gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpmodule.full_path())
+    gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpthumb.full_path())
+    gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpwidgets.full_path())
+    foreach plugin_exe : plugin_executables
+      gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', plugin_exe)
+    endforeach
+    gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', gi.get_variable('libdir') / 'libgirepository-1.0.dylib')
   endif
 else
   # Cross-builds require an existing native GIMP installed, unless we
   # can run target binaries.
-  gimp_exe = find_program([gimpconsole_exe_name, gimpmain_exe_name],
-                          native: true, required: false)
+  native_gimp_exe = find_program([gimpconsole_exe_name, gimpmain_exe_name],
+                                 native: true, required: false)
 
-  if not gimp_exe.found()
+  if not native_gimp_exe.found()
     error('When cross-compiling, the build requires either an exe_wrapper or a native GIMP installed (@0@ or @1@).'.format(gimpconsole_exe_name, gimpmain_exe_name))
   endif
+
+  gimp_run_env.set('GIMP_SELF_IN_BUILD', native_gimp_exe.full_path())
+  gimp_exe_depends = []
 endif
+
+gimp_exe = find_program('tools'/'in-build-gimp.sh')
 
 # Use a temporary config directory in the top build root for 2 reasons: first
 # because we don't want to pollute any existing user config folder; second

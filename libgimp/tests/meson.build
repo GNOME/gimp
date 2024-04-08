@@ -28,7 +28,7 @@ foreach test_name : tests
 
   py_test  = meson.current_source_dir() / basename + '.py'
   test(test_name, run_python_test,
-       args: [ gimp_exe, py_test ],
+       args: [ gimp_exe.full_path(), py_test ],
        env: gimp_run_env,
        suite: ['libgimp', 'python3'],
        timeout: 60)
@@ -55,9 +55,10 @@ foreach test_name : tests
                            '@OUTPUT@' ],
                 build_by_default: true,
                 install: false)
+  plugin_executables += [meson.current_build_dir() / 'c-tests' / basename / fs.name(c_test_exe.full_path())]
 
   test(test_name, run_c_test,
-       args: [ gimp_exe, meson.current_source_dir() / c_test_name, basename ],
+       args: [ gimp_exe.full_path(), meson.current_source_dir() / c_test_name, basename ],
        env: gimp_run_env,
        suite: ['libgimp', 'C'],
        timeout: 60)
