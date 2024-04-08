@@ -396,6 +396,10 @@ load_image_metadata (GFile        *file,
           g_object_unref (input);
           return image;
         }
+      if (data_length > 8)
+        data_length -= 8;
+      else
+        data_length  = 0;
 
       /* Treat labels/ints as Little Endian */
       if (memcmp (sig, "MIB8", 4) == 0)
@@ -1311,6 +1315,7 @@ read_layer_block (PSDimage      *img_a,
   guint64    block_len;
   guint64    block_end;
   gint       block_len_size = (img_a->version == 1 ? 4 : 8);
+  gboolean   enclosed_data = FALSE;
 
   /* If layer data is being loaded for non-PSD files (like TIFF),
    * then mask_layer_len will have its size preloaded */
@@ -1325,6 +1330,10 @@ read_layer_block (PSDimage      *img_a,
         {
           img_a->mask_layer_len = block_len;
         }
+    }
+  else
+    {
+      enclosed_data = TRUE;
     }
 
   IFDBG(1) g_debug ("Layer and mask block size = %" G_GOFFSET_FORMAT, img_a->mask_layer_len);
@@ -1353,37 +1362,58 @@ read_layer_block (PSDimage      *img_a,
         }
       else
         {
+          guint64 adjusted_block_len;
+
           if (img_a->ibm_pc_format)
-            block_len = GUINT32_FROM_BE (block_len);
+            {
+              block_len = GUINT64_FROM_BE (block_len);
+              IFDBG(1) g_debug ("IBM PC format data detected");
+            }
 
           IFDBG(1) g_debug ("Layer info size = %" G_GOFFSET_FORMAT, block_len);
           /* To make computations easier add the size of block_len */
           block_len += block_len_size;
 
+          /* Actual block size is a multiple of 4 */
+          adjusted_block_len = (block_len + 3) / 4 * 4;
+
           if (block_len > block_len_size)
             {
+              goffset cur_ofs;
+
               lyr_a = read_layer_info (img_a, input, error);
 
               if (error && *error)
                 return NULL;
 
-              if (img_a->mask_layer_start + block_len != PSD_TELL(input))
+              cur_ofs = PSD_TELL(input);
+              if (img_a->mask_layer_start + block_len != cur_ofs)
                 {
                   g_debug ("Unexpected offset after reading layer info: %" G_GOFFSET_FORMAT
                           " instead of %" G_GOFFSET_FORMAT,
-                          PSD_TELL(input), img_a->mask_layer_start + block_len);
+                          cur_ofs, img_a->mask_layer_start + block_len);
+                }
+              if (img_a->mask_layer_start + adjusted_block_len != cur_ofs)
+                {
                   /* Correct the offset. */
-                  if (! psd_seek (input, img_a->mask_layer_start + block_len,
+                  if (! psd_seek (input, img_a->mask_layer_start + adjusted_block_len,
                                   G_SEEK_SET, error))
                     return NULL;
                 }
+            }
+          if (block_len > total_len)
+            {
+              IFDBG(1) g_debug ("Unexpectedly block_len %" G_GSIZE_FORMAT
+                                " is larger than total_len %" G_GSIZE_FORMAT,
+                                block_len, total_len);
+              block_len = total_len;
             }
           total_len -= block_len;
         }
       IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT ", remaining len: %" G_GSIZE_FORMAT,
                         PSD_TELL(input), total_len);
 
-      if (total_len >= 4)
+      if (total_len >= 4 && ! enclosed_data)
         {
           /* Global layer mask info */
           if (psd_read (input, &block_len, 4, error) == 4)
