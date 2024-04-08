@@ -25,6 +25,7 @@ libscriptfu_sources = [
   'script-fu-widgets-custom.c',
   'script-fu-color.c',
   'script-fu-resource.c',
+  'script-fu-progress.c',
 ]
 
 # !! just "library(...)" which means shared versus static depends on configuration of project.

@@ -32,6 +32,7 @@
 #include "script-fu-scripts.h"    /* script_fu_find_script */
 #include "script-fu-command.h"
 #include "script-fu-version.h"
+#include "script-fu-progress.h"
 
 #include "script-fu-run-func.h"
 
@@ -84,6 +85,8 @@ script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProc
   gimp_ui_init ("script-fu");
 
   begin_interpret_default_dialect ();
+
+  script_fu_progress_init ();
 
   switch (run_mode)
     {
@@ -170,6 +173,8 @@ script_fu_run_procedure (GimpProcedure       *procedure,
   gimp_ui_init ("script-fu");
 
   begin_interpret_default_dialect ();
+
+  script_fu_progress_init ();
 
   switch (run_mode)
     {

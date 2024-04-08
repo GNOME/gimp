@@ -54,13 +54,7 @@ typedef struct
   GtkWidget  *grid;
   GtkWidget **widgets;
 
-  GtkWidget  *progress_label;
-  GtkWidget  *progress_bar;
-
   gchar      *title;
-  gchar      *last_command;
-  gint        command_count;
-  gint        consec_command_count;
 
   gboolean    running;
 } SFInterface;
@@ -118,49 +112,6 @@ script_fu_interface_is_active (void)
   return (sf_interface != NULL);
 }
 
-void
-script_fu_interface_report_cc (const gchar *command)
-{
-  if (sf_interface == NULL)
-    return;
-
-  if (sf_interface->last_command &&
-      strcmp (sf_interface->last_command, command) == 0)
-    {
-      sf_interface->command_count++;
-
-      if (! g_str_has_prefix (command, "gimp-progress-"))
-        {
-          gchar *new_command;
-
-          new_command = g_strdup_printf ("%s <%d>",
-                                         command, sf_interface->command_count);
-          gtk_label_set_text (GTK_LABEL (sf_interface->progress_label),
-                              new_command);
-          g_free (new_command);
-        }
-    }
-  else
-    {
-      sf_interface->command_count = 1;
-
-      g_free (sf_interface->last_command);
-      sf_interface->last_command = g_strdup (command);
-
-      if (! g_str_has_prefix (command, "gimp-progress-"))
-        {
-          gtk_label_set_text (GTK_LABEL (sf_interface->progress_label),
-                              command);
-        }
-      else
-        {
-          gtk_label_set_text (GTK_LABEL (sf_interface->progress_label), "");
-        }
-    }
-
-  while (gtk_events_pending ())
-    gtk_main_iteration ();
-}
 
 GimpPDBStatusType
 script_fu_interface_dialog (SFScript  *script,
@@ -168,7 +119,6 @@ script_fu_interface_dialog (SFScript  *script,
 {
   GtkWidget    *dialog;
   GtkWidget    *vbox;
-  GtkWidget    *vbox2;
   GtkSizeGroup *group;
   GSList       *list;
   gchar        *title;
@@ -561,26 +511,6 @@ script_fu_interface_dialog (SFScript  *script,
 
   g_object_unref (group);
 
-  /* the script progress bar */
-  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_box_pack_end (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
-  gtk_widget_show (vbox2);
-
-  sf_interface->progress_bar = gimp_progress_bar_new ();
-  gtk_box_pack_start (GTK_BOX (vbox2), sf_interface->progress_bar,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (sf_interface->progress_bar);
-
-  sf_interface->progress_label = gtk_label_new (NULL);
-  gtk_label_set_xalign (GTK_LABEL (sf_interface->progress_label), 0.0);
-  gtk_label_set_ellipsize (GTK_LABEL (sf_interface->progress_label),
-                           PANGO_ELLIPSIZE_MIDDLE);
-  gimp_label_set_attributes (GTK_LABEL (sf_interface->progress_label),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (vbox2), sf_interface->progress_label,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (sf_interface->progress_label);
 #ifdef G_OS_WIN32
     {
       HWND foreground = GetForegroundWindow ();
@@ -667,7 +597,6 @@ script_fu_interface_quit (SFScript *script)
 
   g_free (sf_interface->title);
   g_free (sf_interface->widgets);
-  g_free (sf_interface->last_command);
 
   g_slice_free (SFInterface, sf_interface);
   sf_interface = NULL;

@@ -15,13 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __SCRIPT_FU_INTERFACE_H__
-#define __SCRIPT_FU_INTERFACE_H__
+#ifndef __SCRIPT_FU_PROGRESS_H__
+#define __SCRIPT_FU_PROGRESS_H__
 
+void script_fu_progress_init   (void);
+void script_fu_progress_report (const gchar *command);
 
-GimpPDBStatusType  script_fu_interface_dialog    (SFScript     *script,
-                                                  gint          start_arg);
-gboolean           script_fu_interface_is_active (void);
-
-
-#endif /*  __SCRIPT_FU_INTERFACE_H__  */
+#endif /*  __SCRIPT_FU_PROGRESS__  */

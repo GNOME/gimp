@@ -38,12 +38,12 @@
 
 #include "script-fu-types.h"
 
-#include "script-fu-interface.h"
 #include "script-fu-regex.h"
 #include "script-fu-scripts.h"
 #include "script-fu-errors.h"
 #include "script-fu-compat.h"
 #include "script-fu-version.h"
+#include "script-fu-progress.h"
 
 #include "scheme-wrapper.h"
 #include "scheme-marshal.h"
@@ -688,8 +688,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
                deprecated_name_for (proc_name),
                proc_name);
 
-  /*  report the current command  */
-  script_fu_interface_report_cc (proc_name);
+  script_fu_progress_report (proc_name);
 
   /*  Attempt to fetch the procedure from the database  */
   procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (), proc_name);
