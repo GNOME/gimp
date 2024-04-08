@@ -103,7 +103,7 @@ init_port_struct (port *port, unsigned int kind, gchar *buffer, guint size)
  * Requires the last byte of buffer is NUL.
  * Requires curr_read points to a NUL in the middle of the buffer.
  */
-void
+static void
 reset_output_port_struct (port *pt, gchar *buffer, size_t size, gchar * curr_read)
 {
   init_port_struct (pt, port_string | port_output, buffer, size);
@@ -273,7 +273,7 @@ output_port_expand_by_at_least (scheme *sc, port *p, size_t byte_count)
   /* GLib MAX */
   size_t new_size = current_content_size_bytes + MAX (byte_count, STRING_PORT_MIN_ALLOCATION) + 1;
 
-  g_debug ("%s current contents %i new size %i", G_STRFUNC, current_content_size_bytes, new_size);
+  g_debug ("%s current contents %" G_GSIZE_FORMAT " new size %" G_GSIZE_FORMAT, G_STRFUNC, current_content_size_bytes, new_size);
 
   new_buffer = sc->malloc (new_size);
   if (new_buffer)
@@ -406,7 +406,7 @@ string_port_open_input_string (scheme *sc, pointer scheme_string, int prop)
 void
 string_port_dispose (scheme  *sc, pointer port_cell)
 {
-  g_debug ("%s content size %l", G_STRFUNC, strlen (port_cell->_object._port->rep.string.start) + 1);
+  g_debug ("%s content size %ld", G_STRFUNC, strlen (port_cell->_object._port->rep.string.start) + 1);
 
   /* Free allocated buffer. */
   sc->free (port_cell->_object._port->rep.string.start);
