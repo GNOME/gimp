@@ -1804,8 +1804,12 @@ load_image (GFile                *file,
 
       procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
                                                "file-psd-load-metadata");
+      /* We would like to use run_mode below. That way we could show a dialog
+       * when unsupported Photoshop data is detected in interactive mode.
+       * However, in interactive mode saved config values take precedence over
+       * these values set below, so that won't work. */
       return_vals = gimp_procedure_run (procedure,
-                                        "run-mode",      run_mode,
+                                        "run-mode",      GIMP_RUN_NONINTERACTIVE,
                                         "file",          temp_file,
                                         "size",          photoshop_len,
                                         "image",         *image,
