@@ -33,6 +33,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
 #include "core/gimppickable.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimptempbuf.h"
@@ -156,5 +157,20 @@ gimp_pickable_select_activate (GimpPickableSelect *select)
 static void
 gimp_pickable_select_notify_pickable (GimpPickableSelect *select)
 {
+  GtkWidget           *button;
+  GimpPickableChooser *chooser = GIMP_PICKABLE_CHOOSER (select->chooser);
+
+  button = gtk_dialog_get_widget_for_response (GTK_DIALOG (select),
+                                               GTK_RESPONSE_OK);
+
+  /* Clicking Okay when an image but not a layer or channel has been
+   * selected causes the widget to "lock up" and not reappear when you
+   * click on it again. For now, we'll disable the Okay button until
+   * a layer or channel is selected */
+  if (GIMP_IS_IMAGE (gimp_pickable_chooser_get_pickable (chooser)))
+    gtk_widget_set_sensitive (button, FALSE);
+  else
+    gtk_widget_set_sensitive (button, TRUE);
+
   gimp_pdb_dialog_run_callback ((GimpPdbDialog **) &select, FALSE);
 }
