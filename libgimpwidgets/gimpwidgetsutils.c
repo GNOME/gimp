@@ -1195,7 +1195,7 @@ gimp_widget_wayland_window_exported (GdkWindow   *window,
 {
   GBytes *wayland_handle;
 
-  wayland_handle = g_bytes_new (handle, strlen (handle));
+  wayland_handle = g_bytes_new (handle, strlen (handle) + 1);
 
   g_bytes_unref (*phandle);
   *phandle = wayland_handle;
