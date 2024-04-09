@@ -1010,7 +1010,7 @@ load_layer (FILE             *fp,
   GimpImageType  type     = GIMP_RGBA_IMAGE;
   guint          width    = load_info->width  >> level;
   guint          height   = load_info->height >> level;
-  guint          size     = load_info->linear_size >> (2 * level);
+  guint          size     = width * height * load_info->bpp;
   gchar         *layer_name;
   GimpLayer     *layer;
   guint          layerw;
