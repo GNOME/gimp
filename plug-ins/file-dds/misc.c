@@ -18,7 +18,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "config.h"
+
 #include <libgimp/gimp.h>
+
+#include <libgimp/stdplugins-intl.h>
 
 #include "endian_rw.h"
 #include "imath.h"
@@ -62,7 +66,8 @@ decode_ycocg (GimpDrawable *drawable)
   gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, w, h), 1.0, format, data,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  gimp_progress_init ("Decoding YCoCg pixels...");
+  /* Translators: Do not translate YCoCg, it's the name of a colorspace */
+  gimp_progress_init (_("Decoding YCoCg pixels..."));
 
   for (i = 0; i < num_pixels; ++i)
     {
@@ -127,8 +132,9 @@ decode_ycocg_scaled (GimpDrawable *drawable)
 
   gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, w, h), 1.0, format, data,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
-
-  gimp_progress_init ("Decoding YCoCg (scaled) pixels...");
+                   
+  /* Translators: Do not translate YCoCg, it's the name of a colorspace */
+  gimp_progress_init (_("Decoding YCoCg (scaled) pixels..."));
 
   for (i = 0; i < num_pixels; ++i)
     {
@@ -195,7 +201,7 @@ decode_alpha_exponent (GimpDrawable *drawable)
   gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, w, h), 1.0, format, data,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  gimp_progress_init ("Decoding Alpha-exponent pixels...");
+  gimp_progress_init (_("Decoding Alpha-exponent pixels..."));
 
   for (i = 0; i < num_pixels; ++i)
     {
