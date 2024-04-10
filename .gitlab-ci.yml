@@ -372,14 +372,15 @@ packaging-flatpak-x64:
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     when: always
+    expose_as: 'Linux flatpak'
     paths:
       - flatpak-builder.log
       # These are the same as flatpak_ci_initiative.yml as according to
       # docs, key values are not merged but replaced.
-      - "${BUNDLE}"
+      - "gimp-git.flatpak"
       - 'repo.tar'
-      - '.flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/meson-logs/meson-log.txt'
-      - '.flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/meson-logs/testlog.txt'
+      - '.flatpak-builder/build/gimp/_flatpak_build/meson-logs/meson-log.txt'
+      - '.flatpak-builder/build/gimp/_flatpak_build/meson-logs/testlog.txt'
     expire_in: 1 week
   cache:
     - key: "$CI_JOB_NAME"
@@ -489,6 +490,8 @@ packaging-win-x64-nightly:
   rules:
     # On commits except tags.
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
+    # On merge requests.
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   stage: packaging
@@ -501,8 +504,9 @@ packaging-win-x64-nightly:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     when: always
     expire_in: 2 days
+    expose_as: 'Windows zip'
     paths:
-    - gimp-x64
+    - gimp-x64/
     - done-dll.list
   before_script:
     - apt-get update
@@ -1008,8 +1012,9 @@ dist-installer-weekly:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     when: always
     expire_in: 1 week
+    expose_as: 'Windows exe'
     paths:
-    - build/windows/installer/_Output
+    - build/windows/installer/_Output/
     - installer.log
   script:
     - build/windows/gitlab-ci/4_dist-gimp-inno.ps1 | Out-File -FilePath installer.log
