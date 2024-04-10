@@ -37,6 +37,11 @@ stages:
   - distribution
   - analysis
 
+default:
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
+    when: always
+
 variables:
   GIT_DEPTH: "1"
   ARTIFACTS_SUFFIX: "-x64"
@@ -178,9 +183,7 @@ deps-debian-x64:
     paths:
     - apt-cache
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     expire_in: 2 hours
-    when: always
     paths:
     - "_install${ARTIFACTS_SUFFIX}"
     - _babl/_build${ARTIFACTS_SUFFIX}
@@ -230,8 +233,6 @@ deps-debian-x64:
     - apt-cache
   artifacts:
     expire_in: 1 days
-    when: always
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     paths:
     - "_build${ARTIFACTS_SUFFIX}"
     - "_install${ARTIFACTS_SUFFIX}"
@@ -282,8 +283,6 @@ gimp-debian-x64:
       fi
     - ninja dist && ninja install
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     reports:
       junit: "_build${ARTIFACTS_SUFFIX}/meson-logs/testlog.junit.xml"
     paths:
@@ -370,8 +369,6 @@ packaging-flatpak-x64:
     - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
     - tar cf repo.tar repo/
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     paths:
       - flatpak-builder.log
       # These are the same as flatpak_ci_initiative.yml as according to
@@ -430,8 +427,6 @@ deps-win-x64-cross:
   script:
     - crossroad w64 gimp --run="build/windows/gitlab-ci/1_build-deps-crossroad.sh"
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 2 hours
     paths:
       - .local/
@@ -478,8 +473,6 @@ gimp-win-x64-cross:
     - crossroad w64 gimp --run="build/windows/gitlab-ci/2_build-gimp-crossroad.sh"
   needs: ["deps-win-x64-cross", "gimp-debian-x64"]
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 1 day
     paths:
       - _build-x64-cross/
@@ -498,8 +491,6 @@ packaging-win-x64-nightly:
     BUILD_TYPE: "CI_CROSS"
     CROSSROAD_PLATFORM: "w64"
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 2 days
     paths:
     - gimp-x64
@@ -547,8 +538,6 @@ deps-win-x86-cross:
   script:
     - crossroad w32 gimp --run="build/windows/gitlab-ci/1_build-deps-crossroad.sh"
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 2 hours
     paths:
       - .local/
@@ -592,8 +581,6 @@ gimp-win-x86-cross:
     - crossroad w32 gimp --run="build/windows/gitlab-ci/2_build-gimp-crossroad.sh"
   needs: ["deps-win-x86-cross", "deps-win-x64-cross", "gimp-debian-x64"]
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 1 day
     paths:
       - _build-x86-cross/
@@ -611,8 +598,6 @@ packaging-win-x86-nightly:
     CROSSROAD_PLATFORM: "w32"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 2 days
     paths:
     - gimp-x86
@@ -664,8 +649,6 @@ deps-win-a64:
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/1_build-deps-msys2.sh"
   retry: 2
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 2 hours
     paths:
       - _install-a64
@@ -699,8 +682,6 @@ gimp-win-a64:
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/2_build-gimp-msys2.sh"
   retry: 2
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 1 day
     paths:
     - _install-a64
@@ -742,8 +723,6 @@ packaging-win-a64:
     - C:\msys64\usr\bin\bash -lc "bash -x ../build/windows/gitlab-ci/3_package-gimp-uni_sym.sh"
   retry: 2
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 1 day
     paths:
     - gimp-a64
@@ -777,8 +756,6 @@ deps-win-x64:
   script:
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/1_build-deps-msys2.sh"
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 2 hours
     paths:
       - _install-x64
@@ -805,8 +782,6 @@ gimp-win-x64:
   script:
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/2_build-gimp-msys2.sh"
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 1 day
     paths:
     - _install-x64
@@ -838,8 +813,6 @@ packaging-win-x64:
     - cd gimp-x64
     - C:\msys64\usr\bin\bash -lc "bash -x ../build/windows/gitlab-ci/3_package-gimp-uni_sym.sh"
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 1 day
     paths:
     - gimp-x64
@@ -869,8 +842,6 @@ deps-win-x86:
   script:
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/1_build-deps-msys2.sh"
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 2 hours
     paths:
       - _install-x86
@@ -897,8 +868,6 @@ gimp-win-x86:
   script:
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/2_build-gimp-msys2.sh"
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 1 day
     paths:
     - _install-x86
@@ -929,8 +898,6 @@ packaging-win-x86:
     - cd gimp-x86
     - C:\msys64\usr\bin\bash -lc "bash -x ../build/windows/gitlab-ci/3_package-gimp-uni_sym.sh"
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 1 day
     paths:
     - gimp-x86
@@ -968,9 +935,7 @@ cppcheck:
     - mkdir report
     - cppcheck-htmlreport --source-dir=. --title=gimp --file=cppcheck.xml --report-dir=report
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     expire_in: 1 week
-    when: always
     paths:
       - report
   needs: []
@@ -1005,8 +970,6 @@ dist-installer-weekly:
     - packaging-win-x64
     - packaging-win-x86
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 1 week
     paths:
     - build/windows/installer/_Output
@@ -1027,8 +990,6 @@ sources-debian:
   dependencies:
     - gimp-debian-x64
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 2 days
     paths:
     - gimp-*.tar.xz
@@ -1055,8 +1016,6 @@ dev-docs:
     - deps-debian-x64
     - gimp-debian-x64
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
-    when: always
     expire_in: 2 days
     paths:
     - babl-api-docs-*.tar.xz
