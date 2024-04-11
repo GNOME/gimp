@@ -207,7 +207,7 @@
 
   if (profile)
     {
-      space = gimp_color_profile_get_space (monitor_profile,
+      space = gimp_color_profile_get_space (profile,
                                             GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                             NULL);
       g_object_unref (profile);
