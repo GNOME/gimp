@@ -86,9 +86,10 @@ static void       gimp_search_popup_get_property        (GObject            *obj
 
 static void       gimp_search_popup_size_allocate        (GtkWidget         *widget,
                                                           GtkAllocation     *allocation);
-static void       gimp_search_popup_map                  (GimpSearchPopup   *search_popup,
+#ifdef G_OS_WIN32
+static void       gimp_search_popup_realize              (GimpSearchPopup   *search_popup,
                                                           gpointer           data);
-
+#endif
 static void       gimp_search_popup_confirm              (GimpPopup *popup);
 
 /* Signal handlers on the search entry */
@@ -178,8 +179,8 @@ gimp_search_popup_init (GimpSearchPopup *search_popup)
   search_popup->priv = gimp_search_popup_get_instance_private (search_popup);
 
 #ifdef G_OS_WIN32
-  g_signal_connect (search_popup, "map",
-                    G_CALLBACK (gimp_search_popup_map),
+  g_signal_connect (search_popup, "realize",
+                    G_CALLBACK (gimp_search_popup_realize),
                     NULL);
 #endif
 }
@@ -540,23 +541,22 @@ gimp_search_popup_size_allocate (GtkWidget     *widget,
     }
 }
 
-static void
-gimp_search_popup_map (GimpSearchPopup *search_popup,
-                       gpointer         data)
-{
 #ifdef G_OS_WIN32
+static void
+gimp_search_popup_realize (GimpSearchPopup *search_popup,
+                           gpointer         data)
+{
   /* Since this popup is initially modal to the main window,
    * toggling the visibility of the GdkWindow causes odd
    * behavior. Instead, we change the opacity on launch to
    * refresh the titlebar theme */
   gimp_window_set_title_bar_theme (search_popup->priv->gimp,
-                                   GTK_WIDGET (search_popup),
-                                   TRUE);
+                                   GTK_WIDGET (search_popup));
 
   gtk_widget_set_opacity (GTK_WIDGET (search_popup), 0);
   gtk_widget_set_opacity (GTK_WIDGET (search_popup), 1);
-#endif
 }
+#endif
 
 static void
 gimp_search_popup_confirm (GimpPopup *popup)

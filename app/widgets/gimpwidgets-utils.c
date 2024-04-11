@@ -2651,12 +2651,11 @@ gimp_window_set_transient_cb (GtkWidget   *window,
 #endif
 }
 
+#ifdef G_OS_WIN32
 void
 gimp_window_set_title_bar_theme (Gimp      *gimp,
-                                 GtkWidget *dialog,
-                                 gboolean   is_main_window)
+                                 GtkWidget *dialog)
 {
-#ifdef G_OS_WIN32
   HWND           hwnd;
   GdkWindow     *window        = NULL;
   gboolean       use_dark_mode = FALSE;
@@ -2696,13 +2695,6 @@ gimp_window_set_title_bar_theme (Gimp      *gimp,
         hwnd = (HWND) gdk_win32_window_get_handle (window);
         DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
                                &use_dark_mode, sizeof (use_dark_mode));
-
-        if (! is_main_window)
-          {
-            /* Toggle the window's visibility so the title bar change appears */
-            gdk_window_hide (window);
-            gdk_window_show (window);
-          }
     }
-#endif
 }
+#endif

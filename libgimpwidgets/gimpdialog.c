@@ -174,7 +174,7 @@ gimp_dialog_init (GimpDialog *dialog)
                     NULL);
 
 #ifdef G_OS_WIN32
-  g_signal_connect (GTK_WIDGET (dialog), "map",
+  g_signal_connect (GTK_WIDGET (dialog), "realize",
                     G_CALLBACK (gimp_dialog_set_title_bar_theme),
                     NULL);
 #endif
@@ -806,11 +806,6 @@ gimp_dialog_set_title_bar_theme (GtkWidget *dialog)
       DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
                              &use_dark_mode, sizeof (use_dark_mode));
       UpdateWindow (hwnd);
-      ShowWindow (hwnd, 5);
-
-      /* Toggle the window's visibility so the title bar change appears */
-      gdk_window_hide (window);
-      gdk_window_show (window);
     }
 }
 #endif

@@ -678,10 +678,10 @@ themes_theme_paths_notify (GimpExtensionManager *manager,
     }
 }
 
+#ifdef G_OS_WIN32
 void
 themes_set_title_bar (Gimp *gimp)
 {
-#ifdef G_OS_WIN32
   GList *windows = gimp_get_image_windows (gimp);
   GList *iter;
 
@@ -689,10 +689,10 @@ themes_set_title_bar (Gimp *gimp)
     {
       GtkWidget *window = GTK_WIDGET (windows->data);
 
-      gimp_window_set_title_bar_theme (gimp, window, TRUE);
+      gimp_window_set_title_bar_theme (gimp, window);
     }
 
   if (windows)
     g_list_free (windows);
-#endif
 }
+#endif

@@ -73,7 +73,10 @@ typedef struct
   gboolean        visible;
 } GimpAboutDialog;
 
-
+#ifdef G_OS_WIN32
+static void        about_dialog_realize       (GtkWidget       *widget,
+                                               GimpAboutDialog *dialog);
+#endif
 static void        about_dialog_map           (GtkWidget       *widget,
                                                GimpAboutDialog *dialog);
 static void        about_dialog_unmap         (GtkWidget       *widget,
@@ -166,7 +169,11 @@ about_dialog_create (Gimp           *gimp,
       g_signal_connect (widget, "response",
                         G_CALLBACK (gtk_widget_destroy),
                         NULL);
-
+#ifdef G_OS_WIN32
+      g_signal_connect (widget, "realize",
+                        G_CALLBACK (about_dialog_realize),
+                        &dialog);
+#endif
       g_signal_connect (widget, "map",
                         G_CALLBACK (about_dialog_map),
                         &dialog);
@@ -198,6 +205,15 @@ about_dialog_create (Gimp           *gimp,
   return dialog.dialog;
 }
 
+#ifdef G_OS_WIN32
+static void
+about_dialog_realize (GtkWidget *widget,
+                      GimpAboutDialog *dialog)
+{
+  gimp_window_set_title_bar_theme (dialog->gimp, widget);
+}
+#endif
+
 static void
 about_dialog_map (GtkWidget       *widget,
                   GimpAboutDialog *dialog)
@@ -215,10 +231,6 @@ about_dialog_map (GtkWidget       *widget,
 
       dialog->timer = g_timeout_add (800, about_dialog_timer, dialog);
     }
-
-#ifdef G_OS_WIN32
-  gimp_window_set_title_bar_theme (dialog->gimp, widget, FALSE);
-#endif
 }
 
 static void

@@ -45,9 +45,10 @@ struct _VectorsExportDialog
 
 
 /*  local function prototypes  */
-
-static void   vectors_export_dialog_map      (GtkWidget           *dialog,
+#ifdef G_OS_WIN32
+static void   vectors_export_dialog_realize  (GtkWidget           *dialog,
                                               VectorsExportDialog *data);
+#endif
 static void   vectors_export_dialog_free     (VectorsExportDialog *private);
 static void   vectors_export_dialog_response (GtkWidget           *widget,
                                               gint                 response_id,
@@ -115,8 +116,8 @@ vectors_export_dialog_new (GimpImage                 *image,
                            dialog, 0);
 
 #ifdef G_OS_WIN32
-  g_signal_connect (dialog, "map",
-                    G_CALLBACK (vectors_export_dialog_map),
+  g_signal_connect (dialog, "realize",
+                    G_CALLBACK (vectors_export_dialog_realize),
                     private);
 #endif
   g_signal_connect (dialog, "delete-event",
@@ -144,14 +145,14 @@ vectors_export_dialog_new (GimpImage                 *image,
 
 /*  private functions  */
 
-static void
-vectors_export_dialog_map (GtkWidget           *dialog,
-                           VectorsExportDialog *data)
-{
 #ifdef G_OS_WIN32
-  gimp_window_set_title_bar_theme (data->image->gimp, dialog, FALSE);
-#endif
+static void
+vectors_export_dialog_realize (GtkWidget           *dialog,
+                               VectorsExportDialog *data)
+{
+  gimp_window_set_title_bar_theme (data->image->gimp, dialog);
 }
+#endif
 
 static void
 vectors_export_dialog_free (VectorsExportDialog *private)

@@ -122,7 +122,7 @@ gradients_save_as_pov_ray_cmd_callback (GimpAction *action,
   gtk_window_present (GTK_WINDOW (dialog));
 
 #ifdef G_OS_WIN32
-  gimp_window_set_title_bar_theme (context->gimp, dialog, FALSE);
+  gimp_window_set_title_bar_theme (context->gimp, dialog);
 #endif
 }
 

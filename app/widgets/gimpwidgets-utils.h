@@ -164,10 +164,9 @@ gboolean          gimp_utils_are_menu_path_identical   (const gchar       *path1
                                                         gchar            **canonical_path1,
                                                         gchar            **mnemonic_path1,
                                                         gchar            **path1_section_name);
-
+#ifdef G_OS_WIN32
 void              gimp_window_set_title_bar_theme      (Gimp              *gimp,
-                                                        GtkWidget         *dialog,
-                                                        gboolean           is_main_window);
-
+                                                        GtkWidget         *dialog);
+#endif
 
 #endif /* __APP_GIMP_WIDGETS_UTILS_H__ */

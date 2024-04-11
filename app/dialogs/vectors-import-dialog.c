@@ -46,9 +46,10 @@ struct _VectorsImportDialog
 
 
 /*  local function prototypes  */
-
-static void   vectors_import_dialog_map      (GtkWidget           *dialog,
+#ifdef G_OS_WIN32
+static void   vectors_import_dialog_realize  (GtkWidget           *dialog,
                                               VectorsImportDialog *data);
+#endif
 static void   vectors_import_dialog_free     (VectorsImportDialog *private);
 static void   vectors_import_dialog_response (GtkWidget           *dialog,
                                               gint                 response_id,
@@ -117,8 +118,8 @@ vectors_import_dialog_new (GimpImage                 *image,
                            dialog, 0);
 
 #ifdef G_OS_WIN32
-  g_signal_connect (dialog, "map",
-                    G_CALLBACK (vectors_import_dialog_map),
+  g_signal_connect (dialog, "realize",
+                    G_CALLBACK (vectors_import_dialog_realize),
                     private);
 #endif
   g_signal_connect (dialog, "delete-event",
@@ -173,14 +174,14 @@ vectors_import_dialog_new (GimpImage                 *image,
 
 /*  private functions  */
 
-static void
-vectors_import_dialog_map (GtkWidget           *dialog,
-                           VectorsImportDialog *data)
-{
 #ifdef G_OS_WIN32
-  gimp_window_set_title_bar_theme (data->image->gimp, dialog, FALSE);
-#endif
+static void
+vectors_import_dialog_realize (GtkWidget           *dialog,
+                               VectorsImportDialog *data)
+{
+  gimp_window_set_title_bar_theme (data->image->gimp, dialog);
 }
+#endif
 
 static void
 vectors_import_dialog_free (VectorsImportDialog *private)

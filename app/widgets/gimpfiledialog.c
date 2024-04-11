@@ -86,8 +86,10 @@ static gboolean gimp_file_dialog_delete_event            (GtkWidget           *w
                                                           GdkEventAny         *event);
 static void     gimp_file_dialog_response                (GtkDialog           *dialog,
                                                           gint                 response_id);
-static void     gimp_file_dialog_map                     (GimpFileDialog      *dialog,
+#ifdef G_OS_WIN32
+static void     gimp_file_dialog_realize                 (GimpFileDialog      *dialog,
                                                           gpointer             data);
+#endif
 static GFile  * gimp_file_dialog_real_get_default_folder (GimpFileDialog      *dialog);
 static void     gimp_file_dialog_real_save_state         (GimpFileDialog      *dialog,
                                                           const gchar         *state_name);
@@ -228,8 +230,8 @@ static void
 gimp_file_dialog_init (GimpFileDialog *dialog)
 {
 #ifdef G_OS_WIN32
-  g_signal_connect (dialog, "map",
-                    G_CALLBACK (gimp_file_dialog_map),
+  g_signal_connect (dialog, "realize",
+                    G_CALLBACK (gimp_file_dialog_realize),
                     NULL);
 #endif
 }
@@ -427,14 +429,14 @@ gimp_file_dialog_response (GtkDialog *dialog,
     }
 }
 
-static void
-gimp_file_dialog_map (GimpFileDialog *dialog,
-                      gpointer        data)
-{
 #ifdef G_OS_WIN32
-  gimp_window_set_title_bar_theme (dialog->gimp, GTK_WIDGET (dialog), FALSE);
-#endif
+static void
+gimp_file_dialog_realize (GimpFileDialog *dialog,
+                          gpointer        data)
+{
+  gimp_window_set_title_bar_theme (dialog->gimp, GTK_WIDGET (dialog));
 }
+#endif
 
 static GFile *
 gimp_file_dialog_real_get_default_folder (GimpFileDialog *dialog)

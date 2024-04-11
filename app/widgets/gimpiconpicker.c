@@ -108,9 +108,10 @@ static void    gimp_icon_picker_menu_paste      (GtkWidget      *widget,
 static void    gimp_icon_picker_menu_copy       (GtkWidget      *widget,
                                                  GdkEventButton *event,
                                                  gpointer        data);
-
-static void    gimp_icon_picker_dialog_map      (GtkWidget      *dialog,
+#ifdef G_OS_WIN32
+static void    gimp_icon_picker_dialog_realize  (GtkWidget      *dialog,
                                                  gpointer       *data);
+#endif
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpIconPicker, gimp_icon_picker, GTK_TYPE_BOX)
@@ -495,8 +496,8 @@ gimp_icon_picker_menu_from_file (GtkWidget      *widget,
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
 
 #ifdef G_OS_WIN32
-  g_signal_connect (dialog, "map",
-                    G_CALLBACK (gimp_icon_picker_dialog_map),
+  g_signal_connect (dialog, "realize",
+                    G_CALLBACK (gimp_icon_picker_dialog_realize),
                     picker);
 #endif
 
@@ -616,14 +617,14 @@ gimp_icon_picker_menu_from_name (GtkWidget      *widget,
   gimp_popup_show (GIMP_POPUP (popup), GTK_WIDGET (picker));
 }
 
-static void
-gimp_icon_picker_dialog_map (GtkWidget *dialog,
-                             gpointer  *data)
-{
 #ifdef G_OS_WIN32
+static void
+gimp_icon_picker_dialog_realize (GtkWidget *dialog,
+                                 gpointer  *data)
+{
   GimpIconPicker        *picker  = GIMP_ICON_PICKER (data);
   GimpIconPickerPrivate *private = GET_PRIVATE (picker);
 
-  gimp_window_set_title_bar_theme (private->gimp, dialog, FALSE);
-#endif
+  gimp_window_set_title_bar_theme (private->gimp, dialog);
 }
+#endif
