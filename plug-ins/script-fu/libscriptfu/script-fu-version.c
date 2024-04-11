@@ -19,6 +19,8 @@
 
 #include <libgimp/gimp.h>
 
+#include "script-fu-version.h"
+
 /* Flag indicating version 3 binding to the PDB.
  * while marshalling return values from PDB:
  *   - not wrap solitary values in list
