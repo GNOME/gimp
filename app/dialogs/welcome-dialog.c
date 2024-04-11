@@ -1239,7 +1239,7 @@ welcome_open_images_callback (GtkWidget  *button,
           if (file && g_file_test (name, G_FILE_TEST_IS_REGULAR))
             image = file_open_with_display (gimp, gimp_get_user_context (gimp),
                                             NULL, file, FALSE, NULL, &status,
-                                            NULL);
+                                            &error);
 
           if (! image && status != GIMP_PDB_CANCEL)
             {
