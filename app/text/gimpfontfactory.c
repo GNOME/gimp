@@ -1006,6 +1006,4 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
     gimp_font_factory_load_aliases (container, context);
 
   FcFontSetDestroy (fontset);
-
-  gimp_font_class_set_font_factory (container);
 }

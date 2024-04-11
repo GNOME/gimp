@@ -47,6 +47,7 @@
 #include "core/gimpcontainer.h"
 
 #include "gimpfont.h"
+#include "gimpfontfactory.h"
 
 #include "gimp-intl.h"
 
@@ -111,7 +112,7 @@ struct _GimpFontClass
 {
   GimpDataClass   parent_class;
 
-  GimpContainer  *fontfactory;
+  GimpContainer  *fonts_container;
 };
 
 
@@ -237,7 +238,7 @@ gimp_font_deserialize_create (GType     type,
                               gpointer  data)
 {
   GimpFont      *font;
-  GimpContainer *fonts_container         = GIMP_FONT_CLASS (g_type_class_peek (GIMP_TYPE_FONT))->fontfactory;
+  GimpContainer *fonts_container         = GIMP_FONT_CLASS (g_type_class_peek (GIMP_TYPE_FONT))->fonts_container;
   gint           most_similar_font_index = -1;
   gint           font_count              = gimp_container_get_n_children (fonts_container);
   gint           largest_similarity      = 0;
@@ -484,10 +485,13 @@ gimp_font_deserialize_create (GType     type,
 }
 
 void
-gimp_font_class_set_font_factory (GimpContainer *factory)
+gimp_font_class_set_font_factory (GimpFontFactory *factory)
 {
   GimpFontClass *klass = GIMP_FONT_CLASS (g_type_class_peek (GIMP_TYPE_FONT));
-  klass->fontfactory   = factory;
+
+  g_return_if_fail (GIMP_IS_FONT_FACTORY (factory));
+
+  klass->fonts_container = gimp_data_factory_get_container (GIMP_DATA_FACTORY (factory));
 }
 
 void

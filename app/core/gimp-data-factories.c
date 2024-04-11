@@ -54,6 +54,7 @@
 #include "gimptoolpreset.h"
 #include "gimptoolpreset-load.h"
 
+#include "text/gimpfont.h"
 #include "text/gimpfontfactory.h"
 
 #include "gimp-intl.h"
@@ -198,6 +199,7 @@ gimp_data_factories_init (Gimp *gimp)
                            "font-path");
   gimp_object_set_static_name (GIMP_OBJECT (gimp->font_factory),
                                "font factory");
+  gimp_font_class_set_font_factory (GIMP_FONT_FACTORY (gimp->font_factory));
 
   gimp->tool_preset_factory =
     gimp_data_loader_factory_new (gimp,

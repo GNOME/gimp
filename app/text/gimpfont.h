@@ -39,14 +39,14 @@ typedef struct _GimpFontClass GimpFontClass;
 GType         gimp_font_get_type               (void) G_GNUC_CONST;
 
 GimpData    * gimp_font_get_standard           (void);
-const gchar * gimp_font_get_lookup_name        (GimpFont      *font);
-void          gimp_font_set_lookup_name        (GimpFont      *font,
-                                                gchar         *name);
-gboolean      gimp_font_match_by_lookup_name   (GimpFont      *font,
-                                                const gchar   *name);
-void          gimp_font_set_font_info          (GimpFont      *font,
-                                                gpointer       font_info[]);
-void          gimp_font_class_set_font_factory (GimpContainer *factory);
+const gchar * gimp_font_get_lookup_name        (GimpFont        *font);
+void          gimp_font_set_lookup_name        (GimpFont        *font,
+                                                gchar           *name);
+gboolean      gimp_font_match_by_lookup_name   (GimpFont        *font,
+                                                const gchar     *name);
+void          gimp_font_set_font_info          (GimpFont        *font,
+                                                gpointer         font_info[]);
+void          gimp_font_class_set_font_factory (GimpFontFactory *factory);
 
 enum
 {
