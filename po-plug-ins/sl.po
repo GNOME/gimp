@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-30 03:37+0000\n"
-"PO-Revision-Date: 2024-03-30 23:37+0100\n"
+"POT-Creation-Date: 2024-04-10 15:56+0000\n"
+"PO-Revision-Date: 2024-04-11 22:05+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -65,15 +65,15 @@ msgstr "Povadi kozo (C)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1379
-#: plug-ins/common/cml-explorer.c:2146 plug-ins/common/cml-explorer.c:2356
+#: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1375
+#: plug-ins/common/cml-explorer.c:2142 plug-ins/common/cml-explorer.c:2352
 #: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
 #: plug-ins/common/file-gif-save.c:1222 plug-ins/common/file-heif.c:2314
 #: plug-ins/common/file-pdf-load.c:686 plug-ins/common/file-pdf-save.c:1044
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
-#: plug-ins/file-tiff/file-tiff-load.c:2547 plug-ins/flame/flame.c:622
+#: plug-ins/file-tiff/file-tiff-load.c:2551 plug-ins/flame/flame.c:622
 #: plug-ins/flame/flame.c:827
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1522
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1560
@@ -146,10 +146,10 @@ msgstr "Povadi kozo (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1380 plug-ins/common/file-heif.c:2315
+#: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2315
 #: plug-ins/common/file-pdf-load.c:687 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
-#: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3714
+#: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3744
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -449,20 +449,20 @@ msgstr "Pokaži predogled animacije GIMP na osnovi plasti"
 msgid "Procedure '%s' only works in interactive mode."
 msgstr "Procedura »%s« deluje le v interaktivnem načinu."
 
-#: plug-ins/common/animation-play.c:389 plug-ins/common/animation-play.c:772
-#: plug-ins/common/animation-play.c:1388
+#: plug-ins/common/animation-play.c:389 plug-ins/common/animation-play.c:768
+#: plug-ins/common/animation-play.c:1384
 msgid "Start playback"
 msgstr "Zaženi predvajanje"
 
-#: plug-ins/common/animation-play.c:390 plug-ins/common/animation-play.c:774
+#: plug-ins/common/animation-play.c:390 plug-ins/common/animation-play.c:770
 msgid "Step back to previous frame"
 msgstr "Korak na prejšnjo sličico"
 
-#: plug-ins/common/animation-play.c:391 plug-ins/common/animation-play.c:776
+#: plug-ins/common/animation-play.c:391 plug-ins/common/animation-play.c:772
 msgid "Step to next frame"
 msgstr "Korak na naslednjo sličico"
 
-#: plug-ins/common/animation-play.c:392 plug-ins/common/animation-play.c:778
+#: plug-ins/common/animation-play.c:392 plug-ins/common/animation-play.c:774
 msgid "Rewind the animation"
 msgstr "Previj animacijo na začetek"
 
@@ -478,11 +478,11 @@ msgstr "Upočasnite animacijo"
 msgid "Reset the speed of the animation"
 msgstr "Ponastavite hitrost animacije"
 
-#: plug-ins/common/animation-play.c:404 plug-ins/common/animation-play.c:781
+#: plug-ins/common/animation-play.c:404 plug-ins/common/animation-play.c:777
 msgid "Detach the animation from the dialog window"
 msgstr "Odpni animacijo od pogovornega okna"
 
-#: plug-ins/common/animation-play.c:405 plug-ins/common/animation-play.c:783
+#: plug-ins/common/animation-play.c:405 plug-ins/common/animation-play.c:779
 msgid "Reload the image"
 msgstr "Ponovno naloži sliko"
 
@@ -492,74 +492,74 @@ msgstr "Izhod"
 
 #. list is given in "fps" - frames per second
 #: plug-ins/common/animation-play.c:496 plug-ins/common/animation-play.c:554
-#: plug-ins/common/animation-play.c:839
+#: plug-ins/common/animation-play.c:835
 #, c-format
 msgid "%.1f %%"
 msgstr "%.1f %%"
 
 #. Image Name
-#: plug-ins/common/animation-play.c:694
+#: plug-ins/common/animation-play.c:690
 msgid "Animation Playback:"
 msgstr "Predvajanje animacije:"
 
-#: plug-ins/common/animation-play.c:774
+#: plug-ins/common/animation-play.c:770
 msgid "Step _back"
 msgstr "Korak na_zaj"
 
-#: plug-ins/common/animation-play.c:776
+#: plug-ins/common/animation-play.c:772
 msgid "_Step"
 msgstr "_Korak"
 
-#: plug-ins/common/animation-play.c:781
+#: plug-ins/common/animation-play.c:777
 msgid "Detach"
 msgstr "Odpni"
 
 #. Zoom Options
-#: plug-ins/common/animation-play.c:854
+#: plug-ins/common/animation-play.c:850
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:681
 #: plug-ins/imagemap/imap-menu.ui:276
 msgid "Zoom"
 msgstr "Povečava"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:864
+#: plug-ins/common/animation-play.c:860
 #, c-format
 msgid "%d fps"
 msgstr "%d sl/s"
 
-#: plug-ins/common/animation-play.c:875
+#: plug-ins/common/animation-play.c:871
 msgid "Default framerate"
 msgstr "Privzeta hitrost sličic"
 
-#: plug-ins/common/animation-play.c:895
+#: plug-ins/common/animation-play.c:891
 msgid "Playback speed"
 msgstr "Hitrost predvajanja"
 
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:906 plug-ins/common/file-gif-save.c:1366
+#: plug-ins/common/animation-play.c:902 plug-ins/common/file-gif-save.c:1366
 msgid "Cumulative layers (combine)"
 msgstr "kumulativne plasti (združuj)"
 
-#: plug-ins/common/animation-play.c:911 plug-ins/common/file-gif-save.c:1368
+#: plug-ins/common/animation-play.c:907 plug-ins/common/file-gif-save.c:1368
 msgid "One frame per layer (replace)"
 msgstr "ena sličica na plast (zamenjaj)"
 
-#: plug-ins/common/animation-play.c:1007
+#: plug-ins/common/animation-play.c:1003
 msgid "Memory could not be allocated to the frame container."
 msgstr "Za vsebnik sličic ni bilo mogoče dodeliti pomnilnika."
 
-#: plug-ins/common/animation-play.c:1074
+#: plug-ins/common/animation-play.c:1070
 msgid "Invalid image. Did you close it?"
 msgstr "Neveljavna slika. Ali ste jo zaprli?"
 
-#: plug-ins/common/animation-play.c:1186
+#: plug-ins/common/animation-play.c:1182
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Sličica %d od %d"
 
-#: plug-ins/common/animation-play.c:1388
+#: plug-ins/common/animation-play.c:1384
 msgid "Stop playback"
 msgstr "Zaustavi predvajanje"
 
@@ -639,7 +639,7 @@ msgstr "Navpične"
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:700
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:2910 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/gimpressionist/general.c:147
@@ -988,28 +988,28 @@ msgstr ""
 "Datoteka s parametri, iz katere CML_explorer ustvari sliko. Ta argument se "
 "uporablja samo pri neinteraktivnem zagonu."
 
-#: plug-ins/common/cml-explorer.c:908
+#: plug-ins/common/cml-explorer.c:904
 msgid "CML Explorer: evoluting"
 msgstr "Raziskovalec MZP: razvijanje ..."
 
-#: plug-ins/common/cml-explorer.c:1375
+#: plug-ins/common/cml-explorer.c:1371
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "Raziskovalec mreže združenih poslikav"
 
-#: plug-ins/common/cml-explorer.c:1419
+#: plug-ins/common/cml-explorer.c:1415
 msgid "New Seed"
 msgstr "Novo zrno"
 
-#: plug-ins/common/cml-explorer.c:1430
+#: plug-ins/common/cml-explorer.c:1426
 msgid "Fix Seed"
 msgstr "Popravi zrno"
 
-#: plug-ins/common/cml-explorer.c:1441
+#: plug-ins/common/cml-explorer.c:1437
 msgid "Random Seed"
 msgstr "Naključno zrno"
 
 #. The Load button
-#: plug-ins/common/cml-explorer.c:1456 plug-ins/common/cml-explorer.c:2357
+#: plug-ins/common/cml-explorer.c:1452 plug-ins/common/cml-explorer.c:2353
 #: plug-ins/common/curve-bend.c:1267 plug-ins/common/curve-bend.c:1810
 #: plug-ins/common/file-cel.c:1009 plug-ins/common/qbist.c:842
 #: plug-ins/common/qbist.c:997 plug-ins/common/sphere-designer.c:2295
@@ -1025,7 +1025,7 @@ msgid "_Open"
 msgstr "_Odpri"
 
 #. The Save button
-#: plug-ins/common/cml-explorer.c:1464 plug-ins/common/cml-explorer.c:2147
+#: plug-ins/common/cml-explorer.c:1460 plug-ins/common/cml-explorer.c:2143
 #: plug-ins/common/curve-bend.c:1279 plug-ins/common/curve-bend.c:1845
 #: plug-ins/common/file-pdf-save.c:1043 plug-ins/common/qbist.c:884
 #: plug-ins/common/qbist.c:1005 plug-ins/common/sphere-designer.c:2295
@@ -1040,51 +1040,51 @@ msgstr "_Odpri"
 msgid "_Save"
 msgstr "_Shrani"
 
-#: plug-ins/common/cml-explorer.c:1483
+#: plug-ins/common/cml-explorer.c:1479
 msgid "_Hue"
 msgstr "_Obarvanost"
 
-#: plug-ins/common/cml-explorer.c:1487
+#: plug-ins/common/cml-explorer.c:1483
 msgid "Sat_uration"
 msgstr "Nasi_čenost"
 
-#: plug-ins/common/cml-explorer.c:1491
+#: plug-ins/common/cml-explorer.c:1487
 msgid "_Value"
 msgstr "_Vrednost"
 
-#: plug-ins/common/cml-explorer.c:1495
+#: plug-ins/common/cml-explorer.c:1491
 msgid "_Advanced"
 msgstr "_Napredno"
 
-#: plug-ins/common/cml-explorer.c:1510
+#: plug-ins/common/cml-explorer.c:1506
 msgid "Channel Independent Parameters"
 msgstr "Parametri, neodvisni od kanala"
 
-#: plug-ins/common/cml-explorer.c:1532
+#: plug-ins/common/cml-explorer.c:1528
 msgid "Initial value:"
 msgstr "Začetna vrednost:"
 
-#: plug-ins/common/cml-explorer.c:1537
+#: plug-ins/common/cml-explorer.c:1533
 msgid "Zoom scale:"
 msgstr "Razmerje povečave:"
 
-#: plug-ins/common/cml-explorer.c:1544
+#: plug-ins/common/cml-explorer.c:1540
 msgid "Start offset:"
 msgstr "Začetni odmik:"
 
-#: plug-ins/common/cml-explorer.c:1552
+#: plug-ins/common/cml-explorer.c:1548
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "Zrno naključja (samo za načine »Iz zrna«)"
 
-#: plug-ins/common/cml-explorer.c:1562
+#: plug-ins/common/cml-explorer.c:1558
 msgid "Seed:"
 msgstr "Seme:"
 
-#: plug-ins/common/cml-explorer.c:1574
+#: plug-ins/common/cml-explorer.c:1570
 msgid "Switch to \"From seed\" With the Last Seed"
 msgstr "Preklopi v »Iz zrna« z zadnjim zrnom"
 
-#: plug-ins/common/cml-explorer.c:1586
+#: plug-ins/common/cml-explorer.c:1582
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -1096,107 +1096,107 @@ msgstr ""
 "zakaj so slike na risanih predmetih različne od predoglednih) in (2) mera "
 "mutacij enaka nič."
 
-#: plug-ins/common/cml-explorer.c:1594
+#: plug-ins/common/cml-explorer.c:1590
 msgid "O_thers"
 msgstr "_Drugo"
 
-#: plug-ins/common/cml-explorer.c:1609
+#: plug-ins/common/cml-explorer.c:1605
 msgid "Copy Settings"
 msgstr "Nastavitve kopiranja"
 
-#: plug-ins/common/cml-explorer.c:1628
+#: plug-ins/common/cml-explorer.c:1624
 msgid "Source channel:"
 msgstr "Izvorni kanal:"
 
-#: plug-ins/common/cml-explorer.c:1643 plug-ins/common/cml-explorer.c:1690
+#: plug-ins/common/cml-explorer.c:1639 plug-ins/common/cml-explorer.c:1686
 msgid "Destination channel:"
 msgstr "Ciljni kanal:"
 
-#: plug-ins/common/cml-explorer.c:1647
+#: plug-ins/common/cml-explorer.c:1643
 msgid "Copy Parameters"
 msgstr "Kopiraj parametre"
 
-#: plug-ins/common/cml-explorer.c:1655
+#: plug-ins/common/cml-explorer.c:1651
 msgid "Selective Load Settings"
 msgstr "Izbirne nastavitve nalaganja"
 
-#: plug-ins/common/cml-explorer.c:1675
+#: plug-ins/common/cml-explorer.c:1671
 msgid "Source channel in file:"
 msgstr "Kanal vira v datoteki:"
 
-#: plug-ins/common/cml-explorer.c:1696
+#: plug-ins/common/cml-explorer.c:1692
 msgid "_Misc"
 msgstr "_Razno"
 
-#: plug-ins/common/cml-explorer.c:1755
+#: plug-ins/common/cml-explorer.c:1751
 msgid "Function type:"
 msgstr "Vrsta funkcije:"
 
-#: plug-ins/common/cml-explorer.c:1771
+#: plug-ins/common/cml-explorer.c:1767
 msgid "Composition:"
 msgstr "Kompozicija:"
 
-#: plug-ins/common/cml-explorer.c:1785
+#: plug-ins/common/cml-explorer.c:1781
 msgid "Misc arrange:"
 msgstr "Razne porazdelitve:"
 
-#: plug-ins/common/cml-explorer.c:1789
+#: plug-ins/common/cml-explorer.c:1785
 msgid "Use cyclic range"
 msgstr "Uporabi cikličen obseg"
 
-#: plug-ins/common/cml-explorer.c:1798
+#: plug-ins/common/cml-explorer.c:1794
 msgid "Mod. rate:"
 msgstr "Hitrost spr.:"
 
-#: plug-ins/common/cml-explorer.c:1805
+#: plug-ins/common/cml-explorer.c:1801
 msgid "Env. sensitivity:"
 msgstr "Občutljivost okolja:"
 
-#: plug-ins/common/cml-explorer.c:1812
+#: plug-ins/common/cml-explorer.c:1808
 msgid "Diffusion dist.:"
 msgstr "Odd. razpršenosti:"
 
-#: plug-ins/common/cml-explorer.c:1819
+#: plug-ins/common/cml-explorer.c:1815
 msgid "# of subranges:"
 msgstr "# podobsegov:"
 
-#: plug-ins/common/cml-explorer.c:1826
+#: plug-ins/common/cml-explorer.c:1822
 msgid "P(ower factor):"
 msgstr "P(otenca):"
 
-#: plug-ins/common/cml-explorer.c:1834
+#: plug-ins/common/cml-explorer.c:1830
 msgid "Parameter k:"
 msgstr "Parameter k:"
 
-#: plug-ins/common/cml-explorer.c:1842
+#: plug-ins/common/cml-explorer.c:1838
 msgid "Range low:"
 msgstr "Spodnja meja obsega:"
 
-#: plug-ins/common/cml-explorer.c:1849
+#: plug-ins/common/cml-explorer.c:1845
 msgid "Range high:"
 msgstr "Zgornja meja obsega:"
 
-#: plug-ins/common/cml-explorer.c:1860
+#: plug-ins/common/cml-explorer.c:1856
 msgid "Plot a Graph of the Settings"
 msgstr "Nariši graf nastavitev"
 
-#: plug-ins/common/cml-explorer.c:1902
+#: plug-ins/common/cml-explorer.c:1898
 msgid "Ch. sensitivity:"
 msgstr "Občutljivost kanala:"
 
-#: plug-ins/common/cml-explorer.c:1910
+#: plug-ins/common/cml-explorer.c:1906
 msgid "Mutation rate:"
 msgstr "Hitrost mutiranja:"
 
-#: plug-ins/common/cml-explorer.c:1918
+#: plug-ins/common/cml-explorer.c:1914
 msgid "Mutation dist.:"
 msgstr "Porazdel. mutiranja:"
 
-#: plug-ins/common/cml-explorer.c:2010
+#: plug-ins/common/cml-explorer.c:2006
 msgid "Graph of the Current Settings"
 msgstr "Graf trenutnih nastavitev"
 
-#: plug-ins/common/cml-explorer.c:2014 plug-ins/common/plugin-browser.c:562
+#: plug-ins/common/cml-explorer.c:2010 plug-ins/common/plugin-browser.c:562
 #: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1214 plug-ins/gfig/gfig-dialog.c:1359
 #: plug-ins/ifs-compose/ifs-compose.c:1214
@@ -1204,15 +1204,15 @@ msgstr "Graf trenutnih nastavitev"
 msgid "_Close"
 msgstr "Z_apri"
 
-#: plug-ins/common/cml-explorer.c:2082
+#: plug-ins/common/cml-explorer.c:2078
 msgid "Warning: the source and the destination are the same channel."
 msgstr "Opozorilo: vir in cilj sta isti kanal."
 
-#: plug-ins/common/cml-explorer.c:2142
+#: plug-ins/common/cml-explorer.c:2138
 msgid "Save CML Explorer Parameters"
 msgstr "Shrani parametre raziskovalca MZP"
 
-#: plug-ins/common/cml-explorer.c:2212 plug-ins/common/curve-bend.c:781
+#: plug-ins/common/cml-explorer.c:2208 plug-ins/common/curve-bend.c:781
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
 #: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1221
 #: plug-ins/common/file-pcx.c:1219 plug-ins/common/file-pdf-save.c:667
@@ -1232,38 +1232,38 @@ msgstr "Shrani parametre raziskovalca MZP"
 msgid "Could not open '%s' for writing: %s"
 msgstr "»%s« ni mogoče odpreti za pisanje: %s"
 
-#: plug-ins/common/cml-explorer.c:2225 plug-ins/common/cml-explorer.c:2304
-#: plug-ins/common/cml-explorer.c:2322
+#: plug-ins/common/cml-explorer.c:2221 plug-ins/common/cml-explorer.c:2300
+#: plug-ins/common/cml-explorer.c:2318
 #, c-format
 msgid "Could not write to '%s': %s"
 msgstr "Pisanje v »%s« ni mogoče: %s"
 
-#: plug-ins/common/cml-explorer.c:2331
+#: plug-ins/common/cml-explorer.c:2327
 #, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "Parametri so bili shranjeni v »%s«"
 
-#: plug-ins/common/cml-explorer.c:2352
+#: plug-ins/common/cml-explorer.c:2348
 msgid "Load CML Explorer Parameters"
 msgstr "Naloži parametre raziskovalca MZP"
 
-#: plug-ins/common/cml-explorer.c:2486
+#: plug-ins/common/cml-explorer.c:2482
 #, c-format
 msgid "Error: \"%s\" is not a CML parameter file."
 msgstr "Napaka: »%s« ni datoteka parametrov CML."
 
-#: plug-ins/common/cml-explorer.c:2493
+#: plug-ins/common/cml-explorer.c:2489
 #, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr "Opozorilo: »%s« je starejša oblika datoteke."
 
-#: plug-ins/common/cml-explorer.c:2497
+#: plug-ins/common/cml-explorer.c:2493
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr ""
 "Opozorilo: »%s« je datoteka parametrov za novejšo različico raziskovalca MZP."
 
-#: plug-ins/common/cml-explorer.c:2568
+#: plug-ins/common/cml-explorer.c:2564
 msgid "Error: failed to load parameters"
 msgstr "Napaka: parametrov ni mogoče naložiti"
 
@@ -4274,13 +4274,13 @@ msgid "'%s' is not a PCX file"
 msgstr "»%s« ni datoteka PCX"
 
 #: plug-ins/common/file-pcx.c:692 plug-ins/common/file-wbmp.c:263
-#: plug-ins/file-bmp/bmp-load.c:727 plug-ins/file-psd/psd-load.c:559
+#: plug-ins/file-bmp/bmp-load.c:727 plug-ins/file-psd/psd-load.c:563
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Nepodprta ali neveljavna širina slike: %d"
 
 #: plug-ins/common/file-pcx.c:699 plug-ins/common/file-wbmp.c:269
-#: plug-ins/file-bmp/bmp-load.c:733 plug-ins/file-psd/psd-load.c:551
+#: plug-ins/file-bmp/bmp-load.c:733 plug-ins/file-psd/psd-load.c:555
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Nepodprta ali neveljavna višina slike: %d"
@@ -9353,6 +9353,20 @@ msgstr "Shranjevanje: %s"
 msgid "Mipmap Options"
 msgstr "Možnosti mipmapov"
 
+#. Translators: Do not translate YCoCg, it's the name of a colorspace
+#: plug-ins/file-dds/misc.c:70
+msgid "Decoding YCoCg pixels..."
+msgstr "Dekodiranje slikovnih točk YCoCg ..."
+
+#. Translators: Do not translate YCoCg, it's the name of a colorspace
+#: plug-ins/file-dds/misc.c:137
+msgid "Decoding YCoCg (scaled) pixels..."
+msgstr "Dekodiranje slikovnih točk YCoCg (v merilu) ..."
+
+#: plug-ins/file-dds/misc.c:204
+msgid "Decoding Alpha-exponent pixels..."
+msgstr "Dekodiranje alfa-eksponentnih slikovnih točk ..."
+
 #: plug-ins/file-exr/file-exr.c:114
 msgid "Loads files in the OpenEXR file format"
 msgstr "Naloži datoteke v zapisu OpenEXR"
@@ -10078,111 +10092,111 @@ msgstr "Zapis JPEG ne podpira več plasti."
 msgid "Error loading PSD file: %s"
 msgstr "Napaka pri nalaganju datoteke PSD: %s"
 
-#: plug-ins/file-psd/psd-load.c:451
+#: plug-ins/file-psd/psd-load.c:455
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "Neveljavna oblika plasti metapodatkov PSD"
 
-#: plug-ins/file-psd/psd-load.c:530
+#: plug-ins/file-psd/psd-load.c:534
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Ni veljavna datoteka dokumenta Photoshop"
 
-#: plug-ins/file-psd/psd-load.c:537
+#: plug-ins/file-psd/psd-load.c:541
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Nepodprta različica vrste datotek: %d"
 
-#: plug-ins/file-psd/psd-load.c:544
+#: plug-ins/file-psd/psd-load.c:548
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Preveč kanalov v datoteki: %d"
 
-#: plug-ins/file-psd/psd-load.c:568
+#: plug-ins/file-psd/psd-load.c:572
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost slike: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:583 plug-ins/file-psd/psd-load.c:594
+#: plug-ins/file-psd/psd-load.c:587 plug-ins/file-psd/psd-load.c:598
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Nepodprti barvni način: %s"
 
-#: plug-ins/file-psd/psd-load.c:621
+#: plug-ins/file-psd/psd-load.c:625
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Nepodprta bitna globina: %d"
 
-#: plug-ins/file-psd/psd-load.c:655 plug-ins/file-psd/psd-load.c:665
-#: plug-ins/file-psd/psd-load.c:904 plug-ins/file-psd/psd-load.c:1263
+#: plug-ins/file-psd/psd-load.c:659 plug-ins/file-psd/psd-load.c:669
+#: plug-ins/file-psd/psd-load.c:908 plug-ins/file-psd/psd-load.c:1267
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Datoteka je okvarjena!"
 
-#: plug-ins/file-psd/psd-load.c:833
+#: plug-ins/file-psd/psd-load.c:837
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Preveč kanalov v plasti: %d"
 
-#: plug-ins/file-psd/psd-load.c:940
+#: plug-ins/file-psd/psd-load.c:944
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Nepodprta ali neveljavna višina plasti: %d"
 
-#: plug-ins/file-psd/psd-load.c:949
+#: plug-ins/file-psd/psd-load.c:953
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Nepodprta ali neveljavna širina plasti: %d"
 
-#: plug-ins/file-psd/psd-load.c:959
+#: plug-ins/file-psd/psd-load.c:963
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost plasti: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:984
+#: plug-ins/file-psd/psd-load.c:988
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Nepodprta ali neveljavna velikost podatkov o maski."
 
-#: plug-ins/file-psd/psd-load.c:1167
+#: plug-ins/file-psd/psd-load.c:1171
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Nepodprta ali neveljavna višina plasti maske: %d"
 
-#: plug-ins/file-psd/psd-load.c:1176
+#: plug-ins/file-psd/psd-load.c:1180
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Nepodprta ali neveljavna širina plasti maske: %d"
 
-#: plug-ins/file-psd/psd-load.c:1186
+#: plug-ins/file-psd/psd-load.c:1190
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost plasti maske: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:2178 plug-ins/file-psd/psd-load.c:2883
+#: plug-ins/file-psd/psd-load.c:2208 plug-ins/file-psd/psd-load.c:2913
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nepodprti način stiskanja: %d"
 
-#: plug-ins/file-psd/psd-load.c:3076
+#: plug-ins/file-psd/psd-load.c:3106
 msgid "Extra"
 msgstr "Dodatno"
 
-#: plug-ins/file-psd/psd-load.c:3280
+#: plug-ins/file-psd/psd-load.c:3310
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nepodprta ali neveljavna velikost kanala"
 
-#: plug-ins/file-psd/psd-load.c:3349
+#: plug-ins/file-psd/psd-load.c:3379
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Podatkov ni mogoče razpakirati"
 
-#: plug-ins/file-psd/psd-load.c:3730
+#: plug-ins/file-psd/psd-load.c:3760
 msgid "Duotone Import"
 msgstr "Uvoz duotone"
 
-#: plug-ins/file-psd/psd-load.c:3731
+#: plug-ins/file-psd/psd-load.c:3761
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10192,11 +10206,11 @@ msgstr ""
 "Podatki o barvnem prostoru duotone so shranjeni\n"
 "in se lahko ponovno uporabijo pri izvozu."
 
-#: plug-ins/file-psd/psd-load.c:3753 plug-ins/file-psd/psd-save.c:2670
+#: plug-ins/file-psd/psd-load.c:3783 plug-ins/file-psd/psd-save.c:2670
 msgid "Compatibility Notice"
 msgstr "Obvestilo o združljivosti"
 
-#: plug-ins/file-psd/psd-load.c:3754
+#: plug-ins/file-psd/psd-load.c:3784
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -10540,7 +10554,7 @@ msgstr "Slika TIFF ali BigTIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: plug-ins/file-tiff/file-tiff.c:197 plug-ins/file-tiff/file-tiff-load.c:2598
+#: plug-ins/file-tiff/file-tiff.c:197 plug-ins/file-tiff/file-tiff-load.c:2602
 msgid "_Keep empty space around imported layers"
 msgstr "O_hrani prazni prostor okoli uvoženih plasti"
 
@@ -10830,51 +10844,51 @@ msgstr ""
 "Napaka pri odpiranju začasne %s-datoteke »%s« za nalaganje metapodatkov "
 "tiff: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1872
+#: plug-ins/file-tiff/file-tiff-load.c:1876
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: nepodprta vrsta slike, nalagalnik RGBA ni na voljo"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1987
-#: plug-ins/file-tiff/file-tiff-load.c:2184
+#: plug-ins/file-tiff/file-tiff-load.c:1991
+#: plug-ins/file-tiff/file-tiff-load.c:2188
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
 "Branje datoteke je spodletelo. Slika je morda okvarjena pri vrstici %d."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:1996
-#: plug-ins/file-tiff/file-tiff-load.c:2193
+#: plug-ins/file-tiff/file-tiff-load.c:2000
+#: plug-ins/file-tiff/file-tiff-load.c:2197
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "Branje vrstice je spodletelo. Slika je morda okvarjena pri vrstici %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2543
+#: plug-ins/file-tiff/file-tiff-load.c:2547
 msgid "Import from TIFF"
 msgstr "Uvozi iz TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2548
+#: plug-ins/file-tiff/file-tiff-load.c:2552
 #: plug-ins/metadata/metadata-editor.c:5525
 msgid "_Import"
 msgstr "_Uvozi"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2564
+#: plug-ins/file-tiff/file-tiff-load.c:2568
 msgid "_Show reduced images"
 msgstr "_Pokaži pomanjšane slike"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2615
+#: plug-ins/file-tiff/file-tiff-load.c:2619
 msgid "Process extra channel as:"
 msgstr "Obdelaj dodatni kanal kot:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2618
+#: plug-ins/file-tiff/file-tiff-load.c:2622
 msgid "_Non-premultiplied alpha"
 msgstr "Vnaprej _ne pomnožena alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2619
+#: plug-ins/file-tiff/file-tiff-load.c:2623
 msgid "Pre_multiplied alpha"
 msgstr "_Vnaprej pomnožena alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2620
+#: plug-ins/file-tiff/file-tiff-load.c:2624
 msgid "Channe_l"
 msgstr "Kana_l"
 
