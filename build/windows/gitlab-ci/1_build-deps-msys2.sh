@@ -115,3 +115,5 @@ configure_or_build ()
 configure_or_build babl "-Dwith-docs=false"
 
 configure_or_build gegl "-Ddocs=false -Dworkshop=true"
+
+ccache --show-stats

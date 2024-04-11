@@ -61,20 +61,6 @@ export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA
 export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
 # End of universal variables
 
-if [ ! -d "_ccache" ]; then
-  mkdir -p _ccache
-fi
-export CCACHE_BASEDIR="$(pwd)"
-export CCACHE_DIR="${CCACHE_BASEDIR}/_ccache"
-
-# XXX Do not enable ccache this way because it breaks
-# gobject-introspection rules. Let's see later for ccache.
-# See: https://github.com/msys2/MINGW-packages/issues/9677
-#export CC="ccache gcc"
-
-#ccache --zero-stats
-#ccache --show-stats
-
 
 git submodule update --init
 
@@ -98,6 +84,8 @@ else
   ninja
   ninja install
 fi
+
+ccache --show-stats
 
 
 # XXX Functional fix to the problem of non-configured interpreters
@@ -147,8 +135,6 @@ if [[ "$BUILD_TYPE" == "CI_NATIVE" ]]; then
   make_cmd CI %cd%
 
   cd ..
-
-  #ccache --show-stats
 
   # XXX Moving back the prefix to be used as artifacts.
   mv "${GIMP_PREFIX}" .
