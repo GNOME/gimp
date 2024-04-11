@@ -35,6 +35,11 @@
 
 #include "gimp-intl.h"
 
+#ifdef G_OS_WIN32
+#include <windef.h>
+#include <winbase.h>
+#include <windows.h>
+#endif
 
 #define MEASURE_UPPER "1235678901234567890"
 #define MEASURE_LOWER "12356789012345678901234567890"
@@ -118,6 +123,11 @@ splash_create (gboolean   be_verbose,
   PangoRectangle      ink;
   gint                max_width;
   gint                max_height;
+#ifdef G_OS_WIN32
+  STARTUPINFO         StartupInfo;
+
+  GetStartupInfo (&StartupInfo);
+#endif
 
   g_return_if_fail (splash == NULL);
   g_return_if_fail (GDK_IS_SCREEN (screen));
@@ -218,6 +228,13 @@ splash_create (gboolean   be_verbose,
   gtk_widget_show (splash->progress);
 
   gtk_widget_show (splash->window);
+
+#ifdef G_OS_WIN32
+  if (StartupInfo.wShowWindow == SW_SHOWMINIMIZED   ||
+      StartupInfo.wShowWindow == SW_SHOWMINNOACTIVE ||
+      StartupInfo.wShowWindow == SW_MINIMIZE)
+    gtk_window_iconify (GTK_WINDOW (splash->window));
+#endif
 
   if (FALSE)
     splash->timer = g_timer_new ();

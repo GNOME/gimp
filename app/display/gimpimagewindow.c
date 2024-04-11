@@ -1105,9 +1105,6 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
   else if (StartupInfo.wShowWindow == SW_SHOWMINIMIZED   ||
            StartupInfo.wShowWindow == SW_SHOWMINNOACTIVE ||
            StartupInfo.wShowWindow == SW_MINIMIZE)
-    /* XXX Iconification does not seem to work. I see the
-     * window being iconified and immediately re-raised.
-     * I leave this piece of code for later improvement. */
     gtk_window_iconify (GTK_WINDOW (session_managed));
   else
     /* Another show property not relevant to min/max.
