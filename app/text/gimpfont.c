@@ -237,7 +237,7 @@ gimp_font_deserialize_create (GType     type,
                               gint      nest_level,
                               gpointer  data)
 {
-  GimpFont      *font;
+  GimpFont      *font                    = NULL;
   GimpContainer *fonts_container         = GIMP_FONT_CLASS (g_type_class_peek (GIMP_TYPE_FONT))->fonts_container;
   gint           most_similar_font_index = -1;
   gint           font_count              = gimp_container_get_n_children (fonts_container);
