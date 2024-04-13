@@ -2033,7 +2033,7 @@ create_merged_image (GimpImage *image)
 {
   GimpLayer *projection;
 
-  projection = gimp_layer_new_from_visible (image, image, "psd-save");
+  projection = gimp_layer_new_from_visible (image, image, "psd-export");
 
   if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (projection)))
     return projection;
@@ -2126,10 +2126,10 @@ clear_image_data (void)
 }
 
 gboolean
-save_image (GFile      *file,
-            GimpImage  *image,
-            GObject    *config,
-            GError    **error)
+export_image (GFile      *file,
+              GimpImage  *image,
+              GObject    *config,
+              GError    **error)
 {
   GOutputStream        *output;
   GeglBuffer           *buffer;
@@ -2146,7 +2146,7 @@ save_image (GFile      *file,
                 "clippingpathflatness", &resource_options.clipping_path_flatness,
                 NULL);
 
-  IFDBG(1) g_debug ("Function: save_image");
+  IFDBG(1) g_debug ("Function: export_image");
 
   if (resource_options.cmyk)
     resource_options.duotone = FALSE;

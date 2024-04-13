@@ -32,7 +32,7 @@
 
 
 #define LOAD_PROC      "file-cel-load"
-#define SAVE_PROC      "file-cel-save"
+#define EXPORT_PROC    "file-cel-export"
 #define PLUG_IN_BINARY "file-cel"
 #define PLUG_IN_ROLE   "gimp-file-cel"
 
@@ -67,7 +67,7 @@ static GimpValueArray * cel_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
-static GimpValueArray * cel_save             (GimpProcedure         *procedure,
+static GimpValueArray * cel_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               gint                   n_drawables,
@@ -83,7 +83,7 @@ static gint             load_palette         (GFile                 *file,
 static GimpImage      * load_image           (GFile                 *file,
                                               GFile                 *palette_file,
                                               GError               **error);
-static gboolean         save_image           (GFile                 *file,
+static gboolean         export_image         (GFile                 *file,
                                               GimpImage             *image,
                                               GimpDrawable          *drawable,
                                               GError               **error);
@@ -121,7 +121,7 @@ cel_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -160,11 +160,11 @@ cel_create_procedure (GimpPlugIn  *plug_in,
                           _("KCF file to load palette from"),
                           G_PARAM_READWRITE);
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, cel_save, NULL, NULL);
+                                           FALSE, cel_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, INDEXED*");
 
@@ -274,15 +274,15 @@ cel_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-cel_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+cel_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -321,7 +321,7 @@ cel_save (GimpProcedure        *procedure,
                                                error);
     }
 
-  if (! save_image (file, image, drawables[0], &error))
+  if (! export_image (file, image, drawables[0], &error))
     status = GIMP_PDB_EXECUTION_ERROR;
 
   if (export == GIMP_EXPORT_EXPORT)
@@ -800,10 +800,10 @@ load_palette (GFile   *file,
 }
 
 static gboolean
-save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GError       **error)
+export_image (GFile         *file,
+              GimpImage     *image,
+              GimpDrawable  *drawable,
+              GError       **error)
 {
   GOutputStream *output;
   GeglBuffer    *buffer;

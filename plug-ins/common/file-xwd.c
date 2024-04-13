@@ -62,7 +62,7 @@
 
 
 #define LOAD_PROC      "file-xwd-load"
-#define SAVE_PROC      "file-xwd-save"
+#define EXPORT_PROC    "file-xwd-export"
 #define PLUG_IN_BINARY "file-xwd"
 #define PLUG_IN_ROLE   "gimp-file-xwd"
 
@@ -166,7 +166,7 @@ static GimpValueArray * xwd_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
-static GimpValueArray * xwd_save             (GimpProcedure         *procedure,
+static GimpValueArray * xwd_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               gint                   n_drawables,
@@ -178,7 +178,7 @@ static GimpValueArray * xwd_save             (GimpProcedure         *procedure,
 
 static GimpImage      * load_image           (GFile                 *file,
                                               GError               **error);
-static gboolean         save_image           (GFile                 *file,
+static gboolean         export_image         (GFile                 *file,
                                               GimpImage             *image,
                                               GimpDrawable          *drawable,
                                               GError               **error);
@@ -307,7 +307,7 @@ xwd_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -346,11 +346,11 @@ xwd_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "4,long,0x00000007");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, xwd_save, NULL, NULL);
+                                           FALSE, xwd_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -410,15 +410,15 @@ xwd_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-xwd_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+xwd_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -450,14 +450,14 @@ xwd_save (GimpProcedure        *procedure,
   if (n_drawables != 1)
     {
       g_set_error (&error, G_FILE_ERROR, 0,
-                   _("TGA format does not support multiple layers."));
+                   _("XWD format does not support multiple layers."));
 
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_CALLING_ERROR,
                                                error);
     }
 
-  if (! save_image (file, image, drawables[0], &error))
+  if (! export_image (file, image, drawables[0], &error))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
@@ -686,10 +686,10 @@ out:
 }
 
 static gboolean
-save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GError       **error)
+export_image (GFile         *file,
+              GimpImage     *image,
+              GimpDrawable  *drawable,
+              GError       **error)
 {
   GOutputStream *output;
   GimpImageType  drawable_type;

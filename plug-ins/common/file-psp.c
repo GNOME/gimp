@@ -26,7 +26,7 @@
  */
 
 #define LOAD_PROC      "file-psp-load"
-#define SAVE_PROC      "file-psp-save"
+#define EXPORT_PROC    "file-psp-export"
 #define PLUG_IN_BINARY "file-psp"
 #define PLUG_IN_ROLE   "gimp-file-psp"
 
@@ -591,7 +591,7 @@ static GimpValueArray * psp_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
-static GimpValueArray * psp_save             (GimpProcedure         *procedure,
+static GimpValueArray * psp_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               gint                   n_drawables,
@@ -603,7 +603,7 @@ static GimpValueArray * psp_save             (GimpProcedure         *procedure,
 
 static GimpImage      * load_image           (GFile                 *file,
                                               GError               **error);
-static gboolean         save_image           (GFile                 *file,
+static gboolean         export_image         (GFile                 *file,
                                               GimpImage             *image,
                                               gint                   n_drawables,
                                               GimpDrawable         **drawables,
@@ -647,7 +647,7 @@ psp_query_procedures (GimpPlugIn *plug_in)
   list = g_list_append (list, g_strdup (LOAD_PROC));
 #if 0
   /* commented out until exporting is implemented */
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 #endif
   return list;
 }
@@ -686,11 +686,11 @@ psp_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,Paint\\040Shop\\040Pro\\040Image\\040File\n\032");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, psp_save, NULL, NULL);
+                                           FALSE, psp_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -758,15 +758,15 @@ psp_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-psp_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+psp_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -805,8 +805,8 @@ psp_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, n_drawables, drawables,
-                        G_OBJECT (config), &error))
+      if (! export_image (file, image, n_drawables, drawables,
+                          G_OBJECT (config), &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -2836,12 +2836,12 @@ load_image (GFile   *file,
 }
 
 static gint
-save_image (GFile         *file,
-            GimpImage     *image,
-            gint           n_drawables,
-            GimpDrawable **drawables,
-            GObject       *config,
-            GError       **error)
+export_image (GFile         *file,
+              GimpImage     *image,
+              gint           n_drawables,
+              GimpDrawable **drawables,
+              GObject       *config,
+              GError       **error)
 {
   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                _("Exporting not implemented yet."));

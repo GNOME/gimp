@@ -263,9 +263,9 @@ file_proc_in_group (GimpPlugInProcedure    *file_proc,
 
   is_xcf_save = (strcmp (name, "gimp-xcf-save") == 0);
 
-  is_filter   = (strcmp (name, "file-gz-save")  == 0 ||
-                 strcmp (name, "file-bz2-save") == 0 ||
-                 strcmp (name, "file-xz-save")  == 0);
+  is_filter   = (strcmp (name, "file-gz-export")  == 0 ||
+                 strcmp (name, "file-bz2-export") == 0 ||
+                 strcmp (name, "file-xz-export")  == 0);
 
   switch (group)
     {

@@ -40,7 +40,7 @@
 
 
 #define LOAD_PROC                "file-dds-load"
-#define SAVE_PROC                "file-dds-save"
+#define EXPORT_PROC              "file-dds-export"
 
 
 typedef struct _Dds      Dds;
@@ -73,7 +73,7 @@ static GimpValueArray * dds_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
-static GimpValueArray * dds_save             (GimpProcedure         *procedure,
+static GimpValueArray * dds_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               gint                   n_drawables,
@@ -111,7 +111,7 @@ dds_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -158,11 +158,11 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                              FALSE,
                              G_PARAM_READWRITE);
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, dds_save, NULL, NULL);
+                                           FALSE, dds_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB");
 
@@ -368,15 +368,15 @@ dds_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-dds_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+dds_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;

@@ -17,7 +17,7 @@
 
 /**
  * aa.c version 1.0
- * A plugin that uses libaa (ftp://ftp.ta.jcu.cz/pub/aa) to save images as
+ * A plugin that uses libaa (ftp://ftp.ta.jcu.cz/pub/aa) to export images as
  * ASCII.
  * NOTE: This plugin *requires* aalib 1.2 or later. Earlier versions will
  * not work.
@@ -37,7 +37,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SAVE_PROC      "file-aa-save"
+#define EXPORT_PROC    "file-aa-export"
 #define PLUG_IN_BINARY "file-aa"
 
 
@@ -64,7 +64,7 @@ static GList          * ascii_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * ascii_create_procedure (GimpPlugIn           *plug_in,
                                                 const gchar          *name);
 
-static GimpValueArray * ascii_save             (GimpProcedure        *procedure,
+static GimpValueArray * ascii_export           (GimpProcedure        *procedure,
                                                 GimpRunMode           run_mode,
                                                 GimpImage            *image,
                                                 gint                  n_drawables,
@@ -74,7 +74,7 @@ static GimpValueArray * ascii_save             (GimpProcedure        *procedure,
                                                 GimpProcedureConfig  *config,
                                                 gpointer              run_data);
 
-static gboolean         save_aa                (GFile                *file,
+static gboolean         export_aa              (GFile                *file,
                                                 GimpDrawable         *drawable,
                                                 GObject              *config,
                                                 GError              **error);
@@ -110,7 +110,7 @@ ascii_init (Ascii *ascii)
 static GList *
 ascii_query_procedures (GimpPlugIn *plug_in)
 {
-  return g_list_append (NULL, g_strdup (SAVE_PROC));
+  return g_list_append (NULL, g_strdup (EXPORT_PROC));
 }
 
 static GimpProcedure *
@@ -119,13 +119,13 @@ ascii_create_procedure (GimpPlugIn  *plug_in,
 {
   GimpProcedure *procedure = NULL;
 
-  if (! strcmp (name, SAVE_PROC))
+  if (! strcmp (name, EXPORT_PROC))
     {
       gint i;
 
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, ascii_save, NULL, NULL);
+                                           FALSE, ascii_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -163,15 +163,15 @@ ascii_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-ascii_save (GimpProcedure        *procedure,
-            GimpRunMode           run_mode,
-            GimpImage            *image,
-            gint                  n_drawables,
-            GimpDrawable        **drawables,
-            GFile                *file,
-            GimpMetadata         *metadata,
-            GimpProcedureConfig  *config,
-            gpointer              run_data)
+ascii_export (GimpProcedure        *procedure,
+              GimpRunMode           run_mode,
+              GimpImage            *image,
+              gint                  n_drawables,
+              GimpDrawable        **drawables,
+              GFile                *file,
+              GimpMetadata         *metadata,
+              GimpProcedureConfig  *config,
+              gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -219,7 +219,7 @@ ascii_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_aa (file, drawables[0], G_OBJECT (config), &error))
+      if (! export_aa (file, drawables[0], G_OBJECT (config), &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -235,10 +235,10 @@ ascii_save (GimpProcedure        *procedure,
 }
 
 static gboolean
-save_aa (GFile         *file,
-         GimpDrawable  *drawable,
-         GObject       *config,
-         GError       **error)
+export_aa (GFile         *file,
+           GimpDrawable  *drawable,
+           GObject       *config,
+           GError       **error)
 {
   aa_savedata  savedata;
   aa_context  *context;

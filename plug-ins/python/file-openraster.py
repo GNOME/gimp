@@ -191,7 +191,7 @@ def thumbnail_ora(procedure, file, thumb_size, args, data):
 # We would expect the n_drawables parameter to not be there with introspection but
 # currently that isn't working, see issue #5312. Until that is resolved we keep
 # this parameter here or else saving would fail.
-def save_ora(procedure, run_mode, image, n_drawables, drawables, file, metadata, config, data):
+def export_ora(procedure, run_mode, image, n_drawables, drawables, file, metadata, config, data):
     def write_file_str(zfile, fname, data):
         # work around a permission bug in the zipfile library:
         # http://bugs.python.org/issue3394
@@ -219,7 +219,7 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, metadata,
         tmp = os.path.join(tempdir, 'tmp.png')
         interlace, compression = 0, 2
 
-        pdb_proc   = Gimp.get_pdb().lookup_procedure('file-png-save')
+        pdb_proc   = Gimp.get_pdb().lookup_procedure('file-png-export')
         pdb_config = pdb_proc.create_config()
         pdb_config.set_property('run-mode', Gimp.RunMode.NONINTERACTIVE)
         pdb_config.set_property('image', image)
@@ -460,13 +460,13 @@ class FileOpenRaster (Gimp.PlugIn):
     def do_query_procedures(self):
         return [ 'file-openraster-load-thumb',
                  'file-openraster-load',
-                 'file-openraster-save' ]
+                 'file-openraster-export' ]
 
     def do_create_procedure(self, name):
-        if name == 'file-openraster-save':
+        if name == 'file-openraster-export':
             procedure = Gimp.SaveProcedure.new(self, name,
                                                Gimp.PDBProcType.PLUGIN,
-                                               False, save_ora, None)
+                                               False, export_ora, None)
             procedure.set_image_types("*");
             procedure.set_documentation ('save an OpenRaster (.ora) file',
                                          'save an OpenRaster (.ora) file',

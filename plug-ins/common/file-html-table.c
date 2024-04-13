@@ -57,7 +57,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SAVE_PROC      "file-html-table-save"
+#define EXPORT_PROC    "file-html-table-export"
 #define PLUG_IN_BINARY "file-html-table"
 
 
@@ -84,7 +84,7 @@ static GList          * html_query_procedures  (GimpPlugIn           *plug_in);
 static GimpProcedure  * html_create_procedure  (GimpPlugIn           *plug_in,
                                                 const gchar          *name);
 
-static GimpValueArray * html_save              (GimpProcedure        *procedure,
+static GimpValueArray * html_export            (GimpProcedure        *procedure,
                                                 GimpRunMode           run_mode,
                                                 GimpImage            *image,
                                                 gint                  n_drawables,
@@ -94,7 +94,7 @@ static GimpValueArray * html_save              (GimpProcedure        *procedure,
                                                 GimpProcedureConfig  *config,
                                                 gpointer              run_data);
 
-static gboolean         save_image             (GFile                *file,
+static gboolean         export_image           (GFile                *file,
                                                 GeglBuffer           *buffer,
                                                 GObject              *config,
                                                 GError              **error);
@@ -134,7 +134,7 @@ html_init (Html *html)
 static GList *
 html_query_procedures (GimpPlugIn *plug_in)
 {
-  return  g_list_append (NULL, g_strdup (SAVE_PROC));
+  return  g_list_append (NULL, g_strdup (EXPORT_PROC));
 }
 
 static GimpProcedure *
@@ -143,11 +143,11 @@ html_create_procedure (GimpPlugIn  *plug_in,
 {
   GimpProcedure *procedure = NULL;
 
-  if (! strcmp (name, SAVE_PROC))
+  if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, html_save, NULL, NULL);
+                                           FALSE, html_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -255,15 +255,15 @@ html_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-html_save (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
-           gint                  n_drawables,
-           GimpDrawable        **drawables,
-           GFile                *file,
-           GimpMetadata         *metadata,
-           GimpProcedureConfig  *config,
-           gpointer              run_data)
+html_export (GimpProcedure        *procedure,
+             GimpRunMode           run_mode,
+             GimpImage            *image,
+             gint                  n_drawables,
+             GimpDrawable        **drawables,
+             GFile                *file,
+             GimpMetadata         *metadata,
+             GimpProcedureConfig  *config,
+             gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GeglBuffer        *buffer;
@@ -293,8 +293,8 @@ html_save (GimpProcedure        *procedure,
 
   buffer = gimp_drawable_get_buffer (drawables[0]);
 
-  if (! save_image (file, buffer, G_OBJECT (config),
-                    &error))
+  if (! export_image (file, buffer, G_OBJECT (config),
+                      &error))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
@@ -305,10 +305,10 @@ html_save (GimpProcedure        *procedure,
 }
 
 static gboolean
-save_image (GFile       *file,
-            GeglBuffer  *buffer,
-            GObject     *config,
-            GError     **error)
+export_image (GFile       *file,
+              GeglBuffer  *buffer,
+              GObject     *config,
+              GError     **error)
 {
   const Babl    *format = babl_format ("R'G'B'A u8");
   GeglSampler   *sampler;

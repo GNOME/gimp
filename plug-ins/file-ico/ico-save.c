@@ -1178,10 +1178,10 @@ ico_save_info_free (IcoSaveInfo  *info)
 }
 
 GimpPDBStatusType
-ico_save_image (GFile      *file,
-                GimpImage  *image,
-                gint32      run_mode,
-                GError    **error)
+ico_export_image (GFile      *file,
+                  GimpImage  *image,
+                  gint32      run_mode,
+                  GError    **error)
 {
   IcoSaveInfo info;
 
@@ -1196,14 +1196,14 @@ ico_save_image (GFile      *file,
 }
 
 GimpPDBStatusType
-cur_save_image (GFile      *file,
-                GimpImage  *image,
-                gint32      run_mode,
-                gint       *n_hot_spot_x,
-                gint32    **hot_spot_x,
-                gint       *n_hot_spot_y,
-                gint32    **hot_spot_y,
-                GError    **error)
+cur_export_image (GFile      *file,
+                  GimpImage  *image,
+                  gint32      run_mode,
+                  gint       *n_hot_spot_x,
+                  gint32    **hot_spot_x,
+                  gint       *n_hot_spot_y,
+                  gint32    **hot_spot_y,
+                  GError    **error)
 {
   IcoSaveInfo info;
 
@@ -1220,16 +1220,16 @@ cur_save_image (GFile      *file,
 
 /* Ported from James Huang's ani.c code, under the GPL v3 license */
 GimpPDBStatusType
-ani_save_image (GFile         *file,
-                GimpImage     *image,
-                gint32         run_mode,
-                gint          *n_hot_spot_x,
-                gint32       **hot_spot_x,
-                gint          *n_hot_spot_y,
-                gint32       **hot_spot_y,
-                AniFileHeader *header,
-                AniSaveInfo   *ani_info,
-                GError       **error)
+ani_export_image (GFile         *file,
+                  GimpImage     *image,
+                  gint32         run_mode,
+                  gint          *n_hot_spot_x,
+                  gint32       **hot_spot_x,
+                  gint          *n_hot_spot_y,
+                  gint32       **hot_spot_y,
+                  AniFileHeader *header,
+                  AniSaveInfo   *ani_info,
+                  GError       **error)
 {
   FILE         *fp;
   gint32        i;

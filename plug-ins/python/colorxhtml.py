@@ -62,7 +62,7 @@ preamble = """<!DOCTYPE html>
 
 postamble = """\n</pre>\n</body>\n</html>\n"""
 
-def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, metadata, config, data):
+def export_colorxhtml(procedure, run_mode, image, n_layers, layers, file, metadata, config, data):
     source_file = config.get_property("source-file")
     characters  = config.get_property("characters")
     size        = config.get_property("font-size");
@@ -78,7 +78,7 @@ def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, metadata
         gi.require_version('Gtk', '3.0')
         from gi.repository import Gtk
 
-        GimpUi.init ("file-colorxhtml-save")
+        GimpUi.init ("file-colorxhtml-export")
 
         use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
         dialog = Gtk.Dialog(use_header_bar=use_header_bar,
@@ -294,14 +294,14 @@ class ColorXhtml(Gimp.PlugIn):
         return True, 'gimp30-python', None
 
     def do_query_procedures(self):
-        return [ 'file-colorxhtml-save' ]
+        return [ 'file-colorxhtml-export' ]
 
     def do_create_procedure(self, name):
         procedure = None
-        if name == 'file-colorxhtml-save':
+        if name == 'file-colorxhtml-export':
             procedure = Gimp.SaveProcedure.new(self, name,
                                                Gimp.PDBProcType.PLUGIN,
-                                               False, save_colorxhtml, None)
+                                               False, export_colorxhtml, None)
             procedure.set_image_types("RGB")
             procedure.set_documentation (
                 _("Save as colored HTML text"),

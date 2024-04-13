@@ -68,7 +68,7 @@ static GimpValueArray * psd_load_thumb       (GimpProcedure         *procedure,
                                               gint                   size,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
-static GimpValueArray * psd_save             (GimpProcedure         *procedure,
+static GimpValueArray * psd_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               gint                   n_drawables,
@@ -115,7 +115,7 @@ psd_query_procedures (GimpPlugIn *plug_in)
   list = g_list_append (list, g_strdup (LOAD_THUMB_PROC));
   list = g_list_append (list, g_strdup (LOAD_PROC));
   list = g_list_append (list, g_strdup (LOAD_MERGED_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
   list = g_list_append (list, g_strdup (LOAD_METADATA_PROC));
 
   return list;
@@ -205,11 +205,11 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                                       "John Marshall",
                                       "2007");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           TRUE, psd_save, NULL, NULL);
+                                           TRUE, psd_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -421,15 +421,15 @@ psd_load_thumb (GimpProcedure       *procedure,
 }
 
 static GimpValueArray *
-psd_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+psd_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
@@ -467,7 +467,7 @@ psd_save (GimpProcedure        *procedure,
                                                  NULL);
     }
 
-  if (save_image (file, image, G_OBJECT (config), &error))
+  if (export_image (file, image, G_OBJECT (config), &error))
     {
       if (metadata)
         gimp_metadata_set_bits_per_sample (metadata, 8);

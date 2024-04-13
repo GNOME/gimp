@@ -27,7 +27,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SAVE_PROC      "file-pat-save"
+#define EXPORT_PROC    "file-pat-export"
 #define PLUG_IN_BINARY "file-pat"
 
 
@@ -54,7 +54,7 @@ static GList          * pat_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * pat_create_procedure (GimpPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * pat_save             (GimpProcedure        *procedure,
+static GimpValueArray * pat_export           (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
                                               gint                  n_drawables,
@@ -93,7 +93,7 @@ pat_init (Pat *pat)
 static GList *
 pat_query_procedures (GimpPlugIn *plug_in)
 {
-  return g_list_append (NULL, g_strdup (SAVE_PROC));
+  return g_list_append (NULL, g_strdup (EXPORT_PROC));
 }
 
 static GimpProcedure *
@@ -102,11 +102,11 @@ pat_create_procedure (GimpPlugIn  *plug_in,
 {
   GimpProcedure *procedure = NULL;
 
-  if (! strcmp (name, SAVE_PROC))
+  if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, pat_save, NULL, NULL);
+                                           FALSE, pat_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -118,7 +118,7 @@ pat_create_procedure (GimpPlugIn  *plug_in,
                                         _("New GIMP patterns can be created "
                                           "by exporting them in the "
                                           "appropriate place with this plug-in."),
-                                        SAVE_PROC);
+                                        EXPORT_PROC);
       gimp_procedure_set_attribution (procedure,
                                       "Tim Newsome",
                                       "Tim Newsome",
@@ -144,15 +144,15 @@ pat_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-pat_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+pat_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+           GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;

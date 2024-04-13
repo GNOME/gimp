@@ -19,23 +19,23 @@
  */
 
 /* The PDF export plugin has 3 main procedures:
- * 1. file-pdf-save
+ * 1. file-pdf-export
  *    This is the main procedure. It has 3 options for optimizations of
  *    the pdf file, and it can show a gui. This procedure works on a single
  *    image.
- * 2. file-pdf-save-defaults
+ * 2. file-pdf-export-defaults
  *    This procedures is the one that will be invoked by gimp's file-save,
  *    when the pdf extension is chosen. If it's in RUN_INTERACTIVE, it will
- *    pop a user interface with more options, like file-pdf-save. If it's in
+ *    pop a user interface with more options, like file-pdf-export. If it's in
  *    RUN_NONINTERACTIVE, it will simply use the default values. Note that on
  *    RUN_WITH_LAST_VALS there will be no gui, however the values will be the
  *    ones that were used in the last interactive run (or the defaults if none
  *    are available.
- * 3. file-pdf-save-multi
+ * 3. file-pdf-export-multi
  *    This procedures is more advanced, and it allows the creation of multiple
  *    paged pdf files. It will be located in File/Create/Multiple page PDF...
  *
- * It was suggested that file-pdf-save-multi will be removed from the UI as it
+ * It was suggested that file-pdf-export-multi will be removed from the UI as it
  * does not match the product vision (GIMP isn't a program for editing multiple
  * paged documents).
  */
@@ -114,10 +114,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SAVE_PROC               "file-pdf-save"
-#define SAVE_MULTI_PROC         "file-pdf-save-multi"
-#define PLUG_IN_BINARY          "file-pdf-save"
-#define PLUG_IN_ROLE            "gimp-file-pdf-save"
+#define EXPORT_PROC             "file-pdf-export"
+#define EXPORT_MULTI_PROC       "file-pdf-export-multi"
+#define PLUG_IN_BINARY          "file-pdf-export"
+#define PLUG_IN_ROLE            "gimp-file-pdf-export"
 
 #define DATA_IMAGE_LIST         "file-pdf-data-multi-page"
 
@@ -128,14 +128,14 @@
 #define THUMB_WIDTH              90
 #define THUMB_HEIGHT             120
 
-#define GIMP_PLUGIN_PDF_SAVE_ERROR gimp_plugin_pdf_save_error_quark ()
+#define GIMP_PLUGIN_PDF_EXPORT_ERROR gimp_plugin_pdf_export_error_quark ()
 
 typedef enum
 {
-  GIMP_PLUGIN_PDF_SAVE_ERROR_FAILED
+  GIMP_PLUGIN_PDF_EXPORT_ERROR_FAILED
 } GimpPluginPDFError;
 
-GQuark gimp_plugin_pdf_save_error_quark (void);
+GQuark gimp_plugin_pdf_export_error_quark (void);
 
 typedef struct
 {
@@ -183,7 +183,7 @@ static GList          * pdf_query_procedures     (GimpPlugIn           *plug_in)
 static GimpProcedure  * pdf_create_procedure     (GimpPlugIn           *plug_in,
                                                   const gchar          *name);
 
-static GimpValueArray * pdf_save                 (GimpProcedure        *procedure,
+static GimpValueArray * pdf_export               (GimpProcedure        *procedure,
                                                   GimpRunMode           run_mode,
                                                   GimpImage            *image,
                                                   gint                  n_drawables,
@@ -192,11 +192,11 @@ static GimpValueArray * pdf_save                 (GimpProcedure        *procedur
                                                   GimpMetadata         *metadata,
                                                   GimpProcedureConfig  *config,
                                                   gpointer              run_data);
-static GimpValueArray * pdf_save_multi           (GimpProcedure        *procedure,
+static GimpValueArray * pdf_export_multi         (GimpProcedure        *procedure,
                                                   GimpProcedureConfig  *config,
                                                   gpointer              run_data);
 
-static GimpPDBStatusType pdf_save_image          (GimpProcedure        *procedure,
+static GimpPDBStatusType pdf_export_image        (GimpProcedure        *procedure,
                                                   GimpProcedureConfig  *config,
                                                   gboolean              single_image,
                                                   gboolean              show_progress,
@@ -271,7 +271,7 @@ static GtkWidget    *file_choose;
 static gchar        *file_name;
 
 
-G_DEFINE_QUARK (gimp-plugin-pdf-save-error-quark, gimp_plugin_pdf_save_error)
+G_DEFINE_QUARK (gimp-plugin-pdf-export-error-quark, gimp_plugin_pdf_export_error)
 
 static void
 pdf_class_init (PdfClass *klass)
@@ -293,8 +293,8 @@ pdf_query_procedures (GimpPlugIn *plug_in)
 {
   GList *list = NULL;
 
-  list = g_list_append (list, g_strdup (SAVE_PROC));
-  list = g_list_append (list, g_strdup (SAVE_MULTI_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_MULTI_PROC));
 
   return list;
 }
@@ -305,11 +305,11 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
 {
   GimpProcedure *procedure = NULL;
 
-  if (! strcmp (name, SAVE_PROC))
+  if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           TRUE, pdf_save, NULL, NULL);
+                                           TRUE, pdf_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -385,11 +385,11 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                              TRUE,
                              G_PARAM_READWRITE);
     }
-  else if (! strcmp (name, SAVE_MULTI_PROC))
+  else if (! strcmp (name, EXPORT_MULTI_PROC))
     {
       procedure = gimp_procedure_new (plug_in, name,
                                       GIMP_PDB_PROC_TYPE_PLUGIN,
-                                      pdf_save_multi, NULL, NULL);
+                                      pdf_export_multi, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -468,15 +468,15 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-pdf_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+pdf_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GError            *error          = NULL;
   GimpPDBStatusType  status         = GIMP_PDB_SUCCESS;
@@ -499,17 +499,17 @@ pdf_save (GimpProcedure        *procedure,
     }
 
   if (status == GIMP_PDB_SUCCESS)
-    status = pdf_save_image (procedure, config, TRUE,
-                             (run_mode != GIMP_RUN_NONINTERACTIVE),
-                             &error);
+    status = pdf_export_image (procedure, config, TRUE,
+                               (run_mode != GIMP_RUN_NONINTERACTIVE),
+                               &error);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static GimpValueArray *
-pdf_save_multi (GimpProcedure        *procedure,
-                GimpProcedureConfig  *config,
-                gpointer              run_data)
+pdf_export_multi (GimpProcedure        *procedure,
+                  GimpProcedureConfig  *config,
+                  gpointer              run_data)
 {
   GError            *error     = NULL;
   GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
@@ -553,9 +553,9 @@ pdf_save_multi (GimpProcedure        *procedure,
     }
 
   if (status == GIMP_PDB_SUCCESS)
-    status = pdf_save_image (procedure, config, FALSE,
-                             (run_mode != GIMP_RUN_NONINTERACTIVE),
-                             &error);
+    status = pdf_export_image (procedure, config, FALSE,
+                               (run_mode != GIMP_RUN_NONINTERACTIVE),
+                               &error);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
@@ -637,11 +637,11 @@ get_missing_fonts (GList *layers)
 }
 
 static GimpPDBStatusType
-pdf_save_image (GimpProcedure        *procedure,
-                GimpProcedureConfig  *config,
-                gboolean              single_image,
-                gboolean              show_progress,
-                GError              **error)
+pdf_export_image (GimpProcedure        *procedure,
+                  GimpProcedureConfig  *config,
+                  gboolean              single_image,
+                  gboolean              show_progress,
+                  GError              **error)
 {
   cairo_surface_t        *pdf_file;
   cairo_t                *cr;
@@ -1407,14 +1407,14 @@ get_cairo_surface (GimpDrawable  *drawable,
         {
         case CAIRO_STATUS_INVALID_SIZE:
           g_set_error_literal (error,
-                               GIMP_PLUGIN_PDF_SAVE_ERROR,
-                               GIMP_PLUGIN_PDF_SAVE_ERROR_FAILED,
+                               GIMP_PLUGIN_PDF_EXPORT_ERROR,
+                               GIMP_PLUGIN_PDF_EXPORT_ERROR_FAILED,
                                _("Cannot handle the size (either width or height) of the image."));
           break;
         default:
           g_set_error (error,
-                       GIMP_PLUGIN_PDF_SAVE_ERROR,
-                       GIMP_PLUGIN_PDF_SAVE_ERROR_FAILED,
+                       GIMP_PLUGIN_PDF_EXPORT_ERROR,
+                       GIMP_PLUGIN_PDF_EXPORT_ERROR_FAILED,
                        "Cairo error: %s",
                        cairo_status_to_string (status));
           break;
@@ -1798,7 +1798,7 @@ draw_layer (GimpLayer           **layers,
   gboolean   vectorize;
   gboolean   ignore_hidden;
   gboolean   layers_as_pages = FALSE;
-  gboolean   reverse_order;
+  gboolean   reverse_order   = FALSE;
   gboolean   root_layers_only;
   gboolean   convert_text;
 

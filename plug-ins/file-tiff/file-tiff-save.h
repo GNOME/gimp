@@ -23,21 +23,21 @@
 #define __FILE_TIFF_SAVE_H__
 
 
-gboolean  save_image  (GFile         *file,
-                       GimpImage     *image,
-                       GimpImage     *orig_image,
-                       GObject       *config,
-                       GimpMetadata  *metadata,
-                       GError       **error);
+gboolean  export_image (GFile         *file,
+                        GimpImage     *image,
+                        GimpImage     *orig_image,
+                        GObject       *config,
+                        GimpMetadata  *metadata,
+                        GError       **error);
 
-gboolean  save_dialog (GimpImage     *image,
-                       GimpProcedure *procedure,
-                       GObject       *config,
-                       gboolean       has_alpha,
-                       gboolean       is_monochrome,
-                       gboolean       is_indexed,
-                       gboolean       is_multi_layer,
-                       gboolean       classic_tiff_failed);
+gboolean  save_dialog  (GimpImage     *image,
+                        GimpProcedure *procedure,
+                        GObject       *config,
+                        gboolean       has_alpha,
+                        gboolean       is_monochrome,
+                        gboolean       is_indexed,
+                        gboolean       is_multi_layer,
+                        gboolean       classic_tiff_failed);
 
 
 #endif /* __FILE_TIFF_SAVE_H__ */

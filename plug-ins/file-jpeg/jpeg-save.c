@@ -193,13 +193,13 @@ background_jpeg_save (PreviewPersistent *pp)
 }
 
 gboolean
-save_image (GFile                *file,
-            GimpProcedureConfig  *config,
-            GimpImage            *image,
-            GimpDrawable         *drawable,
-            GimpImage            *orig_image,
-            gboolean              preview,
-            GError              **error)
+export_image (GFile                *file,
+              GimpProcedureConfig  *config,
+              GimpImage            *image,
+              GimpDrawable         *drawable,
+              GimpImage            *orig_image,
+              gboolean              preview,
+              GError              **error)
 {
   static struct jpeg_compress_struct cinfo;
   static struct my_error_mgr         jerr;
@@ -791,11 +791,11 @@ make_preview (GimpProcedureConfig *config)
           undo_touched = TRUE;
         }
 
-      save_image (file, config,
-                  preview_image,
-                  drawable_global,
-                  orig_image_global,
-                  TRUE, NULL);
+      export_image (file, config,
+                    preview_image,
+                    drawable_global,
+                    orig_image_global,
+                    TRUE, NULL);
 
       g_object_unref (file);
 

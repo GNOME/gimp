@@ -1,4 +1,4 @@
-/* Raw data image loader (and saver) plugin 3.4
+/* Raw data image loader (and exporter) plugin 3.4
  *
  * by tim copperfield [timecop@japan.co.jp]
  * http://www.ne.jp/asahi/linux/timecop
@@ -48,7 +48,7 @@
 
 #define LOAD_PROC      "file-raw-load"
 #define LOAD_HGT_PROC  "file-hgt-load"
-#define SAVE_PROC      "file-raw-save"
+#define EXPORT_PROC    "file-raw-export"
 #define PLUG_IN_BINARY "file-raw-data"
 #define PLUG_IN_ROLE   "gimp-file-raw-data"
 #define PREVIEW_SIZE   350
@@ -171,7 +171,7 @@ static GimpValueArray * raw_load             (GimpProcedure            *procedur
                                               GimpMetadataLoadFlags    *flags,
                                               GimpProcedureConfig      *config,
                                               gpointer                  run_data);
-static GimpValueArray * raw_save             (GimpProcedure            *procedure,
+static GimpValueArray * raw_export           (GimpProcedure            *procedure,
                                               GimpRunMode               run_mode,
                                               GimpImage                *image,
                                               gint                      n_drawables,
@@ -237,7 +237,7 @@ static void             rgb_565_to_888       (guint16                  *in,
 static GimpImage      * load_image           (GFile                    *file,
                                               GimpProcedureConfig      *config,
                                               GError                  **error);
-static gboolean         save_image           (GFile                    *file,
+static gboolean         export_image         (GFile                    *file,
                                               GimpImage                *image,
                                               GimpDrawable             *drawable,
                                               GimpProcedureConfig      *config,
@@ -316,7 +316,7 @@ raw_query_procedures (GimpPlugIn *plug_in)
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
   list = g_list_append (list, g_strdup (LOAD_HGT_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -444,11 +444,11 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                          HGT_SRTM_AUTO_DETECT, HGT_SRTM_3, HGT_SRTM_AUTO_DETECT,
                          G_PARAM_READWRITE);
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, raw_save, NULL, NULL);
+                                           FALSE, raw_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB, RGBA");
 
@@ -604,15 +604,15 @@ raw_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-raw_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+raw_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType       status = GIMP_PDB_SUCCESS;
   GimpExportReturn        export = GIMP_EXPORT_CANCEL;
@@ -669,7 +669,7 @@ raw_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, drawables[0], config, &error))
+      if (! export_image (file, image, drawables[0], config, &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -1279,11 +1279,11 @@ raw_load_palette (RawGimpData    *data,
 /* end new image handle functions */
 
 static gboolean
-save_image (GFile                *file,
-            GimpImage            *image,
-            GimpDrawable         *drawable,
-            GimpProcedureConfig  *config,
-            GError              **error)
+export_image (GFile                *file,
+              GimpImage            *image,
+              GimpDrawable         *drawable,
+              GimpProcedureConfig  *config,
+              GError              **error)
 {
   GeglBuffer             *buffer;
   const Babl             *format = NULL;

@@ -31,7 +31,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SAVE_PROC      "file-csource-save"
+#define EXPORT_PROC    "file-csource-export"
 #define PLUG_IN_BINARY "file-csource"
 #define PLUG_IN_ROLE   "gimp-file-csource"
 
@@ -59,7 +59,7 @@ static GList          * csource_query_procedures (GimpPlugIn           *plug_in)
 static GimpProcedure  * csource_create_procedure (GimpPlugIn           *plug_in,
                                                   const gchar          *name);
 
-static GimpValueArray * csource_save             (GimpProcedure        *procedure,
+static GimpValueArray * csource_export           (GimpProcedure        *procedure,
                                                   GimpRunMode           run_mode,
                                                   GimpImage            *image,
                                                   gint                  n_drawables,
@@ -69,7 +69,7 @@ static GimpValueArray * csource_save             (GimpProcedure        *procedur
                                                   GimpProcedureConfig  *config,
                                                   gpointer              run_data);
 
-static gboolean         save_image               (GFile                *file,
+static gboolean         export_image             (GFile                *file,
                                                   GimpImage            *image,
                                                   GimpDrawable         *drawable,
                                                   GObject              *config,
@@ -103,7 +103,7 @@ csource_init (Csource *csource)
 static GList *
 csource_query_procedures (GimpPlugIn *plug_in)
 {
-  return g_list_append (NULL, g_strdup (SAVE_PROC));
+  return g_list_append (NULL, g_strdup (EXPORT_PROC));
 }
 
 static GimpProcedure *
@@ -112,11 +112,11 @@ csource_create_procedure (GimpPlugIn  *plug_in,
 {
   GimpProcedure *procedure = NULL;
 
-  if (! strcmp (name, SAVE_PROC))
+  if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, csource_save, NULL, NULL);
+                                           FALSE, csource_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -203,15 +203,15 @@ csource_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-csource_save (GimpProcedure        *procedure,
-              GimpRunMode           run_mode,
-              GimpImage            *image,
-              gint                  n_drawables,
-              GimpDrawable        **drawables,
-              GFile                *file,
-              GimpMetadata         *metadata,
-              GimpProcedureConfig  *config,
-              gpointer              run_data)
+csource_export (GimpProcedure        *procedure,
+                GimpRunMode           run_mode,
+                GimpImage            *image,
+                gint                  n_drawables,
+                GimpDrawable        **drawables,
+                GFile                *file,
+                GimpMetadata         *metadata,
+                GimpProcedureConfig  *config,
+                gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -274,8 +274,8 @@ csource_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, drawables[0], G_OBJECT (config),
-                        &error))
+      if (! export_image (file, image, drawables[0], G_OBJECT (config),
+                          &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -506,11 +506,11 @@ save_uchar (GOutputStream  *output,
 }
 
 static gboolean
-save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GObject       *config,
-            GError       **error)
+export_image (GFile         *file,
+              GimpImage     *image,
+              GimpDrawable  *drawable,
+              GObject       *config,
+              GError       **error)
 {
   GOutputStream *output;
   GeglBuffer    *buffer;

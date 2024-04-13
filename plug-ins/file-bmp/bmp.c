@@ -1,8 +1,8 @@
 /* bmp.c                                          */
 /* Version 0.52                                   */
 /* This is a File input and output filter for the */
-/* Gimp. It loads and saves images in windows(TM) */
-/* bitmap format.                                 */
+/* Gimp. It loads and exports images in the       */
+/* windows(TM) bitmap format.                     */
 /* Some Parts that deal with the interaction with */
 /* GIMP are taken from the GIF plugin by          */
 /* Peter Mattis & Spencer Kimball and from the    */
@@ -96,7 +96,7 @@ static GimpValueArray * bmp_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
-static GimpValueArray * bmp_save             (GimpProcedure         *procedure,
+static GimpValueArray * bmp_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               gint                   n_drawables,
@@ -135,7 +135,7 @@ bmp_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -170,11 +170,11 @@ bmp_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,BM");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, bmp_save, NULL, NULL);
+                                           FALSE, bmp_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB*");
 
@@ -254,15 +254,15 @@ bmp_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-bmp_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+bmp_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -302,9 +302,9 @@ bmp_save (GimpProcedure        *procedure,
                                                error);
     }
 
-  status = save_image (file, image, drawables[0], run_mode,
-                       procedure, G_OBJECT (config),
-                       &error);
+  status = export_image (file, image, drawables[0], run_mode,
+                         procedure, G_OBJECT (config),
+                         &error);
 
   if (export == GIMP_EXPORT_EXPORT)
     {

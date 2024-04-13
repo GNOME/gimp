@@ -40,7 +40,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SAVE_PROC      "file-gbr-save"
+#define EXPORT_PROC    "file-gbr-export"
 #define PLUG_IN_BINARY "file-gbr"
 
 
@@ -67,7 +67,7 @@ static GList          * gbr_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * gbr_create_procedure (GimpPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * gbr_save             (GimpProcedure        *procedure,
+static GimpValueArray * gbr_export           (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
                                               gint                  n_drawables,
@@ -106,7 +106,7 @@ gbr_init (Gbr *gbr)
 static GList *
 gbr_query_procedures (GimpPlugIn *plug_in)
 {
-  return g_list_append (NULL, g_strdup (SAVE_PROC));
+  return g_list_append (NULL, g_strdup (EXPORT_PROC));
 }
 
 static GimpProcedure *
@@ -115,11 +115,11 @@ gbr_create_procedure (GimpPlugIn  *plug_in,
 {
   GimpProcedure *procedure = NULL;
 
-  if (! strcmp (name, SAVE_PROC))
+  if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, gbr_save, NULL, NULL);
+                                           FALSE, gbr_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -133,7 +133,7 @@ gbr_create_procedure (GimpPlugIn  *plug_in,
                                           "file format"),
                                         _("Exports files in the GIMP brush "
                                           "file format"),
-                                        SAVE_PROC);
+                                        EXPORT_PROC);
       gimp_procedure_set_attribution (procedure,
                                       "Tim Newsome, Jens Lautenbacher, "
                                       "Sven Neumann",
@@ -165,15 +165,15 @@ gbr_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-gbr_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+gbr_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;

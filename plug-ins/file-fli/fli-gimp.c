@@ -65,7 +65,7 @@
 
 
 #define LOAD_PROC      "file-fli-load"
-#define SAVE_PROC      "file-fli-save"
+#define EXPORT_PROC    "file-fli-export"
 #define INFO_PROC      "file-fli-info"
 #define PLUG_IN_BINARY "file-fli"
 #define PLUG_IN_ROLE   "gimp-file-fli"
@@ -101,7 +101,7 @@ static GimpValueArray * fli_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
-static GimpValueArray * fli_save             (GimpProcedure         *procedure,
+static GimpValueArray * fli_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               gint                   n_drawables,
@@ -121,7 +121,7 @@ static gboolean         load_dialog          (GFile                 *file,
                                               GimpProcedure         *procedure,
                                               GObject               *config);
 
-static gboolean         save_image           (GFile                 *file,
+static gboolean         export_image         (GFile                 *file,
                                               GimpImage             *image,
                                               GObject               *config,
                                               GError               **error);
@@ -163,7 +163,7 @@ fli_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
   list = g_list_append (list, g_strdup (INFO_PROC));
 
   return list;
@@ -210,11 +210,11 @@ fli_create_procedure (GimpPlugIn  *plug_in,
                          -1, G_MAXINT, -1,
                          G_PARAM_READWRITE);
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, fli_save, NULL, NULL);
+                                           FALSE, fli_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED, GRAY");
 
@@ -332,15 +332,15 @@ fli_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-fli_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+fli_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -378,8 +378,8 @@ fli_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, G_OBJECT (config),
-                        &error))
+      if (! export_image (file, image, G_OBJECT (config),
+                          &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -657,10 +657,10 @@ load_image (GFile    *file,
  * (some code was taken from the GIF plugin.)
  */
 static gboolean
-save_image (GFile      *file,
-            GimpImage  *image,
-            GObject    *config,
-            GError    **error)
+export_image (GFile      *file,
+              GimpImage  *image,
+              GObject    *config,
+              GError    **error)
 {
   FILE         *fp;
   GList        *framelist;

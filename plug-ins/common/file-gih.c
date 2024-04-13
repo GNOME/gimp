@@ -48,7 +48,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SAVE_PROC      "file-gih-save"
+#define EXPORT_PROC    "file-gih-export"
 #define PLUG_IN_BINARY "file-gih"
 #define PLUG_IN_ROLE   "gimp-file-gih"
 
@@ -83,7 +83,7 @@ static GList          * gih_query_procedures  (GimpPlugIn           *plug_in);
 static GimpProcedure  * gih_create_procedure  (GimpPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * gih_save              (GimpProcedure        *procedure,
+static GimpValueArray * gih_export            (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
                                                gint                  n_drawables,
@@ -137,7 +137,7 @@ gih_init (Gih *gih)
 static GList *
 gih_query_procedures (GimpPlugIn *plug_in)
 {
-  return g_list_append (NULL, g_strdup (SAVE_PROC));
+  return g_list_append (NULL, g_strdup (EXPORT_PROC));
 }
 
 static GimpProcedure *
@@ -146,11 +146,11 @@ gih_create_procedure (GimpPlugIn  *plug_in,
 {
   GimpProcedure *procedure = NULL;
 
-  if (! strcmp (name, SAVE_PROC))
+  if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, gih_save, NULL, NULL);
+                                           FALSE, gih_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
 
@@ -168,7 +168,7 @@ gih_create_procedure (GimpPlugIn  *plug_in,
                                           "multi-layered, and additionally the "
                                           "layers can be divided into a "
                                           "rectangular array of brushes."),
-                                        SAVE_PROC);
+                                        EXPORT_PROC);
       gimp_procedure_set_attribution (procedure,
                                       "Tor Lillqvist",
                                       "Tor Lillqvist",
@@ -246,15 +246,15 @@ gih_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-gih_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+gih_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -479,7 +479,7 @@ gih_save (GimpProcedure        *procedure,
 }
 
 
-/*  save routines */
+/*  export routines */
 
 static void
 gih_remove_guides (GimpProcedureConfig *config,

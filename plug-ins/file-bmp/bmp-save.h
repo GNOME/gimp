@@ -20,13 +20,13 @@
 #define __BMP_SAVE_H__
 
 
-GimpPDBStatusType   save_image (GFile         *file,
-                                GimpImage     *image,
-                                GimpDrawable  *drawable,
-                                GimpRunMode    run_mode,
-                                GimpProcedure *procedure,
-                                GObject       *config,
-                                GError       **error);
+GimpPDBStatusType   export_image (GFile         *file,
+                                  GimpImage     *image,
+                                  GimpDrawable  *drawable,
+                                  GimpRunMode    run_mode,
+                                  GimpProcedure *procedure,
+                                  GObject       *config,
+                                  GError       **error);
 
 
 #endif /* __BMP_SAVE_H__ */

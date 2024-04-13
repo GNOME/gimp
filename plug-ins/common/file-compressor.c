@@ -153,7 +153,7 @@ static GList          * compressor_query_procedures (GimpPlugIn            *plug
 static GimpProcedure  * compressor_create_procedure (GimpPlugIn            *plug_in,
                                                      const gchar           *name);
 
-static GimpValueArray * compressor_save             (GimpProcedure         *procedure,
+static GimpValueArray * compressor_export           (GimpProcedure         *procedure,
                                                      GimpRunMode            run_mode,
                                                      GimpImage             *image,
                                                      gint                   n_drawables,
@@ -175,7 +175,7 @@ static GimpImage         * load_image               (const CompressorEntry *comp
                                                      gint32                 run_mode,
                                                      GimpPDBStatusType     *status,
                                                      GError               **error);
-static GimpPDBStatusType   save_image               (const CompressorEntry *compressor,
+static GimpPDBStatusType   export_image             (const CompressorEntry *compressor,
                                                      GFile                 *file,
                                                      GimpImage             *image,
                                                      gint                   n_drawables,
@@ -189,17 +189,17 @@ static const gchar       * find_extension           (const CompressorEntry *comp
 
 static gboolean            gzip_load                (GFile                 *infile,
                                                      GFile                 *outfile);
-static gboolean            gzip_save                (GFile                 *infile,
+static gboolean            gzip_export              (GFile                 *infile,
                                                      GFile                 *outfile);
 
 static gboolean            bzip2_load               (GFile                 *infile,
                                                      GFile                 *outfile);
-static gboolean            bzip2_save               (GFile                 *infile,
+static gboolean            bzip2_export             (GFile                 *infile,
                                                      GFile                 *outfile);
 
 static gboolean            xz_load                  (GFile                 *infile,
                                                      GFile                 *outfile);
-static gboolean            xz_save                  (GFile                 *infile,
+static gboolean            xz_export                (GFile                 *infile,
                                                      GFile                 *outfile);
 static goffset             get_file_info            (GFile                 *file);
 
@@ -225,10 +225,10 @@ static const CompressorEntry compressors[] =
     "This procedure loads files in the gzip compressed format.",
     gzip_load,
 
-    "file-gz-save",
+    "file-gz-export",
     "saves files compressed with gzip",
     "This procedure saves files in the gzip compressed format.",
-    gzip_save
+    gzip_export
   },
 
   {
@@ -244,10 +244,10 @@ static const CompressorEntry compressors[] =
     "This procedure loads files in the bzip2 compressed format.",
     bzip2_load,
 
-    "file-bz2-save",
+    "file-bz2-export",
     "saves files compressed with bzip2",
     "This procedure saves files in the bzip2 compressed format.",
-    bzip2_save
+    bzip2_export
   },
 
   {
@@ -263,10 +263,10 @@ static const CompressorEntry compressors[] =
     "This procedure loads files in the xz compressed format.",
     xz_load,
 
-    "file-xz-save",
+    "file-xz-export",
     "saves files compressed with xz",
     "This procedure saves files in the xz compressed format.",
-    xz_save
+    xz_export
   }
 };
 
@@ -333,7 +333,7 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
         {
           procedure = gimp_save_procedure_new (plug_in, name,
                                                GIMP_PDB_PROC_TYPE_PLUGIN,
-                                               FALSE, compressor_save,
+                                               FALSE, compressor_export,
                                                (gpointer) compressor, NULL);
 
           gimp_procedure_set_image_types (procedure, "RGB*, GRAY*, INDEXED*");
@@ -399,15 +399,15 @@ compressor_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-compressor_save (GimpProcedure        *procedure,
-                 GimpRunMode           run_mode,
-                 GimpImage            *image,
-                 gint                  n_drawables,
-                 GimpDrawable        **drawables,
-                 GFile                *file,
-                 GimpMetadata         *metadata,
-                 GimpProcedureConfig  *config,
-                 gpointer              run_data)
+compressor_export (GimpProcedure        *procedure,
+                   GimpRunMode           run_mode,
+                   GimpImage            *image,
+                   gint                  n_drawables,
+                   GimpDrawable        **drawables,
+                   GFile                *file,
+                   GimpMetadata         *metadata,
+                   GimpProcedureConfig  *config,
+                  gpointer              run_data)
 {
   const CompressorEntry *compressor = run_data;
   GimpPDBStatusType      status;
@@ -419,20 +419,20 @@ compressor_save (GimpProcedure        *procedure,
   gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
                                       GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
-  status = save_image (compressor, file, image, n_drawables, drawables,
-                       run_mode, &error);
+  status = export_image (compressor, file, image, n_drawables, drawables,
+                         run_mode, &error);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static GimpPDBStatusType
-save_image (const CompressorEntry  *compressor,
-            GFile                  *file,
-            GimpImage              *image,
-            gint                    n_drawables,
-            GimpDrawable          **drawables,
-            gint32                  run_mode,
-            GError                **error)
+export_image (const CompressorEntry  *compressor,
+              GFile                  *file,
+              GimpImage              *image,
+              gint                    n_drawables,
+              GimpDrawable          **drawables,
+              gint32                  run_mode,
+              GError                **error)
 {
   const gchar *ext;
   GFile       *tmp_file;
@@ -652,8 +652,8 @@ gzip_load (GFile *infile,
 }
 
 static gboolean
-gzip_save (GFile *infile,
-           GFile *outfile)
+gzip_export (GFile *infile,
+             GFile *outfile)
 {
   gboolean  ret;
   FILE     *in;
@@ -774,8 +774,8 @@ bzip2_load (GFile *infile,
 }
 
 static gboolean
-bzip2_save (GFile *infile,
-            GFile *outfile)
+bzip2_export (GFile *infile,
+              GFile *outfile)
 {
   gboolean  ret;
   FILE     *in;
@@ -926,8 +926,8 @@ xz_load (GFile *infile,
 }
 
 static gboolean
-xz_save (GFile *infile,
-         GFile *outfile)
+xz_export (GFile *infile,
+           GFile *outfile)
 {
   gboolean     ret;
   FILE        *in;

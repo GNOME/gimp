@@ -60,7 +60,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_ROLE "gimp-file-tiff-save"
+#define PLUG_IN_ROLE "gimp-file-tiff-export"
 
 
 static gboolean  save_paths             (TIFF          *tif,
@@ -1036,13 +1036,13 @@ save_metadata (GFile        *file,
 }
 
 gboolean
-save_image (GFile         *file,
-            GimpImage     *image,
-            GimpImage     *orig_image, /* the export function might
-                                        * have created a duplicate */
-            GObject       *config,
-            GimpMetadata  *metadata,
-            GError       **error)
+export_image (GFile         *file,
+              GimpImage     *image,
+              GimpImage     *orig_image, /* the export function might
+                                          * have created a duplicate */
+              GObject       *config,
+              GimpMetadata  *metadata,
+              GError       **error)
 {
   TIFF             *tif                 = NULL;
   const Babl       *space               = NULL;

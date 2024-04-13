@@ -38,7 +38,7 @@
 
 
 #define LOAD_PROC       "file-png-load"
-#define SAVE_PROC       "file-png-save"
+#define EXPORT_PROC     "file-png-export"
 #define PLUG_IN_BINARY  "file-png"
 #define PLUG_IN_ROLE    "gimp-file-png"
 
@@ -93,7 +93,7 @@ static GimpValueArray * png_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
-static GimpValueArray * png_save             (GimpProcedure         *procedure,
+static GimpValueArray * png_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               gint                   n_drawables,
@@ -108,7 +108,7 @@ static GimpImage * load_image                (GFile                 *file,
                                               gboolean              *resolution_loaded,
                                               gboolean              *profile_loaded,
                                               GError               **error);
-static gboolean    save_image                (GFile                 *file,
+static gboolean    export_image              (GFile                 *file,
                                               GimpImage             *image,
                                               GimpDrawable          *drawable,
                                               GimpImage             *orig_image,
@@ -123,7 +123,7 @@ static int         respin_cmap               (png_structp            pp,
                                               GimpImage             *image,
                                               GimpDrawable          *drawable);
 
-static gboolean    save_dialog               (GimpImage             *image,
+static gboolean    export_dialog             (GimpImage             *image,
                                               GimpProcedure         *procedure,
                                               GObject               *config,
                                               gboolean               alpha);
@@ -167,7 +167,7 @@ png_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -206,11 +206,11 @@ png_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,\211PNG\r\n\032\n");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           TRUE, png_save, NULL, NULL);
+                                           TRUE, png_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -365,15 +365,15 @@ png_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-png_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+png_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -432,7 +432,7 @@ png_save (GimpProcedure        *procedure,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! save_dialog (orig_image, procedure, G_OBJECT (config), alpha))
+      if (! export_dialog (orig_image, procedure, G_OBJECT (config), alpha))
         status = GIMP_PDB_CANCEL;
     }
 
@@ -440,9 +440,9 @@ png_save (GimpProcedure        *procedure,
     {
       gint bits_per_sample;
 
-      if (save_image (file, image, drawables[0], orig_image, G_OBJECT (config),
-                      &bits_per_sample, run_mode != GIMP_RUN_NONINTERACTIVE,
-                      &error))
+      if (export_image (file, image, drawables[0], orig_image, G_OBJECT (config),
+                        &bits_per_sample, run_mode != GIMP_RUN_NONINTERACTIVE,
+                        &error))
         {
           if (metadata)
             gimp_metadata_set_bits_per_sample (metadata, bits_per_sample);
@@ -1278,7 +1278,7 @@ offsets_dialog (gint offset_x,
 }
 
 /*
- * 'save_image ()' - Export the specified image to a PNG file.
+ * 'export_image ()' - Export the specified image to a PNG file.
  */
 
 typedef struct
@@ -1295,14 +1295,14 @@ PngGlobals;
 static PngGlobals pngg;
 
 static gboolean
-save_image (GFile        *file,
-            GimpImage    *image,
-            GimpDrawable *drawable,
-            GimpImage    *orig_image,
-            GObject      *config,
-            gint         *bits_per_sample,
-            gboolean      report_progress,
-            GError      **error)
+export_image (GFile        *file,
+              GimpImage    *image,
+              GimpDrawable *drawable,
+              GimpImage    *orig_image,
+              GObject      *config,
+              gint         *bits_per_sample,
+              gboolean      report_progress,
+              GError      **error)
 {
   gint              i, k;             /* Looping vars */
   gint              bpp = 0;          /* Bytes per pixel */
@@ -2384,10 +2384,10 @@ read_unknown_chunk (png_structp        png_ptr,
 }
 
 static gboolean
-save_dialog (GimpImage     *image,
-             GimpProcedure *procedure,
-             GObject       *config,
-             gboolean       alpha)
+export_dialog (GimpImage     *image,
+               GimpProcedure *procedure,
+               GObject       *config,
+               gboolean       alpha)
 {
   GtkWidget *dialog;
   gboolean   run;

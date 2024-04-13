@@ -66,7 +66,7 @@ static GimpValueArray * webp_load             (GimpProcedure         *procedure,
                                                GimpMetadataLoadFlags *flags,
                                                GimpProcedureConfig   *config,
                                                gpointer               run_data);
-static GimpValueArray * webp_save             (GimpProcedure         *procedure,
+static GimpValueArray * webp_export           (GimpProcedure         *procedure,
                                                GimpRunMode            run_mode,
                                                GimpImage             *image,
                                                gint                   n_drawables,
@@ -104,7 +104,7 @@ webp_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -140,11 +140,11 @@ webp_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "8,string,WEBP");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           TRUE, webp_save, NULL, NULL);
+                                           TRUE, webp_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -280,15 +280,15 @@ webp_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-webp_save (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
-           gint                  n_drawables,
-           GimpDrawable        **drawables,
-           GFile                *file,
-           GimpMetadata         *metadata,
-           GimpProcedureConfig  *config,
-           gpointer              run_data)
+webp_export (GimpProcedure        *procedure,
+             GimpRunMode           run_mode,
+             GimpImage            *image,
+             gint                  n_drawables,
+             GimpDrawable        **drawables,
+             GFile                *file,
+             GimpMetadata         *metadata,
+             GimpProcedureConfig  *config,
+             gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;

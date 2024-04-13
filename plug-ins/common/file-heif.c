@@ -29,12 +29,12 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LOAD_PROC      "file-heif-load"
-#define LOAD_PROC_AV1  "file-heif-av1-load"
-#define LOAD_PROC_HEJ2 "file-heif-hej2-load"
-#define SAVE_PROC      "file-heif-save"
-#define SAVE_PROC_AV1  "file-heif-av1-save"
-#define PLUG_IN_BINARY "file-heif"
+#define LOAD_PROC       "file-heif-load"
+#define LOAD_PROC_AV1   "file-heif-av1-load"
+#define LOAD_PROC_HEJ2  "file-heif-hej2-load"
+#define EXPORT_PROC     "file-heif-export"
+#define EXPORT_PROC_AV1 "file-heif-av1-export"
+#define PLUG_IN_BINARY  "file-heif"
 
 typedef enum _HeifpluginEncoderSpeed
 {
@@ -81,7 +81,7 @@ static GimpValueArray * heif_load             (GimpProcedure                *pro
                                                GimpMetadataLoadFlags        *flags,
                                                GimpProcedureConfig          *config,
                                                gpointer                      run_data);
-static GimpValueArray * heif_save             (GimpProcedure                *procedure,
+static GimpValueArray * heif_export           (GimpProcedure                *procedure,
                                                GimpRunMode                   run_mode,
                                                GimpImage                    *image,
                                                gint                          n_drawables,
@@ -91,7 +91,7 @@ static GimpValueArray * heif_save             (GimpProcedure                *pro
                                                GimpProcedureConfig          *config,
                                                gpointer                      run_data);
 
-static GimpValueArray * heif_av1_save         (GimpProcedure                *procedure,
+static GimpValueArray * heif_av1_export       (GimpProcedure                *procedure,
                                                GimpRunMode                   run_mode,
                                                GimpImage                    *image,
                                                gint                          n_drawables,
@@ -107,7 +107,7 @@ static GimpImage      * load_image            (GFile                        *fil
                                                gboolean                      interactive,
                                                GimpPDBStatusType            *status,
                                                GError                      **error);
-static gboolean         save_image            (GFile                        *file,
+static gboolean         export_image          (GFile                        *file,
                                                GimpImage                    *image,
                                                GimpDrawable                 *drawable,
                                                GObject                      *config,
@@ -157,7 +157,7 @@ heif_init_procedures (GimpPlugIn *plug_in)
 
   if (heif_have_encoder_for_format (heif_compression_HEVC))
     {
-      list = g_list_append (list, g_strdup (SAVE_PROC));
+      list = g_list_append (list, g_strdup (EXPORT_PROC));
     }
 
   if (heif_have_decoder_for_format (heif_compression_AV1))
@@ -167,7 +167,7 @@ heif_init_procedures (GimpPlugIn *plug_in)
 
   if (heif_have_encoder_for_format (heif_compression_AV1))
     {
-      list = g_list_append (list, g_strdup (SAVE_PROC_AV1));
+      list = g_list_append (list, g_strdup (EXPORT_PROC_AV1));
     }
 
 #if LIBHEIF_HAVE_VERSION(1,17,0)
@@ -226,11 +226,11 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                                       "4,string,ftyphevs,4,string,ftypmif1,"
                                       "4,string,ftypmsf1");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, heif_save, NULL, NULL);
+                                           FALSE, heif_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
 
@@ -334,11 +334,12 @@ heif_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_file_procedure_set_priority (GIMP_FILE_PROCEDURE (procedure), 100);
     }
-  else if (! strcmp (name, SAVE_PROC_AV1))
+  else if (! strcmp (name, EXPORT_PROC_AV1))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, heif_av1_save, NULL, NULL);
+                                           FALSE, heif_av1_export, NULL,
+                                           NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
 
@@ -485,15 +486,15 @@ heif_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-heif_save (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
-           gint                  n_drawables,
-           GimpDrawable        **drawables,
-           GFile                *file,
-           GimpMetadata         *metadata_unused,
-           GimpProcedureConfig  *config,
-           gpointer              run_data)
+heif_export (GimpProcedure        *procedure,
+             GimpRunMode           run_mode,
+             GimpImage            *image,
+             gint                  n_drawables,
+             GimpDrawable        **drawables,
+             GFile                *file,
+             GimpMetadata         *metadata_unused,
+             GimpProcedureConfig  *config,
+             gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -546,8 +547,8 @@ heif_save (GimpProcedure        *procedure,
 
       heif_init (NULL);
 
-      if (! save_image (file, image, drawables[0], G_OBJECT (config),
-                        &error, heif_compression_HEVC, metadata))
+      if (! export_image (file, image, drawables[0], G_OBJECT (config),
+                          &error, heif_compression_HEVC, metadata))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -570,15 +571,15 @@ heif_save (GimpProcedure        *procedure,
 }
 
 static GimpValueArray *
-heif_av1_save (GimpProcedure        *procedure,
-               GimpRunMode           run_mode,
-               GimpImage            *image,
-               gint                  n_drawables,
-               GimpDrawable        **drawables,
-               GFile                *file,
-               GimpMetadata         *metadata_unused,
-               GimpProcedureConfig  *config,
-               gpointer              run_data)
+heif_av1_export (GimpProcedure        *procedure,
+                 GimpRunMode           run_mode,
+                 GimpImage            *image,
+                 gint                  n_drawables,
+                 GimpDrawable        **drawables,
+                 GFile                *file,
+                 GimpMetadata         *metadata_unused,
+                 GimpProcedureConfig  *config,
+                 gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -631,8 +632,8 @@ heif_av1_save (GimpProcedure        *procedure,
 
       heif_init (NULL);
 
-      if (! save_image (file, image, drawables[0], G_OBJECT (config),
-                        &error, heif_compression_AV1, metadata))
+      if (! export_image (file, image, drawables[0], G_OBJECT (config),
+                          &error, heif_compression_AV1, metadata))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -1419,13 +1420,13 @@ write_callback (struct heif_context *ctx,
 }
 
 static gboolean
-save_image (GFile                        *file,
-            GimpImage                    *image,
-            GimpDrawable                 *drawable,
-            GObject                      *config,
-            GError                      **error,
-            enum heif_compression_format  compression,
-            GimpMetadata                 *metadata)
+export_image (GFile                        *file,
+              GimpImage                    *image,
+              GimpDrawable                 *drawable,
+              GObject                      *config,
+              GError                      **error,
+              enum heif_compression_format  compression,
+              GimpMetadata                 *metadata)
 {
   struct heif_image                    *h_image = NULL;
   struct heif_context                  *context = heif_context_alloc ();

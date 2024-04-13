@@ -48,10 +48,10 @@ struct _FileFormat
   const gchar *load_help;
   const gchar *load_op;
 
-  const gchar *save_proc;
-  const gchar *save_blurb;
-  const gchar *save_help;
-  const gchar *save_op;
+  const gchar *export_proc;
+  const gchar *export_blurb;
+  const gchar *export_help;
+  const gchar *export_op;
 };
 
 
@@ -85,7 +85,7 @@ static GimpValueArray * goat_load             (GimpProcedure         *procedure,
                                                GimpMetadataLoadFlags *flags,
                                                GimpProcedureConfig   *config,
                                                gpointer               run_data);
-static GimpValueArray * goat_save             (GimpProcedure         *procedure,
+static GimpValueArray * goat_export           (GimpProcedure         *procedure,
                                                GimpRunMode            run_mode,
                                                GimpImage             *image,
                                                gint                   n_drawables,
@@ -98,7 +98,7 @@ static GimpValueArray * goat_save             (GimpProcedure         *procedure,
 static GimpImage      * load_image            (GFile                 *file,
                                                const gchar           *gegl_op,
                                                GError               **error);
-static gboolean         save_image            (GFile                 *file,
+static gboolean         export_image          (GFile                 *file,
                                                const gchar           *gegl_op,
                                                GimpImage             *image,
                                                GimpDrawable          *drawable,
@@ -119,12 +119,12 @@ static const FileFormat file_formats[] =
     "hdr",
     "0,string,#?",
 
-    "file-load-rgbe",
+    "file-rgbe-load",
     "Load files in the RGBE file format",
     "This procedure loads images in the RGBE format, using gegl:rgbe-load",
     "gegl:rgbe-load",
 
-    "file-save-rgbe",
+    "file-rgbe-export",
     "Saves files in the RGBE file format",
     "This procedure exports images in the RGBE format, using gegl:rgbe-save",
     "gegl:rgbe-save",
@@ -138,7 +138,7 @@ static const FileFormat file_formats[] =
     /* no EXR loading (implemented in native GIMP plug-in) */
     NULL, NULL, NULL, NULL,
 
-    "file-exr-save",
+    "file-exr-export",
     "Saves files in the OpenEXR file format",
     "This procedure saves images in the OpenEXR format, using gegl:exr-save",
     "gegl:exr-save"
@@ -174,8 +174,8 @@ goat_query_procedures (GimpPlugIn *plug_in)
       if (format->load_proc)
         list = g_list_append (list, g_strdup (format->load_proc));
 
-      if (format->save_proc)
-        list = g_list_append (list, g_strdup (format->save_proc));
+      if (format->export_proc)
+        list = g_list_append (list, g_strdup (format->export_proc));
     }
 
   return list;
@@ -213,11 +213,11 @@ goat_create_procedure (GimpPlugIn  *plug_in,
           gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                           format->magic);
         }
-      else if (! g_strcmp0 (name, format->save_proc))
+      else if (! g_strcmp0 (name, format->export_proc))
         {
           procedure = gimp_save_procedure_new (plug_in, name,
                                                GIMP_PDB_PROC_TYPE_PLUGIN,
-                                               FALSE, goat_save,
+                                               FALSE, goat_export,
                                                (gpointer) format, NULL);
 
           gimp_procedure_set_image_types (procedure, "*");
@@ -225,8 +225,8 @@ goat_create_procedure (GimpPlugIn  *plug_in,
           gimp_procedure_set_menu_label (procedure, format->file_type);
 
           gimp_procedure_set_documentation (procedure,
-                                            format->save_blurb,
-                                            format->save_help,
+                                            format->export_blurb,
+                                            format->export_help,
                                             name);
 
           gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
@@ -272,15 +272,15 @@ goat_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-goat_save (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
-           gint                  n_drawables,
-           GimpDrawable        **drawables,
-           GFile                *file,
-           GimpMetadata         *metadata,
-           GimpProcedureConfig  *config,
-           gpointer              run_data)
+goat_export (GimpProcedure        *procedure,
+             GimpRunMode           run_mode,
+             GimpImage            *image,
+             gint                  n_drawables,
+             GimpDrawable        **drawables,
+             GFile                *file,
+             GimpMetadata         *metadata,
+             GimpProcedureConfig  *config,
+             gpointer              run_data)
 {
   const FileFormat  *format = run_data;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
@@ -321,7 +321,7 @@ goat_save (GimpProcedure        *procedure,
                                                error);
     }
 
-  if (! save_image (file, format->save_op, image, drawables[0],
+  if (! export_image (file, format->export_op, image, drawables[0],
                     &error))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
@@ -490,11 +490,11 @@ load_image (GFile        *file,
 }
 
 static gboolean
-save_image (GFile         *file,
-            const gchar   *gegl_op,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GError       **error)
+export_image (GFile         *file,
+              const gchar   *gegl_op,
+              GimpImage     *image,
+              GimpDrawable  *drawable,
+              GError       **error)
 {
   GeglNode   *graph;
   GeglNode   *source;

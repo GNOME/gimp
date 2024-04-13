@@ -34,7 +34,7 @@
 
 #define LOAD_PROC      "file-pcx-load"
 #define LOAD_PROC_DCX  "file-dcx-load"
-#define SAVE_PROC      "file-pcx-save"
+#define EXPORT_PROC    "file-pcx-export"
 #define PLUG_IN_BINARY "file-pcx"
 #define PLUG_IN_ROLE   "gimp-file-pcx"
 
@@ -76,7 +76,7 @@ static GimpValueArray * dcx_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
-static GimpValueArray * pcx_save             (GimpProcedure         *procedure,
+static GimpValueArray * pcx_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               gint                   n_drawables,
@@ -139,7 +139,7 @@ static void             readline             (FILE                  *fp,
                                               guchar                *buf,
                                               gint                   bytes);
 
-static gboolean         save_image           (GFile                 *file,
+static gboolean         export_image         (GFile                 *file,
                                               GimpImage             *image,
                                               GimpDrawable          *drawable,
                                               GError               **error);
@@ -192,7 +192,7 @@ pcx_query_procedures (GimpPlugIn *plug_in)
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
   list = g_list_append (list, g_strdup (LOAD_PROC_DCX));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -265,11 +265,11 @@ pcx_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,\xB1\x68\xDE\x3A");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, pcx_save, NULL, NULL);
+                                           FALSE, pcx_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED, RGB, GRAY");
 
@@ -277,7 +277,7 @@ pcx_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports files in ZSoft PCX file format",
-                                        "FIXME: write help for pcx_save",
+                                        "FIXME: write help for pcx_export",
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Francisco Bustamante & Nick Lamb",
@@ -356,15 +356,15 @@ dcx_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-pcx_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+pcx_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -403,9 +403,9 @@ pcx_save (GimpProcedure        *procedure,
                                                error);
     }
 
-  if (! save_image (file,
-                    image, drawables[0],
-                    &error))
+  if (! export_image (file,
+                      image, drawables[0],
+                      &error))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
@@ -1074,10 +1074,10 @@ readline (FILE   *fp,
 }
 
 static gboolean
-save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GError       **error)
+export_image (GFile         *file,
+              GimpImage     *image,
+              GimpDrawable  *drawable,
+              GError       **error)
 {
   FILE          *fp;
   GeglBuffer    *buffer;

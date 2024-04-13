@@ -50,7 +50,7 @@
 
 
 #define LOAD_PROC      "file-fits-load"
-#define SAVE_PROC      "file-fits-save"
+#define EXPORT_PROC    "file-fits-export"
 #define PLUG_IN_BINARY "file-fits"
 #define PLUG_IN_ROLE   "gimp-file-fits"
 
@@ -94,7 +94,7 @@ static GimpValueArray * fits_load             (GimpProcedure         *procedure,
                                                GimpMetadataLoadFlags *flags,
                                                GimpProcedureConfig   *config,
                                                gpointer               run_data);
-static GimpValueArray * fits_save             (GimpProcedure         *procedure,
+static GimpValueArray * fits_export           (GimpProcedure         *procedure,
                                                GimpRunMode            run_mode,
                                                GimpImage             *image,
                                                gint                   n_drawables,
@@ -108,12 +108,12 @@ static GimpImage      * load_image            (GFile                 *file,
                                                GObject               *config,
                                                GimpRunMode            run_mode,
                                                GError               **error);
-static gint             save_image            (GFile                 *file,
+static gint             export_image          (GFile                 *file,
                                                GimpImage             *image,
                                                GimpDrawable          *drawable,
                                                GError               **error);
 
-static gint             save_fits             (GFile                 *file,
+static gint             export_fits           (GFile                 *file,
                                                GimpImage             *image,
                                                GimpDrawable          *drawable);
 
@@ -159,7 +159,7 @@ fits_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -209,11 +209,11 @@ fits_create_procedure (GimpPlugIn  *plug_in,
                              0, 1, 0,
                              G_PARAM_READWRITE);
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, fits_save, NULL, NULL);
+                                           FALSE, fits_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -280,15 +280,15 @@ fits_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-fits_save (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
-           gint                  n_drawables,
-           GimpDrawable        **drawables,
-           GFile                *file,
-           GimpMetadata         *metadata,
-           GimpProcedureConfig  *config,
-           gpointer              run_data)
+fits_export (GimpProcedure        *procedure,
+             GimpRunMode           run_mode,
+             GimpImage            *image,
+             gint                  n_drawables,
+             GimpDrawable        **drawables,
+             GFile                *file,
+             GimpMetadata         *metadata,
+             GimpProcedureConfig  *config,
+             gpointer              run_data)
 {
   GimpImage          *duplicate_image;
   GimpItem          **flipped_drawables;
@@ -335,7 +335,8 @@ fits_save (GimpProcedure        *procedure,
   flipped_drawables =
     gimp_image_get_selected_drawables (duplicate_image, &n_drawables);
 
-  if (! save_image (file, image, GIMP_DRAWABLE (flipped_drawables[0]), &error))
+  if (! export_image (file, image, GIMP_DRAWABLE (flipped_drawables[0]),
+                      &error))
     status = GIMP_PDB_EXECUTION_ERROR;
 
   gimp_image_delete (duplicate_image);
@@ -639,10 +640,10 @@ load_image (GFile        *file,
 }
 
 static gint
-save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GError       **error)
+export_image (GFile         *file,
+              GimpImage     *image,
+              GimpDrawable  *drawable,
+              GError       **error)
 {
   GimpImageType  drawable_type;
   gint           retval;
@@ -675,7 +676,7 @@ save_image (GFile         *file,
 
 
 
-  retval = save_fits (file, image, drawable);
+  retval = export_fits (file, image, drawable);
 
   return retval;
 }
@@ -707,11 +708,11 @@ create_new_image (GFile              *file,
   return image;
 }
 
-/* Save direct colors (GRAY, GRAYA, RGB, RGBA) */
+/* Export direct colors (GRAY, GRAYA, RGB, RGBA) */
 static gint
-save_fits (GFile        *file,
-           GimpImage    *image,
-           GimpDrawable *drawable)
+export_fits (GFile        *file,
+             GimpImage    *image,
+             GimpDrawable *drawable)
 {
   fitsfile      *fptr;
   gint           status = 0;

@@ -33,7 +33,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 #define LOAD_PROC       "file-jpegxl-load"
-#define SAVE_PROC       "file-jpegxl-save"
+#define EXPORT_PROC     "file-jpegxl-export"
 #define PLUG_IN_BINARY  "file-jpegxl"
 
 typedef struct _JpegXL      JpegXL;
@@ -66,7 +66,7 @@ static GimpValueArray *jpegxl_load              (GimpProcedure         *procedur
                                                  GimpMetadataLoadFlags *flags,
                                                  GimpProcedureConfig   *config,
                                                  gpointer               run_data);
-static GimpValueArray *jpegxl_save              (GimpProcedure         *procedure,
+static GimpValueArray *jpegxl_export            (GimpProcedure         *procedure,
                                                  GimpRunMode            run_mode,
                                                  GimpImage             *image,
                                                  gint                   n_drawables,
@@ -122,7 +122,7 @@ jpegxl_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -158,11 +158,11 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
                                       "0,string,\xFF\x0A,0,string,\\000\\000\\000\x0CJXL\\040\\015\\012\x87\\012");
 
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, jpegxl_save, NULL, NULL);
+                                           FALSE, jpegxl_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
 
@@ -1329,12 +1329,12 @@ extract_cmyk (GeglBuffer *buffer,
 }
 
 static gboolean
-save_image (GFile               *file,
-            GimpProcedureConfig *config,
-            GimpImage           *image,
-            GimpDrawable        *drawable,
-            GimpMetadata        *metadata,
-            GError             **error)
+export_image (GFile               *file,
+              GimpProcedureConfig *config,
+              GimpImage           *image,
+              GimpDrawable        *drawable,
+              GimpMetadata        *metadata,
+              GError             **error)
 {
   JxlEncoder              *encoder;
   void                    *runner;
@@ -2104,15 +2104,15 @@ save_dialog (GimpImage     *image,
 
 
 static GimpValueArray *
-jpegxl_save (GimpProcedure        *procedure,
-             GimpRunMode           run_mode,
-             GimpImage            *image,
-             gint                  n_drawables,
-             GimpDrawable        **drawables,
-             GFile                *file,
-             GimpMetadata         *metadata,
-             GimpProcedureConfig  *config,
-             gpointer              run_data)
+jpegxl_export (GimpProcedure        *procedure,
+               GimpRunMode           run_mode,
+               GimpImage            *image,
+               gint                  n_drawables,
+               GimpDrawable        **drawables,
+               GFile                *file,
+               GimpMetadata         *metadata,
+               GimpProcedureConfig  *config,
+               gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -2167,7 +2167,7 @@ jpegxl_save (GimpProcedure        *procedure,
 
       GimpMetadata *metadata = gimp_image_metadata_save_prepare (image, "image/jxl", &metadata_flags);
 
-      if (! save_image (file, config, image, drawables[0], metadata, &error))
+      if (! export_image (file, config, image, drawables[0], metadata, &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }

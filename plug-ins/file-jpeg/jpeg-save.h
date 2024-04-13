@@ -23,7 +23,7 @@ extern GimpImage       *orig_image_global;
 extern GimpDrawable    *drawable_global;
 
 
-gboolean    save_image         (GFile                *file,
+gboolean    export_image       (GFile                *file,
                                 GimpProcedureConfig *config,
                                 GimpImage            *image,
                                 GimpDrawable         *drawable,

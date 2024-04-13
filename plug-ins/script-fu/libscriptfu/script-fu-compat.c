@@ -97,7 +97,7 @@ compat_procs[] =
    { "gimp-plugin-menu-branch-register"       , "gimp-plug-in-menu-branch-register"      },
    { "gimp-plugin-set-pdb-error-handler"      , "gimp-plug-in-set-pdb-error-handler"     },
    { "gimp-plugins-query"                     , "gimp-plug-ins-query"                    },
-   { "file-gtm-save"                          , "file-html-table-save"                   },
+   { "file-gtm-save"                          , "file-html-table-export"                 },
    { "python-fu-histogram-export"             , "histogram-export"                       },
    { "python-fu-gradient-save-as-css"         , "gradient-save-as-css"                   }
 };

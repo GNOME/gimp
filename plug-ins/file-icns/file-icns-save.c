@@ -291,7 +291,7 @@ icns_dialog_new (IcnsSaveInfo *info)
 
   dialog = gimp_export_dialog_new (_("Apple Icon Image"),
                                    PLUG_IN_BINARY,
-                                   "plug-in-icns-save");
+                                   "plug-in-icns-export");
 
   g_object_set_data (G_OBJECT (dialog), "save_info", info);
 
@@ -467,7 +467,7 @@ icns_export_image (GFile        *file,
 
           args = gimp_object_array_new (GIMP_TYPE_DRAWABLE, (GObject **) drawables, 1, FALSE);
 
-          procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), "file-png-save");
+          procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), "file-png-export");
           return_vals = gimp_procedure_run (procedure,
                                             "run-mode",         GIMP_RUN_NONINTERACTIVE,
                                             "image",            image,
@@ -491,7 +491,7 @@ icns_export_image (GFile        *file,
             {
               icns_save_info_free (info);
               g_set_error (error, 0, 0,
-                           "Running procedure 'file-png-save' "
+                           "Running procedure 'file-png-export' "
                            "for icns export failed: %s",
                            gimp_pdb_get_last_error (gimp_get_pdb ()));
 

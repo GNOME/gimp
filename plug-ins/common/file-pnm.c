@@ -39,15 +39,15 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LOAD_PROC      "file-pnm-load"
-#define PNM_SAVE_PROC  "file-pnm-save"
-#define PBM_SAVE_PROC  "file-pbm-save"
-#define PGM_SAVE_PROC  "file-pgm-save"
-#define PPM_SAVE_PROC  "file-ppm-save"
-#define PAM_SAVE_PROC  "file-pam-save"
-#define PFM_SAVE_PROC  "file-pfm-save"
-#define PLUG_IN_BINARY "file-pnm"
-#define PLUG_IN_ROLE   "gimp-file-pnm"
+#define LOAD_PROC        "file-pnm-load"
+#define PNM_EXPORT_PROC  "file-pnm-export"
+#define PBM_EXPORT_PROC  "file-pbm-export"
+#define PGM_EXPORT_PROC  "file-pgm-export"
+#define PPM_EXPORT_PROC  "file-ppm-export"
+#define PAM_EXPORT_PROC  "file-pam-export"
+#define PFM_EXPORT_PROC  "file-pfm-export"
+#define PLUG_IN_BINARY   "file-pnm"
+#define PLUG_IN_ROLE     "gimp-file-pnm"
 
 
 /* Declare local data types
@@ -67,12 +67,12 @@ typedef struct _PNMScanner PNMScanner;
 typedef struct _PNMInfo    PNMInfo;
 typedef struct _PNMRowInfo PNMRowInfo;
 
-typedef void     (* PNMLoaderFunc)  (PNMScanner    *scanner,
-                                     PNMInfo       *info,
-                                     GeglBuffer    *buffer);
-typedef gboolean (* PNMSaverowFunc) (PNMRowInfo    *info,
-                                     guchar        *data,
-                                     GError       **error);
+typedef void     (* PNMLoaderFunc)    (PNMScanner    *scanner,
+                                       PNMInfo       *info,
+                                       GeglBuffer    *buffer);
+typedef gboolean (* PNMExportrowFunc) (PNMRowInfo    *info,
+                                       guchar        *data,
+                                       GError       **error);
 
 struct _PNMScanner
 {
@@ -151,7 +151,7 @@ static GimpValueArray * pnm_load             (GimpProcedure          *procedure,
                                               GimpMetadataLoadFlags  *flags,
                                               GimpProcedureConfig    *config,
                                               gpointer                run_data);
-static GimpValueArray * pnm_save             (GimpProcedure          *procedure,
+static GimpValueArray * pnm_export           (GimpProcedure          *procedure,
                                               GimpRunMode             run_mode,
                                               GimpImage              *image,
                                               gint                    n_drawables,
@@ -163,7 +163,7 @@ static GimpValueArray * pnm_save             (GimpProcedure          *procedure,
 
 static GimpImage      * load_image           (GFile                  *file,
                                               GError                **error);
-static gint             save_image           (GFile                  *file,
+static gint             export_image         (GFile                  *file,
                                               GimpImage              *image,
                                               GimpDrawable           *drawable,
                                               FileType                file_type,
@@ -192,7 +192,7 @@ static void             pnm_load_rawpfm      (PNMScanner             *scan,
 
 static void         create_pam_header        (const gchar           **header_string,
                                               PNMRowInfo             *rowinfo,
-                                              PNMSaverowFunc         *saverow,
+                                              PNMExportrowFunc       *saverow,
                                               GimpImageType           drawable_type,
                                               GeglBuffer             *buffer,
                                               const Babl            **format,
@@ -293,12 +293,12 @@ pnm_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (PNM_SAVE_PROC));
-  list = g_list_append (list, g_strdup (PBM_SAVE_PROC));
-  list = g_list_append (list, g_strdup (PGM_SAVE_PROC));
-  list = g_list_append (list, g_strdup (PPM_SAVE_PROC));
-  list = g_list_append (list, g_strdup (PAM_SAVE_PROC));
-  list = g_list_append (list, g_strdup (PFM_SAVE_PROC));
+  list = g_list_append (list, g_strdup (PNM_EXPORT_PROC));
+  list = g_list_append (list, g_strdup (PBM_EXPORT_PROC));
+  list = g_list_append (list, g_strdup (PGM_EXPORT_PROC));
+  list = g_list_append (list, g_strdup (PPM_EXPORT_PROC));
+  list = g_list_append (list, g_strdup (PAM_EXPORT_PROC));
+  list = g_list_append (list, g_strdup (PFM_EXPORT_PROC));
 
   return list;
 }
@@ -338,11 +338,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
                                       "0,string,P4,0,string,P5,0,string,P6,"
                                       "0,string,P7,0,string,PF,0,string,Pf");
     }
-  else if (! strcmp (name, PNM_SAVE_PROC))
+  else if (! strcmp (name, PNM_EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, pnm_save,
+                                           FALSE, pnm_export,
                                            GINT_TO_POINTER (FILE_TYPE_PNM),
                                            NULL);
 
@@ -375,11 +375,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
                          0, 1, 1,
                          G_PARAM_READWRITE);
     }
-  else if (! strcmp (name, PBM_SAVE_PROC))
+  else if (! strcmp (name, PBM_EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, pnm_save,
+                                           FALSE, pnm_export,
                                            GINT_TO_POINTER (FILE_TYPE_PBM),
                                            NULL);
 
@@ -411,11 +411,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
                          0, 1, 1,
                          G_PARAM_READWRITE);
     }
-  else if (! strcmp (name, PGM_SAVE_PROC))
+  else if (! strcmp (name, PGM_EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, pnm_save,
+                                           FALSE, pnm_export,
                                            GINT_TO_POINTER (FILE_TYPE_PGM),
                                            NULL);
 
@@ -447,11 +447,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
                          0, 1, 1,
                          G_PARAM_READWRITE);
     }
-  else if (! strcmp (name, PPM_SAVE_PROC))
+  else if (! strcmp (name, PPM_EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, pnm_save,
+                                           FALSE, pnm_export,
                                            GINT_TO_POINTER (FILE_TYPE_PPM),
                                            NULL);
 
@@ -483,11 +483,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
                          0, 1, 1,
                          G_PARAM_READWRITE);
     }
-  else if (! strcmp (name, PAM_SAVE_PROC))
+  else if (! strcmp (name, PAM_EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, pnm_save,
+                                           FALSE, pnm_export,
                                            GINT_TO_POINTER (FILE_TYPE_PAM),
                                            NULL);
 
@@ -512,11 +512,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pam");
     }
-  else if (! strcmp (name, PFM_SAVE_PROC))
+  else if (! strcmp (name, PFM_EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, pnm_save,
+                                           FALSE, pnm_export,
                                            GINT_TO_POINTER (FILE_TYPE_PFM),
                                            NULL);
 
@@ -577,15 +577,15 @@ pnm_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-pnm_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+pnm_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   FileType           file_type   = GPOINTER_TO_INT (run_data);
   GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
@@ -678,8 +678,8 @@ pnm_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, drawables[0], file_type, G_OBJECT (config),
-                        &error))
+      if (! export_image (file, image, drawables[0], file_type, G_OBJECT (config),
+                          &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -1308,7 +1308,7 @@ output_write (GOutputStream *output,
 static void
 create_pam_header (const gchar   **header_string,
                    PNMRowInfo     *rowinfo,
-                   PNMSaverowFunc *saverow,
+                   PNMExportrowFunc *saverow,
                    GimpImageType   drawable_type,
                    GeglBuffer     *buffer,
                    const Babl    **format,
@@ -1591,32 +1591,32 @@ pnmsaverow_ascii_indexed (PNMRowInfo    *ri,
 }
 
 static gboolean
-save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            FileType       file_type,
-            GObject       *config,
-            GError       **error)
+export_image (GFile         *file,
+              GimpImage     *image,
+              GimpDrawable  *drawable,
+              FileType       file_type,
+              GObject       *config,
+              GError       **error)
 {
-  gboolean       status = FALSE;
-  GOutputStream *output = NULL;
-  GeglBuffer    *buffer = NULL;
-  const Babl    *format = NULL;
-  const gchar   *header_string = NULL;
-  GimpImageType  drawable_type;
-  PNMRowInfo     rowinfo;
-  PNMSaverowFunc saverow = NULL;
-  guchar         red[256];
-  guchar         grn[256];
-  guchar         blu[256];
-  guchar         alpha[256]; /* PAM only */
-  gchar          buf[BUFLEN];
-  gint           np = 0;
-  gint           xres, yres;
-  gint           ypos, yend;
-  gint           rowbufsize = 0;
-  gchar         *comment    = NULL;
-  gboolean       config_raw = TRUE;
+  gboolean         status = FALSE;
+  GOutputStream   *output = NULL;
+  GeglBuffer      *buffer = NULL;
+  const Babl      *format = NULL;
+  const gchar     *header_string = NULL;
+  GimpImageType    drawable_type;
+  PNMRowInfo       rowinfo;
+  PNMExportrowFunc saverow = NULL;
+  guchar           red[256];
+  guchar           grn[256];
+  guchar           blu[256];
+  guchar           alpha[256]; /* PAM only */
+  gchar            buf[BUFLEN];
+  gint             np = 0;
+  gint             xres, yres;
+  gint             ypos, yend;
+  gint             rowbufsize = 0;
+  gchar           *comment    = NULL;
+  gboolean         config_raw = TRUE;
 
   if (file_type != FILE_TYPE_PFM && file_type != FILE_TYPE_PAM)
     g_object_get (config,

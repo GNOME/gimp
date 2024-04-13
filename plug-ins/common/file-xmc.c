@@ -77,7 +77,7 @@
 
 #define LOAD_PROC              "file-xmc-load"
 #define LOAD_THUMB_PROC        "file-xmc-load-thumb"
-#define SAVE_PROC              "file-xmc-save"
+#define EXPORT_PROC            "file-xmc-export"
 
 #define PLUG_IN_BINARY         "file-xmc"
 #define PLUG_IN_ROLE           "gimp-file-xmc"
@@ -169,7 +169,7 @@ static GimpValueArray * xmc_load_thumb               (GimpProcedure         *pro
                                                       gint                   size,
                                                       GimpProcedureConfig   *config,
                                                       gpointer               run_data);
-static GimpValueArray * xmc_save                     (GimpProcedure         *procedure,
+static GimpValueArray * xmc_export                   (GimpProcedure         *procedure,
                                                       GimpRunMode            run_mode,
                                                       GimpImage             *image,
                                                       gint                   n_drawables,
@@ -192,7 +192,7 @@ static GimpImage      * load_thumbnail               (GFile                 *fil
 static guint32          read32                       (FILE                  *f,
                                                       GError               **error);
 
-static gboolean         save_image                   (GFile                 *file,
+static gboolean         export_image                 (GFile                 *file,
                                                       GimpImage             *image,
                                                       gint                   n_drawables,
                                                       GimpDrawable         **drawables,
@@ -281,7 +281,7 @@ xmc_query_procedures (GimpPlugIn *plug_in)
 
   list = g_list_append (list, g_strdup (LOAD_THUMB_PROC));
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -339,11 +339,11 @@ xmc_create_procedure (GimpPlugIn  *plug_in,
                                       "Takeshi Matsuyama",
                                       "26 May 2009");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, xmc_save, NULL, NULL);
+                                           FALSE, xmc_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGBA");
 
@@ -523,15 +523,15 @@ xmc_load_thumb (GimpProcedure       *procedure,
 }
 
 static GimpValueArray *
-xmc_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+xmc_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -615,8 +615,8 @@ xmc_save (GimpProcedure        *procedure,
       break;
     }
 
-  if (! save_image (file, image, n_drawables, drawables,
-                    orig_image, G_OBJECT (config), &error))
+  if (! export_image (file, image, n_drawables, drawables,
+                      orig_image, G_OBJECT (config), &error))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
@@ -1210,17 +1210,17 @@ load_default_hotspot (GimpImage     *image,
 }
 
 /*
- * 'save_image ()' - Save the specified image to X cursor file.
+ * 'export_image ()' - Export the specified image to X cursor file.
  */
 
 static gboolean
-save_image (GFile         *file,
-            GimpImage     *image,
-            gint           n_drawables,
-            GimpDrawable **drawables,
-            GimpImage     *orig_image,
-            GObject       *config,
-            GError       **error)
+export_image (GFile         *file,
+              GimpImage     *image,
+              gint           n_drawables,
+              GimpDrawable **drawables,
+              GimpImage     *orig_image,
+              GObject       *config,
+              GError       **error)
 {
   FILE            *fp;                     /* File pointer */
   gboolean         dimension_warn = FALSE; /* become TRUE if even one
@@ -1847,7 +1847,7 @@ set_size_and_delay (GObject     *config,
 
   DM_XMC ("function: set_size_and_delay\tframename=%s\n", framename);
 
-  /* re is defined at the start of save_image() as
+  /* re is defined at the start of export_image() as
         [(]                : open parenthesis
         [ ]*               : ignore zero or more spaces
         (\\d+)             : the number we want to get out

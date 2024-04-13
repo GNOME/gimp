@@ -118,13 +118,13 @@ warning_dialog (const gchar *primary,
 }
 
 GimpPDBStatusType
-save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GimpRunMode    run_mode,
-            GimpProcedure *procedure,
-            GObject       *config,
-            GError       **error)
+export_image (GFile         *file,
+              GimpImage     *image,
+              GimpDrawable  *drawable,
+              GimpRunMode    run_mode,
+              GimpProcedure *procedure,
+              GObject       *config,
+              GError       **error)
 {
   FILE           *outfile;
   BitmapFileHead  bitmap_file_head;

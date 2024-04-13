@@ -22,7 +22,7 @@
  *   query()                     - Respond to a plug-in query...
  *   run()                       - Run the plug-in...
  *   load_image()                - Load a PNG image into a new image window.
- *   save_image()                - Export the specified image to a PNG file.
+ *   export_image()              - Export the specified image to a PNG file.
  *   save_ok_callback()          - Destroy the export dialog and export the image.
  *   save_dialog()               - Pop up the export dialog.
  *
@@ -41,7 +41,7 @@
 
 
 #define LOAD_PROC        "file-sgi-load"
-#define SAVE_PROC        "file-sgi-save"
+#define EXPORT_PROC      "file-sgi-export"
 #define PLUG_IN_BINARY   "file-sgi"
 #define PLUG_IN_VERSION  "1.1.1 - 17 May 1998"
 
@@ -76,7 +76,7 @@ static GimpValueArray * sgi_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
-static GimpValueArray * sgi_save             (GimpProcedure         *procedure,
+static GimpValueArray * sgi_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               gint                   n_drawables,
@@ -88,7 +88,7 @@ static GimpValueArray * sgi_save             (GimpProcedure         *procedure,
 
 static GimpImage      * load_image           (GFile                 *file,
                                               GError               **error);
-static gint             save_image           (GFile                 *file,
+static gint             export_image         (GFile                 *file,
                                               GimpImage             *image,
                                               GimpDrawable          *drawable,
                                               GObject               *config,
@@ -126,7 +126,7 @@ sgi_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -162,11 +162,11 @@ sgi_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,short,474");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, sgi_save, NULL, NULL);
+                                           FALSE, sgi_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -232,15 +232,15 @@ sgi_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-sgi_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+sgi_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -288,8 +288,8 @@ sgi_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, drawables[0],
-                        G_OBJECT (config), &error))
+      if (! export_image (file, image, drawables[0],
+                          G_OBJECT (config), &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -575,11 +575,11 @@ load_image (GFile   *file,
 }
 
 static gint
-save_image (GFile        *file,
-            GimpImage    *image,
-            GimpDrawable *drawable,
-            GObject      *config,
-            GError      **error)
+export_image (GFile        *file,
+              GimpImage    *image,
+              GimpDrawable *drawable,
+              GObject      *config,
+              GError      **error)
 {
   gint         compression;
   gint         i, j;        /* Looping var */
@@ -674,7 +674,7 @@ save_image (GFile        *file,
     rows[i] = rows[0] + i * sgip->xsize;
 
   /*
-   * Save the image...
+   * Export the image...
    */
 
   for (y = 0; y < height; y += count)

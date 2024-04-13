@@ -25,7 +25,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SAVE_PROC      "file-header-save"
+#define EXPORT_PROC    "file-header-export"
 #define PLUG_IN_BINARY "file-header"
 #define PLUG_IN_ROLE   "gimp-file-header"
 
@@ -53,7 +53,7 @@ static GList          * header_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * header_create_procedure (GimpPlugIn           *plug_in,
                                                  const gchar          *name);
 
-static GimpValueArray * header_save             (GimpProcedure        *procedure,
+static GimpValueArray * header_export           (GimpProcedure        *procedure,
                                                  GimpRunMode           run_mode,
                                                  GimpImage            *image,
                                                  gint                  n_drawables,
@@ -63,7 +63,7 @@ static GimpValueArray * header_save             (GimpProcedure        *procedure
                                                  GimpProcedureConfig  *config,
                                                  gpointer              run_data);
 
-static gboolean         save_image              (GFile                *file,
+static gboolean         export_image            (GFile                *file,
                                                  GimpImage            *image,
                                                  GimpDrawable         *drawable,
                                                  GError              **error);
@@ -98,7 +98,7 @@ header_init (Header *header)
 static GList *
 header_query_procedures (GimpPlugIn *plug_in)
 {
-  return  g_list_append (NULL, g_strdup (SAVE_PROC));
+  return  g_list_append (NULL, g_strdup (EXPORT_PROC));
 }
 
 static GimpProcedure *
@@ -107,11 +107,11 @@ header_create_procedure (GimpPlugIn  *plug_in,
 {
   GimpProcedure *procedure = NULL;
 
-  if (! strcmp (name, SAVE_PROC))
+  if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, header_save, NULL, NULL);
+                                           FALSE, header_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED, RGB");
 
@@ -139,15 +139,15 @@ header_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-header_save (GimpProcedure        *procedure,
-             GimpRunMode           run_mode,
-             GimpImage            *image,
-             gint                  n_drawables,
-             GimpDrawable        **drawables,
-             GFile                *file,
-             GimpMetadata         *metadata,
-             GimpProcedureConfig  *config,
-             gpointer              run_data)
+header_export (GimpProcedure        *procedure,
+               GimpRunMode           run_mode,
+               GimpImage            *image,
+               gint                  n_drawables,
+               GimpDrawable        **drawables,
+               GFile                *file,
+               GimpMetadata         *metadata,
+               GimpProcedureConfig  *config,
+               gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -185,8 +185,8 @@ header_save (GimpProcedure        *procedure,
                                                error);
     }
 
-  if (! save_image (file, image, drawables[0],
-                    &error))
+  if (! export_image (file, image, drawables[0],
+                      &error))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
@@ -201,10 +201,10 @@ header_save (GimpProcedure        *procedure,
 }
 
 static gboolean
-save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GError       **error)
+export_image (GFile         *file,
+              GimpImage     *image,
+              GimpDrawable  *drawable,
+              GError       **error)
 {
   GeglBuffer    *buffer;
   const Babl    *format;

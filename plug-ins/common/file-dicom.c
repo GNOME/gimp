@@ -36,7 +36,7 @@
 
 
 #define LOAD_PROC      "file-dicom-load"
-#define SAVE_PROC      "file-dicom-save"
+#define EXPORT_PROC    "file-dicom-export"
 #define PLUG_IN_BINARY "file-dicom"
 #define PLUG_IN_ROLE   "gimp-file-dicom"
 
@@ -92,7 +92,7 @@ static GimpValueArray * dicom_load             (GimpProcedure         *procedure
                                                 GimpMetadataLoadFlags *flags,
                                                 GimpProcedureConfig   *config,
                                                 gpointer               run_data);
-static GimpValueArray * dicom_save             (GimpProcedure         *procedure,
+static GimpValueArray * dicom_export           (GimpProcedure         *procedure,
                                                 GimpRunMode            run_mode,
                                                 GimpImage             *image,
                                                 gint                   n_drawables,
@@ -104,7 +104,7 @@ static GimpValueArray * dicom_save             (GimpProcedure         *procedure
 
 static GimpImage      * load_image             (GFile                 *file,
                                                 GError               **error);
-static gboolean         save_image             (GFile                 *file,
+static gboolean         export_image           (GFile                 *file,
                                                 GimpImage             *image,
                                                 GimpDrawable          *drawable,
                                                 GError               **error);
@@ -156,7 +156,7 @@ dicom_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -196,11 +196,11 @@ dicom_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "128,string,DICM");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, dicom_save, NULL, NULL);
+                                           FALSE, dicom_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY");
 
@@ -266,15 +266,15 @@ dicom_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-dicom_save (GimpProcedure        *procedure,
-            GimpRunMode           run_mode,
-            GimpImage            *image,
-            gint                  n_drawables,
-            GimpDrawable        **drawables,
-            GFile                *file,
-            GimpMetadata         *metadata,
-            GimpProcedureConfig  *config,
-            gpointer              run_data)
+dicom_export (GimpProcedure        *procedure,
+              GimpRunMode           run_mode,
+              GimpImage            *image,
+              gint                  n_drawables,
+              GimpDrawable        **drawables,
+              GFile                *file,
+              GimpMetadata         *metadata,
+              GimpProcedureConfig  *config,
+              gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -313,8 +313,8 @@ dicom_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, drawables[0],
-                        &error))
+      if (! export_image (file, image, drawables[0],
+                          &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -1492,15 +1492,15 @@ dicom_ensure_required_elements_present (GSList *elements,
   return elements;
 }
 
-/* save_image() saves an image in the dicom format. The DICOM format
+/* export_image() saves an image in the dicom format. The DICOM format
  * requires a lot of tags to be set. Some of them have real uses, others
  * must just be filled with dummy values.
  */
 static gboolean
-save_image (GFile        *file,
-            GimpImage    *image,
-            GimpDrawable *drawable,
-            GError      **error)
+export_image (GFile        *file,
+              GimpImage    *image,
+              GimpDrawable *drawable,
+              GError      **error)
 {
   FILE          *dicom;
   GimpImageType  drawable_type;

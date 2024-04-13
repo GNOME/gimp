@@ -98,8 +98,8 @@ static const gchar dversion[] = "v1.17  19-Sep-2004";
 #define LOAD_PS_PROC       "file-ps-load"
 #define LOAD_EPS_PROC      "file-eps-load"
 #define LOAD_PS_THUMB_PROC "file-ps-load-thumb"
-#define SAVE_PS_PROC       "file-ps-save"
-#define SAVE_EPS_PROC      "file-eps-save"
+#define EXPORT_PS_PROC     "file-ps-export"
+#define EXPORT_EPS_PROC    "file-eps-export"
 #define PLUG_IN_BINARY     "file-ps"
 #define PLUG_IN_ROLE       "gimp-file-ps"
 
@@ -143,7 +143,7 @@ static GimpValueArray * ps_load_thumb       (GimpProcedure         *procedure,
                                              gint                   size,
                                              GimpProcedureConfig   *config,
                                              gpointer               run_data);
-static GimpValueArray * ps_save             (GimpProcedure         *procedure,
+static GimpValueArray * ps_export           (GimpProcedure         *procedure,
                                              GimpRunMode            run_mode,
                                              GimpImage             *image,
                                              gint                   n_drawables,
@@ -156,7 +156,7 @@ static GimpValueArray * ps_save             (GimpProcedure         *procedure,
 static GimpImage      * load_image          (GFile                 *file,
                                              GObject               *config,
                                              GError               **error);
-static gboolean         save_image          (GFile                 *file,
+static gboolean         export_image        (GFile                 *file,
                                              GObject               *config,
                                              GimpImage             *image,
                                              GimpDrawable          *drawable,
@@ -315,8 +315,8 @@ ps_query_procedures (GimpPlugIn *plug_in)
   list = g_list_append (list, g_strdup (LOAD_PS_THUMB_PROC));
   list = g_list_append (list, g_strdup (LOAD_PS_PROC));
   list = g_list_append (list, g_strdup (LOAD_EPS_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PS_PROC));
-  list = g_list_append (list, g_strdup (SAVE_EPS_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PS_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_EPS_PROC));
 
   return list;
 }
@@ -440,14 +440,14 @@ ps_create_procedure (GimpPlugIn  *plug_in,
                                       "Peter Kirchgessner",
                                       dversion);
     }
-  else if (! strcmp (name, SAVE_PS_PROC) ||
-           ! strcmp (name, SAVE_EPS_PROC))
+  else if (! strcmp (name, EXPORT_PS_PROC) ||
+           ! strcmp (name, EXPORT_EPS_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, ps_save, NULL, NULL);
+                                           FALSE, ps_export, NULL, NULL);
 
-      if (! strcmp (name, SAVE_PS_PROC))
+      if (! strcmp (name, EXPORT_PS_PROC))
         {
           gimp_procedure_set_menu_label (procedure, _("PostScript document"));
 
@@ -655,15 +655,15 @@ ps_load_thumb (GimpProcedure       *procedure,
 }
 
 static GimpValueArray *
-ps_save (GimpProcedure        *procedure,
-         GimpRunMode           run_mode,
-         GimpImage            *image,
-         gint                  n_drawables,
-         GimpDrawable        **drawables,
-         GFile                *file,
-         GimpMetadata         *metadata,
-         GimpProcedureConfig  *config,
-         gpointer              run_data)
+ps_export (GimpProcedure        *procedure,
+           GimpRunMode           run_mode,
+           GimpImage            *image,
+           gint                  n_drawables,
+           GimpDrawable        **drawables,
+           GFile                *file,
+           GimpMetadata         *metadata,
+           GimpProcedureConfig  *config,
+           gpointer              run_data)
 {
   GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
   GimpExportReturn   export   = GIMP_EXPORT_CANCEL;
@@ -673,7 +673,7 @@ ps_save (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  eps_flag = strcmp (gimp_procedure_get_name (procedure), SAVE_PS_PROC);
+  eps_flag = strcmp (gimp_procedure_get_name (procedure), EXPORT_PS_PROC);
   g_object_set (config,
                 "eps-flag", eps_flag ? 1 : 0,
                 NULL);
@@ -745,7 +745,7 @@ ps_save (GimpProcedure        *procedure,
 
       check_save_vals (G_OBJECT (config));
 
-      if (! save_image (file, G_OBJECT (config), image, drawables[0], &error))
+      if (! export_image (file, G_OBJECT (config), image, drawables[0], &error))
         status = GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -1284,11 +1284,11 @@ load_image (GFile   *file,
 
 
 static gboolean
-save_image (GFile         *file,
-            GObject       *config,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GError       **error)
+export_image (GFile         *file,
+              GObject       *config,
+              GimpImage     *image,
+              GimpDrawable  *drawable,
+              GError       **error)
 {
   GOutputStream *output;
   GCancellable  *cancellable;

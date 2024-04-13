@@ -47,7 +47,7 @@
 
 
 #define LOAD_PROC      "file-xbm-load"
-#define SAVE_PROC      "file-xbm-save"
+#define EXPORT_PROC    "file-xbm-export"
 #define PLUG_IN_BINARY "file-xbm"
 
 #define MAX_COMMENT  72
@@ -85,7 +85,7 @@ static GimpValueArray * xbm_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
-static GimpValueArray * xbm_save             (GimpProcedure         *procedure,
+static GimpValueArray * xbm_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               gint                   n_drawables,
@@ -97,7 +97,7 @@ static GimpValueArray * xbm_save             (GimpProcedure         *procedure,
 
 static GimpImage      * load_image           (GFile                 *file,
                                               GError               **error);
-static gboolean         save_image           (GFile                 *file,
+static gboolean         export_image         (GFile                 *file,
                                               const gchar           *prefix,
                                               gboolean               save_mask,
                                               GimpImage             *image,
@@ -142,7 +142,7 @@ xbm_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -179,11 +179,11 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "xbm,icon,bitmap");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, xbm_save, NULL, NULL);
+                                           FALSE, xbm_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED");
 
@@ -335,15 +335,15 @@ init_prefix (GFile   *file,
 }
 
 static GimpValueArray *
-xbm_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+xbm_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType    status        = GIMP_PDB_SUCCESS;
   GimpExportReturn     export        = GIMP_EXPORT_CANCEL;
@@ -460,22 +460,22 @@ xbm_save (GimpProcedure        *procedure,
         if (! g_ascii_isalnum (*temp))
           *temp = '_';
 
-      if (! save_image (file,
-                        prefix,
-                        FALSE,
-                        image, drawables[0],
-                        G_OBJECT (config),
-                        &error)
+      if (! export_image (file,
+                          prefix,
+                          FALSE,
+                          image, drawables[0],
+                          G_OBJECT (config),
+                          &error)
 
           ||
 
           (write_mask &&
-           ! save_image (mask_file,
-                         mask_prefix,
-                         TRUE,
-                         image, drawables[0],
-                         G_OBJECT (config),
-                         &error)))
+           ! export_image (mask_file,
+                           mask_prefix,
+                           TRUE,
+                           image, drawables[0],
+                           G_OBJECT (config),
+                           &error)))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -964,13 +964,13 @@ load_image (GFile   *file,
 }
 
 static gboolean
-save_image (GFile         *file,
-            const gchar   *prefix,
-            gboolean       save_mask,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GObject       *config,
-            GError       **error)
+export_image (GFile         *file,
+              const gchar   *prefix,
+              gboolean       save_mask,
+              GimpImage     *image,
+              GimpDrawable  *drawable,
+              GObject       *config,
+              GError       **error)
 {
   GOutputStream *output;
   GeglBuffer    *buffer;

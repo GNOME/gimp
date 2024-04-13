@@ -67,7 +67,7 @@ Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 
 
 #define LOAD_PROC      "file-xpm-load"
-#define SAVE_PROC      "file-xpm-save"
+#define EXPORT_PROC    "file-xpm-export"
 #define PLUG_IN_BINARY "file-xpm"
 #define PLUG_IN_ROLE   "gimp-file-xpm"
 #define SCALE_WIDTH    125
@@ -111,7 +111,7 @@ static GimpValueArray * xpm_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
-static GimpValueArray * xpm_save             (GimpProcedure         *procedure,
+static GimpValueArray * xpm_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               gint                   n_drawables,
@@ -127,7 +127,7 @@ static guchar         * parse_colors         (XpmImage               *xpm_image)
 static void             parse_image          (GimpImage              *image,
                                               XpmImage               *xpm_image,
                                               guchar                 *cmap);
-static gboolean         save_image           (GFile                  *file,
+static gboolean         export_image         (GFile                  *file,
                                               GimpImage              *image,
                                               GimpDrawable           *drawable,
                                               GObject                *config,
@@ -179,7 +179,7 @@ xpm_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -223,11 +223,11 @@ xpm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0, string,/*\\040XPM\\040*/");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, xpm_save, NULL, NULL);
+                                           FALSE, xpm_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -300,15 +300,15 @@ xpm_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-xpm_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+xpm_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -357,8 +357,8 @@ xpm_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, drawables[0], G_OBJECT (config),
-                        &error))
+      if (! export_image (file, image, drawables[0], G_OBJECT (config),
+                          &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -629,11 +629,11 @@ decrement_hash_values (gpointer gkey,
 }
 
 static gboolean
-save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GObject       *config,
-            GError       **error)
+export_image (GFile         *file,
+              GimpImage     *image,
+              GimpDrawable  *drawable,
+              GObject       *config,
+              GError       **error)
 {
   GeglBuffer *buffer;
   const Babl *format;
@@ -842,7 +842,7 @@ save_image (GFile         *file,
   xpm_image->colorTable = colormap;
   xpm_image->data       = ibuff;
 
-  /* do the save */
+  /* do the export */
   switch (XpmWriteFileFromXpmImage ((char *) g_file_peek_path (file),
                                     xpm_image, NULL))
     {

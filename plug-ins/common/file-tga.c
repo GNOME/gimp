@@ -86,7 +86,7 @@
 
 
 #define LOAD_PROC      "file-tga-load"
-#define SAVE_PROC      "file-tga-save"
+#define EXPORT_PROC    "file-tga-export"
 #define PLUG_IN_BINARY "file-tga"
 #define PLUG_IN_ROLE   "gimp-file-tga"
 
@@ -181,7 +181,7 @@ static GimpValueArray * tga_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
-static GimpValueArray * tga_save             (GimpProcedure         *procedure,
+static GimpValueArray * tga_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               gint                   n_drawables,
@@ -193,7 +193,7 @@ static GimpValueArray * tga_save             (GimpProcedure         *procedure,
 
 static GimpImage      * load_image           (GFile                 *file,
                                               GError               **error);
-static gboolean         save_image           (GFile                 *file,
+static gboolean         export_image         (GFile                 *file,
                                               GimpImage             *image,
                                               GimpDrawable          *drawable,
                                               GObject               *config,
@@ -243,7 +243,7 @@ tga_query_procedures (GimpPlugIn *plug_in)
   GList *list = NULL;
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
 
   return list;
 }
@@ -278,11 +278,11 @@ tga_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "-18&,string,TRUEVISION-XFILE.,-1,byte,0");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, tga_save, NULL, NULL);
+                                           FALSE, tga_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -290,7 +290,7 @@ tga_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports files in the Targa file format",
-                                        "FIXME: write help for tga_save",
+                                        "FIXME: write help for tga_export",
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Raphael FRANCOIS, Gordon Matzigkeit",
@@ -352,15 +352,15 @@ tga_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-tga_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+tga_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -408,8 +408,8 @@ tga_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, drawables[0], G_OBJECT (config),
-                        &error))
+      if (! export_image (file, image, drawables[0], G_OBJECT (config),
+                          &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -1190,11 +1190,11 @@ ReadImage (FILE     *fp,
 
 
 static gboolean
-save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GObject       *config,
-            GError       **error)
+export_image (GFile         *file,
+              GimpImage     *image,
+              GimpDrawable  *drawable,
+              GObject       *config,
+              GError       **error)
 {
   GeglBuffer    *buffer;
   const Babl    *format = NULL;

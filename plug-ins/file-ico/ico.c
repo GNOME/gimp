@@ -41,9 +41,9 @@
 #define LOAD_ANI_PROC       "file-ani-load"
 #define LOAD_THUMB_PROC     "file-ico-load-thumb"
 #define LOAD_ANI_THUMB_PROC "file-ani-load-thumb"
-#define SAVE_PROC           "file-ico-save"
-#define SAVE_CUR_PROC       "file-cur-save"
-#define SAVE_ANI_PROC       "file-ani-save"
+#define EXPORT_PROC         "file-ico-export"
+#define EXPORT_CUR_PROC     "file-cur-export"
+#define EXPORT_ANI_PROC     "file-ani-export"
 
 
 typedef struct _Ico      Ico;
@@ -93,7 +93,7 @@ static GimpValueArray * ani_load_thumb       (GimpProcedure        *procedure,
                                               gint                  size,
                                               GimpProcedureConfig  *config,
                                               gpointer              run_data);
-static GimpValueArray * ico_save             (GimpProcedure        *procedure,
+static GimpValueArray * ico_export           (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
                                               gint                  n_drawables,
@@ -102,7 +102,7 @@ static GimpValueArray * ico_save             (GimpProcedure        *procedure,
                                               GimpMetadata         *metadata,
                                               GimpProcedureConfig  *config,
                                               gpointer              run_data);
-static GimpValueArray * cur_save             (GimpProcedure        *procedure,
+static GimpValueArray * cur_export           (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
                                               gint                  n_drawables,
@@ -111,7 +111,7 @@ static GimpValueArray * cur_save             (GimpProcedure        *procedure,
                                               GimpMetadata         *metadata,
                                               GimpProcedureConfig  *config,
                                               gpointer              run_data);
-static GimpValueArray * ani_save             (GimpProcedure        *procedure,
+static GimpValueArray * ani_export           (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
                                               gint                  n_drawables,
@@ -153,9 +153,9 @@ ico_query_procedures (GimpPlugIn *plug_in)
   list = g_list_append (list, g_strdup (LOAD_PROC));
   list = g_list_append (list, g_strdup (LOAD_CUR_PROC));
   list = g_list_append (list, g_strdup (LOAD_ANI_PROC));
-  list = g_list_append (list, g_strdup (SAVE_PROC));
-  list = g_list_append (list, g_strdup (SAVE_CUR_PROC));
-  list = g_list_append (list, g_strdup (SAVE_ANI_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_CUR_PROC));
+  list = g_list_append (list, g_strdup (EXPORT_ANI_PROC));
 
   return list;
 }
@@ -287,11 +287,11 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                       "James Huang, Alex S.",
                                       "2007-2022");
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, ico_save, NULL, NULL);
+                                           FALSE, ico_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -312,11 +312,11 @@ ico_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "ico");
     }
-  else if (! strcmp (name, SAVE_CUR_PROC))
+  else if (! strcmp (name, EXPORT_CUR_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, cur_save, NULL, NULL);
+                                           FALSE, cur_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -359,11 +359,11 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                  "Y coordinates of hot spot (one per layer)",
                                  G_PARAM_READWRITE);
     }
-  else if (! strcmp (name, SAVE_ANI_PROC))
+  else if (! strcmp (name, EXPORT_ANI_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, ani_save, NULL, NULL);
+                                           FALSE, ani_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -571,36 +571,36 @@ ani_load_thumb (GimpProcedure        *procedure,
 }
 
 static GimpValueArray *
-ico_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+ico_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status;
   GError            *error = NULL;
 
   gegl_init (NULL, NULL);
 
-  status = ico_save_image (file, image, run_mode, &error);
+  status = ico_export_image (file, image, run_mode, &error);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static GimpValueArray *
-cur_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+cur_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status;
   GError            *error        = NULL;
@@ -618,10 +618,10 @@ cur_save (GimpProcedure        *procedure,
                 "hot-spot-y",   &hot_spot_y,
                 NULL);
 
-  status = cur_save_image (file, image, run_mode,
-                           &n_hot_spot_x, &hot_spot_x,
-                           &n_hot_spot_y, &hot_spot_y,
-                           &error);
+  status = cur_export_image (file, image, run_mode,
+                             &n_hot_spot_x, &hot_spot_x,
+                             &n_hot_spot_y, &hot_spot_y,
+                             &error);
 
   if (status == GIMP_PDB_SUCCESS)
     {
@@ -643,15 +643,15 @@ cur_save (GimpProcedure        *procedure,
 }
 
 static GimpValueArray *
-ani_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+ani_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+           GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status;
   GError            *error        = NULL;
@@ -682,10 +682,10 @@ ani_save (GimpProcedure        *procedure,
   ani_info.inam = inam;
   ani_info.iart = iart;
 
-  status = ani_save_image (file, image, run_mode,
-                           &n_hot_spot_x, &hot_spot_x,
-                           &n_hot_spot_y, &hot_spot_y,
-                           &header, &ani_info, &error);
+  status = ani_export_image (file, image, run_mode,
+                             &n_hot_spot_x, &hot_spot_x,
+                             &n_hot_spot_y, &hot_spot_y,
+                             &header, &ani_info, &error);
 
   if (status == GIMP_PDB_SUCCESS)
     {

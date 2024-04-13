@@ -36,8 +36,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SAVE_PROC      "file-gif-save"
-#define PLUG_IN_BINARY "file-gif-save"
+#define EXPORT_PROC    "file-gif-export"
+#define PLUG_IN_BINARY "file-gif-export"
 
 
 /* uncomment the line below for a little debugging info */
@@ -75,7 +75,7 @@ static GList           * gif_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure   * gif_create_procedure (GimpPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray  * gif_save             (GimpProcedure        *procedure,
+static GimpValueArray  * gif_export           (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
                                                gint                  n_drawables,
@@ -85,7 +85,7 @@ static GimpValueArray  * gif_save             (GimpProcedure        *procedure,
                                                GimpProcedureConfig  *config,
                                                gpointer              run_data);
 
-static gboolean          save_image           (GFile                *file,
+static gboolean          export_image         (GFile                *file,
                                                GimpImage            *image,
                                                GimpDrawable         *drawable,
                                                GimpImage            *orig_image,
@@ -131,7 +131,7 @@ gif_init (Gif *gif)
 static GList *
 gif_query_procedures (GimpPlugIn *plug_in)
 {
-  return  g_list_append (NULL, g_strdup (SAVE_PROC));
+  return  g_list_append (NULL, g_strdup (EXPORT_PROC));
 }
 
 static GimpProcedure *
@@ -140,11 +140,11 @@ gif_create_procedure (GimpPlugIn  *plug_in,
 {
   GimpProcedure *procedure = NULL;
 
-  if (! strcmp (name, SAVE_PROC))
+  if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, gif_save, NULL, NULL);
+                                           FALSE, gif_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED*, GRAY*");
 
@@ -255,15 +255,15 @@ gif_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-gif_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+gif_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -382,7 +382,7 @@ gif_save (GimpProcedure        *procedure,
                                                    error);
         }
 
-      if (! save_image (file, image, drawables[0], orig_image, G_OBJECT (config),
+      if (! export_image (file, image, drawables[0], orig_image, G_OBJECT (config),
                         &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -775,12 +775,12 @@ sanity_check (GFile        *file,
 }
 
 static gboolean
-save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GimpImage     *orig_image,
-            GObject       *config,
-            GError       **error)
+export_image (GFile         *file,
+              GimpImage     *image,
+              GimpDrawable  *drawable,
+              GimpImage     *orig_image,
+              GObject       *config,
+              GError       **error)
 {
   GeglBuffer    *buffer;
   GimpImageType  drawable_type;

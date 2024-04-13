@@ -4,8 +4,8 @@
  * Multiple-image Network Graphics (MNG) plug-in
  *
  * Copyright (C) 2002 Mukund Sivaraman <muks@mukund.org>
- * Portions are copyright of the authors of the file-gif-save, file-png-save
- * and file-jpeg-save plug-ins' code. The exact ownership of these code
+ * Portions are copyright of the authors of the file-gif-export, file-png-export
+ * and file-jpeg-export plug-ins' code. The exact ownership of these code
  * fragments has not been determined.
  *
  * This work was sponsored by Xinit Systems Limited, UK.
@@ -25,7 +25,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * --
  *
- * For now, this MNG plug-in can only save images. It cannot load images.
+ * For now, this MNG plug-in can only export images. It cannot load images.
  * Save your working copy as .xcf and use this for "exporting" your images
  * to MNG. Supports animation the same way as animated GIFs. Supports alpha
  * transparency. Uses the libmng library (http://www.libmng.com/).
@@ -93,7 +93,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SAVE_PROC      "file-mng-save"
+#define EXPORT_PROC    "file-mng-export"
 #define PLUG_IN_BINARY "file-mng"
 #define PLUG_IN_ROLE   "gimp-file-mng"
 #define SCALE_WIDTH    125
@@ -157,7 +157,7 @@ static GList          * mng_query_procedures     (GimpPlugIn           *plug_in)
 static GimpProcedure  * mng_create_procedure     (GimpPlugIn           *plug_in,
                                                   const gchar          *name);
 
-static GimpValueArray * mng_save                 (GimpProcedure        *procedure,
+static GimpValueArray * mng_export               (GimpProcedure        *procedure,
                                                   GimpRunMode           run_mode,
                                                   GimpImage            *image,
                                                   gint                  n_drawables,
@@ -197,15 +197,15 @@ static gboolean  respin_cmap     (png_structp       png_ptr,
                                   GeglBuffer       *buffer,
                                   int              *bit_depth);
 
-static gboolean  mng_save_image  (GFile            *file,
-                                  GimpImage        *image,
-                                  gint              n_drawables,
-                                  GimpDrawable    **drawables,
-                                  GObject          *config,
-                                  GError          **error);
-static gboolean  mng_save_dialog (GimpImage        *image,
-                                  GimpProcedure    *procedure,
-                                  GObject          *config);
+static gboolean  mng_export_image (GFile            *file,
+                                   GimpImage        *image,
+                                   gint              n_drawables,
+                                   GimpDrawable    **drawables,
+                                   GObject          *config,
+                                   GError          **error);
+static gboolean  mng_save_dialog  (GimpImage        *image,
+                                   GimpProcedure    *procedure,
+                                   GObject          *config);
 
 
 G_DEFINE_TYPE (Mng, mng, GIMP_TYPE_PLUG_IN)
@@ -235,7 +235,7 @@ mng_init (Mng *mng)
 static GList *
 mng_query_procedures (GimpPlugIn *plug_in)
 {
-  return g_list_append (NULL, g_strdup (SAVE_PROC));
+  return g_list_append (NULL, g_strdup (EXPORT_PROC));
 }
 
 static GimpProcedure *
@@ -244,11 +244,11 @@ mng_create_procedure (GimpPlugIn  *plug_in,
 {
   GimpProcedure *procedure = NULL;
 
-  if (! strcmp (name, SAVE_PROC))
+  if (! strcmp (name, EXPORT_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, mng_save, NULL, NULL);
+                                           FALSE, mng_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -356,15 +356,15 @@ mng_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-mng_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          gint                  n_drawables,
-          GimpDrawable        **drawables,
-          GFile                *file,
-          GimpMetadata         *metadata,
-          GimpProcedureConfig  *config,
-          gpointer              run_data)
+mng_export (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
@@ -398,8 +398,8 @@ mng_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! mng_save_image (file, image, n_drawables, drawables,
-                            G_OBJECT (config), &error))
+      if (! mng_export_image (file, image, n_drawables, drawables,
+                              G_OBJECT (config), &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -772,12 +772,12 @@ mng_putchunk_trns_wrapper (mng_handle    handle,
 }
 
 static gboolean
-mng_save_image (GFile         *file,
-                GimpImage     *image,
-                gint           n_drawables,
-                GimpDrawable **drawables,
-                GObject       *config,
-                GError       **error)
+mng_export_image (GFile         *file,
+                  GimpImage     *image,
+                  gint           n_drawables,
+                  GimpDrawable **drawables,
+                  GObject       *config,
+                  GError       **error)
 {
   gboolean        ret = FALSE;
   gint            rows, cols;
@@ -876,7 +876,7 @@ mng_save_image (GFile         *file,
   handle = mng_initialize ((mng_ptr) userdata, myalloc, myfree, NULL);
   if (! handle)
     {
-      g_warning ("Unable to mng_initialize() in mng_save_image()");
+      g_warning ("Unable to mng_initialize() in mng_export_image()");
       goto err2;
     }
 
@@ -884,13 +884,13 @@ mng_save_image (GFile         *file,
       (mng_setcb_closestream (handle, myclosestream) != MNG_NOERROR) ||
       (mng_setcb_writedata (handle, mywritedata) != MNG_NOERROR))
     {
-      g_warning ("Unable to setup callbacks in mng_save_image()");
+      g_warning ("Unable to setup callbacks in mng_export_image()");
       goto err3;
     }
 
   if (mng_create (handle) != MNG_NOERROR)
     {
-      g_warning ("Unable to mng_create() image in mng_save_image()");
+      g_warning ("Unable to mng_create() image in mng_export_image()");
       goto err3;
     }
 
@@ -898,7 +898,7 @@ mng_save_image (GFile         *file,
                          num_layers, config_default_delay,
                          mng_simplicity_profile) != MNG_NOERROR)
     {
-      g_warning ("Unable to mng_putchunk_mhdr() in mng_save_image()");
+      g_warning ("Unable to mng_putchunk_mhdr() in mng_export_image()");
       goto err3;
     }
 
@@ -912,7 +912,7 @@ mng_save_image (GFile         *file,
                              MNG_ITERACTION_LASTFRAME,
                              ms, 0x7fffffff) != MNG_NOERROR)
         {
-          g_warning ("Unable to mng_putchunk_term() in mng_save_image()");
+          g_warning ("Unable to mng_putchunk_term() in mng_export_image()");
           goto err3;
         }
     }
@@ -926,7 +926,7 @@ mng_save_image (GFile         *file,
                              MNG_ITERACTION_LASTFRAME,
                              ms, 0x7fffffff) != MNG_NOERROR)
         {
-          g_warning ("Unable to mng_putchunk_term() in mng_save_image()");
+          g_warning ("Unable to mng_putchunk_term() in mng_export_image()");
           goto err3;
         }
     }
@@ -938,7 +938,7 @@ mng_save_image (GFile         *file,
                          strlen (MNG_TEXT_TITLE), MNG_TEXT_TITLE,
                          18, "Created using GIMP") != MNG_NOERROR)
     {
-      g_warning ("Unable to mng_putchunk_text() in mng_save_image()");
+      g_warning ("Unable to mng_putchunk_text() in mng_export_image()");
       goto err3;
     }
 
@@ -960,7 +960,7 @@ mng_save_image (GFile         *file,
                              MNG_BACKGROUNDCOLOR_MANDATORY,
                              0, MNG_BACKGROUNDIMAGE_NOTILE) != MNG_NOERROR)
         {
-          g_warning ("Unable to mng_putchunk_back() in mng_save_image()");
+          g_warning ("Unable to mng_putchunk_back() in mng_export_image()");
           goto err3;
         }
 
@@ -968,7 +968,7 @@ mng_save_image (GFile         *file,
                              luminance,
                              rgb[0], rgb[1], rgb[2])) != MNG_NOERROR)
         {
-          g_warning ("Unable to mng_putchunk_bkgd() in mng_save_image()");
+          g_warning ("Unable to mng_putchunk_bkgd() in mng_export_image()");
           goto err3;
         }
     }
@@ -980,7 +980,7 @@ mng_save_image (GFile         *file,
       if (mng_putchunk_gama (handle, MNG_FALSE,
                              (1.0 / 2.2 * 100000)) != MNG_NOERROR)
         {
-          g_warning ("Unable to mng_putchunk_gama() in mng_save_image()");
+          g_warning ("Unable to mng_putchunk_gama() in mng_export_image()");
           goto err3;
         }
     }
@@ -996,7 +996,7 @@ mng_save_image (GFile         *file,
                              (mng_uint32) (xres * 39.37),
                              (mng_uint32) (yres * 39.37), 1) != MNG_NOERROR)
         {
-          g_warning ("Unable to mng_putchunk_phyg() in mng_save_image()");
+          g_warning ("Unable to mng_putchunk_phyg() in mng_export_image()");
           goto err3;
         }
 
@@ -1004,7 +1004,7 @@ mng_save_image (GFile         *file,
                              (mng_uint32) (xres * 39.37),
                              (mng_uint32) (yres * 39.37), 1) != MNG_NOERROR)
         {
-          g_warning ("Unable to mng_putchunk_phys() in mng_save_image()");
+          g_warning ("Unable to mng_putchunk_phys() in mng_export_image()");
           goto err3;
         }
     }
@@ -1020,7 +1020,7 @@ mng_save_image (GFile         *file,
                              gmt->tm_mday, gmt->tm_hour, gmt->tm_min,
                              gmt->tm_sec) != MNG_NOERROR)
         {
-          g_warning ("Unable to mng_putchunk_time() in mng_save_image()");
+          g_warning ("Unable to mng_putchunk_time() in mng_export_image()");
           goto err3;
         }
     }
@@ -1036,7 +1036,7 @@ mng_save_image (GFile         *file,
           (mng_putchunk_plte_wrapper (handle, numcolors,
                                       palette) != MNG_NOERROR))
         {
-          g_warning ("Unable to mng_putchunk_plte() in mng_save_image()");
+          g_warning ("Unable to mng_putchunk_plte() in mng_export_image()");
           goto err3;
         }
     }
@@ -1115,7 +1115,7 @@ mng_save_image (GFile         *file,
           layer_mng_colortype = MNG_COLORTYPE_INDEXED | MNG_COLORTYPE_GRAYA;
           break;
         default:
-          g_warning ("Unsupported GimpImageType in mng_save_image()");
+          g_warning ("Unsupported GimpImageType in mng_export_image()");
           goto err3;
         }
 
@@ -1193,7 +1193,7 @@ mng_save_image (GFile         *file,
                              layer_offset_y + layer_rows,
                              0, NULL) != MNG_NOERROR)
         {
-          g_warning ("Unable to mng_putchunk_fram() in mng_save_image()");
+          g_warning ("Unable to mng_putchunk_fram() in mng_export_image()");
           goto err3;
         }
 
@@ -1204,14 +1204,14 @@ mng_save_image (GFile         *file,
                                  layer_offset_x + layer_cols, layer_offset_y,
                                  layer_offset_y + layer_rows) != MNG_NOERROR)
             {
-              g_warning ("Unable to mng_putchunk_defi() in mng_save_image()");
+              g_warning ("Unable to mng_putchunk_defi() in mng_export_image()");
               goto err3;
             }
         }
 
       if ((temp_file = gimp_temp_file ("mng")) == NULL)
         {
-          g_warning ("gimp_temp_file() failed in mng_save_image()");
+          g_warning ("gimp_temp_file() failed in mng_export_image()");
           goto err3;
         }
 
@@ -1229,7 +1229,7 @@ mng_save_image (GFile         *file,
                                     NULL, NULL, NULL);
       if (! pp)
         {
-          g_warning ("Unable to png_create_write_struct() in mng_save_image()");
+          g_warning ("Unable to png_create_write_struct() in mng_export_image()");
           fclose (outfile);
           g_file_delete (temp_file, NULL, NULL);
           goto err3;
@@ -1239,7 +1239,7 @@ mng_save_image (GFile         *file,
       if (! info)
         {
           g_warning
-            ("Unable to png_create_info_struct() in mng_save_image()");
+            ("Unable to png_create_info_struct() in mng_export_image()");
           png_destroy_write_struct (&pp, NULL);
           fclose (outfile);
           g_file_delete (temp_file, NULL, NULL);
@@ -1248,7 +1248,7 @@ mng_save_image (GFile         *file,
 
       if (setjmp (png_jmpbuf (pp)) != 0)
         {
-          g_warning ("HRM saving PNG in mng_save_image()");
+          g_warning ("HRM saving PNG in mng_export_image()");
           png_destroy_write_struct (&pp, &info);
           fclose (outfile);
           g_file_delete (temp_file, NULL, NULL);
@@ -1473,7 +1473,7 @@ mng_save_image (GFile         *file,
                                      chunkinterlaced) != MNG_NOERROR)
                 {
                   g_warning ("Unable to mng_putchunk_ihdr() "
-                             "in mng_save_image()");
+                             "in mng_export_image()");
                   fclose (infile);
                   goto err3;
                 }
@@ -1484,7 +1484,7 @@ mng_save_image (GFile         *file,
                                      chunkbuffer) != MNG_NOERROR)
                 {
                   g_warning ("Unable to mng_putchunk_idat() "
-                             "in mng_save_image()");
+                             "in mng_export_image()");
                   fclose (infile);
                   goto err3;
                 }
@@ -1494,7 +1494,7 @@ mng_save_image (GFile         *file,
               if (mng_putchunk_iend (handle) != MNG_NOERROR)
                 {
                   g_warning ("Unable to mng_putchunk_iend() "
-                             "in mng_save_image()");
+                             "in mng_export_image()");
                   fclose (infile);
                   goto err3;
                 }
@@ -1510,7 +1510,7 @@ mng_save_image (GFile         *file,
                                              chunkbuffer) != MNG_NOERROR)
                 {
                   g_warning ("Unable to mng_putchunk_plte() "
-                             "in mng_save_image()");
+                             "in mng_export_image()");
                   fclose (infile);
                   goto err3;
                 }
@@ -1522,7 +1522,7 @@ mng_save_image (GFile         *file,
                                              chunkbuffer) != MNG_NOERROR)
                 {
                   g_warning ("Unable to mng_putchunk_trns() "
-                             "in mng_save_image()");
+                             "in mng_export_image()");
                   fclose (infile);
                   goto err3;
                 }
@@ -1542,13 +1542,13 @@ mng_save_image (GFile         *file,
 
   if (mng_putchunk_mend (handle) != MNG_NOERROR)
     {
-      g_warning ("Unable to mng_putchunk_mend() in mng_save_image()");
+      g_warning ("Unable to mng_putchunk_mend() in mng_export_image()");
       goto err3;
     }
 
   if (mng_write (handle) != MNG_NOERROR)
     {
-      g_warning ("Unable to mng_write() the image in mng_save_image()");
+      g_warning ("Unable to mng_write() the image in mng_export_image()");
       goto err3;
     }
 

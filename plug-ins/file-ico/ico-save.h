@@ -22,12 +22,12 @@
 #define __ICO_SAVE_H__
 
 
-GimpPDBStatusType ico_save_image          (GFile         *file,
+GimpPDBStatusType ico_export_image        (GFile         *file,
                                            GimpImage     *image,
                                            gint32         run_mode,
                                            GError       **error);
 
-GimpPDBStatusType cur_save_image          (GFile         *file,
+GimpPDBStatusType cur_export_image        (GFile         *file,
                                            GimpImage     *image,
                                            gint32         run_mode,
                                            gint          *n_hot_spot_x,
@@ -36,7 +36,7 @@ GimpPDBStatusType cur_save_image          (GFile         *file,
                                            gint32       **hot_spot_y,
                                            GError       **error);
 
-GimpPDBStatusType ani_save_image          (GFile         *file,
+GimpPDBStatusType ani_export_image        (GFile         *file,
                                            GimpImage     *image,
                                            gint32         run_mode,
                                            gint          *n_hot_spot_x,
