@@ -1,30 +1,42 @@
+#!/bin/sh
+
+# BASH ENV
+if [[ -z "$CROSSROAD_PLATFORM" ]]; then
+apt-get install -y --no-install-recommends \
+                   wine \
+                   wine64
+git clone --depth=${GIT_DEPTH} https://gitlab.freedesktop.org/crossroad/crossroad.git
+cd crossroad
+./setup.py install --prefix=`pwd`/../.local
+cd ..
+exit 0
+
+
+# CROSSROAD ENV
+else
 if [[ "x$CROSSROAD_PLATFORM" = "xw64" ]]; then
   export ARTIFACTS_SUFFIX="-x64"
 else # [[ "x$CROSSROAD_PLATFORM" = "xw32" ]];
   export ARTIFACTS_SUFFIX="-x86"
 fi
 
-
-# Install the required (pre-built) packages for babl, GEGL and GIMP
+## Install the required (pre-built) packages for babl, GEGL and GIMP
 crossroad source msys2
 DEPS_LIST=$(cat build/windows/gitlab-ci/all-deps-uni.txt)
 DEPS_LIST=$(sed "s/\${MINGW_PACKAGE_PREFIX}-//g" <<< $DEPS_LIST)
 DEPS_LIST=$(sed 's/\\//g' <<< $DEPS_LIST)
-
 crossroad install $DEPS_LIST
-
 if [ $? -ne 0 ]; then
   echo "Installation of pre-built dependencies failed.";
   exit 1;
 fi
 
-
-# Clone babl and GEGL (follow master branch)
+## Clone babl and GEGL (follow master branch)
 mkdir _deps && cd _deps
 git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git _babl
 git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git _gegl
 
-# Build babl and GEGL
+## Build babl and GEGL
 mkdir _babl/_build${ARTIFACTS_SUFFIX}-cross/ && cd _babl/_build${ARTIFACTS_SUFFIX}-cross/
 crossroad meson setup .. -Denable-gir=false
 ninja && ninja install
@@ -34,8 +46,7 @@ crossroad meson setup .. -Dintrospection=false
 ninja && ninja install
 cd ../../
 
-
-# "Build" part of deps
+## "Build" part of deps
 if [ "x$CROSSROAD_PLATFORM" = "xw64" ]; then
   ## Generator of the gio 'giomodule.cache' to fix error about
   ## libgiognutls.dll that prevents generating loaders.cache
@@ -56,3 +67,5 @@ if [ "x$CROSSROAD_PLATFORM" = "xw64" ]; then
   GLIB_PATH=$(echo ${CROSSROAD_PREFIX}/share/glib-*/schemas/)
   wine ${CROSSROAD_PREFIX}/bin/glib-compile-schemas.exe --targetdir=${GLIB_PATH} ${GLIB_PATH}
 fi
+
+fi # END OF CROSSROAD ENV

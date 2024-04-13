@@ -411,11 +411,13 @@ packaging-flatpak-x64:
 .win-cross:
   extends: .default
   variables:
+    BUILD_TYPE: "CI_CROSS"
     # Needed because by default, Debian has now changed
     # "sysconfig.get_default_scheme()" from "posix_prefix" to "posix_local" which
     # adds a local/ folder to the install prefix of setup.py. This environment
     # variable overrides this behavior.
     DEB_PYTHON_INSTALL_LAYOUT: "deb"
+    PATH: "$CI_PROJECT_DIR/.local/bin:$CI_PROJECT_DIR/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     XDG_DATA_HOME: "$CI_PROJECT_DIR/.local/share/"
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
   cache:
@@ -441,14 +443,7 @@ deps-win-x64-cross:
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   before_script:
-    - apt-get install -y --no-install-recommends
-                         wine
-                         wine64
-    - git clone --depth=${GIT_DEPTH} https://gitlab.freedesktop.org/crossroad/crossroad.git
-    - cd crossroad
-    - ./setup.py install --prefix=`pwd`/../.local
-    - cd ..
-    - export PATH="`pwd`/.local/bin:$PATH"
+    - bash -x build/windows/gitlab-ci/1_build-deps-crossroad.sh
   script:
     - crossroad w64 gimp --run="build/windows/gitlab-ci/1_build-deps-crossroad.sh"
   artifacts:
@@ -478,15 +473,12 @@ gimp-win-x64-cross:
     - echo export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}" >> bin/gimp-console-$GIMP_APP_VERSION
     - echo "${GIMP_PREFIX}/bin/gimp-console-$GIMP_APP_VERSION \"\$@\"" >> bin/gimp-console-$GIMP_APP_VERSION
     - chmod u+x bin/gimp-console-$GIMP_APP_VERSION
-    - export PATH="`pwd`/bin:$PATH"
-    # For crossroad
-    - export PATH="`pwd`/.local/bin:$PATH"
   script:
     - crossroad w64 gimp --run="build/windows/gitlab-ci/2_build-gimp-crossroad.sh"
   artifacts:
     paths:
-      - _build-x64-cross/
       - _install-x64-cross/
+      - _build-x64-cross/
     expire_in: 1 day
 
 packaging-win-x64-nightly:
@@ -496,7 +488,6 @@ packaging-win-x64-nightly:
   needs: ["gimp-win-x64-cross"]
   stage: packaging
   variables:
-    BUILD_TYPE: "CI_CROSS"
     CROSSROAD_PLATFORM: "w64"
   cache: []
   before_script:
@@ -533,14 +524,7 @@ deps-win-x86-cross:
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   before_script:
-    - apt-get update
-    - apt-get install -y --no-install-recommends
-                         wine
-    - git clone --depth=${GIT_DEPTH} https://gitlab.freedesktop.org/crossroad/crossroad.git
-    - cd crossroad
-    - ./setup.py install --prefix=`pwd`/../.local
-    - cd ..
-    - export PATH="`pwd`/.local/bin:$PATH"
+    - bash -x build/windows/gitlab-ci/1_build-deps-crossroad.sh
   script:
     - crossroad w32 gimp --run="build/windows/gitlab-ci/1_build-deps-crossroad.sh"
   artifacts:
@@ -570,15 +554,12 @@ gimp-win-x86-cross:
     - echo export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}" >> bin/gimp-console-$GIMP_APP_VERSION
     - echo "${GIMP_PREFIX}/bin/gimp-console-$GIMP_APP_VERSION \"\$@\"" >> bin/gimp-console-$GIMP_APP_VERSION
     - chmod u+x bin/gimp-console-$GIMP_APP_VERSION
-    - export PATH="`pwd`/bin:$PATH"
-    # For crossroad
-    - export PATH="`pwd`/.local/bin:$PATH"
   script:
     - crossroad w32 gimp --run="build/windows/gitlab-ci/2_build-gimp-crossroad.sh"
   artifacts:
     paths:
-      - _build-x86-cross/
       - _install-x86-cross/
+      - _build-x86-cross/
     expire_in: 1 day
 
 packaging-win-x86-nightly:
@@ -588,7 +569,6 @@ packaging-win-x86-nightly:
   needs: ["gimp-win-x86-cross"]
   stage: packaging
   variables:
-    BUILD_TYPE: "CI_CROSS"
     CROSSROAD_PLATFORM: "w32"
   cache: []
   before_script:
