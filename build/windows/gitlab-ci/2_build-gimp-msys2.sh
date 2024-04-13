@@ -29,9 +29,8 @@ else
     echo "To run this script locally, please do it from to the gimp git folder"
     exit 1
   fi
-
+  git submodule update --init
   pacman --noconfirm -Suy
-
   export MESON_OPTIONS="-Drelocatable-bundle=no"
 fi
 
@@ -60,9 +59,6 @@ export LD_LIBRARY_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH
 export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
 export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
 # End of universal variables
-
-
-git submodule update --init
 
 if [ ! -f "_build${ARTIFACTS_SUFFIX}/build.ninja" ]; then
   mkdir -p "_build${ARTIFACTS_SUFFIX}" && cd "_build${ARTIFACTS_SUFFIX}"

@@ -17,8 +17,9 @@ echo export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository
 echo "${GIMP_PREFIX}/bin/gimp-console-$GIMP_APP_VERSION \"\$@\"" >> bin/gimp-console-$GIMP_APP_VERSION
 chmod u+x bin/gimp-console-$GIMP_APP_VERSION
 
-git submodule update --init
-
+if [ -z "$GIT_SUBMODULE_STRATEGY" ]; then
+  git submodule update --init
+fi
 
 # CROSSROAD ENV
 else

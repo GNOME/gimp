@@ -1,11 +1,16 @@
 #!/bin/sh
 
+if [ -z "$GIT_DEPTH" ]; then
+  export GIT_DEPTH=1
+fi
+
+
 # BASH ENV
 if [[ -z "$CROSSROAD_PLATFORM" ]]; then
 apt-get install -y --no-install-recommends \
                    wine \
                    wine64
-git clone --depth=${GIT_DEPTH} https://gitlab.freedesktop.org/crossroad/crossroad.git
+git clone --depth $GIT_DEPTH https://gitlab.freedesktop.org/crossroad/crossroad.git
 cd crossroad
 ./setup.py install --prefix=`pwd`/../.local
 cd ..
@@ -29,8 +34,8 @@ fi
 
 ## Clone babl and GEGL (follow master branch)
 mkdir _deps && cd _deps
-git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git _babl
-git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git _gegl
+git clone --depth $GIT_DEPTH https://gitlab.gnome.org/GNOME/babl.git _babl
+git clone --depth $GIT_DEPTH https://gitlab.gnome.org/GNOME/gegl.git _gegl
 
 ## Build babl and GEGL
 mkdir _babl/_build${ARTIFACTS_SUFFIX}-cross/ && cd _babl/_build${ARTIFACTS_SUFFIX}-cross/

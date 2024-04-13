@@ -62,6 +62,7 @@ stages:
 
 variables:
   GIT_DEPTH: "1"
+  GIT_SUBMODULE_STRATEGY: recursive
   ARTIFACTS_SUFFIX: "-x64"
   GIMP_PREFIX: "${CI_PROJECT_DIR}/_install${ARTIFACTS_SUFFIX}"
 
@@ -248,7 +249,6 @@ deps-debian-gcc:
   before_script:
     # Universal variables
     - !reference [.default, before_script]
-    - git submodule update --init
     - mkdir -p _build${ARTIFACTS_SUFFIX} && cd _build${ARTIFACTS_SUFFIX}
   after_script:
     - ccache --show-stats
@@ -341,7 +341,6 @@ packaging-flatpak-x64:
     - flatpak
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
   variables:
-    GIT_SUBMODULE_STRATEGY: normal
     # Replace with your manifest path
     MANIFEST_PATH: "build/flatpak/org.gimp.GIMP-nightly.json"
     RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"

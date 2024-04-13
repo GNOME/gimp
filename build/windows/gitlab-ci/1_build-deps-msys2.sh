@@ -24,7 +24,7 @@ else
     DEPS_DIR=$(dirname $PWD)
     cd $DEPS_DIR
   fi
-
+  export GIT_DEPTH=1
   pacman --noconfirm -Suy
 fi
 
@@ -61,8 +61,6 @@ fi
 
 
 # Clone babl and GEGL (follow master branch)
-export GIT_DEPTH=1
-
 clone_or_pull ()
 {
   repo="https://gitlab.gnome.org/GNOME/${1}.git"
@@ -76,7 +74,7 @@ clone_or_pull ()
   fi
 
   if [ ! -d "_${1}" ]; then
-    git clone $git_options --depth=${GIT_DEPTH} $repo _${1} || exit 1
+    git clone $git_options --depth $GIT_DEPTH $repo _${1} || exit 1
   else
     cd _${1} && git pull && cd ..
   fi
