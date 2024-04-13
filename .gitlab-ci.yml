@@ -469,13 +469,6 @@ packaging-win-x64-nightly:
     CROSSROAD_PLATFORM: "w64"
   cache: []
   script:
-    - apt-get update
-    - apt-get install -y --no-install-recommends
-                         binutils
-                         binutils-mingw-w64-x86-64
-                         file
-                         libglib2.0-bin
-                         python3
     - bash -x build/windows/gitlab-ci/3_package-gimp-uni_base.sh
     - cd gimp-x64
     - bash -x ../build/windows/gitlab-ci/3_package-gimp-uni_sym.sh
@@ -546,10 +539,10 @@ gimp-win-a64:
   artifacts:
     paths:
       - _install-a64/
-      - _build-a64/build/windows/installer/
       - _build-a64/meson-*/
-      # Needed by 4_dist-gimp-inno.ps1 in dist-installer-weekly
+      # Needed by dist-installer-weekly
       - _build-a64/config.h
+      - _build-a64/build/windows/installer/
     expire_in: 1 day
 
 packaging-win-a64:
@@ -566,11 +559,10 @@ packaging-win-a64:
   artifacts:
     paths:
       - gimp-a64/
-      # Just passing-through splash and language files for the Windows installer.
-      - _build-a64/build/windows/installer/
-      # Needed by 4_dist-gimp-inno.ps1 in dist-installer-weekly
-      - _build-a64/config.h
       - done-dll.list
+      # Just passing-through files for dist-installer-weekly
+      - _build-a64/config.h
+      - _build-a64/build/windows/installer/
     expire_in: 1 day
 
 ## WINDOWS x86_64 CI (native MSYS2) ##

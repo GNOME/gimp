@@ -23,7 +23,15 @@ if [[ "$BUILD_TYPE" != "CI_CROSS" ]] && [[ "$BUILD_TYPE" != "CI_NATIVE" ]]; then
 fi
 
 
-if [[ "$BUILD_TYPE" != "CI_CROSS" ]]; then
+if [[ "$BUILD_TYPE" == "CI_CROSS" ]]; then
+  apt-get update
+  apt-get install -y --no-install-recommends   \
+                     binutils                  \
+                     binutils-mingw-w64-x86-64 \
+                     file                      \
+                     libglib2.0-bin            \
+                     python3
+else
   # Install the required (pre-built) packages again
   # We take code from deps script to better maintenance
   GIMP_DIR=""
