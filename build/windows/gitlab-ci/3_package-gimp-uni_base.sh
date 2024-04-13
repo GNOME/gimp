@@ -12,7 +12,7 @@ elif [[ "$CROSSROAD_PLATFORM" == "w64" ]] || [[ "$MSYSTEM_CARCH" == "x86_64" ]];
   export ARTIFACTS_SUFFIX="-x64"
   export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
   export GIMP_DISTRIB=`realpath ./gimp-x64`
-else # [[ "$CROSSROAD_PLATFORM" == "w32" ]] || [[ "$MSYSTEM_CARCH" == "i686" ]];
+else # [[ "$MSYSTEM_CARCH" == "i686" ]];
   export ARTIFACTS_SUFFIX="-x86"
   export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
   export GIMP_DISTRIB=`realpath ./gimp-x86`

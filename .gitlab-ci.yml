@@ -15,7 +15,6 @@
 # - GIMP_CI_MESON_GCC: trigger the Debian gcc build.
 # - GIMP_CI_RASTER_ICONS: trigger the Debian build without vector icons.
 # - GIMP_CI_CROSSROAD_WIN64: trigger the crossroad build for Win 64-bit.
-# - GIMP_CI_CROSSROAD_WIN32: trigger the crossroad build for Win 32-bit.
 # - GIMP_CI_MSYS2_WIN_AARCH64: trigger the native MSYS2 build for Win Aarch64.
 # - GIMP_CI_MSYS2_WIN64: trigger the native MSYS2 build for Win 64-bit.
 # - GIMP_CI_MSYS2_WIN32: trigger the native MSYS2 build for Win 32-bit.
@@ -75,7 +74,6 @@ image-debian-x64:
     - if: '$GIMP_CI_MESON_GCC != null'
     - if: '$GIMP_CI_RASTER_ICONS != null'
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
-    - if: '$GIMP_CI_CROSSROAD_WIN32 != null'
     - if: '$GIMP_CI_SOURCES != null'
     - if: '$GIMP_CI_FLATPAK != null'
     # On merge requests and commits.
@@ -111,8 +109,6 @@ image-debian-x64:
             ffmpeg
             g++-mingw-w64-x86-64-posix
             gcc-mingw-w64-x86-64-posix
-            g++-mingw-w64-i686
-            gcc-mingw-w64-i686
             gettext
             ghostscript
             gi-docgen
@@ -227,7 +223,6 @@ deps-debian-x64:
     - if: '$GIMP_CI_MESON_CLANG != null'
     - if: '$GIMP_CI_RASTER_ICONS != null'
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
-    - if: '$GIMP_CI_CROSSROAD_WIN32 != null'
     - if: '$GIMP_CI_SOURCES != null'
     - if: '$GIMP_CI_FLATPAK != null'
     # On merge requests and commits.
@@ -270,7 +265,6 @@ gimp-debian-x64:
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_MESON_CLANG != null'
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
-    - if: '$GIMP_CI_CROSSROAD_WIN32 != null'
     - if: '$GIMP_CI_SOURCES != null'
     - if: '$GIMP_CI_FLATPAK != null'
     # On merge requests and commits.
@@ -436,7 +430,6 @@ deps-win-x64-cross:
   extends: .win-cross
   rules:
     - !reference [.win-x64-cross, rules]
-    - if: '$GIMP_CI_CROSSROAD_WIN32 != null'
   needs: ["image-debian-x64"]
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
@@ -455,7 +448,6 @@ gimp-win-x64-cross:
   extends: .win-cross
   rules:
     - !reference [.win-x64-cross, rules]
-    - if: '$GIMP_CI_CROSSROAD_WIN32 != null'
   needs: ["deps-win-x64-cross", "gimp-debian-x64"]
   stage: gimp
   image: $CI_REGISTRY_IMAGE:build-debian-latest
@@ -494,76 +486,6 @@ packaging-win-x64-nightly:
     expose_as: 'Windows zip'
     paths:
       - gimp-x64/
-      - done-dll.list
-    expire_in: 2 days
-
-## WINDOWS 32-bit CI (cross-build crossroad) ##
-
-.win-x86-cross:
-  rules:
-    # Custom builds only (web GUI, API or schedules).
-    - if: '$GIMP_CI_CROSSROAD_WIN32 != null'
-
-deps-win-x86-cross:
-  extends: .win-cross
-  rules:
-    - !reference [.win-x86-cross, rules]
-  needs: ["image-debian-x64"]
-  stage: dependencies
-  image: $CI_REGISTRY_IMAGE:build-debian-latest
-  before_script:
-    - bash -x build/windows/gitlab-ci/1_build-deps-crossroad.sh
-  script:
-    - crossroad w32 gimp --run="build/windows/gitlab-ci/1_build-deps-crossroad.sh"
-  artifacts:
-    paths:
-      - .local/
-      - _deps/_babl/_build-x86-cross/
-      - _deps/_gegl/_build-x86-cross/
-    expire_in: 2 hours
-
-gimp-win-x86-cross:
-  extends: .win-cross
-  rules:
-    - !reference [.win-x86-cross, rules]
-  needs: ["deps-win-x86-cross", "gimp-win-x64-cross", "gimp-debian-x64"]
-  stage: gimp
-  image: $CI_REGISTRY_IMAGE:build-debian-latest
-  cache: []
-  before_script:
-    - bash -x build/windows/gitlab-ci/2_build-gimp-crossroad.sh
-  script:
-    - crossroad w32 gimp --run="build/windows/gitlab-ci/2_build-gimp-crossroad.sh"
-  artifacts:
-    paths:
-      - _install-x86-cross/
-      - _build-x86-cross/
-    expire_in: 1 day
-
-packaging-win-x86-nightly:
-  extends: .win-cross
-  rules:
-    - !reference [.win-x86-cross, rules]
-  needs: ["gimp-win-x86-cross"]
-  stage: packaging
-  variables:
-    CROSSROAD_PLATFORM: "w32"
-  cache: []
-  before_script:
-    - apt-get update
-    - apt-get install -y --no-install-recommends
-                         binutils
-                         binutils-mingw-w64-i686
-                         file
-                         libglib2.0-bin
-                         python3
-  script:
-    - bash -x build/windows/gitlab-ci/3_package-gimp-uni_base.sh
-    - cd gimp-x86
-    - bash -x ../build/windows/gitlab-ci/3_package-gimp-uni_sym.sh
-  artifacts:
-    paths:
-      - gimp-x86/
       - done-dll.list
     expire_in: 2 days
 

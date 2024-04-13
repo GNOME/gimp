@@ -14,11 +14,7 @@ exit 0
 
 # CROSSROAD ENV
 else
-if [[ "x$CROSSROAD_PLATFORM" = "xw64" ]]; then
-  export ARTIFACTS_SUFFIX="-x64"
-else # [[ "x$CROSSROAD_PLATFORM" = "xw32" ]];
-  export ARTIFACTS_SUFFIX="-x86"
-fi
+export ARTIFACTS_SUFFIX="-x64"
 
 ## Install the required (pre-built) packages for babl, GEGL and GIMP
 crossroad source msys2
@@ -49,25 +45,23 @@ ninja install
 cd ../../
 
 ## "Build" part of deps
-if [ "x$CROSSROAD_PLATFORM" = "xw64" ]; then
-  ## Generator of the gio 'giomodule.cache' to fix error about
-  ## libgiognutls.dll that prevents generating loaders.cache
-  gio=''
-  gio+="libgiognomeproxy.dll: gio-proxy-resolver\n"
-  gio+="libgiognutls.dll: gio-tls-backend\n"
-  gio+="libgiolibproxy.dll: gio-proxy-resolver\n"
-  gio+="libgioopenssl.dll: gio-tls-backend\n"
-  printf "%b" "$gio" > ${CROSSROAD_PREFIX}/lib/gio/modules/giomodule.cache
+### Generator of the gio 'giomodule.cache' to fix error about
+### libgiognutls.dll that prevents generating loaders.cache
+gio=''
+gio+="libgiognomeproxy.dll: gio-proxy-resolver\n"
+gio+="libgiognutls.dll: gio-tls-backend\n"
+gio+="libgiolibproxy.dll: gio-proxy-resolver\n"
+gio+="libgioopenssl.dll: gio-tls-backend\n"
+printf "%b" "$gio" > ${CROSSROAD_PREFIX}/lib/gio/modules/giomodule.cache
 
-  ## NOT WORKING: Fallback generator of the pixbuf 'loaders.cache' for GUI image support
-  GDK_PATH=$(echo ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-*/*/)
-  wine ${CROSSROAD_PREFIX}/bin/gdk-pixbuf-query-loaders.exe ${GDK_PATH}loaders/*.dll > ${GDK_PATH}loaders.cache
-  sed -i "s&$CROSSROAD_PREFIX/&&" ${CROSSROAD_PREFIX}/${GDK_PATH}/loaders.cache
-  sed -i '/.dll\"/s*/*\\\\*g' ${CROSSROAD_PREFIX}/${GDK_PATH}/loaders.cache
+### NOT WORKING: Fallback generator of the pixbuf 'loaders.cache' for GUI image support
+GDK_PATH=$(echo ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-*/*/)
+wine ${CROSSROAD_PREFIX}/bin/gdk-pixbuf-query-loaders.exe ${GDK_PATH}loaders/*.dll > ${GDK_PATH}loaders.cache
+sed -i "s&$CROSSROAD_PREFIX/&&" ${CROSSROAD_PREFIX}/${GDK_PATH}/loaders.cache
+sed -i '/.dll\"/s*/*\\\\*g' ${CROSSROAD_PREFIX}/${GDK_PATH}/loaders.cache
 
-  ## Generator of the glib 'gschemas.compiled'
-  GLIB_PATH=$(echo ${CROSSROAD_PREFIX}/share/glib-*/schemas/)
-  wine ${CROSSROAD_PREFIX}/bin/glib-compile-schemas.exe --targetdir=${GLIB_PATH} ${GLIB_PATH}
-fi
+### Generator of the glib 'gschemas.compiled'
+GLIB_PATH=$(echo ${CROSSROAD_PREFIX}/share/glib-*/schemas/)
+wine ${CROSSROAD_PREFIX}/bin/glib-compile-schemas.exe --targetdir=${GLIB_PATH} ${GLIB_PATH}
 
 fi # END OF CROSSROAD ENV
