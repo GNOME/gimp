@@ -576,8 +576,8 @@ file_response_callback (GtkFileChooser      *chooser,
                         "zoom",                  config.cp.zoom,
                         NULL);
           g_signal_handlers_unblock_by_func (proc_config,
-                                           G_CALLBACK (set_flame_preview),
-                                           NULL);
+                                             G_CALLBACK (set_flame_preview),
+                                             NULL);
           set_flame_preview (proc_config);
           set_edit_preview (proc_config);
         }
@@ -1163,6 +1163,7 @@ flame_dialog (Flame                *flame,
   GtkWidget *frame;
   GtkWidget *button;
   GtkWidget *box;
+  gulong     notify_handler;
   gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
@@ -1351,12 +1352,13 @@ flame_dialog (Flame                *flame,
   gtk_widget_show (notebook);
   gtk_box_pack_start (GTK_BOX (main_vbox), notebook, FALSE, FALSE, 0);
 
-  g_signal_connect (proc_config, "notify",
-                    G_CALLBACK (set_flame_preview),
-                    NULL);
+  notify_handler = g_signal_connect (proc_config, "notify",
+                                     G_CALLBACK (set_flame_preview),
+                                     NULL);
   set_flame_preview (proc_config);
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
+  g_signal_handler_disconnect (proc_config, notify_handler);
   gtk_widget_destroy (dialog);
 
   return run;
