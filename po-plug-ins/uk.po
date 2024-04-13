@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-10 15:56+0000\n"
-"PO-Revision-Date: 2024-04-11 13:27+0300\n"
+"POT-Creation-Date: 2024-04-13 15:13+0000\n"
+"PO-Revision-Date: 2024-04-13 18:48+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -9420,18 +9420,15 @@ msgstr "Параметри MIP-текстур"
 
 #. Translators: Do not translate YCoCg, it's the name of a colorspace
 #: plug-ins/file-dds/misc.c:70
-#| msgid "Decode YCoCg"
 msgid "Decoding YCoCg pixels..."
 msgstr "Декодування пікселів YCoCg…"
 
 #. Translators: Do not translate YCoCg, it's the name of a colorspace
 #: plug-ins/file-dds/misc.c:137
-#| msgid "Decode YCoCg (scaled)"
 msgid "Decoding YCoCg (scaled) pixels..."
 msgstr "Декодування пікселів YCoCg (масштабованого)…"
 
 #: plug-ins/file-dds/misc.c:204
-#| msgid "Decode Alpha exponent"
 msgid "Decoding Alpha-exponent pixels..."
 msgstr "Декодування пікселів Alpha-exponent pixels..."
 
@@ -11264,8 +11261,7 @@ msgstr "_Полум'я..."
 msgid "Create cosmic recursive fractal flames"
 msgstr "Створити ефект спалахів полум'я з використанням фракталів"
 
-#: plug-ins/flame/flame.c:195 plug-ins/flame/flame.c:210
-#: plug-ins/flame/flame.c:220
+#: plug-ins/flame/flame.c:195
 msgid "_Brightness"
 msgstr "_Яскравість"
 
@@ -11273,9 +11269,19 @@ msgstr "_Яскравість"
 msgid "Co_ntrast"
 msgstr "_Контраст"
 
+#: plug-ins/flame/flame.c:210
+#| msgid "Sample _density:"
+msgid "Sample _density"
+msgstr "_Щільність зразка"
+
 #: plug-ins/flame/flame.c:215
 msgid "Spa_tial oversample"
 msgstr "П_ерекриття"
+
+#: plug-ins/flame/flame.c:220
+#| msgid "Spatial _filter radius:"
+msgid "Spatial _filter radius"
+msgstr "Радіус просторового _фільтра"
 
 #: plug-ins/flame/flame.c:225
 msgid "_Zoom"
@@ -16545,12 +16551,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "_Brightness:"
 #~ msgstr "_Яскравість:"
-
-#~ msgid "Sample _density:"
-#~ msgstr "_Щільність зразка:"
-
-#~ msgid "Spatial _filter radius:"
-#~ msgstr "Радіус просторового _фільтра:"
 
 #~ msgid "_Zoom:"
 #~ msgstr "Мас_штаб:"
