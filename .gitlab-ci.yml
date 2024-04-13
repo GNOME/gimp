@@ -202,7 +202,6 @@ image-debian-x64:
     - git clone $gegl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
     # Universal variables
     - !reference [.default, before_script]
-    - mkdir -p _ccache/
   script:
     - mkdir _babl/_build${ARTIFACTS_SUFFIX} && cd _babl/_build${ARTIFACTS_SUFFIX}
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
@@ -255,7 +254,6 @@ deps-debian-gcc:
   before_script:
     # Universal variables
     - !reference [.default, before_script]
-    - mkdir -p _ccache/
     - git submodule update --init
     - mkdir -p _build${ARTIFACTS_SUFFIX} && cd _build${ARTIFACTS_SUFFIX}
   after_script:
@@ -583,8 +581,6 @@ packaging-win-x86-nightly:
   variables:
     BUILD_TYPE: "CI_NATIVE"
     CHERE_INVOKING: "yes"
-  before_script:
-    - New-Item -Path .\_ccache -ItemType Directory -Force
 
 .win-a64:
   extends: .win
