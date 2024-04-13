@@ -629,6 +629,7 @@ packaging-win-x86-nightly:
 .win-a64:
   extends: .win
   rules:
+    - !reference [.win, rules]
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_MSYS2_WIN_AARCH64 != null'
   tags:
@@ -646,9 +647,7 @@ packaging-win-x86-nightly:
 
 deps-win-a64:
   extends: .win-a64
-  # GitLab don't support extending 'rules'
   rules:
-    - !reference [.win, rules]
     - !reference [.win-a64, rules]
   needs: []
   stage: dependencies
@@ -661,9 +660,7 @@ deps-win-a64:
 
 gimp-win-a64:
   extends: .win-a64
-  # GitLab don't support extending 'rules'
   rules:
-    - !reference [.win, rules]
     - !reference [.win-a64, rules]
   needs: ["deps-win-a64"]
   stage: gimp
@@ -680,9 +677,7 @@ gimp-win-a64:
 
 packaging-win-a64:
   extends: .win-a64
-  # GitLab don't support extending 'rules'
   rules:
-    - !reference [.win, rules]
     - !reference [.win-a64, rules]
   needs: ["gimp-win-a64"]
   stage: packaging
@@ -706,6 +701,7 @@ packaging-win-a64:
 .win-x64:
   extends: .win
   rules:
+    - !reference [.win, rules]
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_MSYS2_WIN64 != null'
   tags:
@@ -715,9 +711,7 @@ packaging-win-a64:
 
 deps-win-x64:
   extends: .win-x64
-  # GitLab don't support extending 'rules'
   rules:
-    - !reference [.win, rules]
     - !reference [.win-x64, rules]
   needs: []
   stage: dependencies
@@ -730,9 +724,7 @@ deps-win-x64:
 
 gimp-win-x64:
   extends: .win-x64
-  # GitLab don't support extending 'rules'
   rules:
-    - !reference [.win, rules]
     - !reference [.win-x64, rules]
   needs: ["deps-win-x64"]
   stage: gimp
@@ -746,9 +738,7 @@ gimp-win-x64:
 
 packaging-win-x64:
   extends: .win-x64
-  # GitLab don't support extending 'rules'
   rules:
-    - !reference [.win, rules]
     - !reference [.win-x64, rules]
   needs: ["gimp-win-x64"]
   stage: packaging
@@ -768,6 +758,7 @@ packaging-win-x64:
 .win-x86:
   extends: .win
   rules:
+    - !reference [.win, rules]
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_MSYS2_WIN32 != null'
   tags:
@@ -779,9 +770,7 @@ packaging-win-x64:
 
 deps-win-x86:
   extends: .win-x86
-  # GitLab don't support extending 'rules'
   rules:
-    - !reference [.win, rules]
     - !reference [.win-x86, rules]
   needs: []
   stage: dependencies
@@ -794,9 +783,7 @@ deps-win-x86:
 
 gimp-win-x86:
   extends: .win-x86
-  # GitLab don't support extending 'rules'
   rules:
-    - !reference [.win, rules]
     - !reference [.win-x86, rules]
   needs: ["deps-win-x86"]
   stage: gimp
@@ -810,9 +797,7 @@ gimp-win-x86:
 
 packaging-win-x86:
   extends: .win-x86
-  # GitLab don't support extending 'rules'
   rules:
-    - !reference [.win, rules]
     - !reference [.win-x86, rules]
   needs: ["gimp-win-x86"]
   stage: packaging
@@ -922,7 +907,6 @@ dist-flatpak-weekly:
 
 dist-installer-weekly:
   extends: .win
-  # GitLab don't support extending 'rules'
   rules:
     - !reference [.win, rules]
   needs: ["packaging-win-a64", "packaging-win-x64", "packaging-win-x86"]
