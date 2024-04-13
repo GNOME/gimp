@@ -337,12 +337,6 @@ flame_run (GimpProcedure        *procedure,
                                                    GIMP_PDB_CANCEL,
                                                    NULL);
         }
-
-      /*  reusing a drawable from the last run is a bad idea
-       *  since the drawable might have vanished  (bug #37761)
-       */
-      if (config.cmap_drawable_id > 0)
-        config.cmap_drawable_id = GRADIENT_DRAWABLE;
     }
 
   if (gimp_drawable_is_rgb (drawable))
@@ -360,6 +354,12 @@ flame_run (GimpProcedure        *procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
                                                NULL);
     }
+
+   /*  reusing a drawable from the last run is a bad idea
+    *  since the drawable might have vanished  (bug #37761)
+    */
+   if (config.cmap_drawable_id > 0)
+     config.cmap_drawable_id = GRADIENT_DRAWABLE;
 
   flame_update_settings_aux (proc_config);
 
@@ -1138,6 +1138,14 @@ cmap_callback (GtkWidget           *widget,
 {
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
                                  &config.cmap_drawable_id);
+
+  g_signal_handlers_block_by_func (proc_config,
+                                   G_CALLBACK (set_flame_preview),
+                                   NULL);
+  flame_update_settings_aux (proc_config);
+  g_signal_handlers_unblock_by_func (proc_config,
+                                     G_CALLBACK (set_flame_preview),
+                                     NULL);
 
   set_cmap_preview ();
   set_flame_preview (proc_config);
