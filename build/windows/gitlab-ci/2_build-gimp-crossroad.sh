@@ -1,5 +1,27 @@
+#!/bin/sh
+
 set -e
 
+
+# BASH ENV
+if [[ -z "$CROSSROAD_PLATFORM" ]]; then
+
+# So that we can use gimp-console from gimp-debian-x64 project.
+GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+mkdir bin
+echo "#!/bin/sh" > bin/gimp-console-$GIMP_APP_VERSION
+gcc -print-multi-os-directory | grep . && LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || LIB_DIR="lib"
+gcc -print-multiarch | grep . && LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
+echo export LD_LIBRARY_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> bin/gimp-console-$GIMP_APP_VERSION
+echo export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}" >> bin/gimp-console-$GIMP_APP_VERSION
+echo "${GIMP_PREFIX}/bin/gimp-console-$GIMP_APP_VERSION \"\$@\"" >> bin/gimp-console-$GIMP_APP_VERSION
+chmod u+x bin/gimp-console-$GIMP_APP_VERSION
+
+git submodule update --init
+
+
+# CROSSROAD ENV
+else
 if [[ "x$CROSSROAD_PLATFORM" = "xw64" ]]; then
   export ARTIFACTS_SUFFIX="-x64"
   export MESON_OPTIONS=""
@@ -8,19 +30,17 @@ else # [[ "x$CROSSROAD_PLATFORM" = "xw32" ]];
   export MESON_OPTIONS="-Dwmf=disabled -Dmng=disabled"
 fi
 
+## The required packages for GIMP are taken from the previous job
 
-# The required packages for GIMP are taken from the previous job
-
-
-# Build GIMP
+## Build GIMP
 mkdir _build${ARTIFACTS_SUFFIX}-cross && cd _build${ARTIFACTS_SUFFIX}-cross
 crossroad meson setup .. -Dgi-docgen=disabled                 \
                          -Djavascript=disabled -Dlua=disabled \
                          -Dpython=disabled -Dvala=disabled    \
                          $MESON_OPTIONS
-(ninja && ninja install) || exit 1
+ninja
+ninja install
 cd ..
-
 
 ## XXX Functional fix to the problem of non-configured interpreters
 ## XXX Also, functional generator of the pixbuf 'loaders.cache' for GUI image support
@@ -41,8 +61,7 @@ echo "@echo off
       bin\gimp-$GIMP_APP_VERSION.exe" > ${CROSSROAD_PREFIX}/gimp.cmd
 echo "Please run the gimp.cmd file to know the actual plug-in support." > ${CROSSROAD_PREFIX}/README.txt
 
-
-# Copy built GIMP, babl and GEGL and pre-built packages to GIMP_PREFIX
+## Copy built GIMP, babl and GEGL and pre-built packages to GIMP_PREFIX
 cp -fr $CROSSROAD_PREFIX/ _install${ARTIFACTS_SUFFIX}-cross/
 
 if [[ "x$CROSSROAD_PLATFORM" = "xw32" ]]; then
@@ -60,3 +79,5 @@ if [[ "x$CROSSROAD_PLATFORM" = "xw32" ]]; then
   GLIB_PATH=$(sed "s|${CROSSROAD_PREFIX}/||g" <<< $GLIB_PATH)
   cp ${CROSSROAD_PREFIX}/${GLIB_PATH}gschemas.compiled _install${ARTIFACTS_SUFFIX}/${GLIB_PATH}
 fi
+
+fi # END OF CROSSROAD ENV
