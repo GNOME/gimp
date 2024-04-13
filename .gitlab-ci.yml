@@ -46,7 +46,7 @@ stages:
     key: $CI_JOB_NAME
     paths:
       - _ccache/
-  # Universal variables (works in all OSes and archs)
+  # Universal variables (works in all POSIX OSes and archs)
   before_script:
     - export PATH="$GIMP_PREFIX/bin:$PATH"
     - gcc -print-multi-os-directory | grep . && LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || LIB_DIR="lib"
@@ -180,7 +180,8 @@ image-debian-x64:
   needs: ["image-debian-x64"]
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
-  before_script:
+  script:
+    # Clone babl and GEGL
     - if [ "$CI_COMMIT_TAG" != "" ]; then
         repo=https://gitlab.gnome.org/GNOME/babl.git;
         babl_tag=$(git ls-remote --tags --exit-code --refs "$repo" |
@@ -196,9 +197,7 @@ image-debian-x64:
       fi
     - git clone $babl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
     - git clone $gegl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
-    # Universal variables
-    - !reference [.default, before_script]
-  script:
+    # Build babl and GEGL
     - mkdir _babl/_build${ARTIFACTS_SUFFIX} && cd _babl/_build${ARTIFACTS_SUFFIX}
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
     - ninja
@@ -359,7 +358,7 @@ packaging-flatpak-x64:
       paths:
         - '.flatpak-builder/cache'
         - '.flatpak-builder/ccache'
-  before_script:
+  script:
     # Report the installed versions of the runtime
     - flatpak info org.gnome.Platform
     - flatpak info org.gnome.Sdk
@@ -376,7 +375,7 @@ packaging-flatpak-x64:
 
     # GNOME script to customize the manifest
     - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
-  script:
+
     # Build deps and GIMP
     # (Our script is too long for Gitlab and no complete output would be collected
     # To make debugging actually possible, let's save logs as a file.)
@@ -416,6 +415,8 @@ packaging-flatpak-x64:
     key: $CI_JOB_NAME
     paths:
       - .cache/crossroad/
+  # TODO: Crossroads handling of universal variables still not perfect
+  before_script: []
 
 .win-x64-cross:
   rules:
@@ -433,9 +434,8 @@ deps-win-x64-cross:
   needs: ["image-debian-x64"]
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
-  before_script:
-    - bash -x build/windows/gitlab-ci/1_build-deps-crossroad.sh
   script:
+    - bash -x build/windows/gitlab-ci/1_build-deps-crossroad.sh
     - crossroad w64 gimp --run="build/windows/gitlab-ci/1_build-deps-crossroad.sh"
   artifacts:
     paths:
@@ -451,9 +451,8 @@ gimp-win-x64-cross:
   needs: ["deps-win-x64-cross", "gimp-debian-x64"]
   stage: gimp
   image: $CI_REGISTRY_IMAGE:build-debian-latest
-  before_script:
-    - bash -x build/windows/gitlab-ci/2_build-gimp-crossroad.sh
   script:
+    - bash -x build/windows/gitlab-ci/2_build-gimp-crossroad.sh
     - crossroad w64 gimp --run="build/windows/gitlab-ci/2_build-gimp-crossroad.sh"
   artifacts:
     paths:
@@ -470,7 +469,7 @@ packaging-win-x64-nightly:
   variables:
     CROSSROAD_PLATFORM: "w64"
   cache: []
-  before_script:
+  script:
     - apt-get update
     - apt-get install -y --no-install-recommends
                          binutils
@@ -478,7 +477,6 @@ packaging-win-x64-nightly:
                          file
                          libglib2.0-bin
                          python3
-  script:
     - bash -x build/windows/gitlab-ci/3_package-gimp-uni_base.sh
     - cd gimp-x64
     - bash -x ../build/windows/gitlab-ci/3_package-gimp-uni_sym.sh
@@ -503,6 +501,8 @@ packaging-win-x64-nightly:
   variables:
     BUILD_TYPE: "CI_NATIVE"
     CHERE_INVOKING: "yes"
+  # We use the same universal variables but not directly from PS
+  before_script: []
 
 .win-a64:
   extends: .win
@@ -808,11 +808,10 @@ clang-format:
     - merge_requests
   needs: []
   stage: analysis
-  before_script:
+  script:
     - apt-get update
     - apt-get install -y clang-format
                          git
-  script:
     - .gitlab/run_style_check_diff.sh
   allow_failure: true
   artifacts:
@@ -828,10 +827,9 @@ cppcheck:
   needs: []
   stage: analysis
   cache: []
-  before_script:
+  script:
     - apt-get update
     - apt-get install -y cppcheck
-  script:
     - cppcheck -q -j8 --enable=all --force --output-file=cppcheck.xml --xml --xml-version=2
         -i _build-x64 -i _build-x86 -i _deps -i _install-x64 -i _install-x86 -i .local -i .cache .
     - mkdir report
