@@ -276,6 +276,17 @@ dockable_actions_update (GimpActionGroup *group,
 
   SET_ACTIVE ("dockable-lock-tab", locked);
 
+  /* Submenus become invisible if all options inside them are hidden. */
+  SET_VISIBLE ("dockable-preview-size-gigantic", view_size != -1);
+  SET_VISIBLE ("dockable-preview-size-enormous", view_size != -1);
+  SET_VISIBLE ("dockable-preview-size-huge", view_size != -1);
+  SET_VISIBLE ("dockable-preview-size-extra-large", view_size != -1);
+  SET_VISIBLE ("dockable-preview-size-large", view_size != -1);
+  SET_VISIBLE ("dockable-preview-size-medium", view_size != -1);
+  SET_VISIBLE ("dockable-preview-size-small", view_size != -1);
+  SET_VISIBLE ("dockable-preview-size-extra-small", view_size != -1);
+  SET_VISIBLE ("dockable-preview-size-tiny", view_size != -1);
+
   if (view_size != -1)
     {
       if (view_size >= GIMP_VIEW_SIZE_GIGANTIC)
