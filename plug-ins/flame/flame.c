@@ -207,7 +207,7 @@ flame_create_procedure (GimpPlugIn  *plug_in,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "sample-density",
-                            _("_Brightness"), NULL,
+                            _("Sample _density"), NULL,
                             0.1, 20.0, 5.0,
                             G_PARAM_READWRITE);
 
@@ -217,7 +217,7 @@ flame_create_procedure (GimpPlugIn  *plug_in,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "spatial-filter-radius",
-                            _("_Brightness"), NULL,
+                            _("Spatial _filter radius"), NULL,
                             0.0, 4.0, 0.75,
                             G_PARAM_READWRITE);
 
