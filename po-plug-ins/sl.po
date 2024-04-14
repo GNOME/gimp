@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-10 15:56+0000\n"
-"PO-Revision-Date: 2024-04-11 22:05+0200\n"
+"POT-Creation-Date: 2024-04-13 15:13+0000\n"
+"PO-Revision-Date: 2024-04-14 12:26+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -11170,8 +11170,7 @@ msgstr "_Plamen ..."
 msgid "Create cosmic recursive fractal flames"
 msgstr "Ustvari kozmične rekurzivne fraktalne plamene"
 
-#: plug-ins/flame/flame.c:195 plug-ins/flame/flame.c:210
-#: plug-ins/flame/flame.c:220
+#: plug-ins/flame/flame.c:195
 msgid "_Brightness"
 msgstr "_Svetlost"
 
@@ -11179,9 +11178,17 @@ msgstr "_Svetlost"
 msgid "Co_ntrast"
 msgstr "Ko_ntrast"
 
+#: plug-ins/flame/flame.c:210
+msgid "Sample _density"
+msgstr "_Gostota vzorca"
+
 #: plug-ins/flame/flame.c:215
 msgid "Spa_tial oversample"
 msgstr "Prostorsko _nadvzročenje"
+
+#: plug-ins/flame/flame.c:220
+msgid "Spatial _filter radius"
+msgstr "Polmer prostorskega _filtra"
 
 #: plug-ins/flame/flame.c:225
 msgid "_Zoom"
