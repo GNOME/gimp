@@ -432,15 +432,15 @@ load_image (GFile        *file,
       fits_get_img_param (ifp, 3, &hdu.bitpix, &hdu.naxis, hdu.naxisn,
                           &status);
 
-      width  = hdu.naxisn[0];
-      height = hdu.naxisn[1];
-
       /* Skip if invalid dimensions; possibly header data */
       if (hdu.naxis < 2)
         {
           count++;
           continue;
         }
+
+      width  = hdu.naxisn[0];
+      height = hdu.naxisn[1];
 
       type = babl_type ("double");
       switch (hdu.bitpix)
@@ -621,12 +621,6 @@ load_image (GFile        *file,
       count++;
     }
 
-  /* As there might be different sized layers,
-   * we need to resize the canvas afterwards */
-  gimp_image_resize_to_layers (image);
-
-  fits_close_file (ifp, &status);
-
   if (! image)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -634,6 +628,12 @@ load_image (GFile        *file,
       fits_close_file (ifp, &status);
       return NULL;
     }
+
+  /* As there might be different sized layers,
+   * we need to resize the canvas afterwards */
+  gimp_image_resize_to_layers (image);
+
+  fits_close_file (ifp, &status);
 
   return image;
 }
