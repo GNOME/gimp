@@ -521,6 +521,17 @@ else
     install: true,
   )
 
+  if platform_osx
+    g_ir_compiler = find_program('g-ir-compiler')
+    gimp_exe_typelib = custom_target('macos-typelib.stamp',
+                                     output: [ 'macos-typelib.stamp' ],
+                                     command: [
+                                       'make-in-build-typelib.sh', libgimp_gir, libgimpui_gir,
+                                       meson.current_build_dir(), prefix, g_ir_compiler
+                                     ],
+                                     build_by_default: true)
+  endif
+
   if have_vala
     vapi_deps = [
       'babl-0.1',

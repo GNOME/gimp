@@ -1846,11 +1846,12 @@ gimp_run_env=environment()
 
 if meson.can_run_host_binaries()
   if enable_console_bin
-    gimp_exe_depends = gimpconsole_exe
+    gimp_real_exe = gimpconsole_exe
   else
-    gimp_exe_depends = gimpmain_exe
+    gimp_real_exe = gimpmain_exe
   endif
-  gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_exe_depends.full_path())
+  gimp_exe_depends = [gimp_real_exe]
+  gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_real_exe.full_path())
 
   menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
   gimp_run_env.set('GIMP_TESTING_MENUS_PATH', menu_paths)
@@ -1863,7 +1864,11 @@ if meson.can_run_host_binaries()
   gimp_run_env.set('GIMP_TESTING_ENVIRON_DIRS', meson.global_source_root() / 'data/environ/')
 
   gimp_run_env.prepend('GI_TYPELIB_PATH', prefix / 'lib/girepository-1.0/')
-  gimp_run_env.prepend('GI_TYPELIB_PATH', meson.global_build_root() / 'libgimp')
+  if platform_osx
+    gimp_run_env.prepend('GI_TYPELIB_PATH', meson.global_build_root() / 'libgimp/tmp')
+  else
+    gimp_run_env.prepend('GI_TYPELIB_PATH', meson.global_build_root() / 'libgimp')
+  endif
 
   gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimp')
   gimp_run_env.prepend('LD_LIBRARY_PATH', meson.global_build_root() / 'libgimpbase')
@@ -1891,7 +1896,7 @@ if meson.can_run_host_binaries()
 
     gimp_run_env.set('GIMP_GI_DIR', gi.get_variable('libdir'))
 
-    gimp_run_env.set('GIMP_TEMP_UPDATE_RPATH', gimp_exe_depends.full_path())
+    gimp_run_env.set('GIMP_TEMP_UPDATE_RPATH', gimp_real_exe.full_path())
     gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimp.full_path())
     gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpbase.full_path())
     gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpcolor.full_path())
