@@ -49,7 +49,7 @@ AVAILABLE_CHANNELS = (_("Red"), _("Green"), _("Blue"),
 channel_getters = [
     (lambda v, i: v.r),
     (lambda v, i: v.g),
-    (lambda v, i: v.r),
+    (lambda v, i: v.b),
 
     (lambda v, i: rgb_to_yiq(v.r, v.g, v.b)[0]),
 
