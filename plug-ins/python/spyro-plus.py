@@ -1437,7 +1437,7 @@ class SpyroWindow():
         def set_combo_in_table(txt_list, table, row, callback):
             combo = Gtk.ComboBoxText.new()
             for txt in txt_list:
-                combo.append_text(txt)
+                combo.append_text(_(txt))
 
             combo.set_halign(Gtk.Align.FILL)
             table.attach(combo, 1, row, 1, 1)
