@@ -62,12 +62,6 @@ preamble = """<!DOCTYPE html>
 
 postamble = """\n</pre>\n</body>\n</html>\n"""
 
-fmt_from_bpp = {
-        3: 'BBB',
-        6: 'HHH',
-        12: 'III'
-}
-
 def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, metadata, config, data):
     source_file = config.get_property("source-file")
     characters  = config.get_property("characters")
@@ -227,11 +221,6 @@ def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, metadata
     colors = {}
     chars = []
 
-    # Constants used for formatting the pixel color. We can handle image
-    # types where each color is 8 bits, 16 bits, or 32 bit integers.
-    fmt = fmt_from_bpp[bpp]
-    pixel_shift = 8 * (bpp//3 - 1)
-
     for y in range(0, height):
 
         # The characters in "chars" will be used to draw the next row.
@@ -240,16 +229,12 @@ def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, metadata
             chars[0:0] = data
 
         for x in range(0, width):
-            # gimp_drawable_get_pixel() was removed mistakenly in commit
-            # 89c359ce47. This must get fixed.
-            pixel_bytes = layer.get_pixel(x, y)
-            pixel_tuple = struct.unpack(fmt, pixel_bytes)
-            if bpp > 3:
-                 pixel_tuple=(
-                   pixel_tuple[0] >> pixel_shift,
-                   pixel_tuple[1] >> pixel_shift,
-                   pixel_tuple[2] >> pixel_shift,
-                 )
+            pixel_color = layer.get_pixel(x, y)
+            pixel_rgb = pixel_color.get_rgba()
+            pixel_tuple = (int(pixel_rgb[0] * 255),
+                           int(pixel_rgb[1] * 255),
+                           int(pixel_rgb[2] * 255))
+
             color = '%02x%02x%02x' % pixel_tuple
             style = 'background-color:black; color:#%s;' % color
             char = chars.pop()
