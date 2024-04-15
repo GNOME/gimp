@@ -57,7 +57,7 @@ if len(sys.argv) > 1:
 for df in def_files:
    directory, name = path.split (df)
    basename, extension = name.split (".")
-   libname = path.join(directory, ".libs", "lib" + basename + "-*.so")
+   libname = path.join(directory, "lib" + basename + "-*.so")
 
    filename = df
    if srcdir:
@@ -84,13 +84,9 @@ for df in def_files:
    status, nm = subprocess.getstatusoutput ("nm --defined-only --extern-only " +
                                             libname)
    if status != 0:
-      libname_meson = path.join(directory, "lib" + basename + "-*.so")
-      status, nm = subprocess.getstatusoutput ("nm --defined-only --extern-only " +
-                                               libname_meson)
-      if status != 0:
-        print("trouble reading {} or {} - has it been compiled?".format(libname, libname_meson))
-        have_errors = -1
-        continue
+      print("trouble reading {} - has it been compiled?".format(libname))
+      have_errors = -1
+      continue
 
    nmsymbols = nm.split()[2::3]
    nmsymbols = [s for s in nmsymbols if s[0] != '_']
