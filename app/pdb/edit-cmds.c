@@ -77,7 +77,7 @@ edit_cut_invoker (GimpProcedure         *procedure,
         {
           if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
                                            GIMP_PDB_ITEM_CONTENT, error) ||
-              gimp_pdb_item_is_group (GIMP_ITEM (drawables[i]), error))
+              ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawables[i]), error))
             {
               success = FALSE;
               break;
@@ -369,7 +369,7 @@ edit_named_cut_invoker (GimpProcedure         *procedure,
         {
           if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
                                            GIMP_PDB_ITEM_CONTENT, error) ||
-              gimp_pdb_item_is_group (GIMP_ITEM (drawables[i]), error))
+              ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawables[i]), error))
             {
               success = FALSE;
               break;
