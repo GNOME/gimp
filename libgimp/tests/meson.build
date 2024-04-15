@@ -8,6 +8,7 @@ endif
 
 tests = [
   'palette',
+  'selection-float'
 ]
 
 # Unit testing environment is based on gimp_run_env with additional environment

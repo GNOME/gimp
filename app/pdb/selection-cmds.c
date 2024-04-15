@@ -222,8 +222,8 @@ selection_float_invoker (GimpProcedure         *procedure,
           for (i = 0; i < num_drawables; i++)
             {
               if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
-                                               GIMP_PDB_ITEM_CONTENT, error) ||
-                  gimp_pdb_item_is_group (GIMP_ITEM (drawables[i]), error)   ||
+                                               GIMP_PDB_ITEM_CONTENT, error)     ||
+                  ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawables[i]), error) ||
                   (image && image != gimp_item_get_image (GIMP_ITEM (drawables[i]))))
                 {
                   success = FALSE;
