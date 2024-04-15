@@ -11,6 +11,17 @@ Otherwise, this branch is only for bug-fixes.
 Overview of Changes from GIMP 2.10.34 to GIMP 2.10.36
 =====================================================
 
+This release has no functional changes. It comes with various bug fixes on core
+and plug-ins.
+
+13 translations were updated: Belarusian, Brazilian Portuguese, British English,
+Danish, Georgian, German, Hungarian, Italian, Norwegian Nynorsk, Slovenian,
+Spanish, Turkish, Ukrainian.
+
+
+Overview of Changes from GIMP 2.10.34 to GIMP 2.10.36
+=====================================================
+
 Core:
 
   - Disable Arbitrary Rotation menus (under both Image and Layer menus) if no
