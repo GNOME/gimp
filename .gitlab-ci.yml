@@ -176,8 +176,24 @@ image-debian-x64:
 
 ## GNU/Linux 64-bit CIs (Debian bookworm) ##
 
-.deps-debian-base:
+deps-debian-x64:
   extends: .default
+  rules:
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_MESON_GCC != null'
+      variables:
+        CC: "ccache cc"
+        CXX: "ccache c++"
+    - if: '$GIMP_CI_MESON_CLANG != null'
+    - if: '$GIMP_CI_RASTER_ICONS != null'
+    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
+    - if: '$GIMP_CI_SOURCES != null'
+    - if: '$GIMP_CI_FLATPAK != null'
+    # On merge requests and commits.
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
   needs: ["image-debian-x64"]
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
@@ -215,31 +231,6 @@ image-debian-x64:
       - _babl/_build${ARTIFACTS_SUFFIX}/
       - _gegl/_build${ARTIFACTS_SUFFIX}/
     expire_in: 2 hours
-
-deps-debian-x64:
-  extends: .deps-debian-base
-  rules:
-    # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_MESON_CLANG != null'
-    - if: '$GIMP_CI_RASTER_ICONS != null'
-    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
-    - if: '$GIMP_CI_SOURCES != null'
-    - if: '$GIMP_CI_FLATPAK != null'
-    # On merge requests and commits.
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-    # On releases.
-    - if: '$CI_COMMIT_TAG != null'
-
-# GitLab "rules:variables:" is buggy so let's use jobs
-deps-debian-gcc:
-  extends: .deps-debian-base
-  rules:
-    # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_MESON_GCC != null'
-  variables:
-    CC: "ccache gcc"
-    CXX: "ccache gcc"
 
 .gimp-debian-base:
   extends: .default
@@ -302,10 +293,10 @@ gimp-debian-gcc:
   rules:
     # Custom builds only (web GUI, API or schedules).
     - if: '$GIMP_CI_MESON_GCC != null'
-  needs: ["deps-debian-gcc"]
+  needs: ["deps-debian-x64"]
   variables:
-    CC: "ccache gcc"
-    CXX: "ccache gcc"
+    CC: "ccache cc"
+    CXX: "ccache c++"
   script:
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
     - ninja
