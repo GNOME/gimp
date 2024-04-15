@@ -40,11 +40,10 @@ gimp_app_version = '@0@.@1@'.format(
 
 # API & pkg-config version
 api_version_major = gimp_app_version_major
-api_version_minor = gimp_app_version_minor
+api_version_minor = 0
 
-if api_version_minor == 99
+if gimp_app_version_minor == 99
   api_version_major += 1
-  api_version_minor = 0
 endif
 
 gimp_api_version = '@0@.@1@'.format(api_version_major, api_version_minor)
