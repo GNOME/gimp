@@ -8,7 +8,7 @@ if [[ "$MSYSTEM_CARCH" == "aarch64" ]]; then
   export ARTIFACTS_SUFFIX="-a64"
   export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
   export GIMP_DISTRIB=`realpath ./gimp-a64`
-elif [[ "$CROSSROAD_PLATFORM" == "w64" ]] || [[ "$MSYSTEM_CARCH" == "x86_64" ]]; then
+elif [[ "$CI_JOB_NAME" == "gimp-win-x64-cross" ]] || [[ "$MSYSTEM_CARCH" == "x86_64" ]]; then
   export ARTIFACTS_SUFFIX="-x64"
   export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
   export GIMP_DISTRIB=`realpath ./gimp-x64`
@@ -16,10 +16,6 @@ else # [[ "$MSYSTEM_CARCH" == "i686" ]];
   export ARTIFACTS_SUFFIX="-x86"
   export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
   export GIMP_DISTRIB=`realpath ./gimp-x86`
-fi
-
-if [[ "$BUILD_TYPE" != "CI_CROSS" ]] && [[ "$BUILD_TYPE" != "CI_NATIVE" ]]; then
-  pacman --noconfirm -Suy
 fi
 
 
@@ -31,13 +27,6 @@ if [[ "$BUILD_TYPE" == "CI_CROSS" ]]; then
                      file                      \
                      libglib2.0-bin            \
                      python3
-else
-  # Install the required (pre-built) packages again
-  # We take code from deps script to better maintenance
-  GIMP_DIR=""
-  DEPS_CODE=$(cat build/windows/gitlab-ci/1_build-deps-msys2.sh)
-  DEPS_CODE=$(sed -n '/# Install the/,/# End of install/p' <<< $DEPS_CODE)
-  echo "$DEPS_CODE" | bash
 fi
 
 
