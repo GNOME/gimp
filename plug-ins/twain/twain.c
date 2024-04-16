@@ -414,8 +414,12 @@ twain_run (GimpProcedure        *procedure,
    */
   if (! twainIsAvailable ())
     {
+      GError *error = NULL;
+
+      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                   _("TWAIN driver not found, scanning not available"));
       return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR,
-                                               NULL);
+                                               error);
     }
 
   if (run_mode == GIMP_RUN_NONINTERACTIVE)
