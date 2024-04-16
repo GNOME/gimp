@@ -69,6 +69,8 @@ enum
 
 struct _GimpAlignOptionsPrivate
 {
+  GimpImage *image;
+
   gboolean   align_layers;
   gboolean   align_vectors;
   gboolean   align_contents;
@@ -698,25 +700,22 @@ gimp_align_options_image_changed (GimpContext      *context,
                                   GimpImage        *image,
                                   GimpAlignOptions *options)
 {
-  GimpImage *prev_image;
-
-  prev_image = g_object_get_data (G_OBJECT (options), "gimp-align-options-image");
-
-  if (image != prev_image)
+  if (image != options->priv->image)
     {
       /* We cannot keep track of selected guides across image changes. */
       g_clear_pointer (&options->priv->selected_guides, g_list_free);
       gimp_align_options_pick_reference (options, NULL);
 
-      if (prev_image)
+      if (options->priv->image)
         {
-          g_signal_handlers_disconnect_by_func (prev_image,
+          g_signal_handlers_disconnect_by_func (options->priv->image,
                                                 G_CALLBACK (gimp_align_options_update_area),
                                                 options);
-          g_signal_handlers_disconnect_by_func (prev_image,
+          g_signal_handlers_disconnect_by_func (options->priv->image,
                                                 G_CALLBACK (gimp_align_options_guide_removed),
                                                 options);
         }
+      g_set_weak_pointer (&options->priv->image, image);
       if (image)
         {
           g_signal_connect_object (image, "selected-channels-changed",
@@ -730,7 +729,6 @@ gimp_align_options_image_changed (GimpContext      *context,
                                    options, 0);
         }
 
-      g_object_set_data (G_OBJECT (options), "gimp-align-options-image", image);
       gimp_align_options_update_area (options);
     }
 }
