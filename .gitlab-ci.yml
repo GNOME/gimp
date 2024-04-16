@@ -32,7 +32,18 @@ stages:
   - analysis
 
 
+# Common pipelines behavior
+workflow:
+  auto_cancel:
+    on_new_commit: interruptible
+
 .default:
+  interruptible: true
+  retry:
+    max: 1
+    when:
+      - 'runner_system_failure'
+      - 'scheduler_failure'
   # Default Docker image (unless otherwise defined)
   image: debian:bookworm
   # Caching support
@@ -70,6 +81,9 @@ variables:
 
 image-debian-x64:
   rules:
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+      interruptible: false
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_MESON_CLANG != null'
     - if: '$GIMP_CI_MESON_GCC != null'
@@ -80,8 +94,6 @@ image-debian-x64:
     # On merge requests and commits.
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_PIPELINE_SOURCE == "push"'
-    # On releases.
-    - if: '$CI_COMMIT_TAG != null'
   stage: prepare
   image:
     name: gcr.io/kaniko-project/executor:debug
@@ -219,6 +231,9 @@ image-debian-x64:
 deps-debian-x64:
   extends: .deps-debian-base
   rules:
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+      interruptible: false
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_MESON_CLANG != null'
     - if: '$GIMP_CI_RASTER_ICONS != null'
@@ -228,8 +243,6 @@ deps-debian-x64:
     # On merge requests and commits.
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_PIPELINE_SOURCE == "push"'
-    # On releases.
-    - if: '$CI_COMMIT_TAG != null'
 
 # GitLab "rules:variables:" is buggy so let's use jobs
 deps-debian-gcc:
@@ -261,6 +274,9 @@ deps-debian-gcc:
 gimp-debian-x64:
   extends: .gimp-debian-base
   rules:
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+      interruptible: false
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_MESON_CLANG != null'
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
@@ -269,8 +285,6 @@ gimp-debian-x64:
     # On merge requests and commits.
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_PIPELINE_SOURCE == "push"'
-    # On releases.
-    - if: '$CI_COMMIT_TAG != null'
   script:
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
                      -Dgi-docgen=enabled
@@ -484,12 +498,13 @@ packaging-win-x64-nightly:
 .win:
   extends: .default
   rules:
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+      interruptible: false
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_WIN_INSTALLER != null'
     # Merge requests with appropriate label.
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
-    # On releases.
-    - if: '$CI_COMMIT_TAG != null'
   variables:
     BUILD_TYPE: "CI_NATIVE"
     CHERE_INVOKING: "yes"
@@ -687,12 +702,13 @@ packaging-win-x86:
 sources-debian:
   extends: .default
   rules:
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+      interruptible: false
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_SOURCES != null'
     # On commits.
     - if: '$CI_PIPELINE_SOURCE == "push"'
-    # On releases.
-    - if: '$CI_COMMIT_TAG != null'
   needs: ["gimp-debian-x64"]
   stage: distribution
   cache: []
@@ -711,12 +727,13 @@ sources-debian:
 dev-docs:
   extends: .default
   rules:
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+      interruptible: false
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_SOURCES != null'
     # On commits.
     - if: '$CI_PIPELINE_SOURCE == "push"'
-    # On releases.
-    - if: '$CI_COMMIT_TAG != null'
   needs: ["deps-debian-x64", "gimp-debian-x64"]
   stage: distribution
   cache: []
