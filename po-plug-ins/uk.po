@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-13 15:13+0000\n"
-"PO-Revision-Date: 2024-04-13 18:48+0300\n"
+"POT-Creation-Date: 2024-04-16 16:36+0000\n"
+"PO-Revision-Date: 2024-04-16 20:13+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -65,7 +65,7 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1375
 #: plug-ins/common/cml-explorer.c:2142 plug-ins/common/cml-explorer.c:2352
 #: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
-#: plug-ins/common/file-gif-save.c:1222 plug-ins/common/file-heif.c:2314
+#: plug-ins/common/file-gif-save.c:1222 plug-ins/common/file-heif.c:2315
 #: plug-ins/common/file-pdf-load.c:686 plug-ins/common/file-pdf-save.c:1044
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
@@ -143,7 +143,7 @@ msgstr "Потренувати козу (Javascript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2315
+#: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2316
 #: plug-ins/common/file-pdf-load.c:687 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
 #: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3744
@@ -634,7 +634,7 @@ msgstr "Вертикально"
 #: plug-ins/common/file-xbm.c:911 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
 #: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:285
-#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:700
+#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:701
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:474
@@ -1014,7 +1014,7 @@ msgstr "База випадковості"
 #: plug-ins/common/file-cel.c:1009 plug-ins/common/qbist.c:842
 #: plug-ins/common/qbist.c:997 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:624
-#: plug-ins/flame/flame.c:1233
+#: plug-ins/flame/flame.c:1242
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:796
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1523
 #: plug-ins/gfig/gfig-dialog.c:778 plug-ins/ifs-compose/ifs-compose.c:911
@@ -1030,7 +1030,7 @@ msgstr "_Відкрити"
 #: plug-ins/common/file-pdf-save.c:1043 plug-ins/common/qbist.c:884
 #: plug-ins/common/qbist.c:1005 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:624
-#: plug-ins/flame/flame.c:1241
+#: plug-ins/flame/flame.c:1250
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:804
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1561
 #: plug-ins/gfig/gfig-dialog.c:828 plug-ins/gimpressionist/brush.c:271
@@ -1467,7 +1467,7 @@ msgstr "_Redness cr709:"
 
 #: plug-ins/common/compose.c:244 plug-ins/common/compose.c:438
 #: plug-ins/common/compose.c:501 plug-ins/common/decompose.c:193
-#: plug-ins/common/decompose.c:300 plug-ins/common/file-heif.c:2475
+#: plug-ins/common/decompose.c:300 plug-ins/common/file-heif.c:2476
 msgid "RGB"
 msgstr "RGB"
 
@@ -1988,7 +1988,7 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-xmc.c:668 plug-ins/common/file-xmc.c:907
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
 #: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:169
-#: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:395
+#: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:396
 #: plug-ins/file-fli/fli-gimp.c:450 plug-ins/file-fli/fli-gimp.c:501
 #: plug-ins/file-icns/file-icns-load.c:516
 #: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
@@ -2250,7 +2250,7 @@ msgid "Yellow"
 msgstr "Жовтий"
 
 #: plug-ins/common/decompose.c:215 plug-ins/common/warp.c:269
-#: plug-ins/file-fits/fits.c:1027 plug-ins/flame/flame.c:1282
+#: plug-ins/file-fits/fits.c:1028 plug-ins/flame/flame.c:1291
 #: plug-ins/gfig/gfig-dialog.c:1455
 msgid "Black"
 msgstr "Чорний"
@@ -2606,7 +2606,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #.
 #: plug-ins/common/file-cel.c:393 plug-ins/common/file-dicom.c:375
 #: plug-ins/common/file-gegl.c:358 plug-ins/common/file-gif-load.c:408
-#: plug-ins/common/file-heif.c:885 plug-ins/common/file-jp2-load.c:1077
+#: plug-ins/common/file-heif.c:886 plug-ins/common/file-jp2-load.c:1077
 #: plug-ins/common/file-pcx.c:501 plug-ins/common/file-pcx.c:544
 #: plug-ins/common/file-pdf-load.c:856 plug-ins/common/file-pix.c:393
 #: plug-ins/common/file-png.c:657 plug-ins/common/file-pnm.c:713
@@ -2694,7 +2694,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
 #: plug-ins/common/file-tga.c:1229 plug-ins/common/file-xbm.c:1050
 #: plug-ins/common/file-xpm.c:705 plug-ins/common/file-xwd.c:720
-#: plug-ins/file-bmp/bmp-save.c:333 plug-ins/file-fits/fits.c:673
+#: plug-ins/file-bmp/bmp-save.c:333 plug-ins/file-fits/fits.c:674
 #: plug-ins/file-fli/fli-gimp.c:776 plug-ins/file-icns/file-icns-save.c:612
 #: plug-ins/file-ico/ico-save.c:1335 plug-ins/file-ico/ico-save.c:1544
 #: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2165
@@ -2866,7 +2866,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "Неможливо зберегти зображення з альфа-каналом."
 
 #: plug-ins/common/file-dicom.c:1548 plug-ins/common/file-ps.c:1316
-#: plug-ins/common/file-xwd.c:715 plug-ins/file-fits/fits.c:668
+#: plug-ins/common/file-xwd.c:715 plug-ins/file-fits/fits.c:669
 #, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "Не вдається виконати дії із зображеннями невідомого типу."
@@ -3451,76 +3451,76 @@ msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
 "Зберегти зображення у форматі HEIF (High Efficiency Image File Format)."
 
-#: plug-ins/common/file-heif.c:259 plug-ins/common/file-heif.c:368
+#: plug-ins/common/file-heif.c:259 plug-ins/common/file-heif.c:369
 #: plug-ins/file-jpeg/jpeg.c:206
 msgid "_Quality"
 msgstr "Я_кість"
 
-#: plug-ins/common/file-heif.c:260 plug-ins/common/file-heif.c:369
+#: plug-ins/common/file-heif.c:260 plug-ins/common/file-heif.c:370
 msgid "Quality factor (0 = worst, 100 = best)"
 msgstr "Коефіцієнт якості (0 = найгірша, 100 = найкраща)"
 
-#: plug-ins/common/file-heif.c:265 plug-ins/common/file-heif.c:374
+#: plug-ins/common/file-heif.c:265 plug-ins/common/file-heif.c:375
 #: plug-ins/common/file-jpegxl.c:188 plug-ins/file-webp/file-webp.c:178
 msgid "L_ossless"
 msgstr "_Без втрат"
 
-#: plug-ins/common/file-heif.c:266 plug-ins/common/file-heif.c:375
+#: plug-ins/common/file-heif.c:266 plug-ins/common/file-heif.c:376
 #: plug-ins/common/file-jpegxl.c:189
 msgid "Use lossless compression"
 msgstr "Стискання без втрати якості"
 
-#: plug-ins/common/file-heif.c:271 plug-ins/common/file-heif.c:380
+#: plug-ins/common/file-heif.c:271 plug-ins/common/file-heif.c:381
 msgid "Save color prof_ile"
 msgstr "Зберегти _профіль кольорів"
 
-#: plug-ins/common/file-heif.c:272 plug-ins/common/file-heif.c:381
+#: plug-ins/common/file-heif.c:272 plug-ins/common/file-heif.c:382
 msgid "Save the image's color profile"
 msgstr "Зберегти колірний профіль зображення"
 
-#: plug-ins/common/file-heif.c:277 plug-ins/common/file-heif.c:386
+#: plug-ins/common/file-heif.c:277 plug-ins/common/file-heif.c:387
 #: plug-ins/common/file-jpegxl.c:200
 msgid "_Bit depth"
 msgstr "_Бітова глибина"
 
-#: plug-ins/common/file-heif.c:278 plug-ins/common/file-heif.c:387
+#: plug-ins/common/file-heif.c:278 plug-ins/common/file-heif.c:388
 #: plug-ins/common/file-jpegxl.c:201
 msgid "Bit depth of exported image"
 msgstr "Бітова глибина кольорів експортованого зображення"
 
-#: plug-ins/common/file-heif.c:283 plug-ins/common/file-heif.c:392
+#: plug-ins/common/file-heif.c:283 plug-ins/common/file-heif.c:393
 #: plug-ins/common/file-png.c:290
 msgid "_Pixel format"
 msgstr "_Формат пікселів"
 
-#: plug-ins/common/file-heif.c:284 plug-ins/common/file-heif.c:393
+#: plug-ins/common/file-heif.c:284 plug-ins/common/file-heif.c:394
 msgid "Format of color sub-sampling"
 msgstr "Формат субдискретизації кольорів"
 
-#: plug-ins/common/file-heif.c:290 plug-ins/common/file-heif.c:399
+#: plug-ins/common/file-heif.c:290 plug-ins/common/file-heif.c:400
 msgid "Enco_der speed"
 msgstr "Швидкість к_одувальника"
 
-#: plug-ins/common/file-heif.c:291 plug-ins/common/file-heif.c:400
+#: plug-ins/common/file-heif.c:291 plug-ins/common/file-heif.c:401
 msgid "Tradeoff between speed and compression"
 msgstr "Компроміс між швидкістю і рівнем стискання"
 
-#: plug-ins/common/file-heif.c:297 plug-ins/common/file-heif.c:406
+#: plug-ins/common/file-heif.c:297 plug-ins/common/file-heif.c:407
 #: plug-ins/common/file-jpegxl.c:225
 msgid "Save Exi_f"
 msgstr "Зберегти дані Exi_f"
 
-#: plug-ins/common/file-heif.c:298 plug-ins/common/file-heif.c:407
+#: plug-ins/common/file-heif.c:298 plug-ins/common/file-heif.c:408
 #: plug-ins/common/file-jpegxl.c:226
 msgid "Toggle saving Exif data"
 msgstr "Увімкнути або вимкнути збереження даних Exif"
 
-#: plug-ins/common/file-heif.c:303 plug-ins/common/file-heif.c:412
+#: plug-ins/common/file-heif.c:303 plug-ins/common/file-heif.c:413
 #: plug-ins/common/file-jpegxl.c:231
 msgid "Save _XMP"
 msgstr "Зберегти дані _XMP"
 
-#: plug-ins/common/file-heif.c:304 plug-ins/common/file-heif.c:413
+#: plug-ins/common/file-heif.c:304 plug-ins/common/file-heif.c:414
 #: plug-ins/common/file-jpegxl.c:232
 msgid "Toggle saving XMP data"
 msgstr "Увімкнути або вимкнути збереження даних XMP"
@@ -3534,103 +3534,103 @@ msgid "Load image stored in AV1 Image File Format (AVIF)"
 msgstr ""
 "Завантаження зображення, яке збережено у форматі файлів зображень AV1 (AVIF)"
 
-#: plug-ins/common/file-heif.c:350
+#: plug-ins/common/file-heif.c:351
 msgid "Exports AVIF images"
 msgstr "Експортує зображення AVIF"
 
-#: plug-ins/common/file-heif.c:351
+#: plug-ins/common/file-heif.c:352
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Зберегти зображення у форматі файлів зображень AV1 (AVIF)."
 
-#: plug-ins/common/file-heif.c:423
+#: plug-ins/common/file-heif.c:424
 msgid "JPEG 2000 encapsulated in HEIF"
 msgstr "JPEG 2000 вбудований до HEIF"
 
-#: plug-ins/common/file-heif.c:426
+#: plug-ins/common/file-heif.c:427
 msgid "Loads HEJ2 images"
 msgstr "Завантажує зображення HEJ2"
 
-#: plug-ins/common/file-heif.c:427
+#: plug-ins/common/file-heif.c:428
 msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "Завантаження зображення JPEG 2000, яке вбудовано до HEIF (HEJ2)"
 
-#: plug-ins/common/file-heif.c:528 plug-ins/common/file-heif.c:613
+#: plug-ins/common/file-heif.c:529 plug-ins/common/file-heif.c:614
 #, c-format
 msgid "HEIF format does not support multiple layers."
 msgstr "Для формату HEIF не передбачено підтримку декількох шарів."
 
-#: plug-ins/common/file-heif.c:925 plug-ins/common/file-heif.c:958
-#: plug-ins/common/file-heif.c:999 plug-ins/common/file-heif.c:1061
+#: plug-ins/common/file-heif.c:926 plug-ins/common/file-heif.c:959
+#: plug-ins/common/file-heif.c:1000 plug-ins/common/file-heif.c:1062
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Не вдалось завантажити зображення HEIF: %s"
 
-#: plug-ins/common/file-heif.c:947
+#: plug-ins/common/file-heif.c:948
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Не вдалось завантажити зображення HEIF: вхідний файл не містить придатних "
 "для читання зображень"
 
-#: plug-ins/common/file-heif.c:1183
+#: plug-ins/common/file-heif.c:1184
 msgid "image content"
 msgstr "вміст зображення"
 
-#: plug-ins/common/file-heif.c:1522
+#: plug-ins/common/file-heif.c:1523
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Експортуємо «%s» за допомогою кодувальника %s"
 
-#: plug-ins/common/file-heif.c:1570 plug-ins/common/file-heif.c:1955
+#: plug-ins/common/file-heif.c:1571 plug-ins/common/file-heif.c:1956
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Не вдалось закодувати зображення HEIF: %s"
 
-#: plug-ins/common/file-heif.c:2076
+#: plug-ins/common/file-heif.c:2077
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Не вдалось записати зображення HEIF: %s"
 
-#: plug-ins/common/file-heif.c:2165
+#: plug-ins/common/file-heif.c:2166
 msgid "primary"
 msgstr "основне"
 
-#: plug-ins/common/file-heif.c:2310
+#: plug-ins/common/file-heif.c:2311
 msgid "Load HEIF Image"
 msgstr "Завантажити зображення HEIF"
 
-#: plug-ins/common/file-heif.c:2324
+#: plug-ins/common/file-heif.c:2325
 msgid "Select Image"
 msgstr "Виберіть зображення"
 
-#: plug-ins/common/file-heif.c:2476
+#: plug-ins/common/file-heif.c:2477
 msgid "YUV444"
 msgstr "YUV444"
 
-#: plug-ins/common/file-heif.c:2477
+#: plug-ins/common/file-heif.c:2478
 msgid "YUV420"
 msgstr "YUV420"
 
-#: plug-ins/common/file-heif.c:2483 plug-ins/common/file-jpegxl.c:2028
+#: plug-ins/common/file-heif.c:2484 plug-ins/common/file-jpegxl.c:2028
 msgid "8 bit/channel"
 msgstr "8 біт/канал"
 
-#: plug-ins/common/file-heif.c:2484
+#: plug-ins/common/file-heif.c:2485
 msgid "10 bit/channel"
 msgstr "10 біт/канал"
 
-#: plug-ins/common/file-heif.c:2485
+#: plug-ins/common/file-heif.c:2486
 msgid "12 bit/channel"
 msgstr "12 біт/канал"
 
-#: plug-ins/common/file-heif.c:2491
+#: plug-ins/common/file-heif.c:2492
 msgid "Slow"
 msgstr "Повільно"
 
-#: plug-ins/common/file-heif.c:2492
+#: plug-ins/common/file-heif.c:2493
 msgid "Balanced"
 msgstr "Збалансовано"
 
-#: plug-ins/common/file-heif.c:2493
+#: plug-ins/common/file-heif.c:2494
 msgid "Fast"
 msgstr "Швидко"
 
@@ -4756,7 +4756,7 @@ msgid "PNG export format"
 msgstr "Формат експортування PNG"
 
 #: plug-ins/common/file-png.c:292 plug-ins/common/file-ps.c:3723
-#: plug-ins/file-fits/fits.c:1035
+#: plug-ins/file-fits/fits.c:1036
 msgid "Automatic"
 msgstr "Автоматично"
 
@@ -6209,7 +6209,7 @@ msgstr "По_чаток координат"
 msgid "Image origin (0 = top-left, 1 = bottom-left)"
 msgstr "Початок координат зображення (0 = вгорі ліворуч, 1 = внизу ліворуч)"
 
-#: plug-ins/common/file-tga.c:396 plug-ins/common/file-xwd.c:453
+#: plug-ins/common/file-tga.c:396
 #, c-format
 msgid "TGA format does not support multiple layers."
 msgstr "Для формату TGA не передбачено підтримку декількох шарів."
@@ -6772,6 +6772,12 @@ msgstr "Непідтримуваний тип малюнка"
 #: plug-ins/common/file-xwd.c:327 plug-ins/common/file-xwd.c:357
 msgid "X window dump"
 msgstr "Дамп X window"
+
+#: plug-ins/common/file-xwd.c:453
+#, c-format
+#| msgid "PCX format does not support multiple layers."
+msgid "XWD format does not support multiple layers."
+msgstr "Для формату XWD не передбачено підтримку декількох шарів."
 
 #: plug-ins/common/file-xwd.c:523
 #, c-format
@@ -9542,32 +9548,32 @@ msgstr ""
 msgid "FITS format does not support multiple layers."
 msgstr "Для формату FITS не передбачено підтримку декількох шарів."
 
-#: plug-ins/file-fits/fits.c:408
+#: plug-ins/file-fits/fits.c:409
 msgid "Error during opening of FITS file"
 msgstr "Помилка при відкриванні файлу FITS"
 
-#: plug-ins/file-fits/fits.c:421 plug-ins/file-fits/fits.c:633
+#: plug-ins/file-fits/fits.c:422 plug-ins/file-fits/fits.c:628
 msgid "FITS file keeps no displayable images"
 msgstr "Файл FITS не містить зображень, які можна показати"
 
-#: plug-ins/file-fits/fits.c:519
+#: plug-ins/file-fits/fits.c:520
 msgid "FITS HDU"
 msgstr "FITS HDU"
 
-#: plug-ins/file-fits/fits.c:657
+#: plug-ins/file-fits/fits.c:658
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "Зображення з альфа-каналами не можна експортувати як FITS"
 
-#: plug-ins/file-fits/fits.c:1023
+#: plug-ins/file-fits/fits.c:1024
 msgid "Open FITS File"
 msgstr "Відкриття файла FITS"
 
-#: plug-ins/file-fits/fits.c:1028 plug-ins/gfig/gfig-dialog.c:1288
+#: plug-ins/file-fits/fits.c:1029 plug-ins/gfig/gfig-dialog.c:1288
 #: plug-ins/gfig/gfig-dialog.c:1456
 msgid "White"
 msgstr "Білий"
 
-#: plug-ins/file-fits/fits.c:1036
+#: plug-ins/file-fits/fits.c:1037
 msgid "By DATAMIN/DATAMAX"
 msgstr "За DATAMIN/DATAMAX"
 
@@ -11270,7 +11276,6 @@ msgid "Co_ntrast"
 msgstr "_Контраст"
 
 #: plug-ins/flame/flame.c:210
-#| msgid "Sample _density:"
 msgid "Sample _density"
 msgstr "_Щільність зразка"
 
@@ -11279,7 +11284,6 @@ msgid "Spa_tial oversample"
 msgstr "П_ерекриття"
 
 #: plug-ins/flame/flame.c:220
-#| msgid "Spatial _filter radius:"
 msgid "Spatial _filter radius"
 msgstr "Радіус просторового _фільтра"
 
@@ -11295,7 +11299,7 @@ msgstr "_X"
 msgid "_Y"
 msgstr "_Y"
 
-#: plug-ins/flame/flame.c:350
+#: plug-ins/flame/flame.c:344
 msgid "Drawing flame"
 msgstr "Малювання полум'я"
 
@@ -11455,29 +11459,29 @@ msgstr "Завантаження полум'я"
 msgid "Save Flame"
 msgstr "Збереження полум'я"
 
-#: plug-ins/flame/flame.c:1170
+#: plug-ins/flame/flame.c:1179
 msgid "Flame"
 msgstr "Полум'я"
 
-#: plug-ins/flame/flame.c:1225 plug-ins/gimpressionist/orientation.c:190
+#: plug-ins/flame/flame.c:1234 plug-ins/gimpressionist/orientation.c:190
 #: plug-ins/gimpressionist/size.c:199
 #: plug-ins/gradient-flare/gradient-flare.c:3046
 msgid "_Edit"
 msgstr "З_міни"
 
-#: plug-ins/flame/flame.c:1271
+#: plug-ins/flame/flame.c:1280
 msgid "Color_map:"
 msgstr "_Мапа кольорів:"
 
-#: plug-ins/flame/flame.c:1313
+#: plug-ins/flame/flame.c:1322
 msgid "Custom gradient"
 msgstr "Власний градієнт"
 
-#: plug-ins/flame/flame.c:1341
+#: plug-ins/flame/flame.c:1350
 msgid "_Rendering"
 msgstr "_Візуалізація"
 
-#: plug-ins/flame/flame.c:1344
+#: plug-ins/flame/flame.c:1353
 msgid "C_amera"
 msgstr "_Камера"
 
