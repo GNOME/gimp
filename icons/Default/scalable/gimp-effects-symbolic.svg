@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   height="16"
+   viewBox="0 0 16 16"
+   width="16"
+   version="1.1"
+   id="svg10"
+   xml:space="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs10" /><g
+     fill="#222222"
+     id="g10"><path
+       d="m 9.0736307,7.1929687 c -0.386719,0.390625 -0.386719,1.0234374 0.00391,1.4140624 L 13.07754,12.599219 c 0.390625,0.390625 1.023437,0.390625 1.414062,0 0.390625,-0.390625 0.390625,-1.023438 -0.0039,-1.414063 L 10.487703,7.1929687 c -0.390625,-0.390625 -1.0234383,-0.390625 -1.4140623,0 z m 0,0"
+       id="path8"
+       style="fill:#bebebe;fill-opacity:1" /><path
+       d="m 14.487578,7.1924818 c -0.390625,-0.390625 -1.023438,-0.390625 -1.414062,0.00391 L 9.0735164,11.223736 c -0.390626,0.390625 -0.386719,1.023437 0.00391,1.414062 0.394531,0.390625 1.0273436,0.386719 1.4140616,-0.0039 l 4,-4.0273441 c 0.390621,-0.394537 0.386715,-1.0273491 -0.0039,-1.4140681 z m 0,0"
+       id="path9"
+       style="fill:#bebebe;fill-opacity:1" /><g
+       color="#000000"
+       font-weight="400"
+       font-family="sans-serif"
+       white-space="normal"
+       fill="#2e3436"
+       id="g2"
+       transform="translate(0.344,-0.448)"
+       style="fill:#bebebe;fill-opacity:1"><path
+         d="M 5.94,3.048 C 4.606,3.048 3.665,3.86 3.295,4.598 3.0711783,5.048762 2.9483254,5.542904 2.935,6.046 V 6.05 l 0.024,4.988 c 0,0 -0.016,0.292 -0.15,0.556 -0.135,0.265 -0.203,0.454 -0.87,0.454 h -1 v 2 h 1 c 1.334,0 2.276,-0.811 2.65,-1.547 0.376,-0.736 0.37,-1.444 0.37,-1.444 V 11.05 l -0.023,-5 c 0,0 0.015,-0.291 0.146,-0.553 0.132,-0.262 0.19,-0.45 0.858,-0.45 h 1 v -2 z"
+         style="line-height:normal;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;text-transform:none;text-orientation:mixed;shape-padding:0;isolation:auto;mix-blend-mode:normal;fill:#bebebe;fill-opacity:1"
+         overflow="visible"
+         id="path1" /><path
+         d="m 1.94,7.048 v 2 h 5 v -2 h -4 z"
+         style="line-height:normal;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;text-transform:none;text-orientation:mixed;shape-padding:0;isolation:auto;mix-blend-mode:normal;fill:#bebebe;fill-opacity:1"
+         overflow="visible"
+         id="path2-3" /></g></g></svg>
