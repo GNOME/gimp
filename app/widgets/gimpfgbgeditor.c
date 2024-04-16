@@ -241,6 +241,7 @@ gimp_fg_bg_editor_dispose (GObject *object)
   if (editor->context)
     gimp_fg_bg_editor_set_context (editor, NULL);
 
+  g_clear_weak_pointer (&editor->active_image);
   g_clear_object (&editor->default_icon);
   g_clear_object (&editor->swap_icon);
 
@@ -795,7 +796,7 @@ gimp_fg_bg_editor_image_changed (GimpFgBgEditor *editor,
                                                 editor);
         }
     }
-  editor->active_image = image;
+  g_set_weak_pointer (&editor->active_image, image);
   if (image)
     {
       g_signal_connect_swapped (image, "notify::base-type",
