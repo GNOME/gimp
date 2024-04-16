@@ -95,6 +95,7 @@ gimp-device-status
 gimp-display-filter
 gimp-duplicate
 gimp-dynamics
+gimp-effects
 gimp-file-manager
 gimp-floating-selection
 gimp-gegl
