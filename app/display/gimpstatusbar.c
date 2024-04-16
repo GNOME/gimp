@@ -2049,23 +2049,15 @@ gimp_statusbar_shell_set_image (GimpStatusbar *statusbar,
 {
   g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
 
-  if (image != statusbar->image)
-    {
-      if (statusbar->image)
-        {
-          g_signal_handlers_disconnect_by_func (statusbar->image,
-                                                gimp_statusbar_shell_image_simulation_changed,
-                                                statusbar);
-          g_object_unref (statusbar->image);
-        }
-    }
+  if (statusbar->image)
+    g_signal_handlers_disconnect_by_func (statusbar->image,
+                                          gimp_statusbar_shell_image_simulation_changed,
+                                          statusbar);
 
-  statusbar->image = image;
+  g_set_weak_pointer (&statusbar->image, image);
 
   if (statusbar->image)
     {
-      g_object_ref (statusbar->image);
-
       g_signal_connect (statusbar->image, "simulation-profile-changed",
                         G_CALLBACK (gimp_statusbar_shell_image_simulation_changed),
                         statusbar);
