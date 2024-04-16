@@ -712,9 +712,9 @@ gimp_color_editor_color_picked (GtkWidget       *widget,
   if (editor->context && color)
     {
       if (editor->edit_bg)
-        gimp_context_set_background (editor->context, color);
+        gimp_context_set_background (editor->context, GEGL_COLOR (color));
       else
-        gimp_context_set_foreground (editor->context, color);
+        gimp_context_set_foreground (editor->context, GEGL_COLOR (color));
     }
 }
 
