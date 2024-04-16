@@ -496,10 +496,19 @@ script_fu_editor_key_function (GtkWidget        *widget,
 
       is_error = script_fu_interpret_string (command);
 
-      script_fu_output_to_console (is_error,
-                                   output->str,
-                                   output->len,
-                                   console);
+      /* Send captured stdout to console, w/o emphasis. */
+      script_fu_output_to_console (FALSE, output->str, output->len, console);
+      /* Assert the output had a trailing newline, possibly an empty line. */
+
+      if (is_error)
+        {
+          /* Send error text to console, w emphasis. */
+          const gchar *text = script_fu_get_error_msg ();
+
+          script_fu_output_to_console (TRUE, text, strlen (text), console);
+
+          g_free ( (gpointer) text);
+        }
 
       gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
                                           GIMP_PDB_ERROR_HANDLER_INTERNAL);

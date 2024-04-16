@@ -151,6 +151,41 @@ script_fu_get_success_msg (void)
   return ts_get_success_msg ();
 }
 
+/* Return an error message string for recent failure of script.
+ *
+ * Requires an interpretation just returned an error, else returns "Unknown".
+ * Should be called exactly once per error, else second calls return "Unknown".
+ *
+ * Transfer ownership to caller, the string must be freed.
+ */
+const gchar *
+script_fu_get_error_msg (void)
+{
+  return ts_get_error_msg ();
+}
+
+/* Return a GError for recent failure of script.
+ *
+ * Requires an interpretation just returned an error,
+ * else returns a GError with message "Unknown".
+ * Should be called exactly once per error
+ *
+ * You should call either get_error_msg, or get_gerror, but not both.
+ *
+ * Transfers ownership, caller must free the GError.
+ */
+GError *
+script_fu_get_gerror (void)
+{
+  const gchar *error_message;
+  GError      *result;
+
+  error_message = script_fu_get_error_msg ();
+  result = g_error_new_literal (g_quark_from_string ("scriptfu"), 0, error_message);
+  g_free ((gpointer) error_message);
+  return result;
+}
+
 void
 script_fu_run_read_eval_print_loop (void)
 {

@@ -30,6 +30,7 @@ install_data(
 
 scripts_independent = [
   { 'name': 'test-bytes' },
+  { 'name': 'test-display' },
 ]
 
 foreach plugin : scripts_independent

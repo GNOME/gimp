@@ -25,6 +25,7 @@
 
 #include "scheme-wrapper.h"       /* type "pointer" */
 
+#include "script-fu-lib.h"
 #include "script-fu-types.h"
 #include "script-fu-interface.h"  /* ScriptFu's GUI implementation. */
 #include "script-fu-dialog.h"     /* Gimp's GUI implementation. */
@@ -185,15 +186,23 @@ script_fu_run_procedure (GimpProcedure       *procedure,
         /*  First, try to collect the standard script arguments...  */
         min_args = script_fu_script_collect_standard_args (script, pspecs, n_pspecs, config);
 
-        /*  ...then acquire the rest of arguments (if any) with a dialog  */
+        /*  If plugin has more than the standard args. */
         if (script->n_args > min_args)
           {
+            /* Get the rest of arguments with a dialog, and run the command.  */
             status = script_fu_interface_dialog (script, min_args);
+
+            if (status == GIMP_PDB_EXECUTION_ERROR)
+              return gimp_procedure_new_return_values (procedure, status,
+                                                       script_fu_get_gerror ());
+
+            /* Else no error, or GIMP_PDB_CANCEL.
+             * GIMP_PDB_CALLING_ERROR is emitted prior to this.
+             * Break and return without an error message.
+             */
             break;
           }
-        /*  otherwise (if the script takes no more arguments), skip
-         *  this part and run the script directly (fallthrough)
-         */
+        /*  Else fallthrough to next case and run the script without dialog. */
       }
 
     case GIMP_RUN_NONINTERACTIVE:

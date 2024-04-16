@@ -125,6 +125,9 @@ typedef struct num {
 
 #if !STANDALONE
 
+/* Functions to capture and retrieve output i.e. writes using display.
+ * SF Tools: Console, Eval, Server uses.
+ */
 typedef enum { TS_OUTPUT_NORMAL, TS_OUTPUT_ERROR } TsOutputType;
 
 typedef void (* ts_output_func)       (TsOutputType    type,
@@ -137,6 +140,10 @@ SCHEME_EXPORT void ts_register_output_func (ts_output_func  func,
 SCHEME_EXPORT void ts_output_string        (TsOutputType    type,
                                             const char     *string,
                                             int             len);
+
+/* Functions to retrieve error messages. */
+SCHEME_EXPORT const gchar *ts_get_error_string (scheme *sc);
+
 #endif
 
 SCHEME_EXPORT scheme *scheme_init_new(void);

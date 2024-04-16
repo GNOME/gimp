@@ -131,6 +131,7 @@ pointer inport;
 pointer outport;
 pointer save_inport;
 pointer loadport;
+port   *errport;          /* Not a cell, a port struct. */
 
 #ifndef MAXFIL
 #define MAXFIL 64

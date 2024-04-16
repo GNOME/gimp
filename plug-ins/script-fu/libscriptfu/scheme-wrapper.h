@@ -33,6 +33,7 @@ void          ts_set_print_flag       (gint          print_flag);
 void          ts_print_welcome        (void);
 
 const gchar * ts_get_success_msg      (void);
+const gchar * ts_get_error_msg        (void);
 
 void          ts_interpret_stdin      (void);
 

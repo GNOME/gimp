@@ -188,11 +188,18 @@ output_port_struct_from_scratch (scheme *sc)
 
   pt = (port*) sc->malloc (sizeof (port));
   if (pt == NULL)
-    return NULL;
+    {
+      no_memory (sc, "output port struct");
+      return NULL;
+    }
 
   start = sc->malloc (STRING_PORT_MIN_ALLOCATION);
   if (start == NULL)
-    return NULL;
+    {
+      no_memory (sc, "output port bytes");
+      return NULL;
+    }
+
   memset (start, '\0', STRING_PORT_MIN_ALLOCATION);
 
   init_port_struct (pt, port_string|port_output, start, STRING_PORT_MIN_ALLOCATION);
@@ -212,7 +219,7 @@ output_port_from_scratch (scheme *sc)
   port *pt = output_port_struct_from_scratch (sc);
   if (pt == NULL)
     {
-      no_memory (sc, "output port struct");
+      /* no-memory already called. */
       return sc->NIL;
     }
   else
@@ -273,6 +280,7 @@ output_port_expand_by_at_least (scheme *sc, port *p, size_t byte_count)
   /* GLib MAX */
   size_t new_size = current_content_size_bytes + MAX (byte_count, STRING_PORT_MIN_ALLOCATION) + 1;
 
+  g_debug ("%s byte_count %" G_GSIZE_FORMAT, G_STRFUNC, byte_count);
   g_debug ("%s current contents %" G_GSIZE_FORMAT " new size %" G_GSIZE_FORMAT, G_STRFUNC, current_content_size_bytes, new_size);
 
   new_buffer = sc->malloc (new_size);
@@ -378,6 +386,17 @@ string_port_open_output_string (scheme *sc, pointer scheme_string)
   return output_port_from_scratch (sc);
 }
 
+/* Returns C pointer to a port struct, or NULL.
+ *
+ * Used for internal ports of the interpreter
+ * (not for port objects known by a script.)
+ */
+port*
+string_port_open_output_port (scheme *sc)
+{
+  return output_port_struct_from_scratch (sc);
+}
+
 /* Create a string-port of kind input from a Scheme string.
  *
  * Ensures the port contents do not depend on lifetime of Scheme string.
@@ -398,6 +417,24 @@ string_port_open_input_string (scheme *sc, pointer scheme_string, int prop)
   return input_port_from_string (sc, c_string);
 }
 
+
+/* Free heap allocation of a port struct.
+ *
+ * Require port is-a struct port.
+ * The port* must not be used again.
+ */
+void
+string_port_dispose_struct (scheme  *sc, port *port)
+{
+  g_debug ("%s content size %ld", G_STRFUNC, strlen (port->rep.string.start) + 1);
+
+  /* Free allocated buffer. */
+  sc->free (port->rep.string.start);
+
+  /* Free the allocated struct itself. */
+  sc->free (port);
+}
+
 /* Free heap allocation of the Scheme object.
  * Called during garbage collection, the cell itself is being reclaimed.
  *
@@ -406,13 +443,8 @@ string_port_open_input_string (scheme *sc, pointer scheme_string, int prop)
 void
 string_port_dispose (scheme  *sc, pointer port_cell)
 {
-  g_debug ("%s content size %ld", G_STRFUNC, strlen (port_cell->_object._port->rep.string.start) + 1);
-
-  /* Free allocated buffer. */
-  sc->free (port_cell->_object._port->rep.string.start);
-
-  /* Free the allocated struct itself. */
-  sc->free (port_cell->_object._port);
+  string_port_dispose_struct (sc, port_cell->_object._port);
+  /* The cell still has a reference, but it is invalid. */
 }
 
 /* Implementation of Scheme GET-OUTPUT-STRING.

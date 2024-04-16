@@ -19,6 +19,7 @@
  * Testing
  *
  * Use a scriptfu server client such as https://github.com/vit1-irk/gimp-exec.
+ * OR servertest.py in the repo, >python2 servertest.py
  *
  * In a console, export G_MESSAGES_DEBUG=scriptfu (to see more logging from scriptfu)
  * (script-fu-server does not use g_logging but rolls its own.)
@@ -180,7 +181,7 @@ typedef union
 static void      server_start       (const gchar *listen_ip,
                                      gint         port,
                                      const gchar *logfile);
-static gboolean  execute_command    (SFCommand   *cmd);
+static void      execute_command    (SFCommand   *cmd);
 static gint      read_from_client   (gint         filedes);
 static gint      make_socket        (const struct addrinfo
                                                  *ai);
@@ -563,7 +564,6 @@ server_start (const gchar *listen_ip,
         {
           SFCommand *cmd = (SFCommand *) command_queue->data;
 
-          /*  Process the command  */
           execute_command (cmd);
 
           /*  Remove the command from the list  */
@@ -582,69 +582,113 @@ server_start (const gchar *listen_ip,
   server_quit ();
 }
 
+
+/* Interpret command on the ScriptFu interpreter.
+ * Returns whether the script had an error.
+ *
+ * Also creates a GString at the handle script_stdout.
+ * Ownership is transfered, and caller must free.
+ *
+ * The returned script_stdout is either:
+ *  - when no error, what the script writes to stdout
+ *  - an error message from the interpreter,
+ *    or from the script calling Scheme:error or Scheme:quit
+ *
+ * Scheme scripts yield only the value of the final expression.
+ * The yielded value is NOT written to stdout.
+ * Scripts that are calls to Gimp PDB procedure never yield a useful value,
+ * since they are functions returning void.
+ * Most scripts are for their side effects,
+ * and not for what they write to stdout.
+ */
 static gboolean
+get_interpretation_result (SFCommand *cmd, GString **script_stdout)
+{
+  gboolean is_script_error = FALSE;
+
+  *script_stdout = g_string_new (NULL);
+
+  script_fu_redirect_output_to_gstr (*script_stdout);
+
+  /* Returns non-zero on error. */
+  if (script_fu_interpret_string (cmd->command) != 0)
+    {
+      /* Substitute error message for output in script_stdout.
+       * What the script wrote to stdout before error is lost.
+       */
+      g_string_assign (*script_stdout, script_fu_get_error_msg ());
+      is_script_error = TRUE;
+    }
+
+  return is_script_error;
+}
+
+
+/* Interpret command, then relay result to client.
+ * Side effect: log start, response, ending time.
+ *
+ * !!! Does not return a value indicating errors.
+ * Neither IO errors on the socket nor errors interpreting the script.
+ *
+ * Does write an error byte to the client indicating error interpreting script.
+ * On script error, substitutes an error msg for earlier output from the script.
+ */
+static void
 execute_command (SFCommand *cmd)
 {
   guchar      buffer[RESPONSE_HEADER];
-  GString    *response;
+  GString    *response = NULL;
   time_t      clocknow;
-  gboolean    error;
-  gint        i;
   gdouble     total_time;
   GTimer     *timer;
+  gboolean    is_script_error;
 
   server_log ("Processing request #%d\n", cmd->request_no);
+
   timer = g_timer_new ();
 
-  response = g_string_new (NULL);
-  script_fu_redirect_output_to_gstr (response);
+  is_script_error = get_interpretation_result (cmd, &response);
+  /* Require interpretation set response to a valid GString. */
+  if (response == NULL)
+    return;
 
-  /*  run the command  */
-  if (script_fu_interpret_string (cmd->command) != 0)
-    {
-      error = TRUE;
+  server_log ("%s\n", response->str);
 
-      server_log ("%s\n", response->str);
-    }
-  else
-    {
-      error = FALSE;
+  total_time = g_timer_elapsed (timer, NULL);
+  time (&clocknow);
+  server_log ("Request #%d processed in %.3f seconds, finishing on %s",
+              cmd->request_no, total_time, ctime (&clocknow));
 
-      if (response->len == 0)
-        g_string_assign (response, script_fu_get_success_msg ());
-
-      total_time = g_timer_elapsed (timer, NULL);
-      time (&clocknow);
-      server_log ("Request #%d processed in %.3f seconds, finishing on %s",
-                  cmd->request_no, total_time, ctime (&clocknow));
-    }
   g_timer_destroy (timer);
 
   buffer[MAGIC_BYTE]     = MAGIC;
-  buffer[ERROR_BYTE]     = error ? TRUE : FALSE;
+  buffer[ERROR_BYTE]     = is_script_error ? TRUE : FALSE;
   buffer[RSP_LEN_H_BYTE] = (guchar) (response->len >> 8);
   buffer[RSP_LEN_L_BYTE] = (guchar) (response->len & 0xFF);
 
-  /*  Write the response to the client  */
-  for (i = 0; i < RESPONSE_HEADER; i++)
-    if (cmd->filedes > 0 && send (cmd->filedes, (const void *) (buffer + i), 1, 0) < 0)
-      {
-        /*  Write error  */
-        print_socket_api_error ("send");
-        return FALSE;
-      }
+  /*  Write a header to the client, as one message. */
+  if (cmd->filedes > 0 &&
+      send (cmd->filedes, (const void *) (buffer), RESPONSE_HEADER, 0) < 0)
+    {
+      /*  Write error  */
+      g_debug ("%s error sending header", G_STRFUNC);
+      print_socket_api_error ("send");
+      g_string_free (response, TRUE);
+      return;
+    }
 
-  for (i = 0; i < response->len; i++)
-    if (cmd->filedes > 0 && send (cmd->filedes, response->str + i, 1, 0) < 0)
-      {
-        /*  Write error  */
-        print_socket_api_error ("send");
-        return FALSE;
-      }
+  /*  Write the script response to the client, as one message. */
+  if (cmd->filedes > 0 &&
+      send (cmd->filedes, response->str, response->len, 0) < 0)
+    {
+      /*  Write error.  A client may have closed before taking all bytes.  */
+      g_debug ("%s error sending response", G_STRFUNC);
+      print_socket_api_error ("send");
+      g_string_free (response, TRUE);
+      return;
+    }
 
   g_string_free (response, TRUE);
-
-  return FALSE;
 }
 
 static gint

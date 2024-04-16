@@ -36,6 +36,8 @@ void         script_fu_print_welcome             (void);
 
 gboolean     script_fu_interpret_string          (const gchar     *text);
 const gchar *script_fu_get_success_msg           (void);
+const gchar *script_fu_get_error_msg             (void);
+GError      *script_fu_get_gerror                (void);
 
 void         script_fu_run_read_eval_print_loop  (void);
 

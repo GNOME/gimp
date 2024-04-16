@@ -30,6 +30,7 @@
 
 #include "scheme-wrapper.h"
 
+#include "script-fu-lib.h"
 #include "script-fu-types.h"
 
 #include "script-fu-interface.h"
@@ -773,11 +774,16 @@ script_fu_update_models (SFScript *script)
 }
 
 
-/* Handler for event: OK button clicked. */
+/* Handler for event: OK button clicked.
+ *
+ * Run the scripts with values from the dialog.
+ *
+ * Sets a global status of the PDB call to this plugin,
+ * which is returned later by interface_dialog.
+ */
 static void
 script_fu_ok (SFScript *script)
 {
-  GString *output;
   gchar   *command;
 
   script_fu_update_models (script);
@@ -785,25 +791,28 @@ script_fu_ok (SFScript *script)
   command = script_fu_script_get_command (script);
 
   /*  run the command through the interpreter  */
-  output = g_string_new (NULL);
-  ts_register_output_func (ts_gstring_output_func, output);
 
   gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
                                       GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
+  script_fu_redirect_output_to_stdout ();
+
+  /* Returns non-zero error code on failure. */
   if (ts_interpret_string (command))
     {
-      gchar *message = g_strdup_printf (_("Error while executing %s:"),
-                                        script->name);
+      gchar *message;
 
-      g_message ("%s\n\n%s", message, output->str);
+      /* Log to stdout.  Later to Gimp. */
+      message = g_strdup_printf (_("Error while executing %s:"), script->name);
+      g_message ("%s\n", message);
       g_free (message);
+
+      /* Set global to be returned by script-fu-interface-dialog. */
+      sf_status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
                                       GIMP_PDB_ERROR_HANDLER_INTERNAL);
-
-  g_string_free (output, TRUE);
 
   g_free (command);
 }

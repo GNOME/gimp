@@ -25,7 +25,8 @@ pointer string_port_open_input_string  (scheme      *sc,
                                         int          prop);
 void    string_port_dispose            (scheme      *sc,
                                         pointer      port);
-
+void    string_port_dispose_struct     (scheme      *sc,
+                                        port        *port);
 void    string_port_init_static_port   (port        *port,
                                         const gchar *command);
 
@@ -38,5 +39,7 @@ void    string_port_put_bytes          (scheme      *sc,
 
 pointer string_port_get_output_string  (scheme      *sc,
                                         port        *port);
+
+port   *string_port_open_output_port   (scheme      *sc);
 
 #endif /* __STRING_PORT_H__ */

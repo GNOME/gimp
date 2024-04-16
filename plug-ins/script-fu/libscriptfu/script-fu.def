@@ -9,6 +9,8 @@ EXPORTS
   script_fu_print_welcome
   script_fu_interpret_string
   script_fu_get_success_msg
+  script_fu_get_error_msg
+  script_fu_get_gerror
   script_fu_run_read_eval_print_loop
   script_fu_register_quit_callback
   script_fu_register_post_command_callback

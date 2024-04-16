@@ -43,13 +43,19 @@
 
 
 /* Interpret a command.
+ * A command is a string for a Scheme call to a script plugin's run function.
  *
  * When errors during interpretation:
  * 1) set the error message from tinyscheme into GError at given handle.
  * 2) return FALSE
- * otherwise, return TRUE and discard any result of interpretation
+ * Otherwise, return TRUE and discard any result of interpretation.
  * ScriptFu return values only have a GimpPDBStatus,
  * since ScriptFu plugin scripts can only be declared returning void.
+ *
+ * In v2, we captured output from a script (calls to Scheme:display)
+ * and they were a prefix of any error message.
+ * In v3, output from a script is shown in any stdout/terminal in which Gimp was started.
+ * And any error msg is retrieved from the inner interpreter.
  *
  * While interpreting, any errors from further calls to the PDB
  * can show error dialogs in any GIMP gui,
@@ -63,25 +69,17 @@ gboolean
 script_fu_run_command (const gchar  *command,
                        GError      **error)
 {
-  GString  *output;
-  gboolean  success = FALSE;
-
   g_debug ("script_fu_run_command: %s", command);
-  output = g_string_new (NULL);
-  script_fu_redirect_output_to_gstr (output);
 
   if (script_fu_interpret_string (command))
     {
-      g_set_error (error, GIMP_PLUG_IN_ERROR, 0, "%s", output->str);
+      *error = script_fu_get_gerror ();
+      return FALSE;
     }
   else
     {
-      success = TRUE;
+      return TRUE;
     }
-
-  g_string_free (output, TRUE);
-
-  return success;
 }
 
 

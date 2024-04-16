@@ -328,6 +328,15 @@ ts_get_success_msg (void)
   return "Success";
 }
 
+/* Delegate. The caller doesn't know the scheme instance,
+ * and here we don't know TS internals.
+ */
+const gchar*
+ts_get_error_msg (void)
+{
+  return ts_get_error_string (&sc);
+}
+
 void
 ts_stdout_output_func (TsOutputType  type,
                        const char   *string,

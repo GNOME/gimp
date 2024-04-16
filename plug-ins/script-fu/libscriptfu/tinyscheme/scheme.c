@@ -45,11 +45,15 @@
 
 #include "scheme-private.h"
 #include "string-port.h"
+#include "error-port.h"
 
 #if !STANDALONE
 static ts_output_func   ts_output_handler = NULL;
 static gpointer         ts_output_data = NULL;
 
+/* Register an output func from a wrapping interpeter.
+ * Typically the output func writes to a string, or to stdout.
+ */
 void
 ts_register_output_func (ts_output_func  func,
                          gpointer        user_data)
@@ -69,6 +73,28 @@ ts_output_string (TsOutputType  type,
 
   if (ts_output_handler && len > 0)
     (* ts_output_handler) (type, string, len, ts_output_data);
+}
+
+static gboolean
+ts_is_output_redirected (void)
+{
+  return ts_output_handler != NULL;
+}
+
+/* Returns string of errors declared by interpreter or script.
+ *
+ * You must call when a script has returned an error flag.
+ * Side effect is to clear: you should only call once.
+ *
+ * When called when the script did not return an error flag,
+ * returns "Unknown error"
+ *
+ * Returned string is transfered, owned by the caller and must be freed.
+ */
+const gchar*
+ts_get_error_string (scheme *sc)
+{
+  return error_port_take_string_and_close (sc);
 }
 #endif
 
@@ -102,6 +128,19 @@ ts_output_string (TsOutputType  type,
 
 #include <string.h>
 #include <stdlib.h>
+
+/* Set current outport with checks for validity. */
+void
+set_outport (scheme * sc, pointer arg)
+{
+  if (! is_port (arg))
+    g_warning ("%s arg not a port", G_STRFUNC);
+
+  if ( ! is_outport (arg) )
+    g_warning ("%s port not an output port, or closed", G_STRFUNC);
+
+  sc->outport = arg;
+}
 
 #define stricmp utf8_stricmp
 
@@ -1526,8 +1565,10 @@ static void file_pop(scheme *sc) {
  if(sc->file_i != 0) {
      sc->nesting=sc->nesting_stack[sc->file_i];
      port_close(sc,sc->loadport,port_input);
+     /* Pop load stack, discarding port soon to be gc. */
      sc->file_i--;
-     sc->loadport->_object._port=sc->load_stack+sc->file_i;
+     /* Top of stack into current load port. */
+     sc->loadport->_object._port = sc->load_stack + sc->file_i;
    }
 }
 
@@ -1599,7 +1640,11 @@ static pointer port_from_file(scheme *sc, FILE *f, int prop) {
 
 static void port_close(scheme *sc, pointer p, int flag) {
   port *pt=p->_object._port;
-  pt->kind&=~flag;
+
+  /* Clear the direction that is closing. */
+  pt->kind &= ~flag;
+
+  /* If there are no directions remaining. */
   if((pt->kind & (port_input|port_output))==0) {
     if(pt->kind&port_file) {
 
@@ -1613,6 +1658,7 @@ static void port_close(scheme *sc, pointer p, int flag) {
 
       fclose(pt->rep.stdio.file);
     }
+    /* Clear port direction, kind, and saw_EOF. */
     pt->kind=port_free;
   }
 }
@@ -1729,29 +1775,44 @@ backbyte (scheme *sc, gint b)
 static void
 putbytes (scheme *sc, const char *bytes, int byte_count)
 {
-  port *pt=sc->outport->_object._port;
+  port *pt;
+
+  if (error_port_is_redirect_output (sc))
+    pt = error_port_get_port_rep (sc);
+  else
+    pt = sc->outport->_object._port;
 
   if(pt->kind&port_file) {
 #if STANDALONE
       fwrite (bytes, 1, byte_count, pt->rep.stdio.file);
       fflush(pt->rep.stdio.file);
 #else
-      /* If output is still directed to stdout (the default) it should be    */
-      /* safe to redirect it to the registered output routine. */
+      /* If output is still directed to stdout (the default) try
+       * redirect it to any registered output routine.
+       * Currently, we require outer wrapper to set_output_func.
+       */
       if (pt->rep.stdio.file == stdout)
         {
-          ts_output_string (TS_OUTPUT_NORMAL, bytes, byte_count);
+          if (ts_is_output_redirected ())
+            ts_output_string (TS_OUTPUT_NORMAL, bytes, byte_count);
+          else
+            g_warning ("%s Output disappears since outer wrapper did not redirect.", G_STRFUNC);
         }
       else
         {
+          /* Otherwise, the script has set the output port, write to it. */
           fwrite (bytes, 1, byte_count, pt->rep.stdio.file);
           fflush (pt->rep.stdio.file);
         }
 #endif
   }
-  else
+  else if (pt->kind & port_string)
     {
       string_port_put_bytes (sc, pt, bytes, byte_count);
+    }
+  else
+    {
+      g_warning ("%s closed or unknown port kind", G_STRFUNC);
     }
 }
 
@@ -4135,7 +4196,7 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
                if(cadr(sc->args)!=sc->outport) {
                     x=cons(sc,sc->outport,sc->NIL);
                     s_save(sc,OP_SET_OUTPORT, x, sc->NIL);
-                    sc->outport=cadr(sc->args);
+                    set_outport (sc, cadr (sc->args));
                }
           }
           sc->args = car(sc->args);
@@ -4151,14 +4212,20 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
                if(car(sc->args)!=sc->outport) {
                     x=cons(sc,sc->outport,sc->NIL);
                     s_save(sc,OP_SET_OUTPORT, x, sc->NIL);
-                    sc->outport=car(sc->args);
+                    set_outport (sc, car (sc->args));
                }
           }
           putstr(sc, "\n");
           s_return(sc,sc->T);
 
      case OP_ERR0:  /* error */
+          /* Subsequently, the current interpretation will abort. */
           sc->retcode=-1;
+
+          /* Subsequently, putbytes will write to error_port*/
+          error_port_redirect_output (sc);
+
+          /* Print prefix: "Error: <reason>" OR "Error: --" */
           if (!is_string(car(sc->args))) {
                sc->args=cons(sc,mk_string(sc," -- "),sc->args);
                setimmutable(car(sc->args));
@@ -4171,17 +4238,30 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
      case OP_ERR1:  /* error */
           putstr(sc, " ");
           if (sc->args != sc->NIL) {
+               /* Print other args.*/
                s_save(sc,OP_ERR1, cdr(sc->args), sc->NIL);
                sc->args = car(sc->args);
                sc->print_flag = 1;
                s_goto(sc,OP_P0LIST);
+               /* Continues at saved OP_ERR1. */
           } else {
-               putstr(sc, "\n");
-               if(sc->interactive_repl) {
-                    s_goto(sc,OP_T0LVL);
-               } else {
-                    return sc->NIL;
-               }
+              if (sc->interactive_repl)
+                {
+                  /* Case is SF Text Console, not SF Console (w GUI).
+                   * Simple write to stdout.
+                   */
+                  gchar *error_message = (gchar*) error_port_take_string_and_close (sc);
+                  g_printf ("%s", error_message);
+                  g_free (error_message);
+
+                  /* Continue to read stdin and eval. */
+                  s_goto (sc, OP_T0LVL);
+                }
+              else
+                {
+                  /* ScriptFu wrapper will retrieve error message. */
+                  return sc->NIL;
+                }
           }
 
      case OP_REVERSE:   /* reverse */
@@ -4463,7 +4543,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
           s_return(sc,sc->value);
 
      case OP_SET_OUTPORT: /* set-output-port */
-          sc->outport=car(sc->args);
+          set_outport (sc, car (sc->args));
           s_return(sc,sc->value);
 
      case OP_RDSEXPR:
@@ -5109,6 +5189,7 @@ int scheme_init_custom_alloc(scheme *sc, func_alloc malloc, func_dealloc free) {
   sc->outport=sc->NIL;
   sc->save_inport=sc->NIL;
   sc->loadport=sc->NIL;
+  error_port_init (sc);
   sc->nesting=0;
   sc->interactive_repl=0;
   sc->print_output=0;
@@ -5222,6 +5303,7 @@ void scheme_deinit(scheme *sc) {
     typeflag(sc->loadport) = T_ATOM;
   }
   sc->loadport=sc->NIL;
+  error_port_init (sc);
   sc->gc_verbose=0;
   gc(sc,sc->NIL,sc->NIL);
 
