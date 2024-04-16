@@ -1,0 +1,47 @@
+* Themes are licensed the same as GIMP application core under the GNU GENERAL
+  PUBLIC LICENSE -- see the 'COPYING' file in GIMP repository for details:
+  https://gitlab.gnome.org/GNOME/gimp/-/blob/master/COPYING
+
+* Icon themes are licensed under Creative Commons by-sa 3.0 or 4.0. See
+  the file `icons/Default/COPYING`.
+
+* Any data used in artworks, such as brushes, patterns and the like should be
+  under a CC0 license (Creative Commons Zero) or equivalent, i.e. "No rights
+  Reserved", because GIMP contributors clearly don't intend to claim any right
+  on anyone's work just because they used GIMP and its default data.  We cannot
+  clearly give proper licensing on all existing data, prior to the addition of
+  this note in the LICENSE file (for historical reasons, simply because their
+  contributors are since long gone), though we can say that an uncountable
+  number of users have used these for dozens of years and never had legal
+  problems as far as we know (it is anyway unclear whether anyone could really
+  claim any right for very basic brush or pattern usage). Since 2015, we even
+  have a clear FAQ entry to explicitly say the GIMP project has no intention
+  whatsoever to put restrictions on people's work:
+  https://www.gimp.org/docs/userfaq.html#can-i-use-gimp-commercially
+
+  Therefore any new data file under the following folders will be expected to be
+  CC0:
+
+  - brushes/
+  - cursors/
+  - patterns/
+
+  All contributors are expected to read the LICENSE file and therefore are
+  implicitly agreeing to license their data under CC0 by contributing it as core
+  GIMP data.
+
+* Data under images/ may have various licenses which should be detailed in
+  `images/README.md`, though we only accept libre licenses, such as:
+
+  - Free Art License: https://artlibre.org/licence/lal/en/
+  - Creative Commons By-SA: https://creativecommons.org/licenses/by-sa/4.0/
+  - Creative Commons By: https://creativecommons.org/licenses/by/4.0/
+  - CC0: https://creativecommons.org/publicdomain/zero/1.0/
+
+  Other licenses may be suggested for contributed artworks, and the submissions
+  will be considered on a case-by-case basis, though there is no need to submit
+  files without clear "Libre Art" licenses (commercial usage, sharing and
+  modifications allowed in particular).
+
+* Any code-like contents in this repository, such as build tools, scripts and
+  otherwise is licensed under the GNU GENERAL PUBLIC LICENSE v3 or later.
