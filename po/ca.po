@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-03-26 16:58+0000\n"
-"PO-Revision-Date: 2024-03-29 18:06+0100\n"
+"PO-Revision-Date: 2024-04-16 18:06+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -15578,11 +15578,11 @@ msgstr "Perfil integrat"
 #: app/dialogs/color-profile-import-dialog.c:161
 msgid "Convert the image to the preferred grayscale color profile?"
 msgstr ""
-"Vols convertir la imatge al perfil de color en escala de grisos preferit?"
+"Voleu convertir la imatge al perfil de color en escala de grisos preferit?"
 
 #: app/dialogs/color-profile-import-dialog.c:163
 msgid "Convert the image to the preferred RGB color profile?"
-msgstr "Vols convertir la imatge al perfil de color RGB preferit?"
+msgstr "Voleu convertir la imatge al perfil de color RGB preferit?"
 
 #: app/dialogs/color-profile-import-dialog.c:167
 msgid "Preferred Profile"
@@ -18426,7 +18426,7 @@ msgid ""
 "Want to know more?"
 msgstr ""
 "GIMP és un programari lliure per a crear i manipular imatges.\n"
-"Vols saber-ne més?"
+"Voleu saber-ne més?"
 
 #: app/dialogs/welcome-dialog.c:460
 msgid "GIMP website"
@@ -18545,7 +18545,7 @@ msgstr ""
 
 #: app/dialogs/welcome-dialog.c:896
 msgid "Translate"
-msgstr "Tradueix"
+msgstr "Traduïu"
 
 #: app/dialogs/welcome-dialog.c:898
 #, c-format
@@ -21852,7 +21852,7 @@ msgstr "Llindar alfa"
 #: app/pdb/plug-in-compat-cmds.c:4395
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
-msgstr "Ressalta (Màscara d'enfocament)"
+msgstr "Ressalta (màscara d'enfocament)"
 
 #: app/pdb/plug-in-compat-cmds.c:4441
 msgctxt "undo-type"

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-02-27 15:33+0000\n"
-"PO-Revision-Date: 2024-02-28 19:52+0100\n"
+"PO-Revision-Date: 2024-04-16 19:52+0100\n"
 "Last-Translator: Quique Serrano <qserrano@outlook.com>\n"
 "Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
 "Language: ca\n"
@@ -1366,7 +1366,7 @@ msgstr "E_sfera..."
 
 #: plug-ins/script-fu/scripts/tileblur.scm:72
 msgid "_Tileable Blur..."
-msgstr "_Difuminat per a rajoles..."
+msgstr "_Difuminat enrajolat..."
 
 #: plug-ins/script-fu/scripts/tileblur.scm:73
 msgid "Blur the edges of an image so the result tiles seamlessly"

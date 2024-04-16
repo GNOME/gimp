@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-04-12 10:27+0000\n"
-"PO-Revision-Date: 2024-04-13 20:01+0100\n"
+"PO-Revision-Date: 2024-04-16 20:01+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez, <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -28,7 +28,7 @@ msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
-msgstr "Exercici en _do menor"
+msgstr "Entrena en _C menor"
 
 #: extensions/goat-exercises/goat-exercise-c.c:120
 msgid "Exercise a goat in the C language"
@@ -143,7 +143,7 @@ msgstr "Treu una cabra a passejar en Javascript amb l'intèrpret GJS"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:90
 msgid "Exercise a goat (JavaScript)"
-msgstr "Exercita una cabra (JavaScript)"
+msgstr "Entrena una cabra (JavaScript)"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
@@ -398,7 +398,7 @@ msgstr ""
 
 #: plug-ins/common/animation-optimize.c:207
 msgid "_Optimize (Difference)"
-msgstr "_Optimitza (Diferència)"
+msgstr "_Optimitza (diferència)"
 
 #: plug-ins/common/animation-optimize.c:210
 msgid "Reduce file size where combining layers is possible"
@@ -15248,7 +15248,7 @@ msgstr "Urgència"
 
 #: plug-ins/metadata/metadata-editor.c:526
 msgid "Headline"
-msgstr "Crea un titular"
+msgstr "Titular"
 
 #: plug-ins/metadata/metadata-editor.c:527
 msgid "IPTC Subject Code"
