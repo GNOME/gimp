@@ -2,7 +2,7 @@ import os
 import sys
 
 image     = Gimp.list_images()[0]
-procedure = Gimp.get_pdb().lookup_procedure("file-png-save")
+procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
 config    = procedure.create_config()
 image.flatten()
 image.scale(1920, 1080)

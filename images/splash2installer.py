@@ -3,7 +3,7 @@ import os
 import sys
 
 image     = Gimp.list_images()[0]
-procedure = Gimp.get_pdb().lookup_procedure("file-bmp-save")
+procedure = Gimp.get_pdb().lookup_procedure("file-bmp-export")
 if procedure is None:
   sys.exit(os.EX_OK)
 config    = procedure.create_config()

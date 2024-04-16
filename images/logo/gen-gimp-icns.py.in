@@ -35,7 +35,7 @@ for size in sizes:
   image.insert_layer(layer, None, 0)
   tmp_image.delete()
 
-procedure = Gimp.get_pdb().lookup_procedure("file-icns-save")
+procedure = Gimp.get_pdb().lookup_procedure("file-icns-export")
 config    = procedure.create_config()
 drawables = image.list_selected_drawables()
 config.set_property("image", image)
