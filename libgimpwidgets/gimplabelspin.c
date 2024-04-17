@@ -135,7 +135,7 @@ gimp_label_spin_class_init (GimpLabelSpinClass *klass)
   g_object_class_install_property (object_class, PROP_LOWER,
                                    g_param_spec_double ("lower", NULL,
                                                         "Minimum value",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 1.0,
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
@@ -149,7 +149,7 @@ gimp_label_spin_class_init (GimpLabelSpinClass *klass)
   g_object_class_install_property (object_class, PROP_UPPER,
                                    g_param_spec_double ("upper", NULL,
                                                         "Max value",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 1.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
@@ -339,6 +339,7 @@ gimp_label_spin_update_settings (GimpLabelSpin *spin)
   gdouble               step;
   gdouble               page;
   gint                  digits = priv->digits;
+  gboolean              adjust_step = (digits == 0);
 
   g_return_if_fail (GIMP_IS_LABEL_SPIN (spin));
 
@@ -351,6 +352,14 @@ gimp_label_spin_update_settings (GimpLabelSpin *spin)
 
   gimp_range_estimate_settings (lower, upper, &step, &page,
                                 digits < 0 ? &digits: NULL);
+
+  if (adjust_step && digits == 0 && step < 1.0)
+    {
+      step = 1.0;
+      if (page < step)
+        page = step;
+    }
+
   gimp_label_spin_set_increments (spin, step, page);
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (priv->spinbutton), (guint) digits);
   gimp_label_spin_update_spin_width (spin, lower, upper, (guint) digits);
