@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-16 16:36+0000\n"
-"PO-Revision-Date: 2024-04-16 20:13+0300\n"
+"POT-Creation-Date: 2024-04-17 08:59+0000\n"
+"PO-Revision-Date: 2024-04-17 13:16+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -642,7 +642,7 @@ msgstr "Вертикально"
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:245
-#: plug-ins/screenshot/screenshot-win32.c:310 plug-ins/twain/twain.c:636
+#: plug-ins/screenshot/screenshot-win32.c:310 plug-ins/twain/twain.c:640
 msgid "Background"
 msgstr "Тло"
 
@@ -6775,7 +6775,6 @@ msgstr "Дамп X window"
 
 #: plug-ins/common/file-xwd.c:453
 #, c-format
-#| msgid "PCX format does not support multiple layers."
 msgid "XWD format does not support multiple layers."
 msgstr "Для формату XWD не передбачено підтримку декількох шарів."
 
@@ -16445,8 +16444,13 @@ msgstr ""
 msgid "_Scanner/Camera..."
 msgstr "_Сканер/Камера..."
 
+#: plug-ins/twain/twain.c:420
+#, c-format
+msgid "TWAIN driver not found, scanning not available"
+msgstr "Не знайдено драйвера TWAIN. Не можна скористатися скануванням"
+
 #. Initialize our progress dialog
-#: plug-ins/twain/twain.c:496
+#: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
 
