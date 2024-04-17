@@ -337,11 +337,6 @@ gimp_prop_layer_mode_box_new (GObject              *config,
 /*  color button  */
 /******************/
 
-static void   gimp_prop_color_button_callback      (GtkWidget  *widget,
-                                                    GObject    *config);
-static void   gimp_prop_color_button_notify        (GObject    *config,
-                                                    GParamSpec *param_spec,
-                                                    GtkWidget  *button);
 static void   gimp_prop_gegl_color_button_callback (GtkWidget  *widget,
                                                     GObject    *config);
 static void   gimp_prop_gegl_color_button_notify   (GObject    *config,
@@ -351,13 +346,13 @@ static void   gimp_prop_gegl_color_button_notify   (GObject    *config,
 /**
  * gimp_prop_color_button_new:
  * @config:        #GimpConfig object to which property is attached.
- * @property_name: Name of #GimpRGB property.
+ * @property_name: Name of #GeglColor property.
  * @title:         Title of the #GimpColorPanel that is to be created
  * @width:         Width of color button.
  * @height:        Height of color button.
  * @type:          How transparency is represented.
  *
- * Creates a #GimpColorPanel to set and display the value of a #GimpRGB
+ * Creates a #GimpColorPanel to set and display the value of a #GeglColor
  * property.  Pressing the button brings up a color selector dialog.
  * If @title is %NULL, the @property_name's nick will be used as label
  * of the returned widget.
@@ -373,73 +368,6 @@ gimp_prop_color_button_new (GObject           *config,
                             gint               width,
                             gint               height,
                             GimpColorAreaType  type)
-{
-  GParamSpec *param_spec;
-  GtkWidget  *button;
-  GeglColor  *color;
-  GimpRGB    *value;
-
-  param_spec = check_param_spec_w (config, property_name,
-                                   GIMP_TYPE_PARAM_RGB, G_STRFUNC);
-  if (! param_spec)
-    return NULL;
-
-  if (! title)
-    title = g_param_spec_get_nick (param_spec);
-
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-
-  color = gegl_color_new (NULL);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), value);
-  button = gimp_color_panel_new (title, color, type, width, height);
-  g_free (value);
-  g_object_unref (color);
-
-  set_param_spec (G_OBJECT (button), button, param_spec);
-
-  g_signal_connect (button, "color-changed",
-                    G_CALLBACK (gimp_prop_color_button_callback),
-                    config);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_color_button_notify),
-                  button);
-
-  gimp_widget_set_bound_property (button, config, property_name);
-  gtk_widget_show (button);
-
-  return button;
-}
-
-/**
- * gimp_prop_gegl_color_button_new:
- * @config:        #GimpConfig object to which property is attached.
- * @property_name: Name of #GeglColor property.
- * @title:         Title of the #GimpColorPanel that is to be created
- * @width:         Width of color button.
- * @height:        Height of color button.
- * @type:          How transparency is represented.
- *
- * Creates a #GimpColorPanel to set and display the value of a #GeglColor
- * property.  Pressing the button brings up a color selector dialog.
- * If @title is %NULL, the @property_name's nick will be used as label
- * of the returned widget.
- *
- * TODO: this is meant to replace completely gimp_prop_color_button_new().
- *
- * Returns:  A new #GimpColorPanel widget.
- *
- * Since GIMP 2.4
- */
-GtkWidget *
-gimp_prop_gegl_color_button_new (GObject           *config,
-                                 const gchar       *property_name,
-                                 const gchar       *title,
-                                 gint               width,
-                                 gint               height,
-                                 GimpColorAreaType  type)
 {
   GParamSpec *param_spec;
   GtkWidget  *button;
@@ -474,64 +402,6 @@ gimp_prop_gegl_color_button_new (GObject           *config,
   gtk_widget_show (button);
 
   return button;
-}
-
-static void
-gimp_prop_color_button_callback (GtkWidget *button,
-                                 GObject   *config)
-{
-  GParamSpec *param_spec;
-  GeglColor  *color;
-  GimpRGB     rgb;
-
-  param_spec = get_param_spec (G_OBJECT (button));
-  if (! param_spec)
-    return;
-
-  color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (button));
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-
-  g_signal_handlers_block_by_func (config,
-                                   gimp_prop_color_button_notify,
-                                   button);
-
-  g_object_set (config,
-                param_spec->name, &rgb,
-                NULL);
-
-  g_signal_handlers_unblock_by_func (config,
-                                     gimp_prop_color_button_notify,
-                                     button);
-
-  g_object_unref (color);
-}
-
-static void
-gimp_prop_color_button_notify (GObject    *config,
-                               GParamSpec *param_spec,
-                               GtkWidget  *button)
-{
-  GeglColor *color;
-  GimpRGB   *rgb;
-
-  g_object_get (config,
-                param_spec->name, &rgb,
-                NULL);
-
-  g_signal_handlers_block_by_func (button,
-                                   gimp_prop_color_button_callback,
-                                   config);
-
-  color = gegl_color_new (NULL);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (button), color);
-
-  g_object_unref (color);
-  g_free (rgb);
-
-  g_signal_handlers_unblock_by_func (button,
-                                     gimp_prop_color_button_callback,
-                                     config);
 }
 
 static void
@@ -572,14 +442,14 @@ gimp_prop_gegl_color_button_notify (GObject    *config,
                 NULL);
 
   g_signal_handlers_block_by_func (button,
-                                   gimp_prop_color_button_callback,
+                                   gimp_prop_gegl_color_button_callback,
                                    config);
 
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (button), color);
   g_clear_object (&color);
 
   g_signal_handlers_unblock_by_func (button,
-                                     gimp_prop_color_button_callback,
+                                     gimp_prop_gegl_color_button_callback,
                                      config);
 }
 

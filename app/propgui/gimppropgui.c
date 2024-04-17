@@ -372,12 +372,12 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
 
       widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 
-      button = gimp_prop_gegl_color_button_new (config, pspec->name,
-                                                g_param_spec_get_nick (pspec),
-                                                128, 24,
-                                                has_alpha ?
-                                                GIMP_COLOR_AREA_SMALL_CHECKS :
-                                                GIMP_COLOR_AREA_FLAT);
+      button = gimp_prop_color_button_new (config, pspec->name,
+                                           g_param_spec_get_nick (pspec),
+                                           128, 24,
+                                           has_alpha ?
+                                           GIMP_COLOR_AREA_SMALL_CHECKS :
+                                           GIMP_COLOR_AREA_FLAT);
       gimp_color_button_set_update (GIMP_COLOR_BUTTON (button), TRUE);
       gimp_color_panel_set_context (GIMP_COLOR_PANEL (button), context);
       gtk_box_pack_start (GTK_BOX (widget), button, TRUE, TRUE, 0);

@@ -241,13 +241,13 @@ prefs_color_button_add (GObject      *config,
    */
   /*has_alpha = gimp_param_spec_rgb_has_alpha (pspec);*/
 
-  button = gimp_prop_gegl_color_button_new (config, property_name,
-                                            title,
-                                            PREFS_COLOR_BUTTON_WIDTH,
-                                            PREFS_COLOR_BUTTON_HEIGHT,
-                                            has_alpha ?
-                                            GIMP_COLOR_AREA_SMALL_CHECKS :
-                                            GIMP_COLOR_AREA_FLAT);
+  button = gimp_prop_color_button_new (config, property_name,
+                                       title,
+                                       PREFS_COLOR_BUTTON_WIDTH,
+                                       PREFS_COLOR_BUTTON_HEIGHT,
+                                       has_alpha ?
+                                       GIMP_COLOR_AREA_SMALL_CHECKS :
+                                       GIMP_COLOR_AREA_FLAT);
 
   if (button)
     {

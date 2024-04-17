@@ -146,11 +146,11 @@ gimp_grid_editor_constructed (GObject *object)
                             _("Line _style:"), 0.0, 0.5,
                             style, 1);
 
-  color_button = gimp_prop_gegl_color_button_new (G_OBJECT (editor->grid), "fgcolor",
-                                                  _("Change grid foreground color"),
-                                                  GRID_EDITOR_COLOR_BUTTON_WIDTH,
-                                                  GRID_EDITOR_COLOR_BUTTON_HEIGHT,
-                                                  GIMP_COLOR_AREA_FLAT);
+  color_button = gimp_prop_color_button_new (G_OBJECT (editor->grid), "fgcolor",
+                                             _("Change grid foreground color"),
+                                             GRID_EDITOR_COLOR_BUTTON_WIDTH,
+                                             GRID_EDITOR_COLOR_BUTTON_HEIGHT,
+                                             GIMP_COLOR_AREA_FLAT);
   gtk_widget_set_halign (color_button, GTK_ALIGN_START);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
                                 editor->context);
@@ -158,11 +158,11 @@ gimp_grid_editor_constructed (GObject *object)
                             _("_Foreground color:"), 0.0, 0.5,
                             color_button, 1);
 
-  color_button = gimp_prop_gegl_color_button_new (G_OBJECT (editor->grid), "bgcolor",
-                                                  _("Change grid background color"),
-                                                  GRID_EDITOR_COLOR_BUTTON_WIDTH,
-                                                  GRID_EDITOR_COLOR_BUTTON_HEIGHT,
-                                                  GIMP_COLOR_AREA_FLAT);
+  color_button = gimp_prop_color_button_new (G_OBJECT (editor->grid), "bgcolor",
+                                             _("Change grid background color"),
+                                             GRID_EDITOR_COLOR_BUTTON_WIDTH,
+                                             GRID_EDITOR_COLOR_BUTTON_HEIGHT,
+                                             GIMP_COLOR_AREA_FLAT);
   gtk_widget_set_halign (color_button, GTK_ALIGN_START);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
                                 editor->context);
