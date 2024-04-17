@@ -882,7 +882,8 @@ generate_filename (GimpImage *image,
                    guint      channel)
 {
   /* Build a filename like <imagename>-<channel>.<extension> */
-  gchar    *fname;
+  GFile    *file;
+  gchar    *fname = NULL;
   gchar    *filename;
   gchar    *extension;
   gboolean  config_as_layers;
@@ -891,7 +892,9 @@ generate_filename (GimpImage *image,
                 "layers-mode", &config_as_layers,
                 NULL);
 
-  fname = g_file_get_path (gimp_image_get_file (image));
+  file  = gimp_image_get_file (image);
+  if (file)
+    fname = g_file_get_path (file);
 
   if (fname)
     {
@@ -907,29 +910,23 @@ generate_filename (GimpImage *image,
       if (extension >= fname)
         {
           *(extension++) = '\0';
+        }
 
-          if (config_as_layers)
-            filename = g_strdup_printf ("%s-%s.%s", fname,
-                                        gettext (extract[colorspace].type),
-                                        extension);
-          else
-            filename = g_strdup_printf ("%s-%s.%s", fname,
-                                        gettext (extract[colorspace].component[channel].channel_name),
-                                        extension);
-        }
+      if (config_as_layers)
+        filename = g_strdup_printf ("%s-%s.xcf", fname,
+                                    gettext (extract[colorspace].type));
       else
-        {
-          if (config_as_layers)
-            filename = g_strdup_printf ("%s-%s", fname,
-                                        gettext (extract[colorspace].type));
-          else
-            filename = g_strdup_printf ("%s-%s", fname,
-                                        gettext (extract[colorspace].component[channel].channel_name));
-        }
+        filename = g_strdup_printf ("%s-%s.xcf", fname,
+                                    gettext (extract[colorspace].component[channel].channel_name));
     }
   else
     {
-      filename = g_strdup (gettext (extract[colorspace].component[channel].channel_name));
+      if (config_as_layers)
+        filename = g_strdup_printf ("%s.xcf",
+                                    gettext (extract[colorspace].type));
+      else
+        filename = g_strdup_printf ("%s.xcf",
+                                    gettext (extract[colorspace].component[channel].channel_name));
     }
 
   g_free (fname);
