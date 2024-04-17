@@ -245,7 +245,7 @@ static COMPOSE_DSC compose_dsc[] =
     { CPN_RGBA_R,
       CPN_RGBA_G,
       CPN_RGBA_B },
-    "rgb-compose" },
+    "rgb-compose.xcf" },
 
   { "RGBA",
     N_("RGBA"), 4,
@@ -253,21 +253,21 @@ static COMPOSE_DSC compose_dsc[] =
       CPN_RGBA_G,
       CPN_RGBA_B,
       CPN_RGBA_A },
-    "rgba-compose" },
+    "rgba-compose.xcf" },
 
   { "HSV",
     N_("HSV"), 3,
     { CPN_HSV_H,
       CPN_HSV_S,
       CPN_HSV_V },
-    "hsv-compose" },
+    "hsv-compose.xcf" },
 
   { "HSL",
     N_("HSL"), 3,
     { CPN_HSL_H,
       CPN_HSL_S,
       CPN_HSL_L },
-    "hsl-compose" },
+    "hsl-compose.xcf" },
 
   { "CMYK",
     N_("CMYK"), 4,
@@ -275,49 +275,49 @@ static COMPOSE_DSC compose_dsc[] =
       CPN_CMYK_M,
       CPN_CMYK_Y,
       CPN_CMYK_K },
-    "cmyk-compose" },
+    "cmyk-compose.xcf" },
 
   { "CIE Lab",
     N_("LAB"), 3,
     { CPN_LAB_L,
       CPN_LAB_A,
       CPN_LAB_B },
-    "lab-compose" },
+    "lab-compose.xcf" },
 
   { "CIE LCH(ab)",
     N_("LCH"), 3,
     { CPN_LCH_L,
       CPN_LCH_C,
       CPN_LCH_H },
-    "lch-compose" },
+    "lch-compose.xcf" },
 
   { "Y'CbCr",
     N_("YCbCr_ITU_R470"), 3,
     { CPN_YCBCR_Y,
       CPN_YCBCR_CB,
       CPN_YCBCR_CR },
-    "ycbcr470-compose" },
+    "ycbcr470-compose.xcf" },
 
   { "Y'CbCr709",
     N_("YCbCr_ITU_R709"), 3,
     { CPN_YCBCR709_Y,
       CPN_YCBCR709_CB,
       CPN_YCBCR709_CR },
-    "ycbcr709-compose" },
+    "ycbcr709-compose.xcf" },
 
   { "Y'CbCr",
     N_("YCbCr_ITU_R470_256"), 3,
     { CPN_YCBCR_Y,
       CPN_YCBCR_CB,
       CPN_YCBCR_CR },
-    "ycbcr470F-compose" },
+    "ycbcr470F-compose.xcf" },
 
   { "Y'CbCr709",
     N_("YCbCr_ITU_R709_256"), 3,
     { CPN_YCBCR709_Y,
       CPN_YCBCR709_CB,
       CPN_YCBCR709_CR },
-    "ycbcr709F-compose" }
+    "ycbcr709F-compose.xcf" }
 };
 
 static ComposeVals composevals =
