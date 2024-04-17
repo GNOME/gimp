@@ -3,13 +3,13 @@
 # Copyright (C) 2008, 2009, 2015 Free Software Foundation, Inc.
 #
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
-# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2017, 2019, 2022.
+# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2017, 2019, 2022, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-26 14:47+0000\n"
-"PO-Revision-Date: 2022-04-12 10:18+0000\n"
+"POT-Creation-Date: 2024-03-11 21:17+0000\n"
+"PO-Revision-Date: 2024-04-17 15:49+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -17,574 +17,653 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=1;\n"
-"X-Generator: Lokalize 19.12.3\n"
+"X-Generator: Lokalize 22.04.3\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:395
-msgid "Missing exception information"
-msgstr "Vantar upplýsingar um frávik (exception)"
+#: plug-ins/python/colorxhtml.py:91
+#| msgid "Save as colored XHTML"
+msgid "Save as colored HTML text..."
+msgstr "Vista sem litaðan HTML-texta..."
 
-#: ../plug-ins/pygimp/gimpfu.py:404
-#, python-format
-msgid "An error occurred running %s"
-msgstr "Villa kom upp við keyrslu %s"
+#: plug-ins/python/colorxhtml.py:92 plug-ins/python/colorxhtml.py:98
+#: plug-ins/python/gradients-save-as-css.py:113
+#: plug-ins/python/palette-offset.py:135
+#: plug-ins/python/python-console/python-console.py:272
+#: plug-ins/python/spyro-plus.py:1719
+msgid "_Cancel"
+msgstr "_Hætta við"
 
-#: ../plug-ins/pygimp/gimpfu.py:415
-msgid "_More Information"
-msgstr "_Nánari upplýsingar"
+#: plug-ins/python/colorxhtml.py:93 plug-ins/python/colorxhtml.py:99
+#: plug-ins/python/gradients-save-as-css.py:114
+#: plug-ins/python/palette-offset.py:136 plug-ins/python/spyro-plus.py:1720
+msgid "_OK"
+msgstr "Í _lagi"
 
-#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
-#: ../plug-ins/pygimp/gimpfu.py:546
-msgid "No"
-msgstr "Nei"
+#: plug-ins/python/colorxhtml.py:96
+msgid "Read characters from file..."
+msgstr "Lesa úr stafi úr skrá..."
 
-#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
-msgid "Yes"
-msgstr "Já"
+#: plug-ins/python/colorxhtml.py:115
+#| msgid "Character _source"
+msgid "Characters"
+msgstr "Stafir"
 
-#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
-msgid "Python-Fu File Selection"
-msgstr "Python-Fu skráaval"
+#: plug-ins/python/colorxhtml.py:116
+msgid "Characters that will be used as colored pixels. "
+msgstr ""
 
-#: ../plug-ins/pygimp/gimpfu.py:648
-msgid "Python-Fu Folder Selection"
-msgstr "Python-Fu möppuval"
+#: plug-ins/python/colorxhtml.py:125
+msgid "Characters or file location"
+msgstr "Stafir eða staðsetning skráar"
 
-#: ../plug-ins/pygimp/gimpfu.py:737
-#, python-format
-msgid "Invalid input for '%s'"
-msgstr "Ógilt inntak fyrir '%s'"
+#: plug-ins/python/colorxhtml.py:131
+#| msgid "_File to read or characters to use"
+msgid "Read characters from file"
+msgstr "Lesa úr stafi úr skrá"
 
-#: ../plug-ins/pygimp/gimpui.py:176
-msgid "Python-Fu Color Selection"
-msgstr "Python-Fu litaval"
+#: plug-ins/python/colorxhtml.py:134
+msgid ""
+"If set, the Characters text entry will be used as a file name, from which "
+"the characters will be read. Otherwise, the characters in the text entry "
+"will be used to render the image."
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
+#: plug-ins/python/colorxhtml.py:140
+#| msgid "Text file"
+msgid "Choose file"
+msgstr "Veldu skrá"
+
+#: plug-ins/python/colorxhtml.py:147
+msgid "Font Size(px)"
+msgstr "Leturstærð (px)"
+
+#: plug-ins/python/colorxhtml.py:159
+#| msgid "_Write a separate CSS file"
+msgid "Write separate CSS file"
+msgstr "Skrifa sérstaka CSS-skrá"
+
+#: plug-ins/python/colorxhtml.py:215
 msgid "Saving as colored XHTML"
 msgstr "Er að vista sem litað XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
-msgid "Save as colored XHTML"
-msgstr "Vista sem litað XHTML"
+#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
+msgid "_Read characters from file, if true, or use text entry"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
-msgid "Colored XHTML"
-msgstr "Litað XHTML"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-msgid "Character _source"
-msgstr "Uppruni _stafa"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "Source code"
-msgstr "Upprunakóði"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
-msgid "Text file"
-msgstr "Textaskrá"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
-msgid "Entry box"
-msgstr "Innsláttarreitur"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: plug-ins/python/colorxhtml.py:291 plug-ins/python/colorxhtml.py:292
 msgid "_File to read or characters to use"
 msgstr "Skrá _eða stafir sem á að nota"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#: plug-ins/python/colorxhtml.py:296 plug-ins/python/colorxhtml.py:297
 msgid "Fo_nt size in pixels"
 msgstr "Stærð leturs í my_nddílum"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#: plug-ins/python/colorxhtml.py:301 plug-ins/python/colorxhtml.py:302
 msgid "_Write a separate CSS file"
 msgstr "Skrifa sérstaka _CSS-skrá"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
-msgid "Gradient to use"
-msgstr "Litstigull sem nota skal"
+#: plug-ins/python/colorxhtml.py:322
+#| msgid "Save as colored XHTML"
+msgid "Save as colored HTML text"
+msgstr "Vista sem litaðan HTML-texta"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
-msgid "File Name"
-msgstr "Skráarheiti"
+#: plug-ins/python/colorxhtml.py:325
+#| msgid "Colored XHTML"
+msgid "Colored HTML text"
+msgstr "Litaður HTML-texti"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
-msgid "Exports the image histogram to a text file (CSV)"
-msgstr "Flytur litatíðnirit myndar út sem textaskrá (CSV)"
+#: plug-ins/python/foggify.py:111
+#| msgid "_Layer name"
+msgid "Layer _name"
+msgstr "_Heiti lags"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
-msgid "_Export histogram..."
-msgstr "_Flytja út litatíðnirit..."
+#: plug-ins/python/foggify.py:112
+#| msgid "_Layer name"
+msgid "Layer name"
+msgstr "Heiti lags"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
-msgid "_Image"
-msgstr "_Mynd"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
-msgid "_Drawable"
-msgstr "_Teiknanlegt"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
-msgid "Histogram _File"
-msgstr "Litatíðniskrá"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
-msgid "_Bucket Size"
-msgstr "Stærð _fötu"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
-msgid "Sample _Average"
-msgstr "Meðalt_al sýnis"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
-msgid "Output format"
-msgstr "Úttakssnið"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
-msgid "Pixel count"
-msgstr "Fjöldi mynddíla"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
-msgid "Normalized"
-msgstr "Samræmt"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
-msgid "Percent"
-msgstr "prósent"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
-msgid "Add a layer of fog"
-msgstr "Bæta við lagi af þoku"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "_Fog..."
-msgstr "_Þoka"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
-msgid "_Layer name"
-msgstr "Nafn _lags"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: plug-ins/python/foggify.py:113
 msgid "Clouds"
 msgstr "Ský"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:67
-msgid "_Fog color"
-msgstr "Litur þo_ku"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:68
+#: plug-ins/python/foggify.py:116
 msgid "_Turbulence"
 msgstr "_Þyrlun"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:69
-msgid "Op_acity"
-msgstr "Hálf_gegnsæi"
+#: plug-ins/python/foggify.py:117
+#| msgid "_Turbulence"
+msgid "Turbulence"
+msgstr "Iða"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
-msgid "Offset the colors in a palette"
-msgstr "Hliðra til litum á litaspjaldi"
+#: plug-ins/python/foggify.py:121
+#| msgid "Op_acity"
+msgid "O_pacity"
+msgstr "Ó_gegnsæi"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
-msgid "_Offset Palette..."
-msgstr "Hliðra _litaspjaldi..."
+#: plug-ins/python/foggify.py:122
+#| msgid "Op_acity"
+msgid "Opacity"
+msgstr "Ógegnsæi"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
+#: plug-ins/python/foggify.py:131
+msgid "_Fog color"
+msgstr "Litur þo_ku"
+
+#: plug-ins/python/foggify.py:132
+#| msgid "_Fog color"
+msgid "Fog color"
+msgstr "Litur þoku"
+
+#: plug-ins/python/foggify.py:148
+msgid "Add a layer of fog"
+msgstr "Bæta við lagi af þoku"
+
+#: plug-ins/python/foggify.py:149
+#| msgid "Add a layer of fog"
+msgid "Adds a layer of fog to the image."
+msgstr "Bætir lagi af þoku við myndina"
+
+#: plug-ins/python/foggify.py:151
+msgid "_Fog..."
+msgstr "_Þoka"
+
+#: plug-ins/python/gradients-save-as-css.py:94
+#| msgid "_Slice..."
+msgid "_File..."
+msgstr "_Skrá..."
+
+#: plug-ins/python/gradients-save-as-css.py:102
+msgid "Choose CSS file..."
+msgstr "Veldu CSS-skrá..."
+
+#: plug-ins/python/gradients-save-as-css.py:111
+msgid "Save as CSS file..."
+msgstr "Vista sem CSS-skrá..."
+
+#: plug-ins/python/gradients-save-as-css.py:180
+#: plug-ins/python/palette-sort.py:345
+#: plug-ins/python/python-console/python-console.py:300
+msgid "Run mode"
+msgstr "Keyrsluhamur"
+
+#: plug-ins/python/gradients-save-as-css.py:181
+#: plug-ins/python/python-console/python-console.py:300
+msgid "The run mode"
+msgstr "Keyrsluhamurinn"
+
+#: plug-ins/python/gradients-save-as-css.py:185
+#| msgid "Gradient to use"
+msgid "_Gradient to use"
+msgstr "Litsti_gull sem á að nota"
+
+#: plug-ins/python/gradients-save-as-css.py:188
+msgid "_File"
+msgstr "_Skrá"
+
+#: plug-ins/python/gradients-save-as-css.py:204
+#: plug-ins/python/gradients-save-as-css.py:205
+msgid "Creates a new palette from a given gradient"
+msgstr ""
+
+#: plug-ins/python/gradients-save-as-css.py:207
+msgid "Save Gradient as CSS..."
+msgstr "Vista litstigul sem CSS..."
+
+#: plug-ins/python/histogram-export.py:92
+msgid "Pixel count"
+msgstr "Fjöldi mynddíla"
+
+#: plug-ins/python/histogram-export.py:93
+msgid "Normalized"
+msgstr "Samræmt"
+
+#: plug-ins/python/histogram-export.py:94
+msgid "Percent"
+msgstr "prósent"
+
+#: plug-ins/python/histogram-export.py:161
+msgid "File is either a directory or file name is empty."
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:164
+msgid "Directory not found."
+msgstr "Mappa fannst ekki."
+
+#: plug-ins/python/histogram-export.py:179
+msgid "Histogram Export..."
+msgstr "Flytja út litatíðnirit..."
+
+#: plug-ins/python/histogram-export.py:209
+#| msgid "Histogram _File"
+msgid "Histogram File"
+msgstr "Litatíðniskrá"
+
+#: plug-ins/python/histogram-export.py:213
+msgid "_Bucket Size"
+msgstr "Stærð _fötu"
+
+#: plug-ins/python/histogram-export.py:218
+msgid "Sample _Average"
+msgstr "Meðalt_al sýnis"
+
+#: plug-ins/python/histogram-export.py:223
+#| msgid "Output format"
+msgid "Output _format"
+msgstr "Útta_kssnið"
+
+#: plug-ins/python/histogram-export.py:245
+msgid "Exports the image histogram to a text file (CSV)"
+msgstr "Flytur litatíðnirit myndar út sem textaskrá (CSV)"
+
+#: plug-ins/python/histogram-export.py:248
+msgid "_Export histogram..."
+msgstr "_Flytja út litatíðnirit..."
+
+#: plug-ins/python/palette-offset.py:50 plug-ins/python/palette-offset.py:51
+#: plug-ins/python/palette-sort.py:351 plug-ins/python/palette-sort.py:403
+#: plug-ins/python/palette-sort.py:404
 msgid "Palette"
 msgstr "Litaspjald"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: plug-ins/python/palette-offset.py:62
 msgid "Off_set"
 msgstr "_Hliðrun"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:143
+msgid "Offset"
+msgstr "Hliðrun"
+
+#: plug-ins/python/palette-offset.py:73
+msgid "The edited palette"
+msgstr "Breytta litaspjaldið"
+
+#: plug-ins/python/palette-offset.py:74
+msgid "The newly created palette when read-only, otherwise the input palette"
+msgstr ""
+
+#: plug-ins/python/palette-offset.py:94
+msgid "_Offset Palette..."
+msgstr "Hliðra _litaspjaldi..."
+
+#: plug-ins/python/palette-offset.py:95
+msgid "Offset the colors in a palette"
+msgstr "Hliðra til litum á litaspjaldi"
+
+#: plug-ins/python/palette-offset.py:133
+#| msgid "_Offset Palette..."
+msgid "Offset Palette..."
+msgstr "Hliðra litaspjaldi..."
+
+#: plug-ins/python/palette-sort.py:42
 msgid "Red"
 msgstr "Rautt"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: plug-ins/python/palette-sort.py:42
 msgid "Green"
 msgstr "Grænt"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: plug-ins/python/palette-sort.py:42
 msgid "Blue"
 msgstr "Blátt"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
+#: plug-ins/python/palette-sort.py:43
 msgid "Luma (Y)"
 msgstr "Luma (Y)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: plug-ins/python/palette-sort.py:44
 msgid "Hue"
 msgstr "Litblær"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: plug-ins/python/palette-sort.py:44
 msgid "Saturation"
 msgstr "Litmettun"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: plug-ins/python/palette-sort.py:44
 msgid "Value"
 msgstr "Litgildi"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+#: plug-ins/python/palette-sort.py:45
 msgid "Saturation (HSL)"
 msgstr "Litmettun (HSL)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+#: plug-ins/python/palette-sort.py:45
 msgid "Lightness (HSL)"
 msgstr "Ljósleiki (HSL)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
+#: plug-ins/python/palette-sort.py:46
 msgid "Index"
 msgstr "Litnúmerað"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:30
+#: plug-ins/python/palette-sort.py:47
 msgid "Random"
 msgstr "Slembið"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:81
+#: plug-ins/python/palette-sort.py:92
 msgid "Lightness (LAB)"
 msgstr "Ljósleiki (LAB)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
+#: plug-ins/python/palette-sort.py:93
 msgid "A-color"
 msgstr "A-litur"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
+#: plug-ins/python/palette-sort.py:93
 msgid "B-color"
 msgstr "B-litur"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
+#: plug-ins/python/palette-sort.py:94
 msgid "Chroma (LCHab)"
 msgstr "Litróf (LCHab)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:84
+#: plug-ins/python/palette-sort.py:95
 msgid "Hue (LCHab)"
 msgstr "Litblær (LCHab)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
-msgid "Sort the colors in a palette"
-msgstr "Endurraða litum á litaspjaldi"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
-msgid "_Sort Palette..."
-msgstr "_Raða á litaspjaldi..."
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
-msgid "Se_lections"
-msgstr "Va_lið"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: plug-ins/python/palette-sort.py:340
 msgid "All"
 msgstr "Allt"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: plug-ins/python/palette-sort.py:340
 msgid "Slice / Array"
 msgstr "Sneiða / Fylki"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: plug-ins/python/palette-sort.py:340
 msgid "Autoslice (fg->bg)"
 msgstr "Sjálfvirk sneiðing (fg->bg)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
+#: plug-ins/python/palette-sort.py:340
 msgid "Partitioned"
 msgstr "Upphlutað"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
+#: plug-ins/python/palette-sort.py:350
+#: plug-ins/python/palette-to-gradient.py:129
+#| msgid "Palette"
+msgid "_Palette"
+msgstr "Litas_pjald"
+
+#: plug-ins/python/palette-sort.py:354
+#| msgid "Se_lections"
+msgid "Select_ions"
+msgstr "Myn_dval"
+
+#: plug-ins/python/palette-sort.py:361
 msgid "Slice _expression"
 msgstr "Segð sn_eiðingar"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
-msgid "Channel to _sort"
-msgstr "Litrás til að _raða"
+#: plug-ins/python/palette-sort.py:366
+#| msgid "Channel to _sort"
+msgid "Channel _to sort"
+msgstr "Li_trás til að raða"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
+#: plug-ins/python/palette-sort.py:371
 msgid "_Ascending"
 msgstr "_Hækkandi"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
-msgid "Secondary Channel to s_ort"
+#: plug-ins/python/palette-sort.py:372 plug-ins/python/palette-sort.py:382
+#| msgid "_Ascending"
+msgid "Ascending"
+msgstr "Hækkandi"
+
+#: plug-ins/python/palette-sort.py:376
+#| msgid "Secondary Channel to s_ort"
+msgid "Secondary C_hannel to sort"
 msgstr "_Aukalitrás til að raða"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
+#: plug-ins/python/palette-sort.py:381
+#| msgid "_Ascending"
+msgid "Ascen_ding"
+msgstr "Hækkan_di"
+
+#: plug-ins/python/palette-sort.py:386
 msgid "_Quantization"
 msgstr "_Magn"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
+#: plug-ins/python/palette-sort.py:387
+#| msgid "_Quantization"
+msgid "Quantization"
+msgstr "Magntaka"
+
+#: plug-ins/python/palette-sort.py:391
 msgid "_Partitioning channel"
 msgstr "Rás sem á að ski_pta upp"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
+#: plug-ins/python/palette-sort.py:396
 msgid "Partition q_uantization"
 msgstr "Magn í skipting_u"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
-msgid "Create a repeating gradient using colors from the palette"
-msgstr "Búa til endurtekinn litstigul með litum af litaspjaldinu"
+#: plug-ins/python/palette-sort.py:397
+#| msgid "Partition q_uantization"
+msgid "Partition quantization"
+msgstr "Magn í skiptingu"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
-msgid "Palette to _Repeating Gradient"
-msgstr "Litaspjald í endu_rtekinn litstigul"
+#: plug-ins/python/palette-sort.py:421
+msgid "_Sort Palette..."
+msgstr "_Raða á litaspjaldi..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
-msgid "Create a gradient using colors from the palette"
-msgstr "Búa til litstigul með litum af litaspjaldinu"
+#: plug-ins/python/palette-sort.py:423
+msgid "Sort the colors in a palette"
+msgstr "Endurraða litum á litaspjaldi"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: plug-ins/python/palette-to-gradient.py:141
+#: plug-ins/python/palette-to-gradient.py:142
+msgid "The newly created gradient"
+msgstr ""
+
+#: plug-ins/python/palette-to-gradient.py:164
 msgid "Palette to _Gradient"
 msgstr "Litaspjald í _litstigul"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
-msgid "Slice"
-msgstr "Sneiða"
+#: plug-ins/python/palette-to-gradient.py:165
+msgid "Create a gradient using colors from the palette"
+msgstr "Búa til litstigul með litum af litaspjaldinu"
 
-#. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
-msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Sníður mynd meðfram stoðlínum, býr til myndhluta og HTML töflukóða"
+#: plug-ins/python/palette-to-gradient.py:166
+#| msgid "Create a gradient using colors from the palette"
+msgid "Create a new gradient using colors from the palette."
+msgstr "Búa til nýjan litstigul með litum af litaspjaldinu."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
-msgid "_Slice..."
-msgstr "_Sneiða..."
+#: plug-ins/python/palette-to-gradient.py:169
+msgid "Palette to _Repeating Gradient"
+msgstr "Litaspjald í endu_rtekinn litstigul"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
-msgid "Path for HTML export"
-msgstr "Slóð fyrir útflutning á HTML"
+#: plug-ins/python/palette-to-gradient.py:170
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Búa til endurtekinn litstigul með litum af litaspjaldinu"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
-msgid "Filename for export"
-msgstr "Skráarheiti til útflutnings"
+#: plug-ins/python/palette-to-gradient.py:171
+#| msgid "Create a repeating gradient using colors from the palette"
+msgid "Create a new repeating gradient using colors from the palette."
+msgstr "Búa til nýjan endurtekinn litstigul með litum af litaspjaldinu."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
-msgid "Image name prefix"
-msgstr "Forskeyti myndskráarheitis"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
-msgid "Image format"
-msgstr "Myndsnið"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
-msgid "Separate image folder"
-msgstr "Sérstök myndamappa"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
-msgid "Folder for image export"
-msgstr "Mappa til útflutnings mynda"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
-msgid "Space between table elements"
-msgstr "Bil milli töfluhluta"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
-msgid "Javascript for onmouseover and clicked"
-msgstr "Javascript við yfirsvif (onmouseover) og smell"
-
-#. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
-msgid "Skip animation for table caps"
-msgstr "Sleppa hreyfingum á töflufyrirsögnum"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:57
+#: plug-ins/python/python-console/python-console.py:79
 msgid "Python Console"
 msgstr "Python stjórnskjár"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:61
+#: plug-ins/python/python-console/python-console.py:81
+#: plug-ins/python/python-console/python-console.py:273
+msgid "_Save"
+msgstr "Vi_sta"
+
+#: plug-ins/python/python-console/python-console.py:82
+msgid "Cl_ear"
+msgstr "Hr_einsa"
+
+#: plug-ins/python/python-console/python-console.py:83
 msgid "_Browse..."
 msgstr "_Flakka..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:154
+#: plug-ins/python/python-console/python-console.py:84
+#: plug-ins/python/python-console/python-console.py:221
+msgid "_Close"
+msgstr "_Loka"
+
+#: plug-ins/python/python-console/python-console.py:218
 msgid "Python Procedure Browser"
 msgstr "Python aðgerðavafri"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:183
+#: plug-ins/python/python-console/python-console.py:220
+msgid "_Apply"
+msgstr "Virkj_a"
+
+#: plug-ins/python/python-console/python-console.py:246
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Gat ekki opnað '%s' fyrir ritun: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:198
+#: plug-ins/python/python-console/python-console.py:261
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Gat ekki skrifað í '%s': %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:206
+#: plug-ins/python/python-console/python-console.py:270
 msgid "Save Python-Fu Console Output"
 msgstr "Vista Python-Fu úttak frá skipanalínu"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:232
+#: plug-ins/python/python-console/python-console.py:321
+#| msgid "Python Console"
+msgid "Python _Console"
+msgstr "Python stjórns_kjár"
+
+#: plug-ins/python/python-console/python-console.py:322
 msgid "Interactive GIMP Python interpreter"
 msgstr "Gagnvirkur GIMP Python túlkari"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:237
-msgid "_Console"
-msgstr "Stjórns_kjár"
+#: plug-ins/python/python-console/python-console.py:323
+msgid "Type in commands and see results"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
-msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Bæta undirskugga við lag og mögulega fláa það"
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
-msgid "_Drop Shadow and Bevel..."
-msgstr "_Undirskuggi og flái..."
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-msgid "_Shadow blur"
-msgstr "Mýking _skugga"
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "_Bevel"
-msgstr "_Flái"
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-msgid "_Drop shadow"
-msgstr "Un_dirskuggi"
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-msgid "Drop shadow _X displacement"
-msgstr "_X hliðrun undirskugga"
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
-msgid "Drop shadow _Y displacement"
-msgstr "_Y hliðrun undirskugga"
-
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:44
+#: plug-ins/python/spyro-plus.py:51
 msgid "Spyro Layer"
 msgstr "Spíró-lag"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:45
-#| msgid "Spyrograph"
+#: plug-ins/python/spyro-plus.py:52
 msgid "Spyro Path"
 msgstr "Spíróferill"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:56
-msgid ""
-"Save\n"
-"as New Layer"
-msgstr ""
-"Vista\n"
-"sem nýtt lag"
+#: plug-ins/python/spyro-plus.py:62
+#| msgid ""
+#| "Save\n"
+#| "as New Layer"
+msgid "As New Layer"
+msgstr "Sem nýtt lag"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:57
-msgid ""
-"Redraw on\n"
-"Active layer"
-msgstr ""
-"Endurteikna á\n"
-"virkt lag"
+#: plug-ins/python/spyro-plus.py:63
+#| msgid ""
+#| "Redraw on\n"
+#| "Active layer"
+msgid "Redraw on last active layer"
+msgstr "Endurteikna á síðasta virka lag"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:58
-msgid ""
-"Save\n"
-"as Path"
-msgstr ""
-"Vista\n"
-"sem feril"
+#: plug-ins/python/spyro-plus.py:64
+#| msgid ""
+#| "Save\n"
+#| "as Path"
+msgid "As Path"
+msgstr "Sem feril"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:104
+#: plug-ins/python/spyro-plus.py:112
 msgid "Circle"
 msgstr "Hringur"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:140
+#: plug-ins/python/spyro-plus.py:148
 msgid "Polygon-Star"
 msgstr "Marghyrningur-Stjarna"
 
 #. Sine wave on a circle ring.
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:156
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:947
+#: plug-ins/python/spyro-plus.py:164 plug-ins/python/spyro-plus.py:989
 msgid "Sine"
 msgstr "Sínus"
 
 #. Semi-circles, based on a polygon
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:166
+#: plug-ins/python/spyro-plus.py:174
 msgid "Bumps"
 msgstr "Ójöfnur"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:271
+#: plug-ins/python/spyro-plus.py:279
 msgid "Rack"
 msgstr "Rekki"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:315
+#: plug-ins/python/spyro-plus.py:323
 msgid "Frame"
 msgstr "Rammi"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:404
+#: plug-ins/python/spyro-plus.py:436
 msgid "Selection"
 msgstr "Myndval"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:494
+#: plug-ins/python/spyro-plus.py:521
 msgid "Pencil"
 msgstr "Blýantur"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:510
+#: plug-ins/python/spyro-plus.py:537
 msgid "AirBrush"
 msgstr "Sprauta"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:570
+#: plug-ins/python/spyro-plus.py:604
 msgid "Preview"
 msgstr "Forskoðun"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:575
+#: plug-ins/python/spyro-plus.py:609
 msgid "Stroke"
 msgstr "Stroka"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:622
+#: plug-ins/python/spyro-plus.py:656
 msgid "PaintBrush"
 msgstr "Málunarpensill"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:624
+#: plug-ins/python/spyro-plus.py:658
 msgid "Ink"
 msgstr "Blek"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:625
+#: plug-ins/python/spyro-plus.py:659
 msgid "MyPaintBrush"
 msgstr "PensillinnMinn"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:933
+#: plug-ins/python/spyro-plus.py:975
 msgid "Spyrograph"
 msgstr "Spírógraf"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:940
+#: plug-ins/python/spyro-plus.py:982
 msgid "Epitrochoid"
 msgstr "Utan (epitrochoid)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:967
+#: plug-ins/python/spyro-plus.py:1009
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1395
+#: plug-ins/python/spyro-plus.py:1456
 msgid "Curve Type"
 msgstr "Tegund ferils"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1396
+#: plug-ins/python/spyro-plus.py:1457
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1401
+#: plug-ins/python/spyro-plus.py:1462
 msgid "Tool"
 msgstr "Verkfæri"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1402
+#: plug-ins/python/spyro-plus.py:1463
 msgid ""
-"The tool with which to draw the pattern.The Preview tool just draws quickly."
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1407
+#: plug-ins/python/spyro-plus.py:1468
 msgid "Long Gradient"
 msgstr "Langur litstigull"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
+#: plug-ins/python/spyro-plus.py:1470
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
 "gradient and repeat mode from the gradient tool settings."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1429
+#: plug-ins/python/spyro-plus.py:1490
 msgid "Specify pattern using one of the following tabs:"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
+#: plug-ins/python/spyro-plus.py:1492
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -592,115 +671,111 @@ msgid ""
 "similar."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1455
+#: plug-ins/python/spyro-plus.py:1516
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1458
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1484
+#: plug-ins/python/spyro-plus.py:1519 plug-ins/python/spyro-plus.py:1547
 msgid "Fixed Gear Teeth"
 msgstr "Fastur fjöldi tanna"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1464
+#: plug-ins/python/spyro-plus.py:1527
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1467
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1489
+#: plug-ins/python/spyro-plus.py:1530 plug-ins/python/spyro-plus.py:1552
 msgid "Moving Gear Teeth"
 msgstr "Hreyfanlegar gírtennur"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1472
+#: plug-ins/python/spyro-plus.py:1535
 msgid "Hole percent"
 msgstr "Holuprósenta"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1473
+#: plug-ins/python/spyro-plus.py:1536
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1494
+#: plug-ins/python/spyro-plus.py:1557
 msgid "Hole Number"
 msgstr "Holufjöldi"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1495
+#: plug-ins/python/spyro-plus.py:1558
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
+#: plug-ins/python/spyro-plus.py:1569
 msgid "Flower Petals"
 msgstr "Blómkrónublöð"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
-#| msgid "Number of sides of the shape."
+#: plug-ins/python/spyro-plus.py:1570
 msgid "The number of petals in the pattern."
 msgstr "Fjöldi krónublaða í mynstrinu."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1511
+#: plug-ins/python/spyro-plus.py:1575
 msgid "Petal Skip"
 msgstr "Sleppa krónublaði"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1512
+#: plug-ins/python/spyro-plus.py:1576
 msgid "The number of petals to advance for drawing the next petal."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1517
+#: plug-ins/python/spyro-plus.py:1581
 msgid "Hole Radius(%)"
 msgstr "Radíus holu(%)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1518
+#: plug-ins/python/spyro-plus.py:1582
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
 "produce no hole. A Value of 99 will produce a thin line on the edge."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1531
+#: plug-ins/python/spyro-plus.py:1603
 msgid "Width(%)"
 msgstr "Breidd(%)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1532
+#: plug-ins/python/spyro-plus.py:1604
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
 "fixed gear."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1542
+#: plug-ins/python/spyro-plus.py:1615
 msgid "Visual"
 msgstr "Sjónrænt"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1547
+#: plug-ins/python/spyro-plus.py:1621
 msgid "Toy Kit"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1552
+#: plug-ins/python/spyro-plus.py:1627
 msgid "Gears"
 msgstr "Tannhjól"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1564
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
+#: plug-ins/python/spyro-plus.py:1640 plug-ins/python/spyro-plus.py:1684
 msgid "Rotation"
 msgstr "Snúningur"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1565
+#: plug-ins/python/spyro-plus.py:1641
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1588
+#: plug-ins/python/spyro-plus.py:1664
 msgid "Shape"
 msgstr "Lögun"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1589
+#: plug-ins/python/spyro-plus.py:1665
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -709,104 +784,269 @@ msgid ""
 "non-rectangular."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
+#: plug-ins/python/spyro-plus.py:1674
 msgid "Sides"
 msgstr "Hliðar"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
+#: plug-ins/python/spyro-plus.py:1674
 msgid "Number of sides of the shape."
 msgstr "Fjöldi hliða á löguninni."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
+#: plug-ins/python/spyro-plus.py:1679
 msgid "Morph"
 msgstr "Sambræðingur"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
+#: plug-ins/python/spyro-plus.py:1679
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
+#: plug-ins/python/spyro-plus.py:1684
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Snúningur fasta gírhjólsins, í gráðum"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
+#: plug-ins/python/spyro-plus.py:1699
 msgid "Margin (px)"
 msgstr "Spássía (px)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
+#: plug-ins/python/spyro-plus.py:1699
 msgid "Margin from edge of selection."
 msgstr "Spássía frá jaðri myndvals."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1628
+#: plug-ins/python/spyro-plus.py:1704
 msgid "Make width and height equal"
 msgstr "Gera breidd og hæð það sama"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
+#: plug-ins/python/spyro-plus.py:1706
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1654
+#: plug-ins/python/spyro-plus.py:1721
 msgid "Re_draw"
 msgstr "En_durteikna"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1655
+#: plug-ins/python/spyro-plus.py:1723
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
+#: plug-ins/python/spyro-plus.py:1726
 msgid "_Reset"
 msgstr "F_rumstilla"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1658
-msgid "_Cancel"
-msgstr "_Hætta við"
+#: plug-ins/python/spyro-plus.py:1734
+msgid "Save"
+msgstr "Vista"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
-msgid "_OK"
-msgstr "Í _lagi"
-
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1665
+#: plug-ins/python/spyro-plus.py:1735
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1677
+#: plug-ins/python/spyro-plus.py:1749
 msgid "Spyrogimp"
 msgstr "Spírógimp"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1686
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2191
+#: plug-ins/python/spyro-plus.py:1758 plug-ins/python/spyro-plus.py:2295
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1699
+#: plug-ins/python/spyro-plus.py:1771
 msgid "Curve Pattern"
 msgstr "Sveiglínumynstur"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1702
+#: plug-ins/python/spyro-plus.py:1774
 msgid "Fixed Gear"
 msgstr "Fast tannhjól"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1705
+#: plug-ins/python/spyro-plus.py:1777
 msgid "Size"
 msgstr "Stærð"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2039
+#: plug-ins/python/spyro-plus.py:2133
 msgid "Rendering Pattern"
 msgstr "Myndgeri mynstur"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2051
+#: plug-ins/python/spyro-plus.py:2145
 msgid "Please wait : Rendering Pattern"
 msgstr "Hinkraðu aðeins : Myndgeri mynstur"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2160
+#: plug-ins/python/spyro-plus.py:2211 plug-ins/python/spyro-plus.py:2212
+msgid ""
+"The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2216 plug-ins/python/spyro-plus.py:2217
+msgid "Shape of fixed gear"
+msgstr "Lögun fasta gírhjólsins"
+
+#: plug-ins/python/spyro-plus.py:2221 plug-ins/python/spyro-plus.py:2222
+msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2226 plug-ins/python/spyro-plus.py:2227
+msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2231 plug-ins/python/spyro-plus.py:2232
+msgid "Number of teeth for fixed gear"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2236 plug-ins/python/spyro-plus.py:2237
+msgid "Number of teeth for moving gear"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2241 plug-ins/python/spyro-plus.py:2243
+msgid ""
+"Location of hole in moving gear in percent, where 100 means that the hole is "
+"at the edge of the gear, and 0 means the hole is at the center"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2248 plug-ins/python/spyro-plus.py:2249
+#| msgid "Margin from edge of selection."
+msgid "Margin from selection, in pixels"
+msgstr "Spássía frá jaðri myndvals, í mynddílum"
+
+#: plug-ins/python/spyro-plus.py:2253 plug-ins/python/spyro-plus.py:2254
+#| msgid "Make width and height equal"
+msgid "Make height and width equal"
+msgstr "Gera breidd og hæð þá sömu"
+
+#: plug-ins/python/spyro-plus.py:2258 plug-ins/python/spyro-plus.py:2259
+msgid "Pattern rotation, in degrees"
+msgstr "Snúningur mynsturs, í gráðum"
+
+#: plug-ins/python/spyro-plus.py:2263 plug-ins/python/spyro-plus.py:2264
+#| msgid "Rotation of the fixed gear, in degrees"
+msgid "Shape rotation of fixed gear, in degrees"
+msgstr "Snúningur lögunar fasta gírhjólsins, í gráðum"
+
+#: plug-ins/python/spyro-plus.py:2268 plug-ins/python/spyro-plus.py:2269
+#, fuzzy
+#| msgid "The number of petals in the pattern."
+msgid "Tool to use for drawing the pattern."
+msgstr "Fjöldi krónublaða í mynstrinu."
+
+#: plug-ins/python/spyro-plus.py:2273 plug-ins/python/spyro-plus.py:2275
+msgid ""
+"Whether to apply a long gradient to match the length of the pattern. Only "
+"applicable to some of the tools."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2296
+msgid ""
+"Uses current tool settings to draw Spyrograph patterns. The size and "
+"location of the pattern is based on the current selection."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2299
 msgid "Spyrogimp..."
 msgstr "Spírógimp..."
+
+#~ msgid "Missing exception information"
+#~ msgstr "Vantar upplýsingar um frávik (exception)"
+
+#, python-format
+#~ msgid "An error occurred running %s"
+#~ msgstr "Villa kom upp við keyrslu %s"
+
+#~ msgid "_More Information"
+#~ msgstr "_Nánari upplýsingar"
+
+#~ msgid "No"
+#~ msgstr "Nei"
+
+#~ msgid "Yes"
+#~ msgstr "Já"
+
+#~ msgid "Python-Fu File Selection"
+#~ msgstr "Python-Fu skráaval"
+
+#~ msgid "Python-Fu Folder Selection"
+#~ msgstr "Python-Fu möppuval"
+
+#, python-format
+#~ msgid "Invalid input for '%s'"
+#~ msgstr "Ógilt inntak fyrir '%s'"
+
+#~ msgid "Python-Fu Color Selection"
+#~ msgstr "Python-Fu litaval"
+
+#~ msgid "Source code"
+#~ msgstr "Upprunakóði"
+
+#~ msgid "Entry box"
+#~ msgstr "Innsláttarreitur"
+
+#~ msgid "File Name"
+#~ msgstr "Skráarheiti"
+
+#~ msgid "_Image"
+#~ msgstr "_Mynd"
+
+#~ msgid "_Drawable"
+#~ msgstr "_Teiknanlegt"
+
+#~ msgid "Slice"
+#~ msgstr "Sneiða"
+
+#~ msgid ""
+#~ "Cuts an image along its guides, creates images and a HTML table snippet"
+#~ msgstr "Sníður mynd meðfram stoðlínum, býr til myndhluta og HTML töflukóða"
+
+#~ msgid "Path for HTML export"
+#~ msgstr "Slóð fyrir útflutning á HTML"
+
+#~ msgid "Filename for export"
+#~ msgstr "Skráarheiti til útflutnings"
+
+#~ msgid "Image name prefix"
+#~ msgstr "Forskeyti myndskráarheitis"
+
+#~ msgid "Image format"
+#~ msgstr "Myndsnið"
+
+#~ msgid "Separate image folder"
+#~ msgstr "Sérstök myndamappa"
+
+#~ msgid "Folder for image export"
+#~ msgstr "Mappa til útflutnings mynda"
+
+#~ msgid "Space between table elements"
+#~ msgstr "Bil milli töfluhluta"
+
+#~ msgid "Javascript for onmouseover and clicked"
+#~ msgstr "Javascript við yfirsvif (onmouseover) og smell"
+
+#~ msgid "Skip animation for table caps"
+#~ msgstr "Sleppa hreyfingum á töflufyrirsögnum"
+
+#~ msgid "_Console"
+#~ msgstr "Stjórns_kjár"
+
+#~ msgid "Add a drop shadow to a layer, and optionally bevel it"
+#~ msgstr "Bæta undirskugga við lag og mögulega fláa það"
+
+#~ msgid "_Drop Shadow and Bevel..."
+#~ msgstr "_Undirskuggi og flái..."
+
+#~ msgid "_Shadow blur"
+#~ msgstr "Mýking _skugga"
+
+#~ msgid "_Bevel"
+#~ msgstr "_Flái"
+
+#~ msgid "_Drop shadow"
+#~ msgstr "Un_dirskuggi"
+
+#~ msgid "Drop shadow _X displacement"
+#~ msgstr "_X hliðrun undirskugga"
+
+#~ msgid "Drop shadow _Y displacement"
+#~ msgstr "_Y hliðrun undirskugga"
 
 #~ msgid ""
 #~ "Keep\n"
