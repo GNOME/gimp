@@ -2,13 +2,13 @@
 # Copyright (C) 2017 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
-# Sveinn í Felli <sv1@fellsnet.is>, 2017, 2018, 2019, 2022.
+# Sveinn í Felli <sv1@fellsnet.is>, 2017, 2018, 2019, 2022, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-09-06 17:59+0000\n"
-"PO-Revision-Date: 2022-09-08 16:45+0000\n"
+"POT-Creation-Date: 2024-04-17 01:48+0000\n"
+"PO-Revision-Date: 2024-04-17 08:31+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.04.3\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -28,8 +28,11 @@ msgstr "Uppsetning gerð af Jernej Simonèiè, jernej-gimp@ena.si"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
-msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
-msgstr "Þessi útgáfa GIMP krefst Windows 7 eða nýrri útgáfu Windows."
+#| msgid ""
+#| "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgid ""
+"This version of GIMP requires Windows 10, or a newer version of Windows."
+msgstr "Þessi útgáfa GIMP krefst Windows 10 eða nýrri útgáfu Windows."
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
@@ -50,8 +53,8 @@ msgstr ""
 "vinnslu, þar sem óstöðugleiki hennar gæti hugsanlega leitt til þess að gögn "
 "muni tapast.%nEf þú rekst á einhver vandamál, skaltu fyrst athuga hvort ekki "
 "sé búið að lagfæra þau í GIT áður en þú hefur samband við forritarana eða "
-"tilkynnir þau á GIMP-gitlab:%n_https://gitlab.gnome.org/GNOME/gimp/issues%n"
-"%nViltu samt halda áfram með uppsetninguna?"
+"tilkynnir þau á GIMP-gitlab:%n_https://gitlab.gnome.org/GNOME/gimp/"
+"issues%n%nViltu samt halda áfram með uppsetninguna?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
@@ -136,8 +139,8 @@ msgstr "Aðgerðasöfn fyrir keyrsluumhverfi (run-time)"
 #: build/windows/installer/lang/setup.isl.xml.in:101
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
-"Aðgerðasöfn fyrir keyrsluumhverfi sem GIMP notar, þar með talið"
-" GTK-keyrsluumhverfið (run-time environment)"
+"Aðgerðasöfn fyrir keyrsluumhverfi sem GIMP notar, þar með talið GTK-"
+"keyrsluumhverfið (run-time environment)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -148,91 +151,78 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Hafa með upplýsingar sem hjálpa til við að villukemba GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-msgid "MS-Windows engine for GTK"
-msgstr "MS-Windows kerfi fyrir GTK"
-
 #: build/windows/installer/lang/setup.isl.xml.in:117
-msgid "Native Windows look for GIMP"
-msgstr "Frumskrifað Windows-útlit fyrir GIMP"
-
-#: build/windows/installer/lang/setup.isl.xml.in:121
-msgid "Support for old plug-ins"
-msgstr "Stuðningur við eldri hjálparforrit"
-
-#: build/windows/installer/lang/setup.isl.xml.in:125
-msgid "Install libraries needed by old third-party plug-ins"
-msgstr "Setja inn aðgerðasöfn sem eldri utanaðkomandi hjálparforrit þurfa"
-
-#: build/windows/installer/lang/setup.isl.xml.in:129
-#: build/windows/installer/lang/setup.isl.xml.in:133
 msgid "Translations"
 msgstr "Þýðingar"
 
-#: build/windows/installer/lang/setup.isl.xml.in:137
+#: build/windows/installer/lang/setup.isl.xml.in:121
 msgid "Python scripting"
 msgstr "Python-skriftun"
 
-#: build/windows/installer/lang/setup.isl.xml.in:141
+#: build/windows/installer/lang/setup.isl.xml.in:125
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr ""
 "Gerir þér kleift að nota GIMP-hjáparforrit sem skrifuð eru með Python "
 "skriftunarmálinu."
 
-#: build/windows/installer/lang/setup.isl.xml.in:145
+#: build/windows/installer/lang/setup.isl.xml.in:129
 msgid "Lua scripting"
 msgstr "Lua-skriftun"
 
-#: build/windows/installer/lang/setup.isl.xml.in:149
+#: build/windows/installer/lang/setup.isl.xml.in:133
 msgid "Allows you to use GIMP plugins written in Lua scripting language."
 msgstr ""
 "Gerir þér kleift að nota GIMP-hjáparforrit sem skrifuð eru með Lua "
 "skriftunarmálinu."
 
-#: build/windows/installer/lang/setup.isl.xml.in:153
+#: build/windows/installer/lang/setup.isl.xml.in:137
 msgid "MyPaint brushes"
 msgstr "MyPaint málunarpenslar"
 
-#: build/windows/installer/lang/setup.isl.xml.in:157
+#: build/windows/installer/lang/setup.isl.xml.in:141
 msgid "Install the default set of MyPaint brushes"
 msgstr "Setja upp sjálfgefna settið af MyPaint málunarpenslum"
 
-#: build/windows/installer/lang/setup.isl.xml.in:161
+#: build/windows/installer/lang/setup.isl.xml.in:145
 msgid "PostScript support"
 msgstr "PostScript-stuðningur"
 
-#: build/windows/installer/lang/setup.isl.xml.in:165
+#: build/windows/installer/lang/setup.isl.xml.in:149
 msgid "Allow GIMP to load PostScript files"
 msgstr "Leyfa GIMP að hlaða inn PostScript-skrám"
 
-#: build/windows/installer/lang/setup.isl.xml.in:169
+#: build/windows/installer/lang/setup.isl.xml.in:153
 msgid "Support for 32-bit plug-ins"
 msgstr "Stuðningur við 32-bita hjálparforrit"
 
-#: build/windows/installer/lang/setup.isl.xml.in:173
+#: build/windows/installer/lang/setup.isl.xml.in:157
+#| msgid ""
+#| "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
+#| "support."
 msgid ""
-"Include files necessary for using 32-bit plug-ins.%nRequired for Python "
+"Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
 "support."
 msgstr ""
 "Hafa með skrár sem nauðsynlegar eru til að nota 32-bita hjálparforrit."
-"%nNauðsynlegt fyrir stuðning við Python."
+"%nNauðsynlegt fyrir stuðning við TWAIN."
 
-#: build/windows/installer/lang/setup.isl.xml.in:178
+#: build/windows/installer/lang/setup.isl.xml.in:162
 msgid "Additional icons:"
 msgstr "Viðbótartáknmyndir"
 
-#: build/windows/installer/lang/setup.isl.xml.in:182
+#: build/windows/installer/lang/setup.isl.xml.in:166
 msgid "Create a &desktop icon"
 msgstr "&Búa til táknmynd á skjáborð"
 
-#: build/windows/installer/lang/setup.isl.xml.in:186
+#: build/windows/installer/lang/setup.isl.xml.in:170
 msgid "Create a &Quick Launch icon"
 msgstr "Búa til táknmynd fyrir &hraðræsingu"
 
-#: build/windows/installer/lang/setup.isl.xml.in:190
+#: build/windows/installer/lang/setup.isl.xml.in:174
 msgid "Remove previous GIMP version"
 msgstr "Fjarlægja fyrri útgáfu GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:195
+#: build/windows/installer/lang/setup.isl.xml.in:179
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -241,43 +231,43 @@ msgstr ""
 "innhleðslu hjálparforrita, geturðu prófað að fjarlægja GIMP og setja svo upp "
 "aftur."
 
-#: build/windows/installer/lang/setup.isl.xml.in:199
+#: build/windows/installer/lang/setup.isl.xml.in:183
 msgid "Error extracting temporary data."
 msgstr "Villa við að afþjappa bráðabirgðaskrár."
 
-#: build/windows/installer/lang/setup.isl.xml.in:203
+#: build/windows/installer/lang/setup.isl.xml.in:187
 msgid "Error updating Python interpreter info."
 msgstr "Villa við uppfærslu upplýsinga um Python-túlkinn."
 
-#: build/windows/installer/lang/setup.isl.xml.in:207
+#: build/windows/installer/lang/setup.isl.xml.in:191
 msgid "Error updating MyPaint brushes info."
 msgstr "Villa við uppfærslu upplýsinga um MyPaint-pensla."
 
-#: build/windows/installer/lang/setup.isl.xml.in:211
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "There was an error updating %1."
 msgstr "Það kom upp villa við að uppfæra %1."
 
-#: build/windows/installer/lang/setup.isl.xml.in:215
+#: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "There was an error updating GIMP's configuration file %1."
 msgstr "Það kom upp villa við að uppfæra GIMP-stillingaskrána %1."
 
-#: build/windows/installer/lang/setup.isl.xml.in:220
+#: build/windows/installer/lang/setup.isl.xml.in:204
 msgid "Edit with GIMP"
 msgstr "Breyta með Gimp"
 
-#: build/windows/installer/lang/setup.isl.xml.in:225
+#: build/windows/installer/lang/setup.isl.xml.in:209
 msgid "Select file associations"
 msgstr "Veldu vensl skráa"
 
-#: build/windows/installer/lang/setup.isl.xml.in:229
+#: build/windows/installer/lang/setup.isl.xml.in:213
 msgid "Extensions:"
 msgstr "Skráaendingar:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:233
+#: build/windows/installer/lang/setup.isl.xml.in:217
 msgid "Select the file types you wish to associate with GIMP"
 msgstr "Veldu skráagerðirnar sem þú vilt að tengist GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:237
+#: build/windows/installer/lang/setup.isl.xml.in:221
 msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
@@ -285,27 +275,27 @@ msgstr ""
 "Þetta mun láta valdar skrár opnast í GIMP þegar þú tvísmellir á þær í "
 "Explorer skráastjóranum."
 
-#: build/windows/installer/lang/setup.isl.xml.in:241
+#: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Select &All"
 msgstr "Velja &allt"
 
-#: build/windows/installer/lang/setup.isl.xml.in:245
+#: build/windows/installer/lang/setup.isl.xml.in:229
 msgid "Unselect &All"
 msgstr "&Afvelja allt"
 
-#: build/windows/installer/lang/setup.isl.xml.in:249
+#: build/windows/installer/lang/setup.isl.xml.in:233
 msgid "Select &Unused"
 msgstr "Velja ón&otað"
 
-#: build/windows/installer/lang/setup.isl.xml.in:254
+#: build/windows/installer/lang/setup.isl.xml.in:238
 msgid "File types to associate with GIMP:"
 msgstr "Skráagerðir sem eiga að tengjast GIMP:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:258
+#: build/windows/installer/lang/setup.isl.xml.in:242
 msgid "Removing previous version of GIMP:"
 msgstr "Fjarlægi fyrri uppsetningu GIMP:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:262
+#: build/windows/installer/lang/setup.isl.xml.in:246
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
 "the automatic uninstall of old version has failed.%n%nPlease remove the "
@@ -316,25 +306,25 @@ msgstr ""
 "Ekki er hægt að setja GIMP %1 upp yfir þá útgáfu GIMP sem núna er uppsett, "
 "auk þess sem sjálfvirk fjarlæging eldri útgáfunnar mistókst.%n%nÞú ættir að "
 "fjarlægja eldri útgáfu GIMP áður en þú setur upp þessa útgáfu í %2, eða "
-"velja sérsniðna uppsetningu og velja þar aðra möppu til uppsetningar.%n"
-"%nUppsetningarforritið mun núna lokast."
+"velja sérsniðna uppsetningu og velja þar aðra möppu til uppsetningar."
+"%n%nUppsetningarforritið mun núna lokast."
 
-#: build/windows/installer/lang/setup.isl.xml.in:266
+#: build/windows/installer/lang/setup.isl.xml.in:250
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
-"installing this version in %2, or choose a Custom install, and select a "
-"different installation folder.%n%nThe Setup will now exit."
+"Setup couldn't determine how to remove the old version automatically."
+"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+"before installing this version in %2, or choose a Custom install, and select "
+"a different installation folder.%n%nThe Setup will now exit."
 msgstr ""
 "Ekki er hægt að setja GIMP %1 upp yfir þá útgáfu GIMP sem núna er uppsett, "
 "auk þess sem uppsetningarforritið náði ekki að greina hvernig ætti að "
 "fjarlægja eldri útgáfuna sjálfvirkt.%n%nÞú ættir sjálf/ur að fjarlægja eldri "
 "útgáfu GIMP og öll hjálparforrit áður en þú setur upp þessa útgáfu í %2, eða "
-"velja sérsniðna uppsetningu og velja þar aðra möppu til uppsetningar.%n"
-"%nUppsetningarforritið mun núna lokast."
+"velja sérsniðna uppsetningu og velja þar aðra möppu til uppsetningar."
+"%n%nUppsetningarforritið mun núna lokast."
 
-#: build/windows/installer/lang/setup.isl.xml.in:270
+#: build/windows/installer/lang/setup.isl.xml.in:254
 msgid ""
 "Previous GIMP version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
@@ -345,57 +335,69 @@ msgstr ""
 "mun uppsetningin halda áfram næst þegar einhver með stjórnunarheimildir "
 "skráir sig inn."
 
-#: build/windows/installer/lang/setup.isl.xml.in:275
+#: build/windows/installer/lang/setup.isl.xml.in:259
 msgid "There was an error restarting the Setup. (%1)"
 msgstr "Það kom upp villa við að endurræsa uppsetningarferlið. (%1)"
 
-#: build/windows/installer/lang/setup.isl.xml.in:279
+#: build/windows/installer/lang/setup.isl.xml.in:263
 msgid "Cleaning up old files..."
 msgstr "Hreinsa upp eldri skrár..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:284
+#: build/windows/installer/lang/setup.isl.xml.in:268
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Mundu: GIMP er frjáls og ókeypis hugbúnaður.%n%nKíktu á"
 
-#: build/windows/installer/lang/setup.isl.xml.in:288
+#: build/windows/installer/lang/setup.isl.xml.in:272
 msgid "for free updates."
 msgstr "til að athuga með uppfærslur."
 
-#: build/windows/installer/lang/setup.isl.xml.in:292
+#: build/windows/installer/lang/setup.isl.xml.in:276
 msgid "Setting up file associations..."
 msgstr "Set upp skráavensl..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:295
+#: build/windows/installer/lang/setup.isl.xml.in:279
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Set upp umhverfi fyrir GIMP Python-viðauka..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:298
+#: build/windows/installer/lang/setup.isl.xml.in:282
 msgid "Setting up MyPaint brushes..."
 msgstr "Set upp MyPaint málunarpensla..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:301
+#: build/windows/installer/lang/setup.isl.xml.in:285
 msgid "Setting up GIMP environment..."
 msgstr "Set upp GIMP umhverfið..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:304
+#: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
 msgstr "Set inn uppsetningu GIMP á stuðningi við 32-bita viðbætur..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:309
+#: build/windows/installer/lang/setup.isl.xml.in:293
 msgid "Launch GIMP"
 msgstr "Ræsa GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:314
+#: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Removing add-on"
 msgstr "Fjarlægi forritsviðbót"
 
-#: build/windows/installer/lang/setup.isl.xml.in:318
+#: build/windows/installer/lang/setup.isl.xml.in:302
 msgid "Internal error (%1)."
 msgstr "Innri villa (%1)."
 
-#: build/windows/installer/lang/setup.isl.xml.in:323
+#: build/windows/installer/lang/setup.isl.xml.in:307
 msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
 msgstr ""
 "Það lítur ekki út fyrir að GIMP sé uppsett í valinni möppu. Halda samt áfram?"
+
+#~ msgid "MS-Windows engine for GTK"
+#~ msgstr "MS-Windows kerfi fyrir GTK"
+
+#~ msgid "Native Windows look for GIMP"
+#~ msgstr "Frumskrifað Windows-útlit fyrir GIMP"
+
+#~ msgid "Support for old plug-ins"
+#~ msgstr "Stuðningur við eldri hjálparforrit"
+
+#~ msgid "Install libraries needed by old third-party plug-ins"
+#~ msgstr "Setja inn aðgerðasöfn sem eldri utanaðkomandi hjálparforrit þurfa"
