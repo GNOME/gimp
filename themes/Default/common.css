@@ -237,7 +237,8 @@ toolbutton button.flat:hover {
 }
 
 toolbutton button.flat:checked,
-toolbutton button.flat:checked:hover {
+toolbutton button.flat:checked:hover,
+.image-button:hover {
   background: @selected-color;
 }
 
@@ -247,6 +248,11 @@ toolbutton button.flat:checked:hover {
 toolbutton button.flat:checked:active:hover {
   background-color: @hover-color;
   border-color: @hover-color;
+}
+
+/* Prevent overly thick border around image buttons */
+.image-button image {
+  -gtk-icon-shadow: 0 0 transparent;
 }
 
 /* Color the toolbox Wilber icon */
