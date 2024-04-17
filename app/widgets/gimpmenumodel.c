@@ -1256,12 +1256,23 @@ gimp_menu_model_ui_removed (GimpUIManager *manager,
             }
           else if (g_menu_item_get_attribute (iter->data,
                                               G_MENU_ATTRIBUTE_ACTION,
-                                              "&s", &action) &&
-                   /* "action" attribute will start with "app." prefix. */
-                   g_strcmp0 (action + 4, action_name) == 0)
+                                              "&s", &action))
             {
-              item = iter->data;
-              break;
+              gchar *dot = strstr (action, ".");
+
+              g_return_val_if_fail (dot, FALSE);
+
+              /* "action" attribute will start with "app." prefix for main
+               * actions or with another prefix in some other cases (e.g.
+               * "tool-options.tool-options-restore-preset-000"). We need to
+               * clean this up, but for the time being, let's just look at
+               * what's after the dot.
+               */
+              if (g_strcmp0 (dot + 1, action_name) == 0)
+                {
+                  item = iter->data;
+                  break;
+                }
             }
         }
 
