@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-04-17 01:45+0000\n"
-"PO-Revision-Date: 2024-04-17 08:56+0000\n"
+"PO-Revision-Date: 2024-04-17 09:15+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -13728,10 +13728,10 @@ msgid "Format of font information in text layer was changed in %s"
 msgstr "Sniði leturupplýsinga í textalagi var breytt í %s"
 
 #: app/core/gimpimage.c:2939
-#, fuzzy, c-format
+#, c-format
 #| msgid "Layer groups were added in %s"
 msgid "Layer effects were added in %s"
-msgstr "Lagahópum var bætt við í %s"
+msgstr "Lagabrellum var bætt við í %s"
 
 #: app/core/gimpimage.c:2962
 #, c-format
@@ -14491,10 +14491,10 @@ msgstr ""
 "gildi."
 
 #: app/core/gimppalette-load.c:203
-#, fuzzy, c-format
+#, c-format
 #| msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgid "Reading palette file '%s': red component out of range in line %d."
-msgstr "Les litaspjaldsskrá '%s': RGB gildi út fyrir svið á línu %d."
+msgstr "Les litaspjaldsskrá '%s': rautt gildi er út fyrir svið á línu %d."
 
 #: app/core/gimppalette-load.c:211
 #, c-format
@@ -14502,10 +14502,10 @@ msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Les litaspjaldsskrá '%s': Vantar RAUTT-hluta á línu %d."
 
 #: app/core/gimppalette-load.c:220
-#, fuzzy, c-format
+#, c-format
 #| msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgid "Reading palette file '%s': green component out of range in line %d."
-msgstr "Les litaspjaldsskrá '%s': RGB gildi út fyrir svið á línu %d."
+msgstr "Les litaspjaldsskrá '%s': grænt gildi er út fyrir svið á línu %d."
 
 #: app/core/gimppalette-load.c:228
 #, c-format
@@ -14513,10 +14513,10 @@ msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "Les litaspjaldsskrá '%s': Vantar GRÆNT-hluta á línu %d."
 
 #: app/core/gimppalette-load.c:237
-#, fuzzy, c-format
+#, c-format
 #| msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgid "Reading palette file '%s': blue component out of range in line %d."
-msgstr "Les litaspjaldsskrá '%s': RGB gildi út fyrir svið á línu %d."
+msgstr "Les litaspjaldsskrá '%s': blátt gildi er út fyrir svið á línu %d."
 
 #: app/core/gimppalette-load.c:245
 #, c-format
@@ -16159,10 +16159,10 @@ msgid "The selected source contains no colors."
 msgstr "Valið inntak inniheldur enga liti."
 
 #: app/dialogs/palette-import-dialog.c:452
-#, fuzzy, c-format
+#, c-format
 #| msgid "There is no palette to import."
 msgid "The palette was not imported: %s"
-msgstr "Það er ekkert litaspjald til að flytja inn."
+msgstr "Litaspjaldið verður ekki flutt inn: %s"
 
 #: app/dialogs/palette-import-dialog.c:464
 msgid "There is no palette to import."
@@ -16646,10 +16646,9 @@ msgstr "Nota O_penCL"
 
 #. Very unstable tools
 #: app/dialogs/preferences-dialog.c:1577
-#, fuzzy
 #| msgid "Experimental Playground"
 msgid "Experimental"
-msgstr "Tlraunasvæði"
+msgstr "Á tilraunastigi"
 
 #: app/dialogs/preferences-dialog.c:1581
 msgid "_N-Point Deformation tool"
@@ -16831,10 +16830,9 @@ msgid "Select Theme"
 msgstr "Veldu þema"
 
 #: app/dialogs/preferences-dialog.c:1939
-#, fuzzy
 #| msgid "Use dark theme variant if available"
 msgid "Color scheme variant (if available)"
-msgstr "Nota dökkt afbrigði þema ef það er tiltækt"
+msgstr "Tilbrigði litastefs (ef það er tiltækt)"
 
 #: app/dialogs/preferences-dialog.c:1944 app/dialogs/welcome-dialog.c:586
 msgid "_Override icon sizes set by the theme"
@@ -18176,24 +18174,21 @@ msgid "Welcome"
 msgstr "Velkomin"
 
 #: app/dialogs/welcome-dialog.c:244 app/dialogs/welcome-dialog.c:245
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Pixelize"
 msgid "Personalize"
-msgstr "Gera stöllótt"
+msgstr "Persónugera"
 
 #: app/dialogs/welcome-dialog.c:256 app/dialogs/welcome-dialog.c:257
-#, fuzzy
 #| msgid "Contributing"
 msgid "Contribute"
-msgstr "Framlög"
+msgstr "Taka þátt"
 
 #: app/dialogs/welcome-dialog.c:268 app/dialogs/welcome-dialog.c:269
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "Crea_te"
 msgid "Create"
-msgstr "Búa _til..."
+msgstr "Búa til"
 
 #: app/dialogs/welcome-dialog.c:284 app/dialogs/welcome-dialog.c:285
 msgid "Release Notes"
@@ -18207,7 +18202,6 @@ msgstr "Þú settir inn GIMP %s!"
 
 #. Welcome message: left
 #: app/dialogs/welcome-dialog.c:431
-#, fuzzy
 #| msgid ""
 #| "GIMP is a Free Software for image authoring and manipulation.\n"
 #| "Want to know more?"
@@ -18216,7 +18210,7 @@ msgid ""
 "Want to know more?"
 msgstr ""
 "GIMP er frjáls hugbúnaður til meðhöndlunar og breytinga á myndum.\n"
-"Þartu að vita meira?"
+"Viltu að vita meira?"
 
 #: app/dialogs/welcome-dialog.c:460
 msgid "GIMP website"
@@ -18234,7 +18228,6 @@ msgstr "Hjálparskjöl"
 #. * properly set up?
 #. Welcome message: right
 #: app/dialogs/welcome-dialog.c:477
-#, fuzzy
 #| msgid ""
 #| "GIMP is a Community Software under the GNU general public license v3.\n"
 #| "Want to contribute?"
@@ -18242,8 +18235,8 @@ msgid ""
 "GIMP is Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
 msgstr ""
-"GIMP er hugbúnaður unninn í samvinnu fjölda þátttakenda, gefinn út með  "
-"almenna GNU General Public notkunarleyfinu, útgáfu 3.\n"
+"GIMP er hugbúnaður unninn í samvinnu fjölda þátttakenda, gefinn út með"
+" almenna GNU General Public notkunarleyfinu, útgáfu 3.\n"
 "Viltu leggja þitt af mörkum?"
 
 #: app/dialogs/welcome-dialog.c:502
@@ -18255,86 +18248,76 @@ msgid "Donating"
 msgstr "Styrkja"
 
 #: app/dialogs/welcome-dialog.c:549
-#, fuzzy
 #| msgid "Color space:"
 msgid "Color scheme"
-msgstr "Litarýmd:"
+msgstr "Litastef"
 
 #: app/dialogs/welcome-dialog.c:566
-#, fuzzy
 #| msgid "Icon Theme"
 msgid "Icon theme"
 msgstr "Táknmyndaþema"
 
 #: app/dialogs/welcome-dialog.c:583
-#, fuzzy
 #| msgid "Font Scaling"
 msgid "Icon Scaling"
-msgstr "Kvörðun leturs"
+msgstr "Kvörðun táknmynda"
 
 #: app/dialogs/welcome-dialog.c:642
 msgid "GUI Language (requires restart)"
 msgstr "Tungumál viðmóts (krefst endurræsingar)"
 
 #: app/dialogs/welcome-dialog.c:647
-#, fuzzy
 #| msgid "Additional Input Controllers"
 msgid "Additional Customizations"
-msgstr "Aðrar inntaksstýringar"
+msgstr "Aðrar sérsníðingar"
 
 #: app/dialogs/welcome-dialog.c:656
-#, fuzzy
 #| msgid "Merge menu and title bar (client-side decoration)"
 msgid "Merge menu and title bar (requires restart)"
-msgstr "Sameina valmynd og titilstiku (gluggaskreytingar á vegum forritsins)"
+msgstr "Sameina valmynd og titilstiku (krefst endurræsingar)"
 
 #: app/dialogs/welcome-dialog.c:664
-#, fuzzy
 #| msgid "Check for updates (requires internet)"
 msgid "Enable check for updates (requires internet)"
-msgstr "Leita að uppfærslum (nettenging er nauðsynleg)"
+msgstr "Virkja leita að uppfærslum (nettenging er nauðsynleg)"
 
 #: app/dialogs/welcome-dialog.c:705
 msgid "C_reate"
 msgstr "_Búa til"
 
 #: app/dialogs/welcome-dialog.c:714
-#, fuzzy
 #| msgctxt "export-file-type"
 #| msgid "OpenRaster Image"
 msgid "Open an Existing Image"
-msgstr "OpenRaster-mynd"
+msgstr "Opna fyrirliggjandi mynd"
 
 #. Recent Files
 #: app/dialogs/welcome-dialog.c:726
-#, fuzzy
 #| msgid "Revert Image"
 msgid "Recent Images"
-msgstr "Endurlesa mynd"
+msgstr "Nýlegar myndir"
 
 #: app/dialogs/welcome-dialog.c:821
-#, fuzzy
 #| msgctxt "images-action"
 #| msgid "_Delete Image"
 msgid "O_pen Selected Images"
-msgstr "_Eyða mynd"
+msgstr "O_pna valdar myndir"
 
 #: app/dialogs/welcome-dialog.c:830
-#, fuzzy
 #| msgid ""
 #| "This welcome dialog is only shown at first launch. You can show it again "
 #| "from the \"Help\" menu."
 msgid ""
 "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr ""
-"Þessi upphafsgluggi er aðeins birtur í fyrstu ræsingu. Þú getur séð hann "
-"aftur með því að fara í \"Hjálp\"-valmyndina."
+"Birta í ræsingu (þú getur séð upphafsgluggann aftur með því að fara í"
+" \"Hjálp\"-valmyndina)"
 
 #: app/dialogs/welcome-dialog.c:858
-#, fuzzy, c-format
+#, c-format
 #| msgid "Layer Attributes"
 msgid "Ways to contribute"
-msgstr "Eiginleikar lags"
+msgstr "Leiðir til að taka þátt"
 
 #: app/dialogs/welcome-dialog.c:867
 msgid "Report Bugs"
@@ -18359,11 +18342,10 @@ msgid ""
 msgstr ""
 
 #: app/dialogs/welcome-dialog.c:896
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Translate Items"
 msgid "Translate"
-msgstr "Þýða hluti"
+msgstr "Þýða"
 
 #: app/dialogs/welcome-dialog.c:898
 #, c-format
@@ -18371,7 +18353,6 @@ msgid "Contact the respective translation team for your language"
 msgstr ""
 
 #: app/dialogs/welcome-dialog.c:910
-#, fuzzy
 #| msgid "Donating"
 msgid "Donate"
 msgstr "Styrkja"
@@ -23417,10 +23398,9 @@ msgid "%s: switch horizontal and vertical"
 msgstr "%s: víxla láréttu og lóðréttu"
 
 #: app/tools/gimpfiltertool.c:1161
-#, fuzzy
 #| msgid "filter"
 msgid "Add filter"
-msgstr "sía"
+msgstr "Bæta við síu"
 
 #. The blending-options expander
 #: app/tools/gimpfiltertool.c:1248
@@ -23433,11 +23413,10 @@ msgid "Advanced Color Options"
 msgstr "Ítarlegir valkostir lita"
 
 #: app/tools/gimpfiltertool.c:1378
-#, fuzzy
 #| msgctxt "palettes-action"
 #| msgid "_Edit Palette..."
 msgid "Editing filter..."
-msgstr "Br_eyta litaspjaldi..."
+msgstr "Breyti síu..."
 
 #: app/tools/gimpfiltertool.c:1726 app/tools/gimpfiltertool-settings.c:71
 #, c-format
@@ -23959,7 +23938,6 @@ msgstr "Næmni"
 
 #: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:98
 #: app/tools/gimppaintoptions-gui.c:530
-#, fuzzy
 #| msgid "Fill layer mask with"
 msgid "Fill Layer Mask With"
 msgstr "Fylla laghulu með"
@@ -25978,10 +25956,10 @@ msgid "_Search:"
 msgstr "_Leita:"
 
 #: app/widgets/gimpactiongroup.c:1200
-#, fuzzy, c-format
+#, c-format
 #| msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgid "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+msgstr "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpactionview.c:259 app/widgets/gimpcontrollereditor.c:343
 #: app/widgets/gimpdeviceinfoeditor.c:579
@@ -26310,10 +26288,9 @@ msgid "Color index:"
 msgstr "Litnúmer:"
 
 #: app/widgets/gimpcolormapselection.c:248
-#, fuzzy
 #| msgid "HTML notation:"
 msgid "HTML notation (sRGB):"
-msgstr "HTML litkóði:"
+msgstr "HTML litkóði (sRGB):"
 
 #: app/widgets/gimpcolormapselection.c:517
 msgid "Only indexed images have a colormap."
@@ -27270,22 +27247,22 @@ msgid "Save device status"
 msgstr "Vista stöðu tækis"
 
 #: app/widgets/gimpdevicestatus.c:629
-#, fuzzy, c-format
+#, c-format
 #| msgid "Foreground: %d, %d, %d"
 msgid "Foreground: %d, %d, %d (in color space of \"%s\")"
-msgstr "Forgrunnur: %d, %d, %d"
+msgstr "Forgrunnur: %d, %d, %d (í litrýmd \"%s\")"
 
 #: app/widgets/gimpdevicestatus.c:633
-#, fuzzy, c-format
+#, c-format
 #| msgid "Foreground: %d, %d, %d"
 msgid "Foreground: %d, %d, %d (in sRGB)"
-msgstr "Forgrunnur: %d, %d, %d"
+msgstr "Forgrunnur: %d, %d, %d (í sRGB)"
 
 #: app/widgets/gimpdevicestatus.c:640
-#, fuzzy, c-format
+#, c-format
 #| msgid "Background: %d, %d, %d"
 msgid "Background: %d, %d, %d (in color space of \"%s\")"
-msgstr "Bakgrunnur: %d, %d, %d"
+msgstr "Bakgrunnur: %d, %d, %d (í litrýmd \"%s\")"
 
 #: app/widgets/gimpdevicestatus.c:644
 #, c-format
@@ -27801,43 +27778,37 @@ msgid "Set Item Exclusive Visibility Lock"
 msgstr "Stilla læsingu sérstaks sýnileika þessa atriðis"
 
 #: app/widgets/gimpitemtreeview.c:764
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Toggle Path _Visibility"
 msgid "Toggle the visibility of all filters."
-msgstr "_Víxla sýnileika ferils"
+msgstr "Víxla sýnileika allra sía af/á."
 
 #: app/widgets/gimpitemtreeview.c:778
-#, fuzzy
 #| msgid "Move the selected filter up"
 msgid "Edit the selected filter."
-msgstr "Hækka valda síu"
+msgstr "Breyta valinni síu."
 
 #: app/widgets/gimpitemtreeview.c:791
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Raise this layer one step in the layer stack"
 msgid "Raise filter one step up in the stack."
-msgstr "Hækka þetta lag um eitt þrep í lagastaflanum"
+msgstr "Hækka síu um eitt þrep í staflanum."
 
 #: app/widgets/gimpitemtreeview.c:804
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Lower this layer one step in the layer stack"
 msgid "Lower filter one step down in the stack."
-msgstr "Lækka þetta lag um eitt þrep í lagastaflanum"
+msgstr "Lækka síu um eitt þrep í staflanum."
 
 #: app/widgets/gimpitemtreeview.c:817
-#, fuzzy
 #| msgid "Move the selected filter down"
 msgid "Merge all active filters down."
-msgstr "Lækka valda síu"
+msgstr "Sameina allar virkar síur niður."
 
 #: app/widgets/gimpitemtreeview.c:830
-#, fuzzy
 #| msgid "Move the selected filter up"
 msgid "Remove the selected filter."
-msgstr "Hækka valda síu"
+msgstr "Fjarlægja valda síu."
 
 #: app/widgets/gimpitemtreeview.c:841
 #| msgid "Layer Select"
@@ -27845,10 +27816,9 @@ msgid "Layer Effects"
 msgstr "Lagabrellur"
 
 #: app/widgets/gimpitemtreeview.c:872
-#, fuzzy
 #| msgid "Select layers by patterns and store layer sets"
 msgid "Select items by patterns and store item sets"
-msgstr "Velja lög eftir mynstri og geyma lagasett"
+msgstr "Velja atriði eftir mynstri og geyma atriðasett"
 
 #: app/widgets/gimpitemtreeview.c:1724
 #, c-format
