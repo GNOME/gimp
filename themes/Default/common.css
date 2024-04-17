@@ -238,7 +238,7 @@ toolbutton button.flat:hover {
 
 toolbutton button.flat:checked,
 toolbutton button.flat:checked:hover,
-.image-button:hover {
+.image-button:hover, viewport button:hover {
   background: @selected-color;
 }
 
@@ -251,7 +251,7 @@ toolbutton button.flat:checked:active:hover {
 }
 
 /* Prevent overly thick border around image buttons */
-.image-button image {
+.image-button image, button image {
   -gtk-icon-shadow: 0 0 transparent;
 }
 
