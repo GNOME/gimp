@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 if [ -n "$GIMP_TEMP_UPDATE_RPATH" ]; then
   # Earlier code used to set DYLD_LIBRARY_PATH environment variable instead, but
   # it didn't work on contributor's builds because of System Integrity
