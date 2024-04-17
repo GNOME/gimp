@@ -12,13 +12,12 @@ tests = [
 ]
 
 # Unit testing environment is based on gimp_run_env with additional environment
-# variables and added temporary test plug-ins. Ideally I should copy
-# gimp_run_env, but meson doesn't have such function to create an env variable
-# from another. So I just modify the main one instead (fortunately here it's not
-# a big problem).
+# variables and added temporary test plug-ins. Assignment is a deep copy, so
+# test_env here is a new object.
 # See: https://github.com/mesonbuild/meson/issues/13045
-gimp_run_env.append('GIMP_TESTING_PLUGINDIRS', meson.project_build_root() / 'libgimp/tests/c-tests/')
-gimp_run_env.set('GIMP_TESTING_ABS_TOP_SRCDIR', meson.project_source_root())
+test_env=gimp_run_env
+test_env.append('GIMP_TESTING_PLUGINDIRS', meson.project_build_root() / 'libgimp/tests/c-tests/')
+test_env.set('GIMP_TESTING_ABS_TOP_SRCDIR', meson.project_source_root())
 
 run_python_test = find_program('./libgimp-run-python-test.sh')
 run_c_test      = find_program('./libgimp-run-c-test.sh')
@@ -29,7 +28,7 @@ foreach test_name : tests
   py_test  = meson.current_source_dir() / basename + '.py'
   test(test_name, run_python_test,
        args: [ gimp_exe.full_path(), py_test ],
-       env: gimp_run_env,
+       env: test_env,
        suite: ['libgimp', 'python3'],
        timeout: 60)
 
@@ -59,7 +58,7 @@ foreach test_name : tests
 
   test(test_name, run_c_test,
        args: [ gimp_exe.full_path(), meson.current_source_dir() / c_test_name, basename ],
-       env: gimp_run_env,
+       env: test_env,
        suite: ['libgimp', 'C'],
        timeout: 60)
 endforeach
