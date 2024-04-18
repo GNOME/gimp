@@ -18,19 +18,21 @@
                             colors)
 
   (define (max-font-width text use-name list-cnt list font-size)
-    (let* ((count    0)
-           (width    0)
-           (maxwidth 0)
-           (font     "")
-           (extents  '()))
+    (let* ((count        0)
+           (width        0)
+           (maxwidth     0)
+           (font         "")
+           (font-object '())
+           (extents     '()))
       (while (< count list-cnt)
         (set! font (car list))
+        (set! font-object (car (gimp-font-get-by-name font)))
 
         (if (= use-name TRUE)
             (set! text font))
         (set! extents (gimp-text-get-extents-font     text
                                                       font-size
-                                                      font))
+                                                      font-object))
         (set! width (car extents))
         (if (> width maxwidth)
             (set! maxwidth width))
@@ -44,20 +46,22 @@
   )
 
   (define (max-font-height text use-name list-cnt list font-size)
-    (let* ((count     0)
-           (height    0)
-           (maxheight 0)
-           (font      "")
-           (extents   '()))
+    (let* ((count       0)
+           (height      0)
+           (maxheight   0)
+           (font        "")
+           (font-object '())
+           (extents     '()))
       (while (< count list-cnt)
         (set! font (car list))
+        (set! font-object (car (gimp-font-get-by-name font)))
 
         (if (= use-name TRUE)
             (set! text font)
         )
         (set! extents (gimp-text-get-extents-font     text
                                                       font-size
-                                                      font))
+                                                      font-object))
         (set! height (cadr extents))
         (if (> height maxheight)
             (set! maxheight height)
@@ -74,23 +78,24 @@
   (let* (
         ; gimp-fonts-get-list returns a one element list of results,
         ; the only element is itself a list of fonts, possibly empty.
-        (font-list  (car (gimp-fonts-get-list font-filter)))
-        (num-fonts  (length font-list))
-        (label-size (/ font-size 2))
-        (border     (+ border (* labels (/ label-size 2))))
-        (y          border)
-        (maxheight  (max-font-height text use-name num-fonts font-list font-size))
-        (maxwidth   (max-font-width  text use-name num-fonts font-list font-size))
-        (width      (+ maxwidth (* 2 border)))
-        (height     (+ (+ (* maxheight num-fonts) (* 2 border))
-                       (* labels (* label-size num-fonts))))
-        (img        (car (gimp-image-new width height (if (= colors 0)
-                                                          GRAY RGB))))
-        (drawable   (car (gimp-layer-new img width height (if (= colors 0)
-                                                              GRAY-IMAGE RGB-IMAGE)
-                                         "Background" 100 LAYER-MODE-NORMAL)))
-        (count      0)
-        (font       "")
+        (font-list   (car (gimp-fonts-get-list font-filter)))
+        (num-fonts   (length font-list))
+        (label-size  (/ font-size 2))
+        (border      (+ border (* labels (/ label-size 2))))
+        (y           border)
+        (maxheight   (max-font-height text use-name num-fonts font-list font-size))
+        (maxwidth    (max-font-width  text use-name num-fonts font-list font-size))
+        (width       (+ maxwidth (* 2 border)))
+        (height      (+ (+ (* maxheight num-fonts) (* 2 border))
+                        (* labels (* label-size num-fonts))))
+        (img         (car (gimp-image-new width height (if (= colors 0)
+                                                           GRAY RGB))))
+        (drawable    (car (gimp-layer-new img width height (if (= colors 0)
+                                                               GRAY-IMAGE RGB-IMAGE)
+                                          "Background" 100 LAYER-MODE-NORMAL)))
+        (count       0)
+        (font        "")
+        (font-object '())
         )
 
     (gimp-context-push)
@@ -116,6 +121,7 @@
 
     (while (< count num-fonts)
       (set! font (car font-list))
+      (set! font-object (car (gimp-font-get-by-name font)))
 
       (if (= use-name TRUE)
           (set! text font))
@@ -125,7 +131,7 @@
                           y
                           text
                           0 TRUE font-size
-                          font)
+                          font-object)
 
       (set! y (+ y maxheight))
 
@@ -139,7 +145,7 @@
                                                                font
                                                                0 TRUE
                                                                label-size
-                                                               "Sans")))
+                                                               font-object)))
           (set! y (+ y label-size))
           )
       )
