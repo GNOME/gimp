@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-27 15:33+0000\n"
-"PO-Revision-Date: 2024-02-28 13:18+0000\n"
+"POT-Creation-Date: 2024-04-18 15:42+0000\n"
+"PO-Revision-Date: 2024-04-18 13:18+0000\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "Language: ca\n"
@@ -23,45 +23,45 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 1.8.12\n"
 
-#: plug-ins/python/colorxhtml.py:91
+#: plug-ins/python/colorxhtml.py:85
 msgid "Save as colored HTML text..."
 msgstr "Desa com a text HTML de colors…"
 
-#: plug-ins/python/colorxhtml.py:92 plug-ins/python/colorxhtml.py:98
-#: plug-ins/python/gradients-save-as-css.py:116
+#: plug-ins/python/colorxhtml.py:86 plug-ins/python/colorxhtml.py:92
+#: plug-ins/python/gradients-save-as-css.py:113
 #: plug-ins/python/palette-offset.py:135
 #: plug-ins/python/python-console/python-console.py:272
 #: plug-ins/python/spyro-plus.py:1719
 msgid "_Cancel"
 msgstr "_Cancel·la"
 
-#: plug-ins/python/colorxhtml.py:93 plug-ins/python/colorxhtml.py:99
-#: plug-ins/python/gradients-save-as-css.py:117
+#: plug-ins/python/colorxhtml.py:87 plug-ins/python/colorxhtml.py:93
+#: plug-ins/python/gradients-save-as-css.py:114
 #: plug-ins/python/palette-offset.py:136 plug-ins/python/spyro-plus.py:1720
 msgid "_OK"
 msgstr "_D'ACORD"
 
-#: plug-ins/python/colorxhtml.py:96
+#: plug-ins/python/colorxhtml.py:90
 msgid "Read characters from file..."
 msgstr "Llegiu els caràcters del fitxer..."
 
-#: plug-ins/python/colorxhtml.py:115
+#: plug-ins/python/colorxhtml.py:109
 msgid "Characters"
 msgstr "Caràcters"
 
-#: plug-ins/python/colorxhtml.py:116
+#: plug-ins/python/colorxhtml.py:110
 msgid "Characters that will be used as colored pixels. "
 msgstr "Caràcters que s'utilitzaran com a píxels de colors."
 
-#: plug-ins/python/colorxhtml.py:125
+#: plug-ins/python/colorxhtml.py:119
 msgid "Characters or file location"
 msgstr "Caràcters o ubicació del fitxer"
 
-#: plug-ins/python/colorxhtml.py:131
+#: plug-ins/python/colorxhtml.py:125
 msgid "Read characters from file"
 msgstr "Llegeix els caràcters des del fitxer"
 
-#: plug-ins/python/colorxhtml.py:134
+#: plug-ins/python/colorxhtml.py:128
 msgid ""
 "If set, the Characters text entry will be used as a file name, from which "
 "the characters will be read. Otherwise, the characters in the text entry "
@@ -71,44 +71,44 @@ msgstr ""
 "fitxer, a partir del qual es llegiran els caràcters. En cas contrari, "
 "s'utilitzaran els caràcters de l'entrada de text per a renderitzar la imatge."
 
-#: plug-ins/python/colorxhtml.py:140
+#: plug-ins/python/colorxhtml.py:134
 msgid "Choose file"
 msgstr "Tria el fitxer"
 
-#: plug-ins/python/colorxhtml.py:147
+#: plug-ins/python/colorxhtml.py:141
 msgid "Font Size(px)"
 msgstr "Mida de la lletra(px)"
 
-#: plug-ins/python/colorxhtml.py:159
+#: plug-ins/python/colorxhtml.py:153
 msgid "Write separate CSS file"
 msgstr "Escriu un fitxer CSS separat"
 
-#: plug-ins/python/colorxhtml.py:215
+#: plug-ins/python/colorxhtml.py:209
 msgid "Saving as colored XHTML"
 msgstr "S'està desant com a XHTML amb colors"
 
-#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
+#: plug-ins/python/colorxhtml.py:271 plug-ins/python/colorxhtml.py:272
 msgid "_Read characters from file, if true, or use text entry"
 msgstr ""
 "_Llegeix caràcters des del fitxer, si és cert, o utilitza l'entrada de text"
 
-#: plug-ins/python/colorxhtml.py:291 plug-ins/python/colorxhtml.py:292
+#: plug-ins/python/colorxhtml.py:276 plug-ins/python/colorxhtml.py:277
 msgid "_File to read or characters to use"
 msgstr "_Fitxer que s'ha de llegir o caràcters que s'han d'utilitzar"
 
-#: plug-ins/python/colorxhtml.py:296 plug-ins/python/colorxhtml.py:297
+#: plug-ins/python/colorxhtml.py:281 plug-ins/python/colorxhtml.py:282
 msgid "Fo_nt size in pixels"
 msgstr "_Mida de la lletra en píxels"
 
-#: plug-ins/python/colorxhtml.py:301 plug-ins/python/colorxhtml.py:302
+#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
 msgid "_Write a separate CSS file"
 msgstr "_Escriu un fitxer CSS separat"
 
-#: plug-ins/python/colorxhtml.py:322
+#: plug-ins/python/colorxhtml.py:307
 msgid "Save as colored HTML text"
 msgstr "Desa com a text HTML de colors"
 
-#: plug-ins/python/colorxhtml.py:325
+#: plug-ins/python/colorxhtml.py:310
 msgid "Colored HTML text"
 msgstr "Text HTML de colors"
 
@@ -160,43 +160,43 @@ msgstr "Afegeix una capa de boira a la imatge."
 msgid "_Fog..."
 msgstr "_Boira..."
 
-#: plug-ins/python/gradients-save-as-css.py:97
+#: plug-ins/python/gradients-save-as-css.py:94
 msgid "_File..."
 msgstr "_Fitxer..."
 
-#: plug-ins/python/gradients-save-as-css.py:105
+#: plug-ins/python/gradients-save-as-css.py:102
 msgid "Choose CSS file..."
 msgstr "Trieu un fitxer CSS..."
 
-#: plug-ins/python/gradients-save-as-css.py:114
+#: plug-ins/python/gradients-save-as-css.py:111
 msgid "Save as CSS file..."
 msgstr "Desa com a fitxer CSS..."
 
-#: plug-ins/python/gradients-save-as-css.py:190
-#: plug-ins/python/palette-sort.py:345
+#: plug-ins/python/gradients-save-as-css.py:183
+#: plug-ins/python/palette-sort.py:356
 #: plug-ins/python/python-console/python-console.py:300
 msgid "Run mode"
 msgstr "Mode d'execució"
 
-#: plug-ins/python/gradients-save-as-css.py:191
+#: plug-ins/python/gradients-save-as-css.py:184
 #: plug-ins/python/python-console/python-console.py:300
 msgid "The run mode"
 msgstr "El mode d'execució"
 
-#: plug-ins/python/gradients-save-as-css.py:195
+#: plug-ins/python/gradients-save-as-css.py:188
 msgid "_Gradient to use"
 msgstr "_Degradat que s'ha d'utilitzar"
 
-#: plug-ins/python/gradients-save-as-css.py:198
+#: plug-ins/python/gradients-save-as-css.py:191
 msgid "_File"
 msgstr "_Fitxer"
 
-#: plug-ins/python/gradients-save-as-css.py:214
-#: plug-ins/python/gradients-save-as-css.py:215
+#: plug-ins/python/gradients-save-as-css.py:207
+#: plug-ins/python/gradients-save-as-css.py:208
 msgid "Creates a new palette from a given gradient"
 msgstr "Crea una paleta nova a partir d'un degradat donat"
 
-#: plug-ins/python/gradients-save-as-css.py:217
+#: plug-ins/python/gradients-save-as-css.py:210
 msgid "Save Gradient as CSS..."
 msgstr "Desa el degradat com a CSS..."
 
@@ -249,8 +249,8 @@ msgid "_Export histogram..."
 msgstr "_Exporta l'histograma…"
 
 #: plug-ins/python/palette-offset.py:50 plug-ins/python/palette-offset.py:51
-#: plug-ins/python/palette-sort.py:351 plug-ins/python/palette-sort.py:403
-#: plug-ins/python/palette-sort.py:404
+#: plug-ins/python/palette-sort.py:362 plug-ins/python/palette-sort.py:414
+#: plug-ins/python/palette-sort.py:415
 msgid "Palette"
 msgstr "Paleta"
 
@@ -284,144 +284,144 @@ msgstr "Desplaça els colors de la paleta"
 msgid "Offset Palette..."
 msgstr "Desplaça la paleta..."
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:45
 msgid "Red"
 msgstr "Vermell"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:45
 msgid "Green"
 msgstr "Verd"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:45
 msgid "Blue"
 msgstr "Blau"
 
-#: plug-ins/python/palette-sort.py:43
+#: plug-ins/python/palette-sort.py:46
 msgid "Luma (Y)"
 msgstr "Luminància (Y)"
 
-#: plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:47
 msgid "Hue"
 msgstr "To"
 
-#: plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:47
 msgid "Saturation"
 msgstr "Saturació"
 
-#: plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:47
 msgid "Value"
 msgstr "Valor"
 
-#: plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:48
 msgid "Saturation (HSL)"
 msgstr "Saturació (HSL)"
 
-#: plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:48
 msgid "Lightness (HSL)"
 msgstr "Lluminositat (HSL)"
 
-#: plug-ins/python/palette-sort.py:46
+#: plug-ins/python/palette-sort.py:49
 msgid "Index"
 msgstr "Índex"
 
-#: plug-ins/python/palette-sort.py:47
+#: plug-ins/python/palette-sort.py:50
 msgid "Random"
 msgstr "Aleatori"
 
-#: plug-ins/python/palette-sort.py:92
+#: plug-ins/python/palette-sort.py:95
 msgid "Lightness (LAB)"
 msgstr "Lluminositat (LAB)"
 
-#: plug-ins/python/palette-sort.py:93
+#: plug-ins/python/palette-sort.py:96
 msgid "A-color"
 msgstr "A-color"
 
-#: plug-ins/python/palette-sort.py:93
+#: plug-ins/python/palette-sort.py:96
 msgid "B-color"
 msgstr "B-color"
 
-#: plug-ins/python/palette-sort.py:94
+#: plug-ins/python/palette-sort.py:97
 msgid "Chroma (LCHab)"
 msgstr "Croma (LCHab)"
 
-#: plug-ins/python/palette-sort.py:95
+#: plug-ins/python/palette-sort.py:98
 msgid "Hue (LCHab)"
 msgstr "To (LCHab)"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "All"
 msgstr "Tot"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "Slice / Array"
 msgstr "Tall / matriu"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "Autoslice (fg->bg)"
 msgstr "Tall automàtic (fg->bg)"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "Partitioned"
 msgstr "Partició"
 
-#: plug-ins/python/palette-sort.py:350
+#: plug-ins/python/palette-sort.py:361
 #: plug-ins/python/palette-to-gradient.py:129
 msgid "_Palette"
 msgstr "_Paleta"
 
-#: plug-ins/python/palette-sort.py:354
+#: plug-ins/python/palette-sort.py:365
 msgid "Select_ions"
 msgstr "Se_leccions"
 
-#: plug-ins/python/palette-sort.py:361
+#: plug-ins/python/palette-sort.py:372
 msgid "Slice _expression"
 msgstr "_Expressió del tall"
 
-#: plug-ins/python/palette-sort.py:366
+#: plug-ins/python/palette-sort.py:377
 msgid "Channel _to sort"
 msgstr "Canal que s'ha d'_ordenar"
 
-#: plug-ins/python/palette-sort.py:371
+#: plug-ins/python/palette-sort.py:382
 msgid "_Ascending"
 msgstr "_Ascendent"
 
-#: plug-ins/python/palette-sort.py:372 plug-ins/python/palette-sort.py:382
+#: plug-ins/python/palette-sort.py:383 plug-ins/python/palette-sort.py:393
 msgid "Ascending"
 msgstr "Ascendent"
 
-#: plug-ins/python/palette-sort.py:376
+#: plug-ins/python/palette-sort.py:387
 msgid "Secondary C_hannel to sort"
 msgstr "_Canal secundari que s'ha d'ordenar"
 
-#: plug-ins/python/palette-sort.py:381
+#: plug-ins/python/palette-sort.py:392
 msgid "Ascen_ding"
 msgstr "_Ascendent"
 
-#: plug-ins/python/palette-sort.py:386
+#: plug-ins/python/palette-sort.py:397
 msgid "_Quantization"
 msgstr "_Quantificació"
 
-#: plug-ins/python/palette-sort.py:387
+#: plug-ins/python/palette-sort.py:398
 msgid "Quantization"
 msgstr "Quantificació"
 
-#: plug-ins/python/palette-sort.py:391
-msgid "_Partitioning channel"
+#: plug-ins/python/palette-sort.py:402
+msgid "Partitionin_g channel"
 msgstr "C_anal de particions"
 
-#: plug-ins/python/palette-sort.py:396
+#: plug-ins/python/palette-sort.py:407
 msgid "Partition q_uantization"
 msgstr "Q_uantificació de particions"
 
-#: plug-ins/python/palette-sort.py:397
+#: plug-ins/python/palette-sort.py:408
 msgid "Partition quantization"
 msgstr "Q_uantificació de particions"
 
-#: plug-ins/python/palette-sort.py:421
+#: plug-ins/python/palette-sort.py:432
 msgid "_Sort Palette..."
 msgstr "_Ordena la paleta..."
 
-#: plug-ins/python/palette-sort.py:423
+#: plug-ins/python/palette-sort.py:434
 msgid "Sort the colors in a palette"
 msgstr "Ordena els colors de la paleta"
 
@@ -730,7 +730,7 @@ msgid ""
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
 "produce no hole. A Value of 99 will produce a thin line on the edge."
 msgstr ""
-"El radi del forat en el centre del patró on no s'hi dibuixarà res. Es dona "
+"El radi del forat en el centre del patró on no es dibuixarà res. Es dona "
 "com a percentatge de la mida del patró. Un valor de 0 no produirà cap forat. "
 "Un valor de 99 produirà una línia fina a la vora."
 
@@ -968,4 +968,3 @@ msgstr ""
 #: plug-ins/python/spyro-plus.py:2299
 msgid "Spyrogimp..."
 msgstr "Espirògraf..."
-
