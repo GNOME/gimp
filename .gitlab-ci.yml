@@ -382,8 +382,8 @@ gimp-flatpak-x64:
     - flatpak build-init ${GIMP_PREFIX} $APP_ID org.gnome.Sdk org.gnome.Platform
     - flatpak build ${GIMP_PREFIX} meson setup _build${ARTIFACTS_SUFFIX} || echo "Generated log"
     - GIMP_APP_VERSION=$(grep 'Project version' _build${ARTIFACTS_SUFFIX}/meson-logs/meson-log.txt | head -1 | sed -e 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/' -e 's/\([0-9]\+\.[0-9]\+\)\..*/\1/')
-    - sed -i "s/@GIMP_APP_VERSION@/$GIMP_APP_VERSION/g" build/flatpak/org.gimp.GIMP-nightly.json.in
-    - mv build/flatpak/org.gimp.GIMP-nightly.json.in build/flatpak/org.gimp.GIMP-nightly.json
+    - cp build/flatpak/org.gimp.GIMP-nightly.json.in build/flatpak/org.gimp.GIMP-nightly.json
+    - sed -i "s/@GIMP_APP_VERSION@/$GIMP_APP_VERSION/g" build/flatpak/org.gimp.GIMP-nightly.json
 
     # GNOME script to customize the manifest
     - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
