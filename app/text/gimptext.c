@@ -835,12 +835,19 @@ gimp_text_serialize_property (GimpConfig       *config,
                 {
                   fonts = g_slist_prepend (fonts, (gpointer) font_name);
 
-                  font = GIMP_FONT (gimp_container_search (container,
-                                                           (GimpContainerSearchFunc) gimp_font_match_by_lookup_name,
-                                                           (gpointer) font_name));
+                  if (g_str_has_prefix (altered_font_name, "font"))
+                    font = GIMP_FONT (gimp_container_search (container,
+                                                             (GimpContainerSearchFunc) gimp_font_match_by_lookup_name,
+                                                             (gpointer) font_name));
+                  /* in case the font is an alias its lookupname is that alias and doesn't conform to the format "gimpfont%d"*/
+                  else
+                    font = GIMP_FONT (gimp_container_search (container,
+                                                             (GimpContainerSearchFunc) gimp_font_match_by_lookup_name,
+                                                             (gpointer) altered_font_name));
 
                   gimp_config_writer_open   (writer, "markupfont");
-                  /*lookupname format is "font%d" we keep only the "font%d" (see the above comment)*/
+                  /*lookupname format is "gimpfont%d" we keep only the "font%d",
+                   * and in case the font is an alias, we keep its name (see the above comments)*/
                   gimp_config_writer_string (writer, font_name+4);
 
                   gimp_config_writer_open   (writer, "font");
