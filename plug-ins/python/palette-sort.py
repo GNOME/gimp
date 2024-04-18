@@ -22,8 +22,11 @@
 from colorsys import rgb_to_yiq
 from textwrap import dedent
 from random import randint
+import struct
 
 import gi
+gi.require_version('Babl', '0.1')
+from gi.repository import Babl
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
 gi.require_version('GimpUi', '3.0')
@@ -47,23 +50,23 @@ AVAILABLE_CHANNELS = (_("Red"), _("Green"), _("Blue"),
                       _("Random"))
 
 channel_getters = [
-    (lambda v, i: v.r),
-    (lambda v, i: v.g),
-    (lambda v, i: v.b),
+    (lambda v, i: v.get_rgba()[0]),
+    (lambda v, i: v.get_rgba()[1]),
+    (lambda v, i: v.get_rgba()[2]),
 
-    (lambda v, i: rgb_to_yiq(v.r, v.g, v.b)[0]),
+    (lambda v, i: rgb_to_yiq(v.get_rgba()[0], v.get_rgba()[1], v.get_rgba()[1])[0]),
 
-    (lambda v, i: v.to_hsv().h),
-    (lambda v, i: v.to_hsv().s),
-    (lambda v, i: v.to_hsv().v),
+    # TODO: Replace with gegl_color_get_hsv () when available in Gegl
+    (lambda v, i: gegl_color_bytes_convert (v, "HSV float", 'fff', 0)),
+    (lambda v, i: gegl_color_bytes_convert (v, "HSV float", 'fff', 1)),
+    (lambda v, i: gegl_color_bytes_convert (v, "HSV float", 'fff', 2)),
 
-    (lambda v, i: v.to_hsl().s),
-    (lambda v, i: v.to_hsl().l),
+    (lambda v, i: gegl_color_bytes_convert (v, "HSL float", 'fff', 1)),
+    (lambda v, i: gegl_color_bytes_convert (v, "HSL float", 'fff', 2)),
 
     (lambda v, i: i),
     (lambda v, i: randint(0, 0x7fffffff))
 ]
-
 
 GRAIN_SCALE = (1.0, 1.0 , 1.0,
               1.0,
@@ -84,10 +87,10 @@ try:
     from colormath.color_objects import RGBColor, LabColor, LCHabColor
 
     def to_lab(v):
-        return RGBColor(v.r, v.g, v.b).convert_to('LAB').get_value_tuple()
+        return RGBColor(v.get_rgba()[0], v.get_rgba()[1], v.get_rgba()[2]).convert_to('LAB').get_value_tuple()
 
     def to_lchab(v):
-        return RGBColor(v.r, v.g, v.b).convert_to('LCHab').get_value_tuple()
+        return RGBColor(v.get_rgba()[0], v.get_rgba()[1], v.get_rgba()[2]).convert_to('LCHab').get_value_tuple()
 
     AVAILABLE_CHANNELS = AVAILABLE_CHANNELS + (_("Lightness (LAB)"),
                                                _("A-color"), _("B-color"),
@@ -104,6 +107,12 @@ try:
 except ImportError:
     pass
 
+def gegl_color_bytes_convert (color, format, precision, index):
+    color_bytes = color.get_bytes(Babl.format(format))
+    data = color_bytes.get_data()
+    result = struct.unpack (precision, data)
+
+    return result[index]
 
 slice_expr_doc = """
     Format is 'start:nrows,length' . All items are optional.
@@ -217,11 +226,13 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
         def find_index(color, startindex=0):
             for i in range(startindex, num_colors):
                 c = palette.entry_get_color(i)
-                if c[1].r == color[1].r and c[1].g == color[1].g and c[1].b == color[1].b:
+                rgba = c.get_rgba()
+
+                if rgba[0] == color[1].r and rgba[1] == color[1].g and rgba[2] == color[1].b:
                     return i
             return None
         def hexcolor(c):
-            return "#%02x%02x%02x" % (int(255 * c[1].r), int(255 * c[1].b), int(255 * c[1].g))
+            return "#%02x%02x%02x" % (int(255 * rgba[0]), int(255 * rgba[1]), int(255 * rgba[2]))
         fg = Gimp.context_get_foreground()
         bg = Gimp.context_get_background()
         start = find_index(fg)
@@ -263,7 +274,7 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
         result = []
         for i in range(start, end):
             entry =  (palette.entry_get_name(i)[1],
-                      palette.entry_get_color(i)[1])
+                      palette.entry_get_color(i))
             index1 = channels_getter_1(entry[1], i)
             index2 = channels_getter_2(entry[1], i)
             index = ((index1 - (index1 % grain1)) * (1 if ascending1 else -1),
@@ -288,11 +299,11 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
         for row in range(nrows):
             partition_spans = [1]
             rowstart = start + (row * length)
-            old_color = palette.entry_get_color(rowstart)[1]
+            old_color = palette.entry_get_color(rowstart)
             old_partition = pchannels_getter(old_color, rowstart)
             old_partition = old_partition - (old_partition % pgrain)
             for i in range(rowstart + 1, rowstart + length):
-                this_color = palette.entry_get_color(i)[1]
+                this_color = palette.entry_get_color(i)
                 this_partition = pchannels_getter(this_color, i)
                 this_partition = this_partition - (this_partition % pgrain)
                 if this_partition == old_partition:
@@ -302,7 +313,7 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
                     old_partition = this_partition
             base = rowstart
             for size in partition_spans:
-                palette_sort(SELECT_SLICE, '%d:1,%d' % (base, size),
+                palette_sort(palette, SELECT_SLICE, '%d:1,%d' % (base, size),
                              channel1, ascending1,
                              channel2, ascending2,
                              quantize, 0, 1.0)
@@ -388,7 +399,7 @@ class PaletteSort (Gimp.PlugIn):
                      0.0, 1.0, 0.0,
                      GObject.ParamFlags.READWRITE),
         "pchannel": (int,
-                     _("_Partitioning channel"),
+                     _("Partitionin_g channel"),
                      "Partitioning channel: " + str(AVAILABLE_CHANNELS),
                      0, len(AVAILABLE_CHANNELS), 3,
                      GObject.ParamFlags.READWRITE),
