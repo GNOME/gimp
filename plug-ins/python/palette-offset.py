@@ -155,7 +155,7 @@ class PaletteOffset (Gimp.PlugIn):
                 return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
                                                    GLib.Error("Canceled"))
             amount = self.get_property("amount")
-            config.set_property("amount", amount)
+            config.set_property("palette", None)
 
         #If palette is read only, work on a copy:
         editable = palette.is_editable()
@@ -166,7 +166,7 @@ class PaletteOffset (Gimp.PlugIn):
         tmp_entry_array = []
         for i in range (num_colors):
             tmp_entry_array.append  ((palette.entry_get_name(i)[1],
-                                      palette.entry_get_color(i)[1]))
+                                      palette.entry_get_color(i)))
         for i in range (num_colors):
             target_index = i + amount
             if target_index >= num_colors:
