@@ -122,7 +122,7 @@ combobox button {
   background-color: @widget-bg-color;
 }
 
-combobox arrow {
+combobox arrow, combobox button * {
   -gtk-icon-shadow: none;
 }
 
@@ -417,6 +417,7 @@ spinbutton
 /* Styling for the +/- buttons */
 spinbutton button.up, spinbutton button.down {
   background-color: @bg-color;
+  -gtk-icon-shadow: none;
 }
 
 GimpSpinScale entry progress {
