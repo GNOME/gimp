@@ -131,7 +131,7 @@ Formerly, you passed an integer count of strings, and a list of strings.
 Now you only pass the list.
 ScriptFu converts to/from the C type GStrv
 (which is an object knowing its own length.)
-An example is the PDB procedure file-gih-save.
+An example is the PDB procedure file-gih-export.
 
 Formerly, you received an integer count of strings, and a list of strings.
 Now you only receive the list

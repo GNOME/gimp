@@ -38,8 +38,8 @@
 
 ; GStrv string array
 ; from brushes-get-list
-; to file-gih-save or extension-gimp-help
-; TODO test GStrv to file-gih-save
+; to file-gih-export or extension-gimp-help
+; TODO test GStrv to file-gih-export
 
 ; GBytes
 ; from image-get-colormap

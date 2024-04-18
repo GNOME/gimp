@@ -17,11 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-  /* Example of how to call file_gih_save from script-fu:
+  /* Example of how to call file-gih-export from script-fu:
 
   (let ((ranks (cons-array 1 'byte)))
     (aset ranks 0 12)
-    (file-gih-save 1
+    (file-gih-export 1
                    img
                    drawable
                    "foo.gih"

@@ -32,7 +32,7 @@
                              (number->string pattern-image)
                              ".pat"))
 
-        (file-pat-save RUN-NONINTERACTIVE
+        (file-pat-export RUN-NONINTERACTIVE
                        pattern-image
                        1 (vector pattern-draw)
                        path

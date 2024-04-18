@@ -44,7 +44,7 @@
             )
         )
 
-        (file-gbr-save RUN-NONINTERACTIVE
+        (file-gbr-export RUN-NONINTERACTIVE
                        brush-image
                        1 (vector brush-draw)
                        path
