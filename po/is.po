@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-04-17 01:45+0000\n"
-"PO-Revision-Date: 2024-04-17 09:15+0000\n"
+"PO-Revision-Date: 2024-04-18 11:23+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -11070,7 +11070,7 @@ msgstr "Heiti þemunnar sem á að nota."
 
 #: app/config/gimprc-blurbs.h:550
 msgid "Chooses the color scheme variant of the theme."
-msgstr ""
+msgstr "Velur tilbrigði litastefs í þema."
 
 #: app/config/gimprc-blurbs.h:559
 msgid "Override theme-set icon sizes."
@@ -18350,7 +18350,7 @@ msgstr "Þýða"
 #: app/dialogs/welcome-dialog.c:898
 #, c-format
 msgid "Contact the respective translation team for your language"
-msgstr ""
+msgstr "Hafðu samband við þýðingateymi tungumálsins þíns"
 
 #: app/dialogs/welcome-dialog.c:910
 #| msgid "Donating"
@@ -18360,7 +18360,7 @@ msgstr "Styrkja"
 #: app/dialogs/welcome-dialog.c:912
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
-msgstr ""
+msgstr "Að gefa peninga er mikilvægt: þeir gera GIMP sjálfbært."
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:957
@@ -27829,7 +27829,7 @@ msgstr[1] "%d atriði valin"
 
 #: app/widgets/gimpitemtreeview.c:2634 app/widgets/gimpitemtreeview.c:2687
 msgid "Cannot reorder a filter that is being edited."
-msgstr ""
+msgstr "Ekki er hægt að endurraða síu sem verið er að breyta."
 
 #: app/widgets/gimpitemtreeview.c:2651 app/widgets/gimpitemtreeview.c:2704
 #| msgctxt "undo-type"
@@ -27839,7 +27839,7 @@ msgstr "Endurraða síu"
 
 #: app/widgets/gimpitemtreeview.c:2749
 msgid "Effects from active tools can not be merged."
-msgstr ""
+msgstr "Ekki er hægt að sameina sjónhverfingar frá virkum verkfærum."
 
 #: app/widgets/gimpitemtreeview.c:2803
 #| msgctxt "undo-type"
