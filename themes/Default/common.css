@@ -122,6 +122,10 @@ combobox button {
   background-color: @widget-bg-color;
 }
 
+combobox arrow {
+  -gtk-icon-shadow: none;
+}
+
 /* Get rid of the outline around all tabs in the gimpcolordialog */
 GimpColorNotebook .frame {
   border-color: @bg-color;
@@ -424,6 +428,7 @@ GimpSpinScale entry progress {
 GimpSpinScale button
 {
   border-color: @border-color;
+  -gtk-icon-shadow: none;
 }
 
 /* Checkboxes */
