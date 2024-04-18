@@ -526,36 +526,6 @@ G_BEGIN_DECLS
   g_value_take_boxed (gimp_value_array_index (args, n), value)
 
 
-/*  rgb array  */
-
-#define GIMP_PROC_ARG_RGB_ARRAY(procedure, name, nick, blurb, flags) \
-  gimp_procedure_add_argument (procedure,\
-                               gimp_param_spec_rgb_array (name, nick, blurb,\
-                               flags))
-
-#define GIMP_PROC_AUX_ARG_RGB_ARRAY(procedure, name, nick, blurb, flags) \
-  gimp_procedure_add_aux_argument (procedure,\
-                                   gimp_param_spec_rgb_array (name, nick, blurb,\
-                                   flags))
-
-#define GIMP_PROC_VAL_RGB_ARRAY(procedure, name, nick, blurb, flags) \
-  gimp_procedure_add_return_value (procedure,\
-                                   gimp_param_spec_rgb_array (name, nick, blurb,\
-                                   flags))
-
-#define GIMP_VALUES_GET_RGB_ARRAY(args, n) \
-  gimp_value_get_rgb_array (gimp_value_array_index (args, n))
-
-#define GIMP_VALUES_DUP_RGB_ARRAY(args, n) \
-  gimp_value_dup_rgb_array (gimp_value_array_index (args, n))
-
-#define GIMP_VALUES_SET_RGB_ARRAY(args, n, value, length) \
-  gimp_value_set_rgb_array (gimp_value_array_index (args, n), value, length)
-
-#define GIMP_VALUES_TAKE_RGB_ARRAY(args, n, value, length) \
-  gimp_value_take_rgb_array (gimp_value_array_index (args, n), value, length)
-
-
 /*  object array  */
 
 #define GIMP_PROC_ARG_OBJECT_ARRAY(procedure, name, nick, blurb, object_type, flags) \

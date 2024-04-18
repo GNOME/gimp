@@ -293,8 +293,7 @@ marshal_returned_PDB_values (scheme         *sc,
 
       /* In some cases previous value is array_length. */
       if (   GIMP_VALUE_HOLDS_INT32_ARRAY (value)
-          || GIMP_VALUE_HOLDS_FLOAT_ARRAY (value)
-          || GIMP_VALUE_HOLDS_RGB_ARRAY   (value))
+          || GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
         {
           array_length = GIMP_VALUES_GET_INT (values, i);
         }
@@ -548,37 +547,6 @@ marshal_returned_PDB_value    (scheme        *sc,
                           sc->NIL)));
 
       result = temp_val;
-    }
-  else if (GIMP_VALUE_HOLDS_RGB_ARRAY (value))
-    {
-      const GimpRGB  *v = gimp_value_get_rgb_array (value);
-      pointer  vector   = sc->vptr->mk_vector (sc, array_length);
-
-      for (j = 0; j < array_length; j++)
-        {
-          /* FIXME this is duplicated in scheme_marshal.c
-           * Refactor so our repr of pixels is always the same.
-           * OR ... this is not needed because RGB_ARRAY is no longer in the API?
-           */
-          guchar  r, g, b;
-          pointer temp_val;
-
-          gimp_rgb_get_uchar (&v[j], &r, &g, &b);
-
-          temp_val = sc->vptr->cons
-                      (sc,
-                        sc->vptr->mk_integer (sc, r),
-                        sc->vptr->cons
-                          (sc,
-                          sc->vptr->mk_integer (sc, g),
-                          sc->vptr->cons
-                            (sc,
-                              sc->vptr->mk_integer (sc, b),
-                              sc->NIL)));
-          sc->vptr->set_vector_elem (vector, j, temp_val);
-        }
-
-      result = vector;
     }
   else if (GIMP_VALUE_HOLDS_COLOR_ARRAY (value))
     {

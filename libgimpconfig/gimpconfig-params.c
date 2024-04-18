@@ -330,11 +330,6 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
           copy = gimp_param_spec_float_array (name, nick, blurb,
                                               flags);
         }
-      else if (GIMP_IS_PARAM_SPEC_RGB_ARRAY (pspec))
-        {
-          copy = gimp_param_spec_rgb_array (name, nick, blurb,
-                                            flags);
-        }
     }
   else if (GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (pspec))
     {

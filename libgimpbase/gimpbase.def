@@ -128,7 +128,6 @@ EXPORTS
 	gimp_param_memsize_get_type
 	gimp_param_object_array_get_type
 	gimp_param_parasite_get_type
-	gimp_param_rgb_array_get_type
 	gimp_param_spec_array
 	gimp_param_spec_choice
 	gimp_param_spec_float_array
@@ -136,7 +135,6 @@ EXPORTS
 	gimp_param_spec_memsize
 	gimp_param_spec_object_array
 	gimp_param_spec_parasite
-	gimp_param_spec_rgb_array
 	gimp_param_spec_unit
 	gimp_param_spec_value_array
 	gimp_param_unit_get_type
@@ -174,7 +172,6 @@ EXPORTS
 	gimp_rectangle_intersect
 	gimp_rectangle_union
 	gimp_repeat_mode_get_type
-	gimp_rgb_array_get_type
 	gimp_rotation_type_get_type
 	gimp_run_mode_get_type
 	gimp_select_criterion_get_type
@@ -237,23 +234,18 @@ EXPORTS
 	gimp_value_dup_float_array
 	gimp_value_dup_int32_array
 	gimp_value_dup_object_array
-	gimp_value_dup_rgb_array
 	gimp_value_get_float_array
 	gimp_value_get_int32_array
 	gimp_value_get_object_array
-	gimp_value_get_rgb_array
 	gimp_value_set_float_array
 	gimp_value_set_int32_array
 	gimp_value_set_object_array
-	gimp_value_set_rgb_array
 	gimp_value_set_static_float_array
 	gimp_value_set_static_int32_array
 	gimp_value_set_static_object_array
-	gimp_value_set_static_rgb_array
 	gimp_value_take_float_array
 	gimp_value_take_int32_array
 	gimp_value_take_object_array
-	gimp_value_take_rgb_array
 	gimp_vectors_stroke_type_get_type
 	gimp_wire_clear_error
 	gimp_wire_destroy

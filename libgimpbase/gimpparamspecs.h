@@ -294,52 +294,6 @@ void             gimp_color_array_free                (GimpColorArray  array);
 gint             gimp_color_array_get_length          (GimpColorArray  array);
 
 
-
-/*
- * GIMP_TYPE_RGB_ARRAY
- */
-
-#define GIMP_TYPE_RGB_ARRAY               (gimp_rgb_array_get_type ())
-#define GIMP_VALUE_HOLDS_RGB_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_RGB_ARRAY))
-
-GType   gimp_rgb_array_get_type           (void) G_GNUC_CONST;
-
-
-/*
- * GIMP_TYPE_PARAM_RGB_ARRAY
- */
-
-#define GIMP_TYPE_PARAM_RGB_ARRAY           (gimp_param_rgb_array_get_type ())
-#define GIMP_PARAM_SPEC_RGB_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_RGB_ARRAY, GimpParamSpecRGBArray))
-#define GIMP_IS_PARAM_SPEC_RGB_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_RGB_ARRAY))
-
-typedef struct _GimpParamSpecRGBArray GimpParamSpecRGBArray;
-
-struct _GimpParamSpecRGBArray
-{
-  GParamSpecBoxed parent_instance;
-};
-
-GType           gimp_param_rgb_array_get_type   (void) G_GNUC_CONST;
-
-GParamSpec    * gimp_param_spec_rgb_array       (const gchar   *name,
-                                                 const gchar   *nick,
-                                                 const gchar   *blurb,
-                                                 GParamFlags    flags);
-
-const GimpRGB * gimp_value_get_rgb_array        (const GValue  *value);
-GimpRGB       * gimp_value_dup_rgb_array        (const GValue  *value);
-void            gimp_value_set_rgb_array        (GValue        *value,
-                                                 const GimpRGB *data,
-                                                 gsize          length);
-void            gimp_value_set_static_rgb_array (GValue        *value,
-                                                 const GimpRGB *data,
-                                                 gsize          length);
-void            gimp_value_take_rgb_array       (GValue        *value,
-                                                 GimpRGB       *data,
-                                                 gsize          length);
-
-
 /*
  * GIMP_TYPE_OBJECT_ARRAY
  */

@@ -44,9 +44,6 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       if (! strcmp (param_def->type_name, "GimpParamFloatArray"))
         return gimp_param_spec_float_array (name, nick, blurb, flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamRGBArray"))
-        return gimp_param_spec_rgb_array (name, nick, blurb, flags);
-
       if (! strcmp (param_def->type_name, "GimpParamParasite"))
         return gimp_param_spec_parasite (name, nick, blurb, flags);
 
@@ -781,14 +778,6 @@ gimp_gp_param_to_value (gpointer        gimp,
                                   param->data.d_array.size /
                                   sizeof (gdouble));
     }
-  else if (GIMP_VALUE_HOLDS_RGB_ARRAY (value))
-    {
-      gimp_value_set_rgb_array (value,
-                                (GimpRGB *)
-                                param->data.d_array.data,
-                                param->data.d_array.size /
-                                sizeof (GimpRGB));
-    }
   else if (GIMP_VALUE_HOLDS_COLOR_ARRAY (value))
     {
       GeglColor **colors;
@@ -1133,8 +1122,7 @@ gimp_value_to_gp_param (const GValue *value,
         }
     }
   else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
-           GIMP_VALUE_HOLDS_FLOAT_ARRAY (value) ||
-           GIMP_VALUE_HOLDS_RGB_ARRAY (value))
+           GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
     {
       GimpArray *array = g_value_get_boxed (value);
 

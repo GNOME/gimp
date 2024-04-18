@@ -1262,14 +1262,16 @@ script_fu_marshal_procedure_call (scheme   *sc,
           /* Transfer ownership. */
           g_value_take_object (&value, color);
         }
-      else if (GIMP_VALUE_HOLDS_RGB_ARRAY (&value))
+      else if (GIMP_VALUE_HOLDS_COLOR_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
           if (! sc->vptr->is_vector (vector))
-            return script_type_error (sc, "vector", i, proc_name);
+            {
+              return script_type_error (sc, "vector", i, proc_name);
+            }
           else
             {
-              GimpRGB *array;
+              GeglColor **colors;
 
               if (i == 0)
                 return script_error (sc, "The first argument cannot be an array", a);
@@ -1281,20 +1283,20 @@ script_fu_marshal_procedure_call (scheme   *sc,
               if (n_elements > sc->vptr->vector_length (vector))
                 return script_length_error_in_vector (sc, i, proc_name, n_elements, vector);
 
-              array = g_new0 (GimpRGB, n_elements);
+              colors = g_new0 (GeglColor *, n_elements + 1);
 
               for (j = 0; j < n_elements; j++)
                 {
                   pointer v_element = sc->vptr->vector_elem (vector, j);
                   pointer color_list;
-                  guchar  r, g, b;
+                  guchar  rgb[3];
 
                   if (! (sc->vptr->is_list (sc,
                                             sc->vptr->pair_car (v_element)) &&
                          sc->vptr->list_length (sc,
                                                 sc->vptr->pair_car (v_element)) == 3))
                     {
-                      g_free (array);
+                      gimp_color_array_free (colors);
                       g_snprintf (error_str, sizeof (error_str),
                                   "Item %d in vector is not a color "
                                   "(argument %d for function %s)",
@@ -1303,19 +1305,20 @@ script_fu_marshal_procedure_call (scheme   *sc,
                     }
 
                   color_list = sc->vptr->pair_car (v_element);
-                  r = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
-                             0, 255);
+                  rgb[0] = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                                  0, 255);
                   color_list = sc->vptr->pair_cdr (color_list);
-                  g = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
-                             0, 255);
+                  rgb[1] = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                                  0, 255);
                   color_list = sc->vptr->pair_cdr (color_list);
-                  b = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
-                             0, 255);
+                  rgb[2] = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                                  0, 255);
 
-                  gimp_rgba_set_uchar (&array[i], r, g, b, 255);
+                  colors[j] = gegl_color_new (NULL);
+                  gegl_color_set_pixel (colors[j], babl_format ("R'G'B' u8"), rgb);
                 }
 
-              gimp_value_take_rgb_array (&value, array, n_elements);
+              g_value_take_boxed (&value, colors);
 
               g_debug ("color vector has %ld elements", sc->vptr->vector_length (vector));
             }
