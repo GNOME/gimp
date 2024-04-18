@@ -356,6 +356,7 @@ GimpDrawableFilter *
 gimp_drawable_filter_duplicate (GimpDrawable       *drawable,
                                 GimpDrawableFilter *prior_filter)
 {
+  GimpImage          *image;
   GimpDrawableFilter *filter;
   GimpChannel        *mask;
   GeglNode           *prior_node;
@@ -414,13 +415,17 @@ gimp_drawable_filter_duplicate (GimpDrawable       *drawable,
   gimp_drawable_filter_set_region (filter,
                                    prior_filter->region);
 
-  mask = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (prior_filter->mask),
-                                            GIMP_TYPE_CHANNEL));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  if (image != NULL)
+    {
+      mask = GIMP_CHANNEL (gimp_item_convert (GIMP_ITEM (prior_filter->mask),
+                                              image, GIMP_TYPE_CHANNEL));
 
-  g_object_set (filter,
-                "mask", mask,
-                NULL);
-  g_object_unref (mask);
+      g_object_set (filter,
+                    "mask", mask,
+                    NULL);
+      g_object_unref (mask);
+    }
 
   return filter;
 }
