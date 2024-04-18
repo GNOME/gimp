@@ -429,7 +429,7 @@ gih_export (GimpProcedure        *procedure,
       drawables_array = gimp_object_array_new (GIMP_TYPE_DRAWABLE, (GObject **) drawables,
                                                n_drawables, FALSE);
       procedure    = gimp_pdb_lookup_procedure (gimp_get_pdb (),
-                                                "file-gih-save-internal");
+                                                "file-gih-export-internal");
       save_retvals = gimp_procedure_run (procedure,
                                          "image",         image,
                                          "num-drawables", n_drawables,
@@ -455,7 +455,7 @@ gih_export (GimpProcedure        *procedure,
       else
         {
           g_set_error (&error, 0, 0,
-                       "Running procedure 'file-gih-save-internal' "
+                       "Running procedure 'file-gih-export-internal' "
                        "failed: %s",
                        gimp_pdb_get_last_error (gimp_get_pdb ()));
 

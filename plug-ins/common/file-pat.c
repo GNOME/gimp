@@ -220,7 +220,7 @@ pat_export (GimpProcedure        *procedure,
                     NULL);
 
       procedure    = gimp_pdb_lookup_procedure (gimp_get_pdb (),
-                                                "file-pat-save-internal");
+                                                "file-pat-export-internal");
       save_retvals = gimp_procedure_run (procedure,
                                          "image",         image,
                                          "num-drawables", n_drawables,
@@ -232,7 +232,7 @@ pat_export (GimpProcedure        *procedure,
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) != GIMP_PDB_SUCCESS)
         {
           g_set_error (&error, 0, 0,
-                       "Running procedure 'file-pat-save-internal' "
+                       "Running procedure 'file-pat-export-internal' "
                        "failed: %s",
                        gimp_pdb_get_last_error (gimp_get_pdb ()));
 

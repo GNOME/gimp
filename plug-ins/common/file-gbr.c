@@ -244,7 +244,7 @@ gbr_export (GimpProcedure        *procedure,
       drawables_array = gimp_object_array_new (GIMP_TYPE_DRAWABLE, (GObject **) drawables,
                                                n_drawables, FALSE);
       procedure    = gimp_pdb_lookup_procedure (gimp_get_pdb (),
-                                                "file-gbr-save-internal");
+                                                "file-gbr-export-internal");
       save_retvals = gimp_procedure_run (procedure,
                                          "image",         image,
                                          "num-drawables", n_drawables,
@@ -260,7 +260,7 @@ gbr_export (GimpProcedure        *procedure,
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) != GIMP_PDB_SUCCESS)
         {
           g_set_error (&error, 0, 0,
-                       "Running procedure 'file-gbr-save-internal' "
+                       "Running procedure 'file-gbr-export-internal' "
                        "failed: %s",
                        gimp_pdb_get_last_error (gimp_get_pdb ()));
 

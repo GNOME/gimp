@@ -106,8 +106,8 @@ file_data_init (Gimp *gimp)
   gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
   g_object_unref (procedure);
 
-  /*  file-gbr-save-internal  */
-  file = g_file_new_for_path ("file-gbr-save-internal");
+  /*  file-gbr-export-internal  */
+  file = g_file_new_for_path ("file-gbr-export-internal");
   procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
   g_object_unref (file);
 
@@ -130,7 +130,7 @@ file_data_init (Gimp *gimp)
 #endif
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "file-gbr-save-internal");
+                               "file-gbr-export-internal");
   gimp_procedure_set_static_help (procedure,
                                   "Exports Gimp brush file (.GBR)",
                                   "Exports Gimp brush file (.GBR)",
@@ -243,8 +243,8 @@ file_data_init (Gimp *gimp)
   gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
   g_object_unref (procedure);
 
-  /*  file-gih-save-internal  */
-  file = g_file_new_for_path ("file-gih-save-internal");
+  /*  file-gih-export-internal  */
+  file = g_file_new_for_path ("file-gih-export-internal");
   procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
   g_object_unref (file);
 
@@ -267,7 +267,7 @@ file_data_init (Gimp *gimp)
 #endif
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "file-gih-save-internal");
+                               "file-gih-export-internal");
   gimp_procedure_set_static_help (procedure,
                                   "Exports Gimp animated brush file (.gih)",
                                   "Exports Gimp animated brush file (.gih)",
@@ -386,8 +386,8 @@ file_data_init (Gimp *gimp)
   gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
   g_object_unref (procedure);
 
-  /*  file-pat-save-internal  */
-  file = g_file_new_for_path ("file-pat-save-internal");
+  /*  file-pat-export-internal  */
+  file = g_file_new_for_path ("file-pat-export-internal");
   procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
   g_object_unref (file);
 
@@ -410,7 +410,7 @@ file_data_init (Gimp *gimp)
 #endif
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "file-pat-save-internal");
+                               "file-pat-export-internal");
   gimp_procedure_set_static_help (procedure,
                                   "Exports Gimp pattern file (.PAT)",
                                   "Exports Gimp pattern file (.PAT)",
