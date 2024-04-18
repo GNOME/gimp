@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-python.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-03-11 21:17+0000\n"
-"PO-Revision-Date: 2024-04-17 15:49+0000\n"
+"PO-Revision-Date: 2024-04-18 10:58+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -679,7 +679,7 @@ msgstr ""
 
 #: plug-ins/python/spyro-plus.py:1519 plug-ins/python/spyro-plus.py:1547
 msgid "Fixed Gear Teeth"
-msgstr "Fastur fjöldi tanna"
+msgstr "Tennur fasta gírhjólsins"
 
 #: plug-ins/python/spyro-plus.py:1527
 msgid ""
@@ -689,7 +689,7 @@ msgstr ""
 
 #: plug-ins/python/spyro-plus.py:1530 plug-ins/python/spyro-plus.py:1552
 msgid "Moving Gear Teeth"
-msgstr "Hreyfanlegar gírtennur"
+msgstr "Tennur hreyfanlega gírhjólsins"
 
 #: plug-ins/python/spyro-plus.py:1535
 msgid "Hole percent"
@@ -759,7 +759,7 @@ msgstr ""
 
 #: plug-ins/python/spyro-plus.py:1627
 msgid "Gears"
-msgstr "Tannhjól"
+msgstr "Gírhjól"
 
 #: plug-ins/python/spyro-plus.py:1640 plug-ins/python/spyro-plus.py:1684
 msgid "Rotation"
@@ -860,7 +860,7 @@ msgstr "Sveiglínumynstur"
 
 #: plug-ins/python/spyro-plus.py:1774
 msgid "Fixed Gear"
-msgstr "Fast tannhjól"
+msgstr "Fast gírhjól"
 
 #: plug-ins/python/spyro-plus.py:1777
 msgid "Size"
@@ -893,11 +893,11 @@ msgstr ""
 
 #: plug-ins/python/spyro-plus.py:2231 plug-ins/python/spyro-plus.py:2232
 msgid "Number of teeth for fixed gear"
-msgstr ""
+msgstr "Fjöldi tanna fasta gírhjólsins"
 
 #: plug-ins/python/spyro-plus.py:2236 plug-ins/python/spyro-plus.py:2237
 msgid "Number of teeth for moving gear"
-msgstr ""
+msgstr "Fjöldi tanna hreyfanlega gírhjólsins"
 
 #: plug-ins/python/spyro-plus.py:2241 plug-ins/python/spyro-plus.py:2243
 msgid ""
@@ -925,10 +925,9 @@ msgid "Shape rotation of fixed gear, in degrees"
 msgstr "Snúningur lögunar fasta gírhjólsins, í gráðum"
 
 #: plug-ins/python/spyro-plus.py:2268 plug-ins/python/spyro-plus.py:2269
-#, fuzzy
 #| msgid "The number of petals in the pattern."
 msgid "Tool to use for drawing the pattern."
-msgstr "Fjöldi krónublaða í mynstrinu."
+msgstr "Verkfæri sem á að nota við að teikna mynstrið."
 
 #: plug-ins/python/spyro-plus.py:2273 plug-ins/python/spyro-plus.py:2275
 msgid ""
