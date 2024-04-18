@@ -224,8 +224,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-23.11.0.tar.xz",
-                    "sha256": "f99cca6799cb9cb6c92fc1e0eb78547b611cb733750ab7cb047cb0e6c246539c",
+                    "url": "https://poppler.freedesktop.org/poppler-24.04.0.tar.xz",
+                    "sha256": "1e804ec565acf7126eb2e9bb3b56422ab2039f7e05863a5dfabdd1ffd1bb77a7",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -333,8 +333,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10021/ghostscript-10.02.1.tar.gz",
-                    "sha512": "24eeff047a24085413283ee42539a2feea4d3de81077664861399055a9d30349a0ef0950746bb0b0ee2237b4b9ee215340204ab0e33347b53dc2acee85fcfc19",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10030/ghostscript-10.03.0.tar.gz",
+                    "sha512": "880fc78f8a6afe9181cfbb8a416e3399d7f21550a9d50da3a4b97b38c7fe2a5acaed42df12b7d1dd6e5a769d2824e999f09d394216a4cab93f61e1a0459f31e5",
                     "x-checker-data": {
                         "//": "Bypass broken url-template with anitya checker - See https://github.com/flathub/flatpak-external-data-checker/issues/360",
                         "type": "json",
@@ -475,8 +475,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.24.tar.gz",
-                            "sha256": "ceadc5065da97bd92404cac7254da66cc6eb192679cf1002098688978d4d5132",
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.26.tar.gz",
+                            "sha256": "4e6e4f5cb14c209262e33e6816d70221a2fe49eb69eaf0a06f065598ac602c68",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 2540,
@@ -782,8 +782,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/8.0.5/graphviz-8.0.5.tar.gz",
-                            "sha256": "dd06f45f5bbcb1c7cbc67adab5359da2cd4b40533dc7c7424b3fc0e998bbd6c9",
+                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/9.0.0/graphviz-9.0.0.tar.gz",
+                            "sha256": "504d19b5d0e5398a57e9d9de42393f90b9e79aff0969b4ebc3b891ccb39602ed",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 1249,
