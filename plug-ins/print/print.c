@@ -402,9 +402,13 @@ page_setup (GimpImage *image)
   gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
                                       GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
+  /* Notify the Print plug-in if Page Setup was called from there */
   procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), name);
-  return_vals = gimp_procedure_run (procedure, "image", image, NULL);
-  gimp_value_array_unref (return_vals);
+  if (procedure)
+    {
+      return_vals = gimp_procedure_run (procedure, "image", image, NULL);
+      gimp_value_array_unref (return_vals);
+    }
 
   g_free (name);
 
