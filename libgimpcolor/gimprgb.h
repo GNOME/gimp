@@ -60,13 +60,6 @@ void      gimp_rgb_set             (GimpRGB       *rgb,
 void      gimp_rgb_set_alpha       (GimpRGB       *rgb,
                                     gdouble        alpha);
 
-void      gimp_rgb_set_pixel       (GimpRGB       *rgb,
-                                    const Babl    *format,
-                                    gconstpointer  pixel);
-void      gimp_rgb_get_pixel       (const GimpRGB *rgb,
-                                    const Babl    *format,
-                                    gpointer       pixel);
-
 void      gimp_rgb_set_uchar       (GimpRGB       *rgb,
                                     guchar         red,
                                     guchar         green,
@@ -88,19 +81,12 @@ gboolean  gimp_rgb_parse_css       (GimpRGB       *rgb,
 
 void      gimp_rgb_add             (GimpRGB       *rgb1,
                                     const GimpRGB *rgb2);
-void      gimp_rgb_subtract        (GimpRGB       *rgb1,
-                                    const GimpRGB *rgb2);
 void      gimp_rgb_multiply        (GimpRGB       *rgb1,
                                     gdouble        factor);
-gdouble   gimp_rgb_distance        (const GimpRGB *rgb1,
-                                    const GimpRGB *rgb2);
 
 gdouble   gimp_rgb_max             (const GimpRGB *rgb);
 gdouble   gimp_rgb_min             (const GimpRGB *rgb);
 void      gimp_rgb_clamp           (GimpRGB       *rgb);
-
-void      gimp_rgb_gamma           (GimpRGB       *rgb,
-                                    gdouble        gamma);
 
 gdouble   gimp_rgb_luminance       (const GimpRGB *rgb);
 guchar    gimp_rgb_luminance_uchar (const GimpRGB *rgb);
@@ -121,13 +107,6 @@ void      gimp_rgba_set            (GimpRGB       *rgba,
                                     gdouble        blue,
                                     gdouble        alpha);
 
-void      gimp_rgba_set_pixel      (GimpRGB       *rgba,
-                                    const Babl    *format,
-                                    gconstpointer  pixel);
-void      gimp_rgba_get_pixel      (const GimpRGB *rgba,
-                                    const Babl    *format,
-                                    gpointer       pixel);
-
 void      gimp_rgba_set_uchar      (GimpRGB       *rgba,
                                     guchar         red,
                                     guchar         green,
@@ -144,8 +123,6 @@ gboolean  gimp_rgba_parse_css      (GimpRGB       *rgba,
                                     gint           len);
 
 void      gimp_rgba_add            (GimpRGB       *rgba1,
-                                    const GimpRGB *rgba2);
-void      gimp_rgba_subtract       (GimpRGB       *rgba1,
                                     const GimpRGB *rgba2);
 void      gimp_rgba_multiply       (GimpRGB       *rgba,
                                     gdouble        factor);

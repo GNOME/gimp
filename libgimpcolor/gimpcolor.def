@@ -91,9 +91,6 @@ EXPORTS
 	gimp_rgb_add
 	gimp_rgb_clamp
 	gimp_rgb_composite
-	gimp_rgb_distance
-	gimp_rgb_gamma
-	gimp_rgb_get_pixel
 	gimp_rgb_get_type
 	gimp_rgb_get_uchar
 	gimp_rgb_list_names
@@ -107,19 +104,14 @@ EXPORTS
 	gimp_rgb_parse_name
 	gimp_rgb_set
 	gimp_rgb_set_alpha
-	gimp_rgb_set_pixel
 	gimp_rgb_set_uchar
-	gimp_rgb_subtract
 	gimp_rgb_to_cmyk
 	gimp_rgb_to_hsl
 	gimp_rgb_to_hsv
 	gimp_rgba_add
 	gimp_rgba_distance
-	gimp_rgba_get_pixel
 	gimp_rgba_get_uchar
 	gimp_rgba_multiply
 	gimp_rgba_parse_css
 	gimp_rgba_set
-	gimp_rgba_set_pixel
 	gimp_rgba_set_uchar
-	gimp_rgba_subtract
