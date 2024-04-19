@@ -1,6 +1,6 @@
 environ_config = configuration_data()
 
-if platform_windows
+if platform_windows and relocatable_bundle
   environ_config.set('BIN_PATH', 'PATH=${gimp_installation_dir}\\bin')
 else
   environ_config.set('BIN_PATH', '')
