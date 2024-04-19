@@ -446,14 +446,11 @@ dump_describe_param (GParamSpec *param_spec)
                                param_spec->name);
     }
 
-  if (GEGL_IS_PARAM_SPEC_COLOR (param_spec))
+  if (GIMP_IS_PARAM_SPEC_COLOR (param_spec))
     {
-      /* TODO: implement has_alpha parameter to color parameters. */
-#if 0
       if (gimp_param_spec_color_has_alpha (param_spec))
         values = "The color is specified as opaque GeglColor (any Alpha channel is ignored).";
       else
-#endif
         values = "The color is specified as GeglColor.";
     }
   else if (GIMP_IS_PARAM_SPEC_MEMSIZE (param_spec))

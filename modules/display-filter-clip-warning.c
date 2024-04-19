@@ -172,7 +172,7 @@ cdisplay_clip_warning_class_init (CdisplayClipWarningClass *klass)
                            "shadows-color",
                            _("Shadows color"),
                            _("Shadows warning color"),
-                           color,
+                           FALSE, color,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_CONFIG_PARAM_DEFAULTS);
 
@@ -193,7 +193,7 @@ cdisplay_clip_warning_class_init (CdisplayClipWarningClass *klass)
                           "highlights-color",
                           _("Highlights color"),
                           _("Highlights warning color"),
-                          color,
+                          FALSE, color,
                           GIMP_PARAM_STATIC_STRINGS |
                           GIMP_CONFIG_PARAM_DEFAULTS);
 
@@ -214,7 +214,7 @@ cdisplay_clip_warning_class_init (CdisplayClipWarningClass *klass)
                           "bogus-color",
                           _("Bogus color"),
                           _("Bogus warning color"),
-                          color,
+                          FALSE, color,
                           GIMP_PARAM_STATIC_STRINGS |
                           GIMP_CONFIG_PARAM_DEFAULTS);
 

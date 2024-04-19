@@ -579,24 +579,14 @@ gimp_param_spec_unit ("$name",
                       $flags)
 CODE
     }
-    elsif ($pdbtype eq 'color') {
+    elsif ($pdbtype eq 'geglcolor') {
 	$has_alpha = exists $arg->{has_alpha} ? TRUE : FALSE;
 	$default = exists $arg->{default} ? $arg->{default} : NULL;
 	$pspec = <<CODE;
-gimp_param_spec_rgb ("$name",
-                     "$nick",
-                     "$blurb",
-                     $has_alpha,
-                     $default,
-                     $flags)
-CODE
-    }
-    elsif ($pdbtype eq 'geglcolor') {
-	$default = exists $arg->{default} ? $arg->{default} : NULL;
-	$pspec = <<CODE;
-gegl_param_spec_color ("$name",
+gimp_param_spec_color ("$name",
                        "$nick",
                        "$blurb",
+                       $has_alpha,
                        $default,
                        $flags)
 CODE

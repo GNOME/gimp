@@ -740,7 +740,8 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                                         property, -1);
         }
     }
-  else if (G_PARAM_SPEC_TYPE (pspec) == GEGL_TYPE_PARAM_COLOR)
+  else if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_COLOR ||
+           G_PARAM_SPEC_TYPE (pspec) == GEGL_TYPE_PARAM_COLOR)
     {
       if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_LABEL_COLOR)
         {
@@ -928,7 +929,8 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
       return NULL;
     }
 
-  if (G_PARAM_SPEC_TYPE (pspec) == GEGL_TYPE_PARAM_COLOR)
+  if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_COLOR ||
+      G_PARAM_SPEC_TYPE (pspec) == GEGL_TYPE_PARAM_COLOR)
     {
       widget = gimp_prop_label_color_new (G_OBJECT (dialog->priv->config),
                                           property, editable);

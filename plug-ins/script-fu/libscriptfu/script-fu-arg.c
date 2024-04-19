@@ -296,7 +296,7 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       {
         GeglColor *color = sf_color_arg_get_default_color (arg);
 
-        pspec = gegl_param_spec_color (name, nick, arg->label, color, G_PARAM_READWRITE);
+        pspec = gimp_param_spec_color (name, nick, arg->label, TRUE, color, G_PARAM_READWRITE);
         g_object_unref (color);
       }
       break;

@@ -83,9 +83,9 @@ gimp_color_bar_class_init (GimpColorBarClass *klass)
                                                       G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gegl_param_spec_color_from_string ("color",
+                                   gimp_param_spec_color_from_string ("color",
                                                                       NULL, NULL,
-                                                                      /*FALSE,*/ "white",
+                                                                      FALSE, "white",
                                                                       GIMP_PARAM_WRITABLE |
                                                                       G_PARAM_CONSTRUCT));
 

@@ -249,6 +249,21 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                      spec->default_value,
                                      flags);
     }
+  else if (GIMP_IS_PARAM_SPEC_COLOR (pspec))
+    {
+      GeglColor *color;
+      GValue     value = G_VALUE_INIT;
+
+      g_value_init (&value, GEGL_TYPE_COLOR);
+      g_param_value_set_default (pspec, &value);
+      color = g_value_dup_object (&value);
+      g_value_unset (&value);
+
+      copy = gimp_param_spec_color (name, nick, blurb,
+                                    gimp_param_spec_color_has_alpha (pspec),
+                                    color, flags);
+      g_clear_object (&color);
+    }
   else if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
     {
       GeglColor *color;
@@ -260,7 +275,6 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
       g_value_unset (&value);
 
       copy = gegl_param_spec_color (name, nick, blurb,
-                                    /*TRUE,*/
                                     color, flags);
       g_clear_object (&color);
     }

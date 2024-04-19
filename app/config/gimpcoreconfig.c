@@ -710,7 +710,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                           "quick-mask-color",
                           "Quick mask color",
                           QUICK_MASK_COLOR_BLURB,
-                          red,
+                          TRUE, red,
                           GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_IMPORT_PROMOTE_FLOAT,

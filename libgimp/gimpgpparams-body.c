@@ -152,7 +152,8 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       break;
 
     case GP_PARAM_DEF_TYPE_GEGL_COLOR:
-      if (! strcmp (param_def->type_name, "GeglParamColor"))
+      if (! strcmp (param_def->type_name, "GeglParamColor") ||
+          ! strcmp (param_def->type_name, "GimpParamColor"))
         {
           GeglColor *default_color = NULL;
 
@@ -200,7 +201,9 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
                 gegl_color_set_pixel (default_color, format, default_val->data);
             }
 
-          return gegl_param_spec_color (name, nick, blurb, default_color, flags);
+          return gimp_param_spec_color (name, nick, blurb,
+                                        param_def->meta.m_gegl_color.has_alpha,
+                                        default_color, flags);
         }
       break;
 
@@ -397,18 +400,23 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_string.default_val = gsspec->default_value;
     }
   else if (GEGL_IS_PARAM_SPEC_COLOR (pspec) ||
+           GIMP_IS_PARAM_SPEC_COLOR (pspec) ||
            (pspec_type == G_TYPE_PARAM_OBJECT && value_type == GEGL_TYPE_COLOR))
     {
       GPParamColor *default_val = NULL;
       GeglColor    *default_color;
 
       param_def->param_def_type              = GP_PARAM_DEF_TYPE_GEGL_COLOR;
-      /* TODO: no no-alpha support for the time being. */
-      /*param_def->meta.m_gegl_color.has_alpha = TRUE;*/
+      param_def->meta.m_gegl_color.has_alpha = TRUE;
 
       if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
         {
           default_color = gegl_param_spec_color_get_default (pspec);
+        }
+      else if (GIMP_IS_PARAM_SPEC_COLOR (pspec))
+        {
+          default_color = gimp_param_spec_color_get_default (pspec);
+          param_def->meta.m_gegl_color.has_alpha = gimp_param_spec_color_has_alpha (pspec);
         }
       else
         {
@@ -417,6 +425,7 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
           default_color = g_value_get_object (value);
           param_def->type_name = "GeglParamColor";
         }
+
       if (default_color != NULL)
         {
           const Babl *format;

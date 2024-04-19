@@ -362,13 +362,12 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
 
       gimp_prop_gui_bind_label (widget, widget);
     }
-  else if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
+  else if (GIMP_IS_PARAM_SPEC_COLOR (pspec))
     {
-      gboolean   has_alpha = TRUE;
+      gboolean   has_alpha;
       GtkWidget *button;
 
-      /* TODO: need an alpha argument to GeglParamSpecColor. */
-      /*has_alpha = gimp_param_spec_rgb_has_alpha (pspec);*/
+      has_alpha = gimp_param_spec_color_has_alpha (pspec);
 
       widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 

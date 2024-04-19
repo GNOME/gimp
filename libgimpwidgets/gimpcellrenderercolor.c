@@ -110,10 +110,10 @@ gimp_cell_renderer_color_class_init (GimpCellRendererColorClass *klass)
   cell_class->render         = gimp_cell_renderer_color_render;
 
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gegl_param_spec_color ("color",
+                                   gimp_param_spec_color ("color",
                                                           "Color",
                                                           "The displayed color",
-                                                          NULL,
+                                                          TRUE, NULL,
                                                           G_PARAM_READWRITE |
                                                           G_PARAM_CONSTRUCT));
 

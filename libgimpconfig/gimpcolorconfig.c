@@ -326,7 +326,7 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                           "out-of-gamut-color",
                           _("Out of gamut warning color"),
                           OUT_OF_GAMUT_COLOR_BLURB,
-                          magenta,
+                          FALSE, magenta,
                           GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_RGB_U8,

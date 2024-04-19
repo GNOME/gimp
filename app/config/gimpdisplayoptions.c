@@ -234,7 +234,7 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
                           "padding-color",
                           "Padding color",
                           CANVAS_PADDING_COLOR_BLURB,
-                          white,
+                          FALSE, white,
                           GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PADDING_IN_SHOW_ALL,
@@ -381,7 +381,7 @@ gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *k
                           "padding-color",
                           "Padding color",
                           CANVAS_PADDING_COLOR_BLURB,
-                          black,
+                          FALSE, black,
                           GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PADDING_IN_SHOW_ALL,

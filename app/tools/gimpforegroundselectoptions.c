@@ -115,7 +115,7 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                            "mask-color",
                            _("Preview color"),
                            _("Color of selection preview mask"),
-                           blue,
+                           TRUE, blue,
                            GIMP_PARAM_STATIC_STRINGS);
   g_object_unref (blue);
 

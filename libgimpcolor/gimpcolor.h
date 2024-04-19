@@ -64,6 +64,32 @@ gboolean    gimp_color_is_out_of_self_gamut      (GeglColor   *color);
 gboolean    gimp_color_is_out_of_gamut           (GeglColor   *color,
                                                   const Babl  *space);
 
+/*
+ * GIMP_TYPE_PARAM_COLOR
+ */
+
+#define GIMP_TYPE_PARAM_COLOR           (gimp_param_color_get_type ())
+#define GIMP_PARAM_SPEC_COLOR(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_COLOR, GimpParamSpecColor))
+#define GIMP_IS_PARAM_SPEC_COLOR(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_COLOR))
+
+GType        gimp_param_color_get_type         (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_color             (const gchar *name,
+                                                const gchar *nick,
+                                                const gchar *blurb,
+                                                gboolean     has_alpha,
+                                                GeglColor   *default_color,
+                                                GParamFlags  flags);
+
+GParamSpec * gimp_param_spec_color_from_string (const gchar *name,
+                                                const gchar *nick,
+                                                const gchar *blurb,
+                                                gboolean     has_alpha,
+                                                const gchar *default_color_string,
+                                                GParamFlags  flags);
+
+GeglColor  * gimp_param_spec_color_get_default (GParamSpec  *pspec);
+gboolean     gimp_param_spec_color_has_alpha   (GParamSpec  *pspec);
 
 G_END_DECLS
 

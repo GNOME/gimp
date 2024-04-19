@@ -374,7 +374,7 @@ gimp_prop_color_button_new (GObject           *config,
   GeglColor  *color = NULL;
 
   param_spec = check_param_spec_w (config, property_name,
-                                   GEGL_TYPE_PARAM_COLOR, G_STRFUNC);
+                                   GIMP_TYPE_PARAM_COLOR, G_STRFUNC);
   if (! param_spec)
     return NULL;
 

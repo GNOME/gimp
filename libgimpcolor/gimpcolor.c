@@ -41,10 +41,25 @@
  **/
 
 
+static void         gimp_param_color_class_init     (GParamSpecClass *klass);
+static void         gimp_param_color_init           (GParamSpec      *pspec);
+static void         gimp_param_color_finalize       (GParamSpec      *pspec);
+static gboolean     gimp_param_color_validate       (GParamSpec      *pspec,
+                                                     GValue          *value);
+static void         gimp_param_color_set_default    (GParamSpec *pspec,
+                                                     GValue     *value);
+static gint         gimp_param_color_cmp            (GParamSpec   *param_spec,
+                                                     const GValue *value1,
+                                                     const GValue *value2);
+
 static const Babl * gimp_babl_format_get_with_alpha (const Babl *format);
 static gfloat       gimp_color_get_CIE2000_distance (GeglColor  *color1,
                                                      GeglColor  *color2);
 
+
+/*
+ * GEGL_TYPE_COLOR
+ */
 
 /**
  * gimp_color_set_alpha:
@@ -316,6 +331,255 @@ gimp_color_is_out_of_gamut (GeglColor  *color,
 #undef CHANNEL_EPSILON
 
   return is_out_of_gamut;
+}
+
+
+/*
+ * GIMP_TYPE_PARAM_COLOR
+ */
+
+struct _GimpParamSpecColor
+{
+  GParamSpecObject  parent_instance;
+
+  GeglColor        *default_color;
+  gboolean          has_alpha;
+
+  /* TODO: these 2 settings are not currently settable:
+   * - none_ok: whether a parameter were to allow NULL as a value. Of course, it
+   *   should imply that default_color must be set.
+   * - validate: legacy GimpRGB code was implying checking if the RGB values
+   *             were out of [0; 1], i.e. that new code should check if the
+   *             color is out of self-gamut (bounded value).
+   *             We could also add a check for invalid values regardless of
+   *             gamut (though maybe this validation should happen regardless
+   *             and the settings should just be oog_validate).
+   * These can be implemented later as independent functions, especially as the
+   * GimpParamSpecColor struct is private.
+   */
+  gboolean          none_ok;
+  gboolean          validate;
+};
+
+GType
+gimp_param_color_get_type (void)
+{
+  static GType type = 0;
+
+  if (G_UNLIKELY (type == 0))
+    {
+      const GTypeInfo info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_color_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecColor),
+        0,
+        (GInstanceInitFunc) gimp_param_color_init
+      };
+
+      type = g_type_register_static (G_TYPE_PARAM_OBJECT, "GimpParamColor", &info, 0);
+    }
+
+  return type;
+}
+
+static void
+gimp_param_color_class_init (GParamSpecClass *klass)
+{
+  klass->finalize          = gimp_param_color_finalize;
+  klass->value_type        = GEGL_TYPE_COLOR;
+  klass->value_validate    = gimp_param_color_validate;
+  klass->value_set_default = gimp_param_color_set_default;
+  klass->values_cmp        = gimp_param_color_cmp;
+}
+
+static void
+gimp_param_color_init (GParamSpec *pspec)
+{
+  GimpParamSpecColor *cspec = GIMP_PARAM_SPEC_COLOR (pspec);
+
+  cspec->default_color = NULL;
+  cspec->has_alpha     = TRUE;
+  cspec->none_ok       = TRUE;
+  cspec->validate      = FALSE;
+}
+
+static void
+gimp_param_color_finalize (GParamSpec *pspec)
+{
+  GimpParamSpecColor *cspec        = GIMP_PARAM_SPEC_COLOR (pspec);
+  GParamSpecClass    *parent_class = g_type_class_peek (g_type_parent (GIMP_TYPE_PARAM_COLOR));
+
+  g_clear_object (&cspec->default_color);
+
+  parent_class->finalize (pspec);
+}
+
+static gboolean
+gimp_param_color_validate (GParamSpec *pspec,
+                           GValue     *value)
+{
+  GimpParamSpecColor *cspec = GIMP_PARAM_SPEC_COLOR (pspec);
+  GeglColor          *color = value->data[0].v_pointer;
+
+  if (! cspec->none_ok && color == NULL)
+    return TRUE;
+
+  if (color && ! GEGL_IS_COLOR (color))
+    {
+      g_object_unref (color);
+      value->data[0].v_pointer = NULL;
+      return TRUE;
+    }
+
+  if (cspec->validate && gimp_color_is_out_of_self_gamut (color))
+    {
+      /* TODO: See g_param_value_validate() documentation. The value_validate()
+       * method must also modify the value to ensure validity. When it's done,
+       * return TRUE.
+       */
+      return FALSE;
+    }
+  return FALSE;
+}
+
+static void
+gimp_param_color_set_default (GParamSpec *pspec,
+                              GValue     *value)
+{
+  GimpParamSpecColor *cspec = GIMP_PARAM_SPEC_COLOR (pspec);
+
+  if (cspec->default_color)
+    g_value_take_object (value, gegl_color_duplicate (cspec->default_color));
+}
+
+static gint
+gimp_param_color_cmp (GParamSpec   *param_spec,
+                      const GValue *value1,
+                      const GValue *value2)
+{
+  GeglColor  *color1 = g_value_get_object (value1);
+  GeglColor  *color2 = g_value_get_object (value2);
+  const Babl *format1;
+
+  if (! color1 || ! color2)
+    return color2 ? -1 : (color1 ? 1 : 0);
+
+  format1 = gegl_color_get_format (color1);
+  if (format1 != gegl_color_get_format (color2))
+    {
+      return 1;
+    }
+  else
+    {
+      guint8 pixel1[48];
+      guint8 pixel2[48];
+
+      gegl_color_get_pixel (color1, format1, pixel1);
+      gegl_color_get_pixel (color2, format1, pixel2);
+
+      return memcmp (pixel1, pixel2, babl_format_get_bytes_per_pixel (format1));
+    }
+}
+
+/**
+ * gimp_param_spec_color:
+ * @name: canonical name of the property specified
+ * @nick: nick name for the property specified
+ * @blurb: description of the property specified
+ * @has_alpha: %TRUE if the alpha channel has relevance.
+ * @default_color: the default value for the property specified
+ * @flags: flags for the property specified
+ *
+ * Creates a new #GParamSpec instance specifying a #GeglColor property.
+ *
+ * Returns: (transfer full): a newly created parameter specification
+ */
+GParamSpec *
+gimp_param_spec_color (const gchar *name,
+                       const gchar *nick,
+                       const gchar *blurb,
+                       gboolean     has_alpha,
+                       GeglColor   *default_color,
+                       GParamFlags  flags)
+{
+  GimpParamSpecColor *cspec;
+
+  cspec = g_param_spec_internal (GIMP_TYPE_PARAM_COLOR, name, nick, blurb, flags);
+
+  cspec->default_color = default_color;
+  if (default_color)
+    g_object_ref (default_color);
+
+  cspec->has_alpha     = has_alpha;
+
+  return G_PARAM_SPEC (cspec);
+}
+
+/**
+ * gimp_param_spec_color_from_string:
+ * @name: canonical name of the property specified
+ * @nick: nick name for the property specified
+ * @blurb: description of the property specified
+ * @has_alpha: %TRUE if the alpha channel has relevance.
+ * @default_color_string: the default value for the property specified
+ * @flags: flags for the property specified
+ *
+ * Creates a new #GParamSpec instance specifying a #GeglColor property.
+ *
+ * Returns: (transfer full): a newly created parameter specification
+ */
+GParamSpec *
+gimp_param_spec_color_from_string (const gchar *name,
+                                   const gchar *nick,
+                                   const gchar *blurb,
+                                   gboolean     has_alpha,
+                                   const gchar *default_color_string,
+                                   GParamFlags  flags)
+{
+  GimpParamSpecColor *cspec;
+
+  cspec = g_param_spec_internal (GIMP_TYPE_PARAM_COLOR,
+                                 name, nick, blurb, flags);
+
+  cspec->default_color = g_object_new (GEGL_TYPE_COLOR,
+                                       "string", default_color_string,
+                                       NULL);
+  cspec->has_alpha     = has_alpha;
+
+  return G_PARAM_SPEC (cspec);
+}
+
+/**
+ * gimp_param_spec_color_get_default:
+ * @pspec: a #GeglColor #GParamSpec
+ *
+ * Get the default color value of the param spec
+ *
+ * Returns: (transfer none): the default #GeglColor
+ */
+GeglColor *
+gimp_param_spec_color_get_default (GParamSpec *pspec)
+{
+  return GIMP_PARAM_SPEC_COLOR (pspec)->default_color;
+}
+
+/**
+ * gimp_param_spec_color_has_alpha:
+ * @pspec: a #GParamSpec to hold an #GeglColor value.
+ *
+ * Returns: %TRUE if the alpha channel is relevant.
+ *
+ * Since: 2.4
+ **/
+gboolean
+gimp_param_spec_color_has_alpha (GParamSpec *pspec)
+{
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_COLOR (pspec), FALSE);
+
+  return GIMP_PARAM_SPEC_COLOR (pspec)->has_alpha;
 }
 
 

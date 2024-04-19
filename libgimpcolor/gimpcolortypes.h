@@ -33,6 +33,7 @@ typedef struct _GimpColorManaged   GimpColorManaged;  /* dummy typedef */
 typedef struct _GimpColorProfile   GimpColorProfile;
 typedef struct _GimpColorTransform GimpColorTransform;
 
+typedef struct _GimpParamSpecColor GimpParamSpecColor;
 
 /*  usually we don't keep the structure definitions in the types file
  *  but GimpRGB appears in too many header files...

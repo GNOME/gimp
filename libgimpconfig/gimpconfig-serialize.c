@@ -297,8 +297,6 @@ gimp_config_serialize_property (GimpConfig       *config,
       else if (GIMP_VALUE_HOLDS_COLOR (&value))
         {
           GeglColor *color      = g_value_get_object (&value);
-          /* TODO: serialize has_alpha. */
-          /*gboolean   has_alpha  = gimp_param_spec_color_has_alpha (param_spec);*/
           gboolean   free_color = FALSE;
 
           gimp_config_writer_open (writer, param_spec->name);

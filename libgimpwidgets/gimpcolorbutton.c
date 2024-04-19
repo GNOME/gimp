@@ -237,10 +237,10 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
    * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gegl_param_spec_color_from_string ("color",
+                                   gimp_param_spec_color_from_string ("color",
                                                                       "Color",
                                                                       "The color displayed in the button's color area",
-                                                                      "black",
+                                                                      TRUE, "black",
                                                                       GIMP_PARAM_READWRITE |
                                                                       G_PARAM_CONSTRUCT));
   /**

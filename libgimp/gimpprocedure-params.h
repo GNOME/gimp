@@ -296,20 +296,38 @@ G_BEGIN_DECLS
  */
 #define GIMP_PROC_ARG_COLOR(procedure, name, nick, blurb, has_alpha, default, flags) \
   gimp_procedure_add_argument (procedure,\
-                               gegl_param_spec_color (name, nick, blurb,\
-                               default, \
+                               gimp_param_spec_color (name, nick, blurb,\
+                               has_alpha, default, \
                                flags))
 
 #define GIMP_PROC_AUX_ARG_COLOR(procedure, name, nick, blurb, has_alpha, default, flags) \
   gimp_procedure_add_aux_argument (procedure,\
-                                   gegl_param_spec_color (name, nick, blurb,\
-                                   default, \
+                                   gimp_param_spec_color (name, nick, blurb,\
+                                   has_alpha, default, \
                                    flags))
 
 #define GIMP_PROC_VAL_COLOR(procedure, name, nick, blurb, has_alpha, default, flags) \
   gimp_procedure_add_return_value (procedure,\
-                                   gegl_param_spec_color (name, nick, blurb,\
-                                   default, \
+                                   gimp_param_spec_color (name, nick, blurb,\
+                                   has_alpha, default, \
+                                   flags))
+
+#define GIMP_PROC_ARG_COLOR_FROM_STRING(procedure, name, nick, blurb, has_alpha, default, flags) \
+  gimp_procedure_add_argument (procedure,\
+                               gimp_param_spec_color_from_string (name, nick, blurb,\
+                               has_alpha, default, \
+                               flags))
+
+#define GIMP_PROC_AUX_ARG_COLOR_FROM_STRING(procedure, name, nick, blurb, has_alpha, default, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_color_from_string (name, nick, blurb,\
+                                   has_alpha, default, \
+                                   flags))
+
+#define GIMP_PROC_VAL_COLOR_FROM_STRING(procedure, name, nick, blurb, has_alpha, default, flags) \
+  gimp_procedure_add_return_value (procedure,\
+                                   gimp_param_spec_color_from_string (name, nick, blurb,\
+                                   has_alpha, default, \
                                    flags))
 
 #define GIMP_VALUES_GET_COLOR(args, n, value) \

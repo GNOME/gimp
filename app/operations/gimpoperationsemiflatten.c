@@ -73,7 +73,6 @@ gimp_operation_semi_flatten_class_init (GimpOperationSemiFlattenClass *klass)
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
-  GeglColor                     *color;
 
   object_class->set_property = gimp_operation_semi_flatten_set_property;
   object_class->get_property = gimp_operation_semi_flatten_get_property;
@@ -88,15 +87,13 @@ gimp_operation_semi_flatten_class_init (GimpOperationSemiFlattenClass *klass)
 
   point_class->process     = gimp_operation_semi_flatten_process;
 
-  color = gegl_color_new ("white");
-
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gegl_param_spec_color ("color",
-                                                        _("Color"),
-                                                        _("The color"),
-                                                        /*FALSE,*/ color,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+                                   gimp_param_spec_color_from_string ("color",
+                                                                      _("Color"),
+                                                                      _("The color"),
+                                                                      FALSE, "white",
+                                                                      G_PARAM_READWRITE |
+                                                                      G_PARAM_CONSTRUCT));
 }
 
 static void

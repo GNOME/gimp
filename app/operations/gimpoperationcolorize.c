@@ -116,10 +116,10 @@ gimp_operation_colorize_class_init (GimpOperationColorizeClass *klass)
   gegl_color_set_pixel (color, babl_format ("HSL float"), hsl);
 
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gegl_param_spec_color ("color",
+                                   gimp_param_spec_color ("color",
                                                           _("Color"),
                                                           _("Color"),
-                                                          /*FALSE,*/ color,
+                                                          FALSE, color,
                                                           G_PARAM_READWRITE));
   g_object_unref (color);
 }

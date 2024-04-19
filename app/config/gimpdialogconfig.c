@@ -422,7 +422,7 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                           "channel-new-color",
                           "Default new channel color and opacity",
                           CHANNEL_NEW_COLOR_BLURB,
-                          half_transparent,
+                          TRUE, half_transparent,
                           GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_VECTORS_NEW_NAME,

@@ -288,7 +288,7 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
    GIMP_CONFIG_PROP_COLOR (object_class, PROP_OUTLINE_FOREGROUND,
                            "outline-foreground",
                            NULL, NULL,
-                           gray,
+                           FALSE, gray,
                            GIMP_PARAM_STATIC_STRINGS);
    GIMP_CONFIG_PROP_OBJECT (object_class, PROP_OUTLINE_PATTERN,
                             "outline-pattern",

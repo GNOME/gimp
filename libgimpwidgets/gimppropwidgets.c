@@ -67,6 +67,11 @@ static GParamSpec * check_param_spec_w                  (GObject     *object,
                                                          const gchar *property_name,
                                                          GType        type,
                                                          const gchar *strloc);
+static GParamSpec * check_param_specs_w                 (GObject     *object,
+                                                         const gchar *property_name,
+                                                         GType        type1,
+                                                         GType        type2,
+                                                         const gchar *strloc);
 
 static gboolean     get_numeric_values                  (GObject     *object,
                                                          GParamSpec  *param_spec,
@@ -419,35 +424,10 @@ gimp_prop_int_combo_box_new (GObject      *config,
   g_return_val_if_fail (property_name != NULL, NULL);
 
   /* Require property is integer valued type: INT or ENUM, and is writeable. */
-  param_spec = check_param_spec_quiet (config, property_name,
-                                       G_TYPE_PARAM_INT, G_STRFUNC);
-  if (param_spec)
-    {
-      param_spec = check_param_spec_w (config, property_name,
-                                     G_TYPE_PARAM_INT, G_STRFUNC);
-      if (! param_spec)
-        return NULL;
-    }
-  else
-    {
-      param_spec = check_param_spec_quiet (config, property_name,
-                                          G_TYPE_PARAM_ENUM, G_STRFUNC);
-      if (param_spec)
-        {
-          param_spec = check_param_spec_w (config, property_name,
-                                           G_TYPE_PARAM_ENUM, G_STRFUNC);
-          if (! param_spec)
-            return NULL;
-        }
-      else
-        {
-          g_warning ("%s: property '%s' of %s is not integer valued.",
-                     G_STRFUNC,
-                     param_spec->name,
-                     g_type_name (param_spec->owner_type));
-          return NULL;
-        }
-    }
+  param_spec = check_param_specs_w (config, property_name, G_TYPE_PARAM_INT,
+                                    G_TYPE_PARAM_ENUM, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
 
   combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
                             "model", store,
@@ -4091,8 +4071,8 @@ gimp_prop_color_area_new (GObject           *config,
   GtkWidget  *area;
   GeglColor  *color = NULL;
 
-  param_spec = check_param_spec_w (config, property_name,
-                                   GEGL_TYPE_PARAM_COLOR, G_STRFUNC);
+  param_spec = check_param_specs_w (config, property_name, GEGL_TYPE_PARAM_COLOR,
+                                    GIMP_TYPE_PARAM_COLOR, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -4199,8 +4179,8 @@ gimp_prop_color_select_new (GObject           *config,
   GtkWidget  *button;
   GeglColor  *value = NULL;
 
-  param_spec = check_param_spec_w (config, property_name,
-                                   GEGL_TYPE_PARAM_COLOR, G_STRFUNC);
+  param_spec = check_param_specs_w (config, property_name, GEGL_TYPE_PARAM_COLOR,
+                                    GIMP_TYPE_PARAM_COLOR, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -4247,8 +4227,8 @@ gimp_prop_label_color_new (GObject     *config,
   const gchar *label;
   GeglColor   *value;
 
-  param_spec = check_param_spec_w (config, property_name,
-                                   GEGL_TYPE_PARAM_COLOR, G_STRFUNC);
+  param_spec = check_param_specs_w (config, property_name, GEGL_TYPE_PARAM_COLOR,
+                                    GIMP_TYPE_PARAM_COLOR, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -4712,6 +4692,44 @@ check_param_spec_w (GObject     *object,
                  g_type_name (param_spec->owner_type));
       return NULL;
     }
+
+  return param_spec;
+}
+
+static GParamSpec *
+check_param_specs_w (GObject     *object,
+                     const gchar *property_name,
+                     GType        type1,
+                     GType        type2,
+                     const gchar *strloc)
+{
+  GParamSpec *param_spec;
+
+  param_spec = check_param_spec_quiet (object, property_name, type1, strloc);
+  if (param_spec)
+    {
+      param_spec = check_param_spec_w (object, property_name, type1, strloc);
+
+      if (! param_spec)
+        return NULL;
+    }
+  else
+    {
+      param_spec = check_param_spec_quiet (object, property_name, type2, strloc);
+      if (param_spec)
+        {
+          param_spec = check_param_spec_w (object, property_name, type2, strloc);
+          if (! param_spec)
+            return NULL;
+        }
+    }
+
+  if (! param_spec)
+    g_warning ("%s: property '%s' of %s must be of type %s or %s.",
+               strloc, property_name,
+               g_type_name (G_TYPE_FROM_INSTANCE (object)),
+               g_type_name (type1),
+               g_type_name (type2));
 
   return param_spec;
 }

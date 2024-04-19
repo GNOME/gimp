@@ -201,9 +201,9 @@ gimp_menu_model_class_init (GimpMenuModelClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_EXPLICIT_NOTIFY));
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gegl_param_spec_color ("color",
+                                   gimp_param_spec_color ("color",
                                                           NULL, NULL,
-                                                          /*TRUE,*/ NULL,
+                                                          TRUE, NULL,
                                                           GIMP_PARAM_READWRITE |
                                                           G_PARAM_EXPLICIT_NOTIFY));
 }

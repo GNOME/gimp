@@ -93,8 +93,8 @@ gimp_canvas_pen_class_init (GimpCanvasPenClass *klass)
   item_class->stroke         = gimp_canvas_pen_stroke;
 
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gegl_param_spec_color_from_string ("color", NULL, NULL,
-                                                                      /*FALSE,*/ "black",
+                                   gimp_param_spec_color_from_string ("color", NULL, NULL,
+                                                                      FALSE, "black",
                                                                       GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_WIDTH,

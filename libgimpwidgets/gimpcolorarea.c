@@ -181,10 +181,10 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
    * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gegl_param_spec_color_from_string ("color",
+                                   gimp_param_spec_color_from_string ("color",
                                                                       "Color",
                                                                       "The displayed color",
-                                                                      "black",
+                                                                      TRUE, "black",
                                                                       GIMP_PARAM_READWRITE |
                                                                       G_PARAM_CONSTRUCT));
   /**

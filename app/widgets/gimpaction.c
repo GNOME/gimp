@@ -181,9 +181,9 @@ gimp_action_default_init (GimpActionInterface *iface)
                                                             G_PARAM_EXPLICIT_NOTIFY));
 
   g_object_interface_install_property (iface,
-                                       gegl_param_spec_color_from_string ("color",
+                                       gimp_param_spec_color_from_string ("color",
                                                                           NULL, NULL,
-                                                                          "black",
+                                                                          TRUE, "black",
                                                                           GIMP_PARAM_READWRITE));
   g_object_interface_install_property (iface,
                                        g_param_spec_object ("viewable",

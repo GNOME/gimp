@@ -80,6 +80,11 @@ EXPORTS
 	gimp_hsv_set
 	gimp_hsv_to_rgb
 	gimp_hsva_set
+	gimp_param_color_get_type
+	gimp_param_spec_color
+	gimp_param_spec_color_from_string
+	gimp_param_spec_color_get_default
+	gimp_param_spec_color_has_alpha
 	gimp_pixbuf_create_buffer
 	gimp_pixbuf_get_format
 	gimp_pixbuf_get_icc_profile

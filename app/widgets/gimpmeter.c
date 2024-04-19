@@ -235,9 +235,9 @@ gimp_meter_class_init (GimpMeterClass *klass)
                                                          G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_LED_COLOR,
-                                   gegl_param_spec_color_from_string ("led-color",
+                                   gimp_param_spec_color_from_string ("led-color",
                                                                       NULL, NULL,
-                                                                      /*TRUE,*/ "red",
+                                                                      TRUE, "red",
                                                                       GIMP_PARAM_READWRITE |
                                                                       G_PARAM_CONSTRUCT));
 }

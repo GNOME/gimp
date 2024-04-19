@@ -192,10 +192,10 @@ G_BEGIN_DECLS
                                    G_PARAM_READWRITE |\
                                    GIMP_CONFIG_PARAM_SERIALIZE))
 
-#define GIMP_CONFIG_PROP_COLOR(class, id, name, nick, blurb, default, flags) \
+#define GIMP_CONFIG_PROP_COLOR(class, id, name, nick, blurb, has_alpha, default, flags) \
   g_object_class_install_property (class, id,\
-                                   gegl_param_spec_color (name, nick, blurb,\
-                                   default,\
+                                   gimp_param_spec_color (name, nick, blurb,\
+                                   has_alpha, default,\
                                    flags |\
                                    G_PARAM_READWRITE |\
                                    GIMP_CONFIG_PARAM_SERIALIZE))

@@ -167,17 +167,17 @@ gimp_preview_area_class_init (GimpPreviewAreaClass *klass)
                                                       GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CHECK_CUSTOM_COLOR1,
-                                   gegl_param_spec_color ("check-custom-color1",
+                                   gimp_param_spec_color ("check-custom-color1",
                                                           _("Custom Checks Color 1"),
                                                           "The first color of the checkerboard pattern indicating transparency",
-                                                          color1_default,
+                                                          FALSE, color1_default,
                                                           GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CHECK_CUSTOM_COLOR2,
-                                   gegl_param_spec_color ("check-custom-color2",
+                                   gimp_param_spec_color ("check-custom-color2",
                                                           _("Custom Checks Color 2"),
                                                           "The second color of the checkerboard pattern indicating transparency",
-                                                          color2_default,
+                                                          FALSE, color2_default,
                                                           GIMP_PARAM_READWRITE));
 
   g_object_unref (color1_default);

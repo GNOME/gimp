@@ -142,7 +142,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                           "transparency-custom-color1",
                           _("Transparency custom color 1"),
                           TRANSPARENCY_CUSTOM_COLOR1_BLURB,
-                          color,
+                          FALSE, color,
                           GIMP_PARAM_STATIC_STRINGS);
 
   gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), GIMP_CHECKS_CUSTOM_COLOR2);
@@ -150,7 +150,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                           "transparency-custom-color2",
                           _("Transparency custom color 2"),
                           TRANSPARENCY_CUSTOM_COLOR2_BLURB,
-                          color,
+                          FALSE, color,
                           GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_SNAP_DISTANCE,
@@ -381,7 +381,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   GIMP_CONFIG_PROP_COLOR (object_class, PROP_XOR_COLOR,
                           "xor-color",
                           NULL, NULL,
-                          color,
+                          FALSE, color,
                           GIMP_PARAM_STATIC_STRINGS |
                           GIMP_CONFIG_PARAM_IGNORE);
 

@@ -236,7 +236,7 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_PROP_COLOR (object_class, PROP_COLOR,
                           "color",
                           NULL, NULL,
-                          black,
+                          FALSE, black,
                           GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE,
@@ -341,7 +341,7 @@ gimp_text_class_init (GimpTextClass *klass)
                             GIMP_PARAM_STATIC_STRINGS);
    GIMP_CONFIG_PROP_COLOR (object_class, PROP_OUTLINE_FOREGROUND,
                            "outline-foreground", NULL, NULL,
-                           gray,
+                           FALSE, gray,
                            GIMP_PARAM_STATIC_STRINGS);
    GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OUTLINE_WIDTH,
                             "outline-width", NULL, NULL,

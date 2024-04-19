@@ -113,10 +113,10 @@ gimp_label_color_class_init (GimpLabelColorClass *klass)
    *
    * Since: 3.0
    **/
-  object_props[PROP_VALUE] = gegl_param_spec_color_from_string ("value",
+  object_props[PROP_VALUE] = gimp_param_spec_color_from_string ("value",
                                                                 "Color",
                                                                 "The displayed color",
-                                                                "black",
+                                                                TRUE, "black",
                                                                 GIMP_PARAM_READWRITE    |
                                                                 G_PARAM_CONSTRUCT);
 

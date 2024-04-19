@@ -5621,9 +5621,10 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gegl_param_spec_color ("color",
+                               gimp_param_spec_color ("color",
                                                       "color",
                                                       "Color to remove",
+                                                      FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -7665,9 +7666,10 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                  G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gegl_param_spec_color ("color",
+                               gimp_param_spec_color ("color",
                                                       "color",
                                                       "Color of supernova",
+                                                      FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -7875,9 +7877,10 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                  0, 5, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gegl_param_spec_color ("background-color",
+                               gimp_param_spec_color ("background-color",
                                                       "background color",
                                                       "Background color (for background-type == 5)",
+                                                      FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -8848,15 +8851,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                  0, 2, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gegl_param_spec_color ("col1",
+                               gimp_param_spec_color ("col1",
                                                       "col1",
                                                       "fist color (sometimes unused)",
+                                                      FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gegl_param_spec_color ("col2",
+                               gimp_param_spec_color ("col2",
                                                       "col2",
                                                       "second color (sometimes unused)",
+                                                      FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

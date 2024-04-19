@@ -3258,9 +3258,10 @@ register_context_procs (GimpPDB *pdb)
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
   gimp_procedure_add_return_value (procedure,
-                                   gegl_param_spec_color ("foreground",
+                                   gimp_param_spec_color ("foreground",
                                                           "foreground",
                                                           "The foreground color",
+                                                          FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -3281,9 +3282,10 @@ register_context_procs (GimpPDB *pdb)
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
   gimp_procedure_add_argument (procedure,
-                               gegl_param_spec_color ("foreground",
+                               gimp_param_spec_color ("foreground",
                                                       "foreground",
                                                       "The foreground color",
+                                                      FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -3304,9 +3306,10 @@ register_context_procs (GimpPDB *pdb)
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
   gimp_procedure_add_return_value (procedure,
-                                   gegl_param_spec_color ("background",
+                                   gimp_param_spec_color ("background",
                                                           "background",
                                                           "The background color",
+                                                          FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -3327,9 +3330,10 @@ register_context_procs (GimpPDB *pdb)
                                          "Michael Natterer & Sven Neumann",
                                          "2004");
   gimp_procedure_add_argument (procedure,
-                               gegl_param_spec_color ("background",
+                               gimp_param_spec_color ("background",
                                                       "background",
                                                       "The background color",
+                                                      FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

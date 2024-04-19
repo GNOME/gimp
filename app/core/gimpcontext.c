@@ -667,14 +667,14 @@ gimp_context_class_init (GimpContextClass *klass)
                           gimp_context_prop_names[GIMP_CONTEXT_PROP_FOREGROUND],
                           _("Foreground"),
                           _("Foreground color"),
-                          black,
+                          FALSE, black,
                           GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_COLOR (object_class, GIMP_CONTEXT_PROP_BACKGROUND,
                           gimp_context_prop_names[GIMP_CONTEXT_PROP_BACKGROUND],
                           _("Background"),
                           _("Background color"),
-                          white,
+                          FALSE, white,
                           GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, GIMP_CONTEXT_PROP_OPACITY,
