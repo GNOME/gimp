@@ -55,7 +55,7 @@
     (gimp-context-pop)
 
     (gimp-brushes-refresh)
-    (gimp-context-set-brush name)
+    (gimp-context-set-brush (car (gimp-brush-get-by-name name)))
   )
 )
 
@@ -125,7 +125,7 @@
     (gimp-context-pop)
 
     (gimp-brushes-refresh)
-    (gimp-context-set-brush name)
+    (gimp-context-set-brush (car (gimp-brush-get-by-name name)))
   )
 )
 
@@ -181,7 +181,7 @@
     (gimp-context-pop)
 
     (gimp-brushes-refresh)
-    (gimp-context-set-brush name)
+    (gimp-context-set-brush (car (gimp-brush-get-by-name name)))
   )
 )
 
@@ -250,7 +250,7 @@
     (gimp-context-pop)
 
     (gimp-brushes-refresh)
-    (gimp-context-set-brush name)
+    (gimp-context-set-brush (car (gimp-brush-get-by-name name)))
   )
 )
 

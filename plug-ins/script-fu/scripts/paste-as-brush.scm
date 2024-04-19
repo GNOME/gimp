@@ -53,7 +53,7 @@
         (gimp-image-delete brush-image)
 
         (gimp-brushes-refresh)
-        (gimp-context-set-brush name)
+        (gimp-context-set-brush (car (gimp-brush-get-by-name name)))
       )
       (gimp-message _"There is no image data in the clipboard to paste.")
     )

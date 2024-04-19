@@ -41,7 +41,7 @@
         (gimp-image-delete pattern-image)
 
         (gimp-patterns-refresh)
-        (gimp-context-set-pattern name)
+        (gimp-context-set-pattern (car (gimp-pattern-get-by-name name)))
       )
       (gimp-message _"There is no image data in the clipboard to paste.")
     )
