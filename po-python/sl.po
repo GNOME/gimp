@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-02 19:25+0000\n"
-"PO-Revision-Date: 2024-03-02 22:24+0100\n"
+"POT-Creation-Date: 2024-04-19 12:40+0000\n"
+"PO-Revision-Date: 2024-04-19 23:43+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org\n"
 "Language: sl\n"
@@ -24,45 +24,45 @@ msgstr ""
 "X-Project-Style: gnome\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: plug-ins/python/colorxhtml.py:91
+#: plug-ins/python/colorxhtml.py:85
 msgid "Save as colored HTML text..."
 msgstr "Shrani kot barvano besedilo HTML ..."
 
-#: plug-ins/python/colorxhtml.py:92 plug-ins/python/colorxhtml.py:98
-#: plug-ins/python/gradients-save-as-css.py:116
+#: plug-ins/python/colorxhtml.py:86 plug-ins/python/colorxhtml.py:92
+#: plug-ins/python/gradients-save-as-css.py:113
 #: plug-ins/python/palette-offset.py:135
 #: plug-ins/python/python-console/python-console.py:272
 #: plug-ins/python/spyro-plus.py:1719
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
-#: plug-ins/python/colorxhtml.py:93 plug-ins/python/colorxhtml.py:99
-#: plug-ins/python/gradients-save-as-css.py:117
+#: plug-ins/python/colorxhtml.py:87 plug-ins/python/colorxhtml.py:93
+#: plug-ins/python/gradients-save-as-css.py:114
 #: plug-ins/python/palette-offset.py:136 plug-ins/python/spyro-plus.py:1720
 msgid "_OK"
 msgstr "V _redu"
 
-#: plug-ins/python/colorxhtml.py:96
+#: plug-ins/python/colorxhtml.py:90
 msgid "Read characters from file..."
 msgstr "Preberi znake iz datoteke …"
 
-#: plug-ins/python/colorxhtml.py:115
+#: plug-ins/python/colorxhtml.py:109
 msgid "Characters"
 msgstr "Znaki"
 
-#: plug-ins/python/colorxhtml.py:116
+#: plug-ins/python/colorxhtml.py:110
 msgid "Characters that will be used as colored pixels. "
 msgstr "Znaki, ki bodo uporabljeni kot obarvane slikovne točke. "
 
-#: plug-ins/python/colorxhtml.py:125
+#: plug-ins/python/colorxhtml.py:119
 msgid "Characters or file location"
 msgstr "Znaki ali mesto datoteke"
 
-#: plug-ins/python/colorxhtml.py:131
+#: plug-ins/python/colorxhtml.py:125
 msgid "Read characters from file"
 msgstr "Preberi znake iz datoteke"
 
-#: plug-ins/python/colorxhtml.py:134
+#: plug-ins/python/colorxhtml.py:128
 msgid ""
 "If set, the Characters text entry will be used as a file name, from which "
 "the characters will be read. Otherwise, the characters in the text entry "
@@ -72,44 +72,44 @@ msgstr ""
 "katere bodo prebrani znaki. V nasprotnem primeru bodo znaki v vnosu besedila "
 "uporabljeni za upodobitev slike."
 
-#: plug-ins/python/colorxhtml.py:140
+#: plug-ins/python/colorxhtml.py:134
 msgid "Choose file"
 msgstr "Izberite datoteko"
 
-#: plug-ins/python/colorxhtml.py:147
+#: plug-ins/python/colorxhtml.py:141
 msgid "Font Size(px)"
 msgstr "Velikost pisave (slik. točke)"
 
-#: plug-ins/python/colorxhtml.py:159
+#: plug-ins/python/colorxhtml.py:153
 msgid "Write separate CSS file"
 msgstr "Zapiši ločeno datoteko CSS"
 
-#: plug-ins/python/colorxhtml.py:215
+#: plug-ins/python/colorxhtml.py:209
 msgid "Saving as colored XHTML"
 msgstr "Shranjevanje v obliki barvnega XHTML"
 
-#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
+#: plug-ins/python/colorxhtml.py:271 plug-ins/python/colorxhtml.py:272
 msgid "_Read characters from file, if true, or use text entry"
 msgstr ""
 "_Preberi znake iz datoteke, če je potrjeno, ali uporabite besedilni vnos"
 
-#: plug-ins/python/colorxhtml.py:291 plug-ins/python/colorxhtml.py:292
+#: plug-ins/python/colorxhtml.py:276 plug-ins/python/colorxhtml.py:277
 msgid "_File to read or characters to use"
 msgstr "_Datoteka za branje ali znaki za uporabo"
 
-#: plug-ins/python/colorxhtml.py:296 plug-ins/python/colorxhtml.py:297
+#: plug-ins/python/colorxhtml.py:281 plug-ins/python/colorxhtml.py:282
 msgid "Fo_nt size in pixels"
 msgstr "Veli_kost pisave v točkah"
 
-#: plug-ins/python/colorxhtml.py:301 plug-ins/python/colorxhtml.py:302
+#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
 msgid "_Write a separate CSS file"
 msgstr "Zapiši _ločeno datoteko CSS"
 
-#: plug-ins/python/colorxhtml.py:322
+#: plug-ins/python/colorxhtml.py:307
 msgid "Save as colored HTML text"
 msgstr "Shrani kot barvano besedilo HTML"
 
-#: plug-ins/python/colorxhtml.py:325
+#: plug-ins/python/colorxhtml.py:310
 msgid "Colored HTML text"
 msgstr "Barvano besedilo HTML"
 
@@ -161,43 +161,43 @@ msgstr "Sliki doda plast megle."
 msgid "_Fog..."
 msgstr "_Megla ..."
 
-#: plug-ins/python/gradients-save-as-css.py:97
+#: plug-ins/python/gradients-save-as-css.py:94
 msgid "_File..."
 msgstr "_Datoteka ..."
 
-#: plug-ins/python/gradients-save-as-css.py:105
+#: plug-ins/python/gradients-save-as-css.py:102
 msgid "Choose CSS file..."
 msgstr "Izberite datoteko CSS …"
 
-#: plug-ins/python/gradients-save-as-css.py:114
+#: plug-ins/python/gradients-save-as-css.py:111
 msgid "Save as CSS file..."
 msgstr "Shrani kot datoteko CSS …"
 
-#: plug-ins/python/gradients-save-as-css.py:190
-#: plug-ins/python/palette-sort.py:345
+#: plug-ins/python/gradients-save-as-css.py:183
+#: plug-ins/python/palette-sort.py:356
 #: plug-ins/python/python-console/python-console.py:300
 msgid "Run mode"
 msgstr "Izvajalni način"
 
-#: plug-ins/python/gradients-save-as-css.py:191
+#: plug-ins/python/gradients-save-as-css.py:184
 #: plug-ins/python/python-console/python-console.py:300
 msgid "The run mode"
 msgstr "Izvajalni način"
 
-#: plug-ins/python/gradients-save-as-css.py:195
+#: plug-ins/python/gradients-save-as-css.py:188
 msgid "_Gradient to use"
 msgstr "_Preliv za uporabo"
 
-#: plug-ins/python/gradients-save-as-css.py:198
+#: plug-ins/python/gradients-save-as-css.py:191
 msgid "_File"
 msgstr "_Datoteka"
 
-#: plug-ins/python/gradients-save-as-css.py:214
-#: plug-ins/python/gradients-save-as-css.py:215
+#: plug-ins/python/gradients-save-as-css.py:207
+#: plug-ins/python/gradients-save-as-css.py:208
 msgid "Creates a new palette from a given gradient"
 msgstr "Ustvari novo paleto iz danega preliva"
 
-#: plug-ins/python/gradients-save-as-css.py:217
+#: plug-ins/python/gradients-save-as-css.py:210
 msgid "Save Gradient as CSS..."
 msgstr "Shrani preliv kot CSS …"
 
@@ -250,8 +250,8 @@ msgid "_Export histogram..."
 msgstr "_Izvozi histogram ..."
 
 #: plug-ins/python/palette-offset.py:50 plug-ins/python/palette-offset.py:51
-#: plug-ins/python/palette-sort.py:351 plug-ins/python/palette-sort.py:403
-#: plug-ins/python/palette-sort.py:404
+#: plug-ins/python/palette-sort.py:362 plug-ins/python/palette-sort.py:414
+#: plug-ins/python/palette-sort.py:415
 msgid "Palette"
 msgstr "Paleta"
 
@@ -283,144 +283,144 @@ msgstr "Zamakni barve palete"
 msgid "Offset Palette..."
 msgstr "Zamakni paleto ..."
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:45
 msgid "Red"
 msgstr "Rdeča"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:45
 msgid "Green"
 msgstr "Zelena"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:45
 msgid "Blue"
 msgstr "Modra"
 
-#: plug-ins/python/palette-sort.py:43
+#: plug-ins/python/palette-sort.py:46
 msgid "Luma (Y)"
 msgstr "Luma (Y)"
 
-#: plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:47
 msgid "Hue"
 msgstr "Obarvanost"
 
-#: plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:47
 msgid "Saturation"
 msgstr "Nasičenost"
 
-#: plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:47
 msgid "Value"
 msgstr "Vrednost"
 
-#: plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:48
 msgid "Saturation (HSL)"
 msgstr "Nasičenost (HSL)"
 
-#: plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:48
 msgid "Lightness (HSL)"
 msgstr "Svetlost (HSL)"
 
-#: plug-ins/python/palette-sort.py:46
+#: plug-ins/python/palette-sort.py:49
 msgid "Index"
 msgstr "Indeks"
 
-#: plug-ins/python/palette-sort.py:47
+#: plug-ins/python/palette-sort.py:50
 msgid "Random"
 msgstr "Naključno"
 
-#: plug-ins/python/palette-sort.py:92
+#: plug-ins/python/palette-sort.py:95
 msgid "Lightness (LAB)"
 msgstr "Svetlost (LAB)"
 
-#: plug-ins/python/palette-sort.py:93
+#: plug-ins/python/palette-sort.py:96
 msgid "A-color"
 msgstr "A-barva"
 
-#: plug-ins/python/palette-sort.py:93
+#: plug-ins/python/palette-sort.py:96
 msgid "B-color"
 msgstr "B-barva"
 
-#: plug-ins/python/palette-sort.py:94
+#: plug-ins/python/palette-sort.py:97
 msgid "Chroma (LCHab)"
 msgstr "Kroma (LCHab)"
 
-#: plug-ins/python/palette-sort.py:95
+#: plug-ins/python/palette-sort.py:98
 msgid "Hue (LCHab)"
 msgstr "Obarvanost (LCHab)"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "All"
 msgstr "Vse"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "Slice / Array"
 msgstr "Rezina / matrika"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "Autoslice (fg->bg)"
 msgstr "Samodejno poreži (ospr->ozad)"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "Partitioned"
 msgstr "Razdeljeno"
 
-#: plug-ins/python/palette-sort.py:350
+#: plug-ins/python/palette-sort.py:361
 #: plug-ins/python/palette-to-gradient.py:129
 msgid "_Palette"
 msgstr "_Paleta"
 
-#: plug-ins/python/palette-sort.py:354
+#: plug-ins/python/palette-sort.py:365
 msgid "Select_ions"
 msgstr "Iz_bire"
 
-#: plug-ins/python/palette-sort.py:361
+#: plug-ins/python/palette-sort.py:372
 msgid "Slice _expression"
 msgstr "_Izraz rezanja"
 
-#: plug-ins/python/palette-sort.py:366
+#: plug-ins/python/palette-sort.py:377
 msgid "Channel _to sort"
 msgstr "Kanal za _razvrščanje"
 
-#: plug-ins/python/palette-sort.py:371
+#: plug-ins/python/palette-sort.py:382
 msgid "_Ascending"
 msgstr "N_araščajoče"
 
-#: plug-ins/python/palette-sort.py:372 plug-ins/python/palette-sort.py:382
+#: plug-ins/python/palette-sort.py:383 plug-ins/python/palette-sort.py:393
 msgid "Ascending"
 msgstr "Naraščajoče"
 
-#: plug-ins/python/palette-sort.py:376
+#: plug-ins/python/palette-sort.py:387
 msgid "Secondary C_hannel to sort"
 msgstr "Sekundarni kanal za ra_zvrščanje"
 
-#: plug-ins/python/palette-sort.py:381
+#: plug-ins/python/palette-sort.py:392
 msgid "Ascen_ding"
 msgstr "Nara_ščajoče"
 
-#: plug-ins/python/palette-sort.py:386
+#: plug-ins/python/palette-sort.py:397
 msgid "_Quantization"
 msgstr "_Kvantizacija"
 
-#: plug-ins/python/palette-sort.py:387
+#: plug-ins/python/palette-sort.py:398
 msgid "Quantization"
 msgstr "Kvantizacija"
 
-#: plug-ins/python/palette-sort.py:391
-msgid "_Partitioning channel"
+#: plug-ins/python/palette-sort.py:402
+msgid "Partitionin_g channel"
 msgstr "Kanal raz_deljevanja"
 
-#: plug-ins/python/palette-sort.py:396
+#: plug-ins/python/palette-sort.py:407
 msgid "Partition q_uantization"
 msgstr "K_vantizacija razdelkov"
 
-#: plug-ins/python/palette-sort.py:397
+#: plug-ins/python/palette-sort.py:408
 msgid "Partition quantization"
 msgstr "Kvantizacija razdelkov"
 
-#: plug-ins/python/palette-sort.py:421
+#: plug-ins/python/palette-sort.py:432
 msgid "_Sort Palette..."
 msgstr "_Razvrsti paleto ..."
 
-#: plug-ins/python/palette-sort.py:423
+#: plug-ins/python/palette-sort.py:434
 msgid "Sort the colors in a palette"
 msgstr "Razvrsti barve na paleti"
 
