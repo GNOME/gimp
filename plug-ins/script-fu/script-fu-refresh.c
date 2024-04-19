@@ -24,6 +24,9 @@
 #include "libscriptfu/script-fu-lib.h"
 #include "libscriptfu/script-fu-intl.h"
 
+#include "script-fu-refresh.h"
+
+
 /* The "Refresh Scripts" menu item is not in v3.
  *
  * Code is built, but the linker omits it,
