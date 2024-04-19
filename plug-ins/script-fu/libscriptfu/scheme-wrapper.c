@@ -1186,56 +1186,6 @@ script_fu_marshal_procedure_call (scheme   *sc,
               debug_vector (sc, vector, "%f");
             }
         }
-      else if (GIMP_VALUE_HOLDS_RGB (&value))
-        {
-          GimpRGB color;
-
-          if (sc->vptr->is_string (sc->vptr->pair_car (a)))
-            {
-              gchar *color_string = sc->vptr->string_value (sc->vptr->pair_car (a));
-
-              if (! gimp_rgb_parse_css (&color, color_string, -1))
-                return script_type_error (sc, "color string", i, proc_name);
-
-              gimp_rgb_set_alpha (&color, 1.0);
-              gimp_value_set_rgb (&value, &color);
-            }
-          else if (sc->vptr->is_list (sc, sc->vptr->pair_car (a)) &&
-                   sc->vptr->list_length (sc, sc->vptr->pair_car (a)) == 3)
-            {
-              pointer color_list;
-              guchar  r = 0, g = 0, b = 0;
-
-              color_list = sc->vptr->pair_car (a);
-              if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
-                r = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
-                           0, 255);
-              else
-                return script_type_error_in_container (
-                  sc, "numeric", i, 0, proc_name, 0);
-
-              color_list = sc->vptr->pair_cdr (color_list);
-              if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
-                g = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
-                           0, 255);
-              else
-                return script_type_error_in_container (
-                  sc, "numeric", i, 1, proc_name, 0);
-
-              color_list = sc->vptr->pair_cdr (color_list);
-              if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
-                b = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
-                           0, 255);
-              else
-                return script_type_error_in_container (sc, "numeric", i, 2, proc_name, 0);
-
-              gimp_rgba_set_uchar (&color, r, g, b, 255);
-              gimp_value_set_rgb (&value, &color);
-              g_debug ("(%d %d %d)", r, g, b);
-            }
-          else
-            return script_type_error (sc, "color string or list", i, proc_name);
-        }
       else if (GIMP_VALUE_HOLDS_COLOR (&value))
         {
           GeglColor *color = NULL;

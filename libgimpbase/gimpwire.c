@@ -480,18 +480,6 @@ _gimp_wire_read_string (GIOChannel  *channel,
 }
 
 gboolean
-_gimp_wire_read_color (GIOChannel *channel,
-                       GimpRGB    *data,
-                       gint        count,
-                       gpointer    user_data)
-{
-  g_return_val_if_fail (count >= 0, FALSE);
-
-  return _gimp_wire_read_double (channel,
-                                 (gdouble *) data, 4 * count, user_data);
-}
-
-gboolean
 _gimp_wire_read_gegl_color (GIOChannel  *channel,
                             GBytes     **pixel_data,
                             GBytes     **icc_data,
@@ -712,18 +700,6 @@ _gimp_wire_write_string (GIOChannel  *channel,
     }
 
   return TRUE;
-}
-
-gboolean
-_gimp_wire_write_color (GIOChannel    *channel,
-                        const GimpRGB *data,
-                        gint           count,
-                        gpointer       user_data)
-{
-  g_return_val_if_fail (count >= 0, FALSE);
-
-  return _gimp_wire_write_double (channel,
-                                  (gdouble *) data, 4 * count, user_data);
 }
 
 gboolean

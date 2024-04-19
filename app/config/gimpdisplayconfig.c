@@ -115,7 +115,6 @@ static void
 gimp_display_config_class_init (GimpDisplayConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB       xor_rgb      = { 0, 0, 0, 0 };
   GeglColor    *color        = gegl_color_new (NULL);
 
   object_class->finalize     = gimp_display_config_finalize;
@@ -379,12 +378,12 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                             GIMP_PARAM_STATIC_STRINGS |
                             GIMP_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_XOR_COLOR,
-                        "xor-color",
-                        NULL, NULL,
-                        FALSE, &xor_rgb,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_PROP_COLOR (object_class, PROP_XOR_COLOR,
+                          "xor-color",
+                          NULL, NULL,
+                          color,
+                          GIMP_PARAM_STATIC_STRINGS |
+                          GIMP_CONFIG_PARAM_IGNORE);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PERFECT_MOUSE,
                             "perfect-mouse",

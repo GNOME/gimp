@@ -1216,16 +1216,6 @@ _gp_param_def_read (GIOChannel *channel,
         return FALSE;
       break;
 
-    case GP_PARAM_DEF_TYPE_COLOR:
-      if (! _gimp_wire_read_int32 (channel,
-                                   (guint32 *) &param_def->meta.m_color.has_alpha, 1,
-                                   user_data) ||
-          ! _gimp_wire_read_color (channel,
-                                   &param_def->meta.m_color.default_val, 1,
-                                   user_data))
-        return FALSE;
-      break;
-
     case GP_PARAM_DEF_TYPE_GEGL_COLOR:
         {
           GPParamColor *default_val = NULL;
@@ -1332,7 +1322,6 @@ _gp_param_def_destroy (GPParamDef *param_def)
       g_free (param_def->meta.m_gegl_color.default_val);
       break;
 
-    case GP_PARAM_DEF_TYPE_COLOR:
     case GP_PARAM_DEF_TYPE_ID:
       break;
 
@@ -1563,16 +1552,6 @@ _gp_param_def_write (GIOChannel *channel,
       if (! _gimp_wire_write_string (channel,
                                      &param_def->meta.m_string.default_val, 1,
                                      user_data))
-        return FALSE;
-      break;
-
-    case GP_PARAM_DEF_TYPE_COLOR:
-      if (! _gimp_wire_write_int32 (channel,
-                                    (guint32 *) &param_def->meta.m_color.has_alpha, 1,
-                                    user_data) ||
-          ! _gimp_wire_write_color (channel,
-                                    &param_def->meta.m_color.default_val, 1,
-                                    user_data))
         return FALSE;
       break;
 
@@ -1821,13 +1800,6 @@ _gp_params_read (GIOChannel  *channel,
           if (! _gimp_wire_read_string (channel,
                                         &(*params)[i].data.d_string, 1,
                                         user_data))
-            goto cleanup;
-          break;
-
-        case GP_PARAM_TYPE_COLOR:
-          if (! _gimp_wire_read_color (channel,
-                                       &(*params)[i].data.d_color, 1,
-                                       user_data))
             goto cleanup;
           break;
 
@@ -2151,13 +2123,6 @@ _gp_params_write (GIOChannel *channel,
             return;
           break;
 
-        case GP_PARAM_TYPE_COLOR:
-          if (! _gimp_wire_write_color (channel,
-                                        &params[i].data.d_color, 1,
-                                        user_data))
-            return;
-          break;
-
         case GP_PARAM_TYPE_GEGL_COLOR:
           if (! _gimp_wire_write_int32 (channel,
                                         (const guint32 *) &params[i].data.d_gegl_color.size, 1,
@@ -2325,9 +2290,6 @@ _gp_params_destroy (GPParam *params,
         case GP_PARAM_TYPE_STRING:
         case GP_PARAM_TYPE_FILE:
           g_free (params[i].data.d_string);
-          break;
-
-        case GP_PARAM_TYPE_COLOR:
           break;
 
         case GP_PARAM_TYPE_GEGL_COLOR:

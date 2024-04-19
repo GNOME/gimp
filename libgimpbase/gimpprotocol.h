@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0111
+#define GIMP_PROTOCOL_VERSION  0x0112
 
 
 enum
@@ -56,7 +56,6 @@ typedef enum
   GP_PARAM_DEF_TYPE_BOOLEAN,
   GP_PARAM_DEF_TYPE_FLOAT,
   GP_PARAM_DEF_TYPE_STRING,
-  GP_PARAM_DEF_TYPE_COLOR,
   GP_PARAM_DEF_TYPE_GEGL_COLOR,
   GP_PARAM_DEF_TYPE_ID,
   GP_PARAM_DEF_TYPE_ID_ARRAY
@@ -70,7 +69,6 @@ typedef enum
   GP_PARAM_TYPE_STRV,
   GP_PARAM_TYPE_BYTES,
   GP_PARAM_TYPE_FILE,
-  GP_PARAM_TYPE_COLOR,
   GP_PARAM_TYPE_GEGL_COLOR,
   GP_PARAM_TYPE_COLOR_ARRAY,
   GP_PARAM_TYPE_PARASITE,
@@ -93,7 +91,6 @@ typedef struct _GPParamDefFloat     GPParamDefFloat;
 typedef struct _GPParamDefString    GPParamDefString;
 typedef struct _GPParamDefChoice    GPParamDefChoice;
 typedef struct _GPParamStrv         GPParamStrv;
-typedef struct _GPParamDefColor     GPParamDefColor;
 typedef struct _GPParamDefGeglColor GPParamDefGeglColor;
 typedef struct _GPParamDefID        GPParamDefID;
 typedef struct _GPParamDefIDArray   GPParamDefIDArray;
@@ -204,12 +201,6 @@ struct _GPParamDefString
   gchar *default_val;
 };
 
-struct _GPParamDefColor
-{
-  gint32  has_alpha;
-  GimpRGB default_val;
-};
-
 struct _GPParamDefGeglColor
 {
   gint32        has_alpha;
@@ -250,7 +241,6 @@ struct _GPParamDef
     GPParamDefBoolean   m_boolean;
     GPParamDefFloat     m_float;
     GPParamDefString    m_string;
-    GPParamDefColor     m_color;
     GPParamDefGeglColor m_gegl_color;
     GPParamDefID        m_id;
     GPParamDefIDArray   m_id_array;

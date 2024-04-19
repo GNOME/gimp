@@ -446,16 +446,15 @@ dump_describe_param (GParamSpec *param_spec)
                                param_spec->name);
     }
 
-  if (GIMP_IS_PARAM_SPEC_RGB (param_spec))
+  if (GEGL_IS_PARAM_SPEC_COLOR (param_spec))
     {
-      if (gimp_param_spec_rgb_has_alpha (param_spec))
-        values =
-          "The color is specified in the form (color-rgba red green blue "
-          "alpha) with channel values as floats in the range of 0.0 to 1.0.";
+      /* TODO: implement has_alpha parameter to color parameters. */
+#if 0
+      if (gimp_param_spec_color_has_alpha (param_spec))
+        values = "The color is specified as opaque GeglColor (any Alpha channel is ignored).";
       else
-        values =
-          "The color is specified in the form (color-rgb red green blue) "
-          "with channel values as floats in the range of 0.0 to 1.0.";
+#endif
+        values = "The color is specified as GeglColor.";
     }
   else if (GIMP_IS_PARAM_SPEC_MEMSIZE (param_spec))
     {

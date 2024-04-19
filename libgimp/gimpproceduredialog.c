@@ -883,16 +883,16 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
 /**
  * gimp_procedure_dialog_get_color_widget:
  * @dialog:   the associated #GimpProcedureDialog.
- * @property: name of the #GimpRGB property to build a widget for. It
+ * @property: name of the #GeglColor property to build a widget for. It
  *            must be a property of the #GimpProcedure @dialog has been
  *            created for.
  * @editable: whether the color can be edited or is only for display.
  * @type:     the #GimpColorAreaType.
  *
  * Creates a new widget for @property which must necessarily be a
- * #GimpRGB property.
+ * #GeglColor property.
  * This must be used instead of gimp_procedure_dialog_get_widget() when
- * you want a #GimpLabelColor which is not customizable for an RGB
+ * you want a #GimpLabelColor which is not customizable for a color
  * property, or when to set a specific @type.
  *
  * If a widget has already been created for this procedure, it will be
@@ -928,7 +928,7 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
       return NULL;
     }
 
-  if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_RGB)
+  if (G_PARAM_SPEC_TYPE (pspec) == GEGL_TYPE_PARAM_COLOR)
     {
       widget = gimp_prop_label_color_new (G_OBJECT (dialog->priv->config),
                                           property, editable);
@@ -952,7 +952,6 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
       if (tooltip)
         gimp_help_set_help_data (label, tooltip, NULL);
     }
-
 
   gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);

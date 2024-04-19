@@ -262,18 +262,6 @@ package Gimp::CodeGen::pdb;
 		     set_value_func  => 'gimp_value_set_object_array ($value, GIMP_TYPE_PATTERN, (GObject **) $var, $var_len)',
 		     take_value_func => 'gimp_value_take_object_array ($value, GIMP_TYPE_PATTERN, (GObject **) $var, $var_len)' },
 
-    color       => { name            => 'COLOR',
-		     gtype           => 'GIMP_TYPE_RGB',
-		     type            => 'GimpRGB ',
-		     const_type      => 'GimpRGB ',
-		     struct          => 1,
-		     init_value      => '{ 0.0, 0.0, 0.0, 1.0 }',
-		     get_value_func  => 'gimp_value_get_rgb ($value, &$var)',
-		     dup_value_func  => 'GIMP_VALUES_GET_RGB ($value, &$var)',
-		     set_value_func  => 'gimp_value_set_rgb ($value, $var)',
-		     take_value_func => 'gimp_value_set_rgb ($value, &$var)',
-		     headers         => [ qw(<cairo.h> "libgimpcolor/gimpcolor.h") ] },
-
     geglcolor   => { name            => 'GEGLCOLOR',
 		     gtype           => 'GEGL_TYPE_COLOR',
 		     type            => 'GeglColor *',

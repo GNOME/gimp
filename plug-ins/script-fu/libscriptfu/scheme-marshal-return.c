@@ -526,28 +526,6 @@ marshal_returned_PDB_value    (scheme        *sc,
 
       result = list;
     }
-  else if (GIMP_VALUE_HOLDS_RGB (value))
-    {
-      GimpRGB  v;
-      guchar   r, g, b;
-      gpointer temp_val;
-
-      gimp_value_get_rgb (value, &v);
-      gimp_rgb_get_uchar (&v, &r, &g, &b);
-
-      temp_val = sc->vptr->cons
-                    (sc,
-                    sc->vptr->mk_integer (sc, r),
-                    sc->vptr->cons
-                      (sc,
-                        sc->vptr->mk_integer (sc, g),
-                        sc->vptr->cons
-                          (sc,
-                          sc->vptr->mk_integer (sc, b),
-                          sc->NIL)));
-
-      result = temp_val;
-    }
   else if (GIMP_VALUE_HOLDS_COLOR_ARRAY (value))
     {
       /* unlike RBG_ARRAY, gimp_value_get_color_array (value) is not defined */

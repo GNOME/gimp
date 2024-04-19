@@ -107,10 +107,6 @@ G_GNUC_INTERNAL gboolean  _gimp_wire_read_string  (GIOChannel     *channel,
                                                    gchar         **data,
                                                    gint            count,
                                                    gpointer        user_data);
-G_GNUC_INTERNAL gboolean  _gimp_wire_read_color   (GIOChannel     *channel,
-                                                   GimpRGB        *data,
-                                                   gint            count,
-                                                   gpointer        user_data);
 G_GNUC_INTERNAL gboolean
                      _gimp_wire_read_gegl_color   (GIOChannel     *channel,
                                                    GBytes        **pixel_data,
@@ -140,10 +136,6 @@ G_GNUC_INTERNAL gboolean  _gimp_wire_write_double (GIOChannel     *channel,
                                                    gpointer        user_data);
 G_GNUC_INTERNAL gboolean  _gimp_wire_write_string (GIOChannel     *channel,
                                                    gchar         **data,
-                                                   gint            count,
-                                                   gpointer        user_data);
-G_GNUC_INTERNAL gboolean  _gimp_wire_write_color  (GIOChannel     *channel,
-                                                   const GimpRGB  *data,
                                                    gint            count,
                                                    gpointer        user_data);
 G_GNUC_INTERNAL gboolean

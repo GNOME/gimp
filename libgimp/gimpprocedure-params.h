@@ -319,33 +319,6 @@ G_BEGIN_DECLS
   g_value_set_object (gimp_value_array_index (args, n), value)
 
 
-/*  rgb  */
-
-#define GIMP_PROC_ARG_RGB(procedure, name, nick, blurb, has_alpha, default, flags) \
-  gimp_procedure_add_argument (procedure,\
-                               gimp_param_spec_rgb (name, nick, blurb,\
-                               has_alpha, default, \
-                               flags))
-
-#define GIMP_PROC_AUX_ARG_RGB(procedure, name, nick, blurb, has_alpha, default, flags) \
-  gimp_procedure_add_aux_argument (procedure,\
-                                   gimp_param_spec_rgb (name, nick, blurb,\
-                                   has_alpha, default, \
-                                   flags))
-
-#define GIMP_PROC_VAL_RGB(procedure, name, nick, blurb, has_alpha, default, flags) \
-  gimp_procedure_add_return_value (procedure,\
-                                   gimp_param_spec_rgb (name, nick, blurb,\
-                                   has_alpha, default, \
-                                   flags))
-
-#define GIMP_VALUES_GET_RGB(args, n, value) \
-  gimp_value_get_rgb (gimp_value_array_index (args, n), value)
-
-#define GIMP_VALUES_SET_RGB(args, n, value) \
-  gimp_value_set_rgb (gimp_value_array_index (args, n), value)
-
-
 /*  parasite  */
 
 #define GIMP_PROC_ARG_PARASITE(procedure, name, nick, blurb, flags) \

@@ -57,11 +57,6 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
         return g_param_spec_object (name, nick, blurb, G_TYPE_FILE, flags);
 
       if (! strcmp (param_def->type_name, "GParamBoxed") &&
-          ! strcmp (param_def->value_type_name, "GimpRGB"))
-        /* Unfortunately this type loses default and alpha info. */
-        return gimp_param_spec_rgb (name, nick, blurb, TRUE, NULL, flags);
-
-      if (! strcmp (param_def->type_name, "GParamBoxed") &&
           ! strcmp (param_def->value_type_name, "GStrv"))
         return g_param_spec_boxed (name, nick, blurb, G_TYPE_STRV, flags);
 
@@ -153,14 +148,6 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       if (! strcmp (param_def->type_name, "GParamString"))
         return g_param_spec_string (name, nick, blurb,
                                     param_def->meta.m_string.default_val,
-                                    flags);
-      break;
-
-    case GP_PARAM_DEF_TYPE_COLOR:
-      if (! strcmp (param_def->type_name, "GimpParamRGB"))
-        return gimp_param_spec_rgb (name, nick, blurb,
-                                    param_def->meta.m_color.has_alpha,
-                                    &param_def->meta.m_color.default_val,
                                     flags);
       break;
 
@@ -409,24 +396,14 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 
       param_def->meta.m_string.default_val = gsspec->default_value;
     }
-  else if (pspec_type == GIMP_TYPE_PARAM_RGB)
-    {
-      param_def->param_def_type = GP_PARAM_DEF_TYPE_COLOR;
-
-      param_def->meta.m_color.has_alpha =
-        gimp_param_spec_rgb_has_alpha (pspec);
-
-      gimp_param_spec_rgb_get_default (pspec,
-                                       &param_def->meta.m_color.default_val);
-    }
   else if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
     {
       GPParamColor *default_val = NULL;
       GeglColor    *default_color;
 
-      param_def->param_def_type         = GP_PARAM_DEF_TYPE_GEGL_COLOR;
+      param_def->param_def_type              = GP_PARAM_DEF_TYPE_GEGL_COLOR;
       /* TODO: no no-alpha support for the time being. */
-      param_def->meta.m_color.has_alpha = TRUE;
+      /*param_def->meta.m_gegl_color.has_alpha = TRUE;*/
 
       default_color = gegl_param_spec_color_get_default (pspec);
       if (default_color != NULL)
@@ -755,10 +732,6 @@ gimp_gp_param_to_value (gpointer        gimp,
 
       g_value_take_object (value, color);
     }
-  else if (GIMP_VALUE_HOLDS_RGB (value))
-    {
-      gimp_value_set_rgb (value, &param->data.d_color);
-    }
   else if (GIMP_VALUE_HOLDS_PARASITE (value))
     {
       g_value_set_boxed (value, &param->data.d_parasite);
@@ -1063,12 +1036,6 @@ gimp_value_to_gp_param (const GValue *value,
 
       param->data.d_string = file ? g_file_get_uri (file) : NULL;
     }
-  else if (GIMP_VALUE_HOLDS_RGB (value))
-    {
-      param->param_type = GP_PARAM_TYPE_COLOR;
-
-      gimp_value_get_rgb (value, &param->data.d_color);
-    }
   else if (GIMP_VALUE_HOLDS_COLOR (value))
     {
       GeglColor  *color;
@@ -1355,9 +1322,6 @@ _gimp_gp_params_free (GPParam  *params,
         case GP_PARAM_TYPE_FILE:
           /* always free the uri */
           g_free (params[i].data.d_string);
-          break;
-
-        case GP_PARAM_TYPE_COLOR:
           break;
 
         case GP_PARAM_TYPE_GEGL_COLOR:

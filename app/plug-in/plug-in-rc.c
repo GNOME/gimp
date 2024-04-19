@@ -907,27 +907,6 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
         }
       break;
 
-    case GP_PARAM_DEF_TYPE_COLOR:
-      if (! gimp_scanner_parse_int (scanner,
-                                    &param_def.meta.m_color.has_alpha))
-        {
-          token = G_TOKEN_INT;
-          goto error;
-        }
-      if (! gimp_scanner_parse_float (scanner,
-                                      &param_def.meta.m_color.default_val.r) ||
-          ! gimp_scanner_parse_float (scanner,
-                                      &param_def.meta.m_color.default_val.g) ||
-          ! gimp_scanner_parse_float (scanner,
-                                      &param_def.meta.m_color.default_val.b) ||
-          ! gimp_scanner_parse_float (scanner,
-                                      &param_def.meta.m_color.default_val.a))
-        {
-          token = G_TOKEN_FLOAT;
-          goto error;
-        }
-      break;
-
     case GP_PARAM_DEF_TYPE_GEGL_COLOR:
         {
           GPParamColor *default_val   = NULL;
@@ -1052,7 +1031,6 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
         }
       break;
 
-    case GP_PARAM_DEF_TYPE_COLOR:
     case GP_PARAM_DEF_TYPE_ID:
       break;
 
@@ -1199,20 +1177,6 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
     case GP_PARAM_DEF_TYPE_STRING:
       gimp_config_writer_string (writer,
                                  param_def.meta.m_string.default_val);
-      break;
-
-    case GP_PARAM_DEF_TYPE_COLOR:
-      g_ascii_dtostr (buf[0], sizeof (buf[0]),
-                      param_def.meta.m_color.default_val.r);
-      g_ascii_dtostr (buf[1], sizeof (buf[1]),
-                      param_def.meta.m_color.default_val.g),
-      g_ascii_dtostr (buf[2], sizeof (buf[2]),
-                      param_def.meta.m_color.default_val.b);
-      g_ascii_dtostr (buf[3], sizeof (buf[3]),
-                      param_def.meta.m_color.default_val.a);
-      gimp_config_writer_printf (writer, "%d %s %s %s %s",
-                                 param_def.meta.m_color.has_alpha,
-                                 buf[0], buf[1], buf[2], buf[3]);
       break;
 
     case GP_PARAM_DEF_TYPE_GEGL_COLOR:

@@ -170,12 +170,6 @@ G_BEGIN_DECLS
                                    path_type, default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 
-#define GIMP_CONFIG_PROP_RGB(class, id, name, nick, blurb, has_alpha, default, flags) \
-  g_object_class_install_property (class, id,\
-                                   gimp_param_spec_rgb (name, nick, blurb,\
-                                   has_alpha, default, \
-                                   flags | GIMP_CONFIG_PARAM_FLAGS))
-
 #define GIMP_CONFIG_PROP_MATRIX2(class, id, name, nick, blurb, default, flags) \
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_matrix2 (name, nick, blurb,\
