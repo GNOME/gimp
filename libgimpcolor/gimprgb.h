@@ -33,7 +33,6 @@ G_BEGIN_DECLS
  */
 
 #define GIMP_TYPE_RGB               (gimp_rgb_get_type ())
-#define GIMP_VALUE_HOLDS_RGB(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_RGB))
 
 GType   gimp_rgb_get_type           (void) G_GNUC_CONST;
 
