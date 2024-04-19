@@ -923,11 +923,21 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
               goto error;
             }
 
-          if (! gimp_scanner_parse_int (scanner, &bpp)                         ||
-              bpp > 40                                                         ||
-              ! gimp_scanner_parse_data (scanner, bpp, &data)                  ||
-              ! gimp_scanner_parse_string (scanner, &encoding)                 ||
-              ! gimp_scanner_parse_int (scanner, &profile_size))
+          if (g_scanner_peek_next_token (scanner) == G_TOKEN_IDENTIFIER)
+            {
+              if (g_strcmp0 (scanner->next_value.v_identifier, "NULL") != 0)
+                {
+                  token = G_TOKEN_INT;
+                  goto error;
+                }
+              g_scanner_get_next_token (scanner);
+              /* NULL default color. Skip. */
+            }
+          else if (! gimp_scanner_parse_int (scanner, &bpp)                         ||
+                   bpp > 40                                                         ||
+                   ! gimp_scanner_parse_data (scanner, bpp, &data)                  ||
+                   ! gimp_scanner_parse_string (scanner, &encoding)                 ||
+                   ! gimp_scanner_parse_int (scanner, &profile_size))
             {
               g_free (data);
               g_free (encoding);
