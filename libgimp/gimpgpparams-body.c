@@ -396,7 +396,8 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 
       param_def->meta.m_string.default_val = gsspec->default_value;
     }
-  else if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
+  else if (GEGL_IS_PARAM_SPEC_COLOR (pspec) ||
+           (pspec_type == G_TYPE_PARAM_OBJECT && value_type == GEGL_TYPE_COLOR))
     {
       GPParamColor *default_val = NULL;
       GeglColor    *default_color;
@@ -405,7 +406,17 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       /* TODO: no no-alpha support for the time being. */
       /*param_def->meta.m_gegl_color.has_alpha = TRUE;*/
 
-      default_color = gegl_param_spec_color_get_default (pspec);
+      if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
+        {
+          default_color = gegl_param_spec_color_get_default (pspec);
+        }
+      else
+        {
+          const GValue *value = g_param_spec_get_default_value (pspec);
+
+          default_color = g_value_get_object (value);
+          param_def->type_name = "GeglParamColor";
+        }
       if (default_color != NULL)
         {
           const Babl *format;
@@ -475,7 +486,8 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
         (gchar *) g_type_name (GIMP_PARAM_SPEC_OBJECT_ARRAY (pspec)->object_type);
     }
   else if (pspec_type == G_TYPE_PARAM_OBJECT &&
-           value_type != G_TYPE_FILE)
+           value_type != G_TYPE_FILE &&
+           value_type != GEGL_TYPE_COLOR)
     {
       const gchar *type_name  = NULL;
 
@@ -540,10 +552,6 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       else if (value_type == GIMP_TYPE_PATTERN)
         {
           type_name = "GimpParamPattern";
-        }
-      else if (value_type == GEGL_TYPE_COLOR)
-        {
-          type_name = "GeglParamColor";
         }
 
       if (type_name)
