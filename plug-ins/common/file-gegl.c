@@ -197,7 +197,7 @@ goat_create_procedure (GimpPlugIn  *plug_in,
                                                goat_load,
                                                (gpointer) format, NULL);
 
-          gimp_procedure_set_menu_label (procedure, format->file_type);
+          gimp_procedure_set_menu_label (procedure, _(format->file_type));
 
           gimp_procedure_set_documentation (procedure,
                                             format->load_blurb,
@@ -220,7 +220,7 @@ goat_create_procedure (GimpPlugIn  *plug_in,
 
           gimp_procedure_set_image_types (procedure, "*");
 
-          gimp_procedure_set_menu_label (procedure, format->file_type);
+          gimp_procedure_set_menu_label (procedure, _(format->file_type));
 
           gimp_procedure_set_documentation (procedure,
                                             format->export_blurb,

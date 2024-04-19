@@ -224,7 +224,7 @@ create_widget_for_module (gpointer item,
   gtk_widget_show (checkbox);
   gtk_grid_attach (GTK_GRID (grid), checkbox, 0, 0, 1, 1);
 
-  label = gtk_label_new (info ? gettext (info->purpose) :
+  label = gtk_label_new (info ? dgettext (GETTEXT_PACKAGE "-libgimp", info->purpose) :
                                 gimp_file_get_utf8_name (file));
   gtk_widget_show (label);
   gtk_grid_attach (GTK_GRID (grid), label, 1, 0, 1, 1);

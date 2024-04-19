@@ -344,7 +344,7 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
 
       if (procedure)
         {
-          gimp_procedure_set_menu_label (procedure, compressor->file_type);
+          gimp_procedure_set_menu_label (procedure, _(compressor->file_type));
 
           gimp_procedure_set_attribution (procedure,
                                           "Daniel Risacher",
