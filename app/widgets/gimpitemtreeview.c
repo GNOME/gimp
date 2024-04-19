@@ -1418,6 +1418,8 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
   view->priv->effects_drawable               = NULL;
   view->priv->effects_filter                 = NULL;
   view->priv->filters_active_changed_handler = NULL;
+  if (view->priv->effects_popover)
+    gtk_widget_set_visible (view->priv->effects_popover, FALSE);
 
   if (view->priv->image)
     {
