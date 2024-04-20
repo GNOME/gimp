@@ -69,7 +69,7 @@ workflow:
     - export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
   # Common artifacts behavior
   artifacts:
-    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
+    name: "${CI_JOB_NAME}${VARIANT}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     when: always
 
 variables:
@@ -81,20 +81,31 @@ variables:
 
 ## prepare build-oriented Docker images ##
 
-image-debian-x64:
+.debian:
   rules:
     # On releases.
     - if: '$CI_COMMIT_TAG != null'
       interruptible: false
     # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_MESON_CLANG != null'
     - if: '$GIMP_CI_MESON_GCC != null'
+      variables:
+        CC: "ccache cc"
+        CXX: "ccache c++"
+        VARIANT: "-gcc"
     - if: '$GIMP_CI_RASTER_ICONS != null'
+      variables:
+        MESON_OPTIONS: "-Dvector-icons=false"
+        VARIANT: "-raster"
+    - if: '$GIMP_CI_MESON_CLANG != null'
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
     - if: '$GIMP_CI_SOURCES != null'
-    # On merge requests and commits.
+    # On merge requests or commits.
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null'
+
+image-debian-x64:
+  rules:
+    - !reference [.debian, rules]
   stage: prepare
   image:
     name: gcr.io/kaniko-project/executor:debug
@@ -193,21 +204,7 @@ image-debian-x64:
 deps-debian-x64:
   extends: .default
   rules:
-    # On releases.
-    - if: '$CI_COMMIT_TAG != null'
-      interruptible: false
-    # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_MESON_GCC != null'
-      variables:
-        CC: "ccache cc"
-        CXX: "ccache c++"
-    - if: '$GIMP_CI_RASTER_ICONS != null'
-    - if: '$GIMP_CI_MESON_CLANG != null'
-    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
-    - if: '$GIMP_CI_SOURCES != null'
-    # On merge requests and commits.
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - !reference [.debian, rules]
   needs: ["image-debian-x64"]
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
@@ -249,25 +246,7 @@ deps-debian-x64:
 gimp-debian-x64:
   extends: .default
   rules:
-    # On releases.
-    - if: '$CI_COMMIT_TAG != null'
-      interruptible: false
-    # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_MESON_GCC != null'
-      variables:
-        CC: "ccache cc"
-        CXX: "ccache c++"
-        VARIANT: "-gcc"
-    - if: '$GIMP_CI_RASTER_ICONS != null'
-      variables:
-        MESON_OPTIONS: "-Dvector-icons=false"
-        VARIANT: "-raster"
-    - if: '$GIMP_CI_MESON_CLANG != null'
-    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
-    - if: '$GIMP_CI_SOURCES != null'
-    # On merge requests and commits.
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - !reference [.debian, rules]
   needs: ["deps-debian-x64"]
   stage: gimp
   image: $CI_REGISTRY_IMAGE:build-debian-latest
@@ -283,12 +262,11 @@ gimp-debian-x64:
     # Check execution
     - ninja test
     # Check source
-    - echo ${VARIANT}
-    - if [[ "${VARIANT}" != "-gcc" ]] && [[ "${VARIANT}" != "-raster" ]]; then
-        if [ $(git diff |wc -l) -ne 0 ]; then
-          git diff;
-          exit 1;
-        fi;
+    - if [ $(git diff |wc -l) -ne 0 ]; then
+        git diff;
+        exit 1;
+      fi
+    - if [ "$VARIANT" != "-gcc" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
         ninja dist;
       fi
     # Make sure that GIMP is testable locally on Debian
@@ -305,7 +283,6 @@ gimp-debian-x64:
     - cd ..
     - bash -x build/linux/appimage/package-gimp-appimage.sh
   artifacts:
-    name: "${CI_JOB_NAME}${VARIANT}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     expose_as: 'Linux appimage'
     paths:
       - build/linux/appimage/_Output/
@@ -398,6 +375,14 @@ gimp-flatpak-x64:
 
 .win-cross:
   extends: .default
+  rules:
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
+    # On merge requests.
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    # On commits except tags.
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_TAG == null'
+  image: $CI_REGISTRY_IMAGE:build-debian-latest
   variables:
     BUILD_TYPE: "CI_CROSS"
     # Needed because by default, Debian has now changed
@@ -415,22 +400,12 @@ gimp-flatpak-x64:
   # TODO: Crossroads handling of universal variables still not perfect
   before_script: []
 
-.win-x64-cross:
-  rules:
-    # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
-    # On merge requests.
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    # On commits except tags.
-    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
-
 deps-win-x64-cross:
   extends: .win-cross
   rules:
-    - !reference [.win-x64-cross, rules]
+    - !reference [.win-cross, rules]
   needs: ["image-debian-x64"]
   stage: dependencies
-  image: $CI_REGISTRY_IMAGE:build-debian-latest
   script:
     - bash -x build/windows/gitlab-ci/1_build-deps-crossroad.sh
     - crossroad w64 gimp --run="build/windows/gitlab-ci/1_build-deps-crossroad.sh"
@@ -444,10 +419,9 @@ deps-win-x64-cross:
 gimp-win-x64-cross:
   extends: .win-cross
   rules:
-    - !reference [.win-x64-cross, rules]
+    - !reference [.win-cross, rules]
   needs: ["deps-win-x64-cross", "gimp-debian-x64"]
   stage: gimp
-  image: $CI_REGISTRY_IMAGE:build-debian-latest
   script:
     - bash -x build/windows/gitlab-ci/2_build-gimp-crossroad.sh
     - crossroad w64 gimp --run="build/windows/gitlab-ci/2_build-gimp-crossroad.sh"
@@ -675,7 +649,7 @@ sources-debian:
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_SOURCES != null'
     # On commits.
-    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null'
   needs: ["gimp-debian-x64"]
   stage: distribution
   cache: []
@@ -700,7 +674,7 @@ dev-docs:
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_SOURCES != null'
     # On commits.
-    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null'
   needs: ["deps-debian-x64", "gimp-debian-x64"]
   stage: distribution
   cache: []
