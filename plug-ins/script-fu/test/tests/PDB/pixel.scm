@@ -26,15 +26,15 @@
 
 
 ; Setup
-(define testImage (testing:load-test-image "wilber.png"))
-; wilber.png has one layer
+(define testImage (testing:load-test-image-basic))
+; image has one layer
 (define testDrawable (vector-ref (cadr (gimp-image-get-layers testImage)) 0))
 
-(define testImageGray (testing:load-test-image "wilber.png"))
+(define testImageGray (testing:load-test-image-basic))
 (gimp-image-convert-grayscale testImageGray)
 (define testDrawableGray (vector-ref (cadr (gimp-image-get-layers testImageGray)) 0))
 
-(define testImageIndexed (testing:load-test-image "wilber.png"))
+(define testImageIndexed (testing:load-test-image-basic))
 (gimp-image-convert-indexed
                   testImageIndexed
                   CONVERT-DITHER-NONE
@@ -48,13 +48,15 @@
 
 
 
-; RGBA image
+(test! "get-pixel of RGBA image")
 
 ; returned pixel of image of mode RGBA is missing alpha component
+; Test is fragile to chosen testImage.
+; Formerly: (71 71 71)
 (assert `(equal? (car (gimp-drawable-get-pixel ,testDrawable 1 1))
-                 '(71 71 71)))
+                 '(0 0 0)))
 
-; Can set a pixel in RGBA image from a 3 component list.
+(test! "set-pixel of RGBA image from a 3 component list.")
 ; ScriptFu sets alpha to opaque.
 (assert `(gimp-drawable-set-pixel ,testDrawable 1 1 '(2 2 2)))
 ; effective
@@ -67,12 +69,12 @@
 
 
 
-; GRAY image
+(test! "get-pixel of GRAY image")
 
 ; returned pixel of image of mode GRAY has extra components
 ; You might think it only has one component.
 (assert `(equal? (car (gimp-drawable-get-pixel ,testDrawableGray 1 1))
-                 '(71 71 71)))
+                 '(0 0 0)))
 
 ; Can set a pixel in GRAY image from a 3 component list.
 ; You might think it only takes component
@@ -86,7 +88,8 @@
 ; GRAYA TODO
 
 
-; INDEXED image
+(test! "get-pixel of INDEXED image")
+
 ; pixel of image of mode INDEXED has extra components
 ; FIXME this crashes in babl_fatal
 ;(assert `(equal? (car (gimp-drawable-get-pixel ,testDrawableIndexed 1 1))

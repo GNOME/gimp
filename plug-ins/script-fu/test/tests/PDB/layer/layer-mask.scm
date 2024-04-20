@@ -4,33 +4,46 @@
 ; but the methods are named strangely,
 ; e.g. there is no gimp-layer-mask-get-layer
 
+; gimp-layer-mask is deprecated
+
+
+(script-fu-use-v3)
 
 ;        setup
 ;
-(define testImage (car (gimp-image-new 21 22 RGB)))
+(define testImage (gimp-image-new 21 22 RGB))
 
-(define
-  testLayer (car (gimp-layer-new
+(define testLayer (gimp-layer-new
                     testImage
                     21
                     22
                     RGB-IMAGE
                     "LayerNew"
                     50.0
-                    LAYER-MODE-NORMAL)))
+                    LAYER-MODE-NORMAL))
 ; assert layer is not inserted in image
 
-; assert layerMask not on the layer yet!!!
-(define
-  testLayerMask (car (gimp-layer-create-mask
-                    testLayer
-                    ADD-MASK-WHITE)))
 
+
+(test! "layer-create-mask")
+
+(define
+  testLayerMask (gimp-layer-create-mask
+                    testLayer
+                    ADD-MASK-WHITE))
+; assert layerMask not on the layer yet!!!
 
 ; mask is not on layer until added.
 ; Getting the mask for the layer yields -1.
-(assert `(= (car (gimp-layer-mask ,testLayer))
+(assert `(= (gimp-layer-get-mask ,testLayer)
             -1))
+
+; ID is-a layerMask
+(assert `(gimp-item-id-is-layer-mask ,testLayerMask))
+
+
+
+(test! "layer-add-mask")
 
 ; add layerMask created on a layer to that layer succeeds
 (assert `(gimp-layer-add-mask
@@ -39,23 +52,22 @@
 
 ; add layerMask to layer was effective:
 ; Getting the mask for the layer yields layerMask ID
-(assert `(= (car (gimp-layer-mask ,testLayer))
+(assert `(= (gimp-layer-get-mask ,testLayer)
             ,testLayerMask))
 
 ; and vice versa
-(assert `(= (car (gimp-layer-from-mask ,testLayerMask))
+(assert `(= (gimp-layer-from-mask ,testLayerMask)
             ,testLayer))
 
 
 
-;           creating and adding second mask
+(test! "creating and adding second mask")
 
 ; creating a second mask from layer succeeds
-(define
-  testLayerMask2
-    (car (gimp-layer-create-mask
+(define testLayerMask2
+    (gimp-layer-create-mask
                   testLayer
-                  ADD-MASK-WHITE)))
+                  ADD-MASK-WHITE))
 
 
 ; adding a second layerMask fails
@@ -68,7 +80,7 @@
 
 
 
-;            mask removal
+(test! "remove-mask")
 
 ; remove-mask fails if the layer is not on image
 (assert-error `(gimp-layer-remove-mask
@@ -84,15 +96,14 @@
             0  ; parent
             0  ))  ; position within parent
 
-; remove-mask succeeds
-; when layer is in image
+; remove-mask succeeds when layer is in image
 (assert `(gimp-layer-remove-mask
             ,testLayer
             MASK-APPLY))  ; removal mode
 
 ; and is effective
 ; layer no longer has a mask
-(assert `(= (car (gimp-layer-mask ,testLayer))
+(assert `(= (gimp-layer-get-mask ,testLayer)
             -1))
 
 ; and now we can add the second mask
@@ -101,10 +112,21 @@
                  ,testLayerMask2))
 
 
+(test! "variations of layer-create-mask")
+
 ; fails when mask different size from layer?
 
 ; fails create layerMask when ADD-CHANNEL-MASK and no active channel
+(assert-error `(gimp-layer-create-mask
+                  ,testLayer
+                  ADD-MASK-CHANNEL)
+                "Procedure execution of gimp-layer-create-mask failed")
 
 ; create layerMask ADD-ALPHA-MASK works even when no alpha channel
+(assert `(gimp-layer-create-mask
+                  ,testLayer
+                  ADD-MASK-ALPHA))
 
-; TODO many variations of create
+
+
+(script-fu-use-v2)

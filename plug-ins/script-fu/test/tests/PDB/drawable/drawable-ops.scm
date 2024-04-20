@@ -3,16 +3,19 @@
 ; operations change pixels of the drawable without reference to other objects,
 ; or with passed non-drawable args such as curves
 
-
+; So that #t binds to boolean arg to PDB
+(script-fu-use-v3)
 
 ; setup
 
-(define testImage (testing:load-test-image "gimp-logo.png"))
+(define testImage (testing:load-test-image-basic-v3))
 ; Wilber has one layer
+
 ; cadr is vector, first element is a drawable
 (define testDrawable (vector-ref (cadr (gimp-image-get-layers testImage)) 0))
 
 
+(test! "drawable operations")
 
 ; tests in alphabetic order
 
@@ -22,19 +25,20 @@
 
 (assert `(gimp-drawable-colorize-hsl ,testDrawable 360 50 -50))
 
-; TODO requires vector of size 256
-; (assert `(gimp-drawable-curves-explicit ,testDrawable HISTOGRAM-RED 2 #(1 2)))
+; requires vector of size 256 of floats
+(assert `(gimp-drawable-curves-explicit ,testDrawable HISTOGRAM-RED
+      256 (make-vector 256 1.0)))
 
-;(assert `(gimp-drawable-curves-spline ,testDrawable DESATURATE-LUMA))
+; two pairs of float control points of a spline, four floats in total
+(assert `(gimp-drawable-curves-spline ,testDrawable HISTOGRAM-RED 4 #(0 0 25.0 25.0) ))
 
 (assert `(gimp-drawable-desaturate ,testDrawable DESATURATE-LUMA))
 
 (assert `(gimp-drawable-equalize ,testDrawable 1)) ; boolean mask-only
 
-;(assert `(gimp-drawable-extract-component ,testDrawable DESATURATE-LUMA))
+(assert `(gimp-drawable-extract-component ,testDrawable SELECT-CRITERION-HSV-SATURATION #t #t))
 
-; FIXME crashes
-;(assert `(gimp-drawable-fill ,testDrawable FILL-CIELAB-MIDDLE-GRAY))
+(assert `(gimp-drawable-fill ,testDrawable FILL-CIELAB-MIDDLE-GRAY))
 
 (assert `(gimp-drawable-foreground-extract ,testDrawable FOREGROUND-EXTRACT-MATTING ,testDrawable))
 
@@ -69,5 +73,6 @@
 (assert `(gimp-drawable-desaturate ,testDrawable DESATURATE-LUMA))
 (assert `(gimp-drawable-desaturate ,testDrawable DESATURATE-LUMA))
 
-(gimp-display-new testImage)
+(testing:show testImage)
 
+(script-fu-use-v2)

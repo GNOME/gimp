@@ -82,7 +82,7 @@
 
 
 
-; channel stack ordering operations
+(test! "channel stack ordering operations")
 
 ; The first created channel is at the bottom of the two
 ; The second created channel is initially at top
@@ -99,7 +99,8 @@
               "Procedure execution of gimp-image-raise-item failed: Channel cannot be raised higher.")
 
 ; Can be lowered
-(assert `(gimp-image-lower-channel ,testImage ,testChannel))
+; gimp-image-lower-channel is deprecated
+(assert `(gimp-image-lower-item ,testImage ,testChannel))
 
 ; TODO test effectiveness by checking position now
 

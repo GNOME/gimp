@@ -1,6 +1,8 @@
 ; test PDB methods that change selection from existing selection
 
 
+;(script-fu-use-v3)
+
 ; setup
 (define testImage (car (gimp-image-new 21 22 RGB)))
 
@@ -49,13 +51,13 @@
 
 
 
-; test selection methods that change by a pixel amount
+(test! "selection methods that change by a pixel amount")
 (test-selection-change-from-none gimp-selection-feather testImage)
 (test-selection-change-from-none gimp-selection-grow    testImage)
 (test-selection-change-from-none gimp-selection-shrink  testImage)
 (test-selection-change-from-none gimp-selection-border  testImage)
 
-; feather and grow from all are idempotent
+(test! "feather and grow from all are idempotent")
 (test-selection-change-from-all gimp-selection-feather testImage #t)
 (test-selection-change-from-all gimp-selection-grow    testImage #t)
 
@@ -86,7 +88,8 @@
 ; Can't do it without knowing how many pixels are selected?
 ; Knowing bounds is not adequate.
 
-; Simple tests of success
+(test! "selection flood, invert, sharpen, translate")
+; Simple tests of success, not testing effectiveness
 (assert `(gimp-selection-flood ,testImage))
 (assert `(gimp-selection-invert ,testImage))
 (assert `(gimp-selection-sharpen ,testImage))

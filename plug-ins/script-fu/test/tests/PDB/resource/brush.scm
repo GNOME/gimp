@@ -8,12 +8,16 @@
 ; In future, will be possible to create new brush with same name as existing?
 
 
-;      new
 
+; !!! Less car's.
+; Restored at end of this script
+(script-fu-use-v3)
+
+(test! "brush-new")
 
 ; new succeeds
 ; setup, not an assert
-(define testNewBrush (car (gimp-brush-new "TestBrushNew")))
+(define testNewBrush (gimp-brush-new "TestBrushNew"))
 
 ; a resource is an int ID  in ScriptFu
 (assert `(number? ,testNewBrush))
@@ -21,56 +25,55 @@
 ; new returns brush of given name
 ; note call superclass method
 (assert `(string=?
-            (car (gimp-resource-get-name ,testNewBrush))
+            (gimp-resource-get-name ,testNewBrush)
             "TestBrushNew"))
 
 
 
-;               attributes of new brush
+(test! "attributes of new brush")
 
 ; new brush is kind generated versus raster
-(assert `(= (car (gimp-brush-is-generated ,testNewBrush))
-            1))
+(assert `(gimp-brush-is-generated ,testNewBrush))
 
 ; angle     default is 0
 (assert `(=
-            (car (gimp-brush-get-angle ,testNewBrush))
+            (gimp-brush-get-angle ,testNewBrush)
             0))
 
 ; aspect-ratio   default  is 1.0
 ; FIXME: the doc says 0.0
 (assert `(=
-            (car (gimp-brush-get-aspect-ratio ,testNewBrush))
+            (gimp-brush-get-aspect-ratio ,testNewBrush)
             1.0))
 
 ; hardness   default is 0.5
 ; FIXME: the doc says 0
 (assert `(=
-            (car (gimp-brush-get-hardness ,testNewBrush))
+            (gimp-brush-get-hardness ,testNewBrush)
             0.5))
 
 ; shape default is GENERATED-CIRCLE
 (assert `(=
-            (car (gimp-brush-get-shape ,testNewBrush))
+            (gimp-brush-get-shape ,testNewBrush)
             BRUSH-GENERATED-CIRCLE))
 
 ; spikes default is 2
 ; FIXME: docs says 0
 (assert `(=
-            (car (gimp-brush-get-spikes ,testNewBrush))
+            (gimp-brush-get-spikes ,testNewBrush)
             2))
 
 ; get-radius    default 5.0
 ; FIXME: docs says 0
 (assert `(=
-            (car (gimp-brush-get-radius ,testNewBrush))
+            (gimp-brush-get-radius ,testNewBrush)
             5.0))
 
 
 ; spacing default 20
 ; FIXME: docs says 0
 (assert `(=
-            (car (gimp-brush-get-spacing ,testNewBrush))
+            (gimp-brush-get-spacing ,testNewBrush)
             20))
 
 ; get-info returns a list of attributes
@@ -85,16 +88,15 @@
 
 
 
-;              delete
+(test! "resource-delete")
 
 ; can delete a new brush
 ; PDB returns void, ScriptFu returns wrapped truth i.e. (#t)
-(assert `(car (gimp-resource-delete ,testNewBrush)))
+(assert `(gimp-resource-delete ,testNewBrush))
 
 ; delete was effective
 ; ID is now invalid
-(assert `(= (car (gimp-resource-id-is-valid ,testNewBrush))
-            0))
+(assert `(not (gimp-resource-id-is-valid ,testNewBrush)))
 
 
 
@@ -103,7 +105,7 @@
 ; Brush named "z Pepper" is non-generated and is a system brush always installed
 
 ; setup, not an assert
-(define testNongenBrush (car (gimp-resource-get-by-name "GimpBrush" "z Pepper")))
+(define testNongenBrush (gimp-resource-get-by-name "GimpBrush" "z Pepper"))
 
 ; brush says itself is not generated
 
@@ -121,16 +123,14 @@
 ; TODO all the other attributes
 
 
-;        Non-generated brush attributes
+(test! "Non-generated brush attributes")
 
 ; is not generated
-(assert `(=
-            (car (gimp-brush-is-generated ,testNongenBrush))
-            0))
+(assert `(not (gimp-brush-is-generated ,testNongenBrush)))
 
 ; spacing
 (assert `(=
-            (car (gimp-brush-get-spacing ,testNongenBrush))
+            (gimp-brush-get-spacing ,testNongenBrush)
             100))
 
 ; pixels returns a list of attributes
@@ -146,6 +146,16 @@
 
 ;                miscellaneous
 
+(test! "brush-get-by-name on non-existent name")
+
+; Formerly, returned a PDB error, now returns NULL i.e. ID -1
 ; gimp-brush-get-by-name returns error, when brush of that name not exists
-(assert-error '(gimp-brush-get-by-name "foo")
-              "Procedure execution of gimp-brush-get-by-name failed on invalid input arguments: Brush 'foo' not found")
+;(assert-error '(gimp-brush-get-by-name "foo")
+;              "Procedure execution of gimp-brush-get-by-name failed on invalid input arguments: Brush 'foo' not found")
+(assert `(= (gimp-brush-get-by-name "foo")
+            -1))
+
+
+
+; !!! Restore
+(script-fu-use-v2)

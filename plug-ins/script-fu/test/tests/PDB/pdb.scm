@@ -83,7 +83,8 @@
 ; test methods on PDBProcedure
 (testing:load-test "procedures.scm")
 
-(testing:load-test "display.scm")
+; Only run when not headless
+; (testing:load-test "display.scm")
 
 ; TODO undo
 ; TODO progress

@@ -4,6 +4,8 @@
 ; This tests the generic methods named like gimp-resource-<op>
 
 
+; !!! Using v3 binding, which we restore to v2 at the end of this file
+; since subsequent test scripts expect v2
 (script-fu-use-v3)
 
 ; setup
@@ -90,4 +92,7 @@
 
 ; can delete a duplicated font
 (assert `(gimp-resource-delete ,duplicatedSystemBrush))
+
+
+(script-fu-use-v2)
 

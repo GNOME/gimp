@@ -9,10 +9,12 @@
 ; are not in the PDB
 
 
+(script-fu-use-v3)
+
 
 ; setup
 ; Load test image that already has drawable
-(define testImage (testing:load-test-image "gimp-logo.png"))
+(define testImage (testing:load-test-image-basic-v3))
 
 ; get all the root layers
 ; testImage has exactly one root layer.
@@ -27,7 +29,21 @@
 ; So these tests might not pass when you run this test file
 ; in the wrong order.
 
-; paste
+
+
+
+(test! "named-copy")
+
+(define testBuffer (gimp-edit-named-copy
+                              1
+                              (make-vector 1 testLayer)
+                              "testBufferName"))
+; There is one named buffer
+(assert `(= (length (gimp-buffers-get-list "")) 1))
+
+
+
+(test! "paste")
 
 ; ordinary paste is to a drawable
 
@@ -41,18 +57,19 @@
 
 ; paste-as-new-image returns NULL image when clipboard empty
 ; paste-as-new is deprecated
-(assert `(= (car (gimp-edit-paste-as-new-image))
+(assert `(= (gimp-edit-paste-as-new-image)
             -1))  ; the NULL ID
+; named-paste-as-new-image returns a new image
+(assert `(gimp-image-id-is-valid (gimp-edit-named-paste-as-new-image "testBufferName")))
 
-
-; copy
+(test! "copy")
 
 ; copy when:
 ;  - no selection
 ;  - image has one drawable
 ;  - one drawable is passed
 ; returns true and clip has one drawable
-(assert-PDB-true `(gimp-edit-copy 1 ,testLayers))
+(assert `(gimp-edit-copy 1 ,testLayers))
 
 ; paste when clipboard is not empty returns a vector of length one
 (assert `(= (car (gimp-edit-paste
@@ -65,37 +82,51 @@
 
 ; !!! this is not what happens in the GUI, the pasted layer is NOT floating
 ; The pasted layer is floating
-(assert-PDB-true `(gimp-layer-is-floating-sel ,testPastedLayer))
+(assert `(gimp-layer-is-floating-sel ,testPastedLayer))
 
 
 
-
+(test! "copy-visible")
 
 ; copy-visible takes only an image
 ; it puts one drawable on clip
-(assert-PDB-true `(gimp-edit-copy-visible ,testImage))
+(assert `(gimp-edit-copy-visible ,testImage))
 
 
 
 
+(test! "named-paste")
+
+; There is one named buffer
+(assert `(= (length (gimp-buffers-get-list "")) 1))
+
+; named-paste returns just the floating sel
+(assert `(gimp-edit-named-paste
+                   ,testLayer
+                   "testBufferName"
+                   #f)) ; paste-into
+
+
+(test! "paste  into")
 ; paste when clipboard is not empty returns a vector of length one
+; returns (1 #(x))
 (assert `(= (car (gimp-edit-paste ,testLayer TRUE)) ; paste-into
             1))
 
 ; The first pasted floating layer was anchored (merged into) first layer
 ; The ID of the floating sel is now invalid
-(assert-PDB-false `(gimp-item-id-is-valid ,testPastedLayer))
+(assert `(not (gimp-item-id-is-valid ,testPastedLayer)))
 ; Can't do this, it throws CRITICAL
 ;(assert-error `(gimp-layer-is-floating-sel ,testPastedLayer)
 ;              "Procedure")
 
 ; There are now two layers
-(assert `(= (car (gimp-image-get-layers ,testImage))
-            2))
+(assert `(= (car (gimp-image-get-layers ,testImage)) 2))
+
 (define testPastedLayer2 (vector-ref (cadr (gimp-image-get-layers testImage))
                                        0))
 ; the new layer is now floating.
-(assert-PDB-true `(gimp-layer-is-floating-sel ,testPastedLayer2))
+(assert `(gimp-layer-is-floating-sel ,testPastedLayer2))
 
 
 
@@ -109,9 +140,46 @@
 
 
 
-; TODO test paste-into FALSE
 
-; TODO test cut
+
+
+(test! "edit-cut when selection")
+
+; setup, create a selection
+(assert `(gimp-selection-all ,testImage))
+(assert `(not (gimp-selection-is-empty ,testImage)))
+
+(assert `(gimp-edit-cut 1 (make-vector 1 (vector-ref ,testLayers 0))))
+; There are still two layers
+(assert `(= (car (gimp-image-get-layers ,testImage)) 2))
+; !!! No API method is-clipboard-empty
+
+
+(test! "edit-named-cut when selection")
+(assert `(gimp-edit-named-cut 1 (make-vector 1 (vector-ref ,testLayers 0)) "testbufferName2"))
+; There are still two layers
+(assert `(= (car (gimp-image-get-layers ,testImage)) 2))
+; There is two named buffer
+(assert `(= (length (gimp-buffers-get-list ""))
+            2))
+
+
+(test! "cut when no selection")
+
+; setup, delete selection
+(assert `(gimp-selection-none ,testImage))
+(assert `(gimp-selection-is-empty ,testImage))
+
+; cut when no selection cuts given layers out of image
+; Cut one of two layers.
+; returns #t when succeeds
+(assert `(gimp-edit-cut 1 (make-vector 1 (vector-ref ,testLayers 0))))
+; effective: count layers now 0
+; FIXME, the count of layers should be 1, since we cut only one of 2
+(assert `(= (car (gimp-image-get-layers ,testImage))
+            0))
+
+
 
 ; TODO test cross image paste, of different modes
 
@@ -123,10 +191,8 @@
 ; TODO
 
 
+; for debugging individual test file
+(testing:show testImage)
 
 
-
-
-
-; for debugging individual test file:
-(gimp-display-new testImage)
+(script-fu-use-v2)

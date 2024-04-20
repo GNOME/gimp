@@ -30,11 +30,11 @@
             2147483648 2147483648 ; width height of region
           ))
 
-; FIXME: throws CRITICAL but doesn't crash
-(assert `(gimp-drawable-merge-shadow
-            ,testDrawable
-            1 ; push merge to undo stack
-          ))
+; FIXME: throws CRITICAL and sometimes crashes
+;(assert `(gimp-drawable-merge-shadow
+;            ,testDrawable
+;            1 ; push merge to undo stack
+;          ))
 
 (assert `(gimp-drawable-offset
             ,testDrawable

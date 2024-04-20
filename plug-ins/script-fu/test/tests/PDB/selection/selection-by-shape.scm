@@ -2,7 +2,7 @@
 
 
 ; setup
-(define testImage (testing:load-test-image "wilber.png"))
+(define testImage (testing:load-test-image-basic))
 (define testLayer (vector-ref (cadr (gimp-image-get-layers testImage ))
                                   0))
 
@@ -16,9 +16,9 @@
 ; new image has no selection
 (assert-PDB-true `(gimp-selection-is-empty ,testImage))
 ; but selection bounds equal bounds of image
-; returns (0 0 0 256 256)
+; returns (0 0 0 128 128)
 (assert `(equal? (cdr (gimp-selection-bounds ,testImage))
-                 '(0 0 256 256)))
+                 '(0 0 128 128)))
 
 
 
@@ -42,6 +42,7 @@
 
 
 ; polygon
+; TODO
 
 
 

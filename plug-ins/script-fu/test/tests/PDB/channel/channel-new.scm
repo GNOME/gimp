@@ -35,8 +35,9 @@
 (assert `(equal?
             (car (gimp-channel-get-color ,testChannel))
             '(255 0 0)))  ; red
+; gimp-channel-get-name is deprecated
 (assert `(string=?
-            (car (gimp-channel-get-name ,testChannel))
+            (car (gimp-item-get-name ,testChannel))
             "Test Channel"))
 
 
@@ -80,7 +81,8 @@
 (assert-PDB-false `(gimp-item-id-is-channel ,testChannel))
 
 ; Delete throws error when channel already removed
-(assert-error `(gimp-channel-delete ,testChannel)
+; gimp-channel-delete is deprecated
+(assert-error `(gimp-item-delete ,testChannel)
               "runtime: invalid item ID"  )
 
 
@@ -96,7 +98,7 @@
             "red" )))      ; compositing color
 
 ; Does not throw
-(assert `(gimp-channel-delete ,testChannel2))
+(assert `(gimp-item-delete ,testChannel2))
 
 ; Effective: ID is not valid
 (assert-PDB-false `(gimp-item-id-is-channel ,testChannel))

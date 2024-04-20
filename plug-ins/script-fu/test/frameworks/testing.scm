@@ -411,7 +411,7 @@
   (gimp-message (path-to-test-scripts filename))
   (load (path-to-test-scripts filename)))
 
-; Tell Gimp to load a test image
+; Tell Gimp to load a test image by name
 ; Returns ID of image
 ; Knows installed image directory (not dedicated to testing but always there.)
 ; Accepts image suffixes that Gimp can load.
@@ -421,9 +421,42 @@
   ; unpack ID via car
   (car (gimp-file-load RUN-NONINTERACTIVE (path-to-test-images filename))))
 
+
+; Tell Gimp to load a basic image always distributed with Gimp
+; This hides the name of the file.
+; Many tests use this, so you can temporarily change the file name
+; and many tests will then use a different image.
+; But some tests expect the image to have certain properties, like 256x256.
+(define (testing:load-test-image-basic)
+  (testing:load-test-image "gimp-logo.png"))
+
+; Load a basic image while we are using v3 binding: no car
+(define (testing:load-test-image-basic-v3)
+  (gimp-file-load RUN-NONINTERACTIVE (path-to-test-images "gimp-logo.png")))
+
 ; Returns path to file containing named color profile
 ; Currently, assumes color profiles downloaded to /work dir.
 ; FUTURE: platform indpendent path
 ; FUTURE: color profile test files in the repo
 (define (testing:path-to-color-profile name)
   (string-append "/work/" name))
+
+
+; float comparison utility
+
+; are a and b relatively equal, to within epsilon?
+
+(define (equal-relative? a b epsilon)
+  (<= (abs (- a b))
+      (* epsilon (max (abs a) (abs b)))))
+
+
+; graphical result utility
+
+; When testing is in the GUI environment and not in batch mode,
+; show an image result of testing.
+; Now commented out.
+; The PDB API has no predicate answering "can open display?"
+(define (testing:show image)
+  ;(gimp-display-new image)
+  )

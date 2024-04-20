@@ -62,7 +62,7 @@
 
 
 
-; airbrush
+(test! "airbrush")
 
 (assert `(gimp-airbrush
             ,testLayer
@@ -86,25 +86,25 @@
 
 
 
-; clone
+(test! "clone")
 
 ; where source and target are same.
 ; stroke coords in the target.
-; FIXME crashes
-;(assert `(gimp-clone
- ;           ,testLayer      ; affected i.e. target
- ;           ,testLayer      ; source
- ;           CLONE-IMAGE     ; clone type
- ;           1.0 1.0         ; source coord x,y is not a vector
- ;           2               ; num-strokes
- ;           #(4.0 4.0)))    ; float array
+; FIXME throws GLib CRITICAL
+(assert `(gimp-clone
+            ,testLayer      ; affected i.e. target
+            ,testLayer      ; source
+            CLONE-IMAGE     ; clone type
+            1.0 1.0         ; source coord x,y is not a vector
+            2               ; num-strokes
+            #(4.0 4.0)))    ; float array
 
 ; TODO CLONE-PATTERN
 
 
 
 
-; eraser
+(test! "eraser")
 
 (assert `(gimp-eraser
             ,testLayer  ; target
@@ -121,18 +121,17 @@
 
 
 
-; FIXME crashes
-; heal
-;(assert `(gimp-heal
-;            ,testLayer      ; affected i.e. target
-;            ,testLayer      ; source
-;            1.0 1.0         ; source coord x,y is not a vector
-;            2               ; num-strokes
-;            #(4.0 4.0)))    ; float array
+(test! "heal")
+; FIXME throws GLib CRITICAL "has no property named 'src-x'"
+(assert `(gimp-heal
+            ,testLayer      ; affected i.e. target
+            ,testLayer      ; source
+            1.0 1.0         ; source coord x,y is not a vector
+            2               ; num-strokes
+            #(4.0 4.0)))    ; float array
 
 
-
-; convolve
+(test! "convolve")
 (assert `(gimp-convolve
             ,testLayer      ; affected i.e. target
             99.9999999999   ; pressure
@@ -141,8 +140,7 @@
             #(4.0 4.0)))    ; float array
 
 
-
-; dodgeburn
+(test! "dodgeburn")
 (assert `(gimp-dodgeburn
             ,testLayer      ; affected i.e. target
             66.0            ; exposure
@@ -157,7 +155,7 @@
 
 
 
-; smudge
+(test! "smudge")
 (assert `(gimp-smudge
             ,testLayer      ; affected i.e. target
             0.0             ; pressure
@@ -174,11 +172,11 @@
 ; In alphabetic order
 
 (test-paint-op-default gimp-airbrush-default)
-; FIXME crashes
-;(test-paint-op-default gimp-clone-default)
 (test-paint-op-default gimp-convolve-default)
 (test-paint-op-default gimp-dodgeburn-default)
-; FIXME crashes
+; FIXME fails "Set a source image first"
+; The API has no way to set the source image
+;(test-paint-op-default gimp-clone-default)
 ;(test-paint-op-default gimp-heal-default)
 (test-paint-op-default gimp-paintbrush-default)
 ; !!! gimp-pencil is not named gimp-pencil-default

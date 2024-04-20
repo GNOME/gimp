@@ -289,5 +289,18 @@ To test that ScriptFu properly internationalizes,
 you must change the locale and retest.
 The printing of numbers is known to fail in German.
 
+## Test coverage
 
+You can get an approximate list of the internal PDB procedures tested:
+
+```
+>cd test/tests/PDB
+>find . -name "*.scm" -exec grep -o "gimp-[a-z\-]*" {} \; | sort | uniq
+```
+
+That is, for all files with suffix .scm in the PDB directory,
+grep for calls to the GIMP PDB which are like "gimp-", sort them, and get the unique names.
+
+We strive to not use the gimp- prefix on names in comments,
+exactly so this will find only actual calls.
 
