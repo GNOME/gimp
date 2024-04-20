@@ -248,42 +248,6 @@ gimp_rgb_parse_name (GimpRGB     *rgb,
 }
 
 /**
- * gimp_rgb_parse_hex:
- * @rgb: a #GimpRGB struct used to return the parsed color
- * @hex: (array length=len): a string describing a color in hexadecimal notation
- * @len: the length of @hex, in bytes. or -1 if @hex is nul-terminated
- *
- * Attempts to parse a string describing an RGB color in hexadecimal
- * notation (optionally prefixed with a '#').
- *
- * This function does not touch the alpha component of @rgb.
- *
- * Returns: %TRUE if @hex was parsed successfully and @rgb has
- *               been set, %FALSE otherwise
- *
- * Since: 2.2
- **/
-gboolean
-gimp_rgb_parse_hex (GimpRGB     *rgb,
-                    const gchar *hex,
-                    gint         len)
-{
-  gchar    *tmp;
-  gboolean  result;
-
-  g_return_val_if_fail (rgb != NULL, FALSE);
-  g_return_val_if_fail (hex != NULL, FALSE);
-
-  tmp = gimp_rgb_parse_strip (hex, len);
-
-  result = gimp_rgb_parse_hex_internal (rgb, tmp);
-
-  g_free (tmp);
-
-  return result;
-}
-
-/**
  * gimp_rgb_parse_css:
  * @rgb: a #GimpRGB struct used to return the parsed color
  * @css: (array length=len): a string describing a color in CSS notation

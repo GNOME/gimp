@@ -72,9 +72,6 @@ void      gimp_rgb_get_uchar       (const GimpRGB *rgb,
 gboolean  gimp_rgb_parse_name      (GimpRGB       *rgb,
                                     const gchar   *name,
                                     gint           len);
-gboolean  gimp_rgb_parse_hex       (GimpRGB       *rgb,
-                                    const gchar   *hex,
-                                    gint           len);
 gboolean  gimp_rgb_parse_css       (GimpRGB       *rgb,
                                     const gchar   *css,
                                     gint           len);
