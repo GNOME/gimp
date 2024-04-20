@@ -366,7 +366,7 @@ gimp_paned_box_drop_indicator_draw (GtkWidget *widget,
   gdouble       rgba[4];
   gsize         i;
 
-  color = gimp_color_parse_hex (DROP_HIGHLIGHT_COLOR, -1);
+  color = gimp_color_parse_hex (DROP_HIGHLIGHT_COLOR);
   gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgba);
 
   for (i = 0; i < G_N_ELEMENTS (paned_box->p->dnd_highlights); i++)

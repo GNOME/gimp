@@ -53,11 +53,15 @@ void        gimp_color_set_alpha                 (GeglColor   *color,
 gboolean    gimp_color_is_perceptually_identical (GeglColor   *color1,
                                                   GeglColor   *color2);
 
-GeglColor * gimp_color_parse_css                 (const gchar *css,
+GeglColor * gimp_color_parse_css                 (const gchar *css);
+GeglColor * gimp_color_parse_hex                 (const gchar *hex);
+GeglColor * gimp_color_parse_name                (const gchar *name);
+
+GeglColor * gimp_color_parse_css_substring       (const gchar *css,
                                                   gint         len);
-GeglColor * gimp_color_parse_hex                 (const gchar *hex,
+GeglColor * gimp_color_parse_hex_substring       (const gchar *hex,
                                                   gint         len);
-GeglColor * gimp_color_parse_name                (const gchar *name,
+GeglColor * gimp_color_parse_name_substring      (const gchar *name,
                                                   gint         len);
 
 gboolean    gimp_color_is_out_of_self_gamut      (GeglColor   *color);

@@ -504,7 +504,7 @@ svg_parse_gradient_stop_style_prop (SvgStop     *stop,
   if (strcmp (name, "stop-color") == 0)
     {
       g_clear_object (&stop->color);
-      stop->color = gimp_color_parse_css (value, -1);
+      stop->color = gimp_color_parse_css (value);
     }
   else if (strcmp (name, "stop-opacity") == 0)
     {

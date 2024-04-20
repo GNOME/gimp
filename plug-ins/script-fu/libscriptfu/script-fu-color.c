@@ -109,7 +109,7 @@ sf_color_arg_set_default_by_name (SFArg *arg,
 
   /* Create a default value for the old-style interface.
    */
-  if (! (color = gimp_color_parse_css (name_of_default, -1)))
+  if (! (color = gimp_color_parse_css (name_of_default)))
     {
       result = FALSE;
     }
@@ -178,5 +178,5 @@ sf_color_get_repr_from_gegl_color (GeglColor *color)
 GeglColor *
 sf_color_get_color_from_name (gchar *color_name)
 {
-  return gimp_color_parse_css (color_name, -1);
+  return gimp_color_parse_css (color_name);
 }

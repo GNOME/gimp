@@ -1313,7 +1313,7 @@ gimp_palette_load_css (GimpContext   *context,
               GeglColor *color;
               gchar     *word = g_match_info_fetch_named (matches, "param");
 
-              color = gimp_color_parse_css (word, -1);
+              color = gimp_color_parse_css (word);
               if (color)
                 {
                   if (! gimp_palette_find_entry (palette, color, NULL))

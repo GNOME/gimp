@@ -320,8 +320,8 @@ gimp_color_hex_entry_events (GtkWidget *widget,
             gsize      len   = strlen (text);
 
             if (len > 0 &&
-                ((color = gimp_color_parse_hex (text, len)) ||
-                 (color = gimp_color_parse_name (text, -1))))
+                ((color = gimp_color_parse_hex_substring (text, len)) ||
+                 (color = gimp_color_parse_name (text))))
               {
                 gimp_color_hex_entry_set_color (entry, color);
                 g_object_unref (color);
@@ -355,7 +355,7 @@ gimp_color_hex_entry_matched (GtkEntryCompletion *completion,
                       COLUMN_NAME, &name,
                       -1);
 
-  if ((color = gimp_color_parse_name (name, -1)))
+  if ((color = gimp_color_parse_name (name)))
     gimp_color_hex_entry_set_color (entry, color);
 
   g_free (name);
