@@ -21,17 +21,17 @@
 # - GIMP_CI_MSYS2_WIN_AARCH64: trigger the native MSYS2 build for Win Aarch64.
 # - GIMP_CI_MSYS2_WIN64: trigger the native MSYS2 build for Win 64-bit.
 # - GIMP_CI_MSYS2_WIN32: trigger the native MSYS2 build for Win 32-bit.
+# - GIMP_CI_CPPCHECK: trigger cppcheck static analysis.
 # - GIMP_CI_SOURCES: trigger the Debian Clang build and the source tarball job.
 # - GIMP_CI_FLATPAK: trigger the flatpak build and publishing.
 # - GIMP_CI_WIN_INSTALLER: trigger all native MSYS2 builds then creates Inno Windows installer.
-# - GIMP_CI_CPPCHECK: trigger cppcheck static analysis.
 
 stages:
   - prepare
   - dependencies
   - gimp
-  - distribution
   - analysis
+  - distribution
 
 
 # Common pipelines behavior
@@ -620,6 +620,50 @@ gimp-win-x86:
     expire_in: 1 day
 
 
+## Analysis ##
+
+clang-format:
+  extends: .default
+  rules:
+    # On merge requests only.
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  needs: []
+  stage: analysis
+  cache: []
+  script:
+    - apt-get update
+    - apt-get install -y clang-format
+                         git
+    - .gitlab/run_style_check_diff.sh
+  allow_failure: true
+  artifacts:
+    when: on_failure
+    paths:
+      - fetch_upstream.log
+      - fetch_origin.log
+    expire_in: 1 week
+
+cppcheck:
+  extends: .default
+  rules:
+    # Custom builds only (web GUI, API or schedules).
+    - if: '$GIMP_CI_CPPCHECK != null'
+  needs: []
+  stage: analysis
+  cache: []
+  script:
+    - apt-get update
+    - apt-get install -y cppcheck
+    - cppcheck -q -j8 --enable=all --force --output-file=cppcheck.xml --xml --xml-version=2
+        -i _build-x64 -i _build-x86 -i _deps -i _install-x64 -i _install-x86 -i .local -i .cache .
+    - mkdir report
+    - cppcheck-htmlreport --source-dir=. --title=gimp --file=cppcheck.xml --report-dir=report
+  artifacts:
+    paths:
+      - report/
+    expire_in: 1 week
+
+
 ## Ready-to-distribute ##
 
 sources-debian:
@@ -735,45 +779,4 @@ dist-installer-weekly:
     paths:
       - build/windows/installer/_Output/
       - installer.log
-    expire_in: 1 week
-
-
-## Analysis ##
-
-clang-format:
-  extends: .default
-  only:
-    - merge_requests
-  needs: []
-  stage: analysis
-  cache: []
-  script:
-    - apt-get update
-    - apt-get install -y clang-format
-                         git
-    - .gitlab/run_style_check_diff.sh
-  allow_failure: true
-  artifacts:
-    when: on_failure
-    paths: ['fetch_upstream.log', 'fetch_origin.log']
-    expire_in: 1 week
-
-cppcheck:
-  extends: .default
-  rules:
-    # Custom builds only (web GUI, API or schedules).
-    - if: '$GIMP_CI_CPPCHECK != null'
-  needs: []
-  stage: analysis
-  cache: []
-  script:
-    - apt-get update
-    - apt-get install -y cppcheck
-    - cppcheck -q -j8 --enable=all --force --output-file=cppcheck.xml --xml --xml-version=2
-        -i _build-x64 -i _build-x86 -i _deps -i _install-x64 -i _install-x86 -i .local -i .cache .
-    - mkdir report
-    - cppcheck-htmlreport --source-dir=. --title=gimp --file=cppcheck.xml --report-dir=report
-  artifacts:
-    paths:
-      - report
     expire_in: 1 week
