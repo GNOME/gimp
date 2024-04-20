@@ -198,7 +198,7 @@ libgimp_sources_introspectable = [
   'gimpprogress.c',
   'gimpresource.c',
   'gimpresourceselect.c',
-  'gimpsaveprocedure.c',
+  'gimpexportprocedure.c',
   'gimpselection.c',
   'gimptextlayer.c',
   'gimpthumbnailprocedure.c',
@@ -256,7 +256,7 @@ libgimp_headers_introspectable = [
   'gimpprogress.h',
   'gimpresource.h',
   'gimpresourceselect.h',
-  'gimpsaveprocedure.h',
+  'gimpexportprocedure.h',
   'gimpselection.h',
   'gimptextlayer.h',
   'gimpthumbnailprocedure.h',
@@ -287,7 +287,7 @@ libgimpui_sources_introspectable = [
   'gimpprogressbar.c',
   'gimppropwidgets.c',
   'gimpresourcechooser.c',
-  'gimpsaveproceduredialog.c',
+  'gimpexportproceduredialog.c',
   'gimpui.c',
   'gimpzoompreview.c',
 ]
@@ -320,7 +320,7 @@ libgimpui_headers_introspectable = [
   'gimpprogressbar.h',
   'gimppropwidgets.h',
   'gimpresourcechooser.h',
-  'gimpsaveproceduredialog.h',
+  'gimpexportproceduredialog.h',
   'gimpzoompreview.h',
 ]
 

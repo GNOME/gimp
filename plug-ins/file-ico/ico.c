@@ -289,9 +289,9 @@ ico_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, EXPORT_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, ico_export, NULL, NULL);
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, ico_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -314,9 +314,9 @@ ico_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, EXPORT_CUR_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, cur_export, NULL, NULL);
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, cur_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -361,9 +361,9 @@ ico_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, EXPORT_ANI_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, ani_export, NULL, NULL);
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, ani_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 

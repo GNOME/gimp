@@ -123,9 +123,9 @@ ascii_create_procedure (GimpPlugIn  *plug_in,
     {
       gint i;
 
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, ascii_export, NULL, NULL);
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, ascii_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -377,9 +377,9 @@ save_dialog (GimpProcedure *procedure,
   gint          i;
   gboolean      run;
 
-  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
-                                           image);
+  dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
+                                             GIMP_PROCEDURE_CONFIG (config),
+                                             image);
 
   store = g_object_new (GIMP_TYPE_INT_STORE, NULL);
 

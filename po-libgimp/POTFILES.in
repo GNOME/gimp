@@ -5,6 +5,8 @@ libgimp/gimp.c
 libgimp/gimpbrushchooser.c
 libgimp/gimpdrawablechooser.c
 libgimp/gimpexport.c
+libgimp/gimpexportprocedure.c
+libgimp/gimpexportproceduredialog.c
 libgimp/gimpimagemetadata.c
 libgimp/gimpimagemetadata-save.c
 libgimp/gimploadprocedure.c
@@ -16,8 +18,6 @@ libgimp/gimpprocedure.c
 libgimp/gimpproceduredialog.c
 libgimp/gimpprocview.c
 libgimp/gimppropwidgets.c
-libgimp/gimpsaveprocedure.c
-libgimp/gimpsaveproceduredialog.c
 libgimp/gimpunitcache.c
 
 libgimpbase/gimpbaseenums.c

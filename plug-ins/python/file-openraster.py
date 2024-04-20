@@ -464,9 +464,9 @@ class FileOpenRaster (Gimp.PlugIn):
 
     def do_create_procedure(self, name):
         if name == 'file-openraster-export':
-            procedure = Gimp.SaveProcedure.new(self, name,
-                                               Gimp.PDBProcType.PLUGIN,
-                                               False, export_ora, None)
+            procedure = Gimp.ExportProcedure.new(self, name,
+                                                 Gimp.PDBProcType.PLUGIN,
+                                                 False, export_ora, None)
             procedure.set_image_types("*");
             procedure.set_documentation ('save an OpenRaster (.ora) file',
                                          'save an OpenRaster (.ora) file',

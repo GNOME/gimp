@@ -109,9 +109,9 @@ header_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, EXPORT_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, header_export, NULL, NULL);
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, header_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED, RGB");
 

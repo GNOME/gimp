@@ -72,9 +72,9 @@ save_dialog (GimpImage     *image,
 
   animation_supported = nlayers > 1;
 
-  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
-                                           image);
+  dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
+                                             GIMP_PROCEDURE_CONFIG (config),
+                                             image);
 
   /* Create the combobox containing the presets */
   store = gimp_int_store_new (_("Default"), WEBP_PRESET_DEFAULT,

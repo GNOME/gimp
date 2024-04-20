@@ -369,10 +369,10 @@ gimp_procedure_config_set_parasite (GimpProcedureConfig *config,
  * @file:           the file @exported_image was written to
  *
  * Note: There is normally no need to call this function because it's
- * already called by [class@SaveProcedure] at the end of the `run()` callback.
+ * already called by [class@ExportProcedure] at the end of the `run()` callback.
  *
  * Only use this function if the [class@Metadata] passed as argument of a
- * [class@SaveProcedure]'s run() method needs to be written at a specific
+ * [class@ExportProcedure]'s run() method needs to be written at a specific
  * point of the export, other than its end.
  *
  * This function syncs back @config's export properties to the
@@ -781,7 +781,7 @@ _gimp_procedure_config_end_run (GimpProcedureConfig *config,
  * @mime_type: (nullable):  exported file format's mime type, or %NULL.
  *
  * This is a variant of [method@ProcedureConfig.begin_run] to be used
- * by file export procedures using [class@SaveProcedure]. It must be
+ * by file export procedures using [class@ExportProcedure]. It must be
  * paired with a call to [method@ProcedureConfig.end_export] at the end
  * of run().
  *
@@ -794,7 +794,7 @@ _gimp_procedure_config_end_run (GimpProcedureConfig *config,
  * properties. (The corresponding [method@Image.metadata_save_finish]
  * will be called by [method@ProcedureConfig.end_export]).
  *
- * The following boolean arguments of the used [class@SaveProcedure] are
+ * The following boolean arguments of the used [class@ExportProcedure] are
  * synced. The procedure can but must not provide these arguments.
  *
  * - "save-exif" for %GIMP_METADATA_SAVE_EXIF.
@@ -887,7 +887,7 @@ _gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
  * @status:         the return status of the [class@Procedure]'s run()
  *
  * This is a variant of [method@ProcedureConfig.end_run] to be used by
- * file export procedures using [class@SaveProcedure]. It must be paired
+ * file export procedures using [class@ExportProcedure]. It must be paired
  * with a call to [method@ProcedureConfig.begin_export] at the
  * beginning of run().
  *

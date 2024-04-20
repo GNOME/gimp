@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsaveprocedure.c
+ * gimpexportprocedure.c
  * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@
 
 #include "gimppdb_pdb.h"
 #include "gimpplugin-private.h"
-#include "gimpsaveprocedure.h"
+#include "gimpexportprocedure.h"
 #include "gimpprocedureconfig-private.h"
 
 #include "libgimp-intl.h"
@@ -43,72 +43,72 @@ enum
   N_PROPS
 };
 
-struct _GimpSaveProcedurePrivate
+struct _GimpExportProcedurePrivate
 {
-  GimpRunSaveFunc  run_func;
-  gpointer         run_data;
-  GDestroyNotify   run_data_destroy;
+  GimpRunExportFunc  run_func;
+  gpointer           run_data;
+  GDestroyNotify     run_data_destroy;
 
-  gboolean         supports_exif;
-  gboolean         supports_iptc;
-  gboolean         supports_xmp;
-  gboolean         supports_profile;
-  gboolean         supports_thumbnail;
-  gboolean         supports_comment;
+  gboolean           supports_exif;
+  gboolean           supports_iptc;
+  gboolean           supports_xmp;
+  gboolean           supports_profile;
+  gboolean           supports_thumbnail;
+  gboolean           supports_comment;
 
-  gboolean         export_metadata;
+  gboolean           export_metadata;
 };
 
 
-static void   gimp_save_procedure_constructed   (GObject              *object);
-static void   gimp_save_procedure_finalize      (GObject              *object);
-static void   gimp_save_procedure_set_property  (GObject              *object,
-                                                 guint                 property_id,
-                                                 const GValue         *value,
-                                                 GParamSpec           *pspec);
-static void   gimp_save_procedure_get_property  (GObject              *object,
-                                                 guint                 property_id,
-                                                 GValue               *value,
-                                                 GParamSpec           *pspec);
+static void   gimp_export_procedure_constructed   (GObject              *object);
+static void   gimp_export_procedure_finalize      (GObject              *object);
+static void   gimp_export_procedure_set_property  (GObject              *object,
+                                                   guint                 property_id,
+                                                   const GValue         *value,
+                                                   GParamSpec           *pspec);
+static void   gimp_export_procedure_get_property  (GObject              *object,
+                                                   guint                 property_id,
+                                                   GValue               *value,
+                                                   GParamSpec           *pspec);
 
-static void   gimp_save_procedure_install       (GimpProcedure        *procedure);
+static void   gimp_export_procedure_install       (GimpProcedure        *procedure);
 static GimpValueArray *
-              gimp_save_procedure_run           (GimpProcedure        *procedure,
-                                                 const GimpValueArray *args);
+              gimp_export_procedure_run           (GimpProcedure        *procedure,
+                                                   const GimpValueArray *args);
 static GimpProcedureConfig *
-              gimp_save_procedure_create_config (GimpProcedure        *procedure,
-                                                 GParamSpec          **args,
-                                                 gint                  n_args);
+              gimp_export_procedure_create_config (GimpProcedure        *procedure,
+                                                   GParamSpec          **args,
+                                                   gint                  n_args);
 
-static void   gimp_save_procedure_add_metadata  (GimpSaveProcedure    *save_procedure);
+static void   gimp_export_procedure_add_metadata  (GimpExportProcedure  *export_procedure);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpSaveProcedure, gimp_save_procedure,
+G_DEFINE_TYPE_WITH_PRIVATE (GimpExportProcedure, gimp_export_procedure,
                             GIMP_TYPE_FILE_PROCEDURE)
 
-#define parent_class gimp_save_procedure_parent_class
+#define parent_class gimp_export_procedure_parent_class
 
 static GParamSpec *props[N_PROPS] = { NULL, };
 
 static void
-gimp_save_procedure_class_init (GimpSaveProcedureClass *klass)
+gimp_export_procedure_class_init (GimpExportProcedureClass *klass)
 {
   GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
   GimpProcedureClass *procedure_class = GIMP_PROCEDURE_CLASS (klass);
 
-  object_class->constructed      = gimp_save_procedure_constructed;
-  object_class->finalize         = gimp_save_procedure_finalize;
-  object_class->get_property     = gimp_save_procedure_get_property;
-  object_class->set_property     = gimp_save_procedure_set_property;
+  object_class->constructed      = gimp_export_procedure_constructed;
+  object_class->finalize         = gimp_export_procedure_finalize;
+  object_class->get_property     = gimp_export_procedure_get_property;
+  object_class->set_property     = gimp_export_procedure_set_property;
 
-  procedure_class->install       = gimp_save_procedure_install;
-  procedure_class->run           = gimp_save_procedure_run;
-  procedure_class->create_config = gimp_save_procedure_create_config;
+  procedure_class->install       = gimp_export_procedure_install;
+  procedure_class->run           = gimp_export_procedure_run;
+  procedure_class->create_config = gimp_export_procedure_create_config;
 
   /**
-   * GimpSaveProcedure:supports-exif:
+   * GimpExportProcedure:supports-exif:
    *
-   * Whether the save procedure supports EXIF.
+   * Whether the export procedure supports EXIF.
    *
    * Since: 3.0.0
    */
@@ -119,9 +119,9 @@ gimp_save_procedure_class_init (GimpSaveProcedureClass *klass)
                                                     G_PARAM_CONSTRUCT |
                                                     GIMP_PARAM_READWRITE);
   /**
-   * GimpSaveProcedure:supports-iptc:
+   * GimpExportProcedure:supports-iptc:
    *
-   * Whether the save procedure supports IPTC.
+   * Whether the export procedure supports IPTC.
    *
    * Since: 3.0.0
    */
@@ -132,9 +132,9 @@ gimp_save_procedure_class_init (GimpSaveProcedureClass *klass)
                                                     G_PARAM_CONSTRUCT |
                                                     GIMP_PARAM_READWRITE);
   /**
-   * GimpSaveProcedure:supports-xmp:
+   * GimpExportProcedure:supports-xmp:
    *
-   * Whether the save procedure supports XMP.
+   * Whether the export procedure supports XMP.
    *
    * Since: 3.0.0
    */
@@ -145,9 +145,9 @@ gimp_save_procedure_class_init (GimpSaveProcedureClass *klass)
                                                    G_PARAM_CONSTRUCT |
                                                    GIMP_PARAM_READWRITE);
   /**
-   * GimpSaveProcedure:supports-profile:
+   * GimpExportProcedure:supports-profile:
    *
-   * Whether the save procedure supports ICC color profiles.
+   * Whether the export procedure supports ICC color profiles.
    *
    * Since: 3.0.0
    */
@@ -158,9 +158,9 @@ gimp_save_procedure_class_init (GimpSaveProcedureClass *klass)
                                                        G_PARAM_CONSTRUCT |
                                                        GIMP_PARAM_READWRITE);
   /**
-   * GimpSaveProcedure:supports-thumbnail:
+   * GimpExportProcedure:supports-thumbnail:
    *
-   * Whether the save procedure supports storing a thumbnail.
+   * Whether the export procedure supports storing a thumbnail.
    *
    * Since: 3.0.0
    */
@@ -171,9 +171,9 @@ gimp_save_procedure_class_init (GimpSaveProcedureClass *klass)
                                                          G_PARAM_CONSTRUCT |
                                                          GIMP_PARAM_READWRITE);
   /**
-   * GimpSaveProcedure:supports-comment:
+   * GimpExportProcedure:supports-comment:
    *
-   * Whether the save procedure supports storing a comment.
+   * Whether the export procedure supports storing a comment.
    *
    * Since: 3.0.0
    */
@@ -188,15 +188,15 @@ gimp_save_procedure_class_init (GimpSaveProcedureClass *klass)
 }
 
 static void
-gimp_save_procedure_init (GimpSaveProcedure *procedure)
+gimp_export_procedure_init (GimpExportProcedure *procedure)
 {
-  procedure->priv = gimp_save_procedure_get_instance_private (procedure);
+  procedure->priv = gimp_export_procedure_get_instance_private (procedure);
 
   procedure->priv->export_metadata = FALSE;
 }
 
 static void
-gimp_save_procedure_constructed (GObject *object)
+gimp_export_procedure_constructed (GObject *object)
 {
   GimpProcedure *procedure = GIMP_PROCEDURE (object);
 
@@ -204,32 +204,32 @@ gimp_save_procedure_constructed (GObject *object)
 
   GIMP_PROC_ARG_IMAGE (procedure, "image",
                        "Image",
-                       "The image to save",
+                       "The image to export",
                        FALSE,
                        G_PARAM_READWRITE);
 
   GIMP_PROC_ARG_INT (procedure, "num-drawables",
                      "Number of drawables",
-                     "Number of drawables to be saved",
+                     "Number of drawables to be exported",
                      0, G_MAXINT, 1,
                      G_PARAM_READWRITE);
 
   GIMP_PROC_ARG_OBJECT_ARRAY (procedure, "drawables",
                               "Drawables",
-                              "The drawables to save",
+                              "The drawables to export",
                               GIMP_TYPE_DRAWABLE,
                               G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
 
   GIMP_PROC_ARG_FILE (procedure, "file",
                       "File",
-                      "The file to save to",
+                      "The file to export to",
                       GIMP_PARAM_READWRITE);
 }
 
 static void
-gimp_save_procedure_finalize (GObject *object)
+gimp_export_procedure_finalize (GObject *object)
 {
-  GimpSaveProcedure *procedure = GIMP_SAVE_PROCEDURE (object);
+  GimpExportProcedure *procedure = GIMP_EXPORT_PROCEDURE (object);
 
   if (procedure->priv->run_data_destroy)
     procedure->priv->run_data_destroy (procedure->priv->run_data);
@@ -238,12 +238,12 @@ gimp_save_procedure_finalize (GObject *object)
 }
 
 static void
-gimp_save_procedure_set_property (GObject      *object,
-                                  guint         property_id,
-                                  const GValue *value,
-                                  GParamSpec   *pspec)
+gimp_export_procedure_set_property (GObject      *object,
+                                    guint         property_id,
+                                    const GValue *value,
+                                    GParamSpec   *pspec)
 {
-  GimpSaveProcedure *procedure = GIMP_SAVE_PROCEDURE (object);
+  GimpExportProcedure *procedure = GIMP_EXPORT_PROCEDURE (object);
 
   switch (property_id)
     {
@@ -273,12 +273,12 @@ gimp_save_procedure_set_property (GObject      *object,
 }
 
 static void
-gimp_save_procedure_get_property (GObject    *object,
-                                  guint       property_id,
-                                  GValue     *value,
-                                  GParamSpec *pspec)
+gimp_export_procedure_get_property (GObject    *object,
+                                    guint       property_id,
+                                    GValue     *value,
+                                    GParamSpec *pspec)
 {
-  GimpSaveProcedure *procedure = GIMP_SAVE_PROCEDURE (object);
+  GimpExportProcedure *procedure = GIMP_EXPORT_PROCEDURE (object);
 
   switch (property_id)
     {
@@ -308,13 +308,13 @@ gimp_save_procedure_get_property (GObject    *object,
 }
 
 static void
-gimp_save_procedure_install (GimpProcedure *procedure)
+gimp_export_procedure_install (GimpProcedure *procedure)
 {
   GimpFileProcedure *file_proc = GIMP_FILE_PROCEDURE (procedure);
   const gchar       *mime_types;
   gint               priority;
 
-  gimp_save_procedure_add_metadata (GIMP_SAVE_PROCEDURE (procedure));
+  gimp_export_procedure_add_metadata (GIMP_EXPORT_PROCEDURE (procedure));
   GIMP_PROCEDURE_CLASS (parent_class)->install (procedure);
 
   _gimp_pdb_set_file_proc_save_handler (gimp_procedure_get_name (procedure),
@@ -338,11 +338,11 @@ gimp_save_procedure_install (GimpProcedure *procedure)
 #define ARG_OFFSET 5
 
 static GimpValueArray *
-gimp_save_procedure_run (GimpProcedure        *procedure,
-                         const GimpValueArray *args)
+gimp_export_procedure_run (GimpProcedure        *procedure,
+                           const GimpValueArray *args)
 {
   GimpPlugIn           *plug_in;
-  GimpSaveProcedure    *save_proc = GIMP_SAVE_PROCEDURE (procedure);
+  GimpExportProcedure  *export_proc = GIMP_EXPORT_PROCEDURE (procedure);
   GimpValueArray       *remaining;
   GimpValueArray       *return_values;
   GimpProcedureConfig  *config;
@@ -371,12 +371,12 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
     }
 
   config = gimp_procedure_create_config (procedure);
-  if (save_proc->priv->export_metadata)
+  if (export_proc->priv->export_metadata)
     {
       mimetype = (gchar *) gimp_file_procedure_get_mime_types (GIMP_FILE_PROCEDURE (procedure));
       if (mimetype == NULL)
         {
-          g_printerr ("%s: ERROR: the GimpSaveProcedureConfig object was created "
+          g_printerr ("%s: ERROR: the GimpExportProcedureConfig object was created "
                       "with export_metadata but you didn't set any MimeType with gimp_file_procedure_set_mime_types()!\n",
                       G_STRFUNC);
         }
@@ -403,10 +403,10 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
   metadata = _gimp_procedure_config_begin_export (config, image, run_mode, remaining, mimetype);
   g_free (mimetype);
 
-  return_values = save_proc->priv->run_func (procedure, run_mode,
+  return_values = export_proc->priv->run_func (procedure, run_mode,
                                              image, n_drawables, drawables,
                                              file, metadata, config,
-                                             save_proc->priv->run_data);
+                                             export_proc->priv->run_data);
 
   if (return_values != NULL                       &&
       gimp_value_array_length (return_values) > 0 &&
@@ -421,7 +421,7 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
   plug_in = gimp_procedure_get_plug_in (procedure);
   if (G_OBJECT (config)->ref_count > 1 &&
       _gimp_plug_in_manage_memory_manually (plug_in))
-    g_printerr ("%s: ERROR: the GimpSaveProcedureConfig object was refed "
+    g_printerr ("%s: ERROR: the GimpExportProcedureConfig object was refed "
                 "by plug-in, it MUST NOT do that!\n", G_STRFUNC);
 
   g_object_unref (config);
@@ -431,11 +431,11 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
 }
 
 static GimpProcedureConfig *
-gimp_save_procedure_create_config (GimpProcedure  *procedure,
-                                   GParamSpec    **args,
-                                   gint            n_args)
+gimp_export_procedure_create_config (GimpProcedure  *procedure,
+                                     GParamSpec    **args,
+                                     gint            n_args)
 {
-  gimp_save_procedure_add_metadata (GIMP_SAVE_PROCEDURE (procedure));
+  gimp_export_procedure_add_metadata (GIMP_EXPORT_PROCEDURE (procedure));
 
   if (n_args > ARG_OFFSET)
     {
@@ -454,45 +454,45 @@ gimp_save_procedure_create_config (GimpProcedure  *procedure,
 }
 
 static void
-gimp_save_procedure_add_metadata (GimpSaveProcedure *save_procedure)
+gimp_export_procedure_add_metadata (GimpExportProcedure *export_procedure)
 {
-  GimpProcedure   *procedure = GIMP_PROCEDURE (save_procedure);
+  GimpProcedure   *procedure = GIMP_PROCEDURE (export_procedure);
   static gboolean  ran_once = FALSE;
 
   if (ran_once)
     return;
 
-  if (save_procedure->priv->supports_exif)
+  if (export_procedure->priv->supports_exif)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-exif",
                                _("Save _Exif"),
                                _("Save Exif (Exchangeable image file format) metadata"),
                                gimp_export_exif (),
                                G_PARAM_READWRITE);
-  if (save_procedure->priv->supports_iptc)
+  if (export_procedure->priv->supports_iptc)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-iptc",
                                _("Save _IPTC"),
                                _("Save IPTC (International Press Telecommunications Council) metadata"),
                                gimp_export_iptc (),
                                G_PARAM_READWRITE);
-  if (save_procedure->priv->supports_xmp)
+  if (export_procedure->priv->supports_xmp)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-xmp",
                                _("Save _XMP"),
                                _("Save XMP (Extensible Metadata Platform) metadata"),
                                gimp_export_xmp (),
                                G_PARAM_READWRITE);
-  if (save_procedure->priv->supports_profile)
+  if (export_procedure->priv->supports_profile)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
                                _("Save color _profile"),
                                _("Save the ICC color profile as metadata"),
                                gimp_export_color_profile (),
                                G_PARAM_READWRITE);
-  if (save_procedure->priv->supports_thumbnail)
+  if (export_procedure->priv->supports_thumbnail)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-thumbnail",
                                _("Save _thumbnail"),
                                _("Save a smaller representation of the image as metadata"),
                                gimp_export_thumbnail (),
                                G_PARAM_READWRITE);
-  if (save_procedure->priv->supports_comment)
+  if (export_procedure->priv->supports_comment)
     {
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
                                  _("Save c_omment"),
@@ -516,7 +516,7 @@ gimp_save_procedure_add_metadata (GimpSaveProcedure *save_procedure)
 /*  public functions  */
 
 /**
- * gimp_save_procedure_new:
+ * gimp_export_procedure_new:
  * @plug_in:          a #GimpPlugIn.
  * @name:             the new procedure's name.
  * @proc_type:        the new procedure's #GimpPDBProcType.
@@ -525,24 +525,24 @@ gimp_save_procedure_add_metadata (GimpSaveProcedure *save_procedure)
  * @run_data:         user data passed to @run_func.
  * @run_data_destroy: (nullable): free function for @run_data, or %NULL.
  *
- * Creates a new save procedure named @name which will call @run_func
+ * Creates a new export procedure named @name which will call @run_func
  * when invoked.
  *
  * See gimp_procedure_new() for information about @proc_type.
  *
- * #GimpSaveProcedure is a #GimpProcedure subclass that makes it easier
- * to write file save procedures.
+ * #GimpExportProcedure is a #GimpProcedure subclass that makes it easier
+ * to write file export procedures.
  *
  * It automatically adds the standard
  *
  * (#GimpRunMode, #GimpImage, #GimpDrawable, #GFile)
  *
- * arguments of a save procedure. It is possible to add additional
+ * arguments of an export procedure. It is possible to add additional
  * arguments.
  *
  * When invoked via gimp_procedure_run(), it unpacks these standard
- * arguments and calls @run_func which is a #GimpRunSaveFunc. The
- * #GimpProcedureConfig of #GimpRunSaveFunc only contains additionally added
+ * arguments and calls @run_func which is a #GimpRunExportFunc. The
+ * #GimpProcedureConfig of #GimpRunExportFunc only contains additionally added
  * arguments.
  *
  * If @export_metadata is TRUE, then the class will also handle the metadata
@@ -554,15 +554,15 @@ gimp_save_procedure_add_metadata (GimpSaveProcedure *save_procedure)
  * Since: 3.0
  **/
 GimpProcedure *
-gimp_save_procedure_new (GimpPlugIn      *plug_in,
-                         const gchar     *name,
-                         GimpPDBProcType  proc_type,
-                         gboolean         export_metadata,
-                         GimpRunSaveFunc  run_func,
-                         gpointer         run_data,
-                         GDestroyNotify   run_data_destroy)
+gimp_export_procedure_new (GimpPlugIn       *plug_in,
+                           const gchar      *name,
+                           GimpPDBProcType   proc_type,
+                           gboolean          export_metadata,
+                           GimpRunExportFunc run_func,
+                           gpointer          run_data,
+                           GDestroyNotify    run_data_destroy)
 {
-  GimpSaveProcedure *procedure;
+  GimpExportProcedure *procedure;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (name), NULL);
@@ -570,7 +570,7 @@ gimp_save_procedure_new (GimpPlugIn      *plug_in,
   g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_EXTENSION, NULL);
   g_return_val_if_fail (run_func != NULL, NULL);
 
-  procedure = g_object_new (GIMP_TYPE_SAVE_PROCEDURE,
+  procedure = g_object_new (GIMP_TYPE_EXPORT_PROCEDURE,
                             "plug-in",        plug_in,
                             "name",           name,
                             "procedure-type", proc_type,
@@ -585,11 +585,11 @@ gimp_save_procedure_new (GimpPlugIn      *plug_in,
 }
 
 /**
- * gimp_save_procedure_set_support_exif:
+ * gimp_export_procedure_set_support_exif:
  * @procedure: a #GimpProcedure.
  * @supports:  whether Exif metadata are supported.
  *
- * Determine whether @procedure supports saving Exif data. By default,
+ * Determine whether @procedure supports exporting Exif data. By default,
  * it won't (so there is usually no reason to run this function with
  * %FALSE).
  *
@@ -598,14 +598,14 @@ gimp_save_procedure_new (GimpPlugIn      *plug_in,
  * - Automatically adds a standard auxiliary argument "save-exif" in the
  *   end of the argument list of @procedure, with relevant blurb and
  *   description.
- * - If used with other gimp_save_procedure_set_support_*() functions,
+ * - If used with other gimp_export_procedure_set_support_*() functions,
  *   they will always be ordered the same (the order of the calls don't
- *   matter), keeping all save procedures consistent.
- * - Generated GimpSaveProcedureDialog will contain the metadata
+ *   matter), keeping all export procedures consistent.
+ * - Generated GimpExportProcedureDialog will contain the metadata
  *   options, once again always in the same order and with consistent
  *   GUI style across plug-ins.
  * - API from [class@ProcedureConfig] will automatically process these
- *   properties to decide whether to save a given metadata or not.
+ *   properties to decide whether to export a given metadata or not.
  *
  * Note that since this is an auxiliary argument, it won't be part of
  * the PDB arguments. By default, the value will be [func@export_exif].
@@ -613,10 +613,10 @@ gimp_save_procedure_new (GimpPlugIn      *plug_in,
  * Since: 3.0
  **/
 void
-gimp_save_procedure_set_support_exif (GimpSaveProcedure *procedure,
-                                      gboolean           supports)
+gimp_export_procedure_set_support_exif (GimpExportProcedure *procedure,
+                                        gboolean             supports)
 {
-  g_return_if_fail (GIMP_IS_SAVE_PROCEDURE (procedure));
+  g_return_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure));
 
   g_object_set (procedure,
                 "supports-exif", supports,
@@ -624,11 +624,11 @@ gimp_save_procedure_set_support_exif (GimpSaveProcedure *procedure,
 }
 
 /**
- * gimp_save_procedure_set_support_iptc:
+ * gimp_export_procedure_set_support_iptc:
  * @procedure: a #GimpProcedure.
  * @supports:  whether IPTC metadata are supported.
  *
- * Determine whether @procedure supports saving IPTC data. By default,
+ * Determine whether @procedure supports exporting IPTC data. By default,
  * it won't (so there is usually no reason to run this function with
  * %FALSE).
  *
@@ -637,14 +637,14 @@ gimp_save_procedure_set_support_exif (GimpSaveProcedure *procedure,
  * - Automatically adds a standard auxiliary argument "save-iptc" in the
  *   end of the argument list of @procedure, with relevant blurb and
  *   description.
- * - If used with other gimp_save_procedure_set_support_*() functions,
+ * - If used with other gimp_export_procedure_set_support_*() functions,
  *   they will always be ordered the same (the order of the calls don't
- *   matter), keeping all save procedures consistent.
- * - Generated GimpSaveProcedureDialog will contain the metadata
+ *   matter), keeping all export procedures consistent.
+ * - Generated GimpExportProcedureDialog will contain the metadata
  *   options, once again always in the same order and with consistent
  *   GUI style across plug-ins.
  * - API from [class@ProcedureConfig] will automatically process these
- *   properties to decide whether to save a given metadata or not.
+ *   properties to decide whether to export a given metadata or not.
  *
  * Note that since this is an auxiliary argument, it won't be part of
  * the PDB arguments. By default, the value will be [func@export_iptc].
@@ -652,10 +652,10 @@ gimp_save_procedure_set_support_exif (GimpSaveProcedure *procedure,
  * Since: 3.0
  **/
 void
-gimp_save_procedure_set_support_iptc (GimpSaveProcedure *procedure,
-                                      gboolean           supports)
+gimp_export_procedure_set_support_iptc (GimpExportProcedure *procedure,
+                                        gboolean             supports)
 {
-  g_return_if_fail (GIMP_IS_SAVE_PROCEDURE (procedure));
+  g_return_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure));
 
   g_object_set (procedure,
                 "supports-iptc", supports,
@@ -663,11 +663,11 @@ gimp_save_procedure_set_support_iptc (GimpSaveProcedure *procedure,
 }
 
 /**
- * gimp_save_procedure_set_support_xmp:
+ * gimp_export_procedure_set_support_xmp:
  * @procedure: a #GimpProcedure.
  * @supports:  whether XMP metadata are supported.
  *
- * Determine whether @procedure supports saving XMP data. By default,
+ * Determine whether @procedure supports exporting XMP data. By default,
  * it won't (so there is usually no reason to run this function with
  * %FALSE).
  *
@@ -676,14 +676,14 @@ gimp_save_procedure_set_support_iptc (GimpSaveProcedure *procedure,
  * - Automatically adds a standard auxiliary argument "save-xmp" in the
  *   end of the argument list of @procedure, with relevant blurb and
  *   description.
- * - If used with other gimp_save_procedure_set_support_*() functions,
+ * - If used with other gimp_export_procedure_set_support_*() functions,
  *   they will always be ordered the same (the order of the calls don't
- *   matter), keeping all save procedures consistent.
- * - Generated GimpSaveProcedureDialog will contain the metadata
+ *   matter), keeping all export procedures consistent.
+ * - Generated GimpExportProcedureDialog will contain the metadata
  *   options, once again always in the same order and with consistent
  *   GUI style across plug-ins.
  * - API from [class@ProcedureConfig] will automatically process these
- *   properties to decide whether to save a given metadata or not.
+ *   properties to decide whether to export a given metadata or not.
  *
  * Note that since this is an auxiliary argument, it won't be part of
  * the PDB arguments. By default, the value will be [func@export_xmp].
@@ -691,10 +691,10 @@ gimp_save_procedure_set_support_iptc (GimpSaveProcedure *procedure,
  * Since: 3.0
  **/
 void
-gimp_save_procedure_set_support_xmp (GimpSaveProcedure *procedure,
-                                     gboolean           supports)
+gimp_export_procedure_set_support_xmp (GimpExportProcedure *procedure,
+                                       gboolean             supports)
 {
-  g_return_if_fail (GIMP_IS_SAVE_PROCEDURE (procedure));
+  g_return_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure));
 
   g_object_set (procedure,
                 "supports-xmp", supports,
@@ -702,11 +702,11 @@ gimp_save_procedure_set_support_xmp (GimpSaveProcedure *procedure,
 }
 
 /**
- * gimp_save_procedure_set_support_profile:
+ * gimp_export_procedure_set_support_profile:
  * @procedure: a #GimpProcedure.
  * @supports:  whether color profiles can be stored.
  *
- * Determine whether @procedure supports saving ICC color profiles. By
+ * Determine whether @procedure supports exporting ICC color profiles. By
  * default, it won't (so there is usually no reason to run this function
  * with %FALSE).
  *
@@ -715,14 +715,14 @@ gimp_save_procedure_set_support_xmp (GimpSaveProcedure *procedure,
  * - Automatically adds a standard auxiliary argument
  *   "save-color-profile" in the end of the argument list of @procedure,
  *   with relevant blurb and description.
- * - If used with other gimp_save_procedure_set_support_*() functions,
+ * - If used with other gimp_export_procedure_set_support_*() functions,
  *   they will always be ordered the same (the order of the calls don't
- *   matter), keeping all save procedures consistent.
- * - Generated GimpSaveProcedureDialog will contain the metadata
+ *   matter), keeping all export procedures consistent.
+ * - Generated GimpExportProcedureDialog will contain the metadata
  *   options, once again always in the same order and with consistent
  *   GUI style across plug-ins.
  * - API from [class@ProcedureConfig] will automatically process these
- *   properties to decide whether to save a given metadata or not.
+ *   properties to decide whether to export a given metadata or not.
  *
  * Note that since this is an auxiliary argument, it won't be part of
  * the PDB arguments. By default, the value will be [func@export_color_profile].
@@ -730,10 +730,10 @@ gimp_save_procedure_set_support_xmp (GimpSaveProcedure *procedure,
  * Since: 3.0
  **/
 void
-gimp_save_procedure_set_support_profile (GimpSaveProcedure *procedure,
-                                         gboolean           supports)
+gimp_export_procedure_set_support_profile (GimpExportProcedure *procedure,
+                                           gboolean             supports)
 {
-  g_return_if_fail (GIMP_IS_SAVE_PROCEDURE (procedure));
+  g_return_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure));
 
   g_object_set (procedure,
                 "supports-profile", supports,
@@ -741,11 +741,11 @@ gimp_save_procedure_set_support_profile (GimpSaveProcedure *procedure,
 }
 
 /**
- * gimp_save_procedure_set_support_thumbnail:
+ * gimp_export_procedure_set_support_thumbnail:
  * @procedure: a #GimpProcedure.
  * @supports:  whether a thumbnail can be stored.
  *
- * Determine whether @procedure supports saving a thumbnail. By default,
+ * Determine whether @procedure supports exporting a thumbnail. By default,
  * it won't (so there is usually no reason to run this function with
  * %FALSE).
  *
@@ -754,14 +754,14 @@ gimp_save_procedure_set_support_profile (GimpSaveProcedure *procedure,
  * - Automatically adds a standard auxiliary argument "save-thumbnail"
  *   in the end of the argument list of @procedure, with relevant blurb
  *   and description.
- * - If used with other gimp_save_procedure_set_support_*() functions,
+ * - If used with other gimp_export_procedure_set_support_*() functions,
  *   they will always be ordered the same (the order of the calls don't
- *   matter), keeping all save procedures consistent.
- * - Generated GimpSaveProcedureDialog will contain the metadata
+ *   matter), keeping all export procedures consistent.
+ * - Generated GimpExportProcedureDialog will contain the metadata
  *   options, once again always in the same order and with consistent
  *   GUI style across plug-ins.
  * - API from [class@ProcedureConfig] will automatically process these
- *   properties to decide whether to save a given metadata or not.
+ *   properties to decide whether to export a given metadata or not.
  *
  * Note that since this is an auxiliary argument, it won't be part of
  * the PDB arguments. By default, the value will be
@@ -770,10 +770,10 @@ gimp_save_procedure_set_support_profile (GimpSaveProcedure *procedure,
  * Since: 3.0
  **/
 void
-gimp_save_procedure_set_support_thumbnail (GimpSaveProcedure *procedure,
-                                           gboolean           supports)
+gimp_export_procedure_set_support_thumbnail (GimpExportProcedure *procedure,
+                                             gboolean             supports)
 {
-  g_return_if_fail (GIMP_IS_SAVE_PROCEDURE (procedure));
+  g_return_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure));
 
   g_object_set (procedure,
                 "supports-thumbnail", supports,
@@ -781,11 +781,11 @@ gimp_save_procedure_set_support_thumbnail (GimpSaveProcedure *procedure,
 }
 
 /**
- * gimp_save_procedure_set_support_comment:
+ * gimp_export_procedure_set_support_comment:
  * @procedure: a #GimpProcedure.
  * @supports:  whether a comment can be stored.
  *
- * Determine whether @procedure supports saving a comment. By default,
+ * Determine whether @procedure supports exporting a comment. By default,
  * it won't (so there is usually no reason to run this function with
  * %FALSE).
  *
@@ -794,14 +794,14 @@ gimp_save_procedure_set_support_thumbnail (GimpSaveProcedure *procedure,
  * - Automatically adds a standard auxiliary argument "save-comment"
  *   in the end of the argument list of @procedure, with relevant blurb
  *   and description.
- * - If used with other gimp_save_procedure_set_support_*() functions,
+ * - If used with other gimp_export_procedure_set_support_*() functions,
  *   they will always be ordered the same (the order of the calls don't
- *   matter), keeping all save procedures consistent.
- * - Generated GimpSaveProcedureDialog will contain the metadata
+ *   matter), keeping all export procedures consistent.
+ * - Generated GimpExportProcedureDialog will contain the metadata
  *   options, once again always in the same order and with consistent
  *   GUI style across plug-ins.
  * - API from [class@ProcedureConfig] will automatically process these
- *   properties to decide whether to save a given metadata or not.
+ *   properties to decide whether to export a given metadata or not.
  *
  * Note that since this is an auxiliary argument, it won't be part of
  * the PDB arguments. By default, the value will be
@@ -810,10 +810,10 @@ gimp_save_procedure_set_support_thumbnail (GimpSaveProcedure *procedure,
  * Since: 3.0
  **/
 void
-gimp_save_procedure_set_support_comment (GimpSaveProcedure *procedure,
-                                         gboolean           supports)
+gimp_export_procedure_set_support_comment (GimpExportProcedure *procedure,
+                                           gboolean             supports)
 {
-  g_return_if_fail (GIMP_IS_SAVE_PROCEDURE (procedure));
+  g_return_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure));
 
   g_object_set (procedure,
                 "supports-comment", supports,
@@ -821,97 +821,97 @@ gimp_save_procedure_set_support_comment (GimpSaveProcedure *procedure,
 }
 
 /**
- * gimp_save_procedure_get_support_exif:
+ * gimp_export_procedure_get_support_exif:
  * @procedure: a #GimpProcedure.
  *
- * Returns: %TRUE if @procedure supports Exif saving.
+ * Returns: %TRUE if @procedure supports Exif exporting.
  *
  * Since: 3.0
  **/
 gboolean
-gimp_save_procedure_get_support_exif (GimpSaveProcedure *procedure)
+gimp_export_procedure_get_support_exif (GimpExportProcedure *procedure)
 {
-  g_return_val_if_fail (GIMP_IS_SAVE_PROCEDURE (procedure), FALSE);
+  g_return_val_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure), FALSE);
 
   return procedure->priv->supports_exif;
 }
 
 /**
- * gimp_save_procedure_get_support_iptc:
+ * gimp_export_procedure_get_support_iptc:
  * @procedure: a #GimpProcedure.
  *
- * Returns: %TRUE if @procedure supports IPTC saving.
+ * Returns: %TRUE if @procedure supports IPTC exporting.
  *
  * Since: 3.0
  **/
 gboolean
-gimp_save_procedure_get_support_iptc (GimpSaveProcedure *procedure)
+gimp_export_procedure_get_support_iptc (GimpExportProcedure *procedure)
 {
-  g_return_val_if_fail (GIMP_IS_SAVE_PROCEDURE (procedure), FALSE);
+  g_return_val_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure), FALSE);
 
   return procedure->priv->supports_iptc;
 }
 
 /**
- * gimp_save_procedure_get_support_xmp:
+ * gimp_export_procedure_get_support_xmp:
  * @procedure: a #GimpProcedure.
  *
- * Returns: %TRUE if @procedure supports XMP saving.
+ * Returns: %TRUE if @procedure supports XMP exporting.
  *
  * Since: 3.0
  **/
 gboolean
-gimp_save_procedure_get_support_xmp (GimpSaveProcedure *procedure)
+gimp_export_procedure_get_support_xmp (GimpExportProcedure *procedure)
 {
-  g_return_val_if_fail (GIMP_IS_SAVE_PROCEDURE (procedure), FALSE);
+  g_return_val_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure), FALSE);
 
   return procedure->priv->supports_xmp;
 }
 
 /**
- * gimp_save_procedure_get_support_profile:
+ * gimp_export_procedure_get_support_profile:
  * @procedure: a #GimpProcedure.
  *
- * Returns: %TRUE if @procedure supports ICC color profile saving.
+ * Returns: %TRUE if @procedure supports ICC color profile exporting.
  *
  * Since: 3.0
  **/
 gboolean
-gimp_save_procedure_get_support_profile (GimpSaveProcedure *procedure)
+gimp_export_procedure_get_support_profile (GimpExportProcedure *procedure)
 {
-  g_return_val_if_fail (GIMP_IS_SAVE_PROCEDURE (procedure), FALSE);
+  g_return_val_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure), FALSE);
 
   return procedure->priv->supports_profile;
 }
 
 /**
- * gimp_save_procedure_get_support_thumbnail:
+ * gimp_export_procedure_get_support_thumbnail:
  * @procedure: a #GimpProcedure.
  *
- * Returns: %TRUE if @procedure supports thumbnail saving.
+ * Returns: %TRUE if @procedure supports thumbnail exporting.
  *
  * Since: 3.0
  **/
 gboolean
-gimp_save_procedure_get_support_thumbnail (GimpSaveProcedure *procedure)
+gimp_export_procedure_get_support_thumbnail (GimpExportProcedure *procedure)
 {
-  g_return_val_if_fail (GIMP_IS_SAVE_PROCEDURE (procedure), FALSE);
+  g_return_val_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure), FALSE);
 
   return procedure->priv->supports_thumbnail;
 }
 
 /**
- * gimp_save_procedure_get_support_comment:
+ * gimp_export_procedure_get_support_comment:
  * @procedure: a #GimpProcedure.
  *
- * Returns: %TRUE if @procedure supports comment saving.
+ * Returns: %TRUE if @procedure supports comment exporting.
  *
  * Since: 3.0
  **/
 gboolean
-gimp_save_procedure_get_support_comment (GimpSaveProcedure *procedure)
+gimp_export_procedure_get_support_comment (GimpExportProcedure *procedure)
 {
-  g_return_val_if_fail (GIMP_IS_SAVE_PROCEDURE (procedure), FALSE);
+  g_return_val_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure), FALSE);
 
   return procedure->priv->supports_comment;
 }

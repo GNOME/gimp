@@ -142,9 +142,9 @@ gif_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, EXPORT_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, gif_export, NULL, NULL);
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, gif_export, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED*, GRAY*");
 
@@ -1264,9 +1264,9 @@ save_dialog (GimpImage     *image,
 
   animation_supported = n_layers > 1;
 
-  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
-                                           image);
+  dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
+                                             GIMP_PROCEDURE_CONFIG (config),
+                                             image);
 
   /* Warn user that image will be converted to 8 bits if not already */
   if (gimp_image_get_precision (orig_image) != GIMP_PRECISION_U8_NON_LINEAR &&

@@ -299,9 +299,9 @@ class ColorXhtml(Gimp.PlugIn):
     def do_create_procedure(self, name):
         procedure = None
         if name == 'file-colorxhtml-export':
-            procedure = Gimp.SaveProcedure.new(self, name,
-                                               Gimp.PDBProcType.PLUGIN,
-                                               False, export_colorxhtml, None)
+            procedure = Gimp.ExportProcedure.new(self, name,
+                                                 Gimp.PDBProcType.PLUGIN,
+                                                 False, export_colorxhtml, None)
             procedure.set_image_types("RGB")
             procedure.set_documentation (
                 _("Save as colored HTML text"),

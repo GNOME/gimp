@@ -42,6 +42,7 @@
 #include <libgimp/gimpchannel.h>
 #include <libgimp/gimpdisplay.h>
 #include <libgimp/gimpdrawable.h>
+#include <libgimp/gimpexportprocedure.h>
 #include <libgimp/gimpfont.h>
 #include <libgimp/gimpgimprc.h>
 #include <libgimp/gimpgradient.h>
@@ -62,7 +63,6 @@
 #include <libgimp/gimpprocedure-params.h>
 #include <libgimp/gimpprogress.h>
 #include <libgimp/gimpresource.h>
-#include <libgimp/gimpsaveprocedure.h>
 #include <libgimp/gimpselection.h>
 #include <libgimp/gimptextlayer.h>
 #include <libgimp/gimpthumbnailprocedure.h>

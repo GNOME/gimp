@@ -292,7 +292,7 @@ gimp_procedure_dialog_constructed (GObject *object)
 
   if (GIMP_IS_LOAD_PROCEDURE (procedure))
     ok_label = _("_Open");
-  else if (GIMP_IS_SAVE_PROCEDURE (procedure))
+  else if (GIMP_IS_EXPORT_PROCEDURE (procedure))
     ok_label = _("_Export");
   else
     ok_label = _("_OK");
@@ -565,7 +565,7 @@ gimp_procedure_dialog_set_ok_label (GimpProcedureDialog *dialog,
 
       if (GIMP_IS_LOAD_PROCEDURE (procedure))
         ok_label = _("_Open");
-      else if (GIMP_IS_SAVE_PROCEDURE (procedure))
+      else if (GIMP_IS_EXPORT_PROCEDURE (procedure))
         ok_label = _("_Export");
       else
         ok_label = _("_OK");

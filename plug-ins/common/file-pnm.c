@@ -340,11 +340,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PNM_EXPORT_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, pnm_export,
-                                           GINT_TO_POINTER (FILE_TYPE_PNM),
-                                           NULL);
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, pnm_export,
+                                             GINT_TO_POINTER (FILE_TYPE_PNM),
+                                             NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -377,11 +377,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PBM_EXPORT_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, pnm_export,
-                                           GINT_TO_POINTER (FILE_TYPE_PBM),
-                                           NULL);
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, pnm_export,
+                                             GINT_TO_POINTER (FILE_TYPE_PBM),
+                                             NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
       gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
@@ -413,11 +413,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PGM_EXPORT_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, pnm_export,
-                                           GINT_TO_POINTER (FILE_TYPE_PGM),
-                                           NULL);
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, pnm_export,
+                                             GINT_TO_POINTER (FILE_TYPE_PGM),
+                                             NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -449,11 +449,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PPM_EXPORT_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, pnm_export,
-                                           GINT_TO_POINTER (FILE_TYPE_PPM),
-                                           NULL);
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, pnm_export,
+                                             GINT_TO_POINTER (FILE_TYPE_PPM),
+                                             NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -485,11 +485,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PAM_EXPORT_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, pnm_export,
-                                           GINT_TO_POINTER (FILE_TYPE_PAM),
-                                           NULL);
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, pnm_export,
+                                             GINT_TO_POINTER (FILE_TYPE_PAM),
+                                             NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*, INDEXED*");
 
@@ -514,11 +514,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PFM_EXPORT_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, pnm_export,
-                                           GINT_TO_POINTER (FILE_TYPE_PFM),
-                                           NULL);
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, pnm_export,
+                                             GINT_TO_POINTER (FILE_TYPE_PFM),
+                                             NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -2020,9 +2020,9 @@ save_dialog (GimpProcedure *procedure,
   GtkListStore *store;
   gboolean      run;
 
-  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
-                                           image);
+  dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
+                                             GIMP_PROCEDURE_CONFIG (config),
+                                             image);
   /*  file save type  */
   store = gimp_int_store_new (_("_ASCII"), 0,
                               _("_Raw"),   1,

@@ -105,7 +105,7 @@ gimp_file_procedure_finalize (GObject *object)
  *
  * This name can be used for any public-facing strings, such as
  * graphical interface labels. An example usage would be
- * %GimpSaveProcedureDialog title looking like "Export Image as %s".
+ * %GimpExportProcedureDialog title looking like "Export Image as %s".
  *
  * Note that since the format name is public-facing, it is recommended
  * to localize it at runtime, for instance through gettext, like:

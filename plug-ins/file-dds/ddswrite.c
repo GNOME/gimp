@@ -1918,9 +1918,9 @@ save_dialog (GimpImage           *image,
                   "save-type", "layer",
                   NULL);
 
-  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
-                                           image);
+  dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
+                                             GIMP_PROCEDURE_CONFIG (config),
+                                             image);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 

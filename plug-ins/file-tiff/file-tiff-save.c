@@ -1259,9 +1259,9 @@ save_dialog (GimpImage     *image,
     }
   g_strfreev (parasites);
 
-  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
-                                           image);
+  dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
+                                             GIMP_PROCEDURE_CONFIG (config),
+                                             image);
 
   if (classic_tiff_failed)
     {
@@ -1342,7 +1342,7 @@ save_dialog (GimpImage     *image,
       g_object_unref (cmyk_profile);
     }
 
-  gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "save-geotiff");
+  gimp_export_procedure_dialog_add_metadata (GIMP_EXPORT_PROCEDURE_DIALOG (dialog), "save-geotiff");
   gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
                                        "save-geotiff",
                                        has_geotiff, NULL, NULL, FALSE);

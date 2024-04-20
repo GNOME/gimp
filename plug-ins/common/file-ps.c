@@ -443,9 +443,9 @@ ps_create_procedure (GimpPlugIn  *plug_in,
   else if (! strcmp (name, EXPORT_PS_PROC) ||
            ! strcmp (name, EXPORT_EPS_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           FALSE, ps_export, NULL, NULL);
+      procedure = gimp_export_procedure_new (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             FALSE, ps_export, NULL, NULL);
 
       if (! strcmp (name, EXPORT_PS_PROC))
         {
@@ -3855,9 +3855,9 @@ save_dialog (GimpProcedure *procedure,
   GtkWidget      *hbox, *vbox;
   gboolean        run;
 
-  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
-                                           image);
+  dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
+                                             GIMP_PROCEDURE_CONFIG (config),
+                                             image);
 
   /* Image Size */
   /* Width/Height/X-/Y-offset labels */

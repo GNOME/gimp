@@ -42,11 +42,11 @@
 #include <libgimp/gimppatternchooser.h>
 #include <libgimp/gimpprocbrowserdialog.h>
 #include <libgimp/gimpproceduredialog.h>
+#include <libgimp/gimpexportproceduredialog.h>
 #include <libgimp/gimpprocview.h>
 #include <libgimp/gimpprogressbar.h>
 #include <libgimp/gimppropwidgets.h>
 #include <libgimp/gimpresourcechooser.h>
-#include <libgimp/gimpsaveproceduredialog.h>
 #include <libgimp/gimpzoompreview.h>
 
 #undef __GIMP_UI_H_INSIDE__
