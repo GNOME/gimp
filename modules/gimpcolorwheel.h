@@ -77,9 +77,9 @@ void        gimp_color_wheel_set_color         (GimpColorWheel  *wheel,
                                                 double           s,
                                                 double           v);
 void        gimp_color_wheel_get_color         (GimpColorWheel  *wheel,
-                                                gdouble         *h,
-                                                gdouble         *s,
-                                                gdouble         *v);
+                                                gfloat          *h,
+                                                gfloat          *s,
+                                                gfloat          *v);
 
 void        gimp_color_wheel_set_ring_fraction (GimpColorWheel  *wheel,
                                                 gdouble          fraction);

@@ -1341,17 +1341,17 @@ gimp_color_wheel_set_color (GimpColorWheel *wheel,
  */
 void
 gimp_color_wheel_get_color (GimpColorWheel *wheel,
-                            gdouble        *h,
-                            gdouble        *s,
-                            gdouble        *v)
+                            gfloat         *h,
+                            gfloat         *s,
+                            gfloat         *v)
 {
   GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
 
   g_return_if_fail (GIMP_IS_COLOR_WHEEL (wheel));
 
-  if (h) *h = priv->h;
-  if (s) *s = priv->s;
-  if (v) *v = priv->v;
+  if (h) *h = (gfloat) priv->h;
+  if (s) *s = (gfloat) priv->s;
+  if (v) *v = (gfloat) priv->v;
 }
 
 /**

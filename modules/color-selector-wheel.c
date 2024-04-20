@@ -147,9 +147,9 @@ colorsel_wheel_set_color (GimpColorSelector *selector,
                           GeglColor         *color)
 {
   ColorselWheel *wheel = COLORSEL_WHEEL (selector);
-  gdouble        hsv[3];
+  gfloat         hsv[3];
 
-  gegl_color_get_pixel (color, babl_format_with_space ("HSV double", wheel->format), hsv);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSV float", wheel->format), hsv);
   g_signal_handlers_block_by_func (wheel->hsv,
                                    G_CALLBACK (colorsel_wheel_changed),
                                    wheel);
@@ -221,10 +221,10 @@ colorsel_wheel_changed (GimpColorWheel    *wheel,
                         GimpColorSelector *selector)
 {
   GeglColor *color = gegl_color_new (NULL);
-  gdouble    hsv[3];
+  gfloat     hsv[3];
 
   gimp_color_wheel_get_color (wheel, &hsv[0], &hsv[1], &hsv[2]);
-  gegl_color_set_pixel (color, babl_format_with_space ("HSV double",
+  gegl_color_set_pixel (color, babl_format_with_space ("HSV float",
                                                        COLORSEL_WHEEL (selector)->format),
                         hsv);
   gimp_color_selector_set_color (selector, color);
