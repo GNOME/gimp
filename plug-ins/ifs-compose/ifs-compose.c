@@ -264,9 +264,10 @@ static void recompute_center_action       (GSimpleAction *action,
 static void ifs_compose                   (GimpDrawable *drawable);
 
 static ColorMap *color_map_create         (const gchar  *name,
-                                           GimpRGB      *orig_color,
-                                           GimpRGB      *data,
+                                           GeglColor    *orig_color,
+                                           GeglColor    *data,
                                            gboolean      fixed_point);
+static void      color_map_free           (ColorMap     *cmap);
 static void color_map_color_changed_cb    (GtkWidget    *widget,
                                            ColorMap     *color_map);
 static void color_map_update              (ColorMap     *color_map);
@@ -740,7 +741,7 @@ ifs_compose_color_page (void)
   GtkWidget *grid;
   GtkWidget *label;
   GSList    *group = NULL;
-  GimpRGB    color;
+  GeglColor *color;
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -763,7 +764,7 @@ ifs_compose_color_page (void)
   gtk_widget_show (ifsD->simple_button);
 
   ifsD->target_cmap = color_map_create (_("IFS Fractal: Target"), NULL,
-                                        &ifsD->current_vals.target_color, TRUE);
+                                        ifsD->current_vals.target_color, TRUE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->target_cmap->hbox, 1, 0, 1, 2);
                     // GTK_FILL, 0, 0, 0);
   gtk_widget_show (ifsD->target_cmap->hbox);
@@ -806,37 +807,37 @@ ifs_compose_color_page (void)
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (ifsD->full_button));
   gtk_widget_show (ifsD->full_button);
 
-  gimp_rgb_parse_name (&color, "red", -1);
-  gimp_rgb_set_alpha (&color, 1.0);
-  ifsD->red_cmap = color_map_create (_("IFS Fractal: Red"), &color,
-                                     &ifsD->current_vals.red_color, FALSE);
+  color = gegl_color_new ("red");
+  ifsD->red_cmap = color_map_create (_("IFS Fractal: Red"), color,
+                                     ifsD->current_vals.red_color, FALSE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->red_cmap->hbox, 1, 2, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->red_cmap->hbox);
+  g_object_unref (color);
 
-  gimp_rgb_parse_name (&color, "green", -1);
-  gimp_rgb_set_alpha (&color, 1.0);
-  ifsD->green_cmap = color_map_create (_("IFS Fractal: Green"), &color,
-                                       &ifsD->current_vals.green_color, FALSE);
+  color = gegl_color_new ("green");
+  ifsD->green_cmap = color_map_create (_("IFS Fractal: Green"), color,
+                                       ifsD->current_vals.green_color, FALSE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->green_cmap->hbox, 2, 2, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->green_cmap->hbox);
+  g_object_unref (color);
 
-  gimp_rgb_parse_name (&color, "blue", -1);
-  gimp_rgb_set_alpha (&color, 1.0);
-  ifsD->blue_cmap = color_map_create (_("IFS Fractal: Blue"), &color,
-                                      &ifsD->current_vals.blue_color, FALSE);
+  color = gegl_color_new ("blue");
+  ifsD->blue_cmap = color_map_create (_("IFS Fractal: Blue"), color,
+                                      ifsD->current_vals.blue_color, FALSE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->blue_cmap->hbox, 3, 2, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->blue_cmap->hbox);
+  g_object_unref (color);
 
-  gimp_rgb_parse_name (&color, "black", -1);
-  gimp_rgb_set_alpha (&color, 1.0);
-  ifsD->black_cmap = color_map_create (_("IFS Fractal: Black"), &color,
-                                       &ifsD->current_vals.black_color, FALSE);
+  color = gegl_color_new ("black");
+  ifsD->black_cmap = color_map_create (_("IFS Fractal: Black"), color,
+                                       ifsD->current_vals.black_color, FALSE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->black_cmap->hbox, 4, 2, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->black_cmap->hbox);
+  g_object_unref (color);
 
   return vbox;
 }
@@ -1461,8 +1462,19 @@ update_values (void)
 {
   ifsD->in_update = TRUE;
 
+  g_clear_object (&ifsD->current_vals.red_color);
+  g_clear_object (&ifsD->current_vals.green_color);
+  g_clear_object (&ifsD->current_vals.blue_color);
+  g_clear_object (&ifsD->current_vals.black_color);
+  g_clear_object (&ifsD->current_vals.target_color);
+
   ifsD->current_vals = elements[ifsD->current_element]->v;
-  ifsD->current_vals.theta *= 180/G_PI;
+  ifsD->current_vals.theta       *= 180/G_PI;
+  ifsD->current_vals.red_color    = gegl_color_duplicate (ifsD->current_vals.red_color);
+  ifsD->current_vals.green_color  = gegl_color_duplicate (ifsD->current_vals.green_color);
+  ifsD->current_vals.blue_color   = gegl_color_duplicate (ifsD->current_vals.blue_color);
+  ifsD->current_vals.black_color  = gegl_color_duplicate (ifsD->current_vals.black_color);
+  ifsD->current_vals.target_color = gegl_color_duplicate (ifsD->current_vals.target_color);
 
   value_pair_update (ifsD->prob_pair);
   value_pair_update (ifsD->x_pair);
@@ -1995,8 +2007,18 @@ val_changed_update (void)
   undo_begin ();
   undo_update (ifsD->current_element);
 
+  g_clear_object (&cur->v.red_color);
+  g_clear_object (&cur->v.green_color);
+  g_clear_object (&cur->v.blue_color);
+  g_clear_object (&cur->v.black_color);
+  g_clear_object (&cur->v.target_color);
   cur->v = ifsD->current_vals;
-  cur->v.theta *= G_PI/180.0;
+  cur->v.red_color    = gegl_color_duplicate (cur->v.red_color);
+  cur->v.green_color  = gegl_color_duplicate (cur->v.green_color);
+  cur->v.blue_color   = gegl_color_duplicate (cur->v.blue_color);
+  cur->v.black_color  = gegl_color_duplicate (cur->v.black_color);
+  cur->v.target_color = gegl_color_duplicate (cur->v.target_color);
+  cur->v.theta       *= G_PI/180.0;
   aff_element_compute_trans (cur,
                              allocation.width, allocation.height,
                              ifsvals.center_x, ifsvals.center_y);
@@ -2013,18 +2035,19 @@ val_changed_update (void)
 
 static ColorMap *
 color_map_create (const gchar *name,
-                  GimpRGB     *orig_color,
-                  GimpRGB     *data,
+                  GeglColor   *orig_color,
+                  GeglColor   *data,
                   gboolean     fixed_point)
 {
   GtkWidget *frame;
   GtkWidget *arrow;
   ColorMap  *color_map = g_new (ColorMap, 1);
-  GeglColor *color;
 
-  gimp_rgb_set_alpha (data, 1.0);
-  color_map->color       = gegl_color_new (NULL);
-  gegl_color_set_pixel (color_map->color, babl_format ("R'G'B'A double"), data);
+  if (data || orig_color)
+    color_map->color = gegl_color_duplicate (data ? data : orig_color);
+  else
+    color_map->color = gegl_color_new ("black");
+  gimp_color_set_alpha (color_map->color, 1.0);
   color_map->fixed_point = fixed_point;
   color_map->hbox        = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
 
@@ -2033,10 +2056,8 @@ color_map_create (const gchar *name,
   gtk_box_pack_start (GTK_BOX (color_map->hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  color = gegl_color_new (NULL);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), fixed_point ? data : orig_color);
-  color_map->orig_preview = gimp_color_area_new (color, GIMP_COLOR_AREA_FLAT, 0);
-  g_object_unref (color);
+  color_map->orig_preview = gimp_color_area_new (fixed_point ? color_map->color : orig_color,
+                                                 GIMP_COLOR_AREA_FLAT, 0);
   gtk_drag_dest_unset (color_map->orig_preview);
   gtk_widget_set_size_request (color_map->orig_preview,
                                COLOR_SAMPLE_SIZE, COLOR_SAMPLE_SIZE);
@@ -2065,25 +2086,42 @@ color_map_create (const gchar *name,
 }
 
 static void
+color_map_free (ColorMap *cmap)
+{
+  g_object_unref (cmap->color);
+  g_free (cmap);
+}
+
+static void
 color_map_color_changed_cb (GtkWidget *widget,
                             ColorMap  *color_map)
 {
+  g_clear_object (&color_map->color);
+  color_map->color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget));
+
   if (ifsD->in_update)
     return;
 
   undo_begin ();
   undo_update (ifsD->current_element);
 
+  g_clear_object (&elements[ifsD->current_element]->v.red_color);
+  g_clear_object (&elements[ifsD->current_element]->v.green_color);
+  g_clear_object (&elements[ifsD->current_element]->v.blue_color);
+  g_clear_object (&elements[ifsD->current_element]->v.black_color);
+  g_clear_object (&elements[ifsD->current_element]->v.target_color);
   elements[ifsD->current_element]->v = ifsD->current_vals;
-  elements[ifsD->current_element]->v.theta *= G_PI/180.0;
+  elements[ifsD->current_element]->v.theta       *= G_PI/180.0;
+  elements[ifsD->current_element]->v.red_color    = gegl_color_duplicate (elements[ifsD->current_element]->v.red_color);
+  elements[ifsD->current_element]->v.green_color  = gegl_color_duplicate (elements[ifsD->current_element]->v.green_color);
+  elements[ifsD->current_element]->v.blue_color   = gegl_color_duplicate (elements[ifsD->current_element]->v.blue_color);
+  elements[ifsD->current_element]->v.black_color  = gegl_color_duplicate (elements[ifsD->current_element]->v.black_color);
+  elements[ifsD->current_element]->v.target_color = gegl_color_duplicate (elements[ifsD->current_element]->v.target_color);
   aff_element_compute_color_trans (elements[ifsD->current_element]);
 
   update_values ();
 
   ifs_compose_preview ();
-
-  g_clear_object (&color_map->color);
-  color_map->color = gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget));
 }
 
 static void
@@ -2327,12 +2365,9 @@ static void
 ifs_compose_set_defaults (void)
 {
   GeglColor *color;
-  GimpRGB    rgb;
   gint       i;
 
   color = gimp_context_get_foreground ();
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-  g_object_unref (color);
 
   ifsvals.aspect_ratio =
     (gdouble)ifsD->drawable_height / ifsD->drawable_width;
@@ -2346,13 +2381,13 @@ ifs_compose_set_defaults (void)
   element_selected = g_realloc (element_selected,
                                 ifsvals.num_elements * sizeof(gboolean));
 
-  elements[0] = aff_element_new (0.3, 0.37 * ifsvals.aspect_ratio, &rgb,
+  elements[0] = aff_element_new (0.3, 0.37 * ifsvals.aspect_ratio, color,
                                  ++count_for_naming);
   element_selected[0] = FALSE;
-  elements[1] = aff_element_new (0.7, 0.37 * ifsvals.aspect_ratio, &rgb,
+  elements[1] = aff_element_new (0.7, 0.37 * ifsvals.aspect_ratio, color,
                                  ++count_for_naming);
   element_selected[1] = FALSE;
-  elements[2] = aff_element_new (0.5, 0.7 * ifsvals.aspect_ratio, &rgb,
+  elements[2] = aff_element_new (0.5, 0.7 * ifsvals.aspect_ratio, color,
                                  ++count_for_naming);
   element_selected[2] = FALSE;
 
@@ -2380,6 +2415,8 @@ ifs_compose_set_defaults (void)
     g_free (ifsD->selected_orig);
 
   ifsD->selected_orig = g_new (AffElement, ifsvals.num_elements);
+
+  g_object_unref (color);
 }
 
 /* show a transient message dialog */
@@ -2629,7 +2666,6 @@ ifs_compose_new_action (GSimpleAction *action,
 {
   GtkAllocation   allocation;
   GeglColor      *color;
-  GimpRGB         rgb;
   gint            i;
   AffElement     *elem;
 
@@ -2638,12 +2674,10 @@ ifs_compose_new_action (GSimpleAction *action,
   undo_begin ();
 
   color = gimp_context_get_foreground ();
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), &rgb);
-  g_object_unref (color);
 
   elem = aff_element_new (0.5, 0.5 * allocation.height / allocation.width,
-                          &rgb,
-                          ++count_for_naming);
+                          color, ++count_for_naming);
+  g_object_unref (color);
 
   ifsvals.num_elements++;
   elements = g_realloc (elements, ifsvals.num_elements * sizeof (AffElement *));
@@ -2870,6 +2904,11 @@ window_destroy (GtkWidget *widget,
   if (ifsOptD)
     gtk_widget_destroy (ifsOptD->dialog);
 
+  color_map_free (ifsD->red_cmap);
+  color_map_free (ifsD->green_cmap);
+  color_map_free (ifsD->blue_cmap);
+  color_map_free (ifsD->black_cmap);
+  color_map_free (ifsD->target_cmap);
   g_free (ifsD);
 
   gtk_application_remove_window (ifs->app, GTK_WINDOW (ifs->dialog));

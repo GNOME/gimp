@@ -32,24 +32,24 @@ typedef struct {
 } IPolygon;
 
 typedef struct {
-  gdouble  x, y;
-  gdouble  theta;
-  gdouble  scale;
-  gdouble  asym;
-  gdouble  shear;
-  gint     flip;
+  gdouble    x, y;
+  gdouble    theta;
+  gdouble    scale;
+  gdouble    asym;
+  gdouble    shear;
+  gint       flip;
 
-  GimpRGB  red_color;
-  GimpRGB  green_color;
-  GimpRGB  blue_color;
-  GimpRGB  black_color;
+  GeglColor *red_color;
+  GeglColor *green_color;
+  GeglColor *blue_color;
+  GeglColor *black_color;
 
-  GimpRGB  target_color;
-  gdouble  hue_scale;
-  gdouble  value_scale;
+  GeglColor *target_color;
+  gdouble    hue_scale;
+  gdouble    value_scale;
 
-  gint     simple_color;
-  gdouble  prob;
+  gint       simple_color;
+  gdouble    prob;
 } AffElementVals;
 
 typedef struct
@@ -131,7 +131,7 @@ gint      ipolygon_contains    (IPolygon *poly,
 /* manipulation of composite transforms */
 AffElement *aff_element_new                  (gdouble      x,
                                               gdouble      y,
-                                              GimpRGB     *color,
+                                              GeglColor   *color,
                                               gint         count);
 void        aff_element_free                 (AffElement  *elem);
 void        aff_element_compute_trans        (AffElement  *elem,

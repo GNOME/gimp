@@ -89,10 +89,11 @@ static struct
 };
 
 static GTokenType
-ifsvals_parse_color (GScanner *scanner,
-		     GimpRGB  *result)
+ifsvals_parse_color (GScanner  *scanner,
+                     GeglColor *result)
 {
   GTokenType token;
+  gdouble    rgb[3];
 
   token = g_scanner_get_next_token (scanner);
   if (token != G_TOKEN_LEFT_CURLY)
@@ -100,9 +101,9 @@ ifsvals_parse_color (GScanner *scanner,
 
   token = g_scanner_get_next_token (scanner);
   if (token == G_TOKEN_FLOAT)
-    result->r = scanner->value.v_float;
+    rgb[0] = scanner->value.v_float;
   else if (token == G_TOKEN_INT)
-    result->r = scanner->value.v_int;
+    rgb[0] = (gdouble) scanner->value.v_int;
   else
     return G_TOKEN_FLOAT;
 
@@ -112,9 +113,9 @@ ifsvals_parse_color (GScanner *scanner,
 
   token = g_scanner_get_next_token (scanner);
   if (token == G_TOKEN_FLOAT)
-    result->g = scanner->value.v_float;
+    rgb[1] = scanner->value.v_float;
   else if (token == G_TOKEN_INT)
-    result->g = scanner->value.v_int;
+    rgb[1] = (gdouble) scanner->value.v_int;
   else
     return G_TOKEN_FLOAT;
 
@@ -124,15 +125,17 @@ ifsvals_parse_color (GScanner *scanner,
 
   token = g_scanner_get_next_token (scanner);
   if (token == G_TOKEN_FLOAT)
-    result->b = scanner->value.v_float;
+    rgb[2] = scanner->value.v_float;
   else if (token == G_TOKEN_INT)
-    result->b = scanner->value.v_int;
+    rgb[2] = (gdouble) scanner->value.v_int;
   else
     return G_TOKEN_FLOAT;
 
   token = g_scanner_get_next_token (scanner);
   if (token != G_TOKEN_RIGHT_CURLY)
     return G_TOKEN_RIGHT_CURLY;
+
+  gegl_color_set_pixel (result, babl_format ("R'G'B' double"), rgb);
 
   return G_TOKEN_NONE;
 }
@@ -229,31 +232,31 @@ ifsvals_parse_element (GScanner       *scanner,
 	  break;
 
 	case TOKEN_RED_COLOR:
-	  token = ifsvals_parse_color (scanner, &result->red_color);
+	  token = ifsvals_parse_color (scanner, result->red_color);
 	  if (token != G_TOKEN_NONE)
 	    return token;
 	  break;
 
 	case TOKEN_GREEN_COLOR:
-	  token = ifsvals_parse_color (scanner, &result->green_color);
+	  token = ifsvals_parse_color (scanner, result->green_color);
 	  if (token != G_TOKEN_NONE)
 	    return token;
 	  break;
 
 	case TOKEN_BLUE_COLOR:
-	  token = ifsvals_parse_color (scanner, &result->blue_color);
+	  token = ifsvals_parse_color (scanner, result->blue_color);
 	  if (token != G_TOKEN_NONE)
 	    return token;
 	  break;
 
 	case TOKEN_BLACK_COLOR:
-	  token = ifsvals_parse_color (scanner, &result->black_color);
+	  token = ifsvals_parse_color (scanner, result->black_color);
 	  if (token != G_TOKEN_NONE)
 	    return token;
 	  break;
 
 	case TOKEN_TARGET_COLOR:
-	  token = ifsvals_parse_color (scanner, &result->target_color);
+	  token = ifsvals_parse_color (scanner, result->target_color);
 	  if (token != G_TOKEN_NONE)
 	    return token;
 	  break;
@@ -320,15 +323,16 @@ ifsvals_parse (GScanner         *scanner,
   GTokenType      token, expected_token;
   AffElement     *el;
   IfsComposeVals  new_vals;
-  GimpRGB         color;
+  GeglColor      *color;
 
-  GList *el_list = NULL;
-  GList *tmp_list;
-  gint   i;
+  GList          *el_list = NULL;
+  GList          *tmp_list;
+  gint            i;
 
-  new_vals = *vals;
+  new_vals              = *vals;
   new_vals.num_elements = 0;
-  i = 0;
+  color                 = gegl_color_new ("black");
+  i                     = 0;
 
   expected_token = G_TOKEN_NONE;
   while (expected_token == G_TOKEN_NONE)
@@ -381,7 +385,7 @@ ifsvals_parse (GScanner         *scanner,
 	  break;
 
 	case TOKEN_ELEMENT:
-	  el = aff_element_new (0.0,0.0, &color, ++i);
+	  el = aff_element_new (0.0,0.0, color, ++i);
 	  expected_token = ifsvals_parse_element (scanner, &el->v);
 
 	  if (expected_token == G_TOKEN_NONE)
@@ -398,6 +402,8 @@ ifsvals_parse (GScanner         *scanner,
 	  expected_token = G_TOKEN_SYMBOL;
 	}
     }
+
+  g_object_unref (color);
 
   if (expected_token != G_TOKEN_NONE)
     {
@@ -491,6 +497,8 @@ ifsvals_stringify (IfsComposeVals  *vals,
 
   for (i=0; i<vals->num_elements; i++)
     {
+      gdouble rgb[3];
+
       g_string_append (result, "element {\n");
       g_ascii_dtostr (buf, G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.x);
       g_string_append_printf (result, "    x %s\n", buf);
@@ -506,33 +514,38 @@ ifsvals_stringify (IfsComposeVals  *vals,
       g_string_append_printf (result, "    shear %s\n", buf);
       g_string_append_printf (result, "    flip %d\n", elements[i]->v.flip);
 
-      g_ascii_dtostr (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.red_color.r);
-      g_ascii_dtostr (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.red_color.g);
-      g_ascii_dtostr (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.red_color.b);
+      gegl_color_get_pixel (elements[i]->v.red_color, babl_format ("R'G'B' double"), rgb);
+      g_ascii_dtostr (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, rgb[0]);
+      g_ascii_dtostr (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, rgb[1]);
+      g_ascii_dtostr (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, rgb[2]);
       g_string_append_printf (result, "    red_color { %s,%s,%s }\n",
                               cbuf[0], cbuf[1], cbuf[2]);
 
-      g_ascii_dtostr (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.green_color.r);
-      g_ascii_dtostr (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.green_color.g);
-      g_ascii_dtostr (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.green_color.b);
+      gegl_color_get_pixel (elements[i]->v.green_color, babl_format ("R'G'B' double"), rgb);
+      g_ascii_dtostr (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, rgb[0]);
+      g_ascii_dtostr (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, rgb[1]);
+      g_ascii_dtostr (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, rgb[2]);
       g_string_append_printf (result, "    green_color { %s,%s,%s }\n",
                               cbuf[0], cbuf[1], cbuf[2]);
 
-      g_ascii_dtostr (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.blue_color.r);
-      g_ascii_dtostr (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.blue_color.g);
-      g_ascii_dtostr (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.blue_color.b);
+      gegl_color_get_pixel (elements[i]->v.blue_color, babl_format ("R'G'B' double"), rgb);
+      g_ascii_dtostr (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, rgb[0]);
+      g_ascii_dtostr (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, rgb[1]);
+      g_ascii_dtostr (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, rgb[2]);
       g_string_append_printf (result, "    blue_color { %s,%s,%s }\n",
                               cbuf[0], cbuf[1], cbuf[2]);
 
-      g_ascii_dtostr (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.black_color.r);
-      g_ascii_dtostr (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.black_color.g);
-      g_ascii_dtostr (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.black_color.b);
+      gegl_color_get_pixel (elements[i]->v.black_color, babl_format ("R'G'B' double"), rgb);
+      g_ascii_dtostr (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, rgb[0]);
+      g_ascii_dtostr (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, rgb[1]);
+      g_ascii_dtostr (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, rgb[2]);
       g_string_append_printf (result, "    black_color { %s,%s,%s }\n",
                               cbuf[0], cbuf[1], cbuf[2]);
 
-      g_ascii_dtostr (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.target_color.r);
-      g_ascii_dtostr (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.target_color.g);
-      g_ascii_dtostr (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, elements[i]->v.target_color.b);
+      gegl_color_get_pixel (elements[i]->v.target_color, babl_format ("R'G'B' double"), rgb);
+      g_ascii_dtostr (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, rgb[0]);
+      g_ascii_dtostr (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, rgb[1]);
+      g_ascii_dtostr (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, rgb[2]);
       g_string_append_printf (result, "    target_color { %s,%s,%s }\n",
                               cbuf[0], cbuf[1], cbuf[2]);
 
