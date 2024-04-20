@@ -73,8 +73,10 @@ workflow:
     when: always
 
 variables:
+  # Common cloning procedure
   GIT_DEPTH: "1"
   GIT_SUBMODULE_STRATEGY: recursive
+  # CI-wide Debian variables
   ARTIFACTS_SUFFIX: "-x64"
   GIMP_PREFIX: "${CI_PROJECT_DIR}/_install${ARTIFACTS_SUFFIX}"
 
