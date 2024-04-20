@@ -1908,7 +1908,6 @@ if meson.can_run_host_binaries()
     foreach plugin_exe : plugin_executables
       gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', plugin_exe)
     endforeach
-    gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', gi.get_variable('libdir') / 'libgirepository-1.0.dylib')
   endif
 else
   # Cross-builds require an existing native GIMP installed, unless we
