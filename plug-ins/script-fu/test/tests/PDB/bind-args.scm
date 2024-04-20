@@ -31,8 +31,8 @@
 ; int
 ; float
 
-; GimpRGB is tested e.g. with Palette
-; GimpRGBArray is tested e.g.
+; Colors (GeglColor) are tested e.g. with Palette
+; GimpColorArray is tested e.g.
 ; from palette-get-colormap
 ; to is not tested: not an arg to any PDB proc
 

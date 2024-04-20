@@ -38,11 +38,9 @@
  *    Since a GimpProcedureConfig carries the values
  *    and GParamSpec carries the defaults.
  *  - ScriptFu might not support RGB triplet repr
- *  - GimpRGB may go away?
  *
  * Complex:
- * PDB and widgets traffic in GeglColor but SF converts to GimpRGB
- * and dumbs down to a Scheme list (r g b)
+ * PDB and widgets traffic in GeglColor but SF dumbs it down to a Scheme list (r g b)
  *
  * More SF code deals with GeglColor:
  * see scheme_marshall.c we marshall from GeglColor to/from Scheme lists of numbers.
@@ -53,25 +51,24 @@
  * Caller owns returned string.
  */
 gchar*
-sf_color_get_repr (SFColorType *arg_value)
+sf_color_get_repr (SFColorType arg_value)
 {
-  guchar r, g, b;
+  guchar rgb[3] = { 0 };
 
-  gimp_rgb_get_uchar (arg_value, &r, &g, &b);
-  return g_strdup_printf ("'(%d %d %d)", (gint) r, (gint) g, (gint) b);
+  if (arg_value)
+    gegl_color_get_pixel (arg_value, babl_format ("R'G'B' u8"), rgb);
+
+  return g_strdup_printf ("'(%d %d %d)", (gint) rgb[0], (gint) rgb[1], (gint) rgb[2]);
 }
 
-/* Returns GeglColor from SFColorType: GimpRGB w format quad of double.
+/* Returns GeglColor from SFColorType.
  *
  * Returned GeglColor is owned by caller.
  */
 GeglColor *
-sf_color_get_gegl_color (SFColorType *arg_value)
+sf_color_get_gegl_color (SFColorType arg_value)
 {
-  GeglColor *result = gegl_color_new (NULL);
-
-  gegl_color_set_pixel (result, babl_format ("R'G'B'A double"), arg_value);
-  return result;
+  return arg_value ? gegl_color_duplicate (arg_value) : gegl_color_new ("transparent");
 }
 
 /* Set an SFArg of type SFColorType from a GeglColor.
@@ -81,7 +78,14 @@ void
 sf_color_set_from_gegl_color (SFColorType *arg_value,
                               GeglColor   *color)
 {
-  gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), arg_value);
+  const Babl *format = gegl_color_get_format (color);
+  guint8      pixel[48];
+
+  gegl_color_get_pixel (color, format, pixel);
+  if (*arg_value)
+    gegl_color_set_pixel (*arg_value, format, pixel);
+  else
+    *arg_value = gegl_color_duplicate (color);
 }
 
 /* Set the default for an arg of type SFColorType from a string name.
@@ -100,23 +104,23 @@ gboolean
 sf_color_arg_set_default_by_name (SFArg *arg,
                                   gchar *name_of_default)
 {
-  gboolean result = TRUE;
-  GimpRGB  pixel;
+  gboolean   result = TRUE;
+  GeglColor *color;
 
   /* Create a default value for the old-style interface.
-   * This knows SF keeps values of type GimpRGB.
    */
-  if (! gimp_rgb_parse_css (&pixel, name_of_default, -1))
+  if (! (color = gimp_color_parse_css (name_of_default, -1)))
     {
       result = FALSE;
     }
   else
     {
       /* ScriptFu does not let an author specify RGBA, only RGB. */
-      gimp_rgb_set_alpha (&pixel, 1.0);
+      gimp_color_set_alpha (color, 1.0);
 
       /* Copying a struct that is not allocated, not setting a pointer. */
-      arg->default_value.sfa_color = pixel;
+      g_clear_object (&arg->default_value.sfa_color);
+      arg->default_value.sfa_color = color;
     }
   return result;
 }
@@ -143,9 +147,8 @@ sf_color_arg_get_default_color (SFArg *arg)
 {
   /* require the default was set earlier.
    * No easy way to assert it was set,
-   * its a struct GimpRGB where all zeros is valid.
    */
-  return sf_color_get_gegl_color (&arg->default_value.sfa_color);
+  return sf_color_get_gegl_color (arg->default_value.sfa_color);
 }
 
 

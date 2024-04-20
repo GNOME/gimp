@@ -19,20 +19,15 @@
 #define __SCRIPT_FU_COLOR_H__
 
 
-/* ScriptFu stores colors as GimpRGB.
- * I.E. as a pixel, a set of component intensity values,
- * and not as a representation of perceived color GeglColor.
- * I.E. simplified, with loss of capability.
- */
-typedef GimpRGB SFColorType;
+typedef GeglColor * SFColorType;
 
 
 /* Methods on SFColorType. */
-GeglColor* sf_color_get_gegl_color           (SFColorType *arg_value);
+GeglColor* sf_color_get_gegl_color           (SFColorType  arg_value);
 void       sf_color_set_from_gegl_color      (SFColorType *arg_value,
                                               GeglColor   *color);
 
-gchar*     sf_color_get_repr                 (SFColorType *arg_value);
+gchar*     sf_color_get_repr                 (SFColorType  arg_value);
 
 /* Other conversions. */
 gchar*     sf_color_get_repr_from_gegl_color (GeglColor   *color);

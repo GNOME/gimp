@@ -185,7 +185,8 @@ script_fu_arg_reset (SFArg *arg, gboolean should_reset_ids)
       break;
 
     case SF_COLOR:
-      value->sfa_color = default_value->sfa_color;
+      g_clear_object (&value->sfa_color);
+      value->sfa_color = gegl_color_duplicate (default_value->sfa_color);
       break;
 
     case SF_TOGGLE:
@@ -632,7 +633,7 @@ script_fu_arg_append_repr_from_self (SFArg       *arg,
 
     case SF_COLOR:
       {
-        gchar *repr = sf_color_get_repr (&arg_value->sfa_color);
+        gchar *repr = sf_color_get_repr (arg_value->sfa_color);
         g_string_append (result_string, repr);
         g_free (repr);
       }

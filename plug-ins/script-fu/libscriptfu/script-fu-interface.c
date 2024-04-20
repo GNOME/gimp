@@ -77,7 +77,7 @@ static void   script_fu_file_callback       (GtkWidget     *widget,
 static void   script_fu_combo_callback      (GtkWidget     *widget,
                                              SFOption      *option);
 static void   script_fu_color_button_update (GimpColorButton *button,
-                                             GimpRGB         *rgb);
+                                             SFColorType      color);
 
 static void   script_fu_resource_set_handler (gpointer       data,
                                               gpointer       resource,
@@ -266,7 +266,7 @@ script_fu_interface_dialog (SFScript  *script,
         case SF_COLOR:
           {
             GimpColorConfig *config;
-            GeglColor       *color = sf_color_get_gegl_color (&arg->value.sfa_color);
+            GeglColor       *color = sf_color_get_gegl_color (arg->value.sfa_color);
 
             left_align = TRUE;
             widget = gimp_color_button_new (_("Script-Fu Color Selection"),
@@ -283,7 +283,7 @@ script_fu_interface_dialog (SFScript  *script,
 
             g_signal_connect (widget, "color-changed",
                               G_CALLBACK (script_fu_color_button_update),
-                              &arg->value.sfa_color);
+                              arg->value.sfa_color);
           }
           break;
 
@@ -629,11 +629,11 @@ script_fu_combo_callback (GtkWidget *widget,
 
 static void
 script_fu_color_button_update (GimpColorButton *button,
-                               SFColorType     *arg_value)
+                               SFColorType      arg_value)
 {
   GeglColor *color = gimp_color_button_get_color (button);
 
-  sf_color_set_from_gegl_color (arg_value, color);
+  sf_color_set_from_gegl_color (&arg_value, color);
 
   g_object_unref (color);
 }
@@ -835,7 +835,7 @@ script_fu_reset (SFScript *script)
 
         case SF_COLOR:
           {
-            GeglColor *color = sf_color_get_gegl_color (&value->sfa_color);
+            GeglColor *color = sf_color_get_gegl_color (value->sfa_color);
 
             gimp_color_button_set_color (GIMP_COLOR_BUTTON (widget), color);
             g_object_unref (color);
