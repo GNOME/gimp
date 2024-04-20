@@ -72,10 +72,6 @@ void      gimp_rgb_get_uchar       (const GimpRGB *rgb,
 gboolean  gimp_rgb_parse_name      (GimpRGB       *rgb,
                                     const gchar   *name,
                                     gint           len);
-gboolean  gimp_rgb_parse_css       (GimpRGB       *rgb,
-                                    const gchar   *css,
-                                    gint           len);
-
 void      gimp_rgb_add             (GimpRGB       *rgb1,
                                     const GimpRGB *rgb2);
 void      gimp_rgb_multiply        (GimpRGB       *rgb1,
@@ -114,10 +110,6 @@ void      gimp_rgba_get_uchar      (const GimpRGB *rgba,
                                     guchar        *green,
                                     guchar        *blue,
                                     guchar        *alpha);
-
-gboolean  gimp_rgba_parse_css      (GimpRGB       *rgba,
-                                    const gchar   *css,
-                                    gint           len);
 
 void      gimp_rgba_add            (GimpRGB       *rgba1,
                                     const GimpRGB *rgba2);
