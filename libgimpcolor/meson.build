@@ -12,7 +12,6 @@ libgimpcolor_sources = files(
   'gimphsl.c',
   'gimphsv.c',
   'gimppixbuf.c',
-  'gimprgb-parse.c',
   'gimprgb.c',
 )
 

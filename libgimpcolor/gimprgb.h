@@ -69,9 +69,6 @@ void      gimp_rgb_get_uchar       (const GimpRGB *rgb,
                                     guchar        *green,
                                     guchar        *blue);
 
-gboolean  gimp_rgb_parse_name      (GimpRGB       *rgb,
-                                    const gchar   *name,
-                                    gint           len);
 void      gimp_rgb_add             (GimpRGB       *rgb1,
                                     const GimpRGB *rgb2);
 void      gimp_rgb_multiply        (GimpRGB       *rgb1,
@@ -87,12 +84,6 @@ guchar    gimp_rgb_luminance_uchar (const GimpRGB *rgb);
 void      gimp_rgb_composite       (GimpRGB              *color1,
                                     const GimpRGB        *color2,
                                     GimpRGBCompositeMode  mode);
-
-/*  access to the list of color names  */
-void      gimp_rgb_list_names      (const gchar ***names,
-                                    GimpRGB      **colors,
-                                    gint          *n_colors);
-
 
 void      gimp_rgba_set            (GimpRGB       *rgba,
                                     gdouble        red,

@@ -28,6 +28,8 @@
 #include <babl/babl.h>
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "gimpcolor.h"
 
 

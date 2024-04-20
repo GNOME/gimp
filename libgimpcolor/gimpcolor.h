@@ -21,6 +21,8 @@
 
 #define __GIMP_COLOR_H_INSIDE__
 
+#include <libgimpbase/gimpbase.h>
+
 #include <libgimpcolor/gimpcolortypes.h>
 
 #include <libgimpcolor/gimpadaptivesupersample.h>
@@ -47,26 +49,27 @@ G_BEGIN_DECLS
 #define GIMP_VALUE_HOLDS_COLOR(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GEGL_TYPE_COLOR))
 
 
-void        gimp_color_set_alpha                 (GeglColor   *color,
-                                                  gdouble      alpha);
+void           gimp_color_set_alpha                 (GeglColor      *color,
+                                                     gdouble         alpha);
 
-gboolean    gimp_color_is_perceptually_identical (GeglColor   *color1,
-                                                  GeglColor   *color2);
+gboolean       gimp_color_is_perceptually_identical (GeglColor      *color1,
+                                                     GeglColor      *color2);
 
-GeglColor * gimp_color_parse_css                 (const gchar *css);
-GeglColor * gimp_color_parse_hex                 (const gchar *hex);
-GeglColor * gimp_color_parse_name                (const gchar *name);
+GeglColor    * gimp_color_parse_css                 (const gchar    *css);
+GeglColor    * gimp_color_parse_hex                 (const gchar    *hex);
+GeglColor    * gimp_color_parse_name                (const gchar    *name);
+const gchar ** gimp_color_list_names                (GimpColorArray *colors);
 
-GeglColor * gimp_color_parse_css_substring       (const gchar *css,
-                                                  gint         len);
-GeglColor * gimp_color_parse_hex_substring       (const gchar *hex,
-                                                  gint         len);
-GeglColor * gimp_color_parse_name_substring      (const gchar *name,
-                                                  gint         len);
+GeglColor    * gimp_color_parse_css_substring       (const gchar    *css,
+                                                     gint            len);
+GeglColor    * gimp_color_parse_hex_substring       (const gchar    *hex,
+                                                     gint            len);
+GeglColor    * gimp_color_parse_name_substring      (const gchar    *name,
+                                                     gint            len);
 
-gboolean    gimp_color_is_out_of_self_gamut      (GeglColor   *color);
-gboolean    gimp_color_is_out_of_gamut           (GeglColor   *color,
-                                                  const Babl  *space);
+gboolean       gimp_color_is_out_of_self_gamut      (GeglColor      *color);
+gboolean       gimp_color_is_out_of_gamut           (GeglColor      *color,
+                                                     const Babl     *space);
 
 /*
  * GIMP_TYPE_PARAM_COLOR

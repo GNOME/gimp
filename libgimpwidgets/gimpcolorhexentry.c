@@ -116,9 +116,8 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
   GtkEntryCompletion       *completion;
   GtkCellRenderer          *cell;
   GtkListStore             *store;
-  GimpRGB                  *colors;
+  GeglColor               **colors;
   const gchar             **names;
-  gint                      num_colors;
   gint                      i;
 
   entry->priv = gimp_color_hex_entry_get_instance_private (entry);
@@ -139,25 +138,21 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
 
   store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, GEGL_TYPE_COLOR);
 
-  gimp_rgb_list_names (&names, &colors, &num_colors);
+  names = gimp_color_list_names (&colors);
 
-  for (i = 0; i < num_colors; i++)
+  for (i = 0; names[i] != NULL; i++)
     {
       GtkTreeIter  iter;
-      GeglColor   *named_color = gegl_color_new ("black");
-
-      gegl_color_set_rgba_with_space (named_color, colors[i].r, colors[i].g,
-                                      colors[i].b, colors[i].a, NULL);
+      GeglColor   *named_color = colors[i];
 
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter,
                           COLUMN_NAME,  names[i],
                           COLUMN_COLOR, named_color,
                           -1);
-      g_object_unref (named_color);
     }
 
-  g_free (colors);
+  gimp_color_array_free (colors);
   g_free (names);
 
   completion = g_object_new (GTK_TYPE_ENTRY_COMPLETION,
@@ -222,7 +217,7 @@ gimp_color_hex_entry_new (void)
 /**
  * gimp_color_hex_entry_set_color:
  * @entry: a #GimpColorHexEntry widget
- * @color: pointer to a #GimpRGB
+ * @color: the color to set.
  *
  * Sets the color displayed by a #GimpColorHexEntry. If the new color
  * is different to the previously set color, the "color-changed"

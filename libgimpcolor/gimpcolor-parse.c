@@ -29,6 +29,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "gimpcolor.h"
 
 
@@ -255,6 +257,55 @@ GeglColor *
 gimp_color_parse_name (const gchar *name)
 {
   return gimp_color_parse_name_substring (name, -1);
+}
+
+/**
+ * gimp_color_list_names:
+ * @colors: (out) (optional) (array zero-terminated=1) (element-type GeglColor) (transfer full): return location for an array of [class@Gegl.Color]
+ *
+ * Returns the list of [SVG 1.0 color
+ * keywords](https://www.w3.org/TR/SVG/types.html) that is recognized by
+ * [func@color_parse_name].
+ *
+ * The returned strings are const and must not be freed. Only the array
+ * must be freed with `g_free()`.
+ *
+ * The optional @colors arrays must be freed with [func@color_array_free] when
+ * they are no longer needed.
+ *
+ * Returns: (array zero-terminated=1) (transfer container): an array of color names.
+ *
+ * Since: 2.2
+ **/
+const gchar **
+gimp_color_list_names (GimpColorArray *colors)
+{
+  const gchar **names;
+  gint    i;
+
+  names = g_new0 (const gchar *, G_N_ELEMENTS (named_colors) + 1);
+
+  if (colors)
+    *colors = g_new0 (GeglColor *, G_N_ELEMENTS (named_colors) + 1);
+
+  for (i = 0; i < G_N_ELEMENTS (named_colors); i++)
+    {
+      names[i] = named_colors[i].name;
+
+      if (colors)
+        {
+          GeglColor *color = gegl_color_new (NULL);
+
+          gegl_color_set_rgba_with_space (color,
+                                          (gdouble) named_colors[i].red / 255.0,
+                                          (gdouble) named_colors[i].green / 255.0,
+                                          (gdouble) named_colors[i].blue / 255.0,
+                                          1.0, NULL);
+          (*colors)[i] = color;
+        }
+    }
+
+  return names;
 }
 
 /**

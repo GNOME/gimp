@@ -22,6 +22,7 @@ EXPORTS
 	gimp_color_is_out_of_gamut
 	gimp_color_is_out_of_self_gamut
 	gimp_color_is_perceptually_identical
+	gimp_color_list_names
 	gimp_color_managed_get_color_profile
 	gimp_color_managed_get_icc_profile
 	gimp_color_managed_get_simulation_bpc
@@ -96,13 +97,11 @@ EXPORTS
 	gimp_rgb_composite
 	gimp_rgb_get_type
 	gimp_rgb_get_uchar
-	gimp_rgb_list_names
 	gimp_rgb_luminance
 	gimp_rgb_luminance_uchar
 	gimp_rgb_max
 	gimp_rgb_min
 	gimp_rgb_multiply
-	gimp_rgb_parse_name
 	gimp_rgb_set
 	gimp_rgb_set_alpha
 	gimp_rgb_set_uchar
