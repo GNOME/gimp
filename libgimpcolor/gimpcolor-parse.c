@@ -233,7 +233,10 @@ gimp_color_parse_css (const gchar *css,
 
   tmp = gimp_color_parse_strip (css, len);
 
-  color = gimp_color_parse_css_internal (tmp);
+  if (g_strcmp0 (tmp, "transparent") == 0)
+    color = gegl_color_new ("transparent");
+  else
+    color = gimp_color_parse_css_internal (tmp);
 
   g_free (tmp);
 
@@ -344,6 +347,14 @@ gimp_color_parse_hex_internal (const gchar *hex)
     hex++;
 
   len = strlen (hex);
+  /* TODO: current implementation has 2 issues:
+   * 1. It doesn't support the alpha channel, even though CSS spec now has
+   *    support for it with either 8 or 4 digits.
+   * 2. The spec has nothing about channels on 3 or 4 digits, which we support
+   *    here (for higher precision?). Is this format really supported somewhere?
+   *    Do we want to keep this?
+   * See: https://drafts.csswg.org/css-color/#hex-notation
+   */
   if (len % 3 || len < 3 || len > 12)
     return NULL;
 
@@ -463,8 +474,10 @@ gimp_color_parse_css_internal (const gchar *css)
     {
       return gimp_color_parse_hex_internal (css);
     }
-  else if (strncmp (css, "rgb(", 4) == 0 ||
-           strncmp (css, "hsl(", 4) == 0)
+  else if (strncmp (css, "rgb(", 4)  == 0 ||
+           strncmp (css, "hsl(", 4)  == 0 ||
+           strncmp (css, "rgba(", 5) == 0 ||
+           strncmp (css, "hsla(", 5) == 0)
     {
       return gimp_color_parse_css_numeric (css);
     }
