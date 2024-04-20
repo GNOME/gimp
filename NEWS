@@ -29,6 +29,9 @@ Core:
   - More GimpRGB code replaced by GeglColor (space invasion).
   - New official software logo!
     See: https://gitlab.gnome.org/GNOME/gimp-data/-/blob/main/images/logo/README.md
+  - Internal procedures are not shown as search actions.
+  - Non-destructive layer effects are copied together with the layer they belong
+    to.
 
 Tools:
 
@@ -36,20 +39,47 @@ Tools:
     (truncate)" and reordered to be second in the list, just after "None
     (extend)".
 
+Graphical User Interface:
+
+  - New "gimp-effects" icon (used in the Layers dockable for non-destructive
+    layer effects).
+  - GimpSpinScale text area height is now reduced to improve usability (it is
+    now easier to find the area to *grab* the scale vs. area to edit the text;
+    the cursor changing helping to make out one from the other).
+
 Plug-ins:
 
   - Plug-ins ported to GimpProcedureDialog: Warp, decompose,
     file-pdf-save-multi, qbist, file-xmc.
   - PSD: unsupported layers are not dropped anymore (they will usually show
     empty instead).
+  - Script-Fu:
+    * "Refresh Scripts" (Filters > Development > Script-Fu) is now hidden. It
+      was broken and anyway not an ideal design choice.
+    * New call-with-output-string, call-with-input-string and any->string
+      functions.
+  - All "file-*-save" (and "file-*-save-internal) plug-in procedures have been
+    renamed to "file-*-export" (respectively "file-*-export-internal").
 
 API:
 
   - Changes in libgimp:
     * gimp_procedure_run_config() can run with no config objects (equivalent to
       run the prodcedure with default arguments).
+    * New GimpParamColor type (obsoleting GeglParamColor within GIMP) which has
+      the additional setting `has_alpha` to advertize whether your plug-in
+      argument accepts only opaque colors or transparent ones (hence generated
+      GUI can be set accordingly).
+    * GimpSaveProcedure renamed to GimpExportProcedure.
+    * GimpSaveProcedureDialog renamed to GimpExportProcedureDialog.
   - Changes in libgimpwidgets:
     * GimpColorArea: dropped colors are now passed as GeglColor.
+  - Changes in libgimpbase:
+    * GimpRGB and GimpRGB arrays are not supported anymore in the PDB and GIMP
+      Protocol (only GeglColor and GimpColorArray).
+  - Changes in libgimpcolor:
+    * All gimp_rgb_parse_*() functions now become gimp_color_parse_*() functions
+      (GeglColor based rather than GimpRGB).
 
 Build:
 
@@ -57,10 +87,13 @@ Build:
     * babl 0.1.108
   - Started a skeleton for unit testing framework for libgimp (only a few tests
     so far but we eventually target exhaustivity).
-  - Main CI jobs are now compiled with Clang, as well as Windows installer and
-    Nightly Flatpak builds. Some benchmarks run by Øyvind show we can gain a bit
-    of performance in some situations in babl/GEGL/ctx codepaths, thanks to
-    better auto-vectorization support.
+  - CI:
+    * Main CI jobs are now compiled with Clang, as well as Windows installer and
+      Nightly Flatpak builds. Some benchmarks run by Øyvind show we can gain a bit
+      of performance in some situations in babl/GEGL/ctx codepaths, thanks to
+      better auto-vectorization support.
+    * x86 (32-bit) cross-build job for Windows removed.
+    * "packaging" stage merged back with "build" stage.
   - New gimp-data repository used as a git submodule:
     * Various data were moved to gimp-data: icons, cursors, patterns, brushes
       and application icon/logo.
