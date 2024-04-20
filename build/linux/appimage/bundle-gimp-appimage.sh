@@ -85,7 +85,7 @@ wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/$lega
 chmod +x "$legacy_appimagetool"
 
 
-# PACKAGE FILES
+# BUNDLE FILES
 
 ## System base (needed to use GIMP or to avoid polluting the terminal output)
 ### Glib needed files

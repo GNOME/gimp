@@ -30,7 +30,7 @@ if [[ "$BUILD_TYPE" == "CI_CROSS" ]]; then
 fi
 
 
-# Package deps and GIMP files
+# Bundle deps and GIMP files
 export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
 if [[ "$BUILD_TYPE" == "CI_CROSS" ]]; then
   export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}-cross"
@@ -123,7 +123,7 @@ cp -fr ${MSYS_PREFIX}/share/xml/iso-codes/iso_639.xml ${GIMP_DISTRIB}/share/xml/
 
 ## Executables and DLLs.
 
-### We save the list of already copied DLLs to keep a state between 3_package-gimp-uni_dep runs.
+### We save the list of already copied DLLs to keep a state between 3_bundle-gimp-uni_dep runs.
 rm -f done-dll.list
 
 ### Minimal (and some additional) executables for the 'bin' folder
@@ -142,7 +142,7 @@ done
 ## Optional executables, .DLLs and resources for GObject Introspection support
 if [[ "$BUILD_TYPE" != "CI_CROSS" ]]; then
   cp -fr ${MSYS_PREFIX}/bin/libgirepository-*.dll ${GIMP_DISTRIB}/bin/
-  python3 build/windows/gitlab-ci/3_package-gimp-uni_dep.py ${GIMP_DISTRIB}/bin/libgirepository-*.dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+  python3 build/windows/gitlab-ci/3_bundle-gimp-uni_dep.py ${GIMP_DISTRIB}/bin/libgirepository-*.dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
   cp -fr ${MSYS_PREFIX}/lib/girepository-*/ ${GIMP_DISTRIB}/lib/
   cp -fr ${GIMP_PREFIX}/lib/girepository-*/* ${GIMP_DISTRIB}/lib/girepository-*/
   cp -fr ${GIMP_PREFIX}/share/gir-*/ ${GIMP_DISTRIB}/share/
@@ -167,11 +167,11 @@ fi
 ### Needed DLLs for the executables in the 'bin' folder
 binList=$(find ${GIMP_DISTRIB}/bin/ -iname '*.exe') && binArray=($binList)
 for bin in "${binArray[@]}"; do
-  python3 build/windows/gitlab-ci/3_package-gimp-uni_dep.py $bin ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
+  python3 build/windows/gitlab-ci/3_bundle-gimp-uni_dep.py $bin ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
 done
 
 ### Needed DLLs for the executables and DLLs in the 'lib' sub-folders
 libList=$(find ${GIMP_DISTRIB}/lib/ \( -iname '*.dll' -or -iname '*.exe' \)) && libArray=($libList)
 for lib in "${libArray[@]}"; do
-  python3 build/windows/gitlab-ci/3_package-gimp-uni_dep.py $lib ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
+  python3 build/windows/gitlab-ci/3_bundle-gimp-uni_dep.py $lib ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
 done

@@ -283,7 +283,7 @@ gimp-debian-x64:
     - ninja install
     - ccache --show-stats
     - cd ..
-    - bash -x build/linux/appimage/package-gimp-appimage.sh
+    - bash -x build/linux/appimage/bundle-gimp-appimage.sh
   artifacts:
     expose_as: 'Linux appimage'
     paths:
@@ -427,9 +427,9 @@ gimp-win-x64-cross:
   script:
     - bash -x build/windows/gitlab-ci/2_build-gimp-crossroad.sh
     - crossroad w64 gimp --run="build/windows/gitlab-ci/2_build-gimp-crossroad.sh"
-    - bash -x build/windows/gitlab-ci/3_package-gimp-uni_base.sh
+    - bash -x build/windows/gitlab-ci/3_bundle-gimp-uni_base.sh
     - cd gimp-x64
-    - bash -x ../build/windows/gitlab-ci/3_package-gimp-uni_sym.sh
+    - bash -x ../build/windows/gitlab-ci/3_bundle-gimp-uni_sym.sh
   artifacts:
     expose_as: 'Windows zip'
     paths:
@@ -495,9 +495,9 @@ gimp-win-a64:
   stage: gimp
   script:
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/2_build-gimp-msys2.sh"
-    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/3_package-gimp-uni_base.sh"
+    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/3_bundle-gimp-uni_base.sh"
     - cd gimp-a64
-    - C:\msys64\usr\bin\bash -lc "bash -x ../build/windows/gitlab-ci/3_package-gimp-uni_sym.sh"
+    - C:\msys64\usr\bin\bash -lc "bash -x ../build/windows/gitlab-ci/3_bundle-gimp-uni_sym.sh"
   artifacts:
     paths:
       - gimp-a64/
@@ -541,9 +541,9 @@ gimp-win-x64:
   stage: gimp
   script:
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/2_build-gimp-msys2.sh"
-    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/3_package-gimp-uni_base.sh"
+    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/3_bundle-gimp-uni_base.sh"
     - cd gimp-x64
-    - C:\msys64\usr\bin\bash -lc "bash -x ../build/windows/gitlab-ci/3_package-gimp-uni_sym.sh"
+    - C:\msys64\usr\bin\bash -lc "bash -x ../build/windows/gitlab-ci/3_bundle-gimp-uni_sym.sh"
   artifacts:
     paths:
       - gimp-x64/
@@ -586,9 +586,9 @@ gimp-win-x86:
   stage: gimp
   script:
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/2_build-gimp-msys2.sh"
-    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/3_package-gimp-uni_base.sh"
+    - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/3_bundle-gimp-uni_base.sh"
     - cd gimp-x86
-    - C:\msys64\usr\bin\bash -lc "bash -x ../build/windows/gitlab-ci/3_package-gimp-uni_sym.sh"
+    - C:\msys64\usr\bin\bash -lc "bash -x ../build/windows/gitlab-ci/3_bundle-gimp-uni_sym.sh"
   artifacts:
     paths:
       - gimp-x86/
