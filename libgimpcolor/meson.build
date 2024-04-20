@@ -1,4 +1,3 @@
-
 libgimpcolor_sources = files(
   'gimpadaptivesupersample.c',
   'gimpbilinear.c',
@@ -44,7 +43,6 @@ libgimpcolor_introspectable = [
   libgimpcolor_headers_introspectable,
 ]
 
-
 libgimpcolor = library('gimpcolor-' + gimp_api_version,
   libgimpcolor_sources,
   include_directories: rootInclude,
@@ -61,19 +59,4 @@ libgimpcolor = library('gimpcolor-' + gimp_api_version,
 install_headers(
   libgimpcolor_headers,
   subdir: gimp_api_name / 'libgimpcolor',
-)
-
-
-# Test program, not installed
-executable('test-color-parser',
-  'test-color-parser.c',
-  include_directories: rootInclude,
-  dependencies: [
-    cairo, gdk_pixbuf, gegl, lcms, math,
-    babl,
-    # glib,
-  ],
-  c_args: '-DG_LOG_DOMAIN="LibGimpColor"',
-  link_with: [ libgimpbase, libgimpcolor, ],
-  install: false,
 )

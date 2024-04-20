@@ -7,6 +7,7 @@ if not meson.can_run_host_binaries()
 endif
 
 tests = [
+  'color-parser',
   'palette',
   'selection-float'
 ]
