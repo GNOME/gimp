@@ -80,8 +80,12 @@
  */
 
 
-static void pspec_set_default_file (GParamSpec *pspec, const gchar *filepath);
-static void append_int_repr_from_gvalue (GString *result_string, GValue *gvalue);
+static void pspec_set_default_file         (GParamSpec  *pspec,
+                                            const gchar *filepath);
+static void append_int_repr_from_gvalue    (GString     *result_string,
+                                            GValue      *gvalue);
+static void append_scheme_repr_of_c_string (const gchar *user_string,
+                                            GString     *result_string);
 
 /* Free any allocated members.
  * Somewhat hides what members of the SFArg struct are allocated.
@@ -513,13 +517,7 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
 
     case SF_STRING:
     case SF_TEXT:
-      {
-        gchar *tmp;
-
-        tmp = script_fu_strescape (g_value_get_string (gvalue));
-        g_string_append_printf (result_string, "\"%s\"", tmp);
-        g_free (tmp);
-      }
+      append_scheme_repr_of_c_string (g_value_get_string (gvalue), result_string);
       break;
 
     case SF_FILENAME:
@@ -652,13 +650,7 @@ script_fu_arg_append_repr_from_self (SFArg       *arg,
 
     case SF_STRING:
     case SF_TEXT:
-      {
-        gchar *tmp;
-
-        tmp = script_fu_strescape (arg_value->sfa_value);
-        g_string_append_printf (result_string, "\"%s\"", tmp);
-        g_free (tmp);
-      }
+      append_scheme_repr_of_c_string (arg_value->sfa_value, result_string);
       break;
 
     case SF_ADJUSTMENT:
@@ -673,13 +665,7 @@ script_fu_arg_append_repr_from_self (SFArg       *arg,
 
     case SF_FILENAME:
     case SF_DIRNAME:
-      {
-        gchar *tmp;
-
-        tmp = script_fu_strescape (arg_value->sfa_file.filename);
-        g_string_append_printf (result_string, "\"%s\"", tmp);
-        g_free (tmp);
-      }
+      append_scheme_repr_of_c_string (arg_value->sfa_file.filename, result_string);
       break;
 
     case SF_OPTION:
@@ -916,3 +902,35 @@ append_int_repr_from_gvalue (GString *result_string, GValue *gvalue)
       g_string_append (result_string, "1");
     }
 }
+
+
+/* For the given C string IN, which can be user input so almost anything,
+ * append the Scheme repr to the GString OUT.
+ *
+ * The Scheme repr is:
+ *    - escaped certain characters
+ *    - surrounded by double quotes.
+ *
+ * When user input string is NULL, appends just a pair of quotes
+ * i.e. the Scheme representation of an empty string.
+ *
+ * Caller owns the result_string, and it is a GString, appendable.
+ */
+static void
+append_scheme_repr_of_c_string (const gchar *user_string, GString *result_string)
+{
+  gchar *tmp;
+
+  if (user_string == NULL)
+    {
+      g_string_append (result_string, "\"\"");
+    }
+  else
+    {
+      /* strescape requires user_string not null. */
+      tmp = script_fu_strescape (user_string);
+      g_string_append_printf (result_string, "\"%s\"", tmp);
+      g_free (tmp);
+    }
+}
+

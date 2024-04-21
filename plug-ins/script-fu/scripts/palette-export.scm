@@ -6,6 +6,9 @@
 ; utility function to help in exporting to other (text-based) formats.
 ; See instruction on adding new exporters at the end
 ;
+
+; !!! Here run functions call script-fu-use-v3, to bind PDB returns succintly.
+
 ; -----------------------------------------------------------------------------
 ; Numbers and Math
 ; -----------------------------------------------------------------------------
@@ -18,16 +21,16 @@
 
 ; Converts a decimal number to another base. The returned number is a string
 (define (convert-decimal-to-base num base)
-  (if (< num base) 
-    (list-ref conversion-digits num) 
+  (if (< num base)
+    (list-ref conversion-digits num)
     (let loop ((val num)
-               (order (inexact->exact (truncate (/ (log num) 
+               (order (inexact->exact (truncate (/ (log num)
                                                    (log base)))))
                (result ""))
       (let* ((power (expt base order))
              (digit (quotient val power)))
         (if (zero? order)
-          (string-append result (list-ref conversion-digits digit)) 
+          (string-append result (list-ref conversion-digits digit))
           (loop (- val (* digit power))
                 (pred order)
                 (string-append result (list-ref conversion-digits digit))))))))
@@ -155,6 +158,49 @@
     )
   )
 
+(define (bad-file-name)
+  (gimp-message (string-append _"The filename you entered is not a suitable name for a file."
+			       "\n\n"
+			       _"All characters in the name are either white-spaces or characters which can not appear in filenames.")))
+
+; Return path to a file, or abort with error to Gimp.
+;
+; IN filename is from a string widget.
+; A user entered the filename.  It could be strange characters, empty, etc.
+; Valid: see valid-file-name, which may be overly strict for some platforms.
+;
+; IN directory-name is from a GtkFileChooser widget in mode "choose folder"
+; When empty, returned path is just the in filename.
+; When not empty, returned path is to the filename in that directory.
+; The file at that path might exist already.
+;
+; FUTURE a proper widget for choosing a file destination.
+
+(define (get-path-or-abort directory-name filename)
+  (let* ((validated-file-name (valid-file-name filename))
+         (result-path ""))
+    (if (not validated-file-name)
+      (begin
+        (bad-file-name) ; gimp-message w translated text
+        (quit -1)))
+      ; FUTURE: The above should be (error "Invalid file name"))
+      ; with the existing translated text,  when ScriptFu error is fixed.
+
+    (set! result-path
+      (if (> (string-length directory-name) 0)
+        ; result is full path
+        (string-append directory-name DIR-SEPARATOR validated-file-name)
+        ; result is just the filename
+        validated-file-name))
+
+    ; Side effect.
+    ; Tell the user the mangled path, might be different than user entered.
+    ; The user should not need to search for the file.
+    (gimp-message (string-append _"Exported palette to file: " result-path))
+
+    result-path))
+
+
 ; Filters a string from all the characters which are not alpha-numeric
 ; (this also removes whitespaces)
 (define (name-alpha-numeric str)
@@ -179,25 +225,23 @@
 (define displayln (lambda (obj) (display obj) (display "\n")))
 
 ; The loop for exporting all the colors
-(define (export-palette palette-name color-convertor name-convertor
+(define (export-palette palette ; since v3, palette is numeric ID
+                        color-convertor name-convertor
                         start name-pre name-after name-color-seperator
                         color-pre color-after entry-seperator end)
 
   (define (write-color-line index)
     (display name-pre)
-    (display (name-convertor
-	      (car (gimp-palette-entry-get-name palette-name index))))
+    (display (name-convertor (gimp-palette-entry-get-name palette index)))
     (display name-after)
     (display name-color-seperator)
     (display color-pre)
-    (display (color-convertor
-	      (car (gimp-palette-entry-get-color palette-name index))))
+    (display (color-convertor (gimp-palette-entry-get-color palette index)))
     (display color-after)
     )
 
-  (let ((color-count (car (gimp-palette-get-colors palette-name)))
-        (i 0)
-        )
+  (let ((color-count (gimp-palette-get-color-count palette))
+        (i 0))
 
     (display start)
 
@@ -214,8 +258,27 @@
     )
   )
 
+; -----------
+; Methods for getting palette and its name from context.
+; These plugins are in the RMB pop-up menu of the Palettes dockable.
+; User clicking RMB on a palette puts it in the Gimp context i.e chooses it.
+; The palette is not actually passed as an arg to these plugins.
+; -----------
+
+; Return numeric ID of palette in context.
+(define (palette-in-context) (gimp-context-get-palette))
+
+; Return name of palette in context.
+; Since v3, resources in ScriptFu have numeric ID, not a string
+(define (palette-name-in-context)(gimp-resource-get-name (palette-in-context)))
+
+
+; -----------
+; Register exporter as run-function of a plugin.
+; -----------
+
 (define (register-palette-exporter
-	 export-type export-name file-type description author copyright date)
+	        export-type export-name file-type description author copyright date)
   (script-fu-register (string-append "gimp-palette-export-" export-type)
                       export-name
                       description
@@ -231,172 +294,137 @@
                            "<Palettes>/Palettes Menu/Export as")
   )
 
-(define (bad-file-name)
-  (gimp-message (string-append _"The filename you entered is not a suitable name for a file."
-			       "\n\n"
-			       _"All characters in the name are either white-spaces or characters which can not appear in filenames.")))
-
 ; -----------------------------------------------------------------------------
 ; Exporters
+; Run functions of the plugins.
 ; -----------------------------------------------------------------------------
 
 (define (gimp-palette-export-css directory-name file-name)
-  (let ((valid-name (valid-file-name file-name)))
-    (if valid-name
-        (with-output-to-file (string-append
-			      directory-name DIR-SEPARATOR file-name)
-          (lambda () (export-palette (car (gimp-context-get-palette))
-                                     color-rgb-to-css
-                                     name-alpha-numeric        ; name-convertor
-                                     "/* Generated with GIMP Palette Export */\n" ; start
-                                     "."                       ; name-pre
-                                     ""                        ; name-after
-                                     " { "                     ; name-color-seperator
-                                     "color: "                 ; color-pre
-                                     " }"                      ; color-after
-                                     "\n"                      ; entry-seperator
-                                     ""                        ; end
-                                     )))
-        (bad-file-name)
-        )
-    )
-  )
+  (script-fu-use-v3)
+  (let ((path (get-path-or-abort directory-name file-name)))
+    (with-output-to-file path
+      (lambda () (export-palette (palette-in-context)
+                                  color-rgb-to-css
+                                  name-alpha-numeric        ; name-convertor
+                                  "/* Generated with GIMP Palette Export */\n" ; start
+                                  "."                       ; name-pre
+                                  ""                        ; name-after
+                                  " { "                     ; name-color-seperator
+                                  "color: "                 ; color-pre
+                                  " }"                      ; color-after
+                                  "\n"                      ; entry-seperator
+                                  ""                        ; end
+                                  )))))
+
 (register-palette-exporter "css" _"_CSS stylesheet..." "css"
                            (string-append _"Export the active palette as a CSS stylesheet with the color entry name as their class name, and the color itself as the color attribute")
-                           "Barak Itkin <lightningismyname@gmail.com>"
-			   "Barak Itkin" "May 15th, 2009")
+                           "Barak Itkin" "Barak Itkin" "May 15, 2009")
 
 (define (gimp-palette-export-php directory-name file-name)
-  (let ((valid-name (valid-file-name file-name)))
-    (if valid-name
-        (with-output-to-file (string-append
-			      directory-name DIR-SEPARATOR file-name)
-          (lambda () (export-palette (car (gimp-context-get-palette))
-                                     color-rgb-to-hexa-decimal
-                                     name-standard             ; name-convertor
-                                     "<?php\n/* Generated with GIMP Palette Export */\n$colors={\n" ; start
-                                     "'"                       ; name-pre
-                                     "'"                       ; name-after
-                                     " => "                    ; name-color-seperator
-                                     "'"                       ; color-pre
-                                     "'"                       ; color-after
-                                     ",\n"                     ; entry-seperator
-                                     "}\n?>"                 ; end
-                                     )))
-        (bad-file-name)
-        )
-    )
-  )
+  (script-fu-use-v3)
+  (let ((path (get-path-or-abort directory-name file-name)))
+    (with-output-to-file path
+      (lambda () (export-palette (palette-in-context)
+                                  color-rgb-to-hexa-decimal
+                                  name-standard             ; name-convertor
+                                  "<?php\n/* Generated with GIMP Palette Export */\n$colors={\n" ; start
+                                  "'"                       ; name-pre
+                                  "'"                       ; name-after
+                                  " => "                    ; name-color-seperator
+                                  "'"                       ; color-pre
+                                  "'"                       ; color-after
+                                  ",\n"                     ; entry-seperator
+                                  "}\n?>"                 ; end
+                                  )))))
+
 (register-palette-exporter "php" _"P_HP dictionary..." "php"
                            _"Export the active palette as a PHP dictionary (name => color)"
-                           "Barak Itkin <lightningismyname@gmail.com>"
-			   "Barak Itkin" "May 15th, 2009")
+                           "Barak Itkin" "Barak Itkin" "May 15, 2009")
 
 (define (gimp-palette-export-python directory-name file-name)
-  (let ((valid-name (valid-file-name file-name)))
-    (if valid-name
-        (with-output-to-file (string-append
-			      directory-name DIR-SEPARATOR file-name)
-          (lambda ()
-            (let ((palette-name (car (gimp-context-get-palette))))
-              (begin (displayln "# Generated with GIMP Palette Export")
-                     (displayln (string-append
-				 "# Based on the palette " palette-name))
-                     (export-palette palette-name
-                                     color-rgb-to-hexa-decimal
-                                     name-standard             ; name-convertor
-                                     "colors={\n"              ; start
-                                     "'"                       ; name-pre
-                                     "'"                       ; name-after
-                                     ": "                      ; name-color-seperator
-                                     "'"                       ; color-pre
-                                     "'"                       ; color-after
-                                     ",\n"                     ; entry-seperator
-                                     "}"                       ; end
-                                     ))))
-          )
-        (bad-file-name)
-        )
-    )
-  )
+  (script-fu-use-v3)
+  (let ((path (get-path-or-abort directory-name file-name)))
+    (with-output-to-file path
+      (lambda ()
+        (displayln "# Generated with GIMP Palette Export")
+        (displayln (string-append
+          "# Based on the palette " (palette-name-in-context)))
+        (export-palette (palette-in-context)
+                        color-rgb-to-hexa-decimal
+                        name-standard             ; name-convertor
+                        "colors={\n"              ; start
+                        "'"                       ; name-pre
+                        "'"                       ; name-after
+                        ": "                      ; name-color-seperator
+                        "'"                       ; color-pre
+                        "'"                       ; color-after
+                        ",\n"                     ; entry-seperator
+                        "}"                       ; end
+                        )))))
+
 (register-palette-exporter "python" _"_Python dictionary..." "py"
                            _"Export the active palette as a Python dictionary (name: color)"
-                           "Barak Itkin <lightningismyname@gmail.com>"
-			   "Barak Itkin" "May 15th, 2009")
+                           "Barak Itkin" "Barak Itkin" "May 15, 2009")
 
 (define (gimp-palette-export-text directory-name file-name)
-  (let ((valid-name (valid-file-name file-name)))
-    (if valid-name
-        (with-output-to-file (string-append
-			      directory-name DIR-SEPARATOR file-name)
-          (lambda ()
-            (export-palette (car (gimp-context-get-palette))
-                            color-rgb-to-hexa-decimal
-                            name-none                 ; name-convertor
-                            ""                        ; start
-                            ""                        ; name-pre
-                            ""                        ; name-after
-                            ""                        ; name-color-seperator
-                            ""                        ; color-pre
-                            ""                        ; color-after
-                            "\n"                      ; entry-seperator
-                            ""                        ; end
-                            )
-            )
-          )
-        (bad-file-name)
-        )
-    )
-  )
+  (script-fu-use-v3)
+  (let ((path (get-path-or-abort directory-name file-name)))
+    (with-output-to-file path
+      (lambda ()
+        (export-palette (palette-in-context)
+                        color-rgb-to-hexa-decimal
+                        name-none                 ; name-convertor
+                        ""                        ; start
+                        ""                        ; name-pre
+                        ""                        ; name-after
+                        ""                        ; name-color-seperator
+                        ""                        ; color-pre
+                        ""                        ; color-after
+                        "\n"                      ; entry-seperator
+                        ""                        ; end
+                        )))))
+
 (register-palette-exporter "text" _"_Text file..." "txt"
                            _"Write all the colors in a palette to a text file, one hexadecimal value per line (no names)"
-                           "Barak Itkin <lightningismyname@gmail.com>"
-			   "Barak Itkin" "May 15th, 2009")
+                           "Barak Itkin" "Barak Itkin" "May 15, 2009")
 
 (define (gimp-palette-export-java directory-name file-name)
-  (let ((valid-name (valid-file-name file-name)))
-    (if valid-name
-        (with-output-to-file (string-append directory-name
-					    DIR-SEPARATOR file-name)
-          (lambda ()
-            (let ((palette-name (car (gimp-context-get-palette))))
-              (begin (displayln "")
-                     (displayln "import java.awt.Color;")
-                     (displayln "import java.util.Hashtable;")
-                     (displayln "")
-                     (displayln "// Generated with GIMP palette Export ")
-                     (displayln (string-append
-				 "// Based on the palette " palette-name))
-                     (displayln (string-append
-				 "public class "
-				 (name-standard palette-name) " {"))
-                     (displayln "")
-                     (displayln "    Hashtable<String, Color> colors;")
-                     (displayln "")
-                     (displayln (string-append
-				 "    public "
-				 (name-standard palette-name) "() {"))
-                     (export-palette (car (gimp-context-get-palette))
-                                     color-rgb-to-comma-separated-list
-                                     name-no-conversion
-                                     "        colors = new Hashtable<String,Color>();\n" ; start
-                                     "        colors.put(\""                             ; name-pre
-                                     "\""                                                ; name-after
-                                     ", "                                                ; name-color-seperator
-                                     "new Color"                                         ; color-pre
-                                     ");"                                                ; color-after
-                                     "\n"                                                ; entry-seperator
-                                     "\n    }"                                           ; end
-                                     )
-                     (display "\n}"))))
-          )
-        (bad-file-name)
-        )
-    )
-  )
+  (script-fu-use-v3)
+  (let ((path (get-path-or-abort directory-name file-name)))
+    (with-output-to-file path
+      (lambda ()
+        (let ((palette-name (palette-name-in-context)))
+          (displayln "")
+          (displayln "import java.awt.Color;")
+          (displayln "import java.util.Hashtable;")
+          (displayln "")
+          (displayln "// Generated with GIMP palette Export ")
+          (displayln (string-append
+            "// Based on the palette " palette-name))
+          (displayln (string-append
+              "public class "
+              (name-standard palette-name) " {"))
+          (displayln "")
+          (displayln "    Hashtable<String, Color> colors;")
+          (displayln "")
+          (displayln (string-append
+            "    public "
+            (name-standard palette-name) "() {"))
+          (export-palette (palette-in-context)
+                          color-rgb-to-comma-separated-list
+                          name-no-conversion
+                          "        colors = new Hashtable<String,Color>();\n" ; start
+                          "        colors.put(\""                             ; name-pre
+                          "\""                                                ; name-after
+                          ", "                                                ; name-color-seperator
+                          "new Color"                                         ; color-pre
+                          ");"                                                ; color-after
+                          "\n"                                                ; entry-seperator
+                          "\n    }"                                           ; end
+                          )
+          (display "\n}"))))))
 
 (register-palette-exporter "java" _"J_ava map..." "java"
                            _"Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
-                           "Barak Itkin <lightningismyname@gmail.com>"
-			   "Barak Itkin" "May 15th, 2009")
+                           "Barak Itkin" "Barak Itkin" "May 15, 2009")
 
