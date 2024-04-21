@@ -116,11 +116,15 @@ data_new_cmd_callback (GimpAction *action,
 
       if (data)
         {
+          GtkWidget *edit_button;
+
           gimp_context_set_by_type (context,
                                     gimp_data_factory_view_get_children_type (view),
                                     GIMP_OBJECT (data));
 
-          gtk_button_clicked (GTK_BUTTON (gimp_data_factory_view_get_edit_button (view)));
+          edit_button = gimp_data_factory_view_get_edit_button (view);
+          if (edit_button && gtk_widget_get_visible (edit_button))
+            gtk_button_clicked (GTK_BUTTON (gimp_data_factory_view_get_edit_button (view)));
         }
     }
 }
@@ -148,11 +152,15 @@ data_duplicate_cmd_callback (GimpAction *action,
 
       if (new_data)
         {
+          GtkWidget *edit_button;
+
           gimp_context_set_by_type (context,
                                     gimp_data_factory_view_get_children_type (view),
                                     GIMP_OBJECT (new_data));
 
-          gtk_button_clicked (GTK_BUTTON (gimp_data_factory_view_get_edit_button (view)));
+          edit_button = gimp_data_factory_view_get_edit_button (view);
+          if (edit_button && gtk_widget_get_visible (edit_button))
+            gtk_button_clicked (GTK_BUTTON (gimp_data_factory_view_get_edit_button (view)));
         }
     }
 }
@@ -286,6 +294,7 @@ data_edit_cmd_callback (GimpAction *action,
     {
       GdkMonitor *monitor = gimp_widget_get_monitor (GTK_WIDGET (view));
       GtkWidget  *dockable;
+      GtkWidget  *editor  = NULL;
 
       dockable =
         gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
@@ -295,7 +304,10 @@ data_edit_cmd_callback (GimpAction *action,
                                                    g_variant_get_string (value,
                                                                          NULL));
 
-      gimp_data_editor_set_data (GIMP_DATA_EDITOR (gtk_bin_get_child (GTK_BIN (dockable))),
-                                 data);
+      if (dockable)
+        editor = gtk_bin_get_child (GTK_BIN (dockable));
+
+      if (editor && GIMP_IS_DATA_EDITOR (editor))
+        gimp_data_editor_set_data (GIMP_DATA_EDITOR (editor), data);
     }
 }
