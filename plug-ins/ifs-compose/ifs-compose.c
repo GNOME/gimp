@@ -2013,11 +2013,11 @@ val_changed_update (void)
   g_clear_object (&cur->v.black_color);
   g_clear_object (&cur->v.target_color);
   cur->v = ifsD->current_vals;
-  cur->v.red_color    = gegl_color_duplicate (cur->v.red_color);
-  cur->v.green_color  = gegl_color_duplicate (cur->v.green_color);
-  cur->v.blue_color   = gegl_color_duplicate (cur->v.blue_color);
-  cur->v.black_color  = gegl_color_duplicate (cur->v.black_color);
-  cur->v.target_color = gegl_color_duplicate (cur->v.target_color);
+  cur->v.red_color    = gegl_color_duplicate (ifsD->red_cmap->color);
+  cur->v.green_color  = gegl_color_duplicate (ifsD->green_cmap->color);
+  cur->v.blue_color   = gegl_color_duplicate (ifsD->blue_cmap->color);
+  cur->v.black_color  = gegl_color_duplicate (ifsD->black_cmap->color);
+  cur->v.target_color = gegl_color_duplicate (ifsD->target_cmap->color);
   cur->v.theta       *= G_PI/180.0;
   aff_element_compute_trans (cur,
                              allocation.width, allocation.height,
@@ -2112,11 +2112,12 @@ color_map_color_changed_cb (GtkWidget *widget,
   g_clear_object (&elements[ifsD->current_element]->v.target_color);
   elements[ifsD->current_element]->v = ifsD->current_vals;
   elements[ifsD->current_element]->v.theta       *= G_PI/180.0;
-  elements[ifsD->current_element]->v.red_color    = gegl_color_duplicate (elements[ifsD->current_element]->v.red_color);
-  elements[ifsD->current_element]->v.green_color  = gegl_color_duplicate (elements[ifsD->current_element]->v.green_color);
-  elements[ifsD->current_element]->v.blue_color   = gegl_color_duplicate (elements[ifsD->current_element]->v.blue_color);
-  elements[ifsD->current_element]->v.black_color  = gegl_color_duplicate (elements[ifsD->current_element]->v.black_color);
-  elements[ifsD->current_element]->v.target_color = gegl_color_duplicate (elements[ifsD->current_element]->v.target_color);
+  elements[ifsD->current_element]->v.red_color    = gegl_color_duplicate (ifsD->red_cmap->color);
+  elements[ifsD->current_element]->v.green_color  = gegl_color_duplicate (ifsD->green_cmap->color);
+  elements[ifsD->current_element]->v.blue_color   = gegl_color_duplicate (ifsD->blue_cmap->color);
+  elements[ifsD->current_element]->v.black_color  = gegl_color_duplicate (ifsD->black_cmap->color);
+  elements[ifsD->current_element]->v.target_color = gegl_color_duplicate (ifsD->target_cmap->color);
+
   aff_element_compute_color_trans (elements[ifsD->current_element]);
 
   update_values ();
