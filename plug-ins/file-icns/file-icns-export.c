@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * file-icns-save.c
+ * file-icns-export.c
  * Copyright (C) 2004 Brion Vibber <brion@pobox.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@
 #include "file-icns.h"
 #include "file-icns-data.h"
 #include "file-icns-load.h"
-#include "file-icns-save.h"
+#include "file-icns-export.h"
 
 #include "libgimp/stdplugins-intl.h"
 

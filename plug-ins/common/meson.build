@@ -33,7 +33,7 @@ common_plugins_list = [
   { 'name': 'file-gif-load',
     'deps': [ gtk3, gegl, gdk_pixbuf, cairo, ],
   },
-  { 'name': 'file-gif-save', },
+  { 'name': 'file-gif-export', },
   { 'name': 'file-gih', },
   { 'name': 'file-glob',
     'deps': [ gtk3, gegl, gdk_pixbuf, cairo,  ],
@@ -123,7 +123,7 @@ if libmng.found()
 endif
 
 if cairopdf.found()
-  common_plugins_list += { 'name': 'file-pdf-save',
+  common_plugins_list += { 'name': 'file-pdf-export',
     'deps': [ gtk3, gegl, gdk_pixbuf, poppler, cairo, cairopdf ],
   }
 endif

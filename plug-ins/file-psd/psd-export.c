@@ -77,7 +77,7 @@
 
 #include "psd.h"
 #include "psd-util.h"
-#include "psd-save.h"
+#include "psd-export.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -1119,7 +1119,7 @@ get_compress_channel_data (guchar  *channel_data,
   return len;
 }
 
-/* Ported /from plug-ins/file-tiff/file-tiff-save.c */
+/* Ported /from plug-ins/file-tiff/file-tiff-export.c */
 static void
 double_to_psd_fixed (gdouble  value,
                      gchar   *target)
@@ -1143,7 +1143,7 @@ double_to_psd_fixed (gdouble  value,
   target[3] = f & 0xFF;
 }
 
-/* Ported from /plug-ins/file-tiff/file-tiff-save.c */
+/* Ported from /plug-ins/file-tiff/file-tiff-export.c */
 static void
 save_paths (GOutputStream  *output,
             GimpImage      *image)
@@ -1238,7 +1238,7 @@ save_paths (GOutputStream  *output,
               num_points > 65535 ||
               num_points % 6)
             {
-              g_printerr ("psd-save: unsupported stroke type: "
+              g_printerr ("psd-export: unsupported stroke type: "
                           "%d (%d points)\n", type, num_points);
               continue;
             }

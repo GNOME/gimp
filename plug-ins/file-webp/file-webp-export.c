@@ -37,7 +37,7 @@
 #include <webp/encode.h>
 #include <webp/mux.h>
 
-#include "file-webp-save.h"
+#include "file-webp-export.h"
 
 #include "libgimp/stdplugins-intl.h"
 

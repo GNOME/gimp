@@ -61,7 +61,7 @@
 
 #include "bmp.h"
 #include "bmp-load.h"
-#include "bmp-save.h"
+#include "bmp-export.h"
 
 #include "libgimp/stdplugins-intl.h"
 

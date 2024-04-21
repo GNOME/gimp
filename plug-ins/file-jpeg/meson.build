@@ -4,7 +4,7 @@ plugin_sources = [
   'jpeg-icc.c',
   'jpeg-load.c',
   'jpeg-quality.c',
-  'jpeg-save.c',
+  'jpeg-export.c',
   'jpeg-settings.c',
   'jpeg.c',
 ]

@@ -41,7 +41,7 @@
 #include "jpeg.h"
 #include "jpeg-icc.h"
 #include "jpeg-load.h"
-#include "jpeg-save.h"
+#include "jpeg-export.h"
 #include "jpeg-settings.h"
 
 /* See bugs #63610 and #61088 for a discussion about the quality settings */
@@ -642,7 +642,7 @@ export_image (GFile                *file,
   if (save_comment && comment && *comment)
     {
 #ifdef GIMP_UNSTABLE
-      g_print ("jpeg-save: saving image comment (%d bytes)\n",
+      g_print ("jpeg-export: saving image comment (%d bytes)\n",
                (int) strlen (comment));
 #endif
       jpeg_write_marker (&cinfo, JPEG_COM,

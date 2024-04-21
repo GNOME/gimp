@@ -1,5 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
+ *
+ * file-icns-export.h
+ * Copyright (C) 2004 Brion Vibber <brion@pobox.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,17 +18,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __PSD_SAVE_H__
-#define __PSD_SAVE_H__
+#ifndef __ICNS_EXPORT_H__
+#define __ICNS_EXPORT_H__
 
 
-gboolean   export_image (GFile      *file,
-                         GimpImage  *image,
-                         GObject    *config,
-                         GError    **error);
+GimpPDBStatusType icns_save_image (GFile     *file,
+                                   GimpImage *image,
+                                   gint32     run_mode,
+                                   GError   **error);
 
-gboolean   save_dialog  (GimpImage     *image,
-                         GimpProcedure *procedure,
-                         GObject       *config);
-
-#endif /* __PSD_SAVE_H__ */
+#endif /* __ICNS_EXPORT_H__ */

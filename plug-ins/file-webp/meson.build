@@ -5,7 +5,7 @@ plugin_name = 'file-webp'
 plugin_sources = [
   'file-webp-dialog.c',
   'file-webp-load.c',
-  'file-webp-save.c',
+  'file-webp-export.c',
   'file-webp.c',
 ]
 

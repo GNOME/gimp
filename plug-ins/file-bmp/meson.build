@@ -2,7 +2,7 @@ plugin_name = 'file-bmp'
 
 plugin_sources = [
   'bmp-load.c',
-  'bmp-save.c',
+  'bmp-export.c',
   'bmp.c',
 ]
 

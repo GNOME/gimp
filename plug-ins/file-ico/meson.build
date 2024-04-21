@@ -3,7 +3,7 @@ plugin_name = 'file-ico'
 plugin_sources = [
   'ico-dialog.c',
   'ico-load.c',
-  'ico-save.c',
+  'ico-export.c',
   'ico.c',
 ]
 

@@ -19,8 +19,8 @@
  * pablo.dangelo@web.de -- 16 Jan 2004
  */
 
-#ifndef __FILE_TIFF_SAVE_H__
-#define __FILE_TIFF_SAVE_H__
+#ifndef __FILE_TIFF_EXPORT_H__
+#define __FILE_TIFF_EXPORT_H__
 
 
 gboolean  export_image (GFile         *file,
@@ -40,4 +40,4 @@ gboolean  save_dialog  (GimpImage     *image,
                         gboolean       classic_tiff_failed);
 
 
-#endif /* __FILE_TIFF_SAVE_H__ */
+#endif /* __FILE_TIFF_EXPORT_H__ */

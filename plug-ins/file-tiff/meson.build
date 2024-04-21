@@ -2,7 +2,7 @@ plugin_name = 'file-tiff'
 
 plugin_sources = [
   'file-tiff-io.c',
-  'file-tiff-save.c',
+  'file-tiff-export.c',
   'file-tiff.c',
   'file-tiff-load.c',
 ]

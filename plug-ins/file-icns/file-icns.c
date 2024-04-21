@@ -32,7 +32,7 @@
 
 #include "file-icns.h"
 #include "file-icns-load.h"
-#include "file-icns-save.h"
+#include "file-icns-export.h"
 
 #include "libgimp/stdplugins-intl.h"
 

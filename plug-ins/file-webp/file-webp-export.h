@@ -19,8 +19,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEBP_SAVE_H__
-#define __WEBP_SAVE_H__
+#ifndef __WEBP_EXPORT_H__
+#define __WEBP_EXPORT_H__
 
 
 gboolean   save_layer     (GFile         *file,
@@ -37,4 +37,4 @@ gboolean   save_animation (GFile         *file,
                            GError       **error);
 
 
-#endif /* __WEBP_SAVE_H__ */
+#endif /* __WEBP_EXPORT_H__ */

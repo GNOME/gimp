@@ -37,7 +37,7 @@
 #include <libgimp/gimpui.h>
 
 #include "bmp.h"
-#include "bmp-save.h"
+#include "bmp-export.h"
 
 #include "libgimp/stdplugins-intl.h"
 

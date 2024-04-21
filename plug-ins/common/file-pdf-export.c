@@ -1,6 +1,6 @@
 /* GIMP - The GNU Image Manipulation Program
  *
- * file-pdf-save.c - PDF file exporter, based on the cairo PDF surface
+ * file-pdf-export.c - PDF file exporter, based on the cairo PDF surface
  *
  * Copyright (C) 2010 Barak Itkin <lightningismyname@gmail.com>
  *

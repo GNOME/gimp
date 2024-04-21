@@ -18,8 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __ICO_SAVE_H__
-#define __ICO_SAVE_H__
+#ifndef __ICO_EXPORT_H__
+#define __ICO_EXPORT_H__
 
 
 GimpPDBStatusType ico_export_image        (GFile         *file,
@@ -51,4 +51,4 @@ gboolean          ico_cmap_contains_black (const guchar  *cmap,
                                            gint           num_colors);
 
 
-#endif /* __ICO_SAVE_H__ */
+#endif /* __ICO_EXPORT_H__ */

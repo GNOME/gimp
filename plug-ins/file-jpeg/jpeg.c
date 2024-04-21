@@ -32,7 +32,7 @@
 #include "jpeg.h"
 #include "jpeg-settings.h"
 #include "jpeg-load.h"
-#include "jpeg-save.h"
+#include "jpeg-export.h"
 
 
 typedef struct _Jpeg      Jpeg;

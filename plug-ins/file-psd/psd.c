@@ -27,7 +27,7 @@
 
 #include "psd.h"
 #include "psd-load.h"
-#include "psd-save.h"
+#include "psd-export.h"
 #include "psd-thumb-load.h"
 
 #include "libgimp/stdplugins-intl.h"

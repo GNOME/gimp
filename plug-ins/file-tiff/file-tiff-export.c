@@ -55,7 +55,7 @@
 
 #include "file-tiff.h"
 #include "file-tiff-io.h"
-#include "file-tiff-save.h"
+#include "file-tiff-export.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -196,7 +196,7 @@ save_paths (TIFF      *tif,
               num_points > 65535 ||
               num_points % 6)
             {
-              g_printerr ("tiff-save: unsupported stroke type: "
+              g_printerr ("tiff-export: unsupported stroke type: "
                           "%d (%d points)\n", type, num_points);
               continue;
             }

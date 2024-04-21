@@ -4,7 +4,7 @@ plugin_sources = [
   'psd-image-res-load.c',
   'psd-layer-res-load.c',
   'psd-load.c',
-  'psd-save.c',
+  'psd-export.c',
   'psd-thumb-load.c',
   'psd-util.c',
   'psd.c',

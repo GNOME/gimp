@@ -28,7 +28,7 @@
 
 #include "ico.h"
 #include "ico-dialog.h"
-#include "ico-save.h"
+#include "ico-export.h"
 
 #include "libgimp/stdplugins-intl.h"
 

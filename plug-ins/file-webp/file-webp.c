@@ -30,7 +30,7 @@
 
 #include "file-webp-dialog.h"
 #include "file-webp-load.h"
-#include "file-webp-save.h"
+#include "file-webp-export.h"
 #include "file-webp.h"
 
 #include "libgimp/stdplugins-intl.h"

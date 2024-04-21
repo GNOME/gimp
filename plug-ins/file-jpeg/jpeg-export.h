@@ -15,8 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __JPEG_SAVE_H__
-#define __JPEG_SAVE_H__
+#ifndef __JPEG_EXPORT_H__
+#define __JPEG_EXPORT_H__
 
 
 extern GimpImage       *orig_image_global;
@@ -35,4 +35,4 @@ gboolean    save_dialog        (GimpProcedure        *procedure,
                                 GimpDrawable         *drawable,
                                 GimpImage            *image);
 
-#endif /* __JPEG_SAVE_H__ */
+#endif /* __JPEG_EXPORT_H__ */

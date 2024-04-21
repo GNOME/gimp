@@ -16,8 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __BMP_SAVE_H__
-#define __BMP_SAVE_H__
+#ifndef __BMP_EXPORT_H__
+#define __BMP_EXPORT_H__
 
 
 GimpPDBStatusType   export_image (GFile         *file,
@@ -29,4 +29,4 @@ GimpPDBStatusType   export_image (GFile         *file,
                                   GError       **error);
 
 
-#endif /* __BMP_SAVE_H__ */
+#endif /* __BMP_EXPORT_H__ */

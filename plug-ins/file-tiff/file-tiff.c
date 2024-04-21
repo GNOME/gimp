@@ -52,7 +52,7 @@
 #include "file-tiff.h"
 #include "file-tiff-io.h"
 #include "file-tiff-load.h"
-#include "file-tiff-save.h"
+#include "file-tiff-export.h"
 
 #include "libgimp/stdplugins-intl.h"
 
