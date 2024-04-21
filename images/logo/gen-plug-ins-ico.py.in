@@ -66,7 +66,7 @@ for size in sizes:
   # 3. Merging the file design and Wilber on top.
   image.merge_down(layer2, Gimp.MergeType.CLIP_TO_IMAGE)
 
-procedure = Gimp.get_pdb().lookup_procedure("file-ico-save")
+procedure = Gimp.get_pdb().lookup_procedure("file-ico-export")
 config    = procedure.create_config()
 drawables = image.list_selected_drawables()
 config.set_property("image", image)
