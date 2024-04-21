@@ -28,10 +28,13 @@ elif [[ "$2" == "AppDir" ]]; then
   OPT_PREFIX="${GIMP_DISTRIB}"
 fi
 
-## This script is distro-agnostic too.
-## TODO: take this code from .gitlab-ci.yml
-gcc -print-multi-os-directory | grep . && LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || LIB_DIR="lib"
-gcc -print-multiarch | grep . && LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
+## This script is distro-agnostic too. We take universal variables from .gitlab-ci.yml
+OLD_IFS=$IFS
+IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
+IFS=$OLD_IFS
+for VAR in "${VAR_ARRAY[@]}"; do
+  eval "$VAR" || continue
+done
 
 
 #(MOSTLY) AGNOSTIC FUNCTIONS
