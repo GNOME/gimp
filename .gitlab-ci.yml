@@ -168,6 +168,7 @@ image-debian-x64:
             libmypaint-dev
             libomp-dev
             libopenexr-dev
+            libopenjp2-7-dev
             libpoppler-glib-dev
             libraw-dev
             libraw20

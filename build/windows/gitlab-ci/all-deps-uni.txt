@@ -39,6 +39,7 @@ ${MINGW_PACKAGE_PREFIX}-lua51-lgi \
 ${MINGW_PACKAGE_PREFIX}-maxflow \
 ${MINGW_PACKAGE_PREFIX}-mypaint-brushes \
 ${MINGW_PACKAGE_PREFIX}-openexr \
+${MINGW_PACKAGE_PREFIX}-openjpeg2 \
 ${MINGW_PACKAGE_PREFIX}-pango \
 ${MINGW_PACKAGE_PREFIX}-poppler \
 ${MINGW_PACKAGE_PREFIX}-poppler-data \
