@@ -278,7 +278,9 @@ gimp-debian-x64:
     # and appstream-cli get confused with our exotic naming and fails
     - cd ..
     - git apply -v build/linux/appimage/patches/0001-desktop-po-Use-reverse-DNS-naming.patch
-    - git apply -v build/linux/appimage/patches/0001-images-logo-Use-reverse-DNS-naming.patch
+    - cd gimp-data
+    - git apply -v ../build/linux/appimage/patches/0001-images-logo-Use-reverse-DNS-naming.patch
+    - cd ..
     - meson configure _build${ARTIFACTS_SUFFIX} -Drelocatable-bundle=yes -Dvector-icons=true
     - cd _build${ARTIFACTS_SUFFIX}
     - ninja

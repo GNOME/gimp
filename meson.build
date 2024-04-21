@@ -1850,6 +1850,7 @@ subdir('app-tools')
 # tool.
 
 gimp_run_env=environment()
+gimp_run_env.set('GIMP_GLOBAL_BUILD_ROOT', meson.global_build_root())
 
 if meson.can_run_host_binaries()
   if enable_console_bin
@@ -1899,8 +1900,6 @@ if meson.can_run_host_binaries()
   elif platform_osx
     gimp_exe_depends += [gimp_exe_typelib]
 
-    gimp_run_env.set('GIMP_GLOBAL_BUILD_ROOT', meson.global_build_root())
-
     gimp_run_env.set('GIMP_GI_DIR', gi.get_variable('libdir'))
 
     gimp_run_env.set('GIMP_TEMP_UPDATE_RPATH', gimp_real_exe.full_path())
@@ -1931,19 +1930,6 @@ else
 endif
 
 gimp_exe = find_program('tools'/'in-build-gimp.sh')
-
-# Use a temporary config directory in the top build root for 2 reasons: first
-# because we don't want to pollute any existing user config folder; second
-# because the default directory may not be writable (we have the case in macOS
-# CI), but the build dir always is.
-# XXX We might also want to delete this directory before every use, especially
-# when using the binary for testing (ensuring we always start from a fresh
-# config). But for now, let's keep it as-is.
-gimp_exe_config_dir = custom_target('gimp_exe_config_dir',
-                                    output: [ '.tmp-config' ],
-                                    command: [ 'mkdir', '-p', '@OUTDIR@' + '/.tmp-config' ],
-                                    build_by_default: true)
-gimp_run_env.set('GIMP3_DIRECTORY', gimp_exe_config_dir.full_path())
 
 ################################################################################
 # Subdirs: part 2

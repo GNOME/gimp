@@ -2,6 +2,9 @@
 
 set -e
 
+export GIMP3_DIRECTORY=$(mktemp -d ${GIMP_GLOBAL_BUILD_ROOT}/.GIMP3-build-config-XXX)
+echo INFO: temporary GIMP configuration directory: $GIMP3_DIRECTORY
+
 if [ -n "$GIMP_TEMP_UPDATE_RPATH" ]; then
   # Earlier code used to set DYLD_LIBRARY_PATH environment variable instead, but
   # it didn't work on contributor's builds because of System Integrity
@@ -37,4 +40,28 @@ if [ -n "$GIMP_TEMP_UPDATE_RPATH" ]; then
     install_name_tool -delete_rpath ${GIMP_GLOBAL_BUILD_ROOT}/libgimpwidgets $bin
   done;
   unset IFS
+fi
+
+# Clean-up the temporary config directory after each usage, yet making sure we
+# don't get tricked by weird redirections or anything of the sort. In particular
+# we check that this is a directory with user permission, not a symlink, and
+# that it's inside inside the project build's root.
+if [ -n "$GIMP3_DIRECTORY" ] && [ -d "$GIMP3_DIRECTORY" ] && [ -O "$GIMP3_DIRECTORY" ]; then
+  if [ -L "$GIMP3_DIRECTORY" ]; then
+    echo "ERROR: \$GIMP3_DIRECTORY ($GIMP3_DIRECTORY) should not be a symlink."
+    exit 1
+  fi
+  used_dir_prefix=$(realpath "$GIMP3_DIRECTORY")
+  used_dir_prefix=${used_dir_prefix%???}
+  tmpl_dir_prefix=$(realpath "$GIMP_GLOBAL_BUILD_ROOT/.GIMP3-build-config-")
+  if [ "$used_dir_prefix" != "$tmpl_dir_prefix" ]; then
+    echo "ERROR: \$GIMP3_DIRECTORY ($GIMP3_DIRECTORY) should be under the build directory with a specific prefix."
+    echo "       \"$used_dir_prefix\" != \"$tmpl_dir_prefix\""
+    exit 1
+  fi
+  echo INFO: Running: rm -fr --preserve-root --one-file-system \"$GIMP3_DIRECTORY\"
+  rm -fr --preserve-root --one-file-system "$GIMP3_DIRECTORY"
+else
+  echo "ERROR: \$GIMP3_DIRECTORY ($GIMP3_DIRECTORY) is not a directory or does not belong to the user"
+  exit 1
 fi

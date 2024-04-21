@@ -1,16 +1,16 @@
-From f84e5cdc3e671491e45ec839af97f61e2272d78c Mon Sep 17 00:00:00 2001
+From dfd4f599b80883a649175dd76a2f2ea71388cc18 Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunolopesdsilv@outlook.com>
-Date: Sat, 30 Mar 2024 16:13:10 -0300
+Date: Sun, 21 Apr 2024 20:22:35 -0300
 Subject: [PATCH] images/logo: Use reverse DNS naming
 
 ---
- gimp-data/images/logo/meson.build | 8 ++++----
+ images/logo/meson.build | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/gimp-data/images/logo/meson.build b/gimp-data/images/logo/meson.build
-index bf0a5ea..4ec96a1 100644
---- a/gimp-data/images/logo/meson.build
-+++ b/gimp-data/images/logo/meson.build
+diff --git a/images/logo/meson.build b/images/logo/meson.build
+index 394a9a3..8af98eb 100644
+--- a/images/logo/meson.build
++++ b/images/logo/meson.build
 @@ -57,21 +57,21 @@ desktop_sizes = [
  foreach size : desktop_sizes
    sizedir = size + 'x' + size
@@ -29,14 +29,14 @@ index bf0a5ea..4ec96a1 100644
 -                           'mkdir -p "$MESON_INSTALL_DESTDIR_PREFIX/@1@/" && cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/@1@/gimp.png"'.format(app_icon.full_path(), installdir))
 +                           'mkdir -p "$MESON_INSTALL_DESTDIR_PREFIX/@1@/" && cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/@1@/org.gimp.GIMP.png"'.format(app_icon.full_path(), installdir))
  endforeach
-
+ 
  install_data('gimp-logo.svg',
               install_dir: get_option('datadir') / 'icons' / 'hicolor' / 'scalable' / 'apps',
 -             rename: 'gimp.svg')
 +             rename: 'org.gimp.GIMP.svg')
-
- ## gimp.ico (Windows) ##
-
---
+ 
+ ## gimp.ico and fileicon.ico (Windows) ##
+ 
+-- 
 2.44.0.windows.1
 
