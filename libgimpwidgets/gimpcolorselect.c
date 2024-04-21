@@ -894,11 +894,12 @@ gimp_color_select_update_values (GimpColorSelect *select)
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (select);
   GeglColor         *color    = gimp_color_selector_get_color (selector);
   gdouble            values[3];
+  gfloat             values_float[3];
   const Babl        *rgb_format;
   const Babl        *hsv_format;
 
   rgb_format = babl_format_with_space ("R'G'B' double", select->format);
-  hsv_format = babl_format_with_space ("HSV double", select->format);
+  hsv_format = babl_format_with_space ("HSV float", select->format);
 
   switch (select->z_color_fill)
     {
@@ -919,19 +920,22 @@ gimp_color_select_update_values (GimpColorSelect *select)
       break;
 
     case COLOR_SELECT_HUE:
-      values[0] = select->pos[2];
-      values[1] = select->pos[0];
-      values[2] = select->pos[1];
-      gegl_color_set_pixel (color, hsv_format, values);
+      values_float[0] = select->pos[2];
+      values_float[1] = select->pos[0];
+      values_float[2] = select->pos[1];
+      gegl_color_set_pixel (color, hsv_format, values_float);
       break;
     case COLOR_SELECT_SATURATION:
-      values[0] = select->pos[0];
-      values[1] = select->pos[2];
-      values[2] = select->pos[1];
-      gegl_color_set_pixel (color, hsv_format, values);
+      values_float[0] = select->pos[0];
+      values_float[1] = select->pos[2];
+      values_float[2] = select->pos[1];
+      gegl_color_set_pixel (color, hsv_format, values_float);
       break;
     case COLOR_SELECT_VALUE:
-      gegl_color_set_pixel (color, hsv_format, select->pos);
+      values_float[0] = select->pos[0];
+      values_float[1] = select->pos[1];
+      values_float[2] = select->pos[2];
+      gegl_color_set_pixel (color, hsv_format, values_float);
       break;
 
     case COLOR_SELECT_LCH_LIGHTNESS:
@@ -969,10 +973,10 @@ gimp_color_select_update_pos (GimpColorSelect *select)
   GeglColor         *color    = gimp_color_selector_get_color (selector);
   gdouble            rgb[3];
   gdouble            lch[3];
-  gdouble            hsv[3];
+  gfloat             hsv[3];
 
   gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' double", select->format), rgb);
-  gegl_color_get_pixel (color, babl_format_with_space ("HSV double", select->format), hsv);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSV float", select->format), hsv);
   gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) double"), lch);
   g_object_unref (color);
 

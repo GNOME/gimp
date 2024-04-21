@@ -149,7 +149,7 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
 
   fish_lch_to_rgb   = babl_fish (babl_format ("CIE LCH(ab) double"),
                                  babl_format ("R'G'B' double"));
-  fish_hsv_to_rgb   = babl_fish (babl_format ("HSV double"),
+  fish_hsv_to_rgb   = babl_fish (babl_format ("HSV float"),
                                  babl_format ("R'G'B' double"));
   fish_rgb_to_cairo = babl_fish (babl_format ("R'G'B' u8"),
                                  babl_format ("cairo-RGB24"));
@@ -519,7 +519,7 @@ gimp_color_scale_set_format (GimpColorScale *scale,
       scale->priv->format = format;
       fish_lch_to_rgb   = babl_fish (babl_format ("CIE LCH(ab) double"),
                                      babl_format_with_space ("R'G'B' double", format));
-      fish_hsv_to_rgb   = babl_fish (babl_format_with_space ("HSV double", format),
+      fish_hsv_to_rgb   = babl_fish (babl_format_with_space ("HSV float", format),
                                      babl_format_with_space ("R'G'B' double", format));
       scale->priv->needs_render = TRUE;
       gtk_widget_queue_draw (GTK_WIDGET (scale));
@@ -657,13 +657,14 @@ gimp_color_scale_render (GimpColorScale *scale)
   GimpColorScalePrivate *priv  = GET_PRIVATE (scale);
   GtkRange              *range = GTK_RANGE (scale);
   gdouble                rgb[4];
-  gdouble                hsv[3];
+  gfloat                 hsv[3];
   gdouble                lch[3];
   gint                   multiplier = 1;
   guint                  x, y;
-  gdouble               *channel_value = NULL;
-  gboolean               from_hsv      = FALSE;
-  gboolean               from_lch      = FALSE;
+  gdouble               *channel_value   = NULL;
+  gfloat                *channel_value_f = NULL;
+  gboolean               from_hsv        = FALSE;
+  gboolean               from_lch        = FALSE;
   gboolean               invert;
   guchar                *buf;
   guchar                *d;
@@ -678,14 +679,14 @@ gimp_color_scale_render (GimpColorScale *scale)
     }
 
   gegl_color_get_pixel (priv->color, babl_format_with_space ("R'G'B'A double", priv->format), rgb);
-  gegl_color_get_pixel (priv->color, babl_format_with_space ("HSV double", priv->format), hsv);
+  gegl_color_get_pixel (priv->color, babl_format_with_space ("HSV float", priv->format), hsv);
   gegl_color_get_pixel (priv->color, babl_format ("CIE LCH(ab) double"), lch);
 
   switch (priv->channel)
     {
-    case GIMP_COLOR_SELECTOR_HUE:        channel_value = &hsv[0]; break;
-    case GIMP_COLOR_SELECTOR_SATURATION: channel_value = &hsv[1]; break;
-    case GIMP_COLOR_SELECTOR_VALUE:      channel_value = &hsv[2]; break;
+    case GIMP_COLOR_SELECTOR_HUE:        channel_value_f = &hsv[0]; break;
+    case GIMP_COLOR_SELECTOR_SATURATION: channel_value_f = &hsv[1]; break;
+    case GIMP_COLOR_SELECTOR_VALUE:      channel_value_f = &hsv[2]; break;
 
     case GIMP_COLOR_SELECTOR_RED:        channel_value = &rgb[0]; break;
     case GIMP_COLOR_SELECTOR_GREEN:      channel_value = &rgb[1]; break;
@@ -734,7 +735,10 @@ gimp_color_scale_render (GimpColorScale *scale)
           if (invert)
             value = multiplier - value;
 
-          *channel_value = value;
+          if (channel_value)
+            *channel_value = value;
+          else if (channel_value_f)
+            *channel_value_f = (gfloat) value;
 
           if (from_hsv)
             babl_process (fish_hsv_to_rgb, &hsv, &rgb, 1);
@@ -778,7 +782,10 @@ gimp_color_scale_render (GimpColorScale *scale)
           if (invert)
             value = multiplier - value;
 
-          *channel_value = value;
+          if (channel_value)
+            *channel_value = value;
+          else if (channel_value_f)
+            *channel_value_f = (gfloat) value;
 
           if (from_hsv)
             babl_process (fish_hsv_to_rgb, &hsv, &rgb, 1);

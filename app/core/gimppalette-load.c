@@ -563,11 +563,11 @@ gimp_palette_load_aco (GimpContext   *context,
         }
       else if (color_space == 1) /* HSV */
         {
-          gdouble hsv[3] = { ((gdouble) w) / 65536.0,
-                             ((gdouble) x) / 65536.0,
-                             ((gdouble) y) / 65536.0};
+          gfloat hsv[3] = { ((gfloat) w) / 65536.0f,
+                            ((gfloat) x) / 65536.0f,
+                            ((gfloat) y) / 65536.0f};
 
-          gegl_color_set_pixel (color, babl_format ("HSV double"), hsv);
+          gegl_color_set_pixel (color, babl_format ("HSV float"), hsv);
           color_ok = TRUE;
         }
       else if (color_space == 2) /* CMYK */

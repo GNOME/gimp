@@ -305,19 +305,19 @@ context_foreground_hue_cmd_callback (GimpAction *action,
 {
   GimpContext          *context;
   GeglColor            *color;
-  gdouble               pixel[3];
+  gfloat                pixel[3];
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   color = gegl_color_duplicate (gimp_context_get_foreground (context));
-  gegl_color_get_pixel (color, babl_format_with_space ("HSV double", NULL), pixel);
-  pixel[0] = action_select_value (select_type,
-                                  pixel[0],
-                                  0.0, 1.0, 1.0,
-                                  1.0 / 360.0, 0.01, 0.1, 0.0, FALSE);
-  gegl_color_set_pixel (color, babl_format_with_space ("HSV double", NULL), pixel);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSV float", NULL), pixel);
+  pixel[0] = (gfloat) action_select_value (select_type,
+                                           pixel[0],
+                                           0.0, 1.0, 1.0,
+                                           1.0 / 360.0, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_pixel (color, babl_format_with_space ("HSV float", NULL), pixel);
   gimp_context_set_foreground (context, color);
   g_object_unref (color);
 }
@@ -329,19 +329,19 @@ context_foreground_saturation_cmd_callback (GimpAction *action,
 {
   GimpContext          *context;
   GeglColor            *color;
-  gdouble               pixel[3];
+  gfloat                pixel[3];
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   color = gegl_color_duplicate (gimp_context_get_foreground (context));
-  gegl_color_get_pixel (color, babl_format_with_space ("HSV double", NULL), pixel);
-  pixel[1] = action_select_value (select_type,
-                                  pixel[1],
-                                  0.0, 1.0, 1.0,
-                                  0.01, 0.01, 0.1, 0.0, FALSE);
-  gegl_color_set_pixel (color, babl_format_with_space ("HSV double", NULL), pixel);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSV float", NULL), pixel);
+  pixel[1] = (gfloat) action_select_value (select_type,
+                                           pixel[1],
+                                           0.0, 1.0, 1.0,
+                                           0.01, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_pixel (color, babl_format_with_space ("HSV float", NULL), pixel);
   gimp_context_set_foreground (context, color);
   g_object_unref (color);
 }
@@ -353,19 +353,19 @@ context_foreground_value_cmd_callback (GimpAction *action,
 {
   GimpContext          *context;
   GeglColor            *color;
-  gdouble               pixel[3];
+  gfloat                pixel[3];
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   color = gegl_color_duplicate (gimp_context_get_foreground (context));
-  gegl_color_get_pixel (color, babl_format_with_space ("HSV double", NULL), pixel);
-  pixel[2] = action_select_value (select_type,
-                                  pixel[2],
-                                  0.0, 1.0, 1.0,
-                                  0.01, 0.01, 0.1, 0.0, FALSE);
-  gegl_color_set_pixel (color, babl_format_with_space ("HSV double", NULL), pixel);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSV float", NULL), pixel);
+  pixel[2] = (gfloat) action_select_value (select_type,
+                                           pixel[2],
+                                           0.0, 1.0, 1.0,
+                                           0.01, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_pixel (color, babl_format_with_space ("HSV float", NULL), pixel);
   gimp_context_set_foreground (context, color);
   g_object_unref (color);
 }
@@ -377,19 +377,19 @@ context_background_hue_cmd_callback (GimpAction *action,
 {
   GimpContext          *context;
   GeglColor            *color;
-  gdouble               pixel[3];
+  gfloat                pixel[3];
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   color = gegl_color_duplicate (gimp_context_get_background (context));
-  gegl_color_get_pixel (color, babl_format_with_space ("HSV double", NULL), pixel);
-  pixel[0] = action_select_value (select_type,
-                                  pixel[0],
-                                  0.0, 1.0, 1.0,
-                                  1.0 / 360.0, 0.01, 0.1, 0.0, FALSE);
-  gegl_color_set_pixel (color, babl_format_with_space ("HSV double", NULL), pixel);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSV float", NULL), pixel);
+  pixel[0] = (gfloat) action_select_value (select_type,
+                                           pixel[0],
+                                           0.0, 1.0, 1.0,
+                                           1.0 / 360.0, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_pixel (color, babl_format_with_space ("HSV float", NULL), pixel);
   gimp_context_set_background (context, color);
   g_object_unref (color);
 }
@@ -401,19 +401,19 @@ context_background_saturation_cmd_callback (GimpAction *action,
 {
   GimpContext          *context;
   GeglColor            *color;
-  gdouble               pixel[3];
+  gfloat                pixel[3];
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   color = gegl_color_duplicate (gimp_context_get_background (context));
-  gegl_color_get_pixel (color, babl_format_with_space ("HSV double", NULL), pixel);
-  pixel[1] = action_select_value (select_type,
-                                  pixel[1],
-                                  0.0, 1.0, 1.0,
-                                  0.01, 0.01, 0.1, 0.0, FALSE);
-  gegl_color_set_pixel (color, babl_format_with_space ("HSV double", NULL), pixel);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSV float", NULL), pixel);
+  pixel[1] = (gfloat) action_select_value (select_type,
+                                           pixel[1],
+                                           0.0, 1.0, 1.0,
+                                           0.01, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_pixel (color, babl_format_with_space ("HSV float", NULL), pixel);
   gimp_context_set_background (context, color);
   g_object_unref (color);
 }
@@ -425,19 +425,19 @@ context_background_value_cmd_callback (GimpAction *action,
 {
   GimpContext          *context;
   GeglColor            *color;
-  gdouble               pixel[3];
+  gfloat                pixel[3];
   GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   color = gegl_color_duplicate (gimp_context_get_background (context));
-  gegl_color_get_pixel (color, babl_format_with_space ("HSV double", NULL), pixel);
-  pixel[2] = action_select_value (select_type,
-                                  pixel[2],
-                                  0.0, 1.0, 1.0,
-                                  0.01, 0.01, 0.1, 0.0, FALSE);
-  gegl_color_set_pixel (color, babl_format_with_space ("HSV double", NULL), pixel);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSV float", NULL), pixel);
+  pixel[2] = (gfloat) action_select_value (select_type,
+                                           pixel[2],
+                                           0.0, 1.0, 1.0,
+                                           0.01, 0.01, 0.1, 0.0, FALSE);
+  gegl_color_set_pixel (color, babl_format_with_space ("HSV float", NULL), pixel);
   gimp_context_set_background (context, color);
   g_object_unref (color);
 }

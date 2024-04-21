@@ -596,11 +596,11 @@ gimp_gradient_get_color_at (GimpGradient                 *gradient,
     }
   else
     {
-      gdouble left_hsv[3];
-      gdouble right_hsv[3];
+      gfloat left_hsv[3];
+      gfloat right_hsv[3];
 
-      gegl_color_get_pixel (left_color, babl_format ("HSV double"), left_hsv);
-      gegl_color_get_pixel (right_color, babl_format ("HSV double"), right_hsv);
+      gegl_color_get_pixel (left_color, babl_format ("HSV float"), left_hsv);
+      gegl_color_get_pixel (right_color, babl_format ("HSV float"), right_hsv);
 
       left_hsv[1] = left_hsv[1] + (right_hsv[1] - left_hsv[1]) * factor;
       left_hsv[2] = left_hsv[2] + (right_hsv[2] - left_hsv[2]) * factor;
@@ -641,7 +641,7 @@ gimp_gradient_get_color_at (GimpGradient                 *gradient,
           break;
         }
 
-      gegl_color_set_pixel (*color, babl_format ("HSV double"), left_hsv);
+      gegl_color_set_pixel (*color, babl_format ("HSV float"), left_hsv);
     }
 
   /* Calculate alpha */

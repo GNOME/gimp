@@ -1030,6 +1030,7 @@ gimp_scanner_parse_deprecated_color (GimpScanner  *scanner,
         case G_TOKEN_SYMBOL:
           {
             gdouble  col[4]     = { 0.0, 0.0, 0.0, 1.0 };
+            gdouble  col_f[4]   = { 0.0, 0.0, 0.0, 1.0 };
             gint     n_channels = 4;
             gboolean is_hsv     = FALSE;
             gint     i;
@@ -1056,11 +1057,13 @@ gimp_scanner_parse_deprecated_color (GimpScanner  *scanner,
               {
                 if (! gimp_scanner_parse_float (scanner, &col[i]))
                   goto finish;
+
+                col_f[i] = (gfloat) col[i];
               }
 
             *color = gegl_color_new (NULL);
             if (is_hsv)
-              gegl_color_set_pixel (*color, babl_format ("HSVA double"), col);
+              gegl_color_set_pixel (*color, babl_format ("HSVA float"), col_f);
             else
               gegl_color_set_pixel (*color, babl_format ("R'G'B'A double"), col);
 

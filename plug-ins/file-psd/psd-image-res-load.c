@@ -725,14 +725,14 @@ load_resource_1007 (const PSDimageres  *res_a,
 
           case PSD_CS_HSB:
             {
-              gdouble hsv[3] =
+              gfloat hsv[3] =
                 {
-                  ps_color.hsv.hue / 65535.0,
-                  ps_color.hsv.saturation / 65535.0,
-                  ps_color.hsv.value / 65535.0
+                  ps_color.hsv.hue / 65535.0f,
+                  ps_color.hsv.saturation / 65535.0f,
+                  ps_color.hsv.value / 65535.0f
                 };
 
-              gegl_color_set_pixel (color, babl_format ("HSV double"), hsv);
+              gegl_color_set_pixel (color, babl_format ("HSV float"), hsv);
             }
           break;
 
@@ -1461,14 +1461,14 @@ load_resource_1077 (const PSDimageres  *res_a,
 
           case PSD_CS_HSB:
             {
-              gdouble hsv[3] =
+              gfloat hsv[3] =
                 {
-                  ps_color.hsv.hue / 65535.0,
-                  ps_color.hsv.saturation / 65535.0,
-                  ps_color.hsv.value / 65535.0
+                  ps_color.hsv.hue / 65535.0f,
+                  ps_color.hsv.saturation / 65535.0f,
+                  ps_color.hsv.value / 65535.0f
                 };
 
-              gegl_color_set_pixel (color, babl_format ("HSV double"), hsv);
+              gegl_color_set_pixel (color, babl_format ("HSV float"), hsv);
             }
             break;
 

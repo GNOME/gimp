@@ -1310,7 +1310,7 @@ view_set_hint (GimpGradientEditor *editor,
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
   GeglColor      *color       = NULL;
   gdouble         rgb[4];
-  gdouble         hsv[3];
+  gfloat          hsv[3];
   gdouble         xpos;
   gchar          *str1;
   gchar          *str2;
@@ -1326,7 +1326,7 @@ view_set_hint (GimpGradientEditor *editor,
   gimp_color_area_set_color (GIMP_COLOR_AREA (editor->current_color), color);
 
   gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), rgb);
-  gegl_color_get_pixel (color, babl_format ("HSV double"), hsv);
+  gegl_color_get_pixel (color, babl_format ("HSV float"), hsv);
 
   str1 = g_strdup_printf (_("Position: %0.4f"), xpos);
   /* TODO: Current hints are displaying sRGB values. Ideally we'd want to update

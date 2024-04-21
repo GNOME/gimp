@@ -415,10 +415,10 @@ read_image_palette (GimpImage *image,
   for (index = 0; index < ncolors; ++index)
     {
       GeglColor *c   = colors[index];
-      gdouble    hsv[3];
+      gfloat     hsv[3];
       gchar     *text = g_strdup_printf ("%d", index);
 
-      gegl_color_get_pixel (c, babl_format ("HSV double"), hsv);
+      gegl_color_get_pixel (c, babl_format ("HSV float"), hsv);
 
       reverse_order[index] = ncolors - index - 1;
 

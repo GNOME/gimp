@@ -803,13 +803,14 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
   GeglColor         *color    = gimp_color_selector_get_color (selector);
   gdouble            pixel[4];
+  gfloat             pixel_f[4];
   gdouble            values[G_N_ELEMENTS (scale_defs)];
   gint               i;
 
-  gegl_color_get_pixel (color, babl_format_with_space ("HSV double", scales->format), pixel);
-  values[GIMP_COLOR_SELECTOR_HUE]           = pixel[0] * 360.0;
-  values[GIMP_COLOR_SELECTOR_SATURATION]    = pixel[1] * 100.0;
-  values[GIMP_COLOR_SELECTOR_VALUE]         = pixel[2] * 100.0;
+  gegl_color_get_pixel (color, babl_format_with_space ("HSV float", scales->format), pixel_f);
+  values[GIMP_COLOR_SELECTOR_HUE]           = pixel_f[0] * 360.0;
+  values[GIMP_COLOR_SELECTOR_SATURATION]    = pixel_f[1] * 100.0;
+  values[GIMP_COLOR_SELECTOR_VALUE]         = pixel_f[2] * 100.0;
 
   gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", scales->format), pixel);
   values[GIMP_COLOR_SELECTOR_RED]           = pixel[0] * 100.0;
@@ -887,7 +888,7 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
   GeglColor         *color    = gimp_color_selector_get_color (selector);
   gdouble            value    = gimp_label_spin_get_value (GIMP_LABEL_SPIN (scale));
   gdouble            lch[4];
-  gdouble            hsv[4];
+  gfloat             hsv[4];
   gdouble            rgb[4];
   gint               i;
 
@@ -896,21 +897,21 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
       break;
 
   gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", scales->format), rgb);
-  gegl_color_get_pixel (color, babl_format_with_space ("HSVA double", scales->format), hsv);
+  gegl_color_get_pixel (color, babl_format_with_space ("HSVA float", scales->format), hsv);
   gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) alpha double"), lch);
 
   switch (i)
     {
     case GIMP_COLOR_SELECTOR_HUE:
-      hsv[0] = value / 360.0;
+      hsv[0] = value / 360.0f;
       break;
 
     case GIMP_COLOR_SELECTOR_SATURATION:
-      hsv[1] = value / 100.0;
+      hsv[1] = value / 100.0f;
       break;
 
     case GIMP_COLOR_SELECTOR_VALUE:
-      hsv[2] = value / 100.0;
+      hsv[2] = value / 100.0f;
       break;
 
     case GIMP_COLOR_SELECTOR_RED:
@@ -962,7 +963,7 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
   if ((i >= GIMP_COLOR_SELECTOR_HUE) &&
       (i <= GIMP_COLOR_SELECTOR_VALUE))
     {
-      gegl_color_set_pixel (color, babl_format_with_space ("HSVA double", scales->format), hsv);
+      gegl_color_set_pixel (color, babl_format_with_space ("HSVA float", scales->format), hsv);
     }
   else if ((i >= GIMP_COLOR_SELECTOR_LCH_LIGHTNESS) &&
            (i <= GIMP_COLOR_SELECTOR_LCH_HUE))
