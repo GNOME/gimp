@@ -17,7 +17,7 @@ if v.index(0) != Gimp.PDBStatusType.SUCCESS:
 image = v.index(1)
 image.resize(@IMG_WIDTH@, @IMG_HEIGHT@, (@IMG_WIDTH@-@LOGO_DIM@)/2, (@IMG_HEIGHT@-@LOGO_DIM@)/2)
 
-procedure = Gimp.get_pdb().lookup_procedure("file-png-save")
+procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
 config    = procedure.create_config()
 drawables = image.list_selected_drawables()
 # Needed otherwise it doesn't save the proper size because of bug #8855.

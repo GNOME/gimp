@@ -37,7 +37,7 @@ tmp_image.delete()
 
 image.merge_down(layer2, Gimp.MergeType.CLIP_TO_IMAGE)
 
-procedure = Gimp.get_pdb().lookup_procedure("file-png-save")
+procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
 config    = procedure.create_config()
 drawables = image.list_selected_drawables()
 # Needed otherwise it doesn't save the proper size because of bug #8855.
