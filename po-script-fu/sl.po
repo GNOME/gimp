@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8 scriptfu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-07 15:33+0000\n"
-"PO-Revision-Date: 2024-03-07 19:29+0100\n"
+"POT-Creation-Date: 2024-04-22 10:31+0000\n"
+"PO-Revision-Date: 2024-04-22 16:19+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -22,77 +22,61 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: plug-ins/script-fu/script-fu.c:122
+#: plug-ins/script-fu/script-fu.c:119
 msgid "Script-Fu _Console"
 msgstr "_Konzola Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:127
+#: plug-ins/script-fu/script-fu.c:124
 msgid "Interactive console for Script-Fu development"
 msgstr "Interaktivna konzola za razvoj Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:314
+#: plug-ins/script-fu/script-fu.c:309
 msgid "_GIMP Online"
 msgstr "_GIMP na spletu"
 
-#: plug-ins/script-fu/script-fu.c:315
+#: plug-ins/script-fu/script-fu.c:310
 msgid "_User Manual"
 msgstr "_Uporabniški vodnik"
 
-#: plug-ins/script-fu/script-fu.c:318
+#: plug-ins/script-fu/script-fu.c:313
 msgid "_Script-Fu"
 msgstr "_Skript-Fu"
 
-#: plug-ins/script-fu/script-fu.c:320
+#: plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Preizkusi"
 
-#: plug-ins/script-fu/script-fu.c:323
+#: plug-ins/script-fu/script-fu.c:318
 msgid "_Buttons"
 msgstr "_Gumbi"
 
-#: plug-ins/script-fu/script-fu.c:325
+#: plug-ins/script-fu/script-fu.c:320
 msgid "_Logos"
 msgstr "_Logotipi"
 
-#: plug-ins/script-fu/script-fu.c:327
+#: plug-ins/script-fu/script-fu.c:322
 msgid "_Patterns"
 msgstr "_Vzorci"
 
-#: plug-ins/script-fu/script-fu.c:330
+#: plug-ins/script-fu/script-fu.c:325
 msgid "_Web Page Themes"
 msgstr "_Teme spletnih strani"
 
-#: plug-ins/script-fu/script-fu.c:332
+#: plug-ins/script-fu/script-fu.c:327
 msgid "_Alien Glow"
 msgstr "_Svetleči napis"
 
-#: plug-ins/script-fu/script-fu.c:334
+#: plug-ins/script-fu/script-fu.c:329
 msgid "_Beveled Pattern"
 msgstr "_Izbočeni vzorec"
 
-#: plug-ins/script-fu/script-fu.c:336
+#: plug-ins/script-fu/script-fu.c:331
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: plug-ins/script-fu/script-fu.c:339
+#: plug-ins/script-fu/script-fu.c:334
 msgid "Alpha to _Logo"
 msgstr "Alfa v _logotip"
-
-#: plug-ins/script-fu/script-fu.c:345
-msgid "_Refresh Scripts"
-msgstr "_Osveži skripte"
-
-#: plug-ins/script-fu/script-fu.c:350
-msgid "Re-read all available Script-Fu scripts"
-msgstr "Ponovno preberi vse dosegljive skripte Script-Fu"
-
-#: plug-ins/script-fu/script-fu.c:376
-msgid ""
-"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
-"Please close all Script-Fu windows and try again."
-msgstr ""
-"Ko je odprto pogovorno okno Script-Fu, ne smete uporabiti \"Osveži skripte"
-"\".  Prosimo, zaprite vsa okna Script-Fu in poskusite znova."
 
 #: plug-ins/script-fu/script-fu-eval.c:50
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
@@ -126,7 +110,7 @@ msgstr "Shrani izpis konzole Script-Fu"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
 #: plug-ins/script-fu/server/script-fu-server.c:878
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
@@ -187,44 +171,44 @@ msgstr "_Zaženi strežnik ..."
 msgid "Server for remote Script-Fu operation"
 msgstr "Strežnik za oddaljeno upravljanje Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:139
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu ne more obdelati dveh skriptov naenkrat."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:191
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:141
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Že poganjate skript \"%s\"."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:165
 msgid "_Reset"
 msgstr "_Ponastavi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:224
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_OK"
 msgstr "V _redu"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:278
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:329
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:272
 msgid "Script-Fu Color Selection"
 msgstr "Izbor barv Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:455
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:398
 msgid "Script-Fu File Selection"
 msgstr "Izbor datoteke Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:458
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:401
 msgid "Script-Fu Folder Selection"
 msgstr "Izbor mape Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:874
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:796
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Napaka pri izvajanju %s:"
@@ -647,50 +631,50 @@ msgstr "Barva"
 msgid "Opacity"
 msgstr "Prekrivnost"
 
-#: plug-ins/script-fu/scripts/font-map.scm:161
+#: plug-ins/script-fu/scripts/font-map.scm:167
 msgid "Render _Font Map..."
 msgstr "_Upodobi tabelo pisave …"
 
-#: plug-ins/script-fu/scripts/font-map.scm:162
+#: plug-ins/script-fu/scripts/font-map.scm:168
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
 "Ustvari sliko, zapolnjeno s predogledi pisav, ki se ujemajo s filtrom imen "
 "pisav"
 
-#: plug-ins/script-fu/scripts/font-map.scm:167
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "_Text"
 msgstr "_Besedilo"
 
-#: plug-ins/script-fu/scripts/font-map.scm:168
+#: plug-ins/script-fu/scripts/font-map.scm:174
 msgid "Use font _name as text"
 msgstr "Uporabi _ime pisave kot besedilo"
 
-#: plug-ins/script-fu/scripts/font-map.scm:169
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "_Labels"
 msgstr "_Nalepke"
 
-#: plug-ins/script-fu/scripts/font-map.scm:170
+#: plug-ins/script-fu/scripts/font-map.scm:176
 msgid "_Filter (regexp)"
 msgstr "_Filter (regexp)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:171
+#: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "Font _size (pixels)"
 msgstr "_Velikost pisave (slikovne pike)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:172
+#: plug-ins/script-fu/scripts/font-map.scm:178
 msgid "_Border (pixels)"
 msgstr "_Rob (slikovne točke)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "_Color scheme"
 msgstr "_Barvna shema"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "Black on white"
 msgstr "Črno na belem"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "Active colors"
 msgstr "Aktivne barve"
 
@@ -1035,23 +1019,11 @@ msgstr "Sepija"
 msgid "Mottle"
 msgstr "Marogasto"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:226
-msgid "Folder for the output file"
-msgstr "Mapa za izhodno datoteko"
-
-#: plug-ins/script-fu/scripts/palette-export.scm:227
-msgid ""
-"The name of the file to create (if a file with this name already exist, it "
-"will be replaced)"
-msgstr ""
-"Ime datoteke, ki naj bo ustvarjena (če datoteka s tem imenom že obstaja, bo "
-"zamenjana)."
-
-#: plug-ins/script-fu/scripts/palette-export.scm:235
+#: plug-ins/script-fu/scripts/palette-export.scm:162
 msgid "The filename you entered is not a suitable name for a file."
 msgstr "Vneseno ime ni primerno za datoteko."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:237
+#: plug-ins/script-fu/scripts/palette-export.scm:164
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
@@ -1059,11 +1031,30 @@ msgstr ""
 "Vsi znaki v imenu so presledki ali znaki, ki ne smejo nastopiti v imenih "
 "datotek."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:264
+#. Side effect.
+#. Tell the user the mangled path, might be different than user entered.
+#. The user should not need to search for the file.
+#: plug-ins/script-fu/scripts/palette-export.scm:199
+msgid "Exported palette to file: "
+msgstr "Izvožena paleta v datoteko: "
+
+#: plug-ins/script-fu/scripts/palette-export.scm:289
+msgid "Folder for the output file"
+msgstr "Mapa za izhodno datoteko"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:290
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+"Ime datoteke, ki naj bo ustvarjena (če datoteka s tem imenom že obstaja, bo "
+"zamenjana)."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:319
 msgid "_CSS stylesheet..."
 msgstr "Slogovna predloga _CSS …"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:265
+#: plug-ins/script-fu/scripts/palette-export.scm:320
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
@@ -1071,27 +1062,27 @@ msgstr ""
 "Izvozi aktivno paleto kot slogovno predlogo CSS z vnosom imena barve kot ime "
 "razreda ter s samo barvo kot barvnim atributom"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:290
+#: plug-ins/script-fu/scripts/palette-export.scm:340
 msgid "P_HP dictionary..."
 msgstr "Slovar P_HP ..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:291
+#: plug-ins/script-fu/scripts/palette-export.scm:341
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Izvozi aktivno paleto kot slovar PHP (ime => barva)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:322
+#: plug-ins/script-fu/scripts/palette-export.scm:365
 msgid "_Python dictionary..."
 msgstr "Slovar _Python ..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:323
+#: plug-ins/script-fu/scripts/palette-export.scm:366
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Izvozi aktivno paleto kot slovar Python (ime: barva)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:351
+#: plug-ins/script-fu/scripts/palette-export.scm:387
 msgid "_Text file..."
 msgstr "_Besedilna datoteka …"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:352
+#: plug-ins/script-fu/scripts/palette-export.scm:388
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
@@ -1099,11 +1090,11 @@ msgstr ""
 "Zapiši vse barve palete v besedilno datoteko, z eno šestnajstiško vrednostjo "
 "na vrstico (brez imen)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:398
+#: plug-ins/script-fu/scripts/palette-export.scm:427
 msgid "J_ava map..."
 msgstr "Zemljevid J_ava ..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:399
+#: plug-ins/script-fu/scripts/palette-export.scm:428
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr "Izvozi aktivno paleto kot java.util.Hashtable&lt;Niz, Barva&gt;"
 
