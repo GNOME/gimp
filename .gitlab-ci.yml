@@ -758,7 +758,7 @@ dist-installer-weekly:
   needs: ["gimp-win-a64", "gimp-win-x64", "gimp-win-x86"]
   stage: distribution
   tags:
-    - win32-ps
+    - windows-aarch64
   script:
     - build/windows/gitlab-ci/4_dist-gimp-inno.ps1 | Out-File -FilePath installer.log
   artifacts:

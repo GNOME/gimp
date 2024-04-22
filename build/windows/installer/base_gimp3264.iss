@@ -321,8 +321,6 @@ Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\twain.exe"; DestDir: "{app}\
 #include "base_twain32on64.isi"
 ;prefer 32bit twain plugin over 64bit because 64bit twain drivers are rare
 Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins\twain"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR64}\lib\gimp\{#DIR_VER}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins\twain"; Components: (not gimp32on64) and gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIRA64}\lib\gimp\{#DIR_VER}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins\twain"; Components: (not gimp32on64) and gimpARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;special case due to MS-Windows engine
 Source: "{#DEPS_DIR32}\etc\gtk-3.0\*"; DestDir: "{app}\32\etc\gtk-3.0"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
