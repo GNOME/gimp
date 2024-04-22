@@ -111,14 +111,14 @@ goat_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("Exercise in _C minor"));
+      gimp_procedure_set_menu_label (procedure, _("In _C"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_GEGL);
       gimp_procedure_add_menu_path (procedure,
-                                    "<Image>/Filters/Development/Goat exercises/");
+                                    "<Image>/Filters/Development/Plug-in Examples/");
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Exercise a goat in the C language"),
-                                        "Takes a goat for a walk",
+                                        _("Plug-in example in C"),
+                                        _("Plug-in example in C"),
                                         PLUG_IN_PROC);
       gimp_procedure_set_attribution (procedure,
                                       "Øyvind Kolås <pippin@gimp.org>",
@@ -177,7 +177,7 @@ goat_run (GimpProcedure        *procedure,
       gint              response;
 
       gimp_ui_init (PLUG_IN_BINARY);
-      dialog = gimp_dialog_new (_("Exercise a goat (C)"), PLUG_IN_ROLE,
+      dialog = gimp_dialog_new (_("Plug-in Example in C"), PLUG_IN_ROLE,
                                 NULL, GTK_DIALOG_USE_HEADER_BAR,
                                 gimp_standard_help_func, PLUG_IN_PROC,
 
