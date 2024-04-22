@@ -884,6 +884,8 @@ EXPORTS
 	gimp_tile_height
 	gimp_tile_width
 	gimp_user_time
+	gimp_vector_load_procedure_get_type
+	gimp_vector_load_procedure_new
 	gimp_vectors_bezier_stroke_conicto
 	gimp_vectors_bezier_stroke_cubicto
 	gimp_vectors_bezier_stroke_lineto

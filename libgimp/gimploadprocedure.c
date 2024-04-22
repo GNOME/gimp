@@ -372,6 +372,9 @@ gimp_load_procedure_new (GimpPlugIn      *plug_in,
  *
  * Registers a load procedure as capable of handling raw digital camera loads.
  *
+ * Note that you cannot call this function on [Class@VectorLoadProcedure]
+ * subclass objects.
+ *
  * Since: 3.0
  **/
 void

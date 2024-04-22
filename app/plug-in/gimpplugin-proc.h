@@ -81,6 +81,9 @@ gboolean   gimp_plug_in_set_file_proc_handles_remote (GimpPlugIn    *plug_in,
 gboolean   gimp_plug_in_set_file_proc_handles_raw    (GimpPlugIn    *plug_in,
                                                       const gchar   *proc_name,
                                                       GError       **error);
+gboolean   gimp_plug_in_set_file_proc_handles_vector (GimpPlugIn    *plug_in,
+                                                      const gchar   *proc_name,
+                                                      GError       **error);
 gboolean   gimp_plug_in_set_file_proc_thumb_loader   (GimpPlugIn    *plug_in,
                                                       const gchar   *proc_name,
                                                       const gchar   *thumb_proc,

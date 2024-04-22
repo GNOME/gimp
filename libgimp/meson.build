@@ -203,6 +203,7 @@ libgimp_sources_introspectable = [
   'gimptextlayer.c',
   'gimpthumbnailprocedure.c',
   'gimpvectors.c',
+  'gimpvectorloadprocedure.c',
   gimpenums,
   pdb_wrappers_sources,
 ]

@@ -105,6 +105,8 @@ void            gimp_load_procedure_set_thumbnail_loader (GimpLoadProcedure *pro
                                                           const gchar       *thumbnail_proc);
 const gchar   * gimp_load_procedure_get_thumbnail_loader (GimpLoadProcedure *procedure);
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpLoadProcedure, g_object_unref);
+
 
 G_END_DECLS
 

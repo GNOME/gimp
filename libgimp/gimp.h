@@ -66,6 +66,7 @@
 #include <libgimp/gimpselection.h>
 #include <libgimp/gimptextlayer.h>
 #include <libgimp/gimpthumbnailprocedure.h>
+#include <libgimp/gimpvectorloadprocedure.h>
 #include <libgimp/gimpvectors.h>
 
 /* Resources and their widgets. Order important. */

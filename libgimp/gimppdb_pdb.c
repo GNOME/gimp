@@ -1091,6 +1091,43 @@ _gimp_pdb_set_file_proc_handles_raw (const gchar *procedure_name)
 }
 
 /**
+ * _gimp_pdb_set_file_proc_handles_vector:
+ * @procedure_name: The name of the vector load procedure.
+ *
+ * Registers a load handler procedure as handling vector formats.
+ *
+ * Registers a file handler procedure as handling vector image formats.
+ * Use this procedure only to register a GimpVectorLoadProcedure,
+ * calling it on any other handler will generate an error.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+_gimp_pdb_set_file_proc_handles_vector (const gchar *procedure_name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-pdb-set-file-proc-handles-vector",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * _gimp_pdb_set_file_proc_thumbnail_loader:
  * @load_proc: The name of the file load procedure.
  * @thumb_proc: The name of the thumbnail load procedure.

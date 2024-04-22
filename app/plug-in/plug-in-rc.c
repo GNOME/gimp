@@ -40,7 +40,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 13
+#define PLUG_IN_RC_FILE_VERSION 14
 
 
 /*
@@ -92,6 +92,7 @@ enum
   MIME_TYPES,
   HANDLES_REMOTE,
   HANDLES_RAW,
+  HANDLES_VECTOR,
   THUMB_LOADER,
   BATCH_INTERPRETER,
 };
@@ -162,6 +163,8 @@ plug_in_rc_parse (Gimp    *gimp,
                               "handles-remote", GINT_TO_POINTER (HANDLES_REMOTE));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "handles-raw", GINT_TO_POINTER (HANDLES_RAW));
+  g_scanner_scope_add_symbol (scanner, LOAD_PROC,
+                              "handles-vector", GINT_TO_POINTER (HANDLES_VECTOR));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "thumb-loader", GINT_TO_POINTER (THUMB_LOADER));
 
@@ -715,6 +718,10 @@ plug_in_file_or_batch_proc_deserialize (GScanner            *scanner,
 
             case HANDLES_RAW:
               gimp_plug_in_procedure_set_handles_raw (proc);
+              break;
+
+            case HANDLES_VECTOR:
+              gimp_plug_in_procedure_set_handles_vector (proc);
               break;
 
             case THUMB_LOADER:
@@ -1405,6 +1412,12 @@ plug_in_rc_write (GSList  *plug_in_defs,
                   if (proc->handles_raw && ! proc->image_types)
                     {
                       gimp_config_writer_open (writer, "handles-raw");
+                      gimp_config_writer_close (writer);
+                    }
+
+                  if (proc->handles_vector)
+                    {
+                      gimp_config_writer_open (writer, "handles-vector");
                       gimp_config_writer_close (writer);
                     }
 
