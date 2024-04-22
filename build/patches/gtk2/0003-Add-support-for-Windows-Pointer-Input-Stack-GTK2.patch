@@ -1,0 +1,1753 @@
+From 34281c2c0c433900de0e67b767c77fbf0ce9a99e Mon Sep 17 00:00:00 2001
+From: Luca Bacci <luca.bacci982@gmail.com>
+Date: Thu, 11 Apr 2024 16:34:22 +0200
+Subject: [PATCH 03/10] Add support for Windows Pointer Input Stack (GTK2)
+
+---
+ configure.ac                 |   2 +-
+ gdk/win32/gdkdnd-win32.c     |   6 +-
+ gdk/win32/gdkevents-win32.c  | 265 ++++++++++++-
+ gdk/win32/gdkglobals-win32.c |   1 +
+ gdk/win32/gdkinput-win32.c   | 725 ++++++++++++++++++++++++++++++++++-
+ gdk/win32/gdkinput-win32.h   |  32 ++
+ gdk/win32/gdkinput.c         |   7 +-
+ gdk/win32/gdkprivate-win32.h |   7 +-
+ gdk/win32/gdkwindow-win32.c  |   9 +-
+ gdk/win32/winpointer.h       | 324 ++++++++++++++++
+ 10 files changed, 1356 insertions(+), 22 deletions(-)
+ create mode 100644 gdk/win32/winpointer.h
+
+diff --git a/configure.ac b/configure.ac
+index 2446551..f174abf 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1252,7 +1252,7 @@ else
+ fi
+ 
+ if test "x$gdktarget" = "xwin32"; then
+-  GDK_EXTRA_LIBS="$GDK_EXTRA_LIBS -lgdi32 -limm32 -lshell32 -lole32 -Wl,-luuid"
++  GDK_EXTRA_LIBS="$GDK_EXTRA_LIBS -lgdi32 -limm32 -lshell32 -lole32 -lhid -Wl,-luuid"
+   AM_CONDITIONAL(USE_WIN32, true)
+ else
+   AM_CONDITIONAL(USE_WIN32, false)
+diff --git a/gdk/win32/gdkdnd-win32.c b/gdk/win32/gdkdnd-win32.c
+index ec2377c..51de498 100644
+--- a/gdk/win32/gdkdnd-win32.c
++++ b/gdk/win32/gdkdnd-win32.c
+@@ -635,7 +635,7 @@ send_change_events (GdkDragContext *ctx,
+   LPARAM lparam;
+   WPARAM wparam;
+ 
+-  if (!API_CALL (GetCursorPos, (&pt)))
++  if (!API_CALL (_gdk_win32_get_cursor_pos, (&pt)))
+     return FALSE;
+ 
+   if (!API_CALL (ScreenToClient, (hwnd, &pt)))
+@@ -1865,7 +1865,7 @@ _gdk_win32_dnd_do_dragdrop (void)
+ 
+       dobj = data_object_new (drag_ctx);
+ 
+-      API_CALL (GetCursorPos, (&private->last_pt));
++      API_CALL (_gdk_win32_get_cursor_pos, (&private->last_pt));
+       API_CALL (ScreenToClient, (GDK_WINDOW_HWND (drag_ctx->source_window), &private->last_pt));
+       private->last_key_state = 0;
+       API_CALL (GetKeyboardState, (kbd_state));
+@@ -1932,7 +1932,7 @@ _gdk_win32_dnd_do_dragdrop (void)
+ 
+ #if 0
+       // Send a GDK_DROP_FINISHED to the source window
+-      GetCursorPos (&pt);
++      _gdk_win32_get_cursor_pos (&pt);
+       ptl.x = pt.x;
+       ptl.y = pt.y;
+       if ( pending_src_context != NULL && pending_src_context->context != NULL
+diff --git a/gdk/win32/gdkevents-win32.c b/gdk/win32/gdkevents-win32.c
+index b4b2a94..2ad66ac 100644
+--- a/gdk/win32/gdkevents-win32.c
++++ b/gdk/win32/gdkevents-win32.c
+@@ -52,6 +52,10 @@
+ 
+ #include <windowsx.h>
+ 
++#include <tchar.h>
++#include <tpcshrd.h>
++#include "winpointer.h"
++
+ #ifdef G_WITH_CYGWIN
+ #include <fcntl.h>
+ #include <errno.h>
+@@ -135,6 +139,10 @@ static UINT     sync_timer = 0;
+ 
+ static int debug_indent = 0;
+ 
++static gboolean pen_input;
++static POINT pen_cursor_position;
++static LONG last_digitizer_time;
++
+ static void
+ assign_object (gpointer lhsp,
+ 	       gpointer rhs)
+@@ -181,6 +189,18 @@ _gdk_win32_get_next_tick (gulong suggested_tick)
+     return cur_tick = suggested_tick;
+ }
+ 
++BOOL
++_gdk_win32_get_cursor_pos (LPPOINT lpPoint)
++{
++  if (pen_input)
++    {
++      *lpPoint = pen_cursor_position;
++      return TRUE;
++    }
++
++  return GetCursorPos (lpPoint);
++}
++
+ static void
+ generate_focus_event (GdkWindow *window,
+ 		      gboolean   in)
+@@ -1449,7 +1469,25 @@ synthesize_crossing_events (GdkDisplay                 *display,
+ 			   mask, time_);
+     }
+ }
+-			 
++
++static void
++make_crossing_event (GdkWindow *window,
++                     POINT *screen_pt,
++                     guint32 time_)
++{
++  GDK_NOTE (EVENTS, g_print (" mouse_window %p -> %p",
++                             mouse_window ? GDK_WINDOW_HWND (mouse_window) : NULL,
++                             window ? GDK_WINDOW_HWND (window) : NULL));
++  synthesize_crossing_events (_gdk_display,
++                              mouse_window, window,
++                              GDK_CROSSING_NORMAL,
++                              screen_pt,
++                              0, /* TODO: Set right mask */
++                              time_,
++                              FALSE);
++  g_set_object (&mouse_window, window);
++}
++
+ static void
+ synthesize_expose_events (GdkWindow *window)
+ {
+@@ -2086,6 +2124,8 @@ gdk_event_translate (MSG  *msg,
+   GdkPointerGrabInfo *grab = NULL;
+   GdkWindow *grab_window = NULL;
+ 
++  crossing_cb_t crossing_cb = NULL;
++
+   static gint update_colors_counter = 0;
+   gint button;
+   GdkAtom target;
+@@ -2510,6 +2550,8 @@ gdk_event_translate (MSG  *msg,
+ 		g_print (" (%d,%d)",
+ 			 GET_X_LPARAM (msg->lParam), GET_Y_LPARAM (msg->lParam)));
+ 
++      pen_input = FALSE;
++
+       assign_object (&window, find_window_for_mouse_event (window, msg));
+ 
+       if (GDK_WINDOW_DESTROYED (window))
+@@ -2550,6 +2592,8 @@ gdk_event_translate (MSG  *msg,
+ 		g_print (" (%d,%d)",
+ 			 GET_X_LPARAM (msg->lParam), GET_Y_LPARAM (msg->lParam)));
+ 
++      pen_input = FALSE;
++
+       assign_object (&window, find_window_for_mouse_event (window, msg));
+       grab = _gdk_display_get_last_pointer_grab (_gdk_display);
+       if (grab != NULL && grab->implicit)
+@@ -2577,7 +2621,7 @@ gdk_event_translate (MSG  *msg,
+ 					  GDK_CROSSING_UNGRAB,
+ 					  &msg->pt,
+ 					  0, /* TODO: Set right mask */
+-					  msg->time,
++					  _gdk_win32_get_next_tick (msg->time),
+ 					  FALSE);
+ 	      assign_object (&mouse_window, new_window);
+ 	      mouse_window_ignored_leave = NULL;
+@@ -2596,6 +2640,13 @@ gdk_event_translate (MSG  *msg,
+ 			 (gpointer) msg->wParam,
+ 			 GET_X_LPARAM (msg->lParam), GET_Y_LPARAM (msg->lParam)));
+ 
++      if (_gdk_input_winpointer &&
++          ( (msg->time - last_digitizer_time) < 200 ||
++           -(msg->time - last_digitizer_time) < 200 ))
++        break;
++
++      pen_input = FALSE;
++
+       new_window = window;
+ 
+       grab = _gdk_display_get_last_pointer_grab (_gdk_display);
+@@ -2624,7 +2675,7 @@ gdk_event_translate (MSG  *msg,
+ 
+       if (mouse_window != new_window)
+ 	{
+-	  GDK_NOTE (EVENTS, g_print (" mouse_sinwod %p -> %p",
++	  GDK_NOTE (EVENTS, g_print (" mouse_window %p -> %p",
+ 				     mouse_window ? GDK_WINDOW_HWND (mouse_window) : NULL, 
+ 				     new_window ? GDK_WINDOW_HWND (new_window) : NULL));
+ 	  synthesize_crossing_events (_gdk_display,
+@@ -2632,7 +2683,7 @@ gdk_event_translate (MSG  *msg,
+ 				      GDK_CROSSING_NORMAL,
+ 				      &msg->pt,
+ 				      0, /* TODO: Set right mask */
+-				      msg->time,
++				      _gdk_win32_get_next_tick (msg->time),
+ 				      FALSE);
+ 	  assign_object (&mouse_window, new_window);
+ 	  mouse_window_ignored_leave = NULL;
+@@ -2683,12 +2734,17 @@ gdk_event_translate (MSG  *msg,
+       GDK_NOTE (EVENTS,
+ 		g_print (" (%d,%d)",
+ 			 GET_X_LPARAM (msg->lParam), GET_Y_LPARAM (msg->lParam)));
++
++      pen_input = FALSE;
++
+       break;
+ 
+     case WM_MOUSELEAVE:
+       GDK_NOTE (EVENTS, g_print (" %d (%ld,%ld)",
+ 				 HIWORD (msg->wParam), msg->pt.x, msg->pt.y));
+ 
++      pen_input = FALSE;
++
+       new_window = NULL;
+       hwnd = WindowFromPoint (msg->pt);
+       ignore_leave = FALSE;
+@@ -2718,7 +2774,7 @@ gdk_event_translate (MSG  *msg,
+ 				    GDK_CROSSING_NORMAL,
+ 				    &msg->pt,
+ 				    0, /* TODO: Set right mask */
+-				    msg->time,
++				    _gdk_win32_get_next_tick (msg->time),
+ 				    FALSE);
+       assign_object (&mouse_window, new_window);
+       mouse_window_ignored_leave = ignore_leave ? new_window : NULL;
+@@ -2727,6 +2783,168 @@ gdk_event_translate (MSG  *msg,
+       return_val = TRUE;
+       break;
+ 
++    case WM_POINTERDOWN:
++      if (!_gdk_input_winpointer ||
++          gdk_winpointer_should_forward_message (msg) ||
++          !IS_POINTER_PRIMARY_WPARAM (msg->wParam))
++        {
++          return_val = FALSE;
++          break;
++        }
++
++      current_root_x = pen_cursor_position.x = GET_X_LPARAM (msg->lParam);
++      current_root_y = pen_cursor_position.y = GET_Y_LPARAM (msg->lParam);
++      pen_input = TRUE;
++      last_digitizer_time = msg->time;
++
++      grab = _gdk_display_get_last_pointer_grab (_gdk_display);
++      if (grab != NULL && !grab->implicit && !grab->owner_events)
++        g_set_object (&window, grab->native_window);
++
++      if (mouse_window != window)
++        crossing_cb = make_crossing_event;
++
++      gdk_winpointer_input_events (window, crossing_cb, msg);
++
++      *ret_valp = 0;
++      return_val = TRUE;
++      break;
++
++    case WM_POINTERUP:
++      if (!_gdk_input_winpointer ||
++          gdk_winpointer_should_forward_message (msg) ||
++          !IS_POINTER_PRIMARY_WPARAM (msg->wParam))
++        {
++          return_val = FALSE;
++          break;
++        }
++
++      current_root_x = pen_cursor_position.x = GET_X_LPARAM (msg->lParam);
++      current_root_y = pen_cursor_position.y = GET_Y_LPARAM (msg->lParam);
++      pen_input = TRUE;
++      last_digitizer_time = msg->time;
++
++      grab = _gdk_display_get_last_pointer_grab (_gdk_display);
++      if (grab != NULL && !grab->implicit && !grab->owner_events)
++        g_set_object (&window, grab->native_window);
++
++      gdk_winpointer_input_events (window, NULL, msg);
++
++      *ret_valp = 0;
++      return_val = TRUE;
++      break;
++
++    case WM_POINTERUPDATE:
++      if (!_gdk_input_winpointer ||
++          gdk_winpointer_should_forward_message (msg) ||
++          !IS_POINTER_PRIMARY_WPARAM (msg->wParam))
++        {
++          return_val = FALSE;
++          break;
++        }
++
++      current_root_x = pen_cursor_position.x = GET_X_LPARAM (msg->lParam);
++      current_root_y = pen_cursor_position.y = GET_Y_LPARAM (msg->lParam);
++      pen_input = TRUE;
++      last_digitizer_time = msg->time;
++
++      grab = _gdk_display_get_last_pointer_grab (_gdk_display);
++      if (grab != NULL && !grab->implicit && !grab->owner_events)
++        g_set_object (&window, grab->native_window);
++
++      if (mouse_window != window)
++        crossing_cb = make_crossing_event;
++
++      gdk_winpointer_input_events (window, crossing_cb, msg);
++
++      *ret_valp = 0;
++      return_val = TRUE;
++      break;
++
++    case WM_NCPOINTERUPDATE:
++      if (!_gdk_input_winpointer ||
++          gdk_winpointer_should_forward_message (msg) ||
++          !IS_POINTER_PRIMARY_WPARAM (msg->wParam))
++        {
++          return_val = FALSE;
++          break;
++        }
++
++      current_root_x = pen_cursor_position.x = GET_X_LPARAM (msg->lParam);
++      current_root_y = pen_cursor_position.y = GET_Y_LPARAM (msg->lParam);
++      pen_input = TRUE;
++      last_digitizer_time = msg->time;
++
++      if (!IS_POINTER_INCONTACT_WPARAM (msg->wParam) &&
++          mouse_window != NULL)
++        {
++          guint32 event_time = 0;
++
++          gdk_winpointer_get_message_info (msg, &event_time);
++          make_crossing_event (NULL,
++                               &pen_cursor_position,
++                               event_time);
++        }
++
++      return_val = FALSE; /* forward to DefWindowProc */
++      break;
++
++    case WM_POINTERENTER:
++      if (!_gdk_input_winpointer ||
++          gdk_winpointer_should_forward_message (msg) ||
++          !IS_POINTER_PRIMARY_WPARAM (msg->wParam))
++        {
++          return_val = FALSE;
++          break;
++        }
++
++      current_root_x = pen_cursor_position.x = GET_X_LPARAM (msg->lParam);
++      current_root_y = pen_cursor_position.y = GET_Y_LPARAM (msg->lParam);
++      pen_input = TRUE;
++      last_digitizer_time = msg->time;
++
++      grab = _gdk_display_get_last_pointer_grab (_gdk_display);
++      if (grab != NULL && !grab->implicit && !grab->owner_events)
++        g_set_object (&window, grab->native_window);
++
++      gdk_winpointer_input_events (window, NULL, msg);
++
++      *ret_valp = 0;
++      return_val = TRUE;
++      break;
++
++    case WM_POINTERLEAVE:
++      if (!_gdk_input_winpointer ||
++          gdk_winpointer_should_forward_message (msg) ||
++          !IS_POINTER_PRIMARY_WPARAM (msg->wParam))
++        {
++          return_val = FALSE;
++          break;
++        }
++
++      current_root_x = pen_cursor_position.x = GET_X_LPARAM (msg->lParam);
++      current_root_y = pen_cursor_position.y = GET_Y_LPARAM (msg->lParam);
++      pen_input = TRUE;
++      last_digitizer_time = msg->time;
++
++      if (!IS_POINTER_INRANGE_WPARAM (msg->wParam))
++        {
++          gdk_winpointer_input_events (window, NULL, msg);
++        }
++      else if (mouse_window != NULL)
++        {
++          guint32 event_time = 0;
++
++          gdk_winpointer_get_message_info (msg, &event_time);
++          make_crossing_event (NULL,
++                               &pen_cursor_position,
++                               event_time);
++        }
++
++      *ret_valp = 0;
++      return_val = TRUE;
++      break;
++
+     case WM_MOUSEWHEEL:
+     case WM_MOUSEHWHEEL:
+       GDK_NOTE (EVENTS, g_print (" %d", (short) HIWORD (msg->wParam)));
+@@ -2888,6 +3106,17 @@ gdk_event_translate (MSG  *msg,
+ 
+        break;
+ 
++    case WM_POINTERACTIVATE:
++      if (gdk_window_get_window_type (window) == GDK_WINDOW_TEMP ||
++          !((GdkWindowObject *)window)->accept_focus ||
++          _gdk_modal_blocked (gdk_window_get_toplevel (window)))
++        {
++          *ret_valp = PA_NOACTIVATE;
++          return_val = TRUE;
++        }
++
++      break;
++
+     case WM_KILLFOCUS:
+       if (_gdk_display->keyboard_grab.window != NULL &&
+ 	  !GDK_WINDOW_DESTROYED (_gdk_display->keyboard_grab.window))
+@@ -3439,6 +3668,14 @@ gdk_event_translate (MSG  *msg,
+       return_val = TRUE;
+       break;
+ 
++    case WM_DESTROY:
++      /* we have to call RemoveProp before the window is destroyed */
++      if (_gdk_input_winpointer)
++        gdk_winpointer_finalize_window (window);
++
++      return_val = FALSE;
++      break;
++
+     case WM_NCDESTROY:
+       grab = _gdk_display_get_last_pointer_grab (_gdk_display);
+       if (grab != NULL)
+@@ -3573,7 +3810,10 @@ gdk_event_translate (MSG  *msg,
+        * instead
+        */
+       if (LOWORD(msg->wParam) != WA_INACTIVE)
+-	_gdk_input_set_tablet_active ();
++        {
++          if (!_gdk_input_winpointer)
++            _gdk_input_set_tablet_active ();
++        }
+       break;
+ 
+     case WM_ACTIVATEAPP:
+@@ -3605,6 +3845,8 @@ gdk_event_translate (MSG  *msg,
+ 				 HIWORD (msg->lParam)));
+       /* Fall through */
+     wintab:
++      if (_gdk_input_winpointer)
++        break;
+ 
+       event = gdk_event_new (GDK_NOTHING);
+       event->any.window = NULL;
+@@ -3615,6 +3857,17 @@ gdk_event_translate (MSG  *msg,
+ 	gdk_event_free (event);
+ 
+       break;
++
++    case WM_TABLET_QUERYSYSTEMGESTURESTATUS:
++
++      *ret_valp = TABLET_DISABLE_PRESSANDHOLD |
++                  TABLET_DISABLE_PENTAPFEEDBACK |
++                  TABLET_DISABLE_PENBARRELFEEDBACK |
++                  TABLET_DISABLE_FLICKS |
++                  TABLET_DISABLE_FLICKFALLBACKKEYS;
++
++      return_val = TRUE;
++      break;
+     }
+ 
+ done:
+diff --git a/gdk/win32/gdkglobals-win32.c b/gdk/win32/gdkglobals-win32.c
+index 1a876d0..519c718 100644
+--- a/gdk/win32/gdkglobals-win32.c
++++ b/gdk/win32/gdkglobals-win32.c
+@@ -76,6 +76,7 @@ GdkWin32DndState  _dnd_target_state = GDK_WIN32_DND_NONE;
+ GdkWin32DndState  _dnd_source_state = GDK_WIN32_DND_NONE;
+ 
+ gint		  _gdk_input_ignore_wintab = FALSE;
++gboolean          _gdk_input_winpointer = FALSE;
+ gint		  _gdk_max_colors = 0;
+ 
+ gboolean	  _modal_operation_in_progress = FALSE;
+diff --git a/gdk/win32/gdkinput-win32.c b/gdk/win32/gdkinput-win32.c
+index 3fe7aaf..0851662 100644
+--- a/gdk/win32/gdkinput-win32.c
++++ b/gdk/win32/gdkinput-win32.c
+@@ -37,6 +37,12 @@
+ #include "gdkprivate-win32.h"
+ #include "gdkinput-win32.h"
+ 
++#include <tchar.h>
++#include <tpcshrd.h>
++#include <hidsdi.h>
++
++#include "winpointer.h"
++
+ #define WINTAB32_DLL "Wintab32.dll"
+ 
+ #define PACKETDATA (PK_CONTEXT | PK_CURSOR | PK_BUTTONS | PK_X | PK_Y  | PK_NORMAL_PRESSURE | PK_ORIENTATION)
+@@ -52,6 +58,34 @@
+ 
+ /* Forward declarations */
+ 
++typedef BOOL
++(WINAPI *registerPointerDeviceNotifications_t)(HWND window, BOOL notifyRange);
++typedef BOOL
++(WINAPI *getPointerDevices_t)(UINT32 *deviceCount, POINTER_DEVICE_INFO *pointerDevices);
++typedef BOOL
++(WINAPI *getPointerDeviceCursors_t)(HANDLE device, UINT32 *cursorCount, POINTER_DEVICE_CURSOR_INFO *deviceCursors);
++typedef BOOL
++(WINAPI *getPointerDeviceRects_t)(HANDLE device, RECT *pointerDeviceRect, RECT *displayRect);
++typedef BOOL
++(WINAPI *getPointerType_t)(UINT32 pointerId, POINTER_INPUT_TYPE *pointerType);
++typedef BOOL
++(WINAPI *getPointerCursorId_t)(UINT32 pointerId, UINT32 *cursorId);
++typedef BOOL
++(WINAPI *getPointerPenInfo_t)(UINT32 pointerId, POINTER_PEN_INFO *penInfo);
++typedef BOOL
++(WINAPI *getPointerPenInfoHistory_t)(UINT32 pointerId, UINT32 *entriesCount, POINTER_PEN_INFO *penInfo);
++typedef BOOL
++(WINAPI *setWindowFeedbackSetting_t)(HWND hwnd, FEEDBACK_TYPE feedback, DWORD dwFlags, UINT32 size, const VOID *configuration);
++
++static getPointerDevices_t getPointerDevices;
++static getPointerDeviceCursors_t getPointerDeviceCursors;
++static getPointerDeviceRects_t getPointerDeviceRects;
++static getPointerType_t getPointerType;
++static getPointerCursorId_t getPointerCursorId;
++static getPointerPenInfo_t getPointerPenInfo;
++static getPointerPenInfoHistory_t getPointerPenInfoHistory;
++static setWindowFeedbackSetting_t setWindowFeedbackSetting;
++
+ static GdkDevicePrivate *gdk_input_find_dev_from_ctx (HCTX hctx,
+ 						      UINT id);
+ static GList     *wintab_contexts = NULL;
+@@ -80,6 +114,658 @@ static t_WTOverlap p_WTOverlap;
+ static t_WTPacket p_WTPacket;
+ static t_WTQueueSizeSet p_WTQueueSizeSet;
+ 
++static inline double
++rect_width (RECT *rect)
++{
++  return rect->right - rect->left;
++}
++
++static inline double
++rect_height (RECT *rect)
++{
++  return rect->bottom - rect->top;
++}
++
++static inline gboolean
++rect_is_degenerate (RECT *rect)
++{
++  return rect_width (rect) == 0 || rect_height (rect) == 0;
++}
++
++static gboolean
++winpointer_device_update_scale_factors (GdkDevicePrivate *device)
++{
++  RECT device_rect;
++  RECT display_rect;
++
++  if (!getPointerDeviceRects (device->device_handle, &device_rect, &display_rect))
++    {
++      WIN32_API_FAILED ("GetPointerDeviceRects");
++      return FALSE;
++    }
++
++  if (rect_is_degenerate (&device_rect))
++    {
++      g_warning ("Invalid coordinates from GetPointerDeviceRects");
++      return FALSE;
++    }
++
++  device->origin_x = display_rect.left;
++  device->origin_y = display_rect.top;
++  device->scale_x = rect_width (&display_rect) / rect_width (&device_rect);
++  device->scale_y = rect_height (&display_rect) / rect_height (&device_rect);
++
++  return TRUE;
++}
++
++#define HID_STRING_BYTES_LIMIT 200
++#define VID_PID_CHARS 4
++
++static void
++winpointer_get_device_details (HANDLE device,
++                               char *vid,
++                               char *pid,
++                               char **manufacturer,
++                               char **product)
++{
++  RID_DEVICE_INFO info;
++  UINT wchars_count = 0;
++  UINT size = 0;
++
++  memset (&info, 0, sizeof (info));
++
++  info.cbSize = sizeof (info);
++  size = sizeof (info);
++
++  if (GetRawInputDeviceInfoW (device, RIDI_DEVICEINFO, &info, &size) > 0 &&
++      info.dwType == RIM_TYPEHID &&
++      info.hid.dwVendorId > 0 &&
++      info.hid.dwProductId > 0)
++    {
++      const char *format_string = "%0" G_STRINGIFY (VID_PID_CHARS) "x";
++
++      g_snprintf (vid, VID_PID_CHARS + 1, format_string, (unsigned) info.hid.dwVendorId);
++      g_snprintf (pid, VID_PID_CHARS + 1, format_string, (unsigned) info.hid.dwProductId);
++    }
++
++  if (GetRawInputDeviceInfoW (device, RIDI_DEVICENAME, NULL, &wchars_count) == 0)
++    {
++      gunichar2 *path = g_new0 (gunichar2, wchars_count);
++
++      if (GetRawInputDeviceInfoW (device, RIDI_DEVICENAME, path, &wchars_count) > 0)
++        {
++          HANDLE device_file = CreateFileW (path,
++                                            0,
++                                            FILE_SHARE_READ |
++                                            FILE_SHARE_WRITE |
++                                            FILE_SHARE_DELETE,
++                                            NULL,
++                                            OPEN_EXISTING,
++                                            FILE_FLAG_SESSION_AWARE,
++                                            NULL);
++
++          if (device_file != INVALID_HANDLE_VALUE)
++            {
++              gunichar2 *buffer = g_malloc0 (HID_STRING_BYTES_LIMIT);
++
++              if (HidD_GetManufacturerString (device_file, buffer, HID_STRING_BYTES_LIMIT))
++                if (buffer[0])
++                  *manufacturer = g_utf16_to_utf8 (buffer, -1, NULL, NULL, NULL);
++
++              if (HidD_GetProductString (device_file, buffer, HID_STRING_BYTES_LIMIT))
++                if (buffer[0])
++                  *product = g_utf16_to_utf8 (buffer, -1, NULL, NULL, NULL);
++
++              g_free (buffer);
++              CloseHandle (device_file);
++            }
++        }
++
++      g_free (path);
++    }
++}
++
++static void
++winpointer_create_device (POINTER_DEVICE_INFO *info,
++                          GdkInputSource source)
++{
++  GdkDevicePrivate *device = NULL;
++  char vid[VID_PID_CHARS + 1];
++  char pid[VID_PID_CHARS + 1];
++  char *manufacturer = NULL;
++  char *product = NULL;
++  char *base_name = NULL;
++  char *name = NULL;
++  UINT32 num_cursors = 0;
++
++  if (!getPointerDeviceCursors (info->device, &num_cursors, NULL))
++    {
++      WIN32_API_FAILED ("GetPointerDeviceCursors");
++      return;
++    }
++
++  if (num_cursors == 0)
++    return;
++
++  winpointer_get_device_details (info->device, vid, pid, &manufacturer, &product);
++
++  /* build up the name */
++  if (!manufacturer && vid[0])
++    manufacturer = g_strdup (vid);
++
++  if (!product && pid[0])
++    product = g_strdup (pid);
++
++  if (manufacturer && product)
++    base_name = g_strconcat (manufacturer, " ", product, NULL);
++
++  if (!base_name && info->productString[0])
++    base_name = g_utf16_to_utf8 (info->productString, -1, NULL, NULL, NULL);
++
++  if (!base_name)
++    base_name = g_strdup ("Unnamed");
++
++  switch (source)
++    {
++    case GDK_SOURCE_PEN:
++      name = g_strconcat (base_name, " Pen stylus", NULL);
++    break;
++    case GDK_SOURCE_ERASER:
++      name = g_strconcat (base_name, " Eraser", NULL);
++    break;
++    default:
++      name = g_strdup (base_name);
++    break;
++    }
++
++  device = g_object_new (GDK_TYPE_DEVICE, NULL);
++  device->info.name = g_strdup (name);
++  device->info.source = source;
++  device->info.mode = GDK_MODE_SCREEN;
++  device->info.has_cursor = TRUE;
++
++  device->info.num_axes = 3;
++  device->info.axes = g_new (GdkDeviceAxis, device->info.num_axes);
++
++  /* TODO: axes for x, y? */
++  device->info.axes[0].use = GDK_AXIS_PRESSURE;
++  device->info.axes[0].min = 0.0;
++  device->info.axes[0].max = 1.0;
++  device->info.axes[1].use = GDK_AXIS_XTILT;
++  device->info.axes[1].min = -1.0;
++  device->info.axes[1].max = 1.0;
++  device->info.axes[2].use = GDK_AXIS_YTILT;
++  device->info.axes[2].min = -1.0;
++  device->info.axes[2].max = 1.0;
++
++  device->device_handle = info->device;
++  device->start_cursor_id = info->startingCursorId;
++  device->end_cursor_id = info->startingCursorId + num_cursors - 1;
++
++  device->info.num_keys = 0;
++  device->info.keys = NULL;
++
++  if (!winpointer_device_update_scale_factors (device))
++    {
++      g_set_object (&device, NULL);
++      goto cleanup;
++    }
++
++  _gdk_input_devices = g_list_append (_gdk_input_devices, device);
++
++cleanup:
++  g_free (name);
++  g_free (base_name);
++  g_free (product);
++  g_free (manufacturer);
++}
++
++static void
++winpointer_create_devices (POINTER_DEVICE_INFO *info)
++{
++  switch (info->pointerDeviceType)
++    {
++    case POINTER_DEVICE_TYPE_INTEGRATED_PEN:
++    case POINTER_DEVICE_TYPE_EXTERNAL_PEN:
++      winpointer_create_device (info, GDK_SOURCE_PEN);
++      winpointer_create_device (info, GDK_SOURCE_ERASER);
++    break;
++
++    default:
++      g_assert_not_reached ();
++    break;
++    }
++}
++
++static void
++winpointer_enumerate_devices (void)
++{
++  POINTER_DEVICE_INFO *infos = NULL;
++  UINT32 infos_count = 0;
++  UINT32 i = 0;
++  gboolean done = FALSE;
++
++get:
++  infos_count = 0;
++  do
++    {
++      infos = g_new0 (POINTER_DEVICE_INFO, infos_count);
++      if (!getPointerDevices (&infos_count, infos))
++        {
++          g_free (infos);
++
++          if (GetLastError() == ERROR_INSUFFICIENT_BUFFER)
++            goto get;
++
++          WIN32_API_FAILED ("GetPointerDevices");
++          return;
++        }
++    }
++  while (infos_count > 0 && !infos);
++
++  for (i = 0; i < infos_count; i++)
++    winpointer_create_devices (&infos[i]);
++
++  g_free (infos);
++}
++
++static gboolean
++winpointer_ensure_procedures ()
++{
++  static HMODULE user32_dll = NULL;
++
++  if (!user32_dll)
++    {
++      user32_dll = GetModuleHandleW (L"user32.dll");
++      if (!user32_dll)
++        {
++          WIN32_API_FAILED ("GetModuleHandle");
++          return FALSE;
++        }
++
++      getPointerDevices = (getPointerDevices_t)
++        GetProcAddress (user32_dll, "GetPointerDevices");
++      getPointerDeviceCursors = (getPointerDeviceCursors_t)
++        GetProcAddress (user32_dll, "GetPointerDeviceCursors");
++      getPointerDeviceRects = (getPointerDeviceRects_t)
++        GetProcAddress (user32_dll, "GetPointerDeviceRects");
++      getPointerType = (getPointerType_t)
++        GetProcAddress (user32_dll, "GetPointerType");
++      getPointerCursorId = (getPointerCursorId_t)
++        GetProcAddress (user32_dll, "GetPointerCursorId");
++      getPointerPenInfo = (getPointerPenInfo_t)
++        GetProcAddress (user32_dll, "GetPointerPenInfo");
++      getPointerPenInfoHistory = (getPointerPenInfoHistory_t)
++        GetProcAddress (user32_dll, "GetPointerPenInfoHistory");
++      setWindowFeedbackSetting = (setWindowFeedbackSetting_t)
++        GetProcAddress (user32_dll, "SetWindowFeedbackSetting");
++    }
++
++  return getPointerDevices &&
++         getPointerDeviceCursors &&
++         getPointerDeviceRects &&
++         getPointerType &&
++         getPointerCursorId &&
++         getPointerPenInfo &&
++         getPointerPenInfoHistory;
++}
++
++static gboolean
++winpointer_initialize (void)
++{
++  if (!winpointer_ensure_procedures ())
++    return FALSE;
++
++  winpointer_enumerate_devices ();
++
++  return TRUE;
++}
++
++void
++gdk_winpointer_initialize_window (GdkWindow *window)
++{
++  HWND hwnd = GDK_WINDOW_HWND (window);
++  ATOM key = 0;
++  HANDLE val = (HANDLE)(TABLET_DISABLE_PRESSANDHOLD |
++                        TABLET_DISABLE_PENTAPFEEDBACK |
++                        TABLET_DISABLE_PENBARRELFEEDBACK |
++                        TABLET_DISABLE_FLICKS |
++                        TABLET_DISABLE_FLICKFALLBACKKEYS);
++
++  winpointer_ensure_procedures ();
++
++  key = GlobalAddAtom (MICROSOFT_TABLETPENSERVICE_PROPERTY);
++  API_CALL (SetPropW, (hwnd, (LPCWSTR)(uintptr_t)key, val));
++  GlobalDeleteAtom (key);
++
++#if 0
++  if (setGestureConfig != NULL)
++    {
++      GESTURECONFIG gesture_config;
++      memset (&gesture_config, 0, sizeof (gesture_config));
++
++      gesture_config.dwID = 0;
++      gesture_config.dwWant = 0;
++      gesture_config.dwBlock = GC_ALLGESTURES;
++
++      API_CALL (setGestureConfig, (hwnd, 0, 1, &gesture_config, sizeof (gesture_config)));
++    }
++#endif
++
++  if (setWindowFeedbackSetting != NULL)
++    {
++      FEEDBACK_TYPE feedbacks[] = {
++        FEEDBACK_PEN_BARRELVISUALIZATION,
++        FEEDBACK_PEN_TAP,
++        FEEDBACK_PEN_DOUBLETAP,
++        FEEDBACK_PEN_PRESSANDHOLD,
++        FEEDBACK_PEN_RIGHTTAP,
++#if 0
++        FEEDBACK_TOUCH_CONTACTVISUALIZATION,
++        FEEDBACK_TOUCH_TAP,
++        FEEDBACK_TOUCH_DOUBLETAP,
++        FEEDBACK_TOUCH_PRESSANDHOLD,
++        FEEDBACK_TOUCH_RIGHTTAP,
++        FEEDBACK_GESTURE_PRESSANDTAP,
++#endif
++      };
++      gsize i = 0;
++
++      for (i = 0; i < G_N_ELEMENTS (feedbacks); i++)
++        {
++          BOOL setting = FALSE;
++
++          API_CALL (setWindowFeedbackSetting, (hwnd, feedbacks[i], 0, sizeof (BOOL), &setting));
++        }
++    }
++}
++
++void
++gdk_winpointer_finalize_window (GdkWindow *window)
++{
++  HWND hwnd = GDK_WINDOW_HWND (window);
++  ATOM key = 0;
++
++  key = GlobalAddAtom (MICROSOFT_TABLETPENSERVICE_PROPERTY);
++  RemovePropW (hwnd, (LPCWSTR)(uintptr_t)key);
++  GlobalDeleteAtom (key);
++}
++
++
++static inline guint32
++winpointer_get_time (MSG *msg, POINTER_INFO *info)
++{
++  return info->dwTime != 0 ? info->dwTime : msg->time;
++}
++
++static inline gboolean
++winpointer_is_eraser (POINTER_PEN_INFO *pen_info)
++{
++  return (pen_info->penFlags & (PEN_FLAG_INVERTED | PEN_FLAG_ERASER)) != 0;
++}
++
++static GdkDevicePrivate*
++winpointer_find_device_with_source (HANDLE device_handle,
++                                    UINT32 cursor_id,
++                                    GdkInputSource input_source)
++{
++  GList *l;
++
++  for (l = _gdk_input_devices; l; l = l->next)
++    {
++      GdkDevicePrivate *device = (GdkDevicePrivate*) l->data;
++
++      if (device->device_handle == device_handle &&
++          device->start_cursor_id <= cursor_id &&
++          device->end_cursor_id >= cursor_id &&
++          gdk_device_get_source (GDK_DEVICE (device)) == input_source)
++        {
++          return device;
++        }
++    }
++
++  return NULL;
++}
++
++static GdkEvent*
++winpointer_allocate_event (MSG *msg,
++                           POINTER_INFO *info)
++{
++  g_assert_true (info->pointerType == PT_PEN);
++
++  switch (msg->message)
++    {
++    case WM_POINTERENTER:
++      g_return_val_if_fail (IS_POINTER_NEW_WPARAM (msg->wParam), NULL);
++      return gdk_event_new (GDK_PROXIMITY_IN);
++    break;
++    case WM_POINTERLEAVE:
++      g_return_val_if_fail (!IS_POINTER_INRANGE_WPARAM (msg->wParam), NULL);
++      return gdk_event_new (GDK_PROXIMITY_OUT);
++    break;
++    case WM_POINTERDOWN:
++      return gdk_event_new (GDK_BUTTON_PRESS);
++    break;
++    case WM_POINTERUP:
++      return gdk_event_new (GDK_BUTTON_RELEASE);
++    break;
++    case WM_POINTERUPDATE:
++      return gdk_event_new (GDK_MOTION_NOTIFY);
++    break;
++    }
++
++  g_assert_not_reached ();
++  return NULL;
++}
++
++static void
++winpointer_make_event (GdkDevicePrivate *device,
++                       GdkWindow *window,
++                       MSG *msg,
++                       POINTER_INFO *info)
++{
++  guint32 time = 0;
++  double x_root = 0.0;
++  double y_root = 0.0;
++  double x = 0.0;
++  double y = 0.0;
++  unsigned int state = 0;
++  double *axes = NULL;
++  unsigned int button = 0;
++  POINT client_area_coordinates;
++  GdkEvent *evt = NULL;
++  POINTER_PEN_INFO *pen_info = (POINTER_PEN_INFO*) info;
++
++  evt = winpointer_allocate_event (msg, info);
++  if (!evt)
++    return;
++
++  time = winpointer_get_time (msg, info);
++
++  x_root = device->origin_x + info->ptHimetricLocation.x * device->scale_x;
++  y_root = device->origin_y + info->ptHimetricLocation.y * device->scale_y;
++
++  client_area_coordinates.x = 0;
++  client_area_coordinates.y = 0;
++  ClientToScreen (GDK_WINDOW_HWND (window), &client_area_coordinates);
++  x = x_root - client_area_coordinates.x;
++  y = y_root - client_area_coordinates.y;
++
++  /* bring potential win32 negative screen coordinates to
++     the non-negative screen coordinates that GDK expects. */
++  x_root += _gdk_offset_x;
++  y_root += _gdk_offset_y;
++
++  /* info->dwKeyStates is not reliable. We shall use
++   * GetKeyState here even for Ctrl and Shift. */
++  state = 0;
++  if (GetKeyState (VK_CONTROL) < 0)
++    state |= GDK_CONTROL_MASK;
++  if (GetKeyState (VK_SHIFT) < 0)
++    state |= GDK_SHIFT_MASK;
++  if (GetKeyState (VK_MENU) < 0)
++    state |= GDK_MOD1_MASK;
++  if (GetKeyState (VK_CAPITAL) & 0x1)
++    state |= GDK_LOCK_MASK;
++
++  device->last_button_mask = 0;
++  if (((info->pointerFlags & POINTER_FLAG_FIRSTBUTTON) &&
++       (info->ButtonChangeType != POINTER_CHANGE_FIRSTBUTTON_DOWN))
++      || info->ButtonChangeType == POINTER_CHANGE_FIRSTBUTTON_UP)
++    device->last_button_mask |= GDK_BUTTON1_MASK;
++  if (((info->pointerFlags & POINTER_FLAG_SECONDBUTTON) &&
++       (info->ButtonChangeType != POINTER_CHANGE_SECONDBUTTON_DOWN))
++      || info->ButtonChangeType == POINTER_CHANGE_SECONDBUTTON_UP)
++    device->last_button_mask |= GDK_BUTTON3_MASK;
++  state |= device->last_button_mask;
++
++  axes = g_new0 (double, device->info.num_axes);
++
++  g_assert_cmpint (device->info.num_axes, <=, 3);
++  axes[0] = (pen_info->penMask & PEN_MASK_PRESSURE) ? pen_info->pressure / 1024.0 :
++            (pen_info->pointerInfo.pointerFlags & POINTER_FLAG_INCONTACT) ? 1.0 : 0.0;
++  axes[1] = (pen_info->penMask & PEN_MASK_TILT_X) ? pen_info->tiltX / 90.0 : 0.0;
++  axes[2] = (pen_info->penMask & PEN_MASK_TILT_Y) ? pen_info->tiltY / 90.0 : 0.0;
++
++  button = (info->pointerFlags & POINTER_FLAG_FIRSTBUTTON) ||
++           (info->ButtonChangeType == POINTER_CHANGE_FIRSTBUTTON_UP) ? 1 : 3;
++
++  switch (evt->any.type)
++    {
++    case GDK_PROXIMITY_IN:
++    case GDK_PROXIMITY_OUT:
++      evt->proximity.time = time;
++      evt->proximity.device = &device->info;
++    break;
++    case GDK_BUTTON_PRESS:
++    case GDK_BUTTON_RELEASE:
++      evt->button.time = time;
++      evt->button.x_root = x_root;
++      evt->button.y_root = y_root;
++      evt->button.x = x;
++      evt->button.y = y;
++      evt->button.state = state;
++      evt->button.axes = axes;
++      evt->button.button = button;
++      evt->button.device = &device->info;
++    break;
++    case GDK_MOTION_NOTIFY:
++      evt->motion.time = time;
++      evt->motion.x_root = x_root;
++      evt->motion.y_root = y_root;
++      evt->motion.x = x;
++      evt->motion.y = y;
++      evt->motion.state = state;
++      evt->motion.axes = axes;
++      evt->motion.device = &device->info;
++    break;
++
++    default:
++      g_assert_not_reached ();
++    break;
++    }
++
++  evt->any.send_event = FALSE;
++  evt->any.window = window;
++  gdk_event_set_screen (evt, _gdk_screen);
++
++  _gdk_win32_append_event (evt);
++}
++
++void
++gdk_winpointer_input_events (GdkWindow *window,
++                             crossing_cb_t crossing_cb,
++                             MSG *msg)
++{
++  UINT32 pointer_id = GET_POINTERID_WPARAM (msg->wParam);
++  UINT32 cursor_id = 0;
++  POINTER_PEN_INFO *infos = NULL;
++  UINT32 history_count = 0;
++  GdkDevicePrivate *device = NULL;
++  UINT32 h = 0;
++
++  if (!getPointerCursorId (pointer_id, &cursor_id))
++    {
++      WIN32_API_FAILED_LOG_ONCE ("GetPointerCursorId");
++      return;
++    }
++
++  do
++    {
++      infos = g_new0 (POINTER_PEN_INFO, history_count);
++      if (!getPointerPenInfoHistory (pointer_id, &history_count, infos))
++        {
++          WIN32_API_FAILED_LOG_ONCE ("GetPointerPenInfoHistory");
++          g_free (infos);
++          return;
++        }
++    }
++  while (!infos && history_count > 0);
++
++  if (history_count == 0)
++    return;
++
++  device = winpointer_find_device_with_source (infos->pointerInfo.sourceDevice,
++                                               cursor_id,
++                                               winpointer_is_eraser (infos) ?
++                                               GDK_SOURCE_ERASER : GDK_SOURCE_PEN);
++  if (!device)
++    {
++      g_free (infos);
++      return;
++    }
++
++  h = history_count - 1;
++
++  if (crossing_cb)
++    {
++      POINT screen_pt = infos[h].pointerInfo.ptPixelLocation;
++      guint32 event_time = winpointer_get_time (msg, &infos[h].pointerInfo);
++
++      crossing_cb (window, &screen_pt, event_time);
++    }
++
++  do
++    winpointer_make_event (device,
++                           window,
++                           msg,
++                           (POINTER_INFO*) &infos[h]);
++  while (h-- > 0);
++
++  g_free (infos);
++}
++
++void
++gdk_winpointer_get_message_info (MSG *msg,
++                                 guint32 *time_)
++{
++  UINT32 pointer_id = GET_POINTERID_WPARAM (msg->wParam);
++  POINTER_PEN_INFO pen_info;
++
++  if (!getPointerPenInfo (pointer_id, &pen_info))
++    {
++      WIN32_API_FAILED_LOG_ONCE ("GetPointerPenInfo");
++      return;
++    }
++
++  *time_ = winpointer_get_time (msg, &pen_info.pointerInfo);
++}
++
++gboolean
++gdk_winpointer_should_forward_message (MSG *msg)
++{
++  UINT32 pointer_id = GET_POINTERID_WPARAM (msg->wParam);
++  POINTER_INPUT_TYPE type = PT_POINTER;
++
++  if (!getPointerType (pointer_id, &type))
++    {
++      WIN32_API_FAILED_LOG_ONCE ("GetPointerType");
++      return TRUE;
++    }
++
++  return type != PT_PEN;
++}
++
+ static GdkDevicePrivate *
+ gdk_input_find_dev_from_ctx (HCTX hctx,
+ 			     UINT cursor)
+@@ -350,7 +1036,9 @@ _gdk_input_wintab_init_check (void)
+ 
+   if (wintab_initialized)
+     return;
+-  
++
++  g_assert_false (_gdk_input_winpointer);
++
+   wintab_initialized = TRUE;
+   
+   wintab_contexts = NULL;
+@@ -948,6 +1636,9 @@ _gdk_input_other_event (GdkEvent  *event,
+    */
+   static guint button_map[8] = {0, 1, 4, 5, 2, 3, 6, 7};
+ 
++  if (_gdk_input_winpointer)
++    return FALSE;
++
+   if (window != wintab_window)
+     {
+       g_warning ("_gdk_input_other_event: not wintab_window?");
+@@ -1310,6 +2001,9 @@ _gdk_input_set_tablet_active (void)
+   GList *tmp_list;
+   HCTX *hctx;
+ 
++  if (_gdk_input_winpointer)
++    return;
++
+   /* Bring the contexts to the top of the overlap order when one of the
+    * application's windows is activated */
+   
+@@ -1331,17 +2025,36 @@ _gdk_input_set_tablet_active (void)
+ void 
+ _gdk_input_init (GdkDisplay *display)
+ {
++  const char *api_preference = g_getenv ("GDK_WIN32_TABLET_INPUT_API");
+   _gdk_input_devices = NULL;
+ 
++  if (g_strcmp0 (api_preference, "winpointer") == 0)
++    _gdk_input_winpointer = TRUE;
++
+   _gdk_init_input_core (display);
++
++  if (_gdk_input_winpointer)
++    {
++      winpointer_initialize ();
++    }
++  else
++    {
+ #ifdef WINTAB_NO_LAZY_INIT
+-  /* Normally, Wintab is only initialized when the application performs
+-   * an action that requires it, such as enabling extended input events
+-   * for a window or enumerating the devices.
+-   */
+-  _gdk_input_wintab_init_check ();
++      /* Normally, Wintab is only initialized when the application performs
++       * an action that requires it, such as enabling extended input events
++       * for a window or enumerating the devices.
++       */
++      _gdk_input_wintab_init_check ();
+ #endif /* WINTAB_NO_LAZY_INIT */
++    }
+ 
+   _gdk_input_devices = g_list_append (_gdk_input_devices, display->core_pointer);
+ }
+ 
++static void
++__attribute__ ((constructor))
++gdk_input_win32_ctor (void)
++{
++  if (winpointer_ensure_procedures ())
++    SetEnvironmentVariableW (L"GDK_WIN32_FEATURES", L"winpointer");
++}
+diff --git a/gdk/win32/gdkinput-win32.h b/gdk/win32/gdkinput-win32.h
+index 746bcaf..b67db45 100644
+--- a/gdk/win32/gdkinput-win32.h
++++ b/gdk/win32/gdkinput-win32.h
+@@ -53,6 +53,8 @@ struct _GdkDevicePrivate
+ {
+   GdkDevice info;
+ 
++  /*** WinTab ***/
++
+   /* information about the axes */
+   GdkAxisInfo *axes;
+ 
+@@ -68,6 +70,20 @@ struct _GdkDevicePrivate
+   WTPKT pktdata;
+   /* Azimuth and altitude axis */
+   AXIS orientation_axes[2];
++
++  /*** WinPointer ***/
++
++  HANDLE device_handle;
++  UINT32 start_cursor_id;
++  UINT32 end_cursor_id;
++
++  int origin_x;
++  int origin_y;
++  double scale_x;
++  double scale_y;
++
++  unsigned num_axes;
++  GdkModifierType last_button_mask;
+ };
+ 
+ /* Addition used for extension_events mask */
+@@ -137,4 +153,20 @@ void		_gdk_input_set_tablet_active (void);
+ void            _gdk_input_update_for_device_mode (GdkDevicePrivate *gdkdev);
+ void            _gdk_input_check_proximity (void);
+ 
++/* WinPointer */
++
++typedef void
++(*crossing_cb_t)(GdkWindow *window,
++                 POINT *screen_pt,
++                 guint32 time_);
++
++void            gdk_winpointer_initialize_window (GdkWindow *window);
++gboolean        gdk_winpointer_should_forward_message (MSG *msg);
++void            gdk_winpointer_input_events (GdkWindow *window,
++                                             crossing_cb_t crossing_cb,
++                                             MSG *msg);
++void            gdk_winpointer_get_message_info (MSG *msg,
++                                                 guint32 *time_);
++void            gdk_winpointer_finalize_window (GdkWindow *window);
++
+ #endif /* __GDK_INPUT_WIN32_H__ */
+diff --git a/gdk/win32/gdkinput.c b/gdk/win32/gdkinput.c
+index c386443..e770f05 100644
+--- a/gdk/win32/gdkinput.c
++++ b/gdk/win32/gdkinput.c
+@@ -105,7 +105,9 @@ gdk_display_list_devices (GdkDisplay *dpy)
+ {
+   g_return_val_if_fail (dpy == _gdk_display, NULL);
+ 
+-  _gdk_input_wintab_init_check ();
++  if (!_gdk_input_winpointer)
++    _gdk_input_wintab_init_check ();
++
+   return _gdk_input_devices;
+ }
+ 
+@@ -369,7 +371,8 @@ gdk_input_set_extension_events (GdkWindow *window, gint mask,
+ 
+   if (mask != 0)
+     {
+-      _gdk_input_wintab_init_check ();
++      if (!_gdk_input_winpointer)
++        _gdk_input_wintab_init_check ();
+ 
+       if (!iw)
+ 	{
+diff --git a/gdk/win32/gdkprivate-win32.h b/gdk/win32/gdkprivate-win32.h
+index ef4fa56..b594d41 100644
+--- a/gdk/win32/gdkprivate-win32.h
++++ b/gdk/win32/gdkprivate-win32.h
+@@ -222,6 +222,8 @@ GType _gdk_gc_win32_get_type (void);
+ 
+ gulong _gdk_win32_get_next_tick (gulong suggested_tick);
+ 
++BOOL _gdk_win32_get_cursor_pos (LPPOINT lpPoint);
++
+ void _gdk_window_init_position     (GdkWindow *window);
+ void _gdk_window_move_resize_child (GdkWindow *window,
+ 				    gint       x,
+@@ -362,7 +364,9 @@ void    _gdk_other_api_failed        (const gchar *where,
+ #define WIN32_API_FAILED(api) _gdk_win32_api_failed (G_STRLOC , api)
+ #define WIN32_GDI_FAILED(api) WIN32_API_FAILED (api)
+ #define OTHER_API_FAILED(api) _gdk_other_api_failed (G_STRLOC, api)
+- 
++
++#define WIN32_API_FAILED_LOG_ONCE(api) G_STMT_START { static gboolean logged = 0; if (!logged) { _gdk_win32_api_failed (G_STRLOC , api); logged = 1; }} G_STMT_END
++
+ /* These two macros call a GDI or other Win32 API and if the return
+  * value is zero or NULL, print a warning message. The majority of GDI
+  * calls return zero or NULL on failure. The value of the macros is nonzero
+@@ -462,6 +466,7 @@ void  _gdk_win32_end_modal_call (void);
+ 
+ /* Options */
+ extern gboolean		 _gdk_input_ignore_wintab;
++extern gboolean          _gdk_input_winpointer;
+ extern gint		 _gdk_max_colors;
+ 
+ #define GDK_WIN32_COLORMAP_DATA(cmap) ((GdkColormapPrivateWin32 *) GDK_COLORMAP (cmap)->windowing_data)
+diff --git a/gdk/win32/gdkwindow-win32.c b/gdk/win32/gdkwindow-win32.c
+index d918686..65edaa7 100644
+--- a/gdk/win32/gdkwindow-win32.c
++++ b/gdk/win32/gdkwindow-win32.c
+@@ -773,6 +773,9 @@ _gdk_window_impl_new (GdkWindow     *window,
+   g_object_ref (window);
+   gdk_win32_handle_table_insert (&GDK_WINDOW_HWND (window), window);
+ 
++  if (_gdk_input_winpointer)
++    gdk_winpointer_initialize_window (window);
++
+   GDK_NOTE (MISC, g_print ("... \"%s\" %dx%d@%+d%+d %p = %p\n",
+ 			   title,
+ 			   window_width, window_height,
+@@ -2685,7 +2688,7 @@ gdk_window_win32_get_pointer (GdkWindow       *window,
+   return_val = TRUE;
+ 
+   hwnd = GDK_WINDOW_HWND (window);
+-  GetCursorPos (&point);
++  _gdk_win32_get_cursor_pos (&point);
+   ScreenToClient (hwnd, &point);
+ 
+   *x = point.x;
+@@ -2719,7 +2722,7 @@ _gdk_windowing_get_pointer (GdkDisplay       *display,
+   g_return_if_fail (display == _gdk_display);
+   
+   *screen = _gdk_screen;
+-  GetCursorPos (&point);
++  _gdk_win32_get_cursor_pos (&point);
+   *x = point.x + _gdk_offset_x;
+   *y = point.y + _gdk_offset_y;
+ 
+@@ -2757,7 +2760,7 @@ _gdk_windowing_window_at_pointer (GdkDisplay *display,
+   HWND hwnd, hwndc;
+   RECT rect;
+ 
+-  GetCursorPos (&screen_pt);
++  _gdk_win32_get_cursor_pos (&screen_pt);
+ 
+   if (get_toplevel)
+     {
+diff --git a/gdk/win32/winpointer.h b/gdk/win32/winpointer.h
+new file mode 100644
+index 0000000..786f601
+--- /dev/null
++++ b/gdk/win32/winpointer.h
+@@ -0,0 +1,324 @@
++/* GDK - The GIMP Drawing Kit
++ * Copyright (C) 2021 the GTK team
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library. If not, see <http://www.gnu.org/licenses/>.
++ */
++
++/* This code is derived from portions provided by the mingw-w64 project
++ * (mingw-w64.org), originally licensed under the Zope Public License
++ * (ZPL) version 2.1, with modifications made on May 12, 2021.
++ * Legal notice of the Zope Public License version 2.1 follows:
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions are met:
++ *
++ *    1. Redistributions in source code must retain the accompanying copyright
++ *       notice, this list of conditions, and the following disclaimer.
++ *    2. Redistributions in binary form must reproduce the accompanying
++ *       copyright notice, this list of conditions, and the following disclaimer
++ *       in the documentation and/or other materials provided with the
++ *       distribution.
++ *    3. Names of the copyright holders must not be used to endorse or promote
++ *       products derived from this software without prior written permission
++ *       from the copyright holders.
++ *    4. The right to distribute this software or to use it for any purpose does
++ *       not give you the right to use Servicemarks (sm) or Trademarks (tm) of
++ *       the copyright holders.  Use of them is covered by separate agreement
++ *       with the copyright holders.
++ *    5. If any files are modified, you must cause the modified files to carry
++ *       prominent notices stating that you changed the files and the date of
++ *       any change.
++ */
++
++#ifndef POINTER_FLAG_NONE
++
++#include <windows.h>
++#include <tchar.h>
++
++#define WM_POINTERDEVICECHANGE 0x238
++#define WM_POINTERDEVICEINRANGE 0x239
++#define WM_POINTERDEVICEOUTOFRANGE 0x23a
++
++#define WM_NCPOINTERUPDATE 0x0241
++#define WM_NCPOINTERDOWN 0x0242
++#define WM_NCPOINTERUP 0x0243
++#define WM_POINTERUPDATE 0x0245
++#define WM_POINTERDOWN 0x0246
++#define WM_POINTERUP 0x0247
++#define WM_POINTERENTER 0x0249
++#define WM_POINTERLEAVE 0x024a
++#define WM_POINTERACTIVATE 0x024b
++#define WM_POINTERCAPTURECHANGED 0x024c
++#define WM_TOUCHHITTESTING 0x024d
++#define WM_POINTERWHEEL 0x024e
++#define WM_POINTERHWHEEL 0x024f
++#define DM_POINTERHITTEST 0x0250
++#define WM_POINTERROUTEDTO 0x0251
++#define WM_POINTERROUTEDAWAY 0x0252
++#define WM_POINTERROUTEDRELEASED 0x0253
++
++#define POINTER_FLAG_NONE 0x00000000
++#define POINTER_FLAG_NEW 0x00000001
++#define POINTER_FLAG_INRANGE 0x00000002
++#define POINTER_FLAG_INCONTACT 0x00000004
++#define POINTER_FLAG_FIRSTBUTTON 0x00000010
++#define POINTER_FLAG_SECONDBUTTON 0x00000020
++#define POINTER_FLAG_THIRDBUTTON 0x00000040
++#define POINTER_FLAG_FOURTHBUTTON 0x00000080
++#define POINTER_FLAG_FIFTHBUTTON 0x00000100
++#define POINTER_FLAG_PRIMARY 0x00002000
++#define POINTER_FLAG_CONFIDENCE 0x00004000
++#define POINTER_FLAG_CANCELED 0x00008000
++#define POINTER_FLAG_DOWN 0x00010000
++#define POINTER_FLAG_UPDATE 0x00020000
++#define POINTER_FLAG_UP 0x00040000
++#define POINTER_FLAG_WHEEL 0x00080000
++#define POINTER_FLAG_HWHEEL 0x00100000
++#define POINTER_FLAG_CAPTURECHANGED 0x00200000
++#define POINTER_FLAG_HASTRANSFORM 0x00400000
++
++#define POINTER_MOD_SHIFT (0x0004)
++#define POINTER_MOD_CTRL (0x0008)
++
++#define TOUCH_FLAG_NONE 0x00000000
++
++#define TOUCH_MASK_NONE 0x00000000
++#define TOUCH_MASK_CONTACTAREA 0x00000001
++#define TOUCH_MASK_ORIENTATION 0x00000002
++#define TOUCH_MASK_PRESSURE 0x00000004
++
++#define PEN_FLAG_NONE 0x00000000
++#define PEN_FLAG_BARREL 0x00000001
++#define PEN_FLAG_INVERTED 0x00000002
++#define PEN_FLAG_ERASER 0x00000004
++
++#define PEN_MASK_NONE 0x00000000
++#define PEN_MASK_PRESSURE 0x00000001
++#define PEN_MASK_ROTATION 0x00000002
++#define PEN_MASK_TILT_X 0x00000004
++#define PEN_MASK_TILT_Y 0x00000008
++
++#define POINTER_MESSAGE_FLAG_NEW 0x00000001
++#define POINTER_MESSAGE_FLAG_INRANGE 0x00000002
++#define POINTER_MESSAGE_FLAG_INCONTACT 0x00000004
++#define POINTER_MESSAGE_FLAG_FIRSTBUTTON 0x00000010
++#define POINTER_MESSAGE_FLAG_SECONDBUTTON 0x00000020
++#define POINTER_MESSAGE_FLAG_THIRDBUTTON 0x00000040
++#define POINTER_MESSAGE_FLAG_FOURTHBUTTON 0x00000080
++#define POINTER_MESSAGE_FLAG_FIFTHBUTTON 0x00000100
++#define POINTER_MESSAGE_FLAG_PRIMARY 0x00002000
++#define POINTER_MESSAGE_FLAG_CONFIDENCE 0x00004000
++#define POINTER_MESSAGE_FLAG_CANCELED 0x00008000
++
++#define GET_POINTERID_WPARAM(wParam) (LOWORD (wParam))
++#define IS_POINTER_FLAG_SET_WPARAM(wParam, flag) (((DWORD)HIWORD (wParam) &(flag)) == (flag))
++#define IS_POINTER_NEW_WPARAM(wParam) IS_POINTER_FLAG_SET_WPARAM (wParam, POINTER_MESSAGE_FLAG_NEW)
++#define IS_POINTER_INRANGE_WPARAM(wParam) IS_POINTER_FLAG_SET_WPARAM (wParam, POINTER_MESSAGE_FLAG_INRANGE)
++#define IS_POINTER_INCONTACT_WPARAM(wParam) IS_POINTER_FLAG_SET_WPARAM (wParam, POINTER_MESSAGE_FLAG_INCONTACT)
++#define IS_POINTER_FIRSTBUTTON_WPARAM(wParam) IS_POINTER_FLAG_SET_WPARAM (wParam, POINTER_MESSAGE_FLAG_FIRSTBUTTON)
++#define IS_POINTER_SECONDBUTTON_WPARAM(wParam) IS_POINTER_FLAG_SET_WPARAM (wParam, POINTER_MESSAGE_FLAG_SECONDBUTTON)
++#define IS_POINTER_THIRDBUTTON_WPARAM(wParam) IS_POINTER_FLAG_SET_WPARAM (wParam, POINTER_MESSAGE_FLAG_THIRDBUTTON)
++#define IS_POINTER_FOURTHBUTTON_WPARAM(wParam) IS_POINTER_FLAG_SET_WPARAM (wParam, POINTER_MESSAGE_FLAG_FOURTHBUTTON)
++#define IS_POINTER_FIFTHBUTTON_WPARAM(wParam) IS_POINTER_FLAG_SET_WPARAM (wParam, POINTER_MESSAGE_FLAG_FIFTHBUTTON)
++#define IS_POINTER_PRIMARY_WPARAM(wParam) IS_POINTER_FLAG_SET_WPARAM (wParam, POINTER_MESSAGE_FLAG_PRIMARY)
++#define HAS_POINTER_CONFIDENCE_WPARAM(wParam) IS_POINTER_FLAG_SET_WPARAM (wParam, POINTER_MESSAGE_FLAG_CONFIDENCE)
++#define IS_POINTER_CANCELED_WPARAM(wParam) IS_POINTER_FLAG_SET_WPARAM (wParam, POINTER_MESSAGE_FLAG_CANCELED)
++
++#define PA_ACTIVATE MA_ACTIVATE
++#define PA_NOACTIVATE MA_NOACTIVATE
++
++#ifndef GC_ALLGESTURES
++#define GC_ALLGESTURES 0x1
++#endif
++
++typedef DWORD POINTER_INPUT_TYPE;
++typedef UINT32 POINTER_FLAGS;
++typedef UINT32 TOUCH_FLAGS;
++typedef UINT32 TOUCH_MASK;
++typedef UINT32 PEN_FLAGS;
++typedef UINT32 PEN_MASK;
++
++enum tagPOINTER_INPUT_TYPE {
++  PT_POINTER = 0x00000001,
++  PT_TOUCH = 0x00000002,
++  PT_PEN = 0x00000003,
++  PT_MOUSE = 0x00000004,
++  PT_TOUCHPAD = 0x00000005
++};
++
++typedef enum tagFEEDBACK_TYPE {
++  FEEDBACK_TOUCH_CONTACTVISUALIZATION = 1,
++  FEEDBACK_PEN_BARRELVISUALIZATION = 2,
++  FEEDBACK_PEN_TAP = 3,
++  FEEDBACK_PEN_DOUBLETAP = 4,
++  FEEDBACK_PEN_PRESSANDHOLD = 5,
++  FEEDBACK_PEN_RIGHTTAP = 6,
++  FEEDBACK_TOUCH_TAP = 7,
++  FEEDBACK_TOUCH_DOUBLETAP = 8,
++  FEEDBACK_TOUCH_PRESSANDHOLD = 9,
++  FEEDBACK_TOUCH_RIGHTTAP = 10,
++  FEEDBACK_GESTURE_PRESSANDTAP = 11,
++  FEEDBACK_MAX = 0xffffffff
++} FEEDBACK_TYPE;
++
++typedef enum tagPOINTER_BUTTON_CHANGE_TYPE {
++  POINTER_CHANGE_NONE,
++  POINTER_CHANGE_FIRSTBUTTON_DOWN,
++  POINTER_CHANGE_FIRSTBUTTON_UP,
++  POINTER_CHANGE_SECONDBUTTON_DOWN,
++  POINTER_CHANGE_SECONDBUTTON_UP,
++  POINTER_CHANGE_THIRDBUTTON_DOWN,
++  POINTER_CHANGE_THIRDBUTTON_UP,
++  POINTER_CHANGE_FOURTHBUTTON_DOWN,
++  POINTER_CHANGE_FOURTHBUTTON_UP,
++  POINTER_CHANGE_FIFTHBUTTON_DOWN,
++  POINTER_CHANGE_FIFTHBUTTON_UP,
++} POINTER_BUTTON_CHANGE_TYPE;
++
++typedef struct tagPOINTER_INFO {
++  POINTER_INPUT_TYPE pointerType;
++  UINT32 pointerId;
++  UINT32 frameId;
++  POINTER_FLAGS pointerFlags;
++  HANDLE sourceDevice;
++  HWND hwndTarget;
++  POINT ptPixelLocation;
++  POINT ptHimetricLocation;
++  POINT ptPixelLocationRaw;
++  POINT ptHimetricLocationRaw;
++  DWORD dwTime;
++  UINT32 historyCount;
++  INT32 InputData;
++  DWORD dwKeyStates;
++  UINT64 PerformanceCount;
++  POINTER_BUTTON_CHANGE_TYPE ButtonChangeType;
++} POINTER_INFO;
++
++typedef struct tagPOINTER_TOUCH_INFO {
++  POINTER_INFO pointerInfo;
++  TOUCH_FLAGS touchFlags;
++  TOUCH_MASK touchMask;
++  RECT rcContact;
++  RECT rcContactRaw;
++  UINT32 orientation;
++  UINT32 pressure;
++} POINTER_TOUCH_INFO;
++
++typedef struct tagPOINTER_PEN_INFO {
++  POINTER_INFO pointerInfo;
++  PEN_FLAGS penFlags;
++  PEN_MASK penMask;
++  UINT32 pressure;
++  UINT32 rotation;
++  INT32 tiltX;
++  INT32 tiltY;
++} POINTER_PEN_INFO;
++
++typedef enum {
++  POINTER_FEEDBACK_DEFAULT = 1,
++  POINTER_FEEDBACK_INDIRECT = 2,
++  POINTER_FEEDBACK_NONE = 3
++} POINTER_FEEDBACK_MODE;
++
++typedef struct tagUSAGE_PROPERTIES {
++  USHORT level;
++  USHORT page;
++  USHORT usage;
++  INT32 logicalMinimum;
++  INT32 logicalMaximum;
++  USHORT unit;
++  USHORT exponent;
++  BYTE count;
++  INT32 physicalMinimum;
++  INT32 physicalMaximum;
++} USAGE_PROPERTIES, *PUSAGE_PROPERTIES;
++
++typedef struct tagPOINTER_TYPE_INFO {
++  POINTER_INPUT_TYPE  type;
++  union {
++      POINTER_TOUCH_INFO touchInfo;
++      POINTER_PEN_INFO penInfo;
++  } DUMMYUNIONNAME;
++} POINTER_TYPE_INFO, *PPOINTER_TYPE_INFO;
++
++#define POINTER_DEVICE_PRODUCT_STRING_MAX 520
++#define PDC_ARRIVAL 0x001
++#define PDC_REMOVAL 0x002
++#define PDC_ORIENTATION_0 0x004
++#define PDC_ORIENTATION_90 0x008
++#define PDC_ORIENTATION_180 0x010
++#define PDC_ORIENTATION_270 0x020
++#define PDC_MODE_DEFAULT 0x040
++#define PDC_MODE_CENTERED 0x080
++#define PDC_MAPPING_CHANGE 0x100
++#define PDC_RESOLUTION 0x200
++#define PDC_ORIGIN 0x400
++#define PDC_MODE_ASPECTRATIOPRESERVED 0x800
++
++typedef enum tagPOINTER_DEVICE_TYPE {
++  POINTER_DEVICE_TYPE_INTEGRATED_PEN = 0x00000001,
++  POINTER_DEVICE_TYPE_EXTERNAL_PEN = 0x00000002,
++  POINTER_DEVICE_TYPE_TOUCH = 0x00000003,
++  POINTER_DEVICE_TYPE_TOUCH_PAD = 0x00000004,
++  POINTER_DEVICE_TYPE_MAX = 0xffffffff
++} POINTER_DEVICE_TYPE;
++
++typedef struct tagPOINTER_DEVICE_INFO {
++  DWORD displayOrientation;
++  HANDLE device;
++  POINTER_DEVICE_TYPE pointerDeviceType;
++  HMONITOR monitor;
++  ULONG startingCursorId;
++  USHORT maxActiveContacts;
++  WCHAR productString[POINTER_DEVICE_PRODUCT_STRING_MAX];
++} POINTER_DEVICE_INFO;
++
++typedef struct tagPOINTER_DEVICE_PROPERTY {
++  INT32 logicalMin;
++  INT32 logicalMax;
++  INT32 physicalMin;
++  INT32 physicalMax;
++  UINT32 unit;
++  UINT32 unitExponent;
++  USHORT usagePageId;
++  USHORT usageId;
++} POINTER_DEVICE_PROPERTY;
++
++typedef enum tagPOINTER_DEVICE_CURSOR_TYPE {
++  POINTER_DEVICE_CURSOR_TYPE_UNKNOWN = 0x00000000,
++  POINTER_DEVICE_CURSOR_TYPE_TIP = 0x00000001,
++  POINTER_DEVICE_CURSOR_TYPE_ERASER = 0x00000002,
++  POINTER_DEVICE_CURSOR_TYPE_MAX = 0xffffffff
++} POINTER_DEVICE_CURSOR_TYPE;
++
++typedef struct tagPOINTER_DEVICE_CURSOR_INFO {
++  UINT32 cursorId;
++  POINTER_DEVICE_CURSOR_TYPE cursor;
++} POINTER_DEVICE_CURSOR_INFO;
++
++#endif /* POINTER_FLAG_NONE */
++
++#if WINVER < 0x0601
++
++typedef struct tagGESTURECONFIG {
++  DWORD dwID;
++  DWORD dwWant;
++  DWORD dwBlock;
++} GESTURECONFIG,*PGESTURECONFIG;
++
++#endif /* WINVER < 0x0601 */
++
++#ifndef MICROSOFT_TABLETPENSERVICE_PROPERTY
++#define MICROSOFT_TABLETPENSERVICE_PROPERTY _T("MicrosoftTabletPenServiceProperty")
++#endif
+-- 
+2.39.1.windows.1
+

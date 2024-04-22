@@ -1,0 +1,53 @@
+From 9eb407a55b67bb604d85ec98a3c3fc8df07e79f7 Mon Sep 17 00:00:00 2001
+From: Luca Bacci <luca.bacci982@gmail.com>
+Date: Mon, 22 Apr 2024 14:26:17 +0200
+Subject: [PATCH 06/10] Avoid modifying the global keyboard state when calling
+ ToUnicodeEx
+
+---
+ gdk/win32/gdkkeys-win32.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/gdk/win32/gdkkeys-win32.c b/gdk/win32/gdkkeys-win32.c
+index 1dcc0f6..c457548 100644
+--- a/gdk/win32/gdkkeys-win32.c
++++ b/gdk/win32/gdkkeys-win32.c
+@@ -485,7 +485,7 @@ reset_after_dead (guchar key_state[KEY_STATE_SIZE],
+ 
+   ToUnicodeEx (VK_SPACE, MapVirtualKey (VK_SPACE, 0),
+ 	       temp_key_state, wcs, G_N_ELEMENTS (wcs),
+-	       0, handle);
++	       1 << 2, handle);
+ }
+ 
+ static void
+@@ -765,7 +765,7 @@ update_keymap (GdkKeymap *gdk_keymap)
+                   wcs[0] = wcs[1] = 0;
+                   k = ToUnicodeEx (vk, scancode, key_state,
+                                    wcs, G_N_ELEMENTS (wcs),
+-                                   0, hkls[group]);
++                                   1 << 2, hkls[group]);
+ #if 0
+                   g_print ("ToUnicodeEx(%#02x, %d: %d): %d, %04x %04x\n",
+                            vk, scancode, level, k,
+@@ -868,7 +868,7 @@ update_keymap (GdkKeymap *gdk_keymap)
+                   set_level_vks (key_state, dead_key->level);
+                   k = ToUnicodeEx (dead_key->vk, scancode, key_state,
+                                    wcs, G_N_ELEMENTS (wcs),
+-                                   0, hkls[group]);
++                                   1 << 2, hkls[group]);
+                   switch (k)
+                     {
+                     case -1:
+@@ -885,7 +885,7 @@ update_keymap (GdkKeymap *gdk_keymap)
+                   set_level_vks (key_state, level);
+                   k = ToUnicodeEx (vk, scancode, key_state,
+                                    wcs, G_N_ELEMENTS (wcs),
+-                                   0, hkls[group]);
++                                   1 << 2, hkls[group]);
+ 
+                   if (k == 0)
+                     {
+-- 
+2.39.1.windows.1
+

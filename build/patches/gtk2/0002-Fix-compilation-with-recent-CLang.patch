@@ -1,0 +1,92 @@
+From d2f40723ee6757bc9b3ec6dc7872bbf7909cbc39 Mon Sep 17 00:00:00 2001
+From: Luca Bacci <luca.bacci982@gmail.com>
+Date: Sat, 20 Apr 2024 12:24:12 +0200
+Subject: [PATCH 02/10] Fix compilation with recent CLang
+
+---
+ gtk/gtkprintoperation-win32.c          | 2 +-
+ gtk/gtkscale.c                         | 2 +-
+ modules/engines/ms-windows/msw_style.c | 4 ++++
+ tests/testmenubars.c                   | 8 ++++----
+ 4 files changed, 10 insertions(+), 6 deletions(-)
+
+diff --git a/gtk/gtkprintoperation-win32.c b/gtk/gtkprintoperation-win32.c
+index 4f129f5..1cbc152 100644
+--- a/gtk/gtkprintoperation-win32.c
++++ b/gtk/gtkprintoperation-win32.c
+@@ -1368,7 +1368,7 @@ plug_grab_notify (GtkWidget        *widget,
+ }
+ 
+ 
+-static BOOL CALLBACK
++static INT_PTR CALLBACK
+ pageDlgProc (HWND wnd, UINT message, WPARAM wparam, LPARAM lparam)
+ {
+   GtkPrintOperation *op;
+diff --git a/gtk/gtkscale.c b/gtk/gtkscale.c
+index 4317523..a573b2f 100644
+--- a/gtk/gtkscale.c
++++ b/gtk/gtkscale.c
+@@ -1471,7 +1471,7 @@ gtk_scale_add_mark (GtkScale        *scale,
+   mark->position = position;
+  
+   priv->marks = g_slist_insert_sorted_with_data (priv->marks, mark,
+-                                                 (GCompareFunc) compare_marks,
++                                                 compare_marks,
+                                                  GINT_TO_POINTER (
+                                                    gtk_range_get_inverted (GTK_RANGE (scale)) 
+                                                    ));
+diff --git a/modules/engines/ms-windows/msw_style.c b/modules/engines/ms-windows/msw_style.c
+index 799872b..3c5e682 100755
+--- a/modules/engines/ms-windows/msw_style.c
++++ b/modules/engines/ms-windows/msw_style.c
+@@ -878,6 +878,10 @@ setup_system_styles (GtkStyle *style)
+     }
+ }
+ 
++void gdk_drawable_get_size (GdkDrawable *drawable,
++                            gint        *width,
++                            gint        *height);
++
+ static gboolean
+ sanitize_size (GdkWindow *window, gint *width, gint *height)
+ {
+diff --git a/tests/testmenubars.c b/tests/testmenubars.c
+index 416a939..7f247f8 100644
+--- a/tests/testmenubars.c
++++ b/tests/testmenubars.c
+@@ -21,7 +21,7 @@
+ #include <gtk/gtk.h>
+ 
+ static GtkWidget *
+-create_menu (depth)
++create_menu (int depth)
+ {
+     GtkWidget *menu;
+     GtkWidget *menuitem;
+@@ -70,19 +70,19 @@ create_menubar (GtkPackDirection pack_dir,
+   menuitem = gtk_image_menu_item_new_from_stock (GTK_STOCK_HOME, NULL);
+   gtk_menu_shell_append (GTK_MENU_SHELL (menubar), menuitem);
+   gtk_label_set_angle (GTK_LABEL (GTK_BIN (menuitem)->child), angle);
+-  menu = create_menu (2, TRUE);
++  menu = create_menu (2);
+   gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
+ 
+   menuitem = gtk_menu_item_new_with_label ("foo");
+   gtk_menu_shell_append (GTK_MENU_SHELL (menubar), menuitem);
+   gtk_label_set_angle (GTK_LABEL (GTK_BIN (menuitem)->child), angle);
+-  menu = create_menu (2, TRUE);
++  menu = create_menu (2);
+   gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
+ 
+   menuitem = gtk_menu_item_new_with_label ("bar");
+   gtk_menu_shell_append (GTK_MENU_SHELL (menubar), menuitem);
+   gtk_label_set_angle (GTK_LABEL (GTK_BIN (menuitem)->child), angle);
+-  menu = create_menu (2, TRUE);
++  menu = create_menu (2);
+   gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
+ 
+   return menubar;
+-- 
+2.39.1.windows.1
+

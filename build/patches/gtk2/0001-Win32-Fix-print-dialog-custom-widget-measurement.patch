@@ -1,0 +1,180 @@
+From ac68b54f512a3a659c20ec21b3775af8ed8a3859 Mon Sep 17 00:00:00 2001
+From: Luca Bacci <luca.bacci@outlook.com>
+Date: Wed, 29 Dec 2021 21:59:56 +0100
+Subject: [PATCH 01/10] Win32: Fix print dialog custom widget measurement
+
+---
+ gtk/gtkprintoperation-win32.c | 128 ++++++++++++++++++++++++++--------
+ 1 file changed, 98 insertions(+), 30 deletions(-)
+
+diff --git a/gtk/gtkprintoperation-win32.c b/gtk/gtkprintoperation-win32.c
+index 0c29298..4f129f5 100644
+--- a/gtk/gtkprintoperation-win32.c
++++ b/gtk/gtkprintoperation-win32.c
+@@ -45,6 +45,29 @@
+ #include "gtkwin32embedwidget.h"
+ #include "gtkalias.h"
+ 
++#include <pshpack1.h>
++typedef struct {
++  WORD      dlgVer;
++  WORD      signature;
++  DWORD     helpID;
++  DWORD     exStyle;
++  DWORD     style;
++  WORD      cDlgItems;
++  short     x;
++  short     y;
++  short     cx;
++  short     cy;
++  short     menu;
++  short     windowClass;
++  WCHAR     title;
++  WORD      pointsize;
++  WORD      weight;
++  BYTE      italic;
++  BYTE      charset;
++  WCHAR     typeface[LF_FACESIZE];
++} DLGTEMPLATEEX;
++#include <poppack.h>
++
+ #define MAX_PAGE_RANGES 20
+ #define STATUS_POLLING_TIME 2000
+ 
+@@ -1388,7 +1411,12 @@ pageDlgProc (HWND wnd, UINT message, WPARAM wparam, LPARAM lparam)
+     }
+   else 
+     {
+-      op = GTK_PRINT_OPERATION (GetWindowLongPtrW (wnd, GWLP_USERDATA));
++      gpointer user_data = (gpointer) GetWindowLongPtrW (wnd, GWLP_USERDATA);
++
++      if (!user_data)
++        return FALSE;
++
++      op = GTK_PRINT_OPERATION (user_data);
+       op_win32 = op->priv->platform_data;
+ 
+       return _gtk_win32_embed_widget_dialog_procedure (GTK_WIN32_EMBED_WIDGET (op_win32->embed_widget),
+@@ -1398,42 +1426,82 @@ pageDlgProc (HWND wnd, UINT message, WPARAM wparam, LPARAM lparam)
+   return FALSE;
+ }
+ 
++static INT_PTR CALLBACK
++measure_dialog_procedure (HWND hwnd,
++                          UINT uMsg,
++                          WPARAM wParam,
++                          LPARAM lParam)
++{
++  return FALSE;
++}
++
+ static HPROPSHEETPAGE
+-create_application_page (GtkPrintOperation *op)
++create_application_page (GtkPrintOperation *op,
++                         HWND hwndOwner)
+ {
+-  HPROPSHEETPAGE hpage;
+-  PROPSHEETPAGEW page;
+-  DLGTEMPLATE *template;
++  const LONG DBU_DEFAULT = GetDialogBaseUnits ();
++  int dbu_x = LOWORD (DBU_DEFAULT);
++  int dbu_y = HIWORD (DBU_DEFAULT);
++  HWND measure_dialog = NULL;
+   HGLOBAL htemplate;
+-  LONG base_units;
+-  WORD baseunitX, baseunitY;
+-  WORD *array;
++  DLGTEMPLATEEX *template;
++  PROPSHEETPAGEW page;
++  HPROPSHEETPAGE hpage;
+   GtkRequisition requisition;
+   const char *tab_label;
+ 
+-  /* Make the template the size of the custom widget size request */
++  /* Widget must be visible to measure its size */
++  gtk_widget_show (op->priv->custom_widget);
+   gtk_widget_size_request (op->priv->custom_widget, &requisition);
+-      
+-  base_units = GetDialogBaseUnits ();
+-  baseunitX = LOWORD (base_units);
+-  baseunitY = HIWORD (base_units);
+-  
+-  htemplate = GlobalAlloc (GMEM_MOVEABLE, 
+-			   sizeof (DLGTEMPLATE) + sizeof (WORD) * 3);
++
++  htemplate = GlobalAlloc (GMEM_MOVEABLE | GMEM_ZEROINIT, sizeof (DLGTEMPLATEEX));
+   template = GlobalLock (htemplate);
+-  template->style = WS_CHILDWINDOW | DS_CONTROL;
+-  template->dwExtendedStyle = WS_EX_CONTROLPARENT;
+-  template->cdit = 0;
+-  template->x = MulDiv (0, 4, baseunitX);
+-  template->y = MulDiv (0, 8, baseunitY);
+-  template->cx = MulDiv (requisition.width, 4, baseunitX);
+-  template->cy = MulDiv (requisition.height, 8, baseunitY);
+-  
+-  array = (WORD *) (template+1);
+-  *array++ = 0; /* menu */
+-  *array++ = 0; /* class */
+-  *array++ = 0; /* title */
+-  
++  template->dlgVer = 1;
++  template->signature = 0xFFFF;
++  template->helpID = 0;
++  template->exStyle = 0;
++  template->style = DS_SHELLFONT;
++  template->cDlgItems = 0;
++  template->x = 0;
++  template->y = 0;
++  template->cx = 10;
++  template->cy = 10;
++  template->menu = 0;
++  template->windowClass = 0;
++  template->title = 0;
++  template->pointsize = 8;
++  template->weight = FW_NORMAL;
++  template->italic = FALSE;
++  template->charset = DEFAULT_CHARSET;
++  wcscpy_s (template->typeface, LF_FACESIZE, L"MS Shell Dlg");
++
++  /* Create an invisible dialog to measure dialog base units */
++  measure_dialog = CreateDialogIndirectW (NULL, template, hwndOwner, measure_dialog_procedure);
++  if (!measure_dialog)
++    g_warning ("CreateDialogIndirectW failed");
++  else
++    {
++      RECT rect;
++
++      SetRect (&rect, 0, 0, 4, 8);
++      if (!MapDialogRect (measure_dialog, &rect))
++        g_warning ("MapDialogRect failed");
++      else
++        {
++          dbu_x = rect.right - rect.left;
++          dbu_y = rect.bottom - rect.top;
++        }
++
++      DestroyWindow (measure_dialog);
++      measure_dialog = NULL;
++    }
++
++  /* Make the template the size of the custom widget size request */
++  template->exStyle |= WS_EX_CONTROLPARENT;
++  template->style |= WS_CHILD | DS_CONTROL;
++  template->cx = (requisition.width * 4.0) / dbu_x + 1;
++  template->cy = (requisition.height * 8.0) / dbu_y + 1;
++
+   memset (&page, 0, sizeof (page));
+   page.dwSize = sizeof (page);
+   page.dwFlags = PSP_DLGINDIRECT | PSP_USETITLE | PSP_PREMATURE;
+@@ -1724,7 +1792,7 @@ gtk_print_operation_run_with_dialog (GtkPrintOperation *op,
+   g_signal_emit_by_name (op, "create-custom-widget",
+ 			 &op->priv->custom_widget);
+   if (op->priv->custom_widget) {
+-    prop_page = create_application_page (op);
++    prop_page = create_application_page (op, parentHWnd);
+     printdlgex->nPropertyPages = 1;
+     printdlgex->lphPropertyPages = &prop_page;
+   } else {
+-- 
+2.39.1.windows.1
+

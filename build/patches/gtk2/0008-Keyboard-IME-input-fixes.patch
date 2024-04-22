@@ -1,0 +1,43 @@
+From 5fc2958f1a9bf722924bb99d8791a3337b06b433 Mon Sep 17 00:00:00 2001
+From: Luca Bacci <luca.bacci982@gmail.com>
+Date: Mon, 22 Apr 2024 14:45:07 +0200
+Subject: [PATCH 08/10] Keyboard / IME input fixes
+
+See:
+
+* https://github.com/msys2/MINGW-packages/pull/9114
+* https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/7167
+---
+ gdk/win32/gdkkeys-win32.c       | 1 +
+ modules/input/gtkimcontextime.c | 3 +++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/gdk/win32/gdkkeys-win32.c b/gdk/win32/gdkkeys-win32.c
+index c457548..46c5987 100644
+--- a/gdk/win32/gdkkeys-win32.c
++++ b/gdk/win32/gdkkeys-win32.c
+@@ -692,6 +692,7 @@ update_keymap (GdkKeymap *gdk_keymap)
+   if (hkls_len != keymap->layout_handles->len)
+     keymap->keysym_tab = g_renew (guint, keymap->keysym_tab, keysym_tab_size);
+ 
++  memset (key_state, 0, sizeof (key_state));
+   memset (keymap->keysym_tab, 0, keysym_tab_size);
+   g_array_set_size (keymap->layout_handles, hkls_len);
+   g_array_set_size (keymap->options, hkls_len);
+diff --git a/modules/input/gtkimcontextime.c b/modules/input/gtkimcontextime.c
+index 04be829..28b27c4 100644
+--- a/modules/input/gtkimcontextime.c
++++ b/modules/input/gtkimcontextime.c
+@@ -334,6 +334,9 @@ gtk_im_context_ime_filter_keypress (GtkIMContext *context,
+     return FALSE;
+ 
+   utf8 = g_utf16_to_utf8 (event_priv->translation, event_priv->translation_len, NULL, NULL, NULL);
++  if (!utf8)
++    return FALSE;
++
+   g_signal_emit_by_name (context_ime, "commit", utf8);
+   g_free (utf8);
+ 
+-- 
+2.39.1.windows.1
+

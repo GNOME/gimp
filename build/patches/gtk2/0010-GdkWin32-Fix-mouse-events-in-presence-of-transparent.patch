@@ -1,0 +1,112 @@
+From 5143630b2ab4483fa56baf69b06b9a9f8c44e0d3 Mon Sep 17 00:00:00 2001
+From: Luca Bacci <luca.bacci982@gmail.com>
+Date: Mon, 22 Apr 2024 20:01:02 +0200
+Subject: [PATCH 10/10] GdkWin32: Fix mouse events in presence of transparent
+ windows on the desktop
+
+Backport of https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/2767 to GTK2
+---
+ gdk/win32/gdkwindow-win32.c | 73 +++++++++++++------------------------
+ 1 file changed, 25 insertions(+), 48 deletions(-)
+
+diff --git a/gdk/win32/gdkwindow-win32.c b/gdk/win32/gdkwindow-win32.c
+index 65edaa7..a820f5d 100644
+--- a/gdk/win32/gdkwindow-win32.c
++++ b/gdk/win32/gdkwindow-win32.c
+@@ -2757,68 +2757,45 @@ _gdk_windowing_window_at_pointer (GdkDisplay *display,
+ {
+   GdkWindow *window = NULL;
+   POINT screen_pt, client_pt;
+-  HWND hwnd, hwndc;
++  HWND hwnd;
+   RECT rect;
+ 
+-  _gdk_win32_get_cursor_pos (&screen_pt);
++  if (!_gdk_win32_get_cursor_pos (&screen_pt))
++    return NULL;
++
++  hwnd = WindowFromPoint (screen_pt);
+ 
+   if (get_toplevel)
+-    {
+-      /* Only consider visible children of the desktop to avoid the various
+-       * non-visible windows you often find on a running Windows box. These
+-       * might overlap our windows and cause our walk to fail. As we assume
+-       * WindowFromPoint() can find our windows, we follow similar logic
+-       * here, and ignore invisible and disabled windows.
+-       */
+-      hwnd = GetDesktopWindow ();
+-      do {
+-        window = gdk_win32_handle_table_lookup ((GdkNativeWindow) hwnd);
+-
+-        if (window != NULL &&
+-            GDK_WINDOW_TYPE (window) != GDK_WINDOW_ROOT &&
+-            GDK_WINDOW_TYPE (window) != GDK_WINDOW_FOREIGN)
+-          break;
+-
+-        screen_to_client (hwnd, screen_pt, &client_pt);
+-        hwndc = ChildWindowFromPointEx (hwnd, client_pt, CWP_SKIPDISABLED  |
+-                                                         CWP_SKIPINVISIBLE);
+-
+-	/* Verify that we're really inside the client area of the window */
+-	if (hwndc != hwnd)
+-	  {
+-	    GetClientRect (hwndc, &rect);
+-	    screen_to_client (hwndc, screen_pt, &client_pt);
+-	    if (!PtInRect (&rect, client_pt))
+-	      hwndc = hwnd;
+-	  }
+-
+-      } while (hwndc != hwnd && (hwnd = hwndc, 1));
++    hwnd = GetAncestor (hwnd, GA_ROOT);
+ 
+-    }
+-  else
++  if (hwnd)
+     {
+-      hwnd = WindowFromPoint (screen_pt);
+-
+       /* Verify that we're really inside the client area of the window */
+       GetClientRect (hwnd, &rect);
+       screen_to_client (hwnd, screen_pt, &client_pt);
+       if (!PtInRect (&rect, client_pt))
+-	hwnd = NULL;
++        hwnd = NULL;
++    }
+ 
++  if (!get_toplevel && hwnd == NULL)
++    {
+       /* If we didn't hit any window at that point, return the desktop */
+-      if (hwnd == NULL)
+-        {
+-          if (win_x)
+-            *win_x = screen_pt.x + _gdk_offset_x;
+-          if (win_y)
+-            *win_y = screen_pt.y + _gdk_offset_y;
+-          return _gdk_root;
+-        }
+-
+-      window = gdk_win32_handle_table_lookup ((GdkNativeWindow) hwnd);
++      if (win_x)
++        *win_x = screen_pt.x + _gdk_offset_x;
++      if (win_y)
++        *win_y = screen_pt.y + _gdk_offset_y;
++      return _gdk_root;
+     }
+ 
+-  if (window && (win_x || win_y))
++  window = gdk_win32_handle_table_lookup ((GdkNativeWindow) hwnd);
++
++  if (get_toplevel &&
++      window &&
++      (GDK_WINDOW_TYPE (window) == GDK_WINDOW_ROOT ||
++       GDK_WINDOW_TYPE (window) == GDK_WINDOW_FOREIGN))
++    window = NULL;
++
++  if (window)
+     {
+       if (win_x)
+         *win_x = client_pt.x;
+-- 
+2.39.1.windows.1
+
