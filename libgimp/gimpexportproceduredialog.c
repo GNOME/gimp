@@ -296,6 +296,7 @@ gimp_export_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
           gtk_text_view_set_bottom_margin (GTK_TEXT_VIEW (widget), 3);
           gtk_text_view_set_left_margin (GTK_TEXT_VIEW (widget), 3);
           gtk_text_view_set_right_margin (GTK_TEXT_VIEW (widget), 3);
+          gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (widget), GTK_WRAP_WORD);
           g_object_unref (buffer);
 
           tooltip = g_param_spec_get_blurb (pspec);
