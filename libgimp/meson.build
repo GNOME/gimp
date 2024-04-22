@@ -296,6 +296,9 @@ libgimpui_sources_introspectable = [
 libgimpui_sources = [
   libgimpui_sources_introspectable,
   gimpuimarshal,
+
+  # TODO: eventually move to libgimpwidgets.
+  'gimpresolutionentry-private.c'
 ]
 
 libgimpui_headers_introspectable = [

@@ -73,6 +73,19 @@ EXPORTS
 	gimp_prop_gradient_chooser_new
 	gimp_prop_palette_chooser_new
 	gimp_prop_pattern_chooser_new
+	gimp_prop_resolution_entry_new
+	gimp_resolution_entry_get_density
+	gimp_resolution_entry_get_height
+	gimp_resolution_entry_get_keep_ratio
+	gimp_resolution_entry_get_type
+	gimp_resolution_entry_get_unit
+	gimp_resolution_entry_get_width
+	gimp_resolution_entry_new
+	gimp_resolution_entry_set_height
+	gimp_resolution_entry_set_keep_ratio
+	gimp_resolution_entry_set_pixel_density
+	gimp_resolution_entry_set_unit
+	gimp_resolution_entry_set_width
 	gimp_resource_chooser_get_label
 	gimp_resource_chooser_get_resource
 	gimp_resource_chooser_get_type
