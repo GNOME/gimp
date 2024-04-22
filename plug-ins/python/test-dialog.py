@@ -167,7 +167,7 @@ class TestDialogPlugin (Gimp.PlugIn):
                                   "Lloyd Konneker",
                                   "2022")
         # Top level menu "Test"
-        procedure.add_menu_path ("<Image>/Test")
+        procedure.add_menu_path ("<Image>/Filters/Development/Demos")
 
         procedure.add_argument_from_property(self, "brush")
         procedure.add_argument_from_property(self, "font")
