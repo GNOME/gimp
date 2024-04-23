@@ -46,12 +46,12 @@ scripts = [
   'waves-anim.scm',
   'weave.scm',
   'xach-effect.scm',
-  'clothify-v3.scm'
 ]
 
 if not stable
   scripts += [
     'contactsheet.scm',
+    'clothify-v3.scm',
     'test-sphere.scm',
     'test-v3.scm',
   ]

@@ -81,4 +81,4 @@
 )
 
 (script-fu-menu-register "script-fu-clothify-v3"
-                         "<Image>/Filters/Artistic")
+                         "<Image>/Filters/Development/Demos")
