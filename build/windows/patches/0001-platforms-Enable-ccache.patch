@@ -1,0 +1,25 @@
+From 97108e3d7bdf651856212917a875a65ea4859a56 Mon Sep 17 00:00:00 2001
+From: Bruno Lopes <brunolopesdsilv@outlook.com>
+Date: Tue, 23 Apr 2024 09:44:37 -0300
+Subject: [PATCH] platforms: Enable ccache
+
+---
+ platforms/meson/toolchain-w64.meson | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/platforms/meson/toolchain-w64.meson b/platforms/meson/toolchain-w64.meson
+index b57bc6f..7e237d1 100644
+--- a/platforms/meson/toolchain-w64.meson
++++ b/platforms/meson/toolchain-w64.meson
+@@ -1,6 +1,6 @@
+ [binaries]
+-c = 'x86_64-w64-mingw32-gcc'
+-cpp = 'x86_64-w64-mingw32-g++'
++c = ['ccache', 'x86_64-w64-mingw32-gcc']
++cpp = ['ccache', 'x86_64-w64-mingw32-g++']
+ ar = 'x86_64-w64-mingw32-ar'
+ strip = 'x86_64-w64-mingw32-strip'
+ pkgconfig = 'x86_64-w64-mingw32-pkg-config'
+-- 
+2.44.0.windows.1
+

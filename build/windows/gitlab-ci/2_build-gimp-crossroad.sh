@@ -21,6 +21,7 @@ if [ -z "$GIT_SUBMODULE_STRATEGY" ]; then
   git submodule update --init
 fi
 
+
 # CROSSROAD ENV
 else
 export ARTIFACTS_SUFFIX="-x64"
@@ -34,6 +35,7 @@ crossroad meson setup .. -Dgi-docgen=disabled                 \
                          -Dpython=disabled -Dvala=disabled
 ninja
 ninja install
+ccache --show-stats
 cd ..
 
 ## XXX Functional fix to the problem of non-configured interpreters

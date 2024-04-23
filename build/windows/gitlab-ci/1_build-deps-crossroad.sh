@@ -12,6 +12,7 @@ apt-get install -y --no-install-recommends \
                    wine64
 git clone --depth $GIT_DEPTH https://gitlab.freedesktop.org/crossroad/crossroad.git
 cd crossroad
+git apply ../build/windows/patches/0001-platforms-Enable-ccache.patch
 ./setup.py install --prefix=`pwd`/../.local
 cd ..
 exit 0
@@ -42,11 +43,13 @@ mkdir _babl/_build${ARTIFACTS_SUFFIX}-cross/ && cd _babl/_build${ARTIFACTS_SUFFI
 crossroad meson setup .. -Denable-gir=false
 ninja
 ninja install
+ccache --show-stats
 
 mkdir ../../_gegl/_build${ARTIFACTS_SUFFIX}-cross/ && cd ../../_gegl/_build${ARTIFACTS_SUFFIX}-cross/
 crossroad meson setup .. -Dintrospection=false
 ninja
 ninja install
+ccache --show-stats
 cd ../../
 
 ## "Build" part of deps
