@@ -11,12 +11,29 @@ Otherwise, this branch is only for bug-fixes.
 Overview of Changes from GIMP 2.10.36 to GIMP 2.10.38
 =====================================================
 
-This release has no functional changes. It comes with various bug fixes on core
-and plug-ins.
+This release features some important feature backport for Windows: support of
+Windows Ink API for input devices (i.e. graphics tablets in particular).
 
-13 translations were updated: Belarusian, Brazilian Portuguese, British English,
-Danish, Georgian, German, Hungarian, Italian, Norwegian Nynorsk, Slovenian,
-Spanish, Turkish, Ukrainian.
+Other than this, it is mostly a bug-fix release of core and plug-in code. On any
+OS other than Windows, there are no functional changes, though you will want to
+update for fixes.
+
+Core:
+
+  - Windows Ink support backported from GIMP 3 (this also relies on GTK+3
+    backports so the build for GIMP 2.10.38 requires specially-patched GTK+2, on
+    Windows only).
+
+Translations:
+
+  - 15 translations were updated: Belarusian, Brazilian Portuguese, British
+    English, Danish, Georgian, German, Hungarian, Icelandic, Italian, Norwegian
+    Nynorsk, Slovenian, Spanish, Swedish, Turkish, Ukrainian.
+
+Build:
+
+  - Many GTK+2 patches for Windows (see #7498) were backported specially from
+    newer GTK versions and are integrated in our installer.
 
 
 Overview of Changes from GIMP 2.10.34 to GIMP 2.10.36
