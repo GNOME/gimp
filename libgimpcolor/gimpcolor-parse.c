@@ -554,10 +554,15 @@ gimp_color_parse_css_numeric (const gchar *css)
   color = gegl_color_new (NULL);
   if (hsl)
     {
+      gfloat values_f[4];
+
+      for (i = 0; i < (alpha ? 4 : 3); i++)
+        values_f[i] = (gfloat) values[i];
+
       if (alpha)
-        gegl_color_set_pixel (color, babl_format ("HSLA double"), values);
+        gegl_color_set_pixel (color, babl_format ("HSLA float"), values_f);
       else
-        gegl_color_set_pixel (color, babl_format ("HSL double"), values);
+        gegl_color_set_pixel (color, babl_format ("HSL float"), values_f);
     }
   else
     {

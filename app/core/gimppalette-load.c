@@ -572,13 +572,13 @@ gimp_palette_load_aco (GimpContext   *context,
         }
       else if (color_space == 2) /* CMYK */
         {
-          gdouble cmyk[4] = { 1.0 - ((gdouble) w) / 65536.0,
-                              1.0 - ((gdouble) x) / 65536.0,
-                              1.0 - ((gdouble) y) / 65536.0,
-                              1.0 - ((gdouble) z) / 65536.0 };
+          float cmyk[4] = { 1.0f - ((gfloat) w) / 65536.0f,
+                            1.0f - ((gfloat) x) / 65536.0f,
+                            1.0f - ((gfloat) y) / 65536.0f,
+                            1.0f - ((gfloat) z) / 65536.0f };
 
           /* No color space information in the format. */
-          gegl_color_set_pixel (color, babl_format ("CMYK double"), cmyk);
+          gegl_color_set_pixel (color, babl_format ("CMYK float"), cmyk);
           color_ok = TRUE;
         }
       else if (color_space == 7) /* CIE Lab */
@@ -605,12 +605,12 @@ gimp_palette_load_aco (GimpContext   *context,
            * implementation in GIMP so it's hard to know the origin behind it.
            * Where does it come from?
            */
-          gdouble cmyk[4] = { 1.0 - ((gdouble) w) / 10000.0,
-                              1.0 - ((gdouble) x) / 10000.0,
-                              1.0 - ((gdouble) y) / 10000.0,
-                              1.0 - ((gdouble) z) / 10000.0 };
+          gfloat cmyk[4] = { 1.0f - ((gfloat) w) / 10000.0,
+                             1.0f - ((gfloat) x) / 10000.0,
+                             1.0f - ((gfloat) y) / 10000.0,
+                             1.0f - ((gfloat) z) / 10000.0 };
 
-          gegl_color_set_pixel (color, babl_format ("CMYK double"), cmyk);
+          gegl_color_set_pixel (color, babl_format ("CMYK float"), cmyk);
           color_ok = TRUE;
         }
       else

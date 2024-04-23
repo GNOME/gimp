@@ -235,9 +235,9 @@ gimp_color_is_out_of_self_gamut (GeglColor *color)
                  model == babl_model ("cmyk")  ||
                  model == babl_model ("cmykA"))
         {
-            gdouble cmyk[4];
+            gfloat cmyk[4];
 
-            gegl_color_get_pixel (color, babl_format_with_space ("CMYK double", space), cmyk);
+            gegl_color_get_pixel (color, babl_format_with_space ("CMYK float", space), cmyk);
             oog = ((cmyk[0] < 0.0 && -cmyk[0] > CHANNEL_EPSILON)      ||
                    (cmyk[0] > 1.0 && cmyk[0] - 1.0 > CHANNEL_EPSILON) ||
                    (cmyk[1] < 0.0 && -cmyk[1] > CHANNEL_EPSILON)      ||
@@ -303,16 +303,16 @@ gimp_color_is_out_of_gamut (GeglColor  *color,
   else if (babl_space_is_cmyk (space))
     {
       GeglColor *c = gegl_color_new (NULL);
-      gdouble    cmyk[4];
+      gfloat     cmyk[4];
 
       /* CMYK conversion always produces colors in [0; 1] range. What we want
        * to check is whether the source and converted colors are the same in
        * Lab space.
        */
       gegl_color_get_pixel (color,
-                            babl_format_with_space ("CMYK double", space),
+                            babl_format_with_space ("CMYK float", space),
                             cmyk);
-      gegl_color_set_pixel (c, babl_format_with_space ("CMYK double", space), cmyk);
+      gegl_color_set_pixel (c, babl_format_with_space ("CMYK float", space), cmyk);
       is_out_of_gamut = (! gimp_color_is_perceptually_identical (color, c));
       g_object_unref (c);
     }
