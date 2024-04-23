@@ -15,7 +15,7 @@ else # [[ "$MSYSTEM_CARCH" == "i686" ]];
   export MSYS2_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
 fi
 
-if [[ "$BUILD_TYPE" == "CI_NATIVE" ]]; then
+if [[ "$GITLAB_CI" ]]; then
   # XXX We've got a weird error when the prefix is in the current dir.
   # Until we figure it out, this trick seems to work, even though it's
   # completely ridiculous.
@@ -125,7 +125,7 @@ make_cmd ()
   echo "Please run the gimp.cmd file to get proper plug-in support."> ${GIMP_PREFIX}/README.txt
 }
 
-if [[ "$BUILD_TYPE" == "CI_NATIVE" ]]; then
+if [[ "$GITLAB_CI" ]]; then
   make_cmd CI %cd%
 
   cd ..

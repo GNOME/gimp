@@ -19,7 +19,7 @@ else # [[ "$MSYSTEM_CARCH" == "i686" ]];
 fi
 
 
-if [[ "$BUILD_TYPE" == "CI_CROSS" ]]; then
+if [[ "$CI_JOB_NAME" =~ "cross" ]]; then
   apt-get update
   apt-get install -y --no-install-recommends   \
                      binutils                  \
@@ -32,7 +32,7 @@ fi
 
 # Bundle deps and GIMP files
 export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
-if [[ "$BUILD_TYPE" == "CI_CROSS" ]]; then
+if [[ "$CI_JOB_NAME" =~ "cross" ]]; then
   export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}-cross"
   export MSYS_PREFIX="$GIMP_PREFIX"
 fi
@@ -142,12 +142,12 @@ done
 ### .pdb (CodeView) debug symbols
 ### TODO: REMOVE 'if [[ "$MSYSTEM...' WHEN GCC 14 IS ON MSYS2
 ### crossroad don't have LLVM/Clang backend yet
-if [[ "$MSYSTEM_CARCH" != "i686" ]] && [[ "$BUILD_TYPE" != "CI_CROSS" ]]; then
+if [[ "$MSYSTEM_CARCH" != "i686" ]] && [[ ! "$CI_JOB_NAME" =~ "cross" ]]; then
   cp -fr ${GIMP_PREFIX}/bin/*.pdb ${GIMP_DISTRIB}/bin/
 fi
 
 ## Optional executables, .DLLs and resources for GObject Introspection support
-if [[ "$BUILD_TYPE" != "CI_CROSS" ]]; then
+if [[ ! "$CI_JOB_NAME" =~ "cross" ]]; then
   cp -fr ${MSYS_PREFIX}/bin/libgirepository-*.dll ${GIMP_DISTRIB}/bin/
   python3 build/windows/gitlab-ci/3_bundle-gimp-uni_dep.py ${GIMP_DISTRIB}/bin/libgirepository-*.dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
   cp -fr ${MSYS_PREFIX}/lib/girepository-*/ ${GIMP_DISTRIB}/lib/
