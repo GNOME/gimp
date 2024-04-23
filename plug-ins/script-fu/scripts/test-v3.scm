@@ -75,4 +75,4 @@
 )
 
 (script-fu-menu-register "script-fu-testv3"
-                         "<Image>/Filters/Development/Script-Fu/Test")
+                         "<Image>/Filters/Development/Demos")
