@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-18 12:19+0000\n"
-"PO-Revision-Date: 2024-04-19 14:09+0200\n"
+"POT-Creation-Date: 2024-04-23 13:28+0000\n"
+"PO-Revision-Date: 2024-04-23 15:40+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -85,6 +85,10 @@ msgstr ""
 "rättar till diverse fel, vissa mer irriterande än andra."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+msgid "On Windows, the Windows Ink API support has been backported."
+msgstr "På Windows har stödet för Windows Ink-API:t bakåtporterats."
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid ""
 "This new version of GIMP comes with many fixes, including vulnerability "
 "corrections. It is highly recommended to update. It also provides a few "
@@ -94,37 +98,37 @@ msgstr ""
 "rekommenderas starkt att uppdatera. Den tillhandahåller även några "
 "intressanta ändringar:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "Adobe ACB and ASE palette support"
 msgstr "Stöd för Adobes ACB- och ASE-paletter"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "New gradient: FG to Transparent (Hardedge)"
 msgstr "Ny gradient: FG till Transparent (Hård kant)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "Some text tool algorithm enhancement when replacing formatted text"
 msgstr ""
 "Viss algoritmförbättring i textverktyget vid ersättande av formaterad text"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
 "Better theming of item locks (when hovering them or setting them active)"
 msgstr "Bättre temasättning av objektlås (när de hovras över eller aktiveras)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Improvements in handling a few specific metadata"
 msgstr "Förbättringar i hantering av några specifika metadata"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "A new stable releases with a lot of bug fixes and a few enhancements:"
 msgstr "En ny stabil version med många felfixar och några förbättringar:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "New template selector in \"Canvas Size\" dialog"
 msgstr "Ny mallväljare i dialogen ”Storlek på rityta”"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid ""
 "\"Change Color\" dialogs: color scale (0..255/0..100) and models (LCh/HSV) "
 "settings remembered across sessions"
@@ -132,35 +136,35 @@ msgstr ""
 "”Ändra färg”-dialoger: färgskala (0..255/0..100) och modellinställningar "
 "(LCh/NMI) som sparas mellan sessioner"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "New header with \"visible\" and \"link\" icons in item dockables"
 msgstr "Ny rubrik med ”synlig”- och ”länk”-ikoner i dockningsbara objekt"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "Clipping layers better supported when importing PSD files"
 msgstr "Urklippslager stöds bättre vid import av PSD-filer"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid "Paths are now exported to PSD"
 msgstr "Banor exporteras nu till PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "JPEG XL export added"
 msgstr "Export av JPEG-XL har lagts till"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Metadata in JPEG XL import"
 msgstr "Metadata i import av JPEG-XL"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "New option \"Show reduced images\" when loading TIFF images"
 msgstr "Nytt alternativ ”Visa reducerade bilder” när TIFF-bilder läses in"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "16-bit per channel export for raw image data"
 msgstr "16-bitars export per kanal för råa bilddata"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid ""
 "More plug-ins got bug-fixes: DDS, WebP, Flame, Animation Playback, HEIF, "
 "Dicom and Help"
@@ -168,7 +172,7 @@ msgstr ""
 "Flera insticksmoduler har felfixar: DDS, WebP, Flame, Animeringsuppspelning, "
 "HEIF, Dicom och Hjälp"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "Color picking on X11 will ignore the Wayland portal; new implementation for "
 "color picking on Windows"
@@ -176,11 +180,11 @@ msgstr ""
 "Färgval på X11 kommer att ignorera Wayland-portalen; ny implementation för "
 "färgval på Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "Check for updates fixed on macOS"
 msgstr "Sökning efter uppdateringar är fixat på macOS"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
 "GIMP continues strengthening its bases with this new version 2.10.32 fixing "
 "many bugs and improving format support. Notable changes:"
@@ -188,19 +192,19 @@ msgstr ""
 "GIMP fortsätter utvecklas på flera fronter med denna nya version 2.10.32 som "
 "fixar många fel och förbättrar formatstöd. Framstående ändringar:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "8 and 16-bit CMYK(A) TIFF files import is now supported"
 msgstr "Import av 8- and 16-bitars CMYK(A) TIFF-filer stöds nu"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "BIGTIFF import and export are now supported"
 msgstr "Import och export av BIGTIFF stöds nu"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "JPEG XL files import is now supported"
 msgstr "Import av JPEG XL-filer stöds nu"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
 "DDS export has new \"Flip\" (useful for some game engine) and \"Visible "
 "layers\" options"
@@ -208,23 +212,23 @@ msgstr ""
 "DDS-export har de nya alternativen ”Vänd” (användbart för några spelmotorer) "
 "och ”Synliga lager”"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Other improved format supports: BMP, DICOM, EPS, RAW, TGA, WebP"
 msgstr "Andra format med förbättrat stöd: BMP, DICOM, EPS, RAW, TGA, WebP"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid ""
 "The screenshot plug-in on Windows has now an option to capture the cursor"
 msgstr ""
 "Skärmbildsinsticksmodulen på Windows har nu ett alternativ för att fånga "
 "pekaren"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "Several usability improvements in official themes and icons"
 msgstr ""
 "Flera förbättringar vad gäller användbarhet i officiella teman och ikoner"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid ""
 "New support for localized glyphs ('locl') in Text tool depending on the "
 "value of the \"Language\" tool option"
@@ -232,15 +236,15 @@ msgstr ""
 "Nytt stöd för lokaliserade glyfer (”locl”) i textverktyget beroende på "
 "värdet för verktygsalternativet ”Språk”"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "More robust XCF import"
 msgstr "Robustare XCF-import"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "Several metadata handling improvements"
 msgstr "Flera förbättringar i hantering av metadata"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid ""
 "GIMP 2.10.30 fixes many bugs, updates backend implementations to follow OS "
 "evolutions, improves metadata support as well as support of several formats, "
@@ -250,7 +254,7 @@ msgstr ""
 "följer operativsystems utveckling och förbättrar metadatastöd samt stöd för "
 "flera format såsom PSD och AVIF."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
@@ -258,7 +262,7 @@ msgstr ""
 "GIMP 2.10.28 åtgärdar ett byggproblem med GIMP 2.10.26, där vissa temadata "
 "inte installerades korrekt."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
@@ -266,16 +270,16 @@ msgstr ""
 "GIMP 2.10.26 är en felfixutgåva som innehåller dussintals fixar, både i "
 "kärnkod, skript och insticksmodulkod."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr ""
 "GIMP 2.10.24 är återigen mestadels en felfixutgåva. Framstående ändringar:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "GeoTIFF metadata support added"
 msgstr "Stöd för GeoTIFF-metadata tillagt"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
 "PDF import now proposes an option to load layers in reverse orders and "
 "allows fractional pixel density"
@@ -283,37 +287,37 @@ msgstr ""
 "PDF-import föreslår nu ett alternativ för att läsa in lager i omvänd ordning "
 "och tillåter bildpunktsdensitet i bråkform"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid ""
 "Raw image import updated to handle API changes in darktable 3.6 and over"
 msgstr ""
 "Råbildsimport har uppdaterats för att hantera API-ändringar i darktable 3.6 "
 "och senare"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
 "Förbättrat filformatstöd: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "Many fixes and improvements to the metadata viewer and editor"
 msgstr "Många fixar och förbättringar till visare och redigerare av metadata"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "New Kabyle translation"
 msgstr "Ny översättning till kabyliska"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
 msgstr ""
 "Fästpunkter utanför rityta (till rutnät, hjälplinjer, banor) har möjliggjorts"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
 msgstr "GIMP 2.10.22 är främst en felfixutgåva. Framstående ändringar:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
@@ -321,21 +325,21 @@ msgstr ""
 "Förbättringar för HEIF-stöd: valfri export med högt bitdjup, import och "
 "export av AVIF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "Multiple improvements in Corel PaintShop Pro support"
 msgstr "Flera förbättringar i stöd för Corel PaintShop Pro"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
 "”Sampla sammanfogade” är nu tillgängligt i verktygsalternativen för GEGL-"
 "operationer"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid "\"Sample merged\" is now enabled by default for color picking"
 msgstr "”Sampla sammanfogade” är nu aktiverat som standard för färgval"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
@@ -343,7 +347,7 @@ msgstr ""
 "Alternativet som aktiverar OpenCL-stöd har flyttats till fliken Lekplats i "
 "Inställningar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
@@ -351,19 +355,19 @@ msgstr ""
 "Matting Levin är nu standardmotorn för verktyget Förgrundsmarkering då den "
 "presterar mycket bättre"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid "New progressive performance logs and dashboard updates"
 msgstr "Nya progressiva prestandaloggar och paneluppdateringar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr "Informativ felsökning visar nu Flatpak-information när det är relevant"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "Various bug fixes"
 msgstr "Diverse felfixar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
@@ -371,12 +375,12 @@ msgstr ""
 "GIMP 2.10.20 kommer med nya funktioner såväl som viktiga felfixar. "
 "Framstående ändringar:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
 "Verktygsgrupper expanderas nu vid hovring snarare än klick som standard"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
@@ -384,7 +388,7 @@ msgstr ""
 "Icke-förstörande beskärning är nu tillgänglig genom att beskära ritytan "
 "snarare än faktiska bildpunkter"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing "
 "channels in the right order"
@@ -392,19 +396,19 @@ msgstr ""
 "Bättre PSD-stöd: export av 16-bitars filer nu tillgänglig, med läsning/"
 "skrivning av kanaler i rätt ordning"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "On-canvas controls for the Vignette filter"
 msgstr "Kontroller på ritytan för Vinjettfiltret"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr "Nya filter: Överstrålning, Fokusoskärpa, Linsoskärpa, Variabel oskärpa"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid "Over 30 bugfixes"
 msgstr "Över 30 felfixar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
@@ -413,7 +417,7 @@ msgstr ""
 "filer och lägger till en variation av det symboliska ikontemat med högre "
 "kontrast."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid ""
 "GIMP 2.10.16 delivers several major usability improvements, a new tool for "
 "transformations in 3D space, new release checker, and the usual amount of "
@@ -423,43 +427,43 @@ msgstr ""
 "verktyg för transformeringar i 3d-rymden, sökning av nya utgåvor, och den "
 "vanliga mängden felfixar. Nämnvärda förbättringar:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 msgid "Tools are now grouped in the toolbox by default"
 msgstr "Verktyg grupperas nu i verktygslådan som standard"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid "Sliders now use a compact style with improved user interaction"
 msgstr ""
 "Skjutreglage använder nu en kompakt stil med förbättrad användarinteraktion"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid "Vastly improved user experience for the transformation preview"
 msgstr ""
 "Kraftigt förbättrad användarupplevelse för transformeringsförhandsversionen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr "Dockningsbara områden markeras nu då en dockningsbar dialog dras"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid "New 3D Transform tool to rotate and pan items"
 msgstr "Nytt 3d-transformeringsverktyg för att rotera och panorera objekt"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid "Much smoother brush outline motion on the canvas"
 msgstr "Mycket mjukare rörelse för penselkontur på ritytan"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr "Förenat användargränssnitt för att sammanfoga nedåt och ankra lager"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid "Update check to notify users that a new release/installer is available"
 msgstr ""
 "Uppdatera kontroll för att meddela användare att en ny utgåva/installerare "
 "finns tillgänglig"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid ""
 "GIMP 2.10.14 is again mostly a bug fix release, making GIMP rock-solid. "
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
@@ -469,7 +473,7 @@ msgstr ""
 "stabilt som möjligt. Vidare har många gamla filter slutligen porterats till "
 "GEGL. Den innehåller förstås också några nämnvärda förbättringar:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
@@ -477,49 +481,49 @@ msgstr ""
 "Visa-menyn: nytt ”Visa allt”-alternativ för att visa bildpunkter utanför "
 "ritytans gräns"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
 msgstr ""
 "Filter: nytt ”Klippning”-alternativ för att möjliggöra storleksändring av "
 "lager då det är relevant"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
 msgstr "Verktyget Förgrundsmarkering: nytt förhandsvisningsläge ”Gråskala”"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr ""
 "Verktyget Förgrundsmarkering: färg/opacitetsväljare för ”Färg”-"
 "förhandsvisning"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid "Free Select tool: improved copy-paste interaction"
 msgstr "Verktyget Fri markering: förbättrad kopiera-klistra in-interaktion"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid "Transform tools: new Image transform type to transform the whole image"
 msgstr ""
 "Transformeringsverktyg: ny transformeringstyp Bild för att transformera hela "
 "bilden"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
 msgstr "Inställningar: ny inställning ”Tillåt redigering på ej synliga lager”"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "HEIF import/export: color profile support"
 msgstr "HEIF-import/export: färgprofilstöd"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid "PDF export: text layers in layer groups now exported as texts"
 msgstr "PDF-export: textlager i lagergrupper exporteras nu som texter"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
 msgid "TIFF import: now asks how to process unspecified TIFF channels"
 msgstr "TIFF-import: frågar nu hur ospecificerade TIFF-kanaler ska bearbetas"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
 msgid ""
 "GIMP 2.10.12 is a significant bug fix release, which is to be expected after "
 "a 2.10.10 with so many changes! Still, very cool improvements are also "
@@ -529,31 +533,31 @@ msgstr ""
 "2.10.10 med alla dess ändringar! Några väldigt häftiga förbättringar har "
 "ändå tillkommit, främst för kurvredigering:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
 msgid "Improved curves interaction overall"
 msgstr "Överlag förbättrad kurvinteraktion"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
 msgid "A few enhancements specific to the Curves tool"
 msgstr "Några förbättringar specifika för verktyget Kurvor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
 msgid "Layer support in TIFF"
 msgstr "Lagerstöd i TIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
 msgid "Discovery of user-installed fonts in Windows"
 msgstr "Upptäckt av användarinstallerade typsnitt i Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
 msgid "Incremental mode in the Dodge/Burn tool"
 msgstr "Inkrementellt läge i Skugga/Efterbelys-verktyget"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
 msgid "Free Select tool creates preliminary selection"
 msgstr "Verktyget Fri markering skapar en preliminär markering"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
 msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
@@ -561,7 +565,7 @@ msgstr ""
 "GIMP 2.10.10 är en rätt stor uppdatering med många nya funktioner och "
 "felfixar. Framstående ändringar inkluderar:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
@@ -569,11 +573,11 @@ msgstr ""
 "Fyllnadsverktyg: nytt ”Fyll i enligt upptäckt av linjegrafik” för "
 "linjegrafikzoner som inte är fullständigt stängda"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr "Fyllnadsverktyget kan nu snabbt välja färg med Ctrl+klick"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
@@ -581,12 +585,12 @@ msgstr ""
 "Fyllnadsverktyget tillåter att hålla nere musen vid fyllning av ”liknande "
 "färger” och ”enligt upptäckt av linjegrafik”"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid "Scale tool scales around center even when using numeric input"
 msgstr ""
 "Skalningsverktyget skalar runt centrum även då numerisk inmatning används"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
@@ -594,7 +598,7 @@ msgstr ""
 "Enhetliga transformeringsverktyget har nu som standard att behålla "
 "bildförhållandet vid ändring av skala"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
@@ -602,21 +606,21 @@ msgstr ""
 "Lägg till alternativen ”Begränsa handtag” och ”Runt centrum” till "
 "perspektivtransformeringsverktygets grafiska användargränssnitt"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr "Ny allmän ritytemodifierare ”Alt + mittenklick” för att välja lager"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid "Parametric brushes now 32-bit float to avoid posterization"
 msgstr ""
 "Parametriska penslar använder nu 32-bitars flyttal för att undvika "
 "färgreduktion"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid "Clipboard brushes and pattern can now be duplicated"
 msgstr "Urklippspenslar och mönster kan nu dupliceras"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
@@ -624,23 +628,23 @@ msgstr ""
 "Misslyckande att redigera låsta lager kommer att blinka för att växla "
 "uppmärksamheten till felets orsak"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
 msgstr ""
 "Nytt grafiskt användargränssnitt på ritytan (enkla linjer) för cirkulär och "
 "linjär rörelseoskärpa samt zoomrörelseoskärpa"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
 msgid "Several optimizations including faster layer group rendering"
 msgstr "Flera optimeringar inklusive snabbare rendering av lagergrupper"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr "Växlings- och cachefiler sparas inte längre i konfigurationskatalogen"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
@@ -648,15 +652,15 @@ msgstr ""
 "Diverse sparande och exporter av filer har gjorts mer motståndskraftiga mot "
 "fel genom att inte spara partiella filer"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
 msgid "HiDPI support improvements"
 msgstr "Förbättringar för HiDPI-stöd"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
 msgid "New preference to choose the default export file type"
 msgstr "Ny inställning för att välja standardfiltypen för export"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
@@ -664,11 +668,11 @@ msgstr ""
 "Nytt alternativ för att exportera PNG, JPEG och TIFF med en färgprofil; "
 "exportera alltid PSD med en färgprofil"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
 msgid "New DDS format loading/exporting plug-in"
 msgstr "Ny insticksmodul för inläsning/export av DDS-formatet"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
@@ -676,7 +680,7 @@ msgstr ""
 "Fullständig omskrivning av insticksmodulen Spirogimp med fler alternativ och "
 "bättre interaktion"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
@@ -684,7 +688,7 @@ msgstr ""
 "GIMP 2.10.8 är mestadels en utgåva med felfixar och optimering. Främst "
 "inkluderar den:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
@@ -692,12 +696,12 @@ msgstr ""
 "Adaptativ styckesstorlek vid rendering av projektioner, förbättrar svarstid "
 "dynamiskt"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr ""
 "Upptäckt av RawTherapee (version 5.5 och högre) har förbättrats på Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
@@ -705,7 +709,7 @@ msgstr ""
 "XCF-kompatibilitetsinformation i Spara-dialogen är mer lätt att upptäcka och "
 "förstå"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
@@ -713,7 +717,7 @@ msgstr ""
 "Diverse verktyg för prestandaloggar och logginspelning har gjorts "
 "tillgängliga via paneldockan"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
@@ -721,7 +725,7 @@ msgstr ""
 "GIMP 2.10.6 kommer med många felfixar, optimeringar samt nya funktioner. De "
 "mest framstående ändringarna är:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
@@ -729,22 +733,22 @@ msgstr ""
 "Textlager kan nu representera vertikal text (med diverse teckenorienteringar "
 "och radriktningar)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr "Nytt ”Liten planet”-filter (gegl:stereographic-projection)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
 msgid "New \"Long Shadow\" filter"
 msgstr "Nytt filter ”Lång skugga”"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
 msgstr ""
 "Alternativet ”Räta ut” för mätningsverktyget möjliggör nu vertikal uträtning"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
@@ -752,7 +756,7 @@ msgstr ""
 "Förhandsvisningar för ritytor renderas nu asynkront och förhandsvisningar "
 "för lagergrupper kan inaktiveras i Inställningar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
@@ -760,17 +764,17 @@ msgstr ""
 "Ett nytt ”Asynkront”-fält i panelens ”Diverse”-grupp som visar antalet "
 "asynkrona operationer som för närvarande körs"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 "Filformatfiltrering i dialogerna för Öppna/Spara/Exportera har gjorts mindre "
 "förvirrande"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr "Nytt språk (med GIMP nu översatt till 81 språk): Marathi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
@@ -778,18 +782,18 @@ msgstr ""
 "GIMP 2.10.4 inkluderar många felfixar såväl som diverse optimeringar. De "
 "mest framstående ändringarna är:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
 msgstr ""
 "Uträtning i mätningsverktyget: lager kan roteras med måttlinjen som horisont"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr "Snabb uppstart: inläsning av typsnitt blockerar inte längre uppstart"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
@@ -797,11 +801,11 @@ msgstr ""
 "Typsnittstaggning med samma användargränssnitt som för penslar, mönster och "
 "gradienter"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr "PSD-stöd: en försammanfogad version av en PSD-bild kan importeras"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
@@ -809,7 +813,7 @@ msgstr ""
 "Paneluppdatering: en ny ”Minnes”-grupp och en förbättrad ”Växlings”-grupp "
 "som visar diverse mätvärden"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
@@ -819,7 +823,7 @@ msgstr ""
 "den vanliga felfixversionen efter en stor utgåva, med några få dussin fel "
 "fixade."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -831,7 +835,7 @@ msgstr ""
 "Dessa är bra exempel på vår lättade policy kring ny funktionalitet i stabila "
 "mikroutgåvor."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
@@ -839,11 +843,11 @@ msgstr ""
 "Den första utgåvan av 2.10-serien vilken introducerar övergången till en ny "
 "bildbehandlingsmotor, GEGL. De främsta ändringarna är:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr "Färgbearbetning med högt bitdjup (16/32-bit per färgkanal)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
@@ -851,32 +855,32 @@ msgstr ""
 "Färghantering är nu en kärnfunktion, de flesta komponenter och "
 "förhandsvisningsområden är färghanterade"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 "Effektförhandsvisning på ritytan, med delad vy för bildpunkter före/efter "
 "bearbetning"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr "Flertrådad och hårdvaruaccelererad rendering, bearbetning och målning"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
 msgid "Most tools improved, several new transformation tools"
 msgstr "De flesta verktygen har förbättrats, flera nya transformeringsverktyg"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr "Förbättrat stöd för många bildformat, i synnerhet bättre PSD-import"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "Nya bildformat som stöds: OpenEXR, RGBE, WebP, HGT…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
@@ -884,23 +888,23 @@ msgstr ""
 "Förbättrat digitalt målande: rotation och vändande av rityta, "
 "symmetrimålning, MyPaint-penslar…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr "Visning och redigering av Exif-, XMP-, IPTC- och DICOM-metadata"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr "Grundläggande HiDPI-stöd: automatisk eller användarvald ikonstorlek"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "Nya teman för GIMP: Light, Gray, Dark och System"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
 msgid "And much, much more…"
 msgstr "Samt mycket mer…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
@@ -910,7 +914,7 @@ msgstr ""
 "fortfarande är ett primärt mål, nytt fokus satts på hastighet och optimering "
 "för att tillhandahålla en jämnare målningsupplevelse. Större ändringar:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
@@ -918,11 +922,11 @@ msgstr ""
 "Stora kärnoptimeringar för målning och visning, inklusive parallelliserad "
 "målningskod"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr "Symmetrier bibehålls nu i XCF-filer (sparade som bildparasiter)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
@@ -930,7 +934,7 @@ msgstr ""
 "Temana ”Light” och ”Dark” är omskrivna från grunden för att komma åt diverse "
 "användbarhetsproblem. Temana ”Lighter” och ”Darker” har tagits bort."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -940,7 +944,7 @@ msgstr ""
 "närvarande för Panoramaprojiceringsfiltret. Komponenten tillhandahåller "
 "interaktion på ritytan för 3d-rotation (gir, stigning, rullning)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -951,7 +955,7 @@ msgstr ""
 "signaler mottas utan också vid varningar och kritiska fel då "
 "felsökningsnyckeln ”fatal-warnings” har ställts in"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -961,11 +965,11 @@ msgstr ""
 "GIMP 2.10.0, med fokus på felsökning och stabilitet. Förutom de många "
 "felfixarna är de mest framstående förbättringarna:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr "Ny dockningsbar panel för att övervaka GIMP:s resursanvändning"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -973,31 +977,31 @@ msgstr ""
 "En ny felsökningsdialog för att skapa stackspår och annan felsökningsdata, "
 "vilket uppmuntrar till att rapportera fel"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
 msgid "Unsaved images can now be recovered after a crash"
 msgstr "Osparade bilder kan nu återskapas efter en krasch"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
 msgid "Layer masks on layer groups"
 msgstr "Lagermasker på lagergrupper"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr "JPEG 2000-stöd förbättrat för högt bitdjup och diverse färgrymder"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
 msgid "Screenshot and color picking improved on various platforms"
 msgstr "Skärmbilder och färgval förbättrat på diverse plattformar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
 msgid "Metadata defaults preferences now available"
 msgstr "Inställningar för metadatastandardvärden finns nu tillgängliga"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
 msgid "Various GUI polishing"
 msgstr "Diverse polering av det grafiska användargränssnittet"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -1005,47 +1009,47 @@ msgstr ""
 "GIMP 2.9.8 introducerar redigering av gradienter på ritytan och diverse "
 "förbättringar men fokus ligger på felfixar och stabilitet."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
 msgid "On-canvas gradient editing"
 msgstr "Gradientredigerare på ritytan"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
 msgid "Notification when an image is over/underexposed"
 msgstr "Avisering när en bild är över-/underexponerad"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
 msgid "Better and faster color management"
 msgstr "Bättre och snabbare färghantering"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:170
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr "Stöd för färgväljare och skärmbilder i Wayland på KDE Plasma"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:170
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:171
 msgid "Paste in place feature"
 msgstr "Klistra in i på plats-funktion"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:171
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:172
 msgid "Many usability improvements"
 msgstr "Många förbättringar vad gäller användbarhet"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:172
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:173
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "Handboken kan visas i det språk som användaren föredrar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:173
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:174
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Förbättringar för filtret Wavelet-separera"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:174
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:175
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Förbättrad kompatibilitet med Photoshops .psd-filer"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:175
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:176
 msgid "New support for password-protected PDF"
 msgstr "Nytt stöd för lösenordsskyddad PDF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:176
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:177
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Nytt stöd för HGT-format (Digital Elevation Model-data)"
 
@@ -1135,113 +1139,113 @@ msgstr "använder %s version %s (kompilerad mot version %s)"
 msgid "%s version %s"
 msgstr "%s version %s"
 
-#: ../app/main.c:163
+#: ../app/main.c:166
 msgid "Show version information and exit"
 msgstr "Visa versionsinformation och avsluta"
 
-#: ../app/main.c:168
+#: ../app/main.c:171
 msgid "Show license information and exit"
 msgstr "Visa licensinformation och avsluta"
 
-#: ../app/main.c:173
+#: ../app/main.c:176
 msgid "Be more verbose"
 msgstr "Var mer informativ"
 
-#: ../app/main.c:178
+#: ../app/main.c:181
 msgid "Start a new GIMP instance"
 msgstr "Starta en ny instans av GIMP"
 
-#: ../app/main.c:183
+#: ../app/main.c:186
 msgid "Open images as new"
 msgstr "Öppna bilder som nya"
 
-#: ../app/main.c:188
+#: ../app/main.c:191
 msgid "Run without a user interface"
 msgstr "Kör utan ett användargränssnitt"
 
-#: ../app/main.c:193
+#: ../app/main.c:196
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Läs inte in penslar, gradienter, mönster, …"
 
-#: ../app/main.c:198
+#: ../app/main.c:201
 msgid "Do not load any fonts"
 msgstr "Läs inte in några typsnitt"
 
-#: ../app/main.c:203
+#: ../app/main.c:206
 msgid "Do not show a splash screen"
 msgstr "Visa inte en startbild"
 
-#: ../app/main.c:208
+#: ../app/main.c:211
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Använd inte delat minne mellan GIMP och insticksmoduler"
 
-#: ../app/main.c:213
+#: ../app/main.c:216
 msgid "Do not use special CPU acceleration functions"
 msgstr "Använd inga särskilda acceleringsfunktioner för processorer"
 
-#: ../app/main.c:218
+#: ../app/main.c:221
 msgid "Use an alternate sessionrc file"
 msgstr "Använd en alternativ sessionrc-fil"
 
-#: ../app/main.c:223
+#: ../app/main.c:226
 msgid "Use an alternate user gimprc file"
 msgstr "Använd en alternativ användar-gimprc-fil"
 
-#: ../app/main.c:228
+#: ../app/main.c:231
 msgid "Use an alternate system gimprc file"
 msgstr "Använd en alternativ system-gimprc-fil"
 
-#: ../app/main.c:233
+#: ../app/main.c:236
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Satskommando att köra (kan användas flera gånger)"
 
-#: ../app/main.c:238
+#: ../app/main.c:241
 msgid "The procedure to process batch commands with"
 msgstr "Proceduren att behandla satskommandon med"
 
-#: ../app/main.c:243
+#: ../app/main.c:246
 msgid "Send messages to console instead of using a dialog"
 msgstr "Skicka meddelanden till konsolen i stället för att använda en dialog"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:249
+#: ../app/main.c:252
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB-kompatibilitetsläge (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:255
+#: ../app/main.c:258
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Felsök om en krasch sker (never|query|always)"
 
-#: ../app/main.c:260
+#: ../app/main.c:263
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Aktivera icke-ödesdiger signalhanterare för felsökning"
 
-#: ../app/main.c:265
+#: ../app/main.c:268
 msgid "Make all warnings fatal"
 msgstr "Gör alla varningar ödesdigra"
 
-#: ../app/main.c:270
+#: ../app/main.c:273
 msgid "Output a gimprc file with default settings"
 msgstr "Skriv ut en gimprc-fil med standardinställningar"
 
-#: ../app/main.c:286
+#: ../app/main.c:289
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Skapa en sorterad lista med föråldrade rutiner i PDB"
 
-#: ../app/main.c:291
+#: ../app/main.c:294
 msgid "Show a preferences page with experimental features"
 msgstr "Visa en inställningssida med experimentella funktioner"
 
-#: ../app/main.c:296
+#: ../app/main.c:299
 msgid "Show an image submenu with debug actions"
 msgstr "Visa en bildundermeny med felsökningsåtgärder"
 
-#: ../app/main.c:620
+#: ../app/main.c:702
 msgid "[FILE|URI...]"
 msgstr "[FIL|URI…]"
 
-#: ../app/main.c:638
+#: ../app/main.c:730
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1249,20 +1253,20 @@ msgstr ""
 "GIMP kunde inte initiera det grafiska användargränssnittet.\n"
 "Kontrollera att det finns en korrekt konfiguration för din displaymiljö."
 
-#: ../app/main.c:657
+#: ../app/main.c:749
 msgid "Another GIMP instance is already running."
 msgstr "En annan instans av GIMP körs redan."
 
-#: ../app/main.c:748
+#: ../app/main.c:840
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP-utdata. Tryck på en tangent för att stänga fönstret."
 
-#: ../app/main.c:749
+#: ../app/main.c:841
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Tryck på en tangent för att stänga fönstret)\n"
 
-#: ../app/main.c:766
+#: ../app/main.c:858
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP-utdata. Du kan minimera det här fönstret men stäng det inte."
 
@@ -1300,7 +1304,7 @@ msgstr "Penselredigerare"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:114 ../app/core/gimp-data-factories.c:349
-#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:3266
+#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:3279
 msgid "Brushes"
 msgstr "Penslar"
 
@@ -1384,7 +1388,7 @@ msgstr "Filter"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:171 ../app/core/gimp-data-factories.c:383
-#: ../app/dialogs/dialogs.c:355 ../app/dialogs/preferences-dialog.c:3296
+#: ../app/dialogs/dialogs.c:355 ../app/dialogs/preferences-dialog.c:3309
 msgid "Fonts"
 msgstr "Typsnitt"
 
@@ -1395,12 +1399,12 @@ msgstr "Gradientredigerare"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:177 ../app/core/gimp-data-factories.c:374
-#: ../app/dialogs/dialogs.c:349 ../app/dialogs/preferences-dialog.c:3290
+#: ../app/dialogs/dialogs.c:349 ../app/dialogs/preferences-dialog.c:3303
 msgid "Gradients"
 msgstr "Gradienter"
 
 #: ../app/actions/actions.c:180 ../app/core/gimp-data-factories.c:390
-#: ../app/dialogs/dialogs.c:361 ../app/dialogs/preferences-dialog.c:3302
+#: ../app/dialogs/dialogs.c:361 ../app/dialogs/preferences-dialog.c:3315
 msgid "Tool Presets"
 msgstr "Verktygsförinställning"
 
@@ -1429,7 +1433,7 @@ msgstr "Lager"
 
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:198 ../app/core/gimp-data-factories.c:359
-#: ../app/dialogs/dialogs.c:343 ../app/dialogs/preferences-dialog.c:3308
+#: ../app/dialogs/dialogs.c:343 ../app/dialogs/preferences-dialog.c:3321
 msgid "MyPaint Brushes"
 msgstr "MyPaint-penslar"
 
@@ -1440,17 +1444,17 @@ msgstr "Palettredigerare"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:204 ../app/core/gimp-data-factories.c:369
-#: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:3284
+#: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:3297
 msgid "Palettes"
 msgstr "Paletter"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:207 ../app/core/gimp-data-factories.c:364
-#: ../app/dialogs/dialogs.c:346 ../app/dialogs/preferences-dialog.c:3278
+#: ../app/dialogs/dialogs.c:346 ../app/dialogs/preferences-dialog.c:3291
 msgid "Patterns"
 msgstr "Mönster"
 
-#: ../app/actions/actions.c:210 ../app/dialogs/preferences-dialog.c:3314
+#: ../app/actions/actions.c:210 ../app/dialogs/preferences-dialog.c:3327
 msgid "Plug-ins"
 msgstr "Insticksmoduler"
 
@@ -3575,7 +3579,7 @@ msgstr ""
 msgid "Untitled"
 msgstr "Namnlös"
 
-#: ../app/actions/data-commands.c:217 ../app/actions/documents-commands.c:194
+#: ../app/actions/data-commands.c:225 ../app/actions/documents-commands.c:194
 #: ../app/actions/file-commands.c:530
 #, c-format
 msgid "Can't show file in file manager: %s"
@@ -11474,6 +11478,10 @@ msgid "Try generating debug data for bug reporting when appropriate."
 msgstr "Försök generera felsökningsdata för felrapportering när lämpligt."
 
 #: ../app/config/gimprc-blurbs.h:251
+msgid "Sets the preferred pen and touch input API."
+msgstr "Ställer in det föredragna API:t för penn- och pekinmatning."
+
+#: ../app/config/gimprc-blurbs.h:254
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
@@ -11481,34 +11489,34 @@ msgstr ""
 "När aktiverat säkerställer detta att hela bilden är synlig när filen öppnas, "
 "annars visas bilden i skala 1:1."
 
-#: ../app/config/gimprc-blurbs.h:255
+#: ../app/config/gimprc-blurbs.h:258
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Ställer in interpolationsnivån för skalning och andra transformationer."
 
-#: ../app/config/gimprc-blurbs.h:262
+#: ../app/config/gimprc-blurbs.h:265
 msgid "Specifies the language to use for the user interface."
 msgstr "Ställer in språk för användargränssnittet."
 
-#: ../app/config/gimprc-blurbs.h:265
+#: ../app/config/gimprc-blurbs.h:268
 msgid ""
 "The last known release version of GIMP as queried from official website."
 msgstr "Den senast kända utgåvan av GIMP enligt den officiella webbplatsen."
 
-#: ../app/config/gimprc-blurbs.h:268
+#: ../app/config/gimprc-blurbs.h:271
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr "Hur många nyligen använda filer som ska finnas i Arkiv-menyn."
 
-#: ../app/config/gimprc-blurbs.h:271
+#: ../app/config/gimprc-blurbs.h:274
 msgid "The timestamp for the last known release date."
 msgstr "Tidsstämpeln för det senast kända utgåvedatumet."
 
-#: ../app/config/gimprc-blurbs.h:274
+#: ../app/config/gimprc-blurbs.h:277
 msgid "The last revision number for the release."
 msgstr "Det senaste revideringsnumret för utgåvan."
 
-#: ../app/config/gimprc-blurbs.h:277
+#: ../app/config/gimprc-blurbs.h:280
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
@@ -11516,7 +11524,7 @@ msgstr ""
 "Hastigheten på marscherande myror i markeringens kontur. Detta värde är i "
 "millisekunder (mindre tid indikerar snabbare marsch)."
 
-#: ../app/config/gimprc-blurbs.h:281
+#: ../app/config/gimprc-blurbs.h:284
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
@@ -11524,7 +11532,7 @@ msgstr ""
 "GIMP kommer varna användaren vid försök att skapa en bild som skulle kräva "
 "mer minne än det som angivits här."
 
-#: ../app/config/gimprc-blurbs.h:291
+#: ../app/config/gimprc-blurbs.h:294
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -11534,7 +11542,7 @@ msgstr ""
 "satt till 0, frågar vi X-servern efter både horisontell och vertikal "
 "upplösning."
 
-#: ../app/config/gimprc-blurbs.h:296
+#: ../app/config/gimprc-blurbs.h:299
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -11543,11 +11551,11 @@ msgstr ""
 "Ställer in skärmens vertikala upplösning i punkter per tum. Om det är satt "
 "till 0, frågar vi X-servern efter både horisontell och vertikal upplösning."
 
-#: ../app/config/gimprc-blurbs.h:301
+#: ../app/config/gimprc-blurbs.h:304
 msgid "When enabled, non-visible layers can be edited as normal."
 msgstr "När aktiverad kan ej synliga lager redigeras som vanligt."
 
-#: ../app/config/gimprc-blurbs.h:304
+#: ../app/config/gimprc-blurbs.h:307
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
@@ -11555,7 +11563,7 @@ msgstr ""
 "Om aktiverat ställer flyttningsverktyget in det redigerade lagret eller "
 "banan som aktivt. Detta var standardbeteendet i äldre versioner."
 
-#: ../app/config/gimprc-blurbs.h:313
+#: ../app/config/gimprc-blurbs.h:316
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
@@ -11563,13 +11571,13 @@ msgstr ""
 "Ställer in storleken på förhandsvisningen som är tillgänglig i nedre högra "
 "hörnet av bildfönstret."
 
-#: ../app/config/gimprc-blurbs.h:317
+#: ../app/config/gimprc-blurbs.h:320
 msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr ""
 "Ställer in hur många trådar som GIMP ska använda för åtgärder som har stöd "
 "för det."
 
-#: ../app/config/gimprc-blurbs.h:339
+#: ../app/config/gimprc-blurbs.h:342
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
@@ -11579,7 +11587,7 @@ msgstr ""
 "Förhandsvisningar av lager och kanaler är trevliga att ha men de kan göra "
 "saker långsammare vid arbete med stora bilder."
 
-#: ../app/config/gimprc-blurbs.h:344
+#: ../app/config/gimprc-blurbs.h:347
 msgid ""
 "Sets whether GIMP should create previews of layer groups. Layer group "
 "previews are more expensive than ordinary layer previews."
@@ -11588,18 +11596,18 @@ msgstr ""
 "Förhandsvisningar av lagergrupper är dyrare än vanliga förhandsvisningar av "
 "lager."
 
-#: ../app/config/gimprc-blurbs.h:348
+#: ../app/config/gimprc-blurbs.h:351
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
 msgstr ""
 "Ställer in förhandsvisningsstorlek för lager och kanaler i nya dialoger."
 
-#: ../app/config/gimprc-blurbs.h:352
+#: ../app/config/gimprc-blurbs.h:355
 msgid "Sets the default quick mask color."
 msgstr "Ställer in standardsnabbmaskfärgen."
 
-#: ../app/config/gimprc-blurbs.h:355
+#: ../app/config/gimprc-blurbs.h:358
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes. This setting only takes effect in multi-window "
@@ -11609,7 +11617,7 @@ msgstr ""
 "bildens fysiska storlek ändras. Denna inställning får bara effekt i "
 "flerfönsterläge."
 
-#: ../app/config/gimprc-blurbs.h:360
+#: ../app/config/gimprc-blurbs.h:363
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
@@ -11618,12 +11626,12 @@ msgstr ""
 "zoomar in eller ut i bilder. Denna inställning får bara effekt i "
 "flerfönsterläge."
 
-#: ../app/config/gimprc-blurbs.h:365
+#: ../app/config/gimprc-blurbs.h:368
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 "Låt GIMP försöka återskapa din senast sparade session vid varje uppstart."
 
-#: ../app/config/gimprc-blurbs.h:368
+#: ../app/config/gimprc-blurbs.h:371
 msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
@@ -11632,13 +11640,13 @@ msgstr ""
 "tidigare öppnades. När inaktiverat kommer fönster att dyka upp på den för "
 "närvarande använda skärmen."
 
-#: ../app/config/gimprc-blurbs.h:373
+#: ../app/config/gimprc-blurbs.h:376
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Kom ihåg aktuellt verktyg, mönster, färg och pensel mellan GIMP-sessioner."
 
-#: ../app/config/gimprc-blurbs.h:377
+#: ../app/config/gimprc-blurbs.h:380
 msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
@@ -11647,7 +11655,7 @@ msgstr ""
 "alla inmatningsenheter. Ingen verktygsväxling kommer att ske när "
 "inmatningsenheten ändras."
 
-#: ../app/config/gimprc-blurbs.h:382
+#: ../app/config/gimprc-blurbs.h:385
 msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
@@ -11655,16 +11663,16 @@ msgstr ""
 "Håll permanent information över alla öppnade och sparade filer till Senaste "
 "dokument-listan."
 
-#: ../app/config/gimprc-blurbs.h:386
+#: ../app/config/gimprc-blurbs.h:389
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr ""
 "Spara positioner och storlekar på huvuddialogrutorna när GIMP avslutas."
 
-#: ../app/config/gimprc-blurbs.h:389
+#: ../app/config/gimprc-blurbs.h:392
 msgid "Save the tool options when GIMP exits."
 msgstr "Spara verktygsalternativen när GIMP avslutas."
 
-#: ../app/config/gimprc-blurbs.h:395
+#: ../app/config/gimprc-blurbs.h:398
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -11672,14 +11680,14 @@ msgstr ""
 "När aktiverat kommer alla målarverktyg att visa en förhandsvisning av den "
 "aktuella penselns kontur."
 
-#: ../app/config/gimprc-blurbs.h:399
+#: ../app/config/gimprc-blurbs.h:402
 msgid ""
 "When enabled, the brush outline will snap to individual dabs while painting."
 msgstr ""
 "När aktiverad kommer penselkonturen att fästa vid individuella färgstänk vid "
 "målning."
 
-#: ../app/config/gimprc-blurbs.h:403
+#: ../app/config/gimprc-blurbs.h:406
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -11688,7 +11696,7 @@ msgstr ""
 "När aktiverat kommer alla dialoger att visa en hjälpknapp som leder till "
 "relevant hjälp. Du kan se hjälpen även utan denna knapp genom att trycka F1."
 
-#: ../app/config/gimprc-blurbs.h:408
+#: ../app/config/gimprc-blurbs.h:411
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
@@ -11696,7 +11704,7 @@ msgstr ""
 "När aktiverad kommer muspekaren att visas över bilden när ett målarverktyg "
 "används."
 
-#: ../app/config/gimprc-blurbs.h:412
+#: ../app/config/gimprc-blurbs.h:415
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
@@ -11704,7 +11712,7 @@ msgstr ""
 "När aktiverat är menyraden synlig. Detta kan också ändras med ”Visa -> Visa "
 "menyrad”-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:416
+#: ../app/config/gimprc-blurbs.h:419
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
@@ -11712,7 +11720,7 @@ msgstr ""
 "När aktiverat är linjalerna synliga. Detta kan också ändras med ”Visa -> "
 "Visa linjaler”-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:420
+#: ../app/config/gimprc-blurbs.h:423
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
@@ -11720,7 +11728,7 @@ msgstr ""
 "När aktiverat är rullningslisterna synliga. Detta kan också ändras med ”Visa "
 "-> Visa rullningslister”-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:424
+#: ../app/config/gimprc-blurbs.h:427
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
@@ -11728,7 +11736,7 @@ msgstr ""
 "När aktiverat är statusraden synlig. Detta kan också ändras med ”Visa -> "
 "Visa statusrad”-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:428
+#: ../app/config/gimprc-blurbs.h:431
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
@@ -11736,7 +11744,7 @@ msgstr ""
 "När aktiverat är urvalet synligt. Detta kan också ändras med ”Visa -> Visa "
 "urval”-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:432
+#: ../app/config/gimprc-blurbs.h:435
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
@@ -11744,7 +11752,7 @@ msgstr ""
 "När aktiverat är lagerkanten synlig. Detta kan också ändras med ”Visa -> "
 "Visa lagerkant”-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:436
+#: ../app/config/gimprc-blurbs.h:439
 msgid ""
 "When enabled, the canvas boundary is visible by default. This can also be "
 "toggled with the \"View->Show Canvas Boundary\" command."
@@ -11752,7 +11760,7 @@ msgstr ""
 "När aktiverat är ritytans kant synlig som standard. Detta kan också ändras "
 "med ”Visa -> Visa ritytegräns”-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:440
+#: ../app/config/gimprc-blurbs.h:443
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
@@ -11760,7 +11768,7 @@ msgstr ""
 "När aktiverat är hjälplinjerna synliga. Detta kan också ändras med ”Visa -> "
 "Visa hjälplinjer”-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:444
+#: ../app/config/gimprc-blurbs.h:447
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
@@ -11768,7 +11776,7 @@ msgstr ""
 "När aktiverat är rutnätet synligt. Detta kan också ändras med ”Visa -> Visa "
 "rutnät”-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:448
+#: ../app/config/gimprc-blurbs.h:451
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
@@ -11776,52 +11784,52 @@ msgstr ""
 "När aktiverat är samplingspunkterna synliga. Detta kan också ändras med "
 "kommandot ”Visa -> Visa samplingspunkter”."
 
-#: ../app/config/gimprc-blurbs.h:452
+#: ../app/config/gimprc-blurbs.h:455
 msgid "Show a tooltip when the pointer hovers over an item."
 msgstr "Visa en inforuta när muspekaren befinner sig över ett objekt."
 
-#: ../app/config/gimprc-blurbs.h:455
+#: ../app/config/gimprc-blurbs.h:458
 msgid "Use GIMP in a single-window mode."
 msgstr "Kör GIMP i ett enda programfönster."
 
-#: ../app/config/gimprc-blurbs.h:458
+#: ../app/config/gimprc-blurbs.h:461
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr "Dölj dockor och andra fönster, lämna bara bildfönster."
 
-#: ../app/config/gimprc-blurbs.h:461
+#: ../app/config/gimprc-blurbs.h:464
 msgid "Show the image tabs bar in single window mode."
 msgstr "Visa bildfliksraden i enkelfönsterläge."
 
-#: ../app/config/gimprc-blurbs.h:464
+#: ../app/config/gimprc-blurbs.h:467
 msgid "Enable the N-Point Deformation tool."
 msgstr "Aktivera N-punktsdeformeringsverktyg."
 
-#: ../app/config/gimprc-blurbs.h:467
+#: ../app/config/gimprc-blurbs.h:470
 msgid "Enable the Handle Transform tool."
 msgstr "Aktivera handtagstransformeringsverktyget."
 
-#: ../app/config/gimprc-blurbs.h:470
+#: ../app/config/gimprc-blurbs.h:473
 msgid "Enable symmetry on painting."
 msgstr "Aktivera symmetri i målningen."
 
-#: ../app/config/gimprc-blurbs.h:473
+#: ../app/config/gimprc-blurbs.h:476
 msgid "Enable the MyPaint Brush tool."
 msgstr "Aktivera MyPaint-penselverktyget."
 
-#: ../app/config/gimprc-blurbs.h:476
+#: ../app/config/gimprc-blurbs.h:479
 msgid "Enable the Seamless Clone tool."
 msgstr "Aktivera det sömlösa klonverktyget."
 
-#: ../app/config/gimprc-blurbs.h:479
+#: ../app/config/gimprc-blurbs.h:482
 msgid "What to do when the space bar is pressed in the image window."
 msgstr "Vad som ska göras när blankstegstangenten används i bildfönstret."
 
-#: ../app/config/gimprc-blurbs.h:482
+#: ../app/config/gimprc-blurbs.h:485
 msgid "The compression method used for tile data stored in the swap file."
 msgstr ""
 "Komprimeringsmetoden som används för plattdata lagrade i växlingsfilen."
 
-#: ../app/config/gimprc-blurbs.h:485
+#: ../app/config/gimprc-blurbs.h:488
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -11838,11 +11846,11 @@ msgstr ""
 "monterad via NFS. På grund av detta kan det vara en önskvärt att lägga din "
 "växlingsfil i ”tmp”."
 
-#: ../app/config/gimprc-blurbs.h:494
+#: ../app/config/gimprc-blurbs.h:497
 msgid "When enabled, menus can be torn off."
 msgstr "När aktiverad kan menyer ryckas loss."
 
-#: ../app/config/gimprc-blurbs.h:497
+#: ../app/config/gimprc-blurbs.h:500
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
@@ -11850,15 +11858,15 @@ msgstr ""
 "När aktiverad kan du ändra tangentbordsgenvägar för menyval genom att trycka "
 "på en tangentkombination medan menyvalet är markerat."
 
-#: ../app/config/gimprc-blurbs.h:501
+#: ../app/config/gimprc-blurbs.h:504
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr "Spara ändrade tangentbordsgenvägar när GIMP avslutas."
 
-#: ../app/config/gimprc-blurbs.h:504
+#: ../app/config/gimprc-blurbs.h:507
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "Återställ sparade tangentbordsgenvägar varje gång GIMP startar."
 
-#: ../app/config/gimprc-blurbs.h:507
+#: ../app/config/gimprc-blurbs.h:510
 msgid ""
 "Sets the folder for temporary storage. Files will appear here during the "
 "course of running GIMP.  Most files will disappear when GIMP exits, but some "
@@ -11870,18 +11878,18 @@ msgstr ""
 "vissa filer kan komma att finnas kvar så det är bäst om katalogen inte delas "
 "med andra användare."
 
-#: ../app/config/gimprc-blurbs.h:513
+#: ../app/config/gimprc-blurbs.h:516
 msgid "The name of the theme to use."
 msgstr "Namn på temat att använda."
 
-#: ../app/config/gimprc-blurbs.h:528
+#: ../app/config/gimprc-blurbs.h:531
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
 "Ställer in standardåtergivningsmetod för dialogen ”Konvertera till "
 "färgprofil”."
 
-#: ../app/config/gimprc-blurbs.h:531
+#: ../app/config/gimprc-blurbs.h:534
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
@@ -11889,14 +11897,14 @@ msgstr ""
 "Ställer in standardläget för ”Svartpunktskompensering” för dialogen "
 "”Konvertera till färgprofil”."
 
-#: ../app/config/gimprc-blurbs.h:535
+#: ../app/config/gimprc-blurbs.h:538
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "Ställer in standardmetod för färgutjämning av lager för dialogen ”Konvertera "
 "precision”."
 
-#: ../app/config/gimprc-blurbs.h:538
+#: ../app/config/gimprc-blurbs.h:541
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
@@ -11904,18 +11912,18 @@ msgstr ""
 "Ställer in standardmetod för färgutjämning av textlager för dialogen "
 "”Konvertera precision”."
 
-#: ../app/config/gimprc-blurbs.h:541
+#: ../app/config/gimprc-blurbs.h:544
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "Ställer in standardmetoden för färgutjämning av kanaler för dialogen "
 "”Konvertera precision”."
 
-#: ../app/config/gimprc-blurbs.h:544
+#: ../app/config/gimprc-blurbs.h:547
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr "Ställer in standardpalettyp för dialogen ”Konvertera till indexerad”."
 
-#: ../app/config/gimprc-blurbs.h:547
+#: ../app/config/gimprc-blurbs.h:550
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
@@ -11923,7 +11931,7 @@ msgstr ""
 "Ställer in högsta standardantal färger för dialogen ”Konvertera till "
 "indexerad”."
 
-#: ../app/config/gimprc-blurbs.h:550
+#: ../app/config/gimprc-blurbs.h:553
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
@@ -11931,18 +11939,18 @@ msgstr ""
 "Ställer in standardläge för ”Ta bort duplicerade färger” för dialogen "
 "”Konvertera till indexerad”."
 
-#: ../app/config/gimprc-blurbs.h:553
+#: ../app/config/gimprc-blurbs.h:556
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr "Ställer in färgutjämningstyp för dialogen ”Konvertera till indexerad”."
 
-#: ../app/config/gimprc-blurbs.h:556
+#: ../app/config/gimprc-blurbs.h:559
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
 "Ställer in standardtillstånd för ”Färgutjämningsalfa” för dialogen "
 "”Konvertera till indexerad”."
 
-#: ../app/config/gimprc-blurbs.h:559
+#: ../app/config/gimprc-blurbs.h:562
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
@@ -11950,119 +11958,119 @@ msgstr ""
 "Ställer in standardtillståndet för ”Färgutjämna textlager” för dialogen "
 "”Konvertera till indexerad”."
 
-#: ../app/config/gimprc-blurbs.h:562
+#: ../app/config/gimprc-blurbs.h:565
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr "Ställer in standardfyllnadstyp för dialogen ”Storlek på rityta”."
 
-#: ../app/config/gimprc-blurbs.h:565
+#: ../app/config/gimprc-blurbs.h:568
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
 "Ställer in standarduppsättning av lager för dialogen ”Storlek på rityta”."
 
-#: ../app/config/gimprc-blurbs.h:568
+#: ../app/config/gimprc-blurbs.h:571
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
 "Ställer in standardtillstånd för ”Ändra storlek på textlager” för dialogen "
 "”Storlek på rityta”."
 
-#: ../app/config/gimprc-blurbs.h:571
+#: ../app/config/gimprc-blurbs.h:574
 msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr "Ställer in standardlagernamnet för dialogen ”Nytt lager”."
 
-#: ../app/config/gimprc-blurbs.h:574
+#: ../app/config/gimprc-blurbs.h:577
 msgid "Sets the default mode for the 'New Layer' dialog."
 msgstr "Ställer in standardläge för dialogen ”Nytt lager”."
 
-#: ../app/config/gimprc-blurbs.h:577
+#: ../app/config/gimprc-blurbs.h:580
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr "Ställer in standardtoningsrymd för dialogen ”Nytt lager”."
 
-#: ../app/config/gimprc-blurbs.h:580
+#: ../app/config/gimprc-blurbs.h:583
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr "Ställer in standardkompositrymd för dialogen ”Nytt lager”."
 
-#: ../app/config/gimprc-blurbs.h:583
+#: ../app/config/gimprc-blurbs.h:586
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr "Ställer in standardkompositläge för dialogen ”Nytt lager”."
 
-#: ../app/config/gimprc-blurbs.h:586
+#: ../app/config/gimprc-blurbs.h:589
 msgid "Sets the default opacity for the 'New Layer' dialog."
 msgstr "Ställer in standardopacitet för dialogen ”Nytt lager”."
 
-#: ../app/config/gimprc-blurbs.h:589
+#: ../app/config/gimprc-blurbs.h:592
 msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr "Ställer in standardfyllnadstyp för dialogen ”Nytt Lager”."
 
-#: ../app/config/gimprc-blurbs.h:592
+#: ../app/config/gimprc-blurbs.h:595
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr "Ställer in standardfyllnadstyp för dialogen ”Storlek på lagergräns”."
 
-#: ../app/config/gimprc-blurbs.h:595
+#: ../app/config/gimprc-blurbs.h:598
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr "Ställer in standardmask för dialogen ”Lägg till lagermask”."
 
-#: ../app/config/gimprc-blurbs.h:598
+#: ../app/config/gimprc-blurbs.h:601
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
 "Ställer in standardtillståndet för ”invertera mask” för dialogen ”Lägg till "
 "lagermask”."
 
-#: ../app/config/gimprc-blurbs.h:601
+#: ../app/config/gimprc-blurbs.h:604
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
 "Ställer in standardtyp för sammanfogning för dialogen ”Sammanfoga synliga "
 "lager”."
 
-#: ../app/config/gimprc-blurbs.h:604
+#: ../app/config/gimprc-blurbs.h:607
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "Ställer in standardvärde för ”Endast aktiv grupp” för dialogen ”Sammanfoga "
 "synliga lager”."
 
-#: ../app/config/gimprc-blurbs.h:607
+#: ../app/config/gimprc-blurbs.h:610
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "Ställer in standardvärde för ”Förkasta osynliga” för dialogen ”Sammanfoga "
 "synliga lager”."
 
-#: ../app/config/gimprc-blurbs.h:610
+#: ../app/config/gimprc-blurbs.h:613
 msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr "Ställer in standardkanalnamn för dialogen ”Ny kanal”."
 
-#: ../app/config/gimprc-blurbs.h:613
+#: ../app/config/gimprc-blurbs.h:616
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr "Ställer in standardfärg och standardopacitet för dialogen ”Ny kanal”."
 
-#: ../app/config/gimprc-blurbs.h:616
+#: ../app/config/gimprc-blurbs.h:619
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr "Ställer in standardsökvägen för dialogen ”Ny bana”."
 
-#: ../app/config/gimprc-blurbs.h:619
+#: ../app/config/gimprc-blurbs.h:622
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr "Ställer in sökvägen för standardmappen för dialogen ”Exportera bana”."
 
-#: ../app/config/gimprc-blurbs.h:622
+#: ../app/config/gimprc-blurbs.h:625
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
 "Ställer in standardtillståndet för ”Exportera aktiv bana” för dialogen "
 "”Exportera bana”."
 
-#: ../app/config/gimprc-blurbs.h:625
+#: ../app/config/gimprc-blurbs.h:628
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr "Ställer in sökvägen för standardmappen för dialogen ”Importera bana”."
 
-#: ../app/config/gimprc-blurbs.h:628
+#: ../app/config/gimprc-blurbs.h:631
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
 "Ställer in standardtillståndet för ”Sammanfoga importerade banor” för "
 "dialogen ”Importera bana”."
 
-#: ../app/config/gimprc-blurbs.h:631
+#: ../app/config/gimprc-blurbs.h:634
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
@@ -12070,11 +12078,11 @@ msgstr ""
 "Ställer in standardtillståndet för ”Skala importerade banor för att passa "
 "storlek” för dialogen ”Importera bana”."
 
-#: ../app/config/gimprc-blurbs.h:634
+#: ../app/config/gimprc-blurbs.h:637
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr "Ställer in standardluddradie för dialogen ”Ludda markering”."
 
-#: ../app/config/gimprc-blurbs.h:637
+#: ../app/config/gimprc-blurbs.h:640
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Feather Selection' dialog."
@@ -12082,15 +12090,15 @@ msgstr ""
 "Ställer in standardinställning för ”Markerade områden fortsätter utanför "
 "bilden” för dialogen ”Ludda markering”."
 
-#: ../app/config/gimprc-blurbs.h:641
+#: ../app/config/gimprc-blurbs.h:644
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr "Ställer in standardväxradie för dialogen ”Väx markering”."
 
-#: ../app/config/gimprc-blurbs.h:644
+#: ../app/config/gimprc-blurbs.h:647
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr "Ställer in standardkrympningsradie för dialogen ”Krymp markering”."
 
-#: ../app/config/gimprc-blurbs.h:647
+#: ../app/config/gimprc-blurbs.h:650
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
@@ -12098,11 +12106,11 @@ msgstr ""
 "Ställer in standardinställning för ”Markerade områden fortsätter utanför "
 "bilden” för dialogen ”Krymp markering”."
 
-#: ../app/config/gimprc-blurbs.h:651
+#: ../app/config/gimprc-blurbs.h:654
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr "Ställer in standardkantradie för dialogen ”Kantmarkering”."
 
-#: ../app/config/gimprc-blurbs.h:654
+#: ../app/config/gimprc-blurbs.h:657
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
@@ -12110,15 +12118,15 @@ msgstr ""
 "Ställer in standardinställning för ”Markerade områden fortsätter utanför "
 "bilden” för dialogen ”Kantmarkering”."
 
-#: ../app/config/gimprc-blurbs.h:658
+#: ../app/config/gimprc-blurbs.h:661
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr "Ställer in standardkantstil för dialogen ”Kantmarkering”."
 
-#: ../app/config/gimprc-blurbs.h:667
+#: ../app/config/gimprc-blurbs.h:670
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr "Ställer in storleken på miniatyrbilden som visas i dialogen Öppna."
 
-#: ../app/config/gimprc-blurbs.h:670
+#: ../app/config/gimprc-blurbs.h:673
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -12126,7 +12134,7 @@ msgstr ""
 "Miniatyrbilden i öppna-dialogen uppdateras automatiskt om filen som "
 "förhandsgranskas är mindre än storleken som ställs in här."
 
-#: ../app/config/gimprc-blurbs.h:674
+#: ../app/config/gimprc-blurbs.h:677
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -12138,40 +12146,40 @@ msgstr ""
 "möjligt att arbeta på bilder som annars inte skulle få plats i minnet. Om du "
 "har mycket RAM-minne kanske du vill ställa in det här till ett högre värde."
 
-#: ../app/config/gimprc-blurbs.h:680
+#: ../app/config/gimprc-blurbs.h:683
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr "Visa de aktuella för- och bakgrundsfärgerna i verktygslådan."
 
-#: ../app/config/gimprc-blurbs.h:683
+#: ../app/config/gimprc-blurbs.h:686
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr ""
 "Visa för närvarande aktiv pensel, mönster och gradient i verktygslådan."
 
-#: ../app/config/gimprc-blurbs.h:686
+#: ../app/config/gimprc-blurbs.h:689
 msgid "Menu mode of grouped tools."
 msgstr "Menyläge för grupperade verktyg."
 
-#: ../app/config/gimprc-blurbs.h:689
+#: ../app/config/gimprc-blurbs.h:692
 msgid "Use a single toolbox button for grouped tools."
 msgstr "Använd en ensam verktygslådeknapp för grupperade verktyg."
 
-#: ../app/config/gimprc-blurbs.h:692
+#: ../app/config/gimprc-blurbs.h:695
 msgid "Show the currently active image in the toolbox."
 msgstr "Visa den för närvarande aktiva bilden i verktygslådan."
 
-#: ../app/config/gimprc-blurbs.h:695
+#: ../app/config/gimprc-blurbs.h:698
 msgid "Show the GIMP mascot at the top of the toolbox."
 msgstr "Visa GIMP-maskoten högst upp i verktygslådan."
 
-#: ../app/config/gimprc-blurbs.h:698
+#: ../app/config/gimprc-blurbs.h:701
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Ställer in sättet på vilket transparens visas i bilder."
 
-#: ../app/config/gimprc-blurbs.h:701
+#: ../app/config/gimprc-blurbs.h:704
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "Ställer in storleken på schackrutorna som används för transparens."
 
-#: ../app/config/gimprc-blurbs.h:704
+#: ../app/config/gimprc-blurbs.h:707
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
@@ -12179,7 +12187,7 @@ msgstr ""
 "När aktiverad kommer GIMP inte att spara en bild om den inte ändrats sedan "
 "den öppnades."
 
-#: ../app/config/gimprc-blurbs.h:708
+#: ../app/config/gimprc-blurbs.h:711
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -12187,7 +12195,7 @@ msgstr ""
 "Ställer in det minsta antal åtgärder som kan ångras. Fler ångringsnivåer är "
 "tillgängliga tills storlekgränsen för ångring nås."
 
-#: ../app/config/gimprc-blurbs.h:712
+#: ../app/config/gimprc-blurbs.h:715
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -12197,25 +12205,25 @@ msgstr ""
 "spara åtgärder på ångringsstacken. Oberoende av denna inställning sparas "
 "åtminstone så många ångringsåtgärder som angivits på annat håll."
 
-#: ../app/config/gimprc-blurbs.h:717
+#: ../app/config/gimprc-blurbs.h:720
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Ställer in storleken på förhandsvisningar i ångringshistoriken."
 
-#: ../app/config/gimprc-blurbs.h:720
+#: ../app/config/gimprc-blurbs.h:723
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "När aktiverad öppnar F1 hjälpläsaren."
 
-#: ../app/config/gimprc-blurbs.h:723
+#: ../app/config/gimprc-blurbs.h:726
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "När aktiverad används OpenCL för vissa åtgärder."
 
-#: ../app/config/gimprc-blurbs.h:741
+#: ../app/config/gimprc-blurbs.h:744
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr ""
 "När aktiverad kommer en sökning av åtgärder också att returnera inaktiva "
 "åtgärder."
 
-#: ../app/config/gimprc-blurbs.h:744
+#: ../app/config/gimprc-blurbs.h:747
 msgid "The maximum number of actions saved in history."
 msgstr "Maximalt antal åtgärder sparade i historiken."
 
@@ -12673,93 +12681,103 @@ msgctxt "message-severity"
 msgid "CRITICAL"
 msgstr "KRITISK"
 
+#: ../app/core/core-enums.c:940
+msgctxt "win32-pointer-input-api"
+msgid "Wintab"
+msgstr "Wintab"
+
 #: ../app/core/core-enums.c:941
+msgctxt "win32-pointer-input-api"
+msgid "Windows Ink"
+msgstr "Windows Ink"
+
+#: ../app/core/core-enums.c:970
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Inga miniatyrbilder"
 
-#: ../app/core/core-enums.c:942
+#: ../app/core/core-enums.c:971
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Normal (128×128)"
 
-#: ../app/core/core-enums.c:943
+#: ../app/core/core-enums.c:972
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Stor (256×256)"
 
-#: ../app/core/core-enums.c:1133
+#: ../app/core/core-enums.c:1162
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<ogiltig>>"
 
-#: ../app/core/core-enums.c:1134
+#: ../app/core/core-enums.c:1163
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Skala bild"
 
-#: ../app/core/core-enums.c:1135
+#: ../app/core/core-enums.c:1164
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Ändra storlek på bild"
 
-#: ../app/core/core-enums.c:1136
+#: ../app/core/core-enums.c:1165
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Vänd bild"
 
-#: ../app/core/core-enums.c:1137
+#: ../app/core/core-enums.c:1166
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Rotera bild"
 
-#: ../app/core/core-enums.c:1138
+#: ../app/core/core-enums.c:1167
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "Transformera bild"
 
-#: ../app/core/core-enums.c:1139
+#: ../app/core/core-enums.c:1168
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Beskär bild"
 
-#: ../app/core/core-enums.c:1140
+#: ../app/core/core-enums.c:1169
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Konvertera bild"
 
-#: ../app/core/core-enums.c:1141
+#: ../app/core/core-enums.c:1170
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Ta bort objekt"
 
-#: ../app/core/core-enums.c:1142 ../app/core/core-enums.c:1186
+#: ../app/core/core-enums.c:1171 ../app/core/core-enums.c:1215
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Ordna om objekt"
 
-#: ../app/core/core-enums.c:1143
+#: ../app/core/core-enums.c:1172
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Sammanfoga lager"
 
-#: ../app/core/core-enums.c:1144
+#: ../app/core/core-enums.c:1173
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Sammanfoga banor"
 
-#: ../app/core/core-enums.c:1145
+#: ../app/core/core-enums.c:1174
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Snabbmask"
 
-#: ../app/core/core-enums.c:1146 ../app/core/core-enums.c:1177
+#: ../app/core/core-enums.c:1175 ../app/core/core-enums.c:1206
 #: ../app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Rutnät"
 
-#: ../app/core/core-enums.c:1147 ../app/core/core-enums.c:1181
+#: ../app/core/core-enums.c:1176 ../app/core/core-enums.c:1210
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Hjälplinje"
@@ -12767,372 +12785,372 @@ msgstr "Hjälplinje"
 # <janne> "sampel" är vad man använder i digitalteknik och bildbehandling
 # så vitt jag förstår
 #
-#: ../app/core/core-enums.c:1148 ../app/core/core-enums.c:1182
+#: ../app/core/core-enums.c:1177 ../app/core/core-enums.c:1211
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Samplingspunkt"
 
-#: ../app/core/core-enums.c:1149 ../app/core/core-enums.c:1183
+#: ../app/core/core-enums.c:1178 ../app/core/core-enums.c:1212
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Lager/Kanal"
 
-#: ../app/core/core-enums.c:1150 ../app/core/core-enums.c:1184
+#: ../app/core/core-enums.c:1179 ../app/core/core-enums.c:1213
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Ändring av lager/kanal"
 
-#: ../app/core/core-enums.c:1151 ../app/core/core-enums.c:1185
+#: ../app/core/core-enums.c:1180 ../app/core/core-enums.c:1214
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Markeringsmask"
 
-#: ../app/core/core-enums.c:1152 ../app/core/core-enums.c:1189
+#: ../app/core/core-enums.c:1181 ../app/core/core-enums.c:1218
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Objektsynlighet"
 
-#: ../app/core/core-enums.c:1153 ../app/core/core-enums.c:1190
+#: ../app/core/core-enums.c:1182 ../app/core/core-enums.c:1219
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "Länka/avlänka objekt"
 
-#: ../app/core/core-enums.c:1154
+#: ../app/core/core-enums.c:1183
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Objektegenskaper"
 
-#: ../app/core/core-enums.c:1155 ../app/core/core-enums.c:1188
+#: ../app/core/core-enums.c:1184 ../app/core/core-enums.c:1217
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Flytta objekt"
 
-#: ../app/core/core-enums.c:1156
+#: ../app/core/core-enums.c:1185
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Skala objekt"
 
-#: ../app/core/core-enums.c:1157
+#: ../app/core/core-enums.c:1186
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Ändra storlek på objekt"
 
-#: ../app/core/core-enums.c:1158
+#: ../app/core/core-enums.c:1187
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Lägg till lager"
 
-#: ../app/core/core-enums.c:1159 ../app/core/core-enums.c:1209
+#: ../app/core/core-enums.c:1188 ../app/core/core-enums.c:1238
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Lägg till lagermask"
 
-#: ../app/core/core-enums.c:1160 ../app/core/core-enums.c:1211
+#: ../app/core/core-enums.c:1189 ../app/core/core-enums.c:1240
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Tillämpa lagermask"
 
-#: ../app/core/core-enums.c:1161 ../app/core/core-enums.c:1219
+#: ../app/core/core-enums.c:1190 ../app/core/core-enums.c:1248
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Flytande markering till lager"
 
-#: ../app/core/core-enums.c:1162
+#: ../app/core/core-enums.c:1191
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Flytande markering"
 
-#: ../app/core/core-enums.c:1163
+#: ../app/core/core-enums.c:1192
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Förankra flytande markering"
 
-#: ../app/core/core-enums.c:1164 ../app/core/gimp-edit.c:515
+#: ../app/core/core-enums.c:1193 ../app/core/gimp-edit.c:515
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Klistra in"
 
-#: ../app/core/core-enums.c:1165 ../app/core/gimp-edit.c:733
+#: ../app/core/core-enums.c:1194 ../app/core/gimp-edit.c:733
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Klipp ut"
 
-#: ../app/core/core-enums.c:1166
+#: ../app/core/core-enums.c:1195
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Text"
 
-#: ../app/core/core-enums.c:1167 ../app/core/gimpdrawable-transform.c:731
+#: ../app/core/core-enums.c:1196 ../app/core/gimpdrawable-transform.c:731
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transformera"
 
-#: ../app/core/core-enums.c:1168 ../app/core/core-enums.c:1221
+#: ../app/core/core-enums.c:1197 ../app/core/core-enums.c:1250
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Måla"
 
-#: ../app/core/core-enums.c:1169 ../app/core/core-enums.c:1224
+#: ../app/core/core-enums.c:1198 ../app/core/core-enums.c:1253
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Koppla parasit"
 
-#: ../app/core/core-enums.c:1170 ../app/core/core-enums.c:1225
+#: ../app/core/core-enums.c:1199 ../app/core/core-enums.c:1254
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Ta bort parasit"
 
-#: ../app/core/core-enums.c:1171
+#: ../app/core/core-enums.c:1200
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Importera banor"
 
-#: ../app/core/core-enums.c:1172
+#: ../app/core/core-enums.c:1201
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Insticksmodul"
 
-#: ../app/core/core-enums.c:1173
+#: ../app/core/core-enums.c:1202
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Bildtyp"
 
-#: ../app/core/core-enums.c:1174
+#: ../app/core/core-enums.c:1203
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Bildprecision"
 
-#: ../app/core/core-enums.c:1175
+#: ../app/core/core-enums.c:1204
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Bildstorlek"
 
-#: ../app/core/core-enums.c:1176
+#: ../app/core/core-enums.c:1205
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Ändring av bildupplösning"
 
-#: ../app/core/core-enums.c:1178
+#: ../app/core/core-enums.c:1207
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Ändra metadata"
 
-#: ../app/core/core-enums.c:1179
+#: ../app/core/core-enums.c:1208
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Ändra indexerad palett"
 
-#: ../app/core/core-enums.c:1180
+#: ../app/core/core-enums.c:1209
 msgctxt "undo-type"
 msgid "Change color managed state"
 msgstr "Ändra tillstånd för färghantering"
 
-#: ../app/core/core-enums.c:1187
+#: ../app/core/core-enums.c:1216
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Byt namn på objekt"
 
-#: ../app/core/core-enums.c:1191
+#: ../app/core/core-enums.c:1220
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Färgtagg för objekt"
 
-#: ../app/core/core-enums.c:1192
+#: ../app/core/core-enums.c:1221
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Lås/lås upp innehåll"
 
-#: ../app/core/core-enums.c:1193
+#: ../app/core/core-enums.c:1222
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Lås/lås upp position"
 
-#: ../app/core/core-enums.c:1194
+#: ../app/core/core-enums.c:1223
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Nytt lager"
 
-#: ../app/core/core-enums.c:1195
+#: ../app/core/core-enums.c:1224
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Ta bort lager"
 
-#: ../app/core/core-enums.c:1196
+#: ../app/core/core-enums.c:1225
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Ställ in lagerläge"
 
-#: ../app/core/core-enums.c:1197
+#: ../app/core/core-enums.c:1226
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Ställ in lageropacitet"
 
-#: ../app/core/core-enums.c:1198
+#: ../app/core/core-enums.c:1227
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Lås/lås upp alfakanal"
 
-#: ../app/core/core-enums.c:1199
+#: ../app/core/core-enums.c:1228
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Upphäv storleksändring av grupplager"
 
-#: ../app/core/core-enums.c:1200
+#: ../app/core/core-enums.c:1229
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Återuppta storleksändring av grupplager"
 
-#: ../app/core/core-enums.c:1201
+#: ../app/core/core-enums.c:1230
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "Upphäv grupplagermask"
 
-#: ../app/core/core-enums.c:1202
+#: ../app/core/core-enums.c:1231
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "Återuppta grupplagermask"
 
-#: ../app/core/core-enums.c:1203
+#: ../app/core/core-enums.c:1232
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Börja transformera grupplager"
 
-#: ../app/core/core-enums.c:1204
+#: ../app/core/core-enums.c:1233
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Sluta transformera grupplager"
 
-#: ../app/core/core-enums.c:1205
+#: ../app/core/core-enums.c:1234
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Konvertera grupplager"
 
-#: ../app/core/core-enums.c:1206
+#: ../app/core/core-enums.c:1235
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Textlager"
 
-#: ../app/core/core-enums.c:1207
+#: ../app/core/core-enums.c:1236
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Ändring av textlager"
 
-#: ../app/core/core-enums.c:1208
+#: ../app/core/core-enums.c:1237
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Konvertera textlager"
 
-#: ../app/core/core-enums.c:1210
+#: ../app/core/core-enums.c:1239
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Ta bort lagermask"
 
-#: ../app/core/core-enums.c:1212
+#: ../app/core/core-enums.c:1241
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Visa lagermask"
 
-#: ../app/core/core-enums.c:1213
+#: ../app/core/core-enums.c:1242
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Ny kanal"
 
-#: ../app/core/core-enums.c:1214
+#: ../app/core/core-enums.c:1243
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Ta bort kanal"
 
-#: ../app/core/core-enums.c:1215
+#: ../app/core/core-enums.c:1244
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Kanalfärg"
 
-#: ../app/core/core-enums.c:1216
+#: ../app/core/core-enums.c:1245
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Ny bana"
 
-#: ../app/core/core-enums.c:1217
+#: ../app/core/core-enums.c:1246
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Ta bort bana"
 
-#: ../app/core/core-enums.c:1218
+#: ../app/core/core-enums.c:1247
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Ändring av bana"
 
-#: ../app/core/core-enums.c:1220
+#: ../app/core/core-enums.c:1249
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Transformrutnät"
 
-#: ../app/core/core-enums.c:1222
+#: ../app/core/core-enums.c:1251
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Bläck"
 
-#: ../app/core/core-enums.c:1223
+#: ../app/core/core-enums.c:1252
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Välj förgrund"
 
-#: ../app/core/core-enums.c:1226
+#: ../app/core/core-enums.c:1255
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Inte möjligt att göra om"
 
-#: ../app/core/core-enums.c:1261
+#: ../app/core/core-enums.c:1290
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Jätteliten"
 
-#: ../app/core/core-enums.c:1262
+#: ../app/core/core-enums.c:1291
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Mycket liten"
 
-#: ../app/core/core-enums.c:1263
+#: ../app/core/core-enums.c:1292
 msgctxt "view-size"
 msgid "Small"
 msgstr "Liten"
 
-#: ../app/core/core-enums.c:1264
+#: ../app/core/core-enums.c:1293
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Mellan"
 
-#: ../app/core/core-enums.c:1265
+#: ../app/core/core-enums.c:1294
 msgctxt "view-size"
 msgid "Large"
 msgstr "Stor"
 
-#: ../app/core/core-enums.c:1266
+#: ../app/core/core-enums.c:1295
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Mycket stor"
 
-#: ../app/core/core-enums.c:1267
+#: ../app/core/core-enums.c:1296
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Jättestor"
 
-#: ../app/core/core-enums.c:1268
+#: ../app/core/core-enums.c:1297
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Enorm"
 
-#: ../app/core/core-enums.c:1269
+#: ../app/core/core-enums.c:1298
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Gigantisk"
 
-#: ../app/core/core-enums.c:1297
+#: ../app/core/core-enums.c:1326
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Visa som lista"
 
-#: ../app/core/core-enums.c:1298
+#: ../app/core/core-enums.c:1327
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Visa som rutnät"
@@ -13157,7 +13175,7 @@ msgid "Parasites"
 msgstr "Parasiter"
 
 #. initialize the module list
-#: ../app/core/gimp.c:841 ../app/dialogs/preferences-dialog.c:3326
+#: ../app/core/gimp.c:841 ../app/dialogs/preferences-dialog.c:3339
 msgid "Modules"
 msgstr "Moduler"
 
@@ -13175,7 +13193,7 @@ msgstr "Ta bort ”%s” misslyckades: %s"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:354 ../app/core/gimpcontext.c:722
-#: ../app/dialogs/preferences-dialog.c:3272
+#: ../app/dialogs/preferences-dialog.c:3285
 #: ../app/tools/gimppaintoptions-gui.c:221
 msgid "Dynamics"
 msgstr "Dynamik"
@@ -17793,257 +17811,261 @@ msgstr "Inmatningsenheter"
 msgid "Extended Input Devices"
 msgstr "Utökade inmatningsenheter"
 
-#: ../app/dialogs/preferences-dialog.c:3150
+#: ../app/dialogs/preferences-dialog.c:3157
+msgid "Pointer Input API:"
+msgstr "Pekarinmatnings-API:"
+
+#: ../app/dialogs/preferences-dialog.c:3163
 msgid "S_hare tool and tool options between input devices"
 msgstr "_Dela verktyg och verktygsalternativ mellan inmatningsenheter"
 
-#: ../app/dialogs/preferences-dialog.c:3154
+#: ../app/dialogs/preferences-dialog.c:3167
 msgid "Configure E_xtended Input Devices..."
 msgstr "Konfigurera _utökade inmatningsenheter…"
 
-#: ../app/dialogs/preferences-dialog.c:3161
+#: ../app/dialogs/preferences-dialog.c:3174
 msgid "_Save input device settings on exit"
 msgstr "_Spara inställningar för inmatningsenheter vid avslutning"
 
-#: ../app/dialogs/preferences-dialog.c:3165
+#: ../app/dialogs/preferences-dialog.c:3178
 msgid "Save Input Device Settings _Now"
 msgstr "Spara inställningar för inmatningsenheter _nu"
 
-#: ../app/dialogs/preferences-dialog.c:3172
+#: ../app/dialogs/preferences-dialog.c:3185
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr ""
 "_Återställ sparade inställningar för inmatningsenheter till standardvärden"
 
-#: ../app/dialogs/preferences-dialog.c:3187
+#: ../app/dialogs/preferences-dialog.c:3200
 msgid "Additional Input Controllers"
 msgstr "Ytterligare inmatningsenheter"
 
-#: ../app/dialogs/preferences-dialog.c:3188
+#: ../app/dialogs/preferences-dialog.c:3201
 msgid "Input Controllers"
 msgstr "Inmatningsenheter"
 
-#: ../app/dialogs/preferences-dialog.c:3203
-#: ../app/dialogs/preferences-dialog.c:3204
+#: ../app/dialogs/preferences-dialog.c:3216
+#: ../app/dialogs/preferences-dialog.c:3217
 msgid "Folders"
 msgstr "Mappar"
 
-#: ../app/dialogs/preferences-dialog.c:3211
+#: ../app/dialogs/preferences-dialog.c:3224
 msgid "Reset _Folders"
 msgstr "Återställ _mappar"
 
-#: ../app/dialogs/preferences-dialog.c:3227
+#: ../app/dialogs/preferences-dialog.c:3240
 msgid "_Temporary folder:"
 msgstr "_Temporär mapp:"
 
-#: ../app/dialogs/preferences-dialog.c:3228
+#: ../app/dialogs/preferences-dialog.c:3241
 msgid "Select Folder for Temporary Files"
 msgstr "Välj mapp för temporärfiler"
 
-#: ../app/dialogs/preferences-dialog.c:3232
+#: ../app/dialogs/preferences-dialog.c:3245
 msgid "_Swap folder:"
 msgstr "_Växlingsmapp:"
 
-#: ../app/dialogs/preferences-dialog.c:3233
+#: ../app/dialogs/preferences-dialog.c:3246
 msgid "Select Swap Folder"
 msgstr "Välj växlingsmapp"
 
-#: ../app/dialogs/preferences-dialog.c:3266
+#: ../app/dialogs/preferences-dialog.c:3279
 msgid "Brush Folders"
 msgstr "Penselmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3269
+#: ../app/dialogs/preferences-dialog.c:3282
 msgid "Reset Brush _Folders"
 msgstr "Återställ pensel_mappar"
 
-#: ../app/dialogs/preferences-dialog.c:3270
+#: ../app/dialogs/preferences-dialog.c:3283
 msgid "Select Brush Folders"
 msgstr "Välj penselmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3272
+#: ../app/dialogs/preferences-dialog.c:3285
 msgid "Dynamics Folders"
 msgstr "Dynamikmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3275
+#: ../app/dialogs/preferences-dialog.c:3288
 msgid "Reset Dynamics _Folders"
 msgstr "Återställ dynamik_mappar"
 
-#: ../app/dialogs/preferences-dialog.c:3276
+#: ../app/dialogs/preferences-dialog.c:3289
 msgid "Select Dynamics Folders"
 msgstr "Välj dynamikmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3278
+#: ../app/dialogs/preferences-dialog.c:3291
 msgid "Pattern Folders"
 msgstr "Mönstermappar"
 
-#: ../app/dialogs/preferences-dialog.c:3281
+#: ../app/dialogs/preferences-dialog.c:3294
 msgid "Reset Pattern _Folders"
 msgstr "Återställ mönster_mappar"
 
-#: ../app/dialogs/preferences-dialog.c:3282
+#: ../app/dialogs/preferences-dialog.c:3295
 msgid "Select Pattern Folders"
 msgstr "Välj mönstermappar"
 
-#: ../app/dialogs/preferences-dialog.c:3284
+#: ../app/dialogs/preferences-dialog.c:3297
 msgid "Palette Folders"
 msgstr "Palettmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3287
+#: ../app/dialogs/preferences-dialog.c:3300
 msgid "Reset Palette _Folders"
 msgstr "Återställ palett_mappar"
 
-#: ../app/dialogs/preferences-dialog.c:3288
+#: ../app/dialogs/preferences-dialog.c:3301
 msgid "Select Palette Folders"
 msgstr "Välj palettmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3290
+#: ../app/dialogs/preferences-dialog.c:3303
 msgid "Gradient Folders"
 msgstr "Gradientmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3293
+#: ../app/dialogs/preferences-dialog.c:3306
 msgid "Reset Gradient _Folders"
 msgstr "Återställ gradient_mappar"
 
-#: ../app/dialogs/preferences-dialog.c:3294
+#: ../app/dialogs/preferences-dialog.c:3307
 msgid "Select Gradient Folders"
 msgstr "Välj gradientmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3296
+#: ../app/dialogs/preferences-dialog.c:3309
 msgid "Font Folders"
 msgstr "Typsnittsmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3299
+#: ../app/dialogs/preferences-dialog.c:3312
 msgid "Reset Font _Folders"
 msgstr "Återställ typsnitts_mappar"
 
-#: ../app/dialogs/preferences-dialog.c:3300
+#: ../app/dialogs/preferences-dialog.c:3313
 msgid "Select Font Folders"
 msgstr "Välj typsnittsmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3302
+#: ../app/dialogs/preferences-dialog.c:3315
 msgid "Tool Preset Folders"
 msgstr "Mappar för verktygsförinställning"
 
-#: ../app/dialogs/preferences-dialog.c:3305
+#: ../app/dialogs/preferences-dialog.c:3318
 msgid "Reset Tool Preset _Folders"
 msgstr "Återställ verktygsförinställnings_mappar"
 
-#: ../app/dialogs/preferences-dialog.c:3306
+#: ../app/dialogs/preferences-dialog.c:3319
 msgid "Select Tool Preset Folders"
 msgstr "Välj verktygsförinställningsmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3308
+#: ../app/dialogs/preferences-dialog.c:3321
 msgid "MyPaint Brush Folders"
 msgstr "MyPaint-penselmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3311
+#: ../app/dialogs/preferences-dialog.c:3324
 msgid "Reset MyPaint Brush _Folders"
 msgstr "Återställ MyPaint-pensel_mappar"
 
-#: ../app/dialogs/preferences-dialog.c:3312
+#: ../app/dialogs/preferences-dialog.c:3325
 msgid "Select MyPaint Brush Folders"
 msgstr "Välj MyPaint-penselmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3314
+#: ../app/dialogs/preferences-dialog.c:3327
 msgid "Plug-in Folders"
 msgstr "Mappar för insticksmodul"
 
-#: ../app/dialogs/preferences-dialog.c:3317
+#: ../app/dialogs/preferences-dialog.c:3330
 msgid "Reset plug-in _Folders"
 msgstr "Återställ _mappar för insticksmodul"
 
-#: ../app/dialogs/preferences-dialog.c:3318
+#: ../app/dialogs/preferences-dialog.c:3331
 msgid "Select plug-in Folders"
 msgstr "Välj mappar för insticksmodul"
 
-#: ../app/dialogs/preferences-dialog.c:3320
+#: ../app/dialogs/preferences-dialog.c:3333
 msgid "Scripts"
 msgstr "Skript"
 
-#: ../app/dialogs/preferences-dialog.c:3320
+#: ../app/dialogs/preferences-dialog.c:3333
 msgid "Script-Fu Folders"
 msgstr "Mappar för Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3323
+#: ../app/dialogs/preferences-dialog.c:3336
 msgid "Reset Script-Fu _Folders"
 msgstr "Återställ _mappar för Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3324
+#: ../app/dialogs/preferences-dialog.c:3337
 msgid "Select Script-Fu Folders"
 msgstr "Välj mappar för Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3326
+#: ../app/dialogs/preferences-dialog.c:3339
 msgid "Module Folders"
 msgstr "Modulmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3329
+#: ../app/dialogs/preferences-dialog.c:3342
 msgid "Reset Module _Folders"
 msgstr "Återställ modul_mappar"
 
-#: ../app/dialogs/preferences-dialog.c:3330
+#: ../app/dialogs/preferences-dialog.c:3343
 msgid "Select Module Folders"
 msgstr "Välj modulmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3332
+#: ../app/dialogs/preferences-dialog.c:3345
 msgid "Interpreters"
 msgstr "Tolkar"
 
-#: ../app/dialogs/preferences-dialog.c:3332
+#: ../app/dialogs/preferences-dialog.c:3345
 msgid "Interpreter Folders"
 msgstr "Tolkarmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3335
+#: ../app/dialogs/preferences-dialog.c:3348
 msgid "Reset Interpreter _Folders"
 msgstr "Återställ tolkar_mappar"
 
-#: ../app/dialogs/preferences-dialog.c:3336
+#: ../app/dialogs/preferences-dialog.c:3349
 msgid "Select Interpreter Folders"
 msgstr "Välj tolkarmappar"
 
-#: ../app/dialogs/preferences-dialog.c:3338
+#: ../app/dialogs/preferences-dialog.c:3351
 msgid "Environment"
 msgstr "Miljö"
 
-#: ../app/dialogs/preferences-dialog.c:3338
+#: ../app/dialogs/preferences-dialog.c:3351
 msgid "Environment Folders"
 msgstr "Miljömappar"
 
-#: ../app/dialogs/preferences-dialog.c:3341
+#: ../app/dialogs/preferences-dialog.c:3354
 msgid "Reset Environment _Folders"
 msgstr "Återställ miljö_mappar"
 
-#: ../app/dialogs/preferences-dialog.c:3342
+#: ../app/dialogs/preferences-dialog.c:3355
 msgid "Select Environment Folders"
 msgstr "Välj miljömappar"
 
-#: ../app/dialogs/preferences-dialog.c:3344
+#: ../app/dialogs/preferences-dialog.c:3357
 msgid "Themes"
 msgstr "Teman"
 
-#: ../app/dialogs/preferences-dialog.c:3344
+#: ../app/dialogs/preferences-dialog.c:3357
 msgid "Theme Folders"
 msgstr "Temamappar"
 
-#: ../app/dialogs/preferences-dialog.c:3347
+#: ../app/dialogs/preferences-dialog.c:3360
 msgid "Reset Theme _Folders"
 msgstr "Återställ tema_mappar"
 
-#: ../app/dialogs/preferences-dialog.c:3348
+#: ../app/dialogs/preferences-dialog.c:3361
 msgid "Select Theme Folders"
 msgstr "Välj temamappar"
 
-#: ../app/dialogs/preferences-dialog.c:3350
+#: ../app/dialogs/preferences-dialog.c:3363
 msgid "Icon Themes"
 msgstr "Ikonteman"
 
-#: ../app/dialogs/preferences-dialog.c:3350
+#: ../app/dialogs/preferences-dialog.c:3363
 msgid "Icon Theme Folders"
 msgstr "Mappar för ikontema"
 
-#: ../app/dialogs/preferences-dialog.c:3353
+#: ../app/dialogs/preferences-dialog.c:3366
 msgid "Reset Icon Theme _Folders"
 msgstr "Återställ _mappar för ikonteman"
 
-#: ../app/dialogs/preferences-dialog.c:3354
+#: ../app/dialogs/preferences-dialog.c:3367
 msgid "Select Icon Theme Folders"
 msgstr "Välj mappar för ikonteman"
 
