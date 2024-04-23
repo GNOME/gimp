@@ -104,8 +104,6 @@ static const gchar dversion[] = "v1.17  19-Sep-2004";
 #define PLUG_IN_ROLE       "gimp-file-ps"
 
 #define STR_LENGTH     64
-#define MIN_RESOLUTION 5
-#define MAX_RESOLUTION 8192
 
 
 typedef struct _PostScript      PostScript;
@@ -134,6 +132,10 @@ static GimpProcedure  * ps_create_procedure (GimpPlugIn            *plug_in,
 static GimpValueArray * ps_load             (GimpProcedure         *procedure,
                                              GimpRunMode            run_mode,
                                              GFile                 *file,
+                                             gint                   width,
+                                             gint                   height,
+                                             gboolean               preserve_ratio,
+                                             gboolean               prefer_native_dimension,
                                              GimpMetadata          *metadata,
                                              GimpMetadataLoadFlags *flags,
                                              GimpProcedureConfig   *config,
@@ -264,8 +266,6 @@ static gboolean  load_dialog                (GFile         *file,
                                              GimpProcedure *procedure,
                                              GObject       *config);
 
-static gboolean  resolution_change_callback (GtkWidget *adjustment,
-                                             gpointer   data);
 
 typedef struct
 {
@@ -330,9 +330,9 @@ ps_create_procedure (GimpPlugIn  *plug_in,
   if (! strcmp (name, LOAD_PS_PROC) ||
       ! strcmp (name, LOAD_EPS_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           ps_load, NULL, NULL);
+      procedure = gimp_vector_load_procedure_new (plug_in, name,
+                                                  GIMP_PDB_PROC_TYPE_PLUGIN,
+                                                  ps_load, NULL, NULL);
 
       if (! strcmp (name, LOAD_PS_PROC))
         {
@@ -343,6 +343,8 @@ ps_create_procedure (GimpPlugIn  *plug_in,
                                             "Load PostScript documents",
                                             name);
 
+          gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                               _("PostScript"));
           gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                               "application/postscript");
           gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -360,6 +362,8 @@ ps_create_procedure (GimpPlugIn  *plug_in,
                                             "load Encapsulated PostScript images",
                                             name);
 
+          gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                               _("Encapsulated PostScript"));
           gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                               "image/x-eps");
           gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -375,24 +379,6 @@ ps_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
                                                 LOAD_PS_THUMB_PROC);
-
-      GIMP_PROC_ARG_INT (procedure, "resolution",
-                         _("Resol_ution"),
-                         _("Resolution to interpret image (dpi)"),
-                         MIN_RESOLUTION, MAX_RESOLUTION, 100,
-                         GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "width",
-                         _("_Width"),
-                         _("Desired width"),
-                         1, GIMP_MAX_IMAGE_SIZE, 826,
-                         GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "height",
-                         _("_Height"),
-                         _("Desired height"),
-                         1, GIMP_MAX_IMAGE_SIZE, 1170,
-                         GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "check-bbox",
                              _("Try _Bounding Box"),
@@ -573,6 +559,10 @@ static GimpValueArray *
 ps_load (GimpProcedure         *procedure,
          GimpRunMode            run_mode,
          GFile                 *file,
+         gint                   width,
+         gint                   height,
+         gboolean               preserve_ratio,
+         gboolean               prefer_native_dimension,
          GimpMetadata          *metadata,
          GimpMetadataLoadFlags *flags,
          GimpProcedureConfig   *config,
@@ -585,6 +575,14 @@ ps_load (GimpProcedure         *procedure,
   gegl_init (NULL, NULL);
 
   l_run_mode = run_mode;
+
+  /* Why these values? No idea, they were the default until now, I just reuse
+   * them. XXX
+   */
+  if (width == 0)
+    g_object_set (config, "width", 826, NULL);
+  if (height == 0)
+    g_object_set (config, "height", 1170, NULL);
 
   switch (run_mode)
     {
@@ -1054,7 +1052,7 @@ load_image (GFile   *file,
   const gchar  *filename;
   gint          width;
   gint          height;
-  guint         resolution;
+  gdouble       resolution;
   gboolean      use_bbox;
   gint          pnm_type;
   gint          text_alpha;
@@ -1072,7 +1070,7 @@ load_image (GFile   *file,
   if (config)
     {
       g_object_get (config,
-                    "resolution",         &resolution,
+                    "pixel-density",      &resolution,
                     "width",              &width,
                     "height",             &height,
                     "pages",              &pages,
@@ -1088,7 +1086,7 @@ load_image (GFile   *file,
     }
 
 #ifdef PS_DEBUG
-  g_print ("load_image:\n resolution = %d\n", resolution);
+  g_print ("load_image:\n resolution = %f\n", resolution);
   g_print (" %dx%d pixels\n", width, height);
   g_print (" BoundingBox: %d\n", use_bbox);
   g_print (" Coloring: %d\n", pnm_type);
@@ -1163,9 +1161,7 @@ load_image (GFile   *file,
           if (! image)
             break;
 
-          gimp_image_set_resolution (image,
-                                     (gdouble) resolution,
-                                     (gdouble) resolution);
+          gimp_image_set_resolution (image, resolution, resolution);
 
           if (n_images == max_images)
             {
@@ -1389,9 +1385,9 @@ export_image (GFile         *file,
 static void
 check_load_vals (GObject *config)
 {
-  gint     resolution     = MIN_RESOLUTION;
-  gdouble  width          = 2;
-  gdouble  height         = 2;
+  gdouble  resolution     = GIMP_MIN_RESOLUTION;
+  gint     width          = 2;
+  gint     height         = 2;
   gboolean use_bbox       = FALSE;
   gint     pnm_type       = 6;
   gint     text_alpha     = 1;
@@ -1401,7 +1397,7 @@ check_load_vals (GObject *config)
   if (config)
     {
       g_object_get (config,
-                    "resolution",         &resolution,
+                    "pixel-density",      &resolution,
                     "width",              &width,
                     "height",             &height,
                     "check_bbox",         &use_bbox,
@@ -1412,10 +1408,10 @@ check_load_vals (GObject *config)
                     NULL);
     }
 
-  if (resolution < MIN_RESOLUTION)
-    resolution = MIN_RESOLUTION;
-  else if (resolution > MAX_RESOLUTION)
-    resolution = MAX_RESOLUTION;
+  if (resolution < GIMP_MIN_RESOLUTION)
+    resolution = GIMP_MIN_RESOLUTION;
+  else if (resolution > GIMP_MAX_RESOLUTION)
+    resolution = GIMP_MAX_RESOLUTION;
 
   if (width < 2)
     width = 2;
@@ -1436,7 +1432,7 @@ check_load_vals (GObject *config)
   if (config)
     {
       g_object_set (config,
-                    "resolution",         resolution,
+                    "pixel-density",      resolution,
                     "width",              width,
                     "height",             height,
                     "check_bbox",         use_bbox ? 1 : 0,
@@ -1757,7 +1753,7 @@ ps_open (GFile            *file,
   FILE         *fd_popen = NULL;
   FILE         *eps_file;
   gint          width, height;
-  gint          resolution;
+  gdouble       resolution;
   gboolean      use_bbox;
   gint          pnm_type;
   gint          text_alpha;
@@ -1775,7 +1771,7 @@ ps_open (GFile            *file,
       g_object_get (config,
                     "width",              &width,
                     "height",             &height,
-                    "resolution",         &resolution,
+                    "pixel-density",      &resolution,
                     "check-bbox",         &use_bbox,
                     "coloring",           &pnm_type,
                     "text-alpha-bits",    &text_alpha,
@@ -1786,7 +1782,7 @@ ps_open (GFile            *file,
     {
       width = 256;
       height = 256;
-      resolution = 256 / 4;
+      resolution = 256.0 / 4.0;
     }
 
   *llx = *lly = 0;
@@ -1901,7 +1897,7 @@ ps_open (GFile            *file,
 
   g_ptr_array_add (cmdA, g_strdup (g_get_prgname ()));
   g_ptr_array_add (cmdA, g_strdup_printf ("-sDEVICE=%s", driver));
-  g_ptr_array_add (cmdA, g_strdup_printf ("-r%d", resolution));
+  g_ptr_array_add (cmdA, g_strdup_printf ("-r%d", (gint) resolution));
 
   if (is_pdf)
     {
@@ -3648,7 +3644,6 @@ load_dialog (GFile         *file,
   GtkListStore  *store;
   GtkWidget     *hbox;
   GtkWidget     *vbox;
-  GtkWidget     *spinbutton;
   GtkWidget     *target   = NULL;
   GtkWidget     *selector = NULL;
   gint32         page_count;
@@ -3659,9 +3654,9 @@ load_dialog (GFile         *file,
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_procedure_dialog_new (GIMP_PROCEDURE (procedure),
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      NULL);
+  dialog = gimp_vector_load_procedure_dialog_new (GIMP_VECTOR_LOAD_PROCEDURE (procedure),
+                                                  GIMP_PROCEDURE_CONFIG (config),
+                                                  NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                             GTK_RESPONSE_OK,
@@ -3686,35 +3681,6 @@ load_dialog (GFile         *file,
                                 G_CALLBACK (gtk_window_activate_default),
                                 dialog);
     }
-
-  /* Rendering */
-  /* Resolution / Width / Height */
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                  "rendering-options",
-                                  "resolution",
-                                  "width",
-                                  "height",
-                                  NULL);
-
-  spinbutton =
-    gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                           "resolution", 1.0);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                         "width", 1.0);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
-                                         "height", 1.0);
-
-  g_signal_connect (spinbutton, "value-changed",
-                    G_CALLBACK (resolution_change_callback),
-                    config);
-
-  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "rendering-title", _("Rendering"),
-                                   FALSE, FALSE);
-
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "rendering-frame", "rendering-title",
-                                    FALSE, "rendering-options");
 
   /* Coloring */
   store = gimp_int_store_new (_("B/W"),       4,
@@ -3743,7 +3709,6 @@ load_dialog (GFile         *file,
 
   vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                          "rendering-box",
-                                         "rendering-frame",
                                          "check-bbox",
                                          NULL);
 
@@ -3780,7 +3745,6 @@ load_dialog (GFile         *file,
   hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                          "ps-top-row",
                                          "rendering-box",
-                                         "coloring",
                                          NULL);
   gtk_box_set_spacing (GTK_BOX (hbox), 12);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
@@ -3790,6 +3754,7 @@ load_dialog (GFile         *file,
 
   hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                          "ps-bottom-row",
+                                         "coloring",
                                          "text-alpha-bits",
                                          "graphoc-alpha-bits",
                                          NULL);
@@ -3984,36 +3949,4 @@ save_unit_toggle_update (GtkWidget *widget,
                 "x-offset", x_offset * factor,
                 "y-offset", y_offset * factor,
                 NULL);
-}
-
-static gboolean
-resolution_change_callback (GtkWidget *adjustment,
-                            gpointer   data)
-{
-  GimpProcedureConfig *config = GIMP_PROCEDURE_CONFIG (data);
-  gdouble              ratio  = 1.0;
-  gint                 old_resolution;
-  gdouble              resolution;
-  gint                 width;
-  gint                 height;
-
-  g_object_get (config,
-                "resolution", &old_resolution,
-                "width",      &width,
-                "height",     &height,
-                NULL);
-  resolution = gimp_label_spin_get_value (GIMP_LABEL_SPIN (adjustment));
-
-  if (old_resolution)
-    ratio = resolution / old_resolution;
-
-  width  *= ratio;
-  height *= ratio;
-
-  g_object_set (config,
-                "width",  width,
-                "height", height,
-                NULL);
-  return TRUE;
-
 }

@@ -78,6 +78,10 @@ static GimpProcedure  * svg_create_procedure (GimpPlugIn            *plug_in,
 static GimpValueArray * svg_load             (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GFile                 *file,
+                                              gint                   width,
+                                              gint                   height,
+                                              gboolean               preserve_ratio,
+                                              gboolean               prefer_native_dimension,
                                               GimpMetadata          *metadata,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
@@ -156,9 +160,9 @@ svg_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           svg_load, NULL, NULL);
+      procedure = gimp_vector_load_procedure_new (plug_in, name,
+                                                  GIMP_PDB_PROC_TYPE_PLUGIN,
+                                                  svg_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("SVG image"));
 
@@ -172,6 +176,8 @@ svg_create_procedure (GimpPlugIn  *plug_in,
                                       "Dom Lachowicz <cinamod@hotmail.com>",
                                       SVG_VERSION);
 
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("SVG"));
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/svg+xml");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -181,28 +187,6 @@ svg_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
-
-      GIMP_PROC_ARG_DOUBLE (procedure, "resolution",
-                            _("Resolu_tion"),
-                            _("Resolution to use for rendering the SVG"),
-                            GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION, 300,
-                            GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "width",
-                         _("_Width"),
-                         _("Width (in pixels) to load the SVG in. "
-                         "(0 for original width, a negative width to "
-                         "specify a maximum width)"),
-                         -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
-                         GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "height",
-                         _("_Height"),
-                         _("Height (in pixels) to load the SVG in. "
-                         "(0 for original height, a negative height to "
-                         "specify a maximum height)"),
-                         -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
-                         GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_CHOICE (procedure, "paths",
                             _("_Paths"),
@@ -237,6 +221,10 @@ static GimpValueArray *
 svg_load (GimpProcedure         *procedure,
           GimpRunMode            run_mode,
           GFile                 *file,
+          gint                   width,
+          gint                   height,
+          gboolean               preserve_ratio,
+          gboolean               prefer_native_dimension,
           GimpMetadata          *metadata,
           GimpMetadataLoadFlags *flags,
           GimpProcedureConfig   *config,
@@ -248,8 +236,6 @@ svg_load (GimpProcedure         *procedure,
   RsvgHandleFlags    rsvg_flags = RSVG_HANDLE_FLAGS_NONE;
   GimpPDBStatusType  status;
   gchar             *import_paths;
-  gint               width;
-  gint               height;
   gdouble            resolution;
 
   gegl_init (NULL, NULL);
@@ -262,9 +248,9 @@ svg_load (GimpProcedure         *procedure,
     }
 
   g_object_get (config,
-                "width",      &width,
-                "height",     &height,
-                "resolution", &resolution,
+                "width",         &width,
+                "height",        &height,
+                "pixel-density", &resolution,
                 NULL);
   image = load_image (file, width, height, resolution, rsvg_flags, &error);
 
@@ -815,16 +801,12 @@ load_dialog (GFile                *file,
     }
 
   /* Scalable Vector Graphics is SVG, should perhaps not be translated */
-  dialog = gimp_procedure_dialog_new (GIMP_PROCEDURE (procedure),
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Render Scalable Vector Graphics"));
+  dialog = gimp_vector_load_procedure_dialog_new (GIMP_VECTOR_LOAD_PROCEDURE (procedure),
+                                                  GIMP_PROCEDURE_CONFIG (config),
+                                                  NULL);
 
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                  "vbox-arguments",
-                                  "width", "height", "resolution", "paths",
-                                  NULL);
-  main_hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog), "main-hbox",
-                                              "vbox-arguments", NULL);
+  main_hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                              "main-hbox", "paths", NULL);
   gtk_orientable_set_orientation (GTK_ORIENTABLE (main_hbox), GTK_ORIENTATION_HORIZONTAL);
 
   /*  The SVG preview  */
@@ -847,7 +829,7 @@ load_dialog (GFile                *file,
   gtk_widget_show (size_label);
 
   /*  query the initial size after the size label is created  */
-  g_object_get (config, "resolution", &vals.resolution, NULL);
+  g_object_get (config, "pixel-density", &vals.resolution, NULL);
 
   load_rsvg_size (file, &vals, *rsvg_flags, NULL);
   g_object_set (config,
