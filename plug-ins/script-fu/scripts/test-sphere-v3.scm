@@ -183,4 +183,4 @@
 )
 
 (script-fu-menu-register "script-fu-test-sphere-v3"
-                         "<Image>/Filters/Development/Script-Fu/Test")
+                         "<Image>/Filters/Development/Demos")
