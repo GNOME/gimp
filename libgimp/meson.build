@@ -291,6 +291,7 @@ libgimpui_sources_introspectable = [
   'gimpexportproceduredialog.c',
   'gimpui.c',
   'gimpzoompreview.c',
+  'gimpvectorloadproceduredialog.c',
 ]
 
 libgimpui_sources = [

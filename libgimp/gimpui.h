@@ -43,6 +43,7 @@
 #include <libgimp/gimpprocbrowserdialog.h>
 #include <libgimp/gimpproceduredialog.h>
 #include <libgimp/gimpexportproceduredialog.h>
+#include <libgimp/gimpvectorloadproceduredialog.h>
 #include <libgimp/gimpprocview.h>
 #include <libgimp/gimpprogressbar.h>
 #include <libgimp/gimppropwidgets.h>
