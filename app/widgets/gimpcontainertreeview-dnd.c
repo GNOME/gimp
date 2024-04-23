@@ -288,6 +288,9 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
       GtkTreeIter iter;
       gint        n_children;
 
+      if (y < 0)
+        goto drop_impossible;
+
       n_children = gtk_tree_model_iter_n_children (tree_view->model, NULL);
 
       if (n_children > 0 &&
