@@ -2,7 +2,7 @@
 
 set -e
 
-# $MSYSTEM_CARCH, $MSYSTEM_PREFIX and $MINGW_PACKAGE_PREFIX are defined by MSYS2.
+# $MSYSTEM_CARCH and $MINGW_PACKAGE_PREFIX are defined by MSYS2.
 # https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
 if [[ "$MSYSTEM_CARCH" == "aarch64" ]]; then
   export ARTIFACTS_SUFFIX="-a64"
@@ -17,13 +17,12 @@ if [[ -z "$GITLAB_CI" ]]; then
   if [[ "$0" != "build/windows/gitlab-ci/1_build-deps-msys2.sh" ]]; then
     echo "To run this script locally, please do it from to the gimp git folder"
     exit 1
-  else
-    GIMP_DIR=$(echo "${PWD##*/}/")
-    DEPS_DIR=$(dirname $PWD)
-    cd $DEPS_DIR
   fi
   export GIT_DEPTH=1
   pacman --noconfirm -Suy
+  GIMP_DIR=$(echo "${PWD##*/}/")
+  DEPS_DIR=$(dirname $PWD)
+  cd $DEPS_DIR
 fi
 
 
@@ -96,18 +95,15 @@ configure_or_build ()
 {
   if [ ! -f "_${1}/_build/build.ninja" ]; then
     mkdir -p _${1}/_build${ARTIFACTS_SUFFIX} && cd _${1}/_build${ARTIFACTS_SUFFIX}
-    (meson setup .. -Dprefix="${GIMP_PREFIX}" $2 && \
-     ninja && ninja install) || exit 1
-    cd ../..
+    meson setup .. -Dprefix="${GIMP_PREFIX}" $2
   else
     cd _${1}/_build${ARTIFACTS_SUFFIX}
-    (ninja && ninja install) || exit 1
-    cd ../..
   fi
+  ninja
+  ninja install
+  ccache --show-stats
+  cd ../..
 }
 
 configure_or_build babl "-Dwith-docs=false"
-
 configure_or_build gegl "-Ddocs=false -Dworkshop=true"
-
-ccache --show-stats

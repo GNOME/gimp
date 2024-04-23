@@ -2,20 +2,14 @@
 
 set -e
 
-# $MSYSTEM_CARCH, $MSYSTEM_PREFIX and $MINGW_PACKAGE_PREFIX are defined by MSYS2.
+# $MSYSTEM_CARCH and $MSYSTEM_PREFIX are defined by MSYS2.
 # https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
 if [[ "$MSYSTEM_CARCH" == "aarch64" ]]; then
   export ARTIFACTS_SUFFIX="-a64"
-  export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
-  export GIMP_DISTRIB=`realpath ./gimp-a64`
 elif [[ "$CI_JOB_NAME" == "gimp-win-x64-cross" ]] || [[ "$MSYSTEM_CARCH" == "x86_64" ]]; then
   export ARTIFACTS_SUFFIX="-x64"
-  export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
-  export GIMP_DISTRIB=`realpath ./gimp-x64`
 else # [[ "$MSYSTEM_CARCH" == "i686" ]];
   export ARTIFACTS_SUFFIX="-x86"
-  export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
-  export GIMP_DISTRIB=`realpath ./gimp-x86`
 fi
 
 
@@ -31,12 +25,14 @@ fi
 
 
 # Bundle deps and GIMP files
-export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
 if [[ "$CI_JOB_NAME" =~ "cross" ]]; then
   export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}-cross"
   export MSYS_PREFIX="$GIMP_PREFIX"
+else
+  export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
+  export MSYS_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
 fi
-export PATH="$GIMP_PREFIX/bin:$PATH"
+export GIMP_DISTRIB="`realpath ./gimp`${ARTIFACTS_SUFFIX}"
 
 ## Copy a previously built wrapper at tree root, less messy than
 ## having to look inside bin/, in the middle of all the DLLs.

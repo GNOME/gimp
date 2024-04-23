@@ -6,24 +6,13 @@ set -e
 # https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
 if [[ "$MSYSTEM_CARCH" == "aarch64" ]]; then
   export ARTIFACTS_SUFFIX="-a64"
-  export MSYS2_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
 elif [[ "$MSYSTEM_CARCH" == "x86_64" ]]; then
   export ARTIFACTS_SUFFIX="-x64"
-  export MSYS2_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
 else # [[ "$MSYSTEM_CARCH" == "i686" ]];
   export ARTIFACTS_SUFFIX="-x86"
-  export MSYS2_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
 fi
 
-if [[ "$GITLAB_CI" ]]; then
-  # XXX We've got a weird error when the prefix is in the current dir.
-  # Until we figure it out, this trick seems to work, even though it's
-  # completely ridiculous.
-  rm -fr ~/_install${ARTIFACTS_SUFFIX}
-  mv "_install${ARTIFACTS_SUFFIX}" ~
-
-  export MESON_OPTIONS=""
-else
+if [[ -z "$GITLAB_CI" ]]; then
   # Make the script work locally
   if [[ "$0" != "build/windows/gitlab-ci/2_build-gimp-msys2.sh" ]]; then
     echo "To run this script locally, please do it from to the gimp git folder"
@@ -42,13 +31,9 @@ DEPS_CODE=$(cat build/windows/gitlab-ci/1_build-deps-msys2.sh)
 DEPS_CODE=$(sed -n '/# Install the/,/# End of install/p' <<< $DEPS_CODE)
 echo "$DEPS_CODE" | bash
 
-# Install QOI header manually
-# mingw32 package of qoi was removed from MSYS2, we have download it by ourselves
-wget -O "${MSYS2_PREFIX}/include/qoi.h" https://raw.githubusercontent.com/phoboslab/qoi/master/qoi.h
-
 
 # Build GIMP
-export GIMP_PREFIX="`realpath ~/_install`${ARTIFACTS_SUFFIX}"
+export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
 ## Universal variables from .gitlab-ci.yml
 OLD_IFS=$IFS
 IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
@@ -71,20 +56,18 @@ if [ ! -f "_build${ARTIFACTS_SUFFIX}/build.ninja" ]; then
                  -Dwindows-installer=true            \
                  -Dms-store=true                     \
                  -Dbuild-id=org.gimp.GIMP_official $MESON_OPTIONS
-  ninja
-  ninja install
 else
   cd "_build${ARTIFACTS_SUFFIX}"
-  ninja
-  ninja install
 fi
-
+ninja
+ninja install
 ccache --show-stats
 
 
 # XXX Functional fix to the problem of non-configured interpreters
 make_cmd ()
 {
+  MSYS2_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
   GIMP_APP_VERSION=$(grep GIMP_APP_VERSION config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
   echo "@echo off
         echo This is a $1 native build of GIMP.
@@ -127,11 +110,6 @@ make_cmd ()
 
 if [[ "$GITLAB_CI" ]]; then
   make_cmd CI %cd%
-
-  cd ..
-
-  # XXX Moving back the prefix to be used as artifacts.
-  mv "${GIMP_PREFIX}" .
 else
   make_cmd local $MSYS2_PREFIX
 fi
