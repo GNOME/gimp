@@ -1,4 +1,5 @@
 subdir('images')
+subdir('test')
 
 # scripts interpreted by extension-script-fu, installed to /scripts
 scripts = [
@@ -47,15 +48,6 @@ scripts = [
   'weave.scm',
   'xach-effect.scm',
 ]
-
-if not stable
-  scripts += [
-    'contactsheet.scm',
-    'clothify-v3.scm',
-    'test-sphere.scm',
-    'test-v3.scm',
-  ]
-endif
 
 install_data(
   scripts,

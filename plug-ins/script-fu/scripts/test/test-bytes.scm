@@ -584,4 +584,4 @@
   SF-STRING "Test name (optional)" ""
 )
 
-(script-fu-menu-register "script-fu-test9" "<Image>/Test")
+(script-fu-menu-register "script-fu-test9" "<Image>/Filters/Development/Demos")

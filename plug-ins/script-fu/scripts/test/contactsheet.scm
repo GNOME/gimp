@@ -333,4 +333,7 @@
     SF-COLOR   _"Background color" "black"
 )
 
-(script-fu-menu-register "script-fu-contactsheet" "<Image>/Filters/Combine")
+; Originally installed w release in "<Image>/Filters/Combine"
+; Now installed in unstable as a test plugin because
+; it has an open issue: dirstream fails on Windows.
+(script-fu-menu-register "script-fu-contactsheet" "<Image>/Filters/Development/Demos")

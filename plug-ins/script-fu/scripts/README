@@ -1,0 +1,30 @@
+The files in this directory are:
+   - production plugins
+   - demo plugins
+   - initialization scripts for ScriptFu
+
+Don't put test plugins in this directory, but in subdirectory test.
+
+Production plugins:
+  - installed in a release.
+  - appear in diverse menus, not just Filters.
+  - should be marked for translation, and not in potfiles.skip
+
+Demo plugins:
+  - installed in a release (with goat exercise plugins)
+  - appear in Filters>Development>Demos
+  - FUTURE: marked for translation, and not in potfiles.skip
+
+Initialization scripts
+  - loaded by the TinyScheme interpreter
+  - have suffix .init or .scm
+  - are not plugins
+FUTURE:
+The initialization scripts should all should have suffix .scm
+(like the rest of the Scheme world.)
+They should be in a separate directory
+so advanced users can load library scripts.
+
+The files script-fu-util.scm and script-fu-util-setpt.scm
+are also initialization scripts but loaded differently from .init files.
+FUTURE: unify loading of initialization scripts.
