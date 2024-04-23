@@ -12,9 +12,7 @@ else # [[ "$MSYSTEM_CARCH" == "i686" ]];
   export ARTIFACTS_SUFFIX="-x86"
 fi
 
-if [[ "$BUILD_TYPE" == "CI_NATIVE" ]]; then
-  GIMP_DIR=""
-else
+if [[ -z "$GITLAB_CI" ]]; then
   # Make the script work locally
   if [[ "$0" != "build/windows/gitlab-ci/1_build-deps-msys2.sh" ]]; then
     echo "To run this script locally, please do it from to the gimp git folder"

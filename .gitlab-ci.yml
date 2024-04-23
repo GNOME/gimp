@@ -390,7 +390,6 @@ gimp-flatpak-x64:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_TAG == null'
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   variables:
-    BUILD_TYPE: "CI_CROSS"
     # Needed because by default, Debian has now changed
     # "sysconfig.get_default_scheme()" from "posix_prefix" to "posix_local" which
     # adds a local/ folder to the install prefix of setup.py. This environment
@@ -452,7 +451,6 @@ gimp-win-x64-cross:
     # Merge requests with appropriate label.
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
   variables:
-    BUILD_TYPE: "CI_NATIVE"
     CHERE_INVOKING: "yes"
   # We use the same universal variables but not directly from PS
   before_script: []
