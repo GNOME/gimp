@@ -18,7 +18,10 @@ libgimp/gimpprocedure.c
 libgimp/gimpproceduredialog.c
 libgimp/gimpprocview.c
 libgimp/gimppropwidgets.c
+libgimp/gimpresolutionentry-private.c
 libgimp/gimpunitcache.c
+libgimp/gimpvectorloadprocedure.c
+libgimp/gimpvectorloadproceduredialog.c
 
 libgimpbase/gimpbaseenums.c
 libgimpbase/gimpcpuaccel.c
