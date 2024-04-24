@@ -1,7 +1,5 @@
-                   ------------------------------
-                   GNU Image Manipulation Program
-                      2.99 Development Branch
-                   ------------------------------
+#                  GNU Image Manipulation Program
+##                     2.99 Development Branch
 
 This is an unstable development release, an intermediate state on the
 way to the next stable release: GIMP 3.0. GIMP 2.99 may or may not do
@@ -12,39 +10,37 @@ If you think you found a bug in this version, please make sure that it
 hasn't been reported earlier and that it is not just new stuff that is
 still being worked on and obviously not quite finished yet.
 
-If you want to hack on GIMP, please read the file devel-docs/README.md.
-For detailed installation instructions, see the file INSTALL.
+If you want to hack on GIMP, please read the file `devel-docs/README.md`.
+For detailed installation instructions, see the file `INSTALL`.
 
 
-1. Web Resources
-================
+## 1. Web Resources
 
 GIMP's home page is at:
 
-	https://www.gimp.org/
+* https://www.gimp.org/
 
 Please be sure to visit this site for information, documentation,
 tutorials, news, etc.  All things GIMP-ish are available from there.
 
 The latest version of GIMP can be found at:
 
-	https://www.gimp.org/downloads/
+* https://www.gimp.org/downloads/
 
 We also have a website dedicated to documentation at:
 
-        https://docs.gimp.org/
+* https://docs.gimp.org/
 
 
-2. Contributing
-===============
+## 2. Contributing
 
 GIMP source code can be found at:
 
-	https://gitlab.gnome.org/GNOME/gimp/
+* https://gitlab.gnome.org/GNOME/gimp/
 
 Resources for contributors:
 
-        https://developer.gimp.org/
+* https://developer.gimp.org/
 
 In particular, you may want to look in the "Core Development" section. Some
 articles of particular interest for newcomers could be:
@@ -54,13 +50,12 @@ articles of particular interest for newcomers could be:
 * Submit your first patch: https://developer.gimp.org/core/submit-patch/
 
 
-3. Discussion Channels
-======================
+## 3. Discussion Channels
 
 We have several discussion channels dedicated to GIMP user and
 development discussion. There is more info at:
 
-        https://www.gimp.org/discuss.html
+* https://www.gimp.org/discuss.html
 
 For the real junkies, there are IRC channels (e.g. #gimp or #gimp-user)
 devoted to GIMP on GIMPNet (a private free software oriented network).
@@ -75,10 +70,9 @@ More discussion channels, such as forums, will be listed on the above
 Links to archives of former discussion methods (e.g. mailing lists) are
 also included in that page.
 
-4. Customizing
-==============
+## 4. Customizing
 
-The look of GIMP's interface can be customized like any other GTK+ app
+The look of GIMP's interface can be customized like any other GTK app
 by editing files in `${XDG_CONFIG_HOME}/gtk-3.0/` (settings.ini and
 gtk.css in particular) or by using "themes" (ready-made customizations).
 Additionally, GIMP reads `${XDG_CONFIG_HOME}/GIMP/2.99/gimp.css` so you
@@ -90,12 +84,12 @@ editing: `${XDG_CONFIG_HOME}/GIMP/2.99/shortcutsrc`.
 
 Have fun,
 
-  Spencer Kimball
-  Peter Mattis
-  Federico Mena
-  Manish Singh
-  Sven Neumann
-  Michael Natterer
-  Dave Neary
-  Martin Nordholts
-  Jehan
+* Spencer Kimball
+* Peter Mattis
+* Federico Mena
+* Manish Singh
+* Sven Neumann
+* Michael Natterer
+* Dave Neary
+* Martin Nordholts
+* Jehan
