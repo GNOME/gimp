@@ -1852,7 +1852,7 @@ subdir('app-tools')
 gimp_run_env=environment()
 gimp_run_env.set('GIMP_GLOBAL_BUILD_ROOT', meson.global_build_root())
 
-if meson.can_run_host_binaries()
+if meson.can_run_host_binaries() and have_gobject_introspection
   if enable_console_bin
     gimp_real_exe = gimpconsole_exe
   else
