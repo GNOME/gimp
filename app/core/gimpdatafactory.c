@@ -967,24 +967,47 @@ gimp_data_factory_get_save_dir (GimpDataFactory  *factory,
                                              (GCompareFunc) gimp_file_compare);
           if (found)
             {
-              GFile *dir = found->data;
+              GFile  *dir         = found->data;
+              GError *mkdir_error = NULL;
 
               found_any = TRUE;
 
-              if (g_file_query_file_type (dir, G_FILE_QUERY_INFO_NONE,
+              /* We always try and create but do not check the error code
+               * because some errors might be non-fatale. E.g.
+               * G_IO_ERROR_EXISTS may mean either that the folder exists
+               * (good) or that a file of another type exists (bad).
+               * I am also unsure if G_IO_ERROR_NOT_SUPPORTED might happen in
+               * cases where creating directories is forbidden but one might
+               * already exist.
+               * So in the end, we create then check the file type.
+               */
+              if (! g_file_make_directory_with_parents (dir, NULL, &mkdir_error) &&
+                  g_file_query_file_type (dir, G_FILE_QUERY_INFO_NONE,
                                           NULL) != G_FILE_TYPE_DIRECTORY)
                 {
                   /*  error out only if this is the last chance  */
                   if (! list->next)
                     {
-                      g_set_error (error, GIMP_DATA_ERROR, 0,
-                                   _("You have a writable data folder "
-                                     "configured (%s), but this folder does "
-                                     "not exist. Please create the folder or "
-                                     "fix your configuration in the "
-                                     "Preferences dialog's 'Folders' section."),
-                                   gimp_file_get_utf8_name (dir));
+                      if (mkdir_error)
+                        g_set_error (error, GIMP_DATA_ERROR, 0,
+                                     _("You have a writable data folder "
+                                       "configured (%s), but this folder could "
+                                       "not be created: \"%s\"\n\n"
+                                       "Please check your configuration in the "
+                                       "Preferences dialog's 'Folders' section."),
+                                     gimp_file_get_utf8_name (dir),
+                                     mkdir_error->message);
+                      else
+                        g_set_error (error, GIMP_DATA_ERROR, 0,
+                                     _("You have a writable data folder "
+                                       "configured (%s), but this folder does "
+                                       "not exist. Please create the folder or "
+                                       "fix your configuration in the "
+                                       "Preferences dialog's 'Folders' section."),
+                                     gimp_file_get_utf8_name (dir));
                     }
+
+                  g_clear_error (&mkdir_error);
                 }
               else
                 {
