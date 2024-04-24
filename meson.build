@@ -1310,7 +1310,7 @@ if gimpdir == ''
   gimpdir = meson.project_name().to_upper()
 endif
 
-project_subdir = meson.project_name() / gimp_app_version
+project_subdir = meson.project_name() / gimp_api_version
 gimpdatadir    = get_option('datadir')    / project_subdir
 gimpplugindir  = get_option('libdir')     / project_subdir
 gimpsysconfdir = get_option('sysconfdir') / project_subdir
