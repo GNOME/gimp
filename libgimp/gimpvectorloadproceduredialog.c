@@ -37,15 +37,16 @@ struct _GimpVectorLoadProcedureDialogPrivate
 {
   /* TODO: add thumbnail support from the file. */
   GFile    *file;
-
-  gboolean  filled_once;
 };
 
 
-static void   gimp_vector_load_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
-                                                           GimpProcedure       *procedure,
-                                                           GimpProcedureConfig *config,
-                                                           GList               *properties);
+static void gimp_vector_load_procedure_dialog_fill_list  (GimpProcedureDialog *dialog,
+                                                          GimpProcedure       *procedure,
+                                                          GimpProcedureConfig *config,
+                                                          GList               *properties);
+static void gimp_vector_load_procedure_dialog_fill_start (GimpProcedureDialog *dialog,
+                                                          GimpProcedure       *procedure,
+                                                          GimpProcedureConfig *config);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpVectorLoadProcedureDialog, gimp_vector_load_procedure_dialog, GIMP_TYPE_PROCEDURE_DIALOG)
@@ -59,7 +60,8 @@ gimp_vector_load_procedure_dialog_class_init (GimpVectorLoadProcedureDialogClass
 
   proc_dialog_class = GIMP_PROCEDURE_DIALOG_CLASS (klass);
 
-  proc_dialog_class->fill_list = gimp_vector_load_procedure_dialog_fill_list;
+  proc_dialog_class->fill_start = gimp_vector_load_procedure_dialog_fill_start;
+  proc_dialog_class->fill_list  = gimp_vector_load_procedure_dialog_fill_list;
 }
 
 static void
@@ -68,7 +70,27 @@ gimp_vector_load_procedure_dialog_init (GimpVectorLoadProcedureDialog *dialog)
   dialog->priv = gimp_vector_load_procedure_dialog_get_instance_private (dialog);
 
   dialog->priv->file        = NULL;
-  dialog->priv->filled_once = FALSE;
+}
+
+static void
+gimp_vector_load_procedure_dialog_fill_start (GimpProcedureDialog *dialog,
+                                              GimpProcedure       *procedure,
+                                              GimpProcedureConfig *config)
+{
+  GtkWidget *content_area;
+  GtkWidget *res_entry;
+
+  content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+
+  /* Resolution */
+  res_entry = gimp_prop_resolution_entry_new (G_OBJECT (config),
+                                              "width", "height", "pixel-density",
+                                              "physical-unit");
+
+  gtk_box_pack_start (GTK_BOX (content_area), res_entry, FALSE, FALSE, 0);
+  gtk_widget_show (res_entry);
+
+  GIMP_PROCEDURE_DIALOG_CLASS (parent_class)->fill_start (dialog, procedure, config);
 }
 
 static void
@@ -77,29 +99,27 @@ gimp_vector_load_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
                                              GimpProcedureConfig *config,
                                              GList               *properties)
 {
-  GimpVectorLoadProcedureDialog *load_dialog;
+  GList *properties2 = NULL;
+  GList *iter;
 
-  load_dialog = GIMP_VECTOR_LOAD_PROCEDURE_DIALOG (dialog);
-
-  if (! load_dialog->priv->filled_once)
+  for (iter = properties; iter; iter = iter->next)
     {
-      GtkWidget *content_area;
-      GtkWidget *res_entry;
+      gchar *propname = iter->data;
 
-      content_area   = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+      if (g_strcmp0 (propname, "width") == 0                    ||
+          g_strcmp0 (propname, "height") == 0                   ||
+          g_strcmp0 (propname, "keep-ratio") == 0               ||
+          g_strcmp0 (propname, "prefer-native-dimensions") == 0 ||
+          g_strcmp0 (propname, "pixel-density") == 0            ||
+          g_strcmp0 (propname, "physical-unit") == 0)
+        /* Ignoring the standards args which are being handled by fill_start(). */
+        continue;
 
-      /* Resolution */
-      res_entry = gimp_prop_resolution_entry_new (G_OBJECT (config),
-                                                  "width", "height", "pixel-density",
-                                                  "physical-unit");
-
-      gtk_box_pack_start (GTK_BOX (content_area), res_entry, FALSE, FALSE, 0);
-      gtk_widget_show (res_entry);
-      load_dialog->priv->filled_once = TRUE;
+      properties2 = g_list_prepend (properties2, propname);
     }
-
-
-  GIMP_PROCEDURE_DIALOG_CLASS (parent_class)->fill_list (dialog, procedure, config, properties);
+  properties2 = g_list_reverse (properties2);
+  GIMP_PROCEDURE_DIALOG_CLASS (parent_class)->fill_list (dialog, procedure, config, properties2);
+  g_list_free (properties2);
 }
 
 

@@ -68,6 +68,9 @@ struct _GimpProcedureDialogPrivate
   GtkSizeGroup        *label_group;
 
   GHashTable          *sensitive_data;
+
+  gboolean             fill_started;
+  gboolean             fill_ended;
 };
 
 typedef struct GimpProcedureDialogSensitiveData
@@ -89,49 +92,54 @@ typedef struct GimpProcedureDialogSensitiveData2
 } GimpProcedureDialogSensitiveData2;
 
 
-static GObject * gimp_procedure_dialog_constructor    (GType                  type,
-                                                       guint                  n_construct_properties,
-                                                       GObjectConstructParam *construct_properties);
-static void      gimp_procedure_dialog_constructed    (GObject               *object);
-static void      gimp_procedure_dialog_dispose        (GObject               *object);
-static void      gimp_procedure_dialog_set_property   (GObject               *object,
-                                                       guint                  property_id,
-                                                       const GValue          *value,
-                                                       GParamSpec            *pspec);
-static void      gimp_procedure_dialog_get_property   (GObject               *object,
-                                                       guint                  property_id,
-                                                       GValue                *value,
-                                                       GParamSpec            *pspec);
+static GObject   * gimp_procedure_dialog_constructor            (GType                  type,
+                                                                 guint                  n_construct_properties,
+                                                                 GObjectConstructParam *construct_properties);
+static void        gimp_procedure_dialog_constructed            (GObject               *object);
+static void        gimp_procedure_dialog_dispose                (GObject               *object);
+static void        gimp_procedure_dialog_set_property           (GObject               *object,
+                                                                 guint                  property_id,
+                                                                 const GValue          *value,
+                                                                 GParamSpec            *pspec);
+static void        gimp_procedure_dialog_get_property           (GObject               *object,
+                                                                 guint                  property_id,
+                                                                 GValue                *value,
+                                                                 GParamSpec            *pspec);
 
-static void      gimp_procedure_dialog_real_fill_list (GimpProcedureDialog   *dialog,
-                                                       GimpProcedure         *procedure,
-                                                       GimpProcedureConfig   *config,
-                                                       GList                 *properties);
+static void        gimp_procedure_dialog_real_fill_start        (GimpProcedureDialog *dialog,
+                                                                 GimpProcedure       *procedure,
+                                                                 GimpProcedureConfig *config);
+static void        gimp_procedure_dialog_real_fill_end          (GimpProcedureDialog *dialog,
+                                                                 GimpProcedure       *procedure,
+                                                                 GimpProcedureConfig *config);
+static void        gimp_procedure_dialog_real_fill_list         (GimpProcedureDialog   *dialog,
+                                                                 GimpProcedure         *procedure,
+                                                                 GimpProcedureConfig   *config,
+                                                                 GList                 *properties);
 
-static void      gimp_procedure_dialog_reset_initial  (GtkWidget             *button,
-                                                       GimpProcedureDialog   *dialog);
-static void      gimp_procedure_dialog_reset_factory  (GtkWidget             *button,
-                                                       GimpProcedureDialog   *dialog);
-static void      gimp_procedure_dialog_load_defaults  (GtkWidget             *button,
-                                                       GimpProcedureDialog   *dialog);
-static void      gimp_procedure_dialog_save_defaults  (GtkWidget             *button,
-                                                       GimpProcedureDialog   *dialog);
+static void        gimp_procedure_dialog_reset_initial          (GtkWidget             *button,
+                                                                 GimpProcedureDialog   *dialog);
+static void        gimp_procedure_dialog_reset_factory          (GtkWidget             *button,
+                                                                 GimpProcedureDialog   *dialog);
+static void        gimp_procedure_dialog_load_defaults          (GtkWidget             *button,
+                                                                 GimpProcedureDialog   *dialog);
+static void        gimp_procedure_dialog_save_defaults          (GtkWidget             *button,
+                                                                 GimpProcedureDialog   *dialog);
 
-static gboolean  gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog  *dialog,
-                                                       GtkWidget            *widget,
-                                                       const gchar          *id,
-                                                       const gchar          *core_id);
-static GtkWidget *
-            gimp_procedure_dialog_fill_container_list (GimpProcedureDialog  *dialog,
-                                                       const gchar          *container_id,
-                                                       GtkContainer         *container,
-                                                       GList                *properties);
+static gboolean    gimp_procedure_dialog_check_mnemonic         (GimpProcedureDialog  *dialog,
+                                                                  GtkWidget            *widget,
+                                                                  const gchar          *id,
+                                                                  const gchar          *core_id);
+static GtkWidget * gimp_procedure_dialog_fill_container_list    (GimpProcedureDialog  *dialog,
+                                                                 const gchar          *container_id,
+                                                                 GtkContainer         *container,
+                                                                 GList                *properties);
 
-static void      gimp_procedure_dialog_set_sensitive_if_in_cb (GObject                           *config,
-                                                               GParamSpec                        *param_spec,
-                                                               GimpProcedureDialogSensitiveData2 *data);
-static void gimp_procedure_dialog_sensitive_data_free         (GimpProcedureDialogSensitiveData  *data);
-static void gimp_procedure_dialog_sensitive_cb_data_free      (GimpProcedureDialogSensitiveData2 *data);
+static void        gimp_procedure_dialog_set_sensitive_if_in_cb (GObject                           *config,
+                                                                 GParamSpec                        *param_spec,
+                                                                 GimpProcedureDialogSensitiveData2 *data);
+static void        gimp_procedure_dialog_sensitive_data_free    (GimpProcedureDialogSensitiveData  *data);
+static void        gimp_procedure_dialog_sensitive_cb_data_free (GimpProcedureDialogSensitiveData2 *data);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedureDialog, gimp_procedure_dialog,
@@ -153,6 +161,8 @@ gimp_procedure_dialog_class_init (GimpProcedureDialogClass *klass)
   object_class->get_property = gimp_procedure_dialog_get_property;
   object_class->set_property = gimp_procedure_dialog_set_property;
 
+  klass->fill_start          = gimp_procedure_dialog_real_fill_start;
+  klass->fill_end            = gimp_procedure_dialog_real_fill_end;
   klass->fill_list           = gimp_procedure_dialog_real_fill_list;
 
   props[PROP_PROCEDURE] =
@@ -195,6 +205,8 @@ gimp_procedure_dialog_init (GimpProcedureDialog *dialog)
   dialog->priv->label_group    = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   dialog->priv->sensitive_data = g_hash_table_new_full (g_str_hash, g_str_equal, g_free,
                                                         (GDestroyNotify) gimp_procedure_dialog_sensitive_data_free);
+  dialog->priv->fill_started   = FALSE;
+  dialog->priv->fill_ended     = FALSE;
 }
 
 static GObject *
@@ -483,6 +495,20 @@ gimp_procedure_dialog_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_procedure_dialog_real_fill_start (GimpProcedureDialog *dialog,
+                                       GimpProcedure       *procedure,
+                                       GimpProcedureConfig *config)
+{
+}
+
+static void
+gimp_procedure_dialog_real_fill_end (GimpProcedureDialog *dialog,
+                                     GimpProcedure       *procedure,
+                                     GimpProcedureConfig *config)
+{
 }
 
 static void
@@ -1634,6 +1660,15 @@ gimp_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
 {
   gboolean free_properties = FALSE;
 
+  if (! dialog->priv->fill_started &&
+      GIMP_PROCEDURE_DIALOG_GET_CLASS (dialog)->fill_start)
+    {
+      GIMP_PROCEDURE_DIALOG_GET_CLASS (dialog)->fill_start (dialog,
+                                                            dialog->priv->procedure,
+                                                            dialog->priv->config);
+      dialog->priv->fill_started = TRUE;
+    }
+
   if (! properties)
     {
       GParamSpec **pspecs;
@@ -2507,6 +2542,24 @@ gboolean
 gimp_procedure_dialog_run (GimpProcedureDialog *dialog)
 {
   g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), FALSE);
+
+  if (! dialog->priv->fill_started &&
+      GIMP_PROCEDURE_DIALOG_GET_CLASS (dialog)->fill_start)
+    {
+      GIMP_PROCEDURE_DIALOG_GET_CLASS (dialog)->fill_start (dialog,
+                                                            dialog->priv->procedure,
+                                                            dialog->priv->config);
+      dialog->priv->fill_started = TRUE;
+    }
+
+  if (! dialog->priv->fill_ended &&
+      GIMP_PROCEDURE_DIALOG_GET_CLASS (dialog)->fill_end)
+    {
+      GIMP_PROCEDURE_DIALOG_GET_CLASS (dialog)->fill_end (dialog,
+                                                          dialog->priv->procedure,
+                                                          dialog->priv->config);
+      dialog->priv->fill_ended = TRUE;
+    }
 
   while (TRUE)
     {

@@ -43,6 +43,9 @@ struct _GimpExportProcedureDialogPrivate
 
 static void   gimp_export_procedure_dialog_finalize  (GObject             *object);
 
+static void   gimp_export_procedure_dialog_fill_end  (GimpProcedureDialog *dialog,
+                                                      GimpProcedure       *procedure,
+                                                      GimpProcedureConfig *config);
 static void   gimp_export_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
                                                       GimpProcedure       *procedure,
                                                       GimpProcedureConfig *config,
@@ -67,6 +70,7 @@ gimp_export_procedure_dialog_class_init (GimpExportProcedureDialogClass *klass)
   proc_dialog_class = GIMP_PROCEDURE_DIALOG_CLASS (klass);
 
   object_class->finalize       = gimp_export_procedure_dialog_finalize;
+  proc_dialog_class->fill_end  = gimp_export_procedure_dialog_fill_end;
   proc_dialog_class->fill_list = gimp_export_procedure_dialog_fill_list;
 }
 
@@ -94,48 +98,19 @@ gimp_export_procedure_dialog_finalize (GObject *object)
 }
 
 static void
-gimp_export_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
-                                        GimpProcedure       *procedure,
-                                        GimpProcedureConfig *config,
-                                        GList               *properties)
+gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
+                                       GimpProcedure       *procedure,
+                                       GimpProcedureConfig *config)
 {
   GimpExportProcedureDialog *export_dialog;
   GimpExportProcedure       *export_procedure;
   GtkWidget                 *content_area;
-  GList                     *properties2 = NULL;
-  GList                     *iter;
+
+  GIMP_PROCEDURE_DIALOG_CLASS (parent_class)->fill_end (dialog, procedure, config);
 
   export_dialog    = GIMP_EXPORT_PROCEDURE_DIALOG (dialog);
   export_procedure = GIMP_EXPORT_PROCEDURE (procedure);
   content_area     = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-
-  for (iter = properties; iter; iter = iter->next)
-    {
-      gchar *propname = iter->data;
-
-      if ((gimp_export_procedure_get_support_exif (export_procedure) &&
-           g_strcmp0 (propname, "save-exif") == 0)                 ||
-          (gimp_export_procedure_get_support_iptc (export_procedure) &&
-           g_strcmp0 (propname, "save-iptc") == 0)                 ||
-          (gimp_export_procedure_get_support_xmp (export_procedure) &&
-           g_strcmp0 (propname, "save-xmp") == 0)                  ||
-          (gimp_export_procedure_get_support_profile (export_procedure) &&
-           g_strcmp0 (propname, "save-color-profile") == 0)        ||
-          (gimp_export_procedure_get_support_thumbnail (export_procedure) &&
-           g_strcmp0 (propname, "save-thumbnail") == 0)            ||
-          (gimp_export_procedure_get_support_comment (export_procedure) &&
-           (g_strcmp0 (propname, "save-comment") == 0 ||
-            g_strcmp0 (propname, "gimp-comment") == 0))            ||
-          g_list_find (export_dialog->priv->additional_metadata, propname))
-        /* Ignoring the standards and custom metadata. */
-        continue;
-
-      properties2 = g_list_prepend (properties2, propname);
-    }
-  properties2 = g_list_reverse (properties2);
-  GIMP_PROCEDURE_DIALOG_CLASS (parent_class)->fill_list (dialog, procedure, config, properties2);
-  g_list_free (properties2);
-
 
   if (gimp_export_procedure_get_support_exif      (export_procedure) ||
       gimp_export_procedure_get_support_iptc      (export_procedure) ||
@@ -255,7 +230,7 @@ gimp_export_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
 
       /* Custom metadata: n_metadata items per line. */
       left = 0;
-      for (iter = export_dialog->priv->additional_metadata; iter; iter = iter->next)
+      for (GList *iter = export_dialog->priv->additional_metadata; iter; iter = iter->next)
         {
           widget = gimp_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
           gtk_grid_attach (GTK_GRID (grid), widget, left, top, 6 / n_metadata, 1);
@@ -323,6 +298,48 @@ gimp_export_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
       gtk_box_pack_start (GTK_BOX (content_area), frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
     }
+}
+
+static void
+gimp_export_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
+                                        GimpProcedure       *procedure,
+                                        GimpProcedureConfig *config,
+                                        GList               *properties)
+{
+  GimpExportProcedureDialog *export_dialog;
+  GimpExportProcedure       *export_procedure;
+  GList                     *properties2 = NULL;
+  GList                     *iter;
+
+  export_dialog    = GIMP_EXPORT_PROCEDURE_DIALOG (dialog);
+  export_procedure = GIMP_EXPORT_PROCEDURE (procedure);
+
+  for (iter = properties; iter; iter = iter->next)
+    {
+      gchar *propname = iter->data;
+
+      if ((gimp_export_procedure_get_support_exif (export_procedure) &&
+           g_strcmp0 (propname, "save-exif") == 0)                 ||
+          (gimp_export_procedure_get_support_iptc (export_procedure) &&
+           g_strcmp0 (propname, "save-iptc") == 0)                 ||
+          (gimp_export_procedure_get_support_xmp (export_procedure) &&
+           g_strcmp0 (propname, "save-xmp") == 0)                  ||
+          (gimp_export_procedure_get_support_profile (export_procedure) &&
+           g_strcmp0 (propname, "save-color-profile") == 0)        ||
+          (gimp_export_procedure_get_support_thumbnail (export_procedure) &&
+           g_strcmp0 (propname, "save-thumbnail") == 0)            ||
+          (gimp_export_procedure_get_support_comment (export_procedure) &&
+           (g_strcmp0 (propname, "save-comment") == 0 ||
+            g_strcmp0 (propname, "gimp-comment") == 0))            ||
+          g_list_find (export_dialog->priv->additional_metadata, propname))
+        /* Ignoring the standards and custom metadata. */
+        continue;
+
+      properties2 = g_list_prepend (properties2, propname);
+    }
+  properties2 = g_list_reverse (properties2);
+  GIMP_PROCEDURE_DIALOG_CLASS (parent_class)->fill_list (dialog, procedure, config, properties2);
+  g_list_free (properties2);
 }
 
 static gpointer
