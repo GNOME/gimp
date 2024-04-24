@@ -61,9 +61,20 @@ gimp_image_new_get_last_template (Gimp      *gimp,
 
   if (image)
     {
+      const gchar *comment;
+
+      comment = gimp_template_get_comment (gimp->config->default_image);
+
       gimp_config_sync (G_OBJECT (gimp->config->default_image),
                         G_OBJECT (template), 0);
       gimp_template_set_from_image (template, image);
+
+      /* Do not pass around the comment from the current active comment. Only
+       * pass comments stored in actual templates. This can be even considered
+       * as data leak otherwise (creating 2 images in a row and not realizing
+       * the second will have the metadata comment from the first). See #11384.
+       */
+      g_object_set (template, "comment", comment, NULL);
     }
   else
     {
