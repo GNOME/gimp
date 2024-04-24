@@ -10,18 +10,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-23 18:50+0000\n"
-"PO-Revision-Date: 2024-04-23 23:58+0200\n"
+"POT-Creation-Date: 2024-04-24 17:49+0000\n"
+"PO-Revision-Date: 2024-04-24 21:31+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -10418,8 +10418,8 @@ msgstr "Barva prosojnosti po meri 2"
 #: app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "Če je omogočeno, bo slika postala aktivna, ko njeno okno dobi pozornost. To "
 "je uporabno za upravljalnike oken, ki uporabljajo »klikni za "
@@ -11494,7 +11494,7 @@ msgstr "Največje število dejanj, shranjenih v zgodovini."
 
 #: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130
 #: app/core/gimp-units.c:278 app/gui/session.c:309 app/menus/shortcuts-rc.c:148
-#: app/plug-in/plug-in-rc.c:249 app/tools/gimp-tools.c:504
+#: app/plug-in/plug-in-rc.c:252 app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "usodna razčlenitvena napaka"
 
@@ -13379,7 +13379,21 @@ msgstr "Kopija %s"
 msgid "Loading fonts (this may take a while...)"
 msgstr "Nalaganje pisav (to lahko traja dlje časa …)"
 
-#: app/core/gimpdatafactory.c:981
+#: app/core/gimpdatafactory.c:993
+#, c-format
+msgid ""
+"You have a writable data folder configured (%s), but this folder could not "
+"be created: \"%s\"\n"
+"\n"
+"Please check your configuration in the Preferences dialog's 'Folders' "
+"section."
+msgstr ""
+"Nastavljeno imate zapisljivo podatkovno mapo (%s), vendar te mape ni možno "
+"ustvariti: »%s«\n"
+"\n"
+"Preverite svoje nastavitve v odseku Nastavite pogovornega okna »Mape«."
+
+#: app/core/gimpdatafactory.c:1002
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -13390,7 +13404,7 @@ msgstr ""
 "obstaja. Najprej ustvarite mapo ali pa popravite nastavitev v odseku "
 "Nastavite pogovornega okna »Mape«."
 
-#: app/core/gimpdatafactory.c:1000
+#: app/core/gimpdatafactory.c:1023
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -13401,7 +13415,7 @@ msgstr ""
 "poti iskanja podatkov. Najverjetneje ste ročno urejali datoteko gimprc, "
 "popravite jo v odseku Nastavite pogovornega okna »Mape«."
 
-#: app/core/gimpdatafactory.c:1010
+#: app/core/gimpdatafactory.c:1033
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "Podatkovne mape za pisanje še niste nastavili."
@@ -21245,11 +21259,11 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
-"Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta »%s« (#"
-"%d). Pričakovano %s, prejeto %s."
+"Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta "
+"»%s« (#%d). Pričakovano %s, prejeto %s."
 
 #: app/pdb/gimpprocedure.c:893
 #, c-format
@@ -21347,7 +21361,7 @@ msgstr "2D-preoblikovanje"
 msgid "2D Transforming"
 msgstr "2D-preoblikovanje"
 
-#: app/pdb/pdb-cmds.c:1151 app/pdb/pdb-cmds.c:1193
+#: app/pdb/pdb-cmds.c:1183 app/pdb/pdb-cmds.c:1225
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Podatkovna oznaka »%s« ni kanonski identifikator"
@@ -21915,7 +21929,7 @@ msgstr "Indeksirano z alfo"
 msgid "This plug-in only works on the following layer types:"
 msgstr "Ta vstavek deluje le na naslednjih vrstah plasti:"
 
-#: app/plug-in/gimppluginprocedure.c:1307
+#: app/plug-in/gimppluginprocedure.c:1315
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -21924,7 +21938,7 @@ msgstr ""
 "Napaka klica pri »%s«:\n"
 "%s"
 
-#: app/plug-in/gimppluginprocedure.c:1319
+#: app/plug-in/gimppluginprocedure.c:1327
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -21933,22 +21947,22 @@ msgstr ""
 "Napaka pri izvajanju »%s«:\n"
 "%s"
 
-#: app/plug-in/plug-in-rc.c:235
+#: app/plug-in/plug-in-rc.c:238
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Preskakovanje »%s«: napačna različica protokola GIMP."
 
-#: app/plug-in/plug-in-rc.c:242
+#: app/plug-in/plug-in-rc.c:245
 #, c-format
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "Preskakovanje »%s«: napačna različica zapisa datoteke pluginrc."
 
-#: app/plug-in/plug-in-rc.c:544
+#: app/plug-in/plug-in-rc.c:547
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "neveljavna vrednost »%s« za vrsto ikone"
 
-#: app/plug-in/plug-in-rc.c:559
+#: app/plug-in/plug-in-rc.c:562
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "neveljavna vrednost »%ld« za vrsto ikone"
