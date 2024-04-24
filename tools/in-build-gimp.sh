@@ -60,7 +60,12 @@ if [ -n "$GIMP3_DIRECTORY" ] && [ -d "$GIMP3_DIRECTORY" ] && [ -O "$GIMP3_DIRECT
     exit 1
   fi
   echo INFO: Running: rm -fr --preserve-root --one-file-system \"$GIMP3_DIRECTORY\"
-  rm -fr --preserve-root --one-file-system "$GIMP3_DIRECTORY"
+  if [ -n "$GIMP_TEMP_UPDATE_RPATH" ]; then
+    # macOS doesn't have the additional security options.
+    rm -fr "$GIMP3_DIRECTORY"
+  else
+    rm -fr --preserve-root --one-file-system "$GIMP3_DIRECTORY"
+  fi
 else
   echo "ERROR: \$GIMP3_DIRECTORY ($GIMP3_DIRECTORY) is not a directory or does not belong to the user"
   exit 1
