@@ -503,7 +503,7 @@ gimp-win-a64:
       - _build-a64/config.h
       - _build-a64/build/windows/installer/
       - _build-a64/build/windows/store/
-    expire_in: 1 day
+    expire_in: 2 days
 
 ## WINDOWS x86_64 CI (native MSYS2) ##
 
@@ -547,7 +547,7 @@ gimp-win-x64:
     paths:
       - gimp-x64/
       - done-dll.list
-    expire_in: 1 day
+    expire_in: 2 days
 
 ## WINDOWS x86 CI (native MSYS2) ##
 
@@ -590,7 +590,7 @@ gimp-win-x86:
     paths:
       - gimp-x86/
       - done-dll.list
-    expire_in: 1 day
+    expire_in: 2 days
 
 
 ## Analysis ##
@@ -614,7 +614,7 @@ clang-format:
     paths:
       - fetch_upstream.log
       - fetch_origin.log
-    expire_in: 1 week
+    expire_in: 2 days
 
 cppcheck:
   extends: .default
@@ -634,7 +634,7 @@ cppcheck:
   artifacts:
     paths:
       - report/
-    expire_in: 1 week
+    expire_in: 8 days
 
 
 ## Ready-to-distribute ##
@@ -735,7 +735,7 @@ dist-flatpak-weekly:
     expose_as: 'Linux flatpak'
     paths:
       - gimp-git.flatpak
-    expire_in: 1 week
+    expire_in: 8 days
 
 dist-installer-weekly:
   extends: .win
@@ -752,7 +752,7 @@ dist-installer-weekly:
     paths:
       - build/windows/installer/_Output/
       - installer.log
-    expire_in: 1 week
+    expire_in: 8 days
 
 dist-store-weekly:
   extends: .win
@@ -776,4 +776,4 @@ dist-store-weekly:
     paths:
     - build/windows/store/_Output/
     - store.log
-    expire_in: 1 week
+    expire_in: 8 days
