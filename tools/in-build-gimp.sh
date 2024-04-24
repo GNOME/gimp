@@ -53,7 +53,7 @@ if [ -n "$GIMP3_DIRECTORY" ] && [ -d "$GIMP3_DIRECTORY" ] && [ -O "$GIMP3_DIRECT
   fi
   used_dir_prefix=$(realpath "$GIMP3_DIRECTORY")
   used_dir_prefix=${used_dir_prefix%???}
-  tmpl_dir_prefix=$(realpath "$GIMP_GLOBAL_BUILD_ROOT/.GIMP3-build-config-")
+  tmpl_dir_prefix=$(realpath "$GIMP_GLOBAL_BUILD_ROOT")/.GIMP3-build-config-
   if [ "$used_dir_prefix" != "$tmpl_dir_prefix" ]; then
     echo "ERROR: \$GIMP3_DIRECTORY ($GIMP3_DIRECTORY) should be under the build directory with a specific prefix."
     echo "       \"$used_dir_prefix\" != \"$tmpl_dir_prefix\""
