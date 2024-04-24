@@ -31,6 +31,18 @@
 
 #include "libgimp-intl.h"
 
+
+/**
+ * GimpExportProcedure:
+ *
+ * Export procedures implement image export.
+ *
+ * Registered export procedures will be automatically available in the export
+ * interfaces and functions of GIMP. The detection (to decide which file is
+ * redirected to which plug-in procedure) depends on the various methods set
+ * with [class@FileProcedure] API.
+ **/
+
 enum
 {
   PROP_0,

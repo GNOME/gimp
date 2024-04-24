@@ -33,7 +33,7 @@ G_BEGIN_DECLS
  * GimpRunVectorLoadFunc:
  * @procedure:      the [class@Gimp.Procedure] that runs.
  * @run_mode:       the [enum@RunMode].
- * @file:           the [class@Gio.File] to load from.
+ * @file:           the [iface@Gio.File] to load from.
  * @width:          the desired width in pixel for the created image.
  * @height:         the desired height in pixel for the created image.
  * @keep_ratio:     whether dimension ratio should be preserved.
@@ -52,7 +52,7 @@ G_BEGIN_DECLS
  * supports this format. You may tweak this object, for instance adding metadata
  * specific to the format. You can also edit @flags if you need to filter out
  * some specific common fields. For instance, it is customary to remove a
- * colorspace field with [const@MetadataLoadFlags] when a profile was added.
+ * colorspace field with [flags@MetadataLoadFlags] when a profile was added.
  *
  * Regarding returned image dimensions:
  *
@@ -79,7 +79,7 @@ typedef GimpValueArray * (* GimpRunVectorLoadFunc)       (GimpProcedure         
                                                           GFile                 *file,
                                                           gint                   width,
                                                           gint                   height,
-                                                          gboolean               preserve_ratio,
+                                                          gboolean               keep_ratio,
                                                           gboolean               prefer_native_dimension,
                                                           GimpMetadata          *metadata,
                                                           GimpMetadataLoadFlags *flags,

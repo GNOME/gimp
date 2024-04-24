@@ -261,6 +261,7 @@ libgimp_headers_introspectable = [
   'gimpselection.h',
   'gimptextlayer.h',
   'gimpthumbnailprocedure.h',
+  'gimpvectorloadprocedure.h',
   'gimpvectors.h',
   pdb_wrappers_headers,
 ]
@@ -326,6 +327,7 @@ libgimpui_headers_introspectable = [
   'gimppropwidgets.h',
   'gimpresourcechooser.h',
   'gimpexportproceduredialog.h',
+  'gimpvectorloadproceduredialog.h',
   'gimpzoompreview.h',
 ]
 

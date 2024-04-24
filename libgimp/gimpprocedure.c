@@ -42,6 +42,18 @@
 #include "libgimp-intl.h"
 
 
+/**
+ * GimpProcedure:
+ *
+ * Procedures are registered functions which can be run across GIMP ecosystem.
+ * They can be created by plug-ins and can then run by the core application
+ * when called from menus (or through other interaction depending on specific
+ * procedure subclasses).
+ *
+ * A plug-in can also run procedures created by the core, but also the ones
+ * created by other plug-ins (see [class@PDB]).
+ **/
+
 enum
 {
   PROP_0,

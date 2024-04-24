@@ -26,6 +26,21 @@
 #include "gimppdb_pdb.h"
 
 
+/**
+ * GimpBatchProcedure:
+ *
+ * Batch procedures implement an interpreter able to run commands as input.
+ *
+ * In particular, batch procedures will be available on the command line
+ * through the `--batch-interpreter` option to switch the chosen interpreter.
+ * Then any command given through the `--batch` option will have to be in the
+ * chosen language.
+ *
+ * It makes GIMP usable on the command line, but also to process small scripts
+ * (without making full-featured plug-ins), fully in command line without
+ * graphical interface.
+ **/
+
 struct _GimpBatchProcedurePrivate
 {
   gchar           *interpreter_name;
