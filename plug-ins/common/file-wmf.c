@@ -63,6 +63,13 @@ struct _WmfClass
   GimpPlugInClass parent_class;
 };
 
+typedef struct
+{
+  guchar *pixels;
+  gint    width;
+  gint    height;
+} WmfPixbuf;
+
 
 #define WMF_TYPE  (wmf_get_type ())
 #define WMF(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WMF_TYPE, Wmf))
@@ -76,6 +83,10 @@ static GimpProcedure  * wmf_create_procedure (GimpPlugIn            *plug_in,
 static GimpValueArray * wmf_load             (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GFile                 *file,
+                                              gint                   width,
+                                              gint                   height,
+                                              gboolean               preserve_ratio,
+                                              gboolean               prefer_native_dimension,
                                               GimpMetadata          *metadata,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
@@ -96,7 +107,7 @@ static gboolean         load_wmf_size        (GFile                 *file,
 static gboolean         load_dialog          (GFile                 *file,
                                               GimpProcedure         *procedure,
                                               GimpProcedureConfig   *config);
-static guchar         * wmf_get_pixbuf       (GFile                 *file,
+static WmfPixbuf      * wmf_get_pixbuf       (GFile                 *file,
                                               gint                  *width,
                                               gint                  *height);
 static guchar         * wmf_load_file        (GFile                 *file,
@@ -148,9 +159,9 @@ wmf_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           wmf_load, NULL, NULL);
+      procedure = gimp_vector_load_procedure_new (plug_in, name,
+                                                  GIMP_PDB_PROC_TYPE_PLUGIN,
+                                                  wmf_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Microsoft WMF file"));
 
@@ -163,6 +174,8 @@ wmf_create_procedure (GimpPlugIn  *plug_in,
                                       "Dom Lachowicz <cinamod@hotmail.com>",
                                       "(c) 2003 - Version 0.3.0");
 
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("WMF"));
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-wmf");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -172,27 +185,6 @@ wmf_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
-
-      GIMP_PROC_ARG_DOUBLE (procedure, "resolution",
-                            _("Resolu_tion"),
-                            _("Resolution to use for rendering the WMF"),
-                            GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
-                            WMF_DEFAULT_RESOLUTION,
-                            G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "width",
-                         _("_Width"),
-                         _("Width (in pixels) to load the WMF in, "
-                         "0 for original width"),
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
-                         G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "height",
-                         _("_Height"),
-                         _("Height (in pixels) to load the WMF in, "
-                         "0 for original height"),
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
-                         G_PARAM_READWRITE);
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
@@ -217,6 +209,10 @@ static GimpValueArray *
 wmf_load (GimpProcedure         *procedure,
           GimpRunMode            run_mode,
           GFile                 *file,
+          gint                   width,
+          gint                   height,
+          gboolean               preserve_ratio,
+          gboolean               prefer_native_dimension,
           GimpMetadata          *metadata,
           GimpMetadataLoadFlags *flags,
           GimpProcedureConfig   *config,
@@ -226,8 +222,6 @@ wmf_load (GimpProcedure         *procedure,
   GimpImage      *image;
   GError         *error = NULL;
   gdouble         resolution;
-  gint            width;
-  gint            height;
 
   gegl_init (NULL, NULL);
 
@@ -237,9 +231,9 @@ wmf_load (GimpProcedure         *procedure,
                                              NULL);
 
   g_object_get (config,
-                "resolution", &resolution,
-                "width",      &width,
-                "height",     &height,
+                "pixel-density", &resolution,
+                "width",         &width,
+                "height",        &height,
                 NULL);
   image = load_image (file, width, height, resolution, &error);
 
@@ -414,12 +408,12 @@ load_wmf_size (GFile       *file,
 static void
 wmf_preview_callback (GtkWidget     *widget,
                       GtkAllocation *allocation,
-                      guchar        *pixels)
+                      WmfPixbuf     *pixbuf)
 {
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (widget),
-                          0, 0, allocation->width, allocation->height,
+                          0, 0, pixbuf->width, pixbuf->height,
                           GIMP_RGBA_IMAGE,
-                          pixels, allocation->width * 4);
+                          pixbuf->pixels, pixbuf->width * 4);
 }
 
 static gboolean
@@ -428,39 +422,32 @@ load_dialog (GFile               *file,
              GimpProcedureConfig *config)
 {
   GtkWidget     *dialog;
-  GtkWidget     *main_hbox;
+  GtkWidget     *content_area;
   GtkWidget     *vbox;
   GtkWidget     *frame;
   GtkWidget     *image;
-  guchar        *pixels;
+  WmfPixbuf     *pixbuf;
   gboolean       run = FALSE;
   WmfLoadVals    vals;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_procedure_dialog_new (GIMP_PROCEDURE (procedure),
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Render Windows Metafile"));
+  dialog = gimp_vector_load_procedure_dialog_new (GIMP_VECTOR_LOAD_PROCEDURE (procedure),
+                                                  GIMP_PROCEDURE_CONFIG (config),
+                                                  NULL);
 
-  /* TODO: we'll want to have a special widget (or even procedure argument type)
-   * for dimensions (showing units, possibility to link dimensions and so on).
-   * TODO 2: in the old version, there used to be X and Y ratio fields which
-   * could be constrained/linked (or not) and would sync back and forth with the
+  /* TODO: in the old version, there used to be X and Y ratio fields which could
+   * be constrained/linked (or not) and would sync back and forth with the
    * width/height fields. Are these needed? If so, should we try to automatize
-   * such UI when editing dimensions?
+   * such UI when editing dimensions with options in GimpResolutionEntry?
    */
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                  "vbox-arguments",
-                                  "width", "height", "resolution",
-                                  NULL);
-  main_hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog), "main-hbox",
-                                              "vbox-arguments", NULL);
-  gtk_orientable_set_orientation (GTK_ORIENTABLE (main_hbox), GTK_ORIENTATION_HORIZONTAL);
+
+  content_area  = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 
   /*  The WMF preview  */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (main_hbox), vbox, 0);
+  gtk_box_pack_start (GTK_BOX (content_area), vbox, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (content_area), vbox, 0);
   gtk_widget_show (vbox);
 
   frame = gtk_frame_new (NULL);
@@ -470,7 +457,7 @@ load_dialog (GFile               *file,
 
   vals.width  = - WMF_PREVIEW_SIZE;
   vals.height = - WMF_PREVIEW_SIZE;
-  pixels = wmf_get_pixbuf (file, &vals.width, &vals.height);
+  pixbuf = wmf_get_pixbuf (file, &vals.width, &vals.height);
   image = gimp_preview_area_new ();
   gtk_widget_set_size_request (image, vals.width, vals.height);
   gtk_container_add (GTK_CONTAINER (frame), image);
@@ -478,7 +465,7 @@ load_dialog (GFile               *file,
 
   g_signal_connect (image, "size-allocate",
                     G_CALLBACK (wmf_preview_callback),
-                    pixels);
+                    pixbuf);
 
   size_label = gtk_label_new (NULL);
   gtk_label_set_justify (GTK_LABEL (size_label), GTK_JUSTIFY_CENTER);
@@ -486,18 +473,19 @@ load_dialog (GFile               *file,
   gtk_widget_show (size_label);
 
   /*  query the initial size after the size label is created  */
-  g_object_get (config, "resolution", &vals.resolution, NULL);
+  g_object_get (config, "pixel-density", &vals.resolution, NULL);
   load_wmf_size (file, &vals);
   g_object_set (config,
                 "width",  vals.width,
                 "height", vals.height,
                 NULL);
 
-  /* Complete the dialog. */
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "main-hbox", NULL);
+  /* Run the dialog. */
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
+  g_free (pixbuf->pixels);
+  g_free (pixbuf);
 
   return run;
 }
@@ -542,13 +530,14 @@ pixbuf_gd_convert (const gint *gd_pixels,
   return pixels;
 }
 
-static guchar *
+static WmfPixbuf *
 wmf_get_pixbuf (GFile *file,
                 gint  *width,
                 gint  *height)
 {
+  WmfPixbuf      *pixbuf  = NULL;
   GMappedFile    *mapped;
-  guchar         *pixels   = NULL;
+  guchar         *pixels  = NULL;
 
   /* the bits we need to decode the WMF via libwmf2's GD layer  */
   wmf_error_t     err;
@@ -658,7 +647,15 @@ wmf_get_pixbuf (GFile *file,
 
   g_mapped_file_unref (mapped);
 
-  return pixels;
+  if (pixels)
+    {
+      pixbuf = g_new0 (WmfPixbuf, 1);
+      pixbuf->pixels = pixels;
+      pixbuf->width  = *width;
+      pixbuf->height = *height;
+    }
+
+  return pixbuf;
 }
 
 static guchar *
