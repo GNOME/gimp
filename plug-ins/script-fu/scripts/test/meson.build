@@ -4,15 +4,17 @@
 # None should be installed in a release.
 # None should be translated: not marked or marked but in potfiles.skip.
 
+# Note this meson.build is excluded from a release build at a higher level,
+# so here there are no "if not release statements"
+
 # scripts interpreted by extension-script-fu, installed to /scripts
-if not stable
-  scripts = [
-    'contactsheet.scm',
-    'clothify-v3.scm',
-    'test-sphere.scm',
-    'test-v3.scm',
-  ]
-endif
+scripts = [
+  'contactsheet.scm',
+  'clothify-v3.scm',
+  'test-sphere.scm',
+  'test-v3.scm',
+]
+
 
 install_data(
   scripts,
@@ -26,11 +28,9 @@ install_data(
 # Like other interpreted plugins.
 # Lacking a shebang, a .interp file is needed to associate .scm suffix
 
-if not stable
-  scripts_independent = [
-    { 'name': 'test-bytes' },
-  ]
-endif
+scripts_independent = [
+  { 'name': 'test-bytes' },
+]
 
 foreach plugin : scripts_independent
   name = plugin.get('name')

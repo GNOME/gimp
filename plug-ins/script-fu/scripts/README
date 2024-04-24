@@ -20,7 +20,7 @@ Initialization scripts
   - have suffix .init or .scm
   - are not plugins
 FUTURE:
-The initialization scripts should all should have suffix .scm
+The initialization scripts should all have suffix .scm
 (like the rest of the Scheme world.)
 They should be in a separate directory
 so advanced users can load library scripts.

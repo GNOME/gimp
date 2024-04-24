@@ -12,7 +12,9 @@ subdir('scripts')
 subdir('server')
 subdir('interpreter')
 subdir('console')
-subdir('test')
+if not stable or not release
+  subdir('test')
+endif
 
 
 executable_name = 'script-fu'
