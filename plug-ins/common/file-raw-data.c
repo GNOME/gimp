@@ -468,8 +468,8 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                             _("Sa_mple spacing"),
                             _("The sample spacing of the data."),
                             gimp_choice_new_with_values ("auto-detect", HGT_SRTM_AUTO_DETECT, _("Auto-Detect"),            NULL,
-                                                         "srtm-1",      HGT_SRTM_1,           _("STRM-1 (1 arc second)"),  NULL,
-                                                         "srtm-3",      HGT_SRTM_3,           _("STRM-3 (3 arc second)"),  NULL,
+                                                         "srtm-1",      HGT_SRTM_1,           _("SRTM-1 (1 arc second)"),  NULL,
+                                                         "srtm-3",      HGT_SRTM_3,           _("SRTM-3 (3 arc seconds)"),  NULL,
                                                          NULL),
                             "auto-detect", G_PARAM_READWRITE);
 
