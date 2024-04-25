@@ -244,10 +244,8 @@ export_image (GFile                *file,
                 "optimize",                  &optimize,
                 "progressive",               &progressive,
                 "cmyk",                      &cmyk,
-                "sub-sampling",              &subsmp,
                 "baseline",                  &baseline,
                 "restart",                   &restart,
-                "dct",                       &dct,
 
                 /* Original quality settings. */
                 "use-original-quality",      &use_orig_quality,
@@ -261,6 +259,8 @@ export_image (GFile                *file,
                 "gimp-comment",              &comment,
 
                 NULL);
+  dct    = gimp_procedure_config_get_choice_id (config, "dct");
+  subsmp = gimp_procedure_config_get_choice_id (config, "sub-sampling");
 
   quality = (gint) (dquality * 100.0 + 0.5);
 
@@ -843,7 +843,6 @@ save_dialog (GimpProcedure       *procedure,
   GtkWidget        *dialog;
   GtkWidget        *widget;
   GtkWidget        *profile_label;
-  GtkListStore     *store;
   GimpColorProfile *cmyk_profile = NULL;
   gint              orig_quality;
   gint              restart;
@@ -939,32 +938,14 @@ save_dialog (GimpProcedure       *procedure,
                   NULL);
 
   /* Subsampling */
-  store = gimp_int_store_new (_("4:4:4 (best quality)"),
-                              JPEG_SUBSAMPLING_1x1_1x1_1x1,
-                              _("4:2:2 (chroma halved horizontally)"),
-                              JPEG_SUBSAMPLING_2x1_1x1_1x1,
-                              _("4:4:0 (chroma halved vertically)"),
-                              JPEG_SUBSAMPLING_1x2_1x1_1x1,
-                              _("4:2:0 (chroma quartered)"),
-                              JPEG_SUBSAMPLING_2x2_1x1_1x1,
-                              NULL);
-  widget = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "sub-sampling", GIMP_INT_STORE (store));
-  widget = gimp_label_int_widget_get_widget (GIMP_LABEL_INT_WIDGET (widget));
+  widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                             "sub-sampling", G_TYPE_NONE);
 
   if (! gimp_drawable_is_rgb (drawable))
     {
-      g_object_set (config, "sub-sampling", JPEG_SUBSAMPLING_1x1_1x1_1x1, NULL);
+      g_object_set (config, "sub-sampling", "sub-sampling-1x1", NULL);
       gtk_widget_set_sensitive (widget, FALSE);
     }
-
-  /* DCT method */
-  store = gimp_int_store_new (_("Fast Integer"),   1,
-                              _("Integer"),        0,
-                              _("Floating-Point"), 2,
-                              NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "dct", GIMP_INT_STORE (store));
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                    "advanced-title", _("Advanced Options"),
@@ -1055,8 +1036,8 @@ subsampling_changed (GimpProcedureConfig *config,
   g_object_get (config,
                 "use-original-quality",  &use_orig_quality,
                 "original-sub-sampling", &orig_subsmp,
-                "sub-sampling",          &subsmp,
                 NULL);
+  subsmp = gimp_procedure_config_get_choice_id (config, "sub-sampling");
 
   /*  smoothing is not supported with nonstandard sampling ratios  */
   gtk_widget_set_sensitive (smoothing_scale,
@@ -1101,5 +1082,24 @@ use_orig_qual_changed_rgb (GimpProcedureConfig *config)
 
   /* the test is (orig_quality > 0), not (orig_subsmp > 0) - this is normal */
   if (use_orig_quality && orig_quality > 0)
-    g_object_set (config, "sub-sampling", orig_subsmp, NULL);
+    {
+      switch (orig_subsmp)
+        {
+        case JPEG_SUBSAMPLING_1x1_1x1_1x1:
+          g_object_set (config, "sub-sampling", "sub-sampling-1x1", NULL);
+          break;
+
+        case JPEG_SUBSAMPLING_2x1_1x1_1x1:
+          g_object_set (config, "sub-sampling", "sub-sampling-2x1", NULL);
+          break;
+
+        case JPEG_SUBSAMPLING_1x2_1x1_1x1:
+          g_object_set (config, "sub-sampling", "sub-sampling-1x2", NULL);
+          break;
+
+        case JPEG_SUBSAMPLING_2x2_1x1_1x1:
+          g_object_set (config, "sub-sampling", "sub-sampling-2x2", NULL);
+          break;
+        }
+    }
 }

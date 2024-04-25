@@ -136,8 +136,8 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("JPEG image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads files in the JPEG file format",
-                                        "Loads files in the JPEG file format",
+                                        _("Loads files in the JPEG file format"),
+                                        _("Loads files in the JPEG file format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Spencer Kimball, Peter Mattis & others",
@@ -161,9 +161,9 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                                                 jpeg_load_thumb, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads a thumbnail from a JPEG image",
-                                        "Loads a thumbnail from a JPEG image, "
-                                        "if one exists",
+                                        _("Loads a thumbnail from a JPEG image"),
+                                        _("Loads a thumbnail from a JPEG image, "
+                                          "if one exists"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Mukund Sivaraman <muks@mukund.org>, "
@@ -183,9 +183,9 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("JPEG image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Saves files in the JPEG file format",
-                                        "Saves files in the lossy, widely "
-                                        "supported JPEG format",
+                                        _("Exports files in the JPEG file format"),
+                                        _("Exports files in the lossy, widely "
+                                          "supported JPEG format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Spencer Kimball, Peter Mattis & others",
@@ -232,16 +232,15 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "sub-sampling",
-                         _("Su_bsampling"),
-                         _("Sub-sampling type { 0 == 4:2:0 (chroma quartered), "
-                           "1 == 4:2:2 (chroma halved horizontally), "
-                           "2 == 4:4:4 (best quality), "
-                           "3 == 4:4:0 (chroma halved vertically)"),
-                         JPEG_SUBSAMPLING_2x2_1x1_1x1,
-                         JPEG_SUBSAMPLING_1x2_1x1_1x1,
-                         JPEG_SUBSAMPLING_1x1_1x1_1x1,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "sub-sampling",
+                            _("Su_bsampling"),
+                            _("Sub-sampling type"),
+                            gimp_choice_new_with_values ("sub-sampling-1x1", JPEG_SUBSAMPLING_1x1_1x1_1x1, _("4:4:4 (best quality)"),               NULL,
+                                                         "sub-sampling-2x1", JPEG_SUBSAMPLING_2x1_1x1_1x1, _("4:2:2 (chroma halved horizontally)"), NULL,
+                                                         "sub-sampling-1x2", JPEG_SUBSAMPLING_1x2_1x1_1x1, _("4:4:0 (chroma halved vertically)"),   NULL,
+                                                         "sub-sampling-2x2", JPEG_SUBSAMPLING_2x2_1x1_1x1, _("4:2:0 (chroma quartered)"),           NULL,
+                                                         NULL),
+                            "sub-sampling-1x1", G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "baseline",
                              _("Baseline"),
@@ -257,12 +256,14 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                          0, 64, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "dct",
-                         _("_DCT method"),
-                         _("DCT method to use { INTEGER (0), FIXED (1), "
-                           "FLOAT (2) }"),
-                         0, 2, 0,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "dct",
+                            _("_DCT method"),
+                            _("DCT method to use"),
+                            gimp_choice_new_with_values ("fixed",   1, _("Fast Integer"),    NULL,
+                                                         "integer", 0, _("Integer"),         NULL,
+                                                         "float",   2, _("Floating-Point"),  NULL,
+                                                         NULL),
+                            "integer", G_PARAM_READWRITE);
 
       /* Some auxiliary arguments mostly for interactive usage. */
 
@@ -502,9 +503,9 @@ jpeg_export (GimpProcedure        *procedure,
                                           &orig_num_quant_tables);
 
           g_object_get (config,
-                        "quality",      &dquality,
-                        "sub-sampling", &subsmp,
+                        "quality", &dquality,
                         NULL);
+          subsmp = gimp_procedure_config_get_choice_id (config, "sub-sampling");
 
           quality = (gint) (dquality * 100.0);
 
@@ -528,7 +529,24 @@ jpeg_export (GimpProcedure        *procedure,
                     orig_subsmp == JPEG_SUBSAMPLING_2x2_1x1_1x1))
                 {
                   subsmp = orig_subsmp;
-                  g_object_set (config, "sub-sampling", orig_subsmp, NULL);
+                  switch (subsmp)
+                    {
+                    case JPEG_SUBSAMPLING_1x1_1x1_1x1:
+                      g_object_set (config, "sub-sampling", "sub-sampling-1x1", NULL);
+                      break;
+
+                    case JPEG_SUBSAMPLING_2x1_1x1_1x1:
+                      g_object_set (config, "sub-sampling", "sub-sampling-2x1", NULL);
+                      break;
+
+                    case JPEG_SUBSAMPLING_1x2_1x1_1x1:
+                      g_object_set (config, "sub-sampling", "sub-sampling-1x2", NULL);
+                      break;
+
+                    case JPEG_SUBSAMPLING_2x2_1x1_1x1:
+                      g_object_set (config, "sub-sampling", "sub-sampling-2x2", NULL);
+                      break;
+                    }
                 }
 
               if (orig_quality == quality && orig_subsmp == subsmp)
