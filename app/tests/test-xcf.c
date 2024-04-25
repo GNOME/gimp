@@ -278,6 +278,7 @@ gimp_test_load_image (Gimp  *gimp,
                            gimp_get_user_context (gimp),
                            NULL /*progress*/,
                            file,
+                           0, 0, /* vector width, height */
                            FALSE /*as_new*/,
                            proc,
                            GIMP_RUN_NONINTERACTIVE,

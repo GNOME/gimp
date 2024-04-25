@@ -71,6 +71,8 @@ file_open_image (Gimp                *gimp,
                  GimpContext         *context,
                  GimpProgress        *progress,
                  GFile               *file,
+                 gint                 vector_width,
+                 gint                 vector_height,
                  gboolean             as_new,
                  GimpPlugInProcedure *file_proc,
                  GimpRunMode          run_mode,
@@ -204,13 +206,30 @@ file_open_image (Gimp                *gimp,
   if (progress)
     g_object_add_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
 
-  return_vals =
-    gimp_pdb_execute_procedure_by_name (gimp->pdb,
-                                        context, progress, error,
-                                        gimp_object_get_name (file_proc),
-                                        GIMP_TYPE_RUN_MODE, run_mode,
-                                        G_TYPE_FILE,        file,
-                                        G_TYPE_NONE);
+  if (file_proc->handles_vector)
+    {
+      return_vals =
+        gimp_pdb_execute_procedure_by_name (gimp->pdb,
+                                            context, progress, error,
+                                            gimp_object_get_name (file_proc),
+                                            GIMP_TYPE_RUN_MODE, run_mode,
+                                            G_TYPE_FILE,        file,
+                                            G_TYPE_INT,         vector_width,
+                                            G_TYPE_INT,         vector_height,
+                                            G_TYPE_BOOLEAN,     TRUE,
+                                            G_TYPE_BOOLEAN,     vector_width && vector_height ? FALSE : TRUE,
+                                            G_TYPE_NONE);
+    }
+  else
+    {
+      return_vals =
+        gimp_pdb_execute_procedure_by_name (gimp->pdb,
+                                            context, progress, error,
+                                            gimp_object_get_name (file_proc),
+                                            GIMP_TYPE_RUN_MODE, run_mode,
+                                            G_TYPE_FILE,        file,
+                                            G_TYPE_NONE);
+    }
 
   if (progress)
     g_object_remove_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
@@ -504,7 +523,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
     run_mode = GIMP_RUN_NONINTERACTIVE;
 
   image = file_open_image (gimp, context, progress,
-                           file,
+                           file, 0, 0,
                            as_new,
                            file_proc,
                            run_mode,
@@ -604,7 +623,10 @@ file_open_layers (Gimp                *gimp,
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   new_image = file_open_image (gimp, context, progress,
-                               file, FALSE,
+                               file,
+                               gimp_image_get_width (dest_image),
+                               gimp_image_get_height (dest_image),
+                               FALSE,
                                file_proc,
                                run_mode,
                                status, &mime_type, error);
