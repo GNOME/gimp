@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-09 12:23+0000\n"
-"PO-Revision-Date: 2024-03-10 15:50+0100\n"
+"POT-Creation-Date: 2024-04-24 23:18+0000\n"
+"PO-Revision-Date: 2024-04-25 16:44+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -161,12 +161,15 @@ msgstr "ფენების ამოჭრა"
 msgid "Resize Image to Layers"
 msgstr "გამოსახულების ზომის ფენებამდე შეცვლა"
 
-#: libgimp/gimpexport.c:581
-msgid "Confirm Save"
-msgstr "შენახვის დადასტურება"
+#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
+#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
+#: libgimp/gimpexport.c:949 libgimp/gimpexportproceduredialog.c:416
+#, c-format
+msgid "Export Image as %s"
+msgstr "გამოსახულების გატანა, როგორც %s"
 
-#: libgimp/gimpexport.c:586 libgimp/gimpexport.c:668 libgimp/gimpexport.c:1242
-#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:554
+#: libgimp/gimpexport.c:955 libgimp/gimpproceduredialog.c:336
+#: libgimpwidgets/gimpcolorbutton.c:554
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -175,56 +178,78 @@ msgstr "შენახვის დადასტურება"
 msgid "_Cancel"
 msgstr "_გაუქმება"
 
-#: libgimp/gimpexport.c:587
-msgid "C_onfirm"
-msgstr "_დასტური"
-
-#: libgimp/gimpexport.c:663
-msgid "Export File"
-msgstr "ფაილის გატანა"
-
-#: libgimp/gimpexport.c:667
-msgid "_Ignore"
-msgstr "_იგნორი"
-
-#: libgimp/gimpexport.c:669 libgimp/gimpexport.c:1243
-#: libgimp/gimpproceduredialog.c:296 libgimp/gimpproceduredialog.c:569
+#: libgimp/gimpexport.c:956 libgimp/gimpproceduredialog.c:308
+#: libgimp/gimpproceduredialog.c:595
 msgid "_Export"
 msgstr "_გატანა"
 
-#. the headline
-#: libgimp/gimpexport.c:699
-#, c-format
-msgid ""
-"Your image should be exported before it can be saved as %s for the following "
-"reasons:"
+#: libgimp/gimpexportprocedure.c:479
+msgid "Save _Exif"
+msgstr "_Exif-ის შენახვა"
+
+#: libgimp/gimpexportprocedure.c:480
+msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr ""
 
-#. the footline
-#: libgimp/gimpexport.c:773
-msgid "The export conversion won't modify your original image."
+#: libgimp/gimpexportprocedure.c:485
+msgid "Save _IPTC"
+msgstr "_IPTC-ის შენახვა"
+
+#: libgimp/gimpexportprocedure.c:486
+msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
 
-#: libgimp/gimpexport.c:893
-#, c-format
-msgid ""
-"You are about to save a layer mask as %s.\n"
-"This will not save the visible layers."
+#: libgimp/gimpexportprocedure.c:491
+msgid "Save _XMP"
+msgstr "_XMP-ის შენახვა"
+
+#: libgimp/gimpexportprocedure.c:492
+msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr ""
 
-#: libgimp/gimpexport.c:899
-#, c-format
-msgid ""
-"You are about to save a channel (saved selection) as %s.\n"
-"This will not save the visible layers."
+#: libgimp/gimpexportprocedure.c:497
+msgid "Save color _profile"
+msgstr "ფერის პროფილის _შენახვა"
+
+#: libgimp/gimpexportprocedure.c:498
+msgid "Save the ICC color profile as metadata"
 msgstr ""
 
-#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1236 libgimp/gimpsaveproceduredialog.c:398
-#, c-format
-msgid "Export Image as %s"
-msgstr "გამოსახულების გატანა, როგორც %s"
+#: libgimp/gimpexportprocedure.c:503
+msgid "Save _thumbnail"
+msgstr "მინიატურის _შენახვა"
+
+#: libgimp/gimpexportprocedure.c:504
+msgid "Save a smaller representation of the image as metadata"
+msgstr ""
+
+#: libgimp/gimpexportprocedure.c:510
+msgid "Save c_omment"
+msgstr "_კომენტარის შენახვა"
+
+#: libgimp/gimpexportprocedure.c:511
+msgid "Save a comment as metadata"
+msgstr ""
+
+#: libgimp/gimpexportprocedure.c:515
+msgid "Comment"
+msgstr "კომენტარი"
+
+#: libgimp/gimpexportprocedure.c:516
+msgid "Image comment"
+msgstr "გამოსახულების კომენტარი"
+
+#: libgimp/gimpexportproceduredialog.c:141
+msgid "Metadata"
+msgstr "მეტამონაცემები"
+
+#: libgimp/gimpexportproceduredialog.c:150
+msgid "Edit Metadata"
+msgstr "მეტამონაცემების ჩასწორება"
+
+#: libgimp/gimpexportproceduredialog.c:150
+msgid "(edit)"
+msgstr "(ჩასწორება)"
 
 #: libgimp/gimpimagemetadata.c:283
 msgid "Background"
@@ -234,7 +259,7 @@ msgstr "ფონი"
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:267
+#: libgimp/gimploadprocedure.c:267 libgimp/gimpvectorloadprocedure.c:255
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
@@ -351,108 +376,108 @@ msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d დამთხვევა"
 
-#: libgimp/gimpprocedure.c:2068
+#: libgimp/gimpprocedure.c:2080
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "პროცედურამ %s გასაბრუნებელი მნიშვნელობები არ დააბრუნა"
 
-#: libgimp/gimpprocedure.c:2195
+#: libgimp/gimpprocedure.c:2207
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2207
+#: libgimp/gimpprocedure.c:2219
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
 "'%s' (#%d). Expected %s, got %s."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2242
+#: libgimp/gimpprocedure.c:2254
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2256
+#: libgimp/gimpprocedure.c:2268
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2300
+#: libgimp/gimpprocedure.c:2312
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2310
+#: libgimp/gimpprocedure.c:2322
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr ""
 
-#: libgimp/gimpproceduredialog.c:294 libgimp/gimpproceduredialog.c:567
+#: libgimp/gimpproceduredialog.c:306 libgimp/gimpproceduredialog.c:593
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_გახსნა"
 
-#: libgimp/gimpproceduredialog.c:298 libgimp/gimpproceduredialog.c:571
+#: libgimp/gimpproceduredialog.c:310 libgimp/gimpproceduredialog.c:597
 #: libgimpwidgets/gimpcolorbutton.c:555 libgimpwidgets/gimpfileentry.c:467
 #: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
 #: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_დიახ"
 
-#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:553
+#: libgimp/gimpproceduredialog.c:318 libgimpwidgets/gimpcolorbutton.c:553
 msgid "_Reset"
 msgstr "_საწყისი მნიშვნელობებზე დაბრუნება"
 
-#: libgimp/gimpproceduredialog.c:359
+#: libgimp/gimpproceduredialog.c:371
 msgid "_Load Saved Settings"
 msgstr "შენახული პარამეტრების წაკითხვა"
 
-#: libgimp/gimpproceduredialog.c:360
+#: libgimp/gimpproceduredialog.c:372
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr ""
 
-#: libgimp/gimpproceduredialog.c:372
+#: libgimp/gimpproceduredialog.c:384
 msgid "_Save Settings"
 msgstr "პარამეტრების შენახვა"
 
-#: libgimp/gimpproceduredialog.c:373
+#: libgimp/gimpproceduredialog.c:385
 msgid "Store current settings for later reuse"
 msgstr ""
 
-#: libgimp/gimpproceduredialog.c:784
+#: libgimp/gimpproceduredialog.c:811
 msgid "Brush Chooser"
 msgstr "ფუნჯის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:788
+#: libgimp/gimpproceduredialog.c:815
 msgid "Font Chooser"
 msgstr "ფონტის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:792
+#: libgimp/gimpproceduredialog.c:819
 msgid "Gradient Chooser"
 msgstr "გრადიენტის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:796
+#: libgimp/gimpproceduredialog.c:823
 msgid "Palette Chooser"
 msgstr "პალიტრის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:800
+#: libgimp/gimpproceduredialog.c:827
 msgid "Pattern Chooser"
 msgstr "შაბლონის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:2532
+#: libgimp/gimpproceduredialog.c:2586
 msgid "Reset to _Initial Values"
 msgstr "საწყის მნიშვნელობებზე დაბრუნება"
 
-#: libgimp/gimpproceduredialog.c:2541
+#: libgimp/gimpproceduredialog.c:2595
 msgid "Reset to _Factory Defaults"
 msgstr "ქარხნულ _პარამეტრებზე დაბრუნება"
 
@@ -507,77 +532,55 @@ msgstr "აირჩიეთ არხი: %s"
 msgid "Choose drawable: %s"
 msgstr "აირჩიეთ ხატვადი: %s"
 
-#: libgimp/gimpsaveprocedure.c:467
-msgid "Save _Exif"
-msgstr "_Exif-ის შენახვა"
+#: libgimp/gimpresolutionentry-private.c:143
+#: libgimp/gimpvectorloadprocedure.c:117
+msgid "_Keep aspect ratio"
+msgstr "_საწყისი თანაფარდობის შენარჩუნება"
 
-#: libgimp/gimpsaveprocedure.c:468
-msgid "Save Exif (Exchangeable image file format) metadata"
+#: libgimp/gimpresolutionentry-private.c:144
+#: libgimp/gimpvectorloadprocedure.c:118
+msgid "Force dimensions with aspect ratio"
 msgstr ""
 
-#: libgimp/gimpsaveprocedure.c:473
-msgid "Save _IPTC"
-msgstr "_IPTC-ის შენახვა"
-
-#: libgimp/gimpsaveprocedure.c:474
-msgid "Save IPTC (International Press Telecommunications Council) metadata"
-msgstr ""
-
-#: libgimp/gimpsaveprocedure.c:479
-msgid "Save _XMP"
-msgstr "_XMP-ის შენახვა"
-
-#: libgimp/gimpsaveprocedure.c:480
-msgid "Save XMP (Extensible Metadata Platform) metadata"
-msgstr ""
-
-#: libgimp/gimpsaveprocedure.c:485
-msgid "Save color _profile"
-msgstr "ფერის პროფილის _შენახვა"
-
-#: libgimp/gimpsaveprocedure.c:486
-msgid "Save the ICC color profile as metadata"
-msgstr ""
-
-#: libgimp/gimpsaveprocedure.c:491
-msgid "Save _thumbnail"
-msgstr "მინიატურის _შენახვა"
-
-#: libgimp/gimpsaveprocedure.c:492
-msgid "Save a smaller representation of the image as metadata"
-msgstr ""
-
-#: libgimp/gimpsaveprocedure.c:498
-msgid "Save c_omment"
-msgstr "_კომენტარის შენახვა"
-
-#: libgimp/gimpsaveprocedure.c:499
-msgid "Save a comment as metadata"
-msgstr ""
-
-#: libgimp/gimpsaveprocedure.c:503
-msgid "Comment"
-msgstr "კომენტარი"
-
-#: libgimp/gimpsaveprocedure.c:504
-msgid "Image comment"
-msgstr "გამოსახულების კომენტარი"
-
-#: libgimp/gimpsaveproceduredialog.c:166
-msgid "Metadata"
-msgstr "მეტამონაცემები"
-
-#: libgimp/gimpsaveproceduredialog.c:175
-msgid "Edit Metadata"
-msgstr "მეტამონაცემების ჩასწორება"
-
-#: libgimp/gimpsaveproceduredialog.c:175
-msgid "(edit)"
-msgstr "(ჩასწორება)"
+#: libgimp/gimpresolutionentry-private.c:193
+#: libgimp/gimpresolutionentry-private.c:194
+#, c-format
+msgid "pixels/%a"
+msgstr "პიქსელი/%a"
 
 #: libgimp/gimpunitcache.c:54
 msgid "percent"
 msgstr "პროცენტი"
+
+#: libgimp/gimpvectorloadprocedure.c:122
+msgid "_Prefer native dimensions"
+msgstr ""
+
+#: libgimp/gimpvectorloadprocedure.c:123
+msgid "Load and use dimensions from source file"
+msgstr ""
+
+#: libgimp/gimpvectorloadprocedure.c:131
+msgid "Resolu_tion"
+msgstr "_გაფართოება"
+
+#: libgimp/gimpvectorloadprocedure.c:132
+msgid "Pixel Density: number of pixels per physical unit"
+msgstr ""
+
+#: libgimp/gimpvectorloadprocedure.c:136
+msgid "Unit"
+msgstr ""
+
+#: libgimp/gimpvectorloadprocedure.c:137
+msgid "Physical unit"
+msgstr ""
+
+#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
+#: libgimp/gimpvectorloadproceduredialog.c:156
+#, c-format
+msgid "Load %s Image"
+msgstr ""
 
 #: libgimpbase/gimpbaseenums.c:31
 msgctxt "add-mask-type"
@@ -2065,7 +2068,7 @@ msgstr "შა_ვი"
 msgid "_White"
 msgstr "_თეთრი"
 
-#: libgimpwidgets/gimpcolorhexentry.c:134
+#: libgimpwidgets/gimpcolorhexentry.c:133
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -2340,7 +2343,7 @@ msgstr ""
 msgid "Custom Checks Color 2"
 msgstr ""
 
-#: libgimpwidgets/gimppropwidgets.c:2474
+#: libgimpwidgets/gimppropwidgets.c:2454
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2946,75 +2949,75 @@ msgstr ""
 #. Translators: "Clip Warning" is the name of a (color) display filter
 #. * that highlights pixels outside of the color space range.
 #. * Shown as a label description.
-#: modules/display-filter-clip-warning.c:124
+#: modules/display-filter-clip-warning.c:125
 msgid "Clip warning color display filter"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:161
+#: modules/display-filter-clip-warning.c:166
 msgid "Show shadows"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:162
+#: modules/display-filter-clip-warning.c:167
 msgid "Show warning for pixels with a negative component"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:168
+#: modules/display-filter-clip-warning.c:173
 msgid "Shadows color"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:169
+#: modules/display-filter-clip-warning.c:174
 msgid "Shadows warning color"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:181
+#: modules/display-filter-clip-warning.c:185
 msgid "Show highlights"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:182
+#: modules/display-filter-clip-warning.c:186
 msgid "Show warning for pixels with a component greater than one"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:188
+#: modules/display-filter-clip-warning.c:194
 msgid "Highlights color"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:189
+#: modules/display-filter-clip-warning.c:195
 msgid "Highlights warning color"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:201
+#: modules/display-filter-clip-warning.c:206
 msgid "Show bogus"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:202
+#: modules/display-filter-clip-warning.c:207
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:208
+#: modules/display-filter-clip-warning.c:215
 msgid "Bogus color"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:209
+#: modules/display-filter-clip-warning.c:216
 msgid "Bogus warning color"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:221
+#: modules/display-filter-clip-warning.c:227
 msgid "Include alpha component"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:222
+#: modules/display-filter-clip-warning.c:228
 msgid "Include alpha component in the warning"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:228
+#: modules/display-filter-clip-warning.c:234
 msgid "Include transparent pixels"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:229
+#: modules/display-filter-clip-warning.c:235
 msgid "Include fully transparent pixels in the warning"
 msgstr ""
 
-#: modules/display-filter-clip-warning.c:233
+#: modules/display-filter-clip-warning.c:239
 msgid "Clip Warning"
 msgstr ""
 
@@ -3065,6 +3068,18 @@ msgstr ""
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "კონ_ტრასტი"
+
+#~ msgid "Confirm Save"
+#~ msgstr "შენახვის დადასტურება"
+
+#~ msgid "C_onfirm"
+#~ msgstr "_დასტური"
+
+#~ msgid "Export File"
+#~ msgstr "ფაილის გატანა"
+
+#~ msgid "_Ignore"
+#~ msgstr "_იგნორი"
 
 #~ msgctxt "repeat-mode"
 #~ msgid "Truncate"
