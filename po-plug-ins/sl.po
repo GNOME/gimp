@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-24 21:07+0000\n"
-"PO-Revision-Date: 2024-04-24 23:31+0200\n"
+"POT-Creation-Date: 2024-04-25 16:41+0000\n"
+"PO-Revision-Date: 2024-04-25 21:58+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -631,7 +631,7 @@ msgstr "Navpične"
 #: plug-ins/common/file-pcx.c:738 plug-ins/common/file-pcx.c:746
 #: plug-ins/common/file-pix.c:456 plug-ins/common/file-png.c:947
 #: plug-ins/common/file-pnm.c:868 plug-ins/common/file-qoi.c:320
-#: plug-ins/common/file-raw-data.c:1828 plug-ins/common/file-sunras.c:1082
+#: plug-ins/common/file-raw-data.c:1878 plug-ins/common/file-sunras.c:1082
 #: plug-ins/common/file-tga.c:1116 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:911 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
@@ -1216,8 +1216,8 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
 #: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1221
 #: plug-ins/common/file-pcx.c:1219 plug-ins/common/file-pdf-export.c:667
-#: plug-ins/common/file-png.c:1517 plug-ins/common/file-raw-data.c:1337
-#: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
+#: plug-ins/common/file-png.c:1517 plug-ins/common/file-raw-data.c:1383
+#: plug-ins/common/file-raw-data.c:1412 plug-ins/common/file-sunras.c:637
 #: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1284
 #: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-export.c:341
 #: plug-ins/file-fli/fli-gimp.c:809 plug-ins/file-icns/file-icns-export.c:427
@@ -1973,7 +1973,7 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/file-png.c:665 plug-ins/common/file-ps.c:1107
 #: plug-ins/common/file-ps.c:3615 plug-ins/common/file-psp.c:2633
 #: plug-ins/common/file-psp.c:2683 plug-ins/common/file-qoi.c:299
-#: plug-ins/common/file-raw-data.c:515 plug-ins/common/file-raw-data.c:1665
+#: plug-ins/common/file-raw-data.c:567 plug-ins/common/file-raw-data.c:1715
 #: plug-ins/common/file-sunras.c:457 plug-ins/common/file-svg.c:369
 #: plug-ins/common/file-svg.c:795 plug-ins/common/file-tga.c:447
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
@@ -2599,7 +2599,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-pcx.c:501 plug-ins/common/file-pcx.c:544
 #: plug-ins/common/file-pdf-load.c:722 plug-ins/common/file-pix.c:393
 #: plug-ins/common/file-png.c:657 plug-ins/common/file-pnm.c:713
-#: plug-ins/common/file-ps.c:1097 plug-ins/common/file-raw-data.c:1657
+#: plug-ins/common/file-ps.c:1097 plug-ins/common/file-raw-data.c:1707
 #: plug-ins/common/file-sunras.c:449 plug-ins/common/file-tga.c:439
 #: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:781
 #: plug-ins/common/file-xbm.c:741 plug-ins/common/file-xmc.c:658
@@ -3990,13 +3990,13 @@ msgstr "16 bitov/kanal"
 msgid "CMYK profile required for export"
 msgstr "Profil CMYK, potreben za izvoz"
 
-#: plug-ins/common/file-jpegxl.c:2045 plug-ins/file-jpeg/jpeg-export.c:900
+#: plug-ins/common/file-jpegxl.c:2045 plug-ins/file-jpeg/jpeg-export.c:899
 #: plug-ins/file-psd/psd-export.c:2464
 #: plug-ins/file-tiff/file-tiff-export.c:1315
 msgid "Name of the color profile used for CMYK export."
 msgstr "Ime barvnega profila, uporabljenega za izvoz CMYK."
 
-#: plug-ins/common/file-jpegxl.c:2064 plug-ins/file-jpeg/jpeg-export.c:911
+#: plug-ins/common/file-jpegxl.c:2064 plug-ins/file-jpeg/jpeg-export.c:910
 #: plug-ins/file-psd/psd-export.c:2475
 #: plug-ins/file-tiff/file-tiff-export.c:1327
 #, c-format
@@ -5528,9 +5528,13 @@ msgstr "Zapis QOI ne podpira več plasti."
 msgid "Failed to read QOI file"
 msgstr "Branje datoteke QOI ni uspelo"
 
-#: plug-ins/common/file-raw-data.c:336 plug-ins/common/file-raw-data.c:455
+#: plug-ins/common/file-raw-data.c:336 plug-ins/common/file-raw-data.c:504
 msgid "Raw image data"
 msgstr "Surovi podatki slike (RAW)"
+
+#: plug-ins/common/file-raw-data.c:339 plug-ins/common/file-raw-data.c:341
+msgid "Load raw images, specifying image information"
+msgstr "Naloži neobdelane datoteke z navedbo podatkov slik"
 
 #: plug-ins/common/file-raw-data.c:356
 msgid "Image width in number of pixels"
@@ -5545,7 +5549,7 @@ msgid "Offset to beginning of image in raw data"
 msgstr "Zamik do začetka slike v neobdelanih podatkih"
 
 #: plug-ins/common/file-raw-data.c:371
-msgid "Pixel _format"
+msgid "Pi_xel format"
 msgstr "Oblika sli_kovnih točk"
 
 #: plug-ins/common/file-raw-data.c:372
@@ -5554,93 +5558,228 @@ msgstr ""
 "Razporeditev podatkov v slikovnih točkah, kot so komponente in njihov vrstni "
 "red"
 
+#: plug-ins/common/file-raw-data.c:373
+msgid "RGB 8-bit"
+msgstr "RGB, 8-bitna"
+
+#: plug-ins/common/file-raw-data.c:374
+msgid "RGB 16-bit"
+msgstr "RGB, 16-bitna"
+
+#: plug-ins/common/file-raw-data.c:375
+msgid "RGB 32-bit"
+msgstr "RGB, 32-bitna"
+
 #: plug-ins/common/file-raw-data.c:376
-msgid "Data t_ype"
-msgstr "Vrsta po_datkov"
+msgid "RGBA 8-bit"
+msgstr "RGBA, 8-bitna"
 
 #: plug-ins/common/file-raw-data.c:377
-msgid ""
-"Data type used to represent pixel values { RAW_ENCODING_UNSIGNED (0), "
-"RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }"
-msgstr ""
-"Podatkovna vrsta, ki se uporablja za predstavitev vrednosti slikovnih točk "
-"{ RAW_ENCODING_UNSIGNED (0), RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT "
-"(2) }"
+msgid "RGBA 16-bit"
+msgstr "RGBA, 16-bitna"
+
+#: plug-ins/common/file-raw-data.c:378
+msgid "RGBA 32-bit"
+msgstr "RGBA, 32-bitna"
+
+#: plug-ins/common/file-raw-data.c:379
+msgid "RGB565"
+msgstr "RGB565"
+
+#: plug-ins/common/file-raw-data.c:380
+msgid "BGR565"
+msgstr "BGR565"
 
 #: plug-ins/common/file-raw-data.c:381
-msgid "Endianness"
-msgstr "Največje/najmanjše na koncu"
+msgid "B&W 1 bit"
+msgstr "Č/B, 1-bitna"
 
 #: plug-ins/common/file-raw-data.c:382
-msgid ""
-"Order of sequences of bytes { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"
-msgstr ""
-"Vrstni red zaporedja bajtov { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"
+msgid "Grayscale 2-bit"
+msgstr "Sivinska, 2-bitna"
 
-#: plug-ins/common/file-raw-data.c:386 plug-ins/common/file-raw-data.c:470
-msgid "Planar configuration"
-msgstr "Planarna prilagoditev"
+#: plug-ins/common/file-raw-data.c:383
+msgid "Grayscale 4-bit"
+msgstr "Sivinska, 4-bitna"
 
-#: plug-ins/common/file-raw-data.c:387 plug-ins/common/file-raw-data.c:471
-msgid ""
-"How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), "
-"RAW_PLANAR_SEPARATE (1) }"
-msgstr ""
-"Kako so shranjeni podatki o barvnih slikovnih točkah { RAW_PLANAR_CONTIGUOUS "
-"(0), RAW_PLANAR_SEPARATE (1) }"
+#: plug-ins/common/file-raw-data.c:384
+msgid "Grayscale 8-bit"
+msgstr "Sivinska, 8-bitna"
+
+#: plug-ins/common/file-raw-data.c:385
+msgid "Grayscale 16-bit"
+msgstr "Sivinska, 16-bitna"
+
+#: plug-ins/common/file-raw-data.c:386
+msgid "Grayscale 32-bit"
+msgstr "Sivinska, 32-bitna"
+
+#: plug-ins/common/file-raw-data.c:387
+msgid "Grayscale-Alpha 8-bit"
+msgstr "Sivinska z alfo, 8-bitna"
+
+#: plug-ins/common/file-raw-data.c:388
+msgid "Grayscale-Alpha 16-bit"
+msgstr "Sivinska z alfo, 16-bitna"
+
+#: plug-ins/common/file-raw-data.c:389
+msgid "Grayscale-Alpha 32-bit"
+msgstr "Sivinska z alfo, 32-bitna"
+
+#: plug-ins/common/file-raw-data.c:390
+msgid "Indexed"
+msgstr "Indeksirana"
+
+#: plug-ins/common/file-raw-data.c:391
+msgid "Indexed Alpha"
+msgstr "Indeksirana z alfo"
 
 #: plug-ins/common/file-raw-data.c:395
+msgid "_Data type"
+msgstr "Vrsta po_datkov"
+
+#: plug-ins/common/file-raw-data.c:396
+msgid "Data type used to represent pixel values"
+msgstr ""
+"Podatkovna vrsta, ki se uporablja za predstavitev vrednosti slikovnih točk"
+
+#: plug-ins/common/file-raw-data.c:397
+msgid "Unsigned Integer"
+msgstr "Celo število brez predznaka"
+
+#: plug-ins/common/file-raw-data.c:398
+msgid "Signed Integer"
+msgstr "Celo število s predznakom"
+
+#: plug-ins/common/file-raw-data.c:399
+msgid "Floating Point"
+msgstr "Št. s plavajočo vejico"
+
+#: plug-ins/common/file-raw-data.c:403
+msgid "_Endianness"
+msgstr "Najve_čje/najmanjše na koncu"
+
+#: plug-ins/common/file-raw-data.c:404
+msgid "Order of sequences of bytes"
+msgstr "Vrstni red zaporedij bajtov"
+
+#: plug-ins/common/file-raw-data.c:405
+msgid "Little Endian"
+msgstr "Najmanjše na koncu"
+
+#: plug-ins/common/file-raw-data.c:406
+msgid "Big Endian"
+msgstr "Največje na koncu"
+
+#: plug-ins/common/file-raw-data.c:410
+msgid "Planar confi_guration"
+msgstr "Planarna prila_goditev"
+
+#: plug-ins/common/file-raw-data.c:411 plug-ins/common/file-raw-data.c:520
+msgid "How color pixel data are stored"
+msgstr "Kako se shranjujejo podatki o barvnih slikovnih točkah"
+
+#: plug-ins/common/file-raw-data.c:412 plug-ins/common/file-raw-data.c:521
+msgid "Contiguous"
+msgstr "Neprekinjeno"
+
+#: plug-ins/common/file-raw-data.c:413 plug-ins/common/file-raw-data.c:522
+msgid "Planar"
+msgstr "Planarno"
+
+#: plug-ins/common/file-raw-data.c:420 plug-ins/common/file-raw-data.c:479
 msgid "Palette Offse_t"
 msgstr "Za_mik palete"
 
-#: plug-ins/common/file-raw-data.c:396
+#: plug-ins/common/file-raw-data.c:421 plug-ins/common/file-raw-data.c:480
 msgid "Offset to beginning of data in the palette file"
 msgstr "Zamik do začetka podatkov v datoteki palete"
 
-#: plug-ins/common/file-raw-data.c:400
+#: plug-ins/common/file-raw-data.c:426 plug-ins/common/file-raw-data.c:485
+#: plug-ins/common/file-raw-data.c:527
 msgid "Palette's la_yout"
 msgstr "Pos_tavitev palete"
 
-#: plug-ins/common/file-raw-data.c:401 plug-ins/common/file-raw-data.c:477
-msgid ""
-"The layout for the palette's color channels { RAW_PALETTE_RGB (0), "
-"RAW_PALETTE_BGR (1) }"
-msgstr ""
-"Razporeditev barvnih kanalov palete { RAW_PALETTE_RGB (0), RAW_PALETTE_BGR "
-"(1) }"
+#: plug-ins/common/file-raw-data.c:427 plug-ins/common/file-raw-data.c:486
+#: plug-ins/common/file-raw-data.c:528
+msgid "The layout for the palette's color channels"
+msgstr "Razporeditev barvnih kanalov palete"
 
-#: plug-ins/common/file-raw-data.c:406
+#: plug-ins/common/file-raw-data.c:428 plug-ins/common/file-raw-data.c:487
+#: plug-ins/common/file-raw-data.c:529
+msgid "R, G, B (normal)"
+msgstr "R, G, B (navadno)"
+
+#: plug-ins/common/file-raw-data.c:429 plug-ins/common/file-raw-data.c:488
+#: plug-ins/common/file-raw-data.c:530
+msgid "B, G, R, X (BMP style)"
+msgstr "B, G, R, X (slog BMP)"
+
+#: plug-ins/common/file-raw-data.c:433 plug-ins/common/file-raw-data.c:492
 msgid "_Palette File"
 msgstr "_Datoteka palete"
 
-#: plug-ins/common/file-raw-data.c:407
+#: plug-ins/common/file-raw-data.c:434 plug-ins/common/file-raw-data.c:493
 msgid "The file containing palette data"
 msgstr "Datoteka, ki vsebuje podatke palete"
 
-#: plug-ins/common/file-raw-data.c:417 plug-ins/common/file-raw-data.c:2804
+#: plug-ins/common/file-raw-data.c:444 plug-ins/common/file-raw-data.c:2788
 msgid "Digital Elevation Model data"
 msgstr "Podatki modela digitalnega dviganja"
 
-#: plug-ins/common/file-raw-data.c:441
-msgid "_Sample spacing"
+#: plug-ins/common/file-raw-data.c:447
+msgid "Load HGT data as images"
+msgstr "Naloži podatke HGT kot slike"
+
+#: plug-ins/common/file-raw-data.c:448
+#, fuzzy
+msgid ""
+"Load Digital Elevation Model data in HGT format from the Shuttle Radar "
+"Topography Mission as images. Though the output image will be RGB, all "
+"colors are grayscale by default and the contrast will be quite low on most "
+"earth relief. Therefore you will likely want to remap elevation to colors as "
+"a second step, for instance with the \"Gradient Map\" plug-in."
+msgstr ""
+"Naložite podatke digitalnega modela nadmorske višine v formatu HGT iz "
+"Shuttle Radar Topography Mission kot slike. Čeprav bo izhodna slika RGB, so "
+"vse barve privzeto sivinske in kontrast bo na večini reliefov zemlje precej "
+"nizek. Zato boste kot drugi korak verjetno želeli preslikati nadmorsko "
+"višino v barve, na primer z vtičnikom »Gradient Map«."
+
+#: plug-ins/common/file-raw-data.c:468
+msgid "Sa_mple spacing"
 msgstr "_Vzorčni razmik"
 
-#: plug-ins/common/file-raw-data.c:442
-msgid ""
-"The sample spacing of the data. (0: auto-detect, 1: SRTM-1, 2: SRTM-3 data)"
-msgstr ""
-"Razmik med vzorci podatkov. (0: samodejno zaznaj, 1: podatki SRTM-1, 2: "
-"podatki SRTM-3)"
+#: plug-ins/common/file-raw-data.c:469
+msgid "The sample spacing of the data."
+msgstr "Vzorčni razmik podatkov."
 
-#: plug-ins/common/file-raw-data.c:476
-msgid "Palette's layout"
-msgstr "Postavitev palete"
+#: plug-ins/common/file-raw-data.c:470
+msgid "Auto-Detect"
+msgstr "Samodejno zaznaj"
 
-#: plug-ins/common/file-raw-data.c:484
+#: plug-ins/common/file-raw-data.c:471
+msgid "SRTM-1 (1 arc second)"
+msgstr "SRTM-1 (1 kotna sekunda)"
+
+#: plug-ins/common/file-raw-data.c:472
+msgid "SRTM-3 (3 arc seconds)"
+msgstr "SRTM-3 (3 kotne sekunde)"
+
+#: plug-ins/common/file-raw-data.c:507 plug-ins/common/file-raw-data.c:508
+#, fuzzy
+msgid "Dump images to disk in raw format"
+msgstr "Izmet slik na disk v neobdelanem zapisu"
+
+#: plug-ins/common/file-raw-data.c:519
+msgid "Planar configuration"
+msgstr "Planarna prilagoditev"
+
+#: plug-ins/common/file-raw-data.c:536
 msgid "Raw Data"
 msgstr "Neobdelani podatki"
 
-#: plug-ins/common/file-raw-data.c:551
+#: plug-ins/common/file-raw-data.c:601
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
@@ -5648,7 +5787,7 @@ msgstr ""
 "%d ni veljaven razmik vzorcev. Veljavne vrednosti so: 0 (samodejno "
 "zaznavanje), 1 in 3."
 
-#: plug-ins/common/file-raw-data.c:564
+#: plug-ins/common/file-raw-data.c:614
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
@@ -5659,203 +5798,63 @@ msgstr ""
 "datoteka HGT ali pa njena različica še ni podprta. Podprte datoteke HGT so: "
 "SRTM-1 in SRTM-3. Če poznate različico, zaženite z argumentom 1 oz. 3."
 
-#: plug-ins/common/file-raw-data.c:649
+#: plug-ins/common/file-raw-data.c:697
 #, c-format
 msgid "RAW export does not support multiple layers."
 msgstr "Izvoz RAW ne podpira več plasti."
 
-#: plug-ins/common/file-raw-data.c:1547
+#: plug-ins/common/file-raw-data.c:1591
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
 msgstr "»%s« ni mogoče odpreti za preverjanje velikosti: %s"
 
-#: plug-ins/common/file-raw-data.c:2633
+#: plug-ins/common/file-raw-data.c:2679
 msgid "Load Image from Raw Data"
 msgstr "Naloži sliko iz surovih podatkov"
-
-#. 2 types of HGT files are possible: SRTM-1 and SRTM-3.
-#. * From the documentation: https://dds.cr.usgs.gov/srtm/version1/Documentation/SRTM_Topo.txt
-#. * "SRTM-1 data are sampled at one arc-second of latitude and longitude and
-#. *  each file contains 3601 lines and 3601 samples.
-#. * [...]
-#. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
-#. * 1201 samples with similar overlapping rows and columns."
-#.
-#: plug-ins/common/file-raw-data.c:2692
-msgid "SRTM-1 (1 arc-second)"
-msgstr "SRTM-1 (1 kotna sekunda)"
-
-#: plug-ins/common/file-raw-data.c:2693
-msgid "SRTM-3 (3 arc-seconds)"
-msgstr "SRTM-3 (3 kotne sekunde)"
-
-#. Generic case for any data. Let's leave choice to select the
-#. * right type of raw data.
-#.
-#: plug-ins/common/file-raw-data.c:2704
-msgid "RGB 8-bit"
-msgstr "RGB, 8-bitna"
-
-#: plug-ins/common/file-raw-data.c:2705
-msgid "RGB 16-bit"
-msgstr "RGB, 16-bitna"
-
-#: plug-ins/common/file-raw-data.c:2706
-msgid "RGB 32-bit"
-msgstr "RGB, 32-bitna"
-
-#: plug-ins/common/file-raw-data.c:2708
-msgid "RGBA 8-bit"
-msgstr "RGBA, 8-bitna"
-
-#: plug-ins/common/file-raw-data.c:2709
-msgid "RGBA 16-bit"
-msgstr "RGBA, 16-bitna"
-
-#: plug-ins/common/file-raw-data.c:2710
-msgid "RGBA 32-bit"
-msgstr "RGBA, 32-bitna"
-
-#: plug-ins/common/file-raw-data.c:2712
-msgid "RGB565"
-msgstr "RGB565"
-
-#: plug-ins/common/file-raw-data.c:2713
-msgid "BGR565"
-msgstr "BGR565"
-
-#: plug-ins/common/file-raw-data.c:2715
-msgid "B&W 1 bit"
-msgstr "Č/B, 1-bitna"
-
-#: plug-ins/common/file-raw-data.c:2716
-msgid "Grayscale 2-bit"
-msgstr "Sivinska, 2-bitna"
-
-#: plug-ins/common/file-raw-data.c:2717
-msgid "Grayscale 4-bit"
-msgstr "Sivinska, 4-bitna"
-
-#: plug-ins/common/file-raw-data.c:2718
-msgid "Grayscale 8-bit"
-msgstr "Sivinska, 8-bitna"
-
-#: plug-ins/common/file-raw-data.c:2719
-msgid "Grayscale 16-bit"
-msgstr "Sivinska, 16-bitna"
-
-#: plug-ins/common/file-raw-data.c:2720
-msgid "Grayscale 32-bit"
-msgstr "Sivinska, 32-bitna"
-
-#: plug-ins/common/file-raw-data.c:2722
-msgid "Grayscale-Alpha 8-bit"
-msgstr "Sivinska z alfo, 8-bitna"
-
-#: plug-ins/common/file-raw-data.c:2723
-msgid "Grayscale-Alpha 16-bit"
-msgstr "Sivinska z alfo, 16-bitna"
-
-#: plug-ins/common/file-raw-data.c:2724
-msgid "Grayscale-Alpha 32-bit"
-msgstr "Sivinska z alfo, 32-bitna"
-
-#: plug-ins/common/file-raw-data.c:2726
-msgid "Indexed"
-msgstr "Indeksirana"
-
-#: plug-ins/common/file-raw-data.c:2727
-msgid "Indexed Alpha"
-msgstr "Indeksirana z alfo"
-
-#: plug-ins/common/file-raw-data.c:2733
-msgid "Unsigned Integer"
-msgstr "Celo število brez predznaka"
-
-#: plug-ins/common/file-raw-data.c:2734
-msgid "Signed Integer"
-msgstr "Celo število s predznakom"
-
-#: plug-ins/common/file-raw-data.c:2735
-msgid "Floating Point"
-msgstr "Št. s plavajočo vejico"
-
-#: plug-ins/common/file-raw-data.c:2741
-msgid "Little Endian"
-msgstr "Najmanjše na koncu"
-
-#: plug-ins/common/file-raw-data.c:2742
-msgid "Big Endian"
-msgstr "Največje na koncu"
-
-#: plug-ins/common/file-raw-data.c:2748
-msgid "Contiguous"
-msgstr "Neprekinjeno"
-
-#: plug-ins/common/file-raw-data.c:2749
-msgid "Planar"
-msgstr "Planarno"
 
 #. Translators: Digital Elevation Model (DEM) is a technical term
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: plug-ins/common/file-raw-data.c:2798
+#: plug-ins/common/file-raw-data.c:2782
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Podatki digitalnega modela nadmorske višine (1 kotna sekunda)"
 
-#: plug-ins/common/file-raw-data.c:2801
+#: plug-ins/common/file-raw-data.c:2785
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Podatki digitalnega modela nadmorske višine (3 kotne sekunde)"
 
-#: plug-ins/common/file-raw-data.c:2808
+#: plug-ins/common/file-raw-data.c:2792
 msgid "Image"
 msgstr "Slika"
 
-#: plug-ins/common/file-raw-data.c:2811
-msgid "R, G, B (normal)"
-msgstr "R, G, B (navadno)"
-
-#: plug-ins/common/file-raw-data.c:2812
-msgid "B, G, R, X (BMP style)"
-msgstr "B, G, R, X (slog BMP)"
-
-#: plug-ins/common/file-raw-data.c:2827
+#: plug-ins/common/file-raw-data.c:2804
 msgid "Palette"
 msgstr "Paleta"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:2898
+#: plug-ins/common/file-raw-data.c:2874
 #, c-format
 msgid "_Contiguous (%s)"
 msgstr "_Neprekinjeno (%s)"
 
-#: plug-ins/common/file-raw-data.c:2900
+#: plug-ins/common/file-raw-data.c:2876
 msgid "_Contiguous"
 msgstr "_Neprekinjeno"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:2906
+#: plug-ins/common/file-raw-data.c:2882
 #, c-format
 msgid "_Planar (%s)"
 msgstr "_Planarno (%s)"
 
-#: plug-ins/common/file-raw-data.c:2908
+#: plug-ins/common/file-raw-data.c:2884
 msgid "_Planar"
 msgstr "_Planarno"
-
-#. Palette type combo
-#: plug-ins/common/file-raw-data.c:2930
-msgid "_R, G, B (normal)"
-msgstr "_R, G, B (navadno)"
-
-#: plug-ins/common/file-raw-data.c:2931
-msgid "_B, G, R, X (BMP style)"
-msgstr "_B, G, R, X (slog BMP)"
 
 #: plug-ins/common/file-sunras.c:277 plug-ins/common/file-sunras.c:303
 msgid "SUN Rasterfile image"
@@ -8491,7 +8490,7 @@ msgstr "Ukrivi"
 msgid "Basic Options"
 msgstr "Osnovne nastavitve"
 
-#: plug-ins/common/warp.c:450 plug-ins/file-jpeg/jpeg-export.c:970
+#: plug-ins/common/warp.c:450 plug-ins/file-jpeg/jpeg-export.c:951
 #: plug-ins/file-webp/file-webp-dialog.c:107
 msgid "Advanced Options"
 msgstr "Napredne možnosti"
@@ -9829,48 +9828,18 @@ msgstr "Velikost datoteke: %s"
 msgid "Calculating file size..."
 msgstr "Izračun velikosti datoteke ..."
 
-#: plug-ins/file-jpeg/jpeg-export.c:807 plug-ins/file-jpeg/jpeg-export.c:879
+#: plug-ins/file-jpeg/jpeg-export.c:807 plug-ins/file-jpeg/jpeg-export.c:878
 msgid "File size: unknown"
 msgstr "Velikost datoteke: neznana"
 
-#: plug-ins/file-jpeg/jpeg-export.c:887
+#: plug-ins/file-jpeg/jpeg-export.c:886
 msgid "Enable preview to obtain the file size."
 msgstr "Omogoči predogled za izračun velikosti datoteke."
 
-#: plug-ins/file-jpeg/jpeg-export.c:892 plug-ins/file-psd/psd-export.c:2456
+#: plug-ins/file-jpeg/jpeg-export.c:891 plug-ins/file-psd/psd-export.c:2456
 #: plug-ins/file-tiff/file-tiff-export.c:1307
 msgid "No soft-proofing profile"
 msgstr "Brez profila preverjanja videza"
-
-#. Subsampling
-#: plug-ins/file-jpeg/jpeg-export.c:942
-msgid "4:4:4 (best quality)"
-msgstr "4:4:4 (najvišja kakovost)"
-
-#: plug-ins/file-jpeg/jpeg-export.c:944
-msgid "4:2:2 (chroma halved horizontally)"
-msgstr "4:2:2 navpično (razpolovljena kroma vodoravno)"
-
-#: plug-ins/file-jpeg/jpeg-export.c:946
-msgid "4:4:0 (chroma halved vertically)"
-msgstr "4:2:2 navpično (razpolovljena kroma navpično)"
-
-#: plug-ins/file-jpeg/jpeg-export.c:948
-msgid "4:2:0 (chroma quartered)"
-msgstr "4:2:0 (četrtinska kroma)"
-
-#. DCT method
-#: plug-ins/file-jpeg/jpeg-export.c:962
-msgid "Fast Integer"
-msgstr "hitri integer"
-
-#: plug-ins/file-jpeg/jpeg-export.c:963
-msgid "Integer"
-msgstr "integer"
-
-#: plug-ins/file-jpeg/jpeg-export.c:964
-msgid "Floating-Point"
-msgstr "plavajoča vejica"
 
 #: plug-ins/file-jpeg/jpeg-load.c:221
 msgid "JPEG preview"
@@ -9887,6 +9856,27 @@ msgstr ""
 #: plug-ins/file-jpeg/jpeg.c:136 plug-ins/file-jpeg/jpeg.c:183
 msgid "JPEG image"
 msgstr "Slika JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:139 plug-ins/file-jpeg/jpeg.c:140
+msgid "Loads files in the JPEG file format"
+msgstr "Naloži datoteke v zapisu JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:164
+msgid "Loads a thumbnail from a JPEG image"
+msgstr "Naloži ogledno sličico iz datoteke JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:165
+msgid "Loads a thumbnail from a JPEG image, if one exists"
+msgstr "Naloži ogledno sličico iz datoteke JPEG, če obstaja"
+
+#: plug-ins/file-jpeg/jpeg.c:186
+msgid "Exports files in the JPEG file format"
+msgstr "Izvozi datoteke v zapisu slikovnih datotek JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:187
+msgid "Exports files in the lossy, widely supported JPEG format"
+msgstr ""
+"Izvozi datoteke v široko podprtem zapisu slikovnih datotek JPEG z izgubami."
 
 #: plug-ins/file-jpeg/jpeg.c:196 plug-ins/file-tiff/file-tiff.c:244
 msgid "JPEG"
@@ -9934,20 +9924,30 @@ msgid "Su_bsampling"
 msgstr "Po_dvzorčenje"
 
 #: plug-ins/file-jpeg/jpeg.c:237
-msgid ""
-"Sub-sampling type { 0 == 4:2:0 (chroma quartered), 1 == 4:2:2 (chroma halved "
-"horizontally), 2 == 4:4:4 (best quality), 3 == 4:4:0 (chroma halved "
-"vertically)"
-msgstr ""
-"Vrsta podvzorčenja { 0 == 4:2:0 (kromatska barva četrtinjena), 1 == 4:2:2 "
-"(kromatska barva razpolovljena vodoravno), 2 == 4:4:4 (najboljša kakovost), "
-"3 == 4:4:0 (kromatska barva razpolovljena navpično)"
+msgid "Sub-sampling type"
+msgstr "Vrsta podvzorčenja"
 
-#: plug-ins/file-jpeg/jpeg.c:247
+#: plug-ins/file-jpeg/jpeg.c:238
+msgid "4:4:4 (best quality)"
+msgstr "4:4:4 (najvišja kakovost)"
+
+#: plug-ins/file-jpeg/jpeg.c:239
+msgid "4:2:2 (chroma halved horizontally)"
+msgstr "4:2:2 navpično (razpolovljena kroma vodoravno)"
+
+#: plug-ins/file-jpeg/jpeg.c:240
+msgid "4:4:0 (chroma halved vertically)"
+msgstr "4:2:2 navpično (razpolovljena kroma navpično)"
+
+#: plug-ins/file-jpeg/jpeg.c:241
+msgid "4:2:0 (chroma quartered)"
+msgstr "4:2:0 (četrtinska kroma)"
+
+#: plug-ins/file-jpeg/jpeg.c:246
 msgid "Baseline"
 msgstr "Osnovnica besedila"
 
-#: plug-ins/file-jpeg/jpeg.c:248
+#: plug-ins/file-jpeg/jpeg.c:247
 msgid ""
 "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
 "decoders)"
@@ -9955,29 +9955,41 @@ msgstr ""
 "Vsili ustvarjanje osnovnega zapisa JPEG (vsi dekodirniki ne morejo brati "
 "zapisov JPEG, ki niso osnovni)"
 
-#: plug-ins/file-jpeg/jpeg.c:254
+#: plug-ins/file-jpeg/jpeg.c:253
 msgid "Inter_val (MCU rows):"
 msgstr "Inter_val (vrstice MCU):"
 
-#: plug-ins/file-jpeg/jpeg.c:255
+#: plug-ins/file-jpeg/jpeg.c:254
 msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
 msgstr ""
 "Interval označevalnikov ponovnega začetka (v vrsticah MCU, 0 = brez "
 "označevalnikov ponovnega začetka)"
 
-#: plug-ins/file-jpeg/jpeg.c:261
+#: plug-ins/file-jpeg/jpeg.c:260
 msgid "_DCT method"
 msgstr "Metoda _DCT"
 
-#: plug-ins/file-jpeg/jpeg.c:262
-msgid "DCT method to use { INTEGER (0), FIXED (1), FLOAT (2) }"
-msgstr "Uporabljena metoda DCT { INTEGER (0), FIXED (1), FLOAT (2) }"
+#: plug-ins/file-jpeg/jpeg.c:261
+msgid "DCT method to use"
+msgstr "Metoda DCT, ki bo uporabljena"
 
-#: plug-ins/file-jpeg/jpeg.c:270
+#: plug-ins/file-jpeg/jpeg.c:262
+msgid "Fast Integer"
+msgstr "hitri integer"
+
+#: plug-ins/file-jpeg/jpeg.c:263
+msgid "Integer"
+msgstr "integer"
+
+#: plug-ins/file-jpeg/jpeg.c:264
+msgid "Floating-Point"
+msgstr "plavajoča vejica"
+
+#: plug-ins/file-jpeg/jpeg.c:271
 msgid "_Use quality settings from original image"
 msgstr "_Uporabi nastavitve kakovosti iz izvirne slike"
 
-#: plug-ins/file-jpeg/jpeg.c:271
+#: plug-ins/file-jpeg/jpeg.c:272
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -9987,28 +9999,28 @@ msgstr ""
 "nastavitev kakovosti (kvantizacijske tabele), potrdite to možnost, da dobite "
 "skoraj enako kakovost in velikost datoteke."
 
-#: plug-ins/file-jpeg/jpeg.c:293
+#: plug-ins/file-jpeg/jpeg.c:294
 msgid "Sho_w preview in image window"
 msgstr "Poka_ži predogled v oknu slike"
 
-#: plug-ins/file-jpeg/jpeg.c:294
+#: plug-ins/file-jpeg/jpeg.c:295
 msgid "Creates a temporary layer with an export preview"
 msgstr "Ustvari trenutno plast s predogledom izvoza"
 
-#: plug-ins/file-jpeg/jpeg.c:298
+#: plug-ins/file-jpeg/jpeg.c:299
 msgid "Use _arithmetic coding"
 msgstr "Uporabi _aritmetično kodiranje"
 
-#: plug-ins/file-jpeg/jpeg.c:299
+#: plug-ins/file-jpeg/jpeg.c:300
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
 "Starejše programje ima lahko težavo z odpiranjem aritmetično kodiranih slik"
 
-#: plug-ins/file-jpeg/jpeg.c:304
+#: plug-ins/file-jpeg/jpeg.c:305
 msgid "Use restart mar_kers"
 msgstr "Uporabi _označevalnike ponovnega začetka"
 
-#: plug-ins/file-jpeg/jpeg.c:476
+#: plug-ins/file-jpeg/jpeg.c:477
 #, c-format
 msgid "JPEG format does not support multiple layers."
 msgstr "Zapis JPEG ne podpira več plasti."
