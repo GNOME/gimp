@@ -132,8 +132,8 @@ gimp_resolution_entry_class_init (GimpResolutionEntryClass *klass)
                                                    G_PARAM_CONSTRUCT);
   props[PROP_UNIT] = gimp_param_spec_unit ("unit",
                                            "Physical unit for the pixel density",
-                                           "This unit is used to select the pixel density "
-                                           "and show dimensions in physical unit",
+                                           _("This unit is used to select the pixel density "
+                                           "and show dimensions in physical unit"),
                                            FALSE, FALSE,
                                            GIMP_UNIT_INCH,
                                            GIMP_PARAM_READWRITE |

@@ -100,14 +100,14 @@ gimp_vector_load_procedure_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   GIMP_PROC_ARG_INT (procedure, "width",
-                     "_Width (pixels)",
+                     _("_Width (pixels)"),
                      "Width (in pixels) to load the image in. "
                      "(0 for the corresponding width per native ratio)",
                      0, GIMP_MAX_IMAGE_SIZE, 0,
                      GIMP_PARAM_READWRITE);
 
   GIMP_PROC_ARG_INT (procedure, "height",
-                     "_Height (pixels)",
+                     _("_Height (pixels)"),
                      "Height (in pixels) to load the image in. "
                      "(0 for the corresponding height per native ratio)",
                      0, GIMP_MAX_IMAGE_SIZE, 0,
