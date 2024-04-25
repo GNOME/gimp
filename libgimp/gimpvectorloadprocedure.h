@@ -29,6 +29,23 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+typedef struct _GimpVectorLoadData
+{
+  gdouble  width;
+  GimpUnit width_unit;
+  gboolean exact_width;
+
+  gdouble  height;
+  GimpUnit height_unit;
+  gboolean exact_height;
+
+  gboolean correct_ratio;
+
+  gdouble  pixel_density;
+  GimpUnit density_unit;
+  gboolean exact_density;
+} GimpVectorLoadData;
+
 /**
  * GimpRunVectorLoadFunc:
  * @procedure:      the [class@Gimp.Procedure] that runs.
@@ -36,12 +53,12 @@ G_BEGIN_DECLS
  * @file:           the [iface@Gio.File] to load from.
  * @width:          the desired width in pixel for the created image.
  * @height:         the desired height in pixel for the created image.
- * @keep_ratio:     whether dimension ratio should be preserved.
- * @prefer_native_dimension: whether native dimension should override widthxheight.
+ * @extracted_data: dimensions returned by [callback@ExtractVectorFunc].
  * @metadata:       the [class@Gimp.Metadata] which will be added to the new image.
  * @flags: (inout): flags to filter which metadata will be added..
  * @config:         the @procedure's remaining arguments.
- * @run_data: (closure): the run_data given in gimp_vector_load_procedure_new().
+ * @data_from_extract: (closure): @data_for_run returned by [callback@ExtractVectorFunc].
+ * @run_data: (closure): @run_data given in gimp_vector_load_procedure_new().
  *
  * The load function is run during the lifetime of the GIMP session, each time a
  * plug-in load procedure is called.
@@ -79,12 +96,64 @@ typedef GimpValueArray * (* GimpRunVectorLoadFunc)       (GimpProcedure         
                                                           GFile                 *file,
                                                           gint                   width,
                                                           gint                   height,
-                                                          gboolean               keep_ratio,
-                                                          gboolean               prefer_native_dimension,
+                                                          GimpVectorLoadData     extracted_data,
                                                           GimpMetadata          *metadata,
                                                           GimpMetadataLoadFlags *flags,
                                                           GimpProcedureConfig   *config,
+                                                          gpointer               data_from_extract,
                                                           gpointer               run_data);
+
+/**
+ * GimpExtractVectorFunc:
+ * @procedure:      the [class@Gimp.Procedure].
+ * @run_mode:       the [enum@RunMode].
+ * @metadata:       the [class@Gimp.Metadata] which will be added to the new image.
+ * @config:         the @procedure's remaining arguments.
+ * @file:           the [iface@Gio.File] to load from.
+ * @extracted_data: (out): dimensions and pixel density extracted from @file.
+ * @data_for_run: (out) (nullable): will be passed as @data_from_extract in [callback@RunVectorLoadFunc].
+ * @data_for_run_destroy: (out) (nullable) (destroy data_for_run): the free function for @data_for_run.
+ * @extract_data: (closure): the @extract_data given in [func@vector_load_procedure_new].
+ * @error: (out): error to be filled when @file cannot be loaded.
+ *
+ * Loading a vector image happens in 2 steps:
+ *
+ * 1. this function is first run to determine which size should be actually requested.
+ * 2. [callback@RunVectorLoadFunc] is called with the suggested @width and @height.
+ *
+ * This function is run during the lifetime of the GIMP session, as the first
+ * step above. It should extract the maximum of information from the source
+ * document to help GIMP take appropriate decisions for default values and also
+ * for displaying relevant information in the load dialog (if necessary).
+ *
+ * The best case scenario is to be able to extract proper dimensions (@width and
+ * @height) with valid units supported by GIMP. If not possible, returning
+ * already processed dimensions then setting @exact_width and @exact_height to
+ * %FALSE in @extracted_data is also an option. If all you can get are no-unit
+ * dimensions, set them with %GIMP_UNIT_PIXEL and %correct_ratio to %TRUE to at
+ * least give a valid ratio as a default.
+ *
+ * If there is no way to extract any valid default dimensions, not even a ratio,
+ * then return %FALSE but leave %error as %NULL. [callback@RunVectorLoadFunc]
+ * will still be called but default values might be bogus.
+ * If the return value is %FALSE and %error is set, it means that the file is
+ * invalid and cannot even be loaded. Thus [callback@RunVectorLoadFunc] won't be
+ * run and %error
+ *
+ * Returns: %TRUE if any information could be extracted from @file.
+ *
+ * Since: 3.0
+ **/
+typedef gboolean         (* GimpExtractVectorFunc) (GimpProcedure             *procedure,
+                                                    GimpRunMode                run_mode,
+                                                    GFile                     *file,
+                                                    GimpMetadata              *metadata,
+                                                    GimpProcedureConfig       *config,
+                                                    GimpVectorLoadData        *extracted_data,
+                                                    gpointer                  *data_for_run,
+                                                    GDestroyNotify            *data_for_run_destroy,
+                                                    gpointer                   extract_data,
+                                                    GError                   **error);
 
 
 #define GIMP_TYPE_VECTOR_LOAD_PROCEDURE (gimp_vector_load_procedure_get_type ())
@@ -93,12 +162,15 @@ G_DECLARE_FINAL_TYPE (GimpVectorLoadProcedure, gimp_vector_load_procedure, GIMP,
 typedef struct _GimpVectorLoadProcedure        GimpVectorLoadProcedure;
 
 
-GimpProcedure * gimp_vector_load_procedure_new                  (GimpPlugIn              *plug_in,
-                                                                 const gchar             *name,
-                                                                 GimpPDBProcType          proc_type,
-                                                                 GimpRunVectorLoadFunc    run_func,
-                                                                 gpointer                 run_data,
-                                                                 GDestroyNotify           run_data_destroy);
+GimpProcedure * gimp_vector_load_procedure_new  (GimpPlugIn                 *plug_in,
+                                                 const gchar                *name,
+                                                 GimpPDBProcType             proc_type,
+                                                 GimpExtractVectorFunc       extract_func,
+                                                 gpointer                    extract_data,
+                                                 GDestroyNotify              extract_data_destroy,
+                                                 GimpRunVectorLoadFunc       run_func,
+                                                 gpointer                    run_data,
+                                                 GDestroyNotify              run_data_destroy);
 
 
 G_END_DECLS

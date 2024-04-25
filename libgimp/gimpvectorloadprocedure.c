@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <math.h>
+
 #include "gimp.h"
 
 #include "libgimpbase/gimpwire.h" /* FIXME kill this include */
@@ -59,6 +61,10 @@ struct _GimpVectorLoadProcedure
   GimpRunVectorLoadFunc  run_func;
   gpointer               run_data;
   GDestroyNotify         run_data_destroy;
+
+  GimpExtractVectorFunc  extract_func;
+  gpointer               extract_data;
+  GDestroyNotify         extract_data_destroy;
 };
 
 static void                  gimp_vector_load_procedure_constructed   (GObject              *object);
@@ -147,6 +153,9 @@ gimp_vector_load_procedure_finalize (GObject *object)
   if (procedure->run_data_destroy)
     procedure->run_data_destroy (procedure->run_data);
 
+  if (procedure->extract_data_destroy)
+    procedure->extract_data_destroy (procedure->extract_data);
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -167,26 +176,31 @@ gimp_vector_load_procedure_run (GimpProcedure        *procedure,
   GimpValueArray          *remaining;
   GimpValueArray          *return_values;
   GimpProcedureConfig     *config;
-  GimpImage               *image    = NULL;
-  GimpMetadata            *metadata = NULL;
-  gchar                   *mimetype = NULL;
-  GimpMetadataLoadFlags    flags    = GIMP_METADATA_LOAD_ALL;
-  GimpPDBStatusType        status   = GIMP_PDB_EXECUTION_ERROR;
+  GimpImage               *image                = NULL;
+  GimpMetadata            *metadata             = NULL;
+  gchar                   *mimetype             = NULL;
+  GError                  *error                = NULL;
+  GimpVectorLoadData       extracted_dimensions = { 0 };
+  gpointer                 data_for_run         = NULL;
+  GDestroyNotify           data_for_run_destroy = NULL;
+  GimpMetadataLoadFlags    flags                = GIMP_METADATA_LOAD_ALL;
+  GimpPDBStatusType        status               = GIMP_PDB_EXECUTION_ERROR;
   GimpRunMode              run_mode;
   GFile                   *file;
   gint                     width;
   gint                     height;
+  gdouble                  resolution;
   gint                     arg_offset = 0;
   gint                     i;
 
   run_mode = GIMP_VALUES_GET_ENUM (args, arg_offset++);
   file     = GIMP_VALUES_GET_FILE (args, arg_offset++);
-  width    = GIMP_VALUES_GET_INT  (args, arg_offset++);
-  height   = GIMP_VALUES_GET_INT  (args, arg_offset++);
+  width    = GIMP_VALUES_GET_INT  (args, arg_offset);
+  height   = GIMP_VALUES_GET_INT  (args, arg_offset + 1);
 
   remaining = gimp_value_array_new (gimp_value_array_length (args) - arg_offset);
 
-  for (i = 2 /*arg_offset*/; i < gimp_value_array_length (args); i++)
+  for (i = arg_offset; i < gimp_value_array_length (args); i++)
     {
       GValue *value = gimp_value_array_index (args, i);
 
@@ -228,28 +242,210 @@ gimp_vector_load_procedure_run (GimpProcedure        *procedure,
 
   _gimp_procedure_config_begin_run (config, image, run_mode, remaining);
 
-  return_values = load_proc->run_func (procedure,
-                                       run_mode,
-                                       file, width, height,
-                                       TRUE, TRUE,
-                                       metadata, &flags,
-                                       config,
-                                       load_proc->run_data);
+  g_object_get (config, "pixel-density", &resolution, NULL);
 
-  if (return_values != NULL                       &&
-      gimp_value_array_length (return_values) > 0 &&
-      G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
-    status = GIMP_VALUES_GET_ENUM (return_values, 0);
+  if (load_proc->extract_func)
+    {
+      gboolean extract_success;
+
+      extract_success = load_proc->extract_func (procedure, run_mode, file, metadata, config,
+                                                 &extracted_dimensions,
+                                                 &data_for_run, &data_for_run_destroy,
+                                                 load_proc->run_data, &error);
+
+      if (extract_success)
+        {
+          gboolean keep_ratio              = TRUE;
+          gboolean prefer_native_dimension = FALSE;
+
+          g_object_get (config,
+                        "keep-ratio",               &keep_ratio,
+                        "prefer-native-dimensions", &prefer_native_dimension,
+                        NULL);
+
+          if ((prefer_native_dimension || (width == 0 && height == 0)) &&
+              extracted_dimensions.width  != 0                         &&
+              extracted_dimensions.height != 0)
+            {
+              if (extracted_dimensions.width_unit == GIMP_UNIT_PIXEL ||
+                  /* This is kinda bogus, but it at least gives ratio data. */
+                  extracted_dimensions.width_unit == GIMP_UNIT_PERCENT)
+                {
+                  width = (gint) extracted_dimensions.width;
+                }
+              else if (extracted_dimensions.width_unit != GIMP_UNIT_PERCENT &&
+                       ((extracted_dimensions.pixel_density > 0.0 &&
+                         extracted_dimensions.density_unit != GIMP_UNIT_PERCENT &&
+                         extracted_dimensions.density_unit != GIMP_UNIT_PIXEL) ||
+                        resolution > 0.0))
+                {
+                  gdouble native_width;
+
+                  native_width = extracted_dimensions.width / gimp_unit_get_factor (extracted_dimensions.width_unit);
+
+                  if (extracted_dimensions.pixel_density > 0.0 &&
+                      extracted_dimensions.density_unit != GIMP_UNIT_PERCENT &&
+                      extracted_dimensions.density_unit != GIMP_UNIT_PIXEL)
+                    {
+                      native_width *= extracted_dimensions.pixel_density / gimp_unit_get_factor (extracted_dimensions.density_unit);
+                    }
+                  else
+                    {
+                      native_width *= resolution;
+                    }
+
+                  width = (gint) ceil (native_width);
+                }
+
+              if (extracted_dimensions.height_unit == GIMP_UNIT_PIXEL ||
+                  extracted_dimensions.height_unit == GIMP_UNIT_PERCENT)
+                {
+                  height = (gint) extracted_dimensions.height;
+                }
+              else if (extracted_dimensions.height_unit != GIMP_UNIT_PERCENT &&
+                       ((extracted_dimensions.pixel_density > 0.0 &&
+                         extracted_dimensions.density_unit != GIMP_UNIT_PERCENT &&
+                         extracted_dimensions.density_unit != GIMP_UNIT_PIXEL) ||
+                        resolution > 0.0))
+                {
+                  gdouble native_height;
+
+                  native_height = extracted_dimensions.height / gimp_unit_get_factor (extracted_dimensions.height_unit);
+
+                  if (extracted_dimensions.pixel_density > 0.0 &&
+                      extracted_dimensions.density_unit != GIMP_UNIT_PERCENT &&
+                      extracted_dimensions.density_unit != GIMP_UNIT_PIXEL)
+                    {
+                      native_height *= extracted_dimensions.pixel_density / gimp_unit_get_factor (extracted_dimensions.density_unit);
+                    }
+                  else
+                    {
+                      native_height *= resolution;
+                    }
+
+                  height = (gint) ceil (native_height);
+                }
+
+              if (extracted_dimensions.pixel_density > 0.0 &&
+                  extracted_dimensions.density_unit != GIMP_UNIT_PERCENT &&
+                  extracted_dimensions.density_unit != GIMP_UNIT_PIXEL)
+                {
+                  if (extracted_dimensions.density_unit == GIMP_UNIT_INCH)
+                    {
+                      resolution = extracted_dimensions.pixel_density;
+                    }
+                  else
+                    {
+                      resolution = extracted_dimensions.pixel_density / gimp_unit_get_factor (extracted_dimensions.density_unit);
+                    }
+                }
+
+              if (width == 0 || height == 0)
+                {
+                  g_set_error_literal (&error, GIMP_PLUG_IN_ERROR, 0,
+                                       _("dimensions could neither be extracted nor computed "
+                                         "from the vector image's data."));
+                }
+            }
+          else if (keep_ratio || width == 0 || height == 0)
+            {
+              if (extracted_dimensions.width != 0 && extracted_dimensions.height != 0)
+                {
+                  gdouble ratio;
+
+                  ratio = extracted_dimensions.width / extracted_dimensions.height;
+
+                  if (width == 0)
+                    width = (gint) ceil (ratio * height);
+                  else if (height == 0)
+                    height = (gint) ceil (width / ratio);
+                  else if (ratio * height <= width)
+                    width = (gint) ceil (ratio * height);
+                  else
+                    height = (gint) ceil (width / ratio);
+                }
+              else
+                {
+                  g_set_error_literal (&error, GIMP_PLUG_IN_ERROR, 0,
+                                       _("aspect ratio could not be computed "
+                                         "from the vector image's data."));
+                }
+            }
+        }
+
+      g_prefix_error_literal (&error, _("Vector image loading plug-in failed: "));
+    }
+
+  /* One or both dimensions are still zero at this point. */
+  if (width == 0 || height == 0)
+    {
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        {
+          /* These values are utter-bogus but we just some value to start and
+           * let people select proper values in the interactive dialog.
+           */
+          if (width != 0)
+            height = width;
+          else if (height != 0)
+            width = width;
+          else
+            width = height = 500;
+        }
+      else if (! error)
+        {
+          /* Except for interactive case where we can always ask interactively,
+           * non-interactive (including "with-last-vals") require valid values.
+           */
+          g_set_error_literal (&error, GIMP_PLUG_IN_ERROR, 0,
+                               _("Dimensions cannot be 0 and no native dimensions "
+                                 "could be extracted from the vector image."));
+        }
+    }
+
+  if (error)
+    {
+      return_values = gimp_procedure_new_return_values (procedure, status, error);
+    }
+  else
+    {
+      if (resolution == 0.0)
+        resolution = 300.0;
+
+      g_object_set (config,
+                    "width",         width,
+                    "height",        height,
+                    "pixel-density", resolution,
+                    NULL);
+      /* In future, when we'll have vector layers, a vector load proc should be
+       * able to advertize when it can return a vector layer, and when so, we
+       * can even bypass the dialog (by running non-interactively) and just use
+       * the defaults, unless it's all bogus.
+       */
+      return_values = load_proc->run_func (procedure,
+                                           run_mode,
+                                           file, width, height,
+                                           extracted_dimensions,
+                                           metadata, &flags,
+                                           config,
+                                           data_for_run,
+                                           load_proc->run_data);
+
+      if (return_values != NULL                       &&
+          gimp_value_array_length (return_values) > 0 &&
+          G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
+        status = GIMP_VALUES_GET_ENUM (return_values, 0);
+    }
 
   _gimp_procedure_config_end_run (config, status);
+
+  if (data_for_run_destroy)
+    data_for_run_destroy (data_for_run);
 
   if (status == GIMP_PDB_SUCCESS)
     {
       if (gimp_value_array_length (return_values) < 2 ||
           ! GIMP_VALUE_HOLDS_IMAGE (gimp_value_array_index (return_values, 1)))
         {
-          GError *error = NULL;
-
           status = GIMP_PDB_EXECUTION_ERROR;
           g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
                        _("This file loading plug-in returned SUCCESS as a status without an image. "
@@ -272,7 +468,7 @@ gimp_vector_load_procedure_run (GimpProcedure        *procedure,
   plug_in = gimp_procedure_get_plug_in (procedure);
   if (G_OBJECT (config)->ref_count > 1 &&
       _gimp_plug_in_manage_memory_manually (plug_in))
-    g_printerr ("%s: ERROR: the GimpSaveProcedureConfig object was refed "
+    g_printerr ("%s: ERROR: the GimpProcedureConfig object was refed "
                 "by plug-in, it MUST NOT do that!\n", G_STRFUNC);
 
   g_object_unref (config);
@@ -307,6 +503,9 @@ GimpProcedure  *
 gimp_vector_load_procedure_new (GimpPlugIn            *plug_in,
                                 const gchar           *name,
                                 GimpPDBProcType        proc_type,
+                                GimpExtractVectorFunc  extract_func,
+                                gpointer               extract_data,
+                                GDestroyNotify         extract_data_destroy,
                                 GimpRunVectorLoadFunc  run_func,
                                 gpointer               run_data,
                                 GDestroyNotify         run_data_destroy)
@@ -325,9 +524,12 @@ gimp_vector_load_procedure_new (GimpPlugIn            *plug_in,
                             "procedure-type", proc_type,
                             NULL);
 
-  procedure->run_func         = run_func;
-  procedure->run_data         = run_data;
-  procedure->run_data_destroy = run_data_destroy;
+  procedure->run_func             = run_func;
+  procedure->run_data             = run_data;
+  procedure->run_data_destroy     = run_data_destroy;
+  procedure->extract_func         = extract_func;
+  procedure->extract_data         = extract_data;
+  procedure->extract_data_destroy = extract_data_destroy;
 
   return GIMP_PROCEDURE (procedure);
 }

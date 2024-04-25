@@ -118,6 +118,7 @@ opened_xcf_file_files (gconstpointer data)
                            gimp_get_user_context (gimp),
                            NULL /*progress*/,
                            file,
+                           0, 0, /* vector width, height */
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
                            GIMP_RUN_NONINTERACTIVE,
@@ -158,6 +159,7 @@ imported_file_files (gconstpointer data)
                            gimp_get_user_context (gimp),
                            NULL /*progress*/,
                            file,
+                           0, 0, /* vector width, height */
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
                            GIMP_RUN_NONINTERACTIVE,
@@ -206,6 +208,7 @@ saved_imported_file_files (gconstpointer data)
                            gimp_get_user_context (gimp),
                            NULL /*progress*/,
                            import_file,
+                           0, 0, /* vector width, height */
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
                            GIMP_RUN_NONINTERACTIVE,
@@ -313,6 +316,7 @@ clear_import_file_after_export (gconstpointer data)
                            gimp_get_user_context (gimp),
                            NULL /*progress*/,
                            file,
+                           0, 0, /* vector width, height */
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
                            GIMP_RUN_NONINTERACTIVE,

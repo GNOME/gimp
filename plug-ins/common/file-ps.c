@@ -134,11 +134,11 @@ static GimpValueArray * ps_load             (GimpProcedure         *procedure,
                                              GFile                 *file,
                                              gint                   width,
                                              gint                   height,
-                                             gboolean               preserve_ratio,
-                                             gboolean               prefer_native_dimension,
+                                             GimpVectorLoadData     extracted_data,
                                              GimpMetadata          *metadata,
                                              GimpMetadataLoadFlags *flags,
                                              GimpProcedureConfig   *config,
+                                             gpointer               data_from_extract,
                                              gpointer               run_data);
 static GimpValueArray * ps_load_thumb       (GimpProcedure         *procedure,
                                              GFile                 *file,
@@ -332,6 +332,7 @@ ps_create_procedure (GimpPlugIn  *plug_in,
     {
       procedure = gimp_vector_load_procedure_new (plug_in, name,
                                                   GIMP_PDB_PROC_TYPE_PLUGIN,
+                                                  NULL, NULL, NULL,
                                                   ps_load, NULL, NULL);
 
       if (! strcmp (name, LOAD_PS_PROC))
@@ -575,11 +576,11 @@ ps_load (GimpProcedure         *procedure,
          GFile                 *file,
          gint                   width,
          gint                   height,
-         gboolean               preserve_ratio,
-         gboolean               prefer_native_dimension,
+         GimpVectorLoadData     extracted_data,
          GimpMetadata          *metadata,
          GimpMetadataLoadFlags *flags,
          GimpProcedureConfig   *config,
+         gpointer               data_from_extract,
          gpointer               run_data)
 {
   GimpValueArray *return_vals;
