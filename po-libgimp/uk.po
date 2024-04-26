@@ -8,17 +8,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-29 23:35+0000\n"
-"PO-Revision-Date: 2024-03-01 23:42+0200\n"
+"POT-Creation-Date: 2024-04-26 17:36+0000\n"
+"PO-Revision-Date: 2024-04-26 22:43+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language-Team: Ukrainian\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 23.04.1\n"
+"X-Generator: Lokalize 23.04.3\n"
 
 #: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
@@ -167,12 +167,15 @@ msgstr "Обрізати шари"
 msgid "Resize Image to Layers"
 msgstr "Змінити розмір зображення за шарами"
 
-#: libgimp/gimpexport.c:581
-msgid "Confirm Save"
-msgstr "Підтвердження збереження"
+#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
+#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
+#: libgimp/gimpexport.c:949 libgimp/gimpexportproceduredialog.c:416
+#, c-format
+msgid "Export Image as %s"
+msgstr "Експортувати зображення як %s"
 
-#: libgimp/gimpexport.c:586 libgimp/gimpexport.c:668 libgimp/gimpexport.c:1242
-#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:554
+#: libgimp/gimpexport.c:955 libgimp/gimpproceduredialog.c:336
+#: libgimpwidgets/gimpcolorbutton.c:554
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -181,62 +184,79 @@ msgstr "Підтвердження збереження"
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: libgimp/gimpexport.c:587
-msgid "C_onfirm"
-msgstr "_Підтвердити"
-
-#: libgimp/gimpexport.c:663
-msgid "Export File"
-msgstr "Експорт файлу"
-
-#: libgimp/gimpexport.c:667
-msgid "_Ignore"
-msgstr "_Ігнорувати"
-
-#: libgimp/gimpexport.c:669 libgimp/gimpexport.c:1243
-#: libgimp/gimpproceduredialog.c:296 libgimp/gimpproceduredialog.c:569
+#: libgimp/gimpexport.c:956 libgimp/gimpproceduredialog.c:308
+#: libgimp/gimpproceduredialog.c:595
 msgid "_Export"
 msgstr "_Експорт"
 
-#. the headline
-#: libgimp/gimpexport.c:699
-#, c-format
-msgid ""
-"Your image should be exported before it can be saved as %s for the following "
-"reasons:"
+#: libgimp/gimpexportprocedure.c:479
+msgid "Save _Exif"
+msgstr "Зберегти _Exif"
+
+#: libgimp/gimpexportprocedure.c:480
+msgid "Save Exif (Exchangeable image file format) metadata"
+msgstr "Зберегти метадані Exif (Exchangeable image file format)"
+
+#: libgimp/gimpexportprocedure.c:485
+msgid "Save _IPTC"
+msgstr "Зберегти _IPTC"
+
+#: libgimp/gimpexportprocedure.c:486
+msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
-"Ваше зображення має бути експортоване до того, як воно буде збережено у %s з "
-"таких причин:"
+"Зберегти метадані IPTC (International Press Telecommunications Council)"
 
-#. the footline
-#: libgimp/gimpexport.c:773
-msgid "The export conversion won't modify your original image."
-msgstr "Експортне перетворення не змінить ваше початкове зображення."
+#: libgimp/gimpexportprocedure.c:491
+msgid "Save _XMP"
+msgstr "Зберегти дані _XMP"
 
-#: libgimp/gimpexport.c:893
-#, c-format
-msgid ""
-"You are about to save a layer mask as %s.\n"
-"This will not save the visible layers."
-msgstr ""
-"Ви намагаєтесь зберегти маску шару як %s.\n"
-"Видимі шари не будуть збережені."
+#: libgimp/gimpexportprocedure.c:492
+msgid "Save XMP (Extensible Metadata Platform) metadata"
+msgstr "Зберегти метадані XMP (Extensible Metadata Platform)"
 
-#: libgimp/gimpexport.c:899
-#, c-format
-msgid ""
-"You are about to save a channel (saved selection) as %s.\n"
-"This will not save the visible layers."
-msgstr ""
-"Ви намагаєтесь зберегти канал (збережену виділену область) як %s.\n"
-"Видимі шари не будуть збережені."
+#: libgimp/gimpexportprocedure.c:497
+msgid "Save color _profile"
+msgstr "Зберегти _профіль кольорів"
 
-#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1236 libgimp/gimpsaveproceduredialog.c:398
-#, c-format
-msgid "Export Image as %s"
-msgstr "Експортувати зображення як %s"
+#: libgimp/gimpexportprocedure.c:498
+msgid "Save the ICC color profile as metadata"
+msgstr "Зберегти профіль кольорів ICC як метадані"
+
+#: libgimp/gimpexportprocedure.c:503
+msgid "Save _thumbnail"
+msgstr "Зберегти _ескіз"
+
+#: libgimp/gimpexportprocedure.c:504
+msgid "Save a smaller representation of the image as metadata"
+msgstr "Зберегти зменшену версію зображення як метадані"
+
+#: libgimp/gimpexportprocedure.c:510
+msgid "Save c_omment"
+msgstr "З_берегти коментар"
+
+#: libgimp/gimpexportprocedure.c:511
+msgid "Save a comment as metadata"
+msgstr "Зберегти коментар як метадані"
+
+#: libgimp/gimpexportprocedure.c:515
+msgid "Comment"
+msgstr "Коментар"
+
+#: libgimp/gimpexportprocedure.c:516
+msgid "Image comment"
+msgstr "Коментар до зображення"
+
+#: libgimp/gimpexportproceduredialog.c:141
+msgid "Metadata"
+msgstr "Метадані"
+
+#: libgimp/gimpexportproceduredialog.c:150
+msgid "Edit Metadata"
+msgstr "Редагувати метадані"
+
+#: libgimp/gimpexportproceduredialog.c:150
+msgid "(edit)"
+msgstr "(редагувати)"
 
 #: libgimp/gimpimagemetadata.c:283
 msgid "Background"
@@ -246,7 +266,7 @@ msgstr "Тло"
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:267
+#: libgimp/gimploadprocedure.c:267 libgimp/gimpvectorloadprocedure.c:255
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
@@ -370,12 +390,12 @@ msgstr[0] "%d процедура збігається із запитом"
 msgstr[1] "%d процедури збігають із запитом"
 msgstr[2] "%d процедур збігають із запитом"
 
-#: libgimp/gimpprocedure.c:2068
+#: libgimp/gimpprocedure.c:2080
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Процедура «%s» не повернула жодного значення"
 
-#: libgimp/gimpprocedure.c:2195
+#: libgimp/gimpprocedure.c:2207
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -384,7 +404,7 @@ msgstr ""
 "Процедура «%s» повернула некоректний тип значення для значення результату "
 "«%s» (#%d). Очікувався %s, отримано %s."
 
-#: libgimp/gimpprocedure.c:2207
+#: libgimp/gimpprocedure.c:2219
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
@@ -393,7 +413,7 @@ msgstr ""
 "Процедура «%s» викликана з деяким значенням аргументу «%s» (#%d). "
 "Очікувалось %s, отримано %s."
 
-#: libgimp/gimpprocedure.c:2242
+#: libgimp/gimpprocedure.c:2254
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -402,7 +422,7 @@ msgstr ""
 "Процедура «%s» повернула «%s» як значення «%s» (#%d, тип %s). Значення "
 "знаходиться поза межами припустимого діапазону"
 
-#: libgimp/gimpprocedure.c:2256
+#: libgimp/gimpprocedure.c:2268
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -411,12 +431,12 @@ msgstr ""
 "Процедура «%s» викликана із значенням «%s» аргументу «%s» (#%d, тип %s). "
 "Значення знаходиться поза межами допустимого діапазону."
 
-#: libgimp/gimpprocedure.c:2300
+#: libgimp/gimpprocedure.c:2312
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Процедура «%s» повернула некоректний рядок UTF-8 для аргументу «%s»"
 
-#: libgimp/gimpprocedure.c:2310
+#: libgimp/gimpprocedure.c:2322
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -424,66 +444,66 @@ msgid ""
 msgstr ""
 "Процедуру «%s» було викликано з некоректним рядком UTF-8 для аргументу «%s»."
 
-#: libgimp/gimpproceduredialog.c:294 libgimp/gimpproceduredialog.c:567
+#: libgimp/gimpproceduredialog.c:306 libgimp/gimpproceduredialog.c:593
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Відкрити"
 
-#: libgimp/gimpproceduredialog.c:298 libgimp/gimpproceduredialog.c:571
+#: libgimp/gimpproceduredialog.c:310 libgimp/gimpproceduredialog.c:597
 #: libgimpwidgets/gimpcolorbutton.c:555 libgimpwidgets/gimpfileentry.c:467
 #: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
 #: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Гаразд"
 
-#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:553
+#: libgimp/gimpproceduredialog.c:318 libgimpwidgets/gimpcolorbutton.c:553
 msgid "_Reset"
 msgstr "С_кинути"
 
-#: libgimp/gimpproceduredialog.c:359
+#: libgimp/gimpproceduredialog.c:371
 msgid "_Load Saved Settings"
 msgstr "З_авантажити збережені параметри"
 
-#: libgimp/gimpproceduredialog.c:360
+#: libgimp/gimpproceduredialog.c:372
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr ""
 "Завантажити параметри, які було збережено за допомогою кнопки «Зберегти "
 "параметри»"
 
-#: libgimp/gimpproceduredialog.c:372
+#: libgimp/gimpproceduredialog.c:384
 msgid "_Save Settings"
 msgstr "З_берегти параметри"
 
-#: libgimp/gimpproceduredialog.c:373
+#: libgimp/gimpproceduredialog.c:385
 msgid "Store current settings for later reuse"
 msgstr ""
 "Зберегти поточні значення параметрів для подальшого повторного використання"
 
-#: libgimp/gimpproceduredialog.c:784
+#: libgimp/gimpproceduredialog.c:811
 msgid "Brush Chooser"
 msgstr "Вибір пензля"
 
-#: libgimp/gimpproceduredialog.c:788
+#: libgimp/gimpproceduredialog.c:815
 msgid "Font Chooser"
 msgstr "Вибір шрифту"
 
-#: libgimp/gimpproceduredialog.c:792
+#: libgimp/gimpproceduredialog.c:819
 msgid "Gradient Chooser"
 msgstr "Вибір градієнта"
 
-#: libgimp/gimpproceduredialog.c:796
+#: libgimp/gimpproceduredialog.c:823
 msgid "Palette Chooser"
 msgstr "Вибір палітри"
 
-#: libgimp/gimpproceduredialog.c:800
+#: libgimp/gimpproceduredialog.c:827
 msgid "Pattern Chooser"
 msgstr "Вибір текстури"
 
-#: libgimp/gimpproceduredialog.c:2532
+#: libgimp/gimpproceduredialog.c:2586
 msgid "Reset to _Initial Values"
 msgstr "Повернути до по_чаткових значень"
 
-#: libgimp/gimpproceduredialog.c:2541
+#: libgimp/gimpproceduredialog.c:2595
 msgid "Reset to _Factory Defaults"
 msgstr "Повернути до стандартних _початкових значень"
 
@@ -538,78 +558,57 @@ msgstr "Вибір каналу: %s"
 msgid "Choose drawable: %s"
 msgstr "Вибір малюнка: %s"
 
-#: libgimp/gimpsaveprocedure.c:467
-msgid "Save _Exif"
-msgstr "Зберегти _Exif"
+#: libgimp/gimpresolutionentry-private.c:143
+#: libgimp/gimpvectorloadprocedure.c:117
+msgid "_Keep aspect ratio"
+msgstr "З_берігати пропорції"
 
-#: libgimp/gimpsaveprocedure.c:468
-msgid "Save Exif (Exchangeable image file format) metadata"
-msgstr "Зберегти метадані Exif (Exchangeable image file format)"
+#: libgimp/gimpresolutionentry-private.c:144
+#: libgimp/gimpvectorloadprocedure.c:118
+msgid "Force dimensions with aspect ratio"
+msgstr "Примусові розміри за пропорціями"
 
-#: libgimp/gimpsaveprocedure.c:473
-msgid "Save _IPTC"
-msgstr "Зберегти _IPTC"
-
-#: libgimp/gimpsaveprocedure.c:474
-msgid "Save IPTC (International Press Telecommunications Council) metadata"
-msgstr ""
-"Зберегти метадані IPTC (International Press Telecommunications Council)"
-
-#: libgimp/gimpsaveprocedure.c:479
-msgid "Save _XMP"
-msgstr "Зберегти дані _XMP"
-
-#: libgimp/gimpsaveprocedure.c:480
-msgid "Save XMP (Extensible Metadata Platform) metadata"
-msgstr "Зберегти метадані XMP (Extensible Metadata Platform)"
-
-#: libgimp/gimpsaveprocedure.c:485
-msgid "Save color _profile"
-msgstr "Зберегти _профіль кольорів"
-
-#: libgimp/gimpsaveprocedure.c:486
-msgid "Save the ICC color profile as metadata"
-msgstr "Зберегти профіль кольорів ICC як метадані"
-
-#: libgimp/gimpsaveprocedure.c:491
-msgid "Save _thumbnail"
-msgstr "Зберегти _ескіз"
-
-#: libgimp/gimpsaveprocedure.c:492
-msgid "Save a smaller representation of the image as metadata"
-msgstr "Зберегти зменшену версію зображення як метадані"
-
-#: libgimp/gimpsaveprocedure.c:498
-msgid "Save c_omment"
-msgstr "З_берегти коментар"
-
-#: libgimp/gimpsaveprocedure.c:499
-msgid "Save a comment as metadata"
-msgstr "Зберегти коментар як метадані"
-
-#: libgimp/gimpsaveprocedure.c:503
-msgid "Comment"
-msgstr "Коментар"
-
-#: libgimp/gimpsaveprocedure.c:504
-msgid "Image comment"
-msgstr "Коментар до зображення"
-
-#: libgimp/gimpsaveproceduredialog.c:166
-msgid "Metadata"
-msgstr "Метадані"
-
-#: libgimp/gimpsaveproceduredialog.c:175
-msgid "Edit Metadata"
-msgstr "Редагувати метадані"
-
-#: libgimp/gimpsaveproceduredialog.c:175
-msgid "(edit)"
-msgstr "(редагувати)"
+#: libgimp/gimpresolutionentry-private.c:193
+#: libgimp/gimpresolutionentry-private.c:194
+#, c-format
+#| msgctxt "size-type"
+#| msgid "Pixels"
+msgid "pixels/%a"
+msgstr "точок/%a"
 
 #: libgimp/gimpunitcache.c:54
 msgid "percent"
 msgstr "відсоток"
+
+#: libgimp/gimpvectorloadprocedure.c:122
+msgid "_Prefer native dimensions"
+msgstr "П_еревага природних розмірностей"
+
+#: libgimp/gimpvectorloadprocedure.c:123
+msgid "Load and use dimensions from source file"
+msgstr "Завантажити і використати розмірності з початкового файла"
+
+#: libgimp/gimpvectorloadprocedure.c:131
+msgid "Resolu_tion"
+msgstr "Р_оздільна здатність"
+
+#: libgimp/gimpvectorloadprocedure.c:132
+msgid "Pixel Density: number of pixels per physical unit"
+msgstr "Густина пікселів: кількість пікселів на фізичну одиницю"
+
+#: libgimp/gimpvectorloadprocedure.c:136
+msgid "Unit"
+msgstr "Одиниця"
+
+#: libgimp/gimpvectorloadprocedure.c:137
+msgid "Physical unit"
+msgstr "Фізична одиниця"
+
+#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
+#: libgimp/gimpvectorloadproceduredialog.c:156
+#, c-format
+msgid "Load %s Image"
+msgstr "Завантажити зображення %s"
 
 #: libgimpbase/gimpbaseenums.c:31
 msgctxt "add-mask-type"
@@ -1428,8 +1427,6 @@ msgid "None (extend)"
 msgstr "Немає (розширення)"
 
 #: libgimpbase/gimpbaseenums.c:1475
-#| msgctxt "repeat-mode"
-#| msgid "None (extend)"
 msgctxt "repeat-mode"
 msgid "None (truncate)"
 msgstr "Немає (обрізати)"
@@ -1659,22 +1656,22 @@ msgstr "Метадані можна завантажувати лише з ло�
 msgid "Can save metadata only to local files"
 msgstr "Метадані можна записувати лише в локальні файли"
 
-#: libgimpbase/gimpmetadata.c:1347
+#: libgimpbase/gimpmetadata.c:1348
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Неправильний розмір даних Exif."
 
-#: libgimpbase/gimpmetadata.c:1376
+#: libgimpbase/gimpmetadata.c:1393
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Не вдалось розібрати дані Exif."
 
-#: libgimpbase/gimpmetadata.c:1426
+#: libgimpbase/gimpmetadata.c:1445
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Не вдалось розібрати дані IPTC."
 
-#: libgimpbase/gimpmetadata.c:1474
+#: libgimpbase/gimpmetadata.c:1493
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Не вдалось розібрати дані XMP."
@@ -2136,7 +2133,7 @@ msgstr "_Чорний"
 msgid "_White"
 msgstr "_Білий"
 
-#: libgimpwidgets/gimpcolorhexentry.c:134
+#: libgimpwidgets/gimpcolorhexentry.c:133
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -2415,7 +2412,7 @@ msgstr "Колір 1 нетипових клітинок"
 msgid "Custom Checks Color 2"
 msgstr "Колір 2 нетипових клітинок"
 
-#: libgimpwidgets/gimppropwidgets.c:2474
+#: libgimpwidgets/gimppropwidgets.c:2454
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -3032,78 +3029,78 @@ msgstr "Aces RRT"
 #. Translators: "Clip Warning" is the name of a (color) display filter
 #. * that highlights pixels outside of the color space range.
 #. * Shown as a label description.
-#: modules/display-filter-clip-warning.c:124
+#: modules/display-filter-clip-warning.c:125
 msgid "Clip warning color display filter"
 msgstr "Фільтр показу кольору попередження щодо обрізання кольорів"
 
-#: modules/display-filter-clip-warning.c:161
+#: modules/display-filter-clip-warning.c:166
 msgid "Show shadows"
 msgstr "Показати тіні"
 
-#: modules/display-filter-clip-warning.c:162
+#: modules/display-filter-clip-warning.c:167
 msgid "Show warning for pixels with a negative component"
 msgstr "Показувати попередження для точок з від'ємними компонентами"
 
-#: modules/display-filter-clip-warning.c:168
+#: modules/display-filter-clip-warning.c:173
 msgid "Shadows color"
 msgstr "Колір тіней"
 
-#: modules/display-filter-clip-warning.c:169
+#: modules/display-filter-clip-warning.c:174
 msgid "Shadows warning color"
 msgstr "Колір попередження про тінї"
 
-#: modules/display-filter-clip-warning.c:181
+#: modules/display-filter-clip-warning.c:185
 msgid "Show highlights"
 msgstr "Показати світлі ділянки"
 
-#: modules/display-filter-clip-warning.c:182
+#: modules/display-filter-clip-warning.c:186
 msgid "Show warning for pixels with a component greater than one"
 msgstr ""
 "Показувати попередження для точок зі значенням складової більшим, ніж це"
 
-#: modules/display-filter-clip-warning.c:188
+#: modules/display-filter-clip-warning.c:194
 msgid "Highlights color"
 msgstr "Колір світлих ділянок"
 
-#: modules/display-filter-clip-warning.c:189
+#: modules/display-filter-clip-warning.c:195
 msgid "Highlights warning color"
 msgstr "Колір попередження про світлі ділянки"
 
-#: modules/display-filter-clip-warning.c:201
+#: modules/display-filter-clip-warning.c:206
 msgid "Show bogus"
 msgstr "Показувати фіктивні"
 
-#: modules/display-filter-clip-warning.c:202
+#: modules/display-filter-clip-warning.c:207
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr ""
 "Показувати попередження щодо пікселів із нескінченними або недоступними "
 "компонентами"
 
-#: modules/display-filter-clip-warning.c:208
+#: modules/display-filter-clip-warning.c:215
 msgid "Bogus color"
 msgstr "Колір фіктивних"
 
-#: modules/display-filter-clip-warning.c:209
+#: modules/display-filter-clip-warning.c:216
 msgid "Bogus warning color"
 msgstr "Колір попередження щодо фіктивних пікселів"
 
-#: modules/display-filter-clip-warning.c:221
+#: modules/display-filter-clip-warning.c:227
 msgid "Include alpha component"
 msgstr "Включити складову альфа"
 
-#: modules/display-filter-clip-warning.c:222
+#: modules/display-filter-clip-warning.c:228
 msgid "Include alpha component in the warning"
 msgstr "Включити до попередження складову альфа"
 
-#: modules/display-filter-clip-warning.c:228
+#: modules/display-filter-clip-warning.c:234
 msgid "Include transparent pixels"
 msgstr "Включити прозорі точки"
 
-#: modules/display-filter-clip-warning.c:229
+#: modules/display-filter-clip-warning.c:235
 msgid "Include fully transparent pixels in the warning"
 msgstr "Включити до попередження повністю прозорі точки"
 
-#: modules/display-filter-clip-warning.c:233
+#: modules/display-filter-clip-warning.c:239
 msgid "Clip Warning"
 msgstr "Попередження щодо обрізання"
 
@@ -3155,6 +3152,45 @@ msgstr "Цикли контрастності"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Контрастність"
+
+#~ msgid "Confirm Save"
+#~ msgstr "Підтвердження збереження"
+
+#~ msgid "C_onfirm"
+#~ msgstr "_Підтвердити"
+
+#~ msgid "Export File"
+#~ msgstr "Експорт файлу"
+
+#~ msgid "_Ignore"
+#~ msgstr "_Ігнорувати"
+
+#, c-format
+#~ msgid ""
+#~ "Your image should be exported before it can be saved as %s for the "
+#~ "following reasons:"
+#~ msgstr ""
+#~ "Ваше зображення має бути експортоване до того, як воно буде збережено у "
+#~ "%s з таких причин:"
+
+#~ msgid "The export conversion won't modify your original image."
+#~ msgstr "Експортне перетворення не змінить ваше початкове зображення."
+
+#, c-format
+#~ msgid ""
+#~ "You are about to save a layer mask as %s.\n"
+#~ "This will not save the visible layers."
+#~ msgstr ""
+#~ "Ви намагаєтесь зберегти маску шару як %s.\n"
+#~ "Видимі шари не будуть збережені."
+
+#, c-format
+#~ msgid ""
+#~ "You are about to save a channel (saved selection) as %s.\n"
+#~ "This will not save the visible layers."
+#~ msgstr ""
+#~ "Ви намагаєтесь зберегти канал (збережену виділену область) як %s.\n"
+#~ "Видимі шари не будуть збережені."
 
 #~ msgctxt "repeat-mode"
 #~ msgid "Truncate"
@@ -3342,9 +3378,6 @@ msgstr "Контрастність"
 
 #~ msgid "Unit Selection"
 #~ msgstr "Вибір одиниць"
-
-#~ msgid "Unit"
-#~ msgstr "Одиниця"
 
 #~ msgid "Factor"
 #~ msgstr "Множник"
