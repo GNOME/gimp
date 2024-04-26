@@ -479,7 +479,7 @@ gimp_image_new_from_drawables (Gimp     *gimp,
   gimp_image_new_copy_drawables (image, drawables, new_image, tag_copies, NULL, NULL, NULL, NULL);
 
   /* Copy any attached layer effects */
-  old_layers_list = gimp_image_get_layer_iter (image);
+  old_layers_list = drawables;
   for (new_layers_list = gimp_image_get_layer_iter (new_image);
        new_layers_list; new_layers_list = g_list_next (new_layers_list))
     {
