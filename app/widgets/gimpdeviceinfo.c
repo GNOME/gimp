@@ -80,7 +80,6 @@ G_DEFINE_TYPE (GimpDeviceInfo, gimp_device_info, GIMP_TYPE_TOOL_PRESET)
 
 #define parent_class gimp_device_info_parent_class
 
-
 static void
 gimp_device_info_class_init (GimpDeviceInfoClass *klass)
 {
@@ -535,8 +534,23 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
        *  Also we had no clear report on macOS or BSD (AFAIK) of broken
        *  tablets with any of the version of the code. So let's keep
        *  these similar to Linux for now.
+       *
+       *  Update: it's not needed for Windows Ink, only Wintab.
        */
-      return FALSE;
+      {
+        Gimp *gimp = NULL;
+
+        g_object_get (info, "gimp", &gimp, NULL);
+        if (gimp)
+          {
+            GimpWin32PointerInputAPI api = GIMP_WIN32_POINTER_INPUT_API_WINTAB;
+
+            g_object_get (gimp->config, "win32-pointer-input-api", &api, NULL);
+
+            if (api == GIMP_WIN32_POINTER_INPUT_API_WINTAB)
+              return FALSE;
+          }
+      }
 #endif /* G_OS_WIN32 */
     }
   else if (! device && ! info->device)
