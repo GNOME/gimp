@@ -43,9 +43,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-10 11:10+0000\n"
-"PO-Revision-Date: 2024-02-14 03:57+0300\n"
-"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"POT-Creation-Date: 2024-04-23 13:43+0000\n"
+"PO-Revision-Date: 2024-04-23 20:38+0300\n"
+"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -110,6 +110,18 @@ msgstr "GIMP içinde fotoğraf düzenlemek"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
 msgid ""
+"GIMP 2.10.38 has been the first bug-fix only release for a long time, "
+"correcting various bugs, some more annoying than others."
+msgstr ""
+"GIMP 2.10.38, bazıları diğerlerinden daha can sıkıcı çeşitli hataları "
+"düzelten, yalnızca hata düzeltme amaçlı bir sürümdür."
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+msgid "On Windows, the Windows Ink API support has been backported."
+msgstr "Windows'ta, Windows Ink API desteği yeni sürümden aktarıldı."
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+msgid ""
 "This new version of GIMP comes with many fixes, including vulnerability "
 "corrections. It is highly recommended to update. It also provides a few "
 "interesting changes, such as:"
@@ -118,41 +130,41 @@ msgstr ""
 "düzeltmeyle birlikte geliyor. Güncellemenizi şiddetle öneririz. Ayrıca, "
 "aşağıdakiler gibi birkaç ilgi çekici değişiklik de içeriyor:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "Adobe ACB and ASE palette support"
 msgstr "Adobe ACB ve ASE paleti desteği"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "New gradient: FG to Transparent (Hardedge)"
 msgstr "Yeni renk geçişi: ÖA'dan Saydam'a ÖA'dan AA'ya (Sert Kenarlı)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "Some text tool algorithm enhancement when replacing formatted text"
 msgstr ""
 "Biçimlendirilmiş metni değiştirirken bazı metin aracı algoritma "
 "geliştirmeleri"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
 "Better theming of item locks (when hovering them or setting them active)"
 msgstr ""
 "Öge kilitlerinin daha iyi temalandırılması (üzerlerine gelindiğinde ya da "
 "etkinleştirildiğinde)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Improvements in handling a few specific metadata"
 msgstr "Birkaç özel üst veri işlenmesi iyileştirildi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "A new stable releases with a lot of bug fixes and a few enhancements:"
 msgstr ""
 "Pek çok hata düzeltmesi ve birkaç iyileştirme içeren yeni kararlı sürüm:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "New template selector in \"Canvas Size\" dialog"
 msgstr "\"Tuval Boyutu\" iletişim kutusunda yeni şablon seçici"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid ""
 "\"Change Color\" dialogs: color scale (0..255/0..100) and models (LCh/HSV) "
 "settings remembered across sessions"
@@ -160,37 +172,37 @@ msgstr ""
 "\"Renk Değiştir\" iletişim kutuları: renk ölçeği (0..255/0..100) ve "
 "modellerin (LCh/HSV) ayarları oturumlar arasında hatırlanıyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "New header with \"visible\" and \"link\" icons in item dockables"
 msgstr "Öge rıhtımlarında \"görünür\" ve \"bağlantı\" simgeleriyle yeni başlık"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "Clipping layers better supported when importing PSD files"
 msgstr ""
 "PSD dosyaları içe aktarırken kırpma katmanları artık daha iyi destekleniyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid "Paths are now exported to PSD"
 msgstr "Yollar artık PSDʼye aktarılıyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "JPEG XL export added"
 msgstr "JPEG XL dışa aktarma eklendi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Metadata in JPEG XL import"
 msgstr "JPEG XL içe aktarmada üst veriler"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "New option \"Show reduced images\" when loading TIFF images"
 msgstr ""
 "TIFF görüntüleri yüklerken yeni \"Azaltılmış görüntüleri göster\" seçeneği"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "16-bit per channel export for raw image data"
 msgstr "Ham görüntü verileri için kanal başına 16 bit dışa aktarım"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid ""
 "More plug-ins got bug-fixes: DDS, WebP, Flame, Animation Playback, HEIF, "
 "Dicom and Help"
@@ -198,7 +210,7 @@ msgstr ""
 "Daha çok eklentide hata düzeltmeleri yapıldı: DDS, WebP, Alev, Animasyon "
 "Oynatma, HEIF, Dicom ve Yardım"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "Color picking on X11 will ignore the Wayland portal; new implementation for "
 "color picking on Windows"
@@ -206,11 +218,11 @@ msgstr ""
 "X11ʼde renk seçimi, Wayland portalını yok sayacak; Windowsʼta renk seçimi "
 "için yeni uygulama"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "Check for updates fixed on macOS"
 msgstr "macOSʼta güncelleme denetimi düzeltildi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
 "GIMP continues strengthening its bases with this new version 2.10.32 fixing "
 "many bugs and improving format support. Notable changes:"
@@ -218,19 +230,19 @@ msgstr ""
 "GIMP, yeni 2.10.32 sürümü ile hataları düzelterek ve biçim desteğini "
 "geliştirerek temellerini güçlendirmeye devam ediyor. Önemli değişiklikler:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "8 and 16-bit CMYK(A) TIFF files import is now supported"
 msgstr "8 ve 16-bit CMYK(A) TIFF dosyaları içe aktarma artık destekleniyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "BIGTIFF import and export are now supported"
 msgstr "BIGTIFF içe aktarma ve dışa aktarma artık destekleniyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "JPEG XL files import is now supported"
 msgstr "JPEG XL dosyalarını içe aktarma artık destekleniyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
 "DDS export has new \"Flip\" (useful for some game engine) and \"Visible "
 "layers\" options"
@@ -238,22 +250,22 @@ msgstr ""
 "DDS dışa aktarmaya yeni \"Çevir\" (bazı oyun motorları için kullanışlı) ve "
 "\"Görünür katmanlar\" seçenekleri eklendi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Other improved format supports: BMP, DICOM, EPS, RAW, TGA, WebP"
 msgstr "Diğer iyileştirilen biçim destekleri: BMP, DICOM, EPS, RAW, TGA, WebP"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid ""
 "The screenshot plug-in on Windows has now an option to capture the cursor"
 msgstr ""
 "Windows'taki ekran görüntüsü eklentisine imleç yakalama seçeneği eklendi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "Several usability improvements in official themes and icons"
 msgstr ""
 "Resmi temalarda ve simgelerde birçok kullanılabilirlik iyileştirmesi yapıldı"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid ""
 "New support for localized glyphs ('locl') in Text tool depending on the "
 "value of the \"Language\" tool option"
@@ -261,15 +273,15 @@ msgstr ""
 "\"Dil\" aracı seçeneğinin değerine bağlı olarak Metin aracında "
 "yerelleştirilmiş glifler ('locl') için yeni destek"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "More robust XCF import"
 msgstr "Daha kararlı XCF içe aktarma"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "Several metadata handling improvements"
 msgstr "Birçok üst veri işleme iyileştirmesi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid ""
 "GIMP 2.10.30 fixes many bugs, updates backend implementations to follow OS "
 "evolutions, improves metadata support as well as support of several formats, "
@@ -279,7 +291,7 @@ msgstr ""
 "gelişimini izleyecek biçimde günceller, üst veri desteğinin yanında PSD ve "
 "AVIF gibi birçok biçim desteğini iyileştirir."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
@@ -287,7 +299,7 @@ msgstr ""
 "GIMP 2.10.28, bazı tema verilerinin düzgün yüklenmediği GIMP 2.10.26 "
 "sürümünün derleme sorununu düzeltir."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
@@ -295,16 +307,16 @@ msgstr ""
 "GIMP 2.10.26, çekirdek, betikler ve eklenti kodunda yüzlerce düzeltme içeren "
 "bir hata düzeltme sürümüdür."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr ""
 "GIMP 2.10.24 büyük ölçüde bir hata düzeltme sürümüdür. Önemli değişiklikler:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "GeoTIFF metadata support added"
 msgstr "GeoTIFF üst veri desteği eklendi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
 "PDF import now proposes an option to load layers in reverse orders and "
 "allows fractional pixel density"
@@ -312,40 +324,40 @@ msgstr ""
 "PDF içe aktarma artık katmanları ters sırada yükleme seçeneği sunuyor ve "
 "kesirli piksel yoğunluğuna izin veriyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid ""
 "Raw image import updated to handle API changes in darktable 3.6 and over"
 msgstr ""
 "Darktable 3.6 ve sonrasındaki API değişikliklerini işlemek için ham görüntü "
 "içe aktarma güncellendi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
 "İyileştirilen dosya biçimi destekleri: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, "
 "BMP, PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "Many fixes and improvements to the metadata viewer and editor"
 msgstr "Üst veri görüntüleyici ve düzenleyicide birçok düzeltme ve iyileştirme"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "New Kabyle translation"
 msgstr "Yeni Kabyle çevirisi"
 
 # Snapping için yaslama çevirisi kullandığımız yerler de var.
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
 msgstr ""
 "Tuval dışı nokta yakalama (ızgaraya, kılavuzlara, yollara) artık mümkün"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
 msgstr ""
 "GIMP 2.10.22, genel olarak bir hata düzeltme sürümüdür. Önemli değişiklikler:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
@@ -353,21 +365,21 @@ msgstr ""
 "HEIF desteği iyileştirmeleri: isteğe bağlı yüksek bit derinliğiyle dışa "
 "aktarma, AVIF içe ve dışa aktarma"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "Multiple improvements in Corel PaintShop Pro support"
 msgstr "Corel PaintShop Pro desteğinde birçok iyileştirme"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
 "\"Birleştirilmiş örnek\" artık GEGL işlem aracı seçeneklerinden "
 "kullanılabilir"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid "\"Sample merged\" is now enabled by default for color picking"
 msgstr "\"Birleştirilmiş örnek\" renk seçimi için artık öntanımlı olarak etkin"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
@@ -375,7 +387,7 @@ msgstr ""
 "OpenCL desteğini etkinleştiren seçenek, Tercihler'deki Çalışma Alanı "
 "sekmesine taşındı"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
@@ -383,20 +395,20 @@ msgstr ""
 "Matting Levin, çok daha iyi performans gösterdiği için artık Önalan Seçim "
 "aracının öntanımlı motoru"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid "New progressive performance logs and dashboard updates"
 msgstr "Yeni aşamalı performans günlükleri ve pano güncellemeleri"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr ""
 "Ayrıntılı hata ayıklama artık ilgili olduğunda Flatpak bilgilerini gösteriyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "Various bug fixes"
 msgstr "Çeşitli hata düzeltmeleri"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
@@ -404,20 +416,20 @@ msgstr ""
 "GIMP 2.10.20, çeşitli iyileştirmelerin yanı sıra birçok hata düzeltmesini de "
 "içermektedir. En önemli değişiklikler:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
 "Araç grupları artık öntanımlı olarak tıklama yerine fareyle üzerine "
 "gelindiğinde genişliyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
 msgstr ""
 "Yıkımsız kırpma artık gerçek pikseller yerine tuvali kırparak kullanılabilir"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing "
 "channels in the right order"
@@ -425,21 +437,21 @@ msgstr ""
 "Daha iyi PSD desteği: 16 bitlik dosyaların dışa aktarımı artık mümkün, "
 "kanalları doğru sırada okuma/yazma"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "On-canvas controls for the Vignette filter"
 msgstr "Örtü süzgeci için tuval üzerinde denetimler"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr ""
 "Yeni süzgeçler: Bahar, Odak Bulanıklığı, Mercek Bulanıklığı, Değişken "
 "Bulanıklık"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid "Over 30 bugfixes"
 msgstr "30'dan fazla hata düzeltme"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
@@ -448,7 +460,7 @@ msgstr ""
 "destek sunar ve sembolik simge temasının daha yüksek karşıtlıklı bir "
 "çeşitini ekler."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid ""
 "GIMP 2.10.16 delivers several major usability improvements, a new tool for "
 "transformations in 3D space, new release checker, and the usual amount of "
@@ -458,49 +470,49 @@ msgstr ""
 "dönüşüm için yeni bir araç, yeni sürüm denetleyicisi ve olağan miktarda hata "
 "düzeltmesi sunar. Önemli iyileştirmeler:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 msgid "Tools are now grouped in the toolbox by default"
 msgstr "Araçlar artık öntanımlı olarak araç kutusunda gruplanıyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid "Sliders now use a compact style with improved user interaction"
 msgstr ""
 "Kaydırıcılar artık iyileştirilmiş kullanıcı etkileşimi ile sıkı stil "
 "kullanıyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid "Vastly improved user experience for the transformation preview"
 msgstr "Dönüşüm önizlemesi kullanıcı deneyimi büyük ölçüde iyileştirildi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr ""
 "Rıhtımlanabilir alanlar artık rıhtımlanabilir iletişim kutusu sürüklenirken "
 "vurgulanıyor"
 
 # Pan için Dolaşmak çevirisi üstünde yeniden düşünülebilir.
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid "New 3D Transform tool to rotate and pan items"
 msgstr "Ögeleri döndürmek ve dolaşmak için yeni 3B Dönüşüm aracı"
 
 # Outline için Çerçeve çevirisi burada uymuyor.
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid "Much smoother brush outline motion on the canvas"
 msgstr "Tuval üzerinde çok daha yumuşak fırça çerçeve hareketi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr ""
 "Katmanları aşağı birleştirmek ve sabitlemek için birleştirilmiş kullanıcı "
 "arayüzü"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid "Update check to notify users that a new release/installer is available"
 msgstr ""
 "Kullanıcılara yeni sürümün/kurucunun varlığını bildirmek için güncelleme "
 "denetimi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid ""
 "GIMP 2.10.14 is again mostly a bug fix release, making GIMP rock-solid. "
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
@@ -510,7 +522,7 @@ msgstr ""
 "Ayrıca birçok eski süzgeç sonunda GEGL'e taşındı. Tabii ki, kayda değer kimi "
 "gelişmeler de var:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
@@ -518,50 +530,50 @@ msgstr ""
 "Görünüm menüsü: Tuval sınırı dışındaki pikselleri göstermek için yeni "
 "\"Tümünü Göster\" seçeneği"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
 msgstr ""
 "Süzgeçler: İlgili olduğunda katmanın yeniden boyutlandırılmasını sağlayan "
 "yeni \"Kırpma\" seçeneği"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
 msgstr "Önalan Seçim aracı: yeni \"Gri Tonlamalı\" Önizleme Kipi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr "Önalan Seçim aracı: \"Renkli\" önizleme için renk/matlık seçici"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid "Free Select tool: improved copy-paste interaction"
 msgstr "Serbest Seçim aracı: iyileştirilmiş kopyala-yapıştır etkileşimi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid "Transform tools: new Image transform type to transform the whole image"
 msgstr ""
 "Dönüşüm araçları: tüm görüntüyü dönüştürmek için yeni Görüntü dönüştürme türü"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
 msgstr "Tercihler: yeni \"Görünmez katmanları düzenlemeye izin ver\" ayarı"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "HEIF import/export: color profile support"
 msgstr "HEIF içe aktar/dışa aktar: renk profili desteği"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid "PDF export: text layers in layer groups now exported as texts"
 msgstr ""
 "PDF dışa aktar: katman kümelerindeki metin katmanları artık metin olarak "
 "dışa aktarılıyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
 msgid "TIFF import: now asks how to process unspecified TIFF channels"
 msgstr ""
 "TIFF içe aktar: belirtilmemiş TIFF kanallarının nasıl işleneceğini artık "
 "soruyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
 msgid ""
 "GIMP 2.10.12 is a significant bug fix release, which is to be expected after "
 "a 2.10.10 with so many changes! Still, very cool improvements are also "
@@ -571,31 +583,31 @@ msgstr ""
 "beklenebilecek önemli bir hata düzeltme sürümüdür! Yine de, özellikle "
 "eğrilerin düzenlenmesi için çok güzel gelişmeler de içermektedir:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
 msgid "Improved curves interaction overall"
 msgstr "Genel olarak iyileştirilmiş eğri etkileşimi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
 msgid "A few enhancements specific to the Curves tool"
 msgstr "Eğriler aracına özgü birkaç geliştirme"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
 msgid "Layer support in TIFF"
 msgstr "TIFF dosya biçimi için katman desteği"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
 msgid "Discovery of user-installed fonts in Windows"
 msgstr "Windows'ta kullanıcıca yüklenen yazı tiplerinin saptanması"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
 msgid "Incremental mode in the Dodge/Burn tool"
 msgstr "Soldurma/Yakma aracında artımlı kip"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
 msgid "Free Select tool creates preliminary selection"
 msgstr "Serbest Seçim aracı ön seçim oluşturur"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
 msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
@@ -603,7 +615,7 @@ msgstr ""
 "GIMP 2.10.10 birçok yeni özellik ve hata düzeltmeleri ile oldukça büyük bir "
 "güncelleme. Önemli gelişmeler şunlar:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
@@ -611,12 +623,12 @@ msgstr ""
 "Kova Doldurma aracı için yeni, tam olarak kapatılmayan çizgi sanat bölgeleri "
 "için \"Çizgi sanatı saptama ile doldur\" özelliği"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr ""
 "Kova Doldurma aracı artık Ctrl + tıklama ile hızlıca renk seçimi yapabiliyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
@@ -624,12 +636,12 @@ msgstr ""
 "Kova Doldurma aracı, \"benzer renkler\" ve \"çizgi sanatı algılama\" ile "
 "doldururken fareyi tutmaya izin veriyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid "Scale tool scales around center even when using numeric input"
 msgstr ""
 "Ölçek aracı sayısal giriş kullanırken bile merkezin etrafında ölçeklenir"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
@@ -637,7 +649,7 @@ msgstr ""
 "Birleştirilmiş Dönüştürme aracı artık ölçeklendirme yaparken en boy oranını "
 "korumaya ayarlıdır"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
@@ -645,21 +657,21 @@ msgstr ""
 "Perspektif dönüştürme araçlarının arayüzüne \"Tutamaçları kısıtla\" ve "
 "\"Merkez etrafında\" seçenekleri eklendi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr ""
 "Katmanları seçmek için yeni genel tuval değiştirici 'Alt + orta tıklama'"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid "Parametric brushes now 32-bit float to avoid posterization"
 msgstr ""
 "Parametrik fırçalar, posterleşmeyi önlemek için artık 32 bit kayan noktalı"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid "Clipboard brushes and pattern can now be duplicated"
 msgstr "Pano fırçaları ve desenler artık çoğaltılabilir"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
@@ -667,23 +679,23 @@ msgstr ""
 "Kilitli katmanların düzenlenememesi durumunda, hatanın nedenine dikkat "
 "çekmek için artık yanıp sönerek uyarı veriyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
 msgstr ""
 "Dairesel, doğrusal ve yakınlaştırma hareket bulanıklığı için tuvalde yeni "
 "GUI (basit çizgiler)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
 msgid "Several optimizations including faster layer group rendering"
 msgstr "Daha hızlı katman kümesi oluşturma dahil çeşitli eniyilemeler"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr "Takas ve önbellek dosyaları artık yapılandırma klasörüne kaydedilmiyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
@@ -691,15 +703,15 @@ msgstr ""
 "Çeşitli dosya kaydetme/dışa aktarma işlemi, kısmi dosyaları kaydetmeyerek "
 "hataya karşı daha kararlı hale getirildi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
 msgid "HiDPI support improvements"
 msgstr "HiDPI desteği iyileştirmesi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
 msgid "New preference to choose the default export file type"
 msgstr "Öntanımlı dışa aktarma dosya türünü belirlemek için yeni ayar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
@@ -707,11 +719,11 @@ msgstr ""
 "PNG, JPEG ve TIFF görüntüleri renk profiliyle dışa aktarmak için yeni "
 "seçenek; PSD biçimini her zaman bir renk profiliyle dışa aktarın"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
 msgid "New DDS format loading/exporting plug-in"
 msgstr "Yeni DDS biçimi yükleme/dışarı aktarma eklentisi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
@@ -719,7 +731,7 @@ msgstr ""
 "Spyrogimp eklentisi, daha fazla seçenek ve daha iyi etkileşim ile yeniden "
 "yazıldı"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
@@ -727,7 +739,7 @@ msgstr ""
 "GIMP 2.10.8 çoğunlukla bir hata düzeltme ve en iyileme sürümüdür. Özellikle, "
 "şunları içerir:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
@@ -735,12 +747,12 @@ msgstr ""
 "Gösterimler görselleştirilirken uyarlanabilir öbek boyutu, dinamik olarak "
 "yanıt verebilirliği artırıldı"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr ""
 "RawTherapee saptaması (sürüm 5.5 ve üzeri) Windows ortamında iyileştirildi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
@@ -748,7 +760,7 @@ msgstr ""
 "Kaydet iletişim kutusundaki XCF uyumluluğu bilgileri daha anlaşılır ve kolay "
 "saptanabilir yapıldı"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
@@ -756,7 +768,7 @@ msgstr ""
 "Gösterge paneline çeşitli performans kayıt araçları eklendi ve kayıtlar "
 "özelliği yayınlandı"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
@@ -764,7 +776,7 @@ msgstr ""
 "GIMP 2.10.6 birçok hata düzeltmesi, iyileştirme ve özellik ile gelmektedir. "
 "En önemli değişiklikler:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
@@ -772,22 +784,22 @@ msgstr ""
 "Metin katmanları artık dikey metinleri temsil edebiliyor (çeşitli karakter "
 "yönelimleri ve çizgi yönleriyle)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr "Yeni \"Küçük Gezegen\" (gegl:stereographic-projection) süzgeci"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
 msgid "New \"Long Shadow\" filter"
 msgstr "Yeni \"Uzun Gölge\" süzgeci"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
 msgstr ""
 "Ölçüm Aracı'nın \"Doğrult\" seçeneği artık dikey doğrultmaya izin veriyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
@@ -795,7 +807,7 @@ msgstr ""
 "Çizilebilir önizlemeler artık eşzamansız olarak görselleştiriliyor ve "
 "Tercihler'de katman kümesi önizlemeleri pasifleştirilebiliyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
@@ -803,17 +815,17 @@ msgstr ""
 "Gösterge panelindeki \"çeşitli\" kümesine yeni \"eşzamansız\" alanı eklendi, "
 "çalışan eşzamansız işlemlerin sayısı artık görülebiliyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 "Aç / Kaydet / Dışa Aktar iletişim kutularındaki dosya tipi süzgeci daha az "
 "kafa karıştırıcı hale getirildi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr "Yeni dil (GIMP 81. dile çevrilmiş oldu): Marathi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
@@ -821,7 +833,7 @@ msgstr ""
 "GIMP 2.10.4, çeşitli iyileştirmelerin yanı sıra birçok hata düzeltmesini de "
 "içermektedir. En önemli değişiklikler:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
@@ -829,11 +841,11 @@ msgstr ""
 "Ölçüm aracında doğrultma: ölçüm çizgisi ufuk olarak kullanılarak katmanlar "
 "döndürülebiliyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr "Hızlı başlangıç: yazı tipi yükleme artık başlangıçı engellemiyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
@@ -841,13 +853,13 @@ msgstr ""
 "Yazı tipleri artık, fırçalar, desenler ve renk geçişleriyle aynı arayüzden "
 "etiketlenebiliyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
 "PSD desteği: PSD görüntüsünün ön-birleştirilmiş bir sürümü içe "
 "aktarılabiliyor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
@@ -855,7 +867,7 @@ msgstr ""
 "Gösterge paneli güncellemesi: yeni \"Bellek\" kümesi ve çeşitli ölçümler "
 "gösteren geliştirilmiş \"Takas\" kümesi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
@@ -865,7 +877,7 @@ msgstr ""
 "sürümü olup, ana sürümden sonra yayınlanan, birçok hata düzeltmesi içeren, "
 "olağan bir hata düzeltme sürümüdür."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -878,7 +890,7 @@ msgstr ""
 "içermektedir. Bunlar, kararlı küçük sürümlerde rahat özellikler "
 "politikamızın güzel örnekleridir."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
@@ -887,11 +899,11 @@ msgstr ""
 "çalışmalarımızın belirgin özelliklerini üzerinde taşımaktadır. Göze çarpan "
 "değişiklikler:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr "Yüksek bit derinlikli renk işleme (renk kanalı başına 16/32 bit)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
@@ -899,35 +911,35 @@ msgstr ""
 "Renk yönetimi artık temel bir özellik, çoğu gereç ve önizleme alanı renk "
 "yönetimli hale getirildi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 "Tuval üzerinde etki önizlemesi, piksellerin işlenmesinden önce/sonra "
 "bölünmüş görünüm"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr ""
 "Çok iş parçacıklı ve donanım hızlandırmalı görselleştirme, işleme ve boyama"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
 msgid "Most tools improved, several new transformation tools"
 msgstr "Çoğu araç iyileştirildi, çeşitli yeni dönüşüm araçları eklendi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
 "Birçok görüntü formatı için iyileştirmeler, özellikle beriltmek gerekirse "
 "PSD içe aktarma desteği artırıldı"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "Yeni desteklenen görüntü biçimleri: OpenEXR, RGBE, WebP, HGT…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
@@ -935,26 +947,26 @@ msgstr ""
 "İyileştirilmiş sayısal boyama: tuval döndürme ve çevirme, simetrik boyama, "
 "MyPaint fırçaları…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr ""
 "EXIF, XMP, IPTC ve DICOM için üst veri görüntüleme ve düzenleme desteği"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 "Temel HiDPI desteği: kendiliğinden veya kullanıcı tarafından seçilen simge "
 "teması boyutu"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "GIMP için yeni temalar: Light, Gray, Dark ve System"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
 msgid "And much, much more…"
 msgstr "Ve daha çoğu…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
@@ -964,7 +976,7 @@ msgstr ""
 "hedef olmakla birlikte, daha pürüzsüz bir boyama deneyimi sağlamak için hız "
 "ve iyileştirmelere odaklanıldı. Daha büyük değişiklikler şunlar:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
@@ -972,13 +984,13 @@ msgstr ""
 "Boyama ve görüntüleme için ana temel optimizasyonlar, paralel hale "
 "getirilmiş boyama kodu dahil"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr ""
 "Simetri bilgileri artık XCF dosyalarında korunuyor (görüntü parazitleri "
 "olarak kaydediliyor)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
@@ -987,7 +999,7 @@ msgstr ""
 "kurtulmak için en baştan yeniden yazıldı. \"Lighter\" ve \"Darker\" temaları "
 "kaldırıldı."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -997,7 +1009,7 @@ msgstr ""
 "kullanımda. Gereç, 3D döndürme için tuval üzerinde etkileşim sağlıyor (yaw, "
 "pitch, roll)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -1009,7 +1021,7 @@ msgstr ""
 "ayarlandığında uyarılar ve kritik hatalar hakkında da ayrıntılı hata "
 "ayıklaması yapabilmektedir"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -1019,12 +1031,12 @@ msgstr ""
 "hata ayıklama ve kararlılığa odaklanır. Birçok hata düzeltmesi yanında, "
 "dikkate değer gelişmelerden bazıları şunlardır:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
 "GIMP kaynak kullanımını izlemek için yeni rıhtımlanabilir gösterge paneli"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -1032,33 +1044,33 @@ msgstr ""
 "Hata raporlarını teşvik eden, hata izlerini ve diğer hata ayıklama "
 "verilerini üretmek için yeni hata ayıklama iletişim kutusu"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
 msgid "Unsaved images can now be recovered after a crash"
 msgstr "Kaydedilmemiş görüntüler artık çökme sonrası kurtarılabilir"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
 msgid "Layer masks on layer groups"
 msgstr "Katman kümeleri üstünde katman maskeleri"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "JPEG 2000 desteği, yüksek bit derinliği ve çeşitli renk uzayları için "
 "iyileştirildi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
 msgid "Screenshot and color picking improved on various platforms"
 msgstr "Çeşitli platformlarda ekran görüntüsü ve renk seçimi iyileştirildi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
 msgid "Metadata defaults preferences now available"
 msgstr "Üst veri öntanımlı tercihleri artık kullanılabilir"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
 msgid "Various GUI polishing"
 msgstr "Çeşitli GUI iyileştirmeleri"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -1066,49 +1078,49 @@ msgstr ""
 "GIMP 2.9.8, tuval üzerine renk geçişi düzenleme ve çeşitli iyişleştirmeler "
 "sunarken hata düzeltme ve kararlılığa odaklanır."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
 msgid "On-canvas gradient editing"
 msgstr "Tuvalde renk geçişi düzenleme"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
 msgid "Notification when an image is over/underexposed"
 msgstr "Görüntü aşırı veya az pozlanmış olduğunda bildirim"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
 msgid "Better and faster color management"
 msgstr "Daha iyi ve daha hızlı renk yönetimi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:170
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
 "Wayland'de çalışan KDE Plasma üzerinde renk seçici ve ekran görüntüleri "
 "desteği"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:171
 msgid "Paste in place feature"
 msgstr "Konumunda yapıştır özelliği"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:170
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:172
 msgid "Many usability improvements"
 msgstr "Birçok kullanılabilirlik iyileştirmesi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:171
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:173
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "Kılavuz, kullanıcının yeğlediği dilde görüntülenebilir"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:172
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:174
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Wavelet Ayrıştır süzgecinde iyileştirmeler"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:173
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:175
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Photoshop .psd dosyalarıyla geliştirilmiş uyumluluk"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:174
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:176
 msgid "New support for password-protected PDF"
 msgstr "Parola korumalı PDF için yeni destek"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:175
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:177
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "HGT formatı için yeni destek (Sayısal Yükselti Modeli verileri)"
 
@@ -1193,113 +1205,113 @@ msgstr "%s kullanılıyor, sürüm %s (%s sürümüne karşı derlendi)"
 msgid "%s version %s"
 msgstr "%s sürüm %s"
 
-#: ../app/main.c:163
+#: ../app/main.c:166
 msgid "Show version information and exit"
 msgstr "Sürüm bilgisini göster ve çık"
 
-#: ../app/main.c:168
+#: ../app/main.c:171
 msgid "Show license information and exit"
 msgstr "Lisans bilgisini göster ve çık"
 
-#: ../app/main.c:173
+#: ../app/main.c:176
 msgid "Be more verbose"
 msgstr "Daha çok bilgi ver"
 
-#: ../app/main.c:178
+#: ../app/main.c:181
 msgid "Start a new GIMP instance"
 msgstr "Yeni bir GIMP örneği başlat"
 
-#: ../app/main.c:183
+#: ../app/main.c:186
 msgid "Open images as new"
 msgstr "Görüntüleri yeni olarak aç"
 
-#: ../app/main.c:188
+#: ../app/main.c:191
 msgid "Run without a user interface"
 msgstr "Bir kullanıcı arabirimi olmadan çalıştır"
 
-#: ../app/main.c:193
+#: ../app/main.c:196
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Fırçaları, renk geçişlerini, desenleri vs. yükleme."
 
-#: ../app/main.c:198
+#: ../app/main.c:201
 msgid "Do not load any fonts"
 msgstr "Herhangi bir yazı tipi yükleme"
 
-#: ../app/main.c:203
+#: ../app/main.c:206
 msgid "Do not show a splash screen"
 msgstr "Açılış ekranını gösterme"
 
-#: ../app/main.c:208
+#: ../app/main.c:211
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "GIMP ve eklentiler arasında paylaşımlı bellek kullanma"
 
-#: ../app/main.c:213
+#: ../app/main.c:216
 msgid "Do not use special CPU acceleration functions"
 msgstr "Özel işlemci hızlandırma işlevleri kullanma"
 
-#: ../app/main.c:218
+#: ../app/main.c:221
 msgid "Use an alternate sessionrc file"
 msgstr "Başka bir sessionrc dosyası kullan"
 
-#: ../app/main.c:223
+#: ../app/main.c:226
 msgid "Use an alternate user gimprc file"
 msgstr "Başka bir kullanıcının gimprc dosyasını kullan"
 
-#: ../app/main.c:228
+#: ../app/main.c:231
 msgid "Use an alternate system gimprc file"
 msgstr "Başka bir sistem gimprc dosyası kullan"
 
-#: ../app/main.c:233
+#: ../app/main.c:236
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Çalıştırılacak toplu komut (birçok defa kullanılabilir)"
 
-#: ../app/main.c:238
+#: ../app/main.c:241
 msgid "The procedure to process batch commands with"
 msgstr "Toplu komutları işleme yöntemi"
 
-#: ../app/main.c:243
+#: ../app/main.c:246
 msgid "Send messages to console instead of using a dialog"
 msgstr "İletişim kutusu kullanmak yerine iletileri uçbirime gönder"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:249
+#: ../app/main.c:252
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB uyumluluk kipi (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:255
+#: ../app/main.c:258
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Çökme durumunda hata ayıkla (never|query|always)"
 
-#: ../app/main.c:260
+#: ../app/main.c:263
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Ölümcül olmayan hata ayıklama sinyal işleyicilerini etkinleştir"
 
-#: ../app/main.c:265
+#: ../app/main.c:268
 msgid "Make all warnings fatal"
 msgstr "Bütün uyarıları ölümcül yap"
 
-#: ../app/main.c:270
+#: ../app/main.c:273
 msgid "Output a gimprc file with default settings"
 msgstr "Öntanımlı ayarlarla bir gimprc dosyası çıktıla"
 
-#: ../app/main.c:286
+#: ../app/main.c:289
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "PDB'de önerilmeyen yordamların sıralı liste çıktısı"
 
-#: ../app/main.c:291
+#: ../app/main.c:294
 msgid "Show a preferences page with experimental features"
 msgstr "Deneysel özellikler ile bir tercihler sayfası göster"
 
-#: ../app/main.c:296
+#: ../app/main.c:299
 msgid "Show an image submenu with debug actions"
 msgstr "Hata ayıklama işlemleriyle bir görüntü alt menüsü göster"
 
-#: ../app/main.c:620
+#: ../app/main.c:702
 msgid "[FILE|URI...]"
 msgstr "[DOSYA|ADRES...]"
 
-#: ../app/main.c:638
+#: ../app/main.c:730
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1307,20 +1319,20 @@ msgstr ""
 "GIMP, grafiksel kullanıcı arabirimini başlatamadı.\n"
 "Görüntüleme ortamınız için uygun bir kurulumun var olduğundan emin olun."
 
-#: ../app/main.c:657
+#: ../app/main.c:749
 msgid "Another GIMP instance is already running."
 msgstr "Başka bir GIMP zaten çalışıyor."
 
-#: ../app/main.c:748
+#: ../app/main.c:840
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP çıktısı. Bu pencereyi kapatmak için herhangi bir karakter girin."
 
-#: ../app/main.c:749
+#: ../app/main.c:841
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Bu pencereyi kapatmak için herhangi bir karakter girin)\n"
 
-#: ../app/main.c:766
+#: ../app/main.c:858
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP çıktısı. Bu pencereyi küçültebilirsiniz, fakat kapatmayın."
 
@@ -1359,7 +1371,7 @@ msgstr "Fırça Düzenleyici"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:114 ../app/core/gimp-data-factories.c:349
-#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:3266
+#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:3279
 msgid "Brushes"
 msgstr "Fırçalar"
 
@@ -1443,7 +1455,7 @@ msgstr "Süzgeçler"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:171 ../app/core/gimp-data-factories.c:383
-#: ../app/dialogs/dialogs.c:355 ../app/dialogs/preferences-dialog.c:3296
+#: ../app/dialogs/dialogs.c:355 ../app/dialogs/preferences-dialog.c:3309
 msgid "Fonts"
 msgstr "Yazı Tipleri"
 
@@ -1454,12 +1466,12 @@ msgstr "Renk Geçişi Düzenleyici"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:177 ../app/core/gimp-data-factories.c:374
-#: ../app/dialogs/dialogs.c:349 ../app/dialogs/preferences-dialog.c:3290
+#: ../app/dialogs/dialogs.c:349 ../app/dialogs/preferences-dialog.c:3303
 msgid "Gradients"
 msgstr "Renk Geçişleri"
 
 #: ../app/actions/actions.c:180 ../app/core/gimp-data-factories.c:390
-#: ../app/dialogs/dialogs.c:361 ../app/dialogs/preferences-dialog.c:3302
+#: ../app/dialogs/dialogs.c:361 ../app/dialogs/preferences-dialog.c:3315
 msgid "Tool Presets"
 msgstr "Araç Önayarları"
 
@@ -1488,7 +1500,7 @@ msgstr "Katmanlar"
 
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:198 ../app/core/gimp-data-factories.c:359
-#: ../app/dialogs/dialogs.c:343 ../app/dialogs/preferences-dialog.c:3308
+#: ../app/dialogs/dialogs.c:343 ../app/dialogs/preferences-dialog.c:3321
 msgid "MyPaint Brushes"
 msgstr "MyPaint Fırçaları"
 
@@ -1499,17 +1511,17 @@ msgstr "Palet Düzenleyici"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:204 ../app/core/gimp-data-factories.c:369
-#: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:3284
+#: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:3297
 msgid "Palettes"
 msgstr "Paletler"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:207 ../app/core/gimp-data-factories.c:364
-#: ../app/dialogs/dialogs.c:346 ../app/dialogs/preferences-dialog.c:3278
+#: ../app/dialogs/dialogs.c:346 ../app/dialogs/preferences-dialog.c:3291
 msgid "Patterns"
 msgstr "Desenler"
 
-#: ../app/actions/actions.c:210 ../app/dialogs/preferences-dialog.c:3314
+#: ../app/actions/actions.c:210 ../app/dialogs/preferences-dialog.c:3327
 msgid "Plug-ins"
 msgstr "Eklentiler"
 
@@ -1542,7 +1554,7 @@ msgid "Text Editor"
 msgstr "Metin Düzenleyici"
 
 #: ../app/actions/actions.c:231 ../app/dialogs/dialogs.c:312
-#: ../app/gui/gui.c:567
+#: ../app/gui/gui.c:573
 msgid "Tool Options"
 msgstr "Araç Seçenekleri"
 
@@ -3630,7 +3642,7 @@ msgstr ""
 msgid "Untitled"
 msgstr "Başlıksız"
 
-#: ../app/actions/data-commands.c:217 ../app/actions/documents-commands.c:194
+#: ../app/actions/data-commands.c:225 ../app/actions/documents-commands.c:194
 #: ../app/actions/file-commands.c:530
 #, c-format
 msgid "Can't show file in file manager: %s"
@@ -10899,7 +10911,7 @@ msgstr "Bu pencereyi ekrana taşı %s"
 #: ../app/dialogs/template-options-dialog.c:119
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
-#: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:198
+#: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:204
 #: ../app/tools/gimpfiltertool.c:347 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:663
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
@@ -11522,6 +11534,10 @@ msgstr ""
 "Uygun olduğunda, hata bildirimi için hata ayıklama verisi oluşturmayı dene."
 
 #: ../app/config/gimprc-blurbs.h:251
+msgid "Sets the preferred pen and touch input API."
+msgstr "Yeğlenen kalem ve dokunmatik girdi API’sini ayarlar."
+
+#: ../app/config/gimprc-blurbs.h:254
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
@@ -11529,36 +11545,36 @@ msgstr ""
 "Etkin olduğunda, bir dosya açıldıktan sonra tüm görüntünün görünür olmasını "
 "sağlar, aksi halde 1:1 ölçek ile görüntülenecek."
 
-#: ../app/config/gimprc-blurbs.h:255
+#: ../app/config/gimprc-blurbs.h:258
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Diğer dönüşümler ve ölçekleme için kullanılacak aradeğerleme düzeyini "
 "ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:262
+#: ../app/config/gimprc-blurbs.h:265
 msgid "Specifies the language to use for the user interface."
 msgstr "Kullanıcı arayüzünde kullanılacak dili belirler."
 
-#: ../app/config/gimprc-blurbs.h:265
+#: ../app/config/gimprc-blurbs.h:268
 msgid ""
 "The last known release version of GIMP as queried from official website."
 msgstr "Resmi web sitesinden sorgulanan GIMP'in bilinen en son sürümü."
 
-#: ../app/config/gimprc-blurbs.h:268
+#: ../app/config/gimprc-blurbs.h:271
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr ""
 "Dosya menüsünde tutulacak son açılmış görüntü dosyası adlarının sayısıdır."
 
-#: ../app/config/gimprc-blurbs.h:271
+#: ../app/config/gimprc-blurbs.h:274
 msgid "The timestamp for the last known release date."
 msgstr "Son bilinen dağıtım tarihi için zaman damgası."
 
-#: ../app/config/gimprc-blurbs.h:274
+#: ../app/config/gimprc-blurbs.h:277
 msgid "The last revision number for the release."
 msgstr "Dağıtım için bilinen son değişiklik numarası."
 
-#: ../app/config/gimprc-blurbs.h:277
+#: ../app/config/gimprc-blurbs.h:280
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
@@ -11566,7 +11582,7 @@ msgstr ""
 "Seçim çerçevesi içinde yürüyen karıncaların hızı. Bu değer milisaniye "
 "cinsindendir (düşük zaman hızlı yürümeyi belirtir)."
 
-#: ../app/config/gimprc-blurbs.h:281
+#: ../app/config/gimprc-blurbs.h:284
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
@@ -11574,7 +11590,7 @@ msgstr ""
 "Eğer bir teşebbüs burada belirlenmiş boyuttan daha çok bellek kaplayacak bir "
 "görüntü oluşturmaya çalışırsa, GIMP kullanıcıyı uyaracak."
 
-#: ../app/config/gimprc-blurbs.h:291
+#: ../app/config/gimprc-blurbs.h:294
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -11584,7 +11600,7 @@ msgstr ""
 "ayarlanırsa, X sunucusunun her iki yatay ve dikey çözünürlük bilgisini "
 "sorgulanması için zorlayacak."
 
-#: ../app/config/gimprc-blurbs.h:296
+#: ../app/config/gimprc-blurbs.h:299
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -11594,12 +11610,12 @@ msgstr ""
 "ayarlanırsa, X sunucusunun her iki yatay ve dikey çözünürlük bilgisini "
 "sorgulanması için zorlayacak."
 
-#: ../app/config/gimprc-blurbs.h:301
+#: ../app/config/gimprc-blurbs.h:304
 msgid "When enabled, non-visible layers can be edited as normal."
 msgstr ""
 "Etkin olduğunda, görünmez katmanlar normal katmanlar gibi düzenlenebilir."
 
-#: ../app/config/gimprc-blurbs.h:304
+#: ../app/config/gimprc-blurbs.h:307
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
@@ -11607,7 +11623,7 @@ msgstr ""
 "Seçili olduğunda, taşıma aracı katman ya da yolu etkin olacak şekilde "
 "ayarlar. Bu eski sürümlerde öntanımlı davranış olarak kullanılır."
 
-#: ../app/config/gimprc-blurbs.h:313
+#: ../app/config/gimprc-blurbs.h:316
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
@@ -11615,11 +11631,11 @@ msgstr ""
 "Gezgin önizlemesi boyutunu görüntü penceresinin sağ alt köşesinde "
 "kullanılabilir olarak ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:317
+#: ../app/config/gimprc-blurbs.h:320
 msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr "GIMP'in eş zamanlı olarak kaç tane parçacık kullanacağını belirler."
 
-#: ../app/config/gimprc-blurbs.h:339
+#: ../app/config/gimprc-blurbs.h:342
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
@@ -11629,7 +11645,7 @@ msgstr ""
 "Katmanlar ve kanallar iletişim kutusu içindeki önizlemelerin olması güzel "
 "ama geniş görüntüler ile çalışırken nesneleri yavaşlatabilir."
 
-#: ../app/config/gimprc-blurbs.h:344
+#: ../app/config/gimprc-blurbs.h:347
 msgid ""
 "Sets whether GIMP should create previews of layer groups. Layer group "
 "previews are more expensive than ordinary layer previews."
@@ -11638,7 +11654,7 @@ msgstr ""
 "belirler. Katman kümesi önizlemeleri, normal katman önizlemelerine göre daha "
 "masraflıdır."
 
-#: ../app/config/gimprc-blurbs.h:348
+#: ../app/config/gimprc-blurbs.h:351
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
@@ -11646,11 +11662,11 @@ msgstr ""
 "Katmanların ve kanalların önizleme boyutları için kullanılacak yeni "
 "oluşturulmuş iletişim kutularının önizlemelerini ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:352
+#: ../app/config/gimprc-blurbs.h:355
 msgid "Sets the default quick mask color."
 msgstr "Öntanımlı hızlı maske rengini ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:355
+#: ../app/config/gimprc-blurbs.h:358
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes. This setting only takes effect in multi-window "
@@ -11660,7 +11676,7 @@ msgstr ""
 "kendiliğinden yeniden boyutlandırılır. Bu ayar yalnızca çok pencerelikipte "
 "etkilidir."
 
-#: ../app/config/gimprc-blurbs.h:360
+#: ../app/config/gimprc-blurbs.h:363
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
@@ -11669,13 +11685,13 @@ msgstr ""
 "kendiliğinden yeniden boyutlandırılır. Bu ayar yalnızca çok pencereli kipte "
 "etkilidir."
 
-#: ../app/config/gimprc-blurbs.h:365
+#: ../app/config/gimprc-blurbs.h:368
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 "Her başlangıçta kaydedilmiş son oturumunuzu geri yüklemeyi denemek için "
 "GIMP'e izin verin."
 
-#: ../app/config/gimprc-blurbs.h:368
+#: ../app/config/gimprc-blurbs.h:371
 msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
@@ -11684,13 +11700,13 @@ msgstr ""
 "deneyecek. Pasifleştirildiğinde, ekranda şu anda kullanılan pencereler "
 "belirlecek."
 
-#: ../app/config/gimprc-blurbs.h:373
+#: ../app/config/gimprc-blurbs.h:376
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "GIMP oturumları arasında geçerli aracı, deseni, rengi ve fırçayı anımsa."
 
-#: ../app/config/gimprc-blurbs.h:377
+#: ../app/config/gimprc-blurbs.h:380
 msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
@@ -11698,7 +11714,7 @@ msgstr ""
 "Etkin olduğunda, tüm girdi aygıtları için aynı araç ve araç seçenekleri "
 "kullanılacaktır. Girdi aygıtı değiştiğinde hiçbir araç değişimi gerçekleşmez."
 
-#: ../app/config/gimprc-blurbs.h:382
+#: ../app/config/gimprc-blurbs.h:385
 msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
@@ -11706,17 +11722,17 @@ msgstr ""
 "Son Belgeler listesinde tüm açılmış ve kaydedilmiş dosyaların kalıcı bir "
 "kaydını tut."
 
-#: ../app/config/gimprc-blurbs.h:386
+#: ../app/config/gimprc-blurbs.h:389
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr ""
 "GIMP'ten çıkılırken, ana iletişim kutularının konumlarını ve boyutlarını "
 "kaydet."
 
-#: ../app/config/gimprc-blurbs.h:389
+#: ../app/config/gimprc-blurbs.h:392
 msgid "Save the tool options when GIMP exits."
 msgstr "GIMP'ten çıkılırken, araç seçeneklerini kaydet."
 
-#: ../app/config/gimprc-blurbs.h:395
+#: ../app/config/gimprc-blurbs.h:398
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -11724,14 +11740,14 @@ msgstr ""
 "Etkin olduğunda, tüm boyama araçları geçerli fırça çerçevesinin bir "
 "önizlemesini gösterecek."
 
-#: ../app/config/gimprc-blurbs.h:399
+#: ../app/config/gimprc-blurbs.h:402
 msgid ""
 "When enabled, the brush outline will snap to individual dabs while painting."
 msgstr ""
 "Etkin olduğunda, fırça ana çizgileri boyama sırasındaki bağımsız darbelere "
 "yapışır."
 
-#: ../app/config/gimprc-blurbs.h:403
+#: ../app/config/gimprc-blurbs.h:406
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -11741,7 +11757,7 @@ msgstr ""
 "bir yardım düğmesi gösterecek. Bu düğme olmadan, bu yardım sayfasına F1'e "
 "basılarak erişilebilir."
 
-#: ../app/config/gimprc-blurbs.h:408
+#: ../app/config/gimprc-blurbs.h:411
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
@@ -11749,7 +11765,7 @@ msgstr ""
 "Etkin olduğunda, bir boyama aracı kullanıldığında fare imleci görüntü "
 "üzerinde gösterilecek."
 
-#: ../app/config/gimprc-blurbs.h:412
+#: ../app/config/gimprc-blurbs.h:415
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
@@ -11757,7 +11773,7 @@ msgstr ""
 "Etkin olduğunda, menü çubuğu öntanımlı olarak görünür olacak. Bu, \"Görünüm-"
 ">Menü Çubuğunu Göster\" komutuyla da değiştirilebilir."
 
-#: ../app/config/gimprc-blurbs.h:416
+#: ../app/config/gimprc-blurbs.h:419
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
@@ -11765,7 +11781,7 @@ msgstr ""
 "Etkin olduğunda, cetveller öntanımlı olarak görünür olacak. Bu, \"Görünüm-"
 ">Cetvelleri Göster\" komutuyla da değiştirilebilir."
 
-#: ../app/config/gimprc-blurbs.h:420
+#: ../app/config/gimprc-blurbs.h:423
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
@@ -11773,7 +11789,7 @@ msgstr ""
 "Etkin olduğunda, kaydırma çubukları öntanımlı olarak görünür olacak. Bu, "
 "\"Görünüm->Kaydırma Çubuklarını Göster\" komutuyla da değiştirilebilir."
 
-#: ../app/config/gimprc-blurbs.h:424
+#: ../app/config/gimprc-blurbs.h:427
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
@@ -11781,7 +11797,7 @@ msgstr ""
 "Etkin olduğunda, durum çubuğu öntanımlı olarak görünür olacak. Bu, \"Görünüm-"
 ">Durum Çubuğunu Göster\" komutuyla da değiştirilebilir."
 
-#: ../app/config/gimprc-blurbs.h:428
+#: ../app/config/gimprc-blurbs.h:431
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
@@ -11789,7 +11805,7 @@ msgstr ""
 "Etkin olduğunda, seçim öntanımlı olarak görünür olacak. Bu, \"Görünüm-"
 ">Seçimi Göster\" komutuyla da değiştirilebilir."
 
-#: ../app/config/gimprc-blurbs.h:432
+#: ../app/config/gimprc-blurbs.h:435
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
@@ -11797,7 +11813,7 @@ msgstr ""
 "Etkin olduğunda, katman sınırı öntanımlı olarak görünür olacak. Bu, "
 "\"Görünüm->Katman Sınırını Göster\" komutuyla da değiştirilebilir."
 
-#: ../app/config/gimprc-blurbs.h:436
+#: ../app/config/gimprc-blurbs.h:439
 msgid ""
 "When enabled, the canvas boundary is visible by default. This can also be "
 "toggled with the \"View->Show Canvas Boundary\" command."
@@ -11805,7 +11821,7 @@ msgstr ""
 "Etkin olduğunda, tuval sınırı öntanımlı olarak görünür olacak. Bu, \"Görünüm-"
 ">Tuval Sınırını Göster\" komutuyla da değiştirilebilir."
 
-#: ../app/config/gimprc-blurbs.h:440
+#: ../app/config/gimprc-blurbs.h:443
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
@@ -11813,7 +11829,7 @@ msgstr ""
 "Etkin olduğunda, kılavuzlar öntanımlı olarak görünür olacak. Bu, \"Görünüm-"
 ">Kılavuzları Göster\" komutuyla da değiştirilebilir."
 
-#: ../app/config/gimprc-blurbs.h:444
+#: ../app/config/gimprc-blurbs.h:447
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
@@ -11821,7 +11837,7 @@ msgstr ""
 "Etkin olduğunda, ızgara öntanımlı olarak görünür olacak. Bu, \"Görünüm-"
 ">Izgarayı Göster\" komutuyla da değiştirilebilir."
 
-#: ../app/config/gimprc-blurbs.h:448
+#: ../app/config/gimprc-blurbs.h:451
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
@@ -11829,54 +11845,54 @@ msgstr ""
 "Etkin olduğunda, örnek noktalar öntanımlı olarak görünür olacak. Bu, "
 "\"Görünüm->Örnek Noktaları Göster\" komutuyla da değiştirilebilir."
 
-#: ../app/config/gimprc-blurbs.h:452
+#: ../app/config/gimprc-blurbs.h:455
 msgid "Show a tooltip when the pointer hovers over an item."
 msgstr "İmleç bir öge üzerinde durduğunda, bir araç ipucu göster."
 
-#: ../app/config/gimprc-blurbs.h:455
+#: ../app/config/gimprc-blurbs.h:458
 msgid "Use GIMP in a single-window mode."
 msgstr "GIMP'i tek pencereli kipte kullanın."
 
-#: ../app/config/gimprc-blurbs.h:458
+#: ../app/config/gimprc-blurbs.h:461
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr ""
 "Rıhtımları ve diğer pencereleri yalnızca görüntü penceresinden ayrılırken "
 "gizle."
 
-#: ../app/config/gimprc-blurbs.h:461
+#: ../app/config/gimprc-blurbs.h:464
 msgid "Show the image tabs bar in single window mode."
 msgstr "Tek pencereli kipte görüntü sekmelerini gösterir."
 
-#: ../app/config/gimprc-blurbs.h:464
+#: ../app/config/gimprc-blurbs.h:467
 msgid "Enable the N-Point Deformation tool."
 msgstr "N-Nokta Deformasyon aracını etkinleştir."
 
-#: ../app/config/gimprc-blurbs.h:467
+#: ../app/config/gimprc-blurbs.h:470
 msgid "Enable the Handle Transform tool."
 msgstr "Kulp Dönüşüm aracını etkinleştirir."
 
-#: ../app/config/gimprc-blurbs.h:470
+#: ../app/config/gimprc-blurbs.h:473
 msgid "Enable symmetry on painting."
 msgstr "Boyamada simetriyi etkinleştir."
 
-#: ../app/config/gimprc-blurbs.h:473
+#: ../app/config/gimprc-blurbs.h:476
 msgid "Enable the MyPaint Brush tool."
 msgstr "MyPaint Fırça aracını etkinleştir."
 
-#: ../app/config/gimprc-blurbs.h:476
+#: ../app/config/gimprc-blurbs.h:479
 msgid "Enable the Seamless Clone tool."
 msgstr "Kusursuz Kopyalama aracını etkinleştir."
 
-#: ../app/config/gimprc-blurbs.h:479
+#: ../app/config/gimprc-blurbs.h:482
 msgid "What to do when the space bar is pressed in the image window."
 msgstr "Bir görüntü penceresi içinde ara çubuğuna basıldığında ne yapılacağı."
 
-#: ../app/config/gimprc-blurbs.h:482
+#: ../app/config/gimprc-blurbs.h:485
 msgid "The compression method used for tile data stored in the swap file."
 msgstr ""
 "Takas dosyasında döşeme verisi depolama için kullanılacak sıkıştırma yöntemi."
 
-#: ../app/config/gimprc-blurbs.h:485
+#: ../app/config/gimprc-blurbs.h:488
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -11893,11 +11909,11 @@ msgstr ""
 "yavaşlayabilir. Bu sebeplerden dolayı, takas dosyanızı \"/tmp\" içine koymak "
 "daha iyi olabilir."
 
-#: ../app/config/gimprc-blurbs.h:494
+#: ../app/config/gimprc-blurbs.h:497
 msgid "When enabled, menus can be torn off."
 msgstr "Etkin olduğunda, menüler parçalanabilir."
 
-#: ../app/config/gimprc-blurbs.h:497
+#: ../app/config/gimprc-blurbs.h:500
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
@@ -11905,15 +11921,15 @@ msgstr ""
 "Etkin olduğunda, menü ögeleri için klavye kısayollarını, menü ögesi "
 "aydınlatılmış olduğunda bir tuş birleşimi ile değiştirebilirsiniz."
 
-#: ../app/config/gimprc-blurbs.h:501
+#: ../app/config/gimprc-blurbs.h:504
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr "GIMP'ten çıkıldığında, değiştirilmiş klavye kısayollarını kaydet."
 
-#: ../app/config/gimprc-blurbs.h:504
+#: ../app/config/gimprc-blurbs.h:507
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "Her GIMP başladığında kaydedilmiş klavye kısayollarını geri yükle."
 
-#: ../app/config/gimprc-blurbs.h:507
+#: ../app/config/gimprc-blurbs.h:510
 msgid ""
 "Sets the folder for temporary storage. Files will appear here during the "
 "course of running GIMP.  Most files will disappear when GIMP exits, but some "
@@ -11925,18 +11941,18 @@ msgstr ""
 "dosyalar muhtemelen duracak, bu yüzden en iyisi bu klasörü diğer "
 "kullanıcılarla paylaşmamak."
 
-#: ../app/config/gimprc-blurbs.h:513
+#: ../app/config/gimprc-blurbs.h:516
 msgid "The name of the theme to use."
 msgstr "Kullanılacak temanın adı."
 
-#: ../app/config/gimprc-blurbs.h:528
+#: ../app/config/gimprc-blurbs.h:531
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
 "'Renk Profiline Dönüştür' iletişim kutusu için öntanımlı görselleştirme "
 "amacını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:531
+#: ../app/config/gimprc-blurbs.h:534
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
@@ -11944,14 +11960,14 @@ msgstr ""
 "'Renk Profiline Dönüştür' iletişim kutusu için öntanımlı 'Siyah Nokta "
 "Dengelemesi' durumunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:535
+#: ../app/config/gimprc-blurbs.h:538
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "'Hassasiyeti Dönüştür' iletişim kutusu için öntanımlı katman titreme "
 "yöntemini ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:538
+#: ../app/config/gimprc-blurbs.h:541
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
@@ -11959,18 +11975,18 @@ msgstr ""
 "'Hassasiyeti Dönüştür' iletişim kutusu için öntanımlı metin katmanı "
 "titremesi yöntemini ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:541
+#: ../app/config/gimprc-blurbs.h:544
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "'Hassasiyeti Dönüştür' iletişim kutusu için öntanımlı kanal titreme "
 "yöntemini ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:544
+#: ../app/config/gimprc-blurbs.h:547
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr "'İndeksliye Dönüştür' kutusu için öntanımlı palet türünü ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:547
+#: ../app/config/gimprc-blurbs.h:550
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
@@ -11978,7 +11994,7 @@ msgstr ""
 "'İndekliye Dönüştür' iletişim kutusu için öntanımlı en fazla renk sayısını "
 "ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:550
+#: ../app/config/gimprc-blurbs.h:553
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
@@ -11986,19 +12002,19 @@ msgstr ""
 "'İndekliye Dönüştür' iletişim kutusu için öntanımlı 'Çift renkleri kaldır' "
 "durumunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:553
+#: ../app/config/gimprc-blurbs.h:556
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
 "'İndekliye Dönüştür' iletişim kutusu için öntanımlı titreme türünü ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:556
+#: ../app/config/gimprc-blurbs.h:559
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
 "'İndekliye Dönüştür' iletişim kutusu için öntanımlı 'Saydamlık titremesi' "
 "durumunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:559
+#: ../app/config/gimprc-blurbs.h:562
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
@@ -12006,123 +12022,123 @@ msgstr ""
 "'İndekliye Dönüştür' iletişim kutusu için öntanımlı 'Metin katmanları "
 "titremesi' durumunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:562
+#: ../app/config/gimprc-blurbs.h:565
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr "'Tuval Boyutu' iletişim kutusu için öntanımlı doldurma türünü ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:565
+#: ../app/config/gimprc-blurbs.h:568
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
 "'Tuval Boyutu' iletişim kutusu için yeniden boyutlandırılacak öntanımlı "
 "katman kümesini ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:568
+#: ../app/config/gimprc-blurbs.h:571
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
 "'Tuval Boyutu' iletişim kutusu için öntanımlı 'Metin katmanlarını yeniden "
 "boyutlandır' durumunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:571
+#: ../app/config/gimprc-blurbs.h:574
 msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr "'Yeni Katman' iletişim kutusu için öntanımlı katman adını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:574
+#: ../app/config/gimprc-blurbs.h:577
 msgid "Sets the default mode for the 'New Layer' dialog."
 msgstr "'Yeni Katman' iletişim kutusu için öntanımlı kipi ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:577
+#: ../app/config/gimprc-blurbs.h:580
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr ""
 "'Yeni Katman' iletişim kutusu için öntanımlı harmanlama alanını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:580
+#: ../app/config/gimprc-blurbs.h:583
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr "'Yeni Katman' iletişim kutusu için öntanımlı bileşik alanı ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:583
+#: ../app/config/gimprc-blurbs.h:586
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr "'Yeni Katman' iletişim kutusu için öntanımlı bileşik kipini ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:586
+#: ../app/config/gimprc-blurbs.h:589
 msgid "Sets the default opacity for the 'New Layer' dialog."
 msgstr "'Yeni Katman' iletişim kutusu için öntanımlı matlığını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:589
+#: ../app/config/gimprc-blurbs.h:592
 msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr "'Yeni Katman' iletişim kutusu için öntanımlı doldurma türünü ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:592
+#: ../app/config/gimprc-blurbs.h:595
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
 "'Katman Sınır Boyutu' iletişim kutusu için öntanımlı doldurma türünü ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:595
+#: ../app/config/gimprc-blurbs.h:598
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr "'Katman Maskesi Ekle' iletişim kutusu için öntanımlı maskeyi ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:598
+#: ../app/config/gimprc-blurbs.h:601
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
 "'Katman Maskesi Ekle' iletişim kutusu için öntanımlı 'maskeyi ters çevir' "
 "durumunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:601
+#: ../app/config/gimprc-blurbs.h:604
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
 "'Görünür Katmanları Birleştir' iletişim kutusu için öntanımlı birleştirme "
 "türünü ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:604
+#: ../app/config/gimprc-blurbs.h:607
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "'Görünür Katmanları Birleştir' iletişim kutusu için öntanımlı 'Yalnızca "
 "etkin küme' durumunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:607
+#: ../app/config/gimprc-blurbs.h:610
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "'Görünen Katmanları Birleştir' iletişim kutusu için öntanımlı 'Görünmez "
 "katmanları gözden çıkar' durumunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:610
+#: ../app/config/gimprc-blurbs.h:613
 msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr "'Yeni Kanal' iletişim kutusu için öntanımlı kanal adını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:613
+#: ../app/config/gimprc-blurbs.h:616
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr "'Yeni Kanal' iletişim kutusu için öntanımlı rengi ve matlığı ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:616
+#: ../app/config/gimprc-blurbs.h:619
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr "'Yeni Yol' iletişim kutusu için öntanımlı yol adını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:619
+#: ../app/config/gimprc-blurbs.h:622
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr ""
 "'Yolu Dışa Aktar' iletişim kutusu için öntanımlı klasör yolunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:622
+#: ../app/config/gimprc-blurbs.h:625
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
 "'Yolu Dışa Aktar' iletişim kutusu için öntanımlı 'Etkin yolu dışa aktar' "
 "durumunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:625
+#: ../app/config/gimprc-blurbs.h:628
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr "'Yolu İçe Aktar' iletişim kutusu için öntanımlı klasör yolunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:628
+#: ../app/config/gimprc-blurbs.h:631
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
 "'Yolu İçe Aktar' iletişim kutusu için öntanımlı 'İçe aktarılmış yolları "
 "birleştir' durumunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:631
+#: ../app/config/gimprc-blurbs.h:634
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
@@ -12130,11 +12146,11 @@ msgstr ""
 "'Yolları İçe Aktar' iletişim kutusu için öntanımlı 'İçe aktarılmış yolları "
 "ölçekle' durumunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:634
+#: ../app/config/gimprc-blurbs.h:637
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr "'Tüylü Seçim' iletişim kutusu için öntanımlı tüy yarıçapını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:637
+#: ../app/config/gimprc-blurbs.h:640
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Feather Selection' dialog."
@@ -12142,17 +12158,17 @@ msgstr ""
 "'Tüylü Seçim' iletişim kutusu için öntanımlı 'Seçilen alanlar görüntünün "
 "dışında devam ediyor' ayarını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:641
+#: ../app/config/gimprc-blurbs.h:644
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr ""
 "'Seçimi Büyüt' iletişim kutusu için öntanımlı büyüme yarıçapını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:644
+#: ../app/config/gimprc-blurbs.h:647
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr ""
 "'Seçimi Küçült' iletişim kutusu için öntanımlı küçültme yarıçapını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:647
+#: ../app/config/gimprc-blurbs.h:650
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
@@ -12160,12 +12176,12 @@ msgstr ""
 "'Seçimi Küçült' iletişim kutusu için öntanımlı 'Seçilen alanlar görüntünün "
 "dışında devam ediyor' ayarını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:651
+#: ../app/config/gimprc-blurbs.h:654
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr ""
 "'Kenarlık Seçimi' iletişim kutusu için öntanımlı sınır yarıçapını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:654
+#: ../app/config/gimprc-blurbs.h:657
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
@@ -12173,16 +12189,16 @@ msgstr ""
 "'Kenarlık Seçimi' iletişim kutusu için öntanımlı 'Seçilen alanlar görüntünün "
 "dışında devam ediyor' ayarını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:658
+#: ../app/config/gimprc-blurbs.h:661
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr ""
 "'Kenarlık Seçimi' iletişim kutusu için öntanımlı sınır biçemini ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:667
+#: ../app/config/gimprc-blurbs.h:670
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr "Aç iletişim kutusunda gösterilecek küçük resim boyutunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:670
+#: ../app/config/gimprc-blurbs.h:673
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -12190,7 +12206,7 @@ msgstr ""
 "Eğer küçük resim burada ayarlanan boyuttan daha küçükse, Aç iletişim "
 "penceresindeki önizleme kendiliğinden güncellenecek."
 
-#: ../app/config/gimprc-blurbs.h:674
+#: ../app/config/gimprc-blurbs.h:677
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -12202,41 +12218,41 @@ msgstr ""
 "görüntülerde çalışılmasını mümkün kılar. Bilgisayarınızın bellek (RAM) "
 "miktarı fazlaysa, bu değeri daha yüksek olarak ayarlamak isteyebilirsiniz."
 
-#: ../app/config/gimprc-blurbs.h:680
+#: ../app/config/gimprc-blurbs.h:683
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr "Geçerli önalan ve artalan renklerini araç kutusunda göster."
 
-#: ../app/config/gimprc-blurbs.h:683
+#: ../app/config/gimprc-blurbs.h:686
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr ""
 "Geçerli seçilmiş fırçayı, deseni ve renk geçişini araç kutusunda göster."
 
-#: ../app/config/gimprc-blurbs.h:686
+#: ../app/config/gimprc-blurbs.h:689
 msgid "Menu mode of grouped tools."
 msgstr "Kümelenmiş araçların menü kipi."
 
-#: ../app/config/gimprc-blurbs.h:689
+#: ../app/config/gimprc-blurbs.h:692
 msgid "Use a single toolbox button for grouped tools."
 msgstr "Kümelenmiş araçlar için tek araç kutusu düğmesi kullan."
 
-#: ../app/config/gimprc-blurbs.h:692
+#: ../app/config/gimprc-blurbs.h:695
 msgid "Show the currently active image in the toolbox."
 msgstr "Geçerli etkin görüntüyü araç kutusunda göster."
 
-#: ../app/config/gimprc-blurbs.h:695
+#: ../app/config/gimprc-blurbs.h:698
 msgid "Show the GIMP mascot at the top of the toolbox."
 msgstr "GIMP maskotunu araç kutusu üstünde göster."
 
-#: ../app/config/gimprc-blurbs.h:698
+#: ../app/config/gimprc-blurbs.h:701
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Görüntülerde gösterilecek saydamlığın davranışını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:701
+#: ../app/config/gimprc-blurbs.h:704
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr ""
 "Saydamlığı görüntülemek için kullanılan dama tahtasının boyutunu ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:704
+#: ../app/config/gimprc-blurbs.h:707
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
@@ -12244,7 +12260,7 @@ msgstr ""
 "Etkin olduğunda, eğer bir görüntü açıldıktan sonra değiştirilmemişse GIMP "
 "bunu kaydetmeyecek."
 
-#: ../app/config/gimprc-blurbs.h:708
+#: ../app/config/gimprc-blurbs.h:711
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -12253,7 +12269,7 @@ msgstr ""
 "düzeyi, geri alma boyutu sınırına ulaşılana kadar kullanılabilir olarak "
 "tutulur."
 
-#: ../app/config/gimprc-blurbs.h:712
+#: ../app/config/gimprc-blurbs.h:715
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -12263,24 +12279,24 @@ msgstr ""
 "dikkatsizce belirlenmesi sonucunda değişiklikler geri alınamaz hale "
 "gelebilir."
 
-#: ../app/config/gimprc-blurbs.h:717
+#: ../app/config/gimprc-blurbs.h:720
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Geri Alma Geçmişindeki önizlemelerin boyutlarını ayarlar."
 
-#: ../app/config/gimprc-blurbs.h:720
+#: ../app/config/gimprc-blurbs.h:723
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Etkin olduğunda, F1'e basmak yardım tarayıcısını açacak."
 
-#: ../app/config/gimprc-blurbs.h:723
+#: ../app/config/gimprc-blurbs.h:726
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "Etkin olduğunda, bazı işlemler için OpenCL kullanır."
 
-#: ../app/config/gimprc-blurbs.h:741
+#: ../app/config/gimprc-blurbs.h:744
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr ""
 "Etkinleştirildiğinde, komut araması etkin olmayan komutları da listeler."
 
-#: ../app/config/gimprc-blurbs.h:744
+#: ../app/config/gimprc-blurbs.h:747
 msgid "The maximum number of actions saved in history."
 msgstr "Geçmişte kaydedilecek en fazla işlem sayısı."
 
@@ -12741,463 +12757,474 @@ msgctxt "message-severity"
 msgid "CRITICAL"
 msgstr "KRİTİK"
 
+#: ../app/core/core-enums.c:940
+msgctxt "win32-pointer-input-api"
+msgid "Wintab"
+msgstr "Wintab"
+
 #: ../app/core/core-enums.c:941
+#| msgid "Windows"
+msgctxt "win32-pointer-input-api"
+msgid "Windows Ink"
+msgstr "Windows Ink"
+
+#: ../app/core/core-enums.c:970
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Küçük resim yok"
 
-#: ../app/core/core-enums.c:942
+#: ../app/core/core-enums.c:971
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Normal (128x128)"
 
-#: ../app/core/core-enums.c:943
+#: ../app/core/core-enums.c:972
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Büyük (256x256)"
 
-#: ../app/core/core-enums.c:1133
+#: ../app/core/core-enums.c:1162
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<geçersiz>>"
 
-#: ../app/core/core-enums.c:1134
+#: ../app/core/core-enums.c:1163
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Görüntüyü ölçekle"
 
-#: ../app/core/core-enums.c:1135
+#: ../app/core/core-enums.c:1164
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Görüntü boyutunu değiştir"
 
-#: ../app/core/core-enums.c:1136
+#: ../app/core/core-enums.c:1165
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Görüntüyü çevir"
 
-#: ../app/core/core-enums.c:1137
+#: ../app/core/core-enums.c:1166
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Görüntüyü döndür"
 
-#: ../app/core/core-enums.c:1138
+#: ../app/core/core-enums.c:1167
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "Görüntüyü dönüştür"
 
-#: ../app/core/core-enums.c:1139
+#: ../app/core/core-enums.c:1168
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Görüntüyü kırp"
 
-#: ../app/core/core-enums.c:1140
+#: ../app/core/core-enums.c:1169
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Görüntüyü dönüştür"
 
-#: ../app/core/core-enums.c:1141
+#: ../app/core/core-enums.c:1170
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Ögeyi kaldır"
 
-#: ../app/core/core-enums.c:1142 ../app/core/core-enums.c:1186
+#: ../app/core/core-enums.c:1171 ../app/core/core-enums.c:1215
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Ögeyi yeniden sırala"
 
-#: ../app/core/core-enums.c:1143
+#: ../app/core/core-enums.c:1172
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Katmanları birleştir"
 
-#: ../app/core/core-enums.c:1144
+#: ../app/core/core-enums.c:1173
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Yolları birleştir"
 
-#: ../app/core/core-enums.c:1145
+#: ../app/core/core-enums.c:1174
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Hızlı Maske"
 
-#: ../app/core/core-enums.c:1146 ../app/core/core-enums.c:1177
+#: ../app/core/core-enums.c:1175 ../app/core/core-enums.c:1206
 #: ../app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Izgara"
 
-#: ../app/core/core-enums.c:1147 ../app/core/core-enums.c:1181
+#: ../app/core/core-enums.c:1176 ../app/core/core-enums.c:1210
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Kılavuz"
 
-#: ../app/core/core-enums.c:1148 ../app/core/core-enums.c:1182
+#: ../app/core/core-enums.c:1177 ../app/core/core-enums.c:1211
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Örnek Nokta"
 
-#: ../app/core/core-enums.c:1149 ../app/core/core-enums.c:1183
+#: ../app/core/core-enums.c:1178 ../app/core/core-enums.c:1212
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Katman/Kanal"
 
-#: ../app/core/core-enums.c:1150 ../app/core/core-enums.c:1184
+#: ../app/core/core-enums.c:1179 ../app/core/core-enums.c:1213
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Katman/Kanal değişikliği"
 
-#: ../app/core/core-enums.c:1151 ../app/core/core-enums.c:1185
+#: ../app/core/core-enums.c:1180 ../app/core/core-enums.c:1214
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Seçim maskesi"
 
-#: ../app/core/core-enums.c:1152 ../app/core/core-enums.c:1189
+#: ../app/core/core-enums.c:1181 ../app/core/core-enums.c:1218
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Nesne görünürlüğü"
 
-#: ../app/core/core-enums.c:1153 ../app/core/core-enums.c:1190
+#: ../app/core/core-enums.c:1182 ../app/core/core-enums.c:1219
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "Bağlı/Bağsız öge"
 
-#: ../app/core/core-enums.c:1154
+#: ../app/core/core-enums.c:1183
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Nesne özellikleri"
 
-#: ../app/core/core-enums.c:1155 ../app/core/core-enums.c:1188
+#: ../app/core/core-enums.c:1184 ../app/core/core-enums.c:1217
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Ögeyi taşı"
 
-#: ../app/core/core-enums.c:1156
+#: ../app/core/core-enums.c:1185
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Ögeyi ölçekle"
 
-#: ../app/core/core-enums.c:1157
+#: ../app/core/core-enums.c:1186
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Ögeyi yeniden boyutlandır"
 
-#: ../app/core/core-enums.c:1158
+#: ../app/core/core-enums.c:1187
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Katman ekle"
 
-#: ../app/core/core-enums.c:1159 ../app/core/core-enums.c:1209
+#: ../app/core/core-enums.c:1188 ../app/core/core-enums.c:1238
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Katman maskesi ekle"
 
-#: ../app/core/core-enums.c:1160 ../app/core/core-enums.c:1211
+#: ../app/core/core-enums.c:1189 ../app/core/core-enums.c:1240
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Katman maskesi uygula"
 
-#: ../app/core/core-enums.c:1161 ../app/core/core-enums.c:1219
+#: ../app/core/core-enums.c:1190 ../app/core/core-enums.c:1248
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Yüzen seçimden katmana"
 
-#: ../app/core/core-enums.c:1162
+#: ../app/core/core-enums.c:1191
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Seçimi yüzdür"
 
-#: ../app/core/core-enums.c:1163
+#: ../app/core/core-enums.c:1192
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Yüzen seçimi çıpala"
 
-#: ../app/core/core-enums.c:1164 ../app/core/gimp-edit.c:515
+#: ../app/core/core-enums.c:1193 ../app/core/gimp-edit.c:515
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Yapıştır"
 
-#: ../app/core/core-enums.c:1165 ../app/core/gimp-edit.c:733
+#: ../app/core/core-enums.c:1194 ../app/core/gimp-edit.c:733
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Kes"
 
-#: ../app/core/core-enums.c:1166
+#: ../app/core/core-enums.c:1195
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Metin"
 
-#: ../app/core/core-enums.c:1167 ../app/core/gimpdrawable-transform.c:731
+#: ../app/core/core-enums.c:1196 ../app/core/gimpdrawable-transform.c:731
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Dönüşüm"
 
-#: ../app/core/core-enums.c:1168 ../app/core/core-enums.c:1221
+#: ../app/core/core-enums.c:1197 ../app/core/core-enums.c:1250
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Boya"
 
-#: ../app/core/core-enums.c:1169 ../app/core/core-enums.c:1224
+#: ../app/core/core-enums.c:1198 ../app/core/core-enums.c:1253
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Paraziti iliştir"
 
-#: ../app/core/core-enums.c:1170 ../app/core/core-enums.c:1225
+#: ../app/core/core-enums.c:1199 ../app/core/core-enums.c:1254
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Paraziti kaldır"
 
-#: ../app/core/core-enums.c:1171
+#: ../app/core/core-enums.c:1200
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Yolları içe aktar"
 
-#: ../app/core/core-enums.c:1172
+#: ../app/core/core-enums.c:1201
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Eklenti"
 
-#: ../app/core/core-enums.c:1173
+#: ../app/core/core-enums.c:1202
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Görüntü türü"
 
-#: ../app/core/core-enums.c:1174
+#: ../app/core/core-enums.c:1203
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Görüntü hassasiyeti"
 
-#: ../app/core/core-enums.c:1175
+#: ../app/core/core-enums.c:1204
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Görüntü boyutu"
 
-#: ../app/core/core-enums.c:1176
+#: ../app/core/core-enums.c:1205
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Görüntü çözünürlüğü değiştirme"
 
-#: ../app/core/core-enums.c:1178
+#: ../app/core/core-enums.c:1207
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Üst veriyi değiştir"
 
-#: ../app/core/core-enums.c:1179
+#: ../app/core/core-enums.c:1208
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "İndekli paleti değiştir"
 
-#: ../app/core/core-enums.c:1180
+#: ../app/core/core-enums.c:1209
 msgctxt "undo-type"
 msgid "Change color managed state"
 msgstr "Renk yönetimli durumu değiştir"
 
-#: ../app/core/core-enums.c:1187
+#: ../app/core/core-enums.c:1216
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Ögeyi yeniden adlandır"
 
-#: ../app/core/core-enums.c:1191
+#: ../app/core/core-enums.c:1220
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Nesne renk etiketi"
 
-#: ../app/core/core-enums.c:1192
+#: ../app/core/core-enums.c:1221
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "İçeriği Kilitle/Kilidini Aç"
 
-#: ../app/core/core-enums.c:1193
+#: ../app/core/core-enums.c:1222
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Konumu Kilitle/Kilidini Aç"
 
-#: ../app/core/core-enums.c:1194
+#: ../app/core/core-enums.c:1223
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Yeni katman"
 
-#: ../app/core/core-enums.c:1195
+#: ../app/core/core-enums.c:1224
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Katmanı sil"
 
-#: ../app/core/core-enums.c:1196
+#: ../app/core/core-enums.c:1225
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Katman kipini ayarla"
 
-#: ../app/core/core-enums.c:1197
+#: ../app/core/core-enums.c:1226
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Katman matlığını ayarla"
 
-#: ../app/core/core-enums.c:1198
+#: ../app/core/core-enums.c:1227
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Alfa kanalını Kilitle/Kilidini Aç"
 
-#: ../app/core/core-enums.c:1199
+#: ../app/core/core-enums.c:1228
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Katman kümesi boyutlandırmasını duraklat"
 
-#: ../app/core/core-enums.c:1200
+#: ../app/core/core-enums.c:1229
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Katman kümesi boyutlandırmasına devam et"
 
-#: ../app/core/core-enums.c:1201
+#: ../app/core/core-enums.c:1230
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "Katman kümesi maskesini duraklat"
 
-#: ../app/core/core-enums.c:1202
+#: ../app/core/core-enums.c:1231
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "Katman kümesi maskesine devam et"
 
-#: ../app/core/core-enums.c:1203
+#: ../app/core/core-enums.c:1232
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Katman kümesi dönüştürmeyi başlat"
 
-#: ../app/core/core-enums.c:1204
+#: ../app/core/core-enums.c:1233
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Katman kümesi dönüştürmeyi bitir"
 
-#: ../app/core/core-enums.c:1205
+#: ../app/core/core-enums.c:1234
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Kümelenmiş katmanları dönüştür"
 
-#: ../app/core/core-enums.c:1206
+#: ../app/core/core-enums.c:1235
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Metin katmanı"
 
-#: ../app/core/core-enums.c:1207
+#: ../app/core/core-enums.c:1236
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Metin katmanı değişikliği"
 
-#: ../app/core/core-enums.c:1208
+#: ../app/core/core-enums.c:1237
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Metin katmanını dönüştür"
 
-#: ../app/core/core-enums.c:1210
+#: ../app/core/core-enums.c:1239
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Katman maskesini sil"
 
-#: ../app/core/core-enums.c:1212
+#: ../app/core/core-enums.c:1241
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Katman maskesini göster"
 
-#: ../app/core/core-enums.c:1213
+#: ../app/core/core-enums.c:1242
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Yeni kanal"
 
-#: ../app/core/core-enums.c:1214
+#: ../app/core/core-enums.c:1243
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Kanalı sil"
 
-#: ../app/core/core-enums.c:1215
+#: ../app/core/core-enums.c:1244
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Kanal rengi"
 
-#: ../app/core/core-enums.c:1216
+#: ../app/core/core-enums.c:1245
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Yeni yol"
 
-#: ../app/core/core-enums.c:1217
+#: ../app/core/core-enums.c:1246
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Yolu sil"
 
-#: ../app/core/core-enums.c:1218
+#: ../app/core/core-enums.c:1247
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Yol değişikliği"
 
-#: ../app/core/core-enums.c:1220
+#: ../app/core/core-enums.c:1249
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Izgarayı döndür"
 
-#: ../app/core/core-enums.c:1222
+#: ../app/core/core-enums.c:1251
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Mürekkep"
 
-#: ../app/core/core-enums.c:1223
+#: ../app/core/core-enums.c:1252
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Önalanı seç"
 
-#: ../app/core/core-enums.c:1226
+#: ../app/core/core-enums.c:1255
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Geri alınabilir değil"
 
-#: ../app/core/core-enums.c:1261
+#: ../app/core/core-enums.c:1290
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Ufak"
 
-#: ../app/core/core-enums.c:1262
+#: ../app/core/core-enums.c:1291
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Çok küçük"
 
-#: ../app/core/core-enums.c:1263
+#: ../app/core/core-enums.c:1292
 msgctxt "view-size"
 msgid "Small"
 msgstr "Küçük"
 
-#: ../app/core/core-enums.c:1264
+#: ../app/core/core-enums.c:1293
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Orta"
 
-#: ../app/core/core-enums.c:1265
+#: ../app/core/core-enums.c:1294
 msgctxt "view-size"
 msgid "Large"
 msgstr "Büyük"
 
-#: ../app/core/core-enums.c:1266
+#: ../app/core/core-enums.c:1295
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Çok büyük"
 
-#: ../app/core/core-enums.c:1267
+#: ../app/core/core-enums.c:1296
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Kocaman"
 
-#: ../app/core/core-enums.c:1268
+#: ../app/core/core-enums.c:1297
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Muazzam"
 
-#: ../app/core/core-enums.c:1269
+#: ../app/core/core-enums.c:1298
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Devasa"
 
-#: ../app/core/core-enums.c:1297
+#: ../app/core/core-enums.c:1326
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Liste olarak göster"
 
-#: ../app/core/core-enums.c:1298
+#: ../app/core/core-enums.c:1327
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Izgara olarak göster"
@@ -13222,7 +13249,7 @@ msgid "Parasites"
 msgstr "Parazitler"
 
 #. initialize the module list
-#: ../app/core/gimp.c:841 ../app/dialogs/preferences-dialog.c:3326
+#: ../app/core/gimp.c:841 ../app/dialogs/preferences-dialog.c:3339
 msgid "Modules"
 msgstr "Modüller"
 
@@ -13240,7 +13267,7 @@ msgstr "\"%s\" silme başarısız oldu: %s"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:354 ../app/core/gimpcontext.c:722
-#: ../app/dialogs/preferences-dialog.c:3272
+#: ../app/dialogs/preferences-dialog.c:3285
 #: ../app/tools/gimppaintoptions-gui.c:221
 msgid "Dynamics"
 msgstr "Hareketler"
@@ -14673,7 +14700,7 @@ msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d piksel"
 
-#: ../app/core/gimpimagefile.c:846 ../app/display/gimpdisplayshell-title.c:349
+#: ../app/core/gimpimagefile.c:846 ../app/display/gimpdisplayshell-title.c:382
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -15928,7 +15955,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "'%s', listeden kaldırmak ve diskten silmek istediğinize emin misiniz?"
 
-#: ../app/dialogs/dialogs-constructors.c:216 ../app/gui/gui.c:195
+#: ../app/dialogs/dialogs-constructors.c:216 ../app/gui/gui.c:201
 #: ../app/gui/gui-message.c:271
 msgid "GIMP Message"
 msgstr "GIMP İletisi"
@@ -17865,257 +17892,261 @@ msgstr "Girdi Aygıtları"
 msgid "Extended Input Devices"
 msgstr "Gelişmiş Girdi Aygıtları"
 
-#: ../app/dialogs/preferences-dialog.c:3150
+#: ../app/dialogs/preferences-dialog.c:3157
+msgid "Pointer Input API:"
+msgstr "İmleç Girdi API’si:"
+
+#: ../app/dialogs/preferences-dialog.c:3163
 msgid "S_hare tool and tool options between input devices"
 msgstr "Araç ve araç _seçeneklerini girdi aygıtları arasında paylaştır"
 
-#: ../app/dialogs/preferences-dialog.c:3154
+#: ../app/dialogs/preferences-dialog.c:3167
 msgid "Configure E_xtended Input Devices..."
 msgstr "G_elişmiş Girdi Aygıtlarını Yapılandır..."
 
-#: ../app/dialogs/preferences-dialog.c:3161
+#: ../app/dialogs/preferences-dialog.c:3174
 msgid "_Save input device settings on exit"
 msgstr "Çıkarken girdi aygıtı ayarlarını _kaydet"
 
-#: ../app/dialogs/preferences-dialog.c:3165
+#: ../app/dialogs/preferences-dialog.c:3178
 msgid "Save Input Device Settings _Now"
 msgstr "Girdi Aygıtı Ayarlarını _Şimdi Kaydet"
 
-#: ../app/dialogs/preferences-dialog.c:3172
+#: ../app/dialogs/preferences-dialog.c:3185
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "Kaydedilmiş Girdi Aygıtı Ayarlarını Öntanımlı Değerlere _Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3187
+#: ../app/dialogs/preferences-dialog.c:3200
 msgid "Additional Input Controllers"
 msgstr "Ek Girdi Denetleyicileri"
 
-#: ../app/dialogs/preferences-dialog.c:3188
+#: ../app/dialogs/preferences-dialog.c:3201
 msgid "Input Controllers"
 msgstr "Girdi Denetleyicileri"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: ../app/dialogs/preferences-dialog.c:3203
-#: ../app/dialogs/preferences-dialog.c:3204
+#: ../app/dialogs/preferences-dialog.c:3216
+#: ../app/dialogs/preferences-dialog.c:3217
 msgid "Folders"
 msgstr "Klasörler"
 
-#: ../app/dialogs/preferences-dialog.c:3211
+#: ../app/dialogs/preferences-dialog.c:3224
 msgid "Reset _Folders"
 msgstr "_Klasörleri Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3227
+#: ../app/dialogs/preferences-dialog.c:3240
 msgid "_Temporary folder:"
 msgstr "_Geçici klasör:"
 
-#: ../app/dialogs/preferences-dialog.c:3228
+#: ../app/dialogs/preferences-dialog.c:3241
 msgid "Select Folder for Temporary Files"
 msgstr "Geçici Dosyalar İçin Klasör Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3232
+#: ../app/dialogs/preferences-dialog.c:3245
 msgid "_Swap folder:"
 msgstr "_Takas klasörü:"
 
-#: ../app/dialogs/preferences-dialog.c:3233
+#: ../app/dialogs/preferences-dialog.c:3246
 msgid "Select Swap Folder"
 msgstr "Takas Klasörünü Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3266
+#: ../app/dialogs/preferences-dialog.c:3279
 msgid "Brush Folders"
 msgstr "Fırça Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3269
+#: ../app/dialogs/preferences-dialog.c:3282
 msgid "Reset Brush _Folders"
 msgstr "Fırça _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3270
+#: ../app/dialogs/preferences-dialog.c:3283
 msgid "Select Brush Folders"
 msgstr "Fırça Klasörlerini Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3272
+#: ../app/dialogs/preferences-dialog.c:3285
 msgid "Dynamics Folders"
 msgstr "Hareket Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3275
+#: ../app/dialogs/preferences-dialog.c:3288
 msgid "Reset Dynamics _Folders"
 msgstr "Hareket _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3276
+#: ../app/dialogs/preferences-dialog.c:3289
 msgid "Select Dynamics Folders"
 msgstr "Hareket Klasörlerini Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3278
+#: ../app/dialogs/preferences-dialog.c:3291
 msgid "Pattern Folders"
 msgstr "Desen Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3281
+#: ../app/dialogs/preferences-dialog.c:3294
 msgid "Reset Pattern _Folders"
 msgstr "Desen _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3282
+#: ../app/dialogs/preferences-dialog.c:3295
 msgid "Select Pattern Folders"
 msgstr "Desen Klasörlerini Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3284
+#: ../app/dialogs/preferences-dialog.c:3297
 msgid "Palette Folders"
 msgstr "Palet Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3287
+#: ../app/dialogs/preferences-dialog.c:3300
 msgid "Reset Palette _Folders"
 msgstr "Palet _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3288
+#: ../app/dialogs/preferences-dialog.c:3301
 msgid "Select Palette Folders"
 msgstr "Palet Kasörlerini Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3290
+#: ../app/dialogs/preferences-dialog.c:3303
 msgid "Gradient Folders"
 msgstr "Renk Geçişi Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3293
+#: ../app/dialogs/preferences-dialog.c:3306
 msgid "Reset Gradient _Folders"
 msgstr "Renk Geçişi _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3294
+#: ../app/dialogs/preferences-dialog.c:3307
 msgid "Select Gradient Folders"
 msgstr "Renk Geçişi Klasörlerini Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3296
+#: ../app/dialogs/preferences-dialog.c:3309
 msgid "Font Folders"
 msgstr "Yazı Tipi Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3299
+#: ../app/dialogs/preferences-dialog.c:3312
 msgid "Reset Font _Folders"
 msgstr "Yazı Tipi _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3300
+#: ../app/dialogs/preferences-dialog.c:3313
 msgid "Select Font Folders"
 msgstr "Yazı Tipi Klasörlerini Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3302
+#: ../app/dialogs/preferences-dialog.c:3315
 msgid "Tool Preset Folders"
 msgstr "Araç Önayar Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3305
+#: ../app/dialogs/preferences-dialog.c:3318
 msgid "Reset Tool Preset _Folders"
 msgstr "Araç Önayar _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3306
+#: ../app/dialogs/preferences-dialog.c:3319
 msgid "Select Tool Preset Folders"
 msgstr "Araç Önayar Klasörlerini Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3308
+#: ../app/dialogs/preferences-dialog.c:3321
 msgid "MyPaint Brush Folders"
 msgstr "MyPaint Fırça Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3311
+#: ../app/dialogs/preferences-dialog.c:3324
 msgid "Reset MyPaint Brush _Folders"
 msgstr "MyPaint Fırça _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3312
+#: ../app/dialogs/preferences-dialog.c:3325
 msgid "Select MyPaint Brush Folders"
 msgstr "MyPaint Fırça Klasörlerini Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3314
+#: ../app/dialogs/preferences-dialog.c:3327
 msgid "Plug-in Folders"
 msgstr "Eklenti Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3317
+#: ../app/dialogs/preferences-dialog.c:3330
 msgid "Reset plug-in _Folders"
 msgstr "Eklenti _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3318
+#: ../app/dialogs/preferences-dialog.c:3331
 msgid "Select plug-in Folders"
 msgstr "Eklenti Klasörlerini Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3320
+#: ../app/dialogs/preferences-dialog.c:3333
 msgid "Scripts"
 msgstr "Betikler"
 
-#: ../app/dialogs/preferences-dialog.c:3320
+#: ../app/dialogs/preferences-dialog.c:3333
 msgid "Script-Fu Folders"
 msgstr "Script-Fu Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3323
+#: ../app/dialogs/preferences-dialog.c:3336
 msgid "Reset Script-Fu _Folders"
 msgstr "Script-Fu _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3324
+#: ../app/dialogs/preferences-dialog.c:3337
 msgid "Select Script-Fu Folders"
 msgstr "Script-Fu Klasörlerini Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3326
+#: ../app/dialogs/preferences-dialog.c:3339
 msgid "Module Folders"
 msgstr "Modül Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3329
+#: ../app/dialogs/preferences-dialog.c:3342
 msgid "Reset Module _Folders"
 msgstr "Modül _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3330
+#: ../app/dialogs/preferences-dialog.c:3343
 msgid "Select Module Folders"
 msgstr "Modül Klasörlerini Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3332
+#: ../app/dialogs/preferences-dialog.c:3345
 msgid "Interpreters"
 msgstr "Yorumlayıcılar"
 
-#: ../app/dialogs/preferences-dialog.c:3332
+#: ../app/dialogs/preferences-dialog.c:3345
 msgid "Interpreter Folders"
 msgstr "Yorumlayıcı Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3335
+#: ../app/dialogs/preferences-dialog.c:3348
 msgid "Reset Interpreter _Folders"
 msgstr "Yorumlayıcı _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3336
+#: ../app/dialogs/preferences-dialog.c:3349
 msgid "Select Interpreter Folders"
 msgstr "Yorumlayıcı Klasörlerini Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3338
+#: ../app/dialogs/preferences-dialog.c:3351
 msgid "Environment"
 msgstr "Ortam"
 
-#: ../app/dialogs/preferences-dialog.c:3338
+#: ../app/dialogs/preferences-dialog.c:3351
 msgid "Environment Folders"
 msgstr "Ortam Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3341
+#: ../app/dialogs/preferences-dialog.c:3354
 msgid "Reset Environment _Folders"
 msgstr "Ortam _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3342
+#: ../app/dialogs/preferences-dialog.c:3355
 msgid "Select Environment Folders"
 msgstr "Ortam Klasörlerini Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3344
+#: ../app/dialogs/preferences-dialog.c:3357
 msgid "Themes"
 msgstr "Temalar"
 
-#: ../app/dialogs/preferences-dialog.c:3344
+#: ../app/dialogs/preferences-dialog.c:3357
 msgid "Theme Folders"
 msgstr "Tema Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3347
+#: ../app/dialogs/preferences-dialog.c:3360
 msgid "Reset Theme _Folders"
 msgstr "Tema _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3348
+#: ../app/dialogs/preferences-dialog.c:3361
 msgid "Select Theme Folders"
 msgstr "Tema Klasörlerini Seç"
 
-#: ../app/dialogs/preferences-dialog.c:3350
+#: ../app/dialogs/preferences-dialog.c:3363
 msgid "Icon Themes"
 msgstr "Simge Temaları"
 
-#: ../app/dialogs/preferences-dialog.c:3350
+#: ../app/dialogs/preferences-dialog.c:3363
 msgid "Icon Theme Folders"
 msgstr "Simge Teması Klasörleri"
 
-#: ../app/dialogs/preferences-dialog.c:3353
+#: ../app/dialogs/preferences-dialog.c:3366
 msgid "Reset Icon Theme _Folders"
 msgstr "Simge Temaları _Klasörlerini Sıfırla"
 
-#: ../app/dialogs/preferences-dialog.c:3354
+#: ../app/dialogs/preferences-dialog.c:3367
 msgid "Select Icon Theme Folders"
 msgstr "Simge Teması Klasörlerini Seç"
 
@@ -18811,23 +18842,23 @@ msgstr "Yakınlaştırma oranı:"
 msgid "Zoom:"
 msgstr "Yakınlaştır:"
 
-#: ../app/display/gimpdisplayshell-title.c:290
+#: ../app/display/gimpdisplayshell-title.c:319
 msgid "(modified)"
 msgstr "(değiştirildi)"
 
-#: ../app/display/gimpdisplayshell-title.c:295
+#: ../app/display/gimpdisplayshell-title.c:324
 msgid "(clean)"
 msgstr "(temiz)"
 
-#: ../app/display/gimpdisplayshell-title.c:365
-#: ../app/display/gimpdisplayshell-title.c:374
+#: ../app/display/gimpdisplayshell-title.c:398
+#: ../app/display/gimpdisplayshell-title.c:407
 #: ../app/widgets/gimpactiongroup.c:978
 #: ../app/widgets/gimpbuffersourcebox.c:169
 #: ../app/widgets/gimpbuffersourcebox.c:299
 msgid "(none)"
 msgstr "(hiçbiri)"
 
-#: ../app/display/gimpdisplayshell-title.c:497
+#: ../app/display/gimpdisplayshell-title.c:530
 msgid "not color managed"
 msgstr "renk yönetimi değil"
 
@@ -19318,82 +19349,82 @@ msgstr "GIMP fırça (hareketli)"
 msgid "GIMP pattern"
 msgstr "GIMP deseni"
 
-#: ../app/gegl/gimp-babl.c:317 ../app/gegl/gimp-babl.c:318
-#: ../app/gegl/gimp-babl.c:319 ../app/gegl/gimp-babl.c:320
-#: ../app/gegl/gimp-babl.c:321 ../app/gegl/gimp-babl.c:322
-#: ../app/gegl/gimp-babl.c:323 ../app/gegl/gimp-babl.c:324
-#: ../app/gegl/gimp-babl.c:325 ../app/gegl/gimp-babl.c:326
-#: ../app/gegl/gimp-babl.c:327 ../app/gegl/gimp-babl.c:328
+#: ../app/gegl/gimp-babl.c:320 ../app/gegl/gimp-babl.c:321
+#: ../app/gegl/gimp-babl.c:322 ../app/gegl/gimp-babl.c:323
+#: ../app/gegl/gimp-babl.c:324 ../app/gegl/gimp-babl.c:325
+#: ../app/gegl/gimp-babl.c:326 ../app/gegl/gimp-babl.c:327
+#: ../app/gegl/gimp-babl.c:328 ../app/gegl/gimp-babl.c:329
+#: ../app/gegl/gimp-babl.c:330 ../app/gegl/gimp-babl.c:331
 #: ../app/plug-in/gimppluginprocedure.c:1013
 msgid "RGB"
 msgstr "RGB"
 
-#: ../app/gegl/gimp-babl.c:330 ../app/gegl/gimp-babl.c:331
-#: ../app/gegl/gimp-babl.c:332 ../app/gegl/gimp-babl.c:333
-#: ../app/gegl/gimp-babl.c:334 ../app/gegl/gimp-babl.c:335
-#: ../app/gegl/gimp-babl.c:336 ../app/gegl/gimp-babl.c:337
-#: ../app/gegl/gimp-babl.c:338 ../app/gegl/gimp-babl.c:339
-#: ../app/gegl/gimp-babl.c:340 ../app/gegl/gimp-babl.c:341
+#: ../app/gegl/gimp-babl.c:333 ../app/gegl/gimp-babl.c:334
+#: ../app/gegl/gimp-babl.c:335 ../app/gegl/gimp-babl.c:336
+#: ../app/gegl/gimp-babl.c:337 ../app/gegl/gimp-babl.c:338
+#: ../app/gegl/gimp-babl.c:339 ../app/gegl/gimp-babl.c:340
+#: ../app/gegl/gimp-babl.c:341 ../app/gegl/gimp-babl.c:342
+#: ../app/gegl/gimp-babl.c:343 ../app/gegl/gimp-babl.c:344
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: ../app/gegl/gimp-babl.c:343 ../app/gegl/gimp-babl.c:344
-#: ../app/gegl/gimp-babl.c:345 ../app/gegl/gimp-babl.c:346
-#: ../app/gegl/gimp-babl.c:347 ../app/gegl/gimp-babl.c:348
-#: ../app/gegl/gimp-babl.c:349 ../app/gegl/gimp-babl.c:350
-#: ../app/gegl/gimp-babl.c:351 ../app/gegl/gimp-babl.c:352
-#: ../app/gegl/gimp-babl.c:353 ../app/gegl/gimp-babl.c:354
+#: ../app/gegl/gimp-babl.c:346 ../app/gegl/gimp-babl.c:347
+#: ../app/gegl/gimp-babl.c:348 ../app/gegl/gimp-babl.c:349
+#: ../app/gegl/gimp-babl.c:350 ../app/gegl/gimp-babl.c:351
+#: ../app/gegl/gimp-babl.c:352 ../app/gegl/gimp-babl.c:353
+#: ../app/gegl/gimp-babl.c:354 ../app/gegl/gimp-babl.c:355
+#: ../app/gegl/gimp-babl.c:356 ../app/gegl/gimp-babl.c:357
 #: ../app/plug-in/gimppluginprocedure.c:1031
 msgid "Grayscale"
 msgstr "Gri Tonlamalı"
 
-#: ../app/gegl/gimp-babl.c:356 ../app/gegl/gimp-babl.c:357
-#: ../app/gegl/gimp-babl.c:358 ../app/gegl/gimp-babl.c:359
-#: ../app/gegl/gimp-babl.c:360 ../app/gegl/gimp-babl.c:361
-#: ../app/gegl/gimp-babl.c:362 ../app/gegl/gimp-babl.c:363
-#: ../app/gegl/gimp-babl.c:364 ../app/gegl/gimp-babl.c:365
-#: ../app/gegl/gimp-babl.c:366 ../app/gegl/gimp-babl.c:367
+#: ../app/gegl/gimp-babl.c:359 ../app/gegl/gimp-babl.c:360
+#: ../app/gegl/gimp-babl.c:361 ../app/gegl/gimp-babl.c:362
+#: ../app/gegl/gimp-babl.c:363 ../app/gegl/gimp-babl.c:364
+#: ../app/gegl/gimp-babl.c:365 ../app/gegl/gimp-babl.c:366
+#: ../app/gegl/gimp-babl.c:367 ../app/gegl/gimp-babl.c:368
+#: ../app/gegl/gimp-babl.c:369 ../app/gegl/gimp-babl.c:370
 msgid "Grayscale-alpha"
 msgstr "Gri Tonlamalı-alfa"
 
-#: ../app/gegl/gimp-babl.c:369 ../app/gegl/gimp-babl.c:370
-#: ../app/gegl/gimp-babl.c:371 ../app/gegl/gimp-babl.c:372
-#: ../app/gegl/gimp-babl.c:373 ../app/gegl/gimp-babl.c:374
-#: ../app/gegl/gimp-babl.c:375 ../app/gegl/gimp-babl.c:376
-#: ../app/gegl/gimp-babl.c:377 ../app/gegl/gimp-babl.c:378
-#: ../app/gegl/gimp-babl.c:379 ../app/gegl/gimp-babl.c:380
+#: ../app/gegl/gimp-babl.c:372 ../app/gegl/gimp-babl.c:373
+#: ../app/gegl/gimp-babl.c:374 ../app/gegl/gimp-babl.c:375
+#: ../app/gegl/gimp-babl.c:376 ../app/gegl/gimp-babl.c:377
+#: ../app/gegl/gimp-babl.c:378 ../app/gegl/gimp-babl.c:379
+#: ../app/gegl/gimp-babl.c:380 ../app/gegl/gimp-babl.c:381
+#: ../app/gegl/gimp-babl.c:382 ../app/gegl/gimp-babl.c:383
 msgid "Red component"
 msgstr "Kırmızı bileşen"
 
-#: ../app/gegl/gimp-babl.c:382 ../app/gegl/gimp-babl.c:383
-#: ../app/gegl/gimp-babl.c:384 ../app/gegl/gimp-babl.c:385
-#: ../app/gegl/gimp-babl.c:386 ../app/gegl/gimp-babl.c:387
-#: ../app/gegl/gimp-babl.c:388 ../app/gegl/gimp-babl.c:389
-#: ../app/gegl/gimp-babl.c:390 ../app/gegl/gimp-babl.c:391
-#: ../app/gegl/gimp-babl.c:392 ../app/gegl/gimp-babl.c:393
+#: ../app/gegl/gimp-babl.c:385 ../app/gegl/gimp-babl.c:386
+#: ../app/gegl/gimp-babl.c:387 ../app/gegl/gimp-babl.c:388
+#: ../app/gegl/gimp-babl.c:389 ../app/gegl/gimp-babl.c:390
+#: ../app/gegl/gimp-babl.c:391 ../app/gegl/gimp-babl.c:392
+#: ../app/gegl/gimp-babl.c:393 ../app/gegl/gimp-babl.c:394
+#: ../app/gegl/gimp-babl.c:395 ../app/gegl/gimp-babl.c:396
 msgid "Green component"
 msgstr "Yeşil bileşen"
 
-#: ../app/gegl/gimp-babl.c:395 ../app/gegl/gimp-babl.c:396
-#: ../app/gegl/gimp-babl.c:397 ../app/gegl/gimp-babl.c:398
-#: ../app/gegl/gimp-babl.c:399 ../app/gegl/gimp-babl.c:400
-#: ../app/gegl/gimp-babl.c:401 ../app/gegl/gimp-babl.c:402
-#: ../app/gegl/gimp-babl.c:403 ../app/gegl/gimp-babl.c:404
-#: ../app/gegl/gimp-babl.c:405 ../app/gegl/gimp-babl.c:406
+#: ../app/gegl/gimp-babl.c:398 ../app/gegl/gimp-babl.c:399
+#: ../app/gegl/gimp-babl.c:400 ../app/gegl/gimp-babl.c:401
+#: ../app/gegl/gimp-babl.c:402 ../app/gegl/gimp-babl.c:403
+#: ../app/gegl/gimp-babl.c:404 ../app/gegl/gimp-babl.c:405
+#: ../app/gegl/gimp-babl.c:406 ../app/gegl/gimp-babl.c:407
+#: ../app/gegl/gimp-babl.c:408 ../app/gegl/gimp-babl.c:409
 msgid "Blue component"
 msgstr "Mavi Bileşen"
 
-#: ../app/gegl/gimp-babl.c:408 ../app/gegl/gimp-babl.c:409
-#: ../app/gegl/gimp-babl.c:410 ../app/gegl/gimp-babl.c:411
-#: ../app/gegl/gimp-babl.c:412 ../app/gegl/gimp-babl.c:413
+#: ../app/gegl/gimp-babl.c:411 ../app/gegl/gimp-babl.c:412
+#: ../app/gegl/gimp-babl.c:413 ../app/gegl/gimp-babl.c:414
+#: ../app/gegl/gimp-babl.c:415 ../app/gegl/gimp-babl.c:416
 msgid "Alpha component"
 msgstr "Alfa bileşen"
 
-#: ../app/gegl/gimp-babl.c:441
+#: ../app/gegl/gimp-babl.c:444
 msgid "Indexed-alpha"
 msgstr "İndekli-alfa"
 
-#: ../app/gegl/gimp-babl.c:443 ../app/plug-in/gimppluginprocedure.c:1049
+#: ../app/gegl/gimp-babl.c:446 ../app/plug-in/gimppluginprocedure.c:1049
 msgid "Indexed"
 msgstr "İndekli"
 
@@ -20256,23 +20287,23 @@ msgstr "Alfa değeri"
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:241
+#: ../app/gui/gui.c:247
 msgid "default:LTR"
 msgstr "default:LTR"
 
-#: ../app/gui/gui.c:343
+#: ../app/gui/gui.c:349
 msgid "Image Recovery"
 msgstr "Görüntü Kurtar"
 
-#: ../app/gui/gui.c:345
+#: ../app/gui/gui.c:351
 msgid "_Discard"
 msgstr "_Gözden Çıkar"
 
-#: ../app/gui/gui.c:346
+#: ../app/gui/gui.c:352
 msgid "_Recover"
 msgstr "Kurta_r"
 
-#: ../app/gui/gui.c:357
+#: ../app/gui/gui.c:363
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "Hımm! GIMP bir çökmeden kurtulmuş gibi görünüyor!"
 
@@ -20282,7 +20313,7 @@ msgstr "Hımm! GIMP bir çökmeden kurtulmuş gibi görünüyor!"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: ../app/gui/gui.c:366
+#: ../app/gui/gui.c:372
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -20293,11 +20324,11 @@ msgstr[0] "%d görüntü çökmeden etkilendi. Denemek ve kurtarmak ister misini
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: ../app/gui/gui.c:611
+#: ../app/gui/gui.c:622
 msgid "Documents"
 msgstr "Belgeler"
 
-#: ../app/gui/splash.c:138
+#: ../app/gui/splash.c:148
 msgid "GIMP Startup"
 msgstr "GIMP Başlangıcı"
 
@@ -21444,134 +21475,134 @@ msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pikselleştir"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3416
+#: ../app/pdb/plug-in-compat-cmds.c:3420
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plazma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3470
+#: ../app/pdb/plug-in-compat-cmds.c:3474
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Kutup Koordinatları"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3510
+#: ../app/pdb/plug-in-compat-cmds.c:3514
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Kırmızı Göz Kaldırma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3563
+#: ../app/pdb/plug-in-compat-cmds.c:3567
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Rastgele Savrulma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3616
+#: ../app/pdb/plug-in-compat-cmds.c:3620
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Rastgele Seç"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3669
+#: ../app/pdb/plug-in-compat-cmds.c:3673
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Rastgele Slur Lekelemesi"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3744
+#: ../app/pdb/plug-in-compat-cmds.c:3748
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "RGB Gürültüsü"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3814
+#: ../app/pdb/plug-in-compat-cmds.c:3818
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Dalgacık"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3939
+#: ../app/pdb/plug-in-compat-cmds.c:3943
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Gürültüle"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3983
+#: ../app/pdb/plug-in-compat-cmds.c:3987
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Seçmeli Gaussian Bulanıklığı"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4027
+#: ../app/pdb/plug-in-compat-cmds.c:4031
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Yarı Düzleştir"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4070
+#: ../app/pdb/plug-in-compat-cmds.c:4074
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Dönüşüm"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4173
+#: ../app/pdb/plug-in-compat-cmds.c:4177
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Sinüs"
 
 # algoritma adı, çevirilmeden bırakıldı
-#: ../app/pdb/plug-in-compat-cmds.c:4221
+#: ../app/pdb/plug-in-compat-cmds.c:4225
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4282
+#: ../app/pdb/plug-in-compat-cmds.c:4286
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Yoğun Gürültü"
 
 # Arc kelimesiyle karışmaması için bu şekilde çevirildi
-#: ../app/pdb/plug-in-compat-cmds.c:4326
+#: ../app/pdb/plug-in-compat-cmds.c:4330
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Etrafa Saç"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4367
+#: ../app/pdb/plug-in-compat-cmds.c:4371
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Eşik Alfa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4413
+#: ../app/pdb/plug-in-compat-cmds.c:4417
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Keskinleştir (Keskinliği Azalt Maskesi)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4459
+#: ../app/pdb/plug-in-compat-cmds.c:4463
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Video"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4496
+#: ../app/pdb/plug-in-compat-cmds.c:4500
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Değeri Tersine Çevir"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4603
+#: ../app/pdb/plug-in-compat-cmds.c:4607
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Değer Yayılımı"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4650
+#: ../app/pdb/plug-in-compat-cmds.c:4654
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Genişlet"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4697
+#: ../app/pdb/plug-in-compat-cmds.c:4701
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Aşındır"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4760
+#: ../app/pdb/plug-in-compat-cmds.c:4764
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Dalgalar"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4808
+#: ../app/pdb/plug-in-compat-cmds.c:4812
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Döndürme ve Kıstırma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4860
+#: ../app/pdb/plug-in-compat-cmds.c:4864
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Rüzgar"
