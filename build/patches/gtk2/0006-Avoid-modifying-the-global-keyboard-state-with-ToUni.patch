@@ -1,0 +1,126 @@
+From 32bb8b2526cbfb19b417b503bfa21c68aa7d1c35 Mon Sep 17 00:00:00 2001
+From: Luca Bacci <luca.bacci982@gmail.com>
+Date: Mon, 22 Apr 2024 14:26:17 +0200
+Subject: [PATCH 06/11] Avoid modifying the global keyboard state with
+ ToUnicodeEx
+
+---
+ gdk/win32/gdkkeys-win32.c | 55 ++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 51 insertions(+), 4 deletions(-)
+
+diff --git a/gdk/win32/gdkkeys-win32.c b/gdk/win32/gdkkeys-win32.c
+index 1dcc0f6..4b5a127 100644
+--- a/gdk/win32/gdkkeys-win32.c
++++ b/gdk/win32/gdkkeys-win32.c
+@@ -38,6 +38,8 @@
+ #include "gdkkeys.h"
+ #include "gdkwin32keys.h"
+ 
++#include "versionhelpers.h"
++
+ enum _GdkWin32KeyLevelState
+ {
+   GDK_WIN32_LEVEL_NONE = 0,
+@@ -180,6 +182,8 @@ guint _gdk_keymap_serial = 0;
+ 
+ static GdkKeymap *default_keymap = NULL;
+ 
++static UINT flags;
++
+ #define KEY_STATE_SIZE 256
+ 
+ static void update_keymap (GdkKeymap *gdk_keymap);
+@@ -485,7 +489,7 @@ reset_after_dead (guchar key_state[KEY_STATE_SIZE],
+ 
+   ToUnicodeEx (VK_SPACE, MapVirtualKey (VK_SPACE, 0),
+ 	       temp_key_state, wcs, G_N_ELEMENTS (wcs),
+-	       0, handle);
++	       flags, handle);
+ }
+ 
+ static void
+@@ -765,7 +769,7 @@ update_keymap (GdkKeymap *gdk_keymap)
+                   wcs[0] = wcs[1] = 0;
+                   k = ToUnicodeEx (vk, scancode, key_state,
+                                    wcs, G_N_ELEMENTS (wcs),
+-                                   0, hkls[group]);
++                                   flags, hkls[group]);
+ #if 0
+                   g_print ("ToUnicodeEx(%#02x, %d: %d): %d, %04x %04x\n",
+                            vk, scancode, level, k,
+@@ -868,7 +872,7 @@ update_keymap (GdkKeymap *gdk_keymap)
+                   set_level_vks (key_state, dead_key->level);
+                   k = ToUnicodeEx (dead_key->vk, scancode, key_state,
+                                    wcs, G_N_ELEMENTS (wcs),
+-                                   0, hkls[group]);
++                                   flags, hkls[group]);
+                   switch (k)
+                     {
+                     case -1:
+@@ -885,7 +889,7 @@ update_keymap (GdkKeymap *gdk_keymap)
+                   set_level_vks (key_state, level);
+                   k = ToUnicodeEx (vk, scancode, key_state,
+                                    wcs, G_N_ELEMENTS (wcs),
+-                                   0, hkls[group]);
++                                   flags, hkls[group]);
+ 
+                   if (k == 0)
+                     {
+@@ -1665,6 +1669,48 @@ gdk_keymap_map_virtual_modifiers (GdkKeymap       *keymap,
+   return TRUE;
+ }
+ 
++static gboolean
++IsWindows11OrGreater_ (void)
++{
++  OSVERSIONINFOEXW osvi = { sizeof(osvi), 0, 0, 0, 0, {0}, 0, 0 };
++  const DWORDLONG dwlConditionMask = VerSetConditionMask(
++    VerSetConditionMask(
++    VerSetConditionMask(
++            0, VER_MAJORVERSION, VER_GREATER_EQUAL),
++               VER_MINORVERSION, VER_GREATER_EQUAL),
++               VER_BUILDNUMBER, VER_GREATER_EQUAL);
++
++  osvi.dwMajorVersion = HIBYTE(_WIN32_WINNT_WIN10);
++  osvi.dwMinorVersion = LOBYTE(_WIN32_WINNT_WIN10);
++  osvi.dwBuildNumber = 22000;
++
++  return VerifyVersionInfoW (&osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_BUILDNUMBER, dwlConditionMask) != FALSE;
++}
++
++static void
++set_flags (void)
++{
++  BYTE key_state[KEY_STATE_SIZE];
++  wchar_t buf[5];
++  int ret;
++
++  if (IsWindows11OrGreater_ ())
++    {
++      flags = 1 << 2;
++      return;
++    }
++
++  memset (key_state, 0, sizeof (key_state));
++
++  SetLastError (0);
++  ret = ToUnicode (VK_LBUTTON, 0, key_state, buf, G_N_ELEMENTS (buf), 1 << 2);
++
++  if (GetLastError () != ERROR_INVALID_PARAMETER)
++    flags = 1 << 2;
++
++  g_warn_if_fail (ret == 0);
++}
++
+ static void
+ gdk_win32_keymap_class_init (GdkWin32KeymapClass *klass)
+ {
+@@ -1672,4 +1718,5 @@ gdk_win32_keymap_class_init (GdkWin32KeymapClass *klass)
+ 
+   object_class->finalize = gdk_win32_keymap_finalize;
+ 
++  set_flags ();
+ }
+-- 
+2.39.1.windows.1
+

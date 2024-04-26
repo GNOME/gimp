@@ -1,7 +1,7 @@
-From a991c657f17fe5473e81a239e9416277ef3d6e09 Mon Sep 17 00:00:00 2001
+From 383a0ec0caadd83de29b3288cbc9d32af59bea5b Mon Sep 17 00:00:00 2001
 From: Luca Bacci <luca.bacci982@gmail.com>
 Date: Mon, 22 Apr 2024 14:34:11 +0200
-Subject: [PATCH 07/10] GDK W32: transient Z-order rollback
+Subject: [PATCH 07/11] GDK W32: transient Z-order rollback
 
 Backport from GTK3 to GTK2 of commit 83ebdbdb (MR !1769)
 ---
@@ -9,10 +9,10 @@ Backport from GTK3 to GTK2 of commit 83ebdbdb (MR !1769)
  1 file changed, 152 deletions(-)
 
 diff --git a/gdk/win32/gdkevents-win32.c b/gdk/win32/gdkevents-win32.c
-index f3a428c..30b11ee 100644
+index 6a3ce02..7ef4031 100644
 --- a/gdk/win32/gdkevents-win32.c
 +++ b/gdk/win32/gdkevents-win32.c
-@@ -1951,146 +1951,6 @@ generate_button_event (GdkEventType type,
+@@ -1952,146 +1952,6 @@ generate_button_event (GdkEventType type,
    _gdk_win32_append_event (event);
  }
  
@@ -159,7 +159,7 @@ index f3a428c..30b11ee 100644
  #define GDK_ANY_BUTTON_MASK (GDK_BUTTON1_MASK | \
  			     GDK_BUTTON2_MASK | \
  			     GDK_BUTTON3_MASK | \
-@@ -3218,9 +3078,6 @@ gdk_event_translate (MSG  *msg,
+@@ -3220,9 +3080,6 @@ gdk_event_translate (MSG  *msg,
  				       buf))))),
  				  windowpos->cx, windowpos->cy, windowpos->x, windowpos->y,
  				  GetNextWindow (msg->hwnd, GW_HWNDPREV))));
@@ -169,7 +169,7 @@ index f3a428c..30b11ee 100644
        break;
  
      case WM_WINDOWPOSCHANGED:
-@@ -3295,13 +3152,6 @@ gdk_event_translate (MSG  *msg,
+@@ -3297,13 +3154,6 @@ gdk_event_translate (MSG  *msg,
  	  if ((old_state & GDK_WINDOW_STATE_ICONIFIED) != 
  	      (new_state & GDK_WINDOW_STATE_ICONIFIED))
  	    do_show_window (window, (new_state & GDK_WINDOW_STATE_ICONIFIED));
@@ -183,7 +183,7 @@ index f3a428c..30b11ee 100644
  	}
  
        /* Show, New size or position => configure event */
-@@ -3798,8 +3648,6 @@ gdk_event_translate (MSG  *msg,
+@@ -3800,8 +3650,6 @@ gdk_event_translate (MSG  *msg,
        GDK_NOTE (EVENTS, g_print (" %s thread: %I64d",
  				 msg->wParam ? "YES" : "NO",
  				 (gint64) msg->lParam));

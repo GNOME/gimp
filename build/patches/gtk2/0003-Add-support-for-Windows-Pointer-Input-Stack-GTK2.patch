@@ -1,20 +1,20 @@
-From 34281c2c0c433900de0e67b767c77fbf0ce9a99e Mon Sep 17 00:00:00 2001
+From 051650a05a88018cfd2a0c95773ef8f55ccac998 Mon Sep 17 00:00:00 2001
 From: Luca Bacci <luca.bacci982@gmail.com>
 Date: Thu, 11 Apr 2024 16:34:22 +0200
-Subject: [PATCH 03/10] Add support for Windows Pointer Input Stack (GTK2)
+Subject: [PATCH 03/11] Add support for Windows Pointer Input Stack (GTK2)
 
 ---
  configure.ac                 |   2 +-
  gdk/win32/gdkdnd-win32.c     |   6 +-
- gdk/win32/gdkevents-win32.c  | 265 ++++++++++++-
+ gdk/win32/gdkevents-win32.c  | 269 ++++++++++++-
  gdk/win32/gdkglobals-win32.c |   1 +
- gdk/win32/gdkinput-win32.c   | 725 ++++++++++++++++++++++++++++++++++-
- gdk/win32/gdkinput-win32.h   |  32 ++
+ gdk/win32/gdkinput-win32.c   | 752 ++++++++++++++++++++++++++++++++++-
+ gdk/win32/gdkinput-win32.h   |  31 ++
  gdk/win32/gdkinput.c         |   7 +-
  gdk/win32/gdkprivate-win32.h |   7 +-
  gdk/win32/gdkwindow-win32.c  |   9 +-
- gdk/win32/winpointer.h       | 324 ++++++++++++++++
- 10 files changed, 1356 insertions(+), 22 deletions(-)
+ gdk/win32/winpointer.h       | 324 +++++++++++++++
+ 10 files changed, 1385 insertions(+), 23 deletions(-)
  create mode 100644 gdk/win32/winpointer.h
 
 diff --git a/configure.ac b/configure.ac
@@ -62,7 +62,7 @@ index ec2377c..51de498 100644
        ptl.y = pt.y;
        if ( pending_src_context != NULL && pending_src_context->context != NULL
 diff --git a/gdk/win32/gdkevents-win32.c b/gdk/win32/gdkevents-win32.c
-index b4b2a94..2ad66ac 100644
+index b4b2a94..f70a65d 100644
 --- a/gdk/win32/gdkevents-win32.c
 +++ b/gdk/win32/gdkevents-win32.c
 @@ -52,6 +52,10 @@
@@ -106,7 +106,17 @@ index b4b2a94..2ad66ac 100644
  static void
  generate_focus_event (GdkWindow *window,
  		      gboolean   in)
-@@ -1449,7 +1469,25 @@ synthesize_crossing_events (GdkDisplay                 *display,
+@@ -225,7 +245,8 @@ inner_window_procedure (HWND   hwnd,
+   msg.wParam = wparam;
+   msg.lParam = lparam;
+   msg.time = _gdk_win32_get_next_tick (0);
+-  pos = GetMessagePos ();
++  pos = (message >= WM_NCPOINTERUPDATE && message <= WM_POINTERLEAVE) ?
++        lparam : GetMessagePos ();
+   msg.pt.x = GET_X_LPARAM (pos);
+   msg.pt.y = GET_Y_LPARAM (pos);
+ 
+@@ -1449,7 +1470,25 @@ synthesize_crossing_events (GdkDisplay                 *display,
  			   mask, time_);
      }
  }
@@ -133,7 +143,7 @@ index b4b2a94..2ad66ac 100644
  static void
  synthesize_expose_events (GdkWindow *window)
  {
-@@ -2086,6 +2124,8 @@ gdk_event_translate (MSG  *msg,
+@@ -2086,6 +2125,8 @@ gdk_event_translate (MSG  *msg,
    GdkPointerGrabInfo *grab = NULL;
    GdkWindow *grab_window = NULL;
  
@@ -142,7 +152,7 @@ index b4b2a94..2ad66ac 100644
    static gint update_colors_counter = 0;
    gint button;
    GdkAtom target;
-@@ -2510,6 +2550,8 @@ gdk_event_translate (MSG  *msg,
+@@ -2510,6 +2551,8 @@ gdk_event_translate (MSG  *msg,
  		g_print (" (%d,%d)",
  			 GET_X_LPARAM (msg->lParam), GET_Y_LPARAM (msg->lParam)));
  
@@ -151,7 +161,7 @@ index b4b2a94..2ad66ac 100644
        assign_object (&window, find_window_for_mouse_event (window, msg));
  
        if (GDK_WINDOW_DESTROYED (window))
-@@ -2550,6 +2592,8 @@ gdk_event_translate (MSG  *msg,
+@@ -2550,6 +2593,8 @@ gdk_event_translate (MSG  *msg,
  		g_print (" (%d,%d)",
  			 GET_X_LPARAM (msg->lParam), GET_Y_LPARAM (msg->lParam)));
  
@@ -160,7 +170,7 @@ index b4b2a94..2ad66ac 100644
        assign_object (&window, find_window_for_mouse_event (window, msg));
        grab = _gdk_display_get_last_pointer_grab (_gdk_display);
        if (grab != NULL && grab->implicit)
-@@ -2577,7 +2621,7 @@ gdk_event_translate (MSG  *msg,
+@@ -2577,7 +2622,7 @@ gdk_event_translate (MSG  *msg,
  					  GDK_CROSSING_UNGRAB,
  					  &msg->pt,
  					  0, /* TODO: Set right mask */
@@ -169,7 +179,7 @@ index b4b2a94..2ad66ac 100644
  					  FALSE);
  	      assign_object (&mouse_window, new_window);
  	      mouse_window_ignored_leave = NULL;
-@@ -2596,6 +2640,13 @@ gdk_event_translate (MSG  *msg,
+@@ -2596,6 +2641,13 @@ gdk_event_translate (MSG  *msg,
  			 (gpointer) msg->wParam,
  			 GET_X_LPARAM (msg->lParam), GET_Y_LPARAM (msg->lParam)));
  
@@ -183,7 +193,7 @@ index b4b2a94..2ad66ac 100644
        new_window = window;
  
        grab = _gdk_display_get_last_pointer_grab (_gdk_display);
-@@ -2624,7 +2675,7 @@ gdk_event_translate (MSG  *msg,
+@@ -2624,7 +2676,7 @@ gdk_event_translate (MSG  *msg,
  
        if (mouse_window != new_window)
  	{
@@ -192,7 +202,7 @@ index b4b2a94..2ad66ac 100644
  				     mouse_window ? GDK_WINDOW_HWND (mouse_window) : NULL, 
  				     new_window ? GDK_WINDOW_HWND (new_window) : NULL));
  	  synthesize_crossing_events (_gdk_display,
-@@ -2632,7 +2683,7 @@ gdk_event_translate (MSG  *msg,
+@@ -2632,7 +2684,7 @@ gdk_event_translate (MSG  *msg,
  				      GDK_CROSSING_NORMAL,
  				      &msg->pt,
  				      0, /* TODO: Set right mask */
@@ -201,7 +211,7 @@ index b4b2a94..2ad66ac 100644
  				      FALSE);
  	  assign_object (&mouse_window, new_window);
  	  mouse_window_ignored_leave = NULL;
-@@ -2683,12 +2734,17 @@ gdk_event_translate (MSG  *msg,
+@@ -2683,12 +2735,17 @@ gdk_event_translate (MSG  *msg,
        GDK_NOTE (EVENTS,
  		g_print (" (%d,%d)",
  			 GET_X_LPARAM (msg->lParam), GET_Y_LPARAM (msg->lParam)));
@@ -219,7 +229,7 @@ index b4b2a94..2ad66ac 100644
        new_window = NULL;
        hwnd = WindowFromPoint (msg->pt);
        ignore_leave = FALSE;
-@@ -2718,7 +2774,7 @@ gdk_event_translate (MSG  *msg,
+@@ -2718,7 +2775,7 @@ gdk_event_translate (MSG  *msg,
  				    GDK_CROSSING_NORMAL,
  				    &msg->pt,
  				    0, /* TODO: Set right mask */
@@ -228,7 +238,7 @@ index b4b2a94..2ad66ac 100644
  				    FALSE);
        assign_object (&mouse_window, new_window);
        mouse_window_ignored_leave = ignore_leave ? new_window : NULL;
-@@ -2727,6 +2783,168 @@ gdk_event_translate (MSG  *msg,
+@@ -2727,6 +2784,169 @@ gdk_event_translate (MSG  *msg,
        return_val = TRUE;
        break;
  
@@ -356,7 +366,8 @@ index b4b2a94..2ad66ac 100644
 +      if (grab != NULL && !grab->implicit && !grab->owner_events)
 +        g_set_object (&window, grab->native_window);
 +
-+      gdk_winpointer_input_events (window, NULL, msg);
++      if (IS_POINTER_NEW_WPARAM (msg->wParam))
++        gdk_winpointer_input_events (window, NULL, msg);
 +
 +      *ret_valp = 0;
 +      return_val = TRUE;
@@ -397,7 +408,7 @@ index b4b2a94..2ad66ac 100644
      case WM_MOUSEWHEEL:
      case WM_MOUSEHWHEEL:
        GDK_NOTE (EVENTS, g_print (" %d", (short) HIWORD (msg->wParam)));
-@@ -2888,6 +3106,17 @@ gdk_event_translate (MSG  *msg,
+@@ -2888,6 +3108,17 @@ gdk_event_translate (MSG  *msg,
  
         break;
  
@@ -415,7 +426,7 @@ index b4b2a94..2ad66ac 100644
      case WM_KILLFOCUS:
        if (_gdk_display->keyboard_grab.window != NULL &&
  	  !GDK_WINDOW_DESTROYED (_gdk_display->keyboard_grab.window))
-@@ -3439,6 +3668,14 @@ gdk_event_translate (MSG  *msg,
+@@ -3439,6 +3670,14 @@ gdk_event_translate (MSG  *msg,
        return_val = TRUE;
        break;
  
@@ -430,7 +441,7 @@ index b4b2a94..2ad66ac 100644
      case WM_NCDESTROY:
        grab = _gdk_display_get_last_pointer_grab (_gdk_display);
        if (grab != NULL)
-@@ -3573,7 +3810,10 @@ gdk_event_translate (MSG  *msg,
+@@ -3573,7 +3812,10 @@ gdk_event_translate (MSG  *msg,
         * instead
         */
        if (LOWORD(msg->wParam) != WA_INACTIVE)
@@ -442,7 +453,7 @@ index b4b2a94..2ad66ac 100644
        break;
  
      case WM_ACTIVATEAPP:
-@@ -3605,6 +3845,8 @@ gdk_event_translate (MSG  *msg,
+@@ -3605,6 +3847,8 @@ gdk_event_translate (MSG  *msg,
  				 HIWORD (msg->lParam)));
        /* Fall through */
      wintab:
@@ -451,7 +462,7 @@ index b4b2a94..2ad66ac 100644
  
        event = gdk_event_new (GDK_NOTHING);
        event->any.window = NULL;
-@@ -3615,6 +3857,17 @@ gdk_event_translate (MSG  *msg,
+@@ -3615,6 +3859,17 @@ gdk_event_translate (MSG  *msg,
  	gdk_event_free (event);
  
        break;
@@ -482,13 +493,15 @@ index 1a876d0..519c718 100644
  
  gboolean	  _modal_operation_in_progress = FALSE;
 diff --git a/gdk/win32/gdkinput-win32.c b/gdk/win32/gdkinput-win32.c
-index 3fe7aaf..0851662 100644
+index 3fe7aaf..f426846 100644
 --- a/gdk/win32/gdkinput-win32.c
 +++ b/gdk/win32/gdkinput-win32.c
-@@ -37,6 +37,12 @@
+@@ -37,6 +37,14 @@
  #include "gdkprivate-win32.h"
  #include "gdkinput-win32.h"
  
++#include <windowsx.h>
++
 +#include <tchar.h>
 +#include <tpcshrd.h>
 +#include <hidsdi.h>
@@ -498,7 +511,7 @@ index 3fe7aaf..0851662 100644
  #define WINTAB32_DLL "Wintab32.dll"
  
  #define PACKETDATA (PK_CONTEXT | PK_CURSOR | PK_BUTTONS | PK_X | PK_Y  | PK_NORMAL_PRESSURE | PK_ORIENTATION)
-@@ -52,6 +58,34 @@
+@@ -52,6 +60,34 @@
  
  /* Forward declarations */
  
@@ -533,7 +546,7 @@ index 3fe7aaf..0851662 100644
  static GdkDevicePrivate *gdk_input_find_dev_from_ctx (HCTX hctx,
  						      UINT id);
  static GList     *wintab_contexts = NULL;
-@@ -80,6 +114,658 @@ static t_WTOverlap p_WTOverlap;
+@@ -80,6 +116,683 @@ static t_WTOverlap p_WTOverlap;
  static t_WTPacket p_WTPacket;
  static t_WTQueueSizeSet p_WTQueueSizeSet;
  
@@ -710,7 +723,6 @@ index 3fe7aaf..0851662 100644
 +  device->info.num_axes = 3;
 +  device->info.axes = g_new (GdkDeviceAxis, device->info.num_axes);
 +
-+  /* TODO: axes for x, y? */
 +  device->info.axes[0].use = GDK_AXIS_PRESSURE;
 +  device->info.axes[0].min = 0.0;
 +  device->info.axes[0].max = 1.0;
@@ -766,7 +778,6 @@ index 3fe7aaf..0851662 100644
 +  POINTER_DEVICE_INFO *infos = NULL;
 +  UINT32 infos_count = 0;
 +  UINT32 i = 0;
-+  gboolean done = FALSE;
 +
 +get:
 +  infos_count = 0;
@@ -950,35 +961,27 @@ index 3fe7aaf..0851662 100644
 +  return NULL;
 +}
 +
-+static GdkEvent*
-+winpointer_allocate_event (MSG *msg,
-+                           POINTER_INFO *info)
++static GdkEventType
++winpointer_get_event_type (MSG *msg)
 +{
-+  g_assert_true (info->pointerType == PT_PEN);
-+
 +  switch (msg->message)
 +    {
 +    case WM_POINTERENTER:
-+      g_return_val_if_fail (IS_POINTER_NEW_WPARAM (msg->wParam), NULL);
-+      return gdk_event_new (GDK_PROXIMITY_IN);
-+    break;
++      g_return_val_if_fail (IS_POINTER_NEW_WPARAM (msg->wParam), GDK_NOTHING);
++      return GDK_PROXIMITY_IN;
 +    case WM_POINTERLEAVE:
-+      g_return_val_if_fail (!IS_POINTER_INRANGE_WPARAM (msg->wParam), NULL);
-+      return gdk_event_new (GDK_PROXIMITY_OUT);
-+    break;
++      g_return_val_if_fail (!IS_POINTER_INRANGE_WPARAM (msg->wParam), GDK_NOTHING);
++      return GDK_PROXIMITY_OUT;
 +    case WM_POINTERDOWN:
-+      return gdk_event_new (GDK_BUTTON_PRESS);
-+    break;
++      return GDK_BUTTON_PRESS;
 +    case WM_POINTERUP:
-+      return gdk_event_new (GDK_BUTTON_RELEASE);
-+    break;
++      return GDK_BUTTON_RELEASE;
 +    case WM_POINTERUPDATE:
-+      return gdk_event_new (GDK_MOTION_NOTIFY);
-+    break;
++      return GDK_MOTION_NOTIFY;
 +    }
 +
 +  g_assert_not_reached ();
-+  return NULL;
++  return GDK_NOTHING;
 +}
 +
 +static void
@@ -987,6 +990,7 @@ index 3fe7aaf..0851662 100644
 +                       MSG *msg,
 +                       POINTER_INFO *info)
 +{
++  GdkEventType evt_type = GDK_NOTHING;
 +  guint32 time = 0;
 +  double x_root = 0.0;
 +  double y_root = 0.0;
@@ -995,24 +999,24 @@ index 3fe7aaf..0851662 100644
 +  unsigned int state = 0;
 +  double *axes = NULL;
 +  unsigned int button = 0;
-+  POINT client_area_coordinates;
++  gboolean core_events = FALSE;
++  POINT screen_pt;
++  POINT client_pt;
++  GdkDevice *dev = (GdkDevice*)device;
++  GdkWindow *target = NULL;
++  int target_origin_x = 0;
++  int target_origin_y = 0;
 +  GdkEvent *evt = NULL;
 +  POINTER_PEN_INFO *pen_info = (POINTER_PEN_INFO*) info;
 +
-+  evt = winpointer_allocate_event (msg, info);
-+  if (!evt)
++  evt_type = winpointer_get_event_type (msg);
++  if (evt_type == GDK_NOTHING)
 +    return;
 +
 +  time = winpointer_get_time (msg, info);
 +
 +  x_root = device->origin_x + info->ptHimetricLocation.x * device->scale_x;
 +  y_root = device->origin_y + info->ptHimetricLocation.y * device->scale_y;
-+
-+  client_area_coordinates.x = 0;
-+  client_area_coordinates.y = 0;
-+  ClientToScreen (GDK_WINDOW_HWND (window), &client_area_coordinates);
-+  x = x_root - client_area_coordinates.x;
-+  y = y_root - client_area_coordinates.y;
 +
 +  /* bring potential win32 negative screen coordinates to
 +     the non-negative screen coordinates that GDK expects. */
@@ -1021,7 +1025,6 @@ index 3fe7aaf..0851662 100644
 +
 +  /* info->dwKeyStates is not reliable. We shall use
 +   * GetKeyState here even for Ctrl and Shift. */
-+  state = 0;
 +  if (GetKeyState (VK_CONTROL) < 0)
 +    state |= GDK_CONTROL_MASK;
 +  if (GetKeyState (VK_SHIFT) < 0)
@@ -1031,34 +1034,69 @@ index 3fe7aaf..0851662 100644
 +  if (GetKeyState (VK_CAPITAL) & 0x1)
 +    state |= GDK_LOCK_MASK;
 +
-+  device->last_button_mask = 0;
 +  if (((info->pointerFlags & POINTER_FLAG_FIRSTBUTTON) &&
 +       (info->ButtonChangeType != POINTER_CHANGE_FIRSTBUTTON_DOWN))
 +      || info->ButtonChangeType == POINTER_CHANGE_FIRSTBUTTON_UP)
-+    device->last_button_mask |= GDK_BUTTON1_MASK;
++    state |= GDK_BUTTON1_MASK;
 +  if (((info->pointerFlags & POINTER_FLAG_SECONDBUTTON) &&
 +       (info->ButtonChangeType != POINTER_CHANGE_SECONDBUTTON_DOWN))
 +      || info->ButtonChangeType == POINTER_CHANGE_SECONDBUTTON_UP)
-+    device->last_button_mask |= GDK_BUTTON3_MASK;
-+  state |= device->last_button_mask;
++    state |= GDK_BUTTON3_MASK;
 +
-+  axes = g_new0 (double, device->info.num_axes);
++  screen_pt = (POINT){GET_X_LPARAM (msg->lParam), GET_Y_LPARAM (msg->lParam)};
++  client_pt = screen_pt;
++  ScreenToClient (GDK_WINDOW_HWND (window), &client_pt);
 +
-+  g_assert_cmpint (device->info.num_axes, <=, 3);
-+  axes[0] = (pen_info->penMask & PEN_MASK_PRESSURE) ? pen_info->pressure / 1024.0 :
-+            (pen_info->pointerInfo.pointerFlags & POINTER_FLAG_INCONTACT) ? 1.0 : 0.0;
-+  axes[1] = (pen_info->penMask & PEN_MASK_TILT_X) ? pen_info->tiltX / 90.0 : 0.0;
-+  axes[2] = (pen_info->penMask & PEN_MASK_TILT_Y) ? pen_info->tiltY / 90.0 : 0.0;
++  if (GDK_WINDOW_OBJECT (window)->extension_events)
++    {
++      target = window;
++    }
++  else
++    {
++      target = _gdk_window_get_input_window_for_event (window,
++                                                       evt_type,
++                                                       state << 8, /* TODO */
++                                                       client_pt.x,
++                                                       client_pt.y,
++                                                       0);
++      if (!target || GDK_WINDOW_OBJECT (target)->extension_events == 0)
++        core_events = TRUE;
++    }
++
++  if (core_events)
++    {
++      target = window;
++      dev = _gdk_display->core_pointer;
++
++      if (evt_type == GDK_PROXIMITY_IN ||
++          evt_type == GDK_PROXIMITY_OUT)
++        return;
++    }
++  else
++    {
++      axes = g_new0 (double, device->info.num_axes);
++
++      g_assert_cmpint (device->info.num_axes, >=, 3);
++      axes[0] = (pen_info->penMask & PEN_MASK_PRESSURE) ? pen_info->pressure / 1024.0 :
++                (pen_info->pointerInfo.pointerFlags & POINTER_FLAG_INCONTACT) ? 1.0 : 0.0;
++      axes[1] = (pen_info->penMask & PEN_MASK_TILT_X) ? pen_info->tiltX / 90.0 : 0.0;
++      axes[2] = (pen_info->penMask & PEN_MASK_TILT_Y) ? pen_info->tiltY / 90.0 : 0.0;
++    }
++
++  gdk_window_get_root_coords (target, 0, 0, &target_origin_x, &target_origin_y);
++  x = x_root - target_origin_x;
++  y = y_root - target_origin_y;
 +
 +  button = (info->pointerFlags & POINTER_FLAG_FIRSTBUTTON) ||
 +           (info->ButtonChangeType == POINTER_CHANGE_FIRSTBUTTON_UP) ? 1 : 3;
 +
++  evt = gdk_event_new (evt_type);
 +  switch (evt->any.type)
 +    {
 +    case GDK_PROXIMITY_IN:
 +    case GDK_PROXIMITY_OUT:
 +      evt->proximity.time = time;
-+      evt->proximity.device = &device->info;
++      evt->proximity.device = dev;
 +    break;
 +    case GDK_BUTTON_PRESS:
 +    case GDK_BUTTON_RELEASE:
@@ -1070,7 +1108,7 @@ index 3fe7aaf..0851662 100644
 +      evt->button.state = state;
 +      evt->button.axes = axes;
 +      evt->button.button = button;
-+      evt->button.device = &device->info;
++      evt->button.device = dev;
 +    break;
 +    case GDK_MOTION_NOTIFY:
 +      evt->motion.time = time;
@@ -1080,7 +1118,7 @@ index 3fe7aaf..0851662 100644
 +      evt->motion.y = y;
 +      evt->motion.state = state;
 +      evt->motion.axes = axes;
-+      evt->motion.device = &device->info;
++      evt->motion.device = dev;
 +    break;
 +
 +    default:
@@ -1089,7 +1127,7 @@ index 3fe7aaf..0851662 100644
 +    }
 +
 +  evt->any.send_event = FALSE;
-+  evt->any.window = window;
++  evt->any.window = target;
 +  gdk_event_set_screen (evt, _gdk_screen);
 +
 +  _gdk_win32_append_event (evt);
@@ -1192,7 +1230,7 @@ index 3fe7aaf..0851662 100644
  static GdkDevicePrivate *
  gdk_input_find_dev_from_ctx (HCTX hctx,
  			     UINT cursor)
-@@ -350,7 +1036,9 @@ _gdk_input_wintab_init_check (void)
+@@ -350,7 +1063,9 @@ _gdk_input_wintab_init_check (void)
  
    if (wintab_initialized)
      return;
@@ -1203,7 +1241,7 @@ index 3fe7aaf..0851662 100644
    wintab_initialized = TRUE;
    
    wintab_contexts = NULL;
-@@ -948,6 +1636,9 @@ _gdk_input_other_event (GdkEvent  *event,
+@@ -948,6 +1663,9 @@ _gdk_input_other_event (GdkEvent  *event,
     */
    static guint button_map[8] = {0, 1, 4, 5, 2, 3, 6, 7};
  
@@ -1213,7 +1251,7 @@ index 3fe7aaf..0851662 100644
    if (window != wintab_window)
      {
        g_warning ("_gdk_input_other_event: not wintab_window?");
-@@ -1310,6 +2001,9 @@ _gdk_input_set_tablet_active (void)
+@@ -1310,6 +2028,9 @@ _gdk_input_set_tablet_active (void)
    GList *tmp_list;
    HCTX *hctx;
  
@@ -1223,7 +1261,7 @@ index 3fe7aaf..0851662 100644
    /* Bring the contexts to the top of the overlap order when one of the
     * application's windows is activated */
    
-@@ -1331,17 +2025,36 @@ _gdk_input_set_tablet_active (void)
+@@ -1331,17 +2052,36 @@ _gdk_input_set_tablet_active (void)
  void 
  _gdk_input_init (GdkDisplay *display)
  {
@@ -1266,7 +1304,7 @@ index 3fe7aaf..0851662 100644
 +    SetEnvironmentVariableW (L"GDK_WIN32_FEATURES", L"winpointer");
 +}
 diff --git a/gdk/win32/gdkinput-win32.h b/gdk/win32/gdkinput-win32.h
-index 746bcaf..b67db45 100644
+index 746bcaf..c79a248 100644
 --- a/gdk/win32/gdkinput-win32.h
 +++ b/gdk/win32/gdkinput-win32.h
 @@ -53,6 +53,8 @@ struct _GdkDevicePrivate
@@ -1278,7 +1316,7 @@ index 746bcaf..b67db45 100644
    /* information about the axes */
    GdkAxisInfo *axes;
  
-@@ -68,6 +70,20 @@ struct _GdkDevicePrivate
+@@ -68,6 +70,19 @@ struct _GdkDevicePrivate
    WTPKT pktdata;
    /* Azimuth and altitude axis */
    AXIS orientation_axes[2];
@@ -1295,11 +1333,10 @@ index 746bcaf..b67db45 100644
 +  double scale_y;
 +
 +  unsigned num_axes;
-+  GdkModifierType last_button_mask;
  };
  
  /* Addition used for extension_events mask */
-@@ -137,4 +153,20 @@ void		_gdk_input_set_tablet_active (void);
+@@ -137,4 +152,20 @@ void		_gdk_input_set_tablet_active (void);
  void            _gdk_input_update_for_device_mode (GdkDevicePrivate *gdkdev);
  void            _gdk_input_check_proximity (void);
  

@@ -1,7 +1,7 @@
-From 5fc2958f1a9bf722924bb99d8791a3337b06b433 Mon Sep 17 00:00:00 2001
+From 3f10090ee9d36a76ff604a456338eb22ff02dbd7 Mon Sep 17 00:00:00 2001
 From: Luca Bacci <luca.bacci982@gmail.com>
 Date: Mon, 22 Apr 2024 14:45:07 +0200
-Subject: [PATCH 08/10] Keyboard / IME input fixes
+Subject: [PATCH 08/11] Keyboard / IME input fixes
 
 See:
 
@@ -13,10 +13,10 @@ See:
  2 files changed, 4 insertions(+)
 
 diff --git a/gdk/win32/gdkkeys-win32.c b/gdk/win32/gdkkeys-win32.c
-index c457548..46c5987 100644
+index 4b5a127..1655317 100644
 --- a/gdk/win32/gdkkeys-win32.c
 +++ b/gdk/win32/gdkkeys-win32.c
-@@ -692,6 +692,7 @@ update_keymap (GdkKeymap *gdk_keymap)
+@@ -696,6 +696,7 @@ update_keymap (GdkKeymap *gdk_keymap)
    if (hkls_len != keymap->layout_handles->len)
      keymap->keysym_tab = g_renew (guint, keymap->keysym_tab, keysym_tab_size);
  

@@ -1,7 +1,7 @@
-From 3fdd047df6c3347e23f9c8bd0c12fe7c8f5e8bd0 Mon Sep 17 00:00:00 2001
+From ba5fc6c68e150720ba9e9bcf67e99b3ae615e277 Mon Sep 17 00:00:00 2001
 From: Luca Bacci <luca.bacci982@gmail.com>
 Date: Mon, 22 Apr 2024 16:31:16 +0200
-Subject: [PATCH 09/10] GdkWin32: Use WindowFromPoint to find DND target window
+Subject: [PATCH 09/11] GdkWin32: Use WindowFromPoint to find DND target window
 
 ---
  gdk/win32/gdkdnd-win32.c | 82 +++++++++++-----------------------------

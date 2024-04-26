@@ -1,0 +1,552 @@
+From 12de4ce6363b6654ff295cefe72da52d08bd9dbc Mon Sep 17 00:00:00 2001
+From: Luca Bacci <luca.bacci982@gmail.com>
+Date: Tue, 30 Apr 2024 15:22:53 +0200
+Subject: [PATCH 11/11] Winpointer: Add generic device
+
+---
+ gdk/win32/gdkinput-win32.c | 321 ++++++++++++++++++++++++++++++-------
+ gdk/win32/gdkinput-win32.h |   8 +-
+ 2 files changed, 264 insertions(+), 65 deletions(-)
+
+diff --git a/gdk/win32/gdkinput-win32.c b/gdk/win32/gdkinput-win32.c
+index f426846..2496f4d 100644
+--- a/gdk/win32/gdkinput-win32.c
++++ b/gdk/win32/gdkinput-win32.c
+@@ -79,6 +79,7 @@ typedef BOOL
+ typedef BOOL
+ (WINAPI *setWindowFeedbackSetting_t)(HWND hwnd, FEEDBACK_TYPE feedback, DWORD dwFlags, UINT32 size, const VOID *configuration);
+ 
++static registerPointerDeviceNotifications_t registerPointerDeviceNotifications;
+ static getPointerDevices_t getPointerDevices;
+ static getPointerDeviceCursors_t getPointerDeviceCursors;
+ static getPointerDeviceRects_t getPointerDeviceRects;
+@@ -88,6 +89,12 @@ static getPointerPenInfo_t getPointerPenInfo;
+ static getPointerPenInfoHistory_t getPointerPenInfoHistory;
+ static setWindowFeedbackSetting_t setWindowFeedbackSetting;
+ 
++static ATOM winpointer_notif_window_class;
++static HWND winpointer_notif_window_handle;
++
++static GdkDevice *winpointer_generic_pen;
++static GdkDevice *winpointer_generic_eraser;
++
+ static GdkDevicePrivate *gdk_input_find_dev_from_ctx (HCTX hctx,
+ 						      UINT id);
+ static GList     *wintab_contexts = NULL;
+@@ -116,6 +123,8 @@ static t_WTOverlap p_WTOverlap;
+ static t_WTPacket p_WTPacket;
+ static t_WTQueueSizeSet p_WTQueueSizeSet;
+ 
++extern IMAGE_DOS_HEADER __ImageBase;
++
+ static inline double
+ rect_width (RECT *rect)
+ {
+@@ -134,32 +143,6 @@ rect_is_degenerate (RECT *rect)
+   return rect_width (rect) == 0 || rect_height (rect) == 0;
+ }
+ 
+-static gboolean
+-winpointer_device_update_scale_factors (GdkDevicePrivate *device)
+-{
+-  RECT device_rect;
+-  RECT display_rect;
+-
+-  if (!getPointerDeviceRects (device->device_handle, &device_rect, &display_rect))
+-    {
+-      WIN32_API_FAILED ("GetPointerDeviceRects");
+-      return FALSE;
+-    }
+-
+-  if (rect_is_degenerate (&device_rect))
+-    {
+-      g_warning ("Invalid coordinates from GetPointerDeviceRects");
+-      return FALSE;
+-    }
+-
+-  device->origin_x = display_rect.left;
+-  device->origin_y = display_rect.top;
+-  device->scale_x = rect_width (&display_rect) / rect_width (&device_rect);
+-  device->scale_y = rect_height (&display_rect) / rect_height (&device_rect);
+-
+-  return TRUE;
+-}
+-
+ #define HID_STRING_BYTES_LIMIT 200
+ #define VID_PID_CHARS 4
+ 
+@@ -303,18 +286,14 @@ winpointer_create_device (POINTER_DEVICE_INFO *info,
+   device->start_cursor_id = info->startingCursorId;
+   device->end_cursor_id = info->startingCursorId + num_cursors - 1;
+ 
++  device->is_winpointer = TRUE;
++  device->is_generic = FALSE;
++
+   device->info.num_keys = 0;
+   device->info.keys = NULL;
+ 
+-  if (!winpointer_device_update_scale_factors (device))
+-    {
+-      g_set_object (&device, NULL);
+-      goto cleanup;
+-    }
+-
+   _gdk_input_devices = g_list_append (_gdk_input_devices, device);
+ 
+-cleanup:
+   g_free (name);
+   g_free (base_name);
+   g_free (product);
+@@ -338,8 +317,99 @@ winpointer_create_devices (POINTER_DEVICE_INFO *info)
+     }
+ }
+ 
++static GdkDevice *
++winpointer_create_generic_device (GdkInputSource source)
++{
++  GdkDevicePrivate *device = NULL;
++  const char *base_name = "Generic Windows Ink";
++  char *name = NULL;
++
++  switch (source)
++    {
++    case GDK_SOURCE_PEN:
++      name = g_strconcat (base_name, " Pen stylus", NULL);
++    break;
++    case GDK_SOURCE_ERASER:
++      name = g_strconcat (base_name, " Eraser", NULL);
++    break;
++    default:
++      name = g_strdup (base_name);
++    break;
++    }
++
++  device = g_object_new (GDK_TYPE_DEVICE, NULL);
++  device->info.name = g_strdup (name);
++  device->info.source = source;
++  device->info.mode = GDK_MODE_SCREEN;
++  device->info.has_cursor = TRUE;
++
++  device->info.num_axes = 3;
++  device->info.axes = g_new (GdkDeviceAxis, device->info.num_axes);
++
++  device->info.axes[0].use = GDK_AXIS_PRESSURE;
++  device->info.axes[0].min = 0.0;
++  device->info.axes[0].max = 1.0;
++  device->info.axes[1].use = GDK_AXIS_XTILT;
++  device->info.axes[1].min = -1.0;
++  device->info.axes[1].max = 1.0;
++  device->info.axes[2].use = GDK_AXIS_YTILT;
++  device->info.axes[2].min = -1.0;
++  device->info.axes[2].max = 1.0;
++
++  device->device_handle = (HANDLE)-1;
++  device->start_cursor_id = 0;
++  device->end_cursor_id = 0;
++
++  device->is_winpointer = TRUE;
++  device->is_generic = TRUE;
++
++  device->info.num_keys = 0;
++  device->info.keys = NULL;
++
++  _gdk_input_devices = g_list_append (_gdk_input_devices, device);
++
++  g_free (name);
++
++  return &device->info;
++}
++
++static void
++winpointer_create_generic_devices (void)
++{
++  winpointer_generic_pen = winpointer_create_generic_device (GDK_SOURCE_PEN);
++  winpointer_generic_eraser = winpointer_create_generic_device (GDK_SOURCE_ERASER);
++}
++
++static gboolean
++winpointer_match_device_in_system_list (GdkDevicePrivate *device,
++                                        POINTER_DEVICE_INFO *infos,
++                                        UINT32 infos_count)
++{
++  UINT32 i = 0;
++
++  if (!device->is_winpointer)
++    return TRUE;
++
++  if (device->is_generic)
++    return TRUE;
++
++  if (device->device_handle == NULL)
++    return FALSE;
++
++  for (i = 0; i < infos_count; i++)
++    {
++      if (device->device_handle == infos[i].device &&
++          device->start_cursor_id == infos[i].startingCursorId)
++        {
++          return TRUE;
++        }
++    }
++
++  return FALSE;
++}
++
+ static void
+-winpointer_enumerate_devices (void)
++winpointer_enumerate_devices (gboolean first_run)
+ {
+   POINTER_DEVICE_INFO *infos = NULL;
+   UINT32 infos_count = 0;
+@@ -363,12 +433,85 @@ get:
+     }
+   while (infos_count > 0 && !infos);
+ 
+-  for (i = 0; i < infos_count; i++)
+-    winpointer_create_devices (&infos[i]);
++  if (first_run)
++    {
++      for (i = 0; i < infos_count; i++)
++        {
++          winpointer_create_devices (&infos[i]);
++          winpointer_create_generic_devices ();
++        }
++    }
++  else
++    {
++      for (GList *l = _gdk_input_devices; l != NULL; l = l->next)
++        {
++          GdkDevicePrivate *device = (GdkDevicePrivate*) l->data;
++
++          if (!winpointer_match_device_in_system_list (device, infos, infos_count))
++            {
++              device->device_handle = NULL;
++              device->start_cursor_id = 0;
++              device->end_cursor_id = 0;
++            }
++        }
++    }
+ 
+   g_free (infos);
+ }
+ 
++static LRESULT CALLBACK
++winpointer_notif_window_proc (HWND hWnd,
++                              UINT uMsg,
++                              WPARAM wParam,
++                              LPARAM lParam)
++{
++  switch (uMsg)
++    {
++      case WM_POINTERDEVICECHANGE:
++        winpointer_enumerate_devices (FALSE);
++        return 0;
++
++      default:
++        break;
++    }
++
++  return DefWindowProcW (hWnd, uMsg, wParam, lParam);
++}
++
++static gboolean
++winpointer_notif_window_create ()
++{
++  WNDCLASSEXW wndclass;
++
++  memset (&wndclass, 0, sizeof (wndclass));
++  wndclass.cbSize = sizeof (wndclass);
++  wndclass.lpszClassName = L"GdkWin32WinPointerNotificationsWindowClass";
++  wndclass.lpfnWndProc = winpointer_notif_window_proc;
++  wndclass.hInstance = (HINSTANCE)&__ImageBase;
++
++  if ((winpointer_notif_window_class = RegisterClassExW (&wndclass)) == 0)
++    {
++      WIN32_API_FAILED ("RegisterClassExW");
++      return FALSE;
++    }
++
++  if (!(winpointer_notif_window_handle = CreateWindowExW (0,
++                                                          (LPCWSTR)(uintptr_t)winpointer_notif_window_class,
++                                                          L"GdkWin32 WinPointer Notifications",
++                                                          0,
++                                                          0, 0, 0, 0,
++                                                          HWND_MESSAGE,
++                                                          NULL,
++                                                          (HINSTANCE)&__ImageBase,
++                                                          NULL)))
++    {
++      WIN32_API_FAILED ("CreateWindowExW");
++      return FALSE;
++    }
++
++  return TRUE;
++}
++
+ static gboolean
+ winpointer_ensure_procedures ()
+ {
+@@ -383,6 +526,8 @@ winpointer_ensure_procedures ()
+           return FALSE;
+         }
+ 
++      registerPointerDeviceNotifications = (registerPointerDeviceNotifications_t)
++        GetProcAddress (user32_dll, "RegisterPointerDeviceNotifications");
+       getPointerDevices = (getPointerDevices_t)
+         GetProcAddress (user32_dll, "GetPointerDevices");
+       getPointerDeviceCursors = (getPointerDeviceCursors_t)
+@@ -401,7 +546,8 @@ winpointer_ensure_procedures ()
+         GetProcAddress (user32_dll, "SetWindowFeedbackSetting");
+     }
+ 
+-  return getPointerDevices &&
++  return registerPointerDeviceNotifications &&
++         getPointerDevices &&
+          getPointerDeviceCursors &&
+          getPointerDeviceRects &&
+          getPointerType &&
+@@ -416,7 +562,16 @@ winpointer_initialize (void)
+   if (!winpointer_ensure_procedures ())
+     return FALSE;
+ 
+-  winpointer_enumerate_devices ();
++  if (!winpointer_notif_window_create ())
++    return FALSE;
++
++  if (!registerPointerDeviceNotifications (winpointer_notif_window_handle, FALSE))
++    {
++      WIN32_API_FAILED ("RegisterPointerDeviceNotifications");
++      return FALSE;
++    }
++
++  winpointer_enumerate_devices (TRUE);
+ 
+   return TRUE;
+ }
+@@ -504,7 +659,7 @@ winpointer_is_eraser (POINTER_PEN_INFO *pen_info)
+   return (pen_info->penFlags & (PEN_FLAG_INVERTED | PEN_FLAG_ERASER)) != 0;
+ }
+ 
+-static GdkDevicePrivate*
++static GdkDevice*
+ winpointer_find_device_with_source (HANDLE device_handle,
+                                     UINT32 cursor_id,
+                                     GdkInputSource input_source)
+@@ -515,18 +670,60 @@ winpointer_find_device_with_source (HANDLE device_handle,
+     {
+       GdkDevicePrivate *device = (GdkDevicePrivate*) l->data;
+ 
+-      if (device->device_handle == device_handle &&
++      if (device->is_winpointer && !device->is_generic &&
++          device->device_handle == device_handle &&
+           device->start_cursor_id <= cursor_id &&
+           device->end_cursor_id >= cursor_id &&
+           gdk_device_get_source (GDK_DEVICE (device)) == input_source)
+         {
+-          return device;
++          return (GdkDevice*)device;
+         }
+     }
+ 
++  switch (input_source)
++    {
++    case GDK_SOURCE_PEN:
++      return winpointer_generic_pen;
++    case GDK_SOURCE_ERASER:
++      return winpointer_generic_eraser;
++    default:
++      g_assert_not_reached ();
++      break;
++    }
++
+   return NULL;
+ }
+ 
++static gboolean
++winpointer_get_scale_factors (HANDLE device_handle,
++                              int *origin_x,
++                              int *origin_y,
++                              double *scale_x,
++                              double *scale_y)
++{
++  RECT device_rect;
++  RECT display_rect;
++
++  if (!getPointerDeviceRects (device_handle, &device_rect, &display_rect))
++    {
++      WIN32_API_FAILED_LOG_ONCE ("GetPointerDeviceRects");
++      return FALSE;
++    }
++
++  if (rect_is_degenerate (&device_rect))
++    {
++      g_warning_once ("Invalid coordinates from GetPointerDeviceRects");
++      return FALSE;
++    }
++
++  *origin_x = display_rect.left;
++  *origin_y = display_rect.top;
++  *scale_x = rect_width (&display_rect) / rect_width (&device_rect);
++  *scale_y = rect_height (&display_rect) / rect_height (&device_rect);
++
++  return TRUE;
++}
++
+ static GdkEventType
+ winpointer_get_event_type (MSG *msg)
+ {
+@@ -551,13 +748,17 @@ winpointer_get_event_type (MSG *msg)
+ }
+ 
+ static void
+-winpointer_make_event (GdkDevicePrivate *device,
++winpointer_make_event (GdkDevice *device,
+                        GdkWindow *window,
+                        MSG *msg,
+                        POINTER_INFO *info)
+ {
+   GdkEventType evt_type = GDK_NOTHING;
+   guint32 time = 0;
++  int device_origin_x = 0;
++  int device_origin_y = 0;
++  double device_scale_x = 0.0;
++  double device_scale_y = 0.0;
+   double x_root = 0.0;
+   double y_root = 0.0;
+   double x = 0.0;
+@@ -568,7 +769,6 @@ winpointer_make_event (GdkDevicePrivate *device,
+   gboolean core_events = FALSE;
+   POINT screen_pt;
+   POINT client_pt;
+-  GdkDevice *dev = (GdkDevice*)device;
+   GdkWindow *target = NULL;
+   int target_origin_x = 0;
+   int target_origin_y = 0;
+@@ -579,10 +779,15 @@ winpointer_make_event (GdkDevicePrivate *device,
+   if (evt_type == GDK_NOTHING)
+     return;
+ 
+-  time = winpointer_get_time (msg, info);
++  if (!winpointer_get_scale_factors (info->sourceDevice,
++                                     &device_origin_x,
++                                     &device_origin_y,
++                                     &device_scale_x,
++                                     &device_scale_y))
++    return;
+ 
+-  x_root = device->origin_x + info->ptHimetricLocation.x * device->scale_x;
+-  y_root = device->origin_y + info->ptHimetricLocation.y * device->scale_y;
++  x_root = device_origin_x + info->ptHimetricLocation.x * device_scale_x;
++  y_root = device_origin_y + info->ptHimetricLocation.y * device_scale_y;
+ 
+   /* bring potential win32 negative screen coordinates to
+      the non-negative screen coordinates that GDK expects. */
+@@ -621,7 +826,7 @@ winpointer_make_event (GdkDevicePrivate *device,
+     {
+       target = _gdk_window_get_input_window_for_event (window,
+                                                        evt_type,
+-                                                       state << 8, /* TODO */
++                                                       state,
+                                                        client_pt.x,
+                                                        client_pt.y,
+                                                        0);
+@@ -632,7 +837,7 @@ winpointer_make_event (GdkDevicePrivate *device,
+   if (core_events)
+     {
+       target = window;
+-      dev = _gdk_display->core_pointer;
++      device = _gdk_display->core_pointer;
+ 
+       if (evt_type == GDK_PROXIMITY_IN ||
+           evt_type == GDK_PROXIMITY_OUT)
+@@ -640,9 +845,9 @@ winpointer_make_event (GdkDevicePrivate *device,
+     }
+   else
+     {
+-      axes = g_new0 (double, device->info.num_axes);
++      axes = g_new0 (double, device->num_axes);
+ 
+-      g_assert_cmpint (device->info.num_axes, >=, 3);
++      g_assert_cmpint (device->num_axes, >=, 3);
+       axes[0] = (pen_info->penMask & PEN_MASK_PRESSURE) ? pen_info->pressure / 1024.0 :
+                 (pen_info->pointerInfo.pointerFlags & POINTER_FLAG_INCONTACT) ? 1.0 : 0.0;
+       axes[1] = (pen_info->penMask & PEN_MASK_TILT_X) ? pen_info->tiltX / 90.0 : 0.0;
+@@ -656,13 +861,15 @@ winpointer_make_event (GdkDevicePrivate *device,
+   button = (info->pointerFlags & POINTER_FLAG_FIRSTBUTTON) ||
+            (info->ButtonChangeType == POINTER_CHANGE_FIRSTBUTTON_UP) ? 1 : 3;
+ 
++  time = winpointer_get_time (msg, info);
++
+   evt = gdk_event_new (evt_type);
+   switch (evt->any.type)
+     {
+     case GDK_PROXIMITY_IN:
+     case GDK_PROXIMITY_OUT:
+       evt->proximity.time = time;
+-      evt->proximity.device = dev;
++      evt->proximity.device = device;
+     break;
+     case GDK_BUTTON_PRESS:
+     case GDK_BUTTON_RELEASE:
+@@ -674,7 +881,7 @@ winpointer_make_event (GdkDevicePrivate *device,
+       evt->button.state = state;
+       evt->button.axes = axes;
+       evt->button.button = button;
+-      evt->button.device = dev;
++      evt->button.device = device;
+     break;
+     case GDK_MOTION_NOTIFY:
+       evt->motion.time = time;
+@@ -684,7 +891,7 @@ winpointer_make_event (GdkDevicePrivate *device,
+       evt->motion.y = y;
+       evt->motion.state = state;
+       evt->motion.axes = axes;
+-      evt->motion.device = dev;
++      evt->motion.device = device;
+     break;
+ 
+     default:
+@@ -708,7 +915,7 @@ gdk_winpointer_input_events (GdkWindow *window,
+   UINT32 cursor_id = 0;
+   POINTER_PEN_INFO *infos = NULL;
+   UINT32 history_count = 0;
+-  GdkDevicePrivate *device = NULL;
++  GdkDevice *device = NULL;
+   UINT32 h = 0;
+ 
+   if (!getPointerCursorId (pointer_id, &cursor_id))
+@@ -736,11 +943,7 @@ gdk_winpointer_input_events (GdkWindow *window,
+                                                cursor_id,
+                                                winpointer_is_eraser (infos) ?
+                                                GDK_SOURCE_ERASER : GDK_SOURCE_PEN);
+-  if (!device)
+-    {
+-      g_free (infos);
+-      return;
+-    }
++  g_assert_nonnull (device);
+ 
+   h = history_count - 1;
+ 
+diff --git a/gdk/win32/gdkinput-win32.h b/gdk/win32/gdkinput-win32.h
+index c79a248..4442c4c 100644
+--- a/gdk/win32/gdkinput-win32.h
++++ b/gdk/win32/gdkinput-win32.h
+@@ -77,12 +77,8 @@ struct _GdkDevicePrivate
+   UINT32 start_cursor_id;
+   UINT32 end_cursor_id;
+ 
+-  int origin_x;
+-  int origin_y;
+-  double scale_x;
+-  double scale_y;
+-
+-  unsigned num_axes;
++  gboolean is_winpointer;
++  gboolean is_generic;
+ };
+ 
+ /* Addition used for extension_events mask */
+-- 
+2.39.1.windows.1
+
