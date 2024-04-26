@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-23 15:27+0000\n"
-"PO-Revision-Date: 2024-04-23 20:32+0300\n"
+"POT-Creation-Date: 2024-04-26 17:35+0000\n"
+"PO-Revision-Date: 2024-04-26 22:49+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -1049,7 +1049,7 @@ msgstr[1] "Опустити канали додолу"
 msgstr[2] "Опустити канали додолу"
 msgstr[3] "Опустити канал додолу"
 
-#: app/actions/channels-commands.c:384 app/core/gimpimage-new.c:551
+#: app/actions/channels-commands.c:384 app/core/gimpimage-new.c:562
 #: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:259
 #: app/widgets/gimplayertreeview.c:855
 #, c-format
@@ -11135,7 +11135,6 @@ msgid "Chooses the color scheme variant of the theme."
 msgstr "Вибирає варіант схеми кольорів теми."
 
 #: app/config/gimprc-blurbs.h:556
-#| msgid "The name of the theme to use."
 msgid "The name of the icon theme to use."
 msgstr "Назва теми піктограм, яку слід використати."
 
@@ -11536,7 +11535,7 @@ msgstr "Максимальна кількість записів дій, які 
 
 #: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130
 #: app/core/gimp-units.c:278 app/gui/session.c:309 app/menus/shortcuts-rc.c:148
-#: app/plug-in/plug-in-rc.c:249 app/tools/gimp-tools.c:504
+#: app/plug-in/plug-in-rc.c:252 app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "критична помилка лексичного аналізу"
 
@@ -12734,7 +12733,7 @@ msgstr[1] "Вирізати %d шари"
 msgstr[2] "Вирізати %d шарів"
 msgstr[3] "Вирізати шар"
 
-#: app/core/gimp-edit.c:549 app/core/gimpimage-new.c:598
+#: app/core/gimp-edit.c:549 app/core/gimpimage-new.c:609
 msgid "Pasted Layer"
 msgstr "Вставлений шар"
 
@@ -13339,7 +13338,7 @@ msgstr "Передній план"
 msgid "Foreground color"
 msgstr "Колір переднього плану"
 
-#: app/core/gimpcontext.c:675 app/core/gimpimage-new.c:165
+#: app/core/gimpcontext.c:675 app/core/gimpimage-new.c:176
 msgid "Background"
 msgstr "Тло"
 
@@ -13422,7 +13421,26 @@ msgstr "копія %s"
 msgid "Loading fonts (this may take a while...)"
 msgstr "Завантажуємо шрифти (їх завантаження може тривати довго…)"
 
-#: app/core/gimpdatafactory.c:981
+#: app/core/gimpdatafactory.c:993
+#, c-format
+#| msgid ""
+#| "You have a writable data folder configured (%s), but this folder does not "
+#| "exist. Please create the folder or fix your configuration in the "
+#| "Preferences dialog's 'Folders' section."
+msgid ""
+"You have a writable data folder configured (%s), but this folder could not "
+"be created: \"%s\"\n"
+"\n"
+"Please check your configuration in the Preferences dialog's 'Folders' "
+"section."
+msgstr ""
+"Ви маєте налаштовану теку даних для запису (%s), однак цю теку не вдалося"
+" створити: «%s»\n"
+"\n"
+"Будь ласка, перевірте, чи правильно налаштовано програму у вікні"
+" «Параметри», розділ «Теки»."
+
+#: app/core/gimpdatafactory.c:1002
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -13433,7 +13451,7 @@ msgstr ""
 "Будь ласка, створіть теку або поправте налаштування у вікні параметрів "
 "розділу „Теки“."
 
-#: app/core/gimpdatafactory.c:1000
+#: app/core/gimpdatafactory.c:1023
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -13444,7 +13462,7 @@ msgstr ""
 "шляху пошуку даних. Імовірно, ви редагували файл gimprc вручну, будь ласка, "
 "поправте це в налаштуваннях у вікні параметрів «Теки»."
 
-#: app/core/gimpdatafactory.c:1010
+#: app/core/gimpdatafactory.c:1033
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "Каталог з правами на запис даних не вказано."
@@ -18465,7 +18483,6 @@ msgid "Donate via Liberapay"
 msgstr "Фінансова підтримка за допомогою Liberapay"
 
 #: app/dialogs/welcome-dialog.c:923
-#| msgid "Other Options"
 msgid "Other donation options"
 msgstr "Інші варіанти фінансової підтримки"
 
@@ -21432,7 +21449,7 @@ msgstr "2D перетворення"
 msgid "2D Transforming"
 msgstr "2D перетворення"
 
-#: app/pdb/pdb-cmds.c:1151 app/pdb/pdb-cmds.c:1193
+#: app/pdb/pdb-cmds.c:1183 app/pdb/pdb-cmds.c:1225
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Мітка даних «%s» не є канонічним ідентифікатором"
@@ -22000,7 +22017,7 @@ msgstr "Індексовані із прозорістю"
 msgid "This plug-in only works on the following layer types:"
 msgstr "Цей додаток працює лише з такими типами шарів:"
 
-#: app/plug-in/gimppluginprocedure.c:1307
+#: app/plug-in/gimppluginprocedure.c:1315
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -22009,7 +22026,7 @@ msgstr ""
 "Помилка виклику «%s»:\n"
 "%s"
 
-#: app/plug-in/gimppluginprocedure.c:1319
+#: app/plug-in/gimppluginprocedure.c:1327
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -22018,22 +22035,22 @@ msgstr ""
 "Помилка виконання «%s»:\n"
 "%s"
 
-#: app/plug-in/plug-in-rc.c:235
+#: app/plug-in/plug-in-rc.c:238
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Пропускається \"%s\": неправильна версія протоколу GIMP."
 
-#: app/plug-in/plug-in-rc.c:242
+#: app/plug-in/plug-in-rc.c:245
 #, c-format
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "Пропускається \"%s\": неправильна версія файлу формату pluginrc."
 
-#: app/plug-in/plug-in-rc.c:544
+#: app/plug-in/plug-in-rc.c:547
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "неправильне значення «%s» для значка"
 
-#: app/plug-in/plug-in-rc.c:559
+#: app/plug-in/plug-in-rc.c:562
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "неправильне значення '%ld' для значка"
