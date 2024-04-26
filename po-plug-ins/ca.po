@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-18 12:55+0000\n"
+"POT-Creation-Date: 2024-04-25 16:41+0000\n"
 "PO-Revision-Date: 2024-04-18 20:01+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez, <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -52,7 +52,7 @@ msgstr "Entrena una cabra en el llenguatge C"
 #: plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
-#: plug-ins/ifs-compose/ifs-compose.c:492 plug-ins/imagemap/imap_main.c:264
+#: plug-ins/ifs-compose/ifs-compose.c:493 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:777
 #: plug-ins/map-object/map-object-main.c:538 plug-ins/pagecurl/pagecurl.c:299
 #, c-format
@@ -71,8 +71,8 @@ msgstr "Entrena una cabra (C)"
 #: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1375
 #: plug-ins/common/cml-explorer.c:2142 plug-ins/common/cml-explorer.c:2352
 #: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
-#: plug-ins/common/file-gif-save.c:1222 plug-ins/common/file-heif.c:2315
-#: plug-ins/common/file-pdf-load.c:686 plug-ins/common/file-pdf-save.c:1044
+#: plug-ins/common/file-gif-export.c:1222 plug-ins/common/file-heif.c:2315
+#: plug-ins/common/file-pdf-export.c:1044 plug-ins/common/file-pdf-load.c:550
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
@@ -88,9 +88,9 @@ msgstr "Entrena una cabra (C)"
 #: plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401
 #: plug-ins/gradient-flare/gradient-flare.c:3331
 #: plug-ins/gradient-flare/gradient-flare.c:3445
-#: plug-ins/ifs-compose/ifs-compose.c:914
-#: plug-ins/ifs-compose/ifs-compose.c:2565
-#: plug-ins/ifs-compose/ifs-compose.c:2602 plug-ins/imagemap/imap_browse.c:80
+#: plug-ins/ifs-compose/ifs-compose.c:915
+#: plug-ins/ifs-compose/ifs-compose.c:2603
+#: plug-ins/ifs-compose/ifs-compose.c:2640 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106
 #: plug-ins/imagemap/imap_file.c:73 plug-ins/imagemap/imap_file.c:128
 #: plug-ins/lighting/lighting-ui.c:738 plug-ins/lighting/lighting-ui.c:882
@@ -149,7 +149,7 @@ msgstr "Entrena una cabra (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2316
-#: plug-ins/common/file-pdf-load.c:687 plug-ins/common/grid.c:820
+#: plug-ins/common/file-pdf-load.c:551 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
 #: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3744
 #: plug-ins/flame/flame.c:828
@@ -157,7 +157,7 @@ msgstr "Entrena una cabra (JavaScript)"
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3446
-#: plug-ins/ifs-compose/ifs-compose.c:915
+#: plug-ins/ifs-compose/ifs-compose.c:916
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
 msgstr "_D'acord"
@@ -328,7 +328,7 @@ msgstr "Alinea les capes visibles"
 #. Graphics antialiasing
 #. file save type
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
-#: plug-ins/common/file-ps.c:3729 plug-ins/common/file-ps.c:3737
+#: plug-ins/common/file-ps.c:3695 plug-ins/common/file-ps.c:3703
 #: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:191
 #: plug-ins/file-tiff/file-tiff.c:240
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
@@ -537,11 +537,11 @@ msgstr "Velocitat de reproducció"
 
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
-#: plug-ins/common/animation-play.c:902 plug-ins/common/file-gif-save.c:1366
+#: plug-ins/common/animation-play.c:902 plug-ins/common/file-gif-export.c:1366
 msgid "Cumulative layers (combine)"
 msgstr "Capes acumulatives (combina)"
 
-#: plug-ins/common/animation-play.c:907 plug-ins/common/file-gif-save.c:1368
+#: plug-ins/common/animation-play.c:907 plug-ins/common/file-gif-export.c:1368
 msgid "One frame per layer (replace)"
 msgstr "Un fotograma per capa (substitueix)"
 
@@ -628,7 +628,7 @@ msgstr "Vertical"
 #: plug-ins/common/file-pcx.c:738 plug-ins/common/file-pcx.c:746
 #: plug-ins/common/file-pix.c:456 plug-ins/common/file-png.c:947
 #: plug-ins/common/file-pnm.c:868 plug-ins/common/file-qoi.c:320
-#: plug-ins/common/file-raw-data.c:1828 plug-ins/common/file-sunras.c:1082
+#: plug-ins/common/file-raw-data.c:1878 plug-ins/common/file-sunras.c:1082
 #: plug-ins/common/file-tga.c:1116 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:911 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
@@ -1017,8 +1017,8 @@ msgstr "Llavor aleatòria"
 #: plug-ins/flame/flame.c:1242
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:796
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1523
-#: plug-ins/gfig/gfig-dialog.c:778 plug-ins/ifs-compose/ifs-compose.c:911
-#: plug-ins/ifs-compose/ifs-compose.c:2603 plug-ins/imagemap/imap_browse.c:81
+#: plug-ins/gfig/gfig-dialog.c:778 plug-ins/ifs-compose/ifs-compose.c:912
+#: plug-ins/ifs-compose/ifs-compose.c:2641 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:492
 #: plug-ins/lighting/lighting-ui.c:883
 msgid "_Open"
@@ -1027,15 +1027,15 @@ msgstr "_Obre"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1460 plug-ins/common/cml-explorer.c:2143
 #: plug-ins/common/curve-bend.c:1279 plug-ins/common/curve-bend.c:1845
-#: plug-ins/common/file-pdf-save.c:1043 plug-ins/common/qbist.c:884
+#: plug-ins/common/file-pdf-export.c:1043 plug-ins/common/qbist.c:884
 #: plug-ins/common/qbist.c:1005 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1250
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:804
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1561
 #: plug-ins/gfig/gfig-dialog.c:828 plug-ins/gimpressionist/brush.c:271
-#: plug-ins/ifs-compose/ifs-compose.c:912
-#: plug-ins/ifs-compose/ifs-compose.c:2566 plug-ins/imagemap/imap_file.c:129
+#: plug-ins/ifs-compose/ifs-compose.c:913
+#: plug-ins/ifs-compose/ifs-compose.c:2604 plug-ins/imagemap/imap_file.c:129
 #: plug-ins/lighting/lighting-ui.c:486 plug-ins/lighting/lighting-ui.c:739
 msgid "_Save"
 msgstr "_Desa"
@@ -1195,7 +1195,7 @@ msgstr "Graf de les opcions actuals"
 #: plug-ins/common/cml-explorer.c:2010 plug-ins/common/plugin-browser.c:562
 #: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1214 plug-ins/gfig/gfig-dialog.c:1359
-#: plug-ins/ifs-compose/ifs-compose.c:1214
+#: plug-ins/ifs-compose/ifs-compose.c:1215
 #: plug-ins/metadata/metadata-viewer.c:264
 msgid "_Close"
 msgstr "_Tanca"
@@ -1211,18 +1211,18 @@ msgstr "Desa els paràmetres de l'Explorador CML"
 #: plug-ins/common/cml-explorer.c:2208 plug-ins/common/curve-bend.c:781
 #: plug-ins/common/file-dicom.c:1564 plug-ins/common/file-farbfeld.c:380
 #: plug-ins/common/file-mng.c:871 plug-ins/common/file-mng.c:1221
-#: plug-ins/common/file-pcx.c:1219 plug-ins/common/file-pdf-save.c:667
-#: plug-ins/common/file-png.c:1517 plug-ins/common/file-raw-data.c:1337
-#: plug-ins/common/file-raw-data.c:1366 plug-ins/common/file-sunras.c:637
+#: plug-ins/common/file-pcx.c:1219 plug-ins/common/file-pdf-export.c:667
+#: plug-ins/common/file-png.c:1517 plug-ins/common/file-raw-data.c:1383
+#: plug-ins/common/file-raw-data.c:1412 plug-ins/common/file-sunras.c:637
 #: plug-ins/common/file-tga.c:1237 plug-ins/common/file-xmc.c:1284
-#: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-save.c:341
-#: plug-ins/file-fli/fli-gimp.c:809 plug-ins/file-icns/file-icns-save.c:427
-#: plug-ins/file-ico/ico-save.c:1343 plug-ins/file-ico/ico-save.c:1560
-#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2219
-#: plug-ins/file-tiff/file-tiff-save.c:1084
-#: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:590
+#: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-export.c:341
+#: plug-ins/file-fli/fli-gimp.c:809 plug-ins/file-icns/file-icns-export.c:427
+#: plug-ins/file-ico/ico-export.c:1343 plug-ins/file-ico/ico-export.c:1560
+#: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2219
+#: plug-ins/file-tiff/file-tiff-export.c:1084
+#: plug-ins/file-tiff/file-tiff-export.c:1173 plug-ins/flame/flame.c:590
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1424
-#: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2425
+#: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2463
 #: plug-ins/lighting/lighting-ui.c:808
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1981,12 +1981,12 @@ msgstr "No es pot operar en seleccions buides."
 #: plug-ins/common/file-farbfeld.c:298 plug-ins/common/file-gif-load.c:416
 #: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1405
 #: plug-ins/common/file-pcx.c:509 plug-ins/common/file-pcx.c:552
-#: plug-ins/common/file-png.c:665 plug-ins/common/file-ps.c:1109
-#: plug-ins/common/file-ps.c:3619 plug-ins/common/file-psp.c:2633
+#: plug-ins/common/file-png.c:665 plug-ins/common/file-ps.c:1107
+#: plug-ins/common/file-ps.c:3615 plug-ins/common/file-psp.c:2633
 #: plug-ins/common/file-psp.c:2683 plug-ins/common/file-qoi.c:299
-#: plug-ins/common/file-raw-data.c:515 plug-ins/common/file-raw-data.c:1665
-#: plug-ins/common/file-sunras.c:457 plug-ins/common/file-svg.c:383
-#: plug-ins/common/file-svg.c:809 plug-ins/common/file-tga.c:447
+#: plug-ins/common/file-raw-data.c:567 plug-ins/common/file-raw-data.c:1715
+#: plug-ins/common/file-sunras.c:457 plug-ins/common/file-svg.c:369
+#: plug-ins/common/file-svg.c:795 plug-ins/common/file-tga.c:447
 #: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:749
 #: plug-ins/common/file-xmc.c:668 plug-ins/common/file-xmc.c:907
 #: plug-ins/common/file-xwd.c:492 plug-ins/common/sphere-designer.c:2095
@@ -1997,8 +1997,8 @@ msgstr "No es pot operar en seleccions buides."
 #: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
 #: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
 #: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
-#: plug-ins/file-psd/psd-load.c:180 plug-ins/file-psd/psd-load.c:185
-#: plug-ins/file-psd/psd-save.c:2224 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-export.c:2224 plug-ins/file-psd/psd-load.c:180
+#: plug-ins/file-psd/psd-load.c:185 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1784
 #: plug-ins/fractal-explorer/fractal-explorer.c:1159 plug-ins/gfig/gfig.c:527
@@ -2094,7 +2094,7 @@ msgstr "Intercanvia les dues corbes"
 #. The Reset button
 #: plug-ins/common/curve-bend.c:1250 plug-ins/common/sphere-designer.c:2654
 #: plug-ins/common/tile-small.c:525 plug-ins/gimpressionist/preview.c:182
-#: plug-ins/ifs-compose/ifs-compose.c:913
+#: plug-ins/ifs-compose/ifs-compose.c:914
 msgid "_Reset"
 msgstr "_Restableix"
 
@@ -2501,10 +2501,8 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Aquest connector intenta eliminar les ratlles verticals d'una imatge."
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:195
-#: plug-ins/common/file-ps.c:386 plug-ins/common/file-ps.c:500
-#: plug-ins/common/file-raw-data.c:355 plug-ins/common/file-svg.c:192
-#: plug-ins/common/file-wmf.c:184 plug-ins/common/smooth-palette.c:135
-#: plug-ins/imagemap/imap_grid.c:258
+#: plug-ins/common/file-ps.c:486 plug-ins/common/file-raw-data.c:355
+#: plug-ins/common/smooth-palette.c:135 plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
 msgstr "Am_plada"
 
@@ -2613,11 +2611,11 @@ msgstr ""
 #: plug-ins/common/file-gegl.c:358 plug-ins/common/file-gif-load.c:408
 #: plug-ins/common/file-heif.c:886 plug-ins/common/file-jp2-load.c:1077
 #: plug-ins/common/file-pcx.c:501 plug-ins/common/file-pcx.c:544
-#: plug-ins/common/file-pdf-load.c:856 plug-ins/common/file-pix.c:393
+#: plug-ins/common/file-pdf-load.c:722 plug-ins/common/file-pix.c:393
 #: plug-ins/common/file-png.c:657 plug-ins/common/file-pnm.c:713
-#: plug-ins/common/file-ps.c:1099 plug-ins/common/file-raw-data.c:1657
+#: plug-ins/common/file-ps.c:1097 plug-ins/common/file-raw-data.c:1707
 #: plug-ins/common/file-sunras.c:449 plug-ins/common/file-tga.c:439
-#: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:784
+#: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:781
 #: plug-ins/common/file-xbm.c:741 plug-ins/common/file-xmc.c:658
 #: plug-ins/common/file-xpm.c:384 plug-ins/common/file-xwd.c:484
 #: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:197
@@ -2694,18 +2692,18 @@ msgstr ""
 #. init the progress meter
 #. * Open the file for writing...
 #: plug-ins/common/file-cel.c:845 plug-ins/common/file-farbfeld.c:372
-#: plug-ins/common/file-gif-save.c:975 plug-ins/common/file-html-table.c:359
+#: plug-ins/common/file-gif-export.c:975 plug-ins/common/file-html-table.c:359
 #: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1103
 #: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1509
-#: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1321
+#: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1317
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
 #: plug-ins/common/file-tga.c:1229 plug-ins/common/file-xbm.c:1050
 #: plug-ins/common/file-xpm.c:705 plug-ins/common/file-xwd.c:720
-#: plug-ins/file-bmp/bmp-save.c:333 plug-ins/file-fits/fits.c:674
-#: plug-ins/file-fli/fli-gimp.c:776 plug-ins/file-icns/file-icns-save.c:612
-#: plug-ins/file-ico/ico-save.c:1335 plug-ins/file-ico/ico-save.c:1544
-#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2165
-#: plug-ins/file-sgi/sgi.c:645 plug-ins/file-tiff/file-tiff-save.c:1074
+#: plug-ins/file-bmp/bmp-export.c:333 plug-ins/file-fits/fits.c:674
+#: plug-ins/file-fli/fli-gimp.c:776 plug-ins/file-icns/file-icns-export.c:612
+#: plug-ins/file-ico/ico-export.c:1335 plug-ins/file-ico/ico-export.c:1544
+#: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2165
+#: plug-ins/file-sgi/sgi.c:645 plug-ins/file-tiff/file-tiff-export.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Exportació «%s»"
@@ -2872,7 +2870,7 @@ msgstr ""
 msgid "Cannot save images with alpha channel."
 msgstr "No es poden desar imatges amb canal alfa."
 
-#: plug-ins/common/file-dicom.c:1548 plug-ins/common/file-ps.c:1316
+#: plug-ins/common/file-dicom.c:1548 plug-ins/common/file-ps.c:1312
 #: plug-ins/common/file-xwd.c:715 plug-ins/file-fits/fits.c:669
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2956,9 +2954,212 @@ msgstr "El connector d'exportació GEGL no admet múltiples capes."
 msgid "Could not open '%s'"
 msgstr "No s'ha pogut obrir «%s»"
 
-#: plug-ins/common/file-gif-load.c:178 plug-ins/common/file-gif-save.c:151
+#: plug-ins/common/file-gif-export.c:151 plug-ins/common/file-gif-load.c:178
 msgid "GIF image"
 msgstr "Imatge GIF"
+
+#: plug-ins/common/file-gif-export.c:153
+msgid "GIF"
+msgstr "GIF"
+
+#: plug-ins/common/file-gif-export.c:156
+msgid "exports files in GIF file format"
+msgstr "exporta fitxers en format de fitxer GIF"
+
+#: plug-ins/common/file-gif-export.c:159
+#, no-c-format
+msgid ""
+"Export a file in GIF format, with possible animation, transparency, and "
+"comment. To export an animation, operate on a multi-layer file and give the "
+"'as-animation' parameter as TRUE. The plug-in will interpret <50% alpha as "
+"transparent. When run non-interactively, the value for the comment is taken "
+"from the 'gimp-comment' parasite."
+msgstr ""
+"Exporta un fitxer en format GIF, amb una possible animació, transparència i "
+"comentari. Per a exportar una animació, opera en un fitxer multicapa i dona "
+"el paràmetre «com a animació» coem a CERT. El connector interpretarà un alfa"
+" menor del 50% com a transparent. Quan s'executa de forma no interactiva, el"
+" valor del comentari es pren del paràsit «gimp-comment»."
+
+#: plug-ins/common/file-gif-export.c:185 plug-ins/common/file-mng.c:278
+msgid "_Interlace"
+msgstr "_Entrellaça"
+
+#: plug-ins/common/file-gif-export.c:186
+msgid "Try to export as interlaced"
+msgstr "Intenta exportar com a entrellaçat"
+
+#: plug-ins/common/file-gif-export.c:191
+msgid "Loop _Forever"
+msgstr "_Bucle sense fi"
+
+#: plug-ins/common/file-gif-export.c:192
+msgid "(animated gif) Loop infinitely"
+msgstr "(gif animat) Bucle infinit"
+
+#: plug-ins/common/file-gif-export.c:197
+msgid "_Number of repeats"
+msgstr "_Nombre de repeticions"
+
+#: plug-ins/common/file-gif-export.c:198
+msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
+msgstr "(gif animat) Nombre de repeticions (s'ignora si «loop» és CERT)"
+
+#: plug-ins/common/file-gif-export.c:204
+msgid "_Delay between frames when unspecified"
+msgstr "_Retard entre fotogrames no especificats"
+
+#: plug-ins/common/file-gif-export.c:205
+msgid "(animated gif) Default delay between frames in milliseconds"
+msgstr "(gif animat) Retard predeterminat entre fotogrames en mil·lisegons"
+
+#: plug-ins/common/file-gif-export.c:211
+msgid "Frame disposal _when unspecified"
+msgstr "Disposició dels _fotogrames quan no s'especifiqui"
+
+#: plug-ins/common/file-gif-export.c:212
+msgid ""
+"(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)"
+msgstr ""
+"(gif animat) Tipus de disposició predeterminat (0=`no importa`, 1=combina, "
+"2=substitueix)"
+
+#: plug-ins/common/file-gif-export.c:220
+msgid "_As animation"
+msgstr "Com una _animació"
+
+#: plug-ins/common/file-gif-export.c:221
+msgid "Export GIF as animation?"
+msgstr "Voleu exportar la imatge com una animació?"
+
+#: plug-ins/common/file-gif-export.c:226
+msgid "_Use delay entered above for all frames"
+msgstr "_Utilitza el retard per a tots els fotogrames"
+
+#: plug-ins/common/file-gif-export.c:227
+msgid "(animated gif) Use specified delay for all frames"
+msgstr "(gif animat) Usa el retard especificat per a tots els fotogrames"
+
+#: plug-ins/common/file-gif-export.c:232
+msgid "Use dis_posal entered above for all frames"
+msgstr "Us_a la disposició introduïda anteriorment per a tots els fotogrames"
+
+#: plug-ins/common/file-gif-export.c:234
+msgid "(animated gif) Use specified disposal for all frames"
+msgstr "(gif animat) Usa la disposició especificada per a tots els fotogrames"
+
+#: plug-ins/common/file-gif-export.c:239
+msgid "Sa_ve comment"
+msgstr "De_sa el comentari"
+
+#: plug-ins/common/file-gif-export.c:240
+msgid "Save the image comment in the GIF file"
+msgstr "Desa el comentari d'imatge al fitxer GIF"
+
+#: plug-ins/common/file-gif-export.c:245
+msgid "Commen_t"
+msgstr "C_omentari"
+
+#: plug-ins/common/file-gif-export.c:246
+msgid "Image comment"
+msgstr "Comentari d'imatge"
+
+#: plug-ins/common/file-gif-export.c:378
+#, c-format
+msgid "GIF format does not support multiple layers."
+msgstr "El format GIF no admet múltiples capes."
+
+#: plug-ins/common/file-gif-export.c:583
+msgid "Couldn't simply reduce colors further. Exporting as opaque."
+msgstr "No s'ha pogut reduir més els colors. S'exporta com a opac."
+
+#: plug-ins/common/file-gif-export.c:702
+#, c-format
+msgid ""
+"Unable to export '%s'.  The GIF file format does not support images that are"
+" more than %d pixels wide or tall."
+msgstr ""
+"No s'ha pogut exportar «%s». El format de fitxer GIF no permet imatges de "
+"més de %d píxels d'amplada o alçada."
+
+#: plug-ins/common/file-gif-export.c:725
+#, c-format
+msgid ""
+"Unable to export '%s'.  Please convert your image to 8 bit integer "
+"precision, as the GIF file format does not support higher precisions."
+msgstr ""
+"No s'ha pogut exportar «%s».  Convertiu la vostra imatge a una precisió "
+"entera de 8 bits, ja que el format de fitxer GIF no admet precisions més "
+"altes."
+
+#: plug-ins/common/file-gif-export.c:852
+msgid ""
+"The GIF format only supports comments in 7bit ASCII encoding. No comment is "
+"saved."
+msgstr ""
+"El format GIF només accepta comentaris codificats en ASCII 7 bits. No s'ha "
+"desat cap comentari."
+
+#: plug-ins/common/file-gif-export.c:948
+msgid ""
+"Cannot export RGB color images. Convert to indexed color or grayscale first."
+msgstr ""
+"No es poden exportar les imatges de color RGB. Convertiu-les primer a color "
+"indexat o a escala de grisos."
+
+#: plug-ins/common/file-gif-export.c:1168
+msgid "Delay inserted to prevent evil CPU-sucking animation."
+msgstr ""
+"Retard inserit en l'animació per a prevenir sobresaturacions a la CPU."
+
+#: plug-ins/common/file-gif-export.c:1217
+msgid ""
+"The image you are trying to export as a GIF contains layers which extend "
+"beyond the actual borders of the image."
+msgstr ""
+"La imatge que esteu intentant exportar en format GIF conté capes que "
+"s'estenen més enllà de les vores de la imatge."
+
+#: plug-ins/common/file-gif-export.c:1223
+msgid "Cr_op"
+msgstr "_Escapça"
+
+#: plug-ins/common/file-gif-export.c:1234
+msgid ""
+"The GIF file format does not allow this.  You may choose whether to crop all"
+" of the layers to the image borders, or cancel this export."
+msgstr ""
+"Això no està permès en el format de fitxer GIF. Podeu triar entre escapçar "
+"totes les capes d'acord amb les vores de la imatge o cancel·lar "
+"l'exportació."
+
+#: plug-ins/common/file-gif-export.c:1289
+msgid ""
+"The GIF format only supports 8 bit integer precision.\n"
+"Your image will be converted on export, which may change the pixel values."
+msgstr ""
+"El format GIF només admet una precisió d'enter de 8 bits.\n"
+"La imatge es convertirà en exportar, el qual pot canviar els valors dels píxels."
+
+#: plug-ins/common/file-gif-export.c:1358 plug-ins/common/file-mng.c:1641
+msgid "milliseconds"
+msgstr "mil·lisegons"
+
+#: plug-ins/common/file-gif-export.c:1364
+msgid "I don't care"
+msgstr "No importa"
+
+#: plug-ins/common/file-gif-export.c:1400
+msgid "Animated GIF"
+msgstr "GIF animat"
+
+#: plug-ins/common/file-gif-export.c:1407
+msgid ""
+"You can only export as animation when the image has more than one layer.\n"
+"The image you are trying to export only has one layer."
+msgstr ""
+"Només podeu exportar com a animació quan la imatge tingui més d'una capa.\n"
+"La imatge que intenteu exportar només en té una."
 
 #: plug-ins/common/file-gif-load.c:423
 msgid "GIF magic code"
@@ -3114,209 +3315,6 @@ msgstr ""
 #: plug-ins/common/file-gif-load.c:1410
 msgid "Too much compressed data, ignoring extra..."
 msgstr "Hi ha massa dades comprimides, s'ignoraran les extres..."
-
-#: plug-ins/common/file-gif-save.c:153
-msgid "GIF"
-msgstr "GIF"
-
-#: plug-ins/common/file-gif-save.c:156
-msgid "exports files in GIF file format"
-msgstr "exporta fitxers en format de fitxer GIF"
-
-#: plug-ins/common/file-gif-save.c:159
-#, no-c-format
-msgid ""
-"Export a file in GIF format, with possible animation, transparency, and "
-"comment. To export an animation, operate on a multi-layer file and give the "
-"'as-animation' parameter as TRUE. The plug-in will interpret <50% alpha as "
-"transparent. When run non-interactively, the value for the comment is taken "
-"from the 'gimp-comment' parasite."
-msgstr ""
-"Exporta un fitxer en format GIF, amb una possible animació, transparència i "
-"comentari. Per a exportar una animació, opera en un fitxer multicapa i dona "
-"el paràmetre «com a animació» coem a CERT. El connector interpretarà un alfa"
-" menor del 50% com a transparent. Quan s'executa de forma no interactiva, el"
-" valor del comentari es pren del paràsit «gimp-comment»."
-
-#: plug-ins/common/file-gif-save.c:185 plug-ins/common/file-mng.c:278
-msgid "_Interlace"
-msgstr "_Entrellaça"
-
-#: plug-ins/common/file-gif-save.c:186
-msgid "Try to export as interlaced"
-msgstr "Intenta exportar com a entrellaçat"
-
-#: plug-ins/common/file-gif-save.c:191
-msgid "Loop _Forever"
-msgstr "_Bucle sense fi"
-
-#: plug-ins/common/file-gif-save.c:192
-msgid "(animated gif) Loop infinitely"
-msgstr "(gif animat) Bucle infinit"
-
-#: plug-ins/common/file-gif-save.c:197
-msgid "_Number of repeats"
-msgstr "_Nombre de repeticions"
-
-#: plug-ins/common/file-gif-save.c:198
-msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
-msgstr "(gif animat) Nombre de repeticions (s'ignora si «loop» és CERT)"
-
-#: plug-ins/common/file-gif-save.c:204
-msgid "_Delay between frames when unspecified"
-msgstr "_Retard entre fotogrames no especificats"
-
-#: plug-ins/common/file-gif-save.c:205
-msgid "(animated gif) Default delay between frames in milliseconds"
-msgstr "(gif animat) Retard predeterminat entre fotogrames en mil·lisegons"
-
-#: plug-ins/common/file-gif-save.c:211
-msgid "Frame disposal _when unspecified"
-msgstr "Disposició dels _fotogrames quan no s'especifiqui"
-
-#: plug-ins/common/file-gif-save.c:212
-msgid ""
-"(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)"
-msgstr ""
-"(gif animat) Tipus de disposició predeterminat (0=`no importa`, 1=combina, "
-"2=substitueix)"
-
-#: plug-ins/common/file-gif-save.c:220
-msgid "_As animation"
-msgstr "Com una _animació"
-
-#: plug-ins/common/file-gif-save.c:221
-msgid "Export GIF as animation?"
-msgstr "Voleu exportar la imatge com una animació?"
-
-#: plug-ins/common/file-gif-save.c:226
-msgid "_Use delay entered above for all frames"
-msgstr "_Utilitza el retard per a tots els fotogrames"
-
-#: plug-ins/common/file-gif-save.c:227
-msgid "(animated gif) Use specified delay for all frames"
-msgstr "(gif animat) Usa el retard especificat per a tots els fotogrames"
-
-#: plug-ins/common/file-gif-save.c:232
-msgid "Use dis_posal entered above for all frames"
-msgstr "Us_a la disposició introduïda anteriorment per a tots els fotogrames"
-
-#: plug-ins/common/file-gif-save.c:234
-msgid "(animated gif) Use specified disposal for all frames"
-msgstr "(gif animat) Usa la disposició especificada per a tots els fotogrames"
-
-#: plug-ins/common/file-gif-save.c:239
-msgid "Sa_ve comment"
-msgstr "De_sa el comentari"
-
-#: plug-ins/common/file-gif-save.c:240
-msgid "Save the image comment in the GIF file"
-msgstr "Desa el comentari d'imatge al fitxer GIF"
-
-#: plug-ins/common/file-gif-save.c:245
-msgid "Commen_t"
-msgstr "C_omentari"
-
-#: plug-ins/common/file-gif-save.c:246
-msgid "Image comment"
-msgstr "Comentari d'imatge"
-
-#: plug-ins/common/file-gif-save.c:378
-#, c-format
-msgid "GIF format does not support multiple layers."
-msgstr "El format GIF no admet múltiples capes."
-
-#: plug-ins/common/file-gif-save.c:583
-msgid "Couldn't simply reduce colors further. Exporting as opaque."
-msgstr "No s'ha pogut reduir més els colors. S'exporta com a opac."
-
-#: plug-ins/common/file-gif-save.c:702
-#, c-format
-msgid ""
-"Unable to export '%s'.  The GIF file format does not support images that are"
-" more than %d pixels wide or tall."
-msgstr ""
-"No s'ha pogut exportar «%s». El format de fitxer GIF no permet imatges de "
-"més de %d píxels d'amplada o alçada."
-
-#: plug-ins/common/file-gif-save.c:725
-#, c-format
-msgid ""
-"Unable to export '%s'.  Please convert your image to 8 bit integer "
-"precision, as the GIF file format does not support higher precisions."
-msgstr ""
-"No s'ha pogut exportar «%s».  Convertiu la vostra imatge a una precisió "
-"entera de 8 bits, ja que el format de fitxer GIF no admet precisions més "
-"altes."
-
-#: plug-ins/common/file-gif-save.c:852
-msgid ""
-"The GIF format only supports comments in 7bit ASCII encoding. No comment is "
-"saved."
-msgstr ""
-"El format GIF només accepta comentaris codificats en ASCII 7 bits. No s'ha "
-"desat cap comentari."
-
-#: plug-ins/common/file-gif-save.c:948
-msgid ""
-"Cannot export RGB color images. Convert to indexed color or grayscale first."
-msgstr ""
-"No es poden exportar les imatges de color RGB. Convertiu-les primer a color "
-"indexat o a escala de grisos."
-
-#: plug-ins/common/file-gif-save.c:1168
-msgid "Delay inserted to prevent evil CPU-sucking animation."
-msgstr ""
-"Retard inserit en l'animació per a prevenir sobresaturacions a la CPU."
-
-#: plug-ins/common/file-gif-save.c:1217
-msgid ""
-"The image you are trying to export as a GIF contains layers which extend "
-"beyond the actual borders of the image."
-msgstr ""
-"La imatge que esteu intentant exportar en format GIF conté capes que "
-"s'estenen més enllà de les vores de la imatge."
-
-#: plug-ins/common/file-gif-save.c:1223
-msgid "Cr_op"
-msgstr "_Escapça"
-
-#: plug-ins/common/file-gif-save.c:1234
-msgid ""
-"The GIF file format does not allow this.  You may choose whether to crop all"
-" of the layers to the image borders, or cancel this export."
-msgstr ""
-"Això no està permès en el format de fitxer GIF. Podeu triar entre escapçar "
-"totes les capes d'acord amb les vores de la imatge o cancel·lar "
-"l'exportació."
-
-#: plug-ins/common/file-gif-save.c:1289
-msgid ""
-"The GIF format only supports 8 bit integer precision.\n"
-"Your image will be converted on export, which may change the pixel values."
-msgstr ""
-"El format GIF només admet una precisió d'enter de 8 bits.\n"
-"La imatge es convertirà en exportar, el qual pot canviar els valors dels píxels."
-
-#: plug-ins/common/file-gif-save.c:1358 plug-ins/common/file-mng.c:1641
-msgid "milliseconds"
-msgstr "mil·lisegons"
-
-#: plug-ins/common/file-gif-save.c:1364
-msgid "I don't care"
-msgstr "No importa"
-
-#: plug-ins/common/file-gif-save.c:1400
-msgid "Animated GIF"
-msgstr "GIF animat"
-
-#: plug-ins/common/file-gif-save.c:1407
-msgid ""
-"You can only export as animation when the image has more than one layer.\n"
-"The image you are trying to export only has one layer."
-msgstr ""
-"Només podeu exportar com a animació quan la imatge tingui més d'una capa.\n"
-"La imatge que intenteu exportar només en té una."
 
 #: plug-ins/common/file-gih.c:157
 msgid "GIMP brush (animated)"
@@ -3687,10 +3685,9 @@ msgid "The width for each table cell. Can be a number or a percent."
 msgstr ""
 "Amplada de cada cel·la de la taula. Pot ser un nombre o un percentatge."
 
-#: plug-ins/common/file-html-table.c:202 plug-ins/common/file-ps.c:392
-#: plug-ins/common/file-ps.c:507 plug-ins/common/file-raw-data.c:360
-#: plug-ins/common/file-svg.c:200 plug-ins/common/file-wmf.c:191
-#: plug-ins/common/smooth-palette.c:141 plug-ins/imagemap/imap_grid.c:264
+#: plug-ins/common/file-html-table.c:202 plug-ins/common/file-ps.c:493
+#: plug-ins/common/file-raw-data.c:360 plug-ins/common/smooth-palette.c:141
+#: plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
 msgstr "A_lçada"
 
@@ -3867,7 +3864,7 @@ msgstr "xvYCC"
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "JPEG 2000%s «%s» sense suport amb %d components."
 
-#: plug-ins/common/file-jp2-load.c:1085 plug-ins/common/file-wmf.c:762
+#: plug-ins/common/file-jp2-load.c:1085 plug-ins/common/file-wmf.c:759
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "No s'ha pogut obrir «%s» per a llegir-lo"
@@ -4023,13 +4020,15 @@ msgstr "16 bits/canal"
 msgid "CMYK profile required for export"
 msgstr "Cal un perfil CMYK per a exportar"
 
-#: plug-ins/common/file-jpegxl.c:2045 plug-ins/file-jpeg/jpeg-save.c:900
-#: plug-ins/file-psd/psd-save.c:2464 plug-ins/file-tiff/file-tiff-save.c:1315
+#: plug-ins/common/file-jpegxl.c:2045 plug-ins/file-jpeg/jpeg-export.c:899
+#: plug-ins/file-psd/psd-export.c:2464
+#: plug-ins/file-tiff/file-tiff-export.c:1315
 msgid "Name of the color profile used for CMYK export."
 msgstr "Nom del perfil de color utilitzat per a l'exportació CMYK."
 
-#: plug-ins/common/file-jpegxl.c:2064 plug-ins/file-jpeg/jpeg-save.c:911
-#: plug-ins/file-psd/psd-save.c:2475 plug-ins/file-tiff/file-tiff-save.c:1327
+#: plug-ins/common/file-jpegxl.c:2064 plug-ins/file-jpeg/jpeg-export.c:910
+#: plug-ins/file-psd/psd-export.c:2475
+#: plug-ins/file-tiff/file-tiff-export.c:1327
 #, c-format
 msgid "Profile: %s"
 msgstr "Perfil: %s"
@@ -4377,129 +4376,15 @@ msgstr "La vora inferior surt fora dels límits (ha de ser < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "No s'ha pogut escriure al fitxer «%s» : %s"
 
-#: plug-ins/common/file-pdf-load.c:319 plug-ins/common/file-pdf-save.c:316
+#: plug-ins/common/file-pdf-export.c:316 plug-ins/common/file-pdf-load.c:183
 msgid "Portable Document Format"
 msgstr "Format de document portable"
 
-#: plug-ins/common/file-pdf-load.c:345
-msgid "PDF password"
-msgstr "Contrasenya PDF"
-
-#: plug-ins/common/file-pdf-load.c:346
-msgid "The password to decrypt the encrypted PDF file"
-msgstr "La contrasenya per a desxifrar el fitxer PDF encriptat"
-
-#: plug-ins/common/file-pdf-load.c:351
-msgid "Load in re_verse order"
-msgstr "_Carrega en ordre invers"
-
-#: plug-ins/common/file-pdf-load.c:352
-msgid "Load PDF pages in reverse order"
-msgstr "Carrega les pàgines PDF en ordre invers"
-
-#: plug-ins/common/file-pdf-load.c:369
-msgid "Open pages as"
-msgstr "Obre pàgines com a"
-
-#: plug-ins/common/file-pdf-load.c:370 plug-ins/common/file-pdf-load.c:377
-msgid "Number of pages to load (0 for all)"
-msgstr "Nombre de pàgines a carregar (0 per a totes)"
-
-#: plug-ins/common/file-pdf-load.c:376
-msgid "N pages"
-msgstr "N pàgines"
-
-#: plug-ins/common/file-pdf-load.c:389
-msgid "Pages"
-msgstr "Pàgines"
-
-#: plug-ins/common/file-pdf-load.c:390
-msgid "The pages to load in the expected order"
-msgstr "Les pàgines a carregar en l'ordre esperat"
-
-#: plug-ins/common/file-pdf-load.c:394
-msgid "Use _Anti-aliasing"
-msgstr "Utilitza _antialiàsing"
-
-#: plug-ins/common/file-pdf-load.c:395
-msgid "Render texts with anti-aliasing"
-msgstr "Renderitza els textos amb antialiàsing"
-
-#: plug-ins/common/file-pdf-load.c:400
-msgid "_Fill transparent areas with white"
-msgstr "_Omple les àrees transparents amb blanc"
-
-#: plug-ins/common/file-pdf-load.c:401
-msgid "Render all pages as opaque by filling the background in white"
-msgstr "Renderitza totes les pàgines com a opaques emplenant el fons en blanc"
-
-#: plug-ins/common/file-pdf-load.c:409 plug-ins/common/file-pdf-load.c:410
-msgid "Resolution"
-msgstr "Resolució"
-
-#. TRANSLATORS: first argument is file name,
-#. * second is out-of-range page number,
-#. * third is number of pages.
-#. * Specify order as in English if needed.
-#: plug-ins/common/file-pdf-load.c:517
-#, c-format
-msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
-msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
-msgstr[0] ""
-"El document PDF '%1$s' té una sola pàgina. La pàgina %2$d està fora de "
-"l'abast."
-msgstr[1] ""
-"El document PDF '%1$s' té %3$d pàgines. La pàgina %2$d està fora de l'abast."
-
-#: plug-ins/common/file-pdf-load.c:673
-msgid "PDF is password protected, please input the password:"
-msgstr "El PDF està protegit per contrasenya, introduïu la contrasenya:"
-
-#: plug-ins/common/file-pdf-load.c:683
-msgid "Encrypted PDF"
-msgstr "PDF xifrat"
-
-#: plug-ins/common/file-pdf-load.c:710
-msgid "Wrong password! Please input the right one:"
-msgstr "Contrasenya incorrecta! Introduïu la correcta:"
-
-#: plug-ins/common/file-pdf-load.c:728
-#, c-format
-msgid "Could not load '%s': %s"
-msgstr "No s'ha pogut carregar «%s»: %s"
-
-#: plug-ins/common/file-pdf-load.c:1143
-msgid "Import from PDF"
-msgstr "Importa d'un PDF"
-
-#: plug-ins/common/file-pdf-load.c:1172
-msgid "Error getting number of pages from the given PDF file."
-msgstr "S'ha produït un error obtenint el nombre de pàgines del fitxer PDF."
-
-#. Resolution
-#: plug-ins/common/file-pdf-load.c:1221
-msgid "_Width (pixels):"
-msgstr "A_mplada (píxels):"
-
-#: plug-ins/common/file-pdf-load.c:1222
-msgid "_Height (pixels):"
-msgstr "A_lçada (píxels):"
-
-#: plug-ins/common/file-pdf-load.c:1224
-msgid "_Resolution:"
-msgstr "_Resolució:"
-
-#: plug-ins/common/file-pdf-load.c:1515 plug-ins/common/file-pdf-load.c:1516
-#: plug-ins/print/print-page-layout.c:307
-#, c-format
-msgid "pixels/%a"
-msgstr "píxels/%a"
-
-#: plug-ins/common/file-pdf-save.c:319 plug-ins/common/file-pdf-save.c:402
+#: plug-ins/common/file-pdf-export.c:319 plug-ins/common/file-pdf-export.c:402
 msgid "Save files in PDF format"
 msgstr "Desa els fitxers en format PDF"
 
-#: plug-ins/common/file-pdf-save.c:320 plug-ins/common/file-pdf-save.c:403
+#: plug-ins/common/file-pdf-export.c:320 plug-ins/common/file-pdf-export.c:403
 msgid ""
 "Saves files in Adobe's Portable Document Format. PDF is designed to be "
 "easily processed by a variety of different platforms, and is a distant "
@@ -4509,33 +4394,33 @@ msgstr ""
 "dissenyat per ser processat fàcilment per una varietat de plataformes "
 "diferents, i és un cosí llunyà de PostScript."
 
-#: plug-ins/common/file-pdf-save.c:332
+#: plug-ins/common/file-pdf-export.c:332 plug-ins/common/file-pdf-load.c:199
 msgid "PDF"
 msgstr "PDF"
 
-#: plug-ins/common/file-pdf-save.c:339 plug-ins/common/file-pdf-save.c:435
+#: plug-ins/common/file-pdf-export.c:339 plug-ins/common/file-pdf-export.c:435
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr ""
 "Converteix els mapes de _bits en gràfics vectorials quan sigui possible"
 
-#: plug-ins/common/file-pdf-save.c:340 plug-ins/common/file-pdf-save.c:436
+#: plug-ins/common/file-pdf-export.c:340 plug-ins/common/file-pdf-export.c:436
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr ""
 "Converteix els mapes de bits en gràfics vectorials quan sigui possible"
 
-#: plug-ins/common/file-pdf-save.c:345 plug-ins/common/file-pdf-save.c:441
+#: plug-ins/common/file-pdf-export.c:345 plug-ins/common/file-pdf-export.c:441
 msgid "O_mit hidden layers and layers with zero opacity"
 msgstr "O_met les capes ocultes i les capes amb opacitat zero"
 
-#: plug-ins/common/file-pdf-save.c:346 plug-ins/common/file-pdf-save.c:442
+#: plug-ins/common/file-pdf-export.c:346 plug-ins/common/file-pdf-export.c:442
 msgid "Non-visible layers will not be exported"
 msgstr "No s'exportaran capes no visibles"
 
-#: plug-ins/common/file-pdf-save.c:351 plug-ins/common/file-pdf-save.c:447
+#: plug-ins/common/file-pdf-export.c:351 plug-ins/common/file-pdf-export.c:447
 msgid "_Apply layer masks"
 msgstr "A_plica les màscares de capa"
 
-#: plug-ins/common/file-pdf-save.c:352 plug-ins/common/file-pdf-save.c:448
+#: plug-ins/common/file-pdf-export.c:352 plug-ins/common/file-pdf-export.c:448
 msgid ""
 "Apply layer masks before saving (Keeping the mask will not change the "
 "output, only the PDF structure)"
@@ -4543,70 +4428,70 @@ msgstr ""
 "Aplica les màscares de capa abans de desar (mantenir la màscara no canviarà "
 "la sortida, només l'estructura PDF)"
 
-#: plug-ins/common/file-pdf-save.c:358
+#: plug-ins/common/file-pdf-export.c:358
 msgid "La_yers as pages"
 msgstr "_Capes com a pàgines"
 
-#: plug-ins/common/file-pdf-save.c:359
+#: plug-ins/common/file-pdf-export.c:359
 msgid "Layers as pages (bottom layers first)."
 msgstr "Capes com a pàgines (primer les capes inferiors)."
 
-#: plug-ins/common/file-pdf-save.c:364
+#: plug-ins/common/file-pdf-export.c:364
 msgid "Re_verse order"
 msgstr "_Inverteix l'ordre"
 
-#: plug-ins/common/file-pdf-save.c:365
+#: plug-ins/common/file-pdf-export.c:365
 msgid "Reverse the pages order (top layers first)."
 msgstr "Inverteix l'ordre de les pàgines (primer les capes superiors)."
 
-#: plug-ins/common/file-pdf-save.c:370
+#: plug-ins/common/file-pdf-export.c:370
 msgid "Roo_t layers only"
 msgstr "_Només les capes arrel"
 
-#: plug-ins/common/file-pdf-save.c:371
+#: plug-ins/common/file-pdf-export.c:371
 msgid "Only the root layers are considered pages"
 msgstr "Només les capes arrel es consideren pàgines"
 
-#: plug-ins/common/file-pdf-save.c:376
+#: plug-ins/common/file-pdf-export.c:376
 msgid "Convert te_xt layers to image"
 msgstr "_Converteix les capes de text en imatge"
 
-#: plug-ins/common/file-pdf-save.c:377
+#: plug-ins/common/file-pdf-export.c:377
 msgid "Convert text layers to raster graphics"
 msgstr "Converteix les capes de text en gràfics ràster"
 
-#: plug-ins/common/file-pdf-save.c:382 plug-ins/common/file-pdf-save.c:454
+#: plug-ins/common/file-pdf-export.c:382 plug-ins/common/file-pdf-export.c:454
 msgid "_Fill transparent areas with background color"
 msgstr "_Omple les àrees transparents amb el color de fons"
 
-#: plug-ins/common/file-pdf-save.c:383 plug-ins/common/file-pdf-save.c:455
+#: plug-ins/common/file-pdf-export.c:383 plug-ins/common/file-pdf-export.c:455
 msgid ""
 "Fill transparent areas with background color if layer has an alpha channel"
 msgstr ""
 "Omple les àrees transparents amb el color de fons si la capa té un canal "
 "alfa"
 
-#: plug-ins/common/file-pdf-save.c:396
+#: plug-ins/common/file-pdf-export.c:396
 msgid "_Create multipage PDF..."
 msgstr "_Crea un PDF amb múltiples pàgines..."
 
-#: plug-ins/common/file-pdf-save.c:422
+#: plug-ins/common/file-pdf-export.c:422
 msgid "Count"
 msgstr "Comptador"
 
-#: plug-ins/common/file-pdf-save.c:423
+#: plug-ins/common/file-pdf-export.c:423
 msgid "The number of images entered (This will be the number of pages)."
 msgstr "El nombre d'imatges introduïdes (aquest serà el nombre de pàgines)."
 
-#: plug-ins/common/file-pdf-save.c:461
+#: plug-ins/common/file-pdf-export.c:461
 msgid "Save to"
 msgstr "Desa-ho a"
 
-#: plug-ins/common/file-pdf-save.c:462
+#: plug-ins/common/file-pdf-export.c:462
 msgid "The URI of the file to save to"
 msgstr "L'URI del fitxer al qual desar"
 
-#: plug-ins/common/file-pdf-save.c:678
+#: plug-ins/common/file-pdf-export.c:678
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -4617,7 +4502,7 @@ msgstr ""
 "%s\n"
 "Assegureu-vos que heu introduït un nom de fitxer vàlid i que la ubicació no és només de lectura."
 
-#: plug-ins/common/file-pdf-save.c:955
+#: plug-ins/common/file-pdf-export.c:955
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -4626,49 +4511,137 @@ msgstr ""
 "No es poden trobar les següents lletres tipogràfiques: %s.\n"
 "Es recomana convertir les capes de text en imatge o instal·lar les lletres tipogràfiques que falten abans d'exportar-lo, altrament pot ser que el disseny no sembli correcte."
 
-#: plug-ins/common/file-pdf-save.c:1025
+#: plug-ins/common/file-pdf-export.c:1025
 msgid "Export Image as Multi-Page PDF"
 msgstr "Exporta la imatge com a PDF de diverses pàgines"
 
-#: plug-ins/common/file-pdf-save.c:1026
+#: plug-ins/common/file-pdf-export.c:1026
 #: plug-ins/metadata/metadata-editor.c:5560
 msgid "_Export"
 msgstr "_Exporta"
 
-#: plug-ins/common/file-pdf-save.c:1035
+#: plug-ins/common/file-pdf-export.c:1035
 msgid "Save to:"
 msgstr "Desa-ho a:"
 
-#: plug-ins/common/file-pdf-save.c:1039
+#: plug-ins/common/file-pdf-export.c:1039
 msgid "Browse..."
 msgstr "Navega..."
 
-#: plug-ins/common/file-pdf-save.c:1040
+#: plug-ins/common/file-pdf-export.c:1040
 msgid "Multipage PDF export"
 msgstr "Exporta com a PDF amb pàgines"
 
-#: plug-ins/common/file-pdf-save.c:1084
+#: plug-ins/common/file-pdf-export.c:1084
 msgid "Remove the selected pages"
 msgstr "Suprimeix les pàgines seleccionades"
 
-#: plug-ins/common/file-pdf-save.c:1098
+#: plug-ins/common/file-pdf-export.c:1098
 msgid "Add this image"
 msgstr "Afegeix aquesta Imatge"
 
-#: plug-ins/common/file-pdf-save.c:1194 plug-ins/common/file-pdf-save.c:1267
-#: plug-ins/common/file-pdf-save.c:1365 plug-ins/common/file-ps.c:2098
+#: plug-ins/common/file-pdf-export.c:1194
+#: plug-ins/common/file-pdf-export.c:1267
+#: plug-ins/common/file-pdf-export.c:1365 plug-ins/common/file-ps.c:2094
 #: plug-ins/file-tiff/file-tiff-load.c:1530
 #, c-format
 msgid "Page %d"
 msgstr "Pàgina %d"
 
-#: plug-ins/common/file-pdf-save.c:1234
+#: plug-ins/common/file-pdf-export.c:1234
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Error: per tal de desar el fitxer, cal afegir com a mínim una imatge."
 
-#: plug-ins/common/file-pdf-save.c:1412 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-export.c:1412 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "No es pot gestionar la mida (amplada o alçada) de la imatge."
+
+#: plug-ins/common/file-pdf-load.c:211
+msgid "PDF password"
+msgstr "Contrasenya PDF"
+
+#: plug-ins/common/file-pdf-load.c:212
+msgid "The password to decrypt the encrypted PDF file"
+msgstr "La contrasenya per a desxifrar el fitxer PDF encriptat"
+
+#: plug-ins/common/file-pdf-load.c:217
+msgid "Load in re_verse order"
+msgstr "_Carrega en ordre invers"
+
+#: plug-ins/common/file-pdf-load.c:218
+msgid "Load PDF pages in reverse order"
+msgstr "Carrega les pàgines PDF en ordre invers"
+
+#: plug-ins/common/file-pdf-load.c:235
+msgid "Open pages as"
+msgstr "Obre pàgines com a"
+
+#: plug-ins/common/file-pdf-load.c:236 plug-ins/common/file-pdf-load.c:243
+msgid "Number of pages to load (0 for all)"
+msgstr "Nombre de pàgines a carregar (0 per a totes)"
+
+#: plug-ins/common/file-pdf-load.c:242
+msgid "N pages"
+msgstr "N pàgines"
+
+#: plug-ins/common/file-pdf-load.c:255
+msgid "Pages"
+msgstr "Pàgines"
+
+#: plug-ins/common/file-pdf-load.c:256
+msgid "The pages to load in the expected order"
+msgstr "Les pàgines a carregar en l'ordre esperat"
+
+#: plug-ins/common/file-pdf-load.c:260
+msgid "Use _Anti-aliasing"
+msgstr "Utilitza _antialiàsing"
+
+#: plug-ins/common/file-pdf-load.c:261
+msgid "Render texts with anti-aliasing"
+msgstr "Renderitza els textos amb antialiàsing"
+
+#: plug-ins/common/file-pdf-load.c:266
+msgid "_Fill transparent areas with white"
+msgstr "_Omple les àrees transparents amb blanc"
+
+#: plug-ins/common/file-pdf-load.c:267
+msgid "Render all pages as opaque by filling the background in white"
+msgstr "Renderitza totes les pàgines com a opaques emplenant el fons en blanc"
+
+#. TRANSLATORS: first argument is file name,
+#. * second is out-of-range page number,
+#. * third is number of pages.
+#. * Specify order as in English if needed.
+#: plug-ins/common/file-pdf-load.c:378
+#, c-format
+msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
+msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
+msgstr[0] ""
+"El document PDF '%1$s' té una sola pàgina. La pàgina %2$d està fora de "
+"l'abast."
+msgstr[1] ""
+"El document PDF '%1$s' té %3$d pàgines. La pàgina %2$d està fora de l'abast."
+
+#: plug-ins/common/file-pdf-load.c:537
+msgid "PDF is password protected, please input the password:"
+msgstr "El PDF està protegit per contrasenya, introduïu la contrasenya:"
+
+#: plug-ins/common/file-pdf-load.c:547
+msgid "Encrypted PDF"
+msgstr "PDF xifrat"
+
+#: plug-ins/common/file-pdf-load.c:574
+msgid "Wrong password! Please input the right one:"
+msgstr "Contrasenya incorrecta! Introduïu la correcta:"
+
+#: plug-ins/common/file-pdf-load.c:592
+#, c-format
+msgid "Could not load '%s': %s"
+msgstr "No s'ha pogut carregar «%s»: %s"
+
+#: plug-ins/common/file-pdf-load.c:1056
+msgid "Error getting number of pages from the given PDF file."
+msgstr "S'ha produït un error obtenint el nombre de pàgines del fitxer PDF."
 
 #: plug-ins/common/file-pix.c:174 plug-ins/common/file-pix.c:205
 msgid "Alias Pix image"
@@ -4760,7 +4733,7 @@ msgstr ""
 msgid "PNG export format"
 msgstr "Format d'exportació PNG"
 
-#: plug-ins/common/file-png.c:292 plug-ins/common/file-ps.c:3723
+#: plug-ins/common/file-png.c:292 plug-ins/common/file-ps.c:3689
 #: plug-ins/file-fits/fits.c:1036
 msgid "Automatic"
 msgstr "Automàtic"
@@ -5088,197 +5061,181 @@ msgstr "_ASCII"
 msgid "_Raw"
 msgstr "_Sense format"
 
-#: plug-ins/common/file-ps.c:339 plug-ins/common/file-ps.c:452
+#: plug-ins/common/file-ps.c:339 plug-ins/common/file-ps.c:438
 msgid "PostScript document"
 msgstr "Document PostScript"
 
-#: plug-ins/common/file-ps.c:356
+#: plug-ins/common/file-ps.c:347
+msgid "PostScript"
+msgstr "PostScript"
+
+#: plug-ins/common/file-ps.c:358
 msgid "Encapsulated PostScript image"
 msgstr "Imatge PostScript encapsulada"
 
-#: plug-ins/common/file-ps.c:380
-msgid "Resol_ution"
-msgstr "R_esolució"
-
-#: plug-ins/common/file-ps.c:381
-msgid "Resolution to interpret image (dpi)"
-msgstr "Resolució per a interpretar la imatge (dpi)"
-
-#: plug-ins/common/file-ps.c:387
-msgid "Desired width"
-msgstr "Amplada desitjada"
-
-#: plug-ins/common/file-ps.c:393
-msgid "Desired height"
-msgstr "Alçada desitjada"
-
-#: plug-ins/common/file-ps.c:398
-msgid "Try _Bounding Box"
-msgstr "_Prova la caixa contenidora"
-
-#: plug-ins/common/file-ps.c:399
-msgid "FALSE: Use width/height, TRUE: Use BoundingBox"
-msgstr "FALSE: Usa amplada/alçada, TRUE: Usa caixa delimitadora"
-
-#: plug-ins/common/file-ps.c:404
-msgid "_Pages"
-msgstr "_Pàgines"
-
-#: plug-ins/common/file-ps.c:405
-msgid "Pages to load (e.g.: 1,3,5-7)"
-msgstr "Pàgines a carregar (p. ex.: 1,3,5-7)"
-
-#: plug-ins/common/file-ps.c:410
-msgid "Coloring"
-msgstr "S'està acolorint"
-
-#: plug-ins/common/file-ps.c:411
-msgid "4: b/w, 5: grey, 6: color image, 7: automatic"
-msgstr "4: b/n, 5: gris, 6: imatge en color, 7: automàtica"
-
-#: plug-ins/common/file-ps.c:416
-msgid "Text antialiasing"
-msgstr "Antialiàsing del text"
-
-#: plug-ins/common/file-ps.c:417 plug-ins/common/file-ps.c:423
-msgid "1, 2 or 4"
-msgstr "1, 2 o 4"
-
-#: plug-ins/common/file-ps.c:422
-msgid "Graphic antialiasing"
-msgstr "Antialiàsing gràfic"
-
-#: plug-ins/common/file-ps.c:462
-msgid "PS"
-msgstr "PS"
-
-#: plug-ins/common/file-ps.c:471
+#: plug-ins/common/file-ps.c:366 plug-ins/common/file-ps.c:457
 msgid "Encapsulated PostScript"
 msgstr "PostScript encapsulat"
 
-#: plug-ins/common/file-ps.c:482
+#: plug-ins/common/file-ps.c:384
+msgid "Try _Bounding Box"
+msgstr "_Prova la caixa contenidora"
+
+#: plug-ins/common/file-ps.c:385
+msgid "FALSE: Use width/height, TRUE: Use BoundingBox"
+msgstr "FALSE: Usa amplada/alçada, TRUE: Usa caixa delimitadora"
+
+#: plug-ins/common/file-ps.c:390
+msgid "_Pages"
+msgstr "_Pàgines"
+
+#: plug-ins/common/file-ps.c:391
+msgid "Pages to load (e.g.: 1,3,5-7)"
+msgstr "Pàgines a carregar (p. ex.: 1,3,5-7)"
+
+#: plug-ins/common/file-ps.c:396
+msgid "Coloring"
+msgstr "S'està acolorint"
+
+#: plug-ins/common/file-ps.c:397
+msgid "4: b/w, 5: grey, 6: color image, 7: automatic"
+msgstr "4: b/n, 5: gris, 6: imatge en color, 7: automàtica"
+
+#: plug-ins/common/file-ps.c:402
+msgid "Text antialiasing"
+msgstr "Antialiàsing del text"
+
+#: plug-ins/common/file-ps.c:403 plug-ins/common/file-ps.c:409
+msgid "1, 2 or 4"
+msgstr "1, 2 o 4"
+
+#: plug-ins/common/file-ps.c:408
+msgid "Graphic antialiasing"
+msgstr "Antialiàsing gràfic"
+
+#: plug-ins/common/file-ps.c:448
+msgid "PS"
+msgstr "PS"
+
+#: plug-ins/common/file-ps.c:468
 msgid "EPS"
 msgstr "GPS"
 
-#: plug-ins/common/file-ps.c:501
+#: plug-ins/common/file-ps.c:487
 msgid "Width of the image in PostScript file (0: use input image size)"
 msgstr ""
 "Amplada de la imatge al fitxer PostScript (0: utilitzeu la mida de la imatge"
 " d'entrada)"
 
-#: plug-ins/common/file-ps.c:508
+#: plug-ins/common/file-ps.c:494
 msgid "Height of the image in PostScript file (0: use input image size)"
 msgstr ""
 "Alçada de la imatge al fitxer PostScript (0: utilitzeu la mida de la imatge "
 "d'entrada)"
 
-#: plug-ins/common/file-ps.c:514
+#: plug-ins/common/file-ps.c:500
 msgid "_X offset"
 msgstr "Desplaçament en _X"
 
-#: plug-ins/common/file-ps.c:515
+#: plug-ins/common/file-ps.c:501
 msgid "X-offset to image from lower left corner"
 msgstr "Desplaçament X de la imatge des de la cantonada inferior esquerra"
 
-#: plug-ins/common/file-ps.c:520
+#: plug-ins/common/file-ps.c:506
 msgid "Y o_ffset"
 msgstr "Desplaçament en _Y"
 
-#: plug-ins/common/file-ps.c:521
+#: plug-ins/common/file-ps.c:507
 msgid "Y-offset to image from lower left corner"
 msgstr "Desplaçament Y de la imatge des de la cantonada inferior esquerra"
 
-#: plug-ins/common/file-ps.c:526
+#: plug-ins/common/file-ps.c:512
 msgid "Unit"
 msgstr "Unitat"
 
-#: plug-ins/common/file-ps.c:527
+#: plug-ins/common/file-ps.c:513
 msgid "Unit for width/height/offset. 0: inches, 1: millimeters"
 msgstr ""
 "Unitats per a l'amplada/alçada/desplaçament. 0: polzades, 1: mil·límetres"
 
-#: plug-ins/common/file-ps.c:533
+#: plug-ins/common/file-ps.c:519
 msgid "_Keep aspect ratio"
 msgstr "_Conserva la relació d'aspecte"
 
-#: plug-ins/common/file-ps.c:534
+#: plug-ins/common/file-ps.c:520
 msgid "FALSE: use width/height, TRUE: keep aspect ratio"
 msgstr "FALSE: usa amplada/alçada, TRUE: manté la relació d'aspecte"
 
-#: plug-ins/common/file-ps.c:539 plug-ins/map-object/map-object-ui.c:738
+#: plug-ins/common/file-ps.c:525 plug-ins/map-object/map-object-ui.c:738
 msgid "Rotation"
 msgstr "Rotació"
 
-#: plug-ins/common/file-ps.c:545
+#: plug-ins/common/file-ps.c:531
 msgid "PostScript Level _2"
 msgstr "PostScript nivell _2"
 
-#: plug-ins/common/file-ps.c:546
+#: plug-ins/common/file-ps.c:532
 msgid "FALSE: PostScript Level 1, TRUE: PostScript Level 2"
 msgstr "FALSE: Nivell PostScript 1, TRUE: Nivell PostScript 2"
 
-#: plug-ins/common/file-ps.c:551
+#: plug-ins/common/file-ps.c:537
 msgid "Encapsula_ted PostScript"
 msgstr "PostScript encapsula_t"
 
-#: plug-ins/common/file-ps.c:552
+#: plug-ins/common/file-ps.c:538
 msgid "FALSE: PostScript, TRUE: Encapsulated PostScript"
 msgstr "FALSE: PostScript, TRUE: PostScript encapsulat"
 
-#: plug-ins/common/file-ps.c:557 plug-ins/imagemap/imap_grid.c:301
+#: plug-ins/common/file-ps.c:543 plug-ins/imagemap/imap_grid.c:301
 msgid "_Preview"
 msgstr "_Previsualitza"
 
-#: plug-ins/common/file-ps.c:558
+#: plug-ins/common/file-ps.c:544
 msgid "Show Preview"
 msgstr "Mostra la previsualització"
 
-#: plug-ins/common/file-ps.c:563
+#: plug-ins/common/file-ps.c:549
 msgid "Preview Si_ze"
 msgstr "Mida de previ_sualització"
 
-#: plug-ins/common/file-ps.c:564
+#: plug-ins/common/file-ps.c:550
 msgid "0: no preview, >0: max. size of preview"
 msgstr "0: sense vista prèvia, >0: mida màxima de la vista prèvia"
 
-#: plug-ins/common/file-ps.c:708
+#: plug-ins/common/file-ps.c:706
 #, c-format
 msgid "PostScript plug-in does not support multiple layers."
 msgstr "El connector PostScript no admet múltiples capes."
 
-#: plug-ins/common/file-ps.c:1119
+#: plug-ins/common/file-ps.c:1117
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "No s'ha pogut interpretar el fitxer PostScript «%s»"
 
-#: plug-ins/common/file-ps.c:1203
+#: plug-ins/common/file-ps.c:1199
 msgid "Rendered EPS"
 msgstr "EPS renderitzat"
 
-#: plug-ins/common/file-ps.c:1231
+#: plug-ins/common/file-ps.c:1227
 #, c-format
 msgid "%s-pages"
 msgstr "%s-pàgines"
 
-#: plug-ins/common/file-ps.c:1303
+#: plug-ins/common/file-ps.c:1299
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "L'exportació a PostScript no pot gestionar imatges amb canals alfa"
 
-#: plug-ins/common/file-ps.c:3712
-msgid "Rendering"
-msgstr "S'està generant la imatge"
-
 #. Coloring
-#: plug-ins/common/file-ps.c:3720
+#: plug-ins/common/file-ps.c:3686
 msgid "B/W"
 msgstr "B/N"
 
-#: plug-ins/common/file-ps.c:3721 plug-ins/imagemap/imap-menu.ui:101
+#: plug-ins/common/file-ps.c:3687 plug-ins/imagemap/imap-menu.ui:101
 msgid "Gray"
 msgstr "Gris"
 
-#: plug-ins/common/file-ps.c:3722 plug-ins/common/file-xpm.c:511
+#: plug-ins/common/file-ps.c:3688 plug-ins/common/file-xpm.c:511
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:179
 #: plug-ins/imagemap/imap-menu.ui:96 plug-ins/lighting/lighting-main.c:223
 #: plug-ins/lighting/lighting-main.c:346 plug-ins/lighting/lighting-main.c:405
@@ -5287,27 +5244,27 @@ msgstr "Gris"
 msgid "Color"
 msgstr "Color"
 
-#: plug-ins/common/file-ps.c:3730 plug-ins/common/file-ps.c:3738
+#: plug-ins/common/file-ps.c:3696 plug-ins/common/file-ps.c:3704
 msgid "Weak"
 msgstr "Feble"
 
-#: plug-ins/common/file-ps.c:3731 plug-ins/common/file-ps.c:3739
+#: plug-ins/common/file-ps.c:3697 plug-ins/common/file-ps.c:3705
 msgid "Strong"
 msgstr "Fort"
 
-#: plug-ins/common/file-ps.c:3765
+#: plug-ins/common/file-ps.c:3730
 msgid "Pages:"
 msgstr "Pàgines:"
 
-#: plug-ins/common/file-ps.c:3769
+#: plug-ins/common/file-ps.c:3734
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Pàgines a carregar (p. ex. 1-4 o 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3775
+#: plug-ins/common/file-ps.c:3740
 msgid "Open as"
 msgstr "Obre com a"
 
-#: plug-ins/common/file-ps.c:3868
+#: plug-ins/common/file-ps.c:3833
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5315,37 +5272,37 @@ msgstr ""
 "Si es marca l'opció, la imatge resultant es reduirà per a encaixar en la "
 "mida donada sense canviar la relació d'aspecte."
 
-#: plug-ins/common/file-ps.c:3874
+#: plug-ins/common/file-ps.c:3839
 msgid "Image Size"
 msgstr "Mida de la imatge"
 
 #. Unit
-#: plug-ins/common/file-ps.c:3886
+#: plug-ins/common/file-ps.c:3851
 msgid "_Inch"
 msgstr "_Polzada"
 
-#: plug-ins/common/file-ps.c:3887
+#: plug-ins/common/file-ps.c:3852
 msgid "_Millimeter"
 msgstr "_Mil·límetre"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3900
+#: plug-ins/common/file-ps.c:3865
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3901
+#: plug-ins/common/file-ps.c:3866
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3902
+#: plug-ins/common/file-ps.c:3867
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3903
+#: plug-ins/common/file-ps.c:3868
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3910
+#: plug-ins/common/file-ps.c:3875
 msgid "Output"
 msgstr "Sortida"
 
@@ -5628,9 +5585,13 @@ msgstr "El format QOI no admet múltiples capes."
 msgid "Failed to read QOI file"
 msgstr "No s'ha pogut llegir el fitxer QOI"
 
-#: plug-ins/common/file-raw-data.c:336 plug-ins/common/file-raw-data.c:455
+#: plug-ins/common/file-raw-data.c:336 plug-ins/common/file-raw-data.c:504
 msgid "Raw image data"
 msgstr "Dades d'imatge sense format"
+
+#: plug-ins/common/file-raw-data.c:339 plug-ins/common/file-raw-data.c:341
+msgid "Load raw images, specifying image information"
+msgstr "Carrega les imatges RAW, especificant la informació de la imatge"
 
 #: plug-ins/common/file-raw-data.c:356
 msgid "Image width in number of pixels"
@@ -5645,100 +5606,235 @@ msgid "Offset to beginning of image in raw data"
 msgstr "Desplaçament al començament de la imatge en dades sense processar"
 
 #: plug-ins/common/file-raw-data.c:371
-msgid "Pixel _format"
-msgstr "_Format del píxel"
+msgid "Pi_xel format"
+msgstr "F_ormat del píxel"
 
 #: plug-ins/common/file-raw-data.c:372
 msgid "The layout of pixel data, such as components and their order"
 msgstr ""
 "La disposició de les dades de píxels, com ara els components i el seu ordre"
 
+#: plug-ins/common/file-raw-data.c:373
+msgid "RGB 8-bit"
+msgstr "RGB de 8 bits"
+
+#: plug-ins/common/file-raw-data.c:374
+msgid "RGB 16-bit"
+msgstr "RGB de 16 bits"
+
+#: plug-ins/common/file-raw-data.c:375
+msgid "RGB 32-bit"
+msgstr "RGB de 32 bits"
+
 #: plug-ins/common/file-raw-data.c:376
-msgid "Data t_ype"
-msgstr "T_ipus de dades"
+msgid "RGBA 8-bit"
+msgstr "RGBA de 8 bits"
 
 #: plug-ins/common/file-raw-data.c:377
-msgid ""
-"Data type used to represent pixel values { RAW_ENCODING_UNSIGNED (0), "
-"RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }"
-msgstr ""
-"Tipus de dades que s'utilitzen per representar els valors dels píxels { RAW-"
-"ENCODING-UNSIGNED (0), RAW-ENCODING-SIGNED (1), RAW-ENCODING-FLOAT (2) }"
+msgid "RGBA 16-bit"
+msgstr "RGBA de 16 bits"
+
+#: plug-ins/common/file-raw-data.c:378
+msgid "RGBA 32-bit"
+msgstr "RGBA de 32 bits"
+
+#: plug-ins/common/file-raw-data.c:379
+msgid "RGB565"
+msgstr "RGB565"
+
+#: plug-ins/common/file-raw-data.c:380
+msgid "BGR565"
+msgstr "BGR565"
 
 #: plug-ins/common/file-raw-data.c:381
-msgid "Endianness"
-msgstr "Endianitat"
+msgid "B&W 1 bit"
+msgstr "B&N 1 bit"
 
 #: plug-ins/common/file-raw-data.c:382
-msgid ""
-"Order of sequences of bytes { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"
-msgstr ""
-"Ordre de seqüències de bytes { RAW-LITTLE-ENDIAN (0), RAW-BIG-ENDIAN (1) }"
+msgid "Grayscale 2-bit"
+msgstr "Escala de grisos de 2 bits"
 
-#: plug-ins/common/file-raw-data.c:386 plug-ins/common/file-raw-data.c:470
-msgid "Planar configuration"
-msgstr "Configuració planar"
+#: plug-ins/common/file-raw-data.c:383
+msgid "Grayscale 4-bit"
+msgstr "Escala de grisos de 4 bits"
 
-#: plug-ins/common/file-raw-data.c:387 plug-ins/common/file-raw-data.c:471
-msgid ""
-"How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), "
-"RAW_PLANAR_SEPARATE (1) }"
-msgstr ""
-"Com s'emmagatzemen les dades dels píxels de color { RAW-PLANAR-CONTIGUOUS "
-"(0), RAW-PLANAR-SEPARATE (1) }"
+#: plug-ins/common/file-raw-data.c:384
+msgid "Grayscale 8-bit"
+msgstr "Escala de grisos de 8 bits"
+
+#: plug-ins/common/file-raw-data.c:385
+msgid "Grayscale 16-bit"
+msgstr "Escala de grisos de 16 bits"
+
+#: plug-ins/common/file-raw-data.c:386
+msgid "Grayscale 32-bit"
+msgstr "Escala de grisos de 32 bits"
+
+#: plug-ins/common/file-raw-data.c:387
+msgid "Grayscale-Alpha 8-bit"
+msgstr "Escala de grisos alfa de 8 bits"
+
+#: plug-ins/common/file-raw-data.c:388
+msgid "Grayscale-Alpha 16-bit"
+msgstr "Escala de grisos alfa de 16 bits"
+
+#: plug-ins/common/file-raw-data.c:389
+msgid "Grayscale-Alpha 32-bit"
+msgstr "Escala de grisos alfa de 32 bits"
+
+#: plug-ins/common/file-raw-data.c:390
+msgid "Indexed"
+msgstr "Indexat"
+
+#: plug-ins/common/file-raw-data.c:391
+msgid "Indexed Alpha"
+msgstr "Indexat amb alfa"
 
 #: plug-ins/common/file-raw-data.c:395
+msgid "_Data type"
+msgstr "T_ipus de dades"
+
+#: plug-ins/common/file-raw-data.c:396
+msgid "Data type used to represent pixel values"
+msgstr ""
+"Tipus de dades que s'utilitzen per a representar els valors dels píxels"
+
+#: plug-ins/common/file-raw-data.c:397
+msgid "Unsigned Integer"
+msgstr "Enter sense signe"
+
+#: plug-ins/common/file-raw-data.c:398
+msgid "Signed Integer"
+msgstr "Enter amb signe"
+
+#: plug-ins/common/file-raw-data.c:399
+msgid "Floating Point"
+msgstr "Punt flotant"
+
+#: plug-ins/common/file-raw-data.c:403
+msgid "_Endianness"
+msgstr "_Endianness"
+
+#: plug-ins/common/file-raw-data.c:404
+msgid "Order of sequences of bytes"
+msgstr "Ordre de seqüències de bytes"
+
+#: plug-ins/common/file-raw-data.c:405
+msgid "Little Endian"
+msgstr "Ordre dels bytes petit-gran"
+
+#: plug-ins/common/file-raw-data.c:406
+msgid "Big Endian"
+msgstr "Ordre dels bytes gran-petit"
+
+#: plug-ins/common/file-raw-data.c:410
+msgid "Planar confi_guration"
+msgstr "C_onfiguració planar"
+
+#: plug-ins/common/file-raw-data.c:411 plug-ins/common/file-raw-data.c:520
+msgid "How color pixel data are stored"
+msgstr "Com s'emmagatzemen les dades dels píxels de color"
+
+#: plug-ins/common/file-raw-data.c:412 plug-ins/common/file-raw-data.c:521
+msgid "Contiguous"
+msgstr "Contigua"
+
+#: plug-ins/common/file-raw-data.c:413 plug-ins/common/file-raw-data.c:522
+msgid "Planar"
+msgstr "Planar"
+
+#: plug-ins/common/file-raw-data.c:420 plug-ins/common/file-raw-data.c:479
 msgid "Palette Offse_t"
 msgstr "Desplaçamen_t de la paleta"
 
-#: plug-ins/common/file-raw-data.c:396
+#: plug-ins/common/file-raw-data.c:421 plug-ins/common/file-raw-data.c:480
 msgid "Offset to beginning of data in the palette file"
 msgstr "Desplaçament al començament de les dades al fitxer de paleta"
 
-#: plug-ins/common/file-raw-data.c:400
+#: plug-ins/common/file-raw-data.c:426 plug-ins/common/file-raw-data.c:485
+#: plug-ins/common/file-raw-data.c:527
 msgid "Palette's la_yout"
 msgstr "Dispos_ició de la paleta"
 
-#: plug-ins/common/file-raw-data.c:401 plug-ins/common/file-raw-data.c:477
-msgid ""
-"The layout for the palette's color channels { RAW_PALETTE_RGB (0), "
-"RAW_PALETTE_BGR (1) }"
-msgstr ""
-"La disposició dels canals de color de la paleta { RAW-PALETTE-RGB (0), RAW-"
-"PALETTE-BGR (1) }"
+#: plug-ins/common/file-raw-data.c:427 plug-ins/common/file-raw-data.c:486
+#: plug-ins/common/file-raw-data.c:528
+msgid "The layout for the palette's color channels"
+msgstr "La disposició dels canals de color de la paleta"
 
-#: plug-ins/common/file-raw-data.c:406
+#: plug-ins/common/file-raw-data.c:428 plug-ins/common/file-raw-data.c:487
+#: plug-ins/common/file-raw-data.c:529
+msgid "R, G, B (normal)"
+msgstr "R, G, B (normal)"
+
+#: plug-ins/common/file-raw-data.c:429 plug-ins/common/file-raw-data.c:488
+#: plug-ins/common/file-raw-data.c:530
+msgid "B, G, R, X (BMP style)"
+msgstr "B, G, R, X (estil BMP)"
+
+#: plug-ins/common/file-raw-data.c:433 plug-ins/common/file-raw-data.c:492
 msgid "_Palette File"
 msgstr "_Fitxer de paleta"
 
-#: plug-ins/common/file-raw-data.c:407
+#: plug-ins/common/file-raw-data.c:434 plug-ins/common/file-raw-data.c:493
 msgid "The file containing palette data"
 msgstr "El fitxer que conté les dades de la paleta"
 
-#: plug-ins/common/file-raw-data.c:417 plug-ins/common/file-raw-data.c:2804
+#: plug-ins/common/file-raw-data.c:444 plug-ins/common/file-raw-data.c:2788
 msgid "Digital Elevation Model data"
 msgstr "Dades del model d'elevació digital"
 
-#: plug-ins/common/file-raw-data.c:441
-msgid "_Sample spacing"
+#: plug-ins/common/file-raw-data.c:447
+msgid "Load HGT data as images"
+msgstr "Carrega les dades HGT com a imatges"
+
+#: plug-ins/common/file-raw-data.c:448
+msgid ""
+"Load Digital Elevation Model data in HGT format from the Shuttle Radar "
+"Topography Mission as images. Though the output image will be RGB, all "
+"colors are grayscale by default and the contrast will be quite low on most "
+"earth relief. Therefore you will likely want to remap elevation to colors as"
+" a second step, for instance with the \"Gradient Map\" plug-in."
+msgstr ""
+"Carrega les dades del Model d'Elevació Digital en format HGT des de la "
+"Missió de Topografia de Radar del Transbordador com a imatges. Tot i que la "
+"imatge de sortida serà RGB, tots els colors són en escala de grisos per "
+"defecte i el contrast serà bastant baix en la majoria del relleu de la "
+"terra. Per tant, probablement voldreu tornar a assignar l'elevació als "
+"colors com a segon pas, per exemple amb el connector «Gradient Map»."
+
+#: plug-ins/common/file-raw-data.c:468
+msgid "Sa_mple spacing"
 msgstr "E_spaiat de la mostra"
 
-#: plug-ins/common/file-raw-data.c:442
-msgid ""
-"The sample spacing of the data. (0: auto-detect, 1: SRTM-1, 2: SRTM-3 data)"
-msgstr ""
-"Espaiat de mostra de les dades. (0: detecció automàtica, 1: SRTM-1, 2: dades"
-" SRTM-3)"
+#: plug-ins/common/file-raw-data.c:469
+msgid "The sample spacing of the data."
+msgstr "Espaiat de mostra de les dades."
 
-#: plug-ins/common/file-raw-data.c:476
-msgid "Palette's layout"
-msgstr "Disposició de la paleta"
+#: plug-ins/common/file-raw-data.c:470
+msgid "Auto-Detect"
+msgstr "Detecta automàticament"
 
-#: plug-ins/common/file-raw-data.c:484
+#: plug-ins/common/file-raw-data.c:471
+msgid "SRTM-1 (1 arc second)"
+msgstr "SRTM-1 (1 arc de segon)"
+
+#: plug-ins/common/file-raw-data.c:472
+msgid "SRTM-3 (3 arc seconds)"
+msgstr "SRTM-3 (3 arcs de segon)"
+
+#: plug-ins/common/file-raw-data.c:507 plug-ins/common/file-raw-data.c:508
+msgid "Dump images to disk in raw format"
+msgstr "Bolca les imatges al disc en format RAW"
+
+#: plug-ins/common/file-raw-data.c:519
+msgid "Planar configuration"
+msgstr "Configuració planar"
+
+#: plug-ins/common/file-raw-data.c:536
 msgid "Raw Data"
 msgstr "Dades sense format"
 
-#: plug-ins/common/file-raw-data.c:551
+#: plug-ins/common/file-raw-data.c:601
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and "
@@ -5747,7 +5843,7 @@ msgstr ""
 "%d no és una mostra d'espaiat vàlida. Els valors vàlids són: 0 (detecció "
 "automàtica), 1 i 3."
 
-#: plug-ins/common/file-raw-data.c:564
+#: plug-ins/common/file-raw-data.c:614
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
@@ -5759,199 +5855,60 @@ msgstr ""
 "HGT suportats són: SRTM-1 i SRTM-3. Si coneixeu la variant, executeu amb els"
 " arguments 1 o 3."
 
-#: plug-ins/common/file-raw-data.c:649
+#: plug-ins/common/file-raw-data.c:697
 #, c-format
 msgid "RAW export does not support multiple layers."
 msgstr "L'exportació RAW no admet múltiples capes."
 
-#: plug-ins/common/file-raw-data.c:1547
+#: plug-ins/common/file-raw-data.c:1591
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
 msgstr "No s'ha pogut obrir «%s» per a verificar-ne la mida: %s"
 
-#: plug-ins/common/file-raw-data.c:2633
+#: plug-ins/common/file-raw-data.c:2679
 msgid "Load Image from Raw Data"
 msgstr "Carrega una imatge des de dades sense format"
-
-#. 2 types of HGT files are possible: SRTM-1 and SRTM-3.
-#. * From the documentation:
-#. https://dds.cr.usgs.gov/srtm/version1/Documentation/SRTM_Topo.txt
-#. * "SRTM-1 data are sampled at one arc-second of latitude and longitude and
-#. *  each file contains 3601 lines and 3601 samples.
-#. * [...]
-#. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
-#. * 1201 samples with similar overlapping rows and columns."
-#: plug-ins/common/file-raw-data.c:2692
-msgid "SRTM-1 (1 arc-second)"
-msgstr "SRTM-1 (1 arc de segon)"
-
-#: plug-ins/common/file-raw-data.c:2693
-msgid "SRTM-3 (3 arc-seconds)"
-msgstr "SRTM-3 (3 arcs de segon)"
-
-#. Generic case for any data. Let's leave choice to select the
-#. * right type of raw data.
-#: plug-ins/common/file-raw-data.c:2704
-msgid "RGB 8-bit"
-msgstr "RGB de 8 bits"
-
-#: plug-ins/common/file-raw-data.c:2705
-msgid "RGB 16-bit"
-msgstr "RGB de 16 bits"
-
-#: plug-ins/common/file-raw-data.c:2706
-msgid "RGB 32-bit"
-msgstr "RGB de 32 bits"
-
-#: plug-ins/common/file-raw-data.c:2708
-msgid "RGBA 8-bit"
-msgstr "RGBA de 8 bits"
-
-#: plug-ins/common/file-raw-data.c:2709
-msgid "RGBA 16-bit"
-msgstr "RGBA de 16 bits"
-
-#: plug-ins/common/file-raw-data.c:2710
-msgid "RGBA 32-bit"
-msgstr "RGBA de 32 bits"
-
-#: plug-ins/common/file-raw-data.c:2712
-msgid "RGB565"
-msgstr "RGB565"
-
-#: plug-ins/common/file-raw-data.c:2713
-msgid "BGR565"
-msgstr "BGR565"
-
-#: plug-ins/common/file-raw-data.c:2715
-msgid "B&W 1 bit"
-msgstr "B&N 1 bit"
-
-#: plug-ins/common/file-raw-data.c:2716
-msgid "Grayscale 2-bit"
-msgstr "Escala de grisos de 2 bits"
-
-#: plug-ins/common/file-raw-data.c:2717
-msgid "Grayscale 4-bit"
-msgstr "Escala de grisos de 4 bits"
-
-#: plug-ins/common/file-raw-data.c:2718
-msgid "Grayscale 8-bit"
-msgstr "Escala de grisos de 8 bits"
-
-#: plug-ins/common/file-raw-data.c:2719
-msgid "Grayscale 16-bit"
-msgstr "Escala de grisos de 16 bits"
-
-#: plug-ins/common/file-raw-data.c:2720
-msgid "Grayscale 32-bit"
-msgstr "Escala de grisos de 32 bits"
-
-#: plug-ins/common/file-raw-data.c:2722
-msgid "Grayscale-Alpha 8-bit"
-msgstr "Escala de grisos alfa de 8 bits"
-
-#: plug-ins/common/file-raw-data.c:2723
-msgid "Grayscale-Alpha 16-bit"
-msgstr "Escala de grisos alfa de 16 bits"
-
-#: plug-ins/common/file-raw-data.c:2724
-msgid "Grayscale-Alpha 32-bit"
-msgstr "Escala de grisos alfa de 32 bits"
-
-#: plug-ins/common/file-raw-data.c:2726
-msgid "Indexed"
-msgstr "Indexat"
-
-#: plug-ins/common/file-raw-data.c:2727
-msgid "Indexed Alpha"
-msgstr "Indexat amb alfa"
-
-#: plug-ins/common/file-raw-data.c:2733
-msgid "Unsigned Integer"
-msgstr "Enter sense signe"
-
-#: plug-ins/common/file-raw-data.c:2734
-msgid "Signed Integer"
-msgstr "Enter amb signe"
-
-#: plug-ins/common/file-raw-data.c:2735
-msgid "Floating Point"
-msgstr "Punt flotant"
-
-#: plug-ins/common/file-raw-data.c:2741
-msgid "Little Endian"
-msgstr "Ordre dels bytes petit-gran"
-
-#: plug-ins/common/file-raw-data.c:2742
-msgid "Big Endian"
-msgstr "Ordre dels bytes gran-petit"
-
-#: plug-ins/common/file-raw-data.c:2748
-msgid "Contiguous"
-msgstr "Contigua"
-
-#: plug-ins/common/file-raw-data.c:2749
-msgid "Planar"
-msgstr "Planar"
 
 #. Translators: Digital Elevation Model (DEM) is a technical term
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
-#: plug-ins/common/file-raw-data.c:2798
+#: plug-ins/common/file-raw-data.c:2782
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Dades del model d'elevació digital (1 arc de segon)"
 
-#: plug-ins/common/file-raw-data.c:2801
+#: plug-ins/common/file-raw-data.c:2785
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Dades del model d'elevació digital (3 arcs de segon)"
 
-#: plug-ins/common/file-raw-data.c:2808
+#: plug-ins/common/file-raw-data.c:2792
 msgid "Image"
 msgstr "Imatge"
 
-#: plug-ins/common/file-raw-data.c:2811
-msgid "R, G, B (normal)"
-msgstr "R, G, B (normal)"
-
-#: plug-ins/common/file-raw-data.c:2812
-msgid "B, G, R, X (BMP style)"
-msgstr "B, G, R, X (estil BMP)"
-
-#: plug-ins/common/file-raw-data.c:2827
+#: plug-ins/common/file-raw-data.c:2804
 msgid "Palette"
 msgstr "Paleta"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
-#: plug-ins/common/file-raw-data.c:2898
+#: plug-ins/common/file-raw-data.c:2874
 #, c-format
 msgid "_Contiguous (%s)"
 msgstr "C_ontigua (%s)"
 
-#: plug-ins/common/file-raw-data.c:2900
+#: plug-ins/common/file-raw-data.c:2876
 msgid "_Contiguous"
 msgstr "Co_ntigua"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
-#: plug-ins/common/file-raw-data.c:2906
+#: plug-ins/common/file-raw-data.c:2882
 #, c-format
 msgid "_Planar (%s)"
 msgstr "_Planar (%s)"
 
-#: plug-ins/common/file-raw-data.c:2908
+#: plug-ins/common/file-raw-data.c:2884
 msgid "_Planar"
 msgstr "_Planar"
-
-#. Palette type combo
-#: plug-ins/common/file-raw-data.c:2930
-msgid "_R, G, B (normal)"
-msgstr "_R, G, B (normal)"
-
-#: plug-ins/common/file-raw-data.c:2931
-msgid "_B, G, R, X (BMP style)"
-msgstr "_B, G, R, X (estil BMP)"
 
 #: plug-ins/common/file-sunras.c:277 plug-ins/common/file-sunras.c:303
 msgid "SUN Rasterfile image"
@@ -6066,75 +6023,55 @@ msgstr "_Estàndard"
 msgid "R_un-Length Encoded"
 msgstr "Codificació _Run-Lenght"
 
-#: plug-ins/common/file-svg.c:163
+#: plug-ins/common/file-svg.c:167
 msgid "SVG image"
 msgstr "Imatge SVG"
 
-#: plug-ins/common/file-svg.c:186 plug-ins/common/file-wmf.c:177
-msgid "Resolu_tion"
-msgstr "Resolu_ció"
+#: plug-ins/common/file-svg.c:180
+msgid "SVG"
+msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:187
-msgid "Resolution to use for rendering the SVG"
-msgstr "Resolució a usar per a renderitzar el SVG"
-
-#: plug-ins/common/file-svg.c:193
-msgid ""
-"Width (in pixels) to load the SVG in. (0 for original width, a negative "
-"width to specify a maximum width)"
-msgstr ""
-"Amplada (en píxels) per a carregar el SVG. (0 per a l'amplada original, una "
-"amplada negativa per a especificar una amplada màxima)"
-
-#: plug-ins/common/file-svg.c:201
-msgid ""
-"Height (in pixels) to load the SVG in. (0 for original height, a negative "
-"height to specify a maximum height)"
-msgstr ""
-"Alçada (en píxels) per a carregar el SVG. (0 per a l'alçada original, una "
-"alçada negativa per a especificar una alçada màxima)"
-
-#: plug-ins/common/file-svg.c:208
+#: plug-ins/common/file-svg.c:192
 msgid "_Paths"
 msgstr "_Camins"
 
-#: plug-ins/common/file-svg.c:209
+#: plug-ins/common/file-svg.c:193
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr ""
 "Si i com importar rutes perquè es puguin utilitzar amb l'eina de rutes"
 
-#: plug-ins/common/file-svg.c:210
+#: plug-ins/common/file-svg.c:194
 msgid "Don't import paths"
 msgstr "No importis rutes"
 
-#: plug-ins/common/file-svg.c:211
+#: plug-ins/common/file-svg.c:195
 msgid "Import paths individually"
 msgstr "Importa rutes individualment"
 
-#: plug-ins/common/file-svg.c:212
+#: plug-ins/common/file-svg.c:196
 msgid "Merge imported paths"
 msgstr "Fusiona els camins importats"
 
-#: plug-ins/common/file-svg.c:385 plug-ins/common/file-svg.c:811
+#: plug-ins/common/file-svg.c:371 plug-ins/common/file-svg.c:797
 #: plug-ins/file-exr/file-exr.c:356 plug-ins/file-exr/file-exr.c:370
 msgid "Unknown reason"
 msgstr "Raó desconeguda"
 
-#: plug-ins/common/file-svg.c:391
+#: plug-ins/common/file-svg.c:377
 msgid "Rendering SVG"
 msgstr "S'està renderitzant l'SVG"
 
-#: plug-ins/common/file-svg.c:401
+#: plug-ins/common/file-svg.c:387
 msgid "Rendered SVG"
 msgstr "SVG renderitzat"
 
-#: plug-ins/common/file-svg.c:601 plug-ins/common/file-wmf.c:398
+#: plug-ins/common/file-svg.c:587 plug-ins/common/file-wmf.c:392
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: plug-ins/common/file-svg.c:609
+#: plug-ins/common/file-svg.c:595
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -6146,15 +6083,15 @@ msgstr ""
 #. * option (XML_PARSE_HUGE in libxml) because it is considered
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
-#: plug-ins/common/file-svg.c:736
+#: plug-ins/common/file-svg.c:722
 msgid "Disable safety size limits?"
 msgstr "Voleu desactivar els límits de seguretat de la mida?"
 
-#: plug-ins/common/file-svg.c:741
+#: plug-ins/common/file-svg.c:727
 msgid "_No"
 msgstr "_No"
 
-#: plug-ins/common/file-svg.c:742
+#: plug-ins/common/file-svg.c:728
 msgid "_Yes"
 msgstr "_Sí"
 
@@ -6167,7 +6104,7 @@ msgstr "_Sí"
 #. * just directly return from the plug-in as a failure run in other
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
-#: plug-ins/common/file-svg.c:766
+#: plug-ins/common/file-svg.c:752
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to consume too much memory."
@@ -6175,20 +6112,16 @@ msgstr ""
 "S'ha produït un error d'anàlisi.\n"
 "Inhabilitar els límits de seguretat pot ajudar. Els fitxers SVG maliciosos poden utilitzar-los per a consumir massa memòria."
 
-#: plug-ins/common/file-svg.c:778
+#: plug-ins/common/file-svg.c:764
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr ""
 "Per raons de seguretat, això només s'hauria d'utilitzar per a entrades de "
 "confiança!"
 
-#: plug-ins/common/file-svg.c:785
+#: plug-ins/common/file-svg.c:771
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 "Voleu tornar-ho a intentar sense límits i evitar analitzar dades enormes?"
-
-#: plug-ins/common/file-svg.c:820
-msgid "Render Scalable Vector Graphics"
-msgstr "Compon el gràfic de vectors escalables (SVG)"
 
 #: plug-ins/common/file-tga.c:263 plug-ins/common/file-tga.c:289
 msgid "TarGA image"
@@ -6265,23 +6198,15 @@ msgstr "«%s»: el valor de la capçalera fixa WBMP no és compatible"
 msgid "'%s' is not a valid WBMP file"
 msgstr "«%s» no és un fitxer WBMP vàlid"
 
-#: plug-ins/common/file-wmf.c:155
+#: plug-ins/common/file-wmf.c:166
 msgid "Microsoft WMF file"
 msgstr "Fitxer WMF de Microsoft"
 
 #: plug-ins/common/file-wmf.c:178
-msgid "Resolution to use for rendering the WMF"
-msgstr "Resolució a usar per a renderitzar el WMF"
+msgid "WMF"
+msgstr "WMF"
 
-#: plug-ins/common/file-wmf.c:185
-msgid "Width (in pixels) to load the WMF in, 0 for original width"
-msgstr "Amplada (en píxels) per a carregar el WMF, 0 per a l'amplada original"
-
-#: plug-ins/common/file-wmf.c:192
-msgid "Height (in pixels) to load the WMF in, 0 for original height"
-msgstr "Alçada (en píxels) per a carregar el WMF, 0 per a l'alçada original"
-
-#: plug-ins/common/file-wmf.c:392
+#: plug-ins/common/file-wmf.c:386
 msgid ""
 "WMF file does not\n"
 "specify a size!"
@@ -6289,11 +6214,7 @@ msgstr ""
 "El fitxer WMF no\n"
 "especifica una mida!"
 
-#: plug-ins/common/file-wmf.c:443
-msgid "Render Windows Metafile"
-msgstr "Compon un metafitxer del Windows"
-
-#: plug-ins/common/file-wmf.c:797
+#: plug-ins/common/file-wmf.c:794
 msgid "Rendered WMF"
 msgstr "S'ha compost el WMF"
 
@@ -6642,8 +6563,8 @@ msgstr ""
 #  init the progress meter
 #  Set up progress display
 #. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1271 plug-ins/file-webp/file-webp-save.c:198
-#: plug-ins/file-webp/file-webp-save.c:597
+#: plug-ins/common/file-xmc.c:1271 plug-ins/file-webp/file-webp-export.c:198
+#: plug-ins/file-webp/file-webp-export.c:597
 #, c-format
 msgid "Saving '%s'"
 msgstr "S'està desant «%s»"
@@ -8032,7 +7953,7 @@ msgstr "Diàleg de la selecció del color"
 
 #. Scale
 #: plug-ins/common/sphere-designer.c:2856 plug-ins/gimpressionist/paper.c:191
-#: plug-ins/ifs-compose/ifs-compose.c:669
+#: plug-ins/ifs-compose/ifs-compose.c:670
 msgid "Scale:"
 msgstr "Escala:"
 
@@ -8167,7 +8088,7 @@ msgstr "Redueix i compon un mosaic"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:492 plug-ins/ifs-compose/ifs-compose.c:725
+#: plug-ins/common/tile-small.c:492 plug-ins/ifs-compose/ifs-compose.c:726
 msgid "Flip"
 msgstr "Inverteix"
 
@@ -8618,7 +8539,7 @@ msgstr "Deforma"
 msgid "Basic Options"
 msgstr "Opcions bàsiques"
 
-#: plug-ins/common/warp.c:450 plug-ins/file-jpeg/jpeg-save.c:970
+#: plug-ins/common/warp.c:450 plug-ins/file-jpeg/jpeg-export.c:951
 #: plug-ins/file-webp/file-webp-dialog.c:107
 msgid "Advanced Options"
 msgstr "Opcions avançades"
@@ -8837,6 +8758,56 @@ msgstr "S'està baixant la pàgina web «%s»"
 msgid "Transferring webpage image for '%s'"
 msgstr "S'està transferint la imatge de la pàgina web per «%s»"
 
+#: plug-ins/file-bmp/bmp-export.c:199 plug-ins/file-bmp/bmp-export.c:232
+msgid "Cannot export indexed image with transparency in BMP file format."
+msgstr ""
+"No es pot exportar la imatge indexada amb transparència en un format de "
+"fitxer BMP."
+
+#: plug-ins/file-bmp/bmp-export.c:201 plug-ins/file-bmp/bmp-export.c:234
+msgid "Alpha channel will be ignored."
+msgstr "S'ignorarà el canal alfa."
+
+#: plug-ins/file-bmp/bmp-export.c:1009
+msgid "Compatibility"
+msgstr "Compatibilitat"
+
+#: plug-ins/file-bmp/bmp-export.c:1015
+msgid ""
+"Some applications can not read BMP images that include color space "
+"information. GIMP writes color space information by default. Disabling this "
+"option will cause GIMP to not write color space information to the file."
+msgstr ""
+"Algunes aplicacions no poden llegir imatges BMP que inclouen informació de "
+"l'espai en color. El GIMP, per defecte, escriu la informació de l'espai de "
+"color. Si deshabiliteu aquesta opció, el GIMP no escriurà la informació de "
+"l'espai de color al fitxer."
+
+#. RGB Encoding Options
+#: plug-ins/file-bmp/bmp-export.c:1026
+msgid "16 bit (R5 G6 B5)"
+msgstr "16 bits (R5 G6 B5)"
+
+#: plug-ins/file-bmp/bmp-export.c:1027
+msgid "16 bit (A1 R5 G5 B5)"
+msgstr "16 bits (A1 R5 G5 B5)"
+
+#: plug-ins/file-bmp/bmp-export.c:1028
+msgid "16 bit (X1 R5 G5 B5)"
+msgstr "16 bits (X1 R5 G5 B5)"
+
+#: plug-ins/file-bmp/bmp-export.c:1029
+msgid "24 bit (R8 G8 B8)"
+msgstr "24 bits (R8 G8 B8)"
+
+#: plug-ins/file-bmp/bmp-export.c:1030
+msgid "32 bit (A8 R8 G8 B8)"
+msgstr "32 bits (A8 R8 G8 B8)"
+
+#: plug-ins/file-bmp/bmp-export.c:1031
+msgid "32 bit (X8 R8 G8 B8)"
+msgstr "32 bits (X8 R8 G8 B8)"
+
 #: plug-ins/file-bmp/bmp-load.c:146
 msgid "Bad colormap"
 msgstr "Mapa de color erroni"
@@ -8876,56 +8847,6 @@ msgstr "La profunditat de bits no és vàlida o compatible."
 #: plug-ins/file-bmp/bmp-load.c:983
 msgid "The bitmap ends unexpectedly."
 msgstr "El mapa de bits acaba de forma inesperada."
-
-#: plug-ins/file-bmp/bmp-save.c:199 plug-ins/file-bmp/bmp-save.c:232
-msgid "Cannot export indexed image with transparency in BMP file format."
-msgstr ""
-"No es pot exportar la imatge indexada amb transparència en un format de "
-"fitxer BMP."
-
-#: plug-ins/file-bmp/bmp-save.c:201 plug-ins/file-bmp/bmp-save.c:234
-msgid "Alpha channel will be ignored."
-msgstr "S'ignorarà el canal alfa."
-
-#: plug-ins/file-bmp/bmp-save.c:1009
-msgid "Compatibility"
-msgstr "Compatibilitat"
-
-#: plug-ins/file-bmp/bmp-save.c:1015
-msgid ""
-"Some applications can not read BMP images that include color space "
-"information. GIMP writes color space information by default. Disabling this "
-"option will cause GIMP to not write color space information to the file."
-msgstr ""
-"Algunes aplicacions no poden llegir imatges BMP que inclouen informació de "
-"l'espai en color. El GIMP, per defecte, escriu la informació de l'espai de "
-"color. Si deshabiliteu aquesta opció, el GIMP no escriurà la informació de "
-"l'espai de color al fitxer."
-
-#. RGB Encoding Options
-#: plug-ins/file-bmp/bmp-save.c:1026
-msgid "16 bit (R5 G6 B5)"
-msgstr "16 bits (R5 G6 B5)"
-
-#: plug-ins/file-bmp/bmp-save.c:1027
-msgid "16 bit (A1 R5 G5 B5)"
-msgstr "16 bits (A1 R5 G5 B5)"
-
-#: plug-ins/file-bmp/bmp-save.c:1028
-msgid "16 bit (X1 R5 G5 B5)"
-msgstr "16 bits (X1 R5 G5 B5)"
-
-#: plug-ins/file-bmp/bmp-save.c:1029
-msgid "24 bit (R8 G8 B8)"
-msgstr "24 bits (R8 G8 B8)"
-
-#: plug-ins/file-bmp/bmp-save.c:1030
-msgid "32 bit (A8 R8 G8 B8)"
-msgstr "32 bits (A8 R8 G8 B8)"
-
-#: plug-ins/file-bmp/bmp-save.c:1031
-msgid "32 bit (X8 R8 G8 B8)"
-msgstr "32 bits (X8 R8 G8 B8)"
 
 #: plug-ins/file-bmp/bmp.c:155 plug-ins/file-bmp/bmp.c:181
 msgid "Windows BMP image"
@@ -9752,6 +9673,71 @@ msgstr ""
 msgid "Open FLIC Animation"
 msgstr "Obre l'animació FLIC"
 
+#: plug-ins/file-icns/file-icns-export.c:228
+#, c-format
+msgid ""
+"Invalid icon size. \n"
+"It will not be exported"
+msgstr ""
+"Mida d'icona no vàlida. \n"
+"No s'exportarà"
+
+#: plug-ins/file-icns/file-icns-export.c:231
+#, c-format
+msgid ""
+"Duplicate layer size. \n"
+"It will not be exported"
+msgstr ""
+"Mida de la capa duplicada. \n"
+"No s'exportarà"
+
+#: plug-ins/file-icns/file-icns-export.c:292
+#: plug-ins/file-icns/file-icns.c:178
+msgid "Apple Icon Image"
+msgstr "Imatge d'icona d'Apple"
+
+#: plug-ins/file-icns/file-icns-export.c:307
+msgid ""
+"Valid ICNS icons sizes are:\n"
+" 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
+"64x64, 128x128, 256x256, 512x512, and 1024x1024.\n"
+"Any other sized layers will be ignored on export."
+msgstr ""
+"Les mides vàlides de les icones ICNS són:\n"
+" 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
+"64x64, 128x128, 256x256, 512x512, i 1024x1024.\n"
+"Qualsevol altra capa de mida serà ignorada en exportar."
+
+#. Don't show warning by default
+#: plug-ins/file-icns/file-icns-export.c:315
+msgid "Export Icons"
+msgstr "Exporta les icones"
+
+#: plug-ins/file-icns/file-icns-export.c:524
+#, c-format
+msgid "Error writing icns: %s"
+msgstr "S'ha produït un error en escriure icns: %s"
+
+#: plug-ins/file-icns/file-icns-export.c:586
+#, c-format
+msgid ""
+"No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
+"24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
+msgstr ""
+"No hi ha capes de mida vàlida. Només les mides de capa vàlides són 16x12, "
+"16x16, 18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, o"
+" 1024x1024."
+
+#: plug-ins/file-icns/file-icns-export.c:604
+#, c-format
+msgid ""
+"Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
+"24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
+msgstr ""
+"Mida/es de capa/es no vàlida/es. Només les mides de capa vàlides són 16x12, "
+"16x16, 18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, o"
+" 1024x1024."
+
 #: plug-ins/file-icns/file-icns-load.c:433
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
@@ -9767,70 +9753,6 @@ msgstr ""
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "S'està obrint la miniatura per a «%s»"
-
-#: plug-ins/file-icns/file-icns-save.c:228
-#, c-format
-msgid ""
-"Invalid icon size. \n"
-"It will not be exported"
-msgstr ""
-"Mida d'icona no vàlida. \n"
-"No s'exportarà"
-
-#: plug-ins/file-icns/file-icns-save.c:231
-#, c-format
-msgid ""
-"Duplicate layer size. \n"
-"It will not be exported"
-msgstr ""
-"Mida de la capa duplicada. \n"
-"No s'exportarà"
-
-#: plug-ins/file-icns/file-icns-save.c:292 plug-ins/file-icns/file-icns.c:178
-msgid "Apple Icon Image"
-msgstr "Imatge d'icona d'Apple"
-
-#: plug-ins/file-icns/file-icns-save.c:307
-msgid ""
-"Valid ICNS icons sizes are:\n"
-" 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
-"64x64, 128x128, 256x256, 512x512, and 1024x1024.\n"
-"Any other sized layers will be ignored on export."
-msgstr ""
-"Les mides vàlides de les icones ICNS són:\n"
-" 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
-"64x64, 128x128, 256x256, 512x512, i 1024x1024.\n"
-"Qualsevol altra capa de mida serà ignorada en exportar."
-
-#. Don't show warning by default
-#: plug-ins/file-icns/file-icns-save.c:315
-msgid "Export Icons"
-msgstr "Exporta les icones"
-
-#: plug-ins/file-icns/file-icns-save.c:524
-#, c-format
-msgid "Error writing icns: %s"
-msgstr "S'ha produït un error en escriure icns: %s"
-
-#: plug-ins/file-icns/file-icns-save.c:586
-#, c-format
-msgid ""
-"No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
-"24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
-msgstr ""
-"No hi ha capes de mida vàlida. Només les mides de capa vàlides són 16x12, "
-"16x16, 18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, o"
-" 1024x1024."
-
-#: plug-ins/file-icns/file-icns-save.c:604
-#, c-format
-msgid ""
-"Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
-"24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
-msgstr ""
-"Mida/es de capa/es no vàlida/es. Només les mides de capa vàlides són 16x12, "
-"16x16, 18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, o"
-" 1024x1024."
 
 #: plug-ins/file-icns/file-icns.c:134
 msgid "Icns"
@@ -9914,6 +9836,15 @@ msgstr "Punt calent _X:"
 msgid "Hot spot _Y:"
 msgstr "Punt calent _Y:"
 
+#: plug-ins/file-ico/ico-export.c:214
+#, c-format
+msgid ""
+"Called non-interactively with %d and %d hotspot coordinates with an image of"
+" %d icons."
+msgstr ""
+"Cridat sense interacció amb les coordenades del punt calent %d i %d amb una "
+"imatge de %d icones."
+
 #: plug-ins/file-ico/ico-load.c:224
 #, c-format
 msgid "Could not read '%lu' bytes"
@@ -9928,15 +9859,6 @@ msgstr "La icona #%d té una amplada o alçada zero"
 #, c-format
 msgid "Invalid ANI metadata"
 msgstr "Metadades ANI no vàlides"
-
-#: plug-ins/file-ico/ico-save.c:214
-#, c-format
-msgid ""
-"Called non-interactively with %d and %d hotspot coordinates with an image of"
-" %d icons."
-msgstr ""
-"Cridat sense interacció amb les coordenades del punt calent %d i %d amb una "
-"imatge de %d icones."
 
 #: plug-ins/file-ico/ico.c:175 plug-ins/file-ico/ico.c:298
 msgid "Microsoft Windows icon"
@@ -9970,6 +9892,28 @@ msgstr "Nom del cursor (opcional)"
 msgid "Cursor Author (Optional)"
 msgstr "Autor del cursor (opcional)"
 
+#: plug-ins/file-jpeg/jpeg-export.c:139 plug-ins/file-jpeg/jpeg-export.c:146
+#, c-format
+msgid "File size: %s"
+msgstr "Mida del fitxer: %s"
+
+#: plug-ins/file-jpeg/jpeg-export.c:717
+msgid "Calculating file size..."
+msgstr "S'està calculant la mida del fitxer..."
+
+#: plug-ins/file-jpeg/jpeg-export.c:807 plug-ins/file-jpeg/jpeg-export.c:878
+msgid "File size: unknown"
+msgstr "Mida del fitxer: desconeguda"
+
+#: plug-ins/file-jpeg/jpeg-export.c:886
+msgid "Enable preview to obtain the file size."
+msgstr "Habilita la previsualització per a obtenir la mida del fitxer."
+
+#: plug-ins/file-jpeg/jpeg-export.c:891 plug-ins/file-psd/psd-export.c:2456
+#: plug-ins/file-tiff/file-tiff-export.c:1307
+msgid "No soft-proofing profile"
+msgstr "No hi ha cap perfil de prova suau"
+
 #: plug-ins/file-jpeg/jpeg-load.c:221
 msgid "JPEG preview"
 msgstr "Previsualització del JPEG"
@@ -9982,61 +9926,29 @@ msgstr ""
 "S'ha produït un error en obrir el fitxer temporal %s «%s» per a carregar les"
 " metadades jpeg: %s"
 
-#: plug-ins/file-jpeg/jpeg-save.c:139 plug-ins/file-jpeg/jpeg-save.c:146
-#, c-format
-msgid "File size: %s"
-msgstr "Mida del fitxer: %s"
-
-#: plug-ins/file-jpeg/jpeg-save.c:717
-msgid "Calculating file size..."
-msgstr "S'està calculant la mida del fitxer..."
-
-#: plug-ins/file-jpeg/jpeg-save.c:807 plug-ins/file-jpeg/jpeg-save.c:879
-msgid "File size: unknown"
-msgstr "Mida del fitxer: desconeguda"
-
-#: plug-ins/file-jpeg/jpeg-save.c:887
-msgid "Enable preview to obtain the file size."
-msgstr "Habilita la previsualització per a obtenir la mida del fitxer."
-
-#: plug-ins/file-jpeg/jpeg-save.c:892 plug-ins/file-psd/psd-save.c:2456
-#: plug-ins/file-tiff/file-tiff-save.c:1307
-msgid "No soft-proofing profile"
-msgstr "No hi ha cap perfil de prova suau"
-
-#. Subsampling
-#: plug-ins/file-jpeg/jpeg-save.c:942
-msgid "4:4:4 (best quality)"
-msgstr "4:4:4 (la millor qualitat)"
-
-#: plug-ins/file-jpeg/jpeg-save.c:944
-msgid "4:2:2 (chroma halved horizontally)"
-msgstr "4:2:2 vertical (croma reduït a la meitat)"
-
-#: plug-ins/file-jpeg/jpeg-save.c:946
-msgid "4:4:0 (chroma halved vertically)"
-msgstr "4:4:0 (chroma a la meitat verticalment)"
-
-#: plug-ins/file-jpeg/jpeg-save.c:948
-msgid "4:2:0 (chroma quartered)"
-msgstr "4:2:0 (croma reduït a una quarta part)"
-
-#. DCT method
-#: plug-ins/file-jpeg/jpeg-save.c:962
-msgid "Fast Integer"
-msgstr "Nombre enter ràpid"
-
-#: plug-ins/file-jpeg/jpeg-save.c:963
-msgid "Integer"
-msgstr "Nombre enter"
-
-#: plug-ins/file-jpeg/jpeg-save.c:964
-msgid "Floating-Point"
-msgstr "Punt flotant"
-
 #: plug-ins/file-jpeg/jpeg.c:136 plug-ins/file-jpeg/jpeg.c:183
 msgid "JPEG image"
 msgstr "Imatge JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:139 plug-ins/file-jpeg/jpeg.c:140
+msgid "Loads files in the JPEG file format"
+msgstr "Carrega fitxers en el format de fitxer JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:164
+msgid "Loads a thumbnail from a JPEG image"
+msgstr "Carrega una miniatura des d'una imatge JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:165
+msgid "Loads a thumbnail from a JPEG image, if one exists"
+msgstr "Carrega una miniatura des d'una imatge JPEG, si n'hi ha"
+
+#: plug-ins/file-jpeg/jpeg.c:186
+msgid "Exports files in the JPEG file format"
+msgstr "Exporta fitxers en el format de fitxer JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:187
+msgid "Exports files in the lossy, widely supported JPEG format"
+msgstr "Exporta els fitxers en el format JPEG amb pèrdua, àmpliament admès"
 
 #: plug-ins/file-jpeg/jpeg.c:196 plug-ins/file-tiff/file-tiff.c:244
 msgid "JPEG"
@@ -10084,20 +9996,30 @@ msgid "Su_bsampling"
 msgstr "Su_bmostra"
 
 #: plug-ins/file-jpeg/jpeg.c:237
-msgid ""
-"Sub-sampling type { 0 == 4:2:0 (chroma quartered), 1 == 4:2:2 (chroma halved"
-" horizontally), 2 == 4:4:4 (best quality), 3 == 4:4:0 (chroma halved "
-"vertically)"
-msgstr ""
-"Tipus de submostreig { 0 == 4:2:0 (croma esquarterat), 1 == 4:2:2 (el croma "
-"es redueix a la meitat horitzontalment), 2 == 4:4:4 (millor qualitat), 3 == "
-"4:4:0 (el croma es redueix a la meitat verticalment)"
+msgid "Sub-sampling type"
+msgstr "Tipus de submostra"
 
-#: plug-ins/file-jpeg/jpeg.c:247
+#: plug-ins/file-jpeg/jpeg.c:238
+msgid "4:4:4 (best quality)"
+msgstr "4:4:4 (la millor qualitat)"
+
+#: plug-ins/file-jpeg/jpeg.c:239
+msgid "4:2:2 (chroma halved horizontally)"
+msgstr "4:2:2 vertical (croma reduït a la meitat)"
+
+#: plug-ins/file-jpeg/jpeg.c:240
+msgid "4:4:0 (chroma halved vertically)"
+msgstr "4:4:0 (chroma a la meitat verticalment)"
+
+#: plug-ins/file-jpeg/jpeg.c:241
+msgid "4:2:0 (chroma quartered)"
+msgstr "4:2:0 (croma reduït a una quarta part)"
+
+#: plug-ins/file-jpeg/jpeg.c:246
 msgid "Baseline"
 msgstr "Línia base"
 
-#: plug-ins/file-jpeg/jpeg.c:248
+#: plug-ins/file-jpeg/jpeg.c:247
 msgid ""
 "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
 "decoders)"
@@ -10105,29 +10027,41 @@ msgstr ""
 "Força la creació d'un JPEG de línia de base (els JPEG sense línia de base no"
 " poden ser llegits per tots els descodificadors)"
 
-#: plug-ins/file-jpeg/jpeg.c:254
+#: plug-ins/file-jpeg/jpeg.c:253
 msgid "Inter_val (MCU rows):"
 msgstr "_Interval (files MCU):"
 
-#: plug-ins/file-jpeg/jpeg.c:255
+#: plug-ins/file-jpeg/jpeg.c:254
 msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
 msgstr ""
 "Interval de marcadors de reinici (en files MCU, 0 = sense marcadors de "
 "reinici)"
 
-#: plug-ins/file-jpeg/jpeg.c:261
+#: plug-ins/file-jpeg/jpeg.c:260
 msgid "_DCT method"
 msgstr "Mètode _DCT"
 
-#: plug-ins/file-jpeg/jpeg.c:262
-msgid "DCT method to use { INTEGER (0), FIXED (1), FLOAT (2) }"
-msgstr "Mètode DCT per utilitzar { INTEGER (0), FIXED (1), FLOAT (2) }"
+#: plug-ins/file-jpeg/jpeg.c:261
+msgid "DCT method to use"
+msgstr "Mètode DCT a usar"
 
-#: plug-ins/file-jpeg/jpeg.c:270
+#: plug-ins/file-jpeg/jpeg.c:262
+msgid "Fast Integer"
+msgstr "Nombre enter ràpid"
+
+#: plug-ins/file-jpeg/jpeg.c:263
+msgid "Integer"
+msgstr "Nombre enter"
+
+#: plug-ins/file-jpeg/jpeg.c:264
+msgid "Floating-Point"
+msgstr "Punt flotant"
+
+#: plug-ins/file-jpeg/jpeg.c:271
 msgid "_Use quality settings from original image"
 msgstr "_Utilitza els paràmetres de qualitat de la imatge original"
 
-#: plug-ins/file-jpeg/jpeg.c:271
+#: plug-ins/file-jpeg/jpeg.c:272
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality"
 " settings (quantization tables), enable this option to get almost the same "
@@ -10137,32 +10071,91 @@ msgstr ""
 "paràmetres de qualitat no estàndard (taules de quantificació), habiliteu "
 "aquesta opció per a obtenir gairebé la mateixa qualitat i mida de fitxer."
 
-#: plug-ins/file-jpeg/jpeg.c:293
+#: plug-ins/file-jpeg/jpeg.c:294
 msgid "Sho_w preview in image window"
 msgstr "Mos_tra la previsualització a la finestra de la imatge"
 
-#: plug-ins/file-jpeg/jpeg.c:294
+#: plug-ins/file-jpeg/jpeg.c:295
 msgid "Creates a temporary layer with an export preview"
 msgstr "Crea una capa temporal amb una vista prèvia d'exportació"
 
-#: plug-ins/file-jpeg/jpeg.c:298
+#: plug-ins/file-jpeg/jpeg.c:299
 msgid "Use _arithmetic coding"
 msgstr "Utilitza la codificació _aritmètica"
 
-#: plug-ins/file-jpeg/jpeg.c:299
+#: plug-ins/file-jpeg/jpeg.c:300
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
 "El programari més antic pot tenir problemes per a obrir les imatges "
 "codificades aritmètiques"
 
-#: plug-ins/file-jpeg/jpeg.c:304
+#: plug-ins/file-jpeg/jpeg.c:305
 msgid "Use restart mar_kers"
 msgstr "Utilitza marcadors de re_inici"
 
-#: plug-ins/file-jpeg/jpeg.c:476
+#: plug-ins/file-jpeg/jpeg.c:477
 #, c-format
 msgid "JPEG format does not support multiple layers."
 msgstr "El format JPEG no admet múltiples capes."
+
+#: plug-ins/file-psd/psd-export.c:502
+msgid "Error: Can't convert GIMP base imagetype to PSD mode"
+msgstr ""
+"Error: no es pot convertir de tipus d'imatge base del GIMP al mode PSD"
+
+#: plug-ins/file-psd/psd-export.c:2158
+#, c-format
+msgid ""
+"Unable to export '%s'.  The PSD file format does not support images that are"
+" more than 30,000 pixels wide or tall."
+msgstr ""
+"No s'ha pogut exportar «%s». El format de fitxer PSD no és compatible amb "
+"imatges de més de 30.000 píxels d'amplada o alçada."
+
+#: plug-ins/file-psd/psd-export.c:2199
+#, c-format
+msgid ""
+"Unable to export '%s'.  The PSD file format does not support images with "
+"layers that are more than 30,000 pixels wide or tall."
+msgstr ""
+"No s'ha pogut exportar «%s». El format de fitxer PSD no és compatible amb "
+"imatges amb capes de més de 30.000 píxels d'amplada o alçada."
+
+#: plug-ins/file-psd/psd-export.c:2452
+msgid "Export Image as PSD"
+msgstr "Exporta la imatge com a PSD"
+
+#: plug-ins/file-psd/psd-export.c:2499
+msgid ""
+"Duotone color space information from the original\n"
+"imported image will be used."
+msgstr ""
+"S'utilitzarà la informació de l'espai de color\n"
+"Duotone de la imatge original importada."
+
+#: plug-ins/file-psd/psd-export.c:2568
+msgid ""
+"PSD files can store up to 998 paths. \n"
+"The rest will be discarded."
+msgstr ""
+"Els fitxers PSD poden emmagatzemar fins a 998 camins. \n"
+"La resta es descartarà."
+
+#: plug-ins/file-psd/psd-export.c:2670 plug-ins/file-psd/psd-load.c:3783
+msgid "Compatibility Notice"
+msgstr "Avís de compatibilitat"
+
+#: plug-ins/file-psd/psd-export.c:2671
+msgid ""
+"Legacy layer modes have better compatibility with Photoshop, but do not "
+"support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
+"Clipped Layers as Group'. If you encounter display issues, consider "
+"switching to those layer modes."
+msgstr ""
+"Els modes de capa antiga tenen una millor compatibilitat amb el Photoshop, "
+"però no suporten el clip al Backdrop, el qual és necessari per utilitzar les"
+" «Capes inclinades de la barreja com a grup» del Photoshop. Si trobeu "
+"problemes de visualització, considereu canviar a aquests modes de capa."
 
 #: plug-ins/file-psd/psd-load.c:303 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
@@ -10283,10 +10276,6 @@ msgstr ""
 "S'han desat les dades de l'espai de color del Duotone\n"
 "i es pot tornar a aplicar en exportar."
 
-#: plug-ins/file-psd/psd-load.c:3783 plug-ins/file-psd/psd-save.c:2670
-msgid "Compatibility Notice"
-msgstr "Avís de compatibilitat"
-
 #: plug-ins/file-psd/psd-load.c:3784
 msgid ""
 "This PSD file contains features that\n"
@@ -10294,61 +10283,6 @@ msgid ""
 msgstr ""
 "Aquest fitxer PSD conté característiques que\n"
 "encara no estan totalment suportades en el GIMP:"
-
-#: plug-ins/file-psd/psd-save.c:502
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr ""
-"Error: no es pot convertir de tipus d'imatge base del GIMP al mode PSD"
-
-#: plug-ins/file-psd/psd-save.c:2158
-#, c-format
-msgid ""
-"Unable to export '%s'.  The PSD file format does not support images that are"
-" more than 30,000 pixels wide or tall."
-msgstr ""
-"No s'ha pogut exportar «%s». El format de fitxer PSD no és compatible amb "
-"imatges de més de 30.000 píxels d'amplada o alçada."
-
-#: plug-ins/file-psd/psd-save.c:2199
-#, c-format
-msgid ""
-"Unable to export '%s'.  The PSD file format does not support images with "
-"layers that are more than 30,000 pixels wide or tall."
-msgstr ""
-"No s'ha pogut exportar «%s». El format de fitxer PSD no és compatible amb "
-"imatges amb capes de més de 30.000 píxels d'amplada o alçada."
-
-#: plug-ins/file-psd/psd-save.c:2452
-msgid "Export Image as PSD"
-msgstr "Exporta la imatge com a PSD"
-
-#: plug-ins/file-psd/psd-save.c:2499
-msgid ""
-"Duotone color space information from the original\n"
-"imported image will be used."
-msgstr ""
-"S'utilitzarà la informació de l'espai de color\n"
-"Duotone de la imatge original importada."
-
-#: plug-ins/file-psd/psd-save.c:2568
-msgid ""
-"PSD files can store up to 998 paths. \n"
-"The rest will be discarded."
-msgstr ""
-"Els fitxers PSD poden emmagatzemar fins a 998 camins. \n"
-"La resta es descartarà."
-
-#: plug-ins/file-psd/psd-save.c:2671
-msgid ""
-"Legacy layer modes have better compatibility with Photoshop, but do not "
-"support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
-"Clipped Layers as Group'. If you encounter display issues, consider "
-"switching to those layer modes."
-msgstr ""
-"Els modes de capa antiga tenen una millor compatibilitat amb el Photoshop, "
-"però no suporten el clip al Backdrop, el qual és necessari per utilitzar les"
-" «Capes inclinades de la barreja com a grup» del Photoshop. Si trobeu "
-"problemes de visualització, considereu canviar a aquests modes de capa."
 
 #: plug-ins/file-psd/psd-util.c:176
 #, c-format
@@ -10726,6 +10660,53 @@ msgstr ""
 "L'opció «Desa les capes» no està establerta en intentar exportar múltiples "
 "capes."
 
+#: plug-ins/file-tiff/file-tiff-export.c:648
+msgid ""
+"Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT"
+" Group 3\"."
+msgstr ""
+"Només les imatges monocromes es poden comprimir amb «CCITT grup 4» o «CCITT "
+"grup 3»."
+
+#: plug-ins/file-tiff/file-tiff-export.c:662
+msgid "Indexed pictures cannot be compressed with \"JPEG\"."
+msgstr "Les imatges indexades no es poden comprimir amb «JPEG»."
+
+#: plug-ins/file-tiff/file-tiff-export.c:721
+msgid ""
+"The TIFF format only supports comments in\n"
+"7bit ASCII encoding. No comment is saved."
+msgstr ""
+"El format TIFF només accepta comentaris en\n"
+"codificació ASCII de 7 bits. No es desarà cap comentari."
+
+#: plug-ins/file-tiff/file-tiff-export.c:863
+#, c-format
+msgid "Failed a scanline write on row %d"
+msgstr "No s'ha pogut escriure la línia escanejada a la fila %d"
+
+#: plug-ins/file-tiff/file-tiff-export.c:1198
+#, c-format
+msgid "Writing pages with different bit depth is strange."
+msgstr "És estrany escriure pàgines amb una profunditat de bits diferent."
+
+#: plug-ins/file-tiff/file-tiff-export.c:1273
+msgid ""
+"Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
+"different compression algorithm, or cancel."
+msgstr ""
+"Avís: s'ha excedit la mida màxima del fitxer TIFF. Reintenteu com a BigTIFF "
+"o amb un algoritme de compressió diferent, o cancel·leu."
+
+#: plug-ins/file-tiff/file-tiff-export.c:1332
+#, c-format
+msgid ""
+"The assigned soft-proofing profile is not a CMYK profile.\n"
+"This profile will not be included in the exported image."
+msgstr ""
+"El perfil de prova suau assignat no és un perfil CMYK.\n"
+"Aquest perfil no s'inclourà a la imatge exportada."
+
 #: plug-ins/file-tiff/file-tiff-load.c:299
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
@@ -10977,53 +10958,6 @@ msgstr "Alfa pre_multiplicada"
 msgid "Channe_l"
 msgstr "Cana_l"
 
-#: plug-ins/file-tiff/file-tiff-save.c:648
-msgid ""
-"Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT"
-" Group 3\"."
-msgstr ""
-"Només les imatges monocromes es poden comprimir amb «CCITT grup 4» o «CCITT "
-"grup 3»."
-
-#: plug-ins/file-tiff/file-tiff-save.c:662
-msgid "Indexed pictures cannot be compressed with \"JPEG\"."
-msgstr "Les imatges indexades no es poden comprimir amb «JPEG»."
-
-#: plug-ins/file-tiff/file-tiff-save.c:721
-msgid ""
-"The TIFF format only supports comments in\n"
-"7bit ASCII encoding. No comment is saved."
-msgstr ""
-"El format TIFF només accepta comentaris en\n"
-"codificació ASCII de 7 bits. No es desarà cap comentari."
-
-#: plug-ins/file-tiff/file-tiff-save.c:863
-#, c-format
-msgid "Failed a scanline write on row %d"
-msgstr "No s'ha pogut escriure la línia escanejada a la fila %d"
-
-#: plug-ins/file-tiff/file-tiff-save.c:1198
-#, c-format
-msgid "Writing pages with different bit depth is strange."
-msgstr "És estrany escriure pàgines amb una profunditat de bits diferent."
-
-#: plug-ins/file-tiff/file-tiff-save.c:1273
-msgid ""
-"Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
-"different compression algorithm, or cancel."
-msgstr ""
-"Avís: s'ha excedit la mida màxima del fitxer TIFF. Reintenteu com a BigTIFF "
-"o amb un algoritme de compressió diferent, o cancel·leu."
-
-#: plug-ins/file-tiff/file-tiff-save.c:1332
-#, c-format
-msgid ""
-"The assigned soft-proofing profile is not a CMYK profile.\n"
-"This profile will not be included in the exported image."
-msgstr ""
-"El perfil de prova suau assignat no és un perfil CMYK.\n"
-"Aquest perfil no s'inclourà a la imatge exportada."
-
 #: plug-ins/file-webp/file-webp.c:124 plug-ins/file-webp/file-webp.c:151
 msgid "WebP image"
 msgstr "Imatge WebP"
@@ -11161,6 +11095,67 @@ msgstr "Icona"
 msgid "Text"
 msgstr "Text"
 
+#: plug-ins/file-webp/file-webp-export.c:101
+msgid "out of memory"
+msgstr "sense memòria"
+
+#: plug-ins/file-webp/file-webp-export.c:103
+msgid "not enough memory to flush bits"
+msgstr "no hi ha prou memòria per a buidar els bits"
+
+#: plug-ins/file-webp/file-webp-export.c:105
+msgid "NULL parameter"
+msgstr "Paràmetre nul"
+
+#: plug-ins/file-webp/file-webp-export.c:107
+msgid "invalid configuration"
+msgstr "configuració invàlida"
+
+#. TRANSLATORS: widthxheight with UTF-8 encoded multiply sign.
+#: plug-ins/file-webp/file-webp-export.c:110
+#, c-format
+msgid "bad image dimensions (maximum: %d×%d)"
+msgstr "dimensions d'imatge incorrectes (màxim: %d×%d)"
+
+#: plug-ins/file-webp/file-webp-export.c:113
+msgid "partition is bigger than 512K"
+msgstr "la partició és més gran de 512K"
+
+#: plug-ins/file-webp/file-webp-export.c:115
+msgid "partition is bigger than 16M"
+msgstr "la partició és més gran de 16M"
+
+#: plug-ins/file-webp/file-webp-export.c:117
+msgid "unable to flush bytes"
+msgstr "no es poden buidar els bytes"
+
+#: plug-ins/file-webp/file-webp-export.c:119
+msgid "file is larger than 4GiB"
+msgstr "el fitxer és més gran que 4GiB"
+
+#: plug-ins/file-webp/file-webp-export.c:121
+msgid "user aborted encoding"
+msgstr "codificació d'usuari avortada"
+
+#: plug-ins/file-webp/file-webp-export.c:123
+msgid "list terminator"
+msgstr "llista finalitzada"
+
+#: plug-ins/file-webp/file-webp-export.c:125
+msgid "unknown error"
+msgstr "error desconegut"
+
+#: plug-ins/file-webp/file-webp-export.c:208
+#: plug-ins/file-webp/file-webp-export.c:607
+#, c-format
+msgid "Unable to open '%s' for writing: %s"
+msgstr "No s'ha pogut obrir «%s» per a escriure-hi: %s"
+
+#: plug-ins/file-webp/file-webp-export.c:294
+#, c-format
+msgid "WebP error: '%s'"
+msgstr "Error WebP: «%s»"
+
 #: plug-ins/file-webp/file-webp-load.c:106
 #, c-format
 msgid "Invalid WebP file '%s'"
@@ -11188,67 +11183,6 @@ msgstr "No s'ha pogut descodificar el fotograma WebP animat de «%s»"
 #, c-format
 msgid "Frame %d (%dms)"
 msgstr "Fotograma %d (%dms)"
-
-#: plug-ins/file-webp/file-webp-save.c:101
-msgid "out of memory"
-msgstr "sense memòria"
-
-#: plug-ins/file-webp/file-webp-save.c:103
-msgid "not enough memory to flush bits"
-msgstr "no hi ha prou memòria per a buidar els bits"
-
-#: plug-ins/file-webp/file-webp-save.c:105
-msgid "NULL parameter"
-msgstr "Paràmetre nul"
-
-#: plug-ins/file-webp/file-webp-save.c:107
-msgid "invalid configuration"
-msgstr "configuració invàlida"
-
-#. TRANSLATORS: widthxheight with UTF-8 encoded multiply sign.
-#: plug-ins/file-webp/file-webp-save.c:110
-#, c-format
-msgid "bad image dimensions (maximum: %d×%d)"
-msgstr "dimensions d'imatge incorrectes (màxim: %d×%d)"
-
-#: plug-ins/file-webp/file-webp-save.c:113
-msgid "partition is bigger than 512K"
-msgstr "la partició és més gran de 512K"
-
-#: plug-ins/file-webp/file-webp-save.c:115
-msgid "partition is bigger than 16M"
-msgstr "la partició és més gran de 16M"
-
-#: plug-ins/file-webp/file-webp-save.c:117
-msgid "unable to flush bytes"
-msgstr "no es poden buidar els bytes"
-
-#: plug-ins/file-webp/file-webp-save.c:119
-msgid "file is larger than 4GiB"
-msgstr "el fitxer és més gran que 4GiB"
-
-#: plug-ins/file-webp/file-webp-save.c:121
-msgid "user aborted encoding"
-msgstr "codificació d'usuari avortada"
-
-#: plug-ins/file-webp/file-webp-save.c:123
-msgid "list terminator"
-msgstr "llista finalitzada"
-
-#: plug-ins/file-webp/file-webp-save.c:125
-msgid "unknown error"
-msgstr "error desconegut"
-
-#: plug-ins/file-webp/file-webp-save.c:208
-#: plug-ins/file-webp/file-webp-save.c:607
-#, c-format
-msgid "Unable to open '%s' for writing: %s"
-msgstr "No s'ha pogut obrir «%s» per a escriure-hi: %s"
-
-#: plug-ins/file-webp/file-webp-save.c:294
-#, c-format
-msgid "WebP error: '%s'"
-msgstr "Error WebP: «%s»"
 
 #: plug-ins/flame/flame.c:180
 msgid "_Flame..."
@@ -11997,7 +11931,7 @@ msgid "Copy an object"
 msgstr "Copia un objecte"
 
 #: plug-ins/gfig/gfig-dialog.c:410 plug-ins/gfig/gfig-menu.ui:104
-#: plug-ins/ifs-compose/ifs-compose.c:960 plug-ins/ifs-compose/ifs-menus.ui:27
+#: plug-ins/ifs-compose/ifs-compose.c:961 plug-ins/ifs-compose/ifs-menus.ui:27
 #: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
 msgid "Delete"
 msgstr "Suprimeix"
@@ -12322,7 +12256,7 @@ msgstr "Tanca"
 msgid "Edit"
 msgstr "Edita"
 
-#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:962
+#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:963
 #: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1530
 #: plug-ins/imagemap/imap-menu.ui:35
 msgid "Undo"
@@ -13468,58 +13402,58 @@ msgstr ""
 "S'ha produït un error en analitzar «%s»:\n"
 "%s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:433
+#: plug-ins/ifs-compose/ifs-compose.c:434
 msgid "_IFS Fractal..."
 msgstr "Fractal _IFS..."
 
-#: plug-ins/ifs-compose/ifs-compose.c:439
+#: plug-ins/ifs-compose/ifs-compose.c:440
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Crea una fractal del tipus IFS (Sistema de Funció Iterativa)"
 
 #. X
-#: plug-ins/ifs-compose/ifs-compose.c:641
+#: plug-ins/ifs-compose/ifs-compose.c:642
 msgid "X:"
 msgstr "X:"
 
 #. Y
-#: plug-ins/ifs-compose/ifs-compose.c:655
+#: plug-ins/ifs-compose/ifs-compose.c:656
 msgid "Y:"
 msgstr "Y:"
 
 #. Angle
-#: plug-ins/ifs-compose/ifs-compose.c:683
+#: plug-ins/ifs-compose/ifs-compose.c:684
 msgid "Angle:"
 msgstr "Angle:"
 
 #. Asym
-#: plug-ins/ifs-compose/ifs-compose.c:697
+#: plug-ins/ifs-compose/ifs-compose.c:698
 msgid "Asymmetry:"
 msgstr "Asimetria:"
 
 #. Shear
-#: plug-ins/ifs-compose/ifs-compose.c:711
+#: plug-ins/ifs-compose/ifs-compose.c:712
 msgid "Shear:"
 msgstr "Inclina:"
 
 #. Simple color control section
-#: plug-ins/ifs-compose/ifs-compose.c:756
+#: plug-ins/ifs-compose/ifs-compose.c:757
 msgid "Simple"
 msgstr "Senzill"
 
-#: plug-ins/ifs-compose/ifs-compose.c:765
+#: plug-ins/ifs-compose/ifs-compose.c:766
 msgid "IFS Fractal: Target"
 msgstr "Fractal IFS: destí"
 
-#: plug-ins/ifs-compose/ifs-compose.c:771
+#: plug-ins/ifs-compose/ifs-compose.c:772
 msgid "Scale hue by:"
 msgstr "Escala el to per:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:786
+#: plug-ins/ifs-compose/ifs-compose.c:787
 msgid "Scale value by:"
 msgstr "Escala el valor per:"
 
 #. Full color control section
-#: plug-ins/ifs-compose/ifs-compose.c:803
+#: plug-ins/ifs-compose/ifs-compose.c:804
 msgid "Full"
 msgstr "Sencer"
 
@@ -13539,108 +13473,108 @@ msgstr "Fractal IFS: blau"
 msgid "IFS Fractal: Black"
 msgstr "Fractal IFS: negre"
 
-#: plug-ins/ifs-compose/ifs-compose.c:907
+#: plug-ins/ifs-compose/ifs-compose.c:908
 msgid "IFS Fractal"
 msgstr "Fractal IFS"
 
-#: plug-ins/ifs-compose/ifs-compose.c:951 plug-ins/ifs-compose/ifs-menus.ui:6
+#: plug-ins/ifs-compose/ifs-compose.c:952 plug-ins/ifs-compose/ifs-menus.ui:6
 #: plug-ins/imagemap/imap_cmd_move.c:85
 #: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Mou"
 
-#: plug-ins/ifs-compose/ifs-compose.c:953 plug-ins/ifs-compose/ifs-menus.ui:11
+#: plug-ins/ifs-compose/ifs-compose.c:954 plug-ins/ifs-compose/ifs-menus.ui:11
 msgid "Rotate"
 msgstr "Gira"
 
-#: plug-ins/ifs-compose/ifs-compose.c:955 plug-ins/ifs-compose/ifs-menus.ui:16
+#: plug-ins/ifs-compose/ifs-compose.c:956 plug-ins/ifs-compose/ifs-menus.ui:16
 msgid "Stretch"
 msgstr "Amplia"
 
-#: plug-ins/ifs-compose/ifs-compose.c:958 plug-ins/ifs-compose/ifs-menus.ui:23
+#: plug-ins/ifs-compose/ifs-compose.c:959 plug-ins/ifs-compose/ifs-menus.ui:23
 msgid "New"
 msgstr "Nou"
 
-#: plug-ins/ifs-compose/ifs-compose.c:964 plug-ins/ifs-compose/ifs-menus.ui:35
+#: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:35
 #: plug-ins/imagemap/imap_main.c:1532 plug-ins/imagemap/imap-menu.ui:39
 msgid "Redo"
 msgstr "Refés"
 
-#: plug-ins/ifs-compose/ifs-compose.c:966 plug-ins/ifs-compose/ifs-menus.ui:39
+#: plug-ins/ifs-compose/ifs-compose.c:967 plug-ins/ifs-compose/ifs-menus.ui:39
 #: plug-ins/imagemap/imap_cmd_select_all.c:50
 #: plug-ins/imagemap/imap-menu.ui:61
 msgid "Select All"
 msgstr "Selecciona-ho tot"
 
-#: plug-ins/ifs-compose/ifs-compose.c:968 plug-ins/ifs-compose/ifs-menus.ui:43
+#: plug-ins/ifs-compose/ifs-compose.c:969 plug-ins/ifs-compose/ifs-menus.ui:43
 msgid "Recompute Center"
 msgstr "Torna a calcular el centre"
 
-#: plug-ins/ifs-compose/ifs-compose.c:971 plug-ins/ifs-compose/ifs-menus.ui:49
+#: plug-ins/ifs-compose/ifs-compose.c:972 plug-ins/ifs-compose/ifs-menus.ui:49
 msgid "Render Options"
 msgstr "Opcions de composició"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1030
+#: plug-ins/ifs-compose/ifs-compose.c:1031
 msgid "Spatial Transformation"
 msgstr "Transformació espacial"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1036
+#: plug-ins/ifs-compose/ifs-compose.c:1037
 msgid "Color Transformation"
 msgstr "Transformació de color"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1046
+#: plug-ins/ifs-compose/ifs-compose.c:1047
 msgid "Relative probability:"
 msgstr "Probabilitat relativa:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1210
+#: plug-ins/ifs-compose/ifs-compose.c:1211
 msgid "IFS Fractal Render Options"
 msgstr "Opcions de composició de la fractal IFS"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1232
+#: plug-ins/ifs-compose/ifs-compose.c:1233
 msgid "Max. memory:"
 msgstr "Memòria màx.:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1245
+#: plug-ins/ifs-compose/ifs-compose.c:1246
 msgid "Iterations:"
 msgstr "Iteracions:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1260
+#: plug-ins/ifs-compose/ifs-compose.c:1261
 msgid "Subdivide:"
 msgstr "Subdivideix:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1274
+#: plug-ins/ifs-compose/ifs-compose.c:1275
 msgid "Spot radius:"
 msgstr "Radi del punt:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1348
+#: plug-ins/ifs-compose/ifs-compose.c:1349
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "S'està component l'IFS (%d/%d)"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1500
+#: plug-ins/ifs-compose/ifs-compose.c:1512
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformació %s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2430
+#: plug-ins/ifs-compose/ifs-compose.c:2468
 msgid "Save failed"
 msgstr "No s'ha pogut desar"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2513
-#: plug-ins/ifs-compose/ifs-compose.c:2526
+#: plug-ins/ifs-compose/ifs-compose.c:2551
+#: plug-ins/ifs-compose/ifs-compose.c:2564
 msgid "Open failed"
 msgstr "No s'ha pogut obrir"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2521
+#: plug-ins/ifs-compose/ifs-compose.c:2559
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "El fitxer «%s» no sembla un fitxer fractal IFS."
 
-#: plug-ins/ifs-compose/ifs-compose.c:2561
+#: plug-ins/ifs-compose/ifs-compose.c:2599
 msgid "Save as IFS Fractal file"
 msgstr "Desa com a fitxer fractal IFS"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2598
+#: plug-ins/ifs-compose/ifs-compose.c:2636
 msgid "Open IFS Fractal file"
 msgstr "Obre el fitxer fractal IFS"
 
@@ -15996,6 +15930,11 @@ msgstr "Ignora els _marges de la pàgina"
 msgid "_Draw Crop Marks"
 msgstr "_Dibuixa les marques d'escapçament"
 
+#: plug-ins/print/print-page-layout.c:307
+#, c-format
+msgid "pixels/%a"
+msgstr "píxels/%a"
+
 #: plug-ins/print/print-page-layout.c:328
 msgid "_X resolution:"
 msgstr "Resolució _X:"
@@ -16066,11 +16005,11 @@ msgstr "Ajusta la mida de la pàgina i l'orientació per a imprimir-la"
 msgid "Image Settings"
 msgstr "Opcions de la imatge"
 
-#: plug-ins/print/print.c:424
+#: plug-ins/print/print.c:428
 msgid "An error occurred while trying to print:"
 msgstr "S'ha produït un error en imprimir:"
 
-#: plug-ins/print/print.c:451
+#: plug-ins/print/print.c:455
 msgid "Printing"
 msgstr "S'està imprimint"
 
@@ -16469,3 +16408,117 @@ msgstr "No s'ha trobat el controlador TWAIN, l'escaneig no està disponible"
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "S'estan transferint dades de l'escàner/càmera"
+
+#~ msgid "Resolution"
+#~ msgstr "Resolució"
+
+#~ msgid "Import from PDF"
+#~ msgstr "Importa d'un PDF"
+
+#~ msgid "_Width (pixels):"
+#~ msgstr "A_mplada (píxels):"
+
+#~ msgid "_Height (pixels):"
+#~ msgstr "A_lçada (píxels):"
+
+#~ msgid "_Resolution:"
+#~ msgstr "_Resolució:"
+
+#~ msgid "Resol_ution"
+#~ msgstr "R_esolució"
+
+#~ msgid "Resolution to interpret image (dpi)"
+#~ msgstr "Resolució per a interpretar la imatge (dpi)"
+
+#~ msgid "Desired width"
+#~ msgstr "Amplada desitjada"
+
+#~ msgid "Desired height"
+#~ msgstr "Alçada desitjada"
+
+#~ msgid "Rendering"
+#~ msgstr "S'està generant la imatge"
+
+#~ msgid "Pixel _format"
+#~ msgstr "_Format del píxel"
+
+#~ msgid ""
+#~ "Data type used to represent pixel values { RAW_ENCODING_UNSIGNED (0), "
+#~ "RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }"
+#~ msgstr ""
+#~ "Tipus de dades que s'utilitzen per representar els valors dels píxels { RAW-"
+#~ "ENCODING-UNSIGNED (0), RAW-ENCODING-SIGNED (1), RAW-ENCODING-FLOAT (2) }"
+
+#~ msgid ""
+#~ "Order of sequences of bytes { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"
+#~ msgstr ""
+#~ "Ordre de seqüències de bytes { RAW-LITTLE-ENDIAN (0), RAW-BIG-ENDIAN (1) }"
+
+#~ msgid ""
+#~ "How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), "
+#~ "RAW_PLANAR_SEPARATE (1) }"
+#~ msgstr ""
+#~ "Com s'emmagatzemen les dades dels píxels de color { RAW-PLANAR-CONTIGUOUS "
+#~ "(0), RAW-PLANAR-SEPARATE (1) }"
+
+#~ msgid ""
+#~ "The sample spacing of the data. (0: auto-detect, 1: SRTM-1, 2: SRTM-3 data)"
+#~ msgstr ""
+#~ "Espaiat de mostra de les dades. (0: detecció automàtica, 1: SRTM-1, 2: dades"
+#~ " SRTM-3)"
+
+#~ msgid "Palette's layout"
+#~ msgstr "Disposició de la paleta"
+
+#~ msgid "_R, G, B (normal)"
+#~ msgstr "_R, G, B (normal)"
+
+#~ msgid "_B, G, R, X (BMP style)"
+#~ msgstr "_B, G, R, X (estil BMP)"
+
+#~ msgid "Resolu_tion"
+#~ msgstr "Resolu_ció"
+
+#~ msgid "Resolution to use for rendering the SVG"
+#~ msgstr "Resolució a usar per a renderitzar el SVG"
+
+#~ msgid ""
+#~ "Width (in pixels) to load the SVG in. (0 for original width, a negative "
+#~ "width to specify a maximum width)"
+#~ msgstr ""
+#~ "Amplada (en píxels) per a carregar el SVG. (0 per a l'amplada original, una "
+#~ "amplada negativa per a especificar una amplada màxima)"
+
+#~ msgid ""
+#~ "Height (in pixels) to load the SVG in. (0 for original height, a negative "
+#~ "height to specify a maximum height)"
+#~ msgstr ""
+#~ "Alçada (en píxels) per a carregar el SVG. (0 per a l'alçada original, una "
+#~ "alçada negativa per a especificar una alçada màxima)"
+
+#~ msgid "Render Scalable Vector Graphics"
+#~ msgstr "Compon el gràfic de vectors escalables (SVG)"
+
+#~ msgid "Resolution to use for rendering the WMF"
+#~ msgstr "Resolució a usar per a renderitzar el WMF"
+
+#~ msgid "Width (in pixels) to load the WMF in, 0 for original width"
+#~ msgstr "Amplada (en píxels) per a carregar el WMF, 0 per a l'amplada original"
+
+#~ msgid "Height (in pixels) to load the WMF in, 0 for original height"
+#~ msgstr "Alçada (en píxels) per a carregar el WMF, 0 per a l'alçada original"
+
+#~ msgid "Render Windows Metafile"
+#~ msgstr "Compon un metafitxer del Windows"
+
+#~ msgid ""
+#~ "Sub-sampling type { 0 == 4:2:0 (chroma quartered), 1 == 4:2:2 (chroma halved"
+#~ " horizontally), 2 == 4:4:4 (best quality), 3 == 4:4:0 (chroma halved "
+#~ "vertically)"
+#~ msgstr ""
+#~ "Tipus de submostreig { 0 == 4:2:0 (croma esquarterat), 1 == 4:2:2 (el croma "
+#~ "es redueix a la meitat horitzontalment), 2 == 4:4:4 (millor qualitat), 3 == "
+#~ "4:4:0 (el croma es redueix a la meitat verticalment)"
+
+#~ msgid "DCT method to use { INTEGER (0), FIXED (1), FLOAT (2) }"
+#~ msgstr "Mètode DCT per utilitzar { INTEGER (0), FIXED (1), FLOAT (2) }"
