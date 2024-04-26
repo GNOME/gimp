@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-25 16:41+0000\n"
-"PO-Revision-Date: 2024-04-25 21:58+0200\n"
+"POT-Creation-Date: 2024-04-26 17:36+0000\n"
+"PO-Revision-Date: 2024-04-26 23:36+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -5732,7 +5732,6 @@ msgid "Load HGT data as images"
 msgstr "Naloži podatke HGT kot slike"
 
 #: plug-ins/common/file-raw-data.c:448
-#, fuzzy
 msgid ""
 "Load Digital Elevation Model data in HGT format from the Shuttle Radar "
 "Topography Mission as images. Though the output image will be RGB, all "
@@ -5740,11 +5739,11 @@ msgid ""
 "earth relief. Therefore you will likely want to remap elevation to colors as "
 "a second step, for instance with the \"Gradient Map\" plug-in."
 msgstr ""
-"Naložite podatke digitalnega modela nadmorske višine v formatu HGT iz "
-"Shuttle Radar Topography Mission kot slike. Čeprav bo izhodna slika RGB, so "
-"vse barve privzeto sivinske in kontrast bo na večini reliefov zemlje precej "
-"nizek. Zato boste kot drugi korak verjetno želeli preslikati nadmorsko "
-"višino v barve, na primer z vtičnikom »Gradient Map«."
+"Naložite podatke digitalnega modela nadmorske višine (ang. Digital Elevation "
+"Model) v zapisu HGT iz Shuttle Radar Topography Mission kot slike. Čeprav bo "
+"izhodna slika RGB, so vse barve privzeto sivinske in kontrast bo na večini "
+"reliefov zemlje precej nizek. Zato boste kot drugi korak verjetno želeli "
+"preslikati nadmorsko višino v barve, na primer z vtičnikom »Gradient Map«."
 
 #: plug-ins/common/file-raw-data.c:468
 msgid "Sa_mple spacing"
@@ -5767,9 +5766,8 @@ msgid "SRTM-3 (3 arc seconds)"
 msgstr "SRTM-3 (3 kotne sekunde)"
 
 #: plug-ins/common/file-raw-data.c:507 plug-ins/common/file-raw-data.c:508
-#, fuzzy
 msgid "Dump images to disk in raw format"
-msgstr "Izmet slik na disk v neobdelanem zapisu"
+msgstr "Odvrži slike na disk v neobdelanem zapisu"
 
 #: plug-ins/common/file-raw-data.c:519
 msgid "Planar configuration"
