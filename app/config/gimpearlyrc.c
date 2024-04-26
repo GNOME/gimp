@@ -106,7 +106,7 @@ gimp_early_rc_class_init (GimpEarlyRcClass *klass)
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_WIN32_POINTER_INPUT_API,
                          "win32-pointer-input-api", NULL, NULL,
                          GIMP_TYPE_WIN32_POINTER_INPUT_API,
-                         GIMP_WIN32_POINTER_INPUT_API_WINDOWS_INK,
+                         GIMP_WIN32_POINTER_INPUT_API_WINTAB,
                          GIMP_PARAM_STATIC_STRINGS |
                          GIMP_CONFIG_PARAM_RESTART);
 #endif
