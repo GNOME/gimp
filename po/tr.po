@@ -17,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-15 12:50+0000\n"
-"PO-Revision-Date: 2024-03-15 08:00+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2024-03-19 04:40+0000\n"
+"PO-Revision-Date: 2024-03-25 18:08+0300\n"
+"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -184,7 +184,7 @@ msgstr "Kullanıcı arayüzü olmadan çalıştır"
 
 #: app/main.c:190
 msgid "Do not load brushes, gradients, patterns, ..."
-msgstr "Fırçaları, renk geçişlerini, desenleri vs. yükleme."
+msgstr "Fırçaları, renk geçişlerini, örüntüleri vs. yükleme."
 
 #: app/main.c:195
 msgid "Do not load any fonts"
@@ -476,7 +476,7 @@ msgstr "Paletler"
 #: app/actions/actions.c:208 app/core/gimp-data-factories.c:371
 #: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3410
 msgid "Patterns"
-msgstr "Desenler"
+msgstr "Örüntüler"
 
 #: app/actions/actions.c:211 app/dialogs/preferences-dialog.c:3446
 msgid "Plug-ins"
@@ -1900,27 +1900,27 @@ msgstr "Fırça Seçimi: Sonrakine Geç"
 #: app/actions/context-actions.c:739
 msgctxt "context-action"
 msgid "Pattern Selection: Select by Index"
-msgstr "Desen Seçimi: Dizine Göre Seç"
+msgstr "Örüntü Seçimi: Dizine Göre Seç"
 
 #: app/actions/context-actions.c:743
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to First"
-msgstr "Desen Seçimi: İlkine Geç"
+msgstr "Örüntü Seçimi: İlkine Geç"
 
 #: app/actions/context-actions.c:747
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Last"
-msgstr "Desen Seçimi: Sonuncuya Geç"
+msgstr "Örüntü Seçimi: Sonuncuya Geç"
 
 #: app/actions/context-actions.c:751
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Previous"
-msgstr "Desen Seçimi: Öncekine Geç"
+msgstr "Örüntü Seçimi: Öncekine Geç"
 
 #: app/actions/context-actions.c:755
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Next"
-msgstr "Desen Seçimi: Sonrakine Geç"
+msgstr "Örüntü Seçimi: Sonrakine Geç"
 
 #: app/actions/context-actions.c:763
 msgctxt "context-action"
@@ -2850,17 +2850,17 @@ msgstr "MyPaint fırçaları iletişim kutusunu aç"
 #: app/actions/dialogs-actions.c:202
 msgctxt "dialogs-action"
 msgid "P_atterns Dialog"
-msgstr "_Desenler İletişim Kutusu"
+msgstr "Örü_ntüler İletişim Kutusu"
 
 #: app/actions/dialogs-actions.c:203
 msgctxt "dialogs-action"
 msgid "P_atterns"
-msgstr "_Desenler"
+msgstr "Örü_ntüler"
 
 #: app/actions/dialogs-actions.c:205
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
-msgstr "Desenler iletişim kutusunu aç"
+msgstr "Örüntüler iletişim kutusunu aç"
 
 #: app/actions/dialogs-actions.c:210
 msgctxt "dialogs-action"
@@ -3852,12 +3852,12 @@ msgstr "Seçimi, arka plan rengini kullanarak doldur"
 #: app/actions/edit-actions.c:225
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
-msgstr "Desen _İle Doldur"
+msgstr "Örüntü _İle Doldur"
 
 #: app/actions/edit-actions.c:226
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
-msgstr "Seçimi, etkin deseni kullanarak doldur"
+msgstr "Seçimi, etkin örüntüyü kullanarak doldur"
 
 #: app/actions/edit-actions.c:323 app/actions/edit-actions.c:325
 #, c-format
@@ -4502,7 +4502,7 @@ msgstr "_Gaussians Farklılığı..."
 #: app/actions/filters-actions.c:256
 msgctxt "filters-action"
 msgid "D_iffraction Patterns..."
-msgstr "_Kırınım Desenleri..."
+msgstr "_Kırınım Örüntüleri..."
 
 #: app/actions/filters-actions.c:261
 msgctxt "filters-action"
@@ -7304,42 +7304,42 @@ msgstr "Birleştirmek için en az iki palet seçilmiş olmalıdır."
 #: app/actions/patterns-actions.c:43
 msgctxt "patterns-action"
 msgid "_Open Pattern as Image"
-msgstr "Deseni Görüntü Olarak _Aç"
+msgstr "Örüntüyü Görüntü Olarak _Aç"
 
 #: app/actions/patterns-actions.c:44
 msgctxt "patterns-action"
 msgid "Open this pattern as an image"
-msgstr "Bu deseni görüntü olarak aç"
+msgstr "Bu örüntüyü görüntü olarak aç"
 
 #: app/actions/patterns-actions.c:49
 msgctxt "patterns-action"
 msgid "_New Pattern"
-msgstr "_Yeni Desen"
+msgstr "_Yeni Örüntü"
 
 #: app/actions/patterns-actions.c:50
 msgctxt "patterns-action"
 msgid "Create a new pattern"
-msgstr "Yeni desen oluştur"
+msgstr "Yeni örüntü oluştur"
 
 #: app/actions/patterns-actions.c:55
 msgctxt "patterns-action"
 msgid "D_uplicate Pattern"
-msgstr "_Deseni Çoğalt"
+msgstr "Örü_ntüyü Çoğalt"
 
 #: app/actions/patterns-actions.c:56
 msgctxt "patterns-action"
 msgid "Duplicate this pattern"
-msgstr "Bu deseni çoğalt"
+msgstr "Bu örüntüyü çoğalt"
 
 #: app/actions/patterns-actions.c:61
 msgctxt "patterns-action"
 msgid "Copy Pattern _Location"
-msgstr "Desen _Konumunu Kopyala"
+msgstr "Örüntü _Konumunu Kopyala"
 
 #: app/actions/patterns-actions.c:62
 msgctxt "patterns-action"
 msgid "Copy pattern file location to clipboard"
-msgstr "Desen dosyası konumunu panoya kopyala"
+msgstr "Örüntü dosyası konumunu panoya kopyala"
 
 #: app/actions/patterns-actions.c:67
 msgctxt "patterns-action"
@@ -7349,37 +7349,37 @@ msgstr "_Dosya Yöneticisinde Göster"
 #: app/actions/patterns-actions.c:68
 msgctxt "patterns-action"
 msgid "Show pattern file location in the file manager"
-msgstr "Desen dosya konumunu dosya yöneticisinde göster"
+msgstr "Örüntü dosya konumunu dosya yöneticisinde göster"
 
 #: app/actions/patterns-actions.c:73
 msgctxt "patterns-action"
 msgid "_Delete Pattern"
-msgstr "D_eseni Sil"
+msgstr "Örü_ntüyü Sil"
 
 #: app/actions/patterns-actions.c:74
 msgctxt "patterns-action"
 msgid "Delete this pattern"
-msgstr "Bu deseni sil"
+msgstr "Bu örüntüyü sil"
 
 #: app/actions/patterns-actions.c:79
 msgctxt "patterns-action"
 msgid "_Refresh Patterns"
-msgstr "_Desenleri Yenile"
+msgstr "Örü_ntüleri Yenile"
 
 #: app/actions/patterns-actions.c:80
 msgctxt "patterns-action"
 msgid "Refresh patterns"
-msgstr "Desenleri yenile"
+msgstr "Örüntüleri yenile"
 
 #: app/actions/patterns-actions.c:88
 msgctxt "patterns-action"
 msgid "_Edit Pattern..."
-msgstr "_Deseni Düzenle..."
+msgstr "Örüntüyü _Düzenle..."
 
 #: app/actions/patterns-actions.c:89
 msgctxt "patterns-action"
 msgid "Edit pattern"
-msgstr "Deseni düzenle"
+msgstr "Örüntüyü düzenle"
 
 #: app/actions/plug-in-actions.c:69
 msgctxt "plug-in-action"
@@ -10315,7 +10315,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "'%%s' ayrıştırma hatası: satır %s karakterden daha uzun."
 
 #: app/config/gimpconfig-file.c:153 app/config/gimpconfig-file.c:197
-#: app/core/gimp-tags.c:145 app/gui/themes.c:525
+#: app/core/gimp-tags.c:145 app/gui/themes.c:522
 #: app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -10338,7 +10338,7 @@ msgstr ""
 
 #: app/config/gimpcoreconfig.c:821 app/dialogs/preferences-dialog.c:1812
 msgid "Pattern syntax for searching and selecting items:"
-msgstr "Ögeleri aramak ve seçmek için dezen söz dizimi:"
+msgstr "Ögeleri aramak ve seçmek için örüntü söz dizimi:"
 
 #: app/config/gimpdialogconfig.c:318 app/core/gimplayer.c:427
 msgid "Layer"
@@ -10371,8 +10371,8 @@ msgstr "Saydamlık özel renk 2"
 #: app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to "
-"focus\"."
+"receives the focus. This is useful for window managers using \"click to focus"
+"\"."
 msgstr ""
 "Etkinleştirildiğinde, görüntü penceresi odaklandığında görüntü etkin hale "
 "gelir. Bu özellik \"tıklayarak odakla\" özelliğini kullanan pencere "
@@ -10525,7 +10525,7 @@ msgstr "Etkin olduğunda, seçilmiş renk geçişi tüm araçlar için kullanıl
 
 #: app/config/gimprc-blurbs.h:179
 msgid "When enabled, the selected pattern will be used for all tools."
-msgstr "Etkin olduğunda, seçilmiş desen tüm araçlar için kullanılacak."
+msgstr "Etkin olduğunda, seçilmiş örüntü tüm araçlar için kullanılacak."
 
 #: app/config/gimprc-blurbs.h:185
 msgid ""
@@ -10819,7 +10819,7 @@ msgstr ""
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
-"GIMP oturumları arasında geçerli aracı, deseni, rengi ve fırçayı anımsa."
+"GIMP oturumları arasında geçerli aracı, örüntüyü, rengi ve fırçayı anımsa."
 
 #: app/config/gimprc-blurbs.h:409
 msgid ""
@@ -11180,7 +11180,7 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:617
 msgid "Sets how items are searched and selected from a textual pattern."
 msgstr ""
-"Ögelerin nasıl aranacağını ve metin deseninden nasıl seçileceğini ayarlar."
+"Ögelerin nasıl aranacağını ve metin örüntüsünden nasıl seçileceğini ayarlar."
 
 #: app/config/gimprc-blurbs.h:620
 msgid "Sets the default layer name for the 'New Layer' dialog."
@@ -11369,7 +11369,7 @@ msgstr "Geçerli ön plan ve arka plan renklerini araç kutusunda göster."
 #: app/config/gimprc-blurbs.h:732
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr ""
-"Geçerli seçilmiş fırçayı, deseni ve renk geçişini araç kutusunda göster."
+"Geçerli seçilmiş fırçayı, örüntüyü ve renk geçişini araç kutusunda göster."
 
 #: app/config/gimprc-blurbs.h:735
 msgid "Use a single toolbox button for grouped tools."
@@ -11549,7 +11549,7 @@ msgstr "AP renk doldurma"
 #: app/core/core-enums.c:103
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
-msgstr "Desen doldurma"
+msgstr "Örüntü doldurma"
 
 #: app/core/core-enums.c:132
 msgctxt "channel-border-style"
@@ -11816,7 +11816,7 @@ msgstr "Düz renk"
 #: app/core/core-enums.c:603
 msgctxt "custom-style"
 msgid "Pattern"
-msgstr "Desen"
+msgstr "Örüntü"
 
 #: app/core/core-enums.c:632
 msgctxt "fill-style"
@@ -11831,7 +11831,7 @@ msgstr "Arka plan rengi"
 #: app/core/core-enums.c:634
 msgctxt "fill-style"
 msgid "Pattern"
-msgstr "Desen"
+msgstr "Örüntü"
 
 #: app/core/core-enums.c:662
 msgctxt "filter-region"
@@ -12566,7 +12566,7 @@ msgstr "Düzenli ifade aramasıyla seçim"
 #: app/core/core-enums.c:1505
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
-msgstr "Glob desen aramasıyla seçim"
+msgstr "Glob örüntü aramasıyla seçim"
 
 #. initialize babl fishes
 #: app/core/gimp.c:535 app/core/gimp.c:565
@@ -12807,7 +12807,7 @@ msgstr "“%s” alt süreci çalıştırılamadı (%s)"
 msgid "tags-locale:C"
 msgstr "tags-locale:tr"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:537
+#: app/core/gimp-tags.c:156 app/gui/themes.c:534
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "'%s': %s kapatılırken hata"
@@ -12847,7 +12847,7 @@ msgstr "'%s' klasörü oluşturulamadı: %s"
 
 #: app/core/gimp-utils.c:576 app/core/gimpfilloptions.c:431
 msgid "No patterns available for this operation."
-msgstr "Bu işlem için kullanılır desen yok."
+msgstr "Bu işlem için kullanılır örüntü yok."
 
 #: app/core/gimp-utils.c:1452
 #, c-format
@@ -13296,7 +13296,7 @@ msgstr "MyPaint Fırçası"
 
 #: app/core/gimpcontext.c:720 app/core/gimpcontext.c:721
 msgid "Pattern"
-msgstr "Desen"
+msgstr "Örüntü"
 
 #: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728
 #: app/pdb/drawable-edit-cmds.c:255 app/tools/gimpgradientoptions.c:269
@@ -13553,7 +13553,7 @@ msgstr "Saydamlık İle Doldur"
 #: app/core/gimpfilloptions.c:437 app/core/gimpfilloptions.c:512
 msgctxt "undo-type"
 msgid "Fill with Pattern"
-msgstr "Desen İle Doldur"
+msgstr "Örüntü İle Doldur"
 
 #: app/core/gimpgradient-load.c:73
 #, c-format
@@ -13819,7 +13819,7 @@ msgstr "Tuval dışı kılavuzlar %s ile eklendi"
 #: app/core/gimpimage.c:3063
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
-msgstr "Öge seti ve öge adlarında desen araması %s ile eklendi"
+msgstr "Öge seti ve öge adlarında örüntü araması %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
 #: app/core/gimpimage.c:3069
@@ -14675,7 +14675,7 @@ msgstr "Dosya bozulmuş görünüyor: "
 #: app/core/gimppattern-load.c:78
 #, c-format
 msgid "Unknown pattern format version %d."
-msgstr "Bilinmeyen desen biçim sürümü %d."
+msgstr "Bilinmeyen örüntü biçim sürümü %d."
 
 #: app/core/gimppattern-load.c:87
 #, c-format
@@ -14683,8 +14683,8 @@ msgid ""
 "Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Desteklenmeyen desen derinliği %d.\n"
-"GIMP Desenleri GRİ ya da RGB olmalıdır."
+"Desteklenmeyen örüntü derinliği %d.\n"
+"GIMP Örüntüleri GRİ ya da RGB olmalıdır."
 
 #: app/core/gimppattern-load.c:99
 #, c-format
@@ -14698,7 +14698,7 @@ msgstr ""
 #: app/core/gimppattern-load.c:116
 #, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
-msgstr "'%s' içinde geçersiz başlık verisi: Desen adı çok uzun: %lu"
+msgstr "'%s' içinde geçersiz başlık verisi: Örüntü adı çok uzun: %lu"
 
 #: app/core/gimppattern-load.c:129 app/core/gimppattern-load.c:167
 msgid "File appears truncated."
@@ -14707,11 +14707,11 @@ msgstr "Dosya bozulmuş görünüyor."
 #: app/core/gimppattern-load.c:135
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "'%s' desen dosyası içinde geçersiz UTF-8 dizgesi."
+msgstr "'%s' örüntü dosyası içinde geçersiz UTF-8 dizgesi."
 
 #: app/core/gimppattern-load.c:178
 msgid "Fatal parse error in pattern file: "
-msgstr "Desen dosyasında ölümcül ayrıştırma hatası: "
+msgstr "Örüntü dosyasında ölümcül ayrıştırma hatası: "
 
 #: app/core/gimppattern-save.c:52
 #, c-format
@@ -14719,8 +14719,8 @@ msgid ""
 "Unsupported pattern dimensions %d x %d.\n"
 "GIMP Patterns have a maximum size of %d x %d."
 msgstr ""
-"Desteklenmeyen desen boyutları %d x %d.\n"
-"GIMP Desenleri azami %d x %d boyutlarında olmalıdır."
+"Desteklenmeyen örüntü boyutları %d x %d.\n"
+"GIMP Örüntüleri azami %d x %d boyutlarında olmalıdır."
 
 #: app/core/gimppdbprogress.c:267
 #, c-format
@@ -15101,7 +15101,7 @@ msgstr "Depolanan MyPaint fırçasını uygula"
 
 #: app/core/gimptoolpreset.c:185
 msgid "Apply stored pattern"
-msgstr "Depolanan deseni uygula"
+msgstr "Depolanan örüntüyü uygula"
 
 #: app/core/gimptoolpreset.c:192
 msgid "Apply stored palette"
@@ -16754,7 +16754,7 @@ msgstr "_Hareketler"
 
 #: app/dialogs/preferences-dialog.c:1669
 msgid "_Pattern"
-msgstr "_Desen"
+msgstr "Örü_ntü"
 
 #: app/dialogs/preferences-dialog.c:1675
 msgid "E_xpand Layers"
@@ -16952,7 +16952,7 @@ msgstr "_Ön plan ve arka plan rengini göster"
 
 #: app/dialogs/preferences-dialog.c:2164
 msgid "Show active _brush, pattern & gradient"
-msgstr "Etkin _fırçayı, deseni ve renk geçişini göster"
+msgstr "Etkin _fırçayı, örüntüyü ve renk geçişini göster"
 
 #: app/dialogs/preferences-dialog.c:2168
 msgid "Show active _image"
@@ -17691,15 +17691,15 @@ msgstr "Hareket Klasörlerini Seç"
 
 #: app/dialogs/preferences-dialog.c:3410
 msgid "Pattern Folders"
-msgstr "Desen Klasörleri"
+msgstr "Örüntü Klasörleri"
 
 #: app/dialogs/preferences-dialog.c:3413
 msgid "Reset Pattern _Folders"
-msgstr "Desen _Klasörlerini Sıfırla"
+msgstr "Örüntü _Klasörlerini Sıfırla"
 
 #: app/dialogs/preferences-dialog.c:3414
 msgid "Select Pattern Folders"
-msgstr "Desen Klasörlerini Seç"
+msgstr "Örüntü Klasörlerini Seç"
 
 #: app/dialogs/preferences-dialog.c:3416
 msgid "Palette Folders"
@@ -18728,7 +18728,7 @@ msgstr "Seçili bir katmanın pikselleri kilitli."
 #: app/widgets/gimpdrawabletreeview.c:381
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
-msgstr "Deseni katmana bırak"
+msgstr "Örüntüyü katmana bırak"
 
 #: app/display/gimpdisplayshell-dnd.c:452
 #: app/widgets/gimpdrawabletreeview.c:298
@@ -19433,7 +19433,7 @@ msgstr "GIMP fırçası (hareketli)"
 
 #: app/file-data/file-data.c:345 app/file-data/file-data.c:398
 msgid "GIMP pattern"
-msgstr "GIMP deseni"
+msgstr "GIMP örüntüsü"
 
 #: app/file-data/file-data.c:475
 msgid "GIMP extension"
@@ -20448,7 +20448,7 @@ msgstr "Kopyala"
 
 #: app/paint/gimpclone.c:132
 msgid "No patterns available for use with this tool."
-msgstr "Bu araçla kullanılabilecek desen yok."
+msgstr "Bu araçla kullanılabilecek örüntü yok."
 
 #: app/paint/gimpcloneoptions.c:67 app/tools/gimpbucketfilloptions.c:217
 #: app/tools/gimpbucketfilloptions.c:768 app/tools/gimpcloneoptions-gui.c:246
@@ -21137,7 +21137,7 @@ msgstr "Fırça"
 #: app/pdb/gimppdb-utils.c:893
 msgctxt "PDB-error-data-label"
 msgid "Pattern"
-msgstr "Desen"
+msgstr "Örüntü"
 
 #: app/pdb/gimppdb-utils.c:895
 msgctxt "PDB-error-data-label"
@@ -21246,8 +21246,8 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için yanlış bir değer türü ile "
 "çağrıldı (#%d). İstenen %s, olan %s."
@@ -21460,7 +21460,7 @@ msgstr "Ayrıştır"
 #: app/pdb/plug-in-compat-cmds.c:1417
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
-msgstr "Kırınım Desenleri"
+msgstr "Kırınım Örüntüleri"
 
 #: app/pdb/plug-in-compat-cmds.c:1554 app/pdb/plug-in-compat-cmds.c:1565
 msgctxt "undo-type"
@@ -22188,7 +22188,7 @@ msgstr "Siyah"
 
 #: app/propgui/gimppropgui-newsprint.c:236
 msgid "_Lock patterns"
-msgstr "_Desenleri kilitle"
+msgstr "Örüntüleri _kilitle"
 
 #: app/propgui/gimppropgui-newsprint.c:245
 msgid "Loc_k periods"
@@ -22846,7 +22846,8 @@ msgstr "Kovadan Dolum"
 
 #: app/tools/gimpbucketfilltool.c:169
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
-msgstr "Kovadan Dolum Aracı: Seçilmiş bölgeyi bir renkle ya da desenle doldur"
+msgstr ""
+"Kovadan Dolum Aracı: Seçilmiş bölgeyi bir renkle ya da örüntüyle doldur"
 
 #: app/tools/gimpbucketfilltool.c:170
 msgid "_Bucket Fill"
@@ -22989,7 +22990,7 @@ msgstr[0] "'%2$s' kaynağından %1$d öge"
 #: app/tools/gimpclonetool.c:64
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
 msgstr ""
-"Kopyalama Aracı: Bir görüntüden ya da desenden, bir fırça kullanıp seçerek "
+"Kopyalama Aracı: Bir görüntüden ya da örüntüden, bir fırça kullanıp seçerek "
 "kopyala"
 
 #: app/tools/gimpclonetool.c:65
@@ -27875,7 +27876,7 @@ msgstr "Katman Etkileri"
 
 #: app/widgets/gimpitemtreeview.c:872
 msgid "Select items by patterns and store item sets"
-msgstr "Desenlerle ögeleri seç ve öge takımlarını depola"
+msgstr "Örüntülerle ögeleri seç ve öge takımlarını depola"
 
 #: app/widgets/gimpitemtreeview.c:1721
 #, c-format
@@ -27913,11 +27914,11 @@ msgstr "Metin ara"
 
 #: app/widgets/gimpitemtreeview.c:3391
 msgid "Select layers by glob patterns"
-msgstr "Glob desenleriyle katmanları seç"
+msgstr "Glob örüntüleriyle katmanları seç"
 
 #: app/widgets/gimpitemtreeview.c:3393
 msgid "Glob pattern search"
-msgstr "Glob desen arama"
+msgstr "Glob örüntü arama"
 
 #: app/widgets/gimpitemtreeview.c:3397
 msgid "Select layers by regular expressions"
@@ -28261,7 +28262,7 @@ msgstr "_Köşe sınırı:"
 
 #: app/widgets/gimpstrokeeditor.c:169
 msgid "Dash pattern:"
-msgstr "Çizgi deseni:"
+msgstr "Çizgi örüntüsü:"
 
 #: app/widgets/gimpstrokeeditor.c:236
 msgid "Dash _preset:"
@@ -28506,8 +28507,8 @@ msgid ""
 "The active pattern.\n"
 "Click to open the Pattern Dialog."
 msgstr ""
-"Etkin desen.\n"
-"Desen iletişim kutusunu açmak için tıklayın."
+"Etkin örüntü.\n"
+"Örüntü iletişim kutusunu açmak için tıklayın."
 
 #: app/widgets/gimptoolbox-indicator-area.c:228
 msgid ""
@@ -28592,7 +28593,7 @@ msgstr "MyPaint fırça seçim iletişim kutusunu aç"
 
 #: app/widgets/gimpviewablebox.c:292
 msgid "Open the pattern selection dialog"
-msgstr "Desen seçim iletişim kutusunu aç"
+msgstr "Örüntü seçim iletişim kutusunu aç"
 
 #: app/widgets/gimpviewablebox.c:362
 msgid "Open the gradient selection dialog"
@@ -29284,7 +29285,7 @@ msgstr "G_ürültü"
 #: menus/image-menu.ui.in.in:822
 msgctxt "filters-action"
 msgid "_Pattern"
-msgstr "_Desen"
+msgstr "Örü_ntü"
 
 #: menus/image-menu.ui.in.in:835
 msgctxt "filters-action"
@@ -29389,7 +29390,7 @@ msgstr "Dışa Farklı Aktar"
 #: menus/patterns-menu.ui:6
 msgctxt "patterns-action"
 msgid "Patterns Menu"
-msgstr "Desenler Menüsü"
+msgstr "Örüntüler Menüsü"
 
 #: menus/sample-points-menu.ui:6
 msgctxt "sample-points-action"
