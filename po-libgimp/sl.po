@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-24 21:06+0000\n"
-"PO-Revision-Date: 2024-04-24 23:29+0200\n"
+"POT-Creation-Date: 2024-04-26 17:36+0000\n"
+"PO-Revision-Date: 2024-04-26 23:34+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -580,7 +580,6 @@ msgid "percent"
 msgstr "odstotkov"
 
 #: libgimp/gimpvectorloadprocedure.c:122
-#, fuzzy
 msgid "_Prefer native dimensions"
 msgstr "_Prednost imajo domorodne mere"
 
