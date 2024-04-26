@@ -38,7 +38,7 @@
 #define PLUG_IN_ROLE            "gimp-file-wmf"
 
 #define WMF_DEFAULT_RESOLUTION  300.0
-#define WMF_DEFAULT_SIZE        500
+#define WMF_DEFAULT_SIZE        500.0
 #define WMF_PREVIEW_SIZE        128
 
 
@@ -80,6 +80,16 @@ static GList          * wmf_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * wmf_create_procedure (GimpPlugIn            *plug_in,
                                               const gchar           *name);
 
+static gboolean        wmf_extract           (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GFile                *file,
+                                              GimpMetadata         *metadata,
+                                              GimpProcedureConfig  *config,
+                                              GimpVectorLoadData   *extracted_dimensions,
+                                              gpointer             *data_for_run,
+                                              GDestroyNotify       *data_for_run_destroy,
+                                              gpointer              extract_data,
+                                              GError              **error);
 static GimpValueArray * wmf_load             (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GFile                 *file,
@@ -103,7 +113,9 @@ static GimpImage      * load_image           (GFile                 *file,
                                               gdouble                resolution,
                                               GError               **error);
 static gboolean         load_wmf_size        (GFile                 *file,
-                                              WmfLoadVals           *vals);
+                                              float                 *width,
+                                              float                 *height,
+                                              gboolean              *guessed);
 static gboolean         load_dialog          (GFile                 *file,
                                               GimpProcedure         *procedure,
                                               GimpProcedureConfig   *config);
@@ -161,7 +173,7 @@ wmf_create_procedure (GimpPlugIn  *plug_in,
     {
       procedure = gimp_vector_load_procedure_new (plug_in, name,
                                                   GIMP_PDB_PROC_TYPE_PLUGIN,
-                                                  NULL, NULL, NULL,
+                                                  wmf_extract, NULL, NULL,
                                                   wmf_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Microsoft WMF file"));
@@ -204,6 +216,41 @@ wmf_create_procedure (GimpPlugIn  *plug_in,
     }
 
   return procedure;
+}
+
+static gboolean
+wmf_extract (GimpProcedure        *procedure,
+             GimpRunMode           run_mode,
+             GFile                *file,
+             GimpMetadata         *metadata,
+             GimpProcedureConfig  *config,
+             GimpVectorLoadData   *extracted_dimensions,
+             gpointer             *data_for_run,
+             GDestroyNotify       *data_for_run_destroy,
+             gpointer              extract_data,
+             GError              **error)
+{
+  float    width   = 0;
+  float    height  = 0;
+  gboolean guessed = FALSE;
+
+  if (! load_wmf_size (file, &width, &height, &guessed))
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Could not open '%s' for reading AA"),
+                   gimp_file_get_utf8_name (file));
+      return FALSE;
+    }
+
+  extracted_dimensions->width         = width;
+  extracted_dimensions->width_unit    = GIMP_UNIT_PERCENT;
+  extracted_dimensions->exact_width   = guessed ? FALSE : TRUE;
+  extracted_dimensions->height        = height;
+  extracted_dimensions->height_unit   = GIMP_UNIT_PERCENT;
+  extracted_dimensions->exact_height  = guessed ? FALSE : TRUE;
+  extracted_dimensions->correct_ratio = guessed ? FALSE : TRUE;
+
+  return TRUE;
 }
 
 static GimpValueArray *
@@ -261,29 +308,24 @@ wmf_load_thumb (GimpProcedure       *procedure,
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
-  gint            width     = 0;
-  gint            height    = 0;
-  GError         *error     = NULL;
-  WmfLoadVals     load_vals = { WMF_DEFAULT_RESOLUTION, 0, 0, };
+  float           width  = 0;
+  float           height = 0;
+  GError         *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  if (load_wmf_size (file, &load_vals) &&
-      load_vals.width  > 0             &&
-      load_vals.height > 0)
+  if (load_wmf_size (file, &width, &height, NULL) &&
+      width  > 0 && height > 0)
     {
-      width  = load_vals.width;
-      height = load_vals.height;
-
-      if ((gdouble) load_vals.width > (gdouble) load_vals.height)
+      if (width > height)
         {
-          load_vals.height *= (size / (gdouble) load_vals.width);
-          load_vals.width   = size;
+          height *= (size / width);
+          width   = (float) size;
         }
       else
         {
-          load_vals.width  *= size / (gdouble) load_vals.height;
-          load_vals.height  = size;
+          width *= size / height;
+          height = (float) size;
         }
     }
   else
@@ -293,7 +335,7 @@ wmf_load_thumb (GimpProcedure       *procedure,
                                                NULL);
     }
 
-  image = load_image (file, load_vals.width, load_vals.height, load_vals.resolution, &error);
+  image = load_image (file, width, height, WMF_DEFAULT_RESOLUTION, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -320,7 +362,9 @@ static GtkWidget *size_label = NULL;
 /*  This function retrieves the pixel size from a WMF file. */
 static gboolean
 load_wmf_size (GFile       *file,
-               WmfLoadVals *vals)
+               float       *width,
+               float       *height,
+               gboolean    *guessed)
 {
   GMappedFile    *mapped;
   /* the bits we need to decode the WMF via libwmf2's GD layer  */
@@ -330,8 +374,6 @@ load_wmf_size (GFile       *file,
   wmfAPI         *API   = NULL;
   wmfAPI_Options  api_options;
   wmfD_Rect       bbox;
-  guint           width   = -1;
-  guint           height  = -1;
   gboolean        success = TRUE;
   char*           wmffontdirs[2] = { NULL, NULL };
 
@@ -369,18 +411,20 @@ load_wmf_size (GFile       *file,
   if (err != wmf_E_None)
     success = FALSE;
 
-  err = wmf_display_size (API, &width, &height,
-                          vals->resolution, vals->resolution);
-  if (err != wmf_E_None || width <= 0 || height <= 0)
+  err = wmf_size (API, width, height);
+  if (err != wmf_E_None || *width <= 0.0f || *height <= 0.0f)
     success = FALSE;
 
   wmf_mem_close (API);
   g_mapped_file_unref (mapped);
 
-  if (width < 1 || height < 1)
+  if (*width <= 0.0f || *height <= 0.0f)
     {
-      width  = WMF_DEFAULT_SIZE;
-      height = WMF_DEFAULT_SIZE;
+      *width  = WMF_DEFAULT_SIZE;
+      *height = WMF_DEFAULT_SIZE;
+
+      if (guessed)
+        *guessed = TRUE;
 
       if (size_label)
         gtk_label_set_text (GTK_LABEL (size_label),
@@ -390,15 +434,12 @@ load_wmf_size (GFile       *file,
     {
       if (size_label)
         {
-          gchar *text = g_strdup_printf (_("%d × %d"), width, height);
+          gchar *text = g_strdup_printf (_("%.4f × %.4f"), *width, *height);
 
           gtk_label_set_text (GTK_LABEL (size_label), text);
           g_free (text);
         }
     }
-
-  vals->width  = width;
-  vals->height = height;
 
   return success;
 }
@@ -472,14 +513,6 @@ load_dialog (GFile               *file,
   gtk_label_set_justify (GTK_LABEL (size_label), GTK_JUSTIFY_CENTER);
   gtk_box_pack_start (GTK_BOX (vbox), size_label, TRUE, TRUE, 4);
   gtk_widget_show (size_label);
-
-  /*  query the initial size after the size label is created  */
-  g_object_get (config, "pixel-density", &vals.resolution, NULL);
-  load_wmf_size (file, &vals);
-  g_object_set (config,
-                "width",  vals.width,
-                "height", vals.height,
-                NULL);
 
   /* Run the dialog. */
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
