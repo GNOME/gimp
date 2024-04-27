@@ -548,9 +548,10 @@ class GimpExportTestRunner(GimpTestRunner):
 
     def get_test_group_config(self, test_name):
         #FIXME maybe have this sorted and use a search...
-        for test in self.sections.test_groups:
-            if test.group_name == test_name:
-                return test
+        if self.sections is not None:
+            for test in self.sections.test_groups:
+                if test.group_name == test_name:
+                    return test
         return None
 
     def add_test(self, test_class):
@@ -563,7 +564,7 @@ class GimpExportTestRunner(GimpTestRunner):
             self.log.message(f"Running tests for {test.group_name}")
             test_config = self.get_test_group_config(test.group_name)
             if test_config is None:
-                self.log.error(f"Could not find configuration for {test.group_name}!")
+                self.log.error(f"Could not find configuration for {test.group_name} tests!")
             else:
                 test.execute(test_config, self.test_cfg.data_folder)
         self.print_footer("Export tests finished")
