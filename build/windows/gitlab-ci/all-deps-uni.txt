@@ -1,6 +1,6 @@
 ${MINGW_PACKAGE_PREFIX}-binutils \
 ${MINGW_PACKAGE_PREFIX}-meson \
-${MINGW_PACKAGE_PREFIX}-ccache \
+${MINGW_PACKAGE_PREFIX}-sccache \
 ${MINGW_PACKAGE_PREFIX}-aalib \
 ${MINGW_PACKAGE_PREFIX}-appstream-glib \
 ${MINGW_PACKAGE_PREFIX}-atk \

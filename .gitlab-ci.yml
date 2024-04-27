@@ -76,14 +76,13 @@ workflow:
   image: debian:bookworm
   # Caching support
   variables:
-    CCACHE_BASEDIR: "$CI_PROJECT_DIR"
-    CCACHE_DIR: "$CI_PROJECT_DIR/_ccache"
-    CC: "ccache clang"
-    CXX: "ccache clang++"
+    SCCACHE_DIR: "$CI_PROJECT_DIR/_sccache"
+    CC: "sccache clang"
+    CXX: "sccache clang++"
   cache:
     key: ${CI_JOB_NAME}${VARIANT}
     paths:
-      - _ccache/
+      - _sccache/
   # Universal variables (works in all POSIX OSes and archs)
   before_script:
     - export PATH="$GIMP_PREFIX/bin:$PATH"
@@ -117,8 +116,8 @@ variables:
       variables: {}
     - if: '$GIMP_CI_MESON_GCC != null'
       variables:
-        CC: "ccache cc"
-        CXX: "ccache c++"
+        CC: "sccache cc"
+        CXX: "sccache c++"
         VARIANT: "-gcc"
     - if: '$GIMP_CI_RASTER_ICONS != null'
       variables:
@@ -152,7 +151,6 @@ image-debian-x64:
     - echo "appstream
             at-spi2-core
             build-essential
-            ccache
             clang
             cpio
             desktop-file-utils
@@ -217,6 +215,7 @@ image-debian-x64:
             python3-pip
             python3-zstandard
             rpm
+            sccache
             valac
             xauth
             xsltproc
@@ -256,12 +255,14 @@ deps-debian-x64:
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
     - ninja
     - ninja install
-    - ccache --show-stats
+    - sccache --show-stats
+    # sccache --show-adv-stats
     - mkdir ../../_gegl/_build${ARTIFACTS_SUFFIX} && cd ../../_gegl/_build${ARTIFACTS_SUFFIX}
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
     - ninja
     - ninja install
-    - ccache --show-stats
+    - sccache --show-stats
+    # sccache --show-adv-stats
   artifacts:
     paths:
       - _install${ARTIFACTS_SUFFIX}/
@@ -307,7 +308,8 @@ gimp-debian-x64:
     - cd _build${ARTIFACTS_SUFFIX}
     - ninja
     - ninja install
-    - ccache --show-stats
+    - sccache --show-stats
+    # sccache --show-adv-stats
     - cd ..
     - bash -x build/linux/appimage/bundle-gimp-appimage.sh
   artifacts:

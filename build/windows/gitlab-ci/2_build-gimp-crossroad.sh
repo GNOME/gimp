@@ -35,7 +35,8 @@ crossroad meson setup .. -Dgi-docgen=disabled                 \
                          -Dpython=disabled -Dvala=disabled
 ninja
 ninja install
-ccache --show-stats
+sccache --show-stats
+#sccache --show-adv-stats
 cd ..
 
 ## XXX Functional fix to the problem of non-configured interpreters

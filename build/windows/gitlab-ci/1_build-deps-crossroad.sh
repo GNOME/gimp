@@ -43,13 +43,15 @@ mkdir _babl/_build${ARTIFACTS_SUFFIX}-cross/ && cd _babl/_build${ARTIFACTS_SUFFI
 crossroad meson setup .. -Denable-gir=false
 ninja
 ninja install
-ccache --show-stats
+sccache --show-stats
+#sccache --show-adv-stats
 
 mkdir ../../_gegl/_build${ARTIFACTS_SUFFIX}-cross/ && cd ../../_gegl/_build${ARTIFACTS_SUFFIX}-cross/
 crossroad meson setup .. -Dintrospection=false
 ninja
 ninja install
-ccache --show-stats
+sccache --show-stats
+#sccache --show-adv-stats
 cd ../../
 
 ## "Build" part of deps

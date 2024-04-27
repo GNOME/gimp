@@ -101,7 +101,8 @@ configure_or_build ()
   fi
   ninja
   ninja install
-  ccache --show-stats
+  sccache --show-stats
+  sccache --show-adv-stats
   cd ../..
 }
 

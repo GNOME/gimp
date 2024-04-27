@@ -61,7 +61,8 @@ else
 fi
 ninja
 ninja install
-ccache --show-stats
+sccache --show-stats
+sccache --show-adv-stats
 
 
 # XXX Functional fix to the problem of non-configured interpreters
