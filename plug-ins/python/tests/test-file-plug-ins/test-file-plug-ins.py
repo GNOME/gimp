@@ -45,12 +45,12 @@ PRINT_VERBOSE = False
 LOG_APPEND = False
 
 
-test_cfg = GimpConfig()
-
-log = GimpLogger(False, test_cfg.log_file, LOG_APPEND, PRINT_VERBOSE, DEBUGGING)
-
-
 class PythonTest (Gimp.PlugIn):
+
+    def __init__(self):
+        Gimp.PlugIn.__init__(self)
+        self.test_cfg = None
+        self.log = None
 
     ## GimpPlugIn virtual methods ##
     def do_set_i18n(self, _name):
@@ -93,31 +93,38 @@ class PythonTest (Gimp.PlugIn):
                                   YEARS)   #year
         return procedure
 
+    def init_logging(self):
+        self.test_cfg = GimpConfig()
+
+        self.log = GimpLogger(True, self.test_cfg.log_file, LOG_APPEND, PRINT_VERBOSE, DEBUGGING)
+
     def run_import_tests(self, procedure, _run_mode, _image,
                          _n_drawables, _drawable, _config, _data):
-        log.set_interactive(True)
+        self.init_logging()
 
-        runner = GimpTestRunner(log, "import", test_cfg)
-        runner.run_tests()
+        if self.log.enabled:
+            runner = GimpTestRunner(self.log, "import", self.test_cfg)
+            runner.run_tests()
 
         return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
     def run_export_tests(self, procedure, _run_mode, _image,
                          _n_drawables, _drawable, _config, _data):
-        log.set_interactive(True)
+        self.init_logging()
 
-        runner = GimpExportTestRunner(log, "export", test_cfg)
-        if not runner:
-            log.error("Failed to create export test runner!")
-        else:
-            runner.load_test_configs()
+        if self.log.enabled:
+            runner = GimpExportTestRunner(self.log, "export", self.test_cfg)
+            if not runner:
+                self.log.error("Failed to create export test runner!")
+            else:
+                runner.load_test_configs()
 
-            bmp_tests = BmpExportTests("bmp", log)
-            runner.add_test(bmp_tests)
+                bmp_tests = BmpExportTests("bmp", self.log)
+                runner.add_test(bmp_tests)
 
-            # Add additional tests here
+                # Add additional tests here
 
-            runner.run_tests()
+                runner.run_tests()
 
         return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 

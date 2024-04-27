@@ -36,6 +36,7 @@ class GimpLogger (object):
 
         self.verbose = verbose
         self.debugging = debugging
+        self.enabled = True
 
         if debugging:
             log_level = logging.DEBUG
@@ -46,15 +47,25 @@ class GimpLogger (object):
         else:
             log_filemode = 'w'
 
-        logging.basicConfig(
-            filename=logfile,
-            filemode=log_filemode,
-            encoding='utf-8',
-            level=log_level,
-            format='%(asctime)s | %(name)s | %(levelname)s | %(message)s')
+        try:
+            logging.basicConfig(
+                filename=logfile,
+                filemode=log_filemode,
+                encoding='utf-8',
+                level=log_level,
+                format='%(asctime)s | %(name)s | %(levelname)s | %(message)s')
 
-        logging.debug("Starting logger...")
-        logging.debug("Log file: %s", os.path.abspath(logfile))
+            logging.debug("Starting logger...")
+            logging.debug("Log file: %s", os.path.abspath(logfile))
+        except PermissionError:
+            self.enabled = False
+            msg = ("We do not have permission to create a log file at " +
+                   os.path.abspath(logfile) + ". " +
+                   "Please use env var GIMP_TESTS_LOG_FILE to set up a location.")
+            if interactive:
+                Gimp.message(msg)
+            else:
+                print(msg)
 
     def set_interactive(self, interactive):
         if self.interactive != interactive:
