@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-26 17:36+0000\n"
-"PO-Revision-Date: 2024-04-26 23:36+0200\n"
+"POT-Creation-Date: 2024-04-27 16:49+0000\n"
+"PO-Revision-Date: 2024-04-27 23:48+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -324,11 +324,9 @@ msgstr "Ni dovolj plasti, da bi jih bilo mogoče poravnati."
 msgid "Align Visible Layers"
 msgstr "Poravnaj vidne plasti"
 
-#. Text antialiasing
-#. Graphics antialiasing
 #. file save type
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
-#: plug-ins/common/file-ps.c:3695 plug-ins/common/file-ps.c:3703
+#: plug-ins/common/file-ps.c:408 plug-ins/common/file-ps.c:417
 #: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:191
 #: plug-ins/file-tiff/file-tiff.c:240
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
@@ -1970,8 +1968,8 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/file-farbfeld.c:298 plug-ins/common/file-gif-load.c:416
 #: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1405
 #: plug-ins/common/file-pcx.c:509 plug-ins/common/file-pcx.c:552
-#: plug-ins/common/file-png.c:665 plug-ins/common/file-ps.c:1107
-#: plug-ins/common/file-ps.c:3615 plug-ins/common/file-psp.c:2633
+#: plug-ins/common/file-png.c:665 plug-ins/common/file-ps.c:1121
+#: plug-ins/common/file-ps.c:3670 plug-ins/common/file-psp.c:2633
 #: plug-ins/common/file-psp.c:2683 plug-ins/common/file-qoi.c:299
 #: plug-ins/common/file-raw-data.c:567 plug-ins/common/file-raw-data.c:1715
 #: plug-ins/common/file-sunras.c:457 plug-ins/common/file-svg.c:369
@@ -2487,7 +2485,7 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Iz slike odstrani navpične artefakte v obliki trakov."
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:195
-#: plug-ins/common/file-ps.c:486 plug-ins/common/file-raw-data.c:355
+#: plug-ins/common/file-ps.c:496 plug-ins/common/file-raw-data.c:355
 #: plug-ins/common/smooth-palette.c:135 plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
 msgstr "_Širina"
@@ -2599,7 +2597,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-pcx.c:501 plug-ins/common/file-pcx.c:544
 #: plug-ins/common/file-pdf-load.c:722 plug-ins/common/file-pix.c:393
 #: plug-ins/common/file-png.c:657 plug-ins/common/file-pnm.c:713
-#: plug-ins/common/file-ps.c:1097 plug-ins/common/file-raw-data.c:1707
+#: plug-ins/common/file-ps.c:1111 plug-ins/common/file-raw-data.c:1707
 #: plug-ins/common/file-sunras.c:449 plug-ins/common/file-tga.c:439
 #: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:781
 #: plug-ins/common/file-xbm.c:741 plug-ins/common/file-xmc.c:658
@@ -2679,7 +2677,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-gif-export.c:975 plug-ins/common/file-html-table.c:359
 #: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1103
 #: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1509
-#: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1317
+#: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1332
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
 #: plug-ins/common/file-tga.c:1229 plug-ins/common/file-xbm.c:1050
 #: plug-ins/common/file-xpm.c:705 plug-ins/common/file-xwd.c:720
@@ -2852,7 +2850,7 @@ msgstr "GIMP ne podpira %s v kombinaciji z vzorci na slikovno točko: %d"
 msgid "Cannot save images with alpha channel."
 msgstr "Slik ni mogoče shraniti s kanalom alfa."
 
-#: plug-ins/common/file-dicom.c:1548 plug-ins/common/file-ps.c:1312
+#: plug-ins/common/file-dicom.c:1548 plug-ins/common/file-ps.c:1327
 #: plug-ins/common/file-xwd.c:715 plug-ins/file-fits/fits.c:669
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -3659,7 +3657,7 @@ msgstr "Besedilo za vse celice."
 msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Širina posamezne celice v tabeli. Možen je vpis števila ali odstotka."
 
-#: plug-ins/common/file-html-table.c:202 plug-ins/common/file-ps.c:493
+#: plug-ins/common/file-html-table.c:202 plug-ins/common/file-ps.c:503
 #: plug-ins/common/file-raw-data.c:360 plug-ins/common/smooth-palette.c:141
 #: plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
@@ -4510,7 +4508,7 @@ msgstr "Dodaj to sliko"
 
 #: plug-ins/common/file-pdf-export.c:1194
 #: plug-ins/common/file-pdf-export.c:1267
-#: plug-ins/common/file-pdf-export.c:1365 plug-ins/common/file-ps.c:2094
+#: plug-ins/common/file-pdf-export.c:1365 plug-ins/common/file-ps.c:2148
 #: plug-ins/file-tiff/file-tiff-load.c:1530
 #, c-format
 msgid "Page %d"
@@ -4701,7 +4699,7 @@ msgstr ""
 msgid "PNG export format"
 msgstr "Oblika izvoza PNG"
 
-#: plug-ins/common/file-png.c:292 plug-ins/common/file-ps.c:3689
+#: plug-ins/common/file-png.c:292 plug-ins/common/file-ps.c:401
 #: plug-ins/file-fits/fits.c:1036
 msgid "Automatic"
 msgstr "Samodejno"
@@ -5017,9 +5015,13 @@ msgstr "_ASCII"
 msgid "_Raw"
 msgstr "_surovo"
 
-#: plug-ins/common/file-ps.c:339 plug-ins/common/file-ps.c:438
+#: plug-ins/common/file-ps.c:339 plug-ins/common/file-ps.c:448
 msgid "PostScript document"
 msgstr "Dokument PostScript"
+
+#: plug-ins/common/file-ps.c:342 plug-ins/common/file-ps.c:343
+msgid "Load PostScript documents"
+msgstr "Naloži dokumente PostScript"
 
 #: plug-ins/common/file-ps.c:347
 msgid "PostScript"
@@ -5029,7 +5031,11 @@ msgstr "PostScript"
 msgid "Encapsulated PostScript image"
 msgstr "Slika EPS (Encapsulated PostScript)"
 
-#: plug-ins/common/file-ps.c:366 plug-ins/common/file-ps.c:457
+#: plug-ins/common/file-ps.c:361 plug-ins/common/file-ps.c:362
+msgid "Load Encapsulated PostScript images"
+msgstr "Naloži slike EPS (Encapsulated PostScript)"
+
+#: plug-ins/common/file-ps.c:366 plug-ins/common/file-ps.c:467
 msgid "Encapsulated PostScript"
 msgstr "Oviti PostScript (EPS)"
 
@@ -5050,143 +5056,22 @@ msgid "Pages to load (e.g.: 1,3,5-7)"
 msgstr "Strani za nalaganje (npr.: 1,3,5-7)"
 
 #: plug-ins/common/file-ps.c:396
-msgid "Coloring"
-msgstr "Obarvanje"
+msgid "Colorin_g"
+msgstr "O_barvanje"
 
 #: plug-ins/common/file-ps.c:397
-msgid "4: b/w, 5: grey, 6: color image, 7: automatic"
-msgstr "4: č/b, 5: sivinsko, 6: barvna slika, 7: samodejno"
+msgid "Import color format"
+msgstr "Uvozi barvno obliko"
 
-#: plug-ins/common/file-ps.c:402
-msgid "Text antialiasing"
-msgstr "Glajenje robov besedila"
-
-#: plug-ins/common/file-ps.c:403 plug-ins/common/file-ps.c:409
-msgid "1, 2 or 4"
-msgstr "1, 2 ali 4"
-
-#: plug-ins/common/file-ps.c:408
-msgid "Graphic antialiasing"
-msgstr "Glajenje robov slik"
-
-#: plug-ins/common/file-ps.c:448
-msgid "PS"
-msgstr "PS"
-
-#: plug-ins/common/file-ps.c:468
-msgid "EPS"
-msgstr "EPS"
-
-#: plug-ins/common/file-ps.c:487
-msgid "Width of the image in PostScript file (0: use input image size)"
-msgstr "Širina slike v datoteki PostScript (0: uporabi vhodno velikost slike)"
-
-#: plug-ins/common/file-ps.c:494
-msgid "Height of the image in PostScript file (0: use input image size)"
-msgstr "Višina slike v datoteki PostScript (0: uporabi vhodno velikost slike)"
-
-#: plug-ins/common/file-ps.c:500
-msgid "_X offset"
-msgstr "Odmik _X"
-
-#: plug-ins/common/file-ps.c:501
-msgid "X-offset to image from lower left corner"
-msgstr "Odmik X od slike iz levega spodnjega kota"
-
-#: plug-ins/common/file-ps.c:506
-msgid "Y o_ffset"
-msgstr "Odmik _Y"
-
-#: plug-ins/common/file-ps.c:507
-msgid "Y-offset to image from lower left corner"
-msgstr "Odmik Y od slike iz levega spodnjega kota"
-
-#: plug-ins/common/file-ps.c:512
-msgid "Unit"
-msgstr "Enota"
-
-#: plug-ins/common/file-ps.c:513
-msgid "Unit for width/height/offset. 0: inches, 1: millimeters"
-msgstr "Enota za širino/višino/zamik. 0: palci, 1: milimetri"
-
-#: plug-ins/common/file-ps.c:519
-msgid "_Keep aspect ratio"
-msgstr "_Ohrani razmerje stranic"
-
-#: plug-ins/common/file-ps.c:520
-msgid "FALSE: use width/height, TRUE: keep aspect ratio"
-msgstr "FALSE: uporabi razmerje širina/višina, TRUE: ohrani razmerje stranic"
-
-#: plug-ins/common/file-ps.c:525 plug-ins/map-object/map-object-ui.c:738
-msgid "Rotation"
-msgstr "Sukanje"
-
-#: plug-ins/common/file-ps.c:531
-msgid "PostScript Level _2"
-msgstr "PostScript ravni _2"
-
-#: plug-ins/common/file-ps.c:532
-msgid "FALSE: PostScript Level 1, TRUE: PostScript Level 2"
-msgstr "FALSE: PostScript Level 1, TRUE: PostScript Level 2"
-
-#: plug-ins/common/file-ps.c:537
-msgid "Encapsula_ted PostScript"
-msgstr "Ovi_ti PostScript (EPS)"
-
-#: plug-ins/common/file-ps.c:538
-msgid "FALSE: PostScript, TRUE: Encapsulated PostScript"
-msgstr "FALSE: PostScript, TRUE: oviti PostScript"
-
-#: plug-ins/common/file-ps.c:543 plug-ins/imagemap/imap_grid.c:301
-msgid "_Preview"
-msgstr "_Predogled"
-
-#: plug-ins/common/file-ps.c:544
-msgid "Show Preview"
-msgstr "Pokaži predogled"
-
-#: plug-ins/common/file-ps.c:549
-msgid "Preview Si_ze"
-msgstr "_Velikost predogleda"
-
-#: plug-ins/common/file-ps.c:550
-msgid "0: no preview, >0: max. size of preview"
-msgstr "0: brez predogleda, >0: največja velikost predogleda"
-
-#: plug-ins/common/file-ps.c:706
-#, c-format
-msgid "PostScript plug-in does not support multiple layers."
-msgstr "Vstavek PostScript ne podpira več plasti."
-
-#: plug-ins/common/file-ps.c:1117
-#, c-format
-msgid "Could not interpret PostScript file '%s'"
-msgstr "Datoteke PostScript »%s« ni mogoče interpretirati."
-
-#: plug-ins/common/file-ps.c:1199
-msgid "Rendered EPS"
-msgstr "Upodobljeni EPS"
-
-#: plug-ins/common/file-ps.c:1227
-#, c-format
-msgid "%s-pages"
-msgstr "%s-strani"
-
-#: plug-ins/common/file-ps.c:1299
-#, c-format
-msgid "PostScript export cannot handle images with alpha channels"
-msgstr "Izvoz v PostScript ne podpira slik s kanali alfa."
-
-#. Coloring
-#: plug-ins/common/file-ps.c:3686
+#: plug-ins/common/file-ps.c:398
 msgid "B/W"
 msgstr "črno belo"
 
-#: plug-ins/common/file-ps.c:3687 plug-ins/imagemap/imap-menu.ui:101
+#: plug-ins/common/file-ps.c:399 plug-ins/imagemap/imap-menu.ui:101
 msgid "Gray"
 msgstr "sivinsko"
 
-#: plug-ins/common/file-ps.c:3688 plug-ins/common/file-xpm.c:511
+#: plug-ins/common/file-ps.c:400 plug-ins/common/file-xpm.c:511
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:179
 #: plug-ins/imagemap/imap-menu.ui:96 plug-ins/lighting/lighting-main.c:223
 #: plug-ins/lighting/lighting-main.c:346 plug-ins/lighting/lighting-main.c:405
@@ -5195,27 +5080,190 @@ msgstr "sivinsko"
 msgid "Color"
 msgstr "barvno"
 
-#: plug-ins/common/file-ps.c:3696 plug-ins/common/file-ps.c:3704
+#: plug-ins/common/file-ps.c:406
+msgid "Te_xt anti-aliasing"
+msgstr "_Glajenje robov besedila"
+
+#: plug-ins/common/file-ps.c:407
+msgid "Text anti-aliasing strength"
+msgstr "Jakost glajenja robov besedila"
+
+#: plug-ins/common/file-ps.c:409 plug-ins/common/file-ps.c:418
 msgid "Weak"
 msgstr "Šibko"
 
-#: plug-ins/common/file-ps.c:3697 plug-ins/common/file-ps.c:3705
+#: plug-ins/common/file-ps.c:410 plug-ins/common/file-ps.c:419
 msgid "Strong"
 msgstr "Močno"
 
-#: plug-ins/common/file-ps.c:3730
+#: plug-ins/common/file-ps.c:415
+msgid "Gra_phic anti-aliasing"
+msgstr "G_lajenje robov slik"
+
+#: plug-ins/common/file-ps.c:416
+msgid "Graphic anti-aliasing strength"
+msgstr "Jakost glajenja robov slik"
+
+#: plug-ins/common/file-ps.c:430
+msgid "Loads a small preview from a PostScript or PDF document"
+msgstr "Naloži majhen predogled iz dokumenta PostScript ali PDF"
+
+#: plug-ins/common/file-ps.c:451
+msgid "Export image as PostScript document"
+msgstr "Izvozi sliko kot dokument PostScript"
+
+#: plug-ins/common/file-ps.c:452 plug-ins/common/file-ps.c:472
+msgid ""
+"PostScript exporting handles all image types except those with alpha "
+"channels."
+msgstr ""
+"Izvažanje v PostScript podpira vse vrste slik, razen tistih s kanali alfa."
+
+#: plug-ins/common/file-ps.c:458
+msgid "PS"
+msgstr "PS"
+
+#: plug-ins/common/file-ps.c:470
+msgid "Export image as Encapsulated PostScript image"
+msgstr "Izvozi sliko kot sliko EPS (Encapsulated PostScript)"
+
+#: plug-ins/common/file-ps.c:478
+msgid "EPS"
+msgstr "EPS"
+
+#: plug-ins/common/file-ps.c:497
+msgid "Width of the image in PostScript file (0: use input image size)"
+msgstr "Širina slike v datoteki PostScript (0: uporabi vhodno velikost slike)"
+
+#: plug-ins/common/file-ps.c:504
+msgid "Height of the image in PostScript file (0: use input image size)"
+msgstr "Višina slike v datoteki PostScript (0: uporabi vhodno velikost slike)"
+
+#: plug-ins/common/file-ps.c:510
+msgid "_X offset"
+msgstr "Odmik _X"
+
+#: plug-ins/common/file-ps.c:511
+msgid "X-offset to image from lower left corner"
+msgstr "Odmik X od slike iz levega spodnjega kota"
+
+#: plug-ins/common/file-ps.c:516
+msgid "Y o_ffset"
+msgstr "Odmik _Y"
+
+#: plug-ins/common/file-ps.c:517
+msgid "Y-offset to image from lower left corner"
+msgstr "Odmik Y od slike iz levega spodnjega kota"
+
+#: plug-ins/common/file-ps.c:522
+msgid "_Unit"
+msgstr "_Enota"
+
+#: plug-ins/common/file-ps.c:523
+msgid "Unit of measure for offset values"
+msgstr "Merska enota za vrednosti odmika"
+
+#: plug-ins/common/file-ps.c:524
+msgid "Inch"
+msgstr "palec"
+
+#: plug-ins/common/file-ps.c:525
+msgid "Millimeter"
+msgstr "milimeter"
+
+#: plug-ins/common/file-ps.c:530
+msgid "_Keep aspect ratio"
+msgstr "_Ohrani razmerje stranic"
+
+#: plug-ins/common/file-ps.c:531
+msgid ""
+"If enabled, aspect ratio will be maintained on export. Otherwise, the width "
+"and height values will be used."
+msgstr ""
+"Če je omogočeno, se razmerje stranic pri izvozu ohrani. V nasprotnem primeru "
+"bodo uporabljene vrednosti širine in višine."
+
+#: plug-ins/common/file-ps.c:537 plug-ins/map-object/map-object-ui.c:738
+msgid "Rotation"
+msgstr "Sukanje"
+
+#: plug-ins/common/file-ps.c:543
+msgid "PostScript Level _2"
+msgstr "PostScript ravni _2"
+
+#: plug-ins/common/file-ps.c:544
+msgid ""
+"If enabled, export in PostScript Level 2 format. Otherwise, export in "
+"PostScript Level 1 format."
+msgstr ""
+"Če je ta možnost omogočena, izvozi v zapisu PostScript Level 2. V nasprotnem "
+"primeru izvozi v zapisu PostScript Level 1."
+
+#: plug-ins/common/file-ps.c:550
+msgid "Encapsula_ted PostScript"
+msgstr "Ovi_ti PostScript (EPS)"
+
+#: plug-ins/common/file-ps.c:551
+msgid ""
+"If enabled, export as Encapsulated PostScript. Otherwise, export as "
+"PostScript."
+msgstr ""
+"Če je ta možnost omogočena, izvozi kot Encapsulated PostScript. V nasprotnem "
+"primeru izvozi kot PostScript."
+
+#: plug-ins/common/file-ps.c:557 plug-ins/imagemap/imap_grid.c:301
+msgid "_Preview"
+msgstr "_Predogled"
+
+#: plug-ins/common/file-ps.c:558
+msgid "Show Preview"
+msgstr "Pokaži predogled"
+
+#: plug-ins/common/file-ps.c:563
+msgid "Preview Si_ze"
+msgstr "_Velikost predogleda"
+
+#: plug-ins/common/file-ps.c:564
+msgid "Maximum size of preview. Set to 0 for no preview."
+msgstr "Največja velikost predogleda. Nastavite na 0 za brez predogleda."
+
+#: plug-ins/common/file-ps.c:720
+#, c-format
+msgid "PostScript plug-in does not support multiple layers."
+msgstr "Vstavek PostScript ne podpira več plasti."
+
+#: plug-ins/common/file-ps.c:1132
+#, c-format
+msgid "Could not interpret PostScript file '%s'"
+msgstr "Datoteke PostScript »%s« ni mogoče interpretirati."
+
+#: plug-ins/common/file-ps.c:1214
+msgid "Rendered EPS"
+msgstr "Upodobljeni EPS"
+
+#: plug-ins/common/file-ps.c:1242
+#, c-format
+msgid "%s-pages"
+msgstr "%s-strani"
+
+#: plug-ins/common/file-ps.c:1314
+#, c-format
+msgid "PostScript export cannot handle images with alpha channels"
+msgstr "Izvoz v PostScript ne podpira slik s kanali alfa."
+
+#: plug-ins/common/file-ps.c:3759
 msgid "Pages:"
 msgstr "Strani:"
 
-#: plug-ins/common/file-ps.c:3734
+#: plug-ins/common/file-ps.c:3763
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Strani za nalaganje (npr.: 1-4 ali 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3740
+#: plug-ins/common/file-ps.c:3769
 msgid "Open as"
 msgstr "Odpri kot"
 
-#: plug-ins/common/file-ps.c:3833
+#: plug-ins/common/file-ps.c:3860
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5223,37 +5271,28 @@ msgstr ""
 "Ko je vključeno, bo končna slika umerjena na podano velikost brez spremembe "
 "razmerja stranic."
 
-#: plug-ins/common/file-ps.c:3839
+#: plug-ins/common/file-ps.c:3866
 msgid "Image Size"
 msgstr "Velikost slike"
 
-#. Unit
-#: plug-ins/common/file-ps.c:3851
-msgid "_Inch"
-msgstr "_palec"
-
-#: plug-ins/common/file-ps.c:3852
-msgid "_Millimeter"
-msgstr "_milimeter"
-
 #. Rotation
-#: plug-ins/common/file-ps.c:3865
+#: plug-ins/common/file-ps.c:3886
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3866
+#: plug-ins/common/file-ps.c:3887
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3867
+#: plug-ins/common/file-ps.c:3888
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3868
+#: plug-ins/common/file-ps.c:3889
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3875
+#: plug-ins/common/file-ps.c:3896
 msgid "Output"
 msgstr "Izhod"
 
