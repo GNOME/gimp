@@ -12,8 +12,8 @@
         "append-path": "/usr/lib/sdk/llvm17/bin",
         "prepend-ld-library-path": "/usr/lib/sdk/llvm17/lib",
         "env": {
-            "CC": "clang",
-            "CXX": "clang++"
+            "CC": "ccache clang",
+            "CXX": "ccache clang++"
         }
     },
     "separate-locales": false,

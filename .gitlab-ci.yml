@@ -350,14 +350,11 @@ gimp-flatpak-x64:
     APP_ID: "org.gimp.GIMP"
     BUNDLE: "gimp-git.flatpak"
   cache:
-    - key: "$CI_JOB_NAME"
+    - key: ${CI_JOB_NAME}-pkg
       paths:
-        - '.flatpak-builder/downloads'
-        - '.flatpak-builder/git'
-    - key: "$CI_JOB_NAME"
-      paths:
-        - '.flatpak-builder/cache'
-        - '.flatpak-builder/ccache'
+        - .flatpak-builder/downloads
+        - .flatpak-builder/git
+    - !reference [.default, cache]
   script:
     # Report the installed versions of the runtime
     - flatpak info org.gnome.Platform
@@ -383,8 +380,7 @@ gimp-flatpak-x64:
     # Build deps and GIMP
     # (Our script is too long for Gitlab and no complete output would be collected
     # To make debugging actually possible, let's save logs as a file.)
-    - flatpak-builder --user --disable-rofiles-fuse flatpak_app --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH}
-        2>&1 | tee flatpak-builder.log
+    - flatpak-builder --ccache --user --disable-rofiles-fuse flatpak_app --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH} &>flatpak-builder.log
 
     # Generate a Flatpak bundle
     - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
