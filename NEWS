@@ -986,7 +986,7 @@ Documentation:
 
   - More developer docs is being moved to the new developer website.
   - Better clarify licensing of files under data/.
-  - Improve flatpak maintenance doc (build/flatpak/README.md).
+  - Improve flatpak maintenance doc (build/linux/flatpak/README.md).
 
 Translations:
 
