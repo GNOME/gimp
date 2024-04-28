@@ -622,17 +622,13 @@ file-plug-in-tests:
     GIMP_TESTS_LOG_FILE: "$CI_PROJECT_DIR/_log/import-tests.log"
     REGRESSION_STRING: "Total number of regressions: 0"
   cache:
-    - key: "$CI_JOB_NAME"
+    - key: $CI_JOB_NAME
       paths:
         - _data
   image: $CI_REGISTRY_IMAGE:build-debian-latest
-  artifacts:
-    paths:
-      - _log/
-    expire_in: 2 days
   script:
     - API_VER=$(grep GIMP_PKGCONFIG_VERSION _build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-    - APP_VER=$(grep GIMP_USER_VERSION _build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+    - APP_VER=$(grep GIMP_APP_VERSION _build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
     - pkg-config --variable=gimplibdir gimp-${API_VER} 2>/dev/null | grep . && PLUG_IN_DIR=$(echo $(pkg-config --variable=gimplibdir gimp-${API_VER})'/plug-ins/')
     - export PYTHONPATH="${PLUG_IN_DIR}test-file-plug-ins"
     - export GIMP_TESTS_CONFIG_FILE="${PLUG_IN_DIR}test-file-plug-ins/tests/batch-config.ini"
@@ -647,6 +643,10 @@ file-plug-in-tests:
       fi
     # FIXME No export testing for now until it's more developed. A limited test
     #       can be done from the plug-in for bmp export.
+  artifacts:
+    paths:
+      - _log/
+    expire_in: 2 days
 
 clang-format:
   extends: .default
