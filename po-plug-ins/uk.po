@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-26 17:36+0000\n"
-"PO-Revision-Date: 2024-04-26 22:57+0300\n"
+"POT-Creation-Date: 2024-04-27 16:49+0000\n"
+"PO-Revision-Date: 2024-04-28 08:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -321,11 +321,9 @@ msgstr "Недостатньо шарів для вирівнювання."
 msgid "Align Visible Layers"
 msgstr "Вирівнювання видимих шарів"
 
-#. Text antialiasing
-#. Graphics antialiasing
 #. file save type
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
-#: plug-ins/common/file-ps.c:3695 plug-ins/common/file-ps.c:3703
+#: plug-ins/common/file-ps.c:408 plug-ins/common/file-ps.c:417
 #: plug-ins/common/file-psp.c:839 plug-ins/file-dds/dds.c:191
 #: plug-ins/file-tiff/file-tiff.c:240
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
@@ -1978,8 +1976,8 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-farbfeld.c:298 plug-ins/common/file-gif-load.c:416
 #: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1405
 #: plug-ins/common/file-pcx.c:509 plug-ins/common/file-pcx.c:552
-#: plug-ins/common/file-png.c:665 plug-ins/common/file-ps.c:1107
-#: plug-ins/common/file-ps.c:3615 plug-ins/common/file-psp.c:2633
+#: plug-ins/common/file-png.c:665 plug-ins/common/file-ps.c:1121
+#: plug-ins/common/file-ps.c:3670 plug-ins/common/file-psp.c:2633
 #: plug-ins/common/file-psp.c:2683 plug-ins/common/file-qoi.c:299
 #: plug-ins/common/file-raw-data.c:567 plug-ins/common/file-raw-data.c:1715
 #: plug-ins/common/file-sunras.c:457 plug-ins/common/file-svg.c:369
@@ -2495,7 +2493,7 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Цей додаток намагається вилучити вертикальні смуги з зображення."
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:195
-#: plug-ins/common/file-ps.c:486 plug-ins/common/file-raw-data.c:355
+#: plug-ins/common/file-ps.c:496 plug-ins/common/file-raw-data.c:355
 #: plug-ins/common/smooth-palette.c:135 plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
 msgstr "_Ширина"
@@ -2608,7 +2606,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-pcx.c:501 plug-ins/common/file-pcx.c:544
 #: plug-ins/common/file-pdf-load.c:722 plug-ins/common/file-pix.c:393
 #: plug-ins/common/file-png.c:657 plug-ins/common/file-pnm.c:713
-#: plug-ins/common/file-ps.c:1097 plug-ins/common/file-raw-data.c:1707
+#: plug-ins/common/file-ps.c:1111 plug-ins/common/file-raw-data.c:1707
 #: plug-ins/common/file-sunras.c:449 plug-ins/common/file-tga.c:439
 #: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:781
 #: plug-ins/common/file-xbm.c:741 plug-ins/common/file-xmc.c:658
@@ -2688,7 +2686,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-gif-export.c:975 plug-ins/common/file-html-table.c:359
 #: plug-ins/common/file-jpegxl.c:1382 plug-ins/common/file-pcx.c:1103
 #: plug-ins/common/file-pix.c:661 plug-ins/common/file-png.c:1509
-#: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1317
+#: plug-ins/common/file-pnm.c:1634 plug-ins/common/file-ps.c:1332
 #: plug-ins/common/file-qoi.c:374 plug-ins/common/file-sunras.c:628
 #: plug-ins/common/file-tga.c:1229 plug-ins/common/file-xbm.c:1050
 #: plug-ins/common/file-xpm.c:705 plug-ins/common/file-xwd.c:720
@@ -2863,7 +2861,7 @@ msgstr ""
 msgid "Cannot save images with alpha channel."
 msgstr "Неможливо зберегти зображення з альфа-каналом."
 
-#: plug-ins/common/file-dicom.c:1548 plug-ins/common/file-ps.c:1312
+#: plug-ins/common/file-dicom.c:1548 plug-ins/common/file-ps.c:1327
 #: plug-ins/common/file-xwd.c:715 plug-ins/file-fits/fits.c:669
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -3678,7 +3676,7 @@ msgstr "Текст, що пишеться у кожній комірці."
 msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Ширина кожної комірки. Може бути числом чи відсотком."
 
-#: plug-ins/common/file-html-table.c:202 plug-ins/common/file-ps.c:493
+#: plug-ins/common/file-html-table.c:202 plug-ins/common/file-ps.c:503
 #: plug-ins/common/file-raw-data.c:360 plug-ins/common/smooth-palette.c:141
 #: plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
@@ -4534,7 +4532,7 @@ msgstr "Додати це зображення"
 
 #: plug-ins/common/file-pdf-export.c:1194
 #: plug-ins/common/file-pdf-export.c:1267
-#: plug-ins/common/file-pdf-export.c:1365 plug-ins/common/file-ps.c:2094
+#: plug-ins/common/file-pdf-export.c:1365 plug-ins/common/file-ps.c:2148
 #: plug-ins/file-tiff/file-tiff-load.c:1530
 #, c-format
 msgid "Page %d"
@@ -4728,7 +4726,7 @@ msgstr ""
 msgid "PNG export format"
 msgstr "Формат експортування PNG"
 
-#: plug-ins/common/file-png.c:292 plug-ins/common/file-ps.c:3689
+#: plug-ins/common/file-png.c:292 plug-ins/common/file-ps.c:401
 #: plug-ins/file-fits/fits.c:1036
 msgid "Automatic"
 msgstr "Автоматично"
@@ -5055,9 +5053,14 @@ msgstr "_ASCII"
 msgid "_Raw"
 msgstr "_Без обробки"
 
-#: plug-ins/common/file-ps.c:339 plug-ins/common/file-ps.c:438
+#: plug-ins/common/file-ps.c:339 plug-ins/common/file-ps.c:448
 msgid "PostScript document"
 msgstr "Документ PostScript"
+
+#: plug-ins/common/file-ps.c:342 plug-ins/common/file-ps.c:343
+#| msgid "PostScript document"
+msgid "Load PostScript documents"
+msgstr "Завантаження документів PostScript"
 
 #: plug-ins/common/file-ps.c:347
 msgid "PostScript"
@@ -5067,7 +5070,12 @@ msgstr "PostScript"
 msgid "Encapsulated PostScript image"
 msgstr "Encapsulated PostScript"
 
-#: plug-ins/common/file-ps.c:366 plug-ins/common/file-ps.c:457
+#: plug-ins/common/file-ps.c:361 plug-ins/common/file-ps.c:362
+#| msgid "Encapsulated PostScript image"
+msgid "Load Encapsulated PostScript images"
+msgstr "Завантаження зображень інкапсульованого PostScript"
+
+#: plug-ins/common/file-ps.c:366 plug-ins/common/file-ps.c:467
 msgid "Encapsulated PostScript"
 msgstr "_Інкапсульований PostScript"
 
@@ -5088,149 +5096,24 @@ msgid "Pages to load (e.g.: 1,3,5-7)"
 msgstr "Сторінки для завантаження (приклад: 1,3,5-7)"
 
 #: plug-ins/common/file-ps.c:396
-msgid "Coloring"
-msgstr "Фарбування"
+#| msgid "Coloring"
+msgid "Colorin_g"
+msgstr "_Фарбування"
 
 #: plug-ins/common/file-ps.c:397
-msgid "4: b/w, 5: grey, 6: color image, 7: automatic"
-msgstr "4: ч/б, 5: сірий, 6: кольорове зображення, 7: автоматичне"
+#| msgid "Export in X10 format"
+msgid "Import color format"
+msgstr "Формат імпортування кольорів"
 
-#: plug-ins/common/file-ps.c:402
-msgid "Text antialiasing"
-msgstr "Згладжування тексту"
-
-#: plug-ins/common/file-ps.c:403 plug-ins/common/file-ps.c:409
-msgid "1, 2 or 4"
-msgstr "1, 2 або 4"
-
-#: plug-ins/common/file-ps.c:408
-msgid "Graphic antialiasing"
-msgstr "Згладжування графіки"
-
-#: plug-ins/common/file-ps.c:448
-msgid "PS"
-msgstr "PS"
-
-#: plug-ins/common/file-ps.c:468
-msgid "EPS"
-msgstr "EPS"
-
-#: plug-ins/common/file-ps.c:487
-msgid "Width of the image in PostScript file (0: use input image size)"
-msgstr ""
-"Ширина зображення у файлі PostScript (0: скористатися розміром вхідного "
-"зображення)"
-
-#: plug-ins/common/file-ps.c:494
-msgid "Height of the image in PostScript file (0: use input image size)"
-msgstr ""
-"Висота зображення у файлі PostScript (0: скористатися розміром вхідного "
-"зображення)"
-
-#: plug-ins/common/file-ps.c:500
-msgid "_X offset"
-msgstr "Зсув вздовж _X"
-
-#: plug-ins/common/file-ps.c:501
-msgid "X-offset to image from lower left corner"
-msgstr "Зсув за X зображення від нижнього лівого кута"
-
-#: plug-ins/common/file-ps.c:506
-msgid "Y o_ffset"
-msgstr "Зсув вздовж _Y"
-
-#: plug-ins/common/file-ps.c:507
-msgid "Y-offset to image from lower left corner"
-msgstr "Зсув за Y зображення від нижнього лівого кута"
-
-#: plug-ins/common/file-ps.c:512
-msgid "Unit"
-msgstr "Одиниця"
-
-#: plug-ins/common/file-ps.c:513
-msgid "Unit for width/height/offset. 0: inches, 1: millimeters"
-msgstr "Одиниця для ширини, висоти і зсуву. 0: дюйми, 1: міліметри"
-
-#: plug-ins/common/file-ps.c:519
-msgid "_Keep aspect ratio"
-msgstr "З_берігати пропорції"
-
-#: plug-ins/common/file-ps.c:520
-msgid "FALSE: use width/height, TRUE: keep aspect ratio"
-msgstr ""
-"FALSE: скористатися шириною/висотою, TRUE: зберегти співвідношення розмірів"
-
-#: plug-ins/common/file-ps.c:525 plug-ins/map-object/map-object-ui.c:738
-msgid "Rotation"
-msgstr "Обертання"
-
-#: plug-ins/common/file-ps.c:531
-msgid "PostScript Level _2"
-msgstr "PostScript, рівень _2"
-
-#: plug-ins/common/file-ps.c:532
-msgid "FALSE: PostScript Level 1, TRUE: PostScript Level 2"
-msgstr "FALSE: PostScript, рівень 1, TRUE: PostScript, рівень 2"
-
-#: plug-ins/common/file-ps.c:537
-msgid "Encapsula_ted PostScript"
-msgstr "_Інкапсульований PostScript"
-
-#: plug-ins/common/file-ps.c:538
-msgid "FALSE: PostScript, TRUE: Encapsulated PostScript"
-msgstr "FALSE: PostScript, TRUE: інкапсульований PostScript"
-
-#: plug-ins/common/file-ps.c:543 plug-ins/imagemap/imap_grid.c:301
-msgid "_Preview"
-msgstr "_Попередній перегляд"
-
-#: plug-ins/common/file-ps.c:544
-msgid "Show Preview"
-msgstr "Показати перегляд"
-
-#: plug-ins/common/file-ps.c:549
-msgid "Preview Si_ze"
-msgstr "_Розмір перегляду"
-
-#: plug-ins/common/file-ps.c:550
-msgid "0: no preview, >0: max. size of preview"
-msgstr ""
-"0: без попереднього перегляду, >0: макс. розмір попереднього перегляду"
-
-#: plug-ins/common/file-ps.c:706
-#, c-format
-msgid "PostScript plug-in does not support multiple layers."
-msgstr "У додатку PostScript не передбачено підтримки декількох шарів."
-
-#: plug-ins/common/file-ps.c:1117
-#, c-format
-msgid "Could not interpret PostScript file '%s'"
-msgstr "Не вдається інтерпретувати файл PostScript «%s»"
-
-#: plug-ins/common/file-ps.c:1199
-msgid "Rendered EPS"
-msgstr "Оброблений EPS"
-
-#: plug-ins/common/file-ps.c:1227
-#, c-format
-msgid "%s-pages"
-msgstr "%s-сторінок"
-
-#: plug-ins/common/file-ps.c:1299
-#, c-format
-msgid "PostScript export cannot handle images with alpha channels"
-msgstr "Зображення з альфа-каналами не можна експортувати як PostScript"
-
-#. Coloring
-#: plug-ins/common/file-ps.c:3686
+#: plug-ins/common/file-ps.c:398
 msgid "B/W"
 msgstr "Ч/Б"
 
-#: plug-ins/common/file-ps.c:3687 plug-ins/imagemap/imap-menu.ui:101
+#: plug-ins/common/file-ps.c:399 plug-ins/imagemap/imap-menu.ui:101
 msgid "Gray"
 msgstr "Сірий"
 
-#: plug-ins/common/file-ps.c:3688 plug-ins/common/file-xpm.c:511
+#: plug-ins/common/file-ps.c:400 plug-ins/common/file-xpm.c:511
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:179
 #: plug-ins/imagemap/imap-menu.ui:96 plug-ins/lighting/lighting-main.c:223
 #: plug-ins/lighting/lighting-main.c:346 plug-ins/lighting/lighting-main.c:405
@@ -5239,27 +5122,211 @@ msgstr "Сірий"
 msgid "Color"
 msgstr "Колір"
 
-#: plug-ins/common/file-ps.c:3696 plug-ins/common/file-ps.c:3704
+#: plug-ins/common/file-ps.c:406
+#| msgid "Text antialiasing"
+msgid "Te_xt anti-aliasing"
+msgstr "З_гладжування тексту"
+
+#: plug-ins/common/file-ps.c:407
+#| msgid "Text antialiasing"
+msgid "Text anti-aliasing strength"
+msgstr "Потужність згладжування тексту"
+
+#: plug-ins/common/file-ps.c:409 plug-ins/common/file-ps.c:418
 msgid "Weak"
 msgstr "Слабке"
 
-#: plug-ins/common/file-ps.c:3697 plug-ins/common/file-ps.c:3705
+#: plug-ins/common/file-ps.c:410 plug-ins/common/file-ps.c:419
 msgid "Strong"
 msgstr "Сильне"
 
-#: plug-ins/common/file-ps.c:3730
+#: plug-ins/common/file-ps.c:415
+#| msgid "Graphic antialiasing"
+msgid "Gra_phic anti-aliasing"
+msgstr "З_гладжування графіки"
+
+#: plug-ins/common/file-ps.c:416
+#| msgid "Graphic antialiasing"
+msgid "Graphic anti-aliasing strength"
+msgstr "Потужність згладжування графіки"
+
+#: plug-ins/common/file-ps.c:430
+msgid "Loads a small preview from a PostScript or PDF document"
+msgstr ""
+"Завантажує невеличке зображення попереднього перегляду з документа"
+" PostScript або PDF"
+
+#: plug-ins/common/file-ps.c:451
+#| msgid "PostScript document"
+msgid "Export image as PostScript document"
+msgstr "Експортувати зображення як документ PostScript"
+
+#: plug-ins/common/file-ps.c:452 plug-ins/common/file-ps.c:472
+#| msgid ""
+#| "FITS exporting handles all image types except those with alpha channels."
+msgid ""
+"PostScript exporting handles all image types except those with alpha "
+"channels."
+msgstr ""
+"Засіб експортування PostScript обробляє усі типи зображень, окрім зображень"
+" із "
+"каналами прозорості."
+
+#: plug-ins/common/file-ps.c:458
+msgid "PS"
+msgstr "PS"
+
+#: plug-ins/common/file-ps.c:470
+#| msgid "Encapsulated PostScript image"
+msgid "Export image as Encapsulated PostScript image"
+msgstr "Експортувати зображення як зображення інкапсульованого PostScript"
+
+#: plug-ins/common/file-ps.c:478
+msgid "EPS"
+msgstr "EPS"
+
+#: plug-ins/common/file-ps.c:497
+msgid "Width of the image in PostScript file (0: use input image size)"
+msgstr ""
+"Ширина зображення у файлі PostScript (0: скористатися розміром вхідного "
+"зображення)"
+
+#: plug-ins/common/file-ps.c:504
+msgid "Height of the image in PostScript file (0: use input image size)"
+msgstr ""
+"Висота зображення у файлі PostScript (0: скористатися розміром вхідного "
+"зображення)"
+
+#: plug-ins/common/file-ps.c:510
+msgid "_X offset"
+msgstr "Зсув вздовж _X"
+
+#: plug-ins/common/file-ps.c:511
+msgid "X-offset to image from lower left corner"
+msgstr "Зсув за X зображення від нижнього лівого кута"
+
+#: plug-ins/common/file-ps.c:516
+msgid "Y o_ffset"
+msgstr "Зсув вздовж _Y"
+
+#: plug-ins/common/file-ps.c:517
+msgid "Y-offset to image from lower left corner"
+msgstr "Зсув за Y зображення від нижнього лівого кута"
+
+#: plug-ins/common/file-ps.c:522
+#| msgid "Unit"
+msgid "_Unit"
+msgstr "_Одиниця"
+
+#: plug-ins/common/file-ps.c:523
+msgid "Unit of measure for offset values"
+msgstr "Одиниця виміру для значень зсуву"
+
+#: plug-ins/common/file-ps.c:524
+#| msgid "_Inch"
+msgid "Inch"
+msgstr "Дюйм"
+
+#: plug-ins/common/file-ps.c:525
+#| msgid "_Millimeter"
+msgid "Millimeter"
+msgstr "Міліметр"
+
+#: plug-ins/common/file-ps.c:530
+msgid "_Keep aspect ratio"
+msgstr "З_берігати пропорції"
+
+#: plug-ins/common/file-ps.c:531
+msgid ""
+"If enabled, aspect ratio will be maintained on export. Otherwise, the width "
+"and height values will be used."
+msgstr ""
+"Якщо увімкнено, при експортуванні буде збережено пропорції. Якщо не буде"
+" увімкнено, буде використано значення ширини і висоти."
+
+#: plug-ins/common/file-ps.c:537 plug-ins/map-object/map-object-ui.c:738
+msgid "Rotation"
+msgstr "Обертання"
+
+#: plug-ins/common/file-ps.c:543
+msgid "PostScript Level _2"
+msgstr "PostScript, рівень _2"
+
+#: plug-ins/common/file-ps.c:544
+msgid ""
+"If enabled, export in PostScript Level 2 format. Otherwise, export in "
+"PostScript Level 1 format."
+msgstr ""
+"Якщо увімкнено, експортування буде виконано у форматі PostScript, рівень 2."
+" Якщо вимкнено, дані буде експортовано у форматі PostScript, рівень 1."
+
+#: plug-ins/common/file-ps.c:550
+msgid "Encapsula_ted PostScript"
+msgstr "_Інкапсульований PostScript"
+
+#: plug-ins/common/file-ps.c:551
+msgid ""
+"If enabled, export as Encapsulated PostScript. Otherwise, export as "
+"PostScript."
+msgstr ""
+"Якщо увімкнено, експортувати як інкапсульований PostScript. Якщо вимкнено,"
+" дані буде експортовано як PostScript."
+
+#: plug-ins/common/file-ps.c:557 plug-ins/imagemap/imap_grid.c:301
+msgid "_Preview"
+msgstr "_Попередній перегляд"
+
+#: plug-ins/common/file-ps.c:558
+msgid "Show Preview"
+msgstr "Показати перегляд"
+
+#: plug-ins/common/file-ps.c:563
+msgid "Preview Si_ze"
+msgstr "_Розмір перегляду"
+
+#: plug-ins/common/file-ps.c:564
+msgid "Maximum size of preview. Set to 0 for no preview."
+msgstr ""
+"Мінімальний розмір попереднього перегляду. Встановіть 0, щоб вимкнути"
+" попередній перегляд."
+
+#: plug-ins/common/file-ps.c:720
+#, c-format
+msgid "PostScript plug-in does not support multiple layers."
+msgstr "У додатку PostScript не передбачено підтримки декількох шарів."
+
+#: plug-ins/common/file-ps.c:1132
+#, c-format
+msgid "Could not interpret PostScript file '%s'"
+msgstr "Не вдається інтерпретувати файл PostScript «%s»"
+
+#: plug-ins/common/file-ps.c:1214
+msgid "Rendered EPS"
+msgstr "Оброблений EPS"
+
+#: plug-ins/common/file-ps.c:1242
+#, c-format
+msgid "%s-pages"
+msgstr "%s-сторінок"
+
+#: plug-ins/common/file-ps.c:1314
+#, c-format
+msgid "PostScript export cannot handle images with alpha channels"
+msgstr "Зображення з альфа-каналами не можна експортувати як PostScript"
+
+#: plug-ins/common/file-ps.c:3759
 msgid "Pages:"
 msgstr "Сторінки:"
 
-#: plug-ins/common/file-ps.c:3734
+#: plug-ins/common/file-ps.c:3763
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Сторінок для завантаження(наприклад: 1-4 чи 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3740
+#: plug-ins/common/file-ps.c:3769
 msgid "Open as"
 msgstr "Відкрити як"
 
-#: plug-ins/common/file-ps.c:3833
+#: plug-ins/common/file-ps.c:3860
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5267,37 +5334,28 @@ msgstr ""
 "Якщо вибрано, вихідне зображення буде масштабуватись до заповнення вказаного "
 "розміру без зміни пропорцій."
 
-#: plug-ins/common/file-ps.c:3839
+#: plug-ins/common/file-ps.c:3866
 msgid "Image Size"
 msgstr "Розмір зображення"
 
-#. Unit
-#: plug-ins/common/file-ps.c:3851
-msgid "_Inch"
-msgstr "_Дюйм"
-
-#: plug-ins/common/file-ps.c:3852
-msgid "_Millimeter"
-msgstr "_Міліметр"
-
 #. Rotation
-#: plug-ins/common/file-ps.c:3865
+#: plug-ins/common/file-ps.c:3886
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3866
+#: plug-ins/common/file-ps.c:3887
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3867
+#: plug-ins/common/file-ps.c:3888
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3868
+#: plug-ins/common/file-ps.c:3889
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3875
+#: plug-ins/common/file-ps.c:3896
 msgid "Output"
 msgstr "Вивід"
 
@@ -5578,7 +5636,6 @@ msgid "Raw image data"
 msgstr "Raw Image Data"
 
 #: plug-ins/common/file-raw-data.c:339 plug-ins/common/file-raw-data.c:341
-#| msgid "Loads files in DDS image format"
 msgid "Load raw images, specifying image information"
 msgstr ""
 "Завантажити зображення цифрових негативів із визначенням даних зображення"
@@ -5596,7 +5653,6 @@ msgid "Offset to beginning of image in raw data"
 msgstr "Зсув початку зображення у необроблених даних"
 
 #: plug-ins/common/file-raw-data.c:371
-#| msgid "Pixel format"
 msgid "Pi_xel format"
 msgstr "_Формат у пікселях"
 
@@ -5681,7 +5737,6 @@ msgid "Indexed Alpha"
 msgstr "Індексоване з альфа-каналом"
 
 #: plug-ins/common/file-raw-data.c:395
-#| msgid "Data t_ype"
 msgid "_Data type"
 msgstr "Т_ип даних"
 
@@ -5702,7 +5757,6 @@ msgid "Floating Point"
 msgstr "З рухомою крапкою"
 
 #: plug-ins/common/file-raw-data.c:403
-#| msgid "Endianness"
 msgid "_Endianness"
 msgstr "По_рядок байтів"
 
@@ -5719,7 +5773,6 @@ msgid "Big Endian"
 msgstr "Зворотний порядок"
 
 #: plug-ins/common/file-raw-data.c:410
-#| msgid "Planar configuration"
 msgid "Planar confi_guration"
 msgstr "Пло_щинна конфігурація"
 
@@ -5750,9 +5803,6 @@ msgstr "_Компонування палітри"
 
 #: plug-ins/common/file-raw-data.c:427 plug-ins/common/file-raw-data.c:486
 #: plug-ins/common/file-raw-data.c:528
-#| msgid ""
-#| "The layout for the palette's color channels { RAW_PALETTE_RGB (0), "
-#| "RAW_PALETTE_BGR (1) }"
 msgid "The layout for the palette's color channels"
 msgstr "Компонування для каналів кольорів палітри"
 
@@ -5779,7 +5829,6 @@ msgid "Digital Elevation Model data"
 msgstr "Дані цифрової моделі рельєфу"
 
 #: plug-ins/common/file-raw-data.c:447
-#| msgid "Loads HEIF images"
 msgid "Load HGT data as images"
 msgstr "Завантажити дані HGT як зображення"
 
@@ -5791,35 +5840,30 @@ msgid ""
 "earth relief. Therefore you will likely want to remap elevation to colors as "
 "a second step, for instance with the \"Gradient Map\" plug-in."
 msgstr ""
-"Завантажити дані цифрової моделі висот у форматі HGT з Топографічної"
-" радарної місії шатлів. Хоча результатом буде зображення RGB, усі типові"
-" кольори будуть відтінками сірого, а контрастність буде доволі низькою для"
-" більшості земного рельєфу. Через це, ймовірно, варто змінити висоти на"
-" кольорові на другому кроці, наприклад, за допомогою додатка «Мапа"
-" градієнтів»."
+"Завантажити дані цифрової моделі висот у форматі HGT з Топографічної "
+"радарної місії шатлів. Хоча результатом буде зображення RGB, усі типові "
+"кольори будуть відтінками сірого, а контрастність буде доволі низькою для "
+"більшості земного рельєфу. Через це, ймовірно, варто змінити висоти на "
+"кольорові на другому кроці, наприклад, за допомогою додатка «Мапа "
+"градієнтів»."
 
 #: plug-ins/common/file-raw-data.c:468
-#| msgid "_Sample spacing"
 msgid "Sa_mple spacing"
 msgstr "_Інтервал дискретизації"
 
 #: plug-ins/common/file-raw-data.c:469
-#| msgid "The file containing palette data"
 msgid "The sample spacing of the data."
 msgstr "Інтервал дискретизації даних."
 
 #: plug-ins/common/file-raw-data.c:470
-#| msgid "Automatic"
 msgid "Auto-Detect"
 msgstr "Автоматичне визначення"
 
 #: plug-ins/common/file-raw-data.c:471
-#| msgid "SRTM-1 (1 arc-second)"
 msgid "SRTM-1 (1 arc second)"
 msgstr "SRTM-1 (1 кутова сек)"
 
 #: plug-ins/common/file-raw-data.c:472
-#| msgid "SRTM-3 (3 arc-seconds)"
 msgid "SRTM-3 (3 arc seconds)"
 msgstr "SRTM-3 (3 кутові сек)"
 
@@ -6031,7 +6075,6 @@ msgid "SVG image"
 msgstr "Зображення SVG"
 
 #: plug-ins/common/file-svg.c:180
-#| msgid "HSV"
 msgid "SVG"
 msgstr "SVG"
 
@@ -9944,12 +9987,10 @@ msgid "JPEG image"
 msgstr "Перегляд JPEG"
 
 #: plug-ins/file-jpeg/jpeg.c:139 plug-ins/file-jpeg/jpeg.c:140
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Loads files in the JPEG file format"
 msgstr "Завантажує файли у форматі JPEG"
 
 #: plug-ins/file-jpeg/jpeg.c:164
-#| msgid "Load a fractal from file"
 msgid "Loads a thumbnail from a JPEG image"
 msgstr "Завантажує мініатюри з файла JPEG"
 
@@ -9958,12 +9999,10 @@ msgid "Loads a thumbnail from a JPEG image, if one exists"
 msgstr "Завантажує мініатюри з файла JPEG, якщо такий існує"
 
 #: plug-ins/file-jpeg/jpeg.c:186
-#| msgid "Exports files in the PGM file format"
 msgid "Exports files in the JPEG file format"
 msgstr "Експортує файли у форматі JPEG"
 
 #: plug-ins/file-jpeg/jpeg.c:187
-#| msgid "Exports files in the PNM file format"
 msgid "Exports files in the lossy, widely supported JPEG format"
 msgstr "Експортує файли у широкопідтримуваному форматі JPEG із втратою якості"
 
@@ -10013,7 +10052,6 @@ msgid "Su_bsampling"
 msgstr "С_убдискретизація"
 
 #: plug-ins/file-jpeg/jpeg.c:237
-#| msgid "Su_bsampling"
 msgid "Sub-sampling type"
 msgstr "Тип с_убдискретизації"
 
@@ -10059,7 +10097,6 @@ msgid "_DCT method"
 msgstr "Метод _DCT"
 
 #: plug-ins/file-jpeg/jpeg.c:261
-#| msgid "_DCT method"
 msgid "DCT method to use"
 msgstr "Використаний метод DCT"
 
@@ -16410,6 +16447,30 @@ msgstr "Не знайдено драйвера TWAIN. Не можна скори
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "4: b/w, 5: grey, 6: color image, 7: automatic"
+#~ msgstr "4: ч/б, 5: сірий, 6: кольорове зображення, 7: автоматичне"
+
+#~ msgid "1, 2 or 4"
+#~ msgstr "1, 2 або 4"
+
+#~ msgid "Unit for width/height/offset. 0: inches, 1: millimeters"
+#~ msgstr "Одиниця для ширини, висоти і зсуву. 0: дюйми, 1: міліметри"
+
+#~ msgid "FALSE: use width/height, TRUE: keep aspect ratio"
+#~ msgstr ""
+#~ "FALSE: скористатися шириною/висотою, TRUE: зберегти співвідношення "
+#~ "розмірів"
+
+#~ msgid "FALSE: PostScript Level 1, TRUE: PostScript Level 2"
+#~ msgstr "FALSE: PostScript, рівень 1, TRUE: PostScript, рівень 2"
+
+#~ msgid "FALSE: PostScript, TRUE: Encapsulated PostScript"
+#~ msgstr "FALSE: PostScript, TRUE: інкапсульований PostScript"
+
+#~ msgid "0: no preview, >0: max. size of preview"
+#~ msgstr ""
+#~ "0: без попереднього перегляду, >0: макс. розмір попереднього перегляду"
 
 #~ msgid "Resolution"
 #~ msgstr "Роздільна здатність"
