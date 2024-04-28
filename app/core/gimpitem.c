@@ -2694,7 +2694,9 @@ gimp_item_mask_intersect (GimpItem *item,
   gboolean     retval;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
-  g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (item) ||
+                        gimp_viewable_get_parent (GIMP_VIEWABLE (item)),
+                        FALSE);
 
   image     = gimp_item_get_image (item);
   selection = gimp_image_get_mask (image);

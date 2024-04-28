@@ -615,6 +615,35 @@ gimp_group_layer_duplicate (GimpItem *item,
           gimp_container_insert (new_private->children,
                                  GIMP_OBJECT (new_child),
                                  position++);
+
+          /* Copy any attached layer effects */
+          if (gimp_drawable_has_filters (GIMP_DRAWABLE (child)))
+            {
+              GList         *filter_list;
+              GimpContainer *filters;
+
+              filters = gimp_drawable_get_filters (GIMP_DRAWABLE (child));
+
+              for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
+                   filter_list = g_list_previous (filter_list))
+                {
+                  if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+                    {
+                      GimpDrawableFilter *old_filter = filter_list->data;
+                      GimpDrawableFilter *filter;
+
+                      filter =
+                        gimp_drawable_filter_duplicate (GIMP_DRAWABLE (new_child),
+                                                        old_filter);
+
+                      gimp_drawable_filter_apply (filter, NULL);
+                      gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
+
+                      gimp_drawable_filter_layer_mask_freeze (filter);
+                      g_object_unref (filter);
+                    }
+                }
+            }
         }
 
       /*  force the projection to reallocate itself  */
