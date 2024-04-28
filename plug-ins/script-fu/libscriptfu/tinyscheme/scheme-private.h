@@ -7,22 +7,23 @@
 /*------------------ Ugly internals -----------------------------------*/
 /*------------------ Of interest only to FFI users --------------------*/
 
-/* FIXME: should be a bit field.
- * Closing should not clear the entire field.
- * The enum or bit-field type should be referenced.
- * Subkind should be enum in, out, or in/out.
+/* FUTURE: should have bit fields.
+ * With separate enums for each field.
+ */
+/* Direction bit field:
+ *    00 fully closed
+ *    01 open for input
+ *    10 open for output
+ *    11 open for input or output
+ */
+/* !!! A struct port retains whether the port
+ * is-a string or file port, even when closed.
  */
 enum PortData {
-  /* port_free is not a bit that can be set.
-   * closing does kind=port_free which clears the entire value,
-   * losing the kind and subkind.
-   * FIXME: is_closed should be a state bit.
-   */
-  port_free=0,
   /* Kind */
   port_file=1,
   port_string=2,
-  /* Subkind */
+  /* Direction. */
   port_input=4,
   port_output=8,
   /* A state, for all kinds. */

@@ -16,6 +16,8 @@
 (testing:load-test "integer2char.scm")
 
 (testing:load-test "string-escape.scm")
+
+(testing:load-test "file-port.scm")
 (testing:load-test "string-port-output.scm")
 (testing:load-test "string-port-input.scm")
 ; WIP

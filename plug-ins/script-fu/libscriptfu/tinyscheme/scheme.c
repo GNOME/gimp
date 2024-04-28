@@ -1512,9 +1512,13 @@ static void finalize_cell(scheme *sc, pointer a) {
     }
   else if(is_port(a))
     {
+      /* Scheme does not require a script to close a port.
+       * Close the file on the system and/or free memory resources.
+       */
       if(a->_object._port->kind & port_file)
         {
           if (a->_object._port->rep.stdio.closeit)
+            /* Safe to call port_close when already closed. */
             port_close(sc,a,port_input|port_output);
           sc->free(a->_object._port);
         }
@@ -1524,13 +1528,7 @@ static void finalize_cell(scheme *sc, pointer a) {
         }
       else
         {
-          /* It must have been closed.
-           * FIXME: This is leaking if a string-port was closed?
-           * Closing should not set the entire kind to zero
-           * since it loses the kind of string-port.
-           */
-          g_assert (a->_object._port->kind == port_free);
-          g_warning ("%s Did not dispose port already closed %p.", G_STRFUNC, a->_object._port);
+          g_warning ("%s Unknown port kind.", G_STRFUNC);
         }
     }
     /* Else object has no allocation. */
@@ -1637,14 +1635,29 @@ static pointer port_from_file(scheme *sc, FILE *f, int prop) {
 }
 
 
-
-static void port_close(scheme *sc, pointer p, int flag) {
+/* Close one or more directions of the port.
+ *
+ * When there are no directions remaining, the port becomes fully closed.
+ *
+ * When the port is already fully closed, this does nothing.
+ *
+ * When a port becomes fully closed, release OS resources (close the file),
+ * for a file-port. A string-port has no system resources.
+ *
+ * The port remains an object to be gc'd later
+ * but a script cannot call some port methods on the port.
+ */
+static void port_close(scheme *sc, pointer p, int directions) {
   port *pt=p->_object._port;
 
-  /* Clear the direction that is closing. */
-  pt->kind &= ~flag;
+  /* Fully closed already? */
+  if((pt->kind & (port_input|port_output))==0)
+    return;
 
-  /* If there are no directions remaining. */
+  /* Clear directions that are closing. */
+  pt->kind &= ~directions;
+
+  /* Fully closed? */
   if((pt->kind & (port_input|port_output))==0) {
     if(pt->kind&port_file) {
 
@@ -1658,8 +1671,9 @@ static void port_close(scheme *sc, pointer p, int flag) {
 
       fclose(pt->rep.stdio.file);
     }
-    /* Clear port direction, kind, and saw_EOF. */
-    pt->kind=port_free;
+    /* Closing does not lose the kind of port nor the saw_EOF flag.
+     * The port struct still has attributes, until it is destroyed.
+     */
   }
 }
 

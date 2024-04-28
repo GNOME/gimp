@@ -88,6 +88,7 @@ if not stable
     'tests' / 'TS' / 'atom2string.scm',
     'tests' / 'TS' / 'integer2char.scm',
     'tests' / 'TS' / 'string-escape.scm',
+    'tests' / 'TS' / 'file-port.scm',
     'tests' / 'TS' / 'string-port-input.scm',
     'tests' / 'TS' / 'string-port-output.scm',
     # WIP 'tests' / 'TS' / 'string-port-unichar.scm',
