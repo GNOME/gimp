@@ -138,7 +138,7 @@ Copy-Item -Path "..\..\..\$arch_a64" -Destination "$vfs_a64" -Recurse
 Copy-Item -Path "..\..\..\$arch_x64" -Destination "$vfs_x64" -Recurse
 
 ## Remove uneeded files (to match the Inno Windows Installer artifact)
-$omissions = ("include\", "share\gir-1.0\", "share\man\", "share\vala\", "gimp.cmd", "README.txt")
+$omissions = ("include\", "share\gir-1.0\", "share\man\", "share\vala\", "gimp.cmd")
 Set-Location $vfs_a64
 Remove-Item $omissions -Recurse
 Set-Location ..\..\..\..\$vfs_x64

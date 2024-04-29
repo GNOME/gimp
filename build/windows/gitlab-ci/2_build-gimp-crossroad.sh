@@ -38,12 +38,8 @@ ninja install
 ccache --show-stats
 cd ..
 
-## XXX Functional fix to the problem of non-configured interpreters
-## XXX Also, functional generator of the pixbuf 'loaders.cache' for GUI image support
+## Wrapper just for easier GIMP running (to not look at the huge bin/ folder with many .DLLs)
 GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build${ARTIFACTS_SUFFIX}-cross/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-GDK_PATH=$(echo ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-*/*/)
-GDK_PATH=$(sed "s|${CROSSROAD_PREFIX}/||g" <<< $GDK_PATH)
-GDK_PATH=$(sed 's|/|\\|g' <<< $GDK_PATH)
 echo "@echo off
       echo This is a CI crossbuild of GIMP.
       :: Don't run this under PowerShell since it produces UTF-16 files.
@@ -52,10 +48,8 @@ echo "@echo off
       echo .py   (Python) plug-ins     ^|^ NOT supported!
       echo .scm  (ScriptFu) plug-ins   ^|^ NOT supported!
       echo .vala (Vala) plug-ins       ^|^ NOT supported!
-      bin\gdk-pixbuf-query-loaders.exe ${GDK_PATH}loaders\*.dll > ${GDK_PATH}loaders.cache
       echo.
       bin\gimp-$GIMP_APP_VERSION.exe" > ${CROSSROAD_PREFIX}/gimp.cmd
-echo "Please run the gimp.cmd file to know the actual plug-in support." > ${CROSSROAD_PREFIX}/README.txt
 
 ## Copy built GIMP, babl and GEGL and pre-built packages to GIMP_PREFIX
 cp -fr $CROSSROAD_PREFIX/ _install${ARTIFACTS_SUFFIX}-cross/

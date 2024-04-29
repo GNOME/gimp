@@ -62,11 +62,27 @@ gio+="libgiolibproxy.dll: gio-proxy-resolver\n"
 gio+="libgioopenssl.dll: gio-tls-backend\n"
 printf "%b" "$gio" > ${CROSSROAD_PREFIX}/lib/gio/modules/giomodule.cache
 
-### NOT WORKING: Fallback generator of the pixbuf 'loaders.cache' for GUI image support
+### Generator of the pixbuf 'loaders.cache' for GUI image support
 GDK_PATH=$(echo ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-*/*/)
-wine ${CROSSROAD_PREFIX}/bin/gdk-pixbuf-query-loaders.exe ${GDK_PATH}loaders/*.dll > ${GDK_PATH}loaders.cache
-sed -i "s&$CROSSROAD_PREFIX/&&" ${CROSSROAD_PREFIX}/${GDK_PATH}/loaders.cache
-sed -i '/.dll\"/s*/*\\\\*g' ${CROSSROAD_PREFIX}/${GDK_PATH}/loaders.cache
+echo '"lib\\gdk-pixbuf-2.0\\2.10.0\\loaders\\libpixbufloader-png.dll"
+      "png" 5 "gdk-pixbuf" "PNG" "LGPL"
+      "image/png" ""
+      "png" ""
+      "\211PNG\r\n\032\n" "" 100
+
+      "lib\\gdk-pixbuf-2.0\\2.10.0\\loaders\\libpixbufloader-svg.dll"
+      "svg" 6 "gdk-pixbuf" "Scalable Vector Graphics" "LGPL"
+      "image/svg+xml" "image/svg" "image/svg-xml" "image/vnd.adobe.svg+xml" "text/xml-svg" "image/svg+xml-compressed" ""
+      "svg" "svgz" "svg.gz" ""
+      " <svg" "*    " 100
+      " <!DOCTYPE svg" "*             " 100
+
+      ' > $GDK_PATH/loaders.cache
+
+### NOT WORKING: Fallback generator of the pixbuf 'loaders.cache' for GUI image support
+#wine ${CROSSROAD_PREFIX}/bin/gdk-pixbuf-query-loaders.exe ${GDK_PATH}loaders/*.dll > ${GDK_PATH}loaders.cache
+#sed -i "s&$CROSSROAD_PREFIX/&&" ${CROSSROAD_PREFIX}/${GDK_PATH}/loaders.cache
+#sed -i '/.dll\"/s*/*\\\\*g' ${CROSSROAD_PREFIX}/${GDK_PATH}/loaders.cache
 
 ### Generator of the glib 'gschemas.compiled'
 GLIB_PATH=$(echo ${CROSSROAD_PREFIX}/share/glib-*/schemas/)

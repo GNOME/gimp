@@ -36,11 +36,9 @@ export GIMP_DISTRIB="`realpath ./gimp`${ARTIFACTS_SUFFIX}"
 
 ## Copy a previously built wrapper at tree root, less messy than
 ## having to look inside bin/, in the middle of all the DLLs.
-## This utility also configure the interpreters.
-## Then, copy a built README that make clear the utility of .cmd.
+## This utility also configure the interpreters for local builds.
 mkdir -p ${GIMP_DISTRIB}
 cp -fr ${GIMP_PREFIX}/*.cmd ${GIMP_DISTRIB}/
-cp -fr ${GIMP_PREFIX}/*.txt ${GIMP_DISTRIB}/
 
 
 ## Modules.
