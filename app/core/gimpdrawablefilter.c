@@ -279,6 +279,9 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
   GeglNode           *node;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  /* When copying a layer group whose children have layer effects,
+   * the child may be attached to the layer group but not the
+   * image itself at that point. */
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)) ||
                         gimp_viewable_get_parent (GIMP_VIEWABLE (drawable)), NULL);
   g_return_val_if_fail (GEGL_IS_NODE (operation), NULL);
