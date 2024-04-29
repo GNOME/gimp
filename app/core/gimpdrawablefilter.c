@@ -279,7 +279,11 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
   GeglNode           *node;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  /* When copying a layer group whose children have layer effects,
+   * the child may be attached to the layer group but not the
+   * image itself at that point. */
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+                        gimp_viewable_get_parent (GIMP_VIEWABLE (drawable)), NULL);
   g_return_val_if_fail (GEGL_IS_NODE (operation), NULL);
   g_return_val_if_fail (gegl_node_has_pad (operation, "output"), NULL);
 
@@ -766,7 +770,8 @@ gimp_drawable_filter_apply (GimpDrawableFilter  *filter,
                             const GeglRectangle *area)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (filter->drawable)));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (filter->drawable)) ||
+                    gimp_viewable_get_parent (GIMP_VIEWABLE (filter->drawable)));
 
   gimp_drawable_filter_add_filter (filter);
 
@@ -789,7 +794,8 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
   gboolean success = TRUE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), FALSE);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (filter->drawable)),
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (filter->drawable)) ||
+                        gimp_viewable_get_parent (GIMP_VIEWABLE (filter->drawable)),
                         FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
 

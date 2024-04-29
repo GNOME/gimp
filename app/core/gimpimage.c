@@ -3340,7 +3340,7 @@ gimp_image_mask_changed (GimpImage *image)
 }
 
 /**
- * gimp_item_mask_intersect:
+ * gimp_image_mask_intersect:
  * @image:   the #GimpImage
  * @items:   a list of #GimpItem
  * @x: (out) (optional): return location for x
