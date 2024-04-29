@@ -129,6 +129,16 @@ static GList          * ps_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * ps_create_procedure (GimpPlugIn            *plug_in,
                                              const gchar           *name);
 
+static gboolean         ps_extract          (GimpProcedure         *procedure,
+                                             GimpRunMode            run_mode,
+                                             GFile                 *file,
+                                             GimpMetadata          *metadata,
+                                             GimpProcedureConfig   *config,
+                                             GimpVectorLoadData    *extracted_dimensions,
+                                             gpointer              *data_for_run,
+                                             GDestroyNotify        *data_for_run_destroy,
+                                             gpointer               extract_data,
+                                             GError               **error);
 static GimpValueArray * ps_load             (GimpProcedure         *procedure,
                                              GimpRunMode            run_mode,
                                              GFile                 *file,
@@ -231,6 +241,14 @@ static gint      get_bbox         (GFile               *file,
                                    gint                *x1,
                                    gint                *y1);
 
+static gboolean  ps_read_header   (GFile               *file,
+                                   GimpProcedureConfig *config,
+                                   gboolean            *is_pdf,
+                                   gboolean            *is_epsf,
+                                   gint                *bbox_x0,
+                                   gint                *bbox_y0,
+                                   gint                *bbox_x1,
+                                   gint                *bbox_y1);
 static FILE    * ps_open          (GFile               *file,
                                    GimpProcedureConfig *config,
                                    gint                *llx,
@@ -242,6 +260,10 @@ static FILE    * ps_open          (GFile               *file,
 
 static void      ps_close         (FILE              *ifp,
                                    gchar             *tmp_filename);
+static gint      read_pnmraw_type (FILE              *ifp,
+                                   gint              *width,
+                                   gint              *height,
+                                   gint              *maxval);
 
 static gboolean  skip_ps          (FILE              *ifp);
 
@@ -332,7 +354,7 @@ ps_create_procedure (GimpPlugIn  *plug_in,
     {
       procedure = gimp_vector_load_procedure_new (plug_in, name,
                                                   GIMP_PDB_PROC_TYPE_PLUGIN,
-                                                  NULL, NULL, NULL,
+                                                  ps_extract, NULL, NULL,
                                                   ps_load, NULL, NULL);
 
       if (! strcmp (name, LOAD_PS_PROC))
@@ -568,6 +590,47 @@ ps_create_procedure (GimpPlugIn  *plug_in,
     }
 
   return procedure;
+}
+
+static gboolean
+ps_extract (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GFile                *file,
+            GimpMetadata         *metadata,
+            GimpProcedureConfig  *config,
+            GimpVectorLoadData   *extracted_dimensions,
+            gpointer             *data_for_run,
+            GDestroyNotify       *data_for_run_destroy,
+            gpointer              extract_data,
+            GError              **error)
+{
+  gboolean has_bbox;
+  gboolean is_pdf;
+  gboolean is_epsf;
+  gint     bbox_x0 = 0;
+  gint     bbox_y0 = 0;
+  gint     bbox_x1 = 0;
+  gint     bbox_y1 = 0;
+
+  has_bbox = ps_read_header (file, NULL, &is_pdf, &is_epsf,
+                             &bbox_x0, &bbox_y0, &bbox_x1, &bbox_y1);
+
+  if (has_bbox)
+    {
+      extracted_dimensions->width         = (gdouble) bbox_x1 - bbox_x0;
+      extracted_dimensions->height        = (gdouble) bbox_y1 - bbox_y0;
+      extracted_dimensions->width_unit    = GIMP_UNIT_POINT;
+      extracted_dimensions->height_unit   = GIMP_UNIT_POINT;
+      extracted_dimensions->exact_width   = TRUE;
+      extracted_dimensions->exact_height  = TRUE;
+      extracted_dimensions->correct_ratio = TRUE;
+
+      return TRUE;
+    }
+  else
+    {
+      return FALSE;
+    }
 }
 
 static GimpValueArray *
@@ -1068,7 +1131,6 @@ load_image (GFile                *file,
   gint          width;
   gint          height;
   gdouble       resolution;
-  gboolean      use_bbox;
   gchar        *pnm_type = NULL;
   gchar        *text_alpha = NULL;
   gchar        *graphics_alpha = NULL;
@@ -1089,7 +1151,6 @@ load_image (GFile                *file,
                     "width",              &width,
                     "height",             &height,
                     "pages",              &pages,
-                    "check-bbox",         &use_bbox,
                     "coloring",           &pnm_type,
                     "text-alpha-bits",    &text_alpha,
                     "graphic-alpha-bits", &graphics_alpha,
@@ -1103,7 +1164,6 @@ load_image (GFile                *file,
 #ifdef PS_DEBUG
   g_print ("load_image:\n resolution = %f\n", resolution);
   g_print (" %dx%d pixels\n", width, height);
-  g_print (" BoundingBox: %d\n", use_bbox);
   g_print (" Coloring: %s\n", pnm_type);
   g_print (" TextAlphaBits: %s\n", text_alpha);
   g_print (" GraphicsAlphaBits: %s\n", graphics_alpha);
@@ -1788,70 +1848,37 @@ get_bbox (GFile *file,
   return retval;
 }
 
-/* Open the PostScript file. On failure, NULL is returned. */
-/* The filepointer returned will give a PNM-file generated */
-/* by the PostScript-interpreter. */
-static FILE *
-ps_open (GFile               *file,
-         GimpProcedureConfig *config,
-         gint                *llx,
-         gint                *lly,
-         gint                *urx,
-         gint                *ury,
-         gboolean            *is_epsf,
-         gchar              **tmp_filename)
+static gboolean
+ps_read_header (GFile               *file,
+                GimpProcedureConfig *config,
+                gboolean            *is_pdf,
+                gboolean            *is_epsf,
+                gint                *bbox_x0,
+                gint                *bbox_y0,
+                gint                *bbox_x1,
+                gint                *bbox_y1)
 {
-  const gchar  *filename;
-  const gchar  *driver;
-  GPtrArray    *cmdA;
-  gchar       **pcmdA;
-  FILE         *fd_popen = NULL;
-  FILE         *eps_file;
-  gint          width, height;
-  gdouble       resolution;
-  gboolean      use_bbox;
-  gint          pnm_type       = 0;
-  gint          text_alpha     = 0;
-  gint          graphics_alpha = 0;
-  gint          x0, y0, x1, y1;
-  gint          offx = 0;
-  gint          offy = 0;
-  gboolean      is_pdf;
-  gboolean      maybe_epsf = FALSE;
-  int           code;
-  void         *instance = NULL;
+  FILE        *eps_file;
+  const gchar *filename;
+  gboolean     use_bbox   = TRUE;
+  gboolean     maybe_epsf = FALSE;
+  gboolean     has_bbox   = FALSE;
 
   if (config)
-    {
-      g_object_get (config,
-                    "width",              &width,
-                    "height",             &height,
-                    "pixel-density",      &resolution,
-                    "check-bbox",         &use_bbox,
-                    NULL);
-      pnm_type       = gimp_procedure_config_get_choice_id (config, "coloring");
-      text_alpha     = gimp_procedure_config_get_choice_id (config, "text-alpha-bits");
-      graphics_alpha = gimp_procedure_config_get_choice_id (config, "graphic-alpha-bits");
-    }
-  else
-    {
-      width = 256;
-      height = 256;
-      resolution = 256.0 / 4.0;
-    }
-
-  *llx = *lly = 0;
-  *urx = width - 1;
-  *ury = height - 1;
+    g_object_get (config, "check-bbox", &use_bbox, NULL);
 
   /* Check if the file is a PDF. For PDF, we can't set geometry */
-  is_pdf = FALSE;
+  *is_pdf = FALSE;
 
   /* Check if it is a EPS-file */
   *is_epsf = FALSE;
 
-  filename = gimp_file_get_utf8_name (file);
+  *bbox_x0 = 0.0;
+  *bbox_y0 = 0.0;
+  *bbox_x1 = 0.0;
+  *bbox_y1 = 0.0;
 
+  filename = gimp_file_get_utf8_name (file);
   eps_file = g_fopen (filename, "rb");
 
   if (eps_file)
@@ -1859,13 +1886,13 @@ ps_open (GFile               *file,
       gchar hdr[512];
 
       fread (hdr, 1, sizeof(hdr), eps_file);
-      is_pdf = (strncmp (hdr, "%PDF", 4) == 0);
+      *is_pdf = (strncmp (hdr, "%PDF", 4) == 0);
 
-      if (!is_pdf)  /* Check for EPSF */
+      if (!*is_pdf)  /* Check for EPSF */
         {
-          char *adobe, *epsf;
-          int ds = 0;
-          static unsigned char doseps[5] = { 0xc5, 0xd0, 0xd3, 0xc6, 0 };
+          char                 *adobe, *epsf;
+          int                   ds = 0;
+          static unsigned char  doseps[5] = { 0xc5, 0xd0, 0xd3, 0xc6, 0 };
 
           hdr[sizeof(hdr)-1] = '\0';
           adobe = strstr (hdr, "PS-Adobe-");
@@ -1889,31 +1916,97 @@ ps_open (GFile               *file,
       fclose (eps_file);
     }
 
-  if ((!is_pdf) && (use_bbox))    /* Try the BoundingBox ? */
+  if ((!*is_pdf) && (use_bbox))    /* Try the BoundingBox ? */
     {
-      if (get_bbox (file, &x0, &y0, &x1, &y1) == 0)
+      if (get_bbox (file, bbox_x0, bbox_y0, bbox_x1, bbox_y1) == 0)
         {
-          if (maybe_epsf && ((x0 < 0) || (y0 < 0)))
-            *is_epsf = 1;
+          has_bbox = TRUE;
 
-          if (*is_epsf)  /* Handle negative BoundingBox for EPSF */
-            {
-              offx = -x0; x1 += offx; x0 += offx;
-              offy = -y0; y1 += offy; y0 += offy;
-            }
-          if ((x0 >= 0) && (y0 >= 0) && (x1 > x0) && (y1 > y0))
-            {
-               *llx = (int)((x0/72.0) * resolution + 0.0001);
-               *lly = (int)((y0/72.0) * resolution + 0.0001);
-               /* Use upper bbox values as image size */
-               width = (int)((x1/72.0) * resolution + 0.5);
-               height = (int)((y1/72.0) * resolution + 0.5);
-               /* Pixel coordinates must be one less */
-               *urx = width - 1;
-               *ury = height - 1;
-               if (*urx < *llx) *urx = *llx;
-               if (*ury < *lly) *ury = *lly;
-            }
+          if (maybe_epsf && ((bbox_x0 < 0) || (bbox_y0 < 0)))
+            *is_epsf = 1;
+        }
+    }
+
+  return has_bbox;
+}
+
+/* Open the PostScript file. On failure, NULL is returned. */
+/* The filepointer returned will give a PNM-file generated */
+/* by the PostScript-interpreter. */
+static FILE *
+ps_open (GFile               *file,
+         GimpProcedureConfig *config,
+         gint                *llx,
+         gint                *lly,
+         gint                *urx,
+         gint                *ury,
+         gboolean            *is_epsf,
+         gchar              **tmp_filename)
+{
+  const gchar  *driver;
+  GPtrArray    *cmdA;
+  gchar       **pcmdA;
+  FILE         *fd_popen = NULL;
+  gint          width, height;
+  gdouble       resolution;
+  gint          pnm_type       = 0;
+  gint          text_alpha     = 0;
+  gint          graphics_alpha = 0;
+  gboolean      has_bbox;
+  gint          bbox_x0 = 0;
+  gint          bbox_y0 = 0;
+  gint          bbox_x1 = 0;
+  gint          bbox_y1 = 0;
+  gint          offx    = 0;
+  gint          offy    = 0;
+  gboolean      is_pdf;
+  int           code;
+  void         *instance = NULL;
+
+  if (config)
+    {
+      g_object_get (config,
+                    "width",              &width,
+                    "height",             &height,
+                    "pixel-density",      &resolution,
+                    NULL);
+      pnm_type       = gimp_procedure_config_get_choice_id (config, "coloring");
+      text_alpha     = gimp_procedure_config_get_choice_id (config, "text-alpha-bits");
+      graphics_alpha = gimp_procedure_config_get_choice_id (config, "graphic-alpha-bits");
+    }
+  else
+    {
+      width = 256;
+      height = 256;
+      resolution = 256.0 / 4.0;
+    }
+
+  *llx = *lly = 0;
+  *urx = width - 1;
+  *ury = height - 1;
+
+  has_bbox = ps_read_header (file, config, &is_pdf, is_epsf, &bbox_x0, &bbox_y0, &bbox_x1, &bbox_y1);
+
+  if (has_bbox)
+    {
+      if (*is_epsf)  /* Handle negative BoundingBox for EPSF */
+        {
+          offx = -bbox_x0; bbox_x1 += offx; bbox_x0 += offx;
+          offy = -bbox_y0; bbox_y1 += offy; bbox_y0 += offy;
+        }
+
+      if (bbox_x0 >= 0 && bbox_y0 >= 0 && bbox_x1 > bbox_x0 && bbox_y1 > bbox_y0)
+        {
+          *llx = (int) (bbox_x0 / 72.0 * resolution + 0.0001);
+          *lly = (int) (bbox_y0 / 72.0 * resolution + 0.0001);
+          /* Use upper bbox values as image size */
+          width = (int) (bbox_x1 / 72.0 * resolution + 0.5);
+          height = (int) (bbox_y1 / 72.0 * resolution + 0.5);
+          /* Pixel coordinates must be one less */
+          *urx = width - 1;
+          *ury = height - 1;
+          if (*urx < *llx) *urx = *llx;
+          if (*ury < *lly) *ury = *lly;
         }
     }
 
@@ -1996,7 +2089,7 @@ ps_open (GFile               *file,
 
   /* input file name */
   g_ptr_array_add (cmdA, g_strdup ("-f"));
-  g_ptr_array_add (cmdA, g_strdup (filename));
+  g_ptr_array_add (cmdA, g_strdup (gimp_file_get_utf8_name (file)));
 
   if (*is_epsf)
     {
