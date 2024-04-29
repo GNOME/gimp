@@ -2794,25 +2794,19 @@ gimp_item_tree_view_effects_removed_clicked (GtkWidget        *widget,
   if (view->priv->effects_drawable)
     {
       GimpImage *image = view->priv->image;
-      GeglNode  *op    = NULL;
-
-      if (view->priv->effects_filter &&
-          GIMP_IS_DRAWABLE_FILTER (view->priv->effects_filter))
-        op = gimp_drawable_filter_get_operation (view->priv->effects_filter);
-
-      if (op)
+      if (gimp_drawable_has_filters (view->priv->effects_drawable))
         {
+          GimpContainer *filters = gimp_drawable_get_filters (view->priv->effects_drawable);
+
           gimp_image_undo_push_filter_remove (image, _("Remove filter"),
                                               view->priv->effects_drawable,
                                               view->priv->effects_filter);
 
           gimp_drawable_filter_abort (view->priv->effects_filter);
 
-          view->priv->effects_filter = NULL;
-        }
-      else
-        {
-          gimp_drawable_remove_last_filter (GIMP_DRAWABLE (view->priv->effects_drawable));
+          /* Toggle the popover off if all effects are deleted */
+          if (gimp_container_get_n_children (filters) == 0)
+            gtk_widget_set_visible (view->priv->effects_popover, FALSE);
         }
 
       /* Hack to make the effects visibly change */
