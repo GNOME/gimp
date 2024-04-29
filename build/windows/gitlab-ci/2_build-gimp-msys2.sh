@@ -64,14 +64,15 @@ ninja install
 ccache --show-stats
 
 
-# XXX Functional fix to the problem of non-configured interpreters
+# Wrapper just for easier GIMP running
+MSYS2_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
+GIMP_APP_VERSION=$(grep GIMP_APP_VERSION config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+GIMP_API_VERSION=$(grep GIMP_PKGCONFIG_VERSION config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+
 make_cmd ()
 {
-  MSYS2_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
-  GIMP_APP_VERSION=$(grep GIMP_APP_VERSION config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-  GIMP_API_VERSION=$(grep GIMP_PKGCONFIG_VERSION config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
   echo "@echo off
-        echo This is a $1 native build of GIMP.
+        echo This is a $1 native build of GIMP$3.
         :: Don't run this under PowerShell since it produces UTF-16 files.
         echo .js   (JavaScript) plug-ins ^|^ NOT supported!
         (
@@ -99,18 +100,20 @@ make_cmd ()
         echo .scm  (ScriptFu) plug-ins   ^|^ supported.
         echo .vala (Vala) plug-ins       ^|^ supported.
         echo.
-        @if not exist $2\lib\girepository-1.0\babl*.typelib (copy lib\girepository-1.0\babl*.typelib $2\lib\girepository-1.0) > nul
-        @if not exist $2\lib\girepository-1.0\gegl*.typelib (copy lib\girepository-1.0\gegl*.typelib $2\lib\girepository-1.0) > nul
-        @if not exist $2\lib\girepository-1.0\gimp*.typelib (copy lib\girepository-1.0\gimp*.typelib $2\lib\girepository-1.0) > nul
+        @if not exist $MSYS2_PREFIX\lib\girepository-1.0\babl*.typelib (copy lib\girepository-1.0\babl*.typelib $2\lib\girepository-1.0) > nul
+        @if not exist $MSYS2_PREFIX\lib\girepository-1.0\gegl*.typelib (copy lib\girepository-1.0\gegl*.typelib $2\lib\girepository-1.0) > nul
+        @if not exist $MSYS2_PREFIX\lib\girepository-1.0\gimp*.typelib (copy lib\girepository-1.0\gimp*.typelib $2\lib\girepository-1.0) > nul
         set PATH=%PATH%;$2\bin
-        bin\gimp-$GIMP_APP_VERSION.exe" > ${GIMP_PREFIX}/gimp.cmd
+        bin\gimp-$GIMP_APP_VERSION.exe
+        @if exist $MSYS2_PREFIX\lib\girepository-1.0\babl*.typelib (if exist lib\girepository-1.0\babl*.typelib (del $2\lib\girepository-1.0\babl*.typelib)) > nul
+        @if exist $MSYS2_PREFIX\lib\girepository-1.0\gegl*.typelib (if exist lib\girepository-1.0\gegl*.typelib (del $2\lib\girepository-1.0\gegl*.typelib)) > nul
+        @if exist $MSYS2_PREFIX\lib\girepository-1.0\gimp*.typelib (if exist lib\girepository-1.0\gimp*.typelib (del $2\lib\girepository-1.0\gimp*.typelib)) > nul" > ${GIMP_PREFIX}/gimp.cmd
   sed -i "s/GIMP_API_VERSION/${GIMP_API_VERSION}/g" ${GIMP_PREFIX}/gimp.cmd
   sed -i 's|c:/|c:\\|g;s|msys64/|msys64\\|g' ${GIMP_PREFIX}/gimp.cmd
-  echo "Please run the gimp.cmd file to get proper plug-in support."> ${GIMP_PREFIX}/README.txt
 }
 
 if [[ "$GITLAB_CI" ]]; then
-  make_cmd CI %cd%
+  make_cmd CI %cd% ""
 else
-  make_cmd local $MSYS2_PREFIX
+  make_cmd local $MSYS2_PREFIX " (please run bin/gimp-${GIMP_APP_VERSION}.exe under MSYS2)"
 fi
