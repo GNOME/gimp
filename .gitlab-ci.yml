@@ -416,8 +416,6 @@ gimp-flatpak-x64:
     PATH: "$CI_PROJECT_DIR/.local/bin:$CI_PROJECT_DIR/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     XDG_DATA_HOME: "$CI_PROJECT_DIR/.local/share/"
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
-  # TODO: Crossroads handling of universal variables still not perfect
-  before_script: []
 
 deps-win-x64-cross:
   extends: .win-cross
