@@ -34,6 +34,8 @@
 #include "libgimp-intl.h"
 
 
+#define GIMP_VECTOR_LOAD_DEFAULT_PIXEL_DENSITY 300.0
+
 /**
  * GimpVectorLoadProcedure:
  *
@@ -136,7 +138,8 @@ gimp_vector_load_procedure_constructed (GObject *object)
   GIMP_PROC_AUX_ARG_DOUBLE (procedure, "pixel-density",
                             _("Resolu_tion"),
                             _("Pixel Density: number of pixels per physical unit"),
-                            1.0, 5000.0, 300.0,
+                            GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
+                            GIMP_VECTOR_LOAD_DEFAULT_PIXEL_DENSITY,
                             G_PARAM_READWRITE);
   GIMP_PROC_AUX_ARG_INT (procedure, "physical-unit",
                          _("Unit"),
@@ -255,6 +258,11 @@ gimp_vector_load_procedure_run (GimpProcedure        *procedure,
 
       if (extract_success)
         {
+          gdouble  default_pixel_width     = 0.0;
+          gdouble  default_pixel_height    = 0.0;
+          gdouble  default_resolution      = GIMP_VECTOR_LOAD_DEFAULT_PIXEL_DENSITY;
+          gdouble  res_pixel_width         = 0.0;
+          gdouble  res_pixel_height        = 0.0;
           gboolean keep_ratio              = TRUE;
           gboolean prefer_native_dimension = FALSE;
 
@@ -263,69 +271,8 @@ gimp_vector_load_procedure_run (GimpProcedure        *procedure,
                         "prefer-native-dimensions", &prefer_native_dimension,
                         NULL);
 
-          if ((prefer_native_dimension || (width == 0 && height == 0)) &&
-              extracted_dimensions.width  != 0                         &&
-              extracted_dimensions.height != 0)
+          if (extracted_dimensions.width != 0 && extracted_dimensions.height != 0)
             {
-              if (extracted_dimensions.width_unit == GIMP_UNIT_PIXEL ||
-                  /* This is kinda bogus, but it at least gives ratio data. */
-                  extracted_dimensions.width_unit == GIMP_UNIT_PERCENT)
-                {
-                  width = (gint) extracted_dimensions.width;
-                }
-              else if (extracted_dimensions.width_unit != GIMP_UNIT_PERCENT &&
-                       ((extracted_dimensions.pixel_density > 0.0 &&
-                         extracted_dimensions.density_unit != GIMP_UNIT_PERCENT &&
-                         extracted_dimensions.density_unit != GIMP_UNIT_PIXEL) ||
-                        resolution > 0.0))
-                {
-                  gdouble native_width;
-
-                  native_width = extracted_dimensions.width / gimp_unit_get_factor (extracted_dimensions.width_unit);
-
-                  if (extracted_dimensions.pixel_density > 0.0 &&
-                      extracted_dimensions.density_unit != GIMP_UNIT_PERCENT &&
-                      extracted_dimensions.density_unit != GIMP_UNIT_PIXEL)
-                    {
-                      native_width *= extracted_dimensions.pixel_density / gimp_unit_get_factor (extracted_dimensions.density_unit);
-                    }
-                  else
-                    {
-                      native_width *= resolution;
-                    }
-
-                  width = (gint) ceil (native_width);
-                }
-
-              if (extracted_dimensions.height_unit == GIMP_UNIT_PIXEL ||
-                  extracted_dimensions.height_unit == GIMP_UNIT_PERCENT)
-                {
-                  height = (gint) extracted_dimensions.height;
-                }
-              else if (extracted_dimensions.height_unit != GIMP_UNIT_PERCENT &&
-                       ((extracted_dimensions.pixel_density > 0.0 &&
-                         extracted_dimensions.density_unit != GIMP_UNIT_PERCENT &&
-                         extracted_dimensions.density_unit != GIMP_UNIT_PIXEL) ||
-                        resolution > 0.0))
-                {
-                  gdouble native_height;
-
-                  native_height = extracted_dimensions.height / gimp_unit_get_factor (extracted_dimensions.height_unit);
-
-                  if (extracted_dimensions.pixel_density > 0.0 &&
-                      extracted_dimensions.density_unit != GIMP_UNIT_PERCENT &&
-                      extracted_dimensions.density_unit != GIMP_UNIT_PIXEL)
-                    {
-                      native_height *= extracted_dimensions.pixel_density / gimp_unit_get_factor (extracted_dimensions.density_unit);
-                    }
-                  else
-                    {
-                      native_height *= resolution;
-                    }
-
-                  height = (gint) ceil (native_height);
-                }
-
               if (extracted_dimensions.pixel_density > 0.0 &&
                   extracted_dimensions.density_unit != GIMP_UNIT_PERCENT &&
                   extracted_dimensions.density_unit != GIMP_UNIT_PIXEL)
@@ -338,22 +285,58 @@ gimp_vector_load_procedure_run (GimpProcedure        *procedure,
                     {
                       resolution = extracted_dimensions.pixel_density / gimp_unit_get_factor (extracted_dimensions.density_unit);
                     }
+
+                  default_resolution = resolution;
                 }
 
-              if (width == 0 || height == 0)
+              if (extracted_dimensions.width_unit == GIMP_UNIT_PIXEL ||
+                  /* This is kinda bogus, but it at least gives ratio data. */
+                  extracted_dimensions.width_unit == GIMP_UNIT_PERCENT)
                 {
-                  g_set_error_literal (&error, GIMP_PLUG_IN_ERROR, 0,
-                                       _("dimensions could neither be extracted nor computed "
-                                         "from the vector image's data."));
+                  default_pixel_width = extracted_dimensions.width;
+                  res_pixel_width     = (gint) default_pixel_width;
+                }
+              else
+                {
+                  gdouble default_inch_width;
+
+                  default_inch_width = extracted_dimensions.width / gimp_unit_get_factor (extracted_dimensions.width_unit);
+
+                  default_pixel_width = default_inch_width * default_resolution;
+                  res_pixel_width     = (gint) ceil (default_inch_width * resolution);
+                }
+
+              if (extracted_dimensions.height_unit == GIMP_UNIT_PIXEL ||
+                  extracted_dimensions.height_unit == GIMP_UNIT_PERCENT)
+                {
+                  default_pixel_height = extracted_dimensions.height;
+                  res_pixel_height     = (gint) default_pixel_height;
+                }
+              else
+                {
+                  gdouble default_inch_height;
+
+                  default_inch_height = extracted_dimensions.height / gimp_unit_get_factor (extracted_dimensions.height_unit);
+
+                  default_pixel_height = default_inch_height * default_resolution;
+                  res_pixel_height     = (gint) ceil (default_inch_height * resolution);
                 }
             }
-          else if (keep_ratio || width == 0 || height == 0)
+
+          if (default_pixel_width != 0.0 && default_pixel_height != 0.0)
             {
-              if (extracted_dimensions.width != 0 && extracted_dimensions.height != 0)
+              GParamSpec *spec;
+
+              if (prefer_native_dimension || (width == 0 && height == 0))
+                {
+                  width  = (gint) ceil (res_pixel_width);
+                  height = (gint) ceil (res_pixel_height);
+                }
+              else if (keep_ratio || width == 0 || height == 0)
                 {
                   gdouble ratio;
 
-                  ratio = extracted_dimensions.width / extracted_dimensions.height;
+                  ratio = default_pixel_width / default_pixel_height;
 
                   if (width == 0)
                     width = (gint) ceil (ratio * height);
@@ -364,12 +347,26 @@ gimp_vector_load_procedure_run (GimpProcedure        *procedure,
                   else
                     height = (gint) ceil (width / ratio);
                 }
-              else
+
+              spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "width");
+              G_PARAM_SPEC_INT (spec)->default_value = (gint) ceil (default_pixel_width);
+
+              spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "height");
+              G_PARAM_SPEC_INT (spec)->default_value = (gint) ceil (default_pixel_height);
+
+              if (default_resolution != 0.0)
                 {
-                  g_set_error_literal (&error, GIMP_PLUG_IN_ERROR, 0,
-                                       _("aspect ratio could not be computed "
-                                         "from the vector image's data."));
+                  spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "pixel-density");
+                  G_PARAM_SPEC_DOUBLE (spec)->default_value = default_resolution;
                 }
+            }
+
+          if (width == 0 || height == 0)
+            {
+              /* If width or height are still 0, something was very wrong. */
+              g_set_error_literal (&error, GIMP_PLUG_IN_ERROR, 0,
+                                   _("dimensions could neither be extracted nor computed "
+                                     "from the vector image's data."));
             }
         }
 
@@ -408,9 +405,6 @@ gimp_vector_load_procedure_run (GimpProcedure        *procedure,
     }
   else
     {
-      if (resolution == 0.0)
-        resolution = 300.0;
-
       g_object_set (config,
                     "width",         width,
                     "height",        height,
