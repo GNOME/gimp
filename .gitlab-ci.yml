@@ -28,13 +28,6 @@
 # - GIMP_CI_WIN_INSTALLER: trigger all native MSYS2 builds then creates Inno Windows installer.
 # - GIMP_CI_MS_STORE: trigger arm64 and x64 native MSYS2 builds then creates a .msixbundle.
 
-stages:
-  - prepare
-  - dependencies
-  - gimp
-  - analysis
-  - distribution
-
 # Make pipelines auto cancelable when explicity set (e.g. in 'rules')
 # GitLab is quite sensitive about the "if" order so we organize them
 # in a way to avoid as much as possible hardcoding and leaks in "rules"
@@ -66,6 +59,7 @@ workflow:
 .default:
   ## Custom builds though web GUI, API or schedules.
   interruptible: false
+
 
   # Common jobs behavior
   retry:
@@ -107,6 +101,13 @@ variables:
   ARTIFACTS_SUFFIX: "-x64"
   GIMP_PREFIX: "${CI_PROJECT_DIR}/_install${ARTIFACTS_SUFFIX}"
 
+
+stages:
+  - prepare
+  - dependencies
+  - gimp
+  - analysis
+  - distribution
 
 ## prepare build-oriented Docker images ##
 
