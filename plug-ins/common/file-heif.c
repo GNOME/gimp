@@ -497,7 +497,7 @@ heif_export (GimpProcedure        *procedure,
              gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
   GimpMetadata      *metadata;
   GError            *error  = NULL;
 
@@ -512,11 +512,6 @@ heif_export (GimpProcedure        *procedure,
       export = gimp_export_image (&image, &n_drawables, &drawables, "HEIF",
                                   GIMP_EXPORT_CAN_HANDLE_RGB |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA);
-
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
-                                                 NULL);
       break;
 
     default:
@@ -582,7 +577,7 @@ heif_av1_export (GimpProcedure        *procedure,
                  gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
   GimpMetadata      *metadata;
   GError            *error  = NULL;
 
@@ -597,11 +592,6 @@ heif_av1_export (GimpProcedure        *procedure,
       export = gimp_export_image (&image, &n_drawables, &drawables, "AVIF",
                                   GIMP_EXPORT_CAN_HANDLE_RGB |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA);
-
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
-                                                 NULL);
       break;
 
     default:

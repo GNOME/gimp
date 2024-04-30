@@ -769,7 +769,7 @@ psp_export (GimpProcedure        *procedure,
             gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
   GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
@@ -786,11 +786,6 @@ psp_export (GimpProcedure        *procedure,
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA   |
                                   GIMP_EXPORT_CAN_HANDLE_LAYERS);
-
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
-                                                 NULL);
       break;
 
     default:

@@ -214,7 +214,7 @@ csource_export (GimpProcedure        *procedure,
                 gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
   gchar             *prefixed_name;
   gchar             *comment;
   GError            *error  = NULL;
@@ -245,11 +245,6 @@ csource_export (GimpProcedure        *procedure,
   g_object_set (config,
                 "save-alpha", gimp_drawable_has_alpha (drawables[0]),
                 NULL);
-
-  if (export == GIMP_EXPORT_CANCEL)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_CANCEL,
-                                             NULL);
 
   if (! save_dialog (image, procedure, G_OBJECT (config)))
     status = GIMP_PDB_CANCEL;

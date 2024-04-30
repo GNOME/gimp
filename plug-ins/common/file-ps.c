@@ -678,7 +678,7 @@ ps_export (GimpProcedure        *procedure,
            gpointer              run_data)
 {
   GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export   = GIMP_EXPORT_CANCEL;
+  GimpExportReturn   export   = GIMP_EXPORT_IGNORE;
   GimpImage         *orig_image;
   gboolean           eps_flag = FALSE;
   GError            *error    = NULL;
@@ -703,11 +703,6 @@ ps_export (GimpProcedure        *procedure,
                                   GIMP_EXPORT_CAN_HANDLE_RGB  |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED);
-
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
-                                                 NULL);
       break;
 
     default:

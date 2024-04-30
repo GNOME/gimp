@@ -425,7 +425,7 @@ jpeg_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpImage         *orig_image;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
   GError            *error  = NULL;
 
   gint                   orig_num_quant_tables = -1;
@@ -457,12 +457,6 @@ jpeg_export (GimpProcedure        *procedure,
           break;
 
         case GIMP_EXPORT_IGNORE:
-          break;
-
-        case GIMP_EXPORT_CANCEL:
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
           break;
         }
       break;

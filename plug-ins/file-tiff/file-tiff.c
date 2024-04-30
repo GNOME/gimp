@@ -386,7 +386,7 @@ tiff_export_rec (GimpProcedure        *procedure,
   GimpDrawable     **drawables   = orig_drawables;
   gint               n_drawables = n_orig_drawables;
   GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export      = GIMP_EXPORT_CANCEL;
+  GimpExportReturn   export      = GIMP_EXPORT_IGNORE;
   gboolean           bigtiff     = FALSE;
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -445,9 +445,6 @@ tiff_export_rec (GimpProcedure        *procedure,
 
         export = gimp_export_image (&image, &n_drawables, &drawables, "TIFF",
                                     capabilities);
-
-        if (export == GIMP_EXPORT_CANCEL)
-          return GIMP_PDB_CANCEL;
       }
       break;
 

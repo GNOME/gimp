@@ -574,9 +574,7 @@ export_action_perform (const ExportAction *action,
  *
  * If the user chooses to Ignore the export problem, @image and
  * @drawables are not altered, GIMP_EXPORT_IGNORE is returned and the
- * save_plugin should try to save the original image. If the user
- * chooses Cancel, GIMP_EXPORT_CANCEL is returned and the save_plugin
- * should quit itself with status %GIMP_PDB_CANCEL.
+ * save_plugin should try to save the original image.
  *
  * If @format_name is NULL, no dialogs will be shown and this function
  * will behave as if the user clicked on the 'Export' button, if a
@@ -599,7 +597,7 @@ gimp_export_image (GimpImage               **image,
   gboolean           added_flatten        = FALSE;
   gboolean           has_layer_masks      = FALSE;
   gboolean           background_has_alpha = TRUE;
-  GimpExportReturn   retval               = GIMP_EXPORT_CANCEL;
+  GimpExportReturn   retval               = GIMP_EXPORT_IGNORE;
   gint               i;
 
   g_return_val_if_fail (gimp_image_is_valid (*image) && drawables &&

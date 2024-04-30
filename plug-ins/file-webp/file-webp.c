@@ -291,7 +291,7 @@ webp_export (GimpProcedure        *procedure,
              gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
   gboolean           animation;
   GError            *error  = NULL;
 
@@ -326,11 +326,6 @@ webp_export (GimpProcedure        *procedure,
 
       export = gimp_export_image (&image, &n_drawables, &drawables, "WebP",
                                   capabilities);
-
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
-                                                 NULL);
     }
 
   if (animation)

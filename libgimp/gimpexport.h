@@ -65,7 +65,6 @@ typedef enum
 
 /**
  * GimpExportReturn:
- * @GIMP_EXPORT_CANCEL: The export was cancelled
  * @GIMP_EXPORT_IGNORE: The image is unmodified but export shall continue anyway
  * @GIMP_EXPORT_EXPORT: The chosen transforms were applied to the image
  *
@@ -73,7 +72,6 @@ typedef enum
  **/
 typedef enum
 {
-  GIMP_EXPORT_CANCEL,
   GIMP_EXPORT_IGNORE,
   GIMP_EXPORT_EXPORT
 } GimpExportReturn;

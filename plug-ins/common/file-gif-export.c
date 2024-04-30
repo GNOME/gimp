@@ -266,7 +266,7 @@ gif_export (GimpProcedure        *procedure,
             gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
   GimpImage         *orig_image;
   GimpImage         *sanitized_image = NULL;
   GimpParasite      *parasite        = NULL;
@@ -355,16 +355,6 @@ gif_export (GimpProcedure        *procedure,
 
             export = gimp_export_image (&image, &n_drawables, &drawables, "GIF",
                                         capabilities);
-
-            if (export == GIMP_EXPORT_CANCEL)
-              {
-                if (sanitized_image)
-                  gimp_image_delete (sanitized_image);
-
-                return gimp_procedure_new_return_values (procedure,
-                                                         GIMP_PDB_CANCEL,
-                                                         NULL);
-              }
             break;
           }
 
