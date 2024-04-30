@@ -679,7 +679,7 @@ cppcheck:
     - apt-get update
     - apt-get install -y cppcheck
     - cppcheck -q -j8 --enable=all --force --output-file=cppcheck.xml --xml --xml-version=2
-        -i _build-x64 -i _build-x86 -i _deps -i _install-x64 -i _install-x86 -i .local -i .cache .
+        -i _build${ARTIFACTS_SUFFIX} -i _build-x64-cross -i _deps -i _install${ARTIFACTS_SUFFIX} -i .local -i .cache -i _ccache -i gimp-x64 .
     - mkdir report
     - cppcheck-htmlreport --source-dir=. --title=gimp --file=cppcheck.xml --report-dir=report
   artifacts:
