@@ -1,6 +1,7 @@
 # Default commit CI should only run the following pipelines:
 # - Linux build (base & fast)
 # - Win crossbuild (base & fast)
+# - Execution tests (dynamic code analysis)
 # Scheduled CI ($CI_PIPELINE_SOURCE == "schedule") will run regularly:
 # - Linux GCC build (rare usefulness)
 # - Linux build without vector icons (rare usefulness)
@@ -617,6 +618,7 @@ file-plug-in-tests:
     - <<: *CI_COMMIT
   needs: ["deps-debian-x64", "gimp-debian-x64"]
   stage: analysis
+  image: $CI_REGISTRY_IMAGE:build-debian-latest
   variables:
     GIMP_TESTS_DATA_FOLDER: "$CI_PROJECT_DIR/_data/gimp-test-images/"
     GIMP_TESTS_LOG_FILE: "$CI_PROJECT_DIR/_log/import-tests.log"
@@ -625,7 +627,6 @@ file-plug-in-tests:
     - key: $CI_JOB_NAME
       paths:
         - _data
-  image: $CI_REGISTRY_IMAGE:build-debian-latest
   script:
     - API_VER=$(grep GIMP_PKGCONFIG_VERSION _build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
     - APP_VER=$(grep GIMP_APP_VERSION _build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
