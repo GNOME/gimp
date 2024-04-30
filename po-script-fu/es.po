@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-11 21:17+0000\n"
-"PO-Revision-Date: 2024-03-16 15:46+0100\n"
+"POT-Creation-Date: 2024-04-26 17:37+0000\n"
+"PO-Revision-Date: 2024-04-30 17:29+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -29,79 +29,63 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: plug-ins/script-fu/script-fu.c:122
+#: plug-ins/script-fu/script-fu.c:119
 msgid "Script-Fu _Console"
 msgstr "_Consola de Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:127
+#: plug-ins/script-fu/script-fu.c:124
 msgid "Interactive console for Script-Fu development"
 msgstr "Consola interactiva para el desarrollo de Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:314
+#: plug-ins/script-fu/script-fu.c:309
 msgid "_GIMP Online"
 msgstr "_GIMP en línea"
 
-#: plug-ins/script-fu/script-fu.c:315
+#: plug-ins/script-fu/script-fu.c:310
 msgid "_User Manual"
 msgstr "Manual del _usuario"
 
-#: plug-ins/script-fu/script-fu.c:318
+#: plug-ins/script-fu/script-fu.c:313
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:320
+#: plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Prueba"
 
-#: plug-ins/script-fu/script-fu.c:323
+#: plug-ins/script-fu/script-fu.c:318
 msgid "_Buttons"
 msgstr "_Botones"
 
-#: plug-ins/script-fu/script-fu.c:325
+#: plug-ins/script-fu/script-fu.c:320
 msgid "_Logos"
 msgstr "_Logotipos"
 
-#: plug-ins/script-fu/script-fu.c:327
+#: plug-ins/script-fu/script-fu.c:322
 msgid "_Patterns"
 msgstr "_Patrones"
 
-#: plug-ins/script-fu/script-fu.c:330
+#: plug-ins/script-fu/script-fu.c:325
 msgid "_Web Page Themes"
 msgstr "Temas de páginas _web"
 
-#: plug-ins/script-fu/script-fu.c:332
+#: plug-ins/script-fu/script-fu.c:327
 msgid "_Alien Glow"
 msgstr "_Resplandor alienígena"
 
-#: plug-ins/script-fu/script-fu.c:334
+#: plug-ins/script-fu/script-fu.c:329
 msgid "_Beveled Pattern"
 msgstr "Patrón _biselado"
 
-#: plug-ins/script-fu/script-fu.c:336
+#: plug-ins/script-fu/script-fu.c:331
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: plug-ins/script-fu/script-fu.c:339
+#: plug-ins/script-fu/script-fu.c:334
 msgid "Alpha to _Logo"
 msgstr "Alfa a _logotipo"
 
-#: plug-ins/script-fu/script-fu.c:345
-msgid "_Refresh Scripts"
-msgstr "_Actualizar scripts"
-
-#: plug-ins/script-fu/script-fu.c:350
-msgid "Re-read all available Script-Fu scripts"
-msgstr "Releer todos los scripts de Script-Fu disponibles"
-
-#: plug-ins/script-fu/script-fu.c:376
-msgid ""
-"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
-"Please close all Script-Fu windows and try again."
-msgstr ""
-"No puede usar «Actualizar scripts» cuando hay un cuadro de diálogo de Script-"
-"Fu abierto.  Cierre todas las ventanas de Script-Fu e inténtelo de nuevo."
-
-#: plug-ins/script-fu/script-fu-eval.c:50
+#: plug-ins/script-fu/script-fu-eval.c:52
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
@@ -133,8 +117,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "Guardar la salida de la consola de Script-Fu"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:878
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
+#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -159,27 +143,27 @@ msgstr "Bienvenido a TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Creación de scripts para GIMP en lenguaje Scheme"
 
-#: plug-ins/script-fu/server/script-fu-server.c:874
+#: plug-ins/script-fu/server/script-fu-server.c:918
 msgid "Script-Fu Server Options"
 msgstr "Opciones de servidor de Script-Fu"
 
-#: plug-ins/script-fu/server/script-fu-server.c:879
+#: plug-ins/script-fu/server/script-fu-server.c:923
 msgid "_Start Server"
 msgstr "_Iniciar servidor"
 
-#: plug-ins/script-fu/server/script-fu-server.c:912
+#: plug-ins/script-fu/server/script-fu-server.c:956
 msgid "Listen on IP:"
 msgstr "Escuchando en la IP:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:919
+#: plug-ins/script-fu/server/script-fu-server.c:963
 msgid "Server port:"
 msgstr "Puerto del servidor:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:925
+#: plug-ins/script-fu/server/script-fu-server.c:969
 msgid "Server logfile:"
 msgstr "Archivo de registro del servidor:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:938
+#: plug-ins/script-fu/server/script-fu-server.c:982
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -195,44 +179,45 @@ msgstr "_Iniciar servidor…"
 msgid "Server for remote Script-Fu operation"
 msgstr "Servidor para el funcionamiento remoto de Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:140
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu no puede procesar dos scripts a la vez."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:191
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:142
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Ya está ejecutando el script «%s»."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
 msgid "_Reset"
 msgstr "_Restablecer"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:224
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
 msgid "_OK"
 msgstr "_Aceptar"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:278
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:329
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
 msgid "Script-Fu Color Selection"
 msgstr "Selección de color de Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:455
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:399
 msgid "Script-Fu File Selection"
 msgstr "Selección de archivos de Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:458
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:402
 msgid "Script-Fu Folder Selection"
 msgstr "Selección de carpetas de Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:874
+#. Log to stdout.  Later to Gimp.
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:806
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Error al ejecutar %s:"
@@ -663,50 +648,50 @@ msgstr "Color"
 msgid "Opacity"
 msgstr "Opacidad"
 
-#: plug-ins/script-fu/scripts/font-map.scm:161
+#: plug-ins/script-fu/scripts/font-map.scm:167
 msgid "Render _Font Map..."
 msgstr "Renderizar mapa de tipogra_fías…"
 
-#: plug-ins/script-fu/scripts/font-map.scm:162
+#: plug-ins/script-fu/scripts/font-map.scm:168
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
 "Crear una imagen rellena de vistas previas de tipografías que coincidan con "
 "un filtro de nombres"
 
-#: plug-ins/script-fu/scripts/font-map.scm:167
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "_Text"
 msgstr "_Texto"
 
-#: plug-ins/script-fu/scripts/font-map.scm:168
+#: plug-ins/script-fu/scripts/font-map.scm:174
 msgid "Use font _name as text"
 msgstr "Usar el _nombre de la tipografía como texto"
 
-#: plug-ins/script-fu/scripts/font-map.scm:169
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "_Labels"
 msgstr "E_tiquetas"
 
-#: plug-ins/script-fu/scripts/font-map.scm:170
+#: plug-ins/script-fu/scripts/font-map.scm:176
 msgid "_Filter (regexp)"
 msgstr "_Filtro (exp. reg.)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:171
+#: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "Font _size (pixels)"
 msgstr "_Tamaño de la tipografía (píxeles)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:172
+#: plug-ins/script-fu/scripts/font-map.scm:178
 msgid "_Border (pixels)"
 msgstr "_Borde (píxeles)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "_Color scheme"
 msgstr "Esquema de _colores"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "Black on white"
 msgstr "Negro sobre blanco"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "Active colors"
 msgstr "Colores activos"
 
@@ -1057,23 +1042,11 @@ msgstr "Sepia"
 msgid "Mottle"
 msgstr "Moteado"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:226
-msgid "Folder for the output file"
-msgstr "Carpeta para el archivo de salida"
-
-#: plug-ins/script-fu/scripts/palette-export.scm:227
-msgid ""
-"The name of the file to create (if a file with this name already exist, it "
-"will be replaced)"
-msgstr ""
-"Nombre del archivo que crear (si ya existe un archivo con este nombre, se "
-"sustituirá)"
-
-#: plug-ins/script-fu/scripts/palette-export.scm:235
+#: plug-ins/script-fu/scripts/palette-export.scm:162
 msgid "The filename you entered is not a suitable name for a file."
 msgstr "El nombre que ha introducido no es apto para un nombre de archivo."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:237
+#: plug-ins/script-fu/scripts/palette-export.scm:164
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
@@ -1081,11 +1054,30 @@ msgstr ""
 "Todos los caracteres del nombre son espacios o caracteres que no pueden "
 "aparecer en los nombres de archivo."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:264
+#. Side effect.
+#. Tell the user the mangled path, might be different than user entered.
+#. The user should not need to search for the file.
+#: plug-ins/script-fu/scripts/palette-export.scm:199
+msgid "Exported palette to file: "
+msgstr "Paleta exportada a archivo: "
+
+#: plug-ins/script-fu/scripts/palette-export.scm:289
+msgid "Folder for the output file"
+msgstr "Carpeta para el archivo de salida"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:290
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+"Nombre del archivo que crear (si ya existe un archivo con este nombre, se "
+"sustituirá)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:319
 msgid "_CSS stylesheet..."
 msgstr "Hoja de estilo _CSS…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:265
+#: plug-ins/script-fu/scripts/palette-export.scm:320
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
@@ -1093,28 +1085,28 @@ msgstr ""
 "Exportar la paleta activa como una hoja de estilos CSS con el nombre del "
 "color como nombre de la clase, y el color en sí como atributo de color"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:290
+#: plug-ins/script-fu/scripts/palette-export.scm:340
 msgid "P_HP dictionary..."
 msgstr "Diccionario P_HP…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:291
+#: plug-ins/script-fu/scripts/palette-export.scm:341
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Exportar la paleta activa como un diccionario de PHP (nombre => color)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:322
+#: plug-ins/script-fu/scripts/palette-export.scm:365
 msgid "_Python dictionary..."
 msgstr "Diccionario _Python…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:323
+#: plug-ins/script-fu/scripts/palette-export.scm:366
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr ""
 "Exportar la paleta activa como un diccionario de Python (nombre: color)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:351
+#: plug-ins/script-fu/scripts/palette-export.scm:387
 msgid "_Text file..."
 msgstr "Archivo de _texto…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:352
+#: plug-ins/script-fu/scripts/palette-export.scm:388
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
@@ -1122,11 +1114,11 @@ msgstr ""
 "Escribir todos los colores de una paleta a un archivo de texto, con un valor "
 "hexadecimal por cada línea (sin nombres)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:398
+#: plug-ins/script-fu/scripts/palette-export.scm:427
 msgid "J_ava map..."
 msgstr "Mapa de J_ava…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:399
+#: plug-ins/script-fu/scripts/palette-export.scm:428
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
 "Exportar la paleta activa como una java.util.Hashtable&lt;String,Color&gt;"
@@ -1363,10 +1355,6 @@ msgstr "Fondo transparente"
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indexar a n colores (0 = permanece RGB)"
 
-#: plug-ins/script-fu/scripts/test-sphere.scm:247
-msgid "_Sphere..."
-msgstr "_Esfera…"
-
 #: plug-ins/script-fu/scripts/tileblur.scm:72
 msgid "_Tileable Blur..."
 msgstr "Desenfoque en_losable…"
@@ -1525,6 +1513,23 @@ msgstr "Desplazamiento X de la sombra base"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Desplazamiento Y de la sombra base"
+
+#~ msgid "_Refresh Scripts"
+#~ msgstr "_Actualizar scripts"
+
+#~ msgid "Re-read all available Script-Fu scripts"
+#~ msgstr "Releer todos los scripts de Script-Fu disponibles"
+
+#~ msgid ""
+#~ "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is "
+#~ "open.  Please close all Script-Fu windows and try again."
+#~ msgstr ""
+#~ "No puede usar «Actualizar scripts» cuando hay un cuadro de diálogo de "
+#~ "Script-Fu abierto.  Cierre todas las ventanas de Script-Fu e inténtelo de "
+#~ "nuevo."
+
+#~ msgid "_Sphere..."
+#~ msgstr "_Esfera…"
 
 #~ msgid "Add realistic looking coffee stains to the image"
 #~ msgstr "Añadir manchas de café de aspecto realista a la imagen"
