@@ -34,8 +34,6 @@ G_BEGIN_DECLS
  * @procedure:   the #GimpProcedure that runs.
  * @run_mode:    the #GimpRunMode.
  * @image:       the image to export.
- * @n_drawables: the number of drawables to export.
- * @drawables: (array length=n_drawables):   the drawables to export.
  * @file:        the #GFile to export to.
  * @metadata:    metadata object prepared for the mimetype passed in
  *               gimp_file_procedure_set_mime_types() if export_metadata
@@ -58,8 +56,6 @@ G_BEGIN_DECLS
 typedef GimpValueArray * (* GimpRunExportFunc) (GimpProcedure        *procedure,
                                                 GimpRunMode           run_mode,
                                                 GimpImage            *image,
-                                                gint                  n_drawables,
-                                                GimpDrawable        **drawables,
                                                 GFile                *file,
                                                 GimpMetadata         *metadata,
                                                 GimpProcedureConfig  *config,

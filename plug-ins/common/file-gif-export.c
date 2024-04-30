@@ -78,8 +78,6 @@ static GimpProcedure   * gif_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray  * gif_export           (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
-                                               gint                  n_drawables,
-                                               GimpDrawable        **drawables,
                                                GFile                *file,
                                                GimpMetadata         *metadata,
                                                GimpProcedureConfig  *config,
@@ -258,15 +256,13 @@ static GimpValueArray *
 gif_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
-            gint                  n_drawables,
-            GimpDrawable        **drawables,
             GFile                *file,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GimpPDBStatusType  status          = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export          = GIMP_EXPORT_IGNORE;
   GimpImage         *orig_image;
   GimpImage         *sanitized_image = NULL;
   GimpParasite      *parasite        = NULL;
@@ -333,6 +329,8 @@ gif_export (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
+      GList *drawables;  
+
       /* Create an exportable image based on the export options */
       switch (run_mode)
         {
@@ -353,40 +351,29 @@ gif_export (GimpProcedure        *procedure,
             if (as_animation)
               capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
 
-            export = gimp_export_image (&image, &n_drawables, &drawables, "GIF",
-                                        capabilities);
+            export = gimp_export_image (&image, "GIF", capabilities);
             break;
           }
 
         default:
           break;
         }
+      drawables = gimp_image_list_layers (image);
 
-      if (n_drawables != 1)
-        {
-          g_set_error (&error, G_FILE_ERROR, 0,
-                       _("GIF format does not support multiple layers."));
-
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CALLING_ERROR,
-                                                   error);
-        }
-
-      if (! export_image (file, image, drawables[0], orig_image, G_OBJECT (config),
-                        &error))
+      if (! export_image (file, image, drawables->data, orig_image, 
+                          G_OBJECT (config), &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
 
       gimp_image_delete (sanitized_image);
+      g_list_free (drawables);
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
+  
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

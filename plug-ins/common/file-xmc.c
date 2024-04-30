@@ -172,8 +172,6 @@ static GimpValueArray * xmc_load_thumb               (GimpProcedure         *pro
 static GimpValueArray * xmc_export                   (GimpProcedure         *procedure,
                                                       GimpRunMode            run_mode,
                                                       GimpImage             *image,
-                                                      gint                   n_drawables,
-                                                      GimpDrawable         **drawables,
                                                       GFile                 *file,
                                                       GimpMetadata          *metadata,
                                                       GimpProcedureConfig   *config,
@@ -195,7 +193,7 @@ static guint32          read32                       (FILE                  *f,
 static gboolean         export_image                 (GFile                 *file,
                                                       GimpImage             *image,
                                                       gint                   n_drawables,
-                                                      GimpDrawable         **drawables,
+                                                      GList                *drawables,
                                                       GimpImage             *orig_image,
                                                       GObject               *config,
                                                       GError               **error);
@@ -526,20 +524,20 @@ static GimpValueArray *
 xmc_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
-            gint                  n_drawables,
-            GimpDrawable        **drawables,
             GFile                *file,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export      = GIMP_EXPORT_IGNORE;
+  GList             *drawables   = gimp_image_list_layers (image);
+  gint               n_drawables = g_list_length (drawables);
   GimpImage         *orig_image;
   GeglRectangle     *hotspot_range;
   gint               hot_spot_x;
   gint               hot_spot_y;
-  GError            *error = NULL;
+  GError            *error       = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -565,7 +563,7 @@ xmc_export (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "XMC",
+      export = gimp_export_image (&image, "XMC",
                                   GIMP_EXPORT_CAN_HANDLE_RGB    |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA  |
                                   GIMP_EXPORT_CAN_HANDLE_LAYERS |
@@ -575,6 +573,8 @@ xmc_export (GimpProcedure        *procedure,
     default:
       break;
     }
+  drawables = gimp_image_list_layers (image);
+  n_drawables = g_list_length (drawables);
 
   switch (run_mode)
     {
@@ -617,12 +617,10 @@ xmc_export (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
   g_free (hotspot_range);
+  g_list_free (drawables);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
@@ -1212,7 +1210,7 @@ static gboolean
 export_image (GFile         *file,
               GimpImage     *image,
               gint           n_drawables,
-              GimpDrawable **drawables,
+              GList         *drawables,
               GimpImage     *orig_image,
               GObject       *config,
               GError       **error)

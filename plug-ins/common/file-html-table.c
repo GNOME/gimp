@@ -87,8 +87,6 @@ static GimpProcedure  * html_create_procedure  (GimpPlugIn           *plug_in,
 static GimpValueArray * html_export            (GimpProcedure        *procedure,
                                                 GimpRunMode           run_mode,
                                                 GimpImage            *image,
-                                                gint                  n_drawables,
-                                                GimpDrawable        **drawables,
                                                 GFile                *file,
                                                 GimpMetadata         *metadata,
                                                 GimpProcedureConfig  *config,
@@ -258,16 +256,15 @@ static GimpValueArray *
 html_export (GimpProcedure        *procedure,
              GimpRunMode           run_mode,
              GimpImage            *image,
-             gint                  n_drawables,
-             GimpDrawable        **drawables,
              GFile                *file,
              GimpMetadata         *metadata,
              GimpProcedureConfig  *config,
              gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
+  GList             *drawables = gimp_image_list_layers (image);
   GeglBuffer        *buffer;
-  GError            *error  = NULL;
+  GError            *error     = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -281,17 +278,7 @@ html_export (GimpProcedure        *procedure,
                                              GIMP_PDB_CANCEL,
                                              NULL);
 
-  if (n_drawables != 1)
-    {
-      g_set_error (&error, G_FILE_ERROR, 0,
-                   _("HTML table plug-in does not support multiple layers."));
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
-    }
-
-  buffer = gimp_drawable_get_buffer (drawables[0]);
+  buffer = gimp_drawable_get_buffer (drawables->data);
 
   if (! export_image (file, buffer, G_OBJECT (config),
                       &error))
@@ -301,6 +288,7 @@ html_export (GimpProcedure        *procedure,
 
   g_object_unref (buffer);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

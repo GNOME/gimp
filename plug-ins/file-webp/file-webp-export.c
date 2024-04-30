@@ -505,7 +505,7 @@ gboolean
 save_animation (GFile         *file,
                 GimpImage     *image,
                 gint           n_drawables,
-                GimpDrawable **drawables,
+                GList         *drawables,
                 GObject       *config,
                 GError       **error)
 {
@@ -582,7 +582,7 @@ save_animation (GFile         *file,
     }
 
   if (! space)
-    space = gimp_drawable_get_format (drawables[0]);
+    space = gimp_drawable_get_format (drawables->data);
 
   gimp_image_undo_freeze (image);
 

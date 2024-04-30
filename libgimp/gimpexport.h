@@ -83,8 +83,6 @@ GtkWidget        * gimp_export_dialog_new              (const gchar            *
 GtkWidget        * gimp_export_dialog_get_content_area (GtkWidget              *dialog);
 
 GimpExportReturn   gimp_export_image                   (GimpImage             **image,
-                                                        gint                   *n_drawables,
-                                                        GimpDrawable         ***drawables,
                                                         const gchar            *format_name,
                                                         GimpExportCapabilities  capabilities);
 

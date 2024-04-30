@@ -184,8 +184,6 @@ static GimpValueArray * tga_load             (GimpProcedure         *procedure,
 static GimpValueArray * tga_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
-                                              gint                   n_drawables,
-                                              GimpDrawable         **drawables,
                                               GFile                 *file,
                                               GimpMetadata          *metadata,
                                               GimpProcedureConfig   *config,
@@ -355,8 +353,6 @@ static GimpValueArray *
 tga_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
-            gint                  n_drawables,
-            GimpDrawable        **drawables,
             GFile                *file,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
@@ -364,6 +360,7 @@ tga_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GList             *drawables;
   GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
@@ -374,7 +371,7 @@ tga_export (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "TGA",
+      export = gimp_export_image (&image, "TGA",
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -384,16 +381,7 @@ tga_export (GimpProcedure        *procedure,
     default:
       break;
     }
-
-  if (n_drawables != 1)
-    {
-      g_set_error (&error, G_FILE_ERROR, 0,
-                   _("TGA format does not support multiple layers."));
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
-    }
+  drawables = gimp_image_list_layers (image);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -403,7 +391,7 @@ tga_export (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! export_image (file, image, drawables[0], G_OBJECT (config),
+      if (! export_image (file, image, drawables->data, G_OBJECT (config),
                           &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -411,11 +399,9 @@ tga_export (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

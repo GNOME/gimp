@@ -62,7 +62,7 @@ preamble = """<!DOCTYPE html>
 
 postamble = """\n</pre>\n</body>\n</html>\n"""
 
-def export_colorxhtml(procedure, run_mode, image, n_layers, layers, file, metadata, config, data):
+def export_colorxhtml(procedure, run_mode, image, file, metadata, config, data):
     source_file = config.get_property("source-file")
     characters  = config.get_property("characters")
     size        = config.get_property("font-size");
@@ -169,7 +169,7 @@ def export_colorxhtml(procedure, run_mode, image, n_layers, layers, file, metada
                                                GLib.Error())
 
     #For now, work with a single layer
-    layer = layers[0]
+    layer = image.list_layers()[0]
 
     width = layer.get_width()
     height = layer.get_height()

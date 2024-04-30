@@ -32,7 +32,7 @@ gboolean   save_layer     (GFile         *file,
 gboolean   save_animation (GFile         *file,
                            GimpImage     *image,
                            gint           n_drawables,
-                           GimpDrawable **drawables,
+                           GList         *drawables,
                            GObject       *config,
                            GError       **error);
 

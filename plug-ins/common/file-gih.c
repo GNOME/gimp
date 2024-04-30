@@ -86,8 +86,6 @@ static GimpProcedure  * gih_create_procedure  (GimpPlugIn           *plug_in,
 static GimpValueArray * gih_export            (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
-                                               gint                  n_drawables,
-                                               GimpDrawable        **drawables,
                                                GFile                *file,
                                                GimpMetadata         *metadata,
                                                GimpProcedureConfig  *config,
@@ -249,18 +247,18 @@ static GimpValueArray *
 gih_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
-            gint                  n_drawables,
-            GimpDrawable        **drawables,
             GFile                *file,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export    = GIMP_EXPORT_IGNORE;
+  GList             *drawables = NULL;
+  gint               n_drawables;
   GimpParasite      *parasite;
   GimpImage         *orig_image;
-  GError            *error  = NULL;
+  GError            *error     = NULL;
 
   GimpPixPipeParams  gihparams   = { 0, };
   gchar             *description = NULL;
@@ -281,7 +279,7 @@ gih_export (GimpProcedure        *procedure,
 
       gimp_pixpipe_params_init (&gihparams);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "GIH",
+      export = gimp_export_image (&image, "GIH",
                                   GIMP_EXPORT_CAN_HANDLE_RGB   |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY  |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA |
@@ -386,6 +384,8 @@ gih_export (GimpProcedure        *procedure,
           goto out;
         }
     }
+  drawables   = gimp_image_list_layers (image);
+  n_drawables = g_list_length (drawables);
 
   g_object_get (config,
                 "spacing",         &spacing,
@@ -465,11 +465,9 @@ gih_export (GimpProcedure        *procedure,
 
  out:
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

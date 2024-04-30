@@ -555,8 +555,6 @@ export_action_perform (const ExportAction *action,
  * gimp_export_image:
  * @image:        Pointer to the image.
  * @n_drawables:  Size of @drawables.
- * @drawables: (array length=n_drawables): Array of pointers to drawables.
- * @format_name:  The (short) name of the image_format (e.g. JPEG or GIF).
  * @capabilities: What can the image_format do?
  *
  * Takes an image and a drawable to be saved together with a
@@ -566,11 +564,10 @@ export_action_perform (const ExportAction *action,
  * to be exported and offers to do the necessary conversions.
  *
  * If the user chooses to export the image, a copy is created.
- * This copy is then converted, @image and @drawables are changed to
- * point to the new image and the procedure returns GIMP_EXPORT_EXPORT.
+ * This copy is then converted, @image is changed to point to the
+ * new image and the procedure returns GIMP_EXPORT_EXPORT.
  * The save_plugin has to take care of deleting the created image using
- * gimp_image_delete() and the drawables list with g_free() once the
- * image has been saved.
+ * gimp_image_delete() once the image has been saved.
  *
  * If the user chooses to Ignore the export problem, @image and
  * @drawables are not altered, GIMP_EXPORT_IGNORE is returned and the
@@ -584,35 +581,20 @@ export_action_perform (const ExportAction *action,
  **/
 GimpExportReturn
 gimp_export_image (GimpImage               **image,
-                   gint                     *n_drawables,
-                   GimpDrawable           ***drawables,
                    const gchar              *format_name,
                    GimpExportCapabilities    capabilities)
 {
   GSList            *actions = NULL;
   GimpImageBaseType  type;
   GList             *layers;
+  gint               n_layers;
   GList             *iter;
-  GType              drawables_type       = G_TYPE_NONE;
   gboolean           added_flatten        = FALSE;
   gboolean           has_layer_masks      = FALSE;
   gboolean           background_has_alpha = TRUE;
   GimpExportReturn   retval               = GIMP_EXPORT_IGNORE;
-  gint               i;
 
-  g_return_val_if_fail (gimp_image_is_valid (*image) && drawables &&
-                        n_drawables && *n_drawables > 0, FALSE);
-
-  for (i = 0; i < *n_drawables; i++)
-    {
-      g_return_val_if_fail (gimp_item_is_valid (GIMP_ITEM ((*drawables)[i])), FALSE);
-
-      if (drawables_type == G_TYPE_NONE ||
-          g_type_is_a (drawables_type, G_OBJECT_TYPE ((*drawables)[i])))
-        drawables_type = G_OBJECT_TYPE ((*drawables)[i]);
-      else
-        g_return_val_if_fail (g_type_is_a (G_OBJECT_TYPE ((*drawables)[i]), drawables_type), FALSE);
-    }
+  g_return_val_if_fail (gimp_image_is_valid (*image), FALSE);
 
   /* do some sanity checks */
   if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
@@ -629,7 +611,14 @@ gimp_export_image (GimpImage               **image,
     actions = g_slist_prepend (actions, &export_action_merge_layer_effects);
 
   /* check alpha and layer masks */
-  layers = gimp_image_list_layers (*image);
+  layers   = gimp_image_list_layers (*image);
+  n_layers = g_list_length (layers);
+
+  if (n_layers < 1)
+    {
+      g_list_free (layers);
+      return FALSE;
+    }
 
   for (iter = layers; iter; iter = iter->next)
     {
@@ -724,10 +713,9 @@ gimp_export_image (GimpImage               **image,
       /* check if layer size != canvas size, opacity != 100%, or offsets != 0 */
       if (g_list_length (layers) == 1       &&
           ! children                        &&
-          g_type_is_a (drawables_type, GIMP_TYPE_LAYER) &&
           ! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
         {
-          GimpDrawable *drawable = (*drawables)[0];
+          GimpDrawable *drawable = layers->data;
           gint          offset_x;
           gint          offset_y;
 
@@ -884,7 +872,6 @@ gimp_export_image (GimpImage               **image,
       GSList *list;
       GList  *drawables_in;
       GList  *drawables_out;
-      gint    i;
 
       *image = gimp_image_duplicate (*image);
       drawables_in  = gimp_image_list_selected_layers (*image);
@@ -902,11 +889,6 @@ gimp_export_image (GimpImage               **image,
               drawables_in = drawables_out;
             }
         }
-
-      *n_drawables = g_list_length (drawables_out);
-      *drawables = g_new (GimpDrawable *, *n_drawables);
-      for (iter = drawables_out, i = 0; iter; iter = iter->next, i++)
-        (*drawables)[i] = iter->data;
 
       g_list_free (drawables_out);
     }

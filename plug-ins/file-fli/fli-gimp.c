@@ -104,8 +104,6 @@ static GimpValueArray * fli_load             (GimpProcedure         *procedure,
 static GimpValueArray * fli_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
-                                              gint                   n_drawables,
-                                              GimpDrawable         **drawables,
                                               GFile                 *file,
                                               GimpMetadata          *metadata,
                                               GimpProcedureConfig   *config,
@@ -335,8 +333,6 @@ static GimpValueArray *
 fli_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
-            gint                  n_drawables,
-            GimpDrawable        **drawables,
             GFile                *file,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
@@ -344,6 +340,7 @@ fli_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GList             *drawables;
   GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
@@ -354,7 +351,7 @@ fli_export (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "FLI",
+      export = gimp_export_image (&image, "FLI",
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA   |
@@ -364,6 +361,7 @@ fli_export (GimpProcedure        *procedure,
     default:
       break;
     }
+  drawables = gimp_image_list_layers (image);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -381,11 +379,9 @@ fli_export (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

@@ -94,8 +94,6 @@ static GimpValueArray  * tiff_load             (GimpProcedure         *procedure
 static GimpValueArray  * tiff_export           (GimpProcedure         *procedure,
                                                 GimpRunMode            run_mode,
                                                 GimpImage             *image,
-                                                gint                   n_drawables,
-                                                GimpDrawable         **drawables,
                                                 GFile                 *file,
                                                 GimpMetadata          *metadata,
                                                 GimpProcedureConfig   *config,
@@ -103,8 +101,6 @@ static GimpValueArray  * tiff_export           (GimpProcedure         *procedure
 static GimpPDBStatusType tiff_export_rec       (GimpProcedure         *procedure,
                                                 GimpRunMode            run_mode,
                                                 GimpImage             *orig_image,
-                                                gint                   n_orig_drawables,
-                                                GimpDrawable         **orig_drawables,
                                                 GFile                 *file,
                                                 GimpProcedureConfig   *config,
                                                 GimpMetadata          *metadata,
@@ -341,14 +337,12 @@ static GimpValueArray *
 tiff_export (GimpProcedure        *procedure,
              GimpRunMode           run_mode,
              GimpImage            *image,
-             gint                  n_drawables,
-             GimpDrawable        **drawables,
              GFile                *file,
              GimpMetadata         *metadata,
              GimpProcedureConfig  *config,
              gpointer              run_data)
 {
-  GError            *error  = NULL;
+  GError            *error   = NULL;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   gegl_init (NULL, NULL);
@@ -364,7 +358,6 @@ tiff_export (GimpProcedure        *procedure,
     }
 
   status = tiff_export_rec (procedure, run_mode, image,
-                            n_drawables, drawables,
                             file, config, metadata, FALSE, &error);
 
   return gimp_procedure_new_return_values (procedure, status, error);
@@ -374,8 +367,6 @@ static GimpPDBStatusType
 tiff_export_rec (GimpProcedure        *procedure,
                  GimpRunMode           run_mode,
                  GimpImage            *orig_image,
-                 gint                  n_orig_drawables,
-                 GimpDrawable        **orig_drawables,
                  GFile                *file,
                  GimpProcedureConfig  *config,
                  GimpMetadata         *metadata,
@@ -383,8 +374,8 @@ tiff_export_rec (GimpProcedure        *procedure,
                  GError              **error)
 {
   GimpImage         *image       = orig_image;
-  GimpDrawable     **drawables   = orig_drawables;
-  gint               n_drawables = n_orig_drawables;
+  GList             *drawables   = gimp_image_list_layers (image);
+  gint               n_drawables = g_list_length (drawables);
   GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
   GimpExportReturn   export      = GIMP_EXPORT_IGNORE;
   gboolean           bigtiff     = FALSE;
@@ -392,7 +383,7 @@ tiff_export_rec (GimpProcedure        *procedure,
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       if (! save_dialog (orig_image, procedure, G_OBJECT (config),
-                         n_drawables == 1 ? gimp_drawable_has_alpha (drawables[0]) : TRUE,
+                         n_drawables == 1 ? gimp_drawable_has_alpha (drawables->data) : TRUE,
                          image_is_monochrome (orig_image),
                          gimp_image_get_base_type (orig_image) == GIMP_INDEXED,
                          image_is_multi_layer (orig_image),
@@ -443,14 +434,14 @@ tiff_export_rec (GimpProcedure        *procedure,
               capabilities |= GIMP_EXPORT_NEEDS_CROP;
           }
 
-        export = gimp_export_image (&image, &n_drawables, &drawables, "TIFF",
-                                    capabilities);
+        export = gimp_export_image (&image, "TIFF", capabilities);
       }
       break;
 
     default:
       break;
     }
+  drawables = gimp_image_list_layers (image);
 
 #if 0
   /* FIXME */
@@ -471,10 +462,7 @@ tiff_export_rec (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
   if (status == GIMP_PDB_EXECUTION_ERROR &&
       run_mode == GIMP_RUN_INTERACTIVE   &&
@@ -485,8 +473,7 @@ tiff_export_rec (GimpProcedure        *procedure,
       tiff_reset_file_size_error ();
       g_clear_error (error);
 
-      return tiff_export_rec (procedure, run_mode,
-                              orig_image, n_orig_drawables, orig_drawables,
+      return tiff_export_rec (procedure, run_mode, orig_image, 
                               file, config, metadata, TRUE, error);
     }
 

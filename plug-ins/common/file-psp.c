@@ -594,8 +594,6 @@ static GimpValueArray * psp_load             (GimpProcedure         *procedure,
 static GimpValueArray * psp_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
-                                              gint                   n_drawables,
-                                              GimpDrawable         **drawables,
                                               GFile                 *file,
                                               GimpMetadata          *metadata,
                                               GimpProcedureConfig   *config,
@@ -606,7 +604,7 @@ static GimpImage      * load_image           (GFile                 *file,
 static gboolean         export_image         (GFile                 *file,
                                               GimpImage             *image,
                                               gint                   n_drawables,
-                                              GimpDrawable         **drawables,
+                                              GList                 *drawables,
                                               GObject               *config,
                                               GError               **error);
 static gboolean         save_dialog          (GimpProcedure         *procedure,
@@ -761,8 +759,6 @@ static GimpValueArray *
 psp_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
-            gint                  n_drawables,
-            GimpDrawable        **drawables,
             GFile                *file,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
@@ -770,6 +766,8 @@ psp_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GList             *drawables;
+  gint               n_drawables;
   GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
@@ -780,7 +778,7 @@ psp_export (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "PSP",
+      export = gimp_export_image (&image, "PSP",
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -791,6 +789,8 @@ psp_export (GimpProcedure        *procedure,
     default:
       break;
     }
+  drawables   = gimp_image_list_layers (image);
+  n_drawables = g_list_length (drawables);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -808,11 +808,9 @@ psp_export (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
@@ -2834,7 +2832,7 @@ static gint
 export_image (GFile         *file,
               GimpImage     *image,
               gint           n_drawables,
-              GimpDrawable **drawables,
+              GList         *drawables,
               GObject       *config,
               GError       **error)
 {

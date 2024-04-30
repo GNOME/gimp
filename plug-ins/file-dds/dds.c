@@ -76,8 +76,6 @@ static GimpValueArray * dds_load             (GimpProcedure         *procedure,
 static GimpValueArray * dds_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
-                                              gint                   n_drawables,
-                                              GimpDrawable         **drawables,
                                               GFile                 *file,
                                               GimpMetadata          *metadata,
                                               GimpProcedureConfig   *config,
@@ -371,8 +369,6 @@ static GimpValueArray *
 dds_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
-            gint                  n_drawables,
-            GimpDrawable        **drawables,
             GFile                *file,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
@@ -380,7 +376,8 @@ dds_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
-  GError            *error = NULL;
+  GList             *drawables;
+  GError            *error  = NULL;
   gdouble            gamma;
 
   gegl_init (NULL, NULL);
@@ -391,7 +388,7 @@ dds_export (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init ("dds");
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "DDS",
+      export = gimp_export_image (&image, "DDS",
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -402,6 +399,7 @@ dds_export (GimpProcedure        *procedure,
     default:
       break;
     }
+  drawables = gimp_image_list_layers (image);
 
   g_object_get (config,
                 "gamma", &gamma,
@@ -419,16 +417,14 @@ dds_export (GimpProcedure        *procedure,
   /* TODO: support multiple-layers selection, especially as DDS has
    * DDS_SAVE_SELECTED_LAYER option support.
    */
-  status = write_dds (file, image, drawables[0],
+  status = write_dds (file, image, drawables->data,
                       run_mode == GIMP_RUN_INTERACTIVE,
                       procedure, config,
                       export == GIMP_EXPORT_EXPORT);
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }

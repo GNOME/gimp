@@ -220,18 +220,6 @@ gimp_export_procedure_constructed (GObject *object)
                        FALSE,
                        G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_INT (procedure, "num-drawables",
-                     "Number of drawables",
-                     "Number of drawables to be exported",
-                     0, G_MAXINT, 1,
-                     G_PARAM_READWRITE);
-
-  GIMP_PROC_ARG_OBJECT_ARRAY (procedure, "drawables",
-                              "Drawables",
-                              "The drawables to export",
-                              GIMP_TYPE_DRAWABLE,
-                              G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
-
   GIMP_PROC_ARG_FILE (procedure, "file",
                       "File",
                       "The file to export to",
@@ -347,7 +335,7 @@ gimp_export_procedure_install (GimpProcedure *procedure)
                                       priority);
 }
 
-#define ARG_OFFSET 5
+#define ARG_OFFSET 3
 
 static GimpValueArray *
 gimp_export_procedure_run (GimpProcedure        *procedure,
@@ -360,18 +348,14 @@ gimp_export_procedure_run (GimpProcedure        *procedure,
   GimpProcedureConfig  *config;
   GimpRunMode           run_mode;
   GimpImage            *image;
-  GimpDrawable        **drawables;
   GFile                *file;
-  gint                  n_drawables;
   GimpMetadata         *metadata;
   gchar                *mimetype = NULL;
   GimpPDBStatusType     status   = GIMP_PDB_EXECUTION_ERROR;
 
-  run_mode    = GIMP_VALUES_GET_ENUM         (args, 0);
-  image       = GIMP_VALUES_GET_IMAGE        (args, 1);
-  n_drawables = GIMP_VALUES_GET_INT          (args, 2);
-  drawables   = GIMP_VALUES_GET_OBJECT_ARRAY (args, 3);
-  file        = GIMP_VALUES_GET_FILE         (args, 4);
+  run_mode = GIMP_VALUES_GET_ENUM  (args, 0);
+  image    = GIMP_VALUES_GET_IMAGE (args, 1);
+  file     = GIMP_VALUES_GET_FILE  (args, 2);
 
   remaining = gimp_value_array_new (gimp_value_array_length (args) - ARG_OFFSET);
 
@@ -415,10 +399,9 @@ gimp_export_procedure_run (GimpProcedure        *procedure,
   metadata = _gimp_procedure_config_begin_export (config, image, run_mode, remaining, mimetype);
   g_free (mimetype);
 
-  return_values = export_proc->priv->run_func (procedure, run_mode,
-                                             image, n_drawables, drawables,
-                                             file, metadata, config,
-                                             export_proc->priv->run_data);
+  return_values = export_proc->priv->run_func (procedure, run_mode, image,
+                                               file, metadata, config,
+                                               export_proc->priv->run_data);
 
   if (return_values != NULL                       &&
       gimp_value_array_length (return_values) > 0 &&

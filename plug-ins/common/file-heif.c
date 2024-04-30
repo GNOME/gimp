@@ -84,8 +84,6 @@ static GimpValueArray * heif_load             (GimpProcedure                *pro
 static GimpValueArray * heif_export           (GimpProcedure                *procedure,
                                                GimpRunMode                   run_mode,
                                                GimpImage                    *image,
-                                               gint                          n_drawables,
-                                               GimpDrawable                **drawables,
                                                GFile                        *file,
                                                GimpMetadata                 *metadata,
                                                GimpProcedureConfig          *config,
@@ -94,8 +92,6 @@ static GimpValueArray * heif_export           (GimpProcedure                *pro
 static GimpValueArray * heif_av1_export       (GimpProcedure                *procedure,
                                                GimpRunMode                   run_mode,
                                                GimpImage                    *image,
-                                               gint                          n_drawables,
-                                               GimpDrawable                **drawables,
                                                GFile                        *file,
                                                GimpMetadata                 *metadata,
                                                GimpProcedureConfig          *config,
@@ -489,8 +485,6 @@ static GimpValueArray *
 heif_export (GimpProcedure        *procedure,
              GimpRunMode           run_mode,
              GimpImage            *image,
-             gint                  n_drawables,
-             GimpDrawable        **drawables,
              GFile                *file,
              GimpMetadata         *metadata_unused,
              GimpProcedureConfig  *config,
@@ -498,6 +492,7 @@ heif_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GList             *drawables;
   GimpMetadata      *metadata;
   GError            *error  = NULL;
 
@@ -509,7 +504,7 @@ heif_export (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "HEIF",
+      export = gimp_export_image (&image, "HEIF",
                                   GIMP_EXPORT_CAN_HANDLE_RGB |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA);
       break;
@@ -517,16 +512,7 @@ heif_export (GimpProcedure        *procedure,
     default:
       break;
     }
-
-  if (n_drawables != 1)
-    {
-      g_set_error (&error, G_FILE_ERROR, 0,
-                   _("HEIF format does not support multiple layers."));
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
-    }
+  drawables = gimp_image_list_layers (image);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -542,7 +528,7 @@ heif_export (GimpProcedure        *procedure,
 
       heif_init (NULL);
 
-      if (! export_image (file, image, drawables[0], G_OBJECT (config),
+      if (! export_image (file, image, drawables->data, G_OBJECT (config),
                           &error, heif_compression_HEVC, metadata))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -562,6 +548,7 @@ heif_export (GimpProcedure        *procedure,
       g_free (drawables);
     }
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
@@ -569,8 +556,6 @@ static GimpValueArray *
 heif_av1_export (GimpProcedure        *procedure,
                  GimpRunMode           run_mode,
                  GimpImage            *image,
-                 gint                  n_drawables,
-                 GimpDrawable        **drawables,
                  GFile                *file,
                  GimpMetadata         *metadata_unused,
                  GimpProcedureConfig  *config,
@@ -578,8 +563,10 @@ heif_av1_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GList             *drawables;
+
   GimpMetadata      *metadata;
-  GError            *error  = NULL;
+  GError            *error       = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -589,7 +576,7 @@ heif_av1_export (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "AVIF",
+      export = gimp_export_image (&image, "AVIF",
                                   GIMP_EXPORT_CAN_HANDLE_RGB |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA);
       break;
@@ -597,16 +584,7 @@ heif_av1_export (GimpProcedure        *procedure,
     default:
       break;
     }
-
-  if (n_drawables != 1)
-    {
-      g_set_error (&error, G_FILE_ERROR, 0,
-                   _("HEIF format does not support multiple layers."));
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
-    }
+  drawables = gimp_image_list_layers (image);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -622,7 +600,7 @@ heif_av1_export (GimpProcedure        *procedure,
 
       heif_init (NULL);
 
-      if (! export_image (file, image, drawables[0], G_OBJECT (config),
+      if (! export_image (file, image, drawables->data, G_OBJECT (config),
                           &error, heif_compression_AV1, metadata))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -637,11 +615,9 @@ heif_av1_export (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

@@ -156,8 +156,6 @@ static GimpProcedure  * compressor_create_procedure (GimpPlugIn            *plug
 static GimpValueArray * compressor_export           (GimpProcedure         *procedure,
                                                      GimpRunMode            run_mode,
                                                      GimpImage             *image,
-                                                     gint                   n_drawables,
-                                                     GimpDrawable         **drawables,
                                                      GFile                 *file,
                                                      GimpMetadata          *metadata,
                                                      GimpProcedureConfig   *config,
@@ -179,7 +177,7 @@ static GimpPDBStatusType   export_image             (const CompressorEntry *comp
                                                      GFile                 *file,
                                                      GimpImage             *image,
                                                      gint                   n_drawables,
-                                                     GimpDrawable         **drawables,
+                                                     GList                 *drawables,
                                                      gint32                 run_mode,
                                                      GError               **error);
 
@@ -402,16 +400,16 @@ static GimpValueArray *
 compressor_export (GimpProcedure        *procedure,
                    GimpRunMode           run_mode,
                    GimpImage            *image,
-                   gint                  n_drawables,
-                   GimpDrawable        **drawables,
                    GFile                *file,
                    GimpMetadata         *metadata,
                    GimpProcedureConfig  *config,
                   gpointer              run_data)
 {
-  const CompressorEntry *compressor = run_data;
+  const CompressorEntry *compressor  = run_data;
   GimpPDBStatusType      status;
-  GError                *error = NULL;
+  GList                 *drawables   = gimp_image_list_layers (image);
+  gint                   n_drawables = g_list_length (drawables);
+  GError                *error       = NULL;
 
   /*  We handle PDB errors by forwarding them to the caller in
    *  our return values.
@@ -422,6 +420,7 @@ compressor_export (GimpProcedure        *procedure,
   status = export_image (compressor, file, image, n_drawables, drawables,
                          run_mode, &error);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
@@ -430,7 +429,7 @@ export_image (const CompressorEntry  *compressor,
               GFile                  *file,
               GimpImage              *image,
               gint                    n_drawables,
-              GimpDrawable          **drawables,
+              GList                  *drawables,
               gint32                  run_mode,
               GError                **error)
 {

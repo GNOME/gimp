@@ -154,8 +154,6 @@ static GimpValueArray * pnm_load             (GimpProcedure          *procedure,
 static GimpValueArray * pnm_export           (GimpProcedure          *procedure,
                                               GimpRunMode             run_mode,
                                               GimpImage              *image,
-                                              gint                    n_drawables,
-                                              GimpDrawable          **drawables,
                                               GFile                  *file,
                                               GimpMetadata           *metadata,
                                               GimpProcedureConfig    *config,
@@ -580,8 +578,6 @@ static GimpValueArray *
 pnm_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
-            gint                  n_drawables,
-            GimpDrawable        **drawables,
             GFile                *file,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
@@ -590,6 +586,7 @@ pnm_export (GimpProcedure        *procedure,
   FileType           file_type   = GPOINTER_TO_INT (run_data);
   GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
   GimpExportReturn   export      = GIMP_EXPORT_IGNORE;
+  GList             *drawables;
   const gchar       *format_name = NULL;
   GError            *error       = NULL;
 
@@ -605,7 +602,7 @@ pnm_export (GimpProcedure        *procedure,
         {
         case FILE_TYPE_PNM:
           format_name = "PNM";
-          export = gimp_export_image (&image, &n_drawables, &drawables, "PNM",
+          export = gimp_export_image (&image, "PNM",
                                       GIMP_EXPORT_CAN_HANDLE_RGB  |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
                                       GIMP_EXPORT_CAN_HANDLE_INDEXED);
@@ -613,26 +610,26 @@ pnm_export (GimpProcedure        *procedure,
 
         case FILE_TYPE_PBM:
           format_name = "PBM";
-          export = gimp_export_image (&image, &n_drawables, &drawables, "PBM",
+          export = gimp_export_image (&image, "PBM",
                                       GIMP_EXPORT_CAN_HANDLE_BITMAP);
           break;
 
         case FILE_TYPE_PGM:
           format_name = "PGM";
-          export = gimp_export_image (&image, &n_drawables, &drawables, "PGM",
+          export = gimp_export_image (&image, "PGM",
                                       GIMP_EXPORT_CAN_HANDLE_GRAY);
           break;
 
         case FILE_TYPE_PPM:
           format_name = "PPM";
-          export = gimp_export_image (&image, &n_drawables, &drawables, "PPM",
+          export = gimp_export_image (&image, "PPM",
                                       GIMP_EXPORT_CAN_HANDLE_RGB |
                                       GIMP_EXPORT_CAN_HANDLE_INDEXED);
           break;
 
         case FILE_TYPE_PAM:
           format_name = "PAM";
-          export = gimp_export_image (&image, &n_drawables, &drawables, "PAM",
+          export = gimp_export_image (&image, "PAM",
                                       GIMP_EXPORT_CAN_HANDLE_RGB   |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY  |
                                       GIMP_EXPORT_CAN_HANDLE_ALPHA |
@@ -641,7 +638,7 @@ pnm_export (GimpProcedure        *procedure,
 
         case FILE_TYPE_PFM:
           format_name = "PFM";
-          export = gimp_export_image (&image, &n_drawables, &drawables, "PFM",
+          export = gimp_export_image (&image, "PFM",
                                       GIMP_EXPORT_CAN_HANDLE_RGB |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY);
           break;
@@ -651,17 +648,7 @@ pnm_export (GimpProcedure        *procedure,
     default:
       break;
     }
-
-  if (n_drawables != 1)
-    {
-      g_set_error (&error, G_FILE_ERROR, 0,
-                   _("%s format does not support multiple layers."),
-                   format_name);
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
-    }
+  drawables = gimp_image_list_layers (image);
 
   if (file_type != FILE_TYPE_PFM &&
       file_type != FILE_TYPE_PAM &&
@@ -673,19 +660,17 @@ pnm_export (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! export_image (file, image, drawables[0], file_type, G_OBJECT (config),
-                          &error))
+      if (! export_image (file, image, drawables->data, file_type, 
+                          G_OBJECT (config), &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

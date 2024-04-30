@@ -174,8 +174,6 @@ static GimpValueArray * raw_load             (GimpProcedure            *procedur
 static GimpValueArray * raw_export           (GimpProcedure            *procedure,
                                               GimpRunMode               run_mode,
                                               GimpImage                *image,
-                                              gint                      n_drawables,
-                                              GimpDrawable            **drawables,
                                               GFile                    *file,
                                               GimpMetadata             *metadata,
                                               GimpProcedureConfig      *config,
@@ -657,8 +655,6 @@ static GimpValueArray *
 raw_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
-            gint                  n_drawables,
-            GimpDrawable        **drawables,
             GFile                *file,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
@@ -666,6 +662,7 @@ raw_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType       status = GIMP_PDB_SUCCESS;
   GimpExportReturn        export = GIMP_EXPORT_IGNORE;
+  GList                  *drawables;
   RawPlanarConfiguration  planar_conf;
   GError                 *error  = NULL;
 
@@ -680,50 +677,33 @@ raw_export (GimpProcedure        *procedure,
                                                NULL);
     }
 
-  export = gimp_export_image (&image, &n_drawables, &drawables, "RAW",
+  export = gimp_export_image (&image, "RAW",
                               GIMP_EXPORT_CAN_HANDLE_RGB     |
                               GIMP_EXPORT_CAN_HANDLE_GRAY    |
                               GIMP_EXPORT_CAN_HANDLE_INDEXED |
                               GIMP_EXPORT_CAN_HANDLE_ALPHA);
-
-  if (n_drawables != 1)
-    {
-      g_set_error (&error, G_FILE_ERROR, 0,
-                   _("RAW export does not support multiple layers."));
-
-      if (export == GIMP_EXPORT_EXPORT)
-        {
-          gimp_image_delete (image);
-          g_free (drawables);
-        }
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
-    }
+  drawables = gimp_image_list_layers (image);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       if (! save_dialog (image, procedure,
-                         gimp_drawable_has_alpha (drawables[0]),
+                         gimp_drawable_has_alpha (drawables->data),
                          G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
     }
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! export_image (file, image, drawables[0], config, &error))
+      if (! export_image (file, image, drawables->data, config, &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

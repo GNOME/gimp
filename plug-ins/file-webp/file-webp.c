@@ -69,8 +69,6 @@ static GimpValueArray * webp_load             (GimpProcedure         *procedure,
 static GimpValueArray * webp_export           (GimpProcedure         *procedure,
                                                GimpRunMode            run_mode,
                                                GimpImage             *image,
-                                               gint                   n_drawables,
-                                               GimpDrawable         **drawables,
                                                GFile                 *file,
                                                GimpMetadata          *metadata,
                                                GimpProcedureConfig   *config,
@@ -283,8 +281,6 @@ static GimpValueArray *
 webp_export (GimpProcedure        *procedure,
              GimpRunMode           run_mode,
              GimpImage            *image,
-             gint                  n_drawables,
-             GimpDrawable        **drawables,
              GFile                *file,
              GimpMetadata         *metadata,
              GimpProcedureConfig  *config,
@@ -292,6 +288,8 @@ webp_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GList             *drawables;
+  gint               n_drawables;
   gboolean           animation;
   GError            *error  = NULL;
 
@@ -324,9 +322,10 @@ webp_export (GimpProcedure        *procedure,
       if (animation)
         capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION;
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "WebP",
-                                  capabilities);
+      export = gimp_export_image (&image, "WebP", capabilities);
     }
+  drawables   = gimp_image_list_layers (image);
+  n_drawables = g_list_length (drawables);
 
   if (animation)
     {
@@ -338,17 +337,7 @@ webp_export (GimpProcedure        *procedure,
     }
   else
     {
-      if (n_drawables != 1)
-        {
-          g_set_error (&error, G_FILE_ERROR, 0,
-                       _("The WebP plug-in cannot export multiple layer, except in animation mode."));
-
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CALLING_ERROR,
-                                                   error);
-        }
-
-      if (! save_layer (file, image, drawables[0], G_OBJECT (config),
+      if (! save_layer (file, image, drawables->data, G_OBJECT (config),
                         &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -371,10 +360,8 @@ webp_export (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }

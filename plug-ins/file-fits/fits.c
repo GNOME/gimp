@@ -97,8 +97,6 @@ static GimpValueArray * fits_load             (GimpProcedure         *procedure,
 static GimpValueArray * fits_export           (GimpProcedure         *procedure,
                                                GimpRunMode            run_mode,
                                                GimpImage             *image,
-                                               gint                   n_drawables,
-                                               GimpDrawable         **drawables,
                                                GFile                 *file,
                                                GimpMetadata          *metadata,
                                                GimpProcedureConfig   *config,
@@ -283,8 +281,6 @@ static GimpValueArray *
 fits_export (GimpProcedure        *procedure,
              GimpRunMode           run_mode,
              GimpImage            *image,
-             gint                  n_drawables,
-             GimpDrawable        **drawables,
              GFile                *file,
              GimpMetadata         *metadata,
              GimpProcedureConfig  *config,
@@ -294,6 +290,8 @@ fits_export (GimpProcedure        *procedure,
   GimpItem          **flipped_drawables;
   GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   GimpExportReturn    export = GIMP_EXPORT_IGNORE;
+  GList             *drawables;
+  gint               n_drawables;
   GError             *error  = NULL;
 
   gegl_init (NULL, NULL);
@@ -304,7 +302,7 @@ fits_export (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "FITS",
+      export = gimp_export_image (&image,  "FITS",
                                   GIMP_EXPORT_CAN_HANDLE_RGB  |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED);
@@ -313,16 +311,8 @@ fits_export (GimpProcedure        *procedure,
     default:
       break;
     }
-
-  if (n_drawables != 1)
-    {
-      g_set_error (&error, G_FILE_ERROR, 0,
-                   _("FITS format does not support multiple layers."));
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
-    }
+  drawables   = gimp_image_list_layers (image);
+  n_drawables = g_list_length (drawables);
 
   /* Flip image vertical since FITS writes from bottom to top */
   duplicate_image = gimp_image_duplicate (image);
@@ -338,11 +328,9 @@ fits_export (GimpProcedure        *procedure,
   g_free (flipped_drawables);
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

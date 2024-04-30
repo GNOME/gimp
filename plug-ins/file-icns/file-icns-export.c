@@ -453,26 +453,26 @@ icns_export_image (GFile        *file,
         {
           GimpProcedure   *procedure;
           GimpValueArray  *return_vals;
-          GimpDrawable   **drawables = NULL;
+          GimpImage       *temp_image;
+          GimpLayer       *temp_layer;
           GFile           *temp_file = NULL;
-          GimpObjectArray *args;
           FILE            *temp_fp;
           gint             temp_size;
           gint             macos_size;
 
-          temp_file = gimp_temp_file ("png");
+          temp_file  = gimp_temp_file ("png");
 
-          drawables    = g_new (GimpDrawable *, 1);
-          drawables[0] = iter->data;
-
-          args = gimp_object_array_new (GIMP_TYPE_DRAWABLE, (GObject **) drawables, 1, FALSE);
+          /* TODO: Use GimpExportOptions for this when available */
+          temp_image = gimp_image_new (width, height,
+                                       gimp_image_get_base_type (image));
+          temp_layer = gimp_layer_new_from_drawable (GIMP_DRAWABLE (iter->data),
+                                                     temp_image);
+          gimp_image_insert_layer (temp_image, temp_layer, NULL, 0);
 
           procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), "file-png-export");
           return_vals = gimp_procedure_run (procedure,
                                             "run-mode",         GIMP_RUN_NONINTERACTIVE,
-                                            "image",            image,
-                                            "num-drawables",    1,
-                                            "drawables",        args,
+                                            "image",            temp_image,
                                             "file",             temp_file,
                                             "interlaced",       FALSE,
                                             "compression",      9,
@@ -483,9 +483,7 @@ icns_export_image (GFile        *file,
                                             "save-transparent", FALSE,
                                             "optimize-palette", FALSE,
                                             NULL);
-
-          gimp_object_array_free (args);
-          g_clear_pointer (&drawables, g_free);
+          gimp_image_delete (temp_image);
 
           if (GIMP_VALUES_GET_ENUM (return_vals, 0) != GIMP_PDB_SUCCESS)
             {

@@ -69,8 +69,6 @@ static GimpValueArray *jpegxl_load              (GimpProcedure         *procedur
 static GimpValueArray *jpegxl_export            (GimpProcedure         *procedure,
                                                  GimpRunMode            run_mode,
                                                  GimpImage             *image,
-                                                 gint                   n_drawables,
-                                                 GimpDrawable         **drawables,
                                                  GFile                 *file,
                                                  GimpMetadata          *metadata,
                                                  GimpProcedureConfig   *config,
@@ -2107,8 +2105,6 @@ static GimpValueArray *
 jpegxl_export (GimpProcedure        *procedure,
                GimpRunMode           run_mode,
                GimpImage            *image,
-               gint                  n_drawables,
-               GimpDrawable        **drawables,
                GFile                *file,
                GimpMetadata         *metadata,
                GimpProcedureConfig  *config,
@@ -2116,6 +2112,7 @@ jpegxl_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GList             *drawables;
   GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
@@ -2126,7 +2123,7 @@ jpegxl_export (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "JPEG XL",
+      export = gimp_export_image (&image, "JPEG XL",
                                   GIMP_EXPORT_CAN_HANDLE_RGB |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA);
@@ -2135,16 +2132,7 @@ jpegxl_export (GimpProcedure        *procedure,
     default:
       break;
     }
-
-  if (n_drawables < 1)
-    {
-      g_set_error (&error, G_FILE_ERROR, 0,
-                   "No drawables to export");
-
-      return gimp_procedure_new_return_values (procedure,
-             GIMP_PDB_CALLING_ERROR,
-             error);
-    }
+  drawables = gimp_image_list_layers (image);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -2160,7 +2148,7 @@ jpegxl_export (GimpProcedure        *procedure,
 
       GimpMetadata *metadata = gimp_image_metadata_save_prepare (image, "image/jxl", &metadata_flags);
 
-      if (! export_image (file, config, image, drawables[0], metadata, &error))
+      if (! export_image (file, config, image, drawables->data, metadata, &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -2172,10 +2160,8 @@ jpegxl_export (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      g_free (drawables);
-      gimp_image_delete (image);
-    }
+    gimp_image_delete (image);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }

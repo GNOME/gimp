@@ -73,8 +73,6 @@ static GimpValueArray * jpeg_load_thumb       (GimpProcedure         *procedure,
 static GimpValueArray * jpeg_export           (GimpProcedure         *procedure,
                                                GimpRunMode            run_mode,
                                                GimpImage             *image,
-                                               gint                   n_drawables,
-                                               GimpDrawable         **drawables,
                                                GFile                 *file,
                                                GimpMetadata          *metadata,
                                                GimpProcedureConfig   *config,
@@ -416,8 +414,6 @@ static GimpValueArray *
 jpeg_export (GimpProcedure        *procedure,
              GimpRunMode           run_mode,
              GimpImage            *image,
-             gint                  n_drawables,
-             GimpDrawable        **drawables,
              GFile                *file,
              GimpMetadata         *metadata,
              GimpProcedureConfig  *config,
@@ -426,6 +422,7 @@ jpeg_export (GimpProcedure        *procedure,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpImage         *orig_image;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GList             *drawables;
   GError            *error  = NULL;
 
   gint                   orig_num_quant_tables = -1;
@@ -445,7 +442,7 @@ jpeg_export (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "JPEG",
+      export = gimp_export_image (&image, "JPEG",
                                   GIMP_EXPORT_CAN_HANDLE_RGB |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY);
 
@@ -464,16 +461,7 @@ jpeg_export (GimpProcedure        *procedure,
     default:
       break;
     }
-
-  if (n_drawables != 1)
-    {
-      g_set_error (&error, G_FILE_ERROR, 0,
-                   _("JPEG format does not support multiple layers."));
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
-    }
+  drawables = gimp_image_list_layers (image);
 
   /* Override preferences from JPG export defaults (if saved). */
 
@@ -574,10 +562,10 @@ jpeg_export (GimpProcedure        *procedure,
       /* prepare for the preview */
       preview_image     = image;
       orig_image_global = orig_image;
-      drawable_global   = drawables[0];
+      drawable_global   = drawables->data;
 
       /*  First acquire information with a dialog  */
-      if (! save_dialog (procedure, config, drawables[0], orig_image))
+      if (! save_dialog (procedure, config, drawables->data, orig_image))
         {
           status = GIMP_PDB_CANCEL;
         }
@@ -595,7 +583,7 @@ jpeg_export (GimpProcedure        *procedure,
   if (status == GIMP_PDB_SUCCESS)
     {
       if (! export_image (file, config,
-                          image, drawables[0], orig_image, FALSE,
+                          image, drawables->data, orig_image, FALSE,
                           &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -622,10 +610,9 @@ jpeg_export (GimpProcedure        *procedure,
         {
           gimp_image_delete (image);
         }
-
-      g_free (drawables);
     }
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

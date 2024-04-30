@@ -96,8 +96,6 @@ static GimpValueArray * png_load             (GimpProcedure         *procedure,
 static GimpValueArray * png_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
-                                              gint                   n_drawables,
-                                              GimpDrawable         **drawables,
                                               GFile                 *file,
                                               GimpMetadata          *metadata,
                                               GimpProcedureConfig   *config,
@@ -368,8 +366,6 @@ static GimpValueArray *
 png_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
-            gint                  n_drawables,
-            GimpDrawable        **drawables,
             GFile                *file,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
@@ -377,9 +373,10 @@ png_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GList             *drawables;
   GimpImage         *orig_image;
   gboolean           alpha;
-  GError            *error = NULL;
+  GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -391,7 +388,7 @@ png_export (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "PNG",
+      export = gimp_export_image (&image, "PNG",
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -401,21 +398,8 @@ png_export (GimpProcedure        *procedure,
     default:
       break;
     }
-
-  if (n_drawables != 1)
-    {
-      /* PNG images have no layer concept. Export image should have a
-       * single drawable selected.
-       */
-      g_set_error (&error, G_FILE_ERROR, 0,
-                   _("PNG format does not support multiple layers."));
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
-    }
-
-  alpha = gimp_drawable_has_alpha (drawables[0]);
+  drawables = gimp_image_list_layers (image);
+  alpha = gimp_drawable_has_alpha (drawables->data);
 
   /* If the image has no transparency, then there is usually no need
    * to save a bKGD chunk. For more information, see:
@@ -436,7 +420,7 @@ png_export (GimpProcedure        *procedure,
     {
       gint bits_per_sample;
 
-      if (export_image (file, image, drawables[0], orig_image, G_OBJECT (config),
+      if (export_image (file, image, drawables->data, orig_image, G_OBJECT (config),
                         &bits_per_sample, run_mode != GIMP_RUN_NONINTERACTIVE,
                         &error))
         {
@@ -450,11 +434,9 @@ png_export (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

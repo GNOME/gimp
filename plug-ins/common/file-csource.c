@@ -62,8 +62,6 @@ static GimpProcedure  * csource_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * csource_export           (GimpProcedure        *procedure,
                                                   GimpRunMode           run_mode,
                                                   GimpImage            *image,
-                                                  gint                  n_drawables,
-                                                  GimpDrawable        **drawables,
                                                   GFile                *file,
                                                   GimpMetadata         *metadata,
                                                   GimpProcedureConfig  *config,
@@ -206,8 +204,6 @@ static GimpValueArray *
 csource_export (GimpProcedure        *procedure,
                 GimpRunMode           run_mode,
                 GimpImage            *image,
-                gint                  n_drawables,
-                GimpDrawable        **drawables,
                 GFile                *file,
                 GimpMetadata         *metadata,
                 GimpProcedureConfig  *config,
@@ -215,6 +211,7 @@ csource_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GList             *drawables;
   gchar             *prefixed_name;
   gchar             *comment;
   GError            *error  = NULL;
@@ -228,22 +225,13 @@ csource_export (GimpProcedure        *procedure,
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  export = gimp_export_image (&image, &n_drawables, &drawables, "C Source",
+  export = gimp_export_image (&image, "C Source",
                               GIMP_EXPORT_CAN_HANDLE_RGB |
                               GIMP_EXPORT_CAN_HANDLE_ALPHA);
-
-  if (n_drawables != 1)
-    {
-      g_set_error (&error, G_FILE_ERROR, 0,
-                   _("C source does not support multiple layers."));
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
-    }
+  drawables = gimp_image_list_layers (image);
 
   g_object_set (config,
-                "save-alpha", gimp_drawable_has_alpha (drawables[0]),
+                "save-alpha", gimp_drawable_has_alpha (drawables->data),
                 NULL);
 
   if (! save_dialog (image, procedure, G_OBJECT (config)))
@@ -269,7 +257,7 @@ csource_export (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! export_image (file, image, drawables[0], G_OBJECT (config),
+      if (! export_image (file, image, drawables->data, G_OBJECT (config),
                           &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -277,11 +265,9 @@ csource_export (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

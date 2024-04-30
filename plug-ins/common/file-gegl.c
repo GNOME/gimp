@@ -88,8 +88,6 @@ static GimpValueArray * goat_load             (GimpProcedure         *procedure,
 static GimpValueArray * goat_export           (GimpProcedure         *procedure,
                                                GimpRunMode            run_mode,
                                                GimpImage             *image,
-                                               gint                   n_drawables,
-                                               GimpDrawable         **drawables,
                                                GFile                 *file,
                                                GimpMetadata          *metadata,
                                                GimpProcedureConfig   *config,
@@ -275,8 +273,6 @@ static GimpValueArray *
 goat_export (GimpProcedure        *procedure,
              GimpRunMode           run_mode,
              GimpImage            *image,
-             gint                  n_drawables,
-             GimpDrawable        **drawables,
              GFile                *file,
              GimpMetadata         *metadata,
              GimpProcedureConfig  *config,
@@ -285,7 +281,8 @@ goat_export (GimpProcedure        *procedure,
   const FileFormat  *format = run_data;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
-  GError            *error = NULL;
+  GList             *drawables;
+  GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -295,7 +292,7 @@ goat_export (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "GEGL",
+      export = gimp_export_image (&image, "GEGL",
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -305,29 +302,18 @@ goat_export (GimpProcedure        *procedure,
     default:
       break;
     }
+  drawables = gimp_image_list_layers (image);
 
-  if (n_drawables != 1)
-    {
-      g_set_error (&error, G_FILE_ERROR, 0,
-                   _("GEGL export plug-in does not support multiple layers."));
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
-    }
-
-  if (! export_image (file, format->export_op, image, drawables[0],
+  if (! export_image (file, format->export_op, image, drawables->data,
                     &error))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
+  g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

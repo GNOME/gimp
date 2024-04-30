@@ -188,10 +188,7 @@ def thumbnail_ora(procedure, file, thumb_size, args, data):
     else:
         return procedure.new_return_values(result.index(0), GLib.Error(result.index(1)))
 
-# We would expect the n_drawables parameter to not be there with introspection but
-# currently that isn't working, see issue #5312. Until that is resolved we keep
-# this parameter here or else saving would fail.
-def export_ora(procedure, run_mode, image, n_drawables, drawables, file, metadata, config, data):
+def export_ora(procedure, run_mode, image, file, metadata, config, data):
     def write_file_str(zfile, fname, data):
         # work around a permission bug in the zipfile library:
         # http://bugs.python.org/issue3394
@@ -219,12 +216,16 @@ def export_ora(procedure, run_mode, image, n_drawables, drawables, file, metadat
         tmp = os.path.join(tempdir, 'tmp.png')
         interlace, compression = 0, 2
 
+        #TODO: Use GimpExportOptions for this once available
+        width, height = drawable.get_width(), drawable.get_height()
+        tmp_img = Gimp.Image.new(width, height, image.get_base_type())
+        tmp_layer = Gimp.Layer.new_from_drawable (drawable, tmp_img)
+        tmp_img.insert_layer (tmp_layer, None, 0)
+
         pdb_proc   = Gimp.get_pdb().lookup_procedure('file-png-export')
         pdb_config = pdb_proc.create_config()
         pdb_config.set_property('run-mode', Gimp.RunMode.NONINTERACTIVE)
-        pdb_config.set_property('image', image)
-        pdb_config.set_property('num-drawables', 1)
-        pdb_config.set_property('drawables', Gimp.ObjectArray.new(Gimp.Drawable, [drawable], False))
+        pdb_config.set_property('image', tmp_img)
         pdb_config.set_property('file', Gio.File.new_for_path(tmp))
         pdb_config.set_property('interlaced', interlace)
         pdb_config.set_property('compression', compression)
@@ -240,6 +241,8 @@ def export_ora(procedure, run_mode, image, n_drawables, drawables, file, metadat
             os.remove(tmp)
         else:
             print("Error removing ", tmp)
+
+        tmp_img.delete()
 
     def add_layer(parent, x, y, opac, gimp_layer, path, visible=True):
         store_layer(image, gimp_layer, path)
