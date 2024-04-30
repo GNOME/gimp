@@ -789,6 +789,7 @@ dist-installer-weekly:
   stage: distribution
   tags:
     - windows-aarch64
+  cache: []
   script:
     - build/windows/gitlab-ci/4_dist-gimp-inno.ps1 | Out-File -FilePath installer.log
   artifacts:
