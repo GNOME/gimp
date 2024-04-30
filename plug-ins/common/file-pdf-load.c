@@ -79,6 +79,16 @@ static GList          * pdf_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * pdf_create_procedure (GimpPlugIn            *plug_in,
                                               const gchar           *name);
 
+static gboolean         pdf_extract          (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GFile                *file,
+                                              GimpMetadata         *metadata,
+                                              GimpProcedureConfig  *config,
+                                              GimpVectorLoadData   *extracted_dimensions,
+                                              gpointer             *data_for_run,
+                                              GDestroyNotify       *data_for_run_destroy,
+                                              gpointer              extract_data,
+                                              GError              **error);
 static GimpValueArray * pdf_load             (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GFile                 *file,
@@ -116,6 +126,8 @@ static GimpPDBStatusType load_dialog         (PopplerDocument       *doc,
 static PopplerDocument * open_document       (GFile                 *file,
                                               const gchar           *PDF_password,
                                               GimpRunMode            run_mode,
+                                              gdouble               *width,
+                                              gdouble               *height,
                                               GError               **error);
 
 static cairo_surface_t * get_thumb_surface   (PopplerDocument       *doc,
@@ -178,7 +190,7 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
     {
       procedure = gimp_vector_load_procedure_new (plug_in, name,
                                                   GIMP_PDB_PROC_TYPE_PLUGIN,
-                                                  NULL, NULL, NULL,
+                                                  pdf_extract, NULL, NULL,
                                                   pdf_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Portable Document Format"));
@@ -290,6 +302,47 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
+static gboolean
+pdf_extract (GimpProcedure        *procedure,
+             GimpRunMode           run_mode,
+             GFile                *file,
+             GimpMetadata         *metadata,
+             GimpProcedureConfig  *config,
+             GimpVectorLoadData   *extracted_dimensions,
+             gpointer             *data_for_run,
+             GDestroyNotify       *data_for_run_destroy,
+             gpointer              extract_data,
+             GError              **error)
+{
+  PopplerDocument     *doc      = NULL;
+  gchar               *password = NULL;
+  gdouble              width    = 0.0;
+  gdouble              height   = 0.0;
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    gimp_ui_init (PLUG_IN_BINARY);
+
+  g_object_get (config, "password", &password, NULL);
+  doc = open_document (file, password, run_mode,
+                       &width, &height, error);
+  g_free (password);
+  if (doc == NULL)
+    return FALSE;
+
+  extracted_dimensions->width         = width;
+  extracted_dimensions->height        = height;
+  extracted_dimensions->width_unit    = GIMP_UNIT_POINT;
+  extracted_dimensions->height_unit   = GIMP_UNIT_POINT;
+  extracted_dimensions->exact_width   = TRUE;
+  extracted_dimensions->exact_height  = TRUE;
+  extracted_dimensions->correct_ratio = TRUE;
+
+  *data_for_run = doc;
+  *data_for_run_destroy = g_object_unref;
+
+  return TRUE;
+}
+
 static GimpValueArray *
 pdf_load (GimpProcedure         *procedure,
           GimpRunMode            run_mode,
@@ -306,23 +359,11 @@ pdf_load (GimpProcedure         *procedure,
   GimpValueArray      *return_vals;
   GimpPDBStatusType    status   = GIMP_PDB_SUCCESS;
   GimpImage           *image    = NULL;
-  PopplerDocument     *doc      = NULL;
+  PopplerDocument     *doc      = POPPLER_DOCUMENT (data_from_extract);
   PdfSelectedPages     pages    = { 0, NULL };
   GError              *error    = NULL;
-  gchar               *password;
 
   gegl_init (NULL, NULL);
-
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_ui_init (PLUG_IN_BINARY);
-
-  g_object_get (config,
-                "password", &password,
-                NULL);
-  doc = open_document (file,
-                       password,
-                       run_mode, &error);
-  g_free (password);
 
   if (doc == NULL)
     {
@@ -427,9 +468,6 @@ pdf_load (GimpProcedure         *procedure,
         status = GIMP_PDB_EXECUTION_ERROR;
     }
 
-  if (doc)
-    g_object_unref (doc);
-
   g_free (pages.pages);
 
   return_vals = gimp_procedure_new_return_values (procedure, status, error);
@@ -458,10 +496,8 @@ pdf_load_thumb (GimpProcedure       *procedure,
 
   gegl_init (NULL, NULL);
 
-  doc = open_document (file,
-                       NULL,
-                       GIMP_RUN_NONINTERACTIVE,
-                       &error);
+  doc = open_document (file, NULL, GIMP_RUN_NONINTERACTIVE,
+                       NULL, NULL, &error);
 
   if (doc)
     {
@@ -524,6 +560,8 @@ static PopplerDocument *
 open_document (GFile        *file,
                const gchar  *PDF_password,
                GimpRunMode   run_mode,
+               gdouble      *width,
+               gdouble      *height,
                GError      **load_error)
 {
   PopplerDocument *doc;
@@ -595,6 +633,24 @@ open_document (GFile        *file,
                    error->message);
       g_error_free (error);
       return NULL;
+    }
+
+  if (width && height)
+    {
+      gint n_pages;
+
+      n_pages = poppler_document_get_n_pages (doc);
+      for (gint i = 0; i < n_pages; i++)
+        {
+          PopplerPage *page;
+
+          page = poppler_document_get_page (doc, i);
+          poppler_page_get_size (page, width, height);
+          g_object_unref (page);
+
+          /* Only check the first page for the whole document size. */
+          break;
+        }
     }
 
   return doc;
@@ -1001,30 +1057,6 @@ load_dialog (PopplerDocument     *doc,
   gboolean                white_background;
 
   n_pages = poppler_document_get_n_pages (doc);
-  for (i = 0; i < n_pages; i++)
-    {
-      PopplerPage *page;
-      gdouble      width;
-      gdouble      height;
-      gdouble      ppi;
-
-      page = poppler_document_get_page (doc, i);
-      poppler_page_get_size (page, &width, &height);
-      g_object_unref (page);
-
-      width  /= gimp_unit_get_factor (GIMP_UNIT_POINT);
-      height /= gimp_unit_get_factor (GIMP_UNIT_POINT);
-      g_object_get (config,
-                    "pixel-density", &ppi,
-                    NULL);
-      g_object_set (config,
-                    "width",  (gint) ceil (width * ppi),
-                    "height", (gint) ceil (height * ppi),
-                    NULL);
-
-      /* Only check the first page for the whole document size. */
-      break;
-    }
 
   dialog = gimp_vector_load_procedure_dialog_new (GIMP_VECTOR_LOAD_PROCEDURE (procedure),
                                                   GIMP_PROCEDURE_CONFIG (config),
