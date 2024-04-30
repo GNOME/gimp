@@ -51,6 +51,7 @@ struct _GimpResolutionEntry
   gint                      height;
   gdouble                   ppi;
   GimpUnit                  unit;
+  gdouble                   ratio;
   gboolean                  keep_ratio;
 
   GtkWidget                *phy_width_label;
@@ -112,14 +113,14 @@ gimp_resolution_entry_class_init (GimpResolutionEntryClass *klass)
   props[PROP_WIDTH] = g_param_spec_int ("width",
                                         "Width in pixel",
                                         NULL,
-                                        0, GIMP_MAX_IMAGE_SIZE, 0,
+                                        GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, GIMP_MIN_IMAGE_SIZE,
                                         GIMP_PARAM_READWRITE |
                                         G_PARAM_EXPLICIT_NOTIFY |
                                         G_PARAM_CONSTRUCT);
   props[PROP_HEIGHT] = g_param_spec_int ("height",
                                          "Height in pixel",
                                          NULL,
-                                         0, GIMP_MAX_IMAGE_SIZE, 0,
+                                         GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, GIMP_MIN_IMAGE_SIZE,
                                          GIMP_PARAM_READWRITE |
                                          G_PARAM_EXPLICIT_NOTIFY |
                                          G_PARAM_CONSTRUCT);
@@ -172,6 +173,11 @@ gimp_resolution_entry_constructed (GObject *object)
   GtkWidget           *widget;
   GBinding            *binding;
   GtkAdjustment       *adj;
+
+  g_return_if_fail (entry->height != 0);
+
+  /* Initial ratio is from the initial values. */
+  entry->ratio = (gdouble) entry->width / (gdouble) entry->height;
 
   widget = gimp_prop_spin_button_new (object, "pixel-density", 1.0, 10.0, 2);
   adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget));
@@ -439,20 +445,13 @@ gimp_resolution_entry_set_width (GimpResolutionEntry *entry,
     }
   else if (entry->width != width)
     {
-      gdouble inch_width = 0.0;
-
-      if (entry->width != 0 && entry->height != 0 && entry->ppi != 0.0)
-        inch_width = (gdouble) entry->width / entry->ppi;
-
       g_object_freeze_notify (G_OBJECT (entry));
 
       if (entry->keep_ratio && entry->width != 0)
         {
-          gdouble ratio;
-          gint    height;
+          gint height;
 
-          ratio = (gdouble) entry->height / (gdouble) entry->width;
-          height = (gint) (width * ratio);
+          height = (gint) ((gdouble) width / entry->ratio);
 
           if (height != entry->height)
             {
@@ -463,12 +462,6 @@ gimp_resolution_entry_set_width (GimpResolutionEntry *entry,
 
       entry->width = width;
       g_object_notify_by_pspec (G_OBJECT (entry), props[PROP_WIDTH]);
-
-      if (inch_width != 0.0)
-        {
-          entry->ppi = (gdouble) entry->width / inch_width;
-          g_object_notify_by_pspec (G_OBJECT (entry), props[PROP_PIXEL_DENSITY]);
-        }
 
       g_object_thaw_notify (G_OBJECT (entry));
     }
@@ -488,20 +481,13 @@ gimp_resolution_entry_set_height (GimpResolutionEntry *entry,
     }
   else if (entry->height != height)
     {
-      gdouble inch_height = 0.0;
-
-      if (entry->width != 0 && entry->height != 0 && entry->ppi != 0.0)
-        inch_height = (gdouble) entry->height / entry->ppi;
-
       g_object_freeze_notify (G_OBJECT (entry));
 
       if (entry->keep_ratio && entry->height != 0)
         {
-          gdouble ratio;
-          gint    width;
+          gint width;
 
-          ratio = (gdouble) entry->width / (gdouble) entry->height;
-          width = (gint) (height * ratio);
+          width = (gint) ((gdouble) height * entry->ratio);
 
           if (width != entry->width)
             {
@@ -513,12 +499,6 @@ gimp_resolution_entry_set_height (GimpResolutionEntry *entry,
       entry->height = height;
       g_object_notify_by_pspec (G_OBJECT (entry), props[PROP_HEIGHT]);
 
-      if (inch_height != 0.0)
-        {
-          entry->ppi = (gdouble) entry->height / inch_height;
-          g_object_notify_by_pspec (G_OBJECT (entry), props[PROP_PIXEL_DENSITY]);
-        }
-
       g_object_thaw_notify (G_OBJECT (entry));
     }
 }
@@ -529,23 +509,8 @@ gimp_resolution_entry_set_pixel_density (GimpResolutionEntry *entry,
 {
   if (entry->ppi != ppi)
     {
-      gdouble inch_width  = entry->width / entry->ppi;
-      gdouble inch_height = entry->height / entry->ppi;
-
-      g_object_freeze_notify (G_OBJECT (entry));
-      entry->ppi    = ppi;
+      entry->ppi = ppi;
       g_object_notify_by_pspec (G_OBJECT (entry), props[PROP_PIXEL_DENSITY]);
-
-      /* This test is just to check if we are in construction. */
-      if (entry->phy_width_label)
-        {
-          entry->width  = inch_width * ppi;
-          entry->height = inch_height * ppi;
-          g_object_notify_by_pspec (G_OBJECT (entry), props[PROP_WIDTH]);
-          g_object_notify_by_pspec (G_OBJECT (entry), props[PROP_HEIGHT]);
-        }
-
-      g_object_thaw_notify (G_OBJECT (entry));
     }
 }
 
@@ -584,6 +549,10 @@ gimp_resolution_entry_set_keep_ratio (GimpResolutionEntry *entry,
   if (keep_ratio != entry->keep_ratio)
     {
       entry->keep_ratio = keep_ratio;
+
+      if (entry->keep_ratio)
+        entry->ratio = (gdouble) entry->width / (gdouble) entry->height;
+
       g_object_notify_by_pspec (G_OBJECT (entry), props[PROP_KEEP_RATIO]);
     }
 }
