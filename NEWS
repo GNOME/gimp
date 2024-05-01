@@ -23,7 +23,7 @@ Core:
   - Windows Ink support backported from GIMP 3 (this also relies on GTK+3
     backports so the build for GIMP 2.10.38 requires specially-patched GTK+2, on
     Windows only).
-  - On Windows, it would now be possible to use devices attached after GIMP jas
+  - On Windows, it would now be possible to use devices attached after GIMP has
     started through a fallback device.
 
 Translations:
