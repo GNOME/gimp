@@ -535,10 +535,10 @@ _gimp_procedure_config_get_values (GimpProcedureConfig  *config,
   /* The config will have 1 additional property: "procedure". */
   g_return_if_fail (n_pspecs == n_values + n_aux_args + 1);
 
-  for (i = 1; i < n_pspecs; i++)
+  for (i = 0; i < n_values; i++)
     {
-      GParamSpec *pspec = pspecs[i];
-      GValue     *value = gimp_value_array_index (values, i - 1);
+      GParamSpec *pspec = pspecs[i + 1];
+      GValue     *value = gimp_value_array_index (values, i);
 
       g_object_get_property (G_OBJECT (config), pspec->name, value);
     }

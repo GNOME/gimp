@@ -251,8 +251,10 @@ GimpProcedureConfig *
 
 /* Internal use */
 
-G_GNUC_INTERNAL GimpValueArray * _gimp_procedure_run_array (GimpProcedure  *procedure,
-                                                            GimpValueArray *args);
+G_GNUC_INTERNAL GimpProcedureConfig * _gimp_procedure_create_run_config (GimpProcedure  *procedure);
+
+G_GNUC_INTERNAL GimpValueArray      * _gimp_procedure_run_array         (GimpProcedure  *procedure,
+                                                                         GimpValueArray *args);
 
 
 G_END_DECLS

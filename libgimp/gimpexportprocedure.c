@@ -366,7 +366,7 @@ gimp_export_procedure_run (GimpProcedure        *procedure,
       gimp_value_array_append (remaining, value);
     }
 
-  config = gimp_procedure_create_config (procedure);
+  config = _gimp_procedure_create_run_config (procedure);
   if (export_proc->priv->export_metadata)
     {
       mimetype = (gchar *) gimp_file_procedure_get_mime_types (GIMP_FILE_PROCEDURE (procedure));

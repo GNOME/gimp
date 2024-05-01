@@ -130,6 +130,12 @@ static GimpProcedureConfig * gimp_procedure_real_create_config (GimpProcedure   
                                                                 GParamSpec          **args,
                                                                 gint                  n_args);
 
+static GimpProcedureConfig *
+                      gimp_procedure_create_config_with_prefix (GimpProcedure        *procedure,
+                                                                const gchar          *prefix,
+                                                                GParamSpec          **args,
+                                                                gint                  n_args);
+
 static GimpValueArray      * gimp_procedure_new_arguments      (GimpProcedure        *procedure);
 static gboolean              gimp_procedure_validate_args      (GimpProcedure        *procedure,
                                                                 GParamSpec          **param_specs,
@@ -510,7 +516,7 @@ gimp_procedure_real_run (GimpProcedure        *procedure,
         image = GIMP_VALUES_GET_IMAGE (args, 1);
     }
 
-  config = gimp_procedure_create_config (procedure);
+  config = _gimp_procedure_create_run_config (procedure);
   _gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   retvals = procedure->priv->run_func (procedure, config,
@@ -541,10 +547,21 @@ gimp_procedure_real_create_config (GimpProcedure  *procedure,
                                    GParamSpec    **args,
                                    gint            n_args)
 {
+  return gimp_procedure_create_config_with_prefix (procedure,
+                                                   "GimpProcedureConfigRun",
+                                                   args, n_args);
+}
+
+static GimpProcedureConfig *
+gimp_procedure_create_config_with_prefix (GimpProcedure  *procedure,
+                                          const gchar    *prefix,
+                                          GParamSpec    **args,
+                                          gint            n_args)
+{
   gchar *type_name;
   GType  type;
 
-  type_name = g_strdup_printf ("GimpProcedureConfig-%s",
+  type_name = g_strdup_printf ("%s-%s", prefix,
                                gimp_procedure_get_name (procedure));
 
   type = g_type_from_name (type_name);
@@ -1992,6 +2009,29 @@ gimp_procedure_run_config (GimpProcedure       *procedure,
   return return_vals;
 }
 
+/**
+ * _gimp_procedure_create_run_config:
+ * @procedure: A #GimpProcedure
+ *
+ * Create a #GimpConfig with properties that match @procedure's arguments, to be
+ * used in the run() method for @procedure.
+ *
+ * This is an internal function to be used only by libgimp code.
+ *
+ * Returns: (transfer full): The new #GimpConfig.
+ *
+ * Since: 3.0
+ **/
+GimpProcedureConfig *
+_gimp_procedure_create_run_config (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  return GIMP_PROCEDURE_GET_CLASS (procedure)->create_config (procedure,
+                                                              procedure->priv->args,
+                                                              procedure->priv->n_args);
+}
+
 GimpValueArray *
 _gimp_procedure_run_array (GimpProcedure  *procedure,
                            GimpValueArray *args)
@@ -2022,7 +2062,7 @@ _gimp_procedure_run_array (GimpProcedure  *procedure,
       GimpValueArray      *complete;
 
       /*  if saved defaults exist, they override GParamSpec  */
-      config = gimp_procedure_create_config (procedure);
+      config = _gimp_procedure_create_run_config (procedure);
       if (gimp_procedure_config_load_default (config, NULL))
         config_class = G_OBJECT_GET_CLASS (config);
       else
@@ -2125,7 +2165,8 @@ gimp_procedure_extension_ready (GimpProcedure *procedure)
  * gimp_procedure_create_config:
  * @procedure: A #GimpProcedure
  *
- * Create a #GimpConfig with properties that match @procedure's arguments.
+ * Create a #GimpConfig with properties that match @procedure's arguments, to be
+ * used in [method@Procedure.run_config] method.
  *
  * Returns: (transfer full): The new #GimpConfig.
  *
@@ -2136,9 +2177,10 @@ gimp_procedure_create_config (GimpProcedure *procedure)
 {
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  return GIMP_PROCEDURE_GET_CLASS (procedure)->create_config (procedure,
-                                                              procedure->priv->args,
-                                                              procedure->priv->n_args);
+  return gimp_procedure_create_config_with_prefix (procedure,
+                                                   "GimpProcedureConfig",
+                                                   procedure->priv->args,
+                                                   procedure->priv->n_args);
 }
 
 
