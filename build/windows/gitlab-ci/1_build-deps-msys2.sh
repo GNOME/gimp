@@ -4,17 +4,17 @@ set -e
 
 # $MSYSTEM_CARCH and $MINGW_PACKAGE_PREFIX are defined by MSYS2.
 # https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
-if [[ "$MSYSTEM_CARCH" == "aarch64" ]]; then
+if [ "$MSYSTEM_CARCH" = "aarch64" ]; then
   export ARTIFACTS_SUFFIX="-a64"
-elif [[ "$MSYSTEM_CARCH" == "x86_64" ]]; then
+elif [ "$MSYSTEM_CARCH" = "x86_64" ]; then
   export ARTIFACTS_SUFFIX="-x64"
-else # [[ "$MSYSTEM_CARCH" == "i686" ]];
+else # [ "$MSYSTEM_CARCH" = "i686" ];
   export ARTIFACTS_SUFFIX="-x86"
 fi
 
-if [[ -z "$GITLAB_CI" ]]; then
+if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
-  if [[ "$0" != "build/windows/gitlab-ci/1_build-deps-msys2.sh" ]]; then
+  if [ "$0" != "build/windows/gitlab-ci/1_build-deps-msys2.sh" ]; then
     echo "To run this script locally, please do it from to the gimp git folder"
     exit 1
   fi
@@ -27,11 +27,11 @@ fi
 
 
 # Install the required (pre-built) packages for babl and GEGL
-DEPS_LIST=$(cat ${GIMP_DIR}build/windows/gitlab-ci/all-deps-uni.txt)
-DEPS_LIST=$(sed "s/\${MINGW_PACKAGE_PREFIX}-/${MINGW_PACKAGE_PREFIX}-/g" <<< $DEPS_LIST)
-DEPS_LIST=$(sed 's/\\//g' <<< $DEPS_LIST)
+DEPS_LIST=$(cat ${GIMP_DIR}build/windows/gitlab-ci/all-deps-uni.txt      |
+            sed "s/\${MINGW_PACKAGE_PREFIX}-/${MINGW_PACKAGE_PREFIX}-/g" |
+            sed 's/\\//g')
 
-if [[ "$MSYSTEM_CARCH" == "aarch64" ]]; then
+if [ "$MSYSTEM_CARCH" = "aarch64" ]; then
   retry=3
   while [ $retry -gt 0 ]; do
     timeout --signal=KILL 3m pacman --noconfirm -S --needed git                                \

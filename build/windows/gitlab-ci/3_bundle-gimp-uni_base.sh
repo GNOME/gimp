@@ -4,11 +4,11 @@ set -e
 
 # $MSYSTEM_CARCH and $MSYSTEM_PREFIX are defined by MSYS2.
 # https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
-if [[ "$MSYSTEM_CARCH" == "aarch64" ]]; then
+if [ "$MSYSTEM_CARCH" = "aarch64" ]; then
   export ARTIFACTS_SUFFIX="-a64"
-elif [[ "$CI_JOB_NAME" == "gimp-win-x64-cross" ]] || [[ "$MSYSTEM_CARCH" == "x86_64" ]]; then
+elif [ "$CI_JOB_NAME" = "gimp-win-x64-cross" ] || [ "$MSYSTEM_CARCH" = "x86_64" ]; then
   export ARTIFACTS_SUFFIX="-x64"
-else # [[ "$MSYSTEM_CARCH" == "i686" ]];
+else # [ "$MSYSTEM_CARCH" = "i686" ];
   export ARTIFACTS_SUFFIX="-x86"
 fi
 
@@ -75,8 +75,7 @@ mkdir ${GIMP_DISTRIB}/share
 cp -fr ${MSYS_PREFIX}/share/ghostscript/ ${GIMP_DISTRIB}/share/
 rm -r ${GIMP_DISTRIB}/share/ghostscript/*/doc
 cp -fr ${GIMP_PREFIX}/share/gimp/ ${GIMP_DISTRIB}/share/
-GLIB_PATH=$(echo ${MSYS_PREFIX}/share/glib-*/schemas)
-GLIB_PATH=$(sed "s|${MSYS_PREFIX}/||g" <<< $GLIB_PATH)
+GLIB_PATH=$(echo ${MSYS_PREFIX}/share/glib-*/schemas | sed "s|${MSYS_PREFIX}/||g")
 mkdir -p ${GIMP_DISTRIB}/${GLIB_PATH}
 cp -fr ${MSYS_PREFIX}/share/glib-*/schemas/ ${GIMP_DISTRIB}/share/glib-*/
 
@@ -134,9 +133,9 @@ for exe in "${binArray[@]}"; do
 done
 
 ### .pdb (CodeView) debug symbols
-### TODO: REMOVE 'if [[ "$MSYSTEM...' WHEN GCC 14 IS ON MSYS2
+### TODO: REMOVE 'if [ "$MSYSTEM...' WHEN GCC 14 IS ON MSYS2
 ### crossroad don't have LLVM/Clang backend yet
-if [[ "$MSYSTEM_CARCH" != "i686" ]] && [[ ! "$CI_JOB_NAME" =~ "cross" ]]; then
+if [ "$MSYSTEM_CARCH" != "i686" ] && [[ ! "$CI_JOB_NAME" =~ "cross" ]]; then
   cp -fr ${GIMP_PREFIX}/bin/*.pdb ${GIMP_DISTRIB}/bin/
 fi
 

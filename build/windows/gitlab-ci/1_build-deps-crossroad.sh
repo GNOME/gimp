@@ -5,8 +5,8 @@ if [ -z "$GIT_DEPTH" ]; then
 fi
 
 
-# BASH ENV
-if [[ -z "$CROSSROAD_PLATFORM" ]]; then
+# SHELL ENV
+if [ -z "$CROSSROAD_PLATFORM" ]; then
 apt-get install -y --no-install-recommends \
                    wine \
                    wine64
@@ -24,9 +24,9 @@ export ARTIFACTS_SUFFIX="-x64"
 
 ## Install the required (pre-built) packages for babl, GEGL and GIMP
 crossroad source msys2
-DEPS_LIST=$(cat build/windows/gitlab-ci/all-deps-uni.txt)
-DEPS_LIST=$(sed "s/\${MINGW_PACKAGE_PREFIX}-//g" <<< $DEPS_LIST)
-DEPS_LIST=$(sed 's/\\//g' <<< $DEPS_LIST)
+DEPS_LIST=$(cat build/windows/gitlab-ci/all-deps-uni.txt |
+            sed "s/\${MINGW_PACKAGE_PREFIX}-//g"         |
+            sed 's/\\//g')
 crossroad install $DEPS_LIST
 if [ $? -ne 0 ]; then
   echo "Installation of pre-built dependencies failed.";
@@ -55,12 +55,10 @@ cd ../../
 ## "Build" part of deps
 ### Generator of the gio 'giomodule.cache' to fix error about
 ### libgiognutls.dll that prevents generating loaders.cache
-gio=''
-gio+="libgiognomeproxy.dll: gio-proxy-resolver\n"
-gio+="libgiognutls.dll: gio-tls-backend\n"
-gio+="libgiolibproxy.dll: gio-proxy-resolver\n"
-gio+="libgioopenssl.dll: gio-tls-backend\n"
-printf "%b" "$gio" > ${CROSSROAD_PREFIX}/lib/gio/modules/giomodule.cache
+echo 'libgiognomeproxy.dll: gio-proxy-resolver
+libgiognutls.dll: gio-tls-backend
+libgiolibproxy.dll: gio-proxy-resolver
+libgioopenssl.dll: gio-tls-backend' > ${CROSSROAD_PREFIX}/lib/gio/modules/giomodule.cache
 
 ### Generator of the pixbuf 'loaders.cache' for GUI image support
 GDK_PATH=$(echo ${CROSSROAD_PREFIX}/lib/gdk-pixbuf-*/*/)

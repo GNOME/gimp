@@ -4,17 +4,17 @@ set -e
 
 # $MSYSTEM_CARCH, $MSYSTEM_PREFIX and $MINGW_PACKAGE_PREFIX are defined by MSYS2.
 # https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
-if [[ "$MSYSTEM_CARCH" == "aarch64" ]]; then
+if [ "$MSYSTEM_CARCH" = "aarch64" ]; then
   export ARTIFACTS_SUFFIX="-a64"
-elif [[ "$MSYSTEM_CARCH" == "x86_64" ]]; then
+elif [ "$MSYSTEM_CARCH" = "x86_64" ]; then
   export ARTIFACTS_SUFFIX="-x64"
-else # [[ "$MSYSTEM_CARCH" == "i686" ]];
+else # [ "$MSYSTEM_CARCH" = "i686" ];
   export ARTIFACTS_SUFFIX="-x86"
 fi
 
-if [[ -z "$GITLAB_CI" ]]; then
+if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
-  if [[ "$0" != "build/windows/gitlab-ci/2_build-gimp-msys2.sh" ]]; then
+  if [ "$0" != "build/windows/gitlab-ci/2_build-gimp-msys2.sh" ]; then
     echo "To run this script locally, please do it from to the gimp git folder"
     exit 1
   fi
@@ -27,8 +27,8 @@ fi
 # Install the required (pre-built) packages for GIMP
 # We take code from deps script to better maintenance
 GIMP_DIR=""
-DEPS_CODE=$(cat build/windows/gitlab-ci/1_build-deps-msys2.sh)
-DEPS_CODE=$(sed -n '/# Install the/,/# End of install/p' <<< $DEPS_CODE)
+DEPS_CODE=$(cat build/windows/gitlab-ci/1_build-deps-msys2.sh |
+            sed -n '/# Install the/,/# End of install/p')
 echo "$DEPS_CODE" | bash
 
 
@@ -112,7 +112,7 @@ make_cmd ()
   sed -i 's|c:/|c:\\|g;s|msys64/|msys64\\|g' ${GIMP_PREFIX}/gimp.cmd
 }
 
-if [[ "$GITLAB_CI" ]]; then
+if [ "$GITLAB_CI" ]; then
   make_cmd CI %cd% ""
 else
   make_cmd local $MSYS2_PREFIX " (please run bin/gimp-${GIMP_APP_VERSION}.exe under MSYS2)"

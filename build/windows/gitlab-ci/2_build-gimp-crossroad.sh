@@ -3,8 +3,8 @@
 set -e
 
 
-# BASH ENV
-if [[ -z "$CROSSROAD_PLATFORM" ]]; then
+# SHELL ENV
+if [ -z "$CROSSROAD_PLATFORM" ]; then
 
 # So that we can use gimp-console from gimp-debian-x64 project.
 GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
