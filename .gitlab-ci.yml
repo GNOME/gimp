@@ -481,13 +481,7 @@ gimp-win-x64-cross:
   variables:
     MSYSTEM: "CLANGARM64"
   before_script:
-    # Verification to prevent the job from failing because stuck pacman (ARM only)
-    - $stuck = Test-Path -Path "C:\msys64\var\lib\pacman\db.lck" -PathType Leaf
-    - if ($stuck -eq "True") {
-        Remove-Item -Force -Path "C:\msys64\var\lib\pacman\db.lck";
-        Write-Output "Cleaned previous stuck pacman" }
-    - taskkill /F /FI "MODULES eq msys-2.0.dll"
-    - Start-Job -ScriptBlock{sleep 90; taskkill /t /F /IM "pacman.exe"}
+    - '[System.Environment]::OSVersion.Version'
 
 deps-win-a64:
   extends: .win-a64
