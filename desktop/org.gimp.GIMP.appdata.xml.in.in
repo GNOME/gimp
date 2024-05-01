@@ -73,7 +73,7 @@
   </provides>
 
   <releases>
-    <release version="2.10.38" date="2024-04-21">
+    <release version="2.10.38" date="2024-05-01">
       <description>
         <_p>
             GIMP 2.10.38 has been the first bug-fix only release for a long
