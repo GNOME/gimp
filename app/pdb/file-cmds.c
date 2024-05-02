@@ -234,7 +234,7 @@ file_save_invoker (GimpProcedure         *procedure,
   GimpProcedure       *proc;
   gint                 i;
 
-  file = g_value_get_object (gimp_value_array_index (args, 4));
+  file = g_value_get_object (gimp_value_array_index (args, 2));
 
   file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
                                                         GIMP_FILE_PROCEDURE_GROUP_SAVE,
@@ -259,12 +259,8 @@ file_save_invoker (GimpProcedure         *procedure,
                      gimp_value_array_index (new_args, 1));
   g_value_transform (gimp_value_array_index (args, 2),
                      gimp_value_array_index (new_args, 2));
-  g_value_transform (gimp_value_array_index (args, 3),
-                     gimp_value_array_index (new_args, 3));
-  g_value_transform (gimp_value_array_index (args, 4),
-                     gimp_value_array_index (new_args, 4));
 
-  for (i = 5; i < proc->num_args; i++)
+  for (i = 3; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
       g_value_set_static_string (gimp_value_array_index (new_args, i), "");
 
@@ -514,18 +510,6 @@ register_file_procs (GimpPDB *pdb)
                                                       "Input image",
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-drawables",
-                                                 "num drawables",
-                                                 "The number of drawables to save",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
-                                                             "drawables",
-                                                             "Drawables to save",
-                                                             GIMP_TYPE_ITEM,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_object ("file",
                                                     "file",

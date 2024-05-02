@@ -231,12 +231,6 @@ HELP
           desc => 'The run mode' },
         { name => 'image', type => 'image',
           desc => 'Input image' },
-	{ name => 'drawables', type => 'itemarray',
-          desc => 'Drawables to save',
-          no_validate => 1,
-	  array => { name => 'num_drawables',
-                     type => '1 <= int32',
-		     desc => "The number of drawables to save" } },
         { name => 'file', type => 'file',
           desc => 'The file to save the image in' }
     );
@@ -253,7 +247,7 @@ HELP
   GimpProcedure       *proc;
   gint                 i;
 
-  file = g_value_get_object (gimp_value_array_index (args, 4));
+  file = g_value_get_object (gimp_value_array_index (args, 2));
 
   file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
                                                         GIMP_FILE_PROCEDURE_GROUP_SAVE,
@@ -278,12 +272,8 @@ HELP
                      gimp_value_array_index (new_args, 1));
   g_value_transform (gimp_value_array_index (args, 2),
                      gimp_value_array_index (new_args, 2));
-  g_value_transform (gimp_value_array_index (args, 3),
-                     gimp_value_array_index (new_args, 3));
-  g_value_transform (gimp_value_array_index (args, 4),
-                     gimp_value_array_index (new_args, 4));
 
-  for (i = 5; i < proc->num_args; i++)
+  for (i = 3; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
       g_value_set_static_string (gimp_value_array_index (new_args, i), "");
 

@@ -328,9 +328,7 @@ send_image (GObject       *config,
   tmpfile = gimp_temp_file (ext + 1);
   tmpname = g_file_get_path (tmpfile);
 
-  if (! (gimp_file_save (run_mode, image, n_drawables,
-                         (const GimpItem **) drawables,
-                         tmpfile) &&
+  if (! (gimp_file_save (run_mode, image, tmpfile) &&
          valid_file (tmpfile)))
     {
       goto error;

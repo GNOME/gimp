@@ -448,11 +448,7 @@ export_image (const CompressorEntry  *compressor,
 
   tmp_file = gimp_temp_file (ext + 1);
 
-  if (! (gimp_file_save (run_mode,
-                         image,
-                         n_drawables,
-                         (const GimpItem **) drawables,
-                         tmp_file) &&
+  if (! (gimp_file_save (run_mode, image, tmp_file) &&
          valid_file (tmp_file)))
     {
       g_file_delete (tmp_file, NULL, NULL);
