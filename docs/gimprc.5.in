@@ -400,6 +400,8 @@ is specified the size defaults to being specified in kilobytes.
     (simulation-optimize yes)
     (simulation-gamut-check no)
     (out-of-gamut-color (color-rgb 1 0 1))
+    (show-rgb-u8 no)
+    (show-hsv no)
     (display-module "CdisplayLcms"))
 
 Defines the color management behavior.  This is a parameter list.
@@ -1049,7 +1051,7 @@ empty, the language is taken from the user's locale setting.  This is a string
 value.
 
 .TP
-(help-browser gimp)
+(help-browser web-browser)
 
 Sets the browser used by the help system.  Possible values are gimp and
 web-browser.

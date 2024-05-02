@@ -328,6 +328,8 @@
 #     (simulation-optimize yes)
 #     (simulation-gamut-check no)
 #     (out-of-gamut-color (color-rgb 1 0 1))
+#     (show-rgb-u8 no)
+#     (show-hsv no)
 #     (display-module "CdisplayLcms"))
 
 # Keep a permanent record of all opened and saved files in the Recent
@@ -835,7 +837,7 @@
 # Sets the browser used by the help system.  Possible values are gimp and
 # web-browser.
 # 
-# (help-browser gimp)
+# (help-browser web-browser)
 
 # When enabled, a search of actions will also return inactive actions. 
 # Possible values are yes and no.
