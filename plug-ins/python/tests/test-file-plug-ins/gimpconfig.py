@@ -71,6 +71,10 @@ class GimpConfig(object):
         else:
             self.log_file = log_path
 
+        # xml Junit-like results use name and path of log file, but with
+        # an xml extension
+        self.xml_results_file = os.path.splitext(self.log_file)[0] + '.xml'
+
         if data_path is None:
             data_path = base_path + self.DEFAULT_DATA_FOLDER
 

@@ -644,6 +644,8 @@ file-plug-in-tests:
   artifacts:
     paths:
       - _log/
+    reports:
+      junit: "_log/import-tests.xml"
     expire_in: 2 days
 
 clang-format:
