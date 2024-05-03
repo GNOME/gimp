@@ -1,4 +1,4 @@
-From 051650a05a88018cfd2a0c95773ef8f55ccac998 Mon Sep 17 00:00:00 2001
+From bccb08ad321ae55903598b1320582babe786c284 Mon Sep 17 00:00:00 2001
 From: Luca Bacci <luca.bacci982@gmail.com>
 Date: Thu, 11 Apr 2024 16:34:22 +0200
 Subject: [PATCH 03/11] Add support for Windows Pointer Input Stack (GTK2)
@@ -8,13 +8,13 @@ Subject: [PATCH 03/11] Add support for Windows Pointer Input Stack (GTK2)
  gdk/win32/gdkdnd-win32.c     |   6 +-
  gdk/win32/gdkevents-win32.c  | 269 ++++++++++++-
  gdk/win32/gdkglobals-win32.c |   1 +
- gdk/win32/gdkinput-win32.c   | 752 ++++++++++++++++++++++++++++++++++-
+ gdk/win32/gdkinput-win32.c   | 748 ++++++++++++++++++++++++++++++++++-
  gdk/win32/gdkinput-win32.h   |  31 ++
  gdk/win32/gdkinput.c         |   7 +-
  gdk/win32/gdkprivate-win32.h |   7 +-
  gdk/win32/gdkwindow-win32.c  |   9 +-
  gdk/win32/winpointer.h       | 324 +++++++++++++++
- 10 files changed, 1385 insertions(+), 23 deletions(-)
+ 10 files changed, 1381 insertions(+), 23 deletions(-)
  create mode 100644 gdk/win32/winpointer.h
 
 diff --git a/configure.ac b/configure.ac
@@ -493,7 +493,7 @@ index 1a876d0..519c718 100644
  
  gboolean	  _modal_operation_in_progress = FALSE;
 diff --git a/gdk/win32/gdkinput-win32.c b/gdk/win32/gdkinput-win32.c
-index 3fe7aaf..f426846 100644
+index 3fe7aaf..3c4c3e5 100644
 --- a/gdk/win32/gdkinput-win32.c
 +++ b/gdk/win32/gdkinput-win32.c
 @@ -37,6 +37,14 @@
@@ -546,7 +546,7 @@ index 3fe7aaf..f426846 100644
  static GdkDevicePrivate *gdk_input_find_dev_from_ctx (HCTX hctx,
  						      UINT id);
  static GList     *wintab_contexts = NULL;
-@@ -80,6 +116,683 @@ static t_WTOverlap p_WTOverlap;
+@@ -80,6 +116,679 @@ static t_WTOverlap p_WTOverlap;
  static t_WTPacket p_WTPacket;
  static t_WTQueueSizeSet p_WTQueueSizeSet;
  
@@ -764,10 +764,6 @@ index 3fe7aaf..f426846 100644
 +    case POINTER_DEVICE_TYPE_EXTERNAL_PEN:
 +      winpointer_create_device (info, GDK_SOURCE_PEN);
 +      winpointer_create_device (info, GDK_SOURCE_ERASER);
-+    break;
-+
-+    default:
-+      g_assert_not_reached ();
 +    break;
 +    }
 +}
@@ -1230,7 +1226,7 @@ index 3fe7aaf..f426846 100644
  static GdkDevicePrivate *
  gdk_input_find_dev_from_ctx (HCTX hctx,
  			     UINT cursor)
-@@ -350,7 +1063,9 @@ _gdk_input_wintab_init_check (void)
+@@ -350,7 +1059,9 @@ _gdk_input_wintab_init_check (void)
  
    if (wintab_initialized)
      return;
@@ -1241,7 +1237,7 @@ index 3fe7aaf..f426846 100644
    wintab_initialized = TRUE;
    
    wintab_contexts = NULL;
-@@ -948,6 +1663,9 @@ _gdk_input_other_event (GdkEvent  *event,
+@@ -948,6 +1659,9 @@ _gdk_input_other_event (GdkEvent  *event,
     */
    static guint button_map[8] = {0, 1, 4, 5, 2, 3, 6, 7};
  
@@ -1251,7 +1247,7 @@ index 3fe7aaf..f426846 100644
    if (window != wintab_window)
      {
        g_warning ("_gdk_input_other_event: not wintab_window?");
-@@ -1310,6 +2028,9 @@ _gdk_input_set_tablet_active (void)
+@@ -1310,6 +2024,9 @@ _gdk_input_set_tablet_active (void)
    GList *tmp_list;
    HCTX *hctx;
  
@@ -1261,7 +1257,7 @@ index 3fe7aaf..f426846 100644
    /* Bring the contexts to the top of the overlap order when one of the
     * application's windows is activated */
    
-@@ -1331,17 +2052,36 @@ _gdk_input_set_tablet_active (void)
+@@ -1331,17 +2048,36 @@ _gdk_input_set_tablet_active (void)
  void 
  _gdk_input_init (GdkDisplay *display)
  {

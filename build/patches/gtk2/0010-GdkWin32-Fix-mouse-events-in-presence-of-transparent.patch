@@ -1,4 +1,4 @@
-From 0799376464be68ef985ce4326aee856221ad7b44 Mon Sep 17 00:00:00 2001
+From d16c34cd54d0eb044e8b826709d9f1e4570f93d5 Mon Sep 17 00:00:00 2001
 From: Luca Bacci <luca.bacci982@gmail.com>
 Date: Mon, 22 Apr 2024 20:01:02 +0200
 Subject: [PATCH 10/11] GdkWin32: Fix mouse events in presence of transparent

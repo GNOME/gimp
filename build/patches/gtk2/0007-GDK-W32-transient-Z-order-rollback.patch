@@ -1,4 +1,4 @@
-From 383a0ec0caadd83de29b3288cbc9d32af59bea5b Mon Sep 17 00:00:00 2001
+From 729cc0b52421ce4596a5066dd258bdcd2cab91ad Mon Sep 17 00:00:00 2001
 From: Luca Bacci <luca.bacci982@gmail.com>
 Date: Mon, 22 Apr 2024 14:34:11 +0200
 Subject: [PATCH 07/11] GDK W32: transient Z-order rollback

@@ -1,4 +1,4 @@
-From 12de4ce6363b6654ff295cefe72da52d08bd9dbc Mon Sep 17 00:00:00 2001
+From f3d8f12abbed81694c2416ff21c053b118c99046 Mon Sep 17 00:00:00 2001
 From: Luca Bacci <luca.bacci982@gmail.com>
 Date: Tue, 30 Apr 2024 15:22:53 +0200
 Subject: [PATCH 11/11] Winpointer: Add generic device
@@ -9,7 +9,7 @@ Subject: [PATCH 11/11] Winpointer: Add generic device
  2 files changed, 264 insertions(+), 65 deletions(-)
 
 diff --git a/gdk/win32/gdkinput-win32.c b/gdk/win32/gdkinput-win32.c
-index f426846..2496f4d 100644
+index 3c4c3e5..5f41c99 100644
 --- a/gdk/win32/gdkinput-win32.c
 +++ b/gdk/win32/gdkinput-win32.c
 @@ -79,6 +79,7 @@ typedef BOOL
@@ -97,7 +97,7 @@ index f426846..2496f4d 100644
    g_free (name);
    g_free (base_name);
    g_free (product);
-@@ -338,8 +317,99 @@ winpointer_create_devices (POINTER_DEVICE_INFO *info)
+@@ -334,8 +313,99 @@ winpointer_create_devices (POINTER_DEVICE_INFO *info)
      }
  }
  
@@ -198,7 +198,7 @@ index f426846..2496f4d 100644
  {
    POINTER_DEVICE_INFO *infos = NULL;
    UINT32 infos_count = 0;
-@@ -363,12 +433,85 @@ get:
+@@ -359,12 +429,85 @@ get:
      }
    while (infos_count > 0 && !infos);
  
@@ -286,7 +286,7 @@ index f426846..2496f4d 100644
  static gboolean
  winpointer_ensure_procedures ()
  {
-@@ -383,6 +526,8 @@ winpointer_ensure_procedures ()
+@@ -379,6 +522,8 @@ winpointer_ensure_procedures ()
            return FALSE;
          }
  
@@ -295,7 +295,7 @@ index f426846..2496f4d 100644
        getPointerDevices = (getPointerDevices_t)
          GetProcAddress (user32_dll, "GetPointerDevices");
        getPointerDeviceCursors = (getPointerDeviceCursors_t)
-@@ -401,7 +546,8 @@ winpointer_ensure_procedures ()
+@@ -397,7 +542,8 @@ winpointer_ensure_procedures ()
          GetProcAddress (user32_dll, "SetWindowFeedbackSetting");
      }
  
@@ -305,7 +305,7 @@ index f426846..2496f4d 100644
           getPointerDeviceCursors &&
           getPointerDeviceRects &&
           getPointerType &&
-@@ -416,7 +562,16 @@ winpointer_initialize (void)
+@@ -412,7 +558,16 @@ winpointer_initialize (void)
    if (!winpointer_ensure_procedures ())
      return FALSE;
  
@@ -323,7 +323,7 @@ index f426846..2496f4d 100644
  
    return TRUE;
  }
-@@ -504,7 +659,7 @@ winpointer_is_eraser (POINTER_PEN_INFO *pen_info)
+@@ -500,7 +655,7 @@ winpointer_is_eraser (POINTER_PEN_INFO *pen_info)
    return (pen_info->penFlags & (PEN_FLAG_INVERTED | PEN_FLAG_ERASER)) != 0;
  }
  
@@ -332,7 +332,7 @@ index f426846..2496f4d 100644
  winpointer_find_device_with_source (HANDLE device_handle,
                                      UINT32 cursor_id,
                                      GdkInputSource input_source)
-@@ -515,18 +670,60 @@ winpointer_find_device_with_source (HANDLE device_handle,
+@@ -511,18 +666,60 @@ winpointer_find_device_with_source (HANDLE device_handle,
      {
        GdkDevicePrivate *device = (GdkDevicePrivate*) l->data;
  
@@ -395,7 +395,7 @@ index f426846..2496f4d 100644
  static GdkEventType
  winpointer_get_event_type (MSG *msg)
  {
-@@ -551,13 +748,17 @@ winpointer_get_event_type (MSG *msg)
+@@ -547,13 +744,17 @@ winpointer_get_event_type (MSG *msg)
  }
  
  static void
@@ -414,7 +414,7 @@ index f426846..2496f4d 100644
    double x_root = 0.0;
    double y_root = 0.0;
    double x = 0.0;
-@@ -568,7 +769,6 @@ winpointer_make_event (GdkDevicePrivate *device,
+@@ -564,7 +765,6 @@ winpointer_make_event (GdkDevicePrivate *device,
    gboolean core_events = FALSE;
    POINT screen_pt;
    POINT client_pt;
@@ -422,7 +422,7 @@ index f426846..2496f4d 100644
    GdkWindow *target = NULL;
    int target_origin_x = 0;
    int target_origin_y = 0;
-@@ -579,10 +779,15 @@ winpointer_make_event (GdkDevicePrivate *device,
+@@ -575,10 +775,15 @@ winpointer_make_event (GdkDevicePrivate *device,
    if (evt_type == GDK_NOTHING)
      return;
  
@@ -441,7 +441,7 @@ index f426846..2496f4d 100644
  
    /* bring potential win32 negative screen coordinates to
       the non-negative screen coordinates that GDK expects. */
-@@ -621,7 +826,7 @@ winpointer_make_event (GdkDevicePrivate *device,
+@@ -617,7 +822,7 @@ winpointer_make_event (GdkDevicePrivate *device,
      {
        target = _gdk_window_get_input_window_for_event (window,
                                                         evt_type,
@@ -450,7 +450,7 @@ index f426846..2496f4d 100644
                                                         client_pt.x,
                                                         client_pt.y,
                                                         0);
-@@ -632,7 +837,7 @@ winpointer_make_event (GdkDevicePrivate *device,
+@@ -628,7 +833,7 @@ winpointer_make_event (GdkDevicePrivate *device,
    if (core_events)
      {
        target = window;
@@ -459,7 +459,7 @@ index f426846..2496f4d 100644
  
        if (evt_type == GDK_PROXIMITY_IN ||
            evt_type == GDK_PROXIMITY_OUT)
-@@ -640,9 +845,9 @@ winpointer_make_event (GdkDevicePrivate *device,
+@@ -636,9 +841,9 @@ winpointer_make_event (GdkDevicePrivate *device,
      }
    else
      {
@@ -471,7 +471,7 @@ index f426846..2496f4d 100644
        axes[0] = (pen_info->penMask & PEN_MASK_PRESSURE) ? pen_info->pressure / 1024.0 :
                  (pen_info->pointerInfo.pointerFlags & POINTER_FLAG_INCONTACT) ? 1.0 : 0.0;
        axes[1] = (pen_info->penMask & PEN_MASK_TILT_X) ? pen_info->tiltX / 90.0 : 0.0;
-@@ -656,13 +861,15 @@ winpointer_make_event (GdkDevicePrivate *device,
+@@ -652,13 +857,15 @@ winpointer_make_event (GdkDevicePrivate *device,
    button = (info->pointerFlags & POINTER_FLAG_FIRSTBUTTON) ||
             (info->ButtonChangeType == POINTER_CHANGE_FIRSTBUTTON_UP) ? 1 : 3;
  
@@ -488,7 +488,7 @@ index f426846..2496f4d 100644
      break;
      case GDK_BUTTON_PRESS:
      case GDK_BUTTON_RELEASE:
-@@ -674,7 +881,7 @@ winpointer_make_event (GdkDevicePrivate *device,
+@@ -670,7 +877,7 @@ winpointer_make_event (GdkDevicePrivate *device,
        evt->button.state = state;
        evt->button.axes = axes;
        evt->button.button = button;
@@ -497,7 +497,7 @@ index f426846..2496f4d 100644
      break;
      case GDK_MOTION_NOTIFY:
        evt->motion.time = time;
-@@ -684,7 +891,7 @@ winpointer_make_event (GdkDevicePrivate *device,
+@@ -680,7 +887,7 @@ winpointer_make_event (GdkDevicePrivate *device,
        evt->motion.y = y;
        evt->motion.state = state;
        evt->motion.axes = axes;
@@ -506,7 +506,7 @@ index f426846..2496f4d 100644
      break;
  
      default:
-@@ -708,7 +915,7 @@ gdk_winpointer_input_events (GdkWindow *window,
+@@ -704,7 +911,7 @@ gdk_winpointer_input_events (GdkWindow *window,
    UINT32 cursor_id = 0;
    POINTER_PEN_INFO *infos = NULL;
    UINT32 history_count = 0;
@@ -515,7 +515,7 @@ index f426846..2496f4d 100644
    UINT32 h = 0;
  
    if (!getPointerCursorId (pointer_id, &cursor_id))
-@@ -736,11 +943,7 @@ gdk_winpointer_input_events (GdkWindow *window,
+@@ -732,11 +939,7 @@ gdk_winpointer_input_events (GdkWindow *window,
                                                 cursor_id,
                                                 winpointer_is_eraser (infos) ?
                                                 GDK_SOURCE_ERASER : GDK_SOURCE_PEN);
