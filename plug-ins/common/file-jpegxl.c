@@ -76,8 +76,8 @@ static GimpValueArray *jpegxl_export            (GimpProcedure         *procedur
 
 static void      create_cmyk_layer              (GimpImage             *image,
                                                  GimpLayer             *layer,
+                                                 const gchar           *type_format,
                                                  const Babl            *space,
-                                                 const Babl            *type,
                                                  gpointer               picture_buffer,
                                                  gpointer               key_buffer,
                                                  gint                   bit_depth,
@@ -241,14 +241,14 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
  * the final layer buffer.
  */
 static void
-create_cmyk_layer (GimpImage  *image,
-                   GimpLayer  *layer,
-                   const Babl *type,
-                   const Babl *space,
-                   gpointer    cmy_data,
-                   gpointer    key_data,
-                   gint        bit_depth,
-                   gboolean    has_alpha)
+create_cmyk_layer (GimpImage   *image,
+                   GimpLayer   *layer,
+                   const gchar *type_format,
+                   const Babl  *space,
+                   gpointer     cmy_data,
+                   gpointer     key_data,
+                   gint         bit_depth,
+                   gboolean     has_alpha)
 {
   const Babl         *cmy_format   = NULL;
   const Babl         *cmyka_format = NULL;
@@ -263,6 +263,10 @@ create_cmyk_layer (GimpImage  *image,
   gint                width;
   gint                height;
   gint                n_components = 3;
+  const Babl         *type         = babl_type (type_format);
+  GString            *rgb_type     = g_string_new (NULL);
+  GString            *cmy_type     = g_string_new (NULL);
+  GString            *cmyka_type   = g_string_new (NULL);
 
   width  = gimp_image_get_width (image);
   height = gimp_image_get_height (image);
@@ -273,20 +277,13 @@ create_cmyk_layer (GimpImage  *image,
   gimp_image_insert_layer (image, layer, NULL, 0);
   output_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
-  if (bit_depth == 1)
-    rgb_format = babl_format (has_alpha ? "R'G'B'A u8" : "R'G'B' u8");
-  else
-    rgb_format = babl_format (has_alpha ? "R'G'B'A u16" : "R'G'B' u16");
+  g_string_printf (rgb_type, has_alpha ? "R'G'B'A %s" : "R'G'B' %s", type_format);
+  g_string_printf (cmy_type, "cmyk %s", type_format);
+  g_string_printf (cmyka_type, "cmykA %s", type_format);
 
-  if (bit_depth == 1)
-    cmy_format = babl_format_with_space ("cmyk u8", space);
-  else
-    cmy_format = babl_format_with_space ("cmyk u16", space);
-
-  if (bit_depth == 1)
-    cmyka_format = babl_format_with_space ("cmykA u8", space);
-  else
-    cmyka_format = babl_format_with_space ("cmykA u16", space);
+  rgb_format = babl_format (rgb_type->str);
+  cmy_format = babl_format_with_space ( cmy_type->str, space);
+  cmyka_format = babl_format_with_space ( cmyka_type->str, space);
 
   key_format = babl_format_new (babl_model ("Y"),
                                 type,
@@ -387,6 +384,10 @@ create_cmyk_layer (GimpImage  *image,
   g_object_unref (cmy_buffer);
   g_object_unref (key_buffer);
   g_free (key_data);
+
+  g_string_free (cmyka_type, TRUE);
+  g_string_free (cmy_type, TRUE);
+  g_string_free (rgb_type, TRUE);
 }
 
 static GimpImage *
@@ -423,7 +424,7 @@ load_image (GFile                 *file,
   GimpLayer        *layer;
   GeglBuffer       *buffer;
   const Babl       *space           = NULL;
-  const Babl       *type;
+  const gchar      *type;
   GimpPrecision     precision_linear;
   GimpPrecision     precision_non_linear;
   uint32_t          i;
@@ -590,7 +591,7 @@ load_image (GFile                 *file,
       channel_depth = 4;
       precision_linear = GIMP_PRECISION_FLOAT_LINEAR;
       precision_non_linear = GIMP_PRECISION_FLOAT_NON_LINEAR;
-      type = babl_type ("float");
+      type = "float";
     }
   else if (basicinfo.bits_per_sample <= 8)
     {
@@ -598,15 +599,23 @@ load_image (GFile                 *file,
       channel_depth = 1;
       precision_linear = GIMP_PRECISION_U8_LINEAR;
       precision_non_linear = GIMP_PRECISION_U8_NON_LINEAR;
-      type = babl_type ("u8");
+      type = "u8";
     }
-  else
+  else if (basicinfo.exponent_bits_per_sample == 0)
     {
       pixel_format.data_type = JXL_TYPE_UINT16;
       channel_depth = 2;
       precision_linear = GIMP_PRECISION_U16_LINEAR;
       precision_non_linear = GIMP_PRECISION_U16_NON_LINEAR;
-      type = babl_type ("u16");
+      type = "u16";
+    }
+  else
+    {
+      pixel_format.data_type = JXL_TYPE_FLOAT16;
+      channel_depth = 2;
+      precision_linear = GIMP_PRECISION_HALF_LINEAR;
+      precision_non_linear = GIMP_PRECISION_HALF_NON_LINEAR;
+      type = "half";
     }
 
   if (basicinfo.num_color_channels == 1) /* grayscale */
