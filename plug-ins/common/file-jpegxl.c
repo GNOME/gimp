@@ -300,12 +300,19 @@ load_image (const gchar *filename,
       precision_linear       = GIMP_PRECISION_U8_LINEAR;
       precision_non_linear   = GIMP_PRECISION_U8_GAMMA;
     }
-  else
+  else if (basicinfo.exponent_bits_per_sample == 0)
     {
       pixel_format.data_type = JXL_TYPE_UINT16;
       channel_depth          = 2;
       precision_linear       = GIMP_PRECISION_U16_LINEAR;
       precision_non_linear   = GIMP_PRECISION_U16_GAMMA;
+    }
+  else
+    {
+      pixel_format.data_type = JXL_TYPE_FLOAT16;
+      channel_depth          = 2;
+      precision_linear       = GIMP_PRECISION_HALF_LINEAR;
+      precision_non_linear   = GIMP_PRECISION_HALF_GAMMA;
     }
 
   if (basicinfo.num_color_channels == 1) /* grayscale */
