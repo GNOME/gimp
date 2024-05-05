@@ -568,6 +568,7 @@ gimp_palette_set_entry (GimpPalette   *palette,
   if (! entry)
     return FALSE;
 
+  g_clear_object (&entry->color);
   entry->color = gegl_color_duplicate (color);
   if (palette->format != NULL)
     {
@@ -610,6 +611,7 @@ gimp_palette_set_entry_color (GimpPalette   *palette,
     gimp_image_undo_push_image_colormap (gimp_data_get_image (GIMP_DATA (palette)),
                                          C_("undo-type", "Change Colormap entry"));
 
+  g_clear_object (&entry->color);
   entry->color = gegl_color_duplicate (color);
   if (palette->format != NULL)
     {
@@ -771,6 +773,7 @@ gimp_palette_entry_free (GimpPaletteEntry *entry)
   g_return_if_fail (entry != NULL);
 
   g_free (entry->name);
+  g_clear_object (&entry->color);
 
   g_slice_free (GimpPaletteEntry, entry);
 }
@@ -782,6 +785,7 @@ gimp_palette_entry_get_memsize (GimpPaletteEntry *entry,
   gint64 memsize = sizeof (GimpPaletteEntry);
 
   memsize += gimp_string_get_memsize (entry->name);
+  /* the GeglColor is missing here */
 
   return memsize;
 }
