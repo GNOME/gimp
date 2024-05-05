@@ -532,14 +532,18 @@ gimp_image_colormap_set_palette_entry (GimpImage *image,
   const Babl       *format;
   guint8            rgb[3];
   gchar             name[64];
+  gint              i;
 
   g_return_if_fail (GEGL_IS_COLOR (color));
 
   /* Adding black entries if needed. */
-  while (gimp_palette_get_n_colors (private->palette) <= index)
-    gimp_palette_add_entry (private->palette, index, name, new_color);
-
-  g_snprintf (name, sizeof (name), "#%d", index);
+  for (i = gimp_palette_get_n_colors (private->palette);
+       i <= index;
+       i++)
+    {
+      g_snprintf (name, sizeof (name), "#%d", i);
+      gimp_palette_add_entry (private->palette, index, name, new_color);
+    }
 
   space  = gimp_image_get_layer_space (image);
   format = gimp_babl_format (GIMP_RGB, private->precision, FALSE, space);
