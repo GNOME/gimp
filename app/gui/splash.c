@@ -376,13 +376,13 @@ splash_position_layouts (GimpSplash   *splash,
                          const gchar  *text2,
                          GdkRectangle *area)
 {
-  PangoRectangle  upper_ink;
-  PangoRectangle  lower_ink;
+  PangoRectangle  upper_ink, upper_logical;
+  PangoRectangle  lower_ink, lower_logical;
   gint            text_height = 0;
 
   if (text1)
     {
-      pango_layout_get_pixel_extents (splash->upper, &upper_ink, NULL);
+      pango_layout_get_pixel_extents (splash->upper, &upper_ink, &upper_logical);
 
       if (area)
         splash_rectangle_union (area, &upper_ink,
@@ -390,7 +390,7 @@ splash_position_layouts (GimpSplash   *splash,
 
       pango_layout_set_text (splash->upper, text1, -1);
       pango_layout_get_pixel_extents (splash->upper,
-                                      &upper_ink, NULL);
+                                      &upper_ink, &upper_logical);
 
       splash->upper_x = (splash->width - upper_ink.width) / 2;
       text_height += upper_ink.height;
@@ -398,7 +398,7 @@ splash_position_layouts (GimpSplash   *splash,
 
   if (text2)
     {
-      pango_layout_get_pixel_extents (splash->lower, &lower_ink, NULL);
+      pango_layout_get_pixel_extents (splash->lower, &lower_ink, &lower_logical);
 
       if (area)
         splash_rectangle_union (area, &lower_ink,
@@ -406,7 +406,7 @@ splash_position_layouts (GimpSplash   *splash,
 
       pango_layout_set_text (splash->lower, text2, -1);
       pango_layout_get_pixel_extents (splash->lower,
-                                      &lower_ink, NULL);
+                                      &lower_ink, &lower_logical);
 
       splash->lower_x = (splash->width - lower_ink.width) / 2;
       text_height += lower_ink.height;
@@ -429,7 +429,7 @@ splash_position_layouts (GimpSplash   *splash,
     {
       splash->upper_y = MIN (splash->height - text_height,
                              splash->height * 13 / 16 -
-                             upper_ink.height / 2);
+                             upper_logical.height / 2);
 
       if (area)
         splash_rectangle_union (area, &upper_ink,
@@ -439,7 +439,7 @@ splash_position_layouts (GimpSplash   *splash,
   if (text2)
     {
       splash->lower_y = ((splash->height + splash->upper_y) / 2 -
-                         lower_ink.height / 2);
+                         lower_logical.height / 2);
 
       if (area)
         splash_rectangle_union (area, &lower_ink,
