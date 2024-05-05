@@ -1099,9 +1099,13 @@ gimp_widget_get_render_space (GtkWidget       *widget,
     dest_profile = gimp_widget_get_color_profile (gtk_widget_get_toplevel (widget));
 
   if (dest_profile)
-    space = gimp_color_profile_get_space (dest_profile,
-                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                          NULL);
+    {
+      space = gimp_color_profile_get_space (dest_profile,
+                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            NULL);
+      g_object_unref (dest_profile);
+    }
+
   return space;
 }
 
