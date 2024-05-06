@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-25 14:53+0000\n"
-"PO-Revision-Date: 2024-04-26 13:43+0200\n"
+"POT-Creation-Date: 2024-05-05 17:05+0000\n"
+"PO-Revision-Date: 2024-05-06 22:58+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -6623,7 +6623,7 @@ msgstr "_Mapa"
 #: ../app/actions/image-actions.c:74
 msgctxt "image-action"
 msgid "_Tone Mapping"
-msgstr "_Mapeo de tonos"
+msgstr "Mapa de _tonos"
 
 #: ../app/actions/image-actions.c:75
 msgctxt "image-action"
@@ -20299,7 +20299,7 @@ msgstr "Convertir colores en tonos de gris"
 #: ../app/operations/gimpoperationdesaturate.c:90
 #: ../app/operations/gimpoperationsettings.c:95
 #: ../app/tools/gimpfiltertool.c:1118 ../app/tools/gimppaintoptions-gui.c:111
-#: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:116
+#: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:115
 #: ../app/widgets/gimplayertreeview.c:272
 msgid "Mode"
 msgstr "Modo"
@@ -20485,7 +20485,7 @@ msgstr "Tasa"
 # //R ????
 #: ../app/paint/gimpdodgeburn.c:67
 msgid "Dodge/Burn"
-msgstr "Blanquear/Oscurecer"
+msgstr "Blanquear/Ennegrecer"
 
 #: ../app/paint/gimpdodgeburnoptions.c:70
 msgid "Type"
@@ -23039,44 +23039,44 @@ msgstr "Usar el formato antigu_o de archivo de curvas"
 # //R ????
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn"
-msgstr "Marcar a fuego / Quemar"
+msgstr "Blanquear / Ennegrecer"
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
 msgstr ""
-"Herramienta de marcado a fuego/ quemar: iluminar u oscurecer selectivamente "
-"usando un pincel"
+"Herramienta blanquear / ennegrecer: iluminar u oscurecer selectivamente usando "
+"un pincel"
 
 # //R ????
 #: ../app/tools/gimpdodgeburntool.c:76
 msgid "Dod_ge / Burn"
-msgstr "_Marcar a fuego/Quemar"
+msgstr "Blan_quear / Ennegrecer"
 
 #: ../app/tools/gimpdodgeburntool.c:188
 msgid "Click to dodge"
-msgstr "Pulse para marcar a fuego"
+msgstr "Pulse para blanquear"
 
 #: ../app/tools/gimpdodgeburntool.c:189
 msgid "Click to dodge the line"
-msgstr "Pulse para marcar a fuego la línea"
+msgstr "Pulse para blanquear la línea"
 
 #: ../app/tools/gimpdodgeburntool.c:190
 #, c-format
 msgid "%s to burn"
-msgstr "%s para quemar"
+msgstr "%s para ennegrecer"
 
 #: ../app/tools/gimpdodgeburntool.c:194
 msgid "Click to burn"
-msgstr "Pulse para quemar"
+msgstr "Pulse para ennegrecer"
 
 #: ../app/tools/gimpdodgeburntool.c:195
 msgid "Click to burn the line"
-msgstr "Pulse para quemar la línea"
+msgstr "Pulse para ennegrecer la línea"
 
 #: ../app/tools/gimpdodgeburntool.c:196
 #, c-format
 msgid "%s to dodge"
-msgstr "%s para marcar a fuego"
+msgstr "%s para blanquear"
 
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:220
@@ -26904,7 +26904,7 @@ msgstr ""
 "La próxima vez que se conecte este dispositivo, se utilizarán los ajustes "
 "predeterminados."
 
-#: ../app/widgets/gimpdeviceinfo.c:147
+#: ../app/widgets/gimpdeviceinfo.c:146
 msgid "Pressure curve"
 msgstr "Curva de presión"
 
