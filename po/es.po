@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-26 11:53+0000\n"
-"PO-Revision-Date: 2024-04-26 14:10+0200\n"
+"POT-Creation-Date: 2024-05-05 17:42+0000\n"
+"PO-Revision-Date: 2024-05-06 22:46+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -13562,7 +13562,7 @@ msgstr "Error al cargar «%s»"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101
 #: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:445
+#: app/xcf/xcf.c:433
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "No se ha podido abrir «%s» para lectura: "
@@ -13615,11 +13615,11 @@ msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Renderizar el trazo"
 
-#: app/core/gimpdrawable-filters.c:160
+#: app/core/gimpdrawable-filters.c:138
 msgid "Rasterize filters"
 msgstr "Rasterizar filtros"
 
-#: app/core/gimpdrawable-filters.c:169
+#: app/core/gimpdrawable-filters.c:147
 msgid "Merge filter"
 msgstr "Combinar filtro"
 
@@ -19478,11 +19478,11 @@ msgstr "Pulse y arrastre para mover el punto de pivote"
 msgid "Click-Drag to shear"
 msgstr "Pulse y arrastre para inclinar"
 
-#: app/file/file-open.c:136 app/file/file-save.c:140
+#: app/file/file-open.c:136 app/file/file-save.c:126
 msgid "Not a regular file"
 msgstr "No es un archivo regular"
 
-#: app/file/file-open.c:145 app/file/file-save.c:149
+#: app/file/file-open.c:145 app/file/file-save.c:135
 msgid "Permission denied"
 msgstr "Permiso denegado"
 
@@ -19533,15 +19533,15 @@ msgstr "Descargados %s de los datos de la imagen"
 msgid "Uploaded %s of image data"
 msgstr "Subidos %s de los datos de la imagen"
 
-#: app/file/file-save.c:113
+#: app/file/file-save.c:99
 msgid "There is no active layer to save"
 msgstr "No hay una capa activa que guardar"
 
-#: app/file/file-save.c:133
+#: app/file/file-save.c:119
 msgid "Failed to get file information"
 msgstr "No se pudo obtener la información del archivo"
 
-#: app/file/file-save.c:307
+#: app/file/file-save.c:290
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "El complemento %s no ha podido guardar la imagen"
@@ -23503,44 +23503,44 @@ msgstr "Usar el formato antigu_o de archivo de curvas"
 # //R ????
 #: app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn"
-msgstr "Marcar a fuego / Quemar"
+msgstr "Blanquear / Ennegrecer"
 
 #: app/tools/gimpdodgeburntool.c:75
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
 msgstr ""
-"Herramienta de marcado a fuego/ quemar: iluminar u oscurecer selectivamente "
-"usando un pincel"
+"Herramienta blanquear/ennegrecer: iluminar u oscurecer selectivamente usando "
+"un pincel"
 
 # //R ????
 #: app/tools/gimpdodgeburntool.c:76
 msgid "Dod_ge / Burn"
-msgstr "_Marcar a fuego/Quemar"
+msgstr "Blan_quear / Ennegrecer"
 
 #: app/tools/gimpdodgeburntool.c:188
 msgid "Click to dodge"
-msgstr "Pulse para marcar a fuego"
+msgstr "Pulse para blanquear"
 
 #: app/tools/gimpdodgeburntool.c:189
 msgid "Click to dodge the line"
-msgstr "Pulse para marcar a fuego la línea"
+msgstr "Pulse para blanquear la línea"
 
 #: app/tools/gimpdodgeburntool.c:190
 #, c-format
 msgid "%s to burn"
-msgstr "%s para quemar"
+msgstr "%s para ennegrecer"
 
 #: app/tools/gimpdodgeburntool.c:194
 msgid "Click to burn"
-msgstr "Pulse para quemar"
+msgstr "Pulse para ennegrecer"
 
 #: app/tools/gimpdodgeburntool.c:195
 msgid "Click to burn the line"
-msgstr "Pulse para quemar la línea"
+msgstr "Pulse para ennegrecer la línea"
 
 #: app/tools/gimpdodgeburntool.c:196
 #, c-format
 msgid "%s to dodge"
-msgstr "%s para marcar a fuego"
+msgstr "%s para blanquear"
 
 #. the type (dodge or burn)
 #: app/tools/gimpdodgeburntool.c:220
@@ -28120,56 +28120,56 @@ msgstr "Reordenar filtro"
 msgid "Effects from active tools can not be merged."
 msgstr "Los efectos de las herramientas activas no se pueden fusionar."
 
-#: app/widgets/gimpitemtreeview.c:2805
+#: app/widgets/gimpitemtreeview.c:2801
 msgid "Remove filter"
 msgstr "Eliminar filtro"
 
-#: app/widgets/gimpitemtreeview.c:3330
+#: app/widgets/gimpitemtreeview.c:3324
 msgid "No layer set stored"
 msgstr "No hay ningún conjunto de capas almacenado"
 
-#: app/widgets/gimpitemtreeview.c:3352
+#: app/widgets/gimpitemtreeview.c:3346
 msgid "New layer set's name"
 msgstr "Nombre del nuevo conjunto de capas"
 
-#: app/widgets/gimpitemtreeview.c:3394 app/widgets/gimpitemtreeview.c:3409
+#: app/widgets/gimpitemtreeview.c:3388 app/widgets/gimpitemtreeview.c:3403
 msgid "Select layers by text search"
 msgstr "Seleccionar capas por búsqueda de texto"
 
-#: app/widgets/gimpitemtreeview.c:3396 app/widgets/gimpitemtreeview.c:3411
+#: app/widgets/gimpitemtreeview.c:3390 app/widgets/gimpitemtreeview.c:3405
 msgid "Text search"
 msgstr "Búsqueda de texto"
 
-#: app/widgets/gimpitemtreeview.c:3415
+#: app/widgets/gimpitemtreeview.c:3409
 msgid "Select layers by glob patterns"
 msgstr "Seleccionar capas por patrones glob"
 
-#: app/widgets/gimpitemtreeview.c:3417
+#: app/widgets/gimpitemtreeview.c:3411
 msgid "Glob pattern search"
 msgstr "Búsqueda de patrón glob"
 
-#: app/widgets/gimpitemtreeview.c:3421
+#: app/widgets/gimpitemtreeview.c:3415
 msgid "Select layers by regular expressions"
 msgstr "Seleccionar capas por expresiones regulares"
 
-#: app/widgets/gimpitemtreeview.c:3423
+#: app/widgets/gimpitemtreeview.c:3417
 msgid "Regular Expression search"
 msgstr "Búsqueda por expresiones regulares"
 
 # Viendo el programa, parece más bien "cizalla". FVD
-#: app/widgets/gimpitemtreeview.c:3478
+#: app/widgets/gimpitemtreeview.c:3472
 msgid "search"
 msgstr "buscar"
 
-#: app/widgets/gimpitemtreeview.c:3479
+#: app/widgets/gimpitemtreeview.c:3473
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3479
+#: app/widgets/gimpitemtreeview.c:3473
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimpitemtreeview.c:3648
+#: app/widgets/gimpitemtreeview.c:3642
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Expresión regular no válida: %s\n"
@@ -28995,41 +28995,41 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Estado y descripción"
 
-#: app/xcf/xcf.c:122 app/xcf/xcf.c:190
+#: app/xcf/xcf.c:122 app/xcf/xcf.c:178
 msgid "GIMP XCF image"
 msgstr "Imagen XCF de GIMP"
 
-#: app/xcf/xcf.c:267 app/xcf/xcf.c:356
+#: app/xcf/xcf.c:255 app/xcf/xcf.c:344
 msgid "Memory Stream"
 msgstr "Flujo de memoria"
 
-#: app/xcf/xcf.c:278
+#: app/xcf/xcf.c:266
 #, c-format
 msgid "Opening '%s'"
 msgstr "Abriendo «%s»"
 
-#: app/xcf/xcf.c:320
+#: app/xcf/xcf.c:308
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr ""
 "Error XCF: se encontró una versión %d de archivo de tipo XCF no soportada"
 
-#: app/xcf/xcf.c:379
+#: app/xcf/xcf.c:367
 #, c-format
 msgid "Saving '%s'"
 msgstr "Guardando «%s»"
 
-#: app/xcf/xcf.c:387
+#: app/xcf/xcf.c:375
 #, c-format
 msgid "Closing '%s'"
 msgstr "Cerrando «%s»"
 
-#: app/xcf/xcf.c:405
+#: app/xcf/xcf.c:393
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Error al escribir «%s»: "
 
-#: app/xcf/xcf.c:493
+#: app/xcf/xcf.c:481
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Ocurrió un error al crear «%s»: "
