@@ -72,6 +72,7 @@ static GimpValueArray * psd_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               GFile                 *file,
+                                              GimpExportOptions     *options,
                                               GimpMetadata          *metadata,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
@@ -134,10 +135,10 @@ psd_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("Photoshop image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads images from the Photoshop "
-                                        "PSD and PSB file formats",
-                                        "This plug-in loads images in Adobe "
-                                        "Photoshop (TM) native PSD and PSB format.",
+                                        _("Loads images from the Photoshop "
+                                          "PSD and PSB file formats"),
+                                        _("This plug-in loads images in Adobe "
+                                          "Photoshop (TM) native PSD and PSB format."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "John Marshall",
@@ -163,11 +164,11 @@ psd_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("Photoshop image (merged)"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads images from the Photoshop "
-                                        "PSD and PSB file formats",
-                                        "This plug-in loads the merged image "
-                                        "data in Adobe Photoshop (TM) native "
-                                        "PSD and PSB format.",
+                                        _("Loads images from the Photoshop "
+                                          "PSD and PSB file formats"),
+                                        _("This plug-in loads the merged image "
+                                          "data in Adobe Photoshop (TM) native "
+                                          "PSD and PSB format."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Ell",
@@ -192,11 +193,11 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                                                 psd_load_thumb, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads thumbnails from the "
-                                        "Photoshop PSD file format",
-                                        "This plug-in loads thumbnail images "
-                                        "from Adobe Photoshop (TM) native "
-                                        "PSD format files.",
+                                        _("Loads thumbnails from the "
+                                          "Photoshop PSD file format"),
+                                        _("This plug-in loads thumbnail images "
+                                          "from Adobe Photoshop (TM) native "
+                                          "PSD format files."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "John Marshall",
@@ -214,14 +215,14 @@ psd_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("Photoshop image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Saves files in the Photoshop(tm) "
-                                        "PSD file format",
-                                        "This filter saves files of Adobe "
-                                        "Photoshop(tm) native PSD format. "
-                                        "These files may be of any image type "
-                                        "supported by GIMP, with or without "
-                                        "layers, layer masks, aux channels "
-                                        "and guides.",
+                                        _("Saves files in the Photoshop (TM) "
+                                          "PSD file format"),
+                                        _("This filter saves files of Adobe "
+                                          "Photoshop (TM) native PSD format. "
+                                          "These files may be of any image type "
+                                          "supported by GIMP, with or without "
+                                          "layers, layer masks, aux channels "
+                                          "and guides."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Monigotes",
@@ -232,6 +233,15 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-psd");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "psd");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                                              GIMP_EXPORT_CAN_HANDLE_LAYERS  |
+                                              GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS,
+                                              NULL, NULL);
 
       gimp_procedure_add_boolean_argument (procedure, "clippingpath",
                                            _("Assign a Clipping _Path"),
@@ -421,6 +431,7 @@ psd_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
             GFile                *file,
+            GimpExportOptions    *options,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
@@ -441,13 +452,7 @@ psd_export (GimpProcedure        *procedure,
                                                  NULL);
     }
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB     |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                              GIMP_EXPORT_CAN_HANDLE_ALPHA   |
-                              GIMP_EXPORT_CAN_HANDLE_LAYERS  |
-                              GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS);
+  export    = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
   if (export_image (file, image, G_OBJECT (config), &error))

@@ -77,6 +77,7 @@ static GimpValueArray * dds_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               GFile                 *file,
+                                              GimpExportOptions     *options,
                                               GimpMetadata          *metadata,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
@@ -182,6 +183,14 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                                           "image/dds");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "dds");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                                              GIMP_EXPORT_CAN_HANDLE_LAYERS,
+                                              NULL, NULL);
 
       gimp_procedure_add_choice_argument (procedure, "compression-format",
                                           _("Compressio_n"),
@@ -370,6 +379,7 @@ dds_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
             GFile                *file,
+            GimpExportOptions    *options,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
@@ -385,12 +395,7 @@ dds_export (GimpProcedure        *procedure,
   if (run_mode == GIMP_RUN_INTERACTIVE)
     gimp_ui_init ("dds");
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB     |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                              GIMP_EXPORT_CAN_HANDLE_ALPHA   |
-                              GIMP_EXPORT_CAN_HANDLE_LAYERS);
+  export = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
   g_object_get (config,

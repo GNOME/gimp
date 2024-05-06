@@ -323,6 +323,14 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                            spec->object_type,
                                            flags);
     }
+  else if (GIMP_IS_PARAM_SPEC_EXPORT_OPTIONS (pspec))
+    {
+      GimpParamSpecExportOptions *spec = GIMP_PARAM_SPEC_EXPORT_OPTIONS (pspec);
+
+      copy = gimp_param_spec_export_options (name, nick, blurb,
+                                             spec->capabilities,
+                                             flags);
+    }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec))
     {
       GType        value_type = G_PARAM_SPEC_VALUE_TYPE (pspec);

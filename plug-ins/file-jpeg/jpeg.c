@@ -74,6 +74,7 @@ static GimpValueArray * jpeg_export           (GimpProcedure         *procedure,
                                                GimpRunMode            run_mode,
                                                GimpImage             *image,
                                                GFile                 *file,
+                                               GimpExportOptions     *options,
                                                GimpMetadata          *metadata,
                                                GimpProcedureConfig   *config,
                                                gpointer               run_data);
@@ -196,6 +197,11 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                                           "image/jpeg");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "jpg,jpeg,jpe");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY,
+                                              NULL, NULL);
 
       /* See bugs #63610 and #61088 for a discussion about the quality
        * settings
@@ -415,6 +421,7 @@ jpeg_export (GimpProcedure        *procedure,
              GimpRunMode           run_mode,
              GimpImage            *image,
              GFile                *file,
+             GimpExportOptions    *options,
              GimpMetadata         *metadata,
              GimpProcedureConfig  *config,
              gpointer              run_data)
@@ -518,9 +525,7 @@ jpeg_export (GimpProcedure        *procedure,
                 "original-num-quant-tables", orig_num_quant_tables,
                 NULL);
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY);
+  export    = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)

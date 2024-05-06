@@ -46,6 +46,7 @@
 enum
 {
   PROP_0,
+  PROP_CAPABILITIES,
   PROP_SUPPORTS_EXIF,
   PROP_SUPPORTS_IPTC,
   PROP_SUPPORTS_XMP,
@@ -57,44 +58,52 @@ enum
 
 struct _GimpExportProcedure
 {
-  GimpFileProcedure  parent_instance;
+  GimpFileProcedure         parent_instance;
 
-  GimpRunExportFunc  run_func;
-  gpointer           run_data;
-  GDestroyNotify     run_data_destroy;
+  GimpRunExportFunc         run_func;
+  gpointer                  run_data;
+  GDestroyNotify            run_data_destroy;
 
-  gboolean           supports_exif;
-  gboolean           supports_iptc;
-  gboolean           supports_xmp;
-  gboolean           supports_profile;
-  gboolean           supports_thumbnail;
-  gboolean           supports_comment;
+  GimpExportCapabilities    capabilities;
+  GimpExportOptionsEditFunc create_func;
+  gpointer                  create_data;
 
-  gboolean           export_metadata;
+  gboolean                  supports_exif;
+  gboolean                  supports_iptc;
+  gboolean                  supports_xmp;
+  gboolean                  supports_profile;
+  gboolean                  supports_thumbnail;
+  gboolean                  supports_comment;
+
+  gboolean                  export_metadata;
 };
 
 
-static void   gimp_export_procedure_constructed   (GObject              *object);
-static void   gimp_export_procedure_finalize      (GObject              *object);
-static void   gimp_export_procedure_set_property  (GObject              *object,
-                                                   guint                 property_id,
-                                                   const GValue         *value,
-                                                   GParamSpec           *pspec);
-static void   gimp_export_procedure_get_property  (GObject              *object,
-                                                   guint                 property_id,
-                                                   GValue               *value,
-                                                   GParamSpec           *pspec);
+static void   gimp_export_procedure_constructed    (GObject              *object);
+static void   gimp_export_procedure_finalize       (GObject              *object);
+static void   gimp_export_procedure_set_property   (GObject              *object,
+                                                    guint                 property_id,
+                                                    const GValue         *value,
+                                                    GParamSpec           *pspec);
+static void   gimp_export_procedure_get_property   (GObject              *object,
+                                                    guint                 property_id,
+                                                    GValue               *value,
+                                                    GParamSpec           *pspec);
 
-static void   gimp_export_procedure_install       (GimpProcedure        *procedure);
+static void   gimp_export_procedure_install        (GimpProcedure        *procedure);
 static GimpValueArray *
-              gimp_export_procedure_run           (GimpProcedure        *procedure,
-                                                   const GimpValueArray *args);
+              gimp_export_procedure_run            (GimpProcedure        *procedure,
+                                                    const GimpValueArray *args);
 static GimpProcedureConfig *
-              gimp_export_procedure_create_config (GimpProcedure        *procedure,
-                                                   GParamSpec          **args,
-                                                   gint                  n_args);
+              gimp_export_procedure_create_config  (GimpProcedure        *procedure,
+                                                    GParamSpec          **args,
+                                                    gint                  n_args);
 
-static void   gimp_export_procedure_add_metadata  (GimpExportProcedure  *export_procedure);
+static void   gimp_export_procedure_add_metadata   (GimpExportProcedure  *export_procedure);
+
+static void   gimp_export_procedure_update_options (GimpProcedureConfig  *config,
+                                                    GParamSpec           *param,
+                                                    gpointer              data);
 
 
 G_DEFINE_TYPE (GimpExportProcedure, gimp_export_procedure, GIMP_TYPE_FILE_PROCEDURE)
@@ -117,6 +126,20 @@ gimp_export_procedure_class_init (GimpExportProcedureClass *klass)
   procedure_class->install       = gimp_export_procedure_install;
   procedure_class->run           = gimp_export_procedure_run;
   procedure_class->create_config = gimp_export_procedure_create_config;
+
+  /**
+   * GimpExportProcedure:capabilities:
+   *
+   * What #GimpExportCapabilities are supported
+   *
+   * Since: 3.0.0
+   */
+  props[PROP_CAPABILITIES] = g_param_spec_int ("capabilities",
+                                               "Supported image capabilities",
+                                               NULL,
+                                               0, G_MAXINT, 0,
+                                               G_PARAM_CONSTRUCT |
+                                               GIMP_PARAM_READWRITE);
 
   /**
    * GimpExportProcedure:supports-exif:
@@ -204,6 +227,7 @@ static void
 gimp_export_procedure_init (GimpExportProcedure *procedure)
 {
   procedure->export_metadata = FALSE;
+  procedure->capabilities    = 0;
 }
 
 static void
@@ -223,6 +247,11 @@ gimp_export_procedure_constructed (GObject *object)
                                     "File",
                                     "The file to export to",
                                     GIMP_PARAM_READWRITE);
+
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_export_options ("options", "Options",
+                                                                "Export options", 0,
+                                                                G_PARAM_READWRITE));
 }
 
 static void
@@ -246,6 +275,9 @@ gimp_export_procedure_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_CAPABILITIES:
+      procedure->capabilities = g_value_get_int (value);
+      break;
     case PROP_SUPPORTS_EXIF:
       procedure->supports_exif = g_value_get_boolean (value);
       break;
@@ -281,6 +313,9 @@ gimp_export_procedure_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_CAPABILITIES:
+      g_value_set_int (value, procedure->capabilities);
+      break;
     case PROP_SUPPORTS_EXIF:
       g_value_set_boolean (value, procedure->supports_exif);
       break;
@@ -334,7 +369,7 @@ gimp_export_procedure_install (GimpProcedure *procedure)
                                       priority);
 }
 
-#define ARG_OFFSET 3
+#define ARG_OFFSET 4
 
 static GimpValueArray *
 gimp_export_procedure_run (GimpProcedure        *procedure,
@@ -349,12 +384,15 @@ gimp_export_procedure_run (GimpProcedure        *procedure,
   GimpImage            *image;
   GFile                *file;
   GimpMetadata         *metadata;
-  gchar                *mimetype = NULL;
-  GimpPDBStatusType     status   = GIMP_PDB_EXECUTION_ERROR;
+  GimpExportOptions    *options      = NULL;
+  gchar                *mimetype     = NULL;
+  GimpPDBStatusType     status       = GIMP_PDB_EXECUTION_ERROR;
+  gboolean              free_options = FALSE;
 
   run_mode = GIMP_VALUES_GET_ENUM  (args, 0);
   image    = GIMP_VALUES_GET_IMAGE (args, 1);
   file     = GIMP_VALUES_GET_FILE  (args, 2);
+  options  = g_value_get_object (gimp_value_array_index (args, 3));
 
   remaining = gimp_value_array_new (gimp_value_array_length (args) - ARG_OFFSET);
 
@@ -398,9 +436,33 @@ gimp_export_procedure_run (GimpProcedure        *procedure,
   metadata = _gimp_procedure_config_begin_export (config, image, run_mode, remaining, mimetype);
   g_free (mimetype);
 
+  /* GimpExportOptions may be null if called non-interactively from a script,
+   * so we'll make sure it's initialized */
+  if (options == NULL)
+    {
+      options      = gimp_export_options_new ();
+      free_options = TRUE;
+    }
+
+  if (export_proc->create_func != NULL)
+    {
+      export_proc->create_func (procedure, config, options,
+                                export_proc->create_data);
+
+      g_signal_connect_object (config, "notify",
+                               G_CALLBACK (gimp_export_procedure_update_options),
+                               options, 0);
+    }
+  else
+    {
+      g_object_set (options,
+                    "capabilities", export_proc->capabilities,
+                    NULL);
+    }
+
   return_values = export_proc->run_func (procedure, run_mode, image,
-                                         file, metadata, config,
-                                         export_proc->run_data);
+                                         file, options, metadata,
+                                         config, export_proc->run_data);
 
   if (return_values != NULL                       &&
       gimp_value_array_length (return_values) > 0 &&
@@ -418,6 +480,8 @@ gimp_export_procedure_run (GimpProcedure        *procedure,
     g_printerr ("%s: ERROR: the GimpExportProcedureConfig object was refed "
                 "by plug-in, it MUST NOT do that!\n", G_STRFUNC);
 
+  if (free_options)
+    g_object_unref (options);
   g_object_unref (config);
   gimp_value_array_unref (remaining);
 
@@ -506,6 +570,22 @@ gimp_export_procedure_add_metadata (GimpExportProcedure *export_procedure)
   ran_once = TRUE;
 }
 
+static void
+gimp_export_procedure_update_options (GimpProcedureConfig *config,
+                                      GParamSpec          *param,
+                                      gpointer             data)
+{
+  GimpProcedure       *procedure;
+  GimpExportProcedure *export_proc;
+  GimpExportOptions   *options = GIMP_EXPORT_OPTIONS (data);
+
+  procedure   = gimp_procedure_config_get_procedure (config);
+  export_proc = GIMP_EXPORT_PROCEDURE (procedure);
+
+  export_proc->create_func (procedure, config, options,
+                            export_proc->create_data);
+}
+
 
 /*  public functions  */
 
@@ -529,7 +609,7 @@ gimp_export_procedure_add_metadata (GimpExportProcedure *export_procedure)
  *
  * It automatically adds the standard
  *
- * (#GimpRunMode, #GimpImage, #GimpDrawable, #GFile)
+ * (#GimpRunMode, #GimpImage, #GFile, #GimpExportOptions)
  *
  * arguments of an export procedure. It is possible to add additional
  * arguments.
@@ -576,6 +656,39 @@ gimp_export_procedure_new (GimpPlugIn       *plug_in,
   procedure->run_data_destroy = run_data_destroy;
 
   return GIMP_PROCEDURE (procedure);
+}
+
+/**
+ * gimp_export_procedure_set_capabilities:
+ * @procedure:               a #GimpProcedure.
+ * @capabilities:            a #GimpExportCapabilities enum
+ * @create_func: (nullable): callback function to update export options
+ * @create_data: (nullable): data for @create_func
+ *
+ * Sets default #GimpExportCapabilities for image export.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_export_procedure_set_capabilities (GimpExportProcedure       *procedure,
+                                        GimpExportCapabilities     capabilities,
+                                        GimpExportOptionsEditFunc  create_func,
+                                        gpointer                   create_data)
+{
+  g_return_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure));
+
+  /* Assign default image capabilities */
+  g_object_set (procedure,
+                "capabilities", capabilities,
+                NULL);
+
+  /* TODO: Do more with this when we have user-specified callbacks for
+   * image capabilities */
+  if (create_func != NULL)
+    {
+      procedure->create_func = create_func;
+      procedure->create_data = create_data;
+    }
 }
 
 /**

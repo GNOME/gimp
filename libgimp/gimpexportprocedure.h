@@ -35,6 +35,7 @@ G_BEGIN_DECLS
  * @run_mode:    the #GimpRunMode.
  * @image:       the image to export.
  * @file:        the #GFile to export to.
+ * @options:     the #GimpExportOptions settings.
  * @metadata:    metadata object prepared for the mimetype passed in
  *               gimp_file_procedure_set_mime_types() if export_metadata
  *               argument was set in gimp_export_procedure_new().
@@ -57,42 +58,66 @@ typedef GimpValueArray * (* GimpRunExportFunc) (GimpProcedure        *procedure,
                                                 GimpRunMode           run_mode,
                                                 GimpImage            *image,
                                                 GFile                *file,
+                                                GimpExportOptions    *options,
                                                 GimpMetadata         *metadata,
                                                 GimpProcedureConfig  *config,
                                                 gpointer              run_data);
+
+/**
+ * GimpExportOptionsEditFunc:
+ * @procedure:   the #GimpProcedure that runs.
+ * @config:      the #GimpProcedureConfig.
+ * @options:     the @GimpExportOptions object to update.
+ * @create_data: (closure): the create_data given.
+ *
+ * To be described.
+ *
+ * Since: 3.0
+ **/
+
+typedef void   (* GimpExportOptionsEditFunc)   (GimpProcedure        *procedure,
+                                                GimpProcedureConfig  *config,
+                                                GimpExportOptions    *options,
+                                                gpointer              create_data);
 
 
 #define GIMP_TYPE_EXPORT_PROCEDURE (gimp_export_procedure_get_type ())
 G_DECLARE_FINAL_TYPE (GimpExportProcedure, gimp_export_procedure, GIMP, EXPORT_PROCEDURE, GimpFileProcedure)
 
 
-GimpProcedure * gimp_export_procedure_new                   (GimpPlugIn        *plug_in,
-                                                             const gchar       *name,
-                                                             GimpPDBProcType    proc_type,
-                                                             gboolean           export_metadata,
-                                                             GimpRunExportFunc  run_func,
-                                                             gpointer           run_data,
-                                                             GDestroyNotify     run_data_destroy);
+GimpProcedure * gimp_export_procedure_new                   (GimpPlugIn                *plug_in,
+                                                             const gchar               *name,
+                                                             GimpPDBProcType            proc_type,
+                                                             gboolean                   export_metadata,
+                                                             GimpRunExportFunc          run_func,
+                                                             gpointer                   run_data,
+                                                             GDestroyNotify             run_data_destroy);
 
-void            gimp_export_procedure_set_support_exif      (GimpExportProcedure *procedure,
-                                                             gboolean             supports);
-void            gimp_export_procedure_set_support_iptc      (GimpExportProcedure *procedure,
-                                                             gboolean             supports);
-void            gimp_export_procedure_set_support_xmp       (GimpExportProcedure *procedure,
-                                                             gboolean             supports);
-void            gimp_export_procedure_set_support_profile   (GimpExportProcedure *procedure,
-                                                             gboolean             supports);
-void            gimp_export_procedure_set_support_thumbnail (GimpExportProcedure *procedure,
-                                                             gboolean             supports);
-void            gimp_export_procedure_set_support_comment   (GimpExportProcedure *procedure,
-                                                             gboolean             supports);
+void            gimp_export_procedure_set_capabilities      (GimpExportProcedure       *procedure,
+                                                             GimpExportCapabilities     capabilities,
+                                                             GimpExportOptionsEditFunc  create_func,
+                                                             gpointer                   create_data);
 
-gboolean        gimp_export_procedure_get_support_exif      (GimpExportProcedure *procedure);
-gboolean        gimp_export_procedure_get_support_iptc      (GimpExportProcedure *procedure);
-gboolean        gimp_export_procedure_get_support_xmp       (GimpExportProcedure *procedure);
-gboolean        gimp_export_procedure_get_support_profile   (GimpExportProcedure *procedure);
-gboolean        gimp_export_procedure_get_support_thumbnail (GimpExportProcedure *procedure);
-gboolean        gimp_export_procedure_get_support_comment   (GimpExportProcedure *procedure);
+
+void            gimp_export_procedure_set_support_exif      (GimpExportProcedure       *procedure,
+                                                             gboolean                   supports);
+void            gimp_export_procedure_set_support_iptc      (GimpExportProcedure       *procedure,
+                                                             gboolean                   supports);
+void            gimp_export_procedure_set_support_xmp       (GimpExportProcedure       *procedure,
+                                                             gboolean                   supports);
+void            gimp_export_procedure_set_support_profile   (GimpExportProcedure       *procedure,
+                                                             gboolean                   supports);
+void            gimp_export_procedure_set_support_thumbnail (GimpExportProcedure       *procedure,
+                                                             gboolean                   supports);
+void            gimp_export_procedure_set_support_comment   (GimpExportProcedure       *procedure,
+                                                             gboolean                   supports);
+
+gboolean        gimp_export_procedure_get_support_exif      (GimpExportProcedure       *procedure);
+gboolean        gimp_export_procedure_get_support_iptc      (GimpExportProcedure       *procedure);
+gboolean        gimp_export_procedure_get_support_xmp       (GimpExportProcedure       *procedure);
+gboolean        gimp_export_procedure_get_support_profile   (GimpExportProcedure       *procedure);
+gboolean        gimp_export_procedure_get_support_thumbnail (GimpExportProcedure       *procedure);
+gboolean        gimp_export_procedure_get_support_comment   (GimpExportProcedure       *procedure);
 
 
 G_END_DECLS

@@ -293,6 +293,14 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
         return gimp_param_spec_object_array (name, nick, blurb,
                                              g_type_from_name (param_def->meta.m_id_array.type_name),
                                              flags);
+
+    case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
+      if (! strcmp (param_def->type_name, "GimpParamExportOptions"))
+        {
+          return gimp_param_spec_export_options (name, nick, blurb,
+                                                 param_def->meta.m_export_options.capabilities,
+                                                 flags);
+        }
       break;
     }
 
@@ -497,6 +505,14 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 
       param_def->meta.m_id_array.type_name =
         (gchar *) g_type_name (GIMP_PARAM_SPEC_OBJECT_ARRAY (pspec)->object_type);
+    }
+  else if (pspec_type == GIMP_TYPE_PARAM_EXPORT_OPTIONS)
+    {
+      GimpParamSpecExportOptions *eospec = GIMP_PARAM_SPEC_EXPORT_OPTIONS (pspec);
+
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_EXPORT_OPTIONS;
+
+      param_def->meta.m_export_options.capabilities = eospec->capabilities;
     }
   else if (pspec_type == G_TYPE_PARAM_OBJECT &&
            value_type != G_TYPE_FILE &&
@@ -923,6 +939,18 @@ gimp_gp_param_to_value (gpointer        gimp,
   else if (GIMP_VALUE_HOLDS_UNIT (value))
     {
       g_value_set_object (value, get_unit_by_id (gimp, param->data.d_int));
+    }
+  else if (g_type_is_a (G_VALUE_TYPE (value), GIMP_TYPE_EXPORT_OPTIONS))
+    {
+      GimpExportOptions *options = gimp_export_options_new ();
+
+      g_object_set (options,
+                    "capabilities", param->data.d_export_options.capabilities,
+                    NULL);
+
+      g_value_set_object (value, options);
+
+      g_object_unref (options);
     }
   else if (G_VALUE_HOLDS_PARAM (value))
     {
@@ -1359,6 +1387,20 @@ gimp_value_to_gp_param (const GValue *value,
 
       param->data.d_int = unit ? gimp_unit_get_id (unit) : -1;
     }
+  else if (g_type_is_a (G_VALUE_TYPE (value), GIMP_TYPE_EXPORT_OPTIONS))
+    {
+      GimpExportOptions *options      = g_value_get_object (value);
+      gint               capabilities = 0;
+
+      param->param_type = GP_PARAM_TYPE_INT;
+
+      if (options)
+        g_object_get (options,
+                      "capabilities", &capabilities,
+                      NULL);
+
+      param->data.d_export_options.capabilities = capabilities;
+    }
   else if (G_VALUE_HOLDS_PARAM (value))
     {
       param->param_type = GP_PARAM_TYPE_PARAM_DEF;
@@ -1458,6 +1500,9 @@ _gimp_gp_params_free (GPParam  *params,
               g_free (params[i].data.d_parasite.name);
               g_free (params[i].data.d_parasite.data);
             }
+          break;
+
+        case GP_PARAM_TYPE_EXPORT_OPTIONS:
           break;
 
         case GP_PARAM_TYPE_PARAM_DEF:

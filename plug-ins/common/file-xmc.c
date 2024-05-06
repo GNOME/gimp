@@ -173,6 +173,7 @@ static GimpValueArray * xmc_export                   (GimpProcedure         *pro
                                                       GimpRunMode            run_mode,
                                                       GimpImage             *image,
                                                       GFile                 *file,
+                                                      GimpExportOptions     *options,
                                                       GimpMetadata          *metadata,
                                                       GimpProcedureConfig   *config,
                                                       gpointer               run_data);
@@ -364,6 +365,13 @@ xmc_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           XCURSOR_EXTENSION);
 
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB    |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA  |
+                                              GIMP_EXPORT_CAN_HANDLE_LAYERS |
+                                              GIMP_EXPORT_NEEDS_ALPHA,
+                                              NULL, NULL);
+
       gimp_procedure_add_int_argument (procedure, "hot-spot-x",
                                        _("Hot spot _X"),
                                        _("X-coordinate of hot spot "
@@ -525,6 +533,7 @@ xmc_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
             GFile                *file,
+            GimpExportOptions    *options,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
@@ -592,11 +601,7 @@ xmc_export (GimpProcedure        *procedure,
       break;
     }
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB    |
-                              GIMP_EXPORT_CAN_HANDLE_ALPHA  |
-                              GIMP_EXPORT_CAN_HANDLE_LAYERS |
-                              GIMP_EXPORT_NEEDS_ALPHA);
+  export = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
   n_drawables = g_list_length (drawables);
 

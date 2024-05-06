@@ -70,6 +70,7 @@ static GimpValueArray *jpegxl_export            (GimpProcedure         *procedur
                                                  GimpRunMode            run_mode,
                                                  GimpImage             *image,
                                                  GFile                 *file,
+                                                 GimpExportOptions     *options,
                                                  GimpMetadata          *metadata,
                                                  GimpProcedureConfig   *config,
                                                  gpointer               run_data);
@@ -181,6 +182,12 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
                                           "image/jxl");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "jxl");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB  |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
+                                              NULL, NULL);
 
       gimp_procedure_add_boolean_argument (procedure, "lossless",
                                            _("L_ossless"),
@@ -2115,6 +2122,7 @@ jpegxl_export (GimpProcedure        *procedure,
                GimpRunMode           run_mode,
                GimpImage            *image,
                GFile                *file,
+               GimpExportOptions    *options,
                GimpMetadata         *metadata,
                GimpProcedureConfig  *config,
                gpointer              run_data)
@@ -2136,10 +2144,7 @@ jpegxl_export (GimpProcedure        *procedure,
         }
     }
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY |
-                              GIMP_EXPORT_CAN_HANDLE_ALPHA);
+  export = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
   if (status == GIMP_PDB_SUCCESS)

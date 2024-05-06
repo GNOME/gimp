@@ -187,6 +187,7 @@ static GimpValueArray * pdf_export               (GimpProcedure        *procedur
                                                   GimpRunMode           run_mode,
                                                   GimpImage            *image,
                                                   GFile                *file,
+                                                  GimpExportOptions    *options,
                                                   GimpMetadata         *metadata,
                                                   GimpProcedureConfig  *config,
                                                   gpointer              run_data);
@@ -196,9 +197,15 @@ static GimpValueArray * pdf_export_multi         (GimpProcedure        *procedur
 
 static GimpPDBStatusType pdf_export_image        (GimpProcedure        *procedure,
                                                   GimpProcedureConfig  *config,
+                                                  GimpExportOptions    *options,
                                                   gboolean              single_image,
                                                   gboolean              show_progress,
                                                   GError              **error);
+
+static void              export_edit_options     (GimpProcedure        *procedure,
+                                                  GimpProcedureConfig  *config,
+                                                  GimpExportOptions    *options,
+                                                  gpointer              create_data);
 
 static void             init_image_list_defaults (GimpImage            *image);
 
@@ -332,6 +339,14 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                           "application/pdf");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pdf");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB    |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA  |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY   |
+                                              GIMP_EXPORT_CAN_HANDLE_LAYERS |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED,
+                                              export_edit_options, NULL);
 
       gimp_procedure_add_boolean_argument (procedure, "vectorize",
                                            _("Convert _bitmaps to vector graphics where possible"),
@@ -470,6 +485,7 @@ pdf_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
             GFile                *file,
+            GimpExportOptions    *options,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
@@ -495,7 +511,7 @@ pdf_export (GimpProcedure        *procedure,
     }
 
   if (status == GIMP_PDB_SUCCESS)
-    status = pdf_export_image (procedure, config, TRUE,
+    status = pdf_export_image (procedure, config, options, TRUE,
                                (run_mode != GIMP_RUN_NONINTERACTIVE),
                                &error);
 
@@ -510,6 +526,7 @@ pdf_export_multi (GimpProcedure        *procedure,
   GError            *error     = NULL;
   GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
+  GimpExportOptions *options   = NULL;
   gchar             *uri;
   const gint32      *image_ids = NULL;
   GimpImage         *image     = NULL;
@@ -523,6 +540,8 @@ pdf_export_multi (GimpProcedure        *procedure,
                 "count",    &multi_page.image_count,
                 "images",   &image_ids,
                 NULL);
+
+  options = gimp_export_options_new ();
 
   if (uri != NULL)
     {
@@ -549,7 +568,7 @@ pdf_export_multi (GimpProcedure        *procedure,
     }
 
   if (status == GIMP_PDB_SUCCESS)
-    status = pdf_export_image (procedure, config, FALSE,
+    status = pdf_export_image (procedure, config, options, FALSE,
                                (run_mode != GIMP_RUN_NONINTERACTIVE),
                                &error);
 
@@ -635,21 +654,19 @@ get_missing_fonts (GList *layers)
 static GimpPDBStatusType
 pdf_export_image (GimpProcedure        *procedure,
                   GimpProcedureConfig  *config,
+                  GimpExportOptions    *options,
                   gboolean              single_image,
                   gboolean              show_progress,
                   GError              **error)
 {
-  cairo_surface_t        *pdf_file;
-  cairo_t                *cr;
-  GimpExportCapabilities  capabilities;
-  FILE                   *fp;
-  gint                    i;
-  gboolean                apply_masks;
-  gboolean                layers_as_pages = FALSE;
-  gboolean                fill_background_color;
+  cairo_surface_t *pdf_file;
+  cairo_t         *cr;
+  FILE            *fp;
+  gint             i;
+  gboolean         layers_as_pages = FALSE;
+  gboolean         fill_background_color;
 
   g_object_get (config,
-                "apply-masks",           &apply_masks,
                 "fill-background-color", &fill_background_color,
                 NULL);
 
@@ -682,17 +699,6 @@ pdf_export_image (GimpProcedure        *procedure,
 
   cr = cairo_create (pdf_file);
 
-  capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB    |
-                  GIMP_EXPORT_CAN_HANDLE_ALPHA  |
-                  GIMP_EXPORT_CAN_HANDLE_GRAY   |
-                  GIMP_EXPORT_CAN_HANDLE_LAYERS |
-                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
-  /* This seems counter-intuitive, but not setting the mask capability
-   * will apply any layer mask upon gimp_export_image().
-   */
-  if (! apply_masks)
-    capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS;
-
   for (i = 0; i < multi_page.image_count; i++)
     {
       GimpImage     *image = multi_page.images[i];
@@ -716,8 +722,8 @@ pdf_export_image (GimpProcedure        *procedure,
        */
       cairo_save (cr);
 
-      if (! (gimp_export_image (&image,
-                                capabilities) == GIMP_EXPORT_EXPORT))
+      if (! (gimp_export_options_get_image (options,
+                                             &image) == GIMP_EXPORT_EXPORT))
         {
           /* gimp_drawable_histogram() only works within the bounds of
            * the selection, which is a problem (see issue #2431).
@@ -821,6 +827,34 @@ pdf_export_image (GimpProcedure        *procedure,
   fclose (fp);
 
   return GIMP_PDB_SUCCESS;
+}
+
+static void
+export_edit_options (GimpProcedure        *procedure,
+                     GimpProcedureConfig  *config,
+                     GimpExportOptions    *options,
+                     gpointer              create_data)
+{
+  GimpExportCapabilities capabilities;
+  gboolean               apply_masks;
+
+  g_object_get (G_OBJECT (config),
+                "apply-masks", &apply_masks,
+                NULL);
+
+  capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB    |
+                  GIMP_EXPORT_CAN_HANDLE_ALPHA  |
+                  GIMP_EXPORT_CAN_HANDLE_GRAY   |
+                  GIMP_EXPORT_CAN_HANDLE_LAYERS |
+                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
+
+
+  if (! apply_masks)
+    capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS;
+
+  g_object_set (G_OBJECT (options),
+                "capabilities", capabilities,
+                NULL);
 }
 
 /******************************************************/

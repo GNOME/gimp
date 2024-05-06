@@ -32,20 +32,21 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpImage*  gimp_file_load           (GimpRunMode  run_mode,
-                                      GFile       *file);
-GimpLayer*  gimp_file_load_layer     (GimpRunMode  run_mode,
-                                      GimpImage   *image,
-                                      GFile       *file);
-GimpLayer** gimp_file_load_layers    (GimpRunMode  run_mode,
-                                      GimpImage   *image,
-                                      GFile       *file,
-                                      gint        *num_layers);
-gboolean    gimp_file_save           (GimpRunMode  run_mode,
-                                      GimpImage   *image,
-                                      GFile       *file);
-gboolean    gimp_file_save_thumbnail (GimpImage   *image,
-                                      GFile       *file);
+GimpImage*  gimp_file_load           (GimpRunMode        run_mode,
+                                      GFile             *file);
+GimpLayer*  gimp_file_load_layer     (GimpRunMode        run_mode,
+                                      GimpImage         *image,
+                                      GFile             *file);
+GimpLayer** gimp_file_load_layers    (GimpRunMode        run_mode,
+                                      GimpImage         *image,
+                                      GFile             *file,
+                                      gint              *num_layers);
+gboolean    gimp_file_save           (GimpRunMode        run_mode,
+                                      GimpImage         *image,
+                                      GFile             *file,
+                                      GimpExportOptions *options);
+gboolean    gimp_file_save_thumbnail (GimpImage         *image,
+                                      GFile             *file);
 
 
 G_END_DECLS

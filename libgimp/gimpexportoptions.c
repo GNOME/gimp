@@ -1,8 +1,8 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpexport.c
- * Copyright (C) 1999-2004 Sven Neumann <sven@gimp.org>
+ * gimpexportoptions.c
+ * Copyright (C) 2024 Alx Sa.
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -12,7 +12,7 @@
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
@@ -21,39 +21,17 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <gtk/gtk.h>
-
 #include "gimp.h"
-#include "gimpui.h"
+
+#include "gimpexportoptions.h"
 
 #include "libgimp-intl.h"
 
 
-/**
- * SECTION: gimpexport
- * @title: gimpexport
- * @short_description: Export an image before it is saved.
- *
- * This function should be called by all save_plugins unless they are
- * able to save all image formats GIMP knows about. It takes care of
- * asking the user if she wishes to export the image to a format the
- * save_plugin can handle. It then performs the necessary conversions
- * (e.g. Flatten) on a copy of the image so that the image can be
- * saved without changing the original image.
- *
- * The capabilities of the save_plugin are specified by combining
- * #GimpExportCapabilities using a bitwise OR.
- *
- * Make sure you have initialized GTK+ before you call this function
- * as it will most probably have to open a dialog.
- **/
-
+/* export helper functions */
 
 typedef void (* ExportFunc) (GimpImage    *image,
                              GList       **drawables);
-
 
 /* the export action structure */
 typedef struct
@@ -548,47 +526,42 @@ export_action_perform (const ExportAction *action,
   export_action_get_func (action) (image, drawables);
 }
 
-
-/* dialog functions */
-
 /**
- * gimp_export_image:
+ * gimp_export_options_get_image:
+ * @options:      The #GimpExportOptions object.
  * @image:        Pointer to the image.
- * @capabilities: What can the image_format do?
  *
  * Takes an image to be saved together with a description
- * of the capabilities of the image_format. If the type of
- * image doesn't match the capabilities of the format
- * a dialog is opened that informs the user that the image has
- * to be exported and offers to do the necessary conversions.
- *
- * If the user chooses to export the image, a copy is created.
+ * of the capabilities of the image_format. A copy is created.
  * This copy is then converted, @image is changed to point to the
  * new image and the procedure returns GIMP_EXPORT_EXPORT.
  * The save_plugin has to take care of deleting the created image using
  * gimp_image_delete() once the image has been saved.
  *
- * If the user chooses to Ignore the export problem, @image is not
- * altered, GIMP_EXPORT_IGNORE is returned and the save_plugin
- * should try to save the original image.
- *
  * Returns: An enum of #GimpExportReturn describing the user_action.
+ *
+ * Since: 3.0
  **/
 GimpExportReturn
-gimp_export_image (GimpImage              **image,
-                   GimpExportCapabilities   capabilities)
+gimp_export_options_get_image (GimpExportOptions       *options,
+                               GimpImage              **image)
 {
-  GSList            *actions = NULL;
-  GimpImageBaseType  type;
-  GList             *layers;
-  gint               n_layers;
-  GList             *iter;
-  gboolean           added_flatten        = FALSE;
-  gboolean           has_layer_masks      = FALSE;
-  gboolean           background_has_alpha = TRUE;
-  GimpExportReturn   retval               = GIMP_EXPORT_IGNORE;
+  GSList                 *actions = NULL;
+  GimpImageBaseType       type;
+  GList                  *layers;
+  gint                    n_layers;
+  GList                  *iter;
+  GimpExportCapabilities  capabilities         = 0;
+  gboolean                added_flatten        = FALSE;
+  gboolean                has_layer_masks      = FALSE;
+  gboolean                background_has_alpha = TRUE;
+  GimpExportReturn        retval               = GIMP_EXPORT_IGNORE;
 
   g_return_val_if_fail (gimp_image_is_valid (*image), FALSE);
+  g_return_val_if_fail (options != NULL, FALSE);
+
+  /* Get capabilities from ExportOptions */
+  g_object_get (options, "capabilities", &capabilities, NULL);
 
   /* do some sanity checks */
   if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
@@ -890,72 +863,4 @@ gimp_export_image (GimpImage              **image,
   g_slist_free (actions);
 
   return retval;
-}
-
-/**
- * gimp_export_dialog_new:
- * @format_name: The short name of the image_format (e.g. JPEG or PNG).
- * @role:        The dialog's @role which will be set with
- *               gtk_window_set_role().
- * @help_id:     The GIMP help id.
- *
- * Creates a new export dialog. All file plug-ins should use this
- * dialog to get a consistent look on the export dialogs. Use
- * gimp_export_dialog_get_content_area() to get a vertical #GtkBox to be
- * filled with export options. The export dialog is a wrapped
- * #GimpDialog.
- *
- * The dialog response when the user clicks on the Export button is
- * %GTK_RESPONSE_OK, and when the Cancel button is clicked it is
- * %GTK_RESPONSE_CANCEL.
- *
- * Returns: (transfer full): The new export dialog.
- *
- * Since: 2.8
- **/
-GtkWidget *
-gimp_export_dialog_new (const gchar *format_name,
-                        const gchar *role,
-                        const gchar *help_id)
-{
-  GtkWidget *dialog;
-  /* TRANSLATORS: the %s parameter is an image format name (ex: PNG). */
-  gchar     *title  = g_strdup_printf (_("Export Image as %s"), format_name);
-
-  dialog = gimp_dialog_new (title, role,
-                            NULL, 0,
-                            gimp_standard_help_func, help_id,
-
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_Export"), GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
-
-  g_free (title);
-
-  return dialog;
-}
-
-/**
- * gimp_export_dialog_get_content_area:
- * @dialog: A dialog created with gimp_export_dialog_new()
- *
- * Returns the vertical #GtkBox of the passed export dialog to be filled with
- * export options.
- *
- * Returns: (transfer none): The #GtkBox to fill with export options.
- *
- * Since: 2.8
- **/
-GtkWidget *
-gimp_export_dialog_get_content_area (GtkWidget *dialog)
-{
-  return gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 }

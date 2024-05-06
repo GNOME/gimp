@@ -98,6 +98,7 @@ static GimpValueArray * fits_export           (GimpProcedure         *procedure,
                                                GimpRunMode            run_mode,
                                                GimpImage             *image,
                                                GFile                 *file,
+                                               GimpExportOptions     *options,
                                                GimpMetadata          *metadata,
                                                GimpProcedureConfig   *config,
                                                gpointer               run_data);
@@ -239,6 +240,12 @@ fits_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-fits");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "fit,fits");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB  |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED,
+                                              NULL, NULL);
     }
 
   return procedure;
@@ -288,6 +295,7 @@ fits_export (GimpProcedure        *procedure,
              GimpRunMode           run_mode,
              GimpImage            *image,
              GFile                *file,
+             GimpExportOptions    *options,
              GimpMetadata         *metadata,
              GimpProcedureConfig  *config,
              gpointer              run_data)
@@ -305,10 +313,7 @@ fits_export (GimpProcedure        *procedure,
   if (run_mode == GIMP_RUN_INTERACTIVE)
     gimp_ui_init (PLUG_IN_BINARY);
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB  |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY |
-                              GIMP_EXPORT_CAN_HANDLE_INDEXED);
+  export = gimp_export_options_get_image (options, &image);
 
   drawables   = gimp_image_list_layers (image);
   n_drawables = g_list_length (drawables);

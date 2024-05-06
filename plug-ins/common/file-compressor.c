@@ -157,6 +157,7 @@ static GimpValueArray * compressor_export           (GimpProcedure         *proc
                                                      GimpRunMode            run_mode,
                                                      GimpImage             *image,
                                                      GFile                 *file,
+                                                     GimpExportOptions     *options,
                                                      GimpMetadata          *metadata,
                                                      GimpProcedureConfig   *config,
                                                      gpointer               run_data);
@@ -176,6 +177,7 @@ static GimpImage         * load_image               (const CompressorEntry *comp
 static GimpPDBStatusType   export_image             (const CompressorEntry *compressor,
                                                      GFile                 *file,
                                                      GimpImage             *image,
+                                                     GimpExportOptions     *options,
                                                      gint                   n_drawables,
                                                      GList                 *drawables,
                                                      gint32                 run_mode,
@@ -401,9 +403,10 @@ compressor_export (GimpProcedure        *procedure,
                    GimpRunMode           run_mode,
                    GimpImage            *image,
                    GFile                *file,
+                   GimpExportOptions    *options,
                    GimpMetadata         *metadata,
                    GimpProcedureConfig  *config,
-                  gpointer              run_data)
+                   gpointer              run_data)
 {
   const CompressorEntry *compressor  = run_data;
   GimpPDBStatusType      status;
@@ -417,8 +420,8 @@ compressor_export (GimpProcedure        *procedure,
   gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
                                       GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
-  status = export_image (compressor, file, image, n_drawables, drawables,
-                         run_mode, &error);
+  status = export_image (compressor, file, image, options, n_drawables,
+                         drawables, run_mode, &error);
 
   g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
@@ -428,6 +431,7 @@ static GimpPDBStatusType
 export_image (const CompressorEntry  *compressor,
               GFile                  *file,
               GimpImage              *image,
+              GimpExportOptions      *options,
               gint                    n_drawables,
               GList                  *drawables,
               gint32                  run_mode,
@@ -448,7 +452,7 @@ export_image (const CompressorEntry  *compressor,
 
   tmp_file = gimp_temp_file (ext + 1);
 
-  if (! (gimp_file_save (run_mode, image, tmp_file) &&
+  if (! (gimp_file_save (run_mode, image, tmp_file, options) &&
          valid_file (tmp_file)))
     {
       g_file_delete (tmp_file, NULL, NULL);

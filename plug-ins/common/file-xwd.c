@@ -170,6 +170,7 @@ static GimpValueArray * xwd_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               GFile                 *file,
+                                              GimpExportOptions     *options,
                                               GimpMetadata          *metadata,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
@@ -371,6 +372,12 @@ xwd_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-xwindowdump");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "xwd");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB  |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED,
+                                              NULL, NULL);
     }
 
   return procedure;
@@ -412,6 +419,7 @@ xwd_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
             GFile                *file,
+            GimpExportOptions    *options,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
@@ -423,10 +431,7 @@ xwd_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB  |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY |
-                              GIMP_EXPORT_CAN_HANDLE_INDEXED);
+  export    = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
   if (! export_image (file, image, drawables->data, &error))

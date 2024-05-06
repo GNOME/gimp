@@ -70,6 +70,7 @@ file_save (Gimp                *gimp,
   gboolean           mounted    = TRUE;
   GError            *my_error   = NULL;
   GList             *drawables_list;
+  GimpExportOptions *options    = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_PDB_CALLING_ERROR);
@@ -90,6 +91,9 @@ file_save (Gimp                *gimp,
   g_object_ref (orig_file);
 
   gimp_image_saving (image);
+
+  /* TEMP - Remove later */
+  options = gimp_export_options_new ();
 
   drawables_list = gimp_image_get_selected_drawables (image);
 
@@ -190,9 +194,10 @@ file_save (Gimp                *gimp,
                                         gimp_get_user_context (gimp),
                                         progress, error,
                                         gimp_object_get_name (file_proc),
-                                        GIMP_TYPE_RUN_MODE,     run_mode,
-                                        GIMP_TYPE_IMAGE,        image,
-                                        G_TYPE_FILE,            file,
+                                        GIMP_TYPE_RUN_MODE,       run_mode,
+                                        GIMP_TYPE_IMAGE,          image,
+                                        G_TYPE_FILE,              file,
+                                        GIMP_TYPE_EXPORT_OPTIONS, options,
                                         G_TYPE_NONE);
   status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 

@@ -96,6 +96,7 @@ static GimpValueArray * dicom_export           (GimpProcedure         *procedure
                                                 GimpRunMode            run_mode,
                                                 GimpImage             *image,
                                                 GFile                 *file,
+                                                GimpExportOptions     *options,
                                                 GimpMetadata          *metadata,
                                                 GimpProcedureConfig   *config,
                                                 gpointer               run_data);
@@ -174,13 +175,13 @@ dicom_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("DICOM image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads files of the dicom file format",
-                                        "Load a file in the DICOM standard "
-                                        "format. The standard is defined at "
-                                        "http://medical.nema.org/. The plug-in "
-                                        "currently only supports reading "
-                                        "images with uncompressed pixel "
-                                        "sections.",
+                                        _("Loads files of the dicom file format"),
+                                        _("Load a file in the DICOM standard "
+                                          "format. The standard is defined at "
+                                          "http://medical.nema.org/. The plug-in "
+                                          "currently only supports reading "
+                                          "images with uncompressed pixel "
+                                          "sections."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Dov Grobgeld",
@@ -207,16 +208,16 @@ dicom_create_procedure (GimpPlugIn  *plug_in,
                                        "Medicine image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Save file in the DICOM file format",
-                                        "Save an image in the medical "
-                                        "standard DICOM image formats. "
-                                        "The standard is defined at "
-                                        "http://medical.nema.org/. The file "
-                                        "format is defined in section 10 of "
-                                        "the standard. The files are saved "
-                                        "uncompressed and the compulsory DICOM "
-                                        "tags are filled with default dummy "
-                                        "values.",
+                                        _("Save file in the DICOM file format"),
+                                        _("Save an image in the medical "
+                                          "standard DICOM image formats. "
+                                          "The standard is defined at "
+                                          "http://medical.nema.org/. The file "
+                                          "format is defined in section 10 of "
+                                          "the standard. The files are saved "
+                                          "uncompressed and the compulsory DICOM "
+                                          "tags are filled with default dummy "
+                                          "values."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Dov Grobgeld",
@@ -227,6 +228,11 @@ dicom_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-dcm");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "dcm,dicom");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB   |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY,
+                                              NULL, NULL);
     }
 
   return procedure;
@@ -268,6 +274,7 @@ dicom_export (GimpProcedure        *procedure,
               GimpRunMode           run_mode,
               GimpImage            *image,
               GFile                *file,
+              GimpExportOptions    *options,
               GimpMetadata         *metadata,
               GimpProcedureConfig  *config,
               gpointer              run_data)
@@ -279,9 +286,7 @@ dicom_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY);
+  export = gimp_export_options_get_image (options, &image);
 
   drawables = gimp_image_list_layers (image);
 

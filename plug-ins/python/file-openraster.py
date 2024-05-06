@@ -188,7 +188,7 @@ def thumbnail_ora(procedure, file, thumb_size, args, data):
     else:
         return procedure.new_return_values(result.index(0), GLib.Error(result.index(1)))
 
-def export_ora(procedure, run_mode, image, file, metadata, config, data):
+def export_ora(procedure, run_mode, image, file, options, metadata, config, data):
     def write_file_str(zfile, fname, data):
         # work around a permission bug in the zipfile library:
         # http://bugs.python.org/issue3394
@@ -216,7 +216,6 @@ def export_ora(procedure, run_mode, image, file, metadata, config, data):
         tmp = os.path.join(tempdir, 'tmp.png')
         interlace, compression = 0, 2
 
-        #TODO: Use GimpExportOptions for this once available
         width, height = drawable.get_width(), drawable.get_height()
         tmp_img = Gimp.Image.new(width, height, image.get_base_type())
         tmp_layer = Gimp.Layer.new_from_drawable (drawable, tmp_img)
@@ -227,6 +226,7 @@ def export_ora(procedure, run_mode, image, file, metadata, config, data):
         pdb_config.set_property('run-mode', Gimp.RunMode.NONINTERACTIVE)
         pdb_config.set_property('image', tmp_img)
         pdb_config.set_property('file', Gio.File.new_for_path(tmp))
+        pdb_config.set_property('options', None)
         pdb_config.set_property('interlaced', interlace)
         pdb_config.set_property('compression', compression)
         # write all PNG chunks except oFFs(ets)

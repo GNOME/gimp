@@ -63,6 +63,7 @@ static GimpValueArray * csource_export           (GimpProcedure        *procedur
                                                   GimpRunMode           run_mode,
                                                   GimpImage            *image,
                                                   GFile                *file,
+                                                  GimpExportOptions    *options,
                                                   GimpMetadata         *metadata,
                                                   GimpProcedureConfig  *config,
                                                   gpointer              run_data);
@@ -139,6 +140,11 @@ csource_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "c");
 
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB   |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
+                                              NULL, NULL);
+
       gimp_procedure_add_string_aux_argument (procedure, "prefixed-name",
                                               _("_Prefixed name"),
                                               _("Prefixed name"),
@@ -205,6 +211,7 @@ csource_export (GimpProcedure        *procedure,
                 GimpRunMode           run_mode,
                 GimpImage            *image,
                 GFile                *file,
+                GimpExportOptions    *options,
                 GimpMetadata         *metadata,
                 GimpProcedureConfig  *config,
                 gpointer              run_data)
@@ -225,9 +232,7 @@ csource_export (GimpProcedure        *procedure,
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB |
-                              GIMP_EXPORT_CAN_HANDLE_ALPHA);
+  export = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
   g_object_set (config,

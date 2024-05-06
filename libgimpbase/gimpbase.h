@@ -29,6 +29,7 @@
 #include <libgimpbase/gimpchoice.h>
 #include <libgimpbase/gimpcpuaccel.h>
 #include <libgimpbase/gimpenv.h>
+#include <libgimpbase/gimpexportoptions.h>
 #include <libgimpbase/gimplimits.h>
 #include <libgimpbase/gimpmemsize.h>
 #include <libgimpbase/gimpmetadata.h>

@@ -62,7 +62,7 @@ preamble = """<!DOCTYPE html>
 
 postamble = """\n</pre>\n</body>\n</html>\n"""
 
-def export_colorxhtml(procedure, run_mode, image, file, metadata, config, data):
+def export_colorxhtml(procedure, run_mode, image, file, options, metadata, config, data):
     if file is None:
         error = 'No file given'
         return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,

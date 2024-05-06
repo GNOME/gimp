@@ -185,6 +185,7 @@ static GimpValueArray * tga_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               GFile                 *file,
+                                              GimpExportOptions     *options,
                                               GimpMetadata          *metadata,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
@@ -302,6 +303,13 @@ tga_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "tga");
 
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
+                                              NULL, NULL);
+
       gimp_procedure_add_boolean_argument (procedure, "rle",
                                            _("_Use RLE compression"),
                                            _("Use RLE compression"),
@@ -354,6 +362,7 @@ tga_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
             GFile                *file,
+            GimpExportOptions    *options,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
@@ -368,16 +377,12 @@ tga_export (GimpProcedure        *procedure,
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       gimp_ui_init (PLUG_IN_BINARY);
-        
+
       if (! save_dialog (image, procedure, G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
     }
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB     |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                              GIMP_EXPORT_CAN_HANDLE_ALPHA);
+  export = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
   if (status == GIMP_PDB_SUCCESS)

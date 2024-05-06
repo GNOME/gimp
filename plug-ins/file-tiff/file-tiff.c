@@ -95,6 +95,7 @@ static GimpValueArray  * tiff_export           (GimpProcedure         *procedure
                                                 GimpRunMode            run_mode,
                                                 GimpImage             *image,
                                                 GFile                 *file,
+                                                GimpExportOptions     *options,
                                                 GimpMetadata          *metadata,
                                                 GimpProcedureConfig   *config,
                                                 gpointer               run_data);
@@ -103,9 +104,14 @@ static GimpPDBStatusType tiff_export_rec       (GimpProcedure         *procedure
                                                 GimpImage             *orig_image,
                                                 GFile                 *file,
                                                 GimpProcedureConfig   *config,
+                                                GimpExportOptions     *options,
                                                 GimpMetadata          *metadata,
                                                 gboolean               retried,
                                                 GError               **error);
+static void              export_edit_options   (GimpProcedure         *procedure,
+                                                GimpProcedureConfig   *config,
+                                                GimpExportOptions     *options,
+                                                gpointer               create_data);
 
 static gboolean          image_is_monochrome  (GimpImage            *image);
 static gboolean          image_is_multi_layer (GimpImage            *image);
@@ -223,6 +229,11 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "tif,tiff");
 
+      /* TIFF capabilities are so dependent on export settings, we can't assign
+       * defaults until we know how the user wants to export it */
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              0, export_edit_options, NULL);
+
       gimp_procedure_add_boolean_argument (procedure, "bigtiff",
                                            _("Export in _BigTIFF variant file format"),
                                            _("The BigTIFF variant file format uses 64-bit offsets, "
@@ -339,6 +350,7 @@ tiff_export (GimpProcedure        *procedure,
              GimpRunMode           run_mode,
              GimpImage            *image,
              GFile                *file,
+             GimpExportOptions    *options,
              GimpMetadata         *metadata,
              GimpProcedureConfig  *config,
              gpointer              run_data)
@@ -358,8 +370,8 @@ tiff_export (GimpProcedure        *procedure,
       break;
     }
 
-  status = tiff_export_rec (procedure, run_mode, image,
-                            file, config, metadata, FALSE, &error);
+  status = tiff_export_rec (procedure, run_mode, image, file,
+                            config, options, metadata, FALSE, &error);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
@@ -370,6 +382,7 @@ tiff_export_rec (GimpProcedure        *procedure,
                  GimpImage            *orig_image,
                  GFile                *file,
                  GimpProcedureConfig  *config,
+                 GimpExportOptions    *options,
                  GimpMetadata         *metadata,
                  gboolean              retried,
                  GError              **error)
@@ -396,43 +409,9 @@ tiff_export_rec (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      GimpExportCapabilities capabilities;
-      GimpCompression        compression;
-      gboolean               save_layers;
-      gboolean               crop_layers;
+      g_object_get (config, "bigtiff", &bigtiff, NULL);
 
-      g_object_get (config,
-                    "bigtiff",     &bigtiff,
-                    "save-layers", &save_layers,
-                    "crop-layers", &crop_layers,
-                    NULL);
-      compression = gimp_procedure_config_get_choice_id (config, "compression");
-
-      if (compression == GIMP_COMPRESSION_CCITTFAX3 ||
-          compression == GIMP_COMPRESSION_CCITTFAX4)
-        {
-          /* G3/G4 are fax compressions. They only support
-           * monochrome images without alpha support.
-           */
-          capabilities = GIMP_EXPORT_CAN_HANDLE_INDEXED;
-        }
-      else
-        {
-          capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB     |
-                          GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                          GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                          GIMP_EXPORT_CAN_HANDLE_ALPHA);
-        }
-
-      if (save_layers && image_is_multi_layer (orig_image))
-        {
-          capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
-
-          if (crop_layers)
-            capabilities |= GIMP_EXPORT_NEEDS_CROP;
-        }
-
-      export = gimp_export_image (&image, capabilities);
+      export = gimp_export_options_get_image (options, &image);
     }
   drawables = gimp_image_list_layers (image);
 
@@ -466,11 +445,57 @@ tiff_export_rec (GimpProcedure        *procedure,
       tiff_reset_file_size_error ();
       g_clear_error (error);
 
-      return tiff_export_rec (procedure, run_mode, orig_image,
-                              file, config, metadata, TRUE, error);
+      return tiff_export_rec (procedure, run_mode, orig_image, file,
+                              config, options, metadata, TRUE, error);
     }
 
   return status;
+}
+
+static void
+export_edit_options (GimpProcedure        *procedure,
+                     GimpProcedureConfig  *config,
+                     GimpExportOptions    *options,
+                     gpointer              create_data)
+{
+  GimpExportCapabilities capabilities;
+  GimpCompression        compression;
+  gboolean               save_layers;
+  gboolean               crop_layers;
+
+  g_object_get (config,
+                "save-layers", &save_layers,
+                "crop-layers", &crop_layers,
+                NULL);
+  compression = gimp_procedure_config_get_choice_id (config, "compression");
+
+  if (compression == GIMP_COMPRESSION_CCITTFAX3 ||
+      compression == GIMP_COMPRESSION_CCITTFAX4)
+    {
+      /* G3/G4 are fax compressions. They only support
+       * monochrome images without alpha support.
+       */
+      capabilities = GIMP_EXPORT_CAN_HANDLE_INDEXED;
+    }
+  else
+    {
+      capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB     |
+                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
+    }
+
+  if (save_layers)
+    {
+      capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+
+      if (crop_layers)
+        capabilities |= GIMP_EXPORT_NEEDS_CROP;
+    }
+
+  g_object_set (G_OBJECT (options),
+                "capabilities", capabilities,
+                NULL);
 }
 
 static gboolean

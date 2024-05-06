@@ -482,6 +482,18 @@ package Gimp::CodeGen::pdb;
 		     set_value_func  => 'g_value_set_uint ($value, $var)',
 		     take_value_func => 'g_value_set_uint ($value, $var)' },
 
+    export_options => { name         => 'EXPORT_OPTIONS',
+		     gtype           => 'GIMP_TYPE_EXPORT_OPTIONS',
+		     type            => 'GimpExportOptions *',
+		     const_type      => 'GimpExportOptions *',
+		     init_value      => 'NULL',
+		     out_annotate    => '(transfer none)',
+		     get_value_func  => '$var = g_value_get_object ($value)',
+		     dup_value_func  => '$var = g_value_dup_object (gimp_value_array_index ($value))',
+		     set_value_func  => 'g_value_set_object ($value, $var)',
+		     take_value_func => 'g_value_set_object ($value, $var)',
+		     headers         => [ qw("libgimpbase/gimpbase.h") ] },
+
     unit        => { name            => 'UNIT',
 		     gtype           => 'GIMP_TYPE_UNIT',
 		     type            => 'GimpUnit *',

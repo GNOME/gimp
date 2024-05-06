@@ -435,6 +435,15 @@ g_param_spec_uint ("$name",
                    $flags)
 CODE
     }
+    elsif ($pdbtype eq 'export_options') {
+	$pspec = <<CODE;
+gimp_param_spec_export_options ("$name",
+                                "$nick",
+                                "$blurb",
+                                0,
+                                $flags)
+CODE
+    }
     elsif ($pdbtype eq 'float') {
 	$min = defined $typeinfo[0] ? $typeinfo[0] : -G_MAXDOUBLE;
 	$max = defined $typeinfo[2] ? $typeinfo[2] : G_MAXDOUBLE;
