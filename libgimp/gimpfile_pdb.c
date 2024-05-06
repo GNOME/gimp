@@ -179,6 +179,7 @@ gimp_file_load_layers (GimpRunMode  run_mode,
  * @run_mode: The run mode.
  * @image: Input image.
  * @file: The file to save the image in.
+ * @options: Export option settings.
  *
  * Saves a file by extension.
  *
@@ -188,9 +189,10 @@ gimp_file_load_layers (GimpRunMode  run_mode,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_file_save (GimpRunMode  run_mode,
-                GimpImage   *image,
-                GFile       *file)
+gimp_file_save (GimpRunMode        run_mode,
+                GimpImage         *image,
+                GFile             *file,
+                GimpExportOptions *options)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -200,6 +202,7 @@ gimp_file_save (GimpRunMode  run_mode,
                                           GIMP_TYPE_RUN_MODE, run_mode,
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_FILE, file,
+                                          GIMP_TYPE_EXPORT_OPTIONS, options,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),

@@ -89,6 +89,7 @@ static GimpValueArray * xbm_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               GFile                 *file,
+                                              GimpExportOptions     *options,
                                               GimpMetadata          *metadata,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
@@ -208,6 +209,11 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-xbitmap");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "xbm,icon,bitmap");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_BITMAP |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
+                                              NULL, NULL);
 
       gimp_procedure_add_boolean_argument (procedure, "save-comment",
                                            _("_Write comment"),
@@ -337,6 +343,7 @@ xbm_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
             GFile                *file,
+            GimpExportOptions    *options,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
@@ -356,9 +363,7 @@ xbm_export (GimpProcedure        *procedure,
       mask_basename = g_strdup (init_prefix (file, G_OBJECT (config)));
     }
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_BITMAP |
-                              GIMP_EXPORT_CAN_HANDLE_ALPHA);
+  export    = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)

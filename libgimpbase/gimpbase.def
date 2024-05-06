@@ -55,6 +55,8 @@ EXPORTS
 	gimp_enum_value_get_help
 	gimp_env_init
 	gimp_escape_uline
+	gimp_export_options_get_type
+	gimp_export_options_new
 	gimp_file_get_utf8_name
 	gimp_file_has_extension
 	gimp_file_show_in_file_manager
@@ -124,6 +126,7 @@ EXPORTS
 	gimp_paint_application_mode_get_type
 	gimp_param_array_get_type
 	gimp_param_choice_get_type
+	gimp_param_export_options_get_type
 	gimp_param_float_array_get_type
 	gimp_param_int32_array_get_type
 	gimp_param_memsize_get_type
@@ -131,6 +134,7 @@ EXPORTS
 	gimp_param_parasite_get_type
 	gimp_param_spec_array
 	gimp_param_spec_choice
+	gimp_param_spec_export_options
 	gimp_param_spec_float_array
 	gimp_param_spec_int32_array
 	gimp_param_spec_memsize

@@ -121,6 +121,7 @@ static GimpValueArray * sunras_export           (GimpProcedure         *procedur
                                                  GimpRunMode            run_mode,
                                                  GimpImage             *image,
                                                  GFile                 *file,
+                                                 GimpExportOptions     *options,
                                                  GimpMetadata          *metadata,
                                                  GimpProcedureConfig   *config,
                                                  gpointer               run_data);
@@ -275,8 +276,8 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("SUN Rasterfile image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Load file of the SunRaster file format",
-                                        "Load file of the SunRaster file format",
+                                        _("Load file of the SunRaster file format"),
+                                        _("Load file of the SunRaster file format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Peter Kirchgessner",
@@ -301,11 +302,11 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("SUN Rasterfile image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Export file in the SunRaster file "
-                                        "format",
-                                        "SUNRAS exporting handles all image "
-                                        "types except those with alpha "
-                                        "channels.",
+                                        _("Export file in the SunRaster file "
+                                          "format"),
+                                        _("SUNRAS exporting handles all image "
+                                          "types except those with alpha "
+                                          "channels."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Peter Kirchgessner",
@@ -318,6 +319,12 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-sun-raster");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "im1,im8,im24,im32,rs,ras,sun");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB  |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED,
+                                              NULL, NULL);
 
       gimp_procedure_add_choice_argument (procedure, "rle",
                                           _("_Data Formatting"),
@@ -368,6 +375,7 @@ sunras_export (GimpProcedure        *procedure,
                GimpRunMode           run_mode,
                GimpImage            *image,
                GFile                *file,
+               GimpExportOptions    *options,
                GimpMetadata         *metadata,
                GimpProcedureConfig  *config,
                gpointer              run_data)
@@ -387,10 +395,7 @@ sunras_export (GimpProcedure        *procedure,
         status = GIMP_PDB_CANCEL;
     }
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB  |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY |
-                              GIMP_EXPORT_CAN_HANDLE_INDEXED);
+  export = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
   if (status == GIMP_PDB_SUCCESS)

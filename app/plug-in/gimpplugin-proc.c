@@ -390,17 +390,17 @@ gimp_plug_in_set_file_proc_save_handler (GimpPlugIn   *plug_in,
 
   procedure = GIMP_PROCEDURE (proc);
 
-  if ((procedure->num_args < 3)                              ||
-      ! GIMP_IS_PARAM_SPEC_RUN_MODE     (procedure->args[0]) ||
-      ! GIMP_IS_PARAM_SPEC_IMAGE        (procedure->args[1]) ||
-      ! GIMP_IS_PARAM_SPEC_FILE         (procedure->args[2]))
+  if ((procedure->num_args < 4)                                ||
+      ! GIMP_IS_PARAM_SPEC_RUN_MODE       (procedure->args[0]) ||
+      ! GIMP_IS_PARAM_SPEC_IMAGE          (procedure->args[1]) ||
+      ! GIMP_IS_PARAM_SPEC_FILE           (procedure->args[2]))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_FAILED,
                    "Plug-in \"%s\"\n(%s)\n"
                    "attempted to register procedure \"%s\" "
                    "as save handler which does not take the standard "
                    "save procedure arguments:\n"
-                   "(GimpRunMode, GimpImage, GFile)",
+                   "(GimpRunMode, GimpImage, GFile, GimpExportOptions)",
                    gimp_object_get_name (plug_in),
                    gimp_file_get_utf8_name (plug_in->file),
                    proc_name);

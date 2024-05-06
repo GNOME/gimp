@@ -369,6 +369,31 @@ void          gimp_value_take_object_array       (GValue        *value,
                                                   gsize          length);
 
 
+/*
+ * GIMP_TYPE_PARAM_EXPORT_OPTIONS
+ */
+
+#define GIMP_TYPE_PARAM_EXPORT_OPTIONS           (gimp_param_export_options_get_type ())
+#define GIMP_PARAM_SPEC_EXPORT_OPTIONS(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_EXPORT_OPTIONS, GimpParamSpecExportOptions))
+#define GIMP_IS_PARAM_SPEC_EXPORT_OPTIONS(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_EXPORT_OPTIONS))
+
+typedef struct _GimpParamSpecExportOptions GimpParamSpecExportOptions;
+
+struct _GimpParamSpecExportOptions
+{
+  GParamSpecBoxed parent_instance;
+
+  gint            capabilities;
+};
+
+GType        gimp_param_export_options_get_type (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_export_options     (const gchar  *name,
+                                                 const gchar  *nick,
+                                                 const gchar  *blurb,
+                                                 gint          capabilities,
+                                                 GParamFlags   flags);
+
 G_END_DECLS
 
 #endif  /*  __GIMP_PARAM_SPECS_H__  */

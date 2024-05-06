@@ -270,6 +270,7 @@ EXPORTS
 	gimp_export_comment
 	gimp_export_exif
 	gimp_export_iptc
+	gimp_export_options_get_image
 	gimp_export_procedure_get_support_comment
 	gimp_export_procedure_get_support_exif
 	gimp_export_procedure_get_support_iptc
@@ -278,6 +279,7 @@ EXPORTS
 	gimp_export_procedure_get_support_xmp
 	gimp_export_procedure_get_type
 	gimp_export_procedure_new
+	gimp_export_procedure_set_capabilities
 	gimp_export_procedure_set_support_comment
 	gimp_export_procedure_set_support_exif
 	gimp_export_procedure_set_support_iptc

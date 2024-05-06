@@ -57,6 +57,7 @@ static GimpValueArray * header_export           (GimpProcedure        *procedure
                                                  GimpRunMode           run_mode,
                                                  GimpImage            *image,
                                                  GFile                *file,
+                                                 GimpExportOptions    *options,
                                                  GimpMetadata         *metadata,
                                                  GimpProcedureConfig  *config,
                                                  gpointer              run_data);
@@ -116,8 +117,8 @@ header_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("C source code header"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "saves files as C unsigned character "
-                                        "array",
+                                        _("Saves files as C unsigned character "
+                                          "array"),
                                         "FIXME: write help",
                                         name);
       gimp_procedure_set_attribution (procedure,
@@ -131,6 +132,11 @@ header_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-chdr");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "h");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED,
+                                              NULL, NULL);
     }
 
   return procedure;
@@ -141,6 +147,7 @@ header_export (GimpProcedure        *procedure,
                GimpRunMode           run_mode,
                GimpImage            *image,
                GFile                *file,
+               GimpExportOptions    *options,
                GimpMetadata         *metadata,
                GimpProcedureConfig  *config,
                gpointer              run_data)
@@ -152,9 +159,7 @@ header_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB |
-                              GIMP_EXPORT_CAN_HANDLE_INDEXED);
+  export = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
   if (! export_image (file, image, drawables->data,

@@ -450,7 +450,7 @@ EXPORTS
 	gimp_marshal_VOID__OBJECT_OBJECT
 	gimp_marshal_VOID__OBJECT_POINTER
 	gimp_marshal_VOID__POINTER_BOXED
-	gimp_marshal_VOID__POINTER_ENUM 
+	gimp_marshal_VOID__POINTER_ENUM
 	gimp_marshal_VOID__STRING_BOOLEAN_UINT_FLAGS
 	gimp_marshal_VOID__STRING_FLAGS
 	gimp_message

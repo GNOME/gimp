@@ -97,6 +97,7 @@ static GimpValueArray * png_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               GFile                 *file,
+                                              GimpExportOptions     *options,
                                               GimpMetadata          *metadata,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
@@ -234,6 +235,13 @@ png_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "png");
 
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
+                                              NULL, NULL);
+
       gimp_procedure_add_boolean_argument (procedure, "interlaced",
                                            _("_Interlacing (Adam7)"),
                                            _("Use Adam7 interlacing"),
@@ -367,6 +375,7 @@ png_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
             GFile                *file,
+            GimpExportOptions    *options,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
@@ -382,11 +391,7 @@ png_export (GimpProcedure        *procedure,
 
   orig_image = image;
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB     |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                              GIMP_EXPORT_CAN_HANDLE_ALPHA);
+  export = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
   alpha = gimp_drawable_has_alpha (drawables->data);
 

@@ -289,7 +289,8 @@ send_image (GObject       *config,
             GimpDrawable **drawables,
             gint32         run_mode)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType  status  = GIMP_PDB_SUCCESS;
+  GimpExportOptions *options = NULL;
   gchar             *ext;
   GFile             *tmpfile;
   gchar             *tmpname;
@@ -327,8 +328,10 @@ send_image (GObject       *config,
   /* get a temp name with the right extension and save into it. */
   tmpfile = gimp_temp_file (ext + 1);
   tmpname = g_file_get_path (tmpfile);
+  
+  options = gimp_export_options_new ();
 
-  if (! (gimp_file_save (run_mode, image, tmpfile) &&
+  if (! (gimp_file_save (run_mode, image, tmpfile, options) &&
          valid_file (tmpfile)))
     {
       goto error;

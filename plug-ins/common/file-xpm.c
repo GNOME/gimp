@@ -115,6 +115,7 @@ static GimpValueArray * xpm_export           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GimpImage             *image,
                                               GFile                 *file,
+                                              GimpExportOptions     *options,
                                               GimpMetadata          *metadata,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
@@ -197,16 +198,16 @@ xpm_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("X PixMap image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Load files in XPM (X11 Pixmap) format.",
-                                        "Load files in XPM (X11 Pixmap) format. "
-                                        "XPM is a portable image format "
-                                        "designed to be included in C source "
-                                        "code. XLib provides utility functions "
-                                        "to read this format. Newer code should "
-                                        "however be using gdk-pixbuf-csource "
-                                        "instead. XPM supports colored images, "
-                                        "unlike the XBM format which XPM was "
-                                        "designed to replace.",
+                                        _("Load files in XPM (X11 Pixmap) format."),
+                                        _("Load files in XPM (X11 Pixmap) format. "
+                                          "XPM is a portable image format "
+                                          "designed to be included in C source "
+                                          "code. XLib provides utility functions "
+                                          "to read this format. Newer code should "
+                                          "however be using gdk-pixbuf-csource "
+                                          "instead. XPM supports colored images, "
+                                          "unlike the XBM format which XPM was "
+                                          "designed to replace."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Spencer Kimball & Peter Mattis & "
@@ -232,16 +233,16 @@ xpm_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("X PixMap image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Export files in XPM (X11 Pixmap) format.",
-                                        "Export files in XPM (X11 Pixmap) format. "
-                                        "XPM is a portable image format "
-                                        "designed to be included in C source "
-                                        "code. XLib provides utility functions "
-                                        "to read this format. Newer code should "
-                                        "however be using gdk-pixbuf-csource "
-                                        "instead. XPM supports colored images, "
-                                        "unlike the XBM format which XPM was "
-                                        "designed to replace.",
+                                        _("Export files in XPM (X11 Pixmap) format."),
+                                        _("Export files in XPM (X11 Pixmap) format. "
+                                          "XPM is a portable image format "
+                                          "designed to be included in C source "
+                                          "code. XLib provides utility functions "
+                                          "to read this format. Newer code should "
+                                          "however be using gdk-pixbuf-csource "
+                                          "instead. XPM supports colored images, "
+                                          "unlike the XBM format which XPM was "
+                                          "designed to replace."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Spencer Kimball & Peter Mattis & "
@@ -255,6 +256,13 @@ xpm_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-pixmap");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "xpm");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
+                                              NULL, NULL);
 
       gimp_procedure_add_int_argument (procedure, "threshold",
                                        _("_Threshold"),
@@ -302,6 +310,7 @@ xpm_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
             GFile                *file,
+            GimpExportOptions    *options,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
@@ -313,17 +322,13 @@ xpm_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB     |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                              GIMP_EXPORT_CAN_HANDLE_ALPHA);
+  export = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       gimp_ui_init (PLUG_IN_BINARY);
-        
+
       if (gimp_drawable_has_alpha (drawables->data))
         if (! save_dialog (image, procedure, G_OBJECT (config)))
           status = GIMP_PDB_CANCEL;

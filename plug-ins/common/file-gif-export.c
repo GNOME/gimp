@@ -79,6 +79,7 @@ static GimpValueArray  * gif_export           (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
                                                GFile                *file,
+                                               GimpExportOptions    *options,
                                                GimpMetadata         *metadata,
                                                GimpProcedureConfig  *config,
                                                gpointer              run_data);
@@ -89,6 +90,11 @@ static gboolean          export_image         (GFile                *file,
                                                GimpImage            *orig_image,
                                                GObject              *config,
                                                GError              **error);
+
+static void              export_edit_options  (GimpProcedure        *procedure,
+                                               GimpProcedureConfig  *config,
+                                               GimpExportOptions    *options,
+                                               gpointer              create_data);
 
 static GimpPDBStatusType sanity_check         (GFile                *file,
                                                GimpImage           **image,
@@ -179,6 +185,12 @@ gif_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "gif");
 
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
+                                              export_edit_options, NULL);
+
       gimp_procedure_add_boolean_argument (procedure, "interlace",
                                            _("_Interlace"),
                                            _("Try to export as interlaced"),
@@ -257,6 +269,7 @@ gif_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
             GFile                *file,
+            GimpExportOptions    *options,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
@@ -330,33 +343,8 @@ gif_export (GimpProcedure        *procedure,
   if (status == GIMP_PDB_SUCCESS)
     {
       GList                  *drawables;
-      GimpExportCapabilities  capabilities;
 
-      capabilities = (GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
-
-      /* Create an exportable image based on the export options */
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_WITH_LAST_VALS:
-          {
-            gboolean as_animation;
-
-            g_object_get (config,
-                          "as-animation", &as_animation,
-                          NULL);
-
-            if (as_animation)
-              capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
-            break;
-          }
-
-        default:
-          break;
-        }
-      export = gimp_export_image (&image, capabilities);
+      export = gimp_export_options_get_image (options, &image);
       drawables = gimp_image_list_layers (image);
 
       if (! export_image (file, image, drawables->data, orig_image,
@@ -1180,6 +1168,31 @@ export_image (GFile         *file,
     return FALSE;
 
   return TRUE;
+}
+
+static void
+export_edit_options (GimpProcedure        *procedure,
+                     GimpProcedureConfig  *config,
+                     GimpExportOptions    *options,
+                     gpointer              create_data)
+{
+  GimpExportCapabilities capabilities;
+  gboolean               as_animation;
+
+  g_object_get (G_OBJECT (config),
+                "as-animation", &as_animation,
+                NULL);
+
+  capabilities = (GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
+
+  if (as_animation)
+    capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+
+  g_object_set (G_OBJECT (options),
+                "capabilities", capabilities,
+                NULL);
 }
 
 static gboolean

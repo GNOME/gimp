@@ -1278,6 +1278,13 @@ _gp_param_def_read (GIOChannel *channel,
                                     user_data))
         return FALSE;
       break;
+
+    case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
+      if (! _gimp_wire_read_int32 (channel,
+                                   (guint32 *) &param_def->meta.m_export_options.capabilities, 1,
+                                   user_data))
+        return FALSE;
+      break;
     }
 
   return TRUE;
@@ -1327,6 +1334,9 @@ _gp_param_def_destroy (GPParamDef *param_def)
 
     case GP_PARAM_DEF_TYPE_ID_ARRAY:
       g_free (param_def->meta.m_id_array.type_name);
+      break;
+
+    case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
       break;
     }
 }
@@ -1602,6 +1612,13 @@ _gp_param_def_write (GIOChannel *channel,
       if (! _gimp_wire_write_string (channel,
                                      &param_def->meta.m_id_array.type_name, 1,
                                      user_data))
+        return FALSE;
+      break;
+
+    case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
+      if (! _gimp_wire_write_int32 (channel,
+                                    (guint32 *) &param_def->meta.m_export_options.capabilities, 1,
+                                    user_data))
         return FALSE;
       break;
     }
@@ -2058,6 +2075,13 @@ _gp_params_read (GIOChannel  *channel,
             (*params)[i].data.d_parasite.data = NULL;
           break;
 
+        case GP_PARAM_TYPE_EXPORT_OPTIONS:
+          if (! _gimp_wire_read_int32 (channel,
+                                       (guint32 *) &(*params)[i].data.d_export_options.capabilities, 1,
+                                       user_data))
+            goto cleanup;
+          break;
+
         case GP_PARAM_TYPE_PARAM_DEF:
           if (! _gp_param_def_read (channel,
                                     &(*params)[i].data.d_param_def,
@@ -2261,6 +2285,13 @@ _gp_params_write (GIOChannel *channel,
           }
           break;
 
+        case GP_PARAM_TYPE_EXPORT_OPTIONS:
+          if (! _gimp_wire_write_int32 (channel,
+                                        (const guint32 *) &params[i].data.d_export_options.capabilities, 1,
+                                        user_data))
+            return;
+          break;
+
         case GP_PARAM_TYPE_PARAM_DEF:
           if (! _gp_param_def_write (channel,
                                      &params[i].data.d_param_def,
@@ -2328,6 +2359,9 @@ _gp_params_destroy (GPParam *params,
             g_free (params[i].data.d_parasite.name);
           if (params[i].data.d_parasite.data)
             g_free (params[i].data.d_parasite.data);
+          break;
+
+        case GP_PARAM_TYPE_EXPORT_OPTIONS:
           break;
 
         case GP_PARAM_TYPE_PARAM_DEF:

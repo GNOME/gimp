@@ -70,10 +70,15 @@ static GimpValueArray * webp_export           (GimpProcedure         *procedure,
                                                GimpRunMode            run_mode,
                                                GimpImage             *image,
                                                GFile                 *file,
+                                               GimpExportOptions     *options,
                                                GimpMetadata          *metadata,
                                                GimpProcedureConfig   *config,
                                                gpointer               run_data);
 
+static void             export_edit_options   (GimpProcedure        *procedure,
+                                               GimpProcedureConfig  *config,
+                                               GimpExportOptions    *options,
+                                               gpointer              create_data);
 
 G_DEFINE_TYPE (Webp, webp, GIMP_TYPE_PLUG_IN)
 
@@ -164,6 +169,13 @@ webp_create_procedure (GimpPlugIn  *plug_in,
                                           "image/webp");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "webp");
+
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
+                                              export_edit_options, NULL);
 
       gimp_procedure_add_int_argument (procedure, "preset",
                                        _("Source _type"),
@@ -282,6 +294,7 @@ webp_export (GimpProcedure        *procedure,
              GimpRunMode           run_mode,
              GimpImage            *image,
              GFile                *file,
+             GimpExportOptions    *options,
              GimpMetadata         *metadata,
              GimpProcedureConfig  *config,
              gpointer              run_data)
@@ -296,10 +309,9 @@ webp_export (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_ui_init (PLUG_IN_BINARY);
-
-  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
+      gimp_ui_init (PLUG_IN_BINARY);
+
       if (! save_dialog (image, procedure, G_OBJECT (config)))
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_CANCEL,
@@ -311,17 +323,8 @@ webp_export (GimpProcedure        *procedure,
                 NULL);
 
   if (status == GIMP_PDB_SUCCESS)
-    {
-      GimpExportCapabilities capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                             GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                             GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                             GIMP_EXPORT_CAN_HANDLE_ALPHA);
+    export = gimp_export_options_get_image (options, &image);
 
-      if (animation)
-        capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION;
-
-      export = gimp_export_image (&image, capabilities);
-    }
   drawables   = gimp_image_list_layers (image);
   n_drawables = g_list_length (drawables);
 
@@ -362,4 +365,30 @@ webp_export (GimpProcedure        *procedure,
 
   g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
+}
+
+static void
+export_edit_options (GimpProcedure       *procedure,
+                     GimpProcedureConfig *config,
+                     GimpExportOptions   *options,
+                     gpointer             create_data)
+{
+  GimpExportCapabilities capabilities;
+  gboolean               animation;
+
+  g_object_get (G_OBJECT (config),
+                "animation", &animation,
+                NULL);
+
+  capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB     |
+                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
+
+  if (animation)
+    capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION;
+
+  g_object_set (G_OBJECT (options),
+                "capabilities", capabilities,
+                NULL);
 }

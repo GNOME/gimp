@@ -998,6 +998,15 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
           goto error;
         }
       break;
+
+    case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
+      if (! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_export_options.capabilities))
+        {
+          token = G_TOKEN_INT;
+          goto error;
+        }
+      break;
     }
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
@@ -1058,6 +1067,9 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
 
     case GP_PARAM_DEF_TYPE_ID_ARRAY:
       g_free (param_def.meta.m_id_array.type_name);
+      break;
+
+    case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
       break;
     }
 
@@ -1239,6 +1251,11 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
     case GP_PARAM_DEF_TYPE_ID_ARRAY:
       gimp_config_writer_string (writer,
                                  param_def.meta.m_id_array.type_name);
+      break;
+
+    case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
+      gimp_config_writer_printf (writer, "%d",
+                                 param_def.meta.m_export_options.capabilities);
       break;
     }
 

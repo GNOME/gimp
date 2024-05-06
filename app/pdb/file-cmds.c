@@ -259,8 +259,10 @@ file_save_invoker (GimpProcedure         *procedure,
                      gimp_value_array_index (new_args, 1));
   g_value_transform (gimp_value_array_index (args, 2),
                      gimp_value_array_index (new_args, 2));
+  g_value_transform (gimp_value_array_index (args, 3),
+                     gimp_value_array_index (new_args, 3));
 
-  for (i = 3; i < proc->num_args; i++)
+  for (i = 4; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
       g_value_set_static_string (gimp_value_array_index (new_args, i), "");
 
@@ -516,6 +518,12 @@ register_file_procs (GimpPDB *pdb)
                                                     "The file to save the image in",
                                                     G_TYPE_FILE,
                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_export_options ("options",
+                                                               "options",
+                                                               "Export option settings",
+                                                               0,
+                                                               GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

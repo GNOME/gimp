@@ -86,6 +86,7 @@ static GimpValueArray * gih_export            (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
                                                GFile                *file,
+                                               GimpExportOptions    *options,
                                                GimpMetadata         *metadata,
                                                GimpProcedureConfig  *config,
                                                gpointer              run_data);
@@ -180,6 +181,13 @@ gih_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
                                               TRUE);
 
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB   |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY  |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA |
+                                              GIMP_EXPORT_CAN_HANDLE_LAYERS,
+                                              NULL, NULL);
+
       gimp_procedure_add_int_argument (procedure, "spacing",
                                        _("Spacing (_percent)"),
                                        _("Spacing of the brush"),
@@ -247,6 +255,7 @@ gih_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
             GFile                *file,
+            GimpExportOptions    *options,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
@@ -378,11 +387,7 @@ gih_export (GimpProcedure        *procedure,
         }
     }
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB   |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY  |
-                              GIMP_EXPORT_CAN_HANDLE_ALPHA |
-                              GIMP_EXPORT_CAN_HANDLE_LAYERS);
+  export      = gimp_export_options_get_image (options, &image);
   layers      = gimp_image_list_layers (image);
   n_drawables = g_list_length (layers);
 

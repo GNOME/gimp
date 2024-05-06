@@ -58,7 +58,8 @@ typedef enum
   GP_PARAM_DEF_TYPE_STRING,
   GP_PARAM_DEF_TYPE_GEGL_COLOR,
   GP_PARAM_DEF_TYPE_ID,
-  GP_PARAM_DEF_TYPE_ID_ARRAY
+  GP_PARAM_DEF_TYPE_ID_ARRAY,
+  GP_PARAM_DEF_TYPE_EXPORT_OPTIONS
 } GPParamDefType;
 
 typedef enum
@@ -74,35 +75,38 @@ typedef enum
   GP_PARAM_TYPE_PARASITE,
   GP_PARAM_TYPE_ARRAY,
   GP_PARAM_TYPE_ID_ARRAY,
+  GP_PARAM_TYPE_EXPORT_OPTIONS,
   GP_PARAM_TYPE_PARAM_DEF
 } GPParamType;
 
 
-typedef struct _GPConfig            GPConfig;
-typedef struct _GPTileReq           GPTileReq;
-typedef struct _GPTileAck           GPTileAck;
-typedef struct _GPTileData          GPTileData;
-typedef struct _GPParamDef          GPParamDef;
-typedef struct _GPParamDefInt       GPParamDefInt;
-typedef struct _GPParamDefUnit      GPParamDefUnit;
-typedef struct _GPParamDefEnum      GPParamDefEnum;
-typedef struct _GPParamDefBoolean   GPParamDefBoolean;
-typedef struct _GPParamDefFloat     GPParamDefFloat;
-typedef struct _GPParamDefString    GPParamDefString;
-typedef struct _GPParamDefChoice    GPParamDefChoice;
-typedef struct _GPParamStrv         GPParamStrv;
-typedef struct _GPParamDefGeglColor GPParamDefGeglColor;
-typedef struct _GPParamDefID        GPParamDefID;
-typedef struct _GPParamDefIDArray   GPParamDefIDArray;
-typedef struct _GPParam             GPParam;
-typedef struct _GPParamArray        GPParamArray;
-typedef struct _GPParamIDArray      GPParamIDArray;
-typedef struct _GPParamColor        GPParamColor;
-typedef struct _GPParamColorArray   GPParamColorArray;
-typedef struct _GPProcRun           GPProcRun;
-typedef struct _GPProcReturn        GPProcReturn;
-typedef struct _GPProcInstall       GPProcInstall;
-typedef struct _GPProcUninstall     GPProcUninstall;
+typedef struct _GPConfig                 GPConfig;
+typedef struct _GPTileReq                GPTileReq;
+typedef struct _GPTileAck                GPTileAck;
+typedef struct _GPTileData               GPTileData;
+typedef struct _GPParamDef               GPParamDef;
+typedef struct _GPParamDefInt            GPParamDefInt;
+typedef struct _GPParamDefUnit           GPParamDefUnit;
+typedef struct _GPParamDefEnum           GPParamDefEnum;
+typedef struct _GPParamDefBoolean        GPParamDefBoolean;
+typedef struct _GPParamDefFloat          GPParamDefFloat;
+typedef struct _GPParamDefString         GPParamDefString;
+typedef struct _GPParamDefChoice         GPParamDefChoice;
+typedef struct _GPParamStrv              GPParamStrv;
+typedef struct _GPParamDefGeglColor      GPParamDefGeglColor;
+typedef struct _GPParamDefID             GPParamDefID;
+typedef struct _GPParamDefIDArray        GPParamDefIDArray;
+typedef struct _GPParamDefExportOptions  GPParamDefExportOptions;
+typedef struct _GPParam                  GPParam;
+typedef struct _GPParamArray             GPParamArray;
+typedef struct _GPParamIDArray           GPParamIDArray;
+typedef struct _GPParamColor             GPParamColor;
+typedef struct _GPParamColorArray        GPParamColorArray;
+typedef struct _GPParamExportOptions     GPParamExportOptions;
+typedef struct _GPProcRun                GPProcRun;
+typedef struct _GPProcReturn             GPProcReturn;
+typedef struct _GPProcInstall            GPProcInstall;
+typedef struct _GPProcUninstall          GPProcUninstall;
 
 
 struct _GPConfig
@@ -223,6 +227,11 @@ struct _GPParamDefChoice
   gchar      *default_val;
 };
 
+struct _GPParamDefExportOptions
+{
+  gint capabilities;
+};
+
 struct _GPParamDef
 {
   GPParamDefType  param_def_type;
@@ -235,16 +244,17 @@ struct _GPParamDef
 
   union
   {
-    GPParamDefInt       m_int;
-    GPParamDefUnit      m_unit;
-    GPParamDefEnum      m_enum;
-    GPParamDefBoolean   m_boolean;
-    GPParamDefFloat     m_float;
-    GPParamDefString    m_string;
-    GPParamDefGeglColor m_gegl_color;
-    GPParamDefID        m_id;
-    GPParamDefIDArray   m_id_array;
-    GPParamDefChoice    m_choice;
+    GPParamDefInt              m_int;
+    GPParamDefUnit             m_unit;
+    GPParamDefEnum             m_enum;
+    GPParamDefBoolean          m_boolean;
+    GPParamDefFloat            m_float;
+    GPParamDefString           m_string;
+    GPParamDefGeglColor        m_gegl_color;
+    GPParamDefID               m_id;
+    GPParamDefIDArray          m_id_array;
+    GPParamDefChoice           m_choice;
+    GPParamDefExportOptions    m_export_options;
   } meta;
 };
 
@@ -278,6 +288,11 @@ struct _GPParamColorArray
   GPParamColor *colors;
 };
 
+struct _GPParamExportOptions
+{
+  gint capabilities;
+};
+
 struct _GPParam
 {
   GPParamType  param_type;
@@ -285,18 +300,19 @@ struct _GPParam
 
   union
   {
-    gint32              d_int;
-    gdouble             d_float;
-    gchar              *d_string;
-    gchar             **d_strv;
-    GBytes             *d_bytes;
-    GPParamColor        d_gegl_color;
-    GPParamColorArray   d_color_array;
-    GimpRGB             d_color;
-    GimpParasite        d_parasite;
-    GPParamArray        d_array;
-    GPParamIDArray      d_id_array;
-    GPParamDef          d_param_def;
+    gint32                 d_int;
+    gdouble                d_float;
+    gchar                 *d_string;
+    gchar                **d_strv;
+    GBytes                *d_bytes;
+    GPParamColor           d_gegl_color;
+    GPParamColorArray      d_color_array;
+    GimpRGB                d_color;
+    GimpParasite           d_parasite;
+    GPParamArray           d_array;
+    GPParamIDArray         d_id_array;
+    GPParamExportOptions   d_export_options;
+    GPParamDef             d_param_def;
   } data;
 };
 

@@ -33,7 +33,6 @@
 #include <libgimp/gimpbrushchooser.h>
 #include <libgimp/gimpdrawablechooser.h>
 #include <libgimp/gimpdrawablepreview.h>
-#include <libgimp/gimpexport.h>
 #include <libgimp/gimpfontchooser.h>
 #include <libgimp/gimpgradientchooser.h>
 #include <libgimp/gimpimagecombobox.h>

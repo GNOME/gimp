@@ -460,14 +460,15 @@ icns_export_image (GFile        *file,
       /* MacOS X format icons */
       if (match != -1 && duplicates[match] == 0)
         {
-          GimpProcedure   *procedure;
-          GimpValueArray  *return_vals;
-          GimpImage       *temp_image;
-          GimpLayer       *temp_layer;
-          GFile           *temp_file = NULL;
-          FILE            *temp_fp;
-          gint             temp_size;
-          gint             macos_size;
+          GimpProcedure     *procedure;
+          GimpValueArray    *return_vals;
+          GimpImage         *temp_image;
+          GimpLayer         *temp_layer;
+          GFile             *temp_file = NULL;
+          GimpExportOptions *options   = gimp_export_options_new ();
+          FILE              *temp_fp;
+          gint               temp_size;
+          gint               macos_size;
 
           temp_file  = gimp_temp_file ("png");
 
@@ -483,6 +484,7 @@ icns_export_image (GFile        *file,
                                             "run-mode",         GIMP_RUN_NONINTERACTIVE,
                                             "image",            temp_image,
                                             "file",             temp_file,
+                                            "options",          options,
                                             "interlaced",       FALSE,
                                             "compression",      9,
                                             "bkgd",             FALSE,

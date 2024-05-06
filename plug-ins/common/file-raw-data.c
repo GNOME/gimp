@@ -175,6 +175,7 @@ static GimpValueArray * raw_export           (GimpProcedure            *procedur
                                               GimpRunMode               run_mode,
                                               GimpImage                *image,
                                               GFile                    *file,
+                                              GimpExportOptions        *options,
                                               GimpMetadata             *metadata,
                                               GimpProcedureConfig      *config,
                                               gpointer                  run_data);
@@ -513,6 +514,13 @@ raw_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "data,raw");
 
+      gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
+                                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
+                                              NULL, NULL);
+
       gimp_procedure_add_choice_argument (procedure, "planar-configuration",
                                           _("Planar configuration"),
                                           _("How color pixel data are stored"),
@@ -656,6 +664,7 @@ raw_export (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
             GFile                *file,
+            GimpExportOptions    *options,
             GimpMetadata         *metadata,
             GimpProcedureConfig  *config,
             gpointer              run_data)
@@ -677,11 +686,7 @@ raw_export (GimpProcedure        *procedure,
                                                NULL);
     }
 
-  export = gimp_export_image (&image,
-                              GIMP_EXPORT_CAN_HANDLE_RGB     |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                              GIMP_EXPORT_CAN_HANDLE_ALPHA);
+  export = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
