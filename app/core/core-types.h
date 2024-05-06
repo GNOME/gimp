@@ -149,6 +149,7 @@ typedef struct _GimpBrushPipe                   GimpBrushPipe;
 typedef struct _GimpCurve                       GimpCurve;
 typedef struct _GimpDynamics                    GimpDynamics;
 typedef struct _GimpDynamicsOutput              GimpDynamicsOutput;
+typedef struct _GimpExportOptions               GimpExportOptions;
 typedef struct _GimpGradient                    GimpGradient;
 typedef struct _GimpMybrush                     GimpMybrush;
 typedef struct _GimpPadActions                  GimpPadActions;

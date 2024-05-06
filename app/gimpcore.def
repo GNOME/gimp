@@ -222,6 +222,8 @@ EXPORTS
 	gimp_environ_table_add
 	gimp_eraser_options_get_type
 	gimp_exit
+	gimp_export_options_get_type
+	gimp_export_options_new
 	gimp_fill_type_get_type
 	gimp_font_get_standard
 	gimp_font_get_type
@@ -450,7 +452,7 @@ EXPORTS
 	gimp_marshal_VOID__OBJECT_OBJECT
 	gimp_marshal_VOID__OBJECT_POINTER
 	gimp_marshal_VOID__POINTER_BOXED
-	gimp_marshal_VOID__POINTER_ENUM 
+	gimp_marshal_VOID__POINTER_ENUM
 	gimp_marshal_VOID__STRING_BOOLEAN_UINT_FLAGS
 	gimp_marshal_VOID__STRING_FLAGS
 	gimp_message

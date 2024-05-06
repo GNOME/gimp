@@ -124,6 +124,7 @@ libappcore_sources = [
   'gimpdynamics.c',
   'gimpdynamicsoutput.c',
   'gimperror.c',
+  'gimpexportoptions.c',
   'gimpextension-error.c',
   'gimpextension.c',
   'gimpextensionmanager.c',
