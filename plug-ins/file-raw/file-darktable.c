@@ -113,7 +113,7 @@ darktable_init_procedures (GimpPlugIn *plug_in)
                                                              "org.darktable",
                                                              REGISTRY_KEY_BASE,
                                                              &search_path);
-  gchar    *argv[]           = { exec_path, "--version", NULL };
+  gchar    *argv[]           = { exec_path, "--gimp" , "version", NULL };
   gchar    *darktable_stdout = NULL;
   gchar    *darktable_stderr = NULL;
   gboolean  have_darktable   = FALSE;
@@ -126,6 +126,10 @@ darktable_init_procedures (GimpPlugIn *plug_in)
   if (debug_prints)
     g_printf ("[%s] trying to call '%s'\n", __FILE__, exec_path);
 
+  /* In Darktable 4.6, a new GIMP-specific API was introduced due to changes
+   * in how the version output is formatted. We first check for Darktable
+   * with this API, then fallback to the pre-4.6 regex checks if the user has
+   * an older version of Darktable installed. */
   if (g_spawn_sync (NULL,
                     argv,
                     NULL,
@@ -137,47 +141,78 @@ darktable_init_procedures (GimpPlugIn *plug_in)
                     NULL,
                     &error))
     {
-      GRegex     *regex;
-      GMatchInfo *matches;
-      gint        major;
-      gint        minor;
-
-      /* A default darktable would apparently output something like
-       * "this is darktable 2.2.5", but this version string is
-       * customizable. In the official Fedora package for instance, I
-       * encountered a "this is darktable darktable-2.2.5-4.fc27".
-       * Therefore make the version recognition a bit more flexible.
-       */
-      regex = g_regex_new ("this is darktable [^0-9]*([0-9]+)\\.([0-9]+)\\.([0-9]+)",
-                           0, 0, NULL);
-      if (g_regex_match (regex, darktable_stdout, 0, &matches))
+      /* TODO: Utilize more features of Darktable API */
+      if (! error)
         {
-          gchar *match;
-
-          match = g_match_info_fetch (matches, 1);
-          major = g_ascii_strtoll (match, NULL, 10);
-          g_free (match);
-
-          match = g_match_info_fetch (matches, 2);
-          minor = g_ascii_strtoll (match, NULL, 10);
-          g_free (match);
-
-          if (((major == 1 && minor >= 7) || major >= 2))
-            {
-              if (g_strstr_len (darktable_stdout, -1,
-                                "Lua support enabled"))
-                {
-                  have_darktable = TRUE;
-                }
-            }
+          if (! (darktable_stderr && *darktable_stderr))
+            have_darktable = TRUE;
         }
-
-      g_match_info_free (matches);
-      g_regex_unref (regex);
     }
   else if (debug_prints)
     {
       g_printf ("[%s] g_spawn_sync failed\n", __FILE__);
+    }
+
+  if (! have_darktable)
+    {
+      gchar *argv_pre_4_6[] = { exec_path, "--version", NULL };
+
+      g_clear_error (&error);
+      error = NULL;
+
+      if (g_spawn_sync (NULL,
+                        argv_pre_4_6,
+                        NULL,
+                        (search_path ? G_SPAWN_SEARCH_PATH : 0),
+                        NULL,
+                        NULL,
+                        &darktable_stdout,
+                        &darktable_stderr,
+                        NULL,
+                        &error))
+        {
+          GRegex     *regex;
+          GMatchInfo *matches;
+          gint        major;
+          gint        minor;
+
+          /* A default darktable would apparently output something like
+           * "this is darktable 2.2.5", but this version string is
+           * customizable. In the official Fedora package for instance, I
+           * encountered a "this is darktable darktable-2.2.5-4.fc27".
+           * Therefore make the version recognition a bit more flexible.
+           */
+          regex = g_regex_new ("this is darktable [^0-9]*([0-9]+)\\.([0-9]+)\\.([0-9]+)",
+                               0, 0, NULL);
+          if (g_regex_match (regex, darktable_stdout, 0, &matches))
+            {
+              gchar *match;
+
+              match = g_match_info_fetch (matches, 1);
+              major = g_ascii_strtoll (match, NULL, 10);
+              g_free (match);
+
+              match = g_match_info_fetch (matches, 2);
+              minor = g_ascii_strtoll (match, NULL, 10);
+              g_free (match);
+
+              if (((major == 1 && minor >= 7) || major >= 2))
+                {
+                  if (g_strstr_len (darktable_stdout, -1,
+                                    "Lua support enabled"))
+                    {
+                      have_darktable = TRUE;
+                    }
+                }
+            }
+
+          g_match_info_free (matches);
+          g_regex_unref (regex);
+        }
+      else if (debug_prints)
+        {
+          g_printf ("[%s] g_spawn_sync failed\n", __FILE__);
+        }
     }
 
   if (debug_prints)
@@ -235,11 +270,11 @@ darktable_create_procedure (GimpPlugIn  *plug_in,
                                                 darktable_load_thumb, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
-                                        "Load thumbnail from a raw image "
-                                        "via darktable",
-                                        "This plug-in loads a thumbnail "
-                                        "from a raw image by calling "
-                                        "darktable-cli.",
+                                        _("Load thumbnail from a raw image "
+                                          "via darktable"),
+                                        _("This plug-in loads a thumbnail "
+                                          "from a raw image by calling "
+                                          "darktable-cli."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Tobias Ellinghaus",
@@ -532,7 +567,6 @@ load_thumbnail_image (GFile   *file,
                     error))
     {
       gimp_progress_update (0.5);
-
       image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, file_out);
       if (image)
         {
