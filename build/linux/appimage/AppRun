@@ -9,64 +9,54 @@
 set -e
 
 
-# COMPATIBILITY NOTICE
-HERE="$(dirname "$(readlink -f "${0}")")"
-LD_LINUX=$(find "$HERE" -name 'ld-*.so.*' | head -n 1)
-export DISTRO=$(exec "${LD_LINUX}" --inhibit-cache --library-path "$LD_LIBRARY_PATH" "${HERE}/OPT_PREFIX_WILDbin/uname" "-a")
-echo "This is a CI native build of GIMP (please see devel-docs/os-support.txt)."
-case "${DISTRO}" in
-  *Debian*|*debian*)
-    echo ".js   (JavaScript) plug-ins | supported."
-    echo ".lua  (Lua) plug-ins        | NOT supported!"
-    echo ".py   (Python) plug-ins     | supported."
-    echo ".scm  (ScriptFu) plug-ins   | supported."
-    echo ".vala (Vala) plug-ins       | supported."
-esac
-
-
 # PATHS MAPPING
+HERE="$(dirname "$(readlink -f "${0}")")"
 
 ## General paths
-export PATH="${HERE}"/OPT_PREFIX_WILDbin/:"${PATH}"
-export LD_LIBRARY_PATH="${HERE}"/OPT_PREFIX_WILDlib/:"${HERE}"/OPT_PREFIX_WILDlib/x86_64-linux-gnu/:"${HERE}"/OPT_PREFIX_WILDlib64/:"${LD_LIBRARY_PATH}"
-export GI_TYPELIB_PATH="${HERE}"/GI_TYPELIB_PATH_WILD:"${GI_TYPELIB_PATH}"
-export XDG_DATA_DIRS="${HERE}"/OPT_PREFIX_WILDshare/:"${XDG_DATA_DIRS}"
+export PATH="$HERE"/OPT_PREFIX_WILDbin/:"$PATH"
+export LD_LIBRARY_PATH="$HERE"/OPT_PREFIX_WILDlib/:"$HERE"/OPT_PREFIX_WILDlib/x86_64-linux-gnu/:"$HERE"/OPT_PREFIX_WILDlib64/:"$LD_LIBRARY_PATH"
+export GI_TYPELIB_PATH="$HERE"/GI_TYPELIB_PATH_WILD:"$GI_TYPELIB_PATH"
+export XDG_DATA_DIRS="$HERE"/OPT_PREFIX_WILDshare/:"$XDG_DATA_DIRS"
+
+## Compatibility layer
+LD_LINUX="$HERE/LD_LINUX_WILD --inhibit-cache --library-path $LD_LIBRARY_PATH"
+DISTRO=$(eval "$LD_LINUX" "$HERE"/OPT_PREFIX_WILDbin/uname -a)
+echo "This is a CI native build of GIMP (please see devel-docs/os-support.txt)."
+case "$DISTRO" in
+  *Debian*|*debian*)
+    echo '.js   (JavaScript) plug-ins | supported.'
+    echo '.lua  (Lua) plug-ins        | NOT supported!'
+    echo '.py   (Python) plug-ins     | supported.'
+    echo '.scm  (ScriptFu) plug-ins   | supported.'
+    echo '.vala (Vala) plug-ins       | supported.'
+esac
+
+## Other paths (base)
+export GIO_MODULE_DIR="$HERE"/GIO_MODULE_DIR_WILD/modules
+export GDK_PIXBUF_MODULEDIR="$HERE"/GDK_PIXBUF_MODULEDIR_WILD/loaders
+export GDK_PIXBUF_MODULE_FILE="$HERE"/GDK_PIXBUF_MODULE_FILE_WILD/loaders.cache
+export GTK_PATH="$HERE"/GTK_PATH_WILD
+export GTK_IM_MODULE_FILE="$HERE"/GTK_IM_MODULE_FILE_WILD/immodules.cache
+export GTK_THEME=$(eval "$LD_LINUX" "$HERE"/OPT_PREFIX_WILDbin/gsettings get org.gnome.desktop.interface gtk-theme | "$HERE"/OPT_PREFIX_WILDbin/sed "s/'//g" || echo 'Default')
 
 ## GIMP-specific paths
-export BABL_PATH="${HERE}"/BABL_PATH_WILD
-export GEGL_PATH="${HERE}"/GEGL_PATH_WILD
-export GIMP3_SYSCONFDIR="${HERE}"/GIMP3_SYSCONFDIR_WILD
-export GIMP3_PLUGINDIR="${HERE}"/GIMP3_PLUGINDIR_WILD
-export GIMP3_DATADIR="${HERE}"/GIMP3_DATADIR_WILD
-export GIMP3_LOCALEDIR="${HERE}"/OPT_PREFIX_WILDshare/locale
+export BABL_PATH="$HERE"/BABL_PATH_WILD
+export GEGL_PATH="$HERE"/GEGL_PATH_WILD
+export GIMP3_SYSCONFDIR="$HERE"/GIMP3_SYSCONFDIR_WILD
+export GIMP3_PLUGINDIR="$HERE"/GIMP3_PLUGINDIR_WILD
+export GIMP3_DATADIR="$HERE"/GIMP3_DATADIR_WILD
+export GIMP3_LOCALEDIR="$HERE"/OPT_PREFIX_WILDshare/locale
 if [ -z ${XDG_CONFIG_HOME} ]; then
   export GIMP3_DIRECTORY="$HOME/.config/GIMP/GIMP_APP_VERSION"
 else
   export GIMP3_DIRECTORY="$XDG_CONFIG_HOME/GIMP/GIMP_APP_VERSION"
 fi
 
-## Other paths (base)
-export GIO_MODULE_DIR="${HERE}"/GIO_MODULE_DIR_WILD/modules
-export GDK_PIXBUF_MODULEDIR="${HERE}"/GDK_PIXBUF_MODULEDIR_WILD/loaders
-export GDK_PIXBUF_MODULE_FILE="${HERE}"/GDK_PIXBUF_MODULE_FILE_WILD/loaders.cache
-export GTK_PATH="${HERE}"/GTK_PATH_WILD
-export GTK_IM_MODULE_FILE="${HERE}"/GTK_IM_MODULE_FILE_WILD/immodules.cache
-### For now, we only support "Adwaita-compliant" system themes (e.g. Yaru)
-export GTK_THEME=Default
-"${LD_LINUX}" --inhibit-cache --library-path "$LD_LIBRARY_PATH" "${HERE}/OPT_PREFIX_WILDbin/find" "." "-name" "libgtk-4*"
-if [ $? -eq '0' ]; then
-  case "${DE}" in
-    *GNOME*|*gnome*)
-      export SYSTEM_THEME=$(exec "${LD_LINUX}" --inhibit-cache --library-path "$LD_LIBRARY_PATH" "${HERE}/OPT_PREFIX_WILDbin/gsettings" "get" "org.gnome.desktop.interface" "gtk-theme" | exec "${LD_LINUX}" --inhibit-cache --library-path "$LD_LIBRARY_PATH" "${HERE}/OPT_PREFIX_WILDbin/sed" "s/'//g")
-      export GTK_THEME=$SYSTEM_THEME
-  esac
-fi
-
 ## Other paths (GIMP related)
-export LIBGL_DRIVERS_PATH="${HERE}"/LIBGL_DRIVERS_PATH_WILD
-export PYTHONPATH="${HERE}"/PYTHONPATH_WILD
+export LIBGL_DRIVERS_PATH="$HERE"/LIBGL_DRIVERS_PATH_WILD
+export PYTHONPATH="$HERE"/PYTHONPATH_WILD
 
 
 # RUN MAIN_BIN
 cd "$HERE"/OPT_PREFIX_WILD
-exec "${LD_LINUX}" --inhibit-cache --library-path "$LD_LIBRARY_PATH" "${HERE}/OPT_PREFIX_WILDbin/gimp-GIMP_APP_VERSION" "$@"
+LD_PRELOAD=/OPT_PREFIX_WILDlib/x86_64-linux-gnu/libc.so.6 "$HERE"/OPT_PREFIX_WILDbin/gimp-GIMP_APP_VERSION "$@"

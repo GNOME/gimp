@@ -91,6 +91,7 @@ chmod +x "$legacy_appimagetool"
 # BUNDLE FILES
 
 ## System base (needed to use GIMP or to avoid polluting the terminal output)
+conf_app LD_LINUX "/usr" "lib64/ld-*.so.*"
 ### Glib needed files
 find_dat "/usr/share/glib-*/schemas" "*"
 ### Glib commonly required modules
@@ -121,8 +122,7 @@ conf_app GIMP3_SYSCONFDIR "$OPT_PREFIX" "etc/gimp/*"
 conf_app GIMP3_DATADIR "$OPT_PREFIX" "share/gimp/*"
 ### Copy localized language list support
 find_dat "/usr/share/xml/iso-codes" "iso_639-2.xml" "iso_639.xml"
-### Copy system theme support (TODO: remove when our Default theme is mature)
-find_bin "find*"
+### Copy system theme support
 find_bin "gsettings*"
 find_bin "sed*"
 ### Copy GTK inspector support
@@ -143,7 +143,7 @@ find_bin "gjs*"
 ### Copy Python plug-ins support
 find_bin "python*"
 find_lib "python*.*"
-conf_app PYTHONPATH "/usr" "${LIB_DIR}/${LIB_SUBDIR}python*.**"
+conf_app PYTHONPATH "/usr" "${LIB_DIR}/${LIB_SUBDIR}python3.11"
 
 ## Final adjustments
 ### Auto detect and copy deps of binaries copied above
@@ -166,8 +166,10 @@ rm -r $OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR}pkgconfig
 rm -r $OPT_PREFIX/share/doc
 rm -r $OPT_PREFIX/share/man
 
-## Sad adjustments (go-appimagetool don't like when this is made before and don't do for us yet)
+## Sad adjustments (appimagetool don't handle this gracefully when done before deploy)
+### https://github.com/probonopd/go-appimage/issues/284
 sed -i "s|\"/usr/|\"|g" "$OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-2.0/2.10.0/loaders.cache"
+### https://github.com/probonopd/go-appimage/issues/282
 cp -r "/usr/${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/3.0.0/immodules.cache" "$OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/3.0.0"
 sed -i "s|\"/usr/|\"|g" "$OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/3.0.0/immodules.cache"
 
