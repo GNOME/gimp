@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-25 14:58+0000\n"
-"PO-Revision-Date: 2024-04-26 23:39+0000\n"
+"POT-Creation-Date: 2024-05-06 21:06+0000\n"
+"PO-Revision-Date: 2024-05-08 23:39+0000\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -182,12 +182,12 @@ msgstr "Canvia la mida de la imatge a les capes"
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:949 libgimp/gimpexportproceduredialog.c:416
+#: libgimp/gimpexport.c:929 libgimp/gimpexportproceduredialog.c:416
 #, c-format
 msgid "Export Image as %s"
 msgstr "Exporta la imatge com a %s"
 
-#: libgimp/gimpexport.c:955 libgimp/gimpproceduredialog.c:336
+#: libgimp/gimpexport.c:935 libgimp/gimpproceduredialog.c:336
 #: libgimpwidgets/gimpcolorbutton.c:554
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
@@ -197,66 +197,66 @@ msgstr "Exporta la imatge com a %s"
 msgid "_Cancel"
 msgstr "_Cancel·la"
 
-#: libgimp/gimpexport.c:956 libgimp/gimpproceduredialog.c:308
+#: libgimp/gimpexport.c:936 libgimp/gimpproceduredialog.c:308
 #: libgimp/gimpproceduredialog.c:595
 msgid "_Export"
 msgstr "_Exporta"
 
-#: libgimp/gimpexportprocedure.c:479
+#: libgimp/gimpexportprocedure.c:462
 msgid "Save _Exif"
 msgstr "Desa _Exif"
 
-#: libgimp/gimpexportprocedure.c:480
+#: libgimp/gimpexportprocedure.c:463
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Desa les metadades Exif (format de fitxer d'imatge intercanviable)"
 
-#: libgimp/gimpexportprocedure.c:485
+#: libgimp/gimpexportprocedure.c:468
 msgid "Save _IPTC"
 msgstr "Desa _IPTC"
 
-#: libgimp/gimpexportprocedure.c:486
+#: libgimp/gimpexportprocedure.c:469
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
 "Desa les metadades IPTC (Consell Internacional de Telecomunicacions de "
 "Premsa)"
 
-#: libgimp/gimpexportprocedure.c:491
+#: libgimp/gimpexportprocedure.c:474
 msgid "Save _XMP"
 msgstr "Desa _XMP"
 
-#: libgimp/gimpexportprocedure.c:492
+#: libgimp/gimpexportprocedure.c:475
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "Desa les metadades XMP (Plataforma de metadades extensible)"
 
-#: libgimp/gimpexportprocedure.c:497
+#: libgimp/gimpexportprocedure.c:480
 msgid "Save color _profile"
 msgstr "D_esa el perfil de color"
 
-#: libgimp/gimpexportprocedure.c:498
+#: libgimp/gimpexportprocedure.c:481
 msgid "Save the ICC color profile as metadata"
 msgstr "Desa el perfil de color ICC com a metadades"
 
-#: libgimp/gimpexportprocedure.c:503
+#: libgimp/gimpexportprocedure.c:486
 msgid "Save _thumbnail"
 msgstr "Desa _la miniatura"
 
-#: libgimp/gimpexportprocedure.c:504
+#: libgimp/gimpexportprocedure.c:487
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Desa una representació més petita de la imatge com a metadades"
 
-#: libgimp/gimpexportprocedure.c:510
+#: libgimp/gimpexportprocedure.c:493
 msgid "Save c_omment"
 msgstr "Desa el c_omentari"
 
-#: libgimp/gimpexportprocedure.c:511
+#: libgimp/gimpexportprocedure.c:494
 msgid "Save a comment as metadata"
 msgstr "Desa un comentari com a metadades"
 
-#: libgimp/gimpexportprocedure.c:515
+#: libgimp/gimpexportprocedure.c:498
 msgid "Comment"
 msgstr "Comentari"
 
-#: libgimp/gimpexportprocedure.c:516
+#: libgimp/gimpexportprocedure.c:499
 msgid "Image comment"
 msgstr "Comentari de la imatge"
 
@@ -570,6 +570,14 @@ msgstr "Trieu el canal: %s"
 msgid "Choose drawable: %s"
 msgstr "Trieu el dibuixable: %s"
 
+#: libgimp/gimpresolutionentry-private.c:135
+msgid ""
+"This unit is used to select the pixel density and show dimensions in "
+"physical unit"
+msgstr ""
+"Aquesta unitat s'utilitza per a seleccionar la densitat de píxels i mostrar "
+"les dimensions en la unitat física"
+
 #: libgimp/gimpresolutionentry-private.c:143
 #: libgimp/gimpvectorloadprocedure.c:117
 msgid "_Keep aspect ratio"
@@ -589,6 +597,14 @@ msgstr "píxels/%a"
 #: libgimp/gimpunitcache.c:54
 msgid "percent"
 msgstr "percentatge"
+
+#: libgimp/gimpvectorloadprocedure.c:103
+msgid "_Width (pixels)"
+msgstr "_Amplada (píxels)"
+
+#: libgimp/gimpvectorloadprocedure.c:110
+msgid "_Height (pixels)"
+msgstr "_Alçada (píxels)"
 
 #: libgimp/gimpvectorloadprocedure.c:122
 msgid "_Prefer native dimensions"
