@@ -18,6 +18,7 @@
 # Julien Hardelin <jhardlin@orange.fr>, 2004-2020.
 # Charles Monzat <charles.monzat@free.fr>, 2019-2022.
 # Alexandre Franke <afranke@gnome.org>, 2012-2022.
+# Wedone <wedoneofficiel@outlook.fr>, 2024.
 #
 msgid ""
 msgstr ""
@@ -105,7 +106,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "Added support for the BigTIFF file format"
-msgstr ""
+msgstr "Ajout de la prise en charge du format de fichier BigTIFF"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "New option \"Number of repeats\" in GIF export"
@@ -119,7 +120,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "Improved handling of unchecked \"Show pointer for paint tools\" option"
-msgstr ""
+msgstr "Amélioration de la gestion de l'option non cochée "Afficher le pointeur pour les outils de peinture"."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid ""
@@ -214,7 +215,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "Clicking on toolbox or Wilber's drop area actively focuses the canvas"
-msgstr ""
+msgstr "Cliquer sur la boîte à outils ou sur la zone de dépôt de Wilber permet de focaliser activement le canevas."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Marching ants display ported to Wayland and macOS Big Sur logics"
@@ -222,7 +223,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "Initial implementation of config folder migration for GIMP 3"
-msgstr ""
+msgstr "Mise en œuvre initiale de la migration des dossiers de configuration pour GIMP 3"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid ""
@@ -232,19 +233,19 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "PSD: bigger-than-4GiB file support and up to 99 channels"
-msgstr ""
+msgstr "PSD : prise en charge de fichiers de plus de 4 Go et jusqu'à 99 canaux"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "PSB: new support (loading only)"
-msgstr ""
+msgstr "PSB : nouveau support (chargement uniquement)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "SGI: 16-bit images support"
-msgstr ""
+msgstr "SGI : prise en charge des images 16 bits"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "JPEG XL: new support (loading and exporting)"
-msgstr ""
+msgstr "JPEG XL : nouvelle prise en charge (chargement et exportation)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid ""
@@ -254,7 +255,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Much porting to newer API, code cleanup and bug fixing done"
-msgstr ""
+msgstr "Beaucoup de portage vers une API plus récente, de nettoyage de code et de correction de bogues ont été effectués."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
@@ -272,19 +273,19 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Canvas Size dialog now displays a template selector"
-msgstr ""
+msgstr "La boîte de dialogue Taille du canevas affiche désormais un sélecteur de modèle"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Off-canvas guides are now allowed"
-msgstr ""
+msgstr "Off-canvas guides are now allowed"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "The experimental Paint Select tool got various improvements"
-msgstr ""
+msgstr "L'outil expérimental Paint Select a fait l'objet de plusieurs améliorations"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "More fixes for Wayland support"
-msgstr ""
+msgstr "Plus de corrections pour le support de Wayland"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid ""
@@ -15214,7 +15215,7 @@ msgstr "Les guides hors canevas ont été ajoutés dans %s"
 #: ../app/core/gimpimage.c:2965
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
-msgstr ""
+msgstr "L'ensemble d'éléments et la recherche de motifs dans le nom de l'élément ont été ajoutés dans %s"
 
 #: ../app/core/gimpimage.c:2971
 #, c-format
@@ -15843,7 +15844,7 @@ msgstr "Nombre maximal de pixels pris en compte sous le dessin au trait"
 
 #: ../app/core/gimplineart.c:363 ../app/core/gimplineart.c:364
 msgid "Whether or not we should perform the closing step"
-msgstr ""
+msgstr "Si nous devons ou non effectuer l'étape de clôture"
 
 #: ../app/core/gimplineart.c:370
 msgid "Maximum curved closing length"
@@ -16496,7 +16497,8 @@ msgstr ""
 "Stéphane Raimbault <stephane.raimbault@gmail.com>\n"
 "Laurent Monin <gimp@norz.org>\n"
 "Yannick Tailliez <ytdispatch-libre@yahoo.com>\n"
-"Claude Paroz <claude@2xlibre.net>"
+"Claude Paroz <claude@2xlibre.net>\n"
+"Wedone <wedoneofficiel@outlook.fr>é
 
 #: ../app/dialogs/about-dialog.c:340
 msgid "Update available!"
@@ -18125,7 +18127,7 @@ msgstr "Taille de l’aperçu de _navigation :"
 #. Item
 #: ../app/dialogs/preferences-dialog.c:1928
 msgid "Item search"
-msgstr ""
+msgstr "Recherche d'articles"
 
 #. Keyboard Shortcuts
 #: ../app/dialogs/preferences-dialog.c:1935
@@ -19498,7 +19500,7 @@ msgstr "Notes de publication de GIMP %s"
 #: ../app/dialogs/welcome-dialog.c:368
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
-msgstr ""
+msgstr "Cliquez sur les éléments de la version avec un %s bullet point pour obtenir une visite guidée."
 
 #: ../app/dialogs/welcome-dialog.c:416
 msgid ""
