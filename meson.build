@@ -1126,13 +1126,14 @@ endif
 ## Lua
 
 have_lua = false
-# At time of writing, lua-lgi works Lua 5.1, Lua 5.2, Lua 5.3 and LuaJIT2. On
+# At time of writing, lua-lgi works with Lua 5.1, 5.2, 5.3, 5.4 and LuaJIT2. On
 # most platforms, we use luajit. On MSYS2, only lua5.1 works with lua-lgi. This
-# is why we use this order for lua detection.
+# is why we use this order for lua detection. Fall back to an unversioned
+# program name.
 if get_option('lua').allowed()
   have_lua_lgi = false
 
-  foreach lua_bin : [ 'luajit', 'lua5.1', 'lua5.2', 'lua5.3' ]
+  foreach lua_bin : [ 'luajit', 'lua5.1', 'lua5.2', 'lua5.3', 'lua5.4', 'lua' ]
     lua = find_program(lua_bin, required: false)
 
     if lua.found() and meson.can_run_host_binaries()
