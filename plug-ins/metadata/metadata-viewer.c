@@ -69,24 +69,14 @@ enum
 };
 
 
-typedef struct _Metadata      Metadata;
-typedef struct _MetadataClass MetadataClass;
+#define GIMP_TYPE_METADATA_VIEWER  (gimp_metadata_viewer_get_type ())
+G_DECLARE_FINAL_TYPE (GimpMetadataViewer, gimp_metadata_viewer, GIMP, METADATA_VIEWER, GimpPlugIn)
 
-struct _Metadata
+struct _GimpMetadataViewer
 {
   GimpPlugIn parent_instance;
 };
 
-struct _MetadataClass
-{
-  GimpPlugInClass parent_class;
-};
-
-
-#define METADATA_TYPE  (metadata_get_type ())
-#define METADATA(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), METADATA_TYPE, Metadata))
-
-GType                   metadata_get_type         (void) G_GNUC_CONST;
 
 static GList          * metadata_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * metadata_create_procedure (GimpPlugIn           *plug_in,
@@ -136,14 +126,14 @@ static gchar   * metadata_format_string_value     (const gchar          *value,
 static inline gboolean metadata_tag_is_string     (const gchar          *tag);
 
 
-G_DEFINE_TYPE (Metadata, metadata, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (GimpMetadataViewer, gimp_metadata_viewer, GIMP_TYPE_PLUG_IN)
 
-GIMP_MAIN (METADATA_TYPE)
+GIMP_MAIN (GIMP_TYPE_METADATA_VIEWER)
 DEFINE_STD_SET_I18N
 
 
 static void
-metadata_class_init (MetadataClass *klass)
+gimp_metadata_viewer_class_init (GimpMetadataViewerClass *klass)
 {
   GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
@@ -153,7 +143,7 @@ metadata_class_init (MetadataClass *klass)
 }
 
 static void
-metadata_init (Metadata *metadata)
+gimp_metadata_viewer_init (GimpMetadataViewer *self)
 {
 }
 
