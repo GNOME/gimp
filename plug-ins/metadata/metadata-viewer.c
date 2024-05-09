@@ -28,6 +28,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "metadata-tag-object.h"
 #include "metadata-tags.h"
 
 #define PLUG_IN_PROC   "plug-in-metadata-viewer"
@@ -45,28 +46,6 @@
  * of type "Byte" or "Undefined"), in bytes.
  */
 #define RAW_DATA_MAX_SIZE 16
-
-
-enum
-{
-  C_XMP_TAG = 0,
-  C_XMP_VALUE,
-  NUM_XMP_COLS
-};
-
-enum
-{
-  C_EXIF_TAG = 0,
-  C_EXIF_VALUE,
-  NUM_EXIF_COLS
-};
-
-enum
-{
-  C_IPTC_TAG = 0,
-  C_IPTC_VALUE,
-  NUM_IPTC_COLS
-};
 
 
 #define GIMP_TYPE_METADATA_VIEWER  (gimp_metadata_viewer_get_type ())
@@ -93,29 +72,23 @@ static gboolean  metadata_viewer_dialog           (GimpImage            *image,
                                                    GimpMetadata         *g_metadata,
                                                    GError              **error);
 static void      metadata_dialog_set_metadata     (GExiv2Metadata       *metadata,
-                                                   GtkListStore         *exif_store,
-                                                   GtkListStore         *xmp_store,
-                                                   GtkListStore         *iptc_store);
+                                                   GListStore           *exif_store,
+                                                   GListStore           *xmp_store,
+                                                   GListStore           *iptc_store);
+static GtkWidget * create_widget_for_tag_object   (gpointer              item,
+                                                   gpointer              user_data);
 static void metadata_dialog_add_multiple_values   (GExiv2Metadata       *metadata,
                                                    const gchar          *tag,
-                                                   GtkListStore         *store,
-                                                   gint                  tag_column,
-                                                   gint                  value_column);
+                                                   GListStore           *store);
 static void      metadata_dialog_append_tags      (GExiv2Metadata       *metadata,
                                                    gchar               **tags,
-                                                   GtkListStore         *store,
-                                                   gint                  tag_column,
-                                                   gint                  value_column,
+                                                   GListStore           *store,
                                                    gboolean              load_iptc);
-static void metadata_dialog_add_tag               (GtkListStore         *store,
-                                                   gint                  tag_column,
-                                                   gint                  value_column,
+static void metadata_dialog_add_tag               (GListStore           *store,
                                                    const gchar          *tag,
                                                    const gchar          *value);
 static void metadata_dialog_add_translated_tag    (GExiv2Metadata       *metadata,
-                                                   GtkListStore         *store,
-                                                   gint                  tag_column,
-                                                   gint                  value_column,
+                                                   GListStore           *store,
                                                    const gchar          *tag);
 static gchar   * metadata_interpret_user_comment  (gchar                *comment);
 static gchar   * metadata_dialog_format_tag_value (GExiv2Metadata       *metadata,
@@ -232,11 +205,9 @@ metadata_viewer_dialog (GimpImage     *image,
   GtkWidget         *metadata_vbox;
   GtkWidget         *notebook;
   GtkWidget         *scrolled_win;
-  GtkWidget         *list_view;
+  GtkWidget         *list_box;
   GtkWidget         *label;
-  GtkListStore      *exif_store, *xmp_store, *iptc_store;
-  GtkCellRenderer   *rend;
-  GtkTreeViewColumn *col;
+  GListStore        *exif_store, *xmp_store, *iptc_store;
   GExiv2Metadata    *metadata;
 
   metadata = GEXIV2_METADATA(g_metadata);
@@ -278,36 +249,20 @@ metadata_viewer_dialog (GimpImage     *image,
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 6);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win), GTK_SHADOW_IN);
 
-  exif_store = gtk_list_store_new (NUM_EXIF_COLS,
-                                   G_TYPE_STRING,    /* column-name c_exif_tag   */
-                                   G_TYPE_STRING);   /* column-name c_exif_value */
-  list_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (exif_store));
-  gtk_widget_set_vexpand (list_view, TRUE);
-
-  rend = gtk_cell_renderer_text_new ();
-  col = gtk_tree_view_column_new_with_attributes (_("Exif Tag"),
-                                                  rend,
-                                                  "text", C_EXIF_TAG,
-                                                  NULL);
-  gtk_tree_view_column_set_resizable (col, TRUE);
-  gtk_tree_view_column_set_spacing (col, 3);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
-
-  rend = gtk_cell_renderer_text_new ();
-  col = gtk_tree_view_column_new_with_attributes (C_("A tag value", "Value"),
-                                                  rend,
-                                                  "text", C_EXIF_VALUE,
-                                                  NULL);
-  gtk_tree_view_column_set_resizable (col, TRUE);
-  gtk_tree_view_column_set_spacing (col, 3);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
+  exif_store = g_list_store_new (GIMP_TYPE_METADATA_TAG_OBJECT);
+  list_box = gtk_list_box_new ();
+  gtk_list_box_set_selection_mode (GTK_LIST_BOX (list_box),
+                                   GTK_SELECTION_NONE);
+  gtk_list_box_bind_model (GTK_LIST_BOX (list_box), G_LIST_MODEL (exif_store),
+                           create_widget_for_tag_object, NULL, NULL);
+  gtk_widget_set_vexpand (list_box, TRUE);
 
   label = gtk_label_new (_("Exif"));
   gtk_widget_show (label);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), scrolled_win, label);
-  gtk_container_add (GTK_CONTAINER (scrolled_win), list_view);
-  gtk_widget_show (list_view);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), list_box);
+  gtk_widget_show (list_box);
   gtk_widget_show (scrolled_win);
 
   /* XMP tab */
@@ -316,36 +271,20 @@ metadata_viewer_dialog (GimpImage     *image,
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 6);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win), GTK_SHADOW_IN);
 
-  xmp_store = gtk_list_store_new (NUM_XMP_COLS,
-                                  G_TYPE_STRING,    /* column-name c_xmp_tag   */
-                                  G_TYPE_STRING);   /* column-name c_xmp_value */
-  list_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (xmp_store));
-  gtk_widget_set_vexpand (list_view, TRUE);
-
-  rend = gtk_cell_renderer_text_new ();
-  col = gtk_tree_view_column_new_with_attributes (_("XMP Tag"),
-                                                  rend,
-                                                  "text", C_XMP_TAG,
-                                                  NULL);
-  gtk_tree_view_column_set_resizable (col, TRUE);
-  gtk_tree_view_column_set_spacing (col, 3);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
-
-  rend = gtk_cell_renderer_text_new ();
-  col = gtk_tree_view_column_new_with_attributes (C_("A tag value", "Value"),
-                                                  rend,
-                                                  "text", C_XMP_VALUE,
-                                                  NULL);
-  gtk_tree_view_column_set_resizable (col, TRUE);
-  gtk_tree_view_column_set_spacing (col, 3);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
+  xmp_store = g_list_store_new (GIMP_TYPE_METADATA_TAG_OBJECT);
+  list_box = gtk_list_box_new ();
+  gtk_list_box_set_selection_mode (GTK_LIST_BOX (list_box),
+                                   GTK_SELECTION_NONE);
+  gtk_list_box_bind_model (GTK_LIST_BOX (list_box), G_LIST_MODEL (xmp_store),
+                           create_widget_for_tag_object, NULL, NULL);
+  gtk_widget_set_vexpand (list_box, TRUE);
 
   label = gtk_label_new (_("XMP"));
   gtk_widget_show (label);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), scrolled_win, label);
-  gtk_container_add (GTK_CONTAINER (scrolled_win), list_view);
-  gtk_widget_show (list_view);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), list_box);
+  gtk_widget_show (list_box);
   gtk_widget_show (scrolled_win);
 
   /* IPTC tab */
@@ -354,41 +293,25 @@ metadata_viewer_dialog (GimpImage     *image,
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 6);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win), GTK_SHADOW_IN);
 
-  iptc_store = gtk_list_store_new (NUM_IPTC_COLS,
-                                   G_TYPE_STRING,    /* column-name c_iptc_tag   */
-                                   G_TYPE_STRING);   /* column-name c_iptc_value */
-  list_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (iptc_store));
-  gtk_widget_set_vexpand (list_view, TRUE);
-
-  rend = gtk_cell_renderer_text_new ();
-  col = gtk_tree_view_column_new_with_attributes (_("IPTC Tag"),
-                                                  rend,
-                                                  "text", C_IPTC_TAG,
-                                                  NULL);
-  gtk_tree_view_column_set_resizable (col, TRUE);
-  gtk_tree_view_column_set_spacing (col, 3);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
-
-  rend = gtk_cell_renderer_text_new ();
-  col = gtk_tree_view_column_new_with_attributes (C_("A tag value", "Value"),
-                                                  rend,
-                                                  "text", C_IPTC_VALUE,
-                                                  NULL);
-  gtk_tree_view_column_set_resizable (col, TRUE);
-  gtk_tree_view_column_set_spacing (col, 3);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
+  iptc_store = g_list_store_new (GIMP_TYPE_METADATA_TAG_OBJECT);
+  list_box = gtk_list_box_new ();
+  gtk_list_box_set_selection_mode (GTK_LIST_BOX (list_box),
+                                   GTK_SELECTION_NONE);
+  gtk_list_box_bind_model (GTK_LIST_BOX (list_box), G_LIST_MODEL (iptc_store),
+                           create_widget_for_tag_object, NULL, NULL);
+  gtk_widget_set_vexpand (list_box, TRUE);
 
   label = gtk_label_new (_("IPTC"));
   gtk_widget_show (label);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), scrolled_win, label);
-  gtk_container_add (GTK_CONTAINER (scrolled_win), list_view);
-  gtk_widget_show (list_view);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), list_box);
+  gtk_widget_show (list_box);
   gtk_widget_show (scrolled_win);
 
   gtk_widget_show (notebook);
 
-  /* Add the metadata to the tree views */
+  /* Add the metadata to the list models */
 
   metadata_dialog_set_metadata (metadata, exif_store, xmp_store, iptc_store);
   g_object_unref (exif_store);
@@ -405,32 +328,73 @@ metadata_viewer_dialog (GimpImage     *image,
 
 static void
 metadata_dialog_set_metadata (GExiv2Metadata *metadata,
-                              GtkListStore   *exif_store,
-                              GtkListStore   *xmp_store,
-                              GtkListStore   *iptc_store)
+                              GListStore     *exif_store,
+                              GListStore     *xmp_store,
+                              GListStore     *iptc_store)
 {
   gchar        **tags;
 
   /* load exif tags */
   tags  = gexiv2_metadata_get_exif_tags (metadata);
 
-  metadata_dialog_append_tags (metadata, tags, exif_store, C_EXIF_TAG, C_EXIF_VALUE, FALSE);
+  metadata_dialog_append_tags (metadata, tags, exif_store, FALSE);
 
   g_strfreev (tags);
 
   /* load xmp tags */
   tags  = gexiv2_metadata_get_xmp_tags (metadata);
 
-  metadata_dialog_append_tags (metadata, tags, xmp_store, C_XMP_TAG, C_XMP_VALUE, FALSE);
+  metadata_dialog_append_tags (metadata, tags, xmp_store, FALSE);
 
   g_strfreev (tags);
 
   /* load iptc tags */
   tags  = gexiv2_metadata_get_iptc_tags (metadata);
 
-  metadata_dialog_append_tags (metadata, tags, iptc_store, C_IPTC_TAG, C_IPTC_VALUE, TRUE);
+  metadata_dialog_append_tags (metadata, tags, iptc_store, TRUE);
 
   g_strfreev (tags);
+}
+
+static GtkWidget *
+create_widget_for_tag_object (gpointer item,
+                              gpointer user_data)
+{
+  GimpMetadataTagObject *tag_obj = GIMP_METADATA_TAG_OBJECT (item);
+  GtkWidget             *row;
+  GtkWidget             *box;
+  GtkWidget             *tag_label;
+  GtkWidget             *value_label;
+
+  row = gtk_list_box_row_new ();
+  gtk_list_box_row_set_activatable (GTK_LIST_BOX_ROW (row), FALSE);
+  gtk_style_context_add_class (gtk_widget_get_style_context (row),
+                               "metadata-tag-row");
+  gtk_widget_show (row);
+
+  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 3);
+  gtk_container_add (GTK_CONTAINER (row), box);
+  gtk_widget_show (box);
+
+  tag_label = gtk_label_new (gimp_metadata_tag_object_get_tag (tag_obj));
+  gtk_label_set_xalign (GTK_LABEL (tag_label), 0.0);
+  gtk_label_set_selectable (GTK_LABEL (tag_label), TRUE);
+  gtk_style_context_add_class (gtk_widget_get_style_context (row),
+                               "metadata-tag-label");
+  gtk_style_context_add_class (gtk_widget_get_style_context (tag_label),
+                               "dim-label");
+  gtk_widget_show (tag_label);
+  gtk_box_pack_start (GTK_BOX (box), tag_label, FALSE, FALSE, 0);
+
+  value_label = gtk_label_new (gimp_metadata_tag_object_get_value (tag_obj));
+  gtk_style_context_add_class (gtk_widget_get_style_context (value_label),
+                               "metadata-value-label");
+  gtk_label_set_xalign (GTK_LABEL (value_label), 0.0);
+  gtk_label_set_selectable (GTK_LABEL (value_label), TRUE);
+  gtk_widget_show (value_label);
+  gtk_box_pack_start (GTK_BOX (box), value_label, FALSE, FALSE, 0);
+
+  return row;
 }
 
 static gchar *
@@ -487,29 +451,23 @@ metadata_tag_is_string (const gchar *tag)
 }
 
 static void
-metadata_dialog_add_tag (GtkListStore    *store,
-                         gint             tag_column,
-                         gint             value_column,
+metadata_dialog_add_tag (GListStore      *store,
                          const gchar     *tag,
                          const gchar     *value)
 {
-  if (value)
-    {
-      GtkTreeIter iter;
+  GimpMetadataTagObject *tag_object;
 
-      gtk_list_store_append (store, &iter);
-      gtk_list_store_set (store, &iter,
-                          tag_column,   tag,
-                          value_column, value,
-                          -1);
-    }
+  if (value == NULL)
+    return;
+
+  tag_object = gimp_metadata_tag_object_new (tag, value);
+  g_list_store_append (store, tag_object);
+  g_object_unref (tag_object);
 }
 
 static void
 metadata_dialog_add_translated_tag (GExiv2Metadata  *metadata,
-                                    GtkListStore    *store,
-                                    gint             tag_column,
-                                    gint             value_column,
+                                    GListStore      *store,
                                     const gchar     *tag)
 {
   gchar  *value = NULL;
@@ -523,8 +481,7 @@ metadata_dialog_add_translated_tag (GExiv2Metadata  *metadata,
       g_clear_error (&error);
     }
 
-  metadata_dialog_add_tag (store, tag_column, value_column,
-                           tag, gettext (value));
+  metadata_dialog_add_tag (store, tag, gettext (value));
   g_free (value);
 }
 
@@ -564,9 +521,7 @@ metadata_interpret_user_comment (gchar *comment)
 static void
 metadata_dialog_add_multiple_values (GExiv2Metadata  *metadata,
                                      const gchar     *tag,
-                                     GtkListStore    *store,
-                                     gint             tag_column,
-                                     gint             value_column)
+                                     GListStore      *store)
 {
   gchar  **values;
   GError  *error = NULL;
@@ -579,37 +534,25 @@ metadata_dialog_add_multiple_values (GExiv2Metadata  *metadata,
       g_clear_error (&error);
     }
 
-  if (values)
+  if (values == NULL)
+    return;
+
+  for (gsize i = 0; values[i] != NULL; i++)
     {
-      gint i;
+      gchar       *value;
 
-      for (i = 0; values[i] != NULL; i++)
-        {
-          gchar       *value;
-          GtkTreeIter  iter;
-
-          gtk_list_store_append (store, &iter);
-
-          value = metadata_format_string_value (values[i], /* truncate = */ TRUE);
-
-          gtk_list_store_set (store, &iter,
-                              tag_column,   tag,
-                              value_column, value,
-                              -1);
-
-          g_free (value);
-        }
-
-      g_strfreev (values);
+      value = metadata_format_string_value (values[i], /* truncate = */ TRUE);
+      metadata_dialog_add_tag (store, tag, value);
+      g_free (value);
     }
+
+  g_strfreev (values);
 }
 
 static void
 metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                              gchar          **tags,
-                             GtkListStore    *store,
-                             gint             tag_column,
-                             gint             value_column,
+                             GListStore      *store,
                              gboolean         load_iptc)
 {
   const gchar *tag;
@@ -636,9 +579,7 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
           last_tag = tag;
 
           metadata_dialog_add_multiple_values (GEXIV2_METADATA (metadata),
-                                               tag, store,
-                                               tag_column,
-                                               value_column);
+                                               tag, store);
         }
       else if (! strcmp ("Exif.GPSInfo.GPSLongitude",    tag) ||
                ! strcmp ("Exif.GPSInfo.GPSLongitudeRef", tag) ||
@@ -661,7 +602,6 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                 {
                   str = metadata_format_gps_longitude_latitude (lng);
                   metadata_dialog_add_tag (store,
-                                           tag_column, value_column,
                                            "Exif.GPSInfo.GPSLongitude",
                                            str);
                   g_free (str);
@@ -674,7 +614,6 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                 }
 
               metadata_dialog_add_translated_tag (metadata, store,
-                                                  tag_column, value_column,
                                                   "Exif.GPSInfo.GPSLongitudeRef");
 
               if (gexiv2_metadata_try_get_gps_latitude (GEXIV2_METADATA (metadata),
@@ -682,7 +621,6 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                 {
                   str = metadata_format_gps_longitude_latitude (lat);
                   metadata_dialog_add_tag (store,
-                                           tag_column, value_column,
                                            "Exif.GPSInfo.GPSLatitude",
                                            str);
                   g_free (str);
@@ -695,7 +633,6 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                 }
 
               metadata_dialog_add_translated_tag (metadata, store,
-                                                  tag_column, value_column,
                                                   "Exif.GPSInfo.GPSLatitudeRef");
 
               if (gexiv2_metadata_try_get_gps_altitude (GEXIV2_METADATA (metadata),
@@ -708,7 +645,6 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                   str2 = metadata_format_gps_altitude (alt, FALSE, _(" feet"));
                   str3 = g_strdup_printf ("%s (%s)", str, str2);
                   metadata_dialog_add_tag (store,
-                                           tag_column, value_column,
                                            "Exif.GPSInfo.GPSAltitude",
                                            str3);
                   g_free (str);
@@ -736,7 +672,6 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                       else
                         index = 0;
                       metadata_dialog_add_tag (store,
-                                              tag_column, value_column,
                                               "Exif.GPSInfo.GPSAltitudeRef",
                                               gettext (gpsaltref[index]));
                       g_free (value);
@@ -766,9 +701,7 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
           /* Can start with charset. Remove part that is not relevant. */
           value = metadata_interpret_user_comment (value);
 
-          metadata_dialog_add_tag (store,
-                                   tag_column, value_column,
-                                   tag, value);
+          metadata_dialog_add_tag (store, tag, value);
           g_free (value);
         }
       else
@@ -788,18 +721,14 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
               else if (g_strcmp0 (tag_type, "XmpText") != 0)
                 {
                   metadata_dialog_add_multiple_values (GEXIV2_METADATA (metadata),
-                                                       tag, store,
-                                                       tag_column,
-                                                       value_column);
+                                                       tag, store);
                   continue;
                 }
             }
 
           value = metadata_dialog_format_tag_value (metadata, tag,
                                                     /* truncate = */ TRUE);
-          metadata_dialog_add_tag (store,
-                                   tag_column, value_column,
-                                   tag, value);
+          metadata_dialog_add_tag (store, tag, value);
           g_free (value);
         }
     }
