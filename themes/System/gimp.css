@@ -146,3 +146,12 @@ treeview .toggle-icon:not(.visible):hover {
 treeview .toggle-icon:not(.visible):selected {
     border-color: lightgray;
 }
+
+.metadata-tag-row box {
+    background-color: transparent;
+    margin: 3px;
+}
+
+.metadata-value-label {
+    margin-left: 12px;
+}
