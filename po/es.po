@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-05-05 17:05+0000\n"
-"PO-Revision-Date: 2024-05-06 22:58+0200\n"
+"POT-Creation-Date: 2024-05-06 21:02+0000\n"
+"PO-Revision-Date: 2024-05-10 23:37+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.3\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -218,8 +218,8 @@ msgstr "Ahora se pueden importar archivos JPEG XL"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
-"DDS export has new \"Flip\" (useful for some game engine) and \"Visible "
-"layers\" options"
+"DDS export has new \"Flip\" (useful for some game engine) and \"Visible layers"
+"\" options"
 msgstr ""
 "La exportación de DDS tiene las opciones nuevas «Voltear» (útil para algunos "
 "motores de juegos) y «Capas visibles»"
@@ -5409,7 +5409,7 @@ msgstr "Invertir _Valor"
 #: ../app/actions/filters-actions.c:130
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
-msgstr "_Contraste elástico HSV"
+msgstr "_Estirar contraste HSV"
 
 #: ../app/actions/filters-actions.c:138
 msgctxt "filters-action"
@@ -5657,12 +5657,12 @@ msgstr "_Paso alto…"
 #: ../app/actions/filters-actions.c:393
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
-msgstr "Tono-_cromático…"
+msgstr "Tono-_Croma…"
 
 #: ../app/actions/filters-actions.c:398
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
-msgstr "Tono-_saturación…"
+msgstr "Tono-_Saturación…"
 
 #: ../app/actions/filters-actions.c:403
 msgctxt "filters-action"
@@ -5954,7 +5954,7 @@ msgstr "Es_piral…"
 #: ../app/actions/filters-actions.c:688
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
-msgstr "_Expansión del contraste…"
+msgstr "_Estirar contraste…"
 
 #: ../app/actions/filters-actions.c:693
 msgctxt "filters-action"
@@ -11332,8 +11332,8 @@ msgstr "Ruta"
 #: ../app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to "
-"focus\"."
+"receives the focus. This is useful for window managers using \"click to focus"
+"\"."
 msgstr ""
 "Cuando está activado, una imagen se convertirá en activa cuando la ventana de "
 "esta imagen está enfocada. Esto es útil para los gestores de ventanas que usen "
@@ -19608,7 +19608,7 @@ msgstr "Normal (heredado)"
 #: ../app/operations/operations-enums.c:156
 msgctxt "layer-mode"
 msgid "Normal (l)"
-msgstr "Normal (l)"
+msgstr "Normal (h)"
 
 #: ../app/operations/operations-enums.c:157
 msgctxt "layer-mode"
@@ -19625,7 +19625,7 @@ msgstr "Detrás (heredado)"
 #: ../app/operations/operations-enums.c:161
 msgctxt "layer-mode"
 msgid "Behind (l)"
-msgstr "Detrás (l)"
+msgstr "Detrás (h)"
 
 #: ../app/operations/operations-enums.c:162
 msgctxt "layer-mode"
@@ -19637,7 +19637,7 @@ msgstr "Multiplicar (heredado)"
 #: ../app/operations/operations-enums.c:165
 msgctxt "layer-mode"
 msgid "Multiply (l)"
-msgstr "Multiplicar (l)"
+msgstr "Multiplicar (h)"
 
 #: ../app/operations/operations-enums.c:166
 msgctxt "layer-mode"
@@ -19649,7 +19649,7 @@ msgstr "Pantalla (heredado)"
 #: ../app/operations/operations-enums.c:169
 msgctxt "layer-mode"
 msgid "Screen (l)"
-msgstr "Pantalla (l)"
+msgstr "Pantalla (h)"
 
 #: ../app/operations/operations-enums.c:170
 msgctxt "layer-mode"
@@ -19733,7 +19733,7 @@ msgstr "Tono HSV (heredado)"
 #: ../app/operations/operations-enums.c:197
 msgctxt "layer-mode"
 msgid "HSV Hue (l)"
-msgstr "Tono (LCH) (l)"
+msgstr "Tono HSV (h)"
 
 #: ../app/operations/operations-enums.c:198
 msgctxt "layer-mode"
@@ -19745,7 +19745,7 @@ msgstr "Saturación HSV (heredado)"
 #: ../app/operations/operations-enums.c:201
 msgctxt "layer-mode"
 msgid "HSV Saturation (l)"
-msgstr "Saturación (HSV) (l)"
+msgstr "Saturación HSV (h)"
 
 #: ../app/operations/operations-enums.c:202
 msgctxt "layer-mode"
@@ -19757,7 +19757,7 @@ msgstr "Color HSL (heredado)"
 #: ../app/operations/operations-enums.c:205
 msgctxt "layer-mode"
 msgid "HSL Color (l)"
-msgstr "Color HSL (l)"
+msgstr "Color HSL (h)"
 
 #: ../app/operations/operations-enums.c:206
 msgctxt "layer-mode"
@@ -19769,7 +19769,7 @@ msgstr "Valor HSV (heredado)"
 #: ../app/operations/operations-enums.c:209
 msgctxt "layer-mode"
 msgid "HSV Value (l)"
-msgstr "Valor (HSV) (l)"
+msgstr "Valor HSV (h)"
 
 #: ../app/operations/operations-enums.c:210
 msgctxt "layer-mode"
@@ -19859,14 +19859,14 @@ msgstr "Combinar granulado (her)"
 #: ../app/operations/operations-enums.c:238
 msgctxt "layer-mode"
 msgid "Color erase (legacy)"
-msgstr "Color (HSV) (her)"
+msgstr "Borrar color (heredado)"
 
 #. Translators: this is an abbreviated version of "Color erase (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:241
 msgctxt "layer-mode"
 msgid "Color erase (l)"
-msgstr "Color (HSV) (her)"
+msgstr "Borrar color (h)"
 
 #: ../app/operations/operations-enums.c:242
 msgctxt "layer-mode"
@@ -19881,7 +19881,7 @@ msgstr "Tono LCh"
 #: ../app/operations/operations-enums.c:244
 msgctxt "layer-mode"
 msgid "LCh Chroma"
-msgstr "Chroma LCh"
+msgstr "Croma LCh"
 
 #: ../app/operations/operations-enums.c:245
 msgctxt "layer-mode"
@@ -20905,7 +20905,7 @@ msgstr "Extraer componente"
 #: ../app/pdb/drawable-color-cmds.c:554
 msgctxt "undo-type"
 msgid "Hue-Saturation"
-msgstr "Tono-saturación"
+msgstr "Tono-Saturación"
 
 #: ../app/pdb/drawable-color-cmds.c:589
 msgctxt "undo-type"
@@ -21296,8 +21296,8 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:765
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "El procedimiento «%s» se ha llamado con un valor con un tipo erróneo para el "
 "argumento «%s» (#%d). Se esperaba %s pero se obtuvo %s."
@@ -21357,8 +21357,8 @@ msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
-"El procedimiento «%s» se ha llamado con un valor «%s» para el argumento "
-"«%s» (#%d, tipo %s). Este valor está fuera de los límites."
+"El procedimiento «%s» se ha llamado con un valor «%s» para el argumento «%s» (#"
+"%d, tipo %s). Este valor está fuera de los límites."
 
 #: ../app/pdb/image-cmds.c:2569
 msgid "Image resolution is out of bounds, using the default resolution instead."
@@ -21417,12 +21417,12 @@ msgstr "Autorecortar capa"
 #: ../app/pdb/plug-in-compat-cmds.c:777
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
-msgstr "Expansión del contraste HSV"
+msgstr "Estirar contraste HSV"
 
 #: ../app/pdb/plug-in-compat-cmds.c:931
 msgctxt "undo-type"
 msgid "Stretch Contrast"
-msgstr "Expansión del contraste"
+msgstr "Estirar contraste"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1010
 msgctxt "undo-type"
