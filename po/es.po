@@ -1,4 +1,4 @@
-# translation of gimp.master.po to Español
+# translation of gimp.gimp-2-10.po to Español
 # Copyright © 1998-2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
@@ -11,16 +11,15 @@
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003-2013.
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 # Luis Ángel Gonzo <luisangelgonzo@gmail.com>, 2017, 2018.
-# Rodrigo Lledó <rodhos92@gmail.com>, 2018-2021.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2021.
-# Daniel Mustieles García <daniel.mustieles@gmail.com>, 2021.
+# Rodrigo Lledó Milanca <rodhos92@gmail.com>, 2018-2024.
+# Daniel Mustieles García <daniel.mustieles@gmail.com>, 2011-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-05-06 21:02+0000\n"
-"PO-Revision-Date: 2024-05-10 23:37+0200\n"
+"PO-Revision-Date: 2024-05-11 01:49+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -1343,8 +1342,8 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
-"La codificación configurada para el nombre del fichero no puede ser convertida "
-"a UTF-8: %s\n"
+"La codificación configurada para el nombre del archivo no se puede convertir a "
+"UTF-8: %s\n"
 "\n"
 "Compruebe el valor de la variable de entorno G_FILENAME_ENCODING."
 
@@ -1361,7 +1360,7 @@ msgstr ""
 "El nombre de la carpeta que contiene la configuración de usuario de GIMP no se "
 "puede convertir a UTF-8: %s\n"
 " \n"
-"Lo más probable es que su sistema de ficheros almacene los archivos en una "
+"Lo más probable es que su sistema de archivos almacene los archivos en una "
 "codificación diferente a UTF-8 y no ha dicho esto a Glib. Por favor, "
 "establezca la variable de entorno G_FILENAME_ENCODING."
 
@@ -1474,12 +1473,12 @@ msgstr "Degradados"
 #: ../app/actions/actions.c:180 ../app/core/gimp-data-factories.c:390
 #: ../app/dialogs/dialogs.c:361 ../app/dialogs/preferences-dialog.c:3315
 msgid "Tool Presets"
-msgstr "Ajustes prefijados de las herramientas"
+msgstr "Preajustes de herramienta"
 
 #: ../app/actions/actions.c:183 ../app/dialogs/dialogs.c:438
 #: ../app/widgets/gimptoolpreseteditor.c:96
 msgid "Tool Preset Editor"
-msgstr "Editor de ajustes prefijados de las herramientas"
+msgstr "Editor de preajuste de herramienta"
 
 #: ../app/actions/actions.c:186
 msgid "Help"
@@ -3892,12 +3891,12 @@ msgstr "Abrir el editor de paletas"
 #: ../app/actions/dialogs-actions.c:197
 msgctxt "dialogs-action"
 msgid "Tool Pre_sets"
-msgstr "Ajustes pre_fijados de las herramientas"
+msgstr "Pre_ajustes de herramienta"
 
 #: ../app/actions/dialogs-actions.c:198
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
-msgstr "Abrir el diálogo de ajustes prefijados de herramienta"
+msgstr "Abrir el diálogo de preajustes de herramienta"
 
 #: ../app/actions/dialogs-actions.c:203
 msgctxt "dialogs-action"
@@ -8949,27 +8948,27 @@ msgstr "Menú de opciones de herramienta"
 #: ../app/actions/tool-options-actions.c:62
 msgctxt "tool-options-action"
 msgid "_Save Tool Preset"
-msgstr "_Guardar ajuste prefijado de herramienta"
+msgstr "_Guardar preajuste de herramienta"
 
 #: ../app/actions/tool-options-actions.c:66
 msgctxt "tool-options-action"
 msgid "_Restore Tool Preset"
-msgstr "_Restaurar los ajustes prefijados de herramienta"
+msgstr "_Restaurar preajuste de herramienta"
 
 #: ../app/actions/tool-options-actions.c:70
 msgctxt "tool-options-action"
 msgid "E_dit Tool Preset"
-msgstr "_Editar ajuste prefijado de herramienta"
+msgstr "E_ditar preajuste de herramienta"
 
 #: ../app/actions/tool-options-actions.c:74
 msgctxt "tool-options-action"
 msgid "_Delete Tool Preset"
-msgstr "_Eliminar ajuste prefijado de herramienta"
+msgstr "_Eliminar preajuste de herramienta"
 
 #: ../app/actions/tool-options-actions.c:78
 msgctxt "tool-options-action"
 msgid "_New Tool Preset..."
-msgstr "_Nuevo ajuste prefijado de herramienta…"
+msgstr "_Nuevo preajuste de herramienta…"
 
 #: ../app/actions/tool-options-actions.c:83
 msgctxt "tool-options-action"
@@ -9004,12 +9003,12 @@ msgstr ""
 #: ../app/actions/tool-preset-editor-actions.c:44
 msgctxt "tool-preset-editor-action"
 msgid "Tool Preset Editor Menu"
-msgstr "Menú del editor de ajustes prefijados de herramienta"
+msgstr "Menú del editor de preajuste de herramienta"
 
 #: ../app/actions/tool-preset-editor-actions.c:48
 msgctxt "tool-preset-editor-action"
 msgid "_Save Tool Options to Preset"
-msgstr "_Guardar las opciones de herramientas en el preajuste"
+msgstr "_Guardar las opciones de la herramienta en un preajuste"
 
 #: ../app/actions/tool-preset-editor-actions.c:49
 msgctxt "tool-preset-editor-action"
@@ -9020,7 +9019,7 @@ msgstr ""
 #: ../app/actions/tool-preset-editor-actions.c:55
 msgctxt "tool-preset-editor-action"
 msgid "_Restore Tool Preset"
-msgstr "_Restaurar los preajustes de herramienta"
+msgstr "_Restaurar preajuste de herramienta"
 
 #: ../app/actions/tool-preset-editor-actions.c:56
 msgctxt "tool-preset-editor-action"
@@ -9030,7 +9029,7 @@ msgstr "Restaurar este preajuste de herramienta"
 #: ../app/actions/tool-preset-editor-actions.c:65
 msgctxt "tool-preset-editor-action"
 msgid "Edit Active Tool Preset"
-msgstr "Editar el ajuste prefijado de la herramienta activa"
+msgstr "Editar el preajuste de la herramienta activa"
 
 #: ../app/actions/tool-preset-editor-commands.c:65
 #: ../app/actions/tool-presets-commands.c:68
@@ -9043,38 +9042,37 @@ msgstr ""
 #: ../app/actions/tool-presets-actions.c:46
 msgctxt "tool-presets-action"
 msgid "Tool Presets Menu"
-msgstr "Menú de ajustes prefijados de herramienta"
+msgstr "Menú de preajustes de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:50
 msgctxt "tool-presets-action"
 msgid "_New Tool Preset"
-msgstr "_Nuevo ajuste prefijado de herramienta"
+msgstr "_Nuevo preajuste de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:51
 msgctxt "tool-presets-action"
 msgid "Create a new tool preset"
-msgstr "Crear un ajuste prefijado de herramienta"
+msgstr "Crear un preajuste de herramienta nuevo"
 
 #: ../app/actions/tool-presets-actions.c:56
 msgctxt "tool-presets-action"
 msgid "D_uplicate Tool Preset"
-msgstr "D_uplicar ajuste prefijado de herramienta"
+msgstr "D_uplicar preajuste de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:57
 msgctxt "tool-presets-action"
 msgid "Duplicate this tool preset"
-msgstr "Duplicar este ajuste prefijado de herramienta"
+msgstr "Duplicar este preajuste de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:62
 msgctxt "tool-presets-action"
 msgid "Copy Tool Preset _Location"
-msgstr "Copiar la _ruta del ajuste prefijado de herramienta"
+msgstr "Copiar la _ruta del preajuste de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:63
 msgctxt "tool-presets-action"
 msgid "Copy tool preset file location to clipboard"
-msgstr ""
-"Copiar la ruta del archivo de ajustes prefijados de herramienta al portapapeles"
+msgstr "Copiar la ruta del archivo de preajuste de herramienta al portapapeles"
 
 #: ../app/actions/tool-presets-actions.c:68
 msgctxt "tool-presets-action"
@@ -9085,13 +9083,13 @@ msgstr "Mostrar en el gestor de _archivos"
 msgctxt "tool-presets-action"
 msgid "Show tool preset file location in the file manager"
 msgstr ""
-"Mostrar la ruta del archivo de ajustes prefijados de herramienta en el gestor "
-"de archivos"
+"Mostrar la ruta del archivo de preajuste de herramienta en el gestor de "
+"archivos"
 
 #: ../app/actions/tool-presets-actions.c:74
 msgctxt "tool-presets-action"
 msgid "_Save Tool Options to Preset"
-msgstr "_Guardar las opciones de herramientas en el preajuste"
+msgstr "_Guardar las opciones de la herramienta en un preajuste"
 
 #: ../app/actions/tool-presets-actions.c:75
 msgctxt "tool-presets-action"
@@ -9102,42 +9100,42 @@ msgstr ""
 #: ../app/actions/tool-presets-actions.c:81
 msgctxt "tool-presets-action"
 msgid "_Restore Tool Preset"
-msgstr "_Restaurar ajuste prefijado de herramienta"
+msgstr "_Restaurar preajuste de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:82
 msgctxt "tool-presets-action"
 msgid "Restore this tool preset"
-msgstr "Restaurar este ajuste prefijado de herramienta"
+msgstr "Restaurar este preajuste de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:87
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
-msgstr "_Eliminar ajuste prefijado de herramienta"
+msgstr "_Eliminar preajuste de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:88
 msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
-msgstr "Eliminar este ajuste prefijado de herramienta"
+msgstr "Eliminar este preajuste de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:93
 msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
-msgstr "_Actualizar los ajustes prefijados de herramienta"
+msgstr "_Actualizar preajustes de herramienta"
 
 #: ../app/actions/tool-presets-actions.c:94
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
-msgstr "Actualizar los ajustes prefijados de herramienta"
+msgstr "Actualizar los preajustes de la herramienta"
 
 #: ../app/actions/tool-presets-actions.c:102
 msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
-msgstr "_Editar ajuste prefijado de herramienta…"
+msgstr "_Editar preajuste de herramienta…"
 
 #: ../app/actions/tool-presets-actions.c:103
 msgctxt "tool-presets-action"
 msgid "Edit this tool preset"
-msgstr "Editar este ajuste prefijado de herramienta"
+msgstr "Editar este preajuste de herramienta"
 
 #: ../app/actions/tools-actions.c:47
 msgctxt "tools-action"
@@ -13965,7 +13963,7 @@ msgstr "Tipografía"
 
 #: ../app/core/gimpcontext.c:764 ../app/core/gimpcontext.c:765
 msgid "Tool Preset"
-msgstr "Ajuste prefijado de herramienta"
+msgstr "Preajuste de herramienta"
 
 #: ../app/core/gimpdatafactory.c:351 ../app/core/gimpdatafactory.c:385
 #: ../app/core/gimpdatafactory.c:719 ../app/core/gimpdatafactory.c:750
@@ -15687,7 +15685,7 @@ msgstr "Aplicar la tipografía almacenada"
 
 #: ../app/core/gimptoolpreset-load.c:64
 msgid "Tool preset file is corrupt."
-msgstr "El archivo de ajustes prefijados de herramienta está corrupto."
+msgstr "El archivo de preajuste de herramienta está corrupto."
 
 #: ../app/core/gimpunit.c:60
 msgctxt "unit-singular"
@@ -18137,15 +18135,15 @@ msgstr "Seleccionar las carpetas de tipografías"
 
 #: ../app/dialogs/preferences-dialog.c:3315
 msgid "Tool Preset Folders"
-msgstr "Carpetas de preajustes de las herramientas"
+msgstr "Carpetas de preajuste de herramienta"
 
 #: ../app/dialogs/preferences-dialog.c:3318
 msgid "Reset Tool Preset _Folders"
-msgstr "Restablecer las _carpetas de preajustes de herramienta"
+msgstr "Restablecer las _carpetas de preajuste de herramienta"
 
 #: ../app/dialogs/preferences-dialog.c:3319
 msgid "Select Tool Preset Folders"
-msgstr "Seleccionar las carpetas de preajustes"
+msgstr "Seleccionar las carpetas de preajuste de herramienta"
 
 #: ../app/dialogs/preferences-dialog.c:3321
 msgid "MyPaint Brush Folders"
@@ -23233,7 +23231,7 @@ msgstr "Exportar los ajustes «%s»"
 
 #: ../app/tools/gimpfiltertool-settings.c:100
 msgid "Pre_sets:"
-msgstr "Aju_stes prefijados:"
+msgstr "Pre_ajustes:"
 
 #: ../app/tools/gimpfiltertool-settings.c:248
 #, c-format
@@ -27638,15 +27636,15 @@ msgstr "UTF-8 no válido"
 
 #: ../app/widgets/gimpsettingsbox.c:300
 msgid "Pick a preset from the list"
-msgstr "Seleccione un ajuste predeterminado de la lista"
+msgstr "Seleccione un preajuste de la lista"
 
 #: ../app/widgets/gimpsettingsbox.c:324
 msgid "Save the current settings as named preset"
-msgstr "Guardar la configuración actual como ajuste predeterminado con nombre"
+msgstr "Guardar la configuración actual como el preajuste nombrado"
 
 #: ../app/widgets/gimpsettingsbox.c:342
 msgid "Manage presets"
-msgstr "Gestionar ajustes"
+msgstr "Gestionar preajustes"
 
 #: ../app/widgets/gimpsettingsbox.c:356
 msgid "_Import Current Settings from File..."
@@ -27658,15 +27656,15 @@ msgstr "_Exportar la configuración actual a un archivo…"
 
 #: ../app/widgets/gimpsettingsbox.c:369
 msgid "_Manage Saved Presets..."
-msgstr "_Gestionar las opciones guardadas…"
+msgstr "_Gestionar preajustes guardados…"
 
 #: ../app/widgets/gimpsettingsbox.c:605
 msgid "Save Settings as Named Preset"
-msgstr "Guardar configuración como ajuste predeterminado con nombre"
+msgstr "Guardar ajustes como el preajuste nombrado"
 
 #: ../app/widgets/gimpsettingsbox.c:608
 msgid "Enter a name for the preset"
-msgstr "Introduzca un nombre para los ajustes"
+msgstr "Introduzca un nombre para el preajuste"
 
 #: ../app/widgets/gimpsettingsbox.c:609
 msgid "Saved Settings"
@@ -27674,19 +27672,19 @@ msgstr "Opciones guardadas"
 
 #: ../app/widgets/gimpsettingsbox.c:650
 msgid "Manage Saved Presets"
-msgstr "Gestionar los ajustes guardados"
+msgstr "Gestionar los preajustes guardados"
 
 #: ../app/widgets/gimpsettingseditor.c:192
 msgid "Import presets from a file"
-msgstr "Importar ajustes desde un archivo"
+msgstr "Importar preajustes desde un archivo"
 
 #: ../app/widgets/gimpsettingseditor.c:201
 msgid "Export the selected presets to a file"
-msgstr "Exportar los ajustes seleccionados a un archivo"
+msgstr "Exportar los preajustes seleccionados a un archivo"
 
 #: ../app/widgets/gimpsettingseditor.c:210
 msgid "Delete the selected preset"
-msgstr "Eliminar los ajustes seleccionados"
+msgstr "Eliminar el preajuste seleccionado"
 
 #: ../app/widgets/gimpsizebox.c:455
 #, c-format
@@ -27724,7 +27722,7 @@ msgstr "Patrón de punteado:"
 
 #: ../app/widgets/gimpstrokeeditor.c:241
 msgid "Dash _preset:"
-msgstr "Ajuste _prefijado del punteado:"
+msgstr "_Preajuste del punteado:"
 
 #: ../app/widgets/gimptagentry.c:46
 msgid "filter"
@@ -27995,20 +27993,20 @@ msgstr "Reiniciar el orden y la visibilidad de las herramientas"
 
 #: ../app/widgets/gimptooloptionseditor.c:200
 msgid "Save Tool Preset..."
-msgstr "Guardar ajuste prefijado de herramienta…"
+msgstr "Guardar preajuste de herramienta…"
 
 #: ../app/widgets/gimptooloptionseditor.c:209
 msgid "Restore Tool Preset..."
-msgstr "Restaurar los ajustes prefijados de herramienta…"
+msgstr "Restaurar preajuste de herramienta…"
 
 #: ../app/widgets/gimptooloptionseditor.c:218
 msgid "Delete Tool Preset..."
-msgstr "Eliminar ajuste prefijado de herramienta…"
+msgstr "Eliminar preajuste de herramienta…"
 
 #: ../app/widgets/gimptoolpreseteditor.c:300
 #, c-format
 msgid "%s Preset"
-msgstr "Ajuste prefijado %s"
+msgstr "Preajuste de %s"
 
 #: ../app/widgets/gimpuimanager.c:847
 msgid "Your GIMP installation is incomplete:"
