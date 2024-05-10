@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-05-05 17:42+0000\n"
-"PO-Revision-Date: 2024-05-06 22:46+0200\n"
+"POT-Creation-Date: 2024-05-06 21:05+0000\n"
+"PO-Revision-Date: 2024-05-10 23:45+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -30,7 +30,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.3\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -4630,12 +4630,12 @@ msgstr "_Paso alto…"
 #: app/actions/filters-actions.c:351
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
-msgstr "Tono-_croma…"
+msgstr "Tono-_Croma…"
 
 #: app/actions/filters-actions.c:356
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
-msgstr "Tono-_saturación…"
+msgstr "Tono-_Saturación…"
 
 #: app/actions/filters-actions.c:361
 msgctxt "filters-action"
@@ -4927,7 +4927,7 @@ msgstr "Es_piral…"
 #: app/actions/filters-actions.c:646
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
-msgstr "_Expansión del contraste…"
+msgstr "_Estirar contraste…"
 
 #: app/actions/filters-actions.c:651
 msgctxt "filters-action"
@@ -10440,8 +10440,8 @@ msgstr "Color personalizado de transparencia 2"
 #: app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to "
-"focus\"."
+"receives the focus. This is useful for window managers using \"click to focus"
+"\"."
 msgstr ""
 "Cuando está activado, una imagen se convertirá en activa al recibir el foco "
 "la ventana de su imagen. Esto es muy útil para los gestores de ventanas que "
@@ -14141,7 +14141,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Quitar mapa de colores"
 
-#: app/core/gimpimage-colormap.c:440 app/core/gimppalette.c:611
+#: app/core/gimpimage-colormap.c:440 app/core/gimppalette.c:612
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Cambiar entrada del mapa de colores"
@@ -21434,8 +21434,8 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "El procedimiento «%s» se ha llamado con un valor con un tipo erróneo para el "
 "argumento «%s» (#%d). Se esperaba %s pero se obtuvo %s."
@@ -21592,12 +21592,12 @@ msgstr "Autorecortar capa"
 #: app/pdb/plug-in-compat-cmds.c:789
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
-msgstr "Expansión del contraste HSV"
+msgstr "Estirar contraste HSV"
 
 #: app/pdb/plug-in-compat-cmds.c:943
 msgctxt "undo-type"
 msgid "Stretch Contrast"
-msgstr "Expansión del contraste"
+msgstr "Estirar contraste"
 
 #: app/pdb/plug-in-compat-cmds.c:986
 msgctxt "undo-type"
