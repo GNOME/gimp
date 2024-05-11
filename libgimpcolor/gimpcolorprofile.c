@@ -1568,7 +1568,7 @@ gimp_color_profile_get_format (GimpColorProfile          *profile,
 /**
  * gimp_color_profile_get_lcms_format:
  * @format:      a #Babl format
- * @lcms_format: return location for an lcms format
+ * @lcms_format: (out): return location for an lcms format
  *
  * This function takes a #Babl format and returns the lcms format to
  * be used with that @format. It also returns a #Babl format to be
