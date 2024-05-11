@@ -1092,8 +1092,8 @@ gimp_vector_2d_to_3d_val (gint        sx,
  * @sy: the ordinate of the upper-left screen rectangle.
  * @w: the width of the screen rectangle.
  * @h: the height of the screen rectangle.
- * @x: the abscissa of the point in the screen rectangle to map (return value).
- * @y: the ordinate of the point in the screen rectangle to map (return value).
+ * @x: (out): the abscissa of the point in the screen rectangle to map.
+ * @y: (out): the ordinate of the point in the screen rectangle to map.
  * @vp: position of the observer.
  * @p: the 3D point to project to the plane.
  *
