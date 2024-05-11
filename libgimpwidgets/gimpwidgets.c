@@ -574,14 +574,14 @@ gimp_coordinates_new (GimpUnit         unit,
 /**
  * gimp_toggle_button_update:
  * @widget: A #GtkToggleButton.
- * @data:   A pointer to a #gint variable which will store the value of
+ * @data: (out) (type gboolean): A return location for the value of
  *          gtk_toggle_button_get_active().
  **/
 void
 gimp_toggle_button_update (GtkWidget *widget,
                            gpointer   data)
 {
-  gint *toggle_val = (gint *) data;
+  gboolean *toggle_val = (gboolean *) data;
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     *toggle_val = TRUE;
@@ -592,8 +592,8 @@ gimp_toggle_button_update (GtkWidget *widget,
 /**
  * gimp_radio_button_update:
  * @widget: A #GtkRadioButton.
- * @data:   A pointer to a #gint variable which will store the value of
- *          GPOINTER_TO_INT (g_object_get_data (@widget, "gimp-item-data")).
+ * @data: (out) (type gint): A return location for the value of
+ *        `GPOINTER_TO_INT (g_object_get_data (@widget, "gimp-item-data"))`.
  **/
 void
 gimp_radio_button_update (GtkWidget *widget,
@@ -610,9 +610,8 @@ gimp_radio_button_update (GtkWidget *widget,
 
 /**
  * gimp_int_adjustment_update:
- * @adjustment: A #GtkAdjustment.
- * @data:       A pointer to a #gint variable which will store the
- *              @adjustment's value.
+ * @adjustment:              A #GtkAdjustment.
+ * @data: (out) (type gint): A return location for the @adjustment's value.
  *
  * Note that the #GtkAdjustment's value (which is a #gdouble) will be
  * rounded with RINT().
@@ -629,8 +628,7 @@ gimp_int_adjustment_update (GtkAdjustment *adjustment,
 /**
  * gimp_uint_adjustment_update:
  * @adjustment: A #GtkAdjustment.
- * @data:       A pointer to a #guint variable which will store the
- *              @adjustment's value.
+ * @data: (out) (type guint): A return location for the @adjustment's value.
  *
  * Note that the #GtkAdjustment's value (which is a #gdouble) will be rounded
  * with (#guint) (value + 0.5).
@@ -647,8 +645,7 @@ gimp_uint_adjustment_update (GtkAdjustment *adjustment,
 /**
  * gimp_float_adjustment_update:
  * @adjustment: A #GtkAdjustment.
- * @data:       A pointer to a #gfloat variable which will store the
- *              @adjustment's value.
+ * @data: (out) (type gfloat): A return location for the @adjustment's value.
  **/
 void
 gimp_float_adjustment_update (GtkAdjustment *adjustment,
@@ -663,8 +660,7 @@ gimp_float_adjustment_update (GtkAdjustment *adjustment,
 /**
  * gimp_double_adjustment_update:
  * @adjustment: A #GtkAdjustment.
- * @data:       A pointer to a #gdouble variable which will store the
- *              @adjustment's value.
+ * @data: (out) (type gdouble): A return location for the @adjustment's value.
  **/
 void
 gimp_double_adjustment_update (GtkAdjustment *adjustment,
