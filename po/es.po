@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-05-06 21:02+0000\n"
-"PO-Revision-Date: 2024-05-11 01:49+0200\n"
+"POT-Creation-Date: 2024-05-10 23:52+0000\n"
+"PO-Revision-Date: 2024-05-11 02:32+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -2010,12 +2010,12 @@ msgstr "Sustraer este canal de la selección actual"
 #: ../app/actions/channels-actions.c:215
 msgctxt "channels-action"
 msgid "_Intersect with Selection"
-msgstr "_Intersectar con la selección"
+msgstr "_Intersecar con la selección"
 
 #: ../app/actions/channels-actions.c:216
 msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
-msgstr "Intersectar este canal con la selección actual"
+msgstr "Intersecar este canal con la selección actual"
 
 #: ../app/actions/channels-actions.c:224
 msgctxt "channels-action"
@@ -2162,12 +2162,12 @@ msgstr "Sustraer todos los píxeles con este color de la selección actual"
 #: ../app/actions/colormap-actions.c:91
 msgctxt "colormap-action"
 msgid "_Intersect with Selection"
-msgstr "_Intersectar con la selección"
+msgstr "_Intersecar con la selección"
 
 #: ../app/actions/colormap-actions.c:92
 msgctxt "colormap-action"
 msgid "Intersect all pixels with this color with the current selection"
-msgstr "Intersectar todos los píxeles con este color con la selección actual"
+msgstr "Intersecar todos los píxeles de este color con la selección actual"
 
 #: ../app/actions/context-actions.c:47
 msgctxt "context-action"
@@ -7807,13 +7807,12 @@ msgstr "Sustraer la máscara de capa de la selección actual"
 #: ../app/actions/layers-actions.c:521 ../app/actions/layers-actions.c:551
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
-msgstr "_Interseccionar con selección"
+msgstr "_Intersecar con la selección"
 
 #: ../app/actions/layers-actions.c:522
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
-msgstr ""
-"Establecer la máscara de capa como su intersección con la selección actual"
+msgstr "Intersecar la máscara de capa con la selección actual"
 
 #: ../app/actions/layers-actions.c:530
 msgctxt "layers-action"
@@ -7843,9 +7842,7 @@ msgstr "Sustraer el canal alfa de la capa de la selección actual"
 #: ../app/actions/layers-actions.c:553
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
-msgstr ""
-"Establecer la selección actual como su intersección con el canal alfa de la "
-"capa"
+msgstr "Intersecar el canal alfa de la capa con la selección actual"
 
 #: ../app/actions/layers-actions.c:561
 msgctxt "layers-action"
@@ -9937,12 +9934,12 @@ msgstr "Sustraer la ruta de la selección"
 #: ../app/actions/vectors-actions.c:274
 msgctxt "vectors-action"
 msgid "_Intersect with Selection"
-msgstr "_Intersectar con selección"
+msgstr "_Intersecar con selección"
 
 #: ../app/actions/vectors-actions.c:275
 msgctxt "vectors-action"
 msgid "Intersect path with selection"
-msgstr "Establecer la ruta como su intersección con la selección"
+msgstr "Intersecar la ruta con la selección"
 
 #: ../app/actions/vectors-actions.c:283
 msgctxt "vectors-action"
@@ -24550,7 +24547,7 @@ msgstr "Pulse y arrastre para sustraer de la selección actual"
 
 #: ../app/tools/gimpselectiontool.c:350
 msgid "Click-Drag to intersect with the current selection"
-msgstr "Pulse y arrastre para intersectar con la selección actual"
+msgstr "Pulse y arrastre para intersecar con la selección actual"
 
 #: ../app/tools/gimpselectiontool.c:360
 msgid "Click-Drag to move the selection mask"
@@ -25161,7 +25158,7 @@ msgstr "La posición de la capa activa y su tamaño están bloqueados."
 
 #: ../app/tools/gimptransformtool.c:702
 msgid "The selection does not intersect with the layer."
-msgstr "La extensión no se intersecta con la capa."
+msgstr "La selección no se cruza con la capa."
 
 #: ../app/tools/gimptransformtool.c:709
 msgid "There is no selection to transform."
@@ -25216,7 +25213,7 @@ msgstr ""
 "Ruta a selección\n"
 "%s  Añadir\n"
 "%s  Extraer\n"
-"%s  Intersectar"
+"%s  Intersecar"
 
 #. Create a selection from the current path
 #: ../app/tools/gimpvectoroptions.c:192
