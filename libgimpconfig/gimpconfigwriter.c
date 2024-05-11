@@ -542,8 +542,10 @@ gimp_config_writer_identifier (GimpConfigWriter *writer,
 /**
  * gimp_config_writer_data:
  * @writer: a #GimpConfigWriter
- * @length:
- * @data:
+ * @length:                    : The size of @data
+ * @data: (array length=length): The data to write
+ *
+ * Writes data to @writer.
  *
  * Since: 2.4
  **/
