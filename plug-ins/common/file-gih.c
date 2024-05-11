@@ -254,7 +254,7 @@ gih_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
   GimpExportReturn   export    = GIMP_EXPORT_IGNORE;
-  GList             *drawables = NULL;
+  GList             *layers    = NULL;
   gint               n_drawables;
   GimpParasite      *parasite;
   GimpImage         *orig_image;
@@ -384,8 +384,8 @@ gih_export (GimpProcedure        *procedure,
           goto out;
         }
     }
-  drawables   = gimp_image_list_layers (image);
-  n_drawables = g_list_length (drawables);
+  layers      = gimp_image_list_layers (image);
+  n_drawables = g_list_length (layers);
 
   g_object_get (config,
                 "spacing",         &spacing,
@@ -414,17 +414,24 @@ gih_export (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      GimpProcedure   *procedure;
-      GimpValueArray  *save_retvals;
-      GimpObjectArray *drawables_array;
-      gchar           *paramstring;
+      GimpProcedure    *procedure;
+      GimpValueArray   *save_retvals;
+      GimpDrawable    **drawables = NULL;
+      GimpObjectArray  *drawables_array;
+      GList            *iter;
+      gint              i;
+      gchar            *paramstring;
 
       paramstring = gimp_pixpipe_params_build (&gihparams);
 
+      drawables = g_new (GimpDrawable *, n_drawables);
+      for (iter = layers, i = 0; iter; iter = iter->next, i++)
+        drawables[i] = iter->data;
+
       drawables_array = gimp_object_array_new (GIMP_TYPE_DRAWABLE, (GObject **) drawables,
                                                n_drawables, FALSE);
-      procedure    = gimp_pdb_lookup_procedure (gimp_get_pdb (),
-                                                "file-gih-export-internal");
+      procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                             "file-gih-export-internal");
       save_retvals = gimp_procedure_run (procedure,
                                          "image",         image,
                                          "num-drawables", n_drawables,
@@ -434,6 +441,7 @@ gih_export (GimpProcedure        *procedure,
                                          "name",          description,
                                          "params",        paramstring,
                                          NULL);
+      g_free (drawables);
       gimp_object_array_free (drawables_array);
 
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) == GIMP_PDB_SUCCESS)
@@ -467,7 +475,7 @@ gih_export (GimpProcedure        *procedure,
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
 
-  g_list_free (drawables);
+  g_list_free (layers);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
