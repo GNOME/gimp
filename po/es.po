@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-05-06 21:05+0000\n"
-"PO-Revision-Date: 2024-05-11 01:02+0200\n"
+"POT-Creation-Date: 2024-05-11 03:09+0000\n"
+"PO-Revision-Date: 2024-05-11 13:47+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -1147,7 +1147,7 @@ msgstr "_Intersecar con la selección"
 #: app/actions/colormap-actions.c:96
 msgctxt "colormap-action"
 msgid "Intersect all pixels with this color with the current selection"
-msgstr "Intersecar todos los píxeles con este color con la selección actual"
+msgstr "Intersecar todos los píxeles de este color con la selección actual"
 
 #: app/actions/context-actions.c:47
 msgctxt "context-action"
@@ -6786,9 +6786,7 @@ msgstr "_Intersecar alfa con la selección"
 #: app/actions/layers-actions.c:510
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
-msgstr ""
-"Establecer la selección actual como su intersección con el canal alfa de la "
-"capa"
+msgstr "Intersecar el canal alfa de la capa con la selección actual"
 
 #: app/actions/layers-actions.c:518
 msgctxt "layers-action"
@@ -25725,7 +25723,7 @@ msgstr "La posición y el tamaño de una capa seleccionada están bloqueados."
 
 #: app/tools/gimptransformtool.c:720
 msgid "The selection does not intersect with a selected layer."
-msgstr "La selección no intersecta con una capa seleccionada."
+msgstr "La selección no se cruza con una capa seleccionada."
 
 #: app/tools/gimptransformtool.c:727
 msgid "There is no selection to transform."
