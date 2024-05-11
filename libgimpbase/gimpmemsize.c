@@ -94,7 +94,7 @@ gimp_memsize_serialize (guint64 memsize)
 /**
  * gimp_memsize_deserialize:
  * @string:  a string as returned by gimp_memsize_serialize()
- * @memsize: return location for memory size in bytes
+ * @memsize: (out): return location for memory size in bytes
  *
  * Parses a string representation of a memory size as returned by
  * gimp_memsize_serialize().
