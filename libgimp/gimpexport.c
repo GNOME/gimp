@@ -554,12 +554,12 @@ export_action_perform (const ExportAction *action,
 /**
  * gimp_export_image:
  * @image:        Pointer to the image.
- * @n_drawables:  Size of @drawables.
+ * @format_name:  The (short) name of the image_format (e.g. JPEG or GIF).
  * @capabilities: What can the image_format do?
  *
- * Takes an image and a drawable to be saved together with a
- * description of the capabilities of the image_format. If the
- * type of image doesn't match the capabilities of the format
+ * Takes an image to be saved together with a description
+ * of the capabilities of the image_format. If the type of
+ * image doesn't match the capabilities of the format
  * a dialog is opened that informs the user that the image has
  * to be exported and offers to do the necessary conversions.
  *
@@ -569,9 +569,9 @@ export_action_perform (const ExportAction *action,
  * The save_plugin has to take care of deleting the created image using
  * gimp_image_delete() once the image has been saved.
  *
- * If the user chooses to Ignore the export problem, @image and
- * @drawables are not altered, GIMP_EXPORT_IGNORE is returned and the
- * save_plugin should try to save the original image.
+ * If the user chooses to Ignore the export problem, @image is not
+ * altered, GIMP_EXPORT_IGNORE is returned and the save_plugin
+ * should try to save the original image.
  *
  * If @format_name is NULL, no dialogs will be shown and this function
  * will behave as if the user clicked on the 'Export' button, if a
