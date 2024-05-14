@@ -4,7 +4,17 @@ set -e
 
 
 # BASH ENV
-if [[ -z "$CROSSROAD_PLATFORM" ]]; then
+if [ -z "$CROSSROAD_PLATFORM" ]; then
+if [ -z "$GITLAB_CI" ]; then
+  # Make the script work locally
+  if [ "$0" != "build/windows/gitlab-ci/1_build-deps-crossroad.sh" ]; then
+    echo "To run this script locally, please do it from to the gimp git folder"
+    exit 1
+  fi
+  export GIT_DEPTH=1
+  git submodule update --init
+  export WORK_DIR="$(dirname $PWD)'/'"
+fi
 
 # So that we can use gimp-console from gimp-debian-x64 project.
 GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
@@ -17,22 +27,23 @@ echo export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository
 echo "${GIMP_PREFIX}/bin/gimp-console-$GIMP_APP_VERSION \"\$@\"" >> bin/gimp-console-$GIMP_APP_VERSION
 chmod u+x bin/gimp-console-$GIMP_APP_VERSION
 
-if [ -z "$GIT_SUBMODULE_STRATEGY" ]; then
-  git submodule update --init
-fi
-
 
 # CROSSROAD ENV
+crossroad w64 gimp --run="build/windows/gitlab-ci/2_build-gimp-crossroad.sh"
 else
 export ARTIFACTS_SUFFIX="-x64"
 
 ## The required packages for GIMP are taken from the previous job
 
 ## Build GIMP
-mkdir _build${ARTIFACTS_SUFFIX}-cross && cd _build${ARTIFACTS_SUFFIX}-cross
-crossroad meson setup .. -Dgi-docgen=disabled                 \
-                         -Djavascript=disabled -Dlua=disabled \
-                         -Dpython=disabled -Dvala=disabled
+if [ ! -f "_build${ARTIFACTS_SUFFIX}-cross/build.ninja" ]; then
+  mkdir _build${ARTIFACTS_SUFFIX}-cross && cd _build${ARTIFACTS_SUFFIX}-cross
+  crossroad meson setup .. -Dgi-docgen=disabled                 \
+                           -Djavascript=disabled -Dlua=disabled \
+                           -Dpython=disabled -Dvala=disabled
+else
+  cd _build${ARTIFACTS_SUFFIX}-cross
+fi
 ninja
 ninja install
 ccache --show-stats
@@ -52,6 +63,6 @@ echo "@echo off
       bin\gimp-$GIMP_APP_VERSION.exe" > ${CROSSROAD_PREFIX}/gimp.cmd
 
 ## Copy built GIMP, babl and GEGL and pre-built packages to GIMP_PREFIX
-cp -fr $CROSSROAD_PREFIX/ _install${ARTIFACTS_SUFFIX}-cross/
+cp -fr $CROSSROAD_PREFIX/ ${WORK_DIR}_install${ARTIFACTS_SUFFIX}-cross/
 
 fi # END OF CROSSROAD ENV
