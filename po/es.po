@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the gimp package.
 #
 #
-# Pablo G. del Campo <pablodc@bigfoot.com>, 2003-2004.
+# Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 # Alonso Lara <keko@khor-ha.net>, 2005.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2003-2006.
 # Joaquín Ignacio Aramendía <samsagax@gmail.com>, 2011.
@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-05-10 23:52+0000\n"
-"PO-Revision-Date: 2024-05-11 02:32+0200\n"
+"POT-Creation-Date: 2024-05-11 00:33+0000\n"
+"PO-Revision-Date: 2024-05-13 19:37+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -1229,7 +1229,7 @@ msgstr "Ejecutar sin una interfaz de usuario"
 
 #: ../app/main.c:196
 msgid "Do not load brushes, gradients, patterns, ..."
-msgstr "No cargar los pinceles, los degradados, los patrones…"
+msgstr "No cargar pinceles, degradados, patrones…"
 
 #: ../app/main.c:201
 msgid "Do not load any fonts"
@@ -1291,12 +1291,12 @@ msgstr "Hacer todas las advertencias fatales"
 
 #: ../app/main.c:273
 msgid "Output a gimprc file with default settings"
-msgstr "Sacar un archivo gimprc con la configuración predeterminada"
+msgstr "Generar un archivo gimprc con la configuración predeterminada"
 
 #: ../app/main.c:289
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr ""
-"Mostrar una lista ordenada de los procedimientos obsoletos dentro del PDB"
+"Generar una lista ordenada de los procedimientos obsoletos dentro del PDB"
 
 #: ../app/main.c:294
 msgid "Show a preferences page with experimental features"
@@ -1316,7 +1316,7 @@ msgid ""
 "Make sure a proper setup for your display environment exists."
 msgstr ""
 "GIMP no ha podido inicializar la interfaz gráfica de usuario.\n"
-"Asegúrese de que exista una instalación apropiada para su pantalla."
+"Asegúrese de que la configuración de su pantalla sea adecuada."
 
 #: ../app/main.c:749
 msgid "Another GIMP instance is already running."
@@ -1430,12 +1430,12 @@ msgstr "Dibujable"
 
 #: ../app/actions/actions.c:153 ../app/dialogs/dialogs.c:340
 msgid "Paint Dynamics"
-msgstr "Dinámica de la pintura"
+msgstr "Dinámicas de pintura"
 
 #: ../app/actions/actions.c:156 ../app/dialogs/dialogs.c:426
 #: ../app/widgets/gimpdynamicseditor.c:97
 msgid "Paint Dynamics Editor"
-msgstr "Editor de dinámica de la pintura"
+msgstr "Editor de dinámicas de pintura"
 
 #: ../app/actions/actions.c:159
 msgid "Edit"
@@ -1594,7 +1594,7 @@ msgstr "Menú del editor de pinceles"
 #: ../app/actions/brush-editor-actions.c:50
 msgctxt "brush-editor-action"
 msgid "Edit Active Brush"
-msgstr "Editar pincel activo"
+msgstr "Editar el pincel activo"
 
 #: ../app/actions/brushes-actions.c:43
 msgctxt "brushes-action"
@@ -1609,7 +1609,7 @@ msgstr "_Abrir el pincel como una imagen"
 #: ../app/actions/brushes-actions.c:48
 msgctxt "brushes-action"
 msgid "Open brush as image"
-msgstr "Abre el pincel como una imagen"
+msgstr "Abrir el pincel como una imagen"
 
 #: ../app/actions/brushes-actions.c:53
 msgctxt "brushes-action"
@@ -1704,7 +1704,7 @@ msgstr "_Eliminar búfer"
 #: ../app/actions/buffers-actions.c:53
 msgctxt "buffers-action"
 msgid "Delete the selected buffer"
-msgstr "Borra el búfer seleccionado"
+msgstr "Borrar el búfer seleccionado"
 
 #: ../app/actions/buffers-actions.c:61
 msgctxt "buffers-action"
@@ -1759,7 +1759,7 @@ msgstr "Pegar el búfer seleccionado como una capa nueva"
 #: ../app/actions/buffers-actions.c:92
 msgctxt "buffers-action"
 msgid "Paste Buffer as New Layer in Place"
-msgstr "Pegar el búfer como una _capa nueva en su lugar"
+msgstr "Pegar el búfer como una capa nueva en su lugar"
 
 #: ../app/actions/buffers-actions.c:94
 msgctxt "buffers-action"
@@ -1890,7 +1890,7 @@ msgstr "_Bloquear posición del canal"
 #: ../app/actions/channels-actions.c:140
 msgctxt "channels-action"
 msgid "None"
-msgstr "Ninguno/a"
+msgstr "Nada"
 
 #: ../app/actions/channels-actions.c:141
 msgctxt "channels-action"
@@ -2112,22 +2112,22 @@ msgstr "Editar este color"
 #: ../app/actions/colormap-actions.c:58
 msgctxt "colormap-action"
 msgid "_Add Color from FG"
-msgstr "_Añadir color desde el primer plano"
+msgstr "_Añadir color del PP"
 
 #: ../app/actions/colormap-actions.c:59
 msgctxt "colormap-action"
 msgid "Add current foreground color"
-msgstr "Añade el color del primer plano actual"
+msgstr "Añadir el color de primer plano actual"
 
 #: ../app/actions/colormap-actions.c:64
 msgctxt "colormap-action"
 msgid "_Add Color from BG"
-msgstr "_Añadir color desde el fondo"
+msgstr "_Añadir el color del FD"
 
 #: ../app/actions/colormap-actions.c:65
 msgctxt "colormap-action"
 msgid "Add current background color"
-msgstr "Añade el color de fondo actual"
+msgstr "Añadir el color de fondo actual"
 
 #: ../app/actions/colormap-actions.c:73
 msgctxt "colormap-action"
@@ -2253,22 +2253,22 @@ msgstr "Á_ngulo"
 #: ../app/actions/context-actions.c:81
 msgctxt "context-action"
 msgid "_Default Colors"
-msgstr "Colores pre_definidos"
+msgstr "Colores pre_determinados"
 
 #: ../app/actions/context-actions.c:83
 msgctxt "context-action"
 msgid "Set foreground color to black, background color to white"
-msgstr "Establece el color de primer plano a negro y el color de fondo a blanco"
+msgstr "Establecer el color de primer plano en negro y el color de fondo en blanco"
 
 #: ../app/actions/context-actions.c:88
 msgctxt "context-action"
 msgid "S_wap Colors"
-msgstr "In_tercambiar los colores"
+msgstr "In_tercambiar colores"
 
 #: ../app/actions/context-actions.c:89
 msgctxt "context-action"
 msgid "Exchange foreground and background colors"
-msgstr "Intercambia los colores de primer plano y de fondo"
+msgstr "Intercambiar los colores de primer plano y de fondo"
 
 #: ../app/actions/context-actions.c:97
 msgctxt "context-action"
@@ -2483,212 +2483,212 @@ msgstr "Fondo: omitir siguiente color de la muestra"
 #: ../app/actions/context-actions.c:289
 msgctxt "context-action"
 msgid "Foreground Red: Set"
-msgstr "Primer plano rojo: establecer"
+msgstr "Rojo de primer plano: establecer"
 
 #: ../app/actions/context-actions.c:293
 msgctxt "context-action"
 msgid "Foreground Red: Set to Minimum"
-msgstr "Primer plano rojo: establecer al mínimo"
+msgstr "Rojo de primer plano: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:297
 msgctxt "context-action"
 msgid "Foreground Red: Set to Maximum"
-msgstr "Primer plano rojo: establecer al máximo"
+msgstr "Rojo de primer plano: establecer al máximo"
 
 #: ../app/actions/context-actions.c:301
 msgctxt "context-action"
 msgid "Foreground Red: Decrease by 1%"
-msgstr "Primer plano rojo: reducir un 1%"
+msgstr "Rojo de primer plano: reducir un 1%"
 
 #: ../app/actions/context-actions.c:305
 msgctxt "context-action"
 msgid "Foreground Red: Increase by 1%"
-msgstr "Primer plano rojo: aumentar un 1%"
+msgstr "Rojo de primer plano: aumentar un 1%"
 
 #: ../app/actions/context-actions.c:309
 msgctxt "context-action"
 msgid "Foreground Red: Decrease by 10%"
-msgstr "Primer plano rojo: reducir un 10%"
+msgstr "Rojo de primer plano: reducir un 10%"
 
 #: ../app/actions/context-actions.c:313
 msgctxt "context-action"
 msgid "Foreground Red: Increase by 10%"
-msgstr "Primer plano rojo: aumentar un 10%"
+msgstr "Rojo de primer plano: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:321
 msgctxt "context-action"
 msgid "Foreground Green: Set"
-msgstr "Primer plano verde: establecer"
+msgstr "Verde de primer plano: establecer"
 
 #: ../app/actions/context-actions.c:325
 msgctxt "context-action"
 msgid "Foreground Green: Set to Minimum"
-msgstr "Primer plano verde: establecer al mínimo"
+msgstr "Verde de primer plano: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:329
 msgctxt "context-action"
 msgid "Foreground Green: Set to Maximum"
-msgstr "Primer plano verde: establecer al máximo"
+msgstr "Verde de primer plano: establecer al máximo"
 
 #: ../app/actions/context-actions.c:333
 msgctxt "context-action"
 msgid "Foreground Green: Decrease by 1%"
-msgstr "Primer plano verde: reducir un 1%"
+msgstr "Verde de primer plano: reducir un 1%"
 
 #: ../app/actions/context-actions.c:337
 msgctxt "context-action"
 msgid "Foreground Green: Increase by 1%"
-msgstr "Primer plano verde: aumentar un 1%"
+msgstr "Verde de primer plano: aumentar un 1%"
 
 #: ../app/actions/context-actions.c:341
 msgctxt "context-action"
 msgid "Foreground Green: Decrease by 10%"
-msgstr "Primer plano verde: reducir un 10%"
+msgstr "Verde de primer plano: reducir un 10%"
 
 #: ../app/actions/context-actions.c:345
 msgctxt "context-action"
 msgid "Foreground Green: Increase by 10%"
-msgstr "Primer plano verde: aumentar un 10%"
+msgstr "Verde de primer plano: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:353
 msgctxt "context-action"
 msgid "Foreground Blue: Set"
-msgstr "Primer plano azul: establecer"
+msgstr "Azul de primer plano: establecer"
 
 #: ../app/actions/context-actions.c:357
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Minimum"
-msgstr "Primer plano verde: establecer al mínimo"
+msgstr "Azul de primer plano: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:361
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Maximum"
-msgstr "Primer plano verde: establecer al máximo"
+msgstr "Azul de primer plano: establecer al máximo"
 
 #: ../app/actions/context-actions.c:365
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 1%"
-msgstr "Primer plano azul: reducir un 1%"
+msgstr "Azul de primer plano: reducir un 1%"
 
 #: ../app/actions/context-actions.c:369
 msgctxt "context-action"
 msgid "Foreground Blue: Increase by 1%"
-msgstr "Primer plano azul: aumentar un 1%"
+msgstr "Azul de primer plano: aumentar un 1%"
 
 #: ../app/actions/context-actions.c:373
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 10%"
-msgstr "Primer plano azul: reducir un 10%"
+msgstr "Azul de primer plano: reducir un 10%"
 
 #: ../app/actions/context-actions.c:377
 msgctxt "context-action"
 msgid "Foreground Blue: Increase by 10%"
-msgstr "Primer plano azul: aumentar un 10%"
+msgstr "Azul de primer plano: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:385
 msgctxt "context-action"
 msgid "Background Red: Set"
-msgstr "Fondo rojo: establecer"
+msgstr "Rojo de fondo: establecer"
 
 #: ../app/actions/context-actions.c:389
 msgctxt "context-action"
 msgid "Background Red: Set to Minimum"
-msgstr "Fondo rojo: establecer al mínimo"
+msgstr "Rojo de fondo: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:393
 msgctxt "context-action"
 msgid "Background Red: Set to Maximum"
-msgstr "Fondo rojo: establecer al máximo"
+msgstr "Rojo de fondo: establecer al máximo"
 
 #: ../app/actions/context-actions.c:397
 msgctxt "context-action"
 msgid "Background Red: Decrease by 1%"
-msgstr "Fondo rojo: reducir un 1%"
+msgstr "Rojo de fondo: reducir un 1%"
 
 #: ../app/actions/context-actions.c:401
 msgctxt "context-action"
 msgid "Background Red: Increase by 1%"
-msgstr "Fondo rojo: aumentar un 1%"
+msgstr "Rojo de fondo: aumentar un 1%"
 
 #: ../app/actions/context-actions.c:405
 msgctxt "context-action"
 msgid "Background Red: Decrease by 10%"
-msgstr "Fondo rojo: reducir un 10%"
+msgstr "Rojo de fondo: reducir un 10%"
 
 #: ../app/actions/context-actions.c:409
 msgctxt "context-action"
 msgid "Background Red: Increase by 10%"
-msgstr "Fondo rojo: aumentar un 10%"
+msgstr "Rojo de fondo: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:417
 msgctxt "context-action"
 msgid "Background Green: Set"
-msgstr "Fondo verde: establecer"
+msgstr "Verde de fondo: establecer"
 
 #: ../app/actions/context-actions.c:421
 msgctxt "context-action"
 msgid "Background Green: Set to Minimum"
-msgstr "Fondo verde: establecer al mínimo"
+msgstr "Verde de fondo: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:425
 msgctxt "context-action"
 msgid "Background Green: Set to Maximum"
-msgstr "Fondo verde: establecer al máximo"
+msgstr "Verde de fondo: establecer al máximo"
 
 #: ../app/actions/context-actions.c:429
 msgctxt "context-action"
 msgid "Background Green: Decrease by 1%"
-msgstr "Fondo verde: reducir un 1%"
+msgstr "Verde de fondo: reducir un 1%"
 
 #: ../app/actions/context-actions.c:433
 msgctxt "context-action"
 msgid "Background Green: Increase by 1%"
-msgstr "Fondo verde: aumentar un 1%"
+msgstr "Verde de fondo: aumentar un 1%"
 
 #: ../app/actions/context-actions.c:437
 msgctxt "context-action"
 msgid "Background Green: Decrease by 10%"
-msgstr "Fondo verde: reducir un 10%"
+msgstr "Verde de fondo: reducir un 10%"
 
 #: ../app/actions/context-actions.c:441
 msgctxt "context-action"
 msgid "Background Green: Increase by 10%"
-msgstr "Fondo verde: aumentar un 10%"
+msgstr "Verde de fondo: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:449
 msgctxt "context-action"
 msgid "Background Blue: Set"
-msgstr "Fondo azul: establecer"
+msgstr "Azul de fondo: establecer"
 
 #: ../app/actions/context-actions.c:453
 msgctxt "context-action"
 msgid "Background Blue: Set to Minimum"
-msgstr "Fondo azul: establecer al mínimo"
+msgstr "Azul de fondo: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:457
 msgctxt "context-action"
 msgid "Background Blue: Set to Maximum"
-msgstr "Fondo azul: establecer al máximo"
+msgstr "Azul de fondo: establecer al máximo"
 
 #: ../app/actions/context-actions.c:461
 msgctxt "context-action"
 msgid "Background Blue: Decrease by 1%"
-msgstr "Fondo azul: reducir un 1%"
+msgstr "Azul de fondo: reducir un 1%"
 
 #: ../app/actions/context-actions.c:465
 msgctxt "context-action"
 msgid "Background Blue: Increase by 1%"
-msgstr "Fondo azul: aumentar un 1%"
+msgstr "Azul de fondo: aumentar un 1%"
 
 #: ../app/actions/context-actions.c:469
 msgctxt "context-action"
 msgid "Background Blue: Decrease by 10%"
-msgstr "Fondo azul: reducir un 10%"
+msgstr "Azul de fondo: reducir un 10%"
 
 #: ../app/actions/context-actions.c:473
 msgctxt "context-action"
 msgid "Background Blue: Increase by 10%"
-msgstr "Fondo azul: aumentar un 10%"
+msgstr "Azul de fondo: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:481
 msgctxt "context-action"
@@ -2803,12 +2803,12 @@ msgstr "Tono de fondo: establecer"
 #: ../app/actions/context-actions.c:581
 msgctxt "context-action"
 msgid "Background Hue: Set to Minimum"
-msgstr "Tono de fondo: establecer al míninmo"
+msgstr "Tono de fondo: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:585
 msgctxt "context-action"
 msgid "Background Hue: Set to Maximum"
-msgstr "Color de fondo: establecer al máximo"
+msgstr "Tono de fondo: establecer al máximo"
 
 #: ../app/actions/context-actions.c:589
 msgctxt "context-action"
@@ -2878,7 +2878,7 @@ msgstr "Valor de fondo: establecer al mínimo"
 #: ../app/actions/context-actions.c:649
 msgctxt "context-action"
 msgid "Background Value: Set to Maximum"
-msgstr "Valor de fondo establecer al máximo"
+msgstr "Valor de fondo: establecer al máximo"
 
 #: ../app/actions/context-actions.c:653
 msgctxt "context-action"
@@ -2918,22 +2918,22 @@ msgstr "Opacidad de la herramienta: hacer totalmente opaca"
 #: ../app/actions/context-actions.c:685
 msgctxt "context-action"
 msgid "Tool Opacity: Make 1% More Transparent"
-msgstr "Herramienta de opacidad: hacer un 1% más transparente"
+msgstr "Opacidad de la herramienta: hacer un 1% más transparente"
 
 #: ../app/actions/context-actions.c:689
 msgctxt "context-action"
 msgid "Tool Opacity: Make 1% More Opaque"
-msgstr "Herramienta de opacidad: hacer un 1% más opaca"
+msgstr "Opacidad de la herramienta: hacer un 1% más opaca"
 
 #: ../app/actions/context-actions.c:693
 msgctxt "context-action"
 msgid "Tool Opacity: Make 10% More Transparent"
-msgstr "Herramienta de opacidad: hacer un 10% más transparente"
+msgstr "Opacidad de la herramienta: hacer un 10% más transparente"
 
 #: ../app/actions/context-actions.c:697
 msgctxt "context-action"
 msgid "Tool Opacity: Make 10% More Opaque"
-msgstr "Herramienta de opacidad: hacer un 10% más opaca"
+msgstr "Opacidad de la herramienta: hacer un 10% más opaca"
 
 #: ../app/actions/context-actions.c:705
 msgctxt "context-action"
@@ -2948,7 +2948,7 @@ msgstr "Modo de pintura de herramienta: seleccionar última"
 #: ../app/actions/context-actions.c:713
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Previous"
-msgstr "Modo de pintura de herramienta: seleccionar previa"
+msgstr "Modo de pintura de herramienta: seleccionar anterior"
 
 #: ../app/actions/context-actions.c:717
 msgctxt "context-action"
@@ -2973,7 +2973,7 @@ msgstr "Selección de herramienta: cambiar a la última"
 #: ../app/actions/context-actions.c:737
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Previous"
-msgstr "Selección de herramienta: cambiar a la previa"
+msgstr "Selección de herramienta: cambiar a la anterior"
 
 #: ../app/actions/context-actions.c:741
 msgctxt "context-action"
@@ -3008,27 +3008,27 @@ msgstr "Selección de pincel: cambiar al siguiente"
 #: ../app/actions/context-actions.c:773
 msgctxt "context-action"
 msgid "Pattern Selection: Select by Index"
-msgstr "Selección de patrones: seleccionar por índice"
+msgstr "Selección de patrón: seleccionar por índice"
 
 #: ../app/actions/context-actions.c:777
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to First"
-msgstr "Selección de  patrones: cambiar al primero"
+msgstr "Selección de patrón: cambiar al primero"
 
 #: ../app/actions/context-actions.c:781
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Last"
-msgstr "Selección de patrones: cambiar al último"
+msgstr "Selección de patrón: cambiar al último"
 
 #: ../app/actions/context-actions.c:785
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Previous"
-msgstr "Selección de patrones: cambiar al anterior"
+msgstr "Selección de patrón: cambiar al anterior"
 
 #: ../app/actions/context-actions.c:789
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Next"
-msgstr "Selección de patrones: cambiar al siguiente"
+msgstr "Selección de patrón: cambiar al siguiente"
 
 #: ../app/actions/context-actions.c:797
 msgctxt "context-action"
@@ -3213,42 +3213,42 @@ msgstr "Radio del pincel (editor): aumento relativo"
 #: ../app/actions/context-actions.c:965
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set"
-msgstr "Puntas del cepillo (editor): establecer"
+msgstr "Puntas del pincel (editor): establecer"
 
 #: ../app/actions/context-actions.c:969
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set to Minimum"
-msgstr "Puntas del cepillo (editor): establecer al mínimo"
+msgstr "Puntas del pincel (editor): establecer al mínimo"
 
 #: ../app/actions/context-actions.c:973
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set to Maximum"
-msgstr "Puntas del cepillo (editor): establecer al máximo"
+msgstr "Puntas del pincel (editor): establecer al máximo"
 
 #: ../app/actions/context-actions.c:977
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Decrease by 1"
-msgstr "Puntas del cepillo (editor): disminuir en 1"
+msgstr "Puntas del pincel (editor): disminuir en 1"
 
 #: ../app/actions/context-actions.c:981
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Increase by 1"
-msgstr "Puntas del cepillo (editor): aumentar en 1"
+msgstr "Puntas del pincel (editor): aumentar en 1"
 
 #: ../app/actions/context-actions.c:985
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Decrease by 4"
-msgstr "Puntas del cepillo (editor): disminuir en 4"
+msgstr "Puntas del pincel (editor): disminuir en 4"
 
 #: ../app/actions/context-actions.c:989
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Increase by 4"
-msgstr "Puntas del cepillo (editor): aumentar en 4"
+msgstr "Puntas del pincel (editor): aumentar en 4"
 
 #: ../app/actions/context-actions.c:997
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set"
-msgstr "Dureza del pincel(editor): establecer"
+msgstr "Dureza del pincel (editor): establecer"
 
 #: ../app/actions/context-actions.c:1001
 msgctxt "context-action"
@@ -3573,7 +3573,7 @@ msgstr "Archivos de registro (*.log)"
 
 #: ../app/actions/dashboard-commands.c:179
 msgid "Log samples per second"
-msgstr "Muestreo de registro por segundo"
+msgstr "Muestras de registro por segundo"
 
 #: ../app/actions/dashboard-commands.c:183
 msgid "Sample fre_quency:"
@@ -3735,7 +3735,7 @@ msgstr "Editor de _selección"
 #: ../app/actions/dialogs-actions.c:102
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
-msgstr "Abre el editor de selección"
+msgstr "Abrir el editor de selección"
 
 #: ../app/actions/dialogs-actions.c:107
 msgctxt "dialogs-action"
@@ -3745,7 +3745,7 @@ msgstr "Na_vegación"
 #: ../app/actions/dialogs-actions.c:108
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
-msgstr "Abrir el diálogo de mostrar navegación"
+msgstr "Abrir el diálogo de navegación por pantalla"
 
 #: ../app/actions/dialogs-actions.c:113
 msgctxt "dialogs-action"
@@ -3755,7 +3755,7 @@ msgstr "_Histórico de deshacer"
 #: ../app/actions/dialogs-actions.c:114
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
-msgstr "Abrir el diálogo de deshacer histórico"
+msgstr "Abrir el diálogo del histórico de deshacer"
 
 #: ../app/actions/dialogs-actions.c:119
 msgctxt "dialogs-action"
@@ -3785,7 +3785,7 @@ msgstr "Colo_res"
 #: ../app/actions/dialogs-actions.c:132
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
-msgstr "Abrir el diálogo de colores de primer plano y fondo"
+msgstr "Abrir el diálogo de colores de PP/FD"
 
 #: ../app/actions/dialogs-actions.c:137
 msgctxt "dialogs-action"
@@ -3810,22 +3810,22 @@ msgstr "Abrir el editor de pinceles"
 #: ../app/actions/dialogs-actions.c:149
 msgctxt "dialogs-action"
 msgid "Paint D_ynamics"
-msgstr "_Dinámica de la pintura"
+msgstr "D_inámicas de pintura"
 
 #: ../app/actions/dialogs-actions.c:150
 msgctxt "dialogs-action"
 msgid "Open paint dynamics dialog"
-msgstr "Abrir el diálogo de dinámica de la pintura"
+msgstr "Abrir el diálogo de dinámicas de pintura"
 
 #: ../app/actions/dialogs-actions.c:155
 msgctxt "dialogs-action"
 msgid "Paint Dynamics Editor"
-msgstr "Editor de dinámica de la pintura"
+msgstr "Editor de dinámicas de pintura"
 
 #: ../app/actions/dialogs-actions.c:156
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
-msgstr "Abre el editor de dinámica de la pintura"
+msgstr "Abrir el editor de dinámicas de pintura"
 
 #: ../app/actions/dialogs-actions.c:161
 msgctxt "dialogs-action"
@@ -3956,7 +3956,7 @@ msgstr "Co_nsola de errores"
 #: ../app/actions/dialogs-actions.c:234
 msgctxt "dialogs-action"
 msgid "Open the error console"
-msgstr "Abre la consola de errores"
+msgstr "Abrir la consola de errores"
 
 #: ../app/actions/dialogs-actions.c:239
 msgctxt "dialogs-action"
@@ -3991,12 +3991,12 @@ msgstr "Abrir el editor de dispositivos de entrada"
 #: ../app/actions/dialogs-actions.c:262
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
-msgstr "Combinaciones de _teclas"
+msgstr "Atajos del _teclado"
 
 #: ../app/actions/dialogs-actions.c:263
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
-msgstr "Abre el editor de combinaciones de teclas"
+msgstr "Abrir el editor de atajos del teclado"
 
 #: ../app/actions/dialogs-actions.c:268
 msgctxt "dialogs-action"
@@ -4455,7 +4455,7 @@ msgstr "El balance de blancos sólo funciona sobre capas con color RGB."
 #: ../app/actions/dynamics-actions.c:43
 msgctxt "dynamics-action"
 msgid "Paint Dynamics Menu"
-msgstr "Menú de dinámica de la pintura"
+msgstr "Menú de dinámicas de pintura"
 
 #: ../app/actions/dynamics-actions.c:47
 msgctxt "dynamics-action"
@@ -4495,7 +4495,7 @@ msgstr "Mostrar en el gestor de _archivos"
 #: ../app/actions/dynamics-actions.c:66
 msgctxt "dynamics-action"
 msgid "Show dynamics file location in the file manager"
-msgstr "Mostrar la ruta del archivo de dinámica en el gestor de archivos"
+msgstr "Mostrar la ruta del archivo de dinámicas en el gestor de archivos"
 
 #: ../app/actions/dynamics-actions.c:71
 msgctxt "dynamics-action"
@@ -4530,7 +4530,7 @@ msgstr "Editar esta dinámica"
 #: ../app/actions/dynamics-editor-actions.c:43
 msgctxt "dynamics-editor-action"
 msgid "Paint Dynamics Editor Menu"
-msgstr "Menú del editor de dinámica de la pintura"
+msgstr "Menú del editor de dinámicas de pintura"
 
 #: ../app/actions/dynamics-editor-actions.c:51
 msgctxt "dynamics-editor-action"
@@ -4776,7 +4776,7 @@ msgstr ""
 #: ../app/actions/edit-actions.c:214
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
-msgstr "Rellenar con el color de _primer plano"
+msgstr "Rellenar con el color de _PP"
 
 #: ../app/actions/edit-actions.c:215
 msgctxt "edit-action"
@@ -4786,7 +4786,7 @@ msgstr "Rellenar la selección utilizando el color de primer plano"
 #: ../app/actions/edit-actions.c:220
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
-msgstr "Rellenar con el color de fo_ndo"
+msgstr "Rellenar con el color de _FD"
 
 #: ../app/actions/edit-actions.c:221
 msgctxt "edit-action"
@@ -5176,7 +5176,7 @@ msgstr "_Sobreescribir"
 msgctxt "file-action"
 msgid "Export the image back to the imported file in the import format"
 msgstr ""
-"Volver a exportar la imagen al origen de importación en el formato de "
+"Exportar la imagen de regreso al archivo de importación en el formato de "
 "importación"
 
 #: ../app/actions/file-actions.c:172
@@ -5450,7 +5450,7 @@ msgctxt "filters-action"
 msgid "_Bayer Matrix..."
 msgstr "Matriz de _Bayer…"
 
-# http://www.squaregear.net/gimptips/blom.shtml
+# https://squaregear.net/gimptips/blom.html
 # https://www.wordreference.com/es/translation.asp?tranword=bloom
 #: ../app/actions/filters-actions.c:193
 msgctxt "filters-action"
@@ -5630,7 +5630,7 @@ msgstr "Traza _fractal…"
 #: ../app/actions/filters-actions.c:368
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
-msgstr "Desenfoque ga_ussiano…"
+msgstr "Desenfoque _gaussiano…"
 
 #: ../app/actions/filters-actions.c:373
 msgctxt "filters-action"
@@ -5671,7 +5671,7 @@ msgstr "_Ilusión…"
 #: ../app/actions/filters-actions.c:408
 msgctxt "filters-action"
 msgid "_Image Gradient..."
-msgstr "Degradado de la _imagen…"
+msgstr "Gradiente de la _imagen…"
 
 #: ../app/actions/filters-actions.c:413
 msgctxt "filters-action"
@@ -5692,7 +5692,7 @@ msgstr "Distorsión de le_nte…"
 #: ../app/actions/filters-actions.c:428
 msgctxt "filters-action"
 msgid "Lens _Flare..."
-msgstr "_Reflejo en la lente…"
+msgstr "_Reflejo de lente…"
 
 #: ../app/actions/filters-actions.c:433
 msgctxt "filters-action"
@@ -5727,7 +5727,7 @@ msgstr "_Laberinto…"
 #: ../app/actions/filters-actions.c:463
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
-msgstr "Desenfoque de _media de la c_urvatura…"
+msgstr "Desenfoque de media de la c_urvatura…"
 
 #: ../app/actions/filters-actions.c:468
 msgctxt "filters-action"
@@ -5918,7 +5918,7 @@ msgstr "_Luces-Sombras…"
 #: ../app/actions/filters-actions.c:653
 msgctxt "filters-action"
 msgid "_Shift..."
-msgstr "_Desplazamiento…"
+msgstr "_Desplazar…"
 
 #: ../app/actions/filters-actions.c:658
 msgctxt "filters-action"
@@ -5933,7 +5933,7 @@ msgstr "Agrupamiento iterativo lineal _simple…"
 #: ../app/actions/filters-actions.c:668
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
-msgstr "Vecino más cercano _simétrico…"
+msgstr "Vecino _simétrico más cercano…"
 
 #: ../app/actions/filters-actions.c:673
 msgctxt "filters-action"
@@ -5993,7 +5993,7 @@ msgstr "_Mosaico sin costura…"
 #: ../app/actions/filters-actions.c:728
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
-msgstr "Nitidez (_Máscara de suciedad)…"
+msgstr "Enfocar (_Máscara de desenfoque)…"
 
 #: ../app/actions/filters-actions.c:733
 msgctxt "filters-action"
@@ -6009,7 +6009,7 @@ msgstr "Desenfoque _variable…"
 #: ../app/actions/filters-actions.c:743
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
-msgstr "_Degradación del vídeo…"
+msgstr "_Degradación de vídeo…"
 
 #: ../app/actions/filters-actions.c:748
 msgctxt "filters-action"
@@ -6019,7 +6019,7 @@ msgstr "_Viñeta…"
 #: ../app/actions/filters-actions.c:753
 msgctxt "filters-action"
 msgid "_Waterpixels..."
-msgstr "_Píxeles de agua…"
+msgstr "_Píxeles de acuarela…"
 
 #: ../app/actions/filters-actions.c:758
 msgctxt "filters-action"
@@ -6034,12 +6034,12 @@ msgstr "_Girar y comprimir…"
 #: ../app/actions/filters-actions.c:768
 msgctxt "filters-action"
 msgid "W_ind..."
-msgstr "_V_iento…"
+msgstr "V_iento…"
 
 #: ../app/actions/filters-actions.c:776
 msgctxt "filters-action"
 msgid "Re_peat Last"
-msgstr "R_epetir el último"
+msgstr "Re_petir el último"
 
 #: ../app/actions/filters-actions.c:778
 msgctxt "filters-action"
@@ -6133,12 +6133,12 @@ msgstr "G_uardar color derecho en"
 #: ../app/actions/gradient-editor-actions.c:67
 msgctxt "gradient-editor-action"
 msgid "L_eft Endpoint's Color..."
-msgstr "Color del punto final izqui_erdo…"
+msgstr "Color del extremo izqui_erdo…"
 
 #: ../app/actions/gradient-editor-actions.c:72
 msgctxt "gradient-editor-action"
 msgid "R_ight Endpoint's Color..."
-msgstr "Color del punto f_inal derecho…"
+msgstr "Color del extremo _derecho…"
 
 #: ../app/actions/gradient-editor-actions.c:112
 msgctxt "gradient-editor-action"
@@ -6197,13 +6197,13 @@ msgstr "_Fijo"
 #: ../app/actions/gradient-editor-actions.c:293
 msgctxt "gradient-editor-color-type"
 msgid "F_oreground Color"
-msgstr "Color de _primer plano"
+msgstr "Color de primer plan_o"
 
 #: ../app/actions/gradient-editor-actions.c:269
 #: ../app/actions/gradient-editor-actions.c:299
 msgctxt "gradient-editor-color-type"
 msgid "Fo_reground Color (Transparent)"
-msgstr "_Color de p_rimer plano (transparente)"
+msgstr "Color de p_rimer plano (transparente)"
 
 #: ../app/actions/gradient-editor-actions.c:274
 #: ../app/actions/gradient-editor-actions.c:304
@@ -7288,7 +7288,7 @@ msgstr "_Eliminar la capa"
 #: ../app/actions/layers-actions.c:140
 msgctxt "layers-action"
 msgid "Delete this layer"
-msgstr "Borra esta capa"
+msgstr "Eliminar esta capa"
 
 #: ../app/actions/layers-actions.c:145
 msgctxt "layers-action"
@@ -7944,7 +7944,7 @@ msgstr "Modo de la capa: seleccionar siguiente"
 #.
 #: ../app/actions/layers-actions.c:661
 msgid "Shortcut: "
-msgstr "Combinación de teclas: "
+msgstr "Atajo del teclado: "
 
 #. Will be prepended with a modifier key
 #. string, e.g. "Shift"
@@ -8112,7 +8112,7 @@ msgstr "Editar paleta activa"
 #: ../app/actions/palette-editor-actions.c:72
 msgctxt "palette-editor-action"
 msgid "New Color from _FG"
-msgstr "Color nuevo desde el _primer plano"
+msgstr "Color nuevo desde el _PP"
 
 #: ../app/actions/palette-editor-actions.c:74
 msgctxt "palette-editor-action"
@@ -8122,7 +8122,7 @@ msgstr "Crear una entrada nueva a partir del color de primer plano"
 #: ../app/actions/palette-editor-actions.c:79
 msgctxt "palette-editor-action"
 msgid "New Color from _BG"
-msgstr "Color nuevo desde el f_ondo"
+msgstr "Color nuevo desde el _FD"
 
 #: ../app/actions/palette-editor-actions.c:81
 msgctxt "palette-editor-action"
@@ -8261,7 +8261,7 @@ msgstr "_Abrir el patrón como una imagen"
 #: ../app/actions/patterns-actions.c:48
 msgctxt "patterns-action"
 msgid "Open this pattern as an image"
-msgstr "Abre este patrón como una imagen"
+msgstr "Abrir este patrón como una imagen"
 
 #: ../app/actions/patterns-actions.c:53
 msgctxt "patterns-action"
@@ -8485,12 +8485,12 @@ msgstr "Di_fuminar…"
 #: ../app/actions/select-actions.c:76
 msgctxt "select-action"
 msgid "Blur the selection border so that it fades out smoothly"
-msgstr "Difuminar el borde de selección para que se desvanezca suavemente"
+msgstr "Difuminar el borde de la selección para que se desvanezca suavemente"
 
 #: ../app/actions/select-actions.c:81
 msgctxt "select-action"
 msgid "_Sharpen"
-msgstr "_Nitidez"
+msgstr "_Enfocar"
 
 #: ../app/actions/select-actions.c:82
 msgctxt "select-action"
@@ -8570,7 +8570,7 @@ msgstr "Rellenar el contorno de la selección con los últimos valores usados"
 #: ../app/actions/select-actions.c:129
 msgctxt "select-action"
 msgid "_Stroke Selection..."
-msgstr "_Trazar selección [Stroke]…"
+msgstr "_Trazar selección…"
 
 #: ../app/actions/select-actions.c:130
 msgctxt "select-action"
@@ -8580,7 +8580,7 @@ msgstr "Pintar a lo largo del contorno de la selección"
 #: ../app/actions/select-actions.c:135
 msgctxt "select-action"
 msgid "_Stroke Selection"
-msgstr "_Trazar selección [Stroke]"
+msgstr "_Trazar selección"
 
 #: ../app/actions/select-actions.c:136
 msgctxt "select-action"
@@ -8589,11 +8589,11 @@ msgstr "Trazar la selección con los últimos valores usados"
 
 #: ../app/actions/select-commands.c:162
 msgid "Feather Selection"
-msgstr "Difuminar selección [Feather]"
+msgstr "Rebajar la selección"
 
 #: ../app/actions/select-commands.c:166
 msgid "Feather selection by"
-msgstr "Difuminar selección en"
+msgstr "Rebajar la selección en"
 
 #. Edge lock button
 #: ../app/actions/select-commands.c:175 ../app/actions/select-commands.c:251
@@ -8604,7 +8604,7 @@ msgstr "Las á_reas seleccionadas continúan fuera de la imagen"
 #: ../app/actions/select-commands.c:178
 msgid "When feathering, act as if selected areas continued outside the image."
 msgstr ""
-"Al difuminar, actúa como si las áreas seleccionadas continuaran fuera de la "
+"Al rebajar, actúa como si las áreas seleccionadas continuaran fuera de la "
 "imagen."
 
 #: ../app/actions/select-commands.c:237
@@ -9011,7 +9011,7 @@ msgstr "_Guardar las opciones de la herramienta en un preajuste"
 msgctxt "tool-preset-editor-action"
 msgid "Save the active tool options to this tool preset"
 msgstr ""
-"Guardar las opciones activas de la herramienta en este preajuste de herramienta"
+"Guardar las opciones de la herramienta activa en este preajuste de herramienta"
 
 #: ../app/actions/tool-preset-editor-actions.c:55
 msgctxt "tool-preset-editor-action"
@@ -9033,8 +9033,8 @@ msgstr "Editar el preajuste de la herramienta activa"
 #, c-format
 msgid "Can't save '%s' tool options to an existing '%s' tool preset."
 msgstr ""
-"No se pueden guardar las opciones de herramienta de «%s» en un preajuste de "
-"herramienta de «%s» existente."
+"No se pueden guardar las opciones de la herramienta «%s» en el preajuste de "
+"herramienta «%s» existente."
 
 #: ../app/actions/tool-presets-actions.c:46
 msgctxt "tool-presets-action"
@@ -10060,7 +10060,7 @@ msgstr "_Gestión del color"
 #: ../app/actions/view-actions.c:79
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
-msgstr "Prueba de _renderizado en pantalla"
+msgstr "Intención de _renderizado en pantalla"
 
 #: ../app/actions/view-actions.c:82
 msgctxt "view-action"
@@ -10343,7 +10343,7 @@ msgstr "_Mostrar puntos de muestra"
 #: ../app/actions/view-actions.c:264
 msgctxt "view-action"
 msgid "Display the image's color sample points"
-msgstr "Muestra los puntos de muestreo de color de la imagen"
+msgstr "Muestra los puntos de muestra de color de la imagen"
 
 #: ../app/actions/view-actions.c:270
 msgctxt "view-action"
@@ -10678,7 +10678,7 @@ msgstr "_Perceptivo"
 #: ../app/actions/view-actions.c:547
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
-msgstr "La prueba de renderizado en pantalla es perceptivo"
+msgstr "La intención de renderizado en pantalla es perceptivo"
 
 #: ../app/actions/view-actions.c:552 ../app/actions/view-actions.c:579
 msgctxt "view-action"
@@ -10688,7 +10688,7 @@ msgstr "Colorimétrico _relativo"
 #: ../app/actions/view-actions.c:553
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
-msgstr "La prueba de renderizado en pantalla es colorimétrico relativo"
+msgstr "La intención de renderizado en pantalla es colorimétrico relativo"
 
 #: ../app/actions/view-actions.c:558 ../app/actions/view-actions.c:585
 msgctxt "view-action"
@@ -10698,7 +10698,7 @@ msgstr "_Saturación"
 #: ../app/actions/view-actions.c:559
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
-msgstr "La prueba de renderizado en pantalla es saturación"
+msgstr "La intención de renderizado en pantalla es saturación"
 
 #: ../app/actions/view-actions.c:564 ../app/actions/view-actions.c:591
 msgctxt "view-action"
@@ -10708,7 +10708,7 @@ msgstr "Colorimétrico _absoluto"
 #: ../app/actions/view-actions.c:565
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
-msgstr "La prueba de renderizado en pantalla es colorimétrico absoluto"
+msgstr "La intención de renderizado en pantalla es colorimétrico absoluto"
 
 #: ../app/actions/view-actions.c:574
 msgctxt "view-action"
@@ -11666,9 +11666,9 @@ msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This used "
 "to be the default behaviour in older versions."
 msgstr ""
-"Si está activado, la herramienta de movimiento cambia la capa editada o ruta "
-"como activa. Esto solía ser el comportamiento predeterminado en las versiones "
-"más antiguas."
+"Si está activado, la herramienta de movimiento establece la capa editada o "
+"ruta como activa.  Este solía ser el comportamiento predeterminado en "
+"versiones más antiguas."
 
 #: ../app/config/gimprc-blurbs.h:316
 msgid ""
@@ -11976,17 +11976,17 @@ msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 msgstr ""
-"Cuando está activado puede cambiar las combinaciones de teclas de los "
+"Cuando está activado puede cambiar los atajos del teclado de los "
 "elementos del menú presionando una combinación de teclas mientras el elemento "
 "del menú está resaltado."
 
 #: ../app/config/gimprc-blurbs.h:504
 msgid "Save changed keyboard shortcuts when GIMP exits."
-msgstr "Guardar las combinaciones de teclas modificadas al salir de GIMP."
+msgstr "Guardar los atajos del teclado modificados al salir de GIMP."
 
 #: ../app/config/gimprc-blurbs.h:507
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr "Restaurar las combinaciones de teclas guardadas en cada inicio de GIMP."
+msgstr "Restaurar los atajos del teclado guardados en cada inicio de GIMP."
 
 #: ../app/config/gimprc-blurbs.h:510
 msgid ""
@@ -12009,7 +12009,7 @@ msgstr "El nombre del tema que usar."
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
-"Establece la prueba de renderizado predeterminada para el diálogo «Convertir a "
+"Establece la intención de renderizado predeterminada para el diálogo «Convertir a "
 "perfil de color»."
 
 #: ../app/config/gimprc-blurbs.h:534
@@ -12025,7 +12025,7 @@ msgstr ""
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
-"Establece el método de difuminado de capa predeterminado para el diálogo "
+"Establece el método de tramado de capa predeterminado para el diálogo "
 "«Convertir precisión»."
 
 #: ../app/config/gimprc-blurbs.h:541
@@ -12033,14 +12033,14 @@ msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr ""
-"Establece el método de difuminado de capa de texto predeterminado para el "
+"Establece el método de tramado de capa de texto predeterminado para el "
 "diálogo «Convertir precisión»."
 
 #: ../app/config/gimprc-blurbs.h:544
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
-"Establece el método de difuminado de canal predeterminado para el diálogo "
+"Establece el método de tramado de canal predeterminado para el diálogo "
 "«Convertir precisión»."
 
 #: ../app/config/gimprc-blurbs.h:547
@@ -12067,14 +12067,14 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:556
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
-"Establece el tipo de difuminado predeterminado para el diálogo «Convertir en "
+"Establece el tipo de tramado predeterminado para el diálogo «Convertir en "
 "indexado»."
 
 #: ../app/config/gimprc-blurbs.h:559
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
-"Establece el estado de «Difuminado alfa» predeterminado para el diálogo "
+"Establece el estado de «Tramar alfa» predeterminado para el diálogo "
 "«Convertir en indexado»."
 
 #: ../app/config/gimprc-blurbs.h:562
@@ -12082,7 +12082,7 @@ msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
-"Establece el estado de «Difuminado de capas de texto» predeterminado para el "
+"Establece el estado de «Tramar capas de texto» predeterminado para el "
 "diálogo «Convertir en indexado»."
 
 #: ../app/config/gimprc-blurbs.h:565
@@ -12221,7 +12221,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:637
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr ""
-"Establece el radio de pluma predeterminado para el diálogo «Difuminar "
+"Establece el radio de rebajar predeterminado para el diálogo «Rebajar "
 "selección»."
 
 #: ../app/config/gimprc-blurbs.h:640
@@ -12230,7 +12230,7 @@ msgid ""
 "'Feather Selection' dialog."
 msgstr ""
 "Establece la configuración «Las áreas seleccionadas continúan fuera de la "
-"imagen» predeterminada para el diálogo «Difuminar selección»."
+"imagen» predeterminada para el diálogo «Rebajar selección»."
 
 #: ../app/config/gimprc-blurbs.h:644
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
@@ -12439,7 +12439,7 @@ msgstr "Suave"
 #: ../app/core/core-enums.c:116
 msgctxt "channel-border-style"
 msgid "Feathered"
-msgstr "Emplumado"
+msgstr "Rebajado"
 
 # Debe ir en minúsculas por las reglas de estilo
 #: ../app/core/core-enums.c:151
@@ -12590,12 +12590,12 @@ msgstr "Punteados"
 #: ../app/core/core-enums.c:422
 msgctxt "dash-preset"
 msgid "Dash, dot"
-msgstr "Guion, punto"
+msgstr "Raya, punto"
 
 #: ../app/core/core-enums.c:423
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
-msgstr "Guion, punto, punto"
+msgstr "Raya, punto, punto"
 
 #: ../app/core/core-enums.c:453
 msgctxt "debug-policy"
@@ -12773,7 +12773,7 @@ msgstr "Alfa"
 #: ../app/core/core-enums.c:775
 msgctxt "histogram-channel"
 msgid "Luminance"
-msgstr "Luminosidad"
+msgstr "Luminancia"
 
 #: ../app/core/core-enums.c:776
 msgctxt "histogram-channel"
@@ -13386,27 +13386,27 @@ msgstr "Personalizado"
 
 #: ../app/core/gimp-gradients.c:75
 msgid "FG to BG (RGB)"
-msgstr "Primer plano a fondo (RGB)"
+msgstr "PP a FD (RGB)"
 
 #: ../app/core/gimp-gradients.c:83
 msgid "FG to BG (Hardedge)"
-msgstr "Primer plano a fondo (bordes duros)"
+msgstr "PP a FD (bordes duros)"
 
 #: ../app/core/gimp-gradients.c:91
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "Primer plano a fondo (HSV en sentido antihorario)"
+msgstr "PP a FD (HSV en sentido antihorario)"
 
 #: ../app/core/gimp-gradients.c:99
 msgid "FG to BG (HSV clockwise hue)"
-msgstr "Primer plano a fondo (HSV tono en sentido horario)"
+msgstr "PP a FD (HSV tono en sentido horario)"
 
 #: ../app/core/gimp-gradients.c:107
 msgid "FG to Transparent"
-msgstr "Primer plano a transparente"
+msgstr "PP a transparente"
 
 #: ../app/core/gimp-gradients.c:114
 msgid "FG to Transparent (Hardedge)"
-msgstr "Primer plano a transparente (borde duro)"
+msgstr "PP a transparente (borde duro)"
 
 #. Translator:  This message is displayed while GIMP is waiting for
 #. * some operation to finish.  The %s argument is a message describing
@@ -13837,7 +13837,7 @@ msgstr "El canal no puede descender más."
 #: ../app/core/gimpchannel.c:290
 msgctxt "undo-type"
 msgid "Feather Channel"
-msgstr "Difuminar el canal"
+msgstr "Rebajar el canal"
 
 #: ../app/core/gimpchannel.c:291
 msgctxt "undo-type"
@@ -13872,7 +13872,7 @@ msgstr "Reducir el canal"
 #: ../app/core/gimpchannel.c:298
 msgctxt "undo-type"
 msgid "Flood Channel"
-msgstr "Inundar canal"
+msgstr "Inundar el canal"
 
 #: ../app/core/gimpchannel.c:781
 msgid "Cannot fill empty channel."
@@ -13930,7 +13930,7 @@ msgstr "Pincel"
 
 #: ../app/core/gimpcontext.c:723
 msgid "Paint dynamics"
-msgstr "Dinámicas de la pintura"
+msgstr "Dinámicas de pintura"
 
 #: ../app/core/gimpcontext.c:729 ../app/core/gimpcontext.c:730
 #: ../app/tools/gimpmybrushtool.c:73
@@ -14145,11 +14145,11 @@ msgstr "Alisado"
 #: ../app/core/gimpfilloptions.c:123 ../app/tools/gimpbucketfilloptions.c:159
 #: ../app/tools/gimpselectionoptions.c:87
 msgid "Feather edges"
-msgstr "Difuminar los bordes"
+msgstr "Rebajar los bordes"
 
 #: ../app/core/gimpfilloptions.c:124 ../app/tools/gimpbucketfilloptions.c:160
 msgid "Enable feathering of fill edges"
-msgstr "Activar el difuminado de los bordes del relleno"
+msgstr "Activar el rebajar los bordes del relleno"
 
 #: ../app/core/gimpfilloptions.c:130 ../app/paint/gimpmybrushoptions.c:86
 #: ../app/tools/gimpbucketfilloptions.c:166 ../app/tools/gimpcoloroptions.c:85
@@ -14161,7 +14161,7 @@ msgstr "Radio"
 #: ../app/core/gimpfilloptions.c:131 ../app/tools/gimpbucketfilloptions.c:167
 #: ../app/tools/gimpselectionoptions.c:95
 msgid "Radius of feathering"
-msgstr "Radio del difuminado"
+msgstr "Radio del rebajado"
 
 #: ../app/core/gimpfilloptions.c:355
 msgctxt "undo-type"
@@ -14597,7 +14597,7 @@ msgstr "Convertir la imagen a punto flotante gamma de 64 bits"
 #: ../app/dialogs/convert-precision-dialog.c:224
 #: ../app/tools/gimpgradientoptions.c:128
 msgid "Dithering"
-msgstr "Difuminado"
+msgstr "Tramado"
 
 #: ../app/core/gimpimage-convert-type.c:84
 msgctxt "undo-type"
@@ -15307,7 +15307,7 @@ msgstr "Trazar la selección"
 #: ../app/core/gimpselection.c:190
 msgctxt "undo-type"
 msgid "Feather Selection"
-msgstr "Difuminar la selección"
+msgstr "Rebajar la selección"
 
 #: ../app/core/gimpselection.c:191
 msgctxt "undo-type"
@@ -15646,7 +15646,7 @@ msgstr "Grupo"
 
 #: ../app/core/gimptoolpreset.c:149
 msgid "Apply stored FG/BG"
-msgstr "Aplicar el primer plano y el fondo almacenados"
+msgstr "Aplicar el PP/FD almacenados"
 
 #: ../app/core/gimptoolpreset.c:156
 msgid "Apply stored opacity/paint mode"
@@ -15658,7 +15658,7 @@ msgstr "Aplicar el pincel almacenado"
 
 #: ../app/core/gimptoolpreset.c:170
 msgid "Apply stored dynamics"
-msgstr "Aplicar la dinámica almacenada"
+msgstr "Aplicar las dinámicas almacenadas"
 
 #: ../app/core/gimptoolpreset.c:177
 msgid "Apply stored MyPaint brush"
@@ -15766,12 +15766,12 @@ msgstr "Visite el sitio web de GIMP"
 #: ../app/dialogs/about-dialog.c:157
 msgid "translator-credits"
 msgstr ""
+"Rodrigo Lledó <rodhos-hp@ubuntu.com>, 2018-2024\n"
 "Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2021\n"
-"Rodrigo Lledó <rodhos-hp@ubuntu.com>, 2018-2023\n"
-"Alonso Lara 2005\n"
+"Francisco Vila 2003-2013\n"
 "Francisco Javier F. Serrador 2003-2006\n"
-"Pablo G. del Campo 2003-2004\n"
-"Francisco Vila 2003-2013"
+"Alonso Lara 2005\n"
+"Pablo G. del Campo 2003-2004"
 
 #: ../app/dialogs/about-dialog.c:355
 msgid "Update available!"
@@ -15926,7 +15926,7 @@ msgstr "_Detalles del perfil"
 #: ../app/dialogs/color-profile-dialog.c:290
 #: ../app/dialogs/color-profile-import-dialog.c:160
 msgid "_Rendering Intent:"
-msgstr "Prueba de _renderizado:"
+msgstr "Intención de _renderizado:"
 
 #: ../app/dialogs/color-profile-dialog.c:306
 #: ../app/dialogs/color-profile-import-dialog.c:176
@@ -15995,20 +15995,20 @@ msgstr "_Eliminar los colores duplicados y sin usar del mapa de colores"
 
 #: ../app/dialogs/convert-indexed-dialog.c:253
 msgid "Color _dithering:"
-msgstr "_Difuminar el color:"
+msgstr "_Tramado del color:"
 
 #: ../app/dialogs/convert-indexed-dialog.c:268
 msgid "Enable dithering of _transparency"
-msgstr "Activar difuminado de _transparencia"
+msgstr "Activar tramado de _transparencia"
 
 #: ../app/dialogs/convert-indexed-dialog.c:280
 msgid "Enable dithering of text _layers"
-msgstr "Activar el difuminado de las _capas de texto"
+msgstr "Activar tramado de las _capas de texto"
 
 #: ../app/dialogs/convert-indexed-dialog.c:291
 #: ../app/dialogs/convert-precision-dialog.c:279
 msgid "Dithering text layers will make them uneditable"
-msgstr "Difuminar las capas de texto hará que no sean editables"
+msgstr "Tramar las capas de texto hará que no sean editables"
 
 #: ../app/dialogs/convert-indexed-dialog.c:415
 #: ../app/pdb/image-convert-cmds.c:163
@@ -16129,15 +16129,15 @@ msgstr "Navegación"
 
 #: ../app/dialogs/dialogs.c:410
 msgid "Display Navigation"
-msgstr "Navegación de la vista"
+msgstr "Navegación por pantalla"
 
 #: ../app/dialogs/dialogs.c:416
 msgid "FG/BG"
-msgstr "Primer plano y fondo"
+msgstr "PP/FD"
 
 #: ../app/dialogs/dialogs.c:416
 msgid "FG/BG Color"
-msgstr "Color de primer plano y fondo"
+msgstr "Color de PP/FD"
 
 # ¿O es abrir capas? depende del contexto. FVD
 #: ../app/dialogs/file-open-dialog.c:261
@@ -16279,7 +16279,7 @@ msgstr "La capa final combinada debería ser:"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:138
 msgid "Merge within active _group only"
-msgstr "Combinar solamente dentro del grupo acti_vo"
+msgstr "Combinar únicamente dentro del _grupo activo"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:151
 msgid "_Discard invisible layers"
@@ -16400,19 +16400,19 @@ msgstr "_Enlazado"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:63
 msgid "Configure Keyboard Shortcuts"
-msgstr "Configurar combinaciones de teclas"
+msgstr "Configurar atajos del teclado"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:89
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
 msgstr ""
-"Para editar una combinación de teclas, pulse en la fila correspondiente y "
-"teclee un acelerador nuevo, o pulse la tecla de retroceso para borrar."
+"Para editar un atajo del teclado, pulse en la fila correspondiente y "
+"escriba un acelerador nuevo, o pulse la tecla de retroceso para borrar."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:97
 msgid "S_ave keyboard shortcuts on exit"
-msgstr "_Guardar las combinaciones de teclas al salir"
+msgstr "_Guardar los atajos del teclado al salir"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:103
 msgid "Add Layer Mask"
@@ -16689,17 +16689,17 @@ msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
-"Sus combinaciones de teclas se restablecerán a los valores de fábrica la "
+"Sus atajos del teclado se restablecerán a los valores de fábrica la "
 "próxima vez que inicie GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:660
 msgid "Remove all Keyboard Shortcuts"
-msgstr "Eliminar todas las combinaciones de teclas"
+msgstr "Eliminar todos los atajos del teclado"
 
 #: ../app/dialogs/preferences-dialog.c:682
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
 msgstr ""
-"¿Realmente desea eliminar todas las combinaciones de teclas de todos los menús?"
+"¿Realmente desea eliminar todos los atajos del teclado de todos los menús?"
 
 #: ../app/dialogs/preferences-dialog.c:723
 msgid ""
@@ -16937,7 +16937,7 @@ msgstr "In_tentar utilizar el perfil de monitor del sistema"
 
 #: ../app/dialogs/preferences-dialog.c:1367
 msgid "_Rendering intent:"
-msgstr "Prueba de _renderizado:"
+msgstr "Intención de _renderizado:"
 
 #: ../app/dialogs/preferences-dialog.c:1372
 msgid "Use _black point compensation"
@@ -16984,7 +16984,7 @@ msgstr "_Optimizar la prueba de impresión para:"
 
 #: ../app/dialogs/preferences-dialog.c:1427
 msgid "Mar_k out of gamut colors"
-msgstr "Mar_car a partir de los colores de la gama"
+msgstr "Mar_car a partir de la gama de colores"
 
 #: ../app/dialogs/preferences-dialog.c:1432
 msgid "Select Warning Color"
@@ -17005,11 +17005,11 @@ msgstr "Perfil _RGB:"
 
 #: ../app/dialogs/preferences-dialog.c:1460
 msgid "Select Preferred Grayscale Color Profile"
-msgstr "Seleccionar perfil de color de escala de grises preferido"
+msgstr "Seleccionar un perfil de color de escala de grises preferido"
 
 #: ../app/dialogs/preferences-dialog.c:1461
 msgid "_Grayscale profile:"
-msgstr "Perfil de _escala de grises:"
+msgstr "Perfil de escala de _grises:"
 
 #: ../app/dialogs/preferences-dialog.c:1468
 msgid "Select CMYK Color Profile"
@@ -17157,7 +17157,7 @@ msgstr "Usar O_penCL"
 #. Very unstable tools
 #: ../app/dialogs/preferences-dialog.c:1650
 msgid "Insane Options"
-msgstr "Opciones dementes"
+msgstr "Opciones locas"
 
 #: ../app/dialogs/preferences-dialog.c:1654
 msgid "_N-Point Deformation tool"
@@ -17298,31 +17298,31 @@ msgstr "Tamaño de vistas previas de _navegación:"
 #. Keyboard Shortcuts
 #: ../app/dialogs/preferences-dialog.c:1870
 msgid "Keyboard Shortcuts"
-msgstr "Combinaciones de teclas"
+msgstr "Atajos del teclado"
 
 #: ../app/dialogs/preferences-dialog.c:1874
 msgid "_Use dynamic keyboard shortcuts"
-msgstr "Usar combinaciones de teclas _dinámicas"
+msgstr "Usar atajos del teclado _dinámicos"
 
 #: ../app/dialogs/preferences-dialog.c:1878
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "Configurar las combinaciones de _teclas…"
+msgstr "Configurar los atajos del _teclado…"
 
 #: ../app/dialogs/preferences-dialog.c:1885
 msgid "_Save keyboard shortcuts on exit"
-msgstr "_Guardar las combinaciones de teclas al salir"
+msgstr "_Guardar los atajos del teclado al salir"
 
 #: ../app/dialogs/preferences-dialog.c:1889
 msgid "Save Keyboard Shortcuts _Now"
-msgstr "Guardar las combinaciones de teclas _ahora"
+msgstr "Guardar los atajos del teclado _ahora"
 
 #: ../app/dialogs/preferences-dialog.c:1896
 msgid "_Reset Keyboard Shortcuts to Default Values"
-msgstr "_Restablecer las combinaciones de teclas a los valores predeterminados"
+msgstr "_Restablecer los atajos del teclado a los valores predeterminados"
 
 #: ../app/dialogs/preferences-dialog.c:1905
 msgid "Remove _All Keyboard Shortcuts"
-msgstr "Eliminar _todas las combinaciones de teclas"
+msgstr "Eliminar _todos los atajos del teclado"
 
 #: ../app/dialogs/preferences-dialog.c:1917
 #: ../app/dialogs/preferences-dialog.c:1918
@@ -17426,7 +17426,7 @@ msgstr "Diálogo de convertir a perfil de color"
 
 #: ../app/dialogs/preferences-dialog.c:2260
 msgid "Rendering intent:"
-msgstr "Prueba de renderizado:"
+msgstr "Intención de renderizado:"
 
 #: ../app/dialogs/preferences-dialog.c:2264
 msgid "Black point compensation"
@@ -17439,15 +17439,15 @@ msgstr "Diálogo de drecisión de la conversión"
 
 #: ../app/dialogs/preferences-dialog.c:2275
 msgid "Dither layers:"
-msgstr "Difuminar capas:"
+msgstr "Tramar capas:"
 
 #: ../app/dialogs/preferences-dialog.c:2280
 msgid "Dither text layers:"
-msgstr "Difuminar capas de texto:"
+msgstr "Tramar capas de texto:"
 
 #: ../app/dialogs/preferences-dialog.c:2285
 msgid "Dither channels/masks:"
-msgstr "Difuminar canales/máscaras:"
+msgstr "Tramar canales/máscaras:"
 
 #. Convert Indexed Dialog
 #: ../app/dialogs/preferences-dialog.c:2289
@@ -17468,15 +17468,15 @@ msgstr "Quitar los colores no usados y duplicados del mapa de color"
 
 #: ../app/dialogs/preferences-dialog.c:2307
 msgid "Color dithering:"
-msgstr "Difuminar el color:"
+msgstr "Tramado del color:"
 
 #: ../app/dialogs/preferences-dialog.c:2311
 msgid "Enable dithering of transparency"
-msgstr "Activar difuminado de transparencia"
+msgstr "Activar tramado de transparencia"
 
 #: ../app/dialogs/preferences-dialog.c:2314
 msgid "Enable dithering of text layers"
-msgstr "Activar difuminado de las capas de texto"
+msgstr "Activar tramado de las capas de texto"
 
 #: ../app/dialogs/preferences-dialog.c:2323
 msgid "Keep recent settings:"
@@ -17623,11 +17623,11 @@ msgstr "Escalar rutas importadas"
 #. Feather Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2458
 msgid "Feather Selection Dialog"
-msgstr "Diálogo de difuminar selección"
+msgstr "Diálogo de rebajar selección"
 
 #: ../app/dialogs/preferences-dialog.c:2463
 msgid "Feather radius:"
-msgstr "Radio de difuminado:"
+msgstr "Radio de rebajar:"
 
 #: ../app/dialogs/preferences-dialog.c:2467
 #: ../app/dialogs/preferences-dialog.c:2489
@@ -17813,9 +17813,10 @@ msgstr "Sugerencias del gestor de ventanas"
 msgid "Hint for _docks and toolbox:"
 msgstr "Sugerencia para los _empotrables y la caja de herramientas:"
 
+# La imagen activa
 #: ../app/dialogs/preferences-dialog.c:2829
 msgid "Focus"
-msgstr "Enfoque"
+msgstr "Foco"
 
 #: ../app/dialogs/preferences-dialog.c:2833
 msgid "Activate the _focused image"
@@ -18805,8 +18806,7 @@ msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] "Si no guarda la imagen, los cambios desde la última hora se perderán."
-msgstr[1] ""
-"Si no guarda la imagen, los cambios desde las últimas %d horas se perderán."
+msgstr[1] "Si no guarda la imagen, los cambios desde las últimas %d horas se perderán."
 
 #: ../app/display/gimpdisplayshell-close.c:318
 #, c-format
@@ -19536,7 +19536,7 @@ msgstr "Indexado"
 #: ../app/gegl/gimp-gegl-enums.c:24
 msgctxt "cage-mode"
 msgid "Create or adjust the cage"
-msgstr "Crear o ajustar la rejilla"
+msgstr "Crear o ajustar la jaula"
 
 #: ../app/gegl/gimp-gegl-enums.c:25
 msgctxt "cage-mode"
@@ -19544,7 +19544,7 @@ msgid ""
 "Deform the cage\n"
 "to deform the image"
 msgstr ""
-"Deformar la rejilla\n"
+"Deformar la jaula\n"
 "para deformar la imagen"
 
 #: ../app/operations/operations-enums.c:25
@@ -19668,7 +19668,7 @@ msgstr "Diferencia (heredado)"
 #: ../app/operations/operations-enums.c:177
 msgctxt "layer-mode"
 msgid "Difference (l)"
-msgstr "Diferencia (her)"
+msgstr "Diferencia (h)"
 
 #: ../app/operations/operations-enums.c:178
 msgctxt "layer-mode"
@@ -19680,7 +19680,7 @@ msgstr "Suma (heredado)"
 #: ../app/operations/operations-enums.c:181
 msgctxt "layer-mode"
 msgid "Addition (l)"
-msgstr "Suma (her)"
+msgstr "Suma (h)"
 
 #: ../app/operations/operations-enums.c:182
 msgctxt "layer-mode"
@@ -19692,31 +19692,31 @@ msgstr "Sustraer (heredado)"
 #: ../app/operations/operations-enums.c:185
 msgctxt "layer-mode"
 msgid "Subtract (l)"
-msgstr "Sustraer (her)"
+msgstr "Sustraer (h)"
 
 #: ../app/operations/operations-enums.c:186
 msgctxt "layer-mode"
 msgid "Darken only (legacy)"
-msgstr "Oscurecer sólo (heredado)"
+msgstr "Sólo oscurecer (heredado)"
 
 #. Translators: this is an abbreviated version of "Darken only (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:189
 msgctxt "layer-mode"
 msgid "Darken only (l)"
-msgstr "Oscurecer sólo (her)"
+msgstr "Sólo oscurecer (h)"
 
 #: ../app/operations/operations-enums.c:190
 msgctxt "layer-mode"
 msgid "Lighten only (legacy)"
-msgstr "Clarear sólo (heredado)"
+msgstr "Sólo aclarar (heredado)"
 
 #. Translators: this is an abbreviated version of "Lighten only (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:193
 msgctxt "layer-mode"
 msgid "Lighten only (l)"
-msgstr "Clarear sólo (her)"
+msgstr "Sólo aclarar (h)"
 
 #: ../app/operations/operations-enums.c:194
 msgctxt "layer-mode"
@@ -19776,7 +19776,7 @@ msgstr "Dividir (heredado)"
 #: ../app/operations/operations-enums.c:213
 msgctxt "layer-mode"
 msgid "Divide (l)"
-msgstr "Dividir (her)"
+msgstr "Dividir (h)"
 
 # Dodge es evitar
 #: ../app/operations/operations-enums.c:214
@@ -19789,7 +19789,7 @@ msgstr "Blanquear (heredado)"
 #: ../app/operations/operations-enums.c:217
 msgctxt "layer-mode"
 msgid "Dodge (l)"
-msgstr "Blanquear (her)"
+msgstr "Blanquear (h)"
 
 #: ../app/operations/operations-enums.c:218
 msgctxt "layer-mode"
@@ -19801,31 +19801,31 @@ msgstr "Ennegrecer (heredado)"
 #: ../app/operations/operations-enums.c:221
 msgctxt "layer-mode"
 msgid "Burn (l)"
-msgstr "Ennegrecer (her)"
+msgstr "Ennegrecer (h)"
 
 #: ../app/operations/operations-enums.c:222
 msgctxt "layer-mode"
 msgid "Hard light (legacy)"
-msgstr "Claridad fuerte (heredado)"
+msgstr "Luz fuerte (heredado)"
 
 #. Translators: this is an abbreviated version of "Hard light (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:225
 msgctxt "layer-mode"
 msgid "Hard light (l)"
-msgstr "Claridad fuerte (her)"
+msgstr "Luz fuerte (h)"
 
 #: ../app/operations/operations-enums.c:226
 msgctxt "layer-mode"
 msgid "Soft light (legacy)"
-msgstr "Claridad suave (heredado)"
+msgstr "Luz suave (heredado)"
 
 #. Translators: this is an abbreviated version of "Soft light (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:229
 msgctxt "layer-mode"
 msgid "Soft light (l)"
-msgstr "Claridad suave (her)"
+msgstr "Luz suave (h)"
 
 #: ../app/operations/operations-enums.c:230
 msgctxt "layer-mode"
@@ -19837,7 +19837,7 @@ msgstr "Extraer granulado (heredado)"
 #: ../app/operations/operations-enums.c:233
 msgctxt "layer-mode"
 msgid "Grain extract (l)"
-msgstr "Extraer granulado (her)"
+msgstr "Extraer granulado (h)"
 
 #: ../app/operations/operations-enums.c:234
 msgctxt "layer-mode"
@@ -19849,7 +19849,7 @@ msgstr "Combinar granulado (heredado)"
 #: ../app/operations/operations-enums.c:237
 msgctxt "layer-mode"
 msgid "Grain merge (l)"
-msgstr "Combinar granulado (her)"
+msgstr "Combinar granulado (h)"
 
 #: ../app/operations/operations-enums.c:238
 msgctxt "layer-mode"
@@ -19886,7 +19886,7 @@ msgstr "Color LCh"
 #: ../app/operations/operations-enums.c:246
 msgctxt "layer-mode"
 msgid "LCh Lightness"
-msgstr "Luminosidad LCh"
+msgstr "Claridad LCh"
 
 #: ../app/operations/operations-enums.c:247
 msgctxt "layer-mode"
@@ -19926,12 +19926,12 @@ msgstr "Sustraer"
 #: ../app/operations/operations-enums.c:254
 msgctxt "layer-mode"
 msgid "Darken only"
-msgstr "Oscurecer sólo"
+msgstr "Sólo oscurecer"
 
 #: ../app/operations/operations-enums.c:255
 msgctxt "layer-mode"
 msgid "Lighten only"
-msgstr "Clarear sólo"
+msgstr "Sólo aclarar"
 
 #: ../app/operations/operations-enums.c:256
 msgctxt "layer-mode"
@@ -19941,7 +19941,7 @@ msgstr "Tono HSV"
 #: ../app/operations/operations-enums.c:257
 msgctxt "layer-mode"
 msgid "HSV Saturation"
-msgstr "Saturación HSL"
+msgstr "Saturación HSV"
 
 #: ../app/operations/operations-enums.c:258
 msgctxt "layer-mode"
@@ -19971,12 +19971,12 @@ msgstr "Ennegrecer"
 #: ../app/operations/operations-enums.c:263
 msgctxt "layer-mode"
 msgid "Hard light"
-msgstr "Claridad fuerte"
+msgstr "Luz fuerte"
 
 #: ../app/operations/operations-enums.c:264
 msgctxt "layer-mode"
 msgid "Soft light"
-msgstr "Claridad suave"
+msgstr "Luz suave"
 
 #: ../app/operations/operations-enums.c:265
 msgctxt "layer-mode"
@@ -19991,7 +19991,7 @@ msgstr "Combinar granulado"
 #: ../app/operations/operations-enums.c:267
 msgctxt "layer-mode"
 msgid "Vivid light"
-msgstr "Claridad fuerte"
+msgstr "Luz vívida"
 
 #: ../app/operations/operations-enums.c:268
 msgctxt "layer-mode"
@@ -20028,7 +20028,7 @@ msgstr "Oscurecer sólo la luma/luminancia"
 #: ../app/operations/operations-enums.c:276
 msgctxt "layer-mode"
 msgid "Luma darken only"
-msgstr "Oscurecer sólo la luminancia"
+msgstr "Oscurecer sólo la luma"
 
 #: ../app/operations/operations-enums.c:277
 msgctxt "layer-mode"
@@ -20040,7 +20040,7 @@ msgstr "Aclarar sólo la luma/luminancia"
 #: ../app/operations/operations-enums.c:280
 msgctxt "layer-mode"
 msgid "Luma lighten only"
-msgstr "Aclarar sólo la luminancia"
+msgstr "Aclarar sólo la luma"
 
 # Es distinto de luminosidad (Luminosity)
 #: ../app/operations/operations-enums.c:281
@@ -20092,7 +20092,7 @@ msgstr "Predeterminado"
 #: ../app/operations/operations-enums.c:317
 msgctxt "layer-mode-group"
 msgid "Legacy"
-msgstr "Obsoletos"
+msgstr "Heredado"
 
 #: ../app/operations/gimpbrightnesscontrastconfig.c:82
 #: ../app/operations/gimpbrightnesscontrastconfig.c:83
@@ -20118,17 +20118,17 @@ msgstr "El rango afectado"
 #: ../app/operations/gimpcolorbalanceconfig.c:103
 #: ../app/operations/gimpcolorbalanceconfig.c:104
 msgid "Cyan-Red"
-msgstr "Cian-rojo"
+msgstr "Cian-Rojo"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:109
 #: ../app/operations/gimpcolorbalanceconfig.c:110
 msgid "Magenta-Green"
-msgstr "Magenta-verde"
+msgstr "Magenta-Verde"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:115
 #: ../app/operations/gimpcolorbalanceconfig.c:116
 msgid "Yellow-Blue"
-msgstr "Amarillo-azul"
+msgstr "Amarillo-Azul"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:121
 #: ../app/operations/gimpcolorbalanceconfig.c:122
@@ -20187,7 +20187,7 @@ msgstr "Saturación"
 #: ../app/operations/gimpoperationcolorize.c:104
 #: ../app/operations/gimpoperationcolorize.c:105
 msgid "Lightness"
-msgstr "Luminosidad"
+msgstr "Claridad"
 
 #: ../app/operations/gimphuesaturationconfig.c:119
 #: ../app/operations/gimphuesaturationconfig.c:120
@@ -20232,7 +20232,7 @@ msgstr "Retener los valores de salida finales."
 
 #: ../app/operations/gimplevelsconfig.c:846
 msgid "not a GIMP Levels file"
-msgstr "no es un archivo de niveles GIMP"
+msgstr "no es un archivo de niveles de GIMP"
 
 #: ../app/operations/gimplevelsconfig.c:921
 msgid "parse error"
@@ -20305,7 +20305,7 @@ msgstr "Seleccionar tono de gris basado en"
 
 #: ../app/operations/gimpoperationhuesaturation.c:65
 msgid "Adjust hue, saturation, and lightness"
-msgstr "Ajustar el tono, la saturación y la luminosidad"
+msgstr "Ajustar el tono, la saturación y la claridad"
 
 #: ../app/operations/gimpoperationlevels.c:64 ../app/tools/gimplevelstool.c:139
 msgid "Adjust color levels"
@@ -20443,12 +20443,11 @@ msgstr "Flujo"
 
 #: ../app/paint/gimpbrushcore.c:373
 msgid "No brushes available for use with this tool."
-msgstr "No hay pinceles disponibles para usar con esta herramienta."
+msgstr "No hay pinceles disponibles que usar con esta herramienta."
 
 #: ../app/paint/gimpbrushcore.c:380
 msgid "No paint dynamics available for use with this tool."
-msgstr ""
-"No hay dinámicas de pintura disponibles para su uso con esta herramienta."
+msgstr "No hay dinámicas de pintura disponibles que usar con esta herramienta."
 
 #: ../app/paint/gimpclone.c:90 ../app/tools/gimpclonetool.c:62
 msgid "Clone"
@@ -20456,7 +20455,7 @@ msgstr "Clonar"
 
 #: ../app/paint/gimpclone.c:132
 msgid "No patterns available for use with this tool."
-msgstr "No hay patrones disponibles para usar con esta herramienta."
+msgstr "No hay patrones disponibles que usar con esta herramienta."
 
 #: ../app/paint/gimpcloneoptions.c:66 ../app/tools/gimpbucketfilloptions.c:180
 #: ../app/tools/gimpbucketfilloptions.c:505
@@ -20555,7 +20554,7 @@ msgstr "Mybrush"
 
 #: ../app/paint/gimpmybrushcore.c:157
 msgid "No MyPaint brushes available for use with this tool."
-msgstr "No hay pinceles MyPaint disponibles para usar con esta herramienta."
+msgstr "No hay pinceles MyPaint disponibles que usar con esta herramienta."
 
 #: ../app/paint/gimpmybrushoptions.c:93
 msgid "Base Opacity"
@@ -21229,15 +21228,15 @@ msgstr "Bordes suavizados"
 
 #: ../app/pdb/gimppdbcontext.c:107
 msgid "Feather"
-msgstr "Difuminar"
+msgstr "Rebajar"
 
 #: ../app/pdb/gimppdbcontext.c:114
 msgid "Feather radius X"
-msgstr "Difuminar radio X"
+msgstr "Radio de rebajar en X"
 
 #: ../app/pdb/gimppdbcontext.c:121
 msgid "Feather radius Y"
-msgstr "Difuminar radio Y"
+msgstr "Radio de rebajar en Y"
 
 #: ../app/pdb/gimppdbcontext.c:135
 msgid "Sample criterion"
@@ -21268,11 +21267,11 @@ msgstr "Dirección de la transformación"
 
 #: ../app/pdb/gimppdbcontext.c:180
 msgid "Transform resize"
-msgstr "Transformar cambio de tamaño"
+msgstr "Tamaño de la transformación"
 
 #: ../app/pdb/gimppdbcontext.c:195
 msgid "Distance metric"
-msgstr "Distancia métrica"
+msgstr "Métrica de la distancia"
 
 #: ../app/pdb/gimpprocedure.c:477 ../app/plug-in/gimppluginprocframe.c:191
 #, c-format
@@ -21927,7 +21926,7 @@ msgstr "Canal azul"
 
 #: ../app/propgui/gimppropgui-color-balance.c:98
 msgid "Select Range to Adjust"
-msgstr "Seleccione el rango para ajustar"
+msgstr "Seleccione el rango que ajustar"
 
 #: ../app/propgui/gimppropgui-color-balance.c:103
 #: ../app/tools/gimplevelstool.c:252
@@ -22104,7 +22103,7 @@ msgstr "_Tono"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:258
 msgid "_Lightness"
-msgstr "_Luminosidad"
+msgstr "_Claridad"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:265
 msgid "_Saturation"
@@ -22201,7 +22200,7 @@ msgstr "1,850 K – Llama de vela, anochecer/amanecer"
 
 #: ../app/propgui/gimppropgui-utils.c:73
 msgid "2,700 K - Soft (or warm) LED lamps"
-msgstr "2,700 K - suave (o o cálida) lámparas LED"
+msgstr "2,700 K - Lámparas LED suaves (o cálidas)"
 
 #: ../app/propgui/gimppropgui-utils.c:74
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
@@ -22210,7 +22209,7 @@ msgstr "3,000 K – Lámparas blancas fluorescentes compactas suaves (o cálidas
 #: ../app/propgui/gimppropgui-utils.c:75
 msgid "3,200 K – Studio lamps, photofloods, etc."
 msgstr ""
-"3,200 K – Lámparas de estudio, lámparas incandescentes de gran voltaje, etc."
+"3,200 K – Lámparas de estudio, photofloods, etc."
 
 #: ../app/propgui/gimppropgui-utils.c:76
 msgid "3,300 K – Incandescent lamps"
@@ -22218,11 +22217,11 @@ msgstr "3,300 K – Lámparas incandescentes"
 
 #: ../app/propgui/gimppropgui-utils.c:77
 msgid "3,350 K – Studio \"CP\" light"
-msgstr "3,350 K – Luz de estudio \"CP\""
+msgstr "3,350 K – Luz de estudio «CP»"
 
 #: ../app/propgui/gimppropgui-utils.c:78
 msgid "4,000 K - Cold (daylight) LED lamps"
-msgstr "4,000 K - fría (luz diurna) lámparas LED"
+msgstr "4,000 K - Lámparas LED frías (luz diurna)"
 
 #: ../app/propgui/gimppropgui-utils.c:79
 msgid "4,100 K – Moonlight"
@@ -22534,7 +22533,7 @@ msgstr "Brillo-Contraste"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:99
 msgid "B_rightness-Contrast..."
-msgstr "_Brillo y contraste…"
+msgstr "B_rillo-Contraste…"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:161
 msgid "Adjust Brightness and Contrast"
@@ -22711,15 +22710,15 @@ msgstr ""
 
 #: ../app/tools/gimpcagetool.c:162 ../app/tools/gimpcagetool.c:1235
 msgid "Cage Transform"
-msgstr "Transformación de rejilla"
+msgstr "Transformación de jaula"
 
 #: ../app/tools/gimpcagetool.c:163
 msgid "Cage Transform: Deform a selection with a cage"
-msgstr "Transformación de rejilla: deformar una selección con una rejilla"
+msgstr "Transformación de jaula: deformar una selección con una jaula"
 
 #: ../app/tools/gimpcagetool.c:164
 msgid "_Cage Transform"
-msgstr "_Transformación de rejilla"
+msgstr "_Transformación de jaula"
 
 #: ../app/tools/gimpcagetool.c:744 ../app/tools/gimpwarptool.c:389
 msgid "Press ENTER to commit the transform"
@@ -22727,11 +22726,11 @@ msgstr "Pulse INTRO para realizar la transformación"
 
 #: ../app/tools/gimpcagetool.c:1145
 msgid "Computing Cage Coefficients"
-msgstr "Calculando coeficientes de rejilla"
+msgstr "Calculando los coeficientes de la jaula"
 
 #: ../app/tools/gimpcagetool.c:1278
 msgid "Cage transform"
-msgstr "Transformación de rejilla"
+msgstr "Transformación de jaula"
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
@@ -22833,25 +22832,25 @@ msgstr "Información del recoge-color"
 
 #: ../app/tools/gimpconvolvetool.c:74
 msgid "Blur / Sharpen"
-msgstr "Emborronar / enfocar"
+msgstr "Difuminar / enfocar"
 
 #: ../app/tools/gimpconvolvetool.c:75
 msgid "Blur / Sharpen Tool: Selective blurring or unblurring using a brush"
 msgstr ""
-"Herramienta de enfoque y desenfoque: emborronado o desemborronado selectivo "
+"Herramienta Difuminar / Enfocar: difuminado o perfilado selectivo "
 "usando un pincel"
 
 #: ../app/tools/gimpconvolvetool.c:76
 msgid "Bl_ur / Sharpen"
-msgstr "E_mborronar / enfocar"
+msgstr "Dif_uminar / enfocar"
 
 #: ../app/tools/gimpconvolvetool.c:181
 msgid "Click to blur"
-msgstr "Pulse para emborronar"
+msgstr "Pulse para difuminar"
 
 #: ../app/tools/gimpconvolvetool.c:182
 msgid "Click to blur the line"
-msgstr "Pulse para emborronar la línea"
+msgstr "Pulse para difuminar la línea"
 
 #: ../app/tools/gimpconvolvetool.c:183
 #, c-format
@@ -22869,7 +22868,7 @@ msgstr "Pulse para enfocar la línea"
 #: ../app/tools/gimpconvolvetool.c:189
 #, c-format
 msgid "%s to blur"
-msgstr "%s para emborronar"
+msgstr "%s para difuminar"
 
 #. the type radio box
 #: ../app/tools/gimpconvolvetool.c:213
@@ -23524,7 +23523,7 @@ msgstr "Pulse y arrastre para dibujar un degradado"
 
 #: ../app/tools/gimpgradienttool.c:278
 msgid "No gradient available for use with this tool."
-msgstr "No hay degradados disponibles para usar con esta herramienta."
+msgstr "No hay degradados disponibles que usar con esta herramienta."
 
 #: ../app/tools/gimpgradienttool.c:631
 msgid "Gradient: "
@@ -24523,7 +24522,7 @@ msgstr "Clonar el objeto de primer plano"
 
 #: ../app/tools/gimpselectionoptions.c:88
 msgid "Enable feathering of selection edges"
-msgstr "Permitir el difuminado de los límites de la selección"
+msgstr "Activar el rebajar los bordes de la selección"
 
 #: ../app/tools/gimpselectionoptions.c:224 ../app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
@@ -24637,7 +24636,7 @@ msgstr "Herramienta de emborronado: emborrona selectivamente usando un pincel"
 
 #: ../app/tools/gimpsmudgetool.c:57
 msgid "_Smudge"
-msgstr "_Emborronar [Smudge]"
+msgstr "_Emborronar"
 
 #: ../app/tools/gimpsmudgetool.c:79
 msgid "Click to smudge"
@@ -24850,11 +24849,11 @@ msgstr "Incluir elementos enlazados en la vista previa"
 
 #: ../app/tools/gimptransformgridoptions.c:133
 msgid "Synchronous preview"
-msgstr "Vista previa sincronizada"
+msgstr "Vista previa simultánea"
 
 #: ../app/tools/gimptransformgridoptions.c:134
 msgid "Render the preview synchronously"
-msgstr "Trazar la vista previa sincronizadamente"
+msgstr "Representar la vista previa simultáneamente"
 
 #: ../app/tools/gimptransformgridoptions.c:140
 msgid "Image opacity"
@@ -25311,11 +25310,11 @@ msgstr "Tasa de trazos periódicos"
 
 #: ../app/tools/gimpwarpoptions.c:171
 msgid "Frames"
-msgstr "Marcos"
+msgstr "Fotogramas"
 
 #: ../app/tools/gimpwarpoptions.c:172
 msgid "Number of animation frames"
-msgstr "Número de marcos de animación"
+msgstr "Número de fotogramas de animación"
 
 #. the stroke frame
 #: ../app/tools/gimpwarpoptions.c:359
@@ -25337,7 +25336,7 @@ msgstr "Transformación de deformación"
 
 #: ../app/tools/gimpwarptool.c:176
 msgid "Warp Transform: Deform with different tools"
-msgstr "Transformación de deformación: deforma con diferentes herramientas"
+msgstr "Transformación de deformación: deformar con diferentes herramientas"
 
 #: ../app/tools/gimpwarptool.c:177
 msgid "_Warp Transform"
@@ -25379,11 +25378,11 @@ msgstr "Renderizando fotograma %d"
 #: ../app/tools/gimpwarptool.c:1422 ../app/tools/gimpwarptool.c:1452
 #, c-format
 msgid "Frame %d"
-msgstr "Marco %d"
+msgstr "Fotograma %d"
 
 #: ../app/tools/gimpwarptool.c:1461
 msgid "Frame"
-msgstr "Marco"
+msgstr "Fotograma"
 
 #: ../app/tools/tools-enums.c:25
 msgctxt "bucket-fill-area"
@@ -25687,7 +25686,7 @@ msgstr "Acción"
 
 #: ../app/widgets/gimpactionview.c:361
 msgid "Shortcut"
-msgstr "Combinación de teclas"
+msgstr "Atajo del teclado"
 
 #: ../app/widgets/gimpactionview.c:387
 msgid "Name"
@@ -25695,11 +25694,11 @@ msgstr "Nombre"
 
 #: ../app/widgets/gimpactionview.c:626 ../app/widgets/gimpactionview.c:867
 msgid "Changing shortcut failed."
-msgstr "Ha fallado el cambio de la combinación de teclas."
+msgstr "Ha fallado el cambio del atajo del teclado."
 
 #: ../app/widgets/gimpactionview.c:663
 msgid "Conflicting Shortcuts"
-msgstr "Combinaciones de teclas en conflicto"
+msgstr "Atajos del teclado en conflicto"
 
 #: ../app/widgets/gimpactionview.c:669
 msgid "_Reassign Shortcut"
@@ -25708,16 +25707,16 @@ msgstr "_Reasignar atajo"
 #: ../app/widgets/gimpactionview.c:685
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
-msgstr "La combinación de teclas «%s» ya la usa «%s» del grupo «%s»."
+msgstr "El atajo del teclado «%s» ya está en uso por «%s» del grupo «%s»."
 
 #: ../app/widgets/gimpactionview.c:689
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
-msgstr "Reasignar la combinación de teclas hará que se elimine de «%s»."
+msgstr "Reasignar el atajo hará que se elimine de «%s»."
 
 #: ../app/widgets/gimpactionview.c:784
 msgid "Invalid shortcut."
-msgstr "Combinación de teclas no válida."
+msgstr "Atajo del teclado no válido."
 
 #: ../app/widgets/gimpactionview.c:791 ../app/widgets/gimpactionview.c:895
 msgid "F1 cannot be remapped."
@@ -25730,7 +25729,7 @@ msgstr "Alt+%d se usa para mostrar o no %d y no se puede reasignar."
 
 #: ../app/widgets/gimpactionview.c:903
 msgid "Removing shortcut failed."
-msgstr "Ha fallado la eliminación de la combinación de teclas."
+msgstr "Ha fallado la eliminación del atajo del teclado."
 
 #: ../app/widgets/gimpbrusheditor.c:140
 msgid "Shape:"
@@ -26685,7 +26684,7 @@ msgstr "Indica si la CPU está activa"
 
 #: ../app/widgets/gimpdashboard.c:668
 msgid "Total amount of time the CPU has been active"
-msgstr "Total del tiempo que la CPU ha estado activa"
+msgstr "Tiempo total que la CPU ha estado activa"
 
 #: ../app/widgets/gimpdashboard.c:681
 msgctxt "dashboard-variable"
@@ -27579,7 +27578,7 @@ msgid ""
 msgstr ""
 "Esta imagen\n"
 "no tiene\n"
-"puntos de muestreo"
+"puntos de muestra"
 
 #: ../app/widgets/gimpsavedialog.c:150
 msgid "All XCF images"
@@ -27653,7 +27652,7 @@ msgstr "_Exportar la configuración actual a un archivo…"
 
 #: ../app/widgets/gimpsettingsbox.c:369
 msgid "_Manage Saved Presets..."
-msgstr "_Gestionar preajustes guardados…"
+msgstr "_Gestionar los preajustes guardados…"
 
 #: ../app/widgets/gimpsettingsbox.c:605
 msgid "Save Settings as Named Preset"
@@ -28262,8 +28261,8 @@ msgid ""
 "If you don't know what XMP is, you most likely don't need it. Reported error: "
 "%s."
 msgstr ""
-"Los metadatos XMP guardados por una versión de GIMP anterior no se pudieron "
-"convertir y se ignorarán.\n"
+"Los metadatos XMP corruptos guardados en una versión anterior de GIMP no se "
+"pudieron convertir y se ignorarán.\n"
 "Si no sabe qué es XMP, probablemente no lo necesite. Error informado: %s."
 
 #: ../app/xcf/xcf-load.c:715
@@ -28372,7 +28371,7 @@ msgstr "borroso"
 
 #~ msgctxt "dialogs-action"
 #~ msgid "Paint Dynamics"
-#~ msgstr "Dinámica de la pintura"
+#~ msgstr "Dinámicas de pintura"
 
 #~ msgctxt "view-action"
 #~ msgid "Flip Horizontally"
@@ -28517,19 +28516,19 @@ msgstr "borroso"
 
 #~ msgctxt "layer-mode"
 #~ msgid "Hue (HSV) (l)"
-#~ msgstr "Tono (HSV) (her)"
+#~ msgstr "Tono (HSV) (h)"
 
 #~ msgctxt "layer-mode"
 #~ msgid "Saturation (HSV) (l)"
-#~ msgstr "Saturación (HSV) (her)"
+#~ msgstr "Saturación (HSV) (h)"
 
 #~ msgctxt "layer-mode"
 #~ msgid "Color (HSL) (l)"
-#~ msgstr "Color (HSV) (her)"
+#~ msgstr "Color (HSV) (h)"
 
 #~ msgctxt "layer-mode"
 #~ msgid "Value (HSV) (l)"
-#~ msgstr "Valor (HSV) (her)"
+#~ msgstr "Valor (HSV) (h)"
 
 #~ msgctxt "layer-mode"
 #~ msgid "Chroma (LCH)"
@@ -28537,7 +28536,7 @@ msgstr "borroso"
 
 #~ msgctxt "layer-mode"
 #~ msgid "Lightness (LCH)"
-#~ msgstr "Luminosidad (LCH)"
+#~ msgstr "Claridad (LCH)"
 
 #~ msgctxt "layer-mode"
 #~ msgid "Hue (HSV)"
@@ -29030,7 +29029,7 @@ msgstr "borroso"
 #~ msgstr "Tono-saturación sólo funciona sobre capas de color RGB."
 
 #~ msgid "Adjust Hue / Lightness / Saturation"
-#~ msgstr "Ajustar el tono / luminosidad / saturación"
+#~ msgstr "Ajustar el tono / claridad / saturación"
 
 #~ msgid "New Channel Options"
 #~ msgstr "Opciones del canal nuevo"
@@ -29073,7 +29072,7 @@ msgstr "borroso"
 
 #~ msgctxt "view-action"
 #~ msgid "Simulation Re_ndering Intent"
-#~ msgstr "Simulación de prueba de _renderizado"
+#~ msgstr "Simulación de intención de _renderizado"
 
 #~ msgctxt "view-action"
 #~ msgid "_Print Simulation"
@@ -29084,11 +29083,11 @@ msgstr "borroso"
 #~ msgstr "Convertir al espacio de colores RGB"
 
 #~ msgid "Print Simulation (Softproofing)"
-#~ msgstr "Imprimir simulación (pseudoprueba)"
+#~ msgstr "Simulación de impresión (prueba)"
 
 #~| msgid "Print Simulation (Softproofing)"
 #~ msgid "Select Simulation (Softproofing) Color Profile"
-#~ msgstr "Seleccionar perfil de color de simulación (pseudoprueba)"
+#~ msgstr "Seleccionar el perfil de color de la simulación (prueba de impresión)"
 
 #~| msgid "_Print simulation profile:"
 #~ msgid "_Simulation profile:"
@@ -29128,7 +29127,7 @@ msgstr "borroso"
 #~ msgstr "_Modo de operación:"
 
 #~ msgid "_Feather border"
-#~ msgstr "_Difuminar los bordes"
+#~ msgstr "_Rebajar el borde"
 
 #~ msgid ""
 #~ "ICC profile validation failed: Color profile is not for GRAY color space"
@@ -29592,7 +29591,7 @@ msgstr "borroso"
 
 #~ msgctxt "convolve-type"
 #~ msgid "Blur"
-#~ msgstr "Desenfoque"
+#~ msgstr "Difuminar"
 
 #~ msgctxt "ink-blob-type"
 #~ msgid "Circle"
@@ -29630,7 +29629,7 @@ msgstr "borroso"
 
 #~ msgctxt "filters-action"
 #~ msgid "Reduce the number of colors in the image, with optional dithering"
-#~ msgstr "Reducir el número de colores en la imagen, con difuminado opcional"
+#~ msgstr "Reducir el número de colores en la imagen, con tramado opcional"
 
 #~ msgctxt "filters-action"
 #~ msgid "Change the color temperature of the image"
