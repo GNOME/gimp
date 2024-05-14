@@ -1955,7 +1955,20 @@ xcf_save_layer (XcfInfo    *info,
        filter_list = g_list_previous (filter_list))
     {
       if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
-        num_effects++;
+        {
+          GimpDrawableFilter *filter  = filter_list->data;
+          GimpChannel        *mask    = NULL;
+          GeglNode           *op_node = NULL;
+
+          mask    = gimp_drawable_filter_get_mask (filter);
+          op_node = gimp_drawable_filter_get_operation (filter);
+
+          /* For now, prevent tool-based filters from being saved */
+          if (mask    != NULL &&
+              op_node != NULL &&
+              strcmp (gegl_node_get_operation (op_node), "GraphNode") != 0)
+            num_effects++;
+        }
     }
 
   /* write out the width, height and image type information for the layer */
@@ -2017,18 +2030,30 @@ xcf_save_layer (XcfInfo    *info,
         {
           if (GIMP_IS_DRAWABLE_FILTER (list->data))
             {
-              GimpDrawableFilter *filter = list->data;
+              GimpDrawableFilter *filter  = list->data;
+              GimpChannel        *mask    = NULL;
+              GeglNode           *op_node = NULL;
 
-              offset = info->cp;
+              mask    = gimp_drawable_filter_get_mask (filter);
+              op_node = gimp_drawable_filter_get_operation (filter);
 
-              xcf_check_error (xcf_seek_pos (info, saved_pos, error), ;);
-              xcf_write_offset_check_error (info, &offset, 1, ;);
+               /* For now, prevent tool-based filters from being saved */
+              if (mask    != NULL &&
+                  op_node != NULL &&
+                  strcmp (gegl_node_get_operation (op_node), "GraphNode") != 0)
+                {
+                  offset = info->cp;
 
-              saved_pos = info->cp;
+                  xcf_check_error (xcf_seek_pos (info, saved_pos, error), ;);
+                  xcf_write_offset_check_error (info, &offset, 1, ;);
 
-              xcf_check_error (xcf_seek_pos (info, offset, error), ;);
-              xcf_check_error (xcf_save_effect (info, image, GIMP_FILTER (filter),
-                                                error), ;);
+                  saved_pos = info->cp;
+
+                  xcf_check_error (xcf_seek_pos (info, offset, error), ;);
+                  xcf_check_error (xcf_save_effect (info, image,
+                                                    GIMP_FILTER (filter),
+                                                    error), ;);
+                }
             }
         }
       g_list_free (list);

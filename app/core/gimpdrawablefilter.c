@@ -376,6 +376,12 @@ gimp_drawable_filter_duplicate (GimpDrawable       *drawable,
 
   prior_node = gimp_drawable_filter_get_operation (prior_filter);
 
+  /* Don't duplicate tool-based filters (for now) or temporary filters */
+  if (gimp_drawable_filter_get_mask (prior_filter) == NULL ||
+      prior_node                                   == NULL ||
+      ! strcmp (gegl_node_get_operation (prior_node), "GraphNode"))
+    return NULL;
+
   g_object_get (prior_filter,
                 "name",      &undo_desc,
                 "icon-name", &icon_name,

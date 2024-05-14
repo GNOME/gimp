@@ -835,11 +835,14 @@ layers_duplicate_cmd_callback (GimpAction *action,
                     gimp_drawable_filter_duplicate (GIMP_DRAWABLE (new_layer),
                                                     old_filter);
 
-                  gimp_drawable_filter_apply (filter, NULL);
-                  gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
+                  if (filter != NULL)
+                    {
+                      gimp_drawable_filter_apply (filter, NULL);
+                      gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
 
-                  gimp_drawable_filter_layer_mask_freeze (filter);
-                  g_object_unref (filter);
+                      gimp_drawable_filter_layer_mask_freeze (filter);
+                      g_object_unref (filter);
+                    }
                 }
             }
         }
