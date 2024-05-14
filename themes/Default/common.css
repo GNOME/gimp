@@ -600,8 +600,16 @@ actionbar revealer box {
 
 /* GtkListBox widgets */
 
-list {
+list, list row {
   background-color: @widget-bg-color;
+}
+
+list row:selected {
+  background-color: @selected-color;
+}
+
+list row:hover {
+  background-color: @hover-color;
 }
 
 /* GtkSwitch buttons */
