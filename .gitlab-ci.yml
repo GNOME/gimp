@@ -405,7 +405,6 @@ gimp-flatpak-x64:
     - <<: *CI_COMMIT
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
   image: $CI_REGISTRY_IMAGE:build-debian-latest
-  variables:
   # FIXME: Crossroads handling of universal variables still not perfect
   # The cause is: https://gitlab.gnome.org/GNOME/gimp/-/issues/11544
   before_script: []
