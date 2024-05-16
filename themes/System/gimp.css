@@ -74,10 +74,6 @@ GimpToolDialog headerbar {
     min-height: 0;
 }
 
-GimpToolDialog headerbar button {
-    padding: 2px 2px 2px 2px;
-}
-
 GimpDock frame {
     -GimpFrame-label-bold:       0;
     -GimpFrame-label-spacing:    2;
