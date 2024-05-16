@@ -133,9 +133,8 @@ for exe in "${binArray[@]}"; do
 done
 
 ### .pdb (CodeView) debug symbols
-### TODO: REMOVE 'if [ "$MSYSTEM...' WHEN GCC 14 IS ON MSYS2
 ### crossroad don't have LLVM/Clang backend yet
-if [ "$MSYSTEM_CARCH" != "i686" ] && [[ ! "$CI_JOB_NAME" =~ "cross" ]]; then
+if [ "$CI_JOB_NAME" != "gimp-win-x64-cross" ]; then
   cp -fr ${GIMP_PREFIX}/bin/*.pdb ${GIMP_DISTRIB}/bin/
 fi
 
