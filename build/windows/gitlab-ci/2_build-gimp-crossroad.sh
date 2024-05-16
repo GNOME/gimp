@@ -23,6 +23,9 @@ fi
 
 
 # CROSSROAD ENV
+export PATH="$PWD/.local/bin:$PWD/bin:$PATH"
+export XDG_DATA_HOME="$PWD/.local/share"
+crossroad w64 gimp --run="build/windows/gitlab-ci/2_build-gimp-crossroad.sh"
 else
 export ARTIFACTS_SUFFIX="-x64"
 

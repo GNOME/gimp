@@ -13,12 +13,17 @@ apt-get install -y --no-install-recommends \
 git clone --depth $GIT_DEPTH https://gitlab.freedesktop.org/crossroad/crossroad.git
 cd crossroad
 git apply ../build/windows/patches/0001-platforms-Enable-ccache.patch
+# Needed because Debian adds by default a local/ folder to the install
+# prefix of setup.py. This environment variable overrides this behavior.
+export DEB_PYTHON_INSTALL_LAYOUT="deb"
 ./setup.py install --prefix=`pwd`/../.local
 cd ..
-exit 0
 
 
 # CROSSROAD ENV
+export PATH="$PWD/.local/bin:$PATH"
+export XDG_DATA_HOME="$PWD/.local/share"
+crossroad w64 gimp --run="build/windows/gitlab-ci/1_build-deps-crossroad.sh"
 else
 export ARTIFACTS_SUFFIX="-x64"
 
