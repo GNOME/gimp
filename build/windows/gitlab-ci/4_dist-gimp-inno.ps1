@@ -102,14 +102,14 @@ download_lang Swedish.isl
 download_lang Vietnamese.isl
 
 
-$a64_generated = Test-Path -Path "_build-a64/build/windows/installer"
-if ($a64_generated -eq "True")
+$gen_path = Resolve-Path -Path "_build-*\build\windows\installer" | Select-Object -ExpandProperty Path
+if (Test-Path -Path $gen_path)
   {
     # Copy generated language files into the source directory
-    Copy-Item _build-a64/build/windows/installer/lang/*isl build/windows/installer/lang
+    Copy-Item $gen_path\lang\*isl build\windows\installer\lang\
 
-    # Copy generated welcome images into the source directory
-    Copy-Item _build-a64/build/windows/installer/*bmp build/windows/installer/
+    # Copy generated images into the source directory
+    Copy-Item $gen_path\*bmp build\windows\installer\
   }
 
 
