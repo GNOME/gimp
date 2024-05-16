@@ -14,7 +14,7 @@ splash = custom_target('gimp-splash.png',
                        install_dir: gimpdatadir / 'images',
                        install: true)
 
-## Windows Installer's Splash Image ##
+## Windows Installer's Splash Image and Intro Banner ##
 
 if get_option('windows-installer')
   installsplash = custom_target('installsplash.bmp',

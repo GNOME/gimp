@@ -39,11 +39,37 @@ def export_scaled_img(image, target_width, target_height, export_path):
     sys.exit(os.EX_SOFTWARE)
   img.delete()
 
+
+def export_cropped_img(image, target_width, target_height, export_path):
+  img        = image.duplicate()
+  w          = img.get_width()
+  h          = img.get_height()
+  img.flatten()
+  new_width = target_height / h * w
+  img.scale(new_width, target_height)
+  img.resize(new_width, target_height, 0, 0)
+  drawables = img.list_selected_drawables()
+  for d in drawables:
+    d.resize_to_image_size()
+  offx      = new_width * 0.6
+  img.crop(target_width, target_height, offx, 0)
+
+  config.set_property("image", img)
+  config.set_property("file", Gio.file_new_for_path(export_path))
+  retval = procedure.run(config)
+  if retval.index(0) != Gimp.PDBStatusType.SUCCESS:
+    sys.exit(os.EX_SOFTWARE)
+  img.delete()
+
+
 # These sizes are pretty much hardcoded, and in particular the ratio matters in
 # InnoSetup. Or so am I told. XXX
 export_scaled_img(image, 994, 692, 'build/windows/installer/installsplash.bmp')
 export_scaled_img(image, 497, 360, 'build/windows/installer/installsplash_small.bmp')
 export_scaled_img(image, 1160, 803, 'build/windows/installer/installsplash_big.bmp')
+
+export_cropped_img(image, 164, 314, 'build/windows/installer/windows-installer-intro-small.bmp')
+export_cropped_img(image, 328, 602, 'build/windows/installer/windows-installer-intro-big.bmp')
 
 # Avoid the images being re-generated at each build.
 pathlib.Path('gimp-data/images/stamp-installsplash.bmp').touch()
