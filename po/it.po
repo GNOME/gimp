@@ -44,7 +44,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-30 11:43+0200\n"
-"PO-Revision-Date: 2024-04-30 12:12+0200\n"
+"PO-Revision-Date: 2024-05-17 12:11+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -4948,7 +4948,7 @@ msgstr "Pias_trella senza giunte..."
 #: ../app/actions/filters-actions.c:686
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
-msgstr "Nitidizza (_Maschera di contrasto)"
+msgstr "Nitidizza (_maschera di contrasto)..."
 
 #: ../app/actions/filters-actions.c:691
 msgctxt "filters-action"
@@ -16114,7 +16114,7 @@ msgstr "_Modalità:"
 
 #: ../app/dialogs/layer-options-dialog.c:203
 msgid "_Blend space:"
-msgstr "Spazio mescolatura (_b):"
+msgstr "Spazio _fusione:"
 
 #: ../app/dialogs/layer-options-dialog.c:213
 msgid "Compos_ite space:"
@@ -16445,7 +16445,7 @@ msgstr "Mostra margini del _livello"
 
 #: ../app/dialogs/preferences-dialog.c:927
 msgid "Show can_vas boundary"
-msgstr "Mostra margini dell'area disegnabile (_v)"
+msgstr "Mostra margini _area disegnabile"
 
 #: ../app/dialogs/preferences-dialog.c:930
 msgid "Show _guides"
@@ -16453,7 +16453,7 @@ msgstr "Mostra le _guide"
 
 #: ../app/dialogs/preferences-dialog.c:933
 msgid "Show gri_d"
-msgstr "Mostra la griglia (_d)"
+msgstr "Mostra _griglia"
 
 #: ../app/dialogs/preferences-dialog.c:936
 msgid "Show _sample points"
@@ -16575,9 +16575,7 @@ msgstr "Massima dimensione _file per le miniature:"
 
 #: ../app/dialogs/preferences-dialog.c:1179
 msgid "_Keep record of used files in the Recent Documents list"
-msgstr ""
-"Mantenere la registrazione dei file usati recentemente nella cronologia dei "
-"documenti (_k)"
+msgstr "Mantieni la cronologia dei f_ile usati recentemente"
 
 #. TODO: icon needed.
 #: ../app/dialogs/preferences-dialog.c:1197
@@ -16681,7 +16679,7 @@ msgstr "Ottimizza _provino video per:"
 
 #: ../app/dialogs/preferences-dialog.c:1346
 msgid "Mar_k out of gamut colors"
-msgstr "Evidenzia i colori fuori gamut (_k)"
+msgstr "Evidenzia i colori _fuori gamut"
 
 #: ../app/dialogs/preferences-dialog.c:1350
 msgid "Select Warning Color"
@@ -16816,7 +16814,7 @@ msgstr "Tipo file esportazione"
 
 #: ../app/dialogs/preferences-dialog.c:1504
 msgid "Default export file t_ype:"
-msgstr "Tipo di file da esportare come impostazione predefinita (_y):"
+msgstr "Tipo file da esportare predefinito:"
 
 #. Raw Image Importer
 #: ../app/dialogs/preferences-dialog.c:1508
@@ -17453,7 +17451,7 @@ msgstr "Usa la versione installata localmente"
 
 #: ../app/dialogs/preferences-dialog.c:2542
 msgid "U_ser manual:"
-msgstr "Manuale utente (_s):"
+msgstr "Manuale _utente:"
 
 #: ../app/dialogs/preferences-dialog.c:2553
 msgid "User interface language"
@@ -17686,12 +17684,12 @@ msgstr "Usa \"punto per punto\" come pre_definito"
 
 #: ../app/dialogs/preferences-dialog.c:3025
 msgid "Marching ants s_peed:"
-msgstr "Velocità animazione selezione (_p):"
+msgstr "_Velocità animazione selezione:"
 
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:3029
 msgid "Zoom & Resize Behavior"
-msgstr "Comportamento dello zoom e del ridimensionamento"
+msgstr "Comportamento zoom e ridimensionamento"
 
 #: ../app/dialogs/preferences-dialog.c:3033
 msgid "Resize window on _zoom"
@@ -17839,7 +17837,7 @@ msgstr "Cartelle"
 
 #: ../app/dialogs/preferences-dialog.c:3343
 msgid "Reset _Folders"
-msgstr "Reimposta cartelle (_f)"
+msgstr "Reimposta _cartelle"
 
 #: ../app/dialogs/preferences-dialog.c:3359
 msgid "_Temporary folder:"
@@ -17863,7 +17861,7 @@ msgstr "Cartelle pennelli"
 
 #: ../app/dialogs/preferences-dialog.c:3401
 msgid "Reset Brush _Folders"
-msgstr "Reimposta cartelle pennelli (_f)"
+msgstr "Reimposta cartelle _pennelli"
 
 #: ../app/dialogs/preferences-dialog.c:3402
 msgid "Select Brush Folders"
@@ -17875,7 +17873,7 @@ msgstr "Cartelle delle dinamiche"
 
 #: ../app/dialogs/preferences-dialog.c:3407
 msgid "Reset Dynamics _Folders"
-msgstr "Reimposta cartelle dinamiche (_f)"
+msgstr "Reimposta cartelle _dinamiche"
 
 #: ../app/dialogs/preferences-dialog.c:3408
 msgid "Select Dynamics Folders"
@@ -17887,7 +17885,7 @@ msgstr "Cartelle motivi"
 
 #: ../app/dialogs/preferences-dialog.c:3413
 msgid "Reset Pattern _Folders"
-msgstr "Reimposta cartelle motivi (_f)"
+msgstr "Reimposta cartelle _motivi"
 
 #: ../app/dialogs/preferences-dialog.c:3414
 msgid "Select Pattern Folders"
@@ -17899,7 +17897,7 @@ msgstr "Cartelle delle tavolozze"
 
 #: ../app/dialogs/preferences-dialog.c:3419
 msgid "Reset Palette _Folders"
-msgstr "Reimposta cartelle tavolozze (_f)"
+msgstr "Reimposta cartelle _tavolozze"
 
 #: ../app/dialogs/preferences-dialog.c:3420
 msgid "Select Palette Folders"
@@ -17911,7 +17909,7 @@ msgstr "Cartelle dei gradienti"
 
 #: ../app/dialogs/preferences-dialog.c:3425
 msgid "Reset Gradient _Folders"
-msgstr "Reimposta cartelle gradienti (_f)"
+msgstr "Reimposta cartelle _gradienti"
 
 #: ../app/dialogs/preferences-dialog.c:3426
 msgid "Select Gradient Folders"
@@ -17923,7 +17921,7 @@ msgstr "Cartelle dei caratteri"
 
 #: ../app/dialogs/preferences-dialog.c:3431
 msgid "Reset Font _Folders"
-msgstr "Reimposta cartelle caratteri (_f)"
+msgstr "Reimposta cartelle _caratteri"
 
 #: ../app/dialogs/preferences-dialog.c:3432
 msgid "Select Font Folders"
@@ -17935,7 +17933,7 @@ msgstr "Cartelle preimpostazioni strumento"
 
 #: ../app/dialogs/preferences-dialog.c:3437
 msgid "Reset Tool Preset _Folders"
-msgstr "Reimposta cartelle preimpostazioni strumenti (_f)"
+msgstr "Reimposta cartelle _preimpostazioni strumenti"
 
 #: ../app/dialogs/preferences-dialog.c:3438
 msgid "Select Tool Preset Folders"
@@ -17947,7 +17945,7 @@ msgstr "Cartelle pennelli MyPaint"
 
 #: ../app/dialogs/preferences-dialog.c:3443
 msgid "Reset MyPaint Brush _Folders"
-msgstr "Reimposta cartelle pennelli MyPaint (_f)"
+msgstr "Reimposta cartelle pennelli _MyPaint"
 
 #: ../app/dialogs/preferences-dialog.c:3444
 msgid "Select MyPaint Brush Folders"
@@ -17959,7 +17957,7 @@ msgstr "Cartelle plug-in"
 
 #: ../app/dialogs/preferences-dialog.c:3449
 msgid "Reset plug-in _Folders"
-msgstr "Reimposta cartelle plug-in (_f)"
+msgstr "Reimposta cartelle _plug-in"
 
 #: ../app/dialogs/preferences-dialog.c:3450
 msgid "Select plug-in Folders"
@@ -17987,7 +17985,7 @@ msgstr "Cartelle dei moduli"
 
 #: ../app/dialogs/preferences-dialog.c:3461
 msgid "Reset Module _Folders"
-msgstr "Reimposta cartelle moduli (_f)"
+msgstr "Reimposta cartelle _moduli"
 
 #: ../app/dialogs/preferences-dialog.c:3462
 msgid "Select Module Folders"
@@ -18003,7 +18001,7 @@ msgstr "Cartelle interpreti"
 
 #: ../app/dialogs/preferences-dialog.c:3467
 msgid "Reset Interpreter _Folders"
-msgstr "Reimposta cartelle interpreti (_f)"
+msgstr "Reimposta cartelle _interpreti"
 
 #: ../app/dialogs/preferences-dialog.c:3468
 msgid "Select Interpreter Folders"
@@ -18019,7 +18017,7 @@ msgstr "Cartelle di ambiente"
 
 #: ../app/dialogs/preferences-dialog.c:3473
 msgid "Reset Environment _Folders"
-msgstr "Reimposta cartelle ambiente (_f)"
+msgstr "Reimposta cartelle _ambiente"
 
 #: ../app/dialogs/preferences-dialog.c:3474
 msgid "Select Environment Folders"
@@ -18035,7 +18033,7 @@ msgstr "Cartelle dei temi"
 
 #: ../app/dialogs/preferences-dialog.c:3479
 msgid "Reset Theme _Folders"
-msgstr "Reimposta cartelle temi (_f)"
+msgstr "Reimposta cartelle _temi"
 
 #: ../app/dialogs/preferences-dialog.c:3480
 msgid "Select Theme Folders"
@@ -18051,7 +18049,7 @@ msgstr "Cartelle dei temi icone"
 
 #: ../app/dialogs/preferences-dialog.c:3485
 msgid "Reset Icon Theme _Folders"
-msgstr "Reimposta cartelle icone temi (_f)"
+msgstr "Reimposta cartelle _icone temi"
 
 #: ../app/dialogs/preferences-dialog.c:3486
 msgid "Select Icon Theme Folders"
@@ -18288,7 +18286,7 @@ msgstr "Strumento di disegno"
 
 #: ../app/dialogs/stroke-dialog.c:216
 msgid "P_aint tool:"
-msgstr "Strumento di disegno (_a):"
+msgstr "Strumento di _disegno:"
 
 #: ../app/dialogs/stroke-dialog.c:241
 msgid "_Emulate brush dynamics"
@@ -22426,7 +22424,7 @@ msgstr "B_locca i motivi"
 
 #: ../app/propgui/gimppropgui-newsprint.c:245
 msgid "Loc_k periods"
-msgstr "Blocca i periodi (_k)"
+msgstr "Blocca i _punti"
 
 #: ../app/propgui/gimppropgui-newsprint.c:254
 msgid "Lock a_ngles"
