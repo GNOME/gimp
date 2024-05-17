@@ -23,6 +23,7 @@
 
 #include "config.h"
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -32,6 +33,7 @@
 
 #include "text-types.h"
 
+#include "gimpfont.h"
 #include "gimptext.h"
 #include "gimptext-xlfd.h"
 
@@ -177,7 +179,8 @@ void
 gimp_text_set_font_from_xlfd (GimpText    *text,
                               const gchar *xlfd)
 {
-  gchar    *font;
+  gchar    *font_name;
+  GimpFont *font = NULL;
   gdouble   size;
   GimpUnit  size_unit;
 
@@ -186,7 +189,14 @@ gimp_text_set_font_from_xlfd (GimpText    *text,
   if (!xlfd)
     return;
 
-  font = gimp_text_font_name_from_xlfd (xlfd);
+  font_name = gimp_text_font_name_from_xlfd (xlfd);
+  if (font_name != NULL)
+    {
+      font = g_object_new (GIMP_TYPE_FONT,
+                           "name", font_name,
+                           NULL);
+      gimp_font_set_lookup_name (font, font_name);
+    }
 
 #if GIMP_TEXT_DEBUG
   g_printerr ("XLFD: %s  font: %s\n", xlfd, font ? font : "(null)");
@@ -197,7 +207,7 @@ gimp_text_set_font_from_xlfd (GimpText    *text,
       g_object_set (text,
                     "font-size",          size,
                     "font-size-unit",     size_unit,
-                    font ? "font" : NULL, font,
+                    font_name ? "font" : NULL, font,
                     NULL);
     }
   else if (font)
@@ -207,7 +217,8 @@ gimp_text_set_font_from_xlfd (GimpText    *text,
                     NULL);
     }
 
-  g_free (font);
+  g_free (font_name);
+  g_object_unref (font);
 }
 
 /**
@@ -256,7 +267,7 @@ gimp_text_get_xlfd_field (const gchar *fontname,
   if (t2 > t1)
     {
       /* Check we don't overflow the buffer */
-      len = (gsize) t2 - (gsize) t1;
+      len = (gsize) t2 - (gsize) t1 + 1;
       if (len > XLFD_MAX_FIELD_LEN - 1)
         return NULL;
 
