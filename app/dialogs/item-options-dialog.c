@@ -108,6 +108,8 @@ item_options_dialog_new (GimpImage               *image,
   GtkWidget         *main_hbox;
   GtkWidget         *grid;
   GtkWidget         *button;
+  GtkWidget         *window;
+  GtkRequisition     child_requisition;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (item == NULL || GIMP_IS_ITEM (item), NULL);
@@ -253,15 +255,20 @@ item_options_dialog_new (GimpImage               *image,
     }
 
   /*  The switches frame & vbox  */
+  window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (window),
+                                  GTK_POLICY_EXTERNAL, GTK_POLICY_EXTERNAL);
+  gtk_box_pack_start (GTK_BOX (main_hbox), window,
+                      FALSE, FALSE, 0);
+  gtk_widget_set_visible (window, TRUE);
 
   private->right_frame = gimp_frame_new (_("Switches"));
-  gtk_box_pack_start (GTK_BOX (main_hbox), private->right_frame,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (private->right_frame);
+  gtk_container_add (GTK_CONTAINER (window), private->right_frame);
+  gtk_widget_set_visible (private->right_frame, TRUE);
 
   private->right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (private->right_frame), private->right_vbox);
-  gtk_widget_show (private->right_vbox);
+  gtk_widget_set_visible (private->right_vbox, TRUE);
 
   button = check_button_with_icon_new (_("_Visible"),
                                        GIMP_ICON_VISIBLE,
@@ -300,6 +307,11 @@ item_options_dialog_new (GimpImage               *image,
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &private->lock_visibility);
+
+  gtk_widget_get_preferred_size (private->right_vbox, &child_requisition,
+                                 NULL);
+  gtk_scrolled_window_set_min_content_width (GTK_SCROLLED_WINDOW (window),
+                                             child_requisition.width);
 
   return dialog;
 }
