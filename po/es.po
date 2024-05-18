@@ -2,7 +2,6 @@
 # Copyright © 1998-2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
-#
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 # Alonso Lara <keko@khor-ha.net>, 2005.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2003-2006.
@@ -11,8 +10,8 @@
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003-2013.
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 # Luis Ángel Gonzo <luisangelgonzo@gmail.com>, 2017, 2018.
-# Rodrigo Lledó Milanca <rodhos92@gmail.com>, 2018-2024.
 # Daniel Mustieles García <daniel.mustieles@gmail.com>, 2011-2021.
+# Rodrigo Lledó Milanca <rodhos92@gmail.com>, 2018-2024.
 #
 msgid ""
 msgstr ""
@@ -681,7 +680,7 @@ msgstr "Pegar el búfer _en la selección"
 #: app/actions/buffers-actions.c:70
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "Pega el búfer seleccionado en la selección"
+msgstr "Pegar el búfer seleccionado en la selección"
 
 #: app/actions/buffers-actions.c:75
 msgctxt "buffers-action"
@@ -10433,9 +10432,9 @@ msgid ""
 "receives the focus. This is useful for window managers using \"click to focus"
 "\"."
 msgstr ""
-"Cuando está activado, una imagen se convertirá en activa al recibir el foco "
-"la ventana de su imagen. Esto es muy útil para los gestores de ventanas que "
-"estén utilizando «pulsar para obtener el foco»."
+"Cuando está activado, una imagen se convertirá en activa cuando la ventana de "
+"esta imagen está enfocada. Esto es útil para los gestores de ventanas que usen "
+"«pulsar para enfocar»."
 
 #: app/config/gimprc-blurbs.h:23 app/config/gimprc-blurbs.h:28
 msgid "Sets the dynamics search path."
@@ -12609,7 +12608,7 @@ msgstr "Tinta"
 #: app/core/core-enums.c:1396
 msgctxt "undo-type"
 msgid "Select foreground"
-msgstr "Seleccionar el de primer plano"
+msgstr "Seleccionar el primer plano"
 
 #: app/core/core-enums.c:1399
 msgctxt "undo-type"
@@ -17122,7 +17121,7 @@ msgstr "Mostrar el _logotipo de GIMP (arrastrar y soltar el objetivo)"
 
 #: app/dialogs/preferences-dialog.c:2160
 msgid "Show _foreground & background color"
-msgstr "Mostrar el color de _fondo y de primer plano"
+msgstr "Mostrar el color de _primer plano y de fondo"
 
 #: app/dialogs/preferences-dialog.c:2164
 msgid "Show active _brush, pattern & gradient"
@@ -21018,7 +21017,7 @@ msgstr "Complemento"
 #: app/pdb/drawable-cmds.c:978 app/tools/gimpforegroundselecttool.c:1039
 msgctxt "command"
 msgid "Foreground Select"
-msgstr "Selección de primer plano"
+msgstr "Selección del primer plano"
 
 #: app/pdb/drawable-color-cmds.c:85
 msgctxt "undo-type"
@@ -23487,7 +23486,7 @@ msgstr "Blanquear / Ennegrecer"
 #: app/tools/gimpdodgeburntool.c:75
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
 msgstr ""
-"Herramienta blanquear/ennegrecer: iluminar u oscurecer selectivamente usando "
+"Herramienta blanquear / ennegrecer: iluminar u oscurecer selectivamente usando "
 "un pincel"
 
 # //R ????
@@ -23796,17 +23795,17 @@ msgstr "Reiniciar tamaño nativo de la anchura del trazo"
 
 #: app/tools/gimpforegroundselecttool.c:193
 msgid "Foreground Select"
-msgstr "Selección de primer plano"
+msgstr "Selección del primer plano"
 
 #: app/tools/gimpforegroundselecttool.c:194
 msgid "Foreground Select Tool: Select a region containing foreground objects"
 msgstr ""
-"Herramienta de selección de primer plano: selecciona una zona que contiene "
-"objetos en primer plano"
+"Herramienta de selección del primer plano: seleccionar una zona que contiene "
+"objetos en el primer plano"
 
 #: app/tools/gimpforegroundselecttool.c:195
 msgid "F_oreground Select"
-msgstr "Selección de _primer plano"
+msgstr "Selección del _primer plano"
 
 #: app/tools/gimpforegroundselecttool.c:293
 msgid "Cannot select from multiple layers."
@@ -23814,7 +23813,7 @@ msgstr "No se puede seleccionar desde varias capas."
 
 #: app/tools/gimpforegroundselecttool.c:326
 msgid "Dialog for foreground select"
-msgstr "Diálogo de la selección de primer plano"
+msgstr "Diálogo de selección del primer plano"
 
 #: app/tools/gimpforegroundselecttool.c:343
 msgid "_Preview mask"
@@ -23822,7 +23821,7 @@ msgstr "Máscara de _vista previa"
 
 #: app/tools/gimpforegroundselecttool.c:354
 msgid "Select foreground pixels"
-msgstr "Seleccionar píxeles de primer plano"
+msgstr "Seleccionar píxeles del primer plano"
 
 #: app/tools/gimpforegroundselecttool.c:630
 #: app/tools/gimpforegroundselecttool.c:635
@@ -23831,27 +23830,27 @@ msgstr "Dibuje un círculo aproximado alrededor del objeto que quiere extraer"
 
 #: app/tools/gimpforegroundselecttool.c:631
 msgid "press Enter to refine."
-msgstr "pulse Intro para depurar."
+msgstr "pulse Intro para refinar."
 
 #: app/tools/gimpforegroundselecttool.c:658
 msgid "Selecting foreground"
-msgstr "Seleccionando primer plano"
+msgstr "Seleccionando el primer plano"
 
 #: app/tools/gimpforegroundselecttool.c:660
 msgid "Selecting background"
-msgstr "Seleccionando fondo"
+msgstr "Seleccionando el fondo"
 
 #: app/tools/gimpforegroundselecttool.c:662
 msgid "Selecting unknown"
-msgstr "Seleccionando desconocido"
+msgstr "Seleccionando lo desconocido"
 
 #: app/tools/gimpforegroundselecttool.c:665
 msgid "press Enter to preview."
-msgstr "pulse «Retorno» para una vista previa."
+msgstr "pulse Intro para obtener una vista previa."
 
 #: app/tools/gimpforegroundselecttool.c:667
 msgid "press Escape to exit preview or Enter to apply."
-msgstr "presione Esc para salir de la vista previa o Intro para aplicar."
+msgstr "pulse Esc para salir de la vista previa o Intro para aplicar."
 
 #: app/tools/gimpforegroundselecttool.c:1312
 msgid "Paint mask"
@@ -24223,7 +24222,7 @@ msgstr "Selección de tijeras"
 #: app/tools/gimpiscissorstool.c:293
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
 msgstr ""
-"Herramienta de tijeras de selección: seleccionar formas utilizando una ajuste "
+"Herramienta selección de tijeras: seleccionar formas utilizando una ajuste "
 "inteligente de los bordes"
 
 #: app/tools/gimpiscissorstool.c:294
@@ -24453,10 +24452,11 @@ msgstr "Distancia:"
 msgid "Move selection"
 msgstr "Mover la selección"
 
+# Al usar la herramienta, si se pulsa una tecla como Mayús, señalada entre paréntesis, la herramienta alterna su funcionamiento y se comporta de manera diferente.
 #: app/tools/gimpmoveoptions.c:147 app/tools/gimpmoveoptions.c:210
 #, c-format
 msgid "Tool Toggle  (%s)"
-msgstr "Activar herramienta  (%s)"
+msgstr "Alternar la herramienta  (%s)"
 
 #: app/tools/gimpmoveoptions.c:155
 msgid "Pick a layer or guide"
@@ -27637,7 +27637,7 @@ msgstr "Desvanecer"
 
 #: app/widgets/gimpdynamicseditor.c:180
 msgid "Mapping matrix"
-msgstr "Matriz de mapeado"
+msgstr "Matriz de asignación"
 
 #: app/widgets/gimpdynamicseditor.c:313 app/widgets/gimptoolpreseteditor.c:147
 msgid "Icon:"
@@ -29380,7 +29380,7 @@ msgstr "_Mapa"
 #: menus/image-menu.ui.in.in:578
 msgctxt "image-action"
 msgid "_Tone Mapping"
-msgstr "_Mapeo de tonos"
+msgstr "Asignación de _tonos"
 
 #: menus/image-menu.ui.in.in:585
 msgctxt "image-action"
@@ -29645,7 +29645,7 @@ msgstr "_Eliminar preajuste de herramienta"
 #: menus/tool-preset-editor-menu.ui:6
 msgctxt "tool-preset-editor-action"
 msgid "Tool Preset Editor Menu"
-msgstr "Menú del editor de preajustes de herramienta"
+msgstr "Menú del editor de preajuste de herramienta"
 
 #: menus/tool-presets-menu.ui:6
 msgctxt "tool-presets-action"
@@ -29663,7 +29663,7 @@ msgid "Paths Menu"
 msgstr "Menú de rutas"
 
 #~ msgid "Insane Options"
-#~ msgstr "Opciones dementes"
+#~ msgstr "Opciones locas"
 
 #~ msgctxt "select-action"
 #~ msgid "Create a floating selection"
@@ -29919,7 +29919,7 @@ msgstr "Menú de rutas"
 
 #~ msgctxt "channels-action"
 #~ msgid "_Intersect with Selection"
-#~ msgstr "_Intersectar con la selección"
+#~ msgstr "_Intersecar con la selección"
 
 #~ msgctxt "vectors-action"
 #~ msgid "Fr_om Path"
@@ -29935,7 +29935,7 @@ msgstr "Menú de rutas"
 
 #~ msgctxt "vectors-action"
 #~ msgid "_Intersect with Selection"
-#~ msgstr "_Intersectar con selección"
+#~ msgstr "_Intersecar con la selección"
 
 #~ msgctxt "edit-action"
 #~ msgid "_New Image"
@@ -29951,14 +29951,14 @@ msgstr "Menú de rutas"
 
 #~ msgctxt "edit-action"
 #~ msgid "New Layer In _Place"
-#~ msgstr "Nueva capa _en su lugar"
+#~ msgstr "Capa nueva _en su lugar"
 
 #~ msgctxt "edit-action"
 #~ msgid ""
 #~ "Create a new layer from the content of the clipboard and place it at its "
 #~ "original position"
 #~ msgstr ""
-#~ "Crea una nueva capa a partir del contenido del portapapeles y colocarla en "
+#~ "Crear una capa nueva a partir del contenido del portapapeles y colocarla en "
 #~ "su posición original"
 
 #~ msgctxt "layers-action"
@@ -30436,7 +30436,7 @@ msgstr "Menú de rutas"
 #~ "was not properly installed."
 #~ msgstr ""
 #~ "GIMP 2.10.28 corrige un problema de compilación de GIMP 2.10.26, donde "
-#~ "algunos datos del tema no estaban instalados correctamente."
+#~ "algunos datos del tema no se instalaban correctamente."
 
 #~ msgid ""
 #~ "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in "
@@ -30478,7 +30478,7 @@ msgstr "Menú de rutas"
 #~ msgstr "Muchas correcciones y mejoras en el visor y editor de metadatos"
 
 #~ msgid "New Kabyle translation"
-#~ msgstr "Nueva traducción al Cabila"
+#~ msgstr "Nueva traducción al cabilio"
 
 #~ msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
 #~ msgstr ""
@@ -30566,8 +30566,8 @@ msgstr "Menú de rutas"
 
 #~ msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 #~ msgstr ""
-#~ "Filtros nuevos: Capa blanca, Enfoque, Desenfoque de lente, Desenfoque "
-#~ "variable"
+#~ "Filtros nuevos: capa blanca, desenfoque de foco, desenfoque de lente, "
+#~ "desenfoque variable"
 
 #~ msgid "Over 30 bugfixes"
 #~ msgstr "Más de 30 correcciones de errores"
@@ -31156,7 +31156,7 @@ msgstr "Menú de rutas"
 
 # La traducción de Photoshop es «Pegar en contexto»
 #~ msgid "Paste in place feature"
-#~ msgstr "Característica para pegar en contexto"
+#~ msgstr "Característica de pegar en su lugar"
 
 #~ msgid "Many usability improvements"
 #~ msgstr "Muchas mejoras en la usabilidad"
@@ -31237,15 +31237,15 @@ msgstr "Menú de rutas"
 
 #~ msgctxt "channels-action"
 #~ msgid "Toggle Channel _Linked State"
-#~ msgstr "Conmutar el estado _vinculado al canal"
+#~ msgstr "Alternar el estado _vinculado del canal"
 
 #~ msgctxt "drawable-action"
 #~ msgid "Toggle Drawable _Linked State"
-#~ msgstr "Conmutar el estado del dibujable _vinculado"
+#~ msgstr "Alternar el estado _vinculado del dibujable"
 
 #~ msgctxt "layers-action"
 #~ msgid "Toggle Layer _Linked State"
-#~ msgstr "Alternar el estado de en_lazado"
+#~ msgstr "Alternar el estado en_lazado de la capa"
 
 #~ msgctxt "vectors-action"
 #~ msgid "Toggle Path _Linked State"
@@ -31309,7 +31309,7 @@ msgstr "Menú de rutas"
 
 #~ msgctxt "select-action"
 #~ msgid "_Stroke Selection"
-#~ msgstr "_Trazar selección [Stroke]"
+#~ msgstr "_Trazar selección"
 
 #~ msgid "The active channel's position is locked."
 #~ msgstr "La posición del canal activo está bloqueado."
