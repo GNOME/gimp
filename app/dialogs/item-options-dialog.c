@@ -472,6 +472,7 @@ check_button_with_icon_new (const gchar *label,
   GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *image;
+  GtkWidget *label_widget;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (vbox, hbox, FALSE, FALSE, 0);
@@ -484,6 +485,10 @@ check_button_with_icon_new (const gchar *label,
   button = gtk_check_button_new_with_mnemonic (label);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
+
+  /* size the label to its bold size, avoiding a GUI twitch */
+  label_widget = gtk_bin_get_child (GTK_BIN (button));
+  gtk_widget_set_size_request (label_widget, gimp_get_bold_label_width (label), -1);
 
   return button;
 }

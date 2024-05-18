@@ -122,6 +122,7 @@ gimp_prop_check_button_new (GObject     *config,
   GParamSpec  *param_spec;
   GtkWidget   *button;
   const gchar *blurb;
+  GtkWidget   *label_widget;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
@@ -136,6 +137,10 @@ gimp_prop_check_button_new (GObject     *config,
 
   button = gtk_check_button_new_with_mnemonic (label);
   gtk_widget_show (button);
+
+  /* size the label to its bold size, avoiding a GUI twitch */
+  label_widget = gtk_bin_get_child (GTK_BIN (button));
+  gtk_widget_set_size_request (label_widget, gimp_get_bold_label_width (label), -1);
 
   blurb = g_param_spec_get_blurb (param_spec);
   if (blurb)

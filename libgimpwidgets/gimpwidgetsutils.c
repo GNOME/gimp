@@ -1279,3 +1279,23 @@ gimp_widget_set_handle_on_mapped (GtkWidget    *widget,
 
   return FALSE;
 }
+
+/* get the width of the label when it is bold */
+gint
+gimp_get_bold_label_width (const gchar *text)
+  {
+    GtkWidget      *temp_label = gtk_label_new (NULL);
+    GtkRequisition  natural_size;
+
+    gtk_label_set_text (GTK_LABEL (temp_label), text);
+    gtk_widget_set_visible (temp_label, TRUE);
+
+    gimp_label_set_attributes (GTK_LABEL (temp_label),
+                               PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                               -1);
+
+    gtk_widget_get_preferred_size (temp_label, NULL, &natural_size);
+    gtk_widget_destroy (temp_label);
+
+    return natural_size.width;
+}
