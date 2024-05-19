@@ -12541,14 +12541,12 @@ msgctxt "metadata-rotation-policy"
 msgid "Rotate the image then discard metadata"
 msgstr "Girar la imagen y luego descartar los metadatos"
 
-# #-#-#-#-#  gimp.po-ui.master.es.po (gimp.master)  #-#-#-#-#
 # Nombre de la API
 #: app/core/core-enums.c:1030 ../app/core/core-enums.c:940
 msgctxt "win32-pointer-input-api"
 msgid "Wintab"
 msgstr "Wintab"
 
-# #-#-#-#-#  gimp.po-ui.master.es.po (gimp.master)  #-#-#-#-#
 # Nombre de API
 #: app/core/core-enums.c:1031 ../app/core/core-enums.c:941
 msgctxt "win32-pointer-input-api"
