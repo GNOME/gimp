@@ -54,7 +54,6 @@ workflow:
 .pipeline_release: &CI_RELEASE
   if: '$CI_COMMIT_TAG != null'
   interruptible: false
-  variables: {}
 
 .default:
   ## Custom builds though web GUI, API or schedules.
@@ -108,6 +107,7 @@ stages:
   - gimp
   - analysis
   - distribution
+  - .post
 
 ## prepare build-oriented Docker images ##
 
@@ -687,7 +687,7 @@ cppcheck:
 
 ## Ready-to-distribute ##
 
-sources-debian:
+dist-sources:
   extends: .default
   rules:
     - <<: *CI_COMMIT
@@ -708,7 +708,7 @@ sources-debian:
       - gimp-*.tar.xz.SHA512SUMS
     expire_in: 2 days
 
-dev-docs:
+dist-dev-docs:
   extends: .default
   rules:
     - <<: *CI_COMMIT
@@ -814,3 +814,58 @@ dist-store-weekly:
     - build/windows/store/_Output/
     - store.log
     expire_in: 8 days
+
+gitlab-release:
+  rules:
+    - <<: *CI_RELEASE
+    # when: manual
+  needs:
+    - job: dist-sources
+      artifacts: true
+    # job: dist-dev-docs
+    # artifacts: false
+    # job: dist-installer-weekly
+    # artifacts: false
+    # job: dist-store-weekly
+    # artifacts: false
+  stage: .post
+  image: debian:bookworm
+  cache: []
+  script:
+    # INSTALL RELEASE-CLI
+    # (We use release-cli binary instead of using 'image:' provided by GitLab
+    # since the later can not have some GNU utils needed to construct our release)
+    - apt-get update
+    - apt-get install -y --no-install-recommends wget ca-certificates
+    - wget https://gitlab.com/api/v4/projects/gitlab-org%2Frelease-cli/packages/generic/release-cli/latest/release-cli-linux-amd64 -O release-cli
+    - chmod u+x ./release-cli
+    - export PATH=$PWD:$PATH
+    # GET RELEASE INFO
+    ## Get release name
+    - export GIMP_VERSION=$(find . -iname '*.tar.xz' | sed 's|./gimp-||' | sed 's|.tar.xz||')
+    ## Get assets info (Flathub)
+    - export GIMP_APP_VERSION=$(echo $GIMP_VERSION | sed 's/\([0-9]\+\.[0-9]\+\)\..*/\1/')
+    - GIMP_APP_VERSION_MAJOR=$(echo $GIMP_APP_VERSION | sed 's/^[^0-9]*\([0-9]*\).*$/\1/')
+    - GIMP_APP_VERSION_MINOR=$(echo $GIMP_APP_VERSION | sed "s|${GIMP_APP_VERSION_MAJOR}.||")
+    - echo $(($GIMP_APP_VERSION_MINOR % 2)) | grep '1' && export UNSTABLE='beta-'
+    - echo $UNSTABLE
+    ## Get release description
+    - sed -n -i '/Overview of Changes/{p; :loop n; p; /Overview of Changes/q; b loop}' NEWS && sed -i '$ d' NEWS
+    - cat NEWS
+    ## Get milestone
+    - export MILESTONE=$(sed -n -e 's/^.*to GIMP //p' NEWS)
+    - echo $MILESTONE
+    # CREATE RELEASE
+    # (We use release-cli directly instead of 'release:' sub-keywords, since
+    # they don't handle quoting well, don't expand vars and docs are incomplete)
+    - release-cli create
+      --name "GIMP $GIMP_VERSION (fake release for testing purposes)"
+      --description "NEWS"
+      --tag-name "$CI_COMMIT_TAG"
+      --milestone "$MILESTONE"
+      --assets-link "{\"url\":\"https://download.gimp.org/gimp/v${GIMP_APP_VERSION}/gimp-${GIMP_VERSION}.tar.bz2\",\"name\":\"(fake) Source tarball\",\"link_type\":\"other\"}"
+      --assets-link "{\"url\":\"https://flathub.org/${UNSTABLE}repo/appstream/org.gimp.GIMP.flatpakref\",\"name\":\"(fake) Universal Linux Flatpak (x86_64, Aarch64)\",\"link_type\":\"package\"}"
+      --assets-link "{\"url\":\"https://download.gimp.org/pub/gimp/v${GIMP_APP_VERSION}/macos/gimp-${GIMP_VERSION}-arm64.dmg\",\"name\":\"(fake) macOS DMG for Apple Silicon\",\"link_type\":\"package\"}"
+      --assets-link "{\"url\":\"https://download.gimp.org/pub/gimp/v${GIMP_APP_VERSION}/macos/gimp-${GIMP_VERSION}-x86_64.dmg\",\"name\":\"(fake) macOS DMG for Intel\",\"link_type\":\"package\"}"
+      --assets-link "{\"url\":\"TBA\",\"name\":\"(fake) Microsoft Store (Aarch64, x86_64)\",\"link_type\":\"package\"}"
+      --assets-link "{\"url\":\"https://download.gimp.org/gimp/v${GIMP_APP_VERSION}/windows/gimp-${GIMP_VERSION}-setup.exe\",\"name\":\"(fake) Universal Windows installer (Aarch64, x86_64, x86)\",\"link_type\":\"package\"}"
