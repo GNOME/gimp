@@ -82,7 +82,7 @@ workflow:
   # Universal variables (works in all POSIX OSes and archs)
   before_script:
     - export PATH="$GIMP_PREFIX/bin:$PATH"
-    - gcc -print-multi-os-directory 2>/dev/null | grep . && LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || LIB_DIR="lib"
+    - gcc -print-multi-os-directory 2>/dev/null | grep ./ && LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || LIB_DIR="lib"
     - gcc -print-multiarch 2>/dev/null | grep . && LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
     - export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
     - export LD_LIBRARY_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"

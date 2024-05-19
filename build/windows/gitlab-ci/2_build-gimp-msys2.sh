@@ -20,24 +20,22 @@ if [ -z "$GITLAB_CI" ]; then
   fi
   git submodule update --init --force
   pacman --noconfirm -Suy
+  PARENT_DIR='../'
   export MESON_OPTIONS="-Drelocatable-bundle=no"
 fi
 
 
 # Install the required (pre-built) packages for GIMP
 # We take code from deps script to better maintenance
-GIMP_DIR=""
-DEPS_CODE=$(cat build/windows/gitlab-ci/1_build-deps-msys2.sh |
-            sed -n '/# Install the/,/# End of install/p')
-echo "$DEPS_CODE" | bash
+echo "$(cat build/windows/gitlab-ci/1_build-deps-msys2.sh |
+        sed -n '/# Install the/,/# End of install/p')"    | bash
 
 
 # Build GIMP
-export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
+export GIMP_PREFIX="$PWD/${PARENT_DIR}_install${ARTIFACTS_SUFFIX}"
 ## Universal variables from .gitlab-ci.yml
-OLD_IFS=$IFS
 IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
-IFS=$OLD_IFS
+IFS=$' \t\n'
 for VAR in "${VAR_ARRAY[@]}"; do
   eval "$VAR" || continue
 done
@@ -49,12 +47,12 @@ if [ ! -f "_build${ARTIFACTS_SUFFIX}/build.ninja" ]; then
   # and Seed/Webkit are the 2 contenders so far, but they are not
   # available on MSYS2 and we are told it's very hard to build them).
   # TODO: re-enable javascript plug-ins when we can figure this out.
-  meson setup .. -Dprefix="${GIMP_PREFIX}"           \
-                 -Dgi-docgen=disabled                \
-                 -Djavascript=disabled               \
-                 -Ddirectx-sdk-dir="${MSYS2_PREFIX}" \
-                 -Dwindows-installer=true            \
-                 -Dms-store=true                     \
+  meson setup .. -Dprefix="${GIMP_PREFIX}"             \
+                 -Dgi-docgen=disabled                  \
+                 -Djavascript=disabled                 \
+                 -Ddirectx-sdk-dir="${MSYSTEM_PREFIX}" \
+                 -Dwindows-installer=true              \
+                 -Dms-store=true                       \
                  -Dbuild-id=org.gimp.GIMP_official $MESON_OPTIONS
 else
   cd "_build${ARTIFACTS_SUFFIX}"
@@ -115,5 +113,5 @@ make_cmd ()
 if [ "$GITLAB_CI" ]; then
   make_cmd CI %cd% ""
 else
-  make_cmd local $MSYS2_PREFIX " (please run bin/gimp-${GIMP_APP_VERSION}.exe under MSYS2)"
+  make_cmd local $MSYS2_PREFIX " (please run bin/gimp-${GIMP_APP_VERSION}.exe under $MSYSTEM shell)"
 fi

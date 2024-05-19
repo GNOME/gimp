@@ -21,8 +21,7 @@ if [ -z "$GITLAB_CI" ]; then
   export GIT_DEPTH=1
   pacman --noconfirm -Suy
   GIMP_DIR=$(echo "${PWD##*/}/")
-  DEPS_DIR=$(dirname $PWD)
-  cd $DEPS_DIR
+  cd $(dirname $PWD) && echo "Using parent folder as work dir"
 fi
 
 
@@ -84,9 +83,8 @@ clone_or_pull gegl
 # Build babl and GEGL
 export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
 ## Universal variables from .gitlab-ci.yml
-OLD_IFS=$IFS
 IFS=$'\n' VAR_ARRAY=($(cat ${GIMP_DIR}.gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
-IFS=$OLD_IFS
+IFS=$' \t\n'
 for VAR in "${VAR_ARRAY[@]}"; do
   eval "$VAR" || continue
 done
