@@ -70,8 +70,6 @@ const Babl         * gimp_widget_get_render_space    (GtkWidget       *widget,
 void                 gimp_widget_set_native_handle   (GtkWidget        *widget,
                                                       GBytes          **handle);
 
-gint                 gimp_get_bold_label_width       (const gchar      *text);
-
 /* Internal use */
 
 G_GNUC_INTERNAL void _gimp_widget_get_profiles       (GtkWidget         *widget,

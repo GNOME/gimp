@@ -201,7 +201,6 @@ EXPORTS
 	gimp_float_adjustment_update
 	gimp_frame_get_type
 	gimp_frame_new
-	gimp_get_bold_label_width
 	gimp_get_monitor_at_pointer
 	gimp_grid_attach_aligned
 	gimp_help_connect

@@ -136,11 +136,26 @@ gimp_prop_check_button_new (GObject     *config,
     label = g_param_spec_get_nick (param_spec);
 
   button = gtk_check_button_new_with_mnemonic (label);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
-  /* size the label to its bold size, avoiding a GUI twitch */
+  /* Resize the label to its bold size to avoid a GUI twitch */
   label_widget = gtk_bin_get_child (GTK_BIN (button));
-  gtk_widget_set_size_request (label_widget, gimp_get_bold_label_width (label), -1);
+  if (label_widget)
+    {
+      GtkWidget      *temp_label = gtk_label_new (label);
+      GtkRequisition  natural_size;
+
+      gtk_widget_set_visible (temp_label, TRUE);
+
+      gimp_label_set_attributes (GTK_LABEL (temp_label),
+                                 PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                                 -1);
+
+      gtk_widget_get_preferred_size (temp_label, NULL, &natural_size);
+      gtk_widget_destroy (temp_label);
+
+      gtk_widget_set_size_request (label_widget, natural_size.width, -1);
+    }
 
   blurb = g_param_spec_get_blurb (param_spec);
   if (blurb)

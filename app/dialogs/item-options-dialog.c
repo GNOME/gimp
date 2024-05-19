@@ -67,13 +67,14 @@ struct _ItemOptionsDialog
 
 /*  local function prototypes  */
 
-static void        item_options_dialog_free     (ItemOptionsDialog *private);
-static void        item_options_dialog_response (GtkWidget         *dialog,
-                                                 gint               response_id,
-                                                 ItemOptionsDialog *private);
-static GtkWidget * check_button_with_icon_new    (const gchar      *label,
-                                                  const gchar      *icon_name,
-                                                  GtkBox           *vbox);
+static void        item_options_dialog_free          (ItemOptionsDialog *private);
+static void        item_options_dialog_response      (GtkWidget         *dialog,
+                                                      gint               response_id,
+                                                      ItemOptionsDialog *private);
+static GtkWidget * check_button_with_icon_new        (const gchar       *label,
+                                                      const gchar       *icon_name,
+                                                      GtkBox            *vbox);
+static gint        check_button_get_bold_label_width (const gchar       *text);
 
 
 /*  public functions  */
@@ -484,11 +485,32 @@ check_button_with_icon_new (const gchar *label,
 
   button = gtk_check_button_new_with_mnemonic (label);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
-  /* size the label to its bold size, avoiding a GUI twitch */
+  /* Resize the label to its bold size to avoid a GUI twitch */
   label_widget = gtk_bin_get_child (GTK_BIN (button));
-  gtk_widget_set_size_request (label_widget, gimp_get_bold_label_width (label), -1);
+  gtk_widget_set_size_request (label_widget,
+                               check_button_get_bold_label_width (label),
+                               -1);
 
   return button;
+}
+
+static gint
+check_button_get_bold_label_width (const gchar *text)
+{
+  GtkWidget      *temp_label = gtk_label_new (NULL);
+  GtkRequisition  natural_size;
+
+  gtk_label_set_text (GTK_LABEL (temp_label), text);
+  gtk_widget_set_visible (temp_label, TRUE);
+
+  gimp_label_set_attributes (GTK_LABEL (temp_label),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+
+  gtk_widget_get_preferred_size (temp_label, NULL, &natural_size);
+  gtk_widget_destroy (temp_label);
+
+  return natural_size.width;
 }
