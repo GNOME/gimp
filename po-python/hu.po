@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-02 19:25+0000\n"
-"PO-Revision-Date: 2024-03-02 20:43+0100\n"
+"POT-Creation-Date: 2024-05-19 01:23+0000\n"
+"PO-Revision-Date: 2024-05-19 11:56+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -24,45 +24,45 @@ msgstr ""
 "X-Generator: Lokalize 23.08.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: plug-ins/python/colorxhtml.py:91
+#: plug-ins/python/colorxhtml.py:85
 msgid "Save as colored HTML text..."
 msgstr "Mentés színes HTML szövegként…"
 
-#: plug-ins/python/colorxhtml.py:92 plug-ins/python/colorxhtml.py:98
-#: plug-ins/python/gradients-save-as-css.py:116
+#: plug-ins/python/colorxhtml.py:86 plug-ins/python/colorxhtml.py:92
+#: plug-ins/python/gradients-save-as-css.py:113
 #: plug-ins/python/palette-offset.py:135
 #: plug-ins/python/python-console/python-console.py:272
 #: plug-ins/python/spyro-plus.py:1719
 msgid "_Cancel"
 msgstr "_Mégse"
 
-#: plug-ins/python/colorxhtml.py:93 plug-ins/python/colorxhtml.py:99
-#: plug-ins/python/gradients-save-as-css.py:117
+#: plug-ins/python/colorxhtml.py:87 plug-ins/python/colorxhtml.py:93
+#: plug-ins/python/gradients-save-as-css.py:114
 #: plug-ins/python/palette-offset.py:136 plug-ins/python/spyro-plus.py:1720
 msgid "_OK"
 msgstr "_OK"
 
-#: plug-ins/python/colorxhtml.py:96
+#: plug-ins/python/colorxhtml.py:90
 msgid "Read characters from file..."
 msgstr "Karakterek beolvasása fájlból…"
 
-#: plug-ins/python/colorxhtml.py:115
+#: plug-ins/python/colorxhtml.py:109
 msgid "Characters"
 msgstr "Karakterek"
 
-#: plug-ins/python/colorxhtml.py:116
+#: plug-ins/python/colorxhtml.py:110
 msgid "Characters that will be used as colored pixels. "
 msgstr "A színes képpontokként használandó karakterek. "
 
-#: plug-ins/python/colorxhtml.py:125
+#: plug-ins/python/colorxhtml.py:119
 msgid "Characters or file location"
 msgstr "Karakterek vagy fájl helye"
 
-#: plug-ins/python/colorxhtml.py:131
+#: plug-ins/python/colorxhtml.py:125
 msgid "Read characters from file"
 msgstr "Karakterek olvasása fájlból"
 
-#: plug-ins/python/colorxhtml.py:134
+#: plug-ins/python/colorxhtml.py:128
 msgid ""
 "If set, the Characters text entry will be used as a file name, from which "
 "the characters will be read. Otherwise, the characters in the text entry "
@@ -72,43 +72,43 @@ msgstr ""
 "használva, és a karakterek onnan lesznek kiolvasva. Egyébként a "
 "szövegmezőben lévő karakterek lesznek használva a kép megjelenítéséhez."
 
-#: plug-ins/python/colorxhtml.py:140
+#: plug-ins/python/colorxhtml.py:134
 msgid "Choose file"
 msgstr "Fájl kiválasztása"
 
-#: plug-ins/python/colorxhtml.py:147
+#: plug-ins/python/colorxhtml.py:141
 msgid "Font Size(px)"
 msgstr "Betűméret (px)"
 
-#: plug-ins/python/colorxhtml.py:159
+#: plug-ins/python/colorxhtml.py:153
 msgid "Write separate CSS file"
 msgstr "Különálló CSS-fájl írása"
 
-#: plug-ins/python/colorxhtml.py:215
+#: plug-ins/python/colorxhtml.py:209
 msgid "Saving as colored XHTML"
 msgstr "Mentés színes XHTML-ként"
 
-#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
+#: plug-ins/python/colorxhtml.py:271 plug-ins/python/colorxhtml.py:272
 msgid "_Read characters from file, if true, or use text entry"
 msgstr "Karakterek ki_olvasása fájlból, ha igaz, vagy a szövegmező használata"
 
-#: plug-ins/python/colorxhtml.py:291 plug-ins/python/colorxhtml.py:292
+#: plug-ins/python/colorxhtml.py:276 plug-ins/python/colorxhtml.py:277
 msgid "_File to read or characters to use"
 msgstr "_Olvasandó fájl vagy használandó karakterek"
 
-#: plug-ins/python/colorxhtml.py:296 plug-ins/python/colorxhtml.py:297
+#: plug-ins/python/colorxhtml.py:281 plug-ins/python/colorxhtml.py:282
 msgid "Fo_nt size in pixels"
 msgstr "Betű_méret képpontokban"
 
-#: plug-ins/python/colorxhtml.py:301 plug-ins/python/colorxhtml.py:302
+#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
 msgid "_Write a separate CSS file"
 msgstr "Önálló _CSS fájl írása"
 
-#: plug-ins/python/colorxhtml.py:322
+#: plug-ins/python/colorxhtml.py:307
 msgid "Save as colored HTML text"
 msgstr "Mentés színes HTML szövegként"
 
-#: plug-ins/python/colorxhtml.py:325
+#: plug-ins/python/colorxhtml.py:310
 msgid "Colored HTML text"
 msgstr "Színes HTML szöveg"
 
@@ -160,43 +160,43 @@ msgstr "Ködréteget ad hozzá a képhez."
 msgid "_Fog..."
 msgstr "_Köd…"
 
-#: plug-ins/python/gradients-save-as-css.py:97
+#: plug-ins/python/gradients-save-as-css.py:94
 msgid "_File..."
 msgstr "_Fájl…"
 
-#: plug-ins/python/gradients-save-as-css.py:105
+#: plug-ins/python/gradients-save-as-css.py:102
 msgid "Choose CSS file..."
 msgstr "CSS-fájl kiválasztása…"
 
-#: plug-ins/python/gradients-save-as-css.py:114
+#: plug-ins/python/gradients-save-as-css.py:111
 msgid "Save as CSS file..."
 msgstr "Mentés CSS-fájlként…"
 
-#: plug-ins/python/gradients-save-as-css.py:190
-#: plug-ins/python/palette-sort.py:345
+#: plug-ins/python/gradients-save-as-css.py:183
+#: plug-ins/python/palette-sort.py:356
 #: plug-ins/python/python-console/python-console.py:300
 msgid "Run mode"
 msgstr "Futtatási mód"
 
-#: plug-ins/python/gradients-save-as-css.py:191
+#: plug-ins/python/gradients-save-as-css.py:184
 #: plug-ins/python/python-console/python-console.py:300
 msgid "The run mode"
 msgstr "A futtatási mód"
 
-#: plug-ins/python/gradients-save-as-css.py:195
+#: plug-ins/python/gradients-save-as-css.py:188
 msgid "_Gradient to use"
 msgstr "Használandó _színátmenet"
 
-#: plug-ins/python/gradients-save-as-css.py:198
+#: plug-ins/python/gradients-save-as-css.py:191
 msgid "_File"
 msgstr "_Fájl"
 
-#: plug-ins/python/gradients-save-as-css.py:214
-#: plug-ins/python/gradients-save-as-css.py:215
+#: plug-ins/python/gradients-save-as-css.py:207
+#: plug-ins/python/gradients-save-as-css.py:208
 msgid "Creates a new palette from a given gradient"
 msgstr "Új palettát hoz létre az adott színátmenetből"
 
-#: plug-ins/python/gradients-save-as-css.py:217
+#: plug-ins/python/gradients-save-as-css.py:210
 msgid "Save Gradient as CSS..."
 msgstr "Színátmenet mentése CSS-ként…"
 
@@ -225,7 +225,6 @@ msgid "Histogram Export..."
 msgstr "Hisztogram exportálása…"
 
 #: plug-ins/python/histogram-export.py:209
-#| msgid "Histogram _File"
 msgid "Histogram File"
 msgstr "Hisztogram fájl"
 
@@ -250,8 +249,8 @@ msgid "_Export histogram..."
 msgstr "Hisztogram _exportálása…"
 
 #: plug-ins/python/palette-offset.py:50 plug-ins/python/palette-offset.py:51
-#: plug-ins/python/palette-sort.py:351 plug-ins/python/palette-sort.py:403
-#: plug-ins/python/palette-sort.py:404
+#: plug-ins/python/palette-sort.py:362 plug-ins/python/palette-sort.py:414
+#: plug-ins/python/palette-sort.py:415
 msgid "Palette"
 msgstr "Paletta"
 
@@ -285,144 +284,145 @@ msgstr "Színek eltolása egy palettában"
 msgid "Offset Palette..."
 msgstr "Paletta eltolása…"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:45
 msgid "Red"
 msgstr "Vörös"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:45
 msgid "Green"
 msgstr "Zöld"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:45
 msgid "Blue"
 msgstr "Kék"
 
-#: plug-ins/python/palette-sort.py:43
+#: plug-ins/python/palette-sort.py:46
 msgid "Luma (Y)"
 msgstr "Fényesség (Y)"
 
-#: plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:47
 msgid "Hue"
 msgstr "Árnyalat"
 
-#: plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:47
 msgid "Saturation"
 msgstr "Telítettség"
 
-#: plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:47
 msgid "Value"
 msgstr "Érték"
 
-#: plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:48
 msgid "Saturation (HSL)"
 msgstr "Telítettség (HSL)"
 
-#: plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:48
 msgid "Lightness (HSL)"
 msgstr "Fényesség (HSL)"
 
-#: plug-ins/python/palette-sort.py:46
+#: plug-ins/python/palette-sort.py:49
 msgid "Index"
 msgstr "Index"
 
-#: plug-ins/python/palette-sort.py:47
+#: plug-ins/python/palette-sort.py:50
 msgid "Random"
 msgstr "Véletlen"
 
-#: plug-ins/python/palette-sort.py:92
+#: plug-ins/python/palette-sort.py:95
 msgid "Lightness (LAB)"
 msgstr "Fényesség (LAB)"
 
-#: plug-ins/python/palette-sort.py:93
+#: plug-ins/python/palette-sort.py:96
 msgid "A-color"
 msgstr "A-szín"
 
-#: plug-ins/python/palette-sort.py:93
+#: plug-ins/python/palette-sort.py:96
 msgid "B-color"
 msgstr "B-szín"
 
-#: plug-ins/python/palette-sort.py:94
+#: plug-ins/python/palette-sort.py:97
 msgid "Chroma (LCHab)"
 msgstr "Színesség (LCHab)"
 
-#: plug-ins/python/palette-sort.py:95
+#: plug-ins/python/palette-sort.py:98
 msgid "Hue (LCHab)"
 msgstr "Árnyalat (LCHab)"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "All"
 msgstr "Összes"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "Slice / Array"
 msgstr "Szelet / Tömb"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "Autoslice (fg->bg)"
 msgstr "Automatikus szeletelés (előtér->háttér)"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "Partitioned"
 msgstr "Felosztott"
 
-#: plug-ins/python/palette-sort.py:350
+#: plug-ins/python/palette-sort.py:361
 #: plug-ins/python/palette-to-gradient.py:129
 msgid "_Palette"
 msgstr "_Paletta"
 
-#: plug-ins/python/palette-sort.py:354
+#: plug-ins/python/palette-sort.py:365
 msgid "Select_ions"
 msgstr "_Kijelölések"
 
-#: plug-ins/python/palette-sort.py:361
+#: plug-ins/python/palette-sort.py:372
 msgid "Slice _expression"
 msgstr "Szeletelés ki_fejezés"
 
-#: plug-ins/python/palette-sort.py:366
+#: plug-ins/python/palette-sort.py:377
 msgid "Channel _to sort"
 msgstr "Rendezendő _csatorna"
 
-#: plug-ins/python/palette-sort.py:371
+#: plug-ins/python/palette-sort.py:382
 msgid "_Ascending"
 msgstr "Nö_vekvő"
 
-#: plug-ins/python/palette-sort.py:372 plug-ins/python/palette-sort.py:382
+#: plug-ins/python/palette-sort.py:383 plug-ins/python/palette-sort.py:393
 msgid "Ascending"
 msgstr "Növekvő"
 
-#: plug-ins/python/palette-sort.py:376
+#: plug-ins/python/palette-sort.py:387
 msgid "Secondary C_hannel to sort"
 msgstr "_Rendezendő másodlagos csatorna"
 
-#: plug-ins/python/palette-sort.py:381
+#: plug-ins/python/palette-sort.py:392
 msgid "Ascen_ding"
 msgstr "_Növekvő"
 
-#: plug-ins/python/palette-sort.py:386
+#: plug-ins/python/palette-sort.py:397
 msgid "_Quantization"
 msgstr "_Kvantálás"
 
-#: plug-ins/python/palette-sort.py:387
+#: plug-ins/python/palette-sort.py:398
 msgid "Quantization"
 msgstr "Kvantálás"
 
-#: plug-ins/python/palette-sort.py:391
-msgid "_Partitioning channel"
+#: plug-ins/python/palette-sort.py:402
+#| msgid "_Partitioning channel"
+msgid "Partitionin_g channel"
 msgstr "Csatorna _felosztása"
 
-#: plug-ins/python/palette-sort.py:396
+#: plug-ins/python/palette-sort.py:407
 msgid "Partition q_uantization"
 msgstr "Felosztás k_vantálása"
 
-#: plug-ins/python/palette-sort.py:397
+#: plug-ins/python/palette-sort.py:408
 msgid "Partition quantization"
 msgstr "Felosztás kvantálása"
 
-#: plug-ins/python/palette-sort.py:421
+#: plug-ins/python/palette-sort.py:432
 msgid "_Sort Palette..."
 msgstr "Paletta _rendezése…"
 
-#: plug-ins/python/palette-sort.py:423
+#: plug-ins/python/palette-sort.py:434
 msgid "Sort the colors in a palette"
 msgstr "Paletta színeinek rendezése"
 
