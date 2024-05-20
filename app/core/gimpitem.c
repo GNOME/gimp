@@ -1807,6 +1807,7 @@ gimp_item_fill (GimpItem        *item,
 {
   GimpItemClass *item_class;
   GList         *iter;
+  gboolean       locked = FALSE;
   gboolean       retval = FALSE;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
@@ -1833,11 +1834,21 @@ gimp_item_fill (GimpItem        *item,
 
       for (iter = drawables; iter; iter = iter->next)
         {
+          if (gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL))
+            {
+              locked = TRUE;
+              continue;
+            }
+
           retval = item_class->fill (item, iter->data, fill_options,
                                      push_undo, progress, error);
           if (! retval)
             break;
         }
+
+      if (locked)
+        gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                              _("A selected layer's pixels are locked."));
 
       if (push_undo)
         gimp_image_undo_group_end (image);
@@ -1858,6 +1869,7 @@ gimp_item_stroke (GimpItem          *item,
 {
   GimpItemClass *item_class;
   GList         *iter;
+  gboolean       locked = FALSE;
   gboolean       retval = FALSE;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
@@ -1889,11 +1901,21 @@ gimp_item_stroke (GimpItem          *item,
 
       for (iter = drawables; iter; iter = iter->next)
         {
+          if (gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL))
+            {
+              locked = TRUE;
+              continue;
+            }
+
           retval = item_class->stroke (item, iter->data, stroke_options, push_undo,
                                        progress, error);
           if (! retval)
             break;
         }
+
+      if (locked)
+        gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                              _("A selected layer's pixels are locked."));
 
       if (push_undo)
         gimp_image_undo_group_end (image);

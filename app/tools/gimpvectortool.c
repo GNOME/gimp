@@ -749,6 +749,15 @@ gimp_vector_tool_fill_vectors (GimpVectorTool *vector_tool,
       return;
     }
 
+  if (g_list_length (drawables) == 1 &&
+      gimp_item_is_content_locked (GIMP_ITEM (drawables->data), NULL))
+    {
+      gimp_tool_message (GIMP_TOOL (vector_tool),
+                         GIMP_TOOL (vector_tool)->display,
+                         _("A selected layer's pixels are locked."));
+      return;
+    }
+
   vectors_list = g_list_prepend (NULL, vector_tool->vectors);
   dialog = fill_dialog_new (vectors_list, drawables,
                             GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (vector_tool)),
@@ -826,6 +835,15 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
       gimp_tool_message (GIMP_TOOL (vector_tool),
                          GIMP_TOOL (vector_tool)->display,
                          _("There are no selected layers or channels to stroke to."));
+      return;
+    }
+
+  if (g_list_length (drawables) == 1 &&
+      gimp_item_is_content_locked (GIMP_ITEM (drawables->data), NULL))
+    {
+      gimp_tool_message (GIMP_TOOL (vector_tool),
+                         GIMP_TOOL (vector_tool)->display,
+                         _("A selected layer's pixels are locked."));
       return;
     }
 
