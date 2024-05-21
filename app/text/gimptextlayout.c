@@ -25,6 +25,8 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <pango/pangocairo.h>
+#include <pango/pangofc-fontmap.h>
+#include <fontconfig/fontconfig.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -856,6 +858,11 @@ gimp_text_get_pango_context (GimpText *text,
     g_error ("You are using a Pango that has been built against a cairo "
              "that lacks the Freetype font backend");
 
+  /* In case a font becomes missing mid-session and is chosen (or is already in use)
+   * pango substitutes EVERY font for the default font, to avoid this
+   * the FcConfig has to be set everytime a pango fontmap is created
+   */
+  pango_fc_font_map_set_config (PANGO_FC_FONT_MAP (fontmap), FcConfigGetCurrent ());
   pango_cairo_font_map_set_resolution (PANGO_CAIRO_FONT_MAP (fontmap), yres);
 
   context = pango_font_map_create_context (fontmap);
