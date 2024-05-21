@@ -332,13 +332,7 @@ gimp-debian-x64:
       junit: "_build${ARTIFACTS_SUFFIX}/meson-logs/testlog.junit.xml"
     expire_in: 2 days
 
-include: 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
 gimp-flatpak-x64:
-# See: https://gitlab.gnome.org/GNOME/Initiatives/-/wikis/DevOps-with-Flatpak
-# XXX This job is mostly the same as .flatpak job of
-# flatpak_ci_initiative.yml so far, except that we removed the
-# automatic tests since rebuilding plug-ins was not working and
-# one of the test (save-and-export) requires plug-ins to be built.
   extends: .default
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Flatpak package.*/'
@@ -349,59 +343,30 @@ gimp-flatpak-x64:
   tags:
     - flatpak
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
-  variables:
-    # Replace with your manifest path
-    MANIFEST_PATH: "build/linux/flatpak/org.gimp.GIMP-nightly.json"
-    RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
-    # Replace with your application name, as written in the manifest
-    FLATPAK_MODULE: "gimp"
-    APP_ID: "org.gimp.GIMP"
-    BUNDLE: "gimp-git.flatpak"
-  cache:
-    - key: ${CI_JOB_NAME}-pkg
-      paths:
-        - .flatpak-builder/downloads
-        - .flatpak-builder/git
-    - !reference [.default, cache]
+  # FIXME: Flatpak design mandates to build everything from scratch on CI
+  # See: https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1502
+  cache: []
+    # key: ${CI_JOB_NAME}-pkg
+    # paths:
+        # .flatpak-builder/downloads
+        # .flatpak-builder/git
+    # !reference [.default, cache]
   script:
-    # Report the installed versions of the runtime
-    - flatpak info org.gnome.Platform
-    - flatpak info org.gnome.Sdk
-
-    # Install LLVM/Clang
-    - flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-    - flatpak install --user flathub org.freedesktop.Sdk.Extension.llvm17 -y
-
-    # Print the date, since appstream depends on local timezone
-    - date && date -u
-
-    # Configure manifest
-    - flatpak build-init ${GIMP_PREFIX} $APP_ID org.gnome.Sdk org.gnome.Platform
-    - flatpak build ${GIMP_PREFIX} meson setup _build${ARTIFACTS_SUFFIX} || echo "Generated log"
-    - GIMP_APP_VERSION=$(grep 'Project version' _build${ARTIFACTS_SUFFIX}/meson-logs/meson-log.txt | head -1 | sed -e 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/' -e 's/\([0-9]\+\.[0-9]\+\)\..*/\1/')
-    - cp build/linux/flatpak/org.gimp.GIMP-nightly.json.in build/linux/flatpak/org.gimp.GIMP-nightly.json
-    - sed -i "s/@GIMP_APP_VERSION@/$GIMP_APP_VERSION/g" build/linux/flatpak/org.gimp.GIMP-nightly.json
-
-    # GNOME script to customize the manifest
-    - rewrite-flatpak-manifest ${MANIFEST_PATH} ${FLATPAK_MODULE} ${CONFIG_OPTS}
-
-    # Build deps and GIMP
-    # (Our script is too long for Gitlab and no complete output would be collected
-    # To make debugging actually possible, let's save logs as a file.)
-    - flatpak-builder --ccache --user --disable-rofiles-fuse flatpak_app --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH} &>flatpak-builder.log
-
-    # Generate a Flatpak bundle
-    - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
-    - tar cf repo.tar repo/
+    # FIXME: Flatpak design mandates to build monolithically (aka in one job) on CI
+    - bash build/linux/flatpak/1_build-deps-flatpak.sh
+    - bash build/linux/flatpak/2_build-gimp-flatpak.sh
+    # FIXME: Flatpak design mandates to run in the same CI job even the dist commands!
+    - bash build/linux/flatpak/4_dist-gimp-flatpak.sh
   artifacts:
     paths:
       - flatpak-builder.log
-      # These are the same as flatpak_ci_initiative.yml as according to
-      # docs, key values are not merged but replaced.
       - gimp-git.flatpak
       - repo.tar
-      - '.flatpak-builder/build/gimp/_flatpak_build/meson-logs/meson-log.txt'
-      - '.flatpak-builder/build/gimp/_flatpak_build/meson-logs/testlog.txt'
+      # FIXME: these can't be fetched, even if we bypass the symlink (module -> module-1)
+      #        maybe also due to flatpak design?
+      # .flatpak-builder/build/babl-1/_flatpak_build/meson-logs/meson-log.txt
+      # .flatpak-builder/build/gegl-1/_flatpak_build/meson-logs/meson-log.txt
+      # .flatpak-builder/build/gimp-1/_flatpak_build/meson-logs/meson-log.txt
     expire_in: 2 days
 
 ## WINDOWS 64-bit CI (cross-build crossroad) ##
@@ -779,14 +744,18 @@ dev-docs:
       - gimp-api-docs-*.tar.xz.SHA512SUMS
     expire_in: 2 days
 
+include: 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
 dist-flatpak-weekly:
-  extends: '.publish_nightly'
+  extends:
+    - .default
+    - .publish_nightly
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Flatpak package.*/'
       interruptible: true
     - if: '$GIMP_CI_FLATPAK != null'
   needs: ["gimp-flatpak-x64"]
   stage: distribution
+  cache: []
   script:
     - if [ "$CI_COMMIT_BRANCH" != "$CI_DEFAULT_BRANCH" ]; then
         exit 0;
