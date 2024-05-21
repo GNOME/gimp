@@ -411,17 +411,17 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       if (! filter_tool->widget)
         gtk_widget_hide (filter_tool->controller_toggle);
 
+      /*  Fill in subclass widgets  */
+      gimp_filter_tool_dialog (filter_tool);
+
       /*  The operation-settings box  */
       filter_tool->operation_settings_box = gtk_box_new (
         GTK_ORIENTATION_VERTICAL, 2);
-      gtk_box_pack_end (GTK_BOX (vbox), filter_tool->operation_settings_box,
-                        FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), filter_tool->operation_settings_box,
+                          FALSE, FALSE, 0);
       gtk_widget_show (filter_tool->operation_settings_box);
 
       gimp_filter_tool_update_dialog_operation_settings (filter_tool);
-
-      /*  Fill in subclass widgets  */
-      gimp_filter_tool_dialog (filter_tool);
     }
   else
     {

@@ -266,7 +266,7 @@ gimp_operation_tool_dialog (GimpFilterTool *filter_tool)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (options_sw),
                                   GTK_POLICY_NEVER, GTK_POLICY_NEVER);
   gtk_box_pack_start (GTK_BOX (main_vbox), options_sw,
-                      TRUE, TRUE, 0);
+                      FALSE, FALSE, 0);
   gtk_widget_show (options_sw);
 
   /*  The options vbox  */
