@@ -286,8 +286,6 @@ gimp_procedure_dialog_constructed (GObject *object)
   GtkWidget                  *content_area;
   gchar                      *role;
 
-  G_OBJECT_CLASS (parent_class)->constructed (object);
-
   dialog    = GIMP_PROCEDURE_DIALOG (object);
   priv      = gimp_procedure_dialog_get_instance_private (dialog);
   procedure = priv->procedure;
@@ -305,6 +303,12 @@ gimp_procedure_dialog_constructed (GObject *object)
                 "title",   gtk_window_get_title (GTK_WINDOW (dialog)),
                 NULL);
   g_free (role);
+
+  /* Normally, we would call the parents constructed as soon as possible.
+   * However, gimp_dialog_constructed needs the help-id to already be set, or
+   * else the help button in legacy plug-ins doesn't show up. Since we only
+   * set a few object properties, that seems safe to do here. */
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   if (GIMP_IS_LOAD_PROCEDURE (procedure))
     ok_label = _("_Open");
