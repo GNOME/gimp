@@ -24,12 +24,18 @@
 #include "config.h"
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <pango/pango.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <gio/gio.h>
 
 #include "libgimpbase/gimpbase.h"
+
+#include "core/core-types.h"
+#include "core/gimp.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpdatafactory.h"
 
 #include "text-types.h"
 
@@ -192,11 +198,27 @@ gimp_text_set_font_from_xlfd (GimpText    *text,
   font_name = gimp_text_font_name_from_xlfd (xlfd);
   if (font_name != NULL)
     {
-      font = g_object_new (GIMP_TYPE_FONT,
-                           "name", font_name,
-                           NULL);
-      gimp_font_set_lookup_name (font, font_name);
+      PangoFontDescription *pfd  = pango_font_description_from_string (font_name);
+      gchar                *desc = pango_font_description_to_string (pfd);
+      GimpContainer        *fonts_container;
+
+      fonts_container = gimp_data_factory_get_container (text->gimp->font_factory);
+
+      font = GIMP_FONT (gimp_container_search (fonts_container,
+                                               (GimpContainerSearchFunc) gimp_font_match_by_description,
+                                               (gpointer) desc));
+      if (font == NULL)
+        font = GIMP_FONT (gimp_font_get_standard ());
+
+      pango_font_description_free (pfd);
+      g_free (desc);
     }
+  else
+    {
+      font = GIMP_FONT (gimp_font_get_standard ());
+    }
+
+  g_object_ref (font);
 
 #if GIMP_TEXT_DEBUG
   g_printerr ("XLFD: %s  font: %s\n", xlfd, font ? font : "(null)");
@@ -207,10 +229,10 @@ gimp_text_set_font_from_xlfd (GimpText    *text,
       g_object_set (text,
                     "font-size",          size,
                     "font-size-unit",     size_unit,
-                    font_name ? "font" : NULL, font,
+                    "font",               font,
                     NULL);
     }
-  else if (font)
+  else
     {
       g_object_set (text,
                     "font", font,
@@ -218,7 +240,6 @@ gimp_text_set_font_from_xlfd (GimpText    *text,
     }
 
   g_free (font_name);
-  g_object_unref (font);
 }
 
 /**

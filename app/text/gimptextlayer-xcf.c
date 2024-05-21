@@ -97,7 +97,8 @@ gimp_text_layer_xcf_load_hack (GimpLayer **layer)
 
       if (parasite)
         {
-          text = gimp_text_from_gdyntext_parasite (parasite);
+          text = gimp_text_from_gdyntext_parasite (gimp_item_get_image (GIMP_ITEM (*layer))->gimp,
+                                                   parasite);
           before_xcf_v19 = TRUE;
         }
     }

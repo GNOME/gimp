@@ -221,7 +221,8 @@ enum
 };
 
 GimpText *
-gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
+gimp_text_from_gdyntext_parasite (Gimp               *gimp,
+                                  const GimpParasite *parasite)
 {
   GimpText               *retval = NULL;
   GimpTextJustification   justify;
@@ -281,6 +282,7 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
                        color / 255.0f, 1.0);
 
   retval = g_object_new (GIMP_TYPE_TEXT,
+                         "gimp",         gimp,
                          "text",         text,
                          "antialias",    antialias,
                          "justify",      justify,

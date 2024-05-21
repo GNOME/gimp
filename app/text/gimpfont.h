@@ -44,6 +44,8 @@ void          gimp_font_set_lookup_name        (GimpFont        *font,
                                                 gchar           *name);
 gboolean      gimp_font_match_by_lookup_name   (GimpFont        *font,
                                                 const gchar     *name);
+gboolean      gimp_font_match_by_description   (GimpFont        *font,
+                                                const gchar     *desc);
 void          gimp_font_set_font_info          (GimpFont        *font,
                                                 gpointer         font_info[]);
 void          gimp_font_class_set_font_factory (GimpFontFactory *factory);

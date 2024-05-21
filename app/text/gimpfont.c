@@ -524,6 +524,13 @@ gimp_font_match_by_lookup_name (GimpFont    *font,
   return !g_strcmp0 (font->lookup_name, name);
 }
 
+gboolean
+gimp_font_match_by_description (GimpFont    *font,
+                                const gchar *desc)
+{
+  return !g_strcmp0 (font->desc, desc);
+}
+
 const gchar*
 gimp_font_get_lookup_name (GimpFont *font)
 {
