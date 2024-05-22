@@ -2409,7 +2409,8 @@ gimp_item_tree_view_effects_filters_selected (GimpContainerView  *view,
           ! strcmp (gegl_node_get_operation (op_node), "GraphNode"))
         is_tool_op = TRUE;
 
-
+      gtk_widget_set_sensitive (item_view->priv->effects_remove_button,
+                                ! is_tool_op);
       gtk_widget_set_sensitive (item_view->priv->effects_raise_button,
                                 (index != 0) && ! is_tool_op);
       gtk_widget_set_sensitive (item_view->priv->effects_lower_button,
