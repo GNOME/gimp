@@ -204,7 +204,7 @@ psd_read (GInputStream  *input,
 
 gboolean
 psd_read_len (GInputStream  *input,
-              gsize         *data,
+              guint64       *data,
               gint           psd_version,
               GError       **error)
 {
