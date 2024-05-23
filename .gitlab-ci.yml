@@ -784,8 +784,11 @@ dist-installer-weekly:
   stage: distribution
   tags:
     - windows-aarch64
+  variables:
+    MSYSTEM: "CLANGARM64"
   cache: []
   script:
+    - C:\msys64\usr\bin\bash -lc "bash -x build/windows/gitlab-ci/3_bundle-gimp-uni_sym.sh"
     - build/windows/gitlab-ci/4_dist-gimp-inno.ps1 | Out-File -FilePath installer.log
   artifacts:
     expose_as: 'Windows exe'

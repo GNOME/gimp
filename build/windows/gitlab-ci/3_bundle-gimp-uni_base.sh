@@ -174,11 +174,3 @@ libList=$(find ${GIMP_DISTRIB}/lib/ \( -iname '*.dll' -or -iname '*.exe' \)) && 
 for lib in "${libArray[@]}"; do
   python3 build/windows/gitlab-ci/3_bundle-gimp-uni_dep.py $lib ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
 done
-
-### .debug (DWARF) debug symbols
-### (we extract and link them to make possible save space with Inno custom install)
-if [ "$CI_JOB_NAME" != "gimp-win-x64-cross" ]; then
-  find gimp${ARTIFACTS_SUFFIX} \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \) -type f -exec objcopy --only-keep-debug '{}' '{}'.debug \;
-  find gimp${ARTIFACTS_SUFFIX} \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \) -type f -exec objcopy --add-gnu-debuglink='{}'.debug '{}' --strip-unneeded \;
-  find gimp${ARTIFACTS_SUFFIX} -iname '*.debug' -exec "build/windows/gitlab-ci/3_bundle-gimp-uni_sym.sh" {} +
-fi
