@@ -289,6 +289,12 @@ if platform_windows and cc.get_id() == 'gcc'
   compiler_args += msvc_compat_args
 endif
 
+# Optimize DWARF symbols to Dr. Mingw
+# https://github.com/jrfonseca/drmingw/issues/42
+if platform_windows and cc.get_id() == 'clang'
+  compiler_args += '-gdwarf-aranges'
+endif
+
 # Generate .pdb (CodeView) debug symbols (makes possible to debug with DIA SDK)
 #pdb_support = cc.has_argument('-gcodeview') and cc.has_link_argument('-Wl,--pdb=')
 #if platform_windows and pdb_support
