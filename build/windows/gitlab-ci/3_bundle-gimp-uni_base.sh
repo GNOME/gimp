@@ -134,9 +134,9 @@ done
 
 ### .pdb (CodeView) debug symbols
 ### crossroad don't have LLVM/Clang backend yet
-if [ "$CI_JOB_NAME" != "gimp-win-x64-cross" ]; then
-  cp -fr ${GIMP_PREFIX}/bin/*.pdb ${GIMP_DISTRIB}/bin/
-fi
+#if [ "$CI_JOB_NAME" != "gimp-win-x64-cross" ]; then
+#  cp -fr ${GIMP_PREFIX}/bin/*.pdb ${GIMP_DISTRIB}/bin/
+#fi
 
 ## Optional executables, .DLLs and resources for GObject Introspection support
 if [[ ! "$CI_JOB_NAME" =~ "cross" ]]; then

@@ -165,20 +165,20 @@ New-Item -ItemType Directory -Path "_Output"
 $archsArray_limited = $archsArray -replace "gimp-", ""
 
 ## Make .appxsym for each arch
-if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -eq 'MSIXUPLOAD'))
-  {
-    foreach ($arch in $archsArray_limited)
-      {
-        Get-ChildItem -Path "gimp-$arch" -Filter "*.pdb" -Recurse |
-        Compress-Archive -DestinationPath "_Output\${identity_name}_${gimp_version}.0_$arch.zip"
-        Get-ChildItem "_Output\*.zip" | Rename-Item -NewName { $_.Name -replace '.zip','.appxsym' }
-      }
-  }
+#if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -eq 'MSIXUPLOAD'))
+#  {
+#    foreach ($arch in $archsArray_limited)
+#      {
+#        Get-ChildItem -Path "gimp-$arch" -Filter "*.pdb" -Recurse |
+#        Compress-Archive -DestinationPath "_Output\${identity_name}_${gimp_version}.0_$arch.zip"
+#        Get-ChildItem "_Output\*.zip" | Rename-Item -NewName { $_.Name -replace '.zip','.appxsym' }
+#      }
+#  }
 
 ## Make .msix for each arch (this is needed to make the .msixbundle too)
 foreach ($arch in $archsArray_limited)
   {
-    Get-ChildItem "gimp-$arch" -Include "*.pdb" -Recurse -Force | Remove-Item -Recurse -Force
+   #Get-ChildItem "gimp-$arch" -Include "*.pdb" -Recurse -Force | Remove-Item -Recurse -Force
     makeappx pack /d "gimp-$arch" /p "_TempOutput\${identity_name}_${gimp_version}.0_$arch.msix"
     Remove-Item "gimp-$arch" -Recurse
   }
@@ -194,7 +194,7 @@ if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -eq 'MSIXUPLOAD'))
   {
     Compress-Archive -Path "_Output\*" "_Output\${identity_name}_${gimp_version}.0_x64_arm64_bundle.zip"
     Get-ChildItem "_Output\*.zip" | Rename-Item -NewName { $_.Name -replace '.zip','.msixupload' }
-    Get-ChildItem "_Output\*.appxsym" | Remove-Item -Recurse -Force
+   #Get-ChildItem "_Output\*.appxsym" | Remove-Item -Recurse -Force
   }
 
 
