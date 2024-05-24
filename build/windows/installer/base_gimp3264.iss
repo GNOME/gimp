@@ -134,7 +134,7 @@ ChangesAssociations=true
 
 WizardImageFile=windows-installer-intro-big.bmp
 WizardImageStretch=yes
-WizardSmallImageFile=wilber.bmp
+WizardSmallImageFile=gimp.scale-100.bmp,gimp.scale-125.bmp,gimp.scale-150.bmp,gimp.scale-175.bmp,gimp.scale-200.bmp,gimp.scale-225.bmp,gimp.scale-250.bmp
 
 UninstallDisplayIcon={app}\bin\gimp-{#GIMP_APP_VERSION}.exe
 UninstallFilesDir={app}\uninst
