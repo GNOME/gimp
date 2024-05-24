@@ -96,52 +96,58 @@
 #endif
 
 [Setup]
+;INSTALLER AND APP INFO
 AppName=GIMP
 #if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
-AppID=GIMP-{#GIMP_APP_VERSION}
+DefaultDirName={autopf}\GIMP {#GIMP_APP_VERSION}
 #else
-AppID=GIMP-{#MAJOR}
+DefaultDirName={autopf}\GIMP {#MAJOR}
 #endif
-VersionInfoVersion={#GIMP_VERSION}
 #if !defined(REVISION)
 AppVerName=GIMP {#GIMP_VERSION}
 #else
 AppVerName=GIMP {#GIMP_VERSION}-{#REVISION}
 #endif
+
+VersionInfoVersion={#GIMP_VERSION}
+AppVersion={#GIMP_VERSION}
+#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
+AppID=GIMP-{#GIMP_APP_VERSION}
+#else
+AppID=GIMP-{#MAJOR}
+#endif
+
+AppPublisher=The GIMP Team
 AppPublisherURL=https://www.gimp.org/
 AppSupportURL=https://www.gimp.org/docs/
 AppUpdatesURL=https://www.gimp.org/
-AppPublisher=The GIMP Team
-AppVersion={#GIMP_VERSION}
-DisableProgramGroupPage=yes
+
+
+;INSTALLER PAGES
+PrivilegesRequiredOverridesAllowed=dialog
 DisableWelcomePage=no
-DisableDirPage=auto
-AlwaysShowDirOnReadyPage=yes
-ChangesEnvironment=yes
-
-#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
-DefaultDirName={autopf}\GIMP {#GIMP_APP_VERSION}
-LZMANumBlockThreads=4
-LZMABlockSize=76800
-#else
-DefaultDirName={autopf}\GIMP {#MAJOR}
-#endif
-
-;AllowNoIcons=true
-FlatComponentsList=yes
 InfoBeforeFile=gpl+python.rtf
+DisableDirPage=auto
+FlatComponentsList=yes
+DisableProgramGroupPage=yes
+;AllowNoIcons=true
 ChangesAssociations=true
+ChangesEnvironment=yes
+AlwaysShowDirOnReadyPage=yes
 
+WizardSmallImageFile=gimp.scale-100.bmp,gimp.scale-125.bmp,gimp.scale-150.bmp,gimp.scale-175.bmp,gimp.scale-200.bmp,gimp.scale-225.bmp,gimp.scale-250.bmp
 WizardImageFile=windows-installer-intro-big.bmp
 WizardImageStretch=yes
-WizardSmallImageFile=gimp.scale-100.bmp,gimp.scale-125.bmp,gimp.scale-150.bmp,gimp.scale-175.bmp,gimp.scale-200.bmp,gimp.scale-225.bmp,gimp.scale-250.bmp
 
-UninstallDisplayIcon={app}\bin\gimp-{#GIMP_APP_VERSION}.exe
-UninstallFilesDir={app}\uninst
 
-MinVersion=10.0
+;INSTALLER .EXE FILE
 ArchitecturesInstallIn64BitMode=x64 arm64
+MinVersion=10.0
 
+#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
+LZMANumBlockThreads=4
+LZMABlockSize=76800
+#endif
 #ifdef NOCOMPRESSION
 ;UseSetupLdr=no
 OutputDir=_Output\unc
@@ -174,7 +180,11 @@ OutputBaseFileName=gimp-{#GIMP_VERSION}-{#REVISION}-setup
 OutputManifestFile=gimp-{#GIMP_VERSION}-{#REVISION}-setup.txt
 #endif
 
-PrivilegesRequiredOverridesAllowed=dialog
+
+;UNINSTALLER
+UninstallDisplayIcon={app}\bin\gimp-{#GIMP_APP_VERSION}.exe
+UninstallFilesDir={app}\uninst
+
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl,lang\en.setup.isl"
