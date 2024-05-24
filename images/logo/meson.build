@@ -135,6 +135,20 @@ if build_ico_files
                                env: gimp_run_env)
 endif
 
+## Inno installer right-top icon (Windows) ##
+if get_option('windows-installer')
+  installicon = custom_target('installicon.bmp',
+                               input : [ 'gen-gimp-bmp.py' ],
+                               output: [ 'stamp-installicon.bmp', ],
+                               depends: [ gimp_exe_depends ],
+                               command: [ gimp_exe, '-nidfs',
+                                          '--batch-interpreter', 'python-fu-eval',
+                                          '-b', '-', '--quit'],
+                               feed: true,
+                               build_by_default: true,
+                               env: gimp_run_env)
+endif
+
 ## gimp.icns (macOS) ##
 
 gen_gimp_icns_conf = configuration_data()
