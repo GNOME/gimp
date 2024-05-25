@@ -1367,33 +1367,6 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
 
   if (options->preview)
     gimp_drawable_filter_apply (filter_tool->filter, NULL);
-
-  /* If editing existing filter, shift into the right location
-   * in the filter stack. */
-  if (filter_tool->existing_filter)
-    {
-      GimpContainer *filters;
-      GimpChannel   *mask;
-      gint           index;
-      const gchar   *name = _("Editing filter...");
-
-      filters = gimp_drawable_get_filters (drawable);
-
-      if (filters)
-        {
-          index = gimp_container_get_child_index (filters,
-                                                  GIMP_OBJECT (filter_tool->existing_filter));
-
-          gimp_container_reorder (filters, GIMP_OBJECT (filter_tool->filter),
-                                  index);
-        }
-
-      mask = gimp_drawable_filter_get_mask (filter_tool->existing_filter);
-      g_object_set (filter_tool->filter,
-                    "name", name,
-                    "mask", mask,
-                    NULL);
-    }
 }
 
 static void
@@ -1933,8 +1906,14 @@ void
 gimp_filter_tool_set_config (GimpFilterTool *filter_tool,
                              GimpConfig     *config)
 {
+  GimpTool     *tool;
+  GimpDrawable *drawable = NULL;
+
   g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
   g_return_if_fail (GIMP_IS_OPERATION_SETTINGS (config));
+
+  tool     = GIMP_TOOL (filter_tool);
+  drawable = tool->drawables->data;
 
   /* if the user didn't change a setting since the last set_config(),
    * this handler is still connected
@@ -1952,6 +1931,35 @@ gimp_filter_tool_set_config (GimpFilterTool *filter_tool,
     g_signal_connect_object (filter_tool->config, "notify",
                              G_CALLBACK (gimp_filter_tool_unset_setting),
                              G_OBJECT (filter_tool), 0);
+
+  /* If editing a filter, move it to the right location below the existing
+   * filter and set its properties. This should only run when the filter
+   * is initially edited. */
+  if (filter_tool->existing_filter &&
+      gimp_drawable_filter_get_mask (filter_tool->filter) == NULL)
+    {
+      GimpContainer *filters;
+      GimpChannel   *mask;
+      gint           index;
+      const gchar   *name = _("Editing filter...");
+
+      filters = gimp_drawable_get_filters (drawable);
+
+      mask = gimp_drawable_filter_get_mask (filter_tool->existing_filter);
+      if (filters)
+        {
+          index = gimp_container_get_child_index (filters,
+                                                  GIMP_OBJECT (filter_tool->existing_filter));
+
+          gimp_container_reorder (filters, GIMP_OBJECT (filter_tool->filter),
+                                  index);
+        }
+
+      g_object_set (filter_tool->filter,
+                    "name", name,
+                    "mask", mask,
+                    NULL);
+    }
 }
 
 void
