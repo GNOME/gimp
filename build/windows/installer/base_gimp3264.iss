@@ -138,6 +138,9 @@ ChangesAssociations=true
 ChangesEnvironment=yes
 AlwaysShowDirOnReadyPage=yes
 
+WizardStyle=modern
+WizardSizePercent=100
+WizardResizable=no
 WizardSmallImageFile=gimp.scale-100.bmp,gimp.scale-125.bmp,gimp.scale-150.bmp,gimp.scale-175.bmp,gimp.scale-200.bmp,gimp.scale-225.bmp,gimp.scale-250.bmp
 WizardImageFile=windows-installer-intro-big.bmp
 WizardImageStretch=yes
@@ -875,6 +878,7 @@ begin
 		Parent := WizardForm.ComponentsList.Parent;
 		Left := WizardForm.ComponentsList.Left + WizardForm.ComponentsList.Width + ScaleX(8);
 		Width := WizardForm.TypesCombo.Width - WizardForm.ComponentsList.Width - ScaleX(8);
+		ParentColor := True;
 		BevelOuter := bvLowered;
 		BevelInner := bvRaised;
 		Top := WizardForm.ComponentsList.Top + Round(lblDescription.Height * 0.4);
@@ -910,6 +914,8 @@ begin
 		Parent := WizardForm.ReadyMemo.Parent;
 		Scrollbars := ssVertical;
 		Color := WizardForm.Color;
+		BevelKind := bkFlat;
+		BorderStyle := bsNone;
 		UseRichEdit := True;
 		RTFText := ReadyMemoRichText;
 		ReadOnly := True;
@@ -954,7 +960,7 @@ var lblMessage1,lblURL,lblMessage2: TLabel; //TNewStaticText doesn't support ali
 begin
 	with WizardForm.ProgressGauge do
 	begin
-		Height := ScaleY(16);
+		Height := ScaleY(21);
 		Top := WizardForm.InstallingPage.ClientHeight - Top - Height;
 
 		WizardForm.StatusLabel.Top := Top - WizardForm.FilenameLabel.Height - ScaleY(4);
