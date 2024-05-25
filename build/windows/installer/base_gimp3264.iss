@@ -96,6 +96,9 @@
 #endif
 
 [Setup]
+MissingMessagesWarning=no
+NotRecognizedMessagesWarning=no
+
 ;INSTALLER AND APP INFO
 AppName=GIMP
 #if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
