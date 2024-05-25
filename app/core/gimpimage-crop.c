@@ -139,6 +139,8 @@ gimp_image_crop (GimpImage    *image,
           width  = lx2 - lx1;
           height = ly2 - ly1;
 
+          gimp_drawable_enable_resize_undo (GIMP_DRAWABLE (item));
+
           if (width > 0 && height > 0)
             {
               gimp_item_resize (item, context, fill_type,
