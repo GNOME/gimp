@@ -287,6 +287,9 @@ Name: desktopicon; Description: "{cm:AdditionalIconsDesktop}"; GroupDescription:
 Name: "{autoprograms}\GIMP {#GIMP_VERSION}"; Filename: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#GIMP_VERSION}"
 Name: "{autodesktop}\GIMP {#GIMP_VERSION}"; Filename: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#GIMP_VERSION}"; Tasks: desktopicon
 
+[Run]
+Filename: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"; Description: "{cm:LaunchGimp}"; Flags: unchecked postinstall nowait skipifsilent
+
 
 [Files]
 ;setup files
