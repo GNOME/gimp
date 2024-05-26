@@ -140,7 +140,53 @@ gimp_image_metadata_load_finish (GimpImage             *image,
         }
       else if (comment)
         {
-          comment = gimp_image_metadata_interpret_comment (comment);
+          if (g_str_has_prefix (comment, "charset=InvalidCharsetId "))
+            {
+              GBytes *bytes = NULL;
+
+              /* The Exif metadata writer forgot to add the charset.
+               * Read the raw data and assume it's UTF-8. */
+              g_printerr ("Invalid charset for tag %s. Using raw data.\n",
+                          "Exif.Photo.UserComment");
+
+              bytes = gexiv2_metadata_try_get_tag_raw (GEXIV2_METADATA (metadata),
+                                                       "Exif.Photo.UserComment",
+                                                       NULL);
+              if (bytes)
+                {
+                  gsize        size, strsize;
+                  const gchar *data;
+                  gchar       *raw_comment;
+
+                  data = g_bytes_get_data (bytes, &size);
+                  raw_comment = g_new (gchar, size + 1 );
+                  strsize = g_strlcpy (raw_comment, data, size + 1);
+                  g_bytes_unref (bytes);
+                  g_free (comment);
+
+                  if (raw_comment && strsize > 0 &&
+                      g_utf8_validate (raw_comment, size, NULL))
+                    {
+                      comment = raw_comment;
+                    }
+                  else
+                    {
+                      g_free (raw_comment);
+                      comment = NULL;
+                    }
+
+                  /* Fix the tag in our metadata too, that way we don't have to
+                   * check for this in other places. */
+                  gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
+                                                      "Exif.Photo.UserComment",
+                                                      comment,
+                                                      NULL);
+                }
+            }
+          else
+            {
+              comment = gimp_image_metadata_interpret_comment (comment);
+            }
         }
 
       if (! comment)
