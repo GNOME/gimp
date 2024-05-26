@@ -767,9 +767,16 @@ dev-docs:
 dist-flatpak-weekly:
   extends: '.publish_nightly'
   rules:
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Flatpak package.*/'
+      interruptible: true
     - if: '$GIMP_CI_FLATPAK != null'
   needs: ["gimp-flatpak-x64"]
   stage: distribution
+  script:
+    - if [ "$CI_COMMIT_BRANCH" != "$CI_DEFAULT_BRANCH" ]; then
+        exit 0;
+      fi
+    - !reference [.publish_nightly, script]
   artifacts:
     expose_as: 'Linux flatpak'
     paths:
