@@ -30,7 +30,7 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-	{ name => 'yposition', type => '0 <= int32',
+	{ name => 'yposition', type => 'int32',
 	  desc => "The guide's y-offset from top of image" }
     );
 
@@ -42,13 +42,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (yposition <= gimp_image_get_height (image))
-    {
-      GimpGuide *g;
+  GimpGuide *g;
 
-      g = gimp_image_add_hguide (image, yposition, TRUE);
-      guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
-    }
+  g = gimp_image_add_hguide (image, yposition, TRUE);
+  if (g)
+    guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
   else
     success = FALSE;
 }
@@ -70,7 +68,7 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-	{ name => 'xposition', type => '0 <= int32',
+	{ name => 'xposition', type => 'int32',
 	  desc => "The guide's x-offset from left of image" }
     );
 
@@ -82,13 +80,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (xposition <= gimp_image_get_width (image))
-    {
-      GimpGuide *g;
+  GimpGuide *g;
 
-      g = gimp_image_add_vguide (image, xposition, TRUE);
-      guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
-    }
+  g = gimp_image_add_vguide (image, xposition, TRUE);
+  if (g)
+    guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
   else
     success = FALSE;
 }

@@ -64,13 +64,11 @@ image_add_hguide_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (yposition <= gimp_image_get_height (image))
-        {
-          GimpGuide *g;
+      GimpGuide *g;
 
-          g = gimp_image_add_hguide (image, yposition, TRUE);
-          guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
-        }
+      g = gimp_image_add_hguide (image, yposition, TRUE);
+      if (g)
+        guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
       else
         success = FALSE;
     }
@@ -103,13 +101,11 @@ image_add_vguide_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (xposition <= gimp_image_get_width (image))
-        {
-          GimpGuide *g;
+      GimpGuide *g;
 
-          g = gimp_image_add_vguide (image, xposition, TRUE);
-          guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
-        }
+      g = gimp_image_add_vguide (image, xposition, TRUE);
+      if (g)
+        guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
       else
         success = FALSE;
     }
@@ -294,7 +290,7 @@ register_image_guides_procs (GimpPDB *pdb)
                                g_param_spec_int ("yposition",
                                                  "yposition",
                                                  "The guide's y-offset from top of image",
-                                                 0, G_MAXINT32, 0,
+                                                 G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_uint ("guide",
@@ -329,7 +325,7 @@ register_image_guides_procs (GimpPDB *pdb)
                                g_param_spec_int ("xposition",
                                                  "xposition",
                                                  "The guide's x-offset from left of image",
-                                                 0, G_MAXINT32, 0,
+                                                 G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_uint ("guide",
