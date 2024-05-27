@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-30 12:12+0200\n"
-"PO-Revision-Date: 2024-05-01 16:39+0200\n"
+"PO-Revision-Date: 2024-05-27 12:20+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -3041,14 +3041,12 @@ msgstr "(gif animata) Ritardo predefinito tra fotogrammi in millisecondi"
 
 #: ../plug-ins/common/file-gif-export.c:211
 msgid "Frame disposal _when unspecified"
-msgstr "Disposizione fotogrammi ove non speci_ficato"
+msgstr "Scarto fotogrammi ove non speci_ficato"
 
 #: ../plug-ins/common/file-gif-export.c:212
 msgid ""
 "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)"
-msgstr ""
-"(gif animata) Tipo disposizione predefinita (0=`non importa`, 1=combina, "
-"2=rimpiazza)"
+msgstr "(gif animata) Tipo scarto predefinito (0=`non importa`, 1=combina, 2=rimpiazza)"
 
 #: ../plug-ins/common/file-gif-export.c:220
 msgid "_As animation"
@@ -3072,7 +3070,7 @@ msgstr "Usa le dis_posizioni inserite sopra per tutti i forogrammi"
 
 #: ../plug-ins/common/file-gif-export.c:234
 msgid "(animated gif) Use specified disposal for all frames"
-msgstr "(gif animata) Usa disposizione specificata per tutti i fotogrammi"
+msgstr "(gif animata) Usa scarto specificato per tutti i fotogrammi"
 
 #: ../plug-ins/common/file-gif-export.c:239
 msgid "Sa_ve comment"
@@ -4147,12 +4145,11 @@ msgstr ""
 
 #: ../plug-ins/common/file-mng.c:324
 msgid "De_fault frame disposal"
-msgstr "Eliminazione predefinita _fotogrammi"
+msgstr "Scarto predefinito _fotogrammi"
 
 #: ../plug-ins/common/file-mng.c:325
 msgid "(ANIMATED MNG) Default dispose type (0 = combine; 1 = replace)"
-msgstr ""
-"(MNG animata) Tipo eliminazione predefinita (0 = combina; 1 = rimpiazza)"
+msgstr "(MNG animata) Tipo scarto predefinito (0 = combina; 1 = rimpiazza)"
 
 #: ../plug-ins/common/file-mng.c:331 ../plug-ins/common/file-png.c:252
 msgid "Save _background color"
