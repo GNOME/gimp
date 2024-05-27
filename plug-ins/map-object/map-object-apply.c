@@ -412,7 +412,7 @@ copy_from_config (GimpProcedureConfig *config)
   if (cyl_top)
     mapvals.cylindermap_id[0] = gimp_item_get_id (GIMP_ITEM (cyl_top));
   if (cyl_bottom)
-    mapvals.cylindermap_id[0] = gimp_item_get_id (GIMP_ITEM (cyl_bottom));
+    mapvals.cylindermap_id[1] = gimp_item_get_id (GIMP_ITEM (cyl_bottom));
 
   if (color == NULL)
     color = gegl_color_new ("white");
