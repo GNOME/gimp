@@ -204,7 +204,7 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
 
   if (!GetModuleHandleExW (GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
                            GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-                           (LPCTSTR) &gimp_input_device_store_init,
+                           (LPCWSTR) &gimp_input_device_store_init,
                            &thismodule))
     return;
 
