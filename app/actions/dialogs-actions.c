@@ -310,12 +310,11 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
 #if defined(PLATFORM_OSX)
     NC_("dialogs-action", "_Settings..."),
     NC_("dialogs-action", "_Settings..."),
-    { "<primary>,", NULL },
 #else
     NC_("dialogs-action", "_Preferences"),
     NC_("dialogs-action", "_Preferences"),
-    { NULL },
 #endif
+    { NULL },
     NC_("dialogs-action", "Open the preferences dialog"),
     "gimp-preferences-dialog",
     GIMP_HELP_PREFS_DIALOG },

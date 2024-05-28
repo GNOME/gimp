@@ -583,12 +583,11 @@ pnm_export (GimpProcedure        *procedure,
             GimpProcedureConfig  *config,
             gpointer              run_data)
 {
-  FileType           file_type   = GPOINTER_TO_INT (run_data);
-  GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export      = GIMP_EXPORT_IGNORE;
+  FileType           file_type = GPOINTER_TO_INT (run_data);
+  GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export    = GIMP_EXPORT_IGNORE;
   GList             *drawables;
-  const gchar       *format_name = NULL;
-  GError            *error       = NULL;
+  GError            *error     = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -601,7 +600,6 @@ pnm_export (GimpProcedure        *procedure,
       switch (file_type)
         {
         case FILE_TYPE_PNM:
-          format_name = "PNM";
           export = gimp_export_image (&image, "PNM",
                                       GIMP_EXPORT_CAN_HANDLE_RGB  |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
@@ -609,26 +607,22 @@ pnm_export (GimpProcedure        *procedure,
           break;
 
         case FILE_TYPE_PBM:
-          format_name = "PBM";
           export = gimp_export_image (&image, "PBM",
                                       GIMP_EXPORT_CAN_HANDLE_BITMAP);
           break;
 
         case FILE_TYPE_PGM:
-          format_name = "PGM";
           export = gimp_export_image (&image, "PGM",
                                       GIMP_EXPORT_CAN_HANDLE_GRAY);
           break;
 
         case FILE_TYPE_PPM:
-          format_name = "PPM";
           export = gimp_export_image (&image, "PPM",
                                       GIMP_EXPORT_CAN_HANDLE_RGB |
                                       GIMP_EXPORT_CAN_HANDLE_INDEXED);
           break;
 
         case FILE_TYPE_PAM:
-          format_name = "PAM";
           export = gimp_export_image (&image, "PAM",
                                       GIMP_EXPORT_CAN_HANDLE_RGB   |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY  |
@@ -637,7 +631,6 @@ pnm_export (GimpProcedure        *procedure,
           break;
 
         case FILE_TYPE_PFM:
-          format_name = "PFM";
           export = gimp_export_image (&image, "PFM",
                                       GIMP_EXPORT_CAN_HANDLE_RGB |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY);
@@ -660,7 +653,7 @@ pnm_export (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! export_image (file, image, drawables->data, file_type, 
+      if (! export_image (file, image, drawables->data, file_type,
                           G_OBJECT (config), &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
