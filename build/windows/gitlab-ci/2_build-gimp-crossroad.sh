@@ -56,7 +56,6 @@ cd ..
 GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build$ARTIFACTS_SUFFIX/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 echo "@echo off
       echo This is a CI crossbuild of GIMP.
-      :: Don't run this under PowerShell since it produces UTF-16 files.
       echo .js   (JavaScript) plug-ins ^|^ NOT supported!
       echo .lua  (Lua) plug-ins        ^|^ NOT supported!
       echo .py   (Python) plug-ins     ^|^ NOT supported!

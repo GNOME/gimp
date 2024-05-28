@@ -69,43 +69,50 @@ GIMP_API_VERSION=$(grep GIMP_PKGCONFIG_VERSION config.h | head -1 | sed 's/^.*"\
 
 make_cmd ()
 {
+  if [ "$4" == "do_wizardry" ]; then
+    interp_lua="(
+                echo lua=$2\bin\luajit.exe
+                echo luajit=$2\bin\luajit.exe
+                echo /usr/bin/lua=$2\bin\luajit.exe
+                echo /usr/bin/luajit=$2\bin\luajit.exe
+                echo :Lua:E::lua::luajit:
+                ) >%cd%\lib\gimp\GIMP_API_VERSION\interpreters\lua.interp"
+    interp_pyt="(
+                echo python=$2\bin\python.exe
+                echo python3=$2\bin\python.exe
+                echo /usr/bin/python=$2\bin\python.exe
+                echo /usr/bin/python3=$2\bin\python.exe
+                echo :Python:E::py::python:
+                ) >%cd%\lib\gimp\GIMP_API_VERSION\interpreters\pygimp.interp"
+    interp_scm="(
+                echo gimp-script-fu-interpreter=%cd%\bin\gimp-script-fu-interpreter-GIMP_API_VERSION.exe
+                echo gimp-script-fu-interpreter-GIMP_API_VERSION=%cd%\bin\gimp-script-fu-interpreter-GIMP_API_VERSION.exe
+                echo /usr/bin/gimp-script-fu-interpreter=%cd%\bin\gimp-script-fu-interpreter-GIMP_API_VERSION.exe
+                echo :ScriptFu:E::scm::gimp-script-fu-interpreter-GIMP_API_VERSION.exe:
+                ) >%cd%\lib\gimp\GIMP_API_VERSION\interpreters\gimp-script-fu-interpreter.interp"
+    cp_typelib="@if not exist $MSYS2_PREFIX\lib\girepository-1.0\babl*.typelib (copy lib\girepository-1.0\babl*.typelib $2\lib\girepository-1.0) > nul
+                @if not exist $MSYS2_PREFIX\lib\girepository-1.0\gegl*.typelib (copy lib\girepository-1.0\gegl*.typelib $2\lib\girepository-1.0) > nul
+                @if not exist $MSYS2_PREFIX\lib\girepository-1.0\gimp*.typelib (copy lib\girepository-1.0\gimp*.typelib $2\lib\girepository-1.0) > nul"
+      set_path="set PATH=%PATH%;$2\bin"
+    dl_typelib="@if exist $MSYS2_PREFIX\lib\girepository-1.0\babl*.typelib (if exist lib\girepository-1.0\babl*.typelib (del $2\lib\girepository-1.0\babl*.typelib)) > nul
+                @if exist $MSYS2_PREFIX\lib\girepository-1.0\gegl*.typelib (if exist lib\girepository-1.0\gegl*.typelib (del $2\lib\girepository-1.0\gegl*.typelib)) > nul
+                @if exist $MSYS2_PREFIX\lib\girepository-1.0\gimp*.typelib (if exist lib\girepository-1.0\gimp*.typelib (del $2\lib\girepository-1.0\gimp*.typelib)) > nul"
+  fi
   echo "@echo off
         echo This is a $1 native build of GIMP$3.
-        :: Don't run this under PowerShell since it produces UTF-16 files.
         echo .js   (JavaScript) plug-ins ^|^ NOT supported!
-        (
-        echo lua=$2\bin\luajit.exe
-        echo luajit=$2\bin\luajit.exe
-        echo /usr/bin/lua=$2\bin\luajit.exe
-        echo /usr/bin/luajit=$2\bin\luajit.exe
-        echo :Lua:E::lua::luajit:
-        ) >%cd%\lib\gimp\GIMP_API_VERSION\interpreters\lua.interp
+        $interp_lua
         echo .lua  (Lua) plug-ins        ^|^ supported.
-        (
-        echo python=$2\bin\python.exe
-        echo python3=$2\bin\python.exe
-        echo /usr/bin/python=$2\bin\python.exe
-        echo /usr/bin/python3=$2\bin\python.exe
-        echo :Python:E::py::python:
-        ) >%cd%\lib\gimp\GIMP_API_VERSION\interpreters\pygimp.interp
+        $interp_pyt
         echo .py   (Python) plug-ins     ^|^ supported.
-        (
-        echo gimp-script-fu-interpreter=%cd%\bin\gimp-script-fu-interpreter-GIMP_API_VERSION.exe
-        echo gimp-script-fu-interpreter-GIMP_API_VERSION=%cd%\bin\gimp-script-fu-interpreter-GIMP_API_VERSION.exe
-        echo /usr/bin/gimp-script-fu-interpreter=%cd%\bin\gimp-script-fu-interpreter-GIMP_API_VERSION.exe
-        echo :ScriptFu:E::scm::gimp-script-fu-interpreter-GIMP_API_VERSION.exe:
-        ) >%cd%\lib\gimp\GIMP_API_VERSION\interpreters\gimp-script-fu-interpreter.interp
+        $interp_scm
         echo .scm  (ScriptFu) plug-ins   ^|^ supported.
         echo .vala (Vala) plug-ins       ^|^ supported.
         echo.
-        @if not exist $MSYS2_PREFIX\lib\girepository-1.0\babl*.typelib (copy lib\girepository-1.0\babl*.typelib $2\lib\girepository-1.0) > nul
-        @if not exist $MSYS2_PREFIX\lib\girepository-1.0\gegl*.typelib (copy lib\girepository-1.0\gegl*.typelib $2\lib\girepository-1.0) > nul
-        @if not exist $MSYS2_PREFIX\lib\girepository-1.0\gimp*.typelib (copy lib\girepository-1.0\gimp*.typelib $2\lib\girepository-1.0) > nul
-        set PATH=%PATH%;$2\bin
+        $cp_typelib
+        $set_path
         bin\gimp-$GIMP_APP_VERSION.exe
-        @if exist $MSYS2_PREFIX\lib\girepository-1.0\babl*.typelib (if exist lib\girepository-1.0\babl*.typelib (del $2\lib\girepository-1.0\babl*.typelib)) > nul
-        @if exist $MSYS2_PREFIX\lib\girepository-1.0\gegl*.typelib (if exist lib\girepository-1.0\gegl*.typelib (del $2\lib\girepository-1.0\gegl*.typelib)) > nul
-        @if exist $MSYS2_PREFIX\lib\girepository-1.0\gimp*.typelib (if exist lib\girepository-1.0\gimp*.typelib (del $2\lib\girepository-1.0\gimp*.typelib)) > nul" > ${GIMP_PREFIX}/gimp.cmd
+        $dl_typelib" > ${GIMP_PREFIX}/gimp.cmd
   sed -i "s/GIMP_API_VERSION/${GIMP_API_VERSION}/g" ${GIMP_PREFIX}/gimp.cmd
   sed -i 's|c:/|c:\\|g;s|msys64/|msys64\\|g' ${GIMP_PREFIX}/gimp.cmd
 }
@@ -113,5 +120,5 @@ make_cmd ()
 if [ "$GITLAB_CI" ]; then
   make_cmd CI %cd% ""
 else
-  make_cmd local $MSYS2_PREFIX " (please run bin/gimp-${GIMP_APP_VERSION}.exe under $MSYSTEM shell)"
+  make_cmd local $MSYS2_PREFIX " (please run bin/gimp-${GIMP_APP_VERSION}.exe under $MSYSTEM shell)" do_wizardry
 fi
