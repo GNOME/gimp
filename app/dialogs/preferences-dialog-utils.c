@@ -143,12 +143,14 @@ prefs_switch_add (GObject      *config,
                   const gchar  *property_name,
                   const gchar  *label,
                   GtkBox       *vbox,
-                  GtkSizeGroup *group)
+                  GtkSizeGroup *group,
+                  GtkWidget   **switch_out)
 {
   GtkWidget *box;
   GtkWidget *plabel;
 
-  box = gimp_prop_switch_new (config, property_name, label, &plabel, NULL);
+  box = gimp_prop_switch_new (config, property_name, label, &plabel,
+                              switch_out);
 
   if (!box)
     return NULL;

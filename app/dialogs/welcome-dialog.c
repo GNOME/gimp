@@ -579,12 +579,11 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
                           _("Use symbolic icons if available"),
                           GTK_BOX (hbox));
 
-
   vbox = prefs_frame_new (_("Icon Scaling"), GTK_CONTAINER (main_vbox), FALSE);
 
-  button = prefs_check_button_add (object, "override-theme-icon-size",
-                                   _("_Override icon sizes set by the theme"),
-                                   GTK_BOX (vbox));
+  prefs_switch_add (object, "override-theme-icon-size",
+                    _("_Override icon sizes set by the theme"),
+                    GTK_BOX (vbox), NULL, &button);
 
   scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL,
                                     0.0, 3.0, 1.0);
@@ -646,15 +645,10 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
 
   vbox = prefs_frame_new (_("Additional Customizations"), GTK_CONTAINER (main_vbox), FALSE);
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_set_visible (hbox, TRUE);
-
 #ifndef GDK_WINDOWING_QUARTZ
-  prefs_check_button_add (object, "custom-title-bar",
-                          _("Merge menu and title bar (requires restart)"),
-                          GTK_BOX (hbox));
+  prefs_switch_add (object, "custom-title-bar",
+                    _("Merge menu and title bar (requires restart)"),
+                    GTK_BOX (vbox), size_group, NULL);
 #endif
 
 #ifdef CHECK_UPDATE
@@ -662,20 +656,13 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
     {
       prefs_switch_add (object, "check-updates",
                         _("Enable check for updates (requires internet)"),
-                        GTK_BOX (hbox),
-                        size_group);
+                        GTK_BOX (vbox), size_group, NULL);
     }
 #endif
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_set_visible (hbox, TRUE);
-
   prefs_switch_add (object, "toolbox-groups",
                     _("Use tool _groups"),
-                    GTK_BOX (hbox),
-                    NULL);
+                    GTK_BOX (vbox), size_group, NULL);
 
   g_clear_object (&size_group);
 }
