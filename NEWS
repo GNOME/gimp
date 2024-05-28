@@ -46,6 +46,7 @@ Graphical User Interface:
   - GimpSpinScale text area height is now reduced to improve usability (it is
     now easier to find the area to *grab* the scale vs. area to edit the text;
     the cursor changing helping to make out one from the other).
+  - Some cleanups done with test plug-ins and scripts in menus.
 
 Plug-ins:
 
@@ -60,6 +61,15 @@ Plug-ins:
       functions.
   - All "file-*-save" (and "file-*-save-internal) plug-in procedures have been
     renamed to "file-*-export" (respectively "file-*-export-internal").
+  - Ported to GimpVectorLoadProcedure: file-pdf-load, file-ps, file-svg
+    and file-wmf-load.
+  - Arguments ported to GimpChoice in the following plug-ins:
+    file-raw-data, file-jpeg, file-ps, decompose.
+  - New file-plug-in testing framework. It comes with Gitlab junit reports.
+  - JPEG XL: half-float import support.
+  - file-darktable: use the new API which darktable developed from us
+    since version 4.6 (a new `--gimp` flag on command line). Fallback to
+    old usage for older versions.
 
 API:
 
@@ -72,6 +82,24 @@ API:
       GUI can be set accordingly).
     * GimpSaveProcedure renamed to GimpExportProcedure.
     * GimpSaveProcedureDialog renamed to GimpExportProcedureDialog.
+    * GimpExportProcedure does not have "drawables" and "num-drawables"
+      arguments anymore: after much reflection, these arguments were
+      mostly confusing and many plug-ins were already just using
+      gimp_image_list_layers() instead. For future advanced usage which
+      may come in the future, we will add a `GimpExportOptions` argument
+      instead.
+    * gimp_export_image() was simplified by removing the interactive
+      case (which was already hidden hence unused anyway).
+    * New GimpVectorLoadProcedure class: to be used specifically for
+      vector-based formats. It will allow to share a common graphical
+      interface (through the new GimpVectorLoadProcedureDialog), and
+      will also allow the core application to know which export
+      procedure is for a vector format, hence special-casing vector
+      file handling.
+    * GimpProcedureDialog: new fill_start() and fill_end() class methods
+      which are ensured to be run exactly once, unlike fill_list().
+    * gimp_image_add_(h|v)guide() functions can now creates off-canvas
+      guides (same as we can in GUI, now).
   - Changes in libgimpwidgets:
     * GimpColorArea: dropped colors are now passed as GeglColor.
   - Changes in libgimpbase:
@@ -94,6 +122,7 @@ Build:
       better auto-vectorization support.
     * x86 (32-bit) cross-build job for Windows removed.
     * "packaging" stage merged back with "build" stage.
+    * "gimp-debian-x64" job now also generates an AppImage for every commit.
   - New gimp-data repository used as a git submodule:
     * Various data were moved to gimp-data: icons, cursors, patterns, brushes
       and application icon/logo.
@@ -102,6 +131,8 @@ Build:
       systems, Wilber icons of the "Default" icon theme within the application.
     * Splash image and Windows installer's BMP images are generated from the
       splash image contributed as XCF.
+  - Support for .pdb debug symbol files (Visual Studio) was added for
+    Windows.
 
 
 Overview of Changes from GIMP 2.99.16 to GIMP 2.99.18
