@@ -202,7 +202,7 @@ gimp_toolbox_constructed (GObject *object)
   toolbox->p->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), toolbox->p->vbox, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (main_vbox), toolbox->p->vbox, 0);
-  gtk_widget_show (toolbox->p->vbox);
+  gtk_widget_set_visible (toolbox->p->vbox, TRUE);
 
   /* Use g_signal_connect() also for the toolbox itself so we can pass
    * data and reuse the same function for the vbox
@@ -231,7 +231,7 @@ gimp_toolbox_constructed (GObject *object)
   g_signal_connect_swapped (event_box, "button-press-event",
                             G_CALLBACK (gimp_toolbox_button_press_event),
                             toolbox);
-  gtk_widget_show (event_box);
+  gtk_widget_set_visible (event_box, TRUE);
 
   toolbox->p->header = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (toolbox->p->header), GTK_SHADOW_NONE);
@@ -256,14 +256,14 @@ gimp_toolbox_constructed (GObject *object)
                                  toolbox);
   gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->tool_palette,
                       FALSE, FALSE, 0);
-  gtk_widget_show (toolbox->p->tool_palette);
+  gtk_widget_set_visible (toolbox->p->tool_palette, TRUE);
 
   toolbox->p->area_box = gtk_flow_box_new ();
   gtk_flow_box_set_selection_mode (GTK_FLOW_BOX (toolbox->p->area_box),
                                    GTK_SELECTION_NONE);
   gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->area_box,
                       FALSE, FALSE, 0);
-  gtk_widget_show (toolbox->p->area_box);
+  gtk_widget_set_visible (toolbox->p->area_box, TRUE);
 
   gtk_widget_add_events (GTK_WIDGET (toolbox), GDK_POINTER_MOTION_MASK);
   gimp_devices_add_widget (toolbox->p->context->gimp, GTK_WIDGET (toolbox));
@@ -645,8 +645,8 @@ toolbox_create_color_area (GimpToolbox *toolbox,
   g_object_set (col_area,
                 "halign",        GTK_ALIGN_CENTER,
                 "valign",        GTK_ALIGN_CENTER,
-                "margin-left",   2,
-                "margin-right",  2,
+                "margin-start",  2,
+                "margin-end",    2,
                 "margin-top",    2,
                 "margin-bottom", 2,
                 NULL);
@@ -679,8 +679,8 @@ toolbox_create_foo_area (GimpToolbox *toolbox,
   g_object_set (foo_area,
                 "halign",        GTK_ALIGN_CENTER,
                 "valign",        GTK_ALIGN_CENTER,
-                "margin-left",   2,
-                "margin-right",  2,
+                "margin-start",  2,
+                "margin-end",    2,
                 "margin-top",    2,
                 "margin-bottom", 2,
                 NULL);
@@ -698,8 +698,8 @@ toolbox_create_image_area (GimpToolbox *toolbox,
   g_object_set (image_area,
                 "halign",        GTK_ALIGN_CENTER,
                 "valign",        GTK_ALIGN_CENTER,
-                "margin-left",   2,
-                "margin-right",  2,
+                "margin-start",  2,
+                "margin-end",    2,
                 "margin-top",    2,
                 "margin-bottom", 2,
                 NULL);
