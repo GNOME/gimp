@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-05-13 11:10+0000\n"
-"PO-Revision-Date: 2024-05-19 18:50+0800\n"
+"POT-Creation-Date: 2024-05-27 15:03+0000\n"
+"PO-Revision-Date: 2024-05-29 20:40+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -2559,7 +2559,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:484
 #: plug-ins/file-icns/file-icns-load.c:508 plug-ins/file-ico/ico-load.c:673
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
-#: plug-ins/file-psd/psd-load.c:193 plug-ins/file-raw/file-darktable.c:417
+#: plug-ins/file-psd/psd-load.c:193 plug-ins/file-raw/file-darktable.c:452
 #: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:314
 #: plug-ins/file-tiff/file-tiff-load.c:291
 #, c-format
@@ -9422,7 +9422,7 @@ msgstr "试图打开临时的 %s 文件“%s”用于加载 icns 时出错：%s"
 #. ----- Open PSD file -----
 #: plug-ins/file-icns/file-icns-load.c:560 plug-ins/file-ico/ico-load.c:1013
 #: plug-ins/file-jpeg/jpeg-load.c:601 plug-ins/file-psd/psd-thumb-load.c:72
-#: plug-ins/file-raw/file-darktable.c:517
+#: plug-ins/file-raw/file-darktable.c:552
 #: plug-ins/file-raw/file-rawtherapee.c:459
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -10013,6 +10013,15 @@ msgstr "导入 PSD 元数据"
 msgid ""
 "Metadata fill layers are not supported and will show up as empty layers."
 msgstr "不支持元数据填充图层且将会显示为空白图层。"
+
+#: plug-ins/file-raw/file-darktable.c:273
+msgid "Load thumbnail from a raw image via darktable"
+msgstr "通过 darktable 从 Raw 图像加载缩略图"
+
+#: plug-ins/file-raw/file-darktable.c:275
+msgid ""
+"This plug-in loads a thumbnail from a raw image by calling darktable-cli."
+msgstr "该插件通过调用 darktable-cli 从 Raw 图像加载缩略图。"
 
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
