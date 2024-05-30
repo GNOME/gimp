@@ -338,10 +338,10 @@ parse_iso_codes (GHashTable  *base_lang_list,
 
 #ifdef ENABLE_RELOCATABLE_RESOURCES
   file = gimp_installation_directory_file ("share", "xml", "iso-codes",
-                                           "iso_639.xml", NULL);
+                                           "iso_639_3.xml", NULL);
 #else
   file = g_file_new_for_path (ISO_CODES_LOCATION G_DIR_SEPARATOR_S
-                              "iso_639.xml");
+                              "iso_639_3.xml");
 #endif
 
   success = gimp_xml_parser_parse_gfile (xml_parser, file, error);
@@ -374,12 +374,12 @@ iso_codes_parser_init (void)
 
 #ifdef G_OS_WIN32
   /*  on Win32, assume iso-codes is installed in the same location as GIMP  */
-  gimp_bind_text_domain ("iso_639", gimp_locale_directory ());
+  gimp_bind_text_domain ("iso_639_3", gimp_locale_directory ());
 #else
-  gimp_bind_text_domain ("iso_639", ISO_CODES_LOCALEDIR);
+  gimp_bind_text_domain ("iso_639_3", ISO_CODES_LOCALEDIR);
 #endif
 
-  bind_textdomain_codeset ("iso_639", "UTF-8");
+  bind_textdomain_codeset ("iso_639_3", "UTF-8");
 
   initialized = TRUE;
 }
@@ -396,14 +396,14 @@ iso_codes_parser_entry (IsoCodesParser  *parser,
     {
       if (strcmp (*names, "name") == 0)
         lang = *values;
-      else if (strcmp (*names, "iso_639_2B_code") == 0 && code == NULL)
+      else if (strcmp (*names, "part1_code") == 0)
         /* 2-letter ISO 639-1 codes have priority.
          * But some languages have no 2-letter code. Ex: Asturian (ast).
          */
         code = *values;
-      else if (strcmp (*names, "iso_639_2T_code") == 0 && code == NULL)
+      else if (strcmp (*names, "part2_code") == 0 && code == NULL)
         code = *values;
-      else if (strcmp (*names, "iso_639_1_code") == 0)
+      else if (strcmp (*names, "id") == 0 && code == NULL)
         code = *values;
 
       names++;
@@ -413,7 +413,7 @@ iso_codes_parser_entry (IsoCodesParser  *parser,
   if (lang && *lang && code && *code)
     {
       gchar *semicolon;
-      gchar *localized_name = g_strdup (dgettext ("iso_639", lang));
+      gchar *localized_name = g_strdup (dgettext ("iso_639_3", lang));
 
       /* If the language is in our base table, we save its standard English name. */
       if (g_hash_table_contains (parser->base_lang_list, code))
@@ -446,14 +446,14 @@ iso_codes_parser_start_element (GMarkupParseContext  *context,
   switch (parser->state)
     {
     case ISO_CODES_START:
-      if (strcmp (element_name, "iso_639_entries") == 0)
+      if (strcmp (element_name, "iso_639_3_entries") == 0)
         {
           parser->state = ISO_CODES_IN_ENTRIES;
           break;
         }
 
     case ISO_CODES_IN_ENTRIES:
-      if (strcmp (element_name, "iso_639_entry") == 0)
+      if (strcmp (element_name, "iso_639_3_entry") == 0)
         {
           parser->state = ISO_CODES_IN_ENTRY;
           iso_codes_parser_entry (parser, attribute_names, attribute_values);
