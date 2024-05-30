@@ -53,6 +53,7 @@
 #include "gimppaintoptions-gui.h"
 #include "gimppainttool.h"
 #include "gimppainttool-paint.h"
+#include "gimpsourcetool.h"
 #include "gimptoolcontrol.h"
 #include "gimptools-utils.h"
 
@@ -325,12 +326,20 @@ gimp_paint_tool_button_press (GimpTool            *tool,
 
       if (gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
         {
-          gimp_tool_message_literal (tool, display,
-                                     _("The selected item's pixels are locked."));
-          gimp_tools_blink_lock_box (display->gimp, locked_item);
-          g_list_free (drawables);
+          gboolean constrain_only;
 
-          return;
+          /* Allow pixel-locked layers to be set as sources */
+          constrain_only = (state & gimp_get_constrain_behavior_mask () &&
+                            ! (state & gimp_get_extend_selection_mask ()));
+          if (! (GIMP_IS_SOURCE_TOOL (tool) && constrain_only))
+            {
+              gimp_tool_message_literal (tool, display,
+                                         _("The selected item's pixels are locked."));
+              gimp_tools_blink_lock_box (display->gimp, locked_item);
+              g_list_free (drawables);
+
+              return;
+            }
         }
 
       if (! gimp_paint_tool_check_alpha (paint_tool, drawable, display, &error))
@@ -561,9 +570,18 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
               ! (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
                  config->edit_non_visible))
             {
-              modifier        = GIMP_CURSOR_MODIFIER_BAD;
-              toggle_modifier = GIMP_CURSOR_MODIFIER_BAD;
-              break;
+              gboolean constrain_only;
+
+              /* Allow pixel-locked layers to be set as sources */
+              constrain_only = (state & gimp_get_constrain_behavior_mask () &&
+                                ! (state & gimp_get_extend_selection_mask ()));
+
+              if (! (GIMP_IS_SOURCE_TOOL (tool) && constrain_only))
+                {
+                  modifier        = GIMP_CURSOR_MODIFIER_BAD;
+                  toggle_modifier = GIMP_CURSOR_MODIFIER_BAD;
+                  break;
+                }
             }
         }
 
