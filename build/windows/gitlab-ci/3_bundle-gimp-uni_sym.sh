@@ -1,8 +1,11 @@
 #!/bin/bash
 
-archsArray=("-a64"
-            "-x64"
-            "-x86")
+if [ "$MSYSTEM_CARCH" != 'i686' ]; then
+  archsArray=('-a64'
+              '-x64')
+else
+  archsArray=('-x86')
+fi
 
 # Splited .debug (DWARF) debug symbols
 # (we extract and link them to make possible save space with Inno custom install)
