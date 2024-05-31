@@ -437,12 +437,6 @@ gimp_measure_tool_compass_create_guides (GimpToolWidget  *widget,
   if (measure->supress_guides)
     return;
 
-  if (x < 0 || x > gimp_image_get_width (image))
-    vertical = FALSE;
-
-  if (y < 0 || y > gimp_image_get_height (image))
-    horizontal = FALSE;
-
   if (horizontal || vertical)
     {
       if (horizontal && vertical)
@@ -759,119 +753,119 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (gui)), grid,
                       FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_visible (grid, TRUE);
 
 
   label = gtk_label_new (_("Distance:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   measure->distance_label[0] = label = gtk_label_new ("0.0");
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_grid_attach (GTK_GRID (grid), label, 1, 0, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   label = gtk_label_new (_("pixels"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   measure->distance_label[1] = label = gtk_label_new ("0.0");
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_grid_attach (GTK_GRID (grid), label, 3, 0, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   measure->unit_label[0] = label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 4, 0, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
 
   label = gtk_label_new (_("Angle:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   measure->angle_label[0] = label = gtk_label_new ("0.0");
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_grid_attach (GTK_GRID (grid), label, 1, 1, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   label = gtk_label_new ("\302\260");
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 2, 1, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   measure->angle_label[1] = label = gtk_label_new (NULL);
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_grid_attach (GTK_GRID (grid), label, 3, 1, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   measure->unit_label[1] = label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 4, 1, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
 
   label = gtk_label_new (_("Width:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   measure->width_label[0] = label = gtk_label_new ("0.0");
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_grid_attach (GTK_GRID (grid), label, 1, 2, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   label = gtk_label_new (_("pixels"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 2, 2, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   measure->width_label[1] = label = gtk_label_new ("0.0");
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_grid_attach (GTK_GRID (grid), label, 3, 2, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   measure->unit_label[2] = label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 4, 2, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
 
   label = gtk_label_new (_("Height:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 3, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   measure->height_label[0] = label = gtk_label_new ("0.0");
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_grid_attach (GTK_GRID (grid), label, 1, 3, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   label = gtk_label_new (_("pixels"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 2, 3, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   measure->height_label[1] = label = gtk_label_new ("0.0");
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_grid_attach (GTK_GRID (grid), label, 3, 3, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   measure->unit_label[3] = label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), label, 4, 3, 1, 1);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
   return gui;
 }
