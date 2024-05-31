@@ -91,66 +91,67 @@ typedef enum
 
 /* Declare some local functions */
 
-static GimpColorProfile * load_profile     (TIFF              *tif);
+static GimpColorProfile * load_profile     (TIFF                *tif);
 
-static void               load_rgba        (TIFF              *tif,
-                                            ChannelData       *channel);
-static void               load_contiguous  (TIFF              *tif,
-                                            ChannelData       *channel,
-                                            const Babl        *type,
-                                            gushort            bps,
-                                            gushort            spp,
-                                            TiffColorMode      tiff_mode,
-                                            gboolean           is_signed,
-                                            gint               extra);
-static void               load_separate    (TIFF              *tif,
-                                            ChannelData       *channel,
-                                            const Babl        *type,
-                                            gushort            bps,
-                                            gushort            spp,
-                                            TiffColorMode      tiff_mode,
-                                            gboolean           is_signed,
-                                            gint               extra);
+static void               load_rgba        (TIFF                *tif,
+                                            ChannelData         *channel);
+static void               load_contiguous  (TIFF                *tif,
+                                            ChannelData         *channel,
+                                            const Babl          *type,
+                                            gushort              bps,
+                                            gushort              spp,
+                                            TiffColorMode        tiff_mode,
+                                            gboolean             is_signed,
+                                            gint                 extra);
+static void               load_separate    (TIFF                *tif,
+                                            ChannelData         *channel,
+                                            const Babl          *type,
+                                            gushort              bps,
+                                            gushort              spp,
+                                            TiffColorMode        tiff_mode,
+                                            gboolean             is_signed,
+                                            gint                 extra);
 
-static gboolean   is_non_conformant_tiff   (gushort            photomet,
-                                            gushort            spp);
-static gushort    get_extra_channels_count (gushort            photomet,
-                                            gushort            spp,
-                                            gboolean           alpha);
+static gboolean   is_non_conformant_tiff   (gushort              photomet,
+                                            gushort              spp);
+static gushort    get_extra_channels_count (gushort              photomet,
+                                            gushort              spp,
+                                            gboolean             alpha);
 
-static void               fill_bit2byte    (TiffColorMode      tiff_mode);
-static void               fill_2bit2byte   (TiffColorMode      tiff_mode);
-static void               fill_4bit2byte   (TiffColorMode      tiff_mode);
-static void               convert_bit2byte (const guchar      *src,
-                                            guchar            *dest,
-                                            gint               width,
-                                            gint               height);
-static void              convert_2bit2byte (const guchar      *src,
-                                            guchar            *dest,
-                                            gint               width,
-                                            gint               height);
-static void              convert_4bit2byte (const guchar      *src,
-                                            guchar            *dest,
-                                            gint               width,
-                                            gint               height);
+static void               fill_bit2byte    (TiffColorMode        tiff_mode);
+static void               fill_2bit2byte   (TiffColorMode        tiff_mode);
+static void               fill_4bit2byte   (TiffColorMode        tiff_mode);
+static void               convert_bit2byte (const guchar        *src,
+                                            guchar              *dest,
+                                            gint                 width,
+                                            gint                 height);
+static void              convert_2bit2byte (const guchar        *src,
+                                            guchar              *dest,
+                                            gint                 width,
+                                            gint                 height);
+static void              convert_4bit2byte (const guchar        *src,
+                                            guchar              *dest,
+                                            gint                 width,
+                                            gint                 height);
 
-static void             convert_miniswhite (guchar            *buffer,
-                                            gint               width,
-                                            gint               height);
-static void               convert_int2uint (guchar            *buffer,
-                                            gint               bps,
-                                            gint               spp,
-                                            gint               width,
-                                            gint               height,
-                                            gint               stride);
+static void             convert_miniswhite (guchar              *buffer,
+                                            gint                 width,
+                                            gint                 height);
+static void               convert_int2uint (guchar              *buffer,
+                                            gint                 bps,
+                                            gint                 spp,
+                                            gint                 width,
+                                            gint                 height,
+                                            gint                 stride);
 
-static gboolean           load_dialog      (const gchar       *help_id,
-                                            TiffSelectedPages *pages,
-                                            const gchar       *extra_message,
-                                            DefaultExtra      *default_extra);
+static gboolean           load_dialog      (GimpProcedure       *procedure,
+                                            GimpProcedureConfig *config,
+                                            TiffSelectedPages   *pages,
+                                            const gchar         *extra_message,
+                                            DefaultExtra        *default_extra);
 
-static void       tiff_dialog_show_reduced (GtkWidget         *toggle,
-                                            gpointer           data);
+static void       tiff_dialog_show_reduced (GtkWidget           *toggle,
+                                            gpointer             data);
 
 
 
@@ -259,7 +260,8 @@ get_extra_channels_count (gushort photomet, gushort spp, gboolean alpha)
 }
 
 GimpPDBStatusType
-load_image (GFile                *file,
+load_image (GimpProcedure        *procedure,
+            GFile                *file,
             GimpRunMode           run_mode,
             GimpImage           **image,
             gboolean             *resolution_loaded,
@@ -484,10 +486,10 @@ load_image (GFile                *file,
 
   pages.tif = tif;
 
-  if (run_mode == GIMP_RUN_INTERACTIVE &&
+  if (run_mode == GIMP_RUN_INTERACTIVE     &&
       (pages.n_pages > 1 || extra_message) &&
-      ! load_dialog (LOAD_PROC, &pages,
-                     extra_message, &default_extra))
+      ! load_dialog (procedure, config, &pages, extra_message,
+                     &default_extra))
     {
       TIFFClose (tif);
       g_clear_pointer (&pages.pages, g_free);
@@ -2530,47 +2532,38 @@ convert_int2uint (guchar *buffer,
 }
 
 static gboolean
-load_dialog (const gchar       *help_id,
-             TiffSelectedPages *pages,
-             const gchar       *extra_message,
-             DefaultExtra      *default_extra)
+load_dialog (GimpProcedure       *procedure,
+             GimpProcedureConfig *config,
+             TiffSelectedPages   *pages,
+             const gchar         *extra_message,
+             DefaultExtra        *default_extra)
 {
   GtkWidget  *dialog;
   GtkWidget  *vbox;
-  GtkWidget  *show_reduced = NULL;
-  GtkWidget  *crop_option  = NULL;
-  GtkWidget  *extra_radio  = NULL;
+  GtkWidget  *toggle      = NULL;
+  GtkWidget  *extra_radio = NULL;
   gboolean    run;
 
   pages->selector = NULL;
 
-  dialog = gimp_dialog_new (_("Import from TIFF"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, help_id,
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Import from TIFF"));
 
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_Import"), GTK_RESPONSE_OK,
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog), "tiff-vbox",
+                                         "keep-empty-space", NULL);
 
-                            NULL);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "tiff-vbox", NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      vbox, TRUE, TRUE, 0);
-
-  show_reduced = gtk_check_button_new_with_mnemonic (_("_Show reduced images"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (show_reduced),
+  toggle = gtk_check_button_new_with_mnemonic (_("_Show reduced images"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 pages->show_reduced);
-  gtk_box_pack_start (GTK_BOX (vbox), show_reduced, TRUE, TRUE, 0);
+  gtk_widget_set_margin_bottom (toggle, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  gtk_widget_set_visible (toggle, TRUE);
 
-  g_signal_connect (show_reduced, "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (tiff_dialog_show_reduced),
                     pages);
 
@@ -2580,6 +2573,7 @@ load_dialog (const gchar       *help_id,
       pages->selector = gimp_page_selector_new ();
       gtk_widget_set_size_request (pages->selector, 300, 200);
       gtk_box_pack_start (GTK_BOX (vbox), pages->selector, TRUE, TRUE, 0);
+      gtk_widget_set_visible (pages->selector, TRUE);
 
       gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (pages->selector),
                                       pages->n_filtered_pages);
@@ -2589,20 +2583,11 @@ load_dialog (const gchar       *help_id,
       /* Load a set number of pages, based on whether "Show Reduced Images"
        * is checked
        */
-      tiff_dialog_show_reduced (show_reduced, pages);
+      tiff_dialog_show_reduced (toggle, pages);
 
       g_signal_connect_swapped (pages->selector, "activate",
                                 G_CALLBACK (gtk_window_activate_default),
                                 dialog);
-
-      /* Option to shrink the loaded image to its bounding box
-         or keep as much empty space as possible.
-         Note that there seems to be no way to keep the empty
-         space on the right and bottom. */
-      crop_option = gtk_check_button_new_with_mnemonic (_("_Keep empty space around imported layers"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_option),
-                                    pages->keep_empty_space);
-      gtk_box_pack_start (GTK_BOX (vbox), crop_option, TRUE, TRUE, 0);
     }
 
   if (extra_message)
@@ -2614,7 +2599,7 @@ load_dialog (const gchar       *help_id,
                              "hint",      extra_message,
                              NULL);
       gtk_box_pack_start (GTK_BOX (vbox), warning, TRUE, TRUE, 0);
-      gtk_widget_show (warning);
+      gtk_widget_set_visible (warning, TRUE);
 
       extra_radio = gimp_int_radio_group_new (TRUE, _("Process extra channel as:"),
                                               (GCallback) gimp_radio_button_update,
@@ -2624,28 +2609,35 @@ load_dialog (const gchar       *help_id,
                                               _("Channe_l"),                 GIMP_TIFF_LOAD_CHANNEL,    NULL,
                                               NULL);
       gtk_box_pack_start (GTK_BOX (vbox), extra_radio, TRUE, TRUE, 0);
-      gtk_widget_show (extra_radio);
+      gtk_widget_set_visible (extra_radio, TRUE);
     }
 
+  toggle = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                             "keep-empty-space", G_TYPE_NONE);
+  gtk_widget_set_margin_top (toggle, 6);
+  gtk_widget_set_margin_bottom (toggle, 6);
+  gtk_box_reorder_child (GTK_BOX (vbox), toggle, -1);
+
   /* Setup done; display the dialog */
-  gtk_widget_show_all (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   /* run the dialog */
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   if (run)
     {
       if (pages->n_pages > 1)
         {
+          g_object_get (config,
+                        "keep-empty-space", &pages->keep_empty_space,
+                        NULL);
+
           pages->target =
             gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (pages->selector));
 
           pages->pages =
             gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (pages->selector),
                                                    &pages->n_pages);
-
-          pages->keep_empty_space =
-            gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (crop_option));
 
           /* select all if none selected */
           if (pages->n_pages == 0)

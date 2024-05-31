@@ -158,9 +158,9 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("TIFF or BigTIFF image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads files of the TIFF and BigTIFF file formats",
-                                        "Loads files of the Tag Image File Format (TIFF) and "
-                                        "its 64-bit offsets variant (BigTIFF)",
+                                        _("Loads files of the TIFF and BigTIFF file formats"),
+                                        _("Loads files of the Tag Image File Format (TIFF) and "
+                                          "its 64-bit offsets variant (BigTIFF)"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Spencer Kimball, Peter Mattis & Nick Lamb",
@@ -204,10 +204,10 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("TIFF or BigTIFF image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Exports files in the TIFF or BigTIFF file formats",
-                                        "Exports files in the Tag Image File Format (TIFF) or "
-                                        "its 64-bit offsets variant (BigTIFF) able to support "
-                                        "much bigger file sizes",
+                                        _("Exports files in the TIFF or BigTIFF file formats"),
+                                        _("Exports files in the Tag Image File Format (TIFF) or "
+                                          "its 64-bit offsets variant (BigTIFF) able to support "
+                                          "much bigger file sizes"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Spencer Kimball & Peter Mattis",
@@ -309,7 +309,8 @@ tiff_load (GimpProcedure         *procedure,
   if (run_mode == GIMP_RUN_INTERACTIVE)
     gimp_ui_init (PLUG_IN_BINARY);
 
-  status = load_image (file, run_mode, &image,
+  status = load_image (procedure,
+                       file, run_mode, &image,
                        &resolution_loaded,
                        &profile_loaded,
                        &ps_metadata_loaded,
@@ -473,7 +474,7 @@ tiff_export_rec (GimpProcedure        *procedure,
       tiff_reset_file_size_error ();
       g_clear_error (error);
 
-      return tiff_export_rec (procedure, run_mode, orig_image, 
+      return tiff_export_rec (procedure, run_mode, orig_image,
                               file, config, metadata, TRUE, error);
     }
 

@@ -46,7 +46,8 @@ typedef struct
 } TiffSelectedPages;
 
 
-GimpPDBStatusType load_image  (GFile                *file,
+GimpPDBStatusType load_image  (GimpProcedure        *procedure,
+                               GFile                *file,
                                GimpRunMode           run_mode,
                                GimpImage           **image,
                                gboolean             *resolution_loaded,
