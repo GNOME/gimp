@@ -94,7 +94,8 @@ static GimpValueArray * lic_run              (GimpProcedure        *procedure,
                                               gpointer              run_data);
 
 static gboolean         create_main_dialog   (GimpProcedure        *procedure,
-                                              GimpProcedureConfig  *config);
+                                              GimpProcedureConfig  *config,
+                                              GimpDrawable         *drawable);
 static void             compute_image        (GimpProcedureConfig  *config,
                                               GimpDrawable         *drawable);
 
@@ -260,7 +261,7 @@ lic_run (GimpProcedure        *procedure,
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-          if (! create_main_dialog (procedure, config))
+          if (! create_main_dialog (procedure, config, drawable))
             {
               return gimp_procedure_new_return_values (procedure,
                                                        GIMP_PDB_CANCEL,
@@ -864,9 +865,11 @@ compute_image (GimpProcedureConfig *config,
 
 static gboolean
 create_main_dialog (GimpProcedure       *procedure,
-                    GimpProcedureConfig *config)
+                    GimpProcedureConfig *config,
+                    GimpDrawable        *drawable)
 {
   GtkWidget *dialog;
+  GtkWidget *chooser;
   gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
@@ -888,7 +891,14 @@ create_main_dialog (GimpProcedure       *procedure,
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
+
+  /* TODO: Currently we can't serialize GimpDrawable parameters, so this sets
+   * the parameter to the current image as a default value */
+  chooser = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                              "effect-image", G_TYPE_NONE);
+  gimp_drawable_chooser_set_drawable (GIMP_DRAWABLE_CHOOSER (chooser),
+                                      drawable);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
