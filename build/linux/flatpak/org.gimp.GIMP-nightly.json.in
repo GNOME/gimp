@@ -13,7 +13,9 @@
         "prepend-ld-library-path": "/usr/lib/sdk/llvm17/lib",
         "env": {
             "CC": "ccache clang",
-            "CXX": "ccache clang++"
+            "CXX": "ccache clang++",
+            "CC_LD": "lld",
+            "CXX_LD": "lld"
         }
     },
     "separate-locales": false,

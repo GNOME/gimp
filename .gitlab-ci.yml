@@ -75,6 +75,8 @@ workflow:
     CCACHE_DIR: "$CI_PROJECT_DIR/_ccache"
     CC: "ccache clang"
     CXX: "ccache clang++"
+    CC_LD: lld
+    CXX_LD: lld
   cache:
     key: ${CI_JOB_NAME}${VARIANT}
     paths:
@@ -121,6 +123,8 @@ stages:
       variables:
         CC: "ccache cc"
         CXX: "ccache c++"
+        CC_LD: bfd
+        CXX_LD: bfd
         VARIANT: "-gcc"
     - if: '$GIMP_CI_RASTER_ICONS != null'
       variables:
@@ -156,6 +160,7 @@ image-debian-x64:
             build-essential
             ccache
             clang
+            lld
             cpio
             desktop-file-utils
             ffmpeg
@@ -570,6 +575,8 @@ gimp-win-x64:
     MSYSTEM: "MINGW32"
     CC: "ccache cc"
     CXX: "ccache c++"
+    CC_LD: bfd
+    CXX_LD: bfd
 
 deps-win-x86:
   extends: .win-x86
