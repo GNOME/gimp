@@ -115,8 +115,12 @@ AppVerName=GIMP {#GIMP_VERSION}-{#REVISION}
 VersionInfoVersion={#GIMP_VERSION}
 AppVersion={#GIMP_VERSION}
 #if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
+;SetupMutex avoids two installers running at the same time but the
+;UX is ultra clunky: https://github.com/jrsoftware/issrc/pull/461
+SetupMutex=GIMP-{#GIMP_APP_VERSION}
 AppID=GIMP-{#GIMP_APP_VERSION}
 #else
+SetupMutex=GIMP-{#MAJOR}
 AppID=GIMP-{#MAJOR}
 #endif
 
