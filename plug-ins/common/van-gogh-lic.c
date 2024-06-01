@@ -642,23 +642,28 @@ rgb_to_hsl (GimpDrawable     *drawable,
   GeglBuffer *buffer;
   guchar     *themap, data[4];
   gint        x, y;
+  gint        height_max;
+  gint        width_max;
   GimpRGB     color;
   GimpHSL     color_hsl;
   gdouble     val = 0.0;
-  glong       maxc, index = 0;
+  gint64      maxc, index = 0;
   GRand      *gr;
 
   gr = g_rand_new ();
 
-  maxc = gimp_drawable_get_width (drawable) * gimp_drawable_get_height (drawable);
+  width_max  = gimp_drawable_get_width (drawable);
+  height_max = gimp_drawable_get_height (drawable);
+
+  maxc = width_max * height_max;
 
   buffer = gimp_drawable_get_buffer (drawable);
 
   themap = g_new (guchar, maxc);
 
-  for (y = 0; y < border_h; y++)
+  for (y = 0; y < height_max; y++)
     {
-      for (x = 0; x < border_w; x++)
+      for (x = 0; x < width_max; x++)
         {
           data[3] = 255;
 
