@@ -16,20 +16,20 @@ if ((-Not $GIMP_VERSION) -or (-Not $GIMP_APP_VERSION) -or (-Not $GIMP_API_VERSIO
 
 if (-Not $GIMP_VERSION)
   {
-    $GIMP_VERSION = Get-Content -Path "$CONFIG_PATH"         | Select-String 'GIMP_VERSION'        |
-    Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+    $GIMP_VERSION = Get-Content -Path "$CONFIG_PATH"                         | Select-String 'GIMP_VERSION'        |
+                    Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
   }
 
 if (-Not $GIMP_APP_VERSION)
   {
-    $GIMP_APP_VERSION = Get-Content -Path "$CONFIG_PATH"         | Select-String 'GIMP_APP_VERSION "'  |
-    Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+    $GIMP_APP_VERSION = Get-Content -Path "$CONFIG_PATH"                             | Select-String 'GIMP_APP_VERSION "'  |
+                        Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
   }
 
 if (-Not $GIMP_API_VERSION)
   {
-    $GIMP_API_VERSION = Get-Content -Path "$CONFIG_PATH"               | Select-String 'GIMP_PKGCONFIG_VERSION' |
-    Foreach-Object {$_ -replace '#define GIMP_PKGCONFIG_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+    $GIMP_API_VERSION = Get-Content -Path "$CONFIG_PATH"                                   | Select-String 'GIMP_PKGCONFIG_VERSION' |
+                        Foreach-Object {$_ -replace '#define GIMP_PKGCONFIG_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
   }
 
 
@@ -59,8 +59,7 @@ $INNOPATH = [regex]::Matches($log, $pattern).Value
 # Download Official translations (not present in a Inno release yet)
 function download_lang_official ([string]$langfile)
 {
-  $installed = Test-Path -Path "$langfile" -PathType Leaf
-  if ($installed -eq "True")
+  if (Test-Path -Path "$langfile" -PathType Leaf)
     {
       Remove-Item -Path "$langfile" -Force
     }
@@ -74,8 +73,7 @@ download_lang_official Korean.isl
 # Cf. https://jrsoftware.org/files/istrans/
 function download_lang ([string]$langfile)
 {
-  $installed = Test-Path -Path "$langfile" -PathType Leaf
-  if ($installed -eq "True")
+  if (Test-Path -Path "$langfile" -PathType Leaf)
     {
       Remove-Item -Path "$langfile" -Force
     }
@@ -119,8 +117,7 @@ Set-Alias -Name 'iscc' -Value "${INNOPATH}\iscc.exe"
 iscc -DGIMP_VERSION="$GIMP_VERSION" -DGIMP_APP_VERSION="$GIMP_APP_VERSION" -DGIMP_API_VERSION="$GIMP_API_VERSION" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DLUA -DPYTHON base_gimp3264.iss
 
 # Test if the installer was created and return success/failure.
-$builded = Test-Path -Path "_Output/gimp-${GIMP_VERSION}-setup.exe" -PathType Leaf
-if ($builded -eq "True")
+if (Test-Path -Path "_Output/gimp-${GIMP_VERSION}-setup.exe" -PathType Leaf)
   {
     Set-Location _Output/
     $INSTALLER="gimp-${GIMP_VERSION}-setup.exe"

@@ -17,8 +17,8 @@ Set-Alias -Name 'signtool' -Value 'C:\Program Files (x86)\Windows Kits\10\bin\10
 $config_path = Resolve-Path -Path "_build-*\config.h" | Select-Object -ExpandProperty Path
 
 ## Identity Name (internal) and Display Name (in the Store)
-$gimp_unstable = Get-Content -Path "$config_path"        | Select-String 'GIMP_UNSTABLE' |
-Foreach-Object {$_ -replace '#define GIMP_UNSTABLE ',''}
+$gimp_unstable = Get-Content -Path "$config_path"                         | Select-String 'GIMP_UNSTABLE' |
+                 Foreach-Object {$_ -replace '#define GIMP_UNSTABLE ',''}
 if ($gimp_unstable -ne '1')
   {
     $identity_name="GIMP.GIMP"
@@ -33,22 +33,22 @@ else
 ## GIMP version (major.minor.micro)
 if (-Not $gimp_version)
   {
-    $gimp_version = Get-Content -Path "$config_path"         | Select-String 'GIMP_VERSION'        |
-    Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+    $gimp_version = Get-Content -Path "$config_path"                         | Select-String 'GIMP_VERSION'        |
+                    Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
   }
 
 ## GIMP app version (major.minor)
 if (-Not $gimp_app_version)
   {
-    $gimp_app_version = Get-Content -Path "$config_path"         | Select-String 'GIMP_APP_VERSION "'  |
-    Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+    $gimp_app_version = Get-Content -Path "$config_path"                             | Select-String 'GIMP_APP_VERSION "'  |
+                        Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
   }
 
 ## GIMP API version (stable_major.0)
 if (-Not $gimp_api_version)
   {
-    $gimp_api_version = Get-Content -Path "$config_path"         | Select-String 'GIMP_PKGCONFIG_VERSION "'  |
-    Foreach-Object {$_ -replace '#define GIMP_PKGCONFIG_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+    $gimp_api_version = Get-Content -Path "$config_path"                                   | Select-String 'GIMP_PKGCONFIG_VERSION "' |
+                        Foreach-Object {$_ -replace '#define GIMP_PKGCONFIG_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
   }
 
 ## GIMP arch folders
@@ -90,8 +90,7 @@ function Configure-Arch ([string]$arch, [string]$arch_msix)
 
   ## Match supported filetypes
   $file_types = Get-Content -Path '..\installer\data_associations.list' | Foreach-Object {"              <uap:FileType>." + $_} |
-  Foreach-Object {$_ +  "</uap:FileType>"} |
-  Where-Object {$_ -notmatch 'xcf'}
+                Foreach-Object {$_ +  "</uap:FileType>"}                | Where-Object {$_ -notmatch 'xcf'}
   (Get-Content -Path "$arch\AppxManifest.xml") | Foreach-Object {$_ -replace "@FILE_TYPES@","$file_types"}  |
   Set-Content -Path "$arch\AppxManifest.xml"
 }
