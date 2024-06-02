@@ -20,6 +20,8 @@ begin
 	Result := S + ' /' + P;
 end;
 
+const
+	RunOnceName = 'Resume GIMP {#GIMP_VERSION} install';
 
 procedure CreateRunOnceEntry;
 var	RunOnceData, SetupRestartData: String;
@@ -79,7 +81,7 @@ begin
 			RegDeleteKeyIncludingSubkeys(HKLM, 'Software\' + RunOnceName); //clean up
 			if not Exec('>',CmdLine,'',SW_SHOW,ewNoWait,ResultCode) then //bonus: don't block shell from loading, since RunOnce installer exits immediately
 				MsgBox(FmtMessage(CustomMessage('ErrorRestartingSetup'),[IntToStr(ResultCode)]), mbError, mb_Ok);
-		
+
 			DebugMsg('RestartMyself','Result of running ' + CmdLine + ': ' + IntToStr(ResultCode));
 
 		end else

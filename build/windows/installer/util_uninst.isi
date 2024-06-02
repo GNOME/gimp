@@ -2,6 +2,9 @@
 [Code]
 #endif
 
+var
+	asUninstInf: TArrayOfString; //uninst.inf contents (loaded at start of uninstall, executed at the end)
+
 function SplitRegParams(const pInf: String; var oRootKey: Integer; var oKey,oValue: String): Boolean;
 var	sRootKey: String;
 	d: Integer;
@@ -128,7 +131,7 @@ begin
 		Left := (frmMessage.ClientWidth - Width) div 2;
 		Visible := True;
 	end;
-	
+
 	frmMessage.Show();
 
     frmMessage.Refresh();
@@ -138,7 +141,7 @@ end;
 procedure UninstInfRun(const pInf: String);
 var Description,Prog,Params: String;
 	Split, ResultCode, Ctr: Integer;
-	frmMessage: TForm;	
+	frmMessage: TForm;
 begin
 	DebugMsg('UninstInfRun',pInf);
 
@@ -171,7 +174,7 @@ begin
 	if Exec(Prog,Params,'',SW_SHOW,ewWaitUntilTerminated,ResultCode) then
 	begin
 		DebugMsg('UninstInfRun','Exec result: ' + IntToStr(ResultCode));
-		
+
 		Ctr := 0;
 		while FileExists(Prog) do //wait a few seconds for the uninstaller to be deleted - since this is done by a program
 		begin                     //running from a temporary directory, the uninstaller we ran above will exit some time before
@@ -316,7 +319,7 @@ begin
 					Inc(countUI);
 					continue;
 				end;
-				
+
 			end;
 
 			//something else, keep for new uninst.inf
@@ -329,7 +332,7 @@ begin
 		SetArrayLength(asUninstInf, countUI);
 
 		SaveStringsToUTF8File(ExpandConstant('{app}\uninst\uninst.inf'), asNew, False); //replace uninst.inf with a cleaned one
-		
+
 		ParseUninstInf(); //remove old associations
 	end;
 end;
