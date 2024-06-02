@@ -86,7 +86,18 @@
 #define X64 2
 #define ARM64 3
 
-#include "base_directories.isi"
+#define GIMP_DIR32 GIMP_DIR + "\" + DIR32
+#define GIMP_DIR64 GIMP_DIR + "\" + DIR64
+#define GIMP_DIRA64 GIMP_DIR + "\" + DIR64
+
+#define DDIR32 DIR32
+#define DDIR64 DIR64
+#define DDIRA64 DIRA64
+
+#define DEPS_DIR32 DEPS_DIR + "\" + DDIR32
+#define DEPS_DIR64 DEPS_DIR + "\" + DDIR64
+#define DEPS_DIRA64 DEPS_DIR + "\" + DDIRA64
+
 
 #define MAJOR=Copy(GIMP_VERSION,1,Pos(".",GIMP_VERSION)-1)
 #define MINOR=Copy(GIMP_VERSION,Pos(".",GIMP_VERSION)+1)
