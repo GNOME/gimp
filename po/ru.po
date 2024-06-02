@@ -7,14 +7,14 @@
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
 # Julia Dronova <juliette.tux@gmail.com>, 2019, 2020.
-# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005-2022.
+# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.99\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-19 13:59+0100\n"
-"PO-Revision-Date: 2024-02-19 14:25+0100\n"
+"PO-Revision-Date: 2024-06-03 01:34+0200\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -22,8 +22,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.4\n"
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"X-Generator: Gtranslator 46.0\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -10001,7 +10001,7 @@ msgstr "Укажите название нового экрана:"
 #: ../app/actions/window-commands.c:118
 #, c-format
 msgid "Can't open display '%s'. Please try another one:"
-msgstr ""
+msgstr "Невозможно открыть экран '%s'. Попробуйте другой:"
 
 #: ../app/actions/windows-actions.c:102
 msgctxt "windows-action"
@@ -10398,14 +10398,12 @@ msgid "Path"
 msgstr "Контур"
 
 #: ../app/config/gimpdisplayconfig.c:144
-#, fuzzy
 msgid "Transparency custom color 1"
-msgstr "Прозрачный"
+msgstr "Пользовательский цвет прозрачности 1"
 
 #: ../app/config/gimpdisplayconfig.c:152
-#, fuzzy
 msgid "Transparency custom color 2"
-msgstr "Прозрачный"
+msgstr "Пользовательский цвет прозрачности 2"
 
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
@@ -10457,9 +10455,9 @@ msgid "Timestamp of the last update check."
 msgstr "Временная отметка последней проверки на обновления."
 
 #: ../app/config/gimprc-blurbs.h:53
-#, fuzzy
 msgid "What to do when opening a file with an embedded ICC color profile."
-msgstr "Изображение '%s' содержит встроенный цветовой профиль"
+msgstr ""
+"Что делать с изображением при открытии файла со встроенным цветовым профилем."
 
 #: ../app/config/gimprc-blurbs.h:56
 msgid "Sets the default folder path for all color profile file dialogs."
@@ -11111,7 +11109,7 @@ msgstr "Название используемой темы оформления.
 
 #: ../app/config/gimprc-blurbs.h:550
 msgid "Chooses the color scheme variant of the theme."
-msgstr ""
+msgstr "Выбрать вариант цветовой схемы в теме."
 
 #: ../app/config/gimprc-blurbs.h:559
 msgid "Override theme-set icon sizes."
@@ -16774,7 +16772,6 @@ msgstr "Испо_льзовать OpenCL"
 
 #. Very unstable tools
 #: ../app/dialogs/preferences-dialog.c:1577
-#, fuzzy
 msgid "Experimental"
 msgstr "Экспериментальные функции"
 
@@ -18366,8 +18363,7 @@ msgid ""
 "GIMP is Free Software for image authoring and manipulation.\n"
 "Want to know more?"
 msgstr ""
-"GIMP — свободное программное обеспечение для создания и обработки "
-"изображений.\n"
+"GIMP — свободное редактор изображений.\n"
 "Хотите узнать больше?"
 
 #: ../app/dialogs/welcome-dialog.c:460
@@ -18390,8 +18386,7 @@ msgid ""
 "GIMP is Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
 msgstr ""
-"GIMP является общественным программным обеспечением под лицензией GNU "
-"General Public License v3.\n"
+"GIMP — свободное ПО под лицензией GNU General Public License v3.\n"
 "Хотите внести свой вклад?"
 
 #: ../app/dialogs/welcome-dialog.c:502
@@ -28148,7 +28143,7 @@ msgstr "Поменять фильтры местами"
 
 #: ../app/widgets/gimpitemtreeview.c:2730
 msgid "Effects from active tools can not be merged."
-msgstr ""
+msgstr "Эффекты активных инструментов не могут быть объединены."
 
 #: ../app/widgets/gimpitemtreeview.c:2783
 msgid "Remove filter"
