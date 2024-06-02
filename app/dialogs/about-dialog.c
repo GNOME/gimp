@@ -683,8 +683,15 @@ decorate_text (GimpAboutDialog *dialog,
 static gboolean
 about_dialog_timer (gpointer data)
 {
-  GimpAboutDialog *dialog  = data;
-  gint             timeout = 0;
+  GimpAboutDialog *dialog        = data;
+  gint             timeout       = 0;
+  gboolean         use_animation = TRUE;
+
+  /* Use a simple fade-in effect rather than more dynamics motions
+   * if the user has requested reduced animations */
+  g_object_get (gtk_settings_get_default (),
+                "gtk-enable-animations", &use_animation,
+                NULL);
 
   if (dialog->animstep == 0)
     {
@@ -727,7 +734,8 @@ about_dialog_timer (gpointer data)
 
   if (dialog->animstep < 16)
     {
-      decorate_text (dialog, 2, ((gfloat) dialog->animstep) / 15.0);
+      decorate_text (dialog, use_animation ? 2 : 0,
+                     ((gfloat) dialog->animstep) / 15.0);
     }
   else if (dialog->animstep == 16)
     {
@@ -739,7 +747,7 @@ about_dialog_timer (gpointer data)
     }
   else if (dialog->animstep < 33)
     {
-      decorate_text (dialog, 1,
+      decorate_text (dialog, use_animation ? 1 : 0,
                      1.0 - ((gfloat) (dialog->animstep - 17)) / 15.0);
     }
   else if (dialog->animstep == 33)
