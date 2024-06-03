@@ -45,7 +45,7 @@
             <uap:DisplayName>eXperimental Computing Facility file</uap:DisplayName>
             <uap:Logo>Assets\fileicon.png</uap:Logo>
             <uap:SupportedFileTypes>
-              <uap:FileType uap4:ShellNewFileName="Assets\New_GIMP_Project.xcf" uap4:ShellNewDisplayName="GIMP project file">.xcf</uap:FileType>
+              <uap:FileType>.xcf</uap:FileType>
             </uap:SupportedFileTypes>
           </uap3:FileTypeAssociation>
         </uap3:Extension>

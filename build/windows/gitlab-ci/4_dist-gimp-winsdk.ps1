@@ -109,7 +109,6 @@ if (Test-Path -Path "$icons_path")
       {
         New-Item -ItemType Directory -Path "$arch\Assets\"
         Copy-Item -Path "$icons_path\*.png" -Destination "$arch\Assets\" -Recurse
-        Copy-Item -Path "$icons_path\*.xcf" -Destination "$arch\Assets\" -Recurse
       }
   }
 else
