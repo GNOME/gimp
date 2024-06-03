@@ -1957,11 +1957,6 @@ if get_option('windows-installer')
   subdir('build/windows/installer/lang')
 endif
 
-# Microsoft Store icons for .msixupload and/or .msixbundle
-if get_option('ms-store')
-  subdir('build/windows/store/Assets')
-endif
-
 pkgconfig.generate(libgimp,
   filebase: 'gimp-' + gimp_api_version,
   name: prettyname,
