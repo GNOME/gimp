@@ -1,0 +1,146 @@
+import pathlib
+import os
+import sys
+
+# It's just a icon
+if '@TILE_WIDTH@' == 'none':
+  wilber_path = '../gimp-data/images/logo/gimp-logo.svg'
+# It's a tile
+else:
+  wilber_path = '../gimp-data/images/logo/gimp-logo-shadow.svg'
+
+export_dir = 'build/windows/store/Assets/'
+# We need to manually create Assets folder
+if not os.path.exists(export_dir):
+  os.makedirs(export_dir)
+
+
+def export_relative_img(scale):
+  procedure   = Gimp.get_pdb().lookup_procedure("file-svg-load")
+  config      = procedure.create_config()
+  config.set_property("file", Gio.file_new_for_path(wilber_path))
+  logo_size   = @LOGO_SIZE@ * scale / 100
+  config.set_property("width",  logo_size)
+  config.set_property("height", logo_size)
+  Gimp.Procedure.run(procedure, config)
+  v = Gimp.Procedure.run(procedure, config)
+
+  if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+    sys.exit(os.EX_SOFTWARE)
+
+  image = v.index(1)
+
+  # Create tile
+  if '@TILE_WIDTH@' != 'none':
+    tile_width    = @TILE_WIDTH@ * scale / 100
+    tile_height   = @TILE_HEIGHT@ * scale / 100
+    image.resize(tile_width, tile_height, (tile_width-logo_size)/2, (tile_height-logo_size)/2)
+
+  if scale == 100:
+    procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
+    config    = procedure.create_config()
+    drawables = image.list_selected_drawables()
+    # Needed otherwise it doesn't save the proper size because of bug #8855.
+    drawables[0].resize_to_image_size()
+    config.set_property("image", image)
+    scale_str = str(scale)
+    config.set_property("file", Gio.file_new_for_path(export_dir + '@NAME@.png'))
+    Gimp.Procedure.run(procedure, config)
+
+  procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
+  config    = procedure.create_config()
+  drawables = image.list_selected_drawables()
+  # Needed otherwise it doesn't save the proper size because of bug #8855.
+  drawables[0].resize_to_image_size()
+  config.set_property("image", image)
+  scale_str = str(scale)
+  config.set_property("file", Gio.file_new_for_path(export_dir + '@NAME@.scale-' + scale_str + '.png'))
+  Gimp.Procedure.run(procedure, config)
+
+
+def export_absolute_img(size):
+  procedure   = Gimp.get_pdb().lookup_procedure("file-svg-load")
+  config      = procedure.create_config()
+  config.set_property("file", Gio.file_new_for_path('../gimp-data/images/logo/gimp-logo.svg'))
+  config.set_property("width",  size)
+  config.set_property("height", size)
+  Gimp.Procedure.run(procedure, config)
+  v = Gimp.Procedure.run(procedure, config)
+
+  if v.index(0) != Gimp.PDBStatusType.SUCCESS:
+    sys.exit(os.EX_SOFTWARE)
+
+  image = v.index(1)
+
+  if size == 44:
+    procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
+    config    = procedure.create_config()
+    drawables = image.list_selected_drawables()
+    # Needed otherwise it doesn't save the proper size because of bug #8855.
+    drawables[0].resize_to_image_size()
+    config.set_property("image", image)
+    size_str = str(size)
+    config.set_property("file", Gio.file_new_for_path(export_dir + '@NAME@.png'))
+    Gimp.Procedure.run(procedure, config)
+
+  else:
+    procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
+    config    = procedure.create_config()
+    drawables = image.list_selected_drawables()
+    # Needed otherwise it doesn't save the proper size because of bug #8855.
+    drawables[0].resize_to_image_size()
+    config.set_property("image", image)
+    size_str = str(size)
+    config.set_property("file", Gio.file_new_for_path(export_dir + '@NAME@.targetsize-' + size_str + '.png'))
+    Gimp.Procedure.run(procedure, config)
+
+    if '@PLATE_FIX@' =='yes':
+      procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
+      config    = procedure.create_config()
+      drawables = image.list_selected_drawables()
+      # Needed otherwise it doesn't save the proper size because of bug #8855.
+      drawables[0].resize_to_image_size()
+      config.set_property("image", image)
+      size_str = str(size)
+      config.set_property("file", Gio.file_new_for_path(export_dir + '@NAME@.targetsize-' + size_str + '_altform-unplated.png'))
+      Gimp.Procedure.run(procedure, config)
+
+      procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
+      config    = procedure.create_config()
+      drawables = image.list_selected_drawables()
+      # Needed otherwise it doesn't save the proper size because of bug #8855.
+      drawables[0].resize_to_image_size()
+      config.set_property("image", image)
+      size_str = str(size)
+      config.set_property("file", Gio.file_new_for_path(export_dir + '@NAME@.targetsize-' + size_str + '_altform-lightunplated.png'))
+      Gimp.Procedure.run(procedure, config)
+
+
+export_relative_img(100)
+export_relative_img(125)
+export_relative_img(150)
+export_relative_img(200)
+export_relative_img(400)
+
+if @LOGO_SIZE@ == 44:
+  export_absolute_img(44)
+  export_absolute_img(16)
+  export_absolute_img(20)
+  export_absolute_img(24)
+  export_absolute_img(30)
+  export_absolute_img(32)
+  export_absolute_img(36)
+  export_absolute_img(40)
+  export_absolute_img(48)
+  export_absolute_img(56)
+  export_absolute_img(60)
+  export_absolute_img(64)
+  export_absolute_img(72)
+  export_absolute_img(80)
+  export_absolute_img(96)
+  export_absolute_img(128)
+  export_absolute_img(256)
+
+
+# Avoid the images being re-generated at each build.
+pathlib.Path('gimp-data/images/logo/stamp-@NAME@.png').touch()

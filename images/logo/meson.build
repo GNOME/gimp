@@ -1,3 +1,6 @@
+################################################################################
+# PLATFORM-NEUTRAL ICONS
+
 ## Logo used in About dialog ##
 
 # Always install the main logo. We actually use the variant with a shadow so
@@ -36,6 +39,10 @@ if gi_docgen.found()
                   pointing_to: installed_image)
 endif
 
+
+################################################################################
+# LINUX ICONS
+
 ## Logo used in the desktop (system menus/overview, title bar, etc.) ##
 
 desktop_sizes = [
@@ -73,7 +80,11 @@ install_data('gimp-logo.svg',
              install_dir: get_option('datadir') / 'icons' / 'hicolor' / 'scalable' / 'apps',
              rename: 'gimp.svg')
 
-## gimp.ico and fileicon.ico (Windows) ##
+
+################################################################################
+# WINDOWS ICONS
+
+## Inno installer: gimp.ico, fileicon.ico and plug-ins.ico (Windows) ##
 
 build_ico_files = get_option('windows-installer')
 
@@ -135,7 +146,8 @@ if build_ico_files
                                env: gimp_run_env)
 endif
 
-## Inno installer right-top icon (Windows) ##
+
+## Inno installer: right-top icon (Windows) ##
 if get_option('windows-installer')
   installicon = custom_target('installicon.bmp',
                                input : [ 'gen-gimp-bmp.py' ],
@@ -148,6 +160,181 @@ if get_option('windows-installer')
                                build_by_default: true,
                                env: gimp_run_env)
 endif
+
+
+if get_option('ms-store')
+  ## MS Store: AppList/Square44x44Logo (Windows) ##
+  icon_name = 'AppList'
+
+  gen_icon_conf = configuration_data()
+  gen_icon_conf.set('NAME',     icon_name)
+  gen_icon_conf.set('TILE_WIDTH',  'none')
+  gen_icon_conf.set('TILE_HEIGHT', 'none')
+  gen_icon_conf.set('LOGO_SIZE',       44)
+  gen_icon_conf.set('PLATE_FIX',    'yes')
+  gen_applist_py = configure_file(input : 'gen-gimp-png.py.in',
+                                  output : 'gen-' + icon_name + '.py',
+                                  configuration : gen_icon_conf)
+
+  applist = custom_target(icon_name,
+                          input : [ gen_applist_py ],
+                          depend_files: [ 'gimp-logo.svg' ],
+                          depends: [ gimp_exe_depends ],
+                          output: [ 'stamp-' + icon_name + '.png' ],
+                          command: [ gimp_exe, '-nidfs',
+                                     '--batch-interpreter', 'python-fu-eval',
+                                     '-b', '-', '--quit'],
+                          feed: true,
+                          build_by_default: true,
+                          env: gimp_run_env)
+
+
+  ## MS Store: StoreLogo (Windows) ##
+  icon_name = 'StoreLogo'
+
+  gen_icon_conf = configuration_data()
+  gen_icon_conf.set('NAME',     icon_name)
+  gen_icon_conf.set('TILE_WIDTH',  'none')
+  gen_icon_conf.set('TILE_HEIGHT', 'none')
+  gen_icon_conf.set('LOGO_SIZE',       50)
+  gen_storelogo_py = configure_file(input : 'gen-gimp-png.py.in',
+                                    output : 'gen-' + icon_name + '.py',
+                                    configuration : gen_icon_conf)
+
+  storelogo = custom_target(icon_name,
+                            input : [ gen_storelogo_py ],
+                            depend_files: [ 'gimp-logo.svg' ],
+                            depends: [ gimp_exe_depends ],
+                            output: [ 'stamp-' + icon_name + '.png' ],
+                            command: [ gimp_exe, '-nidfs',
+                                       '--batch-interpreter', 'python-fu-eval',
+                                       '-b', '-', '--quit'],
+                            feed: true,
+                            build_by_default: true,
+                            env: gimp_run_env)
+
+
+  ## MS Store: MedTile/Square150x150Logo (Windows) ##
+  icon_name = 'MedTile'
+
+  gen_tile_conf = configuration_data()
+  gen_tile_conf.set('NAME',  icon_name)
+  gen_tile_conf.set('TILE_WIDTH',  150)
+  gen_tile_conf.set('TILE_HEIGHT', 150)
+  ## (The wilber size should be 32% of the tile height)
+  gen_tile_conf.set('LOGO_SIZE',    48)
+  gen_medtile_py = configure_file(input : 'gen-gimp-png.py.in',
+                                  output : 'gen-' + icon_name + '.py',
+                                  configuration : gen_tile_conf)
+
+  med_tile = custom_target(icon_name,
+                           input : [ gen_medtile_py ],
+                           depend_files: [ 'gimp-logo-shadow.svg' ],
+                           depends: [ gimp_exe_depends ],
+                           output: [ 'stamp-' + icon_name + '.png' ],
+                           command: [ gimp_exe, '-nidfs',
+                                      '--batch-interpreter', 'python-fu-eval',
+                                      '-b', '-', '--quit'],
+                           feed: true,
+                           build_by_default: true,
+                           env: gimp_run_env)
+
+
+  ## MS Store: SmallTile/Square71x71Logo (Windows 10 only) ##
+  icon_name = 'SmallTile'
+
+  gen_tile_conf = configuration_data()
+  gen_tile_conf.set('NAME', icon_name)
+  gen_tile_conf.set('TILE_WIDTH',  71)
+  gen_tile_conf.set('TILE_HEIGHT', 71)
+  ## (The wilber size should be 50% of the tile height)
+  gen_tile_conf.set('LOGO_SIZE',   36)
+  gen_smalltile_py = configure_file(input : 'gen-gimp-png.py.in',
+                                    output : 'gen-' + icon_name + '.py',
+                                    configuration : gen_tile_conf)
+
+  small_tile = custom_target(icon_name,
+                             input : [ gen_smalltile_py ],
+                             depend_files: [ 'gimp-logo-shadow.svg' ],
+                             depends: [ gimp_exe_depends ],
+                             output: [ 'stamp-' + icon_name + '.png' ],
+                             command: [ gimp_exe, '-nidfs',
+                                        '--batch-interpreter', 'python-fu-eval',
+                                        '-b', '-', '--quit'],
+                             feed: true,
+                             build_by_default: true,
+                             env: gimp_run_env)
+
+
+  ## MS Store: WideTile/Wide310x150Logo (Windows 10 only) ##
+  icon_name = 'WideTile'
+
+  gen_tile_conf = configuration_data()
+  gen_tile_conf.set('NAME',  icon_name)
+  gen_tile_conf.set('TILE_WIDTH',  310)
+  gen_tile_conf.set('TILE_HEIGHT', 150)
+  ## (The wilber size should be 32% of the tile height)
+  gen_tile_conf.set('LOGO_SIZE',    48)
+  gen_widetile_py = configure_file(input : 'gen-gimp-png.py.in',
+                                   output : 'gen-' + icon_name + '.py',
+                                   configuration : gen_tile_conf)
+
+  wide_tile = custom_target(icon_name,
+                            input : [ gen_widetile_py ],
+                            depend_files: [ 'gimp-logo-shadow.svg' ],
+                            depends: [ gimp_exe_depends ],
+                            output: [ 'stamp-' + icon_name + '.png' ],
+                            command: [ gimp_exe, '-nidfs',
+                                       '--batch-interpreter', 'python-fu-eval',
+                                       '-b', '-', '--quit'],
+                            feed: true,
+                            build_by_default: true,
+                            env: gimp_run_env)
+
+
+  ## MS Store: LargeTile/Square310x310Logo (Windows 10 only) ##
+  icon_name = 'LargeTile'
+
+  gen_tile_conf = configuration_data()
+  gen_tile_conf.set('NAME',  icon_name)
+  gen_tile_conf.set('TILE_WIDTH',  310)
+  gen_tile_conf.set('TILE_HEIGHT', 310)
+  ## (The wilber size should be 34% of the tile height)
+  gen_tile_conf.set('LOGO_SIZE',   105)
+  gen_largetile_py = configure_file(input : 'gen-gimp-png.py.in',
+                                    output : 'gen-' + icon_name + '.py',
+                                    configuration : gen_tile_conf)
+
+  large_tile = custom_target(icon_name,
+                             input : [ gen_largetile_py ],
+                             depend_files: [ 'gimp-logo-shadow.svg' ],
+                             depends: [ gimp_exe_depends ],
+                             output: [ 'stamp-' + icon_name + '.png' ],
+                             command: [ gimp_exe, '-nidfs',
+                                        '--batch-interpreter', 'python-fu-eval',
+                                        '-b', '-', '--quit'],
+                             feed: true,
+                             build_by_default: true,
+                             env: gimp_run_env)
+
+
+  ## fileicon icon (for XCF and other filetypes) ##
+  custom_target('fileicon',
+                input : [ 'gen-fileicon-png.py' ],
+                depend_files: [ 'gimp-logo-shadow.svg', 'fileicon-base.svg' ],
+                depends: [ gimp_exe_depends ],
+                output: [ 'stamp-fileicon.png' ],
+                command: [ gimp_exe, '-nidfs',
+                           '--batch-interpreter', 'python-fu-eval',
+                           '-b', '-', '--quit'],
+                feed: true,
+                build_by_default: true,
+                env: gimp_run_env)
+endif
+
+
+################################################################################
+# MACOS ICONS
 
 ## gimp.icns (macOS) ##
 
