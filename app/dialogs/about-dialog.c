@@ -61,6 +61,7 @@ typedef struct
 
   GtkWidget      *anim_area;
   PangoLayout    *layout;
+  gboolean        use_animation;
 
   gint            n_authors;
   gint            shuffle[G_N_ELEMENTS (authors) - 1];  /* NULL terminated */
@@ -123,6 +124,18 @@ about_dialog_create (Gimp           *gimp,
       dialog.gimp      = gimp;
       dialog.n_authors = G_N_ELEMENTS (authors) - 1;
       dialog.config    = config;
+
+      /* For some people, animated contents may be distracting, or even
+       * disturbing. "Vestibular motion disorders" are an example of
+       * such discomfort. This is why most platforms have a "reduce
+       * animations" option in accessibility settings.
+       * When it's set, we just won't display the fancy animated authors
+       * list. This is redundant anyway as the full list is available in
+       * the Credits tab.
+       */
+      g_object_get (gtk_settings_get_default (),
+                    "gtk-enable-animations", &dialog.use_animation,
+                    NULL);
 
       pixbuf = about_dialog_load_logo ();
 
@@ -187,7 +200,8 @@ about_dialog_create (Gimp           *gimp,
 
       if (GTK_IS_BOX (children->data))
         {
-          about_dialog_add_animation (children->data, &dialog);
+          if (dialog.use_animation)
+            about_dialog_add_animation (children->data, &dialog);
 #ifdef GIMP_UNSTABLE
           about_dialog_add_unstable_message (children->data);
 #endif /* GIMP_UNSTABLE */
@@ -685,13 +699,6 @@ about_dialog_timer (gpointer data)
 {
   GimpAboutDialog *dialog        = data;
   gint             timeout       = 0;
-  gboolean         use_animation = TRUE;
-
-  /* Use a simple fade-in effect rather than more dynamics motions
-   * if the user has requested reduced animations */
-  g_object_get (gtk_settings_get_default (),
-                "gtk-enable-animations", &use_animation,
-                NULL);
 
   if (dialog->animstep == 0)
     {
@@ -704,7 +711,7 @@ about_dialog_timer (gpointer data)
         case 0:
           dialog->timer = g_timeout_add (30, about_dialog_timer, dialog);
           dialog->state += 1;
-          return FALSE;
+          return G_SOURCE_REMOVE;
 
         case 1:
           text = insert_spacers (_("GIMP is brought to you by"));
@@ -734,8 +741,7 @@ about_dialog_timer (gpointer data)
 
   if (dialog->animstep < 16)
     {
-      decorate_text (dialog, use_animation ? 2 : 0,
-                     ((gfloat) dialog->animstep) / 15.0);
+      decorate_text (dialog, 2, ((gfloat) dialog->animstep) / 15.0);
     }
   else if (dialog->animstep == 16)
     {
@@ -747,8 +753,7 @@ about_dialog_timer (gpointer data)
     }
   else if (dialog->animstep < 33)
     {
-      decorate_text (dialog, use_animation ? 1 : 0,
-                     1.0 - ((gfloat) (dialog->animstep - 17)) / 15.0);
+      decorate_text (dialog, 1, 1.0 - ((gfloat) (dialog->animstep - 17)) / 15.0);
     }
   else if (dialog->animstep == 33)
     {
@@ -769,11 +774,11 @@ about_dialog_timer (gpointer data)
   if (timeout > 0)
     {
       dialog->timer = g_timeout_add (timeout, about_dialog_timer, dialog);
-      return FALSE;
+      return G_SOURCE_REMOVE;
     }
 
   /* else keep the current timeout */
-  return TRUE;
+  return G_SOURCE_CONTINUE;
 }
 
 #ifdef GIMP_UNSTABLE
