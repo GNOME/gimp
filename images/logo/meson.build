@@ -144,11 +144,23 @@ if build_ico_files
                                feed: true,
                                build_by_default: false,
                                env: gimp_run_env)
-endif
 
 
-## Inno installer: right-top icon (Windows) ##
-if get_option('windows-installer')
+  # Inno installer: setup .exe icon
+  setup_ico = custom_target('setup.ico',
+                            input : [ 'gen-setup-ico.py' ],
+                            depend_files: [ 'setup-base.svg', 'gimp-logo-shadow.svg', 'setup-hover.svg' ],
+                            depends: [ gimp_exe_depends ],
+                            output: [ 'setup.ico', ],
+                            command: [ gimp_exe,'-nidfs',
+                                       '--batch-interpreter', 'python-fu-eval',
+                                       '-b', '-', '--quit'],
+                            feed: true,
+                            build_by_default: true,
+                            env: gimp_run_env)
+
+
+  ## Inno installer: right-top icon (Windows) ##
   installicon = custom_target('installicon.bmp',
                                input : [ 'gen-gimp-bmp.py' ],
                                output: [ 'stamp-installicon.bmp', ],
