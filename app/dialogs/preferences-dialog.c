@@ -1155,7 +1155,7 @@ prefs_dialog_new (Gimp       *gimp,
       prefs_switch_add (object, "check-updates",
                         _("Check for updates (requires internet)"),
                         GTK_BOX (vbox2),
-                        size_group);
+                        size_group, NULL);
     }
 #endif
 
@@ -1178,7 +1178,7 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_switch_add (object, "save-document-history",
                     _("_Keep record of used files in the Recent Documents list"),
                     GTK_BOX (vbox2),
-                    size_group);
+                    size_group, NULL);
 
   g_clear_object (&size_group);
 
@@ -1571,7 +1571,7 @@ prefs_dialog_new (Gimp       *gimp,
       prefs_switch_add (object, "use-opencl",
                         _("Use O_penCL"),
                         GTK_BOX (vbox2),
-                        NULL);
+                        NULL, NULL);
 
       /*  Very unstable tools  */
       vbox2 = prefs_frame_new (_("Experimental"),

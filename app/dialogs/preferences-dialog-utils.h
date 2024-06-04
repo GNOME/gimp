@@ -38,7 +38,8 @@ GtkWidget * prefs_switch_add                  (GObject        *config,
                                                const gchar    *property_name,
                                                const gchar    *label,
                                                GtkBox         *vbox,
-											   GtkSizeGroup   *group);
+                                               GtkSizeGroup   *group,
+                                               GtkWidget     **switch_out);
 GtkWidget * prefs_check_button_add            (GObject        *config,
                                                const gchar    *property_name,
                                                const gchar    *label,

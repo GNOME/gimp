@@ -514,22 +514,20 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
                                         GtkWidget  *welcome_dialog,
                                         GtkWidget  *main_vbox)
 {
-  GtkSizeGroup  *size_group = NULL;
-  GtkWidget     *scale;
-  GtkListStore  *store;
+  GtkSizeGroup *size_group = NULL;
+  GtkWidget    *scale;
+  GtkListStore *store;
 
-  GtkWidget     *vbox;
-  GtkWidget     *hbox;
-  GtkWidget     *combo_hbox;
-  GtkWidget     *label;
-  GtkWidget     *widget;
-  GtkWidget     *button;
-  GtkWidget     *grid;
+  GtkWidget    *vbox;
+  GtkWidget    *hbox;
+  GtkWidget    *widget;
+  GtkWidget    *button;
+  GtkWidget    *grid;
 
-  GObject       *object;
+  GObject      *object;
 
-  gchar        **themes;
-  gint           n_themes;
+  gchar       **themes;
+  gint          n_themes;
 
   object = G_OBJECT (config);
 
@@ -547,7 +545,14 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
   grid = prefs_grid_new (GTK_CONTAINER (hbox));
   button = prefs_enum_combo_box_add (object, "theme-color-scheme", 0, 0,
                                      _("Color scheme"), GTK_GRID (grid),
-                                     0, NULL);
+                                     0, size_group);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
+  gtk_widget_set_halign (GTK_WIDGET (hbox), GTK_ALIGN_START);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_set_visible (hbox, TRUE);
+
 
   /* Icon Theme */
   store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
@@ -563,28 +568,26 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
   widget = gimp_prop_string_combo_box_new (object, "icon-theme",
                                            GTK_TREE_MODEL (store), 0, 1);
   gtk_widget_set_visible (widget, TRUE);
-  label  = gtk_label_new (_("Icon theme"));
-  gtk_widget_set_visible (label, TRUE);
 
-  combo_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_widget_set_halign (GTK_WIDGET (combo_hbox), GTK_ALIGN_START);
-  gtk_widget_set_visible (combo_hbox, TRUE);
-  gtk_box_pack_start (GTK_BOX (combo_hbox), label, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (combo_hbox), widget, FALSE, FALSE, 0);
-
-  gtk_box_pack_start (GTK_BOX (hbox), combo_hbox, FALSE, FALSE, 0);
+  grid = prefs_grid_new (GTK_CONTAINER (hbox));
+  prefs_widget_add_aligned (widget, _("Icon theme"), GTK_GRID (grid), 0, FALSE,
+                            size_group);
   g_object_unref (store);
 
-  prefs_check_button_add (object, "prefer-symbolic-icons",
-                          _("Use symbolic icons if available"),
-                          GTK_BOX (hbox));
+  /* Reset size group for next set of widgets */
+  g_clear_object (&size_group);
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
+  prefs_switch_add (object, "prefer-symbolic-icons",
+                    _("Use symbolic icons if available"),
+                    GTK_BOX (hbox), NULL, &button);
+  gtk_widget_set_valign (button, GTK_ALIGN_CENTER);
 
   vbox = prefs_frame_new (_("Icon Scaling"), GTK_CONTAINER (main_vbox), FALSE);
 
-  button = prefs_check_button_add (object, "override-theme-icon-size",
-                                   _("_Override icon sizes set by the theme"),
-                                   GTK_BOX (vbox));
+  prefs_switch_add (object, "override-theme-icon-size",
+                    _("_Override icon sizes set by the theme"),
+                    GTK_BOX (vbox), NULL, &button);
 
   scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL,
                                     0.0, 3.0, 1.0);
@@ -646,15 +649,10 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
 
   vbox = prefs_frame_new (_("Additional Customizations"), GTK_CONTAINER (main_vbox), FALSE);
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_set_visible (hbox, TRUE);
-
 #ifndef GDK_WINDOWING_QUARTZ
-  prefs_check_button_add (object, "custom-title-bar",
-                          _("Merge menu and title bar (requires restart)"),
-                          GTK_BOX (hbox));
+  prefs_switch_add (object, "custom-title-bar",
+                    _("Merge menu and title bar (requires restart)"),
+                    GTK_BOX (vbox), size_group, NULL);
 #endif
 
 #ifdef CHECK_UPDATE
@@ -662,20 +660,13 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
     {
       prefs_switch_add (object, "check-updates",
                         _("Enable check for updates (requires internet)"),
-                        GTK_BOX (hbox),
-                        size_group);
+                        GTK_BOX (vbox), size_group, NULL);
     }
 #endif
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_set_visible (hbox, TRUE);
-
   prefs_switch_add (object, "toolbox-groups",
                     _("Use tool _groups"),
-                    GTK_BOX (hbox),
-                    NULL);
+                    GTK_BOX (vbox), size_group, NULL);
 
   g_clear_object (&size_group);
 }
