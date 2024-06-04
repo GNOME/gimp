@@ -174,6 +174,7 @@ WizardImageStretch=yes
 
 
 ;INSTALLER .EXE FILE
+SetupIconFile=setup.ico
 ArchitecturesInstallIn64BitMode=x64 arm64
 MinVersion=10.0
 
