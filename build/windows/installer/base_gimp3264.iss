@@ -113,31 +113,38 @@ NotRecognizedMessagesWarning=no
 ;INSTALLER AND APP INFO
 AppName=GIMP
 #if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
-DefaultDirName={autopf}\GIMP {#GIMP_APP_VERSION}
+	;Inno installer identifier: https://github.com/jrsoftware/issrc/pull/461
+	SetupMutex=GIMP-{#GIMP_APP_VERSION}
+	;Inno installer (default) install location
+	DefaultDirName={autopf}\GIMP {#GIMP_APP_VERSION}
+	;Inno uninstaller identifier
+	AppID=GIMP-{#GIMP_APP_VERSION}
 #else
-DefaultDirName={autopf}\GIMP {#MAJOR}
-#endif
-#if !defined(REVISION)
-AppVerName=GIMP {#GIMP_VERSION}
-#else
-AppVerName=GIMP {#GIMP_VERSION}-{#REVISION}
-#endif
-
-VersionInfoVersion={#GIMP_VERSION}
-AppVersion={#GIMP_VERSION}
-#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
-;SetupMutex avoids two installers running at the same time but the
-;UX is ultra clunky: https://github.com/jrsoftware/issrc/pull/461
-SetupMutex=GIMP-{#GIMP_APP_VERSION}
-AppID=GIMP-{#GIMP_APP_VERSION}
-#else
-SetupMutex=GIMP-{#MAJOR}
-AppID=GIMP-{#MAJOR}
+	SetupMutex=GIMP-{#MAJOR}
+	DefaultDirName={autopf}\GIMP {#MAJOR}
+	AppID=GIMP-{#MAJOR}
 #endif
 
+#if !defined(REVISION) || REVISION == "0"
+	;Inno installer file version
+	VersionInfoVersion={#GIMP_VERSION}
+	;Inno installer product version and ImmersiveControlPanel 'DisplayVersion'
+	AppVersion={#GIMP_VERSION}.0
+	;ImmersiveControlPanel 'DisplayName'
+	AppVerName=GIMP {#GIMP_VERSION}
+#else
+	VersionInfoVersion={#GIMP_VERSION}.{#REVISION}
+	AppVersion={#GIMP_VERSION}.{#REVISION}
+	AppVerName=GIMP {#GIMP_VERSION}.{#REVISION}
+#endif
+
+;ImmersiveControlPanel 'Publisher'
 AppPublisher=The GIMP Team
+;ControlPanel 'URLInfoAbout'
 AppPublisherURL=https://www.gimp.org/
+;ControlPanel 'HelpLink'
 AppSupportURL=https://www.gimp.org/docs/
+;ControlPanel 'URLUpdateInfo'
 AppUpdatesURL=https://www.gimp.org/
 
 
@@ -193,16 +200,17 @@ LZMANumFastBytes=273
 ;SignedUninstallerDir=_Uninst
 #endif //NOCOMPRESSION
 
-#if !defined(REVISION)
+#if !defined(REVISION) || REVISION == "0"
 OutputBaseFileName=gimp-{#GIMP_VERSION}-setup
 OutputManifestFile=gimp-{#GIMP_VERSION}-setup.txt
 #else
-OutputBaseFileName=gimp-{#GIMP_VERSION}-{#REVISION}-setup
-OutputManifestFile=gimp-{#GIMP_VERSION}-{#REVISION}-setup.txt
+OutputBaseFileName=gimp-{#GIMP_VERSION}.{#REVISION}-setup
+OutputManifestFile=gimp-{#GIMP_VERSION}.{#REVISION}-setup.txt
 #endif
 
 
 ;UNINSTALLER
+;ImmersiveControlPanel 'DisplayIcon'
 UninstallDisplayIcon={app}\bin\gimp-{#GIMP_APP_VERSION}.exe
 UninstallFilesDir={app}\uninst
 
