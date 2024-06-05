@@ -88,12 +88,12 @@ class StringEnum:
         raise AttributeError("No such key string " + key)
 
 
+OUTPUT_FORMAT_LABELS = (_("Pixel count"), _("Normalized"), _("Percent"))
 output_format_enum = StringEnum(
-    "pixel count", _("Pixel count"),
-    "normalized", _("Normalized"),
-    "percent", _("Percent")
+    "pixel count", OUTPUT_FORMAT_LABELS[0],
+    "normalized", OUTPUT_FORMAT_LABELS[1],
+    "percent", OUTPUT_FORMAT_LABELS[2]
 )
-
 
 def histogram_export(procedure, img, layers, gio_file,
                      bucket_size, sample_average, output_format):
@@ -177,7 +177,30 @@ def run(procedure, run_mode, image, n_layers, layers, config, data):
         GimpUi.init("histogram-export.py")
 
         dialog = GimpUi.ProcedureDialog.new(procedure, config, _("Histogram Export..."))
-        dialog.fill(None)
+        vbox = dialog.fill_box ("histogram-box", ["file", "bucket-size", "sample-average"])
+
+        #TODO: For now, we'll manually create a GimpStringComboBox
+        #for the GUI version of 'output-format'. Once we can
+        #use Gimp.Choice in Python, we can replace the str
+        #parameter without changing any third-party function calls
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+        vbox.pack_start(hbox, False, False, 0)
+        hbox.set_visible(True)
+
+        label = Gtk.Label.new_with_mnemonic(_("Output _format"))
+        hbox.pack_start(label, False, False, 0)
+        label.set_visible(True)
+
+        output_format_store = store = Gtk.ListStore(str, str)
+        output_format_store.append(["pixel count", OUTPUT_FORMAT_LABELS[0]])
+        output_format_store.append(["normalized", OUTPUT_FORMAT_LABELS[1]])
+        output_format_store.append(["percent", OUTPUT_FORMAT_LABELS[2]])
+
+        combo = GimpUi.prop_string_combo_box_new (config, "output-format", output_format_store, 0, 1)
+        hbox.pack_start(combo, False, False, 0)
+        combo.set_visible(True)
+
+        dialog.fill(["histogram-box"])
 
         if not dialog.run():
             return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
