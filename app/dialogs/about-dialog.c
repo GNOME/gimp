@@ -46,6 +46,10 @@
 #import <Cocoa/Cocoa.h>
 #endif
 
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 
 /* The first authors are the creators and maintainers, don't shuffle
  * them
@@ -141,12 +145,17 @@ about_dialog_create (Gimp           *gimp,
                     "gtk-enable-animations", &dialog.use_animation,
                     NULL);
 
-      /* gtk-enable-animation does not currently respect MacOS's Reduced Motion
-       * setting. This check can be removed once that support is added in GTK.
+      /* gtk-enable-animation does not currently respect system settings by
+       * different operating systems. This check can be removed once that
+       * support is added in GTK.
        */
 #ifdef PLATFORM_OSX
       dialog.use_animation =
         ! ([[NSWorkspace sharedWorkspace] accessibilityDisplayShouldReduceMotion]);
+#endif
+#ifdef G_OS_WIN32
+      SystemParametersInfo (SPI_GETCLIENTAREAANIMATION, 0x00,
+                            &dialog.use_animation, 0x00);
 #endif
 
       pixbuf = about_dialog_load_logo ();
