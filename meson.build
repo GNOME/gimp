@@ -1306,10 +1306,6 @@ endif
 
 enable_console_bin = get_option('enable-console-bin')
 
-if enable_default_bin and meson.version().version_compare('<0.61.0')
-  error('"enable-default-bin" build option requires meson 0.61 or later. Please disable the option or update meson.')
-endif
-
 # Possibly change default gimpdir from $XDG_CONFIG_HOME/GIMP/gimp_user_version
 gimpdir = get_option('gimpdir')
 if gimpdir == ''

@@ -30,15 +30,22 @@ gimp_test_clipboard = executable('gimp-test-clipboard' + exec_ver,
   install: true,
 )
 
-if enable_default_bin and meson.version().version_compare('>=0.61.0')
-  install_symlink(fs.name(gimptool.full_path()).replace(exec_ver, ''),
-    pointing_to: fs.name(gimptool.full_path()),
-    install_dir: get_option('bindir')
-  )
-  install_symlink(fs.name(gimp_test_clipboard.full_path()).replace(exec_ver, ''),
-    pointing_to: fs.name(gimp_test_clipboard.full_path()),
-    install_dir: get_option('bindir')
-  )
+if enable_default_bin
+  if not platform_windows
+    install_symlink(fs.name(gimptool.full_path()).replace(exec_ver, ''),
+      pointing_to: fs.name(gimptool.full_path()),
+      install_dir: get_option('bindir')
+    )
+    install_symlink(fs.name(gimp_test_clipboard.full_path()).replace(exec_ver, ''),
+      pointing_to: fs.name(gimp_test_clipboard.full_path()),
+      install_dir: get_option('bindir')
+    )
+  else
+    meson.add_install_script('sh', '-c',
+                             'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format((gimptool.full_path()), fs.name(gimptool.name()).replace(exec_ver, '.exe')))
+    meson.add_install_script('sh', '-c',
+                             'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format((gimp_test_clipboard.full_path()), fs.name(gimp_test_clipboard.name()).replace(exec_ver, '.exe')))
+  endif
 endif
 
 executable('kernelgen',

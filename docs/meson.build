@@ -40,7 +40,7 @@ man_files +=  configure_file(
 
 install_man(man_files)
 
-if enable_default_bin and meson.version().version_compare('>=0.61.0')
+if enable_default_bin and not platform_windows
   install_symlink('gimptool.1',
     pointing_to: 'gimptool-' + gimp_app_version + '.1',
     install_dir: get_option('mandir') + '/man1'

@@ -53,6 +53,7 @@ if [ ! -f "_build${ARTIFACTS_SUFFIX}/build.ninja" ]; then
                  -Ddirectx-sdk-dir="${MSYSTEM_PREFIX}" \
                  -Dwindows-installer=true              \
                  -Dms-store=true                       \
+                 -Denable-default-bin=enabled          \
                  -Dbuild-id=org.gimp.GIMP_official $MESON_OPTIONS
 else
   cd "_build${ARTIFACTS_SUFFIX}"
