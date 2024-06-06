@@ -627,6 +627,10 @@ gimp_procedure_dialog_set_ok_label (GimpProcedureDialog *dialog,
  *     * %GIMP_TYPE_LABEL_ENTRY (default): an entry with a label.
  *     * %GTK_TYPE_ENTRY: an entry with no label.
  *     * %GTK_TYPE_TEXT_VIEW: a text view with no label.
+ * - %GIMP_TYPE_CHOICE:
+ *     * %GTK_TYPE_COMBO_BOX (default): a combo box displaying every
+ *       choice.
+ *     * %GIMP_TYPE_INT_RADIO_FRAME: a frame with radio buttons.
  * - %GEGL_TYPE_COLOR:
  *     * %GIMP_TYPE_LABEL_COLOR (default): a color button with a label.
  *         Please use gimp_procedure_dialog_get_color_widget() for a
@@ -799,10 +803,19 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
     }
   else if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_CHOICE)
     {
-      widget = gimp_prop_choice_combo_box_new (G_OBJECT (dialog->priv->config), property);
-      gtk_widget_set_vexpand (widget, FALSE);
-      gtk_widget_set_hexpand (widget, TRUE);
-      widget = gimp_label_string_widget_new (g_param_spec_get_nick (pspec), widget);
+      if (widget_type == G_TYPE_NONE || widget_type == GTK_TYPE_COMBO_BOX)
+        {
+          widget = gimp_prop_choice_combo_box_new (G_OBJECT (dialog->priv->config), property);
+          gtk_widget_set_vexpand (widget, FALSE);
+          gtk_widget_set_hexpand (widget, TRUE);
+          widget = gimp_label_string_widget_new (g_param_spec_get_nick (pspec), widget);
+        }
+      else if (widget_type == GIMP_TYPE_INT_RADIO_FRAME)
+        {
+          widget = gimp_prop_choice_radio_frame_new (G_OBJECT (dialog->priv->config), property);
+          gtk_widget_set_vexpand (widget, FALSE);
+          gtk_widget_set_hexpand (widget, TRUE);
+        }
     }
   /* GimpResource subclasses */
   /* FUTURE: title the chooser more specifically, with a prefix that is the nick of the property. */

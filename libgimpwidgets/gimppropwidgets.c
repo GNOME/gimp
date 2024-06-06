@@ -2617,8 +2617,6 @@ gimp_prop_string_combo_box_new (GObject      *config,
  * specified property.
  *
  * Returns: (transfer full): The newly created #GimpStringComboBox widget.
- *
- * Since: 2.4
  */
 GtkWidget *
 gimp_prop_choice_combo_box_new (GObject     *config,
@@ -2730,6 +2728,159 @@ gimp_prop_choice_combo_box_is_sensitive (const gchar *nick,
   return gimp_choice_is_valid (choice, nick);
 }
 
+
+/*************************/
+/*  choice radio frame   */
+/*************************/
+
+static gboolean
+gimp_prop_widget_choice_is_sensitive  (gint          value,
+                                       gpointer      user_data,
+                                       gint         *new_value,
+                                       gpointer      data);
+static gboolean
+gimp_prop_widget_choice_string_to_int (GBinding     *binding,
+                                       const GValue *from_value,
+                                       GValue       *to_value,
+                                       gpointer      user_data);
+static gboolean
+gimp_prop_widget_choice_int_to_string (GBinding     *binding,
+                                       const GValue *from_value,
+                                       GValue       *to_value,
+                                       gpointer      user_data);
+
+
+/**
+ * gimp_prop_choice_radio_frame_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of %GimpChoice property controlled by radio buttons.
+ *
+ * Creates a [class@GimpUi.IntRadioFrame] widget to display and set the
+ * specified [class@Gimp.Choice] property.
+ *
+ * Returns: (transfer full): The newly created #GimpIntRadioFrame widget.
+ */
+GtkWidget *
+gimp_prop_choice_radio_frame_new (GObject     *config,
+                                  const gchar *property_name)
+{
+  GParamSpec          *param_spec;
+  GimpParamSpecChoice *cspec;
+  GtkWidget           *frame;
+  GtkWidget           *title;
+  GimpIntStore        *store;
+  GList               *values;
+  GList               *iter;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   GIMP_TYPE_PARAM_CHOICE, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  cspec  = GIMP_PARAM_SPEC_CHOICE (param_spec);
+  values = gimp_choice_list_nicks (cspec->choice);
+  store = g_object_new (GIMP_TYPE_INT_STORE, NULL);
+
+  for (iter = values; iter; iter = iter->next)
+    {
+      const gchar *nick  = iter->data;
+      const gchar *label = gimp_choice_get_label (cspec->choice, nick);
+      gint         id    = gimp_choice_get_id (cspec->choice, nick);
+
+      gtk_list_store_insert_with_values (GTK_LIST_STORE (store), NULL, -1,
+                                         GIMP_INT_STORE_VALUE, id,
+                                         GIMP_INT_STORE_LABEL, label,
+                                         -1);
+
+    }
+
+  frame = gimp_int_radio_frame_new_from_store (NULL, store);
+  title = gtk_label_new_with_mnemonic (g_param_spec_get_nick (param_spec));
+  gtk_frame_set_label_widget (GTK_FRAME (frame), title);
+  gimp_help_set_help_data (frame, g_param_spec_get_blurb (param_spec), NULL);
+  g_object_unref (store);
+
+  gimp_int_radio_frame_set_sensitivity (GIMP_INT_RADIO_FRAME (frame),
+                                        (GimpIntRadioFrameSensitivityFunc) gimp_prop_widget_choice_is_sensitive,
+                                        cspec->choice, NULL);
+
+  g_object_bind_property_full (config,  property_name,
+                               frame,   "value",
+                               G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE,
+                               gimp_prop_widget_choice_string_to_int,
+                               gimp_prop_widget_choice_int_to_string,
+                               cspec->choice, NULL);
+
+  gimp_widget_set_bound_property (frame, config, property_name);
+
+  gtk_widget_show (frame);
+  gtk_widget_show (title);
+
+  return frame;
+}
+
+static gboolean
+gimp_prop_widget_choice_is_sensitive (gint      value,
+                                      gpointer  user_data,
+                                      gint     *new_value,
+                                      gpointer  data)
+{
+  GimpChoice *choice = GIMP_CHOICE (data);
+  GList      *values;
+  GList      *iter;
+
+  values = gimp_choice_list_nicks (choice);
+
+  for (iter = values; iter; iter = iter->next)
+    {
+      if (gimp_choice_get_id (choice, iter->data) == value)
+        return gimp_choice_is_valid (choice, iter->data);
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_prop_widget_choice_string_to_int (GBinding     *binding,
+                                       const GValue *from_value,
+                                       GValue       *to_value,
+                                       gpointer      user_data)
+{
+  GimpChoice  *choice = GIMP_CHOICE (user_data);
+  const gchar *val = g_value_get_string (from_value);
+
+  g_value_set_int (to_value, gimp_choice_get_id (choice, val));
+
+  return TRUE;
+}
+
+static gboolean
+gimp_prop_widget_choice_int_to_string (GBinding     *binding,
+                                       const GValue *from_value,
+                                       GValue       *to_value,
+                                       gpointer      user_data)
+{
+  GimpChoice *choice = GIMP_CHOICE (user_data);
+  gint        val    = g_value_get_int (from_value);
+  GList      *values;
+  GList      *iter;
+
+  values = gimp_choice_list_nicks (choice);
+
+  for (iter = values; iter; iter = iter->next)
+    {
+      if (gimp_choice_get_id (choice, iter->data) == val)
+        {
+          g_value_set_string (to_value, iter->data);
+          break;
+        }
+    }
+
+  return (iter != NULL);
+}
 
 /*************************/
 /*  file chooser button  */
