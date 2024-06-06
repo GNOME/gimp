@@ -245,6 +245,9 @@ gimp_int_radio_frame_get_property (GObject    *object,
  * If you need to construct an empty #GimpIntRadioFrame, it's best to use
  * g_object_new (GIMP_TYPE_INT_RADIO_FRAME, NULL).
  *
+ * If you want to have a frame title with a mnemonic, set @title to
+ * %NULL instead and call [method@IntRadioFrame.set_title] instead.
+ *
  * Returns: a new #GimpIntRadioFrame.
  *
  * Since: 3.0
@@ -437,6 +440,44 @@ gimp_int_radio_frame_append (GimpIntRadioFrame *radio_frame,
   gtk_list_store_set_valist (store, &iter, args);
 
   va_end (args);
+}
+
+/**
+ * gimp_int_radio_frame_set_title:
+ * @frame:         a #GimpIntRadioFrame
+ * @title:         the frame title or %NULL for none.
+ * @with_mnemonic: whether @title has a mnemonic.
+ *
+ * Change the @frame's title, possibly with a mnemonic.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_int_radio_frame_set_title (GimpIntRadioFrame *frame,
+                                const gchar       *title,
+                                gboolean           with_mnemonic)
+{
+  GimpIntRadioFramePrivate *priv = GET_PRIVATE (frame);
+
+  g_return_if_fail (GIMP_IS_INT_RADIO_FRAME (frame));
+
+  gtk_frame_set_label (GTK_FRAME (frame), NULL);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), NULL);
+
+  if (with_mnemonic && title)
+    {
+      GtkWidget *label;
+
+      label = gtk_label_new_with_mnemonic (title);
+      gtk_frame_set_label_widget (GTK_FRAME (frame), label);
+      gtk_widget_show (label);
+
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), priv->group->data);
+    }
+  else
+    {
+      gtk_frame_set_label (GTK_FRAME (frame), title);
+    }
 }
 
 /**

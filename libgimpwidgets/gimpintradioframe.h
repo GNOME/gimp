@@ -106,6 +106,10 @@ void          gimp_int_radio_frame_prepend         (GimpIntRadioFrame *radio_fra
 void          gimp_int_radio_frame_append          (GimpIntRadioFrame *radio_frame,
                                                     ...);
 
+void          gimp_int_radio_frame_set_title       (GimpIntRadioFrame *frame,
+                                                    const gchar       *title,
+                                                    gboolean           with_mnemonic);
+
 gboolean      gimp_int_radio_frame_set_active      (GimpIntRadioFrame *radio_frame,
                                                     gint               value);
 gint          gimp_int_radio_frame_get_active      (GimpIntRadioFrame *radio_frame);

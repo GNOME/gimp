@@ -241,6 +241,7 @@ EXPORTS
 	gimp_int_radio_frame_set_active
 	gimp_int_radio_frame_set_active_by_user_data
 	gimp_int_radio_frame_set_sensitivity
+	gimp_int_radio_frame_set_title
 	gimp_int_radio_group_new
 	gimp_int_radio_group_set_active
 	gimp_int_store_get_type

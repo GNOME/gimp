@@ -2767,7 +2767,6 @@ gimp_prop_choice_radio_frame_new (GObject     *config,
   GParamSpec          *param_spec;
   GimpParamSpecChoice *cspec;
   GtkWidget           *frame;
-  GtkWidget           *title;
   GimpIntStore        *store;
   GList               *values;
   GList               *iter;
@@ -2798,8 +2797,7 @@ gimp_prop_choice_radio_frame_new (GObject     *config,
     }
 
   frame = gimp_int_radio_frame_new_from_store (NULL, store);
-  title = gtk_label_new_with_mnemonic (g_param_spec_get_nick (param_spec));
-  gtk_frame_set_label_widget (GTK_FRAME (frame), title);
+  gimp_int_radio_frame_set_title (GIMP_INT_RADIO_FRAME (frame), g_param_spec_get_nick (param_spec), TRUE);
   gimp_help_set_help_data (frame, g_param_spec_get_blurb (param_spec), NULL);
   g_object_unref (store);
 
@@ -2817,7 +2815,6 @@ gimp_prop_choice_radio_frame_new (GObject     *config,
   gimp_widget_set_bound_property (frame, config, property_name);
 
   gtk_widget_show (frame);
-  gtk_widget_show (title);
 
   return frame;
 }
