@@ -194,6 +194,7 @@ libgimp_sources_introspectable = [
   'gimppdb.c',
   'gimpplugin.c',
   'gimpprocedure.c',
+  'gimpprocedure-params.c',
   'gimpprocedureconfig.c',
   'gimpprogress.c',
   'gimpresource.c',
@@ -253,6 +254,7 @@ libgimp_headers_introspectable = [
   'gimppdb.h',
   'gimpplugin.h',
   'gimpprocedure.h',
+  'gimpprocedure-params.h',
   'gimpprocedureconfig.h',
   'gimpprogress.h',
   'gimpresource.h',
@@ -268,7 +270,6 @@ libgimp_headers_introspectable = [
 
 libgimp_headers = [
   libgimp_headers_introspectable,
-  'gimpprocedure-params.h',
 ]
 
 libgimpui_sources_introspectable = [

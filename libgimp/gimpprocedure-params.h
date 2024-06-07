@@ -124,24 +124,6 @@ G_BEGIN_DECLS
 
 /* uchar  */
 
-#define GIMP_PROC_ARG_UCHAR(procedure, name, nick, blurb, min, max, default, flags) \
-  gimp_procedure_add_argument (procedure,\
-                               g_param_spec_uchar (name, nick, blurb,\
-                               min, max, default,\
-                               flags))
-
-#define GIMP_PROC_AUX_ARG_UCHAR(procedure, name, nick, blurb, min, max, default, flags) \
-  gimp_procedure_add_aux_argument (procedure,\
-                                   g_param_spec_uchar (name, nick, blurb,\
-                                   min, max, default,\
-                                   flags))
-
-#define GIMP_PROC_VAL_UCHAR(procedure, name, nick, blurb, min, max, default, flags) \
-  gimp_procedure_add_return_value (procedure,\
-                                   g_param_spec_uchar (name, nick, blurb,\
-                                   min, max, default,\
-                                   flags))
-
 #define GIMP_VALUES_GET_UCHAR(args, n) \
   g_value_get_uchar (gimp_value_array_index (args, n))
 
@@ -745,7 +727,7 @@ G_BEGIN_DECLS
 
 #define GIMP_PROC_VAL_CHANNEL(procedure, name, nick, blurb, none_ok, flags)  \
   gimp_procedure_add_return_value (procedure,\
-                                   gimp_param_spec_channe (name, nick, blurb,\
+                                   gimp_param_spec_channel (name, nick, blurb,\
                                    none_ok,\
                                    flags))
 
@@ -945,6 +927,653 @@ G_BEGIN_DECLS
   g_value_get_object (gimp_value_array_index (args, n))
 #define GIMP_VALUES_SET_PATTERN(args, n, value) \
   g_value_set_object (gimp_value_array_index (args, n), value)
+
+void gimp_procedure_add_boolean_argument               (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_boolean_aux_argument           (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_boolean_return_value           (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       value,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_int_argument                   (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gint           min,
+                                                        gint           max,
+                                                        gint           value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_int_aux_argument               (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gint           min,
+                                                        gint           max,
+                                                        gint           value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_int_return_value               (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gint           min,
+                                                        gint           max,
+                                                        gint           value,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_uint_argument                  (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        guint          min,
+                                                        guint          max,
+                                                        guint          value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_uint_aux_argument              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        guint          min,
+                                                        guint          max,
+                                                        guint          value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_uint_return_value              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        guint          min,
+                                                        guint          max,
+                                                        guint          value,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_unit_argument                  (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       show_pixels,
+                                                        gboolean       show_percent,
+                                                        GimpUnit       value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_unit_aux_argument              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       show_pixels,
+                                                        gboolean       show_percent,
+                                                        GimpUnit       value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_unit_return_value              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       show_pixels,
+                                                        gboolean       show_percent,
+                                                        GimpUnit       value,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_double_argument                (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gdouble        min,
+                                                        gdouble        max,
+                                                        gdouble        value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_double_aux_argument            (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gdouble        min,
+                                                        gdouble        max,
+                                                        gdouble        value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_double_return_value            (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gdouble        min,
+                                                        gdouble        max,
+                                                        gdouble        value,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_enum_argument                  (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GType          enum_type,
+                                                        gint           value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_enum_aux_argument              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GType          enum_type,
+                                                        gint           value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_enum_return_value              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GType          enum_type,
+                                                        gint           value,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_choice_argument                (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GimpChoice    *choice,
+                                                        const gchar   *value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_choice_aux_argument            (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GimpChoice    *choice,
+                                                        const gchar   *value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_choice_return_value            (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GimpChoice    *choice,
+                                                        const gchar   *value,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_string_argument                (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        const gchar   *value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_string_aux_argument            (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        const gchar   *value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_string_return_value            (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        const gchar   *value,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_color_argument                 (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       has_alpha,
+                                                        GeglColor     *value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_color_aux_argument             (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       has_alpha,
+                                                        GeglColor     *value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_color_return_value             (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       has_alpha,
+                                                        GeglColor     *value,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_color_from_string_argument     (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       has_alpha,
+                                                        const gchar   *value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_color_from_string_aux_argument (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       has_alpha,
+                                                        const gchar   *value,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_color_from_string_return_value (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       has_alpha,
+                                                        const gchar   *value,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_parasite_argument              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_parasite_aux_argument          (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_parasite_return_value          (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_param_argument                 (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GType          param_type,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_param_aux_argument             (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GType          param_type,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_param_return_value             (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GType          param_type,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_bytes_argument                 (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_bytes_aux_argument             (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_bytes_return_value             (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_int32_array_argument           (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_int32_array_aux_argument       (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_int32_array_return_value       (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_float_array_argument           (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_float_array_aux_argument       (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_float_array_return_value       (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_string_array_argument          (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_string_array_aux_argument      (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_string_array_return_value      (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_object_array_argument          (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GType          object_type,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_object_array_aux_argument      (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GType          object_type,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_object_array_return_value      (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GType          object_type,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_display_argument               (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_display_aux_argument           (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_display_return_value           (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_image_argument                 (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_image_aux_argument             (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_image_return_value             (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_item_argument                  (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_item_aux_argument              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_item_return_value              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_drawable_argument              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_drawable_aux_argument          (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_drawable_return_value          (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_layer_argument                 (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_layer_aux_argument             (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_layer_return_value             (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_text_layer_argument            (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_text_layer_aux_argument        (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_text_layer_return_value        (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_channel_argument               (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_channel_aux_argument           (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_channel_return_value           (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_layer_mask_argument            (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_layer_mask_aux_argument        (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_layer_mask_return_value        (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_selection_argument             (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_selection_aux_argument         (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_selection_return_value         (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_vectors_argument               (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_vectors_aux_argument           (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_vectors_return_value           (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        gboolean       none_ok,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_file_argument                  (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_file_aux_argument              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_file_return_value              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_resource_argument              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_resource_aux_argument          (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_resource_return_value          (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_brush_argument                 (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_brush_aux_argument             (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_brush_return_value             (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_font_argument                  (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_font_aux_argument              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_font_return_value              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_gradient_argument              (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_gradient_aux_argument          (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_gradient_return_value          (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_palette_argument               (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_palette_aux_argument           (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_palette_return_value           (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+
+void gimp_procedure_add_pattern_argument               (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_pattern_aux_argument           (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+void gimp_procedure_add_pattern_return_value           (GimpProcedure *procedure,
+                                                        const gchar   *name,
+                                                        const gchar   *nick,
+                                                        const gchar   *blurb,
+                                                        GParamFlags    flags);
+
 
 G_END_DECLS
 
