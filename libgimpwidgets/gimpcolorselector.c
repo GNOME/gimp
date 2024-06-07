@@ -377,34 +377,44 @@ gimp_color_selector_get_show_alpha (GimpColorSelector *selector)
  * @color:    The new color.
  *
  * Sets the color shown in the @selector widget.
- **/
+ *
+ * Unlike most setters, this does NOT change the model (or update views)
+ * when the change is not perceivable to the eye.
+ *
+ * A control cannot depend on this actually changing the model.
+ * A control, e.g. a chroma slider, may show a small difference from the model.
+ */
 void
 gimp_color_selector_set_color (GimpColorSelector *selector,
                                GeglColor         *color)
 {
   GimpColorSelectorClass   *selector_class;
   GimpColorSelectorPrivate *priv;
-  GeglColor                *old_color;
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
   g_return_if_fail (GEGL_IS_COLOR (color));
 
   priv = GET_PRIVATE (selector);
 
-  old_color = priv->color;
-  priv->color = gegl_color_duplicate (color);
-
-  selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
-
-  if (! gimp_color_is_perceptually_identical (priv->color, old_color))
+  if (! gimp_color_is_perceptually_identical (priv->color, color))
     {
+      g_object_unref (priv->color);
+      priv->color = gegl_color_duplicate (color);
+
+      selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
       if (selector_class->set_color)
         selector_class->set_color (selector, priv->color);
 
       gimp_color_selector_emit_color_changed (selector);
     }
-
-  g_object_unref (old_color);
+  else
+    {
+      /* This happens often, more than you might expect.
+       * A single user event may yield many calls to the setter,
+       * some but not all of which are perceptually identical.
+       */
+      g_debug ("%s new color perceptually identical", G_STRFUNC);
+    }
 }
 
 /**
