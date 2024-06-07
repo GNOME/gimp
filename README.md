@@ -4,9 +4,12 @@ This repository serves to contain data files which are released as part of the
 GNU Image Manipulation Program. It has no purpose on its own and is not meant to
 be a separate package either. GIMP will not even work at all without this data
 (it might start but without icons, with broken theming, with no brushes, no
-patterns, nothing which makes GIMP actually unusable). The build system in the
-main [GIMP repository](https://gitlab.gnome.org/GNOME/gimp/) will automatically
-clone this folder as a meson subproject.
+patterns, nothing which makes GIMP actually unusable).
+
+You usually don't need to clone this repository. You may just bootstrap
+the main [GIMP repository](https://gitlab.gnome.org/GNOME/gimp/) with
+`git submodule update --init` to automatically clone `gimp-data` as a
+git submodule.
 
 Do not confuse the current repository with
 [gimp-data-extras](https://gitlab.gnome.org/GNOME/gimp-data-extras) which is
