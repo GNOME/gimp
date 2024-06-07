@@ -87,14 +87,6 @@ class StringEnum:
             return key
         raise AttributeError("No such key string " + key)
 
-
-OUTPUT_FORMAT_LABELS = (_("Pixel count"), _("Normalized"), _("Percent"))
-output_format_enum = StringEnum(
-    "pixel count", OUTPUT_FORMAT_LABELS[0],
-    "normalized", OUTPUT_FORMAT_LABELS[1],
-    "percent", OUTPUT_FORMAT_LABELS[2]
-)
-
 def histogram_export(procedure, img, layers, gio_file,
                      bucket_size, sample_average, output_format):
     layers = img.list_selected_layers()
@@ -139,12 +131,12 @@ def histogram_export(procedure, img, layers, gio_file,
                     histo_config.set_property('channel', channel)
                     result = histo_proc.run(histo_config)
 
-                    if output_format == output_format_enum.pixel_count:
+                    if output_format == "pixel-count":
                         count = int(result.index(5))
                     else:
                         pixels = result.index(4)
                         count = (result.index(5) / pixels) if pixels else 0
-                        if output_format == output_format_enum.percent:
+                        if output_format == "percent":
                             count = "%.2f%%" % (count * 100)
                     row.append(str(count))
                 writer.writerow(row)
@@ -177,30 +169,7 @@ def run(procedure, run_mode, image, n_layers, layers, config, data):
         GimpUi.init("histogram-export.py")
 
         dialog = GimpUi.ProcedureDialog.new(procedure, config, _("Histogram Export..."))
-        vbox = dialog.fill_box ("histogram-box", ["file", "bucket-size", "sample-average"])
-
-        #TODO: For now, we'll manually create a GimpStringComboBox
-        #for the GUI version of 'output-format'. Once we can
-        #use Gimp.Choice in Python, we can replace the str
-        #parameter without changing any third-party function calls
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
-        vbox.pack_start(hbox, False, False, 0)
-        hbox.set_visible(True)
-
-        label = Gtk.Label.new_with_mnemonic(_("Output _format"))
-        hbox.pack_start(label, False, False, 0)
-        label.set_visible(True)
-
-        output_format_store = store = Gtk.ListStore(str, str)
-        output_format_store.append(["pixel count", OUTPUT_FORMAT_LABELS[0]])
-        output_format_store.append(["normalized", OUTPUT_FORMAT_LABELS[1]])
-        output_format_store.append(["percent", OUTPUT_FORMAT_LABELS[2]])
-
-        combo = GimpUi.prop_string_combo_box_new (config, "output-format", output_format_store, 0, 1)
-        hbox.pack_start(combo, False, False, 0)
-        combo.set_visible(True)
-
-        dialog.fill(["histogram-box"])
+        dialog.fill()
 
         if not dialog.run():
             return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
@@ -223,32 +192,6 @@ def run(procedure, run_mode, image, n_layers, layers, config, data):
 
 
 class HistogramExport(Gimp.PlugIn):
-
-    ## Parameters ##
-    __gproperties__ = {
-        # TODO: GFile props still don't have labels + only load existing files
-        # (here we likely want to create a new file).
-        "file": (Gio.File,
-                 _("Histogram File"),
-                 "Histogram export file",
-                 GObject.ParamFlags.READWRITE),
-        "bucket-size":  (float,
-                         _("_Bucket Size"),
-                         "Bucket Size",
-                         0.001, 1.0, 0.01,
-                         GObject.ParamFlags.READWRITE),
-        "sample-average": (bool,
-                           _("Sample _Average"),
-                           "Sample Average",
-                           False,
-                           GObject.ParamFlags.READWRITE),
-        "output-format": (str,
-                          _("Output _format"),
-                          "Output format: 'pixel count', 'normalized', 'percent'",
-                          "pixel count",
-                          GObject.ParamFlags.READWRITE),
-    }
-
     ## GimpPlugIn virtual methods ##
     def do_set_i18n(self, procname):
         return True, 'gimp30-python', None
@@ -274,10 +217,20 @@ class HistogramExport(Gimp.PlugIn):
                                       "2014")
             procedure.add_menu_path("<Image>/Colors/Info/")
 
-            procedure.add_argument_from_property(self, "file")
-            procedure.add_argument_from_property(self, "bucket-size")
-            procedure.add_argument_from_property(self, "sample-average")
-            procedure.add_argument_from_property(self, "output-format")
+            # TODO: GFile props still don't have labels + only load existing files
+            # (here we likely want to create a new file).
+            procedure.add_file_argument ("file", _("Histogram File"),
+                                         _("Histogram export file"), GObject.ParamFlags.READWRITE)
+            procedure.add_double_argument ("bucket-size", _("_Bucket Size"), _("Bucket Size"),
+                                           0.001, 1.0, 0.01, GObject.ParamFlags.READWRITE)
+            procedure.add_boolean_argument ("sample-average", _("Sample _Average"), _("Sample Average"),
+                                            False, GObject.ParamFlags.READWRITE)
+            choice = Gimp.Choice.new()
+            choice.add("pixel-count", 0, _("Pixel Count"), "")
+            choice.add("normalized", 1, _("Normalized"), "")
+            choice.add("percent", 2, _("Percent"), "")
+            procedure.add_choice_argument ("output-format", _("Output _format"), _("Output format"),
+                                           choice, "percent", GObject.ParamFlags.READWRITE)
 
         return procedure
 

@@ -26,6 +26,8 @@ from gi.repository import Gio
 import time
 import sys
 
+def N_(message): return message
+def _(message): return GLib.dgettext(None, message)
 
 '''
 A Python plugin.
@@ -126,25 +128,6 @@ def test_dialog(procedure, run_mode, image, n_drawables, drawables, config, data
 
 
 class TestDialogPlugin (Gimp.PlugIn):
-    ## Parameters ##
-    # See comments about this in foggify.py, from which we borrowed
-
-    brush    = GObject.Property(type  = Gimp.Brush,
-                                nick  = "_Brush",
-                                blurb = "Brush")
-    font     = GObject.Property(type  = Gimp.Font,
-                                nick  = "_Font",
-                                blurb = "Font")
-    gradient = GObject.Property(type  = Gimp.Gradient,
-                                nick  = "_Gradient",
-                                blurb = "Gradient")
-    palette  = GObject.Property(type  = Gimp.Palette,
-                                nick  = "_Palette",
-                                blurb = "Palette")
-    pattern  = GObject.Property(type  = Gimp.Pattern,
-                                nick  = "Pa_ttern",
-                                blurb = "Pattern")
-
     # FUTURE all other Gimp classes that have GimpParamSpecs
 
     ## GimpPlugIn virtual methods ##
@@ -169,11 +152,19 @@ class TestDialogPlugin (Gimp.PlugIn):
         # Top level menu "Test"
         procedure.add_menu_path ("<Image>/Filters/Development/Demos")
 
-        procedure.add_argument_from_property(self, "brush")
-        procedure.add_argument_from_property(self, "font")
-        procedure.add_argument_from_property(self, "gradient")
-        procedure.add_argument_from_property(self, "palette")
-        procedure.add_argument_from_property(self, "pattern")
+        procedure.add_brush_argument ("brush", _("_Brush"), _("Brush"),
+                                      GObject.ParamFlags.READWRITE)
+        procedure.add_font_argument ("font", _("_Font"), _("Font"),
+                                     GObject.ParamFlags.READWRITE)
+        procedure.add_gradient_argument ("gradient", _("_Gradient"),
+                                         _("Gradient"),
+                                         GObject.ParamFlags.READWRITE)
+        procedure.add_palette_argument ("palette", _("_Palette"),
+                                        _("Palette"),
+                                        GObject.ParamFlags.READWRITE)
+        procedure.add_pattern_argument ("pattern", _("Pa_ttern"),
+                                        _("Pattern"),
+                                        GObject.ParamFlags.READWRITE)
 
         return procedure
 

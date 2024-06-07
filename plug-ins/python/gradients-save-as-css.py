@@ -177,21 +177,6 @@ def gradient_css_save(procedure, config, data):
                                            GLib.Error('File saving failed: {}'.format(file.get_path())))
 
 class GradientsSaveAsCSS (Gimp.PlugIn):
-   ## Parameters ##
-    __gproperties__ = {
-        "run-mode": (Gimp.RunMode,
-                     _("Run mode"),
-                     _("The run mode"),
-                     Gimp.RunMode.NONINTERACTIVE,
-                     GObject.ParamFlags.READWRITE),
-        "gradient": (Gimp.Gradient,
-                     _("_Gradient to use"), "",
-                     GObject.ParamFlags.READWRITE),
-        "file": (Gio.File,
-                 _("_File"), None,
-                 GObject.ParamFlags.READWRITE),
-    }
-
     ## GimpPlugIn virtual methods ##
     def do_set_i18n(self, procname):
         return True, 'gimp30-python', None
@@ -213,9 +198,14 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
                                       "2011")
             procedure.add_menu_path('<Gradients>/Gradients Menu')
 
-            procedure.add_argument_from_property(self, "run-mode")
-            procedure.add_argument_from_property(self, "gradient")
-            procedure.add_argument_from_property(self, "file")
+            procedure.add_enum_argument ("run-mode", _("Run mode"),
+                                         _("The run mode"), Gimp.RunMode,
+                                         Gimp.RunMode.NONINTERACTIVE,
+                                         GObject.ParamFlags.READWRITE)
+            procedure.add_gradient_argument ("gradient", _("_Gradient to use"),
+                                             "", GObject.ParamFlags.READWRITE)
+            procedure.add_file_argument ("file", _("_File"),
+                                         "", GObject.ParamFlags.READWRITE)
         return procedure
 
 Gimp.main(GradientsSaveAsCSS.__gtype__, sys.argv)

@@ -265,30 +265,6 @@ def export_colorxhtml(procedure, run_mode, image, file, metadata, config, data):
 
 
 class ColorXhtml(Gimp.PlugIn):
-    ## Parameters ##
-    __gproperties__ = {
-        "source-file":(bool,
-                     _("_Read characters from file, if true, or use text entry"),
-                     _("_Read characters from file, if true, or use text entry"),
-                      False,
-                     GObject.ParamFlags.READWRITE),
-        "characters": (str,
-                      _("_File to read or characters to use"),
-                      _("_File to read or characters to use"),
-                      "foo",
-                      GObject.ParamFlags.READWRITE),
-        "font-size": (int,
-                      _("Fo_nt size in pixels"),
-                      _("Fo_nt size in pixels"),
-                      5, 100, 10,
-                      GObject.ParamFlags.READWRITE),
-        "separate": (bool,
-                     _("_Write a separate CSS file"),
-                     _("_Write a separate CSS file"),
-                      False,
-                     GObject.ParamFlags.READWRITE)
-    }
-
     ## GimpPlugIn virtual methods ##
     def do_set_i18n(self, procname):
         return True, 'gimp30-python', None
@@ -314,10 +290,19 @@ class ColorXhtml(Gimp.PlugIn):
 
             procedure.set_extensions ("html,xhtml");
 
-            procedure.add_argument_from_property(self, "source-file")
-            procedure.add_argument_from_property(self, "characters")
-            procedure.add_argument_from_property(self, "font-size")
-            procedure.add_argument_from_property(self, "separate")
+            procedure.add_boolean_argument ("source-file",
+                                            _("_Read characters from file, if true, or use text entry"),
+                                            _("Read characters from file, if true, or use text entry"),
+                                            False, GObject.ParamFlags.READWRITE)
+            procedure.add_string_argument ("characters", _("_File to read or characters to use"),
+                                           _("File to read or characters to use"),
+                                           "foo", GObject.ParamFlags.READWRITE)
+            procedure.add_int_argument ("font-size", _("Fo_nt size in pixels"),
+                                        _("Font size in pixels"), 5, 100, 10,
+                                        GObject.ParamFlags.READWRITE)
+            procedure.add_boolean_argument ("separate", _("_Write a separate CSS file"),
+                                            _("Write a separate CSS file"),
+                                            False, GObject.ParamFlags.READWRITE)
 
         return procedure
 

@@ -31,19 +31,6 @@ def N_(message): return message
 def _(message): return GLib.dgettext(None, message)
 
 def foggify(procedure, run_mode, image, n_drawables, drawables, config, data):
-    Gegl.init(None)
-
-    _color = Gegl.Color.new("black")
-    _color.set_rgba(0.94, 0, 0, 1.0)
-
-    # Work around not being able to set default color by only setting it
-    # when color in our config is None. This won't help when resetting to
-    # factory default. This also fixes a critical when running without
-    # changing the color away from None.
-    color = config.get_property('color')
-    if color is None:
-        config.set_property('color', _color)
-
     if run_mode == Gimp.RunMode.INTERACTIVE:
         GimpUi.init('python-fu-foggify')
 
@@ -105,32 +92,6 @@ def foggify(procedure, run_mode, image, n_drawables, drawables, config, data):
     return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
 class Foggify (Gimp.PlugIn):
-    ## Parameters ##
-    __gproperties__ = {
-        "name": (str,
-                 _("Layer _name"),
-                 _("Layer name"),
-                 _("Clouds"),
-                 GObject.ParamFlags.READWRITE),
-        "turbulence": (float,
-                       _("_Turbulence"),
-                       _("Turbulence"),
-                       0.0, 7.0, 1.0,
-                       GObject.ParamFlags.READWRITE),
-        "opacity": (float,
-                    _("O_pacity"),
-                    _("Opacity"),
-                    0.0, 100.0, 100.0,
-                    GObject.ParamFlags.READWRITE),
-    }
-    # I use a different syntax for this property because I think it is
-    # supposed to allow setting a default, except it doesn't seem to
-    # work. I still leave it this way for now until we figure this out
-    # as it should be the better syntax.
-    color = GObject.Property(type =Gegl.Color, default=None,
-                             nick =_("_Fog color"),
-                             blurb=_("Fog color"))
-
     ## GimpPlugIn virtual methods ##
     def do_set_i18n(self, procname):
         return True, 'gimp30-python', None
@@ -139,6 +100,11 @@ class Foggify (Gimp.PlugIn):
         return [ 'python-fu-foggify' ]
 
     def do_create_procedure(self, name):
+        Gegl.init(None)
+
+        _color = Gegl.Color.new("black")
+        _color.set_rgba(0.94, 0.71, 0.27, 1.0)
+
         procedure = Gimp.ImageProcedure.new(self, name,
                                             Gimp.PDBProcType.PLUGIN,
                                             foggify, None)
@@ -154,10 +120,15 @@ class Foggify (Gimp.PlugIn):
                                   "1999,2007")
         procedure.add_menu_path ("<Image>/Filters/Decor")
 
-        procedure.add_argument_from_property(self, "name")
-        procedure.add_argument_from_property(self, "color")
-        procedure.add_argument_from_property(self, "turbulence")
-        procedure.add_argument_from_property(self, "opacity")
+        procedure.add_string_argument ("name", _("Layer _name"), _("Layer name"),
+                                       _("Clouds"), GObject.ParamFlags.READWRITE)
+        procedure.add_color_argument ("color", _("_Fog color"), _("_Fog color"),
+                                      True, _color, GObject.ParamFlags.READWRITE)
+        procedure.add_double_argument ("turbulence", _("_Turbulence"), _("Turbulence"),
+                                       0.0, 7.0, 1.0, GObject.ParamFlags.READWRITE)
+        procedure.add_double_argument ("opacity", _("O_pacity"), _("Opacity"),
+                                       0.0, 100.0, 100.0, GObject.ParamFlags.READWRITE)
+
         return procedure
 
 Gimp.main(Foggify.__gtype__, sys.argv)

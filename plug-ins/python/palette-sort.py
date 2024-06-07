@@ -77,12 +77,6 @@ GRAIN_SCALE = (1.0, 1.0 , 1.0,
               100., 256., 256.,
               256., 360.,)
 
-SELECT_ALL = 0
-SELECT_SLICE = 1
-SELECT_AUTOSLICE = 2
-SELECT_PARTITIONED = 3
-SELECTIONS = (SELECT_ALL, SELECT_SLICE, SELECT_AUTOSLICE, SELECT_PARTITIONED)
-
 try:
     from colormath.color_objects import RGBColor, LabColor, LCHabColor
 
@@ -222,7 +216,7 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
     num_colors = palette.get_color_count()
 
     start, nrows, length = None, None, None
-    if selection == SELECT_AUTOSLICE:
+    if selection == "auto-slice":
         def find_index(color, startindex=0):
             for i in range(startindex, num_colors):
                 c = palette.entry_get_color(i)
@@ -262,9 +256,9 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
         except ValueError:
             # bad expression is okay here, just assume one row
             nrows = 1
-        # remaining behavior is implemented by SELECT_SLICE 'inheritance'.
-        selection = SELECT_SLICE
-    elif selection in (SELECT_SLICE, SELECT_PARTITIONED):
+        # remaining behavior is implemented by "slice-array" 'inheritance'.
+        selection = "slice-array"
+    elif selection in ("slice-array", "partitioned"):
         start, nrows, length = parse_slice(slice_expr, num_colors)
 
     channels_getter_1 = channel_getters[channel1]
@@ -283,14 +277,15 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
             result.append((index, entry))
         return result
 
-    if selection == SELECT_ALL:
+    print (selection)
+    if selection == "all":
         entry_list = get_colors(0, num_colors)
         entry_list.sort(key=lambda v: v[0])
         for i in range(num_colors):
             palette.entry_set_name(i, entry_list[i][1][0])
             palette.entry_set_color(i, entry_list[i][1][1])
 
-    elif selection == SELECT_PARTITIONED:
+    elif selection == "partitioned":
         if num_colors < (start + length * nrows) - 1:
             raise ValueError('Not enough entries in palette to '
                              'sort complete rows! Got %d, expected >=%d' %
@@ -313,13 +308,13 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
                     old_partition = this_partition
             base = rowstart
             for size in partition_spans:
-                palette_sort(palette, SELECT_SLICE, '%d:1,%d' % (base, size),
+                palette_sort(palette, "slice-array", '%d:1,%d' % (base, size),
                              channel1, ascending1,
                              channel2, ascending2,
                              quantize, 0, 1.0)
                 base += size
     else:
-        # SELECT_SLICE and SELECT_AUTOSLICE
+        # "slice-array" and "auto-slice"
         stride = length
         if num_colors < (start + stride * nrows) - 1:
             raise ValueError('Not enough entries in palette to sort '
@@ -348,74 +343,7 @@ You can optionally install colormath (https://pypi.python.org/pypi/colormath/1.0
 to GIMP's Python to get even more channels to choose from.
 """
 
-selections_option = [ _("All"), _("Slice / Array"), _("Autoslice (fg->bg)"), _("Partitioned") ]
 class PaletteSort (Gimp.PlugIn):
-    ## Parameters ##
-    __gproperties__ = {
-        "run-mode": (Gimp.RunMode,
-                     _("Run mode"),
-                     "The run mode",
-                     Gimp.RunMode.INTERACTIVE,
-                     GObject.ParamFlags.READWRITE),
-        "palette": (Gimp.Palette,
-                    _("_Palette"),
-                    _("Palette"),
-                    GObject.ParamFlags.READWRITE),
-        "selections": (int,
-                       _("Select_ions"),
-                       str(selections_option),
-                       0, 3, 0,
-                       GObject.ParamFlags.READWRITE),
-        # TODO: It would be much simpler to replace the slice expression with three
-        # separate parameters: start-index, number-of-rows, row_length
-        "slice_expr": (str,
-                       _("Slice _expression"),
-                       slice_expr_doc,
-                       "",
-                       GObject.ParamFlags.READWRITE),
-        "channel1": (int,
-                     _("Channel _to sort"),
-                     "Channel to sort: " + str(AVAILABLE_CHANNELS),
-                     0, len(AVAILABLE_CHANNELS), 3,
-                     GObject.ParamFlags.READWRITE),
-        "ascending1": (bool,
-                       _("_Ascending"),
-                       _("Ascending"),
-                       True,
-                       GObject.ParamFlags.READWRITE),
-        "channel2": (int,
-                     _("Secondary C_hannel to sort"),
-                     "Secondary Channel to sort: " + str(AVAILABLE_CHANNELS),
-                     0, len(AVAILABLE_CHANNELS), 5,
-                     GObject.ParamFlags.READWRITE),
-        "ascending2": (bool,
-                       _("Ascen_ding"),
-                       _("Ascending"),
-                       True,
-                       GObject.ParamFlags.READWRITE),
-        "quantize": (float,
-                     _("_Quantization"),
-                     _("Quantization"),
-                     0.0, 1.0, 0.0,
-                     GObject.ParamFlags.READWRITE),
-        "pchannel": (int,
-                     _("Partitionin_g channel"),
-                     "Partitioning channel: " + str(AVAILABLE_CHANNELS),
-                     0, len(AVAILABLE_CHANNELS), 3,
-                     GObject.ParamFlags.READWRITE),
-        "pquantize": (float,
-                     _("Partition q_uantization"),
-                     _("Partition quantization"),
-                     0.0, 1.0, 0.0,
-                     GObject.ParamFlags.READWRITE),
-
-        # Returned value
-        "new_palette": (Gimp.Palette,
-                        _("Palette"),
-                        _("Palette"),
-                        GObject.ParamFlags.READWRITE),
-    }
-
     ## GimpPlugIn virtual methods ##
     def do_set_i18n(self, procname):
         return True, 'gimp30-python', None
@@ -440,18 +368,53 @@ class PaletteSort (Gimp.PlugIn):
                                       "2006-2014")
             procedure.add_menu_path ('<Palettes>/Palettes Menu')
 
-            procedure.add_argument_from_property(self, "run-mode")
-            procedure.add_argument_from_property(self, "palette")
-            procedure.add_argument_from_property(self, "selections")
-            procedure.add_argument_from_property(self, "slice_expr")
-            procedure.add_argument_from_property(self, "channel1")
-            procedure.add_argument_from_property(self, "ascending1")
-            procedure.add_argument_from_property(self, "channel2")
-            procedure.add_argument_from_property(self, "ascending2")
-            procedure.add_argument_from_property(self, "quantize")
-            procedure.add_argument_from_property(self, "pchannel")
-            procedure.add_argument_from_property(self, "pquantize")
-            procedure.add_return_value_from_property(self, "new_palette")
+            procedure.add_enum_argument ("run-mode", _("Run mode"),
+                                         _("The run mode"), Gimp.RunMode,
+                                         Gimp.RunMode.INTERACTIVE,
+                                         GObject.ParamFlags.READWRITE)
+            procedure.add_palette_argument ("palette", _("_Palette"),
+                                            _("Palette"),
+                                            GObject.ParamFlags.READWRITE)
+
+            selection_choice = Gimp.Choice.new()
+            selection_choice.add("all", 0, _("All"), "")
+            selection_choice.add("slice-array", 1, _("Slice / Array"), "")
+            selection_choice.add("auto-slice", 2, _("Autoslice (fg->bg)"), "")
+            selection_choice.add("partitioned", 3, _("Partitioned"), "")
+            procedure.add_choice_argument ("selections", _("Select_ions"), _("Selections"),
+                                           selection_choice, "all", GObject.ParamFlags.READWRITE)
+            # TODO: It would be much simpler to replace the slice expression with three
+            # separate parameters: start-index, number-of-rows, row_length
+            procedure.add_string_argument ("slice-expr", _("Slice _expression"),
+                                           slice_expr_doc, "",
+                                           GObject.ParamFlags.READWRITE)
+            channel_choice = Gimp.Choice.new()
+            self.add_choices (channel_choice)
+            procedure.add_choice_argument ("channel1", _("Channel _to sort"), _("Channel to sort"),
+                                           channel_choice, "luma", GObject.ParamFlags.READWRITE)
+            procedure.add_boolean_argument ("ascending1", _("_Ascending"), _("Ascending"),
+                                            True, GObject.ParamFlags.READWRITE)
+            channel_choice2 = Gimp.Choice.new()
+            self.add_choices (channel_choice2)
+            procedure.add_choice_argument ("channel2", _("Secondary C_hannel to sort"),
+                                           _("Secondary Channel to sort"), channel_choice2,
+                                           "saturation", GObject.ParamFlags.READWRITE)
+            procedure.add_boolean_argument ("ascending2", _("Ascen_ding"), _("Ascending"),
+                                            True, GObject.ParamFlags.READWRITE)
+            procedure.add_double_argument ("quantize", _("_Quantization"),
+                                           _("Quantization"), 0.0, 1.0, 0.0,
+                                           GObject.ParamFlags.READWRITE)
+            pchannel_choice = Gimp.Choice.new()
+            self.add_choices (pchannel_choice)
+            procedure.add_choice_argument ("pchannel", _("Partitionin_g channel"),
+                                           _("Partitioning channel"), pchannel_choice,
+                                           "luma", GObject.ParamFlags.READWRITE)
+            procedure.add_double_argument ("pquantize", _("Partition q_uantization"),
+                                           _("Partition quantization"), 0.0, 1.0, 0.0,
+                                           GObject.ParamFlags.READWRITE)
+
+            procedure.add_palette_return_value ("new-palette", _("Palette"),
+                                                _("Palette"), GObject.ParamFlags.READWRITE)
 
         return procedure
 
@@ -478,13 +441,9 @@ class PaletteSort (Gimp.PlugIn):
             dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
 
             dialog.fill (["palette"])
-            dialog.get_int_combo("selections", GimpUi.IntStore.new (selections_option))
             dialog.fill (["selections","slice-expr"])
-            dialog.get_int_combo("channel1", GimpUi.IntStore.new (AVAILABLE_CHANNELS))
             dialog.fill (["channel1", "ascending1"])
-            dialog.get_int_combo("channel2", GimpUi.IntStore.new (AVAILABLE_CHANNELS))
             dialog.fill (["channel2","ascending2", "quantize"])
-            dialog.get_int_combo("pchannel", GimpUi.IntStore.new (AVAILABLE_CHANNELS))
             dialog.fill (["pchannel","pquantize"])
 
             if not dialog.run():
@@ -495,13 +454,13 @@ class PaletteSort (Gimp.PlugIn):
 
         palette    = config.get_property("palette")
         selection  = config.get_property("selections")
-        slice_expr = config.get_property ("slice_expr")
-        channel1   = config.get_property("channel1")
+        slice_expr = config.get_property("slice-expr")
+        channel1   = config.get_choice_id("channel1")
         ascending1 = config.get_property ("ascending1")
-        channel2   = config.get_property("channel2")
+        channel2   = config.get_choice_id("channel2")
         ascending2 = config.get_property ("ascending2")
         quantize   = config.get_property ("quantize")
-        pchannel   = config.get_property("pchannel")
+        pchannel   = config.get_choice_id("pchannel")
         pquantize  = config.get_property ("pquantize")
         try:
             new_palette = palette_sort(palette, selection, slice_expr, channel1, ascending1,
@@ -515,5 +474,19 @@ class PaletteSort (Gimp.PlugIn):
         return_val.remove(1)
         return_val.insert(1, value)
         return return_val
+
+    def add_choices (self, choice):
+       #TODO: Re-incorporate LAB and LCHab options with GeglColor
+       choice.add("red", 0, _("Red"), "")
+       choice.add("green", 1, _("Green"), "")
+       choice.add("blue", 2, _("Blue"), "")
+       choice.add("luma", 3, _("Luma (Y)"), "")
+       choice.add("hue", 4, _("Hue"), "")
+       choice.add("saturation", 5, _("Saturation"), "")
+       choice.add("value", 6, _("Value"), "")
+       choice.add("saturation-hsl", 7, _("Saturation (HSL)"), "")
+       choice.add("lightness-hsl", 8, _("Lightness (HSL)"), "")
+       choice.add("index", 9, _("Index"), "")
+       choice.add("random", 10, _("Random"), "")
 
 Gimp.main(PaletteSort.__gtype__, sys.argv)

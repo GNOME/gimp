@@ -111,43 +111,6 @@ def run(procedure, config, data):
     return retval
 
 class PaletteToGradient (Gimp.PlugIn):
-    ## Parameter: run mode ##
-    @GObject.Property(type=Gimp.RunMode,
-                      default=Gimp.RunMode.NONINTERACTIVE,
-                      nick="Run mode", blurb="The run mode")
-    def run_mode(self):
-        '''The run mode (unused)'''
-        return self.runmode
-
-    @run_mode.setter
-    def run_mode(self, runmode):
-        self.runmode = runmode
-
-    ## Parameter: palette ##
-    @GObject.Property(type=Gimp.Palette,
-                      default=None,
-                      nick= _("_Palette"))
-    def palette(self):
-        '''Palette or None for the currently selected palette'''
-        return self.palette
-
-    @palette.setter
-    def palette(self, palette):
-        self.palette = palette
-
-    ## Properties: return values ##
-    @GObject.Property(type=Gimp.Gradient,
-                      default="",
-                      nick=_("The newly created gradient"),
-                      blurb=_("The newly created gradient"))
-    def new_gradient(self):
-        """Read-write integer property."""
-        return self.new_gradient
-
-    @new_gradient.setter
-    def new_gradient(self, new_gradient):
-        self.new_gradient = new_gradient
-
     ## GimpPlugIn virtual methods ##
     def do_set_i18n(self, procname):
         return True, 'gimp30-python', None
@@ -176,12 +139,17 @@ class PaletteToGradient (Gimp.PlugIn):
         if procedure is not None:
             procedure.set_attribution("Carol Spears, reproduced from previous work by Adrian Likins and Jeff Trefftz",
                                       "Carol Spears", "2006")
-            # We don't build a GParamSpec ourselves because passing it
-            # around is apparently broken in Python. Hence this trick.
-            # See pygobject#227
-            procedure.add_argument_from_property(self, "run-mode")
-            procedure.add_argument_from_property(self, "palette")
-            procedure.add_return_value_from_property(self, "new-gradient")
+
+            procedure.add_enum_argument ("run-mode", _("Run mode"),
+                                         _("The run mode"), Gimp.RunMode,
+                                         Gimp.RunMode.NONINTERACTIVE,
+                                         GObject.ParamFlags.READWRITE)
+            procedure.add_palette_argument ("palette", _("_Palette"),
+                                            _("Palette"),
+                                            GObject.ParamFlags.READWRITE)
+            procedure.add_gradient_return_value ("new-gradient", _("The newly created gradient"),
+                                                 _("The newly created gradient"),
+                                                 GObject.ParamFlags.READWRITE)
 
             procedure.add_menu_path ('<Palettes>/Palettes Menu')
 
