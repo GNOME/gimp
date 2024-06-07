@@ -1,7 +1,7 @@
 From e6dbfe7f2bb5f82e5ddb6091fa43b376326dea40 Mon Sep 17 00:00:00 2001
 From: Philip Zander <philip.zander@gmail.com>
 Date: Tue, 28 Jul 2020 12:30:37 +0200
-Subject: [PATCH 05/11] Use native Windows API for converting keystrokes to
+Subject: [PATCH 5/9] Use native Windows API for converting keystrokes to
  characters
 
 Instead of using the incomplete GTK-internal emulation, use the WM_CHAR

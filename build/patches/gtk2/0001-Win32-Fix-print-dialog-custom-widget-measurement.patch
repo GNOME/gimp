@@ -1,7 +1,7 @@
 From ac68b54f512a3a659c20ec21b3775af8ed8a3859 Mon Sep 17 00:00:00 2001
 From: Luca Bacci <luca.bacci@outlook.com>
 Date: Wed, 29 Dec 2021 21:59:56 +0100
-Subject: [PATCH 01/11] Win32: Fix print dialog custom widget measurement
+Subject: [PATCH 1/9] Win32: Fix print dialog custom widget measurement
 
 ---
  gtk/gtkprintoperation-win32.c | 128 ++++++++++++++++++++++++++--------

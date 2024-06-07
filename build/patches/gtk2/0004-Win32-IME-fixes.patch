@@ -1,7 +1,7 @@
 From ff55c68881e25cca6b6d126412ccd24ba8664a77 Mon Sep 17 00:00:00 2001
 From: Philip Zander <philip.zander@gmail.com>
 Date: Tue, 28 Jul 2020 15:34:00 +0200
-Subject: [PATCH 04/11] Win32 IME fixes
+Subject: [PATCH 4/9] Win32 IME fixes
 
 GTK2 Backport of !1063
 Fixes #2114

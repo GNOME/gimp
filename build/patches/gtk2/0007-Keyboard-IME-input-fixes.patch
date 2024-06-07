@@ -1,7 +1,7 @@
-From 2bef7655a0250af14896b0564c6bc4f9ef2e1b85 Mon Sep 17 00:00:00 2001
+From 202a8af1f6bb0b29d17567000d34bc62444639c7 Mon Sep 17 00:00:00 2001
 From: Luca Bacci <luca.bacci982@gmail.com>
 Date: Mon, 22 Apr 2024 14:45:07 +0200
-Subject: [PATCH 08/11] Keyboard / IME input fixes
+Subject: [PATCH 7/9] Keyboard / IME input fixes
 
 See:
 

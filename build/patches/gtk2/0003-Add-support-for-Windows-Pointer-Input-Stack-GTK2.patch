@@ -1,7 +1,7 @@
 From bccb08ad321ae55903598b1320582babe786c284 Mon Sep 17 00:00:00 2001
 From: Luca Bacci <luca.bacci982@gmail.com>
 Date: Thu, 11 Apr 2024 16:34:22 +0200
-Subject: [PATCH 03/11] Add support for Windows Pointer Input Stack (GTK2)
+Subject: [PATCH 3/9] Add support for Windows Pointer Input Stack (GTK2)
 
 ---
  configure.ac                 |   2 +-

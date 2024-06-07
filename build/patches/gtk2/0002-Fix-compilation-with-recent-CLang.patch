@@ -1,7 +1,7 @@
 From d2f40723ee6757bc9b3ec6dc7872bbf7909cbc39 Mon Sep 17 00:00:00 2001
 From: Luca Bacci <luca.bacci982@gmail.com>
 Date: Sat, 20 Apr 2024 12:24:12 +0200
-Subject: [PATCH 02/11] Fix compilation with recent CLang
+Subject: [PATCH 2/9] Fix compilation with recent CLang
 
 ---
  gtk/gtkprintoperation-win32.c          | 2 +-

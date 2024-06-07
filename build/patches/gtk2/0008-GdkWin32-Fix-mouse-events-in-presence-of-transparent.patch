@@ -1,7 +1,7 @@
-From d16c34cd54d0eb044e8b826709d9f1e4570f93d5 Mon Sep 17 00:00:00 2001
+From e5b6f9f5f18e3b3486c5595f26e732b22566bb4a Mon Sep 17 00:00:00 2001
 From: Luca Bacci <luca.bacci982@gmail.com>
 Date: Mon, 22 Apr 2024 20:01:02 +0200
-Subject: [PATCH 10/11] GdkWin32: Fix mouse events in presence of transparent
+Subject: [PATCH 8/9] GdkWin32: Fix mouse events in presence of transparent
  windows on the desktop
 
 Backport of https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/2767 to GTK2

@@ -1,7 +1,7 @@
-From f3d8f12abbed81694c2416ff21c053b118c99046 Mon Sep 17 00:00:00 2001
+From 9753c545141c1b00478b7105e376657bd9655eda Mon Sep 17 00:00:00 2001
 From: Luca Bacci <luca.bacci982@gmail.com>
 Date: Tue, 30 Apr 2024 15:22:53 +0200
-Subject: [PATCH 11/11] Winpointer: Add generic device
+Subject: [PATCH 9/9] Winpointer: Add generic device
 
 ---
  gdk/win32/gdkinput-win32.c | 321 ++++++++++++++++++++++++++++++-------
