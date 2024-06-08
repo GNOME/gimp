@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-05-04 19:08+0000\n"
-"PO-Revision-Date: 2024-05-05 10:42+0200\n"
+"POT-Creation-Date: 2024-06-08 17:29+0000\n"
+"PO-Revision-Date: 2024-06-08 21:20+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -261,7 +261,7 @@ msgstr "Uredi metapodatke"
 msgid "(edit)"
 msgstr "(v urejanju)"
 
-#: libgimp/gimpimagemetadata.c:283
+#: libgimp/gimpimagemetadata.c:329
 msgid "Background"
 msgstr "Ozadje"
 
@@ -269,7 +269,7 @@ msgstr "Ozadje"
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:267 libgimp/gimpvectorloadprocedure.c:255
+#: libgimp/gimploadprocedure.c:267 libgimp/gimpvectorloadprocedure.c:445
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
@@ -394,12 +394,12 @@ msgstr[1] "%d procedura se ujema z vašim povpraševanjem"
 msgstr[2] "%d proceduri se ujemata z vašim povpraševanjem"
 msgstr[3] "%d procedure se ujemajo z vašim povpraševanjem"
 
-#: libgimp/gimpprocedure.c:2080
+#: libgimp/gimpprocedure.c:2120
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedura »%s« ni vrnila nobenih vrednosti"
 
-#: libgimp/gimpprocedure.c:2207
+#: libgimp/gimpprocedure.c:2249
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -408,7 +408,7 @@ msgstr ""
 "Procedura »%s« je vrnila napačno vrsto vrnjene vrednosti »%s« (#%d). "
 "Pričakovana vrednost %s, prejeta %s."
 
-#: libgimp/gimpprocedure.c:2219
+#: libgimp/gimpprocedure.c:2261
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -417,7 +417,7 @@ msgstr ""
 "Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta »%s« (#"
 "%d). Pričakovano %s, prejeto %s."
 
-#: libgimp/gimpprocedure.c:2254
+#: libgimp/gimpprocedure.c:2296
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -426,7 +426,7 @@ msgstr ""
 "Procedura »%s« je vrnila »%s« kot vrnjeno vrednost »%s« (#%d, vrsta %s). Ta "
 "vrednost je izven dovoljenega obsega."
 
-#: libgimp/gimpprocedure.c:2268
+#: libgimp/gimpprocedure.c:2310
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -435,12 +435,12 @@ msgstr ""
 "Klic procedure »%s« ima vrednost »%s« za argument »%s« (#%d, vrsta %s). Ta "
 "vrednost je zunaj dovoljenega obsega."
 
-#: libgimp/gimpprocedure.c:2312
+#: libgimp/gimpprocedure.c:2354
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Procedura »%s« je vrnila neveljaven niz UTF-8 za argument »%s«."
 
-#: libgimp/gimpprocedure.c:2322
+#: libgimp/gimpprocedure.c:2364
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -480,31 +480,31 @@ msgstr "_Shrani nastavitve"
 msgid "Store current settings for later reuse"
 msgstr "Shrani trenutne nastavitve za kasnejšo rabo"
 
-#: libgimp/gimpproceduredialog.c:811
+#: libgimp/gimpproceduredialog.c:824
 msgid "Brush Chooser"
 msgstr "Izbirnik čopičev"
 
-#: libgimp/gimpproceduredialog.c:815
+#: libgimp/gimpproceduredialog.c:828
 msgid "Font Chooser"
 msgstr "Izbirnik pisav"
 
-#: libgimp/gimpproceduredialog.c:819
+#: libgimp/gimpproceduredialog.c:832
 msgid "Gradient Chooser"
 msgstr "Izbirnik prelivov"
 
-#: libgimp/gimpproceduredialog.c:823
+#: libgimp/gimpproceduredialog.c:836
 msgid "Palette Chooser"
 msgstr "Izbirnik palet"
 
-#: libgimp/gimpproceduredialog.c:827
+#: libgimp/gimpproceduredialog.c:840
 msgid "Pattern Chooser"
 msgstr "Izbirnik vzorcev"
 
-#: libgimp/gimpproceduredialog.c:2586
+#: libgimp/gimpproceduredialog.c:2599
 msgid "Reset to _Initial Values"
 msgstr "Ponastavi na _začetne vrednosti"
 
-#: libgimp/gimpproceduredialog.c:2595
+#: libgimp/gimpproceduredialog.c:2608
 msgid "Reset to _Factory Defaults"
 msgstr "Ponastavi na _tovarniške vrednosti"
 
@@ -559,7 +559,7 @@ msgstr "Izberi kanal: %s"
 msgid "Choose drawable: %s"
 msgstr "Izberi risani predmet: %s"
 
-#: libgimp/gimpresolutionentry-private.c:135
+#: libgimp/gimpresolutionentry-private.c:136
 msgid ""
 "This unit is used to select the pixel density and show dimensions in "
 "physical unit"
@@ -567,18 +567,18 @@ msgstr ""
 "Ta enota se uporablja za izbiro gostote slikovnih točk in prikaz mer v "
 "fizikalnih enotah"
 
-#: libgimp/gimpresolutionentry-private.c:143
-#: libgimp/gimpvectorloadprocedure.c:117
+#: libgimp/gimpresolutionentry-private.c:144
+#: libgimp/gimpvectorloadprocedure.c:125
 msgid "_Keep aspect ratio"
 msgstr "_Ohrani razmerje stranic"
 
-#: libgimp/gimpresolutionentry-private.c:144
-#: libgimp/gimpvectorloadprocedure.c:118
+#: libgimp/gimpresolutionentry-private.c:145
+#: libgimp/gimpvectorloadprocedure.c:126
 msgid "Force dimensions with aspect ratio"
 msgstr "Vsili mere z razmerjem stranic"
 
-#: libgimp/gimpresolutionentry-private.c:193
-#: libgimp/gimpresolutionentry-private.c:194
+#: libgimp/gimpresolutionentry-private.c:199
+#: libgimp/gimpresolutionentry-private.c:200
 #, c-format
 msgid "pixels/%a"
 msgstr "slik. točk/%a"
@@ -587,40 +587,84 @@ msgstr "slik. točk/%a"
 msgid "percent"
 msgstr "odstotkov"
 
-#: libgimp/gimpvectorloadprocedure.c:103
+#: libgimp/gimpvectorloadprocedure.c:111
 msgid "_Width (pixels)"
 msgstr "_Širina (slik. točke)"
 
-#: libgimp/gimpvectorloadprocedure.c:110
+#: libgimp/gimpvectorloadprocedure.c:118
 msgid "_Height (pixels)"
 msgstr "_Višina (slik. točke)"
 
-#: libgimp/gimpvectorloadprocedure.c:122
+#: libgimp/gimpvectorloadprocedure.c:130
 msgid "_Prefer native dimensions"
 msgstr "_Prednost imajo domorodne mere"
 
-#: libgimp/gimpvectorloadprocedure.c:123
+#: libgimp/gimpvectorloadprocedure.c:131
 msgid "Load and use dimensions from source file"
 msgstr "Naloži in uporabi mere iz izvorne datoteke"
 
-#: libgimp/gimpvectorloadprocedure.c:131
+#: libgimp/gimpvectorloadprocedure.c:139
 msgid "Resolu_tion"
 msgstr "Ločljivos_t"
 
-#: libgimp/gimpvectorloadprocedure.c:132
+#: libgimp/gimpvectorloadprocedure.c:140
 msgid "Pixel Density: number of pixels per physical unit"
 msgstr "Gostota slikovnih točk: število slikovnih točk na fizikalno enoto"
 
-#: libgimp/gimpvectorloadprocedure.c:136
+#: libgimp/gimpvectorloadprocedure.c:145
 msgid "Unit"
 msgstr "Enota"
 
-#: libgimp/gimpvectorloadprocedure.c:137
+#: libgimp/gimpvectorloadprocedure.c:146
 msgid "Physical unit"
 msgstr "Fizikalna enota"
 
+#: libgimp/gimpvectorloadprocedure.c:368
+msgid ""
+"dimensions could neither be extracted nor computed from the vector image's "
+"data."
+msgstr ""
+"Dimenzij ni bilo mogoče izvleči ali izračunati iz podatkov vektorske slike."
+
+#: libgimp/gimpvectorloadprocedure.c:373
+msgid "Vector image loading plug-in failed: "
+msgstr "Vstavek za nalaganje vektorskih slik ni uspel: "
+
+#: libgimp/gimpvectorloadprocedure.c:397
+msgid ""
+"Dimensions cannot be 0 and no native dimensions could be extracted from the "
+"vector image."
+msgstr ""
+"Dimenzije ne morejo biti 0 in iz vektorske slike ni bilo mogoče izvleči "
+"nobenih izvornih dimenzij."
+
+#. TRANSLATORS: the %s is a vector format name, e.g. "SVG" or "PDF",
+#. * followed by 2D dimensions with unit, e.g. "200 inch x 400 inch"
+#.
+#: libgimp/gimpvectorloadproceduredialog.c:131
+#, c-format
+msgid "Source %s file size: %%.%df %s × %%.%df %s"
+msgstr "Velikost izvorne datoteke %s: %%. %df %s × %%. %df %s"
+
+#. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
+#: libgimp/gimpvectorloadproceduredialog.c:168
+#, c-format
+msgid "Source %s file's aspect ratio: %%.%df × %%.%df"
+msgstr "Razmerje stranic izvorne datoteke %s: %%. %df × %%. %df"
+
+#: libgimp/gimpvectorloadproceduredialog.c:176
+#, c-format
+msgid "Approximated source %s file size: %%.%df %s × %%.%df %s"
+msgstr "Približna velikost izvorne datoteke %s: %%. %df %s × %%. %df %s"
+
+#. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
+#: libgimp/gimpvectorloadproceduredialog.c:189
+#, c-format
+msgid "The source %s file does not specify a size!"
+msgstr "Izvorna datoteka %s ne navaja velikosti!"
+
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpvectorloadproceduredialog.c:156
+#: libgimp/gimpvectorloadproceduredialog.c:330
 #, c-format
 msgid "Load %s Image"
 msgstr "Naloži sliko %s"
@@ -2042,7 +2086,7 @@ msgstr "Datoteka nima reprezentacije poti"
 msgid "Cannot expand ${%s}"
 msgstr "Ni mogoče razširiti ${%s}"
 
-#: libgimpconfig/gimpconfigwriter.c:95 libgimpconfig/gimpconfigwriter.c:725
+#: libgimpconfig/gimpconfigwriter.c:95 libgimpconfig/gimpconfigwriter.c:727
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Napaka pri pisanju v »%s«: %s"
@@ -2057,7 +2101,7 @@ msgstr "Mape »%s« za »%s« ni mogoče ustvariti: "
 msgid "Could not create temporary file for '%s': "
 msgstr "Začasne datoteke za »%s« ni mogoče ustvariti: "
 
-#: libgimpconfig/gimpconfigwriter.c:835
+#: libgimpconfig/gimpconfigwriter.c:837
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Napaka pri pisanju »%s«: %s"
@@ -2426,7 +2470,7 @@ msgstr "Barva 1 šahovnice po meri"
 msgid "Custom Checks Color 2"
 msgstr "Barva 2 šahovnice po meri"
 
-#: libgimpwidgets/gimppropwidgets.c:2454
+#: libgimpwidgets/gimppropwidgets.c:2474
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
