@@ -3790,13 +3790,6 @@ load_dialog (GFile              *file,
                                                   GIMP_PROCEDURE_CONFIG (config),
                                                   &extracted_data, NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                            GTK_RESPONSE_OK,
-                                            GTK_RESPONSE_CANCEL,
-                                            -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
-
   if (page_count > 1)
     {
       selector = gimp_page_selector_new ();

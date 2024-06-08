@@ -414,8 +414,8 @@ register_progress_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-progress-get-window-handle");
   gimp_procedure_set_static_help (procedure,
-                                  "Returns the native handle of the toplevel window this plug-in's progress is displayed in.",
-                                  "This function returns the native handle allowing to identify the toplevel window this plug-in's progress is displayed in.\n"
+                                  "Returns the native handle of the toplevel window this plug-in's progress is or would be displayed in.",
+                                  "This function returns the native handle allowing to identify the toplevel window this plug-in's progress is displayed in. It should still work even if the progress bar has not been initialized yet, unless the plug-in wasn't called from a GUI.\n"
                                   "This handle can be of various types (integer, string, etc.) depending on the platform you are running on which is why it returns a GBytes. There are usually no reasons to call this directly.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,

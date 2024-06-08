@@ -75,6 +75,7 @@
 #include "plug-in-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpdisplay.h"
 #include "core/gimp-spawn.h"
 #include "core/gimpprogress.h"
 
@@ -142,6 +143,7 @@ gimp_plug_in_init (GimpPlugIn *plug_in)
 {
   plug_in->manager            = NULL;
   plug_in->file               = NULL;
+  plug_in->display            = NULL;
 
   plug_in->call_mode          = GIMP_PLUG_IN_CALL_NONE;
   plug_in->open               = FALSE;
@@ -171,6 +173,7 @@ gimp_plug_in_finalize (GObject *object)
   GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
 
   g_clear_object (&plug_in->file);
+  g_clear_weak_pointer (&plug_in->display);
 
   gimp_plug_in_proc_frame_dispose (&plug_in->main_proc_frame, plug_in);
 
@@ -396,7 +399,8 @@ gimp_plug_in_new (GimpPlugInManager   *manager,
                   GimpContext         *context,
                   GimpProgress        *progress,
                   GimpPlugInProcedure *procedure,
-                  GFile               *file)
+                  GFile               *file,
+                  GimpDisplay         *display)
 {
   GimpPlugIn *plug_in;
 
@@ -406,6 +410,7 @@ gimp_plug_in_new (GimpPlugInManager   *manager,
   g_return_val_if_fail (procedure == NULL ||
                         GIMP_IS_PLUG_IN_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (file == NULL || G_IS_FILE (file), NULL);
+  g_return_val_if_fail (display == NULL || GIMP_IS_DISPLAY (display), NULL);
   g_return_val_if_fail ((procedure != NULL || file != NULL) &&
                         ! (procedure != NULL && file != NULL), NULL);
 
@@ -419,6 +424,7 @@ gimp_plug_in_new (GimpPlugInManager   *manager,
 
   plug_in->manager = manager;
   plug_in->file    = g_object_ref (file);
+  g_set_weak_pointer (&plug_in->display, display);
 
   gimp_plug_in_proc_frame_init (&plug_in->main_proc_frame,
                                 context, progress, procedure);

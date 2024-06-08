@@ -78,7 +78,7 @@ gimp_plug_in_manager_call_query (GimpPlugInManager *manager,
   g_return_if_fail (GIMP_IS_PLUG_IN_DEF (plug_in_def));
 
   plug_in = gimp_plug_in_new (manager, context, NULL,
-                              NULL, plug_in_def->file);
+                              NULL, plug_in_def->file, NULL);
 
   if (plug_in)
     {
@@ -118,7 +118,7 @@ gimp_plug_in_manager_call_init (GimpPlugInManager *manager,
   g_return_if_fail (GIMP_IS_PLUG_IN_DEF (plug_in_def));
 
   plug_in = gimp_plug_in_new (manager, context, NULL,
-                              NULL, plug_in_def->file);
+                              NULL, plug_in_def->file, NULL);
 
   if (plug_in)
     {
@@ -165,7 +165,10 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
   g_return_val_if_fail (args != NULL, NULL);
   g_return_val_if_fail (display == NULL || GIMP_IS_DISPLAY (display), NULL);
 
-  plug_in = gimp_plug_in_new (manager, context, progress, procedure, NULL);
+  if (! display)
+    display = gimp_context_get_display (context);
+
+  plug_in = gimp_plug_in_new (manager, context, progress, procedure, NULL, display);
 
   if (plug_in)
     {
@@ -198,9 +201,6 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
 
           return return_vals;
         }
-
-      if (! display)
-        display = gimp_context_get_display (context);
 
       display_id = display ? gimp_display_get_id (display) : -1;
 

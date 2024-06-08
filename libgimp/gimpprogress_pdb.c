@@ -220,10 +220,12 @@ gimp_progress_end (void)
  * gimp_progress_get_window_handle:
  *
  * Returns the native handle of the toplevel window this plug-in's
- * progress is displayed in.
+ * progress is or would be displayed in.
  *
  * This function returns the native handle allowing to identify the
- * toplevel window this plug-in's progress is displayed in.
+ * toplevel window this plug-in's progress is displayed in. It should
+ * still work even if the progress bar has not been initialized yet,
+ * unless the plug-in wasn't called from a GUI.
  * This handle can be of various types (integer, string, etc.)
  * depending on the platform you are running on which is why it returns
  * a GBytes. There are usually no reasons to call this directly.

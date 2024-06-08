@@ -244,6 +244,8 @@ gimp_plug_in_progress_get_window_id (GimpPlugIn *plug_in)
 
   if (proc_frame->progress)
     return gimp_progress_get_window_id (proc_frame->progress);
+  else if (plug_in->display)
+    return gimp_get_display_window_id (plug_in->manager->gimp, plug_in->display);
 
   return 0;
 }

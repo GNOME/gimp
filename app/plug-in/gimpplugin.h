@@ -44,6 +44,7 @@ struct _GimpPlugIn
   GimpPlugInManager   *manager;
   GFile               *file;            /*  Plug-in's full path name          */
 
+  GimpDisplay         *display;         /*  The display this plug-in was called from. */
   GimpPlugInCallMode   call_mode;       /*  QUERY, INIT or RUN                */
   guint                open : 1;        /*  Is the plug-in open?              */
   guint                hup : 1;         /*  Did we receive a G_IO_HUP         */
@@ -82,7 +83,8 @@ GimpPlugIn  * gimp_plug_in_new               (GimpPlugInManager      *manager,
                                               GimpContext            *context,
                                               GimpProgress           *progress,
                                               GimpPlugInProcedure    *procedure,
-                                              GFile                  *file);
+                                              GFile                  *file,
+                                              GimpDisplay            *display);
 
 gboolean      gimp_plug_in_open              (GimpPlugIn             *plug_in,
                                               GimpPlugInCallMode      call_mode,
