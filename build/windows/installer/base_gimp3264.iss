@@ -164,7 +164,7 @@ WizardStyle=modern
 WizardSizePercent=100
 WizardResizable=no
 WizardSmallImageFile=gimp.scale-100.bmp,gimp.scale-125.bmp,gimp.scale-150.bmp,gimp.scale-175.bmp,gimp.scale-200.bmp,gimp.scale-225.bmp,gimp.scale-250.bmp
-WizardImageFile=windows-installer-intro-big.bmp
+WizardImageFile=install-end.scale-100.bmp,install-end.scale-125.bmp,install-end.scale-150.bmp,install-end.scale-175.bmp,install-end.scale-200.bmp,install-end.scale-225.bmp,install-end.scale-250.bmp
 WizardImageStretch=yes
 
 
@@ -316,7 +316,7 @@ Filename: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"; Description: "{cm:LaunchGimp
 
 [Files]
 ;setup files
-Source: "windows-installer-intro-small.bmp"; Flags: dontcopy
+Source: "install-end.scale-100.bmp"; Flags: dontcopy
 Source: "installsplash.bmp"; Flags: dontcopy
 Source: "installsplash_small.bmp"; Flags: dontcopy
 
@@ -596,7 +596,7 @@ begin
 #endif
 
 	try
-		ExtractTemporaryFile('windows-installer-intro-small.bmp');
+		ExtractTemporaryFile('install-end.scale-100.bmp');
 		ExtractTemporaryFile('installsplash.bmp');
 		ExtractTemporaryFile('installsplash_small.bmp');
 	except
@@ -639,7 +639,7 @@ begin
 			WizardForm.WizardBitmapImage.Bitmap.LoadFromStream(NewBitmap1);
 			WelcomeBitmapBottom.Bitmap := WizardForm.WizardBitmapImage.Bitmap;
 			try
-				NewBitmap2 := TFileStream.Create(ExpandConstant('{tmp}\windows-installer-intro-small.bmp'),fmOpenRead);
+				NewBitmap2 := TFileStream.Create(ExpandConstant('{tmp}\install-end.scale-100.bmp'),fmOpenRead);
 				WizardForm.WizardBitmapImage2.Bitmap.LoadFromStream(NewBitmap2);
 			except
 				DebugMsg('UpdateWizardImages','Error loading image: ' + GetExceptionMessage);
