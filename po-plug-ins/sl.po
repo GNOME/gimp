@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-05-31 04:35+0000\n"
-"PO-Revision-Date: 2024-05-31 09:06+0200\n"
+"POT-Creation-Date: 2024-06-08 17:30+0000\n"
+"PO-Revision-Date: 2024-06-08 21:21+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -44,7 +44,7 @@ msgstr "Povadi kozo v jeziku C"
 #: plug-ins/common/qbist.c:256 plug-ins/common/sample-colorize.c:427
 #: plug-ins/common/smooth-palette.c:195 plug-ins/common/sparkle.c:300
 #: plug-ins/common/sphere-designer.c:3205 plug-ins/common/tile.c:218
-#: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:243
+#: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:244
 #: plug-ins/common/warp.c:346 plug-ins/common/wavelet-decompose.c:181
 #: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:427
 #: plug-ins/gfig/gfig.c:215 plug-ins/gimpressionist/gimp.c:184
@@ -69,7 +69,7 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/common/cml-explorer.c:2142 plug-ins/common/cml-explorer.c:2352
 #: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
 #: plug-ins/common/file-gif-export.c:1199 plug-ins/common/file-heif.c:2281
-#: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:550
+#: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:590
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
@@ -146,7 +146,7 @@ msgstr "Povadi kozo (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2282
-#: plug-ins/common/file-pdf-load.c:551 plug-ins/common/grid.c:820
+#: plug-ins/common/file-pdf-load.c:591 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
 #: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3744
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
@@ -325,7 +325,7 @@ msgstr "Poravnaj vidne plasti"
 
 #. file save type
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
-#: plug-ins/common/file-ps.c:406 plug-ins/common/file-ps.c:415
+#: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
 #: plug-ins/common/file-psp.c:832 plug-ins/file-dds/dds.c:189
 #: plug-ins/file-tiff/file-tiff.c:236
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
@@ -933,13 +933,13 @@ msgid "Randoms from seed (shared)"
 msgstr "Naključno iz zrna (porazdeljeno)"
 
 #: plug-ins/common/cml-explorer.c:299 plug-ins/common/cml-explorer.c:307
-#: plug-ins/common/decompose.c:202 plug-ins/common/van-gogh-lic.c:160
+#: plug-ins/common/decompose.c:202 plug-ins/common/van-gogh-lic.c:161
 #: plug-ins/gimpressionist/orientation.c:172 plug-ins/gimpressionist/size.c:179
 msgid "Hue"
 msgstr "Obarvanost"
 
 #: plug-ins/common/cml-explorer.c:300 plug-ins/common/cml-explorer.c:308
-#: plug-ins/common/decompose.c:203 plug-ins/common/van-gogh-lic.c:161
+#: plug-ins/common/decompose.c:203 plug-ins/common/van-gogh-lic.c:162
 msgid "Saturation"
 msgstr "Nasičenost"
 
@@ -1967,19 +1967,18 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/file-farbfeld.c:279 plug-ins/common/file-gif-load.c:416
 #: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1398
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
-#: plug-ins/common/file-png.c:643 plug-ins/common/file-ps.c:1103
-#: plug-ins/common/file-ps.c:3652 plug-ins/common/file-psp.c:2626
+#: plug-ins/common/file-png.c:643 plug-ins/common/file-ps.c:1165
+#: plug-ins/common/file-ps.c:3747 plug-ins/common/file-psp.c:2626
 #: plug-ins/common/file-psp.c:2676 plug-ins/common/file-qoi.c:283
 #: plug-ins/common/file-raw-data.c:565 plug-ins/common/file-raw-data.c:1690
-#: plug-ins/common/file-sunras.c:436 plug-ins/common/file-svg.c:369
-#: plug-ins/common/file-svg.c:795 plug-ins/common/file-tga.c:428
-#: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:730
-#: plug-ins/common/file-xmc.c:661 plug-ins/common/file-xmc.c:900
-#: plug-ins/common/file-xwd.c:473 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:169
-#: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:379
-#: plug-ins/file-fli/fli-gimp.c:441 plug-ins/file-fli/fli-gimp.c:492
-#: plug-ins/file-icns/file-icns-load.c:516
+#: plug-ins/common/file-sunras.c:436 plug-ins/common/file-svg.c:540
+#: plug-ins/common/file-tga.c:428 plug-ins/common/file-wbmp.c:188
+#: plug-ins/common/file-xbm.c:730 plug-ins/common/file-xmc.c:661
+#: plug-ins/common/file-xmc.c:900 plug-ins/common/file-xwd.c:473
+#: plug-ins/common/sphere-designer.c:2095 plug-ins/file-bmp/bmp-load.c:226
+#: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:260
+#: plug-ins/file-fits/fits.c:379 plug-ins/file-fli/fli-gimp.c:441
+#: plug-ins/file-fli/fli-gimp.c:492 plug-ins/file-icns/file-icns-load.c:516
 #: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
 #: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
 #: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
@@ -2484,7 +2483,7 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Iz slike odstrani navpične artefakte v obliki trakov."
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:193
-#: plug-ins/common/file-ps.c:494 plug-ins/common/file-raw-data.c:353
+#: plug-ins/common/file-ps.c:518 plug-ins/common/file-raw-data.c:353
 #: plug-ins/common/smooth-palette.c:135 plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
 msgstr "_Širina"
@@ -2584,11 +2583,11 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-gegl.c:339 plug-ins/common/file-gif-load.c:408
 #: plug-ins/common/file-heif.c:852 plug-ins/common/file-jp2-load.c:1077
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
-#: plug-ins/common/file-pdf-load.c:722 plug-ins/common/file-pix.c:374
+#: plug-ins/common/file-pdf-load.c:780 plug-ins/common/file-pix.c:374
 #: plug-ins/common/file-png.c:635 plug-ins/common/file-pnm.c:686
-#: plug-ins/common/file-ps.c:1093 plug-ins/common/file-raw-data.c:1682
+#: plug-ins/common/file-ps.c:1155 plug-ins/common/file-raw-data.c:1682
 #: plug-ins/common/file-sunras.c:428 plug-ins/common/file-tga.c:420
-#: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:781
+#: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:618
 #: plug-ins/common/file-xbm.c:722 plug-ins/common/file-xmc.c:651
 #: plug-ins/common/file-xpm.c:365 plug-ins/common/file-xwd.c:465
 #: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:197
@@ -2666,7 +2665,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-gif-export.c:952 plug-ins/common/file-html-table.c:347
 #: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1084
 #: plug-ins/common/file-pix.c:642 plug-ins/common/file-png.c:1487
-#: plug-ins/common/file-pnm.c:1607 plug-ins/common/file-ps.c:1314
+#: plug-ins/common/file-pnm.c:1607 plug-ins/common/file-ps.c:1376
 #: plug-ins/common/file-qoi.c:358 plug-ins/common/file-sunras.c:607
 #: plug-ins/common/file-tga.c:1210 plug-ins/common/file-xbm.c:1031
 #: plug-ins/common/file-xpm.c:686 plug-ins/common/file-xwd.c:701
@@ -2829,7 +2828,7 @@ msgstr "GIMP ne podpira %s v kombinaciji z vzorci na slikovno točko: %d"
 msgid "Cannot save images with alpha channel."
 msgstr "Slik ni mogoče shraniti s kanalom alfa."
 
-#: plug-ins/common/file-dicom.c:1529 plug-ins/common/file-ps.c:1309
+#: plug-ins/common/file-dicom.c:1529 plug-ins/common/file-ps.c:1371
 #: plug-ins/common/file-xwd.c:696 plug-ins/file-fits/fits.c:652
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -3611,7 +3610,7 @@ msgstr "Besedilo za vse celice."
 msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Širina posamezne celice v tabeli. Možen je vpis števila ali odstotka."
 
-#: plug-ins/common/file-html-table.c:200 plug-ins/common/file-ps.c:501
+#: plug-ins/common/file-html-table.c:200 plug-ins/common/file-ps.c:525
 #: plug-ins/common/file-raw-data.c:358 plug-ins/common/smooth-palette.c:141
 #: plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
@@ -3784,7 +3783,7 @@ msgstr "xvYCC"
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Nepodprta JPEG 2000%s »%s« s/z %d komponentami."
 
-#: plug-ins/common/file-jp2-load.c:1085 plug-ins/common/file-wmf.c:759
+#: plug-ins/common/file-jp2-load.c:1085 plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "»%s« ni mogoče odpreti za branje."
@@ -4286,7 +4285,7 @@ msgstr "Spodnji rob je zunaj meja (mora biti < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Pisanje v datoteko »%s« ni uspelo: %s"
 
-#: plug-ins/common/file-pdf-export.c:314 plug-ins/common/file-pdf-load.c:183
+#: plug-ins/common/file-pdf-export.c:314 plug-ins/common/file-pdf-load.c:197
 msgid "Portable Document Format"
 msgstr "PDF (Portable Document Format)"
 
@@ -4304,7 +4303,7 @@ msgstr ""
 "zasnovan tako, da ga je lahko enostavno obdelati na različnih platformah in "
 "je oddaljeni bratranec PostScripta."
 
-#: plug-ins/common/file-pdf-export.c:330 plug-ins/common/file-pdf-load.c:199
+#: plug-ins/common/file-pdf-export.c:330 plug-ins/common/file-pdf-load.c:213
 msgid "PDF"
 msgstr "PDF"
 
@@ -4452,7 +4451,7 @@ msgstr "Dodaj to sliko"
 
 #: plug-ins/common/file-pdf-export.c:1178
 #: plug-ins/common/file-pdf-export.c:1251
-#: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2130
+#: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2225
 #: plug-ins/file-tiff/file-tiff-load.c:1532
 #, c-format
 msgid "Page %d"
@@ -4466,55 +4465,55 @@ msgstr "Napaka! Če želite shraniti datoteko, morate dodati vsaj eno sliko!"
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Velikosti slike ni mogoče obvladati (širina ali višina)."
 
-#: plug-ins/common/file-pdf-load.c:211
+#: plug-ins/common/file-pdf-load.c:225
 msgid "PDF password"
 msgstr "Geslo PDF"
 
-#: plug-ins/common/file-pdf-load.c:212
+#: plug-ins/common/file-pdf-load.c:226
 msgid "The password to decrypt the encrypted PDF file"
 msgstr "Geslo za dešifriranje šifrirane datoteke PDF"
 
-#: plug-ins/common/file-pdf-load.c:217
+#: plug-ins/common/file-pdf-load.c:231
 msgid "Load in re_verse order"
 msgstr "Naloži v _obratnem vrstnem redu"
 
-#: plug-ins/common/file-pdf-load.c:218
+#: plug-ins/common/file-pdf-load.c:232
 msgid "Load PDF pages in reverse order"
 msgstr "Naloži strani PDF v obratnem vrstnem redu"
 
-#: plug-ins/common/file-pdf-load.c:235
+#: plug-ins/common/file-pdf-load.c:249
 msgid "Open pages as"
 msgstr "Odpri strani kot"
 
-#: plug-ins/common/file-pdf-load.c:236 plug-ins/common/file-pdf-load.c:243
+#: plug-ins/common/file-pdf-load.c:250 plug-ins/common/file-pdf-load.c:257
 msgid "Number of pages to load (0 for all)"
 msgstr "Število strani za nalaganje (0 za vse)"
 
-#: plug-ins/common/file-pdf-load.c:242
+#: plug-ins/common/file-pdf-load.c:256
 msgid "N pages"
 msgstr "N strani"
 
-#: plug-ins/common/file-pdf-load.c:255
+#: plug-ins/common/file-pdf-load.c:269
 msgid "Pages"
 msgstr "Strani"
 
-#: plug-ins/common/file-pdf-load.c:256
+#: plug-ins/common/file-pdf-load.c:270
 msgid "The pages to load in the expected order"
 msgstr "Naložene strani v pričakovanem vrstnem redu"
 
-#: plug-ins/common/file-pdf-load.c:260
+#: plug-ins/common/file-pdf-load.c:274
 msgid "Use _Anti-aliasing"
 msgstr "Uporabi _glajenje robov"
 
-#: plug-ins/common/file-pdf-load.c:261
+#: plug-ins/common/file-pdf-load.c:275
 msgid "Render texts with anti-aliasing"
 msgstr "Upodobi besedila z glajenjem robov"
 
-#: plug-ins/common/file-pdf-load.c:266
+#: plug-ins/common/file-pdf-load.c:280
 msgid "_Fill transparent areas with white"
 msgstr "_Zapolni prosojna področja z belo barvo"
 
-#: plug-ins/common/file-pdf-load.c:267
+#: plug-ins/common/file-pdf-load.c:281
 msgid "Render all pages as opaque by filling the background in white"
 msgstr "Upodobi vse strani kot prekrivne z zapolnjevanjem ozadja z belo barvo"
 
@@ -4523,7 +4522,7 @@ msgstr "Upodobi vse strani kot prekrivne z zapolnjevanjem ozadja z belo barvo"
 #. * third is number of pages.
 #. * Specify order as in English if needed.
 #.
-#: plug-ins/common/file-pdf-load.c:378
+#: plug-ins/common/file-pdf-load.c:421
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
@@ -4532,24 +4531,24 @@ msgstr[1] "Dokument PDF »%1$s« ima %3$d stran. Stran %2$d je izven dosega."
 msgstr[2] "Dokument PDF »%1$s« ima %3$d strani. Stran %2$d je izven dosega."
 msgstr[3] "Dokument PDF »%1$s« ima %3$d strani. Stran %2$d je izven dosega."
 
-#: plug-ins/common/file-pdf-load.c:537
+#: plug-ins/common/file-pdf-load.c:577
 msgid "PDF is password protected, please input the password:"
 msgstr "PDF je zaščiten z geslom, vnesite geslo:"
 
-#: plug-ins/common/file-pdf-load.c:547
+#: plug-ins/common/file-pdf-load.c:587
 msgid "Encrypted PDF"
 msgstr "Šifrirani PDF"
 
-#: plug-ins/common/file-pdf-load.c:574
+#: plug-ins/common/file-pdf-load.c:614
 msgid "Wrong password! Please input the right one:"
 msgstr "Napačno geslo! Poskusite znova:"
 
-#: plug-ins/common/file-pdf-load.c:592
+#: plug-ins/common/file-pdf-load.c:632
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "»%s« ni mogoče naložiti: %s"
 
-#: plug-ins/common/file-pdf-load.c:1056
+#: plug-ins/common/file-pdf-load.c:1091
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Napaka pri pridobivanju števila strani iz dane datoteke PDF."
 
@@ -4638,7 +4637,7 @@ msgstr ""
 msgid "PNG export format"
 msgstr "Oblika izvoza PNG"
 
-#: plug-ins/common/file-png.c:290 plug-ins/common/file-ps.c:399
+#: plug-ins/common/file-png.c:290 plug-ins/common/file-ps.c:423
 #: plug-ins/file-fits/fits.c:1019
 msgid "Automatic"
 msgstr "Samodejno"
@@ -4944,63 +4943,63 @@ msgstr "_ASCII"
 msgid "_Raw"
 msgstr "_surovo"
 
-#: plug-ins/common/file-ps.c:337 plug-ins/common/file-ps.c:446
+#: plug-ins/common/file-ps.c:361 plug-ins/common/file-ps.c:470
 msgid "PostScript document"
 msgstr "Dokument PostScript"
 
-#: plug-ins/common/file-ps.c:340 plug-ins/common/file-ps.c:341
+#: plug-ins/common/file-ps.c:364 plug-ins/common/file-ps.c:365
 msgid "Load PostScript documents"
 msgstr "Naloži dokumente PostScript"
 
-#: plug-ins/common/file-ps.c:345
+#: plug-ins/common/file-ps.c:369
 msgid "PostScript"
 msgstr "PostScript"
 
-#: plug-ins/common/file-ps.c:356
+#: plug-ins/common/file-ps.c:380
 msgid "Encapsulated PostScript image"
 msgstr "Slika EPS (Encapsulated PostScript)"
 
-#: plug-ins/common/file-ps.c:359 plug-ins/common/file-ps.c:360
+#: plug-ins/common/file-ps.c:383 plug-ins/common/file-ps.c:384
 msgid "Load Encapsulated PostScript images"
 msgstr "Naloži slike EPS (Encapsulated PostScript)"
 
-#: plug-ins/common/file-ps.c:364 plug-ins/common/file-ps.c:465
+#: plug-ins/common/file-ps.c:388 plug-ins/common/file-ps.c:489
 msgid "Encapsulated PostScript"
 msgstr "Oviti PostScript (EPS)"
 
-#: plug-ins/common/file-ps.c:382
+#: plug-ins/common/file-ps.c:406
 msgid "Try _Bounding Box"
 msgstr "Pos_kusni obsegajoči okvir"
 
-#: plug-ins/common/file-ps.c:383
+#: plug-ins/common/file-ps.c:407
 msgid "FALSE: Use width/height, TRUE: Use BoundingBox"
 msgstr "FALSE: uporabi širino/višino, TRUE: uporabite BoundingBox"
 
-#: plug-ins/common/file-ps.c:388
+#: plug-ins/common/file-ps.c:412
 msgid "_Pages"
 msgstr "_Strani"
 
-#: plug-ins/common/file-ps.c:389
+#: plug-ins/common/file-ps.c:413
 msgid "Pages to load (e.g.: 1,3,5-7)"
 msgstr "Strani za nalaganje (npr.: 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:394
+#: plug-ins/common/file-ps.c:418
 msgid "Colorin_g"
 msgstr "O_barvanje"
 
-#: plug-ins/common/file-ps.c:395
+#: plug-ins/common/file-ps.c:419
 msgid "Import color format"
 msgstr "Uvozi barvno obliko"
 
-#: plug-ins/common/file-ps.c:396
+#: plug-ins/common/file-ps.c:420
 msgid "B/W"
 msgstr "črno belo"
 
-#: plug-ins/common/file-ps.c:397 plug-ins/imagemap/imap-menu.ui:101
+#: plug-ins/common/file-ps.c:421 plug-ins/imagemap/imap-menu.ui:101
 msgid "Gray"
 msgstr "sivinsko"
 
-#: plug-ins/common/file-ps.c:398 plug-ins/common/file-xpm.c:492
+#: plug-ins/common/file-ps.c:422 plug-ins/common/file-xpm.c:492
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:179
 #: plug-ins/imagemap/imap-menu.ui:96 plug-ins/lighting/lighting-main.c:223
 #: plug-ins/lighting/lighting-main.c:346 plug-ins/lighting/lighting-main.c:405
@@ -5009,102 +5008,102 @@ msgstr "sivinsko"
 msgid "Color"
 msgstr "barvno"
 
-#: plug-ins/common/file-ps.c:404
+#: plug-ins/common/file-ps.c:428
 msgid "Te_xt anti-aliasing"
 msgstr "_Glajenje robov besedila"
 
-#: plug-ins/common/file-ps.c:405
+#: plug-ins/common/file-ps.c:429
 msgid "Text anti-aliasing strength"
 msgstr "Jakost glajenja robov besedila"
 
-#: plug-ins/common/file-ps.c:407 plug-ins/common/file-ps.c:416
+#: plug-ins/common/file-ps.c:431 plug-ins/common/file-ps.c:440
 msgid "Weak"
 msgstr "Šibko"
 
-#: plug-ins/common/file-ps.c:408 plug-ins/common/file-ps.c:417
+#: plug-ins/common/file-ps.c:432 plug-ins/common/file-ps.c:441
 msgid "Strong"
 msgstr "Močno"
 
-#: plug-ins/common/file-ps.c:413
+#: plug-ins/common/file-ps.c:437
 msgid "Gra_phic anti-aliasing"
 msgstr "G_lajenje robov slik"
 
-#: plug-ins/common/file-ps.c:414
+#: plug-ins/common/file-ps.c:438
 msgid "Graphic anti-aliasing strength"
 msgstr "Jakost glajenja robov slik"
 
-#: plug-ins/common/file-ps.c:428
+#: plug-ins/common/file-ps.c:452
 msgid "Loads a small preview from a PostScript or PDF document"
 msgstr "Naloži majhen predogled iz dokumenta PostScript ali PDF"
 
-#: plug-ins/common/file-ps.c:449
+#: plug-ins/common/file-ps.c:473
 msgid "Export image as PostScript document"
 msgstr "Izvozi sliko kot dokument PostScript"
 
-#: plug-ins/common/file-ps.c:450 plug-ins/common/file-ps.c:470
+#: plug-ins/common/file-ps.c:474 plug-ins/common/file-ps.c:494
 msgid ""
 "PostScript exporting handles all image types except those with alpha "
 "channels."
 msgstr ""
 "Izvažanje v PostScript podpira vse vrste slik, razen tistih s kanali alfa."
 
-#: plug-ins/common/file-ps.c:456
+#: plug-ins/common/file-ps.c:480
 msgid "PS"
 msgstr "PS"
 
-#: plug-ins/common/file-ps.c:468
+#: plug-ins/common/file-ps.c:492
 msgid "Export image as Encapsulated PostScript image"
 msgstr "Izvozi sliko kot sliko EPS (Encapsulated PostScript)"
 
-#: plug-ins/common/file-ps.c:476
+#: plug-ins/common/file-ps.c:500
 msgid "EPS"
 msgstr "EPS"
 
-#: plug-ins/common/file-ps.c:495
+#: plug-ins/common/file-ps.c:519
 msgid "Width of the image in PostScript file (0: use input image size)"
 msgstr "Širina slike v datoteki PostScript (0: uporabi vhodno velikost slike)"
 
-#: plug-ins/common/file-ps.c:502
+#: plug-ins/common/file-ps.c:526
 msgid "Height of the image in PostScript file (0: use input image size)"
 msgstr "Višina slike v datoteki PostScript (0: uporabi vhodno velikost slike)"
 
-#: plug-ins/common/file-ps.c:508
+#: plug-ins/common/file-ps.c:532
 msgid "_X offset"
 msgstr "Odmik _X"
 
-#: plug-ins/common/file-ps.c:509
+#: plug-ins/common/file-ps.c:533
 msgid "X-offset to image from lower left corner"
 msgstr "Odmik X od slike iz levega spodnjega kota"
 
-#: plug-ins/common/file-ps.c:514
+#: plug-ins/common/file-ps.c:538
 msgid "Y o_ffset"
 msgstr "Odmik _Y"
 
-#: plug-ins/common/file-ps.c:515
+#: plug-ins/common/file-ps.c:539
 msgid "Y-offset to image from lower left corner"
 msgstr "Odmik Y od slike iz levega spodnjega kota"
 
-#: plug-ins/common/file-ps.c:520
+#: plug-ins/common/file-ps.c:544
 msgid "_Unit"
 msgstr "_Enota"
 
-#: plug-ins/common/file-ps.c:521
+#: plug-ins/common/file-ps.c:545
 msgid "Unit of measure for offset values"
 msgstr "Merska enota za vrednosti odmika"
 
-#: plug-ins/common/file-ps.c:522
+#: plug-ins/common/file-ps.c:546
 msgid "Inch"
 msgstr "palec"
 
-#: plug-ins/common/file-ps.c:523
+#: plug-ins/common/file-ps.c:547
 msgid "Millimeter"
 msgstr "milimeter"
 
-#: plug-ins/common/file-ps.c:528
+#: plug-ins/common/file-ps.c:552
 msgid "_Keep aspect ratio"
 msgstr "_Ohrani razmerje stranic"
 
-#: plug-ins/common/file-ps.c:529
+#: plug-ins/common/file-ps.c:553
 msgid ""
 "If enabled, aspect ratio will be maintained on export. Otherwise, the width "
 "and height values will be used."
@@ -5112,15 +5111,15 @@ msgstr ""
 "Če je omogočeno, se razmerje stranic pri izvozu ohrani. V nasprotnem primeru "
 "bodo uporabljene vrednosti širine in višine."
 
-#: plug-ins/common/file-ps.c:535 plug-ins/map-object/map-object-ui.c:738
+#: plug-ins/common/file-ps.c:559 plug-ins/map-object/map-object-ui.c:738
 msgid "Rotation"
 msgstr "Sukanje"
 
-#: plug-ins/common/file-ps.c:541
+#: plug-ins/common/file-ps.c:565
 msgid "PostScript Level _2"
 msgstr "PostScript ravni _2"
 
-#: plug-ins/common/file-ps.c:542
+#: plug-ins/common/file-ps.c:566
 msgid ""
 "If enabled, export in PostScript Level 2 format. Otherwise, export in "
 "PostScript Level 1 format."
@@ -5128,11 +5127,11 @@ msgstr ""
 "Če je ta možnost omogočena, izvozi v zapisu PostScript Level 2. V nasprotnem "
 "primeru izvozi v zapisu PostScript Level 1."
 
-#: plug-ins/common/file-ps.c:548
+#: plug-ins/common/file-ps.c:572
 msgid "Encapsula_ted PostScript"
 msgstr "Ovi_ti PostScript (EPS)"
 
-#: plug-ins/common/file-ps.c:549
+#: plug-ins/common/file-ps.c:573
 msgid ""
 "If enabled, export as Encapsulated PostScript. Otherwise, export as "
 "PostScript."
@@ -5140,54 +5139,54 @@ msgstr ""
 "Če je ta možnost omogočena, izvozi kot Encapsulated PostScript. V nasprotnem "
 "primeru izvozi kot PostScript."
 
-#: plug-ins/common/file-ps.c:555 plug-ins/imagemap/imap_grid.c:301
+#: plug-ins/common/file-ps.c:579 plug-ins/imagemap/imap_grid.c:301
 msgid "_Preview"
 msgstr "_Predogled"
 
-#: plug-ins/common/file-ps.c:556
+#: plug-ins/common/file-ps.c:580
 msgid "Show Preview"
 msgstr "Pokaži predogled"
 
-#: plug-ins/common/file-ps.c:561
+#: plug-ins/common/file-ps.c:585
 msgid "Preview Si_ze"
 msgstr "_Velikost predogleda"
 
-#: plug-ins/common/file-ps.c:562
+#: plug-ins/common/file-ps.c:586
 msgid "Maximum size of preview. Set to 0 for no preview."
 msgstr "Največja velikost predogleda. Nastavite na 0 za brez predogleda."
 
-#: plug-ins/common/file-ps.c:1114
+#: plug-ins/common/file-ps.c:1176
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "Datoteke PostScript »%s« ni mogoče interpretirati."
 
-#: plug-ins/common/file-ps.c:1196
+#: plug-ins/common/file-ps.c:1258
 msgid "Rendered EPS"
 msgstr "Upodobljeni EPS"
 
-#: plug-ins/common/file-ps.c:1224
+#: plug-ins/common/file-ps.c:1286
 #, c-format
 msgid "%s-pages"
 msgstr "%s-strani"
 
-#: plug-ins/common/file-ps.c:1296
+#: plug-ins/common/file-ps.c:1358
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Izvoz v PostScript ne podpira slik s kanali alfa."
 
-#: plug-ins/common/file-ps.c:3741
+#: plug-ins/common/file-ps.c:3837
 msgid "Pages:"
 msgstr "Strani:"
 
-#: plug-ins/common/file-ps.c:3745
+#: plug-ins/common/file-ps.c:3841
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Strani za nalaganje (npr.: 1-4 ali 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3751
+#: plug-ins/common/file-ps.c:3847
 msgid "Open as"
 msgstr "Odpri kot"
 
-#: plug-ins/common/file-ps.c:3842
+#: plug-ins/common/file-ps.c:3938
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5195,28 +5194,28 @@ msgstr ""
 "Ko je vključeno, bo končna slika umerjena na podano velikost brez spremembe "
 "razmerja stranic."
 
-#: plug-ins/common/file-ps.c:3848
+#: plug-ins/common/file-ps.c:3944
 msgid "Image Size"
 msgstr "Velikost slike"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3868
+#: plug-ins/common/file-ps.c:3964
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3869
+#: plug-ins/common/file-ps.c:3965
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3870
+#: plug-ins/common/file-ps.c:3966
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3871
+#: plug-ins/common/file-ps.c:3967
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3878
+#: plug-ins/common/file-ps.c:3974
 msgid "Output"
 msgstr "Izhod"
 
@@ -5915,75 +5914,49 @@ msgstr "_Navadno"
 msgid "R_un-Length Encoded"
 msgstr "_Kodirano s tekočo dolžino (RLE)"
 
-#: plug-ins/common/file-svg.c:167
+#: plug-ins/common/file-svg.c:166
 msgid "SVG image"
 msgstr "Slika SVG"
 
-#: plug-ins/common/file-svg.c:180
+#: plug-ins/common/file-svg.c:179
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:192
+#: plug-ins/common/file-svg.c:188
 msgid "_Paths"
 msgstr "_Poti"
 
-#: plug-ins/common/file-svg.c:193
+#: plug-ins/common/file-svg.c:189
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr "Ali in kako uvoziti poti, da jih je mogoče uporabiti z orodjem poti"
 
-#: plug-ins/common/file-svg.c:194
+#: plug-ins/common/file-svg.c:190
 msgid "Don't import paths"
 msgstr "Ne uvozi poti"
 
-#: plug-ins/common/file-svg.c:195
+#: plug-ins/common/file-svg.c:191
 msgid "Import paths individually"
 msgstr "Uvozi poti posamično"
 
-#: plug-ins/common/file-svg.c:196
+#: plug-ins/common/file-svg.c:192
 msgid "Merge imported paths"
 msgstr "Spoji uvožene poti"
-
-#: plug-ins/common/file-svg.c:371 plug-ins/common/file-svg.c:797
-#: plug-ins/file-exr/file-exr.c:356 plug-ins/file-exr/file-exr.c:370
-msgid "Unknown reason"
-msgstr "Neznani razlog"
-
-#: plug-ins/common/file-svg.c:377
-msgid "Rendering SVG"
-msgstr "Upodabljanje SVG ..."
-
-#: plug-ins/common/file-svg.c:387
-msgid "Rendered SVG"
-msgstr "Upodobljeni SVG"
-
-#: plug-ins/common/file-svg.c:587 plug-ins/common/file-wmf.c:392
-#, c-format
-msgid "%d × %d"
-msgstr "%d x %d"
-
-#: plug-ins/common/file-svg.c:595
-msgid ""
-"SVG file does not\n"
-"specify a size!"
-msgstr ""
-"Datoteka SVG ne\n"
-"navaja velikosti!"
 
 #. We need to ask explicitly before using the "unlimited" size
 #. * option (XML_PARSE_HUGE in libxml) because it is considered
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:722
+#: plug-ins/common/file-svg.c:273
 msgid "Disable safety size limits?"
 msgstr "Ali želite onemogočito varnostne omejitve velikosti?"
 
-#: plug-ins/common/file-svg.c:727
+#: plug-ins/common/file-svg.c:278
 msgid "_No"
 msgstr "_Ne"
 
-#: plug-ins/common/file-svg.c:728
+#: plug-ins/common/file-svg.c:279
 msgid "_Yes"
 msgstr "_Da"
 
@@ -5997,7 +5970,7 @@ msgstr "_Da"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:752
+#: plug-ins/common/file-svg.c:303
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6007,15 +5980,28 @@ msgstr ""
 "Morda bo pomagalo onemogočiti varnostne omejitve. Zlonamerne datoteke SVG "
 "lahko to uporabijo, da porabijo preveč pomnilnika."
 
-#: plug-ins/common/file-svg.c:764
+#: plug-ins/common/file-svg.c:315
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "Iz varnostnih razlogov to uporabite samo za zaupanja vreden vnos!"
 
-#: plug-ins/common/file-svg.c:771
+#: plug-ins/common/file-svg.c:322
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 "Ali želite poskusiti znova brez omejitev, ki preprečujejo razčlenjevanje "
 "ogromnih količin podatkov?"
+
+#: plug-ins/common/file-svg.c:542 plug-ins/file-exr/file-exr.c:356
+#: plug-ins/file-exr/file-exr.c:370
+msgid "Unknown reason"
+msgstr "Neznani razlog"
+
+#: plug-ins/common/file-svg.c:548
+msgid "Rendering SVG"
+msgstr "Upodabljanje SVG ..."
+
+#: plug-ins/common/file-svg.c:558
+msgid "Rendered SVG"
+msgstr "Upodobljeni SVG"
 
 #: plug-ins/common/file-tga.c:261 plug-ins/common/file-tga.c:287
 msgid "TarGA image"
@@ -6087,23 +6073,20 @@ msgstr "»%s«: nepodprta vrednost fiksne glave WBMP"
 msgid "'%s' is not a valid WBMP file"
 msgstr "»%s« ni veljavna datoteka WBMP."
 
-#: plug-ins/common/file-wmf.c:166
+#: plug-ins/common/file-wmf.c:177
 msgid "Microsoft WMF file"
 msgstr "Datoteka Microsoft WMF"
 
-#: plug-ins/common/file-wmf.c:178
+#: plug-ins/common/file-wmf.c:189
 msgid "WMF"
 msgstr "WMF"
 
-#: plug-ins/common/file-wmf.c:386
-msgid ""
-"WMF file does not\n"
-"specify a size!"
-msgstr ""
-"WMF ne navaja\n"
-"velikosti!"
+#: plug-ins/common/file-wmf.c:238
+#, c-format
+msgid "Could not open '%s' for reading AA"
+msgstr "»%s« ni mogoče odpreti za branje AA"
 
-#: plug-ins/common/file-wmf.c:794
+#: plug-ins/common/file-wmf.c:631
 msgid "Rendered WMF"
 msgstr "Upodobljeni WMF"
 
@@ -8160,107 +8143,107 @@ msgstr "Nepopoln vnos"
 msgid "Please fill in all text fields."
 msgstr "Prosimo, izpolnite vsa polja."
 
-#: plug-ins/common/van-gogh-lic.c:144
+#: plug-ins/common/van-gogh-lic.c:145
 msgid "_Van Gogh (LIC)..."
 msgstr "_Van Gogh (LIC) ..."
 
-#: plug-ins/common/van-gogh-lic.c:148
+#: plug-ins/common/van-gogh-lic.c:149
 msgid "Special effects that nobody understands"
 msgstr "Posebni učinki, ki jih nihče ne razume"
 
-#: plug-ins/common/van-gogh-lic.c:158
+#: plug-ins/common/van-gogh-lic.c:159
 msgid "E_ffect Channel"
 msgstr "Kanal u_činkov"
 
-#: plug-ins/common/van-gogh-lic.c:159
+#: plug-ins/common/van-gogh-lic.c:160
 msgid "Effect Channel"
 msgstr "Kanal učinkov"
 
-#: plug-ins/common/van-gogh-lic.c:162
+#: plug-ins/common/van-gogh-lic.c:163
 msgid "Brightness"
 msgstr "Svetlost"
 
-#: plug-ins/common/van-gogh-lic.c:168
+#: plug-ins/common/van-gogh-lic.c:169
 msgid "Effect O_perator"
 msgstr "Ope_rator učinka"
 
-#: plug-ins/common/van-gogh-lic.c:169
+#: plug-ins/common/van-gogh-lic.c:170
 msgid "Effect Operator"
 msgstr "Operator učinka"
 
-#: plug-ins/common/van-gogh-lic.c:170
+#: plug-ins/common/van-gogh-lic.c:171
 msgid "Derivative"
 msgstr "Izpeljanka"
 
-#: plug-ins/common/van-gogh-lic.c:171 plug-ins/gfig/gfig-dialog.c:582
+#: plug-ins/common/van-gogh-lic.c:172 plug-ins/gfig/gfig-dialog.c:582
 msgid "Gradient"
 msgstr "Preliv"
 
-#: plug-ins/common/van-gogh-lic.c:177
+#: plug-ins/common/van-gogh-lic.c:178
 msgid "Con_volve"
 msgstr "Za_vij"
 
-#: plug-ins/common/van-gogh-lic.c:178
+#: plug-ins/common/van-gogh-lic.c:179
 msgid "Convolve"
 msgstr "Zavij"
 
-#: plug-ins/common/van-gogh-lic.c:179
+#: plug-ins/common/van-gogh-lic.c:180
 msgid "With white noise"
 msgstr "z belim šumom"
 
-#: plug-ins/common/van-gogh-lic.c:180
+#: plug-ins/common/van-gogh-lic.c:181
 msgid "With source image"
 msgstr "s slikovnim virom"
 
-#: plug-ins/common/van-gogh-lic.c:186
+#: plug-ins/common/van-gogh-lic.c:187
 msgid "Effect i_mage"
 msgstr "Učin_ek na sliki"
 
-#: plug-ins/common/van-gogh-lic.c:187
+#: plug-ins/common/van-gogh-lic.c:188
 msgid "Effect image"
 msgstr "Učinek na sliki"
 
-#: plug-ins/common/van-gogh-lic.c:192
+#: plug-ins/common/van-gogh-lic.c:193
 msgid "Fil_ter length"
 msgstr "Dolžina _filtra"
 
-#: plug-ins/common/van-gogh-lic.c:193
+#: plug-ins/common/van-gogh-lic.c:194
 msgid "Filter length"
 msgstr "Dolžina filtra"
 
-#: plug-ins/common/van-gogh-lic.c:198
+#: plug-ins/common/van-gogh-lic.c:199
 msgid "_Noise Magnitude"
 msgstr "Obseg _šuma"
 
-#: plug-ins/common/van-gogh-lic.c:199
+#: plug-ins/common/van-gogh-lic.c:200
 msgid "Noise Magnitude"
 msgstr "Obseg šuma"
 
-#: plug-ins/common/van-gogh-lic.c:204
+#: plug-ins/common/van-gogh-lic.c:205
 msgid "Inte_gration steps"
 msgstr "Korakov integriranja"
 
-#: plug-ins/common/van-gogh-lic.c:205
+#: plug-ins/common/van-gogh-lic.c:206
 msgid "Integration steps"
 msgstr "Korakov integriranja"
 
-#: plug-ins/common/van-gogh-lic.c:210
+#: plug-ins/common/van-gogh-lic.c:211
 msgid "Minimum v_alue"
 msgstr "_Najmanjša vrednost"
 
-#: plug-ins/common/van-gogh-lic.c:211
+#: plug-ins/common/van-gogh-lic.c:212
 msgid "Minimum value"
 msgstr "Najmanjša vrednost"
 
-#: plug-ins/common/van-gogh-lic.c:216
+#: plug-ins/common/van-gogh-lic.c:217
 msgid "Ma_ximum value"
 msgstr "N_ajvečja vrednost"
 
-#: plug-ins/common/van-gogh-lic.c:217
+#: plug-ins/common/van-gogh-lic.c:218
 msgid "Maximum value"
 msgstr "N_ajvečja vrednost"
 
-#: plug-ins/common/van-gogh-lic.c:815 plug-ins/common/van-gogh-lic.c:876
+#: plug-ins/common/van-gogh-lic.c:821 plug-ins/common/van-gogh-lic.c:884
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
 
