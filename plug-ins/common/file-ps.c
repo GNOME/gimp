@@ -281,10 +281,11 @@ static void      dither_grey      (const guchar      *grey,
 
 /* Dialog-handling */
 
-static gint32    count_ps_pages   (GFile             *file);
-static gboolean  load_dialog      (GFile             *file,
-                                   GimpProcedure     *procedure,
-                                   GObject           *config);
+static gint32    count_ps_pages   (GFile              *file);
+static gboolean  load_dialog      (GFile              *file,
+                                   GimpVectorLoadData  extracted_data,
+                                   GimpProcedure      *procedure,
+                                   GObject            *config);
 
 
 typedef struct
@@ -663,7 +664,7 @@ ps_load (GimpProcedure         *procedure,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      if (! load_dialog (file, procedure, G_OBJECT (config)))
+      if (! load_dialog (file, extracted_data, procedure, G_OBJECT (config)))
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_CANCEL,
                                                  NULL);
@@ -3767,9 +3768,10 @@ count_ps_pages (GFile *file)
 }
 
 static gboolean
-load_dialog (GFile         *file,
-             GimpProcedure *procedure,
-             GObject       *config)
+load_dialog (GFile              *file,
+             GimpVectorLoadData  extracted_data,
+             GimpProcedure      *procedure,
+             GObject            *config)
 {
   GtkWidget     *dialog;
   GtkWidget     *hbox;
@@ -3786,7 +3788,7 @@ load_dialog (GFile         *file,
 
   dialog = gimp_vector_load_procedure_dialog_new (GIMP_VECTOR_LOAD_PROCEDURE (procedure),
                                                   GIMP_PROCEDURE_CONFIG (config),
-                                                  NULL);
+                                                  &extracted_data, NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                             GTK_RESPONSE_OK,

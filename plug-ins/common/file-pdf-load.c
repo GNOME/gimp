@@ -120,6 +120,7 @@ static GimpImage       * load_image          (PopplerDocument       *doc,
 
 static GimpPDBStatusType load_dialog         (PopplerDocument       *doc,
                                               PdfSelectedPages      *pages,
+                                              GimpVectorLoadData     extracted_data,
                                               GimpProcedure         *procedure,
                                               GimpProcedureConfig   *config);
 
@@ -371,7 +372,7 @@ pdf_load (GimpProcedure         *procedure,
     }
   else if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      status = load_dialog (doc, &pages, procedure, config);
+      status = load_dialog (doc, &pages, extracted_data, procedure, config);
     }
   else if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
@@ -1036,6 +1037,7 @@ white_background_toggled (GtkToggleButton *widget,
 static GimpPDBStatusType
 load_dialog (PopplerDocument     *doc,
              PdfSelectedPages    *pages,
+             GimpVectorLoadData   extracted_data,
              GimpProcedure       *procedure,
              GimpProcedureConfig *config)
 {
@@ -1060,7 +1062,7 @@ load_dialog (PopplerDocument     *doc,
 
   dialog = gimp_vector_load_procedure_dialog_new (GIMP_VECTOR_LOAD_PROCEDURE (procedure),
                                                   GIMP_PROCEDURE_CONFIG (config),
-                                                  NULL);
+                                                  &extracted_data, NULL);
 
   g_object_get (config,
                 "target",           &target,

@@ -68,6 +68,7 @@ GType       gimp_vector_load_procedure_dialog_get_type          (void) G_GNUC_CO
 
 GtkWidget * gimp_vector_load_procedure_dialog_new               (GimpVectorLoadProcedure *procedure,
                                                                  GimpProcedureConfig     *config,
+                                                                 GimpVectorLoadData      *extracted_data,
                                                                  GFile                   *file);
 
 

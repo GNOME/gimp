@@ -35,18 +35,22 @@
 
 struct _GimpVectorLoadProcedureDialogPrivate
 {
-  /* TODO: add thumbnail support from the file. */
-  GFile    *file;
+  GFile              *file;
+  GimpVectorLoadData *extracted_data;
 };
 
 
-static void gimp_vector_load_procedure_dialog_fill_list  (GimpProcedureDialog *dialog,
-                                                          GimpProcedure       *procedure,
-                                                          GimpProcedureConfig *config,
-                                                          GList               *properties);
-static void gimp_vector_load_procedure_dialog_fill_start (GimpProcedureDialog *dialog,
-                                                          GimpProcedure       *procedure,
-                                                          GimpProcedureConfig *config);
+static void gimp_vector_load_procedure_dialog_fill_start       (GimpProcedureDialog           *dialog,
+                                                                GimpProcedure                 *procedure,
+                                                                GimpProcedureConfig           *config);
+static void gimp_vector_load_procedure_dialog_fill_list        (GimpProcedureDialog           *dialog,
+                                                                GimpProcedure                 *procedure,
+                                                                GimpProcedureConfig           *config,
+                                                                GList                         *properties);
+
+static void gimp_vector_load_procedure_dialog_preview_allocate (GtkWidget                     *gtk_image,
+                                                                GtkAllocation                 *allocation,
+                                                                GimpVectorLoadProcedureDialog *dialog);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpVectorLoadProcedureDialog, gimp_vector_load_procedure_dialog, GIMP_TYPE_PROCEDURE_DIALOG)
@@ -56,9 +60,7 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpVectorLoadProcedureDialog, gimp_vector_load_proc
 static void
 gimp_vector_load_procedure_dialog_class_init (GimpVectorLoadProcedureDialogClass *klass)
 {
-  GimpProcedureDialogClass *proc_dialog_class;
-
-  proc_dialog_class = GIMP_PROCEDURE_DIALOG_CLASS (klass);
+  GimpProcedureDialogClass *proc_dialog_class = GIMP_PROCEDURE_DIALOG_CLASS (klass);
 
   proc_dialog_class->fill_start = gimp_vector_load_procedure_dialog_fill_start;
   proc_dialog_class->fill_list  = gimp_vector_load_procedure_dialog_fill_list;
@@ -77,18 +79,126 @@ gimp_vector_load_procedure_dialog_fill_start (GimpProcedureDialog *dialog,
                                               GimpProcedure       *procedure,
                                               GimpProcedureConfig *config)
 {
-  GtkWidget *content_area;
-  GtkWidget *res_entry;
+  GimpVectorLoadProcedureDialog *vector_dialog = GIMP_VECTOR_LOAD_PROCEDURE_DIALOG (dialog);
+  GtkWidget                     *content_area;
+  GtkWidget                     *top_hbox;
+  GtkWidget                     *main_vbox;
+  GtkWidget                     *res_entry;
+  GtkWidget                     *label;
+  gchar                         *text = NULL;
+  gchar                         *markup = NULL;
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_box_pack_start (GTK_BOX (content_area), main_vbox, FALSE, FALSE, 0);
+  gtk_widget_show (main_vbox);
+
+  top_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), top_hbox, FALSE, FALSE, 0);
+  gtk_widget_show (top_hbox);
 
   /* Resolution */
   res_entry = gimp_prop_resolution_entry_new (G_OBJECT (config),
                                               "width", "height", "pixel-density",
                                               "physical-unit");
 
-  gtk_box_pack_start (GTK_BOX (content_area), res_entry, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (top_hbox), res_entry, FALSE, FALSE, 0);
   gtk_widget_show (res_entry);
+
+  /* Preview */
+
+  if (vector_dialog->priv->file)
+    {
+      GtkWidget *image;
+
+      image = gtk_image_new ();
+      g_signal_connect (image, "size-allocate",
+                        G_CALLBACK (gimp_vector_load_procedure_dialog_preview_allocate),
+                        dialog);
+
+      gtk_box_pack_start (GTK_BOX (top_hbox), image, FALSE, FALSE, 0);
+      gtk_widget_show (image);
+    }
+
+  if (vector_dialog->priv->extracted_data)
+    {
+      if (vector_dialog->priv->extracted_data->exact_width && vector_dialog->priv->extracted_data->exact_height)
+        {
+          /* TRANSLATORS: the %s is a vector format name, e.g. "SVG" or "PDF",
+           * followed by 2D dimensions with unit, e.g. "200 inch x 400 inch"
+           */
+          text = g_strdup_printf (_("Source %s file size: %%.%df %s × %%.%df %s"),
+                                  gimp_file_procedure_get_format_name (GIMP_FILE_PROCEDURE (procedure)),
+                                  gimp_unit_get_digits (vector_dialog->priv->extracted_data->width_unit),
+                                  gimp_unit_get_abbreviation (vector_dialog->priv->extracted_data->width_unit),
+                                  gimp_unit_get_digits (vector_dialog->priv->extracted_data->height_unit),
+                                  gimp_unit_get_abbreviation (vector_dialog->priv->extracted_data->height_unit));
+          markup = g_strdup_printf (text, vector_dialog->priv->extracted_data->width, vector_dialog->priv->extracted_data->height);
+        }
+      else if (vector_dialog->priv->extracted_data->correct_ratio)
+        {
+          gdouble ratio_width         = 0.0;
+          gint    ratio_width_digits  = 0;
+          gdouble ratio_height        = 0.0;
+          gint    ratio_height_digits = 0;
+
+          if (vector_dialog->priv->extracted_data->width_unit == vector_dialog->priv->extracted_data->height_unit)
+            {
+              ratio_width  = vector_dialog->priv->extracted_data->width;
+              ratio_height = vector_dialog->priv->extracted_data->height;
+              if (vector_dialog->priv->extracted_data->width_unit == GIMP_UNIT_PIXEL ||
+                  vector_dialog->priv->extracted_data->width_unit == GIMP_UNIT_PERCENT)
+                ratio_width_digits = ratio_height_digits = 0;
+              else
+                ratio_width_digits = ratio_height_digits = gimp_unit_get_digits (vector_dialog->priv->extracted_data->width_unit);
+            }
+          else if (vector_dialog->priv->extracted_data->width_unit != GIMP_UNIT_PIXEL && vector_dialog->priv->extracted_data->height_unit != GIMP_UNIT_PIXEL &&
+                   vector_dialog->priv->extracted_data->width_unit != GIMP_UNIT_PERCENT && vector_dialog->priv->extracted_data->height_unit != GIMP_UNIT_PERCENT)
+            {
+              ratio_width = vector_dialog->priv->extracted_data->width / gimp_unit_get_factor (vector_dialog->priv->extracted_data->width_unit);
+              ratio_height = vector_dialog->priv->extracted_data->height / gimp_unit_get_factor (vector_dialog->priv->extracted_data->height_unit);
+
+              ratio_width_digits = ratio_height_digits = gimp_unit_get_digits (GIMP_UNIT_INCH);
+            }
+
+          if (ratio_width != 0.0 && ratio_height != 0.0)
+            {
+              /* TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF". */
+              text = g_strdup_printf (_("Source %s file's aspect ratio: %%.%df × %%.%df"),
+                                      gimp_file_procedure_get_format_name (GIMP_FILE_PROCEDURE (procedure)),
+                                      ratio_width_digits, ratio_height_digits);
+              markup = g_strdup_printf (text, ratio_width, ratio_height);
+            }
+        }
+      else if (vector_dialog->priv->extracted_data->width != 0.0 && vector_dialog->priv->extracted_data->height != 0.0)
+        {
+          text = g_strdup_printf (_("Approximated source %s file size: %%.%df %s × %%.%df %s"),
+                                  gimp_file_procedure_get_format_name (GIMP_FILE_PROCEDURE (procedure)),
+                                  gimp_unit_get_digits (vector_dialog->priv->extracted_data->width_unit),
+                                  gimp_unit_get_abbreviation (vector_dialog->priv->extracted_data->width_unit),
+                                  gimp_unit_get_digits (vector_dialog->priv->extracted_data->height_unit),
+                                  gimp_unit_get_abbreviation (vector_dialog->priv->extracted_data->height_unit));
+          markup = g_strdup_printf (text, vector_dialog->priv->extracted_data->width, vector_dialog->priv->extracted_data->height);
+        }
+    }
+
+  if (markup == NULL)
+    {
+      /* TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF". */
+      text = g_strdup_printf (_("The source %s file does not specify a size!"),
+                              gimp_file_procedure_get_format_name (GIMP_FILE_PROCEDURE (procedure)));
+      markup = g_strdup_printf ("<i>%s</i>", text);
+    }
+
+  label = gtk_label_new (NULL);
+  gtk_label_set_markup (GTK_LABEL (label), markup);
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
+  gtk_box_pack_start (GTK_BOX (main_vbox), label, TRUE, TRUE, 4);
+  gtk_widget_show (label);
+
+  g_free (text);
+  g_free (markup);
 
   GIMP_PROCEDURE_DIALOG_CLASS (parent_class)->fill_start (dialog, procedure, config);
 }
@@ -122,13 +232,77 @@ gimp_vector_load_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
   g_list_free (properties2);
 }
 
+static void
+gimp_vector_load_procedure_dialog_preview_allocate (GtkWidget                     *gtk_image,
+                                                    GtkAllocation                 *allocation,
+                                                    GimpVectorLoadProcedureDialog *dialog)
+{
+  if (dialog->priv->file)
+    {
+      GimpProcedure     *procedure = NULL;
+      GimpValueArray    *retval;
+      GimpPDBStatusType  status;
+
+      g_object_get (dialog, "procedure", &procedure, NULL);
+
+      retval = gimp_procedure_run (procedure,
+                                   "file",   dialog->priv->file,
+                                   "width",  allocation->height,
+                                   "height", allocation->height,
+                                   "keep-ratio", TRUE,
+                                   NULL);
+
+      status = g_value_get_enum (gimp_value_array_index (retval, 0));
+
+      if (status == GIMP_PDB_SUCCESS)
+        {
+          GimpImage *image;
+          GdkPixbuf *preview;
+
+          image = g_value_get_object (gimp_value_array_index (retval, 1));
+          preview = gimp_image_get_thumbnail (image,
+                                              gimp_image_get_width (image),
+                                              gimp_image_get_height (image),
+                                              GIMP_PIXBUF_SMALL_CHECKS);
+          gtk_image_set_from_pixbuf (GTK_IMAGE (gtk_image), preview);
+          gimp_image_delete (image);
+        }
+
+      gimp_value_array_unref (retval);
+    }
+}
+
 
 /* Public Functions */
 
 
+/**
+ * gimp_vector_load_procedure_dialog_new:
+ * @procedure: the associated #GimpVectorLoadProcedure.
+ * @config:    a #GimpProcedureConfig from which properties will be
+ *             turned into widgets.
+ * @extracted_data: (nullable): the extracted dimensions of the file to load.
+ * @file: (nullable): a [iface@Gio.File] to load the preview from.
+ *
+ * Creates a new dialog for @procedure using widgets generated from
+ * properties of @config.
+ *
+ * @file must be the same vector file which was passed to the
+ * [callback@Gimp.RunVectorLoadFunc] implementation for your plug-in. If you pass any
+ * other file, then the preview may be wrong or not showing at all. And it is
+ * considered a programming error.
+ *
+ * As for all #GtkWindow, the returned #GimpProcedureDialog object is
+ * owned by GTK and its initial reference is stored in an internal list
+ * of top-level windows. To delete the dialog, call
+ * gtk_widget_destroy().
+ *
+ * Returns: (transfer none): the newly created #GimpVectorLoadProcedureDialog.
+ */
 GtkWidget *
 gimp_vector_load_procedure_dialog_new (GimpVectorLoadProcedure *procedure,
                                        GimpProcedureConfig     *config,
+                                       GimpVectorLoadData      *extracted_data,
                                        GFile                   *file)
 {
   GtkWidget   *dialog;
@@ -141,7 +315,7 @@ gimp_vector_load_procedure_dialog_new (GimpVectorLoadProcedure *procedure,
   g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
   g_return_val_if_fail (gimp_procedure_config_get_procedure (config) ==
                         GIMP_PROCEDURE (procedure), NULL);
-  /*g_return_val_if_fail (G_IS_FILE (file), NULL);*/
+  g_return_val_if_fail (file == NULL || G_IS_FILE (file), NULL);
 
   format_name = gimp_file_procedure_get_format_name (GIMP_FILE_PROCEDURE (procedure));
   if (! format_name)
@@ -170,6 +344,7 @@ gimp_vector_load_procedure_dialog_new (GimpVectorLoadProcedure *procedure,
                          "use-header-bar", use_header_bar,
                          NULL);
   GIMP_VECTOR_LOAD_PROCEDURE_DIALOG (dialog)->priv->file = file;
+  GIMP_VECTOR_LOAD_PROCEDURE_DIALOG (dialog)->priv->extracted_data = extracted_data;
   g_free (title);
 
   return dialog;

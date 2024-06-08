@@ -108,7 +108,7 @@ typedef GimpValueArray * (* GimpRunVectorLoadFunc)       (GimpProcedure         
  * @procedure:      the [class@Gimp.Procedure].
  * @run_mode:       the [enum@RunMode].
  * @metadata:       the [class@Gimp.Metadata] which will be added to the new image.
- * @config:         the @procedure's remaining arguments.
+ * @config: (nullable): the @procedure's remaining arguments.
  * @file:           the [iface@Gio.File] to load from.
  * @extracted_data: (out): dimensions and pixel density extracted from @file.
  * @data_for_run: (out) (nullable): will be passed as @data_from_extract in [callback@RunVectorLoadFunc].
@@ -138,7 +138,13 @@ typedef GimpValueArray * (* GimpRunVectorLoadFunc)       (GimpProcedure         
  * will still be called but default values might be bogus.
  * If the return value is %FALSE and %error is set, it means that the file is
  * invalid and cannot even be loaded. Thus [callback@RunVectorLoadFunc] won't be
- * run and %error
+ * run and %error is passed as the main run error.
+ *
+ * Note: when @procedure is run, the original arguments will be passed as
+ * @config. Nevertheless it may happen that this function is called with a %NULL
+ * @config, in particular when [method@VectorLoadProcedure.extract_dimensions] is
+ * called. In such a case, the callback is expected to return whatever can be
+ * considered "best judgement" defaults.
  *
  * Returns: %TRUE if any information could be extracted from @file.
  *
@@ -162,15 +168,20 @@ G_DECLARE_FINAL_TYPE (GimpVectorLoadProcedure, gimp_vector_load_procedure, GIMP,
 typedef struct _GimpVectorLoadProcedure        GimpVectorLoadProcedure;
 
 
-GimpProcedure * gimp_vector_load_procedure_new  (GimpPlugIn                 *plug_in,
-                                                 const gchar                *name,
-                                                 GimpPDBProcType             proc_type,
-                                                 GimpExtractVectorFunc       extract_func,
-                                                 gpointer                    extract_data,
-                                                 GDestroyNotify              extract_data_destroy,
-                                                 GimpRunVectorLoadFunc       run_func,
-                                                 gpointer                    run_data,
-                                                 GDestroyNotify              run_data_destroy);
+GimpProcedure * gimp_vector_load_procedure_new                (GimpPlugIn                 *plug_in,
+                                                               const gchar                *name,
+                                                               GimpPDBProcType             proc_type,
+                                                               GimpExtractVectorFunc       extract_func,
+                                                               gpointer                    extract_data,
+                                                               GDestroyNotify              extract_data_destroy,
+                                                               GimpRunVectorLoadFunc       run_func,
+                                                               gpointer                    run_data,
+                                                               GDestroyNotify              run_data_destroy);
+
+gboolean        gimp_vector_load_procedure_extract_dimensions (GimpVectorLoadProcedure    *procedure,
+                                                               GFile                      *file,
+                                                               GimpVectorLoadData         *data,
+                                                               GError                    **error);
 
 
 G_END_DECLS

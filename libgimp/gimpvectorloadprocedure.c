@@ -51,7 +51,7 @@
  *
  * When invoked via [method@Procedure.run], it unpacks these standard
  * arguments and calls @run_func which is a [callback@RunImageFunc]. The
- * [class@ProcedureConfig] of [callback@GimpRunVectorLoadFunc] contains
+ * [class@ProcedureConfig] of [callback@Gimp.RunVectorLoadFunc] contains
  * additionally added arguments but also the arguments added by this class.
  */
 
@@ -526,4 +526,80 @@ gimp_vector_load_procedure_new (GimpPlugIn            *plug_in,
   procedure->extract_data_destroy = extract_data_destroy;
 
   return GIMP_PROCEDURE (procedure);
+}
+
+/**
+ * gimp_vector_load_procedure_extract_dimensions:
+ * @procedure:    the associated #GimpVectorLoadProcedure.
+ * @file:         a [iface@Gio.File] which can be processed by @procedure.
+ * @data: (out):  the returned dimension data.
+ * @error: (out): the #GError in case of error.
+ *
+ * Extracts native or suggested dimensions from @file, which must be a vector
+ * file in the right format supported by @procedure. It is considered a
+ * programming error to pass a file of invalid format.
+ *
+ * Returns: %TRUE if dimensions could be extracted.
+ */
+gboolean
+gimp_vector_load_procedure_extract_dimensions (GimpVectorLoadProcedure  *procedure,
+                                               GFile                    *file,
+                                               GimpVectorLoadData       *data,
+                                               GError                  **error)
+{
+  gboolean extract_success = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_VECTOR_LOAD_PROCEDURE (procedure), FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
+  g_return_val_if_fail (data != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (procedure->extract_func)
+    {
+      gchar          *mimetype             = NULL;
+      GimpMetadata   *metadata             = NULL;
+      gpointer        data_for_run         = NULL;
+      GDestroyNotify  data_for_run_destroy = NULL;
+
+      mimetype = (gchar *) gimp_file_procedure_get_mime_types (GIMP_FILE_PROCEDURE (procedure));
+
+      if (mimetype != NULL)
+        {
+          char *delim;
+
+          mimetype = g_strdup (mimetype);
+          mimetype = g_strstrip (mimetype);
+          delim = strstr (mimetype, ",");
+          if (delim)
+            *delim = '\0';
+          /* Though docs only writes about the list being comma-separated, our
+           * code apparently also split by spaces.
+           */
+          delim = strstr (mimetype, " ");
+          if (delim)
+            *delim = '\0';
+          delim = strstr (mimetype, "\t");
+          if (delim)
+            *delim = '\0';
+
+          metadata = gimp_metadata_load_from_file (file, NULL);
+          g_free (mimetype);
+        }
+
+      if (metadata == NULL)
+        metadata = gimp_metadata_new ();
+
+      extract_success = procedure->extract_func (GIMP_PROCEDURE (procedure),
+                                                 GIMP_RUN_NONINTERACTIVE,
+                                                 file, metadata, NULL,
+                                                 data, &data_for_run, &data_for_run_destroy,
+                                                 procedure->extract_data, error);
+
+      if (data_for_run_destroy)
+        data_for_run_destroy (data_for_run);
+
+      g_clear_object (&metadata);
+    }
+
+  return extract_success;
 }

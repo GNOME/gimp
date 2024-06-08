@@ -117,11 +117,9 @@ static gboolean         load_wmf_size        (GFile                 *file,
                                               float                 *height,
                                               gboolean              *guessed);
 static gboolean         load_dialog          (GFile                 *file,
+                                              GimpVectorLoadData     extracted_data,
                                               GimpProcedure         *procedure,
                                               GimpProcedureConfig   *config);
-static WmfPixbuf      * wmf_get_pixbuf       (GFile                 *file,
-                                              gint                  *width,
-                                              gint                  *height);
 static guchar         * wmf_load_file        (GFile                 *file,
                                               gint                   requested_width,
                                               gint                   requested_height,
@@ -273,7 +271,7 @@ wmf_load (GimpProcedure         *procedure,
 
   gegl_init (NULL, NULL);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE && ! load_dialog (file, procedure, config))
+  if (run_mode == GIMP_RUN_INTERACTIVE && ! load_dialog (file, extracted_data, procedure, config))
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_CANCEL,
                                              NULL);
@@ -356,9 +354,6 @@ wmf_load_thumb (GimpProcedure       *procedure,
 }
 
 
-static GtkWidget *size_label = NULL;
-
-
 /*  This function retrieves the pixel size from a WMF file. */
 static gboolean
 load_wmf_size (GFile       *file,
@@ -425,20 +420,6 @@ load_wmf_size (GFile       *file,
 
       if (guessed)
         *guessed = TRUE;
-
-      if (size_label)
-        gtk_label_set_text (GTK_LABEL (size_label),
-                            _("WMF file does not\nspecify a size!"));
-    }
-  else
-    {
-      if (size_label)
-        {
-          gchar *text = g_strdup_printf (_("%.4f × %.4f"), *width, *height);
-
-          gtk_label_set_text (GTK_LABEL (size_label), text);
-          g_free (text);
-        }
     }
 
   return success;
@@ -447,36 +428,20 @@ load_wmf_size (GFile       *file,
 
 /*  User interface  */
 
-static void
-wmf_preview_callback (GtkWidget     *widget,
-                      GtkAllocation *allocation,
-                      WmfPixbuf     *pixbuf)
-{
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (widget),
-                          0, 0, pixbuf->width, pixbuf->height,
-                          GIMP_RGBA_IMAGE,
-                          pixbuf->pixels, pixbuf->width * 4);
-}
-
 static gboolean
 load_dialog (GFile               *file,
+             GimpVectorLoadData   extracted_data,
              GimpProcedure       *procedure,
              GimpProcedureConfig *config)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *content_area;
-  GtkWidget     *vbox;
-  GtkWidget     *frame;
-  GtkWidget     *image;
-  WmfPixbuf     *pixbuf;
-  gboolean       run = FALSE;
-  WmfLoadVals    vals;
+  GtkWidget *dialog;
+  gboolean   run = FALSE;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_vector_load_procedure_dialog_new (GIMP_VECTOR_LOAD_PROCEDURE (procedure),
                                                   GIMP_PROCEDURE_CONFIG (config),
-                                                  NULL);
+                                                  &extracted_data, file);
 
   /* TODO: in the old version, there used to be X and Y ratio fields which could
    * be constrained/linked (or not) and would sync back and forth with the
@@ -484,42 +449,8 @@ load_dialog (GFile               *file,
    * such UI when editing dimensions with options in GimpResolutionEntry?
    */
 
-  content_area  = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-
-  /*  The WMF preview  */
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_box_pack_start (GTK_BOX (content_area), vbox, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (content_area), vbox, 0);
-  gtk_widget_show (vbox);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vals.width  = - WMF_PREVIEW_SIZE;
-  vals.height = - WMF_PREVIEW_SIZE;
-  pixbuf = wmf_get_pixbuf (file, &vals.width, &vals.height);
-  image = gimp_preview_area_new ();
-  gtk_widget_set_size_request (image, vals.width, vals.height);
-  gtk_container_add (GTK_CONTAINER (frame), image);
-  gtk_widget_show (image);
-
-  g_signal_connect (image, "size-allocate",
-                    G_CALLBACK (wmf_preview_callback),
-                    pixbuf);
-
-  size_label = gtk_label_new (NULL);
-  gtk_label_set_justify (GTK_LABEL (size_label), GTK_JUSTIFY_CENTER);
-  gtk_box_pack_start (GTK_BOX (vbox), size_label, TRUE, TRUE, 4);
-  gtk_widget_show (size_label);
-
-  /* Run the dialog. */
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
-
   gtk_widget_destroy (dialog);
-  g_free (pixbuf->pixels);
-  g_free (pixbuf);
 
   return run;
 }
@@ -562,134 +493,6 @@ pixbuf_gd_convert (const gint *gd_pixels,
       }
 
   return pixels;
-}
-
-static WmfPixbuf *
-wmf_get_pixbuf (GFile *file,
-                gint  *width,
-                gint  *height)
-{
-  WmfPixbuf      *pixbuf  = NULL;
-  GMappedFile    *mapped;
-  guchar         *pixels  = NULL;
-
-  /* the bits we need to decode the WMF via libwmf2's GD layer  */
-  wmf_error_t     err;
-  gulong          flags;
-  wmf_gd_t       *ddata = NULL;
-  wmfAPI         *API   = NULL;
-  wmfAPI_Options  api_options;
-  guint           file_width;
-  guint           file_height;
-  wmfD_Rect       bbox;
-  gint           *gd_pixels = NULL;
-  char*           wmffontdirs[2] = { NULL, NULL };
-
-  mapped = g_mapped_file_new (g_file_peek_path (file), FALSE, NULL);
-
-  if (! mapped)
-    return NULL;
-
-  flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
-  api_options.function = wmf_gd_function;
-
-#ifdef ENABLE_RELOCATABLE_RESOURCES
-  wmffontdirs[0] = g_build_filename (gimp_installation_directory (),
-                                     "share/libwmf/fonts", NULL);
-  flags |= WMF_OPT_FONTDIRS;
-  api_options.fontdirs = wmffontdirs;
-#endif
-
-  err = wmf_api_create (&API, flags, &api_options);
-  if (wmffontdirs[0])
-    g_free (wmffontdirs[0]);
-  if (err != wmf_E_None)
-    goto _wmf_error;
-
-  ddata = WMF_GD_GetData (API);
-  ddata->type = wmf_gd_image;
-
-  err = wmf_mem_open (API,
-                      (guchar *) g_mapped_file_get_contents (mapped),
-                      g_mapped_file_get_length (mapped));
-  if (err != wmf_E_None)
-    goto _wmf_error;
-
-  err = wmf_scan (API, 0, &bbox);
-  if (err != wmf_E_None)
-    goto _wmf_error;
-
-  err = wmf_display_size (API, &file_width, &file_height,
-                          WMF_DEFAULT_RESOLUTION, WMF_DEFAULT_RESOLUTION);
-  if (err != wmf_E_None || file_width <= 0 || file_height <= 0)
-    goto _wmf_error;
-
-  if (!*width || !*height)
-    goto _wmf_error;
-
-  /*  either both arguments negative or none  */
-  if ((*width * *height) < 0)
-    goto _wmf_error;
-
-  ddata->bbox   = bbox;
-
-  if (*width > 0)
-    {
-      ddata->width  = *width;
-      ddata->height = *height;
-    }
-  else
-    {
-      gdouble w      = file_width;
-      gdouble h      = file_height;
-      gdouble aspect = ((gdouble) *width) / (gdouble) *height;
-
-      if (aspect > (w / h))
-        {
-          ddata->height = abs (*height);
-          ddata->width  = (gdouble) abs (*width) * (w / h) + 0.5;
-        }
-      else
-        {
-          ddata->width  = abs (*width);
-          ddata->height = (gdouble) abs (*height) / (w / h) + 0.5;
-        }
-    }
-
-  err = wmf_play (API, 0, &bbox);
-  if (err != wmf_E_None)
-    goto _wmf_error;
-
-  if (ddata->gd_image != NULL)
-    gd_pixels = wmf_gd_image_pixels (ddata->gd_image);
-  if (gd_pixels == NULL)
-    goto _wmf_error;
-
-  pixels = pixbuf_gd_convert (gd_pixels, ddata->width, ddata->height);
-  if (pixels == NULL)
-    goto _wmf_error;
-
-  *width = ddata->width;
-  *height = ddata->height;
-
- _wmf_error:
-  if (API)
-    {
-      wmf_mem_close (API);
-      wmf_api_destroy (API);
-    }
-
-  g_mapped_file_unref (mapped);
-
-  if (pixels)
-    {
-      pixbuf = g_new0 (WmfPixbuf, 1);
-      pixbuf->pixels = pixels;
-      pixbuf->width  = *width;
-      pixbuf->height = *height;
-    }
-
-  return pixbuf;
 }
 
 static guchar *

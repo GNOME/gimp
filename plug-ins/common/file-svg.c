@@ -778,85 +778,15 @@ load_dialog (GFile                *file,
              GimpVectorLoadData    extracted_data,
              GError              **load_error)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *frame;
-  GtkWidget     *main_hbox;
-  GtkWidget     *vbox;
-  GtkWidget     *image;
-  GdkPixbuf     *preview;
-  GtkWidget     *label;
-  gboolean       run;
-  GError        *error = NULL;
-
-  preview = load_rsvg_pixbuf (handle,
-                              SVG_PREVIEW_SIZE, SVG_PREVIEW_SIZE, SVG_DEFAULT_RESOLUTION,
-                              &error);
-
-  if (! preview)
-    {
-      /*  Do not rely on librsvg setting GError on failure!  */
-      g_set_error (load_error,
-                   error ? error->domain : 0, error ? error->code : 0,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file),
-                   error ? error->message : _("Unknown reason"));
-      g_clear_error (&error);
-
-      return GIMP_PDB_EXECUTION_ERROR;
-    }
+  GtkWidget *dialog;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  /* Scalable Vector Graphics is SVG, should perhaps not be translated */
   dialog = gimp_vector_load_procedure_dialog_new (GIMP_VECTOR_LOAD_PROCEDURE (procedure),
                                                   GIMP_PROCEDURE_CONFIG (config),
-                                                  NULL);
-
-  main_hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                              "main-hbox", "paths", NULL);
-  gtk_orientable_set_orientation (GTK_ORIENTABLE (main_hbox), GTK_ORIENTATION_HORIZONTAL);
-
-  /*  The SVG preview  */
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  image = gtk_image_new_from_pixbuf (preview);
-  gtk_container_add (GTK_CONTAINER (frame), image);
-  gtk_widget_show (image);
-
-  label = gtk_label_new (NULL);
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
-  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 4);
-  gtk_widget_show (label);
-
-  if (extracted_data.width  >= 0.0                    &&
-      extracted_data.height >= 0.0                    &&
-      extracted_data.width_unit  != GIMP_UNIT_PERCENT &&
-      extracted_data.height_unit != GIMP_UNIT_PERCENT)
-    {
-      /* TRANSLATORS: these are 2D dimensions with unit, e.g. "200 inch x 400 inch" */
-      gchar *text = g_strdup_printf (_("%.4f %s × %.4f %s"),
-                                     extracted_data.width,
-                                     gimp_unit_get_abbreviation (extracted_data.width_unit),
-                                     extracted_data.height,
-                                     gimp_unit_get_abbreviation (extracted_data.height_unit));
-      gtk_label_set_text (GTK_LABEL (label), text);
-      g_free (text);
-    }
-  else
-    {
-      gtk_label_set_text (GTK_LABEL (label),
-                          _("SVG file does not\nspecify a size!"));
-    }
-
-  /* Complete the dialog. */
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "main-hbox", NULL);
+                                                  &extracted_data, file);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
