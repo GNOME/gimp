@@ -68,8 +68,18 @@ export_scaled_img(image, 994, 692, 'build/windows/installer/installsplash.bmp')
 export_scaled_img(image, 497, 360, 'build/windows/installer/installsplash_small.bmp')
 export_scaled_img(image, 1160, 803, 'build/windows/installer/installsplash_big.bmp')
 
-export_cropped_img(image, 164, 314, 'build/windows/installer/windows-installer-intro-small.bmp')
-export_cropped_img(image, 328, 602, 'build/windows/installer/windows-installer-intro-big.bmp')
-
 # Avoid the images being re-generated at each build.
 pathlib.Path('gimp-data/images/stamp-installsplash.bmp').touch()
+
+
+# https://jrsoftware.org/ishelp/index.php?topic=setup_wizardimagefile
+export_cropped_img(image, 164, 314, 'build/windows/installer/install-end.scale-100.bmp')
+export_cropped_img(image, 192, 386, 'build/windows/installer/install-end.scale-125.bmp')
+export_cropped_img(image, 246, 459, 'build/windows/installer/install-end.scale-150.bmp')
+export_cropped_img(image, 273, 556, 'build/windows/installer/install-end.scale-175.bmp')
+export_cropped_img(image, 328, 604, 'build/windows/installer/install-end.scale-200.bmp')
+export_cropped_img(image, 355, 700, 'build/windows/installer/install-end.scale-225.bmp')
+export_cropped_img(image, 410, 797, 'build/windows/installer/install-end.scale-250.bmp')
+
+# Avoid the images being re-generated at each build.
+pathlib.Path('gimp-data/images/stamp-install-end.bmp').touch()
