@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-24 15:18+0000\n"
-"PO-Revision-Date: 2024-02-24 16:19+0100\n"
+"POT-Creation-Date: 2024-04-18 15:42+0000\n"
+"PO-Revision-Date: 2024-04-19 00:39+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -21,45 +21,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: plug-ins/python/colorxhtml.py:91
+#: plug-ins/python/colorxhtml.py:85
 msgid "Save as colored HTML text..."
 msgstr "Spara som färglagd HTML-text…"
 
-#: plug-ins/python/colorxhtml.py:92 plug-ins/python/colorxhtml.py:98
-#: plug-ins/python/gradients-save-as-css.py:116
+#: plug-ins/python/colorxhtml.py:86 plug-ins/python/colorxhtml.py:92
+#: plug-ins/python/gradients-save-as-css.py:113
 #: plug-ins/python/palette-offset.py:135
 #: plug-ins/python/python-console/python-console.py:272
 #: plug-ins/python/spyro-plus.py:1719
 msgid "_Cancel"
 msgstr "A_vbryt"
 
-#: plug-ins/python/colorxhtml.py:93 plug-ins/python/colorxhtml.py:99
-#: plug-ins/python/gradients-save-as-css.py:117
+#: plug-ins/python/colorxhtml.py:87 plug-ins/python/colorxhtml.py:93
+#: plug-ins/python/gradients-save-as-css.py:114
 #: plug-ins/python/palette-offset.py:136 plug-ins/python/spyro-plus.py:1720
 msgid "_OK"
 msgstr "_OK"
 
-#: plug-ins/python/colorxhtml.py:96
+#: plug-ins/python/colorxhtml.py:90
 msgid "Read characters from file..."
 msgstr "Läs in tecken från fil…"
 
-#: plug-ins/python/colorxhtml.py:115
+#: plug-ins/python/colorxhtml.py:109
 msgid "Characters"
 msgstr "Tecken"
 
-#: plug-ins/python/colorxhtml.py:116
+#: plug-ins/python/colorxhtml.py:110
 msgid "Characters that will be used as colored pixels. "
 msgstr "Tecken som kommer att användas som färglagda bildpunkter. "
 
-#: plug-ins/python/colorxhtml.py:125
+#: plug-ins/python/colorxhtml.py:119
 msgid "Characters or file location"
 msgstr "Tecken eller plats för fil"
 
-#: plug-ins/python/colorxhtml.py:131
+#: plug-ins/python/colorxhtml.py:125
 msgid "Read characters from file"
 msgstr "Läs tecken från fil"
 
-#: plug-ins/python/colorxhtml.py:134
+#: plug-ins/python/colorxhtml.py:128
 msgid ""
 "If set, the Characters text entry will be used as a file name, from which "
 "the characters will be read. Otherwise, the characters in the text entry "
@@ -69,131 +69,131 @@ msgstr ""
 "vilket tecknen kommer att läsas. Annars kommer tecknen i textinmatningen att "
 "användas för att rendera bilden."
 
-#: plug-ins/python/colorxhtml.py:140
+#: plug-ins/python/colorxhtml.py:134
 msgid "Choose file"
 msgstr "Välj fil"
 
-#: plug-ins/python/colorxhtml.py:147
+#: plug-ins/python/colorxhtml.py:141
 msgid "Font Size(px)"
 msgstr "Typsnittsstorlek(px)"
 
-#: plug-ins/python/colorxhtml.py:159
+#: plug-ins/python/colorxhtml.py:153
 msgid "Write separate CSS file"
 msgstr "Skriv separat CSS-fil"
 
-#: plug-ins/python/colorxhtml.py:215
+#: plug-ins/python/colorxhtml.py:209
 msgid "Saving as colored XHTML"
 msgstr "Sparar som färglagd XHTML"
 
-#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
+#: plug-ins/python/colorxhtml.py:271 plug-ins/python/colorxhtml.py:272
 msgid "_Read characters from file, if true, or use text entry"
 msgstr "_Läs tecken från fil om sant, eller använd textinmatning"
 
-#: plug-ins/python/colorxhtml.py:291 plug-ins/python/colorxhtml.py:292
+#: plug-ins/python/colorxhtml.py:276 plug-ins/python/colorxhtml.py:277
 msgid "_File to read or characters to use"
 msgstr "_Fil att läsa eller tecken att använda"
 
-#: plug-ins/python/colorxhtml.py:296 plug-ins/python/colorxhtml.py:297
+#: plug-ins/python/colorxhtml.py:281 plug-ins/python/colorxhtml.py:282
 msgid "Fo_nt size in pixels"
 msgstr "Typs_nittsstorlek i bildpunkter"
 
-#: plug-ins/python/colorxhtml.py:301 plug-ins/python/colorxhtml.py:302
+#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
 msgid "_Write a separate CSS file"
 msgstr "Sk_riv en separat CSS-fil"
 
-#: plug-ins/python/colorxhtml.py:322
+#: plug-ins/python/colorxhtml.py:307
 msgid "Save as colored HTML text"
 msgstr "Spara som färglagd HTML-text"
 
-#: plug-ins/python/colorxhtml.py:325
+#: plug-ins/python/colorxhtml.py:310
 msgid "Colored HTML text"
 msgstr "Färglagd HTML-text"
 
-#: plug-ins/python/foggify.py:107
+#: plug-ins/python/foggify.py:111
 msgid "Layer _name"
 msgstr "Lager_namn"
 
-#: plug-ins/python/foggify.py:108
+#: plug-ins/python/foggify.py:112
 msgid "Layer name"
 msgstr "Lagernamn"
 
-#: plug-ins/python/foggify.py:109
+#: plug-ins/python/foggify.py:113
 msgid "Clouds"
 msgstr "Moln"
 
-#: plug-ins/python/foggify.py:112
+#: plug-ins/python/foggify.py:116
 msgid "_Turbulence"
 msgstr "_Turbulens"
 
-#: plug-ins/python/foggify.py:113
+#: plug-ins/python/foggify.py:117
 msgid "Turbulence"
 msgstr "Turbulens"
 
-#: plug-ins/python/foggify.py:117
+#: plug-ins/python/foggify.py:121
 msgid "O_pacity"
 msgstr "O_pacitet"
 
-#: plug-ins/python/foggify.py:118
+#: plug-ins/python/foggify.py:122
 msgid "Opacity"
 msgstr "Opacitet"
 
-#: plug-ins/python/foggify.py:127
+#: plug-ins/python/foggify.py:131
 msgid "_Fog color"
 msgstr "Färg på _dimma"
 
-#: plug-ins/python/foggify.py:128
+#: plug-ins/python/foggify.py:132
 msgid "Fog color"
 msgstr "Färg på dimma"
 
-#: plug-ins/python/foggify.py:144
+#: plug-ins/python/foggify.py:148
 msgid "Add a layer of fog"
 msgstr "Lägg till ett lager av dimma"
 
-#: plug-ins/python/foggify.py:145
+#: plug-ins/python/foggify.py:149
 msgid "Adds a layer of fog to the image."
 msgstr "Lägger till ett lager av dimma till bilden."
 
-#: plug-ins/python/foggify.py:147
+#: plug-ins/python/foggify.py:151
 msgid "_Fog..."
 msgstr "_Dimma…"
 
-#: plug-ins/python/gradients-save-as-css.py:97
+#: plug-ins/python/gradients-save-as-css.py:94
 msgid "_File..."
 msgstr "_Fil…"
 
-#: plug-ins/python/gradients-save-as-css.py:105
+#: plug-ins/python/gradients-save-as-css.py:102
 msgid "Choose CSS file..."
 msgstr "Välj CSS-fil…"
 
-#: plug-ins/python/gradients-save-as-css.py:114
+#: plug-ins/python/gradients-save-as-css.py:111
 msgid "Save as CSS file..."
 msgstr "Spara som CSS-fil…"
 
-#: plug-ins/python/gradients-save-as-css.py:190
-#: plug-ins/python/palette-sort.py:345
+#: plug-ins/python/gradients-save-as-css.py:183
+#: plug-ins/python/palette-sort.py:356
 #: plug-ins/python/python-console/python-console.py:300
 msgid "Run mode"
 msgstr "Körläge"
 
-#: plug-ins/python/gradients-save-as-css.py:191
+#: plug-ins/python/gradients-save-as-css.py:184
 #: plug-ins/python/python-console/python-console.py:300
 msgid "The run mode"
 msgstr "Körläget"
 
-#: plug-ins/python/gradients-save-as-css.py:195
+#: plug-ins/python/gradients-save-as-css.py:188
 msgid "_Gradient to use"
 msgstr "_Gradient att använda"
 
-#: plug-ins/python/gradients-save-as-css.py:198
+#: plug-ins/python/gradients-save-as-css.py:191
 msgid "_File"
 msgstr "_Fil"
 
-#: plug-ins/python/gradients-save-as-css.py:214
-#: plug-ins/python/gradients-save-as-css.py:215
+#: plug-ins/python/gradients-save-as-css.py:207
+#: plug-ins/python/gradients-save-as-css.py:208
 msgid "Creates a new palette from a given gradient"
 msgstr "Skapar en ny palett från en angiven gradient"
 
-#: plug-ins/python/gradients-save-as-css.py:217
+#: plug-ins/python/gradients-save-as-css.py:210
 msgid "Save Gradient as CSS..."
 msgstr "Spara gradient som CSS…"
 
@@ -246,8 +246,8 @@ msgid "_Export histogram..."
 msgstr "_Exportera histogram…"
 
 #: plug-ins/python/palette-offset.py:50 plug-ins/python/palette-offset.py:51
-#: plug-ins/python/palette-sort.py:351 plug-ins/python/palette-sort.py:403
-#: plug-ins/python/palette-sort.py:404
+#: plug-ins/python/palette-sort.py:362 plug-ins/python/palette-sort.py:414
+#: plug-ins/python/palette-sort.py:415
 msgid "Palette"
 msgstr "Palett"
 
@@ -279,144 +279,144 @@ msgstr "Skifta färgerna i en palett"
 msgid "Offset Palette..."
 msgstr "Skifta i palett…"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:45
 msgid "Red"
 msgstr "Röd"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:45
 msgid "Green"
 msgstr "Grön"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:45
 msgid "Blue"
 msgstr "Blå"
 
-#: plug-ins/python/palette-sort.py:43
+#: plug-ins/python/palette-sort.py:46
 msgid "Luma (Y)"
 msgstr "Luminans (Y)"
 
-#: plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:47
 msgid "Hue"
 msgstr "Nyans"
 
-#: plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:47
 msgid "Saturation"
 msgstr "Mättnad"
 
-#: plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:47
 msgid "Value"
 msgstr "Intensitet"
 
-#: plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:48
 msgid "Saturation (HSL)"
 msgstr "Mättnad (HSL)"
 
-#: plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:48
 msgid "Lightness (HSL)"
 msgstr "Ljushet (HSL)"
 
-#: plug-ins/python/palette-sort.py:46
+#: plug-ins/python/palette-sort.py:49
 msgid "Index"
 msgstr "Index"
 
-#: plug-ins/python/palette-sort.py:47
+#: plug-ins/python/palette-sort.py:50
 msgid "Random"
 msgstr "Slumpmässig"
 
-#: plug-ins/python/palette-sort.py:92
+#: plug-ins/python/palette-sort.py:95
 msgid "Lightness (LAB)"
 msgstr "Ljushet (LAB)"
 
-#: plug-ins/python/palette-sort.py:93
+#: plug-ins/python/palette-sort.py:96
 msgid "A-color"
 msgstr "A-färg"
 
-#: plug-ins/python/palette-sort.py:93
+#: plug-ins/python/palette-sort.py:96
 msgid "B-color"
 msgstr "B-färg"
 
-#: plug-ins/python/palette-sort.py:94
+#: plug-ins/python/palette-sort.py:97
 msgid "Chroma (LCHab)"
 msgstr "Krominans (LCHab)"
 
-#: plug-ins/python/palette-sort.py:95
+#: plug-ins/python/palette-sort.py:98
 msgid "Hue (LCHab)"
 msgstr "Nyans (LCHab)"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "All"
 msgstr "Alla"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "Slice / Array"
 msgstr "Skiva / Vektor"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "Autoslice (fg->bg)"
 msgstr "Autoskivning (förgr->bakgr)"
 
-#: plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:351
 msgid "Partitioned"
 msgstr "Partitionerad"
 
-#: plug-ins/python/palette-sort.py:350
+#: plug-ins/python/palette-sort.py:361
 #: plug-ins/python/palette-to-gradient.py:129
 msgid "_Palette"
 msgstr "_Palett"
 
-#: plug-ins/python/palette-sort.py:354
+#: plug-ins/python/palette-sort.py:365
 msgid "Select_ions"
 msgstr "Marker_ingar"
 
-#: plug-ins/python/palette-sort.py:361
+#: plug-ins/python/palette-sort.py:372
 msgid "Slice _expression"
 msgstr "Skiv_uttryck"
 
-#: plug-ins/python/palette-sort.py:366
+#: plug-ins/python/palette-sort.py:377
 msgid "Channel _to sort"
 msgstr "Kanal _att sortera"
 
-#: plug-ins/python/palette-sort.py:371
+#: plug-ins/python/palette-sort.py:382
 msgid "_Ascending"
 msgstr "_Stigande"
 
-#: plug-ins/python/palette-sort.py:372 plug-ins/python/palette-sort.py:382
+#: plug-ins/python/palette-sort.py:383 plug-ins/python/palette-sort.py:393
 msgid "Ascending"
 msgstr "Stigande"
 
-#: plug-ins/python/palette-sort.py:376
+#: plug-ins/python/palette-sort.py:387
 msgid "Secondary C_hannel to sort"
 msgstr "Sekundär _kanal att sortera"
 
-#: plug-ins/python/palette-sort.py:381
+#: plug-ins/python/palette-sort.py:392
 msgid "Ascen_ding"
 msgstr "S_tigande"
 
-#: plug-ins/python/palette-sort.py:386
+#: plug-ins/python/palette-sort.py:397
 msgid "_Quantization"
 msgstr "_Kvantisering"
 
-#: plug-ins/python/palette-sort.py:387
+#: plug-ins/python/palette-sort.py:398
 msgid "Quantization"
 msgstr "Kvantisering"
 
-#: plug-ins/python/palette-sort.py:391
-msgid "_Partitioning channel"
-msgstr "_Partitioneringskanal"
+#: plug-ins/python/palette-sort.py:402
+msgid "Partitionin_g channel"
+msgstr "Partitionerin_gskanal"
 
-#: plug-ins/python/palette-sort.py:396
+#: plug-ins/python/palette-sort.py:407
 msgid "Partition q_uantization"
 msgstr "_Kvantisering för partitionering"
 
-#: plug-ins/python/palette-sort.py:397
+#: plug-ins/python/palette-sort.py:408
 msgid "Partition quantization"
 msgstr "Kvantisering för partitionering"
 
-#: plug-ins/python/palette-sort.py:421
+#: plug-ins/python/palette-sort.py:432
 msgid "_Sort Palette..."
 msgstr "_Sortera palett…"
 
-#: plug-ins/python/palette-sort.py:423
+#: plug-ins/python/palette-sort.py:434
 msgid "Sort the colors in a palette"
 msgstr "Sortera färgerna i en palett"
 
