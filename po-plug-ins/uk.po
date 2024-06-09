@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-05-31 04:35+0000\n"
-"PO-Revision-Date: 2024-05-31 20:25+0300\n"
+"POT-Creation-Date: 2024-06-08 19:56+0000\n"
+"PO-Revision-Date: 2024-06-09 17:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -41,7 +41,7 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/common/qbist.c:256 plug-ins/common/sample-colorize.c:427
 #: plug-ins/common/smooth-palette.c:195 plug-ins/common/sparkle.c:300
 #: plug-ins/common/sphere-designer.c:3205 plug-ins/common/tile.c:218
-#: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:243
+#: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:244
 #: plug-ins/common/warp.c:346 plug-ins/common/wavelet-decompose.c:181
 #: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:427
 #: plug-ins/gfig/gfig.c:215 plug-ins/gimpressionist/gimp.c:184
@@ -66,7 +66,7 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/cml-explorer.c:2142 plug-ins/common/cml-explorer.c:2352
 #: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
 #: plug-ins/common/file-gif-export.c:1199 plug-ins/common/file-heif.c:2281
-#: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:550
+#: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:590
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
@@ -143,7 +143,7 @@ msgstr "Потренувати козу (Javascript)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2282
-#: plug-ins/common/file-pdf-load.c:551 plug-ins/common/grid.c:820
+#: plug-ins/common/file-pdf-load.c:591 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
 #: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3744
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
@@ -322,7 +322,7 @@ msgstr "Вирівнювання видимих шарів"
 
 #. file save type
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
-#: plug-ins/common/file-ps.c:406 plug-ins/common/file-ps.c:415
+#: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
 #: plug-ins/common/file-psp.c:832 plug-ins/file-dds/dds.c:189
 #: plug-ins/file-tiff/file-tiff.c:236
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
@@ -933,13 +933,13 @@ msgid "Randoms from seed (shared)"
 msgstr "Випадкове з бази (shared)"
 
 #: plug-ins/common/cml-explorer.c:299 plug-ins/common/cml-explorer.c:307
-#: plug-ins/common/decompose.c:202 plug-ins/common/van-gogh-lic.c:160
+#: plug-ins/common/decompose.c:202 plug-ins/common/van-gogh-lic.c:161
 #: plug-ins/gimpressionist/orientation.c:172 plug-ins/gimpressionist/size.c:179
 msgid "Hue"
 msgstr "Відтінок"
 
 #: plug-ins/common/cml-explorer.c:300 plug-ins/common/cml-explorer.c:308
-#: plug-ins/common/decompose.c:203 plug-ins/common/van-gogh-lic.c:161
+#: plug-ins/common/decompose.c:203 plug-ins/common/van-gogh-lic.c:162
 msgid "Saturation"
 msgstr "Насиченість"
 
@@ -1975,19 +1975,18 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-farbfeld.c:279 plug-ins/common/file-gif-load.c:416
 #: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1398
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
-#: plug-ins/common/file-png.c:643 plug-ins/common/file-ps.c:1103
-#: plug-ins/common/file-ps.c:3652 plug-ins/common/file-psp.c:2626
+#: plug-ins/common/file-png.c:643 plug-ins/common/file-ps.c:1165
+#: plug-ins/common/file-ps.c:3747 plug-ins/common/file-psp.c:2626
 #: plug-ins/common/file-psp.c:2676 plug-ins/common/file-qoi.c:283
 #: plug-ins/common/file-raw-data.c:565 plug-ins/common/file-raw-data.c:1690
-#: plug-ins/common/file-sunras.c:436 plug-ins/common/file-svg.c:369
-#: plug-ins/common/file-svg.c:795 plug-ins/common/file-tga.c:428
-#: plug-ins/common/file-wbmp.c:188 plug-ins/common/file-xbm.c:730
-#: plug-ins/common/file-xmc.c:661 plug-ins/common/file-xmc.c:900
-#: plug-ins/common/file-xwd.c:473 plug-ins/common/sphere-designer.c:2095
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:169
-#: plug-ins/file-faxg3/faxg3.c:260 plug-ins/file-fits/fits.c:379
-#: plug-ins/file-fli/fli-gimp.c:441 plug-ins/file-fli/fli-gimp.c:492
-#: plug-ins/file-icns/file-icns-load.c:516
+#: plug-ins/common/file-sunras.c:436 plug-ins/common/file-svg.c:540
+#: plug-ins/common/file-tga.c:428 plug-ins/common/file-wbmp.c:188
+#: plug-ins/common/file-xbm.c:730 plug-ins/common/file-xmc.c:661
+#: plug-ins/common/file-xmc.c:900 plug-ins/common/file-xwd.c:473
+#: plug-ins/common/sphere-designer.c:2095 plug-ins/file-bmp/bmp-load.c:226
+#: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:260
+#: plug-ins/file-fits/fits.c:379 plug-ins/file-fli/fli-gimp.c:441
+#: plug-ins/file-fli/fli-gimp.c:492 plug-ins/file-icns/file-icns-load.c:516
 #: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
 #: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
 #: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
@@ -2492,7 +2491,7 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Цей додаток намагається вилучити вертикальні смуги з зображення."
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:193
-#: plug-ins/common/file-ps.c:494 plug-ins/common/file-raw-data.c:353
+#: plug-ins/common/file-ps.c:518 plug-ins/common/file-raw-data.c:353
 #: plug-ins/common/smooth-palette.c:135 plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
 msgstr "_Ширина"
@@ -2592,11 +2591,11 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-gegl.c:339 plug-ins/common/file-gif-load.c:408
 #: plug-ins/common/file-heif.c:852 plug-ins/common/file-jp2-load.c:1077
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
-#: plug-ins/common/file-pdf-load.c:722 plug-ins/common/file-pix.c:374
+#: plug-ins/common/file-pdf-load.c:780 plug-ins/common/file-pix.c:374
 #: plug-ins/common/file-png.c:635 plug-ins/common/file-pnm.c:686
-#: plug-ins/common/file-ps.c:1093 plug-ins/common/file-raw-data.c:1682
+#: plug-ins/common/file-ps.c:1155 plug-ins/common/file-raw-data.c:1682
 #: plug-ins/common/file-sunras.c:428 plug-ins/common/file-tga.c:420
-#: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:781
+#: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:618
 #: plug-ins/common/file-xbm.c:722 plug-ins/common/file-xmc.c:651
 #: plug-ins/common/file-xpm.c:365 plug-ins/common/file-xwd.c:465
 #: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:197
@@ -2674,7 +2673,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-gif-export.c:952 plug-ins/common/file-html-table.c:347
 #: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1084
 #: plug-ins/common/file-pix.c:642 plug-ins/common/file-png.c:1487
-#: plug-ins/common/file-pnm.c:1607 plug-ins/common/file-ps.c:1314
+#: plug-ins/common/file-pnm.c:1607 plug-ins/common/file-ps.c:1376
 #: plug-ins/common/file-qoi.c:358 plug-ins/common/file-sunras.c:607
 #: plug-ins/common/file-tga.c:1210 plug-ins/common/file-xbm.c:1031
 #: plug-ins/common/file-xpm.c:686 plug-ins/common/file-xwd.c:701
@@ -2839,7 +2838,7 @@ msgstr ""
 msgid "Cannot save images with alpha channel."
 msgstr "Неможливо зберегти зображення з альфа-каналом."
 
-#: plug-ins/common/file-dicom.c:1529 plug-ins/common/file-ps.c:1309
+#: plug-ins/common/file-dicom.c:1529 plug-ins/common/file-ps.c:1371
 #: plug-ins/common/file-xwd.c:696 plug-ins/file-fits/fits.c:652
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -3628,7 +3627,7 @@ msgstr "Текст, що пишеться у кожній комірці."
 msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Ширина кожної комірки. Може бути числом чи відсотком."
 
-#: plug-ins/common/file-html-table.c:200 plug-ins/common/file-ps.c:501
+#: plug-ins/common/file-html-table.c:200 plug-ins/common/file-ps.c:525
 #: plug-ins/common/file-raw-data.c:358 plug-ins/common/smooth-palette.c:141
 #: plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
@@ -3800,7 +3799,7 @@ msgstr "xvYCC"
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Непідтримуваний JPEG 2000%s «%s» з %d компонентами."
 
-#: plug-ins/common/file-jp2-load.c:1085 plug-ins/common/file-wmf.c:759
+#: plug-ins/common/file-jp2-load.c:1085 plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Не вдається відкрити «%s» для читання."
@@ -4307,7 +4306,7 @@ msgstr "Нижня межа знаходиться за припустимими
 msgid "Writing to file '%s' failed: %s"
 msgstr "Помилка при записі до файлу «%s»: %s"
 
-#: plug-ins/common/file-pdf-export.c:314 plug-ins/common/file-pdf-load.c:183
+#: plug-ins/common/file-pdf-export.c:314 plug-ins/common/file-pdf-load.c:197
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
@@ -4325,7 +4324,7 @@ msgstr ""
 "спрощення обробки на широкому спектрі різних платформ. Цей формат є "
 "віддаленим родичем PostScript."
 
-#: plug-ins/common/file-pdf-export.c:330 plug-ins/common/file-pdf-load.c:199
+#: plug-ins/common/file-pdf-export.c:330 plug-ins/common/file-pdf-load.c:213
 msgid "PDF"
 msgstr "PDF"
 
@@ -4474,7 +4473,7 @@ msgstr "Додати це зображення"
 
 #: plug-ins/common/file-pdf-export.c:1178
 #: plug-ins/common/file-pdf-export.c:1251
-#: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2130
+#: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2225
 #: plug-ins/file-tiff/file-tiff-load.c:1532
 #, c-format
 msgid "Page %d"
@@ -4489,55 +4488,55 @@ msgstr ""
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Неможливо опрацювати розмір (ширину чи висоту) зображення."
 
-#: plug-ins/common/file-pdf-load.c:211
+#: plug-ins/common/file-pdf-load.c:225
 msgid "PDF password"
 msgstr "Пароль до PDF"
 
-#: plug-ins/common/file-pdf-load.c:212
+#: plug-ins/common/file-pdf-load.c:226
 msgid "The password to decrypt the encrypted PDF file"
 msgstr "Пароль для розшифрування зашифрованого файла PDF"
 
-#: plug-ins/common/file-pdf-load.c:217
+#: plug-ins/common/file-pdf-load.c:231
 msgid "Load in re_verse order"
 msgstr "Завантажити у зв_оротному порядку"
 
-#: plug-ins/common/file-pdf-load.c:218
+#: plug-ins/common/file-pdf-load.c:232
 msgid "Load PDF pages in reverse order"
 msgstr "Завантажити сторінки PDF у зворотному порядку"
 
-#: plug-ins/common/file-pdf-load.c:235
+#: plug-ins/common/file-pdf-load.c:249
 msgid "Open pages as"
 msgstr "Відкрити сторінки як"
 
-#: plug-ins/common/file-pdf-load.c:236 plug-ins/common/file-pdf-load.c:243
+#: plug-ins/common/file-pdf-load.c:250 plug-ins/common/file-pdf-load.c:257
 msgid "Number of pages to load (0 for all)"
 msgstr "Кількість сторінок, які слід завантажити (0 — усі)"
 
-#: plug-ins/common/file-pdf-load.c:242
+#: plug-ins/common/file-pdf-load.c:256
 msgid "N pages"
 msgstr "N сторінок"
 
-#: plug-ins/common/file-pdf-load.c:255
+#: plug-ins/common/file-pdf-load.c:269
 msgid "Pages"
 msgstr "Сторінки"
 
-#: plug-ins/common/file-pdf-load.c:256
+#: plug-ins/common/file-pdf-load.c:270
 msgid "The pages to load in the expected order"
 msgstr "Сторінки, які слід завантажити в очікуваному порядку"
 
-#: plug-ins/common/file-pdf-load.c:260
+#: plug-ins/common/file-pdf-load.c:274
 msgid "Use _Anti-aliasing"
 msgstr "_Застосувати згладжування"
 
-#: plug-ins/common/file-pdf-load.c:261
+#: plug-ins/common/file-pdf-load.c:275
 msgid "Render texts with anti-aliasing"
 msgstr "Показувати текст зі згладжуванням символів"
 
-#: plug-ins/common/file-pdf-load.c:266
+#: plug-ins/common/file-pdf-load.c:280
 msgid "_Fill transparent areas with white"
 msgstr "Запов_нити прозорі області білим кольором"
 
-#: plug-ins/common/file-pdf-load.c:267
+#: plug-ins/common/file-pdf-load.c:281
 msgid "Render all pages as opaque by filling the background in white"
 msgstr "Показати усі сторінки непрозорими, заповнивши тло білим"
 
@@ -4546,7 +4545,7 @@ msgstr "Показати усі сторінки непрозорими, зап�
 #. * third is number of pages.
 #. * Specify order as in English if needed.
 #.
-#: plug-ins/common/file-pdf-load.c:378
+#: plug-ins/common/file-pdf-load.c:421
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
@@ -4557,24 +4556,24 @@ msgstr[1] ""
 msgstr[2] ""
 "Документ PDF «%1$s» має %3$d сторінок. Сторінка %2$d за межами діапазону."
 
-#: plug-ins/common/file-pdf-load.c:537
+#: plug-ins/common/file-pdf-load.c:577
 msgid "PDF is password protected, please input the password:"
 msgstr "PDF захищено паролем; введіть пароль:"
 
-#: plug-ins/common/file-pdf-load.c:547
+#: plug-ins/common/file-pdf-load.c:587
 msgid "Encrypted PDF"
 msgstr "Шифрований PDF"
 
-#: plug-ins/common/file-pdf-load.c:574
+#: plug-ins/common/file-pdf-load.c:614
 msgid "Wrong password! Please input the right one:"
 msgstr "Хибний пароль! Введіть правильний:"
 
-#: plug-ins/common/file-pdf-load.c:592
+#: plug-ins/common/file-pdf-load.c:632
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Не вдалось завантажити «%s»: %s"
 
-#: plug-ins/common/file-pdf-load.c:1056
+#: plug-ins/common/file-pdf-load.c:1091
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Помилка при отриманні числа сторінок з даного PDF-файлу."
 
@@ -4663,7 +4662,7 @@ msgstr ""
 msgid "PNG export format"
 msgstr "Формат експортування PNG"
 
-#: plug-ins/common/file-png.c:290 plug-ins/common/file-ps.c:399
+#: plug-ins/common/file-png.c:290 plug-ins/common/file-ps.c:423
 #: plug-ins/file-fits/fits.c:1019
 msgid "Automatic"
 msgstr "Автоматично"
@@ -4980,63 +4979,63 @@ msgstr "_ASCII"
 msgid "_Raw"
 msgstr "_Без обробки"
 
-#: plug-ins/common/file-ps.c:337 plug-ins/common/file-ps.c:446
+#: plug-ins/common/file-ps.c:361 plug-ins/common/file-ps.c:470
 msgid "PostScript document"
 msgstr "Документ PostScript"
 
-#: plug-ins/common/file-ps.c:340 plug-ins/common/file-ps.c:341
+#: plug-ins/common/file-ps.c:364 plug-ins/common/file-ps.c:365
 msgid "Load PostScript documents"
 msgstr "Завантаження документів PostScript"
 
-#: plug-ins/common/file-ps.c:345
+#: plug-ins/common/file-ps.c:369
 msgid "PostScript"
 msgstr "PostScript"
 
-#: plug-ins/common/file-ps.c:356
+#: plug-ins/common/file-ps.c:380
 msgid "Encapsulated PostScript image"
 msgstr "Encapsulated PostScript"
 
-#: plug-ins/common/file-ps.c:359 plug-ins/common/file-ps.c:360
+#: plug-ins/common/file-ps.c:383 plug-ins/common/file-ps.c:384
 msgid "Load Encapsulated PostScript images"
 msgstr "Завантаження зображень інкапсульованого PostScript"
 
-#: plug-ins/common/file-ps.c:364 plug-ins/common/file-ps.c:465
+#: plug-ins/common/file-ps.c:388 plug-ins/common/file-ps.c:489
 msgid "Encapsulated PostScript"
 msgstr "_Інкапсульований PostScript"
 
-#: plug-ins/common/file-ps.c:382
+#: plug-ins/common/file-ps.c:406
 msgid "Try _Bounding Box"
 msgstr "Спробувати _обмежувальну рамку"
 
-#: plug-ins/common/file-ps.c:383
+#: plug-ins/common/file-ps.c:407
 msgid "FALSE: Use width/height, TRUE: Use BoundingBox"
 msgstr "FALSE: скористатися шириною/висотою, TRUE: скористатися BoundingBox"
 
-#: plug-ins/common/file-ps.c:388
+#: plug-ins/common/file-ps.c:412
 msgid "_Pages"
 msgstr "С_торінки"
 
-#: plug-ins/common/file-ps.c:389
+#: plug-ins/common/file-ps.c:413
 msgid "Pages to load (e.g.: 1,3,5-7)"
 msgstr "Сторінки для завантаження (приклад: 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:394
+#: plug-ins/common/file-ps.c:418
 msgid "Colorin_g"
 msgstr "_Фарбування"
 
-#: plug-ins/common/file-ps.c:395
+#: plug-ins/common/file-ps.c:419
 msgid "Import color format"
 msgstr "Формат імпортування кольорів"
 
-#: plug-ins/common/file-ps.c:396
+#: plug-ins/common/file-ps.c:420
 msgid "B/W"
 msgstr "Ч/Б"
 
-#: plug-ins/common/file-ps.c:397 plug-ins/imagemap/imap-menu.ui:101
+#: plug-ins/common/file-ps.c:421 plug-ins/imagemap/imap-menu.ui:101
 msgid "Gray"
 msgstr "Сірий"
 
-#: plug-ins/common/file-ps.c:398 plug-ins/common/file-xpm.c:492
+#: plug-ins/common/file-ps.c:422 plug-ins/common/file-xpm.c:492
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:179
 #: plug-ins/imagemap/imap-menu.ui:96 plug-ins/lighting/lighting-main.c:223
 #: plug-ins/lighting/lighting-main.c:346 plug-ins/lighting/lighting-main.c:405
@@ -5045,41 +5044,41 @@ msgstr "Сірий"
 msgid "Color"
 msgstr "Колір"
 
-#: plug-ins/common/file-ps.c:404
+#: plug-ins/common/file-ps.c:428
 msgid "Te_xt anti-aliasing"
 msgstr "З_гладжування тексту"
 
-#: plug-ins/common/file-ps.c:405
+#: plug-ins/common/file-ps.c:429
 msgid "Text anti-aliasing strength"
 msgstr "Потужність згладжування тексту"
 
-#: plug-ins/common/file-ps.c:407 plug-ins/common/file-ps.c:416
+#: plug-ins/common/file-ps.c:431 plug-ins/common/file-ps.c:440
 msgid "Weak"
 msgstr "Слабке"
 
-#: plug-ins/common/file-ps.c:408 plug-ins/common/file-ps.c:417
+#: plug-ins/common/file-ps.c:432 plug-ins/common/file-ps.c:441
 msgid "Strong"
 msgstr "Сильне"
 
-#: plug-ins/common/file-ps.c:413
+#: plug-ins/common/file-ps.c:437
 msgid "Gra_phic anti-aliasing"
 msgstr "З_гладжування графіки"
 
-#: plug-ins/common/file-ps.c:414
+#: plug-ins/common/file-ps.c:438
 msgid "Graphic anti-aliasing strength"
 msgstr "Потужність згладжування графіки"
 
-#: plug-ins/common/file-ps.c:428
+#: plug-ins/common/file-ps.c:452
 msgid "Loads a small preview from a PostScript or PDF document"
 msgstr ""
 "Завантажує невеличке зображення попереднього перегляду з документа "
 "PostScript або PDF"
 
-#: plug-ins/common/file-ps.c:449
+#: plug-ins/common/file-ps.c:473
 msgid "Export image as PostScript document"
 msgstr "Експортувати зображення як документ PostScript"
 
-#: plug-ins/common/file-ps.c:450 plug-ins/common/file-ps.c:470
+#: plug-ins/common/file-ps.c:474 plug-ins/common/file-ps.c:494
 msgid ""
 "PostScript exporting handles all image types except those with alpha "
 "channels."
@@ -5087,67 +5086,67 @@ msgstr ""
 "Засіб експортування PostScript обробляє усі типи зображень, окрім зображень "
 "із каналами прозорості."
 
-#: plug-ins/common/file-ps.c:456
+#: plug-ins/common/file-ps.c:480
 msgid "PS"
 msgstr "PS"
 
-#: plug-ins/common/file-ps.c:468
+#: plug-ins/common/file-ps.c:492
 msgid "Export image as Encapsulated PostScript image"
 msgstr "Експортувати зображення як зображення інкапсульованого PostScript"
 
-#: plug-ins/common/file-ps.c:476
+#: plug-ins/common/file-ps.c:500
 msgid "EPS"
 msgstr "EPS"
 
-#: plug-ins/common/file-ps.c:495
+#: plug-ins/common/file-ps.c:519
 msgid "Width of the image in PostScript file (0: use input image size)"
 msgstr ""
 "Ширина зображення у файлі PostScript (0: скористатися розміром вхідного "
 "зображення)"
 
-#: plug-ins/common/file-ps.c:502
+#: plug-ins/common/file-ps.c:526
 msgid "Height of the image in PostScript file (0: use input image size)"
 msgstr ""
 "Висота зображення у файлі PostScript (0: скористатися розміром вхідного "
 "зображення)"
 
-#: plug-ins/common/file-ps.c:508
+#: plug-ins/common/file-ps.c:532
 msgid "_X offset"
 msgstr "Зсув вздовж _X"
 
-#: plug-ins/common/file-ps.c:509
+#: plug-ins/common/file-ps.c:533
 msgid "X-offset to image from lower left corner"
 msgstr "Зсув за X зображення від нижнього лівого кута"
 
-#: plug-ins/common/file-ps.c:514
+#: plug-ins/common/file-ps.c:538
 msgid "Y o_ffset"
 msgstr "Зсув вздовж _Y"
 
-#: plug-ins/common/file-ps.c:515
+#: plug-ins/common/file-ps.c:539
 msgid "Y-offset to image from lower left corner"
 msgstr "Зсув за Y зображення від нижнього лівого кута"
 
-#: plug-ins/common/file-ps.c:520
+#: plug-ins/common/file-ps.c:544
 msgid "_Unit"
 msgstr "_Одиниця"
 
-#: plug-ins/common/file-ps.c:521
+#: plug-ins/common/file-ps.c:545
 msgid "Unit of measure for offset values"
 msgstr "Одиниця виміру для значень зсуву"
 
-#: plug-ins/common/file-ps.c:522
+#: plug-ins/common/file-ps.c:546
 msgid "Inch"
 msgstr "Дюйм"
 
-#: plug-ins/common/file-ps.c:523
+#: plug-ins/common/file-ps.c:547
 msgid "Millimeter"
 msgstr "Міліметр"
 
-#: plug-ins/common/file-ps.c:528
+#: plug-ins/common/file-ps.c:552
 msgid "_Keep aspect ratio"
 msgstr "З_берігати пропорції"
 
-#: plug-ins/common/file-ps.c:529
+#: plug-ins/common/file-ps.c:553
 msgid ""
 "If enabled, aspect ratio will be maintained on export. Otherwise, the width "
 "and height values will be used."
@@ -5155,15 +5154,15 @@ msgstr ""
 "Якщо увімкнено, при експортуванні буде збережено пропорції. Якщо не буде "
 "увімкнено, буде використано значення ширини і висоти."
 
-#: plug-ins/common/file-ps.c:535 plug-ins/map-object/map-object-ui.c:738
+#: plug-ins/common/file-ps.c:559 plug-ins/map-object/map-object-ui.c:738
 msgid "Rotation"
 msgstr "Обертання"
 
-#: plug-ins/common/file-ps.c:541
+#: plug-ins/common/file-ps.c:565
 msgid "PostScript Level _2"
 msgstr "PostScript, рівень _2"
 
-#: plug-ins/common/file-ps.c:542
+#: plug-ins/common/file-ps.c:566
 msgid ""
 "If enabled, export in PostScript Level 2 format. Otherwise, export in "
 "PostScript Level 1 format."
@@ -5171,11 +5170,11 @@ msgstr ""
 "Якщо увімкнено, експортування буде виконано у форматі PostScript, рівень 2. "
 "Якщо вимкнено, дані буде експортовано у форматі PostScript, рівень 1."
 
-#: plug-ins/common/file-ps.c:548
+#: plug-ins/common/file-ps.c:572
 msgid "Encapsula_ted PostScript"
 msgstr "_Інкапсульований PostScript"
 
-#: plug-ins/common/file-ps.c:549
+#: plug-ins/common/file-ps.c:573
 msgid ""
 "If enabled, export as Encapsulated PostScript. Otherwise, export as "
 "PostScript."
@@ -5183,56 +5182,56 @@ msgstr ""
 "Якщо увімкнено, експортувати як інкапсульований PostScript. Якщо вимкнено, "
 "дані буде експортовано як PostScript."
 
-#: plug-ins/common/file-ps.c:555 plug-ins/imagemap/imap_grid.c:301
+#: plug-ins/common/file-ps.c:579 plug-ins/imagemap/imap_grid.c:301
 msgid "_Preview"
 msgstr "_Попередній перегляд"
 
-#: plug-ins/common/file-ps.c:556
+#: plug-ins/common/file-ps.c:580
 msgid "Show Preview"
 msgstr "Показати перегляд"
 
-#: plug-ins/common/file-ps.c:561
+#: plug-ins/common/file-ps.c:585
 msgid "Preview Si_ze"
 msgstr "_Розмір перегляду"
 
-#: plug-ins/common/file-ps.c:562
+#: plug-ins/common/file-ps.c:586
 msgid "Maximum size of preview. Set to 0 for no preview."
 msgstr ""
 "Мінімальний розмір попереднього перегляду. Встановіть 0, щоб вимкнути "
 "попередній перегляд."
 
-#: plug-ins/common/file-ps.c:1114
+#: plug-ins/common/file-ps.c:1176
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "Не вдається інтерпретувати файл PostScript «%s»"
 
-#: plug-ins/common/file-ps.c:1196
+#: plug-ins/common/file-ps.c:1258
 msgid "Rendered EPS"
 msgstr "Оброблений EPS"
 
-#: plug-ins/common/file-ps.c:1224
+#: plug-ins/common/file-ps.c:1286
 #, c-format
 msgid "%s-pages"
 msgstr "%s-сторінок"
 
-#: plug-ins/common/file-ps.c:1296
+#: plug-ins/common/file-ps.c:1358
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Зображення з альфа-каналами не можна експортувати як PostScript"
 
-#: plug-ins/common/file-ps.c:3741
+#: plug-ins/common/file-ps.c:3830
 msgid "Pages:"
 msgstr "Сторінки:"
 
-#: plug-ins/common/file-ps.c:3745
+#: plug-ins/common/file-ps.c:3834
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Сторінок для завантаження(наприклад: 1-4 чи 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3751
+#: plug-ins/common/file-ps.c:3840
 msgid "Open as"
 msgstr "Відкрити як"
 
-#: plug-ins/common/file-ps.c:3842
+#: plug-ins/common/file-ps.c:3931
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5240,28 +5239,28 @@ msgstr ""
 "Якщо вибрано, вихідне зображення буде масштабуватись до заповнення вказаного "
 "розміру без зміни пропорцій."
 
-#: plug-ins/common/file-ps.c:3848
+#: plug-ins/common/file-ps.c:3937
 msgid "Image Size"
 msgstr "Розмір зображення"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3868
+#: plug-ins/common/file-ps.c:3957
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3869
+#: plug-ins/common/file-ps.c:3958
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3870
+#: plug-ins/common/file-ps.c:3959
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3871
+#: plug-ins/common/file-ps.c:3960
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3878
+#: plug-ins/common/file-ps.c:3967
 msgid "Output"
 msgstr "Вивід"
 
@@ -5961,77 +5960,51 @@ msgstr "Ст_андарт"
 msgid "R_un-Length Encoded"
 msgstr "_RLE-кодування"
 
-#: plug-ins/common/file-svg.c:167
+#: plug-ins/common/file-svg.c:166
 msgid "SVG image"
 msgstr "Зображення SVG"
 
-#: plug-ins/common/file-svg.c:180
+#: plug-ins/common/file-svg.c:179
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:192
+#: plug-ins/common/file-svg.c:188
 msgid "_Paths"
 msgstr "К_онтури"
 
-#: plug-ins/common/file-svg.c:193
+#: plug-ins/common/file-svg.c:189
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr ""
 "Чи слід імпортувати контури так, щоб ними можна було скористатися у "
 "інструменті контурів, і як це робити"
 
-#: plug-ins/common/file-svg.c:194
+#: plug-ins/common/file-svg.c:190
 msgid "Don't import paths"
 msgstr "Не імпортувати контури"
 
-#: plug-ins/common/file-svg.c:195
+#: plug-ins/common/file-svg.c:191
 msgid "Import paths individually"
 msgstr "Імпортувати контури окремо"
 
-#: plug-ins/common/file-svg.c:196
+#: plug-ins/common/file-svg.c:192
 msgid "Merge imported paths"
 msgstr "Об'єднати імпортовані контури"
-
-#: plug-ins/common/file-svg.c:371 plug-ins/common/file-svg.c:797
-#: plug-ins/file-exr/file-exr.c:356 plug-ins/file-exr/file-exr.c:370
-msgid "Unknown reason"
-msgstr "Невідома причина"
-
-#: plug-ins/common/file-svg.c:377
-msgid "Rendering SVG"
-msgstr "Візуалізація SVG"
-
-#: plug-ins/common/file-svg.c:387
-msgid "Rendered SVG"
-msgstr "Створений SVG"
-
-#: plug-ins/common/file-svg.c:587 plug-ins/common/file-wmf.c:392
-#, c-format
-msgid "%d × %d"
-msgstr "%d × %d"
-
-#: plug-ins/common/file-svg.c:595
-msgid ""
-"SVG file does not\n"
-"specify a size!"
-msgstr ""
-"У файлі SVG\n"
-"не вказано розмір!"
 
 #. We need to ask explicitly before using the "unlimited" size
 #. * option (XML_PARSE_HUGE in libxml) because it is considered
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:722
+#: plug-ins/common/file-svg.c:273
 msgid "Disable safety size limits?"
 msgstr "Вимкнути безпекові обмеження на розмір?"
 
-#: plug-ins/common/file-svg.c:727
+#: plug-ins/common/file-svg.c:278
 msgid "_No"
 msgstr "_Ні"
 
-#: plug-ins/common/file-svg.c:728
+#: plug-ins/common/file-svg.c:279
 msgid "_Yes"
 msgstr "_Так"
 
@@ -6045,7 +6018,7 @@ msgstr "_Так"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:752
+#: plug-ins/common/file-svg.c:303
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6056,15 +6029,28 @@ msgstr ""
 "зловмисниками файли SVG можуть скористатися зняттям обмежень для споживання "
 "надто великого об'єму пам'яті."
 
-#: plug-ins/common/file-svg.c:764
+#: plug-ins/common/file-svg.c:315
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr ""
 "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
-#: plug-ins/common/file-svg.c:771
+#: plug-ins/common/file-svg.c:322
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 "Повторити без обмежень, які накладаються на обробку великих масивів даних?"
+
+#: plug-ins/common/file-svg.c:542 plug-ins/file-exr/file-exr.c:356
+#: plug-ins/file-exr/file-exr.c:370
+msgid "Unknown reason"
+msgstr "Невідома причина"
+
+#: plug-ins/common/file-svg.c:548
+msgid "Rendering SVG"
+msgstr "Візуалізація SVG"
+
+#: plug-ins/common/file-svg.c:558
+msgid "Rendered SVG"
+msgstr "Створений SVG"
 
 #: plug-ins/common/file-tga.c:261 plug-ins/common/file-tga.c:287
 msgid "TarGA image"
@@ -6136,23 +6122,21 @@ msgstr "«%s»: непідтримуване значення виправлен
 msgid "'%s' is not a valid WBMP file"
 msgstr "«%s» не є коректним файлом WBMP"
 
-#: plug-ins/common/file-wmf.c:166
+#: plug-ins/common/file-wmf.c:177
 msgid "Microsoft WMF file"
 msgstr "Файл Microsoft WMF"
 
-#: plug-ins/common/file-wmf.c:178
+#: plug-ins/common/file-wmf.c:189
 msgid "WMF"
 msgstr "WMF"
 
-#: plug-ins/common/file-wmf.c:386
-msgid ""
-"WMF file does not\n"
-"specify a size!"
-msgstr ""
-"У файлі WMF\n"
-"не вказано розмір!"
+#: plug-ins/common/file-wmf.c:238
+#, c-format
+#| msgid "Could not open '%s' for reading"
+msgid "Could not open '%s' for reading AA"
+msgstr "Не вдається відкрити «%s» для читання AA"
 
-#: plug-ins/common/file-wmf.c:794
+#: plug-ins/common/file-wmf.c:631
 msgid "Rendered WMF"
 msgstr "Створений WMF"
 
@@ -8230,107 +8214,107 @@ msgstr "Незавершений ввід"
 msgid "Please fill in all text fields."
 msgstr "Заповніть всі поля"
 
-#: plug-ins/common/van-gogh-lic.c:144
+#: plug-ins/common/van-gogh-lic.c:145
 msgid "_Van Gogh (LIC)..."
 msgstr "_Ван Гог (LIC)..."
 
-#: plug-ins/common/van-gogh-lic.c:148
+#: plug-ins/common/van-gogh-lic.c:149
 msgid "Special effects that nobody understands"
 msgstr "Спеціальні ефекти, сенс яких нікому не відомий"
 
-#: plug-ins/common/van-gogh-lic.c:158
+#: plug-ins/common/van-gogh-lic.c:159
 msgid "E_ffect Channel"
 msgstr "Канал е_фекту"
 
-#: plug-ins/common/van-gogh-lic.c:159
+#: plug-ins/common/van-gogh-lic.c:160
 msgid "Effect Channel"
 msgstr "Канал ефекту"
 
-#: plug-ins/common/van-gogh-lic.c:162
+#: plug-ins/common/van-gogh-lic.c:163
 msgid "Brightness"
 msgstr "Яскравість"
 
-#: plug-ins/common/van-gogh-lic.c:168
+#: plug-ins/common/van-gogh-lic.c:169
 msgid "Effect O_perator"
 msgstr "_Оператор ефекту"
 
-#: plug-ins/common/van-gogh-lic.c:169
+#: plug-ins/common/van-gogh-lic.c:170
 msgid "Effect Operator"
 msgstr "Оператор ефекту"
 
-#: plug-ins/common/van-gogh-lic.c:170
+#: plug-ins/common/van-gogh-lic.c:171
 msgid "Derivative"
 msgstr "Похідна"
 
-#: plug-ins/common/van-gogh-lic.c:171 plug-ins/gfig/gfig-dialog.c:582
+#: plug-ins/common/van-gogh-lic.c:172 plug-ins/gfig/gfig-dialog.c:582
 msgid "Gradient"
 msgstr "Градієнт"
 
-#: plug-ins/common/van-gogh-lic.c:177
+#: plug-ins/common/van-gogh-lic.c:178
 msgid "Con_volve"
 msgstr "З_гортання"
 
-#: plug-ins/common/van-gogh-lic.c:178
+#: plug-ins/common/van-gogh-lic.c:179
 msgid "Convolve"
 msgstr "Згортання"
 
-#: plug-ins/common/van-gogh-lic.c:179
+#: plug-ins/common/van-gogh-lic.c:180
 msgid "With white noise"
 msgstr "З білим шумом"
 
-#: plug-ins/common/van-gogh-lic.c:180
+#: plug-ins/common/van-gogh-lic.c:181
 msgid "With source image"
 msgstr "З початковим  зображенням"
 
-#: plug-ins/common/van-gogh-lic.c:186
+#: plug-ins/common/van-gogh-lic.c:187
 msgid "Effect i_mage"
 msgstr "Зобра_ження _ефекту"
 
-#: plug-ins/common/van-gogh-lic.c:187
+#: plug-ins/common/van-gogh-lic.c:188
 msgid "Effect image"
 msgstr "Зображення ефекту"
 
-#: plug-ins/common/van-gogh-lic.c:192
+#: plug-ins/common/van-gogh-lic.c:193
 msgid "Fil_ter length"
 msgstr "Довжина _фільтра"
 
-#: plug-ins/common/van-gogh-lic.c:193
+#: plug-ins/common/van-gogh-lic.c:194
 msgid "Filter length"
 msgstr "Довжина фільтра"
 
-#: plug-ins/common/van-gogh-lic.c:198
+#: plug-ins/common/van-gogh-lic.c:199
 msgid "_Noise Magnitude"
 msgstr "Величина _шуму"
 
-#: plug-ins/common/van-gogh-lic.c:199
+#: plug-ins/common/van-gogh-lic.c:200
 msgid "Noise Magnitude"
 msgstr "Величина шуму"
 
-#: plug-ins/common/van-gogh-lic.c:204
+#: plug-ins/common/van-gogh-lic.c:205
 msgid "Inte_gration steps"
 msgstr "Кроки ін_тегрування"
 
-#: plug-ins/common/van-gogh-lic.c:205
+#: plug-ins/common/van-gogh-lic.c:206
 msgid "Integration steps"
 msgstr "Кроки інтегрування"
 
-#: plug-ins/common/van-gogh-lic.c:210
+#: plug-ins/common/van-gogh-lic.c:211
 msgid "Minimum v_alue"
 msgstr "М_інімальне значення"
 
-#: plug-ins/common/van-gogh-lic.c:211
+#: plug-ins/common/van-gogh-lic.c:212
 msgid "Minimum value"
 msgstr "Мінімальне значення"
 
-#: plug-ins/common/van-gogh-lic.c:216
+#: plug-ins/common/van-gogh-lic.c:217
 msgid "Ma_ximum value"
 msgstr "Ма_ксимальне значення"
 
-#: plug-ins/common/van-gogh-lic.c:217
+#: plug-ins/common/van-gogh-lic.c:218
 msgid "Maximum value"
 msgstr "Максимальне значення"
 
-#: plug-ins/common/van-gogh-lic.c:815 plug-ins/common/van-gogh-lic.c:876
+#: plug-ins/common/van-gogh-lic.c:821 plug-ins/common/van-gogh-lic.c:884
 msgid "Van Gogh (LIC)"
 msgstr "Ван Гог (LIC)"
 
@@ -10486,7 +10470,6 @@ msgid "TIFF or BigTIFF image"
 msgstr "Зображення TIFF або BigTIFF"
 
 #: plug-ins/file-tiff/file-tiff.c:161
-#| msgid "Load file of the FITS file format"
 msgid "Loads files of the TIFF and BigTIFF file formats"
 msgstr "Завантажує файли у форматах TIFF і BigTIFF"
 
@@ -10495,15 +10478,14 @@ msgid ""
 "Loads files of the Tag Image File Format (TIFF) and its 64-bit offsets "
 "variant (BigTIFF)"
 msgstr ""
-"Завантажує файли у форматі TIFF і його варіанти із зсувами у 64 бітів"
-" (BigTIFF)"
+"Завантажує файли у форматі TIFF і його варіанти із зсувами у 64 бітів "
+"(BigTIFF)"
 
 #: plug-ins/file-tiff/file-tiff.c:193
 msgid "_Keep empty space around imported layers"
 msgstr "За_лишати порожнє місце навколо імпортованих шарів"
 
 #: plug-ins/file-tiff/file-tiff.c:207
-#| msgid "Exports files in the PBM file format"
 msgid "Exports files in the TIFF or BigTIFF file formats"
 msgstr "Експортує файли у форматі TIFF або BigTIFF"
 
@@ -10512,8 +10494,8 @@ msgid ""
 "Exports files in the Tag Image File Format (TIFF) or its 64-bit offsets "
 "variant (BigTIFF) able to support much bigger file sizes"
 msgstr ""
-"Експортує файли у форматі TIFF або його варіанти із зсувами у 64 бітів"
-" (BigTIFF) з можливістю підтримки файлів набагато більших розмірів"
+"Експортує файли у форматі TIFF або його варіанти із зсувами у 64 бітів "
+"(BigTIFF) з можливістю підтримки файлів набагато більших розмірів"
 
 #: plug-ins/file-tiff/file-tiff.c:220
 msgid "TIFF"
@@ -16324,6 +16306,24 @@ msgstr "Не знайдено драйвера TWAIN. Не можна скори
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#, c-format
+#~ msgid "%d × %d"
+#~ msgstr "%d × %d"
+
+#~ msgid ""
+#~ "SVG file does not\n"
+#~ "specify a size!"
+#~ msgstr ""
+#~ "У файлі SVG\n"
+#~ "не вказано розмір!"
+
+#~ msgid ""
+#~ "WMF file does not\n"
+#~ "specify a size!"
+#~ msgstr ""
+#~ "У файлі WMF\n"
+#~ "не вказано розмір!"
 
 #, c-format
 #~ msgid "ASCII art does not support multiple layers."
