@@ -1248,6 +1248,7 @@ gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
           expander = gtk_expander_new (_("Blending Options"));
           gtk_box_pack_start (GTK_BOX (vbox), expander,
                               FALSE, FALSE, 0);
+          gtk_expander_set_resize_toplevel (GTK_EXPANDER (expander), TRUE);
           gtk_widget_show (expander);
 
           g_object_bind_property (options,  "blending-options-expanded",
