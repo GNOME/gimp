@@ -108,6 +108,7 @@ static GimpValueArray * pdf_load_thumb       (GimpProcedure         *procedure,
 
 static GimpImage       * load_image          (PopplerDocument       *doc,
                                               GFile                 *file,
+                                              GimpVectorLoadData     extracted_data,
                                               GimpRunMode            run_mode,
                                               GimpPageSelectorTarget target,
                                               gint                   width,
@@ -455,7 +456,7 @@ pdf_load (GimpProcedure         *procedure,
                     "white-background", &white_background,
                     NULL);
       image = load_image (doc,
-                          file,
+                          file, extracted_data,
                           run_mode,
                           target,
                           width, height,
@@ -750,6 +751,7 @@ render_page_to_pixbuf (PopplerPage *page,
 static GimpImage *
 load_image (PopplerDocument        *doc,
             GFile                  *file,
+            GimpVectorLoadData      extracted_data,
             GimpRunMode             run_mode,
             GimpPageSelectorTarget  target,
             gint                    doc_width,
@@ -780,7 +782,7 @@ load_image (PopplerDocument        *doc,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  scale = resolution / gimp_unit_get_factor (GIMP_UNIT_POINT);
+  scale = (gdouble) doc_width / extracted_data.width;
 
   /* read the file */
 
