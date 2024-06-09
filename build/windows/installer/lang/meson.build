@@ -53,8 +53,6 @@ languages = [
   { 'code': 'zh_TW', },
 ]
 
-addbom = find_program(meson.current_source_dir() / 'addbom.sh')
-
 # Then, we generate the .isl file for each language using some xsltproc magic
 foreach language : languages
   lang_code = language.get('code')
@@ -71,41 +69,16 @@ foreach language : languages
     configuration: { 'LANG_CHECK': lang_check },
   )
 
-  nobom_setup_isl = '@0@-nobom.setup.isl'.format(lang_code)
-  nobom_setup_isl_tmp = custom_target(nobom_setup_isl,
+  setup_isl = '@0@.setup.isl'.format(lang_code)
+  custom_target(setup_isl,
     input : [ ms_installer_config_xml, gimp_ms_installer_lang_xsl  ],
-    output: nobom_setup_isl,
+    output: setup_isl,
     command: [
       xsltproc,
       '--xinclude',
       '--output', '@OUTPUT@',
       '@INPUT1@',
       '@INPUT0@',
-    ],
-    build_by_default: true,
-  )
-
-  setup_isl = '@0@.setup.isl'.format(lang_code)
-  # Inno-Setup absolutely requires a BOM to recognize UTF-8 files.
-  # Here I am working around 3 issues in meson:
-  # 1. We can't easily combine commands in meson. So either we combine
-  # them in an external script, or we run several custom_target(). I do
-  # a mix of both because custom_target() has too many bugs.
-  # 2. To concat a BOM to the file, I'd like to simply call this Python
-  # code:
-  # 'open("@OUTPUT@", "wb").write(b"\\xEF\\xBB\\xBF" + open("@INPUT@", "rb").read())'
-  # Unfortunately we can't pass several @INPUT@/@OUTPUT@ in a same arg.
-  # See: https://github.com/mesonbuild/meson/issues/7696
-  # 3. Antislashes are replaced with slashes in custom_target(). I tried
-  # some weird trick encoding a string to UTF-8 instead of using the
-  # well known BOM bytes directly. Unfortunately result was not
-  # consistent on all platforms (at least Linux and Windows).
-  # See https://github.com/mesonbuild/meson/issues/1564
-  custom_target(setup_isl,
-    input : [ nobom_setup_isl_tmp, 'addbom.sh' ],
-    output: [ setup_isl ],
-    command: [
-      addbom, '@INPUT0@', '@OUTPUT@'
     ],
     build_by_default: true,
   )
