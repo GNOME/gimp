@@ -72,8 +72,7 @@ function download_lang_official ([string]$langfile)
   Invoke-WebRequest -URI "https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/${langfile}" -OutFile "$INNOPATH/Languages/${langfile}"
 }
 
-New-Item -ItemType Directory -Path "$INNOPATH/Languages/" -Force
-download_lang_official Korean.isl
+#New-Item -ItemType Directory -Path "$INNOPATH/Languages/" -Force
 
 # Download Unofficial translations (of unknown quality and maintenance)
 # Cf. https://jrsoftware.org/files/istrans/
