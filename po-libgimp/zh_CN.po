@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-05-13 11:10+0000\n"
-"PO-Revision-Date: 2024-05-13 19:27+0800\n"
+"POT-Creation-Date: 2024-06-08 19:55+0000\n"
+"PO-Revision-Date: 2024-06-09 20:53+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -259,7 +259,7 @@ msgstr "编辑元数据"
 msgid "(edit)"
 msgstr "（编辑）"
 
-#: libgimp/gimpimagemetadata.c:283
+#: libgimp/gimpimagemetadata.c:329
 msgid "Background"
 msgstr "背景"
 
@@ -267,7 +267,7 @@ msgstr "背景"
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:267 libgimp/gimpvectorloadprocedure.c:255
+#: libgimp/gimploadprocedure.c:267 libgimp/gimpvectorloadprocedure.c:445
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
@@ -386,19 +386,19 @@ msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d 个过程与您的查询相匹配"
 
-#: libgimp/gimpprocedure.c:2080
+#: libgimp/gimpprocedure.c:2120
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "“%s”过程无返回值"
 
-#: libgimp/gimpprocedure.c:2207
+#: libgimp/gimpprocedure.c:2249
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr "“%s”过程返回了错误的值类型用于返回值“%s” (#%d) 。需要 %s，但获得 %s。"
 
-#: libgimp/gimpprocedure.c:2219
+#: libgimp/gimpprocedure.c:2261
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
@@ -406,26 +406,26 @@ msgid ""
 msgstr ""
 "调用“%s”过程使用了错误的值类型用于参数“%s” (#%d) 。需要 %s，但获得 %s。"
 
-#: libgimp/gimpprocedure.c:2254
+#: libgimp/gimpprocedure.c:2296
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr "“%s”过程返回了“%s”作为返回值“%s”（#%d，%s 类型）。此值超出范围。"
 
-#: libgimp/gimpprocedure.c:2268
+#: libgimp/gimpprocedure.c:2310
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr "“%s”过程使用了“%s”值用于“%s”参数（#%d，%s 类型）。此值超出范围。"
 
-#: libgimp/gimpprocedure.c:2312
+#: libgimp/gimpprocedure.c:2354
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "“%s”过程为参数“%s”返回了一个无效的 UTF-8 字符串。"
 
-#: libgimp/gimpprocedure.c:2322
+#: libgimp/gimpprocedure.c:2364
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -464,31 +464,31 @@ msgstr "保存设置(_S)"
 msgid "Store current settings for later reuse"
 msgstr "为之后重用保存当前设置"
 
-#: libgimp/gimpproceduredialog.c:811
+#: libgimp/gimpproceduredialog.c:824
 msgid "Brush Chooser"
 msgstr "笔刷选择器"
 
-#: libgimp/gimpproceduredialog.c:815
+#: libgimp/gimpproceduredialog.c:828
 msgid "Font Chooser"
 msgstr "字体选择器"
 
-#: libgimp/gimpproceduredialog.c:819
+#: libgimp/gimpproceduredialog.c:832
 msgid "Gradient Chooser"
 msgstr "渐变选择器"
 
-#: libgimp/gimpproceduredialog.c:823
+#: libgimp/gimpproceduredialog.c:836
 msgid "Palette Chooser"
 msgstr "色板选择器"
 
-#: libgimp/gimpproceduredialog.c:827
+#: libgimp/gimpproceduredialog.c:840
 msgid "Pattern Chooser"
 msgstr "图案选择器"
 
-#: libgimp/gimpproceduredialog.c:2586
+#: libgimp/gimpproceduredialog.c:2599
 msgid "Reset to _Initial Values"
 msgstr "重置为初始值(_I)"
 
-#: libgimp/gimpproceduredialog.c:2595
+#: libgimp/gimpproceduredialog.c:2608
 msgid "Reset to _Factory Defaults"
 msgstr "重置为出厂默认值(_F)"
 
@@ -543,24 +543,24 @@ msgstr "选择通道：%s"
 msgid "Choose drawable: %s"
 msgstr "选择可绘区：%s"
 
-#: libgimp/gimpresolutionentry-private.c:135
+#: libgimp/gimpresolutionentry-private.c:136
 msgid ""
 "This unit is used to select the pixel density and show dimensions in "
 "physical unit"
 msgstr "该单位是用来选择像素密度并以物理单位显示尺寸"
 
-#: libgimp/gimpresolutionentry-private.c:143
-#: libgimp/gimpvectorloadprocedure.c:117
+#: libgimp/gimpresolutionentry-private.c:144
+#: libgimp/gimpvectorloadprocedure.c:125
 msgid "_Keep aspect ratio"
 msgstr "保持宽高比(_K)"
 
-#: libgimp/gimpresolutionentry-private.c:144
-#: libgimp/gimpvectorloadprocedure.c:118
+#: libgimp/gimpresolutionentry-private.c:145
+#: libgimp/gimpvectorloadprocedure.c:126
 msgid "Force dimensions with aspect ratio"
 msgstr "强制保持宽高比例的尺寸"
 
-#: libgimp/gimpresolutionentry-private.c:193
-#: libgimp/gimpresolutionentry-private.c:194
+#: libgimp/gimpresolutionentry-private.c:199
+#: libgimp/gimpresolutionentry-private.c:200
 #, c-format
 msgid "pixels/%a"
 msgstr "像素/%a"
@@ -569,40 +569,81 @@ msgstr "像素/%a"
 msgid "percent"
 msgstr "百分点"
 
-#: libgimp/gimpvectorloadprocedure.c:103
+#: libgimp/gimpvectorloadprocedure.c:111
 msgid "_Width (pixels)"
 msgstr "宽度(像素)(_W)"
 
-#: libgimp/gimpvectorloadprocedure.c:110
+#: libgimp/gimpvectorloadprocedure.c:118
 msgid "_Height (pixels)"
 msgstr "高度(像素)(_H)"
 
-#: libgimp/gimpvectorloadprocedure.c:122
+#: libgimp/gimpvectorloadprocedure.c:130
 msgid "_Prefer native dimensions"
 msgstr "首选原生尺寸(_P)"
 
-#: libgimp/gimpvectorloadprocedure.c:123
+#: libgimp/gimpvectorloadprocedure.c:131
 msgid "Load and use dimensions from source file"
 msgstr "加载并使用源文件的尺寸"
 
-#: libgimp/gimpvectorloadprocedure.c:131
+#: libgimp/gimpvectorloadprocedure.c:139
 msgid "Resolu_tion"
 msgstr "分辨率(_T)"
 
-#: libgimp/gimpvectorloadprocedure.c:132
+#: libgimp/gimpvectorloadprocedure.c:140
 msgid "Pixel Density: number of pixels per physical unit"
 msgstr "像素密度：每物理单位内的像素数量"
 
-#: libgimp/gimpvectorloadprocedure.c:136
+#: libgimp/gimpvectorloadprocedure.c:145
 msgid "Unit"
 msgstr "单位"
 
-#: libgimp/gimpvectorloadprocedure.c:137
+#: libgimp/gimpvectorloadprocedure.c:146
 msgid "Physical unit"
 msgstr "物理单位"
 
+#: libgimp/gimpvectorloadprocedure.c:368
+msgid ""
+"dimensions could neither be extracted nor computed from the vector image's "
+"data."
+msgstr "无法从矢量图像的数据中提取或计算出尺寸。"
+
+#: libgimp/gimpvectorloadprocedure.c:373
+msgid "Vector image loading plug-in failed: "
+msgstr "矢量图像加载插件已失败："
+
+#: libgimp/gimpvectorloadprocedure.c:397
+msgid ""
+"Dimensions cannot be 0 and no native dimensions could be extracted from the "
+"vector image."
+msgstr "尺寸不能为 0 且无法从矢量图像中提取出原生尺寸。"
+
+#. TRANSLATORS: the %s is a vector format name, e.g. "SVG" or "PDF",
+#. * followed by 2D dimensions with unit, e.g. "200 inch x 400 inch"
+#.
+#: libgimp/gimpvectorloadproceduredialog.c:131
+#, c-format
+msgid "Source %s file size: %%.%df %s × %%.%df %s"
+msgstr "%s 源文件大小：%%.%df %s × %%.%df %s"
+
+#. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
+#: libgimp/gimpvectorloadproceduredialog.c:168
+#, c-format
+msgid "Source %s file's aspect ratio: %%.%df × %%.%df"
+msgstr "%s 源文件宽高比：%%.%df × %%.%df"
+
+#: libgimp/gimpvectorloadproceduredialog.c:176
+#, c-format
+msgid "Approximated source %s file size: %%.%df %s × %%.%df %s"
+msgstr "%s 源文件近似大小：%%.%df %s × %%.%df %s"
+
+#. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
+#: libgimp/gimpvectorloadproceduredialog.c:189
+#, c-format
+msgid "The source %s file does not specify a size!"
+msgstr "该 %s 源文件未指定大小！"
+
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpvectorloadproceduredialog.c:156
+#: libgimp/gimpvectorloadproceduredialog.c:330
 #, c-format
 msgid "Load %s Image"
 msgstr "加载 %s 图像"
@@ -2381,7 +2422,7 @@ msgstr "自定义方格颜色 1"
 msgid "Custom Checks Color 2"
 msgstr "自定义方格颜色 2"
 
-#: libgimpwidgets/gimppropwidgets.c:2454
+#: libgimpwidgets/gimppropwidgets.c:2474
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
