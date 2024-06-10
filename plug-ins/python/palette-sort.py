@@ -108,7 +108,7 @@ def gegl_color_bytes_convert (color, format, precision, index):
 
     return result[index]
 
-slice_expr_doc = """
+slice_expr_doc = N_("""
     Format is 'start:nrows,length' . All items are optional.
 
     The empty string selects all items, as does ':'
@@ -121,7 +121,7 @@ slice_expr_doc = """
     '3:,4' selects rows of 4 colors, starting at 3 (nrows auto-determined)
     '2:3,4' selects 3 rows of 4 colors (12 colors total), beginning at index 2.
     '4' is illegal (ambiguous)
-"""
+""")
 
 
 def parse_slice(s, numcolors):
@@ -386,7 +386,7 @@ class PaletteSort (Gimp.PlugIn):
             # TODO: It would be much simpler to replace the slice expression with three
             # separate parameters: start-index, number-of-rows, row_length
             procedure.add_string_argument ("slice-expr", _("Slice _expression"),
-                                           slice_expr_doc, "",
+                                           _(slice_expr_doc), "",
                                            GObject.ParamFlags.READWRITE)
             channel_choice = Gimp.Choice.new()
             self.add_choices (channel_choice)

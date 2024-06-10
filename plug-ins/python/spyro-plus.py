@@ -1453,7 +1453,7 @@ class SpyroWindow():
                     combo.append_text(_(txt))
             else:
                 for key in txt_list:
-                    combo.append (key, txt_list[key].name)
+                    combo.append (key, _(txt_list[key].name))
 
             combo.set_halign(Gtk.Align.FILL)
             table.attach(combo, 1, row, 1, 1)

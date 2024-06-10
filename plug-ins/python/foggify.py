@@ -122,7 +122,7 @@ class Foggify (Gimp.PlugIn):
 
         procedure.add_string_argument ("name", _("Layer _name"), _("Layer name"),
                                        _("Clouds"), GObject.ParamFlags.READWRITE)
-        procedure.add_color_argument ("color", _("_Fog color"), _("_Fog color"),
+        procedure.add_color_argument ("color", _("_Fog color"), _("Fog color"),
                                       True, _color, GObject.ParamFlags.READWRITE)
         procedure.add_double_argument ("turbulence", _("_Turbulence"), _("Turbulence"),
                                        0.0, 7.0, 1.0, GObject.ParamFlags.READWRITE)
