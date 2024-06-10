@@ -728,7 +728,7 @@
                 {
                     "type": "archive",
                     "url": "http://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio-4.2.0.tar.gz",
-                    "sha256": "eba53d1b3f6e345632bb09a7b752ec7ced3d63ec5153a848380f3880c5d61889"
+                    "sha256": "ef9881973ecb9fe55732a4c1bb5ca96e63b624728f6319556939e0fe25f495e8"
                 }
             ]
         },
