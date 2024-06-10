@@ -46,6 +46,9 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <CoreServices/CoreServices.h>
 #endif
+#ifdef PLATFORM_OSX
+#import <Cocoa/Cocoa.h>
+#endif
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -1157,6 +1160,43 @@ gimp_widget_set_native_handle (GtkWidget  *widget,
 
   if (gtk_widget_get_realized (widget))
     gimp_widget_set_handle_on_mapped (widget, NULL, handle);
+}
+
+/**
+ * gimp_widget_animation_enabled:
+ *
+ * This function attempts to read the user's system preference for
+ * showing animation. It can be used to turn off or hide unnecessary
+ * animations such as the scrolling credits or Easter Egg animations.
+ *
+ * Returns: %TRUE if the user has animations enabled on their system
+ *
+ * Since: 3.0
+ */
+gboolean
+gimp_widget_animation_enabled (void)
+{
+  gboolean animation_enabled = TRUE;
+
+  /* Per Luca Bacci, KDE syncs their animation setting with GTK. See
+   * https://invent.kde.org/plasma/kde-gtk-config/-/blob/v6.0.90/kded/gtkconfig.cpp?ref_type=tags#L232
+   */
+  g_object_get (gtk_settings_get_default (),
+                "gtk-enable-animations", &animation_enabled,
+                NULL);
+
+#ifdef PLATFORM_OSX
+  /* The MacOS setting is TRUE if the user wants animations turned off, so
+   * we invert it to match the format of the other platforms */
+  animation_enabled =
+    ! ([[NSWorkspace sharedWorkspace] accessibilityDisplayShouldReduceMotion]);
+#endif
+#ifdef G_OS_WIN32
+  SystemParametersInfo (SPI_GETCLIENTAREAANIMATION, 0x00, &animation_enabled,
+                        0x00);
+#endif
+
+  return animation_enabled;
 }
 
 

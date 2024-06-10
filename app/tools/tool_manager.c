@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpconfig/gimpconfig.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
@@ -776,8 +777,11 @@ tool_manager_tool_changed (GimpContext     *user_context,
 
   g_object_unref (new_tool);
 
-  /* ??? */
-  tool_manager_cast_spell (tool_info);
+  if (gimp_widget_animation_enabled ())
+    {
+      /* ??? */
+      tool_manager_cast_spell (tool_info);
+    }
 }
 
 static void

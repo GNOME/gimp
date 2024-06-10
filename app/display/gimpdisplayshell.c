@@ -1504,8 +1504,11 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
   if (shell->display == gimp_context_get_display (user_context))
     gimp_ui_manager_update (shell->popup_manager, shell->display);
 
-  shell->blink_timeout_id =
-    g_timeout_add (1403230, (GSourceFunc) gimp_display_shell_blink, shell);
+  if (gimp_widget_animation_enabled ())
+    {
+      shell->blink_timeout_id =
+        g_timeout_add (1403230, (GSourceFunc) gimp_display_shell_blink, shell);
+    }
 }
 
 static gboolean

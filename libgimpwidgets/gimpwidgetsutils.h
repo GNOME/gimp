@@ -70,6 +70,8 @@ const Babl         * gimp_widget_get_render_space    (GtkWidget       *widget,
 void                 gimp_widget_set_native_handle   (GtkWidget        *widget,
                                                       GBytes          **handle);
 
+gboolean             gimp_widget_animation_enabled   (void);
+
 /* Internal use */
 
 G_GNUC_INTERNAL void _gimp_widget_get_profiles       (GtkWidget         *widget,
