@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-16 10:12+0100\n"
-"PO-Revision-Date: 2024-01-16 10:13+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2024-06-08 19:26+0000\n"
+"PO-Revision-Date: 2024-06-11 01:10+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "Language: it\n"
@@ -1338,7 +1338,7 @@ msgstr "Nero"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:131
 msgid "_Round Corners..."
-msgstr "Angoli a_rrotondati..."
+msgstr "A_rrotonda spigoli..."
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:132
 msgid ""
@@ -1423,7 +1423,7 @@ msgstr "Converte la selezione in un motivo"
 
 #: ../plug-ins/script-fu/scripts/slide.scm:245
 msgid "_Slide..."
-msgstr "_Diapositive..."
+msgstr "_Pellicola..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm:246
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
