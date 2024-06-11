@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-11 17:18+0000\n"
-"PO-Revision-Date: 2024-06-11 21:48+0200\n"
+"POT-Creation-Date: 2024-06-11 21:01+0000\n"
+"PO-Revision-Date: 2024-06-11 23:10+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org\n"
 "Language: sl\n"
@@ -74,8 +74,8 @@ msgstr "Zapiši ločeno datoteko CSS"
 
 #. GUI only, used to create a widget to open a file if source-file is enabled
 #: plug-ins/python/colorxhtml.py:235
-msgid "Choose _File"
-msgstr "Izberite _datoteko"
+msgid "Choose File"
+msgstr "Izberite datoteko"
 
 #: plug-ins/python/foggify.py:114
 msgid "Add a layer of fog"
