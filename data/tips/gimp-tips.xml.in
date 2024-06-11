@@ -173,17 +173,6 @@
 
   <tip level="advanced">
     <thetip>
-      After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the
-      Preferences dialog, you can reassign shortcut keys. Do so by bringing
-      up the menu, selecting a menu item, and pressing the desired key
-      combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the
-      key bindings are saved when you exit GIMP.
-      You should probably disable &quot;Dynamic Keyboard Shortcuts&quot; 
-      afterwards, to prevent accidentally assigning/reassigning shortcuts.
-    </thetip>
-  </tip>
-  <tip level="advanced">
-    <thetip>
       If your screen is too cluttered, you can press <tt>Tab</tt> 
       in an image window to toggle the visibility of the toolbox 
       and other dialogs.
