@@ -169,7 +169,11 @@ def run(procedure, run_mode, image, n_layers, layers, config, data):
         GimpUi.init("histogram-export.py")
 
         dialog = GimpUi.ProcedureDialog.new(procedure, config, _("Histogram Export..."))
-        dialog.fill()
+
+        dialog.get_file_chooser ("file", Gtk.FileChooserAction.SAVE)
+        radio_frame = dialog.get_widget ("output-format", GimpUi.IntRadioFrame)
+
+        dialog.fill(None)
 
         if not dialog.run():
             return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,

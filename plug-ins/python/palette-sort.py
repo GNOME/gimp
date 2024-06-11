@@ -65,7 +65,14 @@ channel_getters = [
     (lambda v, i: gegl_color_bytes_convert (v, "HSL float", 'fff', 2)),
 
     (lambda v, i: i),
-    (lambda v, i: randint(0, 0x7fffffff))
+    (lambda v, i: randint(0, 0x7fffffff)),
+
+    (lambda v, i: gegl_color_bytes_convert (v, "CIE Lab float", 'fff', 0)),
+    (lambda v, i: gegl_color_bytes_convert (v, "CIE Lab float", 'fff', 1)),
+    (lambda v, i: gegl_color_bytes_convert (v, "CIE Lab float", 'fff', 2)),
+
+    (lambda v, i: gegl_color_bytes_convert (v, "CIE LCH(ab) float", 'fff', 1)),
+    (lambda v, i: gegl_color_bytes_convert (v, "CIE LCH(ab) float", 'fff', 2))
 ]
 
 GRAIN_SCALE = (1.0, 1.0 , 1.0,
@@ -76,30 +83,6 @@ GRAIN_SCALE = (1.0, 1.0 , 1.0,
               float(0x7ffffff),
               100., 256., 256.,
               256., 360.,)
-
-try:
-    from colormath.color_objects import RGBColor, LabColor, LCHabColor
-
-    def to_lab(v):
-        return RGBColor(v.get_rgba()[0], v.get_rgba()[1], v.get_rgba()[2]).convert_to('LAB').get_value_tuple()
-
-    def to_lchab(v):
-        return RGBColor(v.get_rgba()[0], v.get_rgba()[1], v.get_rgba()[2]).convert_to('LCHab').get_value_tuple()
-
-    AVAILABLE_CHANNELS = AVAILABLE_CHANNELS + (_("Lightness (LAB)"),
-                                               _("A-color"), _("B-color"),
-                                               _("Chroma (LCHab)"),
-                                               _("Hue (LCHab)"))
-    channel_getters.extend([
-        (lambda v, i: to_lab(v)[0]),
-        (lambda v, i: to_lab(v)[1]),
-        (lambda v, i: to_lab(v)[2]),
-
-        (lambda v, i: to_lchab(v)[1]),
-        (lambda v, i: to_lchab(v)[2])
-    ])
-except ImportError:
-    pass
 
 def gegl_color_bytes_convert (color, format, precision, index):
     color_bytes = color.get_bytes(Babl.format(format))
@@ -488,5 +471,10 @@ class PaletteSort (Gimp.PlugIn):
        choice.add("lightness-hsl", 8, _("Lightness (HSL)"), "")
        choice.add("index", 9, _("Index"), "")
        choice.add("random", 10, _("Random"), "")
+       choice.add("lightness-lab", 11, _("Lightness (LAB)"), "")
+       choice.add("a-color", 12, _("A-color"), "")
+       choice.add("b-color", 13, _("B-color"), "")
+       choice.add("chroma-lchab", 14, _("Chroma (LCHab)"), "")
+       choice.add("hue-lchab", 15, _("Hue (LCHab)"), "")
 
 Gimp.main(PaletteSort.__gtype__, sys.argv)
