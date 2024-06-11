@@ -644,7 +644,7 @@ gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
  * must call [method@PlugIn.extension_enable].
  *
  * Note that the plug-in does not need to be a
- * [const@PDBProcType.EXTENSION] to register temporary procedures.
+ * [enum@Gimp.PDBProcType.EXTENSION] to register temporary procedures.
  *
  * See also: [method@PlugIn.add_temp_procedure].
  *

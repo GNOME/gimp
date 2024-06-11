@@ -1855,7 +1855,7 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
 
 /**
  * gimp_procedure_run: (skip)
- * @procedure:      the [class@gimp.Procedure] to run.
+ * @procedure:      the [class@Gimp.Procedure] to run.
  * @first_arg_name: the name of an argument of @procedure or %NULL to
  *                  run @procedure with default arguments.
  * @...:            the value of @first_arg_name and any more argument
@@ -1893,7 +1893,7 @@ gimp_procedure_run (GimpProcedure *procedure,
 
 /**
  * gimp_procedure_run_valist: (skip)
- * @procedure:      the [class@gimp.Procedure] to run.
+ * @procedure:      the [class@Gimp.Procedure] to run.
  * @first_arg_name: the name of an argument of @procedure or %NULL to
  *                  run @procedure with default arguments.
  * @args            the value of @first_arg_name and any more argument
@@ -1963,7 +1963,7 @@ gimp_procedure_run_valist (GimpProcedure *procedure,
 
 /**
  * gimp_procedure_run_config: (rename-to gimp_procedure_run)
- * @procedure:          the [class@gimp.Procedure] to run.
+ * @procedure:          the [class@Gimp.Procedure] to run.
  * @config: (nullable): the @procedure's arguments.
  *
  * Runs @procedure, calling the run_func given in [ctor@Procedure.new].

@@ -47,7 +47,7 @@ static void  gimp_font_init (GimpFont *font)
  * gimp_font_get_pango_font_description:
  * @font: (transfer none): the [class@Gimp.Font]
  *
- * Returns a [class@Pango.Font.Description] representing @font.
+ * Returns a [struct@Pango.FontDescription] representing @font.
  *
  * Returns: (transfer full): a %PangoFontDescription representing @font.
  *

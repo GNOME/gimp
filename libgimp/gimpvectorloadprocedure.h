@@ -85,7 +85,8 @@ typedef struct _GimpVectorLoadData
  *    will be used rather than @widthx@height. Note that if both dimensions are
  *    0 or negative, even if @prefer_native_dimension is TRUE yet the procedure
  *    cannot determine native dimensions, then maybe a dialog could be popped
- *    up (if implemented), unless the @run_mode is [enum@RunMode.NONINTERACTIVE].
+ *    up (if implemented), unless the @run_mode is
+ *    [enum@Gimp.RunMode.NONINTERACTIVE].
  *
  * Returns: (transfer full): the @procedure's return values.
  *
