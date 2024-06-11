@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-10 17:07+0000\n"
-"PO-Revision-Date: 2024-06-10 21:51+0300\n"
+"POT-Creation-Date: 2024-06-10 22:02+0000\n"
+"PO-Revision-Date: 2024-06-11 09:37+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -95,7 +95,6 @@ msgid "_Read characters from file, if true, or use text entry"
 msgstr "Якщо «true», _читати символи з файла, інакше — із введеного тексту"
 
 #: plug-ins/python/colorxhtml.py:295
-#| msgid "_Read characters from file, if true, or use text entry"
 msgid "Read characters from file, if true, or use text entry"
 msgstr "Якщо «true», читати символи з файла, інакше — із введеного тексту"
 
@@ -104,7 +103,6 @@ msgid "_File to read or characters to use"
 msgstr "_Файл що читається або символи, що використовуються"
 
 #: plug-ins/python/colorxhtml.py:298
-#| msgid "_File to read or characters to use"
 msgid "File to read or characters to use"
 msgstr "Файл для читання або символи, які слід використовувати"
 
@@ -113,7 +111,6 @@ msgid "Fo_nt size in pixels"
 msgstr "_Кегль шрифту у точках"
 
 #: plug-ins/python/colorxhtml.py:301
-#| msgid "Fo_nt size in pixels"
 msgid "Font size in pixels"
 msgstr "Розмір шрифту у пікселях"
 
@@ -122,7 +119,6 @@ msgid "_Write a separate CSS file"
 msgstr "З_аписати окремий файл CSS"
 
 #: plug-ins/python/colorxhtml.py:304
-#| msgid "_Write a separate CSS file"
 msgid "Write a separate CSS file"
 msgstr "Записати окремий файл CSS"
 
@@ -153,6 +149,10 @@ msgstr "Хмари"
 #: plug-ins/python/foggify.py:125
 msgid "_Fog color"
 msgstr "Колір т_уману"
+
+#: plug-ins/python/foggify.py:125
+msgid "Fog color"
+msgstr "Колір туману"
 
 #: plug-ins/python/foggify.py:127
 msgid "_Turbulence"
@@ -240,7 +240,6 @@ msgid "Histogram File"
 msgstr "Файл гістограми"
 
 #: plug-ins/python/histogram-export.py:223
-#| msgid "Histogram Export file..."
 msgid "Histogram export file"
 msgstr "Файл експортування гістограми"
 
@@ -249,7 +248,6 @@ msgid "_Bucket Size"
 msgstr "_Розмір ділянки"
 
 #: plug-ins/python/histogram-export.py:224
-#| msgid "_Bucket Size"
 msgid "Bucket Size"
 msgstr "Розмір ділянки"
 
@@ -258,12 +256,10 @@ msgid "Sample _Average"
 msgstr "_Середнє за вибіркою"
 
 #: plug-ins/python/histogram-export.py:226
-#| msgid "Sample _Average"
 msgid "Sample Average"
 msgstr "Вибіркове середнє"
 
 #: plug-ins/python/histogram-export.py:229
-#| msgid "Pixel count"
 msgid "Pixel Count"
 msgstr "Кількість пікселів"
 
@@ -280,7 +276,6 @@ msgid "Output _format"
 msgstr "_Формат виводу"
 
 #: plug-ins/python/histogram-export.py:232
-#| msgid "Output _format"
 msgid "Output format"
 msgstr "Формат виводу"
 
@@ -304,7 +299,6 @@ msgid "Palette"
 msgstr "Палітра"
 
 #: plug-ins/python/palette-offset.py:62
-#| msgid "Offset"
 msgid "O_ffset"
 msgstr "_Зсув"
 
@@ -387,6 +381,44 @@ msgstr "Насиченість (LCHab)"
 msgid "Hue (LCHab)"
 msgstr "Відтінок (LCHab)"
 
+#: plug-ins/python/palette-sort.py:111
+msgid ""
+"\n"
+"    Format is 'start:nrows,length' . All items are optional.\n"
+"\n"
+"    The empty string selects all items, as does ':'\n"
+"    ':4,' makes a 4-row selection out of all colors (length auto-"
+"determined)\n"
+"    ':4' also.\n"
+"    ':1,4' selects the first 4 colors\n"
+"    ':,4' selects rows of 4 colors (nrows auto-determined)\n"
+"    ':3,4' selects 3 rows of 4 colors\n"
+"    '4:' selects a single row of all colors after 4, inclusive.\n"
+"    '3:,4' selects rows of 4 colors, starting at 3 (nrows auto-determined)\n"
+"    '2:3,4' selects 3 rows of 4 colors (12 colors total), beginning at index "
+"2.\n"
+"    '4' is illegal (ambiguous)\n"
+msgstr ""
+"\n"
+"    Формат — «початок:кількість_рядків,довжина». Усі частини є"
+" необов'язковими.\n"
+"\n"
+"    Порожній рядок призводить до вибору усіх записів, так само, як «:»\n"
+"    «:4,» — вибрати 4 рядки з усіх кольорів (довжина визначається"
+" автоматично)\n"
+"    «:4» — те саме.\n"
+"    «:1,4» — вибрати перші 4 кольори\n"
+"    «:,4» — вибрати рядки 4 кольорів (кількість рядків визначається"
+" автоматично)\n"
+"    «:3,4» — вибрати 3 рядки 4 кольорів\n"
+"    «4:» — вибрати один рядок усіх кольорів після 4, включно.\n"
+"    «3:,4» — вибрати рядки 4 кольорів, починаючи з 3 (кількість рядків"
+" визначається автоматично)\n"
+"    «2:3,4» — вибрати 3 рядки 4 кольорів (загалом 12 кольорів), починаючи з"
+" індексу "
+"2.\n"
+"    «4» — некоректний варіант (немає однозначності)\n"
+
 #: plug-ins/python/palette-sort.py:360
 msgid "_Sort Palette..."
 msgstr "Впорядкувати _палітру…"
@@ -416,7 +448,6 @@ msgid "Select_ions"
 msgstr "_Вибране"
 
 #: plug-ins/python/palette-sort.py:384
-#| msgid "Select_ions"
 msgid "Selections"
 msgstr "Позначення"
 
@@ -431,7 +462,6 @@ msgid "Channel _to sort"
 msgstr "Сортовані _канали"
 
 #: plug-ins/python/palette-sort.py:393
-#| msgid "Channel _to sort"
 msgid "Channel to sort"
 msgstr "Канал для сортування"
 
@@ -448,7 +478,6 @@ msgid "Secondary C_hannel to sort"
 msgstr "Другий канал для _сортування"
 
 #: plug-ins/python/palette-sort.py:400
-#| msgid "Secondary C_hannel to sort"
 msgid "Secondary Channel to sort"
 msgstr "Другий канал для сортування"
 
@@ -469,7 +498,6 @@ msgid "Partitionin_g channel"
 msgstr "_Канал поділу"
 
 #: plug-ins/python/palette-sort.py:410
-#| msgid "Partitionin_g channel"
 msgid "Partitioning channel"
 msgstr "_Канал поділу"
 
@@ -965,7 +993,6 @@ msgid "rack"
 msgstr "кремальєра"
 
 #: plug-ins/python/spyro-plus.py:2257
-#| msgid "Frame"
 msgid "frame"
 msgstr "рамка"
 
@@ -981,7 +1008,6 @@ msgstr ""
 "деяких форм."
 
 #: plug-ins/python/spyro-plus.py:2267
-#| msgid "Morph"
 msgid "_Morph"
 msgstr "_Морфінг"
 
@@ -992,22 +1018,18 @@ msgstr ""
 "форм."
 
 #: plug-ins/python/spyro-plus.py:2270
-#| msgid "Fixed Gear Teeth"
 msgid "Fi_xed Gear Teeth"
 msgstr "З_убець нерухомої шестерні"
 
 #: plug-ins/python/spyro-plus.py:2271 plug-ins/python/spyro-plus.py:2274
-#| msgid "Number of teeth for fixed gear"
 msgid "Number of teeth for fixed gear."
 msgstr "Кількість зубців нерухомої шестерні."
 
 #: plug-ins/python/spyro-plus.py:2273
-#| msgid "Moving Gear Teeth"
 msgid "Mo_ving Gear Teeth"
 msgstr "Зубець _рухомої шестерні"
 
 #: plug-ins/python/spyro-plus.py:2276
-#| msgid "Hole Radius(%)"
 msgid "_Hole Radius (%)"
 msgstr "Радіус д_ірки (%)"
 
@@ -1020,7 +1042,6 @@ msgstr ""
 "краю шестерні, а 0 означає отвір у центрі"
 
 #: plug-ins/python/spyro-plus.py:2280
-#| msgid "Margin (px)"
 msgid "Margin (_px)"
 msgstr "Поле (у пі_кселях)"
 
@@ -1029,7 +1050,6 @@ msgid "Margin from selection, in pixels"
 msgstr "Поле з позначення, у пікселях"
 
 #: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
-#| msgid "Rotation"
 msgid "_Rotation"
 msgstr "_Поворот"
 
@@ -1042,7 +1062,6 @@ msgid "Shape rotation of fixed gear, in degrees"
 msgstr "Кут обертання форми нерухомої шестерні у градусах"
 
 #: plug-ins/python/spyro-plus.py:2304
-#| msgid "Long Gradient"
 msgid "Long _Gradient"
 msgstr "Довгий _градієнт"
 
@@ -1053,9 +1072,6 @@ msgid ""
 msgstr ""
 "Визначає, чи слід застосовувати довгий градієнт для встановлення "
 "відповідності довжині візерунка. Можна застосувати лише до деяких засобів."
-
-#~ msgid "Fog color"
-#~ msgstr "Колір туману"
 
 #~ msgid "Off_set"
 #~ msgstr "Зс_ув"
