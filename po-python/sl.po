@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-19 12:40+0000\n"
-"PO-Revision-Date: 2024-04-19 23:43+0200\n"
+"POT-Creation-Date: 2024-06-11 10:42+0000\n"
+"PO-Revision-Date: 2024-06-11 17:33+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org\n"
 "Language: sl\n"
@@ -30,15 +30,14 @@ msgstr "Shrani kot barvano besedilo HTML ..."
 
 #: plug-ins/python/colorxhtml.py:86 plug-ins/python/colorxhtml.py:92
 #: plug-ins/python/gradients-save-as-css.py:113
-#: plug-ins/python/palette-offset.py:135
 #: plug-ins/python/python-console/python-console.py:272
-#: plug-ins/python/spyro-plus.py:1719
+#: plug-ins/python/spyro-plus.py:1735
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
 #: plug-ins/python/colorxhtml.py:87 plug-ins/python/colorxhtml.py:93
 #: plug-ins/python/gradients-save-as-css.py:114
-#: plug-ins/python/palette-offset.py:136 plug-ins/python/spyro-plus.py:1720
+#: plug-ins/python/spyro-plus.py:1736
 msgid "_OK"
 msgstr "V _redu"
 
@@ -88,78 +87,94 @@ msgstr "Zapiši ločeno datoteko CSS"
 msgid "Saving as colored XHTML"
 msgstr "Shranjevanje v obliki barvnega XHTML"
 
-#: plug-ins/python/colorxhtml.py:271 plug-ins/python/colorxhtml.py:272
+#: plug-ins/python/colorxhtml.py:283
+msgid "Save as colored HTML text"
+msgstr "Shrani kot barvano besedilo HTML"
+
+#: plug-ins/python/colorxhtml.py:286
+msgid "Colored HTML text"
+msgstr "Barvano besedilo HTML"
+
+#: plug-ins/python/colorxhtml.py:294
 msgid "_Read characters from file, if true, or use text entry"
 msgstr ""
 "_Preberi znake iz datoteke, če je potrjeno, ali uporabite besedilni vnos"
 
-#: plug-ins/python/colorxhtml.py:276 plug-ins/python/colorxhtml.py:277
+#: plug-ins/python/colorxhtml.py:295
+msgid "Read characters from file, if true, or use text entry"
+msgstr "Preberi znake iz datoteke, če je potrjeno, ali uporabi besedilni vnos"
+
+#: plug-ins/python/colorxhtml.py:297
 msgid "_File to read or characters to use"
 msgstr "_Datoteka za branje ali znaki za uporabo"
 
-#: plug-ins/python/colorxhtml.py:281 plug-ins/python/colorxhtml.py:282
+#: plug-ins/python/colorxhtml.py:298
+msgid "File to read or characters to use"
+msgstr "Datoteka za branje ali znaki za uporabo"
+
+#: plug-ins/python/colorxhtml.py:300
 msgid "Fo_nt size in pixels"
 msgstr "Veli_kost pisave v točkah"
 
-#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
+#: plug-ins/python/colorxhtml.py:301
+msgid "Font size in pixels"
+msgstr "Velikost pisave v sl. točkah"
+
+#: plug-ins/python/colorxhtml.py:303
 msgid "_Write a separate CSS file"
 msgstr "Zapiši _ločeno datoteko CSS"
 
-#: plug-ins/python/colorxhtml.py:307
-msgid "Save as colored HTML text"
-msgstr "Shrani kot barvano besedilo HTML"
+#: plug-ins/python/colorxhtml.py:304
+msgid "Write a separate CSS file"
+msgstr "Zapiši ločeno datoteko CSS"
 
-#: plug-ins/python/colorxhtml.py:310
-msgid "Colored HTML text"
-msgstr "Barvano besedilo HTML"
-
-#: plug-ins/python/foggify.py:111
-msgid "Layer _name"
-msgstr "Im_e plasti"
-
-#: plug-ins/python/foggify.py:112
-msgid "Layer name"
-msgstr "Ime plasti"
-
-#: plug-ins/python/foggify.py:113
-msgid "Clouds"
-msgstr "Oblaki"
-
-#: plug-ins/python/foggify.py:116
-msgid "_Turbulence"
-msgstr "_Turbulenca"
-
-#: plug-ins/python/foggify.py:117
-msgid "Turbulence"
-msgstr "Turbulenca"
-
-#: plug-ins/python/foggify.py:121
-msgid "O_pacity"
-msgstr "_Prekrivnost"
-
-#: plug-ins/python/foggify.py:122
-msgid "Opacity"
-msgstr "Prekrivnost"
-
-#: plug-ins/python/foggify.py:131
-msgid "_Fog color"
-msgstr "Barva me_gle"
-
-#: plug-ins/python/foggify.py:132
-msgid "Fog color"
-msgstr "Barva megle"
-
-#: plug-ins/python/foggify.py:148
+#: plug-ins/python/foggify.py:114
 msgid "Add a layer of fog"
 msgstr "Dodaj plast megle"
 
-#: plug-ins/python/foggify.py:149
+#: plug-ins/python/foggify.py:115
 msgid "Adds a layer of fog to the image."
 msgstr "Sliki doda plast megle."
 
-#: plug-ins/python/foggify.py:151
+#: plug-ins/python/foggify.py:117
 msgid "_Fog..."
 msgstr "_Megla ..."
+
+#: plug-ins/python/foggify.py:123
+msgid "Layer _name"
+msgstr "Im_e plasti"
+
+#: plug-ins/python/foggify.py:123
+msgid "Layer name"
+msgstr "Ime plasti"
+
+#: plug-ins/python/foggify.py:124
+msgid "Clouds"
+msgstr "Oblaki"
+
+#: plug-ins/python/foggify.py:125
+msgid "_Fog color"
+msgstr "Barva me_gle"
+
+#: plug-ins/python/foggify.py:125
+msgid "Fog color"
+msgstr "Barva megle"
+
+#: plug-ins/python/foggify.py:127
+msgid "_Turbulence"
+msgstr "_Turbulenca"
+
+#: plug-ins/python/foggify.py:127
+msgid "Turbulence"
+msgstr "Turbulenca"
+
+#: plug-ins/python/foggify.py:129
+msgid "O_pacity"
+msgstr "_Prekrivnost"
+
+#: plug-ins/python/foggify.py:129
+msgid "Opacity"
+msgstr "Prekrivnost"
 
 #: plug-ins/python/gradients-save-as-css.py:94
 msgid "_File..."
@@ -173,285 +188,355 @@ msgstr "Izberite datoteko CSS …"
 msgid "Save as CSS file..."
 msgstr "Shrani kot datoteko CSS …"
 
-#: plug-ins/python/gradients-save-as-css.py:183
-#: plug-ins/python/palette-sort.py:356
+#: plug-ins/python/gradients-save-as-css.py:192
+#: plug-ins/python/gradients-save-as-css.py:193
+msgid "Creates a new palette from a given gradient"
+msgstr "Ustvari novo paleto iz danega preliva"
+
+#: plug-ins/python/gradients-save-as-css.py:195
+msgid "Save Gradient as CSS..."
+msgstr "Shrani preliv kot CSS …"
+
+#: plug-ins/python/gradients-save-as-css.py:201
+#: plug-ins/python/palette-offset.py:55 plug-ins/python/palette-sort.py:371
+#: plug-ins/python/palette-to-gradient.py:143
 #: plug-ins/python/python-console/python-console.py:300
 msgid "Run mode"
 msgstr "Izvajalni način"
 
-#: plug-ins/python/gradients-save-as-css.py:184
+#: plug-ins/python/gradients-save-as-css.py:202
+#: plug-ins/python/palette-offset.py:56 plug-ins/python/palette-sort.py:372
+#: plug-ins/python/palette-to-gradient.py:144
 #: plug-ins/python/python-console/python-console.py:300
 msgid "The run mode"
 msgstr "Izvajalni način"
 
-#: plug-ins/python/gradients-save-as-css.py:188
+#: plug-ins/python/gradients-save-as-css.py:205
 msgid "_Gradient to use"
 msgstr "_Preliv za uporabo"
 
-#: plug-ins/python/gradients-save-as-css.py:191
+#: plug-ins/python/gradients-save-as-css.py:207
 msgid "_File"
 msgstr "_Datoteka"
 
-#: plug-ins/python/gradients-save-as-css.py:207
-#: plug-ins/python/gradients-save-as-css.py:208
-msgid "Creates a new palette from a given gradient"
-msgstr "Ustvari novo paleto iz danega preliva"
-
-#: plug-ins/python/gradients-save-as-css.py:210
-msgid "Save Gradient as CSS..."
-msgstr "Shrani preliv kot CSS …"
-
-#: plug-ins/python/histogram-export.py:92
-msgid "Pixel count"
-msgstr "Število slik. točk"
-
-#: plug-ins/python/histogram-export.py:93
-msgid "Normalized"
-msgstr "Normalizirano"
-
-#: plug-ins/python/histogram-export.py:94
-msgid "Percent"
-msgstr "Odstotek"
-
-#: plug-ins/python/histogram-export.py:161
+#: plug-ins/python/histogram-export.py:153
 msgid "File is either a directory or file name is empty."
 msgstr "Datoteka je mapa ali pa je ime datoteke prazno."
 
-#: plug-ins/python/histogram-export.py:164
+#: plug-ins/python/histogram-export.py:156
 msgid "Directory not found."
 msgstr "Mape ni mogoče najti."
 
-#: plug-ins/python/histogram-export.py:179
+#: plug-ins/python/histogram-export.py:171
 msgid "Histogram Export..."
 msgstr "Izvozi histogram ..."
 
-#: plug-ins/python/histogram-export.py:209
-msgid "Histogram File"
-msgstr "Datoteka histograma"
-
-#: plug-ins/python/histogram-export.py:213
-msgid "_Bucket Size"
-msgstr "Velikost _vedra"
-
-#: plug-ins/python/histogram-export.py:218
-msgid "Sample _Average"
-msgstr "Vzorči povpre_čje"
-
-#: plug-ins/python/histogram-export.py:223
-msgid "Output _format"
-msgstr "Izho_dni zapis"
-
-#: plug-ins/python/histogram-export.py:245
+#: plug-ins/python/histogram-export.py:211
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Izvozi histogram slike v besedilno datoteko (CSV)"
 
-#: plug-ins/python/histogram-export.py:248
+#: plug-ins/python/histogram-export.py:214
 msgid "_Export histogram..."
 msgstr "_Izvozi histogram ..."
 
-#: plug-ins/python/palette-offset.py:50 plug-ins/python/palette-offset.py:51
-#: plug-ins/python/palette-sort.py:362 plug-ins/python/palette-sort.py:414
-#: plug-ins/python/palette-sort.py:415
+#. TODO: GFile props still don't have labels + only load existing files
+#. (here we likely want to create a new file).
+#: plug-ins/python/histogram-export.py:222
+msgid "Histogram File"
+msgstr "Datoteka histograma"
+
+#: plug-ins/python/histogram-export.py:223
+msgid "Histogram export file"
+msgstr "Izvozna datoteka histograma"
+
+#: plug-ins/python/histogram-export.py:224
+msgid "_Bucket Size"
+msgstr "Velikost _vedra"
+
+#: plug-ins/python/histogram-export.py:224
+msgid "Bucket Size"
+msgstr "Velikost vedra"
+
+#: plug-ins/python/histogram-export.py:226
+msgid "Sample _Average"
+msgstr "Vzorči povpre_čje"
+
+#: plug-ins/python/histogram-export.py:226
+msgid "Sample Average"
+msgstr "Vzorči povprečje"
+
+#: plug-ins/python/histogram-export.py:229
+msgid "Pixel Count"
+msgstr "Število slik. točk"
+
+#: plug-ins/python/histogram-export.py:230
+msgid "Normalized"
+msgstr "Normalizirano"
+
+#: plug-ins/python/histogram-export.py:231
+msgid "Percent"
+msgstr "Odstotek"
+
+#: plug-ins/python/histogram-export.py:232
+msgid "Output _format"
+msgstr "Izho_dni zapis"
+
+#: plug-ins/python/histogram-export.py:232
+msgid "Output format"
+msgstr "Izhodni zapis"
+
+#: plug-ins/python/palette-offset.py:48
+msgid "_Offset Palette..."
+msgstr "_Zamakni paleto ..."
+
+#: plug-ins/python/palette-offset.py:49
+msgid "Offset the colors in a palette"
+msgstr "Zamakni barve palete"
+
+#: plug-ins/python/palette-offset.py:59 plug-ins/python/palette-sort.py:375
+#: plug-ins/python/palette-to-gradient.py:147
+msgid "_Palette"
+msgstr "_Paleta"
+
+#: plug-ins/python/palette-offset.py:60 plug-ins/python/palette-sort.py:376
+#: plug-ins/python/palette-sort.py:416 plug-ins/python/palette-sort.py:417
+#: plug-ins/python/palette-to-gradient.py:148
 msgid "Palette"
 msgstr "Paleta"
 
 #: plug-ins/python/palette-offset.py:62
-msgid "Off_set"
+msgid "O_ffset"
 msgstr "_Zamik"
 
-#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:143
+#: plug-ins/python/palette-offset.py:62
 msgid "Offset"
 msgstr "Zamik"
 
-#: plug-ins/python/palette-offset.py:73
+#: plug-ins/python/palette-offset.py:64
 msgid "The edited palette"
 msgstr "Urejena paleta"
 
-#: plug-ins/python/palette-offset.py:74
+#: plug-ins/python/palette-offset.py:65
 msgid "The newly created palette when read-only, otherwise the input palette"
 msgstr "Novo ustvarjena paleta, če je samo za branje, sicer vnosna paleta"
 
-#: plug-ins/python/palette-offset.py:94
-msgid "_Offset Palette..."
-msgstr "_Zamakni paleto ..."
-
-#: plug-ins/python/palette-offset.py:95
-msgid "Offset the colors in a palette"
-msgstr "Zamakni barve palete"
-
-#: plug-ins/python/palette-offset.py:133
-msgid "Offset Palette..."
-msgstr "Zamakni paleto ..."
-
-#: plug-ins/python/palette-sort.py:45
+#. TODO: Re-incorporate LAB and LCHab options with GeglColor
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:480
 msgid "Red"
 msgstr "Rdeča"
 
-#: plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:481
 msgid "Green"
 msgstr "Zelena"
 
-#: plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:482
 msgid "Blue"
 msgstr "Modra"
 
-#: plug-ins/python/palette-sort.py:46
+#: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:483
 msgid "Luma (Y)"
 msgstr "Luma (Y)"
 
-#: plug-ins/python/palette-sort.py:47
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:484
 msgid "Hue"
 msgstr "Obarvanost"
 
-#: plug-ins/python/palette-sort.py:47
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:485
 msgid "Saturation"
 msgstr "Nasičenost"
 
-#: plug-ins/python/palette-sort.py:47
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:486
 msgid "Value"
 msgstr "Vrednost"
 
-#: plug-ins/python/palette-sort.py:48
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:487
 msgid "Saturation (HSL)"
 msgstr "Nasičenost (HSL)"
 
-#: plug-ins/python/palette-sort.py:48
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:488
 msgid "Lightness (HSL)"
 msgstr "Svetlost (HSL)"
 
-#: plug-ins/python/palette-sort.py:49
+#: plug-ins/python/palette-sort.py:49 plug-ins/python/palette-sort.py:489
 msgid "Index"
 msgstr "Indeks"
 
-#: plug-ins/python/palette-sort.py:50
+#: plug-ins/python/palette-sort.py:50 plug-ins/python/palette-sort.py:490
 msgid "Random"
 msgstr "Naključno"
 
-#: plug-ins/python/palette-sort.py:95
+#: plug-ins/python/palette-sort.py:89
 msgid "Lightness (LAB)"
 msgstr "Svetlost (LAB)"
 
-#: plug-ins/python/palette-sort.py:96
+#: plug-ins/python/palette-sort.py:90
 msgid "A-color"
 msgstr "A-barva"
 
-#: plug-ins/python/palette-sort.py:96
+#: plug-ins/python/palette-sort.py:90
 msgid "B-color"
 msgstr "B-barva"
 
-#: plug-ins/python/palette-sort.py:97
+#: plug-ins/python/palette-sort.py:91
 msgid "Chroma (LCHab)"
 msgstr "Kroma (LCHab)"
 
-#: plug-ins/python/palette-sort.py:98
+#: plug-ins/python/palette-sort.py:92
 msgid "Hue (LCHab)"
 msgstr "Obarvanost (LCHab)"
 
-#: plug-ins/python/palette-sort.py:351
-msgid "All"
-msgstr "Vse"
+#: plug-ins/python/palette-sort.py:111
+msgid ""
+"\n"
+"    Format is 'start:nrows,length' . All items are optional.\n"
+"\n"
+"    The empty string selects all items, as does ':'\n"
+"    ':4,' makes a 4-row selection out of all colors (length auto-"
+"determined)\n"
+"    ':4' also.\n"
+"    ':1,4' selects the first 4 colors\n"
+"    ':,4' selects rows of 4 colors (nrows auto-determined)\n"
+"    ':3,4' selects 3 rows of 4 colors\n"
+"    '4:' selects a single row of all colors after 4, inclusive.\n"
+"    '3:,4' selects rows of 4 colors, starting at 3 (nrows auto-determined)\n"
+"    '2:3,4' selects 3 rows of 4 colors (12 colors total), beginning at index "
+"2.\n"
+"    '4' is illegal (ambiguous)\n"
+msgstr ""
+"\n"
+"    Oblika je ‘začetek:štvrstic,dolžina' . Vsi elementi so neobvezni.\n"
+"\n"
+"    Prazen niz izbere vse elemente, prav tako ‘:’\n"
+"    ':4,' naredi 4-vrstični izbor iz vseh barv (samodejno določena dolžina)\n"
+"    Enako ':4'.\n"
+"    ':1,4' izbere prve 4 barve\n"
+"    ':,4' izbere vrstice s 4 barvami (samodejno določeno štvrstic)\n"
+"    ':3,4' izbere 3 vrstice s 4 barvami\n"
+"    ′4:′ izbere eno vrstico vsake barve za vključno 4. vrstico\n"
+"    '3:,4' izbere vrstice s 4 barvami, začenši s 3 (štvrstic samodejno "
+"določeno)\n"
+"    ′2:3,4' izbere 3 vrstice s 4 barvami (skupaj 12 barv), ki se začnejo pri "
+"indeksu 2.\n"
+"    ‘4’ je neveljavno (zaradi dvoumnosti)\n"
 
-#: plug-ins/python/palette-sort.py:351
-msgid "Slice / Array"
-msgstr "Rezina / matrika"
-
-#: plug-ins/python/palette-sort.py:351
-msgid "Autoslice (fg->bg)"
-msgstr "Samodejno poreži (ospr->ozad)"
-
-#: plug-ins/python/palette-sort.py:351
-msgid "Partitioned"
-msgstr "Razdeljeno"
-
-#: plug-ins/python/palette-sort.py:361
-#: plug-ins/python/palette-to-gradient.py:129
-msgid "_Palette"
-msgstr "_Paleta"
-
-#: plug-ins/python/palette-sort.py:365
-msgid "Select_ions"
-msgstr "Iz_bire"
-
-#: plug-ins/python/palette-sort.py:372
-msgid "Slice _expression"
-msgstr "_Izraz rezanja"
-
-#: plug-ins/python/palette-sort.py:377
-msgid "Channel _to sort"
-msgstr "Kanal za _razvrščanje"
-
-#: plug-ins/python/palette-sort.py:382
-msgid "_Ascending"
-msgstr "N_araščajoče"
-
-#: plug-ins/python/palette-sort.py:383 plug-ins/python/palette-sort.py:393
-msgid "Ascending"
-msgstr "Naraščajoče"
-
-#: plug-ins/python/palette-sort.py:387
-msgid "Secondary C_hannel to sort"
-msgstr "Sekundarni kanal za ra_zvrščanje"
-
-#: plug-ins/python/palette-sort.py:392
-msgid "Ascen_ding"
-msgstr "Nara_ščajoče"
-
-#: plug-ins/python/palette-sort.py:397
-msgid "_Quantization"
-msgstr "_Kvantizacija"
-
-#: plug-ins/python/palette-sort.py:398
-msgid "Quantization"
-msgstr "Kvantizacija"
-
-#: plug-ins/python/palette-sort.py:402
-msgid "Partitionin_g channel"
-msgstr "Kanal raz_deljevanja"
-
-#: plug-ins/python/palette-sort.py:407
-msgid "Partition q_uantization"
-msgstr "K_vantizacija razdelkov"
-
-#: plug-ins/python/palette-sort.py:408
-msgid "Partition quantization"
-msgstr "Kvantizacija razdelkov"
-
-#: plug-ins/python/palette-sort.py:432
+#: plug-ins/python/palette-sort.py:360
 msgid "_Sort Palette..."
 msgstr "_Razvrsti paleto ..."
 
-#: plug-ins/python/palette-sort.py:434
+#: plug-ins/python/palette-sort.py:362
 msgid "Sort the colors in a palette"
 msgstr "Razvrsti barve na paleti"
 
-#: plug-ins/python/palette-to-gradient.py:141
-#: plug-ins/python/palette-to-gradient.py:142
-msgid "The newly created gradient"
-msgstr "Novo ustvarjeni preliv"
+#: plug-ins/python/palette-sort.py:380
+msgid "All"
+msgstr "Vse"
 
-#: plug-ins/python/palette-to-gradient.py:164
+#: plug-ins/python/palette-sort.py:381
+msgid "Slice / Array"
+msgstr "Rezina / matrika"
+
+#: plug-ins/python/palette-sort.py:382
+msgid "Autoslice (fg->bg)"
+msgstr "Samodejno poreži (ospr->ozad)"
+
+#: plug-ins/python/palette-sort.py:383
+msgid "Partitioned"
+msgstr "Razdeljeno"
+
+#: plug-ins/python/palette-sort.py:384
+msgid "Select_ions"
+msgstr "Iz_bire"
+
+#: plug-ins/python/palette-sort.py:384
+msgid "Selections"
+msgstr "Izbori"
+
+#. TODO: It would be much simpler to replace the slice expression with three
+#. separate parameters: start-index, number-of-rows, row_length
+#: plug-ins/python/palette-sort.py:388
+msgid "Slice _expression"
+msgstr "_Izraz rezanja"
+
+#: plug-ins/python/palette-sort.py:393
+msgid "Channel _to sort"
+msgstr "Kanal za _razvrščanje"
+
+#: plug-ins/python/palette-sort.py:393
+msgid "Channel to sort"
+msgstr "Kanal za razvrščanje"
+
+#: plug-ins/python/palette-sort.py:395
+msgid "_Ascending"
+msgstr "N_araščajoče"
+
+#: plug-ins/python/palette-sort.py:395 plug-ins/python/palette-sort.py:402
+msgid "Ascending"
+msgstr "Naraščajoče"
+
+#: plug-ins/python/palette-sort.py:399
+msgid "Secondary C_hannel to sort"
+msgstr "Sekundarni kanal za ra_zvrščanje"
+
+#: plug-ins/python/palette-sort.py:400
+msgid "Secondary Channel to sort"
+msgstr "Sekundarni kanal za razvrščanje"
+
+#: plug-ins/python/palette-sort.py:402
+msgid "Ascen_ding"
+msgstr "Nara_ščajoče"
+
+#: plug-ins/python/palette-sort.py:404
+msgid "_Quantization"
+msgstr "_Kvantizacija"
+
+#: plug-ins/python/palette-sort.py:405
+msgid "Quantization"
+msgstr "Kvantizacija"
+
+#: plug-ins/python/palette-sort.py:409
+msgid "Partitionin_g channel"
+msgstr "Kanal raz_deljevanja"
+
+#: plug-ins/python/palette-sort.py:410
+msgid "Partitioning channel"
+msgstr "Kanal razdeljevanja"
+
+#: plug-ins/python/palette-sort.py:412
+msgid "Partition q_uantization"
+msgstr "K_vantizacija razdelkov"
+
+#: plug-ins/python/palette-sort.py:413
+msgid "Partition quantization"
+msgstr "Kvantizacija razdelkov"
+
+#: plug-ins/python/palette-to-gradient.py:127
 msgid "Palette to _Gradient"
 msgstr "Paleta v _preliv"
 
-#: plug-ins/python/palette-to-gradient.py:165
+#: plug-ins/python/palette-to-gradient.py:128
 msgid "Create a gradient using colors from the palette"
 msgstr "Ustvari preliv z uporabo barv iz palete"
 
-#: plug-ins/python/palette-to-gradient.py:166
+#: plug-ins/python/palette-to-gradient.py:129
 msgid "Create a new gradient using colors from the palette."
 msgstr "Ustvarite nov preliv z uporabo barv iz palete."
 
-#: plug-ins/python/palette-to-gradient.py:169
+#: plug-ins/python/palette-to-gradient.py:132
 msgid "Palette to _Repeating Gradient"
 msgstr "Paleta v _ponavljajoči preliv"
 
-#: plug-ins/python/palette-to-gradient.py:170
+#: plug-ins/python/palette-to-gradient.py:133
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Ustvari ponavljajoči preliv z uporabo barv iz palete"
 
-#: plug-ins/python/palette-to-gradient.py:171
+#: plug-ins/python/palette-to-gradient.py:134
 msgid "Create a new repeating gradient using colors from the palette."
 msgstr "Ustvarite nov ponavljajoči preliv z uporabo barv iz palete."
+
+#: plug-ins/python/palette-to-gradient.py:150
+#: plug-ins/python/palette-to-gradient.py:151
+msgid "The newly created gradient"
+msgstr "Novo ustvarjeni preliv"
 
 #: plug-ins/python/python-console/python-console.py:79
 msgid "Python Console"
@@ -529,21 +614,22 @@ msgstr "Ponovno nariši na zadnji aktivni plasti"
 msgid "As Path"
 msgstr "Kot pot"
 
-#: plug-ins/python/spyro-plus.py:112
+#: plug-ins/python/spyro-plus.py:112 plug-ins/python/spyro-plus.py:2255
 msgid "Circle"
 msgstr "Krog"
 
-#: plug-ins/python/spyro-plus.py:148
+#: plug-ins/python/spyro-plus.py:148 plug-ins/python/spyro-plus.py:2259
 msgid "Polygon-Star"
 msgstr "Mnogokotna zvezda"
 
 #. Sine wave on a circle ring.
-#: plug-ins/python/spyro-plus.py:164 plug-ins/python/spyro-plus.py:989
+#: plug-ins/python/spyro-plus.py:164 plug-ins/python/spyro-plus.py:996
+#: plug-ins/python/spyro-plus.py:2250 plug-ins/python/spyro-plus.py:2260
 msgid "Sine"
 msgstr "Sinus"
 
 #. Semi-circles, based on a polygon
-#: plug-ins/python/spyro-plus.py:174
+#: plug-ins/python/spyro-plus.py:174 plug-ins/python/spyro-plus.py:2261
 msgid "Bumps"
 msgstr "Izbokline"
 
@@ -555,55 +641,55 @@ msgstr "Pladenj"
 msgid "Frame"
 msgstr "Okvir"
 
-#: plug-ins/python/spyro-plus.py:436
+#: plug-ins/python/spyro-plus.py:436 plug-ins/python/spyro-plus.py:2258
 msgid "Selection"
 msgstr "Izbor"
 
-#: plug-ins/python/spyro-plus.py:521
+#: plug-ins/python/spyro-plus.py:526 plug-ins/python/spyro-plus.py:2295
 msgid "Pencil"
 msgstr "Svinčnik"
 
-#: plug-ins/python/spyro-plus.py:537
+#: plug-ins/python/spyro-plus.py:542 plug-ins/python/spyro-plus.py:2296
 msgid "AirBrush"
 msgstr "Barvna pršilka"
 
-#: plug-ins/python/spyro-plus.py:604
+#: plug-ins/python/spyro-plus.py:609 plug-ins/python/spyro-plus.py:2293
 msgid "Preview"
 msgstr "Predogled"
 
-#: plug-ins/python/spyro-plus.py:609
+#: plug-ins/python/spyro-plus.py:614 plug-ins/python/spyro-plus.py:2297
 msgid "Stroke"
 msgstr "Poteza"
 
-#: plug-ins/python/spyro-plus.py:656
+#: plug-ins/python/spyro-plus.py:661 plug-ins/python/spyro-plus.py:2294
 msgid "PaintBrush"
 msgstr "Slikarski čopič"
 
-#: plug-ins/python/spyro-plus.py:658
+#: plug-ins/python/spyro-plus.py:665 plug-ins/python/spyro-plus.py:2298
 msgid "Ink"
 msgstr "Črnilo"
 
-#: plug-ins/python/spyro-plus.py:659
+#: plug-ins/python/spyro-plus.py:666 plug-ins/python/spyro-plus.py:2299
 msgid "MyPaintBrush"
 msgstr "Čopič MyPaint"
 
-#: plug-ins/python/spyro-plus.py:975
+#: plug-ins/python/spyro-plus.py:982 plug-ins/python/spyro-plus.py:2248
 msgid "Spyrograph"
 msgstr "Spirograf"
 
-#: plug-ins/python/spyro-plus.py:982
+#: plug-ins/python/spyro-plus.py:989 plug-ins/python/spyro-plus.py:2249
 msgid "Epitrochoid"
 msgstr "Epitrohoida"
 
-#: plug-ins/python/spyro-plus.py:1009
+#: plug-ins/python/spyro-plus.py:1016 plug-ins/python/spyro-plus.py:2251
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: plug-ins/python/spyro-plus.py:1456
+#: plug-ins/python/spyro-plus.py:1472 plug-ins/python/spyro-plus.py:2252
 msgid "Curve Type"
 msgstr "Vrsta krivulje"
 
-#: plug-ins/python/spyro-plus.py:1457
+#: plug-ins/python/spyro-plus.py:1473
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -611,20 +697,21 @@ msgstr ""
 "Vzorec epitrohoide dobimo, če je gibljivi zobnik na zunanjem robu fiksnega "
 "zobnika."
 
-#: plug-ins/python/spyro-plus.py:1462
+#. TODO: Add Clone option once it's fixed
+#: plug-ins/python/spyro-plus.py:1478 plug-ins/python/spyro-plus.py:2301
 msgid "Tool"
 msgstr "Orodje"
 
-#: plug-ins/python/spyro-plus.py:1463
+#: plug-ins/python/spyro-plus.py:1479
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr "Orodje za risanje vzorcev. Orodje Predogled riše hitro."
 
-#: plug-ins/python/spyro-plus.py:1468
+#: plug-ins/python/spyro-plus.py:1484
 msgid "Long Gradient"
 msgstr "Dolgi preliv"
 
-#: plug-ins/python/spyro-plus.py:1470
+#: plug-ins/python/spyro-plus.py:1486
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -634,11 +721,11 @@ msgstr ""
 "bo uporabljen dolgi preliv, ki se ujema z dolžino vzorca glede na trenutni "
 "preliv in način ponavljanja iz nastavitev orodja preliva."
 
-#: plug-ins/python/spyro-plus.py:1490
+#: plug-ins/python/spyro-plus.py:1506
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Določite vzorec z uporabo enega od naslednjih zavihkov:"
 
-#: plug-ins/python/spyro-plus.py:1492
+#: plug-ins/python/spyro-plus.py:1508
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -650,7 +737,7 @@ msgstr ""
 "sestavnimi koščki. Če sledite navodilom igralnih kompletov, bi morali biti "
 "rezultati podobni."
 
-#: plug-ins/python/spyro-plus.py:1516
+#: plug-ins/python/spyro-plus.py:1532
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -658,11 +745,11 @@ msgstr ""
 "Število zobcev fiksnega zobatega kolesa. Velikost fiksnega zobatega kolesa "
 "je sorazmerna s številom zobcev."
 
-#: plug-ins/python/spyro-plus.py:1519 plug-ins/python/spyro-plus.py:1547
+#: plug-ins/python/spyro-plus.py:1535 plug-ins/python/spyro-plus.py:1563
 msgid "Fixed Gear Teeth"
 msgstr "Zobci fiksnega zobnika"
 
-#: plug-ins/python/spyro-plus.py:1527
+#: plug-ins/python/spyro-plus.py:1543
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -670,15 +757,15 @@ msgstr ""
 "Število zobcev zobatega kolesa. Velikost zobatega kolesa je sorazmerna s "
 "številom zobcev."
 
-#: plug-ins/python/spyro-plus.py:1530 plug-ins/python/spyro-plus.py:1552
+#: plug-ins/python/spyro-plus.py:1546 plug-ins/python/spyro-plus.py:1568
 msgid "Moving Gear Teeth"
 msgstr "Zobci gibljivega zobnika"
 
-#: plug-ins/python/spyro-plus.py:1535
+#: plug-ins/python/spyro-plus.py:1551
 msgid "Hole percent"
 msgstr "Odstotek luknje"
 
-#: plug-ins/python/spyro-plus.py:1536
+#: plug-ins/python/spyro-plus.py:1552
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -686,11 +773,11 @@ msgstr ""
 "Kako daleč je luknja od središča gibljivega zobnika. 100 % pomeni, da je "
 "luknja na robu zobnika."
 
-#: plug-ins/python/spyro-plus.py:1557
+#: plug-ins/python/spyro-plus.py:1573
 msgid "Hole Number"
 msgstr "Številka luknje"
 
-#: plug-ins/python/spyro-plus.py:1558
+#: plug-ins/python/spyro-plus.py:1574
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -698,29 +785,29 @@ msgstr ""
 "Luknja št. 1 je na robu zobnika. Luknja z najvišjo številko je blizu "
 "središča. Najvišja številka luknje se za vsak zobnik razlikuje."
 
-#: plug-ins/python/spyro-plus.py:1569
+#: plug-ins/python/spyro-plus.py:1585
 msgid "Flower Petals"
 msgstr "Cvetni listi"
 
-#: plug-ins/python/spyro-plus.py:1570
+#: plug-ins/python/spyro-plus.py:1586
 msgid "The number of petals in the pattern."
 msgstr "Število cvetnih listov v vzorcu."
 
-#: plug-ins/python/spyro-plus.py:1575
+#: plug-ins/python/spyro-plus.py:1591
 msgid "Petal Skip"
 msgstr "Preskoči cvetni list"
 
-#: plug-ins/python/spyro-plus.py:1576
+#: plug-ins/python/spyro-plus.py:1592
 msgid "The number of petals to advance for drawing the next petal."
 msgstr ""
 "Število cvetnih listov za napredovanje pri risanju naslednjega cvetnega "
 "lista."
 
-#: plug-ins/python/spyro-plus.py:1581
+#: plug-ins/python/spyro-plus.py:1597
 msgid "Hole Radius(%)"
 msgstr "Polmer luknje (%)"
 
-#: plug-ins/python/spyro-plus.py:1582
+#: plug-ins/python/spyro-plus.py:1598
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
@@ -730,11 +817,11 @@ msgstr ""
 "velikosti vzorca. Vrednost 0 predstavlja odsotnost luknje. Vrednost 99 "
 "povzroči tanko črto na robu."
 
-#: plug-ins/python/spyro-plus.py:1603
+#: plug-ins/python/spyro-plus.py:1619
 msgid "Width(%)"
 msgstr "Širina (%)"
 
-#: plug-ins/python/spyro-plus.py:1604
+#: plug-ins/python/spyro-plus.py:1620
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
@@ -743,23 +830,23 @@ msgstr ""
 "Širina vzorca kot odstotek velikosti vzorca. Vrednost 1 zgolj nariše tanek "
 "vzorec. Vrednost 100 zapolni celoten fiksen postroj."
 
-#: plug-ins/python/spyro-plus.py:1615
+#: plug-ins/python/spyro-plus.py:1631
 msgid "Visual"
 msgstr "Vidno"
 
-#: plug-ins/python/spyro-plus.py:1621
+#: plug-ins/python/spyro-plus.py:1637
 msgid "Toy Kit"
 msgstr "Komplet igrač"
 
-#: plug-ins/python/spyro-plus.py:1627
+#: plug-ins/python/spyro-plus.py:1643
 msgid "Gears"
 msgstr "Zobniki"
 
-#: plug-ins/python/spyro-plus.py:1640 plug-ins/python/spyro-plus.py:1684
+#: plug-ins/python/spyro-plus.py:1656 plug-ins/python/spyro-plus.py:1700
 msgid "Rotation"
 msgstr "Sukanje"
 
-#: plug-ins/python/spyro-plus.py:1641
+#: plug-ins/python/spyro-plus.py:1657
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -767,11 +854,11 @@ msgstr ""
 "Sukanje vzorca, v stopinjah. Začetni položaj gibljivega zobnika v fiksnem "
 "zobniku."
 
-#: plug-ins/python/spyro-plus.py:1664
+#: plug-ins/python/spyro-plus.py:1680 plug-ins/python/spyro-plus.py:2262
 msgid "Shape"
 msgstr "Oblika"
 
-#: plug-ins/python/spyro-plus.py:1665
+#: plug-ins/python/spyro-plus.py:1681
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -785,39 +872,40 @@ msgstr ""
 "dotikate robov. Izbor bo zaobjel robove trenutnega izbora - poskusite s čim "
 "ne pravokotnim."
 
-#: plug-ins/python/spyro-plus.py:1674
+#: plug-ins/python/spyro-plus.py:1690
 msgid "Sides"
 msgstr "Stranice"
 
-#: plug-ins/python/spyro-plus.py:1674
+#: plug-ins/python/spyro-plus.py:1690
 msgid "Number of sides of the shape."
 msgstr "Število stranic lika."
 
-#: plug-ins/python/spyro-plus.py:1679
+#: plug-ins/python/spyro-plus.py:1695
 msgid "Morph"
 msgstr "Preoblikuj"
 
-#: plug-ins/python/spyro-plus.py:1679
+#: plug-ins/python/spyro-plus.py:1695
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr "Preoblikuj kot lik fiksnega zobnika. Vpliva samo na nekatere like."
 
-#: plug-ins/python/spyro-plus.py:1684
+#: plug-ins/python/spyro-plus.py:1700
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Sukanje fiksnega zobnika, v stopinjah"
 
-#: plug-ins/python/spyro-plus.py:1699
+#: plug-ins/python/spyro-plus.py:1715
 msgid "Margin (px)"
 msgstr "Rob (sl. t.)"
 
-#: plug-ins/python/spyro-plus.py:1699
+#: plug-ins/python/spyro-plus.py:1715
 msgid "Margin from edge of selection."
 msgstr "Rob od konca izbora."
 
-#: plug-ins/python/spyro-plus.py:1704
+#: plug-ins/python/spyro-plus.py:1720 plug-ins/python/spyro-plus.py:2283
+#: plug-ins/python/spyro-plus.py:2284
 msgid "Make width and height equal"
 msgstr "Naj bosta širina in višina enaki"
 
-#: plug-ins/python/spyro-plus.py:1706
+#: plug-ins/python/spyro-plus.py:1722
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -825,11 +913,11 @@ msgstr ""
 "Če ni potrjeno, bo z vzorcem zapolnjena trenutna slika ali izbor. Če je "
 "potrjeno, bo imel vzorec enako širino in višino in bo na sredini."
 
-#: plug-ins/python/spyro-plus.py:1721
+#: plug-ins/python/spyro-plus.py:1737
 msgid "Re_draw"
 msgstr "Ponovno _nariši"
 
-#: plug-ins/python/spyro-plus.py:1723
+#: plug-ins/python/spyro-plus.py:1739
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -837,15 +925,15 @@ msgstr ""
 "Če spremenite nastavitve orodja, spremenite barvo ali izbor, pritisnite to "
 "za ogled videza vzorca."
 
-#: plug-ins/python/spyro-plus.py:1726
+#: plug-ins/python/spyro-plus.py:1742
 msgid "_Reset"
 msgstr "_Ponastavi"
 
-#: plug-ins/python/spyro-plus.py:1734
+#: plug-ins/python/spyro-plus.py:1750
 msgid "Save"
 msgstr "Shrani"
 
-#: plug-ins/python/spyro-plus.py:1735
+#: plug-ins/python/spyro-plus.py:1751
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
@@ -853,102 +941,35 @@ msgstr ""
 "Izberite, ali želite shraniti kot novo plast, ponovno risati na zadnji "
 "dejavni plasti ali shraniti v pot."
 
-#: plug-ins/python/spyro-plus.py:1749
+#: plug-ins/python/spyro-plus.py:1765
 msgid "Spyrogimp"
 msgstr "Spiro-gimp"
 
-#: plug-ins/python/spyro-plus.py:1758 plug-ins/python/spyro-plus.py:2295
+#: plug-ins/python/spyro-plus.py:1774 plug-ins/python/spyro-plus.py:2237
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr "Nariše spirografe z uporabo trenutnih nastavitev orodja in izbora."
 
-#: plug-ins/python/spyro-plus.py:1771
+#: plug-ins/python/spyro-plus.py:1787
 msgid "Curve Pattern"
 msgstr "Vzorec krivulje"
 
-#: plug-ins/python/spyro-plus.py:1774
+#: plug-ins/python/spyro-plus.py:1790
 msgid "Fixed Gear"
 msgstr "Fiksen zobnik"
 
-#: plug-ins/python/spyro-plus.py:1777
+#: plug-ins/python/spyro-plus.py:1793
 msgid "Size"
 msgstr "Velikost"
 
-#: plug-ins/python/spyro-plus.py:2133
+#: plug-ins/python/spyro-plus.py:2149
 msgid "Rendering Pattern"
 msgstr "Upodabljanje vzorca"
 
-#: plug-ins/python/spyro-plus.py:2145
+#: plug-ins/python/spyro-plus.py:2161
 msgid "Please wait : Rendering Pattern"
 msgstr "Prosimo, počakajte: upodabljanje vzorca"
 
-#: plug-ins/python/spyro-plus.py:2211 plug-ins/python/spyro-plus.py:2212
-msgid ""
-"The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"
-msgstr ""
-"Vrsta krivulje { spirograf (0), epitrohoida (1), sinusna (2), Lissajousova "
-"(3) }"
-
-#: plug-ins/python/spyro-plus.py:2216 plug-ins/python/spyro-plus.py:2217
-msgid "Shape of fixed gear"
-msgstr "Oblika fiksnega zobnika"
-
-#: plug-ins/python/spyro-plus.py:2221 plug-ins/python/spyro-plus.py:2222
-msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
-msgstr ""
-"Število strani fiksnega zobatega kolesa (3 ali več). Uporabljajo ga le "
-"nekateri liki."
-
-#: plug-ins/python/spyro-plus.py:2226 plug-ins/python/spyro-plus.py:2227
-msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
-msgstr ""
-"Preoblikuj kot lik fiksnega zobatega kolesa. Uporabljajo ga samo nekateri "
-"liki."
-
-#: plug-ins/python/spyro-plus.py:2231 plug-ins/python/spyro-plus.py:2232
-msgid "Number of teeth for fixed gear"
-msgstr "Število zobcev fiksnega zobatega kolesa"
-
-#: plug-ins/python/spyro-plus.py:2236 plug-ins/python/spyro-plus.py:2237
-msgid "Number of teeth for moving gear"
-msgstr "Število zobcev za gibljivega zobnega kolesa"
-
-#: plug-ins/python/spyro-plus.py:2241 plug-ins/python/spyro-plus.py:2243
-msgid ""
-"Location of hole in moving gear in percent, where 100 means that the hole is "
-"at the edge of the gear, and 0 means the hole is at the center"
-msgstr ""
-"Mesto luknje v gibljivem zobatem kolesu v odstotkih, kjer 100 pomeni, da je "
-"luknja na robu zobatega kolesa, 0 pa pomeni, da je luknja v središču."
-
-#: plug-ins/python/spyro-plus.py:2248 plug-ins/python/spyro-plus.py:2249
-msgid "Margin from selection, in pixels"
-msgstr "Rob od izbora, v slikovnih točkah"
-
-#: plug-ins/python/spyro-plus.py:2253 plug-ins/python/spyro-plus.py:2254
-msgid "Make height and width equal"
-msgstr "Naj bosta višina in širina enaki"
-
-#: plug-ins/python/spyro-plus.py:2258 plug-ins/python/spyro-plus.py:2259
-msgid "Pattern rotation, in degrees"
-msgstr "Sukanje vzorca, v stopinjah"
-
-#: plug-ins/python/spyro-plus.py:2263 plug-ins/python/spyro-plus.py:2264
-msgid "Shape rotation of fixed gear, in degrees"
-msgstr "Sukanje lika fiksnega zobnika, v stopinjah"
-
-#: plug-ins/python/spyro-plus.py:2268 plug-ins/python/spyro-plus.py:2269
-msgid "Tool to use for drawing the pattern."
-msgstr "Orodje za risanje vzorca."
-
-#: plug-ins/python/spyro-plus.py:2273 plug-ins/python/spyro-plus.py:2275
-msgid ""
-"Whether to apply a long gradient to match the length of the pattern. Only "
-"applicable to some of the tools."
-msgstr ""
-"Ali uporabiti dolg preliv, da se ujema z dolžino vzorca. Uporablja se le za "
-"nekatera orodja."
-
-#: plug-ins/python/spyro-plus.py:2296
+#: plug-ins/python/spyro-plus.py:2238
 msgid ""
 "Uses current tool settings to draw Spyrograph patterns. The size and "
 "location of the pattern is based on the current selection."
@@ -956,6 +977,90 @@ msgstr ""
 "Uporablja trenutne nastavitve orodja za risanje spirografnih vzorcev. "
 "Velikost in mesto vzorca temeljita na trenutnem izboru."
 
-#: plug-ins/python/spyro-plus.py:2299
+#: plug-ins/python/spyro-plus.py:2241
 msgid "Spyrogimp..."
 msgstr "Spiro-gimp ..."
+
+#: plug-ins/python/spyro-plus.py:2256
+msgid "rack"
+msgstr "Pladenj"
+
+#: plug-ins/python/spyro-plus.py:2257
+msgid "frame"
+msgstr "Okvir"
+
+#: plug-ins/python/spyro-plus.py:2264
+msgid "Si_des"
+msgstr "Stra_ni"
+
+#: plug-ins/python/spyro-plus.py:2265
+msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
+msgstr ""
+"Število strani fiksnega zobatega kolesa (3 ali več). Uporabljajo ga le "
+"nekateri liki."
+
+#: plug-ins/python/spyro-plus.py:2267
+msgid "_Morph"
+msgstr "Preo_blikuj"
+
+#: plug-ins/python/spyro-plus.py:2268
+msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
+msgstr ""
+"Preoblikuj kot lik fiksnega zobatega kolesa. Uporabljajo ga samo nekateri "
+"liki."
+
+#: plug-ins/python/spyro-plus.py:2270
+msgid "Fi_xed Gear Teeth"
+msgstr "Zobci fi_ksnega zobnika"
+
+#: plug-ins/python/spyro-plus.py:2271 plug-ins/python/spyro-plus.py:2274
+msgid "Number of teeth for fixed gear."
+msgstr "Število zobcev fiksnega zobatega kolesa."
+
+#: plug-ins/python/spyro-plus.py:2273
+msgid "Mo_ving Gear Teeth"
+msgstr "Zobci giblji_vega zobnika"
+
+#: plug-ins/python/spyro-plus.py:2276
+msgid "_Hole Radius (%)"
+msgstr "Pol_mer luknje (%)"
+
+#: plug-ins/python/spyro-plus.py:2277
+msgid ""
+"Location of hole in moving gear in percent, where 100 means that the hole is "
+"at the edge of the gear, and 0 means the hole is at the center"
+msgstr ""
+"Mesto luknje v gibljivem zobatem kolesu v odstotkih, kjer 100 pomeni, da je "
+"luknja na robu zobatega kolesa, 0 pa pomeni, da je luknja v središču."
+
+#: plug-ins/python/spyro-plus.py:2280
+msgid "Margin (_px)"
+msgstr "Rob (sl. _t.)"
+
+#: plug-ins/python/spyro-plus.py:2281
+msgid "Margin from selection, in pixels"
+msgstr "Rob od izbora, v slikovnih točkah"
+
+#: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
+msgid "_Rotation"
+msgstr "Su_kanje"
+
+#: plug-ins/python/spyro-plus.py:2287
+msgid "Pattern rotation, in degrees"
+msgstr "Sukanje vzorca, v stopinjah"
+
+#: plug-ins/python/spyro-plus.py:2290
+msgid "Shape rotation of fixed gear, in degrees"
+msgstr "Sukanje lika fiksnega zobnika, v stopinjah"
+
+#: plug-ins/python/spyro-plus.py:2304
+msgid "Long _Gradient"
+msgstr "Dol_gi preliv"
+
+#: plug-ins/python/spyro-plus.py:2305
+msgid ""
+"Whether to apply a long gradient to match the length of the pattern. Only "
+"applicable to some of the tools."
+msgstr ""
+"Ali uporabiti dolg preliv, da se ujema z dolžino vzorca. Uporablja se le za "
+"nekatera orodja."
