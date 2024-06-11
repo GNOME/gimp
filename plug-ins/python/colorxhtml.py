@@ -232,7 +232,7 @@ class ColorXhtml(Gimp.PlugIn):
                                             _("Write a separate CSS file"),
                                             False, GObject.ParamFlags.READWRITE)
             #GUI only, used to create a widget to open a file if source-file is enabled
-            procedure.add_file_aux_argument ("aux-file", _("Choose _File"),
+            procedure.add_file_aux_argument ("aux-file", _("Choose File"),
                                              "", GObject.ParamFlags.READWRITE)
 
         return procedure
