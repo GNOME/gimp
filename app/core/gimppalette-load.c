@@ -431,9 +431,9 @@ gimp_palette_load_aco (GimpContext   *context,
                                  &bytes_read, NULL, error) ||
       bytes_read != sizeof (header))
     {
-      g_prefix_error (error,
-                      _("Could not read header from palette file '%s': "),
-                      gimp_file_get_utf8_name (file));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Could not read header from palette file '%s': "),
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -615,9 +615,9 @@ gimp_palette_load_acb (GimpContext   *context,
                                  &bytes_read, NULL, error) ||
       bytes_read != sizeof (header))
     {
-      g_prefix_error (error,
-                      _("Could not read header from palette file '%s': "),
-                      gimp_file_get_utf8_name (file));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Could not read header from palette file '%s': "),
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -625,20 +625,23 @@ gimp_palette_load_acb (GimpContext   *context,
   if (! g_input_stream_read_all (input, &version, sizeof (version),
                                  &bytes_read, NULL, error))
     {
-      g_prefix_error (error, _("Invalid ACB palette version."));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid ACB palette version."));
       return NULL;
     }
   version = GUINT16_FROM_BE (version);
   if (version != 1)
     {
-      g_prefix_error (error, _("GIMP only supports version 1 ACB palettes"));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("GIMP only supports version 1 ACB palettes"));
       return NULL;
     }
 
   if (! g_input_stream_read_all (input, &version, sizeof (version),
                                  &bytes_read, NULL, error))
     {
-      g_prefix_error (error, _("Invalid ACB palette identifier."));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid ACB palette identifier."));
       return NULL;
     }
 
@@ -653,7 +656,8 @@ gimp_palette_load_acb (GimpContext   *context,
           g_strfreev (palette_strings);
           g_free (palette_name);
         }
-      g_prefix_error (error, _("Invalid ACB palette name."));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid ACB palette name."));
       return NULL;
     }
   palette = GIMP_PALETTE (gimp_palette_new (context, palette_strings[1]));
@@ -671,7 +675,8 @@ gimp_palette_load_acb (GimpContext   *context,
           g_strfreev (palette_prefix);
           g_free (palette_name);
         }
-      g_prefix_error (error, _("Invalid ACB palette prefix."));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid ACB palette prefix."));
       return NULL;
     }
   g_free (palette_name);
@@ -686,7 +691,8 @@ gimp_palette_load_acb (GimpContext   *context,
           g_strfreev (palette_suffix);
           g_free (palette_name);
         }
-      g_prefix_error (error, _("Invalid ACB palette suffix."));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid ACB palette suffix."));
       return NULL;
     }
   g_free (palette_name);
@@ -704,14 +710,16 @@ gimp_palette_load_acb (GimpContext   *context,
       g_strfreev (palette_prefix);
       g_strfreev (palette_suffix);
 
-      g_prefix_error (error, _("Invalid number of colors in palette."));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid number of colors in palette."));
       return NULL;
     }
   number_of_colors = GUINT16_FROM_BE (number_of_colors);
   if (number_of_colors <= 1)
     {
-      g_prefix_error (error, _("Invalid number of colors: %s."),
-                      gimp_file_get_utf8_name (file));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid number of colors: %s."),
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -722,7 +730,8 @@ gimp_palette_load_acb (GimpContext   *context,
       g_strfreev (palette_prefix);
       g_strfreev (palette_suffix);
 
-      g_prefix_error (error, _("Invalid ACB palette page info."));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid ACB palette page info."));
       return NULL;
     }
   if (! g_input_stream_read_all (input, &page, sizeof (page),
@@ -731,7 +740,8 @@ gimp_palette_load_acb (GimpContext   *context,
       g_strfreev (palette_prefix);
       g_strfreev (palette_suffix);
 
-      g_prefix_error (error, _("Invalid ACB palette page info."));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid ACB palette page info."));
       return NULL;
     }
 
@@ -742,7 +752,8 @@ gimp_palette_load_acb (GimpContext   *context,
       g_strfreev (palette_prefix);
       g_strfreev (palette_suffix);
 
-      g_prefix_error (error, _("Invalid ACB palette color space."));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid ACB palette color space."));
       return NULL;
     }
   color_space = GUINT16_FROM_BE (color_space);
@@ -764,7 +775,8 @@ gimp_palette_load_acb (GimpContext   *context,
       g_strfreev (palette_prefix);
       g_strfreev (palette_suffix);
 
-      g_prefix_error (error, _("Invalid ACB palette color space."));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid ACB palette color space."));
       return NULL;
     }
 
@@ -958,9 +970,9 @@ gimp_palette_load_ase (GimpContext   *context,
                                  &bytes_read, NULL, error) ||
       bytes_read != sizeof (header))
     {
-      g_prefix_error (error,
-                      _("Could not read header from palette file '%s': "),
-                      gimp_file_get_utf8_name (file));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Could not read header from palette file '%s': "),
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -969,23 +981,25 @@ gimp_palette_load_ase (GimpContext   *context,
   if (! g_str_has_prefix (header + 0, "ASEF") ||
       header[5] != 0x01)
     {
-      g_prefix_error (error, _("Invalid ASE header: %s"),
-                      gimp_file_get_utf8_name (file));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid ASE header: %s"),
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
   if (! g_input_stream_read_all (input, &num_cols, sizeof (num_cols),
                                  &bytes_read, NULL, error))
     {
-      g_prefix_error (error,
-                      _("Invalid number of colors in palette."));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid number of colors in palette."));
       return NULL;
     }
   num_cols = GINT32_FROM_BE (num_cols);
   if (num_cols <= 1)
     {
-      g_prefix_error (error, _("Invalid number of colors: %s."),
-                      gimp_file_get_utf8_name (file));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid number of colors: %s."),
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -994,8 +1008,9 @@ gimp_palette_load_ase (GimpContext   *context,
   if (! g_input_stream_read_all (input, &group, sizeof (group),
                                  &bytes_read, NULL, error))
     {
-      g_prefix_error (error, _("Invalid ASE file: %s."),
-                      gimp_file_get_utf8_name (file));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid ASE file: %s."),
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
   group = GINT16_FROM_BE (group);
