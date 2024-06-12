@@ -2794,11 +2794,14 @@ gimp_item_tree_view_effects_removed_clicked (GtkWidget        *widget,
 {
   if (view->priv->effects_drawable)
     {
-      GimpImage *image = view->priv->image;
-      if (gimp_drawable_has_filters (view->priv->effects_drawable))
-        {
-          GimpContainer *filters = gimp_drawable_get_filters (view->priv->effects_drawable);
+      GimpImage     *image   = view->priv->image;
+      GimpContainer *filters = NULL;
 
+      filters = gimp_drawable_get_filters (view->priv->effects_drawable);
+
+      if (filters != NULL &&
+          gimp_container_have (filters, GIMP_OBJECT (view->priv->effects_filter)))
+        {
           gimp_image_undo_push_filter_remove (image, _("Remove filter"),
                                               view->priv->effects_drawable,
                                               view->priv->effects_filter);
